@@ -22,6 +22,13 @@ old incomplete bundles must be rebuilt from their matching solution or re-solved
 
 ## Current E5F calibration and policy audit utilities
 
+`tools/build_e5f_utility_review_packet.py` rebuilds the utility/pension visual review
+from saved results with no model solves. Run `python3 code/model/tools/build_e5f_utility_review_packet.py`
+from the repository root (Python with matplotlib and reportlab). The nine-page
+PDF is `../../output/pdf/e5f_utility_pension_visual_review.pdf`; the full standard
+diagnostic gallery and exact source-series checks are indexed in
+`../../output/model/e5f_matched_pf_20260909a/visual_review/README.md`.
+
 `tools/build_e5f_preference_timing_figures.py` creates three supplemental figures
 and a PDF with complete inherited fit/parameter tables from the verified timing
 pilot. Its inputs, reproduction command and scope are indexed in

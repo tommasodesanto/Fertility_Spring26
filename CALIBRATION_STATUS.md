@@ -2,6 +2,95 @@
 
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
+**September 11, 11:14 EDT — author prioritizes pension balance, utility comparison and visible diagnostics.**
+The author does not prioritize squeezing the fitting loss. Deliver the budget repair,
+old/new utility assessment (including a separate stationary 2023 comparison), and
+policy/transition plots. Automatic agent monitoring remains paused; no broad new
+calibration search is launched.
+
+Completed continuation17370186 passes the six-date joint housing/pension root:
+5 mappings/60 Bellmans,1075.60 seconds, maximum housing residual3.55536e-5,
+maximum pension residual3.33847e-10, exact final replay and checkpoint reload.
+Its preference path remains illustrative; terminal-distance/horizon checks do not
+pass. This is a converged finite-path diagnostic, not a fitted historical benchmark.
+Completed17370427 repeats candidate loss1180.2245445422732 exactly twice using
+the complete frozen working objective. Lightweight results and original graphs
+from both jobs are now local; all34 new plot hashes match their saved receipts.
+
+The nine-page visual review is `output/pdf/e5f_utility_pension_visual_review.pdf`.
+The full136-plot gallery (eight unchanged17-graph sets) is
+`output/model/e5f_matched_pf_20260909a/visual_review/index.html`.
+Rebuild from saved results with `python3 code/model/tools/build_e5f_utility_review_packet.py`;
+measured rendering/packaging4.06 seconds excluding first-use import/font setup,
+zero model solves. Supplemental transition and old/new lifecycle curves match
+their source CSV columns exactly. The original policy jumps remain visible;
+this report does not certify global policy regularity.
+
+The previously completed four-cell fixed-parameter comparison17358470 is now
+explicitly surfaced: both balanced cases show similar aggregate lifecycle curves,
+while the legacy family-size room gap falls0.312638 to0.156791 with the utility
+change. This is a pre-2007 stationary diagnostic, not a2023 recalibration.
+
+Two-arm job17373666 is submitted for stationary counterparts at the retained
+2023 preference(-0.03200017062648686), old/new utility with balanced pensions,
+identical inherited structural parameters and initial supply curve. Each arm
+repeats twice;4GE total, roughly4minutes per arm anticipated,14-minute Slurm caps,
+1CPU8GB each. All641 source files and original summary/checkpoint hashes pass
+preflight; model code is unchanged. ContractSHA
+1dbe5da97ec957273b643dec2bd3bb0a80353aa65f1b2cf2adc42f18eb22a5b0.
+Each arm reports all12 old target rows/weights under fingerprint3726c17e62c8233ce62d5f4c95f44fd2cc2ea6cfa3d2492795461b4569300497.
+These stationary tests do not reproduce the inherited historical2023 distribution,
+and are not re-estimated calibrations. Full2023 recalibration remains outstanding.
+Recipe and scope: `output/model/e5f_matched_pf_20260909a/utility_fiscal_decomposition/static_2023/`.
+
+**Same-turn completion:** both17373666 arms completed in about151 seconds with
+exact two-repetition results and balanced fiscal residuals below2e-9. All74
+lightweight artifacts were hash-verified after collection. The stationary fertility
+stock is1.39999 old versus1.40925 new; ownership58.8397% versus58.8922%; the
+family-size room gap0.383859 versus0.231144. Raw old-target losses1335.71971 and
+1361.32977 describe fixed-parameter stationary diagnostics, not calibrated fits.
+The inherited2023 transition preference does not make its stationary counterpart
+match2023 fertility. Do not call this the requested matched2023 recalibration.
+Both complete12-row/two-repetition tables and all parameter restrictions are in
+`utility_fiscal_decomposition/static_2023/results/{old_balanced,new_balanced}/`.
+The nine-page PDF and136-plot gallery include the late-preference comparison.
+No new scientific job remains from this turn; the next2023 calibration stage is
+outstanding and no unattended search is scheduled.
+
+**September11,10:11 EDT — access restored; complete candidate ranking and two resumed jobs.**
+Root17362744 completed normally in25:12: eight mappings/96Bellmans, exact final
+replay,643source hashes, checkpoint reload and17graphs verified. It hit its
+evaluation budget: maxhousing0.0087467491, fiscal3.03e-10. The horizon remains
+uncertified. Collected37artifacts in `history_probe/root_round_01/completed_17362744/`.
+The isolated continuation change is reviewed and committed450bce1c;88puretests
+pass. It reuses the prior selected point, physical Broyden matrix and damping,
+with all scientific inputs and gates fixed. Job17370186 is running: first mapping
+reproduced prior residuals and all policy/distribution/fiscal signatures exactly.
+By mapping3 maxhousing is0.0004963632, still above2e-4; pension gates pass.
+The continuation has8mapping/96Bellman,27minute root/30minute driver limits.
+
+Read-only joint observation17370136 completed in1:48, zero GE/Bellmans,
+all22fresh cases,641source pins, checkpoint/graph hashes and13startup tests.
+The complete23candidate comparison now includes every target. Lowest observed
+working loss is1180.2245445 at joint_12_analysis_28,21.31% below baseline1499.851825.
+Recent-parent gap improves to-0.03774559 versus target+0.16289551 but contributes
+1089.182234 to loss. Other target rows and all parameter bounds are in
+`initial_calibration_contract/saved_case_scores/joint_12_analysis_28_*`.
+This is the lowest observed candidate, not a final estimate or optimum.
+
+The complete solve-observe-score wrapper now has9passing preflight/process tests
+in addition to18scorer tests. It requires the approved objective fingerprint and
+exact641-file observation snapshot, preserving all634economic files. Original
+numeric gates and17graph filenames are enforced. Startup job17370341 failed in
+3seconds, before any model solve, because two existing test-fixture CSVs were
+missing at their expected relative paths. Byte-identical pinned copies repaired
+packaging; all27tests then passed. Both failure and repair are retained. Replacement
+smoke17370427 is running at the lowest observed candidate, two fresh repetitions,
+max16GE,30minute solve/35minute wrapper/36minute Slurm,1CPU8GB. Full target/weight
+hash unchanged. A24case joint proposal design using all12rows is prepared in
+`initial_calibration_contract/joint_search_round_01/`; no broad scored search is
+launched before this exact-loop smoke passes.
+
 **September 11, morning restart after09:36 EDT — credit interruption and complete saved scores.**
 Several agent tasks stopped with usage-limit errors around03:27. No further
 agent-led work is established by the subsequent repeated heartbeat messages.

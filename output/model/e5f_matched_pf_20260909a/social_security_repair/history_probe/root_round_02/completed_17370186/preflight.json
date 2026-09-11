@@ -1,0 +1,2805 @@
+{
+  "allowed_shared_source_differences": [],
+  "demographics": {
+    "annual_array_sha256": {
+      "birth_sex_shares": "35396da083f8b6055ac6e27c569c4908de4414ac9b534ce40fba03a11dd7eefb",
+      "net_migration": "f60ab7b1e1a97e2cfa8cfdeaa6c84ab31e2b72f3461ae5520d9d236a36fd7e66",
+      "survival": "ee53514375edd905443b951a59cb21a933e039c94ed4507ce7287f59ba86fd2d"
+    },
+    "class_name": "run_e5f_perfect_foresight_person_demography.AnnualDemographicPrimitives",
+    "initial_stationary_age_realignment_performed": false,
+    "internal_identity_gaps": {
+      "headship_alignment": 0.0,
+      "initial_household_age": 1.3877787807814457e-17,
+      "initial_person_head_age": 0.0,
+      "person_head": 0.0
+    },
+    "scale_model_units_per_person": 8.756331612630393e-09,
+    "serialized_source_paths": {
+      "acs_headship": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_history_20260909a/inputs/headship/acs_headship_profiles.csv",
+      "births_mid": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_history_20260909a/inputs/census/births_mid.csv",
+      "population_mid": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_history_20260909a/inputs/census/population_mid.csv",
+      "survival": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_history_20260909a/inputs/census/survival.csv",
+      "vintage_2025": "/scratch/td2248/projects/Fertility_Spring26_matched_pf_history_20260909a/inputs/census/vintage_2025_age_sex.csv"
+    },
+    "source_pinning": "serialized arrays are covered by the approved initial checkpoint SHA256",
+    "start_year": 2023,
+    "status": "serialized_frozen_2023_primitives_without_realignment",
+    "terminal_year": 2100
+  },
+  "initial_bridge": {
+    "age_reweight": {
+      "age_survival": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.9391263063710125,
+        0.9184976343249724,
+        0.8849521927812863,
+        0.8300468061015381
+      ],
+      "future_entry_rule": "old steady-state entrant flow held fixed",
+      "horizon_calendar_year": 2023.0,
+      "horizon_periods": 4,
+      "implied_age_survival": [
+        0.9999999999641578,
+        0.9999999995224917,
+        0.9999999993490846,
+        0.999999999938967,
+        1.0000000002367522,
+        0.9999999996313396,
+        1.000000000133309,
+        0.9999999998916999,
+        0.9999999998219014,
+        1.0000000001418234,
+        0.9999999991278742,
+        0.999999999702068,
+        0.9391263067495477,
+        0.9184976355208191,
+        0.8849521929876535,
+        0.8300468073589066
+      ],
+      "mapping": "exact closed integer bins [18+4j, 21+4j], j=0,...,16; every non-age model state is preserved conditional on age",
+      "model_age_grid": [
+        18.0,
+        22.0,
+        26.0,
+        30.0,
+        34.0,
+        38.0,
+        42.0,
+        46.0,
+        50.0,
+        54.0,
+        58.0,
+        62.0,
+        66.0,
+        70.0,
+        74.0,
+        78.0,
+        82.0
+      ],
+      "path": [
+        {
+          "adult_household_mass": 1.0000000000000075,
+          "period": 0,
+          "population_index": 1.0
+        },
+        {
+          "adult_household_mass": 1.0226637000357979,
+          "period": 1,
+          "population_index": 1.02266370003579
+        },
+        {
+          "adult_household_mass": 1.0420852254680522,
+          "period": 2,
+          "population_index": 1.0420852254680444
+        },
+        {
+          "adult_household_mass": 1.0592520871136502,
+          "period": 3,
+          "population_index": 1.0592520871136422
+        },
+        {
+          "adult_household_mass": 1.0730891719490827,
+          "period": 4,
+          "population_index": 1.0730891719490747
+        }
+      ],
+      "period_years": 4.0,
+      "population_index_at_horizon": 1.0730891719490747,
+      "reweighted_initial_age_mass": [
+        0.016622662021820136,
+        0.04529676719571187,
+        0.0635969478209919,
+        0.06696559869635488,
+        0.0788451476861594,
+        0.08072893564675303,
+        0.0896829554861331,
+        0.09115500500154608,
+        0.08684345526254425,
+        0.0781247054407291,
+        0.07104778040230728,
+        0.05661696446968079,
+        0.04505232136554895,
+        0.03889108604181328,
+        0.03548381308904322,
+        0.03128817505209708,
+        0.023757679320773252
+      ],
+      "sample": "national ACS; GQ in {1,2}; PERNUM=1; RELATE=1; HHWT>0; age 18--85",
+      "source": "IPUMS USA ACS microdata extract",
+      "source_path": "/scratch/td2248/projects/Fertility_Spring26_history_root_450bce1c/code/data/Spatial_aggregate_withmicrodata/raw_data/extract27.dta",
+      "source_receipt": {
+        "age_18_85_share_of_all_heads": 0.9785258874050475,
+        "head_records_all_ages": 1174259,
+        "head_weight_all_ages": 112376192.0,
+        "sample": 200701
+      },
+      "source_sha256": "edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324e",
+      "source_year": 2007,
+      "stationary_age_mass": [
+        0.06173345624973455,
+        0.06173345624752189,
+        0.06173345621804366,
+        0.0617334561778604,
+        0.06173345617409262,
+        0.06173345618870815,
+        0.06173345616594947,
+        0.06173345617417909,
+        0.061733456167493345,
+        0.0617334561564987,
+        0.061733456165253955,
+        0.06173345611141461,
+        0.06173345609302224,
+        0.057975512623525335,
+        0.05325037126281542,
+        0.04712403282643523,
+        0.03911515299745887
+      ],
+      "status": "diagnostic_only",
+      "survival_source": "structural_survival_after_1e-8_age_mass_roundoff_gate",
+      "units": "HHWT-weighted household heads ages 18--85"
+    },
+    "announcement": "Entire historical path known in2007; preference intercept constant after2023",
+    "announcement_pension_status": "Reweighted age distribution requires its own dated balanced pension",
+    "announcement_state_accounts_at_old_pension": {
+      "implied_balanced_payroll_tax": 0.10428133990974114,
+      "implied_balanced_pension_period": 3.512600519494792,
+      "payroll_tax_base_period": 3.4237665554395074,
+      "payroll_tax_rate": 0.179,
+      "payroll_tax_revenue": 0.6128542134236717,
+      "pension_budget_residual": 0.25581924948428086,
+      "pension_outlays": 0.3570349639393909,
+      "pension_period_units": 2.0463613896121218,
+      "retiree_benefit_exposure": 0.17447307486927574,
+      "retiree_household_mass": 0.17447307486927574,
+      "scaled_pension_budget_residual": 0.41742268206848515,
+      "worker_household_mass": 0.825526925130732
+    },
+    "arm": "sequential",
+    "birth_to_entry_conversion": 0.47619047619047616,
+    "calibrated_smm": false,
+    "dated_supply_elasticity": 0.63,
+    "fiscal_contract": {
+      "annual_property_tax": 0.01,
+      "closure": "retained_calibration_unrebated",
+      "period_property_tax": 0.04,
+      "transfer": 0.0
+    },
+    "historical_equilibrium_verified": false,
+    "normalization": {
+      "absolute_gap": 3.286289097070849e-05,
+      "completed_fertility": 2.100032862890971,
+      "psi_child": 0.2827035668649932,
+      "stationary_solve_seconds": 269.7562059070915,
+      "stationary_solves": 4,
+      "status": "derived_intercept",
+      "target": 2.1
+    },
+    "old_stationary_supply_elasticity": 0.63,
+    "outside_origin_entry_share": 0.169,
+    "preference_change_2023": -0.25,
+    "renewal": {
+      "entry_flow_E": 0.061733456249734524,
+      "identity_residual": 0.0,
+      "outside_flow_M": 0.010432954106205134,
+      "queue_B_over_E": 1.000015648742248,
+      "queue_mature_flow_B": 0.06173442230067946,
+      "retention_rho": 0.8309869960986865
+    },
+    "schema": "e5f_approved_parenthood_initial_state_v1",
+    "stationary_pension": {
+      "actual_accounts": {
+        "implied_balanced_payroll_tax": 0.17900000004964906,
+        "implied_balanced_pension_period": 2.0463613890445247,
+        "payroll_tax_base_period": 2.963205895536571,
+        "payroll_tax_rate": 0.179,
+        "payroll_tax_revenue": 0.5304138553010462,
+        "pension_budget_residual": -1.4712031592978292e-10,
+        "pension_outlays": 0.5304138554481665,
+        "pension_period_units": 2.0463613896121218,
+        "retiree_benefit_exposure": 0.2591985258032571,
+        "retiree_household_mass": 0.2591985258032571,
+        "scaled_pension_budget_residual": -2.7736891564696295e-10,
+        "worker_household_mass": 0.7408014741967504
+      },
+      "fiscal_gate": true,
+      "fiscal_tolerance": 1e-06,
+      "marginal_gate": true,
+      "marginal_tolerance": 1e-09,
+      "normalized_age_income_max_gap": 4.958282916189827e-11
+    },
+    "structural_age_gate": {
+      "max_abs_mass_gap": 1.5671228204006127e-10,
+      "max_relative_mass_gap_to_entry": 2.538530831743852e-09,
+      "relative_tolerance": 1e-08,
+      "status": "structural_survival_recursion_after_kfe_roundoff_gate"
+    },
+    "supply_anchor": "Unchanged initial GE supply law; no age-reweight or2023 rebasing",
+    "verified_solution_fertility": 2.100032862890971
+  },
+  "initial_supply": {
+    "elasticity": 0.63,
+    "initial_price": 0.6332572250742834,
+    "initial_stock": 6.466497060275431,
+    "mode": "static-elastic"
+  },
+  "objective_computed": false,
+  "outside_entry_status": "diagnostic_outstanding_not_estimated",
+  "production_eligible": false,
+  "source_files_verified": 539,
+  "status": "passed",
+  "targets_loaded": false,
+  "terminal_source_comparison": [
+    {
+      "path": "code/model/.gitignore",
+      "sha256": "4b7787cd6884504cba6417cf0b0df0504a06374114cc53a9ceb0159c6edb5db0"
+    },
+    {
+      "path": "code/model/Makefile",
+      "sha256": "e21bc70ec1df39ba13138fa8a11ae90e6ea718039f0099f444bcdae64fbdc3bc"
+    },
+    {
+      "path": "code/model/PLAN.md",
+      "sha256": "92391c9c4cb2e834ce3adb33398e036826b808dd333f72c44881ce9026a6674b"
+    },
+    {
+      "path": "code/model/README.md",
+      "sha256": "e0086e901a2e9344a10cf5d218c0b8c39192ac63e0c83de3b855d08a3e60443d"
+    },
+    {
+      "path": "code/model/benchmarks/README.md",
+      "sha256": "5815e793dd64a58ace18e1d2096e6856781fb53c3a364b63befca6a81d514d30"
+    },
+    {
+      "path": "code/model/benchmarks/accounting_scale_fast_iter1_2026_05_05.json",
+      "sha256": "0c1a574af55d2b1d718e9b6ef41c91a40e350277365c1d1d0ce780568f65a0bb"
+    },
+    {
+      "path": "code/model/benchmarks/accounting_scale_fast_live_stop_2026_05_05.json",
+      "sha256": "a79096fede73b2d9cc609d9b4969ad54a4b30d41c44789eae7016f0a16c388c1"
+    },
+    {
+      "path": "code/model/benchmarks/accounting_scale_fast_live_stop_fixed_vo_2026_05_05.json",
+      "sha256": "6f164bb8ea22f556d2b5da616c04cc3d0e0af64c1c0b942c14e8b5c46f0df84f"
+    },
+    {
+      "path": "code/model/benchmarks/accounting_scale_psi_sensitivity_iter1_2026_05_05.json",
+      "sha256": "1717ce3a46233f724b68ec522ea6536127670c5f7d2d5ab93a4c51535255f598"
+    },
+    {
+      "path": "code/model/benchmarks/fast_ge_iter1.json",
+      "sha256": "0f51f6049bf3ba28376a1f484d0f59a864390f9efb835e069e15fd12382335bd"
+    },
+    {
+      "path": "code/model/benchmarks/fast_ge_iter1_2026_05_05_final_default.json",
+      "sha256": "289be294c88b7517e09e4f41193b432bd9b551f945dfe280e9581a19377dea0e"
+    },
+    {
+      "path": "code/model/benchmarks/fast_ge_iter1_2026_05_05_post_scaled_patch_default.json",
+      "sha256": "7ac6ab64fc55aca390bc614493c9798651809b1b4914583d6bd8cd3b34000666"
+    },
+    {
+      "path": "code/model/benchmarks/fast_ge_iter1_2026_05_05_postclosure_default.json",
+      "sha256": "3f97c6c1c2d0c4bbec5805e38e692066488f3a286522ed4dedd4b90beb5a6bf0"
+    },
+    {
+      "path": "code/model/benchmarks/fast_ge_iter1_2026_05_05_postclosure_default_logupdate.json",
+      "sha256": "e7b8f878745e0bca4be7d2352ca47160e4a9adea35e23929e5b6043a0383b1a3"
+    },
+    {
+      "path": "code/model/benchmarks/fast_ge_iter1_2026_05_05_postclosure_default_rerun.json",
+      "sha256": "c3cc6ebfcc1801bca562464323b33dd58eaeeb2afc82190088521c4b944686eb"
+    },
+    {
+      "path": "code/model/benchmarks/fast_ge_iter1_2026_05_05_preclosure.json",
+      "sha256": "5672d829db24ad6df7b8c89569245c0a8078b9dbf6218098540a68f5b8539b77"
+    },
+    {
+      "path": "code/model/benchmarks/fast_ge_iter1_compiled_forward.json",
+      "sha256": "fcc2e56d4045464dcb1b54b6f74a5e970ce0fd0fde9f5e4c5a8972a242c3d1d1"
+    },
+    {
+      "path": "code/model/benchmarks/fast_ge_iter1_compiled_forward_warm.json",
+      "sha256": "96b33ae995283b49d210c8add533abf699488a2dc4e5e9f10e1277f9120ac1ae"
+    },
+    {
+      "path": "code/model/benchmarks/fast_ge_iter1_final_distribution.json",
+      "sha256": "b5ce0d15a22f5f83fa15461bb066f59449c9277bd86c047370984a4bd6b68320"
+    },
+    {
+      "path": "code/model/benchmarks/fast_ge_iter1_no_mass_rescale_2026_05_05.json",
+      "sha256": "870b265d4f512f2576d08c4a601bc8845e0afac44410faf97a04f2a2a7f12274"
+    },
+    {
+      "path": "code/model/benchmarks/fast_ge_iter1_tenure_preidx.json",
+      "sha256": "2ff601022f9fafc80a6099592084bb97d7a456d90c1b04add8b0ad42b2540f41"
+    },
+    {
+      "path": "code/model/benchmarks/grad_descent_bench.json",
+      "sha256": "992a93d93562f1469d2c89024b38f3e46abaa051febb90b90651b3a37907a863"
+    },
+    {
+      "path": "code/model/benchmarks/howard_baseline_eval6.json",
+      "sha256": "4557f98dc59348eac3d7760f48c0b417733f904b8ff7eff678156c560c6c6172"
+    },
+    {
+      "path": "code/model/benchmarks/howard_baseline_iter1.json",
+      "sha256": "9c46f7315daf195a2eac86d2eb4572a8096068f651be62fcefc3885802e8e3f3"
+    },
+    {
+      "path": "code/model/benchmarks/howard_kernel_eval6.json",
+      "sha256": "a4363f3651f38fbf31ced56bf79cff0c757b5ef81ff0e0e9a6ae3fc208ef3973"
+    },
+    {
+      "path": "code/model/benchmarks/howard_kernel_eval6_full_kernel.json",
+      "sha256": "b0c53365a24d95c8271bb2855a0568dac06766a07cc0d784034775c77a046267"
+    },
+    {
+      "path": "code/model/benchmarks/howard_kernel_eval6_lockernel.json",
+      "sha256": "2aaec3aa0a326e64a7670b0192e2c8e8c06b13a3b4cb6d5ccb9a3a3f01ff251d"
+    },
+    {
+      "path": "code/model/benchmarks/howard_kernel_eval6_parallel.json",
+      "sha256": "ed380ef91ff2dbef459b5c94623b11f42bf7770375d3e211149480aa7627ba80"
+    },
+    {
+      "path": "code/model/benchmarks/howard_kernel_eval6_tcjkernel.json",
+      "sha256": "66feb05f794fbde73fd30fab10c12b08e65d7ffca263921f1698db2c8c19e8ed"
+    },
+    {
+      "path": "code/model/benchmarks/howard_kernel_eval6_warm.json",
+      "sha256": "214b2034268e3868392a3ec0c5db23f2c29a1dd47a8a970e55eb8efda14486bc"
+    },
+    {
+      "path": "code/model/benchmarks/matlab_fast_ge_converged.json",
+      "sha256": "6125b2dc0d22ecbb46553882a99f63b26be7470841e36ab5b58f4cc79176952d"
+    },
+    {
+      "path": "code/model/benchmarks/matlab_fast_ge_iter1.json",
+      "sha256": "70c229852205cf890bb6b568b28dacec4c0b74a29d876b80b3fd1b4747cb020a"
+    },
+    {
+      "path": "code/model/benchmarks/matlab_solve_theta_x0_benchmark.json",
+      "sha256": "c1063d587acc369b9e0a0c00d168eb873d70e31d97e928640dbc85c08ff9af9a"
+    },
+    {
+      "path": "code/model/benchmarks/matlab_solve_theta_x0_fast.json",
+      "sha256": "984e7490baa3b83cde582a4aa431b76dcf01c59c319463dc055d1219c238b93d"
+    },
+    {
+      "path": "code/model/benchmarks/mini_parameter_solve_10_fast_2026_05_05.json",
+      "sha256": "fdf754d155705c43435e160dc734499787c4651e271aee0ededc28c9ef28d846"
+    },
+    {
+      "path": "code/model/benchmarks/outside_closure_fast_calibrated_iter50_2026_05_05.json",
+      "sha256": "8543a8b8ca693da252c3b0ecafe226f12353e49de5d4be5b3b9880a2b113c0c0"
+    },
+    {
+      "path": "code/model/benchmarks/outside_closure_fast_damped_iter30_2026_05_05.json",
+      "sha256": "44a639be8ed793ff6f1d31f23dd4dc7c3551ef4ec45e2c128bbdc92dda94efdd"
+    },
+    {
+      "path": "code/model/benchmarks/outside_closure_fast_iter8_2026_05_05.json",
+      "sha256": "68babfd899d1a17143937da6649eda3385dc2e5ec19f78d0541436d034685705"
+    },
+    {
+      "path": "code/model/benchmarks/python_fast_ge_converged.json",
+      "sha256": "ce01be69692b739eff7e4f5f58342ca0166d8406dc8c887c5810c00b4eb083c1"
+    },
+    {
+      "path": "code/model/benchmarks/python_fast_ge_converged_distopt_dense.json",
+      "sha256": "54c2e73cff95d2760ad8b4fb7aefd80d57643da8325bb9552ca3363f3bdedfdd"
+    },
+    {
+      "path": "code/model/benchmarks/scaled_equilibrium_fast_iter80_2026_05_05.json",
+      "sha256": "8e74d7e41cb017438332071df06676b72ac784cf3700509fcce582783396a9dc"
+    },
+    {
+      "path": "code/model/benchmarks/scaled_equilibrium_fast_iter80_fixed_vo_2026_05_05.json",
+      "sha256": "b91d9b4c556fbf146fd2729c031470f68fadb375666b71c306432853fc6393bd"
+    },
+    {
+      "path": "code/model/benchmarks/scaled_equilibrium_low_outside_flow_forcefull_iter80_fixed_vo_2026_05_05.json",
+      "sha256": "de2241994ed7aa781eb8a059bf38f2fc5e87887fe670a12106c9cbed5633f04c"
+    },
+    {
+      "path": "code/model/benchmarks/scaled_equilibrium_low_outside_flow_iter160_fixed_vo_2026_05_05.json",
+      "sha256": "c218e70c4a93cc28a40cd43836bedb7d095d89b9aff30a62be9e0195d7f704f8"
+    },
+    {
+      "path": "code/model/benchmarks/scaled_equilibrium_outside_flow_sensitivity_2026_05_05.json",
+      "sha256": "161e7f08ad4c97ada31406f88f2294ef746ad7eef454dc0972d0cac4cc5a0c47"
+    },
+    {
+      "path": "code/model/benchmarks/scaled_equilibrium_outside_flow_sensitivity_fixed_vo_2026_05_05.json",
+      "sha256": "6f415988008f098e6352e65de702981c304e2938662742bf951a98ae872e4658"
+    },
+    {
+      "path": "code/model/benchmarks/scaled_equilibrium_psi_sensitivity_2026_05_05.json",
+      "sha256": "d781a630442709b1b7390178b4274b5276d4aeb3e963bee8878f42cbdef615bb"
+    },
+    {
+      "path": "code/model/benchmarks/scaled_equilibrium_psi_sensitivity_fixed_vo_2026_05_05.json",
+      "sha256": "b0044d437aae602953b1d587a94cc9a98c7424e89f34e720382165c8bc2345c0"
+    },
+    {
+      "path": "code/model/benchmarks/solve_theta_x0_bench_parallel.json",
+      "sha256": "34ca9d229db2b1ead00a1c8fb5ee29a25c9b6c9d5ac377c020770cf506b6616c"
+    },
+    {
+      "path": "code/model/benchmarks/solve_theta_x0_bench_parallel_cold.json",
+      "sha256": "57a984c82e638026c9b99276f9ad689f426c843413513205a7330fecea627156"
+    },
+    {
+      "path": "code/model/benchmarks/solve_theta_x0_bench_parallel_run3.json",
+      "sha256": "76090e097c659f3f5b90f30a4fc4b9fbc713f67e74ff928a6d1250a5d02bdf0c"
+    },
+    {
+      "path": "code/model/benchmarks/solve_theta_x0_fast.json",
+      "sha256": "9b4d5fd08c5be6dd92fcc68c88b0767f6bdaf557c159bbc1c1510ffe5ec03813"
+    },
+    {
+      "path": "code/model/benchmarks/solve_theta_x0_fast_cached_eval.json",
+      "sha256": "53dba868bc28a501bf6ff7796d9e9d84f215bb7b7a5b9f43402c2cc01d50de51"
+    },
+    {
+      "path": "code/model/benchmarks/solve_theta_x0_fast_compiled_forward.json",
+      "sha256": "2b927fbfc735bd6ae82a146ac9974a0b4b418abe88479ef1ef89f408363486a5"
+    },
+    {
+      "path": "code/model/benchmarks/solve_theta_x0_fast_eval_kernel.json",
+      "sha256": "c41755978cef800b851e3a1c933a5069e271e4940a2ff71f886eb8a421b43b99"
+    },
+    {
+      "path": "code/model/benchmarks/solve_theta_x0_fast_eval_kernel_run2.json",
+      "sha256": "bf60debe69037279b4e52152853960e193952a53c7ed329685eba83849b3a32f"
+    },
+    {
+      "path": "code/model/benchmarks/solve_theta_x0_fast_full_kernel.json",
+      "sha256": "b0fa16b0632d8eafd3aea518bec6c4267ac91b0135b044d01b04288309646d2c"
+    },
+    {
+      "path": "code/model/benchmarks/solve_theta_x0_fast_interp_eval.json",
+      "sha256": "cbac5549543f5aee15f534c3870280738fbcab3c6c9de89ff2c69d095e0ab654"
+    },
+    {
+      "path": "code/model/benchmarks/solve_theta_x0_fast_iter6_tenure_preidx.json",
+      "sha256": "e62f5325caf1b1005c532b0a8747147cedbdb65da74732b45241b7ca47a27392"
+    },
+    {
+      "path": "code/model/benchmarks/solve_theta_x0_fast_post_kernel.json",
+      "sha256": "35cf1ed8de2e14a3a8e49479f8a2544b1b0554d264d8572bb7f5644ab7241735"
+    },
+    {
+      "path": "code/model/benchmarks/solve_theta_x0_fast_tenure_kernel.json",
+      "sha256": "d21f9812c1565ee9f3853507d8c42e81c9cff9b28220488bcd9ae6a251f0b5b8"
+    },
+    {
+      "path": "code/model/demographic_transition/README.md",
+      "sha256": "c36bf2eeee6cbeef1480e8bb4456dbbba37dc4c367c92d910618dc051f1a7ca3"
+    },
+    {
+      "path": "code/model/demographic_transition/__init__.py",
+      "sha256": "afd8e75f1f60f47040c0a047095b746b1026a129ce84bfcc96514db8d2f04f6c"
+    },
+    {
+      "path": "code/model/demographic_transition/four_year_bridge.py",
+      "sha256": "720f3410c918d36508fb79700f1b50da65241eb28038d8ad93473dcff0fa30c0"
+    },
+    {
+      "path": "code/model/demographic_transition/household_head_bridge.py",
+      "sha256": "ccc15523fea69df11adf4e2b9c00c77ad20c99d9ac10a4072233b1bfebe72f9a"
+    },
+    {
+      "path": "code/model/demographic_transition/household_person_coupling.py",
+      "sha256": "fd9826cd1b40c3dda224f93c6e6ba2227865848074d6763fadf6ab64756b104a"
+    },
+    {
+      "path": "code/model/demographic_transition/person_cohort_law.py",
+      "sha256": "d923898340a41f844e5618b65cf9c9c95abe6e609d2e1c729a90608aed039857"
+    },
+    {
+      "path": "code/model/demographic_transition/tests/test_four_year_bridge.py",
+      "sha256": "f534e9ea330cbf549e890243db22e438210fe72586c12dd0fd527283239e7f22"
+    },
+    {
+      "path": "code/model/demographic_transition/tests/test_household_head_bridge.py",
+      "sha256": "bf201756b82d06f6526524c12e524c9f51ee379eb13dfd8fba42c90ea7b12b05"
+    },
+    {
+      "path": "code/model/demographic_transition/tests/test_household_person_coupling.py",
+      "sha256": "e167f023756f4e9d80cfc2b1102081b4cabb9b31cb4d1515171adafa24647273"
+    },
+    {
+      "path": "code/model/demographic_transition/tests/test_person_cohort_law.py",
+      "sha256": "030b4ee5aa04b53f4410a45ef39d17b07b0426e8247e3e963305ee75801ae304"
+    },
+    {
+      "path": "code/model/docs/README.md",
+      "sha256": "22c4eaf96e1af60d637b8635581d52699dc9d7336ba88191f6d21617108f5db9"
+    },
+    {
+      "path": "code/model/docs/architecture.html",
+      "sha256": "1fd0609df3898fac7167c47fb4bdc949a0989806b0e1e13acd54d5cb849772b3"
+    },
+    {
+      "path": "code/model/docs/tour.html",
+      "sha256": "fdbad80b7fa7abcc42053bde314a588581dc6a65d3baaadadd4c47652ce63a4b"
+    },
+    {
+      "path": "code/model/docs/tour_data.json",
+      "sha256": "62834b49a357dfec1ac1edc6d1036dfb3db81735a94810de1605535331ca1f64"
+    },
+    {
+      "path": "code/model/dt_cp_model/__init__.py",
+      "sha256": "1475ae510e45d5eaddb24babd1ca5c9bacdb981b038f6bf15f9d2150010e489f"
+    },
+    {
+      "path": "code/model/dt_cp_model/cli.py",
+      "sha256": "15b846a2300630f965df11990f89b2f89eeb6dc24d76643d515035900dd34ce6"
+    },
+    {
+      "path": "code/model/dt_cp_model/direct_calibration.py",
+      "sha256": "bbdf69cedfd618b4480e4761b5ad19ae982c4dee0f461eaaabd1c096e2f20f11"
+    },
+    {
+      "path": "code/model/dt_cp_model/evaluate.py",
+      "sha256": "8c41c8e805af09237a25df8ac25cd9c4fd8e24761b72cfa9d659283adf877d58"
+    },
+    {
+      "path": "code/model/dt_cp_model/kernels.py",
+      "sha256": "d3354bdec10235c7bf791ddd9207ac9c64dce8c03926ca3a06d32b5ecd78eb97"
+    },
+    {
+      "path": "code/model/dt_cp_model/objective.py",
+      "sha256": "b5d76228671e0bc462cac5cb5525e8213245073ca6d89c326987603bd39bc669"
+    },
+    {
+      "path": "code/model/dt_cp_model/parameters.py",
+      "sha256": "4fa37c0248458bd0ff913c4559b482d513cfe17a591726403122f12f1a9d7b8c"
+    },
+    {
+      "path": "code/model/dt_cp_model/solver.py",
+      "sha256": "57fffcf4bff92f861a36e8a333ecf1d8340180cd0cf57d002fdf435ac11801f9"
+    },
+    {
+      "path": "code/model/dt_cp_model/theta.py",
+      "sha256": "54d5d5a9718668af247a93ce331ec5b61c78954e07536cc46e2391c50d09c6ba"
+    },
+    {
+      "path": "code/model/dt_cp_model/utils.py",
+      "sha256": "bd27d0ae8196d7f0ec99cbfdaeea63a09d7d0a6661ede64bdf34e80a79c9553a"
+    },
+    {
+      "path": "code/model/experiments/population_closure_2026_05_05/README.md",
+      "sha256": "db6409b354ee486f6642ccd51aa13712ac2cfda48287e10c600bdb96588fd8fc"
+    },
+    {
+      "path": "code/model/experiments/population_closure_2026_05_05/entry_closure.py",
+      "sha256": "8f3495e3fda53530974ac5e56d0a96df7fe4598961296260a95af62f7757129b"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/IMPLEMENTATION_STATUS.md",
+      "sha256": "9249e85c60e043b90e9bda9f799d8960541380d20a9d5ad15730aeabc9538cf1"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/README.md",
+      "sha256": "7e3f0bf8a58bbc3fbc48d9af898626b3cd46edfeaaac9727efe8be69314fc1b3"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/__init__.py",
+      "sha256": "a7a5fd5a56d05e7460e2c44fd8b147c98fe70ce361d2e8d543257dffc72c253a"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/calibration.py",
+      "sha256": "33540a5e0a182b28514beaa7ff810731b0487606ccf04210f9fc0852cb0e3bf4"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/cli.py",
+      "sha256": "7ba4dfb3b07bbf7b858dd2fb110f64c5bd098beb1f727e0f91138a66e69c33a4"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/collect_e1.py",
+      "sha256": "0c056f71bedb629d76b6019442fced501aa508da7d7c4204aeff208cc07b3f53"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/diagnostics.py",
+      "sha256": "6f076d7360e066b7a6c47d5a603e14340bd3971d7ab03a4e8c00f2bb50fe3d7d"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/kernels.py",
+      "sha256": "b900e1efef5cfb4f67c3352502ebc63ca1a24a2ae5d13600a05b383317f410b0"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/local_panel.py",
+      "sha256": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/parameters.py",
+      "sha256": "0aac95bca815d56d42c6c59f63c7cb59af7bd1c7d094d4438b368184e476b9f5"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/production_profile.py",
+      "sha256": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/run_e1_chain.py",
+      "sha256": "79de985aeb70cfd1a225c92ba70b93e0a63542fa9964674ad11f5fb09345cc1d"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/run_seq_smoke.py",
+      "sha256": "00b023a6b11bee7cd9aaa1c5175617fa686ee469e2b0b1bc86f18ee72a60fb1a"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/solver.py",
+      "sha256": "a56a9b2197c4000e0b00d24407a298cf633850fdd3347806380d28425ddfd702"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/tests/__init__.py",
+      "sha256": "39be22bcfab361bb43081d22c00c38985550913d1da981c80f8c5cae17c16d20"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/tests/test_age_survival.py",
+      "sha256": "e14cfbd4947987066ef50f7d517d0f6132583b4c5bd5caebea671b10a9fbe2a4"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/tests/test_bequest_normalization.py",
+      "sha256": "33950f56dfa7c3bf2efb5315b0a428ead4490407f459f4c21ceba30eba2cada3"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/tests/test_bequest_target_moments.py",
+      "sha256": "f9e534dc30ca03c7f7373836c90a14b6808f4856dcf1d9b7473d080425ee8d0c"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/tests/test_code_repair_20260709.py",
+      "sha256": "2150baba37d63eeb5e7deabfc73e7b047bd08139c9c19b5abf76396f5b276a64"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/tests/test_combined_specification.py",
+      "sha256": "4c17529997021438bf453713d8831e7d3bd87758a313524729d1184e68ff9894"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/tests/test_entrant_feasibility.py",
+      "sha256": "9fa6f1535d1d472855ba6acf423643d6634c07de28a6ddc644dd585519a75839"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/tests/test_eqscale_seq.py",
+      "sha256": "b8707aeabaa058ac10de87cc32ae00b604cefeb263aa92c5ce5237a200318e42"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/tests/test_fecundity.py",
+      "sha256": "b4f73f1503765a276d914729de280932d360ca3e656d5e9e16a01eba198f3a62"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/tests/test_retirement_income_heterogeneity.py",
+      "sha256": "c5ec3649cd62aa3492b0df4719a975b71d65a19dc399b6da4f99f60ff41d3692"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/tests/test_transfer_floor.py",
+      "sha256": "e4f529d72f6259d0e69bb327c3d041b1b9cd07025b0af3e718e70731a319a435"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq/utils.py",
+      "sha256": "3c1f997c3a9d2355f4f756aebd52d180f8c839c44059d7e9330af2cd2da25c26"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/IMPLEMENTATION_STATUS.md",
+      "sha256": "17866cf3c5eb35fd0252934828585635dc646449fa134f09cc674ff76d65f896"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/PORT_HANDOFF.md",
+      "sha256": "f946798a22ab7a8af6d0b569cb42ae839957451ee54d4499ef0e3e8b0223e25a"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/README.md",
+      "sha256": "b54b5aa3ec1856030c2cf527ecae6f0bb65fa0c2f5301fb30a93abbbec95b23c"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/__init__.py",
+      "sha256": "a7a5fd5a56d05e7460e2c44fd8b147c98fe70ce361d2e8d543257dffc72c253a"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/audit_timing_repaired_readout.py",
+      "sha256": "724d99fbe9be9e771c44663e2705d7bf9cb47c1c2ca1ca5873c51e15fb2430ac"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/benchmark_e1.py",
+      "sha256": "1f120b758764ba826a62e1d0e11c47496117100b4313ea144cd93dccb6360d20"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/build_e2_packet.py",
+      "sha256": "d6c959e1eab7918d749cdc8b3131239d9d42eb0cf027f2ad607c87f9484548ee"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/build_e5f_psinneg_iteration_packet.py",
+      "sha256": "79b715fac093f39150c2fa0ff6a4dae23c3c2b2f2c283ef3cdcb2820d9bf63cb"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/build_e6_decision_tables.py",
+      "sha256": "be589549305ba01d17b2f20484cb0926e468eb06064809c4c3cbe5c09d0a505f"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/build_e6_l1_comparison.py",
+      "sha256": "d9712571e269b84c5144fb684973e63e0c8e1cf599706d0e52e918f48e044ef9"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/build_e6_plain_comparison.py",
+      "sha256": "b41dab604d149ab24fa8f0394ed40421c9bf8fe2269ee4eb745ed37d4c41506c"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/build_e6_winner_diagnostics.py",
+      "sha256": "b4421e3b8595395926b6a07d6f2d206d3b765e4c39ff1ff124c33866f5150213"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/calibration.py",
+      "sha256": "7981fdaa24a1d59e9d8761f349708f627a565bea8cb840f47887bad1f1650d5d"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/cli.py",
+      "sha256": "f4c728ab4e12f882c6b7e20d5ca8b5309dd7945b001443ac2e3ce905be06d666"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/cluster/submit_e1_promotion.sh",
+      "sha256": "9d6da7349129bf91efa3613e9c1a5301e1a6d3ac8ae88fd8c9d0ee51373c205a"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/collect_e1.py",
+      "sha256": "e0684091323522eacda86c875ee0ad3840d5071b8b1b712c058d86e2bc69d5f2"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/collect_e5_probe.py",
+      "sha256": "0b10d00b2300746e1715f2ec58a59c831cf90996011b78ba4bfbc024225697c6"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/diagnostics.py",
+      "sha256": "3d77fc4ebddad9635407c65cd73f1add3cea8fd2f4a8250d125329c9113a654b"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e1_profile.py",
+      "sha256": "bf04570c636306e274ea7287606c97d80fb930082ef404be1105f1cb8adb4838"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e5_maturation_repair.py",
+      "sha256": "02a14892614ae287de9d961a900d76197dcef60750a82318ce50fe6536166b0f"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e5_profile.py",
+      "sha256": "24b670345aff47636d3e1de78065ad7a8bcf8579699c8c6fcb92ebb455f1578b"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e5_target_provenance.csv",
+      "sha256": "38e6507fdc81ae264d54ab02d9fb6c824114a3da85cfc67c901eca819bf6e78b"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e5_young_ownership_profile.py",
+      "sha256": "5d74f6558adb29c453f15309337b9d1840870eda9d5790e4d6780552f8a13c0d"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e5f_floor_profile.py",
+      "sha256": "7735bdecb21aca1fe3227f01525e2ed0be2b2cf1daf4fdb599ef0eeacadbadbf"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e5f_income_entry_profile.py",
+      "sha256": "171f489bf0deffcbb8e1ba12b94d872f3a8f10949849b636a643ff0ffbb6130c"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e6_plain_weighting.py",
+      "sha256": "fff0c093c3837ec3bc41823318648ba6b44eb95f7c7ccbafd439c5eadbebb6af"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e6a_profile.py",
+      "sha256": "e8fa2140fc32cb8c62a026a8a91fb99ab6898edb4745a17018fd18e9fae4a03f"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e6b_profile.py",
+      "sha256": "9e80ef51ad27bb2b7d5a545457248142c80e70fe98a7044e793c3aceb4a70a52"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e6c_profile.py",
+      "sha256": "777a9441fde8d8f4135ce6d1c8cc6d9d3434768cd366177ce873d03aedcad524"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/externals.py",
+      "sha256": "56d1979d717f7bbaaf53322458c3479a72e3aad5d45c9992f5ab86ccb4be1dc3"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/fertility_nested.py",
+      "sha256": "c9e04c42689e14ba46cd1050a20675582b93497543d40770eb63a1a619e4bc42"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/joint_nested.py",
+      "sha256": "64ef6c882746e4c251ec9739fbafe316d184b190ed5a567e22f49904a32d3cbc"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/kernels.py",
+      "sha256": "79370af16a97723c8de91a1735db5d8ac12830f57e28ad1b74dfac112321fc2a"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/local_panel.py",
+      "sha256": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/parameters.py",
+      "sha256": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/parity_panel_e1.py",
+      "sha256": "f89a5e45ca97125bd813b973ada96387e75f2a14d511bfb321373ffe2bd817ee"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/production_profile.py",
+      "sha256": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/promotion_collect_e1.py",
+      "sha256": "ef6e7a96f2dfbcb31115bbe6b2efa1b1b0669faef1be175b3e20e644bbe777a5"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/promotion_worker_e1.py",
+      "sha256": "6acb9b926ae25149d7c3588f43e7c4d3cf9d5c225120adc77ae02cc9a44066b2"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_e1_chain.py",
+      "sha256": "23220d1ba96ddf7a7d926ae8c438086ef40bf37d398924622c69ad5978dd4443"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_e5_wealth_slice.py",
+      "sha256": "ca58e81065347d90cadd75114fa677fa9426c2a037810d6df1ba56ba0c1474c6"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_e5b_autopsy.py",
+      "sha256": "de9d8c5186e8e5b7e912302dd0c4df4d9c4f7a0945f7dcc1894dedb507117f7e"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_e5f_floor_strict_smoke.py",
+      "sha256": "577ca4ace08d1bbd2042e0d7a68dfb866bcfb8f1b3ca191ead1b35b978660f81"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_e6a_fecundity_tail_frontier.py",
+      "sha256": "fbcd78f7a8c50422ea498114afc24442c62e228ca5cc7a8aa238555571935282"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_e6b_income_level_diagnostic.py",
+      "sha256": "ae7267446536004ab2dbb41f85ca84e178ec11423e71c1f448f5566a3bddb5aa"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_e6c_projection_diagnostic.py",
+      "sha256": "284b05dcaef3c4e85d4f8e965fe5d2f61a386ee7da42ef5add8f31014d8800d1"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_e6c_timing_jacobian.py",
+      "sha256": "5218b0626ccf5730c93fcf7c090530784ceb3b03153789634af646f545befc62"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_family_gap_scan.py",
+      "sha256": "3b3661611af64e76ad5b2ca1465e1167ab81a577a7042c66cc2c71be35e727a2"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_fertility_frontier_scan.py",
+      "sha256": "c1dabaff2af31ec347c3c7b5e94f9888e5d681c5b2ea235892c17eb278f436ee"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_seq_smoke.py",
+      "sha256": "3eaec95dbb8bf63897c9c91376a4faefb1134335709bf3825077af86d7059dbf"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/solver.py",
+      "sha256": "1a25a77ab9d8316a56101848615486d5c297f0f52665c52098fafc178df51d27"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/state_layout.py",
+      "sha256": "9a051cc480d5e49d67474aa3cdc65f05d5e43d7918613b013bb3fd8e1ba0560d"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/target_system.py",
+      "sha256": "b9bf465e5e1c1e4999c3f55c3893256e22171722b25e5afb5856e36a83ea0c83"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/__init__.py",
+      "sha256": "39be22bcfab361bb43081d22c00c38985550913d1da981c80f8c5cae17c16d20"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_age_survival.py",
+      "sha256": "872729f043731a3a59dfac45fecd2f47a4fa042dfbd356a594a628c10563c090"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_bequest_normalization.py",
+      "sha256": "00c8352d7a86b5bf64e8423cd279527685ac1a3f9df38bd1e900c63429d3fe68"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_bequest_target_moments.py",
+      "sha256": "dfa75e2037a7ee336df968cffac5f0db3fd6ba83d5fb9db928919e9a0e09643a"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_calendar_time_continuation.py",
+      "sha256": "132a8fbea51a6e96a872c6f14ee5026926a1ff78fa606e51654b4b02201cef79"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_code_repair_20260709.py",
+      "sha256": "8cfb44b5c128d10b11003a7492d21d820cafd2a68b3ed362cadb7df79e074600"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_combined_specification.py",
+      "sha256": "6b11fe0888e65bc063e8979f53a4940b75a53be8183a7cecc3b0c4b162edbc19"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_e4_packet_args.py",
+      "sha256": "8518e8fa21f9ec923bf0abed193ddd0a63c44c0ae66aac9c917abcbac7809730"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_e5_profile.py",
+      "sha256": "c23abcd1c8d9457980bbcd4005b600ffce82ebde51f512edb395b9b6962826c9"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_e5f_child_room_floor.py",
+      "sha256": "2e835b2fb57d7261ddbe7cb890d1ff2f79d71ba103c68f2f41b074f96d6185df"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_e5f_income_entry_profile.py",
+      "sha256": "3048dfc83ea41a7b8785e623ac8f6236f518f268772b14441c998a1149ef4b75"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_e5f_probe_contract.py",
+      "sha256": "e799109c95ac22f4e98fd8dfce80cd91fe80e7b4c95c230687c30e8135c53220"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_e5f_transition_calibration.py",
+      "sha256": "cc3380d58c5760f61ee95c1ef8679fdcf542b1b507bbeb256f24b530908cd9f6"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_e6_plain_weighting.py",
+      "sha256": "b800dd3997031ec130619748216baf7b68447be2b11f337c5f4626ca0315eb59"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_e6b_profile.py",
+      "sha256": "575ecf128367dd06b8261aa40183633ffbfdfd53919eba485b8413f29fbdf195"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_e6c_profile.py",
+      "sha256": "a42fa25b10c17372f68ea61cb69ae07592338501a2592f8a7afd1f97d7883d0f"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_entrant_feasibility.py",
+      "sha256": "379247bdd951a59fc3de6b83b23f051ea980f9652b817a6df385b53842df6c3c"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_entry_target_contract.py",
+      "sha256": "7d6e2626e92ef746896f70bd9bc9411f36ff03fb683c06a9d6aab9b8e9bd68f1"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_eqscale_seq.py",
+      "sha256": "f201375c87635da18795238f1a6d2c1bbaa063cde633124fec72456c64265c28"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_externals.py",
+      "sha256": "b115dcd5f72baf99a5c13af7e634a468bb6b77e6e95599a831ed08c91bda0ff0"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_fecundity.py",
+      "sha256": "04e25024d0749053c786496cc36c828cc245ee97b5359a4b379a436706a3ea7d"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_independent_child_maturation.py",
+      "sha256": "d2c8ecb94507eb0c32ce9773bc0e5784581b23a239e7416c6e8a6a8b3a84c0b2"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_literal_parity.py",
+      "sha256": "6f2ea9a4af4162c544f1d7ee51a28e068eb7db64a0671936cf9bd38a3db13be7"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_markov_renewal_closure.py",
+      "sha256": "24f97a01fea2dc368ede0ccb95ccf3f09aacbee1a922274798af72d5fdb22a8b"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_optimized_port.py",
+      "sha256": "9928dec1ca317637f203484890cfa34b99699f99ede17213acb3a69933aadc02"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_retirement_income_heterogeneity.py",
+      "sha256": "82f95bba77a12d952aa4be91a738ed8770d8b2af0a5d485402a9463a914e160a"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_transfer_floor.py",
+      "sha256": "5d419ebd9548545311aaa1aa2cbdcad1d2bdf6da7e7f48ce16328622cec050d7"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/two_shock_choice.py",
+      "sha256": "94a8ac241c3fd6eb655a5f1bc5553ceae8ce40fb332552563b9d83e9ed68712f"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/utils.py",
+      "sha256": "2cbd83c01014f07c3046a628e8c925fe1ded9cb23ede3855f291c34597abc837"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/IMPLEMENTATION_STATUS.md",
+      "sha256": "9249e85c60e043b90e9bda9f799d8960541380d20a9d5ad15730aeabc9538cf1"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/README.md",
+      "sha256": "7e3f0bf8a58bbc3fbc48d9af898626b3cd46edfeaaac9727efe8be69314fc1b3"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/__init__.py",
+      "sha256": "a7a5fd5a56d05e7460e2c44fd8b147c98fe70ce361d2e8d543257dffc72c253a"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/calibration.py",
+      "sha256": "35daac257a685489d3512b07170b547999cb29272bc6fce5e74e0a4cd01d3e93"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/cli.py",
+      "sha256": "ba5c36ca7ecf6b84eaa3570bfb8cc1923ca3ae8187d9564d081cf8db4c8a89fd"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/diagnostics.py",
+      "sha256": "6f076d7360e066b7a6c47d5a603e14340bd3971d7ab03a4e8c00f2bb50fe3d7d"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/kernels.py",
+      "sha256": "14db87b84dbc9716a1185b4f7b544ff7bd9459dac647a171881c2dc072591450"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/local_panel.py",
+      "sha256": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/parameters.py",
+      "sha256": "1a7ec1e026755202622a377227838c23e84239d6873a0b8c5f8b4eec2b04dcc0"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/production_profile.py",
+      "sha256": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/solver.py",
+      "sha256": "98d18955a47490870292617b0b48a59b0fb70bd5867f5e345740b55af246d7ff"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/tests/__init__.py",
+      "sha256": "39be22bcfab361bb43081d22c00c38985550913d1da981c80f8c5cae17c16d20"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/tests/test_age_survival.py",
+      "sha256": "1db2c2167c2cda2ff5692e24f34b7e8c2c032532777f6a6ac22b08ac0d3389ec"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/tests/test_bequest_normalization.py",
+      "sha256": "88d72b9f93f7b3ec85964dcf3b97c106420b7d62c43620679e319433b10d215d"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/tests/test_bequest_target_moments.py",
+      "sha256": "810a3595ecadcb79a7bd1d4a82071eb506daae3a39a7f1427afda5ef74b324d2"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/tests/test_code_repair_20260709.py",
+      "sha256": "cf56835b84554a88171588e1d6ff8627d4cdc6e481d2a7c4862126320b4d6000"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/tests/test_combined_specification.py",
+      "sha256": "ac7f3bfb989abde7b5865e46e4c7b0149e12d9a61e625217d1c70b4446ec9c52"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/tests/test_entrant_feasibility.py",
+      "sha256": "52c00ef037c44774dc728dcf6e33fa5441fd333e286869c6931baacc3c8ee90a"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/tests/test_retirement_income_heterogeneity.py",
+      "sha256": "d178b9f508934b386c0e2275af9a7e1ebbddb07ba612399715981b9f10cd6439"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/tests/test_transfer_floor.py",
+      "sha256": "a751c4353697445e89c066ea3419530465515066badda64aeff72c27d4cf68b2"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility/utils.py",
+      "sha256": "3c1f997c3a9d2355f4f756aebd52d180f8c839c44059d7e9330af2cd2da25c26"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_howard_test/IMPLEMENTATION_STATUS.md",
+      "sha256": "8e42a7500c114103c45b7cd10fa261790f213ef419dd34448e0c240f15327164"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_howard_test/README.md",
+      "sha256": "c3d72981bdfd4ff7c7119acf7a9aca4acfd56fde9459d9ef48dbecf572ccda35"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_howard_test/__init__.py",
+      "sha256": "e8ffc646d33750e9224702d21278831d59b9856b6941a9e2e05f3c920618106b"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_howard_test/calibration.py",
+      "sha256": "75ee53f3b378acde2b5fa49ff0928daa6fb6c0be909f4caf145c3d680ff1f8a9"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_howard_test/cli.py",
+      "sha256": "50d35128b652f0521e8dbcf0ed8ea82ff96a3beaf2777a2ec8b0c39d2891ac54"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_howard_test/diagnostics.py",
+      "sha256": "6f076d7360e066b7a6c47d5a603e14340bd3971d7ab03a4e8c00f2bb50fe3d7d"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_howard_test/howard_speed_audit.py",
+      "sha256": "89bc9f519e27229368ef29faeee37094a7cc3411622efb4bc910198f301a32d1"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_howard_test/kernels.py",
+      "sha256": "35a846d5d0ab98f18aababdbe065848b44ca85fffa8b85557f1893ebb849be4a"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_howard_test/local_panel.py",
+      "sha256": "1486c3375f1ad376b213589916c7e92ec7be05441e3c88748961440463e6c022"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_howard_test/parameters.py",
+      "sha256": "487b69ed45fd62a7cdc4802bce5835fa9c9d5290a44f661a111e65a376a67eb4"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_howard_test/solver.py",
+      "sha256": "5a965a1d7ddd203579ef2ff0ad076fe62ee62a2d19917d4c63b8f621404704d9"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_howard_test/utils.py",
+      "sha256": "bd27d0ae8196d7f0ec99cbfdaeea63a09d7d0a6661ede64bdf34e80a79c9553a"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/CALIBRATION_RUNBOOK.md",
+      "sha256": "79aa430a8679760b02d0a6a2da3a5f7e77378b0256558048cb86f9bffb6720d0"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/IMPLEMENTATION_STATUS.md",
+      "sha256": "3d0e7412634b249a2949967d7a8cff2196f096735364827572dc41a77c4ae23f"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/PROMOTION_RUNBOOK.md",
+      "sha256": "5c0064c3ac8dddd29c6fd2e117d016a7d31d14133eb9b45a7a27ff4cc952b8b0"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/README.md",
+      "sha256": "2a6dbf9ef4c59d65d4e51a3eb511eeb47207aff92707f12554afa4c322c839ac"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/REFACTOR_REPORT.md",
+      "sha256": "477f161d3da5e132f877970003bc85e28b39cb3d3574a2eab7eecb6d957abd09"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/__init__.py",
+      "sha256": "582bdfdf4274b863393d2ccf6a644d02299ccb4ba6010e94a695f110a0fc016f"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/audit_new_moment_jacobian.py",
+      "sha256": "45b1efd491b008ee6ae270262a833e37d530b7e2551c47c6bce3c97f29bf8603"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/audit_repaired_target_system.py",
+      "sha256": "e1101ee2e50cafbd02df53ab875dea67baa29e2f39aca09f0d9d14b62296405e"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/benchmark_m5.py",
+      "sha256": "1c4c36b77ace63431ed8bf47b3476597c2e0d3a0ca19bb576a2aec957aa89b76"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/calibration.py",
+      "sha256": "92a80b4b18509d8de4b79f758b3ff1a5de032363841d16d879bab7794c0fe69a"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/calibration_collect.py",
+      "sha256": "10e4dfca4f5edbeb6f4aaa6436db0918027a441944218af8ffbab8f841b604ab"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/calibration_search.py",
+      "sha256": "296252c012cd5d507238a3fd8d90afb9321a310521fdd00d2f1f03e6aef4ff98"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/cli.py",
+      "sha256": "52d879bb878f7d41537c9a37c720c7efd8dab580a79d8b2ac6671502a10d6550"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/cluster/submit_beta_profile.sh",
+      "sha256": "147c21ddc78d97194b12ee4cf682be692fdb70d7fc62fe97e7d1514a4c03887d"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/cluster/submit_beta_profile_collector.sh",
+      "sha256": "9ae60c2882c4d35cc1c4264d368db95f290402392adb2bb224b9ded8ec240262"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/cluster/submit_final_winner_jacobian.sh",
+      "sha256": "447d143a7d19ad224dccee483dac32c26cb5494c4e1dfc90b8f475b8a162825a"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/cluster/submit_overnight_new_moment_battery.sh",
+      "sha256": "cba8c3be2f27020619c0c3af5aa29164c819b50ce473e3b04d66959b76b41465"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/cluster/submit_overnight_new_moment_collector.sh",
+      "sha256": "e0b3ff7bc660da91645a59318d81e5dcf8572e86c2bdcfc8d78f715659c0dc5d"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/cluster/submit_promotion_battery.sh",
+      "sha256": "0c1a18ebc553cc67f4c166bcd3d5c48eae2ed2b2a332b0eee69c7acf06341964"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/cluster/submit_six_hour_calibration.sh",
+      "sha256": "a3c736607f3c9b712c43c3702d50d33cee8535453f533ccf304eb381ba6693ac"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/cluster/submit_six_hour_collector.sh",
+      "sha256": "567a8b0bc519ac6971f55bf3b053dc434e34a76c120b4b5435a6c85b983d6bef"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/cluster/submit_three_hour_new_moment_collector.sh",
+      "sha256": "b33d4e1af6d63cfa93a1a609c645e39bd36e074d2026016ff5536681d92d905a"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/cluster/submit_three_hour_new_moments.sh",
+      "sha256": "4fa4bda7dbfac38d10425e8739b384debccb021bb0e6d0a15508ad5ddb760787"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/cluster/submit_weight_tilt_basin_search.sh",
+      "sha256": "42278cc3a650d78a1b105af6dabf259999455649a15d758fa0fb34316f6abff8"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/collect_beta_profile.py",
+      "sha256": "fafa022d5424e2e63389853b86ffeecc7a312a55356a95b320a3abf340972a3f"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/diagnose_wealth_structure.py",
+      "sha256": "0ea0b55791aa174ba26ef6ad03481527809096ebdb30071841af7e63c0f8a0b5"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/diagnostic_parity.py",
+      "sha256": "688c79f520b42aa02e7676a58a7df89021abb63eb0a81051058e8e762bef5301"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/diagnostics.py",
+      "sha256": "6f076d7360e066b7a6c47d5a603e14340bd3971d7ab03a4e8c00f2bb50fe3d7d"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/kernels.py",
+      "sha256": "14db87b84dbc9716a1185b4f7b544ff7bd9459dac647a171881c2dc072591450"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/local_panel.py",
+      "sha256": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/m5_profile.py",
+      "sha256": "7ab85bcd8dc546f942356ba8452739e6a59b5f62ddb3fa7213dcc2719ee59eed"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/new_moment_profile.py",
+      "sha256": "05bca887184b34f4ef6d547a07d8d06eb030dd74632e8b6b45d1fe7b402a80a5"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/parameters.py",
+      "sha256": "f824cfdad58ee3d5b576ca51b005fff32642b560fd05436881c0e4187ceb1f30"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/parity_panel.py",
+      "sha256": "bfabedc6e622e579f081caaab3bcaf847cc9495041830ceb61a31e614dc8f59f"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/production_profile.py",
+      "sha256": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/promotion_collect.py",
+      "sha256": "188bebf788c78f29b894749df4026f4489c81dcddc83ec65e0f3201e35b564bb"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/promotion_contract.py",
+      "sha256": "f9d0cff139ba04d9c8deea26960253c4bcad85c1a4e1da6d1415fb4304eefade"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/promotion_worker.py",
+      "sha256": "6392c70766097f91f421101d1383d52f5dec5bbff60d0e7085ce882c94ee654f"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/solver.py",
+      "sha256": "4edf76ea08d07e4e1af7f98914afe1d7f7d1602bc805466b5847577d0cf92ce7"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/state_layout.py",
+      "sha256": "9a051cc480d5e49d67474aa3cdc65f05d5e43d7918613b013bb3fd8e1ba0560d"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/target_system.py",
+      "sha256": "b9bf465e5e1c1e4999c3f55c3893256e22171722b25e5afb5856e36a83ea0c83"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/tests/__init__.py",
+      "sha256": "39be22bcfab361bb43081d22c00c38985550913d1da981c80f8c5cae17c16d20"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/tests/run_all.py",
+      "sha256": "71d8cb407259c9eccb5427b913b75b5917da3c8e573819293d3d6b905afd62a2"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/tests/test_age_survival.py",
+      "sha256": "89be7032f46a28748ea1d0179877adc9613cded370f13331af44c2c28f726389"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/tests/test_bequest_normalization.py",
+      "sha256": "4af56df49bd1442ddd677bb824ccb5cb581a0b0da1a529ed9c268b94bc631e2c"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/tests/test_bequest_target_moments.py",
+      "sha256": "c4ee67b12f61555d4553c40972cb272e204cd864358ec9b2fc578fd131f908a8"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/tests/test_calibration_search.py",
+      "sha256": "ebb14d3a945d56f2c06d9c41db46d36dd5baff045beeaee12f61f1a1e3c27557"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/tests/test_code_repair_20260709.py",
+      "sha256": "a6c9237cccc04e3a48b4b86878d696e58ef6690031577bb706a51aaac7cef3d5"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/tests/test_combined_specification.py",
+      "sha256": "22c641170f20e629050ee44615d2f04b3b42613987e38377c37df627cae6f8ec"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/tests/test_entrant_feasibility.py",
+      "sha256": "e7b55e21b303a4a725ca204c186fd895f8147bef556b12eaedeb07ddfa100caa"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/tests/test_new_moment_profile.py",
+      "sha256": "04bde2c06558e0cbafc2376ca2173804d5492df1916b062f96d7b8a2c1fc46e1"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/tests/test_property_tax_rebate.py",
+      "sha256": "f0f40f4e62d0d2a0d11221b6ef9000525be5ab18b0b3b2d634a8196d6db46e8e"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/tests/test_refactor_regressions.py",
+      "sha256": "264583dc2d53f44ca86a79af5accaf8296ba6f0b07ca81603a59fee3767dc366"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/tests/test_retirement_income_heterogeneity.py",
+      "sha256": "9cfb20f1344d620d014554ea80161193a2ca737dfc3b873f4df6e49c70d7a747"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/tests/test_transfer_floor.py",
+      "sha256": "0cea29022ce1e0603e2de4f341ff0022deea8e20c10000ff88e2c7a15a3d7e82"
+    },
+    {
+      "path": "code/model/intergen_housing_fertility_optimized/utils.py",
+      "sha256": "70113e4d7936f30388349dd67d4ab3a7d59ebc201c2a028695db81c64aecc26e"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/IMPLEMENTATION_STATUS.md",
+      "sha256": "9249e85c60e043b90e9bda9f799d8960541380d20a9d5ad15730aeabc9538cf1"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/README.md",
+      "sha256": "7e3f0bf8a58bbc3fbc48d9af898626b3cd46edfeaaac9727efe8be69314fc1b3"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/__init__.py",
+      "sha256": "a7a5fd5a56d05e7460e2c44fd8b147c98fe70ce361d2e8d543257dffc72c253a"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/calibration.py",
+      "sha256": "9c05faa4dfacd9c5f87b6234339371f603f66cb5cf01b2ebfbe93bde64e0a781"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/cli.py",
+      "sha256": "0c58c6f749d64cb8a8d9121069d6aecc2d755702729f376cf41cc46ea56a9d89"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/diagnostics.py",
+      "sha256": "6f076d7360e066b7a6c47d5a603e14340bd3971d7ab03a4e8c00f2bb50fe3d7d"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/kernels.py",
+      "sha256": "14db87b84dbc9716a1185b4f7b544ff7bd9459dac647a171881c2dc072591450"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/local_panel.py",
+      "sha256": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/parameters.py",
+      "sha256": "53f798a01b1b22b47a3026c982fa0dd19923919bf9db95a198d86566892ad92e"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/production_profile.py",
+      "sha256": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/run_seq_smoke.py",
+      "sha256": "6000d2a92dfb2acea9d4d976f0da8963541d36625250ffe5ce440859200185dc"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/solver.py",
+      "sha256": "a6837913c494393341c868b86b188311769f26331624404b26a10e845b4960f7"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/tests/__init__.py",
+      "sha256": "39be22bcfab361bb43081d22c00c38985550913d1da981c80f8c5cae17c16d20"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/tests/test_age_survival.py",
+      "sha256": "d6df49eafa821c46b10a222ec69fb96c5933a3dbc2aaf5b100b484c7f90afb24"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/tests/test_bequest_normalization.py",
+      "sha256": "a999511e7fd95ba376af9f3275534a3cbb53d4193e3e7bbe935282f39410b490"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/tests/test_bequest_target_moments.py",
+      "sha256": "45da0346225cabe65f44e3cffebf5495dcd9fbe350d8357b1bc7291298462311"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/tests/test_code_repair_20260709.py",
+      "sha256": "3ad17610aef5d94ef3150c6d504d718776ce8fefe8aee7528225e8716a9a02e0"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/tests/test_combined_specification.py",
+      "sha256": "6f7f52ee52bc33b3598b300a6b017dc57f16badf3912cdb6c45254e116ee78a9"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/tests/test_entrant_feasibility.py",
+      "sha256": "c0b48311e05fe61b68627097af889dbe9c65ada6f0b7de40d17182d679e3ec92"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/tests/test_fecundity.py",
+      "sha256": "5511698d77deb3abd0113399eb616f589e14b259b9b825f2e0d8c35866d22aea"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/tests/test_retirement_income_heterogeneity.py",
+      "sha256": "4879fc61070c6bdbc2c05c7e41117d3af9e7320bd5ac095ed7fe34e11f3f9077"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/tests/test_transfer_floor.py",
+      "sha256": "8095203864206bf92d32d3daada6861c117dae9f472138cbcb338c88d9d5caa4"
+    },
+    {
+      "path": "code/model/intergen_seq_fertility/utils.py",
+      "sha256": "3c1f997c3a9d2355f4f756aebd52d180f8c839c44059d7e9330af2cd2da25c26"
+    },
+    {
+      "path": "code/model/intergen_surrogate_calibration/README.md",
+      "sha256": "0f766ff016d9fa40f1ccdca85e0d46099633bf9c72a49c7118e97cd488ea1725"
+    },
+    {
+      "path": "code/model/intergen_surrogate_calibration/__init__.py",
+      "sha256": "d1120db965291d10fccb3bbb75f8177e68dcfc8c34ece0f0774a387bef8508d6"
+    },
+    {
+      "path": "code/model/intergen_surrogate_calibration/bo.py",
+      "sha256": "3a82623d35710aa1719915b2a4f9aeb23a27053c89b4fa034ac2616d3cc9f8ef"
+    },
+    {
+      "path": "code/model/intergen_surrogate_calibration/data.py",
+      "sha256": "9abe3fdc51319032805987041ac1751b1cd6983ca5a32605f519a092a9e08dd5"
+    },
+    {
+      "path": "code/model/intergen_surrogate_calibration/emulator.py",
+      "sha256": "01f047907f250d31d49b2a825858acc64c09959a2289a3a98aff6e216daf6a98"
+    },
+    {
+      "path": "code/model/intergen_surrogate_calibration/gp.py",
+      "sha256": "969375cf73de30cacf4e25fe8357cd44bcbd8338485344df389ad7f698612888"
+    },
+    {
+      "path": "code/model/intergen_surrogate_calibration/identification.py",
+      "sha256": "98a8f9d785dc505b98d3faa7885fd1fae5f4737702b91a293d17b37712b76a12"
+    },
+    {
+      "path": "code/model/intergen_surrogate_calibration/run_surrogate_calibration.py",
+      "sha256": "637dc04181e1697dd6ca3513d9d6929a4b8e7ff408e1654ff3a7e55b15bbf826"
+    },
+    {
+      "path": "code/model/intergen_surrogate_calibration/validate_proposals.py",
+      "sha256": "9dcdda751d859efc4fd66c6493358f5015a17977dc7b8ba2f8952becb5725356"
+    },
+    {
+      "path": "code/model/pyproject.toml",
+      "sha256": "190d8304fc8978693bab94d70b4971f9aa30a7c78cde9051af6c193eb8876c0f"
+    },
+    {
+      "path": "code/model/run_intergen_model.py",
+      "sha256": "3db784bfbebf87d33d03a72696e0784ca1523007f566a655944e3f9df564bffd"
+    },
+    {
+      "path": "code/model/tools/analyze_e5f_first_birth_measurement.py",
+      "sha256": "3420c2232bbb36407d7a3b8e293cda425e526af94661df2b2b1533c47da50237"
+    },
+    {
+      "path": "code/model/tools/analyze_e5f_transition_calibration_panel.py",
+      "sha256": "73ef1eb854b3497f99d8809db5a928ee7e95d5c7a06bdf6368327778c1507b43"
+    },
+    {
+      "path": "code/model/tools/assemble_tour.py",
+      "sha256": "acf262c4357923fcef49f1418a4815005caca6f5c47b74978762f168bc91d5d3"
+    },
+    {
+      "path": "code/model/tools/audit_closed_reproductive_closure.py",
+      "sha256": "29b18b58bf51c036e734f235817b1713985e73d232c6a15d776b0ff826c40064"
+    },
+    {
+      "path": "code/model/tools/audit_e5f_fertility_price_feedback.py",
+      "sha256": "fedd2e8a66d2750ca293634da4bec58425e3bf84a141906e63c6b305886c1065"
+    },
+    {
+      "path": "code/model/tools/audit_e5f_slope_fit_tradeoff.py",
+      "sha256": "0c0ced03bd139b579ce2f1c7166bce570c89e625a6d414a8fa8f41128690f00b"
+    },
+    {
+      "path": "code/model/tools/audit_e5f_social_security.py",
+      "sha256": "7914c3fa2c60e7e2be849ab037b5fd4460fbf1e5da223a5bf77661c8c4509c4b"
+    },
+    {
+      "path": "code/model/tools/audit_e5f_stationary_paygo.py",
+      "sha256": "038296eb494bd1cd4551ebe5ec83c14ad1e220a201b3df9f14d1f7f65cbf84ad"
+    },
+    {
+      "path": "code/model/tools/audit_intergen_active_tenure_values.py",
+      "sha256": "eebb6a51e199073d2384e8a35f7a6efd96c12626b65ed215d3798edb20132d01"
+    },
+    {
+      "path": "code/model/tools/audit_intergen_bequest_exit_jacobian.py",
+      "sha256": "ef8d27429f906252676235a530ad9c051549d2cfba1504f79e0531d4feb566ed"
+    },
+    {
+      "path": "code/model/tools/audit_intergen_entry_atom.py",
+      "sha256": "ee275edd0aaf4c8d6744c92bd6b2dc44879c18d1e138fa7d7942caddbbf3f383"
+    },
+    {
+      "path": "code/model/tools/audit_intergen_final_best_pathologies.py",
+      "sha256": "6c3238a3b9de984f15998f94b073d710f8efb6391e2ca93db7494afd35ee6c23"
+    },
+    {
+      "path": "code/model/tools/audit_intergen_housing_ladder.py",
+      "sha256": "f195b587d4b79d243f70a3585d07a05da24b417871e015021eff2d54a22bb7c9"
+    },
+    {
+      "path": "code/model/tools/audit_intergen_mechanism_grid.py",
+      "sha256": "43dc1c3a23837a6c4c9a7057eb457138d4b6ee6da63b78efd2495704c1c56202"
+    },
+    {
+      "path": "code/model/tools/audit_intergen_parent_credit_margin.py",
+      "sha256": "14af179aa2595929be7c40f036a6ba151c20ebfa1ce81547979c3c1d0566cb79"
+    },
+    {
+      "path": "code/model/tools/audit_intergen_savings_globality.py",
+      "sha256": "064333ded8085a050144a308a339b15008b07850a825129a5bad034375690466"
+    },
+    {
+      "path": "code/model/tools/audit_intergen_sensitivity_jacobian.py",
+      "sha256": "3324068f1f8eb56c3607a9b125c1b8493756047b5a3174521a00adb027e898aa"
+    },
+    {
+      "path": "code/model/tools/audit_intergen_solver_accuracy.py",
+      "sha256": "1b83ef3016933afe69f71318e090308947799c54bf28212a674c1dd935f05b62"
+    },
+    {
+      "path": "code/model/tools/audit_intergen_wealth_units.py",
+      "sha256": "bd773174ae9010fcdaecdd977c6bab0128386372f2f5e4bc46955b894527e795"
+    },
+    {
+      "path": "code/model/tools/build_aug07_floor_lifecycle_figure.py",
+      "sha256": "438e7eb8ed3453d98e7c5016d477baf2cc5e6e0dab4ca5b04d12c1df15823c48"
+    },
+    {
+      "path": "code/model/tools/build_current_one_shot_stationary_closure.py",
+      "sha256": "ae36e96de1cd7d6f30f2d26280100f6b9770937b1a6117694fcdc69268e8d46e"
+    },
+    {
+      "path": "code/model/tools/build_current_one_shot_transition_initial_state.py",
+      "sha256": "24fd6562772def64890091d6cf25ce83a29918f7c6e4b595ffa52c9739b9f0f0"
+    },
+    {
+      "path": "code/model/tools/build_demographic_momentum_intergenerational_housing_illustration.py",
+      "sha256": "fdde324dcd1b9e5898f7c36895a24358bc2fba13b8cb2ca8f58cb0baf59e65f4"
+    },
+    {
+      "path": "code/model/tools/build_dynamic_population_housing_paper_illustrations.py",
+      "sha256": "956de8ca2a5de49fdd1089c7cb1ecfabdbf3c2385f7548efcb83bb62d12eddd4"
+    },
+    {
+      "path": "code/model/tools/build_e5_quota_policy_packet.py",
+      "sha256": "eed821fceac8d4dcf2dec39bb12f14b4f711176eb447ec144b22df0ee1275aa5"
+    },
+    {
+      "path": "code/model/tools/build_e5f_baseline_demographic_gap_decomposition.py",
+      "sha256": "9a8233780399e728fac21f4b58c497a9f02ef00f8892a1b605f52d7d2007d0aa"
+    },
+    {
+      "path": "code/model/tools/build_e5f_bounded_refinement_plan.py",
+      "sha256": "f57144f4e2cb9c24518e621da1319c1ca563e7af95e9f887f2047e8a6f979696"
+    },
+    {
+      "path": "code/model/tools/build_e5f_bounded_refinement_report.py",
+      "sha256": "fa38d960c338166ca2283d3542f7fd74231f0c07ea7142c50a249d139c2791f9"
+    },
+    {
+      "path": "code/model/tools/build_e5f_candidate_policy_comparison_report.py",
+      "sha256": "96cd7720de642874c76bfd64aee03cdd568019b3370e958aa54cf0f4ed760fdb"
+    },
+    {
+      "path": "code/model/tools/build_e5f_census_anchored_policy_forecast.py",
+      "sha256": "efbde4958191fd67c85921e226be358b7b159aee2eb1ab3f2b88c9776f11b797"
+    },
+    {
+      "path": "code/model/tools/build_e5f_coherent_person_cohort_path.py",
+      "sha256": "89e751338c20d39aaee0cbc5f63bf4ac97da720ba8f8a039516381f1f1b3f4a0"
+    },
+    {
+      "path": "code/model/tools/build_e5f_coherent_terminal_demographic_diagnostic.py",
+      "sha256": "85acb91f8f62dca6c40836e72e571581fd60474ebd00fe3d3ad5f1d0eaa3cc1e"
+    },
+    {
+      "path": "code/model/tools/build_e5f_continuation_receipts.py",
+      "sha256": "10bb2830bd15eba23507f7632ff914cfaa6c9fe6d25949b97c106ded2076825f"
+    },
+    {
+      "path": "code/model/tools/build_e5f_first_child_jump_diagnostic.py",
+      "sha256": "e7c95b4e29184dfe88bfc99342401db87bf7447455b490d43daeaf1f2bca8510"
+    },
+    {
+      "path": "code/model/tools/build_e5f_headship_demographic_bridge.py",
+      "sha256": "e5a859f13db3fdc5b037f81474f1db4170f7ff5fdd500d47b0307e3331bf197e"
+    },
+    {
+      "path": "code/model/tools/build_e5f_historical_demographic_closure_coordinate_plan.py",
+      "sha256": "e90ac43b5f6f4b0d4c3330681eb5ece85617f3f305105ee07277d9e6c1ebeaa1"
+    },
+    {
+      "path": "code/model/tools/build_e5f_historical_four_group_model_data_validation.py",
+      "sha256": "5f0b0bbbd92aa41da5100be018f0971025a74030ac990533bc746fa46c09aad8"
+    },
+    {
+      "path": "code/model/tools/build_e5f_independent_audit_pdf.py",
+      "sha256": "c8fbf7d9342f865540f8df8850779c6c9ed7a7f7d523cb6be341d475949d5f0f"
+    },
+    {
+      "path": "code/model/tools/build_e5f_joint_nested_long_contract.py",
+      "sha256": "2868be219eca80292facaa627d2d5315a4a1210fe71d9bc2e70747b4596dd4ca"
+    },
+    {
+      "path": "code/model/tools/build_e5f_joint_nested_review.py",
+      "sha256": "99b8715ac2e6b67bc9984b44fcd1b8248a484c5bded8cbf108cf756132deeb67"
+    },
+    {
+      "path": "code/model/tools/build_e5f_no_policy_transition_report.py",
+      "sha256": "b224b46738eb5897c3b67ad49de484be42f4cfc9143f53f43f3bd8659d7053d5"
+    },
+    {
+      "path": "code/model/tools/build_e5f_overnight_numerical_report.py",
+      "sha256": "71d4fa05f5c254d34d252333f9feba54c7c05ccec5b4f09989652d6d21efa097"
+    },
+    {
+      "path": "code/model/tools/build_e5f_overnight_panel_receipts.py",
+      "sha256": "f23c17e54d1a0acf08b56f1d364adece79437e17a68e9f4ac9f95ed068b3a4cc"
+    },
+    {
+      "path": "code/model/tools/build_e5f_person_demography_policy_comparison.py",
+      "sha256": "7601189d762cb1d7a8c3c0327b461b71ec531695b41a5c9e37a5aaf151ba9068"
+    },
+    {
+      "path": "code/model/tools/build_e5f_person_demography_terminal_comparison.py",
+      "sha256": "12bbfab1ae22b0f20066621fc7bf3caa73c5481be590af89376333d0f6cce8e4"
+    },
+    {
+      "path": "code/model/tools/build_e5f_person_demography_terminal_point.py",
+      "sha256": "866e79cdf1cb3ebc6e6efb550fed48a42ba2b1be66a0b9d115f5f005e617de57"
+    },
+    {
+      "path": "code/model/tools/build_e5f_person_demography_terminal_spectrum.py",
+      "sha256": "a405c7f0cbf33fcbe21c313c9c0c8c30cd76e0e21736bc1e65f43c9b27c25efe"
+    },
+    {
+      "path": "code/model/tools/build_e5f_person_policy_discrete_kink_map.py",
+      "sha256": "08ca0c62de84091ae68a82e28c0c12565d0b06972df84c6f3682a7e3269bc785"
+    },
+    {
+      "path": "code/model/tools/build_e5f_persons_demographic_satellite.py",
+      "sha256": "8546d10c7a290b251e1dce3845f1ec419baef2805f61d742ce5e6d5d3635d8ad"
+    },
+    {
+      "path": "code/model/tools/build_e5f_policy_calibration_diagnosis.py",
+      "sha256": "e2b83204063855faa19d7f30d90ce3d39bbdd074fe0220b8fe453410e7aa1fbb"
+    },
+    {
+      "path": "code/model/tools/build_e5f_policy_demographic_reconciliation.py",
+      "sha256": "530154e93cb5dc5b3a02ce55019ab5ca497aaab2f280106a36a4909247231b12"
+    },
+    {
+      "path": "code/model/tools/build_e5f_population_law_residual_audit.py",
+      "sha256": "857fafa0d12f854cc1b89ed1a8485359ec908659dc47930e00e0df66b794cbbe"
+    },
+    {
+      "path": "code/model/tools/build_e5f_rebated_tax_morning_report.py",
+      "sha256": "31135077474b4fdb70fb8174dd054178650384e5238edaaaf62d0249a7c6fece"
+    },
+    {
+      "path": "code/model/tools/build_e5f_transition_calibration_report.py",
+      "sha256": "9344a0f731a2d6bc75eba42e063a34a3b50c28b57a47e1260a257b4d92d8e4d5"
+    },
+    {
+      "path": "code/model/tools/build_e5f_transition_decision_packet.py",
+      "sha256": "cae4c76c14280a828848ecb9f6f534bea5f5804293bedacccdcb7d13fab5d5ff"
+    },
+    {
+      "path": "code/model/tools/build_e5f_transition_design_feasibility.py",
+      "sha256": "f8f70367919952f1de57f4f9293e033231cbfa2b0a2030adc874f706f0126042"
+    },
+    {
+      "path": "code/model/tools/build_e5f_transition_historical_validation.py",
+      "sha256": "6b07e4c068f99d63666cc2f6a83ba354d08ee0c522b6183c102851fd320f28c3"
+    },
+    {
+      "path": "code/model/tools/build_e5f_transition_ridge_refinement.py",
+      "sha256": "2ecf79d2ba7fda147a53f1d02cff49d12be91551037ac2d8ee9b269356566fc1"
+    },
+    {
+      "path": "code/model/tools/build_eqscale_note_draft_figures.py",
+      "sha256": "64049f61709025e76e3f84fcbe213ee3bf1aadeb94b19cecb45d85996fbdcf5a"
+    },
+    {
+      "path": "code/model/tools/build_fertility_population_housing_transition_figures.py",
+      "sha256": "b6925c27aec9ef19a6c9f8da35c1203597b887fb3a6c63dfa60c3c4653112a29"
+    },
+    {
+      "path": "code/model/tools/build_intergen_current_m_draft_figures.py",
+      "sha256": "19fa6434803beacb790009b8e9113f11dfd542e653390855af6fa5de48046e6c"
+    },
+    {
+      "path": "code/model/tools/build_intergen_housing_block_packet.py",
+      "sha256": "c4068a7401b03322cf6e6397bc547f591034deb3a2513c3af3759691b087d871"
+    },
+    {
+      "path": "code/model/tools/build_intergen_mechanics_packet.py",
+      "sha256": "ef5c238905aad9aac2ad1027dc644a4b361c04ca2cbfa760093595e78d00346b"
+    },
+    {
+      "path": "code/model/tools/build_population_closure_update.py",
+      "sha256": "1c85c0b95a44567a4f42423ba3000d6c0102291da3d49a80e5b8cc0f39adc1b8"
+    },
+    {
+      "path": "code/model/tools/build_simplified_olg_mixed_tenure_theory.py",
+      "sha256": "5cb5c20b001659e694ad175bd03055710c06ed4d0df025895560de3d2566c4aa"
+    },
+    {
+      "path": "code/model/tools/build_simplified_olg_saddle_path_diagnostic.py",
+      "sha256": "19f96be0e6491a26ec1107f79ef0b981fa6b7e0814884849020e9d81fb6a20a4"
+    },
+    {
+      "path": "code/model/tools/build_simplified_olg_theory_slides.py",
+      "sha256": "ae995440a0859b2c5c5858b8155f52bc0fefba229d29d5044e615ebaff5a450e"
+    },
+    {
+      "path": "code/model/tools/build_simplified_olg_transition_example.py",
+      "sha256": "1b3da881702905aa3660d591b9a202c944ff77d7874cbaa5e4839519a18ff7f8"
+    },
+    {
+      "path": "code/model/tools/calibrate_direct_geometry.py",
+      "sha256": "c504ccb75ef14114859f75ec5c153a6963d9ab5782d079310ec7a0f9cbcfbdde"
+    },
+    {
+      "path": "code/model/tools/capture_e5f_two_shock_failure.py",
+      "sha256": "08d17aaee1990979b696e2761a4ec80b7c6e64ddefada6be5d737557504e0e01"
+    },
+    {
+      "path": "code/model/tools/check_bridge_fit.py",
+      "sha256": "38698dfeced23bb437b63254c93495293c40d80256248185cfa0ba49e1ea857c"
+    },
+    {
+      "path": "code/model/tools/check_e5f_two_shock_local_reference.py",
+      "sha256": "300a1904aaee11a477de049b7d8df1a8e11ee5503779700b82bafb77a5d80f41"
+    },
+    {
+      "path": "code/model/tools/check_population_closure.py",
+      "sha256": "24b05c3687e7a84a43fc7121bf7c2df8f8a8e7efcb407f5b792a6176336397d5"
+    },
+    {
+      "path": "code/model/tools/collect_direct_geometry_results.py",
+      "sha256": "d31fc32887ad261560dc93670e81d1dde52a73f5b15b89d6445f742caf3fcbda"
+    },
+    {
+      "path": "code/model/tools/collect_e5f_historical_demographic_closure_coordinate.py",
+      "sha256": "afdd306025fb90577f29d2cffe38ec028790cbb3c060a1a50bd3088de4bee3d2"
+    },
+    {
+      "path": "code/model/tools/collect_e5f_joint_nested_experiment.py",
+      "sha256": "db9362e8f46916e92208388aeaab9c6170b126237615722d34c877f69f17f5d4"
+    },
+    {
+      "path": "code/model/tools/collect_e5f_joint_overnight_search.py",
+      "sha256": "dccda0413ceec51f23b3782d608ecaa1e5016cc2c70658ac4f6298305eb68d9d"
+    },
+    {
+      "path": "code/model/tools/collect_e5f_matched_pf_preference_pilot.py",
+      "sha256": "6648357b4546511e7be380f42a3f83a1e4f56d62c0922d4882e57b01a0a14cad"
+    },
+    {
+      "path": "code/model/tools/collect_e5f_matched_pf_price_jacobian.py",
+      "sha256": "a002192b0a3cb9bbc561ca7d7b12185a10e1a094cbc55ff860d18f0123ad6d5e"
+    },
+    {
+      "path": "code/model/tools/collect_e5f_perfect_foresight_horizon_certification.py",
+      "sha256": "75a2a37cee5e9f25d4cb0e0b098a23759212d2bbdb1d277f97509676984e2498"
+    },
+    {
+      "path": "code/model/tools/collect_e5f_perfect_foresight_rebated_property_tax.py",
+      "sha256": "784633c6e14c64ebacbc18b51c2ffdc80f3b1829366985e15595cb905ae86b21"
+    },
+    {
+      "path": "code/model/tools/collect_e5f_person_demography_policy_horizon_stability.py",
+      "sha256": "6de0b7653d6c53db441d6a8931312dfe28cd50454f84eae6dea392632de96e48"
+    },
+    {
+      "path": "code/model/tools/collect_e5f_person_policy_tenure_complementarity_share_map.py",
+      "sha256": "98dcbd6b9a0702621dfe1808c171cbb3d38fb4c981d12625aa3911c76a9295a6"
+    },
+    {
+      "path": "code/model/tools/collect_e5f_person_policy_tenure_kink_states.py",
+      "sha256": "0ade7bc71080a43ab4705a7fa9e8fda6d55e01c094db468cf126cf80c1927860"
+    },
+    {
+      "path": "code/model/tools/collect_e5f_post2023_kappa_mechanism_decomposition.py",
+      "sha256": "326b48d0f59aaa962e0ce4661b895b7b371942a75ed5404c69d672520d67f34d"
+    },
+    {
+      "path": "code/model/tools/collect_e5f_post2023_policy_mechanisms.py",
+      "sha256": "4d5817df5f6256df9efa5420f0313dc52e7d388e7f76c57840c4944a5f9c04d2"
+    },
+    {
+      "path": "code/model/tools/collect_e5f_transition_calibration.py",
+      "sha256": "a2c27dc7199ecf21454c846c8dcc2fea351e2e8563882f69bac9c7b45cdf39f7"
+    },
+    {
+      "path": "code/model/tools/collect_e5f_transition_ridge_refinement.py",
+      "sha256": "1a700e0190b2bf3b6956b7a83a4e42cd8bbf8c9a95971eebdb61d016dede67a8"
+    },
+    {
+      "path": "code/model/tools/collect_intergen_bequest_exit_battery.py",
+      "sha256": "c393613ce565eed3e5fae9d091519d3e57f59cc46bd5761ac0c0284f9b4465fa"
+    },
+    {
+      "path": "code/model/tools/collect_intergen_bequest_reachability.py",
+      "sha256": "213e90800caded982e37557a7ccf9ea598498113f9711fe0a3b80f68cf786e05"
+    },
+    {
+      "path": "code/model/tools/collect_intergen_focused_profile.py",
+      "sha256": "3ef96b42ce365f37e2c128fa60896dfbe0a67406239f0bd6283d466fd37c1824"
+    },
+    {
+      "path": "code/model/tools/collect_intergen_internal_bequest_recalibration.py",
+      "sha256": "15e4e3a2348fefc466279f06ceb25962511a02d1311f91191b888fe3f2ba1c7f"
+    },
+    {
+      "path": "code/model/tools/collect_intergen_mortality_bequest_recalibration.py",
+      "sha256": "78c74eb1354e744efc3f9a5cf0690017f154cf861c31ce2b4a785a556b498581"
+    },
+    {
+      "path": "code/model/tools/collect_intergen_mortality_recalibration.py",
+      "sha256": "cb01456f6e6941906c6bf41416f655a0564c65034acba2d20cc674bc9ae2c828"
+    },
+    {
+      "path": "code/model/tools/collect_intergen_panel_results.py",
+      "sha256": "4990e14ec8832168bf6c206321bef181d6dcc43d91046ea70a140570fde0c93e"
+    },
+    {
+      "path": "code/model/tools/collect_intergen_policy_full.py",
+      "sha256": "604c400ececd0f98c7b5152befdaf96fd560874987775f94611596900c667ae6"
+    },
+    {
+      "path": "code/model/tools/collect_intergen_retirement_income_dispersion.py",
+      "sha256": "bb840e3a95e1ce7dff8ba63b94263e0cd9d31cca2f51a4d7b2636291d60f694e"
+    },
+    {
+      "path": "code/model/tools/collect_intergen_standard_bequest_theta1_profile.py",
+      "sha256": "80ad72c8d3f6fca9304e4ca5e68142747cc07dde81eaaaac85cf71519bc1d914"
+    },
+    {
+      "path": "code/model/tools/compare_benchmarks.py",
+      "sha256": "ac291ea4f70d33a90ad7f4d7343f5cebd9167082866b8be1f7288783ab49b30b"
+    },
+    {
+      "path": "code/model/tools/compare_intergen_bequest_normalization.py",
+      "sha256": "bb549e5f91d75fd3507608e71a70165d7fc22effe87aab6a71e45ab598124ab9"
+    },
+    {
+      "path": "code/model/tools/compare_intergen_combined_specification.py",
+      "sha256": "ca7bb24bf56f5bd30a90048e55d9684051b7f7694b1bb8ede070253b78323e98"
+    },
+    {
+      "path": "code/model/tools/compare_intergen_income_processes.py",
+      "sha256": "d3cd5bf8870171b4ac9005b4198d170dd07661a19e5d1a0257350402b6104b36"
+    },
+    {
+      "path": "code/model/tools/diagnose_e5f_joint_policy_market.py",
+      "sha256": "9117c0b9ed0cb90468c78422709289334f348224fbf2c8dfc17876da19254135"
+    },
+    {
+      "path": "code/model/tools/diagnose_intergen_bequest_distribution.py",
+      "sha256": "13836070d10c8d666a3edefc572059a67bfbc41cfdb87d2a735ce2c9fc046afa"
+    },
+    {
+      "path": "code/model/tools/dk_lm_asymmetry_test.py",
+      "sha256": "733b5d6c53d76d590081eef98617200134a75a17091ce483448fa6657030ef6b"
+    },
+    {
+      "path": "code/model/tools/dk_lm_demand_shock_test.py",
+      "sha256": "5fa016d62c366fc7c8d8900fc7cc9f313200ff5306872c04411d648550aa144a"
+    },
+    {
+      "path": "code/model/tools/dump_explorer_data.py",
+      "sha256": "dcc79fbd3caaa1d74c1a1c8bc8490f4ebea05c47b1d064e367fab5744b420103"
+    },
+    {
+      "path": "code/model/tools/e5f_approved_initial_state.py",
+      "sha256": "ea5a618fb8661298cbede2500a0610c745ec683282ea96143d96dee2493c7880"
+    },
+    {
+      "path": "code/model/tools/e5f_balanced_terminal.py",
+      "sha256": "f1bd39c7e58d1b2cd4c52cfb0b539c186f6a2526e655a37e8772c97421227f61"
+    },
+    {
+      "path": "code/model/tools/e5f_initial_fertility_observer.py",
+      "sha256": "2be39f66b90f3265f1d21d96dd68626fcfc43b569e8526ab2ea0414a4bef07b7"
+    },
+    {
+      "path": "code/model/tools/e5f_initial_housing_observer.py",
+      "sha256": "169bf4c108af35f1c2f76d74da568a0aedc256ca32395a5b5477eb153a8a2e59"
+    },
+    {
+      "path": "code/model/tools/e5f_joint_nested_choice.py",
+      "sha256": "215332a9b40dbf383153bb463075bd5c9327dea21faa6be78813b4560928898b"
+    },
+    {
+      "path": "code/model/tools/e5f_matched_pf_birth_path.py",
+      "sha256": "f66fbbe0a854f5450e83e3944dd84afd2f3e544f6791126a7ea162ed49dc2370"
+    },
+    {
+      "path": "code/model/tools/e5f_matched_pf_endpoint.py",
+      "sha256": "948fb8c46fedaa9b1aa8b746f6457b9a38da222b0be22cbc2c962c7a4d229924"
+    },
+    {
+      "path": "code/model/tools/e5f_matched_pf_initial_state.py",
+      "sha256": "0633fce1b4e3cd95f266d2834d329c5df10ca05d40ddcc5bf1e4c3d55dde5d4e"
+    },
+    {
+      "path": "code/model/tools/e5f_matched_pf_moments.py",
+      "sha256": "4ffe5097b50775cfed88978be63804e6804c0889fe49f6609b3c5c00cd41d821"
+    },
+    {
+      "path": "code/model/tools/e5f_matched_pf_path_root.py",
+      "sha256": "1f827bad0c87f2c75d1ea76f1f059494cc67ca5390135087780691cc0ead2c80"
+    },
+    {
+      "path": "code/model/tools/e5f_matched_pf_price_root.py",
+      "sha256": "e1052c705a91e1bd84c5530f3654efbfacdb28f07697c89eecea4dc11b4fa7e9"
+    },
+    {
+      "path": "code/model/tools/e5f_parenthood_utility.py",
+      "sha256": "ddd6d8083648761a598a0d0784bf711527cbe95d16ee763a1cdd8677ec95cd1a"
+    },
+    {
+      "path": "code/model/tools/e5f_post2023_tenure_sensitivity.py",
+      "sha256": "29d8aebd00889c36f9fa25618d96f3bda38493d4bf1821786c8ec312ec314201"
+    },
+    {
+      "path": "code/model/tools/e5f_social_security.py",
+      "sha256": "f7bb7db2774be7ef7d2ca2a635eafa3cb27ba79a503fe69b6f00c1eef9658455"
+    },
+    {
+      "path": "code/model/tools/e5f_social_security_root.py",
+      "sha256": "269f3d5017da3a240d0a80d9b168471e6c6cd6c55e9617041c70bfb1085cd77a"
+    },
+    {
+      "path": "code/model/tools/e5f_stationary_paygo.py",
+      "sha256": "d723bae3e2a6d912f1095a5aa94a1780eb9ad6a43babdd45659bea31c680a6f9"
+    },
+    {
+      "path": "code/model/tools/entry_target_contract.py",
+      "sha256": "4354ce74770ab8f038086442f1680dc9dfff08bb7a0d7ad4c8e256fa5076bdc2"
+    },
+    {
+      "path": "code/model/tools/export_distributional_discipline.py",
+      "sha256": "beba56a1f9695490c177ead0c4c4a23d5527446a73088b921a9f39766406449e"
+    },
+    {
+      "path": "code/model/tools/export_room_pattern_diagnostics.py",
+      "sha256": "3a925bd79718ab17a09f87987206b36163525929f8ecc808412cba3ceea5c847"
+    },
+    {
+      "path": "code/model/tools/grad_descent_report.py",
+      "sha256": "0d4b4cf7d0481f5a0983cf454dfbaf6fe6a2d75a9d4da1a9f7fdc51f6e6c9b3a"
+    },
+    {
+      "path": "code/model/tools/gradient_descent.py",
+      "sha256": "ec213da1f3f62ee6e6bd4aebb36bdc8faa6c58682e7b63708725ca48de52ae2a"
+    },
+    {
+      "path": "code/model/tools/grid_interp_lab.py",
+      "sha256": "1b2e9f714ba4b1f7e631f7bb634237a843713f36d37d72c33a688d3f13cf51a1"
+    },
+    {
+      "path": "code/model/tools/house_size_age_heads_only_compare.py",
+      "sha256": "8b1cec279da893b8c9ed98e92409293e352b9aafd3d2430e8110fd9eb12da201"
+    },
+    {
+      "path": "code/model/tools/house_size_age_model_vs_data.py",
+      "sha256": "0baafdcaa872f3bc57e5e48e21ba379840180abff9f51eccc7f7bd96c51e437a"
+    },
+    {
+      "path": "code/model/tools/house_size_by_age.py",
+      "sha256": "c757820121db7fc8d4c863ff536fa4d592b8905bc4e9894a6058943c1fd90dc0"
+    },
+    {
+      "path": "code/model/tools/make_direct_fit_slide_note.py",
+      "sha256": "69c5ae0f122f7e09eb18fd7274735d7633ee535b1e65833c2aedb7daa187a1f7"
+    },
+    {
+      "path": "code/model/tools/make_eqscale_note_figures.py",
+      "sha256": "4d85eb76695df99aabf2ddb2683712ad0f5f9a74adbb47aa22c252b8dca61673"
+    },
+    {
+      "path": "code/model/tools/make_full_dispersion_diagnostic_note.py",
+      "sha256": "57a91a4fe4735f90740b54cd1f104e63319a72d3856b61e49ea42c846d6db968"
+    },
+    {
+      "path": "code/model/tools/make_part1_example_figure.py",
+      "sha256": "94629ab70afdd342395b28778595706507a03e8c4ad3ab1fe4087e4b03c7e98b"
+    },
+    {
+      "path": "code/model/tools/make_quick_dispersion_snapshot_note.py",
+      "sha256": "26b72a98a1a162ff695790059d509ee0da30877a423a7dfa2ffb3077a8847878"
+    },
+    {
+      "path": "code/model/tools/matlab_reference_fast_converged.m",
+      "sha256": "6548fb5c468552ac7550aa7b3648773202f194d865cc3e894f283975f9d6b36d"
+    },
+    {
+      "path": "code/model/tools/matlab_reference_fast_iter1.m",
+      "sha256": "993b84e12e978fe3f7b0de66bcf66f7d786b4d3ed2dcdedd25e7cfc8dbe4e5af"
+    },
+    {
+      "path": "code/model/tools/matlab_reference_solve_theta_x0_benchmark.m",
+      "sha256": "0a62b91becca21e6381ff96811b9e0c734081ade23be297e58a03c37fa31253e"
+    },
+    {
+      "path": "code/model/tools/matlab_reference_solve_theta_x0_fast.m",
+      "sha256": "7b0a5b5341b627e302036a378d948afa41ffd400efc2e13378006abb106ce054"
+    },
+    {
+      "path": "code/model/tools/merge_policy_counterfactual_outputs.py",
+      "sha256": "2302996f0dd7f1e3dac9dbddd28ccc74eff1c5f9e0c7ea460bef2501b72d4ccb"
+    },
+    {
+      "path": "code/model/tools/mini_parameter_solve.py",
+      "sha256": "1f74a753c7f71ea709a931244386191341d33e82788d7612d4469c88024ad1e0"
+    },
+    {
+      "path": "code/model/tools/observe_e5f_candidate_rebate.py",
+      "sha256": "91a5002a7a9bb95a07a3a85d82b31382797a69b69328105075dcc896805ce2b2"
+    },
+    {
+      "path": "code/model/tools/phi_hacamo_analog.py",
+      "sha256": "5513bb87723ab222b3edbe8a1d33654f5266410a61616d70b9fe04cc9bc6e878"
+    },
+    {
+      "path": "code/model/tools/phi_shift_and_ablation.py",
+      "sha256": "95f68d6d2589cc78b835b5ca6f290a1fb7b3c233509fded49a2fd232776c386d"
+    },
+    {
+      "path": "code/model/tools/phi_sweep_universal_and_parent.py",
+      "sha256": "f035d1e3e561f7a82e1b36edd531aebe27191f587d58b70d4edcd9b99acd6dd3"
+    },
+    {
+      "path": "code/model/tools/plot_big_homes_rooms_data_vs_model.py",
+      "sha256": "fa4e7d2447a7ecfcde75f0dc5eaa95f9321a4bb52707dbe604730377556a8e28"
+    },
+    {
+      "path": "code/model/tools/plot_intergen_draft_figures_from_cache.py",
+      "sha256": "88219eb8c6f1c4fc7ae70b4ab541bc7a287fac9cd407596a413cc9e52ae2db22"
+    },
+    {
+      "path": "code/model/tools/plot_intergen_policy_overlay.py",
+      "sha256": "5e58ae78a979dbe09b8ff5840f3cf90d905f5945a4835ded46a23f8baa2050ec"
+    },
+    {
+      "path": "code/model/tools/plot_intergen_policy_slice.py",
+      "sha256": "1c34f951e551b92b1f89ac16505c586427704ad242a28fb927c04fafe440d893"
+    },
+    {
+      "path": "code/model/tools/plot_lifecycle.py",
+      "sha256": "68ee78c961c97e4f32baf8dc67a380616143da7cb2e0012349b705cd317360f5"
+    },
+    {
+      "path": "code/model/tools/plot_lifecycle_compare.py",
+      "sha256": "c3fa3b0cdaa5a0edf1112ddbed76a22e6ee544229d0eabe13df3d4dd57e7e3ab"
+    },
+    {
+      "path": "code/model/tools/plot_ownership_spatial_lifecycle_diagnostic.py",
+      "sha256": "598e4f2d55eb3794e883f23f8f6ba5e227e21e73272aba05a71cb3f541b7e48b"
+    },
+    {
+      "path": "code/model/tools/plot_phi_sweep.py",
+      "sha256": "b76dd9a84c3bed8df9e7fec6703fd2585442f3ce56815af3c8aef1d1e5f2e090"
+    },
+    {
+      "path": "code/model/tools/plot_population_closure_results.py",
+      "sha256": "a13942b09283ebc956aa55fcc48d806d6d0886e94171951c9aee8714e9c9a4c0"
+    },
+    {
+      "path": "code/model/tools/plot_redfin_data_vs_model.py",
+      "sha256": "b71eb1b0a3db691970772b0b8ee0ac3c4170dbcfffab3ea55362ef34e01f5df5"
+    },
+    {
+      "path": "code/model/tools/prepare_e5f_matched_pf_preference_case.py",
+      "sha256": "594404d90b3334b3ed92a8fb24bdcb6c6a1071410b92d8775ce71615e363c95e"
+    },
+    {
+      "path": "code/model/tools/profile_intergen_bequest_reachability.py",
+      "sha256": "e17a48f14c9f60b332b926c5186e815f22047dff94ec25e7697d3e1bbdf0bbca"
+    },
+    {
+      "path": "code/model/tools/profile_intergen_computation.py",
+      "sha256": "3698378734b3da919135ce73a4f1ab06dbcc6dd02177ee70ab4ae196ffefe8a2"
+    },
+    {
+      "path": "code/model/tools/redfin_big_homes_model_analog.py",
+      "sha256": "4d8de0659ce55f7d97bca652ea192278f031bae0beed296c7e62d08d1aa84007"
+    },
+    {
+      "path": "code/model/tools/regen_lifecycle_compare_notitle.py",
+      "sha256": "094a154cae1187c55dc4645d402187981cfff895a82cc3d9b14ad78734f14b33"
+    },
+    {
+      "path": "code/model/tools/report_intergen_calibration_refinement.py",
+      "sha256": "d9d41d8e4b0af89204af9e2e8da0b7e1f5fcc8af293c9a95963f05cba7fab8e1"
+    },
+    {
+      "path": "code/model/tools/retighten_intergen_bequest_reachability.py",
+      "sha256": "4691ee1254cfad93858932a98b73649b325996487c938032350d1867c5dda3f4"
+    },
+    {
+      "path": "code/model/tools/run_dynamic_population_transition.py",
+      "sha256": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362"
+    },
+    {
+      "path": "code/model/tools/run_e5_repaired_policy_with_entry.py",
+      "sha256": "da141cd217291e845b0dd65046b65d75e770fdf17ac05b63687a7587d8d98822"
+    },
+    {
+      "path": "code/model/tools/run_e5f_balanced_terminal_probe.py",
+      "sha256": "589978c4d3298d4a4ac3e8f2680f36502ee0437996ac080a914043579524d0cc"
+    },
+    {
+      "path": "code/model/tools/run_e5f_bounded_calibration_refinement.py",
+      "sha256": "b7ad60d11c31d3d2e81fd70bdac0b889adfa1663b0877248c711d803a4ae1408"
+    },
+    {
+      "path": "code/model/tools/run_e5f_candidate_policy_comparison.py",
+      "sha256": "5d68a1eda49f7157a0828ef88de64f17340786cc80ca46ec07ada41f907ded1f"
+    },
+    {
+      "path": "code/model/tools/run_e5f_final_closed_root_slope_frontier.py",
+      "sha256": "64b4e0e097ade56b2e0f1a0b4ca4f3f4c37f47cc6cda5a6a4076f88559147793"
+    },
+    {
+      "path": "code/model/tools/run_e5f_global_saving_quantification.py",
+      "sha256": "0e89d55a6cd3d0432dcff39b24683a7f6233ac0820a03b47a94eda8e2a924586"
+    },
+    {
+      "path": "code/model/tools/run_e5f_historical_demographic_closure_candidate.py",
+      "sha256": "e2727f665a50d5b64729234600df3ad281f009dbff4a33468003f59646df5a4d"
+    },
+    {
+      "path": "code/model/tools/run_e5f_historical_demographic_closure_smoke.py",
+      "sha256": "5e6edcbd5f012e95ca92b160b33ca49aca1e9ebe1fe2b7e44bc943baea2df39c"
+    },
+    {
+      "path": "code/model/tools/run_e5f_historical_four_group_best_endpoints.py",
+      "sha256": "6ababc913f45236d549230f34e8cb4fb0bad83d5cd4140782cd0719dd704a14e"
+    },
+    {
+      "path": "code/model/tools/run_e5f_independent_numerical_audit.py",
+      "sha256": "656d766e0197e854c73e6b6fb7a3e97cd4fef57e75ad4c7a924d8b1ca5212528"
+    },
+    {
+      "path": "code/model/tools/run_e5f_initial_measurement_probe.py",
+      "sha256": "aea896dbd802b27cb067819154e67c357add4368103ba1c6d6d513e8a133c6c3"
+    },
+    {
+      "path": "code/model/tools/run_e5f_initial_revision_probe.py",
+      "sha256": "ba197f16bfca6042626674e81eb7fcb4a66ae177cf39cee4175aeb58bd1ed513"
+    },
+    {
+      "path": "code/model/tools/run_e5f_joint_nested_experiment.py",
+      "sha256": "7ac09d40eef8eb40971702d5d1e05e83a67be26a81bc8ef3536629f2431b4bdf"
+    },
+    {
+      "path": "code/model/tools/run_e5f_joint_nested_finalize.py",
+      "sha256": "c934a13f29368c3cbdc309985f9f32c5c133c973c38ee5adbc33490a134859df"
+    },
+    {
+      "path": "code/model/tools/run_e5f_joint_nested_full_smoke.py",
+      "sha256": "64aeac5bca749542f3233e8a6c1b50da5273a1653788d787c9fdde6126b037a7"
+    },
+    {
+      "path": "code/model/tools/run_e5f_joint_nested_long_search.py",
+      "sha256": "cd4ecbc56fc2af52307aa31b4e716fe5e4b1bff01c256423efba20bbbe2394f9"
+    },
+    {
+      "path": "code/model/tools/run_e5f_joint_nested_reporting_check.py",
+      "sha256": "3ee555ff6335b00f0922f143e2e9b1424eeae880e62c4c70c206e9b34d725468"
+    },
+    {
+      "path": "code/model/tools/run_e5f_joint_overnight_case.py",
+      "sha256": "cdd3ed363ec170443513cf6f49db23b5f4af87358e5f65797efceffafae62239"
+    },
+    {
+      "path": "code/model/tools/run_e5f_joint_overnight_search.py",
+      "sha256": "6086ecb6549fe8883f4b306c1f976d7154fa5b10480a5cd5190fcf985f4d3f88"
+    },
+    {
+      "path": "code/model/tools/run_e5f_matched_pf_baseline.py",
+      "sha256": "032082de09944d8d47f8c1a33b60b82810ce0ba8c7fc9bc19e0f66e093018450"
+    },
+    {
+      "path": "code/model/tools/run_e5f_matched_pf_historical_root.py",
+      "sha256": "5c861bab36aaef23a7ad64e9a8255def81d25f9aa893e90de30f863a71e7859b"
+    },
+    {
+      "path": "code/model/tools/run_e5f_matched_pf_history.py",
+      "sha256": "b919751422454e6a91eed01d00319c17ef81de8bdfe5fd6f50b86d97f8c30934"
+    },
+    {
+      "path": "code/model/tools/run_e5f_matched_pf_preference_pilot.py",
+      "sha256": "2aa75cc0c48a06b8b92a916e1c544e735b862c07b0900314cc7f57a23c059535"
+    },
+    {
+      "path": "code/model/tools/run_e5f_matched_pf_smoke.py",
+      "sha256": "91e0728387e55c3a33419298868b696820a4d4bd61809996e6a7842654aabf32"
+    },
+    {
+      "path": "code/model/tools/run_e5f_nested_wealth_grid_audit.py",
+      "sha256": "a6e5892fcb66c9c73441b2b57f2a112e2a4e3a17ad932b0142b6cf450bbcad9a"
+    },
+    {
+      "path": "code/model/tools/run_e5f_open_population_transition.py",
+      "sha256": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346"
+    },
+    {
+      "path": "code/model/tools/run_e5f_perfect_foresight_person_demography.py",
+      "sha256": "b9067b83bcd54281bdcb1089b0184b06bba79254c83c5714dd666dddd2a37e40"
+    },
+    {
+      "path": "code/model/tools/run_e5f_perfect_foresight_person_demography_policy.py",
+      "sha256": "3ea8d01770fe438e49ef97d3aafc4db5985f0c58dcbeb6637fdf3eed0b5d3e4f"
+    },
+    {
+      "path": "code/model/tools/run_e5f_perfect_foresight_rebated_property_tax.py",
+      "sha256": "36cb434d3c96b3443f0aaab6106dce783c3633a6fbca9e30cf330b074d519c57"
+    },
+    {
+      "path": "code/model/tools/run_e5f_perfect_foresight_transition.py",
+      "sha256": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be"
+    },
+    {
+      "path": "code/model/tools/run_e5f_person_policy_fertility_mechanism_diagnostic.py",
+      "sha256": "ac4776afe9eb7bf0725d1dc397427381f7c4aae409e2883038fd72333d1daca6"
+    },
+    {
+      "path": "code/model/tools/run_e5f_person_policy_tenure_complementarity_oracle.py",
+      "sha256": "8243b411514c04c7b4e5f8f140ada5f15f4edac4a22382ede3e8e647aca9c7d1"
+    },
+    {
+      "path": "code/model/tools/run_e5f_person_policy_tenure_conditional_transition.py",
+      "sha256": "3e632ea778afdadbc6be9250cc3273f630ba6fc9174629cfadd62d5141ff80e7"
+    },
+    {
+      "path": "code/model/tools/run_e5f_person_policy_tenure_kink_diagnostic.py",
+      "sha256": "2dbc286da7d67192c09530589da250e8a6b12daa36c47062b5a71ce8ce8a2d1a"
+    },
+    {
+      "path": "code/model/tools/run_e5f_post2023_coven_property_tax_path.py",
+      "sha256": "022a643fabff15ac84c3a82f3b717c4b96e332c0b85f7848ee1da94f4aa1f51f"
+    },
+    {
+      "path": "code/model/tools/run_e5f_post2023_coven_property_tax_smoke.py",
+      "sha256": "102a215177ba25d740eee7f953e1144ae475def4998ecdfff2c2092eda082bdb"
+    },
+    {
+      "path": "code/model/tools/run_e5f_post2023_no_policy_continuations.py",
+      "sha256": "0ed39dcd8c5c332ce0a9619402ba4fb6e4d7aff40a4a5c6aefb38c39d9d22147"
+    },
+    {
+      "path": "code/model/tools/run_e5f_post2023_policy_mechanisms.py",
+      "sha256": "345f2b54718bde99d11ee490e649bf005cc6b20125b6a7dbdb0ab698abf6b2f8"
+    },
+    {
+      "path": "code/model/tools/run_e5f_post2023_rebated_property_tax_smoke.py",
+      "sha256": "adc722ec2b908dc6209a91448eb8936a3c4bb6a79f5d9c592b96298bc09219a1"
+    },
+    {
+      "path": "code/model/tools/run_e5f_rebated_tax_shapley_diagnosis.py",
+      "sha256": "feb4d26222d39f892a5b64e16211b344f0efb690b6c7e58592a94af3e7843f22"
+    },
+    {
+      "path": "code/model/tools/run_e5f_rental_cap_sensitivity.py",
+      "sha256": "d4a1598052500aca2f89b9dedf86302d8103e625c013403ba930575319900f31"
+    },
+    {
+      "path": "code/model/tools/run_e5f_simple_fertility_overnight.py",
+      "sha256": "de44faae3782f63f2b6e45aa459f845f03fb0f38111e6d2815bf1da2b230ce8d"
+    },
+    {
+      "path": "code/model/tools/run_e5f_simple_fertility_policy_impact.py",
+      "sha256": "c5006bf4f4d9fe42b3bf795d83ae9d4f28de09960cbb48772014dc06dc39d1bc"
+    },
+    {
+      "path": "code/model/tools/run_e5f_simple_fertility_probe.py",
+      "sha256": "3d62cdee9a22ad990053961b702f3cd1394f7d9c65c1f59107f18bc1edb69625"
+    },
+    {
+      "path": "code/model/tools/run_e5f_simple_fertility_search.py",
+      "sha256": "85df266193f92788cf146039e3cd5a72c2c672ad3146d3b4516286349033af92"
+    },
+    {
+      "path": "code/model/tools/run_e5f_simple_fertility_tax_channels.py",
+      "sha256": "dc9792f015311bb1c7343c1e6f4a3389c0ef25424e8367b3a39c14b5e7d0153d"
+    },
+    {
+      "path": "code/model/tools/run_e5f_simple_fertility_tax_graphs.py",
+      "sha256": "484e8417b3c402ed79ccc17b397e5c13ae768616c86b8b8e0549f80107c2f2a8"
+    },
+    {
+      "path": "code/model/tools/run_e5f_simple_fertility_tax_impact.py",
+      "sha256": "d1d25a391c0a8aa10a358d1766c0500b5d1893b6e562a90e7051e1647a848aa6"
+    },
+    {
+      "path": "code/model/tools/run_e5f_simple_fertility_tax_transition.py",
+      "sha256": "afc41253ae39191d67dc2215d5213e6454e99cfe76c00caebc2a72ebc57c684a"
+    },
+    {
+      "path": "code/model/tools/run_e5f_target_preserving_closed_root_frontier.py",
+      "sha256": "2b86d56422d87e254dd582e3f9d97628da12894ab97e4bfb15f9b94a1c6c7373"
+    },
+    {
+      "path": "code/model/tools/run_e5f_transition_calibration.py",
+      "sha256": "32f5be1c16ec591ef514af91cec2223f8aecd259808b1fc806f9742d5fd64435"
+    },
+    {
+      "path": "code/model/tools/run_e5f_transition_funded_policy.py",
+      "sha256": "a7ed69d951f338eb94ea4e3416877d9c2fbc357902430e211f33652fd8872537"
+    },
+    {
+      "path": "code/model/tools/run_e5f_two_shock_probe.py",
+      "sha256": "c5d555eb98844bf0939bfb7fde43823d06133d4d04d3aba3bf11d7433673f21e"
+    },
+    {
+      "path": "code/model/tools/run_intergen_bequest_calibration_exercise.py",
+      "sha256": "0a697ee89203db26ab4c78188a650ceeb67963eb544f5cd9b32085af7f35c370"
+    },
+    {
+      "path": "code/model/tools/run_intergen_bequest_exit_chain.py",
+      "sha256": "89b040807b344be8d55ad066b446eb85aea85e58afdeed0085636c88f01feac9"
+    },
+    {
+      "path": "code/model/tools/run_intergen_code_repair_comparison.py",
+      "sha256": "e9d44442bff902dec7e2e78124e107271a93a32e29eaa9b9b13f3208201c2a70"
+    },
+    {
+      "path": "code/model/tools/run_intergen_combined_recalibration.py",
+      "sha256": "145bcc8824baca62544967c19b032c34397a0846331547496e5f1b848a446ab8"
+    },
+    {
+      "path": "code/model/tools/run_intergen_combined_wide_discovery.py",
+      "sha256": "3c5d7f934165ddfc08406053df6c8a6a6d712440768b36fb8c8eccba4a109116"
+    },
+    {
+      "path": "code/model/tools/run_intergen_combined_wide_polish.py",
+      "sha256": "de7bb0d1a1fd6e750295125339d3ba6fef2430ed0180384bb69a516c5f1a0d89"
+    },
+    {
+      "path": "code/model/tools/run_intergen_feasibility_fix_diagnostic.py",
+      "sha256": "48c67441fc7f456c0238966b8613aecc5c52d84fb5182f53d0734fcd1f4341c9"
+    },
+    {
+      "path": "code/model/tools/run_intergen_funded_policy_with_entry.py",
+      "sha256": "53267a1f78d9361fe93f29bf9b551ccb8214aa671bb31d33310fa00518852c64"
+    },
+    {
+      "path": "code/model/tools/run_intergen_funded_property_tax_test.py",
+      "sha256": "fe99765bfffd493845c77033e5f2406797f972b0aff2eeb1f271c59f4c6fa73b"
+    },
+    {
+      "path": "code/model/tools/run_intergen_income_feasibility_frontier.py",
+      "sha256": "9f9112db4220ade7865a60cc9d7f32f71a1ad5e012f405d93f755a5b4fb74393"
+    },
+    {
+      "path": "code/model/tools/run_intergen_kappa_smoothing_audit.py",
+      "sha256": "3e99804f7ff6b7464adf83474e5ff0e6abe90a4600d94eecd8abf9170ebfa8f4"
+    },
+    {
+      "path": "code/model/tools/run_intergen_owner_ladder_robustness.py",
+      "sha256": "a6ff3bd5e4984a4909376f51784528c10d2225d706e355d28d798b73b816467c"
+    },
+    {
+      "path": "code/model/tools/run_intergen_policy_poc.py",
+      "sha256": "60d7fb242ed5ea44daa011c218e107d0bc7a321f55c4b8630c6ee2b88e91d7dd"
+    },
+    {
+      "path": "code/model/tools/run_intergen_repaired_surrogate.py",
+      "sha256": "de18bd7e9a4d53f9cf84c09846a55df29d9e440a74a46e8a1699fb0ed183c809"
+    },
+    {
+      "path": "code/model/tools/run_intergen_tax_no_rebate_with_entry.py",
+      "sha256": "a25768541b602053c84d205fa3421eca088374a782c9523ad3e8beb03d61225c"
+    },
+    {
+      "path": "code/model/tools/run_intergen_transfer_floor_probe.py",
+      "sha256": "45f9d5b263cc103dadeb3559b1b8eb82575f911ff35d42c9cedf34961fbb9140"
+    },
+    {
+      "path": "code/model/tools/run_policy_counterfactuals_from_record.py",
+      "sha256": "2b54268731e00a17ff77ee8d0e687a32008a2641450f0ae4c5f890bc6be764bb"
+    },
+    {
+      "path": "code/model/tools/select_intergen_bequest_exit_headline.py",
+      "sha256": "068a25fb341d0e3d790f676ac096efae4bf3bedb22c53b24f4875f85b6993ee5"
+    },
+    {
+      "path": "code/model/tools/solve_e5f_person_demography_terminal_root.py",
+      "sha256": "8cd0cc0762c9603ee207459530da775cef3a50f3960cf3ffff050cadadc22e3f"
+    },
+    {
+      "path": "code/model/tools/test_analyze_e5f_transition_calibration_panel.py",
+      "sha256": "e2816d3310f918e60c86bb1378b315a9afddfd243cd014b855764a32fda6fb78"
+    },
+    {
+      "path": "code/model/tools/test_build_e5f_bounded_refinement_plan.py",
+      "sha256": "42e15cd28368027f25d6baa93c07115ce6c454f85ca29e3def7da2d5051cf541"
+    },
+    {
+      "path": "code/model/tools/test_build_e5f_joint_nested_review.py",
+      "sha256": "bf4a61ecf1edcb190241b8553c7067fba6a2cbc832e5b1e4a57dcc4266944c60"
+    },
+    {
+      "path": "code/model/tools/test_build_e5f_no_policy_transition_report.py",
+      "sha256": "98d7f71bb75211481417bfe66de997d6ef7e41cb68624826d31206e6dd154def"
+    },
+    {
+      "path": "code/model/tools/test_build_e5f_person_demography_terminal_spectrum.py",
+      "sha256": "9d58f9e073334a79804a8df6973bbacf8e07c11af3390dd57ba8581c8d9e84ed"
+    },
+    {
+      "path": "code/model/tools/test_build_e5f_transition_design_feasibility.py",
+      "sha256": "93d12354b44ac8669543e6511ff663a48e5b02f4e0a65af6750a5ef02997377e"
+    },
+    {
+      "path": "code/model/tools/test_build_e5f_transition_historical_validation.py",
+      "sha256": "d92b20e037badde9f2968bd7c0b63c1532005d25b9057aba93a822a88295fccf"
+    },
+    {
+      "path": "code/model/tools/test_build_e5f_transition_ridge_refinement.py",
+      "sha256": "536fc866da2eef0de5e873d088323d6d5118904e3ba5baedf89301814ef75ac8"
+    },
+    {
+      "path": "code/model/tools/test_build_simplified_olg_mixed_tenure_theory.py",
+      "sha256": "099c08a7fa498ed1ecfcaff3c6a5639b0bf71e84a315ea2d260d4f4483a0ad58"
+    },
+    {
+      "path": "code/model/tools/test_calendar_policy_reuse.py",
+      "sha256": "f27d3aecaed0a5eb12f638323a2edbadddd28f6dedfc496d2f9357dd79676a2e"
+    },
+    {
+      "path": "code/model/tools/test_collect_e5f_matched_pf_price_jacobian.py",
+      "sha256": "8cff1ba6fe511af943191cca3e4865c6fdf8b5f0d62306a2c7d45c158ff66a55"
+    },
+    {
+      "path": "code/model/tools/test_collect_e5f_person_demography_policy_horizon_stability.py",
+      "sha256": "0dc1678ce1ab4f98d5b63f9472cae44800ae24482a6171c8ca599ff8e18d928a"
+    },
+    {
+      "path": "code/model/tools/test_collect_e5f_person_policy_tenure_complementarity_share_map.py",
+      "sha256": "6523c1e741434f058d213488f99ecf32a1124eb3c415b196bdde8eb2f4ae7631"
+    },
+    {
+      "path": "code/model/tools/test_collect_e5f_person_policy_tenure_kink_states.py",
+      "sha256": "8e6535f6db2ca687cf7b9da44901b7461f401729d24952547e5423a2137c5903"
+    },
+    {
+      "path": "code/model/tools/test_collect_e5f_post2023_policy_mechanisms.py",
+      "sha256": "866605d22a8dd685762c1c023153295252422b091da7295f2348f0d88cddd7b6"
+    },
+    {
+      "path": "code/model/tools/test_e5f_approved_initial_state.py",
+      "sha256": "ab90b732bc38e476d6a474a398eb86f5867f63dead3395a01ccfbdb556d56304"
+    },
+    {
+      "path": "code/model/tools/test_e5f_balanced_terminal.py",
+      "sha256": "a993e5bd7cc177cdbd51a3c3f211b1f368e1828e3b0305f5fd9cb8c9060100b4"
+    },
+    {
+      "path": "code/model/tools/test_e5f_exhaustive_saving.py",
+      "sha256": "f91c65ed37bd9d3f05c0ee47cb3d974ada2dbf03690a5aba6b55ce12176fb67e"
+    },
+    {
+      "path": "code/model/tools/test_e5f_final_closed_root_slope_frontier.py",
+      "sha256": "909c3bb1d83ec1a9de7ccce58ed6fefb2bf237516884091674a159cc0eaf3ecd"
+    },
+    {
+      "path": "code/model/tools/test_e5f_initial_fertility_observer.py",
+      "sha256": "bf614724b0749d337fdd335f46820f9c926bcf60887176d249a81759ff1b8975"
+    },
+    {
+      "path": "code/model/tools/test_e5f_initial_housing_observer.py",
+      "sha256": "554d4b5e7f8053a06003069d8b857b21981570d9adb9ec87ba7c5432f1e7a17a"
+    },
+    {
+      "path": "code/model/tools/test_e5f_joint_nested_choice.py",
+      "sha256": "fc6eeee4607aae887e2265827c94ddc3e93ace468457bb471573949de261547c"
+    },
+    {
+      "path": "code/model/tools/test_e5f_joint_nested_finalize_parallel.py",
+      "sha256": "daa279aff6f2eeac224e5f2993190feb34c9a19bfc3d4c54034bb2be32c09e04"
+    },
+    {
+      "path": "code/model/tools/test_e5f_joint_nested_full.py",
+      "sha256": "6a26a909e68ca3c184ff4fdd6a9dc2b1d693ce5e0833b9c989932272ccff1d22"
+    },
+    {
+      "path": "code/model/tools/test_e5f_joint_nested_integration.py",
+      "sha256": "9e3a588c6e52eb338ab0be11fb2e173ae2fdbd65886ad10ebe6606b507894f88"
+    },
+    {
+      "path": "code/model/tools/test_e5f_joint_nested_long_search.py",
+      "sha256": "8231624510c50c399dcaeb5e25154960cee91ee2419b55032c9bd4f681f2253b"
+    },
+    {
+      "path": "code/model/tools/test_e5f_matched_pf_birth_path.py",
+      "sha256": "eacb4a33f5a7e1eae05575d91794f2920652cf7257cf1941050bcbce75521f4c"
+    },
+    {
+      "path": "code/model/tools/test_e5f_matched_pf_endpoint.py",
+      "sha256": "bd70f7b9f3979d8b4a61c8969262ac56130281088caf6ed6b329cb09c3d6e402"
+    },
+    {
+      "path": "code/model/tools/test_e5f_matched_pf_history.py",
+      "sha256": "a0e74f2c0969071a4638b30e9a0f99ffe0ff450adaf536e8126dce80ed994450"
+    },
+    {
+      "path": "code/model/tools/test_e5f_matched_pf_initial_state.py",
+      "sha256": "3c94cdd65b0e97e4a22275494c88e04004f4dd266281aeb71a99be865e0b9d00"
+    },
+    {
+      "path": "code/model/tools/test_e5f_matched_pf_moments.py",
+      "sha256": "40bfdc60ea59ac9ab175154d19b4a123e028317646678385dc82db1a043d3098"
+    },
+    {
+      "path": "code/model/tools/test_e5f_matched_pf_path_root.py",
+      "sha256": "bfc220af6819adc19eb739ff43c1c091e33bf8aae4748c9ec1b48f86d59266c2"
+    },
+    {
+      "path": "code/model/tools/test_e5f_matched_pf_price_root.py",
+      "sha256": "c852715025ec9b70fdbb10998f049908bbe33dc53274f7b12a67bc12c3bf6693"
+    },
+    {
+      "path": "code/model/tools/test_e5f_matched_pf_smoke.py",
+      "sha256": "419bac866f614f88a40c4bf4c2f12e89c8394c4a1fe1fd6b0666176cfc1c8bc2"
+    },
+    {
+      "path": "code/model/tools/test_e5f_parenthood_utility.py",
+      "sha256": "2991b33a99c322301e993f15dcf761a35845424c62cd430a3f140e3388cdf6e7"
+    },
+    {
+      "path": "code/model/tools/test_e5f_pf_choice_ownership.py",
+      "sha256": "43e736db56efebf045a3405e5207db88c353a23a40ed1c094c467414dd567fce"
+    },
+    {
+      "path": "code/model/tools/test_e5f_pf_historical_bridge.py",
+      "sha256": "ab67c5ecc1374529386d8e47140527d380203acc09c04ed702115b4ffa4ac998"
+    },
+    {
+      "path": "code/model/tools/test_e5f_post2023_kappa_mechanism_decomposition.py",
+      "sha256": "d2d5491f20ce3f75da496f86d22130d00951a791ae61048a44f6d3543b9588a0"
+    },
+    {
+      "path": "code/model/tools/test_e5f_post2023_no_policy_continuations.py",
+      "sha256": "b8774f85490481a0584a3779e175283db5033285384afd5412f917846d0cecd1"
+    },
+    {
+      "path": "code/model/tools/test_e5f_post2023_tenure_sensitivity.py",
+      "sha256": "a7f50ae5941409c331e2941997531d26dc2f19ac754bfb46825bb52c74e891f0"
+    },
+    {
+      "path": "code/model/tools/test_e5f_simple_fertility_calibration.py",
+      "sha256": "7f95870eea894c6c047ac6437b20c45dc5b2a57c919ae509088876713723da39"
+    },
+    {
+      "path": "code/model/tools/test_e5f_simple_fertility_nest.py",
+      "sha256": "1686dea04ca2ca37c69a040d6f0cd2d748dc569e1e1fcff1131175df999f75fa"
+    },
+    {
+      "path": "code/model/tools/test_e5f_simple_fertility_overnight.py",
+      "sha256": "ca928182ef173d74e866bde286ed537c27c2e57e7362bb3bed108d2bea15db47"
+    },
+    {
+      "path": "code/model/tools/test_e5f_simple_fertility_search.py",
+      "sha256": "355cc9d51cd5c39695a7f8751145777cf1c79e85bc914a5b587ef6aa3f570205"
+    },
+    {
+      "path": "code/model/tools/test_e5f_small_mass_transport.py",
+      "sha256": "0cd6cd8b51ecb05778deb77c5aecff35db309d5c60c0ee87ebed2943cd839c5f"
+    },
+    {
+      "path": "code/model/tools/test_e5f_social_security.py",
+      "sha256": "58df627a1819dc73d7ffaaacc728f2bdd87f58f9a8eb44df41f3695182bd1d8c"
+    },
+    {
+      "path": "code/model/tools/test_e5f_social_security_compiled.py",
+      "sha256": "3bc21a091b611e99b481c606c8ea9954036260c3998999a73a118d1df073a515"
+    },
+    {
+      "path": "code/model/tools/test_e5f_social_security_root.py",
+      "sha256": "217f80dcd1041531cda6f152248aa85a0711ae4dc12b946e2ecd74b98ea4e628"
+    },
+    {
+      "path": "code/model/tools/test_e5f_stationary_paygo.py",
+      "sha256": "7d7508c85991b07e4351ac95c22a0b2444447afa7ce8971adb392e23ac237f5f"
+    },
+    {
+      "path": "code/model/tools/test_e5f_target_preserving_closed_root_frontier.py",
+      "sha256": "b9e3d646cefe7809d5c9d78c9b807a418b728fbfa95170fea3bd7345706ab9ec"
+    },
+    {
+      "path": "code/model/tools/test_e5f_transition_accounting.py",
+      "sha256": "9e1bb417811925b74fdbdc6e08489e46d38ae2e4cd522a4e931dee8fa7dafd5f"
+    },
+    {
+      "path": "code/model/tools/test_e5f_two_shock_calibration.py",
+      "sha256": "fbc86ab1c49d08040db352f65add9493cf1d019c2f89a48637abf3cf6f3aad49"
+    },
+    {
+      "path": "code/model/tools/test_e5f_two_shock_choice.py",
+      "sha256": "33148ed8dd3d2722cbcc6b700dfcc0896dd211ba248b0a0162f911776f95348b"
+    },
+    {
+      "path": "code/model/tools/test_e5f_young_ownership_target_profile.py",
+      "sha256": "f7f2e0c38d3d5e4460344dfa417f895f255fc0b2e1929f32a5be41c9e78a7176"
+    },
+    {
+      "path": "code/model/tools/test_run_e5f_historical_demographic_closure_smoke.py",
+      "sha256": "de1a2ecf26f4b894aa80f3e554e24574f66de175c9bd267e0c154724a5e406d0"
+    },
+    {
+      "path": "code/model/tools/test_run_e5f_independent_numerical_audit.py",
+      "sha256": "97f77122ccbad69cf1621c16682192a05a397b1fb9f3ecaf0ae8c640ef7fc657"
+    },
+    {
+      "path": "code/model/tools/test_run_e5f_joint_overnight_search.py",
+      "sha256": "d1d4d102dd4bccebf96b4d52035daea5c501c9bd9d4705ca2bf18917a0eeaf25"
+    },
+    {
+      "path": "code/model/tools/test_run_e5f_matched_pf_historical_root.py",
+      "sha256": "bd27139c743875d9ac5804bb0b541e074beaba5072ce9c44a6b528bde477e606"
+    },
+    {
+      "path": "code/model/tools/test_run_e5f_matched_pf_preference_pilot.py",
+      "sha256": "00763c1befa9bb8a0ae048760450f090051efe1089099d692a5ce5dfdbd2829e"
+    },
+    {
+      "path": "code/model/tools/test_run_e5f_nested_wealth_grid_audit.py",
+      "sha256": "d8e15b11a9d2488f76faae2b801e28811a3c748c716da7ef698d3722d1fb6f39"
+    },
+    {
+      "path": "code/model/tools/test_run_e5f_perfect_foresight_person_demography.py",
+      "sha256": "5cbe6faf8c613be50980410f60b77fa6b3b3b8ab5f63e45a136cd96dd494422d"
+    },
+    {
+      "path": "code/model/tools/test_run_e5f_perfect_foresight_person_demography_policy.py",
+      "sha256": "fc6e8725c5c648f61734740f065bf64b3956ac98c70a5333d0f014f403e9e9e8"
+    },
+    {
+      "path": "code/model/tools/test_run_e5f_perfect_foresight_transition.py",
+      "sha256": "9b527239a18cbea8150bc0ef97bf89b7483c686bb77ab133ac5fcf5760fd28d5"
+    },
+    {
+      "path": "code/model/tools/test_run_e5f_person_policy_tenure_complementarity_oracle.py",
+      "sha256": "1f541f17d2f622673f7c3231adb62a9f7c8e1942680c13db1dd6365b9b5e8133"
+    },
+    {
+      "path": "code/model/tools/test_run_e5f_person_policy_tenure_conditional_transition.py",
+      "sha256": "ae483449ebb7fe3daa62f7c4fd01938a92214099ca5cec1919c72eea8727c922"
+    },
+    {
+      "path": "code/model/tools/test_run_e5f_person_policy_tenure_kink_diagnostic.py",
+      "sha256": "86f6b6edbb5ad47b5a6be25afe713443a2726864efa3fd84b2b11ad02f19752b"
+    },
+    {
+      "path": "code/model/tools/test_run_e5f_post2023_coven_property_tax_path.py",
+      "sha256": "068b18df4c68d2255902f1ddd30cedcc51a6e5eb49dc291241092a49039d6f61"
+    },
+    {
+      "path": "code/model/tools/test_run_e5f_post2023_coven_property_tax_smoke.py",
+      "sha256": "3e085f4d935bfa7415cfe769a72a8b96719e009559a8215cf36cd30addf45545"
+    },
+    {
+      "path": "code/model/tools/test_run_e5f_post2023_policy_mechanisms.py",
+      "sha256": "6462f2c8d78bc8cd469314a075fafd683653de94f3895254723534fc2b2634e6"
+    },
+    {
+      "path": "code/model/tools/test_run_e5f_post2023_rebated_property_tax_smoke.py",
+      "sha256": "9b139fb0721edcb12727cbfe829a66fd1d73d12354a5831e4dbee31174dee549"
+    },
+    {
+      "path": "code/model/tools/test_run_e5f_rebated_tax_shapley_diagnosis.py",
+      "sha256": "636c57fc35db53faeb6a6120060f7ead89dc36328893a55ede51e559a891ccc6"
+    },
+    {
+      "path": "code/model/tools/test_run_e5f_transition_funded_policy.py",
+      "sha256": "9c5506f59c0c640d13aa2b6771e5fc93972cc9624dc9cbb7df912ceba693c5b5"
+    },
+    {
+      "path": "code/model/tools/tour_template.html",
+      "sha256": "02ce781714d444adc8d990cd74cb4929b706289bfe04a0ab909dd6aefdcbbb50"
+    },
+    {
+      "path": "code/model/tools/tour_widgets.js",
+      "sha256": "049fecde9f8f4baed1c323c8ad19ca3636ddf3caec19d3bba4a2e1b4ebcf73e6"
+    },
+    {
+      "path": "code/model/tools/verify_simplified_olg_amendments.py",
+      "sha256": "395d2a2086ead26c086f187f7ecf67cf63ea119e03c4d34c18d411650b55a2f6"
+    },
+    {
+      "path": "code/model/tools/verify_simplified_olg_local_transition.py",
+      "sha256": "d36f98a38d4f7f39b872830449fffb9aad880f7379bace2ba12265dfbca1c65d"
+    },
+    {
+      "path": "code/model/tools/verify_simplified_olg_mixed_transition.py",
+      "sha256": "f22bdc662ca470b763805abe0adec28cb1548c0b921260e57636bd84be08daa4"
+    },
+    {
+      "path": "code/model/tools/verify_simplified_olg_planner_benchmarks.py",
+      "sha256": "88ba37027f520a6cbbb94fcf427080eb60ee8ae0751e4208d80fe783aa91e79c"
+    },
+    {
+      "path": "code/model/tools/verify_simplified_olg_simple_assessment.py",
+      "sha256": "97c4224d62c67fff485b64707e351ed6c8a5c7eb3b752dcb0d4791af60822d9f"
+    },
+    {
+      "path": "code/model/tools/warm_benchmark.py",
+      "sha256": "a195df791bd9d9b79f51d8918c128605b481796fd5d26f020f85d799d300d8e0"
+    }
+  ]
+}
