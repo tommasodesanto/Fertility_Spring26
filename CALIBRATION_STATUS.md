@@ -2,7 +2,33 @@
 
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
-**September 11, further work authorized — extended initial-calibration job17378993 submitted.**
+**September 11, extended run collected —17378993 COMPLETED; no active job from this task.**
+Job17378993 completed normally in1h36m44s, exit0, allsix refinement rounds.
+178case evaluations:176verified,2housing-gate rejections; search continued past
+both rejections. Selected candidate r5_joint_09 repeated twice exactly:
+all13numerical target rows,17parameter rows and loss158.07639074681484 match.
+Same fixed objective improved43.28% from278.708079 and86.61% from1180.224545.
+Full objective independently recomputed;21selectedartifact hashes verified,
+including17originalPNG graphs,2tables,cases and summary. Earlier heartbeat remains
+stale at the final-repeat phase; authoritative summary and sacct say COMPLETED.
+
+Recent-parent ownership gap is0.14943390 versus0.16289551; childlessness0.20501783
+versus0.19827875; exactly-one among mothers0.20532188 versus0.21365533.
+Housing/tenure still problematic: meanrooms6.32135461 versus5.56109738;
+ownership30–55=0.53486471 versus0.64833403; first-birth response1.11353343rooms
+versus0.72024626. Overall ownership and room levels worsen relative to the prior
+candidate despite lower weighted loss. h_P=2.18379536 is inside its2.3bound;
+beta_annual=0.99579607. Two fertility scales andtheta1 retain saved near-boundflags.
+No target,weight,bound or numericalgate changed. Initial normalization remains2.1.
+
+This is the new initial pre-2007 stationary working calibration only. No historical
+shock path, horizon certificate or policy run was produced with these parameters.
+The olderPDF still describes an earlier candidate; current full assessment and
+all17graphs are at:
+`output/model/e5f_matched_pf_20260909a/initial_calibration_contract/extended_refinement/collected_17378993/READOUT.md`.
+No automatic next run or AI monitor launched. Cluster access restored at collection.
+
+**Previous launch record —17378993 now completed; see above.**
 Author requests more work following completed17376529. A separate autonomous batch
 starts from its exactly reproduced selected candidate. Up to6further rounds of
 18feasible derivatives/12joint proposals,24CPUs192GiB,3h hard cap; maximum180search
