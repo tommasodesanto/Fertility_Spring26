@@ -1,5 +1,44 @@
 # Current-candidate transition diagnostic
 
+## Commute launch: dated fertility reporting and preference alternatives
+
+The continued six-date root passed its unchanged market/fiscal and exact replay
+gates. Its existing 28-date continuation remains job17402074. New job17409646_2
+runs the same accepted short path with the existing age-specific birth-flow
+observer attached without changing any model source. Array17409647_0/1 starts
+automatically only after that numerical observer smoke passes; its two independent
+branches reuse the verified -0.025/-0.10 terminal endpoints and the accepted
+-0.05 short price/pension path as an initial guess. No terminal is unnecessarily
+re-solved. Array tasks have separate failure/output directories.
+
+`run_observed_bracket.py` adds a read-only observer around the existing solver,
+retaining its original observer and every original source/input/numerical gate.
+It saves age-specific parity flows, age masses and household-rate diagnostics
+at every date/mapping. These rates use model-household exposure, not female
+exposure. They are diagnostic sensitivities, **not an estimated historical shock
+or an empirically certified female-TFR fit**. Female-exposure/maternal-age mapping
+and the outer preference-fitting update remain unfinished and have priority.
+
+The baseline observer smoke is capped at8 six-date mappings/96 Bellman calls,
+30minutes plus startup/reporting within a40-minute Slurm allocation. Each
+alternative gets one six-date solve, at most one continuation using its own
+verified saved point/Jacobian, and28dates only after its short root converges.
+Maximum24mappings/640Bellman calls per alternative, stage budgets30+30+120minutes,
+3h15m Slurm limit. The observed short mapping is about170seconds; a28-date
+mapping is provisionally about13–17minutes, so the2h stage limit can bind.
+The baseline long path already running is not duplicated. Three new jobs need
+at most30GiB across three one-CPU allocations; alternatives wait for the smoke.
+
+All44 startup unit tests plus the parity-flow/period-rate accounting test pass;
+all three real source/input preflights pass. The numerical observer smoke is
+pending/running, not declared passed by these pure tests. Every case retains
+the17standard graphs, root replay and checkpoint gates. Submission IDs, source
+hashes and dependency are in `observed_bracket_submission.json`. Cluster-side
+controllers and Slurm dependency run without the laptop; no AI heartbeat was
+reactivated. Outputs are under the remote batch's `observed_bracket/` directory.
+
+Earlier run records below describe the original attempts.
+
 Job17393936 runs in an isolated cluster snapshot at
 `/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a`.
 The source, fiscal and demographic preflight passed, following78 focused tests.

@@ -2,6 +2,37 @@
 
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
+**September11, commute launch — preference-rate observer17409646_2 RUNNING;
+two alternative histories17409647_0/1 queued after its successful smoke.**
+The resumed six-date history now passed its unchanged housing/fiscal/replay
+gates; original17402074 has advanced to28dates. The new baseline short replay
+saves the existing age-specific parity-flow and model-household-rate diagnostics.
+Its reporting-only wrapper preserves all641original scientific pins and the
+three existing candidate wrappers.44unit tests and the direct period-rate flow
+accounting test pass, as do source/input preflights for allthree cases. Numerical
+observer smoke is not yet certified. Two independent-0.025/-0.10 histories
+follow automatically, reusing their already accepted terminal endpoints and the
+accepted-0.05 short price/pension path as guesses. Each gets at most two short
+root rounds then one28-date root:640Bellmans,3h15mSlurm. Baseline reporter gets
+96Bellmans/40minutes; its existing long path is not duplicated.
+Full recipe and submissionreceipt: `output/model/e5f_matched_pf_20260909a/current_candidate_transition/README.md`.
+
+**Priority remains unfinished historical preference estimation.** Current jobs
+measure sensitivities; there is no outer shock-fitting update. The observer's
+denominator is households by model age, not female exposure. Do not call it an
+empirically certified TFR fit. Finish the female/maternal-age observation contract
+and connect the preference update; fixed-beta profiling must not postpone it.
+No calibrated-shock, horizon or newpolicy result is claimed.
+
+At the latest queue check17403262_0(beta.98) stillruns;17403262_1(beta.99) stopped
+after17m16s during its first derivative stage. Its seed and completed cases are
+saved, but no exact selected repeats or joint refinements completed. Controller
+reports a sequential age15 advancement mass-gate failure in r0_d5_+1:
+relativegap1.013e-8 versus1e-8tolerance (actualmass0.039115152442695297,
+expected0.03911515283909172). Diagnose it before recovery; do not silently relax
+the gate or classify a failed mass identity as a valid fit. The older heading
+below sayingboth profilesrun is superseded.
+
 **September11 — fixed-beta profiles17403262_0/1 RUNNING; transition17402074 RUNNING.**
 Author approved fixedannualbeta0.98 and0.99 profiles, reoptimizing every other
 eightstructuralcoordinates, with unchanged12scoredtargets plus2.1normalization.
