@@ -1,0 +1,62 @@
+{
+  "schema": "e5f_three_hour_fixed_objective_continuation_v1",
+  "source_root": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8",
+  "workers": 24,
+  "search_seconds": 7800,
+  "slurm_seconds": 10800,
+  "verification_reserve_seconds": 3000,
+  "rounds": 2,
+  "maximum_new_cases": 62,
+  "maximum_new_repetitions": 64,
+  "maximum_GE": 512,
+  "expected_case_seconds": 490,
+  "expected_wall_minutes_excluding_queue": [
+    45,
+    90
+  ],
+  "smoke_job": "17370427",
+  "smoke_summary_sha256": "22b9a9f75a9e43a528bbde766f6595274f9843e7f77f29316315168118fd8e53",
+  "smoke_contract_sha256": "afff32c34e679aaf19efbbe14cd673919e3df333d719847c9928f289946a19df",
+  "controller_sha256": "5b6af4df3263a0291c82e2988d3e3f272895961779f2a0cb99882c8c682166e3",
+  "file_sha256": {
+    "proposals.json": "8a6374b28459778f1da804139d071981e892d72a5e61aa8d9352ffb94b7ba1d3",
+    "test_run_search.py": "01e7f2828a3e6448a9beadae8136bbd8651e238442b847f26f1a5e06c7674722"
+  },
+  "stop": "Known exact initial housing-equilibrium failures are rejected proposals, never scored. Unexpected/source/observer/accounting errors stop. Derivatives may use a saved one-sided stencil if one side clears; both sides failing stops that refinement. Majority equilibrium rejection stops. No changed model, targets, weights or gates. Initial selected-seed exact smoke precedes refinement; final selected candidate repeats twice. Hard limit3h.",
+  "production_eligible": false,
+  "resume_score_path": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/batches/three_hour_refinement_20260911/results/cases/md_joint_10/evaluation/scored_repetition_01/score.json",
+  "resume_score_sha256": "ddc8f4885d41ed237f831d0b876cbb9a07b57a059c68cd7ca0215466537dac2b",
+  "resume_proposal": {
+    "case_id": "md_joint_10",
+    "center": "baseline",
+    "center_actual_loss": 1499.85182523238,
+    "initial_psi": 0.2827035668649932,
+    "linear_predicted_loss": 849.8153152143776,
+    "linear_predicted_recent_parent": 0.0038322907582430746,
+    "log_step": [
+      -0.49999999999999994,
+      -0.49999999999999994,
+      -0.3771732658903396,
+      0.022746482940726467,
+      0.07461719443288818,
+      -0.49999999999999994,
+      0.49999999999999994,
+      -0.05373670544067892,
+      0.49999999999999994
+    ],
+    "model_evaluated": false,
+    "parameters": {
+      "H0": 9.08830502698483,
+      "beta_annual": 0.9971324323122445,
+      "chi": 1.0779702806734552,
+      "first_birth_fixed_cost": 4.378034397461762,
+      "h_P": 1.1818858574626845,
+      "kappa_fert": 1.3150634238661971,
+      "kappa_fert_continuation": 1.2143895777366736,
+      "theta0": 0.34593469518160364,
+      "theta1": 0.1710118836194822
+    },
+    "radius_in_log_coordinates": 0.5,
+    "ridge": 0.1
+  }
+}

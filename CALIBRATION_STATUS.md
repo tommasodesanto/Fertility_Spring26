@@ -2,9 +2,39 @@
 
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
-**September 11, teaching-block launch — autonomous three-hour cluster search RUNNING.**
+**September 11, teaching-block completion — no active computation; refinement completed.**
+First job17375937 stopped after8m16s when2of24 proposals failed the unchanged
+initial housing-equilibrium gate;22valid cases saved, bestloss869.413984.
+Its controller incorrectly treated ordinary candidate rejection as a whole-search
+stop. Author requested continuation despite a single candidate failure. Separate
+job17376529 classifies that exact, preflight-verified housing error as inadmissible,
+while source/observer/accounting/unexpected errors remain fatal; one-sided derivative
+stencils are explicit when only one side clears. No model or gate changed.
+
+17376529 COMPLETED normally in54m35s, exit0:62candidate jobs/64repetitions,
+all62passed. Two derivative/joint-refinement rounds finished, followed by exact
+selected repetitions. Same complete working loss is278.70807868932224, versus
+869.4139839490657 continuation seed and1180.2245445422732 before both jobs.
+Every numerical fit row and parameter row repeats exactly; only checkpoint hash
+metadata differs. Full13-row loss independently recomputed;20selectedartifact
+hashes checked (17PNGs,2tables,summary). New candidate is r1_joint_10, final
+verification output selected_exact_repetitions. Not a certified benchmark.
+
+Recent-parent ownership gap improves to0.09753554 versus0.16289551. First-birth
+rooms now overshoot1.26589562 versus0.72024626; average rooms6.22643 versus5.56110;
+ownership30–55is0.572675 versus0.648334. Initial completed-fertility normalization
+2.10009165 remains within its gate. This is pre-2007 initial calibration, not a
+2023 recalibration, historical shock fit, horizon certificate or policy result.
+Allfulltables,parameterboundsand17originalplots:
+`output/model/e5f_matched_pf_20260909a/initial_calibration_contract/three_hour_continuation/collected_17376529/READOUT.md`.
+Remote batch `three_hour_continuation_20260911` under the70abd4a8snapshot.
+The two-round search cap was reached before the three-hour wall cap. No additional
+round or AI monitor was launched. The previous PDF describes the prior candidate;
+use this new complete readout for current calibration numbers.
+
+**Historical launch record —17375937 subsequently stopped; see completion above.**
 Author requests useful computation while teaching for three hours, with laptop off.
-Job17375937 is RUNNING oncs657,24CPUs/192GiB,3h hard cap. All641 frozen source
+Job17375937 was launched oncs657,24CPUs/192GiB,3h hard cap. All641 frozen source
 files, objective/provenance/checkpoint pins and exact-loop17370427 receipt passed
 preflight;6 orchestration tests and27 unchanged wrapper/scorer tests pass on Torch.
 The plan evaluates24 joint points, then up to two rounds of18 derivative probes
