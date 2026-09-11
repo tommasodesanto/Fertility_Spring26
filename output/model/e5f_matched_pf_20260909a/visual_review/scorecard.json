@@ -1,0 +1,297 @@
+{
+  "checks": [
+    [
+      "Check",
+      "Success means",
+      "Current result"
+    ],
+    [
+      "Pension accounts",
+      "Balance at every solved date under the pinned fiscal gate.",
+      "PASS; max scaled residual 3.34e-10"
+    ],
+    [
+      "Housing equilibrium",
+      "Demand equals supply under the pinned market gate.",
+      "PASS; max relative residual 3.56e-05"
+    ],
+    [
+      "Reproducibility",
+      "Saved mapping replays and checkpoint reloads correctly.",
+      "PASS"
+    ],
+    [
+      "Calibration fit",
+      "Every target and parameter visible; economically material misses resolved or explicitly assessed.",
+      "NEEDS WORK; complete tables follow. A small total loss alone is insufficient."
+    ],
+    [
+      "2023 utility comparison",
+      "Old and new each recalibrated to the same 2023 targets, fiscal closure and numerical gates.",
+      "MISSING; current stationary tests freeze parameters and final preference."
+    ],
+    [
+      "Policy functions",
+      "Feasible choices and probabilities; occupied reversals explained and sensitive states checked under numerical refinement.",
+      "OPEN; plotting objects clarified. Global policy accuracy is not certified."
+    ],
+    [
+      "Historical transition",
+      "Correctly timed, comparable data overlays; shock estimated; observed and imposed moments distinguished.",
+      "NEEDS WORK; birth-count shape misses. Household path is conditioned on data."
+    ],
+    [
+      "Terminal horizon",
+      "Approved tail checks pass and the dates of interest remain stable when the horizon is extended.",
+      "NOT PASSED"
+    ],
+    [
+      "Policy readiness",
+      "All above resolved, with approved population, entry, fiscal and geographic closure.",
+      "NOT READY"
+    ]
+  ],
+  "models": [
+    [
+      "Experiment",
+      "What was varied / targeted",
+      "Interpretation"
+    ],
+    [
+      "Early stationary candidate",
+      "New utility; early-period working targets; fertility normalized to 2.1.",
+      "Loss 1180.225. Candidate, not certified SMM."
+    ],
+    [
+      "Static old / new, late preference",
+      "Same structural parameters, final preference and housing supply; balanced pensions.",
+      "Losses 1335.720 / 1361.330. Neither recalibrated."
+    ],
+    [
+      "Six-date historical diagnostic",
+      "New utility; illustrative announced preference path, 2007-2027.",
+      "Converged finite path. Neither fitted history nor horizon-certified policy benchmark."
+    ]
+  ],
+  "production_eligible": false,
+  "model_solves": 0,
+  "fit_screen": [
+    {
+      "case": "early_candidate",
+      "moment": "Childless women, ages 40\u201344",
+      "scaled_gap": -1.4117507221110854,
+      "review_flag": false
+    },
+    {
+      "case": "early_candidate",
+      "moment": "Exactly one child among mothers, ages 40\u201344",
+      "scaled_gap": 1.104725511440799,
+      "review_flag": false
+    },
+    {
+      "case": "early_candidate",
+      "moment": "Period mean first-birth age",
+      "scaled_gap": 3.992945709971659,
+      "review_flag": true
+    },
+    {
+      "case": "early_candidate",
+      "moment": "First births at age 30+",
+      "scaled_gap": -0.1259696830519841,
+      "review_flag": false
+    },
+    {
+      "case": "early_candidate",
+      "moment": "Wealth / annual gross labor earnings",
+      "scaled_gap": -0.45456421659817053,
+      "review_flag": false
+    },
+    {
+      "case": "early_candidate",
+      "moment": "Annual bequests / aggregate wealth",
+      "scaled_gap": 6.028525027980386,
+      "review_flag": true
+    },
+    {
+      "case": "early_candidate",
+      "moment": "Old wealth/income p90 / median, ages 76\u201384",
+      "scaled_gap": 1.4368569765092727,
+      "review_flag": false
+    },
+    {
+      "case": "early_candidate",
+      "moment": "Mean occupied rooms, capped at 9",
+      "scaled_gap": 4.065313229232088,
+      "review_flag": true
+    },
+    {
+      "case": "early_candidate",
+      "moment": "Ownership, heads 30\u201355",
+      "scaled_gap": -2.105284205531243,
+      "review_flag": true
+    },
+    {
+      "case": "early_candidate",
+      "moment": "First-birth room response, \u22121 to +3",
+      "scaled_gap": -2.248240626686958,
+      "review_flag": true
+    },
+    {
+      "case": "early_candidate",
+      "moment": "Rooms: 3+ versus 1\u20132 resident children (model dependent proxy)",
+      "scaled_gap": -2.6910014672948512,
+      "review_flag": true
+    },
+    {
+      "case": "early_candidate",
+      "moment": "Recent-parent ownership gap",
+      "scaled_gap": -33.002760998440664,
+      "review_flag": true
+    },
+    {
+      "case": "old_balanced",
+      "moment": "tfr",
+      "scaled_gap": -19.55964999977955,
+      "review_flag": true
+    },
+    {
+      "case": "old_balanced",
+      "moment": "childless_rate",
+      "scaled_gap": 19.181588048962134,
+      "review_flag": true
+    },
+    {
+      "case": "old_balanced",
+      "moment": "mean_age_first_birth",
+      "scaled_gap": 17.260195175457394,
+      "review_flag": true
+    },
+    {
+      "case": "old_balanced",
+      "moment": "share_first_births_age30plus",
+      "scaled_gap": 12.331455181388485,
+      "review_flag": true
+    },
+    {
+      "case": "old_balanced",
+      "moment": "housing_increment_0to1",
+      "scaled_gap": -4.205269443181564,
+      "review_flag": true
+    },
+    {
+      "case": "old_balanced",
+      "moment": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "scaled_gap": 0.8789533943328564,
+      "review_flag": false
+    },
+    {
+      "case": "old_balanced",
+      "moment": "own_family_gap",
+      "scaled_gap": -6.478253946205139,
+      "review_flag": true
+    },
+    {
+      "case": "old_balanced",
+      "moment": "own_rate",
+      "scaled_gap": 0.44919720121715595,
+      "review_flag": false
+    },
+    {
+      "case": "old_balanced",
+      "moment": "aggregate_mean_occupied_rooms_18_85",
+      "scaled_gap": 2.311490846758331,
+      "review_flag": true
+    },
+    {
+      "case": "old_balanced",
+      "moment": "aggregate_wealth_to_annual_gross_labor_earnings",
+      "scaled_gap": -1.6638803778414086,
+      "review_flag": false
+    },
+    {
+      "case": "old_balanced",
+      "moment": "annual_bequest_flow_to_aggregate_wealth",
+      "scaled_gap": 8.015736117548919,
+      "review_flag": true
+    },
+    {
+      "case": "old_balanced",
+      "moment": "old_total_wealth_to_annual_income_p90_p50_7684",
+      "scaled_gap": 1.4958080532467564,
+      "review_flag": false
+    },
+    {
+      "case": "new_balanced",
+      "moment": "tfr",
+      "scaled_gap": -19.210057236653753,
+      "review_flag": true
+    },
+    {
+      "case": "new_balanced",
+      "moment": "childless_rate",
+      "scaled_gap": 18.900017600612617,
+      "review_flag": true
+    },
+    {
+      "case": "new_balanced",
+      "moment": "mean_age_first_birth",
+      "scaled_gap": 17.07868393780487,
+      "review_flag": true
+    },
+    {
+      "case": "new_balanced",
+      "moment": "share_first_births_age30plus",
+      "scaled_gap": 12.178124291639708,
+      "review_flag": true
+    },
+    {
+      "case": "new_balanced",
+      "moment": "housing_increment_0to1",
+      "scaled_gap": -4.255241194836216,
+      "review_flag": true
+    },
+    {
+      "case": "new_balanced",
+      "moment": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "scaled_gap": -7.427546107883711,
+      "review_flag": true
+    },
+    {
+      "case": "new_balanced",
+      "moment": "own_family_gap",
+      "scaled_gap": -6.842151952310701,
+      "review_flag": true
+    },
+    {
+      "case": "new_balanced",
+      "moment": "own_rate",
+      "scaled_gap": 0.4674358207407332,
+      "review_flag": false
+    },
+    {
+      "case": "new_balanced",
+      "moment": "aggregate_mean_occupied_rooms_18_85",
+      "scaled_gap": 2.2968377199478813,
+      "review_flag": true
+    },
+    {
+      "case": "new_balanced",
+      "moment": "aggregate_wealth_to_annual_gross_labor_earnings",
+      "scaled_gap": -1.6646729579397468,
+      "review_flag": false
+    },
+    {
+      "case": "new_balanced",
+      "moment": "annual_bequest_flow_to_aggregate_wealth",
+      "scaled_gap": 8.02614024777061,
+      "review_flag": true
+    },
+    {
+      "case": "new_balanced",
+      "moment": "old_total_wealth_to_annual_income_p90_p50_7684",
+      "scaled_gap": 1.5264539882557777,
+      "review_flag": false
+    }
+  ],
+  "fit_screen_definition": "Flag abs(gap)*sqrt(weight)>2 for review only; objective scales include synthetic scales, not confidence intervals. No target or weight is changed."
+}

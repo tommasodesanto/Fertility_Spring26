@@ -1,0 +1,696 @@
+{
+  "late_target_table": [
+    [
+      "Moment",
+      "Target",
+      "Old",
+      "New",
+      "Old gap",
+      "New gap",
+      "Weight",
+      "Old loss",
+      "New loss"
+    ],
+    [
+      "Completed-fertility measure",
+      "1.918",
+      "1.4",
+      "1.4092",
+      "-0.51801",
+      "-0.50875",
+      "1425.7",
+      "382.58",
+      "369.03"
+    ],
+    [
+      "Childlessness",
+      "0.188",
+      "0.33434",
+      "0.33219",
+      "0.14634",
+      "0.14419",
+      "17181",
+      "367.93",
+      "357.21"
+    ],
+    [
+      "Mean age at first birth",
+      "26.045",
+      "28.634",
+      "28.606",
+      "2.589",
+      "2.5618",
+      "44.444",
+      "297.91",
+      "291.68"
+    ],
+    [
+      "First births at 30+",
+      "0.26033",
+      "0.38364",
+      "0.38211",
+      "0.12331",
+      "0.12178",
+      "10000",
+      "152.06",
+      "148.31"
+    ],
+    [
+      "First-birth room response",
+      "0.72025",
+      "0.3617",
+      "0.35744",
+      "-0.35854",
+      "-0.3628",
+      "137.57",
+      "17.684",
+      "18.107"
+    ],
+    [
+      "Rooms: 3+ vs 1-2 children",
+      "0.3677",
+      "0.38386",
+      "0.23114",
+      "0.01616",
+      "-0.13656",
+      "2958.5",
+      "0.77256",
+      "55.168"
+    ],
+    [
+      "Parent ownership gap (old definition)",
+      "0.16766",
+      "0.11335",
+      "0.1103",
+      "-0.054308",
+      "-0.057358",
+      "14230",
+      "41.968",
+      "46.815"
+    ],
+    [
+      "Ownership (old definition)",
+      "0.57547",
+      "0.5884",
+      "0.58892",
+      "0.012925",
+      "0.01345",
+      "1207.8",
+      "0.20178",
+      "0.2185"
+    ],
+    [
+      "Mean occupied rooms",
+      "5.78",
+      "6.448",
+      "6.4438",
+      "0.66802",
+      "0.66378",
+      "11.973",
+      "5.343",
+      "5.2755"
+    ],
+    [
+      "Wealth / annual labor earnings",
+      "6.8731",
+      "6.2095",
+      "6.2092",
+      "-0.66356",
+      "-0.66387",
+      "6.2877",
+      "2.7685",
+      "2.7711"
+    ],
+    [
+      "Annual bequests / wealth",
+      "0.0088",
+      "0.012327",
+      "0.012332",
+      "0.0035269",
+      "0.0035315",
+      "5.1653e+06",
+      "64.252",
+      "64.419"
+    ],
+    [
+      "Old wealth/income: p90 / median",
+      "3.4481",
+      "3.6463",
+      "3.6504",
+      "0.19819",
+      "0.20226",
+      "56.96",
+      "2.2374",
+      "2.3301"
+    ]
+  ],
+  "early_target_table": [
+    [
+      "Moment",
+      "Target",
+      "Model",
+      "Gap",
+      "Weight",
+      "Loss"
+    ],
+    [
+      "Initial model completed fertility",
+      "2.1",
+      "2.1",
+      "2.5234e-05",
+      "--",
+      "--"
+    ],
+    [
+      "Childless women, ages 40-44",
+      "0.19828",
+      "0.19079",
+      "-0.0074894",
+      "35532",
+      "1.993"
+    ],
+    [
+      "Exactly one child among mothers, ages 40-44",
+      "0.21366",
+      "0.22038",
+      "0.006729",
+      "26953",
+      "1.2204"
+    ],
+    [
+      "Period mean first-birth age",
+      "25.976",
+      "26.314",
+      "0.33767",
+      "139.83",
+      "15.944"
+    ],
+    [
+      "First births at age 30+",
+      "0.24928",
+      "0.24821",
+      "-0.0010698",
+      "13866",
+      "0.015868"
+    ],
+    [
+      "Wealth / annual gross labor earnings",
+      "6.1459",
+      "5.9809",
+      "-0.16494",
+      "7.5951",
+      "0.20663"
+    ],
+    [
+      "Annual bequests / aggregate wealth",
+      "0.0088",
+      "0.011453",
+      "0.0026526",
+      "5.1653e+06",
+      "36.343"
+    ],
+    [
+      "Old wealth/income p90 / median, ages 76-84",
+      "3.5159",
+      "3.9569",
+      "0.44099",
+      "10.616",
+      "2.0646"
+    ],
+    [
+      "Mean occupied rooms, capped at 9",
+      "5.5611",
+      "5.9204",
+      "0.3593",
+      "128.02",
+      "16.527"
+    ],
+    [
+      "Ownership, heads 30-55",
+      "0.64833",
+      "0.60481",
+      "-0.043527",
+      "2339.4",
+      "4.4322"
+    ],
+    [
+      "First-birth room response, -1 to +3",
+      "0.72025",
+      "0.52856",
+      "-0.19169",
+      "137.57",
+      "5.0546"
+    ],
+    [
+      "Rooms: 3+ versus 1-2 resident children (model dependent proxy)",
+      "0.34707",
+      "0.1864",
+      "-0.16067",
+      "280.53",
+      "7.2415"
+    ],
+    [
+      "Recent-parent ownership gap",
+      "0.1629",
+      "-0.037746",
+      "-0.20064",
+      "27056",
+      "1089.2"
+    ]
+  ],
+  "parameter_table": [
+    [
+      "Parameter",
+      "Static old",
+      "Static new",
+      "Early candidate",
+      "Range / restriction",
+      "Near bound?"
+    ],
+    [
+      "beta_annual",
+      "0.99528",
+      "0.99528",
+      "0.99545",
+      "[0.94, 0.9995]",
+      "No / fixed"
+    ],
+    [
+      "kappa_fert",
+      "2.1682",
+      "2.1682",
+      "1.8057",
+      "[0.02, 50]",
+      "No / fixed"
+    ],
+    [
+      "kappa_fert_continuation",
+      "1.7708",
+      "1.7708",
+      "1.6254",
+      "[0.02, 50]",
+      "No / fixed"
+    ],
+    [
+      "chi",
+      "1.0537",
+      "1.0537",
+      "1.075",
+      "[0.1, 5]",
+      "No / fixed"
+    ],
+    [
+      "H0",
+      "8.4348",
+      "8.4348",
+      "7.4778",
+      "[0.2, 80]",
+      "No / fixed"
+    ],
+    [
+      "theta0",
+      "0.57035",
+      "0.57035",
+      "0.44419",
+      "[0, 8]",
+      "No / fixed"
+    ],
+    [
+      "theta1",
+      "0.10372",
+      "0.10372",
+      "0.11955",
+      "[0.02, 16]",
+      "Yes: theta1, all three"
+    ],
+    [
+      "first_birth_fixed_cost",
+      "4.6197",
+      "4.6197",
+      "4.4745",
+      "[0, 8]",
+      "No / fixed"
+    ],
+    [
+      "h_P",
+      "0.71685",
+      "0.71685",
+      "0.92045",
+      "New [0.10,2.30]; old = jump + slope",
+      "No / fixed"
+    ],
+    [
+      "hbar_child_rooms",
+      "0.24708",
+      "0",
+      "0",
+      "Old [0.10,1.80]; new fixed at zero",
+      "No / fixed"
+    ],
+    [
+      "psi_child",
+      "-0.032",
+      "-0.032",
+      "0.29349",
+      "Fixed in static tests; early normalized to 2.1",
+      "No / fixed"
+    ],
+    [
+      "payroll_tax",
+      "0.179",
+      "0.179",
+      "0.179",
+      "externally fixed",
+      "No / fixed"
+    ],
+    [
+      "pension_period",
+      "2.0464",
+      "2.0464",
+      "2.0464",
+      "Derived from payroll budget",
+      "No / fixed"
+    ],
+    [
+      "housing_supply_elasticity",
+      "0.63",
+      "0.63",
+      "0.63",
+      "externally fixed",
+      "No / fixed"
+    ],
+    [
+      "tenure_choice_kappa",
+      "0.005",
+      "0.005",
+      "0.005",
+      "externally fixed",
+      "No / fixed"
+    ],
+    [
+      "alpha_cons",
+      "0.733",
+      "0.733",
+      "0.733",
+      "externally fixed",
+      "No / fixed"
+    ],
+    [
+      "sigma",
+      "2",
+      "2",
+      "2",
+      "externally fixed",
+      "No / fixed"
+    ],
+    [
+      "Old first-child jump",
+      "0.46977",
+      "--",
+      "--",
+      "Old [0,0.5]; new uses h_P",
+      "No"
+    ]
+  ],
+  "birth_comparison": [
+    {
+      "decision_year": 2007,
+      "birth_year_start": 2008,
+      "birth_year_end": 2011,
+      "data_births": 16331335,
+      "data_index": 100.0,
+      "model_births": 0.11983006633880187,
+      "model_index": 100.0
+    },
+    {
+      "decision_year": 2011,
+      "birth_year_start": 2012,
+      "birth_year_end": 2015,
+      "data_births": 15851595,
+      "data_index": 97.06245692712812,
+      "model_births": 0.10825682049128302,
+      "model_index": 90.34195156431174
+    },
+    {
+      "decision_year": 2015,
+      "birth_year_start": 2016,
+      "birth_year_end": 2019,
+      "data_births": 15340627,
+      "data_index": 93.93369862292336,
+      "model_births": 0.10268817167336511,
+      "model_index": 85.69483002957656
+    },
+    {
+      "decision_year": 2019,
+      "birth_year_start": 2020,
+      "birth_year_end": 2023,
+      "data_births": 14541714,
+      "data_index": 89.0417960319839,
+      "model_births": 0.09980424369389734,
+      "model_index": 83.288148578434
+    }
+  ],
+  "selected_policy_slice": [
+    30,
+    5
+  ],
+  "selection_score": 8.056342135638441e-07,
+  "inspected_slice_mass": 0.001345815351036526,
+  "occupied_large_dips": 2,
+  "source_sha256": {
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/utility_fiscal_decomposition/static_2023/results/old_balanced/target_fit.csv": "4e09f54f98ae6f9784c021f676981bd2bbac05b63080a3362d2cbe25b70d332f",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/utility_fiscal_decomposition/static_2023/results/new_balanced/target_fit.csv": "297edf08a46e28c5fbdc076fedf5c8edccebd70c23ddef847f490a1bad99852f",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/initial_calibration_contract/saved_case_scores/joint_12_analysis_28_fit.csv": "a5ce0c1c857511eae6cc48745b20beffced3c8e6c546eefd5d20ee3000e1e0b0",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/initial_calibration_contract/saved_case_scores/joint_12_analysis_28_parameters.csv": "13a16a057eb7dcc4579b3fae47b0dff7a2baa004467e641a39de9134f5a2ef14",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/utility_fiscal_decomposition/static_2023/results/old_balanced/repetition_02/parameters.csv": "f337d3e8c1350b414a2cb55aa946a69624c011c0082530b57f8544cd9b7305c3",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/utility_fiscal_decomposition/static_2023/results/new_balanced/repetition_02/parameters.csv": "1a09d3c07f4545533a832ded116a656da6f2c047051bee7832eaec18062e6fbb",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/path_pilot_20260910/fertility_data/empirical_blocks.csv": "8945aa2427e26157e2e01b44b327e374daae5078daa458727f025938569a2f74",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/social_security_repair/history_probe/root_round_02/completed_17370186/transition_path.csv": "9bd71de0ea2f5c102fb80ba9e04b470de7585a00514cc53711d8d8682b8bd258",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/path_pilot_20260910/fertility_data/annual_household_stocks_2007_2023.csv": "a317fa692ae82d73916f94bba878a745b3c5b17ce12c775fd429495d5ec61c96",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/visual_review/current_policy_extraction/results/current_transition_conditional_policy.csv": "c64e888936eed9dc25de77646f6f029405b1c39d0d73802959c5bbae542a13b6"
+  },
+  "fit_screen": [
+    {
+      "case": "early_candidate",
+      "moment": "Childless women, ages 40\u201344",
+      "scaled_gap": -1.4117507221110854,
+      "review_flag": false
+    },
+    {
+      "case": "early_candidate",
+      "moment": "Exactly one child among mothers, ages 40\u201344",
+      "scaled_gap": 1.104725511440799,
+      "review_flag": false
+    },
+    {
+      "case": "early_candidate",
+      "moment": "Period mean first-birth age",
+      "scaled_gap": 3.992945709971659,
+      "review_flag": true
+    },
+    {
+      "case": "early_candidate",
+      "moment": "First births at age 30+",
+      "scaled_gap": -0.1259696830519841,
+      "review_flag": false
+    },
+    {
+      "case": "early_candidate",
+      "moment": "Wealth / annual gross labor earnings",
+      "scaled_gap": -0.45456421659817053,
+      "review_flag": false
+    },
+    {
+      "case": "early_candidate",
+      "moment": "Annual bequests / aggregate wealth",
+      "scaled_gap": 6.028525027980386,
+      "review_flag": true
+    },
+    {
+      "case": "early_candidate",
+      "moment": "Old wealth/income p90 / median, ages 76\u201384",
+      "scaled_gap": 1.4368569765092727,
+      "review_flag": false
+    },
+    {
+      "case": "early_candidate",
+      "moment": "Mean occupied rooms, capped at 9",
+      "scaled_gap": 4.065313229232088,
+      "review_flag": true
+    },
+    {
+      "case": "early_candidate",
+      "moment": "Ownership, heads 30\u201355",
+      "scaled_gap": -2.105284205531243,
+      "review_flag": true
+    },
+    {
+      "case": "early_candidate",
+      "moment": "First-birth room response, \u22121 to +3",
+      "scaled_gap": -2.248240626686958,
+      "review_flag": true
+    },
+    {
+      "case": "early_candidate",
+      "moment": "Rooms: 3+ versus 1\u20132 resident children (model dependent proxy)",
+      "scaled_gap": -2.6910014672948512,
+      "review_flag": true
+    },
+    {
+      "case": "early_candidate",
+      "moment": "Recent-parent ownership gap",
+      "scaled_gap": -33.002760998440664,
+      "review_flag": true
+    },
+    {
+      "case": "old_balanced",
+      "moment": "tfr",
+      "scaled_gap": -19.55964999977955,
+      "review_flag": true
+    },
+    {
+      "case": "old_balanced",
+      "moment": "childless_rate",
+      "scaled_gap": 19.181588048962134,
+      "review_flag": true
+    },
+    {
+      "case": "old_balanced",
+      "moment": "mean_age_first_birth",
+      "scaled_gap": 17.260195175457394,
+      "review_flag": true
+    },
+    {
+      "case": "old_balanced",
+      "moment": "share_first_births_age30plus",
+      "scaled_gap": 12.331455181388485,
+      "review_flag": true
+    },
+    {
+      "case": "old_balanced",
+      "moment": "housing_increment_0to1",
+      "scaled_gap": -4.205269443181564,
+      "review_flag": true
+    },
+    {
+      "case": "old_balanced",
+      "moment": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "scaled_gap": 0.8789533943328564,
+      "review_flag": false
+    },
+    {
+      "case": "old_balanced",
+      "moment": "own_family_gap",
+      "scaled_gap": -6.478253946205139,
+      "review_flag": true
+    },
+    {
+      "case": "old_balanced",
+      "moment": "own_rate",
+      "scaled_gap": 0.44919720121715595,
+      "review_flag": false
+    },
+    {
+      "case": "old_balanced",
+      "moment": "aggregate_mean_occupied_rooms_18_85",
+      "scaled_gap": 2.311490846758331,
+      "review_flag": true
+    },
+    {
+      "case": "old_balanced",
+      "moment": "aggregate_wealth_to_annual_gross_labor_earnings",
+      "scaled_gap": -1.6638803778414086,
+      "review_flag": false
+    },
+    {
+      "case": "old_balanced",
+      "moment": "annual_bequest_flow_to_aggregate_wealth",
+      "scaled_gap": 8.015736117548919,
+      "review_flag": true
+    },
+    {
+      "case": "old_balanced",
+      "moment": "old_total_wealth_to_annual_income_p90_p50_7684",
+      "scaled_gap": 1.4958080532467564,
+      "review_flag": false
+    },
+    {
+      "case": "new_balanced",
+      "moment": "tfr",
+      "scaled_gap": -19.210057236653753,
+      "review_flag": true
+    },
+    {
+      "case": "new_balanced",
+      "moment": "childless_rate",
+      "scaled_gap": 18.900017600612617,
+      "review_flag": true
+    },
+    {
+      "case": "new_balanced",
+      "moment": "mean_age_first_birth",
+      "scaled_gap": 17.07868393780487,
+      "review_flag": true
+    },
+    {
+      "case": "new_balanced",
+      "moment": "share_first_births_age30plus",
+      "scaled_gap": 12.178124291639708,
+      "review_flag": true
+    },
+    {
+      "case": "new_balanced",
+      "moment": "housing_increment_0to1",
+      "scaled_gap": -4.255241194836216,
+      "review_flag": true
+    },
+    {
+      "case": "new_balanced",
+      "moment": "prime30_55_parent_3plus_minus_1to2_mean_rooms",
+      "scaled_gap": -7.427546107883711,
+      "review_flag": true
+    },
+    {
+      "case": "new_balanced",
+      "moment": "own_family_gap",
+      "scaled_gap": -6.842151952310701,
+      "review_flag": true
+    },
+    {
+      "case": "new_balanced",
+      "moment": "own_rate",
+      "scaled_gap": 0.4674358207407332,
+      "review_flag": false
+    },
+    {
+      "case": "new_balanced",
+      "moment": "aggregate_mean_occupied_rooms_18_85",
+      "scaled_gap": 2.2968377199478813,
+      "review_flag": true
+    },
+    {
+      "case": "new_balanced",
+      "moment": "aggregate_wealth_to_annual_gross_labor_earnings",
+      "scaled_gap": -1.6646729579397468,
+      "review_flag": false
+    },
+    {
+      "case": "new_balanced",
+      "moment": "annual_bequest_flow_to_aggregate_wealth",
+      "scaled_gap": 8.02614024777061,
+      "review_flag": true
+    },
+    {
+      "case": "new_balanced",
+      "moment": "old_total_wealth_to_annual_income_p90_p50_7684",
+      "scaled_gap": 1.5264539882557777,
+      "review_flag": false
+    }
+  ],
+  "fit_screen_definition": "Flag abs(gap)*sqrt(weight)>2 for review only; objective scales include synthetic scales, not confidence intervals. No target or weight is changed.",
+  "losses": {
+    "early_candidate": 1180.2245445422732,
+    "old_balanced": 1335.7197101404572,
+    "new_balanced": 1361.3297676688458
+  }
+}

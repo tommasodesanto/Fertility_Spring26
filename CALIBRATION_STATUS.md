@@ -17,11 +17,11 @@ Completed17370427 repeats candidate loss1180.2245445422732 exactly twice using
 the complete frozen working objective. Lightweight results and original graphs
 from both jobs are now local; all34 new plot hashes match their saved receipts.
 
-The nine-page visual review is `output/pdf/e5f_utility_pension_visual_review.pdf`.
+The sixteen-page model scorecard and visual review is `output/pdf/e5f_utility_pension_visual_review.pdf`.
 The full136-plot gallery (eight unchanged17-graph sets) is
 `output/model/e5f_matched_pf_20260909a/visual_review/index.html`.
 Rebuild from saved results with `python3 code/model/tools/build_e5f_utility_review_packet.py`;
-measured rendering/packaging4.06 seconds excluding first-use import/font setup,
+measured rendering/packaging about6 seconds excluding first-use import/font setup,
 zero model solves. Supplemental transition and old/new lifecycle curves match
 their source CSV columns exactly. The original policy jumps remain visible;
 this report does not certify global policy regularity.
@@ -53,9 +53,38 @@ The inherited2023 transition preference does not make its stationary counterpart
 match2023 fertility. Do not call this the requested matched2023 recalibration.
 Both complete12-row/two-repetition tables and all parameter restrictions are in
 `utility_fiscal_decomposition/static_2023/results/{old_balanced,new_balanced}/`.
-The nine-page PDF and136-plot gallery include the late-preference comparison.
+The PDF and136-plot gallery include the late-preference comparison.
 No new scientific job remains from this turn; the next2023 calibration stage is
 outstanding and no unattended search is scheduled.
+
+**September 11, follow-up — fixed model scorecard and explicit success criteria.**
+The same one-command builder now starts with one page of numerical, fit, policy,
+comparison and horizon checks, followed by the model registry, all13 early rows,
+all12 old/new static rows, all parameters/restrictions, and aligned data plots.
+`visual_review/scorecard.json` is machine-readable. Shading flags gaps exceeding
+2 objective scales (loss contribution above4) for review only: synthetic scales
+are not empirical standard errors; no objective or numerical gate changed.
+The early loss1180.22454 is checked against its exact-loop receipt. Recent-parent
+ownership remains negative(-3.775pp) against+16.290pp; contribution1089.18223.
+The final-preference stationary tests remain unrecalibrated; their fertility near
+1.40 is not the fit from an estimated2023 stationary calibration.
+
+Current short-path birth-count indices are100,90.34195,85.69483,83.28815 versus
+NCHS100,97.06246,93.93370,89.04180. Thus2008-11 to2020-23 decline is16.712%
+model versus10.958% data; decision dates map to the subsequent four birth years.
+National/model-geography approximation remains explicit. Census household stocks
+enter historical conditioning; their overlay is not independent validation.
+Matched historical price/rent/ownership/housing-quantity overlays remain outstanding.
+
+Read-only cluster extraction17374949 completed in11seconds, no model solves;
+643 source pins and the current2023 checkpoint verified. It exposes conditional
+renter consumption, selected tenure housing, probability-weighted physical housing,
+and actual state occupancy. The largest inspected mass-weighted ownership decline
+is at age30/income state5; two occupied adjacent declines exceed1pp in that slice.
+This is a descriptive screen, not numerical certification or an aggregate effect.
+A prior stationary two-node audit cannot certify the current transition policies.
+Standard136 graph bytes are retained. Full matched2023 recalibration, wider policy
+verification and horizon certification remain outstanding. No new search launched.
 
 **September11,10:11 EDT — access restored; complete candidate ranking and two resumed jobs.**
 Root17362744 completed normally in25:12: eight mappings/96Bellmans, exact final

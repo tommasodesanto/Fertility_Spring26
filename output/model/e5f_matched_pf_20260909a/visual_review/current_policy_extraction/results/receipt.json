@@ -1,0 +1,43 @@
+{
+  "status": "completed_read_only_checkpoint_reduction",
+  "model_solves": 0,
+  "contract_sha256": "8f3398508b916c59d7348835ee4251ae1832674b99ecc334aed36253c3cecd1e",
+  "source_files_verified": 643,
+  "cases": [
+    {
+      "case": "current_transition",
+      "input": "/scratch/td2248/projects/Fertility_Spring26_history_root_450bce1c/output/root_round_02/dated_2023.pkl.gz",
+      "checkpoint_sha256": "cc58e79d08b1d0bfde704857692b0922afe5cd9a506d4596bf56bd0106c627f3",
+      "wealth_points": 120,
+      "income_states": 15,
+      "readiness_state": 0,
+      "price": [
+        0.636473592619126
+      ],
+      "parameter_phi": [
+        0.8,
+        0.8,
+        0.8,
+        0.8
+      ],
+      "owner_products": [
+        2.0,
+        4.0,
+        6.0,
+        8.0,
+        10.0
+      ],
+      "rows": 3600,
+      "distribution_timing": "g_pre: before birth; g_post_fertility: before tenure; g_current: after tenure/location",
+      "policy_condition": "renter, location 0, parity 0, readiness-settled; tenure choice is conditional on the post-fertility state",
+      "housing_graph_definition": "selected tenure product or conditional rental housing; not probability-weighted housing",
+      "elapsed_seconds": 8.825482001528144
+    }
+  ],
+  "elapsed_seconds": 8.851178926415741,
+  "output_sha256": {
+    "current_transition_conditional_policy.csv": "c64e888936eed9dc25de77646f6f029405b1c39d0d73802959c5bbae542a13b6",
+    "current_transition_owner_probability_steps.csv": "4b74ef73397e97e92a5e1561d9852abed3b238703ce528d0ca59ba34d2e637e4",
+    "current_transition_ownership_age_type.csv": "68ecd00d1d2a98f1e69e806fdf58ad6d86e3c95a4e7feb72310e26d27fa08822"
+  }
+}
