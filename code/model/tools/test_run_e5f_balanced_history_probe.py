@@ -228,4 +228,85 @@ class ActualRootContractTest(unittest.TestCase):
         self.assertEqual(got['bellman_solves'],24)
 
 
+class ContinuationContractTest(unittest.TestCase):
+    def setUp(self):
+        fixture=ActualRootContractTest();fixture.setUp()
+        previous,root,signatures,records=fixture.replay_fixture()
+        self.directory=tempfile.TemporaryDirectory();self.addCleanup(self.directory.cleanup)
+        folder=Path(self.directory.name)
+        root.update(schema='e5f_balanced_history_v1',converged=False,
+            finite_horizon_market_fiscal_converged=False,years=list(range(2007,2028,4)),
+            closure='fixed_tax',payroll_tax=.179,property_tax_period=.04,
+            property_tax_rebate=0.,horizon_verified=False,final_damping=.5,
+            final_jacobian=[[float(i==j) for j in range(12)] for i in range(12)])
+        checkpoint=folder/'dated_2023.pkl.gz';checkpoint.write_bytes(b'opaque checkpoint evidence only')
+        summary=dict(status='incomplete_finite_history_root_diagnostic',
+            finite_horizon_market_fiscal_converged=False,mapping_replay_verified=True,
+            checkpoint_reload_verified=True,standard_graph_count=17,
+            checkpoint_sha256=driver.digest(checkpoint),root_evaluations=4)
+        objects=dict(contract=dict(previous,contract_sha256='a'*64),root_receipt=root,
+            summary=summary,dated_reproduction=dict(signatures=signatures),root_evaluations=records)
+        for name,obj in objects.items():
+            (folder/driver.CONTINUATION_FILES[name]).write_text(json.dumps(obj))
+        self.c=copy.deepcopy(previous)
+        self.c.update(schema=driver.CONTINUATION_SCHEMA,
+            initial_prices=root['best']['prices'],initial_pensions=root['best']['fiscal_values'],
+            continuation={name:dict(path=str(folder/file),sha256=driver.digest(folder/file))
+                          for name,file in driver.CONTINUATION_FILES.items()})
+        self.c['root_controls'].update(initial_jacobian=root['final_jacobian'],damping=.5)
+        self.root=root
+
+    def test_verified_restart_keeps_original_initial_state_and_physical_jacobian(self):
+        before=copy.deepcopy(self.c);driver.validate_contract(self.c)
+        result=driver.load_continuation(self.c)
+        self.assertEqual(self.c,before)
+        self.assertEqual(result['prior_final'],self.root['final'])
+        self.assertIn('original2007 initial input remains unchanged',result['checkpoint_role'])
+        self.assertNotEqual(self.c['initial_checkpoint']['path'],self.c['continuation']['checkpoint']['path'])
+
+    def test_invalid_or_unpinned_matrix_rejected(self):
+        for matrix in ([[1.]],[[float('nan')]*12 for _ in range(12)],
+                       [[True]*12 for _ in range(12)],[["1"]*12 for _ in range(12)]):
+            c=copy.deepcopy(self.c);c['root_controls']['initial_jacobian']=matrix
+            with self.subTest(matrix=str(matrix)[:20]),self.assertRaises(ValueError):driver.validate_contract(c)
+        c=copy.deepcopy(self.c);c['schema']=driver.ROOT_SCHEMA;del c['continuation']
+        with self.assertRaises(ValueError):driver.validate_contract(c)
+
+    def test_changed_science_point_jacobian_damping_or_gate_rejected(self):
+        for change in ('source','entry','price','pension','jacobian','damping','tolerance'):
+            c=copy.deepcopy(self.c)
+            if change=='source':c['source_sha256']['code/model/tools/e5f_social_security.py']='b'*64
+            elif change=='entry':c['outside_origin_entry_share']=.17
+            elif change=='price':c['initial_prices'][0]+=.01
+            elif change=='pension':c['initial_pensions'][0]+=.01
+            elif change=='jacobian':c['root_controls']['initial_jacobian'][0][0]=2.
+            elif change=='damping':c['root_controls']['damping']=.6
+            else:c['root_controls']['market_tolerance']=.001
+            with self.subTest(change=change),self.assertRaises(ValueError):driver.load_continuation(c)
+
+    def test_prior_hash_drift_rejected_before_loading(self):
+        c=copy.deepcopy(self.c);c['continuation']['summary']['sha256']='0'*64
+        with self.assertRaisesRegex(ValueError,'SHA256'):driver.load_continuation(c)
+
+    def test_first_mapping_replays_before_a_second_update_can_run(self):
+        continuation=driver.load_continuation(self.c)
+        record=copy.deepcopy(self.root['final']);record.update(evaluation=1,phase='initial')
+        signatures=continuation['prior_signatures']
+        passed=driver.verify_continuation_initial(continuation,record,signatures,2e-10)
+        self.assertTrue(passed['verified']);self.assertTrue(passed['initial_mapping_counts_in_budget'])
+        for change in ('coordinates','residual','signature','phase','invalid'):
+            r=copy.deepcopy(record);s=copy.deepcopy(signatures)
+            if change=='coordinates':r['prices'][0]+=.01
+            elif change=='residual':r['market_residual'][0]+=.001
+            elif change=='signature':s[0]['policy']['V']='changed'
+            elif change=='phase':r['evaluation']=2
+            else:r['mapping_valid']=False
+            calls=[]
+            def next_update():
+                driver.verify_continuation_initial(continuation,r,s,2e-10)
+                calls.append('unsafe next update')
+            with self.subTest(change=change),self.assertRaises(RuntimeError):next_update()
+            self.assertEqual(calls,[])
+
+
 if __name__=='__main__':unittest.main()
