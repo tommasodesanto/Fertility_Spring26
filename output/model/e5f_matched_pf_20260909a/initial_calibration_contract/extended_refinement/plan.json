@@ -1,0 +1,46 @@
+{
+  "schema": "e5f_extended_fixed_objective_refinement_v1",
+  "source_root": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8",
+  "workers": 24,
+  "search_seconds": 7800,
+  "slurm_seconds": 10800,
+  "verification_reserve_seconds": 3000,
+  "rounds": 6,
+  "maximum_new_cases": 181,
+  "maximum_new_repetitions": 182,
+  "maximum_GE": 1456,
+  "expected_case_seconds": 490,
+  "expected_wall_minutes_excluding_queue": [
+    90,
+    150
+  ],
+  "smoke_job": "17370427",
+  "smoke_summary_sha256": "22b9a9f75a9e43a528bbde766f6595274f9843e7f77f29316315168118fd8e53",
+  "smoke_contract_sha256": "afff32c34e679aaf19efbbe14cd673919e3df333d719847c9928f289946a19df",
+  "controller_sha256": "e98bc6940d3ef2cc7ae4dd724da6dc0683aa0ffdb72e428c50da910bb6a259ff",
+  "file_sha256": {
+    "test_run_search.py": "98e65ca3c3823d7f6a91d231fa65df3253704230fcaa2f99f65ca88fac1ba1f2"
+  },
+  "stop": "Up to six adaptive rounds,180 search cases, or time guard with final verification reserve. Ordinary exactly classified housing-equilibrium failures reject candidates without stopping. Unexpected/source/observer/accounting failures stop. Active bounds use feasible inward derivatives; no bounds change. No global optimality or production claim.",
+  "production_eligible": false,
+  "resume_score_path": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/batches/three_hour_continuation_20260911/results/cases/selected_exact_repetitions/evaluation/scored_repetition_01/score.json",
+  "resume_score_sha256": "199963a65549b6a1d58e19f077b77d480f0a623ead11517b46180df79c45a55a",
+  "resume_proposal": {
+    "case_id": "selected_exact_repetitions",
+    "initial_psi": 0.3222002262605176,
+    "parameters": {
+      "H0": 7.869302290963492,
+      "beta_annual": 0.998944123208258,
+      "chi": 1.0663120232037595,
+      "first_birth_fixed_cost": 2.5375074119638192,
+      "h_P": 2.2999999999999994,
+      "kappa_fert": 1.0322617636384097,
+      "kappa_fert_continuation": 1.0123939269688695,
+      "theta0": 0.18912709319463217,
+      "theta1": 0.4648584956933915
+    },
+    "repetitions": 2
+  },
+  "maximum_search_cases": 180,
+  "resume_summary_sha256": "31e5fbd73cca3e4838f7e78ba414e44245949a7d04e3cae4b031b45af27a3737"
+}

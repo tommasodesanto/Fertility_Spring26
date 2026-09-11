@@ -2,7 +2,29 @@
 
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
-**September 11, teaching-block completion — no active computation; refinement completed.**
+**September 11, further work authorized — extended initial-calibration job17378993 submitted.**
+Author requests more work following completed17376529. A separate autonomous batch
+starts from its exactly reproduced selected candidate. Up to6further rounds of
+18feasible derivatives/12joint proposals,24CPUs192GiB,3h hard cap; maximum180search
+cases plus2selected repetitions/1456GE. Expected90–150minutes excluding queue.
+Same7800second search deadline with3000seconds reserved; no stage starts without
+its2100second worst-case allowance. Completed seed repetitions are pinned and
+reused; new selected candidate is repeated twice at the end.
+
+The selected h_P=2.3is at its unchanged upper bound. Outward zero-length probes
+are omitted; inward one-sided derivatives use the verified center. Beta also
+retains its reported near-upper-bound flag. Eleven pure controller tests pass,
+including active-bound stencils; original27wrapper/scorer tests remain. All641
+source pins, original objective/weights/parameter bounds/numerical gates stay fixed.
+Known exact housing-equilibrium failures reject individual proposals without
+stopping valid cases; unexpected/source/observer/accounting failures remain fatal.
+This is initial calibration only, not a2023 recalibration or historical/policy run.
+No AI monitor activated; the controller is laptop-independent.
+Recipe and submission:
+`output/model/e5f_matched_pf_20260909a/initial_calibration_contract/extended_refinement/`.
+Remote batch `extended_refinement_20260911` under the70abd4a8snapshot.
+
+**Previous completed round —17376529; now superseded by the further launch above.**
 First job17375937 stopped after8m16s when2of24 proposals failed the unchanged
 initial housing-equilibrium gate;22valid cases saved, bestloss869.413984.
 Its controller incorrectly treated ordinary candidate rejection as a whole-search
