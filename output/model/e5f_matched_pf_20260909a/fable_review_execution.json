@@ -1,0 +1,46 @@
+{
+  "status": "completed",
+  "start_utc": "2026-09-11T03:51:45.138697+00:00",
+  "requested_model": "claude-fable-5-1",
+  "client_version": "2.1.263",
+  "cwd": "/private/tmp/fertility-fable-plan-review",
+  "tools": "none",
+  "mcp_servers": {},
+  "prompt_sha256": "6947709583136f0caaffdc9f5ff0c1c3273b019251668f3e5493ed27c1239e19",
+  "hard_limit_seconds": 1200,
+  "returncode": 0,
+  "elapsed_seconds": 343.333592614,
+  "backend_model_usage": {
+    "claude-haiku-4-5-20251001": {
+      "inputTokens": 4139,
+      "outputTokens": 19,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 0,
+      "webSearchRequests": 0,
+      "costUSD": 0.004234,
+      "contextWindow": 200000,
+      "maxOutputTokens": 32000,
+      "thinkingTokens": 0,
+      "canonicalModel": "claude-haiku-4-5",
+      "provider": "firstParty",
+      "costBasis": "list"
+    },
+    "claude-fable-5-1": {
+      "inputTokens": 2,
+      "outputTokens": 23543,
+      "cacheReadInputTokens": 0,
+      "cacheCreationInputTokens": 9247,
+      "webSearchRequests": 0,
+      "costUSD": 1.36211,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 20088,
+      "canonicalModel": "claude-fable-5-1",
+      "provider": "firstParty",
+      "costBasis": "list"
+    }
+  },
+  "num_turns": 1,
+  "permission_denials": [],
+  "is_error": false
+}

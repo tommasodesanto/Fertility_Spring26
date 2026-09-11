@@ -2,6 +2,52 @@
 
 Updated: `2026-09-10` (design research completed; finite 100-date continuation verified)
 
+**September 11 — author selects parenthood-only housing utility; overnight proposal under review.**
+Retain the externally fixed concave equivalence scale
+\(e(m)=((2+0.7m)/2)^{0.7}\), constant consumption share, zero nonhousing
+floor, \(\sigma=2\) and the existing linear child reward. Replace the
+housing jump plus per-dependent-child slope by
+\(\bar h(m)=h_P\mathbf 1\{m>0\}\), where \(m\) counts current dependent
+children, not lifetime parity. Thus flow utility remains
+\(-e(m)/(c^{\alpha_0}[s-h_P\mathbf 1\{m>0\}]^{1-\alpha_0})+\psi_t m\).
+The author accepts declining marginal resource requirements from sharing;
+do not add another curvature term to counteract that feature. Initialize
+\(h_P\) at the sum of the old two floor parameters, then re-estimate it;
+the per-child slope is fixed at zero and removed from the search. Preserve
+other lifecycle and fertility components. The exact author note is
+`output/model/e5f_matched_pf_20260909a/utility_change_author_specification.md`.
+
+No model source or numerical result has changed under this decision yet.
+The revised overnight proposal is the new opening section of
+`output/model/e5f_matched_pf_20260909a/OVERNIGHT_PLAN.md`. It proposes nine
+initial structural coordinates plus the separate 2.1 normalization, keeps
+the larger-family housing moment, and makes early observer/weight/entry
+prerequisites explicit. The new early target system has not been promoted.
+The author requests Fable 5.1 review, then his approval before a cluster
+launch. Cluster access works and the user queue was empty at preparation.
+Fable 5.1 completed the self-contained plan/utility review in 343.33 seconds,
+with tools and MCP disabled; returned metadata confirms `claude-fable-5-1`.
+It is not an independent code/data audit. The lead retained the utility,
+parameter count and critical-path critique, and adopted batched local search
+and explicit horizon/control budgets. The revised proposal has a 96-job
+ceiling and at most 384 initial candidate evaluations, plus panel/repeats;
+at most 12 historical/horizon/control roots and four policy paths, all under
+one 12-hour ceiling. Policies may remain diagnostic or unavailable by morning.
+The proposal explicitly asks approval for eta=0.63 in initial and dated
+economies, with seed-point supply rebasing and subsequent scale estimation.
+It preserves observed 2007 ages, the open demographic closure and the
+larger-family rooms target. Fable's recommendations to remove these, and its
+claims of impossible terminal stationarity or automatic 28-date adequacy,
+were rejected or qualified against source evidence. Full adjudication and
+unedited response: `output/model/e5f_matched_pf_20260909a/FABLE_OVERNIGHT_REVIEW.md`.
+Receipt: `output/model/e5f_matched_pf_20260909a/overnight_review_receipt.json`.
+The revised plan awaits the author's explicit approval before implementation
+and the gated cluster launch. The old terminal client did not support Fable
+5.1; the already installed supported client was used. The initially rejected
+broader-file-access request was not executed; only the authorized plan packet
+was sent in the successful review.
+No new model jobs or overnight monitor were launched during preparation.
+
 **September 11 — urgent Social Security correction; earlier fiscal claims qualified.**
 The author requires Social Security to balance. The maintained pension setup
 uses a reference stationary age ratio, with fixed payroll tax and fixed pension
