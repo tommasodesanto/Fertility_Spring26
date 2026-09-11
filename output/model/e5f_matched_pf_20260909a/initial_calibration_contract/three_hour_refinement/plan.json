@@ -1,0 +1,27 @@
+{
+  "schema": "e5f_three_hour_fixed_objective_search_v1",
+  "source_root": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8",
+  "workers": 24,
+  "search_seconds": 7800,
+  "slurm_seconds": 10800,
+  "verification_reserve_seconds": 3000,
+  "rounds": 2,
+  "maximum_new_cases": 85,
+  "maximum_new_repetitions": 86,
+  "maximum_GE": 688,
+  "expected_case_seconds": 490,
+  "expected_wall_minutes_excluding_queue": [
+    50,
+    100
+  ],
+  "smoke_job": "17370427",
+  "smoke_summary_sha256": "22b9a9f75a9e43a528bbde766f6595274f9843e7f77f29316315168118fd8e53",
+  "smoke_contract_sha256": "afff32c34e679aaf19efbbe14cd673919e3df333d719847c9928f289946a19df",
+  "controller_sha256": "2d93fbe0c21fd21ca9f23459174c19e2c685232f64e12e619d7bab271300ee83",
+  "file_sha256": {
+    "proposals.json": "8a6374b28459778f1da804139d071981e892d72a5e61aa8d9352ffb94b7ba1d3",
+    "test_run_search.py": "a0badd8f9d3dcc0c79d8c4f5f978df2c51c4d0f4319bb72bce3b16d772b88ecf"
+  },
+  "stop": "84 search candidates, two refinement rounds, or insufficient remaining search time; any failed case stops adaptive stages for review. Final selected candidate repeats twice if all prior stages pass. Slurm hard stop at three hours.",
+  "production_eligible": false
+}

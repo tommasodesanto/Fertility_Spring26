@@ -2,6 +2,32 @@
 
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
+**September 11, teaching-block launch — autonomous three-hour cluster search RUNNING.**
+Author requests useful computation while teaching for three hours, with laptop off.
+Job17375937 is RUNNING oncs657,24CPUs/192GiB,3h hard cap. All641 frozen source
+files, objective/provenance/checkpoint pins and exact-loop17370427 receipt passed
+preflight;6 orchestration tests and27 unchanged wrapper/scorer tests pass on Torch.
+The plan evaluates24 joint points, then up to two rounds of18 derivative probes
+and12 joint updates; selection gets two exact repetitions if search gates pass.
+Maximum84 search candidates plus2 repetitions; all9 structural coordinates and
+complete12-row working objective plus separate2.1 normalization retained. Maximum
+688GE; measured single-case time about490seconds; estimated50–100minutes excluding
+queue, bounded by3hours. Search cutoff7800seconds reserves3000seconds for final
+verification/reporting. Any failed case stops adaptive stages for explicit review.
+
+This is initial pre-2007 calibration refinement, not a static2023 recalibration,
+fitted historical shock path or policy run. New utility and budget-balanced pension
+closure remain fixed. The controller runs entirely inside the Slurm allocation;
+it requires neither this chat nor a powered-on laptop. Automatic AI monitoring
+remains paused, so cluster computation does not consume ongoing chat tokens.
+Latest/best summaries update every completed case; heartbeat every30seconds;
+all13 fit rows,17parameter rows and original17graphs saved for the selected case.
+Recipe, tests, immutable plan and submission:
+`output/model/e5f_matched_pf_20260909a/initial_calibration_contract/three_hour_refinement/`.
+Remote results:
+`/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/batches/three_hour_refinement_20260911/results/`.
+Do not relaunch or replace this job without first checking its saved progress.
+
 **September 11, 11:14 EDT — author prioritizes pension balance, utility comparison and visible diagnostics.**
 The author does not prioritize squeezing the fitting loss. Deliver the budget repair,
 old/new utility assessment (including a separate stationary 2023 comparison), and
