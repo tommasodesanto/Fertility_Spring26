@@ -4,10 +4,33 @@ Run explicitly on the cluster with NUMBA_DISABLE_JIT unset or zero. One existing
 tiny-grid fixture is constructed, then six two-date paths are evaluated: twelve
 forward dates and twenty-four backward/forward Bellman calls. No price root,
 historical data, calibration, person-law endpoint or figure is involved.
+
+Historical evidence retained, not an acceptance criterion: compiled smoke
+``17352615`` failed its universal assertion that a future fiscal-income shock
+must change an *occupied* current saving or consumption choice.  It did change
+occupied current values, and all budget, mass, queue, and replay checks passed.
+The follow-up diagnostic ``17353361`` found nonzero conditional control
+responses, but only at zero-mass grid states in this small fixture.  Positive
+saving among the affected occupied cohort means that borrowing corners alone do
+not explain the result.  The obsolete universal occupied-control assertion is
+therefore deliberately not silently relabelled as passed.
+
+The acceptance tests below fix two states from that diagnostic BEFORE the new
+run. The pension probe has interior saving under both paths; the tax probe
+releases a zero-saving corner into the interior. These were selected using
+earlier diagnostic evidence, not from a maximum in the new run. Actual kernel
+inputs are checked against next-date/next-age Markov expectations; conditional
+Bellman values and crossed-policy incentive gains are reconstructed in NumPy.
+This remains a conditional fixed-price test, not an equilibrium, occupied
+response, or general optimizer-optimality certificate. Original source is
+retained at a654219c; original failure logs and anticipation_diagnostic.json
+remain under output/model/e5f_matched_pf_20260909a/social_security_repair/ in
+the main checkout. No original failed run is relabelled as passed.
 """
 from __future__ import annotations
 
 import copy
+import inspect
 import unittest
 from unittest.mock import patch
 
@@ -21,6 +44,63 @@ import run_e5f_matched_pf_smoke as primitive
 from e5f_social_security import fiscal_accounts
 
 
+# Axes: wealth index, conditional tenure, location, age index, income state,
+# lifetime parity, dependent-child count. Both have zero dependent children.
+ANTICIPATION_PROBES = {
+    "future_pension": (1, 0, 0, 4, 0, 1, 0),
+    "future_tax": (10, 1, 0, 0, 1, 0, 0),
+}
+KERNEL_PROBES = dict(ANTICIPATION_PROBES, pension_recipient=(1, 0, 0, 5, 0, 1, 0))
+
+
+def conditional_probe_objective(inputs, state, saving):
+    """Independent scalar u(c,h) + beta E[V] at a recorded feasible control.
+
+    This evaluates two saved controls only. It never calls a model kernel or
+    solves a household problem. Kernel output floors must be inactive at the
+    probes; assertions below check that the reported bundles match this formula.
+    """
+    wealth, tenure, _, _, _, parity, children = state
+    if children != 0:
+        raise ValueError("The declared probes have no dependent children")
+    column = parity  # flattened family order: parity + n_parity * children
+    resource = float(inputs["Rv1d"][wealth]) + float(np.clip(
+        inputs["gb_v"][column] - inputs["Rvt1d"][wealth],
+        0.0, inputs["gb_v"][column]))
+    cb, hb = float(inputs["cb_v"][column]), float(inputs["hb_v"][column])
+    alpha, scale = float(inputs["alpha_v"][column]), float(inputs["esc_v"][column])
+    if tenure == 0:
+        rent = float(inputs["ri"])
+        surplus = resource - cb - rent * hb - saving
+        h_net = min((1.0 - alpha) * surplus / rent, float(inputs["hR_max"]) - hb)
+        c_net = resource - cb - rent * (hb + h_net) - saving
+        flow_housing = h_net
+        continuation = inputs["Vc_flat"][:, column]
+        spending_floor = cb + rent * hb
+        collateral_floor = 0.0
+    else:
+        c_net = resource - float(inputs["oc"]) - cb - saving
+        h_net = float(inputs["hsv"]) - float(inputs["owner_h_bar_scale"]) * hb
+        flow_housing = float(inputs["owner_service_premium"]) * h_net
+        continuation = inputs["Vco_flat"][:, column]
+        spending_floor = cb + float(inputs["oc"])
+        collateral_floor = float(inputs["bf_v"][column])
+    if c_net <= 0 or flow_housing <= 0:
+        raise ValueError("Declared probe control is not economically feasible")
+    oms = float(inputs["oms"])
+    utility = scale * (c_net**alpha * flow_housing**(1.0 - alpha))**oms / oms
+    utility += float(inputs["psi_v"][column])
+    expected = float(np.interp(saving, inputs["b_grid"], continuation))
+    current_unsecured = float(inputs["b_grid"][wealth]) - collateral_floor
+    unsecured_floor = min(float(inputs["s_next"]) * min(current_unsecured, 0.0),
+                          -float(inputs["D_next"]))
+    lower = max(float(inputs["b_grid"][0]), collateral_floor + unsecured_floor)
+    upper = resource - spending_floor - 1e-6
+    return dict(value=utility + float(inputs["beta"]) * expected, utility=utility,
+                expected=expected, consumption=cb + c_net, net_consumption=c_net,
+                renter_housing=hb + h_net, net_housing=h_net, lower=lower, upper=upper)
+
+
 class CompiledSocialSecurityTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -29,11 +109,19 @@ class CompiledSocialSecurityTests(unittest.TestCase):
         fixture.TinyPerfectForesightTests.setUpClass()
         source = fixture.TinyPerfectForesightTests
         cls.parameters = source.parameters
+        cls.b_grid = source.b_grid
         cls.initial_g = source.stationary_g_pre.copy()
         cls.original_income = source.parameters.income.copy()
         cls.original_pension = float(source.parameters.pension)
         cls.original_tax = float(source.parameters.tau_pay)
         cls.initial_accounts = fiscal_accounts(cls.initial_g, cls.parameters)
+        # These are properties of this unchanged diagnostic fixture, not model
+        # restrictions. A changed fixture needs a newly declared probe design.
+        if (cls.parameters.J != 6 or cls.parameters.J_R != 5
+                or cls.parameters.I != 1 or cls.parameters.n_house != 2
+                or bool(getattr(cls.parameters, "use_age_survival", False))
+                or bool(getattr(cls.parameters, "readiness_gate_enabled", False))):
+            raise RuntimeError("Anticipation probe contract no longer matches the tiny fixture")
         balanced_pension = cls.initial_accounts["implied_balanced_pension_period"]
         balanced_tax = cls.initial_accounts["implied_balanced_payroll_tax"]
         if (balanced_pension is None or not np.isfinite(balanced_pension)
@@ -63,10 +151,42 @@ class CompiledSocialSecurityTests(unittest.TestCase):
         }
         cls.results = {}
         actual_evaluate_period = fixture.calendar.evaluate_period
+        actual_solve_date_policy = fixture.driver.solve_date_policy
+        actual_kernels = {0: fixture.model.full_renter_block_kernel,
+                          1: fixture.model.full_owner_block_kernel}
+        kernel_signatures = {key: inspect.signature(kernel.py_func)
+                             for key, kernel in actual_kernels.items()}
         rent = float(source.parameters.user_cost_rate) * source.price
 
         for name, fiscal_paths in cases.items():
             dated = []
+            bellman_calls = []
+            active_call = {}
+
+            def observe_kernel(kind, *args, **kwargs):
+                # The Python Bellman loops age descending, then income,
+                # location, and (for owners) product. Count every real call;
+                # continuation/resource checks below also validate the mapping.
+                ordinal = active_call["counts"][kind]
+                active_call["counts"][kind] += 1
+                output = actual_kernels[kind](*args, **kwargs)
+                P = active_call["parameters"]
+                for probe_name, state in KERNEL_PROBES.items():
+                    _, tenure, location, age, income_state, _, _ = state
+                    if (tenure == 0) != (kind == 0):
+                        continue
+                    expected_ordinal = ((P.J - 1 - age) * len(P.z_grid) + income_state) * P.I + location
+                    if kind == 1:
+                        expected_ordinal = expected_ordinal * P.n_house + tenure - 1
+                    if ordinal == expected_ordinal:
+                        bound = kernel_signatures[kind].bind(*args, **kwargs)
+                        bound.apply_defaults()
+                        active_call["probes"][probe_name] = dict(
+                            inputs={key: value.copy() if isinstance(value, np.ndarray) else value
+                                    for key, value in bound.arguments.items()},
+                            output=tuple(np.asarray(value).copy() for value in output),
+                        )
+                return output
 
             def inspect_actual_date(*args, **kwargs):
                 # This wrapper calls the real Bellman-supplied/KFE evaluator;
@@ -85,7 +205,35 @@ class CompiledSocialSecurityTests(unittest.TestCase):
                 ))
                 return evaluation
 
-            with patch.object(fixture.calendar, "evaluate_period", side_effect=inspect_actual_date):
+            def inspect_bellman_call(*args, **kwargs):
+                # evaluate_path_at_prices calls this first in backward order
+                # (date 1, date 0) and then in forward/replay order (date 0,
+                # date 1).  Retain copies: the production path creates a fresh
+                # dated P for each call, and no solver object is mocked.
+                parameters = kwargs["P"]
+                active_call.clear()
+                active_call.update(parameters=parameters, counts={0: 0, 1: 0}, probes={})
+                policy = actual_solve_date_policy(*args, **kwargs)
+                count = parameters.J * len(parameters.z_grid) * parameters.I
+                if (active_call["counts"] != {0: count, 1: count * parameters.n_house}
+                        or set(active_call["probes"]) != set(KERNEL_PROBES)):
+                    raise RuntimeError("Compiled kernel loop did not match declared probe mapping")
+                bellman_calls.append(dict(
+                    income=np.asarray(parameters.income, dtype=float).copy(),
+                    pension=float(parameters.pension),
+                    tax=float(parameters.tau_pay),
+                    continuation=np.asarray(kwargs["continuation_V"], dtype=float).copy(),
+                    value=np.asarray(policy.V, dtype=float).copy(),
+                    probes=active_call["probes"],
+                ))
+                return policy
+
+            with patch.object(fixture.calendar, "evaluate_period", side_effect=inspect_actual_date), \
+                    patch.object(fixture.driver, "solve_date_policy", side_effect=inspect_bellman_call), \
+                    patch.object(fixture.model, "full_renter_block_kernel",
+                                 side_effect=lambda *a, **k: observe_kernel(0, *a, **k)), \
+                    patch.object(fixture.model, "full_owner_block_kernel",
+                                 side_effect=lambda *a, **k: observe_kernel(1, *a, **k)):
                 path = fixture.driver.evaluate_path_at_prices(
                     prices=np.full(2, source.price),
                     psi_path=np.full(2, float(source.parameters.psi_child)),
@@ -100,7 +248,12 @@ class CompiledSocialSecurityTests(unittest.TestCase):
                 )
             if len(dated) != 2:
                 raise RuntimeError(f"{name} did not execute exactly two real forward dates")
-            cls.results[name] = dict(path=path, dated=dated, fiscal_paths=fiscal_paths)
+            if len(bellman_calls) != 4:
+                raise RuntimeError(f"{name} did not execute exactly two backward and two forward Bellman calls")
+            cls.results[name] = dict(
+                path=path, dated=dated, fiscal_paths=fiscal_paths,
+                bellman_calls=bellman_calls,
+            )
 
     def test_explicit_constant_baseline_reproduces_the_unmodified_path(self):
         baseline = self.results["baseline"]
@@ -139,26 +292,182 @@ class CompiledSocialSecurityTests(unittest.TestCase):
                     else:
                         self.assertEqual(date["pension"], self.original_pension)
 
-    def test_future_fiscal_income_changes_current_values_and_choices(self):
+    def test_dated_fiscal_income_and_age_support_reach_both_bellman_passes(self):
+        """Check the dated chain and the exact one-step age support of shocks."""
         for changed_name, control_name in (("future_pension", "fixed_tax"),
                                            ("future_tax", "fixed_pension")):
             with self.subTest(case=changed_name):
                 changed, control = self.results[changed_name], self.results[control_name]
+                changed_calls = changed["bellman_calls"]
+                control_calls = control["bellman_calls"]
+                # Calls are backward date 1/date 0, then forward date 0/date
+                # 1.  This proves the bound income reaches each evaluator,
+                # rather than only the KFE/accounting call observed below.
+                for result, calls in ((changed, changed_calls), (control, control_calls)):
+                    for call_index, date_index in enumerate((1, 0, 0, 1)):
+                        np.testing.assert_array_equal(
+                            calls[call_index]["income"], result["dated"][date_index]["income"])
+                        self.assertEqual(calls[call_index]["pension"], result["dated"][date_index]["pension"])
+                        self.assertEqual(calls[call_index]["tax"], result["dated"][date_index]["tax"])
+                    # The backward date-zero and forward date-zero solves use
+                    # exactly the date-one backward value as continuation.
+                    np.testing.assert_array_equal(calls[1]["continuation"], calls[0]["value"])
+                    np.testing.assert_array_equal(calls[2]["continuation"], calls[0]["value"])
+                    np.testing.assert_array_equal(calls[1]["value"], calls[2]["value"])
+                    np.testing.assert_array_equal(calls[3]["value"], calls[0]["value"])
+                    np.testing.assert_array_equal(calls[3]["continuation"], calls[0]["continuation"])
+                    # Independent pension/payroll reconstruction: these are
+                    # period-unit incomes before household income-state scaling.
+                    for call in calls:
+                        P = self.parameters
+                        period_scale = (float(P.period_years) if P.scale_flows_to_period else 1.0)
+                        expected_income = np.full((P.I, P.J), call["pension"])
+                        expected_income[:, :P.J_R] = (period_scale * (1.0 - call["tax"])
+                            * np.asarray(P.w_hat)[:, None]
+                            * np.asarray(P.income_age_profile)[None, :P.J_R])
+                        np.testing.assert_allclose(call["income"], expected_income, rtol=0, atol=1e-14)
+                        # Inspect a retiree as well as the working anticipation
+                        # states in ALL four real calls. Thus both pensions and
+                        # taxes are checked inside the compiled resource inputs.
+                        for probe_name, state in KERNEL_PROBES.items():
+                            _, _, location, age, income_state, _, _ = state
+                            z = float(P.z_grid[income_state])
+                            multiplier = (z if age < P.J_R else
+                                1.0 + float(P.retirement_income_z_scale) * (z - 1.0))
+                            inputs = call["probes"][probe_name]["inputs"]
+                            np.testing.assert_allclose(inputs["Rv1d"], P.R_gross * self.b_grid
+                                + expected_income[location, age] * multiplier, rtol=0, atol=1e-14)
+                            self.assertEqual(inputs["beta"], P.beta)
                 np.testing.assert_array_equal(changed["dated"][0]["income"],
                                               control["dated"][0]["income"])
+                np.testing.assert_array_equal(changed_calls[0]["continuation"],
+                                              control_calls[0]["continuation"])
                 self.assertGreater(float(np.max(np.abs(changed["dated"][1]["income"]
                                                       - control["dated"][1]["income"]))), 1e-8)
+                date_one_value_change = np.max(np.abs(
+                    changed_calls[0]["value"] - control_calls[0]["value"]
+                ))
+                self.assertGreater(float(date_one_value_change), 1e-8)
+                # The sole date-zero difference is the anticipated date-one
+                # value: terminal values and current dated income are shared.
+                continuation_change = np.max(np.abs(
+                    changed_calls[1]["continuation"] - control_calls[1]["continuation"]
+                ))
+                self.assertGreater(float(continuation_change), 1e-8)
                 occupied_pre = self.initial_g > 1e-12
                 value_change = (changed["path"].values[0] - control["path"].values[0])[occupied_pre]
                 self.assertTrue(np.isfinite(value_change).all())
                 self.assertGreater(float(np.max(np.abs(value_change))), 1e-8)
-                left, right = changed["dated"][0]["evaluation"], control["dated"][0]["evaluation"]
-                occupied_current = (left.g_current + right.g_current) > 1e-12
-                choice_change = max(float(np.max(np.abs(
-                    getattr(left.policy, field)[occupied_current]
-                    - getattr(right.policy, field)[occupied_current])))
-                    for field in ("c_pol", "bp_pol"))
-                self.assertGreater(choice_change, 1e-9)
+                np.testing.assert_array_equal(changed_calls[1]["value"], changed["path"].values[0])
+                # At t=1 only current recipients/payers can respond because
+                # the terminal continuation is fixed. At t=0 only households
+                # whose NEXT age receives/pays at t=1 can anticipate the shock.
+                future_affected = {5} if changed_name == "future_pension" else set(range(5))
+                current_affected = {4} if changed_name == "future_pension" else set(range(4))
+                sign = 1.0 if changed_name == "future_pension" else -1.0
+                for date, affected in ((1, future_affected), (0, current_affected)):
+                    delta = changed["path"].values[date] - control["path"].values[date]
+                    for age in range(self.parameters.J):
+                        if age not in affected:
+                            np.testing.assert_allclose(delta[:, :, :, age], 0.0, rtol=0, atol=2e-12)
+                    self.assertGreater(float(np.max(sign * delta)), 1e-8)
+                    self.assertGreaterEqual(float(np.min(sign * delta)), -2e-10)
+
+    def test_predeclared_controls_satisfy_exact_continuation_and_crossed_policy_incentives(self):
+        """Verify the optimization channel at two declared, feasible states.
+
+        Earlier diagnostic pension saving: 0.9382044371 -> 0.5013730264,
+        interior on both paths. Tax saving: 0 -> 0.8407770257, a release from
+        its lower bound. No universal interior or occupied response is assumed.
+        """
+        P = self.parameters
+        for changed_name, control_name in (("future_pension", "fixed_tax"),
+                                           ("future_tax", "fixed_pension")):
+            state = ANTICIPATION_PROBES[changed_name]
+            wealth, tenure, location, age, income_state, parity, children = state
+            with self.subTest(case=changed_name, state=state):
+                records = []
+                for name in (control_name, changed_name):
+                    result = self.results[name]
+                    # Check both actual current-date calls, not only that
+                    # the enclosing function received the right full array.
+                    for call_index in (1, 2):
+                        call = result["bellman_calls"][call_index]
+                        probe = call["probes"][changed_name]
+                        inputs, output = probe["inputs"], probe["output"]
+                        self.assertEqual(inputs["has_prev"], 0)
+                        # E[V] = sum_z' Pi_z[z,z'] sum_m' Pi_child[m,m';n]
+                        #             V_{t+1}(b',tenure,location,age+1,z',n,m').
+                        # No survival/bequest mixture or readiness gate is
+                        # active in this explicit fixture contract.
+                        z_weights = np.asarray(P.Pi_z[income_state], dtype=float)
+                        z_weights = z_weights / z_weights.sum()
+                        child_weights = np.asarray(P.Pi_child[children, :, parity], dtype=float)
+                        expected = np.zeros(len(self.b_grid))
+                        for znext, probability_z in enumerate(z_weights):
+                            for child_next, probability_child in enumerate(child_weights):
+                                expected += probability_z * probability_child * call["continuation"][
+                                    :, tenure, location, age + 1, znext, parity, child_next]
+                        continuation_key = "Vc_flat" if tenure == 0 else "Vco_flat"
+                        np.testing.assert_allclose(inputs[continuation_key][:, parity], expected,
+                                                   rtol=0, atol=2e-12)
+                        # Prove fiscal income reaches the compiled optimizer's
+                        # resources, including its income-state multiplier.
+                        income = call["income"][location, age] * float(P.z_grid[income_state])
+                        np.testing.assert_allclose(inputs["Rv1d"], P.R_gross * self.b_grid + income,
+                                                   rtol=0, atol=1e-14)
+                        saving = float(output[1][wealth, parity])
+                        objective = conditional_probe_objective(inputs, state, saving)
+                        np.testing.assert_allclose(output[0][wealth, parity], objective["value"],
+                                                   rtol=0, atol=2e-12)
+                        self.assertGreater(objective["net_consumption"], inputs["c_min"])
+                        np.testing.assert_allclose(output[2][wealth, parity], objective["consumption"],
+                                                   rtol=0, atol=2e-12)
+                        if tenure == 0:
+                            self.assertGreater(objective["net_housing"], 0.01)
+                            np.testing.assert_allclose(output[3][wealth, parity], objective["renter_housing"],
+                                                       rtol=0, atol=2e-12)
+                        self.assertAlmostEqual(saving, result["dated"][0]["evaluation"].policy.bp_pol[state],
+                                               delta=2e-12)
+                        if call_index == 1:
+                            records.append((inputs, saving, objective))
+
+                before_inputs, before, before_value = records[0]
+                after_inputs, after, after_value = records[1]
+                continuation_key = "Vc_flat" if tenure == 0 else "Vco_flat"
+                # Every current primitive and feasible-set argument is equal;
+                # only the date-one continuation presented to the kernel differs.
+                for key in before_inputs:
+                    if key != continuation_key:
+                        np.testing.assert_array_equal(before_inputs[key], after_inputs[key])
+                self.assertGreater(float(np.max(np.abs(
+                    after_inputs[continuation_key][:, parity] - before_inputs[continuation_key][:, parity]))), 1e-8)
+                self.assertGreater(abs(after - before), 1e-8)
+                for saving, objective in ((after, after_value), (before, before_value)):
+                    self.assertGreaterEqual(saving, objective["lower"] - 1e-12)
+                    self.assertLess(saving, min(objective["upper"], self.b_grid[-1]) - 1e-6)
+                self.assertGreater(after, after_value["lower"] + 1e-6)
+                if changed_name == "future_pension":
+                    self.assertGreater(before, before_value["lower"] + 1e-6)
+                    self.assertLess(after, before)
+                else:
+                    self.assertAlmostEqual(before, before_value["lower"], delta=1e-10)
+                    self.assertGreater(after, before)
+
+                old_control_new_income = conditional_probe_objective(after_inputs, state, before)
+                new_control_old_income = conditional_probe_objective(before_inputs, state, after)
+                # Strict revealed-preference reversals make these economically
+                # informative control tests, not arbitrary nonzero-array tests.
+                self.assertGreater(after_value["value"] - old_control_new_income["value"], 1e-10)
+                self.assertGreater(before_value["value"] - new_control_old_income["value"], 1e-10)
+                # At fixed saving, the ENTIRE value change is beta times the
+                # anticipated continuation change. Current utility is identical.
+                self.assertAlmostEqual(old_control_new_income["utility"], before_value["utility"], delta=2e-12)
+                self.assertAlmostEqual(old_control_new_income["value"] - before_value["value"],
+                    P.beta * (old_control_new_income["expected"] - before_value["expected"]), delta=2e-12)
+                self.assertAlmostEqual(after_value["value"] - before_value["value"],
+                    after_value["utility"] - before_value["utility"]
+                    + P.beta * (after_value["expected"] - before_value["expected"]), delta=2e-12)
 
     def test_every_date_passes_actual_budget_mass_and_replay_checks(self):
         for name, result in self.results.items():

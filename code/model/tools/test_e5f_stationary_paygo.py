@@ -35,6 +35,10 @@ class InitialPAYGOTests(unittest.TestCase):
         self.assertEqual(g.shape,(1,1,1,4,2,1,1))
         certificate=certify_initial_pension(g,P,marginal_tolerance=1e-10,fiscal_tolerance=1e-6)
         self.assertTrue(certificate['fiscal_gate'])
+        P.income[0,2] *= 4
+        with self.assertRaisesRegex(RuntimeError,'Anticipated stationary income'):
+            certify_initial_pension(g,P,marginal_tolerance=1e-10,fiscal_tolerance=1e-6)
+        P.income[0,2] /= 4
         # A changed age distribution must reject this stationary shortcut.
         g[0,0,0,3,1,0,0] += .05
         with self.assertRaisesRegex(RuntimeError,'certification failed'):

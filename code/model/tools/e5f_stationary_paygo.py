@@ -70,6 +70,12 @@ def certify_initial_pension(g, P, *, marginal_tolerance, fiscal_tolerance):
     if (not np.isfinite([marginal_tolerance, fiscal_tolerance]).all()
             or not 0 < marginal_tolerance <= 1e-8 or not 0 < fiscal_tolerance <= 1e-6):
         raise ValueError('Explicit tight marginal and fiscal gates required')
+    expected = bind_social_security_income(copy.deepcopy(P),
+        pension_period=P.pension, payroll_tax=P.tau_pay)
+    if (getattr(P, 'social_security_income_units', None) != 'period'
+            or not np.array_equal(np.asarray(P.income), expected.income)
+            or not np.array_equal(np.asarray(P.pension_by_loc), expected.pension_by_loc)):
+        raise RuntimeError('Anticipated stationary income differs from its pension budget inputs')
     accounts = fiscal_accounts(g, P)
     actual = np.asarray(g, dtype=float).sum(axis=(0, 1, 5, 6))
     if actual.sum() <= 0:
@@ -86,6 +92,8 @@ def certify_initial_pension(g, P, *, marginal_tolerance, fiscal_tolerance):
 def solve_balanced_initial_equilibrium(*, model, parameters, b_grid, initial_prices,
                                        payroll_tax, marginal_tolerance, fiscal_tolerance):
     """Solve households/prices with the balancing pension already anticipated."""
+    if not np.isfinite(parameters.tol_eq) or not 0 < parameters.tol_eq <= 2.5e-5:
+        raise ValueError('Initial equilibrium tolerance must retain the 2.5e-5 gate or tighter')
     P, receipt = bind_initial_balanced_pension(parameters, payroll_tax=payroll_tax)
     sol, P, prices = model.solve_markov_income_equilibrium(
         np.asarray(initial_prices, dtype=float), P, b_grid, verbose=False)
