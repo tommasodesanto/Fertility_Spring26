@@ -81,8 +81,10 @@ All three six-date smoke cases, array **17347123**, completed with exit code zer
 in 3m12–3m25. Their `afterok` dependency released main array **17347124** at
 23:25:35 UTC. All three main cases are independently confirmed RUNNING, with
 fresh `historical_backward_and_forward` heartbeats. Each main case verifies all
-three smoke summaries, gates and artifact hashes before computing. Independent
-local collection of those smoke receipts remains to be done.
+three smoke summaries, gates and artifact hashes before computing. At 23:58 UTC the lead independently verified all three local smoke receipts:
+508 source pins per case, all 15 saved-artifact hashes, all 36 numerical gates,
+18 dated household budgets, every fit-row calculation and unchanged parameters.
+These are six-date plumbing tests; they do not pass an equilibrium market test.
 
 The remaining main budget is now **one 100-date mapping per case**: the linear
 case exactly replays the baseline, while the earlier/later cases hold the
@@ -117,3 +119,48 @@ Those jobs are cancelled. **Do not repair or relaunch them.** The corrected
 snapshot has one smoke array and one main array, submitted once and verified.
 Old outputs remain intact for diagnosis. No targets, weights, scientific gates,
 model equations or production benchmark were changed by the launch repair.
+
+## Local verification and historical comparison
+
+The main paths were still progressing at 00:00 UTC: cases 0 and 1 had completed
+57 of 100 forward dates, and case 2 had completed 68. No completed main output
+is collected yet. All three runtime compilation checks passed in their logs.
+
+The existing, exactly reproduced baseline path has now been matched to the
+four empirical birth-count blocks. Normalizing 2008–2011 births to 100 gives:
+
+| Birth years | Data | Existing baseline |
+|---|---:|---:|
+| 2008–2011 | 100.00 | 100.00 |
+| 2012–2015 | 97.06 | 88.79 |
+| 2016–2019 | 93.93 | 82.75 |
+| 2020–2023 | 89.04 | 79.07 |
+
+The existing baseline therefore has a 20.93% decline versus 10.96% in the
+observed aggregate birth count. This is a new diagnostic readout of an existing
+solution, not a result of the running alternatives or a female-TFR comparison.
+Own-first-block normalization discards the initial level; historical household
+counts/ages are externally conditioned, and national birth data versus the
+model's housing geography remains an approximation. Additional births in the
+3+ parity bin are imputed at entry into that bin. All raw levels and denominators
+are retained in `computation/baseline_birth_comparison.json`.
+
+[Full inherited fit table](../design_research/computation/final_replay/evaluation_003/target_fit.csv)
+and [all parameter estimates, bounds and current fixed roles](computation/all_inherited_parameters.csv)
+remain available. No target or parameter was changed by this diagnostic.
+
+After copying completed remote `output/main/` cases into `computation/main/`,
+regenerate verification and birth comparisons from the project root with:
+
+```sh
+python3 tmp/e5f_matched_pf/code/model/tools/collect_e5f_matched_pf_preference_pilot.py \
+  --pilot-root output/model/e5f_matched_pf_20260909a/path_pilot_20260910 \
+  --source-root tmp/e5f_matched_pf \
+  --parent-evaluation output/model/e5f_matched_pf_20260909a/design_research/computation/final_replay/evaluation_003
+```
+
+The collector performs no model solve. It verifies each completed case before
+writing `computation/verified_receipts.json`, full main fit and birth-comparison
+CSVs, the common inherited-parameter table, and each candidate's detailed birth
+comparison. Missing completed summaries remain explicitly pending. The unchanged
+main case must reproduce all four baseline tables byte for byte.

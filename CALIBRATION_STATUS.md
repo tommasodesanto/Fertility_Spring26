@@ -18,7 +18,10 @@ declines. These are preliminary comparisons, not new equilibrium roots or
 calibration estimates. Structural parameters, targets, weights, numerical gates,
 initial normalization 2.1 and the constant post-2023 preference endpoint remain
 unchanged. Sixty focused tests passed. Main launchers verify all three smoke
-receipts before computing; independent local receipt collection is still pending.
+receipts before computing. At 23:58 UTC independent local checks verified all
+508 source pins per case, 15 artifact hashes, 36 gates, 18 dated household budgets
+and every fit/parameter row. The six-date tests do not certify market clearing.
+At 00:00 UTC all main cases were progressing, with 57/57/68 forward dates done.
 The recoverable plan is in
 `output/model/e5f_matched_pf_20260909a/path_pilot_20260910/README.md`.
 The jobs continue if the laptop closes. Review deadline: 2026-09-11 00:30 UTC;

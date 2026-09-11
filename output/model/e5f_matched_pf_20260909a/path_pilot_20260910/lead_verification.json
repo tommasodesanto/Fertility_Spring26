@@ -9,16 +9,17 @@
   "smoke_status_last_observed": "COMPLETED, all three cases, exit code 0:0",
   "main_job_id_last_recorded": "17347124",
   "main_dependency_verified": true,
-  "cluster_status_last_check": "2026-09-10 23:27 UTC: all three main cases RUNNING; fresh historical_backward_and_forward heartbeats",
+  "cluster_status_last_check": "2026-09-11 00:00 UTC: all three main cases RUNNING; forward dates 57, 57, 68 of 100",
   "monitor_status": "ACTIVE update confirmed; corrected jobs and deadline saved",
   "production_promoted": false,
   "remote_snapshot": "/scratch/td2248/projects/Fertility_Spring26_preference_shape_20260910b",
   "main_scope": "one 100-date mapping per case: baseline exact replay, two conditional profiles at inherited prices",
-  "independent_smoke_receipt_collection": "pending",
+  "independent_smoke_receipt_collection": "All 3 verified locally: 508 source pins each, 15 artifact hashes, 36 numerical gates, 18 dated budgets, 36 target rows; unchanged parameters",
   "deadline_utc": "2026-09-11 00:30 UTC",
   "previous_smoke_failure": "17340342 timed out with inherited NUMBA_DISABLE_JIT=1; corrected launcher explicitly enables and asserts compiled model execution",
   "cancelled_old_jobs": [
     "17340490",
     "17340491"
-  ]
+  ],
+  "verification_driver": "tmp/e5f_matched_pf/code/model/tools/collect_e5f_matched_pf_preference_pilot.py"
 }
