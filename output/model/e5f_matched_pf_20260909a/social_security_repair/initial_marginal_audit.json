@@ -1,0 +1,48 @@
+{
+  "status": "passed_saved_distribution_marginal_audit",
+  "model_solves": 0,
+  "equilibrium_certified": false,
+  "inherited_source_files_verified": 508,
+  "inherited_checkpoint_sha256": "dfeb34f077e7a16804119eabd43cb8ee0611b0c3bb0180ec8af8ad7dc51b94e4",
+  "inherited_pension_period": 1.7183999999999993,
+  "analytic_balanced_pension_period": 2.0463613896121218,
+  "prediction": {
+    "method": "exogenous_one_market_age_income_recursion",
+    "predicted_accounts": {
+      "payroll_tax_base_period": 2.9632058966759054,
+      "retiree_benefit_exposure": 0.2591985258310237,
+      "worker_household_mass": 0.7408014741689763,
+      "retiree_household_mass": 0.2591985258310237,
+      "payroll_tax_rate": 0.179,
+      "pension_period_units": 2.0463613896121218,
+      "payroll_tax_revenue": 0.5304138555049871,
+      "pension_outlays": 0.5304138555049871,
+      "pension_budget_residual": 0.0,
+      "scaled_pension_budget_residual": 0.0,
+      "implied_balanced_pension_period": 2.0463613896121218,
+      "implied_balanced_payroll_tax": 0.17900000000000002
+    }
+  },
+  "certificate": {
+    "actual_accounts": {
+      "payroll_tax_base_period": 2.96320589588729,
+      "retiree_benefit_exposure": 0.25919852614565453,
+      "worker_household_mass": 0.7408014738543685,
+      "retiree_household_mass": 0.25919852614565453,
+      "payroll_tax_rate": 0.179,
+      "pension_period_units": 2.0463613896121218,
+      "payroll_tax_revenue": 0.5304138553638249,
+      "pension_outlays": 0.5304138561488355,
+      "pension_budget_residual": -7.850106120699252e-10,
+      "scaled_pension_budget_residual": -1.4799964272608465e-09,
+      "implied_balanced_pension_period": 2.046361386583514,
+      "implied_balanced_payroll_tax": 0.17900000026491936
+    },
+    "normalized_age_income_max_gap": 4.897025797021004e-11,
+    "marginal_tolerance": 1e-09,
+    "fiscal_tolerance": 1e-06,
+    "marginal_gate": true,
+    "fiscal_gate": true
+  },
+  "interpretation": "Analytic age/earnings law verified on old actual stationary heads; revised household equilibrium still required"
+}

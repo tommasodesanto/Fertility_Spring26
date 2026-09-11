@@ -1,6 +1,98 @@
 # Calibration Status
 
-Updated: `2026-09-10` (design research completed; finite 100-date continuation verified)
+Updated: `2026-09-11` (reviewed utility/PAYGO plan approved; implementation starting)
+
+**September 11, 01:04 EDT — new initial equilibrium and active fiscal tests pass; early sensitivity and terminal work underway.**
+Source `7e872053` is pushed on the isolated `codex/balanced-social-security` branch.
+Full-grid smoke **17358109 passed**: two exact fresh normalizations, eight GE calls,
+569.6 seconds. Initial fertility is 2.100032863; actual pension-budget residual
+is -2.77e-10 relative, market residual 4.39e-6. All household budget, mass,
+operator, probability, occupied-value and checkpoint checks pass, with the stable
+17-graph packet. This certifies the initial numerical loop, not an early calibration.
+
+**17358472 passed** the new early observation diagnostic (4.5 seconds; 630 source
+pins) and all **23 compiled utility/PAYGO/anticipation tests** (13.3 seconds).
+The fiscal fixture now explicitly uses the same exhaustive saving method as the
+active model. The old knot case is preserved, and a separate predeclared interior
+state passes reconstructed continuation and crossed-objective checks. Original
+legacy failures remain in the fiscal evidence folder; none is relabelled passed.
+The early initial measurements and complete parameter table are in
+`social_security_repair/initial_measurement_17358472.json` and
+`initial_smoke_17358109_parameters.csv` under the matched output folder.
+No early weights have been promoted. Exact recent-parent ownership is unavailable
+from count-only states; family, age, structure and income mappings remain explicit.
+
+Frozen-psi four-cell array **17358470 completed all four cases** with one GE each,
+59–88 seconds per GE. Nine structural coordinates and psi are identical across
+cells; the two balanced-pension cases have relative fiscal gaps below 1.5e-9.
+All receipts, full raw decomposition, parameters and 68 original graphs are in
+`utility_fiscal_decomposition/`. Legacy moment comparisons do not use early targets.
+
+Sensitivity preparation: **17358574** runs two fresh normalized candidate loops
+including all nine explicit coordinates and the new early observers. If it passes,
+launch the prepared 19-case baseline/coordinate panel in immutable source
+`/scratch/td2248/projects/Fertility_Spring26_initial_panel_7e872053`.
+Eight coordinates move ±2% in levels; beta moves ±2% of its annual log discount
+rate, with actual level changes saved. Every point separately normalizes 2.1;
+max eight GE calls/point, 30-minute driver, 32-minute Slurm, one CPU/16GB.
+No objective or calibrated-SMM claim is assigned. Exact terminal/PAYGO adapter
+and initial historical bridge pass 49 combined pure checks; compiled terminal
+root and complete-path checks remain outstanding. Independent bridge review
+caught and repaired stale/NaN normalization acceptance before use.
+
+**September 11, 00:42 EDT — implementation verified locally; exact initial loop running.**
+Active isolated source c6dd3508 is pushed on `codex/balanced-social-security`.
+The parenthood adapter preserves pension/income arrays, keeps nine structural
+coordinates and rejects a reintroduced slope. Eleven real-type/tiny allocation
+tests and four initial-PAYGO arithmetic tests pass locally and compiled on Torch.
+Saved-distribution audit **17357678 passed**: all 508 inherited source pins
+verified, normalized age/earnings gap 4.8970e-11; analytic pension 2.0463613896
+period units gives actual relative fiscal residual -1.4800e-9. This audit solves
+no new economy; it supports the inexpensive stationary pension recursion.
+
+Compiled six-path diagnostic **17357939 failed three stronger assertions**;
+all utility, balance, budget, mass, queue and exact-replay tests passed. The tiny
+fixture inherited `exhaustive_saving_control=False`, whereas the active matched
+model requires True. A negative crossed-policy objective gain identifies an
+inferior action in that legacy fixture. Preserve the failure; diagnostic
+**17358206** changes only the fixture's optimizer flag before initialization
+and records all tests, responses and objective comparisons. No acceptance gate
+is waived and no active-solver failure is inferred without this comparison.
+
+Initial smoke **17358109** is running in immutable snapshot
+`/scratch/td2248/projects/Fertility_Spring26_initial_revision_c6dd3508`:
+new utility, balanced initial pension, common eta .63, explicit active exhaustive
+optimizer, two fresh normalizations to 2.1, at most eight GE solves each,
+30-minute driver/32-minute Slurm limits, one CPU/16GB. Expected time about ten
+minutes based on prior candidates; first new GE took 73.7 seconds. The driver
+requires source pins, fiscal/market/operator/budget/value/probability checks,
+checkpoint reload, exact repeats and the unchanged 17-graph packet. This is a
+diagnostic candidate loop, not an early SMM calibration or perfect-foresight path.
+
+Independent empirical checks are saved in `design_research/fertility_contract/`
+and `design_research/observer_contract/` under the matched-PF output folder.
+They reproduce the proposed points and recover official approximate CPS
+uncertainty, but disclose age-window, maternal/resident-child, structure and
+income mappings. Default-off initial observation adapters are being implemented;
+no new empirical weights or target fingerprint are promoted. A separate bounded
+agent is wiring the actual terminal person/household pension root. Lead verifies
+critical diffs. Monitor remains active every 15 minutes; idle sleep prevention
+is active. Work and initial launches are authorized; no further approval wait.
+
+**September 11, 00:11 EDT — author approves implementation, cluster launches and autonomous iteration.**
+An active goal now covers the approved utility, actual-budget pensions, certified
+early calibration, announced historical preference path and gated matched policies.
+The first round follows `output/model/e5f_matched_pf_20260909a/OVERNIGHT_PLAN.md`;
+its earlier 12-hour global stop is superseded by authorization to continue and
+launch useful follow-up rounds. Each round/job retains explicit solve/time
+limits, exact-loop smoke, immutable inputs, checkpoints and numerical gates.
+The 96 concurrent one-CPU ceiling remains. The new target design and common
+supply elasticity 0.63 are approved subject to their stated verification.
+At this checkpoint the isolated source is a654219c and no new model solve has
+yet run. Implementation, empirical certification and anticipation-test repair
+start in parallel. A morning readout will distinguish completed from pending work.
+The existing fifteen-minute monitor is active for this scope; its former paused
+prompt and the preparation-only approval language below are superseded.
 
 **September 11 — author selects parenthood-only housing utility; overnight proposal under review.**
 Retain the externally fixed concave equivalence scale

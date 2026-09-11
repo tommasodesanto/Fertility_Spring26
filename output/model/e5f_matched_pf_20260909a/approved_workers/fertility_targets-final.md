@@ -1,0 +1,23 @@
+# Fertility contract verification completed; activation remains conditional
+
+Main-root deliverables:
+
+- [Assessment and concrete observer choices](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/README.md)
+- [Machine-readable contract](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/fertility_target_contract.json)
+- [Source checks and all uncertainty arithmetic](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/verification.json)
+
+The four target points reproduce: CPS childless .1982787510 and exactly-one-among-mothers .2136553252; NCHS midpoint first-birth age 25.9762638610 and age 30+ share .2492780130. Original samples/targets are unchanged. Every active weight is null; this is not an activated SMM fingerprint.
+
+Two recovered-worker statements needed correction. Official Census generalized-variance formulas supply annual approximate CPS SEs, despite missing replicate weights: childlessness .005216/.005397 and conditional one-child share .006046/.006138 in 2004/2006. Zero-cross-year-covariance pooled candidates are .003751/.004307; conservative fixed-base correlation-one candidates are .005305/.006091. Cross-year covariance and random mother-base treatment remain unverified, so no pooled scale was adopted. Sources: [2004 technical documentation](https://www2.census.gov/programs-surveys/cps/techdocs/cpsjun04.pdf), [2006 technical documentation](https://www2.census.gov/programs-surveys/cps/techdocs/cpsjun06.pdf).
+
+NCHS complete counts can support a model-based stochastic event-process SE; zero sampling error does not exclude that interpretation. Conditional multinomial SE candidates are .002250 years/.00016824 share, whereas annual temporal SDs are .084567/.008492. These measure different objects. Inherited .15/.01 remain explicitly synthetic old-cohort scales suitable only for labeled diagnostic borrowing unless adopted through a new justified contract. [NCHS random-variation discussion, printed pages 96–99](https://www.cdc.gov/nchs/data/nvsr/nvsr57/nvsr57_07.pdf).
+
+The existing dated flow primitive is usable: first_birth_accounting_by_age and period_fertility_diagnostics already compute realized first-birth flows and midpoint mean/share. The scored HistoricalMomentObserver uses synthetic-cohort timing, which must be replaced for these early period rows. No new flow engine is required.
+
+A concrete default-off CPS projection is specified: overlap weights .5/.75 on the age 38/42 cells. Under uniform event timing, use pre/post parity mixtures .25/.75 in the age 38 cell and .625/.375 in the age 42 cell, then aggregate masses before ratios. Constant-cell stock and fixed CPS age-composition projections are diagnostic sensitivities. This is an explicit four-year approximation, not exact maternal-year reconstruction. The README lists the necessary pure invariance, mass, parity-transition and denominator checks; model code was not modified.
+
+Remaining material cautions: 7.7314% of the early NCHS first births are below 18 and are collapsed into model label 20. The authoritative builder applies no residence filter; its 2006 age 12–49 all-order count exceeds the published all-age resident total, so resident comparability is unverified. It also excludes 71,956 unknown-order records in 2003–06; conservative bounds are saved. No replacement sample was constructed. [Published resident count convention, Table 1](https://www.cdc.gov/nchs/data/nvsr/nvsr58/nvsr58_24.pdf).
+
+The author’s 2.1 normalization is preserved. Using it, the two CPS shares and the inherited 3.602359 top-bin count on the same parity distribution would require 3+ share .416791 versus observed .286255; this is a conditional algebraic diagnostic, not proof the model is infeasible. Household-to-maternal units, age projections, 2.1 renewal identities, finite scales and the full identification/fingerprint gate remain for lead review.
+
+Verification: the bounded script rehashed 71.31 MB of exact selected CPS partitions, verified every record’s date and the loader hash, independently recomputed all four points and NCHS annual/tail arithmetic, and checked source pins plus null active weights. Runtime about .52 seconds. JSON parses. Output is ignored by existing repository rules. No model runs, cluster launches, core/builder edits, git commits or pushes. The prior worktree worker artifacts are preserved.

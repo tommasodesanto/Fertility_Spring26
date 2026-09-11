@@ -1,0 +1,7 @@
+# Terminal pension root smoke
+
+Diagnostic only. Initial state is the verified c6dd3508 new-utility/balanced-pension equilibrium. Terminal preference is the initial intercept minus0.25, a declared numerical test value, not an estimated shock. Household/person demographics reuse exactly the serialized approved seed: initial2023 head alignment, Census annual paths through2100, then terminal2100 coefficients. No population/headship/supply re-anchoring.
+
+Full grid120x17, new utility, fixed payroll tax.179, propertytax1% annually with zero rebate, same initial supply curve and eta.63. Unknowns are terminal assetprice and periodpension. At most8 joint mappings including fresh replay,250 inner population iterations/mapping,28min root allocation,30min processwatchdog,32minSlurm; oneCPU16GB. Latest initialGE70seconds; actual terminal-person root runtime is unknown and measured here. No new GE for final diagnostics. Numerical price[.05,5] and pension[.05,10] bounds are not empirical restrictions.
+
+Original input/checkpoint/repetition-summary and every model source are pinned. Every trial re-solves households with its own pension before solving actual terminal population. Market2e-4/fiscal1e-6 and existing budget/feasibility/population/replay gates retained. Checkpoint and stable17graphs required. Success certifies this terminal numerical test only, not calibration/history/horizon or a policy benchmark.

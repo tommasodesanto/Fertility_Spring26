@@ -1,0 +1,248 @@
+{
+  "status": "partial",
+  "updated_at_utc": "2026-09-11T05:14:32.686265+00:00",
+  "job_id": "17358647",
+  "source_commit": "7e872053",
+  "all_19_unique_contracts_verified": true,
+  "source_pins_verified": 634,
+  "seed_sha256_verified": "dfeb34f077e7a16804119eabd43cb8ee0611b0c3bb0180ec8af8ad7dc51b94e4",
+  "case_count_verified": 10,
+  "verified_case_ids": [
+    "baseline",
+    "beta_annual_minus",
+    "beta_annual_plus",
+    "kappa_fert_minus",
+    "kappa_fert_plus",
+    "kappa_fert_continuation_minus",
+    "kappa_fert_continuation_plus",
+    "chi_minus",
+    "chi_plus",
+    "H0_minus"
+  ],
+  "pending_or_running": [
+    "H0_plus",
+    "theta0_minus",
+    "theta0_plus",
+    "theta1_minus",
+    "theta1_plus",
+    "first_birth_fixed_cost_minus",
+    "first_birth_fixed_cost_plus",
+    "h_P_minus",
+    "h_P_plus"
+  ],
+  "failures_or_validation_errors": [],
+  "current_states": [
+    {
+      "case_id": "baseline",
+      "index": 0,
+      "contract_sha256": "5b9602d9d94ec71f0cba2b2dbc082750bc9dd9dfbb247371d43185849d054e14",
+      "heartbeat.json": {
+        "case": "new_balanced",
+        "completed_repetitions": 0,
+        "elapsed_seconds": 60.00059198401868,
+        "phase": "stationary_equilibrium",
+        "psi_child": 0.2827035668649932,
+        "repetition": 1,
+        "stationary_solves": 1
+      },
+      "status": "previously_verified"
+    },
+    {
+      "case_id": "beta_annual_minus",
+      "index": 1,
+      "contract_sha256": "4ba7a21655c2dd07e18d1d39afab7f253ebbe8b2c996beea9e69cb31e8023a7b",
+      "heartbeat.json": {
+        "case": "new_balanced",
+        "completed_repetitions": 0,
+        "elapsed_seconds": 60.000619538128376,
+        "phase": "stationary_equilibrium",
+        "psi_child": 0.2827035668649932,
+        "repetition": 1,
+        "stationary_solves": 1
+      },
+      "status": "previously_verified"
+    },
+    {
+      "case_id": "beta_annual_plus",
+      "index": 2,
+      "contract_sha256": "80d582a3e9fc4966ab800c1cfc183f437dd05ff344840aedd8617274160e07ae",
+      "heartbeat.json": {
+        "case": "new_balanced",
+        "completed_repetitions": 0,
+        "elapsed_seconds": 60.00063384603709,
+        "phase": "stationary_equilibrium",
+        "psi_child": 0.2827035668649932,
+        "repetition": 1,
+        "stationary_solves": 1
+      },
+      "status": "previously_verified"
+    },
+    {
+      "case_id": "kappa_fert_minus",
+      "index": 3,
+      "contract_sha256": "fcdbb054aa6993bde411313070456d26924c90f44ce107d41ae6a47750c377fe",
+      "heartbeat.json": {
+        "case": "new_balanced",
+        "completed_repetitions": 0,
+        "elapsed_seconds": 240.04691340774298,
+        "phase": "stationary_equilibrium",
+        "psi_child": 0.2793098670550113,
+        "repetition": 1,
+        "stationary_solves": 4
+      },
+      "status": "previously_verified"
+    },
+    {
+      "case_id": "kappa_fert_plus",
+      "index": 4,
+      "contract_sha256": "aaa39b904d0502b05e721bbaa8845af3040f4ff607dbc40401ce55fc0844a05f",
+      "heartbeat.json": {
+        "case": "new_balanced",
+        "completed_repetitions": 0,
+        "elapsed_seconds": 300.04120194353163,
+        "phase": "stationary_equilibrium",
+        "psi_child": 0.2860750278110019,
+        "repetition": 1,
+        "stationary_solves": 4
+      },
+      "status": "previously_verified"
+    },
+    {
+      "case_id": "kappa_fert_continuation_minus",
+      "index": 5,
+      "contract_sha256": "f83614e20589d11caab664e59223bf1c8e2695b6b6483efca98aeb88629d926a",
+      "heartbeat.json": {
+        "case": "new_balanced",
+        "completed_repetitions": 0,
+        "elapsed_seconds": 240.05542836897075,
+        "phase": "stationary_equilibrium",
+        "psi_child": 0.28930446958082384,
+        "repetition": 1,
+        "stationary_solves": 4
+      },
+      "status": "previously_verified"
+    },
+    {
+      "case_id": "kappa_fert_continuation_plus",
+      "index": 6,
+      "contract_sha256": "013e9069866ad25ef0b4df32a888ad550d0c203da9eeaf029c29472803a806fd",
+      "heartbeat.json": {
+        "case": "new_balanced",
+        "completed_repetitions": 0,
+        "elapsed_seconds": 300.074544490315,
+        "phase": "stationary_equilibrium",
+        "psi_child": 0.2760197491928827,
+        "repetition": 1,
+        "stationary_solves": 4
+      },
+      "status": "previously_verified"
+    },
+    {
+      "case_id": "chi_minus",
+      "index": 7,
+      "contract_sha256": "97bb4a1d3c556178481c4fa1c5663ba088a95f92a7efd88bf088cd85760e80b9",
+      "heartbeat.json": {
+        "case": "new_balanced",
+        "completed_repetitions": 0,
+        "elapsed_seconds": 300.0569477984682,
+        "phase": "stationary_equilibrium",
+        "psi_child": 0.28298339775274217,
+        "repetition": 1,
+        "stationary_solves": 5
+      },
+      "status": "previously_verified"
+    },
+    {
+      "case_id": "chi_plus",
+      "index": 8,
+      "contract_sha256": "a355ba2330700708a268d492510b9b479101dd7c1c6deb5bd66fd31a813769c2",
+      "heartbeat.json": {
+        "case": "new_balanced",
+        "completed_repetitions": 0,
+        "elapsed_seconds": 420.09888179507107,
+        "phase": "stationary_equilibrium",
+        "psi_child": 0.2823942438362474,
+        "repetition": 1,
+        "stationary_solves": 5
+      },
+      "status": "verified"
+    },
+    {
+      "case_id": "H0_minus",
+      "index": 9,
+      "contract_sha256": "197e8a16345531fc506b4bc6232998aa5c4c164c4e62c061d7096ae079ce8878",
+      "heartbeat.json": {
+        "case": "new_balanced",
+        "completed_repetitions": 0,
+        "elapsed_seconds": 300.04745795205235,
+        "phase": "stationary_equilibrium",
+        "psi_child": 0.283927072312628,
+        "repetition": 1,
+        "stationary_solves": 4
+      },
+      "status": "previously_verified"
+    },
+    {
+      "case_id": "H0_plus",
+      "index": 10,
+      "contract_sha256": "dc1e48db00f8bc74d76348a8a305056016bde834d2363de45939df9a743b6f08",
+      "status": "pending_or_running"
+    },
+    {
+      "case_id": "theta0_minus",
+      "index": 11,
+      "contract_sha256": "d0e6e0a70792fa66f2314240432a27fe95f88f985d7ebf61efdd0cda85bd3722",
+      "status": "pending_or_running"
+    },
+    {
+      "case_id": "theta0_plus",
+      "index": 12,
+      "contract_sha256": "1629059326102a8dd5fdad444fd8cb14262433393808213b8f422a12fd79a9b5",
+      "status": "pending_or_running"
+    },
+    {
+      "case_id": "theta1_minus",
+      "index": 13,
+      "contract_sha256": "80ae077b65d2c369655a44d4093eb63a577f3d7628f8c0e57cbafd4b83a8bdfe",
+      "status": "pending_or_running"
+    },
+    {
+      "case_id": "theta1_plus",
+      "index": 14,
+      "contract_sha256": "e49fadd73d814a9441006897fa58cc13ad41c3f1b69a39384032fe84d4c050aa",
+      "status": "pending_or_running"
+    },
+    {
+      "case_id": "first_birth_fixed_cost_minus",
+      "index": 15,
+      "contract_sha256": "8f551f035f5e129c060112812c8fe96ad802a625099ce3d7e34e32918bf18582",
+      "status": "pending_or_running"
+    },
+    {
+      "case_id": "first_birth_fixed_cost_plus",
+      "index": 16,
+      "contract_sha256": "3fc5c210ffc4271dc72323a42afb49379271c0ba390dddb9f10930571c96aa46",
+      "status": "pending_or_running"
+    },
+    {
+      "case_id": "h_P_minus",
+      "index": 17,
+      "contract_sha256": "641d54d2959f2bf535973b020c15e04a05a0a7b595085d5f5c06ad60860ca222",
+      "status": "pending_or_running"
+    },
+    {
+      "case_id": "h_P_plus",
+      "index": 18,
+      "contract_sha256": "c2007b1a3c47e8870bfd113e0606978f1c9bdec78097e3d67ab82b78369956ab",
+      "status": "pending_or_running"
+    }
+  ],
+  "checkpoints_verified": 10,
+  "graph_hashes_verified": 170,
+  "graph_pngs_downloaded": false,
+  "raw_case_summary_sha256": "279cdba9bc00544eb71d5c30c9cb6cfe20b8c50292ec1a68ff677513a4ea88e3",
+  "collector_sha256": "5a0050a4981f9222239bc46df6b7c9fcd4816ad4b494f56394458bad360a8046",
+  "calibrated_smm": false,
+  "weights_assigned": false,
+  "remaining": "Await remaining existing jobs; no rerun authorized by collector"
+}

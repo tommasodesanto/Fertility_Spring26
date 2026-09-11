@@ -1,0 +1,362 @@
+{
+  "status": "source_checks_passed_weights_not_adopted",
+  "source_sha256": {
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/parameter_target_audit/fertility/fertility_availability.json": "739392f0c75df883a9b50168e8e545da4e26b192b67ba38557b387d80c1486f1",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/nchs_natality_timing/build_first_birth_timing.R": "893e526f0720dd9d0219ae9bf3f81835414fa3debd03124dc0d772fddfff3926",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/nchs_natality_timing/first_birth_counts_year_age.csv": "5ef20c138a103c79b472b372fa8c5199cd5f3a0b544faff73e908f3803360c45",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/nchs_natality_timing/first_birth_counts_manifest.csv": "cc2988d58c7d0d4e8fa487abdb9c3a4fe7477ccc40245b271a93ee1fdcaf19d0",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/nchs_natality_timing/order_exclusion_shares_by_year.csv": "cbc35f9497c44d2dcb8fe4746cf68003906eab3873fe04e3e9916a7ff9432262",
+    "/Users/tommasodesanto/Desktop/Projects/Datasets/CPS/extract3/loader.do": "eb40824c7a3f11d5ca12400e9935ed6ae8cb5439cbe30009c047be90280bfab3",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/verify_fertility_contract.py": "aa7905221740fcbea809bc0c8f371a75511b9761a1d98dcff5505bb96c1c490d"
+  },
+  "cps_partition_checks": {
+    "2004": {
+      "partition_sha256": "44e233bb4780c844892f8e75fc34206533bb753906bba68c3ffc9ced374df786",
+      "records": 5600,
+      "bytes_checked": 35825904
+    },
+    "2006": {
+      "partition_sha256": "8bd7a843587d2f7dfb70d9309473855f4c87d1271636572f50e8a7950cf3426a",
+      "records": 5272,
+      "bytes_checked": 35483733
+    }
+  },
+  "cps": {
+    "2004": {
+      "n": 5600,
+      "weight": 11534656.9936,
+      "mothers_weight": 9310329.7468,
+      "childless": 0.1928386121957651,
+      "exactly_one_among_mothers": 0.21511000477596962,
+      "parity1": 0.17362848998554725,
+      "parity2": 0.34475417737228137,
+      "parity3plus": 0.28877872044640635,
+      "completed_capped5": 1.8712915395903205,
+      "completed_uncapped": 1.894658062500325,
+      "top_parity_capped_mean": 3.4910975895376306
+    },
+    "2006": {
+      "n": 5272,
+      "weight": 11234864.9964,
+      "mothers_weight": 8944479.862,
+      "childless": 0.20386405489820397,
+      "exactly_one_among_mothers": 0.21214114591071567,
+      "parity1": 0.16889319169460562,
+      "parity2": 0.3435779575310322,
+      "parity3plus": 0.2836647958761581,
+      "completed_capped5": 1.8415328894676988,
+      "completed_uncapped": 1.8616754439151721,
+      "top_parity_capped_mean": 3.474113802762009
+    },
+    "pooled": {
+      "n": 10872,
+      "weight": 22769521.99,
+      "mothers_weight": 18254809.6088,
+      "childless": 0.19827875100684098,
+      "exactly_one_among_mothers": 0.2136553252201454,
+      "parity1": 0.1712920141895346,
+      "parity2": 0.34417381072565945,
+      "parity3plus": 0.28625542407796506,
+      "completed_capped5": 1.856608121258149,
+      "completed_uncapped": 1.8783838839209643,
+      "top_parity_capped_mean": 3.4827933438416143
+    }
+  },
+  "cps_age_detail": {
+    "40": {
+      "n": 2158,
+      "weight": 4606011.5997,
+      "mothers_weight": 3753550.1629,
+      "childless": 0.18507583368993746,
+      "exactly_one_among_mothers": 0.23500667390001806,
+      "parity1": 0.19151261780527296,
+      "parity2": 0.3374564267925936,
+      "parity3plus": 0.28595512171219595,
+      "completed_capped5": 1.8700110444925937,
+      "completed_uncapped": 1.8923906756482587,
+      "top_parity_capped_mean": 3.5095911802279525
+    },
+    "41": {
+      "n": 2153,
+      "weight": 4575763.033,
+      "mothers_weight": 3573215.9779,
+      "childless": 0.21909942623114856,
+      "exactly_one_among_mothers": 0.21552475438459281,
+      "parity1": 0.1683034043603193,
+      "parity2": 0.33587208277968533,
+      "parity3plus": 0.2767250866288469,
+      "completed_capped5": 1.8039483439089186,
+      "completed_uncapped": 1.8231693193321885,
+      "top_parity_capped_mean": 3.483243191760367
+    },
+    "42": {
+      "n": 2072,
+      "weight": 4275229.8611,
+      "mothers_weight": 3450593.0924,
+      "childless": 0.1928871184689527,
+      "exactly_one_among_mothers": 0.19337484711531153,
+      "parity1": 0.1560753300708648,
+      "parity2": 0.35095186557149305,
+      "parity3plus": 0.30008568588868945,
+      "completed_capped5": 1.91753588755359,
+      "completed_uncapped": 1.9494283431009785,
+      "top_parity_capped_mean": 3.5308476084152836
+    },
+    "43": {
+      "n": 2247,
+      "weight": 4697022.9922,
+      "mothers_weight": 3844963.0257,
+      "childless": 0.18140425710390456,
+      "exactly_one_among_mothers": 0.22734976382272365,
+      "parity1": 0.1861075488137143,
+      "parity2": 0.3472018541761823,
+      "parity3plus": 0.2852863399061988,
+      "completed_capped5": 1.8683174608838142,
+      "completed_uncapped": 1.8867348465648417,
+      "top_parity_capped_mean": 3.462507893096188
+    },
+    "44": {
+      "n": 2242,
+      "weight": 4615494.504,
+      "mothers_weight": 3632487.3499,
+      "childless": 0.21297981250938136,
+      "exactly_one_among_mothers": 0.1945229351506076,
+      "parity1": 0.15309347689345662,
+      "parity2": 0.34974776514217687,
+      "parity3plus": 0.28417894545498523,
+      "completed_capped5": 1.8270869939920094,
+      "completed_uncapped": 1.8448397558962841,
+      "top_parity_capped_mean": 3.429170254868732
+    },
+    "40_41": {
+      "n": 4311,
+      "weight": 9181774.6327,
+      "mothers_weight": 7326766.1408,
+      "childless": 0.2020315860611049,
+      "exactly_one_among_mothers": 0.22550546903624735,
+      "parity1": 0.17994624146140092,
+      "parity2": 0.3366668645286711,
+      "parity3plus": 0.281355307948823,
+      "completed_capped5": 1.8370885131428958,
+      "completed_uncapped": 1.8578940193921625,
+      "top_parity_capped_mean": 3.496676674758529
+    },
+    "42_44": {
+      "n": 6561,
+      "weight": 13587747.3573,
+      "mothers_weight": 10928043.468,
+      "childless": 0.19574281294471355,
+      "exactly_one_among_mothers": 0.2057103318890276,
+      "parity1": 0.1654440128732787,
+      "parity2": 0.34924654915301323,
+      "parity3plus": 0.2895666250289945,
+      "completed_capped5": 1.8697982872157595,
+      "completed_uncapped": 1.8922296902500708,
+      "top_parity_capped_mean": 3.4736778657959513
+    }
+  },
+  "cps_uncertainty_candidates": {
+    "childless": {
+      "annual": {
+        "2004": {
+          "value": 0.1928386121957651,
+          "denominator_population_units": 11534656.9936,
+          "b_parameter": 2016,
+          "approximate_gvf_se": 0.0052157901461549385
+        },
+        "2006": {
+          "value": 0.20386405489820397,
+          "denominator_population_units": 11234864.9964,
+          "b_parameter": 2016,
+          "approximate_gvf_se": 0.005396662766690418
+        }
+      },
+      "base_share_2004": 0.5065831860091674,
+      "pooled_fixed_bases_zero_crossyear_covariance_se": 0.0037512549510131253,
+      "pooled_fixed_bases_max_positive_correlation_se": 0.005305035738317728,
+      "qualification": "Annual official generalized-variance approximation. Pooled candidates condition on observed base shares; cross-year covariance and random conditional-mother bases are not certified. Neither scale is adopted."
+    },
+    "exactly_one_among_mothers": {
+      "annual": {
+        "2004": {
+          "value": 0.21511000477596962,
+          "denominator_population_units": 9310329.7468,
+          "b_parameter": 2016,
+          "approximate_gvf_se": 0.006046407789789988
+        },
+        "2006": {
+          "value": 0.21214114591071567,
+          "denominator_population_units": 8944479.862,
+          "b_parameter": 2016,
+          "approximate_gvf_se": 0.006137682005815865
+        }
+      },
+      "base_share_2004": 0.5100206436725485,
+      "pooled_fixed_bases_zero_crossyear_covariance_se": 0.004307418797745566,
+      "pooled_fixed_bases_max_positive_correlation_se": 0.0060911302714076404,
+      "qualification": "Annual official generalized-variance approximation. Pooled candidates condition on observed base shares; cross-year covariance and random conditional-mother bases are not certified. Neither scale is adopted."
+    }
+  },
+  "nchs": {
+    "pooled": {
+      "n": 6611269,
+      "midpoint_mean": 25.976263860992496,
+      "share30plus": 0.2492780130410667,
+      "conditional_multinomial_process_se_mean": 0.002249891508714525,
+      "conditional_multinomial_process_se_share": 0.000168243827885977,
+      "conditional_multinomial_process_covariance": 3.1409331228590885e-07,
+      "first_births_below18": 511141,
+      "first_births_above45": 3146
+    },
+    "annual": {
+      "2003": {
+        "n": 1636534,
+        "midpoint_mean": 26.047395287846143,
+        "share30plus": 0.25780582621564846,
+        "conditional_multinomial_process_se_mean": 0.0045371340866676374,
+        "conditional_multinomial_process_se_share": 0.00034193426088093346,
+        "conditional_multinomial_process_covariance": 1.2893553204350334e-06,
+        "first_births_below18": 127025,
+        "first_births_above45": 745
+      },
+      "2004": {
+        "n": 1633723,
+        "midpoint_mean": 26.03269464897048,
+        "share30plus": 0.25415201965082207,
+        "conditional_multinomial_process_se_mean": 0.0045434380793552085,
+        "conditional_multinomial_process_se_share": 0.0003406298709785005,
+        "conditional_multinomial_process_covariance": 1.2861203959250127e-06,
+        "first_births_below18": 126675,
+        "first_births_above45": 759
+      },
+      "2005": {
+        "n": 1640920,
+        "midpoint_mean": 25.967932623162618,
+        "share30plus": 0.2470230114813641,
+        "conditional_multinomial_process_se_mean": 0.004514722613885716,
+        "conditional_multinomial_process_se_share": 0.00033667886453729633,
+        "conditional_multinomial_process_covariance": 1.2612452965271157e-06,
+        "first_births_below18": 126452,
+        "first_births_above45": 810
+      },
+      "2006": {
+        "n": 1700092,
+        "midpoint_mean": 25.861605136663194,
+        "share30plus": 0.23856179547930348,
+        "conditional_multinomial_process_se_mean": 0.00440587739501471,
+        "conditional_multinomial_process_se_share": 0.00032687489536594903,
+        "conditional_multinomial_process_covariance": 1.191263368935258e-06,
+        "first_births_below18": 130989,
+        "first_births_above45": 832
+      }
+    },
+    "leave_one_year_out": {
+      "2003": {
+        "n": 4974735,
+        "midpoint_mean": 25.952863820886943,
+        "share30plus": 0.24647262618008797,
+        "conditional_multinomial_process_se_mean": 0.0025907694859903223,
+        "conditional_multinomial_process_se_share": 0.0001932185806687064,
+        "conditional_multinomial_process_covariance": 4.1515048549285715e-07,
+        "first_births_below18": 384116,
+        "first_births_above45": 2401
+      },
+      "2004": {
+        "n": 4977546,
+        "midpoint_mean": 25.9577422288011,
+        "share30plus": 0.24767827359104266,
+        "conditional_multinomial_process_se_mean": 0.0025896223659514417,
+        "conditional_multinomial_process_se_share": 0.00019348090798206307,
+        "conditional_multinomial_process_covariance": 4.1553775959599673e-07,
+        "first_births_below18": 384466,
+        "first_births_above45": 2387
+      },
+      "2005": {
+        "n": 4970349,
+        "midpoint_mean": 25.97901435090373,
+        "share30plus": 0.2500224833306474,
+        "conditional_multinomial_process_se_mean": 0.0025950933986878394,
+        "conditional_multinomial_process_se_share": 0.00019423174504675447,
+        "conditional_multinomial_process_covariance": 4.1824880324238354e-07,
+        "first_births_below18": 384689,
+        "first_births_above45": 2336
+      },
+      "2006": {
+        "n": 4911177,
+        "midpoint_mean": 26.015955034811412,
+        "share30plus": 0.2529876239443213,
+        "conditional_multinomial_process_se_mean": 0.0026164507993310378,
+        "conditional_multinomial_process_se_share": 0.00019616464802174336,
+        "conditional_multinomial_process_covariance": 4.2632154010982915e-07,
+        "first_births_below18": 380152,
+        "first_births_above45": 2314
+      }
+    },
+    "temporal_variation_not_sampling_se": {
+      "midpoint_mean": {
+        "annual_sample_sd": 0.0845673694617251,
+        "annual_range": 0.18579015118294961,
+        "maximum_leave_one_year_shift": 0.03969117381891607
+      },
+      "share30plus": {
+        "annual_sample_sd": 0.00849226186213262,
+        "annual_range": 0.01924403073634498,
+        "maximum_leave_one_year_shift": 0.0037096109032545843
+      }
+    },
+    "order_exclusions": [
+      {
+        "year": "2003",
+        "n_birth_records_age_12_49": "4095769",
+        "n_unknown_live_birth_order": "11986",
+        "unknown_live_birth_order_share": "0.00292643457187161",
+        "age_variable": "mager41",
+        "age_transformation": "NCHS 41-category recode decoded: 01->14 proxy for under-15; 02:41->code+13",
+        "order_variable": "lbo_rec"
+      },
+      {
+        "year": "2004",
+        "n_birth_records_age_12_49": "4118531",
+        "n_unknown_live_birth_order": "18692",
+        "unknown_live_birth_order_share": "0.0045385114255544",
+        "age_variable": "mager",
+        "age_transformation": "literal single-year age",
+        "order_variable": "lbo_rec"
+      },
+      {
+        "year": "2005",
+        "n_birth_records_age_12_49": "4145200",
+        "n_unknown_live_birth_order": "17530",
+        "unknown_live_birth_order_share": "0.00422898774486153",
+        "age_variable": "mager",
+        "age_transformation": "literal single-year age",
+        "order_variable": "lbo_rec"
+      },
+      {
+        "year": "2006",
+        "n_birth_records_age_12_49": "4272728",
+        "n_unknown_live_birth_order": "23748",
+        "unknown_live_birth_order_share": "0.00555804160714185",
+        "age_variable": "mager",
+        "age_transformation": "literal single-year age",
+        "order_variable": "lbo_rec"
+      }
+    ],
+    "extreme_unknown_order_bounds_not_se": {
+      "unknown_order_records": 71956,
+      "mean_lower": 25.911919470016347,
+      "mean_upper": 26.170319269514344,
+      "share_lower": 0.2465941218498554,
+      "share_upper": 0.25736078016227193,
+      "qualification": "Conservative: every unknown-order record could be first order and at either midpoint extreme; no assumption that missingness is random."
+    }
+  },
+  "normalization_algebra": {
+    "normalization": 2.1,
+    "inherited_top_bin_weight": 3.602359422009,
+    "required_p3plus_if_same_age_parity_distribution": 0.4167913309773426,
+    "observed_p3plus": 0.28625542407796506,
+    "implied_p2": 0.21363790382628184,
+    "qualification": "Algebraic conditional diagnostic only: actual 2.1 normalization and CPS age-window observers need not be the same distribution."
+  }
+}

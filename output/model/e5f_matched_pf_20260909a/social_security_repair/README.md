@@ -1,5 +1,45 @@
 # Social Security correction — September 11, 2026
 
+## Verified progress, 01:04 EDT
+
+Initial repeated full-grid smoke17358109 passes, and measurement17358472 plus
+all23 active-optimizer compiled fiscal/utility tests pass. See
+`initial_smoke_17358109_summary.json`, its complete parameter CSV,
+`initial_measurement_17358472.json` and `compiled_smoke_17358472.err`.
+The three failed legacy-optimizer assertions below remain historical evidence;
+active-optimizer diagnostic17358206 and final test17358472 reconcile them.
+Four frozen-psi utility/fiscal cells17358470 pass; complete decomposition is in
+`../utility_fiscal_decomposition/README.md`. No new SMM or PF-policy result exists.
+Terminal and historical fiscal work continues with explicit budgets and gates.
+
+## Approved execution, 00:42 EDT
+
+The author approved implementation and autonomous iteration at 00:11 EDT.
+Source c6dd3508 is pushed in the isolated checkout. The fifteen-minute monitor
+is active, and idle sleep prevention is running. The earlier paused-monitor
+and pending-instrument language in historical receipts is superseded.
+
+- 17357678: saved-distribution marginal audit passed; see
+  `initial_marginal_audit.json`. Analytic initial pension 2.0463613896;
+  actual normalized age/earnings gap 4.897e-11, relative fiscal gap -1.480e-9.
+  No model solve or new equilibrium is implied.
+- 17357939: 22 compiled tests, three failures in stronger anticipation
+  assertions; utility, fiscal arithmetic and accounting/replay checks pass.
+  `utility_fiscal_smoke_17357939.json` and `compiled_smoke_17357939.err` preserve
+  the complete failed evidence. The fixture uses the legacy saving optimizer.
+- 17358206: bounded active-optimizer diagnostic, same six two-date paths and
+  24 dated Bellman calls, changing only the fixture flag before initialization.
+  `submitted_active_optimizer_diagnostic.sh` and its Python observer reproduce
+  the experiment. Diagnostic completion is distinct from acceptance-test pass.
+- 17358109: full-grid new-utility/balanced-pension initial candidate smoke,
+  two exact fresh normalizations, at most16 GE solves, one CPU/16GB,
+  30-minute driver/32-minute Slurm limit. Launch and complete source/input
+  contract: `submitted_initial_candidate_smoke.sh` and
+  `initial_candidate_smoke_contract.json`. It is not calibrated SMM.
+
+The approved plan and canonical status own progression. No production policy
+can use these initial-only or incomplete fiscal checks as a full-path certificate.
+
 The author requires Social Security to balance at every date. Existing matched
 PF runs fix both payroll tax and the pension derived from a reference age ratio.
 Their household, population and property-tax checks did not include a Social

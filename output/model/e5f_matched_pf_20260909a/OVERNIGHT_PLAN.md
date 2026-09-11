@@ -1,9 +1,9 @@
-# Overnight proposal: utility, pensions, calibration and policies
+# Approved overnight work: utility, pensions, calibration and policies
 
-**Status: Fable 5.1 review completed; revised by the lead; awaiting Tommaso's approval. No model implementation or cluster job has been launched in this preparation.** The author requests a broad review first, then approval and launch. Maximum proposed computation window: 12 hours from approved launch; a morning readout is delivered even if the bounded computation window extends beyond it. The prior September 9–10 execution record is retained below as history, not a live queue.
+**Approved September 11 at 00:11 EDT.** Fable 5.1 review is complete and the author authorizes implementation, gated cluster launches, monitoring and autonomous useful follow-up rounds. An active goal is set. The first round retains the case counts and per-job limits below, with a morning readout. The author's latest instruction supersedes the earlier hard 12-hour global stop: additional rounds may follow a documented diagnosis, renewed solve/time budget and smoke verification. The 96 concurrent one-CPU ceiling and all scientific gates remain. At approval, implementation was starting from a654219c; no new utility solve had yet run. The prior September 9–10 execution record is history, not a live queue.
 
 
-### What the author is being asked to approve
+### Approved scope (reviewed wording retained below)
 
 Approve implementation and a **gated 12-hour run**, using up to **96 concurrent one-CPU jobs** across nodes. Retain the agreed parenthood-only utility, fixed 17.9% tax with actual-budget pensions, the observed-age 2007 initialization, and all proposed housing identification moments. Approve the **new early-target design described below**, conditional on its builders, observers, weights and population identities being certified; it does not silently inherit the old late-target fingerprint. The initial model fertility normalization remains 2.1, with its empirical approximation disclosed.
 

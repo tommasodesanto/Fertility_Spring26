@@ -1,0 +1,351 @@
+{
+  "schema_version": 2,
+  "contract_id": "early_cps_nchs_fertility_certification_20260911_v2_not_activated",
+  "status": "empirical_points_reproduced_annual_cps_gvf_recovered_observer_and_weight_activation_blocked",
+  "scope": "CPS 2004/2006 completed/near-completed parity stocks and NCHS 2003-2006 period first-birth timing flows",
+  "source_pins": {
+    "cps_receipt": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/parameter_target_audit/fertility/fertility_availability.json",
+      "sha256": "739392f0c75df883a9b50168e8e545da4e26b192b67ba38557b387d80c1486f1",
+      "raw_extract": "/Users/tommasodesanto/Desktop/Projects/Datasets/CPS/extract3/cps_00003.dat",
+      "raw_hash_scope": "exact selected June 2004 and June 2006 partitions hashed; full 6GB extract not hashed",
+      "partition_sha256": {
+        "2004": "44e233bb4780c844892f8e75fc34206533bb753906bba68c3ffc9ced374df786",
+        "2006": "8bd7a843587d2f7dfb70d9309473855f4c87d1271636572f50e8a7950cf3426a"
+      }
+    },
+    "nchs_cache": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/nchs_natality_timing/first_birth_counts_year_age.csv",
+      "sha256": "5ef20c138a103c79b472b372fa8c5199cd5f3a0b544faff73e908f3803360c45",
+      "raw_provenance": "timing_target_metadata.json records the national raw-file manifest and source bundle"
+    },
+    "live_observer_code": {
+      "e5f_matched_pf_moments.py": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_matched_pf/code/model/tools/e5f_matched_pf_moments.py",
+        "sha256": "4ffe5097b50775cfed88978be63804e6804c0889fe49f6609b3c5c00cd41d821"
+      },
+      "run_e5f_transition_calibration.py": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_matched_pf/code/model/tools/run_e5f_transition_calibration.py",
+        "sha256": "32f5be1c16ec591ef514af91cec2223f8aecd259808b1fc806f9742d5fd64435"
+      }
+    }
+  },
+  "candidate_moments": [
+    {
+      "id": "cps_childless_women_40_44_2004_2006",
+      "value": 0.19827875100684264,
+      "reported_value": 0.198279,
+      "definition": "Weighted P(FREVER=0) among pooled June 2004 and June 2006 women age 40-44 with valid FREVER 0-20 and positive FRSUPPWT.",
+      "sample_records": 10872,
+      "weighted_denominator": 22769521.989999805,
+      "uncertainty": {
+        "sampling_se": null,
+        "annual_official_approximate_sampling_gvf_se": {
+          "2004": {
+            "value": 0.1928386121957651,
+            "denominator_population_units": 11534656.9936,
+            "b_parameter": 2016,
+            "approximate_gvf_se": 0.0052157901461549385
+          },
+          "2006": {
+            "value": 0.20386405489820397,
+            "denominator_population_units": 11234864.9964,
+            "b_parameter": 2016,
+            "approximate_gvf_se": 0.005396662766690418
+          }
+        },
+        "pooled_candidates": {
+          "annual": {
+            "2004": {
+              "value": 0.1928386121957651,
+              "denominator_population_units": 11534656.9936,
+              "b_parameter": 2016,
+              "approximate_gvf_se": 0.0052157901461549385
+            },
+            "2006": {
+              "value": 0.20386405489820397,
+              "denominator_population_units": 11234864.9964,
+              "b_parameter": 2016,
+              "approximate_gvf_se": 0.005396662766690418
+            }
+          },
+          "base_share_2004": 0.5065831860091674,
+          "pooled_fixed_bases_zero_crossyear_covariance_se": 0.0037512549510131253,
+          "pooled_fixed_bases_max_positive_correlation_se": 0.005305035738317728,
+          "qualification": "Annual official generalized-variance approximation. Pooled candidates condition on observed base shares; cross-year covariance and random conditional-mother bases are not certified. Neither scale is adopted."
+        },
+        "status": "annual_generalized_variance_approximation_recovered_pooled_covariance_not_certified"
+      },
+      "model_observer_status": "blocked_by_age_window_mapping",
+      "active_weight": null,
+      "production_active": false
+    },
+    {
+      "id": "cps_exactly_one_among_mothers_40_44_2004_2006",
+      "value": 0.21365532522014702,
+      "reported_value": 0.213655,
+      "definition": "Weighted P(FREVER=1 | FREVER>=1) in the same pooled CPS sample.",
+      "weighted_numerator": 3900237.283800007,
+      "weighted_mother_denominator": 18254809.608799897,
+      "uncertainty": {
+        "sampling_se": null,
+        "annual_official_approximate_sampling_gvf_se": {
+          "2004": {
+            "value": 0.21511000477596962,
+            "denominator_population_units": 9310329.7468,
+            "b_parameter": 2016,
+            "approximate_gvf_se": 0.006046407789789988
+          },
+          "2006": {
+            "value": 0.21214114591071567,
+            "denominator_population_units": 8944479.862,
+            "b_parameter": 2016,
+            "approximate_gvf_se": 0.006137682005815865
+          }
+        },
+        "pooled_candidates": {
+          "annual": {
+            "2004": {
+              "value": 0.21511000477596962,
+              "denominator_population_units": 9310329.7468,
+              "b_parameter": 2016,
+              "approximate_gvf_se": 0.006046407789789988
+            },
+            "2006": {
+              "value": 0.21214114591071567,
+              "denominator_population_units": 8944479.862,
+              "b_parameter": 2016,
+              "approximate_gvf_se": 0.006137682005815865
+            }
+          },
+          "base_share_2004": 0.5100206436725485,
+          "pooled_fixed_bases_zero_crossyear_covariance_se": 0.004307418797745566,
+          "pooled_fixed_bases_max_positive_correlation_se": 0.0060911302714076404,
+          "qualification": "Annual official generalized-variance approximation. Pooled candidates condition on observed base shares; cross-year covariance and random conditional-mother bases are not certified. Neither scale is adopted."
+        },
+        "status": "annual_generalized_variance_approximation_recovered_pooled_covariance_not_certified"
+      },
+      "model_observer_status": "blocked_by_age_window_mapping; literal parity-one conditional-on-parenthood stock, not a continuation hazard",
+      "active_weight": null,
+      "production_active": false
+    },
+    {
+      "id": "nchs_period_mean_age_first_birth_2003_2006",
+      "value": 25.976263860992496,
+      "reported_value": 25.976264,
+      "definition": "Pooled national first-birth counts ages 12-49, 2003-2006; age <=21 mapped to midpoint 20, 22-25 to 24, ..., age >=42 to 44; count-weighted mean.",
+      "first_birth_count": 6611269,
+      "uncertainty": {
+        "sampling_se": null,
+        "status": "national_count_not_probability_sample",
+        "annual_2003_2006_sample_sd": 0.0845673694617251,
+        "note": "annual SD is period variation, not a sampling SE",
+        "conditional_multinomial_process_se": 0.002249891508714525,
+        "conditional_multinomial_qualification": "Model-based process variation conditional on total first births; not a sampling SE and not adopted for SMM. Our mean-age delta-method extension is not a quoted NCHS formula.",
+        "temporal_variation": {
+          "annual_sample_sd": 0.0845673694617251,
+          "annual_range": 0.18579015118294961,
+          "maximum_leave_one_year_shift": 0.03969117381891607
+        }
+      },
+      "model_observer_status": "dated_flow_primitive_available_scored_period_adapter_and_population_mapping_not_certified",
+      "active_weight": null,
+      "production_active": false
+    },
+    {
+      "id": "nchs_period_first_birth_share_age30plus_2003_2006",
+      "value": 0.2492780130410667,
+      "reported_value": 0.249278,
+      "definition": "Pooled national first-birth counts ages 12-49, 2003-2006; exact maternal age >=30 divided by all first births in the pooled window.",
+      "first_birth_count": 6611269,
+      "uncertainty": {
+        "sampling_se": null,
+        "status": "national_count_not_probability_sample",
+        "annual_2003_2006_sample_sd": 0.00849226186213262,
+        "note": "annual SD is period variation, not a sampling SE",
+        "conditional_multinomial_process_se": 0.000168243827885977,
+        "conditional_multinomial_qualification": "Model-based process variation conditional on total first births; not a sampling SE and not adopted for SMM. Our mean-age delta-method extension is not a quoted NCHS formula.",
+        "temporal_variation": {
+          "annual_sample_sd": 0.00849226186213262,
+          "annual_range": 0.01924403073634498,
+          "maximum_leave_one_year_shift": 0.0037096109032545843
+        }
+      },
+      "model_observer_status": "dated_flow_primitive_available_scored_period_adapter_and_population_mapping_not_certified",
+      "active_weight": null,
+      "production_active": false
+    }
+  ],
+  "nchs_weight_scale_options": [
+    {
+      "id": "conditional_multinomial_process_variance",
+      "values": {
+        "mean_age": 0.002249891508714525,
+        "share30plus": 0.000168243827885977
+      },
+      "interpretation": "Stochastic event-process precision; does not measure missing-order bias, residence mismatch, age-tail collapse, or stationary approximation. Not automatic SMM weights."
+    },
+    {
+      "id": "annual_temporal_dispersion",
+      "values": {
+        "mean_age": 0.0845673694617251,
+        "share30plus": 0.00849226186213262
+      },
+      "interpretation": "Sample SD of four annual statistics, no division by sqrt(4), no trend removal. Temporal discrepancy scale, not sampling SE. Unadopted."
+    },
+    {
+      "id": "leave_one_year_window_sensitivity",
+      "values": {
+        "mean_age": 0.03969117381891607,
+        "share30plus": 0.0037096109032545843
+      },
+      "interpretation": "Maximum absolute shift after omitting one year from the 2003-06 pooled statistic; deterministic window sensitivity, not SE. Unadopted."
+    },
+    {
+      "id": "inherited_cohort_window_scales",
+      "values": {
+        "mean_age": 0.15,
+        "share30plus": 0.01
+      },
+      "interpretation": "Existing rounded old-cohort-window differences. Can be an explicit diagnostic-only inherited scale, never misrepresented as new early-period uncertainty."
+    },
+    {
+      "id": "explicit_model_discrepancy_or_measurement_error_scale",
+      "values": null,
+      "interpretation": "Must state and justify source/model discrepancy assumptions and pin resulting weights; not yet specified."
+    }
+  ],
+  "required_observers": {
+    "cps_parity_stock": {
+      "formula": "p0=sum_j omega_j M_j0 / sum_j omega_j M_j; one_given_mother=sum_j omega_j M_j1 / sum_j omega_j sum_n>=1 M_jn",
+      "age_window": "integer ages40 through44 = continuous[40,45); cells[38,42),[42,46) overlap2 and3 years",
+      "uniform_within_cell_candidate_weights": {
+        "start_age38": 0.5,
+        "start_age42": 0.75
+      },
+      "qualification": "Only an explicit approximate reconstruction. Need select pre-/post-birth timing and within-cell law; four-year age42 alone is not exact. Empirical age40-41/42-44 counts are saved. Model household parity also needs maternal/female unit mapping.",
+      "certified": false,
+      "default_off_diagnostic_options": {
+        "constant_cell_stock": {
+          "overlap_weights": {
+            "38": 0.5,
+            "42": 0.75
+          },
+          "phase": "must be explicit"
+        },
+        "uniform_birth_time_parity_interpolation": {
+          "q38_pre": 0.25,
+          "q38_post": 0.75,
+          "q42_pre": 0.625,
+          "q42_post": 0.375,
+          "age_cell_mass_overlap_weights": {
+            "38": 0.5,
+            "42": 0.75
+          },
+          "status": "preferred diagnostic proposal; not implemented or adopted",
+          "assumptions": "Equal pre/post fertility age mass; at most one parity transition during a four-year cell; conditional transition time uniform; household reproductive member proxy for female population"
+        },
+        "fixed_empirical_age_composition_supplement": {
+          "all_women_share_40_41": 0.4032484580366898,
+          "all_women_share_42_44": 0.5967515419633103,
+          "status": "supplemental projection; not endogenous age-composition fit"
+        },
+        "pending_validation": [
+          "constant parity invariance",
+          "no-birth pre/post equivalence",
+          "unit first-birth interpolation",
+          "continuation reduces one-child stock",
+          "correct mother denominator",
+          "strict nonzero denominators",
+          "same age30 bin classification"
+        ]
+      }
+    },
+    "nchs_period_first_birth_flow": {
+      "available_function": "run_e5f_transition_calibration.first_birth_accounting_by_age(evaluation,P), uses g_pre * first-attempt policy * fecundity; period_fertility_diagnostics already returns count-flow mean/share",
+      "formula": "F_j=sum_date sum_state g_pre(date,state,j,n=0)*attempt_prob*success_prob; mean=sum_j (age_start_j+2)F_j/sum_j F_j; share30plus=sum_{start_age_j>=30} F_j/sum_j F_j",
+      "denominator": "first-birth flow, not childless risk set and not female exposure; exposure required separately for all-order female rates",
+      "existing_scored_observer": "e5f_matched_pf_moments.HistoricalMomentObserver calls cohort_timing_moments and must not be reused for new early-period rows",
+      "stationary_use": "One stationary flow distribution can represent pooled2003-06 only under the explicit stationary maternal-population approximation; verify actual evaluation stage and no reweighting",
+      "calendar": "Dated bridge assigns decision t to births t+1,...,t+4. For t=2019 this is2020-2023. Preserve annual weights and align maternal age mapping; no label-only shift.",
+      "certified": false
+    },
+    "age_tail_collapse": {
+      "data_rule": "ages<=21 ->20;22-25->24;26-29->28;30-33->32;34-37->36;38-41->40;42+->44",
+      "preserve_data_sample": true,
+      "below18_count": 511141,
+      "below18_share": 0.07731359894749404,
+      "above45_count": 3146,
+      "above45_share": 0.0004758541817009715,
+      "qualification": "Collapse preserves the empirical score but assumes early/late births can be represented by boundary model decisions. It does not create pre18 motherhood or maternal age states."
+    }
+  },
+  "normalization_and_topcoding": {
+    "initial_fertility_2_1": "Author-selected stationary model completed-fertility normalization. Inherited observer uses literal0/1/2/3+ with top-bin representative3.602359422009. Related renewal law divides topcode-adjusted births by2.1. This is not a measured female periodTFR; normalization and entry identities require separate checks.",
+    "cps_topcode": "FREVER is capped at 5 only for the separate CPS mean-completed-fertility diagnostic. The two certified shares do not use that cap.",
+    "model_top_parity": "Any mean-fertility observer must state its representative top-parity weight. Exact-one-among-mothers is identified from literal parity zero/one masses and is not a sequential second-birth hazard.",
+    "early_cps_capped_top_bin_mean": 3.4827933438416143,
+    "algebraic_same_distribution_check": {
+      "normalization": 2.1,
+      "inherited_top_bin_weight": 3.602359422009,
+      "required_p3plus_if_same_age_parity_distribution": 0.4167913309773426,
+      "observed_p3plus": 0.28625542407796506,
+      "implied_p2": 0.21363790382628184,
+      "qualification": "Algebraic conditional diagnostic only: actual 2.1 normalization and CPS age-window observers need not be the same distribution."
+    },
+    "high_parity_limitation": "One terminal3+ state cannot recover the actual distribution of fourth/fifth births. Top-bin mean is an observer restriction, not an extra realized-birth process."
+  },
+  "activation_blockers": [
+    "Implement and verify scored early-period adapter reusing existing dated first-birth flow primitives; no synthetic-cohort substitution.",
+    "Approve/test CPS40-44 within-cell timing/allocation and maternal population mapping; preserve authoritative CPS sample.",
+    "Choose a named pooled CPS variance approximation including crossyear covariance/base treatment; annual official GVF SEs now available.",
+    "Choose a finite NCHS process/discrepancy scale and disclose inherited scales if used for diagnostics.",
+    "Verify NCHS residence sample and boundary-cell maternal interpretation; preserve old source while resolving.",
+    "Verify2.1 top-parity/renewal/entry identities separately; do not equate stock and period units.",
+    "Pin full early contract and weights and check identification without dropping any row."
+  ],
+  "previous_worker_assessment": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_matched_pf/output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/fertility_target_contract.json",
+    "sha256": "3c47edcbc0d1a0b1836b70226a9ba5a540b92a75d90e97a161bc3d8a2f01a614",
+    "qualification": "Superseded by v2: annual official CPS generalized variance is available, and dated model first-birth flow primitives already exist. Prior files preserved."
+  },
+  "verification": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/verification.json",
+    "sha256": "542c0822a4fa588e1b1accf5ec2d89c73cadd6fb6d0ad8bceacc81f515a71618",
+    "reproduction_script": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/verify_fertility_contract.py",
+    "elapsed_seconds_observed": 0.519,
+    "model_runs": 0
+  },
+  "official_uncertainty_sources": [
+    {
+      "url": "https://www2.census.gov/programs-surveys/cps/techdocs/cpsjun04.pdf",
+      "location": "Attachment17 printed17-7/17-14; percentage Formula(2), Table3 FERTILITY total b=2016"
+    },
+    {
+      "url": "https://www2.census.gov/programs-surveys/cps/techdocs/cpsjun06.pdf",
+      "location": "Attachment16 printed16-8/16-15; percentage Formula(2), Table4 FERTILITY total b=2016"
+    },
+    {
+      "url": "https://www.cdc.gov/nchs/data/nvsr/nvsr57/nvsr57_07.pdf",
+      "location": "printed96-99: complete natality counts, nonsampling error, stochastic random-variation interpretation"
+    }
+  ],
+  "nchs_source_cautions": {
+    "sample": "US-named raw files; exact/decoded age12-49 and known live-birth order1; 2003 under15 recode mapped14",
+    "resident_filter": "None in authoritative builder: reads age/order only. Do not label exact sample US-resident births without verification.",
+    "evidence": {
+      "cache_2006_all_order_age12_49_count": 4272728,
+      "published_2006_US_resident_all_age_count": 4265555,
+      "published_source": "https://www.cdc.gov/nchs/data/nvsr/nvsr58/nvsr58_24.pdf Table1"
+    },
+    "conclusion": "Counts exceed published resident total even after age restriction; dataset residence comparability is unverified. Presence/effect of nonresident births is an inference requiring a raw residence-field check; no source correction performed.",
+    "unknown_live_birth_order": {
+      "unknown_order_records": 71956,
+      "mean_lower": 25.911919470016347,
+      "mean_upper": 26.170319269514344,
+      "share_lower": 0.2465941218498554,
+      "share_upper": 0.25736078016227193,
+      "qualification": "Conservative: every unknown-order record could be first order and at either midpoint extreme; no assumption that missingness is random."
+    }
+  }
+}
