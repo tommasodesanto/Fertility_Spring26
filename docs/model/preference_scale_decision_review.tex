@@ -1,0 +1,235 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=0.8in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,booktabs,tabularx,array,enumitem,xcolor,fancyhdr}
+\usepackage[colorlinks=true,urlcolor=blue!55!black,linkcolor=blue!55!black]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlist[itemize]{leftmargin=*,itemsep=3pt,topsep=3pt}
+\setlist[enumerate]{leftmargin=*,itemsep=4pt,topsep=3pt}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small Household needs and fertility}
+\fancyhead[R]{\small Decision review | 10 September 2026}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}
+\newcommand{\U}{\mathcal U}
+\newcommand{\hh}{\bar h}
+\newcommand{\cc}{\bar c}
+\newcommand{\page}[1]{\newpage\section*{#1}}
+\begin{document}
+\thispagestyle{empty}
+{\LARGE\bfseries Household needs, housing, and fertility}\par
+{\large A decision under the JMP time constraint}\par
+10 September 2026
+
+\section*{1. Recommendation: keep the current benchmark}
+\textbf{I recommend keeping the current power scale, inside CRRA, together with the child-related housing requirement.} Defend it as a parsimonious specification of household needs whose implications must be checked jointly against consumption, housing, saving, and fertility. Use a linear scale matched to the first-child cost, and a square-root scale, as the first robustness alternatives. Do not replace the benchmark simply to obtain a cleaner citation.
+
+This corrects my earlier suggestion that we should move to a linear scale. Linearity would be an attractive starting point for a new model. Given the work already completed, ease of explanation alone does not justify changing preferences and recomputing the quantitative economy. Nor does prior investment establish that the current model is right: the reason to retain it is that it is coherent, has useful published precedents for its ingredients, and has no demonstrated fatal defect that a cosmetic scale change would cure.
+
+\textbf{The decision can be firm without pretending that validation is complete.} Select the benchmark today. State its assumptions accurately. Complete the most informative checks in a fixed order, and change the model only if evidence reveals an economically consequential failure. This is an ordinary research commitment, not a claim that every parameter and counterfactual is already validated.
+
+The three issues that became entangled in our discussion are different:
+\begin{enumerate}
+\item \textbf{Scale shape:} how household needs increase with current dependent children. Power, linear, and square-root scales answer this question differently.
+\item \textbf{Aggregation:} whether utility is $\U(Q/e)$ or $e\U(Q/e)$. These differ when family size is chosen. Adding the outside multiplier would be a substantive preference change.
+\item \textbf{Committed expenditure:} whether children require housing space, nonhousing expenditure, or both before discretionary consumption. Changing the scale does not eliminate this question.
+\end{enumerate}
+
+The most important empirical concern is the \emph{combined} resource requirement. An imported scale based on total household needs, layered over a separate housing minimum, can imply more total child expenditure than that scale alone. This is not an algebraic contradiction, but it needs an explicit interpretation and a joint empirical check.
+
+\textbf{What this review establishes.} The equations below are checked analytically, the main literature claims are checked against primary sources, and the data plan uses existing project builders and observation definitions. No preferences, target weights, model results, slides, or production jobs were changed. This is not a new calibration readout.
+
+\page{2. The specification we actually have}
+Let $c$ be nonhousing consumption, $s$ housing services, and $m$ the number of children currently dependent on the household. Current dependents are distinct from completed fertility: a child can stop affecting household needs after becoming independent.
+
+The household receives utility from a consumption--housing bundle and a separate child-related benefit:
+\[
+u_t(c,s;m)=\U\!\left(\frac{Q(c,s;m)}{e(m)}\right)+\psi_t m,
+\qquad
+\U(q)=\frac{q^{1-\sigma}}{1-\sigma}.
+\]
+The bundle is Cobb--Douglas in nonhousing consumption and housing services above the family requirement:
+\[
+Q(c,s;m)=c^{\alpha}\bigl(s-\hh(m)\bigr)^{1-\alpha},
+\qquad
+\hh(m)=h_1\mathbf 1\{m>0\}+h_m m.
+\]
+Here $0<\alpha<1$ is the nonhousing share of discretionary expenditure; $h_1$ captures a first-child housing requirement and $h_m$ the additional requirement per dependent child. Both housing parameters are nonnegative. Feasible positive consumption requires $c>0$ and $s>\hh(m)$.
+
+The current scale normalizes a two-adult, childless household to one:
+\[
+e(m)=\left(\frac{2+0.7m}{2}\right)^{0.7}.
+\]
+Its coefficients are externally fixed, not estimated in the current parameter search. The housing-requirement parameters are separate objects. There is no nonhousing subsistence term in this specification; there \emph{is} a housing subsistence term. Thus, describing it as having abandoned Stone--Geary altogether would be misleading.
+
+At the maintained curvature $\sigma=2$, the expression becomes particularly transparent:
+\[
+\boxed{\quad u_t(c,s;m)=-\frac{e(m)}{Q(c,s;m)}+\psi_t m.\quad}
+\]
+Children increase the consumption bundle needed to maintain a given effective standard of living. They also increase required housing services and provide utility through the separate child term. The model trades off these costs and benefits over time, with earnings risk, saving, tenure choice, and conception uncertainty.
+
+There is \textbf{no extra household multiplier outside CRRA}. The factor $e(m)^{\sigma-1}$ that appears after expanding the formula is just the algebra of dividing the bundle by the scale. It is not a new preference component:
+\[
+\U(Q/e)=e^{\sigma-1}\frac{Q^{1-\sigma}}{1-\sigma}.
+\]
+For exposition, use the first display, define its ingredients in words, and leave this algebra to discussion or an appendix. Housing services also need to be distinguished from measured physical rooms when applying the model's owner-service premium.
+
+\page{3. The alternatives, ranked by usefulness}
+\small
+\renewcommand{\arraystretch}{1.22}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.19\textwidth}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X@{}}
+\toprule
+Option & What it buys & Main cost or limitation\\
+\midrule
+Keep current power scale & Preserves the benchmark; allows economies of scale across children; familiar scale shape. & Exact coefficients do not validate the combined housing-plus-scale cost; curvature remains externally imposed.\\
+First-child-matched linear scale & Very transparent; isolates the role of declining marginal scale increments. & Higher costs at larger families; new solutions and eventual comparable re-estimation still required.\\
+Square-root household size & Familiar, parameter-free measurement convention; a useful lower-cost comparison here. & Treats adults and children symmetrically in headcount; measurement convention is not a fertility model.\\
+Restore a nonhousing floor & Represents an absolute expenditure commitment; adds income-dependent affordability effects. & Reopens feasibility, identification, and estimation; can duplicate needs already represented by the scale.\\
+Add outside multiplier $e$ & Moves toward Scholz's aggregation convention. & Changes relative utility across family sizes and the effective cost of children; cannot be justified as a harmless normalization.\\
+Scale only nonhousing consumption & May sound closer to a nonhousing child-cost measure. & Under Cobb--Douglas it can be only a reparameterization; does not automatically solve identification or double counting.\\
+\bottomrule
+\end{tabularx}
+\normalsize
+
+For a controlled linear alternative, set $e_L(m)=1+\lambda m$ and fix $\lambda=e(1)-1$, rather than estimating another parameter. For the square-root alternative, set $e_S(m)=\sqrt{(2+m)/2}$. The implied scales are:
+\begin{center}
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+Current dependents & Current power & Matched linear & Square root\\
+\midrule
+0 & 1.0000 & 1.0000 & 1.0000\\
+1 & 1.2338 & 1.2338 & 1.2247\\
+2 & 1.4498 & 1.4675 & 1.4142\\
+3 & 1.6528 & 1.7013 & 1.5811\\
+\bottomrule
+\end{tabular}
+\end{center}
+These are analytical inputs, not estimated costs or simulated results. Matching the first child isolates curvature reasonably well: the linear scale is only about 2.9\% above the current one at three dependents. Small differences in a scale can nevertheless move fertility or tenure decisions substantially near discrete thresholds.
+
+\textbf{My ranking is current benchmark, matched linear, then square root.} Restoring a consumption floor belongs to a deeper specification review if the evidence requires absolute commitments. Adding Scholz's outside multiplier is a poor response to a citation concern. Removing the scale altogether is useful as a mechanism diagnostic, but leaves the model without this channel for nonhousing child needs.
+
+\page{4. What the model does and does not imply for fertility}
+An interior renter example separates the mechanisms. Let $X$ be current spending on consumption and housing, let $r$ be the rental price of one unit of housing services, and define discretionary resources as $R_m=X-r\hh(m)>0$. Holding $X$, $r$, and $m$ fixed, optimal allocation is
+\[
+c^*=\alpha R_m,
+\qquad
+s^*=\frac{(1-\alpha)X}{r}+\alpha\hh(m).
+\]
+\textbf{The scale cancels from this conditional allocation.} The housing floor shifts the allocation toward housing, whereas the scale affects the value of consumption and hence saving, spending across periods, and fertility. It would be incorrect to infer that the scale has no effect on actual housing choices: $X$, tenure, family size, and equilibrium prices are endogenous in the full model.
+
+Define the price of one unit of the discretionary composite by
+\[
+P_Q(r)=\frac{r^{1-\alpha}}{\alpha^\alpha(1-\alpha)^{1-\alpha}}.
+\]
+Then $Q^*=R_m/P_Q(r)$. At $\sigma=2$, conditional flow utility is
+\[
+v(X,r,m)=\psi_t m-\frac{P_Q(r)e(m)}{X-r\hh(m)}.
+\]
+An additional dependent child increases $e$ and the housing requirement. Holding current spending fixed, and provided both family sizes are feasible, its material utility cost is smaller at higher resources. For example, the derivative of the gain from moving from $m$ to $m+1$ with respect to $X$ is
+\[
+\frac{\partial[v(X,r,m+1)-v(X,r,m)]}{\partial X}
+=P_Q(r)\left[\frac{e(m+1)}{R_{m+1}^2}-\frac{e(m)}{R_m^2}\right]>0.
+\]
+Higher rents also increase this material cost in the interior renter comparison. Thus the current specification contains the affordability channel we want: children are more costly when resources are scarce and housing is expensive.
+
+\textbf{That is a mechanism, not a theorem about the final fertility gradient.} Saving responses, wealth effects for existing owners, down-payment constraints, relocation, conception risk, and continuation values can change the aggregate response. A rise in house prices is not the same experiment as a rise in rents; owners can experience capital gains. The theory must be checked separately for renters, owners, and households near tenure transitions.
+
+Scale concavity means declining increments in $e(m)$, not necessarily declining total marginal child costs. The housing requirement and the remaining consumption bundle also change with $m$. Likewise, a linear scale does not imply a linear fertility response. The scale-only resource effect depends on CRRA curvature: with log utility and no floor the utility penalty is $-\log e(m)$, independent of spending. Keep curvature fixed in the first scale comparison.
+
+\page{5. The key concern: total needs and committed expenditure}
+Let $q$ denote a given effective material standard of living, $Q/e=q$. For an interior renter, the expenditure required to attain it is
+\[
+\boxed{\quad E(m,q,r)=r\hh(m)+P_Q(r)e(m)q.\quad}
+\]
+This equation gives a precise interpretation: the household first pays for the housing requirement and then finances the scaled discretionary bundle. Because $\hh(0)=0$ and $e(0)=1$, the expenditure ratio relative to a childless household is
+\[
+\frac{E(m,q,r)}{E(0,q,r)}
+=e(m)+\frac{r\hh(m)}{E(0,q,r)}.
+\]
+Consequently, the model's \emph{total} needs ratio exceeds the imported scale whenever the housing requirement is positive. As a purely illustrative calculation, if the childless budget is 100 and the extra housing requirement costs 10, the first-child ratio is $1.2338+0.10=1.3338$, not 1.2338. This is not a model estimate.
+
+\textbf{Is this double counting?} Not necessarily: a scale on discretionary living standards and a separate physical requirement describe distinct margins. But a scale estimated or conventionally applied to \emph{total} consumption cannot simply be relabeled ``nonhousing needs'' or ``residual needs'' and retain its original empirical interpretation. That reinterpretation is an additional assumption. Replacing its power formula with a linear one does not make the issue disappear.
+
+The right check is the implied joint pattern of housing, nonhousing spending, and saving across household types and resources. A useful warning sign would be a model that fits room increases only by predicting implausibly large declines in nonhousing consumption or saving among comparable parents. The cost ratio also varies with resources and rents, which creates testable nonhomotheticity rather than a single universal equivalence number.
+
+Restoring a nonhousing floor $\cc(m)$ would change the expenditure function to
+\[
+E(m,q,r)=\cc(m)+r\hh(m)+P_Q(r)e(m)q.
+\]
+This is useful if absolute nonhousing commitments are essential in the data. At fixed current spending, increasing $\cc$ crowds out housing, whereas increasing $\hh$ raises housing demand. Joint spending composition can therefore help distinguish the floors. But adding both a floor and a flexible scale without new restrictions creates substitution among parameters and can make poor-parent states infeasible.
+
+There is a separate childless restriction: zero floors and constant shares imply homothetic interior renter demand for childless households. Earlier project notes report evidence against this restriction. That evidence needs to be rechecked with the current observer and sample before being treated as a rejection of today's benchmark. Crucially, changing the \emph{child} scale cannot repair a childless demand failure.
+
+\page{6. What the literature supports, precisely}
+\textbf{Scholz, Seshadri, and Khitatrakun (2006).} Their scale is $g=(A+0.7K)^{0.7}$, with adults $A$ and children $K$. Their consumption utility is $g\U(c/g)$, and family composition is exogenous. Our two-adult normalization borrows the scale shape; it does not reproduce their aggregation convention or make their retirement-saving exercise a validation of endogenous fertility. At common curvature two, their convention gives $-g^2/c$, whereas the inside-only convention gives $-g/c$. Cite them for the scale, not for the entire preference specification. \href{https://users.ssc.wisc.edu/~aseshadr/Publications/optimality.pdf}{Primary paper, pp.\ 615 and 619.}
+
+\textbf{Dustmann, Fitzenberger, and Zimmermann (2022).} Their housing framework uses
+\[
+n^{-\phi}(h-n^\phi\bar h)^a x^{1-a},
+\]
+where $n$ is household size, $h$ housing, and $x$ nonhousing consumption. This is a scaled Cobb--Douglas bundle with a housing minimum and no nonhousing minimum. It supplies a direct precedent for combining these ingredients. Their minimum is tied to the household scale, however, whereas ours has a separate first-child jump and slope. Their framework is static with exogenous household composition; it does not validate our cardinal CRRA extension or fertility responses. \href{https://academic.oup.com/ej/article/132/645/1709/6459206}{Primary article, equation (1a).}
+
+\textbf{de la Croix and Pommeret (2021).} Their fertility-timing model has CRRA utility from consumption and a separate child reward. After a birth, the budget finances $(1+\beta)c$; writing total spending as $C$ gives $\U(C/(1+\beta))$. Their two-child extension uses $(1+2\beta)c$. This provides a published endogenous-fertility precedent for an inside consumption scale without an outside family multiplier. It does not include our housing bundle, and its timing and child-reward architecture differ. Their cost coefficient should not be imported mechanically into our model. \href{https://perso.uclouvain.be/david.delacroix/pdfpubli/jet21.pdf}{Primary paper, section 2 and section 5.1.}
+
+\textbf{OECD conventions.} The modified OECD scale assigns weight one to the first adult, one-half to additional people aged 14 or older, and 0.3 to younger children. For two adults and young children, normalization gives $1+0.2m$. Our dependents need not all be under 14, so this is not an exact mapping without an age convention. The square-root scale offers another conventional benchmark. Neither convention identifies preferences over fertility. \href{https://www.oecd.org/en/publications/oecd-handbook-on-the-compilation-of-household-distributional-results-on-income-consumption-and-saving-in-line-with-national-accounts-totals_5a3b9119-en/full-report/component-15.html}{OECD handbook (2024)}; \href{https://www.oecd.org/content/dam/oecd/en/publications/reports/2013/06/oecd-framework-for-statistics-on-the-distribution-of-household-income-consumption-and-wealth_g1g2c4b5/9789264194830-en.pdf}{OECD framework (2013)}.
+
+\textbf{The defensible literature claim is modest and sufficient:} the specification combines established ingredients in a model where fertility, housing, and saving are jointly chosen. The extension requires empirical discipline. It need not be identical to a single published paper, and it should not be presented as if it were.
+
+\page{7. What existing data can tell us}
+\textbf{CEX consumption and housing composition.} Existing builders construct nonhousing expenditure and regressions by child count. These are useful starting points, not ready-made estimates of $e(m)$. At fixed total spending the scale cancels from interior demand, so a conditional allocation regression cannot identify it directly. At fixed income the scale can affect spending through saving; estimation must reproduce that dynamic comparison. Rooms and tenure can themselves be outcomes of fertility, making conditioning on them consequential.
+
+The current child-cost builder restricts under-18 household members to at most three. Its apparent upper ``3+'' category therefore contains exactly three in that sample. It also permits different adult counts. Rebuild or harmonize the observer to distinguish adult composition, current dependent children, and the model's fertility stock. Estimate separate first-child and additional-child contrasts with their joint covariance. Do not treat a household spending increment as a per-child floor or scale coefficient by direct substitution.
+
+\textbf{PSID housing around births.} The reviewed first-birth room response already helps discipline the housing channel. It is not equal to the first-child floor: moving, tenure, prior anticipation, later births in the event window, and income changes contribute to the measured response. Match the model's event window, inspect pretrends, and retain the biennial observation convention. Since this response is already targeted, fitting it is not independent validation. Additional untargeted windows or subgroup responses can be.
+
+\textbf{ACS housing and tenure.} Existing family room and tenure moments help constrain the combined mechanism. More detailed room and tenure profiles by income, age, and family composition would test whether the same parameters explain household heterogeneity. Use the same resident-child definition and geography as the model observer. A room reporting cap is a measurement issue, not automatically a physical housing constraint.
+
+\textbf{CPS and natality fertility outcomes.} Completed fertility, childlessness, and birth timing constrain costs jointly with child preferences and uncertainty. Untargeted parity shares and age-specific profiles would be valuable checks of scale curvature. Mean children among mothers is algebraically implied by mean fertility and childlessness, so it is not an independent identifying moment when both are already matched. Current dependent children must not be substituted for lifetime births.
+
+\textbf{PSID wealth and saving.} Existing wealth moments help prevent fitting family needs through implausible resource reallocation, but patience, bequests, and earnings risk also affect wealth. Spending and liquid-wealth changes around births, with comparable income and tenure groups, would give more direct evidence on the scale's intertemporal channel. These require additional construction; they are not already verified targets.
+
+\textbf{External housing-cost shocks.} Renter--owner and liquidity differences in fertility responses are especially useful for the JMP mechanism. Match the empirical shock, exposure timing, and outcome horizon before comparing signs or magnitudes. A regional price--fertility correlation is not a causal elasticity, and a birth-induced room response is not a housing-price-induced fertility response.
+
+\page{8. A validation sequence that respects the deadline}
+\textbf{First: finish the interpretation audit without solving the model.} The important parts are done here: establish the actual formula, separate scale shape from aggregation, verify published precedents, and derive total expenditure requirements. Complete a compact evidence sheet from existing files showing which consumption and housing restrictions are already tested, which are targeted, and which remain genuinely unused. This protects completed work from being overturned by a notation misunderstanding.
+
+\textbf{Second: harmonize the most informative data comparison.} Prioritize CEX first-child and additional-child spending contrasts alongside housing expenditure or rooms, conditional on a defensible set of predetermined characteristics. Compare resource gradients, not only one average increment. Check the childless renter demand restriction separately. Existing data reduce acquisition cost, but sample alignment, uncertainty, and simulated observers still require work. Descriptive controls alone do not establish causal child costs.
+
+\textbf{Third: run a small, prespecified scale comparison when computation is authorized and ready.} Use current power, first-child-matched linear, and square root. Start at identical preference and technology parameters, supplied prices, earnings processes, and initial household distribution. This isolates the immediate mechanical effect; it is not a newly calibrated equilibrium. Then, only if differences matter, recompute equilibrium and compare under the same target definitions, weights, bounds, population closure, and numerical tolerances.
+
+Keep the initial fertility normalization at the author-selected 2.1 in a full normalized comparison, and retain the agreed post-2023 constant preference path. Re-solving that initial normalization may require a different preference intercept: do not label such a comparison ``all preferences held fixed.'' Separate the mechanical fixed-intercept experiment from the normalized equilibrium experiment. The historical preference path must not silently absorb every change in the child-cost specification.
+
+\textbf{Fourth: re-estimate only if the comparison changes the decision.} Existing parameters are useful starting values under another scale, not evidence that it has been calibrated. A fair refit uses the same permitted coordinates and restrictions and reports all target fits and parameter bounds. A taste-only adjustment should be labeled as such. It is not a substitute for a comparable full fit.
+
+Do not estimate an extra scale slope merely because the code supports one. In the inherited design, adding a free slope to eleven searched parameters would leave twelve parameters against twelve target rows. Counting equations is not identification: examine sensitivity and substitution with housing requirements, child tastes, patience, and bequests. An additional free slope requires independent identifying variation in the existing or added moments. Assess local rank, conditioning, and substitution with the other parameters; matching the parameter count to the target count is insufficient.
+
+\textbf{Reopen the benchmark if} harmonized data reveal a substantial joint consumption--housing failure; economically relevant households face implausible feasibility restrictions; untargeted fertility and saving patterns fail systematically; or the central policy result changes materially across reasonable scales after comparable fitting. Do not select the scale solely because it produces the preferred sign.
+
+\page{9. What is preserved, and technical checks}
+\textbf{Most of the project investment survives any scale decision.} The state space, earnings process, demographic accounting, data builders, empirical designs, housing institutions, transition machinery, and much of the solver remain useful. Numerical solutions, fitted parameters, equilibrium prices, and counterfactual magnitudes must be checked again after a preference change. Keeping the current benchmark avoids that immediate duplication while allowing focused validation. No new long computation is warranted merely to improve a citation.
+
+\textbf{Scaling only consumption.} For any positive function $g(m)$,
+\[
+\left(\frac{c}{g(m)}\right)^\alpha(s-\hh(m))^{1-\alpha}
+=\frac{Q(c,s;m)}{g(m)^\alpha}.
+\]
+It exactly reproduces the current bundle when $g=e^{1/\alpha}$. Using $g=e$ instead weakens the effective scale to $e^\alpha$. Calling the scale ``consumption only'' therefore either changes its quantitative strength or simply renames the same object; it does not create an independently identified channel.
+
+\textbf{Adding a family multiplier.} For the unnormalized CRRA used here and $\sigma\ne1$,
+\[
+e\U(Q/e)=\U\!\left(Q/e^{\sigma/(\sigma-1)}\right).
+\]
+At curvature two, this replaces the inside scale by its square. An additive normalization of CRRA is harmless inside the current utility when common across family sizes, but becomes family-size dependent after multiplication by $e$. Thus even apparently cosmetic normalizations require care with endogenous fertility.
+
+\textbf{A taste adjustment cannot generally undo a scale change.} At curvature two, the change in conditional material utility is
+\[
+-\frac{P_Q(r)\,[e_{\rm new}(m)-e_{\rm old}(m)]}{X-r\hh(m)}.
+\]
+It varies with resources, rents, and family size. A single change in $\psi_t m$ cannot offset it in every state. This is why preserving a fertility mean after changing the scale does not preserve fertility heterogeneity or policy elasticities.
+
+\textbf{Implementation checks.} The reviewed solver contains power, square-root, and linear branches. Its linear branch applies the utility multiplier $1+\gamma_e m$ directly. This equals a linear inside equivalence scale at the maintained $\sigma=2$; at other curvatures the conversion must be checked. The table on page 3 holds curvature fixed. The owner housing floor applies to services, so when $s=\chi H$ its physical requirement is $H>\hh(m)/\chi$.
+
+\small
+\textbf{Project evidence and reproducibility.} Read \texttt{CALIBRATION\_STATUS.md} for the live quantitative contract. The equations were checked against the matched implementation's \texttt{solver.py} and \texttt{e5\_profile.py} under \path{tmp/e5f_matched_pf/code/model/intergen_eqscale_seq_optimized/}. Data provenance is in \path{code/data/cex_child_cost/build_child_cost_target.R} and the parameter/target audit linked from \path{output/model/e5f_matched_pf_20260909a/README.md}. July reconciliation notes are historical evidence, not current calibration results. This document can be rebuilt with pdfLaTeX; no model solve is needed.
+\end{document}

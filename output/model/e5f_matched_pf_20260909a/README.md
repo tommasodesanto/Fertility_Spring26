@@ -1,5 +1,7 @@
 # Matched perfect-foresight implementation
 
+Preference decision review (10 September): [nine-page memo](../../pdf/preference_scale_decision_review.pdf), with [LaTeX source](../../../docs/model/preference_scale_decision_review.tex). Compares household scales, utility aggregation, and consumption floors; recommends retaining the current benchmark with controlled robustness checks and a joint consumption–housing validation plan. This is analysis only: no model, calibration contract, or production job changed.
+
 
 Latest design review (10 September): [decision research](design_research/README.md), with an eight-page PDF, full proposed early target set and newly verified continuation receipts. This is a proposal; no new calibration was adopted.
 
