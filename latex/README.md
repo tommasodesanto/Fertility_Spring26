@@ -2,6 +2,10 @@
 
 Active documents:
 
+- Slides-only collaboration handoff: `../docs/prompts/HANDOFF_september14_slides.md`.
+  It identifies the single working deck, technical task contacts, and the
+  September 11 utility/pension updates that still need presentation edits.
+
 - `september_14_presentation.tex`: the single working September 14 seminar
   presentation. The reader PDF is `../output/pdf/september_14_presentation.pdf`;
   `september_14_presentation.pdf` is an identical build copy. The September 10

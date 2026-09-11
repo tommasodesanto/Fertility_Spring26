@@ -1,5 +1,13 @@
 # Current-candidate transition diagnostic
 
+The verified return-home assessment is `return_home_20260911/READOUT.md`:
+all three short paths converge and their household-rate diagnostics reproduce;
+the central long path exhausted its mapping budget without convergence. Both
+alternative long paths were still solving. It includes every fit/parameter row
+for the unrestricted and two fixed-beta profiles. Regenerate without solving
+using `python build_return_home_readout.py` from this directory; the builder
+checks all numerical rows and exact rate replays against the collected receipts.
+
 ## Commute launch: dated fertility reporting and preference alternatives
 
 The continued six-date root passed its unchanged market/fiscal and exact replay

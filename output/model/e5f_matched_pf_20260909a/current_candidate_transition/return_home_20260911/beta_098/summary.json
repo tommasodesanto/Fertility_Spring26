@@ -1,0 +1,38 @@
+{
+  "attempted_cases": 57,
+  "best_case": "selected_exact_repetitions",
+  "best_loss": 222.52444919101495,
+  "elapsed_seconds": 4499.568406801671,
+  "fixed_beta_annual": 0.98,
+  "fixed_beta_seed_loss": 251.74426866944245,
+  "fixed_parameter_restrictions": {
+    "beta_annual": {
+      "status": "author_fixed_profile_restriction",
+      "value": 0.98
+    }
+  },
+  "free_parameter_count": 8,
+  "free_parameters": [
+    "kappa_fert",
+    "kappa_fert_continuation",
+    "chi",
+    "H0",
+    "theta0",
+    "theta1",
+    "first_birth_fixed_cost",
+    "h_P"
+  ],
+  "identification_established": false,
+  "maximum_stationary_solves": 464,
+  "objective_canonical_sha256": "c0e266d3a0d430343c469d780d1aedb45fa87f8763c9c938889e0c37daa31de2",
+  "production_eligible": false,
+  "raw_scorer_free_parameter_count": 9,
+  "raw_scorer_metadata_note": "Frozen scorer describes the unrestricted nine-coordinate contract; this profile imposes the additional author-fixed beta restriction externally.",
+  "scored_moment_count": 12,
+  "search_attempted_cases": 55,
+  "selected_exact_repetitions_verified": true,
+  "separate_normalization_target": 2.1,
+  "status": "completed",
+  "stop_reason": "round_cap",
+  "unrestricted_seed_loss_for_reference_only": 158.07639074681484
+}

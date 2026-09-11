@@ -2,6 +2,37 @@
 
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
+**September11, return-home assessment — allthree short trial paths converged;
+central28-date root finished without convergence; both alternative long paths stillrunning.**
+The observed-0.05 shortpath17409919 reproduces its selected fertility observer
+exactly. Both17409920 alternatives used the single budgeted short continuation
+and passed unchangedmarket/fiscal/replay/checkpoint gates. Their2020–2023-block
+household-based fertility indices are1.842701(-.025),1.669684(-.05),1.333686(-.10),
+versus femaleperiodTFR1.64575. This is sensitivity evidence, NOT a certified
+like-for-like empirical fit: female/maternal-age mapping and adaptive fitting
+remain unfinished. Fullfour-block profiles and exact observer replay are saved.
+Middle28-date root17402074 completed8mappings in6539seconds: housinggap.0110561
+and fiscalgap.000285091 stillfail2e-4/1e-6. Replay andcheckpointpass. Slurmjob
+completion must not be interpreted as equilibrium convergence. Alternative
+longroots were at theirfourth completedmapping atcollection and remainpending.
+
+Beta.98 profile17403262_0 completed its boundedsearch (57case attempts,~75min),
+with twoexactselectedrepetitions,loss222.524449 versus158.076391 unrestricted.
+It improvesfirst-birthrooms to.75748 vs.720246, but wealth/earnings3.88234
+vs6.14586 andownership30–55 .49599 vs.648334 worsen. Beta.99 remainsstopped
+at its massgate with unrepeatedbest168.201074; no jointrefinement completed.
+All39targetrows,51parameterrows, target/weightequality andlosscontributions
+are verified in `output/model/e5f_matched_pf_20260909a/current_candidate_transition/return_home_20260911/READOUT.md`.
+No newsearch or policy waslaunched during this assessment.
+
+Slides-only handoff: `docs/prompts/HANDOFF_september14_slides.md`. Active deck
+is `latex/september_14_presentation.tex`; it stillshowsobsoletepositiveper-child
+housingfloor onFamilySpace andEmpiricalDiscipline. Handoffroutes quantitative
+questions toReview quantitative model andtheory toReview two-period OLG model.
+No slides or protectedmanuscript wereedited bythis assessment.
+
+Earlier commute-launch statuses below are superseded by this completed-case review.
+
 **September11, commute launch — preference-rate observer17409919_2 submitted;
 two alternative histories17409920_0/1 queued after its successful smoke.**
 The resumed six-date history now passed its unchanged housing/fiscal/replay
