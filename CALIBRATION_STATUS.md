@@ -11,11 +11,28 @@ Earlier reported household-budget, demographic-accounting and property-tax
 checks do not establish that gate. Treat existing quantitative transitions and
 policies as provisional until their fiscal closure is corrected and recomputed.
 
-The choice of adjustment instrument is outstanding: the lead recommends fixed
-payroll tax with pension benefits adjusting; fixed benefits with an adjusting
-payroll tax is the alternative presented to the author. No answer has yet been
-received and neither rule has been adopted by a production launcher. Repair
-work is isolated in `tmp/e5f_matched_pf`, branch
+**Historical reconciliation supports the author's recollection.** On July 10
+the assistant explicitly described a fixed 17.9% tax and pensions determined
+internally by stationary budget balance. The July 15 saved no-mortality control
+has the equal age masses that justify the pension formula's 12/5 worker/retiree
+ratio. Adding post-retirement mortality changed those masses while leaving
+the formula unchanged. The saved mortality arm implies outlays/revenue
+0.839734374 from demographic accounting, matching today's actual audited
+pre-announcement stationary ratio 0.839734375 within 1.24e-9. The historical
+factor is reconstructed, not a recovered old fiscal-residual receipt. This
+identifies the current stationary gap; it does not certify every old version
+or establish the exact production-promotion date. Fiscal closure was flagged
+in later audits but never closed. The lead's earlier framing incorrectly
+blurred today's failure with the older specification.
+
+The repair direction is fixed payroll tax at 17.9% with pensions determined
+from actual revenue and retiree exposure, restoring the previously communicated
+stationary specification and extending the author's balance requirement to
+every transition date. Do not treat the adjustment instrument as a wholly new
+unanswered choice. No corrected production equilibrium is yet available. The
+historical receipts and caveats are in the repair README and
+`historical_reconciliation.json`. Repair work is isolated in
+`tmp/e5f_matched_pf`, branch
 `codex/balanced-social-security`, preserving earlier commits and numerical
 outputs. Actual household-head payroll/pension accounting, period-unit income
 binding, dated pension/tax anticipation through both PF passes, and a bounded

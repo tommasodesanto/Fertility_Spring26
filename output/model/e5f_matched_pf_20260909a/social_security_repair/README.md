@@ -5,12 +5,68 @@ PF runs fix both payroll tax and the pension derived from a reference age ratio.
 Their household, population and property-tax checks did not include a Social
 Security balance condition. Existing quantitative results remain provisional.
 
-## Economic decision still outstanding
+## Historical reconciliation and restored repair direction
 
-The lead recommends fixed payroll tax with a common pension adjusting to actual
-tax revenue. The author was also offered fixed pensions with the payroll tax
-adjusting; no answer has yet been received. Neither rule has been adopted for
-production. In period units, with actual household distribution
+The author's recollection has direct support. On July 10 at 23:05:47 UTC the
+assistant said pensions balanced within the stationary age distribution. At
+23:08:33 and 23:12:39 UTC it explicitly described an external 17.9% tax and a
+pension determined internally by stationary budget balance. The author asked
+about precisely this distinction and then approved the source-table wording.
+See `memory/transcripts/2026-07-10/combined_user_assistant.md:17586` and
+`:17627`; the original response records are also retained in that day's raw
+transcript folder. No instruction abandoning that condition was found in the
+reviewed exchanges. These exchanges establish what was communicated; they are
+not themselves numerical budget checks.
+
+The July 15 mortality experiment supplies the concrete numerical link. Its
+saved `report/lifecycle_decomposition.csv` has 12 equal-sized working cohorts
+and five equal-sized retirement cohorts in the no-mortality control, M0.
+The pension shortcut uses the ratio 12/5. Adding retirement mortality in M1
+reduced the mass of retirees without updating that shortcut:
+
+| Saved age distribution | Worker mass | Retiree mass | Demographic outlays/revenue factor, (12/5) R/W |
+|---|---:|---:|---:|
+| M0, no mortality before terminal exit | 0.705882353 | 0.294117647 | 1.000000000 |
+| M1, post-retirement mortality | 0.740801474 | 0.259198526 | 0.839734374 |
+
+The factor assumes actual mean worker earnings equal the pension formula's
+reference mean. It is an accounting reconstruction from saved age masses,
+not a recovered historical fiscal-residual receipt. The independent audit of
+today's actual pre-announcement stationary payroll gives outlays/revenue
+0.839734375: the mortality reconstruction differs by only 1.24e-9. This
+identifies the stale no-mortality age ratio as the source of the current
+pre-announcement stationary gap. Subsequent reweighting to the 2007 population
+and changing transition demographics introduce further discrepancies.
+
+The unchanged pension formula is visible in
+`code/model/intergen_eqscale_seq_optimized/parameters.py:742`. Commit
+`411616d22ce64634ca2ddd0d31a9a4dc8c27aa8c` records the July 10–16 machinery,
+including mortality, without replacing this formula. The July 15 experiment
+contract explicitly was not a production promotion; the exact date of its
+later production adoption is not established here. Older MATLAB branches
+also differed: January had an actual-distribution pension update, whereas a
+March branch explicitly retained a fixed reference benefit. Do not conclude
+that every historical version either balanced or failed.
+
+The fiscal issue was subsequently flagged in August transition reviews and
+the September 4 audit, but remained unresolved; see
+`memory/transcripts/2026-08-11/combined_user_assistant.md:5281` and
+`memory/transcripts/2026-09-04/combined_user_assistant.md:3740`.
+The lead's initial claim
+blurred the current audited failure with the older stationary specification;
+the author was right to challenge that history. Arithmetic and source hashes
+are preserved in `historical_reconciliation.json`; no model was solved or
+changed for this reconciliation.
+
+The repair direction is therefore to retain the external 17.9% tax and
+determine pensions from actual payroll revenue and retiree exposure, consistent
+with the previously communicated stationary specification and the author's
+current requirement to balance Social Security. Extend the condition to every
+transition date. Do not keep presenting the instrument as a wholly new,
+unanswered choice. This is the repair direction, not a claim that the production
+launcher or a corrected equilibrium has already adopted it.
+
+In period units, with actual household distribution
 `g[wealth,tenure,location,age,z,parity,child]`, the identities are
 
 \[
@@ -120,7 +176,8 @@ remain preserved.
 
 ## Required before claiming the model is repaired
 
-1. Settle the economic adjustment instrument with the author.
+1. Carry the recovered fixed-tax, endogenous-pension specification into the
+   explicit endpoint and transition contracts; retain 17.9% as the external tax.
 2. Complete the compiled test and inspect the actual saved-state budget gaps.
 3. Rebuild and reproduce the initial normalization and terminal stationary
    endpoint under the chosen fiscal rule, with new source/input contracts.

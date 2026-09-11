@@ -1,0 +1,35 @@
+{
+  "status": "read_only_historical_accounting_reconstruction",
+  "model_solves": 0,
+  "formula": "(12 / 5) * saved_retiree_mass / saved_worker_mass",
+  "interpretation": "Demographic outlays/revenue factor under the unchanged reference pension formula when reference mean worker earnings equal actual worker mean earnings. Historical factors are reconstructed from saved age distributions, not stored historical fiscal residuals. The current stationary ratio is from the independent actual-payroll audit.",
+  "historical_arms": {
+    "M0": {
+      "worker_mass": 0.7058823529411917,
+      "retiree_mass": 0.2941176470587992,
+      "demographic_budget_factor": 0.9999999999998958
+    },
+    "M1": {
+      "worker_mass": 0.7408014741689929,
+      "retiree_mass": 0.25919852583099895,
+      "demographic_budget_factor": 0.8397343737635278
+    }
+  },
+  "current_pre_announcement_outlays_over_revenue": 0.8397343750064302,
+  "mortality_factor_minus_current_actual_ratio": -1.2429024476290351e-09,
+  "communicated_specification_evidence": {
+    "date_utc": "2026-07-10",
+    "assistant_time_utc": "23:08:33",
+    "transcript_line": 17627,
+    "content": "Fixed tax 0.179; pension benefit described as internally determined from stationary balanced-budget condition."
+  },
+  "mortality_code_provenance_commit": "411616d22ce64634ca2ddd0d31a9a4dc8c27aa8c",
+  "chronology_limit": "July 15 experiment contract and July 16 as-run provenance commit establish the mortality extension; exact production promotion date has not been established. No claim that all older variants balanced.",
+  "source_sha256": {
+    "output/model/intergen_mortality_recalibration_20260715/report/lifecycle_decomposition.csv": "e5b47a3297968133101bf652037b70af8b027538811a695e20b22b4720cfc005",
+    "output/model/e5f_matched_pf_20260909a/social_security_repair/budget_audit.json": "ce459895ee49d92faaefd8a8a19edf0c578a5d23117fc3c0e080b0f62086dea9",
+    "output/model/intergen_mortality_recalibration_20260715/README.md": "6d8ccbcc096bd6ba0449bbe36940e91797649343dfc0a5f21075006dfddcd2a6",
+    "memory/transcripts/2026-07-10/combined_user_assistant.md": "4aa0f80fae7f613d3b93f7fe0101e7e67a63e35704922d606e44df2121d3a167",
+    "code/model/intergen_eqscale_seq_optimized/parameters.py": "8ffa743f6bcc22e42f24e2f846c187f19d006813a3795dc4a935d09d2fbfc7a6"
+  }
+}
