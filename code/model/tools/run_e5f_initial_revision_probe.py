@@ -83,9 +83,22 @@ def main():
     base,supply_rebase=rebase_initial_supply(old.parameters,
         asset_prices=np.asarray(old.solution.p_eq),elasticity=.63)
     if args.case.startswith('new_'):
-        from e5f_parenthood_utility import initialize_parenthood_utility,validate_parenthood_utility
+        from e5f_parenthood_utility import (initialize_parenthood_utility,validate_parenthood_utility,
+                                          validate_parenthood_candidate,bind_parenthood_utility)
         base=initialize_parenthood_utility(base)
         validate_parenthood_utility(base)
+    if 'structural_candidate' in c:
+        if args.case!='new_balanced' or not c['normalize'] or c.get('observe_early') is not True:
+            raise ValueError('Structural probes require normalized balanced new utility and explicit early diagnostics')
+        candidate=validate_parenthood_candidate(c['structural_candidate'],require_complete=True)
+        base=bind_parenthood_utility(base,candidate)
+    if 'initial_psi' in c:
+        if not np.isfinite(c['initial_psi']): raise ValueError('Initial preference must be finite')
+        base.psi_child=float(c['initial_psi'])
+    if 'observe_early' in c and type(c['observe_early']) is not bool:
+        raise ValueError('Early diagnostic switch must be an explicit Boolean')
+    if c.get('observe_early',False) and args.case!='new_balanced':
+        raise ValueError('Early diagnostic panel requires balanced new utility')
     grid=np.asarray(old.b_grid).copy()
     if (len(grid)!=120 or int(base.J)!=17 or int(base.I)!=1
             or not np.array_equal(grid,model.make_grid(base))
@@ -211,7 +224,7 @@ def main():
                 float(np.asarray(getattr(P,name)).reshape(-1)[0]))
             parameter_rows.append(dict(parameter=name,estimate=estimate,lower=lower,upper=upper,
                 transform=transform,near_bound=min(estimate-lower,upper-estimate)<=.01*(upper-lower),
-                status='inherited diagnostic point; not re-estimated',
+                status='diagnostic candidate; not a certified estimate' if 'structural_candidate' in c else 'inherited diagnostic point; not re-estimated',
                 interpretation='mapped first-child requirement' if name=='h_P' else 'structural coordinate'))
         parameter_rows.extend(dict(parameter=name,estimate=float(value),lower=None,upper=None,
             transform='',near_bound=False,status=status,interpretation='') for name,value,status in (
@@ -222,6 +235,19 @@ def main():
                 ('tenure_choice_kappa',P.tenure_choice_kappa,'externally fixed'),
                 ('alpha_cons',P.alpha_cons,'externally fixed'),('sigma',P.sigma,'externally fixed')))
         primitive.pf.write_csv(dest/'parameters.csv',parameter_rows)
+        if c.get('observe_early',False):
+            from e5f_initial_fertility_observer import observe_initial_fertility
+            from e5f_initial_housing_observer import observe_initial_housing_wealth
+            state.update(phase='early_measurement',repetition=repetition+1)
+            fertility={projection:observe_initial_fertility(evaluation,P,age_projection=projection)
+                for projection in ('uniform_birth_time','constant_post_cell')}
+            housing=observe_initial_housing_wealth(evaluation,P,grid,shared,
+                diagnostic_enabled=True,age_projection='uniform_within_age_cell',
+                diagnostic_allow_family_proxies=True,include_wealth=True,include_birth_response=True)
+            early=dict(fertility=fertility,housing_wealth=housing,calibrated_smm=False,
+                empirical_target_contract_activated=False,weights_assigned=False)
+            save(f'repetition_{repetition+1:02d}/early_measurement.json',early)
+            summary['early_measurement']=early
         save(f'repetition_{repetition+1:02d}/summary.json',summary)
         completed.append(summary)
         save('latest_completed.json',dict(repetition=repetition+1,**summary))
