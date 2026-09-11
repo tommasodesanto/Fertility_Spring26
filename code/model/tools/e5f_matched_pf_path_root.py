@@ -14,7 +14,7 @@ def solve_price_path(*, initial_prices, evaluate, project, slope,
                      market_tolerance, max_log_step, damping, max_evaluations,
                      deadline_monotonic, max_condition_number, worsening_factor,
                      final_reproduction_tolerance, callback=None,
-                     initial_jacobian=None):
+                     initial_jacobian=None, default_jacobian=None):
     """Return a dict; only ``converged=True`` certifies the fresh final mapping.
 
     ``evaluate`` returns ``residual``, Boolean ``mapping_valid`` and optionally
@@ -23,7 +23,8 @@ def solve_price_path(*, initial_prices, evaluate, project, slope,
     ``callback`` receives a copied ledger record after every evaluation, with
     ``new_best`` and the current best score, plus the final completion record.
     ``initial_jacobian`` optionally supplies d(residual)/d(log price), a finite
-    NxN matrix. It is copied; all safeguard resets still use ``-slope * I``.
+    NxN matrix. ``default_jacobian`` optionally specifies a nonsingular reset
+    matrix for differently scaled equations; the default remains ``-slope * I``.
     """
     p0 = np.asarray(initial_prices, dtype=float)
     if p0.ndim != 1 or not p0.size or not np.isfinite(p0).all() or np.any(p0 <= 0):
@@ -40,6 +41,15 @@ def solve_price_path(*, initial_prices, evaluate, project, slope,
     started = time.monotonic()
     ledger, best, evaluation_count = [], None, 0
     J0 = -float(slope) * np.eye(p0.size)
+    if default_jacobian is not None:
+        J0 = np.asarray(default_jacobian, dtype=float).copy()
+        if J0.shape != (p0.size, p0.size) or not np.isfinite(J0).all():
+            raise ValueError('Default Jacobian must be a finite nonsingular NxN matrix')
+        try:
+            if not np.isfinite(np.linalg.solve(J0, np.ones(p0.size))).all():
+                raise np.linalg.LinAlgError('nonfinite reset step')
+        except np.linalg.LinAlgError as exc:
+            raise ValueError('Default Jacobian must be a finite nonsingular NxN matrix') from exc
     J = J0.copy() if initial_jacobian is None else np.asarray(initial_jacobian, dtype=float).copy()
     if J.shape != J0.shape or not np.isfinite(J).all():
         raise ValueError('Initial Jacobian must be a finite NxN matrix for log-price residual derivatives')
@@ -96,7 +106,8 @@ def solve_price_path(*, initial_prices, evaluate, project, slope,
                     raise np.linalg.LinAlgError('nonfinite Newton step')
             except np.linalg.LinAlgError:
                 J = J0.copy()
-                raw_step = current['residual'] / float(slope)
+                raw_step = (current['residual'] / float(slope) if default_jacobian is None
+                            else -np.linalg.solve(J0, current['residual']))
                 reset_reason = 'jacobian_reset_positive_residual_price_increase'
             step = np.clip(active_damping * raw_step, -max_log_step, max_log_step)
             trial_prices = projected(np.exp(current['x'] + step))

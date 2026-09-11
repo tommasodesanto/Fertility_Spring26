@@ -47,6 +47,7 @@ import audit_closed_reproductive_closure as closure
 import run_dynamic_population_transition as calendar
 import run_e5f_open_population_transition as transition
 import run_e5f_post2023_no_policy_continuations as continuation
+import e5f_social_security as social_security
 
 
 DEFAULT_REPORT = (
@@ -513,8 +514,12 @@ def backward_value_path(
     base_parameters: SimpleNamespace,
     b_grid: np.ndarray,
     transfer_path: Sequence[float] | None = None,
+    pension_path: Sequence[float] | None = None,
+    payroll_tax_path: Sequence[float] | None = None,
 ) -> tuple[list[np.ndarray], int]:
     periods = int(len(prices))
+    pensions, payroll_taxes = social_security.validated_fiscal_paths(
+        periods, pension_path, payroll_tax_path)
     if rents.shape != prices.shape or psi_path.shape != prices.shape:
         raise ValueError("Price, rent, and preference paths must have the same length.")
     transfers = (
@@ -533,6 +538,7 @@ def backward_value_path(
         parameters = copy.deepcopy(base_parameters)
         parameters.psi_child = float(psi_path[period])
         parameters.property_tax_lump_sum_transfer = float(transfers[period])
+        social_security.apply_fiscal_date(parameters, period, pensions, payroll_taxes)
         shared = calendar.model.precompute_shared(parameters, b_grid)
         policy = solve_date_policy(
             price=float(prices[period]),
@@ -565,10 +571,14 @@ def evaluate_path_at_prices(
     birth_to_entry_conversion: float,
     transfer_path: Sequence[float] | None = None,
     historical_conditioning: HistoricalConditioning | None = None,
+    pension_path: Sequence[float] | None = None,
+    payroll_tax_path: Sequence[float] | None = None,
 ) -> PathEvaluation:
     started = time.perf_counter()
     price_path = np.asarray(prices, dtype=float).reshape(-1)
     psi_values = np.asarray(psi_path, dtype=float).reshape(-1)
+    pensions, payroll_taxes = social_security.validated_fiscal_paths(
+        len(price_path), pension_path, payroll_tax_path)
     if historical_conditioning is not None:
         historical_conditioning.validate(base_parameters, len(price_path), initial_state,
                                          birth_to_entry_conversion)
@@ -592,6 +602,8 @@ def evaluate_path_at_prices(
         base_parameters=base_parameters,
         b_grid=b_grid,
         transfer_path=transfer_values,
+        pension_path=pensions,
+        payroll_tax_path=payroll_taxes,
     )
 
     state = PFInitialState(
@@ -610,6 +622,7 @@ def evaluate_path_at_prices(
         parameters = copy.deepcopy(base_parameters)
         parameters.psi_child = float(psi)
         parameters.property_tax_lump_sum_transfer = float(transfer_value)
+        social_security.apply_fiscal_date(parameters, period, pensions, payroll_taxes)
         shared = calendar.model.precompute_shared(parameters, b_grid)
         policy = solve_date_policy(
             price=float(price),
@@ -775,6 +788,8 @@ def evaluate_path_at_prices(
                 ),
             }
         )
+        if pensions is not None or payroll_taxes is not None:
+            rows[-1].update(social_security.fiscal_accounts(evaluation.g_current, parameters))
         if historical_conditioning is not None:
             rows[-1].update(
                 historical_conditioning_scope="Conditional historical PF evaluation; supplied terminal boundary",

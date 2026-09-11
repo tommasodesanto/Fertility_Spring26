@@ -22,6 +22,26 @@ old incomplete bundles must be rebuilt from their matching solution or re-solved
 
 ## Current E5F calibration and policy audit utilities
 
+Social Security repair is isolated on `codex/balanced-social-security`.
+`tools/e5f_social_security.py` integrates payroll and pension outlays over the
+actual seven-axis household distribution and binds dated disposable income in
+period units. Explicit optional pension/payroll-tax paths are passed through
+both the historical and person-tail perfect-foresight calculations.
+`tools/e5f_social_security_root.py` provides a bounded joint market/budget root
+with mandatory choice of `fixed_tax` or `fixed_pension`, independent residual
+gates and fresh final replay. It does not choose or adopt an economic closure.
+`tools/audit_e5f_social_security.py` reads hash-pinned old endpoint distributions
+without solving them. Those old endpoints and historical policy results have
+no Social Security balance certificate; they must be rebuilt under the chosen
+rule. A conditional income path or passing unit test is not that certificate.
+
+Pure repair checks use the existing project Python, with `PYTHONPATH` including
+`code/model` and `code/model/tools`:
+`python -m unittest test_e5f_social_security test_e5f_social_security_root test_e5f_matched_pf_path_root test_e5f_matched_pf_history test_e5f_pf_historical_bridge`.
+The compiled tiny-grid check is `test_e5f_social_security_compiled` and must use
+`NUMBA_DISABLE_JIT=0`. Its synthetic paths test household choices and budget
+accounting, not the production steady states or historical equilibrium.
+
 `tools/collect_e5f_matched_pf_preference_pilot.py` independently verifies locally
 collected six-date tests and 100-date preference-timing cases, including pinned
 source/artifact hashes, every fit row, unchanged parameters, dated budgets and

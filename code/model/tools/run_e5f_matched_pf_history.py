@@ -35,6 +35,8 @@ def evaluate_history_and_person_tail(
     demographic_primitives: person_pf.AnnualDemographicPrimitives,
     supply_rule: Any, birth_to_entry_conversion: float,
     observer: Callable | None = None,
+    pension_path: Sequence[float] | None = None,
+    payroll_tax_path: Sequence[float] | None = None,
 ) -> ConditionalHistoryEvaluation:
     """Evaluate 2007--2019 history followed by the person tail from 2023.
 
@@ -45,6 +47,11 @@ def evaluate_history_and_person_tail(
     p = np.asarray(prices, dtype=float)
     psi = np.asarray(psi_path, dtype=float)
     transfers = np.asarray(transfer_path, dtype=float)
+    pensions, payroll_taxes = pf.social_security.validated_fiscal_paths(
+        len(p), pension_path, payroll_tax_path)
+    def fiscal_slice(start, stop=None):
+        return dict(pension_path=None if pensions is None else pensions[start:stop],
+                    payroll_tax_path=None if payroll_taxes is None else payroll_taxes[start:stop])
     if (dates.ndim != 1 or len(dates) < 5
             or not np.array_equal(dates, 2007 + 4 * np.arange(len(dates)))
             or float(base_parameters.period_years) != 4.):
@@ -74,6 +81,7 @@ def evaluate_history_and_person_tail(
         prices=tail_prices, rents=tail_rents, psi_path=tail_psi,
         terminal_V=terminal_V, base_parameters=base_parameters,
         b_grid=b_grid, transfer_path=tail_transfers,
+        **fiscal_slice(4),
     )
     history = pf.evaluate_path_at_prices(
         prices=p[:4], psi_path=psi[:4], transfer_path=transfers[:4],
@@ -81,6 +89,7 @@ def evaluate_history_and_person_tail(
         base_parameters=base_parameters, b_grid=b_grid, initial_state=initial_state,
         supply_rule=supply_rule, birth_to_entry_conversion=birth_to_entry_conversion,
         historical_conditioning=replace(historical_conditioning, observer=callback),
+        **fiscal_slice(0, 4),
     )
     g_2023 = history.terminal_state.g_pre
     heads_2023 = person_pf.aggregate_heads_to_model_age_cells(
@@ -102,6 +111,7 @@ def evaluate_history_and_person_tail(
         demographic_primitives=demographic_primitives, supply_rule=supply_rule,
         precomputed_value_path=tail_values,
         observer=tail_observer if callback is not None else None,
+        **fiscal_slice(4),
     )
     rows = [dict(row) for row in history.rows]
     rows.extend(dict(row, period=int(row['period']) + 4) for row in tail.rows)

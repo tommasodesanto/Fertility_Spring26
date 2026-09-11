@@ -67,6 +67,27 @@ class PriceRootTests(unittest.TestCase):
         self.assertTrue(result['converged'])
         self.assertEqual(result['history'][1]['reset_reason'], 'jacobian_reset_positive_residual_price_increase')
 
+    def test_explicit_reset_matrix_respects_different_equation_scales(self):
+        matrix = np.diag([-2., -10000.])
+        original = matrix.copy()
+        target = np.array([.1, -.1])
+        result = self.run_root(lambda p: dict(residual=matrix @ (np.log(p)-target),
+            mapping_valid=True), initial_jacobian=np.zeros((2, 2)), default_jacobian=matrix)
+        self.assertTrue(result['converged'])
+        self.assertEqual(result['evaluations'], 3)
+        np.testing.assert_allclose(result['history'][1]['actual_log_step'], target, atol=1e-15)
+        np.testing.assert_array_equal(matrix, original)
+
+    def test_invalid_reset_matrix_fails_before_evaluation(self):
+        calls = []
+        def evaluate(p):
+            calls.append(p)
+            return dict(residual=np.zeros(2), mapping_valid=True)
+        for matrix in (np.eye(3), np.zeros((2, 2)), np.full((2, 2), np.nan)):
+            with self.subTest(matrix=matrix), self.assertRaisesRegex(ValueError, 'Default Jacobian'):
+                self.run_root(evaluate, default_jacobian=matrix)
+        self.assertFalse(calls)
+
     def test_ill_conditioned_reset_raises_price_for_positive_residual(self):
         def evaluate(p):
             return dict(residual=np.array([.1, .1]) - np.log(p), mapping_valid=True)

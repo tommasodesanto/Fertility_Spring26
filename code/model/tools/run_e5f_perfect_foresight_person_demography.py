@@ -673,6 +673,8 @@ def evaluate_path_at_prices_person_demography(
     transfer_path: Sequence[float] | None = None,
     precomputed_value_path: Sequence[np.ndarray] | None = None,
     observer: Any | None = None,
+    pension_path: Sequence[float] | None = None,
+    payroll_tax_path: Sequence[float] | None = None,
 ) -> PersonPathEvaluation:
     """Evaluate a price path with endogenous births and coherent head stocks.
 
@@ -686,6 +688,8 @@ def evaluate_path_at_prices_person_demography(
     psi_values = np.asarray(psi_path, dtype=float).reshape(-1)
     if price_path.shape != psi_values.shape or len(price_path) < 1:
         raise ValueError("Price and preference paths must have the same positive length")
+    pensions, payroll_taxes = pf.social_security.validated_fiscal_paths(
+        len(price_path), pension_path, payroll_tax_path)
     transfers = (
         np.zeros_like(price_path)
         if transfer_path is None
@@ -708,6 +712,8 @@ def evaluate_path_at_prices_person_demography(
             base_parameters=base_parameters,
             b_grid=b_grid,
             transfer_path=transfers,
+            pension_path=pensions,
+            payroll_tax_path=payroll_taxes,
         )
     else:
         values = [np.asarray(value, dtype=float) for value in precomputed_value_path]
@@ -741,6 +747,7 @@ def evaluate_path_at_prices_person_demography(
         parameters = copy.deepcopy(base_parameters)
         parameters.psi_child = float(psi)
         parameters.property_tax_lump_sum_transfer = float(transfer_value)
+        pf.social_security.apply_fiscal_date(parameters, period, pensions, payroll_taxes)
         period_years = int(round(float(parameters.period_years)))
         expected_year = pf.CALENDAR_START_YEAR + period * period_years
         if state.persons.year != expected_year:
@@ -920,6 +927,8 @@ def evaluate_path_at_prices_person_demography(
                 ),
             }
         )
+        if pensions is not None or payroll_taxes is not None:
+            rows[-1].update(pf.social_security.fiscal_accounts(evaluation.g_current, parameters))
         state = PersonPFState(g_pre=next_g, persons=next_persons)
 
     return PersonPathEvaluation(

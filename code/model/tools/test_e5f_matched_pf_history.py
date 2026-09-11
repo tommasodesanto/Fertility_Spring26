@@ -51,7 +51,7 @@ class JoinedHistoryTests(unittest.TestCase):
             return self.g2023.copy(), next_people, ledger
         self.couple = self.stack.enter_context(patch.object(person_pf, 'advance_household_person_block', side_effect=couple))
 
-    def run_joined(self, prices=None, observer=None):
+    def run_joined(self, prices=None, observer=None, **fiscal_paths):
         return joined.evaluate_history_and_person_tail(
             years=[2007, 2011, 2015, 2019, 2023, 2027],
             prices=np.ones(6) if prices is None else prices,
@@ -61,7 +61,68 @@ class JoinedHistoryTests(unittest.TestCase):
             historical_conditioning=self.conditioning(), initial_2023_persons=self.people,
             demographic_primitives=self.primitives, supply_rule=object(),
             birth_to_entry_conversion=1 / 2.1, observer=observer,
+            **fiscal_paths,
         )
+
+    def fiscal_fixture(self):
+        self.P.J_R = 12
+        self.P.w_hat = np.array([1., 1.2])
+        self.P.income_age_profile = np.ones(17)
+        self.P.z_grid = np.array([1.])
+        self.P.tau_pay = .179
+        self.P.pension = 1.
+        self.P.scale_flows_to_period = True
+        pf.social_security.bind_social_security_income(self.P)
+
+        def solve(**kwargs):
+            P = kwargs['P']
+            return SimpleNamespace(
+                V=kwargs['continuation_V'] + kwargs['price'] + P.psi_child
+                  + P.property_tax_lump_sum_transfer + P.income.sum(),
+                price=np.array([kwargs['price']]), hR_pol=np.ones(self.shape),
+                joint_choice=self.joint_marker)
+        pf.solve_date_policy.side_effect = solve
+
+    def test_dated_pensions_and_taxes_enter_both_passes_and_future_anticipation(self):
+        self.fiscal_fixture()
+        pensions = np.arange(6) * .1 + 1.
+        taxes = np.arange(6) * .005 + .15
+        original_income = self.P.income.copy()
+        seen = []
+        def observe(period, evaluation, P, grid, shared):
+            seen.append((period, P.pension, P.tau_pay, P.income.copy()))
+        result = self.run_joined(observer=observe, pension_path=pensions, payroll_tax_path=taxes)
+        self.assertEqual(result.bellman_solves, 12)
+        self.assertLess(result.person_tail.maximum_policy_reproduction_error, 1e-12)
+        np.testing.assert_allclose([r['pension_period_units'] for r in result.rows], pensions)
+        np.testing.assert_allclose([r['payroll_tax_rate'] for r in result.rows], taxes)
+        for period, pension, tax, income in seen:
+            self.assertEqual(pension, pensions[period])
+            self.assertEqual(tax, taxes[period])
+            np.testing.assert_allclose(income[:, :12],
+                np.broadcast_to(4*(1-tax)*self.P.w_hat[:, None], (2, 12)))
+            np.testing.assert_allclose(income[:, 12:], pension)
+        np.testing.assert_array_equal(self.P.income, original_income)
+        changed = pensions.copy()
+        changed[-1] += .2
+        future = self.run_joined(pension_path=changed, payroll_tax_path=taxes)
+        # Two locations, five retirement ages: a future .2 pension increase
+        # raises the transparent household recursion already in 2007 by 2.
+        np.testing.assert_allclose(future.values[0] - result.values[0], 2., atol=1e-12)
+
+    def test_cached_values_from_wrong_pension_path_fail_replay(self):
+        self.fiscal_fixture()
+        pension = np.array([1.])
+        values, _ = REAL_BACKWARD(prices=np.ones(1), rents=np.ones(1),
+            psi_path=np.array([.1]), terminal_V=np.zeros(self.shape),
+            base_parameters=self.P, b_grid=np.arange(2.), pension_path=pension)
+        with self.assertRaisesRegex(RuntimeError, 'fails exact dated replay'):
+            person_pf.evaluate_path_at_prices_person_demography(
+                prices=[1.], psi_path=[.1], terminal_price=1.,
+                terminal_V=np.zeros(self.shape), base_parameters=self.P,
+                b_grid=np.arange(2.), initial_state=person_pf.PersonPFState(self.g2023, self.people),
+                demographic_primitives=self.primitives, supply_rule=object(),
+                precomputed_value_path=values, pension_path=[1.2])
 
     def test_future_tail_changes_2007_value_and_each_date_is_solved_twice(self):
         observations = []
