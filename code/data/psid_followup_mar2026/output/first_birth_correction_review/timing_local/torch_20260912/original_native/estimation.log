@@ -1,0 +1,286 @@
+-------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /scratch/td2248/projects/Fertility_Spring26_original_rooms_timing_
+> 20260912b/results/original_native/estimation.log
+  log type:  text
+ opened on:  12 Sep 2026, 09:34:46
+
+. mata: mata mlib index
+.mlib libraries to be searched are now
+    lmatabase;lmataado;lmatabma;lmatacate;lmatacollect;lmatadata;lmataerm;lmata
+> fc;lmatagsem;lmatah2o;lmatahetdid;lmataivqreg;lmatajm;lmatalasso;lmatamcmc;lm
+> atameta;lmatami;lmatamixlog;lmatanumlib;lmataopt;lmatapath;lmatapostest;lmata
+> pss;lmatarw;lmatasem;lmatasp;lmatasubexpr;lmatasvy;lmatatab;lmatats;lasdoc;li
+> vreg2;lspmat
+
+. use "/scratch/td2248/projects/Fertility_Spring26_original_rooms_timing_202609
+> 12b/analysis_sample.dta", clear
+(PSID-SHELF, 1968–2019, Beta Release 2023.01. Long format. Compiled: 2023/10/11
+> .)
+
+. do "audit_original_rooms_timing.do" original_native "/scratch/td2248/projects
+> /Fertility_Spring26_original_rooms_timing_20260912b/results/original_native"
+
+. * Timing-only comparisons against the author's recognized regression.
+. * These diagnostics intentionally retain original room codes and controls.
+. * They cannot promote a replacement empirical target.
+. version 17.0
+
+. args mode outdir
+
+. timer clear 1
+
+. timer on 1
+
+. if "`mode'" == "toy" {
+.     clear
+.     set seed 12092026
+.     set obs 2400
+.     gen long ID = ceil(_n/20)
+.     bysort ID: gen int year = 1989+_n
+.     gen int f_c_y = 1995 + 2*mod(ID,5)
+.     gen double K = year-f_c_y
+.     gen byte lastcohort = f_c_y==2003
+.     gen byte AGEREP = 25+mod(ID,10)
+.     gen byte EDUYEAR = 12+mod(ID,4)
+.     gen double rooms = 4+ID/100+0.2*(K>=0)+rnormal()
+.     sort ID year
+.     by ID: gen double rooms_aligned = rooms[_n-1]
+.     gen byte common_rooms = !missing(rooms,rooms_aligned)
+.     gen byte cohort_has_reference = 1
+.     gen byte cohort_has_m2 = 1
+.     tempfile toydata
+.     save `toydata'
+.     foreach arm in original_native original_common aligned_common {
+  2.         use `toydata', clear
+  3.         do "audit_original_rooms_timing.do" `arm' "`outdir'/`arm'"
+  4.     }
+.     di "ORIGINAL_TIMING_TOY_PASS"
+.     exit
+. }
+
+. capture mkdir "`outdir'"
+
+. * Rows unusable in either fit are excluded by the original marksample/markout
+> .
+. * Remove them before allocating interactions, preserving the full cohort list
+> .
+. quietly levelsof f_c_y if lastcohort==0, local(cohorts_before)
+
+. drop if missing(rooms,AGEREP,EDUYEAR) & missing(rooms_aligned,AGEREP,EDUYEAR)
+(2,457,789 observations deleted)
+
+. quietly levelsof f_c_y if lastcohort==0, local(cohorts_after)
+
+. assert "`cohorts_before'" == "`cohorts_after'"
+
+. if inlist("`mode'","original_common","aligned_common") keep if common_rooms
+
+. if "`mode'" == "aligned_common" replace rooms = rooms_aligned
+
+. assert inlist("`mode'","original_native","original_common","aligned_common")
+
+. 
+. * Verbatim event construction and command from the recognized Stata file.
+. capture drop L*event F*event
+
+. forvalues l = 0/10 {
+  2.     gen L`l'event = K==`l'
+  3. }
+
+. gen L11event = (K>10 & K!=.)
+
+. forvalues l = 1/5 {
+  2.     gen F`l'event = K==-`l'
+  3. }
+
+. gen F7event = (K<-6 & K!=.)
+
+. drop F2event
+
+. eventstudyinteract rooms L*event F*event, ///
+>     vce(cluster ID) absorb(ID year) cohort(f_c_y) control_cohort(lastcohort) 
+> ///
+>     covariates(i.AGEREP i.EDUYEAR)
+(obs=360,947)
+
+IW estimates for dynamic effects                       Number of obs = 354,697
+Absorbing 2 HDFE groups                                F(708, 36317) =    3.15
+                                                       Prob > F      =  0.0000
+                                                       R-squared     =  0.1546
+                                                       Adj R-squared =  0.0560
+                                                       Root MSE      =  9.2207
+                                (Std. err. adjusted for 36,318 clusters in ID)
+------------------------------------------------------------------------------
+             |               Robust
+       rooms | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+     L0event |   .1650373   .1368767     1.21   0.228    -.1032451    .4333196
+     L1event |   .5685725   .1499323     3.79   0.000     .2747007    .8624442
+     L2event |   .5798187    .148817     3.90   0.000      .288133    .8715045
+     L3event |   .7968586   .1564607     5.09   0.000      .490191    1.103526
+     L4event |   .7960964   .1531004     5.20   0.000      .496015    1.096178
+     L5event |   .9564254   .1575599     6.07   0.000     .6476034    1.265247
+     L6event |   1.055848   .1620439     6.52   0.000     .7382371    1.373459
+     L7event |   .9381927   .1567936     5.98   0.000     .6308726    1.245513
+     L8event |   1.057049   .1569131     6.74   0.000     .7494947    1.364603
+     L9event |   1.015385   .1540753     6.59   0.000     .7133925    1.317377
+    L10event |   1.069045   .1648613     6.48   0.000     .7459124    1.392179
+    L11event |   1.039568   .1277028     8.14   0.000     .7892667    1.289869
+     F1event |   .0561211    .150284     0.37   0.709    -.2384399    .3506821
+     F3event |   -.062584   .1726127    -0.36   0.717      -.40091     .275742
+     F4event |  -.1642174   .1737473    -0.95   0.345    -.5047673    .1763324
+     F5event |   .1393735   .2268705     0.61   0.539    -.3052992    .5840463
+     F7event |   .1860009   .1379739     1.35   0.178     -.084432    .4564339
+------------------------------------------------------------------------------
+
+. 
+. matrix b = e(b_iw)
+
+. matrix V = e(V_iw)
+
+. local n = e(N)
+
+. local clusters = e(N_clust)
+
+. local p3 = colnumb(b,"L3event")
+
+. local m1 = colnumb(b,"F1event")
+
+. assert !missing(`p3',`m1') & `p3'>0 & `m1'>0
+
+. local difference = b[1,`p3']-b[1,`m1']
+
+. local difference_se = sqrt(V[`p3',`p3']+V[`m1',`m1']-2*V[`p3',`m1'])
+
+. assert !missing(`difference',`difference_se') & `difference_se'>0
+
+. quietly summarize rooms if e(sample) & K==-2
+
+. local premean = r(mean)
+
+. preserve
+
+.     keep if e(sample)
+(48,451 observations deleted)
+
+.     sort ID year
+
+.     export delimited ID year using "`outdir'/private_sample_keys.csv", replac
+> e
+(file
+    /scratch/td2248/projects/Fertility_Spring26_original_rooms_timing_2026091
+    > 2b/results/original_native/private_sample_keys.csv not found)
+file /scratch/td2248/projects/Fertility_Spring26_original_rooms_timing_20260912
+> b/results/original_native/private_sample_keys.csv saved
+
+.     gen long rows = 1
+
+.     collapse (sum) rows, by(f_c_y K lastcohort)
+
+.     export delimited using "`outdir'/fitted_support.csv", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_original_rooms_timing_2026091
+    > 2b/results/original_native/fitted_support.csv not found)
+file /scratch/td2248/projects/Fertility_Spring26_original_rooms_timing_20260912
+> b/results/original_native/fitted_support.csv saved
+
+. restore
+
+. local names : colnames b
+
+. tempname points covariance
+
+. postfile `points' str20 coefficient double estimate standard_error using "`ou
+> tdir'/coefficients.dta", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_original_rooms_timing_2026091
+    > 2b/results/original_native/coefficients.dta not found)
+
+. postfile `covariance' str20 coefficient_i str20 coefficient_j double covarian
+> ce using "`outdir'/covariance.dta", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_original_rooms_timing_2026091
+    > 2b/results/original_native/covariance.dta not found)
+
+. forvalues i = 1/`=colsof(b)' {
+  2.     local name : word `i' of `names'
+  3.     post `points' ("`name'") (b[1,`i']) (sqrt(V[`i',`i']))
+  4.     forvalues j = 1/`=colsof(b)' {
+  5.         local other : word `j' of `names'
+  6.         post `covariance' ("`name'") ("`other'") (V[`i',`j'])
+  7.     }
+  8. }
+
+. postclose `points'
+
+. postclose `covariance'
+
+. preserve
+
+.     use "`outdir'/coefficients.dta", clear
+
+.     format estimate standard_error %24.17g
+
+.     export delimited using "`outdir'/coefficients.csv", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_original_rooms_timing_2026091
+    > 2b/results/original_native/coefficients.csv not found)
+file /scratch/td2248/projects/Fertility_Spring26_original_rooms_timing_20260912
+> b/results/original_native/coefficients.csv saved
+
+.     use "`outdir'/covariance.dta", clear
+
+.     format covariance %24.17g
+
+.     export delimited using "`outdir'/covariance.csv", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_original_rooms_timing_2026091
+    > 2b/results/original_native/covariance.csv not found)
+file /scratch/td2248/projects/Fertility_Spring26_original_rooms_timing_20260912
+> b/results/original_native/covariance.csv saved
+
+. restore
+
+. timer off 1
+
+. quietly timer list 1
+
+. local seconds = r(t1)
+
+. clear
+
+. set obs 1
+Number of observations (_N) was 0, now 1.
+
+. gen str24 arm = "`mode'"
+
+. gen double observations = `n'
+
+. gen double clusters = `clusters'
+
+. gen double contrast_p3_m1 = `difference'
+
+. gen double contrast_se = `difference_se'
+
+. gen double premean = `premean'
+
+. gen double runtime_seconds = `seconds'
+
+. format contrast_p3_m1 contrast_se premean %24.17g
+
+. export delimited using "`outdir'/fit_receipt.csv", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_original_rooms_timing_2026091
+    > 2b/results/original_native/fit_receipt.csv not found)
+file /scratch/td2248/projects/Fertility_Spring26_original_rooms_timing_20260912
+> b/results/original_native/fit_receipt.csv saved
+
+. di "ORIGINAL_TIMING_ARM_PASS `mode'"
+ORIGINAL_TIMING_ARM_PASS original_native
+
+. 
+end of do-file
+
+. 
+end of do-file

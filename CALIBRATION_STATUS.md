@@ -1,5 +1,40 @@
 # Calibration Status
 
+**September 12, 14:24 UTC — access restored; author resumes fertility-path work.**
+Both matched-horizon tasks 17489644_0–1 remained running across the login lapse.
+Latest completed best iterations are six (28 dates) and three (56 dates), written
+at 14:18/14:17 UTC. Their housing/PAYGO maxima are respectively
+0.0120763/0.000644671 and 0.152174/0.0223452: neither is converged, and these
+are solver diagnostics, not fitted historical results. Observed iteration times
+are about 13.6 and 25.9 minutes. No new numerical task was submitted at this check.
+The author said to proceed. Monitoring now remains active every 30 minutes toward
+the complete four-window surprise fit and conditional policies; the prior
+16:00 UTC automatic stop/collection-only restriction is superseded. Follow-up
+runs require a justified numerical continuation/search design, unchanged gates,
+exact-loop smoke, explicit budget and saved progress. No blind restarts, new
+scientific closure, token reset or agent fan-out. The usage stop remains 25%
+weekly remaining. No complete historical fit or new policy result exists.
+
+**September 12 — May figure reproduced; timing-only cluster comparison completed.**
+All three Stata fits passed. The author's recognized original specification
+reproduces all 18 saved May plot points: maximum coefficient difference
+6.54e-8 rooms, maximum saved-SE difference 2e-8. This establishes reproduction
+of that figure; the original-regression failure suspicion is not supported.
+Original sample: N=354,697, 36,318 person clusters, +3 minus -1 = 0.740737457
+(SE 0.160924386). On the identical common sample (N=345,751; 36,026 clusters),
+the original assignment gives 0.758142403 (SE 0.165599725), while moving rooms
+forward one interview gives 0.238478148 (SE 0.165723953). Thus the sample
+restriction changes this contrast by +0.017405; timing alone changes it by
+-0.519664 rooms. Full covariance symmetry/PSD and contrast arithmetic pass;
+common-sample key hashes are identical. The later housing rise remains visible.
+These fits retain original room codes, reference restrictions and last-cohort
+controls. They do not validate a new 0.238 target or complete the comparison
+with the later weighted/household/confirmed-childless specification behind
+0.720246. No target or slide has been changed. Graphs, complete aggregate
+results, and verification are in the existing first_birth_correction_review
+output; cluster results are under `timing_local/torch_20260912/`. All three
+jobs completed in 24–33 minutes. The collection automation remains paused.
+
 **September 12 — authorized PSID cluster comparison is running.**
 After the matched macOS crash diagnosis, Tommaso explicitly requested moving
 this data comparison to Torch. The verified prepared sample and pinned ado/

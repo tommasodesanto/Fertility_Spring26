@@ -1,5 +1,9 @@
 # September 12 autonomous cluster campaign
 
+## 14:19 UTC: monitoring blocked by renewed authentication requirement
+
+The scheduled read-only check was refused by Torch authentication. No retry or new numerical submission was made. Jobs 17489644_0–1 were last observed running at the previous check; their current progress and outcomes are unverified. An SSH login failure does not establish that Slurm jobs stopped. Weekly usage was 8% used, so the token stop threshold was not reached. Renewed access is needed to inspect and collect the jobs.
+
 ## 13:15 UTC: matched first window, consolidated PDF and final horizon checks
 
 Warm follow-up arm 0 passed its short native root: model fertility **1.974855548** against **1.974875**, gap **-0.000019452**. Housing/PAYGO maxima are 3.22250e-5/3.97512e-7. Complete rows, root receipt, provenance and 17 graphs are collected in `matched_short/`. The -0.0175 arm failed the unchanged mass gate (1.318e-8 versus 1e-8). No accepted four-shock sequence or new policy result exists.
