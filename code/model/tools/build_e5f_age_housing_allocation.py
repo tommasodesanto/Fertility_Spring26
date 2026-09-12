@@ -40,16 +40,50 @@ def compare_data(a):
     (a.output/'comparison_summary.json').write_text(json.dumps(dict(data_mean_rooms=float(dr.sum()/dw.sum()),model_mean_rooms=float(mr.sum()/mw.sum()),groups=result),indent=2)+'\n')
     print(json.dumps(result))
 
+
+def compare_large_owners(a):
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    d=json.loads((a.output/'allocation.json').read_text())
+    data=list(csv.DictReader((a.output/'large_owner_data.csv').open()))
+    groups=[(22,40),(40,60),(60,86)]
+    masses=np.zeros((3,2))
+    for r in d['large_owner_age_cells']:
+        for i,(lo,hi) in enumerate(groups):
+            fraction=max(0.,min(r['age']+r['age_width'],hi)-max(r['age'],lo))/r['age_width']
+            masses[i,0]+=fraction*r['without_children'];masses[i,1]+=fraction*r['with_children']
+    model=100*masses.ravel()/masses.sum()
+    assert len(data)==6
+    vals=np.array([100*float(r['share']) for r in data])
+    assert abs(vals.sum()-100)<1e-8 and abs(model.sum()-100)<1e-8
+    labels=[f'{g}\n{t}' for g in ['Young (22-39)','Middle (40-59)','Old (60-85)'] for t in ['Without children','With children']]
+    fig,ax=plt.subplots(figsize=(11,5.5));x=np.arange(6);width=.38
+    for dx,v,color,label in [(-width/2,vals,'#1f5fa6','ACS 2005-06'),(width/2,model,'#C73E3A','Model initial economy')]:
+        bars=ax.bar(x+dx,v,width,color=color,label=label)
+        for b,n in zip(bars,v):ax.text(b.get_x()+b.get_width()/2,n+.45,f'{n:.1f}%',ha='center',fontsize=10,color=color)
+    ax.set(xticks=x,xticklabels=labels,ylabel='Share of large owner-occupied homes (%)',ylim=(0,max(vals.max(),model.max())*1.27))
+    ax.tick_params(axis='x',labelsize=9);ax.spines[['top','right']].set_visible(False);ax.grid(axis='y',alpha=.2);ax.legend(frameon=False)
+    fig.suptitle('Intergenerational Allocation: Model vs Data',fontsize=16)
+    fig.text(.5,.055,'Owner-occupied homes with at least 6 rooms; household heads aged 22-85. ACS: 42 metros, household weights.',ha='center',fontsize=8.5)
+    fig.text(.5,.025,'Children: resident own minors in ACS; dependent children in the model.',ha='center',fontsize=8.5)
+    fig.tight_layout(rect=(0,.09,1,.95));fig.savefig(a.output/'intergenerational_allocation_data_model.png',dpi=180);fig.savefig(a.output/'intergenerational_allocation_data_model.pdf');plt.close(fig)
+    rows=[dict(age_group=['22-39','40-59','60-85'][k//2],children=bool(k%2),data_share_percent=float(vals[k]),model_share_percent=float(model[k]),gap_pp=float(model[k]-vals[k])) for k in range(6)]
+    (a.output/'large_owner_comparison.json').write_text(json.dumps(dict(rows=rows,model_total_large_owner_mass=float(masses.sum()),age_observer='Uniform age within each four-year model cell; split at40and60',children_observer='ACS resident own minor vs model dependent count>0',model_checkpoint_sha256=d['checkpoint_sha256']),indent=2)+'\n')
+    print(json.dumps(rows))
+
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--compare-data',action='store_true');ap.add_argument('--checkpoint',type=Path);ap.add_argument('--source-root',type=Path)
+    ap=argparse.ArgumentParser();ap.add_argument('--large-owners',action='store_true');ap.add_argument('--compare-data',action='store_true');ap.add_argument('--checkpoint',type=Path);ap.add_argument('--source-root',type=Path)
     ap.add_argument('--output',type=Path,required=True);a=ap.parse_args();a.output.mkdir(parents=True,exist_ok=True)
+    if a.large_owners:compare_large_owners(a);return
     if a.compare_data:compare_data(a);return
     if a.checkpoint:
         sys.path[:0]=[str(a.source_root/'code/model/tools'),str(a.source_root/'code/model')]
         with gzip.open(a.checkpoint,'rb') as stream:q=pickle.load(stream)
-        P=q['parameters'];e=q['evaluation'];g=e.g_current;rows=[]
+        P=q['parameters'];e=q['evaluation'];g=e.g_current;rows=[];large_cells=[]
+        assert P.child_state_mode=='independent_count'
         for j in range(P.J):
-            mass=0.;rooms=0.;owners=0.;capped_rooms=0.
+            mass=0.;rooms=0.;owners=0.;capped_rooms=0.;large_no=0.;large_yes=0.
             for z in range(P.Nz):
                 for tenure in range(1+P.n_house):
                     for n in range(P.n_parity):
@@ -57,11 +91,15 @@ def main():
                             w=g[:,tenure,0,j,z,n,d];m=float(w.sum());mass+=m
                             if tenure:
                                 owners+=m;rooms+=m*float(P.H_own[tenure-1]);capped_rooms+=m*min(float(P.H_own[tenure-1]),9.)
+                                if P.H_own[tenure-1]>=6:
+                                    if d>0:large_yes+=m
+                                    else:large_no+=m
                             else:
                                 h=e.policy.hR_pol[:,tenure,0,j,z,n,d]
                                 rooms+=float(np.sum(w*h));capped_rooms+=float(np.sum(w*np.minimum(h,9.)))
+            large_cells.append(dict(age=float(P.age_start+j*P.da),age_width=float(P.da),without_children=large_no,with_children=large_yes))
             rows.append(dict(age=float(P.age_start+j*P.da),households=mass,rooms=rooms,owners=owners,capped_rooms=capped_rooms,rooms_per_head=rooms/mass,ownership=owners/mass))
-        payload=dict(rows=rows,checkpoint=str(a.checkpoint),checkpoint_sha256=hashlib.sha256(a.checkpoint.read_bytes()).hexdigest(),
+        payload=dict(rows=rows,large_owner_age_cells=large_cells,checkpoint=str(a.checkpoint),checkpoint_sha256=hashlib.sha256(a.checkpoint.read_bytes()).hexdigest(),
             model='Selected provisional overnight initial stationary economy; not a transition or policy effect',
             units='Occupied physical rooms, uncapped; actual post-choice household distribution',
             income_states=int(P.Nz),permanent_levels_enabled=bool(P.permanent_income_levels_enabled),

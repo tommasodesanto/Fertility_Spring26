@@ -1,5 +1,18 @@
 # Calibration Status
 
+**September12 — author selects May Intergenerational Allocation graph format.**
+Restored six paired bars: shares of6+room owner homes by age22-39/40-59/60-85
+and children at home. Figure intergenerational_allocation_data_model.pdf/png
+in overnight_20260912/age_housing_allocation. Current initial model uses same
+2005-06ACS42metroHHWT sample as early targets; May used2022-23PERWT birthyear
+cohorts, so no claim of improved fit relative toMay. Modelvsdata shares(%):
+young/nochildren2.542/6.793,young/children13.941/15.091,middle/no14.377/28.126,
+middle/yes21.043/23.486,old/no38.843/26.028,old/yes9.255/.477.
+Modeldependentchildren are notexactACSresidentownminors; agecells uniformly
+split at40/60, native demographics retained. Model overallocateslargehomesold.
+Lead corrected ownerfilter and YNGCH99denominator errors in delegated draft,
+reran, checkedshares, rendered/inspectedPDF. No modelsolve orcalibrationchange.
+
 **September12 — age-housing DATA versus MODEL comparison completed.**
 Author corrected the model-only request and explicitly asks Luna for menial tasks.
 Two Luna workers located/checked sources and extracted the ACS data; lead reviewed
