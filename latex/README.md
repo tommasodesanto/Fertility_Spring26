@@ -76,6 +76,10 @@ Active documents:
   be labeled a fitted history or a temporary, baseline-subtracted impulse
   response. Their initial calibration also differs from the latest provisional
   initial-fit tables. No such plot has yet been inserted into the deck.
+  The first no-shock terminal probe failed at its initial demographic-renewal
+  guess before completing a root evaluation. This is not a nonexistence result;
+  a bounded diagnosis under the unchanged closure is requested. No matched
+  baseline/pulse IRF has been computed.
 
   **Two-slide algorithm walkthrough.** The first two numbered frames in
   Quantification explain the actual nested loops in literal steps. For each
