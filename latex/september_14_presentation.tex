@@ -542,11 +542,10 @@ Compare model moments with the same age windows, conditioning events, and time u
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Fertility Targets}
+\begin{frame}{Calibration: Targets and Model}
 \footnotesize
-\textit{Provisional initial calibration}\par
-\medskip
-\renewcommand{\arraystretch}{1.15}
+\linespread{1}\selectfont
+\renewcommand{\arraystretch}{1.12}
 \begin{tabularx}{\textwidth}{@{}Xrr@{}}
 \toprule
 Moment & Target & Model \\
@@ -556,39 +555,22 @@ Childless, women 40--44 (\%) & 19.8 & 20.7 \\
 Exactly one child among mothers, 40--44 (\%) & 21.4 & 20.7 \\
 Mean age at first birth (years) & 25.98 & 26.10 \\
 First births at age 30+ (\%) & 24.9 & 23.2 \\
-\bottomrule
-\end{tabularx}\par
-\medskip
-\source{CPS fertility supplements, 2004/2006; NCHS natality, 2003--2006. Completed fertility 2.1 is an author-selected model normalization.}
-\end{frame}
-\begin{frame}{Housing and Wealth Targets}
-\footnotesize
-\textit{Provisional initial calibration}\par
-\medskip
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}Xrr@{}}
-\toprule
-Moment & Target & Model \\
-\midrule
+\addlinespace[4pt]
 Mean occupied rooms (capped at 9) & 5.56 & 6.29 \\
 Ownership, heads 30--55 (\%) & 64.8 & 52.4 \\
-First-birth room response, $-1$ to $+3$ ($\dagger$) & 0.720 & 1.011 \\
+First-birth room response, $-1$ to $+3$ & 0.720 & 1.011 \\
 Rooms: 3+ versus 1--2 resident children & 0.347 & 0.200 \\
 Recent-parent ownership gap (pp) & 16.3 & 15.0 \\
+\addlinespace[4pt]
 Wealth / annual gross earnings & 6.15 & 4.85 \\
 Annual bequests / wealth (\%) & 0.88 & 0.86 \\
 Wealth/income p90 / median, ages 76--84 & 3.52 & 4.44 \\
 \bottomrule
-\end{tabularx}\par
-\medskip
-$\dagger$ Retained computational target; empirical measurement under review.
-\source{ACS 2005/2006; PSID 2003/2005 wealth and pooled first-birth event study; external bequest-flow restriction.}
+\end{tabularx}
 \end{frame}
 \begin{frame}{Calibrated Parameters}
 \footnotesize
-\textit{Provisional initial calibration}\par
 
-\medskip
 \renewcommand{\arraystretch}{1.12}
 \begin{tabularx}{\textwidth}{@{}lXr@{}}
 \toprule
@@ -634,8 +616,7 @@ $e(m)=((2+0.7m)/2)^{0.7}$; pensions are in model-period income units.
 \end{frame}
 
 \begin{frame}{Fertility Fit}
-\small\textit{Provisional initial calibration}\par
-\medskip
+\small
 \centering
 \begin{tikzpicture}
 \begin{axis}[width=0.55\textwidth,height=0.53\textheight,
@@ -658,15 +639,14 @@ clip=false]
 The dashed line denotes the target. First births occur slightly later in the model, but too few occur at age 30 or above.
 \end{frame}
 \begin{frame}{Housing and Wealth Fit}
-\small\textit{Provisional initial calibration}\par
-\medskip
+\small
 \centering
 \begin{tikzpicture}
 \begin{axis}[width=0.55\textwidth,height=0.53\textheight,
 scale only axis,xmin=0.5,xmax=1.5,
 ymin=-0.6,ymax=7.6,
 ytick={0,1,2,3,4,5,6,7},
-yticklabels={{Old-age wealth/income dispersion},{Annual bequests / wealth (\%)},{Wealth / annual gross earnings},{Recent-parent ownership gap (pp)},{Family-size room gap},{First-birth rooms ($\dagger$)},{Ownership, heads 30--55 (\%)},{Mean rooms}},
+yticklabels={{Old-age wealth/income dispersion},{Annual bequests / wealth (\%)},{Wealth / annual gross earnings},{Recent-parent ownership gap (pp)},{Family-size room gap},{First-birth rooms},{Ownership, heads 30--55 (\%)},{Mean rooms}},
 xtick={0.5,0.75,1,1.25,1.5},
 xlabel={Model / target},tick label style={font=\scriptsize},
 axis x line*=bottom,axis y line*=left,y axis line style={draw=none},ytick style={draw=none},xmajorgrids,grid style={gray!15},
@@ -683,12 +663,10 @@ clip=false]
 \end{axis}
 \end{tikzpicture}
 \par\medskip\raggedright\small
-The model has too many rooms and too little ownership and wealth. $\dagger$ The first-birth room target awaits empirical reconciliation.
+The model has too many rooms and too little ownership and wealth.
 \end{frame}
 \begin{frame}{The Initial Equilibrium over the Lifecycle}
-\small\textit{Provisional initial calibration}\par
-
-\medskip
+\small
 \centering
 \includegraphics[width=0.49\textwidth]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/verified_final/selected_standard_diagnostics/fertility_by_age.png}\hfill
 \includegraphics[width=0.49\textwidth]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/verified_final/selected_standard_diagnostics/ownership_by_age.png}

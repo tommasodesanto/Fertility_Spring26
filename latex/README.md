@@ -127,8 +127,12 @@ Active documents:
   [readout](../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/verified_final/README.md)
   contains both complete human-readable tables. Fingerprint:
   `c0e266d3a0d430343c469d780d1aedb45fa87f8763c9c938889e0c37daa31de2`.
-  All 13 targets appear in the main tables; all 12 scored targets appear in the
-  fit plots as model/target ratios. The unscored 2.1 normalization is separate.
+  All 13 moments appear in one `Moment | Target | Model` table on the
+  `Calibration: Targets and Model` frame. The author requested removing the
+  provisional labels and the target/source footnotes from the calibration
+  display; values and the underlying evidence remain unchanged. All 12 scored
+  targets appear in the fit plots as model/target ratios. The unscored 2.1
+  normalization remains explicitly identified in the combined table.
   The main parameter tables contain all 17 free/fixed/normalized/derived rows;
   the appendix gives every free coordinate's bounds and position. Near-bound
   means within 1% of the allowed range, not proof of a binding restriction.
@@ -154,7 +158,8 @@ Active documents:
   computational -1/+3 contract, with timing and reference support under review.
   It is distinct from the restored May coefficients and the requested -2
   comparison. No diagnostic .403018 or .238478 estimate was promoted.
-  The housing-target row and fit plot flag this limitation. No regression,
+  These measurement qualifications remain in the documentation and issues ledger.
+  No regression,
   calibration, model solve, or new mechanism figure was generated in this task.
 
   **Historical transition and evidence boundary.** Quantification explains
@@ -178,8 +183,8 @@ Active documents:
   Build twice from `latex/`, writing auxiliary files outside the active folder:
   `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=../tmp/september_slides_review september_14_presentation.tex`.
   Copy the verified PDF to the reader path and the adjacent build copy.
-  The deck has 37 numbered main frames and nine appendix frames
-  (53 PDF pages including overlays and dividers). Two final compilation passes
+  The deck has 36 numbered main frames and nine appendix frames
+  (52 PDF pages including overlays and dividers). Two final compilation passes
   have no warnings or overfull boxes; all frames were visually inspected and
   all figure paths and all three appendix links resolve.
 
