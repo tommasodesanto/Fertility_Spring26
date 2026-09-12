@@ -2,6 +2,37 @@
 
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
+**September 11, 22:06 EDT — capped search completed; no cluster jobs remain running.**
+Job 17425504 finished in 64 minutes: 84 new parameter trials, two fresh seed
+replays, and two exact winner repetitions. Selected loss is 159.2389860754,
+0.735% above the unrestricted reference 158.0763907468 under identical targets
+and weights. Annual beta was estimated over [0.94,0.99] and selected 0.99;
+h_P=2.3 is also at its upper bound. This is a provisional initial calibration,
+not a certified global optimum or fitted historical model. One mass-gate trial
+was excluded. All selected numerical cells reproduce exactly; all 17 standard
+plots are collected. Full 13-row fit, 17-row parameter/restriction table and
+independent verification:
+`output/model/e5f_matched_pf_20260909a/initial_calibration_contract/fixed_beta_profiles/collected_17425504/READOUT.md`.
+Mean rooms are 6.28872 vs 5.56110, ownership at 30–55 is 0.522954 vs 0.648334,
+and first-birth rooms response is 1.01376 vs 0.720246. The cap has little cost
+relative to the prior fit, but substantial housing/ownership misses remain.
+
+All three 28-date historical trials finished without convergence. Maximum
+housing/fiscal relative gaps for declines -0.025/-0.05/-0.10 are respectively
+0.00809224/0.000232081, 0.01105612/0.000285091, 0.01480176/0.001074436;
+required gates are 2e-4/1e-6. All fail terminal-horizon checks too. Their three
+short roots remain accepted, but these histories use the earlier unrestricted
+calibration, not the new capped point. Preference-path estimation and the
+female-exposure observation mapping remain unfinished; new policy results are
+not verified. Fiscal equations are repaired and verified in initial/terminal/
+short solutions; the full dated price/pension root still does not converge.
+The fixed-beta comparison 17424705 stopped after a repeated mass-gate rejection,
+without final repeats; its best 159.379533 is not selected. No new run was
+launched during this decision review. The lead recommends provisionally holding
+the new initial candidate and concentrating on historical measurement, root/
+horizon convergence, then fitted-shock policies; this recommendation is not an
+author decision to promote the candidate or accept outstanding approximations.
+
 **September 11, 20:32 EDT — author correction: annual beta is CAPPED at 0.99,
 not fixed. Capped search 17425504 RUNNING on 18 cores.**
 The maintained search estimates all nine structural coordinates jointly with

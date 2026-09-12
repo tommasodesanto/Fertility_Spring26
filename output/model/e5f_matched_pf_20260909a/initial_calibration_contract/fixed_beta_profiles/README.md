@@ -1,5 +1,12 @@
 # Beta-restricted calibration searches
 
+**Completed evening results:** the capped search finished, loss 159.2389860754,
+annual beta 0.99, with two exact winner repetitions. Full target/parameter tables,
+verification, and all 17 original plots are in `collected_17425504/READOUT.md`.
+The fixed-beta comparison stopped after a repeated mass-gate rejection and has
+no final exact repetitions. Both jobs have ended. Earlier launch states below
+are historical receipts, superseded by this completed-result assessment.
+
 **Maintained author instruction: beta is estimated with a 0.99 ceiling, not fixed.**
 The author clarified this after the fixed-beta recovery was launched. The original
 lower bound remains 0.94. All nine structural coordinates remain free; the

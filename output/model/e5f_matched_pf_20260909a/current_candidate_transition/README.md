@@ -1,5 +1,16 @@
 # Current-candidate transition diagnostic
 
+**22:06 EDT update:** all three 28-date trials have now ended without passing
+finite-path or horizon gates. The -0.025/-0.10 final receipts are collected in
+`return_home_20260911/paths/delta_m0025_long` and `delta_m010_long`; the middle
+path was already collected. All three short trial paths remain accepted, under
+the earlier unrestricted calibration. The newly completed capped calibration
+has not been propagated through a new historical solve. Complete evening fit,
+parameters and long-path comparison are in
+`../initial_calibration_contract/fixed_beta_profiles/collected_17425504/READOUT.md`.
+No cluster jobs remain running; preference fitting and the empirical period-TFR
+observation mapping remain incomplete. Earlier running states below are historical.
+
 The verified return-home assessment is `return_home_20260911/READOUT.md`:
 all three short paths converge and their household-rate diagnostics reproduce;
 the central long path exhausted its mapping budget without convergence. Both
