@@ -1,0 +1,1373 @@
+{
+  "converged": true,
+  "status": "converged",
+  "best": {
+    "prices": [
+      0.7189536776068375,
+      0.7628055131824941,
+      0.7600373801093124,
+      0.7487586856452507,
+      0.7249866107865003,
+      0.6832158656272865
+    ],
+    "x": [
+      -0.3299583494744604,
+      -0.2707521777223508,
+      -0.27438766255691255,
+      -0.2893385294257687,
+      -0.32160209217868496,
+      -0.38094441425504066,
+      0.7160632809406122,
+      0.8458661764391326,
+      0.7352841625555773,
+      0.6690967519000329,
+      0.66611297661586,
+      0.6739261433143081
+    ],
+    "residual": [
+      9.174132310845633e-06,
+      -3.0108454125493504e-05,
+      7.541560150492156e-05,
+      -3.6520914585935444e-05,
+      -1.5690196104482703e-05,
+      -8.899523621667164e-07,
+      1.752867429355179e-11,
+      -1.7752181679790334e-10,
+      1.0533514843232376e-10,
+      1.6432440877231612e-10,
+      4.941587189906097e-11,
+      2.3851856245256355e-10
+    ],
+    "score": 0.3770780075246078,
+    "mapping_valid": true,
+    "payload": {
+      "trial": 2,
+      "terminal_distance": {
+        "status": "not_converged",
+        "all_checks_pass": false,
+        "metrics": {
+          "resident_persons_relative_gap": 0.3885508400529205,
+          "household_heads_relative_gap": 0.4112900093161567,
+          "normalized_household_distribution_l1": 0.8021351719939754,
+          "normalized_person_age_sex_l1": 0.13525853697479506,
+          "normalized_head_age_sex_l1": 0.12816521419404886,
+          "asset_price_relative_gap": 0.13042423602675737,
+          "renter_price_relative_gap": 0.9174804158510047,
+          "equal_transfer_relative_gap": 0.0,
+          "psi_absolute_gap": 0.0,
+          "pension_relative_gap": 0.25699413830910095
+        },
+        "checks": {
+          "resident_persons_relative_gap": false,
+          "household_heads_relative_gap": false,
+          "normalized_household_distribution_l1": false,
+          "normalized_person_age_sex_l1": false,
+          "normalized_head_age_sex_l1": false,
+          "asset_price_relative_gap": false,
+          "renter_price_relative_gap": false,
+          "equal_transfer_relative_gap": true,
+          "psi_absolute_gap": true,
+          "pension_relative_gap": false
+        },
+        "tolerances": {
+          "resident_persons_relative_gap": 0.01,
+          "household_heads_relative_gap": 0.01,
+          "normalized_household_distribution_l1": 0.02,
+          "normalized_person_age_sex_l1": 0.02,
+          "normalized_head_age_sex_l1": 0.02,
+          "asset_price_relative_gap": 0.01,
+          "renter_price_relative_gap": 0.01,
+          "equal_transfer_relative_gap": 0.01,
+          "psi_absolute_gap": 0.001,
+          "pension_relative_gap": 0.01
+        },
+        "candidate_terminal_year": 2043,
+        "reference_terminal_year_label": 2100,
+        "candidate_resident_persons_model_units": 3.036819872892919,
+        "reference_resident_persons_model_units": 2.187042624076465,
+        "candidate_household_heads_model_units": 1.242151666739171,
+        "reference_household_heads_model_units": 0.8801533763716346,
+        "last_pension_relative_gap": 0.25699413830910095
+      },
+      "dated_household_audits": [
+        {
+          "year": 2019,
+          "diagnostics": {
+            "budget": {
+              "budget_excess_mass": 0.0,
+              "maximum_occupied_excess": 7.105427357601002e-15,
+              "actual_rent": 0.07528703474162919,
+              "budget_tolerance": 1e-09
+            },
+            "probabilities": {
+              "tenure_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "loc_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert2_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              }
+            },
+            "occupied_negative_steps": 0,
+            "maximum_occupied_value_drop": 0.0,
+            "feasibility_projection_mass": 1.1804755549818418e-23
+          },
+          "gates": {
+            "household_budget": true,
+            "finite_policy_arrays": true,
+            "probability_bounds": true,
+            "occupied_value_monotonicity": true,
+            "finite_nonnegative_household_mass": true,
+            "feasibility_projection": true
+          }
+        },
+        {
+          "year": 2023,
+          "diagnostics": {
+            "budget": {
+              "budget_excess_mass": 0.0,
+              "maximum_occupied_excess": 7.105427357601002e-15,
+              "actual_rent": 0.12917375549779886,
+              "budget_tolerance": 1e-09
+            },
+            "probabilities": {
+              "tenure_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "loc_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert2_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              }
+            },
+            "occupied_negative_steps": 0,
+            "maximum_occupied_value_drop": 0.0,
+            "feasibility_projection_mass": 0.0
+          },
+          "gates": {
+            "household_budget": true,
+            "finite_policy_arrays": true,
+            "probability_bounds": true,
+            "occupied_value_monotonicity": true,
+            "finite_nonnegative_household_mass": true,
+            "feasibility_projection": true
+          }
+        },
+        {
+          "year": 2027,
+          "diagnostics": {
+            "budget": {
+              "budget_excess_mass": 0.0,
+              "maximum_occupied_excess": 7.105427357601002e-15,
+              "actual_rent": 0.1372256054897407,
+              "budget_tolerance": 1e-09
+            },
+            "probabilities": {
+              "tenure_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "loc_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert2_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              }
+            },
+            "occupied_negative_steps": 0,
+            "maximum_occupied_value_drop": 0.0,
+            "feasibility_projection_mass": 3.925917844287868e-21
+          },
+          "gates": {
+            "household_budget": true,
+            "finite_policy_arrays": true,
+            "probability_bounds": true,
+            "occupied_value_monotonicity": true,
+            "finite_nonnegative_household_mass": true,
+            "feasibility_projection": true
+          }
+        },
+        {
+          "year": 2031,
+          "diagnostics": {
+            "budget": {
+              "budget_excess_mass": 0.0,
+              "maximum_occupied_excess": 7.105427357601002e-15,
+              "actual_rent": 0.14784997685233853,
+              "budget_tolerance": 1e-09
+            },
+            "probabilities": {
+              "tenure_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "loc_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert2_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              }
+            },
+            "occupied_negative_steps": 0,
+            "maximum_occupied_value_drop": 0.0,
+            "feasibility_projection_mass": 2.8524248502194925e-15
+          },
+          "gates": {
+            "household_budget": true,
+            "finite_policy_arrays": true,
+            "probability_bounds": true,
+            "occupied_value_monotonicity": true,
+            "finite_nonnegative_household_mass": true,
+            "feasibility_projection": true
+          }
+        },
+        {
+          "year": 2035,
+          "diagnostics": {
+            "budget": {
+              "budget_excess_mass": 0.0,
+              "maximum_occupied_excess": 7.105427357601002e-15,
+              "actual_rent": 0.16190934169824617,
+              "budget_tolerance": 1e-09
+            },
+            "probabilities": {
+              "tenure_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "loc_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert2_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              }
+            },
+            "occupied_negative_steps": 0,
+            "maximum_occupied_value_drop": 0.0,
+            "feasibility_projection_mass": 1.84157964963005e-12
+          },
+          "gates": {
+            "household_budget": true,
+            "finite_policy_arrays": true,
+            "probability_bounds": true,
+            "occupied_value_monotonicity": true,
+            "finite_nonnegative_household_mass": true,
+            "feasibility_projection": true
+          }
+        },
+        {
+          "year": 2039,
+          "diagnostics": {
+            "budget": {
+              "budget_excess_mass": 0.0,
+              "maximum_occupied_excess": 7.105427357601002e-15,
+              "actual_rent": 0.19204366611434304,
+              "budget_tolerance": 1e-09
+            },
+            "probabilities": {
+              "tenure_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "loc_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert2_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              }
+            },
+            "occupied_negative_steps": 0,
+            "maximum_occupied_value_drop": 0.0,
+            "feasibility_projection_mass": 0.0
+          },
+          "gates": {
+            "household_budget": true,
+            "finite_policy_arrays": true,
+            "probability_bounds": true,
+            "occupied_value_monotonicity": true,
+            "finite_nonnegative_household_mass": true,
+            "feasibility_projection": true
+          }
+        }
+      ],
+      "fiscal_accounts": [
+        {
+          "payroll_tax_base_period": 2.9632058914130046,
+          "retiree_benefit_exposure": 0.25919852620985734,
+          "worker_household_mass": 0.7408014737897599,
+          "retiree_household_mass": 0.25919852620985734,
+          "payroll_tax_rate": 0.179,
+          "pension_period_units": 2.0463613829508676,
+          "payroll_tax_revenue": 0.5304138545629278,
+          "pension_outlays": 0.5304138545536303,
+          "pension_budget_residual": 9.297451697420911e-12,
+          "scaled_pension_budget_residual": 1.752867429355179e-11,
+          "implied_balanced_pension_period": 2.0463613829867375,
+          "implied_balanced_payroll_tax": 0.17899999999686236
+        },
+        {
+          "payroll_tax_base_period": 3.5465191815032884,
+          "retiree_benefit_exposure": 0.2724584811648923,
+          "worker_household_mass": 0.8567891900825743,
+          "retiree_household_mass": 0.2724584811648923,
+          "payroll_tax_rate": 0.179,
+          "pension_period_units": 2.329995127652444,
+          "payroll_tax_revenue": 0.6348269334890886,
+          "pension_outlays": 0.6348269336017842,
+          "pension_budget_residual": -1.1269563060523069e-10,
+          "scaled_pension_budget_residual": -1.7752181679790334e-10,
+          "implied_balanced_pension_period": 2.329995127238819,
+          "implied_balanced_payroll_tax": 0.1790000000317764
+        },
+        {
+          "payroll_tax_base_period": 3.569002078561327,
+          "retiree_benefit_exposure": 0.3062456844233819,
+          "worker_household_mass": 0.8613437729760648,
+          "retiree_household_mass": 0.3062456844233819,
+          "payroll_tax_rate": 0.179,
+          "pension_period_units": 2.086074692605228,
+          "payroll_tax_revenue": 0.6388513720624776,
+          "pension_outlays": 0.638851371995184,
+          "pension_budget_residual": 6.729350410239476e-11,
+          "scaled_pension_budget_residual": 1.0533514843232376e-10,
+          "implied_balanced_pension_period": 2.086074692824965,
+          "implied_balanced_payroll_tax": 0.17899999998114502
+        },
+        {
+          "payroll_tax_base_period": 3.5986141121938946,
+          "retiree_benefit_exposure": 0.3299159273129545,
+          "worker_household_mass": 0.8681494144549762,
+          "retiree_household_mass": 0.3299159273129545,
+          "payroll_tax_rate": 0.179,
+          "pension_period_units": 1.9524729564384506,
+          "payroll_tax_revenue": 0.6441519260827071,
+          "pension_outlays": 0.6441519259768572,
+          "pension_budget_residual": 1.0584988441308951e-10,
+          "scaled_pension_budget_residual": 1.6432440877231612e-10,
+          "implied_balanced_pension_period": 1.9524729567592896,
+          "implied_balanced_payroll_tax": 0.1789999999705859
+        },
+        {
+          "payroll_tax_base_period": 3.6631893029783518,
+          "retiree_benefit_exposure": 0.3368396467357933,
+          "worker_household_mass": 0.8816144348348578,
+          "retiree_household_mass": 0.3368396467357933,
+          "payroll_tax_rate": 0.179,
+          "pension_period_units": 1.9466558986004456,
+          "payroll_tax_revenue": 0.6557108852331249,
+          "pension_outlays": 0.6557108852007224,
+          "pension_budget_residual": 3.240252510749997e-11,
+          "scaled_pension_budget_residual": 4.941587189906097e-11,
+          "implied_balanced_pension_period": 1.9466558986966414,
+          "implied_balanced_payroll_tax": 0.17899999999115454
+        },
+        {
+          "payroll_tax_base_period": 3.719692940450626,
+          "retiree_benefit_exposure": 0.3393733348906193,
+          "worker_household_mass": 0.8939978514703807,
+          "retiree_household_mass": 0.3393733348906193,
+          "payroll_tax_rate": 0.179,
+          "pension_period_units": 1.961925018052603,
+          "payroll_tax_revenue": 0.665825036340662,
+          "pension_outlays": 0.6658250361818504,
+          "pension_budget_residual": 1.588116305129006e-10,
+          "scaled_pension_budget_residual": 2.3851856245256355e-10,
+          "implied_balanced_pension_period": 1.9619250185205586,
+          "implied_balanced_payroll_tax": 0.17899999995730517
+        }
+      ]
+    },
+    "fiscal_values": [
+      2.0463613829508676,
+      2.329995127652444,
+      2.086074692605228,
+      1.9524729564384506,
+      1.9466558986004456,
+      1.961925018052603
+    ],
+    "fiscal_unknown": "period_pension",
+    "market_residual": [
+      9.174132310845633e-06,
+      -3.0108454125493504e-05,
+      7.541560150492156e-05,
+      -3.6520914585935444e-05,
+      -1.5690196104482703e-05,
+      -8.899523621667164e-07
+    ],
+    "fiscal_residual": [
+      1.752867429355179e-11,
+      -1.7752181679790334e-10,
+      1.0533514843232376e-10,
+      1.6432440877231612e-10,
+      4.941587189906097e-11,
+      2.3851856245256355e-10
+    ],
+    "market_gate": true,
+    "fiscal_gate": true,
+    "closure": "fixed_tax"
+  },
+  "final": {
+    "prices": [
+      0.7189536776068375,
+      0.7628055131824941,
+      0.7600373801093124,
+      0.7487586856452507,
+      0.7249866107865003,
+      0.6832158656272865
+    ],
+    "x": [
+      -0.3299583494744604,
+      -0.2707521777223508,
+      -0.27438766255691255,
+      -0.2893385294257687,
+      -0.32160209217868496,
+      -0.38094441425504066,
+      0.7160632809406122,
+      0.8458661764391326,
+      0.7352841625555773,
+      0.6690967519000329,
+      0.66611297661586,
+      0.6739261433143081
+    ],
+    "residual": [
+      9.174132310845633e-06,
+      -3.0108454125493504e-05,
+      7.541560150492156e-05,
+      -3.6520914585935444e-05,
+      -1.5690196104482703e-05,
+      -8.899523621667164e-07,
+      1.752867429355179e-11,
+      -1.7752181679790334e-10,
+      1.0533514843232376e-10,
+      1.6432440877231612e-10,
+      4.941587189906097e-11,
+      2.3851856245256355e-10
+    ],
+    "score": 0.3770780075246078,
+    "mapping_valid": true,
+    "payload": {
+      "trial": 3,
+      "terminal_distance": {
+        "status": "not_converged",
+        "all_checks_pass": false,
+        "metrics": {
+          "resident_persons_relative_gap": 0.3885508400529205,
+          "household_heads_relative_gap": 0.4112900093161567,
+          "normalized_household_distribution_l1": 0.8021351719939754,
+          "normalized_person_age_sex_l1": 0.13525853697479506,
+          "normalized_head_age_sex_l1": 0.12816521419404886,
+          "asset_price_relative_gap": 0.13042423602675737,
+          "renter_price_relative_gap": 0.9174804158510047,
+          "equal_transfer_relative_gap": 0.0,
+          "psi_absolute_gap": 0.0,
+          "pension_relative_gap": 0.25699413830910095
+        },
+        "checks": {
+          "resident_persons_relative_gap": false,
+          "household_heads_relative_gap": false,
+          "normalized_household_distribution_l1": false,
+          "normalized_person_age_sex_l1": false,
+          "normalized_head_age_sex_l1": false,
+          "asset_price_relative_gap": false,
+          "renter_price_relative_gap": false,
+          "equal_transfer_relative_gap": true,
+          "psi_absolute_gap": true,
+          "pension_relative_gap": false
+        },
+        "tolerances": {
+          "resident_persons_relative_gap": 0.01,
+          "household_heads_relative_gap": 0.01,
+          "normalized_household_distribution_l1": 0.02,
+          "normalized_person_age_sex_l1": 0.02,
+          "normalized_head_age_sex_l1": 0.02,
+          "asset_price_relative_gap": 0.01,
+          "renter_price_relative_gap": 0.01,
+          "equal_transfer_relative_gap": 0.01,
+          "psi_absolute_gap": 0.001,
+          "pension_relative_gap": 0.01
+        },
+        "candidate_terminal_year": 2043,
+        "reference_terminal_year_label": 2100,
+        "candidate_resident_persons_model_units": 3.036819872892919,
+        "reference_resident_persons_model_units": 2.187042624076465,
+        "candidate_household_heads_model_units": 1.242151666739171,
+        "reference_household_heads_model_units": 0.8801533763716346,
+        "last_pension_relative_gap": 0.25699413830910095
+      },
+      "dated_household_audits": [
+        {
+          "year": 2019,
+          "diagnostics": {
+            "budget": {
+              "budget_excess_mass": 0.0,
+              "maximum_occupied_excess": 7.105427357601002e-15,
+              "actual_rent": 0.07528703474162919,
+              "budget_tolerance": 1e-09
+            },
+            "probabilities": {
+              "tenure_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "loc_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert2_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              }
+            },
+            "occupied_negative_steps": 0,
+            "maximum_occupied_value_drop": 0.0,
+            "feasibility_projection_mass": 1.1804755549818418e-23
+          },
+          "gates": {
+            "household_budget": true,
+            "finite_policy_arrays": true,
+            "probability_bounds": true,
+            "occupied_value_monotonicity": true,
+            "finite_nonnegative_household_mass": true,
+            "feasibility_projection": true
+          }
+        },
+        {
+          "year": 2023,
+          "diagnostics": {
+            "budget": {
+              "budget_excess_mass": 0.0,
+              "maximum_occupied_excess": 7.105427357601002e-15,
+              "actual_rent": 0.12917375549779886,
+              "budget_tolerance": 1e-09
+            },
+            "probabilities": {
+              "tenure_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "loc_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert2_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              }
+            },
+            "occupied_negative_steps": 0,
+            "maximum_occupied_value_drop": 0.0,
+            "feasibility_projection_mass": 0.0
+          },
+          "gates": {
+            "household_budget": true,
+            "finite_policy_arrays": true,
+            "probability_bounds": true,
+            "occupied_value_monotonicity": true,
+            "finite_nonnegative_household_mass": true,
+            "feasibility_projection": true
+          }
+        },
+        {
+          "year": 2027,
+          "diagnostics": {
+            "budget": {
+              "budget_excess_mass": 0.0,
+              "maximum_occupied_excess": 7.105427357601002e-15,
+              "actual_rent": 0.1372256054897407,
+              "budget_tolerance": 1e-09
+            },
+            "probabilities": {
+              "tenure_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "loc_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert2_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              }
+            },
+            "occupied_negative_steps": 0,
+            "maximum_occupied_value_drop": 0.0,
+            "feasibility_projection_mass": 3.925917844287868e-21
+          },
+          "gates": {
+            "household_budget": true,
+            "finite_policy_arrays": true,
+            "probability_bounds": true,
+            "occupied_value_monotonicity": true,
+            "finite_nonnegative_household_mass": true,
+            "feasibility_projection": true
+          }
+        },
+        {
+          "year": 2031,
+          "diagnostics": {
+            "budget": {
+              "budget_excess_mass": 0.0,
+              "maximum_occupied_excess": 7.105427357601002e-15,
+              "actual_rent": 0.14784997685233853,
+              "budget_tolerance": 1e-09
+            },
+            "probabilities": {
+              "tenure_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "loc_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert2_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              }
+            },
+            "occupied_negative_steps": 0,
+            "maximum_occupied_value_drop": 0.0,
+            "feasibility_projection_mass": 2.8524248502194925e-15
+          },
+          "gates": {
+            "household_budget": true,
+            "finite_policy_arrays": true,
+            "probability_bounds": true,
+            "occupied_value_monotonicity": true,
+            "finite_nonnegative_household_mass": true,
+            "feasibility_projection": true
+          }
+        },
+        {
+          "year": 2035,
+          "diagnostics": {
+            "budget": {
+              "budget_excess_mass": 0.0,
+              "maximum_occupied_excess": 7.105427357601002e-15,
+              "actual_rent": 0.16190934169824617,
+              "budget_tolerance": 1e-09
+            },
+            "probabilities": {
+              "tenure_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "loc_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert2_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              }
+            },
+            "occupied_negative_steps": 0,
+            "maximum_occupied_value_drop": 0.0,
+            "feasibility_projection_mass": 1.84157964963005e-12
+          },
+          "gates": {
+            "household_budget": true,
+            "finite_policy_arrays": true,
+            "probability_bounds": true,
+            "occupied_value_monotonicity": true,
+            "finite_nonnegative_household_mass": true,
+            "feasibility_projection": true
+          }
+        },
+        {
+          "year": 2039,
+          "diagnostics": {
+            "budget": {
+              "budget_excess_mass": 0.0,
+              "maximum_occupied_excess": 7.105427357601002e-15,
+              "actual_rent": 0.19204366611434304,
+              "budget_tolerance": 1e-09
+            },
+            "probabilities": {
+              "tenure_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "loc_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              },
+              "fert2_probs": {
+                "minimum": 0.0,
+                "maximum": 1.0,
+                "nonfinite": 0
+              }
+            },
+            "occupied_negative_steps": 0,
+            "maximum_occupied_value_drop": 0.0,
+            "feasibility_projection_mass": 0.0
+          },
+          "gates": {
+            "household_budget": true,
+            "finite_policy_arrays": true,
+            "probability_bounds": true,
+            "occupied_value_monotonicity": true,
+            "finite_nonnegative_household_mass": true,
+            "feasibility_projection": true
+          }
+        }
+      ],
+      "fiscal_accounts": [
+        {
+          "payroll_tax_base_period": 2.9632058914130046,
+          "retiree_benefit_exposure": 0.25919852620985734,
+          "worker_household_mass": 0.7408014737897599,
+          "retiree_household_mass": 0.25919852620985734,
+          "payroll_tax_rate": 0.179,
+          "pension_period_units": 2.0463613829508676,
+          "payroll_tax_revenue": 0.5304138545629278,
+          "pension_outlays": 0.5304138545536303,
+          "pension_budget_residual": 9.297451697420911e-12,
+          "scaled_pension_budget_residual": 1.752867429355179e-11,
+          "implied_balanced_pension_period": 2.0463613829867375,
+          "implied_balanced_payroll_tax": 0.17899999999686236
+        },
+        {
+          "payroll_tax_base_period": 3.5465191815032884,
+          "retiree_benefit_exposure": 0.2724584811648923,
+          "worker_household_mass": 0.8567891900825743,
+          "retiree_household_mass": 0.2724584811648923,
+          "payroll_tax_rate": 0.179,
+          "pension_period_units": 2.329995127652444,
+          "payroll_tax_revenue": 0.6348269334890886,
+          "pension_outlays": 0.6348269336017842,
+          "pension_budget_residual": -1.1269563060523069e-10,
+          "scaled_pension_budget_residual": -1.7752181679790334e-10,
+          "implied_balanced_pension_period": 2.329995127238819,
+          "implied_balanced_payroll_tax": 0.1790000000317764
+        },
+        {
+          "payroll_tax_base_period": 3.569002078561327,
+          "retiree_benefit_exposure": 0.3062456844233819,
+          "worker_household_mass": 0.8613437729760648,
+          "retiree_household_mass": 0.3062456844233819,
+          "payroll_tax_rate": 0.179,
+          "pension_period_units": 2.086074692605228,
+          "payroll_tax_revenue": 0.6388513720624776,
+          "pension_outlays": 0.638851371995184,
+          "pension_budget_residual": 6.729350410239476e-11,
+          "scaled_pension_budget_residual": 1.0533514843232376e-10,
+          "implied_balanced_pension_period": 2.086074692824965,
+          "implied_balanced_payroll_tax": 0.17899999998114502
+        },
+        {
+          "payroll_tax_base_period": 3.5986141121938946,
+          "retiree_benefit_exposure": 0.3299159273129545,
+          "worker_household_mass": 0.8681494144549762,
+          "retiree_household_mass": 0.3299159273129545,
+          "payroll_tax_rate": 0.179,
+          "pension_period_units": 1.9524729564384506,
+          "payroll_tax_revenue": 0.6441519260827071,
+          "pension_outlays": 0.6441519259768572,
+          "pension_budget_residual": 1.0584988441308951e-10,
+          "scaled_pension_budget_residual": 1.6432440877231612e-10,
+          "implied_balanced_pension_period": 1.9524729567592896,
+          "implied_balanced_payroll_tax": 0.1789999999705859
+        },
+        {
+          "payroll_tax_base_period": 3.6631893029783518,
+          "retiree_benefit_exposure": 0.3368396467357933,
+          "worker_household_mass": 0.8816144348348578,
+          "retiree_household_mass": 0.3368396467357933,
+          "payroll_tax_rate": 0.179,
+          "pension_period_units": 1.9466558986004456,
+          "payroll_tax_revenue": 0.6557108852331249,
+          "pension_outlays": 0.6557108852007224,
+          "pension_budget_residual": 3.240252510749997e-11,
+          "scaled_pension_budget_residual": 4.941587189906097e-11,
+          "implied_balanced_pension_period": 1.9466558986966414,
+          "implied_balanced_payroll_tax": 0.17899999999115454
+        },
+        {
+          "payroll_tax_base_period": 3.719692940450626,
+          "retiree_benefit_exposure": 0.3393733348906193,
+          "worker_household_mass": 0.8939978514703807,
+          "retiree_household_mass": 0.3393733348906193,
+          "payroll_tax_rate": 0.179,
+          "pension_period_units": 1.961925018052603,
+          "payroll_tax_revenue": 0.665825036340662,
+          "pension_outlays": 0.6658250361818504,
+          "pension_budget_residual": 1.588116305129006e-10,
+          "scaled_pension_budget_residual": 2.3851856245256355e-10,
+          "implied_balanced_pension_period": 1.9619250185205586,
+          "implied_balanced_payroll_tax": 0.17899999995730517
+        }
+      ]
+    },
+    "fiscal_values": [
+      2.0463613829508676,
+      2.329995127652444,
+      2.086074692605228,
+      1.9524729564384506,
+      1.9466558986004456,
+      1.961925018052603
+    ],
+    "fiscal_unknown": "period_pension",
+    "market_residual": [
+      9.174132310845633e-06,
+      -3.0108454125493504e-05,
+      7.541560150492156e-05,
+      -3.6520914585935444e-05,
+      -1.5690196104482703e-05,
+      -8.899523621667164e-07
+    ],
+    "fiscal_residual": [
+      1.752867429355179e-11,
+      -1.7752181679790334e-10,
+      1.0533514843232376e-10,
+      1.6432440877231612e-10,
+      4.941587189906097e-11,
+      2.3851856245256355e-10
+    ],
+    "market_gate": true,
+    "fiscal_gate": true,
+    "closure": "fixed_tax"
+  },
+  "final_reproduction_max_abs": 0.0,
+  "evaluations": 3,
+  "elapsed_seconds": 527.2212027969945,
+  "history": [
+    {
+      "evaluation": 1,
+      "phase": "initial",
+      "prices": [
+        0.7188447085795268,
+        0.7627074874721714,
+        0.7601016200058538,
+        0.7487497761335395,
+        0.724979262218787,
+        0.6832044323924025
+      ],
+      "residual": [
+        0.00016379550087558694,
+        0.0003887763840851876,
+        -6.649063256110435e-05,
+        -1.0826833400251624e-05,
+        2.7414531062750548e-06,
+        4.763816168729246e-05,
+        -4.9577652578147575e-06,
+        6.153267611628669e-06,
+        6.052443325386286e-06,
+        3.483714020142463e-06,
+        4.5786347757748577e-10,
+        -5.288325444051325e-06
+      ],
+      "score": 6.15326761162867,
+      "mapping_valid": true,
+      "new_best": true,
+      "best_score": 6.15326761162867,
+      "elapsed_seconds": 173.1031408609997,
+      "evaluation_seconds": 173.10288689700246,
+      "fiscal_values": [
+        2.0463715284164,
+        2.3299807902652225,
+        2.086062066942744,
+        1.952466154760444,
+        1.9466558980107163,
+        1.9619353938576836
+      ],
+      "fiscal_unknown": "period_pension",
+      "market_residual": [
+        0.00016379550087558694,
+        0.0003887763840851876,
+        -6.649063256110435e-05,
+        -1.0826833400251624e-05,
+        2.7414531062750548e-06,
+        4.763816168729246e-05
+      ],
+      "fiscal_residual": [
+        -4.9577652578147575e-06,
+        6.153267611628669e-06,
+        6.052443325386286e-06,
+        3.483714020142463e-06,
+        4.5786347757748577e-10,
+        -5.288325444051325e-06
+      ],
+      "market_gate": false,
+      "fiscal_gate": false,
+      "closure": "fixed_tax"
+    },
+    {
+      "evaluation": 2,
+      "phase": "iterate",
+      "prices": [
+        0.7189536776068375,
+        0.7628055131824941,
+        0.7600373801093124,
+        0.7487586856452507,
+        0.7249866107865003,
+        0.6832158656272865
+      ],
+      "residual": [
+        9.174132310845633e-06,
+        -3.0108454125493504e-05,
+        7.541560150492156e-05,
+        -3.6520914585935444e-05,
+        -1.5690196104482703e-05,
+        -8.899523621667164e-07,
+        1.752867429355179e-11,
+        -1.7752181679790334e-10,
+        1.0533514843232376e-10,
+        1.6432440877231612e-10,
+        4.941587189906097e-11,
+        2.3851856245256355e-10
+      ],
+      "score": 0.3770780075246078,
+      "mapping_valid": true,
+      "new_best": true,
+      "best_score": 0.3770780075246078,
+      "elapsed_seconds": 338.5102846319933,
+      "evaluation_seconds": 165.37673097000516,
+      "damping": 1.0,
+      "requested_log_step": [
+        0.00015157761834519914,
+        0.00012851507711253844,
+        -8.451845071373884e-05,
+        1.1899113679358984e-05,
+        1.013619403077778e-05,
+        1.6734579983816127e-05,
+        -4.9577950734986555e-06,
+        6.153416873350392e-06,
+        6.052372302952904e-06,
+        3.483628201569438e-06,
+        3.0294485811624017e-10,
+        -5.288569924149837e-06
+      ],
+      "actual_log_step": [
+        0.0001515776183452222,
+        0.00012851507711247878,
+        -8.451845071372199e-05,
+        1.1899113679436635e-05,
+        1.0136194030785362e-05,
+        1.6734579983745945e-05,
+        -4.957795073479154e-06,
+        6.153416873377893e-06,
+        6.052372303000375e-06,
+        3.483628201572664e-06,
+        3.0294489139492953e-10,
+        -5.288569924100095e-06
+      ],
+      "reset_reason": null,
+      "fiscal_values": [
+        2.0463613829508676,
+        2.329995127652444,
+        2.086074692605228,
+        1.9524729564384506,
+        1.9466558986004456,
+        1.961925018052603
+      ],
+      "fiscal_unknown": "period_pension",
+      "market_residual": [
+        9.174132310845633e-06,
+        -3.0108454125493504e-05,
+        7.541560150492156e-05,
+        -3.6520914585935444e-05,
+        -1.5690196104482703e-05,
+        -8.899523621667164e-07
+      ],
+      "fiscal_residual": [
+        1.752867429355179e-11,
+        -1.7752181679790334e-10,
+        1.0533514843232376e-10,
+        1.6432440877231612e-10,
+        4.941587189906097e-11,
+        2.3851856245256355e-10
+      ],
+      "market_gate": true,
+      "fiscal_gate": true,
+      "closure": "fixed_tax"
+    },
+    {
+      "evaluation": 3,
+      "phase": "final",
+      "prices": [
+        0.7189536776068375,
+        0.7628055131824941,
+        0.7600373801093124,
+        0.7487586856452507,
+        0.7249866107865003,
+        0.6832158656272865
+      ],
+      "residual": [
+        9.174132310845633e-06,
+        -3.0108454125493504e-05,
+        7.541560150492156e-05,
+        -3.6520914585935444e-05,
+        -1.5690196104482703e-05,
+        -8.899523621667164e-07,
+        1.752867429355179e-11,
+        -1.7752181679790334e-10,
+        1.0533514843232376e-10,
+        1.6432440877231612e-10,
+        4.941587189906097e-11,
+        2.3851856245256355e-10
+      ],
+      "score": 0.3770780075246078,
+      "mapping_valid": true,
+      "new_best": false,
+      "best_score": 0.3770780075246078,
+      "elapsed_seconds": 527.2070090799971,
+      "evaluation_seconds": 188.6385253269982,
+      "fiscal_values": [
+        2.0463613829508676,
+        2.329995127652444,
+        2.086074692605228,
+        1.9524729564384506,
+        1.9466558986004456,
+        1.961925018052603
+      ],
+      "fiscal_unknown": "period_pension",
+      "market_residual": [
+        9.174132310845633e-06,
+        -3.0108454125493504e-05,
+        7.541560150492156e-05,
+        -3.6520914585935444e-05,
+        -1.5690196104482703e-05,
+        -8.899523621667164e-07
+      ],
+      "fiscal_residual": [
+        1.752867429355179e-11,
+        -1.7752181679790334e-10,
+        1.0533514843232376e-10,
+        1.6432440877231612e-10,
+        4.941587189906097e-11,
+        2.3851856245256355e-10
+      ],
+      "market_gate": true,
+      "fiscal_gate": true,
+      "closure": "fixed_tax"
+    }
+  ],
+  "final_jacobian": [
+    [
+      -2.263192038353365,
+      1.482410602242471,
+      0.046502018684334,
+      -0.04899012849775409,
+      -0.0641638068540294,
+      0.1517243080185773,
+      -0.019247605609893165,
+      0.023888309766933437,
+      0.023497736300254743,
+      0.013525477571014183,
+      2.446756804593687e-06,
+      -0.02052999625575325
+    ],
+    [
+      -0.35641924712953216,
+      -2.747917393610465,
+      0.12799899400953385,
+      0.1062071663704686,
+      0.019716989654146394,
+      -0.10811679034288493,
+      0.01948162813902734,
+      -0.02417911383663391,
+      -0.023783516520009783,
+      -0.01368959808321999,
+      -2.260247195258128e-06,
+      0.020779954486913818
+    ],
+    [
+      0.1211262960733956,
+      -0.2012635358733181,
+      -1.763342476403853,
+      0.06193874589024351,
+      0.004099868502593598,
+      -0.02657617429439089,
+      -0.0015242076727273717,
+      0.0018920550759050341,
+      0.0018603346592888995,
+      0.001070608127263218,
+      -5.061150321454531e-07,
+      -0.0016266702614364317
+    ],
+    [
+      0.047566595571439316,
+      -0.10574619527624401,
+      -0.006926005036266794,
+      -1.6909861094066714,
+      0.03431863312510203,
+      -0.006535645308086891,
+      0.0005969879151043497,
+      -0.0007410473359867097,
+      -0.0007283736812686691,
+      -0.0004190584501630014,
+      6.830602854645028e-07,
+      0.000637673305131196
+    ],
+    [
+      -0.05852715357444182,
+      0.05883470559113007,
+      0.005581269423793549,
+      -0.009394777394329444,
+      -1.6650613795943772,
+      0.019058325332211794,
+      -0.0007328549818150073,
+      0.0009094356122140456,
+      0.0008946572999396964,
+      0.0005149129322621255,
+      -2.722467629902776e-08,
+      -0.0007817767771763691
+    ],
+    [
+      -0.05828916683232929,
+      -0.09619877126313844,
+      -0.004751720561376174,
+      0.009556347827069623,
+      -0.0065793627814415365,
+      -1.6566643092017301,
+      0.0019534128189508744,
+      -0.0024244106971993747,
+      -0.002384813345871194,
+      -0.0013726963532593723,
+      -3.059679415369814e-07,
+      0.002083498857551926
+    ],
+    [
+      4.590496939831546e-07,
+      -6.972910753576675e-07,
+      -1.0015374533637628e-07,
+      7.776896992162794e-09,
+      5.1297854549247934e-08,
+      -6.952287912007584e-08,
+      -0.9999999939392542,
+      -7.521862533593253e-09,
+      -7.399005305623763e-09,
+      -4.2589804919620766e-09,
+      -7.384325657049386e-13,
+      6.464538472278918e-09
+    ],
+    [
+      -8.466315704299967e-07,
+      9.63101135927531e-07,
+      2.7869643276696663e-07,
+      -1.7020156561476747e-07,
+      -5.412035124634322e-08,
+      1.3555603775514607e-07,
+      -5.61615822423396e-09,
+      -0.9999999930307075,
+      6.857377861930372e-09,
+      3.947782798655515e-09,
+      2.564144912029503e-12,
+      -5.987917310070975e-09
+    ],
+    [
+      -6.591028559592477e-07,
+      1.0744685321588151e-06,
+      6.817782975783017e-08,
+      2.0144374271636962e-07,
+      -2.3666759701072016e-07,
+      9.744985868798831e-08,
+      -9.475540260419033e-09,
+      1.1760334385469957e-08,
+      -0.9999999884338926,
+      6.6567081639045646e-09,
+      -1.9553228221788733e-12,
+      -1.0110535780369133e-08
+    ],
+    [
+      -2.062114549538435e-08,
+      5.346213631012757e-07,
+      -1.297817515629524e-07,
+      2.130622037426375e-07,
+      -1.9924808664153268e-07,
+      6.961463296389663e-08,
+      -9.798620865148117e-09,
+      1.216169273513446e-08,
+      1.1960372340251756e-08,
+      -0.9999999931166592,
+      -2.3450698978070567e-12,
+      -1.0455739844682529e-08
+    ],
+    [
+      -3.891049614883806e-07,
+      -2.76605533735405e-07,
+      1.2244690115206933e-07,
+      2.899477778038068e-07,
+      -3.3216987998868335e-07,
+      -2.1154143042685045e-08,
+      1.2655991704515725e-08,
+      -1.5707676292076055e-08,
+      -1.5452846798755404e-08,
+      -8.89588662603655e-09,
+      -1.0000000000058158,
+      1.349448617962625e-08
+    ],
+    [
+      4.876001614742003e-07,
+      -7.656161864765984e-07,
+      -2.140454372595522e-07,
+      4.210650728614192e-07,
+      -3.0461917981165225e-07,
+      -7.487470420675383e-08,
+      8.476547029596448e-09,
+      -1.0519519270903821e-08,
+      -1.0351592666179155e-08,
+      -5.960353617212617e-09,
+      -7.255548907783991e-12,
+      -0.9999999909659886
+    ]
+  ],
+  "final_damping": 1.0,
+  "closure": "fixed_tax",
+  "gates": {
+    "mapping": true,
+    "housing": true,
+    "social_security": true,
+    "market_replay": true,
+    "fiscal_replay": true
+  },
+  "domain_rejections": {},
+  "market_reproduction_max_abs": 0.0,
+  "fiscal_reproduction_max_abs": 0.0,
+  "contract": {
+    "closure": "fixed_tax",
+    "fiscal_bounds": [
+      0.05,
+      10.0
+    ],
+    "market_tolerance": 0.0002,
+    "fiscal_tolerance": 1e-06,
+    "market_slope": 1.63,
+    "fiscal_slope": 1.0,
+    "fiscal_residual_scale": 200.00000000000003,
+    "max_log_step": 0.2,
+    "final_reproduction_tolerance": 2e-10,
+    "score_definition": "maximum absolute residual divided by its own tolerance"
+  },
+  "schema": "e5f_permanent_surprise_v1",
+  "start_year": 2019,
+  "psi": 0.09239514522037684,
+  "expected_psi_path": [
+    0.09239514522037684,
+    0.09239514522037684,
+    0.09239514522037684,
+    0.09239514522037684,
+    0.09239514522037684,
+    0.09239514522037684
+  ],
+  "finite_horizon_market_fiscal_converged": true,
+  "terminal_distance_passed": false,
+  "horizon_verified": false,
+  "production_eligible": false,
+  "information": "Current preference persists; subsequent preference surprises not anticipated",
+  "demographic_information": "Existing observed historical head-age bridge and frozen2023 person anchor retained"
+}

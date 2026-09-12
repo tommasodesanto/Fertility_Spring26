@@ -232,7 +232,7 @@ A birth changes the household's space needs immediately, but its demographic eff
   \varpi_t,&a\geq a_R.
   \end{cases}
   \]
-  \item $e_a$ is the age profile; $z_t$ combines a permanent income group and a persistent earnings shock.
+  \item $e_a$ is effective labor supplied over the model period at age $a$; $z_t$ combines a permanent income group and a persistent earnings shock.
   \item \textbf{Pay-as-you-go pensions:} workers' payroll taxes finance retirees' benefits. The pension $\varpi_t$ adjusts each period to balance the system.
 \end{itemize}
 \end{frame}
@@ -370,7 +370,7 @@ An equilibrium is a sequence of policy functions, value functions, household dis
   \]
   Fertility determines $B$; $A$ ages survivors, $fB$ counts newborn survivors, and $M$ is net migration. $L$ counts annual steps; $\ell$ is age in years.
   \item From the initial state, distributions follow policies, idiosyncratic shocks, and demographic entry and exit, with $\int dG_t=H_t$, the head count over represented adult ages.
-  \item Housing clears, $\int q_t\,dG_t=H_t^s$, with $q_t$ measured in physical rooms. Asset pricing and both fiscal budgets hold.
+  \item Housing clears, $\int q_t\,dG_t=H_t^s$, with $q_t$ measured in physical rooms. Asset pricing and the pay-as-you-go pension rule hold.
 \end{enumerate}
 \end{frame}
 
@@ -600,23 +600,34 @@ Initial fertility preference $\psi_0$ & 0.1596 & Completed fertility of 2.1 \\
 A model period contains $L=4$ calendar years, $\beta=\beta_{\rm annual}^4$.
 \end{frame}
 
-\begin{frame}{The Initial Equilibrium over the Lifecycle}
-\small
+% Checked presentation patch: stationary household fits through 2019,
+% then the actual dated forward forecast from source PATCH17497354_0.
+\begin{frame}{Historical Fertility}
 \centering
-\includegraphics[width=0.49\textwidth]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/verified_final/selected_standard_diagnostics/fertility_by_age.png}\hfill
-\includegraphics[width=0.49\textwidth]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/verified_final/selected_standard_diagnostics/ownership_by_age.png}
-
-\medskip
-\raggedright
-Births are concentrated early in life, while ownership rises with age.
+\includegraphics[width=\textwidth,height=0.78\textheight,keepaspectratio]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/patch_readout/figures/historical_fertility.pdf}
 \par\smallskip
-These are model equilibrium profiles; the calibration table compares targeted moments with data.
+\scriptsize The final fertility window is not yet matched; the terminal horizon is not verified.
 \end{frame}
 
-% Intergenerational Allocation: Model vs Data
-\begin{frame}{}
+\begin{frame}{The 2023 Equilibrium}
 \centering
-\includegraphics[width=\textwidth,height=0.88\textheight,keepaspectratio]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/age_housing_allocation/intergenerational_allocation_data_model.pdf}
+\includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/patch_readout/figures/equilibrium_2023.pdf}
+\par\smallskip
+\scriptsize Population levels and age composition are externally conditioned.
+\end{frame}
+
+\begin{frame}{Lifecycle Fit in 2023}
+\centering
+\includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/patch_readout/figures/lifecycle_2023.pdf}
+\par\smallskip
+\scriptsize 2023 profiles are untargeted comparisons; the calibration uses initial-period moments.
+\end{frame}
+
+\begin{frame}{Intergenerational Allocation: Model vs Data}
+\centering
+\includegraphics[width=0.92\linewidth,height=0.78\textheight,keepaspectratio]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/patch_readout/figures/intergenerational_allocation_2023.pdf}
+\par\smallskip
+\scriptsize Owner-occupied homes with $6+$ rooms; ACS 2023. Children: model dependents; ACS resident own minors.
 \end{frame}
 
 \begin{frame}{Housing and Fertility in Equilibrium}
@@ -967,6 +978,16 @@ For renters, $q_t=h_t^R$; for owners, $q_t=h_{t+1}$. Choice probabilities are in
 
 \vfill
 A stationary terminal value supplies a boundary condition; it does not establish stationarity of the simulated endpoint.
+\end{frame}
+
+\begin{frame}{Fertility by Age: Measurement Comparison}
+\centering
+\includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/patch_readout/figures/fertility_age_2023.pdf}
+\end{frame}
+
+\begin{frame}{Prices and Quantities Along the Finite Path}
+\centering
+\includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/patch_readout/figures/prices_quantities_path.pdf}
 \end{frame}
 
 \end{document}

@@ -103,6 +103,16 @@ Active documents:
   pension integrals and repeated fiscal-accounting bullets are omitted. This
   is exposition of the existing fixed-wage income specification, not a new
   production or labor-market solve.
+  The subsequent transition audit is recorded in
+  `../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/patch_readout/earnings_pension_audit.md`.
+  Its four checks cover the economic identity, actual dated income binding,
+  anticipated/applied pension paths, and all six saved fiscal receipts.
+  Twenty-three pure accounting tests pass, and every saved pension residual is
+  below $1.6\times10^{-10}$. The slide now defines $e_a$ in model-period units.
+  The main equilibrium definition states the verified PAYGO rule, not a claim
+  that unrebated property-tax receipts balance transfers or that a closed goods
+  market has been verified. Full resource closure and terminal-horizon
+  convergence are outside this audit's certification.
 
   **September 12 return to the May source.** Use the actual May frame text,
   typography and composition for unchanged material; patch only documented model
@@ -234,19 +244,26 @@ Active documents:
   The main parameter tables contain all 17 free/fixed/normalized/derived rows;
   the appendix gives every free coordinate's bounds and position. Near-bound
   means within 1% of the allowed range, not proof of a binding restriction.
-  The existing `fertility_by_age.png` and `ownership_by_age.png` in
-  `selected_standard_diagnostics/` are included unchanged as model equilibrium
-  profiles, not empirical-fit overlays. The stable 17-graph packet is unchanged.
+  The initial model-only age profiles have been replaced in the presentation by
+  the checked dated comparison figures below. The stable 17-graph packet is unchanged.
 
   **Requested results sequence.** After estimation design and parameter/target
-  tables, show the 2023 equilibrium (prices, rents and quantities), then historical
-  transition fit and cross-sectional 2023 data/model fit, following May's market
+  tables, show historical fertility, the 2023 equilibrium (prices, rents and quantities),
+  cross-sectional 2023 data/model fit, and intergenerational allocation, following May's market
   equilibrium, lifecycle comparison and allocation formats without spatial panels.
   `Historical Fertility Discipline` immediately follows the concise calibration
-  overview, keeping estimation design together. The quantitative task
-  has the request for dated 2023 figures; these remain outstanding. Existing
-  initial profiles/allocation retain their correct dates. The 2023 ACS allocation
-  data alone cannot support a data/model overlay without a matching model state.
+  overview, keeping estimation design together. The four main figures now come
+  from `../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/patch_readout/figures/`.
+  This author-approved presentation patch uses conditional stationary household
+  fits through 2019, then the actual 2019-start forward forecast. It is not a
+  fully carried history from 2007. The final fertility window remains unmatched
+  (1.5590 versus 1.64575), and the terminal horizon is unverified. The lifecycle
+  and six-bar allocation figures use the actual 2023 state and ACS 2023; those
+  profiles are untargeted comparisons. Person/head levels and age composition
+  are conditioned externally. Fertility-by-age measurement and the finite
+  price/quantity path are supplemental appendix frames. These figures use
+  checkpoint `120ffc45...`, not the later initial candidate shown in the initial
+  calibration table; no claim is made that the latter generated this patch.
   2023 ends the final 2020--2023 historical birth window and starts the policy
   comparison; it is not the terminal stationary economy or end of the forecast.
 
@@ -293,8 +310,8 @@ Active documents:
   Build twice from `latex/`, writing auxiliary files outside the active folder:
   `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=../tmp/september_slides_review september_14_presentation.tex`.
   Copy the verified PDF to the reader path and the adjacent build copy.
-  The deck has 34 numbered main frames and eleven appendix frames
-  (52 PDF pages including overlays and dividers). Two final compilation passes
+  The deck has 36 numbered main frames and thirteen appendix frames
+  (56 PDF pages including overlays and dividers). Two final compilation passes
   have no warnings or overfull boxes; all frames were visually inspected and
   all figure paths and all three appendix links resolve.
 
