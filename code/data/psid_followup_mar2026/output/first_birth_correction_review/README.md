@@ -348,11 +348,13 @@ with reproduction. Reference support and comparison-group issues remain separate
 
 The first original-specification fit exited after 1,889.59 seconds, before its
 two-hour cap, without the required success marker. The controller stopped as
-designed; neither common-sample timing fit started. The retained Stata log ends
-at event-indicator construction and contains no explanation of the process exit.
-The cause is unresolved; this is not a timeout or evidence that May was wrong.
+designed; neither common-sample timing fit started. Follow-up found the macOS
+crash report for the exact PID 2463: Stata launched at 01:09:54 and crashed at
+01:41:23 EDT with EXC_BAD_ACCESS / SIGSEGV (invalid memory access). This establishes
+an application crash; the trigger remains unresolved. It is neither a timeout
+nor evidence that the author's original regression was wrong. Aggregate crash
+evidence is saved as `crash_summary.json` beside the failed batch receipt.
 No comparison graph or replacement target was obtained. No regression was
 restarted at the morning review. Failed receipts/log are preserved under
 `code/data/psid_followup_mar2026/output/first_birth_correction_review/timing_local/overnight_20260912/`.
 Next step is to diagnose the Stata process exit before another full fit.
-
