@@ -78,6 +78,12 @@ Active documents:
   and attempting values suppress repeated arguments only after the full current
   state is stated. The $t,t+1$ convention and immediate post-birth housing needs
   are preserved.
+  The first overlay was subsequently recopied directly from the May source:
+  `State`, the original three-bullet structure, and `Within the period`, with
+  no added Values block. Its May diagram construction and spacing are restored.
+  Only dated notation, removal of geography, addition of earnings heterogeneity,
+  dependent-child counts, and birth-attempt timing differ; the two later
+  household-problem overlays retain their existing layout.
 
   **External-input table.** The September 14 table follows the July mini-draft's
   `Parameter | Value | Source` layout, using the table in

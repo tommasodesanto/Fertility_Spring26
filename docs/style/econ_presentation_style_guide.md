@@ -23,6 +23,10 @@ the codebase or the sequence of internal experiments.
 
 ## 2. Frame architecture
 
+- When the author asks to restore an earlier slide, copy its source directly.
+  Preserve unchanged wording, definitions, order, spacing, and composition;
+  edit only the model differences and notation the author has requested.
+  Do not add explanations or a new value-function definition while restoring it.
 - One idea per frame.
 - Keep bullets to one line whenever possible. If a bullet needs a paragraph, shorten it or
   split the argument across frames.
