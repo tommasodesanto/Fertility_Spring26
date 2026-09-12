@@ -1,5 +1,29 @@
 # September 12 autonomous cluster campaign
 
+**September 12 — matched-horizon budgets exhausted; improving roots continued.**
+Both 17489644 arms stopped at 9,000 seconds without finite convergence. The
+last complete 28/56-date receipts have housing maxima 0.00672430/0.07773044
+and pension maxima 0.000278120/0.00247739. Scaled solver scores fell from
+61599.6 to 278.12 and 61605.5 to 2477.39; this supports a checkpoint continuation,
+not an accepted first fertility window. Original receipts (including the earlier
+converged -0.045 long run) are collected under overnight_20260912/horizon_receipts.
+
+Array 17493863_0–1 is RUNNING, each one CPU/32 GiB with 14,400 seconds. It resumes
+the full best saved price/pension coordinates and final Jacobian at unchanged
+psi 0.14708715651861665. The native short forecast remains the smoke evidence,
+but no longer overwrites the first six coordinates of the improving long path.
+Before its first mapping the driver checks exact full-coordinate equality and
+writes initialization_verified.json. Estimated remaining capacity is about
+16/8 mappings at observed 14/26 minutes each. Each root continuation retains
+its existing mapping cap; no automatic repeat after this four-hour budget.
+All 19 tests passed locally and on Torch. Preparation caught the unconverged
+receipt's null final field and two missing wrapper imports before submission;
+these packaging/initialization issues were fixed without changing science.
+No target, weight, population closure or gate changed. No complete historical
+fit or policy result exists. Source: code/cluster/prepare_e5f_matched_continuation.py;
+cluster batch: /scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/matched_continuation_20260912.
+Monitoring remains every30minutes with the existing token floor and no agent fan-out.
+
 **September 12, 14:24 UTC — access restored; author resumes fertility-path work.**
 Both matched-horizon tasks 17489644_0–1 remained running across the login lapse.
 Latest completed best iterations are six (28 dates) and three (56 dates), written

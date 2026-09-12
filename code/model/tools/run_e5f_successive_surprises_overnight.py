@@ -98,13 +98,13 @@ def main():
                     if time.monotonic()+900>fit_deadline:break
                     prices=np.linspace(pstart,float(terminal.policy.price[0]),count);pensions=np.linspace(bstart,float(terminal.parameters.pension),count)
                     if plan.get('initialization_receipt'):
-                        init=read(plan['initialization_receipt']);f=init['final'];n=min(count,len(f['prices']))
+                        init=read(plan['initialization_receipt']);initial_coordinates=init.get('final') or init['best'];f=initial_coordinates;n=min(count,len(f['prices']))
                         prices[:n]=np.asarray(f['prices'][:n])*plan.get('initial_price_multiplier',1.)
                         pensions[:n]=f['fiscal_values'][:n]
                         if count>n:
                             prices[n:]=np.linspace(prices[n-1],float(terminal.policy.price[0]),count-n+1)[1:]
                             pensions[n:]=np.linspace(pensions[n-1],float(terminal.parameters.pension),count-n+1)[1:]
-                        if plan.get('verified_native_smoke'):
+                        if plan.get('verified_native_smoke') and plan.get('initialization_native_prefix',True):
                             q=read(plan['verified_native_smoke'])['final'];k=min(count,len(q['prices']))
                             prices[:k]=q['prices'][:k];pensions[:k]=q['fiscal_values'][:k]
                     if previous is not None:
@@ -113,7 +113,7 @@ def main():
                             take=min(count,len(f['prices']));prices[:take]=f['prices'][:take];pensions[:take]=f['fiscal_values'][:take]
                     for continuation in range(3):
                         rc=copy.deepcopy(plan['history_root_controls']);rc['initial_jacobian']=None
-                        if continuation==0 and plan.get('initialization_receipt') and len(init['final']['prices'])==count:
+                        if continuation==0 and plan.get('initialization_receipt') and len(initial_coordinates['prices'])==count:
                             rc['initial_jacobian']=init.get('final_jacobian')
                         if continuation and result is not None:
                             f=result.root_receipt.get('final') or result.root_receipt.get('best')
@@ -128,6 +128,12 @@ def main():
                         def progress(record):
                             save(stage/'latest_completed.json',record)
                             if record.get('new_best'):save(stage/'best_so_far.json',record)
+                        if continuation==0 and plan.get('initialization_native_prefix') is False:
+                            if (len(initial_coordinates['prices'])!=count or
+                                not np.array_equal(prices,np.asarray(initial_coordinates['prices'])) or
+                                not np.array_equal(pensions,np.asarray(initial_coordinates['fiscal_values']))):
+                                raise ValueError('Continuation must preserve the complete pinned path coordinates')
+                            save(stage/'initialization_verified.json',dict(receipt=plan['initialization_receipt'],sha256=sha(plan['initialization_receipt']),full_path_preserved=True,jacobian_reused=rc['initial_jacobian'] is not None))
                         result=surprise.solve_surprise(inherited=inherited,psi=psi,old_state=old,terminal=terminal,terminal_root_receipt=tr,
                             demographic_primitives=demographics,terminal_demographic_primitives=t['demographic_seed'],count=count,initial_prices=prices,initial_pensions=pensions,
                             audit_controls=audit,root_controls=rc,deadline_monotonic=min(fit_deadline,time.monotonic()+(1800 if count==6 else 7200)),pension_tail_tolerance=.01,callback=progress,observer=observe)
