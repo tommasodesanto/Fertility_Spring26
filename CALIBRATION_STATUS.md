@@ -1,5 +1,26 @@
 # Calibration Status
 
+**September 12 — home check: two successive-shock windows fitted; medium run failed.**
+Restart `17501164` is RUNNING (52 minutes at check) and has saved the fitted
+2011–2015 window: target 1.861, model 1.8610692789655279, absolute gap
+0.0000692789655, preference 0.13608715651861664. Together with the retained
+2007–2011 fit (target 1.974875, model 1.9748555482499361), two of four windows
+are now accepted, with actual household history carried into 2015. Both remain
+finite-horizon diagnostics: terminal-distance checks fail; no horizon certificate.
+Current trial is the unexpected 2015 preference change to 0.12408715651861664.
+Its forecast is still solving; no 2015–2019 or 2019–2023 fit is admitted yet.
+
+Medium-horizon `17498928` FAILED after 2:19:42 on another numerical mass gate
+in its second 2007 preference trial: age15 advancement actual mass
+0.025628090705037257 versus expected 0.025628090428480195, relative gap
+1.079e-8 versus 1e-8 tolerance. It has no accepted fitted history prefix.
+This reinforces the need to trace the underlying numerical mass discrepancy;
+float32 probability rounding is still a hypothesis, not a verified diagnosis.
+Long-horizon `17498929` remains priority-queued. No transition policies have
+completed. The separate stationary comparison and fitted presentation patch
+remain the available quantitative outputs. No new run launched at this check;
+AI heartbeat remains paused, active cluster controller continues autonomously.
+
 **September 12 — commute check: finite history restarted from its fitted 2011 state.**
 Short-horizon job `17498927` stopped after 1:14:40 during a 2011 shock trial.
 It retained the fitted 2007–2011 window and its original-expectations 2011 state.
