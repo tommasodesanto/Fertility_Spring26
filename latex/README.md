@@ -65,8 +65,12 @@ Active documents:
   balanced pension budget. They describe an experiment, not computed effects.
   The quantitative task reconfirmed this contract directly. An accepted
   historical 2023 state and the entry/demographic closure remain unresolved.
-  At the author's request, **Review quantitative model** is supplying numerical
-  transition panels first and investigating a bounded fertility-preference IRF.
+  At the author's request, **Review quantitative model** supplied numerical
+  transition panels and is investigating a bounded fertility-preference IRF.
+  The separate review figures are
+  [fertility and demography](../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/seminar_transition_panels/fertility_demography.pdf)
+  and [housing](../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/seminar_transition_panels/housing.pdf).
+  Their directory contains the plotted CSV, source hashes, and the IRF design.
   Saved short forecasts are responses to a permanent preference step, with
   finite market/fiscal closure but uncertified terminal distance; they cannot
   be labeled a fitted history or a temporary, baseline-subtracted impulse
