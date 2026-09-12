@@ -343,3 +343,16 @@ all three passing fits render `timing_only_comparison.png/pdf`. Neither result
 is automatically promoted into slides or calibration. The morning review must
 check numerical reproduction against May rather than equating exit success
 with reproduction. Reference support and comparison-group issues remain separate.
+
+## Morning outcome, September 12
+
+The first original-specification fit exited after 1,889.59 seconds, before its
+two-hour cap, without the required success marker. The controller stopped as
+designed; neither common-sample timing fit started. The retained Stata log ends
+at event-indicator construction and contains no explanation of the process exit.
+The cause is unresolved; this is not a timeout or evidence that May was wrong.
+No comparison graph or replacement target was obtained. No regression was
+restarted at the morning review. Failed receipts/log are preserved under
+`code/data/psid_followup_mar2026/output/first_birth_correction_review/timing_local/overnight_20260912/`.
+Next step is to diagnose the Stata process exit before another full fit.
+

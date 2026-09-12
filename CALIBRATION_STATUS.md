@@ -1,5 +1,16 @@
 # Calibration Status
 
+**September 12, 08:00 EDT — data-only overnight batch stopped without estimates.**
+The first original-specification fit exited after 1,889.59 seconds, before its
+two-hour cap, without the required success marker. The controller stopped as
+designed; neither common-sample timing fit started. The retained Stata log ends
+at event-indicator construction and contains no explanation of the process exit.
+The cause is unresolved; this is not a timeout or evidence that May was wrong.
+No comparison graph or replacement target was obtained. No regression was
+restarted at the morning review. Failed receipts/log are preserved under
+`code/data/psid_followup_mar2026/output/first_birth_correction_review/timing_local/overnight_20260912/`.
+Next step is to diagnose the Stata process exit before another full fit.
+
 **September 12, 11:00 UTC — both smaller-shock smokes pass; testing terminal starting guesses.**
 The -0.0225 and -0.0275 diagnostics both passed finite six-date housing/PAYGO
 roots and wrote all 17 standard graphs. First-window fertility is respectively
