@@ -31,8 +31,41 @@ def next_psi(trials, initial, seed_step, bound):
     p,e=min(valid,key=lambda x:abs(x[1]))
     return float(np.clip(p-(abs(seed_step) if e>0 else -abs(seed_step)),*bound))
 
+def large_owner_observation(e,P):
+    """Small saved sufficient statistics; no policy or equilibrium modifications."""
+    if P.child_state_mode!='independent_count':raise ValueError('Dependent-count observer requires independent_count')
+    rows=[]
+    slots=[k for k,h in enumerate(P.H_own,start=1) if h>=6]
+    for j in range(P.J):
+        g=e.g_current[:,:,:,j,:,:,:]
+        td=g.sum(axis=(0,2,3,4))
+        rows.append(dict(age=float(P.age_start+j*P.da),age_width=float(P.da),
+            without_children=float(td[slots,0].sum()),with_children=float(td[slots,1:].sum())))
+    return rows
+
+def carry_finite_diagnostic(result, *, enabled, inherited, old, demographics, psi, module):
+    """Allow experimental state propagation while retaining failed horizon flags.
+
+    Production admission is unchanged. The exact first-period replay is mandatory.
+    """
+    if not enabled or result.next_state is not None:return result
+    receipt=result.root_receipt
+    if not receipt.get('finite_horizon_market_fiscal_converged'):return result
+    f=receipt['final']
+    next_state=module.first_period_state(inherited=inherited,old_state=old,
+        demographics=demographics,path=result.path,prices=f['prices'],
+        pensions=f['fiscal_values'],psi=psi)
+    receipt['diagnostic_finite_horizon_state_carry']=True
+    receipt['production_eligible']=False
+    receipt['horizon_verified']=False
+    realized=dict(result.path.rows[0],forecast_vintage_year=inherited.year,
+        expected_next_asset_price=float(f['prices'][1]),expected_constant_psi=float(psi))
+    return module.SurpriseResult(result.path,receipt,next_state,realized)
+
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--plan',type=Path,required=True);ap.add_argument('--arm',type=int,required=True);args=ap.parse_args();plan=read(args.plan)
+    finite_sequence=bool(plan.get('finite_sequence_diagnostic',False))
+    if finite_sequence and not plan.get('skip_policies',False):raise ValueError('Finite-horizon sequence diagnostic cannot launch policies')
     root=Path(plan['source_root']);out=Path(plan['output_root'])/f'arm_{args.arm}';out.mkdir(parents=True,exist_ok=False)
     start=time.monotonic();deadline=start+plan['total_seconds'];stop=threading.Event();state={'phase':'preflight'}
     def heartbeat():
@@ -77,7 +110,7 @@ def main():
             household_mass=float(start_state.g_pre.sum()),raw_birth_queue=start_state.scheduled_raw_entries,
             adjusted_birth_queue=start_state.scheduled_entries,distribution_reset_2023=False,
             interpretation='Conditional stationary household distribution dated2019; birth queues from its constant birth flows. Original supply curve and external2023person anchor retained; no claim of full demographic stationarity.'))
-    targets=list(csv.DictReader(Path(plan['empirical_blocks']).open()));realized=[];smoked=False;trial_index=0
+    targets=list(csv.DictReader(Path(plan['empirical_blocks']).open()));realized=[];smoked=False;trial_index=0;warm=None;warm_year=None
     if plan.get('stationary_restart_2019'):targets=[t for t in targets if int(t['decision_year'])>=2019]
     if plan.get('verified_native_smoke'):
         native=read(plan['verified_native_smoke'])
@@ -94,7 +127,10 @@ def main():
             for attempt in range(plan['maximum_trials_per_window']):
                 if time.monotonic()+1800>fit_deadline:raise TimeoutError('Historical fitting budget reached; policy reserve preserved')
                 center=initial_psi if not realized else realized[-1]['psi']
-                psi=next_psi(trials,center,plan['seed_steps'][args.arm],(initial_psi-.20,initial_psi+.02))
+                seed_step=plan.get('seed_steps_by_year',{}).get(str(year),plan['seed_steps'][args.arm])
+                proposal_step=plan.get('proposal_step',seed_step) if trials else seed_step
+                psi=next_psi(trials,center,proposal_step,(initial_psi-.20,initial_psi+.02))
+                if not trials and not seen and str(year) in plan.get('initial_psi_by_year',{}):psi=float(plan['initial_psi_by_year'][str(year)])
                 if any(abs(psi-v)<1e-6 for v in seen):
                     psi=float(np.clip(center+(attempt+1)*plan['seed_steps'][args.arm],initial_psi-.20,initial_psi+.02))
                     if any(abs(psi-v)<1e-6 for v in seen):break
@@ -126,6 +162,11 @@ def main():
                         if plan.get('verified_native_smoke') and plan.get('initialization_native_prefix',True):
                             q=read(plan['verified_native_smoke'])['final'];k=min(count,len(q['prices']))
                             prices[:k]=q['prices'][:k];pensions[:k]=q['fiscal_values'][:k]
+                    if finite_sequence and warm is not None:
+                        f=warm.get('final') or warm['best'];offset=(year-warm_year)//4
+                        for arr,key,tail in ((prices,'prices',float(terminal.policy.price[0])),(pensions,'fiscal_values',float(terminal.parameters.pension))):
+                            source=np.asarray(f[key])[offset:];take=min(count,len(source));arr[:take]=source[:take]
+                            if take<count:arr[take:]=np.linspace(arr[take-1],tail,count-take+1)[1:]
                     if previous is not None:
                         f=previous.root_receipt.get('final') or previous.root_receipt.get('best')
                         if f is not None:
@@ -134,20 +175,24 @@ def main():
                         rc=copy.deepcopy(plan['history_root_controls']);rc['initial_jacobian']=None
                         if continuation==0 and plan.get('initialization_receipt') and len(initial_coordinates['prices'])==count:
                             rc['initial_jacobian']=init.get('final_jacobian')
+                        if finite_sequence and warm is not None:
+                            rc['initial_jacobian']=warm.get('final_jacobian') if warm_year==year else None
                         if continuation and result is not None:
                             f=result.root_receipt.get('final') or result.root_receipt.get('best')
                             if f is None:break
                             prices=np.asarray(f['prices']);pensions=np.asarray(f['fiscal_values']);rc['initial_jacobian']=result.root_receipt.get('final_jacobian')
                         stage=folder/f'forecast_{count}_{continuation}';stage.mkdir();state.update(phase='forecast',dates=count,continuation=continuation);save(out/'latest_stage.json',state)
-                        snapshot={};measurements=[]
+                        snapshot={};measurements=[];dated_allocation={}
                         def observe(i,e,P,grid,shared):
-                            if i==0:measurements.clear();snapshot.clear();snapshot.update(parameters=P,b_grid=grid,evaluation=e,shared=shared,supply_rule=old.supply_rule)
+                            if i==0:measurements.clear();dated_allocation.clear();snapshot.clear();snapshot.update(parameters=P,b_grid=grid,evaluation=e,shared=shared,supply_rule=old.supply_rule)
+                            if year+4*i==2023:
+                                dated_allocation.update(calendar_year=2023,large_owner_age_cells=large_owner_observation(e,P),interpretation='Expected2023allocation within this forecast vintage, not automatically realized history')
                             measurements.append(dict(calendar_year=year+4*i,**fertility.period_fertility_diagnostics(e,P)))
                             save(stage/'latest_date.json',dict(year=year+4*i));state['last_completed_year']=year+4*i
                         def progress(record):
                             save(stage/'latest_completed.json',record)
                             if record.get('new_best'):save(stage/'best_so_far.json',record)
-                        if continuation==0 and plan.get('initialization_native_prefix') is False:
+                        if continuation==0 and plan.get('initialization_native_prefix') is False and not finite_sequence:
                             if (len(initial_coordinates['prices'])!=count or
                                 not np.array_equal(prices,np.asarray(initial_coordinates['prices'])) or
                                 not np.array_equal(pensions,np.asarray(initial_coordinates['fiscal_values']))):
@@ -156,8 +201,12 @@ def main():
                         result=surprise.solve_surprise(inherited=inherited,psi=psi,old_state=old,terminal=terminal,terminal_root_receipt=tr,
                             demographic_primitives=demographics,terminal_demographic_primitives=t['demographic_seed'],count=count,initial_prices=prices,initial_pensions=pensions,
                             audit_controls=audit,root_controls=rc,deadline_monotonic=min(fit_deadline,time.monotonic()+(1800 if count==6 else 7200)),pension_tail_tolerance=.01,callback=progress,observer=observe)
+                        result=carry_finite_diagnostic(result,enabled=finite_sequence,inherited=inherited,old=old,demographics=demographics,psi=psi,module=surprise)
+                        if dated_allocation:save(stage/'allocation_2023.json',dict(dated_allocation,finite_converged=result.root_receipt['finite_horizon_market_fiscal_converged'],horizon_verified=False,forecast_vintage_year=year))
                         surprise.persist_episode(stage/'vintage',year,result,provenance={'plan_sha256':sha(args.plan),'terminal_contract_sha256':sha(folder/'terminal_contract.json'),'target_fingerprint':plan['target_fingerprint']})
                         save(stage/'fertility.json',measurements);previous=result
+                        if finite_sequence and (result.root_receipt.get('final') or result.root_receipt.get('best')):
+                            warm=result.root_receipt;warm_year=year
                         if plan.get('forecast_diagnostic_only',False) and result.root_receipt['finite_horizon_market_fiscal_converged']:
                             standard_graphs(snapshot,result,out/'native_graphs')
                             save(out/'summary.json',dict(status='finite_forecast_diagnostic_only',dates=count,year=year,psi=psi,data=desired,
@@ -185,16 +234,20 @@ def main():
                     save(folder/'rejected.json',dict(stage='forecast_or_terminal_distance'));continue
                 standard_graphs(snapshot,result,folder/'accepted_graphs')
                 value=measurements[0]['period_tfr_topcode_adjusted'];error=value-desired;trials.append((psi,error))
-                save(folder/'fit.json',dict(year=year,psi=psi,data=desired,model=value,gap=error,measurement='retained household-rate analogue of published femaleTFR'))
+                save(folder/'fit.json',dict(finite_horizon_diagnostic=finite_sequence,terminal_distance_passed=result.root_receipt['terminal_distance_passed'],year=year,psi=psi,data=desired,model=value,gap=error,measurement='retained household-rate analogue of published femaleTFR'))
                 if winner is None or abs(error)<winner['error_abs']:
-                    winner=dict(error_abs=abs(error),psi=psi,model=value,data=desired,year=year,folder=str(stage));winner_state=result.next_state
+                    winner=dict(error_abs=abs(error),psi=psi,model=value,data=desired,year=year,folder=str(stage),finite_horizon_diagnostic=finite_sequence,terminal_distance_passed=result.root_receipt['terminal_distance_passed']);winner_state=result.next_state;winner_receipt=result.root_receipt
                     save(out/'best_so_far.json',dict(realized=realized,current=winner))
                     with gzip.open(folder/'first_period_diagnostics.pkl.gz','wb',compresslevel=1) as f:pickle.dump(snapshot,f,protocol=5)
                 if abs(error)<=plan['fertility_fit_tolerance']:break
             if winner is None:raise RuntimeError('No accepted full forecast for this inherited state')
             if winner['error_abs']>plan['fertility_fit_tolerance']:raise RuntimeError('Shock fit did not meet declared tolerance; do not carry inaccurate fit forward')
-            realized.append(winner);inherited=winner_state;save(out/'realized_fit.json',realized)
+            realized.append(winner);inherited=winner_state;warm=winner_receipt;warm_year=year;save(out/'realized_fit.json',realized)
             with gzip.open(out/f'realized_state_{inherited.year}.pkl.gz','wb',compresslevel=1) as f:pickle.dump(inherited,f,protocol=5)
+        if finite_sequence:
+            save(out/'finite_horizon_sequence_fit.json',dict(realized=realized,historical_fit_complete=False,finite_horizon_sequence_fit_complete=True,horizon_verified=False,production_eligible=False,forecast_counts=plan['forecast_counts']))
+            save(out/'summary.json',dict(status='finite_horizon_sequence_fit_complete',realized=realized,horizon_verified=False,production_eligible=False,policies_launched=False))
+            return
         save(out/'historical_fit_complete.json',dict(realized=realized,measurement_approximation_retained=True,horizon_verified=False))
         state['phase']='policy'
         from run_e5f_successive_surprise_policy import run_policies

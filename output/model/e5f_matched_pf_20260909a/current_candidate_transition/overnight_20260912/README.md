@@ -1,3 +1,28 @@
+## Parallel sequence fit — September12
+
+Torch array **17498666**: arms0/1/2 fit successive unanticipated shocks with
+6/12/28forecast dates, within3/5/8hours. Arm3 fits the stationary2019patch's last
+shock, within3hours. Source/plan/receipt batch:
+`/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/finite_sequences_20260912`.
+All25startup pure tests pass. Pinned numerical native forecast is reused as a
+warm start; every new forecast and first-period state must replay exactly.
+
+No terminal failure is relabeled as a pass: these searches allow explicitly
+provisional finite-horizon state carry. No policy runs or certified-history claim.
+Each window must fit within0.005before the next shock. All model/target parameters
+are unchanged; full initial fit/weight/parameter tables remain in verified_final.
+
+Patch status: early conditional stationary fits complete, forward2019test balanced,
+but its2019–23fertility **1.5590039164 vs1.64575**. Arm3 now fits that finalshock.
+Four static rows are not the fitted historical transition.2023model/data allocation
+will use the final2019vintage's saved2023occupation cells, not an earlier forecast.
+
+Expected search size: up to24preference trials per full arm,6forpatch; each has
+at most24root mappings plus exactreplay. Planning range1–3trials/window and
+2–6mappings/trial. Observed mapping times about170/350(estimated)/814seconds
+for6/12/28dates; wallcaps can stop the search before completion. Checkpoint and
+summary files retain all completed progress. No blind automatic round repeats.
+
 # September 12 autonomous cluster campaign
 
 **September 12 — supplemental transition panels delivered; temporary-IRF prerequisite failed.**

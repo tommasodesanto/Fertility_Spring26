@@ -1,5 +1,38 @@
 # Calibration Status
 
+**September 12 — successive-shock fits submitted in parallel; patch still needs fitting.**
+Array17498666 runs the diagnostic controller in
+`/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/finite_sequences_20260912`.
+Arms0/1/2 target all four fertility windows, carrying only each shock's first-period
+household state under its original expectations. Forecast lengths6/12/28dates;
+time caps3/5/8hours. Arm3 fits the final2019shock from the conditional stationary
+2019household distribution,3hours. All25pure loop/admission/replay tests passed.
+Each forecast retains the housing2e-4, PAYGO1e-6, household and exact-reproduction
+gates; original-expectations first-period replay is mandatory before state carry.
+
+This is an explicit FINITE-HORIZON diagnostic: the controller can carry a balanced
+forecast whose terminal-distance test fails, while preserving that failed flag.
+The default strict solver and production admission are unchanged. Even complete
+finite-sequence fits are not horizon-certified histories; policies are disabled.
+Six preference trials/window, at most three8-mapping root continuations/trial,
+and fixed wall budgets; an unmatched window cannot be carried forward. Saved
+warm coordinates/Jacobians are reused within a vintage; across vintages the path
+is shifted one date and the Jacobian resets. Original model/targets/weights and
+historical initial checkpoint120ffc45... remain pinned. Standard17graphs,
+checkpoint reload checks, latest/best summaries and2023large-owner age cells saved.
+Source: `code/cluster/prepare_e5f_finite_sequences.py`; controller is the isolated
+batch copy of `code/model/tools/run_e5f_successive_surprises_overnight.py`.
+
+Patch17497354_0 completed and passed finite housing/PAYGO/reproduction, but final
+window fertility is1.5590039164103253 against1.64575, gap-0.08674608358967473.
+Thus the stationary fits and a balanced2019forward forecast exist; the fitted
+patch does not yet exist. New arm3 searches that final preference rather than
+presenting the static result as transition fertility. The external2023person
+anchor and conditional2019stationary approximation remain explicit limitations.
+The four submitted jobs await/enter cluster scheduling; submission alone is not
+proof of computation. Monitoring checks actual latest-stage artifacts.
+
+
 **September12 — consistent dated2023 aggregate and historical diagnostic figures delivered.**
 The slides task requests equilibrium first, then historical fit, then2023crosssection.
 Collected completed28date forecast into overnight_20260912/forecast_28_completed.
