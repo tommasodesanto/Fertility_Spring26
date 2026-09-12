@@ -1,5 +1,37 @@
 # Calibration Status
 
+**September12 — presentation packet based on the stationary-history patch delivered.**
+Seven visually inspected pages at `output/pdf/e5f_patch_review.pdf`, with separate
+slide PDFs/PNGs under overnight_20260912/patch_readout/figures. Reproduce with
+`code/model/tools/build_e5f_patch_readout.py`. Fertility history uses ONLY three
+stationary window fits ending2011/15/19 plus the actual2019–23forward patch value
+1.5590039164vs1.64575. No single2007permanent-shock path substituted. May-style
+fourpanel2023equilibrium, threepanel2023lifecycle, sixbarlarge-owner allocation,
+plus supplementary agefertility, levelvalidation and finite2019–39price/quantity
+paths are available. Slides task received the checked files and owns deck edits.
+
+Native observer replay17498757 exactly reproduces all saved2019forecast aggregates
+(maxabsoluteerror0,190.6seconds), using pinned initialcheckpoint120ffc45...
+and forecastreceipt52b8241559ae6c7d29adcf67fb87d919ea3f84544d83af2f8bf19209e12ce2a9.
+It supplies actual post-choice2023profiles, not stationary2023replacement profiles.
+Readout-only17498744 failed before solving due omitted sequential initialization;
+corrected explicit initialization then replay passed. No model/calibration change.
+
+Untargeted2023validation, ages22–85, data/model: ownership61.8763/55.3886percent;
+meanrooms(capped9)5.598717/6.072524; childrenhome27.0697/33.5058percent. Model
+childdefinition remainsdependentcount versus ACSresidentownminor; their late-age
+gap must not be labeled exactresidentminorfit. Model has excessive old-age housing
+and too many older households with dependents. All data use actual2023ACS42metros,
+HHWT heads. Lead corrected delegated owner-onlychild and head-onlyfemale filters;
+only corrected reruns plotted. Metadata and CSVs in patch_readout/data.
+
+Agefertility is supplemental: model2023–27annualizedbirths/households versus2023
+ACSfemale recentbirthreports/PERWT, allwomen18–49; denominator, clock and multiple-
+birth differences prevent an exactsame-measureclaim.2023demographictotals/age
+shares are externally conditioned inputs. Neither the matchedfinalfertilitywindow
+nor horizon certification is complete. Arrays17498666remain separate ongoing fits.
+
+
 **September 12 — successive-shock fits submitted in parallel; patch still needs fitting.**
 Array17498666 runs the diagnostic controller in
 `/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/finite_sequences_20260912`.
