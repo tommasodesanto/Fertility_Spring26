@@ -2,6 +2,8 @@
 
 Active documents:
 
+- [Mock presentation feedback](../docs/model/MOCK_PRESENTATION_FEEDBACK.md): running list of mock concerns, hand edits, technical questions, and their resolutions.
+
 - Slides-only collaboration handoff: `../docs/prompts/HANDOFF_september14_slides.md`.
   It identifies the single working deck, technical task contacts, and the
   September 11 utility/pension updates and their presentation status below.
