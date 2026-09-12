@@ -2,7 +2,7 @@
 #SBATCH --account=torch_pr_570_general
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=32G
-#SBATCH --time=00:45:00
+#SBATCH --time=02:00:00
 set -euo pipefail
 umask 077
 module load stata/19.0
@@ -16,8 +16,35 @@ else
     arm=toy
 fi
 outdir="$task_root/results/$arm"
+if [[ "$phase" == toy ]]; then
+    outdir="$task_root/results/smoke_${SLURM_JOB_ID}/toy"
+fi
 mkdir -p "$outdir"
 cd "$outdir"
+started_epoch=$(date +%s)
+write_receipt() {
+    result_code=$?
+    trap - EXIT
+    python3 - "$task_root" "$outdir" "$arm" "$started_epoch" "$result_code" <<'PY'
+import hashlib,json,pathlib,sys,time
+root,out,arm,started,code=sys.argv[1:]
+root,out=pathlib.Path(root),pathlib.Path(out)
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+passed=int(code)==0 and (out/'completion.txt').exists()
+r=dict(arm=arm,route='Torch Stata 19',status='pass' if passed else 'failed',
+       exit_code=int(code),elapsed_seconds=time.time()-int(started),
+       estimator_do_sha256=sha(root/'audit_original_rooms_timing.do'),
+       data_sha256=sha(root/'analysis_sample.dta'),microdata_uploaded=True)
+hp=out/'sample_key_hashes.json'
+if hp.exists():
+    hashes=json.loads(hp.read_text())
+    if 'private_sample_keys.csv' in hashes:r['sample_keys_sha256']=hashes['private_sample_keys.csv']
+(out/'run_receipt.json').write_text(json.dumps(r,indent=2)+'\n')
+PY
+    exit "$result_code"
+}
+trap write_receipt EXIT
+(cd "$task_root" && sha256sum -c SHA256SUMS > "$outdir/source_verification.txt")
 cp "$task_root/audit_original_rooms_timing.do" .
 cat > entry.do <<EODO
 clear all
@@ -27,6 +54,7 @@ version 17.0
 sysdir set PLUS "$task_root/ado/"
 adopath ++ "$task_root/ado/"
 log using "$outdir/estimation.log", replace text
+mata: mata mlib index
 EODO
 if [[ "$phase" == full ]]; then
     printf 'use "%s/analysis_sample.dta", clear\n' "$task_root" >> entry.do

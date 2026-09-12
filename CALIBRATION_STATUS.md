@@ -1,5 +1,19 @@
 # Calibration Status
 
+**September 12 — authorized PSID cluster comparison is running.**
+After the matched macOS crash diagnosis, Tommaso explicitly requested moving
+this data comparison to Torch. The verified prepared sample and pinned ado/
+estimator files were transferred to his private task directory. First smoke
+17490198 exposed an unindexed Mata library; adding `mata mlib index` to the
+entrypoint resolved it. The unchanged three-fit numerical/export loop passed
+as 17490246, including paired sample-key equality. Real array 17490247_0–2
+now runs original_native/original_common/aligned_common in parallel, each on
+8 CPUs/32 GB with a two-hour cap. All three running heartbeats were checked.
+No real-data estimates are claimed yet; no model job or target change is involved.
+Submission and aggregate evidence are under the audit's
+`timing_local/torch_20260912/`; the finite collection follow-up uses the existing
+`morning-psid-data-audit` automation. No automatic regression retries.
+
 **September 12, 13:15 UTC — first-window short forecast matches; full review PDF ready.**
 Warm follow-up 17488254_0 passed its six-date native root and produces
 1.974855548 versus 1.974875 in the first empirical window (gap -0.000019452).

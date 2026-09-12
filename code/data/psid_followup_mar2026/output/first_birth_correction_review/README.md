@@ -358,3 +358,30 @@ No comparison graph or replacement target was obtained. No regression was
 restarted at the morning review. Failed receipts/log are preserved under
 `code/data/psid_followup_mar2026/output/first_birth_correction_review/timing_local/overnight_20260912/`.
 Next step is to diagnose the Stata process exit before another full fit.
+
+## Authorized cluster continuation
+
+**September 12 — authorized PSID cluster comparison is running.**
+After the matched macOS crash diagnosis, Tommaso explicitly requested moving
+this data comparison to Torch. The verified prepared sample and pinned ado/
+estimator files were transferred to his private task directory. First smoke
+17490198 exposed an unindexed Mata library; adding `mata mlib index` to the
+entrypoint resolved it. The unchanged three-fit numerical/export loop passed
+as 17490246, including paired sample-key equality. Real array 17490247_0–2
+now runs original_native/original_common/aligned_common in parallel, each on
+8 CPUs/32 GB with a two-hour cap. All three running heartbeats were checked.
+No real-data estimates are claimed yet; no model job or target change is involved.
+Submission and aggregate evidence are under the audit's
+`timing_local/torch_20260912/`; the finite collection follow-up uses the existing
+`morning-psid-data-audit` automation. No automatic regression retries.
+
+Reproduction/collection command (from the repository root):
+
+```bash
+python3 code/data/psid_followup_mar2026/audit_original_rooms_timing.py /tmp/psid_original_timing_20260912b --collect-cluster --run-label torch_20260912
+```
+
+The collector accepts only the pinned estimator/sample hashes and an explicit
+aggregate-file whitelist. Its initial live check correctly reported all three
+fits pending; no microdata or private sample keys are collected. The existing
+renderer checks the common-sample digests before the complete comparison.

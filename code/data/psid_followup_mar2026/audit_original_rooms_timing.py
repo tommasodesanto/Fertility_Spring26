@@ -14,6 +14,7 @@ import shutil
 import csv
 import os
 import sys
+import shlex
 
 ROOT = Path(__file__).resolve().parents[3]
 SOURCE = ROOT.parent / 'Codes/code_per tommi_addingcontrolsandfixingthings.do'
@@ -187,6 +188,49 @@ log close _all
     print(json.dumps(receipt, indent=2))
 
 
+def collect_cluster(run_label):
+    """Collect only aggregate outputs from this authorized, frozen Torch batch."""
+    assert run_label and run_label.replace('_', '').isalnum()
+    remote = '/scratch/td2248/projects/Fertility_Spring26_original_rooms_timing_20260912b'
+    names = ['run_receipt.json', 'coefficients.csv', 'covariance.csv',
+             'fitted_support.csv', 'fit_receipt.csv', 'sample_key_hashes.json',
+             'completion.txt', 'estimation.log']
+    arms = ['original_native', 'original_common', 'aligned_common']
+    code = f'''import json,pathlib
+root=pathlib.Path({remote!r})/'results'
+payload={{}}
+for arm in {arms!r}:
+    p=root/arm
+    if (p/'run_receipt.json').exists():
+        payload[arm]={{n:(p/n).read_text() for n in {names!r} if (p/n).exists()}}
+print(json.dumps(payload))
+'''
+    response = subprocess.run(['ssh', '-o', 'BatchMode=yes', '-o', 'ConnectTimeout=10',
+                               'torch', 'python3 -c '+shlex.quote(code)],
+                              check=True, capture_output=True, text=True, timeout=90)
+    payload = json.loads(response.stdout)
+    destination = ROOT/'code/data/psid_followup_mar2026/output/first_birth_correction_review/timing_local'/run_label
+    states = {a: 'pending' for a in arms}
+    for arm, files in payload.items():
+        assert arm in arms and set(files) <= set(names)
+        receipt = json.loads(files['run_receipt.json'])
+        assert receipt['estimator_do_sha256'] == '601f031ef270d223bf24e6a0faae76c859b2f4cadd7487c19dad84a7d8dcfab6'
+        assert receipt['data_sha256'] == 'ede59bdb1ee42028dc97b6f35ee9d281e913ae0745bed777ce39bd6bdd9ba8eb'
+        out = destination/arm
+        out.mkdir(parents=True, exist_ok=True)
+        for name, text in files.items():
+            (out/name).write_text(text)
+        states[arm] = receipt['status']
+    if states['original_native'] == 'pass':
+        renderer = ROOT/'code/data/psid_followup_mar2026/render_original_rooms_timing.py'
+        command = [sys.executable, str(renderer), '--run-label', run_label]
+        if not all(s == 'pass' for s in states.values()):
+            command.append('--baseline-only')
+        subprocess.run(command, check=True, timeout=90,
+                       env=dict(os.environ, MPLCONFIGDIR='/tmp/psid_correction_review/matplotlib'))
+    print(json.dumps(states))
+
+
 def run_overnight(work, run_label, timeout=7200, total_budget=21600):
     """Three sequential, unchanged fits; stop at first failure, with no retries."""
     assert run_label and run_label.replace('_', '').isalnum()
@@ -247,8 +291,12 @@ if __name__ == '__main__':
     parser.add_argument('--processors', type=int, default=8)
     parser.add_argument('--run-label', default='')
     parser.add_argument('--overnight', action='store_true')
+    parser.add_argument('--collect-cluster', action='store_true')
     args = parser.parse_args()
-    if args.overnight:
+    if args.collect_cluster:
+        assert not args.overnight and args.run is None
+        collect_cluster(args.run_label)
+    elif args.overnight:
         assert args.run is None
         run_overnight(args.work.resolve(), args.run_label, args.timeout)
     elif args.run:
