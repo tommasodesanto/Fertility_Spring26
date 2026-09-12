@@ -9,7 +9,11 @@ Active documents:
 - `september_14_presentation.tex`: the single working September 14 seminar
   presentation. The reader PDF is `../output/pdf/september_14_presentation.pdf`;
   `september_14_presentation.pdf` is an identical build copy. The September 10
-  refocus follows the May deck's appearance and model/empirical/policy structure.
+  refocus follows the May deck's appearance. The September 11 structure follows
+  May: Quantitative Model, a short Empirics section, then Quantification.
+  Empirics contains the data overview and the AHS and PSID evidence frames.
+  Quantification contains empirical discipline, calibration and transition
+  strategy, and the policy comparisons; policy has no separate section divider.
   It presents the quantitative household environment, sequential choices,
   population accounting, equilibrium, and a policy comparison introduced along
   the same inherited transition. The three original August
@@ -41,8 +45,9 @@ Active documents:
   **Unresolved choices (kept outside audience-facing slides).** Sequential
   choice is retained and explicitly named for exposition; the comparison with
   simultaneous fertility nests does not itself promote either arm. Initial
-  fertility 2.1 is author-selected. Initial-economy-first versus joint
-  transition estimation, the final measurement/calendar mappings, and the
+  fertility 2.1 is author-selected. The approved strategy calibrates the initial
+  economy before fitting the preference path. Its final parameterization,
+  measurement/calendar mappings, and the
   initial/dynamic supply, demographic, and fiscal closures remain governed
   by `../CALIBRATION_STATUS.md`; this edit does not adopt a new target contract.
   The rebated-tax frame defines a conditional policy experiment with one common
@@ -57,6 +62,23 @@ Active documents:
   (43 PDF pages including overlays and dividers). Two final compilation passes
   have no warnings or overfull boxes; all frames were visually inspected and
   all figure paths and the remaining appendix link resolve.
+
+  **September 11 structure revision.** The illustrative transition frames remain
+  in the model section. `Calibration and Transition Strategy` replaces the
+  generic initial-economy frame: approximate pre-2007 calibration, observed 2007
+  age initialization preserving within-age household states, then an announced
+  historical preference path with structural parameters held fixed. Preferences
+  stay flat after 2023; anticipated prices and pensions are solved jointly, with
+  continuation checks before policy comparisons from the inherited 2023 state.
+  Sources are `../output/model/e5f_matched_pf_20260909a/OVERNIGHT_PLAN.md`, sections
+  4--5, and the named quantitative task's September 11 reply to this structure
+  request. Initial moments pool pre-crisis waves; the retained PSID event response
+  uses its pooled estimator, not a literal 2007 cross-section. The slide presents
+  a strategy, not a completed historical fit. Linear-amplitude trials do not
+  settle the final path parameterization. The female-exposure/maternal-age mapping
+  remains unresolved, and the new capped initial candidate has no verified
+  historical or policy fit. Current numerical status remains in
+  `../CALIBRATION_STATUS.md` (22:06 EDT update at this revision).
 
   **September 11 slides-only pass.** `Family Space` and `Empirical Discipline`
   now use the parenthood-only requirement `h_P 1{m>0}`, while dependents are

@@ -86,10 +86,10 @@ Need a framework where fertility, tenure, housing size, saving, and population a
 \alert{Empirics:} housing around births, birth timing, and wealth by age
 
 \vfill
-\alert{Policy:} compare housing reforms along a demographic transition
+\alert{Quantification:} calibrate the model and study the demographic transition
 \begin{itemize}
-  \item An externally specified decline in fertility preferences starts the transition.
-  \item Introduce the reform along the path, from the same inherited state.
+  \item Discipline the initial economy and the decline in fertility preferences.
+  \item Compare housing policies from the same inherited transition state.
 \end{itemize}
 \end{frame}
 
@@ -497,11 +497,11 @@ Smaller entering cohorts can reduce housing demand. Lower housing costs partly o
 The arrow links the illustrated equilibria. Changing age composition can produce overshooting; it is not a computed transition or a convergence result.
 \end{frame}
 
-\section{Empirics and Quantification}
+\section{Empirics}
 
 \begin{frame}[plain,c,noframenumbering]{}
 \centering
-{\Large\textbf{Empirics and Quantification}}
+{\Large\textbf{Empirics}}
 \end{frame}
 
 \begin{frame}{Data}
@@ -532,6 +532,13 @@ Rooms increase around first birth, including before the birth. The four-year con
 \source{PSID; Sun--Abraham event study, household-aligned sample; pointwise 95\% intervals.}
 \end{frame}
 
+\section{Quantification}
+
+\begin{frame}[plain,c,noframenumbering]{}
+\centering
+{\Large\textbf{Quantification}}
+\end{frame}
+
 \begin{frame}{Empirical Discipline}
 \small
 Different moments inform the fertility, housing, and saving decisions jointly.
@@ -553,23 +560,25 @@ Housing supply & Housing quantities and price responses & $H_0$, $\eta$ \\
 A moment can inform several parameters; identification depends on their joint effects.
 \end{frame}
 
-\begin{frame}{The Initial Economy and the Transition}
-\begin{itemize}\setlength\itemsep{0.7em}
- \item Use an approximate pre-2007 stationary economy for inherited household states.
- \item The chosen initial fertility benchmark is 2.1.
- \item Introduce the announced preference decline and compare dated model outcomes with the data.
- \item Treat the 2023 economy as a point along the transition.
-\end{itemize}
+\begin{frame}{Calibration and Transition Strategy}
+\small
+Calibrate structural parameters first, then estimate the fertility-preference decline.
+
+\medskip
+\begin{enumerate}\setlength\itemsep{0.5em}
+ \item \textbf{Initial calibration.} Fit an approximate stationary economy to pre-crisis moments. Choose $\psi_0$ so model completed fertility equals 2.1.
+ \item \textbf{2007 initialization.} Impose observed age shares, preserving stationary household distributions within age.
+ \item \textbf{Historical fit.} Hold structural parameters fixed and fit an announced 2007--2023 preference path to dated fertility observations.
+\end{enumerate}
+
+\medskip
+Households learn the full path in 2007. Preferences remain constant after 2023.
+
+\medskip
+For each path, solve anticipated prices and pensions jointly with household choices. Continue beyond 2023 to check terminal effects.
 
 \vfill
-Period birth rates, completed cohort fertility, and births per household head are distinct measurements.
-\end{frame}
-
-\section{Housing Policy}
-
-\begin{frame}[plain,c,noframenumbering]{}
-\centering
-{\Large\textbf{Housing Policy}}
+Policy comparisons share the inherited 2023 transition state.
 \end{frame}
 
 \begin{frame}{Policy Along the Transition}
