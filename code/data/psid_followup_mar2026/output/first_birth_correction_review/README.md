@@ -280,11 +280,32 @@ Planned Torch execution uses three parallel fits, each 8 CPUs/32 GB with a
 per-fit receipts, full event covariance and sample-key digests. Person/year
 keys are removed after hashing; only aggregate outputs will be collected.
 
-**Current execution state: prepared and smoke-tested, real fits not launched.**
-Automatic approval review rejected transfer of the 57.6 MB minimal analysis
-sample to the author's private Torch directory because it contains person IDs
-and requires explicit authorization for that data export. User permission is
-pending. No microdata was uploaded. Private local inputs remain under
+**Current execution state: local original fit reached its cap without estimates.**
+Automatic approval review rejected the proposed Torch transfer; Tommaso then
+explicitly directed that this diagnostic run locally. No microdata was uploaded
+and no Torch job was launched. The cluster plan above is superseded. The local
+runner first tried eight threads with a 600-second cap, then one thread with
+a 300-second cap; both stopped without estimates. Failed logs/receipts are
+retained in `timing_local/original_native/` and `timing_local/p1/original_native/`.
+A CPU sample showed active OpenMP computation/synchronization. A small paired
+thread-count check reproduced coefficients to numerical precision but did not
+establish a speed advantage for one thread. A proposed algebraic acceleration
+was reviewed but was not implemented or used.
+
+After the author's renewed instruction to proceed, the unchanged original
+fit ran under `baseline_complete`, with eight threads and a 2,700-second cap.
+It stopped after 2,701.63 seconds without estimates; the failed receipt and log
+are in `timing_local/baseline_complete/original_native/`. No regression remains
+running. The historical comparison's approximately 31-minute runtime did not
+predict this fit's completion. Exact-loop validation had passed before launch,
+but the real-data reproduction and all timing-only comparisons remain pending.
+`../../render_original_rooms_timing.py --run-label baseline_complete --baseline-only`
+is prepared to compare a successfully completed baseline with May; it requires
+a passing receipt and cannot produce a reproduction from this failed run.
+The separate author-requested overnight calibration task was instructed to
+retain 0.7202462623815278 rooms and its existing weight provisionally. No validated
+replacement target has been produced by this audit.
+Private inputs remain under
 `/tmp/psid_original_timing_20260912b/`; no microdata is committed here.
 Preflight evidence is in `preparation_receipt.json`, `sample_comparison.json`,
 `matched_reference_support.csv`, and `timing_comparison_preflight.json`.

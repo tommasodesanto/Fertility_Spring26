@@ -25,9 +25,18 @@ Follow-up: Tommaso identified the Ludovica-era `Codes/code_per tommi_addingcontr
 as the recognized regression reference. A byte-preserved copy is now in the
 audit evidence. Three timing-only fits are prepared and their synthetic loop
 passes; complete input samples are 361,231 original, 394,167 shifted, and
-352,250 common observations. Real fits are not launched: automatic approval
-review blocked the private Torch sample transfer pending explicit permission
-for the microdata export. No empirical target is changed.
+352,250 common observations. Tommaso explicitly chose local execution after
+the proposed Torch transfer was blocked; no microdata was uploaded. The
+600-second eight-thread and 300-second one-thread local tests ended without
+estimates. After Tommaso's renewed instruction to proceed, the unchanged
+original fit ran locally and stopped at its 45-minute cap (2,701.63 seconds)
+without estimates. Its failed receipt and log are preserved under the audit's
+`timing_local/baseline_complete/original_native/` output. No regression remains
+running; the original-versus-May graph and timing-only comparison are pending.
+No arithmetic optimization, timing-shifted regression, or empirical target change
+has been implemented. For the author-requested separate overnight calibration
+task, the recommendation is to retain 0.7202462623815278 and its existing weight
+provisionally; this audit has not supplied a validated replacement.
 Evidence and reproducible driver:
 `code/data/psid_followup_mar2026/output/first_birth_correction_review/README.md`.
 

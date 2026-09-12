@@ -10,6 +10,7 @@ import json
 from pathlib import Path
 import subprocess
 import time
+import shutil
 
 ROOT = Path(__file__).resolve().parents[3]
 SOURCE = ROOT.parent / 'Codes/code_per tommi_addingcontrolsandfixingthings.do'
@@ -124,7 +125,74 @@ log close _all
     print(json.dumps(receipt, indent=2))
 
 
+def run_local(work, arm, timeout, processors=8, run_label=''):
+    """Run one bounded local fit; retain aggregate evidence, never upload data."""
+    prep = json.loads((work/'preparation_receipt.json').read_text())
+    assert prep['status'] == 'pass'
+    assert sha(work/'analysis_sample.dta') == prep['analysis_sample_sha256']
+    assert sha(SOURCE) == SOURCE_SHA256
+    script = ROOT/'code/data/psid_followup_mar2026/audit_original_rooms_timing.do'
+    assert processors in (1,2,4,8)
+    assert not run_label or run_label.replace('_','').isalnum()
+    out = work/'local'/run_label/arm
+    out.mkdir(parents=True, exist_ok=False)
+    out.chmod(0o700)
+    entry = out/'entry.do'
+    entry.write_text(f'''clear all
+set more off
+set processors {processors}
+version 17.0
+log using "{out}/estimation.log", replace text
+use "{work}/analysis_sample.dta", clear
+do "{script}" {arm} "{out}"
+log close _all
+''')
+    receipt = {'arm': arm, 'route': 'local Stata', 'status': 'running',
+               'timeout_seconds': timeout, 'data_sha256': prep['analysis_sample_sha256'],
+               'estimator_do_sha256': sha(script), 'source_sha256': SOURCE_SHA256,
+               'microdata_uploaded': False, 'processors': processors, 'run_label': run_label}
+    started = time.monotonic()
+    process = subprocess.Popen([str(STATA), '-bq', 'do', str(entry)], cwd=out)
+    try:
+        while process.poll() is None:
+            elapsed = time.monotonic()-started
+            log = out/'estimation.log'
+            heartbeat = {'arm': arm, 'elapsed_seconds': elapsed, 'pid': process.pid,
+                         'log_bytes': log.stat().st_size if log.exists() else 0}
+            (out/'heartbeat.json').write_text(json.dumps(heartbeat)+'\n')
+            if elapsed > timeout:
+                process.terminate()
+                process.wait(timeout=15)
+                raise TimeoutError(f'{arm} exceeded {timeout}-second cap')
+            time.sleep(2)
+        log_text = (out/'estimation.log').read_text()
+        assert process.returncode == 0 and f'\nORIGINAL_TIMING_ARM_PASS {arm}\n' in log_text
+        assert sha(script) == receipt['estimator_do_sha256']
+        receipt.update(status='pass', elapsed_seconds=time.monotonic()-started,
+                       sample_keys_sha256=sha(out/'private_sample_keys.csv'))
+        (out/'private_sample_keys.csv').unlink()
+    except Exception as exc:
+        receipt.update(status='failed', error=str(exc), elapsed_seconds=time.monotonic()-started)
+        raise
+    finally:
+        (out/'run_receipt.json').write_text(json.dumps(receipt, indent=2)+'\n')
+        evidence = ROOT/'code/data/psid_followup_mar2026/output/first_birth_correction_review/timing_local'/run_label/arm
+        evidence.mkdir(parents=True, exist_ok=True)
+        for name in ['coefficients.csv','covariance.csv','fitted_support.csv','fit_receipt.csv','run_receipt.json','estimation.log']:
+            if (out/name).exists():
+                shutil.copy2(out/name,evidence/name)
+    print(json.dumps(receipt, indent=2))
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('work', type=Path)
-    prepare(parser.parse_args().work.resolve())
+    parser.add_argument('--run', choices=['original_native','original_common','aligned_common'])
+    parser.add_argument('--timeout', type=int, default=600)
+    parser.add_argument('--processors', type=int, default=8)
+    parser.add_argument('--run-label', default='')
+    args = parser.parse_args()
+    if args.run:
+        run_local(args.work.resolve(), args.run, args.timeout, args.processors, args.run_label)
+    else:
+        prepare(args.work.resolve())
