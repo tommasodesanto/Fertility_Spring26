@@ -9,6 +9,15 @@ def sha(p):
 def save(p,d):
     p=Path(p);p.parent.mkdir(parents=True,exist_ok=True);q=p.with_suffix('.tmp');q.write_text(json.dumps(d,default=lambda x:x.tolist() if hasattr(x,'tolist') else str(x),indent=2)+'\n');q.replace(p)
 
+def standard_graphs(snapshot,result,folder):
+    import run_e5f_independent_numerical_audit as diagnostic_writer
+    from unittest.mock import patch
+    original=diagnostic_writer.write_diagnostics
+    actual_rent=float(result.path.rows[0]['renter_price'])
+    def writer(stats,Q,destination):stats.owner_user_cost=np.array([actual_rent]);return original(stats,Q,destination)
+    with patch.object(diagnostic_writer,'write_diagnostics',writer):diagnostic_writer.standard_diagnostics(snapshot,folder,validate_production_young=False)
+    if len(list((folder/'standard_diagnostics').glob('*.png')))!=17:raise RuntimeError('Missing standard graphs')
+
 def next_psi(trials, initial, seed_step, bound):
     """Bracketed scalar proposals; do not extrapolate outside explicit bounds."""
     if not trials:return initial+seed_step
@@ -108,18 +117,20 @@ def main():
                                 if continuation==2:raise RuntimeError('Native exact-loop smoke failed after bounded continuations; no long new-timing solve')
                                 continue
                             smoked=True;save(out/'native_smoke.json',dict(passed=True,year=year,psi=psi,folder=str(stage)))
+                            if plan.get('native_smoke_only',False):
+                                standard_graphs(snapshot,result,out/'native_graphs')
+                                save(out/'summary.json',dict(status='native_smoke_only',year=year,psi=psi,data=desired,
+                                    model=measurements[0]['period_tfr_topcode_adjusted'],
+                                    gap=measurements[0]['period_tfr_topcode_adjusted']-desired,
+                                    finite_converged=True,historical_fit_complete=False,horizon_verified=False,production_eligible=False,
+                                    forecast_folder=str(stage),measurement_approximation_retained=True))
+                                return
                             break
                         if result.next_state is not None:break
                     if result is not None and result.next_state is not None:break
                 if result is None or result.next_state is None:
                     save(folder/'rejected.json',dict(stage='forecast_or_terminal_distance'));continue
-                import run_e5f_independent_numerical_audit as diagnostic_writer
-                from unittest.mock import patch
-                original_writer=diagnostic_writer.write_diagnostics
-                actual_rent=float(result.path.rows[0]['renter_price'])
-                def writer(stats,Q,destination):stats.owner_user_cost=np.array([actual_rent]);return original_writer(stats,Q,destination)
-                with patch.object(diagnostic_writer,'write_diagnostics',writer):diagnostic_writer.standard_diagnostics(snapshot,folder/'accepted_graphs',validate_production_young=False)
-                if len(list((folder/'accepted_graphs/standard_diagnostics').glob('*.png')))!=17:raise RuntimeError('Missing standard graphs')
+                standard_graphs(snapshot,result,folder/'accepted_graphs')
                 value=measurements[0]['period_tfr_topcode_adjusted'];error=value-desired;trials.append((psi,error))
                 save(folder/'fit.json',dict(year=year,psi=psi,data=desired,model=value,gap=error,measurement='retained household-rate analogue of published femaleTFR'))
                 if winner is None or abs(error)<winner['error_abs']:

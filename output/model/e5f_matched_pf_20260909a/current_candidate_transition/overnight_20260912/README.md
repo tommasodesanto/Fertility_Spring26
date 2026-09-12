@@ -1,5 +1,15 @@
 # September 12 autonomous cluster campaign
 
+## 09:00 UTC: completed calibration and first native equilibrium
+
+Calibration job 17440306 finished all three bounded batches and 252 search trials. Final loss **158.5411910626344**, a **0.438%** improvement from launch, reproduces twice. Beta is still at its estimated 0.99 cap. [verified_final/README.md](verified_final/README.md) contains all targets, weights, contributions and parameters/bounds; the full 17-graph packet is collected. This candidate does not replace the historical workers' pinned initial condition.
+
+Recovery arm 1 passed the six-date native root: maximum housing residual 1.13348e-4 and pension residual 7.92154e-7, within unchanged gates. Terminal-distance checks fail; its 28-date extension continues with valid mapping progress. The first forecast window gives fertility 1.72574 versus 1.974875 in data. This is an unfitted constant-preference forecast, not the realized historical sequence. [Native forecast PDF](native_smoke/native_forecast.pdf) and [PNG](native_smoke/native_forecast.png) are supplemental; their source rows, fiscal/horizon receipt and plot reproduction script are alongside them.
+
+Recovery arm 0 stopped at a 1.075e-8 relative cohort-mass discrepancy against the unchanged 1e-8 gate (absolute loss 2.75e-10). The old hypothesis of float32 tenure probability normalization has not been verified; no scientific code or gate changed.
+
+Independent diagnostic array **17486113_0–1** tests initial shocks -0.0225/-0.0275. Each gets 90 minutes, one CPU and 16 GiB; both were observed running with all 19 tests passed. These tasks stop after the six-date loop, retain diagnostic/horizon flags and cannot launch a history or policy. This is a bounded early-fertility/terminal-existence check, not another full calibration. Root: `/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/night_surprise_frontier_20260912`; plan SHA256 `9a804837c6ae5b10d4b001833efc0ae96a8fbf441c2c85eabf13c4c9a56b7571`; collector **17486114**. Inspect `results/arm_*/summary.json`, failure receipts and `native_graphs/standard_diagnostics/`. The long recovery arm and its conditional policy logic remain unchanged.
+
 ## 06:55 UTC recovery
 
 Arms 1 and 2 of the original array failed at the second native mapping with `KeyError: pension_relative_gap`. The native terminal report returns its global tolerance dictionary by reference; extending that returned dictionary polluted the next call. The adapter now deep-copies the report before adding the pension tail test. A repeated-root regression exercises the shared-dictionary case. All 19 tests pass locally, on Torch and inside the new workers. No equations or thresholds changed.

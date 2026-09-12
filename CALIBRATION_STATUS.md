@@ -1,5 +1,34 @@
 # Calibration Status
 
+**September 12, 09:00 UTC — initial refinement completed; native surprise smoke passes.**
+Calibration 17440306 completed all three bounded batches (252 new search trials).
+Final loss 158.5411910626 is 0.438% below the starting 159.2389860754, with two
+exact final repetitions; beta remains at the estimated cap 0.99. All 13 target
+rows, 17 parameter/restriction rows and 17 standard graphs are collected in
+`current_candidate_transition/overnight_20260912/verified_final/` under the
+matched-PF output folder. Its README contains the complete tables, and their
+12 scored contributions independently sum to the loss. No historical initial
+point was replaced.
+
+Recovery arm 17473943_1 (preference change -0.045) passed its six-date native
+root: maximum housing gap 1.13348e-4 and PAYGO gap 7.92154e-7, below the unchanged
+2e-4/1e-6 tolerances. Terminal-distance checks fail; the 28-date extension is
+still running and writing valid mappings. The short expected forecast gives
+first-window fertility 1.72574 versus data 1.974875, not a fitted history.
+Its supplemental figure and receipts are in `overnight_20260912/native_smoke/`.
+Recovery arm 0 failed the unchanged age-advancement mass gate: relative gap
+1.075e-8 versus 1e-8, absolute loss 2.75e-10. No gate was relaxed; the earlier
+float32-probability hypothesis remains unproven.
+
+Two new diagnostic-only tasks 17486113_0–1 are RUNNING, testing smaller declines
+-0.0225/-0.0275 for at most 90 minutes each. They stop after the native six-date
+loop and write the stable graphs; they cannot advance an uncertified history
+or launch policies. All 19 loop tests pass. Source-isolated batch is
+`batches/night_surprise_frontier_20260912`; collector 17486114 follows it.
+The long path and its conditional policies remain untouched. No policy result
+is yet verified. Usage tool now reports a changed window and 0% used; this task
+did not redeem a reset and retains the original conservative token discipline.
+
 **September 12, 06:55 UTC — transition adapter failure repaired; isolated retry running.**
 The first two viable-shock workers failed during their second native mapping:
 the adapter added its pension tolerance to a diagnostics object whose tolerance
