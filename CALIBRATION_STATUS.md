@@ -1,5 +1,19 @@
 # Calibration Status
 
+**September 12 — author chooses May empirical figures for the presentation.**
+Tommaso explicitly chose the historical May plots/original regression for today,
+deferring review of the subsequent corrections until after the presentation.
+This is a presentation-version decision, not a reversal of the verified rooms
+year-assignment finding or approval of a new calibration target. The existing
+presentation task received the instruction and a suggested disclosure:
+"Original May specification; measurement revisions under review."
+Post-presentation issues, evidence and closure requirements are recorded in
+`docs/model/POST_PRESENTATION_ISSUES.md`. No further empirical runs are launched;
+the data collection automation remains paused. May +3 = 0.796858555; its
++3-minus-−1 contrast = 0.740737457, versus pinned later target 0.720246262.
+The latter two differ by 0.020491195 rooms but use different specifications.
+Historical slide .66/.664 does not equal the saved May +3 coefficient.
+
 **September 12 — supplemental transition panels delivered; temporary-IRF prerequisite failed.**
 Two rendered/visually checked PDF/PNG pages and source series are available in
 current_candidate_transition/overnight_20260912/seminar_transition_panels under

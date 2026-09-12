@@ -568,3 +568,16 @@ Binning removes the annual alternation in the display, but the adjusted early
 pre-birth coefficients remain positive and imprecise, and the baseline is lower.
 Neither smoothness nor positive post coefficients certify parallel trends.
 No additional outcome or model run was launched; collection heartbeat paused.
+
+
+## Presentation decision and deferred ledger — September 12
+
+The author chose the historical May plots and original regression for the
+presentation, deferring review of revisions. This does not rescind verified
+measurement findings or promote a new calibration target. The post-presentation
+issues and closure requirements are in
+[POST_PRESENTATION_ISSUES.md](../../../../../docs/model/POST_PRESENTATION_ISSUES.md).
+The existing presentation task is restoring the four assets referenced by its
+May source, with an original-specification/measurement-review note; only rooms
+has been coefficient-by-coefficient reproduced in this audit. Empirical jobs
+are complete and collection remains paused; no additional runs are launched.
