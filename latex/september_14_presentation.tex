@@ -102,149 +102,124 @@ Need a framework where fertility, tenure, housing size, saving, and population a
 
 \begin{frame}{Environment}
 \small
-\begin{itemize}\setlength\itemsep{0.55em}
-  \item Overlapping generations of households in one competitive housing market.
-  \begin{itemize}
-    \item Rental space is size-limited; ownership offers larger homes but requires a down payment.
-  \end{itemize}
-  \item Households age from $a=0$ to $J$, survive with probability $s_a$, and retire at $a_R$.
-  \begin{itemize}
-    \item Birth attempts are possible during a fertile window $[a_F^0,a_F^1]$.
-    \item Children depend on their parents until they mature.
-  \end{itemize}
-  \item Households differ in liquid wealth $b$, inherited owned housing $h$, and persistent earnings $z$.
-  \begin{itemize}
-    \item Lifetime parity $n$ and dependent children $m$ describe their family composition.
-  \end{itemize}
-  \item Households choose birth attempts, tenure, housing size, consumption, and saving.
+\begin{itemize}\setlength\itemsep{0.4em}
+ \item Overlapping generations of households in one housing market.
+ \item Adult age $a\in[0,J]$, with survival probability $s_a$.
+ \begin{itemize}
+  \item Working life ends at $a_R$; fertile ages are $[a_F^0,a_F^1]$.
+  \item Children depend on their parents until they mature.
+ \end{itemize}
+ \item Households differ in wealth $b$, inherited housing $h$, earnings $z$, lifetime parity $n$, and dependent children $m$.
+ \begin{itemize}
+  \item Earnings follow a persistent Markov process.
+ \end{itemize}
+ \item Households choose:
+ \begin{itemize}
+  \item \textbf{Fertility:} whether to attempt the next birth, subject to taste shocks.
+  \item \textbf{Tenure and size:} rent up to a size limit or buy a home on a housing ladder.
+  \item \textbf{Consumption and saving:} subject to borrowing and down-payment constraints.
+ \end{itemize}
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Preferences}
 \small
-Households value consumption $c$, housing services $s$, and children at home $m$:
-\[
-u_t(c,s;m)
-=e(m)^{\sigma-1}
-\frac{\left[c^{\alpha_0}\bigl(s-\bar h(m)\bigr)^{1-\alpha_0}\right]^{1-\sigma}}
-{1-\sigma}
-+\psi_t m.
-\]
-Family size raises household needs through the equivalence scale $e(m)$ and the space requirement $\bar h(m)$.
+\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
+$m$: children currently at home; $c$: consumption; $s$: housing services.
 
 \medskip
-\begin{itemize}\setlength\itemsep{0.5em}
- \item $\alpha_0$ is the consumption share; $\sigma$ governs curvature.
- \item $\psi_t$ is the preference for children at date $t$.
- \item The equivalence scale $e(m)$ \cit{(Scholz et al., 2006)} is increasing and concave.
- \item Its shape is fixed externally and normalized to a childless couple.
-\end{itemize}
-\end{frame}
+\textbf{Flow utility.} Households value consumption, housing, and children:
+\[
+u_t(c,s;m)=e(m)^{\sigma-1}
+\frac{\left[c^{\alpha_0}\bigl(s-\bar h(m)\bigr)^{1-\alpha_0}\right]^{1-\sigma}}{1-\sigma}
++\psi_t m.
+\]
+$\alpha_0$ is the consumption share, $\sigma$ curvature, and $\psi_t$ the preference for children.
 
-\begin{frame}{Family Space}
-The first child creates a discrete increase in required housing services:
+\medskip
+\textbf{Family needs.} The equivalence scale $e(m)$ increases with family size; dependent children also require space:
 \[
 \bar h(m)=h_P\1\{m>0\}.
 \]
-$h_P$ is the housing requirement while dependent children are present.
-
-\medskip
-Housing services depend on tenure:
+\textbf{Housing services.} A household either rents or owns:
 \[
-s=\begin{cases}
-h^R,&\text{renter},\\
-\chi h',&\text{owner},
-\end{cases}
-\qquad \chi>0.
+s=\underbrace{\1\{\mathrm{own}\}\chi h'}_{\text{owner services}}
++\underbrace{\1\{\mathrm{rent}\}h^R}_{\text{renter services}},\qquad \chi>0.
 \]
-The multiplier $\chi$ converts owned rooms into housing services; $\chi>1$ gives an ownership premium.
-
-\vfill
-Child needs disappear as children mature; lifetime births remain in the state.
+\smallskip
+Child needs disappear after maturation; $\chi>1$ gives an ownership premium.
+\source{Equivalence-scale specification: Scholz et al. (2006); normalized to a childless couple.}
 \end{frame}
 
-\begin{frame}{Earnings and Bequests}
+\begin{frame}{Bequests}
 \small
-Gross earnings $y_t^g(a,z)$ combine an age profile and persistent income risk \cit{(De Nardi, 2004)}. Earnings state $z$ follows a Markov process; households receive pensions after working life.
-
-\medskip
-At death, households value estate wealth $w^e$:
+Terminal utility at death:
 \[
-\mathcal B(w^e)
-=\theta_0\frac{(\theta_1+\max\{w^e,0\})^{1-\sigma}}{1-\sigma}.
+\mathcal B(w^e)=\theta_0\frac{(\theta_1+\max\{w^e,0\})^{1-\sigma}}{1-\sigma}.
 \]
-$\theta_0$ governs the bequest motive; $\theta_1$ governs its sensitivity to wealth.
-
-\begin{itemize}\setlength\itemsep{0.5em}
-  \item Estate wealth includes liquid assets and housing wealth.
-  \item Bequests affect saving and old-age housing retention.
-  \item Entrant wealth is externally distributed; the model is not fully dynastic.
+\begin{itemize}
+ \vfill\item $\theta_0$ governs the strength of the bequest motive.
+ \vfill\item $\theta_1$ governs its sensitivity to wealth.
+ \vfill\item Estate wealth $w^e$ includes liquid assets and the market value of housing.
+ \vfill\item Entrant wealth is externally distributed; the model is not fully dynastic.
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Pensions}
+\begin{frame}{Earnings and Pensions}
 \small
-A fixed payroll tax $\tau^{SS}$ finances pensions $\varpi_t d(z)$, with retirement at age $a_R$:
-\[
-\tau^{SS}\int_{a<a_R}y_t^g(a,z)\,dG_t
-=\varpi_t\int_{a\geq a_R}d(z)\,dG_t.
-\]
-The pension $\varpi_t$ balances the budget using the actual household distribution $G_t$. The benefit multiplier $d(z)$ equals one for common benefits.
+\textbf{Gross earnings.} $y_t^g(a,z)$ depends on age and persistent earnings state $z$.
 
 \medskip
-Disposable earnings and pension income are:
+\textbf{Disposable income.} Workers pay a payroll tax; retirees receive pensions:
 \[
-y_t^d(a,z)=
-\begin{cases}
+y_t^d(a,z)=\begin{cases}
 (1-\tau^{SS})y_t^g(a,z),&a<a_R,\\
 \varpi_t d(z),&a\geq a_R.
 \end{cases}
 \]
-Households anticipate the pension path. Earnings and pensions are measured over the model period.
-
-\vfill
-Property-tax rebates $T_t$ have a separate budget.
-\end{frame}
-
-\begin{frame}{Housing and Tenure}
-Rental housing is continuous up to a size limit; owned housing comes in discrete sizes:
+\textbf{Balanced pensions.} A fixed tax $\tau^{SS}$ finances benefits each period:
 \[
-h^R\in[0,\bar h^R],\qquad
-h'\in\{0\}\cup\mathcal H^O,\qquad h'h^R=0.
+\tau^{SS}\int_{a<a_R}y_t^g(a,z)\,dG_t
+=\varpi_t\int_{a\geq a_R}d(z)\,dG_t.
 \]
-A household either rents or owns, and the largest owned homes exceed the rental limit.
-
-\medskip
-\begin{itemize}\setlength\itemsep{0.65em}
- \item Buying requires a down payment of $(1-\phi)P_t h'$.
- \item $P_t$ is the purchase price per room; $\phi$ is the financed share.
- \item Selling incurs a proportional transaction cost $\psi^s$.
- \item Borrowing is secured by housing; the debt limit tightens with age.
+\begin{itemize}\setlength\itemsep{0.4em}
+ \item $G_t$ is the household distribution; $d(z)=1$ for common benefits.
+ \item The pension $\varpi_t$ adjusts to balance the budget; households anticipate its path.
+ \item Property-tax rebates $T_t$ have a separate budget.
 \end{itemize}
+\source{Earnings process: De Nardi (2004).}
 \end{frame}
 
-\begin{frame}{Budget Constraints}
-\small
-Changing inherited owner size $h$ to $h'$ changes liquid resources by
+\begin{frame}{Housing, Tenure, and Budget Constraints}
+\footnotesize
+\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
+Households choose rental space $h^R$ or owned size $h'$; $r_t$ and $P_t$ are rent and purchase price per room:
 \[
-\mathcal T_t(h,h')=\1\{h'\neq h\}
-\left[(1-\psi^s)P_t h-P_t h'\right].
+h^R\in[0,\bar h^R],\qquad h'\in\{0,H_1,\ldots,H_K\},\qquad h'h^R=0.
 \]
-Housing transactions change liquid wealth before financial returns accrue.
+\textbf{Tenure segmentation:} the largest owned homes exceed the rental limit.
 
-\medskip
-For renters and owners, respectively,
+\smallskip
+\textbf{Renters} ($h'=0$), selling any inherited owned home $h$:
+\[
+b'=R_b\bigl[b+(1-\psi^s)P_t h\bigr]+y_t^d(a,z)+T_t-c-r_t h^R,
+\qquad b'\geq\underline b_a^R.
+\]
+\textbf{Owners} ($h^R=0$), with inherited owned size $h$:
 \[
 \begin{aligned}
-c+r_t h^R+b'&=R_b\bigl[b+\mathcal T_t(h,0)\bigr]+y_t^d(a,z)+T_t,\\[0.5em]
-c+(\delta_H+\tau_t^p)P_t h'+b'
-&=R_b\bigl[b+\mathcal T_t(h,h')\bigr]+y_t^d(a,z)+T_t.
+b'={}&R_b\!\left\{b-\1\{h'\neq h\}\bigl[P_t h'-(1-\psi^s)P_t h\bigr]\right\}\\
+&+y_t^d(a,z)+T_t-c-(\delta_H+\tau_t^p)P_t h',
+\qquad b'\geq\underline b_a^O.
 \end{aligned}
 \]
-$R_b$ is the gross financial return per period, $r_t$ rent per room, $\delta_H$ depreciation, $\tau_t^p$ the property-tax rate, and $T_t$ a transfer per household head.
-
-\vfill
-Households carry net liquid wealth $b$ into the period and choose saving $b'$.
+\smallskip
+\begin{itemize}\setlength\itemsep{2pt}
+ \item $R_b$: gross financial return; $\delta_H$: depreciation; $\tau_t^p$: property tax; $\psi^s$: sale cost.
+ \item A purchase requires a down payment of $(1-\phi)P_t h'$; $\phi$ is the financed share.
+ \item Debt floors $\underline b_a^R,\underline b_a^O$ depend on age, inherited liabilities, and collateral.
+\end{itemize}
+\hfill\hyperlink{borrowing-limits}{\beamergotobutton{Borrowing limits}}
 \end{frame}
 
 \begin{frame}{Sequential Fertility and Child Aging}
@@ -324,37 +299,37 @@ The Household's Problem%
 \setlength{\belowdisplayskip}{4pt}
 
 
+
 \only<1>{%
 \small
-At date $t$ and age $a$, write the household's inherited state as
+\textbf{State at date $t$ and age $a$.}
 \[
-x=(b,h,z,n,m).
+x=(b,h,z,n,m),\qquad h\in\{0,H_1,\ldots,H_K\}.
 \]
-$b$ is liquid wealth, $h$ owned housing ($h=0$ for renters), $z$ the earnings state, $n$ lifetime parity, and $m$ dependent children.
-
+\begin{itemize}\setlength\itemsep{3pt}
+ \item $b$: liquid wealth; $h$: inherited owner size ($h=0$ for renters); $z$: earnings.
+ \item $n$: lifetime parity; $m$: children currently at home.
+ \item A successful birth changes the state to $x^+=(b,h,z,n+1,m+1)$.
+\end{itemize}
 \medskip
-$V_{t,a}(x)$ is value before fertility choice; $\mathcal V_{t,a}(x)$ is value after the birth outcome, before housing choice.
-
-\medskip
-A successful birth changes the state to $x^+=(b,h,z,n+1,m+1)$. Households then choose housing and saving for the realized family size.
+\textbf{Values.} $V_{t,a}(x)$ is value before fertility choice; $\mathcal V_{t,a}(x)$ is value after the birth outcome and before housing tastes.
 }
 
 \only<2>{%
 \footnotesize
-After the birth outcome, housing and saving solve
+\textbf{Conditional on the realized family size:}
 \[
 \begin{aligned}
-\mathcal V_{t,a}(b,h,z,n,m)
-=\E_{\varepsilon_t^H}\max_{h',h^R,b'}
-\Bigl\{&u_t(c,s;m)+\varepsilon_t^H(h')\\
-&+\beta s_a\E\!\left[V_{t+1,a+1}(b',h',z',n,m')\mid z,m\right]\\
-&+\beta(1-s_a)\E_t[\mathcal B(w^e_{t+1})]\Bigr\}.
+\mathcal V_{t,a}(x)=\E_{\varepsilon^H}\max_{h',h^R,b'}\Bigl\{
+&u_t(c,s;m)+\varepsilon^H(h')\\
+&+\beta\E_t\!\left[s_a V_{t+1,a+1}(x')+(1-s_a)\mathcal B(w^e_{t+1})\right]\Bigr\}.
 \end{aligned}
 \]
-\begin{itemize}\setlength\itemsep{3pt}
-  \item Choices satisfy budgets, the rental size cap, down-payment requirements, and age-dependent debt limits.
-  \item Expectations integrate next period's earnings $z'$ and dependent-child count $m'$.
-  \item $\beta$ discounts the future, $s_a$ is survival, and $\kappa_H$ is the scale of housing tastes.
+\begin{itemize}\setlength\itemsep{0.5em}
+ \item Next period's state is $x'=(b',h',z',n,m')$: earnings and child maturation are uncertain.
+ \item A renter sets $h'=0$; an owner sets $h^R=0$. The budget determines consumption $c$.
+ \item Choices satisfy the rental cap, down payment, and debt limits.
+ \item $\beta$ discounts the future; $s_a$ is survival; housing tastes have scale $\kappa_H$.
 \end{itemize}
 }
 
@@ -827,6 +802,30 @@ Compare paths under the same rebate rule, with a common inherited state and supp
 \centering{\Large\textbf{Appendix}}
 \end{frame}
 
+
+
+\begin{frame}[label=borrowing-limits]{Borrowing Limits}
+\small
+After a housing transaction, liquid wealth is
+\[
+\widetilde b=b+\1\{h'\neq h\}\bigl[(1-\psi^s)P_t h-P_t h'\bigr].
+\]
+Let $D_{a+1}$ be the unsecured borrowing allowance and $\lambda_{a+1}$ govern repayment of inherited unsecured debt. Its lower bound is
+\[
+\mathcal L_{a+1}(u)=\min\{\lambda_{a+1}\min(u,0),-D_{a+1}\}.
+\]
+With collateral floor $C=-\phi P_t h'$, saving must satisfy
+\[
+\underbrace{b'\geq\underline b_a^R=\mathcal L_{a+1}(\widetilde b)}_{\text{renter}},
+\qquad
+\underbrace{b'\geq\underline b_a^O=C+\mathcal L_{a+1}(\widetilde b-C)}_{\text{owner}}.
+\]
+A purchase ($h'>0$, $h'\neq h$) separately requires
+\[
+b+(1-\psi^s)P_t h\geq(1-\phi)P_t h'.
+\]
+Inherited unsecured debt may run off over time; renting does not impose immediate nonnegative saving.
+\end{frame}
 
 \begin{frame}[label=parameter-restrictions]{Parameter Restrictions}
 \footnotesize

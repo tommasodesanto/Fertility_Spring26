@@ -34,6 +34,30 @@ Active documents:
   It is historical source, not a second working deck. All separate theory
   notes and the September 10 planner work remain untouched and parked.
 
+  **September 12 return to May's model layout.** Unchanged primitives use
+  May's organization: Environment with a named choice list; one Preferences
+  frame with flow utility, family needs and housing services; a separate Bequests
+  frame; Earnings and Pensions; and one Housing, Tenure, and Budget Constraints
+  frame with saving written explicitly for renters and owners. The transaction
+  helper was removed from the main slides. Current return timing is preserved,
+  and the actual collateral/unsecured-debt floors are defined in a linked
+  Borrowing Limits appendix. May's unconditional renter nonnegativity rule is
+  not valid for the maintained debt-carryover specification. The quantitative
+  task checked the expanded equations and the exact debt-floor function against
+  its pinned `intergen_eqscale_seq_optimized/parameters.py:622` and
+  `solver.py:112--163`. The household-problem overlays retain sequential timing
+  with shorter state and Bellman notation.
+
+  **Choice specification.** The current calibration and transition calculations
+  enforce `joint_nested_choice=False`: see
+  `../tmp/e5f_matched_pf/code/model/tools/run_e5f_initial_revision_probe.py:77--81`
+  and `../tmp/e5f_matched_pf/code/model/tools/e5f_approved_initial_state.py:32`.
+  Fertility choice integrates over conception and subsequent housing decisions;
+  the housing stage has its separate extreme-value taste shock. The simultaneous
+  nested alternative was tested, but no permanent author rejection of that
+  alternative was verified. The deck describes the active calculation rather
+  than claiming that every nested alternative has been definitively abandoned.
+
   **Two-slide algorithm walkthrough.** The first two numbered frames in
   Quantification explain the actual nested loops in literal steps. For each
   structural candidate, the initial pension is derived from the stationary
@@ -46,7 +70,8 @@ Active documents:
   nesting and the stated tolerances directly on September 12.
   `../output/pdf/september_14_calibration_walkthrough.pdf` is a two-page extract
   of these frames for sharing; it has no independent slide source. Regenerate
-  it with pypdf from pages 25--26 of the verified full deck (zero-based 24--25).
+  it with pypdf by locating the two pages titled `1. Calibrating the Initial
+  Economy` and `2. Fitting the Historical Transition` in the verified full deck.
   These replace the former generic Calibration Strategy and From the Initial
   Economy to 2023 frames, leaving the full deck length unchanged.
 
@@ -112,10 +137,10 @@ Active documents:
   Build twice from `latex/`, writing auxiliary files outside the active folder:
   `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=../tmp/september_slides_review september_14_presentation.tex`.
   Copy the verified PDF to the reader path and the adjacent build copy.
-  The deck has 38 numbered main frames and eight appendix frames
-  (53 PDF pages including overlays and dividers). Two final compilation passes
+  The deck has 36 numbered main frames and nine appendix frames
+  (52 PDF pages including overlays and dividers). Two final compilation passes
   have no warnings or overfull boxes; all frames were visually inspected and
-  all figure paths and both appendix links resolve.
+  all figure paths and all three appendix links resolve.
 
   **September 12 equilibrium wording.** The main definition is titled
   `Equilibrium` and names sequences of policy functions, value functions,
@@ -139,7 +164,8 @@ Active documents:
   `e5f_successive_surprises.py`, `evaluate_forecast`, in the quantitative task's
   active isolated model tools; the technical task verified the contract directly.
 
-  **September 11 slides-only pass.** `Family Space` and `Empirical Discipline`
+  **September 11 slides-only pass (retained in the consolidated layout).**
+  The former `Family Space` and `Empirical Discipline`
   now use the parenthood-only requirement `h_P 1{m>0}`, while dependents are
   present. The equivalence scale and surrounding preferences are unchanged.
   Sources: the handoff's immediate corrections and the September 11 approved
@@ -147,11 +173,11 @@ Active documents:
   quantitative task against `../tmp/e5f_matched_pf/code/model/tools/e5f_parenthood_utility.py:67`
   and `../tmp/e5f_matched_pf/code/model/intergen_eqscale_seq_optimized/solver.py:2262`.
 
-  `Pensions` explains the fixed payroll tax and benefits that balance the actual
+  `Earnings and Pensions` explains the fixed payroll tax and benefits that balance the actual
   dated household budget, with the same benefits anticipated by households.
   Pension notation is `varpi_t`, to avoid conflict with choice probabilities
   `pi_t` and liquid wealth `b`. Disposable income excludes property-tax rebates.
-  `Budget Constraints` now applies the financial return to liquid wealth after
+  The combined budget frame applies the financial return to liquid wealth after
   the housing transaction. Equilibrium notation and the appendix solution steps
   include pensions consistently. The named quantitative task supplied these
   equations, and the slide editor checked the cited source excerpts:
