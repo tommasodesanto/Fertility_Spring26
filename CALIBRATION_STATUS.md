@@ -1,5 +1,17 @@
 # Calibration Status
 
+**September12 — queued sequence array replaced with smaller resource requests.**
+Array17498666 neverstarted; all four tasks were verifiedPENDING before cancellation.
+Same immutable source/plans now run as individual jobs17498927(arm0,6dates,3h),
+17498928(arm1,12dates,5h),17498929(arm2,28dates,8h),17498930(arm3,patch,3h).
+Each requests16GB rather than32GB; prior6/28/56datepeaks were2.6/3.5/4.8GB.
+Individual schedulerwalllimits now match each budget plus10minutes, rather than
+8h10for everytask. No numerical, parameter or target change. Track artifacts
+in the SAME finite_sequences_20260912/results/arm_i directories. resubmission.json
+records IDs. First freshcheck confirms17498927/28RUNNING;28datejob stillqueued.
+Prior56diagnostic17493863_1 exhausted its4hourbudget and is no longer running.
+
+
 **September12 — presentation packet based on the stationary-history patch delivered.**
 Seven visually inspected pages at `output/pdf/e5f_patch_review.pdf`, with separate
 slide PDFs/PNGs under overnight_20260912/patch_readout/figures. Reproduce with
