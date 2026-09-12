@@ -1,6 +1,7 @@
 """Extract six-cell large-owner-home shares for the early ACS sample."""
 from pathlib import Path
 import importlib.util, json, sys
+import argparse
 import numpy as np
 import pandas as pd
 
@@ -11,6 +12,12 @@ YEARS = (2005, 2006)
 AGE_BINS = ((22, 39), (40, 59), (60, 85))
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--years", nargs="+", type=int, default=list(YEARS))
+    parser.add_argument("--output", type=Path, default=OUT)
+    args = parser.parse_args()
+    years = tuple(args.years)
+    out = args.output if args.output.is_absolute() else ROOT / args.output
     spec = importlib.util.spec_from_file_location("early", ROOT / "output/model/e5f_matched_pf_20260909a/design_research/housing/inspect_early_housing.py")
     mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
     class CompatReader(mod.HeaderReader):
@@ -25,7 +32,7 @@ def main():
     metros = set(map(int, (ROOT / "output/model/e5f_matched_pf_20260909a/design_research/housing/active_metros.txt").read_text().split(",")))
     needed = ("year", "sample", "met2013", "gq", "pernum", "relate", "hhwt", "age", "ownershp", "rooms", "nchild", "yngch")
     totals = {(lo, hi, minor): {"hhwt": 0.0, "records": 0} for lo, hi in AGE_BINS for minor in (False, True)}
-    for year in YEARS:
+    for year in years:
         lo, hi = 0, nobs
         while lo < hi:
             mid = (lo + hi) // 2
@@ -55,7 +62,7 @@ def main():
         for minor in (False, True):
             v = totals[(lo, hi, minor)]; rows.append({"age_group": f"{lo}-{hi}", "children_under_18": minor, "hhwt": v["hhwt"], "records": v["records"], "share": v["hhwt"] / denom})
     assert abs(sum(r["share"] for r in rows)-1)<1e-12
-    OUT.mkdir(parents=True, exist_ok=True); pd.DataFrame(rows).to_csv(OUT / "large_owner_data.csv", index=False)
-    prov = {"status": "PASS", "years": list(YEARS), "metros": sorted(metros), "weight": "HHWT", "unit": "PERNUM=1, RELATE=1 household heads", "filters": "sample year*100+1; GQ 1/2; age 22-85; OWNERSHP=1; literal 6<=ROOMS<99; observed NCHILD 0-9", "minor_definition": "nchild > 0 and yngch < 18, YNGCH=99 stays in the denominator as no resident minor", "denominator": "all six HHWT-weighted cells", "may_difference": "May used PERWT and birth-year generation cohorts; this reproduction uses HHWT and actual-age groups 22-39, 40-59, 60-85 for current target comparability", "total_hhwt": denom, "total_records": sum(v["records"] for v in totals.values()), "source": str(SRC), "source_size": SRC.stat().st_size, "source_mtime_ns": SRC.stat().st_mtime_ns}
-    (OUT / "large_owner_data_provenance.json").write_text(json.dumps(prov, indent=2) + "\n"); print(pd.DataFrame(rows).to_string(index=False))
+    out.mkdir(parents=True, exist_ok=True); pd.DataFrame(rows).to_csv(out / "large_owner_data.csv", index=False)
+    prov = {"status": "PASS", "years": list(years), "metros": sorted(metros), "weight": "HHWT", "unit": "PERNUM=1, RELATE=1 household heads", "filters": "sample year*100+1; GQ 1/2; age 22-85; OWNERSHP=1; literal 6<=ROOMS<99; observed NCHILD 0-9", "minor_definition": "nchild > 0 and yngch < 18, YNGCH=99 stays in the denominator as no resident minor", "denominator": "all six HHWT-weighted cells", "may_difference": "May used PERWT and birth-year generation cohorts; this reproduction uses HHWT and actual-age groups 22-39, 40-59, 60-85 for current target comparability", "total_hhwt": denom, "total_records": sum(v["records"] for v in totals.values()), "source": str(SRC), "source_size": SRC.stat().st_size, "source_mtime_ns": SRC.stat().st_mtime_ns}
+    (out / "large_owner_data_provenance.json").write_text(json.dumps(prov, indent=2) + "\n"); print(pd.DataFrame(rows).to_string(index=False))
 if __name__ == "__main__": main()

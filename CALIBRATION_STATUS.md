@@ -1,5 +1,20 @@
 # Calibration Status
 
+**September12 — author requests2023data versus2023model allocation.**
+2023ACSlarge-owner sixcells extracted in age_housing_allocation/comparison_2023
+under overnight_20260912. Shares(%):youngno6.47175,youngyes10.59034,middleno21.75543,
+middleyes20.43445,oldno40.04918,oldyes.69885. Same42metros,HHWT,actualagebins,
+owner1,rooms>=6,year2023; allshares sum1. Do notoverlayinitialmodelas2023.
+Latest17497354_0 still forecasting2019start; full17493863_0 finished finite28date
+root atpsi.1470871565 but terminaldistanceFAILED and historicalfitincomplete;
+firstwindow2.006907418vs1.974875(gap.032032418). Its saved files have aggregate
+paths, notfull2023state.17493863_1 continues. Need save2023occupationcells from
+an accepted dated observer/replay, with forecastversusrealizedhistorystatus.
+The current12scoredmoments target related room/ownership/parenthoodandwealth
+moments, NOTthese sixallocationcells norfullhousingageprofile. No targetsadded.
+Source: extract_e5f_large_owner_acs.py now accepts --years/--output; leadreviewed
+CLIonlydiff and verified2023receipt. AuthorprefersMay sixbar format for2023.
+
 **September12 — author selects May Intergenerational Allocation graph format.**
 Restored six paired bars: shares of6+room owner homes by age22-39/40-59/60-85
 and children at home. Figure intergenerational_allocation_data_model.pdf/png
