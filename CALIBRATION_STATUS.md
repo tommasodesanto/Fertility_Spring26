@@ -1,5 +1,19 @@
 # Calibration Status
 
+**September12 — consistent dated2023 aggregate and historical diagnostic figures delivered.**
+The slides task requests equilibrium first, then historical fit, then2023crosssection.
+Collected completed28date forecast into overnight_20260912/forecast_28_completed.
+All28housing residuals <=2.570441992e-5; pension residuals <=9.471202477e-7.
+Finite equilibrium passes, terminaldistance/horizon and historicalfit do not.
+New equilibrium_2023.pdf/png and historical_fertility.pdf/png use this SAME
+source, visibly diagnostic. Actual model fertility windowsending2011/15/19/23:
+2.006907418,1.976594414,1.945051373,1.923937509 versus1.974875,1.861,1.755375,1.64575.
+2023isauthor-selected historicalcomparison/preference-freeze boundary, NOTSS.
+Only2023aggregateforecastavailable; microallocation and fullfittedhistoryremain
+outstanding. Sourcebuilder build_e5f_dated_forecast_readout.py; lead verified
+exactyearselection, actualfertilitysource, residuals, andbothrenderedPDFs.
+This supports diagnostic illustrations only, not completed2023fit claims.
+
 **September12 — author requests2023data versus2023model allocation.**
 2023ACSlarge-owner sixcells extracted in age_housing_allocation/comparison_2023
 under overnight_20260912. Shares(%):youngno6.47175,youngyes10.59034,middleno21.75543,
