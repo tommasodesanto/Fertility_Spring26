@@ -272,11 +272,16 @@ Active documents:
   equilibrium, lifecycle comparison and allocation formats without spatial panels.
   `Historical Fertility Discipline` immediately follows the concise calibration
   overview, keeping estimation design together. The four main figures now come
-  from `../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/patch_readout/figures/`.
+  from `../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/patch_readout_fit/figures/`.
   This author-approved presentation patch uses conditional stationary household
   fits through 2019, then the actual 2019-start forward forecast. It is not a
-  fully carried history from 2007. The final fertility window remains unmatched
-  (1.5590 versus 1.64575), and the terminal horizon is unverified. The lifecycle
+  fully carried history from 2007. All four fertility windows match within 0.005;
+  the final window is 1.641680887 versus 1.64575. The full carried history and
+  terminal horizon remain unverified. The complete six-figure deck packet was
+  replaced together after producer visual QA: fitting job `17498984`, exact
+  readout replay `17499630` (maximum aggregate discrepancy zero), preference
+  $\psi=0.10239514522037683$. The new receipt SHA-256 is
+  `8b69b1e874e0f69030035d18a9681f6ec9a1b63565df628201646a9d66d47136`. The lifecycle
   and six-bar allocation figures use the actual 2023 state and ACS 2023; those
   profiles are untargeted comparisons. Person/head levels and age composition
   are conditioned externally. Fertility-by-age measurement and the finite
