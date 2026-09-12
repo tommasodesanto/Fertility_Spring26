@@ -71,6 +71,14 @@ Active documents:
   remain static. The theory task checked the timing convention. No economic
   specification, coefficients, numerical code, or estate valuation date changed.
 
+  **Household-problem readability.** The three overlays use a compact timing
+  diagram and `small` body text. Household values display their economic state
+  arguments explicitly, with ordinary $V_t$ and $V_t^H$ and bequest utility $B$.
+  There is no $x$ or successful-birth-state shorthand in these overlays. Waiting
+  and attempting values suppress repeated arguments only after the full current
+  state is stated. The $t,t+1$ convention and immediate post-birth housing needs
+  are preserved.
+
   **September 12 return to the May source.** Use the actual May frame text,
   typography and composition for unchanged material; patch only documented model
   differences rather than paraphrasing the shared exposition. The frame order is

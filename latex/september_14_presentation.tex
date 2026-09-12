@@ -154,7 +154,7 @@ s_t=\underbrace{\mathbf{1}\{\text{own}\}\,\chi\,h_{t+1}}_{\text{owner services}}
 \small
 Utility upon death at the end of period $t$:
 \[
-\mathcal B(w_{t+1}^e)=\theta_0\frac{(\theta_1+\max\{w_{t+1}^e,0\})^{1-\sigma}}{1-\sigma}.
+B(w_{t+1}^e)=\theta_0\frac{(\theta_1+\max\{w_{t+1}^e,0\})^{1-\sigma}}{1-\sigma}.
 \]
 \begin{itemize}
   \vfill \item $\theta_0$ governs overall bequest motive (saving level).
@@ -263,92 +263,83 @@ H_t^s=H_0\left(\frac{P_t}{\bar P}\right)^\eta.
 \only<2>{The Household's Problem: Housing and Saving}%
 \only<3>{The Household's Problem: Fertility Choice}%
 }
-\vspace{0.3em}
 \centering
-\resizebox{\textwidth}{!}{%
+\scalebox{0.85}{%
 \begin{tikzpicture}[
-  node distance=7mm and 10mm, >=Latex,
-  see/.style={
-    ellipse, draw, fill=yellow!20,
-    minimum height=1.3em, minimum width=1.8cm,
-    inner sep=2pt, align=center, font=\normalsize
-  },
-  choose/.style={
-    rectangle, draw, fill=green!15, rounded corners=2pt,
-    minimum height=1.5em, minimum width=1cm,
-    inner sep=2pt, align=center, font=\normalsize
-  },
+  node distance=7mm and 7mm, >=Latex,
+  see/.style={ellipse, draw, fill=yellow!20, inner sep=3pt, align=center, font=\small},
+  choose/.style={rectangle, draw, fill=green!15, rounded corners=2pt, inner sep=3pt, align=center, font=\small},
   line/.style={-Latex, semithick, draw=black!75}
 ]
 \node (fertS) [see, alt=<3>{draw=red, ultra thick}{}] {see $\varepsilon_t^F$};
-\node (fertD) [choose, right=of fertS, alt=<3>{draw=red, ultra thick}{}] {choose attempt\\($\pi^F_{t,a}$, $V_{t,a}$)};
-\node (succ) [see, right=of fertD, alt=<2>{draw=red, ultra thick}{}] {realize birth\\see $\varepsilon_t^H$};
-\node (house) [choose, right=of succ, alt=<2>{draw=red, ultra thick}{}] {choose $h_{t+1},h_t^R,b_{t+1}$\\($\pi^H_{t,a}$, $\mathcal V_{t,a}$)};
-
+\node (fertD) [choose, right=of fertS, alt=<3>{draw=red, ultra thick}{}] {choose attempt};
+\node (succ) [see, right=of fertD, alt=<2>{draw=red, ultra thick}{}] {birth; see $\varepsilon_t^H$};
+\node (house) [choose, right=of succ, alt=<2>{draw=red, ultra thick}{}] {housing and saving};
 \draw[line] (fertS) -- (fertD);
 \draw[line] (fertD) -- (succ);
 \draw[line] (succ) -- (house);
 \end{tikzpicture}%
 }
-
-\vspace{0.2em}
+\par\vspace{0.3em}
 \raggedright
-\setlength{\abovedisplayskip}{3pt}
-\setlength{\belowdisplayskip}{3pt}
-
-
+\small
+\setlength{\abovedisplayskip}{4pt}\setlength{\belowdisplayskip}{4pt}
 
 \only<1>{%
-\small
-\textbf{State.} At date $t$ and age $a$:
+\textbf{State.} At date $t$ and age $a$, the household carries
 \[
-x_t=(b_t,h_t,z_t,n_t,m_t),\qquad h_t\in\{0,H_1,\ldots,H_K\}.
+(b_t,h_t,z_t,a,n_t,m_t),\qquad h_t\in\{0,H_1,\ldots,H_K\}.
 \]
-\begin{itemize}\setlength\itemsep{3pt}
- \item $b_t$: liquid wealth; $h_t$: inherited owner size ($h_t=0$ for renters); $z_t$: earnings.
+\begin{itemize}\setlength\itemsep{0.5em}
+ \item $b_t$: liquid wealth; $h_t$: inherited owner size; $z_t$: earnings.
  \item $n_t$: lifetime parity; $m_t$: dependents before the birth outcome.
- \item After the birth outcome, $\widetilde x_t=(b_t,h_t,z_t,\widetilde n_t,\widetilde m_t)$.
+ \item After the birth outcome, parity and dependents are $\widetilde n_t$ and $\widetilde m_t$.
 \end{itemize}
-\medskip
-\textbf{Values.} $V_{t,a}(x_t)$ is value before fertility tastes; $\mathcal V_{t,a}(\widetilde x_t)$ is value after the birth outcome and before housing tastes.
+\textbf{Values.}
+\begin{itemize}\setlength\itemsep{0.5em}
+ \item $V_t(b_t,h_t,z_t,a,n_t,m_t)$: before fertility tastes.
+ \item $V^H_t(b_t,h_t,z_t,a,\widetilde n_t,\widetilde m_t)$: after the birth outcome, before housing tastes.
+\end{itemize}
 }
 
 \only<2>{%
-\footnotesize
 \textbf{Conditional on the realized family size:}
 \[
 \begin{aligned}
-\mathcal V_{t,a}(\widetilde x_t)=\E_{\varepsilon_t^H}\max_{h_{t+1},h_t^R,b_{t+1}}\Bigl\{
-&u_t(c_t,s_t;\widetilde m_t)+\varepsilon_t^H(h_{t+1})\\
-&+\beta\E_t\!\left[s_a V_{t+1,a+1}(x_{t+1})+(1-s_a)\mathcal B(w^e_{t+1})\right]\Bigr\}.
+&V^H_t(b_t,h_t,z_t,a,\widetilde n_t,\widetilde m_t)\\
+&=\E_{\varepsilon_t^H}\max_{h_{t+1},h_t^R,b_{t+1}}\Bigl\{
+ u_t(c_t,s_t;\widetilde m_t)+\varepsilon_t^H(h_{t+1})\\
+&\qquad+\beta\E_t\!\left[s_a V_{t+1}(b_{t+1},h_{t+1},z_{t+1},a+1,n_{t+1},m_{t+1})\right]\\
+&\qquad+\beta\E_t\!\left[(1-s_a)B(w^e_{t+1})\right]\Bigr\}.
 \end{aligned}
 \]
 \begin{itemize}\setlength\itemsep{0.5em}
- \item Next period's state is $x_{t+1}=(b_{t+1},h_{t+1},z_{t+1},n_{t+1},m_{t+1})$: earnings and child maturation are uncertain.
- \item A renter sets $h_{t+1}=0$; an owner sets $h_t^R=0$. The budget determines consumption $c_t$.
- \item Choices satisfy the rental cap, down payment, and debt limits.
- \item $\beta$ discounts the future; $s_a$ is survival; housing tastes have scale $\kappa_H$.
+ \item Parity carries forward: $n_{t+1}=\widetilde n_t$. Earnings and child maturation determine $z_{t+1}$ and $m_{t+1}$.
+ \item A renter sets $h_{t+1}=0$; an owner sets $h_t^R=0$. The budget determines $c_t$.
 \end{itemize}
 }
 
 \only<3>{%
-\footnotesize
-Write $x_t^+=(b_t,h_t,z_t,n_t+1,m_t+1)$ for a successful birth. Waiting and attempting have values
+At $(b_t,h_t,z_t,a,n_t,m_t)$, waiting and attempting have values
 \[
-W_{t,a}^0(x_t)=\mathcal V_{t,a}(x_t),\qquad
-W_{t,a}^A(x_t)=\pi_a\!\left[\mathcal V_{t,a}(x_t^+)-F_1\1\{n_t=0\}\right]
-+(1-\pi_a)\mathcal V_{t,a}(x_t).
+\begin{aligned}
+W_t^0&=V^H_t(b_t,h_t,z_t,a,n_t,m_t),\\
+W_t^A&=\pi_a\!\left[V^H_t(b_t,h_t,z_t,a,n_t+1,m_t+1)-F_1\1\{n_t=0\}\right]\\
+&\quad +(1-\pi_a)V^H_t(b_t,h_t,z_t,a,n_t,m_t).
+\end{aligned}
 \]
-The value before fertility tastes and the attempt probability are
+Before fertility tastes, household value is
 \[
-V_{t,a}(x_t)=\E_{\varepsilon_t^F}\max\{W_{t,a}^0(x_t)+\varepsilon_{t,0}^F,\ W_{t,a}^A(x_t)+\varepsilon_{t,A}^F\},
+V_t(b_t,h_t,z_t,a,n_t,m_t)
+=\E_{\varepsilon_t^F}\max\{W_t^0+\varepsilon_{t,0}^F,\ W_t^A+\varepsilon_{t,A}^F\}.
 \]
+The probability of attempting is
 \[
-\pi^F_{t,a}(x_t)=\frac{\exp\{W_{t,a}^A(x_t)/\kappa(n_t)\}}
-{\exp\{W_{t,a}^A(x_t)/\kappa(n_t)\}+\exp\{W_{t,a}^0(x_t)/\kappa(n_t)\}},
-\qquad \kappa(n_t)=\begin{cases}\kappa_1,&n_t=0,\\\kappa_C,&n_t\geq1.\end{cases}
+\pi^F_{t,a}(b_t,h_t,z_t,n_t,m_t)
+=\frac{\exp\{W_t^A/\kappa(n_t)\}}
+{\exp\{W_t^A/\kappa(n_t)\}+\exp\{W_t^0/\kappa(n_t)\}},
 \]
-Expected births are $\pi_a\pi^F_{t,a}(x_t)$. Attempts are unavailable outside fertile ages or at terminal parity.
+Here $\kappa(n_t)=\kappa_1$ if $n_t=0$ and $\kappa_C$ otherwise. Expected births equal $\pi_a\pi^F_{t,a}$; attempts require fertile age and parity below the maximum.
 }
 \end{frame}
 
