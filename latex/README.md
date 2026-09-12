@@ -80,7 +80,8 @@ Active documents:
   guess before completing a root evaluation. This is not a nonexistence result;
   the quantitative task subsequently reports that the bounded probe with a
   5%-higher initial price passed the stationary endpoint checks (17496086_0).
-  The result is endpoint verification only; its local receipt handoff is pending.
+  The collected [endpoint receipt](../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/seminar_transition_panels/irf_prerequisite/root_receipt.json)
+  directly confirms convergence and endpoint numerical eligibility only.
   No matched baseline/pulse IRF has been computed. The author also requested a
   parallel stationary-history approximation carrying distributions into 2023.
   Its implemented algorithm and evidence must be handed over before replacing
