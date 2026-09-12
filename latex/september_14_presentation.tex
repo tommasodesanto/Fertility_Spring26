@@ -713,38 +713,47 @@ A model period contains $L=4$ calendar years, $\beta=\beta_{\rm annual}^4$.
 \scriptsize Owner-occupied homes with $6+$ rooms; ACS 2023. Children: model dependents; ACS resident own minors.
 \end{frame}
 
-\begin{frame}{Housing Policy During the Transition}
-We study whether a rebated property tax changes access to family housing and fertility during the demographic transition.
+\begin{frame}{Stationary Housing Policy Comparisons}
+Compare three stationary equilibria under the same household parameters and fertility preference:
 
 \medskip
-\begin{itemize}\setlength\itemsep{0.8em}
- \item \textbf{Starting point:} the same inherited 2023 economy---liquid assets, homes, and age distributions.
- \item \textbf{Experiment:} a permanent increase in the annual property-tax rate from 1\% to 2\%; each path rebates its revenue equally to household heads.
- \item \textbf{Common environment:} the fertility-preference path, housing supply schedule, survival, migration, and entry rule.
-\end{itemize}
+\begin{enumerate}\setlength\itemsep{0.8em}
+ \item Annual property tax of 1\%, with no rebate.
+ \item Annual property tax of 1\%, with an equal rebate per household.
+ \item Annual property tax of 2\%, with an equal rebate per household.
+\end{enumerate}
+
+\medskip
+In the rebated cases, all property-tax revenue is returned to households. Payroll taxes separately finance pensions in each equilibrium.
 
 \vfill
-Compare the initial response of prices and household choices, then the evolution of births, population, and housing demand.
+\small Conditional on the diagnostic demographic and entry assumptions; these are stationary comparisons, not transition effects from 2023.
 \end{frame}
 
-\begin{frame}{The Rebated Property Tax}
+\begin{frame}{Stationary Policy Results}
 \small
-In each path, all property-tax revenue is returned equally to household heads:
-\[
-T_t\int dG_t=\tau_t^p P_t Q_t^H,
-\qquad Q_t^H=\int q_t(x_t)\,dG_t(x_t).
-\]
-Here $q_t(x_t)$ is occupied physical housing, including rented rooms; $\tau_t^p$ is the tax rate per model period.
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{@{}Xrrr@{}}
+\toprule
+ & 1\% tax & 1\% tax & 2\% tax \\
+ & No rebate & Equal rebate & Equal rebate \\
+\midrule
+Period fertility & 1.7298 & 1.8011 & 1.8080 \\
+Homeownership (\%) & 66.31 & 66.13 & 66.80 \\
+Rooms per household & 6.734 & 6.626 & 6.298 \\
+House price per room & 0.633 & 0.707 & 0.659 \\
+Rent per room, per period & 0.105 & 0.117 & 0.136 \\
+Rebate per household, per period & 0.000 & 0.187 & 0.332 \\
+\addlinespace[4pt]
+Fertility change vs.\ no rebate (\%) & 0.00 & +4.12 & +4.52 \\
+\bottomrule
+\end{tabularx}
 
-\begin{itemize}\setlength\itemsep{0.5em}
- \item \textbf{Housing costs:} carrying costs affect asset prices and rents.
- \item \textbf{Household resources:} rebates change disposable income and saving; prices change the required down payment.
- \item \textbf{Family choices:} tenure, housing size, and fertility respond jointly.
- \item \textbf{Demographic feedback:} births change future cohorts and housing demand.
-\end{itemize}
+\medskip
+With rebates in both cases, raising the tax from 1\% to 2\% increases fertility by 0.38\%.
 
 \vfill
-The payroll tax is unchanged; a separate balanced budget determines pensions in each path.
+\small Conditional stationary comparisons under the same demographic and entry assumptions.
 \end{frame}
 
 \begin{frame}{Conclusion}
@@ -752,11 +761,11 @@ The payroll tax is unchanged; a separate balanced budget determines pensions in 
  \item Children raise demand for rooms; rental size and down payments govern access to that space.
  \item Tenure, saving, and fertility interact over the household lifecycle.
  \item Births change population and housing demand with long delays.
- \item Housing policy changes choices along an ongoing demographic transition.
+ \item Property taxes and rebates jointly change housing costs and household resources.
 \end{itemize}
 
 \vfill
-\textbf{The policy comparison is between paths starting from the same inherited economy.}
+\textbf{The stationary comparisons hold demographic and entry assumptions fixed.}
 \end{frame}
 
 \begin{frame}[plain,c,noframenumbering]{}

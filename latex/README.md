@@ -169,13 +169,22 @@ Active documents:
   alternative was verified. The deck describes the active calculation rather
   than claiming that every nested alternative has been definitively abandoned.
 
-  **September 12 policy overview and transition figures.** The two policy
-  frames now describe the common inherited 2023 economy, permanent annual
-  property tax of 1% versus 2%, equal per-head distribution of each path's own
-  revenue, common preference/supply/demographic environment, and separate
-  balanced pension budget. They describe an experiment, not computed effects.
-  The quantitative task reconfirmed this contract directly. An accepted
-  historical 2023 state and the entry/demographic closure remain unresolved.
+  **September 12 stationary policy comparison.** The two main policy frames
+  now present the author-requested stationary cases: 1% annual tax without a
+  rebate, 1% with equal per-household rebates, and 2% with equal rebates.
+  All use the same structural parameters and fitted preference
+  $\psi=0.10239514522037683$, with separate PAYGO pensions. The table is generated
+  directly from `../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/stationary_policy_comparison_fit/comparison.csv`;
+  the adjacent `comparison.md`, `comparison.json`, and `contract.json` contain
+  the full outcome table, equilibrium receipts, and assumptions. All three cases passed housing, PAYGO, rebate and exact-reproduction
+  checks. These are conditional
+  stationary comparisons under the retained diagnostic demographic/entry
+  closure (`production_eligible=false`), not policy transitions from 2023.
+  The historical patch figures remain separate. The 1%-to-2% comparison with
+  rebates in both equilibria increases fertility by 0.383%; comparisons against
+  the unrebated baseline also include the introduction of rebates. Lower mean
+  rooms do not establish improved housing allocation. The conclusion now
+  describes this stationary scope; no transition-policy result is asserted.
   At the author's request, **Review quantitative model** supplied numerical
   transition panels and is investigating a bounded fertility-preference IRF.
   The separate review figures are

@@ -1,0 +1,193 @@
+{
+  "summaries": [
+    {
+      "case": "baseline",
+      "status": "stationary_equilibrium_passed",
+      "annual_property_tax": 0.01,
+      "equal_rebate": false,
+      "psi": 0.10239514522037683,
+      "asset_price": 0.633081064382963,
+      "rent_per_room": 0.10490879340226049,
+      "pension_period": 1.5628844886427344,
+      "rebate_per_head_period": 0.0,
+      "household_heads": 0.9317448529785468,
+      "resident_persons": 2.3252670703950966,
+      "ownership": 0.6631140301197044,
+      "housing_demand": 6.2741053476656745,
+      "housing_supply": 6.274105359119562,
+      "with_children": 0.31598404103469424,
+      "period_fertility": 1.7297879296249563,
+      "births": 0.07770158802796998,
+      "accounts": {
+        "payroll_tax_base_period": 2.6297969540248554,
+        "retiree_benefit_exposure": 0.3011954181587075,
+        "worker_household_mass": 0.6305494348198388,
+        "retiree_household_mass": 0.3011954181587075,
+        "payroll_tax_rate": 0.179,
+        "pension_period_units": 1.5628844886427344,
+        "payroll_tax_revenue": 0.4707336547704491,
+        "pension_outlays": 0.47073364709050614,
+        "pension_budget_residual": 7.67994295935992e-09,
+        "scaled_pension_budget_residual": 1.6314837236579156e-08,
+        "implied_balanced_pension_period": 1.5628845141409409,
+        "implied_balanced_payroll_tax": 0.17899999707964412
+      },
+      "root_residual": [
+        -1.825581012836094e-09,
+        3.262967447315831e-06
+      ],
+      "root_coordinates": [
+        0.633081064382963,
+        1.5628844886427344
+      ],
+      "seconds": 101.29949414078146,
+      "production_eligible": false,
+      "interpretation": "Stationary comparison conditional on the provisional patch preference and retained demographic/entry closure; not impact from2023",
+      "property_tax_revenue": 0.158880691662041,
+      "rebate_outlays": 0.0,
+      "rooms_per_household": 6.733716132274823,
+      "births_per_household": 0.08339363268772361,
+      "ownership_percent": 66.31140301197044,
+      "with_children_percent": 31.598404103469424
+    },
+    {
+      "case": "equal-rebate-1pct",
+      "status": "stationary_equilibrium_passed",
+      "annual_property_tax": 0.01,
+      "equal_rebate": true,
+      "psi": 0.10239514522037683,
+      "asset_price": 0.7072271702510711,
+      "rent_per_room": 0.11719565355291266,
+      "pension_period": 1.5658114767357878,
+      "rebate_per_head_period": 0.18743153352000683,
+      "household_heads": 1.015383637377807,
+      "resident_persons": 2.549353012965311,
+      "ownership": 0.661250782050886,
+      "housing_demand": 6.727505503531244,
+      "housing_supply": 6.727513279711474,
+      "with_children": 0.3270424716841174,
+      "period_fertility": 1.8011384614494008,
+      "births": 0.08791113038089134,
+      "accounts": {
+        "payroll_tax_base_period": 2.86685960890763,
+        "retiree_benefit_exposure": 0.3277328617671347,
+        "worker_household_mass": 0.6876507756106721,
+        "retiree_household_mass": 0.3277328617671347,
+        "payroll_tax_rate": 0.179,
+        "pension_period_units": 1.5658114767357878,
+        "payroll_tax_revenue": 0.5131678699944657,
+        "pension_outlays": 0.513167876258443,
+        "pension_budget_residual": -6.263977225806627e-09,
+        "scaled_pension_budget_residual": -1.2206487419824282e-08,
+        "implied_balanced_pension_period": 1.5658114576227298,
+        "implied_balanced_payroll_tax": 0.17900000218496126
+      },
+      "root_residual": [
+        -1.1558773511401193e-06,
+        -2.441297483964856e-06,
+        7.875327264852492e-05
+      ],
+      "root_coordinates": [
+        0.7072271702510711,
+        1.5658114767357878,
+        0.18743153352000683
+      ],
+      "seconds": 349.7848823731765,
+      "production_eligible": false,
+      "interpretation": "Stationary comparison conditional on the provisional patch preference and retained demographic/entry closure; not impact from2023",
+      "property_tax_revenue": 0.19031498720448525,
+      "rebate_outlays": 0.19031491226484487,
+      "rooms_per_household": 6.62557998364519,
+      "births_per_household": 0.0865792269490562,
+      "ownership_percent": 66.1250782050886,
+      "with_children_percent": 32.70424716841174
+    },
+    {
+      "case": "equal-rebate-2pct",
+      "status": "stationary_equilibrium_passed",
+      "annual_property_tax": 0.02,
+      "equal_rebate": true,
+      "psi": 0.10239514522037683,
+      "asset_price": 0.6594162968467806,
+      "rent_per_room": 0.13564949534362178,
+      "pension_period": 1.5660282067725642,
+      "rebate_per_head_period": 0.33222362475612544,
+      "household_heads": 1.0221623410765197,
+      "resident_persons": 2.5675145897812803,
+      "ownership": 0.6680030677871635,
+      "housing_demand": 6.437250075134015,
+      "housing_supply": 6.4372893296939955,
+      "with_children": 0.3281668296213427,
+      "period_fertility": 1.8080297872833306,
+      "births": 0.08873858696106712,
+      "accounts": {
+        "payroll_tax_base_period": 2.8860729171565387,
+        "retiree_benefit_exposure": 0.3298836518394065,
+        "worker_household_mass": 0.6922786892371133,
+        "retiree_household_mass": 0.3298836518394065,
+        "payroll_tax_rate": 0.179,
+        "pension_period_units": 1.5660282067725642,
+        "payroll_tax_revenue": 0.5166070521710204,
+        "pension_outlays": 0.5166071037336506,
+        "pension_budget_residual": -5.156263016559137e-08,
+        "scaled_pension_budget_residual": -9.981014545277283e-08,
+        "implied_balanced_pension_period": 1.566028050467061,
+        "implied_balanced_payroll_tax": 0.17900001786601782
+      },
+      "root_residual": [
+        -6.097995284949304e-06,
+        -1.9962029090554567e-05,
+        -0.00015873885225331828
+      ],
+      "root_coordinates": [
+        0.6594162968467806,
+        1.5660282067725642,
+        0.33222362475612544
+      ],
+      "seconds": 396.8310875883326,
+      "production_eligible": false,
+      "interpretation": "Stationary comparison conditional on the provisional patch preference and retained demographic/entry closure; not impact from2023",
+      "property_tax_revenue": 0.33958620851380955,
+      "rebate_outlays": 0.3395864780416484,
+      "rooms_per_household": 6.297678770237651,
+      "births_per_household": 0.08681457278851569,
+      "ownership_percent": 66.80030677871635,
+      "with_children_percent": 32.816682962134266
+    }
+  ],
+  "changes": [
+    {
+      "case": "baseline",
+      "period_fertility_change_percent": 0.0,
+      "births_change_percent": 0.0,
+      "asset_price_change_percent": 0.0,
+      "rent_per_room_change_percent": 0.0,
+      "rooms_per_household_change_percent": 0.0,
+      "household_heads_change_percent": 0.0,
+      "resident_persons_change_percent": 0.0,
+      "ownership_change_pp": 0.0
+    },
+    {
+      "case": "equal-rebate-1pct",
+      "period_fertility_change_percent": 4.12481383425507,
+      "births_change_percent": 13.13942560510637,
+      "asset_price_change_percent": 11.711944968749787,
+      "rent_per_room_change_percent": 11.711944968749787,
+      "rooms_per_household_change_percent": -1.605891108348545,
+      "household_heads_change_percent": 8.976575951226184,
+      "resident_persons_change_percent": 9.636998064576673,
+      "ownership_change_pp": -0.1863248068818324
+    },
+    {
+      "case": "equal-rebate-2pct",
+      "period_fertility_change_percent": 4.5232052044286375,
+      "births_change_percent": 14.204341524042196,
+      "asset_price_change_percent": 4.15985154910381,
+      "rent_per_room_change_percent": 29.30231198398181,
+      "rooms_per_household_change_percent": -6.475434269455427,
+      "household_heads_change_percent": 9.704103844408873,
+      "resident_persons_change_percent": 10.418051434626063,
+      "ownership_change_pp": 0.4889037667459073
+    }
+  ]
+}
