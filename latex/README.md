@@ -79,6 +79,21 @@ Active documents:
   state is stated. The $t,t+1$ convention and immediate post-birth housing needs
   are preserved.
 
+  **External-input table.** The September 14 table follows the July mini-draft's
+  `Parameter | Value | Source` layout, using the table in
+  `calibration_strategy_eqscale_provisional.tex` (also in
+  `calibration_note_july24.pdf`) for source wording. It includes the normalized
+  equivalence scale in the table, retains the payroll tax rate, and omits the
+  derived initial pension level and zero child-space slope. Repeated `fixed`
+  labels are removed. Current values of the supply elasticity and housing-taste
+  dispersion are preserved; no old Saiz attribution is applied to the revised
+  elasticity. Blank source cells do not claim empirical provenance.
+  The annual real return is 2\%, with the July Greaney et al. (2025) source.
+  The quantitative task verified the overridden four-year return 0.08243216 in
+  the pinned historical checkpoint (SHA-256
+  `120ffc45c0fb8756f4182f999c96b7c0236adf315cb938190ec31cd2068c87c2`);
+  the generic 4\% annual code default is not that calibration's rate.
+
   **September 12 return to the May source.** Use the actual May frame text,
   typography and composition for unchanged material; patch only documented model
   differences rather than paraphrasing the shared exposition. The frame order is
