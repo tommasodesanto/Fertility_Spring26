@@ -1,6 +1,7 @@
 """Rebuild presentation figures from the saved2019stationary-start patch and ACS2023."""
 from pathlib import Path
 import csv,hashlib,json
+import argparse
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
@@ -12,17 +13,24 @@ BLUE='#1f5fa6';RED='#c73e3a'
 def read(p):return json.loads(Path(p).read_text())
 def csvread(p):return list(csv.DictReader(Path(p).open()))
 def main():
-    source=BASE/'source';data=BASE/'data';out=BASE/'figures';out.mkdir(exist_ok=True)
+    ap=argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--base',type=Path,default=BASE,help='Patch packet root (default: frozen patch_readout).')
+    ap.add_argument('--pdf',type=Path,default=None,help='Combined review PDF destination.')
+    args=ap.parse_args()
+    base=args.base; source=base/'source';data=base/'data';out=base/'figures';out.mkdir(parents=True,exist_ok=True)
     path=csvread(source/'expected_transition.csv');fert=read(source/'fertility.json');static=read(source/'stationary_history.json');initial=read(source/'initial.json')
     r=next(r for r in path if int(r['calendar_year'])==2023)
     root=read(source/'root_receipt.json');assert root['finite_horizon_market_fiscal_converged']
-    assert abs(float(path[0]['psi_child'])-.09239514522037684)<1e-14
+    # The selected patch's preference is source-controlled by the forecast
+    # receipt; the frozen default packet retains its original value, while an
+    # opt-in refreshed packet may use a newly fitted final shock.
+    assert abs(float(path[0]['psi_child'])-float(root['psi']))<1e-14
     full=read(source/'model_2023.json') if (source/'model_2023.json').exists() else None
     if full:
         check=read(source/'verification.json');assert check['status']=='PASS' and full['calendar_year']==2023
         assert full['forecast_receipt_sha256']==hashlib.sha256((source/'root_receipt.json').read_bytes()).hexdigest()
     plt.rcParams.update({'font.size':11,'axes.spines.top':False,'axes.spines.right':False,'axes.titlesize':12,'legend.fontsize':10})
-    pdf=ROOT/'output/pdf/e5f_patch_review.pdf';pages=PdfPages(pdf);manifest={}
+    pdf=args.pdf or (ROOT/'output/pdf/e5f_patch_review.pdf');pdf.parent.mkdir(parents=True,exist_ok=True);pages=PdfPages(pdf);manifest={}
     def save(fig,name,values):
         fig.savefig(out/f'{name}.pdf',bbox_inches='tight');fig.savefig(out/f'{name}.png',dpi=150,bbox_inches='tight');pages.savefig(fig,bbox_inches='tight');plt.close(fig);manifest[name]=values
     ends=np.array([2007,2011,2015,2019,2023]);model=[initial['fertility']['period_tfr_topcode_adjusted'],*[s['model'] for s in static],fert[0]['period_tfr_topcode_adjusted']];target=[s['data'] for s in static]+[1.64575]

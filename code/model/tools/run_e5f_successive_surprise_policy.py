@@ -70,6 +70,9 @@ def execute(packet,case,out,seconds):
         last=NS(P=Q,policy=policy,endpoint=endpoint,evaluation=e,shared=shared);coordinates=np.asarray(x).copy()
         return dict(residual=residual(endpoint.residuals['housing_demand'],endpoint.residuals['housing_supply'],accounts,revenue,outlays),mapping_valid=bool(endpoint.mapping_valid and all(gates.values())),payload=dict(accounts=accounts,household_gates=gates,rebate_revenue=revenue,rebate_outlays=outlays))
     guess=[float(old.policy.price[0]),float(P.pension)]+([.25] if rebated else [])
+    if packet.get('terminal_guess') is not None:
+        guess=list(packet['terminal_guess'])
+        if rebated:guess.append(float(packet['rebate_guess']))
     r=None
     for attempt in range(3):
         r=root_solve(guess,terminal_evaluate,lambda x:np.clip(x,.000001,10),out/f'terminal_{attempt}',None if r is None else r['final_jacobian'])
@@ -79,6 +82,29 @@ def execute(packet,case,out,seconds):
         guess=f['prices']
     if not r['converged'] or not np.array_equal(r['final']['prices'],coordinates):raise RuntimeError('Policy terminal did not clear all budgets with its retained evaluation')
     terminal=last;terminal_x=coordinates.copy();nfirst=6
+    if packet.get('terminal_only',False):
+        e=terminal.evaluation;Q=terminal.P;g=e.g_current;heads=float(g.sum())
+        accounts=fiscal_accounts(g,Q);f=fertility.period_fertility_diagnostics(e,Q)
+        summary=dict(case=case,status='stationary_equilibrium_passed',annual_property_tax=tax/4,equal_rebate=rebated,
+            psi=float(Q.psi_child),asset_price=float(terminal_x[0]),rent_per_room=float(Q.user_cost_rate*terminal_x[0]),
+            pension_period=float(terminal_x[1]),rebate_per_head_period=float(terminal_x[2]) if rebated else 0.,
+            household_heads=heads,resident_persons=float(terminal.endpoint.fixed_point.persons.persons.sum()),
+            ownership=float(g[:,1:].sum()/heads),housing_demand=float(terminal.endpoint.residuals['housing_demand']),
+            housing_supply=float(terminal.endpoint.residuals['housing_supply']),
+            with_children=float(g[:,:,:,:,:,:,1:].sum()/heads),period_fertility=float(f['period_tfr_topcode_adjusted']),
+            births=float(f['birth_flow_topcode_adjusted'].sum()),accounts=accounts,
+            root_residual=r['final']['residual'],root_coordinates=terminal_x,seconds=time.monotonic()-start,
+            production_eligible=False,interpretation='Stationary comparison conditional on the provisional patch preference and retained demographic/entry closure; not impact from2023')
+        if case=='baseline' and packet.get('baseline_reference'):
+            for key,value in packet['baseline_reference'].items():
+                if not np.isclose(summary[key],value,rtol=0,atol=2e-8):raise RuntimeError('Baseline stationary replay mismatch:'+key)
+        snapshot=dict(parameters=Q,b_grid=grid,evaluation=e,shared=terminal.shared,supply_rule=supply)
+        with gzip.open(out/'stationary_state.pkl.gz','wb',compresslevel=1) as stream:pickle.dump(snapshot,stream,protocol=5)
+        import run_e5f_independent_numerical_audit as audit_writer
+        audit_writer.standard_diagnostics(snapshot,out/'graphs',validate_production_young=False)
+        if len(list((out/'graphs/standard_diagnostics').glob('*.png')))!=17:raise RuntimeError('Missing stationary diagnostic packet')
+        save(out/'fertility.json',f);save(out/'summary.json',summary)
+        return
     reference=NS(parameters=terminal.P,asset_price=float(terminal_x[0]),renter_price=float(terminal.P.user_cost_rate*terminal_x[0]),
         equal_transfer=float(terminal_x[2]) if rebated else 0.,psi_child=P.psi_child,state=joined.person_pf.PersonPFState(terminal.endpoint.fixed_point.g_pre,terminal.endpoint.fixed_point.persons))
     history=[];last=None;previous=None;snapshot={}

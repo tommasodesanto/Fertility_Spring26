@@ -772,3 +772,15 @@ Its packet is under
 is a contemporaneous housing-cost index, not a forward-looking asset price.
 
 See `PLAN.md` for the full implementation and optimization plan.
+
+The conditional stationary tax comparison uses the terminal-only mode of
+`tools/run_e5f_successive_surprise_policy.py`. Its pinned cluster launcher is
+`../cluster/prepare_e5f_stationary_policy_comparison.py`: a native baseline replay
+must pass before the two rebate cases start in parallel. Housing, pension and
+rebate budgets are solved jointly. Each retained solution writes the standard
+17-figure diagnostic packet. Collect the batch contract and `results/` folders,
+then run `python tools/build_e5f_stationary_policy_comparison.py <batch-folder>`
+to generate the checked comparison table and figure. Add `--pdf <output.pdf>`
+to write a one-page review (requires ReportLab). The explicit diagnostic
+label retains the patch's unresolved entry normalization and horizon status;
+this command does not estimate parameters or solve a policy transition.

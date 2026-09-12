@@ -1,5 +1,56 @@
 # Calibration Status
 
+**September 12 — three stationary tax comparisons passed; fitted patch packet refreshed.**
+Author-requested stationary cases completed on Torch: `17499515` (baseline),
+`17499516` (1% tax with equal rebate), `17499517` (2% with equal rebate).
+Equilibrium solve times were 101.3, 349.8 and 396.8 seconds; rebate cases ran in
+parallel after the baseline's exact native replay. All housing, PAYGO, rebate,
+household and reproduction gates passed; all 17 standard diagnostic figures
+were saved per case. Maximum absolute housing gap is 6.10e-6; maximum scaled
+pension gap is 9.99e-8; maximum scaled rebate gap is 7.94e-7.
+
+| Outcome | 1% tax, no rebate | 1% tax, equal rebate | 2% tax, equal rebate |
+|---|---:|---:|---:|
+| Period fertility | 1.729788 | 1.801138 | 1.808030 |
+| Homeownership (%) | 66.3114 | 66.1251 | 66.8003 |
+| Rooms per household | 6.7337 | 6.6256 | 6.2977 |
+| House price per room | 0.633081 | 0.707227 | 0.659416 |
+| Period rent per room | 0.104909 | 0.117196 | 0.135649 |
+
+Fertility rises 4.125% when the existing tax is rebated. Doubling the already
+rebated tax adds only 0.383%; the total effect versus the unrebated baseline is
+4.523%. Total rooms rise, but household mass rises faster, so mean rooms fall.
+Do not infer improved housing allocation from this comparison. These are
+conditional stationary equilibria under the retained diagnostic demographic/
+entry closure, NOT impacts from the inherited 2023 economy. Population levels
+and total births depend on that retained normalization. No parameters were
+re-estimated. Same preference 0.10239514522037683 in all cases.
+
+Full checked table/JSON/figure and receipts:
+`output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/stationary_policy_comparison_fit/`.
+Source launcher: `code/cluster/prepare_e5f_stationary_policy_comparison.py`;
+collector: `code/model/tools/build_e5f_stationary_policy_comparison.py`.
+Cluster batch has the same basename under candidate_path_20260911a/batches/.
+Four controller tests passed and local/remote source hashes match. Contract
+SHA-256: `4acd656e968f51aef300df5a8f3bc3e46508a2fb6617cc5a4af919d268e43196`.
+Old jobs 17499476–17499478 were cancelled while pending before any solve.
+
+Patch fitting job `17498984` completed: 2019–2023 target/model is
+1.64575/1.64168088679 (gap 0.00406911 < 0.005). Exact observer replay `17499630`
+passed with maximum aggregate discrepancy 0.0. The COMPLETE new patch packet
+is in sibling `patch_readout_fit/`, and `output/pdf/e5f_patch_review_fit.pdf`
+contains all seven rendered and visually inspected pages. Source receipt SHA:
+`8b69b1e874e0f69030035d18a9681f6ec9a1b63565df628201646a9d66d47136`.
+All four patch fertility windows now fit within 0.005. The first three remain
+stationary-history approximations; terminal distance still FAILS and the full
+carried history is not certified. New 2023 profiles were regenerated together;
+no mixture with the old unfitted forecast. Untargeted 2023 data/model:
+ownership 61.8763/55.5898%; capped rooms 5.5987/6.0989; children at home
+27.0697/33.9954% (model dependents remain an approximation to resident minors).
+Slides task has the complete checked replacement packet and separate policy
+comparison. Jobs 17498927/28 remain running; 17498929 is priority-queued. AI
+heartbeat remains paused at the user's usage floor; cluster jobs are autonomous.
+
 **September12 heartbeat — first finite-history window carried; AI monitoring paused at usage floor.**
 Job17498927(6dates) fitted2007–2011fertility and saved the2011inherited state;
 it is now solving the next unexpectedshock in2011. Full target/model for the
