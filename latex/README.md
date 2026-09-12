@@ -13,8 +13,8 @@ Active documents:
   May: Model, a short Empirics section, then Quantification.
   Empirics contains the data overview and the AHS and PSID evidence frames.
   Quantification contains calibration strategy, empirical moment construction,
-  complete initial target and parameter tables, fit plots, lifecycle equilibrium
-  profiles, the historical transition design and illustrations, and the policy
+  complete initial target and parameter tables, lifecycle equilibrium
+  profiles, allocation comparisons, the historical transition design and illustrations, and the policy
   comparisons; policy has no separate section divider.
   It presents the quantitative household environment, sequential choices,
   population accounting, equilibrium, and a policy comparison introduced along
@@ -174,8 +174,9 @@ Active documents:
   All 13 moments appear in one `Moment | Target | Model` table on the
   `Calibration: Targets and Model` frame. The author requested removing the
   provisional labels and the target/source footnotes from the calibration
-  display; values and the underlying evidence remain unchanged. All 12 scored
-  targets appear in the fit plots as model/target ratios. The unscored 2.1
+  display; values and the underlying evidence remain unchanged. At the author's
+  request the `Fertility Fit` and `Housing and Wealth Fit` ratio-plot frames are
+  completely removed. The unscored 2.1
   normalization remains explicitly identified in the combined table.
   The main parameter tables contain all 17 free/fixed/normalized/derived rows;
   the appendix gives every free coordinate's bounds and position. Near-bound
@@ -183,6 +184,18 @@ Active documents:
   The existing `fertility_by_age.png` and `ownership_by_age.png` in
   `selected_standard_diagnostics/` are included unchanged as model equilibrium
   profiles, not empirical-fit overlays. The stable 17-graph packet is unchanged.
+
+  **Requested results sequence.** After estimation design and parameter/target
+  tables, show the 2023 equilibrium (prices, rents and quantities), then historical
+  transition fit and cross-sectional 2023 data/model fit, following May's market
+  equilibrium, lifecycle comparison and allocation formats without spatial panels.
+  `Historical Fertility Discipline` now immediately follows the literal historical
+  fitting algorithm, keeping estimation design together. The quantitative task
+  has the request for dated 2023 figures; these remain outstanding. Existing
+  initial profiles/allocation retain their correct dates. The 2023 ACS allocation
+  data alone cannot support a data/model overlay without a matching model state.
+  2023 ends the final 2020--2023 historical birth window and starts the policy
+  comparison; it is not the terminal stationary economy or end of the forecast.
 
   The AHS 2023 tenure-by-bedroom figure remains the May asset. On September 12
   the author explicitly chose the original May PSID plots for the presentation
@@ -227,8 +240,8 @@ Active documents:
   Build twice from `latex/`, writing auxiliary files outside the active folder:
   `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=../tmp/september_slides_review september_14_presentation.tex`.
   Copy the verified PDF to the reader path and the adjacent build copy.
-  The deck has 37 numbered main frames and nine appendix frames
-  (53 PDF pages including overlays and dividers). Two final compilation passes
+  The deck has 35 numbered main frames and nine appendix frames
+  (51 PDF pages including overlays and dividers). Two final compilation passes
   have no warnings or overfull boxes; all frames were visually inspected and
   all figure paths and all three appendix links resolve.
 

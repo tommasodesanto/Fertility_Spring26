@@ -507,6 +507,32 @@ After 2023, hold the final preference level fixed.
 \end{frame}
 
 
+\begin{frame}{Historical Fertility Discipline}
+\small
+Choose each preference level to match fertility over the following four calendar years.
+
+\medskip
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}C C C@{}}
+\toprule
+Decision date & Birth years & Mean published TFR \\
+\midrule
+2007 & 2008--2011 & 1.9749 \\
+2011 & 2012--2015 & 1.8610 \\
+2015 & 2016--2019 & 1.7554 \\
+2019 & 2020--2023 & 1.6458 \\
+\bottomrule
+\end{tabularx}
+
+\medskip
+The model sums age-specific births per adult household: an approximate analogue of female period TFR. The exposure mapping remains to be reconciled.
+
+\medskip
+This is the estimation design. A complete historical fit requires converged conditional equilibria and stability to a longer continuation horizon.
+\source{Published annual U.S. total fertility rates; equal-weight four-year averages.}
+\end{frame}
+
+
 
 \begin{frame}{Empirical Discipline}
 \small
@@ -614,56 +640,6 @@ A model period is four years, $\beta=\beta_{\rm annual}^4$. The equivalence scal
 $e(m)=((2+0.7m)/2)^{0.7}$; pensions are in model-period income units.
 \end{frame}
 
-\begin{frame}{Fertility Fit}
-\small
-\centering
-\begin{tikzpicture}
-\begin{axis}[width=0.55\textwidth,height=0.53\textheight,
-scale only axis,xmin=0.5,xmax=1.5,
-ymin=-0.6,ymax=3.6,
-ytick={0,1,2,3},
-yticklabels={{First births at age 30+ (\%)},{Mean age at first birth (years)},{One child among mothers (\%)},{Childless, ages 40--44 (\%)}},
-xtick={0.5,0.75,1,1.25,1.5},
-xlabel={Model / target},tick label style={font=\scriptsize},
-axis x line*=bottom,axis y line*=left,y axis line style={draw=none},ytick style={draw=none},xmajorgrids,grid style={gray!15},
-clip=false]
-\addplot[black!50,dashed] coordinates {(1,-0.5) (1,3.5)};
-\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,0) (0.9307964788,0)};
-\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,1) (1.0048857750,1)};
-\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,2) (0.9668861235,2)};
-\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,3) (1.0437636804,3)};
-\end{axis}
-\end{tikzpicture}
-\par\medskip\raggedright\small
-The dashed line denotes the target. First births occur slightly later in the model, but too few occur at age 30 or above.
-\end{frame}
-\begin{frame}{Housing and Wealth Fit}
-\small
-\centering
-\begin{tikzpicture}
-\begin{axis}[width=0.55\textwidth,height=0.53\textheight,
-scale only axis,xmin=0.5,xmax=1.5,
-ymin=-0.6,ymax=7.6,
-ytick={0,1,2,3,4,5,6,7},
-yticklabels={{Old-age wealth/income dispersion},{Annual bequests / wealth (\%)},{Wealth / annual gross earnings},{Recent-parent ownership gap (pp)},{Family-size room gap},{First-birth rooms},{Ownership, heads 30--55 (\%)},{Mean rooms}},
-xtick={0.5,0.75,1,1.25,1.5},
-xlabel={Model / target},tick label style={font=\scriptsize},
-axis x line*=bottom,axis y line*=left,y axis line style={draw=none},ytick style={draw=none},xmajorgrids,grid style={gray!15},
-clip=false]
-\addplot[black!50,dashed] coordinates {(1,-0.5) (1,7.5)};
-\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,0) (1.2623651641,0)};
-\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,1) (0.9752896614,1)};
-\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,2) (0.7889725539,2)};
-\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,3) (0.9218170781,3)};
-\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,4) (0.5776232226,4)};
-\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,5) (1.4037227307,5)};
-\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,6) (0.8089033192,6)};
-\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,7) (1.1311776181,7)};
-\end{axis}
-\end{tikzpicture}
-\par\medskip\raggedright\small
-The model has too many rooms and too little ownership and wealth.
-\end{frame}
 \begin{frame}{The Initial Equilibrium over the Lifecycle}
 \small
 \centering
@@ -674,7 +650,7 @@ The model has too many rooms and too little ownership and wealth.
 \raggedright
 Births are concentrated early in life, while ownership rises with age.
 \par\smallskip
-These are model equilibrium profiles; the preceding tables and plots compare the targeted moments with data.
+These are model equilibrium profiles; the calibration table compares targeted moments with data.
 \end{frame}
 
 % Intergenerational Allocation: Model vs Data
@@ -682,34 +658,6 @@ These are model equilibrium profiles; the preceding tables and plots compare the
 \centering
 \includegraphics[width=\textwidth,height=0.88\textheight,keepaspectratio]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/age_housing_allocation/intergenerational_allocation_data_model.pdf}
 \end{frame}
-
-
-
-\begin{frame}{Historical Fertility Discipline}
-\small
-Choose each preference level to match fertility over the following four calendar years.
-
-\medskip
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{@{}C C C@{}}
-\toprule
-Decision date & Birth years & Mean published TFR \\
-\midrule
-2007 & 2008--2011 & 1.9749 \\
-2011 & 2012--2015 & 1.8610 \\
-2015 & 2016--2019 & 1.7554 \\
-2019 & 2020--2023 & 1.6458 \\
-\bottomrule
-\end{tabularx}
-
-\medskip
-The model sums age-specific births per adult household: an approximate analogue of female period TFR. The exposure mapping remains to be reconciled.
-
-\medskip
-This is the estimation design. A complete historical fit requires converged conditional equilibria and stability to a longer continuation horizon.
-\source{Published annual U.S. total fertility rates; equal-weight four-year averages.}
-\end{frame}
-
 
 \begin{frame}{Housing and Fertility in Equilibrium}
 The next three diagrams illustrate the interaction between housing costs and population.
