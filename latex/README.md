@@ -78,8 +78,13 @@ Active documents:
   initial-fit tables. No such plot has yet been inserted into the deck.
   The first no-shock terminal probe failed at its initial demographic-renewal
   guess before completing a root evaluation. This is not a nonexistence result;
-  a bounded diagnosis under the unchanged closure is requested. No matched
-  baseline/pulse IRF has been computed.
+  the quantitative task subsequently reports that the bounded probe with a
+  5%-higher initial price passed the stationary endpoint checks (17496086_0).
+  The result is endpoint verification only; its local receipt handoff is pending.
+  No matched baseline/pulse IRF has been computed. The author also requested a
+  parallel stationary-history approximation carrying distributions into 2023.
+  Its implemented algorithm and evidence must be handed over before replacing
+  the existing perfect-foresight algorithm slide.
 
   **Two-slide algorithm walkthrough.** The first two numbered frames in
   Quantification explain the actual nested loops in literal steps. For each
