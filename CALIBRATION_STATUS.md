@@ -21,6 +21,13 @@ corrected estimate or bound on bias; residual fluctuations remain unresolved.
 The one-cohort September 5 reference check does not certify the full curve.
 No estimator, 0.720246 target, weight, model, or slide was changed in this review.
 Exact May execution and one-change-at-a-time reconstruction remain outstanding.
+Follow-up: Tommaso identified the Ludovica-era `Codes/code_per tommi_addingcontrolsandfixingthings.do`
+as the recognized regression reference. A byte-preserved copy is now in the
+audit evidence. Three timing-only fits are prepared and their synthetic loop
+passes; complete input samples are 361,231 original, 394,167 shifted, and
+352,250 common observations. Real fits are not launched: automatic approval
+review blocked the private Torch sample transfer pending explicit permission
+for the microdata export. No empirical target is changed.
 Evidence and reproducible driver:
 `code/data/psid_followup_mar2026/output/first_birth_correction_review/README.md`.
 

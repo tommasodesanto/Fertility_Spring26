@@ -205,3 +205,86 @@ final-sample support cells. This is an exact design identity evaluated on
 aggregate support, not a fresh microdata regression replay. No long numerical
 run was needed. The May table export uses the bundled runtime's
 `pandas.read_stata` on the preserved 18-row original artifact.
+
+## Author-recognized reference and controlled timing comparison
+
+In the follow-up discussion Tommaso identified
+`/Users/tommasodesanto/Desktop/Projects/Fertility/Codes/code_per tommi_addingcontrolsandfixingthings.do`
+as the Ludovica-era file in line with his regressions, although it was not the
+production script. He states that this code produced the May graphs through
+its modifications. This author-provided provenance is accepted as the working
+baseline; absence of an exact historical execution log is not a reason to
+dispute it. A byte-for-byte evidence copy is `author_recognized_reference.do`,
+SHA-256 `0262dadfb07b5a998bcbe3c32e58593556f4fb62d399ace97cb4e6189474c011`.
+Its original whitespace is intentionally preserved.
+
+The original long PSID-SHELF panel does not contain ACTUALROOMS_. The field is
+in `mobility_long_withadd.dta`, which `Codes/merger_SHELFmobility.do` merges by
+ID/year. A deterministic 512-row input probe recovered 480 matching person/year
+rows in the merged panel, including 244 observed rooms values; all 244 were
+unchanged at the same labelled year. The code constructing the added file
+was not recovered in bounded code, archived-chat, and editor-history searches.
+
+Archived August 17 conversation establishes Codex subagent
+`first_birth_rooms_target_repair` (Nietzsche), id
+`01a00e26-f802-7953-97c5-ed529744de4f`, as the implementer of the bundled
+rooms/sample/control redesign. It announced the offset at 01:26 EDT;
+subsequent reviews added the household/history restrictions and proposed the
++3-minus-1 contrast. Evidence: `memory/transcripts/2026-08-17/combined_user_assistant.md`
+around line 34960. September 10 task "Update September presentation slides"
+introduced the diagnostic curve into the September deck. This identifies
+the later assistant changes, not the original 2024 extraction author.
+
+The author authorized a controlled comparison. Preparation driver
+`../../audit_original_rooms_timing.py` copies the recognized source's preparation
+block through `compress`, selectively loads its required columns, and carries
+a second rooms column shifted forward one observed interview. Donor alignment
+is computed before sample restrictions and permits one/two-year gaps. Both
+columns retain the original special room codes: this isolates timing rather
+than bundling coding changes. The original first-birth field, all-sex sample,
+last-cohort control, unweighted regression, covariates, individual/year FE,
+clustering, and omitted -2/-6 indicators are retained.
+
+Three planned fits in `../../audit_original_rooms_timing.do` are:
+1. Original assignment on its original complete sample.
+2. Original assignment on observations complete under both assignments.
+3. Shifted assignment on that identical common sample.
+
+The preparation passed in 38.1 seconds. It preserves a constant first-birth
+year within every person. Complete input counts, before singleton removal:
+
+| Sample | Observations |
+|---|---:|
+| Original assignment | 361,231 |
+| Shifted assignment | 394,167 |
+| Common sample | 352,250 |
+| Original observations lost to common-sample restriction | 8,981 |
+
+The exact three-fit loop passed on synthetic data, including byte-identical
+common-sample person/year keys and finite covariance-based contrast SEs.
+Before allocating regression interactions, observations unusable under both
+assignments are removed; an assertion verifies that this preserves the full
+cohort list. These rows would be excluded by the estimator's marksample/markout
+in either arm. This reduces memory allocation without changing fitted rows.
+
+Common-sample support has 16 treated cohorts without K=-2. A -2/-1 window
+reduces that to four: 1968, 1969, 1970, and 1977. Binning alone therefore does
+not solve all reference support. Any subsequent reference repair must handle
+those cohorts explicitly and separately address the last-control treatment
+date; no such design has been promoted or estimated in this comparison yet.
+
+The old local reconstruction took approximately 31 minutes for one fit.
+Planned Torch execution uses three parallel fits, each 8 CPUs/32 GB with a
+45-minute hard cap, following the exact-loop smoke; queue time is additional.
+`code/cluster/run_original_rooms_timing.sh` writes a ten-second heartbeat,
+per-fit receipts, full event covariance and sample-key digests. Person/year
+keys are removed after hashing; only aggregate outputs will be collected.
+
+**Current execution state: prepared and smoke-tested, real fits not launched.**
+Automatic approval review rejected transfer of the 57.6 MB minimal analysis
+sample to the author's private Torch directory because it contains person IDs
+and requires explicit authorization for that data export. User permission is
+pending. No microdata was uploaded. Private local inputs remain under
+`/tmp/psid_original_timing_20260912b/`; no microdata is committed here.
+Preflight evidence is in `preparation_receipt.json`, `sample_comparison.json`,
+`matched_reference_support.csv`, and `timing_comparison_preflight.json`.
