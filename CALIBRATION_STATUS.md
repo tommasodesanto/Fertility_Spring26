@@ -1,5 +1,17 @@
 # Calibration Status
 
+**September12 — patch-only packaging guard repaired; full searches active.**
+Main sequence17498927/28areRUNNING;17498929remainsqueued. Patch17498930failed
+before anysolve on one obsolete pin for an UNUSED historicalplotfile
+stationary_2019_pf_test_20260912/build_e5f_age_housing_allocation.py. Controller
+has no reference/import to thisplotbuilder. Only thatunuseddependencyremoved;
+all economic source, input, target andsolverpins unchanged. Replacement17498984
+uses plan_3_preflight_retry.json and finite_sequences_20260912/patch_retry/results/arm_3.
+Original failedoutput/log retained;3hour16GBbudgetunchanged. Monitorupdated.
+Presentationfigures now use Housing size for meanphysicalrooms and Housing quantity
+for totalphysicalrooms; numericalseries unchanged. No housing-servicepremiumclaim.
+
+
 **September12 — queued sequence array replaced with smaller resource requests.**
 Array17498666 neverstarted; all four tasks were verifiedPENDING before cancellation.
 Same immutable source/plans now run as individual jobs17498927(arm0,6dates,3h),

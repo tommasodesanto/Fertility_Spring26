@@ -31,7 +31,7 @@ def main():
     fig.text(.5,.01,'Stationary approximation through 2019; transition thereafter. Initial model fertility normalized to 2.1.',ha='center',fontsize=9);fig.tight_layout(rect=(0,.055,1,1));save(fig,'historical_fertility',dict(years=ends.tolist(),model=model,data=target))
     years=[int(a['calendar_year']) for a in path]
     fig,axs=plt.subplots(1,3,figsize=(12,3.7))
-    for ax,title,key,unit in zip(axs,['House prices','Rents','Housing services'],['asset_price','renter_price','housing_demand'],['Price per room','Rent per room / model period','Total physical rooms (model units)']):
+    for ax,title,key,unit in zip(axs,['House prices','Rents','Housing quantity'],['asset_price','renter_price','housing_demand'],['Price per room','Rent per room / model period','Total physical rooms (model units)']):
         values=[float(a[key]) for a in path];ax.plot(years,values,'o-',color=BLUE);ax.axvline(2023,color='.65',lw=.8,ls=':');ax.set(title=title,xlabel='Year',ylabel=unit,xticks=years[::2]);ax.grid(alpha=.16)
     fig.tight_layout();save(fig,'prices_quantities_path',dict(years=years,series={k:[float(a[k]) for a in path] for k in ['asset_price','renter_price','housing_demand']}))
     if full:
@@ -44,7 +44,7 @@ def main():
         fig.tight_layout();save(fig,'equilibrium_2023',dict(groups=groups,calendar_year=2023))
         empirical=csvread(data/'actual2023_age_housing_levels.csv');byage={int(a['age_lower']):a for a in empirical}
         x=np.array([a['age']+1.5 for a in age]);d=[byage[int(a['age'])] for a in age]
-        comparisons=[('Homeownership','Percent of households','owners','ownership_rate',100),('Housing services','Physical rooms, capped at 9','capped_rooms','mean_capped_rooms',1),('Children at home','Percent of households','with_children','with_minor_rate',100)]
+        comparisons=[('Homeownership','Percent of households','owners','ownership_rate',100),('Housing size','Physical rooms, capped at 9','capped_rooms','mean_capped_rooms',1),('Children at home','Percent of households','with_children','with_minor_rate',100)]
         fig,axs=plt.subplots(1,3,figsize=(13,4));mseries={}
         for ax,(title,ylabel,mkey,dkey,scale) in zip(axs,comparisons):
             mv=[scale*a[mkey]/a['households'] for a in age];dv=[scale*float(a[dkey]) for a in d];ax.plot(x,mv,'-',lw=2,color=BLUE,label='Model');ax.plot(x,dv,'--',lw=2,color=RED,label='ACS 2023');ax.set(title=title,xlabel='Age of household head',ylabel=ylabel,xticks=[20,35,50,65,80]);ax.grid(alpha=.16);mseries[mkey]=dict(model=mv,data=dv)
