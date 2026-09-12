@@ -60,6 +60,12 @@ def main():
     demographics=packet['demographic_seed'];initial_psi=float(old.parameters.psi_child)
     inherited=surprise.InheritedState(2007,old.initial_state);del packet
     targets=list(csv.DictReader(Path(plan['empirical_blocks']).open()));realized=[];smoked=False;trial_index=0
+    if plan.get('verified_native_smoke'):
+        native=read(plan['verified_native_smoke'])
+        if (not native['finite_horizon_market_fiscal_converged'] or native['start_year']!=2007
+                or abs(native['psi']-(initial_psi+plan['seed_steps'][args.arm]))>1e-14):
+            raise ValueError('Pinned native smoke does not match this preference and initial date')
+        smoked=True
     audit=terminal_module.TerminalAuditControls(**c['audit_controls'])
     fit_deadline=deadline-plan['policy_reserve_seconds']
     try:
@@ -86,16 +92,29 @@ def main():
                 tr=read(folder/'terminal/root_receipt.json');payload=tr['final']['payload']
                 terminal=terminal_module.BalancedTerminalEndpoint(t['parameters'],t['b_grid'],t['policy'],t['endpoint'],t['social_security'],payload['diagnostics'],payload['household_gates'])
                 pstart=float(plan['warm_price_2007']);bstart=float(plan['warm_pension_2007']);previous=None;result=None;observed={}
-                counts=([6] if not smoked else [])+[28,56]
+                counts=plan.get('forecast_counts',([6] if not smoked else [])+[28,56])
+                if counts!=[6] and not smoked and counts[0]!=6:raise ValueError('Long diagnostic requires its pinned native smoke first')
                 for count in counts:
                     if time.monotonic()+900>fit_deadline:break
                     prices=np.linspace(pstart,float(terminal.policy.price[0]),count);pensions=np.linspace(bstart,float(terminal.parameters.pension),count)
+                    if plan.get('initialization_receipt'):
+                        init=read(plan['initialization_receipt']);f=init['final'];n=min(count,len(f['prices']))
+                        prices[:n]=np.asarray(f['prices'][:n])*plan.get('initial_price_multiplier',1.)
+                        pensions[:n]=f['fiscal_values'][:n]
+                        if count>n:
+                            prices[n:]=np.linspace(prices[n-1],float(terminal.policy.price[0]),count-n+1)[1:]
+                            pensions[n:]=np.linspace(pensions[n-1],float(terminal.parameters.pension),count-n+1)[1:]
+                        if plan.get('verified_native_smoke'):
+                            q=read(plan['verified_native_smoke'])['final'];k=min(count,len(q['prices']))
+                            prices[:k]=q['prices'][:k];pensions[:k]=q['fiscal_values'][:k]
                     if previous is not None:
                         f=previous.root_receipt.get('final') or previous.root_receipt.get('best')
                         if f is not None:
                             take=min(count,len(f['prices']));prices[:take]=f['prices'][:take];pensions[:take]=f['fiscal_values'][:take]
                     for continuation in range(3):
                         rc=copy.deepcopy(plan['history_root_controls']);rc['initial_jacobian']=None
+                        if continuation==0 and plan.get('initialization_receipt') and len(init['final']['prices'])==count:
+                            rc['initial_jacobian']=init.get('final_jacobian')
                         if continuation and result is not None:
                             f=result.root_receipt.get('final') or result.root_receipt.get('best')
                             if f is None:break
@@ -114,6 +133,13 @@ def main():
                             audit_controls=audit,root_controls=rc,deadline_monotonic=min(fit_deadline,time.monotonic()+(1800 if count==6 else 7200)),pension_tail_tolerance=.01,callback=progress,observer=observe)
                         surprise.persist_episode(stage/'vintage',year,result,provenance={'plan_sha256':sha(args.plan),'terminal_contract_sha256':sha(folder/'terminal_contract.json'),'target_fingerprint':plan['target_fingerprint']})
                         save(stage/'fertility.json',measurements);previous=result
+                        if plan.get('forecast_diagnostic_only',False) and result.root_receipt['finite_horizon_market_fiscal_converged']:
+                            standard_graphs(snapshot,result,out/'native_graphs')
+                            save(out/'summary.json',dict(status='finite_forecast_diagnostic_only',dates=count,year=year,psi=psi,data=desired,
+                                model=measurements[0]['period_tfr_topcode_adjusted'],gap=measurements[0]['period_tfr_topcode_adjusted']-desired,
+                                finite_converged=True,terminal_distance_passed=result.root_receipt['terminal_distance_passed'],
+                                historical_fit_complete=False,horizon_verified=False,production_eligible=False,forecast_folder=str(stage)))
+                            return
                         if count==6:
                             if not result.root_receipt['finite_horizon_market_fiscal_converged']:
                                 if continuation==2:raise RuntimeError('Native exact-loop smoke failed after bounded continuations; no long new-timing solve')

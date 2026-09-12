@@ -1,5 +1,17 @@
 # September 12 autonomous cluster campaign
 
+## 13:15 UTC: matched first window, consolidated PDF and final horizon checks
+
+Warm follow-up arm 0 passed its short native root: model fertility **1.974855548** against **1.974875**, gap **-0.000019452**. Housing/PAYGO maxima are 3.22250e-5/3.97512e-7. Complete rows, root receipt, provenance and 17 graphs are collected in `matched_short/`. The -0.0175 arm failed the unchanged mass gate (1.318e-8 versus 1e-8). No accepted four-shock sequence or new policy result exists.
+
+The older -0.045 28-date root finally converged (housing 3.60843e-5, PAYGO 9.19031e-7) but failed terminal-distance checks: household mass gap 12.56% and pension gap 7.78%. It stopped on the historical fitting budget; no accepted state was passed to policy.
+
+Final parallel horizon array **17489644_0–1** checks **28 and 56 dates** at the matching preference decline -0.01414, each with **9,000 seconds, one CPU and 32 GiB**. It reuses the pinned verified short smoke and nearby converged 28-date prices/pensions as numerical guesses; only the 28-date case reuses the dimension-matched Jacobian. Both tasks passed preflight and are running. Root: `/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/night_matched_horizon_20260912`; plan hashes: `c83b770c04c8b7a5820b4e9da7494b2ef0cd614863c65fd8d0f5fb4587dc3386` and `7d2048336848379ca83349946b3c12974c151a54aeecc49fe775aff82b540b28`. These are diagnostic-only checks, not fitted histories or policy launchers.
+
+The consolidated **14-page review** is [e5f_overnight_review.pdf](../../../../pdf/e5f_overnight_review.pdf). It includes every target and parameter, all 17 standard initial graphs, the actual forecast shapes, fiscal receipts and unresolved issues. All 14 pages were rendered and inspected. `report_support/verification.json` records the source fingerprints, recomputed loss, native residuals and reviewed PDF hash. Existing graph legends are preserved, including their original crowding. The PDF is not a certificate of a completed historical model.
+
+Rebuild with `code/model/tools/build_e5f_overnight_review.py` using Python with matplotlib and reportlab. In this session: `PYTHONPATH=/tmp/e5f-pdf-deps MPLCONFIGDIR=/tmp/e5f-mpl /opt/anaconda3/bin/python -B code/model/tools/build_e5f_overnight_review.py`; the isolated `reportlab` package is linked from the Codex bundled Python runtime. No model solve is performed. Final-stage monitoring now checks every 30 minutes, stays quiet while healthy, collects on completion and pauses no later than 16:00 UTC.
+
 ## 11:00 UTC: two smaller-shock equilibria and a numerical-start test
 
 Follow-up: **both warm terminal probes passed** (`passed_terminal_root_diagnostic`), and both dependent forecasts 17488254_0–1 are now running. Verified terminal equilibria exist at the newly tested smaller declines. Earlier failures at initial guesses must not be interpreted as general equilibrium nonexistence.

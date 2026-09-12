@@ -1,5 +1,33 @@
 # Calibration Status
 
+**September 12, 13:15 UTC — first-window short forecast matches; full review PDF ready.**
+Warm follow-up 17488254_0 passed its six-date native root and produces
+1.974855548 versus 1.974875 in the first empirical window (gap -0.000019452).
+Its maximum housing/PAYGO residuals are 3.22250e-5/3.97512e-7; terminal horizon
+remains uncertified. The -0.0175 follow-up failed the unchanged age-advancement
+mass gate (1.318e-8 versus 1e-8). No gate or target changed.
+
+The old -0.045 28-date run DID eventually clear its finite root:
+housing 3.60843e-5 and PAYGO 9.19031e-7. It failed terminal-distance checks
+(household mass gap 12.56%, pension gap 7.78%) and exhausted the fitting budget.
+It never implemented an accepted first period or launched policies.
+
+Final-stage array 17489644_0–1 is RUNNING independent 28/56-date diagnostics
+at the short-matching preference change -0.01414. Each has 9,000 seconds and
+32 GiB; starts use the pinned native smoke plus nearby converged long-path
+coordinates (Jacobian reused only at matching dimension). All 19 loop tests
+passed on Torch. These checks cannot promote a history or run policies.
+
+`output/pdf/e5f_overnight_review.pdf` is the 14-page consolidated review:
+complete 13-row target fit, 17-row parameter/restriction table, all 17 standard
+initial graphs, actual forecast shapes, fiscal verification and outstanding
+items. All pages were rendered and visually inspected; source hashes, loss
+recomputation and matched target fingerprints are in the report verification
+manifest under `overnight_20260912/report_support/`. This PDF certifies its
+reported evidence, not a completed historical model. No fitted four-shock
+sequence or new policy result exists yet. Final-stage monitoring is every
+30 minutes until collection, and must pause by 16:00 UTC.
+
 **September 12, 08:00 EDT — data-only overnight batch stopped without estimates.**
 The first original-specification fit exited after 1,889.59 seconds, before its
 two-hour cap, without the required success marker. The controller stopped as
