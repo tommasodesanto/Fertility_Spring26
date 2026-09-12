@@ -87,9 +87,16 @@ Active documents:
   The first overlay was subsequently recopied directly from the May source:
   `State`, the original three-bullet structure, and `Within the period`, with
   no added Values block. Its May diagram construction and spacing are restored.
-  Only dated notation, removal of geography, addition of earnings heterogeneity,
-  dependent-child counts, and birth-attempt timing differ; the two later
-  household-problem overlays retain their existing layout.
+  The restoration now covers all three household overlays: the shared May
+  diagram, May font/display spacing, and the second overlay's value function,
+  owner/rental menus, adjustment indicator, and `Budget and collateral` block.
+  The combined budget was checked algebraically against the separate renter,
+  adjusting-owner, and staying-owner equations. The current housing shocks,
+  stochastic survival, bequests, debt floors, and sequential birth attempts
+  remain; they differ substantively from May. Across the surrounding model
+  section, unchanged May wording is restored, including the housing-choice and
+  tenure statements, bequest introduction, and earnings/pension framing.
+  The new population-accounting and equilibrium content is retained.
 
   **External-input table.** The September 14 table follows the July mini-draft's
   `Parameter | Value | Source` layout, using the table in
