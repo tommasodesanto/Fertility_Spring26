@@ -1,0 +1,63 @@
+{
+  "status": "smoke passed both fits and equal-sample check; full pair pending Torch capacity",
+  "smoke_job_id": "17493156",
+  "array_job_id": "17493166",
+  "arms": {
+    "0": "original_binned",
+    "1": "aligned_binned"
+  },
+  "remote_root": "/scratch/td2248/projects/Fertility_Spring26_binned_rooms_20260912b",
+  "data_sha256": "ede59bdb1ee42028dc97b6f35ee9d281e913ae0745bed777ce39bd6bdd9ba8eb",
+  "estimator_do_sha256": "4fdae3d5b10158cb24399498d91bfd9e45e15c6b67f25c1aeccae13aa361e936",
+  "launcher_sha256": "88687cabef72ddcec4ab6fcd02276d215ee23bb316dfccf94327d7466fadc368",
+  "cpus_per_fit": 8,
+  "memory_gb_per_fit": 32,
+  "cap_seconds_per_fit": 3600,
+  "smoke_cap_seconds": 300,
+  "expected_minutes_per_fit": "Earlier annual fits 24\u201333; binned runtime not yet measured",
+  "baseline": [
+    -3,
+    -2
+  ],
+  "displayed_windows": [
+    [
+      -7,
+      -6
+    ],
+    [
+      -5,
+      -4
+    ],
+    [
+      -3,
+      -2
+    ],
+    [
+      -1,
+      0
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      3,
+      4
+    ]
+  ],
+  "support": "Each retained treated cohort must have positive complete-case counts in all six displayed bins, before fitting and in e(sample).",
+  "control": "Original latest first-birth cohort; exclude all calendar years >= its birth year (2019).",
+  "weights": "Original Sun\u2013Abraham block is unweighted; unchanged in both arms.",
+  "codes": "Original room codes retained; this isolates assignment, not final outcome cleaning.",
+  "stop": "No retries; fail on missing bin support, missing fit marker or covariance contrast. Slurm cap enforced.",
+  "promotion": "Diagnostic only; no target, model or slide changes.",
+  "preserved_failed_smoke": {
+    "job": "17493008",
+    "error": "r(109) type mismatch at colnumb(b,\"Dp3\"); quoted matrix name fixes variable-abbreviation ambiguity with bin.",
+    "cancelled_dependent_array": "17493037",
+    "full_regression_runtime_seconds": 0,
+    "remote_root": "/scratch/td2248/projects/Fertility_Spring26_binned_rooms_20260912"
+  },
+  "smoke_status": "pass",
+  "smoke_paired_sample_sha256": "1d246291ac3d6e79b096419bec660802c844b11b6a67d9f1c56a0ba9065f2335"
+}

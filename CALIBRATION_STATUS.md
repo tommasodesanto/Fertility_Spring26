@@ -1,5 +1,28 @@
 # Calibration Status
 
+**September 12 — two-year rooms diagnostic authorized and queued.**
+The author authorized immediate work after agreeing to investigate a −3/−2
+baseline, keeping −1 outside the reference. Corrected smoke 17493156 and
+success-dependent array 17493166 compare original versus verified rooms year
+assignment on identical common observations. Both retain the original
+unweighted Sun–Abraham specification, covariates, FE, clustering and room
+codes. Both exclude dates from 2019 onward so the 2019 control cohort is still
+untreated, and require each treated cohort to have fitted support in every
+displayed two-year bin from −7/−6 through +3/+4. This is a changed diagnostic
+design, not a new target. Each full fit has a one-hour cap; no automatic retry.
+First smoke 17493008 caught a result-export naming error after one synthetic
+fit; its dependent array 17493037 was cancelled before any full regression.
+That specific error was fixed in a separate frozen deployment; revised smoke
+17493156 passed both fits and equal-sample checks. Full array 17493166 is
+eligible and pending capacity; no binned estimates are available yet.
+Ownership has a recovered survey-year mapping and must not receive the rooms
+shift by analogy. Moving-reason source mapping and recall intervals still
+need validation. Neither outcome was included in this rooms-only launch.
+Original code does construct/use weights in csdid blocks; only the separate
+Sun–Abraham command reproducing May is unweighted. Evidence and collector:
+`code/data/psid_followup_mar2026/output/first_birth_correction_review/binned_rooms/`,
+`code/data/psid_followup_mar2026/collect_binned_rooms.py`.
+
 **September 12 — full-wave rooms timing validation; author reaffirms year −2.**
 The full source check covers all 82,573 people and all 41 survey waves,
 1968–2019. All 352,250 prepared common-sample rows (including every one of the

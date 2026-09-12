@@ -466,3 +466,78 @@ eligible row fell outside the available source waves. The two initial audit
 assertions and logs remain in `/tmp/psid_all_wave_validation_attempt1.log` and
 `attempt2.log` (with the same prefix); these were audit bookkeeping assumptions,
 not new Stata fits or evidence of an outcome mismatch.
+
+
+## September 12: authorized immediate two-year-window diagnostic
+
+The author approved immediate execution after discussing a −3/−2 baseline,
+keeping the final pre-birth year outside the reference. Smoke job 17493008
+runs the exact two-fit/export loop on synthetic annual/biennial observations.
+Array 17493037 (original_binned, aligned_binned) is gated on smoke success;
+it cannot execute after a failed smoke. Each full fit has 8 CPUs, 32 GB and a
+one-hour cap; no automatic retries. Previous annual fits took 24–33 minutes.
+At submission these jobs were queued; no binned estimate was available.
+
+The pair uses the existing frozen original-preparation sample, restricted to
+complete common observations and dates strictly before the 2019 control cohort
+is treated. Every retained treated cohort must contribute to all displayed
+windows: −7/−6, −5/−4, baseline −3/−2, −1/0, +1/+2, +3/+4. Explicit outer-tail
+indicators avoid introducing a second omitted period. The support assertion
+is repeated on the fitted sample. This holds the cohort set constant across
+displayed windows, but does not force identical cohort weights or individual
+composition in each window. The sample, original room codes, unweighted
+regression, age/education covariates, ID/year FE and ID clustering are identical
+between arms. Only the rooms year assignment differs. Changes from the earlier
+annual comparison therefore include bins, common support and admissible control
+dates; comparisons across batches must not attribute those jointly to timing.
+
+Original weights were NOT absent throughout the Ludovica code: it constructs
+rounded frequency weights and uses them in csdid calls. The separate
+Sun–Abraham command that reproduces May has no weight argument. Replacing it
+with direct IW probability weights remains a separate design comparison.
+
+A bounded independent source review found the original HOMEOWN construction
+in `/Users/tommasodesanto/Desktop/Projects/Fertility/PSID/Construction_Files/Code/01 Collect housing variables.do`
+(lines 95–118): 41 survey-year sources, including 1984 V10437, 2017 ER66030,
+2019 ER72030. The lead checked this mapping. It gives no basis for applying the
+rooms shift to ownership. The original ownership regression excludes tenure
+'neither owns nor rents'; its denominator must be stated, not called automatic
+missing-code cleanup. A numeric source match and ownership-bin rerun remain
+next steps; they were not included in this two-arm rooms launch.
+
+Moving reasons remain blocked on source-year/recall validation. Official 2019
+family codebook ER72156 asks about moving since January 2017; ER72157/ER72158
+date the most recent move; ER72159 is the first-mentioned reason. In 1984,
+V10447 asks since spring 1983. Interview-year binning does not place those moves
+unambiguously before/after birth. No mapping for the renamed MOVEDFREF_ and
+WHYMOVED1_ additions was recovered in the bounded review; do not shift them
+by analogy with rooms. Existing August IV repairs of L. versus previous observed
+interview and missing outcomes are relevant but do not certify these sources.
+Sources: https://psidonline.isr.umich.edu/documents/psid/codebook/FAM2019ER_codebook.pdf
+(pp. 10, 54–56), https://psidonline.isr.umich.edu/documents/psid/codebook/FAM1984_codebook.pdf
+(p. 161). No moving-reason regression was launched on an unverified clock.
+
+Aggregate-only collection and covariance/sample verification:
+`python3 code/data/psid_followup_mar2026/collect_binned_rooms.py`.
+Results and submission pins live in `binned_rooms/`. The collector plots only
+when both fits pass, have identical person/year sample digests, and pass
+covariance symmetry/PSD and reported-effect arithmetic checks. Neither a
+calibration target nor a slide is automatically replaced.
+
+
+Launch correction: smoke 17493008 fitted its first synthetic regression but
+failed exporting the +3/+4 coefficient: unquoted `colnumb(b,"Dp3")` collided
+with the variable `bin` (r(109), type mismatch). Array 17493037 was automatically
+cancelled with zero full-regression runtime. The corrected code explicitly
+quotes matrix name `"b"`; no empirical specification changed. Failed input and
+logs remain in the original remote directory; source copy is preserved locally
+as `binned_rooms/failed_smoke_estimator.do`. Corrected smoke **17493156** and
+success-dependent array **17493166** use the separate frozen remote root
+`/scratch/td2248/projects/Fertility_Spring26_binned_rooms_20260912b`.
+The latest pins are in `binned_rooms/submission.json`. At this update the
+corrected smoke was pending; neither successful smoke nor full fit is claimed.
+
+Verified update: corrected smoke 17493156 **passed** both regressions, exports,
+and the identical-sample digest check (13.56 seconds recorded by the wrapper).
+Array 17493166 is eligible and pending Torch capacity. Bounded collection
+follow-up is active; full estimates are not yet available.
