@@ -106,7 +106,7 @@ Need a framework where fertility, tenure, housing size, saving, and population a
 \begin{frame}{Environment}
 \begin{itemize}
   \item Overlapping generations of households in one housing market
-  \item Adult age $a \in [0,J]$; survival probability $s_a$
+  \item Adult age index $a \in \{0,\ldots,J\}$; survival probability $s_a$
   \begin{itemize}
     \item Working age $a<a_R$; fertile window $a \in [a_F^0,a_F^1]$
     \item Children do not work; they depend on their parents
@@ -116,7 +116,7 @@ Need a framework where fertility, tenure, housing size, saving, and population a
   \begin{itemize}
     \item \textbf{Fertility}: whether to attempt the next birth, subject to EV shocks
     \item \textbf{Tenure}: rent or buy a discrete house size $H_k$ on a housing ladder
-    \item \textbf{Saving}: liquid wealth $b$ with age-dependent borrowing limits
+    \item \textbf{Saving}: next-period liquid wealth $b_{t+1}$ with age-dependent borrowing limits
   \end{itemize}
   \item Children age stochastically; housing need depends on children at home
 \end{itemize}
@@ -124,25 +124,25 @@ Need a framework where fertility, tenure, housing size, saving, and population a
 
 \begin{frame}{Preferences}
 \small
-$n$: lifetime parity; $m$: children currently at home; $s$: housing services.
+$n_t$: lifetime parity; $m_t$: dependents before birth; $\widetilde m_t$: after birth.
 
 \medskip
 \textbf{Flow utility.} Over consumption and housing services:
 \[
-u_t(c,s;m)=
-\frac{\left[\dfrac{c^{\alpha_0}\bigl(s-\bar h(m)\bigr)^{1-\alpha_0}}{e(m)}\right]^{1-\sigma}}{1-\sigma}
-+\psi_t m.
+u_t(c_t,s_t;\widetilde m_t)=
+\frac{\left[\dfrac{c_t^{\alpha_0}\bigl(s_t-\bar h(\widetilde m_t)\bigr)^{1-\alpha_0}}{e(\widetilde m_t)}\right]^{1-\sigma}}{1-\sigma}
++\psi_t\widetilde m_t.
 \]
 
-\textbf{Family needs.} An equivalence scale $e(m)$ and a housing requirement:
+\textbf{Family needs.} An equivalence scale $e(\widetilde m_t)$ and a housing requirement:
 \[
-\bar h(m)=\underbrace{h_P\mathbf{1}\{m>0\}}_{\text{first-child housing margin}}.
+\bar h(\widetilde m_t)=\underbrace{h_P\mathbf{1}\{\widetilde m_t>0\}}_{\text{first-child housing margin}}.
 \]
 
-\textbf{Housing services.} Households either rent or own; $\chi$ scales owner services:
+\textbf{Housing services.} The home chosen at $t$ provides current services; $\chi$ scales owner services:
 \[
-s=\underbrace{\mathbf{1}\{\text{own}\}\,\chi\,h'}_{\text{owner services}}
-+\underbrace{\mathbf{1}\{\text{rent}\}\,h^R}_{\text{renter services}},\quad\chi>0.
+s_t=\underbrace{\mathbf{1}\{\text{own}\}\,\chi\,h_{t+1}}_{\text{owner services}}
++\underbrace{\mathbf{1}\{\text{rent}\}\,h_t^R}_{\text{renter services}},\quad\chi>0.
 \]
 
 \begin{itemize}
@@ -152,14 +152,14 @@ s=\underbrace{\mathbf{1}\{\text{own}\}\,\chi\,h'}_{\text{owner services}}
 
 \begin{frame}{Bequests}
 \small
-Terminal utility at death:
+Utility upon death at the end of period $t$:
 \[
-\mathcal B(w^e)=\theta_0\frac{(\theta_1+\max\{w^e,0\})^{1-\sigma}}{1-\sigma}.
+\mathcal B(w_{t+1}^e)=\theta_0\frac{(\theta_1+\max\{w_{t+1}^e,0\})^{1-\sigma}}{1-\sigma}.
 \]
 \begin{itemize}
   \vfill \item $\theta_0$ governs overall bequest motive (saving level).
   \vfill \item $\theta_1$ governs its sensitivity to wealth.
-  \vfill \item Total bequeathable wealth $w^e$ includes liquid wealth and the market value of housing.
+  \vfill \item Total bequeathable wealth $w_{t+1}^e$ includes liquid wealth and the market value of housing.
 \end{itemize}
 \end{frame}
 
@@ -168,29 +168,28 @@ Terminal utility at death:
 \begin{frame}{Housing, Tenure, and Budget Constraints}
 \small
 \setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
-Households choose housing inputs:
+Households inherit $(b_t,h_t)$ and choose $(b_{t+1},h_{t+1})$; the chosen home is occupied at $t$:
 \[
-h^R \in [0,\bar h^R],
+h_t^R \in [0,\bar h^R],
 \qquad
-h' \in \{0,H_1,\ldots,H_K\}.
+h_{t+1} \in \{0,H_1,\ldots,H_K\}.
 \]
-A household either rents ($h^R>0$, $h'=0$) or owns ($h'>0$, $h^R=0$).
-
-\smallskip
 \textbf{Tenure segmentation:} $\max H_k>\bar h^R$, so the largest homes are reachable only through ownership.
 
 \smallskip
-\textbf{Renters} ($h'=0$)
+\textbf{Renters} ($h_{t+1}=0$)
 \[
-b'=R_b\bigl[b+(1-\psi^s)P_t h\bigr]+y_t^d(a,z)+T_t-c-r_t h^R,
-\qquad b'\geq\underline b_a^R.
+b_{t+1}=R_b\bigl[b_t+(1-\psi^s)P_t h_t\bigr]+y_t^d(a,z_t)+T_t-c_t-r_t h_t^R,
+\qquad b_{t+1}\geq\underline b_{t+1}^R.
 \]
 
-\textbf{Owners} ($h^R=0$), with prior owner stock $h$
+\textbf{Owners} ($h_t^R=0$), with inherited owner stock $h_t$
 \[
-b'=R_b b+y_t^d(a,z)+T_t-c-(\delta_H+\tau_t^p)P_t h'
--R_b P_t\mathbf{1}\{h'\neq h\}\bigl[h'-(1-\psi^s)h\bigr],
-\qquad b'\geq\underline b_a^O.
+\begin{aligned}
+b_{t+1}={}&R_b b_t+y_t^d(a,z_t)+T_t-c_t-(\delta_H+\tau_t^p)P_t h_{t+1}\\
+&-R_b P_t\mathbf{1}\{h_{t+1}\neq h_t\}\bigl[h_{t+1}-(1-\psi^s)h_t\bigr],
+\qquad b_{t+1}\geq\underline b_{t+1}^O.
+\end{aligned}
 \]
 
 \smallskip
@@ -206,13 +205,13 @@ b'=R_b b+y_t^d(a,z)+T_t-c-(\delta_H+\tau_t^p)P_t h'
 \begin{itemize}\setlength\itemsep{0.35em}
   \item During fertile ages, a household below terminal parity chooses whether to attempt the next birth.
   \item An attempt succeeds with age-specific probability $\pi_a$.
-  \item A successful birth:
+  \item Let $d_t\in\{0,1\}$ be the realized birth. Post-birth states are
   \[
-    n'=n+1,\qquad m'=m+1,
+    \widetilde n_t=n_t+d_t,\qquad \widetilde m_t=m_t+d_t,
   \]
   and the first successful birth pays the one-time utility cost $F_1$.
   \item Fertility taste shocks have scale $\kappa_1$ on the first-birth margin and $\kappa_C$ on continuation margins.
-  \item Each dependent child matures independently; the state tracks their count $m$, while lifetime parity $n\in\{0,1,2,3+\}$ remains a stock.
+  \item Each dependent child matures independently; the state tracks their count $m_{t+1}$ after maturation. Lifetime parity satisfies $n_{t+1}=\widetilde n_t\in\{0,1,2,3+\}$.
 \end{itemize}
 
 \vfill
@@ -221,22 +220,22 @@ A birth changes the household's space needs immediately, but its demographic eff
 
 \begin{frame}{Earnings and Pensions}
 \small
-\textbf{Gross earnings.} $y_t^g(a,z)$ depends on age and earnings state $z$, which combines a fixed permanent income group and a persistent Markov shock.
+\textbf{Gross earnings.} $y_t^g(a,z_t)$ depends on age and earnings state $z_t$, which combines a fixed permanent income group and a persistent Markov shock.
 
 \textbf{Disposable income.} Workers pay a payroll tax; retirees receive pensions:
 \[
-y_t^d(a,z)=\begin{cases}
-(1-\tau^{SS})y_t^g(a,z),&a<a_R,\\
-\varpi_t d(z),&a\geq a_R.
+y_t^d(a,z_t)=\begin{cases}
+(1-\tau^{SS})y_t^g(a,z_t),&a<a_R,\\
+\varpi_t d(z_t),&a\geq a_R.
 \end{cases}
 \]
 \textbf{Balanced pensions.} A fixed tax $\tau^{SS}$ finances benefits each period:
 \[
-\tau^{SS}\int_{a<a_R}y_t^g(a,z)\,dG_t
-=\varpi_t\int_{a\geq a_R}d(z)\,dG_t.
+\tau^{SS}\int_{a<a_R}y_t^g(a,z_t)\,dG_t
+=\varpi_t\int_{a\geq a_R}d(z_t)\,dG_t.
 \]
 \begin{itemize}\setlength\itemsep{0.4em}
- \item $G_t$ is the household distribution; $d(z)=1$ for common benefits.
+ \item $G_t$ is the household distribution; $d(z_t)=1$ for common benefits.
  \item The pension $\varpi_t$ adjusts to balance the budget; households anticipate its path.
  \item Property-tax rebates $T_t$ have a separate budget.
 \end{itemize}
@@ -266,7 +265,7 @@ H_t^s=H_0\left(\frac{P_t}{\bar P}\right)^\eta.
 }
 \vspace{0.3em}
 \centering
-\scalebox{0.85}{%
+\resizebox{\textwidth}{!}{%
 \begin{tikzpicture}[
   node distance=7mm and 10mm, >=Latex,
   see/.style={
@@ -281,10 +280,10 @@ H_t^s=H_0\left(\frac{P_t}{\bar P}\right)^\eta.
   },
   line/.style={-Latex, semithick, draw=black!75}
 ]
-\node (fertS) [see, alt=<3>{draw=red, ultra thick}{}] {see $\varepsilon^F$};
-\node (fertD) [choose, right=of fertS, alt=<3>{draw=red, ultra thick}{}] {choose attempt\\($\pi^F$, $V$)};
-\node (succ) [see, right=of fertD, alt=<2>{draw=red, ultra thick}{}] {realize birth\\see $\varepsilon^H$};
-\node (house) [choose, right=of succ, alt=<2>{draw=red, ultra thick}{}] {choose $h',h^R,b'$\\($\pi^H$, $\mathcal V$)};
+\node (fertS) [see, alt=<3>{draw=red, ultra thick}{}] {see $\varepsilon_t^F$};
+\node (fertD) [choose, right=of fertS, alt=<3>{draw=red, ultra thick}{}] {choose attempt\\($\pi^F_{t,a}$, $V_{t,a}$)};
+\node (succ) [see, right=of fertD, alt=<2>{draw=red, ultra thick}{}] {realize birth\\see $\varepsilon_t^H$};
+\node (house) [choose, right=of succ, alt=<2>{draw=red, ultra thick}{}] {choose $h_{t+1},h_t^R,b_{t+1}$\\($\pi^H_{t,a}$, $\mathcal V_{t,a}$)};
 
 \draw[line] (fertS) -- (fertD);
 \draw[line] (fertD) -- (succ);
@@ -292,10 +291,10 @@ H_t^s=H_0\left(\frac{P_t}{\bar P}\right)^\eta.
 \end{tikzpicture}%
 }
 
-\vspace{0.35em}
+\vspace{0.2em}
 \raggedright
-\setlength{\abovedisplayskip}{4pt}
-\setlength{\belowdisplayskip}{4pt}
+\setlength{\abovedisplayskip}{3pt}
+\setlength{\belowdisplayskip}{3pt}
 
 
 
@@ -303,15 +302,15 @@ H_t^s=H_0\left(\frac{P_t}{\bar P}\right)^\eta.
 \small
 \textbf{State.} At date $t$ and age $a$:
 \[
-x=(b,h,z,n,m),\qquad h\in\{0,H_1,\ldots,H_K\}.
+x_t=(b_t,h_t,z_t,n_t,m_t),\qquad h_t\in\{0,H_1,\ldots,H_K\}.
 \]
 \begin{itemize}\setlength\itemsep{3pt}
- \item $b$: liquid wealth; $h$: inherited owner size ($h=0$ for renters); $z$: earnings.
- \item $n$: lifetime parity; $m$: children currently at home.
- \item A successful birth changes the state to $x^+=(b,h,z,n+1,m+1)$.
+ \item $b_t$: liquid wealth; $h_t$: inherited owner size ($h_t=0$ for renters); $z_t$: earnings.
+ \item $n_t$: lifetime parity; $m_t$: dependents before the birth outcome.
+ \item After the birth outcome, $\widetilde x_t=(b_t,h_t,z_t,\widetilde n_t,\widetilde m_t)$.
 \end{itemize}
 \medskip
-\textbf{Values.} $V_{t,a}(x)$ is value before fertility choice; $\mathcal V_{t,a}(x)$ is value after the birth outcome and before housing tastes.
+\textbf{Values.} $V_{t,a}(x_t)$ is value before fertility tastes; $\mathcal V_{t,a}(\widetilde x_t)$ is value after the birth outcome and before housing tastes.
 }
 
 \only<2>{%
@@ -319,14 +318,14 @@ x=(b,h,z,n,m),\qquad h\in\{0,H_1,\ldots,H_K\}.
 \textbf{Conditional on the realized family size:}
 \[
 \begin{aligned}
-\mathcal V_{t,a}(x)=\E_{\varepsilon^H}\max_{h',h^R,b'}\Bigl\{
-&u_t(c,s;m)+\varepsilon^H(h')\\
-&+\beta\E_t\!\left[s_a V_{t+1,a+1}(x')+(1-s_a)\mathcal B(w^e_{t+1})\right]\Bigr\}.
+\mathcal V_{t,a}(\widetilde x_t)=\E_{\varepsilon_t^H}\max_{h_{t+1},h_t^R,b_{t+1}}\Bigl\{
+&u_t(c_t,s_t;\widetilde m_t)+\varepsilon_t^H(h_{t+1})\\
+&+\beta\E_t\!\left[s_a V_{t+1,a+1}(x_{t+1})+(1-s_a)\mathcal B(w^e_{t+1})\right]\Bigr\}.
 \end{aligned}
 \]
 \begin{itemize}\setlength\itemsep{0.5em}
- \item Next period's state is $x'=(b',h',z',n,m')$: earnings and child maturation are uncertain.
- \item A renter sets $h'=0$; an owner sets $h^R=0$. The budget determines consumption $c$.
+ \item Next period's state is $x_{t+1}=(b_{t+1},h_{t+1},z_{t+1},n_{t+1},m_{t+1})$: earnings and child maturation are uncertain.
+ \item A renter sets $h_{t+1}=0$; an owner sets $h_t^R=0$. The budget determines consumption $c_t$.
  \item Choices satisfy the rental cap, down payment, and debt limits.
  \item $\beta$ discounts the future; $s_a$ is survival; housing tastes have scale $\kappa_H$.
 \end{itemize}
@@ -334,22 +333,22 @@ x=(b,h,z,n,m),\qquad h\in\{0,H_1,\ldots,H_K\}.
 
 \only<3>{%
 \footnotesize
-Given conception success $\pi_a$, waiting and attempting have values
+Write $x_t^+=(b_t,h_t,z_t,n_t+1,m_t+1)$ for a successful birth. Waiting and attempting have values
 \[
-W_{t,a}^0(x)=\mathcal V_{t,a}(x),\qquad
-W_{t,a}^A(x)=\pi_a\!\left[\mathcal V_{t,a}(x^+)-F_1\1\{n=0\}\right]
-+(1-\pi_a)\mathcal V_{t,a}(x).
+W_{t,a}^0(x_t)=\mathcal V_{t,a}(x_t),\qquad
+W_{t,a}^A(x_t)=\pi_a\!\left[\mathcal V_{t,a}(x_t^+)-F_1\1\{n_t=0\}\right]
++(1-\pi_a)\mathcal V_{t,a}(x_t).
 \]
 The value before fertility tastes and the attempt probability are
 \[
-V_{t,a}(x)=\E_{\varepsilon^F}\max\{W_{t,a}^0(x)+\varepsilon_0^F,\ W_{t,a}^A(x)+\varepsilon_A^F\},
+V_{t,a}(x_t)=\E_{\varepsilon_t^F}\max\{W_{t,a}^0(x_t)+\varepsilon_{t,0}^F,\ W_{t,a}^A(x_t)+\varepsilon_{t,A}^F\},
 \]
 \[
-\pi^F_{t,a}(x)=\frac{\exp\{W_{t,a}^A(x)/\kappa(n)\}}
-{\exp\{W_{t,a}^A(x)/\kappa(n)\}+\exp\{W_{t,a}^0(x)/\kappa(n)\}},
-\qquad \kappa(n)=\begin{cases}\kappa_1,&n=0,\\\kappa_C,&n\geq1.\end{cases}
+\pi^F_{t,a}(x_t)=\frac{\exp\{W_{t,a}^A(x_t)/\kappa(n_t)\}}
+{\exp\{W_{t,a}^A(x_t)/\kappa(n_t)\}+\exp\{W_{t,a}^0(x_t)/\kappa(n_t)\}},
+\qquad \kappa(n_t)=\begin{cases}\kappa_1,&n_t=0,\\\kappa_C,&n_t\geq1.\end{cases}
 \]
-Expected births are $\pi_a\pi^F_{t,a}(x)$. Attempts are unavailable outside fertile ages or at terminal parity.
+Expected births are $\pi_a\pi^F_{t,a}(x_t)$. Attempts are unavailable outside fertile ages or at terminal parity.
 }
 \end{frame}
 
@@ -358,7 +357,7 @@ Births change future housing demand by changing the number and age of households
 
 \medskip
 \begin{itemize}\setlength\itemsep{0.65em}
-  \item $N_t$: resident persons, tracked by age and sex.
+  \item $N_t=N_{t,0}$: resident persons at the start of period $t$, tracked by age and sex.
   \item $H_t$: household heads, obtained from persons using age--sex headship rates.
   \item $G_t$: the distribution of household wealth, earnings, tenure, and children.
 \end{itemize}
@@ -373,14 +372,16 @@ Births enter the population immediately. Survival, migration, and household form
 \begin{frame}{Equilibrium}
 \small
 An equilibrium is a sequence of policy functions, value functions, household distributions, populations, prices, transfers, and pensions such that:
-\begin{enumerate}\setlength\itemsep{0.35em}
+\begin{enumerate}\setlength\itemsep{0pt}
   \item Given prices, fiscal paths, and expectations, policies solve the household's problem and values give the associated lifetime utilities.
-  \item Annual population accounting and fixed headship rates satisfy:
+  \item Within period $t$, annual steps $j$ and fixed headship rates satisfy:
   \[
-  N_{y+1}=A_{y+1}N_y+f_{y+1}B_{y+1}+M_{y+1},
-  \qquad H_y^{g,a}=\rho^{g,a}N_y^{g,a}.
+  \begin{gathered}
+  N_{t,j+1}=A_{t,j+1}N_{t,j}+f_{t,j+1}B_{t,j+1}+M_{t,j+1},\\
+  H_{t,j}^{g,\ell}=\rho^{g,\ell}N_{t,j}^{g,\ell},\qquad N_{t+1,0}=N_{t,L}.
+  \end{gathered}
   \]
-  Fertility policies determine $B$; $A$ ages survivors, $fB$ counts surviving newborns, and $M$ is net migration.
+  Fertility determines $B$; $A$ ages survivors, $fB$ counts newborn survivors, and $M$ is net migration. $L$ counts annual steps; $\ell$ is age in years.
   \item From the initial state, distributions follow policies, idiosyncratic shocks, and demographic entry and exit, with $\int dG_t=H_t$, the head count over represented adult ages.
   \item Housing clears, $\int q_t\,dG_t=H_t^s$, with $q_t$ measured in physical rooms. Asset pricing and both fiscal budgets hold.
 \end{enumerate}
@@ -468,42 +469,15 @@ Cross-sectional housing patterns discipline access to space; longitudinal data d
 % Initial tables and fit coordinates: verified_final/selected_target_fit.csv and selected_parameters.csv (2026-09-12).
 % Fingerprint c0e266d3a0d430343c469d780d1aedb45fa87f8763c9c938889e0c37daa31de2.
 
-\begin{frame}{1. Calibrating the Initial Economy}
-\linespread{1}\fontsize{9}{11}\selectfont
-\textbf{Goal:} fit pre-2007 household moments. External inputs and all 12 targets and weights stay fixed.
-
-\medskip
-\begin{enumerate}\setlength\itemsep{0.45em}
- \item \textbf{Try a parameter vector $\theta$:} nine coefficients governing saving, fertility, housing, and bequests.
- \item \textbf{Compute initial age--earnings shares} from survival, entry, and the earnings process. Set the pension to payroll revenue divided by retiree exposure; verify it against the solved distribution.
- \item \textbf{Try a fertility preference $\psi_0$ and solve the housing equilibrium.} Guess the house price $P$, derive rent, solve household choices backward, and find the stationary distribution forward. Update $P$ and repeat until housing demand equals supply.
- \item \textbf{Update $\psi_0$ with a bracketed scalar search.} Repeat step 3 for each trial until model completed fertility equals 2.1 (within 0.0005).
- \item \textbf{Score this parameter vector:} compute all 12 model moments and the weighted sum of squared model--target gaps.
- \item \textbf{Update $\theta$.} Perturb each coefficient to estimate how the moments respond; use these slopes for bounded, ridge-regularized joint steps. Redo steps 2--5 for each proposal, keep the lowest loss, and repeat within the search budget. Re-solve the selected winner twice.
+\begin{frame}{Calibration and Historical Transition}
+\begin{enumerate}\setlength\itemsep{1.1em}
+  \item \textbf{Calibrate the 2007 steady state.}\\
+  Match fertility, housing, and wealth moments to determine household parameters.
+  \item \textbf{Estimate the sequence of fertility shocks.}\\
+  Hold those parameters fixed and match birth rates through 2023 with unanticipated changes in fertility preferences. Carry households and population forward between shocks.
+  \item \textbf{Project the economy forward.}\\
+  After 2023, hold fertility preferences fixed and solve for prices, housing choices, and population. Compare housing policies from the same 2023 economy.
 \end{enumerate}
-
-\vfill
-\textbf{Nested loops:} parameter search $\longrightarrow$ fertility normalization $\longrightarrow$ housing-market clearing.
-\end{frame}
-
-
-\begin{frame}{2. Fitting the Historical Transition}
-\linespread{1}\fontsize{9}{11}\selectfont
-\textbf{Hold the nine structural parameters fixed.} Form 2007 age masses from data; within each age, keep the calibrated distribution of wealth, housing, and family states.
-
-\medskip
-\begin{enumerate}\setlength\itemsep{0.45em}
- \item \textbf{Try $\psi_{2007}$, believed permanent.} Solve the terminal stationary economy at this preference level.
- \item \textbf{Guess future price and pension paths.} Solve household choices backward from the terminal value; simulate household and person distributions and birth cohorts forward from the inherited 2007 state.
- \item \textbf{Update the price and pension paths and repeat step 2} until housing clears and the payroll budget balances at every date. Verify the population accounting, recompute the path, and check a longer horizon.
- \item \textbf{Change $\psi_{2007}$ and repeat steps 1--3} until first-window fertility matches the 2008--2011 target of 1.974875 (error at most 0.005). Every trial starts from the same 2007 state.
- \item \textbf{Advance only after acceptance.} Keep the first four-year outcome and birth queues. Repeat at 2011, 2015, and 2019 to target the following four years. Each new preference level is unanticipated.
-\end{enumerate}
-
-\medskip
-After 2023, hold the final preference level fixed.
-\par\smallskip
-\textit{The household-rate analogue of female TFR is approximate; the complete history is not yet validated.}
 \end{frame}
 
 
@@ -636,8 +610,8 @@ $\varpi_0$ & Initial pension implied by budget balance & 2.0464 \\
 \bottomrule
 \end{tabularx}\par
 \medskip
-A model period is four years, $\beta=\beta_{\rm annual}^4$. The equivalence scale is
-$e(m)=((2+0.7m)/2)^{0.7}$; pensions are in model-period income units.
+A model period contains $L=4$ calendar years, $\beta=\beta_{\rm annual}^4$. The equivalence scale is
+$e(\widetilde m_t)=((2+0.7\widetilde m_t)/2)^{0.7}$; pensions are in model-period income units.
 \end{frame}
 
 \begin{frame}{The Initial Equilibrium over the Lifecycle}
@@ -728,9 +702,9 @@ Compare the initial response of prices and household choices, then the evolution
 In each path, all property-tax revenue is returned equally to household heads:
 \[
 T_t\int dG_t=\tau_t^p P_t Q_t^H,
-\qquad Q_t^H=\int q_t(x)\,dG_t(x).
+\qquad Q_t^H=\int q_t(x_t)\,dG_t(x_t).
 \]
-Here $q_t(x)$ is occupied physical housing, including rented rooms; $\tau_t^p$ is the tax rate per model period.
+Here $q_t(x_t)$ is occupied physical housing, including rented rooms; $\tau_t^p$ is the tax rate per model period.
 
 \begin{itemize}\setlength\itemsep{0.5em}
  \item \textbf{Housing costs:} carrying costs affect asset prices and rents.
@@ -767,27 +741,68 @@ The payroll tax is unchanged; a separate balanced budget determines pensions in 
 
 
 
+\begin{frame}{1. Calibrating the Initial Economy}
+\linespread{1}\fontsize{9}{11}\selectfont
+\textbf{Goal:} fit pre-2007 household moments. External inputs and all 12 targets and weights stay fixed.
+
+\medskip
+\begin{enumerate}\setlength\itemsep{0.45em}
+ \item \textbf{Try a parameter vector $\theta$:} nine coefficients governing saving, fertility, housing, and bequests.
+ \item \textbf{Compute initial age--earnings shares} from survival, entry, and the earnings process. Set the pension to payroll revenue divided by retiree exposure; verify it against the solved distribution.
+ \item \textbf{Try a fertility preference $\psi_0$ and solve the housing equilibrium.} Guess the house price $P$, derive rent, solve household choices backward, and find the stationary distribution forward. Update $P$ and repeat until housing demand equals supply.
+ \item \textbf{Update $\psi_0$ with a bracketed scalar search.} Repeat step 3 for each trial until model completed fertility equals 2.1 (within 0.0005).
+ \item \textbf{Score this parameter vector:} compute all 12 model moments and the weighted sum of squared model--target gaps.
+ \item \textbf{Update $\theta$.} Perturb each coefficient to estimate how the moments respond; use these slopes for bounded, ridge-regularized joint steps. Redo steps 2--5 for each proposal, keep the lowest loss, and repeat within the search budget. Re-solve the selected winner twice.
+\end{enumerate}
+
+\vfill
+\textbf{Nested loops:} parameter search $\longrightarrow$ fertility normalization $\longrightarrow$ housing-market clearing.
+\end{frame}
+
+
+\begin{frame}{2. Fitting the Historical Transition}
+\linespread{1}\fontsize{9}{11}\selectfont
+\textbf{Hold the nine structural parameters fixed.} Form 2007 age masses from data; within each age, keep the calibrated distribution of wealth, housing, and family states.
+
+\medskip
+\begin{enumerate}\setlength\itemsep{0.45em}
+ \item \textbf{Try $\psi_{2007}$, believed permanent.} Solve the terminal stationary economy at this preference level.
+ \item \textbf{Guess future price and pension paths.} Solve household choices backward from the terminal value; simulate household and person distributions and birth cohorts forward from the inherited 2007 state.
+ \item \textbf{Update the price and pension paths and repeat step 2} until housing clears and the payroll budget balances at every date. Verify the population accounting, recompute the path, and check a longer horizon.
+ \item \textbf{Change $\psi_{2007}$ and repeat steps 1--3} until first-window fertility matches the 2008--2011 target of 1.974875 (error at most 0.005). Every trial starts from the same 2007 state.
+ \item \textbf{Advance only after acceptance.} Keep the first four-year outcome and birth queues. Repeat at 2011, 2015, and 2019 to target the following four years. Each new preference level is unanticipated.
+\end{enumerate}
+
+\medskip
+After 2023, hold the final preference level fixed.
+\par\smallskip
+\textit{The household-rate analogue of female TFR is approximate; the complete history is not yet validated.}
+\end{frame}
+
+
 \begin{frame}[label=borrowing-limits]{Borrowing Limits}
 \small
+\setlength{\abovedisplayskip}{5pt}\setlength{\belowdisplayskip}{5pt}
 After a housing transaction, liquid wealth is
 \[
-\widetilde b=b+\1\{h'\neq h\}\bigl[(1-\psi^s)P_t h-P_t h'\bigr].
+\widetilde b_t=b_t+\1\{h_{t+1}\neq h_t\}\bigl[(1-\psi^s)P_t h_t-P_t h_{t+1}\bigr].
 \]
 Let $D_{a+1}$ be the unsecured borrowing allowance and $\lambda_{a+1}$ govern repayment of inherited unsecured debt. Its lower bound is
 \[
 \mathcal L_{a+1}(u)=\min\{\lambda_{a+1}\min(u,0),-D_{a+1}\}.
 \]
-With collateral floor $C=-\phi P_t h'$, saving must satisfy
+With collateral floor $C_t=-\phi P_t h_{t+1}$, saving must satisfy
 \[
-\underbrace{b'\geq\underline b_a^R=\mathcal L_{a+1}(\widetilde b)}_{\text{renter}},
-\qquad
-\underbrace{b'\geq\underline b_a^O=C+\mathcal L_{a+1}(\widetilde b-C)}_{\text{owner}}.
+\begin{aligned}
+\text{Renters:}\quad b_{t+1}&\geq\underline b_{t+1}^R=\mathcal L_{a+1}(\widetilde b_t),\\
+\text{Owners:}\quad b_{t+1}&\geq\underline b_{t+1}^O=C_t+\mathcal L_{a+1}(\widetilde b_t-C_t).
+\end{aligned}
 \]
-A purchase ($h'>0$, $h'\neq h$) separately requires
+A purchase ($h_{t+1}>0$, $h_{t+1}\neq h_t$) separately requires
 \[
-b+(1-\psi^s)P_t h\geq(1-\phi)P_t h'.
+b_t+(1-\psi^s)P_t h_t\geq(1-\phi)P_t h_{t+1}.
 \]
-Inherited unsecured debt may run off over time; renting does not impose immediate nonnegative saving.
+Inherited unsecured debt can run off gradually, including for renters.
 \end{frame}
 
 \begin{frame}[label=parameter-restrictions]{Parameter Restrictions}
@@ -831,53 +846,53 @@ Households optimize, persons and household distributions reproduce themselves, h
 
 \begin{frame}[label=person-accounting]{The Person-Cohort Law}
 \small
-Let $N_t^{g,a}$ denote resident persons of sex $g$ and single year of age $a$.
+$t$ indexes household periods; $j=0,\ldots,L$ indexes years within each period. $N_{t,j}^{g,\ell}$ counts persons of sex $g$ and age $\ell$ in years.
 
 \medskip
-The annual person law is
+For $j=0,\ldots,L-1$, the annual person law is
 \[
-N_{t+1}
+N_{t,j+1}
 =
-A_{t+1}N_t+f_{t+1}B_{t+1}+M_{t+1}.
+A_{t,j+1}N_{t,j}+f_{t,j+1}B_{t,j+1}+M_{t,j+1}.
 \]
 
 \begin{itemize}\setlength\itemsep{0.5em}
-  \item $A_{t+1}$ ages existing cohorts using destination-age survival.
-  \item $f_{t+1}B_{t+1}$ allocates newborn survivors by sex at age zero.
-  \item $M_{t+1}$ is the age--sex net-migration flow after survival.
+  \item $A_{t,j+1}$ ages existing cohorts using destination-age survival.
+  \item $f_{t,j+1}B_{t,j+1}$ allocates newborn survivors by sex at age zero.
+  \item $M_{t,j+1}$ is the age--sex net-migration flow after survival.
   \item Model-period births are assigned to calendar cohorts before the annual law is iterated.
 \end{itemize}
 
 \vfill
-Births and household heads remain distinct objects throughout the transition.
+The period boundary satisfies $N_{t+1,0}=N_{t,L}$; write $N_t=N_{t,0}$.
 \end{frame}
 
 \begin{frame}{The Household-Head Law}
 \small
-Fixed age--sex headship rates $\rho^{g,a}$ map persons into the target head stock:
+Annual age--sex headship rates $\rho^{g,\ell}$ map persons into the target head stock:
 \[
-H_{t+1}^{g,a}
+H_{t,j+1}^{g,\ell}
 =
-\rho^{g,a}N_{t+1}^{g,a}
+\rho^{g,\ell}N_{t,j+1}^{g,\ell}
 =
-H_{t+1}^{\mathrm{surv},g,a}
-+F_{t+1}^{g,a}
--D_{t+1}^{g,a}
-+H_{t+1}^{M,g,a}.
+H_{t,j+1}^{\mathrm{surv},g,\ell}
++F_{t,j+1}^{g,\ell}
+-D_{t,j+1}^{g,\ell}
++H_{t,j+1}^{M,g,\ell}.
 \]
 
-The household operator supplies a raw within-age distribution
+Aggregating annual ages $\ell$ into household age cells $a$, the household operator supplies
 $\widetilde G_{t+1,a}$. Its mass is rescaled to the person-law head target:
 \[
-G_{t+1,a}(x)
+G_{t+1,a}(x_{t+1})
 =
 H_{t+1,a}
-\frac{\widetilde G_{t+1,a}(x)}
-{\int\widetilde G_{t+1,a}(x')\,dx'}.
+\frac{\widetilde G_{t+1,a}(x_{t+1})}
+{\int\widetilde G_{t+1,a}(\xi)\,d\xi}.
 \]
 
 \begin{itemize}\setlength\itemsep{0.4em}
-  \item $F$ and $D$ are the minimum one-way formation or dissolution flow needed to attain $\rho^{g,a}$.
+  \item $F$ and $D$ are the minimum one-way formation or dissolution flow needed to attain $\rho^{g,\ell}$.
   \item Wealth, tenure, income, parity, and child-state composition are preserved within age.
   \item This is an accounting closure, not an estimated household-formation hazard.
 \end{itemize}
@@ -885,49 +900,49 @@ H_{t+1,a}
 
 \begin{frame}{Exact Annual Person Accounting}
 \small
-Let $s^{g,a}$ be survival and $f^g$ the birth sex share. For newborns,
+Let $s^{g,\ell}$ be survival and $f^g$ the birth sex share. For newborns,
 \[
-N_{t+1}^{g,0}
+N_{t,j+1}^{g,0}
 =
-s_{t+1}^{g,0}f_{t+1}^{g}B_{t+1}
+s_{t,j+1}^{g,0}f_{t,j+1}^{g}B_{t,j+1}
 +
-M_{t+1}^{g,0}.
+M_{t,j+1}^{g,0}.
 \]
-For interior ages $a\geq1$,
+For interior ages $\ell\geq1$,
 \[
-N_{t+1}^{g,a}
+N_{t,j+1}^{g,\ell}
 =
-s_{t+1}^{g,a}N_t^{g,a-1}
+s_{t,j+1}^{g,\ell}N_{t,j}^{g,\ell-1}
 +
-M_{t+1}^{g,a}.
+M_{t,j+1}^{g,\ell}.
 \]
 The terminal age is top coded, so survivors from the penultimate and terminal
 cells both enter the last cell. Every step satisfies
 \[
-\sum N_{t+1}
+\sum N_{t,j+1}
 =
-\sum N_t+B_{t+1}
+\sum N_{t,j}+B_{t,j+1}
 -\text{newborn deaths}
 -\text{existing deaths}
-+\sum M_{t+1}.
++\sum M_{t,j+1}.
 \]
 \end{frame}
 
 \begin{frame}{The Within-Age Household Bridge}
-Let $\widetilde G_{t+1,a}(x)$ be the raw household transition within age $a$,
+Let $\widetilde G_{t+1,a}(x_{t+1})$ be the raw household transition within age $a$,
 and let $H_{t+1,a}$ be the head mass implied by persons. Then
 \[
-G_{t+1,a}(x)
+G_{t+1,a}(x_{t+1})
 =
 \begin{cases}
 \displaystyle
 H_{t+1,a}
-\frac{\widetilde G_{t+1,a}(x)}
-{\int\widetilde G_{t+1,a}(x')\,dx'},
+\frac{\widetilde G_{t+1,a}(x_{t+1})}
+{\int\widetilde G_{t+1,a}(\xi)\,d\xi},
 &
 \int\widetilde G_{t+1,a}>0,
 \\[1.2em]
-H_{t+1,a}\Gamma_a(x),
+H_{t+1,a}\Gamma_a(x_{t+1}),
 &
 \text{for an empty entrant age cell},
 \end{cases}
@@ -940,12 +955,12 @@ and migrant heads rather than preserve the raw conditional composition.
 \end{frame}
 
 \begin{frame}{Housing-Market Clearing}
-Let $q_t(x)$ denote the physical housing occupied after tenure choice. Market clearing requires
+Let $q_t(x_t)$ denote the physical housing occupied after tenure choice. Market clearing requires
 \[
-Q_t^H=\int q_t(x)\,dG_t(x)
+Q_t^H=\int q_t(x_t)\,dG_t(x_t)
 =H_0\left(\frac{P_t}{\bar P}\right)^\eta.
 \]
-For renters, $q_t=h_t^R$; for owners, $q_t=h_t'$. Choice probabilities are included when aggregating.
+For renters, $q_t=h_t^R$; for owners, $q_t=h_{t+1}$. Choice probabilities are included when aggregating.
 
 \medskip
 \begin{itemize}\setlength\itemsep{0.65em}

@@ -58,6 +58,19 @@ Active documents:
   semicolon separates these claims rather than attributing a mortgage-credit
   experiment to Couillard.
 
+  **Dated model notation.** Dynamic household states and flows now use $t$ and
+  $t+1$: inherited assets are $(b_t,h_t)$, choices are $(b_{t+1},h_{t+1})$, and
+  the chosen home supplies current housing services. Consumption and rental
+  housing are $c_t,h_t^R$. Tildes denote the state immediately after the current
+  birth outcome; current utility and housing requirements use post-birth
+  dependents. Maturation determines $m_{t+1}$, while parity carries forward.
+  Household age $a$ is a model age index. Annual population accounting uses
+  within-period year $j$ and age in years $\ell$, with $N_{t+1,0}=N_{t,L}$;
+  $L=4$ is stated in quantification. Stationary definitions retain starred
+  objects, integration dummies use $\xi$, and schematic schedule arguments
+  remain static. The theory task checked the timing convention. No economic
+  specification, coefficients, numerical code, or estate valuation date changed.
+
   **September 12 return to the May source.** Use the actual May frame text,
   typography and composition for unchanged material; patch only documented model
   differences rather than paraphrasing the shared exposition. The frame order is
@@ -65,7 +78,8 @@ Active documents:
   Earnings/Pensions, and Housing Supply/Price Mapping, followed by the household
   problem and the new population/equilibrium frames. The housing frame restores
   May's `small` font, short opening and renter/owner headings, equation order,
-  single-line owner budget and compact closing bullets. The unchanged preference
+  owner budget and compact closing bullets; the dated owner budget wraps over
+  two lines. The unchanged preference
   headings, housing-service underbraces, child-cost sentence, bequest-motive
   sentence and household-problem title/diagram scale follow May directly.
   Current return timing is preserved,
@@ -122,8 +136,14 @@ Active documents:
   Its implemented algorithm and evidence must be handed over before replacing
   the existing perfect-foresight algorithm slide.
 
-  **Two-slide algorithm walkthrough.** The first two numbered frames in
-  Quantification explain the actual nested loops in literal steps. For each
+  **Calibration overview and algorithm walkthrough.** Quantification opens with
+  one presentation slide, `Calibration and Historical Transition`: calibrate the
+  2007 steady-state benchmark, estimate successive fertility-preference shocks
+  through 2023 while carrying distributions forward, then project beyond 2023
+  and compare policies from a common inherited economy. This describes the
+  estimation strategy, not a claim that the historical fit is completed.
+  The two original detailed algorithm frames are preserved unchanged at the
+  beginning of the appendix. They explain the nested loops in literal steps. For each
   structural candidate, the initial pension is derived from the stationary
   age--earnings marginal (not separately iterated); a bracketed preference
   normalization wraps complete housing-equilibrium solves. The outer search
@@ -136,8 +156,8 @@ Active documents:
   of these frames for sharing; it has no independent slide source. Regenerate
   it with pypdf by locating the two pages titled `1. Calibrating the Initial
   Economy` and `2. Fitting the Historical Transition` in the verified full deck.
-  These replace the former generic Calibration Strategy and From the Initial
-  Economy to 2023 frames, leaving the full deck length unchanged.
+  The extract continues to contain the two detailed appendix frames, not the
+  new one-page presentation overview.
 
   **September 12 model and quantification revision.** The Environment and
   household-problem overlays return to May's age/choice/heterogeneity exposition,
@@ -189,8 +209,8 @@ Active documents:
   tables, show the 2023 equilibrium (prices, rents and quantities), then historical
   transition fit and cross-sectional 2023 data/model fit, following May's market
   equilibrium, lifecycle comparison and allocation formats without spatial panels.
-  `Historical Fertility Discipline` now immediately follows the literal historical
-  fitting algorithm, keeping estimation design together. The quantitative task
+  `Historical Fertility Discipline` immediately follows the concise calibration
+  overview, keeping estimation design together. The quantitative task
   has the request for dated 2023 figures; these remain outstanding. Existing
   initial profiles/allocation retain their correct dates. The 2023 ACS allocation
   data alone cannot support a data/model overlay without a matching model state.
@@ -240,8 +260,8 @@ Active documents:
   Build twice from `latex/`, writing auxiliary files outside the active folder:
   `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=../tmp/september_slides_review september_14_presentation.tex`.
   Copy the verified PDF to the reader path and the adjacent build copy.
-  The deck has 35 numbered main frames and nine appendix frames
-  (51 PDF pages including overlays and dividers). Two final compilation passes
+  The deck has 34 numbered main frames and eleven appendix frames
+  (52 PDF pages including overlays and dividers). Two final compilation passes
   have no warnings or overfull boxes; all frames were visually inspected and
   all figure paths and all three appendix links resolve.
 
