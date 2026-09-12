@@ -1,5 +1,26 @@
 # Calibration Status
 
+**September 12, 11:00 UTC — both smaller-shock smokes pass; testing terminal starting guesses.**
+The -0.0225 and -0.0275 diagnostics both passed finite six-date housing/PAYGO
+roots and wrote all 17 standard graphs. First-window fertility is respectively
+1.90752953 and 1.86726183 versus 1.974875. Complete native receipts and graph
+packets are collected in `overnight_20260912/frontier/`; neither run certifies
+a historical fit or terminal horizon. The original -0.045 long run remains
+active in its third 28-date root continuation; the second continuation ended
+at housing 8.21433e-4 and PAYGO 1.77627e-5, still above strict tolerances.
+
+Important qualification: earlier finite-demography failures occurred at the
+initial price/pension guess. They do NOT prove nonexistence of a terminal
+equilibrium for a smaller preference decline. Array 17488021 now tests -0.01414
+and -0.0175 from the nearby converged terminal's price/pension, with eight-map,
+30-minute caps. The generated entrypoint changes only root starting coordinates
+and explicit provenance/schema; its entire diff was reviewed and all original
+scientific files remain pinned and unchanged. Both starts have produced valid
+mappings. Conditional array 17488254 reproduces each passed terminal and runs
+its native short forecast automatically (90-minute budget); failed terminals
+skip their dependent forecast. These remain diagnostic-only, not new policies.
+Paths and source fingerprints are in the overnight README.
+
 **September 12, 09:00 UTC — initial refinement completed; native surprise smoke passes.**
 Calibration 17440306 completed all three bounded batches (252 new search trials).
 Final loss 158.5411910626 is 0.438% below the starting 159.2389860754, with two

@@ -1,5 +1,13 @@
 # September 12 autonomous cluster campaign
 
+## 11:00 UTC: two smaller-shock equilibria and a numerical-start test
+
+Both frontier jobs completed: first-window fertility is **1.90752953** for -0.0225 and **1.86726183** for -0.0275, against data **1.974875**. Both clear finite six-date housing and PAYGO checks and have 17 standard graphs. [frontier/README.md](frontier/README.md) contains the comparison and points to their complete receipts and graphs. No horizon or historical-fit certificate follows from these short roots. The original long arm is in its third 28-date continuation; the previous continuation's maximum housing/PAYGO residuals were 8.21433e-4/1.77627e-5, still above tolerance.
+
+Failures of smaller shocks at the old initial price/pension guess do **not** establish nonexistence of a terminal equilibrium. Array **17488021_0–1** tests -0.01414/-0.0175 from the nearest verified terminal's numerical starting coordinates, at most eight mappings/30 minutes each. Root: `/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/night_warm_terminal_20260912`. The generated entrypoint's full diff was reviewed: only numerical starts, schema/provenance and explicit source-root location differ; all economic source pins remain unchanged. Generated-driver SHA256: `e820d378a1de532f53f37772ebd4f8b80daba6093be2bfa235b6d8ca7bf7f4b7`. The starting receipt SHA256 is `460a02e584fd8d25b4d85ceb056e7f03d38d8a8de3915b322ed6f3ffc0419841`. Both probes have produced valid native mappings.
+
+Conditional array **17488254_0–1** waits for those probes. A passed terminal is used as a numerical start and independently reproduced before its six-date forecast; a failed terminal skips the dependent forecast. Each forecast has a 90-minute budget and cannot promote a history or launch policies. Root: `/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/night_warm_followup_20260912`; inspect `plan_*.json`, `results/arm_*/summary.json`, `failure.json` and `skipped_*.json`. All 19 existing loop tests still pass locally. Original long-run source and output directories were not changed.
+
 ## 09:00 UTC: completed calibration and first native equilibrium
 
 Calibration job 17440306 finished all three bounded batches and 252 search trials. Final loss **158.5411910626344**, a **0.438%** improvement from launch, reproduces twice. Beta is still at its estimated 0.99 cap. [verified_final/README.md](verified_final/README.md) contains all targets, weights, contributions and parameters/bounds; the full 17-graph packet is collected. This candidate does not replace the historical workers' pinned initial condition.

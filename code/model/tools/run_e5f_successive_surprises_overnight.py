@@ -75,9 +75,11 @@ def main():
                     if any(abs(psi-v)<1e-6 for v in seen):break
                 seen.append(psi);folder=out/f'trial_{trial_index:02d}_{year}';trial_index+=1;folder.mkdir()
                 state.update(phase='terminal',year=year,psi=psi,trial=trial_index);save(out/'latest_stage.json',state)
-                tc=copy.deepcopy(c);tc['psi_change_from_initial']=psi-initial_psi;save(folder/'terminal_contract.json',tc)
+                tc=copy.deepcopy(c);tc['psi_change_from_initial']=psi-initial_psi
+                tc.update(plan.get('terminal_contract_overrides',{}));save(folder/'terminal_contract.json',tc)
+                terminal_driver=Path(plan.get('terminal_driver',root/'code/model/tools/run_e5f_candidate_terminal.py'))
                 with (folder/'terminal.log').open('w') as log:
-                    status=subprocess.run([sys.executable,'-B',str(root/'code/model/tools/run_e5f_candidate_terminal.py'),'--contract',str(folder/'terminal_contract.json'),'--contract-sha256',sha(folder/'terminal_contract.json'),'--output',str(folder/'terminal')],stdout=log,stderr=subprocess.STDOUT,timeout=1860)
+                    status=subprocess.run([sys.executable,'-B',str(terminal_driver),'--contract',str(folder/'terminal_contract.json'),'--contract-sha256',sha(folder/'terminal_contract.json'),'--output',str(folder/'terminal')],stdout=log,stderr=subprocess.STDOUT,timeout=1860)
                 if status.returncode:
                     save(folder/'rejected.json',dict(stage='terminal',exit=status.returncode));continue
                 with gzip.open(folder/'terminal/terminal_state.pkl.gz','rb') as f:t=pickle.load(f)
