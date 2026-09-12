@@ -34,6 +34,22 @@ Active documents:
   It is historical source, not a second working deck. All separate theory
   notes and the September 10 planner work remain untouched and parked.
 
+  **Two-slide algorithm walkthrough.** The first two numbered frames in
+  Quantification explain the actual nested loops in literal steps. For each
+  structural candidate, the initial pension is derived from the stationary
+  age--earnings marginal (not separately iterated); a bracketed preference
+  normalization wraps complete housing-equilibrium solves. The outer search
+  uses finite-difference moment slopes and bounded ridge-regularized joint
+  proposals. The historical slide distinguishes the conditional price/pension
+  path iterations, the scalar preference search, and advancement to the next
+  calendar window only after acceptance. The quantitative task verified this
+  nesting and the stated tolerances directly on September 12.
+  `../output/pdf/september_14_calibration_walkthrough.pdf` is a two-page extract
+  of these frames for sharing; it has no independent slide source. Regenerate
+  it with pypdf from pages 25--26 of the verified full deck (zero-based 24--25).
+  These replace the former generic Calibration Strategy and From the Initial
+  Economy to 2023 frames, leaving the full deck length unchanged.
+
   **September 12 model and quantification revision.** The Environment and
   household-problem overlays return to May's age/choice/heterogeneity exposition,
   retaining the active one-market sequential model. Household state is

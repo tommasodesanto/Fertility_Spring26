@@ -457,20 +457,46 @@ Provisional event profile: empirical timing and reference-period support are und
 
 % Initial tables and fit coordinates: verified_final/selected_target_fit.csv and selected_parameters.csv (2026-09-12).
 % Fingerprint c0e266d3a0d430343c469d780d1aedb45fa87f8763c9c938889e0c37daa31de2.
-\begin{frame}{Calibration Strategy}
-\small
-Discipline household behavior in an approximate pre-2007 stationary economy, then hold structural parameters fixed along the demographic transition.
+
+\begin{frame}{1. Calibrating the Initial Economy}
+\linespread{1}\fontsize{9}{11}\selectfont
+\textbf{Goal:} fit pre-2007 household moments. External inputs and all 12 targets and weights stay fixed.
 
 \medskip
-\begin{enumerate}\setlength\itemsep{0.65em}
- \item \textbf{External inputs.} Fix the income process, survival and conception probabilities, housing menus, equivalence scale, and housing-supply elasticity.
- \item \textbf{Initial calibration.} Jointly match fertility, housing, and wealth moments by minimum distance. Normalize $\psi_0$ to model completed fertility of 2.1.
- \item \textbf{Historical transition.} Initialize household masses in 2007 and choose subsequent fertility-preference levels to match dated fertility rates.
+\begin{enumerate}\setlength\itemsep{0.45em}
+ \item \textbf{Try a parameter vector $\theta$:} nine coefficients governing saving, fertility, housing, and bequests.
+ \item \textbf{Compute initial age--earnings shares} from survival, entry, and the earnings process. Set the pension to payroll revenue divided by retiree exposure; verify it against the solved distribution.
+ \item \textbf{Try a fertility preference $\psi_0$ and solve the housing equilibrium.} Guess the house price $P$, derive rent, solve household choices backward, and find the stationary distribution forward. Update $P$ and repeat until housing demand equals supply.
+ \item \textbf{Update $\psi_0$ with a bracketed scalar search.} Repeat step 3 for each trial until model completed fertility equals 2.1 (within 0.0005).
+ \item \textbf{Score this parameter vector:} compute all 12 model moments and the weighted sum of squared model--target gaps.
+ \item \textbf{Update $\theta$.} Perturb each coefficient to estimate how the moments respond; use these slopes for bounded, ridge-regularized joint steps. Redo steps 2--5 for each proposal, keep the lowest loss, and repeat within the search budget. Re-solve the selected winner twice.
 \end{enumerate}
 
 \vfill
-The initial fit disciplines behavior; the historical fit disciplines changes in the preference for children.
+\textbf{Nested loops:} parameter search $\longrightarrow$ fertility normalization $\longrightarrow$ housing-market clearing.
 \end{frame}
+
+
+\begin{frame}{2. Fitting the Historical Transition}
+\linespread{1}\fontsize{9}{11}\selectfont
+\textbf{Hold the nine structural parameters fixed.} Form 2007 age masses from data; within each age, keep the calibrated distribution of wealth, housing, and family states.
+
+\medskip
+\begin{enumerate}\setlength\itemsep{0.45em}
+ \item \textbf{Try $\psi_{2007}$, believed permanent.} Solve the terminal stationary economy at this preference level.
+ \item \textbf{Guess future price and pension paths.} Solve household choices backward from the terminal value; simulate household and person distributions and birth cohorts forward from the inherited 2007 state.
+ \item \textbf{Update the price and pension paths and repeat step 2} until housing clears and the payroll budget balances at every date. Verify the population accounting, recompute the path, and check a longer horizon.
+ \item \textbf{Change $\psi_{2007}$ and repeat steps 1--3} until first-window fertility matches the 2008--2011 target of 1.974875 (error at most 0.005). Every trial starts from the same 2007 state.
+ \item \textbf{Advance only after acceptance.} Keep the first four-year outcome and birth queues. Repeat at 2011, 2015, and 2019 to target the following four years. Each new preference level is unanticipated.
+\end{enumerate}
+
+\medskip
+After 2023, hold the final preference level fixed.
+\par\smallskip
+\textit{The household-rate analogue of female TFR is approximate; the complete history is not yet validated.}
+\end{frame}
+
+
 
 \begin{frame}{Empirical Discipline}
 \small
@@ -663,21 +689,7 @@ Births are concentrated early in life, while ownership rises with age.
 These are model equilibrium profiles; the preceding tables and plots compare the targeted moments with data.
 \end{frame}
 
-\begin{frame}{From the Initial Economy to 2023}
-\small
-The historical exercise separates inherited demographics from changes in fertility preferences.
 
-\medskip
-\begin{enumerate}\setlength\itemsep{0.55em}
- \item \textbf{2007 starting point.} Impose observed age masses, preserving the initial stationary distribution of household states within each age.
- \item \textbf{Preference innovations.} At each decision date, households observe a new preference level and believe it will remain permanent.
- \item \textbf{Conditional equilibrium.} Solve the anticipated price and pension paths jointly with household choices and population accounting. Realize the first four-year period.
- \item \textbf{Next observation.} Carry forward wealth, homes, household distributions, and birth cohorts. Choose the next preference level to fit the next fertility window.
-\end{enumerate}
-
-\vfill
-The pre-2023 population bridge uses observed demographics. Later preference innovations are unanticipated; the final level remains fixed after 2023.
-\end{frame}
 
 \begin{frame}{Historical Fertility Discipline}
 \small
