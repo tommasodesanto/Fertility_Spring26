@@ -63,6 +63,19 @@ Active documents:
   have no warnings or overfull boxes; all frames were visually inspected and
   all figure paths and the remaining appendix link resolve.
 
+  **September 12 equilibrium wording.** The main definition is titled
+  `Equilibrium` and explicitly equates expected occupied physical rooms,
+  integrated over household mass, to the constant-elasticity supply schedule
+  at every date. This is the existing appendix clearing condition. The named
+  quantitative task confirmed the formula and neutral expectations wording.
+  Its latest information assumption is successive unanticipated preference
+  innovations, each followed by a perfect-foresight continuation conditional on
+  the new preference level remaining permanent (`e5f_successive_surprises.py`,
+  `evaluate_forecast`, in the active isolated model tools). The announced-path
+  wording elsewhere in the deck, especially `A Decline in Fertility Preferences`
+  and `Calibration and Transition Strategy`, still needs a separate coordinated
+  update; this scoped definition edit does not certify that older description.
+
   **September 11 structure revision.** The illustrative transition frames remain
   in the model section. `Calibration and Transition Strategy` replaces the
   generic initial-economy frame: approximate pre-2007 calibration, observed 2007

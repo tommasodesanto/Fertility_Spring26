@@ -400,22 +400,27 @@ Births enter the population immediately. Survival, migration, and household form
 \hfill\hyperlink{person-accounting}{\beamergotobutton{Population accounting}}
 \end{frame}
 
-\begin{frame}{Transition Equilibrium}
+\begin{frame}{Equilibrium}
 \small
-Given the inherited household and population state and the announced preference and policy paths, a perfect-foresight equilibrium is a sequence
+Given the inherited household and population state, preferences, policy rules, and expectations, an equilibrium is a sequence:
 \[
 \{V_t,\pi_t,G_t,N_t,H_t,P_t,r_t,T_t,\varpi_t\}_{t\geq0},
 \]
 where $V_t$ are household values and $\pi_t$ are choice probabilities, satisfying:
-\begin{enumerate}\setlength\itemsep{0.5em}
-  \item Household optimality given the anticipated price, transfer, and pension paths.
+\begin{enumerate}\setlength\itemsep{0.35em}
+  \item Household optimality given prices, transfers, pensions, and expectations at each date.
   \item Population and household evolution under births, survival, and migration.
-  \item Housing-market clearing: occupied physical rooms equal $H_t^s$.
+  \item Physical housing clears at every date:
+  \[
+  \int q_t\,dG_t=H_t^s
+  =H_0\left(\frac{P_t}{\bar P}\right)^\eta,
+  \qquad \text{for all }t.
+  \]
   \item Asset pricing and separate balanced budgets for pensions and property-tax rebates.
 \end{enumerate}
 
 \vfill
-Aggregate paths are anticipated; individual outcomes remain uncertain.
+$G_t$ measures household mass; $q_t$ averages rented and owned physical rooms over choices.
 \end{frame}
 
 \begin{frame}{Steady-State Equilibrium}
