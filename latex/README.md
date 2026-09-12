@@ -130,12 +130,24 @@ Active documents:
   `selected_standard_diagnostics/` are included unchanged as model equilibrium
   profiles, not empirical-fit overlays. The stable 17-graph packet is unchanged.
 
-  The AHS 2023 tenure-by-bedroom figure remains the May asset. The existing
-  September 5 PSID profile remains visible but is explicitly provisional.
-  **Data — PSID event studies** confirmed no approved replacement figure or target:
-  the retained 0.720246 room contrast is the old computational -1/+3 contract,
-  with timing and reference support under review. It is not the newly requested
-  -2 comparison. No diagnostic .403018 or .238478 estimate was promoted.
+  The AHS 2023 tenure-by-bedroom figure remains the May asset. On September 12
+  the author explicitly chose the original May PSID plots for the presentation
+  while measurement revisions remain under review. The empirical frames restore
+  the exact `own_f_c_y_all.png`, `rooms_f_c_y_all.png`, `mv_s_f_c_y_all.png`, and
+  `mv_n_f_c_y_all.png` assets under `../../Outputs/Graphs/`, as referenced in
+  `may_29_project_presentation.tex`. Both frames carry the requested review note.
+  Moving labels preserve the broader recorded reasons: expansion/better housing
+  and neighborhood/schools/proximity. The data task's
+  [post-presentation issues ledger](../docs/model/POST_PRESENTATION_ISSUES.md)
+  records the unresolved measurement and identification work.
+  The data task reproduced all 18 rooms points, but ownership/moving measurement
+  validation remains separate from this restoration of the May assets. The
+  stale May prose value 0.66/0.664 is not reproduced. No new diagnostic curve is
+  presented as the accepted empirical result. This presentation choice does not
+  change calibration: the retained 0.720246 room contrast is the later
+  computational -1/+3 contract, with timing and reference support under review.
+  It is distinct from the restored May coefficients and the requested -2
+  comparison. No diagnostic .403018 or .238478 estimate was promoted.
   The housing-target row and fit plot flag this limitation. No regression,
   calibration, model solve, or new mechanism figure was generated in this task.
 
@@ -160,8 +172,8 @@ Active documents:
   Build twice from `latex/`, writing auxiliary files outside the active folder:
   `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=../tmp/september_slides_review september_14_presentation.tex`.
   Copy the verified PDF to the reader path and the adjacent build copy.
-  The deck has 36 numbered main frames and nine appendix frames
-  (52 PDF pages including overlays and dividers). Two final compilation passes
+  The deck has 37 numbered main frames and nine appendix frames
+  (53 PDF pages including overlays and dividers). Two final compilation passes
   have no warnings or overfull boxes; all frames were visually inspected and
   all figure paths and all three appendix links resolve.
 
