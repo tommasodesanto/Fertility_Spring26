@@ -1,5 +1,20 @@
 # Calibration Status
 
+**September 12 — all four stationary fertility fits passed; carry diagnostic running.**
+Models1.974456588,1.861041303,1.755439462,1.650469481 versus unchanged targets
+1.974875,1.861,1.755375,1.64575; all within declared0.005absolute tolerance.
+Only psi varied. Job17497087 now evaluates four one-period household decisions
+using those stationary continuation values/prices/pensions on the actual carried
+household distribution, preserving both birth queues and observed-age bridges.
+This initial carry is DIAGNOSTIC: it does not reclear current prices/pensions
+against the carried population. It records actual fertility, market/accounting/
+fiscal gaps and saved inherited states; a failed balance cannot be passed on as
+an accepted2023equilibrium. Budget four dated evaluations/12minutes, oneCPU16GiB.
+Source code/model/tools/run_e5f_stationary_policy_carry.py; outputs in
+stationary_history_patch_20260912/carry on Torch. Full PF remains incomplete;
+no new policy results. The author was explicitly told full completion within
+45minutes is very unlikely; no promised delivery of a completed approximation.
+
 **September 12 — author-approved stationary-history patch launched in parallel.**
 The author requested stationary early-period fits followed by post2023PF, and
 explicitly selected CARRYING household distributions into2023, not resetting

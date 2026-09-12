@@ -152,3 +152,19 @@ The author requested an approximate pre2023 stationary-history fit followed by a
 Exact-loop smoke17496911 runs two stationary solves (original psi and psi-.02), replays the pinned seed, checks stationary operators, inherited supply clearing, actual pension accounts and household budgets, saves both checkpoints and17standardgraphs. Budget900seconds, oneCPU/16GiB. The first seed reproduction took63seconds and gives period fertility2.1000010284. Conditional follow-up: four independent window-target fits, max8stationary candidates/1800seconds each. At the observed one-minute solve, eight candidates imply about8minutes plus diagnostics per arm; the30-minute cap is protective.
 
 The fitted stationary points are starting approximations, not an accepted carried history. Stage2 must carry actual household wealth/tenure/parity/dependents and birth queues, retain the existing historical age conditioning and2023person anchor, and verify fertility plus contemporaneous housing/PAYGO balances on the carried state. If direct stationary policies fail those checks, the intended approximation is a one-period equilibrium using stationary future values/prices, with current price/pension clearing on the carried distribution; its implemented logic must be separately tested and disclosed. Do not silently call an unbalanced stationary-policy replay an equilibrium or feed it to policy. Post2023PF remains a separate required stage; original full-PF runs continue unchanged.
+
+**September 12 — all four stationary fertility fits passed; carry diagnostic running.**
+Models1.974456588,1.861041303,1.755439462,1.650469481 versus unchanged targets
+1.974875,1.861,1.755375,1.64575; all within declared0.005absolute tolerance.
+Only psi varied. Job17497087 now evaluates four one-period household decisions
+using those stationary continuation values/prices/pensions on the actual carried
+household distribution, preserving both birth queues and observed-age bridges.
+This initial carry is DIAGNOSTIC: it does not reclear current prices/pensions
+against the carried population. It records actual fertility, market/accounting/
+fiscal gaps and saved inherited states; a failed balance cannot be passed on as
+an accepted2023equilibrium. Budget four dated evaluations/12minutes, oneCPU16GiB.
+Source code/model/tools/run_e5f_stationary_policy_carry.py; outputs in
+stationary_history_patch_20260912/carry on Torch. Full PF remains incomplete;
+no new policy results. The author was explicitly told full completion within
+45minutes is very unlikely; no promised delivery of a completed approximation.
+
