@@ -1,5 +1,24 @@
 # Calibration Status
 
+**September 12 — 2019 stationary-start PF diagnostic launched; age allocation figure ready.**
+Following the author's correction, job17497354_0 starts from the fitted conditional
+stationary household distribution dated2019 (fit_2, psi.1069228919), then tests
+one permanent preference change to.0923951452. The2023household distribution
+is carried along the forecast, never reset to a stationary distribution.
+The original external2023person anchor remains; this is not full demographic
+stationarity or an already fitted2023transition. Six-date diagnostic, one trial,
+3600seconds/oneCPU32GiB; longer-horizon certification and shock fitting remain.
+Startup verified restart_2019.json. Original full-PF17493863_0/1 still running.
+The earlier2007onward stationary-policy carry completed but missed the fertility
+windows and did not reclear markets/PAYGO; it is superseded as the next test.
+New supplemental age_housing_allocation under overnight_20260912 uses the latest
+provisional initial checkpoint e3a4c930c53af407b734fc6a416e68e92240280594d036cf9ef6fa1e83f2c671.
+PDF rendered and inspected; physical mean rooms6.5031406485 exactly matches
+saved aggregate demand. Under34heads account for24.69%ofhouseholds and19.69%of
+occupied rooms; ages66+for25.92%and28.64%. Descriptive stationary allocation,
+not causal intergenerational displacement or a new policy result. Standard17
+plots preserved. Builder: code/model/tools/build_e5f_age_housing_allocation.py.
+
 **September 12 — all four stationary fertility fits passed; carry diagnostic running.**
 Models1.974456588,1.861041303,1.755439462,1.650469481 versus unchanged targets
 1.974875,1.861,1.755375,1.64575; all within declared0.005absolute tolerance.

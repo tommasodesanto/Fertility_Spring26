@@ -59,7 +59,26 @@ def main():
     old=build_approved_initial_state(packet=packet,normalization=initial_summary['normalization'],outside_origin_entry_share=plan['outside_origin_entry_share'],preference_change_2023=0.,fertility_tolerance=5e-4)
     demographics=packet['demographic_seed'];initial_psi=float(old.parameters.psi_child)
     inherited=surprise.InheritedState(2007,old.initial_state);del packet
+    if plan.get('stationary_restart_2019'):
+        spec=plan['stationary_restart_2019'];static_plan=read(spec['fit_plan']);selected=read(spec['fit_summary'])
+        if (static_plan['terminal_template']['initial_checkpoint']!=c['initial_checkpoint'] or
+            selected['status']!='stationary_fertility_target_matched' or selected['decision_year']!=2015):
+            raise ValueError('2019 stationary restart must use the same pinned structural seed and the window ending2019')
+        point=selected['selected'];td.verify(point['checkpoint'],point['checkpoint_sha256'])
+        with gzip.open(point['checkpoint'],'rb') as f:stationary=pickle.load(f)
+        Q=stationary['parameters'];sol=stationary['solution']
+        if not np.array_equal(stationary['b_grid'],old.b_grid):raise ValueError('Stationary restart grid changed')
+        from run_e5f_matched_pf_history import pf
+        births=fertility.closure.topcode_consistent_renewal_accounting(sol,Q)
+        adjusted=float(births['topcode_adjusted_birth_children'])/2.1;raw=float(sol.total_births_kfe)/2.1
+        start_state=pf.PFInitialState(stationary['stationary_g_pre'].copy(),[adjusted]*4,[raw]*4)
+        inherited=surprise.InheritedState(2019,start_state)
+        save(out/'restart_2019.json',dict(source=spec,checkpoint_sha256=point['checkpoint_sha256'],psi_2019=float(Q.psi_child),
+            household_mass=float(start_state.g_pre.sum()),raw_birth_queue=start_state.scheduled_raw_entries,
+            adjusted_birth_queue=start_state.scheduled_entries,distribution_reset_2023=False,
+            interpretation='Conditional stationary household distribution dated2019; birth queues from its constant birth flows. Original supply curve and external2023person anchor retained; no claim of full demographic stationarity.'))
     targets=list(csv.DictReader(Path(plan['empirical_blocks']).open()));realized=[];smoked=False;trial_index=0
+    if plan.get('stationary_restart_2019'):targets=[t for t in targets if int(t['decision_year'])>=2019]
     if plan.get('verified_native_smoke'):
         native=read(plan['verified_native_smoke'])
         if (not native['finite_horizon_market_fiscal_converged'] or native['start_year']!=2007
