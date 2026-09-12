@@ -14,7 +14,7 @@ Each issue will have a stable number and contain:
 - **Status:** open, investigating, awaiting an answer, or resolved.
 - **Answer / decision:** record the resolution and supporting source beside the original issue.
 
-Capture issues as they arrive. Send another task a bounded question only when its input is needed. Keep resolved issues below rather than deleting them.
+**Current instruction: record only.** Capture issues as Tommaso states them. Do not investigate, resolve, edit slides, or contact other tasks about these issues until Tommaso asks. Leave actions and ownership undecided unless he specifies them. Keep resolved issues below rather than deleting them when work is later authorized.
 
 ## Resolved issues
 
