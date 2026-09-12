@@ -1,6 +1,45 @@
 # Fixed-beta calibration profiles
 
-Array17403262 is running: task0 fixesannualbeta0.98; task1 fixes0.99. Both passed source/target/checkpoint preflight. Author approved these profiles on September11. Each profile reoptimizes
+**Current: beta 0.99 recovery job 17424705 is running (September 11, 20:01 EDT).**
+The author requested a stronger fixed-beta search while away for dinner.
+`plan_recovery_beta_099.json` and `submit_recovery.sh` define this separate batch;
+the original remote batch and its sources remain intact. The recovery pins 87
+evidence files in `recovery_manifest.json`, validates all 15 successful first-round
+derivatives, and excludes the failed theta1-positive trial. It must freshly
+reproduce every numerical cell of the original fixed-beta seed before using
+those derivatives. The missing derivative side uses the verified negative side;
+all eight parameter directions remain present.
+
+The continuation evaluates 12 joint proposals, then one further round of 16
+derivatives and 12 joint proposals around the best valid candidate. Eight workers,
+at most 40 new search trials, one seed replay, and two final repetitions:
+42 new case calls / 43 repetitions / at most 344 stationary equilibrium solves.
+Expected duration is 45–75 minutes excluding queue; the hard cap remains three
+hours with 7800 seconds for search and 3000 seconds reserved for final verification.
+Thirteen controller tests passed locally and on Torch, including complete recovery
+and exact-repetition handling. Remote import/proposal preflight passed. Actual
+seed replay is still pending; no improved result is yet claimed.
+
+The population tolerance remains 1e-8. Only a narrowly recognized, preflighted
+sequential-age advancement mass failure with relative gap in (1e-8, 2e-8] can be
+recorded as an **ineligible** trial; it receives no score and cannot enter either
+the Jacobian or selection. The original failure counts toward a total allowance
+of one, so any recurrence stops the search after the current batch for review.
+Unknown failures also stop. All failure artifacts remain available. Inspection
+suggests unnormalized float32 tenure probabilities in calendar advancement as a
+possible cause, not a proven diagnosis. Neither solver code nor gates were changed.
+Results, heartbeat, latest and best summaries are under the remote batch's
+`results/`; the selected result includes the full fit/parameter tables and the
+unchanged 17 diagnostic graphs. This is an initial-state calibration profile,
+not historical preference estimation or a certified new policy result.
+
+**Original run:** array 17403262 finished. Task 0 (annual beta 0.98) completed
+with loss 222.524449 and two exact repetitions; task 1 (0.99) stopped after its
+first derivative stage at the mass gate, best unrepeated loss 168.201074.
+Original run plans below retain their original pins and are historical receipts;
+the updated local controller is launched with the new recovery plan only.
+
+Author approved these profiles on September11. Each profile reoptimizes
 all eight other structural coordinates against the same12scoredmoments and
 separate completed-fertility normalization2.1. No target, weight, original source,
 observer, numerical tolerance or economic equation is changed. The unrestricted

@@ -144,5 +144,45 @@ class ProfileTests(unittest.TestCase):
             f['error']='Source mismatch';p.write(d/'raw/failure.json',f)
             self.assertEqual(p.failure_status(d),'failed')
 
+    def test_mass_rejection_is_narrow_and_requires_verified_preflight(self):
+        with tempfile.TemporaryDirectory() as t:
+            d=Path(t); (d/'raw').mkdir()
+            f=dict(error_type='RuntimeError',phase='stationary_equilibrium',error='sequential_calendar_age_15_advancement mass gate failed: actual=0.039115152442695297, expected=0.03911515283909172, relative_gap=1.013e-08, tolerance=1.000e-08')
+            p.write(d/'raw/failure.json',f);p.write(d/'preflight.json',{})
+            self.assertEqual(p.failure_status(d),'failed')
+            p.write(d/'preflight.json',dict(status='verified',objective_canonical_sha256=p.APPROVED_OBJECTIVE))
+            self.assertEqual(p.failure_status(d),'rejected_mass_gate')
+            for old,new in [('age_15','age_20'),('0.039115152442695297','0.038'),('1.000e-08','1.000e-07')]:
+                bad=copy.deepcopy(f);bad['error']=bad['error'].replace(old,new);p.write(d/'raw/failure.json',bad)
+                self.assertEqual(p.failure_status(d),'failed')
+
+    def test_recovery_replays_seed_reuses_derivatives_and_completes_joint_search(self):
+        config=plan(.99);config['maximum_search_cases']=40
+        inherited=score(dict(parameters={n:1. for n in p.ALL_NAMES},initial_psi=.2),.999)
+        calls=[]
+        def worker(item):
+            calls.append(copy.deepcopy(item));s=score(item,.99)
+            return dict(case_id=item['case_id'],proposal=item,status='verified',score=s,loss=s['loss'],output='/synthetic')
+        seed=dict(case_id='fixed_beta_seed',parameters=p.full_parameters(p.parameters(inherited),.99),initial_psi=.2)
+        saved=worker(seed);recovery=[saved]
+        for item in p.proposals(saved,restrictions(),.99,0):
+            q=worker(item);q['imported']=True
+            if item['case_id']=='r0_d5_+1':
+                q['status']='rejected_mass_gate';q.pop('score');q.pop('loss')
+            recovery.append(q)
+        calls.clear()
+        with tempfile.TemporaryDirectory() as t,contextlib.redirect_stdout(io.StringIO()):
+            summary,best=p.search(config,inherited,restrictions(),worker,Path(t),recovery=recovery)
+        self.assertEqual(summary['status'],'completed');self.assertEqual(summary['search_attempted_cases'],40)
+        self.assertEqual(summary['imported_observations'],16);self.assertEqual(len(calls),42)
+        self.assertEqual(summary['maximum_stationary_solves'],344)
+        self.assertFalse(any(c['case_id'].startswith('r0_d') for c in calls))
+        self.assertTrue(summary['selected_exact_repetitions_verified'])
+        changed=copy.deepcopy(recovery);changed[0]['score']['loss']+=1
+        calls.clear()
+        with tempfile.TemporaryDirectory() as t,contextlib.redirect_stdout(io.StringIO()):
+            summary,_=p.search(config,inherited,restrictions(),worker,Path(t),recovery=changed)
+        self.assertEqual(summary['status'],'stopped_for_review');self.assertEqual(len(calls),1)
+
 
 if __name__ == '__main__': unittest.main()

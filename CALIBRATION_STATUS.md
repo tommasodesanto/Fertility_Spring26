@@ -2,6 +2,27 @@
 
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
+**September 11, 20:01 EDT — author-approved beta 0.99 recovery job 17424705 RUNNING.**
+The author explicitly requested a stronger beta 0.99 search after returning home.
+This supersedes the earlier hold on new launches. The separate recovery batch
+preserves all 641 scientific source pins, targets, weights, normalization and
+strict numerical gates. Fifteen valid saved derivatives passed an 87-file
+provenance check; the failed theta1-positive observation remains ineligible.
+The original beta 0.99 seed must reproduce every numerical cell before reuse.
+Then up to 12 joint proposals and a further 16-derivative / 12-joint adaptive
+round reoptimize all eight other structural parameters. Eight cores, at most
+40 new search trials, seed replay and two exact winner repetitions: 43 total
+repetitions / 344 maximum stationary solves; expected 45–75 minutes, three-hour
+hard limit. Thirteen exact-controller tests and remote recovery preflight passed.
+The actual seed replay is pending, so no new calibration improvement is claimed.
+The original isolated mass-gate failure is excluded without assigning a score;
+any recurrence or unknown failure stops for review. Possible float32 probability
+rounding in calendar advancement is a hypothesis, not an established root cause.
+Full plan, receipts and rejection rules:
+`output/model/e5f_matched_pf_20260909a/initial_calibration_contract/fixed_beta_profiles/README.md`.
+This requested initial-state profile does not complete the still-outstanding
+historical preference fit, observation mapping, long-horizon root or policy work.
+
 **September11, return-home assessment — allthree short trial paths converged;
 central28-date root finished without convergence; both alternative long paths stillrunning.**
 The observed-0.05 shortpath17409919 reproduces its selected fertility observer

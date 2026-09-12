@@ -1,0 +1,55 @@
+{
+  "source_root": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8",
+  "smoke_summary_sha256": "22b9a9f75a9e43a528bbde766f6595274f9843e7f77f29316315168118fd8e53",
+  "smoke_contract_sha256": "afff32c34e679aaf19efbbe14cd673919e3df333d719847c9928f289946a19df",
+  "schema": "e5f_fixed_beta_recovery_v1",
+  "fixed_beta": 0.99,
+  "workers": 8,
+  "rounds": 2,
+  "search_seconds": 7800,
+  "slurm_seconds": 10800,
+  "verification_reserve_seconds": 3000,
+  "maximum_search_cases": 40,
+  "resume_score_path": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/batches/extended_refinement_20260911/results/cases/selected_exact_repetitions/evaluation/scored_repetition_01/score.json",
+  "resume_score_sha256": "13e0be0a95322f15916883f2cf417d4b55f89230223b330613d47465bc3889a5",
+  "resume_summary_sha256": "bacf25337299d65f59e41fcbd86e7ea11f9e9a486d9363676909062ea1294185",
+  "resume_proposal": {
+    "case_id": "selected_exact_repetitions",
+    "initial_psi": 0.17870906533378325,
+    "parameters": {
+      "H0": 8.225499724508786,
+      "beta_annual": 0.9957960668523341,
+      "chi": 1.045632526446847,
+      "first_birth_fixed_cost": 0.2937155016899614,
+      "h_P": 2.1837953641959,
+      "kappa_fert": 0.3346343063057974,
+      "kappa_fert_continuation": 0.4037305572536571,
+      "theta0": 0.08957524492721414,
+      "theta1": 0.0770953752444599
+    },
+    "repetitions": 2
+  },
+  "seed_initial_psi": 0.16525977525321506,
+  "controller_sha256": "601c22b491467d204f82041fcfe6cf317b6152c6a4f6d554f5f9e67195bfd1d9",
+  "file_sha256": {
+    "test_run_profile.py": "0ea8216db4666af3a0a76b36250ac0c0909283b6948d9df5b8e7b3fdf9a946a2",
+    "submit_recovery.sh": "fe0f2cce342925b91de400dc9f422a637744c33c31b2569e47ec6048f0bdc1dd"
+  },
+  "output_dir": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/batches/fixed_beta_099_recovery_20260911/results",
+  "maximum_case_evaluations": 42,
+  "maximum_repetitions": 43,
+  "maximum_GE": 344,
+  "expected_case_seconds": [
+    300,
+    490
+  ],
+  "expected_wall_minutes_excluding_queue": [
+    45,
+    75
+  ],
+  "stop": "Replay original beta=.99 seed exactly, import pinned complete derivative stage excluding its failed mass-gate point, evaluate 12 joint candidates, then one 16-derivative plus 12-joint adaptive round. Retain all strict model gates; any recurrence of mass-gate rejection triggers review; unknown failures or majority equilibrium failures stop. Repeat selected input twice exactly. Maximum 40 new search cases plus seed and final repetition pair; 7800s search and 3000s verification reserve.",
+  "production_eligible": false,
+  "recovery_manifest_path": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/batches/fixed_beta_099_recovery_20260911/recovery_manifest.json",
+  "recovery_manifest_sha256": "2c50c7fb8c3c9db324a46a98bf4f8f738c8a60939430e9c866d46a6c28b98fba",
+  "numerical_smoke": "Original frozen scored-wrapper exact loop; 13 complete-controller unit tests including recovery, one-sided derivative, objective/parameter invariants and final replay; fresh actual fixed-beta seed must match all previous numeric cells before imported derivatives can be used."
+}

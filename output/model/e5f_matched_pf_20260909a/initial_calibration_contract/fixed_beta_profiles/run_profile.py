@@ -14,6 +14,7 @@ import hashlib
 import json
 import math
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -189,10 +190,59 @@ def failure_status(dest):
         if (f.get('error_type') == 'RuntimeError' and f.get('phase') == 'stationary_equilibrium'
                 and f.get('error') == 'Initial housing equilibrium failed its unchanged strict gate'):
             return 'rejected_equilibrium'
+        # Reject this observation; never give it a score or waive its mass gate.
+        match = re.fullmatch(r'sequential_calendar_age_(\d+)_advancement mass gate failed: actual=([^,]+), expected=([^,]+), relative_gap=([^,]+), tolerance=([^,]+)', f.get('error', ''))
+        if (match and read(preflight).get('status') == 'verified'
+                and read(preflight).get('objective_canonical_sha256') == APPROVED_OBJECTIVE
+                and f.get('error_type') == 'RuntimeError'
+                and f.get('phase') == 'stationary_equilibrium'):
+            age, actual, expected, reported, tolerance = map(float, match.groups())
+            if (0 <= age <= 16 and actual > 0 and expected > 0 and tolerance == 1e-8
+                    and 1e-8 < abs(actual - expected) / expected <= 2e-8
+                    and math.isclose(abs(actual - expected) / expected, reported, rel_tol=.001)):
+                return 'rejected_mass_gate'
     return 'failed'
 
 
-def search(p, seed_score, restrictions, run_case, out, *, seed_only=False, smoke=False):
+def load_recovery(p, restrictions):
+    manifest = read(p['recovery_manifest_path'])
+    if sha(p['recovery_manifest_path']) != p['recovery_manifest_sha256']:
+        raise ValueError('Recovery manifest changed')
+    for path, pin in manifest['file_sha256'].items():
+        if sha(path) != pin: raise ValueError('Recovery evidence changed: ' + path)
+    records = read(manifest['records_path']); loaded = []
+    for old in records:
+        q = copy.deepcopy(old); dest = Path(q['output']); item = q['proposal']
+        pre = read(dest / 'preflight.json')
+        if (pre['status'] != 'verified' or pre['objective_canonical_sha256'] != APPROVED_OBJECTIVE
+                or pre['run_contract_sha256'] != sha(dest.parent / 'run_contract.json')
+                or pre['initial_solve_contract_sha256'] != sha(dest.parent / 'initial_contract.json')):
+            raise ValueError('Unverified recovery preflight')
+        ic = read(dest.parent / 'initial_contract.json')
+        if ic['structural_candidate'] != item['parameters'] or ic['initial_psi'] != item['initial_psi']:
+            raise ValueError('Recovery input differs from original contract')
+        if q['status'] == 'verified':
+            receipt = read(dest / 'summary.json'); q['score'] = read(dest / 'scored_repetition_01/score.json')
+            validate_score(q['score'], item, p['fixed_beta'])
+            if (receipt['status'] != 'verified_scored_candidate' or receipt['loss'] != q['loss']
+                    or q['loss'] != q['score']['loss'] or receipt['objective_canonical_sha256'] != APPROVED_OBJECTIVE):
+                raise ValueError('Recovery score receipt mismatch')
+        else:
+            q['status'] = failure_status(dest)
+            if q['status'] not in ('rejected_equilibrium', 'rejected_mass_gate'):
+                raise ValueError('Unknown recovery failure')
+        q['imported'] = True; loaded.append(q)
+    if len(loaded) != 17 or loaded[0]['case_id'] != 'fixed_beta_seed' or loaded[0]['status'] != 'verified':
+        raise ValueError('Recovery requires original seed and complete first derivative stage')
+    expected = {q['case_id']: q for q in proposals(loaded[0], restrictions, p['fixed_beta'], 0)}
+    if {q['case_id']: q['proposal'] for q in loaded[1:]} != expected:
+        raise ValueError('Recovery probes do not match original center and full parameter set')
+    if sum(q['status'] != 'verified' for q in loaded[1:]) > 1:
+        raise ValueError('Recovery exceeds reviewed single rejected observation')
+    return loaded
+
+
+def search(p, seed_score, restrictions, run_case, out, *, seed_only=False, smoke=False, recovery=None):
     """Production loop, injected worker also used by complete deterministic smoke tests."""
     beta = p['fixed_beta']; started = time.monotonic(); deadline = started + p['search_seconds']
     best = None; records = []; state = dict(phase='fixed_beta_seed', completed=0, failed=0, status='running')
@@ -221,6 +271,9 @@ def search(p, seed_score, restrictions, run_case, out, *, seed_only=False, smoke
         if any(r['status'] == 'failed' for r in results): raise RuntimeError('Unexpected/code/source/observer failure: stopped for review')
         if sum(r['status'] == 'rejected_equilibrium' for r in results) > len(results) / 2:
             raise RuntimeError('Majority of proposals fail equilibrium: stopped for review')
+        if (sum(r['status'] == 'rejected_mass_gate' for r in results) > len(results) / 4
+                or sum(r['status'] == 'rejected_mass_gate' for r in records) > 1):
+            raise RuntimeError('Repeated mass-gate rejection: stopped for numerical review')
         return results
     def can_search(count):
         waves = math.ceil(count / p['workers'])
@@ -233,6 +286,10 @@ def search(p, seed_score, restrictions, run_case, out, *, seed_only=False, smoke
         seed = dict(case_id='fixed_beta_seed', parameters=full_parameters(parameters(seed_score), beta),
                     initial_psi=p.get('seed_initial_psi', p['resume_proposal']['initial_psi']))
         fixed = run_case(seed); completed(fixed)
+        if recovery is not None:
+            if (fixed['status'] != 'verified' or fixed['proposal'] != recovery[0]['proposal']
+                    or numeric_signature(fixed['score']) != numeric_signature(recovery[0]['score'])):
+                raise RuntimeError('Recovered fixed-beta seed did not reproduce exactly')
         if fixed['status'] == 'rejected_equilibrium':
             # Predeclared recovery is limited to two H0 alternatives. These are
             # newly normalized fixed-beta solves, never the unrestricted score.
@@ -254,9 +311,13 @@ def search(p, seed_score, restrictions, run_case, out, *, seed_only=False, smoke
         else:
             for round_index in range(min(p['rounds'], 1) if smoke else p['rounds']):
                 center = copy.deepcopy(best); probes = proposals(center, restrictions, beta, round_index)
-                if not can_search(len(probes)):
+                if round_index == 0 and recovery is not None:
+                    results = copy.deepcopy(recovery[1:])
+                    for result in results: completed(result)
+                elif not can_search(len(probes)):
                     stop_reason = 'stage_deadline_or_case_budget'; break
-                results = run_stage(probes, f'round_{round_index}_feasible_derivatives')
+                else:
+                    results = run_stage(probes, f'round_{round_index}_feasible_derivatives')
                 J = jacobian(results, center)
                 condition = np.linalg.cond(J)
                 write(out / f'jacobian_round_{round_index}.json', dict(center=center['case_id'], names=list(FREE_NAMES),
@@ -286,7 +347,9 @@ def search(p, seed_score, restrictions, run_case, out, *, seed_only=False, smoke
         summary = dict(profile_metadata(beta), status=final_status, stop_reason=stop_reason,
                        elapsed_seconds=time.monotonic() - started, attempted_cases=len(records),
                        search_attempted_cases=search_attempts,
-                       maximum_stationary_solves=8 * sum(r['proposal'].get('repetitions', 1) for r in records),
+                       new_case_evaluations=sum(not r.get('imported', False) for r in records),
+                       imported_observations=sum(r.get('imported', False) for r in records),
+                       maximum_stationary_solves=8 * sum(r['proposal'].get('repetitions', 1) for r in records if not r.get('imported', False)),
                        best_case=None if best is None else best['case_id'], best_loss=None if best is None else best['loss'],
                        unrestricted_seed_loss_for_reference_only=seed_score['loss'], fixed_beta_seed_loss=fixed_seed_loss,
                        selected_exact_repetitions_verified=verified_repeat)
@@ -370,7 +433,9 @@ def main():
                    str(folder / 'run_contract.json'), '--contract-sha256', sha(folder / 'run_contract.json'), '--output', str(dest)],
                    cwd=source, env=env, stdout=log, stderr=subprocess.STDOUT)
         if code or not (dest / 'summary.json').exists():
-            return dict(case_id=case, status=failure_status(dest), returncode=code, output=str(dest), proposal=item)
+            detail = read(dest / 'raw/failure.json') if (dest / 'raw/failure.json').exists() else None
+            return dict(case_id=case, status=failure_status(dest), returncode=code, output=str(dest), proposal=item,
+                        failure_detail=detail)
         receipt = read(dest / 'summary.json')
         if receipt['objective_canonical_sha256'] != APPROVED_OBJECTIVE: raise ValueError('Mixed output objective')
         score = read(dest / 'scored_repetition_01/score.json'); validate_score(score, item, p['fixed_beta'])
@@ -380,7 +445,8 @@ def main():
             if not (receipt['repetitions'] == 2 and receipt['exact_loss_equality'] and numeric_signature(score) == numeric_signature(second)):
                 raise ValueError('Incomplete/nonexact final repetition pair')
         return dict(case_id=case, status='verified', loss=score['loss'], output=str(dest), score=score, proposal=item)
-    summary, best = search(p, seed_score, restrictions, run_case, out, seed_only=args.seed_only, smoke=args.smoke)
+    recovery = load_recovery(p, restrictions) if 'recovery_manifest_path' in p else None
+    summary, best = search(p, seed_score, restrictions, run_case, out, seed_only=args.seed_only, smoke=args.smoke, recovery=recovery)
     save_profile_tables(out, best, p['fixed_beta']); print(json.dumps(summary), flush=True)
     if summary['status'] == 'stopped_for_review': sys.exit(2)
 
