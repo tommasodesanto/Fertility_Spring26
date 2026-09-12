@@ -280,7 +280,7 @@ Planned Torch execution uses three parallel fits, each 8 CPUs/32 GB with a
 per-fit receipts, full event covariance and sample-key digests. Person/year
 keys are removed after hashing; only aggregate outputs will be collected.
 
-**Current execution state: local original fit reached its cap without estimates.**
+**Earlier execution state: local original fit reached its cap without estimates.**
 Automatic approval review rejected the proposed Torch transfer; Tommaso then
 explicitly directed that this diagnostic run locally. No microdata was uploaded
 and no Torch job was launched. The cluster plan above is superseded. The local
@@ -311,3 +311,35 @@ Private inputs remain under
 `/tmp/psid_original_timing_20260912b/`; no microdata is committed here.
 Preflight evidence is in `preparation_receipt.json`, `sample_comparison.json`,
 `matched_reference_support.csv`, and `timing_comparison_preflight.json`.
+
+## Authorized overnight data continuation, September 12
+
+Tommaso subsequently authorized continuing this data work while he sleeps,
+with a morning update and at most 10% of his remaining Codex allowance. At
+authorization 71% was used, leaving 29%; the maximum increment is 2.9 percentage
+points. A conservative AI stop threshold is 72% used; no subagents or repeated
+overnight AI polling are planned. The one-time morning follow-up is 08:00
+America/New_York on September 12, automation `morning-psid-data-audit`.
+
+The local batch started at 05:09:54 UTC, under `overnight_20260912`, with the
+same frozen preparation and estimator. It runs original_native, original_common,
+then aligned_common sequentially, each capped at two hours within six total
+hours. First failure stops the batch, without retries. Idle-sleep prevention
+is attached to the controller's lifetime. No microdata leaves the Mac.
+
+The existing three-fit numerical loop had passed its synthetic Stata smoke.
+The added controller smoke checks order, the two rendering stages, and immediate
+failure propagation. Source hashes are checked before every fit; completed
+original/shifted common samples must have identical key digests for the full
+comparison renderer. These checks do not establish successful real-data fits.
+
+`timing_local/overnight_20260912/batch_receipt.json` contains current phase and
+latest completed fit summaries; per-arm outputs sit below the same directory.
+Private live heartbeats are under
+`/tmp/psid_original_timing_20260912b/local/overnight_20260912/` and the controller
+log/launch receipt under `/tmp/psid_original_timing_20260912b/overnight_20260912/`.
+The first passing fit automatically renders `original_reproduction.png/pdf`;
+all three passing fits render `timing_only_comparison.png/pdf`. Neither result
+is automatically promoted into slides or calibration. The morning review must
+check numerical reproduction against May rather than equating exit success
+with reproduction. Reference support and comparison-group issues remain separate.

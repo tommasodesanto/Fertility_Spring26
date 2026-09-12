@@ -11,6 +11,9 @@ from pathlib import Path
 import subprocess
 import time
 import shutil
+import csv
+import os
+import sys
 
 ROOT = Path(__file__).resolve().parents[3]
 SOURCE = ROOT.parent / 'Codes/code_per tommi_addingcontrolsandfixingthings.do'
@@ -184,6 +187,58 @@ log close _all
     print(json.dumps(receipt, indent=2))
 
 
+def run_overnight(work, run_label, timeout=7200, total_budget=21600):
+    """Three sequential, unchanged fits; stop at first failure, with no retries."""
+    assert run_label and run_label.replace('_', '').isalnum()
+    assert 0 < timeout <= total_budget <= 21600
+    evidence = ROOT/'code/data/psid_followup_mar2026/output/first_birth_correction_review'
+    batch = evidence/'timing_local'/run_label
+    batch.mkdir(parents=True, exist_ok=False)
+    renderer = ROOT/'code/data/psid_followup_mar2026/render_original_rooms_timing.py'
+    sources = [Path(__file__).resolve(), renderer,
+               ROOT/'code/data/psid_followup_mar2026/audit_original_rooms_timing.do', SOURCE]
+    pins = {str(p): sha(p) for p in sources}
+    state = {'status': 'running', 'run_label': run_label,
+             'total_budget_seconds': total_budget, 'per_fit_cap_seconds': timeout,
+             'source_pins': pins, 'completed': [], 'current_arm': None,
+             'microdata_uploaded': False, 'target_changed': False}
+    started = time.monotonic()
+
+    def checkpoint():
+        state['elapsed_seconds'] = time.monotonic()-started
+        temporary = batch/'batch_receipt.tmp'
+        temporary.write_text(json.dumps(state, indent=2)+'\n')
+        temporary.replace(batch/'batch_receipt.json')
+
+    try:
+        for arm in ('original_native', 'original_common', 'aligned_common'):
+            assert all(sha(Path(p)) == digest for p, digest in pins.items()), 'Source changed'
+            remaining = total_budget-(time.monotonic()-started)
+            if remaining < 60:
+                raise TimeoutError('Total overnight budget exhausted')
+            state['current_arm'] = arm
+            checkpoint()
+            run_local(work, arm, min(timeout, int(remaining)-30), 8, run_label)
+            with (batch/arm/'fit_receipt.csv').open(newline='') as f:
+                state['completed'].append(next(csv.DictReader(f)))
+            checkpoint()
+            if arm in ('original_native', 'aligned_common'):
+                command = [sys.executable, str(renderer), '--run-label', run_label]
+                if arm == 'original_native':
+                    command.append('--baseline-only')
+                remaining = total_budget-(time.monotonic()-started)
+                if remaining <= 0:
+                    raise TimeoutError('No rendering time remains')
+                env = dict(os.environ, MPLCONFIGDIR='/tmp/psid_correction_review/matplotlib')
+                subprocess.run(command, check=True, timeout=min(60, remaining), env=env)
+        state.update(status='pass', current_arm=None)
+    except Exception as exc:
+        state.update(status='failed', error=str(exc))
+        raise
+    finally:
+        checkpoint()
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('work', type=Path)
@@ -191,8 +246,12 @@ if __name__ == '__main__':
     parser.add_argument('--timeout', type=int, default=600)
     parser.add_argument('--processors', type=int, default=8)
     parser.add_argument('--run-label', default='')
+    parser.add_argument('--overnight', action='store_true')
     args = parser.parse_args()
-    if args.run:
+    if args.overnight:
+        assert args.run is None
+        run_overnight(args.work.resolve(), args.run_label, args.timeout)
+    elif args.run:
         run_local(args.work.resolve(), args.run, args.timeout, args.processors, args.run_label)
     else:
         prepare(args.work.resolve())

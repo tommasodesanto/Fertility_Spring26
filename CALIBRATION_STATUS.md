@@ -26,6 +26,24 @@ interrupt them. The report collector passed a live partial-output smoke test.
 
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
+**September 12, overnight data-only work authorized; no model launch.**
+Before sleeping, Tommaso explicitly authorized continued data work and a morning
+update, capped at 10% of the remaining Codex allowance. At authorization the
+account showed 71% used: 29% remaining, hence at most 2.9 additional percentage
+points. The task uses a conservative 72%-used AI stop threshold, no subagents,
+and a single 08:00 America/New_York morning follow-up. No reset is authorized.
+At 05:09:54 UTC a detached local Stata controller started three sequential
+original-specification fits under `overnight_20260912`: original sample,
+original rooms on common observations, then shifted rooms on those same
+observations. Per-fit cap is two hours, total cap six hours; stop on first
+failure, no automatic retry. This extended local run is newly authorized;
+the failed 45-minute attempt is retained. The regression specification and
+prepared data are unchanged. Numerical-loop and controller ordering/failure
+smokes passed; actual estimates are pending. Batch receipt and per-arm evidence:
+`code/data/psid_followup_mar2026/output/first_birth_correction_review/timing_local/overnight_20260912/`.
+No slides, empirical target, weights, or model are changed. The separate
+mistaken model-task job was cancelled by that task and its automation paused.
+
 **September 12 — author clarification: no new overnight calibration authorized from the data task.**
 Tommaso asked only which empirical number to use. The data-task assistant
 mistakenly submitted creation of "Overnight calibration — provisional rooms target"
