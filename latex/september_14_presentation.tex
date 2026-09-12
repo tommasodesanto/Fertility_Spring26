@@ -402,25 +402,18 @@ Births enter the population immediately. Survival, migration, and household form
 
 \begin{frame}{Equilibrium}
 \small
-Given the inherited household and population state, preferences, policy rules, and expectations, an equilibrium is a sequence:
-\[
-\{V_t,\pi_t,G_t,N_t,H_t,P_t,r_t,T_t,\varpi_t\}_{t\geq0},
-\]
-where $V_t$ are household values and $\pi_t$ are choice probabilities, satisfying:
+An equilibrium is a sequence of policy functions, value functions, household distributions, populations, prices, transfers, and pensions such that:
 \begin{enumerate}\setlength\itemsep{0.35em}
-  \item Household optimality given prices, transfers, pensions, and expectations at each date.
-  \item Population and household evolution under births, survival, and migration.
-  \item Physical housing clears at every date:
+  \item Given prices, fiscal paths, and expectations, policies solve the household's problem and values give the associated lifetime utilities.
+  \item Annual population accounting and fixed headship rates satisfy:
   \[
-  \int q_t\,dG_t=H_t^s
-  =H_0\left(\frac{P_t}{\bar P}\right)^\eta,
-  \qquad \text{for all }t.
+  N_{y+1}=A_{y+1}N_y+f_{y+1}B_{y+1}+M_{y+1},
+  \qquad H_y^{g,a}=\rho^{g,a}N_y^{g,a}.
   \]
-  \item Asset pricing and separate balanced budgets for pensions and property-tax rebates.
+  Fertility policies determine $B$; $A$ ages survivors, $fB$ counts surviving newborns, and $M$ is net migration.
+  \item From the initial state, distributions follow policies, idiosyncratic shocks, and demographic entry and exit, with $\int dG_t=H_t$, the head count over represented adult ages.
+  \item Housing clears, $\int q_t\,dG_t=H_t^s$, with $q_t$ measured in physical rooms. Asset pricing and both fiscal budgets hold.
 \end{enumerate}
-
-\vfill
-$G_t$ measures household mass; $q_t$ averages rented and owned physical rooms over choices.
 \end{frame}
 
 \begin{frame}{Steady-State Equilibrium}

@@ -64,10 +64,22 @@ Active documents:
   all figure paths and the remaining appendix link resolve.
 
   **September 12 equilibrium wording.** The main definition is titled
-  `Equilibrium` and explicitly equates expected occupied physical rooms,
-  integrated over household mass, to the constant-elasticity supply schedule
-  at every date. This is the existing appendix clearing condition. The named
-  quantitative task confirmed the formula and neutral expectations wording.
+  `Equilibrium` and names sequences of policy functions, value functions,
+  distributions, populations, prices and fiscal objects in prose. Its classroom
+  reference is `/Users/tommasodesanto/Documents/5_Stationary_Equilibria.pdf`,
+  section 1.2, pp. 5--6: name the equilibrium objects, then require household
+  optimality, market clearing and distribution consistency. The stationary
+  invariance condition is adapted to this model's demographic evolution.
+  Population accounting is explicit: fertility policies produce births, the
+  annual person law includes surviving cohorts/newborns and net migration, and
+  fixed headship rates determine head counts. Household mass reflects choices
+  plus demographic entry/exit and equals heads over represented adult ages.
+  The named quantitative task verified these statements against
+  `person_cohort_law.py`, `four_year_bridge.py`, and `household_head_bridge.py`
+  in its active `demographic_transition` package. The annual law uses `y`;
+  household conditions use model dates `t`. Physical-room clearing is written
+  simply as demand equals supply; the supply expansion remains on its own slide.
+  The quantitative task also confirmed the neutral expectations wording.
   Its latest information assumption is successive unanticipated preference
   innovations, each followed by a perfect-foresight continuation conditional on
   the new preference level remaining permanent (`e5f_successive_surprises.py`,
