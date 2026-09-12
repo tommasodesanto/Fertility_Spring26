@@ -1,5 +1,27 @@
 # September 12 autonomous cluster campaign
 
+**September 12 — supplemental transition panels delivered; temporary-IRF prerequisite failed.**
+Two rendered/visually checked PDF/PNG pages and source series are available in
+current_candidate_transition/overnight_20260912/seminar_transition_panels under
+output/model/e5f_matched_pf_20260909a. They show the saved sequential six-date
+permanent -.01414 preference forecast: finite market/PAYGO closure passes,
+terminal horizon fails. They are levels, not a fitted history or baseline-subtracted
+IRF. Missing pre2023 person counts are not imputed; historical heads and the2023
+person anchor are explicitly externally conditioned. The original standard
+17-graph packet is intact. Builder: code/model/tools/build_e5f_saved_transition_panels.py.
+
+Author requested trying a temporary IRF through the verified slides task.
+Proposed pulse is psi -.005 for one four-year period with anticipated reversion,
+identical inherited state and structural parameters relative to no shock.
+Prerequisite no-shock terminal17495992_0 failed after37.6seconds at its initial
+price/pension guess, before a completed mapping: renewal ratio1.00181714881
+violates the retained finite fixed-migration demographic condition. This does
+not prove global nonexistence. No dependent pulse or no-shock forecast launched.
+The next check must examine numerical feasible starts/gradual continuation;
+no demographic closure, preference normalization or numerical gate may change.
+The existing surprise adapter assumes constant preferences; an explicit pulse
+path must be separately implemented and verified before the IRF is claimed.
+
 **September 12 — matched-horizon budgets exhausted; improving roots continued.**
 Both 17489644 arms stopped at 9,000 seconds without finite convergence. The
 last complete 28/56-date receipts have housing maxima 0.00672430/0.07773044

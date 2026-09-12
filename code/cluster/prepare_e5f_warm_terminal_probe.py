@@ -1,13 +1,16 @@
 """Generate a source-pinned numerical warm-start entrypoint; economic sources stay fixed."""
 from pathlib import Path
-import copy,difflib,hashlib,json,subprocess
+import argparse,copy,difflib,hashlib,json,subprocess
 def read(p):return json.loads(p.read_text())
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
+    parser=argparse.ArgumentParser();parser.add_argument('--no-shock',action='store_true');args=parser.parse_args()
     root=Path('/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a')
-    out=root/'batches/night_warm_terminal_20260912';out.mkdir(exist_ok=False)
+    out=root/('batches/irf_no_shock_terminal_20260912' if args.no_shock else 'batches/night_warm_terminal_20260912');out.mkdir(exist_ok=False)
     plan=read(root/'batches/night_surprises_recovery_20260912/plan.json')
     warm=root/'batches/night_surprise_frontier_20260912/results/arm_0/trial_00_2007/terminal/root_receipt.json'
+    if args.no_shock:
+        warm=root/'batches/night_warm_followup_20260912/results/arm_0/trial_00_2007/terminal/root_receipt.json'
     receipt=read(warm);assert receipt['converged'];final=receipt['final']
     start=dict(asset_price=final['prices'][0],pension_period=final['fiscal_values'][0],source_receipt=dict(path=str(warm),sha256=sha(warm)))
     original=(root/'code/model/tools/run_e5f_candidate_terminal.py').read_text();source=original
@@ -34,14 +37,15 @@ def main():
     compile(source,'warm_terminal_driver.py','exec')
     driver=out/'warm_terminal_driver.py';driver.write_text(source)
     (out/'entrypoint.diff').write_text(''.join(difflib.unified_diff(original.splitlines(True),source.splitlines(True),fromfile='native',tofile='warm_entrypoint')))
-    for i,delta in enumerate((-.01414,-.0175)):
+    deltas=(0.,) if args.no_shock else (-.01414,-.0175)
+    for i,delta in enumerate(deltas):
         c=copy.deepcopy(plan['terminal_template']);c.update(schema='e5f_candidate_terminal_warm_start_v1',psi_change_from_initial=delta,diagnostic_root_start=start)
         path=out/f'contract_{i}.json';path.write_text(json.dumps(c,indent=2)+'\n');(out/f'contract_{i}.sha256').write_text(sha(path)+'\n')
     driver_pin=sha(driver)
     script=f'''#!/bin/bash
 #SBATCH --job-name=e5f_warm_terminal
 #SBATCH --account=torch_pr_570_general
-#SBATCH --array=0-1
+#SBATCH --array=0-{len(deltas)-1}
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=16G
 #SBATCH --time=00:32:00
@@ -57,6 +61,6 @@ python -B {driver} --contract {out}/contract_${{SLURM_ARRAY_TASK_ID}}.json --con
 '''
     launch=out/'submit.sh';launch.write_text(script);subprocess.run(['bash','-n',str(launch)],check=True)
     job=subprocess.check_output(['sbatch','--parsable',str(launch)],text=True).strip().split(';')[0]
-    result=dict(job=job,driver_sha256=driver_pin,warm_source_sha256=sha(warm),maximum_mappings_per_case=8,maximum_seconds_per_case=1800,changes='Only numerical root starting coordinates, explicit schema and entrypoint provenance; original scientific source manifest retained')
+    result=dict(job=job,deltas=list(deltas),driver_sha256=driver_pin,warm_source_sha256=sha(warm),maximum_mappings_per_case=8,maximum_seconds_per_case=1800,changes='Only numerical root starting coordinates, explicit schema and entrypoint provenance; original scientific source manifest retained')
     (out/'submission.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result))
 if __name__=='__main__':main()
