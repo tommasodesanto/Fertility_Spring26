@@ -20,6 +20,10 @@ mappings. Conditional array 17488254 reproduces each passed terminal and runs
 its native short forecast automatically (90-minute budget); failed terminals
 skip their dependent forecast. These remain diagnostic-only, not new policies.
 Paths and source fingerprints are in the overnight README.
+Follow-up: BOTH warm terminal probes passed their full native terminal checks.
+Dependent short-forecast tasks 17488254_0–1 are now RUNNING. Smaller-shock
+terminal equilibria therefore do exist at these tested preferences; prior
+failed initial guesses cannot be treated as a general nonexistence result.
 
 **September 12, 09:00 UTC — initial refinement completed; native surprise smoke passes.**
 Calibration 17440306 completed all three bounded batches (252 new search trials).
