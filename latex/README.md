@@ -34,6 +34,16 @@ Active documents:
   It is historical source, not a second working deck. All separate theory
   notes and the September 10 planner work remain untouched and parked.
 
+  **Intro literature.** The compact May-style bullets cite Dettling and Kearney
+  (2025), [mortgage expansion and the baby boom](https://www.nber.org/system/files/working_papers/w33446/w33446.pdf),
+  and Fazio et al. (2025), [Housing and Fertility](https://afajof.org/management/viewp.php?n=152292).
+  The former's completed-fertility evidence is supplementary cohort correlation
+  (pp. 29--30, Figure 5), distinct from its main birth-rate IV estimates.
+  The latter uses random housing-credit waiting times and fertility measured at
+  sample end among participants over 40 (Section 4.3, Table III; November 10,
+  2025 version lists van Doornik first). The slide omits study context at the
+  author's request. Dettling--Kearney (2014) does not establish completed-fertility effects.
+
   **September 12 return to the May source.** Use the actual May frame text,
   typography and composition for unchanged material; patch only documented model
   differences rather than paraphrasing the shared exposition. The frame order is

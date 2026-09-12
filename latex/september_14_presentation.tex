@@ -57,15 +57,18 @@
 \end{frame}
 
 \begin{frame}{Housing, Fertility, and Tenure Choice}
-\textbf{Children increase how much physical space a household needs.}
-Access to that space depends on tenure and wealth:
-\begin{itemize}\setlength\itemsep{0.6em}
-  \item Rental housing can limit the size of the home a family can occupy.
-  \item Ownership expands the housing menu but requires liquid wealth for a down payment.
-  \item Older owners may retain family-sized homes after their children leave.
-  \item Young families and older households compete for housing: its allocation across generations matters for fertility.
+\textbf{Housing access affects fertility:}
+\begin{itemize}
+  \item Easier mortgage access raises births, with evidence of higher completed fertility \cit{(Dettling \& Kearney 2025)}
+  \item Delayed access to housing credit reduces completed fertility \cit{(Fazio et al.\ 2025)}
 \end{itemize}
-
+\medskip
+Children increase how much physical space a household needs. Access depends on:
+\begin{itemize}
+  \item Tenure: rental housing offers a limited size menu.
+  \item Wealth: ownership requires a down payment.
+  \item Age: older owners may retain family-sized homes after their children leave.
+\end{itemize}
 \vfill
 How much does access to family-sized housing affect fertility?\\
 Which housing constraints matter, and for whom?
@@ -126,8 +129,8 @@ $n$: lifetime parity; $m$: children currently at home; $s$: housing services.
 \medskip
 \textbf{Flow utility.} Over consumption and housing services:
 \[
-u_t(c,s;m)=e(m)^{\sigma-1}
-\frac{\left[c^{\alpha_0}\bigl(s-\bar h(m)\bigr)^{1-\alpha_0}\right]^{1-\sigma}}{1-\sigma}
+u_t(c,s;m)=
+\frac{\left[\dfrac{c^{\alpha_0}\bigl(s-\bar h(m)\bigr)^{1-\alpha_0}}{e(m)}\right]^{1-\sigma}}{1-\sigma}
 +\psi_t m.
 \]
 
