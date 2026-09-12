@@ -93,62 +93,58 @@ Need a framework where fertility, tenure, housing size, saving, and population a
 \end{itemize}
 \end{frame}
 
-\section{Quantitative Model}
+\section{Model}
 
 \begin{frame}[plain,c,noframenumbering]{}
 \centering
-{\Large\textbf{Quantitative Model}}
+{\Large\textbf{Model}}
 \end{frame}
 
 \begin{frame}{Environment}
-\small
-\begin{itemize}\setlength\itemsep{0.4em}
- \item Overlapping generations of households in one housing market.
- \item Adult age $a\in[0,J]$, with survival probability $s_a$.
- \begin{itemize}
-  \item Working life ends at $a_R$; fertile ages are $[a_F^0,a_F^1]$.
-  \item Children depend on their parents until they mature.
- \end{itemize}
- \item Households differ in wealth $b$, inherited housing $h$, earnings $z$, lifetime parity $n$, and dependent children $m$.
- \begin{itemize}
-  \item Earnings follow a persistent Markov process.
- \end{itemize}
- \item Households choose:
- \begin{itemize}
-  \item \textbf{Fertility:} whether to attempt the next birth, subject to taste shocks.
-  \item \textbf{Tenure and size:} rent up to a size limit or buy a home on a housing ladder.
-  \item \textbf{Consumption and saving:} subject to borrowing and down-payment constraints.
- \end{itemize}
+\begin{itemize}
+  \item Overlapping generations of households in one housing market
+  \item Adult age $a \in [0,J]$; survival probability $s_a$
+  \begin{itemize}
+    \item Working age $a<a_R$; fertile window $a \in [a_F^0,a_F^1]$
+    \item Children do not work; they depend on their parents
+  \end{itemize}
+  \item Households differ in liquid wealth, owned housing, permanent income, and family composition
+  \item Households choose:
+  \begin{itemize}
+    \item \textbf{Fertility}: whether to attempt the next birth, subject to EV shocks
+    \item \textbf{Tenure}: rent or buy a discrete house size $H_k$ on a housing ladder
+    \item \textbf{Saving}: liquid wealth $b$ with age-dependent borrowing limits
+  \end{itemize}
+  \item Children age stochastically; housing need depends on children at home
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Preferences}
 \small
-\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
-$m$: children currently at home; $c$: consumption; $s$: housing services.
+$n$: lifetime parity; $m$: children currently at home; $s$: housing services.
 
 \medskip
-\textbf{Flow utility.} Households value consumption, housing, and children:
+\textbf{Flow utility.} Over consumption and housing services:
 \[
 u_t(c,s;m)=e(m)^{\sigma-1}
 \frac{\left[c^{\alpha_0}\bigl(s-\bar h(m)\bigr)^{1-\alpha_0}\right]^{1-\sigma}}{1-\sigma}
 +\psi_t m.
 \]
-$\alpha_0$ is the consumption share, $\sigma$ curvature, and $\psi_t$ the preference for children.
 
-\medskip
-\textbf{Family needs.} The equivalence scale $e(m)$ increases with family size; dependent children also require space:
+\textbf{Family needs.} An equivalence scale $e(m)$ and a housing requirement:
 \[
-\bar h(m)=h_P\1\{m>0\}.
+\bar h(m)=\underbrace{h_P\mathbf{1}\{m>0\}}_{\text{first-child housing margin}}.
 \]
-\textbf{Housing services.} A household either rents or owns:
+
+\textbf{Housing services.} Households either rent or own; $\chi$ scales owner services:
 \[
-s=\underbrace{\1\{\mathrm{own}\}\chi h'}_{\text{owner services}}
-+\underbrace{\1\{\mathrm{rent}\}h^R}_{\text{renter services}},\qquad \chi>0.
+s=\underbrace{\mathbf{1}\{\text{own}\}\,\chi\,h'}_{\text{owner services}}
++\underbrace{\mathbf{1}\{\text{rent}\}\,h^R}_{\text{renter services}},\quad\chi>0.
 \]
-\smallskip
-Child needs disappear after maturation; $\chi>1$ gives an ownership premium.
-\source{Equivalence-scale specification: Scholz et al. (2006); normalized to a childless couple.}
+
+\begin{itemize}
+  \item Child costs disappear after children mature.
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Bequests}
@@ -158,71 +154,51 @@ Terminal utility at death:
 \mathcal B(w^e)=\theta_0\frac{(\theta_1+\max\{w^e,0\})^{1-\sigma}}{1-\sigma}.
 \]
 \begin{itemize}
- \vfill\item $\theta_0$ governs the strength of the bequest motive.
- \vfill\item $\theta_1$ governs its sensitivity to wealth.
- \vfill\item Estate wealth $w^e$ includes liquid assets and the market value of housing.
- \vfill\item Entrant wealth is externally distributed; the model is not fully dynastic.
+  \vfill \item $\theta_0$ governs overall bequest motive (saving level).
+  \vfill \item $\theta_1$ governs its sensitivity to wealth.
+  \vfill \item Total bequeathable wealth $w^e$ includes liquid wealth and the market value of housing.
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Earnings and Pensions}
-\small
-\textbf{Gross earnings.} $y_t^g(a,z)$ depends on age and persistent earnings state $z$.
 
-\medskip
-\textbf{Disposable income.} Workers pay a payroll tax; retirees receive pensions:
-\[
-y_t^d(a,z)=\begin{cases}
-(1-\tau^{SS})y_t^g(a,z),&a<a_R,\\
-\varpi_t d(z),&a\geq a_R.
-\end{cases}
-\]
-\textbf{Balanced pensions.} A fixed tax $\tau^{SS}$ finances benefits each period:
-\[
-\tau^{SS}\int_{a<a_R}y_t^g(a,z)\,dG_t
-=\varpi_t\int_{a\geq a_R}d(z)\,dG_t.
-\]
-\begin{itemize}\setlength\itemsep{0.4em}
- \item $G_t$ is the household distribution; $d(z)=1$ for common benefits.
- \item The pension $\varpi_t$ adjusts to balance the budget; households anticipate its path.
- \item Property-tax rebates $T_t$ have a separate budget.
-\end{itemize}
-\source{Earnings process: De Nardi (2004).}
-\end{frame}
 
 \begin{frame}{Housing, Tenure, and Budget Constraints}
-\footnotesize
+\small
 \setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}
-Households choose rental space $h^R$ or owned size $h'$; $r_t$ and $P_t$ are rent and purchase price per room:
+Households choose housing inputs:
 \[
-h^R\in[0,\bar h^R],\qquad h'\in\{0,H_1,\ldots,H_K\},\qquad h'h^R=0.
+h^R \in [0,\bar h^R],
+\qquad
+h' \in \{0,H_1,\ldots,H_K\}.
 \]
-\textbf{Tenure segmentation:} the largest owned homes exceed the rental limit.
+A household either rents ($h^R>0$, $h'=0$) or owns ($h'>0$, $h^R=0$).
 
 \smallskip
-\textbf{Renters} ($h'=0$), selling any inherited owned home $h$:
+\textbf{Tenure segmentation:} $\max H_k>\bar h^R$, so the largest homes are reachable only through ownership.
+
+\smallskip
+\textbf{Renters} ($h'=0$)
 \[
 b'=R_b\bigl[b+(1-\psi^s)P_t h\bigr]+y_t^d(a,z)+T_t-c-r_t h^R,
 \qquad b'\geq\underline b_a^R.
 \]
-\textbf{Owners} ($h^R=0$), with inherited owned size $h$:
+
+\textbf{Owners} ($h^R=0$), with prior owner stock $h$
 \[
-\begin{aligned}
-b'={}&R_b\!\left\{b-\1\{h'\neq h\}\bigl[P_t h'-(1-\psi^s)P_t h\bigr]\right\}\\
-&+y_t^d(a,z)+T_t-c-(\delta_H+\tau_t^p)P_t h',
+b'=R_b b+y_t^d(a,z)+T_t-c-(\delta_H+\tau_t^p)P_t h'
+-R_b P_t\mathbf{1}\{h'\neq h\}\bigl[h'-(1-\psi^s)h\bigr],
 \qquad b'\geq\underline b_a^O.
-\end{aligned}
 \]
+
 \smallskip
 \begin{itemize}\setlength\itemsep{2pt}
- \item $R_b$: gross financial return; $\delta_H$: depreciation; $\tau_t^p$: property tax; $\psi^s$: sale cost.
- \item A purchase requires a down payment of $(1-\phi)P_t h'$; $\phi$ is the financed share.
- \item Debt floors $\underline b_a^R,\underline b_a^O$ depend on age, inherited liabilities, and collateral.
+  \item $R_b$: gross bond rate; $\delta_H$: depreciation; $\tau_t^p$: property tax; $\psi^s$: transaction cost.
+  \item Borrowing limits depend on age and inherited debt; purchases require a down payment.
 \end{itemize}
 \hfill\hyperlink{borrowing-limits}{\beamergotobutton{Borrowing limits}}
 \end{frame}
 
-\begin{frame}{Sequential Fertility and Child Aging}
+\begin{frame}{Fertility and Child Aging}
 \small
 \begin{itemize}\setlength\itemsep{0.35em}
   \item During fertile ages, a household below terminal parity chooses whether to attempt the next birth.
@@ -240,34 +216,54 @@ b'={}&R_b\!\left\{b-\1\{h'\neq h\}\bigl[P_t h'-(1-\psi^s)P_t h\bigr]\right\}\\
 A birth changes the household's space needs immediately, but its demographic effects propagate across cohorts.
 \end{frame}
 
-\begin{frame}{Housing Supply and Prices}
+\begin{frame}{Earnings and Pensions}
 \small
-Physical housing supply responds to the purchase price:
+\textbf{Gross earnings.} $y_t^g(a,z)$ depends on age and earnings state $z$, which combines a fixed permanent income group and a persistent Markov shock.
+
+\textbf{Disposable income.} Workers pay a payroll tax; retirees receive pensions:
+\[
+y_t^d(a,z)=\begin{cases}
+(1-\tau^{SS})y_t^g(a,z),&a<a_R,\\
+\varpi_t d(z),&a\geq a_R.
+\end{cases}
+\]
+\textbf{Balanced pensions.} A fixed tax $\tau^{SS}$ finances benefits each period:
+\[
+\tau^{SS}\int_{a<a_R}y_t^g(a,z)\,dG_t
+=\varpi_t\int_{a\geq a_R}d(z)\,dG_t.
+\]
+\begin{itemize}\setlength\itemsep{0.4em}
+ \item $G_t$ is the household distribution; $d(z)=1$ for common benefits.
+ \item The pension $\varpi_t$ adjusts to balance the budget; households anticipate its path.
+ \item Property-tax rebates $T_t$ have a separate budget.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Housing Supply and Price Mapping}
+\small
+Housing supply:
 \[
 H_t^s=H_0\left(\frac{P_t}{\bar P}\right)^\eta.
 \]
-$H_0$ is supply at reference price $\bar P$; $\eta$ is the supply elasticity.
-
-\medskip
-Rent and purchase prices satisfy the asset-pricing condition:
-\[
-r_t+P_{t+1}=(R_b+\delta_H+\tau_t^p)P_t.
-\]
-The current rent depends on both the carrying cost and the anticipated resale price.
-
-\vfill
-Housing is supplied separately at each date; there is no construction stock in this specification.
+\begin{itemize}
+  \item $H_0$: supply at reference price $\bar P$; $\eta$: supply elasticity.
+  \item House prices map into user costs through
+  \[
+  r_t=(R_b+\delta_H+\tau_t^p)P_t-P_{t+1}.
+  \]
+  \item $P_t$ is the purchase price per room; $r_t$ is rent per room.
+  \item Current rent depends on carrying costs and the anticipated resale price.
+\end{itemize}
 \end{frame}
 
 \begin{frame}[t]{%
-The Household's Problem%
-\only<1>{: Sequential Choices}%
-\only<2>{: Housing and Saving}%
-\only<3>{: Fertility Choice}%
+\only<1>{The Household's Problem}%
+\only<2>{The Household's Problem: Housing and Saving}%
+\only<3>{The Household's Problem: Fertility Choice}%
 }
 \vspace{0.3em}
 \centering
-\scalebox{0.84}{%
+\scalebox{0.85}{%
 \begin{tikzpicture}[
   node distance=7mm and 10mm, >=Latex,
   see/.style={
@@ -302,7 +298,7 @@ The Household's Problem%
 
 \only<1>{%
 \small
-\textbf{State at date $t$ and age $a$.}
+\textbf{State.} At date $t$ and age $a$:
 \[
 x=(b,h,z,n,m),\qquad h\in\{0,H_1,\ldots,H_K\}.
 \]

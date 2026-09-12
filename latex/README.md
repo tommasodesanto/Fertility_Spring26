@@ -10,7 +10,7 @@ Active documents:
   presentation. The reader PDF is `../output/pdf/september_14_presentation.pdf`;
   `september_14_presentation.pdf` is an identical build copy. The September 10
   refocus follows the May deck's appearance. The September 12 structure follows
-  May: Quantitative Model, a short Empirics section, then Quantification.
+  May: Model, a short Empirics section, then Quantification.
   Empirics contains the data overview and the AHS and PSID evidence frames.
   Quantification contains calibration strategy, empirical moment construction,
   complete initial target and parameter tables, fit plots, lifecycle equilibrium
@@ -34,19 +34,30 @@ Active documents:
   It is historical source, not a second working deck. All separate theory
   notes and the September 10 planner work remain untouched and parked.
 
-  **September 12 return to May's model layout.** Unchanged primitives use
-  May's organization: Environment with a named choice list; one Preferences
-  frame with flow utility, family needs and housing services; a separate Bequests
-  frame; Earnings and Pensions; and one Housing, Tenure, and Budget Constraints
-  frame with saving written explicitly for renters and owners. The transaction
-  helper was removed from the main slides. Current return timing is preserved,
+  **September 12 return to the May source.** Use the actual May frame text,
+  typography and composition for unchanged material; patch only documented model
+  differences rather than paraphrasing the shared exposition. The frame order is
+  Environment, Preferences, Bequests, Housing/Tenure/Budgets, Fertility/Child Aging,
+  Earnings/Pensions, and Housing Supply/Price Mapping, followed by the household
+  problem and the new population/equilibrium frames. The housing frame restores
+  May's `small` font, short opening and renter/owner headings, equation order,
+  single-line owner budget and compact closing bullets. The unchanged preference
+  headings, housing-service underbraces, child-cost sentence, bequest-motive
+  sentence and household-problem title/diagram scale follow May directly.
+  Current return timing is preserved,
   and the actual collateral/unsecured-debt floors are defined in a linked
   Borrowing Limits appendix. May's unconditional renter nonnegativity rule is
   not valid for the maintained debt-carryover specification. The quantitative
   task checked the expanded equations and the exact debt-floor function against
   its pinned `intergen_eqscale_seq_optimized/parameters.py:622` and
   `solver.py:112--163`. The household-problem overlays retain sequential timing
-  with shorter state and Bellman notation.
+  with the current state and Bellman notation. Necessary differences from May
+  include the single market, earnings heterogeneity and survival, sequential
+  fertility/count-state maturation, equivalence scale and parenthood-only space
+  requirement, bequest specification, continuous rental menu, debt carryover,
+  dated asset-pricing equation and actual-budget pensions. The owner transaction
+  term is algebraically unchanged: the common price is factored out so the budget
+  fits on one line. The May and revised housing frames were compared visually.
 
   **Choice specification.** The current calibration and transition calculations
   enforce `joint_nested_choice=False`: see
@@ -108,9 +119,18 @@ Active documents:
   household-problem overlays return to May's age/choice/heterogeneity exposition,
   retaining the active one-market sequential model. Household state is
   `(b,h,z,n,m)` at date `t`, age `a`: liquid wealth, inherited owner housing,
-  persistent Markov earnings, lifetime parity, and dependent-child count.
-  The quantitative task confirmed that permanent-income extensions are off and
-  the active child state is a count, not a vector of child ages. Values now show
+  permanent income group and persistent Markov earnings shock, lifetime parity,
+  and dependent-child count. The quantitative task corrected its earlier
+  default-off claim after inspecting the selected overnight checkpoint: there
+  are three fixed permanent income groups crossed with five persistent earnings
+  states (`Nz=15`, `permanent_income_levels_enabled=True`). The earlier claim
+  came from a historical README and must not be reused. The active child state
+  remains a count, not a vector of child ages. The collected
+  [checkpoint extraction](../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/age_housing_allocation/allocation.json)
+  records the selected source hash and all 15 income-group indices. The
+  quantitative task also verified the same income architecture in the historical
+  pinned checkpoint (SHA256 `120ffc45c0fb8756f4182f999c96b7c0236adf315cb938190ec31cd2068c87c2`).
+  Values now show
   their state arguments, fertility outcomes, earnings and maturation expectations,
   and the associated attempt probability. The owner service multiplier is
   positive; values above one imply a premium, consistent with its search range.
