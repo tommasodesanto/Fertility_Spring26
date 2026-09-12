@@ -1,5 +1,20 @@
 # September 12 autonomous cluster campaign
 
+**September 12, 14:24 UTC — access restored; author resumes fertility-path work.**
+Both matched-horizon tasks 17489644_0–1 remained running across the login lapse.
+Latest completed best iterations are six (28 dates) and three (56 dates), written
+at 14:18/14:17 UTC. Their housing/PAYGO maxima are respectively
+0.0120763/0.000644671 and 0.152174/0.0223452: neither is converged, and these
+are solver diagnostics, not fitted historical results. Observed iteration times
+are about 13.6 and 25.9 minutes. No new numerical task was submitted at this check.
+The author said to proceed. Monitoring now remains active every 30 minutes toward
+the complete four-window surprise fit and conditional policies; the prior
+16:00 UTC automatic stop/collection-only restriction is superseded. Follow-up
+runs require a justified numerical continuation/search design, unchanged gates,
+exact-loop smoke, explicit budget and saved progress. No blind restarts, new
+scientific closure, token reset or agent fan-out. The usage stop remains 25%
+weekly remaining. No complete historical fit or new policy result exists.
+
 ## 14:19 UTC: monitoring blocked by renewed authentication requirement
 
 The scheduled read-only check was refused by Torch authentication. No retry or new numerical submission was made. Jobs 17489644_0–1 were last observed running at the previous check; their current progress and outcomes are unverified. An SSH login failure does not establish that Slurm jobs stopped. Weekly usage was 8% used, so the token stop threshold was not reached. Renewed access is needed to inspect and collect the jobs.
