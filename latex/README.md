@@ -51,6 +51,12 @@ Active documents:
   sample end among participants over 40 (Section 4.3, Table III; November 10,
   2025 version lists van Doornik first). The slide omits study context at the
   author's request. Dettling--Kearney (2014) does not establish completed-fertility effects.
+  The intro restores May's opening, implications and closing questions, omitting
+  the location bullet for the single-market model. Hacamo (2021) supports the
+  joint home-purchase/birth response to mortgage access; Couillard (2025)
+  supports the importance of housing size through structural evidence. The
+  semicolon separates these claims rather than attributing a mortgage-credit
+  experiment to Couillard.
 
   **September 12 return to the May source.** Use the actual May frame text,
   typography and composition for unchanged material; patch only documented model
