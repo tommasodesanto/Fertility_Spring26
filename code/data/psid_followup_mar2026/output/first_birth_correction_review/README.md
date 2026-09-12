@@ -541,3 +541,30 @@ Verified update: corrected smoke 17493156 **passed** both regressions, exports,
 and the identical-sample digest check (13.56 seconds recorded by the wrapper).
 Array 17493166 is eligible and pending Torch capacity. Bounded collection
 follow-up is active; full estimates are not yet available.
+
+
+Completed binned pair: original assignment +3/+4 versus −3/−2 = 0.707834
+(SE 0.169392); verified assignment = 0.426502 (SE 0.163226). Both use 149,402
+observations and 14,453 person clusters, with identical sample digests. Both
+full receipts pass; covariance symmetry/PSD and effect arithmetic pass. The
+comparison plot was visually inspected. Wall-clock allocation times were
+65 and 87 seconds; no computational failures in the full pair.
+
+Sample loss is substantive and must be disclosed: of 352,250 prepared common
+complete rows, 14,632 are removed by excluding calendar 2019 onward; another
+101,848 have no recorded first-birth year and are excluded so the designated
+2019 cohort is the sole control group. A further 84,559 rows belong to treated
+cohorts without all six displayed windows. This leaves 151,211 input rows and
+149,402 fitted rows after 1,809 estimator exclusions. These sequential counts
+are in `binned_rooms/sample_flow.json`. Thus the new diagnostic uses much less
+than the previous annual common fit (345,751 rows). Missing first-birth dates
+can include childless people as well as unknown histories; this frozen sample
+does not distinguish them. Their exclusion is a control-population restriction,
+not evidence they are bad data. It must be evaluated explicitly in a subsequent
+sample-design decision. Do not describe this as only binning, a maximum-sample
+estimate, or a production target. No rows were discarded by data transfer.
+
+Binning removes the annual alternation in the display, but the adjusted early
+pre-birth coefficients remain positive and imprecise, and the baseline is lower.
+Neither smoothness nor positive post coefficients certify parallel trends.
+No additional outcome or model run was launched; collection heartbeat paused.

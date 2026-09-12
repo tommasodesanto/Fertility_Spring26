@@ -1,5 +1,24 @@
 # Calibration Status
 
+**September 12 — binned rooms pair completed; sample restriction is material.**
+Both full jobs 17493166_0/1 passed (65/87 seconds allocated runtime). On exactly
+149,402 observations and 14,453 person clusters, +3/+4 relative to −3/−2 is
+0.707834 (SE 0.169392) with original year assignment and 0.426502 (SE 0.163226)
+with verified assignment. Paired sample digests, covariance symmetry/PSD and
+effect arithmetic pass; the graph was visually inspected. This is diagnostic.
+No data were lost through transfer, but the specification reduces the sample:
+352,250 prepared common complete rows minus 14,632 calendar-2019+ rows,
+101,848 rows lacking a recorded first-birth year, 84,559 lacking cohort support
+in all six displayed windows, and 1,809 estimator exclusions gives 149,402.
+The missing-birth exclusion restricts controls to the designated 2019 cohort;
+it can exclude childless people as well as unknown histories. It is an explicit
+design restriction, not a data-error correction. Do not call this merely the
+effect of binning or a maximum-sample specification. Previous annual common
+fit N was 345,751. See `binned_rooms/sample_flow.json`, `summary.csv`,
+`verification.json`, and `binned_rooms_comparison.png/pdf` in the audit folder.
+Collection follow-up paused. No target, slide or model change; other outcomes
+and the control/sample choice remain to be assessed.
+
 **September 12 — two-year rooms diagnostic authorized and queued.**
 The author authorized immediate work after agreeing to investigate a −3/−2
 baseline, keeping −1 outside the reference. Corrected smoke 17493156 and

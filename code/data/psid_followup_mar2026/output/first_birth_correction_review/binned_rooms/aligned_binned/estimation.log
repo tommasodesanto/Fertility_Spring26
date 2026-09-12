@@ -1,0 +1,303 @@
+-------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /scratch/td2248/projects/Fertility_Spring26_binned_rooms_20260912b
+> /results/aligned_binned/estimation.log
+  log type:  text
+ opened on:  12 Sep 2026, 12:20:53
+
+. mata: mata mlib index
+.mlib libraries to be searched are now
+    lmatabase;lmataado;lmatabma;lmatacate;lmatacollect;lmatadata;lmataerm;lmata
+> fc;lmatagsem;lmatah2o;lmatahetdid;lmataivqreg;lmatajm;lmatalasso;lmatamcmc;lm
+> atameta;lmatami;lmatamixlog;lmatanumlib;lmataopt;lmatapath;lmatapostest;lmata
+> pss;lmatarw;lmatasem;lmatasp;lmatasubexpr;lmatasvy;lmatatab;lmatats;lasdoc;li
+> vreg2;lspmat
+
+. use "/scratch/td2248/projects/Fertility_Spring26_binned_rooms_20260912b/analy
+> sis_sample.dta", clear
+(PSID-SHELF, 1968–2019, Beta Release 2023.01. Long format. Compiled: 2023/10/11
+> .)
+
+. do "audit_binned_rooms.do" aligned_binned "/scratch/td2248/projects/Fertility
+> _Spring26_binned_rooms_20260912b/results/aligned_binned"
+
+. * Diagnostic only: common observations, original specification, two-year bins
+> .
+. * Baseline -3/-2; supported cohorts; last cohort used only before treatment.
+. version 17.0
+
+. args mode outdir
+
+. timer clear 1
+
+. timer on 1
+
+. if "`mode'" == "toy" {
+.     clear
+.     set seed 12092026
+.     set obs 4800
+.     gen long ID = ceil(_n/40)
+.     bysort ID: gen int year = 1979+_n
+.     keep if year<=1997 | mod(year,2)==1
+.     gen int f_c_y = 1989+3*mod(ID,5)
+.     gen double K = year-f_c_y
+.     gen byte lastcohort = f_c_y==2001
+.     gen byte AGEREP = 25+mod(ID,10)
+.     gen byte EDUYEAR = 12+mod(ID,4)
+.     gen double rooms = 4+ID/100+0.2*(K>=0)+rnormal()
+.     sort ID year
+.     by ID: gen double rooms_aligned = rooms[_n-1]
+.     gen byte common_rooms = !missing(rooms,rooms_aligned)
+.     tempfile toydata
+.     save `toydata'
+.     foreach arm in original_binned aligned_binned {
+  2.         use `toydata', clear
+  3.         do "audit_binned_rooms.do" `arm' "`outdir'/`arm'"
+  4.     }
+.     di "BINNED_ROOMS_TOY_PASS"
+.     exit
+. }
+
+. assert inlist("`mode'","original_binned","aligned_binned")
+
+. capture mkdir "`outdir'"
+
+. quietly summarize f_c_y if lastcohort==1, meanonly
+
+. local control_year = r(min)
+
+. assert r(min)==r(max) & !missing(r(min))
+
+. keep if year < `control_year'
+(149,140 observations deleted)
+
+. keep if common_rooms & !missing(rooms,rooms_aligned,AGEREP,EDUYEAR,f_c_y)
+(2,476,027 observations deleted)
+
+. * Each displayed two-year bin, including the baseline, must have support.
+. gen byte bin = floor((K+3)/2)
+
+. gen byte supported = 1
+
+. forvalues j = -2/3 {
+  2.     gen byte here = bin==`j'
+  3.     bysort f_c_y: egen long nbin = total(here)
+  4.     replace supported = 0 if nbin==0
+  5.     drop here nbin
+  6. }
+(58,151 real changes made)
+(8,026 real changes made)
+(7,456 real changes made)
+(7,215 real changes made)
+(1,761 real changes made)
+(2,168 real changes made)
+
+. preserve
+
+.     gen long rows = 1
+
+.     collapse (sum) rows (min) supported, by(f_c_y bin lastcohort)
+
+.     export delimited using "`outdir'/input_support.csv", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_binned_rooms_20260912b/result
+    > s/aligned_binned/input_support.csv not found)
+file /scratch/td2248/projects/Fertility_Spring26_binned_rooms_20260912b/results
+> /aligned_binned/input_support.csv saved
+
+. restore
+
+. keep if supported | lastcohort
+(84,559 observations deleted)
+
+. if "`mode'" == "aligned_binned" replace rooms = rooms_aligned
+(88,504 real changes made)
+
+. gen byte Dm7 = inrange(K,-7,-6)
+
+. gen byte Dm5 = inrange(K,-5,-4)
+
+. gen byte Dm1 = inrange(K,-1,0)
+
+. gen byte Dp1 = inrange(K,1,2)
+
+. gen byte Dp3 = inrange(K,3,4)
+
+. gen byte Dleft = K<=-8
+
+. gen byte Dright = K>=5
+
+. assert Dm7+Dm5+Dm1+Dp1+Dp3+Dleft+Dright+inrange(K,-3,-2)==1
+
+. eventstudyinteract rooms Dm7 Dm5 Dm1 Dp1 Dp3 Dleft Dright, ///
+>     vce(cluster ID) absorb(ID year) cohort(f_c_y) control_cohort(lastcohort) 
+> ///
+>     covariates(i.AGEREP i.EDUYEAR)
+(obs=150,993)
+
+IW estimates for dynamic effects                       Number of obs = 149,402
+Absorbing 2 HDFE groups                                F(322, 14452) =    8.70
+                                                       Prob > F      =  0.0000
+                                                       R-squared     =  0.1502
+                                                       Adj R-squared =  0.0567
+                                                       Root MSE      = 10.3646
+                                (Std. err. adjusted for 14,453 clusters in ID)
+------------------------------------------------------------------------------
+             |               Robust
+       rooms | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+         Dm7 |   .2974937   .2194146     1.36   0.175    -.1325869    .7275744
+         Dm5 |   .2498859   .1755716     1.42   0.155     -.094257    .5940288
+         Dm1 |   .1207709   .1370952     0.88   0.378    -.1479532    .3894951
+         Dp1 |   .4873708   .1543679     3.16   0.002     .1847899    .7899518
+         Dp3 |   .4265019   .1632264     2.61   0.009     .1065572    .7464467
+       Dleft |   .6182668   .2613218     2.37   0.018     .1060426    1.130491
+      Dright |   .7475627   .1801538     4.15   0.000     .3944381    1.100687
+------------------------------------------------------------------------------
+
+. matrix b = e(b_iw)
+
+. matrix V = e(V_iw)
+
+. local n = e(N)
+
+. local clusters = e(N_clust)
+
+. local p3 = colnumb("b","Dp3")
+
+. assert !missing(`p3') & `p3'>0
+
+. local effect = b[1,`p3']
+
+. local effect_se = sqrt(V[`p3',`p3'])
+
+. assert !missing(`effect',`effect_se') & `effect_se'>0
+
+. preserve
+
+.     keep if e(sample)
+(1,809 observations deleted)
+
+.     sort ID year
+
+.     export delimited ID year using "`outdir'/private_sample_keys.csv", replac
+> e
+(file
+    /scratch/td2248/projects/Fertility_Spring26_binned_rooms_20260912b/result
+    > s/aligned_binned/private_sample_keys.csv not found)
+file /scratch/td2248/projects/Fertility_Spring26_binned_rooms_20260912b/results
+> /aligned_binned/private_sample_keys.csv saved
+
+.     forvalues j = -2/3 {
+  2.         gen byte here = bin==`j'
+  3.         bysort f_c_y: egen long nbin = total(here)
+  4.         assert nbin>0 if !lastcohort
+  5.         drop here nbin
+  6.     }
+
+.     gen long rows = 1
+
+.     collapse (sum) rows, by(f_c_y bin lastcohort)
+
+.     export delimited using "`outdir'/fitted_support.csv", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_binned_rooms_20260912b/result
+    > s/aligned_binned/fitted_support.csv not found)
+file /scratch/td2248/projects/Fertility_Spring26_binned_rooms_20260912b/results
+> /aligned_binned/fitted_support.csv saved
+
+. restore
+
+. local names : colnames b
+
+. tempname points covariance
+
+. postfile `points' str20 coefficient double estimate standard_error using "`ou
+> tdir'/coefficients.dta", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_binned_rooms_20260912b/result
+    > s/aligned_binned/coefficients.dta not found)
+
+. postfile `covariance' str20 coefficient_i str20 coefficient_j double covarian
+> ce using "`outdir'/covariance.dta", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_binned_rooms_20260912b/result
+    > s/aligned_binned/covariance.dta not found)
+
+. forvalues i = 1/`=colsof(b)' {
+  2.     local name : word `i' of `names'
+  3.     post `points' ("`name'") (b[1,`i']) (sqrt(V[`i',`i']))
+  4.     forvalues j = 1/`=colsof(b)' {
+  5.         local other : word `j' of `names'
+  6.         post `covariance' ("`name'") ("`other'") (V[`i',`j'])
+  7.     }
+  8. }
+
+. postclose `points'
+
+. postclose `covariance'
+
+. use "`outdir'/coefficients.dta", clear
+
+. format estimate standard_error %24.17g
+
+. export delimited using "`outdir'/coefficients.csv", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_binned_rooms_20260912b/result
+    > s/aligned_binned/coefficients.csv not found)
+file /scratch/td2248/projects/Fertility_Spring26_binned_rooms_20260912b/results
+> /aligned_binned/coefficients.csv saved
+
+. use "`outdir'/covariance.dta", clear
+
+. format covariance %24.17g
+
+. export delimited using "`outdir'/covariance.csv", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_binned_rooms_20260912b/result
+    > s/aligned_binned/covariance.csv not found)
+file /scratch/td2248/projects/Fertility_Spring26_binned_rooms_20260912b/results
+> /aligned_binned/covariance.csv saved
+
+. timer off 1
+
+. quietly timer list 1
+
+. local seconds = r(t1)
+
+. clear
+
+. set obs 1
+Number of observations (_N) was 0, now 1.
+
+. gen str24 arm = "`mode'"
+
+. gen double observations = `n'
+
+. gen double clusters = `clusters'
+
+. gen double post_3_4_vs_pre_3_2 = `effect'
+
+. gen double standard_error = `effect_se'
+
+. gen double control_birth_year = `control_year'
+
+. gen double runtime_seconds = `seconds'
+
+. format post_3_4_vs_pre_3_2 standard_error %24.17g
+
+. export delimited using "`outdir'/fit_receipt.csv", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_binned_rooms_20260912b/result
+    > s/aligned_binned/fit_receipt.csv not found)
+file /scratch/td2248/projects/Fertility_Spring26_binned_rooms_20260912b/results
+> /aligned_binned/fit_receipt.csv saved
+
+. di "BINNED_ROOMS_ARM_PASS `mode'"
+BINNED_ROOMS_ARM_PASS aligned_binned
+
+. 
+end of do-file
+
+. 
+end of do-file
