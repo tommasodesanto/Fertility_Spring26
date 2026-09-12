@@ -12,6 +12,8 @@ The model-task author explicitly authorized overnight calibration, successive un
 
 All four numerical tasks were observed RUNNING. Calibration seed reproduced twice. The 18 surprise/controller tests passed locally, on Torch, and in each array task. Native terminal and six-date exact-loop smoke stages still determine whether a long transition is permitted. A small preference decline may fail the retained finite-level demographic endpoint; that rejection is preserved and the next bounded trial is attempted.
 
+At the first follow-up, arm 0 had exhausted its four small-shock terminal trials: all failed finite demographic endpoint existence (last renewal ratio 1.00206). Arms 1 and 2 and calibration continued. The graph collector was smoke-tested successfully on these partial receipts. The failed arm does not terminate its siblings.
+
 The historical workers use the previously twice-reproduced capped calibration, not a changing live search incumbent. Beta remains estimated over [0.94, 0.99]. New initial candidates are reported separately; they cannot silently replace a historical chain's initial distribution or parameters.
 
 ## Search and gates

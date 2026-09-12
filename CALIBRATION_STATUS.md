@@ -19,6 +19,10 @@ Full budgets, contracts, source pins, paths, stop criteria and quiet monitoring:
 `output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/README.md`.
 Agent monitoring stops at 25% weekly remaining (32% at launch); cluster workers
 continue autonomously without model/API calls.
+Initial follow-up: arm 17445263_0 exhausted its four small-shock terminal trials
+without a finite demographic steady state (last renewal ratio 1.00206).
+Arms 1 and 2 and the 18-core calibration remain running; the failed arm did not
+interrupt them. The report collector passed a live partial-output smoke test.
 
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
