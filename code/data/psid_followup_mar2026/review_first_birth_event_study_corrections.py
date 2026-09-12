@@ -371,14 +371,150 @@ def main():
     print(json.dumps({k: v for k, v in receipt.items() if k != "input_hashes"}, indent=2))
 
 
+def check_all_waves():
+    """Validate every prepared row and every survey wave, with aggregate exports."""
+    import mmap
+    import numpy as np
+    import pandas as pd
+    started = time.monotonic()
+    data = ROOT.parent/'PSID'
+    raw_path = data/'Construction_Files/Data/Users/DD/Dropbox (University of Michigan)/Data/PSID/PSID_CMS/PSID_COMPLETE_MAIN_STUDY_1968_2019.dta'
+    shelf_path = data/'PSIDSHELF_MOBILITY.dta'
+    prepared_path = Path('/tmp/psid_original_timing_20260912b/analysis_sample.dta')
+    waves = list(range(1968,1998))+list(range(1999,2020,2))
+    variables = ('V102 V592 V1263 V1966 V2565 V3107 V3521 V3937 V4448 V5362 V5862 V6477 '
+                 'V7080 V7671 V8360 V8969 V10432 V11614 V13019 V14122 V15138 V16639 '
+                 'V18070 V19370 V20670 V22425 ER2029 ER5028 ER7028 ER10032 ER13037 '
+                 'ER17040 ER21039 ER25027 ER36027 ER42028 ER47328 ER53028 ER60029 ER66029 ER72029').split()
+    assert len(waves)==len(variables)==41
+
+    def heartbeat(phase):
+        elapsed=time.monotonic()-started
+        (OUTPUT/'all_wave_heartbeat.json').write_text(json.dumps({'phase':phase,'elapsed_seconds':elapsed})+'\n')
+        assert elapsed<600, 'Ten-minute read-only audit budget exhausted'
+
+    def columns(path,names):
+        cache_dir=Path('/tmp/psid_all_wave_cache')
+        cache_dir.mkdir(mode=0o700,exist_ok=True)
+        cached=cache_dir/(path.name+'.npz');meta=cache_dir/(path.name+'.json')
+        signature={'size':path.stat().st_size,'mtime_ns':path.stat().st_mtime_ns,'columns':names}
+        if cached.exists() and meta.exists() and json.loads(meta.read_text())==signature:
+            with np.load(cached) as z:return {n:z[n] for n in names}
+        r=FixedWidthStataReader(path)
+        mm=mmap.mmap(r.file.fileno(),0,access=mmap.ACCESS_READ)
+        types={'b':'i1','h':'i2','i':'i4','f':'f4','d':'f8'}
+        thresholds={'b':101,'h':32741,'i':2147483621,'f':8e36,'d':8e307}
+        out={n:np.empty(r.n,dtype='f8') for n in names}
+        for start in range(0,r.n,1024):
+            stop=min(start+1024,r.n)
+            for n in names:
+                offset,width,fmt=r.fields[n]
+                a=np.ndarray((r.n,),dtype=r.endian+types[fmt],buffer=mm,
+                             offset=r.data_start+offset,strides=(r.row_width,))
+                out[n][start:stop]=a[start:stop]
+                del a
+            if start%16384==0:heartbeat(path.name)
+        for n in names:
+            out[n][out[n]>=thresholds[r.fields[n][2]]]=np.nan
+        mm.close();r.file.close()
+        # Independent pandas parsing of all requested columns on the first four rows.
+        with pd.io.stata.StataReader(path,columns=names,convert_categoricals=False) as reader:
+            first=reader.read(nrows=4)
+        for n in names:
+            assert np.array_equal(out[n][:4],first[n].to_numpy(dtype=float),equal_nan=True)
+        np.savez(cached,**out);cached.chmod(0o600)
+        meta.write_text(json.dumps(signature)+'\n')
+        return out
+
+    heartbeat('source crosswalk')
+    with pd.io.stata.StataReader(raw_path,convert_categoricals=False) as reader:
+        labels=reader.variable_labels()
+    ordered=list(labels);crosswalk=[]
+    for year,var in zip(waves,variables):
+        i=ordered.index(var)
+        release=next(j for j in range(i,-1,-1) if labels[ordered[j]].strip()=='RELEASE NUMBER')
+        identifier=ordered[release+1];label=labels[identifier]
+        assert str(year) in label or re.search(r'(?<!\d)'+str(year)[2:]+r'(?!\d)',label), (year,var,identifier,label)
+        crosswalk.append({'year':year,'rooms_variable':var,'rooms_label':labels[var],
+                          'family_year_identifier':identifier,'family_year_label':label})
+    write_csv(OUTPUT/'all_wave_variable_crosswalk.csv',crosswalk)
+    raw=columns(raw_path,['ID']+variables)
+    shelf=columns(shelf_path,['ID','year','CURRENT','ACTUALROOMS_'])
+    prepared=columns(prepared_path,['ID','year','rooms','rooms_aligned','AGEREP','EDUYEAR','f_c_y','lastcohort'])
+    shelf_order=np.lexsort((shelf['year'],shelf['ID']))
+    shelf={n:a[shelf_order] for n,a in shelf.items()}
+    order=np.argsort(raw['ID']);raw_ids=raw['ID'][order]
+    assert np.all(np.diff(raw_ids)>0)
+    keys=shelf['ID'].astype('i8')*10000+shelf['year'].astype('i8')
+    assert np.all(np.diff(keys)>0)
+    donor=np.full(len(keys),np.nan)
+    valid=(shelf['ID'][1:]==shelf['ID'][:-1]) & np.isin(shelf['year'][1:]-shelf['year'][:-1],[1,2])
+    donor[1:]=np.where(valid,shelf['ACTUALROOMS_'][:-1],np.nan)
+    pkeys=prepared['ID'].astype('i8')*10000+prepared['year'].astype('i8')
+    spos=np.searchsorted(keys,pkeys)
+    assert np.all(spos<len(keys)) and np.array_equal(keys[spos],pkeys)
+    equal=lambda a,b:(a==b)|(np.isnan(a)&np.isnan(b))
+    original_bad=~equal(prepared['rooms'],shelf['ACTUALROOMS_'][spos])
+    adjusted_bad=~equal(prepared['rooms_aligned'],donor[spos])
+    rows=[];pairs=[];uncovered=[]
+    common=np.isfinite(prepared['rooms']) & np.isfinite(prepared['rooms_aligned']) & np.isfinite(prepared['AGEREP']) & np.isfinite(prepared['EDUYEAR'])
+    report_population=[('current_shelf',shelf['ID'],shelf['year'],shelf['ACTUALROOMS_'],donor,shelf['CURRENT']==1),
+                       ('prepared_common',prepared['ID'],prepared['year'],prepared['rooms'],prepared['rooms_aligned'],common)]
+    for population,ids,years,original,adjusted,eligible in report_population:
+        for year in np.unique(years[eligible & ~np.isin(years,waves)]):
+            mask=eligible & (years==year)
+            uncovered.append({'population':population,'year':int(year),'rows':int(mask.sum()),
+                              'adjusted_observed':int(np.isfinite(adjusted[mask]).sum())})
+        idx=np.searchsorted(raw_ids,ids)
+        idx=np.minimum(idx,len(raw_ids)-1)
+        matched=raw_ids[idx]==ids
+        idx=order[idx]
+        for year,var in zip(waves,variables):
+            requested=eligible & (years==year)
+            mask=requested & matched
+            observed=raw[var][idx[mask]];old=original[mask];new=adjusted[mask]
+            oldeq=equal(observed,old);neweq=equal(observed,new)
+            both=np.isfinite(observed)&np.isfinite(new)
+            substantive=both & (observed>=1) & (observed<=(8 if year<=1984 else 20))
+            rows.append({'population':population,'year':year,'rooms_variable':var,'rows':int(mask.sum()),
+                         'eligible_rows':int(requested.sum()),'unmatched_source_person':int((requested&~matched).sum()),
+                         'original_exact':int(oldeq.sum()),'adjusted_exact':int(neweq.sum()),
+                         'raw_missing':int(np.isnan(observed).sum()),'adjusted_missing':int(np.isnan(new).sum()),
+                         'both_observed':int(both.sum()),'both_observed_mismatch':int((both&~neweq).sum()),
+                         'raw_observed_adjusted_missing':int((np.isfinite(observed)&np.isnan(new)).sum()),
+                         'raw_missing_adjusted_observed':int((np.isnan(observed)&np.isfinite(new)).sum()),
+                         'substantive_observed':int(substantive.sum()),'substantive_mismatch':int((substantive&~neweq).sum())})
+            if np.any(both&~neweq):
+                values,counts=np.unique(np.column_stack([observed[both&~neweq],new[both&~neweq]]),axis=0,return_counts=True)
+                pairs.extend({'population':population,'year':year,'raw_value':float(v[0]),'adjusted_value':float(v[1]),'count':int(c)} for v,c in zip(values,counts))
+        heartbeat(population)
+    write_csv(OUTPUT/'all_wave_timing_validation.csv',rows)
+    if pairs:write_csv(OUTPUT/'all_wave_mismatch_values.csv',pairs)
+    receipt={'status':'completed audit; inspect mismatch counts before claiming validation',
+             'waves':waves,'source_rows':len(raw_ids),'shelf_rows':len(keys),'prepared_rows':len(pkeys),
+             'prepared_original_construction_mismatches':int(original_bad.sum()),
+             'prepared_adjusted_construction_mismatches':int(adjusted_bad.sum()),
+             'independent_pandas_cells':4*(42+4+8),'elapsed_seconds':time.monotonic()-started,
+             'years_without_source_wave':uncovered,
+             'scope':'Every source person, every survey wave, all current shelf rows and all prepared common-sample rows; no value recoding',
+             'source_files':{str(p):{'size':p.stat().st_size,'mtime_ns':p.stat().st_mtime_ns} for p in [raw_path,shelf_path,prepared_path]},
+             'comparison':rows}
+    (OUTPUT/'all_wave_validation_receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
+    print(json.dumps({k:v for k,v in receipt.items() if k not in ['comparison','source_files']},indent=2))
+    print(json.dumps([r for r in rows if r['both_observed_mismatch'] or r['raw_observed_adjusted_missing'] or r['raw_missing_adjusted_observed']],indent=2))
+
+
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser(description=__doc__)
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--check-raw-timing", action="store_true", help="Run only the bounded direct raw-to-shelf timing comparison")
     mode.add_argument("--validate-reader", action="store_true", help="Cross-check selected-cell reads against pandas; requires pandas")
+    mode.add_argument("--check-all-waves", action="store_true", help="Validate every wave and prepared row against source survey columns")
     args = parser.parse_args()
-    if args.check_raw_timing:
+    if args.check_all_waves:
+        check_all_waves()
+    elif args.check_raw_timing:
         check_raw_timing()
     elif args.validate_reader:
         validate_reader()

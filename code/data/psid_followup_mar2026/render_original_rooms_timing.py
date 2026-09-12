@@ -98,10 +98,49 @@ def main(baseline_only=False):
     print(json.dumps(summaries,indent=2))
 
 
+def reference_m2():
+    """Report the author's intended reference, retaining original restrictions."""
+    receipts={a:json.loads((RESULTS/a/'run_receipt.json').read_text()) for a in ARMS}
+    assert all(r['status']=='pass' for r in receipts.values())
+    assert receipts['original_common']['sample_keys_sha256']==receipts['aligned_common']['sample_keys_sha256']
+    assert len({r['estimator_do_sha256'] for r in receipts.values()})==1
+    fig,axes=plt.subplots(1,2,figsize=(12,4.8),sharey=True)
+    may=read(OUT/'may_plot_estimates.csv')
+    axes[0].plot([float(r['relative_time']) for r in may],[float(r['b']) for r in may],
+                 'o--',color='#777777',label='Saved May figure')
+    summaries=[]
+    for arm,color,label,ax in [('original_native','#285a7d','Original specification reproduced',axes[0]),
+                              ('original_common','#777777','Original year assignment',axes[1]),
+                              ('aligned_common','#b76539','Timing-adjusted assignment',axes[1])]:
+        x,y,se,_,_=curve(arm)
+        ax.plot(x,y,'o-',color=color,ms=3,label=label)
+        ax.fill_between(x,y-1.96*se,y+1.96*se,color=color,alpha=.10)
+        i=int(np.flatnonzero(x==3)[0]);fit=read(RESULTS/arm/'fit_receipt.csv')[0]
+        summaries.append({'arm':arm,'comparison':'year +3 coefficient under original -2/-6 normalization',
+                          'observations':int(float(fit['observations'])),'estimate':float(y[i]),
+                          'standard_error':float(se[i]),'ci_lower':float(y[i]-1.96*se[i]),'ci_upper':float(y[i]+1.96*se[i])})
+    for ax,title in zip(axes,['May reproduction','Timing only: identical observations']):
+        ax.axhline(0,color='#aaaaaa',lw=.7);ax.axvline(-.5,color='#aaaaaa',lw=.7,ls=':')
+        ax.set(title=title,xlabel='Years relative to first birth',ylabel='Rooms coefficient')
+        ax.set_xticks([-7,-5,-3,-2,-1,1,3,5,7,9,11])
+        ax.spines[['top','right']].set_visible(False);ax.legend(frameon=False,fontsize=8)
+    fig.suptitle('Author’s year −2 reference retained',fontsize=14)
+    fig.text(.5,.015,'Original −2 and −6 omissions retained. Shading: 95% intervals. Timing validation is reported separately.',ha='center',fontsize=9)
+    fig.tight_layout(rect=[0,.06,1,.93])
+    for suffix in ['png','pdf']:fig.savefig(OUT/('timing_comparison_reference_m2.'+suffix),dpi=180)
+    with (OUT/'reference_m2_summary.csv').open('w',newline='') as f:
+        w=csv.DictWriter(f,fieldnames=list(summaries[0]));w.writeheader();w.writerows(summaries)
+    print(json.dumps(summaries,indent=2))
+
+
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run-label',default='')
     parser.add_argument('--baseline-only',action='store_true')
+    parser.add_argument('--reference-m2',action='store_true')
     args=parser.parse_args()
     RESULTS=RESULTS/args.run_label
-    main(args.baseline_only)
+    if args.reference_m2:
+        reference_m2()
+    else:
+        main(args.baseline_only)

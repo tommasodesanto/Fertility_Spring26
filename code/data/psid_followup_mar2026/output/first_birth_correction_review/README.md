@@ -412,3 +412,57 @@ Visuals: `original_reproduction.png/pdf` and `timing_only_comparison.png/pdf`.
 The three-row summaries give coefficients, contrasts, uncertainty, N and clusters.
 `timing_local/torch_20260912/may_reproduction_check.json` compares all 18 May
 points; `comparison_verification.json` checks covariance and common observations.
+
+## All-wave verification and author-selected reference
+
+**September 12 — full-wave rooms timing validation; author reaffirms year −2.**
+The full source check covers all 82,573 people and all 41 survey waves,
+1968–2019. All 352,250 prepared common-sample rows (including every one of the
+345,751 fitted rows) match the source survey-year rooms value exactly after
+alignment. Both construction checks on all 2,860,937 prepared rows have zero
+mismatches. Across 863,803 current-person shelf rows, all 811,486 comparisons
+with an observed adjusted value match exactly; 52,317 source-observed values
+remain missing after shifting: 17,807 in 1968, 16,493 in 1969, 18,016 in 1976,
+and one in 2019. Thus assigned values are validated for the estimated common
+sample; a shift does not restore the full available outcome coverage. Source
+variable years were checked against family-file year-ID labels; numeric reads
+were independently checked with pandas on 216 cells, adding to earlier checks.
+The assembled source panel remains the upstream reference, not a fresh PSID
+raw-download reconstruction. No outcome values or missing codes were recoded.
+
+Tommaso explicitly reaffirmed −2, not −1, as the main empirical comparison.
+Under the original regression's retained −2/−6 omissions, +3 coefficients are
+0.796859 (original sample), 0.770274 (original common sample), and 0.403018
+(timing-adjusted common sample). The last SE is 0.155235, 95% interval
+[0.098757,0.707279], normal-approximate p=0.00943. The previously reported
+0.238478 is a DIFFERENT, −1-to-+3 contrast and must not replace the author's
+chosen empirical comparison. It subtracts the estimated −1 coefficient 0.164540.
+
+Reference support remains a separate unresolved limitation: 3,297 of 9,309
++3 observations come from cohorts without observed −2; 2,235 lack both −2 and
+−6. These are fitted-support counts, not a new regression or corrected SE.
+Retain −2 as the intended design; do not silently substitute −1 for missing
+reference support. Restoring missing source outcomes and handling unsupported
+cohorts still require a specified estimation check. No new target contract,
+model mapping, calibration weight or slide was promoted or changed here.
+Evidence: `all_wave_validation_receipt.json`, `all_wave_timing_validation.csv`,
+`all_wave_variable_crosswalk.csv`, `reference_m2_summary.csv`, and
+`reference_m2_support.json` in the existing first_birth_correction_review folder.
+The new two-panel figure is `timing_comparison_reference_m2.png/pdf`.
+
+Reproduce the read-only census with the bundled pandas Python:
+
+```bash
+/Users/tommasodesanto/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 code/data/psid_followup_mar2026/review_first_birth_event_study_corrections.py --check-all-waves
+MPLCONFIGDIR=/tmp/psid_correction_review/matplotlib python3 code/data/psid_followup_mar2026/render_original_rooms_timing.py --run-label torch_20260912 --reference-m2
+```
+
+Private numeric caches under `/tmp/psid_all_wave_cache` are keyed by input size,
+mtime and column list; they are not committed. The shelf has one appended block,
+so the audit sorts ID/year exactly as preparation does before constructing the
+donor. It records unmatched eligible IDs rather than assuming every placeholder
+row belongs to the through-2019 source. No eligible row was unmatched, and no
+eligible row fell outside the available source waves. The two initial audit
+assertions and logs remain in `/tmp/psid_all_wave_validation_attempt1.log` and
+`attempt2.log` (with the same prefix); these were audit bookkeeping assumptions,
+not new Stata fits or evidence of an outcome mismatch.
