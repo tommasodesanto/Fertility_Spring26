@@ -1,5 +1,30 @@
 # Calibration Status
 
+**September 12 — author-approved stationary-history patch launched in parallel.**
+The author requested stationary early-period fits followed by post2023PF, and
+explicitly selected CARRYING household distributions into2023, not resetting
+them to a stationary distribution. Exact two-solve smoke17496911 passed:
+pinned seed period fertility2.1000010284 at psi.1612271565 (63seconds), and
+1.9827650812 at psi.1412271565 (75seconds). Operator/source/household-budget/
+market/PAYGO checks passed and17standardgraphs were saved.
+Four independent fits17496961_0–3 now target the unchanged four period-fertility
+windows, each oneCPU/16GiB, max8stationary GEs/1800seconds. All structural
+parameters stay fixed at the pinned historical initial point; only psi varies.
+This is a conditional stationary household approximation, NOT a full person
+steady state at subreplacement fertility. Fits alone do not establish the
+carried history: actual carried-state fertility and price/pension balance must
+be checked before any2023PF handoff. See overnight README for stages/budgets.
+Source: code/model/tools/run_e5f_stationary_history_patch.py. Cluster batch:
+/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/stationary_history_patch_20260912.
+Original full-PF jobs continue; monitoring is temporarily every10minutes.
+
+Separately, no-shock terminal17496086 PASSED in5evaluations/203seconds after
+the explicitly changed numerical price start. Final price.8243409333, pension
+1.5728936715; housing/PAYGO residuals4.61427e-6/3.36142e-8. This certifies the
+terminal prerequisite only, not a baseline/pulse IRF. Local receipts are in
+seminar_transition_panels/irf_prerequisite under overnight_20260912. The slides
+task was sent the completed verdict; intermediate numerical updates stay here.
+
 **September 12 — author chooses May empirical figures for the presentation.**
 Tommaso explicitly chose the historical May plots/original regression for today,
 deferring review of the subsequent corrections until after the presentation.
