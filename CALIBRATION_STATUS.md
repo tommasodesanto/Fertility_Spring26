@@ -1,5 +1,25 @@
 # Calibration Status
 
+**September 12 — explicit model-task overnight authorization; parallel jobs launched.**
+The author subsequently authorized overnight work here, retaining first-birth
+rooms 0.7202462623815278 and its weight, with beta estimated and capped at 0.99.
+This is independent of the accidental data-task delegation described below,
+which remains cancelled. Calibration refinement 17440306 is running on 18 CPUs;
+both fresh starting-point reproductions passed. Three independent surprise-fit
+tasks 17445263_0–2 are running, each with its own bounded shock search and
+automatic three-case tax/rebate comparison after an accepted historical fit.
+Collector 17445799 runs after all numerical tasks, including failures. Eighteen
+adapter/loop tests passed locally and on Torch; native terminal and forecast
+smokes precede any long new-timing solve. Small-shock terminal trials have
+encountered the retained finite-demographic-endpoint restriction; rejection
+receipts are preserved and independent trials continue. No new fitted history
+or policy result is yet established. The household/female fertility mapping,
+outside-entry normalization and horizon certification remain outstanding.
+Full budgets, contracts, source pins, paths, stop criteria and quiet monitoring:
+`output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/README.md`.
+Agent monitoring stops at 25% weekly remaining (32% at launch); cluster workers
+continue autonomously without model/API calls.
+
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
 **September 12 — author clarification: no new overnight calibration authorized from the data task.**
