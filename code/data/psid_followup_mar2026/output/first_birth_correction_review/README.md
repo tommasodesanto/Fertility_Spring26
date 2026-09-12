@@ -302,9 +302,11 @@ but the real-data reproduction and all timing-only comparisons remain pending.
 `../../render_original_rooms_timing.py --run-label baseline_complete --baseline-only`
 is prepared to compare a successfully completed baseline with May; it requires
 a passing receipt and cannot produce a reproduction from this failed run.
-The separate author-requested overnight calibration task was instructed to
-retain 0.7202462623815278 rooms and its existing weight provisionally. No validated
-replacement target has been produced by this audit.
+The recommendation for a possible overnight calibration is to retain
+0.7202462623815278 rooms and its existing weight provisionally. The author
+clarified that he requested only this number, not task creation or a launch;
+the assistant's pending overnight-task creation was a mistake and must not
+initiate a run. No validated replacement target has been produced by this audit.
 Private inputs remain under
 `/tmp/psid_original_timing_20260912b/`; no microdata is committed here.
 Preflight evidence is in `preparation_receipt.json`, `sample_comparison.json`,

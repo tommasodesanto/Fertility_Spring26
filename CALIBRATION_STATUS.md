@@ -2,6 +2,14 @@
 
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
+**September 12 — author clarification: no new overnight calibration authorized from the data task.**
+Tommaso asked only which empirical number to use. The data-task assistant
+mistakenly submitted creation of "Overnight calibration — provisional rooms target"
+(pending client id `client-new-thread:bc4b4cb0-666f-4a2a-aeb1-77592df94716`).
+The author explicitly corrected that interpretation. Do not launch the run
+described by that pending task. The 0.720246 recommendation is advice only,
+not authorization for a new task, calibration, or target change.
+
 **September 11, data-only event-study review — annual curve requires reference-support repair; retained target unchanged.**
 The May figure's preserved table has +3=0.796859, not the slide's 0.664;
 missing person FE is not established as a defect of that original figure.
@@ -34,9 +42,10 @@ without estimates. Its failed receipt and log are preserved under the audit's
 `timing_local/baseline_complete/original_native/` output. No regression remains
 running; the original-versus-May graph and timing-only comparison are pending.
 No arithmetic optimization, timing-shifted regression, or empirical target change
-has been implemented. For the author-requested separate overnight calibration
-task, the recommendation is to retain 0.7202462623815278 and its existing weight
-provisionally; this audit has not supplied a validated replacement.
+has been implemented. In answer to the author's question about a possible
+overnight calibration, the recommendation is to retain 0.7202462623815278 and its
+existing weight provisionally; this is not launch authorization, and this audit
+has not supplied a validated replacement.
 Evidence and reproducible driver:
 `code/data/psid_followup_mar2026/output/first_birth_correction_review/README.md`.
 
