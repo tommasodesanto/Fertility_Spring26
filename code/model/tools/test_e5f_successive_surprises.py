@@ -117,6 +117,20 @@ class RootRoutingTest(unittest.TestCase):
     def test_terminal_cannot_use_future_eventual_preference(self):
         with self.assertRaisesRegex(ValueError,'own constant-preference terminal'):self.solve(psi=.1)
 
+    def test_repeated_root_does_not_mutate_shared_terminal_tolerances(self):
+        shared_tolerances={'tail':.01};calls=[]
+        def diagnostics(*args,**kwargs):
+            metrics={'tail':.02}
+            checks={k:metrics[k]<=v for k,v in shared_tolerances.items()}
+            calls.append(1)
+            return dict(metrics=metrics,checks=checks,tolerances=shared_tolerances,all_checks_pass=False)
+        self.runtime[3].terminal_convergence_diagnostics=diagnostics
+        result=self.solve(initial_prices=np.full(6,1.9),initial_pensions=np.full(6,1.9))
+        self.assertTrue(result.root_receipt['finite_horizon_market_fiscal_converged'])
+        self.assertGreater(len(calls),1)
+        self.assertEqual(shared_tolerances,{'tail':.01})
+        self.assertIn('pension_relative_gap',result.root_receipt['final']['payload']['terminal_distance']['tolerances'])
+
     def test_occupied_feasibility_audit_not_bypassed(self):
         self.f.policy_fault='nonfinite'
         with self.assertRaisesRegex(RuntimeError,'household audit'):self.solve()

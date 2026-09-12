@@ -1,6 +1,6 @@
 """Collect the bounded campaign even if some Slurm tasks fail."""
 from pathlib import Path
-import csv,json,shutil
+import argparse,csv,json,shutil
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -8,7 +8,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 
 def read(p):return json.loads(p.read_text())
 def main():
-    root=Path('/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/night_surprises_20260912')
+    parser=argparse.ArgumentParser();parser.add_argument('--root',type=Path,default=Path('/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/night_surprises_20260912'));root=parser.parse_args().root
     out=root/'report';out.mkdir(exist_ok=True)
     plan=read(root/'plan.json');score=Path(plan['initial_score_path'])
     shutil.copy2(score,out/'historical_initial_score_full.json')

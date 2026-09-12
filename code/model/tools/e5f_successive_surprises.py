@@ -216,7 +216,9 @@ def solve_surprise(*, inherited, psi, old_state, terminal, terminal_root_receipt
             market.append((row['housing_demand']-row['housing_supply'])/row['housing_supply'])
             rev,out=a['payroll_tax_revenue'],a['pension_outlays']
             fiscal.append((rev-out)/max(abs(rev),abs(out),1e-12))
-        distance=checks.terminal_convergence_diagnostics(result.person_tail,terminal=endpoint,psi_path=np.full(len(result.person_tail.rows),psi))
+        # The native report exposes module-level tolerance defaults by reference.
+        # Extend an owned copy so the next root mapping sees its original schema.
+        distance=copy.deepcopy(checks.terminal_convergence_diagnostics(result.person_tail,terminal=endpoint,psi_path=np.full(len(result.person_tail.rows),psi)))
         gap=abs(float(b[-1])-float(terminal.parameters.pension))/float(terminal.parameters.pension)
         distance['last_pension_relative_gap']=gap
         distance.setdefault('metrics',{})['pension_relative_gap']=gap

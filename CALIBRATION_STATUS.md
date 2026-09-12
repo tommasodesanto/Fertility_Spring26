@@ -1,5 +1,26 @@
 # Calibration Status
 
+**September 12, 06:55 UTC — transition adapter failure repaired; isolated retry running.**
+The first two viable-shock workers failed during their second native mapping:
+the adapter added its pension tolerance to a diagnostics object whose tolerance
+dictionary aliases module defaults. The next native report then raised
+`KeyError: pension_relative_gap`. The adapter now deep-copies the returned
+diagnostics before extension; equations, checks and tolerances are unchanged.
+A repeated-root regression reproduces the aliasing hazard; all 19 tests pass
+locally, on Torch and inside both replacement tasks. Array 17473943_0–1 is
+RUNNING from isolated `batches/night_surprises_recovery_20260912`, starting at
+distinct preference changes -0.03 and -0.045 with seven-hour budgets. Native
+forecast acceptance is still pending; this is a verified code repair, not a
+converged history. Collector 17473944 follows both workers and calibration.
+
+Calibration 17440306 remains healthy in its third bounded batch. Completed
+batch 1 selected loss 158.9299594291 with two exact winner repetitions. Its
+13-row target table, 17-row parameter/restriction table and 17 standard graphs
+are collected under `current_candidate_transition/overnight_20260912/verified_round_1/`
+within the output folder linked below; scored contributions recompute the loss.
+The historical initial point is not replaced with this intermediate candidate.
+Account usage was 29% remaining at this wakeup; the 25% cutoff is unchanged.
+
 **September 12 — explicit model-task overnight authorization; parallel jobs launched.**
 The author subsequently authorized overnight work here, retaining first-birth
 rooms 0.7202462623815278 and its weight, with beta estimated and capped at 0.99.

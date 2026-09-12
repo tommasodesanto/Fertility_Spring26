@@ -1,5 +1,13 @@
 # September 12 autonomous cluster campaign
 
+## 06:55 UTC recovery
+
+Arms 1 and 2 of the original array failed at the second native mapping with `KeyError: pension_relative_gap`. The native terminal report returns its global tolerance dictionary by reference; extending that returned dictionary polluted the next call. The adapter now deep-copies the report before adding the pension tail test. A repeated-root regression exercises the shared-dictionary case. All 19 tests pass locally, on Torch and inside the new workers. No equations or thresholds changed.
+
+Recovery array **17473943_0–1** is running with distinct initial preference changes -0.03 and -0.045, seven-hour budgets and the original policy reserve. Original failed outputs and source pins are preserved. New snapshot directory: `/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/night_surprises_recovery_20260912`; plan SHA256 `47e0b7212a9b440144fc7b6bd81760293c852d9407b869c6b70371be2727c7ed`. Read its `results/arm_*/` receipts for live transition progress. Recovery collector **17473944** generates its own `report/` after these workers and calibration end. Native forecast convergence remains pending.
+
+Calibration remains active in batch 2. Completed batch 1 is collected in [verified_round_1/README.md](verified_round_1/README.md), with all target/parameter tables, exact-repeat receipt and standard graphs. The selected loss 158.92995942909278 is an intermediate result; it does not change the historical workers' initial calibration. Weekly remaining at this wakeup: 29%.
+
 The model-task author explicitly authorized overnight calibration, successive unexpected permanent preference changes, and conditional policy experiments, retaining the 0.7202462623815278 first-birth rooms target and its weight. This authorization is separate from the cancelled accidental data-task delegation. No target, utility, empirical estimator, or numerical tolerance is changed.
 
 ## Submitted work
