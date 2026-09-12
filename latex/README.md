@@ -34,6 +34,14 @@ Active documents:
   It is historical source, not a second working deck. All separate theory
   notes and the September 10 planner work remain untouched and parked.
 
+  The lifecycle equilibrium frame is followed by the exact supplemental
+  `intergenerational_allocation_data_model.pdf` from
+  `../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/age_housing_allocation/`.
+  It compares six age/child groups' shares of owner-occupied homes with at least
+  six rooms, using the initial model and 2005--06 ACS data. The figure retains
+  its own title and measurement notes; its companion README records sample and
+  child-definition differences. It is descriptive allocation, not a welfare measure.
+
   **Intro literature.** The compact May-style bullets cite Dettling and Kearney
   (2025), [mortgage expansion and the baby boom](https://www.nber.org/system/files/working_papers/w33446/w33446.pdf),
   and Fazio et al. (2025), [Housing and Fertility](https://afajof.org/management/viewp.php?n=152292).
@@ -213,8 +221,8 @@ Active documents:
   Build twice from `latex/`, writing auxiliary files outside the active folder:
   `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=../tmp/september_slides_review september_14_presentation.tex`.
   Copy the verified PDF to the reader path and the adjacent build copy.
-  The deck has 36 numbered main frames and nine appendix frames
-  (52 PDF pages including overlays and dividers). Two final compilation passes
+  The deck has 37 numbered main frames and nine appendix frames
+  (53 PDF pages including overlays and dividers). Two final compilation passes
   have no warnings or overfull boxes; all frames were visually inspected and
   all figure paths and all three appendix links resolve.
 
