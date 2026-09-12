@@ -1,0 +1,55 @@
+{
+  "source_root": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8",
+  "smoke_summary_sha256": "22b9a9f75a9e43a528bbde766f6595274f9843e7f77f29316315168118fd8e53",
+  "smoke_contract_sha256": "afff32c34e679aaf19efbbe14cd673919e3df333d719847c9928f289946a19df",
+  "schema": "e5f_capped_beta_search_v1",
+  "workers": 18,
+  "rounds": 3,
+  "search_seconds": 7800,
+  "slurm_seconds": 10800,
+  "verification_reserve_seconds": 3000,
+  "maximum_search_cases": 90,
+  "resume_score_path": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/batches/fixed_beta_099_recovery_20260911/results/cases/r0_joint_01/evaluation/scored_repetition_01/score.json",
+  "resume_score_sha256": "ba3cb8215432c8536bc4c5478a72beb8cbde5c63ba5a7e0a030ef1c68331d24a",
+  "resume_summary_sha256": "522540f1b9bda4e106670eaa17bbd67a7a9e406fa2f88905ba206198a260cb1e",
+  "resume_proposal": {
+    "case_id": "r0_joint_01",
+    "initial_psi": 0.1633463680830745,
+    "parameters": {
+      "beta_annual": 0.99,
+      "H0": 8.27597578070702,
+      "chi": 1.0496534423047694,
+      "first_birth_fixed_cost": 0.26576477618628114,
+      "h_P": 2.3,
+      "kappa_fert": 0.33773423411167025,
+      "kappa_fert_continuation": 0.39785645171756406,
+      "theta0": 0.08105103333987912,
+      "theta1": 0.08520356663830632
+    }
+  },
+  "controller_sha256": "8b5ed3c50ee32805fea8147d6f2f617b66ad239218e8a90c3019e31593e26ee3",
+  "file_sha256": {
+    "run_profile.py": "601c22b491467d204f82041fcfe6cf317b6152c6a4f6d554f5f9e67195bfd1d9",
+    "test_run_capped_beta.py": "5404a5fd59267fa51c493d6e5d855795925c1ba6fafbe56c03981bcf98af77fa",
+    "submit_capped_beta.sh": "1367691b8f20e05c9ca1b2b5b81f07727bb80498d000e3cb2d0401f947662e1d"
+  },
+  "output_dir": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/batches/capped_beta_099_20260911/results",
+  "maximum_case_evaluations": 93,
+  "maximum_repetitions": 94,
+  "maximum_GE": 752,
+  "expected_case_seconds": [
+    300,
+    490
+  ],
+  "expected_wall_minutes_excluding_queue": [
+    65,
+    100
+  ],
+  "stop": "Beta remains estimated within [.94,.99]; all9 structural parameters jointly free. Two fresh exact seed repetitions must reproduce pinned numeric results, then up to3 adaptive18-derivative/12-joint rounds, and2 final selected repetitions. 90new search trials maximum;7800s search,3000s verification reserve,3h Slurm. All original targets,weights,scientificsource and strict gates unchanged; cap is explicit author restriction. Stop on unknown failure, recurrent mass-gate rejection, majority housing failures, missing derivative column or budget. No empirical identification or production certification claimed.",
+  "production_eligible": false,
+  "beta_upper": 0.99,
+  "beta_lower": 0.94,
+  "seed_manifest_path": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/batches/capped_beta_099_20260911/seed_manifest.json",
+  "seed_manifest_sha256": "541d2733ffc4b7488c2f3667151d5f51dd6df6386e2398ff5bb31bc778060a5b",
+  "controller_smoke": "Nine tests including complete three-round nine-parameter search, inward beta derivative, cap rejection, deadline reserve, two seed repeats and two final repeats, numerical rejection and reporting bounds. Actual frozen scored-wrapper exact smoke pinned; fresh seed repetitions required before numerical search."
+}

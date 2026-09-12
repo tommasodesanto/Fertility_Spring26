@@ -1,7 +1,46 @@
-# Fixed-beta calibration profiles
+# Beta-restricted calibration searches
 
-**Current: beta 0.99 recovery job 17424705 is running (September 11, 20:01 EDT).**
-The author requested a stronger fixed-beta search while away for dinner.
+**Maintained author instruction: beta is estimated with a 0.99 ceiling, not fixed.**
+The author clarified this after the fixed-beta recovery was launched. The original
+lower bound remains 0.94. All nine structural coordinates remain free; the
+unchanged scorer's original beta upper bound of 0.9995 is tightened externally
+by the pinned search plan and enforced before each solve and after each score.
+The target/weight fingerprint is unchanged; the new parameter restriction is
+explicit in the plan and reporting metadata. This is not a claim of identification.
+
+**Capped search 17425504 is RUNNING on 18 cores (September 11, 20:32 EDT).**
+`run_capped_beta.py`, `test_run_capped_beta.py`, `plan_capped_beta_099.json`,
+`submit_capped_beta.sh` and `capped_seed_manifest.json` define this separate batch.
+It starts from the saved boundary candidate r0_joint_01, whose five source/score
+receipts are pinned. Two fresh exact seed repetitions must match all numerical
+cells before the search. Up to three adaptive rounds each use at most 18 feasible
+derivative probes and 12 joint constrained proposals, retaining all nine
+directions; beta uses an inward derivative at its upper bound. The actual first
+stage has 16 probes because beta and h_P are at their respective upper bounds.
+
+Budget: 18 CPUs / 96 GiB; at most 90 search trials plus two seed repetitions and
+two final repetitions (93 case calls / 94 repetitions / 752 maximum stationary
+solves). Expected 65–100 minutes excluding queue, with a three-hour hard limit,
+7800-second search budget and 3000-second verification reserve. Every stage checks
+its worst-case remaining time. The numerical source, targets, weights, utility,
+pension accounting and all strict acceptance gates remain unchanged. Known
+inadmissible trials receive no score; unknown errors, recurrent mass failures,
+a majority of housing failures or a missing derivative direction stop for review.
+
+Nine controller tests passed locally and on Torch: complete three-round search
+with an interior beta optimum, all nine directions, cap rejection, exact replay,
+rejected-trial handling, deadline reserves, and actual bounds in output tables.
+The source/seed preflight passed, including the actual feasible beta probe
+0.9897990204537143. Actual seed repetitions remain pending at launch. Results
+save every target/parameter row, 30-second heartbeats, per-case latest/best
+records, and the unchanged 17 diagnostic graphs. Remote batch:
+`/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/batches/capped_beta_099_20260911/`.
+
+**Boundary comparison: fixed beta 0.99 recovery job 17424705 remains running.**
+Its original launch status follows; it is no longer the maintained estimation
+restriction. Its completed trials remain useful comparisons for the capped search.
+The earlier request to push harder on beta 0.99 was initially implemented as a
+fixed-beta profile; the subsequent clarification above supersedes that interpretation.
 `plan_recovery_beta_099.json` and `submit_recovery.sh` define this separate batch;
 the original remote batch and its sources remain intact. The recovery pins 87
 evidence files in `recovery_manifest.json`, validates all 15 successful first-round

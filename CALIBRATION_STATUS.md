@@ -2,7 +2,31 @@
 
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
-**September 11, 20:01 EDT — author-approved beta 0.99 recovery job 17424705 RUNNING.**
+**September 11, 20:32 EDT — author correction: annual beta is CAPPED at 0.99,
+not fixed. Capped search 17425504 RUNNING on 18 cores.**
+The maintained search estimates all nine structural coordinates jointly with
+0.94 <= beta_annual <= 0.99; 0.94 is the original lower bound. All other bounds,
+the complete 12 scored targets plus separate 2.1 normalization, weights, source,
+utility, pension accounting and strict gates remain unchanged. The raw scorer
+retains its original bound metadata; the pinned search contract and selected
+parameter tables explicitly impose the author-approved cap, retain nine free
+parameters, and recompute beta's near-bound flag using the original 1% rule.
+Fixed-beta job 17424705 is retained only as a boundary comparison.
+
+The capped search must reproduce its saved boundary seed twice before up to
+three adaptive nine-coordinate rounds. Maximum 90 search cases plus two seed
+and two final repetitions: 93 case calls / 94 repetitions / 752 maximum GE
+solves. 18 CPUs / 96 GiB, expected 65–100 minutes excluding queue, three-hour
+hard cap and explicit search/verification reserves. Nine controller tests and
+the scientific-source/seed/proposal preflight passed locally/on Torch; actual
+seed repetitions are pending at launch. First feasible beta probe is
+0.9897990204537143, so beta is computationally free below the ceiling.
+Full plan and run receipt:
+`output/model/e5f_matched_pf_20260909a/initial_calibration_contract/fixed_beta_profiles/README.md`.
+No capped calibration improvement, historical preference fit or policy
+certification is claimed from a job merely starting.
+
+**September 11, 20:01 EDT — earlier fixed-beta recovery job 17424705 RUNNING.**
 The author explicitly requested a stronger beta 0.99 search after returning home.
 This supersedes the earlier hold on new launches. The separate recovery batch
 preserves all 641 scientific source pins, targets, weights, normalization and
