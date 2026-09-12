@@ -1,5 +1,24 @@
 # Calibration Status
 
+**September12 heartbeat — first finite-history window carried; AI monitoring paused at usage floor.**
+Job17498927(6dates) fitted2007–2011fertility and saved the2011inherited state;
+it is now solving the next unexpectedshock in2011. Full target/model for the
+completed window:1.974875/1.97485554825, psi.14708715651861665,
+absolutegap1.945175e-5versus0.005tolerance. Housing/PAYGO/replay gates passed;
+terminal-distance stillFAILED, so this is finite-horizon diagnostic progress,
+not a certified history. The other threewindows remainunfitted. Evidence:
+finite_sequences_20260912/results/arm_0/realized_fit.json and first-vintage receipts.
+17498928(12dates) andpatch17498984remainhealthy on firstforecasts;
+17498929(28dates)isqueued. No clusterjobstopped or numericalsettingschanged.
+
+Fresh account usage is80percentused/20percentremaining for the weekly window,
+below the monitor's25percentthreshold. Automationovernight-rebated-tax-results-and-graphs
+was PAUSED to preserve tokens. Existing clustercontrollers continue autonomously
+with their saved budgets/checkpoints; agent-driven review/relaunch is paused.
+No resetcreditconsumed. Resume monitoring only under the user's revised allowance
+or after usage renews; do not imply that pausedAIchecks continue inbackground.
+
+
 **September12 — patch-only packaging guard repaired; full searches active.**
 Main sequence17498927/28areRUNNING;17498929remainsqueued. Patch17498930failed
 before anysolve on one obsolete pin for an UNUSED historicalplotfile
