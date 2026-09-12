@@ -2,6 +2,28 @@
 
 Updated: `2026-09-11` (approved utility/PAYGO implementation verified; joint diagnostic search and historical replay progressing)
 
+**September 11, data-only event-study review — annual curve requires reference-support repair; retained target unchanged.**
+The May figure's preserved table has +3=0.796859, not the slide's 0.664;
+missing person FE is not established as a defect of that original figure.
+A new direct raw-PSID check supports the room-timing correction: all 525 usable
+person-wave comparisons across 1984/1985/2017/2019 match raw rooms to the shelf
+row one interview earlier. This is a deterministic 512-person sampling frame,
+not a full-panel/all-vintage validation. The selected-cell reader matches
+pandas on 384 cells. Authoritative codebooks identify zero as a valid shared-room
+response; blanket zero-as-missing guidance must not override that evidence.
+
+Saved cohort coefficients demonstrate a substantial source of the annual
+zigzag: recent even-birth cohorts lack K=-2 and instead have their pooled early
+lead normalized to zero. Reassigning those arbitrary zeros to K=-1 leaves the
+fitted observations unchanged and changes average odd-year peak size from
+0.420242 to 0.147472 rooms. This is a non-identification diagnostic, not a
+corrected estimate or bound on bias; residual fluctuations remain unresolved.
+The one-cohort September 5 reference check does not certify the full curve.
+No estimator, 0.720246 target, weight, model, or slide was changed in this review.
+Exact May execution and one-change-at-a-time reconstruction remain outstanding.
+Evidence and reproducible driver:
+`code/data/psid_followup_mar2026/output/first_birth_correction_review/README.md`.
+
 **September 11, 22:06 EDT — capped search completed; no cluster jobs remain running.**
 Job 17425504 finished in 64 minutes: 84 new parameter trials, two fresh seed
 replays, and two exact winner repetitions. Selected loss is 159.2389860754,

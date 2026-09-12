@@ -1,0 +1,122 @@
+{
+  "scope": "512 deterministic evenly spaced raw person indices; aggregate exports only",
+  "sample": "current in destination year; raw rooms 1..8 through 1984 and 1..20 later in both adjacent waves; both shelf room fields observed",
+  "matched_person_ids": 512,
+  "comparisons": [
+    {
+      "raw_interview_year": 1984,
+      "usable_person_waves": 120,
+      "same_label_year_equal_to_raw": 50,
+      "preceding_label_year_equal_to_raw": 120,
+      "raw_rooms_changed_since_previous_wave": 50,
+      "changers_same_label_equal": 16,
+      "changers_preceding_label_equal": 50
+    },
+    {
+      "raw_interview_year": 1985,
+      "usable_person_waves": 123,
+      "same_label_year_equal_to_raw": 68,
+      "preceding_label_year_equal_to_raw": 123,
+      "raw_rooms_changed_since_previous_wave": 71,
+      "changers_same_label_equal": 31,
+      "changers_preceding_label_equal": 71
+    },
+    {
+      "raw_interview_year": 2017,
+      "usable_person_waves": 139,
+      "same_label_year_equal_to_raw": 55,
+      "preceding_label_year_equal_to_raw": 139,
+      "raw_rooms_changed_since_previous_wave": 85,
+      "changers_same_label_equal": 27,
+      "changers_preceding_label_equal": 85
+    },
+    {
+      "raw_interview_year": 2019,
+      "usable_person_waves": 143,
+      "same_label_year_equal_to_raw": 55,
+      "preceding_label_year_equal_to_raw": 143,
+      "raw_rooms_changed_since_previous_wave": 86,
+      "changers_same_label_equal": 25,
+      "changers_preceding_label_equal": 86
+    }
+  ],
+  "interpretation": "In the checked person-waves, the custom shelf series is labelled one interview early. Moving it forward one observed interview recovers contemporaneous raw rooms.",
+  "limitations": "This is a deterministic matched sample in four waves, not a full-panel/all-vintage validation. It does not identify the exact executable that produced the May graph.",
+  "selected_evidence_sha256": "932b47f11124bd81b4290f51f64b823cbc398c530087f12ea2ad48de2f923789",
+  "elapsed_seconds": 1.9446151200000001,
+  "files": {
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/PSID/Construction_Files/Data/Users/DD/Dropbox (University of Michigan)/Data/PSID/PSID_CMS/PSID_COMPLETE_MAIN_STUDY_1968_2019.dta": {
+      "bytes": 9579079729,
+      "mtime_ns": 1696873684000000000,
+      "observations": 82573,
+      "data_start": 56761306,
+      "record_width": 115320,
+      "fields": {
+        "ID": [
+          0,
+          4,
+          "f"
+        ],
+        "V8969": [
+          14793,
+          1,
+          "b"
+        ],
+        "V10432": [
+          15953,
+          1,
+          "b"
+        ],
+        "V11614": [
+          17486,
+          1,
+          "b"
+        ],
+        "ER60029": [
+          89318,
+          1,
+          "b"
+        ],
+        "ER66029": [
+          96317,
+          1,
+          "b"
+        ],
+        "ER72029": [
+          103387,
+          1,
+          "b"
+        ]
+      }
+    },
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/PSID/PSIDSHELF_MOBILITY.dta": {
+      "bytes": 6300266005,
+      "mtime_ns": 1730930638959661722,
+      "observations": 3533123,
+      "data_start": 632378,
+      "record_width": 1783,
+      "fields": {
+        "ID": [
+          0,
+          8,
+          "d"
+        ],
+        "year": [
+          8,
+          2,
+          "h"
+        ],
+        "CURRENT": [
+          18,
+          1,
+          "b"
+        ],
+        "ACTUALROOMS_": [
+          1687,
+          8,
+          "d"
+        ]
+      }
+    }
+  }
+}

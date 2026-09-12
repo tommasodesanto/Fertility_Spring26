@@ -9,6 +9,19 @@ This folder contains standalone scripts for:
 
 No existing project files were overwritten.
 
+## First-birth event-study correction review
+
+The September 11 data-only audit is in
+[`output/first_birth_correction_review/README.md`](output/first_birth_correction_review/README.md).
+It recovers the exact May plotted coefficients, distinguishes later design
+changes from demonstrated errors, and diagnoses the current annual curve's
+mixed reference periods using saved cohort coefficients. The reproducible
+driver is `review_first_birth_event_study_corrections.py`; it runs no regression
+and changes no target. The alternate curve is a same-fit normalization
+diagnostic, not a replacement empirical estimate. The same driver independently
+verifies the room-extraction offset in 525 matched person-wave observations
+across four annual/biennial waves with `--check-raw-timing`.
+
 ## Files
 
 - `sa_replication_own_only.do`
