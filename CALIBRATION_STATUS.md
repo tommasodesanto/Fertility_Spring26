@@ -1,5 +1,20 @@
 # Calibration Status
 
+**September12 — age-housing DATA versus MODEL comparison completed.**
+Author corrected the model-only request and explicitly asks Luna for menial tasks.
+Two Luna workers located/checked sources and extracted the ACS data; lead reviewed
+measurement/code, pooled years and verified all totals. Exact initial-target sample:
+2005-06ACS42MET2013metros,1,018,881head records,HHWT105,868,278; weighted capped
+rooms588,743,803. Both model/data cap rooms at9 before age aggregation.
+New age_housing_data_model.pdf/png under overnight_20260912/age_housing_allocation
+shows model fails the empirical decline after middle age: ages66-85mean rooms
+6.932164339 versus5.467887183. It overstates old-age housing retention; not evidence
+of matching misallocation. Stock shares also reflect different age distributions;
+left panel compares conditional age means. Full calibration tables remain unchanged.
+Raw-data totals exactly match canonical saved components; PDF visually inspected.
+No new model solve, targets or calibration changes. Source extraction/plot commands
+and pinned outputs are indexed in that folder's README.
+
 **September 12 — 2019 stationary-start PF diagnostic launched; age allocation figure ready.**
 Following the author's correction, job17497354_0 starts from the fitted conditional
 stationary household distribution dated2019 (fit_2, psi.1069228919), then tests
