@@ -94,6 +94,16 @@ Active documents:
   `120ffc45c0fb8756f4182f999c96b7c0236adf315cb938190ec31cd2068c87c2`);
   the generic 4\% annual code default is not that calibration's rate.
 
+  **Firms and earnings.** This frame restores May's linear competitive-firm
+  interpretation, $Y_t=AL_t$ and $w=A$, for the maintained common wage. The
+  current earnings decomposition adds the age profile and combined permanent
+  group/persistent earnings component. The pension is described as pay-as-you-go:
+  payroll receipts finance benefits and the dated benefit adjusts to balance the
+  system. The household's disposable-income formula remains; the aggregate
+  pension integrals and repeated fiscal-accounting bullets are omitted. This
+  is exposition of the existing fixed-wage income specification, not a new
+  production or labor-market solve.
+
   **September 12 return to the May source.** Use the actual May frame text,
   typography and composition for unchanged material; patch only documented model
   differences rather than paraphrasing the shared exposition. The frame order is

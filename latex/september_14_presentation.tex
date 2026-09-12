@@ -218,26 +218,22 @@ b_{t+1}={}&R_b b_t+y_t^d(a,z_t)+T_t-c_t-(\delta_H+\tau_t^p)P_t h_{t+1}\\
 A birth changes the household's space needs immediately, but its demographic effects propagate across cohorts.
 \end{frame}
 
-\begin{frame}{Earnings and Pensions}
+\begin{frame}{Firms and Earnings}
 \small
-\textbf{Gross earnings.} $y_t^g(a,z_t)$ depends on age and earnings state $z_t$, which combines a fixed permanent income group and a persistent Markov shock.
-
-\textbf{Disposable income.} Workers pay a payroll tax; retirees receive pensions:
-\[
-y_t^d(a,z_t)=\begin{cases}
-(1-\tau^{SS})y_t^g(a,z_t),&a<a_R,\\
-\varpi_t d(z_t),&a\geq a_R.
-\end{cases}
-\]
-\textbf{Balanced pensions.} A fixed tax $\tau^{SS}$ finances benefits each period:
-\[
-\tau^{SS}\int_{a<a_R}y_t^g(a,z_t)\,dG_t
-=\varpi_t\int_{a\geq a_R}d(z_t)\,dG_t.
-\]
-\begin{itemize}\setlength\itemsep{0.4em}
- \item $G_t$ is the household distribution; $d(z_t)=1$ for common benefits.
- \item The pension $\varpi_t$ adjusts to balance the budget; households anticipate its path.
- \item Property-tax rebates $T_t$ have a separate budget.
+\begin{itemize}\setlength\itemsep{0.6em}
+  \item Competitive firms produce with effective labor:
+  \[
+  Y_t=A L_t,\qquad w=A.
+  \]
+  \item Earnings depend on age and household productivity:
+  \[
+  y_t^d(a,z_t)=\begin{cases}
+  (1-\tau^{SS})\,w e_a z_t,&a<a_R,\\
+  \varpi_t,&a\geq a_R.
+  \end{cases}
+  \]
+  \item $e_a$ is the age profile; $z_t$ combines a permanent income group and a persistent earnings shock.
+  \item \textbf{Pay-as-you-go pensions:} workers' payroll taxes finance retirees' benefits. The pension $\varpi_t$ adjusts each period to balance the system.
 \end{itemize}
 \end{frame}
 
