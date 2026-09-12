@@ -1,5 +1,9 @@
 # Current-candidate transition diagnostic
 
+**Successive-surprise preparation (September12):** new experimental API `code/model/tools/e5f_successive_surprises.py`; specification, tests and deferred native-run requirements are in `docs/model/e5f_successive_surprises.md`. Each revision solves a constant-preference PF forecast and carries only its first-period state forward. Targets, replacement normalization and announced-history code are unchanged. No numerical or cluster run was launched; the author is checking another target.
+
+**Transition slides:** [slide_review/README.md](slide_review/README.md) documents the two-frame model/data review, generated from the existing middle-shock short path and unchanged NCHS/ACS series. PDF: `output/pdf/historical_transition_review.pdf`; source: `latex/historical_transition_review.tex`. No shock fitting or new solve is implied.
+
 **Age-support check (September 11):** [age_support_check/README.md](age_support_check/README.md) recomputes the empirical comparison from cached NCHS rates. The four-year-window decline is 16.67% with published TFR versus 15.11% for ages 18–44 (15.09% with an explicitly approximate age-45 addition). Saved model flow/rate replays pass. This is a sensitivity, not a replacement target contract; the initial boundary-collapsed timing moments and production inputs remain unchanged. Full continuation remains paused at the author’s request. Reproduce with `python check_fertility_age_support.py`.
 
 **22:06 EDT update:** all three 28-date trials have now ended without passing

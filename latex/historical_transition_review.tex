@@ -1,0 +1,37 @@
+\documentclass[11pt,aspectratio=169]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,graphicx,booktabs}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+\setbeamercolor{frametitle}{fg=black}
+\setbeamerfont{frametitle}{size=\Large}
+\setbeamersize{text margin left=0.55cm,text margin right=0.55cm}
+\graphicspath{{output/model/e5f_matched_pf_20260909a/current_candidate_transition/slide_review/}}
+\begin{document}
+\begin{frame}{Fertility transition, 2007--2023}
+\small An initial replacement benchmark; a preference decline announced in 2007.
+\begin{center}
+\includegraphics[width=\textwidth,height=5.15cm,keepaspectratio]{fertility_transition.pdf}
+\end{center}
+\vspace{-0.25cm}
+\small Across the four-year windows: fertility falls \textbf{13.2\% in the model}, versus \textbf{16.7\% in the data}.
+\par\vspace{0.12cm}
+\scriptsize Illustrative shock, not estimated; short-path equilibrium with an unverified long horizon.
+Initial 2.1 denotes completed fertility; transition points use the model birth-flow index.
+\par\vspace{0.07cm}
+\tiny\color{gray} Sources: NCHS, Births: Final Data for 2015 and 2023; saved model transition.
+\end{frame}
+\begin{frame}{Housing along the same transition}
+\small The fertility experiment also produces testable housing and tenure paths.
+\begin{center}
+\includegraphics[width=\textwidth,height=5.15cm,keepaspectratio]{housing_transition.pdf}
+\end{center}
+\vspace{-0.25cm}
+\small Ownership remains too low; model housing space falls from \textbf{6.76 to 6.11} room units.
+\par\vspace{0.12cm}
+\scriptsize National household heads ages 18--85. Recorded ACS rooms have changing top-codes;
+that series is descriptive, not a harmonized room-growth target. Household totals and age shares are imposed through 2023.
+\par\vspace{0.07cm}
+\tiny\color{gray} Sources: ACS 2007, 2011, 2015, 2019, 2023; saved model transition.
+\end{frame}
+\end{document}
