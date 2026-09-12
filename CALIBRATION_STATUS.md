@@ -1,5 +1,37 @@
 # Calibration Status
 
+**September 12 — commute check: finite history restarted from its fitted 2011 state.**
+Short-horizon job `17498927` stopped after 1:14:40 during a 2011 shock trial.
+It retained the fitted 2007–2011 window and its original-expectations 2011 state.
+One further accepted forecast at preference 0.1370871565 produced 1.86906254
+versus the next window's 1.861 target; it was not close enough to carry forward.
+A subsequent proposal failed a population-conservation gate: absolute excess
+mass 3.725e-10, relative 1.163e-8 versus 1e-8 tolerance. No gate was relaxed.
+A read-only diagnosis identifies float32 tenure probabilities as a plausible
+rounding source, not yet an established cause; a stage-by-stage mass trace is
+still needed before any numerical correction.
+
+Controller now rejects RuntimeError forecast candidates without accepting their
+states, and can explicitly resume a hash-pinned fitted prefix. Changed target,
+model, root-control, or state-clock contracts are rejected. Six local controller
+tests and all 27 cluster preflight tests passed, including failure-then-success
+iteration and immutable resume checks. Native preflight loaded the actual
+2011 state and prior valid 2011 warm-start receipt successfully.
+Restart `17501164` is RUNNING, 1 CPU/8GB, 3-hour budget, from
+`candidate_path_20260911a/batches/finite_sequences_20260912/resume_2011/`.
+Plan SHA-256 `ecc9888d3533dc366f63db9777483084366154026569dd07216b15cb190c3d75`.
+Initial resumed preference proposal is 0.1360871565; scalar search step is now
+0.001. All economic primitives, targets, tolerances and source pins persist.
+Old failed outputs remain untouched. Maximum six trials per remaining window;
+no inaccurate fit is carried, and finite-diagnostic policy admission stays off.
+
+Medium-horizon `17498928` continues its first 2007 forecast: housing clearance
+passes, but last read pension gap 1.71e-6 still exceeds 1e-6. Long-horizon
+`17498929` remains priority-queued. No full carried history or new transition
+policy has completed. Cluster controllers remain autonomous with laptop closed;
+AI heartbeat remains paused at the token floor. The completed stationary
+policies and refreshed patch figures below remain available.
+
 **September 12 — three stationary tax comparisons passed; fitted patch packet refreshed.**
 Author-requested stationary cases completed on Torch: `17499515` (baseline),
 `17499516` (1% tax with equal rebate), `17499517` (2% with equal rebate).

@@ -9,6 +9,41 @@ def sha(p):
 def save(p,d):
     p=Path(p);p.parent.mkdir(parents=True,exist_ok=True);q=p.with_suffix('.tmp');q.write_text(json.dumps(d,default=lambda x:x.tolist() if hasattr(x,'tolist') else str(x),indent=2)+'\n');q.replace(p)
 
+def attempt_forecast(solve, rejection_path):
+    """Reject a numerically invalid candidate without admitting its state."""
+    try:return solve()
+    except RuntimeError as exc:
+        save(rejection_path,dict(stage='forecast',error_type=type(exc).__name__,error=str(exc)))
+        return None
+
+def restore_fitted_prefix(plan):
+    """Resume only an explicitly pinned, previously admitted finite prefix."""
+    spec=plan['resume_fitted_prefix']
+    for key,item in spec.items():
+        if sha(item['path'])!=item['sha256']:raise ValueError('Resume pin changed: '+key)
+    source=read(spec['source_plan']['path'])
+    for key in ('terminal_template','source_root','target_fingerprint','history_root_controls',
+                'outside_origin_entry_share','fertility_fit_tolerance','forecast_counts'):
+        if source[key]!=plan[key]:raise ValueError('Resume contract mismatch: '+key)
+    if not plan.get('finite_sequence_diagnostic') or not plan.get('skip_policies'):
+        raise ValueError('This resume path requires the explicit finite diagnostic contract')
+    realized=read(spec['realized_fit']['path']);receipt=read(spec['receipt']['path'])
+    if not realized:raise ValueError('Empty fitted prefix')
+    for i,row in enumerate(realized):
+        if row['year']!=2007+4*i or row['error_abs']>plan['fertility_fit_tolerance']:
+            raise ValueError('Unfitted or nonconsecutive prefix')
+    if (not receipt['finite_horizon_market_fiscal_converged'] or
+            receipt['start_year']!=realized[-1]['year'] or receipt['psi']!=realized[-1]['psi']):
+        raise ValueError('Resume receipt does not certify the retained prefix')
+    with gzip.open(spec['checkpoint']['path'],'rb') as stream:inherited=pickle.load(stream)
+    if inherited.year!=realized[-1]['year']+4:raise ValueError('Resume state clock mismatch')
+    if spec.get('warm_receipt'):
+        warm=read(spec['warm_receipt']['path'])
+        if not warm['finite_horizon_market_fiscal_converged'] or warm['start_year']!=inherited.year:
+            raise ValueError('Warm receipt must describe a valid forecast from the resumed date')
+        receipt=warm
+    return inherited,realized,receipt
+
 def standard_graphs(snapshot,result,folder):
     import run_e5f_independent_numerical_audit as diagnostic_writer
     from unittest.mock import patch
@@ -111,6 +146,12 @@ def main():
             adjusted_birth_queue=start_state.scheduled_entries,distribution_reset_2023=False,
             interpretation='Conditional stationary household distribution dated2019; birth queues from its constant birth flows. Original supply curve and external2023person anchor retained; no claim of full demographic stationarity.'))
     targets=list(csv.DictReader(Path(plan['empirical_blocks']).open()));realized=[];smoked=False;trial_index=0;warm=None;warm_year=None
+    if plan.get('resume_fitted_prefix'):
+        inherited,realized,warm=restore_fitted_prefix(plan);warm_year=warm['start_year'];smoked=True
+        targets=[t for t in targets if int(t['decision_year'])>=inherited.year]
+        save(out/'resume_receipt.json',dict(source=plan['resume_fitted_prefix'],year=inherited.year,
+            preserved_realized=realized,horizon_verified=False,production_eligible=False))
+        save(out/'realized_fit.json',realized)
     if plan.get('stationary_restart_2019'):targets=[t for t in targets if int(t['decision_year'])>=2019]
     if plan.get('verified_native_smoke'):
         native=read(plan['verified_native_smoke'])
@@ -146,7 +187,7 @@ def main():
                 with gzip.open(folder/'terminal/terminal_state.pkl.gz','rb') as f:t=pickle.load(f)
                 tr=read(folder/'terminal/root_receipt.json');payload=tr['final']['payload']
                 terminal=terminal_module.BalancedTerminalEndpoint(t['parameters'],t['b_grid'],t['policy'],t['endpoint'],t['social_security'],payload['diagnostics'],payload['household_gates'])
-                pstart=float(plan['warm_price_2007']);bstart=float(plan['warm_pension_2007']);previous=None;result=None;observed={}
+                pstart=float(plan['warm_price_2007']);bstart=float(plan['warm_pension_2007']);previous=None;result=None;observed={};trial_failed=False
                 counts=plan.get('forecast_counts',([6] if not smoked else [])+[28,56])
                 if counts!=[6] and not smoked and counts[0]!=6:raise ValueError('Long diagnostic requires its pinned native smoke first')
                 for count in counts:
@@ -198,10 +239,12 @@ def main():
                                 not np.array_equal(pensions,np.asarray(initial_coordinates['fiscal_values']))):
                                 raise ValueError('Continuation must preserve the complete pinned path coordinates')
                             save(stage/'initialization_verified.json',dict(receipt=plan['initialization_receipt'],sha256=sha(plan['initialization_receipt']),full_path_preserved=True,jacobian_reused=rc['initial_jacobian'] is not None))
-                        result=surprise.solve_surprise(inherited=inherited,psi=psi,old_state=old,terminal=terminal,terminal_root_receipt=tr,
+                        result=attempt_forecast(lambda: surprise.solve_surprise(inherited=inherited,psi=psi,old_state=old,terminal=terminal,terminal_root_receipt=tr,
                             demographic_primitives=demographics,terminal_demographic_primitives=t['demographic_seed'],count=count,initial_prices=prices,initial_pensions=pensions,
-                            audit_controls=audit,root_controls=rc,deadline_monotonic=min(fit_deadline,time.monotonic()+(1800 if count==6 else 7200)),pension_tail_tolerance=.01,callback=progress,observer=observe)
-                        result=carry_finite_diagnostic(result,enabled=finite_sequence,inherited=inherited,old=old,demographics=demographics,psi=psi,module=surprise)
+                            audit_controls=audit,root_controls=rc,deadline_monotonic=min(fit_deadline,time.monotonic()+(1800 if count==6 else 7200)),pension_tail_tolerance=.01,callback=progress,observer=observe),folder/'rejected.json')
+                        if result is not None:
+                            result=attempt_forecast(lambda: carry_finite_diagnostic(result,enabled=finite_sequence,inherited=inherited,old=old,demographics=demographics,psi=psi,module=surprise),folder/'rejected.json')
+                        if result is None:trial_failed=True;break
                         if dated_allocation:save(stage/'allocation_2023.json',dict(dated_allocation,finite_converged=result.root_receipt['finite_horizon_market_fiscal_converged'],horizon_verified=False,forecast_vintage_year=year))
                         surprise.persist_episode(stage/'vintage',year,result,provenance={'plan_sha256':sha(args.plan),'terminal_contract_sha256':sha(folder/'terminal_contract.json'),'target_fingerprint':plan['target_fingerprint']})
                         save(stage/'fertility.json',measurements);previous=result
@@ -216,7 +259,9 @@ def main():
                             return
                         if count==6:
                             if not result.root_receipt['finite_horizon_market_fiscal_converged']:
-                                if continuation==2:raise RuntimeError('Native exact-loop smoke failed after bounded continuations; no long new-timing solve')
+                                if continuation==2:
+                                    if not smoked:raise RuntimeError('Native exact-loop smoke failed after bounded continuations; no long new-timing solve')
+                                    save(folder/'rejected.json',dict(stage='forecast',error='Bounded continuations did not converge'));trial_failed=True;result=None;break
                                 continue
                             smoked=True;save(out/'native_smoke.json',dict(passed=True,year=year,psi=psi,folder=str(stage)))
                             if plan.get('native_smoke_only',False):
@@ -229,9 +274,10 @@ def main():
                                 return
                             break
                         if result.next_state is not None:break
-                    if result is not None and result.next_state is not None:break
+                    if trial_failed or (result is not None and result.next_state is not None):break
                 if result is None or result.next_state is None:
-                    save(folder/'rejected.json',dict(stage='forecast_or_terminal_distance'));continue
+                    if not (folder/'rejected.json').exists():save(folder/'rejected.json',dict(stage='forecast_or_terminal_distance'))
+                    continue
                 standard_graphs(snapshot,result,folder/'accepted_graphs')
                 value=measurements[0]['period_tfr_topcode_adjusted'];error=value-desired;trials.append((psi,error))
                 save(folder/'fit.json',dict(finite_horizon_diagnostic=finite_sequence,terminal_distance_passed=result.root_receipt['terminal_distance_passed'],year=year,psi=psi,data=desired,model=value,gap=error,measurement='retained household-rate analogue of published femaleTFR'))
