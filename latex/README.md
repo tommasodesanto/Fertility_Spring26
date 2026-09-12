@@ -63,7 +63,7 @@ Active documents:
   the chosen home supplies current housing services. Consumption and rental
   housing are $c_t,h_t^R$. Tildes denote the state immediately after the current
   birth outcome; current utility and housing requirements use post-birth
-  dependents. Maturation determines $m_{t+1}$, while parity carries forward.
+  dependents. Maturation determines $m_{t+1}$, while the number of children ever born carries forward.
   Household age $a$ is a model age index. Annual population accounting uses
   within-period year $j$ and age in years $\ell$, with $N_{t+1,0}=N_{t,L}$;
   $L=4$ is stated in quantification. Stationary definitions retain starred
@@ -186,7 +186,7 @@ Active documents:
   household-problem overlays return to May's age/choice/heterogeneity exposition,
   retaining the active one-market sequential model. Household state is
   `(b,h,z,n,m)` at date `t`, age `a`: liquid wealth, inherited owner housing,
-  permanent income group and persistent Markov earnings shock, lifetime parity,
+  permanent income group and persistent Markov earnings shock, number of children ever born,
   and dependent-child count. The quantitative task corrected its earlier
   default-off claim after inspecting the selected overnight checkpoint: there
   are three fixed permanent income groups crossed with five persistent earnings

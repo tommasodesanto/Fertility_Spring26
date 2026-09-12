@@ -124,7 +124,7 @@ Need a framework where fertility, tenure, housing size, saving, and population a
 
 \begin{frame}{Preferences}
 \small
-$n_t$: lifetime parity; $m_t$: dependents before birth; $\widetilde m_t$: after birth.
+$n_t$: children ever born; $m_t$: dependents before birth; $\widetilde m_t$: after birth.
 
 \medskip
 \textbf{Flow utility.} Over consumption and housing services:
@@ -203,7 +203,7 @@ b_{t+1}={}&R_b b_t+y_t^d(a,z_t)+T_t-c_t-(\delta_H+\tau_t^p)P_t h_{t+1}\\
 \begin{frame}{Fertility and Child Aging}
 \small
 \begin{itemize}\setlength\itemsep{0.35em}
-  \item During fertile ages, a household below terminal parity chooses whether to attempt the next birth.
+  \item During fertile ages, households choose whether to attempt another birth, up to the maximum family size.
   \item An attempt succeeds with age-specific probability $\pi_a$.
   \item Let $d_t\in\{0,1\}$ be the realized birth. Post-birth states are
   \[
@@ -211,7 +211,7 @@ b_{t+1}={}&R_b b_t+y_t^d(a,z_t)+T_t-c_t-(\delta_H+\tau_t^p)P_t h_{t+1}\\
   \]
   and the first successful birth pays the one-time utility cost $F_1$.
   \item Fertility taste shocks have scale $\kappa_1$ on the first-birth margin and $\kappa_C$ on continuation margins.
-  \item Each dependent child matures independently; the state tracks their count $m_{t+1}$ after maturation. Lifetime parity satisfies $n_{t+1}=\widetilde n_t\in\{0,1,2,3+\}$.
+  \item Each dependent child matures independently; the state tracks their count $m_{t+1}$ after maturation. The total number of births satisfies $n_{t+1}=\widetilde n_t\in\{0,1,2,3+\}$.
 \end{itemize}
 
 \vfill
@@ -292,8 +292,8 @@ H_t^s=H_0\left(\frac{P_t}{\bar P}\right)^\eta.
 \]
 \begin{itemize}\setlength\itemsep{0.5em}
  \item $b_t$: liquid wealth; $h_t$: inherited owner size; $z_t$: earnings.
- \item $n_t$: lifetime parity; $m_t$: dependents before the birth outcome.
- \item After the birth outcome, parity and dependents are $\widetilde n_t$ and $\widetilde m_t$.
+ \item $n_t$: children ever born; $m_t$: dependents before the birth outcome.
+ \item After the birth outcome, total births and dependents are $\widetilde n_t$ and $\widetilde m_t$.
 \end{itemize}
 \textbf{Values.}
 \begin{itemize}\setlength\itemsep{0.5em}
@@ -314,7 +314,7 @@ H_t^s=H_0\left(\frac{P_t}{\bar P}\right)^\eta.
 \end{aligned}
 \]
 \begin{itemize}\setlength\itemsep{0.5em}
- \item Parity carries forward: $n_{t+1}=\widetilde n_t$. Earnings and child maturation determine $z_{t+1}$ and $m_{t+1}$.
+ \item Total births carry forward: $n_{t+1}=\widetilde n_t$. Earnings and child maturation determine $z_{t+1}$ and $m_{t+1}$.
  \item A renter sets $h_{t+1}=0$; an owner sets $h_t^R=0$. The budget determines $c_t$.
 \end{itemize}
 }
@@ -339,7 +339,7 @@ The probability of attempting is
 =\frac{\exp\{W_t^A/\kappa(n_t)\}}
 {\exp\{W_t^A/\kappa(n_t)\}+\exp\{W_t^0/\kappa(n_t)\}},
 \]
-Here $\kappa(n_t)=\kappa_1$ if $n_t=0$ and $\kappa_C$ otherwise. Expected births equal $\pi_a\pi^F_{t,a}$; attempts require fertile age and parity below the maximum.
+Here $\kappa(n_t)=\kappa_1$ if $n_t=0$ and $\kappa_C$ otherwise. Expected births equal $\pi_a\pi^F_{t,a}$; attempts require fertile age and family size below the maximum.
 }
 \end{frame}
 
@@ -525,7 +525,7 @@ Compare model moments with the same age windows, conditioning events, and time u
 
 \medskip
 \begin{itemize}\setlength\itemsep{0.65em}
- \item \textbf{Fertility:} CPS 2004/2006 parity stocks at ages 40--44; natality records 2003--2006 for first-birth timing. Interpolate birth timing within model age cells.
+ \item \textbf{Fertility:} CPS 2004/2006 children ever born at ages 40--44; natality records 2003--2006 for first-birth timing. Interpolate birth timing within model age cells.
  \item \textbf{Housing:} ACS 2005/2006, pooled across 42 metros; match room top-codes, age ranges, and resident-child groups. The model uses dependent counts as the child-group proxy.
  \item \textbf{Wealth:} PSID 2003/2005; match weighted wealth/earnings and old-age wealth/income dispersion. Bequests/wealth is an external flow restriction.
  \item \textbf{Housing around birth:} compare a longitudinal PSID room response with the corresponding model event contrast; the empirical timing and reference design remain under review.
@@ -883,7 +883,7 @@ H_{t+1,a}
 
 \begin{itemize}\setlength\itemsep{0.4em}
   \item $F$ and $D$ are the minimum one-way formation or dissolution flow needed to attain $\rho^{g,\ell}$.
-  \item Wealth, tenure, income, parity, and child-state composition are preserved within age.
+  \item Wealth, tenure, income, and family composition are preserved within age.
   \item This is an accounting closure, not an estimated household-formation hazard.
 \end{itemize}
 \end{frame}

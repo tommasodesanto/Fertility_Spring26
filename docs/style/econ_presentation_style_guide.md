@@ -59,6 +59,10 @@ the codebase or the sequence of internal experiments.
 
 ## 4. Model and equilibrium slides
 
+- Do not use "parity" in slide text or figure labels. Say "number of children,"
+  "children ever born," or "fertility"; distinguish total births $n$ from children
+  currently at home $m$.
+
 - Introduce the simplified economy before presenting its results: agents, timing, choices,
   prices, and market clearing.
 - Define a steady state as a constant allocation, population/cohort structure, and price

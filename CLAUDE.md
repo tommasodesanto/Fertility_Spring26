@@ -341,6 +341,11 @@ inspectable if it only writes CSVs, losses, or scalar moments.
 
 Maintain precise terminology:
 
+- Do not use "parity" in author-facing prose, slides, or figure labels. Use
+  "number of children," "children ever born," or "fertility," as appropriate.
+  Distinguish children ever born ($n$) from children currently at home ($m$).
+  Existing internal code identifiers need not be renamed.
+
 - "Fertility" can mean a flow or hazard; "completed fertility" is a stock.
 - "Childlessness" is the extensive margin; "number of children" is the intensive
   margin.
