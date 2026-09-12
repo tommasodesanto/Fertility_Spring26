@@ -58,6 +58,21 @@ Active documents:
   alternative was verified. The deck describes the active calculation rather
   than claiming that every nested alternative has been definitively abandoned.
 
+  **September 12 policy overview and transition figures.** The two policy
+  frames now describe the common inherited 2023 economy, permanent annual
+  property tax of 1% versus 2%, equal per-head distribution of each path's own
+  revenue, common preference/supply/demographic environment, and separate
+  balanced pension budget. They describe an experiment, not computed effects.
+  The quantitative task reconfirmed this contract directly. An accepted
+  historical 2023 state and the entry/demographic closure remain unresolved.
+  At the author's request, **Review quantitative model** is supplying numerical
+  transition panels first and investigating a bounded fertility-preference IRF.
+  Saved short forecasts are responses to a permanent preference step, with
+  finite market/fiscal closure but uncertified terminal distance; they cannot
+  be labeled a fitted history or a temporary, baseline-subtracted impulse
+  response. Their initial calibration also differs from the latest provisional
+  initial-fit tables. No such plot has yet been inserted into the deck.
+
   **Two-slide algorithm walkthrough.** The first two numbered frames in
   Quantification explain the actual nested loops in literal steps. For each
   structural candidate, the initial pension is derived from the stationary
