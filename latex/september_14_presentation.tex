@@ -101,13 +101,22 @@ Need a framework where fertility, tenure, housing size, saving, and population a
 \end{frame}
 
 \begin{frame}{Environment}
-\begin{itemize}\setlength\itemsep{0.65em}
-  \item Overlapping generations of households in one housing market.
-  \item Households live for a finite number of periods, work, and then retire.
-  \item Earnings differ permanently across households and are subject to persistent idiosyncratic risk.
-  \item Households choose whether to have a child during their fertile years.
-  \item Children depend on their parents until they mature.
-  \item Households choose tenure, housing size, consumption, and saving throughout life.
+\small
+\begin{itemize}\setlength\itemsep{0.55em}
+  \item Overlapping generations of households in one competitive housing market.
+  \begin{itemize}
+    \item Rental space is size-limited; ownership offers larger homes but requires a down payment.
+  \end{itemize}
+  \item Households age from $a=0$ to $J$, survive with probability $s_a$, and retire at $a_R$.
+  \begin{itemize}
+    \item Birth attempts are possible during a fertile window $[a_F^0,a_F^1]$.
+    \item Children depend on their parents until they mature.
+  \end{itemize}
+  \item Households differ in liquid wealth $b$, inherited owned housing $h$, and persistent earnings $z$.
+  \begin{itemize}
+    \item Lifetime parity $n$ and dependent children $m$ describe their family composition.
+  \end{itemize}
+  \item Households choose birth attempts, tenure, housing size, consumption, and saving.
 \end{itemize}
 \end{frame}
 
@@ -146,9 +155,9 @@ s=\begin{cases}
 h^R,&\text{renter},\\
 \chi h',&\text{owner},
 \end{cases}
-\qquad \chi>1.
+\qquad \chi>0.
 \]
-Owners obtain a service premium $\chi$ from a home of physical size $h'$.
+The multiplier $\chi$ converts owned rooms into housing services; $\chi>1$ gives an ownership premium.
 
 \vfill
 Child needs disappear as children mature; lifetime births remain in the state.
@@ -156,7 +165,7 @@ Child needs disappear as children mature; lifetime births remain in the state.
 
 \begin{frame}{Earnings and Bequests}
 \small
-Gross earnings $y_t^g(a,z)$ combine an age profile and persistent income risk \cit{(De Nardi, 2004)}, with permanent differences across households. Households receive retirement income after working life.
+Gross earnings $y_t^g(a,z)$ combine an age profile and persistent income risk \cit{(De Nardi, 2004)}. Earnings state $z$ follows a Markov process; households receive pensions after working life.
 
 \medskip
 At death, households value estate wealth $w^e$:
@@ -249,7 +258,7 @@ Households carry net liquid wealth $b$ into the period and choose saving $b'$.
   \]
   and the first successful birth pays the one-time utility cost $F_1$.
   \item Fertility taste shocks have scale $\kappa_1$ on the first-birth margin and $\kappa_C$ on continuation margins.
-  \item Each child at home matures independently; $m$ falls as children leave, while parity $n$ remains a stock.
+  \item Each dependent child matures independently; the state tracks their count $m$, while lifetime parity $n\in\{0,1,2,3+\}$ remains a stock.
 \end{itemize}
 
 \vfill
@@ -298,9 +307,9 @@ The Household's Problem%
   },
   line/.style={-Latex, semithick, draw=black!75}
 ]
-\node (fertS) [see, alt=<3>{draw=red, ultra thick}{}] {see $\varepsilon^f$};
+\node (fertS) [see, alt=<3>{draw=red, ultra thick}{}] {see $\varepsilon^F$};
 \node (fertD) [choose, right=of fertS, alt=<3>{draw=red, ultra thick}{}] {choose attempt\\($\pi^F$, $V$)};
-\node (succ) [see, right=of fertD, alt=<2>{draw=red, ultra thick}{}] {realize birth};
+\node (succ) [see, right=of fertD, alt=<2>{draw=red, ultra thick}{}] {realize birth\\see $\varepsilon^H$};
 \node (house) [choose, right=of succ, alt=<2>{draw=red, ultra thick}{}] {choose $h',h^R,b'$\\($\pi^H$, $\mathcal V$)};
 
 \draw[line] (fertS) -- (fertD);
@@ -314,72 +323,59 @@ The Household's Problem%
 \setlength{\abovedisplayskip}{4pt}
 \setlength{\belowdisplayskip}{4pt}
 
+
 \only<1>{%
 \small
-Households choose fertility before learning whether conception succeeds.
+At date $t$ and age $a$, write the household's inherited state as
+\[
+x=(b,h,z,n,m).
+\]
+$b$ is liquid wealth, $h$ owned housing ($h=0$ for renters), $z$ the earnings state, $n$ lifetime parity, and $m$ dependent children.
 
 \medskip
-\begin{enumerate}\setlength\itemsep{0.65em}
-  \item Observe fertility tastes and choose whether to attempt a birth.
-  \item Learn whether the attempt succeeds.
-  \item Choose tenure and housing size, given the realized family size.
-  \item Choose consumption and saving, anticipating future income and family needs.
-\end{enumerate}
+$V_{t,a}(x)$ is value before fertility choice; $\mathcal V_{t,a}(x)$ is value after the birth outcome, before housing choice.
+
+\medskip
+A successful birth changes the state to $x^+=(b,h,z,n+1,m+1)$. Households then choose housing and saving for the realized family size.
 }
 
 \only<2>{%
 \footnotesize
-For a household of age $a$, given its wealth, earnings, housing, and realized family size:
+After the birth outcome, housing and saving solve
 \[
-\mathcal V_t
-=
-\E_{\varepsilon_t^H}
-\max_{h',h^R,b'}
-\left\{
-u_t(c,s;m)+\varepsilon_t^H(h')
-+\beta s_a\E_t[V_{t+1}]
-+\beta(1-s_a)\E_t[\mathcal B(w^e_{t+1})]
-\right\}.
+\begin{aligned}
+\mathcal V_{t,a}(b,h,z,n,m)
+=\E_{\varepsilon_t^H}\max_{h',h^R,b'}
+\Bigl\{&u_t(c,s;m)+\varepsilon_t^H(h')\\
+&+\beta s_a\E\!\left[V_{t+1,a+1}(b',h',z',n,m')\mid z,m\right]\\
+&+\beta(1-s_a)\E_t[\mathcal B(w^e_{t+1})]\Bigr\}.
+\end{aligned}
 \]
-
 \begin{itemize}\setlength\itemsep{3pt}
-  \item $h'h^R=0$: a renter sets $h'=0$; an owner sets $h^R=0$.
-  \item Current purchases occur at $P_t$ and future sales at future prices.
-  \item The budget, down-payment condition, and age-tapered debt floor restrict $(h',h^R,b')$.
-  \item $\beta$ discounts the future; $s_a$ is survival; $V_{t+1}$ is the next-period value.
-  \item Housing-product taste shocks $\varepsilon_t^H$ have scale $\kappa_H$.
+  \item Choices satisfy budgets, the rental size cap, down-payment requirements, and age-dependent debt limits.
+  \item Expectations integrate next period's earnings $z'$ and dependent-child count $m'$.
+  \item $\beta$ discounts the future, $s_a$ is survival, and $\kappa_H$ is the scale of housing tastes.
 \end{itemize}
 }
 
 \only<3>{%
 \footnotesize
-Let $\mathcal V_t^+$ denote the value with an additional child and $\pi_a$ conception success. The values of waiting and attempting are:
+Given conception success $\pi_a$, waiting and attempting have values
 \[
-W_t^0=\mathcal V_t,
-\qquad
-W_t^A
-=
-\pi_a\!\left[
-\mathcal V_t^+-F_1\1\{n=0\}
-\right]
-+(1-\pi_a)\mathcal V_t.
+W_{t,a}^0(x)=\mathcal V_{t,a}(x),\qquad
+W_{t,a}^A(x)=\pi_a\!\left[\mathcal V_{t,a}(x^+)-F_1\1\{n=0\}\right]
++(1-\pi_a)\mathcal V_{t,a}(x).
 \]
-The attempt probability is
+The value before fertility tastes and the attempt probability are
 \[
-\pi_t^F
-=
-\frac{\exp\{W_t^A/\kappa(n)\}}
-{\exp\{W_t^A/\kappa(n)\}+\exp\{W_t^0/\kappa(n)\}},
-\qquad
-\kappa(n)=
-\begin{cases}
-\kappa_1,&n=0,\\
-\kappa_C,&n\geq1.
-\end{cases}
+V_{t,a}(x)=\E_{\varepsilon^F}\max\{W_{t,a}^0(x)+\varepsilon_0^F,\ W_{t,a}^A(x)+\varepsilon_A^F\},
 \]
-
-\medskip
-Housing affects fertility through current child-space needs, tenure feasibility, and the continuation value of wealth and housing.
+\[
+\pi^F_{t,a}(x)=\frac{\exp\{W_{t,a}^A(x)/\kappa(n)\}}
+{\exp\{W_{t,a}^A(x)/\kappa(n)\}+\exp\{W_{t,a}^0(x)/\kappa(n)\}},
+\qquad \kappa(n)=\begin{cases}\kappa_1,&n=0,\\\kappa_C,&n\geq1.\end{cases}
+\]
+Expected births are $\pi_a\pi^F_{t,a}(x)$. Attempts are unavailable outside fertile ages or at terminal parity.
 }
 \end{frame}
 
@@ -416,85 +412,6 @@ An equilibrium is a sequence of policy functions, value functions, household dis
 \end{enumerate}
 \end{frame}
 
-\begin{frame}{Steady-State Equilibrium}
-\small
-A steady state is a constant allocation, population structure, and price:
-\[
-(N^*,H^*,G^*,\pi^*,P^*,r^*,T^*,\varpi^*).
-\]
-Households optimize, persons and household distributions reproduce themselves, housing clears, and the fiscal rule holds.
-
-\medskip
-\begin{itemize}\setlength\itemsep{0.65em}
- \item With no migration, births must replace deaths in a constant population.
- \item With migration, births and net inflows together offset deaths.
- \item A constant continuation value alone does not make a finite path stationary.
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Housing and Fertility in Equilibrium}
-The next three diagrams illustrate the interaction between housing costs and population.
-
-\medskip
-\begin{itemize}\setlength\itemsep{0.65em}
- \item \textbf{Left panel:} $P(S;v)$ is the housing cost that clears the market at adult-household population $S$, holding age composition fixed.
- \item \textbf{Right panel:} $n(p;v)$ is household fertility at housing cost $p$ and fertility preference $v$.
- \item The illustration uses a closed population, with replacement equal to $n=1$.
-\end{itemize}
-
-\vfill
-These are schematic schedules. The quantitative model tracks the full age distribution and distinguishes rents from asset prices.
-\end{frame}
-
-\begin{frame}{Initial Steady State}
-\centering
-\includegraphics[width=\textwidth,height=0.66\textheight,keepaspectratio]{../output/model/fertility_population_housing_transition_note/housing_fertility_stage_initial.pdf}
-
-\medskip
-\raggedright\small
-At $A$, housing clears at $(S_0,p_0)$ and fertility is at replacement.\par
-The housing cost and population are constant in this schematic initial economy.
-\end{frame}
-
-\begin{frame}{A Decline in Fertility Preferences}
-Begin from an approximate initial steady state. At the start of the transition, households learn the full future preference path.
-
-\medskip
-\begin{itemize}\setlength\itemsep{0.7em}
- \item The preference for children declines exogenously over 2007--2023.
- \item The preference level remains fixed thereafter.
- \item Prices and household choices can respond as soon as the path is known.
- \item Liquid asset holdings, inherited homes, and cohort sizes are fixed at impact.
-\end{itemize}
-
-\vfill
-The exercise conditions on this decline; explaining its original cause is outside the question.
-\end{frame}
-
-\begin{frame}{Impact}
-\centering
-\includegraphics[width=\textwidth,height=0.60\textheight,keepaspectratio]{../output/model/fertility_population_housing_transition_note/housing_fertility_stage_impact.pdf}
-
-\medskip
-\raggedright\small
-A fall from $v_0$ to $v_1$ shifts both schedules. With $S_0$ inherited, the schematic impact equilibrium moves from $A$ to $I$: housing cost and fertility fall.
-
-\smallskip
-The diagram shows a one-time shift; the quantitative preference decline is spread over time.
-\end{frame}
-
-\begin{frame}{Demographic Adjustment}
-\centering
-\includegraphics[width=\textwidth,height=0.60\textheight,keepaspectratio]{../output/model/fertility_population_housing_transition_note/housing_fertility_stage_adjustment.pdf}
-
-\medskip
-\raggedright\small
-Smaller entering cohorts can reduce housing demand. Lower housing costs partly offset the preference decline; $A'$ marks a possible stationary outcome.
-
-\smallskip
-The arrow links the illustrated equilibria. Changing age composition can produce overshooting; it is not a computed transition or a convergence result.
-\end{frame}
-
 \section{Empirics}
 
 \begin{frame}[plain,c,noframenumbering]{}
@@ -526,7 +443,7 @@ Cross-sectional housing patterns discipline access to space; longitudinal data d
 
 \medskip
 \raggedright\small
-Rooms increase around first birth, including before the birth. The four-year contrast from $-1$ to $+3$ is descriptive, not a causal effect.
+Provisional event profile: empirical timing and reference-period support are under review. The retained calibration contrast is $-1$ to $+3$; it is not a causal effect.
 \source{PSID; Sun--Abraham event study, household-aligned sample; pointwise 95\% intervals.}
 \end{frame}
 
@@ -537,46 +454,305 @@ Rooms increase around first birth, including before the birth. The four-year con
 {\Large\textbf{Quantification}}
 \end{frame}
 
-\begin{frame}{Empirical Discipline}
+
+% Initial tables and fit coordinates: verified_final/selected_target_fit.csv and selected_parameters.csv (2026-09-12).
+% Fingerprint c0e266d3a0d430343c469d780d1aedb45fa87f8763c9c938889e0c37daa31de2.
+\begin{frame}{Calibration Strategy}
 \small
-Different moments inform the fertility, housing, and saving decisions jointly.
+Discipline household behavior in an approximate pre-2007 stationary economy, then hold structural parameters fixed along the demographic transition.
 
 \medskip
-\renewcommand{\arraystretch}{1.25}
-\begin{tabularx}{\textwidth}{@{}p{0.25\textwidth}YY@{}}
+\begin{enumerate}\setlength\itemsep{0.65em}
+ \item \textbf{External inputs.} Fix the income process, survival and conception probabilities, housing menus, equivalence scale, and housing-supply elasticity.
+ \item \textbf{Initial calibration.} Jointly match fertility, housing, and wealth moments by minimum distance. Normalize $\psi_0$ to model completed fertility of 2.1.
+ \item \textbf{Historical transition.} Initialize household masses in 2007 and choose subsequent fertility-preference levels to match dated fertility rates.
+\end{enumerate}
+
+\vfill
+The initial fit disciplines behavior; the historical fit disciplines changes in the preference for children.
+\end{frame}
+
+\begin{frame}{Empirical Discipline}
+\small
+Moments inform parameters through their joint effects on household choices.
+
+\medskip
+\renewcommand{\arraystretch}{1.22}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.14\textwidth}Y>{\raggedright\arraybackslash}p{0.19\textwidth}@{}}
 \toprule
-Margin & Observations & Parameters informed \\
+Margin & Empirical variation & Parameters \\
 \midrule
-Fertility & Childlessness, completed fertility, first-birth timing & $\psi$, $F_1$, $\kappa_1$, $\kappa_C$ \\
-Housing & Rooms around births, family-size room gaps, ownership & $h_P$, $\chi$ \\
-Saving and bequests & Wealth/earnings, bequest flows, old-age wealth dispersion & $\beta$, $\theta_0$, $\theta_1$ \\
-Housing supply & Housing quantities and price responses & $H_0$, $\eta$ \\
+Fertility & Childlessness and one-child families; mean first-birth age and the share at age 30+ & $F_1,\kappa_1,\kappa_C$ \\
+Housing & Rooms and ownership; housing around first birth and differences across family sizes & $h_P,\chi,H_0$ \\
+Saving & Wealth relative to earnings, bequest flows, and old-age wealth dispersion & $\beta,\theta_0,\theta_1$ \\
 \bottomrule
 \end{tabularx}
 
-\vfill
-A moment can inform several parameters; identification depends on their joint effects.
+\medskip
+Fertility stocks and birth timing discipline different margins. Housing around birth informs demand for space.
 \end{frame}
 
-\begin{frame}{Calibration and Transition Strategy}
+\begin{frame}{Moment Construction}
 \small
-Calibrate structural parameters first, then estimate the fertility-preference decline.
+Compare model moments with the same age windows, conditioning events, and time units used in the data.
 
 \medskip
-\begin{enumerate}\setlength\itemsep{0.5em}
- \item \textbf{Initial calibration.} Fit an approximate stationary economy to pre-crisis moments. Choose $\psi_0$ so model completed fertility equals 2.1.
- \item \textbf{2007 initialization.} Impose observed age shares, preserving stationary household distributions within age.
- \item \textbf{Historical fit.} Hold structural parameters fixed and fit an announced 2007--2023 preference path to dated fertility observations.
+\begin{itemize}\setlength\itemsep{0.65em}
+ \item \textbf{Fertility:} CPS 2004/2006 parity stocks at ages 40--44; natality records 2003--2006 for first-birth timing. Interpolate birth timing within model age cells.
+ \item \textbf{Housing:} ACS 2005/2006, pooled across 42 metros; match room top-codes, age ranges, and resident-child groups. The model uses dependent counts as the child-group proxy.
+ \item \textbf{Wealth:} PSID 2003/2005; match weighted wealth/earnings and old-age wealth/income dispersion. Bequests/wealth is an external flow restriction.
+ \item \textbf{Housing around birth:} compare a longitudinal PSID room response with the corresponding model event contrast; the empirical timing and reference design remain under review.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Fertility Targets}
+\footnotesize
+\textit{Provisional initial calibration}\par
+\medskip
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}Xrr@{}}
+\toprule
+Moment & Target & Model \\
+\midrule
+Completed fertility (normalization) & 2.10 & 2.10 \\
+Childless, women 40--44 (\%) & 19.8 & 20.7 \\
+Exactly one child among mothers, 40--44 (\%) & 21.4 & 20.7 \\
+Mean age at first birth (years) & 25.98 & 26.10 \\
+First births at age 30+ (\%) & 24.9 & 23.2 \\
+\bottomrule
+\end{tabularx}\par
+\medskip
+\source{CPS fertility supplements, 2004/2006; NCHS natality, 2003--2006. Completed fertility 2.1 is an author-selected model normalization.}
+\end{frame}
+\begin{frame}{Housing and Wealth Targets}
+\footnotesize
+\textit{Provisional initial calibration}\par
+\medskip
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}Xrr@{}}
+\toprule
+Moment & Target & Model \\
+\midrule
+Mean occupied rooms (capped at 9) & 5.56 & 6.29 \\
+Ownership, heads 30--55 (\%) & 64.8 & 52.4 \\
+First-birth room response, $-1$ to $+3$ ($\dagger$) & 0.720 & 1.011 \\
+Rooms: 3+ versus 1--2 resident children & 0.347 & 0.200 \\
+Recent-parent ownership gap (pp) & 16.3 & 15.0 \\
+Wealth / annual gross earnings & 6.15 & 4.85 \\
+Annual bequests / wealth (\%) & 0.88 & 0.86 \\
+Wealth/income p90 / median, ages 76--84 & 3.52 & 4.44 \\
+\bottomrule
+\end{tabularx}\par
+\medskip
+$\dagger$ Retained computational target; empirical measurement under review.
+\source{ACS 2005/2006; PSID 2003/2005 wealth and pooled first-birth event study; external bequest-flow restriction.}
+\end{frame}
+\begin{frame}{Calibrated Parameters}
+\footnotesize
+\textit{Provisional initial calibration}\par
+
+\medskip
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}lXr@{}}
+\toprule
+Parameter & Economic interpretation & Value \\
+\midrule
+$\beta_{\rm annual}$ & Annual discount factor & 0.990 \\
+$\kappa_1$ & First-birth taste dispersion & 0.279 \\
+$\kappa_C$ & Later-birth taste dispersion & 0.347 \\
+$\chi$ & Owner housing-service multiplier & 1.048 \\
+$H_0$ & Housing supply at reference price & 8.191 \\
+$\theta_0$ & Bequest-motive scale & 0.087 \\
+$\theta_1$ & Bequest-utility wealth shift & 0.057 \\
+$F_1$ & First-birth utility cost & 0.127 \\
+$h_P$ & Parenthood space requirement & 2.300 \\
+
+\bottomrule
+\end{tabularx}\par
+\medskip
+$\beta_{\rm annual}$ and $h_P$ reach their upper search bounds.
+\hfill\hyperlink{parameter-restrictions}{\beamergotobutton{Parameter restrictions}}
+\end{frame}
+
+\begin{frame}{External Inputs and Normalizations}
+\footnotesize
+\renewcommand{\arraystretch}{1.18}
+\begin{tabularx}{\textwidth}{@{}lXr@{}}
+\toprule
+Object & Economic interpretation & Value \\
+\midrule
+$\sigma$ & Utility curvature (fixed) & 2 \\
+$\alpha_0$ & Consumption share (fixed) & 0.733 \\
+$\eta$ & Housing-supply elasticity (fixed) & 0.63 \\
+$\kappa_H$ & Housing-product taste dispersion (fixed) & 0.005 \\
+$\tau^{SS}$ & Payroll tax rate (fixed) & 0.179 \\
+Child-space slope & No additional linear requirement per child & 0 \\
+$\psi_0$ & Preference level matching completed fertility 2.1 & 0.1596 \\
+$\varpi_0$ & Initial pension implied by budget balance & 2.0464 \\
+\bottomrule
+\end{tabularx}\par
+\medskip
+A model period is four years, $\beta=\beta_{\rm annual}^4$. The equivalence scale is
+$e(m)=((2+0.7m)/2)^{0.7}$; pensions are in model-period income units.
+\end{frame}
+
+\begin{frame}{Fertility Fit}
+\small\textit{Provisional initial calibration}\par
+\medskip
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.55\textwidth,height=0.53\textheight,
+scale only axis,xmin=0.5,xmax=1.5,
+ymin=-0.6,ymax=3.6,
+ytick={0,1,2,3},
+yticklabels={{First births at age 30+ (\%)},{Mean age at first birth (years)},{One child among mothers (\%)},{Childless, ages 40--44 (\%)}},
+xtick={0.5,0.75,1,1.25,1.5},
+xlabel={Model / target},tick label style={font=\scriptsize},
+axis x line*=bottom,axis y line*=left,y axis line style={draw=none},ytick style={draw=none},xmajorgrids,grid style={gray!15},
+clip=false]
+\addplot[black!50,dashed] coordinates {(1,-0.5) (1,3.5)};
+\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,0) (0.9307964788,0)};
+\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,1) (1.0048857750,1)};
+\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,2) (0.9668861235,2)};
+\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,3) (1.0437636804,3)};
+\end{axis}
+\end{tikzpicture}
+\par\medskip\raggedright\small
+The dashed line denotes the target. First births occur slightly later in the model, but too few occur at age 30 or above.
+\end{frame}
+\begin{frame}{Housing and Wealth Fit}
+\small\textit{Provisional initial calibration}\par
+\medskip
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=0.55\textwidth,height=0.53\textheight,
+scale only axis,xmin=0.5,xmax=1.5,
+ymin=-0.6,ymax=7.6,
+ytick={0,1,2,3,4,5,6,7},
+yticklabels={{Old-age wealth/income dispersion},{Annual bequests / wealth (\%)},{Wealth / annual gross earnings},{Recent-parent ownership gap (pp)},{Family-size room gap},{First-birth rooms ($\dagger$)},{Ownership, heads 30--55 (\%)},{Mean rooms}},
+xtick={0.5,0.75,1,1.25,1.5},
+xlabel={Model / target},tick label style={font=\scriptsize},
+axis x line*=bottom,axis y line*=left,y axis line style={draw=none},ytick style={draw=none},xmajorgrids,grid style={gray!15},
+clip=false]
+\addplot[black!50,dashed] coordinates {(1,-0.5) (1,7.5)};
+\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,0) (1.2623651641,0)};
+\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,1) (0.9752896614,1)};
+\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,2) (0.7889725539,2)};
+\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,3) (0.9218170781,3)};
+\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,4) (0.5776232226,4)};
+\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,5) (1.4037227307,5)};
+\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,6) (0.8089033192,6)};
+\addplot[thick,blue!65!black,mark=*,mark indices={2}] coordinates {(1,7) (1.1311776181,7)};
+\end{axis}
+\end{tikzpicture}
+\par\medskip\raggedright\small
+The model has too many rooms and too little ownership and wealth. $\dagger$ The first-birth room target awaits empirical reconciliation.
+\end{frame}
+\begin{frame}{The Initial Equilibrium over the Lifecycle}
+\small\textit{Provisional initial calibration}\par
+
+\medskip
+\centering
+\includegraphics[width=0.49\textwidth]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/verified_final/selected_standard_diagnostics/fertility_by_age.png}\hfill
+\includegraphics[width=0.49\textwidth]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/verified_final/selected_standard_diagnostics/ownership_by_age.png}
+
+\medskip
+\raggedright
+Births are concentrated early in life, while ownership rises with age.
+\par\smallskip
+These are model equilibrium profiles; the preceding tables and plots compare the targeted moments with data.
+\end{frame}
+
+\begin{frame}{From the Initial Economy to 2023}
+\small
+The historical exercise separates inherited demographics from changes in fertility preferences.
+
+\medskip
+\begin{enumerate}\setlength\itemsep{0.55em}
+ \item \textbf{2007 starting point.} Impose observed age masses, preserving the initial stationary distribution of household states within each age.
+ \item \textbf{Preference innovations.} At each decision date, households observe a new preference level and believe it will remain permanent.
+ \item \textbf{Conditional equilibrium.} Solve the anticipated price and pension paths jointly with household choices and population accounting. Realize the first four-year period.
+ \item \textbf{Next observation.} Carry forward wealth, homes, household distributions, and birth cohorts. Choose the next preference level to fit the next fertility window.
 \end{enumerate}
 
-\medskip
-Households learn the full path in 2007. Preferences remain constant after 2023.
+\vfill
+The pre-2023 population bridge uses observed demographics. Later preference innovations are unanticipated; the final level remains fixed after 2023.
+\end{frame}
+
+\begin{frame}{Historical Fertility Discipline}
+\small
+Choose each preference level to match fertility over the following four calendar years.
 
 \medskip
-For each path, solve anticipated prices and pensions jointly with household choices. Continue beyond 2023 to check terminal effects.
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{@{}C C C@{}}
+\toprule
+Decision date & Birth years & Mean published TFR \\
+\midrule
+2007 & 2008--2011 & 1.9749 \\
+2011 & 2012--2015 & 1.8610 \\
+2015 & 2016--2019 & 1.7554 \\
+2019 & 2020--2023 & 1.6458 \\
+\bottomrule
+\end{tabularx}
+
+\medskip
+The model sums age-specific births per adult household: an approximate analogue of female period TFR. The exposure mapping remains to be reconciled.
+
+\medskip
+This is the estimation design. A complete historical fit requires converged conditional equilibria and stability to a longer continuation horizon.
+\source{Published annual U.S. total fertility rates; equal-weight four-year averages.}
+\end{frame}
+
+
+\begin{frame}{Housing and Fertility in Equilibrium}
+The next three diagrams illustrate the interaction between housing costs and population.
+
+\medskip
+\begin{itemize}\setlength\itemsep{0.65em}
+ \item \textbf{Left panel:} $P(S;v)$ is the housing cost that clears the market at adult-household population $S$, holding age composition fixed.
+ \item \textbf{Right panel:} $n(p;v)$ is household fertility at housing cost $p$ and fertility preference $v$.
+ \item The illustration uses a closed population, with replacement equal to $n=1$.
+\end{itemize}
 
 \vfill
-Policy comparisons share the inherited 2023 transition state.
+These are schematic schedules. The quantitative model tracks the full age distribution and distinguishes rents from asset prices.
+\end{frame}
+
+\begin{frame}{Initial Steady State}
+\centering
+\includegraphics[width=\textwidth,height=0.66\textheight,keepaspectratio]{../output/model/fertility_population_housing_transition_note/housing_fertility_stage_initial.pdf}
+
+\medskip
+\raggedright\small
+At $A$, housing clears at $(S_0,p_0)$ and fertility is at replacement.\par
+The housing cost and population are constant in this schematic initial economy.
+\end{frame}
+
+
+
+\begin{frame}{Impact}
+\centering
+\includegraphics[width=\textwidth,height=0.60\textheight,keepaspectratio]{../output/model/fertility_population_housing_transition_note/housing_fertility_stage_impact.pdf}
+
+\medskip
+\raggedright\small
+A fall from $v_0$ to $v_1$ shifts both schedules. With $S_0$ inherited, the schematic impact equilibrium moves from $A$ to $I$: housing cost and fertility fall.
+
+\smallskip
+The diagram shows a one-time shift; the quantitative preference decline is spread over time.
+\end{frame}
+
+\begin{frame}{Demographic Adjustment}
+\centering
+\includegraphics[width=\textwidth,height=0.60\textheight,keepaspectratio]{../output/model/fertility_population_housing_transition_note/housing_fertility_stage_adjustment.pdf}
+
+\medskip
+\raggedright\small
+Smaller entering cohorts can reduce housing demand. Lower housing costs partly offset the preference decline; $A'$ marks a possible stationary outcome.
+
+\smallskip
+The arrow links the illustrated equilibria. Changing age composition can produce overshooting; it is not a computed transition or a convergence result.
 \end{frame}
 
 \begin{frame}{Policy Along the Transition}
@@ -637,6 +813,46 @@ Compare paths under the same rebate rule, with a common inherited state and supp
 
 \begin{frame}[plain,c,noframenumbering]{}
 \centering{\Large\textbf{Appendix}}
+\end{frame}
+
+
+\begin{frame}[label=parameter-restrictions]{Parameter Restrictions}
+\footnotesize
+\renewcommand{\arraystretch}{1.12}
+\begin{tabularx}{\textwidth}{@{}lrrrX@{}}
+\toprule
+Parameter & Value & Lower & Upper & Position \\
+\midrule
+$\beta_{\rm annual}$ & 0.9900 & 0.94 & 0.99 & Upper bound \\
+$\kappa_1$ & 0.2794 & 0.02 & 50 & Near lower bound \\
+$\kappa_C$ & 0.3469 & 0.02 & 50 & Near lower bound \\
+$\chi$ & 1.0480 & 0.1 & 5 & Interior \\
+$H_0$ & 8.1905 & 0.2 & 80 & Interior \\
+$\theta_0$ & 0.0870 & 0 & 8 & Interior \\
+$\theta_1$ & 0.0571 & 0.02 & 16 & Near lower bound \\
+$F_1$ & 0.1268 & 0 & 8 & Interior \\
+$h_P$ & 2.3000 & 0.1 & 2.3 & Upper bound \\
+
+\bottomrule
+\end{tabularx}\par
+\medskip
+Near-bound means within 1\% of the allowed range; it does not establish a binding constraint. Fixed, normalized, and budget-derived objects are listed separately in the main table.
+\end{frame}
+
+\begin{frame}{Steady-State Equilibrium}
+\small
+A steady state is a constant allocation, population structure, and price:
+\[
+(N^*,H^*,G^*,\pi^*,P^*,r^*,T^*,\varpi^*).
+\]
+Households optimize, persons and household distributions reproduce themselves, housing clears, and the fiscal rule holds.
+
+\medskip
+\begin{itemize}\setlength\itemsep{0.65em}
+ \item With no migration, births must replace deaths in a constant population.
+ \item With migration, births and net inflows together offset deaths.
+ \item A constant continuation value alone does not make a finite path stationary.
+\end{itemize}
 \end{frame}
 
 \begin{frame}[label=person-accounting]{The Person-Cohort Law}

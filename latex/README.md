@@ -9,16 +9,18 @@ Active documents:
 - `september_14_presentation.tex`: the single working September 14 seminar
   presentation. The reader PDF is `../output/pdf/september_14_presentation.pdf`;
   `september_14_presentation.pdf` is an identical build copy. The September 10
-  refocus follows the May deck's appearance. The September 11 structure follows
+  refocus follows the May deck's appearance. The September 12 structure follows
   May: Quantitative Model, a short Empirics section, then Quantification.
   Empirics contains the data overview and the AHS and PSID evidence frames.
-  Quantification contains empirical discipline, calibration and transition
-  strategy, and the policy comparisons; policy has no separate section divider.
+  Quantification contains calibration strategy, empirical moment construction,
+  complete initial target and parameter tables, fit plots, lifecycle equilibrium
+  profiles, the historical transition design and illustrations, and the policy
+  comparisons; policy has no separate section divider.
   It presents the quantitative household environment, sequential choices,
   population accounting, equilibrium, and a policy comparison introduced along
   the same inherited transition. The three original August
   `housing_fertility_stage_{initial,impact,adjustment}.pdf` figures are reused
-  unchanged around the equilibrium exposition. They are explicitly schematic:
+  unchanged within Quantification, following the dated transition strategy. They are explicitly schematic:
   their fixed-composition housing curves and replacement-one household units
   are not the quantitative demographic law or a computed transition. Exact
   attribution to the Raquel meeting remains unverified. The separate
@@ -32,36 +34,72 @@ Active documents:
   It is historical source, not a second working deck. All separate theory
   notes and the September 10 planner work remain untouched and parked.
 
-  **Scope of the presentation.** The AHS 2023 tenure-by-bedroom figure is
-  reused from May. The PSID rooms profile comes from the corrected
-  household-aligned Sun--Abraham event table, via the saved September 5
-  measurement-review figure; the pre-birth pattern and pointwise intervals
-  remain visible. Only its internal figure title is trimmed in LaTeX. No
-  regression, calibration, model solve, or new mechanism figure was generated.
-  The old calibration tables and computed transition claims are preserved in
-  the archive but omitted from the active deck because they do not establish
-  a calibrated history under the latest intended specification.
+  **September 12 model and quantification revision.** The Environment and
+  household-problem overlays return to May's age/choice/heterogeneity exposition,
+  retaining the active one-market sequential model. Household state is
+  `(b,h,z,n,m)` at date `t`, age `a`: liquid wealth, inherited owner housing,
+  persistent Markov earnings, lifetime parity, and dependent-child count.
+  The quantitative task confirmed that permanent-income extensions are off and
+  the active child state is a count, not a vector of child ages. Values now show
+  their state arguments, fertility outcomes, earnings and maturation expectations,
+  and the associated attempt probability. The owner service multiplier is
+  positive; values above one imply a premium, consistent with its search range.
+  The classroom equilibrium definition and explicit population accounting remain
+  at the end of Model. The stationary definition is in the appendix.
 
-  **Unresolved choices (kept outside audience-facing slides).** Sequential
-  choice is retained and explicitly named for exposition; the comparison with
-  simultaneous fertility nests does not itself promote either arm. Initial
-  fertility 2.1 is author-selected. The approved strategy calibrates the initial
-  economy before fitting the preference path. Its final parameterization,
-  measurement/calendar mappings, and the
-  initial/dynamic supply, demographic, and fiscal closures remain governed
-  by `../CALIBRATION_STATUS.md`; this edit does not adopt a new target contract.
-  The rebated-tax frame defines a conditional policy experiment with one common
-  inherited state and supply schedule, not a computed or authorized production
-  policy result. Initial-equilibrium conditioning must still be reconciled
-  with the historical demographic inputs before presenting a numerical fit.
+  Initial tables and the two supplementary PGFPlots fit graphics use the same
+  September 12 provisional candidate, verified by **Review quantitative model**:
+  `../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/verified_final/`.
+  [Complete target-fit CSV](../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/verified_final/selected_target_fit.csv)
+  preserves every target, model value, gap, weight, loss contribution, provenance,
+  sample and measurement caveat; the [complete parameter CSV](../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/verified_final/selected_parameters.csv)
+  preserves estimates, bounds and external restrictions. The source
+  [readout](../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/verified_final/README.md)
+  contains both complete human-readable tables. Fingerprint:
+  `c0e266d3a0d430343c469d780d1aedb45fa87f8763c9c938889e0c37daa31de2`.
+  All 13 targets appear in the main tables; all 12 scored targets appear in the
+  fit plots as model/target ratios. The unscored 2.1 normalization is separate.
+  The main parameter tables contain all 17 free/fixed/normalized/derived rows;
+  the appendix gives every free coordinate's bounds and position. Near-bound
+  means within 1% of the allowed range, not proof of a binding restriction.
+  The existing `fertility_by_age.png` and `ownership_by_age.png` in
+  `selected_standard_diagnostics/` are included unchanged as model equilibrium
+  profiles, not empirical-fit overlays. The stable 17-graph packet is unchanged.
+
+  The AHS 2023 tenure-by-bedroom figure remains the May asset. The existing
+  September 5 PSID profile remains visible but is explicitly provisional.
+  **Data — PSID event studies** confirmed no approved replacement figure or target:
+  the retained 0.720246 room contrast is the old computational -1/+3 contract,
+  with timing and reference support under review. It is not the newly requested
+  -2 comparison. No diagnostic .403018 or .238478 estimate was promoted.
+  The housing-target row and fit plot flag this limitation. No regression,
+  calibration, model solve, or new mechanism figure was generated in this task.
+
+  **Historical transition and evidence boundary.** Quantification explains
+  successive unanticipated preference innovations at 2007/2011/2015/2019,
+  matching the subsequent four-year fertility windows from
+  `../output/model/e5f_matched_pf_20260909a/current_candidate_transition/inputs/empirical_blocks.csv`.
+  Each level is believed
+  permanent; its conditional forward-looking equilibrium is solved, only the
+  first four-year period is realized, and the next innovation inherits household
+  states and birth queues. Preferences remain at the final level after 2023.
+  This replaces the old single announced-path description. The retained
+  age-specific births per adult-household diagnostic is an approximate analogue
+  of female TFR; exposure mapping remains unresolved. The pre-2023 demographic
+  bridge conditions on external information and is not demographic validation.
+  A complete historical fit, horizon validation and policy results remain absent.
+  Existing historical workers use an earlier pinned initial point: the displayed
+  latest initial diagnostics are not claimed to generate their trial paths.
+  The policy frames define comparisons from a common inherited 2023 state.
+  Live scientific closure and numerical status remain in `../CALIBRATION_STATUS.md`.
 
   Build twice from `latex/`, writing auxiliary files outside the active folder:
   `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=../tmp/september_slides_review september_14_presentation.tex`.
   Copy the verified PDF to the reader path and the adjacent build copy.
-  The deck has 30 numbered main frames and six appendix frames
-  (43 PDF pages including overlays and dividers). Two final compilation passes
+  The deck has 38 numbered main frames and eight appendix frames
+  (53 PDF pages including overlays and dividers). Two final compilation passes
   have no warnings or overfull boxes; all frames were visually inspected and
-  all figure paths and the remaining appendix link resolve.
+  all figure paths and both appendix links resolve.
 
   **September 12 equilibrium wording.** The main definition is titled
   `Equilibrium` and names sequences of policy functions, value functions,
@@ -80,30 +118,10 @@ Active documents:
   household conditions use model dates `t`. Physical-room clearing is written
   simply as demand equals supply; the supply expansion remains on its own slide.
   The quantitative task also confirmed the neutral expectations wording.
-  Its latest information assumption is successive unanticipated preference
-  innovations, each followed by a perfect-foresight continuation conditional on
-  the new preference level remaining permanent (`e5f_successive_surprises.py`,
-  `evaluate_forecast`, in the active isolated model tools). The announced-path
-  wording elsewhere in the deck, especially `A Decline in Fertility Preferences`
-  and `Calibration and Transition Strategy`, still needs a separate coordinated
-  update; this scoped definition edit does not certify that older description.
-
-  **September 11 structure revision.** The illustrative transition frames remain
-  in the model section. `Calibration and Transition Strategy` replaces the
-  generic initial-economy frame: approximate pre-2007 calibration, observed 2007
-  age initialization preserving within-age household states, then an announced
-  historical preference path with structural parameters held fixed. Preferences
-  stay flat after 2023; anticipated prices and pensions are solved jointly, with
-  continuation checks before policy comparisons from the inherited 2023 state.
-  Sources are `../output/model/e5f_matched_pf_20260909a/OVERNIGHT_PLAN.md`, sections
-  4--5, and the named quantitative task's September 11 reply to this structure
-  request. Initial moments pool pre-crisis waves; the retained PSID event response
-  uses its pooled estimator, not a literal 2007 cross-section. The slide presents
-  a strategy, not a completed historical fit. Linear-amplitude trials do not
-  settle the final path parameterization. The female-exposure/maternal-age mapping
-  remains unresolved, and the new capped initial candidate has no verified
-  historical or policy fit. Current numerical status remains in
-  `../CALIBRATION_STATUS.md` (22:06 EDT update at this revision).
+  The successive-surprise information assumption was subsequently integrated
+  into Quantification in the revision described above. Its implementation is
+  `e5f_successive_surprises.py`, `evaluate_forecast`, in the quantitative task's
+  active isolated model tools; the technical task verified the contract directly.
 
   **September 11 slides-only pass.** `Family Space` and `Empirical Discipline`
   now use the parenthood-only requirement `h_P 1{m>0}`, while dependents are
