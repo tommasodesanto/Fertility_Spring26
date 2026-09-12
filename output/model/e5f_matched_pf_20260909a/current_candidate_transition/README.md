@@ -1,5 +1,7 @@
 # Current-candidate transition diagnostic
 
+**Age-support check (September 11):** [age_support_check/README.md](age_support_check/README.md) recomputes the empirical comparison from cached NCHS rates. The four-year-window decline is 16.67% with published TFR versus 15.11% for ages 18–44 (15.09% with an explicitly approximate age-45 addition). Saved model flow/rate replays pass. This is a sensitivity, not a replacement target contract; the initial boundary-collapsed timing moments and production inputs remain unchanged. Full continuation remains paused at the author’s request. Reproduce with `python check_fertility_age_support.py`.
+
 **22:06 EDT update:** all three 28-date trials have now ended without passing
 finite-path or horizon gates. The -0.025/-0.10 final receipts are collected in
 `return_home_20260911/paths/delta_m0025_long` and `delta_m010_long`; the middle
