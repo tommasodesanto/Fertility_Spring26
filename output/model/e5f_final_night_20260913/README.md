@@ -1,58 +1,53 @@
 # Authorized final-night work
 
-Latest evidence: September13, approximately10:00UTC. Deadline18:00UTC.
-The cluster runs and collector are independent of the laptop. Idle system sleep
-is prevented locally until the deadline. Last account check:70% weekly remaining.
+Latest evidence: September 13, 10:40 UTC. Fixed deadline: 18:00 UTC.
+The cluster jobs and collector continue independently of the laptop. Local idle
+sleep prevention lasts until the deadline. Latest account check: 58% weekly
+remaining; retain the author's 20% floor.
 
-## Numerical repair under verification
+## Verified progress
 
-Trace17642567 reproduced the native2011 mass failure. The loss comes from
-float32 tenure-probability row sums. `probability_mass_native_verification.json`
-records an exact old-output replay and two identical corrected outputs; relative
-mass error falls from1.067e-8 to5.69e-13, below the unchanged1e-8 gate. Both the
-stationary Markov KFE and the transition Markov KFE now normalize these rows in
-float64. The first isolated corrected initial job17651740 reached its root but
-failed stationary nesting because it only corrected the transition copy. A new
-two-repetition full initial check is being prepared. No corrected calibration
-is accepted yet; all original source folders and rejected outputs are retained.
+The corrected initial equilibrium passed two exact numerical reproductions in
+job 17655042. Full target and parameter tables: `corrected_initial/README.md`.
+The probability repair is numerical: it does not change the structural search
+coordinates, empirical targets, weights or acceptance tolerances. It changes the
+loss by less than 0.000001 and does not improve the economic fit.
 
-`fiscal_polish_Aplus_6_summary.json` records probe17650020: the stalled A+ forecast
-passes every market/fiscal/replay check in three evaluations (245seconds), with
-all seven asset prices held at the prior market-admissible values. Its2007 TFR
-is1.9788233781 against1.974875, within0.005. This is one forecast without historical
-carry. An opt-in automatic early polish passes13 wiring tests and preserves the
-full residual vector,24-evaluation total cap, deadline and exact replay. A full
-native combined-controller run is still required before adoption.
+Both six-period cases passed their first historical window and carried households
+to 2011. With ordinary starts, the A0 fertility gap is −0.001750752 and the A+
+gap is +0.003827671 against target 1.974875, within the 0.005 requirement.
+All market, PAYGO, rebate, household and exact-replay gates pass. Price-seeded
+counterparts also pass in two mappings, about 174 seconds; ordinary starts took
+14 mappings, about 1,223 seconds. Different nodes prevent a controlled timing claim.
+
+## Live jobs
+
+| Job | Work | State at update |
+|---|---|---|
+| 17658836 | A0/A+, 6 periods, ordinary starts | Fitting subsequent surprises |
+| 17661737 | A0/A+, 6 periods, pinned numerical price starts | Fitting subsequent surprises |
+| 17663940 | A0/A+, 24 periods, ordinary starts | Submitted by verified handoff |
+| 17663986 | A0/A+, 100 periods | Submitted by verified handoff |
+| 17664449 | A0/A+, 24 periods, pinned numerical price starts | Submitted |
+| 17607147 | Five-minute receipt collector | Running |
+
+Handoff 17658318 completed after verifying both six-period first-window gates.
+The superseded old-source arrays 17613033, 17613034 and 17632922 were cancelled;
+all their outputs remain. No seeded 100-period duplicate was submitted.
+
+No complete four-shock history, horizon certificate or completed policy is claimed.
+The fiscal and mass problems have verified numerical repairs; the economic fit
+and full historical/policy exercise still require assessment.
 
 Remote batch: `/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/`.
-The requested plan is `docs/model/e5f_two_closure_overnight_plan.md`.
-
-## Current work
-
-| Jobs | Work | Evidence/status |
-|---|---|---|
-|17613033|A0/A+ six-date histories and rebated policy|A0 first window accepted and carried into2011; A+ fitting|
-|17613034|A0/A+ 24-date histories and rebated policy|Equilibrium iterations in progress|
-|17632922|A0/A+ 100-date histories and rebated policy|Submitted; queue counts against deadline|
-|17635971/17635972|One-forecast Jacobian warm-start comparison|A0 passed; A+ rejected by mass gate|
-|17641919|Native saved-state restart validation|Every inherited state field exactly verified, no solve|
-|17642567|Instrumented reproduction of2011mass failure|One forecast,30-minute cap; main jobs unchanged|
-|17607147|Five-minute cluster receipt collector|Running; discovers refit arrays automatically|
-|17603133|Initial calibration recovery|Two exact numerical repetitions verified|
-|17597260|Extra initial fertility-age pilot|Numerical outputs verified by separate report recovery|
-
-No complete fitted history, horizon certificate or completed rebated policy is
-claimed. A0_6 first-window target1.974875 is matched by1.9731122320, a gap of
-−0.001762768 within the0.005 fit requirement. Preference0.1289153142. The market,
-PAYGO pension, property-tax rebate and exact replay checks pass. The next fitted
-surprise is2011; households carry forward between accepted windows.
+Plan: `docs/model/e5f_two_closure_overnight_plan.md`.
 
 ## Calibration and scientific contract
 
-The recovered initial loss is179.2984252281 versus182.6491468669 for the rebated
+The corrected initial loss is 179.2984242480 versus 182.6491468669 for the rebated
 seed. This is a verified candidate, not a converged optimizer. The original search
 stopped after repeated20-evaluation numerical root limits. Complete13-row target
-and17-row parameter/restriction tables: `initial_search_recovered/README.md`.
+and17-row parameter/restriction tables: `corrected_initial/README.md`.
 The displayed beta bound is the enforced annual0.99; raw scorer metadata retains
 its old0.9995 separately. Housing moments remain weak.
 
@@ -68,6 +63,10 @@ Twelve scored initial moments, nine free coordinates, unchanged weights, annual
 beta cap0.99 and separate fertility normalization2.1 remain. Four unexpected
 permanent preference changes are fitted at2007/2011/2015/2019; each vintage
 expects current preferences to persist, with preferences fixed after2023.
+The target contract maps decision vintages2007/2011/2015/2019 to published TFR
+means for2008–2011/2012–2015/2016–2019/2020–2023 respectively. Fit plots must show
+these four-year observation windows explicitly; a2023 decision-vintage fertility
+flow belongs to the forecast period, rather than another fitted historical row.
 Every property-tax comparison returns revenue equally per current household
 head. PAYGO pensions balance separately at every accepted date. A0 removes all
 post2023 migration; A+ retains the supplied migration sensitivity. Historical
@@ -99,15 +98,22 @@ at most24 primary forecast trials and one bounded alternative start; the shared
 deadline and two-hour policy reserve still govern. The total worker ceiling is18.
 Progress, latest completed cases and best-so-far receipts remain on the cluster.
 
-Jacobian probes use the root solver's saved derivative matrix for the immediately
-following preference trial in the same vintage. The opt-in default remains off;
-failed roots and vintage changes reset reuse, and policies never inherit this
-matrix. Ten focused root/resume tests pass. A0 native comparison passes:7 versus11 evaluations, maximum forecast fertility difference4.36e-7, exact replays zero. A+ hits the unchanged mass gate; cause remains under investigation. Sources:
-`code/model/tools/run_e5f_final_rebated_history.py` and
-`code/model/tools/run_e5f_forecast_jacobian_probe.py`. Their new snapshot is
-`jacobian_source`; the running histories remain frozen in `history_source_cached`.
+The native corrected first forecasts now verify the combined cache, row
+normalization, optional Jacobian reuse and fiscal-polish controller. Numerical
+price seeding reuses only pinned root coordinates; it never reuses old-source
+household distributions or Jacobians. Fourteen focused seed/driver tests pass.
 
 ## Readout and traceability
+
+`verified_initial_readout.pdf` contains the three-page assessment, complete
+initial tables and unchanged 17-figure appendix. It is explicitly an initial
+readout while history/policy work runs. All 12 rendered pages were visually
+reviewed. Regenerate without a model solve using the bundled Python runtime:
+
+```sh
+python code/model/tools/build_e5f_final_night_report.py --packet output/model/e5f_final_night_20260913 --output output/model/e5f_final_night_20260913/verified_initial_readout.pdf --as-of "13 September 2026, 10:45 UTC"
+```
+
 
 `collect_e5f_final_history_readout.py` prepares the complete2023 observations
 from accepted native2019/2023 snapshots without solving again. Compilation and
@@ -116,16 +122,6 @@ The stable17-graph packets are generated alongside successful forecasts. The
 saved A+ first-trial contact sheet was visually inspected. Its legacy filename
 `lifecycle_2023.csv` does not make that2007 snapshot a2023 result.
 
-Source and job receipts: `jobs.json`, `resource_resubmission.json`,
-`initial_search_recovered/`, `age_pilot_recovered/`; remote submissions remain
-under `histories_refit`, `histories_refit_100_v2` and `jacobian_probes`.
-
-Superseded jobs17592542/17592728/17593512/17593865 failed or were replaced before
-any promotion. Initial17594990 passed the complete scoring loop in about six
-minutes. Search17596347 stopped at numerical limits; recovery17603133 passed.
-Handoff17605279 submitted refits; entirely pending17608564 was split into memory
-classes, and entirely pending17613035 was replaced by17632922. All uncached
-17595967 tasks were retired after the cached replacements passed. All old outputs
-are retained. No result is promoted from failed harnesses17597051/17597204/17598460.
-
-Verified restart support loads a pinned contiguous accepted history prefix and compares every inherited state field to the selected saved forecast. Native validation17641919 passed in1.89seconds without solving. Trace17642567 replays only the first2011forecast from that exact state with the existing stage profiler; it stops before any fallback, next trial or historical carry. The earlier mass trace17554347 had no reproduced failure. Float32 row sums are a hypothesis until the captured-cohort comparison establishes the source.
+Source and job receipts are in `jobs.json`, the corrected-source receipts,
+`corrected_initial/`, and the native remote batch. Historical failed and superseded
+outputs remain preserved. No result is promoted from a failed numerical harness.

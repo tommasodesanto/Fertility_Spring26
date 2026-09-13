@@ -11,14 +11,16 @@
     17593512,
     17593865,
     17597051,
-    17597204,
-    17598460,
     17597052,
+    17597204,
     17597285,
+    17598460,
     17608564,
-    17613035
+    17613033,
+    17613034,
+    17613035,
+    17632922
   ],
-  "numerical_workers_running": 4,
   "numerical_worker_cap": 18,
   "new_launch_deadline_utc": "2026-09-13 18:00:00 UTC",
   "history_closures_submitted": [
@@ -39,8 +41,7 @@
   "search_recovery_status": "verified_two_exact_repetitions",
   "after_search_handoff_status": "completed_submitted_refits",
   "initial_age_pilot_status": "report_recovered_verified_numerical_outputs",
-  "numerical_workers_queued": 2,
-  "worker_count_snapshot": "2026-09-13 08:30 UTC (before new probes scheduled)",
+  "worker_count_snapshot": "2026-09-13 10:40 UTC; query Slurm for current counts",
   "history_refit_arrays": {
     "6": 17613033,
     "24": 17613034,
@@ -55,7 +56,7 @@
     "17595967_5"
   ],
   "six_date_first_equilibria": "A0 first historical window accepted and carried to2011; Aplus fitting",
-  "weekly_remaining_percent_snapshot": 76,
+  "weekly_remaining_percent_snapshot": 58,
   "jacobian_probes": [
     17635971,
     17635972
@@ -65,5 +66,33 @@
   "jacobian_probe_status": {
     "A0": "verified_7_vs_11_evaluations",
     "A+": "rejected_mass_gate_cause_under_trace"
-  }
+  },
+  "corrected_initial_replay": "17655042",
+  "corrected_initial_status": "verified_two_exact_numerical_reproductions",
+  "corrected_initial_source": "corrected_initial_source_v2",
+  "corrected_history_source": "corrected_history_source_v2",
+  "corrected_solver_sha256": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da",
+  "corrected_objective_fingerprint": "4440ea07f4de957740ca6c04961d2806d9b9ef782c7a0e7dad4ce73e1db651b1",
+  "native_probability_mass_replay": "17649021",
+  "native_probability_mass_replay_status": "passed; stationary copy then aligned for full initial replay",
+  "fiscal_polish_probe": "17650020",
+  "fiscal_polish_status": "passed one six-date A+ forecast, no history carried",
+  "corrected_history_status": "both six-period first windows accepted; later surprises fitting",
+  "corrected_initial_loss": 179.2984242480252,
+  "corrected_history_arrays": {
+    "6": 17658836,
+    "24": 17663940,
+    "100": 17663986
+  },
+  "corrected_seeded_history_arrays": {
+    "6": 17661737,
+    "24": 17664449
+  },
+  "corrected_handoff": 17658318,
+  "corrected_handoff_status": "completed_long_arrays_submitted",
+  "retired_old_source_arrays": [
+    17613033,
+    17613034,
+    17632922
+  ]
 }

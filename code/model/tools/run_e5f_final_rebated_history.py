@@ -98,6 +98,64 @@ def initial_seed_step(plan, manifest):
     return float(next(iter(seeds.values())) if isinstance(seeds,dict) else seeds[0])
 
 
+def initial_coordinate_seed(manifest,case,count,default):
+    """Load an optional pinned numerical guess without importing solved state."""
+    if case not in ('A0','A+') or count not in (6,24,100):
+        raise ValueError('Initial coordinate seed requires a supported history track')
+    default=np.asarray(default,dtype=float);unpack_coordinates(default,count)
+    profiles=manifest.get('initial_coordinate_seeds')
+    key=('A0' if case=='A0' else 'Aplus')+f'_{count}'
+    allowed={f'{name}_{n}' for name in ('A0','Aplus') for n in (6,24,100)}
+    base=dict(mode='default',case=case,count=count,selection='default',seed_origin=None,
+        default_coordinates=default.tolist(),selected_coordinates=default.tolist(),
+        coordinates_changed=False,
+        driver=dict(path=str(Path(__file__).resolve()),sha256=sha(Path(__file__).resolve())))
+    if profiles is None:return default.copy(),base
+    if not isinstance(profiles,dict) or any(name not in allowed for name in profiles):
+        raise ValueError('Initial coordinate seeds require recognized A0/Aplus count keys')
+    if key not in profiles:return default.copy(),base
+    if 'resume_history' in manifest:
+        raise ValueError('Initial coordinate seeds cannot be combined with history resume')
+    entry=profiles[key]
+    if not isinstance(entry,dict) or set(entry)!= {'path','sha256'}:
+        raise ValueError('Initial coordinate seed entry must contain only path and sha256')
+    seed_path=Path(entry['path'])
+    if not seed_path.is_absolute() or str(seed_path) not in manifest.get('file_sha256',{}):
+        raise ValueError('Initial coordinate seed JSON must be an absolute manifest-pinned input')
+    if manifest['file_sha256'][str(seed_path)]!=entry['sha256'] or sha(seed_path)!=entry['sha256']:
+        raise ValueError('Initial coordinate seed JSON hash mismatch')
+    seed=json.loads(seed_path.read_text())
+    fields={'case','count','start_year','coordinates','label','source_root_receipt','selection'}
+    if not isinstance(seed,dict) or set(seed)!=fields or seed['label']!='numerical_guess_only':
+        raise ValueError('Initial coordinate seed JSON schema mismatch')
+    if seed['case']!=case or seed['count']!=count or seed['start_year']!=2007:
+        raise ValueError('Initial coordinate seed track mismatch')
+    origin=seed['source_root_receipt']
+    if not isinstance(origin,dict) or set(origin)!= {'path','sha256'}:
+        raise ValueError('Seed source root receipt requires path and sha256')
+    root_path=Path(origin['path'])
+    if not root_path.is_absolute() or sha(root_path)!=origin['sha256']:
+        raise ValueError('Seed source root receipt hash mismatch')
+    root=json.loads(root_path.read_text())
+    if root.get('case')!=case or root.get('count')!=count or root.get('start_year')!=2007:
+        raise ValueError('Seed source root receipt track mismatch')
+    selection=seed['selection']
+    if selection not in ('final','best'):
+        raise ValueError('Seed price selection must be final or best')
+    selected=root.get(selection)
+    if not isinstance(selected,dict) or selected.get('mapping_valid') is not True:
+        raise ValueError('Selected seed root mapping is not valid')
+    prices=np.asarray(selected.get('prices'),dtype=float);unpack_coordinates(prices,count)
+    coordinates=np.asarray(seed['coordinates'],dtype=float);unpack_coordinates(coordinates,count)
+    if not np.array_equal(coordinates,prices):
+        raise ValueError('Seed coordinates do not exactly match selected root prices')
+    receipt=dict(base,mode='pinned_numerical_guess',selection=selection,
+        seed_origin=dict(path=str(seed_path),sha256=entry['sha256'],
+            source_root_receipt=dict(path=str(root_path),sha256=origin['sha256'])),
+        selected_coordinates=coordinates.tolist(),coordinates_changed=not np.array_equal(default,coordinates))
+    return coordinates.copy(),receipt
+
+
 def shift_forecast_coordinates(values,count):
     """Advance the numerical starting guess by one realized four-year date."""
     unpack_coordinates(values,count)
@@ -578,6 +636,8 @@ def main(argv=None):
         width=args.count+1
         initial=np.r_[np.full(width,float(packet['evaluation'].policy.price[0])),
             np.full(width,float(old.parameters.pension)),np.full(width,float(old.parameters.property_tax_lump_sum_transfer))]
+        initial,seed_receipt=initial_coordinate_seed(manifest,args.case,args.count,initial)
+        save(out/'initial_coordinate_seed_receipt.json',seed_receipt)
         completed_years=[]
         if 'resume_history' in manifest:
             resumed=load_resume_history(manifest['resume_history'],current_manifest=manifest,

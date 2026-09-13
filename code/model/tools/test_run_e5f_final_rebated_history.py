@@ -88,6 +88,43 @@ class DriverTests(unittest.TestCase):
         self.assertEqual([p[-1] for p in parts],[7.,14.,21.])
         with self.assertRaises(ValueError):driver.unpack_coordinates(np.ones(18),6)
 
+    def test_optional_initial_coordinate_seed_is_exact_pinned_guess_only(self):
+        default=np.full(21,.5)
+        unchanged,receipt=driver.initial_coordinate_seed({},'A0',6,default)
+        np.testing.assert_array_equal(unchanged,default);self.assertIsNot(unchanged,default)
+        self.assertEqual(receipt['mode'],'default')
+        with tempfile.TemporaryDirectory() as d:
+            d=Path(d);root_path=d/'root_receipt.json';seed_path=d/'seed.json'
+            prices=np.arange(1.,22.)
+            def write_seed(*,seed_case='A0',coordinates=prices,root_case='A0',selection='final'):
+                driver.save(root_path,dict(case=root_case,count=6,start_year=2007,
+                    final=dict(prices=prices.tolist(),mapping_valid=True),
+                    best=dict(prices=(prices+.1).tolist(),mapping_valid=True)))
+                driver.save(seed_path,dict(case=seed_case,count=6,start_year=2007,
+                    coordinates=np.asarray(coordinates).tolist(),label='numerical_guess_only',
+                    source_root_receipt=dict(path=str(root_path),sha256=driver.sha(root_path)),
+                    selection=selection))
+                return dict(initial_coordinate_seeds={'A0_6':dict(
+                    path=str(seed_path),sha256=driver.sha(seed_path))},
+                    file_sha256={str(seed_path):driver.sha(seed_path)})
+            manifest=write_seed();got,receipt=driver.initial_coordinate_seed(manifest,'A0',6,default)
+            np.testing.assert_array_equal(got,prices)
+            self.assertEqual(receipt['mode'],'pinned_numerical_guess')
+            self.assertEqual(receipt['selection'],'final')
+            self.assertEqual(receipt['driver']['sha256'],driver.sha(Path(driver.__file__).resolve()))
+            mismatch=write_seed(seed_case='A+')
+            with self.assertRaises(ValueError):driver.initial_coordinate_seed(mismatch,'A0',6,default)
+            mismatch=write_seed(coordinates=prices+.2)
+            with self.assertRaises(ValueError):driver.initial_coordinate_seed(mismatch,'A0',6,default)
+            negative=prices.copy();negative[0]=-1.;bad=write_seed(coordinates=negative)
+            with self.assertRaises(ValueError):driver.initial_coordinate_seed(bad,'A0',6,default)
+            best=write_seed(coordinates=prices+.1,selection='best')
+            got,receipt=driver.initial_coordinate_seed(best,'A0',6,default)
+            np.testing.assert_array_equal(got,prices+.1);self.assertEqual(receipt['selection'],'best')
+            stale=write_seed();stale['initial_coordinate_seeds']['A0_6']['sha256']='0'*64
+            stale['file_sha256'][str(seed_path)]='0'*64
+            with self.assertRaises(ValueError):driver.initial_coordinate_seed(stale,'A0',6,default)
+
     def test_reuse_requires_a_finite_verified_same_width_root(self):
         matrix=np.arange(21*21,dtype=float).reshape(21,21)
         receipt=dict(finite_horizon_market_fiscal_converged=True,final_jacobian=matrix)

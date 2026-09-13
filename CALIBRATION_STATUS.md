@@ -1,29 +1,43 @@
 # Calibration Status
 
-**September 13, 10:00 UTC — two numerical causes isolated; corrected-source verification in progress.**
-Native trace17642567 reproduced the first2011 mass rejection. Float32 tenure
-probability rows caused relative mass loss1.067e-8, exceeding the unchanged1e-8
-gate. Native operator replay17649021 verifies that row normalization in float64
-reduces the discrepancy to5.69e-13, with exact repeated output. This is a numerical
-probability correction, not a change to choices, targets, weights or tolerances.
-The stationary KFE contains a duplicate tenure scatter; both Markov scatter
-implementations now receive the same correction. The first corrected initial
-replay17651740 reached its joint root but rejected stationary reconstruction
-at5.237e-9 versus5e-9 because only the transition copy had been corrected.
-The next isolated source version will verify the complete initial solve twice.
-No corrected-source calibration or historical path is accepted yet.
+**September 13, 10:40 UTC — corrected initial equilibrium verified; all three horizons submitted.**
+Job 17655042 passed two exact numerical reproductions, including stationary and
+one-step nesting, household accounting, housing, PAYGO and equal property-tax
+rebate gates. Loss is 179.2984242480. The numerical correction changes the loss
+by less than 0.000001; the structural coordinates and empirical targets/weights
+are unchanged. This remains a verified candidate, not a converged optimizer.
+The complete 13-row target and 17-row parameter/restriction tables are in
+`output/model/e5f_final_night_20260913/corrected_initial/README.md` and its CSVs.
+Annual beta is at its enforced 0.99 cap; mean rooms and ownership still fit poorly.
 
-Independent fiscal probe17650020 resolved the stalled A+ six-date forecast in
-three evaluations (245 seconds), with all seven asset prices fixed at the prior
-market-admissible values. All housing, PAYGO, rebate and exact replay checks
-passed, with the full residual vector retained. Its2007 fertility is1.9788233781
-versus1.974875 (gap+0.0039483781). This probe did not carry history forward.
-An opt-in early fiscal-polish switch is implemented and passes13 wiring tests;
-it retains the24-mapping total cap and every acceptance gate. Native full-loop
-verification of this combined controller and corrected model remains pending.
-Old-source histories remain frozen and separate. No complete four-shock fit,
-horizon certificate or rebated policy result is claimed. Details and proof files:
-`output/model/e5f_final_night_20260913/`.
+Both corrected six-period histories passed their first historical window and
+carried households into 2011. Jobs 17658836 use ordinary starting prices;
+17661737 use pinned previous prices, pensions and rebates as numerical guesses
+only. Every household state and residual is recomputed under the corrected
+source. The latter first forecasts pass in two mappings (about 174 seconds),
+compared with 14 mappings (about 1,223 seconds) from ordinary starting prices;
+these are different nodes, not a controlled hardware benchmark.
+Handoff 17658318 completed and submitted 17663940 (24 periods) and 17663986
+(100 periods). Additional price-seeded 24-period array 17664449 is submitted.
+The superseded old-source jobs 17613033, 17613034 and 17632922 are cancelled;
+all outputs are preserved. No duplicate seeded 100-period array is submitted.
+Collector 17607147 remains independent of the laptop. All tracks retain the
+18:00 UTC deadline, source pins, empirical contract and numerical tolerances.
+
+The proven mass error was float32 tenure-row rounding in both Markov distribution
+operators. Normalizing rows in float64 reduces the captured relative error from
+1.067e-8 to 5.69e-13. Full corrected initial stationary nesting is 2.27e-14 and
+one-step nesting 2.65e-13. Native first-history market, PAYGO, rebate, household
+and exact-replay checks also pass. The fixed-price fiscal polish retains all
+residuals and the 24-mapping total cap. Frozen corrected initial/history source
+versions are `corrected_initial_source_v2` / `corrected_history_source_v2`.
+
+No complete four-shock history, horizon-adequacy certificate or completed rebated
+policy is claimed yet. B0/B+ remain blocked by the unresolved child/person/head
+formation conversion, with signed migrant-state allocation also outstanding
+for B+. The age-profile pilot did not establish improved age fit. The verified
+initial figure packet is collected; plot measurements are being checked before
+the report. Current jobs and evidence are in the final-night packet below.
 
 **September 13 — recovered initial point verified; cached refits submitted.**
 Recovery17603133 passed both exact numerical repetitions. The selected original

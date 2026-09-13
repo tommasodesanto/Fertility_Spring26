@@ -1,0 +1,116 @@
+{
+  "phase": "long_arrays_submitted",
+  "elapsed_seconds": 1287.8746845489368,
+  "smoke": {
+    "A0": {
+      "status": "passed",
+      "case": "A0",
+      "gap": -0.0017507516837793613,
+      "root_receipt": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_auto_v2_6/A0_6/window_2007/trial_00/root_receipt.json",
+      "root_receipt_sha256": "6b52f3505fd423af9ccdda146426506c0260f3112d981b680ce41ceaabd29e3c",
+      "accepted_forecast": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_auto_v2_6/A0_6/window_2007/trial_00/accepted_forecast.pkl.gz",
+      "native_smoke": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_auto_v2_6/A0_6/native_smoke.json",
+      "native_smoke_sha256": "e93801d49a28ecea7042a102f63983a4a8a498b7d81ed55048a5e71dc4d5eacf"
+    },
+    "A+": {
+      "status": "passed",
+      "case": "A+",
+      "gap": 0.0038276709487419236,
+      "root_receipt": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_auto_v2_6/Aplus_6/window_2007/trial_00/root_receipt.json",
+      "root_receipt_sha256": "e7735645e3bc67fc86c5ae0fccfb3afc25fcb99fbfb8422dff3e73013114d3a7",
+      "accepted_forecast": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_auto_v2_6/Aplus_6/window_2007/trial_00/accepted_forecast.pkl.gz",
+      "native_smoke": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_auto_v2_6/Aplus_6/native_smoke.json",
+      "native_smoke_sha256": "afd98ed41bd570732a671807aa472c72fba5e0013e5120f41a78fbd754747de9"
+    }
+  },
+  "submissions": {
+    "6": {
+      "status": "submitted",
+      "count": 6,
+      "command": [
+        "/share/apps/anaconda3/2025.06/bin/python",
+        "-B",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/submit_e5f_final_night.py",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_array_manifest_corrected_auto_v2_6.json",
+        "--submit"
+      ],
+      "job": "17658836",
+      "submitter": {
+        "command": [
+          "sbatch",
+          "--parsable",
+          "--account=torch_pr_570_general",
+          "--array=0-1%2",
+          "--cpus-per-task=1",
+          "--mem=16G",
+          "--time=07:44:47",
+          "--job-name=e5f_final_history",
+          "--output=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_auto_v2_6/slurm_%A_%a.out",
+          "--error=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_auto_v2_6/slurm_%A_%a.err",
+          "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_auto_v2_6/final_night_array.sh"
+        ],
+        "manifest_sha256": "af77edd1c25820a378ac39323af129353469f492f1ffd300acbe05dfc5c2171f",
+        "job": "17658836"
+      }
+    },
+    "24": {
+      "status": "submitted",
+      "count": 24,
+      "command": [
+        "/share/apps/anaconda3/2025.06/bin/python",
+        "-B",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/submit_e5f_final_night.py",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_array_manifest_corrected_auto_v2_24.json",
+        "--submit"
+      ],
+      "job": "17663940",
+      "submitter": {
+        "command": [
+          "sbatch",
+          "--parsable",
+          "--account=torch_pr_570_general",
+          "--array=0-1%2",
+          "--cpus-per-task=1",
+          "--mem=32G",
+          "--time=07:44:47",
+          "--job-name=e5f_final_history",
+          "--output=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_auto_v2_24/slurm_%A_%a.out",
+          "--error=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_auto_v2_24/slurm_%A_%a.err",
+          "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_auto_v2_24/final_night_array.sh"
+        ],
+        "manifest_sha256": "1721eba4e6ce7b497763b86c4309db28fd6099846ce2f9fc09bc263f02b7bfb2",
+        "job": "17663940"
+      }
+    },
+    "100": {
+      "status": "submitted",
+      "count": 100,
+      "command": [
+        "/share/apps/anaconda3/2025.06/bin/python",
+        "-B",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/submit_e5f_final_night.py",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_array_manifest_corrected_auto_v2_100.json",
+        "--submit"
+      ],
+      "job": "17663986",
+      "submitter": {
+        "command": [
+          "sbatch",
+          "--parsable",
+          "--account=torch_pr_570_general",
+          "--array=0-1%2",
+          "--cpus-per-task=1",
+          "--mem=48G",
+          "--time=07:44:47",
+          "--job-name=e5f_final_history",
+          "--output=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_auto_v2_100/slurm_%A_%a.out",
+          "--error=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_auto_v2_100/slurm_%A_%a.err",
+          "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_auto_v2_100/final_night_array.sh"
+        ],
+        "manifest_sha256": "36e0e1bc68846e0faac7e1d6914dae41aa50fffb1cacb1c90e4c4c003d914aea",
+        "job": "17663986"
+      }
+    }
+  },
+  "updated_unix": 1789295793.8786836
+}
