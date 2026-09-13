@@ -59,7 +59,9 @@ def project_cps_age_profile(source,period_level,anchor):
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--projection',action='store_true',help='Write a separate dotted-extension variant; preserve the historical slide figure.')
+    parser.add_argument('--reveal',action='store_true',help='Write source-free history/projection panels with identical axes for a Beamer reveal.')
     args=parser.parse_args()
+    if args.reveal:args.projection=True
     source=BASE/'source/stock_forecast'
     p=source/'us_period_fertility_wdi.json'
     c=source/'cps_history_40_44.json'
@@ -68,7 +70,8 @@ def main():
     assert sorted(period)==list(range(1980,2024))
     assert period[2007]==2.12 and completed[2024]==1.918 and completed[1980]==2.988
     plt.rcParams.update({'font.size':12,'axes.spines.top':False,'axes.spines.right':False})
-    fig,axes=plt.subplots(1,2,figsize=(12.5,5.1 if args.projection else 4.5),sharey=True)
+    fig,axes=plt.subplots(1,2,figsize=(12.5,5.1 if args.projection and not args.reveal else 4.5),sharey=True)
+    projection_artists=[]
     scenario,scenario_meta=project_cps_age_profile(source,period[2023],completed[2024]) if args.projection else ([],{})
     plotted={}
     for ax,values,title,xlabel in zip(axes,[period,completed],
@@ -95,19 +98,20 @@ def main():
             future_values=[period[2023]]*2 if ax is axes[0] else [r['projected_ceb40_44'] for r in scenario]
             assert future_values[0]==values[years[-1]]
             future_line,=ax.plot(future_years,future_values,color='#245f99',lw=2.2,ls=':',label='Constant-rate scenario')
+            projection_artists.append(future_line)
             assert list(future_line.get_ydata())==future_values
             ax.set_xlim(1979,2067);ax.set_xticks([1980,2000,2020,2040,2060])
             ax.legend(loc='upper right',frameon=False,fontsize=8.5)
-            ax.annotate(f'{future_values[-1]:.2f}',(future_years[-1],future_values[-1]),xytext=(0,-18),
-                        textcoords='offset points',ha='center',color='#245f99',fontsize=11)
+            projection_artists.append(ax.annotate(f'{future_values[-1]:.2f}',(future_years[-1],future_values[-1]),xytext=(0,-18),
+                        textcoords='offset points',ha='center',color='#245f99',fontsize=11))
             plotted[title]['scenario']=dict(years=future_years,values=future_values)
     axes[0].set_ylabel('Births per woman')
     axes[1].set_ylabel('Children ever born per woman')
     axes[0].text(1980,2.15,'Approx. replacement: 2.1',color='#906437',fontsize=10)
     axes[1].annotate(f'{completed[1980]:.2f}',(1980,completed[1980]),xytext=(8,1),
                      textcoords='offset points',ha='left',color='#245f99',fontsize=11)
-    fig.subplots_adjust(left=.065,right=.98,bottom=.26 if args.projection else .20,top=.88,wspace=.25)
-    if args.projection:
+    fig.subplots_adjust(left=.065,right=.98,bottom=.26 if args.projection and not args.reveal else .20,top=.88,wspace=.25)
+    if args.projection and not args.reveal:
         fig.text(.065,.035,
                  'Dotted lines: illustrative constant-rate scenario. Period fertility stays at its last observed level; the 2023 age pattern is fixed.\n'
                  'Completed fertility advances the 2024 CPS age profile to ages 40–44. Its limit is slightly lower because some births occur after those ages.\n'
@@ -115,8 +119,19 @@ def main():
                  fontsize=8.4,color='#555555',linespacing=1.4)
     out=BASE/'figures'
     name='fertility_introduction_with_projection' if args.projection else 'fertility_introduction'
+    if args.reveal:name='fertility_introduction_reveal_projection'
     for ext in ('png','pdf'):
         fig.savefig(out/f'{name}.{ext}',dpi=170,facecolor='white')
+    if args.reveal:
+        positions=[list(ax.get_position().bounds) for ax in axes]
+        for artist in projection_artists:artist.set_visible(False)
+        for ax in axes:
+            handles,labels=ax.get_legend_handles_labels()
+            keep=[i for i,label in enumerate(labels) if label=='Data']
+            ax.legend([handles[i] for i in keep],[labels[i] for i in keep],loc='upper right',frameon=False,fontsize=8.5)
+        assert [list(ax.get_position().bounds) for ax in axes]==positions
+        for ext in ('png','pdf'):
+            fig.savefig(out/f'fertility_introduction_reveal_history.{ext}',dpi=170,facecolor='white')
     plt.close(fig)
     source_paths=[p,c]
     if args.projection:
@@ -133,6 +148,7 @@ def main():
         completed_source='US Census CPS Historical Table2, through2024.',
         source_sha256={str(q.relative_to(BASE)):hashlib.sha256(q.read_bytes()).hexdigest() for q in source_paths},
         scenario=scenario,scenario_metadata=scenario_meta,
+        reveal_identical_axes=args.reveal,visible_sources=False if args.reveal else None,
         artist_data_exact=True),indent=2)+'\n')
     if args.projection:
         with (out/f'{name}.csv').open('w') as stream:

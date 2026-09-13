@@ -542,12 +542,14 @@ Cross-sectional housing patterns discipline access to space; longitudinal data d
 % Initial tables and fit coordinates: verified_final/selected_target_fit.csv and selected_parameters.csv (2026-09-12).
 % Fingerprint c0e266d3a0d430343c469d780d1aedb45fa87f8763c9c938889e0c37daa31de2.
 
-\begin{frame}{Fertility in the United States}
+\begin{frame}[t]{Fertility in the United States}
 \centering
-\includegraphics[width=\textwidth,height=0.65\textheight,keepaspectratio]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/recovered_sequence/figures/fertility_introduction.pdf}
+\alt<2>{\includegraphics[width=\textwidth,height=0.65\textheight,keepaspectratio]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/recovered_sequence/figures/fertility_introduction_reveal_projection.pdf}}{\includegraphics[width=\textwidth,height=0.65\textheight,keepaspectratio]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/recovered_sequence/figures/fertility_introduction_reveal_history.pdf}}
 \par\medskip
-{\small We approximate the 2007 economy by an initial steady state.}
-\source{World Bank WDI; U.S. Census Bureau, CPS Historical Table 2.}
+\begin{minipage}[c][0.12\textheight][c]{\textwidth}
+\centering\small
+\alt<2>{With age-specific birth rates fixed, completed fertility falls across successive cohorts.}{We approximate the 2007 economy by an initial steady state.}
+\end{minipage}
 \end{frame}
 
 \begin{frame}{Calibration and Historical Transition}

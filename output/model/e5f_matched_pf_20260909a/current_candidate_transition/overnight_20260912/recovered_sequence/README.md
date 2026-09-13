@@ -179,6 +179,22 @@ scenario rows, all input hashes, exact historical-artist checks and definitions
 are in the companion CSV and verification JSON. This remains a separate
 illustration for review, not an economic-model result or slide replacement.
 
+**Presentation reveal adopted:** the author subsequently requested putting the
+historical graph and dotted extension on successive overlays of the same frame,
+with visible sources removed. `--reveal` now exports
+`fertility_introduction_reveal_history.pdf/png` and
+`fertility_introduction_reveal_projection.pdf/png`. They share identical axes,
+positions and historical artist values, so the second overlay only introduces
+the scenario curves, endpoint labels and scenario legend. The September14 frame
+Fertility in the United States uses these two images with Beamer `alt` overlays
+and a fixed caption area in a top-aligned frame.
+The first caption introduces the2007 initial-state approximation; the second
+explains falling completed fertility across successive cohorts at fixed
+age-specific rates. Source citations and construction limitations remain here
+and in the saved receipts; the visible source/footer text is removed from the
+presentation images and frame. Values and projection assumptions are unchanged.
+Reproduce with `python3 code/model/tools/build_e5f_fertility_introduction.py --reveal`.
+
 ### Housing and population comparison, September13
 
 **Presentation simplification, September13:** the author subsequently removed
