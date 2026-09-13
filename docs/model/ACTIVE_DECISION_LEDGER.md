@@ -7,6 +7,18 @@ that can still change the theory, quantitative interpretation, or paper-facing
 claims. `CALIBRATION_STATUS.md` remains the source for numerical results and
 reproducibility contracts.
 
+## Quantitative transition: discussion deferred to September 13
+
+At Tommaso's request on September 12, discuss tomorrow the existence and
+uniqueness of the quantitative stationary equilibrium and the transition from
+an inherited household distribution. Separate economic existence, local
+stability and equilibrium selection from convergence of the numerical solver.
+No model-specific existence or uniqueness proof is currently established for
+the numerical exercise. Check sensitivity to initial guesses and the terminal
+horizon before treating a computed path as a robust equilibrium prediction.
+This discussion does not delay tonight's numerical readout; any unresolved
+terminal-horizon checks must remain visible in that readout.
+
 ## Simplified theory discussion map
 
 Started 2026-09-04 at Tommaso's request to explore the review's decisions one
