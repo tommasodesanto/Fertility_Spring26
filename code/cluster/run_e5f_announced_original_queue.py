@@ -341,7 +341,8 @@ def main():
           ev0, fp0=announced_queue_path(c,constant)
           g=__import__("numpy").repeat([q,float(P.pension),float(P.property_tax_lump_sum_transfer)],6).reshape(3,6)
           inputs=dict(inherited=c.rebated.InheritedState(2007,c.old.initial_state),old_state=c.old,
-              prices=g[0],pensions=g[1],transfers=g[2],psi=float(P.psi_child),terminal=stationary)
+              prices=g[0],pensions=g[1],transfers=g[2],psi=float(P.psi_child),
+              terminal=NS(parameters=P,policy=stationary.policy,asset_price=q))
           baseline=c.queue.queue_path(**inputs)
           routed=ev0(**inputs)
           save(c.driver,folder/"constant_native_comparison.json",dict(passed=True,**compare_native_paths(baseline,routed)))

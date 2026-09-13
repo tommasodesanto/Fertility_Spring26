@@ -1,6 +1,6 @@
 # Calibration Status
 
-**September 13 — announced four-step experiment: smoke submitted as 17705644.**
+**September 13 — announced four-step experiment: terminal reproduced; corrected smoke 17705757.**
 The author clarified that this is ONE path known at time zero, not four
 successive-surprise solves. Reuse the fitted preference levels0.1289153146,
 0.1169660838,0.1056429092,0.09221854784 at2007/2011/2015/2019, then hold the
@@ -12,7 +12,15 @@ The expected long-stage runtime is3–5hours, with a six-hour numerical cap,
 eight root mappings and a separate seven-hour absolute experiment deadline.
 Seven pure routing tests pass locally. The terminal reconstruction and exact-loop
 smoke are submitted on Torch; only a passed matching smoke may dispatch the
-long job. No long announced run is running yet. Existing runs remain independent.
+long job. Initial smoke 17705644 freshly reproduced terminal prices, policy,
+population and both queues exactly; all 16 native one-period checks passed.
+It then stopped at a wrapper state-type mismatch, before any path evaluation.
+Corrected smoke 17705757 uses a bare continuation boundary and keeps the
+carried household state separate. Its isolated batch ends in
+`announced_original_queue_20260913b`; the original seven-hour deadline remains.
+Fresh terminal household mass is 0.3494542724972, renewal 0.9999999649074,
+housing relative gap -3.85e-13, PAYGO gap zero, rebate gap -2.59e-8.
+This verifies the stationary endpoint, not the finite path reaching it. No long announced run is running yet. Existing runs remain independent.
 The manifest and submission receipt, together with the full scientific
 contract are under `output/model/e5f_original_queue_20260913a/announced_sequence/`.
 

@@ -1,0 +1,62 @@
+{
+  "passed": true,
+  "comparisons": {
+    "asset_price": 0.0,
+    "pension": 0.0,
+    "rebate": 0.0,
+    "policy_V": 0.0,
+    "g_pre": 0.0,
+    "scheduled_entries": 0.0,
+    "scheduled_raw_entries": 0.0
+  },
+  "endpoint_receipt_verified": true,
+  "final_psi": 0.09221854783921073,
+  "one_step_audit": {
+    "status": "passed",
+    "checks": {
+      "root_renewal": true,
+      "root_paygo": true,
+      "root_equal_rebate": true,
+      "housing_level": true,
+      "one_step_population_level": true,
+      "one_step_distribution_level_l1": true,
+      "one_step_distribution_normalized_l1": true,
+      "one_step_entry_queue": true,
+      "one_step_raw_queue": true,
+      "one_step_policy_reproduction": true,
+      "one_step_mass_accounting": true,
+      "one_step_feasibility_projection": true,
+      "household_audit": true,
+      "stationary_reconstruction": true,
+      "four_waiting_entry_vintages": true,
+      "four_waiting_raw_vintages": true
+    },
+    "initial_population_mass": 0.3494542724972196,
+    "next_population_mass": 0.3494542724973378,
+    "population_absolute_gap": 1.1818324097134791e-13,
+    "distribution_level_l1": 5.878189093588915e-13,
+    "distribution_normalized_l1": 1.4219333705358513e-12,
+    "entry_queue_maximum_absolute_gap": 7.570524138134083e-10,
+    "raw_queue_maximum_absolute_gap": 0.0,
+    "maximum_policy_reproduction_error": 0.0,
+    "maximum_mass_accounting_error": 1.6653345369377348e-16,
+    "maximum_feasibility_projection_mass": 0.0
+  },
+  "household_mass": 0.3494542724972196,
+  "renewal_ratio": 0.999999964907444,
+  "housing_relative_gap": -3.852249151025267e-13,
+  "pension_relative_gap": 0.0,
+  "rebate_relative_gap": -2.591124581903642e-08,
+  "raw_queue": [
+    0.019434190415801238,
+    0.019434190415801238,
+    0.019434190415801238,
+    0.019434190415801238
+  ],
+  "adjusted_queue": [
+    0.021573020018445823,
+    0.021573020018445823,
+    0.021573020018445823,
+    0.021573020018445823
+  ]
+}

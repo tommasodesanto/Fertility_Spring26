@@ -59,3 +59,27 @@ Frozen batch:
 Manifest SHA-256: `9f9c3b7d5a8a573c5bba09ff4be2ffb72454fd9ce1fa8685a3ab5ddc49ac3ed1`.
 Local copies: `manifest.json` and `submission.json`. The existing 30-minute
 monitor now includes this arm and its independent deadline.
+
+## Corrected smoke and terminal verification
+
+The first smoke freshly reconstructed the endpoint exactly: all policy, price,
+distribution and queue reproduction gaps are zero. All **16** native one-step
+checks passed. Household mass is 0.3494542724972, renewal ratio
+0.9999999649074, housing relative gap -3.85e-13, PAYGO gap zero and rebate
+gap -2.59e-8. See `fresh_terminal_check.json`.
+
+It then stopped on `Optional terminal state must contain households and persons`:
+the constant-path comparison had unnecessarily passed the original queue state
+through the frozen helper's optional person-state compatibility interface. The
+repair passes only the continuation parameters, policy and price, preserving
+the actual household state separately. No model or numerical gate changed.
+
+Retry smoke **17705757** uses the isolated sibling batch
+`announced_original_queue_20260913b`; `retry_manifest.json` and
+`retry_submission.json` pin it. It retains the first announced arm's absolute
+deadline. A matching successful smoke still gates automatic long-run dispatch.
+
+The author stressed that the final path should settle well before the endpoint
+and be stable to extending the horizon. This has **not** been established:
+the earlier plotted 100-period iteration was unconverged and population remained
+about 11% above the stationary endpoint. No additional horizon run was launched.
