@@ -28,6 +28,10 @@ def main():
     ap.add_argument('--as-of', required=True)
     ap.add_argument('--history-case', type=Path, default=None,
                     help='Optional verified four-window history packet')
+    ap.add_argument('--policy-dir', type=Path, default=None,
+                    help='Optional verified policy_comparison directory')
+    ap.add_argument('--policy-state-verification', type=Path, default=None,
+                    help='Optional passed policy state verification JSON')
     args = ap.parse_args()
     initial = args.packet / 'corrected_initial'
     candidate = json.loads((initial / 'candidate_result.json').read_text())
@@ -59,6 +63,45 @@ def main():
     story = []
 
     history_rows = None
+    policy_rows = None
+    policy_verification = None
+    policy_state = None
+    if args.policy_dir or args.policy_state_verification:
+        if not (args.policy_dir and args.policy_state_verification and args.history_case):
+            raise ValueError('--policy-dir, --policy-state-verification and --history-case are required together')
+        policy_dir = args.policy_dir
+        with (policy_dir / 'comparison.csv').open() as stream:
+            policy_rows = list(csv.DictReader(stream))
+        policy_verification = json.loads((policy_dir / 'verification.json').read_text())
+        policy_state = json.loads(args.policy_state_verification.read_text())
+        if policy_verification.get('status') != 'passed' or policy_verification.get('horizon_verified') is not False:
+            raise ValueError('Policy comparison must be passed with horizon_verified=false')
+        if policy_state.get('status') != 'passed' or policy_state.get('horizon_verified') is not False:
+            raise ValueError('Policy state verification must be passed with horizon_verified=false')
+        if len(policy_verification.get('years', [])) != 6 or policy_verification['years'] != [2023, 2027, 2031, 2035, 2039, 2043]:
+            raise ValueError('Expected six policy dates')
+        if len(policy_rows) != 66 or {int(r['decision_year']) for r in policy_rows} != {2023, 2027, 2031, 2035, 2039, 2043}:
+            raise ValueError('Expected 6 x 11 policy comparison rows')
+        if policy_state.get('policy_root_sha256', {}).keys() != {'baseline_rebate', 'tax2_rebate'}:
+            raise ValueError('Both policy root provenance hashes are required')
+        roots = {}
+        for name in ('baseline_rebate', 'tax2_rebate'):
+            root = args.history_case / 'policies' / name / 'root_receipt.json'
+            if not root.exists() or hashlib.sha256(root.read_bytes()).hexdigest() != policy_state['policy_root_sha256'][name]:
+                raise ValueError('Policy root provenance hash mismatch: ' + name)
+            roots[name] = root
+        source_sha = policy_verification.get('source_sha256', {})
+        for path, digest in source_sha.items():
+            if hashlib.sha256(Path(path).read_bytes()).hexdigest() != digest:
+                raise ValueError('Changed policy comparison input: '+path)
+        if source_sha.get(str(args.policy_state_verification.resolve())) != hashlib.sha256(args.policy_state_verification.read_bytes()).hexdigest():
+            raise ValueError('Policy comparison must use this native state proof')
+        for name in ('comparison.csv','policy_comparison.pdf','policy_comparison.png'):
+            if policy_verification.get('output_sha256', {}).get(name) != hashlib.sha256((policy_dir/name).read_bytes()).hexdigest():
+                raise ValueError('Policy comparison output hash mismatch: '+name)
+        for root in roots.values():
+            if str(root.resolve()) not in source_sha or source_sha[str(root.resolve())] != hashlib.sha256(root.read_bytes()).hexdigest():
+                raise ValueError('Policy comparison source hash does not pin ' + root.name)
     if args.history_case:
         case = args.history_case
         realized = json.loads((case / 'realized_fit.json').read_text())
@@ -119,7 +162,7 @@ def main():
         return '-' if value in ('', None) else f'{float(value):.6g}'
 
     add('Quantitative model<br/>' + ('Verified history and model fit' if args.history_case else 'Verified initial readout'), 'TitleCustom')
-    add(escape(args.as_of) + (' | Six-period history verified; policies and longer horizons continue.'
+    add(escape(args.as_of) + (' | Six-period history and paired tax policies verified; horizon adequacy pending.' if policy_rows is not None else ' | Six-period history verified; policies and longer horizons continue.'
         if args.history_case else ' | Historical and policy work remains in progress.'), 'SmallCustom')
     add('<b>The fiscal and distribution repairs pass. The economic fit remains weak.</b> '
         'The corrected initial equilibrium reproduces exactly in two independent numerical '
@@ -131,7 +174,7 @@ def main():
         ['Is property tax rebated?', 'Yes. Revenue returns equally per current household head; the rebate budget is checked separately from pensions.'],
         ['Was the probability error fixed?', 'Yes. Float64 normalization in both Markov distribution operators passes the captured mass-error replay and full initial reconstruction.'],
         ['Is the entire shock path fitted?', 'Yes for the provisional six-period A0 history. All four observed fertility windows pass the 0.005 fit requirement. Horizon adequacy remains unverified.' if args.history_case else 'Not yet. Both short-horizon variants have accepted the first historical window; subsequent surprises are being fitted.'],
-        ['Are policy results ready?', 'Not yet. Baseline and higher-tax rebated policies follow each completed history from its inherited 2023 households.'],
+        ['Are policy results ready?', 'Yes for the six-period A0 case: baseline and doubled property tax both return revenue equally, balance pensions, and start from identical 2023 households.' if policy_rows is not None else 'Not yet. Baseline and higher-tax rebated policies follow each completed history from its inherited 2023 households.'],
     ], [158, width - 158])
     add('What deserves attention', 'SectionCustom')
     add('Mean rooms and ownership at ages 30-55 are the largest remaining fit problems. '
@@ -140,6 +183,13 @@ def main():
     add('The 6-, 24- and 100-period forecasts are separate horizon checks. Passing a finite '
         'market-clearing root does not establish that a shorter horizon is adequate. The '
         'alternative demographic closure remains unresolved and has not been promoted.')
+    if policy_rows is not None:
+        policy_map={(int(r['decision_year']),r['metric']):r for r in policy_rows}
+        add('The paired tax exercise changes the first birth flow by %.2f%% and the final simulated '
+            'birth flow by %+.2f%%. These are small, provisional effects. A0 assumes zero net migration '
+            'after 2023; six periods cover 24 years, followed by a constant-condition boundary '
+            'for remaining household lifetimes.' % (float(policy_map[(2023,'birth_children_topcode_adjusted')]['percent_change']),
+            float(policy_map[(2043,'birth_children_topcode_adjusted')]['percent_change'])))
     add('How the historical exercise works', 'SectionCustom')
     add('At each surprise, households expect the new fertility preference to remain constant. '
         'For guessed paths of house prices, pensions and rebates, the solver works backward '
@@ -178,7 +228,7 @@ def main():
         add('Verified four-window history', 'TitleCustom')
         add('All four fertility windows are matched in a six-period forecast. Each accepted date '
             'passes housing, PAYGO and equal-rebate gates. Horizon adequacy remains unverified; '
-            'longer runs and rebated-tax policies continue. Matching the fertility decline does '
+            'longer forecasts continue. Matching the fertility decline does '
             'not resolve weak cross-sectional fit.')
         table([['Window end', 'Data', 'Model', 'Gap', 'psi']] +
               [[int(r['year'])+4, number(r['target']), number(r['model']), number(r['gap']), number(r['psi'])]
@@ -195,6 +245,28 @@ def main():
             add('2023 validation measurement caveats', 'TitleCustom')
             for r in caveats:
                 add('<b>%s.</b> %s' % (escape(r['moment']), escape(r['measurement_note'])))
+
+    if policy_rows is not None:
+        story.append(PageBreak())
+        add('Policy comparison: 2023–2043', 'TitleCustom')
+        add('A0 means no net migration after 2023. The six periods span 24 years, with a remaining-lifetime constant-condition boundary. The paired reforms apply a 1% annual property tax versus a 2% annual property tax, with equal rebates. Both start from the same inherited 2023 households and balance PAYGO separately. Births are per-period flows, not cumulative; the last decision in 2043 corresponds to the 2044–47 flow. These are provisional short-horizon results because horizon adequacy is unverified.')
+        metrics = ['asset_price','renter_price','housing_demand','resident_persons','household_heads','birth_children_topcode_adjusted','owner_rate','pension_period_units','equal_transfer_period_units','period_tfr_topcode_adjusted','rooms_per_head']
+        labels = {'asset_price':'Asset price','renter_price':'Renter price','housing_demand':'Housing demand','resident_persons':'Resident persons','household_heads':'Household heads','birth_children_topcode_adjusted':'Births (flow)','owner_rate':'Owner rate','pension_period_units':'Pension (period units)','equal_transfer_period_units':'Equal transfer (period units)','period_tfr_topcode_adjusted':'Period TFR (flow)','rooms_per_head':'Rooms per head'}
+        by = {(int(r['decision_year']), r['metric']): r for r in policy_rows}
+        for year in (2023, 2043):
+            if year == 2043:
+                story.append(PageBreak())
+            add('Decision year %d' % year, 'SectionCustom')
+            rows = [['Metric','Baseline','2% tax','Percent change','Change (pp)']]
+            for metric in metrics:
+                r = by[(year, metric)]
+                pp = r.get('percentage_point_change','')
+                rows.append([labels[metric], number(r['baseline']), number(r['reform']), number(r['percent_change']) + '%', (number(pp) + ' pp') if metric == 'owner_rate' else ''])
+            table(rows, [150, 78, 78, 92, width-398], numeric_start=1)
+        add('Housing supply uses the same price-dependent curve in both policies, with elasticity '
+            '0.63. The lower house price reduces supply, so the tax experiment includes a contraction '
+            'in total housing as well as changes in its allocation. Reported rooms per head are '
+            'physical rooms; the empirical validation table uses its separate top-coded room measure.')
 
     story.append(PageBreak())
     add('Parameters and restrictions', 'TitleCustom')
@@ -241,6 +313,26 @@ def main():
         add(escape(stem.replace('_', ' ')), 'SmallCustom')
         story.append(Spacer(1, 8))
 
+    policy_figure_paths = []
+    if policy_rows is not None:
+        for policy_name, label in (('baseline_rebate', 'Baseline policy'), ('tax2_rebate', '2% tax policy')):
+            diag = args.history_case / 'policies' / policy_name / 'graphs' / 'standard_diagnostics'
+            for stem in graphs:
+                path = diag / (stem + '.png')
+                if not path.exists():
+                    raise ValueError('Missing policy diagnostic: ' + str(path))
+                policy_figure_paths.append((label, stem, path))
+        for i, (label, stem, path) in enumerate(policy_figure_paths):
+            if (i % len(graphs)) % 2 == 0:
+                story.append(PageBreak())
+                add('Policy native diagnostics: ' + label, 'SectionCustom')
+                add('The unchanged 17-figure standard diagnostic packet for this policy.', 'SmallCustom')
+            iw, ih = ImageReader(str(path)).getSize()
+            scale = min(width / iw, 274 / ih)
+            story.append(Image(str(path), width=iw * scale, height=ih * scale, hAlign='CENTER'))
+            add(escape(label + ' — ' + stem.replace('_', ' ')), 'SmallCustom')
+            story.append(Spacer(1, 8))
+
     def footer(canvas, doc):
         canvas.setStrokeColor(gray)
         canvas.line(40, 35, A4[0] - 40, 35)
@@ -261,6 +353,9 @@ def main():
             writer.add_page(page)
         for page in PdfReader(str(args.history_case / 'figures' / 'e5f_final_history_figures.pdf')).pages:
             writer.add_page(page)
+        if policy_rows is not None:
+            for page in PdfReader(str(args.policy_dir / 'policy_comparison.pdf')).pages:
+                writer.add_page(page)
         writer.add_metadata({'/Title': 'Fertility and housing: verified history and model fit',
                              '/Author': 'Quantitative model working report'})
         with args.output.open('wb') as stream:

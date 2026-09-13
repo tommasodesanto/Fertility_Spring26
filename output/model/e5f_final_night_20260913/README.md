@@ -1,255 +1,163 @@
-Policy comparison builder: `code/model/tools/build_e5f_final_policy_readout.py`
-requires both finite/exact policy roots plus a native common-initial-state proof.
-It compares each policy's own matched2023baseline; it never uses the earlier
-2019forecast's2023row as the policy baseline. Ownership changes are reported in
-both percentages and percentage points. Three fixturetests pass; nativepair and
-actualfigures await tax completion. Read-only state-verification17689191 runs
-after A0controller17658841, with separate pension/propertytax budget checks.
+# Final-night quantitative work
 
-Update13:00UTC: native boundary-policy verification17686318 passes exact policy,
-accounting and six-period replay checks. New100-period A0/A+array17686968 runs
-from frozen policy-only value-boundary helper; collector17687181 watches it.
-The first native100-period mappings are still underway.
+Current evidence: September 13, 13:51 UTC. Fixed deadline: September 13, 18:00 UTC.
+Cluster computation and collection are independent of the laptop. Latest account
+check,13:52UTC:38%weekly remaining; keep the author’s20%floor.
 
-Current discussion PDF: `verified_history_readout.pdf` (20pages; all13initial
-moments,17parameters, four historical windows,13untargeted2023comparisons,
-17initialdiagnostics and five newcomparisonfigures). Allpages visually inspected
-and157source numeric cells checked; sidecar `verified_history_readout_qa.json`.
-Policy effects and horizon adequacy remain pending. Fullnative evidence lives
-in `history_A0_6/` and `boundary_policy_seed_verification_v2.json`.
+## Discussion packet
 
-Update12:54UTC: A0ordinary six-period history matches allfourfertilitywindows,
-with finite housing/PAYGO/equal-rebate gates and exact replay. Native2023reader
-passes. Full13rowData/Model CSV and five verifiedPDF/PNGfigures are under
-`history_A0_6/`; `four_window_A0_verification.json` records acceptance. These remain
-finite-horizon provisional results. Rebated baseline/tax forecasts are underway.
-Native boundary-policy split verification17686318 continues; no newsourcepromotionyet.
+**`verified_history_readout.pdf` is the current 41-page report.** The first page
+summarizes the decision points. Pages 2–8 contain the complete initial target
+fit, historical fit, untargeted 2023 validation, paired tax tables, and parameter
+restrictions. Pages 9–35 preserve all 17 native diagnostics for each of the
+initial equilibrium, baseline policy, and higher-tax policy. Pages 36–41 show
+the five historical/2023 comparison figures and supplemental policy comparison.
 
-Update12:40UTC: all four six-period cases have three accepted windows. Boundary
-probe17683693 exactly reproduces the100-period proposal rejection as an audit of
-initial2007 households at terminal conditions. Isolated `history_source_policy_seed_v1`
-removes that substitute-population audit while retaining all actual dated and
-carried-endpoint checks; native equivalence verification is required before use.
-Model kernels, targets and tolerances are unchanged. See canonical status top.
+All 41 draft pages were rendered and visually inspected. The final version only
+updates its actual timestamp. All 225 displayed source numbers checked;
+`verified_history_readout_qa.json` binds the report to its inputs. Full-precision
+CSV/JSON files remain the numerical source. `verified_initial_readout.pdf` is
+an older initial-only readout.
 
-# Authorized final-night work
+## Established results
 
-Latest evidence: September 13, 12:15 UTC. Fixed deadline: 18:00 UTC.
-The cluster jobs and collector continue independently of the laptop. Local idle
-sleep prevention lasts until the deadline. Latest account check: 48% weekly
-remaining; retain the author's 20% floor.
+- Corrected initial equilibrium: two exact numerical repetitions, loss
+  179.2984242480. This is a verified candidate from an incomplete search, not
+  a converged optimizer. The probability normalization repair changes its
+  loss by less than one millionth. Complete 13-row target and 17-row parameter
+  tables: `corrected_initial/`. Nine free structural coordinates; annual beta
+  capped at 0.99; targets and weights unchanged.
+- All four ordinary/seeded A0/A+ six-period histories fit all four observed
+  fertility windows. Ordinary A0 model/data: 1.973124/1.974875 (2008–2011),
+  1.861042/1.861000 (2012–2015), 1.755338/1.755375 (2016–2019), and
+  1.645559/1.645750 (2020–2023). Every accepted root passes the finite housing,
+  PAYGO, equal-rebate and exact-replay gates.
+- Native A0 2023 readout passes: maximum aggregate discrepancy 3.55e-15,
+  including the dated first-birth room response. Full 13-row untargeted table:
+  `history_A0_6/validation/validation_2023.csv`. Actual empirical vintages and
+  measurement qualifications remain explicit.
+- The A0 baseline and doubled-property-tax policy forecasts both converge from
+  exactly the same inherited 2023 households, grid and supply curve. Separate
+  pension and property-tax budgets balance. Native proof:
+  `history_A0_6/policy_state_verification_v2.json` (job 17691079).
 
-## Verified progress
+## Paired policy comparison
 
-The corrected initial equilibrium passed two exact numerical reproductions in
-job 17655042. Full target and parameter tables: `corrected_initial/README.md`.
-The probability repair is numerical: it does not change the structural search
-coordinates, empirical targets, weights or acceptance tolerances. It changes the
-loss by less than 0.000001 and does not improve the economic fit.
+Both 1% and 2% annual property taxes return revenue equally per current head.
+The comparison uses each policy's own 2023 forecast; it does not substitute the
+2023 row from the earlier 2019 forecast. Six periods span 24 years; the final
+2043 decision produces the 2044–2047 fertility flow.
 
-Both six-period cases passed their first historical window and carried households
-to 2011. With ordinary starts, the A0 fertility gap is −0.001750752 and the A+
-gap is +0.003827671 against target 1.974875, within the 0.005 requirement.
-All market, PAYGO, rebate, household and exact-replay gates pass. Price-seeded
-counterparts also pass in two mappings, about 174 seconds; ordinary starts took
-14 mappings, about 1,223 seconds. Different nodes prevent a controlled timing claim.
+| Change from 1% to 2%, both rebated | Initial decision 2023 | Final decision 2043 |
+|---|---:|---:|
+| Birth flow | −0.2478% | +0.4718% |
+| Period TFR | −0.2212% | +0.6223% |
+| Resident persons | 0% | +0.03251% |
+| Physical rooms per head | −4.2367% | −4.8879% |
+| Ownership | −1.4867 percentage points | +1.4263 percentage points |
+| House price per room | −6.6489% | −7.6500% |
+| Rent per room | +20.2015% | +14.1891% |
 
-Both short variants now also accept the second historical window. In the seeded
-runs, model fertility is 1.861042 (A0) and 1.861231 (A+) against 1.861000. Ordinary
-starts agree within 1.1e-6. All finite gates pass, with exact replay zero. Households
-are carried to 2015; two surprise windows remain. `two_window_verification.json`
-records the selected forecasts and their native root hashes.
+These are dated flow/level effects, not cumulative births or long-run stationary
+comparisons. Supply is static-elastic with elasticity 0.63 in both policies;
+its exact price/supply log ratio verifies 0.63. Lower prices therefore reduce
+housing supply. No fixed-stock sensitivity has been launched or substituted.
+All 66 dated comparison rows and 132 original level cells were checked against
+the native outputs; see `history_A0_6/policy_comparison/qa.json`. The standard
+policy graphs are under `history_A0_6/policies/*/graphs/standard_diagnostics/`.
 
-## Live jobs
+A separate read-only comparison also verifies the ordinary A+ and seeded A0
+pairs (`policy_sensitivity/summary.json`). A+ changes the initial birth flow by
+−0.2631% and final flow by+0.5196%; the seeded A0 reproduces the corresponding
+ordinary A0 effects within0.000002percentage points for births. These are
+additional provisional checks; only A0 is in the main report.
 
-| Job | Work | State at update |
+## Outstanding work and limits
+
+The six-period results remain **provisional**: horizon adequacy is unverified,
+and production eligibility remains false. Longer 24- and 100-period fits are
+still running. The 24-period tracks have not yet accepted their first fitted
+window. The new 100-period tracks have passed their first two complete mappings;
+these are valid evaluations, not converged equilibria. A0's second mapping
+requires a safeguarded step; A+ improves. No tolerance was loosened.
+
+Economic fit remains weak, especially housing. Untargeted 2023 completed
+fertility is 1.69387 versus CPS2024 1.91842; capped mean rooms 6.25308 versus
+ACS2023 5.58372; ownership ages 30–55 is 49.4514% versus 58.7409%; the first-birth
+room response is 1.01368 versus retained 0.720246. See the complete table for all
+moments, not just these examples. Physical rooms in policy graphs are distinct
+from the capped empirical room measure.
+
+A0 removes all post-2023 migration; A+ retains the supplied migration sensitivity.
+Historical head-age conditioning through 2023 remains an imposed bridge. The
+older orphan-care omission remains the explicitly approved fallback. B0/B+ are
+not launched: converting child/person mass into new household heads remains
+unresolved, and B+ additionally needs signed migrant-state allocation. The
+0.5647956 diagnostic coefficient is not a production default. The optional
+age-profile initial pilot did not improve its age component and was not promoted.
+
+## Active calculations and numerical repair
+
+| Job array | Work | Last established state |
 |---|---|---|
-| 17658836 | A0/A+, 6 periods, ordinary starts | Fitting subsequent surprises |
-| 17661737 | A0/A+, 6 periods, pinned numerical price starts | Fitting subsequent surprises |
-| 17663940 | A0/A+, 24 periods, ordinary starts | Submitted by verified handoff |
-| 17663986 | A0/A+, 100 periods, 48 GiB | Cancelled after both32-GiB native nonconstant mappings passed |
-| 17676958 | A0/A+, 100 periods, 32 GiB / 12-GiB cache | Both nonconstant mappings valid; roots still solving |
-| 17680316 | A0/A+, 100 periods, extended24-period price guesses | Running; pinned input preflight passed |
-| 17664449 | A0/A+, 24 periods, pinned numerical price starts | Submitted |
-| 17607147 | Five-minute receipt collector | Running |
-| 17683391 | Boundary-budget reproduction, four checks | Diagnostic only;20-minute cap |
+| 17658836 | Ordinary A0/A+, six periods | Both histories and both paired policies complete |
+| 17661737 | Price-seeded A0/A+, six periods | Both histories complete; A0 pair complete; A+ tax finishes |
+| 17663940 | Ordinary A0/A+, 24 periods | First-window preference search |
+| 17664449 | Price-seeded A0/A+, 24 periods | First-window preference search |
+| 17686968 | Corrected boundary initialization, A0/A+, 100 periods | Two valid mappings each; root solving |
+| 17676958 | Earlier 32-GiB 100-period starts | Independent old-helper attempt; see live receipts |
+| 17680316 | Earlier extended 100-period starts | A0 failed premature audit; A+ independent attempt |
 
-Ordinary A0 now fits the first three windows, with third-window fertility
-1.7553381559 versus1.755375. See `three_window_verification.json`; the final
-surprise remains. The first same-preference A0 horizon comparison is also
-verified: six-period fertility1.97311223 versus24-period1.95887157, an absolute
-difference0.01424067. Both roots pass, but the latter needs a shock refit to meet
-the retained0.005 fit tolerance. See `fixed_preference_horizon_comparison/`.
+The long-boundary initializer previously audited inherited 2007 households at
+terminal conditions before carrying the population. The isolated helper now
+constructs lifetime household values without that substitute-population audit.
+Every actual dated and carried-endpoint population still passes the same checks.
+Native verification 17686318 reproduces policies, fiscal inputs, full accepted
+six-period paths, terminal households and ledgers bitwise. Source:
+`history_source_policy_seed_v1`; model kernels are unchanged. Immutable first-
+and second-mapping evidence: `policy_seed_first100_mapping/` and
+`policy_seed_second100_mapping/`. The new A0 first mapping matches all 303 old
+coordinates and residuals exactly.
 
-One extended100-period boundary proposal failed the household spending gate;
-its trial was rejected safely. `probe_e5f_boundary_budget_gate.py` reconstructs
-the exact proposed coordinates from the saved first mapping, then tests only
-boundary household evaluations. Job17683391 has a20-minute limit; it captures
-the violating states and tests the ordinary half-damping alternative. It is
-not a completed history, root, or policy. No numerical tolerance changes.
+The 48-GiB duplicate array 17663986 was retired after actual 32-GiB mappings and
+memory use were verified. Numerical cache results remain exact. One 100-period
+mapping currently takes about 30 minutes, so completion by the deadline is
+uncertain. Each track retains checkpoints, latest/best summaries, five-minute
+heartbeats, bounded root/preference attempts and independent failure handling.
+Automatic native readout collectors cover every active horizon; see `jobs.json`
+and `readout_verification/`. Failed and superseded results are preserved.
 
-Handoff 17658318 completed after verifying both six-period first-window gates.
-The superseded old-source arrays 17613033, 17613034 and 17632922 were cancelled;
-all their outputs remain. The separately frozen extended 100-period starts import
-only numerical prices, pensions and rebates; no household state or Jacobian.
+## Scientific contract and regeneration
 
-The 100-period peak RSS was about16.7 GiB at 11:45 UTC, with current heartbeats.
-The first nonconstant mapping has not finished, so full memory/runtime feasibility
-is still pending. The extended guesses preserve all 25 coordinates of each saved
-24-period block and repeat its own final value 76 times to obtain 101 coordinates.
-Fifteen driver tests and the exact pinned input preflight pass; the actual 100-date
-forecast is the next gate. Provenance: `extended_history_preparation.json` and
-`extended_history_submission.json`; reproducible preparation:
-`prepare_extended_history.py`. The model, empirical objective, all gates and 18 UTC
-deadline are unchanged.
+Preferences unexpectedly change at decisions 2007, 2011, 2015 and 2019. At each
+vintage households expect that preference to persist; the solver computes the
+corresponding price/pension/rebate path, matches the four-year fertility window,
+and carries only the first realized period to the next surprise. Preferences
+stay fixed after the final shock. The boundary values remaining lifetimes under
+constant conditions, clearing markets and budgets on the actual carried endpoint
+population. It does not reset to a stationary population or prove feasibility
+forever beyond the horizon.
 
-Additional readout collectors 17680417/17680418 cover the two new100-period pairs;
-their preflights returned PENDING. Receipts are in `readout_verification/`; their
-launch script is `prepare_long_readout_collectors.py`. They run only the strict
-saved-state observer once all four historical windows pass. The full 13-row 2023
-table can then be built locally with:
+The fixed-preference migration and 6-versus-24-period comparisons remain separate
+diagnostics under `fixed_preference_migration_comparison/` and
+`fixed_preference_horizon_comparison/`. The latter changes first-window TFR by
+−0.01424, which motivates the longer-horizon refit; it is not a horizon certificate.
 
-```sh
-python3 code/model/tools/build_e5f_final_history_validation.py --model /absolute/readout/model_2023.json --out /absolute/output/validation
-```
-
-The adapter requires the matching native PASS verification, preserves empirical
-source hashes/vintages, and labels decision 2023 fertility flows as 2024–2027.
-All five adapter tests pass; final dated observations remain pending.
-
-The five retained historical/2023 figures are also ready to regenerate from a
-locally copied complete case and strict readout:
+Regenerate the supplemental comparison without a model solve:
 
 ```sh
-code/model/.venv/bin/python code/model/tools/build_e5f_final_history_plots.py --case-dir /absolute/copied/A0_6 --readout-dir /absolute/native/readout --out /absolute/output/figures
+code/model/.venv/bin/python code/model/tools/build_e5f_final_policy_readout.py --case-dir output/model/e5f_final_night_20260913/history_A0_6 --out output/model/e5f_final_night_20260913/history_A0_6/policy_comparison --state-verification output/model/e5f_final_night_20260913/history_A0_6/policy_state_verification_v2.json
 ```
 
-This command writes the historical fertility fit and continuation, prices and
-quantities, 2023 equilibrium levels, housing/ownership/children-at-home lifecycle
-comparisons, and fertility by age. The last two retain the actual ACS2023 overlays
-and their measurement qualifications. The complete table remains the separate
-13-row adapter above. Only the final-vintage forecast contributes the continuation;
-earlier vintages contribute their first realized period. Native source/root linkage
-and all four fit gaps are checked before plotting. Two synthetic tests pass,
-including the observation clock, data overlays, small population weights, and
-rejection of an invalid fit/readout. The five-page synthetic rendering was
-visually inspected; it is only a test under `tmp/pdfs/final_history_synthetic/`.
-No actual completed-history figure is claimed yet.
+The full report builder is `code/model/tools/build_e5f_final_night_report.py`.
+Use the bundled Python runtime with reportlab and pypdf, supplying `--packet`,
+`--history-case`, `--policy-dir`, `--policy-state-verification`, `--output`, and
+an actual `--as-of` timestamp. The retained five historical figures use
+`build_e5f_final_history_plots.py`; all 13 validation rows use
+`build_e5f_final_history_validation.py`. Existing full-precision inputs are
+sufficient; none of these readers runs the model.
 
-No complete four-shock history, horizon certificate or completed policy is claimed.
-The fiscal and mass problems have verified numerical repairs; the economic fit
-and full historical/policy exercise still require assessment.
-
-Remote batch: `/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/`.
-Plan: `docs/model/e5f_two_closure_overnight_plan.md`.
-
-## Calibration and scientific contract
-
-The corrected initial loss is 179.2984242480 versus 182.6491468669 for the rebated
-seed. This is a verified candidate, not a converged optimizer. The original search
-stopped after repeated20-evaluation numerical root limits. Complete13-row target
-and17-row parameter/restriction tables: `corrected_initial/README.md`.
-The displayed beta bound is the enforced annual0.99; raw scorer metadata retains
-its old0.9995 separately. Housing moments remain weak.
-
-The extra age pilot barely improves its augmented loss306.5873 to306.1929;
-its age component worsens123.9381 to126.0059. It does not establish better age
-fit and is not promoted. All original13, extra6 and augmented18-row tables are
-in `age_pilot_recovered/README.md`. The extra synthetic5% scales are not empirical
-standard errors. Recovery checked source, checkpoints, fiscal gaps and numerical
-repetitions without another solve; serialized checkpoint hashes are provenance,
-not numerical outputs that must reproduce byte for byte.
-
-Twelve scored initial moments, nine free coordinates, unchanged weights, annual
-beta cap0.99 and separate fertility normalization2.1 remain. Four unexpected
-permanent preference changes are fitted at2007/2011/2015/2019; each vintage
-expects current preferences to persist, with preferences fixed after2023.
-The target contract maps decision vintages2007/2011/2015/2019 to published TFR
-means for2008–2011/2012–2015/2016–2019/2020–2023 respectively. Fit plots must show
-these four-year observation windows explicitly; a2023 decision-vintage fertility
-flow belongs to the forecast period, rather than another fitted historical row.
-Every property-tax comparison returns revenue equally per current household
-head. PAYGO pensions balance separately at every accepted date. A0 removes all
-post2023 migration; A+ retains the supplied migration sensitivity. Historical
-head-age conditioning through2023 remains an imposed and disclosed bridge.
-
-B0/B+ histories have not been launched: the child/person/household formation
-conversion remains unresolved, and B+ also needs signed migrant-state allocation.
-The demographic operator preflight17592167 passes both accounting identities;
-its mass-preserving coefficient0.5647956 is diagnostic and not adopted.
-
-The finite boundary evaluates remaining-lifetime household values at constant
-boundary conditions. Boundary prices, pensions and rebates are solved on the
-actual carried households. No stationary population reset is imported. Fiscal
-feasibility beyond the boundary and insensitivity to horizon remain unverified.
-
-## Numerical checks and budgets
-
-Native exact-policy cache probe17598785 matched all dated values, policies,
-household distributions, economic rows and accounting residuals exactly:
-183.9926seconds uncached versus43.5013seconds cached, with11/12 repeated calls
-reused. This is a constant-input mapping comparison, not a universal speedup.
-All solver arguments enter the key, unsupported arguments bypass the cache,
-and cache hits return fresh arrays. Cache bounds are6GiB for6/24dates and24GiB
-for100dates. Main jobs request16/32/48GiB respectively and use one thread each.
-
-The root cap is24 evaluations, with unchanged market/fiscal/exact-replay gates.
-Numerical guesses shift one date between surprise vintages. Each history allows
-at most24 primary forecast trials and one bounded alternative start; the shared
-deadline and two-hour policy reserve still govern. The total worker ceiling is18.
-Progress, latest completed cases and best-so-far receipts remain on the cluster.
-
-The native corrected first forecasts now verify the combined cache, row
-normalization, optional Jacobian reuse and fiscal-polish controller. Numerical
-price seeding reuses only pinned root coordinates; it never reuses old-source
-household distributions or Jacobians. Fourteen focused seed/driver tests pass.
-
-## Fixed-preference migration diagnostic
-
-`fixed_preference_migration_comparison/` compares the accepted six-period A0 and
-A+ forecasts at the same preference and identical initial household checkpoint.
-All dated quantity differences are saved, with root/source pins. The first-window
-birth flow is 0.271% higher and house prices 0.269% higher when the supplied future
-migration path is retained. This satisfies the plan's bounded migration-switch
-check. It is a controlled first-vintage diagnostic, not the fitted four-surprise
-history or a property-tax comparison; no extra solve was needed.
-
-## Readout and traceability
-
-`verified_initial_readout.pdf` contains the three-page assessment, complete
-initial tables and unchanged 17-figure appendix. It is explicitly an initial
-readout while history/policy work runs. All 12 rendered pages were visually
-reviewed. Regenerate without a model solve using the bundled Python runtime:
-
-```sh
-python code/model/tools/build_e5f_final_night_report.py --packet output/model/e5f_final_night_20260913 --output output/model/e5f_final_night_20260913/verified_initial_readout.pdf --as-of "13 September 2026, 10:45 UTC"
-```
-
-
-Readout smoke 17675207 passed both actual frozen runtimes and the saved 2007
-snapshot observers, with aggregate discrepancies below 1.8e-15 and no solve.
-This verifies the cross-sectional readers, not the still-pending dated 2019-to-2023
-birth-room observation. Automatic collectors 17675550 (ordinary starts) and
-17675552 (price-seeded starts) now watch the ten explicit cases. They require
-four accepted fit rows, exact source pins and the selected final native forecast,
-and retain failures without rerunning unchanged artifacts. Proofs and commands
-are in `readout_verification/`. Five collection-contract tests pass. The running
-collector is `BATCH/readout_source/collect_e5f_corrected_history_outputs.py`.
-
-`collect_e5f_final_history_readout.py` prepares the complete2023 observations
-from accepted native2019/2023 snapshots without solving again. Compilation and
-schema checks pass; native extraction awaits an accepted final historical window.
-The stable17-graph packets are generated alongside successful forecasts. The
-saved A+ first-trial contact sheet was visually inspected. Its legacy filename
-`lifecycle_2023.csv` does not make that2007 snapshot a2023 result.
-
-Source and job receipts are in `jobs.json`, the corrected-source receipts,
-`corrected_initial/`, and the native remote batch. Historical failed and superseded
-outputs remain preserved. No result is promoted from a failed numerical harness.
-
-The new100 array changes only cache/resource limits and output paths. The exact
-cache kernel is unchanged. The queued48-GiB array remains until native progress
-and memory viability are verified. Its scientific manifest stays
-`history_manifest_corrected_auto_v2.json`; run directory is
-`histories_corrected_cpu32_100`. The existing readout collectors have not yet been
-redirected to this pair. Cache/resource provenance: `cpu32_100_preparation.json`.
+Remote batch:
+`/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/`.
+The author-approved plan is `docs/model/e5f_two_closure_overnight_plan.md`.
+`CALIBRATION_STATUS.md` is canonical; `jobs.json` records job IDs and provenance.

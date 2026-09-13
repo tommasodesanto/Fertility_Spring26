@@ -1,5 +1,37 @@
 # Calibration Status
 
+**September 13, 13:51 UTC — paired rebated-tax policies verified; 41-page report complete.**
+Ordinary A0's 1% and 2% annual property-tax forecasts both pass all finite market,
+PAYGO, equal-rebate and exact-replay gates. Native read-only job17691079 proves
+identical inherited2023 households, grid and supply rule, with all non-policy
+parameters identical. First birth flow changes −0.24784%; the last simulated
+flow (2044–2047) changes +0.47185%. Resident persons are unchanged initially and
++0.03251% at the2043decision. These are dated effects, not cumulative births.
+
+Physical rooms per head fall4.2367% initially; house prices fall6.6489% and rents
+rise20.2015%. Both supply curves have fixed elasticity0.63, verified exactly from
+native price/supply ratios. The policy therefore includes an endogenous supply
+contraction. No fixed-stock sensitivity or production change has been introduced.
+Full66row comparison, 132raw-level-cell checks and native evidence are under
+`output/model/e5f_final_night_20260913/history_A0_6/policy_comparison/` and
+`history_A0_6/policy_state_verification_v2.json` in that packet.
+
+The current `verified_history_readout.pdf` has41pages: complete13initial moments,
+17parameter/restriction rows, four fitted fertility windows, all13untargeted2023
+Data/Model comparisons, paired policy tables, all51native diagnostics and six
+comparison figures. All41draft pages visually inspected and225displayed source
+numbers verified; the final differs only by its actual timestamp. Sidecar QA
+records hashes. The ordinary A+ and seeded A0 policy pairs also pass native
+common-state checks17691282/17691283; their compact readouts are being compared.
+
+Both corrected100-period tracks now pass the second full mapping that was
+previously blocked by the premature substitute-population audit. A0 requires
+safeguarding (score20.74185 versus best10.82422); A+ improves to7.44346. This is
+valid forward/backward evaluation, not root convergence. Immutable evidence:
+`policy_seed_second100_mapping/`. The24-period tracks are still fitting their
+first historical window. The six-period results remain provisional, horizon
+adequacy and production eligibility unverified, with the18UTCdeadline retained.
+
 **September 13, 13:04 UTC — four short histories complete; first100-period correction check passes.**
 All ordinary/seeded A0/A+six-period histories now fit allfourwindows. Their last
 model values are1.64555932 (A0) and1.64560934–1.64560954 (A+) versus1.645750.

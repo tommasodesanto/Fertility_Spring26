@@ -1,0 +1,71 @@
+{
+  "status": "passed",
+  "no_model_solve": true,
+  "common_initial_g_pre": true,
+  "common_grid": true,
+  "common_supply_rule": true,
+  "supply_rule_fields": {
+    "mode": "static-elastic",
+    "initial_price": 0.7026083285154774,
+    "initial_stock": 6.639864628663391,
+    "elasticity": 0.63
+  },
+  "prices": [
+    0.8130768574565646,
+    0.7590160843008096
+  ],
+  "housing_supply": [
+    7.279687865666869,
+    6.970885786498492
+  ],
+  "implied_supply_elasticity": 0.6300000000000014,
+  "initial_g_pre_sha256": "dbb276c3fd4172ee223062658f1c15001e269f4253da0f370bd474e84b028847",
+  "initial_shape": [
+    120,
+    6,
+    1,
+    17,
+    15,
+    4,
+    4
+  ],
+  "initial_dtype": "float64",
+  "case_contract_sha256": "7041e551fa1b1fbe884a97042886184b802c80941960587d0ae43d331264dc1a",
+  "policy_root_sha256": {
+    "baseline_rebate": "0b193a64e07d91dfdfe37423c9af14cdd64dfc0e3279aa9678a9b7bc25ede88b",
+    "tax2_rebate": "7a5ea5b5ad41ed843052307a9e697c5d7d9a45db2e5e9e71daf477a385b40fc3"
+  },
+  "allowed_parameter_differences": [
+    "income",
+    "pension",
+    "pension_by_loc",
+    "property_tax_lump_sum_transfer",
+    "tau_H",
+    "user_cost_rate"
+  ],
+  "actual_parameter_differences": [
+    "property_tax_lump_sum_transfer",
+    "tau_H",
+    "user_cost_rate",
+    "pension",
+    "pension_by_loc",
+    "income"
+  ],
+  "all_other_parameter_fields_exact": true,
+  "worker_income_exact": true,
+  "input_sha256": {
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_seeded_v1_6/A0_6/realized_state_2023.pkl.gz": "918df938fc1b0713e363b8d7c52d5cb810eaa216c6398aa602ce57dc44e3f717",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_manifest_corrected_seeded_v1.json": "362888b891f9cb5ea13bf65ffd8a6025320965e43aa4fd37b00fe1242e75f550",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_seeded_v1_6/A0_6/contract_receipt.json": "7041e551fa1b1fbe884a97042886184b802c80941960587d0ae43d331264dc1a",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/verify_policy_states_v2.py": "4893895b8ec6e0b04ade0989effd3e70bf1ed5b7b7fa6f0bb92740f162464456",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_seeded_v1_6/A0_6/policies/baseline_rebate/summary.json": "59227837595f6e7ffb484a22cf2b9363528c86cb0bdc5b9d289269144e0bc24b",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_seeded_v1_6/A0_6/policies/baseline_rebate/root_receipt.json": "0b193a64e07d91dfdfe37423c9af14cdd64dfc0e3279aa9678a9b7bc25ede88b",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_seeded_v1_6/A0_6/policies/baseline_rebate/first_period_diagnostics.pkl.gz": "c710f07208120bdc97c14de59647f6f196bbd5970d1907925aaebbff554c030a",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_seeded_v1_6/A0_6/policies/tax2_rebate/summary.json": "bff925893b01c7056e67f524374fdbb7ef9c96917b699c714ab0dc4f9dd49986",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_seeded_v1_6/A0_6/policies/tax2_rebate/root_receipt.json": "7a5ea5b5ad41ed843052307a9e697c5d7d9a45db2e5e9e71daf477a385b40fc3",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_seeded_v1_6/A0_6/policies/tax2_rebate/first_period_diagnostics.pkl.gz": "bf9b889a579a7761511462f4f0b2b05db0fe9c8f501bc1d3773fcd12b261be3d"
+  },
+  "horizon_verified": false,
+  "production_eligible": false,
+  "elapsed_seconds": 1.9207630157470703
+}

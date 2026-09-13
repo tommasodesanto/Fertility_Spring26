@@ -41,7 +41,7 @@
   "search_recovery_status": "verified_two_exact_repetitions",
   "after_search_handoff_status": "completed_submitted_refits",
   "initial_age_pilot_status": "report_recovered_verified_numerical_outputs",
-  "worker_count_snapshot": "2026-09-13 13:00UTC; querySlurmforfreshstate",
+  "worker_count_snapshot": "September 13, 13:51 UTC; query Slurm for fresh state",
   "history_refit_arrays": {
     "6": 17613033,
     "24": 17613034,
@@ -56,7 +56,7 @@
     "17595967_5"
   ],
   "six_date_first_equilibria": "A0 first historical window accepted and carried to2011; Aplus fitting",
-  "weekly_remaining_percent_snapshot": 42,
+  "weekly_remaining_percent_snapshot": 38,
   "jacobian_probes": [
     17635971,
     17635972
@@ -77,7 +77,7 @@
   "native_probability_mass_replay_status": "passed; stationary copy then aligned for full initial replay",
   "fiscal_polish_probe": "17650020",
   "fiscal_polish_status": "passed one six-date A+ forecast, no history carried",
-  "corrected_history_status": "Allfour ordinary/seeded A0/A+six-period histories complete; policiesunderway",
+  "corrected_history_status": "All four ordinary/seeded A0/A+ six-period histories complete; three paired policy cases complete, seeded A+ tax pending",
   "corrected_initial_loss": 179.2984242480252,
   "corrected_history_arrays": {
     "6": 17658836,
@@ -96,7 +96,7 @@
     17632922
   ],
   "readout_native_smoke": 17675207,
-  "readout_native_smoke_status": "passed both source runtimes and native2007cross-sectional observers; final2019to2023dated observer pending",
+  "readout_native_smoke_status": "passed both runtimes; actual A0 native2023 readout and dated first-birth observer passed",
   "readout_collectors": {
     "corrected_auto_v2": 17675550,
     "corrected_seeded_v1": 17675552,
@@ -117,21 +117,48 @@
   "corrected_extended_100_status": "running; pinned24-to100guess preflightpassed; firstnative mappingpending",
   "retired_pending_48g_array": 17663986,
   "boundary_budget_probe": 17683693,
-  "boundary_budget_probe_status": "exact repeated premature initial-population rejection; native policy split under verification",
+  "boundary_budget_probe_status": "reproduced; native exact boundary-policy split passed and active",
   "corrected_six_date_accepted_windows_by_track": {
     "corrected_auto_v2/A0_6": [
       2007,
       2011,
-      2015
+      2015,
+      2019
+    ],
+    "corrected_auto_v2/Aplus_6": [
+      2007,
+      2011,
+      2015,
+      2019
+    ],
+    "corrected_seeded_v1/A0_6": [
+      2007,
+      2011,
+      2015,
+      2019
+    ],
+    "corrected_seeded_v1/Aplus_6": [
+      2007,
+      2011,
+      2015,
+      2019
     ]
   },
   "boundary_policy_seed_verification": 17686318,
   "boundary_policy_seed_verification_status": "passed: native policies/accounts/fullsix-periodpath/actualterminalpopulation and ledgers bitwise exact; no policy mutation",
   "corrected_policy_seed_100_array": 17686968,
   "boundary_policy_seed_source": "history_source_policy_seed_v1",
-  "corrected_policy_seed_100_status": "Both first mappingsvalid; A0all303coordinates/residualsexact versusoldvalidpoint; secondproposalunderway",
+  "corrected_policy_seed_100_status": "Both second complete mappings valid. A0 safeguard: score20.74185 versus best10.82422; A+ score7.44346. Root convergence pending.",
   "old_extended_A0_status": "failedafter6prematurepopulationauditrejections; replacedby17686968_0",
   "A0_six_baseline_policy_status": "finite_converged",
-  "A0_six_tax2_policy_status": "running",
-  "policy_state_verification_A0_6": 17689191
+  "A0_six_tax2_policy_status": "finite_converged",
+  "policy_state_verification_A0_6": 17689191,
+  "A0_six_policy_native_supply_state_proof": 17691079,
+  "policy_additional_state_verifications": {
+    "ordinary_Aplus": 17691282,
+    "seeded_A0": 17691283
+  },
+  "current_discussion_pdf": "verified_history_readout.pdf",
+  "discussion_pdf_pages": 41,
+  "weekly_usage_snapshot_utc": "2026-09-13 13:52 UTC"
 }

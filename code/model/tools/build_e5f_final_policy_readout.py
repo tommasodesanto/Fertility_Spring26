@@ -27,6 +27,8 @@ def check_case(case,state):
         require(all(numeric(row[k]) for k in ('psi','target','model','gap')) and
             row['gap']==row['model']-row['target'] and abs(row['gap'])<=.005,'Invalid historical fit')
     require(proof.get('status')=='passed' and proof.get('common_initial_g_pre') is True,'Identical native initial populations required')
+    require(all(proof.get(k) is True for k in ('common_grid','common_supply_rule','all_other_parameter_fields_exact','worker_income_exact')),
+        'Common native grid, supply rule and non-policy parameters required')
     require(proof.get('case_contract_sha256')==sha(files[0]),'State proof belongs to a different case')
     count=contract['count'];require(isinstance(count,int) and count>0,'Invalid forecast count')
     years=list(range(2023,2023+4*count,4));series={}
@@ -85,6 +87,7 @@ def build(case,out,state):
     plt.close(fig)
     receipt=dict(status='passed',horizon_verified=False,production_eligible=False,years=years,
         source_sha256={str(p):sha(p) for p in files},state_verification=str(Path(state).resolve()))
+    receipt['output_sha256']={name:sha(out/name) for name in ('comparison.csv','policy_comparison.pdf','policy_comparison.png')}
     (out/'verification.json').write_text(json.dumps(receipt,indent=2)+'\n')
     (out/'figure_manifest.json').write_text(json.dumps(dict(receipt,title=title,footnote=note,
         supplemental=True,plotted_series=plotted,ownership_plot_units='percent'),indent=2)+'\n')
