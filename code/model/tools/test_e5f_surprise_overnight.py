@@ -30,6 +30,17 @@ class OvernightTest(unittest.TestCase):
    plan['resume_fitted_prefix']={key:dict(path=str(root/key),sha256=sha(root/key)) for key in (*values,'checkpoint')}
    inherited,rows,receipt=restore_fitted_prefix(plan)
    self.assertEqual(inherited.year,2011);self.assertEqual(len(rows),1)
+   guess=dict(start_year=2011,best=dict(mapping_valid=True,prices=[.7]*6,fiscal_values=[2.]*6),
+    finite_horizon_market_fiscal_converged=True)
+   (root/'warm_guess').write_text(json.dumps(guess))
+   plan['resume_fitted_prefix']['warm_guess']=dict(path=str(root/'warm_guess'),sha256=sha(root/'warm_guess'))
+   inherited,resumed,warm=restore_fitted_prefix(plan)
+   self.assertEqual(resumed,rows);self.assertTrue(warm['warm_guess_only'])
+   self.assertFalse(warm['finite_horizon_market_fiscal_converged'])
+   guess['start_year']=2015;(root/'warm_guess').write_text(json.dumps(guess))
+   plan['resume_fitted_prefix']['warm_guess']['sha256']=sha(root/'warm_guess')
+   with self.assertRaises(ValueError):restore_fitted_prefix(plan)
+   del plan['resume_fitted_prefix']['warm_guess']
    altered=copy.deepcopy(plan);altered['history_root_controls']={'fiscal_tolerance':.01}
    with self.assertRaises(ValueError):restore_fitted_prefix(altered)
    (root/'realized_fit').write_text('[]')

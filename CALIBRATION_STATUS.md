@@ -1,5 +1,32 @@
 # Calibration Status
 
+**September 12, 22:32 EDT — recover the saved final-window mapping.**
+Job `17559194` was submitted on cpu_short (1 CPU, 8GB; one-hour controller,
+70-minute scheduler cap). It restarts from the same three fitted windows and
+actual inherited 2019 state, using the unfinished previous forecast's saved
+2019 prices and pension benefits as numerical guesses only. That saved mapping
+had housing and pension gates passing (scaled score 0.122986), but had not
+completed final reproduction before the old job timed out. This is not an
+accepted equilibrium or fertility observation yet. The recovery reruns all
+original gates; no tolerance, economic primitive, target or accepted state changed.
+
+Controller now permits a hash-pinned `warm_guess` distinct from a certified
+warm receipt; it strips any supplied convergence claim and never uses that
+guess to certify the retained history. All 27 cluster preflight tests passed,
+including native loading and clock/hash checks of the actual 2019 prefix.
+Batch: `finite_sequences_20260912/recover_saved_2019/` under candidate_path_20260911a.
+Plan SHA-256: ba9bfb5f63ecfefd724c3a2b5bef4a886716177becd6e379afa11eaae3fb9ab7.
+Observed mappings take about 150 seconds; expected recovery about 8–12 minutes
+from execution if the saved point reproduces, not a completion guarantee.
+Two existing final-window searches and the long-horizon job remain active.
+
+Mass trace `17554347` finished with exit 2 because it did not reproduce the
+original failure: all 96 cohort calls passed, with no captured failing cohort.
+The reconstructed initial guess is insufficient to diagnose the failing root
+iterate. The floating-point probability hypothesis remains unproved. No model
+numerics or gates were modified. Existence/uniqueness discussion was explicitly
+deferred by Tommaso to September 13 in `docs/model/ACTIVE_DECISION_LEDGER.md`.
+
 **September 12 — expanded parallel work: final window searches and native mass trace.**
 Restart `17501164` fitted the third successive-shock window before its three-hour
 budget expired during the final 2019 forecast. Window 2015–2019 target/model:

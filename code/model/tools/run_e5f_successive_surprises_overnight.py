@@ -42,6 +42,19 @@ def restore_fitted_prefix(plan):
         if not warm['finite_horizon_market_fiscal_converged'] or warm['start_year']!=inherited.year:
             raise ValueError('Warm receipt must describe a valid forecast from the resumed date')
         receipt=warm
+    if spec.get('warm_guess'):
+        # An unfinished mapping supplies coordinates only. It certifies no state
+        # or equilibrium; the pinned fitted prefix and all new solve gates stand.
+        guess=read(spec['warm_guess']['path']);point=guess['best']
+        if guess['start_year']!=inherited.year or not point.get('mapping_valid'):
+            raise ValueError('Warm guess must be a valid mapping at the resumed date')
+        prices=np.asarray(point['prices'],dtype=float);pensions=np.asarray(point['fiscal_values'],dtype=float)
+        if (prices.ndim!=1 or prices.shape!=pensions.shape or len(prices) not in plan['forecast_counts']
+                or not np.all(np.isfinite(prices)&(prices>0))
+                or not np.all(np.isfinite(pensions)&(pensions>0))):
+            raise ValueError('Invalid warm guess coordinates')
+        receipt=dict(start_year=inherited.year,best=dict(prices=prices,fiscal_values=pensions),
+            warm_guess_only=True,finite_horizon_market_fiscal_converged=False)
     return inherited,realized,receipt
 
 def standard_graphs(snapshot,result,folder):
