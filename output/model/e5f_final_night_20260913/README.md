@@ -1,8 +1,34 @@
+Update13:00UTC: native boundary-policy verification17686318 passes exact policy,
+accounting and six-period replay checks. New100-period A0/A+array17686968 runs
+from frozen policy-only value-boundary helper; collector17687181 watches it.
+The first native100-period mappings are still underway.
+
+Current discussion PDF: `verified_history_readout.pdf` (20pages; all13initial
+moments,17parameters, four historical windows,13untargeted2023comparisons,
+17initialdiagnostics and five newcomparisonfigures). Allpages visually inspected
+and157source numeric cells checked; sidecar `verified_history_readout_qa.json`.
+Policy effects and horizon adequacy remain pending. Fullnative evidence lives
+in `history_A0_6/` and `boundary_policy_seed_verification_v2.json`.
+
+Update12:54UTC: A0ordinary six-period history matches allfourfertilitywindows,
+with finite housing/PAYGO/equal-rebate gates and exact replay. Native2023reader
+passes. Full13rowData/Model CSV and five verifiedPDF/PNGfigures are under
+`history_A0_6/`; `four_window_A0_verification.json` records acceptance. These remain
+finite-horizon provisional results. Rebated baseline/tax forecasts are underway.
+Native boundary-policy split verification17686318 continues; no newsourcepromotionyet.
+
+Update12:40UTC: all four six-period cases have three accepted windows. Boundary
+probe17683693 exactly reproduces the100-period proposal rejection as an audit of
+initial2007 households at terminal conditions. Isolated `history_source_policy_seed_v1`
+removes that substitute-population audit while retaining all actual dated and
+carried-endpoint checks; native equivalence verification is required before use.
+Model kernels, targets and tolerances are unchanged. See canonical status top.
+
 # Authorized final-night work
 
-Latest evidence: September 13, 11:47 UTC. Fixed deadline: 18:00 UTC.
+Latest evidence: September 13, 12:15 UTC. Fixed deadline: 18:00 UTC.
 The cluster jobs and collector continue independently of the laptop. Local idle
-sleep prevention lasts until the deadline. Latest account check: 52% weekly
+sleep prevention lasts until the deadline. Latest account check: 48% weekly
 remaining; retain the author's 20% floor.
 
 ## Verified progress
@@ -33,11 +59,26 @@ records the selected forecasts and their native root hashes.
 | 17658836 | A0/A+, 6 periods, ordinary starts | Fitting subsequent surprises |
 | 17661737 | A0/A+, 6 periods, pinned numerical price starts | Fitting subsequent surprises |
 | 17663940 | A0/A+, 24 periods, ordinary starts | Submitted by verified handoff |
-| 17663986 | A0/A+, 100 periods, 48 GiB | Pending in small high-memory pool |
-| 17676958 | A0/A+, 100 periods, 32 GiB / 12-GiB cache | First flat mapping valid; nonconstant mapping computing |
+| 17663986 | A0/A+, 100 periods, 48 GiB | Cancelled after both32-GiB native nonconstant mappings passed |
+| 17676958 | A0/A+, 100 periods, 32 GiB / 12-GiB cache | Both nonconstant mappings valid; roots still solving |
 | 17680316 | A0/A+, 100 periods, extended24-period price guesses | Running; pinned input preflight passed |
 | 17664449 | A0/A+, 24 periods, pinned numerical price starts | Submitted |
 | 17607147 | Five-minute receipt collector | Running |
+| 17683391 | Boundary-budget reproduction, four checks | Diagnostic only;20-minute cap |
+
+Ordinary A0 now fits the first three windows, with third-window fertility
+1.7553381559 versus1.755375. See `three_window_verification.json`; the final
+surprise remains. The first same-preference A0 horizon comparison is also
+verified: six-period fertility1.97311223 versus24-period1.95887157, an absolute
+difference0.01424067. Both roots pass, but the latter needs a shock refit to meet
+the retained0.005 fit tolerance. See `fixed_preference_horizon_comparison/`.
+
+One extended100-period boundary proposal failed the household spending gate;
+its trial was rejected safely. `probe_e5f_boundary_budget_gate.py` reconstructs
+the exact proposed coordinates from the saved first mapping, then tests only
+boundary household evaluations. Job17683391 has a20-minute limit; it captures
+the violating states and tests the ordinary half-damping alternative. It is
+not a completed history, root, or policy. No numerical tolerance changes.
 
 Handoff 17658318 completed after verifying both six-period first-window gates.
 The superseded old-source arrays 17613033, 17613034 and 17632922 were cancelled;

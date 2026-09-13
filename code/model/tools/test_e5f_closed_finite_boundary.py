@@ -118,6 +118,20 @@ class FiniteBoundaryTests(unittest.TestCase):
         self.audit_pass = False
         self.assertFalse(self.evaluate().mapping_valid)
 
+    def test_policy_boundary_does_not_audit_a_substitute_population(self):
+        with patch.object(boundary,'_runtime',return_value=self.runtime), patch.object(
+                self.calendar,'evaluate_period',side_effect=RuntimeError('population not yet constructed')):
+            policy=boundary.boundary_policy(**{k:self.args[k] for k in
+                ('parameters','grid','price','pension','transfer')})
+        self.assertEqual(policy.parameters.pension,2.4)
+        for name in ('g_pre','mapping_valid','gates','residuals','actual_accounts','production_eligible'):
+            self.assertFalse(hasattr(policy,name))
+        expected=policy.policy.V.copy()
+        np.testing.assert_array_equal(self.evaluate().policy.V,expected)
+        # Removing the substitute-population check must not remove the actual one.
+        self.audit_pass=False
+        self.assertFalse(self.evaluate().mapping_valid)
+
     def test_invalid_population_and_deadline_fail_before_household_solve(self):
         for invalid in (np.zeros_like(self.g), -self.g, self.g*np.nan):
             with self.assertRaises(ValueError):
@@ -129,7 +143,11 @@ class FiniteBoundaryTests(unittest.TestCase):
     def test_progress_and_no_fictitious_future_budget_certificate(self):
         records = []
         result = self.evaluate(callback=records.append)
-        self.assertEqual(records[-1]['phase'], 'boundary_complete')
+        self.assertEqual([record['phase'] for record in records], [
+            'boundary_validate', 'boundary_bellman', 'boundary_actual_population',
+            'boundary_complete'])
+        self.assertTrue(all(record['boundary_kind'] == result.boundary_kind
+                            for record in records))
         self.assertFalse(result.diagnostics['stationary_population_computed'])
         self.assertFalse(result.diagnostics['future_fiscal_consistency_verified'])
 

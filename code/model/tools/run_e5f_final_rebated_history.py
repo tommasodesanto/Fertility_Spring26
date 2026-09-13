@@ -294,11 +294,10 @@ def solve_forecast(*, inherited, old, demographics, psi, count, initial,
         mapping+=1; began=time.monotonic(); latest={}
         prices,pensions,transfers=unpack_coordinates(raw,count)
         Q=copy.deepcopy(old.parameters); Q.psi_child=float(psi)
-        # Only the policy from this seed call is used. Actual boundary budgets
-        # below use the state carried by THIS complete trial path.
-        terminal=closed.boundary_evaluation(parameters=Q,g_pre=inherited.households.g_pre,
-            grid=old.b_grid,supply_rule=old.supply_rule,price=float(prices[-1]),
-            pension=float(pensions[-1]),transfer=float(transfers[-1]),audit_controls=audit,
+        # The value boundary is independent of the initial population. Audit
+        # the actual carried terminal population below, after the dated sweep.
+        terminal=closed.boundary_policy(parameters=Q,grid=old.b_grid,price=float(prices[-1]),
+            pension=float(pensions[-1]),transfer=float(transfers[-1]),
             deadline_monotonic=deadline,callback=lambda row:save(folder/'latest_phase.json',dict(row,mapping=mapping)))
         rows=[];audits=[];observations=[];snapshot={};snapshot2023={}
         rents=joined.pf.rents_from_asset_prices(prices[:-1],float(prices[-1]),old.parameters)

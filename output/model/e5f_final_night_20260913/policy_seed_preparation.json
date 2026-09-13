@@ -1,0 +1,28 @@
+{
+  "status": "prepared_not_submitted_native_validation_required",
+  "old_helper": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source_extended_seed_v1",
+  "new_helper": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source_policy_seed_v1",
+  "changed_files": [
+    "e5f_closed_finite_boundary.py",
+    "run_e5f_final_rebated_history.py",
+    "test_e5f_closed_finite_boundary.py",
+    "test_e5f_rebated_surprises.py",
+    "test_run_e5f_final_rebated_history.py"
+  ],
+  "source_sha256": {
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source_policy_seed_v1/e5f_closed_finite_boundary.py": "424b203529013977e245a1d958fcf703c8ac14e7fcf85a3f470baa082ce8f8f1",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source_policy_seed_v1/run_e5f_final_rebated_history.py": "92e8b997744a81bfe181f56a151f9bee877741d7dfcc2bbe0f661490eaeb01a1",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source_policy_seed_v1/test_e5f_closed_finite_boundary.py": "d8a66c91aaf8a1796e2629a29d18d63a58e022b5d14e530fe4614460a4798dac",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source_policy_seed_v1/test_e5f_rebated_surprises.py": "09f53cbc5b3c3c23c802575411157d256fe27e36e7fe9a2d09a54e178d9f5397",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source_policy_seed_v1/test_run_e5f_final_rebated_history.py": "747fb12cf6df1a37993d14e9f15faba2d5e5297a2c6c3c774a42a45a44707db7"
+  },
+  "manifest": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_manifest_corrected_policy_seed_v1.json",
+  "manifest_sha256": "d7a587487dc6bf69c7c8c23a11faa4e088a61289c0f75a8818e462433c63b042",
+  "array_manifest": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_array_manifest_corrected_policy_seed_100.json",
+  "array_sha256": "bd00c7001534770f56e017e8f407f14574c0dc7d6bd1d12df3c20140daac100d",
+  "model_kernels_changed": false,
+  "target_parameters_or_gates_changed": false,
+  "boundary_change": "Construct lifetime policy without substituting initial population; audit every actual dated and carried endpoint population.",
+  "sizing": "Two independent100-period histories; four windows, maximum6 preference trials/window and24 mappings/trial plus retained bounded alternative. Observed nonconstant100-period mapping about30minutes. Full completion by18UTC uncertain.",
+  "safety": "Native valid-point and exact6-period-loop equivalence required before launch. Same checkpoints, per-case summaries, five-minute heartbeat,30-minute health threshold,18UTC deadline and2hour policy reserve."
+}

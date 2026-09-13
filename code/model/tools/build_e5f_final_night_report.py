@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -17,6 +18,7 @@ from reportlab.lib.utils import ImageReader
 from reportlab.platypus import (
     Image, PageBreak, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle,
 )
+from pypdf import PdfReader, PdfWriter
 
 
 def main():
@@ -24,6 +26,8 @@ def main():
     ap.add_argument('--packet', type=Path, required=True)
     ap.add_argument('--output', type=Path, required=True)
     ap.add_argument('--as-of', required=True)
+    ap.add_argument('--history-case', type=Path, default=None,
+                    help='Optional verified four-window history packet')
     args = ap.parse_args()
     initial = args.packet / 'corrected_initial'
     candidate = json.loads((initial / 'candidate_result.json').read_text())
@@ -54,6 +58,39 @@ def main():
     width = A4[0] - 80
     story = []
 
+    history_rows = None
+    if args.history_case:
+        case = args.history_case
+        realized = json.loads((case / 'realized_fit.json').read_text())
+        finite = json.loads((case / 'finite_history_complete.json').read_text())
+        verification = json.loads((case / 'readout' / 'verification.json').read_text())
+        contract = json.loads((case / 'contract_receipt.json').read_text())
+        if contract.get('case') != 'A0' or contract.get('count') != 6:
+            raise ValueError('This report interpretation requires the A0 six-period case')
+        if len(realized) != 4 or finite.get('realized') != realized:
+            raise ValueError('History packet must contain the exact four-window fit list')
+        if any(abs(float(row['gap'])) > .005 for row in realized):
+            raise ValueError('History fertility fit gap exceeds 0.005')
+        if verification.get('status') != 'PASS' or verification.get('native_2023_snapshot_sha256') is None:
+            raise ValueError('Native history readout verification did not pass')
+        if verification.get('historical_fit_status', {}).get('realized') != realized:
+            raise ValueError('Readout must verify this complete realized history')
+        provenance = json.loads((case / 'validation' / 'validation_2023_manifest.json').read_text())
+        for key, path in [('model_source_sha256', case/'readout/model_2023.json'),
+                          ('readout_verification_sha256', case/'readout/verification.json')]:
+            if provenance[key] != hashlib.sha256(path.read_bytes()).hexdigest():
+                raise ValueError('Validation source pin failed: '+key)
+        if provenance.get('deterministic_fixture') is not False:
+            raise ValueError('An actual native readout is required')
+        validation = case / 'validation' / 'validation_2023.csv'
+        with validation.open() as stream:
+            history_rows = list(csv.DictReader(stream))
+        if len(history_rows) != 13 or any(str(r.get('model_year')) != '2023' for r in history_rows):
+            raise ValueError('Expected 13 rows for model year 2023')
+        figure_pdf = case / 'figures' / 'e5f_final_history_figures.pdf'
+        if not figure_pdf.exists():
+            raise ValueError('Existing history figure PDF is required')
+
     def p(text, style='BodyCustom'):
         return Paragraph(text, styles[style])
 
@@ -81,18 +118,19 @@ def main():
     def number(value):
         return '-' if value in ('', None) else f'{float(value):.6g}'
 
-    add('Quantitative model<br/>Verified initial readout', 'TitleCustom')
-    add(escape(args.as_of) + ' | Historical and policy work remains in progress.', 'SmallCustom')
+    add('Quantitative model<br/>' + ('Verified history and model fit' if args.history_case else 'Verified initial readout'), 'TitleCustom')
+    add(escape(args.as_of) + (' | Six-period history verified; policies and longer horizons continue.'
+        if args.history_case else ' | Historical and policy work remains in progress.'), 'SmallCustom')
     add('<b>The fiscal and distribution repairs pass. The economic fit remains weak.</b> '
         'The corrected initial equilibrium reproduces exactly in two independent numerical '
         'repetitions. Its objective is %.6f. This is a verified candidate from an incomplete '
         'search, not a converged calibration optimizer.' % candidate['loss'])
     table([
         ['Question', 'Verified evidence'],
-        ['Does the pension budget balance?', 'Yes in the initial equilibrium and accepted first historical forecasts. Every later accepted date must pass the same PAYGO check.'],
+        ['Does the pension budget balance?', 'Yes in the initial equilibrium and every accepted historical forecast date.' if args.history_case else 'Yes in the initial equilibrium and accepted first historical forecasts. Every later accepted date must pass the same PAYGO check.'],
         ['Is property tax rebated?', 'Yes. Revenue returns equally per current household head; the rebate budget is checked separately from pensions.'],
         ['Was the probability error fixed?', 'Yes. Float64 normalization in both Markov distribution operators passes the captured mass-error replay and full initial reconstruction.'],
-        ['Is the entire shock path fitted?', 'Not yet. Both short-horizon variants have accepted the first historical window; subsequent surprises are being fitted.'],
+        ['Is the entire shock path fitted?', 'Yes for the provisional six-period A0 history. All four observed fertility windows pass the 0.005 fit requirement. Horizon adequacy remains unverified.' if args.history_case else 'Not yet. Both short-horizon variants have accepted the first historical window; subsequent surprises are being fitted.'],
         ['Are policy results ready?', 'Not yet. Baseline and higher-tax rebated policies follow each completed history from its inherited 2023 households.'],
     ], [158, width - 158])
     add('What deserves attention', 'SectionCustom')
@@ -116,7 +154,7 @@ def main():
     rows = [['Moment', 'Target', 'Model', 'Gap', 'Weight', 'Loss']]
     rows += [[r['label'].replace('\u2212', '-'), *[number(r[k]) for k in
               ('target', 'model', 'gap', 'actual_weight', 'loss_contribution')]] for r in targets]
-    table(rows, [211, 61, 61, 61, 65, width - 459], numeric_start=1)
+    table(rows, [201, 61, 61, 71, 65, width - 459], numeric_start=1)
     add('The normalization row does not enter the loss. Units follow each empirical moment: '
         'ownership is a fraction, room responses are in rooms, and first-birth age is in years. '
         'The CSV preserves every row\'s builder, sample, vintage, observation definition, '
@@ -134,6 +172,29 @@ def main():
     add('A 2023 decision-vintage fertility flow belongs to the 2024-2027 forecast. It is '
         'not an additional fitted historical observation. Other 2023 model/data comparisons '
         'must use the correctly dated inherited economy.', 'SmallCustom')
+
+    if history_rows is not None:
+        story.append(PageBreak())
+        add('Verified four-window history', 'TitleCustom')
+        add('All four fertility windows are matched in a six-period forecast. Each accepted date '
+            'passes housing, PAYGO and equal-rebate gates. Horizon adequacy remains unverified; '
+            'longer runs and rebated-tax policies continue. Matching the fertility decline does '
+            'not resolve weak cross-sectional fit.')
+        table([['Window end', 'Data', 'Model', 'Gap', 'psi']] +
+              [[int(r['year'])+4, number(r['target']), number(r['model']), number(r['gap']), number(r['psi'])]
+               for r in realized], [105, 95, 95, 95, width - 390], numeric_start=1)
+        story.append(PageBreak())
+        add('Full 2023 validation: Data / Model (untargeted)', 'TitleCustom')
+        add('These comparisons are a validation readout; they are not additional fitted targets.')
+        table([['Moment', 'Data', 'Model', 'Gap', 'Vintage']] +
+              [[r['moment'], number(r['data']), number(r['model']), number(r['gap']), r['data_vintage']]
+               for r in history_rows], [185, 63, 63, 63, width - 374], numeric_start=1)
+        caveats = [r for r in history_rows if r.get('measurement_note')]
+        if caveats:
+            story.append(PageBreak())
+            add('2023 validation measurement caveats', 'TitleCustom')
+            for r in caveats:
+                add('<b>%s.</b> %s' % (escape(r['moment']), escape(r['measurement_note'])))
 
     story.append(PageBreak())
     add('Parameters and restrictions', 'TitleCustom')
@@ -185,15 +246,25 @@ def main():
         canvas.line(40, 35, A4[0] - 40, 35)
         canvas.setFont('Helvetica', 8)
         canvas.setFillColor(navy)
-        canvas.drawString(40, 23, 'Fertility and housing | Verified initial readout')
+        canvas.drawString(40, 23, 'Fertility and housing | ' + ('Verified history and model fit' if args.history_case else 'Verified initial readout'))
         canvas.drawRightString(A4[0] - 40, 23, str(doc.page))
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     doc = SimpleDocTemplate(str(args.output), pagesize=A4, leftMargin=40, rightMargin=40,
                             topMargin=38, bottomMargin=46,
-                            title='Fertility and housing: verified initial readout',
+                            title='Fertility and housing: '+('verified history and model fit' if args.history_case else 'verified initial readout'),
                             author='Quantitative model working report')
     doc.build(story, onFirstPage=footer, onLaterPages=footer)
+    if args.history_case:
+        writer = PdfWriter()
+        for page in PdfReader(str(args.output)).pages:
+            writer.add_page(page)
+        for page in PdfReader(str(args.history_case / 'figures' / 'e5f_final_history_figures.pdf')).pages:
+            writer.add_page(page)
+        writer.add_metadata({'/Title': 'Fertility and housing: verified history and model fit',
+                             '/Author': 'Quantitative model working report'})
+        with args.output.open('wb') as stream:
+            writer.write(stream)
     print(args.output.resolve())
 
 

@@ -274,7 +274,8 @@ class DriverTests(unittest.TestCase):
         runtime=(None,NS(pf=pf),primitive,None,
             NS(project_price_path_to_positive_rents=lambda p,**kw:(p,None)))
         def boundary(**kw):
-            calls.append(kw['g_pre'].copy())
+            self.assertNotIn('g_pre',kw)
+            calls.append(kw['price'])
             return NS(parameters=kw['parameters'],policy=NS(V=np.ones_like(g),price=np.array([kw['price']])))
         def cached(template,carried,*args):
             actual_calls.append(carried.copy())
@@ -333,7 +334,7 @@ class DriverTests(unittest.TestCase):
             stack_dated_residuals=lambda rows:np.asarray(rows).T.ravel(),
             first_period_state=lambda **kw:NS(year=2011))
         modules={'e5f_rebated_surprises':rebated,
-            'e5f_closed_finite_boundary':NS(boundary_evaluation=boundary),
+            'e5f_closed_finite_boundary':NS(boundary_policy=boundary),
             'e5f_balanced_terminal':NS(_household_checks=lambda *args:({},dict(valid=True))),
             'e5f_social_security':NS(fiscal_accounts=lambda *args:{}),
             'e5f_matched_pf_path_root':NS(solve_price_path=root),

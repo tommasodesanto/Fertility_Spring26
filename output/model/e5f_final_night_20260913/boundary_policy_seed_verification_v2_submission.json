@@ -1,0 +1,39 @@
+{
+  "job": "17686318",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--account=torch_pr_570_general",
+    "--cpus-per-task=1",
+    "--mem=32G",
+    "--time=20",
+    "--job-name=e5f_boundary_policy_verify",
+    "--output=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/boundary_policy_seed_verify_v2_%j.out",
+    "--error=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/boundary_policy_seed_verify_v2_%j.err",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/boundary_policy_seed_verification_v2.sbatch"
+  ],
+  "verification_command": [
+    "/share/apps/anaconda3/2025.06/bin/python",
+    "-B",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/verify_e5f_boundary_policy_seed_v2.py",
+    "--manifest",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_manifest_corrected_policy_seed_v1.json",
+    "--helper",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source_policy_seed_v1",
+    "--old-helper",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source_extended_seed_v1",
+    "--case-dir",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_seeded_v1_6/A0_6",
+    "--out",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/boundary_policy_seed_verification_v2",
+    "--initial-raw-summary-sha256",
+    "1ac58723db45545640fcacc9b83f542887709fc3474441687e271b9cd5626dd5"
+  ],
+  "script_sha256": "7b590248e89c3d6a80743414511e80783d2fcea412369952a8acf90f935cdf45",
+  "model_gates_unchanged": true,
+  "total_boundary_solves": 4,
+  "total_forecast_mappings": 2,
+  "wall_budget_minutes": 20,
+  "initial_raw_summary_sha256": "1ac58723db45545640fcacc9b83f542887709fc3474441687e271b9cd5626dd5",
+  "predecessor_failure": "v1 stopped before numerical solves: raw summary is not a direct scientific-manifest entry; now separately pinned at launch and77kernelpairs verified"
+}

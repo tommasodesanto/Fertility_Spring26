@@ -47,6 +47,14 @@ class FiniteBoundaryEvaluation:
         return bool(all(self.gates.values()))
 
 
+@dataclass
+class BoundaryPolicy:
+    """Lifetime value at boundary conditions; no population or equilibrium claim."""
+    parameters: Any
+    b_grid: np.ndarray
+    policy: Any
+
+
 def _runtime():
     import e5f_balanced_terminal as balanced
     import e5f_social_security as social
@@ -58,6 +66,41 @@ def _runtime():
 def _scaled_difference(revenue, outlays):
     magnitude = max(abs(revenue), abs(outlays))
     return (revenue - outlays) / magnitude if magnitude else 0.
+
+
+def boundary_policy(*, parameters, grid, price, pension, transfer,
+                    deadline_monotonic=None, callback=None):
+    """Construct a lifetime policy without evaluating an arbitrary population.
+
+    Every actual population must subsequently pass its dated household and
+    fiscal/market checks. This object supplies only the backward value boundary.
+    """
+    def progress(phase):
+        if deadline_monotonic is not None and (
+                not np.isfinite(deadline_monotonic) or time.monotonic() >= deadline_monotonic):
+            raise TimeoutError('Finite-boundary policy deadline exhausted')
+        if callback is not None:callback(dict(phase=phase, boundary_kind='lifetime_policy_only'))
+    progress('boundary_policy_validate')
+    P=parameters;b_grid=np.asarray(grid,dtype=float)
+    if (b_grid.ndim!=1 or len(b_grid)<2 or not np.isfinite(b_grid).all()
+            or np.any(np.diff(b_grid)<=0) or int(P.Nb)!=len(b_grid) or int(P.I)!=1):
+        raise ValueError('Boundary policy requires the retained one-market wealth grid')
+    if not np.isfinite([price,pension,transfer]).all() or price<=0 or pension<0 or transfer<0:
+        raise ValueError('Positive finite price and nonnegative fiscal values required')
+    if (not bool(P.exhaustive_saving_control) or any(bool(getattr(P,n,False))
+            for n in ('joint_nested_choice','fertility_nest_choice','two_shock_choice'))):
+        raise ValueError('Retained exhaustive sequential household specification required')
+    model,_,_,_,social,pf=_runtime()
+    P=copy.deepcopy(P);P.property_tax_lump_sum_transfer=float(transfer)
+    social.bind_social_security_income(P,pension_period=float(pension),payroll_tax=float(P.tau_pay))
+    prices=np.array([float(price)])
+    rent=float(pf.rents_from_asset_prices(prices,float(price),P)[0])
+    shared=model.precompute_shared(P,b_grid)
+    progress('boundary_bellman')
+    objects=model.solve_bellman_full_markov_income(np.array([rent]),prices,P,b_grid,shared,continuation_V=None)
+    policy=pf.policy_from_objects(objects,float(price),P,b_grid,shared)
+    progress('boundary_policy_ready')
+    return BoundaryPolicy(P,b_grid.copy(),policy)
 
 
 def boundary_evaluation(*, parameters, g_pre, grid, supply_rule, price,
@@ -106,19 +149,17 @@ def boundary_evaluation(*, parameters, g_pre, grid, supply_rule, price,
         value = float(getattr(audit_controls, name))
         if not np.isfinite(value) or not 0. <= value <= cap:
             raise ValueError('Boundary audit tolerance may not be relaxed: ' + name)
-    P = copy.deepcopy(P)
-    P.property_tax_lump_sum_transfer = float(transfer)
-    social.bind_social_security_income(P, pension_period=float(pension), payroll_tax=float(P.tau_pay))
+    def policy_progress(record):
+        # Keep the population-evaluation callback contract unchanged.
+        if record['phase'] == 'boundary_bellman':
+            progress('boundary_bellman')
+    template=boundary_policy(parameters=P,grid=b_grid,price=price,pension=pension,
+        transfer=transfer,deadline_monotonic=deadline_monotonic,callback=policy_progress)
+    P,policy=template.parameters,template.policy
     prices = np.array([float(price)])
     # This also checks tax/user-cost consistency and positive rents.
     rent = float(pf.rents_from_asset_prices(prices, float(price), P)[0])
     shared = model.precompute_shared(P, b_grid)
-    progress('boundary_bellman')
-    # A household age recursion only: the general solve wrapper would also
-    # construct a stationary population and must not be used here.
-    objects = model.solve_bellman_full_markov_income(
-        np.array([rent]), prices, P, b_grid, shared, continuation_V=None)
-    policy = pf.policy_from_objects(objects, float(price), P, b_grid, shared)
     progress('boundary_actual_population')
     actual = calendar.evaluate_period(prices, g.copy(), P, b_grid, shared,
         calendar.SolveCounter(), supply_rule=supply_rule, supplied_policy=policy)

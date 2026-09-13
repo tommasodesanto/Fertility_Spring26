@@ -1,0 +1,1344 @@
+[
+  {
+    "period": 0,
+    "calendar_year": 2007,
+    "psi_child": 0.12891531457859182,
+    "asset_price": 0.7559040840198729,
+    "renter_price": 0.09865070923981681,
+    "housing_demand": 6.952972132503583,
+    "housing_supply": 6.952866106514821,
+    "relative_market_residual": 1.5249249322178755e-05,
+    "adult_population": 0.9999999999997032,
+    "property_tax_revenue": 0.2102312012414329,
+    "equal_transfer_period_units": 0.21023117190158533,
+    "equal_transfer_outlays": 0.21023117190152293,
+    "government_budget_residual": 2.933990997378011e-08,
+    "scaled_government_budget_residual": 1.3956020705073973e-07,
+    "implied_equal_transfer": 0.2102312012414953,
+    "entry_flow_E": 0.01662266202182037,
+    "birth_children": 0.10758302505535697,
+    "birth_children_topcode_adjusted": 0.12484484549566066,
+    "effective_mature_entrant_flow_B": 0.061733480361200556,
+    "raw_state_scheduled_mature_entrant_flow_B": 0.05504304182412831,
+    "entrant_flow_next": 0.06173345618085491,
+    "queue_B_over_current_E": 3.7138143264997963,
+    "owner_rate": 0.5559104814564836,
+    "adult_deaths": 0.03906975621394494,
+    "model_state_same_period_mature_flow_B": 0.06302214593074872,
+    "mass_accounting_residual": 1.1102230246251565e-15,
+    "policy_reproduction_max_abs": 0.0,
+    "feasibility_frontier_projection_mass": 0.0,
+    "minimum_distribution_mass": 0.0,
+    "nonfinite_distribution_count": 0,
+    "payroll_tax_base_period": 3.4237665567843436,
+    "retiree_benefit_exposure": 0.17447307486916988,
+    "worker_household_mass": 0.8255269251305335,
+    "retiree_household_mass": 0.17447307486916988,
+    "payroll_tax_rate": 0.179,
+    "pension_period_units": 3.512600520876751,
+    "payroll_tax_revenue": 0.6128542136643975,
+    "pension_outlays": 0.6128542136644145,
+    "pension_budget_residual": -1.6986412276764895e-14,
+    "scaled_pension_budget_residual": -2.7716889103525494e-14,
+    "implied_balanced_pension_period": 3.5126005208766538,
+    "implied_balanced_payroll_tax": 0.17900000000000496,
+    "historical_conditioning_scope": "Conditional historical PF evaluation; supplied terminal boundary",
+    "historical_outside_flow": 0.01043295409456448,
+    "historical_retained_due_entry": 0.05130050208629043,
+    "historical_next_bridge_year": 2011,
+    "historical_bridge_audit": {
+      "year": 2011,
+      "hh3_published_total_thousands": 119927.0,
+      "acs_age_18_85_share_of_all_heads": 0.9746011584825295,
+      "hh3_total_for_model_ages_thousands": 116880.99313333431,
+      "acs_age_source": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_history_source_v2/code/data/Spatial_aggregate_withmicrodata/raw_data/extract27.dta",
+      "acs_age_source_sha256": "edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324e",
+      "acs_source_receipt": {
+        "sample": 201101,
+        "head_records_all_ages": 1204817,
+        "head_weight_all_ages": 114990599.0,
+        "age_18_85_share_of_all_heads": 0.9746011584825295
+      },
+      "acs_age_normalization": "shares conditional on household-head age 18--85",
+      "model_mass_before_bridge": 1.0226636999669323,
+      "model_target_mass": 1.0296091729801509,
+      "model_mass_after_bridge": 1.0296091729801506,
+      "net_residual": 0.006945473013218351,
+      "absolute_group_residual": 0.10981024591421094,
+      "maximum_absolute_target_gap": 1.5265566588595902e-16,
+      "groups": [
+        {
+          "model_age": 18.0,
+          "closed_integer_age_bin": [
+            18,
+            21
+          ],
+          "acs_share_conditional_18_85": 0.01423640057870632,
+          "mass_before_bridge": 0.061733456180854934,
+          "target_mass": 0.014657928626055956,
+          "mass_after_bridge": 0.014657928626055954,
+          "net_residual": -0.04707552755479898,
+          "multiplicative_factor": 0.23743897608962547,
+          "target_gap": -1.734723475976807e-18
+        },
+        {
+          "model_age": 22.0,
+          "closed_integer_age_bin": [
+            22,
+            25
+          ],
+          "acs_share_conditional_18_85": 0.04015597541289629,
+          "mass_before_bridge": 0.01662266202182039,
+          "target_mass": 0.04134496063508342,
+          "mass_after_bridge": 0.0413449606350834,
+          "net_residual": 0.024722298613263013,
+          "multiplicative_factor": 2.4872647101174494,
+          "target_gap": -2.0816681711721685e-17
+        },
+        {
+          "model_age": 26.0,
+          "closed_integer_age_bin": [
+            26,
+            29
+          ],
+          "acs_share_conditional_18_85": 0.059442310375899,
+          "mass_before_bridge": 0.04529676719571251,
+          "target_mass": 0.06120234802615881,
+          "mass_after_bridge": 0.06120234802615882,
+          "net_residual": 0.01590558083044631,
+          "multiplicative_factor": 1.3511416336120299,
+          "target_gap": 1.3877787807814457e-17
+        },
+        {
+          "model_age": 30.0,
+          "closed_integer_age_bin": [
+            30,
+            33
+          ],
+          "acs_share_conditional_18_85": 0.06829743892768564,
+          "mass_before_bridge": 0.06359694782099282,
+          "target_mass": 0.07031966961099677,
+          "mass_after_bridge": 0.07031966961099682,
+          "net_residual": 0.006722721790004008,
+          "multiplicative_factor": 1.1057082457624616,
+          "target_gap": 5.551115123125783e-17
+        },
+        {
+          "model_age": 34.0,
+          "closed_integer_age_bin": [
+            34,
+            37
+          ],
+          "acs_share_conditional_18_85": 0.06969370947726934,
+          "mass_before_bridge": 0.06696559869635577,
+          "target_mass": 0.07175728257681019,
+          "mass_after_bridge": 0.07175728257681031,
+          "net_residual": 0.0047916838804545475,
+          "multiplicative_factor": 1.0715544096332432,
+          "target_gap": 1.249000902703301e-16
+        },
+        {
+          "model_age": 38.0,
+          "closed_integer_age_bin": [
+            38,
+            41
+          ],
+          "acs_share_conditional_18_85": 0.07775638667739104,
+          "mass_before_bridge": 0.07884514768616066,
+          "target_mass": 0.08005868898083342,
+          "mass_after_bridge": 0.08005868898083332,
+          "net_residual": 0.0012135412946726598,
+          "multiplicative_factor": 1.0153914518557718,
+          "target_gap": -9.71445146547012e-17
+        },
+        {
+          "model_age": 42.0,
+          "closed_integer_age_bin": [
+            42,
+            45
+          ],
+          "acs_share_conditional_18_85": 0.0786375861558847,
+          "mass_before_bridge": 0.08072893564675437,
+          "target_mass": 0.0809659800471158,
+          "mass_after_bridge": 0.08096598004711565,
+          "net_residual": 0.0002370444003612776,
+          "multiplicative_factor": 1.0029363003297687,
+          "target_gap": -1.5265566588595902e-16
+        },
+        {
+          "model_age": 46.0,
+          "closed_integer_age_bin": [
+            46,
+            49
+          ],
+          "acs_share_conditional_18_85": 0.08591835898663702,
+          "mass_before_bridge": 0.08968295548613431,
+          "target_mass": 0.08846233054004306,
+          "mass_after_bridge": 0.08846233054004303,
+          "net_residual": -0.0012206249460912783,
+          "multiplicative_factor": 0.986389554854936,
+          "target_gap": -2.7755575615628914e-17
+        },
+        {
+          "model_age": 50.0,
+          "closed_integer_age_bin": [
+            50,
+            53
+          ],
+          "acs_share_conditional_18_85": 0.08895820986694107,
+          "mass_before_bridge": 0.09115500500154727,
+          "target_mass": 0.09159218889089589,
+          "mass_after_bridge": 0.09159218889089601,
+          "net_residual": 0.0004371838893487412,
+          "multiplicative_factor": 1.0047960492058685,
+          "target_gap": 1.249000902703301e-16
+        },
+        {
+          "model_age": 54.0,
+          "closed_integer_age_bin": [
+            54,
+            57
+          ],
+          "acs_share_conditional_18_85": 0.08466006473759148,
+          "mass_before_bridge": 0.08684345526254554,
+          "target_mass": 0.0871667792389176,
+          "mass_after_bridge": 0.08716677923891752,
+          "net_residual": 0.0003233239763719836,
+          "multiplicative_factor": 1.0037230666996675,
+          "target_gap": -6.938893903907228e-17
+        },
+        {
+          "model_age": 58.0,
+          "closed_integer_age_bin": [
+            58,
+            61
+          ],
+          "acs_share_conditional_18_85": 0.07633661295406242,
+          "mass_before_bridge": 0.07812470544073027,
+          "target_mass": 0.07859687693173809,
+          "mass_after_bridge": 0.07859687693173802,
+          "net_residual": 0.0004721714910077418,
+          "multiplicative_factor": 1.006043817872261,
+          "target_gap": -6.938893903907228e-17
+        },
+        {
+          "model_age": 62.0,
+          "closed_integer_age_bin": [
+            62,
+            65
+          ],
+          "acs_share_conditional_18_85": 0.06975907935230928,
+          "mass_before_bridge": 0.0710477804023084,
+          "target_mass": 0.07182458799978787,
+          "mass_after_bridge": 0.07182458799978778,
+          "net_residual": 0.0007768075974793759,
+          "multiplicative_factor": 1.01093359416833,
+          "target_gap": -9.71445146547012e-17
+        },
+        {
+          "model_age": 66.0,
+          "closed_integer_age_bin": [
+            66,
+            69
+          ],
+          "acs_share_conditional_18_85": 0.05367679625793782,
+          "mass_before_bridge": 0.056616964469681605,
+          "target_mass": 0.055266121803359415,
+          "mass_after_bridge": 0.055266121803359436,
+          "net_residual": -0.001350842666322169,
+          "multiplicative_factor": 0.9761406730478183,
+          "target_gap": 2.0816681711721685e-17
+        },
+        {
+          "model_age": 70.0,
+          "closed_integer_age_bin": [
+            70,
+            73
+          ],
+          "acs_share_conditional_18_85": 0.04331476984142344,
+          "mass_before_bridge": 0.04230982015746853,
+          "target_mass": 0.04459728435425357,
+          "mass_after_bridge": 0.04459728435425353,
+          "net_residual": 0.002287464196785001,
+          "multiplicative_factor": 1.0540646164004377,
+          "target_gap": -4.163336342344337e-17
+        },
+        {
+          "model_age": 74.0,
+          "closed_integer_age_bin": [
+            74,
+            77
+          ],
+          "acs_share_conditional_18_85": 0.03516810939479943,
+          "mass_before_bridge": 0.03572137052573499,
+          "target_mass": 0.036209408029254916,
+          "mass_after_bridge": 0.036209408029254916,
+          "net_residual": 0.00048803750351992387,
+          "multiplicative_factor": 1.0136623398357105,
+          "target_gap": 0.0
+        },
+        {
+          "model_age": 78.0,
+          "closed_integer_age_bin": [
+            78,
+            81
+          ],
+          "acs_share_conditional_18_85": 0.02998756910537614,
+          "mass_before_bridge": 0.031401478201390574,
+          "target_mass": 0.030875476226271452,
+          "mass_after_bridge": 0.030875476226271438,
+          "net_residual": -0.0005260019751191364,
+          "multiplicative_factor": 0.9832491333132264,
+          "target_gap": -1.3877787807814457e-17
+        },
+        {
+          "model_age": 82.0,
+          "closed_integer_age_bin": [
+            82,
+            85
+          ],
+          "acs_share_conditional_18_85": 0.02400062189718957,
+          "mass_before_bridge": 0.025970649770739433,
+          "target_mass": 0.02471126046257465,
+          "mass_after_bridge": 0.024711260462574634,
+          "net_residual": -0.0012593893081647989,
+          "multiplicative_factor": 0.951507208357039,
+          "target_gap": -1.734723475976807e-17
+        }
+      ]
+    },
+    "historical_bridge_net_residual": 0.006945473013218351
+  },
+  {
+    "period": 1,
+    "calendar_year": 2011,
+    "psi_child": 0.12891531457859182,
+    "asset_price": 0.7825153512374582,
+    "renter_price": 0.10902752100191856,
+    "housing_demand": 7.106132006844383,
+    "housing_supply": 7.106084312615135,
+    "relative_market_residual": 6.711745477603333e-06,
+    "adult_population": 1.029609172979864,
+    "property_tax_revenue": 0.22242629533102304,
+    "equal_transfer_period_units": 0.21602980701815414,
+    "equal_transfer_outlays": 0.2224262709429613,
+    "government_budget_residual": 2.4388061736768663e-08,
+    "scaled_government_budget_residual": 1.0964558709424822e-07,
+    "implied_equal_transfer": 0.21602983070487175,
+    "entry_flow_E": 0.014657928626055954,
+    "birth_children": 0.10217579970106841,
+    "birth_children_topcode_adjusted": 0.11832415641705368,
+    "effective_mature_entrant_flow_B": 0.061733480361200556,
+    "raw_state_scheduled_mature_entrant_flow_B": 0.05504304182412831,
+    "entrant_flow_next": 0.06173345618085491,
+    "queue_B_over_current_E": 4.2116101078199435,
+    "owner_rate": 0.5791875199548693,
+    "adult_deaths": 0.04112349639909252,
+    "model_state_same_period_mature_flow_B": 0.06196767949779603,
+    "mass_accounting_residual": -2.220446049250313e-16,
+    "policy_reproduction_max_abs": 0.0,
+    "feasibility_frontier_projection_mass": 0.0,
+    "minimum_distribution_mass": 0.0,
+    "nonfinite_distribution_count": 0,
+    "payroll_tax_base_period": 3.4800979666339753,
+    "retiree_benefit_exposure": 0.19165955087563302,
+    "worker_household_mass": 0.8379496221042316,
+    "retiree_household_mass": 0.19165955087563302,
+    "payroll_tax_rate": 0.179,
+    "pension_period_units": 3.2502295512094532,
+    "payroll_tax_revenue": 0.6229375360274816,
+    "pension_outlays": 0.6229375360275141,
+    "pension_budget_residual": -3.2529534621517087e-14,
+    "scaled_pension_budget_residual": -5.2219576988342394e-14,
+    "implied_balanced_pension_period": 3.2502295512092836,
+    "implied_balanced_payroll_tax": 0.17900000000000935,
+    "historical_conditioning_scope": "Conditional historical PF evaluation; supplied terminal boundary",
+    "historical_outside_flow": 0.01043295409456448,
+    "historical_retained_due_entry": 0.05130050208629043,
+    "historical_next_bridge_year": 2015,
+    "historical_bridge_audit": {
+      "year": 2015,
+      "hh3_published_total_thousands": 124587.0,
+      "acs_age_18_85_share_of_all_heads": 0.9729968145464646,
+      "hh3_total_for_model_ages_thousands": 121222.75413390038,
+      "acs_age_source": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_history_source_v2/code/data/Spatial_aggregate_withmicrodata/raw_data/extract27.dta",
+      "acs_age_source_sha256": "edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324e",
+      "acs_source_receipt": {
+        "sample": 201501,
+        "head_records_all_ages": 1226681,
+        "head_weight_all_ages": 118204832.0,
+        "age_18_85_share_of_all_heads": 0.9729968145464646
+      },
+      "acs_age_normalization": "shares conditional on household-head age 18--85",
+      "model_mass_before_bridge": 1.050219132761913,
+      "model_target_mass": 1.067855912960968,
+      "model_mass_after_bridge": 1.0678559129609668,
+      "net_residual": 0.017636780199053792,
+      "absolute_group_residual": 0.12494223204242387,
+      "maximum_absolute_target_gap": 1.8041124150158794e-16,
+      "groups": [
+        {
+          "model_age": 18.0,
+          "closed_integer_age_bin": [
+            18,
+            21
+          ],
+          "acs_share_conditional_18_85": 0.01237826965969259,
+          "mass_before_bridge": 0.06173345618085492,
+          "target_mass": 0.01321820844832808,
+          "mass_after_bridge": 0.01321820844832808,
+          "net_residual": -0.04851524773252684,
+          "multiplicative_factor": 0.2141174213477355,
+          "target_gap": 0.0
+        },
+        {
+          "model_age": 22.0,
+          "closed_integer_age_bin": [
+            22,
+            25
+          ],
+          "acs_share_conditional_18_85": 0.03850574185466547,
+          "mass_before_bridge": 0.01465792862605596,
+          "target_mass": 0.04111858412245315,
+          "mass_after_bridge": 0.04111858412245313,
+          "net_residual": 0.026460655496397173,
+          "multiplicative_factor": 2.8052111025674313,
+          "target_gap": -2.0816681711721685e-17
+        },
+        {
+          "model_age": 26.0,
+          "closed_integer_age_bin": [
+            26,
+            29
+          ],
+          "acs_share_conditional_18_85": 0.05703943274201573,
+          "mass_before_bridge": 0.04134496063508338,
+          "target_mass": 0.06090989552550093,
+          "mass_after_bridge": 0.06090989552550096,
+          "net_residual": 0.01956493489041758,
+          "multiplicative_factor": 1.4732120817117351,
+          "target_gap": 2.7755575615628914e-17
+        },
+        {
+          "model_age": 30.0,
+          "closed_integer_age_bin": [
+            30,
+            33
+          ],
+          "acs_share_conditional_18_85": 0.06801644249983209,
+          "mass_before_bridge": 0.06120234802615875,
+          "target_mass": 0.07263176030201537,
+          "mass_after_bridge": 0.07263176030201546,
+          "net_residual": 0.011429412275856705,
+          "multiplicative_factor": 1.1867479376930363,
+          "target_gap": 8.326672684688674e-17
+        },
+        {
+          "model_age": 34.0,
+          "closed_integer_age_bin": [
+            34,
+            37
+          ],
+          "acs_share_conditional_18_85": 0.07105444888041931,
+          "mass_before_bridge": 0.07031966961099692,
+          "target_mass": 0.07587591337913858,
+          "mass_after_bridge": 0.07587591337913846,
+          "net_residual": 0.005556243768141539,
+          "multiplicative_factor": 1.0790140766997112,
+          "target_gap": -1.249000902703301e-16
+        },
+        {
+          "model_age": 38.0,
+          "closed_integer_age_bin": [
+            38,
+            41
+          ],
+          "acs_share_conditional_18_85": 0.06998319536695549,
+          "mass_before_bridge": 0.07175728257681033,
+          "target_mass": 0.07473196898050603,
+          "mass_after_bridge": 0.07473196898050603,
+          "net_residual": 0.002974686403695706,
+          "multiplicative_factor": 1.0414548363159035,
+          "target_gap": 0.0
+        },
+        {
+          "model_age": 42.0,
+          "closed_integer_age_bin": [
+            42,
+            45
+          ],
+          "acs_share_conditional_18_85": 0.0763366291223356,
+          "mass_before_bridge": 0.08005868898083338,
+          "target_mass": 0.0815165207837945,
+          "mass_after_bridge": 0.08151652078379448,
+          "net_residual": 0.001457831802961107,
+          "multiplicative_factor": 1.0182095387960965,
+          "target_gap": -1.3877787807814457e-17
+        },
+        {
+          "model_age": 46.0,
+          "closed_integer_age_bin": [
+            46,
+            49
+          ],
+          "acs_share_conditional_18_85": 0.07639420525997405,
+          "mass_before_bridge": 0.08096598004711551,
+          "target_mass": 0.08157800380281717,
+          "mass_after_bridge": 0.08157800380281727,
+          "net_residual": 0.0006120237557017544,
+          "multiplicative_factor": 1.007559023621347,
+          "target_gap": 9.71445146547012e-17
+        },
+        {
+          "model_age": 50.0,
+          "closed_integer_age_bin": [
+            50,
+            53
+          ],
+          "acs_share_conditional_18_85": 0.08415207247359373,
+          "mass_before_bridge": 0.08846233054004304,
+          "target_mass": 0.08986228817884696,
+          "mass_after_bridge": 0.0898622881788469,
+          "net_residual": 0.0013999576388038504,
+          "multiplicative_factor": 1.015825466390694,
+          "target_gap": -6.938893903907228e-17
+        },
+        {
+          "model_age": 54.0,
+          "closed_integer_age_bin": [
+            54,
+            57
+          ],
+          "acs_share_conditional_18_85": 0.08484820293023589,
+          "mass_before_bridge": 0.09159218889089582,
+          "target_mass": 0.09060565520316452,
+          "mass_after_bridge": 0.0906056552031647,
+          "net_residual": -0.0009865336877311198,
+          "multiplicative_factor": 0.9892290630928533,
+          "target_gap": 1.8041124150158794e-16
+        },
+        {
+          "model_age": 58.0,
+          "closed_integer_age_bin": [
+            58,
+            61
+          ],
+          "acs_share_conditional_18_85": 0.08099594893356551,
+          "mass_before_bridge": 0.08716677923891747,
+          "target_mass": 0.08649200299459255,
+          "mass_after_bridge": 0.08649200299459257,
+          "net_residual": -0.0006747762443248956,
+          "multiplicative_factor": 0.9922587911333123,
+          "target_gap": 2.7755575615628914e-17
+        },
+        {
+          "model_age": 62.0,
+          "closed_integer_age_bin": [
+            62,
+            65
+          ],
+          "acs_share_conditional_18_85": 0.07322657866496309,
+          "mass_before_bridge": 0.07859687693173815,
+          "target_mass": 0.07819543501328229,
+          "mass_after_bridge": 0.07819543501328213,
+          "net_residual": -0.00040144191845602195,
+          "multiplicative_factor": 0.9948923935132369,
+          "target_gap": -1.5265566588595902e-16
+        },
+        {
+          "model_age": 66.0,
+          "closed_integer_age_bin": [
+            66,
+            69
+          ],
+          "acs_share_conditional_18_85": 0.06532914452875623,
+          "mass_before_bridge": 0.07182458799978789,
+          "target_mass": 0.069762113273714,
+          "mass_after_bridge": 0.0697621132737139,
+          "net_residual": -0.0020624747260739873,
+          "multiplicative_factor": 0.9712845589023082,
+          "target_gap": -9.71445146547012e-17
+        },
+        {
+          "model_age": 70.0,
+          "closed_integer_age_bin": [
+            70,
+            73
+          ],
+          "acs_share_conditional_18_85": 0.05029551243914543,
+          "mass_before_bridge": 0.05190186883663945,
+          "target_mass": 0.05370836035354336,
+          "mass_after_bridge": 0.05370836035354335,
+          "net_residual": 0.001806491516903902,
+          "multiplicative_factor": 1.0348059050164422,
+          "target_gap": -6.938893903907228e-18
+        },
+        {
+          "model_age": 74.0,
+          "closed_integer_age_bin": [
+            74,
+            77
+          ],
+          "acs_share_conditional_18_85": 0.0383851119341587,
+          "mass_before_bridge": 0.04096250017669995,
+          "target_mass": 0.04098976874855999,
+          "mass_after_bridge": 0.040989768748560036,
+          "net_residual": 2.7268571860084023e-05,
+          "multiplicative_factor": 1.0006656959839464,
+          "target_gap": 4.85722573273506e-17
+        },
+        {
+          "model_age": 78.0,
+          "closed_integer_age_bin": [
+            78,
+            81
+          ],
+          "acs_share_conditional_18_85": 0.02999548094268535,
+          "mass_before_bridge": 0.032043595034801454,
+          "target_mass": 0.03203085168675458,
+          "mass_after_bridge": 0.03203085168675456,
+          "net_residual": -1.2743348046892478e-05,
+          "multiplicative_factor": 0.999602312161509,
+          "target_gap": -2.0816681711721685e-17
+        },
+        {
+          "model_age": 82.0,
+          "closed_integer_age_bin": [
+            82,
+            85
+          ],
+          "acs_share_conditional_18_85": 0.02306358176700575,
+          "mass_before_bridge": 0.02562809042848058,
+          "target_mass": 0.02462858216395586,
+          "mass_after_bridge": 0.024628582163955866,
+          "net_residual": -0.0009995082645247143,
+          "multiplicative_factor": 0.9609995029745187,
+          "target_gap": 6.938893903907228e-18
+        }
+      ]
+    },
+    "historical_bridge_net_residual": 0.017636780199053792
+  },
+  {
+    "period": 2,
+    "calendar_year": 2015,
+    "psi_child": 0.12891531457859182,
+    "asset_price": 0.8031595988850728,
+    "renter_price": 0.12104041642494609,
+    "housing_demand": 7.223646457974544,
+    "housing_supply": 7.2236221069327184,
+    "relative_market_residual": 3.371029307064898e-06,
+    "adult_population": 1.0678559129607323,
+    "property_tax_revenue": 0.23206963966697647,
+    "equal_transfer_period_units": 0.21732297309445744,
+    "equal_transfer_outlays": 0.23206962184112254,
+    "government_budget_residual": 1.7825853931840996e-08,
+    "scaled_government_budget_residual": 7.681252040301942e-08,
+    "implied_equal_transfer": 0.21732298978758405,
+    "entry_flow_E": 0.01321820844832808,
+    "birth_children": 0.10155207365678666,
+    "birth_children_topcode_adjusted": 0.11729496004146595,
+    "effective_mature_entrant_flow_B": 0.061733480361200556,
+    "raw_state_scheduled_mature_entrant_flow_B": 0.05504304182412831,
+    "entrant_flow_next": 0.06173345618085491,
+    "queue_B_over_current_E": 4.670336422861374,
+    "owner_rate": 0.5793849110146103,
+    "adult_deaths": 0.04341214666000716,
+    "model_state_same_period_mature_flow_B": 0.061771695341854345,
+    "mass_accounting_residual": 1.5543122344752192e-15,
+    "policy_reproduction_max_abs": 0.0,
+    "feasibility_frontier_projection_mass": 0.0,
+    "minimum_distribution_mass": 0.0,
+    "nonfinite_distribution_count": 0,
+    "payroll_tax_base_period": 3.516534266748489,
+    "retiree_benefit_exposure": 0.22111967622646658,
+    "worker_household_mass": 0.846736236734265,
+    "retiree_household_mass": 0.22111967622646658,
+    "payroll_tax_rate": 0.179,
+    "pension_period_units": 2.84669209221954,
+    "payroll_tax_revenue": 0.6294596337479795,
+    "pension_outlays": 0.6294596337480275,
+    "pension_budget_residual": -4.796163466380676e-14,
+    "scaled_pension_budget_residual": -7.619493307017332e-14,
+    "implied_balanced_pension_period": 2.8466920922193233,
+    "implied_balanced_payroll_tax": 0.17900000000001362,
+    "historical_conditioning_scope": "Conditional historical PF evaluation; supplied terminal boundary",
+    "historical_outside_flow": 0.01043295409456448,
+    "historical_retained_due_entry": 0.05130050208629043,
+    "historical_next_bridge_year": 2019,
+    "historical_bridge_audit": {
+      "year": 2019,
+      "hh3_published_total_thousands": 128579.0,
+      "acs_age_18_85_share_of_all_heads": 0.9723886417790605,
+      "hh3_total_for_model_ages_thousands": 125028.75917130982,
+      "acs_age_source": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_history_source_v2/code/data/Spatial_aggregate_withmicrodata/raw_data/extract27.dta",
+      "acs_age_source_sha256": "edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324e",
+      "acs_source_receipt": {
+        "sample": 201901,
+        "head_records_all_ages": 1276656,
+        "head_weight_all_ages": 122797400.0,
+        "age_18_85_share_of_all_heads": 0.9723886417790605
+      },
+      "acs_age_normalization": "shares conditional on household-head age 18--85",
+      "model_mass_before_bridge": 1.086177222481816,
+      "model_target_mass": 1.1013831580148759,
+      "model_mass_after_bridge": 1.1013831580148745,
+      "net_residual": 0.01520593553305849,
+      "absolute_group_residual": 0.13341726423875297,
+      "maximum_absolute_target_gap": 2.3592239273284576e-16,
+      "groups": [
+        {
+          "model_age": 18.0,
+          "closed_integer_age_bin": [
+            18,
+            21
+          ],
+          "acs_share_conditional_18_85": 0.0120438621262071,
+          "mass_before_bridge": 0.06173345618085494,
+          "target_mass": 0.013264906903257732,
+          "mass_after_bridge": 0.013264906903257732,
+          "net_residual": -0.04846854927759721,
+          "multiplicative_factor": 0.21487387429592036,
+          "target_gap": 0.0
+        },
+        {
+          "model_age": 22.0,
+          "closed_integer_age_bin": [
+            22,
+            25
+          ],
+          "acs_share_conditional_18_85": 0.0367238307212947,
+          "mass_before_bridge": 0.013218208448328078,
+          "target_mass": 0.04044700865422327,
+          "mass_after_bridge": 0.04044700865422327,
+          "net_residual": 0.027228800205895194,
+          "multiplicative_factor": 3.059946346915059,
+          "target_gap": 0.0
+        },
+        {
+          "model_age": 26.0,
+          "closed_integer_age_bin": [
+            26,
+            29
+          ],
+          "acs_share_conditional_18_85": 0.05910831022458462,
+          "mass_before_bridge": 0.04111858412245315,
+          "target_mass": 0.06510089738007599,
+          "mass_after_bridge": 0.06510089738007596,
+          "net_residual": 0.02398231325762281,
+          "multiplicative_factor": 1.5832475453484083,
+          "target_gap": -2.7755575615628914e-17
+        },
+        {
+          "model_age": 30.0,
+          "closed_integer_age_bin": [
+            30,
+            33
+          ],
+          "acs_share_conditional_18_85": 0.06727556723592544,
+          "mass_before_bridge": 0.060909895525500996,
+          "target_mass": 0.07409617669954567,
+          "mass_after_bridge": 0.07409617669954563,
+          "net_residual": 0.013186281174044634,
+          "multiplicative_factor": 1.2164883236176953,
+          "target_gap": -4.163336342344337e-17
+        },
+        {
+          "model_age": 34.0,
+          "closed_integer_age_bin": [
+            34,
+            37
+          ],
+          "acs_share_conditional_18_85": 0.07113343807388117,
+          "mass_before_bridge": 0.07263176030201553,
+          "target_mass": 0.07834517066626685,
+          "mass_after_bridge": 0.07834517066626677,
+          "net_residual": 0.005713410364251242,
+          "multiplicative_factor": 1.0786626999055782,
+          "target_gap": -8.326672684688674e-17
+        },
+        {
+          "model_age": 38.0,
+          "closed_integer_age_bin": [
+            38,
+            41
+          ],
+          "acs_share_conditional_18_85": 0.07127626076428463,
+          "mass_before_bridge": 0.07587591337913843,
+          "target_mass": 0.07850247317205959,
+          "mass_after_bridge": 0.07850247317205962,
+          "net_residual": 0.0026265597929211876,
+          "multiplicative_factor": 1.0346165163086303,
+          "target_gap": 2.7755575615628914e-17
+        },
+        {
+          "model_age": 42.0,
+          "closed_integer_age_bin": [
+            42,
+            45
+          ],
+          "acs_share_conditional_18_85": 0.06827752862343339,
+          "mass_before_bridge": 0.07473196898050607,
+          "target_mass": 0.07519972009672815,
+          "mass_after_bridge": 0.07519972009672812,
+          "net_residual": 0.00046775111622204824,
+          "multiplicative_factor": 1.0062590498096482,
+          "target_gap": -2.7755575615628914e-17
+        },
+        {
+          "model_age": 46.0,
+          "closed_integer_age_bin": [
+            46,
+            49
+          ],
+          "acs_share_conditional_18_85": 0.07300446221666929,
+          "mass_before_bridge": 0.08151652078379445,
+          "target_mass": 0.0804058851453729,
+          "mass_after_bridge": 0.08040588514537293,
+          "net_residual": -0.0011106356384215227,
+          "multiplicative_factor": 0.9863753306968623,
+          "target_gap": 2.7755575615628914e-17
+        },
+        {
+          "model_age": 50.0,
+          "closed_integer_age_bin": [
+            50,
+            53
+          ],
+          "acs_share_conditional_18_85": 0.0729897394366922,
+          "mass_before_bridge": 0.0815780038028175,
+          "target_mass": 0.08038966972346698,
+          "mass_after_bridge": 0.08038966972346674,
+          "net_residual": -0.0011883340793507613,
+          "multiplicative_factor": 0.9854331557042895,
+          "target_gap": -2.3592239273284576e-16
+        },
+        {
+          "model_age": 54.0,
+          "closed_integer_age_bin": [
+            54,
+            57
+          ],
+          "acs_share_conditional_18_85": 0.0787754151047197,
+          "mass_before_bridge": 0.08986228817884676,
+          "target_mass": 0.08676191546196894,
+          "mass_after_bridge": 0.08676191546196907,
+          "net_residual": -0.0031003727168776862,
+          "multiplicative_factor": 0.9654986226178957,
+          "target_gap": 1.249000902703301e-16
+        },
+        {
+          "model_age": 58.0,
+          "closed_integer_age_bin": [
+            58,
+            61
+          ],
+          "acs_share_conditional_18_85": 0.0817118811084096,
+          "mass_before_bridge": 0.0906056552031647,
+          "target_mass": 0.08999608966251624,
+          "mass_after_bridge": 0.08999608966251625,
+          "net_residual": -0.000609565540648449,
+          "multiplicative_factor": 0.9932723234627945,
+          "target_gap": 1.3877787807814457e-17
+        },
+        {
+          "model_age": 62.0,
+          "closed_integer_age_bin": [
+            62,
+            65
+          ],
+          "acs_share_conditional_18_85": 0.07839923886409916,
+          "mass_before_bridge": 0.08649200299459255,
+          "target_mass": 0.08634760128610412,
+          "mass_after_bridge": 0.08634760128610415,
+          "net_residual": -0.00014440170848839529,
+          "multiplicative_factor": 0.9983304617364747,
+          "target_gap": 2.7755575615628914e-17
+        },
+        {
+          "model_age": 66.0,
+          "closed_integer_age_bin": [
+            66,
+            69
+          ],
+          "acs_share_conditional_18_85": 0.06788946863719994,
+          "mass_before_bridge": 0.0781954350132821,
+          "target_mass": 0.07477231736359113,
+          "mass_after_bridge": 0.07477231736359119,
+          "net_residual": -0.0034231176496909155,
+          "multiplicative_factor": 0.9562235615274789,
+          "target_gap": 5.551115123125783e-17
+        },
+        {
+          "model_age": 70.0,
+          "closed_integer_age_bin": [
+            70,
+            73
+          ],
+          "acs_share_conditional_18_85": 0.06041097476218209,
+          "mass_before_bridge": 0.06551543576337913,
+          "target_mass": 0.06653563016232907,
+          "mass_after_bridge": 0.06653563016232904,
+          "net_residual": 0.001020194398949903,
+          "multiplicative_factor": 1.0155718173444583,
+          "target_gap": -2.7755575615628914e-17
+        },
+        {
+          "model_age": 74.0,
+          "closed_integer_age_bin": [
+            74,
+            77
+          ],
+          "acs_share_conditional_18_85": 0.04486839220718734,
+          "mass_before_bridge": 0.04933100192820267,
+          "target_mass": 0.049417291504202036,
+          "mass_after_bridge": 0.04941729150420207,
+          "net_residual": 8.628957599940423e-05,
+          "multiplicative_factor": 1.0017491956908753,
+          "target_gap": 3.469446951953614e-17
+        },
+        {
+          "model_age": 78.0,
+          "closed_integer_age_bin": [
+            78,
+            81
+          ],
+          "acs_share_conditional_18_85": 0.03290898088489887,
+          "mass_before_bridge": 0.03627398573563604,
+          "target_mass": 0.0362453972940611,
+          "mass_after_bridge": 0.036245397294061114,
+          "net_residual": -2.858844157492546e-05,
+          "multiplicative_factor": 0.99921187481896,
+          "target_gap": 1.3877787807814457e-17
+        },
+        {
+          "model_age": 82.0,
+          "closed_integer_age_bin": [
+            82,
+            85
+          ],
+          "acs_share_conditional_18_85": 0.02320264900833074,
+          "mass_before_bridge": 0.026587106139302718,
+          "target_mass": 0.02555500683910604,
+          "mass_after_bridge": 0.025555006839106026,
+          "net_residual": -0.001032099300196692,
+          "multiplicative_factor": 0.9611804573694854,
+          "target_gap": -1.3877787807814457e-17
+        }
+      ]
+    },
+    "historical_bridge_net_residual": 0.01520593553305849
+  },
+  {
+    "period": 3,
+    "calendar_year": 2019,
+    "psi_child": 0.12891531457859182,
+    "asset_price": 0.8152119397211572,
+    "renter_price": 0.1287280195255555,
+    "housing_demand": 7.2916955109534705,
+    "housing_supply": 7.29172506752113,
+    "relative_market_residual": 4.053439671056607e-06,
+    "adult_population": 1.1013831580146731,
+    "property_tax_revenue": 0.23777108965361732,
+    "equal_transfer_period_units": 0.21588407604826476,
+    "equal_transfer_outlays": 0.2377710854431177,
+    "government_budget_residual": 4.210499615631136e-09,
+    "scaled_government_budget_residual": 1.770820675366779e-08,
+    "implied_equal_transfer": 0.2158840798711847,
+    "entry_flow_E": 0.013264906903257732,
+    "birth_children": 0.10306324513540577,
+    "birth_children_topcode_adjusted": 0.11857182021718506,
+    "effective_mature_entrant_flow_B": 0.061733480361200556,
+    "raw_state_scheduled_mature_entrant_flow_B": 0.05504304182412831,
+    "entrant_flow_next": 0.06173345618085491,
+    "queue_B_over_current_E": 4.6538947322758375,
+    "owner_rate": 0.5762416960831904,
+    "adult_deaths": 0.047374857298626005,
+    "model_state_same_period_mature_flow_B": 0.06143441332555273,
+    "mass_accounting_residual": 1.1102230246251565e-15,
+    "policy_reproduction_max_abs": 0.0,
+    "feasibility_frontier_projection_mass": 0.0,
+    "minimum_distribution_mass": 0.0,
+    "nonfinite_distribution_count": 0,
+    "payroll_tax_base_period": 3.5207526931865347,
+    "retiree_benefit_exposure": 0.2525256431632198,
+    "worker_household_mass": 0.8488575148514531,
+    "retiree_household_mass": 0.2525256431632198,
+    "payroll_tax_rate": 0.179,
+    "pension_period_units": 2.495646478457107,
+    "payroll_tax_revenue": 0.6302147320803897,
+    "pension_outlays": 0.6302147320804055,
+    "pension_budget_residual": -1.5765166949677223e-14,
+    "scaled_pension_budget_residual": -2.5015548109506645e-14,
+    "implied_balanced_pension_period": 2.4956464784570445,
+    "implied_balanced_payroll_tax": 0.17900000000000446,
+    "historical_conditioning_scope": "Conditional historical PF evaluation; supplied terminal boundary",
+    "historical_outside_flow": 0.01043295409456448,
+    "historical_retained_due_entry": 0.05130050208629043,
+    "historical_next_bridge_year": 2023,
+    "historical_bridge_audit": {
+      "year": 2023,
+      "hh3_published_total_thousands": 131434.0,
+      "acs_age_18_85_share_of_all_heads": 0.975333111777626,
+      "hh3_total_for_model_ages_thousands": 128191.9322133805,
+      "acs_age_source": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_history_source_v2/code/data/Spatial_aggregate_withmicrodata/raw_data/extract27.dta",
+      "acs_age_source_sha256": "edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324e",
+      "acs_source_receipt": {
+        "sample": 202301,
+        "head_records_all_ages": 1342971,
+        "head_weight_all_ages": 131325888.0,
+        "age_18_85_share_of_all_heads": 0.975333111777626
+      },
+      "acs_age_normalization": "shares conditional on household-head age 18--85",
+      "model_mass_before_bridge": 1.1157417568971044,
+      "model_target_mass": 1.1292476712477861,
+      "model_mass_after_bridge": 1.1292476712477877,
+      "net_residual": 0.013505914350683268,
+      "absolute_group_residual": 0.15451280321198108,
+      "maximum_absolute_target_gap": 1.3877787807814457e-16,
+      "groups": [
+        {
+          "model_age": 18.0,
+          "closed_integer_age_bin": [
+            18,
+            21
+          ],
+          "acs_share_conditional_18_85": 0.01269617145483895,
+          "mass_before_bridge": 0.06173345618085492,
+          "target_mass": 0.014337122049139502,
+          "mass_after_bridge": 0.014337122049139502,
+          "net_residual": -0.047396334131715415,
+          "multiplicative_factor": 0.23224233561680613,
+          "target_gap": 0.0
+        },
+        {
+          "model_age": 22.0,
+          "closed_integer_age_bin": [
+            22,
+            25
+          ],
+          "acs_share_conditional_18_85": 0.03962038556026601,
+          "mass_before_bridge": 0.01326490690325774,
+          "target_mass": 0.0447412281278698,
+          "mass_after_bridge": 0.044741228127869785,
+          "net_residual": 0.031476321224612046,
+          "multiplicative_factor": 3.3729017816839533,
+          "target_gap": -1.3877787807814457e-17
+        },
+        {
+          "model_age": 26.0,
+          "closed_integer_age_bin": [
+            26,
+            29
+          ],
+          "acs_share_conditional_18_85": 0.05765140549135367,
+          "mass_before_bridge": 0.04044700865422326,
+          "target_mass": 0.06510271539527296,
+          "mass_after_bridge": 0.06510271539527297,
+          "net_residual": 0.024655706741049714,
+          "multiplicative_factor": 1.6095804748338363,
+          "target_gap": 1.3877787807814457e-17
+        },
+        {
+          "model_age": 30.0,
+          "closed_integer_age_bin": [
+            30,
+            33
+          ],
+          "acs_share_conditional_18_85": 0.06890576989592977,
+          "mass_before_bridge": 0.06510089738007599,
+          "target_mass": 0.0778116801905145,
+          "mass_after_bridge": 0.0778116801905145,
+          "net_residual": 0.012710782810438512,
+          "multiplicative_factor": 1.1952474285604644,
+          "target_gap": 0.0
+        },
+        {
+          "model_age": 34.0,
+          "closed_integer_age_bin": [
+            34,
+            37
+          ],
+          "acs_share_conditional_18_85": 0.07222893075363992,
+          "mass_before_bridge": 0.07409617669954562,
+          "target_mass": 0.08156435185026549,
+          "mass_after_bridge": 0.08156435185026552,
+          "net_residual": 0.007468175150719902,
+          "multiplicative_factor": 1.100790290179246,
+          "target_gap": 2.7755575615628914e-17
+        },
+        {
+          "model_age": 38.0,
+          "closed_integer_age_bin": [
+            38,
+            41
+          ],
+          "acs_share_conditional_18_85": 0.0733336686796633,
+          "mass_before_bridge": 0.07834517066626666,
+          "target_mass": 0.08281187458056649,
+          "mass_after_bridge": 0.08281187458056663,
+          "net_residual": 0.0044667039142999715,
+          "multiplicative_factor": 1.0570131365636692,
+          "target_gap": 1.3877787807814457e-16
+        },
+        {
+          "model_age": 42.0,
+          "closed_integer_age_bin": [
+            42,
+            45
+          ],
+          "acs_share_conditional_18_85": 0.0721540828893215,
+          "mass_before_bridge": 0.0785024731720597,
+          "target_mass": 0.08147983007378604,
+          "mass_after_bridge": 0.08147983007378598,
+          "net_residual": 0.0029773569017262774,
+          "multiplicative_factor": 1.0379269184959388,
+          "target_gap": -5.551115123125783e-17
+        },
+        {
+          "model_age": 46.0,
+          "closed_integer_age_bin": [
+            46,
+            49
+          ],
+          "acs_share_conditional_18_85": 0.06656022972977625,
+          "mass_before_bridge": 0.07519972009672807,
+          "target_mass": 0.0751629844200675,
+          "mass_after_bridge": 0.07516298442006751,
+          "net_residual": -3.673567666055699e-05,
+          "multiplicative_factor": 0.9995114918431436,
+          "target_gap": 1.3877787807814457e-17
+        },
+        {
+          "model_age": 50.0,
+          "closed_integer_age_bin": [
+            50,
+            53
+          ],
+          "acs_share_conditional_18_85": 0.0714282608125555,
+          "mass_before_bridge": 0.0804058851453729,
+          "target_mass": 0.0806601971838578,
+          "mass_after_bridge": 0.08066019718385786,
+          "net_residual": 0.00025431203848495787,
+          "multiplicative_factor": 1.0031628535401993,
+          "target_gap": 5.551115123125783e-17
+        },
+        {
+          "model_age": 54.0,
+          "closed_integer_age_bin": [
+            54,
+            57
+          ],
+          "acs_share_conditional_18_85": 0.0695918219694791,
+          "mass_before_bridge": 0.08038966972346664,
+          "target_mass": 0.0785864028969248,
+          "mass_after_bridge": 0.07858640289692485,
+          "net_residual": -0.0018032668265417912,
+          "multiplicative_factor": 0.9775684259837747,
+          "target_gap": 5.551115123125783e-17
+        },
+        {
+          "model_age": 58.0,
+          "closed_integer_age_bin": [
+            58,
+            61
+          ],
+          "acs_share_conditional_18_85": 0.07656515710357487,
+          "mass_before_bridge": 0.08676191546196904,
+          "target_mass": 0.0864610253579328,
+          "mass_after_bridge": 0.08646102535793285,
+          "net_residual": -0.00030089010403619443,
+          "multiplicative_factor": 0.996532002521681,
+          "target_gap": 4.163336342344337e-17
+        },
+        {
+          "model_age": 62.0,
+          "closed_integer_age_bin": [
+            62,
+            65
+          ],
+          "acs_share_conditional_18_85": 0.07798978045201599,
+          "mass_before_bridge": 0.0899960896625163,
+          "target_mass": 0.08806977795656516,
+          "mass_after_bridge": 0.0880697779565651,
+          "net_residual": -0.0019263117059511864,
+          "multiplicative_factor": 0.9785956066183013,
+          "target_gap": -5.551115123125783e-17
+        },
+        {
+          "model_age": 66.0,
+          "closed_integer_age_bin": [
+            66,
+            69
+          ],
+          "acs_share_conditional_18_85": 0.07085160357313883,
+          "mass_before_bridge": 0.08634760128610414,
+          "target_mass": 0.08000900833913835,
+          "mass_after_bridge": 0.08000900833913835,
+          "net_residual": -0.006338592946965788,
+          "multiplicative_factor": 0.9265921362891889,
+          "target_gap": 0.0
+        },
+        {
+          "model_age": 70.0,
+          "closed_integer_age_bin": [
+            70,
+            73
+          ],
+          "acs_share_conditional_18_85": 0.06165837774909073,
+          "mass_before_bridge": 0.07022065022447053,
+          "target_mass": 0.06962757948607702,
+          "mass_after_bridge": 0.06962757948607698,
+          "net_residual": -0.0005930707383935557,
+          "multiplicative_factor": 0.9915541833278718,
+          "target_gap": -4.163336342344337e-17
+        },
+        {
+          "model_age": 74.0,
+          "closed_integer_age_bin": [
+            74,
+            77
+          ],
+          "acs_share_conditional_18_85": 0.05063149245400102,
+          "mass_before_bridge": 0.06111281890242054,
+          "target_mass": 0.05717549494548051,
+          "mass_after_bridge": 0.05717549494548047,
+          "net_residual": -0.003937323956940068,
+          "multiplicative_factor": 0.9355728629826944,
+          "target_gap": -3.469446951953614e-17
+        },
+        {
+          "model_age": 78.0,
+          "closed_integer_age_bin": [
+            78,
+            81
+          ],
+          "acs_share_conditional_18_85": 0.03500355974319133,
+          "mass_before_bridge": 0.043731940477955714,
+          "target_mass": 0.03952768832538157,
+          "mass_after_bridge": 0.039527688325381505,
+          "net_residual": -0.004204252152574209,
+          "multiplicative_factor": 0.9038631236888879,
+          "target_gap": -6.245004513516506e-17
+        },
+        {
+          "model_age": 82.0,
+          "closed_integer_age_bin": [
+            82,
+            85
+          ],
+          "acs_share_conditional_18_85": 0.02312930168816325,
+          "mass_before_bridge": 0.030085376259816762,
+          "target_mass": 0.02611871006894584,
+          "mass_after_bridge": 0.026118710068945835,
+          "net_residual": -0.003966666190870927,
+          "multiplicative_factor": 0.868153013722851,
+          "target_gap": -3.469446951953614e-18
+        }
+      ]
+    },
+    "historical_bridge_net_residual": 0.013505914350683268
+  },
+  {
+    "period": 4,
+    "calendar_year": 2023,
+    "psi_child": 0.12891531457859182,
+    "asset_price": 0.8215738885657953,
+    "renter_price": 0.13013439715588657,
+    "housing_demand": 7.327498539054338,
+    "housing_supply": 7.327523601220312,
+    "relative_market_residual": 3.420277755157288e-06,
+    "resident_persons": 2.9659779384078715,
+    "household_heads": 1.1292476712475508,
+    "persons_per_household_head": 2.6265079078101348,
+    "birth_children": 0.10810557457578104,
+    "birth_children_topcode_adjusted": 0.12419683099468198,
+    "births_per_household_head": 0.10998192350263955,
+    "next_resident_persons": 2.9847589188215298,
+    "next_household_heads": 1.1584039347991049,
+    "annual_net_migration_over_period": 0.0,
+    "new_heads_from_nonheads_over_period": 0.0994393394365845,
+    "head_dissolutions_over_period": 0.024233277597331,
+    "net_migrant_heads_over_period": 0.0,
+    "household_bridge_added_mass": 0.08815164622635718,
+    "household_bridge_removed_mass": 0.009035644102111287,
+    "household_person_head_gap": -6.661338147750939e-16,
+    "person_identity_max_abs": 4.440892098500626e-16,
+    "head_identity_max_abs": 2.220446049250313e-16,
+    "raw_household_exit_mass": 0.049959738572926654,
+    "raw_household_mass_residual": -8.881784197001252e-16,
+    "model_state_same_period_mature_flow_B": 0.06216229067721185,
+    "property_tax_revenue": 0.24080325872764224,
+    "equal_transfer_period_units": 0.2132422034957429,
+    "equal_transfer_outlays": 0.240803261709264,
+    "government_budget_residual": -2.9816217550493462e-09,
+    "owner_rate": 0.5683287305981187,
+    "policy_reproduction_max_abs": 0.0,
+    "feasibility_frontier_projection_mass": 0.0,
+    "minimum_distribution_mass": 0.0,
+    "nonfinite_distribution_count": 0,
+    "payroll_tax_base_period": 3.546519185737017,
+    "retiree_benefit_exposure": 0.272458481164932,
+    "worker_household_mass": 0.856789190082619,
+    "retiree_household_mass": 0.272458481164932,
+    "payroll_tax_rate": 0.179,
+    "pension_period_units": 2.3299951300199693,
+    "payroll_tax_revenue": 0.634826934246926,
+    "pension_outlays": 0.634826934246929,
+    "pension_budget_residual": -2.9976021664879227e-15,
+    "scaled_pension_budget_residual": -4.721920266416962e-15,
+    "implied_balanced_pension_period": 2.329995130019958,
+    "implied_balanced_payroll_tax": 0.17900000000000085
+  },
+  {
+    "period": 5,
+    "calendar_year": 2027,
+    "psi_child": 0.12891531457859182,
+    "asset_price": 0.827583707671134,
+    "renter_price": 0.13493158645386896,
+    "housing_demand": 7.361213869323715,
+    "housing_supply": 7.3612466154967295,
+    "relative_market_residual": 4.448454823674448e-06,
+    "resident_persons": 2.9847589188215298,
+    "household_heads": 1.1584039347988937,
+    "persons_per_household_head": 2.57661324271978,
+    "birth_children": 0.10840787596604312,
+    "birth_children_topcode_adjusted": 0.12457258035257317,
+    "births_per_household_head": 0.1075381191399352,
+    "next_resident_persons": 2.9958968899324043,
+    "next_household_heads": 1.1776638055976139,
+    "annual_net_migration_over_period": 0.0,
+    "new_heads_from_nonheads_over_period": 0.09735583685011764,
+    "head_dissolutions_over_period": 0.029566545741024533,
+    "net_migrant_heads_over_period": 0.0,
+    "household_bridge_added_mass": 0.08676730045028308,
+    "household_bridge_removed_mass": 0.008055088201242379,
+    "household_person_head_gap": 6.661338147750939e-16,
+    "person_identity_max_abs": 8.881784197001252e-16,
+    "head_identity_max_abs": 0.0,
+    "raw_household_exit_mass": 0.05945234145053306,
+    "raw_household_mass_residual": 6.661338147750939e-16,
+    "model_state_same_period_mature_flow_B": 0.06223826979839697,
+    "property_tax_revenue": 0.24368082667740376,
+    "equal_transfer_period_units": 0.2103591227784553,
+    "equal_transfer_outlays": 0.24368083554740622,
+    "government_budget_residual": -8.870002454752779e-09,
+    "owner_rate": 0.5747777387603659,
+    "policy_reproduction_max_abs": 0.0,
+    "feasibility_frontier_projection_mass": 0.0,
+    "minimum_distribution_mass": 0.0,
+    "nonfinite_distribution_count": 0,
+    "payroll_tax_base_period": 3.5337473937293713,
+    "retiree_benefit_exposure": 0.3061289572459359,
+    "worker_household_mass": 0.8522749775529579,
+    "retiree_household_mass": 0.3061289572459359,
+    "payroll_tax_rate": 0.179,
+    "pension_period_units": 2.066255963395815,
+    "payroll_tax_revenue": 0.6325407834775575,
+    "pension_outlays": 0.6325407834775576,
+    "pension_budget_residual": -1.1102230246251565e-16,
+    "scaled_pension_budget_residual": -1.7551801458894342e-16,
+    "implied_balanced_pension_period": 2.0662559633958146,
+    "implied_balanced_payroll_tax": 0.17900000000000005
+  }
+]

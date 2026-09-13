@@ -1,5 +1,114 @@
 # Calibration Status
 
+**September 13, 13:00 UTC — boundary-policy correction verified and launched; full review PDF ready.**
+Native verification17686318 passes in573.35seconds. All policy fields and bound
+fiscal inputs match bitwise; the accepted six-period forecast reproduces its
+entire residual vector, dated rows, lifetime values, actual terminal population
+and boundary fiscal ledger exactly. Both mappings execute the actual endpoint
+audit; policy hashes before/after are identical. Evidence:
+`boundary_policy_seed_verification_v2.json` in the overnight packet.
+
+New32GiB/cache12GiB array17686968 runs A0/A+100periods on the separately frozen
+`history_source_policy_seed_v1`; readout collector17687181 covers both cases.
+Only the premature substitute-population audit is removed from value setup;
+all actual population, market and fiscal gates remain. Model kernels/targets/
+parameters/initial state are unchanged. Their first native100-period mappings
+are underway; no100-period convergence is claimed. The18UTCdeadline and2hour
+policy reserve are enforced after queue wait. Earlier sources remain frozen.
+Account check13:00UTC:42% weekly remaining, creditbalance unchanged;20%floor.
+
+`output/model/e5f_final_night_20260913/verified_history_readout.pdf` is the current
+20-page discussion report: complete initial13moment and17parameter tables,
+four-window fertility fit, all13untargeted2023Data/Model rows with actual data
+vintages/caveats,17native initial diagnostics and five history/2023figures.
+All20pages were rendered and visually inspected;157numeric source cells checked.
+It reports the completed provisional A0six history; policies are still pending
+and horizon adequacy remains unverified. This supersedes the initial-only PDF
+for discussion, not the calibration candidate or scientific contract.
+
+**September 13, 12:54 UTC — baseline six-period history and native2023readout complete.**
+Ordinary A0 has matched all four observed fertility windows. Model/data:
+2008–2011:1.973124/1.974875;2012–2015:1.861042/1.861000;
+2016–2019:1.755338/1.755375;2020–2023:1.645559/1.645750.
+Each accepted root passes the retained finite housing/fiscal gates and exact
+replay (maximum difference0). Four-window evidence: `four_window_A0_verification.json`.
+The horizon remains unverified; this is the approved provisional finite solve,
+not a certified long-horizon equilibrium. Baseline and2% equally rebated tax
+forecasts now run from the inherited2023state. No policy effect is claimed yet.
+
+The automatic native2023reader passes, maximum aggregate discrepancy3.55e-15,
+including the dated2019-to-2023first-birth rooms observer. All13Data/Model rows
+are in `history_A0_6/validation/validation_2023.csv` beneath the overnight packet.
+Completed fertility1.69387 versus CPS2024stock1.91842; mean capped rooms6.25308
+versus ACS2023value5.58372; ownership30–55 is49.4514% versus58.7409%; first-birth
+room response1.01368 versus retained0.720246. These are untargeted2023validation
+rows, with their actual data vintages and measurement caveats retained.
+The unchanged five historical/2023comparison figures are generated and all five
+PDF pages visually inspected in `history_A0_6/figures/`.
+
+The boundary-policy split remains under native verification17686318. Old/new
+policy arrays and fiscal accounts at a valid boundary match exactly; the complete
+six-period replay continues. Its predecessor17686268 stopped before numerics
+because the raw initial summary was not a direct manifest entry. The verifier
+now pins that summary explicitly and checks all77initial/historykernel pairs.
+New100period histories will use this helper only after the full replay passes.
+
+**September 13, 12:40 UTC — boundary failure reproduced; isolated correction under native verification.**
+Boundary-only job17683693 reproduced the rejected proposal twice exactly. The
+pre-sweep initializer was auditing the inherited2007 population at terminal
+prices, before constructing the actual terminal population. The same initial
+negative-wealth renter states cause the repeated rejection. This is an
+artificial cross-date restriction, separate from the actual endpoint checks.
+Probe17683391 failed before numerics because of a checkpoint-key parser; its
+corrected successor17683693 completed all four boundary-only cases in80seconds.
+Native evidence is `boundary_budget_probe_v2/` in the overnight packet.
+
+A separate helper `history_source_policy_seed_v1` now constructs only the
+remaining-lifetime Bellman policy for the backward boundary. Every realized
+date and the actual carried endpoint still receive the original household,
+housing and fiscal checks. The old boundary-evaluation callback contract is
+preserved. Eight boundary tests, eight routing tests and fifteen driver tests
+pass; independent review supports the separation. A native old/new policy,
+accounting and accepted six-period-loop comparison is required before new
+histories use it. The model kernels, structural parameters, targets, initial
+state and numerical gates are unchanged. Existing jobs retain frozen sources.
+All four six-period cases have three fitted windows and are fitting2019–2023;
+no complete history or tax-policy comparison is claimed yet.
+
+**September 13, 12:15 UTC — three baseline windows fitted; first horizon comparison.**
+Ordinary-start A0 with six periods has accepted the third window: model fertility
+1.7553381559 versus 1.755375 for 2016–2019. All finite/exact gates pass; realized
+households are carried into2019 for the final surprise. Native receipts:
+`output/model/e5f_final_night_20260913/three_window_verification.json`.
+This still does not constitute the complete four-window history.
+
+At the identical first preference .12891531458 and initial state, the first
+24-period A0 equilibrium gives fertility1.9588715674 versus1.9731122329 with six
+periods, a decline of0.014240666 (0.7217%). The house price differs by−0.4188%,
+rent by+1.0040%, and housing demand by−0.2668%. Both equilibria pass their native
+finite/exact gates and share the scientific manifest. The24-period fertility
+miss still exceeds0.005, so its shock refit continues. This is a fixed-preference
+first-vintage horizon diagnostic, not a horizon-adequacy certificate or a full
+historical result. Evidence: `fixed_preference_horizon_comparison/` in the packet.
+
+Both32-GiB100-period ordinary starts now complete valid nonconstant mappings.
+Actual physical Slurm steps are17677004 (A0) and17676958 (A+), with measured peaks
+about16.8/17.0GiB. The array shorthand passed to `sstat` had repeated the base
+task; subsequent checks use these physical job IDs. Pending48-GiB duplicate
+array17663986 is cancelled, with outputs preserved in `pending_48g_retirement.json`.
+The running ordinary/extended100-period arrays and their readout collectors remain.
+
+One extended A0 trial hit `Dated budget gate failed` at its boundary proposal:
+violating household mass2.2768224e-9, largest occupied spending excess0.40874.
+That trial was rejected; it was not carried into history. The controller continues
+to another preference trial. Its root engine supports restoring the best point
+and halving damping for an invalid mapping, but this RuntimeError bypasses that
+branch. Diagnostic17683391 reconstructs the exact first proposal and tests only
+four boundary evaluations (initial/full/half/full-repeat), capturing violating
+states; no history is solved and no gate is loosened. No correction is claimed
+before the native evidence. Latest account check12:01UTC:48% weekly remaining,
+credit balance unchanged. Keep the20% floor and18UTC numerical deadline.
+
 **September 13, 11:47 UTC — additional long-run starts and automatic readouts.**
 The 32-GiB 100-period array 17676958 has passed its first flat-price mapping. Its
 first nonconstant mapping is still computing, with fresh heartbeats and about

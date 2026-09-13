@@ -51,6 +51,17 @@ class AccountingTest(unittest.TestCase):
         self.assertEqual(price, 2.)
         self.assertIsNone(state)
 
+    def test_population_free_policy_supplies_the_backward_value_boundary(self):
+        from e5f_closed_finite_boundary import BoundaryPolicy
+        terminal = BoundaryPolicy(NS(), np.array([0., 1.]),
+            NS(price=np.array([2.]), V=np.array([3., 4.])))
+        parameters, policy, price, state = r._terminal_parts(terminal)
+        self.assertIs(parameters, terminal.parameters)
+        self.assertIs(policy.V, terminal.policy.V)
+        self.assertEqual(price, 2.)
+        self.assertIsNone(state)
+        self.assertFalse(hasattr(terminal, 'g_pre'))
+
 
 class ReplayTest(unittest.TestCase):
     def test_first_period_replays_accepted_transfer_next_price_and_value(self):

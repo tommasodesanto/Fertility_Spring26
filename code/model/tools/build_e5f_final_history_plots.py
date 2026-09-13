@@ -72,8 +72,12 @@ def build(case_dir,readout_dir,initial_readout=None,data_dir=DEFAULT_DATA,out=No
         raise ValueError('Expected unique consecutive dated quantity rows')
     r=next(x for x in path if x['calendar_year']==2023)
     for x in path:
-        for key in ('asset_price','renter_price','housing_demand','household_heads','resident_persons'):
+        for key in ('asset_price','renter_price','housing_demand'):
             if not math.isfinite(float(x[key])):raise ValueError('Nonfinite path quantity: '+key)
+    # Resident-person accounting begins at the dated 2023 demographic anchor.
+    # Historical head-age-conditioned rows do not contain resident-person totals.
+    for key in ('household_heads','resident_persons'):
+        if not math.isfinite(float(r[key])):raise ValueError('Nonfinite2023population: '+key)
     out=Path(out or case_dir/'figures');out.mkdir(parents=True,exist_ok=True)
     pdf=Path(pdf or out/'e5f_final_history_figures.pdf');pdf.parent.mkdir(parents=True,exist_ok=True)
     inputs=[case_dir/n for n in ('realized_fit.json','finite_history_complete.json','contract_receipt.json')]

@@ -13,6 +13,10 @@ class FinalHistoryPlotsTest(unittest.TestCase):
                 finite_horizon_market_fiscal_converged=True,final={'mapping_valid':True},final_reproduction_max_abs=0.)
             (d/'root_receipt.json').write_text(json.dumps(receipt))
             rows=[dict(calendar_year=y,asset_price=1+i/10,renter_price=.2,housing_demand=5.,household_heads=1.,resident_persons=2.) for y in range(year,year+24,4)]
+            for row in rows:
+                if row['calendar_year'] < 2023:
+                    row.pop('household_heads'); row.pop('resident_persons')
+                    row['adult_population'] = 1.
             fertility=[dict(calendar_year=y,period_tfr_topcode_adjusted=2-i*.1-j*.01) for j,y in enumerate(range(year,year+24,4))]
             (d/'rows.json').write_text(json.dumps(rows));(d/'fertility.json').write_text(json.dumps(fertility))
             self.fits.append(dict(year=year,model=2-i*.1,target=2-i*.1,gap=0.,psi=receipt['psi'],folder=str(d)))
