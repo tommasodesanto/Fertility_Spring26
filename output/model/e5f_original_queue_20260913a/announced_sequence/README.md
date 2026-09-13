@@ -83,3 +83,21 @@ The author stressed that the final path should settle well before the endpoint
 and be stable to extending the horizon. This has **not** been established:
 the earlier plotted 100-period iteration was unconverged and population remained
 about 11% above the stationary endpoint. No additional horizon run was launched.
+
+## Corrected launch, September 13 at 22:24 UTC
+
+**September 13, 22:24 UTC — full announced four-shock transition running.**
+Corrected smoke `17711391` passed the fresh terminal reconstruction, native
+constant-vector reproduction, six-date stationary root/drift check and announced
+household test. It automatically dispatched the full 104-date job **17711519**,
+confirmed RUNNING on `cs614`. Batch: `announced_original_queue_20260913c`.
+The repaired short household test holds initial prices and uses its own native
+fixed-price continuation at final preferences; it makes no equilibrium claim.
+This avoids imposing the entire terminal capital loss immediately on inherited
+2007 households. The full transition still uses the separately reverified true
+stationary GE endpoint, the existing warm start and all unchanged numerical
+gates. No parameters, shocks, population law or fiscal closure changed.
+The original absolute deadline remains; expected long-stage runtime is 3–5 hours,
+with convergence unestablished. Receipts are in the announced-sequence packet
+as `retry_c_*.json`. SSJ continuation is handed to the author's Claude session
+through `docs/prompts/HANDOFF_claude_ssj.md`; no new SSJ computation here.

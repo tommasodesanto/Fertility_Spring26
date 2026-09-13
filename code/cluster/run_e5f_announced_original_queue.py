@@ -352,15 +352,24 @@ def main():
           drift=terminal_distance(stationary_result.path.person_tail.terminal_state,c.old.initial_state)
           if max(drift.values())>1e-5: raise RuntimeError("Constant-vector stationary drift failed")
           save(c.driver,folder/"constant_stationary_drift.json",dict(passed=True,**drift))
-          # (c) One direct six-date mapping containing the announced four-level
-          # transition and two final-psi dates; no equilibrium claim is made.
+          # (c) Fixed-price household test of the four announced levels. Keep
+          # inherited owners at their initial prices instead of imposing the
+          # entire long-run capital loss immediately. This is not a GE endpoint;
+          # the full run below still uses the separately verified terminal GE.
           announced=__import__("numpy").r_[m["psi_levels"],FINAL_PSI,FINAL_PSI]
-          g=__import__("numpy").repeat(__import__("numpy").asarray(endpoint.coordinates,float)[:,None],6,axis=1)
+          g=__import__("numpy").repeat([q,float(P.pension),float(P.property_tax_lump_sum_transfer)],6).reshape(3,6)
+          test_P=copy.deepcopy(P);test_P.psi_child=FINAL_PSI
+          test_shared=c.primitive.calendar.model.precompute_shared(test_P,c.old.b_grid)
+          test_objects=c.primitive.calendar.model.solve_bellman_full_markov_income(
+              __import__("numpy").array([test_P.user_cost_rate*q]),__import__("numpy").array([q]),
+              test_P,c.old.b_grid,test_shared)
+          test_policy=c.joined.pf.policy_from_objects(test_objects,q,test_P,c.old.b_grid,test_shared)
+          test_terminal=NS(parameters=test_P,policy=test_policy,asset_price=q)
           evA,fpA=announced_queue_path(c,announced)
           from e5f_balanced_terminal import _household_checks
           import run_e5f_transition_calibration as fertility
           audits=[]; observations=[]
-          rents=c.joined.pf.rents_from_asset_prices(g[0],endpoint.asset_price,c.old.parameters)
+          rents=c.joined.pf.rents_from_asset_prices(g[0],q,c.old.parameters)
           def audit_announced(i,e,P,grid,shared):
               diagnostics,gates=_household_checks(e,P,shared,grid,float(rents[i]),c.primitive,c.audit)
               if not gates or not all(gates.values()): raise RuntimeError("Announced dated household audit failed")
@@ -369,10 +378,13 @@ def main():
               audits.append(dict(period=i,psi=float(P.psi_child),diagnostics=diagnostics,gates=gates))
               observations.append(dict(period=i,calendar_year=2007+4*i,**fertility.period_fertility_diagnostics(e,P)))
           direct=evA(inherited=c.rebated.InheritedState(2007,c.old.initial_state),old_state=c.old,prices=g[0],pensions=g[1],transfers=g[2],psi=FINAL_PSI,
-             terminal=NS(parameters=endpoint.parameters,policy=endpoint.policy,asset_price=endpoint.asset_price),observer=audit_announced)
+             terminal=test_terminal,observer=audit_announced)
           fpA(inherited=c.rebated.InheritedState(2007,c.old.initial_state),old_state=c.old,demographics=None,
               path=direct,prices=g[0],pensions=g[1],transfers=g[2],psi=FINAL_PSI)
           ddir=folder/"announced_direct"; save(c.driver,ddir/"rows.json",direct.rows); save(c.driver,ddir/"native_values_shape.json",dict(values=len(direct.values),rows=len(direct.rows)))
+          save(c.driver,ddir/"test_contract.json",dict(fixed_price_household_test=True,
+              household_continuation_psi=FINAL_PSI,household_continuation_price=q,
+              full_run_terminal_is_separately_verified_ge=True,equilibrium_claim=False))
           save(c.driver,ddir/"household_audits.json",audits); save(c.driver,ddir/"fertility.json",observations)
           save(c.driver,ddir/"terminal_distance.json",terminal_distance(direct.person_tail.terminal_state,endpoint.state))
           if len(direct.rows)!=6 or len(direct.values)!=7: raise RuntimeError("Six-date announced mapping shape failed")
