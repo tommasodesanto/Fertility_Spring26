@@ -16,6 +16,123 @@
   },
   "standardization": "Q_model_standardized = model mean capped rooms per household * ACS HHWT household total. Divide by ACS PERWT residents in those same households for per-person comparison.",
   "model_person_history_before_2023_available": false,
+  "every_panel_compares_model_and_data": true,
+  "native_model_history_and_continuation_panels": {
+    "Households": {
+      "model_years": [
+        2007,
+        2011,
+        2015,
+        2019,
+        2023,
+        2027,
+        2031,
+        2035,
+        2039
+      ],
+      "model_values": [
+        100.0,
+        102.96091729801563,
+        106.78559129610116,
+        110.13831580149495,
+        112.92476712478728,
+        116.75894573997901,
+        119.80653417682784,
+        121.84540815709806,
+        123.3371186361373
+      ],
+      "data_years": [
+        2007,
+        2011,
+        2015,
+        2019,
+        2023
+      ],
+      "data_values": [
+        100.0,
+        101.91606063031394,
+        104.59237325554184,
+        108.58814590684233,
+        116.4814272595459
+      ]
+    },
+    "Total occupied housing": {
+      "model_years": [
+        2007,
+        2011,
+        2015,
+        2019,
+        2023,
+        2027,
+        2031,
+        2035,
+        2039
+      ],
+      "model_values": [
+        99.99999999999999,
+        101.84019098152942,
+        103.31026911404831,
+        104.04630945196214,
+        104.39112490033256,
+        104.73155378894369,
+        104.42329218150998,
+        103.20052675190578,
+        100.61312174278079
+      ],
+      "data_years": [
+        2007,
+        2011,
+        2015,
+        2019,
+        2023
+      ],
+      "data_values": [
+        100.0,
+        103.44073407380559,
+        106.24093113002161,
+        110.44896108039616,
+        118.24475653839507
+      ]
+    },
+    "Housing per household": {
+      "model_years": [
+        2007,
+        2011,
+        2015,
+        2019,
+        2023,
+        2027,
+        2031,
+        2035,
+        2039
+      ],
+      "model_values": [
+        6.561294974738576,
+        6.489875487214644,
+        6.347758544477378,
+        6.198374492830113,
+        6.065462702783053,
+        5.88541300383347,
+        5.71882015404062,
+        5.557280391679722,
+        5.352422509814057
+      ],
+      "data_years": [
+        2007,
+        2011,
+        2015,
+        2019,
+        2023
+      ],
+      "data_values": [
+        5.6316668951222715,
+        5.715917138945276,
+        5.7204317688642385,
+        5.728173665021766,
+        5.716920685005593
+      ]
+    }
+  },
   "source_scope": "National housing validation. Initial model calibration retains its42-metro targets; no model rerun, reweighting of states, or target change.",
   "checks": [
     "Five household and person ratio identities",

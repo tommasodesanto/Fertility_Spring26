@@ -49,32 +49,43 @@ def main():
     assert abs(parts[0]-parts[1]+parts[2]-np.log(vals('data_rooms')[-1]/vals('data_rooms')[0])) < 1e-12
     plt.rcParams.update({'font.size':11,'axes.spines.top':False,'axes.spines.right':False})
     fig,axes=plt.subplots(2,2,figsize=(12.2,8.2))
-    red,blue,green='#bd433c','#245f99','#3b8065'
+    red,blue='#bd433c','#245f99'
     a,b,c,d=axes.flat
-    for k,label,color in [('data_rooms','Occupied rooms',blue),('data_households','Households',green),('data_persons','Residents',red)]:
-        v=vals(k); a.plot(x,100*v/v[0],'o-',color=color,label=f'{label}: +{growth(k):.1f}%',ms=4)
-    a.set(title='What grew in the data?',ylabel='2007 = 100')
-    a.legend(frameon=False,fontsize=9)
-    b.plot(x,vals('data_persons_per_household'),'s-',color=red,ms=4)
-    b.set(title='Residents per household',ylabel='Persons')
-    for year,value in [(x[0],vals('data_persons_per_household')[0]),(x[-1],vals('data_persons_per_household')[-1])]:
-        b.annotate(f'{value:.2f}',(year,value),xytext=(0,8),textcoords='offset points',ha='center',color=red)
-    for key,label,color in [('data_rooms_per_household','ACS',red),('model_rooms_per_household','Model',blue)]:
-        v=vals(key); c.plot(x,v,'o-',color=color,ms=4,label=f'{label}: {growth(key):+.1f}%')
-    c.set(title='Housing per household',ylabel='Occupied rooms per household')
-    c.legend(frameon=False,fontsize=9)
+    model_years=sorted(model)
+    assert model_years == list(range(2007,2040,4))
+    plotted={}
+    for ax,dk,mk,title,ylabel,indexed in [
+            (a,'data_households','households','Households','2007 = 100',True),
+            (b,'data_rooms','capped_rooms','Total occupied housing','2007 = 100',True),
+            (c,'data_rooms_per_household','mean_capped_rooms','Housing per household','Occupied rooms per household',False)]:
+        mv=np.array([float(model[y][mk]) for y in model_years]);dv=vals(dk)
+        if indexed:
+            mv=100*mv/mv[0];dv=100*dv/dv[0]
+        ax.plot(model_years[:5],mv[:5],'o-',color=blue,ms=4,label='Model')
+        ax.plot(model_years[4:],mv[4:],'o:',color=blue,ms=4,label='Model continuation')
+        ax.plot(x,dv,'s--',color=red,ms=4,label='Data')
+        ax.set(title=title,ylabel=ylabel)
+        ax.axvline(2023,color='.65',lw=.8,ls='--')
+        ax.axvspan(2023,2040,color=blue,alpha=.035)
+        ax.set_xlim(2005.7,2040.5);ax.set_xticks([2007,2015,2023,2031,2039])
+        ax.legend(frameon=False,fontsize=8.5)
+        plotted[title]=dict(model_years=model_years,model_values=mv.tolist(),data_years=x,data_values=dv.tolist())
     for key,label,color in [('data_rooms_per_person','ACS',red),('model_rooms_per_person_at_data_demographics','Model at observed demographics',blue)]:
-        v=vals(key); d.plot(x,v,'o-',color=color,ms=4,label=f'{label}: {growth(key):+.1f}%')
-    d.set(title='Housing per resident: common demographics',ylabel='Occupied rooms per resident')
+        v=vals(key); d.plot(x,v,'s--' if color==red else 'o-',color=color,ms=4,label=label)
+    d.set(title='Housing per resident',ylabel='Occupied rooms per resident')
+    d.text(.03,.04,'Observed demographics for both series',transform=d.transAxes,fontsize=9,color='#555555')
+    d.set_xlim(2005.7,2024.3);d.set_xticks(x)
     d.legend(frameon=False,fontsize=8.5)
     for ax in axes.flat:
-        ax.set_xlim(2005.7,2024.3); ax.set_xticks(x); ax.grid(alpha=.16); ax.margins(y=.18)
-    fig.suptitle('Housing and population, 2007–2023',x=.08,y=.97,ha='left',fontsize=19)
+        ax.grid(alpha=.16); ax.margins(y=.18)
+        labels=ax.get_legend_handles_labels()[1]
+        assert any('Model' in label for label in labels) and any(label in ('Data','ACS') for label in labels)
+    fig.suptitle('Housing: model and data',x=.08,y=.97,ha='left',fontsize=19)
     fig.text(.08,.055,
-             'National ACS: the same occupied households and their residents in every measure; heads ages 18–85, rooms capped at nine.\n'
-             'Rooms and households use household weights; residents use person weights. Group quarters are excluded.\n'
-             'Bottom right: model rooms per household × observed households / observed residents. This holds demographics common;\n'
-             'it is not a model population prediction. The retained model has no separate resident-person history before 2023.',
+             'Data: national ACS occupied households, heads ages 18–85; rooms capped at nine. Household weights for housing, person weights for residents.\n'
+             'Top row: native model aggregates; historical household counts use Census inputs, whose coverage differs from the restricted ACS sample.\n'
+             'Bottom right: model rooms per household × ACS households / ACS residents; a comparison at common demographics, not a population prediction.\n'
+             'Model resident-person history is unavailable before 2023. Dotted continuation holds preferences fixed; no tax rebate, horizon sensitivity unresolved.',
              fontsize=9,color='#555555',linespacing=1.5)
     fig.subplots_adjust(left=.08,right=.97,top=.89,bottom=.23,hspace=.35,wspace=.26)
     out=BASE/'figures'
@@ -88,6 +99,8 @@ def main():
                       growth_2007_2023_percent=growths,
                       standardization='Q_model_standardized = model mean capped rooms per household * ACS HHWT household total. Divide by ACS PERWT residents in those same households for per-person comparison.',
                       model_person_history_before_2023_available=False,
+                      every_panel_compares_model_and_data=True,
+                      native_model_history_and_continuation_panels=plotted,
                       source_scope='National housing validation. Initial model calibration retains its42-metro targets; no model rerun, reweighting of states, or target change.',
                       checks=['Five household and person ratio identities','Multiplicative growth decomposition','Complete2007–2023model date support'],
                       rows=rows)

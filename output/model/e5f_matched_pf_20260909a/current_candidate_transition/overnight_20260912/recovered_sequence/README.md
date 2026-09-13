@@ -116,6 +116,15 @@ housing behavior. Vacancy is outside the model and this empirical stock measure.
 `figures/housing_population_comparison.pdf` (and PNG/CSV) provides a supplemental
 historical comparison using the same national ACS housing households and all
 their resident person records. It leaves the presentation deck unchanged.
+Following the author's correction, every panel now compares model and data:
+household counts, total occupied rooms, rooms per household, and rooms per
+resident at common observed demographics. The first three include the full
+saved model history and continuation2007–2039; data end in2023. The fourth ends
+in2023 because the common observed denominator is unavailable beyond that date.
+Top-row model aggregates retain their native Census demographic conditioning,
+with its different household-count coverage disclosed in the figure. The former
+data-only decomposition panels are removed. Verification checks that all four
+panels contain both model and data and preserves the exact plotted native series.
 Households and capped rooms use HHWT; residents use PERWT, following the
 [IPUMS household](https://usa.ipums.org/usa-action/variables/HHWT) and
 [person-weight](https://usa.ipums.org/usa-action/variables/PERWT) definitions.
