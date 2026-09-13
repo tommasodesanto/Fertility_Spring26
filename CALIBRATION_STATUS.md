@@ -1,5 +1,15 @@
 # Calibration Status
 
+**September13 — requested fertility overlay prepared from saved results.**
+`terminal_restart_v1/fertility_replay_iter3/output/fertility_overlay.png/pdf`
+under the original-queue output packet overlays the prior recovered_sequence
+slide's history, continuation and data with the current permanent-shock path
+over2007–2039. It preserves common start-of-window dates and all original
+values, independently verified and visually inspected. This is a supplemental
+comparison across different fiscal/population closures, not a controlled shock-
+timing test. No model solve, calibration change or deck edit was performed.
+Reproduction: `code/model/tools/build_e5f_fertility_path_overlay.py`.
+
 **September 13, 20:24 UTC — corrected fertility graph and bounded native derivative check delivered.**
 Replay17702691 completed: all100 saved iteration3 rows reproduced exactly,
 and native age-specific fertility rates were independently reconstructed.

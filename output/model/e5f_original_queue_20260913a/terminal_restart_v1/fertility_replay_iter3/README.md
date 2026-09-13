@@ -1,5 +1,25 @@
 # Native fertility diagnostics for the saved 100-period path
 
+## Requested historical overlay
+
+`output/fertility_overlay.png` and `.pdf` overlay the native iteration3 path
+with the exact prior slide's historical fertility, constant-preference
+continuation, and four-year data averages over2007–2039. Both use the prior
+slide's start-of-window dating:2007labels the first window, whose empirical
+average covers2008–2011. Source and artist values are checked without changing
+any model output. CSV and verification JSON are alongside the figures.
+
+This is a visual comparison, not a controlled timing experiment: the prior
+recovered_sequence run uses no rebate, demographic conditioning and six-period
+forecasts; the current run uses equal rebates, the original closed household
+queue and100periods. The current root is unconverged and the prior horizon
+remains unverified. The pre-shock2.1point belongs to the current IRF only.
+The existing presentation and standard six-panel figure remain unchanged.
+
+Regenerate with Python containing NumPy and Matplotlib:
+`python code/model/tools/build_e5f_fertility_path_overlay.py`.
+The lead visually inspected the complete one-panel output.
+
 **Completed and collected September13 at20:24UTC.** All100 iteration3 rows
 reproduce exactly. `output/lead_verification.json` records independent
 age-specific fertility reconstruction and visual inspection. Deliverables:
