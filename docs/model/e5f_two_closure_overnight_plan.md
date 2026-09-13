@@ -1,12 +1,15 @@
-# Two demographic closures: overnight rerun plan
+# Four demographic cases: overnight rerun plan
 
 **Author decision, September 12–13, 2026. Planning record only; no launch from this request.**
-Run both demographic specifications. Prefer the survivor-maturation version if
-it produces verified, usable results; retain the current specification as the
-fallback, with its missing treatment of orphan care stated explicitly. Neither
-branch is selected merely because its job finishes or the other branch fails.
+Run both demographic mechanisms with and without migration. Zero migration is
+the author's intended forecast specification; migration-on cases are controlled
+comparisons, not automatic fallback baselines. Within the zero-migration cases,
+prefer surviving-maturation entry if verified; retain the current demographic
+mechanism as the fallback, with its missing orphan-care treatment disclosed.
+Completion or a better fit alone does not select a mechanism or authorize
+restoring migration.
 
-## The two branches
+## The two demographic mechanisms
 
 | Branch | Demographic treatment | Presentation role |
 |---|---|---|
@@ -18,6 +21,68 @@ separate. Never splice A's initial state, demographic anchor or terminal
 equilibrium into B's history. In B, the separate birth queue and person/head
 rescaling cannot silently recreate entrants or overwrite the new closure.
 
+## Four cases: separate demographic mechanism from migration
+
+**Author addition, September 13:** retain the migration comparison while making
+zero migration the intended baseline. The saved September 12–13 A continuation
+has positive, externally supplied net migration in every post-2023 window;
+it is not evidence for a closed-population path.
+
+| Case | Demographic mechanism | Migration in the post-2023 forecast | Role |
+|---|---|---|---|
+| A0 | A: separate person cohorts and headship | Zero in every age-sex cell and year | Closed-population fallback |
+| A+ | A: separate person cohorts and headship | Retain the supplied dated net-migration path | Controlled migration comparison |
+| B0 | B: entry from surviving maturation | Zero outside migration/entry | Preferred closed-population candidate |
+| B+ | B: entry from surviving maturation | Same external person-migration path, with an explicit conversion into B's states | Controlled migration comparison |
+
+The migration split applies from the 2023 forecast origin onward, including
+that future segment of forecasts formed before 2023. Keep the historical rule
+fixed within each migration pair. A retains its observed historical household
+conditioning through 2023 and its person anchor; do not describe that imposed
+history as an endogenous zero-migration prediction. B must preserve its own
+surviving-maturation rule rather than import A's reweighting. Each case refits
+the successive-surprise history because changed future demography can change
+earlier choices.
+
+In A0, keep births, age-specific survival and the declared fixed headship
+profiles, but set the person-law net-migration arrays exactly to zero. In B0,
+set migration and every outside-origin entry flow exactly to zero; domestic
+entry must come only from surviving maturation. Neither case may use a hidden
+outside-entry residual to offset low fertility or to stabilize population.
+A0 still imposes headship-based formation and dissolution, so zero migration
+does not make its dependent and person records fully linked.
+
+In the migration-on comparisons, the input is a dated net flow (arrivals minus
+departures), not a constant immigration fraction or a residual refitted to the
+model's births. For A+, preserve its existing empirical-source construction.
+B+ needs an explicit age and unit conversion from this same person input into
+household/dependent states; assigning all migrants to youngest entrants or
+using an arbitrary constant is not an approved shortcut. This mapping is an
+outstanding preflight item, not an implemented migration mechanism.
+
+Where initial equilibrium contracts are identical, A0/A+ share one verified A
+initial calibration and B0/B+ share one verified B initial calibration. Compare
+migration switches at fixed initial states, structural parameters and preference
+paths as well as after refitting shocks. Give these fixed-preference diagnostics
+a separate bounded budget; do not interpret a comparison of differently fitted
+histories as the isolated effect of migration.
+
+### Closed-population terminal condition
+
+Zero migration is not a one-line production change. The retained person-law
+terminal solver uses fixed positive migration to support its stationary scale.
+With no migration, subreplacement reproduction need not admit a positive
+stationary population. Do not reuse an open-population terminal equilibrium,
+restore migration, or reset household mass to obtain a positive endpoint.
+
+Closed cases may follow shrinking finite-horizon paths. They still need an
+explicit continuation-value boundary consistent with the zero-migration
+assumption and horizon checks on the dates being reported. A positive closed
+steady state is not a prerequisite for studying such a transition, but it
+must be established before any stationary comparison is claimed. The boundary
+construction and its fiscal consistency are outstanding implementation items;
+100 dates alone do not certify them.
+
 ## Shared economic specification
 
 - Use the current sequential-choice model, revised utility, stochastic child
@@ -25,8 +90,8 @@ rescaling cannot silently recreate entrants or overwrite the new closure.
   utility experiments tonight.
 - Estimate annual beta with its existing cap of 0.99; do not fix it at the cap.
   Preserve the remaining approved bounds and external restrictions.
-- **Rebate all property-tax revenue equally in both baselines.** Re-solve the
-  initial equilibrium, every forecast and the terminal equilibrium with this
+- **Rebate all property-tax revenue equally in every case.** Re-solve the
+  initial equilibrium, every forecast and its terminal continuation with this
   same fiscal rule. PAYGO pensions balance separately at each date.
 - Refit the approximate pre-2007 stationary economy using the existing twelve
   scored empirical moments, their definitions and weights. Keep the first-birth
@@ -44,12 +109,22 @@ rescaling cannot silently recreate entrants or overwrite the new closure.
 
 ## Launch sequence and parallel work
 
-### 1. Two exact-loop smoke jobs, before large searches
+### 1. Exact-loop smokes for all four cases, before large searches
 
-For A, verify the equal-rebate initial, terminal and dated fiscal calculations.
-For B, first exercise the demographic operator at saved policies, then connect
-it to the same fiscal and equilibrium solver. No additional household states
-are required for an aggregate stochastic-renewal experiment.
+For A, verify the equal-rebate initial, terminal-boundary and dated fiscal
+calculations. For B, first exercise the demographic operator at saved policies,
+then connect it to the same fiscal and equilibrium solver. No additional
+household states are required for the aggregate domestic-renewal experiment;
+that does not certify B+'s separate migrant allocation.
+
+Exercise both migration settings with the exact short and long loop structures.
+For A0/B0, every migration and outside-origin entry field from 2023 onward must
+be exactly zero; an aggregate zero concealing offsetting age-cell flows is
+insufficient. Audit earlier historical conditioning separately.
+For A+/B+, pin the supplied flow and its units and verify the mapped entries.
+Report births, child survival/dependency, maturation, household formation,
+migration, population growth and fiscal flows separately. Complete one bounded
+migration-switch comparison before multiplying full historical searches.
 
 For B, with post-birth dependent stock C+, dependent deaths D, surviving
 maturations M, household exits DH and household entry E, verify
@@ -64,19 +139,21 @@ normalized, externally fixed or outstanding. Do not turn the diagnostic
 outside-entry share or a mechanically calculated conversion into an empirical
 production input.
 
-The old initial 2.1 normalization is not proof of replacement under B. Check
-actual reproduction: stationary household entry must equal household exits.
-Preserve A's current normalization for its controlled rerun. If B needs a
-different normalization or formation restriction, record that explicitly before
-its search; do not force both conditions by undocumented rescaling. Its twelve
-scored empirical rows remain unchanged, but its normalization contract must be
-separately named. This is the remaining specification item to settle at launch,
-not a reason to leave A idle.
+Keep the author-requested initial completed-fertility normalization at 2.1
+in both mechanisms. This does not itself certify replacement under either
+mechanism's units. For any initial economy claimed to be closed and stationary,
+verify actual reproduction: domestic household entry must equal household exits.
+B's mortality, maturation and formation restriction must reconcile that check
+with its fertility normalization; do not force both by undocumented rescaling
+or by silently changing the target. Keep the birth-per-household versus
+birth-per-woman mapping visible as a separate measurement limitation. Its twelve
+scored empirical rows remain unchanged. An unresolved B gate must be reported
+without preventing independent work on an admissible A case.
 
-Both exact loops must write checkpoints, full observations, failed-case
-receipts and the standard diagnostic packet before a search is admitted.
+Every exact loop must write checkpoints, full observations, failed-case
+receipts and the standard diagnostic packet before its search is admitted.
 
-### 2. Full initial calibration in both branches, in parallel
+### 2. Full initial calibration for A and B, in parallel
 
 Use all nine estimated coordinates and the complete objective. Proposed search
 ceiling per branch: eighteen plus/minus coordinate probes, then up to two
@@ -85,8 +162,15 @@ and local response matrix. These joint waves may move all nine parameters.
 Keep the best valid point and perform two independent exact repetitions.
 No branch wins from a favorable subset of moments.
 
-Use up to eighteen concurrent calibration workers in total, subject to actual
-Torch memory/account limits; each worker has one numerical thread. Start a
+Retain two initial calibrations if the A0/A+ and B0/B+ initial contracts are
+identical: the migration experiment begins in their forecasts. Verify this
+rather than assuming it from equal starting parameters. If migration must also
+change an initial economy, record the distinct initial contract and revise the
+budget before launch; do not silently add two structural searches.
+
+Use up to eighteen concurrent calibration workers across all cases in total,
+subject to actual Torch memory/account limits; each has one numerical thread.
+Prioritize zero-migration feasibility and initial calibrations. Start a
 historical pipeline from the first verified rebated initial candidate in each
 branch while the structural search continues. Freeze its source and parameters.
 A better initial calibration can start a separate history; it cannot silently
@@ -134,9 +218,12 @@ Keep this addition bounded: at most six full candidate evaluations per
 demographic branch, including its starting point, and two selected-point
 repetitions if a candidate is usable. This is at most sixteen additional
 single-repetition evaluations across A and B, within the existing initial
-search time budget. The four primary historical/horizon tracks remain the
-priority. A better augmented initial calibration can seed a separately pinned
-history within the existing chain budget; do not automatically double all
+search time budget. The migration split does not by itself duplicate this
+experiment: reuse an augmented initial calibration across its two migration
+cases only when their initial contracts match. The eight primary
+historical/horizon tracks remain the priority. A better augmented initial
+calibration can seed a separately pinned history within the existing chain
+budget; do not automatically double all
 long-horizon jobs or splice parameters into a history already fitted.
 
 Candidate empirical extraction and exact reproduction code belong under
@@ -145,26 +232,32 @@ Point extraction alone does not activate a scored target or certify a model fit.
 
 ### 3. Historical shock fitting and horizon checks
 
-**Author refinement: run short and long forecasts in parallel for BOTH
-demographic branches.** Following the author's request for a substantially
-longer forecast, the planned lengths are:
+**Author refinement: retain short and long forecasts for each of the four
+demographic/migration cases.** Four economic cases therefore have eight
+historical/policy tracks; horizon length is a numerical check, not a fifth
+demographic mechanism.
 
-| Historical/policy track | Demographic branch | Explicit forecast |
+| Historical/policy track | Demographic/migration case | Explicit forecast |
 |---|---|---|
-| A-short | Retained demographic treatment | 6 four-year dates, 24 years |
-| A-long | Retained demographic treatment | 100 four-year dates, 400 years |
-| B-short | Entry from surviving maturation | 6 four-year dates, 24 years |
-| B-long | Entry from surviving maturation | 100 four-year dates, 400 years |
+| A0-short | A, zero migration | 6 four-year dates, 24 years |
+| A0-long | A, zero migration | 100 four-year dates, 400 years |
+| A+-short | A, supplied migration | 6 four-year dates, 24 years |
+| A+-long | A, supplied migration | 100 four-year dates, 400 years |
+| B0-short | B, zero migration | 6 four-year dates, 24 years |
+| B0-long | B, zero migration | 100 four-year dates, 400 years |
+| B+-short | B, supplied migration | 6 four-year dates, 24 years |
+| B+-long | B, supplied migration | 100 four-year dates, 400 years |
 
 These are numerical forecast horizons with terminal continuation values, not
 different assumptions about how long the preference shock lasts. Preferences
 are expected to remain at the latest revealed level in every track. There are
-two initial calibrations, one per demographic branch; each branch's two
-forecast tracks begin from the same verified initial candidate. The four
-tracks fit their shock sequences separately and write separate policy results.
+two initial calibrations when the migration-paired initial contracts match.
+Each demographic mechanism's four forecast tracks then begin from the same
+verified initial candidate. All eight tracks fit their shock sequences
+separately and write separate policy results.
 
-Start all four tracks after their own required smoke tests; long tracks do not
-wait for short fits, and short tracks do not wait for long convergence. Allow
+Start each of the eight tracks after its own required smoke tests. Long tracks
+do not wait for short fits; short tracks do not wait for long convergence. Allow
 at most one additional bounded numerical-start attempt per track when useful.
 Within each history, windows must run sequentially because
 the next window inherits the preceding realized state. Use bracketed searches
@@ -187,18 +280,23 @@ fixed under the same stated extrapolation, rather than change the economy
 along with the horizon.
 Retain the existing fertility tolerance and numerical gates.
 
-### 4. Policy computations in both branches
+### 4. Policy computations in the four cases
 
 The priority comparison is the baseline 1% annual property tax with equal
-rebate versus a 2% annual tax with equal rebate. First compute consistent
-stationary endpoints in parallel with historical work. Label these long-run
-comparisons; they are not effects from the inherited 2023 economy.
+rebate versus a 2% annual tax with equal rebate. Compute stationary comparisons
+only where that case admits a verified stationary equilibrium. Do not require
+a positive closed endpoint or substitute an open endpoint for the zero-migration
+finite transition. State the terminal-boundary approximation and horizon evidence
+for each transition. Stationary comparisons, when available, are not effects
+from the inherited 2023 economy.
 
-As soon as a demographic/horizon track has an admissible fitted 2023 state and
-baseline continuation, run its rebated-tax policy transition from that same state.
+As soon as a demographic/migration/horizon track has an admissible fitted 2023
+state and baseline continuation, run its rebated-tax policy transition from
+that same state.
 Compare births, population under that branch's definition, housing services,
 ownership, prices/rents, consumption and both fiscal budgets. Baseline and
-policy require matching horizons and demographic closure.
+policy require matching horizons, demographic closure and migration inputs.
+Prioritize A0/B0 policy results; A+/B+ diagnose sensitivity to migration.
 
 Supply +20% and dependent-child LTV95% are the next independent policy jobs if
 the main historical/tax work passes and time remains. Policy failure must not
@@ -208,7 +306,8 @@ policy benchmark.
 
 ### 5. Automatic collection and morning decision
 
-Write one review packet per demographic/horizon track and a four-way comparison containing:
+Write one review packet per demographic/migration/horizon track (eight primary
+packets) and a comparison of the four cases at each horizon containing:
 
 - every initial target, model moment, gap, weight and loss contribution;
 - every estimated parameter, bound and bound proximity, plus external inputs;
@@ -220,26 +319,32 @@ Write one review packet per demographic/horizon track and a four-way comparison 
 - policy differences from a matched baseline, separating stationary evidence
   from transition evidence, and a concise list of failed or outstanding gates.
 
-Prefer B only if its accounting, reproduction, household choices, fiscal and
-market checks pass and its fit and horizon evidence support the stated claims.
-Otherwise use A only to the extent its own checks permit, explicitly stating
-the orphan-care omission. If neither passes a transition/horizon gate, show
-provisional results as provisional. Do not imply that either specification is
-globally unique or guaranteed to exist.
+Prefer B0 only if its accounting, initial reproduction where claimed, household
+choices, fiscal and market checks pass and its fit and horizon evidence support
+the stated claims. Otherwise use A0 only to the extent its own checks permit,
+explicitly stating the orphan-care and dependent/person-record omissions.
+A+/B+ remain migration sensitivities even if they fit better or finish first.
+If neither zero-migration case passes a transition/horizon gate, report that
+limitation; do not substitute a migration-on case as the intended baseline.
+Do not imply uniqueness or guaranteed existence.
 
 ## Compute budget and unattended operation
 
 The proposed envelope is twelve hours from launch, with the final hour reserved
 for reproduction, collection and figures. Initial search should use at most
-three hours; it must not delay the first viable historical pipeline. Historical
-chains have explicit trial and per-forecast limits and a shared deadline;
+three hours; it must not delay the first viable historical pipeline. Expanding
+to four demographic/migration cases does not double this shared wall-time budget
+or the eighteen-worker concurrency cap. Historical chains have explicit trial
+and per-forecast limits and a shared deadline;
 reserve the final three hours for admitted policy runs and verification. These
 are caps, not forecasts of successful completion.
 
-Search size ceiling: 54 objective evaluations plus two smoke repetitions and
-two selected-point repetitions per branch, or 116 single-repetition evaluations
-across both. With at most eight stationary solves per such evaluation, this
-means at most 928 stationary solves. At the previously observed 2–5 minutes per
+Initial-search ceiling, conditional on the verified reuse of two initial
+calibrations: 54 objective evaluations plus two smoke repetitions and two
+selected-point repetitions per A/B mechanism, or 116 single-repetition
+evaluations across both. The four-case forecast-loop smokes are separate work
+and must also be costed before launch. With at most eight stationary solves per
+initial evaluation, this means at most 928 stationary solves. At the previously observed 2–5 minutes per
 stationary solve, that is roughly 31–77 CPU-hours, or 1.7–4.3 hours with eighteen
 fully utilized workers, before startup, uneven work, failures and queueing.
 Replace this rough estimate with the exact-loop measured cost before submission;
@@ -252,13 +357,17 @@ solves (roughly35–88CPU-hours at the same rough timing). Keep the three-hour
 initial-search deadline; share workers or reduce rounds rather than extend the
 critical path silently.
 
-Historical fitting has four primary chains (two demographics times two
-horizons), four windows and six preference trials per window: at most 96
-primary forecast attempts. One bounded alternative numerical start per track
-raises the total ceiling to 192 attempts; do not spend this reserve on identical
-failed restarts. Additional fixed-shock horizon checks have their own recorded
-budgets, and the common deadline will usually bind much earlier. A six-date converged
-forecast previously took 6–45 minutes at fixed preferences; longer forecasts
+Historical fitting has eight primary chains (two demographic mechanisms times
+two migration settings times two horizons), four windows and six preference
+trials per window: at most 192 primary forecast attempts. Preserve at most one
+bounded alternative numerical-start attempt per track, adding eight attempts
+for a ceiling of 200. This corrects the earlier budget's inconsistent doubling
+under a once-per-track recovery rule; it does not permit replaying whole searches.
+Do not spend the reserve on identical failed restarts. Native smokes,
+fixed-shock migration/horizon comparisons and the optional augmented-initial
+history each need their own recorded budget within the common deadline.
+The common deadline will usually bind much earlier than these ceilings.
+A six-date converged forecast previously took 6–45 minutes at fixed preferences; longer forecasts
 and repeated shock roots can dominate total time. Parallelism helps independent
 chains and policy branches, not the dependence between historical windows.
 Before launch, record horizon-specific solve counts, memory and wall-time
@@ -284,7 +393,9 @@ when a chain exhausts its budget. No numerical gate is relaxed to meet a deadlin
 Use cheap scripted collection and sparse meaningful notifications. Do not
 reactivate expensive continuous AI polling or redeem usage credits as part of
 this planning request. The formal launch manifest must pin source, objective,
-normalization, fiscal, demographic and horizon contracts separately for A and B.
+normalization, fiscal, demographic, migration and horizon contracts separately
+for A0, A+, B0 and B+. Label each population/entry object as estimated,
+empirically normalized, externally fixed or outstanding.
 
 ## Existing anchors
 

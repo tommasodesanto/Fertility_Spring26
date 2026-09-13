@@ -1,5 +1,44 @@
 # Calibration Status
 
+**September 13 — four demographic/migration cases requested; zero migration is the intended forecast.**
+Tommaso explicitly rejects migration in the intended forecast and requests
+comparisons with migration retained to establish the effect of removing it.
+The run plan now crosses A (separate person cohorts/headship) and B (surviving
+maturation with joint parent/dependent death) with zero versus supplied migration:
+A0, A+, B0 and B+. A+/B+ are controlled sensitivities, not automatic fallback
+baselines. The retained saved A continuation still has positive net migration;
+it must not be relabeled as closed. This supersedes earlier ambiguity between
+the decision ledger's closed-transition wording and the saved A specification.
+
+The split applies to post-2023 forecast demography, including forecasts formed
+at earlier surprise dates. A's historical household conditioning through 2023
+is disclosed separately; B retains its own surviving-maturation rule. Keep the
+author-requested 6- and 100-date horizons for each case: eight history/policy
+tracks. Share the A initial calibration across
+A0/A+ and the B initial calibration across B0/B+ only after verifying identical
+initial-economy contracts. Retain the additional calibration of children ever
+born and childlessness by age as a bounded A/B pilot; the migration split does
+not automatically duplicate it or replace the original target system.
+
+Removing migration also changes the terminal problem. A positive closed
+stationary population is not guaranteed, and the retained fixed-migration
+terminal solver cannot be reused unchanged. Permit shrinking finite transitions
+with an explicit zero-migration-consistent continuation boundary and horizon
+checks. Never restore outside entry or normalize population to obtain a positive
+endpoint. B+'s person-to-household migrant allocation is also outstanding.
+The completed-fertility normalization at 2.1 remains separate from proving
+replacement and from the unresolved household-versus-woman fertility mapping.
+
+The shared twelve-hour planning envelope and eighteen-worker cap are unchanged;
+initial searches remain conditional on exact-loop timing and the three-hour
+stage cap. Eight histories imply ceilings of 192 primary forecast attempts or
+200 including one bounded alternative start per track, before separately
+budgeted diagnostic work.
+Prioritize zero-migration feasibility and results. No code changes, model solves,
+jobs or new target contract were launched by this amendment.
+Detailed matrix, pilot and preflight conditions:
+[overnight rerun plan](docs/model/e5f_two_closure_overnight_plan.md).
+
 **September13 — extra initial fertility-age-profile calibration requested.**
 Tommaso proposes improving the2007initialization by adding pre-2007 fertility
 stocks across ages. This is an additional experimental specification alongside
@@ -16,9 +55,10 @@ columns. New uncertainty/weights and the stationary model age projection still
 need to be specified before search. Source, compact data and verified builder:
 `output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/age_profile/`.
 Section2a of [the overnight plan](docs/model/e5f_two_closure_overnight_plan.md)
-adds a bounded pilot in each demographic branch without automatically doubling
-the four primary history/horizon tracks. Initial distribution changes must come
-from the calibrated equilibrium, not undocumented cohort reweighting.
+adds a bounded pilot in each demographic mechanism without automatically doubling
+the eight primary demographic/migration/horizon tracks. Initial distribution
+changes must come from the calibrated equilibrium, not undocumented cohort
+reweighting.
 
 **September 13 — full historical stock/fertility comparison and slide completed.**
 Fixed-coordinate replays17581096/17581099/17581100 recovered the actual2007/2011/
@@ -47,7 +87,7 @@ its2023 resident-person/head ratio includes a different universe and is not
 matched ACS household size. Full weight sensitivity, definitions, values and
 reproduction commands are in the packet README. The deck and model are unchanged.
 
-**September 12–13 — author chooses two demographic branches for the next rerun.**
+**September 12–13 — earlier two-mechanism plan, expanded by the four-case migration decision above.**
 Tommaso wants both today's demographic treatment and a version with joint
 parent/dependent death and domestic entry only from surviving stochastic
 maturation. The latter is preferred if verified; the former is the fallback
