@@ -22,13 +22,13 @@ Children mature stochastically; do adults age deterministically?
 
 Do we still need the distinction between children at home (m) and children ever born (n), now that bequests do not depend on n?
 
-**Status:** open; concise first-pass review requested. No changes authorized.
+**Status:** notation consolidation discussed and deferred; keep children ever born $n$ distinct from dependents at home $m$.
 
 ### M05 — Utility specification and literature
 
 The utility function is broadly unjustified and hard to parse. Is it common in the literature and quantitative work? Explain the role of every component: why divide by e(m) outside; why retain the Stone–Geary housing floor; why combine Cobb–Douglas and CRRA; why is the preference for children linear and outside the consumption/housing aggregator? Saverio suggests showing only a generic u and its shape properties in the model section, then specifying functional forms in Quantification.
 
-**Status:** open; concise first-pass review requested. No changes authorized.
+**Status:** exposition edit authorized and completed. The generic model utility and exact quantitative functional form are now separated; justification and literature review remain open.
 
 ### M06 — Budget-constraint slide
 

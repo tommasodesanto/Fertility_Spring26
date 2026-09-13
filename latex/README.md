@@ -79,6 +79,11 @@ Active documents:
   remain static. The theory task checked the timing convention. No economic
   specification, coefficients, numerical code, or estate valuation date changed.
 
+  **Utility specification.** The model Preferences frame states a generic
+  increasing, concave aggregator $F$ with an equivalence scale and direct child
+  benefit. Quantification separately records the exact Cobb--Douglas and CRRA
+  functional form and its calibrated normalization.
+
   **Household-problem readability.** The three overlays use a compact timing
   diagram and `small` body text. Household values display their economic state
   arguments explicitly, with ordinary $V_t$ and $V_t^H$ and bequest utility $B$.

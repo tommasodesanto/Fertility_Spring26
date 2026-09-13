@@ -127,12 +127,13 @@ Need a framework where fertility, tenure, housing size, saving, and population a
 $n_t$: children ever born; $m_t$: dependents before birth; $\widetilde m_t$: after birth.
 
 \medskip
-\textbf{Flow utility.} Over consumption and housing services:
+\textbf{Flow utility.} Preferences are increasing and concave in consumption and housing services:
 \[
 u_t(c_t,s_t;\widetilde m_t)=
-\frac{\left[\dfrac{c_t^{\alpha_0}\bigl(s_t-\bar h(\widetilde m_t)\bigr)^{1-\alpha_0}}{e(\widetilde m_t)}\right]^{1-\sigma}}{1-\sigma}
-+\psi_t\widetilde m_t.
+\frac{\left[F\!\left(c_t,s_t-\bar h(\widetilde m_t)\right)/e(\widetilde m_t)\right]^{1-\sigma}}{1-\sigma}
++\psi_t\widetilde m_t,\qquad \sigma>0.
 \]
+Here $F_c,F_s>0$ and $F_{cc},F_{ss}<0$ above the housing requirement. The scale $e(\widetilde m_t)>0$ is increasing in children at home and normalized by $e(0)=1$; children bring direct benefit $\psi_t\widetilde m_t$ and raise consumption and housing needs.
 
 \textbf{Family needs.} An equivalence scale $e(\widetilde m_t)$ and a housing requirement:
 \[
@@ -548,6 +549,21 @@ Cross-sectional housing patterns discipline access to space; longitudinal data d
   \item \textbf{Project the economy forward.}\\
   After 2023, hold fertility preferences fixed and solve for prices, housing choices, and population. Compare housing policies from the same 2023 economy.
 \end{enumerate}
+\end{frame}
+
+\begin{frame}{Utility Specification}
+\small
+For quantification, use the following functional form:
+\[
+u_t(c_t,s_t;\widetilde m_t)=
+\frac{\left[\dfrac{c_t^{\alpha_0}\bigl(s_t-\bar h(\widetilde m_t)\bigr)^{1-\alpha_0}}{e(\widetilde m_t)}\right]^{1-\sigma}}{1-\sigma}
++\psi_t\widetilde m_t.
+\]
+\[
+e(\widetilde m_t)=\left(\frac{2+0.7\widetilde m_t}{2}\right)^{0.7},\qquad
+\bar h(\widetilde m_t)=h_P\mathbf{1}\{\widetilde m_t>0\},\qquad
+\alpha_0=0.733,\quad \sigma=2.
+\]
 \end{frame}
 
 
