@@ -4,6 +4,8 @@ Running record of the September presentation mock: slide fixes, substantive ques
 
 First-pass review task: **Mock presentation: concise conceptual review** (`01a09818-86af-75a1-9ff4-3a396e394c4d`), max reasoning. Replies are advisory; only individually authorized fixes may be implemented.
 
+**Coordination decision:** route ongoing conceptual model questions to a dedicated clarification task, starting with M10. Keep the quantitative task focused on runs and quantitative deliverables; do not send it each slide/model question. This presentation task remains slides-only, and clarification work is read-only unless the author separately authorizes implementation.
+
 ## Open issues
 
 ### M02 — Adult aging and death
