@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run one bounded forecast from a pinned accepted root and its learned Jacobian."""
+"""Run one bounded forecast from a pinned root using a learned Jacobian or fiscal polish."""
 from __future__ import annotations
 
 import argparse
@@ -59,6 +59,27 @@ def accepted_seed(receipt, case, count, reproduction_tolerance):
     return prices.copy(),jacobian.copy(),psi
 
 
+def fiscal_polish_seed(receipt, case, count, reproduction_tolerance, market_tolerance):
+    """Admit an exact failed root only when every saved housing residual passes."""
+    width=3*(count+1);final=receipt.get('final');best=receipt.get('best')
+    if (receipt.get('start_year')!=2007 or receipt.get('case')!=case or receipt.get('count')!=count
+            or not isinstance(final,dict) or not isinstance(best,dict)
+            or final.get('mapping_valid') is not True or best.get('mapping_valid') is not True):
+        raise ValueError('Fiscal-polish seed is not a valid same-case/count 2007 final mapping')
+    prices=np.asarray(final.get('prices'),dtype=float);best_prices=np.asarray(best.get('prices'),dtype=float)
+    residual=np.asarray(final.get('residual'),dtype=float);best_residual=np.asarray(best.get('residual'),dtype=float)
+    reproduction=float(receipt.get('final_reproduction_max_abs',math.nan));psi=float(receipt.get('psi',math.nan))
+    if (prices.shape!=(width,) or best_prices.shape!=(width,) or not np.array_equal(prices,best_prices)
+            or not np.isfinite(prices).all() or np.any(prices<=0)
+            or residual.shape!=(width,) or best_residual.shape!=(width,)
+            or not np.isfinite(residual).all() or not np.isfinite(best_residual).all()
+            or not np.isfinite(reproduction) or not 0<=reproduction<=reproduction_tolerance
+            or float(np.max(np.abs(residual-best_residual)))>reproduction_tolerance
+            or not np.isfinite(psi) or np.any(np.abs(residual[:count+1])>=market_tolerance)):
+        raise ValueError('Fiscal-polish seed fails exact replay, coordinates, or the full housing block gate')
+    return prices.copy(),psi,prices[:count+1].copy()
+
+
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--manifest',type=Path,required=True)
@@ -75,11 +96,16 @@ def main(argv=None):
     parser.add_argument('--case',choices=['A0','A+'],required=True)
     parser.add_argument('--count',type=int,choices=[6,24,100],required=True)
     parser.add_argument('--psi',type=float)
+    parser.add_argument('--fiscal-polish',action='store_true')
     parser.add_argument('--output',type=Path,required=True)
-    parser.add_argument('--seconds',type=float,default=3600.)
+    parser.add_argument('--seconds',type=float)
     args=parser.parse_args(argv)
-    if not np.isfinite(args.seconds) or not 0<args.seconds<=3600:
-        parser.error('--seconds must be in (0,3600]')
+    if args.seconds is None:args.seconds=1200. if args.fiscal_polish else 3600.
+    maximum_seconds=1200. if args.fiscal_polish else 3600.
+    if not np.isfinite(args.seconds) or not 0<args.seconds<=maximum_seconds:
+        parser.error(f'--seconds must be in (0,{int(maximum_seconds)}] for this probe mode')
+    if args.fiscal_polish and args.psi is not None:
+        parser.error('--fiscal-polish retains the seed psi exactly; omit --psi')
     pins=((args.manifest,args.manifest_sha256,'manifest'),
           (args.driver,args.driver_sha256,'history driver'),
           (args.cache,args.cache_sha256,'policy cache'),
@@ -110,9 +136,14 @@ def main(argv=None):
             or seed_contract.get('initial_checkpoint_sha256')!=checkpoint_sha):
         raise ValueError('Seed model source or initial checkpoint differs from this manifest')
     controls=dict(plan['history_root_controls']);controls.update(manifest.get('root_controls',{}))
-    prices,jacobian,seed_psi=accepted_seed(
-        seed,args.case,args.count,float(controls['final_reproduction_tolerance']))
-    psi=seed_psi-.01 if args.psi is None else float(args.psi)
+    if args.fiscal_polish:
+        prices,seed_psi,fixed_prices=fiscal_polish_seed(seed,args.case,args.count,
+            float(controls['final_reproduction_tolerance']),float(controls['market_tolerance']))
+        jacobian=None;psi=seed_psi
+    else:
+        prices,jacobian,seed_psi=accepted_seed(
+            seed,args.case,args.count,float(controls['final_reproduction_tolerance']))
+        fixed_prices=None;psi=seed_psi-.01 if args.psi is None else float(args.psi)
     if not np.isfinite(psi):raise ValueError('Probe psi must be finite')
 
     driver=load('run_e5f_final_rebated_history',driver_path)
@@ -120,15 +151,22 @@ def main(argv=None):
     probe_manifest=dict(manifest)
     probe_manifest['policy_reserve_seconds']=0
     probe_manifest['forecast_seconds']=args.seconds
+    if args.fiscal_polish:
+        probe_manifest['root_controls']=dict(probe_manifest.get('root_controls',{}),max_evaluations=6)
     probe_manifest['forecast_jacobian_probe']=dict(
+        mode='fiscal_polish' if args.fiscal_polish else 'jacobian',
         canonical_manifest=str(args.manifest.resolve()),canonical_manifest_sha256=args.manifest_sha256,
         seed_root=str(args.seed_root.resolve()),seed_root_sha256=args.seed_root_sha256,
         seed_contract=str(seed_contract_path),seed_contract_sha256=args.seed_contract_sha256,
         wrapper_only_budget_override=True)
     probe_manifest_path=out/'probe_manifest.json';driver.save(probe_manifest_path,probe_manifest)
-    driver.save(out/'probe_contract.json',dict(case=args.case,count=args.count,seconds=args.seconds,
-        seed_psi=seed_psi,probe_psi=psi,initial_prices_source='accepted seed final exact replay',
-        initial_jacobian_source='accepted seed final learned Jacobian',source_pins={str(p):d for p,d,_ in pins},
+    mode='fiscal_polish' if args.fiscal_polish else 'jacobian'
+    driver.save(out/'probe_contract.json',dict(mode=mode,case=args.case,count=args.count,seconds=args.seconds,
+        seed_psi=seed_psi,probe_psi=psi,
+        initial_prices_source=('pinned valid seed final exact replay' if args.fiscal_polish else 'accepted seed final exact replay'),
+        initial_jacobian_source=('default scaled diagonal' if args.fiscal_polish else 'accepted seed final learned Jacobian'),
+        fixed_asset_prices=None if fixed_prices is None else fixed_prices,
+        source_pins={str(p):d for p,d,_ in pins},
         seed_contract_sha256=args.seed_contract_sha256,canonical_manifest_sha256=args.manifest_sha256,
         cache_native_proof_sha256=args.cache_proof_sha256,
         probe_driver_sha256=sha(Path(__file__).resolve()),maximum_forecast_solves=1))
@@ -141,8 +179,13 @@ def main(argv=None):
                 or kwargs['inherited'].year!=2007):
             captured['error']=ValueError('First intercepted forecast differs from seed case/count/year')
             raise _ProbeFinished()
-        call=dict(kwargs,initial=prices.copy(),initial_jacobian=jacobian.copy(),psi=psi,
+        call=dict(kwargs,initial=prices.copy(),psi=psi,
                   deadline=min(kwargs['deadline'],time.monotonic()+args.seconds))
+        if args.fiscal_polish:
+            call.update(initial_jacobian=None,fixed_asset_prices=fixed_prices.copy(),
+                controls=dict(kwargs['controls'],max_evaluations=6))
+        else:
+            call.update(initial_jacobian=jacobian.copy())
         import e5f_rebated_surprises as rebated
         _,joined,*_=rebated._runtime()
         try:
@@ -167,13 +210,20 @@ def main(argv=None):
     if not captured.get('called'):
         raise RuntimeError('History driver reached no forecast solve')
     if 'error' in captured:
-        exc=captured['error'];driver.save(out/'failure.json',dict(status='failed_forecast_jacobian_probe',
+        exc=captured['error'];driver.save(out/'failure.json',dict(status='failed_forecast_'+mode+'_probe',mode=mode,
             error_type=type(exc).__name__,error=str(exc),elapsed_seconds=elapsed,cache=captured.get('cache')))
         raise RuntimeError('Single forecast Jacobian probe failed') from exc
     result,detail=captured['result'],captured['detail'];receipt=result.root_receipt
     valid=bool(result.next_state is not None and receipt.get('finite_horizon_market_fiscal_converged'))
+    if args.fiscal_polish:
+        final_prices=np.asarray(receipt.get('final',{}).get('prices'),dtype=float)
+        recorded_fixed=np.asarray(receipt.get('fixed_asset_prices'),dtype=float)
+        valid=bool(valid and final_prices.shape==(3*(args.count+1),)
+            and np.array_equal(final_prices[:args.count+1],fixed_prices)
+            and np.array_equal(recorded_fixed,fixed_prices)
+            and float(receipt.get('psi',math.nan))==seed_psi)
     if not valid:
-        driver.save(out/'failure.json',dict(status='failed_forecast_jacobian_probe',
+        driver.save(out/'failure.json',dict(status='failed_forecast_'+mode+'_probe',mode=mode,
             error='Forecast did not pass the unchanged finite root and replay gates',elapsed_seconds=elapsed,
             root_receipt=str(Path(detail.get('folder',''))/'root_receipt.json'),cache=captured.get('cache')))
         raise RuntimeError('Single forecast Jacobian probe did not converge')
@@ -185,20 +235,26 @@ def main(argv=None):
     root_summary={key:driver.clean(value) for key,value in receipt.items()
                   if key not in ('history','best','final','final_jacobian')}
     root_summary.update(root_receipt=str(root_receipt_path),root_receipt_sha256=driver.sha(root_receipt_path),
-        seed_final_jacobian_reused=True)
+        seed_final_jacobian_reused=not args.fiscal_polish,fixed_asset_prices_held=args.fiscal_polish)
     driver.save(out/'probe_root_summary.json',root_summary)
     observation=detail['observations'][0]
+    final_residual=np.asarray(receipt['final']['residual'],dtype=float);width=args.count+1
     driver.save(out/'probe_evaluation.json',dict(calendar_year=2007,psi=psi,
         period_fertility=observation,root_evaluations=receipt['evaluations'],
+        final_residual=final_residual,
+        residual_maxima=dict(housing=float(np.max(np.abs(final_residual[:width]))),
+            paygo_scaled=float(np.max(np.abs(final_residual[width:2*width]))),
+            rebate_scaled=float(np.max(np.abs(final_residual[2*width:])))),
         mapping_receipt=str(captured['folder']/'mapping_receipt.json'),
         cache=captured['cache'],graphs=graphs))
-    driver.save(out/'valid.json',dict(status='verified',finite_horizon_market_fiscal_converged=True,
+    driver.save(out/'valid.json',dict(status='verified',mode=mode,finite_horizon_market_fiscal_converged=True,
         exact_replay_verified=True,historical_state_carried=False,root_receipt=str(root_receipt_path)))
-    summary_out=dict(status='verified_forecast_jacobian_probe',case=args.case,count=args.count,
+    summary_out=dict(status='verified_forecast_'+mode+'_probe',mode=mode,case=args.case,count=args.count,
         elapsed_seconds=elapsed,seed_psi=seed_psi,probe_psi=psi,
         finite_horizon_market_fiscal_converged=True,exact_replay_verified=True,
         evaluations=receipt['evaluations'],final_reproduction_max_abs=receipt['final_reproduction_max_abs'],
         final_damping=receipt['final_damping'],standard_graph_count=17,
+        fixed_asset_prices=None if fixed_prices is None else fixed_prices,
         root_receipt=str(root_receipt_path),
         evaluation=str(out/'probe_evaluation.json'),cache=captured['cache'],
         historical_state_carried=False,production_eligible=False)

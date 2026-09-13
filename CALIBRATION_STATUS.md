@@ -1,5 +1,30 @@
 # Calibration Status
 
+**September 13, 10:00 UTC — two numerical causes isolated; corrected-source verification in progress.**
+Native trace17642567 reproduced the first2011 mass rejection. Float32 tenure
+probability rows caused relative mass loss1.067e-8, exceeding the unchanged1e-8
+gate. Native operator replay17649021 verifies that row normalization in float64
+reduces the discrepancy to5.69e-13, with exact repeated output. This is a numerical
+probability correction, not a change to choices, targets, weights or tolerances.
+The stationary KFE contains a duplicate tenure scatter; both Markov scatter
+implementations now receive the same correction. The first corrected initial
+replay17651740 reached its joint root but rejected stationary reconstruction
+at5.237e-9 versus5e-9 because only the transition copy had been corrected.
+The next isolated source version will verify the complete initial solve twice.
+No corrected-source calibration or historical path is accepted yet.
+
+Independent fiscal probe17650020 resolved the stalled A+ six-date forecast in
+three evaluations (245 seconds), with all seven asset prices fixed at the prior
+market-admissible values. All housing, PAYGO, rebate and exact replay checks
+passed, with the full residual vector retained. Its2007 fertility is1.9788233781
+versus1.974875 (gap+0.0039483781). This probe did not carry history forward.
+An opt-in early fiscal-polish switch is implemented and passes13 wiring tests;
+it retains the24-mapping total cap and every acceptance gate. Native full-loop
+verification of this combined controller and corrected model remains pending.
+Old-source histories remain frozen and separate. No complete four-shock fit,
+horizon certificate or rebated policy result is claimed. Details and proof files:
+`output/model/e5f_final_night_20260913/`.
+
 **September 13 — recovered initial point verified; cached refits submitted.**
 Recovery17603133 passed both exact numerical repetitions. The selected original
 objective is179.2984252281 versus182.6491468669 for the rebated seed (1.83% lower).

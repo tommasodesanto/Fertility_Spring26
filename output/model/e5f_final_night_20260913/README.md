@@ -1,8 +1,28 @@
 # Authorized final-night work
 
-Latest evidence: September13, approximately09:00UTC. Deadline18:00UTC.
+Latest evidence: September13, approximately10:00UTC. Deadline18:00UTC.
 The cluster runs and collector are independent of the laptop. Idle system sleep
-is prevented locally until the deadline. Last account check:76% weekly remaining.
+is prevented locally until the deadline. Last account check:70% weekly remaining.
+
+## Numerical repair under verification
+
+Trace17642567 reproduced the native2011 mass failure. The loss comes from
+float32 tenure-probability row sums. `probability_mass_native_verification.json`
+records an exact old-output replay and two identical corrected outputs; relative
+mass error falls from1.067e-8 to5.69e-13, below the unchanged1e-8 gate. Both the
+stationary Markov KFE and the transition Markov KFE now normalize these rows in
+float64. The first isolated corrected initial job17651740 reached its root but
+failed stationary nesting because it only corrected the transition copy. A new
+two-repetition full initial check is being prepared. No corrected calibration
+is accepted yet; all original source folders and rejected outputs are retained.
+
+`fiscal_polish_Aplus_6_summary.json` records probe17650020: the stalled A+ forecast
+passes every market/fiscal/replay check in three evaluations (245seconds), with
+all seven asset prices held at the prior market-admissible values. Its2007 TFR
+is1.9788233781 against1.974875, within0.005. This is one forecast without historical
+carry. An opt-in automatic early polish passes13 wiring tests and preserves the
+full residual vector,24-evaluation total cap, deadline and exact replay. A full
+native combined-controller run is still required before adoption.
 
 Remote batch: `/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/`.
 The requested plan is `docs/model/e5f_two_closure_overnight_plan.md`.

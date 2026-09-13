@@ -28,6 +28,10 @@ for _thread_key in ('OMP_NUM_THREADS', 'OPENBLAS_NUM_THREADS', 'MKL_NUM_THREADS'
 import numpy as np
 
 
+class _AutomaticFiscalPolish(BaseException):
+    def __init__(self, record):self.record=record
+
+
 def sha(path):
     h = hashlib.sha256()
     with Path(path).open('rb') as f:
@@ -139,8 +143,36 @@ def cached_boundary(template, actual_g, old, audit, runtime):
         horizon_status='unverified_finite_truncation'),gates)
 
 
+def validated_fixed_asset_prices(values, count, price_bounds, pf, parameters):
+    prices=np.asarray(values,dtype=float);lo,hi=price_bounds
+    if (prices.shape!=(count+1,) or not np.isfinite(prices).all()
+            or np.any(prices<=0) or np.any(prices<lo) or np.any(prices>hi)):
+        raise ValueError('Fixed asset prices must be a positive finite in-bound N+1 path')
+    rents=np.asarray(pf.rents_from_asset_prices(prices[:-1],float(prices[-1]),parameters),dtype=float)
+    if rents.shape!=(count,) or not np.isfinite(rents).all() or np.any(rents<=0):
+        raise ValueError('Fixed asset prices must imply positive finite PF rents')
+    return prices.copy()
+
+
+def fiscal_polish_switch_prices(record, width, market_tolerance, maximum_evaluations):
+    """Return the price block only after an eligible coupled iterate mapping."""
+    if (record.get('phase')!='iterate' or record.get('mapping_valid') is not True
+            or not isinstance(record.get('evaluation'),int)
+            or maximum_evaluations-record['evaluation']<2):
+        return None
+    residual=np.asarray(record.get('residual'),dtype=float)
+    coordinates=np.asarray(record.get('prices'),dtype=float)
+    if (residual.shape!=(3*width,) or coordinates.shape!=(3*width,)
+            or not np.isfinite(residual).all() or not np.isfinite(coordinates).all()
+            or np.any(np.abs(residual[:width])>=market_tolerance)
+            or np.max(np.abs(residual[width:]))<market_tolerance):
+        return None
+    return coordinates[:width].copy()
+
+
 def solve_forecast(*, inherited, old, demographics, psi, count, initial,
-                   controls, audit, deadline, folder, case, initial_jacobian=None):
+                   controls, audit, deadline, folder, case, initial_jacobian=None,
+                   fixed_asset_prices=None):
     import e5f_rebated_surprises as rebated
     import e5f_closed_finite_boundary as closed
     from e5f_balanced_terminal import _household_checks
@@ -155,6 +187,14 @@ def solve_forecast(*, inherited, old, demographics, psi, count, initial,
     for lo,hi in bounds:
         if not np.isfinite([lo,hi]).all() or not 0 < lo < hi:
             raise ValueError('Joint log-root needs explicit positive bounds')
+    fixed_prices=None
+    if fixed_asset_prices is not None:
+        fixed_prices=validated_fixed_asset_prices(
+            fixed_asset_prices,count,bounds[0],joined.pf,old.parameters)
+    automatic_fiscal_polish=rc.pop('automatic_fiscal_polish',False)
+    if type(automatic_fiscal_polish) is not bool:
+        raise ValueError('automatic_fiscal_polish must be Boolean')
+    automatic_fiscal_polish=bool(automatic_fiscal_polish and fixed_prices is None)
     if not 2 <= rc['max_evaluations'] <= 24 or not 0 < rc['market_tolerance'] <= 2e-4:
         raise ValueError('Retained mapping budget/market gate required')
     if not 0 <= rc['final_reproduction_tolerance'] <= 2e-10:
@@ -171,10 +211,13 @@ def solve_forecast(*, inherited, old, demographics, psi, count, initial,
     def project(raw):
         x=np.asarray(raw,dtype=float).reshape(3,width).copy()
         for j,(lo,hi) in enumerate(bounds): x[j]=np.clip(x[j],lo,hi)
-        endpoint=NS(parameters=old.parameters,asset_price=float(x[0,-1]))
-        x[0,:-1]=rent_domain.project_price_path_to_positive_rents(
-            x[0,:-1],terminal=endpoint,minimum_rent_share=1e-6)[0]
-        if np.any(x[0]>bounds[0][1]): raise ValueError('Positive-rent projection exceeds price bound')
+        if fixed_prices is None:
+            endpoint=NS(parameters=old.parameters,asset_price=float(x[0,-1]))
+            x[0,:-1]=rent_domain.project_price_path_to_positive_rents(
+                x[0,:-1],terminal=endpoint,minimum_rent_share=1e-6)[0]
+            if np.any(x[0]>bounds[0][1]): raise ValueError('Positive-rent projection exceeds price bound')
+        else:
+            x[0]=fixed_prices
         return x.ravel()
     def evaluate(raw):
         nonlocal mapping,latest
@@ -238,10 +281,81 @@ def solve_forecast(*, inherited, old, demographics, psi, count, initial,
         return dict(residual=rebated.stack_dated_residuals(rows),mapping_valid=boundary.mapping_valid,
             payload=dict(mapping=mapping,dated_audits=audits,boundary_accounts=boundary.actual_accounts,
                 boundary_residuals=boundary.residuals,boundary_household_gates=boundary.gates))
-    receipt=solve_price_path(initial_prices=initial,evaluate=evaluate,project=project,
-        deadline_monotonic=deadline,callback=progress,
-        initial_jacobian=initial_jacobian,
-        default_jacobian=np.diag(np.r_[np.full(width,-float(rc['slope'])),np.full(2*width,-200.)]),**rc)
+    default_jacobian=np.diag(np.r_[np.full(width,-float(rc['slope'])),np.full(2*width,-200.)])
+    root_started=time.monotonic()
+    root_arguments=dict(initial_prices=initial,evaluate=evaluate,project=project,
+        deadline_monotonic=deadline,default_jacobian=default_jacobian,**rc)
+    if not automatic_fiscal_polish:
+        receipt=solve_price_path(callback=progress,initial_jacobian=initial_jacobian,**root_arguments)
+    else:
+        coupled_events=[]
+        def coupled_progress(record):
+            enriched=dict(record,root_phase='coupled',
+                total_evaluation=record.get('evaluation'),forecast_elapsed_seconds=time.monotonic()-root_started)
+            coupled_events.append(copy.deepcopy(enriched));progress(enriched)
+            prices=fiscal_polish_switch_prices(record,width,rc['market_tolerance'],rc['max_evaluations'])
+            if prices is not None:raise _AutomaticFiscalPolish(record)
+        try:
+            receipt=solve_price_path(callback=coupled_progress,initial_jacobian=initial_jacobian,**root_arguments)
+        except _AutomaticFiscalPolish as switch:
+            switch_evaluation=int(switch.record['evaluation'])
+            remaining=rc['max_evaluations']-switch_evaluation
+            polish_budget=min(6,remaining)
+            fixed_prices=validated_fixed_asset_prices(
+                np.asarray(switch.record['prices'],dtype=float)[:width],count,bounds[0],joined.pf,old.parameters)
+            polish_events=[];polish_started_offset=time.monotonic()-root_started
+            def polish_progress(record):
+                local=record.get('evaluation')
+                enriched=dict(record,root_phase='fiscal_polish',
+                    total_evaluation=None if local is None else switch_evaluation+local,
+                    forecast_elapsed_seconds=time.monotonic()-root_started)
+                polish_events.append(copy.deepcopy(enriched));progress(enriched)
+            polish_controls=dict(rc,max_evaluations=polish_budget)
+            receipt=solve_price_path(initial_prices=np.asarray(switch.record['prices'],dtype=float),
+                evaluate=evaluate,project=project,deadline_monotonic=deadline,callback=polish_progress,
+                initial_jacobian=None,default_jacobian=default_jacobian,**polish_controls)
+            coupled_by_evaluation={};coupled_order=[]
+            for row in coupled_events:
+                evaluation=row.get('evaluation')
+                if evaluation is not None:
+                    if evaluation not in coupled_by_evaluation:coupled_order.append(evaluation)
+                    coupled_by_evaluation[evaluation]=row
+            coupled_history=[coupled_by_evaluation[evaluation] for evaluation in coupled_order]
+            polish_history=[]
+            for row in receipt.get('history',[]):
+                value=copy.deepcopy(row);value['root_phase']='fiscal_polish'
+                value['phase_evaluation']=value['evaluation'];value['evaluation']=switch_evaluation+value['evaluation']
+                value['forecast_elapsed_seconds']=polish_started_offset+float(value.get('elapsed_seconds',0.))
+                polish_history.append(value)
+            local_evaluations=int(receipt.get('evaluations',0))
+            receipt['history']=coupled_history+polish_history
+            receipt['evaluations']=switch_evaluation+local_evaluations
+            receipt['elapsed_seconds']=time.monotonic()-root_started
+            receipt['root_phase_ledger']=[dict(root_phase=row.get('root_phase'),
+                evaluation=row.get('evaluation'),phase=row.get('phase'),score=row.get('score'),
+                mapping_valid=row.get('mapping_valid'),forecast_elapsed_seconds=row.get('forecast_elapsed_seconds'))
+                for row in receipt['history']]
+            receipt['automatic_fiscal_polish']=dict(switched=True,switch_evaluation=switch_evaluation,
+                coupled_evaluations=switch_evaluation,fiscal_polish_evaluations=local_evaluations,
+                total_actual_mappings=mapping,original_maximum_evaluations=rc['max_evaluations'],
+                fiscal_polish_maximum_evaluations=polish_budget,fixed_asset_prices=fixed_prices)
+            if receipt['evaluations']>rc['max_evaluations'] or mapping!=receipt['evaluations']:
+                raise RuntimeError('Automatic fiscal polish mapping accounting violated the original budget')
+        else:
+            if mapping!=receipt.get('evaluations'):
+                raise RuntimeError('Automatic fiscal-polish coupled mapping accounting differs from root receipt')
+            history=[]
+            for row in receipt.get('history',[]):
+                value=copy.deepcopy(row);value['root_phase']='coupled'
+                value['total_evaluation']=value['evaluation'];history.append(value)
+            receipt['history']=history
+            receipt['root_phase_ledger']=[dict(root_phase='coupled',evaluation=row['evaluation'],
+                phase=row.get('phase'),score=row.get('score'),mapping_valid=row.get('mapping_valid'),
+                forecast_elapsed_seconds=row.get('elapsed_seconds')) for row in history]
+            receipt['automatic_fiscal_polish']=dict(switched=False,
+                coupled_evaluations=receipt.get('evaluations',0),fiscal_polish_evaluations=0,
+                total_actual_mappings=mapping,
+                original_maximum_evaluations=rc['max_evaluations'])
     final=receipt.get('final')
     finite=bool(receipt.get('converged') and final is not None and latest
         and final['payload']['mapping']==latest['mapping']
@@ -249,6 +363,7 @@ def solve_forecast(*, inherited, old, demographics, psi, count, initial,
     receipt.update(finite_horizon_market_fiscal_converged=finite,start_year=inherited.year,
         psi=float(psi),case=case,count=count,boundary_status='unverified_finite_truncation',
         terminal_distance_passed=False,horizon_verified=False,production_eligible=False)
+    if fixed_prices is not None:receipt['fixed_asset_prices']=fixed_prices
     save(folder/'root_receipt.json',receipt)
     if latest:
         save(folder/'rows.json',latest['path'].rows);save(folder/'fertility.json',latest['observations'])
@@ -269,7 +384,8 @@ def reusable_forecast_jacobian(result, count, enabled):
     if not enabled or result.next_state is None:
         return None
     receipt=result.root_receipt
-    if not receipt.get('finite_horizon_market_fiscal_converged'):
+    if (not receipt.get('finite_horizon_market_fiscal_converged')
+            or receipt.get('fixed_asset_prices') is not None):
         return None
     width=3*(count+1)
     matrix=np.asarray(receipt.get('final_jacobian'),dtype=float)
@@ -498,7 +614,8 @@ def main(argv=None):
                     if result.next_state is None and not alternative_used and result.root_receipt.get('best'):
                         forecast_jacobian=None
                         alternative_used=True;initial=np.asarray(result.root_receipt['best']['prices'])
-                        alt=dict(controls,damping=float(controls['damping'])*.5)
+                        alt=dict(controls,damping=float(controls['damping'])*.5,
+                            automatic_fiscal_polish=False)
                         save(folder/'alternative_start.json',dict(reason='Best admissible root coordinates with half damping; sole track alternative'))
                         result,detail=solve_forecast(inherited=inherited,old=old,demographics=demographics,
                             psi=psi,count=args.count,initial=initial,controls=alt,audit=audit,

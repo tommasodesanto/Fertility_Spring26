@@ -100,6 +100,8 @@ class DriverTests(unittest.TestCase):
             NS(next_state=None,root_receipt=receipt),6,True))
         self.assertIsNone(driver.reusable_forecast_jacobian(
             NS(next_state=NS(),root_receipt=dict(receipt,final_jacobian=np.eye(3))),6,True))
+        self.assertIsNone(driver.reusable_forecast_jacobian(
+            NS(next_state=NS(),root_receipt=dict(receipt,fixed_asset_prices=np.ones(7))),6,True))
 
     def test_probe_seed_requires_accepted_exact_same_track_root(self):
         prices=np.arange(1.,22.);jacobian=np.eye(21)
@@ -116,6 +118,43 @@ class DriverTests(unittest.TestCase):
             jacobian_probe.accepted_seed(dict(receipt,case='A+'),'A0',6,2e-10)
         with self.assertRaises(ValueError):
             jacobian_probe.accepted_seed(dict(receipt,final_reproduction_max_abs=1e-4),'A0',6,2e-10)
+
+    def test_fiscal_polish_seed_requires_complete_passing_housing_block(self):
+        prices=np.arange(1.,22.);residual=np.r_[np.full(7,1e-5),np.full(7,3e-5),np.full(7,8e-4)]
+        receipt=dict(start_year=2007,case='A+',count=6,psi=.13,final_reproduction_max_abs=0.,
+            final=dict(prices=prices,residual=residual,mapping_valid=True),
+            best=dict(prices=prices.copy(),residual=residual.copy(),mapping_valid=True))
+        got,psi,fixed=jacobian_probe.fiscal_polish_seed(receipt,'A+',6,2e-10,2e-4)
+        np.testing.assert_array_equal(got,prices);np.testing.assert_array_equal(fixed,prices[:7])
+        self.assertEqual(psi,.13)
+        bad=copy.deepcopy(receipt);bad['final']['residual'][3]=2e-4
+        with self.assertRaises(ValueError):
+            jacobian_probe.fiscal_polish_seed(bad,'A+',6,2e-10,2e-4)
+        bad=copy.deepcopy(receipt);bad['final']['mapping_valid']=False
+        with self.assertRaises(ValueError):
+            jacobian_probe.fiscal_polish_seed(bad,'A+',6,2e-10,2e-4)
+
+    def test_fixed_asset_prices_require_bounds_and_positive_pf_rents(self):
+        pf=NS(rents_from_asset_prices=lambda prices,terminal,P:np.ones(len(prices)))
+        fixed=driver.validated_fixed_asset_prices(np.arange(1.,8.),6,(.5,8.),pf,NS())
+        np.testing.assert_array_equal(fixed,np.arange(1.,8.))
+        for invalid in (np.ones(6),np.r_[np.ones(6),0.],np.r_[np.ones(6),9.]):
+            with self.assertRaises(ValueError):
+                driver.validated_fixed_asset_prices(invalid,6,(.5,8.),pf,NS())
+        bad_pf=NS(rents_from_asset_prices=lambda prices,terminal,P:np.r_[np.ones(5),0.])
+        with self.assertRaises(ValueError):
+            driver.validated_fixed_asset_prices(np.arange(1.,8.),6,(.5,8.),bad_pf,NS())
+
+    def test_automatic_polish_switch_predicate_requires_clear_housing_and_open_fiscal(self):
+        prices=np.arange(1.,22.);eligible=dict(phase='iterate',mapping_valid=True,evaluation=2,
+            prices=prices,residual=np.r_[np.full(7,1e-5),np.zeros(7),np.full(7,3e-4)])
+        np.testing.assert_array_equal(driver.fiscal_polish_switch_prices(eligible,7,2e-4,8),prices[:7])
+        already=copy.deepcopy(eligible);already['residual'][14:]=1e-5
+        self.assertIsNone(driver.fiscal_polish_switch_prices(already,7,2e-4,8))
+        bad_market=copy.deepcopy(eligible);bad_market['residual'][0]=2e-4
+        self.assertIsNone(driver.fiscal_polish_switch_prices(bad_market,7,2e-4,8))
+        late=copy.deepcopy(eligible);late['evaluation']=7
+        self.assertIsNone(driver.fiscal_polish_switch_prices(late,7,2e-4,8))
 
     def test_source_hash_drift_is_rejected(self):
         with tempfile.TemporaryDirectory() as d:
@@ -183,17 +222,47 @@ class DriverTests(unittest.TestCase):
                 kw['observer'](i,e,q,np.array([0.,1.]),NS())
                 rows.append(dict(annual_net_migration_over_period=0.,net_migrant_heads_over_period=0.))
             return NS(rows=rows,person_tail=NS(rows=rows,terminal_state=NS(g_pre=actual_g)))
+        fixed_prices=np.linspace(1.1,1.7,7);root_initials=[];adaptive=[]
         def root(**kw):
-            np.testing.assert_array_equal(kw['initial_jacobian'],np.eye(21))
+            if adaptive:
+                adaptive.append(len(adaptive))
+                if len(adaptive)==2:
+                    self.assertEqual(kw['max_evaluations'],8)
+                    x=kw['project'](kw['initial_prices']);first=kw['evaluate'](x)
+                    kw['callback'](dict(evaluation=1,phase='initial',prices=x,
+                        residual=first['residual'],mapping_valid=True,score=.01,elapsed_seconds=.1))
+                    trial=x.copy();trial[:7]=fixed_prices;trial=kw['project'](trial)
+                    second=kw['evaluate'](trial)
+                    kw['callback'](dict(evaluation=2,phase='iterate',prices=trial,
+                        residual=np.r_[np.full(7,1e-5),np.zeros(7),np.full(7,3e-4)],
+                        mapping_valid=True,score=3e-4,elapsed_seconds=.2))
+                    self.fail('Automatic fiscal switch callback did not interrupt the coupled root')
+                self.assertEqual(kw['max_evaluations'],6);self.assertIsNone(kw['initial_jacobian'])
+                raw=np.asarray(kw['initial_prices']).copy();raw[:7]=4.8;x=kw['project'](raw)
+                np.testing.assert_array_equal(x[:7],fixed_prices)
+                first=kw['evaluate'](x);second=kw['evaluate'](x)
+                history=[dict(evaluation=1,phase='initial',prices=x,residual=first['residual'],
+                    mapping_valid=True,score=.1,elapsed_seconds=.1),
+                    dict(evaluation=2,phase='final',prices=x,residual=second['residual'],
+                    mapping_valid=True,score=.1,elapsed_seconds=.2)]
+                return dict(converged=True,status='converged',best=dict(prices=x,residual=first['residual'],
+                    mapping_valid=True,payload=first['payload']),final=dict(prices=x,residual=second['residual'],
+                    mapping_valid=True,payload=second['payload']),final_reproduction_max_abs=0.,evaluations=2,
+                    elapsed_seconds=.2,history=history,final_jacobian=np.eye(21),final_damping=.5)
+            root_initials.append(kw['initial_jacobian'])
             expected=np.diag(np.r_[np.full(7,-1.),np.full(14,-200.)])
             np.testing.assert_array_equal(kw['default_jacobian'],expected)
-            x=kw['project'](kw['initial_prices'])
+            raw=np.asarray(kw['initial_prices']).copy();raw[:7]=4.5
+            x=kw['project'](raw)
+            np.testing.assert_array_equal(x[:7],fixed_prices)
             first=kw['evaluate'](x);second=kw['evaluate'](x)
             self.assertEqual(first['residual'].shape,(21,))
             np.testing.assert_array_equal(first['residual'],second['residual'])
+            np.testing.assert_array_equal(first['residual'],
+                np.r_[np.full(6,.1),0.,np.full(6,.2),0.,np.full(6,.3),0.])
             return dict(converged=True,final=dict(prices=x,payload=second['payload']))
         rebated=NS(_runtime=lambda:runtime,evaluate_forecast=forecast,
-            rebated_tax_accounts=lambda **kw:{},dated_residual=lambda **kw:np.zeros(3),
+            rebated_tax_accounts=lambda **kw:{},dated_residual=lambda **kw:np.array([.1,.2,.3]),
             stack_dated_residuals=lambda rows:np.asarray(rows).T.ravel(),
             first_period_state=lambda **kw:NS(year=2011))
         modules={'e5f_rebated_surprises':rebated,
@@ -208,10 +277,27 @@ class DriverTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d,patch.dict(sys.modules,modules),patch.object(driver,'cached_boundary',cached),patch.object(driver,'checkpoint',lambda *args:None):
             result,detail=driver.solve_forecast(inherited=inherited,old=old,demographics=NS(),
                 psi=.1,count=count,initial=np.r_[np.ones(14),np.full(7,.2)],controls=controls,
-                audit=NS(),deadline=time.monotonic()+10,folder=d,case='A0',
-                initial_jacobian=np.eye(21))
-        self.assertEqual(len(calls),2)  # One per mapping, including fresh replay.
-        self.assertEqual(len(actual_calls),2)
+                audit=NS(),deadline=time.monotonic()+10,folder=Path(d)/'fixed',case='A0',
+                initial_jacobian=None,fixed_asset_prices=fixed_prices)
+            driver.solve_forecast(inherited=inherited,old=old,demographics=NS(),
+                psi=.1,count=count,initial=np.r_[np.ones(14),np.full(7,.2)],controls=controls,
+                audit=NS(),deadline=time.monotonic()+10,folder=Path(d)/'learned',case='A0',
+                initial_jacobian=np.eye(21),fixed_asset_prices=fixed_prices)
+            adaptive.append(0)
+            polished,_=driver.solve_forecast(inherited=inherited,old=old,demographics=NS(),
+                psi=.1,count=count,initial=np.r_[np.ones(14),np.full(7,.2)],
+                controls=dict(controls,automatic_fiscal_polish=True),audit=NS(),
+                deadline=time.monotonic()+10,folder=Path(d)/'automatic',case='A0')
+        self.assertIsNone(root_initials[0]);np.testing.assert_array_equal(root_initials[1],np.eye(21))
+        self.assertEqual(polished.root_receipt['evaluations'],4)
+        self.assertTrue(polished.root_receipt['automatic_fiscal_polish']['switched'])
+        self.assertEqual(polished.root_receipt['automatic_fiscal_polish']['total_actual_mappings'],4)
+        self.assertEqual([row['evaluation'] for row in polished.root_receipt['root_phase_ledger']],[1,2,3,4])
+        self.assertEqual([row['root_phase'] for row in polished.root_receipt['root_phase_ledger']],
+            ['coupled','coupled','fiscal_polish','fiscal_polish'])
+        np.testing.assert_array_equal(polished.root_receipt['fixed_asset_prices'],fixed_prices)
+        self.assertEqual(len(calls),8)  # Two mappings in each of four root phases/runs.
+        self.assertEqual(len(actual_calls),8)
         for value in actual_calls:np.testing.assert_array_equal(value,actual_g)
         self.assertTrue(result.root_receipt['finite_horizon_market_fiscal_converged'])
         self.assertFalse(result.root_receipt['horizon_verified'])
