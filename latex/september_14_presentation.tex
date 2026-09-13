@@ -707,25 +707,53 @@ A model period contains $L=4$ calendar years, $\beta=\beta_{\rm annual}^4$.
 \scriptsize Provisional no-rebate carried history; the last window remains outside the fit tolerance, and no horizon certificate is available.
 \end{frame}
 
+\begin{frame}{2023 Data and Model}
+\footnotesize
+\renewcommand{\arraystretch}{0.90}
+\begin{tabularx}{\textwidth}{@{}Xrr@{}}
+\toprule
+Moment & Data & Model \\
+\midrule
+Completed fertility, ages 40--44\textsuperscript{a} & 1.92 & 1.70 \\
+Childless, ages 40--44 (\%)\textsuperscript{a} & 18.8 & 25.0 \\
+Exactly one child among mothers, 40--44 (\%)\textsuperscript{a} & 22.2 & 25.5 \\
+Mean age at first birth (years)\textsuperscript{b} & 28.09 & 29.74 \\
+First births at age 30+ (\%)\textsuperscript{b} & 37.7 & 44.0 \\
+\addlinespace[2pt]
+Mean occupied rooms (capped at 9)\textsuperscript{c} & 5.58 & 6.07 \\
+Ownership, heads 30--55 (\%)\textsuperscript{c} & 58.7 & 46.9 \\
+First-birth room response, $-$1 to +3\textsuperscript{d} & 0.720 & 1.060 \\
+Rooms: 3+ versus 1--2 resident children\textsuperscript{c} & 0.355 & 0.266 \\
+Recent-parent ownership gap (pp)\textsuperscript{c} & 21.1 & 13.1 \\
+\addlinespace[2pt]
+Wealth / annual gross earnings\textsuperscript{e} & 6.87 & 5.64 \\
+Annual bequests / wealth (\%)\textsuperscript{f} & 0.88 & 0.70 \\
+Wealth/income p90 / median, ages 76--84\textsuperscript{g} & 3.45 & 3.50 \\
+\bottomrule
+\end{tabularx}
+\scriptsize 2023 model; provisional no-rebate history. Pooled benchmarks retain their original vintages. Completed fertility is a stock, distinct from period fertility.\\
+\tiny\textsuperscript{a} CPS 2024; \textsuperscript{b} NCHS 2023; \textsuperscript{c} ACS 2023; \textsuperscript{d} pooled PSID event study; \textsuperscript{e} PSID 2005--19; \textsuperscript{f} external bequest benchmark; \textsuperscript{g} PSID 1984--2019.
+\end{frame}
+
 \begin{frame}{The 2023 Equilibrium}
 \centering
 \includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/patch_readout_fit/figures/equilibrium_2023.pdf}
 \par\smallskip
-\scriptsize Population levels and age composition are externally conditioned.
+\scriptsize Earlier stationary-start patch. Population levels and age composition are externally conditioned.
 \end{frame}
 
 \begin{frame}{Lifecycle Fit in 2023}
 \centering
 \includegraphics[width=\textwidth,height=0.85\textheight,keepaspectratio]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/patch_readout_fit/figures/lifecycle_2023.pdf}
 \par\smallskip
-\scriptsize 2023 profiles are untargeted comparisons; the calibration uses initial-period moments.
+\scriptsize Earlier stationary-start patch. 2023 profiles are untargeted comparisons; the calibration uses initial-period moments.
 \end{frame}
 
 \begin{frame}{Intergenerational Allocation: Model vs Data}
 \centering
 \includegraphics[width=0.92\linewidth,height=0.78\textheight,keepaspectratio]{../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/patch_readout_fit/figures/intergenerational_allocation_2023.pdf}
 \par\smallskip
-\scriptsize Owner-occupied homes with $6+$ rooms; ACS 2023. Children: model dependents; ACS resident own minors.
+\scriptsize Earlier stationary-start patch. Owner-occupied homes with $6+$ rooms; ACS 2023. Children: model dependents; ACS resident own minors.
 \end{frame}
 
 \begin{frame}{Stationary Housing Policy Comparisons}

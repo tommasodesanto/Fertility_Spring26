@@ -282,6 +282,11 @@ Active documents:
   The initial model-only age profiles have been replaced in the presentation by
   the checked dated comparison figures below. The stable 17-graph packet is unchanged.
 
+  The deck adds a 13-row 2023 Data and Model validation table immediately after
+  the Historical Fertility frame and before the 2023 equilibrium frame. It compares contemporaneous data and pooled
+  benchmarks; completed fertility at ages 40--44 is a stock distinct from period
+  fertility. Source vintages and benchmark labels appear in the frame footer.
+
   **Requested results sequence.** After estimation design and parameter/target
   tables, show historical fertility, the 2023 equilibrium (prices, rents and quantities),
   cross-sectional 2023 data/model fit, and intergenerational allocation, following May's market
