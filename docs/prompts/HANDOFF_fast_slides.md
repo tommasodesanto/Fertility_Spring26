@@ -56,14 +56,14 @@ It saves `model_2023.json`, `native_2023_snapshot.pkl.gz`,
 Collect into:
 `/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_original_queue_20260913a/terminal_restart_v1/fertility_replay_iter3/profile_2023`.
 
-Worker source (currently untracked; preserve and commit with the completed work):
+Worker source (backed up as work in progress; end-to-end validation remains pending):
 `/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/cluster/recover_e5f_permanent_2023_profile.py`.
 The profile excludes childless readiness states from “children at home.” Check
 that housing and household totals reproduce the native 2023 aggregate row.
 
 ## Plotting is implemented; finish verification and deck insertion
 
-The uncommitted addition to
+The work-in-progress addition to
 `/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/build_e5f_patch_readout.py`
 accepts `--permanent-profile PATH/model_2023.json --figures-dir PATH/figures`.
 Use `/Users/tommasodesanto/miniconda3/bin/python` locally; default Python lacks

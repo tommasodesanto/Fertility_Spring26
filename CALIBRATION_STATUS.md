@@ -8,7 +8,7 @@ Recovery job17707689 is running in the isolated Torch batch
 It must reproduce five saved iteration3 rows before the 2023 lifecycle and
 large-home allocation figures replace the old patch figures. Do not duplicate
 this recovery. Automatic monitoring is paused and the prior subagent stopped.
-Worker and new plotting route remain uncommitted pending end-to-end validation.
+Worker and new plotting route are backed up as work in progress; end-to-end validation remains pending.
 
 **September 13 — requested mock transition figure prepared from saved iteration 3.**
 The supplemental `macro_transition_mock.png/pdf` and full-horizon version live

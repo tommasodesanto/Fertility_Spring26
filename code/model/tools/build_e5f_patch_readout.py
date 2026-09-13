@@ -135,12 +135,103 @@ def sequence_validation(sequence_base):
         weight_or_target_changes=False,horizon_verified=False,replay_check=check)
     (out/'validation_2023_verification.json').write_text(json.dumps(manifest,indent=2)+'\n')
     print(json.dumps([dict(moment=r['moment'],data=r['data'],model=r['model']) for r in rows],indent=2))
+
+def permanent_profile_figures(profile_path, figures_dir):
+    """Refresh the two 2023 model-vs-data figures from a permanent-shock profile."""
+    profile_path=Path(profile_path)
+    model_path=profile_path/'model_2023.json' if profile_path.is_dir() else profile_path
+    source=model_path.parent
+    verification_path=source/'verification.json'
+    model=read(model_path);verification=read(verification_path)
+    assert model['calendar_year']==2023
+    assert verification['status']=='PASS'
+    assert verification.get('row_reproduction',{}).get('passed') is True
+    assert verification.get('observed_year')==2023 or verification.get('observed_year2023') is True
+    assert verification.get('model_source_sha256')==hashlib.sha256(model_path.read_bytes()).hexdigest()
+    assert float(verification['row_reproduction'].get('numeric_max_abs_gap',0))<=2e-10
+    prof=model['profile'];age=prof['rows']
+    empirical_path=BASE/'data/actual2023_age_housing_levels.csv'
+    empirical=csvread(empirical_path);byage={int(r['age_lower']):r for r in empirical}
+    assert age and all(int(r['age']) in byage for r in age)
+    out=Path(figures_dir);out.mkdir(parents=True,exist_ok=True)
+    model_hash=hashlib.sha256(model_path.read_bytes()).hexdigest()
+    verification_hash=hashlib.sha256(verification_path.read_bytes()).hexdigest()
+    empirical_hash=hashlib.sha256(empirical_path.read_bytes()).hexdigest()
+    six_path=BASE.parent/'age_housing_allocation/comparison_2023/large_owner_data.csv'
+    six=csvread(six_path);six_hash=hashlib.sha256(six_path.read_bytes()).hexdigest()
+    plt.rcParams.update({'font.size':11,'axes.spines.top':False,'axes.spines.right':False,
+                         'axes.titlesize':12,'legend.fontsize':10})
+    qa={}
+    def write_qa(name, plotted, sources):
+        payload=dict(figure=name,calendar_year=2023,model_source=str(model_path),
+                     model_source_sha256=model_hash,verification_source=str(verification_path),
+                     verification_source_sha256=verification_hash,source_hashes=sources,
+                     plotted_arrays=plotted,arrays_match_source=True,
+                     note='Permanent preference shock; transition not converged.')
+        (out/f'{name}_verification.json').write_text(json.dumps(payload,indent=2)+'\n')
+        qa[name]=payload
+    # Canonical Lifecycle Fit in 2023: homeownership, capped rooms, and with dependents.
+    x=np.array([r['age']+1.5 for r in age],dtype=float)
+    d=[byage[int(r['age'])] for r in age]
+    comparisons=[('Homeownership','Percent of households','owners','ownership_rate',100),
+                 ('Housing size','Physical rooms, capped at 9','capped_rooms','mean_capped_rooms',1),
+                 ('Children at home','Percent of households','with_children','with_minor_rate',100)]
+    fig,axs=plt.subplots(1,3,figsize=(13,4));mseries={}
+    for ax,(title,ylabel,mkey,dkey,scale) in zip(axs,comparisons):
+        mv=np.asarray([scale*r[mkey]/r['households'] for r in age],dtype=float)
+        dv=np.asarray([scale*float(r[dkey]) for r in d],dtype=float)
+        line_m,=ax.plot(x,mv,'-',lw=2,color=BLUE,label='Model')
+        line_d,=ax.plot(x,dv,'--',lw=2,color=RED,label='ACS 2023')
+        assert np.array_equal(np.asarray(line_m.get_ydata()),mv)
+        assert np.array_equal(np.asarray(line_d.get_ydata()),dv)
+        ax.set(title=title,xlabel='Age of household head',ylabel=ylabel,
+               xticks=[20,35,50,65,80]);ax.grid(alpha=.16)
+        mseries[mkey]=dict(model=mv.tolist(),data=dv.tolist())
+    axs[0].legend(frameon=False);fig.tight_layout(rect=(0,.065,1,1))
+    fig.text(.5,.015,'Children at home: model dependents; ACS resident own children under 18. Permanent preference shock; transition not converged.',
+             ha='center',fontsize=8.5)
+    for ext in ('pdf','png'):fig.savefig(out/f'lifecycle_2023.{ext}',dpi=150,bbox_inches='tight')
+    plt.close(fig)
+    write_qa('lifecycle_2023',dict(ages=x.tolist(),series=mseries),
+             dict(acs_2023_age_housing_levels=dict(path=str(empirical_path),sha256=empirical_hash)))
+    # Canonical Intergenerational Allocation Model vs Data: six large-owner groups.
+    masses=np.zeros((3,2))
+    for row in prof['large_owner_age_cells']:
+        for j,(lo,hi) in enumerate([(22,40),(40,60),(60,86)]):
+            frac=max(0,min(row['age']+row['age_width'],hi)-max(row['age'],lo))/row['age_width']
+            masses[j]+=[frac*row['without_children'],frac*row['with_children']]
+    mv=100*masses.ravel()/masses.sum();dv=100*np.asarray([float(r['share']) for r in six])
+    assert abs(dv.sum()-100)<1e-8 and len(dv)==6
+    fig,ax=plt.subplots(figsize=(11,4.5));xx=np.arange(6);width=.36
+    for offset,values,color,label in [(-width/2,mv,BLUE,'Model'),(width/2,dv,RED,'ACS 2023')]:
+        bars=ax.bar(xx+offset,values,width,color=color,label=label)
+        for bar,value in zip(bars,values):
+            assert np.isclose(bar.get_height(),value,rtol=0,atol=1e-12)
+            ax.text(bar.get_x()+width/2,value+.5,f'{value:.1f}',ha='center',fontsize=9)
+    ax.set(xticks=xx,xticklabels=[f'{a}\n{b}' for a in ['Young (22-39)','Middle (40-59)','Old (60-85)']
+                                   for b in ['No children','Children']],
+           ylabel='Share of large owner-occupied homes (%)',ylim=(0,max(mv.max(),dv.max())*1.2))
+    ax.legend(frameon=False);ax.tick_params(axis='x',labelsize=9);fig.tight_layout(rect=(0,.075,1,1))
+    fig.text(.5,.015,'Permanent preference shock; transition not converged.',ha='center',fontsize=8.5)
+    for ext in ('pdf','png'):fig.savefig(out/f'intergenerational_allocation_2023.{ext}',dpi=150,bbox_inches='tight')
+    plt.close(fig)
+    write_qa('intergenerational_allocation_2023',dict(model=mv.tolist(),data=dv.tolist(),rooms_threshold=6),
+             dict(large_owner_data=dict(path=str(six_path),sha256=six_hash)))
+    (out/'permanent_profile_figures_verification.json').write_text(json.dumps(dict(status='PASS',figures=qa),indent=2)+'\n')
+    print(json.dumps(dict(figures_dir=str(out),figures=list(qa),model_source_sha256=model_hash),indent=2))
+
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--base',type=Path,default=BASE,help='Patch packet root (default: frozen patch_readout).')
     ap.add_argument('--pdf',type=Path,default=None,help='Combined review PDF destination.')
     ap.add_argument('--sequence-base',type=Path,help='Opt-in carried-history fertility readout; leaves the patch packet unchanged.')
+    ap.add_argument('--permanent-profile',type=Path,help='Opt-in permanent-shock profile JSON or directory containing model_2023.json.')
+    ap.add_argument('--figures-dir',type=Path,help='Output directory for --permanent-profile figures and QA sidecars.')
     args=ap.parse_args()
+    if args.permanent_profile is not None:
+        if args.figures_dir is None: ap.error('--figures-dir is required with --permanent-profile')
+        permanent_profile_figures(args.permanent_profile,args.figures_dir)
+        return
     if args.sequence_base is not None:
         sequence_fertility(args.base,args.sequence_base)
         if (args.sequence_base/'source/readout_2023/model_2023.json').exists():sequence_validation(args.sequence_base)
