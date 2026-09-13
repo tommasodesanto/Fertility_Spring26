@@ -13,11 +13,14 @@ household-formation conversion and replacement normalization must be explicit
 before its long search; the old2.1 normalization alone does not certify
 replacement. No diagnostic entry parameter is promoted silently.
 Author refinement: each demographic branch gets independent short and long
-forecast tracks, initially6and24four-year dates (24and96years), giving four
+forecast tracks, now6and100four-year dates (24and400years), giving four
 parallel history/policy tracks from two initial calibrations. Short results
 remain provisional; long results still need terminal/horizon checks. Shock
 sequences are refitted by track, with fixed-shock comparisons to identify
-horizon sensitivity. No jobs submitted by this planning amendment.
+horizon sensitivity. Twenty-four dates are an intermediate numerical step,
+not the final long track. Native long-mapping timing and memory must be measured
+before budgeting its search; completion overnight is not assured. No jobs
+submitted by this planning amendment.
 Detailed plan: [two-closure overnight rerun](docs/model/e5f_two_closure_overnight_plan.md).
 
 **September 13 — completed-fertility continuation extracted, no recalibration.**

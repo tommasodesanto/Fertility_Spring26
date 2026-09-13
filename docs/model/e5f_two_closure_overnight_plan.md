@@ -92,14 +92,15 @@ replace the starting distribution of an existing fitted path.
 ### 3. Historical shock fitting and horizon checks
 
 **Author refinement: run short and long forecasts in parallel for BOTH
-demographic branches.** The initial proposed lengths are:
+demographic branches.** Following the author's request for a substantially
+longer forecast, the planned lengths are:
 
 | Historical/policy track | Demographic branch | Explicit forecast |
 |---|---|---|
 | A-short | Retained demographic treatment | 6 four-year dates, 24 years |
-| A-long | Retained demographic treatment | 24 four-year dates, 96 years |
+| A-long | Retained demographic treatment | 100 four-year dates, 400 years |
 | B-short | Entry from surviving maturation | 6 four-year dates, 24 years |
-| B-long | Entry from surviving maturation | 24 four-year dates, 96 years |
+| B-long | Entry from surviving maturation | 100 four-year dates, 400 years |
 
 These are numerical forecast horizons with terminal continuation values, not
 different assumptions about how long the preference shock lasts. Preferences
@@ -121,11 +122,15 @@ Short tracks are deliberately provisional finite-horizon experiments. Compare
 both refitted paths and fixed-shock replays from the same inherited state:
 refitting fertility alone could conceal a change in fitted preferences caused
 by the horizon. Report differences in fitted shocks, prices, housing and policy
-effects. Twelve dates may serve as an intermediate numerical continuation step
-if needed; this does not replace the independent short/long comparison.
-Extend beyond twenty-four dates only within the measured run budget. An
+effects. Twenty-four dates (96 years), with twelve dates if needed, serve as
+intermediate numerical continuation steps toward the 100-date solve; they do
+not replace the independent short/long comparison. A stalled long solve does
+not block the short track's fitted path and provisional policy readout. An
 endpoint-distance failure or material change with the horizon stays visible;
-neither the six-date nor the twenty-four-date label certifies convergence.
+neither the six-date nor the 100-date label certifies convergence. A numerical
+horizon extension must hold future demographic primitives and fiscal rules
+fixed under the same stated extrapolation, rather than change the economy
+along with the horizon.
 Retain the existing fertility tolerance and numerical gates.
 
 ### 4. Policy computations in both branches
@@ -196,7 +201,16 @@ forecast previously took 6–45 minutes at fixed preferences; longer forecasts
 and repeated shock roots can dominate total time. Parallelism helps independent
 chains and policy branches, not the dependence between historical windows.
 Before launch, record horizon-specific solve counts, memory and wall-time
-estimates from the native smoke; no uncosted 24-date or longer search.
+estimates from the native smoke; no uncosted 100-date search. A 100-date mapping
+has about 16.7 times the household-date work of a six-date mapping. Naively
+scaling the observed 2.5–3.3 minutes per six-date mapping gives roughly42–55
+minutes per 100-date mapping, before accounting for reusable work or a changed
+iteration count. This is a planning estimate, not a runtime measurement or a
+claim that a full fitted long history will finish overnight. Time a native
+long mapping and record memory before granting its subsequent search budget.
+Provide progress during backward and forward date sweeps, not only at the end
+of a complete long mapping. Independent jobs do not remove the backward/forward
+dependence within a forecast or the sequential dependence between shock windows.
 
 Use autonomous Torch controllers and dependency jobs, so laptop sleep does not
 stop computation. Checkpoint each completed case and report progress at least
