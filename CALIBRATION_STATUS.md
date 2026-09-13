@@ -1,5 +1,21 @@
 # Calibration Status
 
+**September 13 — saved 2007 household mechanism figure.**
+`output/model/e5f_original_queue_20260913a/household_mechanism_2007/` contains
+an inspected two-panel PNG/PDF and full-grid CSV. It uses the same verified
+initial checkpoint as the original-queue transition, without any model solve.
+At age30, initially childless renters are compared at three current-income
+states within the same permanent-income group. First-birth probability uses
+native fecundity times attempt probability (branch index1). At zero liquid
+wealth it is0.3343/0.4326/0.4934 at low/middle/high income. Housing compares
+the realized tenure mixture conditional on birth versus no birth. Both child
+and financing-state definitions were checked against native code; saved tenure
+probability sums differ from one by at most4.08e-8 (float32 storage).
+Dotted lines show down-payment eligibility, not proof of binding desired
+borrowing. The graph displays nonnegative wealth; it is a conditional policy
+comparison, not an empirical income gradient or calibration fit. The deck is
+unchanged. Rebuild: `code/model/tools/build_e5f_ss2007_household_mechanism.py`.
+
 **September 13, 22:24 UTC — full announced four-shock transition running.**
 Corrected smoke `17711391` passed the fresh terminal reconstruction, native
 constant-vector reproduction, six-date stationary root/drift check and announced

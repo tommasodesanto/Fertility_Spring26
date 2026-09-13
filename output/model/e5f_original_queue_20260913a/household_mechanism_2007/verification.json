@@ -1,0 +1,78 @@
+{
+  "status": "PASS",
+  "no_new_solve": true,
+  "age": 30.0,
+  "age_index": 3,
+  "settled_state": 0,
+  "permanent_income_group": 1,
+  "income_indices": [
+    6,
+    7,
+    8
+  ],
+  "income_multipliers": [
+    0.4977813254644079,
+    0.7543722733967643,
+    1.1432279552449633
+  ],
+  "income_relative_to_middle": [
+    0.6598616399606171,
+    1.0,
+    1.5154692126968978
+  ],
+  "fecundity": 0.9001436879133341,
+  "owner_sizes": [
+    2.0,
+    4.0,
+    6.0,
+    8.0,
+    10.0
+  ],
+  "asset_price": 0.7026083285154774,
+  "financed_share": 0.8,
+  "downpayment_thresholds": [
+    0.28104333140619087,
+    0.5620866628123817,
+    0.8431299942185726,
+    1.1241733256247635,
+    1.4052166570309543
+  ],
+  "saved_probability_sum_error": 4.077694382154107e-08,
+  "xlim": [
+    0,
+    5.325581395348838
+  ],
+  "slice_wealth_p99": 5.325581395348838,
+  "nonnegative_occupied_mass_retained": 0.9913019480542778,
+  "snapshot": {
+    "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_replay_v6/case/evaluation/raw/repetition_02/initial_state.pkl.gz",
+    "checkpoint_sha256": "8aeedcdc8f19845da72de89c79cde4d46ce5daf480fe3ce2102aba21fba41f2d",
+    "pension_relative_gap": 3.068941321592033e-12,
+    "property_tax_revenue": 0.186609051818202,
+    "rebate_outlays": 0.1866089801899132,
+    "rebate_relative_gap": 3.8384144875262185e-07,
+    "rebate_residual": 7.162828880025174e-08,
+    "repetition": "repetition_02",
+    "transfer_period_units": 0.18660898018995767
+  },
+  "spec_sha256": "5262ccba5ce38eb185e6187c9b5ad5754cd38c86e221b638d6cd0a7c0bf1b8b2",
+  "model_source": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_history_source_v2/code/model/intergen_eqscale_seq_optimized/solver.py",
+  "birth_formula": "fecundity[j] * fert_probs[b,0,0,j,z,1] among settled childless renters",
+  "housing_formula": "tenure_probs[...,0]*hR_pol[...,n,cs] + sum(owner_probabilities*owner_rooms)",
+  "branch_states": {
+    "no_birth": [
+      0,
+      0
+    ],
+    "birth": [
+      1,
+      1
+    ]
+  },
+  "financing_marker": "Purchase eligibility: (1-phi)*price*owner_rooms, not proof of a binding desired borrowing constraint",
+  "selection": "Age nearest30, initial renter, sole location, modal permanent-income group; 25/50/75 percentiles of its income-state weights",
+  "full_grid": [
+    -12.0,
+    30.0
+  ]
+}
