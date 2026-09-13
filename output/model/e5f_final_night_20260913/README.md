@@ -17,6 +17,12 @@ verified. Do not read the snapshot below as a current queue observation.
 
 ## Discussion packet
 
+The September 13 [terminal-method review](../../../docs/model/transition_terminal_method_review.md)
+compares the current boundary with a transition between steady states, reviews
+the official sequence-space package, and records measured timing and the
+prerequisites for a clean single-shock experiment. No new model run was launched
+for that review.
+
 **`verified_history_readout.pdf` is the current 41-page report.** The first page
 summarizes the decision points. Pages 2–8 contain the complete initial target
 fit, historical fit, untargeted 2023 validation, paired tax tables, and parameter
