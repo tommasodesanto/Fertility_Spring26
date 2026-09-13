@@ -1,0 +1,10 @@
+#!/bin/bash
+#SBATCH --job-name=e5f_orig_replay3
+#SBATCH --account=torch_pr_570_general
+#SBATCH --cpus-per-task=1
+#SBATCH --mem=32G
+#SBATCH --time=60
+#SBATCH --output=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_fertility_replay_iter3/source/replay_%j.log
+set -euo pipefail
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1
+/share/apps/anaconda3/2025.06/bin/python /scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_fertility_replay_iter3/source/replay_e5f_original_queue_diagnostics.py --worker --spec /scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a/spec.json --snapshot /scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_fertility_replay_iter3/source/snapshot --endpoint /scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_terminal_restart_v1/endpoint/terminal.pkl.gz --endpoint-receipt /scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_terminal_restart_v1/endpoint/root_receipt.json --stationary-reference /scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_fertility_replay_iter3/source/stationary_reference.json --output /scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_fertility_replay_iter3/output --seconds 3600 --input-contract /scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_fertility_replay_iter3/source/worker_contract.json --plotter /scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_fertility_replay_iter3/source/build_e5f_stationary_shock_figures.py

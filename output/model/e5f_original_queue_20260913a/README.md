@@ -1,5 +1,13 @@
 # Original household-queue afternoon experiments
 
+**19:44 UTC — fertility figure:** diagnostic replay job17702691 is running
+on cs609. It reproduces saved 100-period iteration3 with identical controls,
+saves native fertility rates and terminal state gaps, and automatically plots
+the fertility-rate panel with the initial steady state. Local contracts and
+collection instructions are in `terminal_restart_v1/fertility_replay_iter3/`;
+remote directory is the main batch plus `_fertility_replay_iter3`. The thread
+monitor includes it. Original equilibrium jobs continue independently.
+
 **19:17 UTC collection:** ten-period job17700926 finished at its eight-mapping
 budget without convergence. `terminal_10/` holds its native rows, fertility,
 stationary references, root receipt, terminal distances and visually inspected

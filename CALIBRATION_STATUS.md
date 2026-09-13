@@ -1,5 +1,28 @@
 # Calibration Status
 
+**September 13, 19:44 UTC — native fertility-rate replay running.**
+At the author's request, job 17702691 replays the saved third 100-period mapping
+on its own node to recover native age-specific fertility diagnostics and a
+fertility-rate/population figure with an explicit pre-shock point. It holds
+all 300 price/pension/rebate coordinates fixed; there is no root solve or new
+calibration. Estimated mapping time 28.3 minutes, one CPU and 32 GiB, 60-minute
+cap plus original global deadline. Native household audits and reproduction
+of every saved row to 2e-10 are required. Code/inputs are pinned. After passing,
+the job automatically creates irf_fertility.png/pdf. The existing monitor now
+includes it and must collect, visually inspect, and deliver the plot.
+Contracts/collector instructions: `output/model/e5f_original_queue_20260913a/terminal_restart_v1/fertility_replay_iter3/`.
+Source: `code/cluster/replay_e5f_original_queue_diagnostics.py`.
+
+The plotted standalone shock lowers psi from 0.1489153146 to 0.09221854784
+(38.073%) once, unexpectedly, and permanently. Its size comes from a previously
+fitted historical sequence; this standalone exercise does not itself refit
+history. In iteration 3, adjusted births FALL 19.911% on impact, then recover
+1.218% by year 16 while remaining below the initial level. The old graph began
+at the post-shock point and obscured the initial drop. The mechanism of the
+small rebound is not separately identified. Birth timing, family composition,
+and housing responses should be examined in the saved native diagnostics;
+do not attribute the rebound solely to prices from these aggregate curves.
+
 **September 13, 19:23 UTC — rents checked; 100-period attempt plotted.**
 Every saved rent in the ten- and 100-period stationary-endpoint attempts
 reproduces the dated asset-pricing formula to 6e-17: rent = u * price + price
