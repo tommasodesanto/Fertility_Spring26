@@ -34,6 +34,10 @@ def parse_args() -> argparse.Namespace:
                    help="Use native age-specific fertility diagnostics, never a birth-count proxy.")
     p.add_argument("--include-pre-shock", action="store_true",
                    help="Show the initial steady state and the impact jump explicitly.")
+    p.add_argument("--max-years", type=float,
+                   help="Plot only dated rows no later than this horizon after the shock.")
+    p.add_argument("--output-stem",
+                   help="Output filename stem; defaults retain the established names.")
     return p.parse_args()
 
 
@@ -91,6 +95,14 @@ def main() -> None:
         raise ValueError("irf_contract.json must contain an object")
     rows = [dict(row) for row in rows]
     xs = x_values(rows, contract)
+    if args.max_years is not None:
+        if args.max_years <= 0:
+            raise ValueError("--max-years must be positive")
+        keep = [i for i, x in enumerate(xs) if x <= args.max_years]
+        if not keep:
+            raise ValueError("--max-years excludes every dated row")
+        rows = [rows[i] for i in keep]
+        xs = [xs[i] for i in keep]
     initial = read_json(case / "initial_reference.json", required=False) or {}
     terminal = read_json(case / "terminal_reference.json", required=False)
     terminal_ok = isinstance(terminal, dict) and terminal.get("verified") is True
@@ -98,6 +110,8 @@ def main() -> None:
     if args.fertility_rate:
         diagnostics = read_json(case / "fertility.json")
         references = read_json(case / "stationary_reference.json")
+        wanted_years = {float(row["calendar_year"]) for row in rows}
+        diagnostics = [item for item in diagnostics if float(item["calendar_year"]) in wanted_years]
         by_year = {float(item["calendar_year"]): item for item in diagnostics}
         if (len(by_year) != len(diagnostics)
                 or len(rows) != len(diagnostics)
@@ -144,6 +158,8 @@ def main() -> None:
             ax.plot(xs, plotted, marker="o", linewidth=1.8, label="IRF")
         if ref is not None:
             ax.axhline(ref, color="0.35", linestyle="--", linewidth=1.1, label="Initial reference")
+        if args.include_pre_shock:
+            ax.axvline(0.0, color="0.25", linestyle=":", linewidth=1.0)
         if terminal_ok:
             tref = value(terminal, field)
             if tref is not None:
@@ -158,13 +174,17 @@ def main() -> None:
         handles, labels = ax.get_legend_handles_labels()
         if handles:
             ax.legend(fontsize=7, frameon=False)
-    fig.suptitle(str(contract.get("label", "Stationary preference shock IRF")), fontsize=13)
+    title = str(contract.get("label", "Stationary preference shock IRF"))
+    if args.max_years is not None:
+        title += f" — first {args.max_years:g} years shown"
+    fig.suptitle(title, fontsize=13)
     status = str(contract.get("status_label", "status unspecified"))
     description=str(contract.get("shock_description", "Permanent preference shock."))
     fig.text(0.5, 0.012, "Diagnostic under original household-entry rule. " + description + " " + status,
              ha="center", fontsize=8)
     fig.tight_layout(rect=(0, 0.035, 1, 0.94))
-    stem = "irf_fertility" if args.fertility_rate else ("irf_preshock" if args.include_pre_shock else "irf")
+    default_stem = "irf_fertility" if args.fertility_rate else ("irf_preshock" if args.include_pre_shock else "irf")
+    stem = args.output_stem or default_stem
     png = case / (stem + ".png")
     pdf = case / (stem + ".pdf")
     fig.savefig(png, dpi=180)
@@ -181,6 +201,7 @@ def main() -> None:
         "terminal_reference_used": terminal_ok,
         "native_period_fertility_used": args.fertility_rate,
         "pre_shock_point_included": args.include_pre_shock,
+        "max_years": args.max_years,
     }
     qa_name = "qa.json" if stem == "irf" else stem + "_qa.json"
     (case / qa_name).write_text(json.dumps(qa, indent=2, sort_keys=True) + "\n", encoding="utf-8")
