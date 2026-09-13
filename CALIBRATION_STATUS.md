@@ -1,5 +1,21 @@
 # Calibration Status
 
+**September 13 — announced four-step experiment: smoke submitted as 17705644.**
+The author clarified that this is ONE path known at time zero, not four
+successive-surprise solves. Reuse the fitted preference levels0.1289153146,
+0.1169660838,0.1056429092,0.09221854784 at2007/2011/2015/2019, then hold the
+last level for100additional periods (104dates total). No shock re-estimation.
+Retain today's original-queue, no-immigration, equal-rebate/PAYGO contract.
+The terminal at the last level must be freshly reconstructed from the current
+structural parameters and pass the native one-period audit before dispatch.
+The expected long-stage runtime is3–5hours, with a six-hour numerical cap,
+eight root mappings and a separate seven-hour absolute experiment deadline.
+Seven pure routing tests pass locally. The terminal reconstruction and exact-loop
+smoke are submitted on Torch; only a passed matching smoke may dispatch the
+long job. No long announced run is running yet. Existing runs remain independent.
+The manifest and submission receipt, together with the full scientific
+contract are under `output/model/e5f_original_queue_20260913a/announced_sequence/`.
+
 **September13 — introductory slide simplified at the author's request.**
 The September14 deck replaces the housing/fertility comparison with two historical
 data panels: period fertility and children ever born at ages40–44. The frame
