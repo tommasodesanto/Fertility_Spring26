@@ -168,6 +168,13 @@ authorized by this slide handoff.
 
 ## Build and delivery
 
+**Automatic builds are configured:** a background process runs the shared
+deck's dependency watcher (restart it after logout/reboot). Saving in either editor rebuilds and publishes both
+PDF copies after success; failures preserve the last good PDFs. See
+`ops/latex-preview/README.md` for logs and start/stop commands. While it is
+running, let it publish the PDFs; do not overwrite them with an older manual
+build. The commands below remain a manual fallback and verification recipe.
+
 Build from `latex/` because some images live outside this repository in the
 parent project's `Latex/` and `Outputs/Graphs/` directories. Preserve those
 relative paths; this source is not a self-contained portable bundle.
