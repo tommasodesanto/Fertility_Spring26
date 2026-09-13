@@ -140,7 +140,9 @@ The sequence of slides around the equilibrium concept is confusing and needs sub
 
 Is i too low? More generally, the whole calibration needs a much clearer explanation and must be clearer in Tommaso’s own understanding.
 
-**Status:** open; concise first-pass review requested. No changes authorized.
+**Status:** rate reference checked at the author's request; broader calibration explanation remains open. No parameter change authorized.
+
+The cited source is Greaney, Parkhomenko and Van Nieuwerburgh, *Dynamic Urban Economics*, February 16, 2025 version (local Zotero PDF `MAXJ699L/Dynamic_Urban_Economics.pdf`, physical/printed page 28, paragraph “Interest rate and discount factor”). It sets annual q=0.02 using the average ten-year real interest rate over 1962–2024 in a small open economy. Our July calibration note cites this choice explicitly at `latex/calibration_strategy_eqscale_provisional.tex:103`. The four-year gross factor is 1.02^4=1.08243216. The reference supports the parameter provenance; its underlying real-yield time series was not independently reconstructed here. Our single rate for positive and negative liquid wealth remains a separate simplifying assumption from the numerical value 2%. The author paper has a later December 2025 listing, but this verification concerns the actual February version in the project's reference library.
 
 ### M18 — Fertility measurement
 
