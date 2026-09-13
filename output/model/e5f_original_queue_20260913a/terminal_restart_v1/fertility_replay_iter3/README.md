@@ -1,5 +1,12 @@
 # Native fertility diagnostics for the saved 100-period path
 
+The requested simple view is `output/fertility_data_model.png` and `.pdf`:
+orange permanent-shock model path and empirical data only. The old fitted
+sequence is excluded. Regenerate with
+`python code/model/tools/build_e5f_fertility_path_overlay.py --data-model-only`.
+Exact artist/data checks and visual inspection pass; the model remains
+unconverged iteration3. CSV and verification JSON accompany the figure.
+
 ## Requested historical overlay
 
 `output/fertility_overlay.png` and `.pdf` overlay the native iteration3 path

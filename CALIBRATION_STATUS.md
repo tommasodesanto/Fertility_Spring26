@@ -1,5 +1,13 @@
 # Calibration Status
 
+**September13 — simplified fertility comparison requested and delivered.**
+The current two-series view is `fertility_data_model.png/pdf` under
+`output/model/e5f_original_queue_20260913a/terminal_restart_v1/fertility_replay_iter3/output/`.
+It shows only the orange permanent-shock iteration3 and the empirical fertility
+data, with the earlier fitted sequence excluded. Values and dating are unchanged;
+the caption retains the unconverged status. Source/artist checks and visual
+inspection pass. No numerical solve or presentation edit was performed.
+
 **September13 — requested fertility overlay prepared from saved results.**
 `terminal_restart_v1/fertility_replay_iter3/output/fertility_overlay.png/pdf`
 under the original-queue output packet overlays the prior recovered_sequence

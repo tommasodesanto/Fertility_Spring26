@@ -4,6 +4,7 @@ Display only: no model solve, fitted value change, extrapolation, or deck edit.
 Both curves retain the start-of-window dating of the historical slide.
 """
 from pathlib import Path
+import argparse
 import csv
 import hashlib
 import json
@@ -22,7 +23,45 @@ def read(path):
     return json.loads(path.read_text())
 
 
+def plot_data_model(years, permanent, data_years, data, initial, inputs):
+    """Requested two-series view, preserving all underlying observations."""
+    plt.rcParams.update({'font.size': 12, 'axes.spines.top': False, 'axes.spines.right': False})
+    fig, ax = plt.subplots(figsize=(9, 5.5))
+    x, y = np.r_[2005, 2007, years], np.r_[initial, initial, permanent]
+    model_line, = ax.plot(x, y, 'o-', color='#d97815', lw=2.3, ms=5, label='Model')
+    data_line, = ax.plot(data_years, data, 's--', color='#c73e3a', lw=2, ms=5, label='Data')
+    ax.set(title='Fertility: data and model', xlabel='Start of four-year period',
+           ylabel='Births per woman', xlim=(2005, 2041), ylim=(1.55, 2.15))
+    ax.set_xticks(years)
+    ax.grid(alpha=.16)
+    ax.legend(handles=[data_line, model_line], frameon=False, loc='upper right')
+    fig.text(.11, .035, 'Data: four-year averages. Model: permanent shock, unconverged.',
+             fontsize=9, color='#555555')
+    fig.subplots_adjust(left=.11, right=.97, top=.88, bottom=.19)
+    for artist, expected_x, expected_y in [(model_line, x, y), (data_line, data_years, data)]:
+        np.testing.assert_array_equal(artist.get_xdata(), expected_x)
+        np.testing.assert_array_equal(artist.get_ydata(), expected_y)
+    for ext in ['png', 'pdf']:
+        fig.savefig(CURRENT / f'fertility_data_model.{ext}', dpi=180, facecolor='white')
+    plt.close(fig)
+    with (CURRENT / 'fertility_data_model.csv').open('w') as stream:
+        writer = csv.writer(stream, lineterminator='\n')
+        writer.writerow(['window_start_year', 'model', 'data'])
+        for i, year in enumerate(years):
+            writer.writerow([int(year), permanent[i], data[i] if i < len(data) else ''])
+    (CURRENT / 'fertility_data_model_verification.json').write_text(json.dumps(dict(
+        status='passed', artist_data_verified=True, current_iteration=3,
+        model_series='permanent_shock', displayed_series=['Data', 'Model'],
+        model_solves=0, same_start_of_window_dating=True,
+        source_sha256={str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs}
+    ), indent=2) + '\n')
+    print(CURRENT / 'fertility_data_model.png')
+
+
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--data-model-only', action='store_true')
+    args = parser.parse_args()
     inputs = [HISTORY / 'figures/stock_forecast.csv', HISTORY / 'historical_fit.csv',
               HISTORY / 'figures/figure_verification.json',
               CURRENT / 'fertility.json', CURRENT / 'rows.json',
@@ -58,6 +97,9 @@ def main():
     np.testing.assert_allclose([float(r['model']) for r in fit], previous[:4], rtol=0, atol=2e-10)
     np.testing.assert_allclose(data, old_check['data'], rtol=0, atol=2e-10)
     initial = reference['initial']['fertility']['period_tfr_topcode_adjusted']
+    if args.data_model_only:
+        plot_data_model(years, permanent, data_years, data, initial, inputs)
+        return
     plt.rcParams.update({'font.size': 11, 'axes.spines.top': False, 'axes.spines.right': False})
     fig, ax = plt.subplots(figsize=(10.4, 6.4))
     blue, red, orange = '#1f5fa6', '#c73e3a', '#d97815'
