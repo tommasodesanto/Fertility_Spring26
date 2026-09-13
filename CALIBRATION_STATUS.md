@@ -1,5 +1,15 @@
 # Calibration Status
 
+**September 13 — fast-slide handoff; 2023 recovery already running.**
+The author is moving quick slide work to a Terra-medium chat for cost control.
+`docs/prompts/HANDOFF_fast_slides.md` contains the bounded first task and paths.
+Recovery job17707689 is running in the isolated Torch batch
+`permanent_2023_profile_20260913_retry2` (10/22 backward steps at handoff).
+It must reproduce five saved iteration3 rows before the 2023 lifecycle and
+large-home allocation figures replace the old patch figures. Do not duplicate
+this recovery. Automatic monitoring is paused and the prior subagent stopped.
+Worker and new plotting route remain uncommitted pending end-to-end validation.
+
 **September 13 — requested mock transition figure prepared from saved iteration 3.**
 The supplemental `macro_transition_mock.png/pdf` and full-horizon version live
 in `terminal_restart_v1/fertility_replay_iter3/output/` under the original-queue
