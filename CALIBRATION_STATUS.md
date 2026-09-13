@@ -1,5 +1,25 @@
 # Calibration Status
 
+**September 13 — requested mock transition figure prepared from saved iteration 3.**
+The supplemental `macro_transition_mock.png/pdf` and full-horizon version live
+in `terminal_restart_v1/fertility_replay_iter3/output/` under the original-queue
+packet. Four panels show period fertility/data, reconstructed cohort completed
+fertility, housing demand/supply and household mass, and housing per household.
+The source is still the one-permanent-shock, unconverged iteration3, not the
+announced four-shock exercise. Completed fertility uses the cohort conditional-
+mean recursion and fixed top-bin weight; definitions and checks are in
+`macro_transition_verification.json`. Both figures visually inspected; no solve.
+Rebuild with `build_e5f_fertility_path_overlay.py --macro-transition`.
+
+Corrected announced smoke17705757 reproduced the terminal, passed exact native
+constant-vector equivalence and the stationary six-date joint root/drift check.
+It stopped at the separate six-date announced diagnostic: placing the inherited
+2007 households immediately at terminal prices fails the native dated budget
+gate (mass0.0030268, excess0.3219244). No long announced run was dispatched.
+This requires a feasible smoke price-path guess, preserving all gates; it does
+not negate the successful stationary endpoint reproduction. The urgent mock
+figure request took priority; no further scientific arm was launched.
+
 **September 13 — announced four-step experiment: terminal reproduced; corrected smoke 17705757.**
 The author clarified that this is ONE path known at time zero, not four
 successive-surprise solves. Reuse the fitted preference levels0.1289153146,

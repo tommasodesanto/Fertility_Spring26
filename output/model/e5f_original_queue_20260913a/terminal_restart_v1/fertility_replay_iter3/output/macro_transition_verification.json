@@ -1,0 +1,99 @@
+{
+  "status": "passed",
+  "model_solves": 0,
+  "current_iteration": 3,
+  "finite_equilibrium_converged": false,
+  "artist_data_verified": true,
+  "cohort_stock_identity_verified": true,
+  "completed_fertility_definition": "Reconstructed top-code-adjusted children ever born after births in model age cell42\u201345; stationary prehistory, age-only survival and childless entry. Not a direct saved-distribution measurement or an empirical ages40\u201344 match.",
+  "data_definition": "Four-year fertility averages;2007 denotes2008\u20132011,2019 denotes2020\u20132023.",
+  "housing_definition": "Aggregate services demanded and supplied shown separately because markets are not yet cleared.",
+  "terminal_reference": {
+    "housing_index": 48.265990998775735,
+    "households_index": 34.94542724969186,
+    "housing_per_household_index": 138.11818826510793
+  },
+  "completed_minimum": {
+    "year": 2039,
+    "value": 1.7107176869416159
+  },
+  "selected_rows": [
+    {
+      "window_start_year": 2007,
+      "period_fertility": 1.6818645215857357,
+      "completed_fertility_reconstructed": 2.071182985397819,
+      "housing_index": 99.18794365555786,
+      "supply_index": 99.08747969530766,
+      "households_index": 100.00000000000048,
+      "housing_per_household_index": 99.18794365555738,
+      "relative_market_residual": 0.001013891568935866
+    },
+    {
+      "window_start_year": 2023,
+      "period_fertility": 1.7023443399127078,
+      "completed_fertility_reconstructed": 1.8230999869371063,
+      "housing_index": 98.1210076359976,
+      "supply_index": 97.96341740141348,
+      "households_index": 100.00000000009233,
+      "housing_per_household_index": 98.121007635907,
+      "relative_market_residual": 0.001608664119365914
+    },
+    {
+      "window_start_year": 2063,
+      "period_fertility": 1.763609597994745,
+      "completed_fertility_reconstructed": 1.7426745733483988,
+      "housing_index": 88.38969357441984,
+      "supply_index": 90.18764753153609,
+      "households_index": 86.41254235120887,
+      "housing_per_household_index": 102.28803732584927,
+      "relative_market_residual": 0.019935700800794827
+    },
+    {
+      "window_start_year": 2103,
+      "period_fertility": 1.8572033842807665,
+      "completed_fertility_reconstructed": 1.8308512716496532,
+      "housing_index": 77.85281635533315,
+      "supply_index": 80.24989524591284,
+      "households_index": 68.54839223783237,
+      "housing_per_household_index": 113.57351181223707,
+      "relative_market_residual": 0.029870180929635372
+    },
+    {
+      "window_start_year": 2403,
+      "period_fertility": 2.082766733931701,
+      "completed_fertility_reconstructed": 2.0836081391470755,
+      "housing_index": 52.95166760081602,
+      "supply_index": 49.68569162668262,
+      "households_index": 38.82478006198842,
+      "housing_per_household_index": 136.38626546312003,
+      "relative_market_residual": 0.06573272640889387
+    }
+  ],
+  "plots": {
+    "macro_transition_mock": {
+      "first_year": 2003,
+      "last_year": 2103
+    },
+    "macro_transition_full_horizon": {
+      "first_year": 2003,
+      "last_year": 2403
+    }
+  },
+  "source_sha256": {
+    "output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/recovered_sequence/figures/stock_forecast.csv": "230d215bbc8502d11a7eaf9cd2837c3b3d55692c0da4886d1fe54bf46776c92f",
+    "output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/recovered_sequence/historical_fit.csv": "0dbd044dcad10df533cb1ebb01ec2f4a5bf2a9f9ed62093eb15300e25e49e978",
+    "output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/recovered_sequence/figures/figure_verification.json": "289bbe4dcc284f8d0d9dde37b81f4e64da597c67d1f18838f58562b62ab86a12",
+    "output/model/e5f_original_queue_20260913a/terminal_restart_v1/fertility_replay_iter3/output/fertility.json": "85787077d5193a48c571ae14b6f4916f47765d4c393165ab506d64641a1052ce",
+    "output/model/e5f_original_queue_20260913a/terminal_restart_v1/fertility_replay_iter3/output/rows.json": "ee80ab27e9a430367904ead7b1bdc54317152141cfc464fd1dbc748530081844",
+    "output/model/e5f_original_queue_20260913a/terminal_restart_v1/fertility_replay_iter3/output/stationary_reference.json": "c1eeb1a36d87b4d7555169b45b11ed8d1af220a4499101efe300680f16f9867b",
+    "output/model/e5f_original_queue_20260913a/terminal_restart_v1/fertility_replay_iter3/output/lead_verification.json": "213372873258dcb58b2f528b92c6296ec999fd83bbd05b7e25fbfbc85194662c"
+  },
+  "visual_qa": "Both exported PNG canvases inspected: all panels, labels and legends fit without clipping; PDF uses the same matplotlib figure.",
+  "cohort_identity_basis": {
+    "survival": "run_e5f_open_population_transition.advance_sequential_calendar_distribution applies a common age-only survival factor before advancing each age cell. The frozen cluster source was inspected and matches this recursion.",
+    "entry": "run_dynamic_population_transition.entrant_cohort assigns only n=0 to the youngest age cell. No immigration or older-age reweighting in this experiment.",
+    "state": "intergen_eqscale_seq_optimized.solver.advance_cohort_one_period_markov_income transports nn unchanged in all non-birth transitions.",
+    "formula": "C[t,j]=C[t-1,j-1]+birth_flow_topcode_adjusted[t,j]/age_mass[t,j]. Pre-2007 C is cumulative initial stationary age rates; output is post-birth age cell42\u201345.",
+    "checks": "Rate/flow equality at all100dates; recurrence/diagonal equality; initial stationary completed value2.10000082255. Reconstructed quantity; not a direct distribution remeasurement."
+  }
+}

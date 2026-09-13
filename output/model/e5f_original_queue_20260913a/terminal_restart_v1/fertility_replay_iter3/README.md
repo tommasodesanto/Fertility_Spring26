@@ -63,3 +63,32 @@ Lead checks: plotting validated using completed ten-period native observations;
 receipt is required on the node. Lead repaired the delegated launcher's log
 placement, NumPy import, input pin checks, terminal-value count (100 dated
 values plus the terminal value), and post-replay figure generation before launch.
+
+## Mock transition panels
+
+`output/macro_transition_mock.png/pdf` shows2003–2103: period fertility and
+US four-year-average data, reconstructed completed fertility, housing services
+demanded/supplied and household mass, and housing services per household.
+`output/macro_transition_full_horizon.png/pdf` uses the full saved horizon.
+These are the unchanged one-permanent-shock iteration3, **not** the new four-shock
+announced path or a converged historical fit. All labels retain start-of-window
+dating:2007 data are2008–2011 and2019 data are2020–2023. No model solve.
+
+Completed fertility is reconstructed from saved age-specific birth rates along
+cohorts, using the stationary prehistory. Age-only survival cancels in cohort
+means; entry starts childless; non-birth transitions preserve children ever born.
+The mean stock recursion is C[t,j]=C[t-1,j-1]+births[t,j]/mass[t,j]. Output uses
+the model's final fertile age cell42–45 after its births and its fixed3+ bin
+weight. It is not a directly saved-distribution measurement or an empirical
+ages40–44 match. No CPS data overlay is asserted in that panel.
+
+Both figure canvases were visually inspected. Sidecar
+`output/macro_transition_verification.json` records source hashes, the native
+flow/rate and independent cohort-diagonal checks, definitions and selected
+values. `output/macro_transition_mock.csv` supplies all100observations.
+Rebuild: `python code/model/tools/build_e5f_fertility_path_overlay.py --macro-transition`.
+
+At2063, housing used is11.61% below initial, housing supplied9.81% below,
+household mass13.59% below and services per household2.29% above. The
+market gap remains1.99%, so neither housing curve is a cleared allocation.
+At2103, housing used is22.15% below and household mass31.45% below.

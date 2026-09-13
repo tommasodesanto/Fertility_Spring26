@@ -23,6 +23,112 @@ def read(path):
     return json.loads(path.read_text())
 
 
+def plot_macro_transition(fertility, rows, reference, fit, inputs):
+    """Saved-path mock figures; cohort stocks use the original queue identity.
+
+    Survival depends only on age, entry is childless at age 18, and all other
+    transitions preserve children ever born. Therefore the cohort conditional
+    mean obeys C[t,j] = C[t-1,j-1] + births[t,j]/mass[t,j]. The initial stationary
+    age rates supply pre-2007 history. These are reconstructed model stocks,
+    with the same fixed 3+ weight as the native birth-flow diagnostics.
+    """
+    years=np.array([r['calendar_year'] for r in rows],dtype=int)
+    rates=np.array([r['age_specific_birth_rate_topcode_adjusted'] for r in fertility])
+    old_rates=np.array(reference['initial']['fertility']['age_specific_birth_rate_topcode_adjusted'])
+    ages=np.array(fertility[0]['age_cell_start'])
+    np.testing.assert_array_equal(years,2007+4*np.arange(100))
+    np.testing.assert_array_equal(ages,18+4*np.arange(len(ages)))
+    end_age=int(np.flatnonzero(ages==42)[0])
+    assert np.all(rates[:,end_age+1:]==0) and np.all(old_rates[end_age+1:]==0)
+    # Check rates against native flows and independently accumulate the stock
+    # by recurrence and by cohort-diagonal summation.
+    for d,row,rate in zip(fertility,rows,rates):
+        masses=np.array(d['age_mass']);flows=np.array(d['birth_flow_topcode_adjusted'])
+        np.testing.assert_allclose(rate,np.divide(flows,masses,out=np.zeros_like(flows),where=masses>1e-15),atol=2e-12,rtol=0)
+        assert abs(flows.sum()-row['birth_children_topcode_adjusted'])<2e-10
+    stocks=[]; previous=np.cumsum(old_rates)
+    for rate in rates:
+        current=np.r_[0.,previous[:-1]]+rate
+        stocks.append(current); previous=current
+    completed=np.array(stocks)[:,end_age]
+    diagonal=np.array([sum((old_rates[j] if t-end_age+j<0 else rates[t-end_age+j,j])
+        for j in range(end_age+1)) for t in range(len(rows))])
+    np.testing.assert_allclose(completed,diagonal,atol=2e-12,rtol=0)
+    period=rates.sum(axis=1); initial_tfr=float(old_rates.sum())
+    initial=reference['initial']['quantities']; terminal=reference['terminal']['quantities']
+    housing=np.array([r['housing_demand'] for r in rows])/initial['housing_demand']*100
+    supply=np.array([r['housing_supply'] for r in rows])/initial['housing_demand']*100
+    households=np.array([r['adult_population'] for r in rows])/initial['adult_population']*100
+    per_household=housing/households*100
+    terminal_housing=100*terminal['housing_demand']/initial['housing_demand']
+    terminal_households=100*terminal['adult_population']/initial['adult_population']
+    data_years=np.array([int(r['year']) for r in fit]); data=np.array([float(r['target']) for r in fit])
+    plt.rcParams.update({'font.size':13,'axes.spines.top':False,'axes.spines.right':False,
+                         'axes.titlesize':15,'axes.labelsize':12})
+    orange,blue,grey='#d97815','#245f99','#777777'
+    plotted={}
+    for last,stem in ((2103,'macro_transition_mock'),(2403,'macro_transition_full_horizon')):
+        keep=years<=last; x=np.r_[2003,2007,years[keep]]
+        fig,axes=plt.subplots(2,2,figsize=(13.4,7.8))
+        def line(ax,values,pre,label,color,style='-'):
+            y=np.r_[pre,pre,values[keep]]
+            artist,=ax.plot(x,y,color=color,lw=2.3,ls=style,label=label)
+            np.testing.assert_array_equal(artist.get_xdata(),x)
+            np.testing.assert_array_equal(artist.get_ydata(),y)
+            return artist
+        ax=axes[0,0]
+        line(ax,period,initial_tfr,'Model',orange)
+        artist,=ax.plot(data_years,data,'s--',color=blue,lw=1.6,ms=5,label='US data')
+        np.testing.assert_array_equal(artist.get_ydata(),data)
+        ax.axhline(initial_tfr,color=grey,lw=.9,ls=':')
+        ax.set(title='Period fertility',ylabel='Births per woman',ylim=(1.55,2.16));ax.legend(frameon=False,fontsize=11)
+        ax=axes[0,1]
+        line(ax,completed,initial_tfr,'Model cohort',orange)
+        ax.axhline(initial_tfr,color=grey,lw=.9,ls=':')
+        ax.set(title='Completed fertility',ylabel='Children by the end of fertile ages',ylim=(1.55,2.16))
+        ax=axes[1,0]
+        line(ax,housing,100,'Housing services used',orange)
+        line(ax,supply,100,'Housing supplied',grey,':')
+        line(ax,households,100,'Households',blue)
+        ax.set(title='Aggregate housing and households',ylabel='Initial steady state = 100')
+        ax.legend(frameon=False,fontsize=10.5,loc='lower left')
+        ax=axes[1,1]
+        line(ax,per_household,100,'Housing per household',orange)
+        ax.set(title='Housing services per household',ylabel='Initial steady state = 100')
+        for ax in axes.flat:
+            ax.axvline(2023,color='.75',lw=.8,ls='--')
+            ax.set_xlim(2003,last+2);ax.grid(axis='y',alpha=.16)
+            ax.set_xlabel('Start of four-year period')
+            ax.set_xticks([2007,2023,2043,2063,2083,2103] if last==2103 else [2007,2103,2203,2303,2403])
+            ax.tick_params(axis='x',labelsize=10.5)
+        fig.suptitle('Demographic adjustment after a permanent preference decline',fontsize=17,y=.97)
+        fig.text(.07,.028,'Preference falls 38.1% in 2007 and stays fixed. Numerical diagnostic: transition not converged.',fontsize=10,color='.3')
+        fig.subplots_adjust(left=.075,right=.98,top=.87,bottom=.13,wspace=.25,hspace=.48)
+        for ext in ('png','pdf'):fig.savefig(CURRENT/f'{stem}.{ext}',dpi=180,facecolor='white')
+        plt.close(fig)
+        plotted[stem]=dict(first_year=2003,last_year=last)
+    table=[]
+    for i,y in enumerate(years):
+        table.append(dict(window_start_year=int(y),period_fertility=float(period[i]),
+            completed_fertility_reconstructed=float(completed[i]),housing_index=float(housing[i]),
+            supply_index=float(supply[i]),households_index=float(households[i]),
+            housing_per_household_index=float(per_household[i]),relative_market_residual=rows[i]['relative_market_residual']))
+    with (CURRENT/'macro_transition_mock.csv').open('w') as stream:
+        writer=csv.DictWriter(stream,fieldnames=list(table[0]),lineterminator='\n');writer.writeheader();writer.writerows(table)
+    verification=dict(status='passed',model_solves=0,current_iteration=3,finite_equilibrium_converged=False,
+        artist_data_verified=True,cohort_stock_identity_verified=True,
+        completed_fertility_definition='Reconstructed top-code-adjusted children ever born after births in model age cell42–45; stationary prehistory, age-only survival and childless entry. Not a direct saved-distribution measurement or an empirical ages40–44 match.',
+        data_definition='Four-year fertility averages;2007 denotes2008–2011,2019 denotes2020–2023.',
+        housing_definition='Aggregate services demanded and supplied shown separately because markets are not yet cleared.',
+        terminal_reference=dict(housing_index=terminal_housing,households_index=terminal_households,
+             housing_per_household_index=terminal_housing/terminal_households*100),
+        completed_minimum=dict(year=int(years[completed.argmin()]),value=float(completed.min())),
+        selected_rows=[table[i] for i in (0,4,14,24,99)],plots=plotted,
+        source_sha256={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs})
+    (CURRENT/'macro_transition_verification.json').write_text(json.dumps(verification,indent=2)+'\n')
+    print(json.dumps(verification['selected_rows'],indent=2))
+
+
 def plot_data_model(years, permanent, data_years, data, initial, inputs):
     """Requested two-series view, preserving all underlying observations."""
     plt.rcParams.update({'font.size': 12, 'axes.spines.top': False, 'axes.spines.right': False})
@@ -61,6 +167,7 @@ def plot_data_model(years, permanent, data_years, data, initial, inputs):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--data-model-only', action='store_true')
+    parser.add_argument('--macro-transition', action='store_true')
     args = parser.parse_args()
     inputs = [HISTORY / 'figures/stock_forecast.csv', HISTORY / 'historical_fit.csv',
               HISTORY / 'figures/figure_verification.json',
@@ -97,6 +204,9 @@ def main():
     np.testing.assert_allclose([float(r['model']) for r in fit], previous[:4], rtol=0, atol=2e-10)
     np.testing.assert_allclose(data, old_check['data'], rtol=0, atol=2e-10)
     initial = reference['initial']['fertility']['period_tfr_topcode_adjusted']
+    if args.macro_transition:
+        plot_macro_transition(fertility,native,reference,fit,inputs)
+        return
     if args.data_model_only:
         plot_data_model(years, permanent, data_years, data, initial, inputs)
         return
