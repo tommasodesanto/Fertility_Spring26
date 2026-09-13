@@ -1,5 +1,15 @@
 # Original household-queue afternoon experiments
 
+**19:17 UTC collection:** ten-period job17700926 finished at its eight-mapping
+budget without convergence. `terminal_10/` holds its native rows, fertility,
+stationary references, root receipt, terminal distances and visually inspected
+supplemental plot (regenerate with `code/model/tools/build_e5f_fixed_terminal_horizon_figures.py --case-dir output/model/e5f_original_queue_20260913a/terminal_10`).
+After40years household mass0.917922 remains162.67% above terminal0.349454.
+The plot labels the failed root explicitly. The stationary100 arm has completed
+three mappings, latest score8.48344 versus2e-4 required, and is still running.
+Appendix algorithms are in `latex/appendix_solution_algorithms.tex` with a
+standalone two-page extract at `output/pdf/solution_algorithms.pdf`.
+
 **18:41 UTC — new author-requested short test:** job17700926 reuses the verified
 new steady-state endpoint for a ten-period (40-year) transition. It first runs
 the same ten-period root/replay with no shock; only a passed no-shock check

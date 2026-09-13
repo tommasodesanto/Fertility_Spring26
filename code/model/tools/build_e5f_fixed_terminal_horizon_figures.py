@@ -25,7 +25,7 @@ import numpy as np
 
 FERTILITY_FIELD = "period_tfr_topcode_adjusted"
 QUANTITY_FIELDS = (
-    (FERTILITY_FIELD, "Fertility rate (top-code adjusted period diagnostic)"),
+    (FERTILITY_FIELD, "Period fertility rate\n(top-code adjusted)"),
     ("adult_population", "Household population"),
     ("asset_price", "House price"),
     ("renter_price", "Rent"),
@@ -236,7 +236,7 @@ def main() -> None:
         out.update({field: series[field][idx] for field, _ in fields})
         qa_rows.append(out)
     with (case / "fixed_terminal_horizon_raw.csv").open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(qa_rows[0]))
+        writer = csv.DictWriter(handle, fieldnames=list(qa_rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(qa_rows)
     qa = {

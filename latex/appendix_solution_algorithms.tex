@@ -1,0 +1,28 @@
+% Closed-population algorithms used by the original household-queue experiment.
+% These frames describe the solver and acceptance checks, not convergence results.
+\begin{frame}{Steady-State Solution}
+Fixed preferences and tax rules; no immigration.
+
+\medskip
+\begin{enumerate}\setlength\itemsep{0.55em}
+ \item Guess the house price $P$, pension $\varpi$, and rebate $T$; derive rent $r$ from asset pricing.
+ \item Solve households backward over age: optimize saving and housing conditional on fertility and tenure, then compute choice probabilities.
+ \item Construct the stationary household composition. Set household mass equal to housing supply divided by mean housing per household.
+ \item Update $P$, $\varpi$, and $T$ until household entry replaces exits, payroll taxes fund pensions, and property taxes fund equal rebates.
+ \item Apply the population law for one period and verify that the distribution and entry queue reproduce themselves; check markets and both budgets.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Transition Solution}
+Permanent preference change with a stationary terminal condition.
+
+\medskip
+\begin{enumerate}\setlength\itemsep{0.4em}
+ \item Fix inherited households and the entry queue; solve the new steady state for the terminal value.
+ \item Guess price, pension, and rebate paths $(P_t,\varpi_t,T_t)$; derive rents from asset pricing.
+ \item Using these paths, solve households backward in calendar time.
+ \item Advance households and entry queues; aggregate housing demand and taxes.
+ \item Update all three paths jointly until housing clears and both fiscal budgets balance at every date.
+ \item Check terminal distributions and queues against the steady state; extend the horizon to test stability of early responses.
+\end{enumerate}
+\end{frame}

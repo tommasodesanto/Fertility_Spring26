@@ -1053,18 +1053,7 @@ For renters, $q_t=h_t^R$; for owners, $q_t=h_{t+1}$. Choice probabilities are in
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Perfect-Foresight Solution}
-\begin{enumerate}\setlength\itemsep{0.7em}
- \item Guess the price and pension paths and compute rents from asset pricing.
- \item Solve households backward using date-specific continuation values.
- \item Advance household and population distributions from the inherited state.
- \item Update prices and pensions until housing clears and the payroll budget balances at every date.
- \item Extend the horizon and check that the measured outcomes are stable.
-\end{enumerate}
-
-\vfill
-A stationary terminal value supplies a boundary condition; it does not establish stationarity of the simulated endpoint.
-\end{frame}
+\input{appendix_solution_algorithms.tex}
 
 \begin{frame}{Fertility by Age: Measurement Comparison}
 \centering

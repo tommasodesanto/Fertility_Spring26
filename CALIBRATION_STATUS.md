@@ -1,5 +1,39 @@
 # Calibration Status
 
+**September 13, 19:17 UTC — 40-year diagnostic collected; algorithm appendix added.**
+The ten-period stationary-endpoint test17700926 stopped at its eight-mapping
+budget without convergence (shocked stage23.5minutes). At40years, carried
+household population is0.917922 of initial mass1, against verified terminal
+mass0.349454:162.67% above terminal, with12.62% of the eventual population
+fall completed in this unconverged calculation. The final four-year period
+has period fertility1.68017 against terminal2.10. Full distribution relative
+L1 is2.87960; adjusted queue maximum relative gap1.09319. These are distances
+of an unconverged iterate, not equilibrium convergence evidence. Collected
+inputs, receipts, and visually checked supplemental figures are under
+`output/model/e5f_original_queue_20260913a/terminal_10/`.
+
+The100-period stationary-endpoint job17699174 has completed three valid
+mappings. Score44.5491 ->14.2871 ->8.48344, versus2e-4 acceptance; latest dated
+maximum housing gap7.4765%, PAYGO gap0.7082%, rebate gap4.2417%. Each mapping
+still takes28.3minutes. It and finite100/history6/history24 remain running;
+history6 has completed one of four windows, history24 none. No new historical
+fit or policy result is accepted. Existing presentation results retain their
+finite-boundary qualification.
+
+The sequence-space worker completed an interface prototype with four reported
+local interface tests, but no native-model evaluation or package factorization
+was validated. It has not built fast-news derivatives or demonstrated speedup.
+Review `docs/model/e5f_sequence_space_prototype.md` before further work.
+
+Two algorithm frames now replace the prior single solution frame in the deck
+appendix. Source `latex/appendix_solution_algorithms.tex` describes the original
+closed-population stationary solver and the permanent-shock stationary-endpoint
+transition, without claiming convergence or describing the finite historical
+boundary as a stationary endpoint. Extract: `output/pdf/solution_algorithms.pdf`;
+full-deck PDF pages56–57. Two final LaTeX passes and visual inspection pass for
+both changed frames. Three pre-existing overfull figure frames at source
+lines486/504/522 remain outside this edit.
+
 **September 13, 18:51 UTC — long stationary-endpoint path improving; sequence-space prototype delegated.**
 The100-period (400-year) stationary-endpoint arm17699174 has completed two
 valid mappings. Maximum scaled residual falls44.5491 to14.2871, versus2e-4
