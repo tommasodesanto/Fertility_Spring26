@@ -1,0 +1,338 @@
+{
+  "status": "PASS",
+  "builder": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/housing/build_historical_stock.py",
+  "builder_sha256": "1c51d6e2c90d4ae6993af1e3587848b7e618683cc37907b25b2c783491c1d908",
+  "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/Spatial_aggregate_withmicrodata/raw_data/extract27.dta",
+  "source_size": 9919999546,
+  "source_mtime_ns": 1751924817336253881,
+  "source_sha256_from_existing_receipt": "edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324e",
+  "source_rehashed_this_pass": false,
+  "sample": "ACS1-year SAMPLE=year*100+1; GQ1or2; PERNUM1; RELATE1; HHWT>0; ages18\u201385; OWNERSHP1or2; ROOMS>0. HHWT already scaled in source.42-metro subset uses fixed MET2013 membership, not admitted PUMA.",
+  "room_definition": "Physical rooms occupied; min(ROOMS,9) per household before HHWT aggregation. Covers occupied renter/owner housing, excludes vacancies. Comparable cap9 across2007 and later coding vintages.",
+  "metro_ids": [
+    12060,
+    12420,
+    12580,
+    14460,
+    15380,
+    16740,
+    16980,
+    17140,
+    18140,
+    19100,
+    19740,
+    19820,
+    26420,
+    26900,
+    27260,
+    28140,
+    29820,
+    31080,
+    33100,
+    33340,
+    33460,
+    34980,
+    35380,
+    35620,
+    36420,
+    36740,
+    37980,
+    38060,
+    38300,
+    38900,
+    39300,
+    39580,
+    40900,
+    41180,
+    41620,
+    41700,
+    41740,
+    41860,
+    42660,
+    45300,
+    47260,
+    47900
+  ],
+  "series": [
+    {
+      "records": 1145374,
+      "households": 109963013.0,
+      "total_occupied_rooms_literal": 619275060.0,
+      "total_occupied_rooms_capped9": 619275060.0,
+      "calendar_year": 2007,
+      "geography": "national",
+      "mean_occupied_rooms_capped9": 5.6316668951222715,
+      "total_rooms_index_2007_100": 100.0,
+      "households_index_2007_100": 100.0
+    },
+    {
+      "records": 516656,
+      "households": 53456727.0,
+      "total_occupied_rooms_literal": 298707404.0,
+      "total_occupied_rooms_capped9": 298707404.0,
+      "calendar_year": 2007,
+      "geography": "42_metros",
+      "mean_occupied_rooms_capped9": 5.587835633857644,
+      "total_rooms_index_2007_100": 100.0,
+      "households_index_2007_100": 100.0
+    },
+    {
+      "records": 1168026,
+      "households": 112069971.0,
+      "total_occupied_rooms_literal": 657664302.0,
+      "total_occupied_rooms_capped9": 640582668.0,
+      "calendar_year": 2011,
+      "geography": "national",
+      "mean_occupied_rooms_capped9": 5.715917138945276,
+      "total_rooms_index_2007_100": 103.44073407380559,
+      "households_index_2007_100": 101.91606063031394
+    },
+    {
+      "records": 517196,
+      "households": 54711668.0,
+      "total_occupied_rooms_literal": 317563984.0,
+      "total_occupied_rooms_capped9": 308372921.0,
+      "calendar_year": 2011,
+      "geography": "42_metros",
+      "mean_occupied_rooms_capped9": 5.636328269136302,
+      "total_rooms_index_2007_100": 103.23578085797968,
+      "households_index_2007_100": 102.34758293376248
+    },
+    {
+      "records": 1170846,
+      "households": 112954395.0,
+      "total_occupied_rooms_literal": 663765785.0,
+      "total_occupied_rooms_capped9": 645895950.0,
+      "calendar_year": 2012,
+      "geography": "national",
+      "mean_occupied_rooms_capped9": 5.718201137724654,
+      "total_rooms_index_2007_100": 104.29871824646062,
+      "households_index_2007_100": 102.72035288811156
+    },
+    {
+      "records": 531345,
+      "households": 55443172.0,
+      "total_occupied_rooms_literal": 322056496.0,
+      "total_occupied_rooms_capped9": 312435726.0,
+      "calendar_year": 2012,
+      "geography": "42_metros",
+      "mean_occupied_rooms_capped9": 5.635242622842719,
+      "total_rooms_index_2007_100": 104.59590951418132,
+      "households_index_2007_100": 103.7159869514645
+    },
+    {
+      "records": 1188387,
+      "households": 115012925.0,
+      "total_occupied_rooms_literal": 676807904.0,
+      "total_occupied_rooms_capped9": 657923590.0,
+      "calendar_year": 2015,
+      "geography": "national",
+      "mean_occupied_rooms_capped9": 5.7204317688642385,
+      "total_rooms_index_2007_100": 106.24093113002161,
+      "households_index_2007_100": 104.59237325554184
+    },
+    {
+      "records": 546911,
+      "households": 56998998.0,
+      "total_occupied_rooms_literal": 330953983.0,
+      "total_occupied_rooms_capped9": 320911099.0,
+      "calendar_year": 2015,
+      "geography": "42_metros",
+      "mean_occupied_rooms_capped9": 5.630118252254189,
+      "total_rooms_index_2007_100": 107.43325900284681,
+      "households_index_2007_100": 106.62642701637905
+    },
+    {
+      "records": 1236397,
+      "households": 119406797.0,
+      "total_occupied_rooms_literal": 705237995.0,
+      "total_occupied_rooms_capped9": 683982870.0,
+      "calendar_year": 2019,
+      "geography": "national",
+      "mean_occupied_rooms_capped9": 5.728173665021766,
+      "total_rooms_index_2007_100": 110.44896108039616,
+      "households_index_2007_100": 108.58814590684233
+    },
+    {
+      "records": 568829,
+      "households": 59498911.0,
+      "total_occupied_rooms_literal": 345404725.0,
+      "total_occupied_rooms_capped9": 334231933.0,
+      "calendar_year": 2019,
+      "geography": "42_metros",
+      "mean_occupied_rooms_capped9": 5.617446225192256,
+      "total_rooms_index_2007_100": 111.89275140967045,
+      "households_index_2007_100": 111.30294415518556
+    },
+    {
+      "records": 1301851,
+      "households": 128086487.0,
+      "total_occupied_rooms_literal": 757502386.0,
+      "total_occupied_rooms_capped9": 732260287.0,
+      "calendar_year": 2023,
+      "geography": "national",
+      "mean_occupied_rooms_capped9": 5.716920685005593,
+      "total_rooms_index_2007_100": 118.24475653839507,
+      "households_index_2007_100": 116.4814272595459
+    },
+    {
+      "records": 588017,
+      "households": 64166203.0,
+      "total_occupied_rooms_literal": 371472207.0,
+      "total_occupied_rooms_capped9": 358286293.0,
+      "calendar_year": 2023,
+      "geography": "42_metros",
+      "mean_occupied_rooms_capped9": 5.583722836147871,
+      "total_rooms_index_2007_100": 119.94556820560096,
+      "households_index_2007_100": 120.03391640494563
+    }
+  ],
+  "verification": [
+    {
+      "year": 2007,
+      "geography": "42_metros",
+      "field": "records",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2007,
+      "geography": "42_metros",
+      "field": "households",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2007,
+      "geography": "42_metros",
+      "field": "total_occupied_rooms_capped9",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2007,
+      "geography": "national",
+      "field": "records",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2007,
+      "geography": "national",
+      "field": "households",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2007,
+      "geography": "national",
+      "field": "total_occupied_rooms_literal",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2011,
+      "geography": "national",
+      "field": "records",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2011,
+      "geography": "national",
+      "field": "households",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2011,
+      "geography": "national",
+      "field": "total_occupied_rooms_literal",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2012,
+      "geography": "42_metros",
+      "field": "records",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2012,
+      "geography": "42_metros",
+      "field": "households",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2012,
+      "geography": "42_metros",
+      "field": "total_occupied_rooms_capped9",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2015,
+      "geography": "national",
+      "field": "records",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2015,
+      "geography": "national",
+      "field": "households",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2015,
+      "geography": "national",
+      "field": "total_occupied_rooms_literal",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2019,
+      "geography": "national",
+      "field": "records",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2019,
+      "geography": "national",
+      "field": "households",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2019,
+      "geography": "national",
+      "field": "total_occupied_rooms_literal",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2023,
+      "geography": "42_metros",
+      "field": "records",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2023,
+      "geography": "42_metros",
+      "field": "households",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2023,
+      "geography": "42_metros",
+      "field": "total_occupied_rooms_capped9",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2023,
+      "geography": "national",
+      "field": "records",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2023,
+      "geography": "national",
+      "field": "households",
+      "absolute_gap": 0.0
+    },
+    {
+      "year": 2023,
+      "geography": "national",
+      "field": "total_occupied_rooms_literal",
+      "absolute_gap": 0.0
+    }
+  ],
+  "elapsed_seconds": 21.356973408997874,
+  "interpretation": "Total stock is weighted sum of occupied capped rooms, not housing-unit count or mean rooms. National household weights are comparable geography to nationally conditioned model heads; historical national household-count growth is an externally conditioned component, not fully predicted.42metro series retains initial calibration geography. No target or model changes."
+}

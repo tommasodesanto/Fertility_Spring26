@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "calendar_year": 2007,
+  "replay_maximum_abs": 0.0,
+  "seconds": 245.28781015053391,
+  "forecast_dates": [
+    2007,
+    2011,
+    2015,
+    2019,
+    2023,
+    2027
+  ],
+  "source_sha256": {
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/finite_sequences_20260912/plan_0.json": "0e7df05ec0ef45cc280de76802e9f19d1fa599a7b1d5e7b5bd2a78216749cd0c",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/finite_sequences_20260912/resume_2011/results/arm_0/realized_fit.json": "816ee8eaf501a83264243391f9ae4f62df428c1ba94dd50b935f394aeb03f1e3",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/finite_sequences_20260912/results/arm_0/trial_00_2007/forecast_6_0/vintage/2007/root_receipt.json": "5b898532e02a18290e5f2a80cfc6f0b83e2f2a2996f0ef179f8c08870a776d4a",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/finite_sequences_20260912/results/arm_0/trial_00_2007/forecast_6_0/vintage/2007/expected_transition.csv": "bf9ac8a7aebab69882310ad1fb44ec68ac371ee50e4910b86a4560c96a4cd2fc",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/finite_sequences_20260912/results/arm_0/trial_00_2007/forecast_6_0/vintage/2007/realized_period.json": "5024edfa3dd7dad4b963bb74a12c8e22ddeae40ce2a13a46ea37c9afa98a80a2",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/finite_sequences_20260912/results/arm_0/trial_00_2007/terminal/terminal_state.pkl.gz": "86ff1b23262f054e60d4e964c660bba7562a4932909f69716c4d1f1ccfd7ebb6",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/finite_sequences_20260912/results/arm_0/trial_00_2007/terminal/root_receipt.json": "680f2317ffd533b9eafa7fbded141f6cf83b9e9b93457b6e83dc381e1d1324b8",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/historical_stock_observers_20260913/collect_e5f_historical_stock_observers.py": "04abc07479c09bb3da92a1643f2f674f5ab80e7a78ca5320ebf91133cc7b50bf",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/code/model/tools/e5f_initial_fertility_observer.py": "2be39f66b90f3265f1d21d96dd68626fcfc43b569e8526ab2ea0414a4bef07b7",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/historical_stock_observers_20260913/collect_e5f_patch_readout.py": "4e1e77baf5d6e594ab1d065e401bd523464d4c4dff35a781c113584f7affa1ba"
+  },
+  "inherited_checkpoint_sha256": null,
+  "initial_checkpoint_sha256": "120ffc45c0fb8756f4182f999c96b7c0236adf315cb938190ec31cd2068c87c2",
+  "finite_converged": true,
+  "horizon_verified": false,
+  "production_eligible": false,
+  "fiscal_regime": "retained no-rebate diagnostic",
+  "admitted_fit": {
+    "error_abs": 1.9451750063792517e-05,
+    "psi": 0.14708715651861665,
+    "model": 1.9748555482499361,
+    "data": 1.974875,
+    "year": 2007,
+    "folder": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/finite_sequences_20260912/results/arm_0/trial_00_2007/forecast_6_0",
+    "finite_horizon_diagnostic": true,
+    "terminal_distance_passed": false
+  },
+  "interpretation": "Only the first date is realized history; later early-vintage expectations are not exported as history"
+}

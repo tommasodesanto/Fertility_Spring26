@@ -59,8 +59,8 @@ children ever born at ages40–44 using the same uniform-birth-time observer as
 2023:1.6951 in2023,1.6285 in2027,1.5620 in2031,1.5085 in2035 and1.4703 in2039.
 It is a near-completion measure, not fertility observed at age50. Its date is
 the observation year; period fertility is plotted at the end of its four-year
-birth window and therefore extends to2043. The model stock/housing series begin
-in2019; the earlier fitted prefix still lacks these saved observers. Initial
+birth window and therefore extends to2043. The first preview began in2019; the full-history extraction below supersedes
+that incomplete preview. Initial
 stationary profiles must not be relabeled as historical2007observations.
 
 The completed-fertility data are Census CPS Historical Table2, not Goldin or HFD.
@@ -81,3 +81,49 @@ For a fresh identical numerical replay, the existing collector now accepts
 `source/stock_forecast/submission.json`. It records every observer date but
 retains the original aggregate-path reproduction gate. Large states remain on
 Torch. The plot is supplemental; the presentation deck has not been edited.
+
+## Full historical stock and fertility comparison
+
+The complete figure now includes model observations at2007,2011,2015,2019,2023,
+2027,2031,2035,2039 in every panel. Three exact fixed-coordinate replays recovered
+only the first, realized date of the admitted2007/2011/2015forecasts. Their later
+expectations were not spliced into the realized history. Jobs17581096,17581099,
+17581100 passed with exactly zero discrepancy against every saved forecast row;
+evaluation times245.29,151.68,242.48seconds. The prior2019–2039observations and
+2023 verification remain intact. Source hashes, admitted-vintage receipts and
+pinned inherited states are in `source/historical_stock/`.
+
+Housing is now TOTAL occupied physical rooms, capped atnine per household and
+summed across households. The plot compares national ACS and model stock indices,
+each2007=100; it does not validate the initial housing level. The national series
+matches the geographic scope of the model's demographic conditioning. The42-metro
+sample remains the initial cross-sectional calibration source; no target changed.
+Both national and42-metro raw totals, household counts and definitions are retained
+in `source/historical_stock/housing_data.json`. A single file-backed ACS scan took
+21.36seconds and passed24 exact checks against previously saved aggregates. It did
+not rerun bootstrap estimates or scan the source into memory in full.
+
+National stock growth2007–2023 is18.2448%, model growth4.3911%. The model's
+completed-fertility measure is1.8962,1.8645,1.8250,1.7611,1.6951 over the five
+historical dates. These are untargeted historical comparisons conditional on the
+calibrated parameters and imposed demographic inputs; they show material misses.
+National ACS restricted-sample household counts and imposed CensusHH-3 counts
+are not identical, so the stock gap must not be attributed wholly to endogenous
+housing behavior. Vacancy is outside the model and this empirical stock measure.
+
+All panels now use the same model dates. Period fertility is dated at the START
+of its four-year birth window: e.g. the2019point summarizes births2019–2023.
+This is an explicit plotting change, not a change in any numerical fertility
+estimate. Every plotted period-flow number is checked against the previous
+figure receipt. The separate old-state2.1normalization is no longer plotted as
+an observed2007period point. The2039flow covers2039–2043; stocks are observed at
+2039. The same age40–44 birth-time projection and CPS source are maintained.
+
+The complete figure replaces the former single-panel historical-fertility image
+in `latex/september_14_presentation.tex`, frame `Fertility and Housing`.
+Rebuild it with the same plotting command above. The historical replay source is
+`code/model/tools/collect_e5f_historical_stock_observers.py`; exact arguments are
+in `source/historical_stock/submission.json`. The empirical builder is
+`output/model/e5f_matched_pf_20260909a/design_research/housing/build_historical_stock.py`;
+run with `/opt/anaconda3/bin/python -B` to regenerate `/tmp/full_housing_stock_history.json`.
+The no-rebate baseline and unresolved horizon limitations remain unchanged.

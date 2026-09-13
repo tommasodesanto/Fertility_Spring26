@@ -1,5 +1,22 @@
 # Calibration Status
 
+**September 13 — full historical stock/fertility comparison and slide completed.**
+Fixed-coordinate replays17581096/17581099/17581100 recovered the actual2007/2011/
+2015 observations with exactly zero saved-path discrepancies. Together with the
+previous2019forecast replay, all three figure panels now cover every model date
+2007–2039. Housing is total occupied rooms, capped atnine and indexed2007=100;
+national ACS growth through2023 is18.2448%, versus model4.3911%. Completed fertility
+uses the same ages40–44 observer throughout. Period fertility is now plotted at
+the start of its four-year window; all values reproduce the original figure.
+This supersedes the incomplete historical-stock preview below. Source receipts,
+full values and reproduction commands are in the recovered_sequence packet's
+README; its figure historical_fit_stock_forecast.pdf is now in the September14
+deck, frame Fertility and Housing. Both deck PDF copies were compiled twice and
+the changed frame visually checked. No calibration or fiscal specification
+changed; no-rebate and horizon limitations persist. Initial cross-sectional
+targets remain42-metro; the national stock comparison is an additional growth
+validation conditional on demographic inputs, not a new target system.
+
 **September 12–13 — author chooses two demographic branches for the next rerun.**
 Tommaso wants both today's demographic treatment and a version with joint
 parent/dependent death and domestic entry only from surviving stochastic
