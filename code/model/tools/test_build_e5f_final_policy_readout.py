@@ -24,4 +24,10 @@ class T(TestCase):
   c,s,z=self.fx();put(s,{'status':'failed','common_initial_g_pre':False});self.assertRaises(ValueError,build,c,z/'o',s)
  def test_changed_supply(self):
   c,s,z=self.fx();q=json.loads(s.read_text());q['common_supply_rule']=False;put(s,q);self.assertRaises(ValueError,build,c,z/'o',s)
+ def test_conditional_history_label(self):
+  c,s,z=self.fx();p=c/'contract_receipt.json';q=json.loads(p.read_text());q.update(conditional_history_count=6,history_refitted=False);put(p,q)
+  (c/'finite_history_complete.json').rename(c/'conditioning_history_complete.json')
+  q=json.loads(s.read_text());q.update(case_contract_sha256=dg(p),conditional_history_count=6);put(s,q)
+  receipt=build(c,z/'o',s);self.assertEqual(receipt['conditional_history_count'],6)
+  q['conditional_history_count']=24;put(s,q);self.assertRaises(ValueError,build,c,z/'bad',s)
 if __name__=='__main__':main()

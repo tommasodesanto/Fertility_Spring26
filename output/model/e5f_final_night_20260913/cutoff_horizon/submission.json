@@ -1,0 +1,171 @@
+{
+  "status": "submitted_smoke_gated",
+  "spec_sha256": "d92af0af1d6288808672545fd199faa6314e85cffdd182120afac7ca17496330",
+  "source_sha256": "bdfe1bfefc0a979a74f0b7ab51b58277c26e879b3d2731a474469b76c0cc4bb8",
+  "smoke": {
+    "job": "17692349",
+    "command": [
+      "sbatch",
+      "--parsable",
+      "--account=torch_pr_570_general",
+      "--cpus-per-task=1",
+      "--mem=32G",
+      "--time=22",
+      "--job-name=e5f_cutoff_smoke",
+      "--output=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/smoke_%j.out",
+      "--error=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/smoke_%j.err",
+      "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/smoke.sbatch"
+    ],
+    "argv": [
+      "/share/apps/anaconda3/2025.06/bin/python",
+      "-B",
+      "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_source_v1/run_e5f_inherited_policy_horizon.py",
+      "--spec",
+      "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/spec.json",
+      "--mode",
+      "smoke",
+      "--output",
+      "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/smoke"
+    ],
+    "script_sha256": "b46229d54177559ce124d1d27f60f3480422e9c6190d66155e61f3c1e07cee55"
+  },
+  "forecasts": {
+    "baseline_rebate_flat": {
+      "job": "17692351",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--account=torch_pr_570_general",
+        "--cpus-per-task=1",
+        "--mem=32G",
+        "--time=100",
+        "--job-name=e5f_cutoff_baseline_rebate_flat",
+        "--output=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/baseline_rebate_flat_%j.out",
+        "--error=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/baseline_rebate_flat_%j.err",
+        "--dependency=afterok:17692349",
+        "--kill-on-invalid-dep=yes",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/baseline_rebate_flat.sbatch"
+      ],
+      "argv": [
+        "/share/apps/anaconda3/2025.06/bin/python",
+        "-B",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_source_v1/run_e5f_inherited_policy_horizon.py",
+        "--spec",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/spec.json",
+        "--mode",
+        "forecast",
+        "--policy",
+        "baseline_rebate",
+        "--seed",
+        "flat",
+        "--output",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/baseline_rebate_flat"
+      ],
+      "script_sha256": "0d28c6c0699ca2bab8ed83430e16e23d4c261466a44ddb7fd927cd931e7a4f65"
+    },
+    "baseline_rebate_long": {
+      "job": "17692352",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--account=torch_pr_570_general",
+        "--cpus-per-task=1",
+        "--mem=32G",
+        "--time=100",
+        "--job-name=e5f_cutoff_baseline_rebate_long",
+        "--output=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/baseline_rebate_long_%j.out",
+        "--error=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/baseline_rebate_long_%j.err",
+        "--dependency=afterok:17692349",
+        "--kill-on-invalid-dep=yes",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/baseline_rebate_long.sbatch"
+      ],
+      "argv": [
+        "/share/apps/anaconda3/2025.06/bin/python",
+        "-B",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_source_v1/run_e5f_inherited_policy_horizon.py",
+        "--spec",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/spec.json",
+        "--mode",
+        "forecast",
+        "--policy",
+        "baseline_rebate",
+        "--seed",
+        "long",
+        "--output",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/baseline_rebate_long"
+      ],
+      "script_sha256": "7722bf403a5724fa1315682024d7fdd6905b7d56987d95bc3f2b60f34dd8085a"
+    },
+    "tax2_rebate_flat": {
+      "job": "17692353",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--account=torch_pr_570_general",
+        "--cpus-per-task=1",
+        "--mem=32G",
+        "--time=100",
+        "--job-name=e5f_cutoff_tax2_rebate_flat",
+        "--output=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/tax2_rebate_flat_%j.out",
+        "--error=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/tax2_rebate_flat_%j.err",
+        "--dependency=afterok:17692349",
+        "--kill-on-invalid-dep=yes",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/tax2_rebate_flat.sbatch"
+      ],
+      "argv": [
+        "/share/apps/anaconda3/2025.06/bin/python",
+        "-B",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_source_v1/run_e5f_inherited_policy_horizon.py",
+        "--spec",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/spec.json",
+        "--mode",
+        "forecast",
+        "--policy",
+        "tax2_rebate",
+        "--seed",
+        "flat",
+        "--output",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/tax2_rebate_flat"
+      ],
+      "script_sha256": "214486f1f906b76e45a46d85474dc66d999b1ea233b9b37f0678001ac93deaf1"
+    },
+    "tax2_rebate_long": {
+      "job": "17692354",
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--account=torch_pr_570_general",
+        "--cpus-per-task=1",
+        "--mem=32G",
+        "--time=100",
+        "--job-name=e5f_cutoff_tax2_rebate_long",
+        "--output=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/tax2_rebate_long_%j.out",
+        "--error=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/tax2_rebate_long_%j.err",
+        "--dependency=afterok:17692349",
+        "--kill-on-invalid-dep=yes",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/tax2_rebate_long.sbatch"
+      ],
+      "argv": [
+        "/share/apps/anaconda3/2025.06/bin/python",
+        "-B",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_source_v1/run_e5f_inherited_policy_horizon.py",
+        "--spec",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/spec.json",
+        "--mode",
+        "forecast",
+        "--policy",
+        "tax2_rebate",
+        "--seed",
+        "long",
+        "--output",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/tax2_rebate_long"
+      ],
+      "script_sha256": "d44143c44932468aa6ec56cb4595443c98dfd91b58c8ceeb400302479c9e5fe5"
+    }
+  },
+  "numerical_deadline_utc": "2026-09-13 16:05 UTC",
+  "technical_freeze_utc": "2026-09-13 16:30 UTC",
+  "sizing": "Two exact six-period policy replays, then four independent24-period forecasts (2taxes x2 numerical starts). At most8smoke and96forecast mappings; observed24-period mapping400\u2013460seconds, so worst-case roots exceed budget. Per-forecast hard deadline16:05UTC; no empirical or structural changes, no historical refit.",
+  "gates": "Original housing, PAYGO, equal-rebate, household, actual endpoint and exact-replay tolerances; no relaxation.",
+  "conditional_initial_history_count": 6
+}

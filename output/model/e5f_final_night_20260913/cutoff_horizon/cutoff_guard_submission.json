@@ -1,0 +1,17 @@
+{
+  "job": "17692370",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--account=torch_pr_570_general",
+    "--cpus-per-task=1",
+    "--mem=256M",
+    "--time=130",
+    "--job-name=e5f_author_cutoff",
+    "--output=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/cutoff_guard_%j.out",
+    "--error=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/cutoff_guard_%j.err",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/cutoff_guard.sbatch"
+  ],
+  "plan_sha256": "b7feae2cc77f35c4338c5ef3c3fd07c09578dd0ad8310ea892c9b47a4419c178",
+  "source_sha256": "7262e4a369d631a7bcc3608d2689d326f2c3297bdd4ce91cb901fb956fdea727"
+}

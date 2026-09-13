@@ -1,5 +1,12 @@
 # Final-night quantitative work
 
+**New author cutoff:12:30EDT (16:30UTC).** Access restored. Numerical jobs stop
+at12:05EDT, collectors by12:25EDT; then slides only. These deadlines supersede
+the older18UTC references below. Four conditional24-period policy checks are
+queued behind exact six-period baseline/tax replays. They retain the same2023
+households and preference; they do not refit the history. Contracts and job IDs
+are under `cutoff_horizon/` and `jobs.json`.
+
 Current evidence: September 13, 13:51 UTC. Fixed deadline: September 13, 18:00 UTC.
 Cluster computation and collection are independent of the laptop. Latest account
 check,13:52UTC:38%weekly remaining; keep the author’s20%floor.

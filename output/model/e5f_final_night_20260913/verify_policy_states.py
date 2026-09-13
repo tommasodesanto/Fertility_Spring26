@@ -19,7 +19,10 @@ def main():
     try:
         case=args.case_dir;contract=read(case/'contract_receipt.json');fits=read(case/'realized_fit.json')
         assert contract['manifest_sha256']==sha(args.manifest) and len(fits)==4
-        assert read(case/'finite_history_complete.json')['realized']==fits
+        conditional=contract.get('conditional_history_count')
+        if conditional is not None:assert conditional==6 and contract['history_refitted'] is False
+        complete='conditioning_history_complete.json' if conditional is not None else 'finite_history_complete.json'
+        assert read(case/complete)['realized']==fits
         state=case/'realized_state_2023.pkl.gz'
         with gzip.open(state,'rb') as f:inherited=pickle.load(f)
         assert inherited.year==2023
@@ -44,7 +47,7 @@ def main():
         allowed={'tau_H','user_cost_rate','pension','pension_by_loc','property_tax_lump_sum_transfer','income'}
         assert set(differences)<=allowed,('Unexpected parameter change',differences)
         np.testing.assert_array_equal(parameters[0].income[:,:parameters[0].J_R],parameters[1].income[:,:parameters[1].J_R])
-        receipt.update(status='passed',common_initial_g_pre=True,common_grid=True,common_supply_rule=True,supply_rule_fields=clean(vars(rules[0])),
+        receipt.update(status='passed',conditional_history_count=conditional,common_initial_g_pre=True,common_grid=True,common_supply_rule=True,supply_rule_fields=clean(vars(rules[0])),
             prices=prices,housing_supply=quantities,implied_supply_elasticity=float(np.log(quantities[1]/quantities[0])/np.log(prices[1]/prices[0])),initial_g_pre_sha256=hashlib.sha256(heads.tobytes()).hexdigest(),
             initial_shape=list(heads.shape),initial_dtype=str(heads.dtype),case_contract_sha256=sha(case/'contract_receipt.json'),
             policy_root_sha256=root_hashes,allowed_parameter_differences=sorted(allowed),actual_parameter_differences=differences,

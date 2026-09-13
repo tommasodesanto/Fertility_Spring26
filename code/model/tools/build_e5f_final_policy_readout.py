@@ -20,7 +20,12 @@ def relative(revenue,outlays):
 
 def check_case(case,state):
     case=Path(case).resolve();state=Path(state).resolve()
-    files=[case/name for name in ('contract_receipt.json','realized_fit.json','finite_history_complete.json')]+[state]
+    contract=load(case/'contract_receipt.json');conditional=contract.get('conditional_history_count')
+    if conditional is not None:
+        require(type(conditional) is int and conditional>0 and contract.get('history_refitted') is False,
+            'Conditional forecast must identify its historical horizon and absence of refit')
+    completed='conditioning_history_complete.json' if conditional is not None else 'finite_history_complete.json'
+    files=[case/name for name in ('contract_receipt.json','realized_fit.json',completed)]+[state]
     contract,fit,complete=map(load,files[:3]);proof=load(state)
     require([x['year'] for x in fit]==[2007,2011,2015,2019] and complete['realized']==fit,'Incomplete historical fit')
     for row in fit:
@@ -29,6 +34,7 @@ def check_case(case,state):
     require(proof.get('status')=='passed' and proof.get('common_initial_g_pre') is True,'Identical native initial populations required')
     require(all(proof.get(k) is True for k in ('common_grid','common_supply_rule','all_other_parameter_fields_exact','worker_income_exact')),
         'Common native grid, supply rule and non-policy parameters required')
+    require(proof.get('conditional_history_count')==conditional,'Conditional history label differs from native proof')
     require(proof.get('case_contract_sha256')==sha(files[0]),'State proof belongs to a different case')
     count=contract['count'];require(isinstance(count,int) and count>0,'Invalid forecast count')
     years=list(range(2023,2023+4*count,4));series={}
@@ -61,6 +67,7 @@ def check_case(case,state):
 
 def build(case,out,state):
     files,years,series=check_case(case,state);out=Path(out);out.mkdir(parents=True,exist_ok=True)
+    conditional=load(Path(case)/'contract_receipt.json').get('conditional_history_count')
     with (out/'comparison.csv').open('w',newline='') as h:
         fields=['decision_year','fertility_window_end','metric','baseline','reform','absolute_change','percent_change','percentage_point_change']
         writer=csv.DictWriter(h,fieldnames=fields);writer.writeheader()
@@ -82,11 +89,13 @@ def build(case,out,state):
     axes[0,0].legend(frameon=False,fontsize=8)
     title='Property tax with equal rebates and balanced pensions'
     note='Provisional finite horizon; horizon adequacy unverified. Fertility decision 2023 corresponds to the 2024–2027 flow.'
+    if conditional is not None:
+        note=(f'{len(years)}-period forecast conditional on a {conditional}-period fitted history; no historical refit.\n'+note)
     fig.suptitle(title);fig.text(.5,.012,note,ha='center',fontsize=8);fig.tight_layout(rect=(0,.055,1,.95))
     for ext in ('png','pdf'):fig.savefig(out/f'policy_comparison.{ext}',dpi=160)
     plt.close(fig)
     receipt=dict(status='passed',horizon_verified=False,production_eligible=False,years=years,
-        source_sha256={str(p):sha(p) for p in files},state_verification=str(Path(state).resolve()))
+        source_sha256={str(p):sha(p) for p in files},state_verification=str(Path(state).resolve()),conditional_history_count=conditional)
     receipt['output_sha256']={name:sha(out/name) for name in ('comparison.csv','policy_comparison.pdf','policy_comparison.png')}
     (out/'verification.json').write_text(json.dumps(receipt,indent=2)+'\n')
     (out/'figure_manifest.json').write_text(json.dumps(dict(receipt,title=title,footnote=note,

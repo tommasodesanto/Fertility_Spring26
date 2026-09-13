@@ -1,0 +1,26 @@
+{
+  "job": "17692411",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--account=torch_pr_570_general",
+    "--cpus-per-task=1",
+    "--mem=16G",
+    "--time=10",
+    "--dependency=afterany:17692351:17692352:17692353:17692354",
+    "--job-name=e5f_conditional_pair",
+    "--output=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/collect_%j.out",
+    "--error=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/collect_%j.err",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/collect_pair.sbatch"
+  ],
+  "argv": [
+    "/usr/bin/python3",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_source_v1/collect_conditional_policy_pair.py",
+    "--run",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1",
+    "--verifier",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_source_v1/verify_policy_states_v3.py",
+    "--deadline",
+    "1789316400.0"
+  ]
+}

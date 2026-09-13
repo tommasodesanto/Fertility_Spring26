@@ -1,5 +1,27 @@
 # Calibration Status
 
+**September 13, 14:49 UTC — access restored; author technical cutoff12:30EDT supersedes18UTC.**
+Torch access is verified. The author requires technical work to close by16:30UTC
+(12:30EDT), then slides only. Numerical cutoff is16:05UTC, enforced independently
+on the cluster by guard17692370; background collectors stop16:25UTC. All four
+ordinary/seeded six-period historical and paired-tax cases are now complete.
+The long histories still fit their first window; a full100-period history is not
+expected within the remaining time.
+
+Conditional policy-horizon check: native two-policy six-period replay17692349
+is running; baseline already reproduces exactly. After both pass, four24-period
+forecasts17692351–17692354 run separately (two taxes x two numerical starts).
+They use the identical fitted six-period2023 households and preference; this is
+a conditional forward-horizon check, NOT a re-estimated24-period history. One
+start extends the accepted short coordinates; the other shifts a pinned accepted
+24-period numerical path and applies the saved short-policy coordinate ratios.
+No household state or Jacobian is imported from that numerical guess. Cache,
+model, parameters, targets and all market/fiscal/replay gates are unchanged.
+Collector17692411 performs native common-state/supply verification if a pair
+passes. Source and frozen contracts: `cutoff_horizon/` in the final-night packet;
+driver `code/model/tools/run_e5f_inherited_policy_horizon.py`. Five reader tests
+and both pure coordinate-extension checks pass; full native smoke pending.
+
 **September 13, 14:33 UTC — local Torch login needs renewal; submitted work is independent.**
 The initial DNS failure cleared, but a fresh BatchMode SSH connection now returns
 permission denied; no Kerberos cache is available. The last verified results and
