@@ -1,5 +1,38 @@
 # Calibration Status
 
+**September 13 — rebated initial smoke passed; six histories and calibration search running.**
+Joint initial job17594990 passed the complete saved scoring loop in about six
+minutes. Thirteen joint root evaluations plus one pilot jointly solved price,
+initial fertility preference and equal rebate. Housing relative residual was
+−1.2372e-6, completed-fertility gap−3.1072e-5, pension relative gap4.6979e-10,
+and rebate relative gap2.4222e-7. Source/target, household, population and
+accounting gates passed. This is a valid seed, not a newly optimized calibration.
+The complete thirteen-row table (twelve scored plus normalization) and all
+seventeen parameter/restriction rows are in the local packet.
+
+History/policy array17595967 has six running one-thread tasks: A0/A+ at6/24/100
+forecast dates. Initial search17596347 is running with six one-thread workers,
+18 coordinate proposals, up to18 joint proposals, a3h cap and35min reserved for
+two exact reproductions. Numerical candidate failures do not halt other cases;
+proven contract corruption or three matching systemic failures halt the branch.
+Earlier17592542,17592728,17593512,17593865 were cancelled/superseded; no result
+is promoted from them. Each accepted history requires dated housing, PAYGO,
+rebate and household checks. Finite-root success is not a horizon certificate.
+The first6-date numerical mapping took165seconds; longer mappings remain timed
+by their own native receipts. Seventy-seven household-kernel files match across
+initial and historical source snapshots.
+
+The full requested12-track matrix is **not all submitted**: B0/B+ full histories
+remain blocked by the child-unit/person/head formation conversion; B+ also lacks
+signed migrant-state allocation. Operator preflight17592167 passed both native
+household/dependent identities, but its implied formation conversion0.5647956
+is diagnostic, not adopted. Age-profile pilot17597260 is running with two workers. Handoff17597052 will
+submit six separate refits only after verified initial improvement and within
+the shared time/worker limits; collector17597285 saves five-minute cluster
+receipts independently of the laptop. Total numerical workers currently14. Launch receipts,
+full tables and limitations: `output/model/e5f_final_night_20260913/`; remote batch:
+`/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/`.
+
 **September 13 — four demographic/migration cases requested; zero migration is the intended forecast.**
 Tommaso explicitly rejects migration in the intended forecast and requests
 comparisons with migration retained to establish the effect of removing it.
