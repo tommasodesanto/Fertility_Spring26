@@ -146,6 +146,39 @@ Reproduce with:
 This is an illustrative conditional calculation, not a published forecast,
 economic-model prediction or new calibration target. The deck is unchanged.
 
+**Two-panel dotted-extension variant:** at the author's subsequent request,
+`figures/fertility_introduction_with_projection.png/pdf` preserves every point
+of the1980-onward introductory graph and appends dotted scenarios. Reproduce with
+`python3 code/model/tools/build_e5f_fertility_introduction.py --projection`.
+The default historical figure and presentation PDF are not overwritten.
+
+The completed-fertility extension is rebuilt for ages40–44; it does not splice
+the age50 birth-rate calculation above onto CPS survey means. It starts at the
+exact2024 CPS value1.918 and advances the observed2024 younger-age means in
+five-year cohorts. Source: Census2024 Tables1 and3a, with extracted values,
+source hashes and URLs in `source/stock_forecast/cps_2024_age_profile_scenario.json`.
+Ages20–39 use normalized, rounded number-of-children shares (five-plus coded5);
+ages15–19 use the reported Table3a mean to avoid suppressed cells. Source
+rounding and initial topcoding limit precision. Future expected births are
+added to these means without reapplying topcode5: this is an illustrative
+mean-stock extension, not an exact forecast of the topcoded survey statistic.
+Migration, selective survival and future cohort-size changes are omitted.
+
+The future age pattern is NCHS2023, rescaled by0.997223936 to match exactly the
+existing WDI2023 period value1.6165. Thus the period dotted line has no source-
+change jump. Single ages are represented at their midpoints with uniform weights
+inside each five-year age band. Age exposures are integrated over the fixed
+schedule; a separate half-year exposure sum reproduces every increment.
+Cohorts under15 in2024 use negligible early births from the same fixed schedule.
+
+The ages40–44 mean is1.9095 in2029,1.7538 in2034,1.6456 in2039 and converges to
+1.57985. Its limit is below lifetime period fertility because it omits births
+after the ages observed. The small2044–2054 variation is retained from the
+initial CPS age profile, not smoothed into a forced monotone curve. Complete
+scenario rows, all input hashes, exact historical-artist checks and definitions
+are in the companion CSV and verification JSON. This remains a separate
+illustration for review, not an economic-model result or slide replacement.
+
 ### Housing and population comparison, September13
 
 **Presentation simplification, September13:** the author subsequently removed

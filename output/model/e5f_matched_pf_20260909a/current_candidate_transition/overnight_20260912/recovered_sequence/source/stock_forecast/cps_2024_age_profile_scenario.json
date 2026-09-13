@@ -1,0 +1,128 @@
+{
+  "year": 2024,
+  "rows": [
+    {
+      "age_start": 15,
+      "age_end": 19,
+      "mean_ceb": 0.038,
+      "source": "Table3a",
+      "row": 6,
+      "cell": "I6",
+      "method": "Reported CEB per1000, divided by1000; avoids suppressed Table1 cells."
+    },
+    {
+      "age_start": 20,
+      "age_end": 24,
+      "mean_ceb": 0.20720720720720723,
+      "source": "Table1",
+      "row": 10,
+      "reported_percentages": [
+        85,
+        10.3,
+        3.6,
+        0.8,
+        0.2,
+        "Z"
+      ],
+      "normalized_percentages": [
+        85.0,
+        10.3,
+        3.6,
+        0.8,
+        0.2,
+        0.0
+      ],
+      "percent_sum": 99.9
+    },
+    {
+      "age_start": 25,
+      "age_end": 29,
+      "mean_ceb": 0.6466466466466465,
+      "source": "Table1",
+      "row": 11,
+      "reported_percentages": [
+        63,
+        17.5,
+        13.1,
+        4.8,
+        1,
+        0.5
+      ],
+      "normalized_percentages": [
+        63.0,
+        17.5,
+        13.1,
+        4.8,
+        1.0,
+        0.5
+      ],
+      "percent_sum": 99.9
+    },
+    {
+      "age_start": 30,
+      "age_end": 34,
+      "mean_ceb": 1.2167832167832169,
+      "source": "Table1",
+      "row": 12,
+      "reported_percentages": [
+        40.3,
+        21,
+        23.1,
+        10.2,
+        3.5,
+        2
+      ],
+      "normalized_percentages": [
+        40.3,
+        21.0,
+        23.1,
+        10.2,
+        3.5,
+        2.0
+      ],
+      "percent_sum": 100.1
+    },
+    {
+      "age_start": 35,
+      "age_end": 39,
+      "mean_ceb": 1.743,
+      "source": "Table1",
+      "row": 13,
+      "reported_percentages": [
+        23.2,
+        20,
+        29.8,
+        16.5,
+        7.3,
+        3.2
+      ],
+      "normalized_percentages": [
+        23.2,
+        20.0,
+        29.8,
+        16.5,
+        7.3,
+        3.2
+      ],
+      "percent_sum": 100.0
+    },
+    {
+      "age_start": 40,
+      "age_end": 44,
+      "mean_ceb": 1.918,
+      "source": "CPS HistoricalTable2; exact plotted2024 anchor"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://www2.census.gov/programs-surveys/demo/tables/fertility/2024/am-women-fertility/t1.xlsx",
+      "sha256": "44bb6773774a7cf0b1853f9c1b7e55175978e1abf1fc480d768586f07ca2b085"
+    },
+    {
+      "url": "https://www2.census.gov/programs-surveys/demo/tables/fertility/2024/am-women-fertility/t3a.xlsx",
+      "sha256": "54478696b596c42d5d8756b14da0562d865bbb9278a0de6d86e3e0a312da14dd"
+    }
+  ],
+  "definition": "CPS all-women CEB, initial counts topcoded at5. Ages20\u201339 derived from rounded Table1 percentages, normalized tosum1; Z treated as0. Age15\u201319 uses reported Table3a mean. Age40\u201344 uses exact HistoricalTable2 anchor.",
+  "projection_limitation": "Future mean births are added to these initial means without reapplying topcode5; an illustrative mean-stock extension, not an exact forecast of the topcoded survey statistic. No migration or selective survival; uniform single-age weights within each band."
+}
