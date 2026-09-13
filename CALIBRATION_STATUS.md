@@ -9,16 +9,22 @@ in `output/model/e5f_final_night_20260913/initial_search_recovered/`.
 The displayed beta bound is the actual enforced0.99; the unchanged raw scorer
 metadata with0.9995 is preserved separately. Housing moments remain weak.
 
-Handoff17605279 submitted six cached refits. While still entirely pending,
-array17608564 was replaced by17613033 (6dates,16GiB),17613034 (24dates,32GiB),
-and17613035 (100dates,64GiB), two cases each. This is a resource-only split of
-the same pinned commands and deadline; native noncache peak memory was about
-2.2/2.9/4.7GiB. New6/24date tasks passed initial complete mapping audits and are
-iterating; equilibrium convergence is not yet established. Superseded uncached
-24/100tasks17595967_{1,2,4,5} were cancelled to release memory. Original6date
-tasks0/3 remain as comparison, with all prior outputs preserved. Collector17607147
-discovers the three new arrays automatically. No fitted four-shock history or
-policy is claimed from these runs yet.
+Handoff17605279 submitted six cached refits, subsequently split by memory request:
+17613033 (6 dates, 16 GiB), 17613034 (24 dates, 32 GiB), and 17632922
+(100 dates, 48 GiB). The entirely pending 100-date array17613035 was replaced
+without changing commands, source, outputs or deadline. A0_6 has accepted the
+first historical window: model1.973112 versus target1.974875, psi0.1289153142,
+with finite market/fiscal checks and exact replay passed. It has carried the
+households into2011 and is fitting the next surprise. A+ first-window fitting
+and both longer horizons remain in progress. No complete four-shock history or
+policy is claimed yet. All superseded uncached tasks17595967 were cancelled;
+every old output is preserved. Collector17607147 runs independently of the laptop.
+
+Two bounded numerical probes17635971/17635972 test the root solver's existing
+Jacobian warm start at the same psi and inherited state as the cold second trial.
+They use separate frozen source/output folders and leave the main jobs unchanged.
+Each permits one forecast, one CPU, 16 GiB and one hour; eight focused tests pass.
+No economic equation, target, tolerance or horizon certificate changes.
 
 Age pilot17597260 finished five valid primary cases, one numerical failure, and
 two exact selected repetitions. Its original report guard incorrectly compared

@@ -140,7 +140,7 @@ def cached_boundary(template, actual_g, old, audit, runtime):
 
 
 def solve_forecast(*, inherited, old, demographics, psi, count, initial,
-                   controls, audit, deadline, folder, case):
+                   controls, audit, deadline, folder, case, initial_jacobian=None):
     import e5f_rebated_surprises as rebated
     import e5f_closed_finite_boundary as closed
     from e5f_balanced_terminal import _household_checks
@@ -240,6 +240,7 @@ def solve_forecast(*, inherited, old, demographics, psi, count, initial,
                 boundary_residuals=boundary.residuals,boundary_household_gates=boundary.gates))
     receipt=solve_price_path(initial_prices=initial,evaluate=evaluate,project=project,
         deadline_monotonic=deadline,callback=progress,
+        initial_jacobian=initial_jacobian,
         default_jacobian=np.diag(np.r_[np.full(width,-float(rc['slope'])),np.full(2*width,-200.)]),**rc)
     final=receipt.get('final')
     finite=bool(receipt.get('converged') and final is not None and latest
@@ -261,6 +262,20 @@ def solve_forecast(*, inherited, old, demographics, psi, count, initial,
     if latest['snapshot2023']:
         checkpoint(folder/'native_2023_snapshot.pkl.gz',latest['snapshot2023'])
     return result,latest
+
+
+def reusable_forecast_jacobian(result, count, enabled):
+    """Copy an accepted root Jacobian for the immediately following psi trial."""
+    if not enabled or result.next_state is None:
+        return None
+    receipt=result.root_receipt
+    if not receipt.get('finite_horizon_market_fiscal_converged'):
+        return None
+    width=3*(count+1)
+    matrix=np.asarray(receipt.get('final_jacobian'),dtype=float)
+    if matrix.shape!=(width,width) or not np.isfinite(matrix).all():
+        return None
+    return matrix.copy()
 
 
 def main(argv=None):
@@ -321,6 +336,9 @@ def main(argv=None):
         audit=TerminalAuditControls(**plan['terminal_template']['audit_controls'])
         controls=dict(plan['history_root_controls']);controls.update(manifest.get('root_controls',{}))
         controls.setdefault('transfer_bounds',[1e-10,10.]);controls['max_evaluations']=min(24,int(controls['max_evaluations']))
+        reuse_forecast_jacobian=manifest.get('reuse_forecast_jacobian',False)
+        if type(reuse_forecast_jacobian) is not bool:
+            raise ValueError('reuse_forecast_jacobian must be Boolean')
         targets=list(csv.DictReader(Path(plan['empirical_blocks']).open()))
         if [int(t['decision_year']) for t in targets]!=[2007,2011,2015,2019]:raise ValueError('Four pinned fertility windows required')
         tolerance=float(plan['fertility_fit_tolerance'])
@@ -328,6 +346,7 @@ def main(argv=None):
         save(out/'contract_receipt.json',dict(case=args.case,count=args.count,manifest_sha256=sha(args.manifest),
             initial_checkpoint_sha256=digest,source_root=str(root),migration_zero_by_cell=args.case=='A0',
             boundary='Actual-carried-state finite snapshot for both migration cases; replaces prior stationary-boundary comparison',
+            reuse_forecast_jacobian=reuse_forecast_jacobian,
             horizon_verified=False,production_eligible=False,full_2023_table_status='native snapshot saved for authoritative observer replay'))
         width=args.count+1
         initial=np.r_[np.full(width,float(packet['evaluation'].policy.price[0])),
@@ -337,7 +356,7 @@ def main(argv=None):
         for target in targets:
             year=int(target['decision_year']);desired=float(target['period_tfr_arithmetic_mean'])
             if inherited.year!=year:raise RuntimeError('Inherited historical clock mismatch')
-            trials=[];seen=[];winner=None
+            trials=[];seen=[];winner=None;forecast_jacobian=None
             center=initial_psi if not realized else realized[-1]['psi']
             seed=initial_seed_step(plan,manifest)
             for attempt in range(min(6,int(plan.get('maximum_trials_per_window',6)))):
@@ -350,16 +369,22 @@ def main(argv=None):
                 try:
                     result,detail=solve_forecast(inherited=inherited,old=old,demographics=demographics,
                         psi=psi,count=args.count,initial=initial,controls=controls,audit=audit,
-                        deadline=min(fit_deadline,time.monotonic()+float(manifest.get('forecast_seconds',fit_deadline-time.monotonic()))),folder=folder,case=args.case)
+                        deadline=min(fit_deadline,time.monotonic()+float(manifest.get('forecast_seconds',fit_deadline-time.monotonic()))),folder=folder,case=args.case,
+                        initial_jacobian=forecast_jacobian)
                     if result.next_state is None and not alternative_used and result.root_receipt.get('best'):
+                        forecast_jacobian=None
                         alternative_used=True;initial=np.asarray(result.root_receipt['best']['prices'])
                         alt=dict(controls,damping=float(controls['damping'])*.5)
                         save(folder/'alternative_start.json',dict(reason='Best admissible root coordinates with half damping; sole track alternative'))
                         result,detail=solve_forecast(inherited=inherited,old=old,demographics=demographics,
                             psi=psi,count=args.count,initial=initial,controls=alt,audit=audit,
-                            deadline=fit_deadline,folder=folder/'alternative',case=args.case)
+                            deadline=fit_deadline,folder=folder/'alternative',case=args.case,
+                            initial_jacobian=forecast_jacobian)
                     if result.next_state is None:
+                        forecast_jacobian=None
                         save(folder/'rejected.json',dict(reason='Finite market/fiscal root failed'));continue
+                    forecast_jacobian=reusable_forecast_jacobian(
+                        result,args.count,reuse_forecast_jacobian)
                     initial=np.asarray(result.root_receipt['final']['prices'])
                     if not smoked:
                         standard_graphs(detail['snapshot'],result,folder/'native_graphs')
@@ -373,6 +398,7 @@ def main(argv=None):
                     save(out/'best_so_far.json',dict(realized=realized,current=winner[0]))
                     if abs(gap)<=tolerance:break
                 except (RuntimeError,ValueError,TimeoutError) as exc:
+                    forecast_jacobian=None
                     save(folder/'rejected.json',dict(error_type=type(exc).__name__,error=str(exc)))
                     if isinstance(exc,TimeoutError):raise
             if winner is None or abs(winner[0]['gap'])>tolerance:

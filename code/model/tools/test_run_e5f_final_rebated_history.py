@@ -12,6 +12,7 @@ import numpy as np
 
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 import run_e5f_final_rebated_history as driver
+import run_e5f_forecast_jacobian_probe as jacobian_probe
 
 
 @dataclass(frozen=True)
@@ -42,6 +43,35 @@ class DriverTests(unittest.TestCase):
         parts=driver.unpack_coordinates(np.arange(1,22,dtype=float),6)
         self.assertEqual([p[-1] for p in parts],[7.,14.,21.])
         with self.assertRaises(ValueError):driver.unpack_coordinates(np.ones(18),6)
+
+    def test_reuse_requires_a_finite_verified_same_width_root(self):
+        matrix=np.arange(21*21,dtype=float).reshape(21,21)
+        receipt=dict(finite_horizon_market_fiscal_converged=True,final_jacobian=matrix)
+        result=NS(next_state=NS(),root_receipt=receipt)
+        reused=driver.reusable_forecast_jacobian(result,6,True)
+        np.testing.assert_array_equal(reused,matrix)
+        self.assertIsNot(reused,matrix)
+        self.assertIsNone(driver.reusable_forecast_jacobian(result,6,False))
+        self.assertIsNone(driver.reusable_forecast_jacobian(
+            NS(next_state=None,root_receipt=receipt),6,True))
+        self.assertIsNone(driver.reusable_forecast_jacobian(
+            NS(next_state=NS(),root_receipt=dict(receipt,final_jacobian=np.eye(3))),6,True))
+
+    def test_probe_seed_requires_accepted_exact_same_track_root(self):
+        prices=np.arange(1.,22.);jacobian=np.eye(21)
+        receipt=dict(converged=True,status='converged',
+            finite_horizon_market_fiscal_converged=True,start_year=2007,case='A0',count=6,
+            psi=.13,final_reproduction_max_abs=1e-12,final_damping=.25,
+            final=dict(prices=prices,mapping_valid=True),best=dict(prices=prices.copy()),
+            final_jacobian=jacobian)
+        got_prices,got_jacobian,psi=jacobian_probe.accepted_seed(receipt,'A0',6,2e-10)
+        np.testing.assert_array_equal(got_prices,prices)
+        np.testing.assert_array_equal(got_jacobian,jacobian)
+        self.assertEqual(psi,.13)
+        with self.assertRaises(ValueError):
+            jacobian_probe.accepted_seed(dict(receipt,case='A+'),'A0',6,2e-10)
+        with self.assertRaises(ValueError):
+            jacobian_probe.accepted_seed(dict(receipt,final_reproduction_max_abs=1e-4),'A0',6,2e-10)
 
     def test_source_hash_drift_is_rejected(self):
         with tempfile.TemporaryDirectory() as d:
@@ -77,6 +107,9 @@ class DriverTests(unittest.TestCase):
                 rows.append(dict(annual_net_migration_over_period=0.,net_migrant_heads_over_period=0.))
             return NS(rows=rows,person_tail=NS(rows=rows,terminal_state=NS(g_pre=actual_g)))
         def root(**kw):
+            np.testing.assert_array_equal(kw['initial_jacobian'],np.eye(21))
+            expected=np.diag(np.r_[np.full(7,-1.),np.full(14,-200.)])
+            np.testing.assert_array_equal(kw['default_jacobian'],expected)
             x=kw['project'](kw['initial_prices'])
             first=kw['evaluate'](x);second=kw['evaluate'](x)
             self.assertEqual(first['residual'].shape,(21,))
@@ -98,7 +131,8 @@ class DriverTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d,patch.dict(sys.modules,modules),patch.object(driver,'cached_boundary',cached),patch.object(driver,'checkpoint',lambda *args:None):
             result,detail=driver.solve_forecast(inherited=inherited,old=old,demographics=NS(),
                 psi=.1,count=count,initial=np.r_[np.ones(14),np.full(7,.2)],controls=controls,
-                audit=NS(),deadline=time.monotonic()+10,folder=d,case='A0')
+                audit=NS(),deadline=time.monotonic()+10,folder=d,case='A0',
+                initial_jacobian=np.eye(21))
         self.assertEqual(len(calls),2)  # One per mapping, including fresh replay.
         self.assertEqual(len(actual_calls),2)
         for value in actual_calls:np.testing.assert_array_equal(value,actual_g)

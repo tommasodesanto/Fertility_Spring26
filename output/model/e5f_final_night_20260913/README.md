@@ -1,133 +1,107 @@
 # Authorized final-night work
 
-Author requested immediate launch of the plan in
-`docs/model/e5f_two_closure_overnight_plan.md`. This folder records actual
-submission and evidence, which must not be confused with the full planned matrix.
+Latest evidence: September13, approximately08:35UTC. Deadline18:00UTC.
+The cluster runs and collector are independent of the laptop. Idle system sleep
+is prevented locally until the deadline. Last account check:76% weekly remaining.
 
-Remote batch:
-`/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/`.
+Remote batch: `/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/`.
+The requested plan is `docs/model/e5f_two_closure_overnight_plan.md`.
 
-| Job | Work | Status at submission readout |
+## Current work
+
+| Jobs | Work | Evidence/status |
 |---|---|---|
-| 17592167 | Saved-policy demographic operator | Completed, two identities pass |
-| 17592542 | Superseded initial smoke source | Cancelled; not a calibration result |
-| 17592728 /17593512 /17593865 | Slow nested initial method and dependent searches | Cancelled/superseded |
-| 17594990 | Joint price/preference/rebate initial smoke | Completed, full numerical/scoring/accounting gates passed |
-| 17596347 | Nine-coordinate rebated initial search, six workers | Running |
-| 17595967 | A0/A+ ×6/24/100 fitted histories and rebated-tax policies | All six array tasks running |
-| 17597260 | Experimental initial fertility-age profile, two workers | Running; source/target preflight passed |
-| 17597052 | Refits after an exactly reproduced initial improvement | Depends on search success; checks improvement and remaining time |
-| 17597285 | Cluster-side five-minute receipt collector | Submitted, independent of laptop |
+|17613033|A0/A+ six-date histories and rebated policy|A0 first window accepted and carried into2011; A+ fitting|
+|17613034|A0/A+ 24-date histories and rebated policy|Equilibrium iterations in progress|
+|17632922|A0/A+ 100-date histories and rebated policy|Submitted; queue counts against deadline|
+|17635971/17635972|One-forecast Jacobian warm-start comparison|Separate one-hour probes; main source unchanged|
+|17607147|Five-minute cluster receipt collector|Running; discovers refit arrays automatically|
+|17603133|Initial calibration recovery|Two exact numerical repetitions verified|
+|17597260|Extra initial fertility-age pilot|Numerical outputs verified by separate report recovery|
 
-The array and search coexist with the age pilot within fourteen numerical workers, below the shared
-eighteen-worker cap. Each worker has one numerical thread. The initial search
-has a three-hour limit with35minutes reserved for exact verification; history
-tasks have twelve-hour Slurm limits. There are at most36 original-objective
-search proposals and24 preference trials plus one alternative start per history.
-Numerical candidate failures are isolated; proven contract corruption or three
-matching systemic failures stop the search branch. The accepted joint smoke took
-about six minutes; the first6-date forecast mapping took165seconds. These are
-observed operation times, not forecasts of full convergence.
+No complete fitted history, horizon certificate or completed rebated policy is
+claimed. A0_6 first-window target1.974875 is matched by1.9731122320, a gap of
+−0.001762768 within the0.005 fit requirement. Preference0.1289153142. The market,
+PAYGO pension, property-tax rebate and exact replay checks pass. The next fitted
+surprise is2011; households carry forward between accepted windows.
 
-Full initial smoke tables: `joint_initial_smoke/selected_target_fit.csv` and
-`joint_initial_smoke/selected_parameters.csv`; the complete score is unchanged.
-This is a validated seed, not a newly optimized result.
+## Calibration and scientific contract
 
-Forecasts retain the original twelve scored targets, all weights, nine free
-coordinates and annual beta cap0.99, plus separate initial fertility2.1.
-Property-tax revenue is returned equally and PAYGO pensions balance separately.
-Four successive surprises are fitted; current preferences are expected to
-persist and remain fixed after2023. Historical A head-age conditioning remains
-an imposed bridge. The migration experiment applies to the post2023 future
-segment, including forecasts formed before2023.
+The recovered initial loss is179.2984252281 versus182.6491468669 for the rebated
+seed. This is a verified candidate, not a converged optimizer. The original search
+stopped after repeated20-evaluation numerical root limits. Complete13-row target
+and17-row parameter/restriction tables: `initial_search_recovered/README.md`.
+The displayed beta bound is the enforced annual0.99; raw scorer metadata retains
+its old0.9995 separately. Housing moments remain weak.
 
-The finite-boundary implementation evaluates remaining-lifetime household
-values at constant boundary conditions. Boundary prices, pensions and transfers
-are jointly rooted with dated values, using actual carried households. No
-stationary population or hidden entry is imported. Fiscal feasibility after the
-boundary is not established; horizon comparisons remain required.
+The extra age pilot barely improves its augmented loss306.5873 to306.1929;
+its age component worsens123.9381 to126.0059. It does not establish better age
+fit and is not promoted. All original13, extra6 and augmented18-row tables are
+in `age_pilot_recovered/README.md`. The extra synthetic5% scales are not empirical
+standard errors. Recovery checked source, checkpoints, fiscal gaps and numerical
+repetitions without another solve; serialized checkpoint hashes are provenance,
+not numerical outputs that must reproduce byte for byte.
 
-B0/B+ full histories have not been launched: the formation-unit restriction and
-B+ person-migration allocation remain unresolved. The demographic preflight
-reports the conversion that would keep one saved household distribution's
-mass constant only as a diagnostic; it is not an empirical formation estimate.
+Twelve scored initial moments, nine free coordinates, unchanged weights, annual
+beta cap0.99 and separate fertility normalization2.1 remain. Four unexpected
+permanent preference changes are fitted at2007/2011/2015/2019; each vintage
+expects current preferences to persist, with preferences fixed after2023.
+Every property-tax comparison returns revenue equally per current household
+head. PAYGO pensions balance separately at every accepted date. A0 removes all
+post2023 migration; A+ retains the supplied migration sensitivity. Historical
+head-age conditioning through2023 remains an imposed and disclosed bridge.
 
-Verification before submission: 19 history/boundary tests passed on Torch;
-six initial-wrapper tests passed on Torch;77household-kernel source files were
-identical across the pinned initial and historical snapshots. The full initial native smoke passed. Native history
-root and fit gates still govern admission. Full2023observations are saved as native
-snapshots; complete authoritative table reconstruction remains a separate task.
+B0/B+ histories have not been launched: the child/person/household formation
+conversion remains unresolved, and B+ also needs signed migrant-state allocation.
+The demographic operator preflight17592167 passes both accounting identities;
+its mass-preserving coefficient0.5647956 is diagnostic and not adopted.
 
-Source entry points are `code/model/tools/run_e5f_final_rebated_history.py`,
-`run_e5f_rebated_initial_overnight.py`, `run_e5f_rebated_initial_search.py`, and
-`code/cluster/prepare_e5f_final_night_manifest.py`.
+The finite boundary evaluates remaining-lifetime household values at constant
+boundary conditions. Boundary prices, pensions and rebates are solved on the
+actual carried households. No stationary population reset is imported. Fiscal
+feasibility beyond the boundary and insensitivity to horizon remain unverified.
 
-The follow-up controller automatically submits six separate history/policy refits
-if the original-objective search improves its seed and reproduces twice. It
-preserves the first array, caps combined numerical workers at14, counts queue
-delay against the fixed September13 18:00UTC deadline, and skips refits if fewer
-than three hours remain. The experimental age objective is not automatically
-promoted into those original-objective histories. Cluster collection writes
-`monitor_summary.json` every five minutes and discovers the follow-up array.
-The app heartbeat checks meaningful changes every30minutes when the app is
-available; the cluster jobs, follow-up submission and collector do not need it.
+## Numerical checks and budgets
 
-Pilot17597051/17597204 failed test setup before numerical work because local
-fixture paths were unavailable on Torch.17597260 uses the three portable tests,
-with the complete source/target and native observer checks retained by the
-controller; the local fixture tests already passed. Its source is frozen under
-`age_source_v2`. No result is promoted from the failed test launches.
+Native exact-policy cache probe17598785 matched all dated values, policies,
+household distributions, economic rows and accounting residuals exactly:
+183.9926seconds uncached versus43.5013seconds cached, with11/12 repeated calls
+reused. This is a constant-input mapping comparison, not a universal speedup.
+All solver arguments enter the key, unsupported arguments bypass the cache,
+and cache hits return fresh arrays. Cache bounds are6GiB for6/24dates and24GiB
+for100dates. Main jobs request16/32/48GiB respectively and use one thread each.
 
-The displayed initial parameter table overlays the enforced annual beta upper
-bound0.99 on the frozen scorer metadata, which still prints0.9995. The original
-scorer parameter rows are preserved in selected_parameters_raw.csv. This is a
-reporting correction only; the candidate/search bound was already enforced.
+The root cap is24 evaluations, with unchanged market/fiscal/exact-replay gates.
+Numerical guesses shift one date between surprise vintages. Each history allows
+at most24 primary forecast trials and one bounded alternative start; the shared
+deadline and two-hour policy reserve still govern. The total worker ceiling is18.
+Progress, latest completed cases and best-so-far receipts remain on the cluster.
 
-## Failure recovery and exact policy reuse
+Jacobian probes use the root solver's saved derivative matrix for the immediately
+following preference trial in the same vintage. The opt-in default remains off;
+failed roots and vintage changes reset reuse, and policies never inherit this
+matrix. Eight focused tests pass. Native comparison remains pending. Sources:
+`code/model/tools/run_e5f_final_rebated_history.py` and
+`code/model/tools/run_e5f_forecast_jacobian_probe.py`. Their new snapshot is
+`jacobian_source`; the running histories remain frozen in `history_source_cached`.
 
-Search17596347 stopped after three matching candidate numerical-budget failures.
-The explicit traceback was the20-evaluation initial root limit; valid candidates
-remain in the ledger. Recovery17603133 re-evaluates the verified best twice in
-`initial_search_recovered`, preserving the stopped search. Handoff17605279 will
-use that independently verified result; the earlier handoff17597052 is obsolete.
+## Readout and traceability
 
-Native cache probe17598785 reproduced every comparison exactly (including all
-dated values, policies, final household distribution, economic rows and audit
-residuals):183.9926seconds uncached versus43.5013seconds cached, with1 actual
-dated solve and11 hits in this constant-input six-date mapping. The cache is
-bounded and its key covers the complete solver arguments, including shared
-state and continuation values; hits return fresh arrays. Unsupported argument
-states bypass the cache. This is a measured mapping speedup, not a claim that
-every long solve is4.23times faster. Probe17598460 failed its harness time-reserve
-setup before a model mapping;17598785 used a zero-policy-reserve probe manifest.
+`collect_e5f_final_history_readout.py` prepares the complete2023 observations
+from accepted native2019/2023 snapshots without solving again. Compilation and
+schema checks pass; native extraction awaits an accepted final historical window.
+The stable17-graph packets are generated alongside successful forecasts. The
+saved A+ first-trial contact sheet was visually inspected. Its legacy filename
+`lifecycle_2023.csv` does not make that2007 snapshot a2023 result.
 
-The pending refit source allows24 root evaluations instead of8, since the short
-roots were still converging at the earlier limit. The market/fiscal/reproduction
-gates are unchanged. It shifts numerical guesses one date when carrying a
-realized state. Six refits have a maximum576 primary mappings per track before
-one bounded alternative start, constrained by the shared deadline and policy
-reserve. Cache bounds are6GiB for6/24dates and24GiB for100dates; refit jobs request
-64GiB memory. The worker ceiling remains18 and the planned overlap is14 numerical
-workers. Native cache proof and source hashes govern admission.
+Source and job receipts: `jobs.json`, `resource_resubmission.json`,
+`initial_search_recovered/`, `age_pilot_recovered/`; remote submissions remain
+under `histories_refit`, `histories_refit_100_v2` and `jacobian_probes`.
 
-Collector17607147 supersedes17597285 and reads the recovery/cache receipts and
-discovers the follow-up array automatically. Weekly allowance at this check was
-81% remaining; subsequent healthy monitoring should stay compact.
-# Latest verified continuation
-
-Recovery17603133 passed two exact numerical repetitions. Selected original loss:
-179.2984252281 versus182.6491468669 for the rebated seed. The search itself stopped
-after repeated numerical evaluation limits. Complete13-row fit and17-row parameter
-tables, accounting gaps and caveats: `initial_search_recovered/README.md`.
-
-Handoff17605279 completed and submitted array17608564: six cached A0/A+ refits
-at6/24/100dates, root cap24, unchanged tolerances, fixed18:00UTC deadline.
-Original17595967 remains independent evidence. Cluster collector17607147
-automatically includes the refit array. A complete accepted historical path and
-policy results remain outstanding. Age pilot17597260 has exact matching numerical
-results but failed its broad checkpoint-hash comparison; recover the report into
-a separate folder without another solve or changing the main target system.
-
-Resource-only queue replacement: pending17608564 was cancelled before execution and split into17613033 (6dates,16GiB),17613034 (24dates,32GiB),17613035 (100dates,64GiB), two cases per array. Commands, output folders, source pins, tolerances and deadline unchanged. See `resource_resubmission.json`. Age report recovery passed without solves; full tables and limitations in `age_pilot_recovered/README.md`.
-
-After the new6/24date paths passed their first complete mapping audits, superseded uncached24/100tasks17595967_{1,2,4,5} were cancelled to free memory for100date replacements. Old6date tasks0/3 remain as comparison; all outputs preserved. `collect_e5f_final_history_readout.py` is a no-solve extractor prepared for accepted2019/2023 native snapshots. Compilation and schema checks passed; native extraction remains pending an accepted final history window.
+Superseded jobs17592542/17592728/17593512/17593865 failed or were replaced before
+any promotion. Initial17594990 passed the complete scoring loop in about six
+minutes. Search17596347 stopped at numerical limits; recovery17603133 passed.
+Handoff17605279 submitted refits; entirely pending17608564 was split into memory
+classes, and entirely pending17613035 was replaced by17632922. All uncached
+17595967 tasks were retired after the cached replacements passed. All old outputs
+are retained. No result is promoted from failed harnesses17597051/17597204/17598460.
