@@ -68,6 +68,25 @@ The adapter requires the matching native PASS verification, preserves empirical
 source hashes/vintages, and labels decision 2023 fertility flows as 2024–2027.
 All five adapter tests pass; final dated observations remain pending.
 
+The five retained historical/2023 figures are also ready to regenerate from a
+locally copied complete case and strict readout:
+
+```sh
+code/model/.venv/bin/python code/model/tools/build_e5f_final_history_plots.py --case-dir /absolute/copied/A0_6 --readout-dir /absolute/native/readout --out /absolute/output/figures
+```
+
+This command writes the historical fertility fit and continuation, prices and
+quantities, 2023 equilibrium levels, housing/ownership/children-at-home lifecycle
+comparisons, and fertility by age. The last two retain the actual ACS2023 overlays
+and their measurement qualifications. The complete table remains the separate
+13-row adapter above. Only the final-vintage forecast contributes the continuation;
+earlier vintages contribute their first realized period. Native source/root linkage
+and all four fit gaps are checked before plotting. Two synthetic tests pass,
+including the observation clock, data overlays, small population weights, and
+rejection of an invalid fit/readout. The five-page synthetic rendering was
+visually inspected; it is only a test under `tmp/pdfs/final_history_synthetic/`.
+No actual completed-history figure is claimed yet.
+
 No complete four-shock history, horizon certificate or completed policy is claimed.
 The fiscal and mass problems have verified numerical repairs; the economic fit
 and full historical/policy exercise still require assessment.
