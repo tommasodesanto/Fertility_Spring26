@@ -1,5 +1,37 @@
 # Calibration Status
 
+**September 12 — expanded parallel work: final window searches and native mass trace.**
+Restart `17501164` fitted the third successive-shock window before its three-hour
+budget expired during the final 2019 forecast. Window 2015–2019 target/model:
+1.755375/1.7555364577860617; preference 0.12555593170200227. Its actual 2019
+inherited state is saved. All three accepted windows remain finite-horizon
+results with failed terminal-distance flags; the final window is not fitted.
+
+Two new jobs `17553016` and `17553017` are RUNNING independently from that same
+hash-pinned 2019 state, using initial preferences 0.11155593170200227 and
+0.10955593170200227. Each has 1 CPU/8GB and a two-hour cap, six candidate trials,
+unchanged model/target/root controls, and no policy admission. The source and
+accepted-prefix checks passed on actual native checkpoints before submission.
+Plans/submission receipts are in finite_sequences_20260912/resume_2019/.
+Long-horizon `17498929` is now RUNNING (about two hours at latest check).
+
+Read-only native mass trace `17554347` is RUNNING, 1 CPU/8GB, 15-minute cap.
+It reconstructs the failed 2011 trial, records mass after location, tenure,
+wealth and income/child redistribution, and preserves the original mass gate.
+Captured-cohort comparisons disable compiled scatter and, separately, normalize
+probability rows in float64 for diagnosis ONLY. No production numerical change.
+Driver: `code/model/tools/diagnose_e5f_transition_mass.py`; two pure tests passed
+and lead reviewed the numerical dispatch, row-error precision and exception
+classification. Context/source hashes and results are in
+finite_sequences_20260912/mass_trace/. No causal diagnosis is established yet.
+A proposed same-state horizon-comparison driver failed lead review, was never
+launched and was removed; do not claim that extra sensitivity panel is running.
+
+There is no model-specific existence, uniqueness or global convergence proof.
+Successful stationary and finite-path roots are numerical evidence only. The
+mass-conservation failure is a separate computational issue, not evidence of
+nonexistence. Local stability and horizon sensitivity remain outstanding.
+
 **September 12 — home check: two successive-shock windows fitted; medium run failed.**
 Restart `17501164` is RUNNING (52 minutes at check) and has saved the fitted
 2011–2015 window: target 1.861, model 1.8610692789655279, absolute gap
