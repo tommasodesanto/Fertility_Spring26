@@ -2,15 +2,9 @@
 
 Running record of the September presentation mock: slide fixes, substantive questions, and decisions.
 
-First-pass review task: **Mock presentation: concise conceptual review** (`01a09818-86af-75a1-9ff4-3a396e394c4d`), max reasoning. Replies are advisory; no fixes are authorized.
+First-pass review task: **Mock presentation: concise conceptual review** (`01a09818-86af-75a1-9ff4-3a396e394c4d`), max reasoning. Replies are advisory; only individually authorized fixes may be implemented.
 
 ## Open issues
-
-### M01 — Earnings terminology
-
-Replace “heterogeneous income” with “idiosyncratic earnings risk.”
-
-**Status:** open; concise first-pass review requested. No changes authorized.
 
 ### M02 — Adult aging and death
 
@@ -123,11 +117,17 @@ Each issue will have a stable number and contain:
 - **Status:** open, investigating, awaiting an answer, or resolved.
 - **Answer / decision:** record the resolution and supporting source beside the original issue.
 
-**Current authorization:** record the issues and request one separate task, at max reasoning, to give concise first-pass answers to all 18 points. That task may flag problems and uncertainties only; no code inspection, implementation, slide edits, or model changes. Further investigation and fixes remain unauthorized. Keep each eventual answer beside its original issue, without treating an unanswered concern as resolved.
+**Current authorization:** record the issues and request one separate task, at max reasoning, to give concise first-pass answers to all 18 points. That task may flag problems and uncertainties only; no code inspection, implementation, slide edits, or model changes. Further investigation and fixes require individual authorization; M01 has been authorized and completed. Keep each eventual answer beside its original issue, without treating an unanswered concern as resolved.
 
 ## Resolved issues
 
-None yet.
+### M01 — Earnings terminology
+
+Replace “heterogeneous income” with “idiosyncratic earnings risk.”
+
+**Status:** resolved; Tommaso authorized this edit with “do it.”
+
+**Resolution:** On “This Paper,” replaced “Income heterogeneity, earnings risk, and bequests” with “Idiosyncratic earnings risk and bequests.” The model section still identifies permanent income groups separately.
 
 ## Related material
 
