@@ -91,20 +91,42 @@ replace the starting distribution of an existing fitted path.
 
 ### 3. Historical shock fitting and horizon checks
 
-Give each branch up to two independent historical searches with different
-numerical starts. Within each history, windows must run sequentially because
+**Author refinement: run short and long forecasts in parallel for BOTH
+demographic branches.** The initial proposed lengths are:
+
+| Historical/policy track | Demographic branch | Explicit forecast |
+|---|---|---|
+| A-short | Retained demographic treatment | 6 four-year dates, 24 years |
+| A-long | Retained demographic treatment | 24 four-year dates, 96 years |
+| B-short | Entry from surviving maturation | 6 four-year dates, 24 years |
+| B-long | Entry from surviving maturation | 24 four-year dates, 96 years |
+
+These are numerical forecast horizons with terminal continuation values, not
+different assumptions about how long the preference shock lasts. Preferences
+are expected to remain at the latest revealed level in every track. There are
+two initial calibrations, one per demographic branch; each branch's two
+forecast tracks begin from the same verified initial candidate. The four
+tracks fit their shock sequences separately and write separate policy results.
+
+Start all four tracks after their own required smoke tests; long tracks do not
+wait for short fits, and short tracks do not wait for long convergence. Allow
+at most one additional bounded numerical-start attempt per track when useful.
+Within each history, windows must run sequentially because
 the next window inherits the preceding realized state. Use bracketed searches
 over preference levels, saved price/pension/transfer guesses and exact replay.
 Reject a failed trial and continue with the next admissible proposal; do not
 terminate unrelated chains or admit a failed inherited state.
 
-Six-date forecasts are initialization diagnostics. Compare successively longer
-forecasts (initially twelve and twenty-four four-year dates), preserving the
-same inherited state and economic specification. Refit shock levels if changing
-the horizon materially changes the historical fertility fit. Extend further
-only within the measured run budget. An endpoint-distance failure or material
-change with the horizon stays visible; a longer attempted run is not a
-certificate. Retain the existing fertility tolerance and numerical gates.
+Short tracks are deliberately provisional finite-horizon experiments. Compare
+both refitted paths and fixed-shock replays from the same inherited state:
+refitting fertility alone could conceal a change in fitted preferences caused
+by the horizon. Report differences in fitted shocks, prices, housing and policy
+effects. Twelve dates may serve as an intermediate numerical continuation step
+if needed; this does not replace the independent short/long comparison.
+Extend beyond twenty-four dates only within the measured run budget. An
+endpoint-distance failure or material change with the horizon stays visible;
+neither the six-date nor the twenty-four-date label certifies convergence.
+Retain the existing fertility tolerance and numerical gates.
 
 ### 4. Policy computations in both branches
 
@@ -113,8 +135,8 @@ rebate versus a 2% annual tax with equal rebate. First compute consistent
 stationary endpoints in parallel with historical work. Label these long-run
 comparisons; they are not effects from the inherited 2023 economy.
 
-As soon as a branch has an admissible fitted 2023 state and baseline
-continuation, run its rebated-tax policy transition from that same state.
+As soon as a demographic/horizon track has an admissible fitted 2023 state and
+baseline continuation, run its rebated-tax policy transition from that same state.
 Compare births, population under that branch's definition, housing services,
 ownership, prices/rents, consumption and both fiscal budgets. Baseline and
 policy require matching horizons and demographic closure.
@@ -127,7 +149,7 @@ policy benchmark.
 
 ### 5. Automatic collection and morning decision
 
-Write one review packet per branch and a side-by-side comparison containing:
+Write one review packet per demographic/horizon track and a four-way comparison containing:
 
 - every initial target, model moment, gap, weight and loss contribution;
 - every estimated parameter, bound and bound proximity, plus external inputs;
@@ -164,9 +186,12 @@ fully utilized workers, before startup, uneven work, failures and queueing.
 Replace this rough estimate with the exact-loop measured cost before submission;
 reduce round counts if the three-hour stage budget requires it.
 
-Historical fitting has up to four chains, four windows and six preference
-trials per window: at most 96 forecast attempts before additional horizon
-checks, with time caps usually binding much earlier. A six-date converged
+Historical fitting has four primary chains (two demographics times two
+horizons), four windows and six preference trials per window: at most 96
+primary forecast attempts. One bounded alternative numerical start per track
+raises the total ceiling to 192 attempts; do not spend this reserve on identical
+failed restarts. Additional fixed-shock horizon checks have their own recorded
+budgets, and the common deadline will usually bind much earlier. A six-date converged
 forecast previously took 6–45 minutes at fixed preferences; longer forecasts
 and repeated shock roots can dominate total time. Parallelism helps independent
 chains and policy branches, not the dependence between historical windows.
