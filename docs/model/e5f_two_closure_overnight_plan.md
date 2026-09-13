@@ -31,6 +31,9 @@ rescaling cannot silently recreate entrants or overwrite the new closure.
 - Refit the approximate pre-2007 stationary economy using the existing twelve
   scored empirical moments, their definitions and weights. Keep the first-birth
   room response at 0.7202462623815278. No target dropping or reweighting.
+  The author additionally requested a separate experimental initial calibration
+  adding fertility stocks by age; see section2a. Its expanded objective must
+  have its own target-and-weight fingerprint.
 - Fit the four fertility windows from 2007 through 2023 using successive
   unexpected preference changes. At each change, households expect that level
   to persist; carry the realized household state forward. Hold preferences
@@ -88,6 +91,57 @@ historical pipeline from the first verified rebated initial candidate in each
 branch while the structural search continues. Freeze its source and parameters.
 A better initial calibration can start a separate history; it cannot silently
 replace the starting distribution of an existing fitted path.
+
+### 2a. Extra experiment: improve the inherited fertility profile
+
+**Author addition, September13:** supplement the initial calibration with
+pre-2007 fertility stocks by age. The purpose is to start younger and older
+cohorts with more realistic accumulated births before fitting subsequent
+preference shocks. This is an extra calibration specification, not an automatic
+replacement of the original objective or a direct reweighting of saved cohorts.
+
+Use pooled June2004/2006 CPS observations, consistent with the existing initial
+fertility source. Proposed additional rows are mean children ever born at
+ages25–29,30–34,35–39,40–44 and childlessness at25–29 and35–39. Inspect the full
+0/1/2/3+ distribution in all these groups, with ages20–24 as a supplemental
+boundary diagnostic. Existing childlessness and exactly-one-among-mothers at
+40–44 remain in the original objective; do not duplicate them as new rows or
+count all shares summing to one as independent information.
+
+These observations help discipline first-birth cost and dispersion, later-birth
+dispersion and the other utility/housing parameters through their implications
+for birth timing and family size. They do not separately identify every
+parameter or guarantee that a stationary age profile can reproduce actual
+cohorts with different pre-2007 histories. Completed fertility at40–44 remains
+distinct from final lifetime fertility and the replacement normalization.
+
+Before this experimental search: reproduce the existing40–44 empirical rows;
+record the source, sample, survey weights, years, age bands, uncertainty and
+new objective weights; verify the stationary model age projection; and
+reconcile literal child counts with the maintained3+ representative. Preserve
+raw/capped empirical means and model-coded means separately. A synthetic
+weight must be identified as synthetic, not presented as an empirical standard
+error. Correlated/overlapping stock moments require explicit treatment.
+
+Keep all twelve original scored rows and their weights. Score both the original
+and augmented objectives on the same candidate, and report the complete tables
+and parameter bounds. Re-estimate structural parameters to improve the initial
+profile; do not merely alter the distribution while calling it a stationary
+equilibrium. The2023completed-fertility path remains an outcome to assess
+whether this improved initialization actually helps.
+
+Keep this addition bounded: at most six full candidate evaluations per
+demographic branch, including its starting point, and two selected-point
+repetitions if a candidate is usable. This is at most sixteen additional
+single-repetition evaluations across A and B, within the existing initial
+search time budget. The four primary historical/horizon tracks remain the
+priority. A better augmented initial calibration can seed a separately pinned
+history within the existing chain budget; do not automatically double all
+long-horizon jobs or splice parameters into a history already fitted.
+
+Candidate empirical extraction and exact reproduction code belong under
+`output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/age_profile/`.
+Point extraction alone does not activate a scored target or certify a model fit.
 
 ### 3. Historical shock fitting and horizon checks
 
@@ -190,6 +244,13 @@ stationary solve, that is roughly 31–77 CPU-hours, or 1.7–4.3 hours with eig
 fully utilized workers, before startup, uneven work, failures and queueing.
 Replace this rough estimate with the exact-loop measured cost before submission;
 reduce round counts if the three-hour stage budget requires it.
+
+The optional age-profile experiment adds at most sixteen single-repetition
+evaluations, or128stationary solves at the same eight-solve cap. Including that
+pilot, the combined initial-work ceiling becomes132evaluations and1056stationary
+solves (roughly35–88CPU-hours at the same rough timing). Keep the three-hour
+initial-search deadline; share workers or reduce rounds rather than extend the
+critical path silently.
 
 Historical fitting has four primary chains (two demographics times two
 horizons), four windows and six preference trials per window: at most 96

@@ -1,5 +1,25 @@
 # Calibration Status
 
+**September13 — extra initial fertility-age-profile calibration requested.**
+Tommaso proposes improving the2007initialization by adding pre-2007 fertility
+stocks across ages. This is an additional experimental specification alongside
+the retained initial objective. Proposed extra rows: mean children ever born
+at25–29,30–34,35–39,40–44 and childlessness at25–29/35–39. Existing40–44
+childlessness/exactly-one rows are not duplicated. All original scored moments
+remain. No new weights, target contract or calibrated result has been activated.
+
+The pooled June2004/2006 CPS profile is now extracted from the two previously
+pinned raw partitions, with original sample/weight conventions. Fifteen rows
+(five ages by two years and pooled) were checked; the existing40–44 moments
+reproduce within4.3e-15. Raw, capped5 and model-coded3+ means are distinct saved
+columns. New uncertainty/weights and the stationary model age projection still
+need to be specified before search. Source, compact data and verified builder:
+`output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/age_profile/`.
+Section2a of [the overnight plan](docs/model/e5f_two_closure_overnight_plan.md)
+adds a bounded pilot in each demographic branch without automatically doubling
+the four primary history/horizon tracks. Initial distribution changes must come
+from the calibrated equilibrium, not undocumented cohort reweighting.
+
 **September 13 — full historical stock/fertility comparison and slide completed.**
 Fixed-coordinate replays17581096/17581099/17581100 recovered the actual2007/2011/
 2015 observations with exactly zero saved-path discrepancies. Together with the
