@@ -1,5 +1,24 @@
 # Calibration Status
 
+**September 13, 18:51 UTC — long stationary-endpoint path improving; sequence-space prototype delegated.**
+The100-period (400-year) stationary-endpoint arm17699174 has completed two
+valid mappings. Maximum scaled residual falls44.5491 to14.2871, versus2e-4
+required; latest largest dated housing imbalance9.293%, PAYGO imbalance5.881%
+and rebate imbalance7.144%. Full mappings take28.3–28.6minutes. This remains
+an unconverged path. The separate24-period finite-boundary IRF17697888 has
+converged only for its truncated system; its tail remains unverified.
+
+Author explicitly requested an agent to attempt sequence-space Jacobians.
+The worker_fast wrapper (Terra, medium) is dispatched with a30-minute limit,
+exclusive new adapter/test/note files and at most one10-minute native horizon2
+directional-derivative check. No existing scientific source or running job may
+change. Full prototype benchmark requires lead numerical review. Prompt:
+`docs/prompts/e5f_sequence_space_prototype.md`; worker log and expected final
+report: `output/model/e5f_sequence_space_prototype_20260913/worker.log` and
+`worker_report.md`. On the next monitor, inspect this report if available and
+review the proposed native-equivalence and Jacobian checks before a larger run.
+The ten-period no-shock check17700926 passed; its shocked stage is running.
+
 **September 13, 18:41 UTC — author-requested ten-period stationary-endpoint diagnostic launched.**
 Job17700926 is running with a45-minute numerical budget and50-minute Slurm
 limit. It reuses the verified permanent-shock endpoint and original frozen
