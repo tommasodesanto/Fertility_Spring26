@@ -1,5 +1,26 @@
 # Calibration Status
 
+**September 13, 19:23 UTC — rents checked; 100-period attempt plotted.**
+Every saved rent in the ten- and 100-period stationary-endpoint attempts
+reproduces the dated asset-pricing formula to 6e-17: rent = u * price + price
+minus next price, where u = Rgross - 1 + depreciation + property tax = 0.165711
+in four-year units. The short path's final rent 0.232492 consists of carrying
+cost 0.064478 and capital loss 0.168014; the latter reflects its large jump to
+the imposed terminal price. The longer path generally has falling rents, with
+a smaller final boundary spike: 0.038361 + 0.010411 = 0.048772. This is an exact
+accounting decomposition of unconverged iterates, not an equilibrium claim.
+
+The third 100-period mapping and visually inspected six-panel graph are in
+`output/model/e5f_original_queue_20260913a/terminal_restart_v1/transition_snapshot/`.
+The final saved period starts at year 396: household mass 0.388248 is 11.10%
+above stationary mass 0.349454. Full terminal distribution/queue distances and
+period TFR are not yet persisted by the running driver; the graph labels its
+birth-count panel explicitly. Active jobs remain 17699174 (stationary endpoint,
+100 periods), 17697889 (finite boundary, 100 periods), 17697891 (historical fit,
+6-period forecasts), and 17697892 (historical fit, 24-period forecasts). History
+6 has one completed window; history 24 none. Neither fresh history is complete
+and their conditional policies have not started. No solver or job was changed.
+
 **September 13, 19:17 UTC — 40-year diagnostic collected; algorithm appendix added.**
 The ten-period stationary-endpoint test17700926 stopped at its eight-mapping
 budget without convergence (shocked stage23.5minutes). At40years, carried

@@ -1,0 +1,31 @@
+{
+  "period_carrying_cost_rate": 0.16571146935900002,
+  "formula": "rent = u * price + price - next_price",
+  "source": "code/model/tools/run_e5f_perfect_foresight_transition.py:rents_from_asset_prices",
+  "checks": {
+    "ten_periods": {
+      "maximum_rent_identity_error": 5.551115123125783e-17,
+      "last_period_start_years": 36,
+      "last_house_price": 0.389097505552429,
+      "terminal_house_price": 0.22108375039468428,
+      "last_carrying_cost": 0.06447791936901467,
+      "last_expected_capital_loss": 0.16801375515774472,
+      "last_rent": 0.2324916745267594,
+      "last_dated_household_population": 0.9329704937021939,
+      "terminal_household_population": 0.3494542724968353,
+      "converged": false
+    },
+    "hundred_periods": {
+      "maximum_rent_identity_error": 5.551115123125783e-17,
+      "last_period_start_years": 396,
+      "last_house_price": 0.2314947402890728,
+      "terminal_house_price": 0.22108375039468428,
+      "last_carrying_cost": 0.038361333562182354,
+      "last_expected_capital_loss": 0.010410989894388517,
+      "last_rent": 0.04877232345657087,
+      "last_dated_household_population": 0.3882478006197917,
+      "terminal_household_population": 0.3494542724968353,
+      "converged": false
+    }
+  }
+}
