@@ -1,5 +1,22 @@
 # Calibration Status
 
+**September 13, 19:57 UTC — author-approved bounded Terra native SSJ task active.**
+The author explicitly approved proceeding with the 15-minute Terra task after
+being informed that weekly remaining allowance is 12%, below the earlier 20%
+floor. This is a bounded task authorization, not a request to redeem credits.
+In-thread Terra medium agent `terra_native_ssj` is running, with deadline
+20:12 UTC. The route avoids the prior CLI worker's restricted network.
+It must wire the existing prototype to the frozen native evaluator and attempt
+at most one two-period, six-mapping Torch test (one CPU, 24 GiB, ten minutes).
+It cannot start a large Jacobian or change production kernels/parameters/gates.
+The lead must review its numerical diff and evidence before trusting it.
+Prompt: `docs/prompts/e5f_sequence_space_native_smoke.md`.
+Required report: `output/model/e5f_sequence_space_prototype_20260913/native_smoke/worker_report.md`.
+The next monitor should inspect this report if present, collect any named small
+job's results, and report meaningful completion or a concrete blocker. Do not
+restart or expand the task without discussing the next step with the author.
+Fertility diagnostic replay17702691 and all existing equilibrium jobs continue.
+
 **September 13, 19:44 UTC — native fertility-rate replay running.**
 At the author's request, job 17702691 replays the saved third 100-period mapping
 on its own node to recover native age-specific fertility diagnostics and a
