@@ -4,6 +4,10 @@ Current evidence: September 13, 13:51 UTC. Fixed deadline: September 13, 18:00 U
 Cluster computation and collection are independent of the laptop. Latest account
 check,13:52UTC:38%weekly remaining; keep the author’s20%floor.
 
+**Access update: September 13, 14:33 UTC.** Local SSH now requires login renewal. Already
+submitted jobs and collectors are independent; later progress has not been
+verified. Do not read the snapshot below as a current queue observation.
+
 ## Discussion packet
 
 **`verified_history_readout.pdf` is the current 41-page report.** The first page

@@ -1,5 +1,13 @@
 # Calibration Status
 
+**September 13, 14:33 UTC — local Torch login needs renewal; submitted work is independent.**
+The initial DNS failure cleared, but a fresh BatchMode SSH connection now returns
+permission denied; no Kerberos cache is available. The last verified results and
+41-page PDF below remain valid and are backed up in commit4993c123. Submitted
+cluster jobs and collectors do not depend on this local login; their subsequent
+state cannot currently be verified. Further collection, monitoring and submission
+require renewed access. Receipt: `output/model/e5f_final_night_20260913/cluster_access_status.json`.
+
 **September 13, 13:51 UTC — paired rebated-tax policies verified; 41-page report complete.**
 Ordinary A0's 1% and 2% annual property-tax forecasts both pass all finite market,
 PAYGO, equal-rebate and exact-replay gates. Native read-only job17691079 proves
