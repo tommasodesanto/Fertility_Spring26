@@ -1,5 +1,19 @@
 # Calibration Status
 
+**September 13 — completed-fertility continuation extracted, no recalibration.**
+Author-requested job17580030 replayed the retained2019forecast once and reproduced
+its aggregate path exactly. Every saved2023observer matches the original readout.
+The same ages40–44 completed-fertility measure is1.6951 in2023 and declines to
+1.4703 in2039 under the saved constant-preference continuation. Capped housing
+observers were recovered for the same2019–2039dates. The no-rebate baseline and
+unresolved terminal-horizon limitation remain; this is no new baseline or policy
+certificate. Supplemental figure, full dated values, source receipts and
+reproduction instructions are in `recovered_sequence/README.md` under the packet
+below, with figure `figures/historical_fit_stock_forecast.pdf`. Earlier model
+stock/housing observations before2019remain unavailable; no stationary profiles
+were substituted. The presentation deck is unchanged.
+
+
 **September 12, 23:14 EDT — current history plus continuation and complete 2023 readout.**
 At Tommaso's request, one fixed-coordinate observer replay (job17575193) recovered
 the actual carried 2023 household state from the saved 2019 surprise forecast.

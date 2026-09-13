@@ -33,3 +33,51 @@ Regenerate the figures, full table and two-page PDF (no model solve):
 ```sh
 /opt/anaconda3/bin/python -B code/model/tools/build_e5f_patch_readout.py --base output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/patch_readout_fit --sequence-base output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/recovered_sequence --pdf output/pdf/e5f_current_history_and_2023_fit.pdf
 ```
+
+## Completed-fertility and housing continuation
+
+At the author's request, one fixed-coordinate replay observed every date of the
+same saved2019forecast. Job17580030 completed in2m55s (evaluation164.53s),
+with exactly zero aggregate-path discrepancy. All2023 profiles, birth-flow
+measurements and fertility-stock observations match the original2023packet
+exactly. No parameters, targets, equilibrium prices, demographic inputs or
+fiscal rules were fitted or changed. The no-rebate/horizon qualifications above
+remain in force.
+
+`source/stock_forecast/observed_dates.json` preserves the dated observations and
+receipt hash; the accompanying verification and submission files identify the
+remote inputs and source hash. The2023match and independent weighted-count
+fertility calculation are checked by the plotting driver. The first launch,
+17579982, was cancelled after11seconds to repair a NumPy-array comparison in
+report validation; its scientific inputs were unchanged and its output was
+never admitted.
+
+`figures/historical_fit_stock_forecast.png` and `.pdf` add the completed-fertility
+and capped-room continuations to the existing period-fertility comparison.
+`figures/stock_forecast.csv` gives every dated value. Completed fertility means
+children ever born at ages40–44 using the same uniform-birth-time observer as
+2023:1.6951 in2023,1.6285 in2027,1.5620 in2031,1.5085 in2035 and1.4703 in2039.
+It is a near-completion measure, not fertility observed at age50. Its date is
+the observation year; period fertility is plotted at the end of its four-year
+birth window and therefore extends to2043. The model stock/housing series begin
+in2019; the earlier fitted prefix still lacks these saved observers. Initial
+stationary profiles must not be relabeled as historical2007observations.
+
+The completed-fertility data are Census CPS Historical Table2, not Goldin or HFD.
+The source URL, workbook hash and extraction definition are in
+`source/stock_forecast/cps_source.json`; recent2022/2024 counts are capped atfive.
+Housing data retain the42-metro ACS capped-nine-room definition, while the model
+uses its existing household/demographic normalization. The plotted housing
+measure is rooms per household, not total housing stock.
+
+Reproduce without solving:
+
+```sh
+python3 code/model/tools/build_e5f_stock_forecast_comparison.py
+```
+
+For a fresh identical numerical replay, the existing collector now accepts
+`--all-dates` with the pinned carried-state arguments recorded in
+`source/stock_forecast/submission.json`. It records every observer date but
+retains the original aggregate-path reproduction gate. Large states remain on
+Torch. The plot is supplemental; the presentation deck has not been edited.

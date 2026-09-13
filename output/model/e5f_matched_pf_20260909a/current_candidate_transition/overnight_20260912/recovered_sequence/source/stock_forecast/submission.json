@@ -1,0 +1,33 @@
+{
+  "job": "17580030",
+  "source_sha256": "4e1e77baf5d6e594ab1d065e401bd523464d4c4dff35a781c113584f7affa1ba",
+  "remote_output": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/carried_readout_20260913_all_dates_b/source",
+  "prior_submission": {
+    "job": "17575193",
+    "command": [
+      "python",
+      "-B",
+      "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/carried_readout_20260913/collect_e5f_patch_readout.py",
+      "--batch",
+      "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/finite_sequences_20260912/recover_saved_2019",
+      "--out",
+      "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/carried_readout_20260913/source",
+      "--forecast-stage",
+      "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/finite_sequences_20260912/recover_saved_2019/results/arm_0/trial_00_2019/forecast_6_0",
+      "--plan",
+      "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/finite_sequences_20260912/recover_saved_2019/plan.json",
+      "--inherited-checkpoint",
+      "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/finite_sequences_20260912/resume_2011/results/arm_0/realized_state_2019.pkl.gz",
+      "--inherited-sha256",
+      "7787c71ae5278ef41bade3dd797b92f07db782b29ffe502277ed3d819c627a5f"
+    ],
+    "driver_sha256": "dfe988771b4c1f7c7b3cbe2c61c52c6c8b373bb8fb028e6751976424b1e7c133",
+    "scope": "Single fixed-coordinate replay for2023diagnostics; no root or calibration search",
+    "expected_seconds": "200-400seconds including observers;15minute cap"
+  },
+  "scope": "One fixed-coordinate replay of2019forecast with fertility-stock and cappedhousing observers for all dates; no root/search",
+  "time_cap_minutes": 15,
+  "expected_seconds": 300,
+  "supersedes_cancelled_job": "17579982",
+  "correction": "JSON-normalized equality for NumPy profile arrays; first job stopped after10seconds, before complete replay"
+}

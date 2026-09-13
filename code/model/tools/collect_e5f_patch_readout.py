@@ -36,7 +36,10 @@ def main():
     ap.add_argument('--plan',type=Path,default=None,help='Plan carrying the approved initial and stationary source receipts.')
     ap.add_argument('--inherited-checkpoint',type=Path,help='Opt-in actual carried2019state, instead of the stationary patch restart.')
     ap.add_argument('--inherited-sha256',help='Required pin for the carried state.')
+    ap.add_argument('--all-dates',action='store_true',help='Also observe fertility stocks and capped housing at every saved forecast date.')
     args=ap.parse_args()
+    if args.all_dates and not args.inherited_checkpoint:
+        raise ValueError('All-date observations require the actual carried state')
     batch=args.batch; out=args.out
     out.mkdir(parents=True,exist_ok=True)
     forecast_stage=args.forecast_stage or (batch/'results/arm_0/trial_00_2019/forecast_6_2')
@@ -76,10 +79,16 @@ def main():
     stage=forecast_stage; trial=stage.parent; receipt=read(stage/'vintage/2019/root_receipt.json');assert receipt['finite_horizon_market_fiscal_converged']
     t=load(trial/'terminal/terminal_state.pkl.gz');tr=read(trial/'terminal/root_receipt.json');payload=tr['final']['payload']
     terminal=term.BalancedTerminalEndpoint(t['parameters'],t['b_grid'],t['policy'],t['endpoint'],t['social_security'],payload['diagnostics'],payload['household_gates'])
-    observed={};branch=None;measurement_errors={}
+    observed={};branch=None;measurement_errors={};observed_dates=[]
     def observer(i,e,P,grid,shared):
         nonlocal branch
         save(out/'latest_date.json',dict(year=2019+4*i))
+        if args.all_dates:
+            from e5f_initial_fertility_observer import observe_initial_fertility
+            dated=dict(calendar_year=2019+4*i,profile=profile(e,P,grid),
+                fertility=fert.period_fertility_diagnostics(e,P),
+                fertility_stock_timing=observe_initial_fertility(e,P,age_projection='uniform_birth_time'))
+            observed_dates.append(dated)
         if args.inherited_checkpoint and i==0:
             try:branch=fert.begin_dated_first_birth_housing_branch(e,P,grid,shared,origin_period=0)
             except (ValueError,RuntimeError) as exc:measurement_errors['first_birth_origin']=str(exc)
@@ -120,6 +129,20 @@ def main():
     assert observed['calendar_year']==2023
     agg=observed['profile']['totals'];r=path.rows[1]
     assert abs(agg['rooms']-r['housing_demand'])<2e-10 and abs(agg['owners']/agg['households']-r['owner_rate'])<2e-10
+    if args.all_dates:
+        assert len(observed_dates)==len(path.rows)
+        for dated,row in zip(observed_dates,path.rows):
+            assert dated['calendar_year']==int(row['calendar_year'])
+            totals=dated['profile']['totals']
+            assert abs(totals['rooms']-row['housing_demand'])<2e-10
+            assert 0<=totals['capped_rooms']<=totals['rooms']+2e-10
+        dated2023=next(d for d in observed_dates if d['calendar_year']==2023)
+        normalize=lambda obj:json.dumps(obj,sort_keys=True,default=lambda x:x.tolist() if hasattr(x,'tolist') else str(x))
+        assert normalize(dated2023['profile'])==normalize(observed['profile'])
+        assert dated2023['fertility_stock_timing']==observed['fertility_stock_timing']
+        save(out/'observed_dates.json',dict(dates=observed_dates,
+            forecast_receipt_sha256=sha(stage/'vintage/2019/root_receipt.json'),
+            replay_maximum_abs=maximum,finite_converged=True,horizon_verified=False))
     # Keep the selected forecast's immutable aggregate rows and receipt beside
     # the derived observer files, making the source packet reproducible offline.
     import shutil
