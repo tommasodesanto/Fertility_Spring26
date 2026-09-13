@@ -86,7 +86,13 @@ The slides are messy, the notation is not transparent, and it is unclear whether
 
 Very important: how do survival s_a and the number of children interact? If parents die, do their children mature? If so, is market clearing/population accounting consistent?
 
-**Status:** open; concise first-pass review requested. No changes authorized.
+**Status:** substantive accounting gap flagged after authorized read-only investigation. No model or slide changes authorized for this issue.
+
+$s_a$ is the parent household's survival probability to the next age cell. The household transition multiplies the entire post-birth distribution by $s_a$ before maturation. Dependents attached to dead households therefore leave the household distribution; they are neither reassigned nor included in that transition's reported mature-child flow. At the terminal parent age, the entire household cohort exits.
+
+This does **not** imply that the fitted transition deletes their future adult entry: the separate recorded-birth queue continues independently of parental survival. The newer person-demography operator instead advances child persons using their own age/sex survival and determines household-head totals from headship rates. Neither mechanism, in the inspected implementation, explicitly places surviving children of dead parents into another household or reconciles those children's ongoing housing needs with household dependent states. Thus aggregate demographic/household-head identities do not certify that dependent-child accounting link. Its quantitative incidence has not been measured.
+
+**Evidence:** pinned `run_e5f_open_population_transition.py:847–895` (survivor-only dependent transition and maturation; terminal exit); `run_e5f_perfect_foresight_transition.py:650–694` and `advance_birth_vintage_queue` at `run_e5f_open_population_transition.py:351` (separate future-entry queue); `run_e5f_perfect_foresight_person_demography.py:807–838` and `demographic_transition/household_person_coupling.py:33–99` (separate person law and age-head-mass reconciliation). The fitted-patch receipt retains the historical head-age bridge and frozen 2023 person anchor; do not represent it as the newer person-cohort operator. A narrow clarification has been requested from the quantitative task. No solve or implementation change.
 
 ### M14 — Equilibrium and population accounting
 
