@@ -1,0 +1,960 @@
+{
+  "best": {
+    "mapping_valid": true,
+    "payload": {
+      "coordinates": [
+        0.22110222986985162,
+        2.0463613896184945,
+        0.08110660829382418
+      ],
+      "household_gates": {
+        "feasibility_projection": true,
+        "finite_nonnegative_household_mass": true,
+        "finite_policy_arrays": true,
+        "household_budget": true,
+        "occupied_value_monotonicity": true,
+        "probability_bounds": true
+      },
+      "housing_relative_gap": -3.84511816806092e-13,
+      "mapping_valid": true,
+      "payroll_accounts": {
+        "implied_balanced_payroll_tax": 0.1790000000000015,
+        "implied_balanced_pension_period": 2.046361389618477,
+        "payroll_tax_base_period": 1.0355649226045176,
+        "payroll_tax_rate": 0.179,
+        "payroll_tax_revenue": 0.18536612114620865,
+        "pension_budget_residual": -1.5543122344752192e-15,
+        "pension_outlays": 0.1853661211462102,
+        "pension_period_units": 2.0463613896184945,
+        "retiree_benefit_exposure": 0.09058327726793566,
+        "retiree_household_mass": 0.09058327726793566,
+        "scaled_pension_budget_residual": -8.385093375553956e-15,
+        "worker_household_mass": 0.25889123065103825
+      },
+      "pension_relative_gap": -8.385093375553956e-15,
+      "population_scale": 0.3494745079193545,
+      "rebate_accounts": {
+        "equal_transfer_outlays": 0.028344692022461194,
+        "equal_transfer_period_units": 0.08110660829382418,
+        "government_budget_residual": 3.19079083047763e-07,
+        "household_head_mass": 0.34947450791897416,
+        "implied_equal_transfer": 0.08110752131916886,
+        "property_tax_revenue": 0.02834501110154424,
+        "scaled_government_budget_residual": 1.1256975060079602e-05
+      },
+      "rebate_relative_gap": 1.1256975060079602e-05,
+      "reconstruction_gates": {
+        "stationary_feasibility_projection": true,
+        "stationary_post_fertility_nesting_l1": true,
+        "stationary_post_fertility_nesting_max_abs": true
+      },
+      "renewal_ratio": 0.9999933239761892,
+      "residual": [
+        -0.0013352047621539853,
+        -1.6770186751107912e-12,
+        0.0022513950120159206
+      ],
+      "trial": 22,
+      "unit_stationary_mass": 1.0000000000000087
+    },
+    "prices": [
+      0.22110222986985162,
+      2.0463613896184945,
+      0.08110660829382418
+    ],
+    "residual": [
+      -0.0013352047621539853,
+      -1.6770186751107912e-12,
+      0.0022513950120159206
+    ],
+    "score": 0.0022513950120159206,
+    "x": [
+      -1.509130105824267,
+      0.7160632841988963,
+      -2.5119908379026183
+    ]
+  },
+  "converged": false,
+  "coordinate_labels": [
+    "asset_price",
+    "pension",
+    "rebate"
+  ],
+  "elapsed_seconds": 624.9659280655906,
+  "elapsed_seconds_total": 624.9747450230643,
+  "endpoint_reference": {
+    "asset_price": 0.22110222986985162,
+    "birth_children_topcode_adjusted": 0.045305662900379025,
+    "entry_flow": 0.021574269220991697,
+    "equal_transfer_period_units": 0.08110660829382418,
+    "housing_demand": 3.204966670647,
+    "housing_supply": 3.2049666706482323,
+    "owner_rate": 0.8268117943250981,
+    "payroll_tax_rate": 0.179,
+    "pension_period_units": 2.0463613896184945,
+    "population_households": 0.3494745079193545,
+    "raw_birth_queue_flow": 0.01943519043544386,
+    "renewal_ratio": 0.9999933239761892,
+    "renter_price": 0.036639175390284495
+  },
+  "evaluations": 24,
+  "final": {
+    "mapping_valid": true,
+    "payload": {
+      "coordinates": [
+        0.22110222986985162,
+        2.0463613896184945,
+        0.08110660829382418
+      ],
+      "household_gates": {
+        "feasibility_projection": true,
+        "finite_nonnegative_household_mass": true,
+        "finite_policy_arrays": true,
+        "household_budget": true,
+        "occupied_value_monotonicity": true,
+        "probability_bounds": true
+      },
+      "housing_relative_gap": -3.84511816806092e-13,
+      "mapping_valid": true,
+      "payroll_accounts": {
+        "implied_balanced_payroll_tax": 0.1790000000000015,
+        "implied_balanced_pension_period": 2.046361389618477,
+        "payroll_tax_base_period": 1.0355649226045176,
+        "payroll_tax_rate": 0.179,
+        "payroll_tax_revenue": 0.18536612114620865,
+        "pension_budget_residual": -1.5543122344752192e-15,
+        "pension_outlays": 0.1853661211462102,
+        "pension_period_units": 2.0463613896184945,
+        "retiree_benefit_exposure": 0.09058327726793566,
+        "retiree_household_mass": 0.09058327726793566,
+        "scaled_pension_budget_residual": -8.385093375553956e-15,
+        "worker_household_mass": 0.25889123065103825
+      },
+      "pension_relative_gap": -8.385093375553956e-15,
+      "population_scale": 0.3494745079193545,
+      "rebate_accounts": {
+        "equal_transfer_outlays": 0.028344692022461194,
+        "equal_transfer_period_units": 0.08110660829382418,
+        "government_budget_residual": 3.19079083047763e-07,
+        "household_head_mass": 0.34947450791897416,
+        "implied_equal_transfer": 0.08110752131916886,
+        "property_tax_revenue": 0.02834501110154424,
+        "scaled_government_budget_residual": 1.1256975060079602e-05
+      },
+      "rebate_relative_gap": 1.1256975060079602e-05,
+      "reconstruction_gates": {
+        "stationary_feasibility_projection": true,
+        "stationary_post_fertility_nesting_l1": true,
+        "stationary_post_fertility_nesting_max_abs": true
+      },
+      "renewal_ratio": 0.9999933239761892,
+      "residual": [
+        -0.0013352047621539853,
+        -1.6770186751107912e-12,
+        0.0022513950120159206
+      ],
+      "trial": 24,
+      "unit_stationary_mass": 1.0000000000000087
+    },
+    "prices": [
+      0.22110222986985162,
+      2.0463613896184945,
+      0.08110660829382418
+    ],
+    "residual": [
+      -0.0013352047621539853,
+      -1.6770186751107912e-12,
+      0.0022513950120159206
+    ],
+    "score": 0.0022513950120159206,
+    "x": [
+      -1.509130105824267,
+      0.7160632841988963,
+      -2.5119908379026183
+    ]
+  },
+  "final_damping": 0.5,
+  "final_jacobian": [
+    [
+      48.65792901873944,
+      1.169769460773597e-08,
+      -83.77459144708837
+    ],
+    [
+      1.0129753355857536e-08,
+      -200.0,
+      1.1745795373086373e-08
+    ],
+    [
+      197.46883806607556,
+      8.890022344720396e-09,
+      -253.9389005812552
+    ]
+  ],
+  "final_reproduction_max_abs": 0.0,
+  "fresh_final_mapping_matches_endpoint": false,
+  "history": [
+    {
+      "best_score": 35.10489122404883,
+      "elapsed_seconds": 30.7481160890311,
+      "evaluation": 1,
+      "evaluation_seconds": 30.74783629272133,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "initial",
+      "prices": [
+        0.7026083285154774,
+        2.0463613896121218,
+        0.18660898018995767
+      ],
+      "residual": [
+        -35.10489122404883,
+        6.303931733666621e-10,
+        -1.8728723488533352
+      ],
+      "score": 35.10489122404883
+    },
+    {
+      "actual_log_step": [
+        -0.1076837154111927,
+        3.1519231669108194e-12,
+        -0.009364361744266692
+      ],
+      "best_score": 29.388679251345916,
+      "damping": 1.0,
+      "elapsed_seconds": 58.91229221876711,
+      "evaluation": 2,
+      "evaluation_seconds": 28.13246062770486,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.6308801312682409,
+        2.0463613896185717,
+        0.18486966270402158
+      ],
+      "requested_log_step": [
+        -0.10768371541119272,
+        3.1519658668333104e-12,
+        -0.009364361744266676
+      ],
+      "reset_reason": null,
+      "residual": [
+        -29.388679251345916,
+        4.605737719980277e-11,
+        -7.881291965033347
+      ],
+      "score": 29.388679251345916
+    },
+    {
+      "actual_log_step": [
+        -0.2,
+        1.674216321134736e-12,
+        -0.19999999999999996
+      ],
+      "best_score": 22.049960595494355,
+      "damping": 1.0,
+      "elapsed_seconds": 85.77950347494334,
+      "evaluation": 3,
+      "evaluation_seconds": 26.83271849900484,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.516520964975183,
+        2.046361389621998,
+        0.1513584781669361
+      ],
+      "requested_log_step": [
+        -0.2,
+        1.6741646567508852e-12,
+        -0.2
+      ],
+      "reset_reason": null,
+      "residual": [
+        -22.049960595494355,
+        -2.6427232014111707e-10,
+        10.84087614197633
+      ],
+      "score": 22.049960595494355
+    },
+    {
+      "actual_log_step": [
+        -0.19999999999999996,
+        -8.635314685534468e-13,
+        -0.14922552296379576
+      ],
+      "best_score": 15.387753051837038,
+      "damping": 1.0,
+      "elapsed_seconds": 112.49876387603581,
+      "evaluation": 4,
+      "evaluation_seconds": 26.69428496528417,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.42289159863469744,
+        2.046361389620231,
+        0.130376383882478
+      ],
+      "requested_log_step": [
+        -0.2,
+        -8.635467205638319e-13,
+        -0.14922552296379593
+      ],
+      "reset_reason": null,
+      "residual": [
+        -15.387753051837038,
+        1.6543817989176358e-10,
+        15.336418145118285
+      ],
+      "score": 15.387753051837038
+    },
+    {
+      "actual_log_step": [
+        -0.19999999999999996,
+        2.8348434710778747e-12,
+        -0.12696759472116925
+      ],
+      "best_score": 9.61062023614434,
+      "damping": 1.0,
+      "elapsed_seconds": 138.7987149618566,
+      "evaluation": 5,
+      "evaluation_seconds": 26.27655590325594,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.3462343570205375,
+        2.046361389626032,
+        0.11483059245382712
+      ],
+      "requested_log_step": [
+        -0.2,
+        2.834921273746165e-12,
+        -0.12696759472116922
+      ],
+      "reset_reason": null,
+      "residual": [
+        -9.61062023614434,
+        -4.3691857405518416e-10,
+        9.364148594030762
+      ],
+      "score": 9.61062023614434
+    },
+    {
+      "actual_log_step": [
+        -0.19999999999999996,
+        -2.488231842789901e-12,
+        -0.20000000000000018
+      ],
+      "best_score": 9.61062023614434,
+      "damping": 1.0,
+      "elapsed_seconds": 164.57532225269824,
+      "evaluation": 6,
+      "evaluation_seconds": 25.752937705256045,
+      "mapping_valid": true,
+      "new_best": false,
+      "phase": "iterate",
+      "prices": [
+        0.28347271586489553,
+        2.04636138962094,
+        0.09401533743611268
+      ],
+      "requested_log_step": [
+        -0.2,
+        -2.4883728956832185e-12,
+        -0.2
+      ],
+      "reset_reason": null,
+      "residual": [
+        -4.967861965589004,
+        -1.5578737741548446e-11,
+        15.426133628398734
+      ],
+      "safeguard": "restored_best_halved_damping_reset_jacobian",
+      "score": 15.426133628398734
+    },
+    {
+      "actual_log_step": [
+        -0.014740215086110897,
+        -1.092459456231154e-12,
+        0.023410371485077075
+      ],
+      "best_score": 8.998319615822247,
+      "damping": 0.5,
+      "elapsed_seconds": 190.91851635929197,
+      "evaluation": 7,
+      "evaluation_seconds": 26.318014547228813,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.34116821784639806,
+        2.0463613896237964,
+        0.11755053246428294
+      ],
+      "requested_log_step": [
+        -0.014740215086110951,
+        -1.0922964351379604e-12,
+        0.023410371485076905
+      ],
+      "reset_reason": null,
+      "residual": [
+        -8.998319615822247,
+        -2.4530758087629956e-10,
+        2.507737782124574
+      ],
+      "score": 8.998319615822247
+    },
+    {
+      "actual_log_step": [
+        -0.019226342477842495,
+        -6.699085730588195e-13,
+        0.0016836261358852411
+      ],
+      "best_score": 8.400777431692319,
+      "damping": 0.5,
+      "elapsed_seconds": 217.70210289303213,
+      "evaluation": 8,
+      "evaluation_seconds": 26.75702308025211,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.33467145546414095,
+        2.0463613896224255,
+        0.11774861031075742
+      ],
+      "requested_log_step": [
+        -0.01922634247784241,
+        -6.699612929879807e-13,
+        0.0016836261358854133
+      ],
+      "reset_reason": null,
+      "residual": [
+        -8.400777431692319,
+        -9.18423132703866e-11,
+        -0.8712955484241786
+      ],
+      "score": 8.400777431692319
+    },
+    {
+      "actual_log_step": [
+        -0.0320325350314723,
+        7.66053886991358e-15,
+        -0.019161666119455578
+      ],
+      "best_score": 7.6288118121236925,
+      "damping": 0.5,
+      "elapsed_seconds": 243.78634011838585,
+      "evaluation": 9,
+      "evaluation_seconds": 26.059472774155438,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.3241209619937988,
+        2.046361389622441,
+        0.11551383018740354
+      ],
+      "requested_log_step": [
+        -0.03203253503147234,
+        7.709948391140935e-15,
+        -0.01916166611945574
+      ],
+      "reset_reason": null,
+      "residual": [
+        -7.6288118121236925,
+        -1.5297120237514755e-10,
+        -2.4679497852943304
+      ],
+      "score": 7.6288118121236925
+    },
+    {
+      "actual_log_step": [
+        -0.07564855881355226,
+        -1.1658451981588769e-12,
+        -0.06541909675705382
+      ],
+      "best_score": 6.0345497242044965,
+      "damping": 0.5,
+      "elapsed_seconds": 269.31324497424066,
+      "evaluation": 10,
+      "evaluation_seconds": 25.506300925277174,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.3005061521443948,
+        2.0463613896200554,
+        0.10819889652859858
+      ],
+      "requested_log_step": [
+        -0.07564855881355236,
+        -1.165756199773097e-12,
+        -0.0654190967570538
+      ],
+      "reset_reason": null,
+      "residual": [
+        -6.0345497242044965,
+        1.425561153563383e-10,
+        -2.741728054817277
+      ],
+      "score": 6.0345497242044965
+    },
+    {
+      "actual_log_step": [
+        -0.11330477298118224,
+        8.47433234696382e-13,
+        -0.10545661226999092
+      ],
+      "best_score": 3.3132586807492315,
+      "damping": 0.5,
+      "elapsed_seconds": 294.5761461323127,
+      "evaluation": 11,
+      "evaluation_seconds": 25.234437497332692,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.2683154803851173,
+        2.0463613896217896,
+        0.0973696495326937
+      ],
+      "requested_log_step": [
+        -0.11330477298118215,
+        8.474123667614165e-13,
+        -0.10545661226999076
+      ],
+      "reset_reason": null,
+      "residual": [
+        -3.3132586807492315,
+        -1.450146953985297e-10,
+        -0.729767353689195
+      ],
+      "score": 3.3132586807492315
+    },
+    {
+      "actual_log_step": [
+        -0.08548648873093256,
+        -8.005818230572004e-13,
+        -0.0747830242228491
+      ],
+      "best_score": 1.746866201773578,
+      "damping": 0.5,
+      "elapsed_seconds": 319.9279494136572,
+      "evaluation": 12,
+      "evaluation_seconds": 25.326855034567416,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.2463311983222594,
+        2.0463613896201513,
+        0.09035366054906363
+      ],
+      "requested_log_step": [
+        -0.08548648873093262,
+        -8.006111954256925e-13,
+        -0.07478302422284899
+      ],
+      "reset_reason": null,
+      "residual": [
+        -1.746866201773578,
+        -8.92602875495814e-11,
+        -1.4990134750316595
+      ],
+      "score": 1.746866201773578
+    },
+    {
+      "actual_log_step": [
+        -0.02839897780551226,
+        -4.0534242629064465e-13,
+        -0.029128234980679846
+      ],
+      "best_score": 1.2867206233783346,
+      "damping": 0.5,
+      "elapsed_seconds": 345.4203060399741,
+      "evaluation": 13,
+      "evaluation_seconds": 25.45706462673843,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.23943404369997148,
+        2.046361389619322,
+        0.08775977888703612
+      ],
+      "requested_log_step": [
+        -0.02839897780551223,
+        -4.051978987477902e-13,
+        -0.029128234980679707
+      ],
+      "reset_reason": null,
+      "residual": [
+        -1.2867206233783346,
+        -5.964972170445324e-11,
+        -0.9409095606132265
+      ],
+      "score": 1.2867206233783346
+    },
+    {
+      "actual_log_step": [
+        -0.04996346508093952,
+        -5.944134073843088e-13,
+        -0.04903420477176734
+      ],
+      "best_score": 0.4491449968308636,
+      "damping": 0.5,
+      "elapsed_seconds": 371.28920590877533,
+      "evaluation": 14,
+      "evaluation_seconds": 25.84565437491983,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.22776502881948685,
+        2.0463613896181054,
+        0.08356034719126261
+      ],
+      "requested_log_step": [
+        -0.04996346508093955,
+        -5.943629830939894e-13,
+        -0.04903420477176755
+      ],
+      "reset_reason": null,
+      "residual": [
+        -0.4491449968308636,
+        5.6489170011375894e-11,
+        -0.442976002658529
+      ],
+      "score": 0.4491449968308636
+    },
+    {
+      "actual_log_step": [
+        -0.011217577111755528,
+        1.3844481117075702e-13,
+        -0.011482870363606956
+      ],
+      "best_score": 0.2797773808555615,
+      "damping": 0.5,
+      "elapsed_seconds": 396.85642395261675,
+      "evaluation": 15,
+      "evaluation_seconds": 25.545459397137165,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.2252243339079887,
+        2.0463613896183888,
+        0.08260632251061806
+      ],
+      "requested_log_step": [
+        -0.011217577111755575,
+        1.3859919854571723e-13,
+        -0.01148287036360678
+      ],
+      "reset_reason": null,
+      "residual": [
+        -0.2797773808555615,
+        2.6218860045437172e-11,
+        -0.24653681803120456
+      ],
+      "score": 0.2797773808555615
+    },
+    {
+      "actual_log_step": [
+        -0.01060447431332423,
+        5.3179682879545e-14,
+        -0.010584217291910392
+      ],
+      "best_score": 0.121227965925641,
+      "damping": 0.5,
+      "elapsed_seconds": 421.9488169439137,
+      "evaluation": 16,
+      "evaluation_seconds": 25.067811826243997,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.22284856738569161,
+        2.0463613896184976,
+        0.08173660997586596
+      ],
+      "requested_log_step": [
+        -0.010604474313324237,
+        5.320901497371999e-14,
+        -0.010584217291910595
+      ],
+      "reset_reason": null,
+      "residual": [
+        -0.121227965925641,
+        -8.130840583350984e-12,
+        -0.07519047157112059
+      ],
+      "score": 0.121227965925641
+    },
+    {
+      "actual_log_step": [
+        -0.004987175042847403,
+        -7.527312106958561e-14,
+        -0.004792843680788028
+      ],
+      "best_score": 0.049871354982707915,
+      "damping": 0.5,
+      "elapsed_seconds": 447.1693385411054,
+      "evaluation": 17,
+      "evaluation_seconds": 25.190421213395894,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.22173994930608765,
+        2.0463613896183435,
+        0.0813457964833689
+      ],
+      "requested_log_step": [
+        -0.004987175042847366,
+        -7.52564403911157e-14,
+        -0.004792843680788026
+      ],
+      "reset_reason": null,
+      "residual": [
+        -0.04405777874854078,
+        5.798003079871336e-12,
+        -0.049871354982707915
+      ],
+      "score": 0.049871354982707915
+    },
+    {
+      "actual_log_step": [
+        -0.0009952094588807636,
+        1.3433698597964394e-14,
+        -0.0010423631957943158
+      ],
+      "best_score": 0.029417844051016218,
+      "damping": 0.5,
+      "elapsed_seconds": 472.20697153545916,
+      "evaluation": 18,
+      "evaluation_seconds": 25.014882748946548,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.22151938138497218,
+        2.046361389618371,
+        0.08126104879559073
+      ],
+      "requested_log_step": [
+        -0.0009952094588808577,
+        1.3409106629801865e-14,
+        -0.0010423631957945294
+      ],
+      "reset_reason": null,
+      "residual": [
+        -0.029417844051016218,
+        7.865588901753596e-12,
+        -0.02824619273495721
+      ],
+      "score": 0.029417844051016218
+    },
+    {
+      "actual_log_step": [
+        -0.0013129919411878355,
+        5.0182080713057076e-14,
+        -0.0013124852171455537
+      ],
+      "best_score": 0.012162836377620412,
+      "damping": 0.5,
+      "elapsed_seconds": 497.4062904790044,
+      "evaluation": 19,
+      "evaluation_seconds": 25.1679424950853,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.2212287190827842,
+        2.0463613896184736,
+        0.08115446483055631
+      ],
+      "requested_log_step": [
+        -0.001312991941187836,
+        5.0216486293517385e-14,
+        -0.0013124852171454986
+      ],
+      "reset_reason": null,
+      "residual": [
+        -0.009796134397710432,
+        3.2927789046580025e-12,
+        -0.012162836377620412
+      ],
+      "score": 0.012162836377620412
+    },
+    {
+      "actual_log_step": [
+        -0.00026603766984756305,
+        1.3877787807814457e-14,
+        -0.00027818254203593185
+      ],
+      "best_score": 0.006479223016175075,
+      "damping": 0.5,
+      "elapsed_seconds": 523.1468373080716,
+      "evaluation": 20,
+      "evaluation_seconds": 25.71824029739946,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.22116987173800837,
+        2.046361389618502,
+        0.08113189221503153
+      ],
+      "requested_log_step": [
+        -0.0002660376698475467,
+        1.3910141919964999e-14,
+        -0.00027818254203606916
+      ],
+      "reset_reason": null,
+      "residual": [
+        -0.005878343791509977,
+        -5.688573107666229e-13,
+        -0.006479223016175075
+      ],
+      "score": 0.006479223016175075
+    },
+    {
+      "actual_log_step": [
+        -0.0002410826952117251,
+        -6.106226635438361e-15,
+        -0.00024377000702813234
+      ],
+      "best_score": 0.002982661639925304,
+      "damping": 0.5,
+      "elapsed_seconds": 549.0132680991665,
+      "evaluation": 21,
+      "evaluation_seconds": 25.839750948362052,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.2211165579360059,
+        2.0463613896184896,
+        0.08111211710348352
+      ],
+      "requested_log_step": [
+        -0.00024108269521175375,
+        -6.266800836090912e-15,
+        -0.00024377000702828473
+      ],
+      "reset_reason": null,
+      "residual": [
+        -0.0022883240153870332,
+        8.684006266039251e-13,
+        -0.002982661639925304
+      ],
+      "score": 0.002982661639925304
+    },
+    {
+      "actual_log_step": [
+        -6.480080247328601e-05,
+        2.3314683517128287e-15,
+        -6.791829547392325e-05
+      ],
+      "best_score": 0.0022513950120159206,
+      "damping": 0.5,
+      "elapsed_seconds": 574.6498940745369,
+      "evaluation": 22,
+      "evaluation_seconds": 25.609223004430532,
+      "mapping_valid": true,
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.22110222986985162,
+        2.0463613896184945,
+        0.08110660829382418
+      ],
+      "requested_log_step": [
+        -6.480080247338191e-05,
+        2.4687573486971848e-15,
+        -6.791829547407417e-05
+      ],
+      "reset_reason": null,
+      "residual": [
+        -0.0013352047621539853,
+        -1.6770186751107912e-12,
+        0.0022513950120159206
+      ],
+      "score": 0.0022513950120159206
+    },
+    {
+      "actual_log_step": [
+        0.00012092485823922416,
+        1.2656542480726785e-14,
+        9.3389699356905e-05
+      ],
+      "best_score": 0.0022513950120159206,
+      "damping": 0.5,
+      "elapsed_seconds": 599.7833628430963,
+      "evaluation": 23,
+      "evaluation_seconds": 25.11033741571009,
+      "mapping_valid": true,
+      "new_best": false,
+      "phase": "iterate",
+      "prices": [
+        0.22112896824228936,
+        2.04636138961852,
+        0.08111418316929077
+      ],
+      "requested_log_step": [
+        0.00012092485823913628,
+        1.256153078592576e-14,
+        9.33896993569466e-05
+      ],
+      "reset_reason": null,
+      "residual": [
+        -0.0032749355023398152,
+        -1.8864518841005084e-12,
+        0.002415008681514007
+      ],
+      "score": 0.0032749355023398152
+    },
+    {
+      "best_score": 0.0022513950120159206,
+      "elapsed_seconds": 624.9562811544165,
+      "evaluation": 24,
+      "evaluation_seconds": 25.15232307370752,
+      "mapping_valid": true,
+      "new_best": false,
+      "phase": "final",
+      "prices": [
+        0.22110222986985162,
+        2.0463613896184945,
+        0.08110660829382418
+      ],
+      "residual": [
+        -0.0013352047621539853,
+        -1.6770186751107912e-12,
+        0.0022513950120159206
+      ],
+      "score": 0.0022513950120159206
+    }
+  ],
+  "initial_distribution_rule": "stationary original household law; no historical conditioning",
+  "one_step_audit": null,
+  "one_step_error": null,
+  "population_scale_rule": "unchanged_supply_quantity(asset_price)/unit_household_demand",
+  "production_eligible": false,
+  "queue_rule": "four waiting vintages; adjusted entry flow and raw births both divided by 2.1",
+  "root_residual_definition": [
+    "200*(topcode_adjusted_births/(2.1*age0_entries)-1)",
+    "200*PAYGO_relative_gap",
+    "200*equal_rebate_relative_gap"
+  ],
+  "root_tolerance": 1e-05,
+  "schema": "e5f_original_queue_terminal_v1",
+  "stationary_endpoint_verified": false,
+  "status": "evaluation_budget",
+  "unscaled_root_tolerance": 5.0000000000000004e-08,
+  "verified": false
+}

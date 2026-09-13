@@ -1,5 +1,23 @@
 # Calibration Status
 
+**September 13, 17:46 UTC — afternoon smoke passed; all five arms dispatched; endpoint resumed from saved best point.**
+Smoke17697809 completed in4m55s and verifies both the original stationary
+equilibrium and exact no-shock transition/replay. Jobs17697888/17697889 are the
+24/100-period finite IRFs;17697891/17697892 are fresh6/24-period historical fits.
+All four are running; no shocked path is yet accepted. The24-period IRF has
+five valid mappings, with its residual score still above tolerance.
+
+Endpoint job17697890 stopped at its24-evaluation cap after10m39s, while improving.
+Its best maximum unscaled residual is1.126e-5, versus the retained5e-8 endpoint
+requirement. Replacement17699174 resumes the saved coordinates and Jacobian,
+with a mandatory first-mapping reproduction check. No scientific specification
+or acceptance gate changes. Original endpoint deadline18:12:42UTC and original
+arm deadline23:12:42UTC are preserved. The stationary endpoint and anchored
+100-period transition remain unverified. Restart source/receipts are indexed in
+`output/model/e5f_original_queue_20260913a/README.md`; remote replacement directory
+is the original batch name plus `_terminal_restart_v1`. Monitor this replacement
+as well as the four original live jobs; do not redispatch the failed arm.
+
 **September 13, 17:08 UTC — author-approved original-population-law afternoon experiments launched.**
 Native smoke job **17697809** is confirmed running on Torch. Only the smoke is
 submitted so far; success automatically dispatches five independent jobs: fixed

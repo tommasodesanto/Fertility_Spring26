@@ -1,9 +1,20 @@
 # Original household-queue afternoon experiments
 
-Author approved launch on September 13, 2026. Smoke job **17697809** was
-confirmed RUNNING on Torch at approximately 17:08 UTC. No long experiment has
-yet passed or been submitted. A successful smoke automatically dispatches the
-five independent jobs below. Existing presentation results remain frozen.
+Author approved launch on September 13, 2026. Smoke job **17697809 passed** in
+4m55s and automatically dispatched all five jobs. At 17:46 UTC, finite IRFs
+17697888/17697889 and historical fits17697891/17697892 remain running. No shocked
+path is yet accepted. Existing presentation results remain frozen.
+
+The endpoint arm17697890 exhausted24 evaluations after10m39s while improving:
+maximum unscaled residual1.126e-5 versus5e-8 required. Replacement **17699174**
+resumes the saved best coordinates and Jacobian, requiring an exact native
+first-mapping replay before continuing. It retains the original one-hour
+endpoint deadline18:12:42UTC and six-hour arm deadline23:12:42UTC. Source:
+`code/cluster/resume_e5f_original_queue_terminal.py`. Local receipts are under
+`terminal_restart_v1/`; remote replacement is the batch path below plus
+`_terminal_restart_v1`. The original pinned solver and other four jobs are
+unchanged. Do not mistake the failed endpoint receipt for a verified steady
+state, or redispatch it while the replacement is active.
 
 ## Scientific contract
 
@@ -66,7 +77,10 @@ bounded by these evaluation and wall-clock limits.
 - `code/model/tools/build_e5f_stationary_shock_figures.py`: supplementary six-panel IRF figures alongside native diagnostics.
 - `code/cluster/prepare_e5f_original_queue_experiments.py`: immutable preparation and smoke-gated dispatch.
 
-Python compilation passed before launch. Native smoke has not yet passed.
+Python compilation and native smoke passed. `smoke/summary.json` records
+relative no-shock distribution drift4.84e-8 and adjusted queue drift4.41e-7.
+The terminal solver reproduces the original stationary coordinates within
+1.59e-6 relative. The shocked endpoint and all shocked transitions are pending.
 The endpoint solver imposes births/2.1 equal to household entry and balances
 both fiscal accounts; population scale follows the unchanged housing supply
 curve. It does not reuse the person-law endpoint with migration set to zero.
