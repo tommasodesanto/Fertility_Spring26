@@ -20,11 +20,21 @@ and both longer horizons remain in progress. No complete four-shock history or
 policy is claimed yet. All superseded uncached tasks17595967 were cancelled;
 every old output is preserved. Collector17607147 runs independently of the laptop.
 
-Two bounded numerical probes17635971/17635972 test the root solver's existing
-Jacobian warm start at the same psi and inherited state as the cold second trial.
-They use separate frozen source/output folders and leave the main jobs unchanged.
-Each permits one forecast, one CPU, 16 GiB and one hour; eight focused tests pass.
-No economic equation, target, tolerance or horizon certificate changes.
+Jacobian probe17635971 passed for A0:7 rather than11 root evaluations,
+first-window fertility differs1.06e-7, all forecast fertility differences are
+below4.36e-7, and both exact replays are zero. Different cluster nodes mean the
+627.6versus1365.1second root timings are not a controlled hardware comparison.
+A+ probe17635972 hit the unchanged age14 mass gate (relative1.023e-8 versus1e-8).
+Main A0's first2011trial also hit that gate at age15 (1.067e-8) and continued to
+another preference trial. Float32 tenure probability row sums are a plausible
+cause; the older17554347trace did not reproduce its failure and does not prove it.
+
+Verified resume17641919 loaded every field of the saved2007 household/person
+state exactly, without a model solve. Ten focused resume/root tests pass.
+Separate trace17642567 is reproducing only the first2011forecast with stage
+instrumentation and a30-minute cap, using `history_source_resumable` and
+`resume_inputs/A0_6_from_2007`. It cannot advance history, launch policies or
+change the numerical gates. Main jobs retain their frozen original source.
 
 Age pilot17597260 finished five valid primary cases, one numerical failure, and
 two exact selected repetitions. Its original report guard incorrectly compared

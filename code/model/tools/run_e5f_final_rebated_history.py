@@ -278,6 +278,116 @@ def reusable_forecast_jacobian(result, count, enabled):
     return matrix.copy()
 
 
+def _artifact(entry, label):
+    if not isinstance(entry,dict) or set(entry)!= {'path','sha256'}:
+        raise ValueError(label+' requires exactly path and sha256')
+    path=Path(entry['path']).resolve()
+    if sha(path)!=entry['sha256']:raise ValueError('Pinned resume artifact changed: '+label)
+    return path
+
+
+def _economic_manifest(value):
+    """Remove only resume, numerical budget, and relocated history-driver metadata."""
+    result=copy.deepcopy(value)
+    for key in ('resume_history','reuse_forecast_jacobian','policy_reserve_seconds','forecast_seconds'):
+        result.pop(key,None)
+    pins=result.get('file_sha256',{})
+    result['file_sha256']={path:digest for path,digest in pins.items()
+        if Path(path).name!='run_e5f_final_rebated_history.py'}
+    return result
+
+
+def _same_state(left, right, seen=None):
+    """Exact recursive comparison of every serialized inherited-state field."""
+    if seen is None:seen=set()
+    pair=(id(left),id(right))
+    if pair in seen:return True
+    seen.add(pair)
+    if type(left) is not type(right):return False
+    if isinstance(left,np.ndarray):
+        return left.dtype==right.dtype and left.shape==right.shape and np.array_equal(left,right,equal_nan=True)
+    if isinstance(left,np.generic):return left.dtype==right.dtype and left.tobytes()==right.tobytes()
+    if isinstance(left,dict):
+        return left.keys()==right.keys() and all(_same_state(left[k],right[k],seen) for k in left)
+    if isinstance(left,(tuple,list)):
+        return len(left)==len(right) and all(_same_state(a,b,seen) for a,b in zip(left,right))
+    if hasattr(left,'__dict__'):
+        return _same_state(vars(left),vars(right),seen)
+    if isinstance(left,float):
+        return left==right or (np.isnan(left) and np.isnan(right))
+    return left==right
+
+
+def load_resume_history(spec, *, current_manifest, targets, tolerance, case, count,
+                        initial_checkpoint_sha256, source_root):
+    """Validate and load one explicitly pinned contiguous accepted history prefix."""
+    required={'source_manifest','source_contract','realized_fit','last_realized_state','windows'}
+    if not isinstance(spec,dict) or set(spec)!=required:
+        raise ValueError('resume_history has an incomplete explicit artifact contract')
+    source_manifest_path=_artifact(spec['source_manifest'],'source manifest')
+    source_manifest=json.loads(source_manifest_path.read_text())
+    verify_pins(source_manifest['file_sha256'])
+    if _economic_manifest(source_manifest)!=_economic_manifest(current_manifest):
+        raise ValueError('Resume and current manifests differ outside driver, reuse, or budget metadata')
+    source_contract_path=_artifact(spec['source_contract'],'source contract')
+    source_contract=json.loads(source_contract_path.read_text())
+    if (source_contract.get('manifest_sha256')!=spec['source_manifest']['sha256']
+            or source_contract.get('case')!=case or source_contract.get('count')!=count
+            or source_contract.get('initial_checkpoint_sha256')!=initial_checkpoint_sha256
+            or Path(source_contract.get('source_root','')).resolve()!=Path(source_root).resolve()):
+        raise ValueError('Resume source contract differs in case, count, initial state, or model source')
+    realized_path=_artifact(spec['realized_fit'],'realized fit')
+    realized=json.loads(realized_path.read_text())
+    windows=spec['windows'];years=[int(row['decision_year']) for row in targets]
+    if (not isinstance(windows,list) or not windows or len(windows)>len(years)
+            or [entry.get('year') for entry in windows]!=years[:len(windows)]
+            or len(realized)!=len(windows)):
+        raise ValueError('Resume windows are not a nonempty contiguous historical prefix')
+    last_result=None;last_root=None
+    for index,(entry,fit,target) in enumerate(zip(windows,realized,targets)):
+        if set(entry)!= {'year','fit','root_receipt','accepted_forecast'}:
+            raise ValueError('Each resumed window needs exact fit/root/forecast pins')
+        fit_path=_artifact(entry['fit'],f'window {entry["year"]} fit')
+        root_path=_artifact(entry['root_receipt'],f'window {entry["year"]} root')
+        accepted_path=_artifact(entry['accepted_forecast'],f'window {entry["year"]} accepted forecast')
+        if (root_path.parent!=accepted_path.parent
+                or root_path.parent not in (fit_path.parent,fit_path.parent/'alternative')):
+            raise ValueError('Resumed root and accepted forecast do not belong to the selected trial')
+        saved_fit=json.loads(fit_path.read_text());root=json.loads(root_path.read_text())
+        if saved_fit!=fit or Path(fit['folder']).resolve()!=fit_path.parent:
+            raise ValueError('Resumed selected fit differs from the realized-fit ledger')
+        year=years[index];desired=float(target['period_tfr_arithmetic_mean'])
+        if (fit.get('year')!=year or float(fit['target'])!=desired
+                or not np.isfinite([float(fit['psi']),float(fit['model']),float(fit['gap'])]).all()
+                or float(fit['gap'])!=float(fit['model'])-desired
+                or abs(float(fit['gap']))>tolerance):
+            raise ValueError('Resumed fit fails its pinned empirical target or tolerance')
+        final=root.get('final');reproduction=float(root.get('final_reproduction_max_abs',np.nan))
+        if (root.get('converged') is not True or root.get('status')!='converged'
+                or root.get('finite_horizon_market_fiscal_converged') is not True
+                or root.get('start_year')!=year or root.get('case')!=case or root.get('count')!=count
+                or float(root.get('psi',np.nan))!=float(fit['psi']) or not isinstance(final,dict)
+                or final.get('mapping_valid') is not True or not np.isfinite(reproduction)
+                or reproduction>min(2e-10,float(tolerance))):
+            raise ValueError('Resumed selected root lacks its finite exact acceptance certificate')
+        with gzip.open(accepted_path,'rb') as stream:accepted=pickle.load(stream)
+        result=accepted.get('result');coordinates=np.asarray(accepted.get('coordinates'),dtype=float)
+        final_prices=np.asarray(final.get('prices'),dtype=float);width=3*(count+1)
+        if (result is None or result.next_state is None or result.next_state.year!=year+4
+                or clean(result.root_receipt)!=root or coordinates.shape!=(width,)
+                or final_prices.shape!=(width,) or not np.array_equal(coordinates,final_prices)):
+            raise ValueError('Accepted forecast packet differs from its selected root or next year')
+        last_result=result;last_root=root
+    state_path=_artifact(spec['last_realized_state'],'last realized state')
+    with gzip.open(state_path,'rb') as stream:inherited=pickle.load(stream)
+    if inherited.year!=years[len(windows)-1]+4 or not _same_state(inherited,last_result.next_state):
+        raise ValueError('Last accepted forecast and resumed inherited state differ')
+    return dict(realized=realized,inherited=inherited,
+        initial=shift_forecast_coordinates(last_root['final']['prices'],count),
+        completed_years=years[:len(windows)],source_manifest=str(source_manifest_path),
+        source_contract=str(source_contract_path),last_realized_state=str(state_path))
+
+
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--manifest',required=True);parser.add_argument('--case',choices=['A0','A+'],required=True)
@@ -347,14 +457,28 @@ def main(argv=None):
             initial_checkpoint_sha256=digest,source_root=str(root),migration_zero_by_cell=args.case=='A0',
             boundary='Actual-carried-state finite snapshot for both migration cases; replaces prior stationary-boundary comparison',
             reuse_forecast_jacobian=reuse_forecast_jacobian,
+            resume_history_requested='resume_history' in manifest,
             horizon_verified=False,production_eligible=False,full_2023_table_status='native snapshot saved for authoritative observer replay'))
         width=args.count+1
         initial=np.r_[np.full(width,float(packet['evaluation'].policy.price[0])),
             np.full(width,float(old.parameters.pension)),np.full(width,float(old.parameters.property_tax_lump_sum_transfer))]
+        completed_years=[]
+        if 'resume_history' in manifest:
+            resumed=load_resume_history(manifest['resume_history'],current_manifest=manifest,
+                targets=targets,tolerance=tolerance,case=args.case,count=args.count,
+                initial_checkpoint_sha256=digest,source_root=root)
+            realized=resumed['realized'];inherited=resumed['inherited'];initial=resumed['initial']
+            completed_years=resumed['completed_years']
+            save(out/'resume_receipt.json',dict(status='verified_completed_history_prefix',
+                completed_years=completed_years,source_manifest=resumed['source_manifest'],
+                source_contract=resumed['source_contract'],last_realized_state=resumed['last_realized_state'],
+                inherited_year=inherited.year,horizon_verified=False,production_eligible=False))
+            save(out/'realized_fit.json',realized)
         fit_deadline=deadline-float(manifest.get('policy_reserve_seconds',min(3*3600,args.seconds*.25)))
         alternative_used=False;smoked=False
         for target in targets:
             year=int(target['decision_year']);desired=float(target['period_tfr_arithmetic_mean'])
+            if year in completed_years:continue
             if inherited.year!=year:raise RuntimeError('Inherited historical clock mismatch')
             trials=[];seen=[];winner=None;forecast_jacobian=None
             center=initial_psi if not realized else realized[-1]['psi']

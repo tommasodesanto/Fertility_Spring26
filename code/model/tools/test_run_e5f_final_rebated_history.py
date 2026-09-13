@@ -1,6 +1,8 @@
 """Pure joint-root wiring tests. No native model solve or launch."""
 from dataclasses import dataclass
+import copy
 import importlib.util
+import json
 from pathlib import Path
 import sys
 import tempfile
@@ -21,6 +23,48 @@ class Demo:
 
 
 class DriverTests(unittest.TestCase):
+    def resume_fixture(self,d):
+        d=Path(d);source=d/'source';current=d/'current';trial=d/'history/window_2007/trial_00'
+        source.mkdir();current.mkdir();trial.mkdir(parents=True)
+        kernel=source/'kernel.py';kernel.write_text('kernel')
+        old_driver=source/'run_e5f_final_rebated_history.py';old_driver.write_text('old')
+        new_driver=current/'run_e5f_final_rebated_history.py';new_driver.write_text('new')
+        source_manifest=dict(prior_plan='/fixed/plan.json',initial_summary='/fixed/summary.json',
+            file_sha256={str(kernel):driver.sha(kernel),str(old_driver):driver.sha(old_driver)},
+            policy_reserve_seconds=100)
+        source_manifest_path=d/'source_manifest.json';driver.save(source_manifest_path,source_manifest)
+        source_root=d/'model_source';initial_digest='initial-checkpoint'
+        contract=dict(manifest_sha256=driver.sha(source_manifest_path),case='A0',count=6,
+            initial_checkpoint_sha256=initial_digest,source_root=str(source_root))
+        contract_path=d/'history/contract_receipt.json';driver.save(contract_path,contract)
+        fit=dict(year=2007,psi=.12,target=1.7,model=1.7,gap=0.,folder=str(trial))
+        fit_path=trial/'fit.json';driver.save(fit_path,fit)
+        prices=np.arange(1.,22.)
+        root=dict(converged=True,status='converged',finite_horizon_market_fiscal_converged=True,
+            start_year=2007,case='A0',count=6,psi=.12,final_reproduction_max_abs=0.,
+            final=dict(prices=prices.tolist(),mapping_valid=True))
+        root_path=trial/'root_receipt.json';driver.save(root_path,root)
+        state=NS(year=2011,households=NS(g_pre=np.arange(4.).reshape(2,2),
+            persons=NS(year=2011,persons=np.array([3.,4.]),heads=np.array([1.,2.]))))
+        accepted_path=trial/'accepted_forecast.pkl.gz'
+        driver.checkpoint(accepted_path,dict(result=NS(next_state=state,root_receipt=root),
+            boundary=NS(),coordinates=prices.copy()))
+        state_path=d/'history/realized_state_2011.pkl.gz';driver.checkpoint(state_path,state)
+        realized_path=d/'history/realized_fit.json';driver.save(realized_path,[fit])
+        artifact=lambda path:dict(path=str(path),sha256=driver.sha(path))
+        spec=dict(source_manifest=artifact(source_manifest_path),source_contract=artifact(contract_path),
+            realized_fit=artifact(realized_path),last_realized_state=artifact(state_path),
+            windows=[dict(year=2007,fit=artifact(fit_path),root_receipt=artifact(root_path),
+                accepted_forecast=artifact(accepted_path))])
+        current_manifest=copy.deepcopy(source_manifest)
+        current_manifest['file_sha256'].pop(str(old_driver));current_manifest['file_sha256'][str(new_driver)]=driver.sha(new_driver)
+        current_manifest.update(reuse_forecast_jacobian=True,resume_history=spec,forecast_seconds=200)
+        kwargs=dict(current_manifest=current_manifest,
+            targets=[dict(decision_year='2007',period_tfr_arithmetic_mean='1.7')],tolerance=.005,
+            case='A0',count=6,initial_checkpoint_sha256=initial_digest,source_root=source_root)
+        return spec,kwargs,dict(contract_path=contract_path,fit_path=fit_path,
+            realized_path=realized_path,state_path=state_path,state=state,fit=fit)
+
     def test_next_vintage_guess_advances_all_three_blocks(self):
         old=np.arange(1.,22.)
         shifted=driver.shift_forecast_coordinates(old,6).reshape(3,7)
@@ -79,6 +123,39 @@ class DriverTests(unittest.TestCase):
             pins={str(p):driver.sha(p)};driver.verify_pins(pins)
             p.write_text('changed')
             with self.assertRaises(ValueError):driver.verify_pins(pins)
+
+    def test_resume_loads_exact_contiguous_state_and_shifted_coordinates(self):
+        with tempfile.TemporaryDirectory() as d:
+            spec,kwargs,paths=self.resume_fixture(d)
+            resumed=driver.load_resume_history(spec,**kwargs)
+            self.assertEqual(resumed['completed_years'],[2007])
+            self.assertTrue(driver._same_state(resumed['inherited'],paths['state']))
+            np.testing.assert_array_equal(resumed['initial'].reshape(3,7),
+                np.array([[2,3,4,5,6,7,7],[9,10,11,12,13,14,14],[16,17,18,19,20,21,21]]))
+
+    def test_resume_rejects_wrong_case_source_hash_year_fit_and_state(self):
+        mutations=('case','source','hash','year','fit','state')
+        for mutation in mutations:
+            with self.subTest(mutation=mutation),tempfile.TemporaryDirectory() as d:
+                spec,kwargs,paths=self.resume_fixture(d)
+                if mutation in ('case','source'):
+                    contract=json.loads(paths['contract_path'].read_text())
+                    contract['case']='A+' if mutation=='case' else contract['case']
+                    contract['source_root']='/different/source' if mutation=='source' else contract['source_root']
+                    driver.save(paths['contract_path'],contract)
+                    spec['source_contract']['sha256']=driver.sha(paths['contract_path'])
+                elif mutation=='hash':spec['realized_fit']['sha256']='0'*64
+                elif mutation=='year':spec['windows'][0]['year']=2011
+                elif mutation=='fit':
+                    fit=dict(paths['fit'],model=1.71,gap=1.71-1.7)
+                    driver.save(paths['fit_path'],fit);driver.save(paths['realized_path'],[fit])
+                    spec['windows'][0]['fit']['sha256']=driver.sha(paths['fit_path'])
+                    spec['realized_fit']['sha256']=driver.sha(paths['realized_path'])
+                else:
+                    state=copy.deepcopy(paths['state']);state.households.persons.heads[0]=99.
+                    driver.checkpoint(paths['state_path'],state)
+                    spec['last_realized_state']['sha256']=driver.sha(paths['state_path'])
+                with self.assertRaises(ValueError):driver.load_resume_history(spec,**kwargs)
 
     def test_joint_root_uses_actual_terminal_state_and_single_boundary_solve(self):
         count=6;g=np.ones((2,1,1,2,1,1,1));actual_g=3*g

@@ -1,6 +1,6 @@
 # Authorized final-night work
 
-Latest evidence: September13, approximately08:35UTC. Deadline18:00UTC.
+Latest evidence: September13, approximately09:00UTC. Deadline18:00UTC.
 The cluster runs and collector are independent of the laptop. Idle system sleep
 is prevented locally until the deadline. Last account check:76% weekly remaining.
 
@@ -14,7 +14,9 @@ The requested plan is `docs/model/e5f_two_closure_overnight_plan.md`.
 |17613033|A0/A+ six-date histories and rebated policy|A0 first window accepted and carried into2011; A+ fitting|
 |17613034|A0/A+ 24-date histories and rebated policy|Equilibrium iterations in progress|
 |17632922|A0/A+ 100-date histories and rebated policy|Submitted; queue counts against deadline|
-|17635971/17635972|One-forecast Jacobian warm-start comparison|Separate one-hour probes; main source unchanged|
+|17635971/17635972|One-forecast Jacobian warm-start comparison|A0 passed; A+ rejected by mass gate|
+|17641919|Native saved-state restart validation|Every inherited state field exactly verified, no solve|
+|17642567|Instrumented reproduction of2011mass failure|One forecast,30-minute cap; main jobs unchanged|
 |17607147|Five-minute cluster receipt collector|Running; discovers refit arrays automatically|
 |17603133|Initial calibration recovery|Two exact numerical repetitions verified|
 |17597260|Extra initial fertility-age pilot|Numerical outputs verified by separate report recovery|
@@ -80,7 +82,7 @@ Progress, latest completed cases and best-so-far receipts remain on the cluster.
 Jacobian probes use the root solver's saved derivative matrix for the immediately
 following preference trial in the same vintage. The opt-in default remains off;
 failed roots and vintage changes reset reuse, and policies never inherit this
-matrix. Eight focused tests pass. Native comparison remains pending. Sources:
+matrix. Ten focused root/resume tests pass. A0 native comparison passes:7 versus11 evaluations, maximum forecast fertility difference4.36e-7, exact replays zero. A+ hits the unchanged mass gate; cause remains under investigation. Sources:
 `code/model/tools/run_e5f_final_rebated_history.py` and
 `code/model/tools/run_e5f_forecast_jacobian_probe.py`. Their new snapshot is
 `jacobian_source`; the running histories remain frozen in `history_source_cached`.
@@ -105,3 +107,5 @@ Handoff17605279 submitted refits; entirely pending17608564 was split into memory
 classes, and entirely pending17613035 was replaced by17632922. All uncached
 17595967 tasks were retired after the cached replacements passed. All old outputs
 are retained. No result is promoted from failed harnesses17597051/17597204/17598460.
+
+Verified restart support loads a pinned contiguous accepted history prefix and compares every inherited state field to the selected saved forecast. Native validation17641919 passed in1.89seconds without solving. Trace17642567 replays only the first2011forecast from that exact state with the existing stage profiler; it stops before any fallback, next trial or historical carry. The earlier mass trace17554347 had no reproduced failure. Float32 row sums are a hypothesis until the captured-cohort comparison establishes the source.
