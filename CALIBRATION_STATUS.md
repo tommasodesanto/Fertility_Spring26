@@ -3,6 +3,9 @@
 **September13 — introductory slide simplified at the author's request.**
 The September14 deck replaces the housing/fertility comparison with two historical
 data panels: period fertility and children ever born at ages40–44. The frame
+now starts in1980 at the author's request: the CPS measure is2.988 in1980,
+2.447 in1985 and2.147 in1988, revealing older cohorts above replacement.
+The annual WDI series is extended with all prior observations preserved. The frame
 Fertility in the United States precedes Calibration and Historical Transition
 and states that2007 is approximated by an initial steady state. The figures do
 not establish exact stationarity. Housing diagnostics and earlier model overlays

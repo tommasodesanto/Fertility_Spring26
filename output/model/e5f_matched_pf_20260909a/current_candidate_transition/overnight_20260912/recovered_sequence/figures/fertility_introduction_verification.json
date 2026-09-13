@@ -6,6 +6,16 @@
   "plotted": {
     "Period fertility": {
       "years": [
+        1980,
+        1981,
+        1982,
+        1983,
+        1984,
+        1985,
+        1986,
+        1987,
+        1988,
+        1989,
         1990,
         1991,
         1992,
@@ -42,6 +52,16 @@
         2023
       ],
       "values": [
+        1.8395,
+        1.812,
+        1.8275,
+        1.799,
+        1.8065,
+        1.844,
+        1.8375,
+        1.872,
+        1.934,
+        2.014,
         2.081,
         2.0625,
         2.046,
@@ -80,6 +100,15 @@
     },
     "Completed fertility": {
       "years": [
+        1980,
+        1981,
+        1982,
+        1983,
+        1984,
+        1985,
+        1986,
+        1987,
+        1988,
         1990,
         1992,
         1994,
@@ -100,6 +129,15 @@
         2024
       ],
       "values": [
+        2.988,
+        2.861,
+        2.783,
+        2.688,
+        2.558,
+        2.447,
+        2.302,
+        2.218,
+        2.147,
         2.045,
         2.012,
         1.965,
@@ -122,11 +160,23 @@
     }
   },
   "completed_definition": "CPS children ever born ages40\u201344, a near-completed measure;2022/2024 counts capped atfive.",
-  "period_source": "World Bank WDI SP.DYN.TFRT.IN, USA,1990\u20132023; previously retrieved September12,2026.",
+  "period_source": "World Bank WDI SP.DYN.TFRT.IN, USA,1980\u20132023; extended September13,2026; all prior1990\u20132023 values unchanged.",
   "completed_source": "US Census CPS Historical Table2, through2024.",
   "source_sha256": {
-    "source/stock_forecast/us_period_fertility_wdi.json": "44830959d2396f1ef151cb4010f1ab8f3ec27065a7eccaae6e6e542a9f7c7cae",
+    "source/stock_forecast/us_period_fertility_wdi.json": "2454800a4f90088920e922ad0c4d1f5a3aae61be7253dafda40ba7745b3224b2",
     "source/stock_forecast/cps_history_40_44.json": "349a9a32047ad375e18de3de92dc6ca04bee80773402c12fac32f2299e31fa37"
   },
-  "artist_data_exact": true
+  "artist_data_exact": true,
+  "extended_cps_years_checked_against_workbook": [
+    1988,
+    1987,
+    1986,
+    1985,
+    1984,
+    1983,
+    1982,
+    1981,
+    1980
+  ],
+  "cps_workbook_units": "Children ever born per1000women, divided by1000"
 }

@@ -116,7 +116,7 @@ housing behavior. Vacancy is outside the model and this empirical stock measure.
 **Presentation simplification, September13:** the author subsequently removed
 housing from this introductory slide. The deck now uses
 `figures/fertility_introduction.pdf`, two historical-data panels (annual period
-fertility1990–2023 and CPS children ever born ages40–44 through2024), immediately
+fertility1980–2023 and CPS children ever born ages40–44 from1980 through2024), immediately
 before Calibration and Historical Transition. It states that2007 is approximated
 by an initial steady state, rather than claiming the graphs establish stationarity.
 The housing and model-comparison packets below remain research diagnostics.
@@ -125,6 +125,13 @@ Reproduce the introductory figure with
 The saved WDI response and existing CPS history are its pinned inputs; the figure
 receipt verifies both plotted arrays exactly. CPS2022/2024 counts are capped atfive.
 Both deck PDF copies are updated from a twice-compiled, visually inspected build.
+The author requested extending the start from1990 to1980 to show older cohorts.
+The additional CPS observations were checked directly against Historical Table2,
+rows34–42: children ever born were2.988 in1980,2.447 in1985 and2.147 in1988.
+These are survey dates for women aged40–44 (1980 corresponds approximately to
+birth cohorts1936–1940), not birth-cohort labels. The refreshed WDI response adds
+1980–1989 with every previously plotted1990–2023 value unchanged. Both panels
+share the expanded1.4–3.15 vertical range; no historical observations are clipped.
 
 `figures/housing_population_comparison.pdf` (and PNG/CSV) provides a supplemental
 historical comparison using the same national ACS housing households and all
