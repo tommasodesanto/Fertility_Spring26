@@ -1,5 +1,18 @@
 # Calibration Status
 
+**September 13, 18:22 UTC — shocked stationary endpoint verified; anchored100-period transition running.**
+Replacement17699174 reproduces the saved numerical seed exactly and converges
+the stationary root in210seconds. All native one-period stationarity, queue,
+housing, household, PAYGO and equal-rebate checks pass. Normalized distribution
+replay L1 is1.42e-12; policy reproduction error iszero. Evidence:
+`output/model/e5f_original_queue_20260913a/terminal_restart_v1/verified_endpoint_receipt.json`.
+This establishes a verified numerical stationary endpoint under the original
+household queue and permanent preference decline, not uniqueness or transition
+convergence. The anchored100-period path has completed its first valid mapping
+and remains running. The other four arms also remain running; the short
+historical fit has completed one of four windows, the longer fit none yet.
+No shocked transition is accepted at this check. Original deadlines remain.
+
 **September 13, 17:46 UTC — afternoon smoke passed; all five arms dispatched; endpoint resumed from saved best point.**
 Smoke17697809 completed in4m55s and verifies both the original stationary
 equilibrium and exact no-shock transition/replay. Jobs17697888/17697889 are the

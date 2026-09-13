@@ -1,5 +1,15 @@
 # Original household-queue afternoon experiments
 
+**18:22 UTC update:** replacement17699174 has verified the new stationary
+endpoint, including all one-step population, queue, household, market and fiscal
+checks. Its first saved-point replay is exact; stationary-root continuation
+took210seconds. `terminal_restart_v1/verified_endpoint_receipt.json` is the
+authoritative result. The anchored100-period transition is now running after
+its first valid full mapping. All four other jobs remain running. The short
+historical fit has completed one of four windows; no shocked path is yet
+accepted. This endpoint result establishes neither uniqueness nor convergence
+of the full transition.
+
 Author approved launch on September 13, 2026. Smoke job **17697809 passed** in
 4m55s and automatically dispatched all five jobs. At 17:46 UTC, finite IRFs
 17697888/17697889 and historical fits17697891/17697892 remain running. No shocked
@@ -13,8 +23,9 @@ endpoint deadline18:12:42UTC and six-hour arm deadline23:12:42UTC. Source:
 `code/cluster/resume_e5f_original_queue_terminal.py`. Local receipts are under
 `terminal_restart_v1/`; remote replacement is the batch path below plus
 `_terminal_restart_v1`. The original pinned solver and other four jobs are
-unchanged. Do not mistake the failed endpoint receipt for a verified steady
-state, or redispatch it while the replacement is active.
+unchanged. The earlier `prior_root_receipt.json` remains failed; only the new
+`verified_endpoint_receipt.json` certifies the endpoint. Do not redispatch the
+arm while its replacement transition is active.
 
 ## Scientific contract
 
@@ -80,7 +91,7 @@ bounded by these evaluation and wall-clock limits.
 Python compilation and native smoke passed. `smoke/summary.json` records
 relative no-shock distribution drift4.84e-8 and adjusted queue drift4.41e-7.
 The terminal solver reproduces the original stationary coordinates within
-1.59e-6 relative. The shocked endpoint and all shocked transitions are pending.
+1.59e-6 relative. The shocked endpoint is verified; shocked transitions remain pending.
 The endpoint solver imposes births/2.1 equal to household entry and balances
 both fiscal accounts; population scale follows the unchanged housing supply
 curve. It does not reuse the person-law endpoint with migration set to zero.
