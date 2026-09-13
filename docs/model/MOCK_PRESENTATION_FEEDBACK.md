@@ -46,7 +46,11 @@ The transition rental-pricing identity is consistent with this convention: curre
 
 The slide is messy and confusing. Some material concerns calibration and should not be in the model exposition.
 
-**Status:** open; concise first-pass review requested. No changes authorized.
+**Status:** event-order clarification checked; slide cleanup and any model change remain unapproved.
+
+**Timing finding:** the household chooses whether to attempt a birth; success raises both children ever born and current dependents. Housing, consumption, and current utility use this post-birth child count. Maturation then determines next period's dependents. Under independent-count maturation, conditional on the parent's survival, $m_{t+1}\sim\operatorname{Binomial}(m_t+d_t,1-\mu)$. The newborn is included in this first maturation draw: there is no minimum childhood duration. With a four-year period, a child can therefore exit dependency by the next model date after birth. This is a substantive approximation to flag, not evidence of a discrepancy between the household problem and forward transition. No change implemented; parental-death accounting remains M13.
+
+**Evidence:** pinned optimized `solver.py` uses post-birth values at lines 2770–2821, current child-count utility adjustments at 2241–2271, and child aging in continuation values at 2521 and 7056–7079. `parameters.py:896` builds the independent binomial transition. The perfect-foresight population path calls `run_e5f_open_population_transition.py:828`, which advances the post-fertility survivor distribution using that same child transition. Inspection only; no numerical solve.
 
 ### M08 — Age earnings profile
 
