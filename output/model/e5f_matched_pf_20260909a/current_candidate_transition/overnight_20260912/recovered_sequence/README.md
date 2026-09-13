@@ -111,6 +111,53 @@ National ACS restricted-sample household counts and imposed CensusHH-3 counts
 are not identical, so the stock gap must not be attributed wholly to endogenous
 housing behavior. Vacancy is outside the model and this empirical stock measure.
 
+### Housing and population comparison, September13
+
+`figures/housing_population_comparison.pdf` (and PNG/CSV) provides a supplemental
+historical comparison using the same national ACS housing households and all
+their resident person records. It leaves the presentation deck unchanged.
+Households and capped rooms use HHWT; residents use PERWT, following the
+[IPUMS household](https://usa.ipums.org/usa-action/variables/HHWT) and
+[person-weight](https://usa.ipums.org/usa-action/variables/PERWT) definitions.
+The sample still requires a head aged18–85, valid owner/renter tenure, positive
+rooms and non-group-quarter residence. It is not the entire US population.
+Complete consecutive person rosters and every prior household/room total were
+checked; source hashes and accounting checks are saved in
+`source/historical_stock/housing_population_data.json` and the figure receipt.
+
+Between2007 and2023, sample residents grow10.9514%, households16.4814%, total
+rooms18.2448%, and rooms per resident6.5735%. The ratio of weighted residents to
+weighted households falls from2.6364 to2.5112; this is distinct from directly
+averaging roster size with household weights. As a weighting sensitivity,
+HHWT-weighted roster population implies rooms per resident growth3.8924%.
+That sensitivity is retained in the source and comparison CSV, not substituted
+silently for the person-weighted population estimate.
+
+The retained model has no separate resident-person history before2023:
+`code/model/tools/e5f_successive_surprises.py` carries household distributions
+through the historical dates and introduces the fixed person-population anchor
+in2023. The2023 resident-person/head ratio2.6265 includes a different population
+universe and must not be described as matched ACS household size. Historical
+person counts cannot be reconstructed by adding a partner and dependent count.
+
+The bottom-right model line is explicitly standardized to observed demographics:
+model mean rooms per household times ACS households, divided by ACS residents.
+Its2007–2023 change is−2.9494%, versus data+6.5735%; it is not a model population
+prediction, a new equilibrium, or an unconditional historical fit. Model mean
+rooms per household still falls7.5569%, versus data rising1.5138%, while its
+level remains above the national data. At common household counts, model total
+rooms grow7.6790%, rather than the native aggregate4.3911%. Initial42-metro
+calibration targets and model states remain unchanged. This comparison isolates
+housing intensity; it does not diagnose its economic cause. Native per-person
+historical forecasts are not supplied where the necessary population is absent.
+
+Reproduce from the repository root:
+
+```sh
+/opt/anaconda3/bin/python code/data/Spatial_aggregate_withmicrodata/build_housing_population_comparison.py
+MPLCONFIGDIR=/tmp/psid_correction_review/matplotlib python3 code/model/tools/build_e5f_housing_population_comparison.py
+```
+
 All panels now use the same model dates. Period fertility is dated at the START
 of its four-year birth window: e.g. the2019point summarizes births2019–2023.
 This is an explicit plotting change, not a change in any numerical fertility

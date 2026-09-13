@@ -1,0 +1,92 @@
+{
+  "status": "PASS",
+  "data_sha256": "cb6f554dc52532bcee8be7ad4bd76ff88e7a4ea00be3e46e5f434aebc457ebc0",
+  "model_csv_sha256": "230d215bbc8502d11a7eaf9cd2837c3b3d55692c0da4886d1fe54bf46776c92f",
+  "growth_2007_2023_percent": {
+    "data_persons": 10.951417586468137,
+    "data_households": 16.48142725954589,
+    "data_rooms": 18.24475653839508,
+    "data_persons_per_household": -4.747546285431159,
+    "data_rooms_per_household": 1.5138287024248909,
+    "data_rooms_per_person": 6.573452697206861,
+    "model_rooms_per_household": -7.556927007008685,
+    "model_rooms_at_data_households": 7.679010824820098,
+    "model_rooms_per_person_at_data_demographics": -2.9494050935381155,
+    "data_rooms_per_person_household_weights": 3.8923620658886993
+  },
+  "standardization": "Q_model_standardized = model mean capped rooms per household * ACS HHWT household total. Divide by ACS PERWT residents in those same households for per-person comparison.",
+  "model_person_history_before_2023_available": false,
+  "source_scope": "National housing validation. Initial model calibration retains its42-metro targets; no model rerun, reweighting of states, or target change.",
+  "checks": [
+    "Five household and person ratio identities",
+    "Multiplicative growth decomposition",
+    "Complete2007\u20132023model date support"
+  ],
+  "rows": [
+    {
+      "year": 2007,
+      "data_persons": 289904679.0,
+      "data_households": 109963013.0,
+      "data_rooms": 619275060.0,
+      "data_persons_per_household": 2.636383553804587,
+      "data_rooms_per_household": 5.6316668951222715,
+      "data_rooms_per_person": 2.136133373687287,
+      "model_rooms_per_household": 6.561294974738576,
+      "model_rooms_at_data_households": 721499764.6040127,
+      "model_rooms_per_person_at_data_demographics": 2.4887482571608053,
+      "data_rooms_per_person_household_weights": 2.216573206824484
+    },
+    {
+      "year": 2011,
+      "data_persons": 299115979.0,
+      "data_households": 112069971.0,
+      "data_rooms": 640582668.0,
+      "data_persons_per_household": 2.6690109431722795,
+      "data_rooms_per_household": 5.715917138945276,
+      "data_rooms_per_person": 2.141586250729855,
+      "model_rooms_per_household": 6.489875487214644,
+      "model_rooms_at_data_households": 727320157.645756,
+      "model_rooms_per_person_at_data_demographics": 2.431565709318913,
+      "data_rooms_per_person_household_weights": 2.257140851725512
+    },
+    {
+      "year": 2015,
+      "data_persons": 308311839.0,
+      "data_households": 115012925.0,
+      "data_rooms": 657923590.0,
+      "data_persons_per_household": 2.6806712289075336,
+      "data_rooms_per_household": 5.7204317688642385,
+      "data_rooms_per_person": 2.133954998724522,
+      "model_rooms_per_household": 6.347758544477378,
+      "model_rooms_at_data_households": 730074277.3940858,
+      "model_rooms_per_person_at_data_demographics": 2.3679735418596293,
+      "data_rooms_per_person_household_weights": 2.2699058594871837
+    },
+    {
+      "year": 2019,
+      "data_persons": 314730191.0,
+      "data_households": 119406797.0,
+      "data_rooms": 683982870.0,
+      "data_persons_per_household": 2.6357812026395786,
+      "data_rooms_per_household": 5.728173665021766,
+      "data_rooms_per_person": 2.173235646147465,
+      "model_rooms_per_household": 6.198374492830113,
+      "model_rooms_at_data_households": 740128044.7953433,
+      "model_rooms_per_person_at_data_demographics": 2.351627095080126,
+      "data_rooms_per_person_household_weights": 2.2918027500512403
+    },
+    {
+      "year": 2023,
+      "data_persons": 321653351.0,
+      "data_households": 128086487.0,
+      "data_rooms": 732260287.0,
+      "data_persons_per_household": 2.5112200243262195,
+      "data_rooms_per_household": 5.716920685005593,
+      "data_rooms_per_person": 2.27655109055587,
+      "model_rooms_per_household": 6.065462702783053,
+      "model_rooms_at_data_households": 776903809.6290064,
+      "model_rooms_per_person_at_data_demographics": 2.4153449892987635,
+      "data_rooms_per_person_household_weights": 2.302850261489573
+    }
+  ]
+}

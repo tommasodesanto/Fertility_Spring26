@@ -1,0 +1,95 @@
+{
+  "status": "PASS",
+  "rows": [
+    {
+      "year": 2007,
+      "households": 109963013.0,
+      "occupied_rooms_capped9": 619275060.0,
+      "household_weighted_residents": 279383987.0,
+      "person_weighted_residents": 289904679.0,
+      "persons_per_household": 2.636383553804587,
+      "rooms_per_household": 5.6316668951222715,
+      "rooms_per_person": 2.136133373687287,
+      "rooms_per_person_household_weighted": 2.216573206824484,
+      "mean_household_size_household_weighted": 2.540708729034189,
+      "sample_households": 1145374,
+      "sample_persons": 2872269
+    },
+    {
+      "year": 2011,
+      "households": 112069971.0,
+      "occupied_rooms_capped9": 640582668.0,
+      "household_weighted_residents": 283802700.0,
+      "person_weighted_residents": 299115979.0,
+      "persons_per_household": 2.6690109431722795,
+      "rooms_per_household": 5.715917138945276,
+      "rooms_per_person": 2.141586250729855,
+      "rooms_per_person_household_weighted": 2.257140851725512,
+      "mean_household_size_household_weighted": 2.5323706026478763,
+      "sample_households": 1168026,
+      "sample_persons": 2896585
+    },
+    {
+      "year": 2015,
+      "households": 115012925.0,
+      "occupied_rooms_capped9": 657923590.0,
+      "household_weighted_residents": 289846201.0,
+      "person_weighted_residents": 308311839.0,
+      "persons_per_household": 2.6806712289075336,
+      "rooms_per_household": 5.7204317688642385,
+      "rooms_per_person": 2.133954998724522,
+      "rooms_per_person_household_weighted": 2.2699058594871837,
+      "mean_household_size_household_weighted": 2.5201185084198148,
+      "sample_households": 1188387,
+      "sample_persons": 2940966
+    },
+    {
+      "year": 2019,
+      "households": 119406797.0,
+      "occupied_rooms_capped9": 683982870.0,
+      "household_weighted_residents": 298447530.0,
+      "person_weighted_residents": 314730191.0,
+      "persons_per_household": 2.6357812026395786,
+      "rooms_per_household": 5.728173665021766,
+      "rooms_per_person": 2.173235646147465,
+      "rooms_per_person_household_weighted": 2.2918027500512403,
+      "mean_household_size_household_weighted": 2.499418270134153,
+      "sample_households": 1236397,
+      "sample_persons": 3026650
+    },
+    {
+      "year": 2023,
+      "households": 128086487.0,
+      "occupied_rooms_capped9": 732260287.0,
+      "household_weighted_residents": 317979983.0,
+      "person_weighted_residents": 321653351.0,
+      "persons_per_household": 2.5112200243262195,
+      "rooms_per_household": 5.716920685005593,
+      "rooms_per_person": 2.27655109055587,
+      "rooms_per_person_household_weighted": 2.302850261489573,
+      "mean_household_size_household_weighted": 2.48254121451547,
+      "sample_households": 1301851,
+      "sample_persons": 3166153
+    }
+  ],
+  "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/Spatial_aggregate_withmicrodata/raw_data/extract27.dta",
+  "source_sha256_from_prior_receipt": "edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324e",
+  "builder_sha256": "a5005a4b17515133fc378c68eac05ffe4acb983c87ef35211837a5ccb89659e2",
+  "sample": "ACS1-year SAMPLE=year*100+1; GQ1or2; PERNUM1; RELATE1; HHWT>0; ages18\u201385; OWNERSHP1or2; ROOMS>0. HHWT already scaled in source.42-metro subset uses fixed MET2013 membership, not admitted PUMA.",
+  "geography": "national",
+  "population_definition": "All resident person records in the exact selected housing households, including children; excludes group quarters and households whose head falls outside ages18\u201385.",
+  "weight_definition": "Main count: PERWT sum over residents of selected households. Housing and household totals use HHWT. HHWT times complete household roster size is retained as a weighting sensitivity. This restricted-sample population is not total US population.",
+  "sources": [
+    "https://usa.ipums.org/usa-action/variables/HHWT",
+    "https://usa.ipums.org/usa-action/variables/PERNUM",
+    "https://usa.ipums.org/usa-action/variables/PERWT"
+  ],
+  "checks": [
+    "Complete consecutive person rosters in every selected household",
+    "HHWT constant within every selected household",
+    "All five prior household/room totals reproduce exactly",
+    "Person count independently sums from person records",
+    "All five room/person accounting identities"
+  ],
+  "elapsed_seconds": 4.596947330996045
+}

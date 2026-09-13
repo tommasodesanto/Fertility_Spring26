@@ -37,6 +37,16 @@ changed; no-rebate and horizon limitations persist. Initial cross-sectional
 targets remain42-metro; the national stock comparison is an additional growth
 validation conditional on demographic inputs, not a new target system.
 
+Follow-up population diagnosis: supplemental `figures/housing_population_comparison.pdf`
+in the same recovered packet uses ACS persons living in the exact housing sample.
+Person-weighted residents grow10.9514% and rooms/person6.5735% during2007–2023.
+Model housing at the same observed household/population counts implies−2.9494%
+rooms/person growth. This is explicitly demographic standardization, not a
+population prediction. The retained model has no separate person state before2023;
+its2023 resident-person/head ratio includes a different universe and is not
+matched ACS household size. Full weight sensitivity, definitions, values and
+reproduction commands are in the packet README. The deck and model are unchanged.
+
 **September 12–13 — author chooses two demographic branches for the next rerun.**
 Tommaso wants both today's demographic treatment and a version with joint
 parent/dependent death and domestic entry only from surviving stochastic
