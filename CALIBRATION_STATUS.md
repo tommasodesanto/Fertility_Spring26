@@ -12,10 +12,11 @@ the decision ledger's closed-transition wording and the saved A specification.
 
 The split applies to post-2023 forecast demography, including forecasts formed
 at earlier surprise dates. A's historical household conditioning through 2023
-is disclosed separately; B retains its own surviving-maturation rule. Keep the
-author-requested 6- and 100-date horizons for each case: eight history/policy
-tracks. Share the A initial calibration across
-A0/A+ and the B initial calibration across B0/B+ only after verifying identical
+is disclosed separately; B retains its own surviving-maturation rule. The latest
+author refinement retains 6-, 24- and 100-date horizons for each case: twelve
+history/policy tracks. The 24-date horizon now has its own fitted history and
+policy packet, as well as helping the longer solve. Share the A initial
+calibration across A0/A+ and the B initial calibration across B0/B+ only after verifying identical
 initial-economy contracts. Retain the additional calibration of children ever
 born and childlessness by age as a bounded A/B pilot; the migration split does
 not automatically duplicate it or replace the original target system.
@@ -31,8 +32,8 @@ replacement and from the unresolved household-versus-woman fertility mapping.
 
 The shared twelve-hour planning envelope and eighteen-worker cap are unchanged;
 initial searches remain conditional on exact-loop timing and the three-hour
-stage cap. Eight histories imply ceilings of 192 primary forecast attempts or
-200 including one bounded alternative start per track, before separately
+stage cap. Twelve histories imply ceilings of 288 primary forecast attempts or
+300 including one bounded alternative start per track, before separately
 budgeted diagnostic work.
 Prioritize zero-migration feasibility and results. No code changes, model solves,
 jobs or new target contract were launched by this amendment.
@@ -56,7 +57,7 @@ need to be specified before search. Source, compact data and verified builder:
 `output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/age_profile/`.
 Section2a of [the overnight plan](docs/model/e5f_two_closure_overnight_plan.md)
 adds a bounded pilot in each demographic mechanism without automatically doubling
-the eight primary demographic/migration/horizon tracks. Initial distribution
+the twelve primary demographic/migration/horizon tracks. Initial distribution
 changes must come from the calibrated equilibrium, not undocumented cohort
 reweighting.
 

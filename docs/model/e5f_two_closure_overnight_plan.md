@@ -117,7 +117,9 @@ then connect it to the same fiscal and equilibrium solver. No additional
 household states are required for the aggregate domestic-renewal experiment;
 that does not certify B+'s separate migrant allocation.
 
-Exercise both migration settings with the exact short and long loop structures.
+Exercise both migration settings with the exact 6-, 24- and 100-period loop
+structures. The 24-period case must produce its own fitted history and policy
+packet, not just a numerical starting guess for the 100-period case.
 For A0/B0, every migration and outside-origin entry field from 2023 onward must
 be exactly zero; an aggregate zero concealing offsetting age-cell flows is
 insufficient. Audit earlier historical conditioning separately.
@@ -220,7 +222,7 @@ repetitions if a candidate is usable. This is at most sixteen additional
 single-repetition evaluations across A and B, within the existing initial
 search time budget. The migration split does not by itself duplicate this
 experiment: reuse an augmented initial calibration across its two migration
-cases only when their initial contracts match. The eight primary
+cases only when their initial contracts match. The twelve primary
 historical/horizon tracks remain the priority. A better augmented initial
 calibration can seed a separately pinned history within the existing chain
 budget; do not automatically double all
@@ -232,32 +234,42 @@ Point extraction alone does not activate a scored target or certify a model fit.
 
 ### 3. Historical shock fitting and horizon checks
 
-**Author refinement: retain short and long forecasts for each of the four
-demographic/migration cases.** Four economic cases therefore have eight
-historical/policy tracks; horizon length is a numerical check, not a fifth
-demographic mechanism.
+**Author refinement, September 13: retain 6-, 24- and 100-period forecasts for
+each of the four demographic/migration cases.** The intermediate horizon now
+has its own fitted history and policy deliverable. Four economic cases therefore
+have twelve historical/policy tracks; horizon length is a numerical check, not
+a fifth demographic mechanism. The extra age-profile calibration in section2a
+is a separate bounded initial-calibration experiment, not an automatic doubling
+of these twelve tracks.
 
 | Historical/policy track | Demographic/migration case | Explicit forecast |
 |---|---|---|
 | A0-short | A, zero migration | 6 four-year dates, 24 years |
+| A0-intermediate | A, zero migration | 24 four-year dates, 96 years |
 | A0-long | A, zero migration | 100 four-year dates, 400 years |
 | A+-short | A, supplied migration | 6 four-year dates, 24 years |
+| A+-intermediate | A, supplied migration | 24 four-year dates, 96 years |
 | A+-long | A, supplied migration | 100 four-year dates, 400 years |
 | B0-short | B, zero migration | 6 four-year dates, 24 years |
+| B0-intermediate | B, zero migration | 24 four-year dates, 96 years |
 | B0-long | B, zero migration | 100 four-year dates, 400 years |
 | B+-short | B, supplied migration | 6 four-year dates, 24 years |
+| B+-intermediate | B, supplied migration | 24 four-year dates, 96 years |
 | B+-long | B, supplied migration | 100 four-year dates, 400 years |
 
 These are numerical forecast horizons with terminal continuation values, not
 different assumptions about how long the preference shock lasts. Preferences
 are expected to remain at the latest revealed level in every track. There are
 two initial calibrations when the migration-paired initial contracts match.
-Each demographic mechanism's four forecast tracks then begin from the same
-verified initial candidate. All eight tracks fit their shock sequences
+Each demographic mechanism's six forecast tracks then begin from the same
+verified initial candidate. All twelve tracks fit their shock sequences
 separately and write separate policy results.
 
-Start each of the eight tracks after its own required smoke tests. Long tracks
-do not wait for short fits; short tracks do not wait for long convergence. Allow
+Start each of the twelve tracks after its own required smoke tests, within the
+shared worker and time limits. Long tracks need not wait for shorter fits;
+short and intermediate results do not wait for long convergence. Reuse valid
+shorter-horizon price and fiscal paths as numerical starting guesses when
+available, but re-solve and refit under each track's own horizon contract. Allow
 at most one additional bounded numerical-start attempt per track when useful.
 Within each history, windows must run sequentially because
 the next window inherits the preceding realized state. Use bracketed searches
@@ -269,12 +281,13 @@ Short tracks are deliberately provisional finite-horizon experiments. Compare
 both refitted paths and fixed-shock replays from the same inherited state:
 refitting fertility alone could conceal a change in fitted preferences caused
 by the horizon. Report differences in fitted shocks, prices, housing and policy
-effects. Twenty-four dates (96 years), with twelve dates if needed, serve as
-intermediate numerical continuation steps toward the 100-date solve; they do
-not replace the independent short/long comparison. A stalled long solve does
-not block the short track's fitted path and provisional policy readout. An
+effects. Twenty-four dates (96 years) provide an independent intermediate fit
+and policy result and can also seed the 100-date solve. A twelve-date numerical
+bridge, if needed, is separately budgeted diagnostic work, not a fourth
+deliverable horizon. A stalled long solve does not block the short or
+intermediate track's fitted path and policy readout. An
 endpoint-distance failure or material change with the horizon stays visible;
-neither the six-date nor the 100-date label certifies convergence. A numerical
+none of the three horizon labels certifies convergence. A numerical
 horizon extension must hold future demographic primitives and fiscal rules
 fixed under the same stated extrapolation, rather than change the economy
 along with the horizon.
@@ -306,7 +319,7 @@ policy benchmark.
 
 ### 5. Automatic collection and morning decision
 
-Write one review packet per demographic/migration/horizon track (eight primary
+Write one review packet per demographic/migration/horizon track (twelve primary
 packets) and a comparison of the four cases at each horizon containing:
 
 - every initial target, model moment, gap, weight and loss contribution;
@@ -333,8 +346,8 @@ Do not imply uniqueness or guaranteed existence.
 The proposed envelope is twelve hours from launch, with the final hour reserved
 for reproduction, collection and figures. Initial search should use at most
 three hours; it must not delay the first viable historical pipeline. Expanding
-to four demographic/migration cases does not double this shared wall-time budget
-or the eighteen-worker concurrency cap. Historical chains have explicit trial
+to four demographic/migration cases and three horizons does not extend this
+shared wall-time budget or the eighteen-worker concurrency cap. Historical chains have explicit trial
 and per-forecast limits and a shared deadline;
 reserve the final three hours for admitted policy runs and verification. These
 are caps, not forecasts of successful completion.
@@ -357,12 +370,13 @@ solves (roughly35–88CPU-hours at the same rough timing). Keep the three-hour
 initial-search deadline; share workers or reduce rounds rather than extend the
 critical path silently.
 
-Historical fitting has eight primary chains (two demographic mechanisms times
-two migration settings times two horizons), four windows and six preference
-trials per window: at most 192 primary forecast attempts. Preserve at most one
-bounded alternative numerical-start attempt per track, adding eight attempts
-for a ceiling of 200. This corrects the earlier budget's inconsistent doubling
-under a once-per-track recovery rule; it does not permit replaying whole searches.
+Historical fitting has twelve primary chains (two demographic mechanisms times
+two migration settings times three horizons), four windows and six preference
+trials per window: at most 288 primary forecast attempts. Preserve at most one
+bounded alternative numerical-start attempt per track, adding twelve attempts
+for a ceiling of 300. These replace the earlier eight-track ceilings of 192/200;
+they do not permit replaying whole searches. This is a 50% increase in the
+attempt ceiling, not a claim of 50% longer runtime: horizon costs differ.
 Do not spend the reserve on identical failed restarts. Native smokes,
 fixed-shock migration/horizon comparisons and the optional augmented-initial
 history each need their own recorded budget within the common deadline.
@@ -372,6 +386,11 @@ and repeated shock roots can dominate total time. Parallelism helps independent
 chains and policy branches, not the dependence between historical windows.
 Before launch, record horizon-specific solve counts, memory and wall-time
 estimates from the native smoke; no uncosted 100-date search. A 100-date mapping
+and a 24-date mapping need separate timing receipts. A 24-date mapping has
+roughly four times the household-date work of six dates: naively 10–13 minutes
+per mapping using the observed short timing, before changes in iteration count.
+This is an unmeasured planning estimate, not the cost of a complete fitted path.
+A 100-date mapping
 has about 16.7 times the household-date work of a six-date mapping. Naively
 scaling the observed 2.5–3.3 minutes per six-date mapping gives roughly42–55
 minutes per 100-date mapping, before accounting for reusable work or a changed
