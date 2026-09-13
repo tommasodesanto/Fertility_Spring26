@@ -1,12 +1,12 @@
 # LaTeX Workspace
 
-September 13 schematic preview: the September deck now labels the direct
+September 13 accepted schematic: the September deck now labels the direct
 fixed-price fertility response `A'` (right panel only), the same-period housing
 adjustment `B`, and the later demographic endpoint `C`. Initial point `A`,
 curves and existing endpoint coordinates are unchanged. The local wrapper
 `code/model/tools/build_september_schematic_figures.py` adds the intermediate
 point and writes PDF/PNG versions; the shared canonical builder is untouched.
-This four-point presentation is for the author's review.
+Tommaso approved this four-point presentation after reviewing the diagrams.
 
 Active documents:
 
