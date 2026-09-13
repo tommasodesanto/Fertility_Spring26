@@ -1,3 +1,11 @@
+Policy comparison builder: `code/model/tools/build_e5f_final_policy_readout.py`
+requires both finite/exact policy roots plus a native common-initial-state proof.
+It compares each policy's own matched2023baseline; it never uses the earlier
+2019forecast's2023row as the policy baseline. Ownership changes are reported in
+both percentages and percentage points. Three fixturetests pass; nativepair and
+actualfigures await tax completion. Read-only state-verification17689191 runs
+after A0controller17658841, with separate pension/propertytax budget checks.
+
 Update13:00UTC: native boundary-policy verification17686318 passes exact policy,
 accounting and six-period replay checks. New100-period A0/A+array17686968 runs
 from frozen policy-only value-boundary helper; collector17687181 watches it.
