@@ -1,5 +1,19 @@
 # Calibration Status
 
+**September 12–13 — author chooses two demographic branches for the next rerun.**
+Tommaso wants both today's demographic treatment and a version with joint
+parent/dependent death and domestic entry only from surviving stochastic
+maturation. The latter is preferred if verified; the former is the fallback
+with orphan-care omissions disclosed. This request records the launch plan for
+now; no jobs were submitted from it. Both planned baselines rebate property
+taxes equally and keep PAYGO budgets separate. Full initial calibration,
+successive-surprise fertility fitting, horizon checks, rebated-tax policies and
+complete graph/table packets are included. B's literal/top-bin person units,
+household-formation conversion and replacement normalization must be explicit
+before its long search; the old2.1 normalization alone does not certify
+replacement. No diagnostic entry parameter is promoted silently.
+Detailed plan: [two-closure overnight rerun](docs/model/e5f_two_closure_overnight_plan.md).
+
 **September 13 — completed-fertility continuation extracted, no recalibration.**
 Author-requested job17580030 replayed the retained2019forecast once and reproduced
 its aggregate path exactly. Every saved2023observer matches the original readout.
