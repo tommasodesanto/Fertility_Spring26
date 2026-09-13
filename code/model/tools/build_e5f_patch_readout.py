@@ -1,4 +1,4 @@
-"""Rebuild presentation figures from the saved2019stationary-start patch and ACS2023."""
+"""Rebuild patch or carried-history figures and dated empirical comparisons."""
 from pathlib import Path
 import csv,hashlib,json
 import argparse
@@ -23,24 +23,113 @@ def sequence_fertility(base, sequence_base):
     rows=prefix+[trial];ends=[2007]+[x['year']+4 for x in rows]
     model=[initial['fertility']['period_tfr_topcode_adjusted']]+[x['model'] for x in rows]
     data=[x['data'] for x in rows]
+    future=read(source/'fertility.json')[1:]
+    future_years=[2023]+[x['calendar_year']+4 for x in future]
+    future_values=[model[-1]]+[x['period_tfr_topcode_adjusted'] for x in future]
     plt.rcParams.update({'font.size':11,'axes.spines.top':False,'axes.spines.right':False,'axes.titlesize':12,'legend.fontsize':10})
     fig,ax=plt.subplots(figsize=(9,4.8))
-    ax.plot(ends,model,'o-',color=BLUE,label='Model: successive unexpected shocks')
+    ax.plot(ends,model,'o-',color=BLUE,label='Model: historical fit')
+    ax.plot(future_years,future_values,'o:',color=BLUE,label='Model: constant-preference continuation')
     ax.plot(ends[1:],data,'s--',color=RED,label='Data')
-    ax.annotate(f"Data {data[-1]:.4f}\nModel {model[-1]:.4f}",xy=(2023,model[-1]),xytext=(2018.7,1.90),
-        arrowprops=dict(arrowstyle='-',color='.5'),fontsize=10)
-    ax.set(xticks=ends,xlabel='End of four-year fertility window',ylabel='Period fertility',ylim=(1.45,2.2),
-        title='Current historical fit — property tax is not rebated')
+    ax.axvline(2023,color='.6',lw=.8,ls='--');ax.axvspan(2023,future_years[-1],color=BLUE,alpha=.035)
+    ax.set(xticks=ends+future_years[1::2],xlabel='End of four-year fertility window',ylabel='Period fertility',ylim=(1.45,2.2),
+        title='Fertility: historical fit and continuation')
     ax.legend(frameon=False,loc='lower left');ax.grid(alpha=.16)
-    fig.text(.5,.01,'Actual household history carried forward; six-date forecasts. Final fertility target and horizon checks remain open.',ha='center',fontsize=8.5)
+    fig.text(.5,.01,'No property-tax rebate. Six-date forecasts; terminal-horizon sensitivity has not been verified.',ha='center',fontsize=8.5)
     fig.tight_layout(rect=(0,.055,1,1))
     for ext in ('png','pdf'):fig.savefig(out/f'historical_fertility.{ext}',dpi=150,bbox_inches='tight')
     plt.close(fig)
-    (out/'figure_verification.json').write_text(json.dumps(dict(years=ends,model=model,data=data,
+    (out/'figure_verification.json').write_text(json.dumps(dict(years=ends,model=model,data=data,future_years=future_years,future_model=future_values,
         root_receipt_sha256=hashlib.sha256((source/'root_receipt.json').read_bytes()).hexdigest(),
         initial_checkpoint_sha256=initial['checkpoint_sha256'],property_tax_rebated=False,
         horizon_verified=False,final_window_fit_accepted=False),indent=2)+'\n')
     print(str(out/'historical_fertility.png'))
+def sequence_validation(sequence_base):
+    """Read all original moment families at 2023, preserving empirical vintages."""
+    source=sequence_base/'source/readout_2023';out=sequence_base/'figures'
+    model=read(source/'model_2023.json');check=read(source/'verification.json')
+    assert check['status']=='PASS' and check['replay_maximum_abs']==0 and model['calendar_year']==2023
+    assert not read(source/'measurement_verification.json')['errors']
+    assert model['forecast_receipt_sha256']==hashlib.sha256((source/'root_receipt.json').read_bytes()).hexdigest()
+    empirical=ROOT/'output/model/e5f_matched_pf_20260909a/design_research'
+    paths={
+        'cps':ROOT/'code/data/cps_fertility/output/cps_fertility_targets.csv',
+        'nchs':ROOT/'code/data/nchs_natality_timing/first_birth_counts_year_age.csv',
+        'acs':empirical/'housing/early_housing_target_candidates.csv',
+        'rooms':ROOT/'code/data/psid_followup_mar2026/output/sa_rooms_first_birth_household_aligned_v1/target_receipt.csv',
+        'wealth':empirical/'wealth/aggregate_wealth_results.csv',
+        'old':empirical/'wealth/old_wealth_results.csv',
+        'bequest':ROOT/'output/model/e5f_matched_pf_20260909a/initial_calibration_contract/working_weights.csv',
+    }
+    cps={r['moment_key']:float(r['estimate']) for r in csvread(paths['cps'])}
+    counts=[(int(r['age']),float(r['n_first_births'])) for r in csvread(paths['nchs']) if int(r['year'])==2023]
+    assert counts and min(a for a,n in counts)==12 and max(a for a,n in counts)==49
+    midpoint=lambda a:20 if a<22 else 44 if a>=42 else 20+4*((a-18)//4)
+    total=sum(n for a,n in counts)
+    nchs_mean=sum(n*midpoint(a) for a,n in counts)/total
+    nchs_share=sum(n for a,n in counts if a>=30)/total
+    acs={r['moment']:float(r['point']) for r in csvread(paths['acs']) if r['window']=='2023'}
+    f=model['fertility_stock_timing'];h=model['housing_wealth']['moments'];flow=model['fertility']
+    third=np.asarray(flow['birth_flow_third_bin_entry']);explicit=np.asarray(flow['birth_flow_explicit']);adjusted=np.asarray(flow['birth_flow_topcode_adjusted'])
+    top=3+(adjusted-explicit)[third>1e-12]/third[third>1e-12]
+    assert np.allclose(top,top[0],rtol=0,atol=1e-12)
+    shares=f['parity_shares_40_44'];completed=shares['1']+2*shares['2']+float(top[0])*shares['3plus']
+    rows=[]
+    def add(key,label,d,m,vintage,source_key,scale=1,decimals=2,note=''):
+        assert np.isfinite(d) and np.isfinite(m)
+        rows.append(dict(moment_key=key,moment=label,data=scale*d,model=scale*m,gap=scale*(m-d),
+            data_vintage=vintage,model_year=2023,decimals=decimals,data_source=str(paths[source_key]),
+            empirical_status='External benchmark' if key=='bequest_wealth' else 'Untargeted validation',
+            weight='',loss_contribution='',measurement_note=note))
+    add('completed_fertility','Completed fertility, ages 40–44',cps['tfr'],completed,'CPS 2024','cps',note='Stock of children ever born at ages 40–44; not the period fertility rate or the initial 2.1 normalization. Model top-bin representative recovered from saved birth accounting.')
+    add('childlessness','Childless, ages 40–44 (%)',cps['childless_rate'],f['moments']['childless_rate_40_44'],'CPS 2024','cps',100,1)
+    add('exactly_one','Exactly one child among mothers, 40–44 (%)',cps['parity_share_1']/(1-cps['childless_rate']),f['moments']['exactly_one_among_mothers_40_44'],'CPS 2024','cps',100,1)
+    add('first_birth_age','Mean age at first birth (years)',nchs_mean,f['moments']['period_mean_age_first_birth'],'NCHS 2023','nchs',note='Count-weighted model-cell midpoints; model 2023–2027 birth flow versus annual 2023 births.')
+    add('first_birth_share30','First births at age 30+ (%)',nchs_share,f['moments']['period_share_first_births_age30plus'],'NCHS 2023','nchs',100,1,note='Model 2023–2027 first-birth flow versus annual 2023 births.')
+    add('mean_rooms','Mean occupied rooms (capped at 9)',acs['aggregate_mean_occupied_rooms_capped9_18_85'],h['aggregate_mean_occupied_rooms_capped9_18_85'],'ACS 2023','acs')
+    add('ownership_30_55','Ownership, heads 30–55 (%)',acs['own_rate_30_55'],h['own_rate_30_55'],'ACS 2023','acs',100,1)
+    add('first_birth_rooms','First-birth room response, −1 to +3',float(csvread(paths['rooms'])[0]['estimate']),model['dated_first_birth_rooms']['housing_response'],'PSID pooled','rooms',1,3,note='Sun–Abraham empirical contrast; model matched branch from 2019 into 2023, not a stationary 2023 comparison.')
+    add('family_rooms','Rooms: 3+ versus 1–2 resident children',acs['prime30_55_resident_3plus_minus_1to2_rooms_capped9'],h['prime30_55_model_dependent_3plus_minus_1to2_rooms_capped9'],'ACS 2023','acs',1,3,note='Model dependent counts proxy resident own children under age 18.')
+    add('recent_parent','Recent-parent ownership gap (pp)',acs['recent_parent_minus_no_resident_child_ownership_30_55'],model['recent_parent']['model_value'],'ACS 2023','acs',100,1,note='Model current birth into empty dependent home versus currently empty home; same flow proxy as initial calibration, not exact ACS oldest-child-age reconstruction.')
+    wealth=next(float(r['estimate']) for r in csvread(paths['wealth']) if r['window']=='pooled_2005_2019')
+    add('wealth_earnings','Wealth / annual gross earnings',wealth,h['aggregate_wealth_to_annual_gross_labor_earnings'],'PSID 2005–19','wealth')
+    bequest=next(float(r['target']) for r in csvread(paths['bequest']) if r['restriction_id']=='bequest_wealth')
+    add('bequest_wealth','Annual bequests / wealth (%)',bequest,h['annual_bequest_flow_to_aggregate_wealth'],'External benchmark','bequest',100,2,note='External historical restriction, not a 2023 empirical observation.')
+    old=next(float(r['estimate']) for r in csvread(paths['old']) if r['window']=='pooled_1984_2019' and r['moment']=='old_p90_p50')
+    add('old_dispersion','Wealth/income p90 / median, ages 76–84',old,h['old_total_wealth_to_annual_income_p90_p50_7684'],'PSID 1984–2019','old',note='Beginning-period wealth among living households; model pension-income proxy versus empirical family income.')
+    assert len(rows)==13
+    with (out/'validation_2023.csv').open('w') as handle:
+        writer=csv.DictWriter(handle,fieldnames=rows[0]);writer.writeheader();writer.writerows(rows)
+    def fmt(r,key):return f"{r[key]:.{r['decimals']}f}"
+    # Three-column slide table; row markers retain the data-vintage mapping.
+    marks=['a','a','a','b','b','c','c','d','c','c','e','f','g']
+    latex=['\\begin{tabularx}{\\textwidth}{@{}Xrr@{}}','\\toprule','Moment & Data & Model \\\\','\\midrule']
+    for i,(r,mark) in enumerate(zip(rows,marks)):
+        label=r['moment'].replace('–','--').replace('−','$-$').replace('%',r'\%')
+        latex.append(label+r'\textsuperscript{'+mark+'} & '+fmt(r,'data')+' & '+fmt(r,'model')+r' \\')
+        if i in (4,9):latex.append(r'\addlinespace[4pt]')
+    latex += [r'\bottomrule',r'\end{tabularx}']
+    (out/'validation_2023.tex').write_text('\n'.join(latex)+'\n')
+    fig,ax=plt.subplots(figsize=(11.7,7.3));ax.axis('off')
+    cells=[[r['moment'],fmt(r,'data'),fmt(r,'model'),r['data_vintage']] for r in rows]
+    tab=ax.table(cellText=cells,colLabels=['Moment','Data','Model 2023','Data vintage'],loc='upper center',cellLoc='left',colWidths=[.56,.10,.12,.22],bbox=[0,.15,1,.80])
+    tab.auto_set_font_size(False);tab.set_fontsize(10)
+    for (i,j),cell in tab.get_celld().items():
+        cell.visible_edges='B' if i in (0,13) else '';cell.set_linewidth(.7)
+        if i==0:cell.set_text_props(weight='bold')
+        if j in (1,2):cell.set_text_props(ha='right')
+    ax.set_title('2023 model: untargeted moment comparison',fontsize=15,pad=12)
+    fig.text(.06,.10,'All 13 moment families from the initial calibration. CPS uses the nearest available fertility supplement; PSID moments are pooled.\nCompleted fertility is children ever born at ages 40–44, distinct from period fertility. Birth timing uses model age-cell midpoints.\nModel first-birth rooms follow the 2019–2023 matched branch. Housing samples retain the original 42-metro definition.',fontsize=9,linespacing=1.6)
+    fig.text(.06,.025,'Provisional carried-history model; no property-tax rebate. Finite-path checks pass; terminal horizon is not verified.',fontsize=9,color='.3')
+    fig.subplots_adjust(top=.91,bottom=.13,left=.055,right=.96)
+    for ext in ('pdf','png'):fig.savefig(out/f'validation_2023.{ext}',dpi=150)
+    plt.close(fig)
+    manifest=dict(rows=13,model_source=str(source/'model_2023.json'),top_bin_representative=float(top[0]),
+        model_source_sha256=hashlib.sha256((source/'model_2023.json').read_bytes()).hexdigest(),
+        sources={k:dict(path=str(p),sha256=hashlib.sha256(p.read_bytes()).hexdigest()) for k,p in paths.items()},
+        weight_or_target_changes=False,horizon_verified=False,replay_check=check)
+    (out/'validation_2023_verification.json').write_text(json.dumps(manifest,indent=2)+'\n')
+    print(json.dumps([dict(moment=r['moment'],data=r['data'],model=r['model']) for r in rows],indent=2))
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--base',type=Path,default=BASE,help='Patch packet root (default: frozen patch_readout).')
@@ -48,7 +137,18 @@ def main():
     ap.add_argument('--sequence-base',type=Path,help='Opt-in carried-history fertility readout; leaves the patch packet unchanged.')
     args=ap.parse_args()
     if args.sequence_base is not None:
-        sequence_fertility(args.base,args.sequence_base);return
+        sequence_fertility(args.base,args.sequence_base)
+        if (args.sequence_base/'source/readout_2023/model_2023.json').exists():sequence_validation(args.sequence_base)
+        if args.pdf:
+            from pypdf import PdfReader,PdfWriter
+            writer=PdfWriter()
+            for name in ('historical_fertility','validation_2023'):
+                packet=PdfReader(args.sequence_base/'figures'/f'{name}.pdf')
+                assert len(packet.pages)==1
+                writer.add_page(packet.pages[0])
+            args.pdf.parent.mkdir(parents=True,exist_ok=True)
+            with args.pdf.open('wb') as handle:writer.write(handle)
+        return
     base=args.base; source=base/'source';data=base/'data';out=base/'figures';out.mkdir(parents=True,exist_ok=True)
     path=csvread(source/'expected_transition.csv');fert=read(source/'fertility.json');static=read(source/'stationary_history.json');initial=read(source/'initial.json')
     r=next(r for r in path if int(r['calendar_year'])==2023)

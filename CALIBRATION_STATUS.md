@@ -1,5 +1,29 @@
 # Calibration Status
 
+**September 12, 23:14 EDT — current history plus continuation and complete 2023 readout.**
+At Tommaso's request, one fixed-coordinate observer replay (job17575193) recovered
+the actual carried 2023 household state from the saved 2019 surprise forecast.
+It completed in248.5seconds, reproduced the saved aggregate path exactly
+(maximum absolute error0), and all requested measurement observers completed.
+No preference search, calibration or policy run was restarted. The no-rebate
+baseline, failed terminal-distance check and final-window fertility miss below
+remain unchanged; this packet is provisional.
+
+The packet is `output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/recovered_sequence/`.
+`figures/historical_fertility.pdf` now adds the saved constant-preference
+continuation through the fertility window ending2043. This is the native
+six-date forecast, not a verified long-horizon prediction. `figures/validation_2023.csv`
+and `.tex` give every one of the13 initial-calibration moment families, with
+Data/Model headings and no target/weight changes. CPS uses2024, NCHS and ACS
+use2023; unavailable2023PSID measures use explicitly labeled pooled benchmarks,
+and the bequest restriction remains external. Completed fertility at40–44 is a
+stock (data1.9184/model1.6951), distinct from the fitted period fertility flow.
+The room-response observer follows the actual2019–2023 matched branch.
+All definitions, vintage labels, exact gaps and source hashes are saved; the
+observer JSON retains the existing demographic, geographic and residence-proxy
+limitations. The standalone two-page review is
+`output/pdf/e5f_current_history_and_2023_fit.pdf`.
+
 **September 12, 22:48 EDT — author stops no-rebate work; equal-rebate baseline required.**
 Tommaso explicitly requested cancellation after confirming the historical baseline
 did not rebate property-tax revenue. Jobs17498929,17553016,17553017,17559194 are

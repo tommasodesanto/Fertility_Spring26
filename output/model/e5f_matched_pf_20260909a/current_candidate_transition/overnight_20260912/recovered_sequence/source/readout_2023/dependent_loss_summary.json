@@ -1,0 +1,43 @@
+{
+  "calendar_year": 2023,
+  "source": "dependent_age_2023.json; measure_e5f_dependent_parent_death.py definitions",
+  "dependents_current": 0.525204861974392,
+  "births": 0.09382717452758584,
+  "dependent_loss_D": 0.00531022553668957,
+  "D_over_current_dependents": 0.0101107699512281,
+  "D_over_births": 0.0565958163338738,
+  "terminal_forced_exit": 1.0,
+  "terminal_age_loss": 0.0019534757125156,
+  "terminal_share_of_loss": 0.36787057329648,
+  "age_start_da": [
+    18,
+    4
+  ],
+  "age_loss_by_node": {
+    "18": 0.0,
+    "22": 0.0,
+    "26": 0.0,
+    "30": 0.0,
+    "34": 0.0,
+    "38": 0.0,
+    "42": 0.0,
+    "46": 0.0,
+    "50": 0.0,
+    "54": 0.0,
+    "58": 0.0,
+    "62": 0.0,
+    "66": 0.000995411631178,
+    "70": 0.000902072022206,
+    "74": 0.000813267669061,
+    "78": 0.000645998501729,
+    "82": 0.0019534757125156
+  },
+  "formula": "D=sum_a,m [g_age_m_post_fertility[a,m] * m * (1-survival[a])], with final node survival forced to 0",
+  "checks": {
+    "all_loss_below66_zero": true,
+    "all_nonterminal_loss_zero": false,
+    "terminal_survival_input_forced_to_zero": true,
+    "maximum_current_dependent_count_gap": 9.325873406851315e-15
+  },
+  "source_sha256": "5a7d467c3197421e3f2cc9335277d4e962548e07022d78ca4dba584178b0eb01"
+}
