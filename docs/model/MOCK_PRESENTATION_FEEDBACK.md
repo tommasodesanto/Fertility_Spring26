@@ -34,7 +34,13 @@ The utility function is broadly unjustified and hard to parse. Is it common in t
 
 The slide is messy; the constraints need to be made clear.
 
-**Status:** open; concise first-pass review requested. No changes authorized.
+**Status:** timing checked; slide simplification explicitly deferred. No budget-slide or model edits made.
+
+**Timing finding:** households trade housing out of beginning-of-period liquid wealth, then earn/pay the gross bond return on the resulting liquid position. Current earnings/pensions and rebates enter afterward; consumption, rent, maintenance, and property tax are period flows. The ordinary initial down-payment test uses wealth available before current earnings. These conventions support the budget slide's gross-return factors on housing purchases and sale proceeds.
+
+The transition rental-pricing identity is consistent with this convention: current rent plus next-period asset value, less current maintenance and property tax, equals the gross bond return on the current purchase price. This verifies timing, not the economic justification of frictionless rental pricing for constrained owners with transaction costs (M10).
+
+**Evidence:** read-only inspection and source-extracted checks of the optimized solver, tenure kernel, and perfect-foresight rent function; nine interior tenure alternatives, the pre-income down-payment restriction, the dated rental identity, and constant-price nesting passed. The quantitative task independently confirmed that all four source hashes match the fitted-patch terminal contract and stationary-policy preparation. No model solve was run. Grid-clipping incidence and the estate price-date convention were not audited here. Scratch check: `tmp/september_slides_review/budget_timing_check.py`.
 
 ### M07 — Fertility and child-aging slide
 
