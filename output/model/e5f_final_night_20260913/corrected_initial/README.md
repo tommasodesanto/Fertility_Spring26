@@ -51,3 +51,14 @@ The first row is a separate normalization; twelve rows enter the scored objectiv
 Bounds and near-bound flags follow the retained reporting rule, with the enforced annual-beta cap overlaid explicitly. Remaining nonstructural rows are normalizations, fiscal outcomes or externally fixed quantities; their full statuses and interpretations are in parameters.csv.
 
 Source: corrected_initial_source_v2; frozen solver SHA256 2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da. Corrected full objective fingerprint4440ea07f4de957740ca6c04961d2806d9b9ef782c7a0e7dad4ce73e1db651b1. Only source-provenance fields and the numerical source-version label changed in the objective; the empirical-field fingerprint is unchanged.
+
+## Native graph measurement check
+
+The native housing graph reports uncapped demand 6.6398676277. The calibration
+reports rooms capped at nine, 6.4246524480. The saved ten-room owner demand is
+2.1521517966, corresponding to 0.2152151797 such owner households per total
+household. Subtracting one room for each reconciles the two means to 1e-15;
+see `rooms_cap_reconciliation.json`. This difference is not evidence of a
+pre-choice/post-choice distribution mismatch. The actual scored solve uses
+current realized tenure. Do not infer an income gradient from repeated plot
+colors without checking the underlying age/type cells.
