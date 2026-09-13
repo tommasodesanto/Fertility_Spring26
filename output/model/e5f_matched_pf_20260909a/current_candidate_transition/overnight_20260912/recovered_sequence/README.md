@@ -111,6 +111,41 @@ National ACS restricted-sample household counts and imposed CensusHH-3 counts
 are not identical, so the stock gap must not be attributed wholly to endogenous
 housing behavior. Vacancy is outside the model and this empirical stock measure.
 
+### Separate constant-rate completed-fertility illustration
+
+At the author's request, `figures/completed_fertility_constant_rates.png/pdf`
+shows a separate mechanical scenario, outside the presentation. The source is
+Driscoll and Hamilton (NCHS,2025),
+[Table2](https://www.ncbi.nlm.nih.gov/books/NBK617829/table/nvsr74-3.t2/)
+for annual age-specific rates1990–2023 and
+[Table4](https://www.ncbi.nlm.nih.gov/books/NBK617829/table/nvsr74-3.t4/)
+for independently published TFRs. The exact transcribed rates and TFRs are in
+`source/stock_forecast/nchs_asfr_1990_2023.csv`. Reconstructed TFRs agree within
+0.006 for all34years (published rates/TFRs have different rounding precision).
+
+For cohort c, sum annual rates at ages10–49 in calendar years c+a, using the
+historical rate when c+a<=2023 and the2023 age-specific rate thereafter. Rates
+are uniform within each published five-year age group; the45+ group is assigned
+five ages45–49, following the published TFR convention. This is an approximate
+cohort reconstruction from grouped period rates, not an exact single-age Lexis
+calculation or the CPS survey measure. No migration-selection or individual
+birth-history response is modeled. Constant TFR alone would not identify the
+scenario: the entire age schedule is held constant.
+
+Projected completed fertility is2.1864 for the1980cohort,1.9336 for1990,
+1.6610 for2000 and1.6210 for2010. The eventual level equals the2023 reconstructed
+TFR1.621 by accounting identity. These estimates must not be joined to the
+CPS ages40–44 line: the source, population accounting, age horizon and measure
+differ. The figure's bottom axis is year of reaching50; its top axis is birth
+cohort. Every cohort-year-age cell and the historical/projected decomposition
+are saved in the two companion CSVs. Independent grouped sums, all-period TFR
+checks, the constant-schedule identity and plotted values pass verification.
+
+Reproduce with:
+`MPLCONFIGDIR=/tmp/psid_correction_review/matplotlib python3 code/model/tools/build_e5f_completed_fertility_scenario.py`.
+This is an illustrative conditional calculation, not a published forecast,
+economic-model prediction or new calibration target. The deck is unchanged.
+
 ### Housing and population comparison, September13
 
 **Presentation simplification, September13:** the author subsequently removed
