@@ -1,5 +1,22 @@
 # Calibration Status
 
+**September 13, 23:40 UTC — SSJ continuation: measured block-Toeplitz initial Jacobian.**
+Two bounded ten-period diagnostics ran on Torch (jobs 17714834 and 17717654,
+batches `afternoon_original_queue_20260913a_ssj_toeplitz_10[_scaled]`), leaving
+the announced four-shock job 17711519 untouched. Seven native mappings at the
+2007 stationary economy (722 s) measured every dated residual's response to a
+log perturbation of price, pension and rebate at date 5; the housing row is a
+near-differencing operator (own \(-1.91\), next date \(+1.03\)) and the rebate
+row inherits it (\(-57\), \(+205\)). Supplying the assembled 30×30 matrix as
+Broyden `initial_jacobian` to the retained ten-period shocked root, with the
+identical start, controls, endpoint and eight-mapping budget as job 17700926,
+lowered the best score from 1.346 to 0.02246 (housing inside the gate, rebate
+block remaining); a direction-preserving step variant reached 0.04671
+monotonically. Neither meets \(2	imes10^{-4}\) in eight mappings; no
+fake-news Jacobian, no 104-date speedup claim, no production change.
+Packets: `output/model/e5f_sequence_space_prototype_20260913/toeplitz_jacobian_10*/`;
+write-up and author decisions: `docs/model/e5f_sequence_space_prototype.md`.
+
 **September 13 — saved 2007 household mechanism figure.**
 `output/model/e5f_original_queue_20260913a/household_mechanism_2007/` contains
 an inspected two-panel PNG/PDF and full-grid CSV. It uses the same verified
