@@ -1,5 +1,43 @@
 # Calibration Status
 
+**September 13, 17:08 UTC — author-approved original-population-law afternoon experiments launched.**
+Native smoke job **17697809** is confirmed running on Torch. Only the smoke is
+submitted so far; success automatically dispatches five independent jobs: fixed
+permanent-shock paths with 24 and 100 periods; a genuinely stationary terminal
+equilibrium plus a 100-period path; and fresh four-surprise historical fits with
+6- and 24-period forecasts, each followed by paired rebated-tax policies.
+The full previously fitted preference decline is applied at once only in the
+standalone IRFs; historical arms re-estimate their own shock sequence.
+
+These isolated experiments have explicit afternoon authorization beyond the
+earlier presentation cutoff. They retain the raw calibrated 2007 stationary
+household distribution and its original birth-vintage queue at every date:
+birth-to-entry conversion 1/2.1, four waiting slots, no immigration, no observed
+age reweighting, and no later switch to the person/headship population model.
+Structural parameters, targets, weights and numerical gates are unchanged.
+PAYGO balances at payroll tax 0.179; property-tax revenues are equally rebated;
+the original housing supply curve retains elasticity 0.63. Neither this
+population-law experiment nor its results are automatically production-eligible.
+The current presentation packet remains frozen.
+
+The smoke checks repeated native paths, the exact forecast/root/replay loop,
+diagnostic outputs and reproduction of the original stationary equilibrium by
+the new terminal solver. Five long jobs are conditional on all these passing.
+Each job has a stage limit and a hard global deadline at 00:07 UTC September 14
+(20:07 EDT September 13), seven hours after batch preparation. A half-hour
+monitor reports meaningful changes. Source compilation passes; native numerical validation is pending.
+Contracts, launch receipts, budgets and collection instructions:
+`output/model/e5f_original_queue_20260913a/README.md`.
+
+**September13,14:50UTC — conditional-horizon native smoke passes; four forecasts running.**
+Job17692349 reproduces both original six-period policy roots exactly, including
+coordinates, residuals, all dated rows and fertility observations, with identical
+inherited2023 households. Both loops produce native diagnostic packets. Allfour
+24-period jobs17692351–17692354 are confirmed RUNNING on Torch. Native evidence:
+`output/model/e5f_final_night_20260913/cutoff_horizon/native_smoke_summary.json`.
+The calculation remains conditional on the fitted six-period history. The author
+cutoff12:30EDT and independent12:05numerical guard remain in force.
+
 **September 13, 14:49 UTC — access restored; author technical cutoff12:30EDT supersedes18UTC.**
 Torch access is verified. The author requires technical work to close by16:30UTC
 (12:30EDT), then slides only. Numerical cutoff is16:05UTC, enforced independently
