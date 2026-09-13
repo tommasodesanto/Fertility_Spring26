@@ -286,14 +286,17 @@ Active documents:
   tables, show historical fertility, the 2023 equilibrium (prices, rents and quantities),
   cross-sectional 2023 data/model fit, and intergenerational allocation, following May's market
   equilibrium, lifecycle comparison and allocation formats without spatial panels.
+  The Historical Fertility figure now uses the recovered successive-shock carried
+  history in `../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/recovered_sequence/figures/`; it is provisional, no-rebate, and its final window remains outside the fit tolerance.
   `Historical Fertility Discipline` immediately follows the concise calibration
-  overview, keeping estimation design together. The four main figures now come
+  overview, keeping estimation design together. The remaining three main result figures come
   from `../output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/patch_readout_fit/figures/`.
-  This author-approved presentation patch uses conditional stationary household
+  Their underlying presentation patch uses conditional stationary household
   fits through 2019, then the actual 2019-start forward forecast. It is not a
-  fully carried history from 2007. All four fertility windows match within 0.005;
-  the final window is 1.641680887 versus 1.64575. The full carried history and
-  terminal horizon remain unverified. The complete six-figure deck packet was
+  fully carried history from 2007. In that older patch, all four fertility windows match within 0.005;
+  the final window is 1.641680887 versus 1.64575. Those profiles are not results
+  from the newly recovered carried history. The terminal horizon remains
+  unverified. The original six-figure deck packet was
   replaced together after producer visual QA: fitting job `17498984`, exact
   readout replay `17499630` (maximum aggregate discrepancy zero), preference
   $\psi=0.10239514522037683$. The new receipt SHA-256 is
