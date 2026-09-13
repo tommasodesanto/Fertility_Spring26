@@ -13,7 +13,10 @@ Handoff17605279 submitted six cached refits. While still entirely pending,
 array17608564 was replaced by17613033 (6dates,16GiB),17613034 (24dates,32GiB),
 and17613035 (100dates,64GiB), two cases each. This is a resource-only split of
 the same pinned commands and deadline; native noncache peak memory was about
-2.2/2.9/4.7GiB. The original array17595967 remains separate. Collector17607147
+2.2/2.9/4.7GiB. New6/24date tasks passed initial complete mapping audits and are
+iterating; equilibrium convergence is not yet established. Superseded uncached
+24/100tasks17595967_{1,2,4,5} were cancelled to release memory. Original6date
+tasks0/3 remain as comparison, with all prior outputs preserved. Collector17607147
 discovers the three new arrays automatically. No fitted four-shock history or
 policy is claimed from these runs yet.
 

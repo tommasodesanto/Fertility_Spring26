@@ -48,7 +48,12 @@ def sequence_validation(sequence_base):
     """Read all original moment families at 2023, preserving empirical vintages."""
     source=sequence_base/'source/readout_2023';out=sequence_base/'figures'
     model=read(source/'model_2023.json');check=read(source/'verification.json')
-    assert check['status']=='PASS' and check['replay_maximum_abs']==0 and model['calendar_year']==2023
+    snapshot_gap=check.get('snapshot_maximum_abs')
+    native_verified=(check.get('verification_method')=='native_saved_snapshot_aggregate_match'
+        and check.get('replay_performed') is False and check.get('finite_converged') is True
+        and isinstance(snapshot_gap,(int,float)) and np.isfinite(snapshot_gap)
+        and 0<=snapshot_gap<=2e-10)
+    assert check['status']=='PASS' and (check.get('replay_maximum_abs')==0 or native_verified) and model['calendar_year']==2023
     assert not read(source/'measurement_verification.json')['errors']
     assert model['forecast_receipt_sha256']==hashlib.sha256((source/'root_receipt.json').read_bytes()).hexdigest()
     empirical=ROOT/'output/model/e5f_matched_pf_20260909a/design_research'

@@ -129,3 +129,5 @@ results but failed its broad checkpoint-hash comparison; recover the report into
 a separate folder without another solve or changing the main target system.
 
 Resource-only queue replacement: pending17608564 was cancelled before execution and split into17613033 (6dates,16GiB),17613034 (24dates,32GiB),17613035 (100dates,64GiB), two cases per array. Commands, output folders, source pins, tolerances and deadline unchanged. See `resource_resubmission.json`. Age report recovery passed without solves; full tables and limitations in `age_pilot_recovered/README.md`.
+
+After the new6/24date paths passed their first complete mapping audits, superseded uncached24/100tasks17595967_{1,2,4,5} were cancelled to free memory for100date replacements. Old6date tasks0/3 remain as comparison; all outputs preserved. `collect_e5f_final_history_readout.py` is a no-solve extractor prepared for accepted2019/2023 native snapshots. Compilation and schema checks passed; native extraction remains pending an accepted final history window.
