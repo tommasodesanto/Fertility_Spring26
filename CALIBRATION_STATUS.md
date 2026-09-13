@@ -1,5 +1,17 @@
 # Calibration Status
 
+**September 13, 13:04 UTC — four short histories complete; first100-period correction check passes.**
+All ordinary/seeded A0/A+six-period histories now fit allfourwindows. Their last
+model values are1.64555932 (A0) and1.64560934–1.64560954 (A+) versus1.645750.
+The policy loops are underway. The corrected A0first100-period mapping reproduces
+the old valid starting point exactly: all303coordinates and residuals match,
+score10.8242212; actual endpoint gates pass. This is a valid mapping, not a
+converged100-period equilibrium. Immutable old/new receipts are under
+`policy_seed_first100_mapping/` in the overnight packet. The second proposal,
+which previously failed on the substitute2007population, is now computing with
+the actual endpoint audit. Old extended A0 exhausted its six trials at the known
+premature audit and failed; the newsource job17686968 replaces that attempt.
+
 **September 13, 13:00 UTC — boundary-policy correction verified and launched; full review PDF ready.**
 Native verification17686318 passes in573.35seconds. All policy fields and bound
 fiscal inputs match bitwise; the accepted six-period forecast reproduces its
