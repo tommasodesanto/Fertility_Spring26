@@ -14,9 +14,9 @@ Do people die randomly and age randomly at any age? Clarify the actual timing.
 
 ### M03 — Child versus adult aging
 
-Children age stochastically; do adults age deterministically?
+Children mature stochastically; do adults age deterministically?
 
-**Status:** open; concise first-pass review requested. No changes authorized.
+**Status:** resolved for author-facing wording. The concern is preserved for review: the stochastic event is the exit from dependency, while adult household age advances deterministically. No implementation verification is claimed.
 
 ### M04 — Number of children: m versus n
 
