@@ -1,5 +1,20 @@
 # Calibration Status
 
+**September 13 — recovered permanent-shock 2023 cross-section used in mock slides.**
+Recovery job `17707689` completed in retry2 and was collected under
+`output/model/e5f_original_queue_20260913a/terminal_restart_v1/fertility_replay_iter3/profile_2023/`.
+All five aggregate rows reproduce saved iteration3 exactly (maximum absolute
+gap zero; required tolerance `2e-10`); the recovery used 22 backward and five
+forward dates and zero root solves.  The model snapshot source hash is
+`abcb26c19639b51d19c770ddd4429d09f52e44f90369870889b2e59d05be001e`.
+The regenerated lifecycle and large-owner allocation figures retain the prior
+formats and empirical definitions, pass their source/age-aggregation checks,
+and now feed the September 14 deck.  Large-owner shares sum to 100 percent;
+the directly measured age-42 completed-fertility value is
+`1.8230999869363615`, a `7.45e-13` difference from the prior reconstruction.
+This remains the fixed-price, one-permanent-shock iteration3 cross-section;
+the finite transition is not converged.
+
 **September 13 — fast-slide handoff; 2023 recovery already running.**
 The author is moving quick slide work to a Terra-medium chat for cost control.
 `docs/prompts/HANDOFF_fast_slides.md` contains the bounded first task and paths.
