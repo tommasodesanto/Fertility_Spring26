@@ -1,5 +1,27 @@
 # Calibration Status
 
+**September 13, 18:41 UTC — author-requested ten-period stationary-endpoint diagnostic launched.**
+Job17700926 is running with a45-minute numerical budget and50-minute Slurm
+limit. It reuses the verified permanent-shock endpoint and original frozen
+solver, first requiring a native ten-period no-shock root/replay and stationary
+drift check. Only then does it solve the ten-period shocked path, with at most
+eight mappings per root. All gates, parameters, shocks and population rules
+remain unchanged. The100-period arm continues independently.
+
+This additional experiment was explicitly requested after the original five
+arms. Forty years is an imposed continuation horizon, not an asserted date of
+actual population convergence. A supplemental plot uses the native period-TFR
+diagnostic, household population, prices and actual terminal distribution/queue
+gaps. Plot-only job17700971 follows after any numerical exit and labels any
+unconverged last mapping. Source:
+`code/cluster/run_e5f_fixed_terminal_horizon.py` and
+`code/model/tools/build_e5f_fixed_terminal_horizon_figures.py`.
+Local receipts: `output/model/e5f_original_queue_20260913a/terminal_10/`;
+remote batch is the original afternoon batch name plus `_terminal_10`.
+Monitor this arm and its plots as well as the original jobs. The prior long
+run's first mapping suggests slow demographic adjustment, but it is still an
+unconverged price guess and is not evidence of the equilibrium transition.
+
 **September 13, 18:22 UTC — shocked stationary endpoint verified; anchored100-period transition running.**
 Replacement17699174 reproduces the saved numerical seed exactly and converges
 the stationary root in210seconds. All native one-period stationarity, queue,

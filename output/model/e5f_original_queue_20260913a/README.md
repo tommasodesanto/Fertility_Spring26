@@ -1,5 +1,21 @@
 # Original household-queue afternoon experiments
 
+**18:41 UTC — new author-requested short test:** job17700926 reuses the verified
+new steady-state endpoint for a ten-period (40-year) transition. It first runs
+the same ten-period root/replay with no shock; only a passed no-shock check
+permits the shocked stage. Eight mappings per root, ten-minute smoke ceiling,
+45-minute total numerical budget,50-minute Slurm cap, original global deadline
+retained. The population is carried forward and its endpoint discrepancy is
+reported, never removed by rescaling. Native diagnostic measurement of period
+fertility is retained; aggregate birth counts are not substituted for a rate.
+Additional plot-only job17700971 runs after any numerical exit. Remote batch
+is the path below plus `_terminal_10`; local launch contracts are in
+`terminal_10/`. New sources are `code/cluster/run_e5f_fixed_terminal_horizon.py`
+and `code/model/tools/build_e5f_fixed_terminal_horizon_figures.py`.
+No result from this additional arm is yet accepted. The original100-period
+transition continues. Supplemental plots require visual QA after collection;
+Python compilation passed before launch.
+
 **18:22 UTC update:** replacement17699174 has verified the new stationary
 endpoint, including all one-step population, queue, household, market and fiscal
 checks. Its first saved-point replay is exact; stationary-root continuation
