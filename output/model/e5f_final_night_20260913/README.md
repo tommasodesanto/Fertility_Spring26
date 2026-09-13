@@ -1,8 +1,8 @@
 # Authorized final-night work
 
-Latest evidence: September 13, 10:40 UTC. Fixed deadline: 18:00 UTC.
+Latest evidence: September 13, 11:22 UTC. Fixed deadline: 18:00 UTC.
 The cluster jobs and collector continue independently of the laptop. Local idle
-sleep prevention lasts until the deadline. Latest account check: 58% weekly
+sleep prevention lasts until the deadline. Latest account check: 52% weekly
 remaining; retain the author's 20% floor.
 
 ## Verified progress
@@ -20,6 +20,12 @@ All market, PAYGO, rebate, household and exact-replay gates pass. Price-seeded
 counterparts also pass in two mappings, about 174 seconds; ordinary starts took
 14 mappings, about 1,223 seconds. Different nodes prevent a controlled timing claim.
 
+Both short variants now also accept the second historical window. In the seeded
+runs, model fertility is 1.861042 (A0) and 1.861231 (A+) against 1.861000. Ordinary
+starts agree within 1.1e-6. All finite gates pass, with exact replay zero. Households
+are carried to 2015; two surprise windows remain. `two_window_verification.json`
+records the selected forecasts and their native root hashes.
+
 ## Live jobs
 
 | Job | Work | State at update |
@@ -27,7 +33,8 @@ counterparts also pass in two mappings, about 174 seconds; ordinary starts took
 | 17658836 | A0/A+, 6 periods, ordinary starts | Fitting subsequent surprises |
 | 17661737 | A0/A+, 6 periods, pinned numerical price starts | Fitting subsequent surprises |
 | 17663940 | A0/A+, 24 periods, ordinary starts | Submitted by verified handoff |
-| 17663986 | A0/A+, 100 periods | Submitted by verified handoff |
+| 17663986 | A0/A+, 100 periods, 48 GiB | Pending in small high-memory pool |
+| 17676958 | A0/A+, 100 periods, 32 GiB / 12-GiB cache | Running in ordinary CPU pool; native memory check pending |
 | 17664449 | A0/A+, 24 periods, pinned numerical price starts | Submitted |
 | 17607147 | Five-minute receipt collector | Running |
 
@@ -145,3 +152,10 @@ saved A+ first-trial contact sheet was visually inspected. Its legacy filename
 Source and job receipts are in `jobs.json`, the corrected-source receipts,
 `corrected_initial/`, and the native remote batch. Historical failed and superseded
 outputs remain preserved. No result is promoted from a failed numerical harness.
+
+The new100 array changes only cache/resource limits and output paths. The exact
+cache kernel is unchanged. The queued48-GiB array remains until native progress
+and memory viability are verified. Its scientific manifest stays
+`history_manifest_corrected_auto_v2.json`; run directory is
+`histories_corrected_cpu32_100`. The existing readout collectors have not yet been
+redirected to this pair. Cache/resource provenance: `cpu32_100_preparation.json`.

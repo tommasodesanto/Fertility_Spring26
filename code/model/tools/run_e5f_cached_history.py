@@ -6,10 +6,19 @@ import json
 from pathlib import Path
 import time
 
+def cache_size_gib(count, requested=None):
+    default = 24 if count == 100 else 6
+    if requested is None:
+        return default
+    if type(requested) is not int or not 1 <= requested <= default:
+        raise ValueError('A cache override must reduce the existing memory cap')
+    return requested
+
 def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--cache-proof',type=Path,required=True)
     parser.add_argument('--cache-sha256',required=True)
+    parser.add_argument('--cache-gib',type=int,help='Optional smaller exact-policy cache; no model change')
     parser.add_argument('driver_args',nargs=argparse.REMAINDER)
     args=parser.parse_args()
     import e5f_exact_policy_cache as cache
@@ -25,11 +34,12 @@ def main():
     argv=args.driver_args[1:] if args.driver_args[:1]==['--'] else args.driver_args
     output=Path(argv[argv.index('--output')+1]);started=time.monotonic()
     count=int(argv[argv.index('--count')+1])
-    cache_gib=24 if count==100 else 6
+    cache_gib=cache_size_gib(count,args.cache_gib)
     with cache.policy_cache(joined.pf,max_bytes=cache_gib*1024**3) as stats:
         try:driver.main(argv)
         finally:
             driver.save(output/'policy_cache_receipt.json',dict(cache_sha256=digest,
+                cache_gib=cache_gib,
                 proof=str(args.cache_proof),proof_sha256=hashlib.sha256(args.cache_proof.read_bytes()).hexdigest(),
                 elapsed_seconds=time.monotonic()-started,**stats.snapshot()))
 

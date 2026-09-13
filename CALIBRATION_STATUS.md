@@ -1,5 +1,24 @@
 # Calibration Status
 
+**September 13, 11:22 UTC — second window fitted; 100-period jobs running.**
+Both short-horizon variants now accept the 2011 decision window (2012–2015 data):
+A0 model 1.861042 versus 1.861000, A+ model 1.861231 versus 1.861000, using the
+price-seeded runs. Ordinary starts independently agree within 1.1e-6. Every finite
+market, PAYGO, rebate, household and exact-replay gate passes. Both tracks have
+carried the realized households into 2015. Two shocks remain to be fitted.
+Evidence: `output/model/e5f_final_night_20260913/two_window_verification.json`.
+
+The original 48-GiB 100-period array 17663986 was routed to the seven-node `cl`
+pool and remains queued. Array 17676958 requests 32 GiB with a 12-GiB exact-policy
+cache and is now running in the 184-node `cs` pool. The cache kernel, model,
+scientific manifest, initial state, targets and gates are unchanged; only the
+cache memory cap, resource request and output directory differ. Its first native
+100-period mapping and memory feasibility remain to be verified. Retain the
+queued version until that proof exists. New outputs are `histories_corrected_cpu32_100`;
+the cache wrapper is frozen in `cache_source_v3`. The two automatic final-window
+collectors currently watch the prior ordinary/seeded arrays; add the new100pair
+after its native memory check. Latest account check: 52% weekly remaining.
+
 **September 13, 11:08 UTC — readout pipeline verified and automated.**
 Native saved-state readout smoke 17675207 passed under both corrected helper
 versions. The observed 2007 aggregates match the accepted forecast to below
