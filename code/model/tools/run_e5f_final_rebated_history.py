@@ -94,6 +94,13 @@ def initial_seed_step(plan, manifest):
     return float(next(iter(seeds.values())) if isinstance(seeds,dict) else seeds[0])
 
 
+def shift_forecast_coordinates(values,count):
+    """Advance the numerical starting guess by one realized four-year date."""
+    unpack_coordinates(values,count)
+    blocks=np.asarray(values,dtype=float).reshape(3,count+1)
+    return np.column_stack((blocks[:,1:],blocks[:,-1])).ravel()
+
+
 def cached_boundary(template, actual_g, old, audit, runtime):
     """Re-account the same lifetime policy on actual carried terminal heads.
 
@@ -148,7 +155,7 @@ def solve_forecast(*, inherited, old, demographics, psi, count, initial,
     for lo,hi in bounds:
         if not np.isfinite([lo,hi]).all() or not 0 < lo < hi:
             raise ValueError('Joint log-root needs explicit positive bounds')
-    if not 2 <= rc['max_evaluations'] <= 8 or not 0 < rc['market_tolerance'] <= 2e-4:
+    if not 2 <= rc['max_evaluations'] <= 24 or not 0 < rc['market_tolerance'] <= 2e-4:
         raise ValueError('Retained mapping budget/market gate required')
     if not 0 <= rc['final_reproduction_tolerance'] <= 2e-10:
         raise ValueError('Retained exact replay gate required')
@@ -313,7 +320,7 @@ def main(argv=None):
         initial_psi=float(old.parameters.psi_child)
         audit=TerminalAuditControls(**plan['terminal_template']['audit_controls'])
         controls=dict(plan['history_root_controls']);controls.update(manifest.get('root_controls',{}))
-        controls.setdefault('transfer_bounds',[1e-10,10.]);controls['max_evaluations']=min(8,int(controls['max_evaluations']))
+        controls.setdefault('transfer_bounds',[1e-10,10.]);controls['max_evaluations']=min(24,int(controls['max_evaluations']))
         targets=list(csv.DictReader(Path(plan['empirical_blocks']).open()))
         if [int(t['decision_year']) for t in targets]!=[2007,2011,2015,2019]:raise ValueError('Four pinned fertility windows required')
         tolerance=float(plan['fertility_fit_tolerance'])
@@ -373,6 +380,7 @@ def main(argv=None):
             fit,result,detail=winner
             standard_graphs(detail['snapshot'],result,out/f'window_{year}'/'selected_graphs')
             realized.append(fit);inherited=result.next_state
+            initial=shift_forecast_coordinates(result.root_receipt['final']['prices'],args.count)
             checkpoint(out/f'realized_state_{inherited.year}.pkl.gz',inherited)
             save(out/'realized_fit.json',realized)
         save(out/'finite_history_complete.json',dict(realized=realized,horizon_verified=False,production_eligible=False))

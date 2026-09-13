@@ -67,13 +67,15 @@ def checkpoint_item(item):
     return path,digest
 
 
-def prepare(batch,deadline_unix,now=None):
+def prepare(batch,deadline_unix,now=None,search_subdir='initial_search_joint',
+            history_template='history_manifest_joint.json',array_template='history_array_manifest_joint.json'):
     """Validate receipts and publish a separate immutable six-track manifest."""
-    batch=Path(batch).resolve();search=batch/'initial_search_joint'
+    batch=Path(batch).resolve();search=batch/search_subdir
+    if search.parent!=batch:raise ValueError('Initial search must be a direct batch child')
     summary=read(search/'summary.json');contract=read(search/'search_contract.json')
     exact=read(search/'cases/selected_exact_repetitions/result.json')
     smoke=read(batch/'joint_initial_smoke/summary.json')
-    if summary.get('status')!='completed_rebated_initial_search':
+    if summary.get('status') not in ('completed_rebated_initial_search','recovered_rebated_initial_search'):
         raise ValueError('Initial search prerequisite is not completed')
     if (summary.get('selected_exact_repetitions_verified') is not True
             or contract.get('final_exact_repetitions')!=2
@@ -97,7 +99,7 @@ def prepare(batch,deadline_unix,now=None):
     if len({r.get('repetition') for r in exact['accounting']})!=2:
         raise ValueError('Exact repetitions must have distinct recorded identities')
     result=dict(selected_loss=loss,original_smoke_loss=smoke_loss,source_root=source_root,
-        search_job='17596347',deadline_unix=deadline_unix,search_summary_sha256=sha(search/'summary.json'),
+        search_source=str(search),deadline_unix=deadline_unix,search_summary_sha256=sha(search/'summary.json'),
         selected_checkpoint_sha256=selected_sha)
     if not loss<smoke_loss:
         return dict(result,status='skipped_no_strict_initial_improvement')
@@ -107,7 +109,8 @@ def prepare(batch,deadline_unix,now=None):
     driver_seconds=remaining-60
     if driver_seconds<=3*3600:
         return dict(result,status='skipped_insufficient_shared_time',remaining_seconds=max(0,remaining))
-    history_path=batch/'history_manifest_joint.json';array_path=batch/'history_array_manifest_joint.json'
+    history_path=batch/history_template;array_path=batch/array_template
+    if history_path.parent!=batch or array_path.parent!=batch:raise ValueError('Templates must be direct batch children')
     history=read(history_path);array=read(array_path)
     verify(history['file_sha256']);verify(array['source_pins'])
     if Path(history['initial_summary']).resolve()!=(batch/'joint_initial_smoke/summary.json').resolve():
@@ -167,6 +170,12 @@ def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--batch',type=Path,required=True)
     parser.add_argument('--deadline-unix',type=float,required=True)
+    parser.add_argument('--search-subdir',default='initial_search_joint')
+    parser.add_argument('--cache-runner',type=Path)
+    parser.add_argument('--cache-module',type=Path)
+    parser.add_argument('--cache-proof',type=Path)
+    parser.add_argument('--history-template',default='history_manifest_joint.json')
+    parser.add_argument('--array-template',default='history_array_manifest_joint.json')
     parser.add_argument('--submit',action='store_true')
     args=parser.parse_args(argv);batch=args.batch.resolve()
     receipt_path=batch/'continuation_after_search_receipt.json'
@@ -179,8 +188,27 @@ def main(argv=None):
         if previous.get('status')=='submitted':
             print(json.dumps(previous,indent=2));return
     try:
-        result=prepare(batch,args.deadline_unix)
+        result=prepare(batch,args.deadline_unix,search_subdir=args.search_subdir,
+            history_template=args.history_template,array_template=args.array_template)
         if result['status']=='prepared':
+            if args.cache_runner or args.cache_module or args.cache_proof:
+                if not all((args.cache_runner,args.cache_module,args.cache_proof)):
+                    raise ValueError('All exact policy cache paths are required together')
+                proof=read(args.cache_proof);digest=sha(args.cache_module)
+                if (proof.get('status')!='verified' or proof.get('cache_sha256')!=digest
+                    or proof.get('exact_mapping_equal') is not True
+                    or proof.get('household_and_accounting_mapping_valid') is not True):
+                    raise ValueError('Native complete forecast cache verification failed')
+                manifest=read(result['array_manifest'])
+                manifest['memory']='64G'
+                for stage in manifest['stages']:
+                    original=stage['command'][4:]
+                    stage['command'][4:]=[original[0],'-B',str(args.cache_runner),
+                        '--cache-proof',str(args.cache_proof),'--cache-sha256',digest,'--',*original[3:]]
+                manifest['environment']['PYTHONPATH']=str(args.cache_module.parent)+':'+manifest['environment']['PYTHONPATH']
+                manifest['source_pins'].update({str(p):sha(p) for p in (args.cache_runner,args.cache_module,args.cache_proof)})
+                write(result['array_manifest'],manifest)
+                result.update(array_manifest_sha256=sha(result['array_manifest']),exact_policy_cache=True)
             command=[sys.executable,str(batch/'submit_e5f_final_night.py'),result['array_manifest']]
             if args.submit:command.append('--submit')
             # The existing Torch-side submitter validates source pins, emits

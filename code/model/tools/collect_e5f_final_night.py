@@ -18,7 +18,7 @@ def read(path):
 
 def collect(root, jobs):
     stages = []
-    locations = [root / name for name in ("joint_initial_smoke", "initial_search_joint", "age_pilot_joint")]
+    locations = [root / name for name in ("joint_initial_smoke", "initial_search_joint", "initial_search_recovered", "age_pilot_joint", "policy_cache_probe_v2")]
     for group in ("histories_joint", "histories_refit"):
         locations += sorted((root / group).glob("A*"))
     for folder in locations:

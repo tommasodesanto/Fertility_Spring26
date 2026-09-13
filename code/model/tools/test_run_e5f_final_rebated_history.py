@@ -20,6 +20,12 @@ class Demo:
 
 
 class DriverTests(unittest.TestCase):
+    def test_next_vintage_guess_advances_all_three_blocks(self):
+        old=np.arange(1.,22.)
+        shifted=driver.shift_forecast_coordinates(old,6).reshape(3,7)
+        np.testing.assert_array_equal(shifted,np.array([[2,3,4,5,6,7,7],[9,10,11,12,13,14,14],[16,17,18,19,20,21,21]]))
+        np.testing.assert_array_equal(old,np.arange(1.,22.))
+
     def test_seed_profiles_accept_legacy_lists_and_named_profiles(self):
         self.assertEqual(driver.initial_seed_step({'seed_steps':[-.02,-.03]},{}),-.02)
         self.assertEqual(driver.initial_seed_step({'seed_steps':{'a':-.04}},{}),-.04)

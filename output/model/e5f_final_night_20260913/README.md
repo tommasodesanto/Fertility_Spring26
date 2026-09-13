@@ -82,3 +82,50 @@ The displayed initial parameter table overlays the enforced annual beta upper
 bound0.99 on the frozen scorer metadata, which still prints0.9995. The original
 scorer parameter rows are preserved in selected_parameters_raw.csv. This is a
 reporting correction only; the candidate/search bound was already enforced.
+
+## Failure recovery and exact policy reuse
+
+Search17596347 stopped after three matching candidate numerical-budget failures.
+The explicit traceback was the20-evaluation initial root limit; valid candidates
+remain in the ledger. Recovery17603133 re-evaluates the verified best twice in
+`initial_search_recovered`, preserving the stopped search. Handoff17605279 will
+use that independently verified result; the earlier handoff17597052 is obsolete.
+
+Native cache probe17598785 reproduced every comparison exactly (including all
+dated values, policies, final household distribution, economic rows and audit
+residuals):183.9926seconds uncached versus43.5013seconds cached, with1 actual
+dated solve and11 hits in this constant-input six-date mapping. The cache is
+bounded and its key covers the complete solver arguments, including shared
+state and continuation values; hits return fresh arrays. Unsupported argument
+states bypass the cache. This is a measured mapping speedup, not a claim that
+every long solve is4.23times faster. Probe17598460 failed its harness time-reserve
+setup before a model mapping;17598785 used a zero-policy-reserve probe manifest.
+
+The pending refit source allows24 root evaluations instead of8, since the short
+roots were still converging at the earlier limit. The market/fiscal/reproduction
+gates are unchanged. It shifts numerical guesses one date when carrying a
+realized state. Six refits have a maximum576 primary mappings per track before
+one bounded alternative start, constrained by the shared deadline and policy
+reserve. Cache bounds are6GiB for6/24dates and24GiB for100dates; refit jobs request
+64GiB memory. The worker ceiling remains18 and the planned overlap is14 numerical
+workers. Native cache proof and source hashes govern admission.
+
+Collector17607147 supersedes17597285 and reads the recovery/cache receipts and
+discovers the follow-up array automatically. Weekly allowance at this check was
+81% remaining; subsequent healthy monitoring should stay compact.
+# Latest verified continuation
+
+Recovery17603133 passed two exact numerical repetitions. Selected original loss:
+179.2984252281 versus182.6491468669 for the rebated seed. The search itself stopped
+after repeated numerical evaluation limits. Complete13-row fit and17-row parameter
+tables, accounting gaps and caveats: `initial_search_recovered/README.md`.
+
+Handoff17605279 completed and submitted array17608564: six cached A0/A+ refits
+at6/24/100dates, root cap24, unchanged tolerances, fixed18:00UTC deadline.
+Original17595967 remains independent evidence. Cluster collector17607147
+automatically includes the refit array. A complete accepted historical path and
+policy results remain outstanding. Age pilot17597260 has exact matching numerical
+results but failed its broad checkpoint-hash comparison; recover the report into
+a separate folder without another solve or changing the main target system.
+
+Resource-only queue replacement: pending17608564 was cancelled before execution and split into17613033 (6dates,16GiB),17613034 (24dates,32GiB),17613035 (100dates,64GiB), two cases per array. Commands, output folders, source pins, tolerances and deadline unchanged. See `resource_resubmission.json`. Age report recovery passed without solves; full tables and limitations in `age_pilot_recovered/README.md`.

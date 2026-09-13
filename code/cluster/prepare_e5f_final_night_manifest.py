@@ -17,9 +17,12 @@ def main():
     parser=argparse.ArgumentParser()
     parser.add_argument('--initial-summary',type=Path,required=True)
     parser.add_argument('--label',default='joint')
+    parser.add_argument('--source-dir',type=Path,default=BATCH/'history_source')
+    parser.add_argument('--root-evaluations',type=int,choices=(8,24),default=8)
     args=parser.parse_args()
     if not args.label.replace('_','').isalnum():raise ValueError('Simple manifest label required')
-    source=BATCH/'history_source';pairs=[]
+    source=args.source_dir.resolve();pairs=[]
+    if not source.is_relative_to(BATCH):raise ValueError('Source must remain in the pinned batch')
     for first in sorted((INITIAL/'code/model/intergen_eqscale_seq_optimized').rglob('*.py')):
         second=ROOT/first.relative_to(INITIAL)
         digest=sha(first)
@@ -37,7 +40,7 @@ def main():
     save(forecast,dict(prior_plan=str(plan),initial_summary=str(args.initial_summary),
         initial_source_root=str(INITIAL),kernel_equivalence=str(equivalence),file_sha256=pins,
         policy_reserve_seconds=10800,seed_step=-.01,
-        root_controls=dict(transfer_bounds=[1e-10,10.]),
+        root_controls=dict(transfer_bounds=[1e-10,10.],max_evaluations=args.root_evaluations),
         disclosure='A historical observed head-age conditioning; dated equal rebate and PAYGO; finite boundary actual carried state, future constant conditions provisional'))
     stages=[]
     for case,label in [('A0','A0'),('A+','Aplus')]:

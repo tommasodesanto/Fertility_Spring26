@@ -1,5 +1,56 @@
 # Calibration Status
 
+**September 13 — recovered initial point verified; cached refits submitted.**
+Recovery17603133 passed both exact numerical repetitions. The selected original
+objective is179.2984252281 versus182.6491468669 for the rebated seed (1.83% lower).
+This is a verified candidate from a search stopped by numerical evaluation limits,
+not a converged optimizer. All13 target rows and17 parameter/restriction rows are
+in `output/model/e5f_final_night_20260913/initial_search_recovered/`.
+The displayed beta bound is the actual enforced0.99; the unchanged raw scorer
+metadata with0.9995 is preserved separately. Housing moments remain weak.
+
+Handoff17605279 submitted six cached refits. While still entirely pending,
+array17608564 was replaced by17613033 (6dates,16GiB),17613034 (24dates,32GiB),
+and17613035 (100dates,64GiB), two cases each. This is a resource-only split of
+the same pinned commands and deadline; native noncache peak memory was about
+2.2/2.9/4.7GiB. The original array17595967 remains separate. Collector17607147
+discovers the three new arrays automatically. No fitted four-shock history or
+policy is claimed from these runs yet.
+
+Age pilot17597260 finished five valid primary cases, one numerical failure, and
+two exact selected repetitions. Its original report guard incorrectly compared
+serialized checkpoint hashes. The separate `age_pilot_recovered` report passed
+source, checkpoint, numeric and fiscal verification without another model solve.
+Its augmented loss barely improves,306.5873 to306.1929; the extra age-profile
+component worsens123.9381 to126.0059. It therefore does not establish an improved
+age-profile fit. Complete original13, extra6 and augmented18-row tables are saved.
+The six extra age targets remain experimental and outside the main calibration.
+
+**September13 overnight continuation — failure recovery and verified speed improvement.**
+The initial search17596347 stopped after repeated candidate-level joint-root
+20-evaluation limits; candidate source/accounting gates were not relaxed.
+Recovery17603133 is independently reproducing the best verified candidate twice,
+in a separate `initial_search_recovered` folder. Handoff17605279 supersedes
+17597052 and will launch the six refits only if that recovery verifies.
+
+An exact dated-policy cache passed native comparison17598785: the complete
+six-date mapping, all value arrays, household distributions, policy arrays,
+accounting audits and root residuals reproduced exactly. Runtime was183.99s
+without reuse and43.50s with reuse;11/12 repeated dated Bellman calls were hits.
+This measured speedup is for that constant-input mapping, not a guarantee for
+all trial paths. Cache keys include every solver argument; unsupported states
+bypass reuse. The pending refits use6GiB cache bounds at6/24dates and24GiB at100,
+with64GiB Slurm memory per task and the original numerical-worker ceiling.
+
+The short original roots were still improving at their8+8 evaluation limit
+(best scaled residual about0.01, requirement0.0002). The new refit source allows
+up to24 root evaluations with unchanged tolerances and advances all three
+starting-coordinate paths by one realized date between surprise vintages.
+The fixed overall deadline and policy reserve still bind. Original histories
+remain separate evidence; no fitted history or successful policy is claimed yet.
+Source versions: `history_source_cached`, `cache_source_v2`; full receipts and
+limitations remain in `output/model/e5f_final_night_20260913/README.md`.
+
 **September 13 — rebated initial smoke passed; six histories and calibration search running.**
 Joint initial job17594990 passed the complete saved scoring loop in about six
 minutes. Thirteen joint root evaluations plus one pilot jointly solved price,

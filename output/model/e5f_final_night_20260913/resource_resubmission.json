@@ -1,0 +1,65 @@
+{
+  "replaced_pending_job": 17608564,
+  "reason": "Resource-only split based on native RSS plus verified bounded cache",
+  "deadline_unix": 1789322400,
+  "manifest_sha256": "1fc5f06097f2f11fd4b6d388c785ca9f8b7165ff04a539912c33c75c6733e31e",
+  "groups": [
+    {
+      "count": 6,
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--account=torch_pr_570_general",
+        "--array=0,3%2",
+        "--cpus-per-task=1",
+        "--mem=16G",
+        "--time=10:37:06",
+        "--job-name=e5f_final_history",
+        "--output=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_refit/slurm_%A_%a.out",
+        "--error=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_refit/slurm_%A_%a.err",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_refit/final_night_array.sh"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "job": "17613033"
+    },
+    {
+      "count": 24,
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--account=torch_pr_570_general",
+        "--array=1,4%2",
+        "--cpus-per-task=1",
+        "--mem=32G",
+        "--time=10:37:06",
+        "--job-name=e5f_final_history",
+        "--output=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_refit/slurm_%A_%a.out",
+        "--error=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_refit/slurm_%A_%a.err",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_refit/final_night_array.sh"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "job": "17613034"
+    },
+    {
+      "count": 100,
+      "command": [
+        "sbatch",
+        "--parsable",
+        "--account=torch_pr_570_general",
+        "--array=2,5%2",
+        "--cpus-per-task=1",
+        "--mem=64G",
+        "--time=10:37:06",
+        "--job-name=e5f_final_history",
+        "--output=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_refit/slurm_%A_%a.out",
+        "--error=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_refit/slurm_%A_%a.err",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_refit/final_night_array.sh"
+      ],
+      "returncode": 0,
+      "stderr": "",
+      "job": "17613035"
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "runroot": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories",
+  "horizon_hours": 12,
+  "max_workers": 6,
+  "memory": "32G",
+  "source_pins": {
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source/collect_e5f_final_night.py": "0b9c85bc89b790cbe8209974589776a4159efc687b9ea85f59be24c99da84a72",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source/e5f_closed_finite_boundary.py": "8abc8829a7f4a3497c9b73e0392d55bdf631e8f4b7ee75bffbdb307cd6a4708a",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source/e5f_rebated_initial_bridge.py": "fd084a8b605e29b515a1c429561e8a3d56cb86619d629b41faab58b4a30d80a5",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source/e5f_rebated_surprises.py": "540f14170a1e1587eb554789134989393167b31253355356b8c19162454afc97",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source/e5f_successive_surprises.py": "cbfbbe7dafeee3b034570ce161eba9828cb418d8052abacc84e6005a0d8fdc68",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source/prepare_e5f_final_night_manifest.py": "5e2d44c64b764fb710fc24abe57be83910e457e232adde157dc876bea14d2bc5",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source/run_e5f_final_rebated_history.py": "854b3efebff09eab54c353e357d764d206b3d8cb1a78904a315f45203377a7f8",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source/run_e5f_successive_surprises_overnight.py": "0661bad716037b59673b5fde8088875ea4d8d872d1c9ca269cbf80d9efabe2be",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source/submit_e5f_final_night.py": "593289dba49bc7a83aa2674454b497b340a9d8bda5296032ee28ce812f684b32",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source/test_e5f_closed_finite_boundary.py": "310809e1550e4a2f1d708c29d158222d7f43ab0344a101d3d3ba73029532f74a",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source/test_e5f_rebated_surprises.py": "80551cce9c0827ae80f933638dd2131ccc8245dc90552c49d4bc70b76c371f0e",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source/test_run_e5f_final_rebated_history.py": "037314bf08acdfadc0e82d75d679e6191db7845ef724c29b4146d8f675f63b41",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_plan.json": "0f054cb8e60c99f4677a80b264d10cb0589bdc09ede3f8419128386a9451b95f",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/kernel_equivalence.json": "9f658857f0c35563a07a88aabdbb59f233a4b23792eb05629f5aa85bb34d342c",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/night_surprises_20260912/empirical_blocks.csv": "8945aa2427e26157e2e01b44b327e374daae5078daa458727f025938569a2f74",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_manifest.json": "7d52b8fedf3b131a9a6c2cfac80b4a70d8017acec9c6dc08a5070ebaaa4743a1"
+  },
+  "stages": [
+    {
+      "name": "A0_6",
+      "seconds": 43200,
+      "cpus": 1,
+      "command": [
+        "python",
+        "-B",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source/run_e5f_final_rebated_history.py",
+        "--manifest",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_manifest.json",
+        "--case",
+        "A0",
+        "--count",
+        "6",
+        "--output",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories/A0_6",
+        "--seconds",
+        "42600"
+      ]
+    },
+    {
+      "name": "A0_24",
+      "seconds": 43200,
+      "cpus": 1,
+      "command": [
+        "python",
+        "-B",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source/run_e5f_final_rebated_history.py",
+        "--manifest",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_manifest.json",
+        "--case",
+        "A0",
+        "--count",
+        "24",
+        "--output",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories/A0_24",
+        "--seconds",
+        "42600"
+      ]
+    },
+    {
+      "name": "A0_100",
+      "seconds": 43200,
+      "cpus": 1,
+      "command": [
+        "python",
+        "-B",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source/run_e5f_final_rebated_history.py",
+        "--manifest",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_manifest.json",
+        "--case",
+        "A0",
+        "--count",
+        "100",
+        "--output",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories/A0_100",
+        "--seconds",
+        "42600"
+      ]
+    },
+    {
+      "name": "Aplus_6",
+      "seconds": 43200,
+      "cpus": 1,
+      "command": [
+        "python",
+        "-B",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source/run_e5f_final_rebated_history.py",
+        "--manifest",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_manifest.json",
+        "--case",
+        "A+",
+        "--count",
+        "6",
+        "--output",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories/Aplus_6",
+        "--seconds",
+        "42600"
+      ]
+    },
+    {
+      "name": "Aplus_24",
+      "seconds": 43200,
+      "cpus": 1,
+      "command": [
+        "python",
+        "-B",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source/run_e5f_final_rebated_history.py",
+        "--manifest",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_manifest.json",
+        "--case",
+        "A+",
+        "--count",
+        "24",
+        "--output",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories/Aplus_24",
+        "--seconds",
+        "42600"
+      ]
+    },
+    {
+      "name": "Aplus_100",
+      "seconds": 43200,
+      "cpus": 1,
+      "command": [
+        "python",
+        "-B",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source/run_e5f_final_rebated_history.py",
+        "--manifest",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_manifest.json",
+        "--case",
+        "A+",
+        "--count",
+        "100",
+        "--output",
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories/Aplus_100",
+        "--seconds",
+        "42600"
+      ]
+    }
+  ],
+  "environment": {
+    "PYTHONPATH": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source:/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/code/model/tools:/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/code/model",
+    "NUMBA_CACHE_DIR": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/output/cache/numba"
+  }
+}
