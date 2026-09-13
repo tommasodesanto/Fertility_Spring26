@@ -126,8 +126,15 @@ def initial_coordinate_seed(manifest,case,count,default):
         raise ValueError('Initial coordinate seed JSON hash mismatch')
     seed=json.loads(seed_path.read_text())
     fields={'case','count','start_year','coordinates','label','source_root_receipt','selection'}
-    if not isinstance(seed,dict) or set(seed)!=fields or seed['label']!='numerical_guess_only':
+    extension_fields={'source_count','rule'}
+    if not isinstance(seed,dict) or not fields.issubset(seed) or seed['label']!='numerical_guess_only':
         raise ValueError('Initial coordinate seed JSON schema mismatch')
+    extension=set(seed)-fields
+    if extension and extension != extension_fields:
+        raise ValueError('Initial coordinate seed JSON schema mismatch')
+    extended=bool(extension)
+    if extended and (seed['source_count']!=24 or seed['rule']!='hold_last' or count!=100):
+        raise ValueError('Initial coordinate seed extension requires source_count 24, hold_last, and target count 100')
     if seed['case']!=case or seed['count']!=count or seed['start_year']!=2007:
         raise ValueError('Initial coordinate seed track mismatch')
     origin=seed['source_root_receipt']
@@ -137,7 +144,8 @@ def initial_coordinate_seed(manifest,case,count,default):
     if not root_path.is_absolute() or sha(root_path)!=origin['sha256']:
         raise ValueError('Seed source root receipt hash mismatch')
     root=json.loads(root_path.read_text())
-    if root.get('case')!=case or root.get('count')!=count or root.get('start_year')!=2007:
+    source_count=seed['source_count'] if extended else count
+    if root.get('case')!=case or root.get('count')!=source_count or root.get('start_year')!=2007:
         raise ValueError('Seed source root receipt track mismatch')
     selection=seed['selection']
     if selection not in ('final','best'):
@@ -145,7 +153,9 @@ def initial_coordinate_seed(manifest,case,count,default):
     selected=root.get(selection)
     if not isinstance(selected,dict) or selected.get('mapping_valid') is not True:
         raise ValueError('Selected seed root mapping is not valid')
-    prices=np.asarray(selected.get('prices'),dtype=float);unpack_coordinates(prices,count)
+    prices=np.asarray(selected.get('prices'),dtype=float);source_prices=unpack_coordinates(prices,source_count)
+    if extended:
+        prices=np.concatenate([np.pad(block,(0,count-source_count),'edge') for block in source_prices])
     coordinates=np.asarray(seed['coordinates'],dtype=float);unpack_coordinates(coordinates,count)
     if not np.array_equal(coordinates,prices):
         raise ValueError('Seed coordinates do not exactly match selected root prices')
@@ -153,6 +163,8 @@ def initial_coordinate_seed(manifest,case,count,default):
         seed_origin=dict(path=str(seed_path),sha256=entry['sha256'],
             source_root_receipt=dict(path=str(root_path),sha256=origin['sha256'])),
         selected_coordinates=coordinates.tolist(),coordinates_changed=not np.array_equal(default,coordinates))
+    if extended:
+        receipt['seed_origin'].update(source_count=source_count,rule='hold_last')
     return coordinates.copy(),receipt
 
 

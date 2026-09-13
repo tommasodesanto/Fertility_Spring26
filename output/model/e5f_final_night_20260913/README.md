@@ -1,6 +1,6 @@
 # Authorized final-night work
 
-Latest evidence: September 13, 11:22 UTC. Fixed deadline: 18:00 UTC.
+Latest evidence: September 13, 11:47 UTC. Fixed deadline: 18:00 UTC.
 The cluster jobs and collector continue independently of the laptop. Local idle
 sleep prevention lasts until the deadline. Latest account check: 52% weekly
 remaining; retain the author's 20% floor.
@@ -34,13 +34,39 @@ records the selected forecasts and their native root hashes.
 | 17661737 | A0/A+, 6 periods, pinned numerical price starts | Fitting subsequent surprises |
 | 17663940 | A0/A+, 24 periods, ordinary starts | Submitted by verified handoff |
 | 17663986 | A0/A+, 100 periods, 48 GiB | Pending in small high-memory pool |
-| 17676958 | A0/A+, 100 periods, 32 GiB / 12-GiB cache | Running in ordinary CPU pool; native memory check pending |
+| 17676958 | A0/A+, 100 periods, 32 GiB / 12-GiB cache | First flat mapping valid; nonconstant mapping computing |
+| 17680316 | A0/A+, 100 periods, extended24-period price guesses | Running; pinned input preflight passed |
 | 17664449 | A0/A+, 24 periods, pinned numerical price starts | Submitted |
 | 17607147 | Five-minute receipt collector | Running |
 
 Handoff 17658318 completed after verifying both six-period first-window gates.
 The superseded old-source arrays 17613033, 17613034 and 17632922 were cancelled;
-all their outputs remain. No seeded 100-period duplicate was submitted.
+all their outputs remain. The separately frozen extended 100-period starts import
+only numerical prices, pensions and rebates; no household state or Jacobian.
+
+The 100-period peak RSS was about16.7 GiB at 11:45 UTC, with current heartbeats.
+The first nonconstant mapping has not finished, so full memory/runtime feasibility
+is still pending. The extended guesses preserve all 25 coordinates of each saved
+24-period block and repeat its own final value 76 times to obtain 101 coordinates.
+Fifteen driver tests and the exact pinned input preflight pass; the actual 100-date
+forecast is the next gate. Provenance: `extended_history_preparation.json` and
+`extended_history_submission.json`; reproducible preparation:
+`prepare_extended_history.py`. The model, empirical objective, all gates and 18 UTC
+deadline are unchanged.
+
+Additional readout collectors 17680417/17680418 cover the two new100-period pairs;
+their preflights returned PENDING. Receipts are in `readout_verification/`; their
+launch script is `prepare_long_readout_collectors.py`. They run only the strict
+saved-state observer once all four historical windows pass. The full 13-row 2023
+table can then be built locally with:
+
+```sh
+python3 code/model/tools/build_e5f_final_history_validation.py --model /absolute/readout/model_2023.json --out /absolute/output/validation
+```
+
+The adapter requires the matching native PASS verification, preserves empirical
+source hashes/vintages, and labels decision 2023 fertility flows as 2024–2027.
+All five adapter tests pass; final dated observations remain pending.
 
 No complete four-shock history, horizon certificate or completed policy is claimed.
 The fiscal and mass problems have verified numerical repairs; the economic fit

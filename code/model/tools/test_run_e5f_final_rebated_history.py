@@ -125,6 +125,36 @@ class DriverTests(unittest.TestCase):
             stale['file_sha256'][str(seed_path)]='0'*64
             with self.assertRaises(ValueError):driver.initial_coordinate_seed(stale,'A0',6,default)
 
+    def test_initial_coordinate_seed_can_hold_each_source_block_tail(self):
+        default=np.full(303,.5)
+        with tempfile.TemporaryDirectory() as d:
+            d=Path(d);root_path=d/'root_receipt.json';seed_path=d/'seed.json'
+            source=np.arange(1.,76.)
+            expected=np.concatenate([np.pad(block,(0,76),'edge')
+                for block in source.reshape(3,25)])
+            def write_seed(*,root_count=24,seed_case='A0',coordinates=expected):
+                driver.save(root_path,dict(case='A0',count=root_count,start_year=2007,
+                    final=dict(prices=source.tolist(),mapping_valid=True),
+                    best=dict(prices=source.tolist(),mapping_valid=True)))
+                driver.save(seed_path,dict(case=seed_case,count=100,start_year=2007,
+                    coordinates=np.asarray(coordinates).tolist(),label='numerical_guess_only',
+                    source_root_receipt=dict(path=str(root_path),sha256=driver.sha(root_path)),
+                    selection='final',source_count=24,rule='hold_last'))
+                return dict(initial_coordinate_seeds={'A0_100':dict(
+                    path=str(seed_path),sha256=driver.sha(seed_path))},
+                    file_sha256={str(seed_path):driver.sha(seed_path)})
+            got,receipt=driver.initial_coordinate_seed(write_seed(),'A0',100,default)
+            np.testing.assert_array_equal(got,expected)
+            self.assertEqual(receipt['seed_origin']['source_count'],24)
+            self.assertEqual(receipt['seed_origin']['rule'],'hold_last')
+            with self.assertRaises(ValueError):driver.initial_coordinate_seed(
+                write_seed(root_count=100),'A0',100,default)
+            with self.assertRaises(ValueError):driver.initial_coordinate_seed(
+                write_seed(seed_case='A+'),'A0',100,default)
+            corrupt=expected.copy();corrupt[25+24]=999.
+            with self.assertRaises(ValueError):driver.initial_coordinate_seed(
+                write_seed(coordinates=corrupt),'A0',100,default)
+
     def test_reuse_requires_a_finite_verified_same_width_root(self):
         matrix=np.arange(21*21,dtype=float).reshape(21,21)
         receipt=dict(finite_horizon_market_fiscal_converged=True,final_jacobian=matrix)

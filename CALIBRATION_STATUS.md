@@ -1,5 +1,30 @@
 # Calibration Status
 
+**September 13, 11:47 UTC — additional long-run starts and automatic readouts.**
+The 32-GiB 100-period array 17676958 has passed its first flat-price mapping. Its
+first nonconstant mapping is still computing, with fresh heartbeats and about
+16.7 GiB peak resident memory; full 100-period memory/runtime feasibility is not
+yet certified. Keep the pending 48-GiB array 17663986 until that check completes.
+New array 17680316 is running two independent 100-period starts obtained by
+extending each 25-coordinate price/pension/rebate block of the saved 24-period
+guess with its own final value. This imports no household state or Jacobian.
+The helper is separately frozen as `history_source_extended_seed_v1`; the driver
+checks both the source-receipt hash and the exact blockwise extension. All 15
+driver tests and the actual pinned input preflight pass. Its first native
+forecast remains pending; this is a numerical starting-value experiment only.
+
+Readout collectors 17680417 and 17680418 now cover the new flat/extended 100-period
+pairs, in addition to 17675550/17675552 for ordinary and seeded short histories.
+They wait for all four historical windows and the retained finite/exact gates.
+The six-period cases are fitting the third surprise; the 24-period cases are
+still solving their first forecast. No new numerical failure appeared in the
+latest check. Full 2023 table preparation is ready in
+`code/model/tools/build_e5f_final_history_validation.py`, using the unchanged 13
+moment families, explicit data vintages, native-readout verification and a
+2024–2027 label for the decision 2023 fertility flow. Five adapter tests pass;
+no final 2023 model table is claimed before a complete history exists.
+Deadline 18 UTC and the two-hour policy reserve remain unchanged.
+
 **September 13, 11:22 UTC — second window fitted; 100-period jobs running.**
 Both short-horizon variants now accept the 2011 decision window (2012–2015 data):
 A0 model 1.861042 versus 1.861000, A+ model 1.861231 versus 1.861000, using the
