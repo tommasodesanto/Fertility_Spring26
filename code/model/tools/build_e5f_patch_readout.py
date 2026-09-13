@@ -12,11 +12,43 @@ BASE=ROOT/'output/model/e5f_matched_pf_20260909a/current_candidate_transition/ov
 BLUE='#1f5fa6';RED='#c73e3a'
 def read(p):return json.loads(Path(p).read_text())
 def csvread(p):return list(csv.DictReader(Path(p).open()))
+def sequence_fertility(base, sequence_base):
+    """Show the carried history separately from the stationary-start patch."""
+    source=sequence_base/'source';out=sequence_base/'figures';out.mkdir(parents=True,exist_ok=True)
+    prefix=read(source/'realized_fit.json');trial=read(source/'final_window_trial_00.json')
+    receipt=read(source/'root_receipt.json');initial=read(base/'source/initial.json')
+    assert len(prefix)==3 and [x['year'] for x in prefix]==[2007,2011,2015]
+    assert receipt['finite_horizon_market_fiscal_converged'] and receipt['start_year']==trial['year']==2019
+    assert receipt['psi']==trial['psi']
+    rows=prefix+[trial];ends=[2007]+[x['year']+4 for x in rows]
+    model=[initial['fertility']['period_tfr_topcode_adjusted']]+[x['model'] for x in rows]
+    data=[x['data'] for x in rows]
+    plt.rcParams.update({'font.size':11,'axes.spines.top':False,'axes.spines.right':False,'axes.titlesize':12,'legend.fontsize':10})
+    fig,ax=plt.subplots(figsize=(9,4.8))
+    ax.plot(ends,model,'o-',color=BLUE,label='Model: successive unexpected shocks')
+    ax.plot(ends[1:],data,'s--',color=RED,label='Data')
+    ax.annotate(f"Data {data[-1]:.4f}\nModel {model[-1]:.4f}",xy=(2023,model[-1]),xytext=(2018.7,1.90),
+        arrowprops=dict(arrowstyle='-',color='.5'),fontsize=10)
+    ax.set(xticks=ends,xlabel='End of four-year fertility window',ylabel='Period fertility',ylim=(1.45,2.2),
+        title='Current historical fit — property tax is not rebated')
+    ax.legend(frameon=False,loc='lower left');ax.grid(alpha=.16)
+    fig.text(.5,.01,'Actual household history carried forward; six-date forecasts. Final fertility target and horizon checks remain open.',ha='center',fontsize=8.5)
+    fig.tight_layout(rect=(0,.055,1,1))
+    for ext in ('png','pdf'):fig.savefig(out/f'historical_fertility.{ext}',dpi=150,bbox_inches='tight')
+    plt.close(fig)
+    (out/'figure_verification.json').write_text(json.dumps(dict(years=ends,model=model,data=data,
+        root_receipt_sha256=hashlib.sha256((source/'root_receipt.json').read_bytes()).hexdigest(),
+        initial_checkpoint_sha256=initial['checkpoint_sha256'],property_tax_rebated=False,
+        horizon_verified=False,final_window_fit_accepted=False),indent=2)+'\n')
+    print(str(out/'historical_fertility.png'))
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--base',type=Path,default=BASE,help='Patch packet root (default: frozen patch_readout).')
     ap.add_argument('--pdf',type=Path,default=None,help='Combined review PDF destination.')
+    ap.add_argument('--sequence-base',type=Path,help='Opt-in carried-history fertility readout; leaves the patch packet unchanged.')
     args=ap.parse_args()
+    if args.sequence_base is not None:
+        sequence_fertility(args.base,args.sequence_base);return
     base=args.base; source=base/'source';data=base/'data';out=base/'figures';out.mkdir(parents=True,exist_ok=True)
     path=csvread(source/'expected_transition.csv');fert=read(source/'fertility.json');static=read(source/'stationary_history.json');initial=read(source/'initial.json')
     r=next(r for r in path if int(r['calendar_year'])==2023)

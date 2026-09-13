@@ -1,5 +1,44 @@
 # Calibration Status
 
+**September 12, 22:48 EDT — author stops no-rebate work; equal-rebate baseline required.**
+Tommaso explicitly requested cancellation after confirming the historical baseline
+did not rebate property-tax revenue. Jobs17498929,17553016,17553017,17559194 are
+all confirmed CANCELLED; no replacement numerical run was launched. Existing
+results remain preserved and diagnostic. Intended baseline now returns all
+property-tax revenue as an equal household transfer, with its budget separate
+from PAYGO pensions. This must be implemented consistently in the initial
+equilibrium, each surprise forecast and the terminal equilibrium before new
+baseline/policy claims. The completed1%-tax equal-rebate stationary case is useful
+conditional evidence, not a recalibrated historical baseline.
+
+At the author's request, the recovered no-rebate fertility figure was sent to
+the September14slides task for provisional use. It shows the three fitted windows
+and the final candidate1.633313 versus1.64575; both fiscal regime and failed
+horizon/final-fit status are labeled. The established plotting driver now has
+an opt-in --sequence-base mode; the prior patch graph packet remains intact.
+
+Coven et al.'s older local reference text, section3.6, specifies equal lump-sum
+rebates of all property-tax revenue. The August1,2026version differs: equation29
+scales the property-tax transfer by public-goods valuation phi; baseline and
+counterfactual transfers remain endogenous (section4.4). Do not describe the
+latest version as an unqualified full cash rebate. Primary source:
+https://humcap.uchicago.edu/RePEc/hka/wpaper/Coven_Golder_Gupta_etal_2026_property-tax-housing-allocation.pdf
+The earlier September1comparison note says E5f rebated revenue in that prior
+policy exercise; that statement must not be carried over to these September12
+historical runs.
+
+**September 12, 22:43 EDT — new final-window number recovered and reproduced.**
+Job `17559194` recovered the saved 2019 forecast: period fertility1.6333131251180577
+versus target1.64575, gap−0.01243687488194234 (−0.7557%), at preference
+0.11155593170200227. All finite housing, PAYGO, dated household and exact replay
+gates passed; final reproduction discrepancy is exactly zero. The fertility gap
+exceeds the0.005 acceptance tolerance, so this candidate is not carried as a
+fitted final window. The existing controller continues with an upward preference
+proposal. The first three fitted windows and inherited2019 state remain intact.
+Terminal-distance still fails; no horizon certificate or transition policy.
+Local complete four-window table and native receipts:
+`output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/recovered_sequence/README.md`.
+
 **September 12, 22:32 EDT — recover the saved final-window mapping.**
 Job `17559194` was submitted on cpu_short (1 CPU, 8GB; one-hour controller,
 70-minute scheduler cap). It restarts from the same three fitted windows and
