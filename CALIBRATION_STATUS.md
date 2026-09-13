@@ -1,5 +1,22 @@
 # Calibration Status
 
+**September 13, 20:18 UTC — bounded native sequence-space check passed startup.**
+Retry job17703357 is RUNNING on cs612 and its started.json confirms that the
+frozen runtime loaded and source/input pins passed. Jobs17703005 and17703266
+failed before any native mapping (output-directory creation, then premature
+module import). The author asked to retry; both repairs were reviewed before
+the new immutable submission. This remains the same two-period, six-mapping
+test, one CPU,24 GiB,ten-minute Slurm limit; no scientific budget expansion.
+The driver now saves startup and per-mapping progress plus stationary-state
+and exact-replay distribution/queue gaps. Lead compilation and four existing
+prototype interface tests pass. No native numerical result is available yet.
+Remote: `/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/e5f_sequence_space_native_20260913_retry2/output`.
+Source: `code/cluster/check_e5f_sequence_space_native.py`.
+Collect under `output/model/e5f_sequence_space_prototype_20260913/native_smoke/retry2/`.
+The official sequence_jacobian package is absent; this test checks native
+residual evaluation and a central numerical derivative, not package integration
+or fast-news acceleration. The existing monitor should collect and review it.
+
 **September 13, 19:57 UTC — author-approved bounded Terra native SSJ task active.**
 The author explicitly approved proceeding with the 15-minute Terra task after
 being informed that weekly remaining allowance is 12%, below the earlier 20%
