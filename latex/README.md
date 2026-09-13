@@ -7,6 +7,8 @@ curves and existing endpoint coordinates are unchanged. The local wrapper
 `code/model/tools/build_september_schematic_figures.py` adds the intermediate
 point and writes PDF/PNG versions; the shared canonical builder is untouched.
 Tommaso approved this four-point presentation after reviewing the diagrams.
+The separate diagram-introduction frame is folded into a one-sentence setup
+above the initial graph. Equal-height minipages align the three graph frames.
 
 Active documents:
 
