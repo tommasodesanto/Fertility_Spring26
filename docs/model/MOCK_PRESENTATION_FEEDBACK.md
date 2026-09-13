@@ -70,13 +70,17 @@ Is housing supply instantaneous? Confirm.
 
 Clarify the user-cost equation very deeply, for Tommaso as well as the audience.
 
-**Status:** open; concise first-pass review requested. No changes authorized.
+**Status:** conceptual explanation received in the dedicated clarification task; author will review exposition tomorrow. The code imposes rental-asset pricing, rationalized by an unconstrained competitive investor earning the bond return after maintenance, tax and anticipated appreciation. No explicit investor portfolio/balance-sheet problem is solved. Household frictions can coexist only under that investor interpretation. No equation or model change authorized.
 
 ### M11 — Gumbel shocks, expectations, and constraints
 
 If a household is constrained, it still receives the taste shock: is that appropriate? Clarify the Gumbel shocks and expectations.
 
-**Status:** open; concise first-pass review requested. No changes authorized.
+**Status:** equation/implementation sequence checked by the dedicated clarification task; no substantive mismatch found and no shock-related pre-run model change indicated. Source inspection only, not a new occupied-state numerical audit.
+
+The active architecture is sequential: observe fertility tastes, choose an attempt, realize birth success, observe housing tastes, then choose feasible housing/saving. The housing kernel applies down-payment/borrowing feasibility before softmax and the log-sum expected maximum. Fertility values use the expected housing values separately for successful and failed conception, matching the displayed expectation of the housing maximum. Historical joint/nested experiments are not the active specification.
+
+For tomorrow's exposition, make the feasible menu explicit and describe the shocks as mean-zero Type-I extreme value. The implemented expected maximum is the unadjusted scale times log-sum-exp; the option value of a larger feasible menu is retained. Subtracting log menu size or silently switching to zero-location Gumbels would change values/incentives. Sources: pinned optimized `kernels.py:715–763`, `solver.py:2668–2820`; slides household equations at `latex/september_14_presentation.tex:323` and `:353`. No edits to those equations or numerical routines.
 
 ### M12 — Household-problem slides
 
@@ -88,7 +92,7 @@ The slides are messy, the notation is not transparent, and it is unclear whether
 
 Very important: how do survival s_a and the number of children interact? If parents die, do their children mature? If so, is market clearing/population accounting consistent?
 
-**Status:** substantive accounting gap flagged after authorized read-only investigation. No model or slide changes authorized for this issue.
+**Status:** substantive accounting gap quantified. Subsequent author decision in the quantitative task is to plan both the retained demographic branch and a joint-death/surviving-maturation branch, preferring the latter if verified. Both baselines must rebate property taxes. See the authoritative `docs/model/e5f_two_closure_overnight_plan.md`; this slides task does not implement or launch model work. The new branch's unit conversion/formation rule and reproduction normalization remain explicit pre-search decisions. Earlier proposal discussions below are preserved as history.
 
 **Measured size, initial stationary state:** using checkpoint `120ffc45...` (the recovered no-rebate history's initial equilibrium), parent-household exit removes 0.005972242 literal dependents per unit household mass every four years: **1.19965% of current dependents**, or **5.18089% of births**. All loss is at parent ages 66+, and 48.9851% comes from the forced final-age exit. These are flows, not a measured unassigned-child stock; the 2023 measurement is reported below. Full age table, source hash, reproduction script and checks: `output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/child_accounting/README.md`.
 
