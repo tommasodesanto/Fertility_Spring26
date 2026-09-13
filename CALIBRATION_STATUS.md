@@ -1,5 +1,17 @@
 # Calibration Status
 
+**September 13, 11:08 UTC — readout pipeline verified and automated.**
+Native saved-state readout smoke 17675207 passed under both corrected helper
+versions. The observed 2007 aggregates match the accepted forecast to below
+1.8e-15; fertility-stock, housing/wealth and recent-parent readers also run.
+No new solve was performed. This does not yet verify the final dated 2019-to-2023
+birth-room calculation. Collectors 17675550 and 17675552 now await complete
+four-window histories, then run the strict native final-window reader with
+source pins and independent failure handling. Five collection-contract tests pass.
+The fixed-preference A0/A+ first-vintage comparison is also verified from saved
+outputs; it isolates the migration switch at common preference and initial state.
+It is a diagnostic, not the full fitted history or a property-tax exercise.
+
 **September 13, 10:40 UTC — corrected initial equilibrium verified; all three horizons submitted.**
 Job 17655042 passed two exact numerical reproductions, including stationary and
 one-step nesting, household accounting, housing, PAYGO and equal property-tax

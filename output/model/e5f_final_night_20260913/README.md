@@ -103,6 +103,16 @@ normalization, optional Jacobian reuse and fiscal-polish controller. Numerical
 price seeding reuses only pinned root coordinates; it never reuses old-source
 household distributions or Jacobians. Fourteen focused seed/driver tests pass.
 
+## Fixed-preference migration diagnostic
+
+`fixed_preference_migration_comparison/` compares the accepted six-period A0 and
+A+ forecasts at the same preference and identical initial household checkpoint.
+All dated quantity differences are saved, with root/source pins. The first-window
+birth flow is 0.271% higher and house prices 0.269% higher when the supplied future
+migration path is retained. This satisfies the plan's bounded migration-switch
+check. It is a controlled first-vintage diagnostic, not the fitted four-surprise
+history or a property-tax comparison; no extra solve was needed.
+
 ## Readout and traceability
 
 `verified_initial_readout.pdf` contains the three-page assessment, complete
@@ -114,6 +124,16 @@ reviewed. Regenerate without a model solve using the bundled Python runtime:
 python code/model/tools/build_e5f_final_night_report.py --packet output/model/e5f_final_night_20260913 --output output/model/e5f_final_night_20260913/verified_initial_readout.pdf --as-of "13 September 2026, 10:45 UTC"
 ```
 
+
+Readout smoke 17675207 passed both actual frozen runtimes and the saved 2007
+snapshot observers, with aggregate discrepancies below 1.8e-15 and no solve.
+This verifies the cross-sectional readers, not the still-pending dated 2019-to-2023
+birth-room observation. Automatic collectors 17675550 (ordinary starts) and
+17675552 (price-seeded starts) now watch the ten explicit cases. They require
+four accepted fit rows, exact source pins and the selected final native forecast,
+and retain failures without rerunning unchanged artifacts. Proofs and commands
+are in `readout_verification/`. Five collection-contract tests pass. The running
+collector is `BATCH/readout_source/collect_e5f_corrected_history_outputs.py`.
 
 `collect_e5f_final_history_readout.py` prepares the complete2023 observations
 from accepted native2019/2023 snapshots without solving again. Compilation and
