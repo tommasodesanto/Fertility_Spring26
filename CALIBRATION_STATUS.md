@@ -1,5 +1,15 @@
 # Calibration Status
 
+**September13 — introductory slide simplified at the author's request.**
+The September14 deck replaces the housing/fertility comparison with two historical
+data panels: period fertility and children ever born at ages40–44. The frame
+Fertility in the United States precedes Calibration and Historical Transition
+and states that2007 is approximated by an initial steady state. The figures do
+not establish exact stationarity. Housing diagnostics and earlier model overlays
+remain saved separately; no numerical result or calibration target changed.
+Builder: `code/model/tools/build_e5f_fertility_introduction.py`; source data,
+PNG/PDF and verification receipt are in the recovered_sequence packet.
+
 **September13 — simplified fertility comparison requested and delivered.**
 The current two-series view is `fertility_data_model.png/pdf` under
 `output/model/e5f_original_queue_20260913a/terminal_restart_v1/fertility_replay_iter3/output/`.

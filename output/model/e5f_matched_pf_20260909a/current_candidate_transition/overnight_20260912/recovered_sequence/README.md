@@ -113,6 +113,19 @@ housing behavior. Vacancy is outside the model and this empirical stock measure.
 
 ### Housing and population comparison, September13
 
+**Presentation simplification, September13:** the author subsequently removed
+housing from this introductory slide. The deck now uses
+`figures/fertility_introduction.pdf`, two historical-data panels (annual period
+fertility1990–2023 and CPS children ever born ages40–44 through2024), immediately
+before Calibration and Historical Transition. It states that2007 is approximated
+by an initial steady state, rather than claiming the graphs establish stationarity.
+The housing and model-comparison packets below remain research diagnostics.
+Reproduce the introductory figure with
+`python3 code/model/tools/build_e5f_fertility_introduction.py`.
+The saved WDI response and existing CPS history are its pinned inputs; the figure
+receipt verifies both plotted arrays exactly. CPS2022/2024 counts are capped atfive.
+Both deck PDF copies are updated from a twice-compiled, visually inspected build.
+
 `figures/housing_population_comparison.pdf` (and PNG/CSV) provides a supplemental
 historical comparison using the same national ACS housing households and all
 their resident person records. It leaves the presentation deck unchanged.
