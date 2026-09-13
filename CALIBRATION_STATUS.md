@@ -1,5 +1,33 @@
 # Calibration Status
 
+**September 13, 20:24 UTC — corrected fertility graph and bounded native derivative check delivered.**
+Replay17702691 completed: all100 saved iteration3 rows reproduced exactly,
+and native age-specific fertility rates were independently reconstructed.
+The visually inspected six-panel PNG/PDF is under
+`output/model/e5f_original_queue_20260913a/terminal_restart_v1/fertility_replay_iter3/output/irf_fertility`.
+This is the permanent38.073% preference decline at once, not a historical fit.
+Period fertility drops2.10000 to1.6818645 on impact and reaches2.0827667 in
+the final four-year period, versus the verified stationary2.10. At year400,
+household mass0.3877547 remains10.9601% above stationary0.3494543. Full
+distribution relative L1 gap is0.255773 and adjusted queue gap0.0994702.
+These are distances of an UNCONVERGED iteration3, not acceptance of the path.
+The main job17699174 has now completed iteration5: scaled residual3.170864,
+housing1.70615%, PAYGO0.123718%, rebate1.58543%; still above the unchanged
+gates. Its progress is saved separately as terminal_restart_v1/progress_iter5.json.
+
+Terra's corrected native check17703357 completed all six mappings in117.57s.
+Lead independently reconstructed every residual from the native rows exactly.
+Baseline scaled residual7.67683e-5 passes2e-4; exact residual/state/queue
+replay gaps are zero; no-shock distribution drift5.05e-13 and adjusted queue
+drift3.92e-7 pass the existing checks. All native accounting/feasibility gates
+pass. Halving the central-difference step changes the directional derivative
+by0.15784% in relative sup norm, at most0.30067% on substantial components.
+This checks only one price direction at two dates. Official toolkit integration,
+a full Jacobian and a solver speedup remain untested. No further job launched.
+Evidence: `output/model/e5f_sequence_space_prototype_20260913/native_smoke/retry2/`.
+Both completed jobs are collected and reviewed; the monitor should not announce
+them again unless a new substantive issue appears. The four main jobs continue.
+
 **September 13, 20:18 UTC — bounded native sequence-space check passed startup.**
 Retry job17703357 is RUNNING on cs612 and its started.json confirms that the
 frozen runtime loaded and source/input pins passed. Jobs17703005 and17703266

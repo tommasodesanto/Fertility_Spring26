@@ -1,5 +1,13 @@
 # Native fertility diagnostics for the saved 100-period path
 
+**Completed and collected September13 at20:24UTC.** All100 iteration3 rows
+reproduce exactly. `output/lead_verification.json` records independent
+age-specific fertility reconstruction and visual inspection. Deliverables:
+`output/irf_fertility.png` and `.pdf`; full native data and terminal gaps are
+alongside them. Fertility2.10 ->1.68186 on impact ->2.08277 at the final period;
+year400 household mass0.387755 versus stationary0.349454. The path remains
+unconverged; diagnostic replay success does not change its equilibrium status.
+
 Job 17702691 is confirmed running on Torch (cs609), September 13 at 19:44 UTC.
 It performs one exact replay of iteration 3, not a price-path search. Runtime
 estimate is 28.3 minutes for one native mapping, with a 60-minute Slurm cap

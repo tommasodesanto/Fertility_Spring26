@@ -1,5 +1,14 @@
 # Original household-queue afternoon experiments
 
+**20:24 UTC — corrected graph collected and visually verified.**
+Replay17702691 exactly reproduced all100 iteration3 rows. The requested
+native fertility-rate graph, including the pre-shock steady state, is at
+`terminal_restart_v1/fertility_replay_iter3/output/irf_fertility.png` and `.pdf`.
+Fertility drops2.10 to1.68186 on impact and rises to2.08277 by the final
+period. The carried year400 household mass0.387755 is10.96% above the
+stationary0.349454. This is an unconverged iterate. The main run has moved to
+iteration5, housing gap1.70615%; its later progress is separate from this plot.
+
 **19:44 UTC — fertility figure:** diagnostic replay job17702691 is running
 on cs609. It reproduces saved 100-period iteration3 with identical controls,
 saves native fertility rates and terminal state gaps, and automatically plots
