@@ -1,5 +1,17 @@
 # Calibration Status
 
+**September 14 — outstanding, maximum urgency: permanent earnings heterogeneity.**
+Tommaso requests reassessing and prefers removing the permanent income component
+while retaining persistent Rouwenhorst earnings shocks. No code or current-run
+change is made now. Active frozen runs have five persistent states crossed with
+three permanent types (15 income states); age-profile points are separate.
+Reconcile empirical variance/process provenance and historical fit motivation,
+then assess removal and its calibration/policy consequences before adoption.
+Double counting is a question to investigate, not an established finding.
+Full decision and validation checklist: the maximum-urgency entry in
+`docs/model/ACTIVE_DECISION_LEDGER.md`. Current results continue to include
+permanent heterogeneity until a revised specification is implemented and verified.
+
 **September 14, 03:45 UTC — numerical overview and four-shock handoff repair.**
 Announced four-shock baseline 17711519 exhausted eight mappings without finite
 convergence; best housing/PAYGO/rebate relative gaps were approximately

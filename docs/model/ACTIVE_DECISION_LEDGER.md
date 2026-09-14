@@ -7,6 +7,42 @@ that can still change the theory, quantitative interpretation, or paper-facing
 claims. `CALIBRATION_STATUS.md` remains the source for numerical results and
 reproducibility contracts.
 
+## Maximum urgency — reassess permanent earnings heterogeneity (September 14)
+
+**Author priority: highest. Status: open; reassessment requested, no immediate
+code change or new numerical run authorized by this ledger update.** Tommaso
+prefers simplifying earnings to the persistent Rouwenhorst process without
+the additional permanent component. Current results still include that
+component; removal has not been implemented or validated.
+
+The active frozen parameters combine five Rouwenhorst earnings states with
+three permanent income types, for 15 income states at each age. The five
+age-profile points are a separate deterministic object. The permanent
+log-income variance is externally measured from PSID; the persistent process
+uses literature-based parameters. Their combination is not itself evidence
+of double counting, but requires a consistent empirical justification.
+
+Close this item by:
+
+1. Reconstructing why the component was introduced and retained, including
+   the fit failures it was meant to address and the author's adoption history.
+2. Reconciling the permanent and persistent components' samples, income
+   definitions, tax treatment, variances and autocovariances; assess whether
+   the combined process counts the same heterogeneity twice.
+3. Designing a controlled comparison with the permanent component removed,
+   separating fixed-parameter effects from recalibration under the same target
+   contract. Inspect earnings and wealth dispersion, fertility, ownership,
+   housing demand and policy sensitivity; report full fit and parameter tables.
+4. Returning a clear retain/remove recommendation for author resolution.
+   A later change must propagate consistently through calibration, initial
+   distributions, terminal equilibria, transitions and policy comparisons.
+
+Historical evidence: `memory/daily/2026-07-27.md`, sections "E6b empirical
+gate" and "E6b implementation and fixed-winner diagnostic". Those tests found
+better wealth dispersion but mixed fertility/ownership effects. Source:
+`code/model/intergen_eqscale_seq_optimized/e6b_profile.py`. Keep this item open
+until the specification decision and any required validation are recorded.
+
 ## Quantitative transition: discussion deferred to September 13
 
 At Tommaso's request on September 12, discuss tomorrow the existence and
