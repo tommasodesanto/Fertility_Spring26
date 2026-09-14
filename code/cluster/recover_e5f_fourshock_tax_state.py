@@ -38,10 +38,15 @@ TOL = 2e-10
 
 def read(path): return json.loads(Path(path).read_text())
 def sha(path): return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+def json_default(value):
+    if hasattr(value, 'tolist'):
+        return value.tolist()
+    raise TypeError(f'Unsupported JSON value: {type(value).__name__}')
+
 def save(path, value):
     path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(path.suffix + '.tmp')
-    tmp.write_text(json.dumps(value, indent=2) + '\n'); tmp.replace(path)
+    tmp.write_text(json.dumps(value, indent=2, default=json_default) + '\n'); tmp.replace(path)
 
 
 def copy_if_different(source, destination):

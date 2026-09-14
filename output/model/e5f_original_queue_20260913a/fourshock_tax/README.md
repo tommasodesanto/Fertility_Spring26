@@ -1,5 +1,12 @@
 # Four-shock inherited-2023 tax comparison
 
+Update: recovery 17723529 reproduced the five native rows and saved the 2023
+snapshot, then failed while serializing NumPy arrays in `fertility.json`.
+The array/scalar serializer and atomic replacement were tested. Recovery retry
+17734560 is submitted in sibling immutable batch `fourshock_tax_20260914b`;
+it repeats the native recovery checks and then dispatches the 2% policy.
+The existing baseline transition is reused. Retry receipts are saved here.
+
 Recovery job 17723529 waits for baseline job 17711519 (`afterany`). It freezes
 a completed 104-date native baseline evaluation, preferentially the saved
 best, and replays the household problem to recover its own 2023 distribution

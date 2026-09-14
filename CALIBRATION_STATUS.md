@@ -1,5 +1,21 @@
 # Calibration Status
 
+**September 14, 03:45 UTC — numerical overview and four-shock handoff repair.**
+Announced four-shock baseline 17711519 exhausted eight mappings without finite
+convergence; best housing/PAYGO/rebate relative gaps were approximately
+0.5367%/0.0586%/0.4885%. SSJ continuation jobs 17732268 and 17732269 are RUNNING;
+their first updates have not improved that best. One-shock 2% job 17722295 and
+1% control 17722962 remain RUNNING, with best housing gaps 0.3263% and 0.4259%;
+neither meets the joint market/fiscal gates. The successive-surprise fitting
+job 17732824 remains PENDING (Priority), with no long fitted shock yet.
+
+Four-shock recovery 17723529 failed serializing NumPy arrays in the fertility
+diagnostic, after exact five-row comparison and saving the 2023 state/rows.
+The serializer now handles numerical arrays/scalars; its atomic-write check
+passes. Retry **17734560** uses immutable batch `fourshock_tax_20260914b` and
+repeats only native state recovery/verification before dispatching the 2% arm.
+No baseline path, parameter, target, fiscal closure or numerical gate changed.
+
 **September 13 night — exact-loop smoke passed; long refit dispatched.**
 Smoke 17732511 passed the fresh stationary endpoint, six-date finite equilibrium,
 changed-preference native root-loop and exact next-state checkpoint checks.
