@@ -48,6 +48,14 @@ def main() -> None:
                 elif text.get_text() == r"$A'$":
                     text.set_text(r"$C$")
             stage = Path(path).stem.rsplit("_", 1)[-1]
+            # Label replacement fertility as n-bar rather than the normalized 1.
+            if stage == "initial":
+                figure.axes[1].set_yticks([values["replacement"]], labels=[r"$\bar n$"])
+            else:
+                figure.axes[1].set_yticks(
+                    [values["impact_fertility"], values["replacement"]],
+                    labels=[r"$\widetilde n$", r"$\bar n$"],
+                )
             if stage in {"impact", "adjustment"}:
                 child_axis = figure.axes[1]
                 point_a = (values["old_price"], values["replacement"])

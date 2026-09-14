@@ -171,6 +171,10 @@ Replace “heterogeneous income” with “idiosyncratic earnings risk.”
 
 **Resolution:** On “This Paper,” replaced “Income heterogeneity, earnings risk, and bequests” with “Idiosyncratic earnings risk and bequests.” The model section still identifies permanent income groups separately.
 
+## Post-presentation issues
+
+Model and slide issues opened on September 13 are recorded in [POST_PRESENTATION_ISSUES.md](POST_PRESENTATION_ISSUES.md), items M19–M28.
+
 ## Related material
 
 - [Working presentation](../../output/pdf/september_14_presentation.pdf)

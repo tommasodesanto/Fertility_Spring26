@@ -58,6 +58,68 @@ decision; smoothness or statistical significance alone is not a criterion.
 | 2 | Reason code 3 includes expansion/better housing; code 6 includes neighborhood, schools and proximity to friends/relatives. | Check vintage-specific codes and use accurate outcome names. Revisit move gating, missing-to-zero errors and reason-response denominators. |
 | 3 | Presentation numbers, empirical contrasts and calibration mapping differ. | Reconcile 0.66/0.664, 0.797, 0.741 and 0.720; choose the intended horizon and population; regenerate the target estimate, covariance-based uncertainty, weight and provenance together before recalibration. |
 
+## Model and slide issues — September 13, 2026
+
+Items raised while editing the September 14 deck. Numbering continues the mock-feedback ledger (M01–M18 in `MOCK_PRESENTATION_FEEDBACK.md`). None is authorized for implementation by the slide task.
+
+### M19 — Tenure smoothing $\kappa_H$
+
+`tenure_choice_kappa = 0.005` is the lower search bound set on June 28, not an interior estimate. Searches returned the bound; the June sweep showed that 0.05 changes the economics materially (old-age ownership near 0.90). The only dedicated moment ever proposed was the PSID four-year-ahead ownership Brier score (0.117113, SE 0.002102); the matching simulated-history exercise was never implemented. Removed from all September 14 slides.
+
+**Decision needed:** treat as external numerical smoothing with a stated value, or implement the auxiliary prediction target and estimate it.
+
+### M20 — Parameter-table vintage
+
+Deck tables report $\psi_0 = 0.160$ and the earlier parameter vintage (e.g. $\kappa_1 = 0.279$, $\xi = 0.127$). The September 13 corrected initial packet gives $\psi_0 = 0.149$, $\kappa_1 = 0.338$, $\xi = 0.266$. Refresh all initial tables together or not at all.
+
+### M21 — Recent-parent ownership gap
+
+Removed from the Identification slide and both target tables on September 13. It remains a weighted target in the live run (13 rows; deck shows 12). If it is dropped from the calibration, name the replacement discipline for the housing block; if kept, the paper table must show it.
+
+### M22 — Owner housing grid in exposition
+
+The draft budget-constraint slide states continuous sizes $h \in [0,\bar h]$; the household-problem and state slides still write $h_{t+1} \in \{0,H_1,\dots,H_K\}$. Choose one exposition (discreteness as computational detail) and harmonize.
+
+### M23 — Equilibrium definition loose ends
+
+Sequence definition adopted September 13. Open: the set $\{V_t,g_t,G_t,N_t,P_t,r_t,T_t,\varpi_t\}$ is not named element by element; $N_t$ is first defined inside the definition after the Population and Households slide was cut; the rebate condition $T_t\int dG_t=\tau_t^p P_t\int h_{t+1}dG_t$ should read $T_t=0$ in the no-rebate baseline; $\mathcal A_t,\mathcal F_t$ defined in words only; four appendix person-accounting frames are now unlinked. Supersedes the exposition part of M14/M16.
+
+### M24 — Preferences cross-partial
+
+Slide states $\partial^2 u_t/\partial s_t\partial m_t>0$ on the utility, not on the aggregator, because $\mathcal C_{sm}$ has ambiguous sign in the implemented form (housing requirement raises it, equivalence scale lowers it). Confirm the sign at $\sigma=2$ or drop the bullet.
+
+### M25 — Identification mapping unverified
+
+Slide assigns $\xi \to$ childlessness, $\kappa_1 \to$ first-birth timing, $\kappa_C \to$ one-child families, $h_P \to$ both room moments. This is a reading of the parameter table, not a Jacobian check. Verify against the local weighted Jacobian before the paper.
+
+### M26 — Population law in slides versus code
+
+The fitted 2007–2023 history imposes observed household age masses (births/2.1 entry queue rescaled to data); the post-2023 forecast converts annual persons to heads with fixed 2023 ACS headship. The deck now says neither. Decide how much to state on the calibration slide.
+
+### M27 — Underwater-debt rollover
+
+No unsecured credit line ($\lambda_d=0$). Debt below the collateral floor arises only after a price fall or a sale with shortfall and rolls over at share $\lambda_{a+1}$ (1 before age 42, linear to 0 at 62). Removed from the deck as niche; belongs in the paper appendix.
+
+### M28 — Schematic frames overfull
+
+Initial Steady State, Impact, and Demographic Adjustment each overflow by 18pt (minipage heights). Cosmetic.
+
+### M29 — Supply elasticity source
+
+The deck cites Baum-Snow and Han (2024) for $\eta = 0.63$. Their headline is an average urban floor-space supply elasticity near 0.5; the independent quantitative audit found no primary receipt deriving 0.63. Establish the derivation or change the value/citation before the paper.
+
+### M30 — First-birth fixed cost $\xi$
+
+The author was not aware the model carries a one-time utility cost at the first birth (`first_birth_fixed_cost`, default zero, estimated at 0.127 in the deck vintage and 0.266 in the September 13 corrected initial). It exists because the first-child housing jump $h_P$ is pinned by rooms moments and childlessness needed its own lever. Decide whether to keep it as a fixed cost of parenthood, replace it with a per-period time/goods cost of children, or test whether childlessness can be matched by $h_P$ alone. Requires recalibration; not for the September 14 deck.
+
+### M31 — Earnings process documentation
+
+Correction (September 14): the live calibration layer (`code/model/intergen_eqscale_seq_optimized/local_panel.py`) builds the earnings state as a five-point Rouwenhorst discretization of an AR(1) crossed with three permanent income types; the three-point grid with persistence 0.85 in `parameters.py` is a module default that the calibration overrides. The slides say only "discretized AR(1)" and omit the permanent types. Open: (i) document the annual persistence/innovation parameters and their four-year conversion in one place with a source; (ii) verify that the PSID-based permanent-type variance and the literature-based persistent process do not double count dispersion; (iii) decide whether the three permanent types stay in the paper exposition.
+
+### M32 — Sources for the selling cost and the rental size cap
+
+The deck cites Greaney, Parkhomenko and Van Nieuwerburgh (2025) for both the 6% selling cost and the 6-room rental cap. The selling cost is a standard transaction-cost value in that literature; the rental cap is a maintained restriction whose level is contentious (earlier sensitivity work found it non-monotone and load-bearing for the ownership fit). Establish a proper empirical basis for the cap, for example the share of 6+ room units that are renter-occupied in the AHS/ACS, or reframe it as a calibrated object.
+
 ## Evidence and reproduction
 
 - Recognized original code: `/Users/tommasodesanto/Desktop/Projects/Fertility/Codes/code_per tommi_addingcontrolsandfixingthings.do`.
