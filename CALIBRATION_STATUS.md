@@ -1,5 +1,20 @@
 # Calibration Status
 
+**September 14, 07:02 UTC — big refit and four-shock policy have started.**
+Stage 0 job 17732824 is RUNNING. Its first preference candidate has a newly
+converged and verified stationary endpoint, including all 16 one-step checks;
+the first 104-date path is in progress, with no fitted stage accepted yet.
+Four-shock 2% policy job 17735075 is also RUNNING. All active driver heartbeats
+are recent. One-shock 1%/2% continuations remain RUNNING and unconverged.
+
+Announced continuation 17732269 ended with exit 124 at its authorized 16,200 s
+deadline (`controller_failure.json`: `Rescue deadline`). Its best completed
+mapping 6 improves the housing/PAYGO/rebate gaps to 0.26438%/0.01684%/0.22357%,
+with exact best-coordinate matching and passed native household checks, but
+does not clear the joint gates. No retry, new run or slide change was made.
+Compact evidence and next-wake comparison state:
+`output/model/e5f_original_queue_20260913a/long_successive_refit/overnight_monitor.json`.
+
 **September 14, 06:00 UTC — author freezes slides; overnight monitoring only.**
 Do not edit, compile or replace slide sources, figures or presentation PDFs.
 Report any major improvement for author review tomorrow before changing slides.

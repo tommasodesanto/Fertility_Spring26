@@ -1,0 +1,70 @@
+{
+  "checked_utc": "2026-09-14T07:02:19.438386+00:00",
+  "slides_frozen": true,
+  "jobs": {
+    "17732824": {
+      "state": "RUNNING",
+      "stage": 0,
+      "trial": 1,
+      "terminal_verified": true,
+      "terminal_converged": true,
+      "terminal_one_step_checks": {
+        "four_waiting_entry_vintages": true,
+        "four_waiting_raw_vintages": true,
+        "household_audit": true,
+        "housing_level": true,
+        "one_step_distribution_level_l1": true,
+        "one_step_distribution_normalized_l1": true,
+        "one_step_entry_queue": true,
+        "one_step_feasibility_projection": true,
+        "one_step_mass_accounting": true,
+        "one_step_policy_reproduction": true,
+        "one_step_population_level": true,
+        "one_step_raw_queue": true,
+        "root_equal_rebate": true,
+        "root_paygo": true,
+        "root_renewal": true,
+        "stationary_reconstruction": true
+      },
+      "psi": 0.12891531457859182,
+      "accepted_stage": false,
+      "heartbeat_age_seconds": 54.80512189865112
+    },
+    "17732269": {
+      "state": "FAILED",
+      "slurm_exit_code": "124:0",
+      "diagnostic": {
+        "source": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c_ssj_rescue_toeplitz/run",
+        "failure": {
+          "error": "Rescue deadline"
+        },
+        "best_mapping": 6,
+        "score": 0.44714270236002046,
+        "best_coordinates_match_rows": true,
+        "max_abs_relative_market_residual": 0.0026438082824836446,
+        "max_abs_scaled_pension_budget_residual": 0.00016844941428689365,
+        "max_abs_scaled_government_budget_residual": 0.002235713511800102,
+        "max_abs_mass_accounting_residual": 1.7763568394002505e-15,
+        "max_abs_policy_reproduction_max_abs": 0.0,
+        "max_abs_feasibility_frontier_projection_mass": 0.0
+      }
+    },
+    "17722962": {
+      "state": "RUNNING",
+      "best_score": 0.8163783907168953
+    },
+    "17722295": {
+      "state": "RUNNING",
+      "best_score": 0.3237706798176564
+    },
+    "17735075": {
+      "state": "RUNNING"
+    }
+  },
+  "reported_changes": [
+    "Big refit stage 0 started; first candidate terminal verified; first long path in progress, no fitted stage accepted.",
+    "Four-shock tax2 started.",
+    "Announced solver continuation reached 16200-second deadline, with improved but unconverged saved mapping."
+  ],
+  "morning_readout_at_or_after_utc": "2026-09-14T13:00:00Z"
+}
