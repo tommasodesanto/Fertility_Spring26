@@ -5,8 +5,9 @@
 The author confirmed successive surprises, each solved with a long forecast,
 on September 13. Retain the calibrated 2007 structural parameters and initial
 household distribution. Re-estimate four fertility-preference levels; the
-currently running announced sequence is a separate comparison. This document
-is the prepared specification, not a submission receipt or a launch-ready driver.
+currently running announced sequence is a separate comparison. The author
+subsequently authorized execution. Exact-loop smoke job 17732511 was submitted
+for batch `long_successive_refit_20260914a`; receipts are indexed below.
 
 At each shock date households learn the current preference level and believe
 it will remain permanent. They do not anticipate later surprises. Solve their
@@ -92,12 +93,11 @@ not merely whether the last plotted price reaches the imposed boundary.
 
 ## Readiness, cost and remaining implementation
 
-The old scalar fitter is `code/model/tools/run_e5f_successive_surprises_overnight.py`.
-It supplies the search pattern, but its old terminal/demographic interface
-must not be launched unchanged. The current original-queue terminal and
-three-block forecast adapters are the scientific source of truth. The current
-policy driver also hard-codes today's preference and 2023 source, so it needs
-an explicit fitted-state/preference interface before this chain can call it.
+The isolated driver is `code/cluster/run_e5f_long_successive_refit.py`; its
+preparer is `code/cluster/prepare_e5f_long_successive_refit.py`. It retains the
+old scalar search pattern but uses the current original-queue terminal and
+three-block forecast adapters. Its policy mode reads the final fitted
+preference and saved 2023 state directly and verifies the checkpoint hash.
 
 The measured-Jacobian/scaled-step method passed a ten-period finite equilibrium
 test (13 root mappings across two rounds); that does not certify 100 dates.
@@ -112,8 +112,19 @@ Four stages with three candidate values each would therefore be roughly
 not a measured forecast. Warm starts and parallel candidates may reduce it.
 Do not promise an overnight fit from short-horizon timings.
 
-Before submission, pin explicit total/stage/trial/round budgets using the
-first long benchmark. Proposed search cap is six trial values per date,
+Submission pins conservative caps: 30 minutes for smoke, one hour per terminal,
+ten hours per candidate, four eight-mapping rounds, 24 hours per historical
+stage, 12 hours for policy, and a seven-day absolute calendar expiry including
+queueing. These are stop limits, not completion forecasts. The first long
+candidate supplies the long-solver benchmark. The cap is six trial values per date,
 with latest-completed and best-so-far files, per-mapping plots, minute
 heartbeats and independent rejection receipts. A 30-minute period without
-checkpoint or heartbeat triggers investigation. No new refit has been submitted.
+checkpoint or heartbeat triggers investigation. Smoke dispatches stage 0 only
+after native stationary-root, changed-preference root-loop, target measurement
+and checkpoint/replay checks pass. Each fitted stage dispatches the next;
+the final one dispatches policy. Failed candidate evaluations are recorded,
+but a failed fit cannot pass its state onward. Local unit checks passed;
+compute-node validation remains pending at submission.
+
+Pinned contract and receipts:
+`output/model/e5f_original_queue_20260913a/long_successive_refit/`.

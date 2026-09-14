@@ -1,5 +1,25 @@
 # Calibration Status
 
+**September 13 night — long successive-surprise chain submitted for exact-loop smoke.**
+Author authorized execution. Job **17732511** is submitted for the isolated
+`long_successive_refit_20260914a` batch. A passed smoke automatically submits
+stage 0; subsequent stages require a converged finite forecast, fertility gap
+at most 0.005, exact first-period replay and a verified inherited checkpoint.
+Four dated levels are estimated with the 2007 structural parameters fixed.
+Forecast lengths 104/103/102/101 share the 2423 boundary; the final fitted
+baseline supplies the 100-date 2023 control for the unexpected 2% policy.
+Endpoints are re-solved at every candidate preference and at the fitted policy
+preference. No immigration, household rescaling or fiscal changes beyond the
+authorized tax reform. The source uses the verified scaled-step routine and
+measured derivative profiles as an approximate starting Jacobian. It has not
+yet established long-horizon convergence. Local tests passed (seven driver
+checks and eight numerical-helper checks); native smoke is pending.
+Caps: 30-minute smoke, 24-hour historical stages, six candidates per stage,
+ten hours per candidate/four eight-mapping rounds, 12-hour policy, seven-day
+absolute calendar expiry. Finite equilibrium, terminal distance and horizon
+adequacy remain distinct. Receipts and source index:
+`output/model/e5f_original_queue_20260913a/long_successive_refit/`.
+
 **September 13 — author selects a long-horizon successive-surprise refit.**
 Prepare four fitted preference surprises, at 2007/2011/2015/2019, each believed
 permanent when it arrives, with the calibrated 2007 parameters fixed. Carry
@@ -8,8 +28,8 @@ balanced PAYGO and no immigration. This differs from the running announced
 four-shock comparison. The fitted 2023 state will feed the 2% policy, and its
 matching baseline continuation will be reused. The prepared specification is
 `docs/model/e5f_long_horizon_successive_surprise_plan.md`.
-No new refit has been submitted. The scalar-fitting adapter and a long-horizon
-test of the improved numerical method remain prerequisites. A ten-period
+The implementation/submission update above supersedes the preparation status.
+A long-horizon test remains necessary. A ten-period
 equilibrium success is not evidence of terminal convergence or long-run fit.
 
 **September 13 — author requests the 2% policy under both fertility histories.**

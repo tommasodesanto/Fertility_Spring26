@@ -1,0 +1,115 @@
+{
+  "schema": "e5f_long_successive_refit_v1",
+  "output": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output",
+  "spec": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a/spec.json",
+  "source_driver": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/source/run_e5f_long_successive_refit.py",
+  "numerics_dir": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/source",
+  "jacobian_source": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_ssj_toeplitz_10/derivative/derivative_receipt.json",
+  "empirical_blocks": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/inputs/empirical_blocks.csv",
+  "target_sha256": "8945aa2427e26157e2e01b44b327e374daae5078daa458727f025938569a2f74",
+  "initial_score": "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/batches/capped_beta_099_20260911/results/cases/selected_exact_repetitions/evaluation/scored_repetition_01/score.json",
+  "initial_target_fingerprint": "c0e266d3a0d430343c469d780d1aedb45fa87f8763c9c938889e0c37daa31de2",
+  "shock_years": [
+    2007,
+    2011,
+    2015,
+    2019
+  ],
+  "year_targets": {
+    "2007": 1.974875,
+    "2011": 1.861,
+    "2015": 1.755375,
+    "2019": 1.64575
+  },
+  "psi_seeds": [
+    0.12891531457859182,
+    0.11696608375682901,
+    0.10564290922456478,
+    0.09221854783921073
+  ],
+  "bounds_relative": [
+    -0.2,
+    0.02
+  ],
+  "fit_tolerance": 0.005,
+  "max_trials": 6,
+  "max_rounds": 4,
+  "max_root_evaluations": 8,
+  "candidate_seconds": 36000,
+  "stage_seconds": 86400,
+  "policy_seconds": 43200,
+  "smoke_seconds": 1800,
+  "terminal_seconds": 3600,
+  "terminal_max_evaluations": 24,
+  "total_deadline_unix": 1789957368.4969687,
+  "terminal_year": 2423,
+  "scripts": {
+    "smoke": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/scripts/smoke.sbatch",
+    "stage_0": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/scripts/stage_0.sbatch",
+    "stage_1": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/scripts/stage_1.sbatch",
+    "stage_2": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/scripts/stage_2.sbatch",
+    "stage_3": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/scripts/stage_3.sbatch",
+    "policy": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/scripts/policy.sbatch"
+  },
+  "file_sha256": {
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/source/run_e5f_long_successive_refit.py": "bd9e278194dc158dff067f70dba3c6d5929b0d4472cb9ac6fc3b4fea59afb860",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/source/e5f_ssj_scaled_step_root.py": "ffcb23342862d746c8f475f52582976527d2b86e3134c379791de5835efde3c4",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/source/e5f_ssj_toeplitz_jacobian.py": "94c448367c139682c3bc06336dba27ab3ddb384e99120201cc1000d8509dead0",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a/spec.json": "5262ccba5ce38eb185e6187c9b5ad5754cd38c86e221b638d6cd0a7c0bf1b8b2",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/cutoff_horizon_v1/spec.json": "d92af0af1d6288808672545fd199faa6314e85cffdd182120afac7ca17496330",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_manifest_corrected_policy_seed_v1.json": "d7a587487dc6bf69c7c8c23a11faa4e088a61289c0f75a8818e462433c63b042",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_plan_corrected_auto_v2.json": "657bda8e319f3813397fc00c67ad2553aaf557db03fd2b4854ccac7f96570f45",
+    "/scratch/td2248/projects/Fertility_Spring26_recent_parent_probe_70abd4a8/batches/capped_beta_099_20260911/results/cases/selected_exact_repetitions/evaluation/scored_repetition_01/score.json": "5c3e9622c857b1ad7dea3eba4fafd2291922377837a9f0b7c9704e5e23eafab7",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/inputs/empirical_blocks.csv": "8945aa2427e26157e2e01b44b327e374daae5078daa458727f025938569a2f74",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_ssj_toeplitz_10/derivative/derivative_receipt.json": "6dd937ba9da32180b3bd5d146692d58b6967539b2d8ab577ba20e773bb2cc41f",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/source/prepare_e5f_long_successive_refit.py": "1a69a970b2bc39b7a49e201da4aa0b87c5dd6b163ea0f09fb67be02bd1e46451",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/inputs/source_manifest.json": "38ffd16f523e517ea9d7d3e26a296c9655e9951cbe682ab15c660885168e4a26",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/scripts/smoke.sbatch": "6fcb625729bfc1669b1d467702c47dadbaabf9feb74fd43c2410532b4547bd3f",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/scripts/stage_0.sbatch": "5368c9db7549bcd54b786b22e21b18ce8dc0bbb534c361d9af0c0b9cac32ef53",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/scripts/stage_1.sbatch": "cef72aee4079c82fe7d0d741eca22e6ea6b1a8594dcaa3eed4eb18de58eb0258",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/scripts/stage_2.sbatch": "76281f81fa282a43ded839fed54f85d885855aadd508e9b9e33435c7ce22a112",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/scripts/stage_3.sbatch": "8088e7754f7551c97eef0d213c5fd1ff1353f7bd147c3d295c8072f6dbacd12a",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/scripts/policy.sbatch": "79e3a77d84495646aabcbcf986be6681ff12285e94b8e81c1260c9386afa4e90"
+  },
+  "contract": {
+    "information": "Successive permanent surprises; later surprises not anticipated",
+    "structural_parameters": "estimated, fixed retained 2007 calibration",
+    "preference_levels": "four estimated dated levels",
+    "initial_distribution": "retained calibrated 2007 original-queue checkpoint",
+    "later_distributions": "endogenous inherited states from accepted preceding shock",
+    "entry_conversion": "externally fixed births/2.1",
+    "migration": "externally fixed zero",
+    "population_rescaling": false,
+    "historical_age_reweighting": false,
+    "supply_scale": "empirically normalized fixed asset-price supply curve",
+    "supply_elasticity": "externally fixed 0.63",
+    "baseline_tax": "externally fixed 1% annual; all receipts equally rebated",
+    "policy_tax": "externally fixed 2% annual; unexpected in inherited 2023",
+    "payroll_tax": "externally fixed 0.179; pension balances PAYGO",
+    "fertility_measurement": "retained household-rate analogue of published female TFR",
+    "terminal_distance": "outstanding until checked at each fitted endpoint",
+    "horizon_robustness": "outstanding; no acceptance inferred from finite root",
+    "production_eligible": false
+  },
+  "budget": {
+    "cpus_per_job": 1,
+    "memory_gb": 32,
+    "first_stage_dates": 104,
+    "later_stage_dates": [
+      103,
+      102,
+      101
+    ],
+    "policy_dates": 100,
+    "max_candidate_values_total": 24,
+    "max_native_root_mappings_per_candidate": 32,
+    "root_mapping_seconds_observed": [
+      1666,
+      2223
+    ],
+    "stage_wall_hours": 24,
+    "policy_wall_hours": 12,
+    "total_calendar_days": 7,
+    "interpretation": "Caps, not runtime predictions; stop with best evidence if exhausted"
+  }
+}
