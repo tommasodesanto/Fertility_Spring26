@@ -82,7 +82,7 @@ def main():
     table = [dict(year=int(y), period_fertility=float(tfr[i]), households_index=float(hh[i]),
                   housing_index=float(housing[i]), house_price_index=float(price[i])) for i, y in enumerate(years)]
     with (out / "big_run_transition.csv").open("w") as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(table[0])); writer.writeheader(); writer.writerows(table)
+        writer = csv.DictWriter(stream, fieldnames=list(table[0]), lineterminator="\n"); writer.writeheader(); writer.writerows(table)
     result = dict(model_solves=0, status="First candidate of first surprise; not a fitted four-shock history",
                   stage=0, psi=best["psi"], mapping=7, dates=len(rows), artist_arrays_verified=True,
                   native_best_coordinates_match_exactly=True, terminal_steady_state_verified=True,
