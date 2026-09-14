@@ -1,5 +1,37 @@
 # Matched policy transition: preliminary slide
 
+**Author's final display choice:** use `policy_fertility.pdf` / `.png`, showing
+only fertility without headline effect numbers. The main deck's Policy Results
+frame and standalone slide now use that figure. The earlier two-panel graph is
+retained as a diagnostic. The paths are from the one-permanent-shock history,
+not the announced four-shock history. The first fertility observation is after
+the unexpected 2023 tax increase, so the two impact decisions can differ despite
+identical inherited states.
+
+The author subsequently requests axes and legend only in the slide, with no
+status or experiment annotations. Numerical limitations remain in this note
+and the verification receipt; removing slide annotations does not certify the
+equilibrium.
+
+## Comparison with Coven et al. (2025 version)
+
+Their June 19, 2025 paper (local `docs/reference/coven2025_property_tax.txt`,
+sections 5.1–5.5) compares stationary equilibria after California's property
+tax rises from 0.8% to 2%, with equal rebates. Their
+[July 2025 NBER presentation, slide 28](https://conference.nber.org/conf_papers/f222903/f222903.slides.pdf#page=28)
+reports California prices -11.2%, aggregate ownership +6 percentage points
+(61% to 67%), and ownership at ages 25–44 +8 points (35% to 43%).
+Our verified stationary 1%-to-2% comparison instead gives prices +1.1553%
+and aggregate ownership -0.6265 points. Our preliminary 2063 transition gives
+prices -6.2005% and ownership +0.8188 points, but that date is not a stationary
+comparison. We have not established a matched age-25–44 ownership response.
+The models also differ in geography, migration, demographic adjustment and
+baseline conditions. These differences preclude treating our experiment as a
+replication or mechanically scaling their numbers by the tax change. The
+present fertility result is not evidence that their housing response has been
+quantitatively reproduced. Falling aggregate housing alone would not refute
+their mechanism: their paper also has a smaller stock and a tenure reallocation.
+
 Figure: `policy_transition.pdf` / `.png`. Slide:
 `output/pdf/property_tax_transition.pdf`; source:
 `latex/appendix_property_tax_transition.tex`.

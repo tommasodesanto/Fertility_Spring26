@@ -1,5 +1,16 @@
 # Calibration Status
 
+**September 14 — author selects fertility-only policy slide.** The Policy
+Results frame in `latex/september_14_presentation.tex` now uses
+`inherited_2023_tax/transition_readout/policy_fertility.pdf` within the original
+queue packet, without headline effect numbers or a population panel. This is
+the one-permanent-shock policy comparison, not the four-shock history. The
+standalone `output/pdf/property_tax_transition.pdf` follows the same choice.
+The author requests axes and legend only; numerical caveats stay in this
+status and the receipt. The current stationary housing effects do not reproduce
+the 2025 Coven et al. California experiment; the comparison is recorded in the
+transition readout README, distinguishing stationary from 2063 effects.
+
 **September 14 — preliminary matched tax-transition graph, original units.**
 `output/pdf/property_tax_transition.pdf` shows 2023–2063 period fertility and
 household mass for the saved one-shock inherited-2023 1%/2% equal-rebate paths.

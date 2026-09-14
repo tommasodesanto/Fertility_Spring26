@@ -85,6 +85,20 @@ def main():
     for suffix in ['pdf','png']:
         fig.savefig(OUT/f'policy_transition.{suffix}', dpi=180)
     plt.close(fig)
+    fig, ax = plt.subplots(figsize=(9.5, 4.4))
+    for prefix, label, color, style in [('baseline','1% tax','#246395','-'),
+                                       ('policy','2% tax','#ce6c26','--')]:
+        values = [r[f'{prefix}_tfr'] for r in shown]
+        line, = ax.plot(years, values, label=label, color=color, ls=style, lw=2.5)
+        np.testing.assert_array_equal(line.get_ydata(), values)
+    ax.set(ylabel='Total fertility rate', xlim=(2023,2063), ylim=(1.68,1.80))
+    ax.set_xticks([2023,2031,2039,2047,2055,2063])
+    ax.grid(axis='y', alpha=.18)
+    ax.legend(loc='upper left', frameon=False)
+    fig.subplots_adjust(left=.11, right=.965, bottom=.14, top=.96)
+    for suffix in ['pdf','png']:
+        fig.savefig(OUT/f'policy_fertility.{suffix}', dpi=180)
+    plt.close(fig)
     tex = r'''\documentclass[11pt,aspectratio=169]{beamer}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern,graphicx}
@@ -92,19 +106,15 @@ def main():
 \setbeamertemplate{footline}[frame number]
 \begin{document}
 \begin{frame}{Policy Results}
-\small Annual property tax from 1\% to 2\% in 2023; equal rebates in both paths.
-\par\smallskip
-\includegraphics[width=\textwidth]{../output/model/e5f_original_queue_20260913a/inherited_2023_tax/transition_readout/policy_transition.pdf}
-\par\smallskip
-\footnotesize Preliminary transitions: market convergence is incomplete.\\
-Common inherited 2023 economy after one permanent preference shock; no immigration.\\
-Households are in model units (2023 $\simeq 1$), not resident-person counts.
+\centering
+\includegraphics[width=.95\textwidth,height=.65\textheight,keepaspectratio]{../output/model/e5f_original_queue_20260913a/inherited_2023_tax/transition_readout/policy_fertility.pdf}
 \end{frame}
 \end{document}
 '''
     (ROOT/'latex/appendix_property_tax_transition.tex').write_text(tex)
     verification = dict(artifact_checks='PASS', equilibrium_status='NOT CONVERGED',
         model_solves=0, population_transformation_in_graphs=False,
+        author_selected_slide='fertility only, no headline effect numbers',
         source_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
         plotted_arrays=plotted, diagnostics=diagnostics,
         effects_2063=shown[-1])
