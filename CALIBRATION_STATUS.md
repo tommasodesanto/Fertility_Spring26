@@ -1,5 +1,17 @@
 # Calibration Status
 
+**September 14 — verified stationary policy comparison for slides.**
+`output/pdf/property_tax_steady_states.pdf` compares the saved 1% and 2% annual
+property-tax endpoints at common final fertility preferences, with equal
+rebates, balanced PAYGO and the same supply/population contract. Both endpoint
+receipts and the fresh baseline audit pass. Relative to 1%, the 2% endpoint has
+households +1.8051%, housing +0.7263%, housing per household -1.0597%, house
+price +1.1553%, unit rent +25.5725%, and ownership -0.6265 percentage points.
+These are stationary comparisons, not effects at 2023 or a converged policy
+transition. No model solve or main-deck edit. Exact values, receipts and
+regeneration instructions:
+`output/model/e5f_original_queue_20260913a/inherited_2023_tax/steady_state_readout/`.
+
 **September 14 — 2007/2023 lifecycle figures.** The author-requested initial
 stationary model versus ACS2007, plus a comparison with the existing2023
 lifecycle slide, is in
