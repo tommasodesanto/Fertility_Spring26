@@ -1,8 +1,9 @@
 # Successive permanent-surprise refit
 
-Smoke job 17732511 starts the authorized autonomous chain. It has not yet
-passed native validation at the time of this submission receipt. Each stage
-dispatches its successor only after its acceptance checks pass.
+Smoke job 17732511 passed native validation and automatically submitted
+first-stage job 17732824 (initially PENDING, Priority). Each stage dispatches
+its successor only after its acceptance checks pass. The passed smoke is
+not a completed fit. The smoke and dispatch receipts are saved here.
 
 | Stage | Surprise | Observed birth years | Forecast decisions |
 |---|---:|---|---:|

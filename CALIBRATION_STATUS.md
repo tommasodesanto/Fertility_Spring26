@@ -1,5 +1,15 @@
 # Calibration Status
 
+**September 13 night — exact-loop smoke passed; long refit dispatched.**
+Smoke 17732511 passed the fresh stationary endpoint, six-date finite equilibrium,
+changed-preference native root-loop and exact next-state checkpoint checks.
+It automatically dispatched **17732824**, the first 104-date fitting stage;
+the initial Slurm state was PENDING (Priority). Subsequent stages and policy
+remain conditional on successful fits and verified inherited states.
+Receipts: `long_successive_refit/smoke_passed.json` and
+`long_successive_refit/stage_0_dispatch.json` in the original-queue packet.
+This is a passed launch check, not a fitted long history or a convergence claim.
+
 **September 13 night — long successive-surprise chain submitted for exact-loop smoke.**
 Author authorized execution. Job **17732511** is submitted for the isolated
 `long_successive_refit_20260914a` batch. A passed smoke automatically submits

@@ -7,7 +7,8 @@ on September 13. Retain the calibrated 2007 structural parameters and initial
 household distribution. Re-estimate four fertility-preference levels; the
 currently running announced sequence is a separate comparison. The author
 subsequently authorized execution. Exact-loop smoke job 17732511 was submitted
-for batch `long_successive_refit_20260914a`; receipts are indexed below.
+for batch `long_successive_refit_20260914a`. It passed and automatically
+dispatched long-stage job 17732824; receipts are indexed below.
 
 At each shock date households learn the current preference level and believe
 it will remain permanent. They do not anticipate later surprises. Solve their
@@ -124,7 +125,7 @@ after native stationary-root, changed-preference root-loop, target measurement
 and checkpoint/replay checks pass. Each fitted stage dispatches the next;
 the final one dispatches policy. Failed candidate evaluations are recorded,
 but a failed fit cannot pass its state onward. Local unit checks passed;
-compute-node validation remains pending at submission.
+compute-node smoke passed and the first full fitting stage is dispatched.
 
 Pinned contract and receipts:
 `output/model/e5f_original_queue_20260913a/long_successive_refit/`.
