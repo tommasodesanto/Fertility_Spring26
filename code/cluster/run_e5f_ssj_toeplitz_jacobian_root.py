@@ -227,6 +227,7 @@ def main():
         population_law=spec["population_law"], no_immigration=True, psi=spec["permanent_psi"],
         comparison_reference=m["reference_root_receipt"], production_eligible=False,
         step_rule=m.get("step_rule", "clipped"), jacobian_source=m.get("jacobian_source"),
+        warm_start_receipt=m.get("warm_start_receipt"),
         fake_news_derivatives_constructed=False))
     step_solver = select_step_rule(m.get("step_rule", "clipped"))
     stop = threading.Event()
@@ -305,13 +306,31 @@ def main():
             save(out / "stage_status.json", dict(derivative="complete", root="starting",
                  elapsed_seconds=time.time() - started_unix))
             native_solve = c.rebated.solve_rebated_forecast
+            warm = None
+            if m.get("warm_start_receipt"):
+                previous = read(m["warm_start_receipt"])
+                best = previous["best"]
+                if best is None or previous.get("final_reproduction_max_abs") != 0.0:
+                    raise ValueError("Warm start requires an exactly reproduced previous best")
+                warm = dict(coordinates=np.asarray(best["prices"], dtype=float),
+                            jacobian=np.asarray(previous["final_jacobian"], dtype=float),
+                            previous_best_score=float(best["score"]))
+                if warm["coordinates"].shape != (3 * HORIZON,) or warm["jacobian"].shape != (3 * HORIZON, 3 * HORIZON):
+                    raise ValueError("Warm-start receipt has the wrong horizon")
+                save(out / "warm_start.json", dict(source=m["warm_start_receipt"], previous_best_score=warm["previous_best_score"],
+                     previous_evaluations=previous.get("evaluations"), coordinates=warm["coordinates"].tolist()))
 
             def solve_with_jacobian(**kwargs):
                 controls = dict(kwargs["root_controls"])
-                controls["initial_jacobian"] = jacobian
                 if controls.get("max_evaluations") != 8:
                     raise ValueError("Comparison requires the retained eight-mapping budget")
-                return native_solve(**dict(kwargs, root_controls=controls))
+                if warm is None:
+                    controls["initial_jacobian"] = jacobian
+                    return native_solve(**dict(kwargs, root_controls=controls))
+                controls["initial_jacobian"] = warm["jacobian"]
+                x = warm["coordinates"]
+                return native_solve(**dict(kwargs, root_controls=controls, initial_prices=x[:HORIZON],
+                                           initial_pensions=x[HORIZON:2 * HORIZON], initial_transfers=x[2 * HORIZON:]))
             solver_patch = (patch.object(c.rebated, "_path_root_solver", lambda: step_solver)
                             if step_solver is not None else patch.object(c.rebated, "_path_root_solver",
                                                                          c.rebated._path_root_solver))

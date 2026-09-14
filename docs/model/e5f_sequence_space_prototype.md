@@ -228,3 +228,27 @@ mapping at the end, so about two more mappings would be needed.
   step scaling in the production solver, which is a numerics change and needs
   its own verification; (iii) raise the mapping budget from eight to ten when
   a measured start is supplied. None of these was applied to production.
+
+### September 14, 01:23 UTC: certified ten-period root by warm-started continuation
+
+The frozen root operator refuses budgets above eight mappings, so each arm was
+continued in a second eight-mapping run warm-started from its exactly
+reproduced best iterate with its learned Broyden matrix (driver option
+`warm_start_receipt`; jobs 17730694 clipped, 17730695 scaled). The scaled arm
+converged: scores 0.04671, 0.009937, 0.0009657, \(9.587\times10^{-5}\), final
+replay exact (reproduction gap 0), five mappings in 561 s. Housing
+\(5.5\times10^{-7}\), PAYGO \(7.7\times10^{-6}\), rebate \(9.6\times10^{-5}\).
+Total cost of the certified root: seven derivative mappings once, then
+\(8+5=13\) root mappings, against eight unconverged mappings for the diagonal
+start (job 17700926, best 1.346). Accepted prices 0.6825 to 0.3906, pensions
+2.046 to 1.882, rebates 0.178 to 0.077. The terminal-distance diagnostic is
+unchanged (carried mass 163 percent above the endpoint), so the root is
+finite-horizon market/fiscal converged with the terminal approach unverified,
+exactly as the reference contract labels it. Packet:
+`output/model/e5f_sequence_space_prototype_20260913/toeplitz_jacobian_10_scaled_cont/`.
+The clipped arm (retained solver, unmodified) also converged in its
+continuation: 0.02246, 0.005601, 0.0007447, 0.0002399, \(2.690\times10^{-5}\),
+final replay exact, six mappings in 946 s (job 17730694), so the certified
+ten-period root costs \(8+6=14\) retained-solver mappings after the one-time
+seven-mapping measurement. The two certified roots agree to
+\(2\times10^{-4}\) relative in every coordinate.

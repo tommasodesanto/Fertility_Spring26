@@ -117,3 +117,23 @@ def condition_report(jacobian, default):
                 relative_frobenius_gap_to_default=float(np.linalg.norm(jacobian - default)
                                                         / np.linalg.norm(default)),
                 min_abs_diagonal=float(np.min(np.abs(np.diag(jacobian)))))
+
+
+def assemble_from_receipt(receipt, horizon):
+    """Rebuild the block-Toeplitz Jacobian at any horizon from a derivative receipt.
+
+    Uses the receipt's ``measured_lags`` and ``lag_profiles`` (keyed
+    ``"<residual block><-<unknown block>"``).  Lags outside the measured window
+    are zero at every horizon; the receipt returned alongside states how many
+    entries per block that leaves unmeasured.
+    """
+    lags = np.asarray(receipt["measured_lags"], dtype=int)
+    jacobian = np.zeros((3 * horizon, 3 * horizon))
+    for i, residual_block in enumerate(RESIDUAL_BLOCKS):
+        for j, unknown_block in enumerate(UNKNOWN_BLOCKS):
+            profile = np.asarray(receipt["lag_profiles"][f"{residual_block}<-{unknown_block}"], dtype=float)
+            jacobian[i * horizon:(i + 1) * horizon, j * horizon:(j + 1) * horizon] = toeplitz_block(lags, profile, horizon)
+    measured = set(lags.tolist())
+    unmeasured = sum(1 for t in range(horizon) for s in range(horizon) if (t - s) not in measured)
+    return jacobian, dict(horizon=horizon, source_horizon=int(receipt["horizon"]), measured_lags=lags.tolist(),
+                          zero_filled_entries_per_block=unmeasured, fake_news_derivatives_constructed=False)

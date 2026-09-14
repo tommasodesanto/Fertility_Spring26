@@ -77,3 +77,27 @@ class TestToeplitzJacobian(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestAssembleFromReceipt(unittest.TestCase):
+    def test_extends_measured_profiles_to_longer_horizon(self):
+        from e5f_ssj_toeplitz_jacobian import assemble_from_receipt
+        T, s, h = 10, 5, 1e-4
+        kernels = _toy_kernels(T)
+        base = np.zeros((3, T))
+        columns = []
+        for j in range(3):
+            up, dn = base.copy(), base.copy()
+            up[j, s] += h; dn[j, s] -= h
+            columns.append(central_column(_toy_residual(up, kernels, T), _toy_residual(dn, kernels, T), h, T))
+        J10, receipt = assemble_jacobian(columns, T, s)
+        J20, info = assemble_from_receipt(receipt, 20)
+        self.assertEqual(J20.shape, (60, 60))
+        # Same-horizon rebuild is exact; the longer horizon reproduces the toy's exact banded map.
+        np.testing.assert_allclose(assemble_from_receipt(receipt, T)[0], J10, rtol=0, atol=1e-12)
+        exact = np.zeros((60, 60))
+        for col in range(60):
+            e = np.zeros(60); e[col] = 1.0
+            exact[:, col] = _toy_residual(e.reshape(3, 20), kernels, 20)
+        np.testing.assert_allclose(J20, exact, rtol=0, atol=1e-9)
+        self.assertEqual(info["source_horizon"], 10)
