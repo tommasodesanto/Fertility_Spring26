@@ -1,5 +1,5 @@
 {
-  "checked_utc": "2026-09-14T12:04:35.385063+00:00",
+  "checked_utc": "2026-09-14T13:06:53.160895+00:00",
   "slides_frozen": true,
   "jobs": {
     "17732824": {
@@ -28,31 +28,31 @@
       },
       "psi": 0.12891531457859182,
       "accepted_stage": false,
-      "heartbeat_age_seconds": 4.64228081703186,
+      "heartbeat_age_seconds": 21.130457639694214,
       "source": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007",
       "round": "trial_01/round_01",
-      "best_mapping": 5,
-      "best_score": 0.10593799090101491,
+      "best_mapping": 6,
+      "best_score": 0.02450798290492083,
       "best_coordinates_match_rows": true,
       "latest_completed": {
-        "evaluation": 5,
+        "evaluation": 6,
         "phase": "iterate",
-        "score": 0.10593799090101491,
+        "score": 0.02450798290492083,
         "mapping_valid": true,
         "new_best": true,
-        "best_score": 0.10593799090101491,
-        "elapsed_seconds": 17025.648561389185,
-        "evaluation_seconds": 3444.32676759921,
+        "best_score": 0.02450798290492083,
+        "elapsed_seconds": 20411.87372061331,
+        "evaluation_seconds": 3386.1895817313343,
         "damping": 1.0,
         "reset_reason": null,
         "round": 1,
         "calendar_year": 2007,
         "psi": 0.12891531457859182
       },
-      "max_abs_relative_market_residual": 0.00087876862782742,
-      "max_abs_scaled_pension_budget_residual": 0.0002983738798736581,
-      "max_abs_scaled_government_budget_residual": 0.0005296899545050746,
-      "max_abs_mass_accounting_residual": 1.6653345369377348e-15,
+      "max_abs_relative_market_residual": 0.0001845583113934526,
+      "max_abs_scaled_pension_budget_residual": 6.403951470877678e-05,
+      "max_abs_scaled_government_budget_residual": 0.00012253991452460414,
+      "max_abs_mass_accounting_residual": 1.887379141862766e-15,
       "max_abs_policy_reproduction_max_abs": 0.0,
       "max_abs_feasibility_frontier_projection_mass": 0.0,
       "terminal_distance": {
@@ -64,7 +64,7 @@
         "horizon_comparison_passed": false,
         "production_eligible": false
       },
-      "latest_completed_age_minutes": 44.75726087888082,
+      "latest_completed_age_minutes": 50.61531173388163,
       "trials": [
         "trial_01"
       ],
@@ -180,26 +180,26 @@
       "state": "RUNNING",
       "source": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/fourshock_tax_20260914b/policy/tax2",
       "round": "transition/round_02",
-      "best_mapping": 2,
-      "best_score": 0.6334645802873032,
+      "best_mapping": 6,
+      "best_score": 0.5039819546532156,
       "best_coordinates_match_rows": true,
-      "heartbeat_age_seconds": 18.1072940826416,
+      "heartbeat_age_seconds": 34.69613313674927,
       "latest_completed": {
-        "evaluation": 3,
+        "evaluation": 6,
         "phase": "iterate",
-        "score": 0.7702672089071667,
+        "score": 0.5039819546532156,
         "mapping_valid": true,
-        "new_best": false,
-        "best_score": 0.6334645802873032,
-        "elapsed_seconds": 4832.605813872069,
-        "evaluation_seconds": 1912.7766763707623,
+        "new_best": true,
+        "best_score": 0.5039819546532156,
+        "elapsed_seconds": 9895.869017308578,
+        "evaluation_seconds": 1690.6326798833907,
         "damping": 1.0,
         "reset_reason": null
       },
-      "max_abs_relative_market_residual": 0.0031088822901613345,
-      "max_abs_scaled_pension_budget_residual": 0.00018228774045211761,
-      "max_abs_scaled_government_budget_residual": 0.0031673229014365163,
-      "max_abs_mass_accounting_residual": 1.4432899320127035e-15,
+      "max_abs_relative_market_residual": 0.002523306100653996,
+      "max_abs_scaled_pension_budget_residual": 0.0001134883280575416,
+      "max_abs_scaled_government_budget_residual": 0.002519909773266078,
+      "max_abs_mass_accounting_residual": 1.6653345369377348e-15,
       "max_abs_policy_reproduction_max_abs": 0.0,
       "max_abs_feasibility_frontier_projection_mass": 0.0,
       "terminal_distance": {
@@ -210,7 +210,7 @@
         "terminal_verified": true,
         "horizon_comparison_passed": false
       },
-      "latest_completed_age_minutes": 25.96574119726817,
+      "latest_completed_age_minutes": 3.8742038051287335,
       "native_household_checks_pass": true,
       "accepted_stage": false,
       "complete_exists": false,
@@ -218,10 +218,25 @@
     }
   },
   "reported_changes": [
-    "One-shock 1% control also completed without convergence; both one-shock policy arms remain provisional, with no final replays.",
-    "Big refit first shock remains in its first trial, no accepted stage; aggregate solver score improves but housing gap worsened between its first two mappings.",
-    "Four-shock policy best housing gap improved to 0.4254%, still above the 0.02% requirement."
+    "Morning readout: big-run housing residual 0.01846%, no accepted shock; four-shock policy still unconverged; three earlier searches finished unconverged. Overnight monitor paused; slides untouched."
   ],
   "morning_readout_at_or_after_utc": "2026-09-14T13:00:00Z",
-  "last_check_assessment": "Scheduler checked separately; inspect current receipts for any status change. No changes to jobs, numerical contracts or slides."
+  "last_check_assessment": "Scheduler checked separately; inspect current receipts for any status change. No changes to jobs, numerical contracts or slides.",
+  "overnight_monitor_status": "PAUSED after scheduled morning readout; cluster jobs remain running",
+  "morning_readout": {
+    "time_utc": "2026-09-14T13:06:53.160895+00:00",
+    "accepted_historical_shocks": 0,
+    "slides_changed": false,
+    "new_validated_slide_replacement": false,
+    "big_run": "First candidate of first shock, mapping 6: housing residual below its 0.02% gate; joint equilibrium and fitted-stage acceptance still pending.",
+    "active_jobs": [
+      "17732824",
+      "17735075"
+    ],
+    "finished_unconverged_jobs": [
+      "17732269",
+      "17722962",
+      "17722295"
+    ]
+  }
 }

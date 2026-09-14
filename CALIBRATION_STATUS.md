@@ -1,5 +1,33 @@
 # Calibration Status
 
+**September 14, 13:07 UTC — morning readout; slides stay frozen.** The big
+successive-surprise refit has made substantial numerical progress but has
+accepted **zero of four fitted shocks**. At the first candidate of the first
+shock, mapping 6 has housing/PAYGO/rebate gaps
+0.01846%/0.00640%/0.01225%. Housing is now below its 0.02% gate; the joint root
+and fitted-stage acceptance remain pending. This is not a completed historical
+fit. Stage 0 job 17732824 remains RUNNING, with a recent heartbeat.
+
+| Exercise | Morning status | Best maximum housing gap |
+|---|---|---:|
+| Successive-surprise refit, first shock (17732824) | Running; no accepted stage | 0.01846% |
+| Announced four-shock continuation (17732269) | Deadline reached; unconverged | 0.26438% |
+| One-shock 1% control (17722962) | Search finished; unconverged | 0.25943% |
+| One-shock 2% policy (17722295) | Search finished; unconverged | 0.15191% |
+| Four-shock 2% policy (17735075) | Running; unconverged | 0.25233% |
+
+The four-shock policy's best round-2 mapping 6 has PAYGO/rebate gaps
+0.01135%/0.25199%; its heartbeat is recent. Native household checks and exact
+saved-coordinate comparisons pass, but neither active run has a newly accepted
+complete experiment. Existing verified stationary endpoints remain available;
+the new transition results remain provisional. Nothing warrants replacing the
+frozen slides with a newly validated historical fit or policy result yet.
+The overnight heartbeat is now PAUSED as scheduled; the two active cluster jobs
+and their already-authorized automatic dispatch continue independently. No new
+jobs, numerical changes, slide edits or figure regeneration were performed.
+Full compact evidence: `long_successive_refit/overnight_monitor.json` within
+`output/model/e5f_original_queue_20260913a/`.
+
 **September 14, 12:05 UTC — first-shock root gets closer, still unaccepted.**
 Big refit 17732824 remains at the first fixed preference candidate. Mapping 5
 reduces housing/PAYGO/rebate gaps to 0.08788%/0.02984%/0.05297%; the housing
