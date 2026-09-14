@@ -7,6 +7,36 @@ that can still change the theory, quantitative interpretation, or paper-facing
 claims. `CALIBRATION_STATUS.md` remains the source for numerical results and
 reproducibility contracts.
 
+## Very urgent — reconcile geographic scope before final quantification (September 14)
+
+**Author priority: very urgent. Status: open.** The current pooled housing
+market combines ACS housing moments from 42 selected metropolitan areas with
+national fertility and PSID wealth/first-birth housing-response moments. The
+model is not a 42-location model. Tommaso flags this mixed geography as a major
+problem for substantive quantification; it must be resolved explicitly.
+
+The selected metros supply mean rooms, ownership at ages 30–55, the room gap
+between households with 3+ versus 1–2 resident children, and the recent-parent
+ownership gap. The initial housing targets pool ACS 2005–06; the 2007/2023
+lifecycle housing comparisons also use these 42 metros. The current extraction
+includes the full selected MET2013 codes, not the older admitted-PUMA footprint.
+Source: `output/model/e5f_matched_pf_20260909a/design_research/housing/`
+(`active_metros.txt`, `inspect_early_housing.py`, and
+`early_housing_target_candidates.csv`); active rows are in
+`output/model/e5f_final_night_20260913/corrected_initial/target_fit.csv`.
+
+Before final quantitative claims, choose and document a consistent geographic
+population; reconcile every target, validation series, housing supply/price
+normalization and demographic closure with that scope. Remeasure mismatched
+moments and assess the resulting calibration and policy sensitivity. Do not
+silently relabel the existing calibration as national or replace its targets.
+
+**Temporary author decision:** use the full U.S. population to illustrate the
+saved policy paths, holding the 2023 headship rate fixed. Label the result an
+illustrative population equivalent, not a resident-population forecast or an
+endorsement of the mixed-geography calibration. No production target, model
+closure, or numerical gate changes with this display conversion.
+
 ## Maximum urgency — reassess permanent earnings heterogeneity (September 14)
 
 **Author priority: highest. Status: open; reassessment requested, no immediate

@@ -1,0 +1,122 @@
+{
+  "artifact_checks": "PASS",
+  "equilibrium_status": "NOT CONVERGED",
+  "model_solves": 0,
+  "population_transformation_in_graphs": false,
+  "source_sha256": "20fa8d2b5283fcc150b975e8d60ee7c7a4a4e02c4b8eb44c86b4171ce233b1fe",
+  "plotted_arrays": [
+    {
+      "series": "baseline_tfr",
+      "values": [
+        1.6986410336237445,
+        1.7056393853741407,
+        1.7123744396354061,
+        1.7177914203008418,
+        1.7239105755523,
+        1.7310700804585166,
+        1.738416676121876,
+        1.7458111411386954,
+        1.7534591154598878,
+        1.7614748533499922,
+        1.7706954640264811
+      ]
+    },
+    {
+      "series": "policy_tfr",
+      "values": [
+        1.6954505951815828,
+        1.7083653569195225,
+        1.7189300832280603,
+        1.727358615332869,
+        1.7356487256863067,
+        1.7436777551857443,
+        1.751452854124385,
+        1.7591228321684,
+        1.766733246466138,
+        1.7748584395037499,
+        1.7841236126458329
+      ]
+    },
+    {
+      "series": "baseline_households",
+      "values": [
+        1.0000000000006855,
+        0.9877081198892268,
+        0.9757335675208971,
+        0.9639242137217798,
+        0.9521629732319596,
+        0.9403642702969885,
+        0.9275824300718765,
+        0.9136625910364331,
+        0.8984290398318591,
+        0.8818192443786919,
+        0.8638145215701777
+      ]
+    },
+    {
+      "series": "policy_households",
+      "values": [
+        1.0000000000007079,
+        0.9877081198892399,
+        0.9757335675209154,
+        0.963924213721802,
+        0.9521629732319938,
+        0.9402704813485625,
+        0.9275594343946947,
+        0.9138084744655802,
+        0.8988173698085372,
+        0.8825000407262811,
+        0.8647956751624308
+      ]
+    }
+  ],
+  "diagnostics": {
+    "tax1": {
+      "native_gates": {
+        "mass": 1.2212453270876722e-15,
+        "policy": 0.0,
+        "feasibility": 0.0
+      },
+      "max_housing_relative_gap": 0.004258844455004186,
+      "max_pension_relative_gap": 0.00047376796344827417,
+      "max_rebate_relative_gap": 0.004241334161666552,
+      "terminal_distance": {
+        "population_relative_gap": 0.09874403854580605,
+        "distribution_relative_l1": 0.4326444167209733,
+        "queue_relative_max": 0.07788720880640199,
+        "raw_queue_relative_max": 0.07773742012684126,
+        "terminal_verified": true,
+        "horizon_comparison_passed": false
+      }
+    },
+    "tax2": {
+      "native_gates": {
+        "mass": 1.5543122344752192e-15,
+        "policy": 0.0,
+        "feasibility": 0.0
+      },
+      "max_housing_relative_gap": 0.0018826438445496284,
+      "max_pension_relative_gap": 5.276307509282056e-05,
+      "max_rebate_relative_gap": 0.0018709894392660894,
+      "terminal_distance": {
+        "population_relative_gap": 0.10659868070849132,
+        "distribution_relative_l1": 0.44586938784064445,
+        "queue_relative_max": 0.0845134998752266,
+        "raw_queue_relative_max": 0.08439884268782905,
+        "terminal_verified": true,
+        "horizon_comparison_passed": false
+      }
+    }
+  },
+  "effects_2063": {
+    "year": 2063,
+    "baseline_tfr": 1.7706954640264811,
+    "policy_tfr": 1.7841236126458329,
+    "baseline_households": 0.8638145215701777,
+    "policy_households": 0.8647956751624308,
+    "baseline_births": 0.0841462804936669,
+    "policy_births": 0.08501383686585365,
+    "household_difference_percent": 0.11358382705464187,
+    "birth_difference_percent": 1.031009769055724
+  }
+}

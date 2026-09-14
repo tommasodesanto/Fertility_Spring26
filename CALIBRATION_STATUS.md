@@ -1,5 +1,26 @@
 # Calibration Status
 
+**September 14 — preliminary matched tax-transition graph, original units.**
+`output/pdf/property_tax_transition.pdf` shows 2023–2063 period fertility and
+household mass for the saved one-shock inherited-2023 1%/2% equal-rebate paths.
+At 2063 the household gap is +0.11358%, the birth-count gap +1.03101%, and TFR
+1.77070 versus 1.78412. Both transitions remain unconverged. The separate
+verified stationary household gap is +1.80506%, not the 2063 effect. At the
+author's clarification, no resident-population transformation enters the
+graphs; a fixed-headship national illustration is documented in words only.
+Frozen native inputs, exact plotted-array checks and all numerical limitations:
+`output/model/e5f_original_queue_20260913a/inherited_2023_tax/transition_readout/`.
+
+**September 14 — outstanding, very urgent: mixed geographic scope.** The author
+flags the combination of ACS housing targets from 42 selected metros with
+national fertility and PSID moments as a major issue for final quantification.
+The model is one pooled housing market. Reconcile the geographic population,
+targets, price/supply normalization and demographic closure before final claims;
+the full decision is at the top of `docs/model/ACTIVE_DECISION_LEDGER.md`.
+For current slides only, the author authorizes scaling saved household paths to
+the full U.S. population at a fixed 2023 headship rate, explicitly as an
+illustration. This does not change or validate the production geography.
+
 **September 14 — verified stationary policy comparison for slides.**
 `output/pdf/property_tax_steady_states.pdf` compares the saved 1% and 2% annual
 property-tax endpoints at common final fertility preferences, with equal
