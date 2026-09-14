@@ -1,5 +1,17 @@
 # Calibration Status
 
+**September 14, 06:00 UTC — author freezes slides; overnight monitoring only.**
+Do not edit, compile or replace slide sources, figures or presentation PDFs.
+Report any major improvement for author review tomorrow before changing slides.
+The big successive-surprise refit, stage 0 job 17732824, remains PENDING for
+Priority with no estimated start; its exact-loop launch smoke passed. Jobs
+17732269 (four-shock solver continuation), 17722962 (one-shock 1% control) and
+17722295 (one-shock 2% policy) are RUNNING; four-shock 2% job 17735075 is PENDING
+for Priority. These are scheduler observations, not new convergence results.
+The existing original-queue heartbeat is reactivated hourly for compact checks
+through the September 14 morning readout, with no new scientific arms or slide
+changes. Preserve automatic gated dispatch already built into the big run.
+
 **September 14 — outstanding, high priority: calibration versus policy mechanism.**
 The author requests quantifying how much of the weak fertility-policy response
 and the difference from Coven et al. comes from calibration shortcomings versus
