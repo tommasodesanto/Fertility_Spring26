@@ -1,5 +1,20 @@
 # Calibration Status
 
+**September 14, 09:03 UTC — both one-shock arms have finished, still provisional.**
+Control job 17722962 is scheduler COMPLETED (exit 0); its numerical receipt is
+`time_or_evaluation_budget`, not convergence, with no final replay. Best
+round-2 mapping 6 has housing/PAYGO/rebate gaps 0.25943%/0.00906%/0.26186%.
+Neither this control nor the completed 2% arm meets the full equilibrium and
+horizon requirements. Native household checks and exact best-coordinate
+matching pass for the saved mappings; slides are not refreshed.
+
+The big refit remains RUNNING at the first shock and first trial, with no
+accepted stage. Mapping 2 lowers its scaled solver score from 15.3844 to
+5.5909, but the housing gap rises from 13.17% to 18.18% as fiscal errors fall;
+this is not uniform convergence progress or a fertility fit. Four-shock policy
+17735075 is RUNNING, with best mapping 5 housing gap 0.42541% (still above
+0.02%). Both active driver heartbeats are recent. No new jobs or slide changes.
+
 **September 14, 08:00 UTC — one-shock 2% search finished without convergence.**
 Job 17722295 has scheduler state COMPLETED (exit 0), but its numerical receipt
 ends at `time_or_evaluation_budget`: finite equilibrium, terminal distance and

@@ -1,5 +1,5 @@
 {
-  "checked_utc": "2026-09-14T08:00:42.490332+00:00",
+  "checked_utc": "2026-09-14T09:02:41.376499+00:00",
   "slides_frozen": true,
   "jobs": {
     "17732824": {
@@ -28,40 +28,47 @@
       },
       "psi": 0.12891531457859182,
       "accepted_stage": false,
-      "heartbeat_age_seconds": 16.38729476928711,
+      "heartbeat_age_seconds": 13.942456245422363,
       "source": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007",
       "round": "trial_01/round_01",
-      "best_mapping": 1,
-      "best_score": 15.38441756732176,
+      "best_mapping": 2,
+      "best_score": 5.590894292353086,
       "best_coordinates_match_rows": true,
       "latest_completed": {
-        "evaluation": 1,
-        "phase": "initial",
-        "score": 15.38441756732176,
+        "evaluation": 2,
+        "phase": "iterate",
+        "score": 5.590894292353086,
         "mapping_valid": true,
         "new_best": true,
-        "best_score": 15.38441756732176,
-        "elapsed_seconds": 3477.6646399525926,
-        "evaluation_seconds": 3477.6624682154506,
+        "best_score": 5.590894292353086,
+        "elapsed_seconds": 6832.104844139889,
+        "evaluation_seconds": 3354.412283822894,
+        "damping": 1.0,
+        "reset_reason": null,
         "round": 1,
         "calendar_year": 2007,
         "psi": 0.12891531457859182
       },
-      "max_abs_relative_market_residual": 0.13171756432180812,
-      "max_abs_scaled_pension_budget_residual": 0.0769220878366088,
-      "max_abs_scaled_government_budget_residual": 0.008621084007359251,
-      "max_abs_mass_accounting_residual": 1.887379141862766e-15,
+      "max_abs_relative_market_residual": 0.18178000533622016,
+      "max_abs_scaled_pension_budget_residual": 0.027954471461765433,
+      "max_abs_scaled_government_budget_residual": 0.01943572305301313,
+      "max_abs_mass_accounting_residual": 1.4432899320127035e-15,
       "max_abs_policy_reproduction_max_abs": 0.0,
       "max_abs_feasibility_frontier_projection_mass": 0.0,
       "terminal_distance": {
-        "distribution_relative_l1": 0.09991757782857205,
-        "population_relative_gap": 0.09228461710893865,
-        "queue_relative_max": 0.09640323360496605,
-        "raw_queue_relative_max": 0.09617540688483617,
+        "distribution_relative_l1": 0.3742167773838449,
+        "population_relative_gap": 0.09397336925596655,
+        "queue_relative_max": 0.12202957928455671,
+        "raw_queue_relative_max": 0.12200454128177607,
         "terminal_steady_state_verified": true,
         "horizon_comparison_passed": false,
         "production_eligible": false
-      }
+      },
+      "latest_completed_age_minutes": 32.74491102298101,
+      "trials": [
+        "trial_01"
+      ],
+      "native_household_checks_pass": true
     },
     "17732269": {
       "state": "FAILED",
@@ -83,41 +90,48 @@
       }
     },
     "17722962": {
-      "state": "RUNNING",
-      "best_score": 0.6035663111741414,
+      "state": "COMPLETED",
+      "best_score": 0.5237166981364495,
       "source": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/inherited_2023_tax_20260913b/tax1",
       "round": "transition/round_02",
-      "best_mapping": 4,
+      "best_mapping": 6,
       "best_coordinates_match_rows": true,
-      "heartbeat_age_seconds": 7.935940504074097,
+      "heartbeat_age_seconds": 3186.675440788269,
       "latest_completed": {
-        "evaluation": 5,
-        "phase": "iterate",
-        "score": 1.180480571082091,
-        "mapping_valid": true,
-        "new_best": false,
-        "best_score": 0.6035663111741414,
-        "elapsed_seconds": 10191.326967892237,
-        "evaluation_seconds": 1929.4655691869557,
-        "damping": 0.5,
-        "reset_reason": null,
-        "safeguard": "restored_best_halved_damping_reset_jacobian",
-        "event": "safeguard"
+        "event": "complete",
+        "converged": false,
+        "status": "time_or_evaluation_budget",
+        "evaluations": 6
       },
-      "max_abs_relative_market_residual": 0.002977240699277533,
-      "max_abs_scaled_pension_budget_residual": 0.00011443738666474577,
-      "max_abs_scaled_government_budget_residual": 0.003017831555870707,
-      "max_abs_mass_accounting_residual": 1.887379141862766e-15,
+      "max_abs_relative_market_residual": 0.002594348878818976,
+      "max_abs_scaled_pension_budget_residual": 9.057753806539444e-05,
+      "max_abs_scaled_government_budget_residual": 0.0026185834906822473,
+      "max_abs_mass_accounting_residual": 1.9984014443252818e-15,
       "max_abs_policy_reproduction_max_abs": 0.0,
       "max_abs_feasibility_frontier_projection_mass": 0.0,
       "terminal_distance": {
-        "population_relative_gap": 0.09866023592204898,
-        "distribution_relative_l1": 0.4315665331917714,
-        "queue_relative_max": 0.07776945677638958,
-        "raw_queue_relative_max": 0.07761708297532266,
+        "population_relative_gap": 0.09866171013848368,
+        "distribution_relative_l1": 0.4315573599052486,
+        "queue_relative_max": 0.07777067208864907,
+        "raw_queue_relative_max": 0.07761846787749493,
         "terminal_verified": true,
         "horizon_comparison_passed": false
-      }
+      },
+      "latest_completed_age_minutes": 52.94285283088684,
+      "complete.json": {
+        "completed": true,
+        "production_eligible": false
+      },
+      "root_summary": {
+        "converged": false,
+        "status": "time_or_evaluation_budget",
+        "final_reproduction_max_abs": null,
+        "finite_horizon_market_fiscal_converged": false,
+        "terminal_distance_passed": false,
+        "horizon_verified": false
+      },
+      "scheduler_accounting": "17722962|COMPLETED|08:22:26|0:0",
+      "native_household_checks_pass": true
     },
     "17722295": {
       "state": "COMPLETED",
@@ -164,41 +178,44 @@
       "state": "RUNNING",
       "source": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/fourshock_tax_20260914b/policy/tax2",
       "round": "transition/round_01",
-      "best_mapping": 3,
-      "best_score": 6.445558407251091,
+      "best_mapping": 5,
+      "best_score": 0.8095621936930492,
       "best_coordinates_match_rows": true,
-      "heartbeat_age_seconds": 29.593485116958618,
+      "heartbeat_age_seconds": 27.31959342956543,
       "latest_completed": {
-        "evaluation": 3,
+        "evaluation": 5,
         "phase": "iterate",
-        "score": 6.445558407251091,
+        "score": 0.8095621936930492,
         "mapping_valid": true,
         "new_best": true,
-        "best_score": 6.445558407251091,
-        "elapsed_seconds": 5540.928306992166,
-        "evaluation_seconds": 1693.2065443927422,
+        "best_score": 0.8095621936930492,
+        "elapsed_seconds": 8917.400472459383,
+        "evaluation_seconds": 1683.9386755665764,
         "damping": 1.0,
         "reset_reason": null
       },
-      "max_abs_relative_market_residual": 0.016844951393266045,
-      "max_abs_scaled_pension_budget_residual": 0.007664314956955182,
-      "max_abs_scaled_government_budget_residual": 0.032227792036255455,
-      "max_abs_mass_accounting_residual": 1.6653345369377348e-15,
+      "max_abs_relative_market_residual": 0.0042541109442797926,
+      "max_abs_scaled_pension_budget_residual": 0.0007461266519697583,
+      "max_abs_scaled_government_budget_residual": 0.004047810968465246,
+      "max_abs_mass_accounting_residual": 2.4424906541753444e-15,
       "max_abs_policy_reproduction_max_abs": 0.0,
       "max_abs_feasibility_frontier_projection_mass": 0.0,
       "terminal_distance": {
-        "population_relative_gap": 0.10678572974519684,
-        "distribution_relative_l1": 0.471392044425978,
-        "queue_relative_max": 0.08180266183728113,
-        "raw_queue_relative_max": 0.08169255246316354,
+        "population_relative_gap": 0.10833506481537603,
+        "distribution_relative_l1": 0.4514117230203394,
+        "queue_relative_max": 0.08575206842980787,
+        "raw_queue_relative_max": 0.08563037019364561,
         "terminal_verified": true,
         "horizon_comparison_passed": false
-      }
+      },
+      "latest_completed_age_minutes": 9.109010549386342,
+      "native_household_checks_pass": true
     }
   },
   "reported_changes": [
-    "One-shock 2% job completed its allowed search without finite convergence; no final replay.",
-    "Big refit first long mapping is valid; no accepted fitted stage. Other live jobs have recent heartbeats."
+    "One-shock 1% control also completed without convergence; both one-shock policy arms remain provisional, with no final replays.",
+    "Big refit first shock remains in its first trial, no accepted stage; aggregate solver score improves but housing gap worsened between its first two mappings.",
+    "Four-shock policy best housing gap improved to 0.4254%, still above the 0.02% requirement."
   ],
   "morning_readout_at_or_after_utc": "2026-09-14T13:00:00Z"
 }
