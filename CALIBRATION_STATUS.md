@@ -1,5 +1,14 @@
 # Calibration Status
 
+**September 14, 11:05 UTC — big run improves again, no fitted stage accepted.**
+First-shock trial 1 mapping 4 reduces housing/PAYGO/rebate gaps to
+0.30466%/0.28052%/0.25234%, from 2.66948%/1.08420%/1.45306% at mapping 3.
+This remains above acceptance tolerances; it is numerical progress at a fixed
+candidate preference, not a completed preference estimate. Four-shock policy
+17735075 has moved automatically to its authorized second round, reproducing
+the prior best with housing gap 0.37534%. Both jobs remain RUNNING with recent
+heartbeats and passed household checks. No new jobs or slide changes.
+
 **September 14, 10:03 UTC — first-shock solver makes numerical progress.**
 Big refit 17732824 is still at trial 1 of the first shock. Mapping 3 reduces
 the maximum housing gap from 18.18% to 2.66948%; PAYGO/rebate gaps are
