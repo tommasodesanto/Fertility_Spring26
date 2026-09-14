@@ -1,5 +1,13 @@
 # Calibration Status
 
+**September 14, 10:03 UTC — first-shock solver makes numerical progress.**
+Big refit 17732824 is still at trial 1 of the first shock. Mapping 3 reduces
+the maximum housing gap from 18.18% to 2.66948%; PAYGO/rebate gaps are
+1.08420%/1.45306%. This is improved numerical balance, not an accepted fitted
+shock or a converged transition. Four-shock policy 17735075 remains active;
+best mapping 6 has housing gap 0.37534%, still above 0.02%. Both have recent
+heartbeats and passed native household checks. No new jobs or slide changes.
+
 **September 14, 09:03 UTC — both one-shock arms have finished, still provisional.**
 Control job 17722962 is scheduler COMPLETED (exit 0); its numerical receipt is
 `time_or_evaluation_budget`, not convergence, with no final replay. Best

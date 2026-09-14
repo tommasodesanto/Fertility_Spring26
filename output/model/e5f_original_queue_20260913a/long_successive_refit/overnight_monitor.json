@@ -1,5 +1,5 @@
 {
-  "checked_utc": "2026-09-14T09:02:41.376499+00:00",
+  "checked_utc": "2026-09-14T10:03:51.052577+00:00",
   "slides_frozen": true,
   "jobs": {
     "17732824": {
@@ -28,31 +28,31 @@
       },
       "psi": 0.12891531457859182,
       "accepted_stage": false,
-      "heartbeat_age_seconds": 13.942456245422363,
+      "heartbeat_age_seconds": 22.717714071273804,
       "source": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007",
       "round": "trial_01/round_01",
-      "best_mapping": 2,
-      "best_score": 5.590894292353086,
+      "best_mapping": 3,
+      "best_score": 2.9061170971577357,
       "best_coordinates_match_rows": true,
       "latest_completed": {
-        "evaluation": 2,
+        "evaluation": 3,
         "phase": "iterate",
-        "score": 5.590894292353086,
+        "score": 2.9061170971577357,
         "mapping_valid": true,
         "new_best": true,
-        "best_score": 5.590894292353086,
-        "elapsed_seconds": 6832.104844139889,
-        "evaluation_seconds": 3354.412283822894,
+        "best_score": 2.9061170971577357,
+        "elapsed_seconds": 10205.560164997354,
+        "evaluation_seconds": 3373.4203468980268,
         "damping": 1.0,
         "reset_reason": null,
         "round": 1,
         "calendar_year": 2007,
         "psi": 0.12891531457859182
       },
-      "max_abs_relative_market_residual": 0.18178000533622016,
-      "max_abs_scaled_pension_budget_residual": 0.027954471461765433,
-      "max_abs_scaled_government_budget_residual": 0.01943572305301313,
-      "max_abs_mass_accounting_residual": 1.4432899320127035e-15,
+      "max_abs_relative_market_residual": 0.026694818743830513,
+      "max_abs_scaled_pension_budget_residual": 0.010841988452081636,
+      "max_abs_scaled_government_budget_residual": 0.014530585485788679,
+      "max_abs_mass_accounting_residual": 1.6653345369377348e-15,
       "max_abs_policy_reproduction_max_abs": 0.0,
       "max_abs_feasibility_frontier_projection_mass": 0.0,
       "terminal_distance": {
@@ -64,11 +64,13 @@
         "horizon_comparison_passed": false,
         "production_eligible": false
       },
-      "latest_completed_age_minutes": 32.74491102298101,
+      "latest_completed_age_minutes": 37.686726319789884,
       "trials": [
         "trial_01"
       ],
-      "native_household_checks_pass": true
+      "native_household_checks_pass": true,
+      "complete_exists": false,
+      "failure_exists": false
     },
     "17732269": {
       "state": "FAILED",
@@ -178,26 +180,26 @@
       "state": "RUNNING",
       "source": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/fourshock_tax_20260914b/policy/tax2",
       "round": "transition/round_01",
-      "best_mapping": 5,
-      "best_score": 0.8095621936930492,
+      "best_mapping": 6,
+      "best_score": 0.7808215553609551,
       "best_coordinates_match_rows": true,
-      "heartbeat_age_seconds": 27.31959342956543,
+      "heartbeat_age_seconds": 36.1938533782959,
       "latest_completed": {
-        "evaluation": 5,
+        "evaluation": 7,
         "phase": "iterate",
-        "score": 0.8095621936930492,
+        "score": 0.8200508261373065,
         "mapping_valid": true,
-        "new_best": true,
-        "best_score": 0.8095621936930492,
-        "elapsed_seconds": 8917.400472459383,
-        "evaluation_seconds": 1683.9386755665764,
+        "new_best": false,
+        "best_score": 0.7808215553609551,
+        "elapsed_seconds": 12302.1209111223,
+        "evaluation_seconds": 1693.0770490001887,
         "damping": 1.0,
         "reset_reason": null
       },
-      "max_abs_relative_market_residual": 0.0042541109442797926,
-      "max_abs_scaled_pension_budget_residual": 0.0007461266519697583,
-      "max_abs_scaled_government_budget_residual": 0.004047810968465246,
-      "max_abs_mass_accounting_residual": 2.4424906541753444e-15,
+      "max_abs_relative_market_residual": 0.003753378592294184,
+      "max_abs_scaled_pension_budget_residual": 0.0003541690059131221,
+      "max_abs_scaled_government_budget_residual": 0.003904107776804776,
+      "max_abs_mass_accounting_residual": 1.5543122344752192e-15,
       "max_abs_policy_reproduction_max_abs": 0.0,
       "max_abs_feasibility_frontier_projection_mass": 0.0,
       "terminal_distance": {
@@ -208,8 +210,11 @@
         "terminal_verified": true,
         "horizon_comparison_passed": false
       },
-      "latest_completed_age_minutes": 9.109010549386342,
-      "native_household_checks_pass": true
+      "latest_completed_age_minutes": 13.862277972698212,
+      "native_household_checks_pass": true,
+      "accepted_stage": false,
+      "complete_exists": false,
+      "failure_exists": false
     }
   },
   "reported_changes": [
@@ -217,5 +222,6 @@
     "Big refit first shock remains in its first trial, no accepted stage; aggregate solver score improves but housing gap worsened between its first two mappings.",
     "Four-shock policy best housing gap improved to 0.4254%, still above the 0.02% requirement."
   ],
-  "morning_readout_at_or_after_utc": "2026-09-14T13:00:00Z"
+  "morning_readout_at_or_after_utc": "2026-09-14T13:00:00Z",
+  "last_check_assessment": "Both active jobs have recent heartbeats; no accepted fitted stage or completed policy. No changes to jobs, numerical contracts or slides."
 }
