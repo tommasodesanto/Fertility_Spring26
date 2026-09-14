@@ -1,5 +1,19 @@
 # Calibration Status
 
+**September 14, 08:00 UTC — one-shock 2% search finished without convergence.**
+Job 17722295 has scheduler state COMPLETED (exit 0), but its numerical receipt
+ends at `time_or_evaluation_budget`: finite equilibrium, terminal distance and
+horizon checks remain unpassed, and no final replay was performed. The best
+saved round-2 mapping 7 has housing/PAYGO/rebate gaps
+0.15191%/0.00348%/0.15078%; exact saved-coordinate matching and household gates
+pass. This is an improved provisional iterate, not a certified policy path.
+
+Big refit 17732824 remains RUNNING: first long mapping valid, first trial still
+being solved, no fitted stage accepted. Four-shock policy 17735075 and one-shock
+control 17722962 remain RUNNING with recent heartbeats. No restarts or slide
+changes. Updated compact checkpoint is in `long_successive_refit/overnight_monitor.json`
+within the original-queue packet.
+
 **September 14, 07:02 UTC — big refit and four-shock policy have started.**
 Stage 0 job 17732824 is RUNNING. Its first preference candidate has a newly
 converged and verified stationary endpoint, including all 16 one-step checks;
