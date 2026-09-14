@@ -251,4 +251,44 @@ continuation: 0.02246, 0.005601, 0.0007447, 0.0002399, \(2.690\times10^{-5}\),
 final replay exact, six mappings in 946 s (job 17730694), so the certified
 ten-period root costs \(8+6=14\) retained-solver mappings after the one-time
 seven-mapping measurement. The two certified roots agree to
-\(2\times10^{-4}\) relative in every coordinate.
+\(4\times10^{-7}\) relative in every coordinate.
+
+### September 14, 03:45 UTC: the 104-date announced root and discrete tenure thresholds
+
+The announced four-shock job 17711519 ended at its eight-mapping budget with
+best score 0.977 (housing \(5.4\times10^{-3}\), PAYGO 0.12, rebate 0.977),
+13819 s total; its second mapping tripped the worsening safeguard, which
+halved damping to 0.5 and reset the Jacobian to diagonal. Two experiment-only
+rescue arms (jobs 17732268 and 17732269, driver
+`code/cluster/run_e5f_ssj_announced_rescue.py`) restarted from its exactly
+reproduced best iterate: a pure continuation with the learned Broyden matrix
+and the unmodified solver, and the extrapolated ten-date Toeplitz matrix with
+the scaled step. Both first steps worsened (1.37 accepted; 1.50 tripped the
+safeguard, which discards the supplied matrix).
+
+The reason is not the Jacobian. At the warm start the rebate residual is
+concentrated at isolated dates (43--44: \(-0.23,+0.36\); 68--70:
+\(-0.16,+0.27,-0.98\)) plus a smooth tail rise to 0.71 at dates 100--102.
+The native rows show that the isolated spikes coincide with discrete jumps in
+the owner rate of 1.2--1.7 percentage points between adjacent dates (dates 25,
+44, 71) on an otherwise flat ownership profile whose typical date-to-date
+change is 0.16 points. A log-price step of 0.001 moved the jump from date 71
+to 72 and from 44 to 45 and the residual spike moved with it. These are the
+deterministic tenure-choice thresholds on the housing grid: a mass of
+households flips tenure when the price path crosses a threshold, the
+property-tax base moves by about 0.1 percent, and the rebate row, which is 200
+times the relative imbalance, jumps by 0.2 or more. The fiscal gate
+(\(2\times10^{-4}\) scaled, i.e. \(10^{-6}\) relative) is three orders of
+magnitude tighter than that jump, so no smooth root exists across a straddled
+threshold; the ten- and six-date roots pass because their few dates happen not
+to straddle one. Along a 104-date path a handful of dates always will.
+
+Implications (author decisions, nothing applied): (i) the announced 104-date
+"unconverged" label is a discreteness floor, not a search failure; the housing
+block at \(5\times10^{-3}\) and the PAYGO block are already near what the
+mapping can deliver; (ii) a certifiable long root needs either a fiscal gate
+commensurate with the threshold jump (of order \(10^{-3}\) relative, i.e. a
+scaled gate near 0.2--0.5), or a smooth tenure margin (the previously rejected
+Frechet smoothing), or a rebate rule that is not evaluated date by date at
+\(10^{-6}\); (iii) the measured-Jacobian start remains the right tool for the
+smooth part of the problem and cannot fix a discontinuity.
