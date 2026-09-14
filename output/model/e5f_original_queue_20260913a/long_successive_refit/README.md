@@ -47,3 +47,7 @@ remain explicitly separate, and all results remain provisional until checked.
 Sources: `code/cluster/run_e5f_long_successive_refit.py` and
 `code/cluster/prepare_e5f_long_successive_refit.py`. Detailed specification:
 `docs/model/e5f_long_horizon_successive_surprise_plan.md`.
+
+The September 14 requested first-candidate transition graph and comparison of
+the four-announced-shock tax policy with the frozen slide result are in
+`readout/README.md`. These are separate diagnostic artifacts; the deck is unchanged.

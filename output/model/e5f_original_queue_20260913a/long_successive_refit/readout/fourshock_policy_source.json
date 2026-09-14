@@ -1,0 +1,49 @@
+{
+  "status": "provisional_policy_best_matching_fourshock_recovery",
+  "contract": {
+    "policy": "fourshock_tax_20260914b/policy/tax2, round_02 mapping_07, job 17735075",
+    "baseline": "fourshock_tax_20260914b/output/recovery/baseline_rows.json",
+    "baseline_provenance": "announced four-shock job 17711519; recovery verification PASS; no root solves",
+    "tax": 0.02,
+    "matching": "baseline and policy share four-shock recovered 2023 state; do not substitute frozen one-shock tax1"
+  },
+  "remote_paths": {
+    "manifest": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/fourshock_tax_20260914b/manifest.json",
+    "recovery_rows": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/fourshock_tax_20260914b/output/recovery/baseline_rows.json",
+    "recovery_fertility": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/fourshock_tax_20260914b/output/recovery/fertility.json",
+    "recovery_verification": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/fourshock_tax_20260914b/output/recovery/verification.json",
+    "policy_rows": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/fourshock_tax_20260914b/policy/tax2/transition/round_02/mappings/mapping_07/rows.json",
+    "policy_fertility": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/fourshock_tax_20260914b/policy/tax2/transition/round_02/mappings/mapping_07/fertility.json",
+    "policy_best_receipt": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/fourshock_tax_20260914b/policy/tax2/transition/round_02/best_so_far.json",
+    "original_announced_rows": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c/output/run/mappings/mapping_07/rows.json",
+    "original_announced_fertility": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c/output/run/mappings/mapping_07/fertility.json"
+  },
+  "sha256": {
+    "manifest": "8b7d43210178089e716f25176a84b0ab4ef4da9a1c46d5642a70ddf8de312e83",
+    "recovery_rows": "d3c0751294a24dc9484c26b83adbb01c7555eac181ac44728486731796749752",
+    "recovery_fertility": "e6449fd67ecb4dbf2e7a45efe1baabd4cb120a7cf878270315d95f20effede37",
+    "recovery_verification": "a50e42ce9528cebb2b3cab1c245eeca5c6b3d53ecb88fdae366084683997a547",
+    "policy_rows": "65f3203c4d12487623d644d4b8974c8792122f5ea5286624181736e555664718",
+    "policy_fertility": "3a0b53038ecc9a711915870d17d560012fb1e63ad93661e3229aee652bbbc58e",
+    "policy_best_receipt": "c457d46272993aa51129b6d7a8743d2975e127899c0fe078b431f8046f6decfd",
+    "original_announced_rows": "52f4601e2c317845b94b98bec66f747dc9587f1d02bf1b9fe24b395a0b1dafc4",
+    "original_announced_fertility": "c6ccf1c75b76b69e518d3e9e50d19650a9bcf57fe60e230007d14fc5c79e6db4"
+  },
+  "recovery_verification": {"status":"PASS","observed_year":2023,"root_solves":0,"forward_dates":5,"backward_dates":22,"numeric_max_abs_gap":0.0,"tolerance":2e-10,"source_mapping_sha256":"52f4601e2c317845b94b98bec66f747dc9587f1d02bf1b9fe24b395a0b1dafc4","model_snapshot_sha256":"795319f9a4462c5c1ece51b5bf0713e5cf85f3d6f701f775881e103a5d0b5549"},
+  "best_receipt": {"evaluation":7,"score":0.4833747755050668,"mapping_valid":true,"policy_prices_2023_2063":[0.6421700022922914,0.5530039953106957],"policy_pension_period_2023_2063":[2.0463613896164983,1.7110008119100728],"policy_transfer_2023_2063":[0.32232156342873136,0.2888488209700042]},
+  "endpoints": {
+    "2023": {
+      "baseline": {"household_mass":1.0000000000006861,"birth_flow":0.0944351576320943,"birth_flow_topcode_adjusted":0.1045776305245444,"period_tfr_topcode_adjusted":1.6940187216826863,"pension_period":2.046361389616625,"transfer":0.1773404406969411},
+      "policy": {"household_mass":1.000000000000706,"birth_flow":0.0942568429268351,"birth_flow_topcode_adjusted":0.10437458991597415,"period_tfr_topcode_adjusted":1.6907297334884144,"pension_period":2.0463613896164983,"transfer":0.32232156342873136},
+      "relative_effect_percent": {"household_mass":1.9984014443252818e-12,"birth_flow_topcode_adjusted":-0.19415300150886772}
+    },
+    "2063": {
+      "baseline": {"household_mass":0.8736024123180269,"birth_flow":0.076627674052744,"birth_flow_topcode_adjusted":0.08460759600059849,"period_tfr_topcode_adjusted":1.765973076343138,"pension_period":1.7080530987833982,"transfer":0.16056978943454953},
+      "policy": {"household_mass":0.8745740611330163,"birth_flow":0.07740810004211837,"birth_flow_topcode_adjusted":0.08545456544387556,"period_tfr_topcode_adjusted":1.7788662882776864,"pension_period":1.7110008119100728,"transfer":0.2888488209700042},
+      "relative_effect_percent": {"household_mass":0.11122322938774687,"birth_flow_topcode_adjusted":1.0010560319797746}
+    }
+  },
+  "arrays_2023_2063": {"years":[2023,2027,2031,2035,2039,2043,2047,2051,2055,2059,2063],"baseline_households":[1.0000000000006861,0.992020746859679,0.9822303691821708,0.9710245760385378,0.9589435808512393,0.9470089963488058,0.9345030501595143,0.9211360056887139,0.9066332262420911,0.8908085209598391,0.8736024123180269],"policy_households":[1.000000000000706,0.9920207468596858,0.9822303691821878,0.9710245760385531,0.9589435808512722,0.9469123103447584,0.934476722635451,0.9212860325069164,0.9070256203040308,0.8914844269684107,0.8745740611330163],"baseline_births_topcode_adjusted":[0.1045776305245444,0.10337777098212785,0.10156946459103075,0.09918442114179324,0.09640837688704107,0.09350742983197631,0.09053302540424274,0.08785669417734757,0.08667800084819512,0.08564780810848593,0.08460759600059849],"policy_births_topcode_adjusted":[0.10437458991597415,0.10352552379013194,0.10193980870976387,0.09969339235364907,0.09700375197495084,0.09412848972545217,0.09118255528796414,0.08853793013366863,0.0874101512738526,0.08643007730043917,0.08545456544387556],"baseline_tfr":[1.6940187216826863,1.7008017795631594,1.7075473278675677,1.7140498153274306,1.7207488606645964,1.727525367432741,1.7344690578343676,1.7416741158415576,1.749220698178577,1.7572728210193667,1.765973076343138],"policy_tfr":[1.6907297334884144,1.7033957208981478,1.714151744616534,1.723361539927409,1.731919576408803,1.7397991954243759,1.7473328373588153,1.754778719894908,1.7624314809098989,1.7702693786194919,1.7788662882776864]},
+  "unresolved": [],
+  "local_comparator_guard": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_original_queue_20260913a/inherited_2023_tax/transition_readout/frozen_policy_paths.json"
+}
