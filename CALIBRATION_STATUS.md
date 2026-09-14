@@ -1,5 +1,14 @@
 # Calibration Status
 
+**September 14, 12:05 UTC — first-shock root gets closer, still unaccepted.**
+Big refit 17732824 remains at the first fixed preference candidate. Mapping 5
+reduces housing/PAYGO/rebate gaps to 0.08788%/0.02984%/0.05297%; the housing
+requirement is 0.02%, and the joint gates have not passed. No fitted stage is
+accepted. Four-shock policy 17735075 continues round 2, with best housing gap
+0.31089%. Both driver heartbeats are recent; saved-coordinate and household
+checks pass. No job changes or slide updates. Morning readout remains scheduled
+for the first monitor wake at or after 13:00 UTC.
+
 **September 14, 11:05 UTC — big run improves again, no fitted stage accepted.**
 First-shock trial 1 mapping 4 reduces housing/PAYGO/rebate gaps to
 0.30466%/0.28052%/0.25234%, from 2.66948%/1.08420%/1.45306% at mapping 3.
