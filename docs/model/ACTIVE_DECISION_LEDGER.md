@@ -7,6 +7,46 @@ that can still change the theory, quantitative interpretation, or paper-facing
 claims. `CALIBRATION_STATUS.md` remains the source for numerical results and
 reproducibility contracts.
 
+## High priority — weak policy effects: calibration or economic mechanism? (September 14)
+
+**Author priority: very important. Status: open.** Establish how much of the
+difference from Coven et al., and of our weak fertility response to the rebated
+property tax more generally, reflects an inadequate calibration versus economic
+mechanisms introduced by our model. Neither explanation is established. A weak
+response by itself is not evidence of a new mechanism or a reason to tune the
+calibration until the policy produces a preferred result.
+
+Required assessment:
+
+1. Establish comparable experiments: tax change, rebate recipients, geography,
+   starting distribution, population/migration closure, age definitions and
+   stationary versus transition outcomes. Separate these differences from
+   calibration quality. Exclude unresolved numerical and measurement errors
+   before attributing a discrepancy to economics; current transitions remain
+   unconverged.
+2. Within the same model and empirical target contract, assess how the policy
+   changes across credible calibrations with better fit. Inspect young ownership,
+   age-specific housing allocation, wealth and borrowing constraints, and the
+   first-birth housing response. Retain identification and report complete fit
+   and parameter tables; a lower aggregate loss alone does not establish that
+   the policy-relevant margins are better disciplined.
+3. At fixed parameters, use controlled mechanism comparisons to trace the
+   tax through capitalization, holding costs and rebates into young households'
+   ownership, housing services and fertility, then population feedback. Keep
+   these comparisons distinct from recalibration of an altered specification.
+4. Quantify how much the policy outcomes move when calibration fit improves
+   and when individual mechanisms are changed. Report interactions and remaining
+   uncertainty rather than imposing a unique additive attribution. State which
+   findings survive credible calibration changes and what evidence supports
+   calling them an economic contribution.
+
+Deliverable: a concise attribution table and explanation separating calibration
+sensitivity, experimental/environment differences, numerical uncertainty and
+robust economic mechanisms. Reconcile with the urgent geography and earnings
+heterogeneity entries below. Benchmark evidence is in
+`output/model/e5f_original_queue_20260913a/inherited_2023_tax/transition_readout/README.md`.
+This entry records the research priority; it does not launch new computations.
+
 ## Very urgent — reconcile geographic scope before final quantification (September 14)
 
 **Author priority: very urgent. Status: open.** The current pooled housing

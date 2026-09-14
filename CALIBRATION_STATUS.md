@@ -1,5 +1,15 @@
 # Calibration Status
 
+**September 14 — outstanding, high priority: calibration versus policy mechanism.**
+The author requests quantifying how much of the weak fertility-policy response
+and the difference from Coven et al. comes from calibration shortcomings versus
+the model's economic mechanisms. Neither attribution is established. Compare
+credible calibrations under a common target contract, then controlled mechanism
+changes at fixed parameters; distinguish experimental/geographic differences,
+interactions and unresolved numerical error. The full assessment and deliverable
+are in the high-priority entry in `docs/model/ACTIVE_DECISION_LEDGER.md`.
+No new computation is launched by this ledger update.
+
 **September 14 — author selects fertility-only policy slide.** The Policy
 Results frame in `latex/september_14_presentation.tex` now uses
 `inherited_2023_tax/transition_readout/policy_fertility.pdf` within the original
