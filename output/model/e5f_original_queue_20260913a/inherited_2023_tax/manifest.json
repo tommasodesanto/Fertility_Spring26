@@ -1,0 +1,61 @@
+{
+  "spec": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a/spec.json",
+  "recovery": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/permanent_2023_profile_20260913_retry2/output",
+  "endpoint": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_terminal_restart_v1/endpoint/terminal.pkl.gz",
+  "endpoint_receipt": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_terminal_restart_v1/endpoint/root_receipt.json",
+  "seed": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_fertility_replay_iter3/source/snapshot/latest_completed.json",
+  "output": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/inherited_2023_tax_20260913a",
+  "file_sha256": {
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/inherited_2023_tax_20260913a/source/run_e5f_inherited_2023_tax_long.py": "67d755b6cd5b5dba73d63f0560313d6912007c9dcdc3770ec86034c1a486b64d",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a/spec.json": "5262ccba5ce38eb185e6187c9b5ad5754cd38c86e221b638d6cd0a7c0bf1b8b2",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/permanent_2023_profile_20260913_retry2/output/native_2023_snapshot.pkl.gz": "befdbf210a7d4c9e363f62edbd2b57c1cf4486564aa6523d15511e0def3ef072",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/permanent_2023_profile_20260913_retry2/output/verification.json": "edf67d9d5eb8d5510c29582786589683f84dce3deadb9e5be92be36d32f5bd88",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/permanent_2023_profile_20260913_retry2/output/rows.json": "9f1424965dae457979cc17fc31f3f7d779d4c165e86edc2c24a6b5875cb8250e",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_terminal_restart_v1/endpoint/terminal.pkl.gz": "22f85eda9fa8770c1213856cedcc480bd10fd8114700c0e2ead528a2784fce7c",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_terminal_restart_v1/endpoint/root_receipt.json": "d4054a2c82867a881d0d96b6799ffb733858fd36ed9186d42c45cb6f60dd686e",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_fertility_replay_iter3/source/snapshot/latest_completed.json": "e155a092f1535ed2a24eec31cade75b9e673324fe8994da356d29ab3ed714e5c",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/permanent_2023_profile_20260913_retry2/output/continuation_2027.pkl.gz": "63068cdf83caf2be6b4b1627f73ca4c95fc1ef3bee3aced62f15f6e41048a53a"
+  },
+  "annual_taxes": [
+    0.01,
+    0.02
+  ],
+  "start_year": 2023,
+  "periods": 100,
+  "psi": 0.09221854783921073,
+  "max_path_evaluations": 16,
+  "terminal_max_evaluations": 24,
+  "terminal_seconds": 3600,
+  "smoke_seconds": 1500,
+  "path_seconds": 28800,
+  "total_seconds": 36000,
+  "expected_mapping_seconds": 1900,
+  "expected_hours_per_arm": [
+    4,
+    9
+  ],
+  "closure": {
+    "preference": "Held permanently at fitted final level; no new preference shock",
+    "information": "Unexpected tax reform in 2023, then known permanently",
+    "initial_distribution": "Saved one-permanent-preference-shock iteration3 pre-choice2023, unconverged history",
+    "population": "Original four-vintage birth queue, births/2.1; no immigration or rescaling",
+    "fiscal": "Equal property-tax rebate to household heads; balanced PAYGO at fixed payroll .179",
+    "housing": "Fixed calibrated supply curve in asset prices, elasticity .63",
+    "production_eligible": false
+  },
+  "objects": {
+    "structural_parameters": "estimated, retained 2007 calibration",
+    "preference_levels": "estimated in earlier historical exercise, fixed here",
+    "housing_supply_scale": "empirically normalized at calibration, unchanged",
+    "housing_supply_elasticity": "externally fixed .63",
+    "birth_to_entry_conversion": "externally fixed 1/2.1",
+    "entry_distribution": "retained calibrated entry distribution",
+    "migration": "externally fixed zero",
+    "annual_property_tax": "externally fixed policy values .01/.02",
+    "payroll_tax": "externally fixed .179",
+    "pension": "endogenous balanced amount",
+    "rebate": "endogenous equal-per-head balanced amount",
+    "inherited_history": "outstanding: not converged",
+    "terminal_approach_and_horizon": "outstanding until assessed"
+  }
+}

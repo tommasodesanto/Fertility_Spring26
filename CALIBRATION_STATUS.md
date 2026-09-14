@@ -1,5 +1,69 @@
 # Calibration Status
 
+**September 13 — author selects a long-horizon successive-surprise refit.**
+Prepare four fitted preference surprises, at 2007/2011/2015/2019, each believed
+permanent when it arrives, with the calibrated 2007 parameters fixed. Carry
+households and original birth queues between dates; retain equal rebates,
+balanced PAYGO and no immigration. This differs from the running announced
+four-shock comparison. The fitted 2023 state will feed the 2% policy, and its
+matching baseline continuation will be reused. The prepared specification is
+`docs/model/e5f_long_horizon_successive_surprise_plan.md`.
+No new refit has been submitted. The scalar-fitting adapter and a long-horizon
+test of the improved numerical method remain prerequisites. A ten-period
+equilibrium success is not evidence of terminal convergence or long-run fit.
+
+**September 13 — author requests the 2% policy under both fertility histories.**
+The slides show the one-permanent-shock iteration3; job17711519 solves the
+announced four-shock baseline. The policy plan now keeps both: a matched
+1%/2% continuation from the existing one-shock2023 state, plus a2% continuation
+from the four-shock run's own2023 state, reusing its existing1% baseline.
+The four-shock branch must wait for a frozen completed baseline result; it
+must not mix that baseline with the one-shock household distribution.
+The final preference and structural parameters coincide across histories, so
+the2% terminal equilibrium can be shared after fresh source-matched validation.
+
+One-shock2% job17722295 has verified its new terminal, passed two valid native
+smoke mappings and entered the full100-period transition. The extra1% job17722294
+stopped on exact saved-V reproduction: recomputing an unchanged user-cost
+identity changed floating-point rounding. Retry17722962 preserves the saved
+baseline user cost exactly; no tolerances or scientific parameters changed.
+It passed fresh terminal verification and two smoke mappings and is RUNNING
+the full 100-period path. Four-shock recovery job **17723529** is submitted,
+PENDING with dependency `afterany:17711519`. It will freeze a completed native
+104-date baseline evaluation, verify its recovered 2023 state, then automatically
+submit only the 2% continuation. No second 1% four-shock job is launched.
+Recovery and policy receipts are under
+`output/model/e5f_original_queue_20260913a/fourshock_tax/`.
+
+**September 13 — inherited-2023 1%/2% tax pipelines running.**
+The author explicitly selected an unexpected permanent reform in the inherited
+2023 economy. Jobs **17722294** (1% baseline) and **17722295** (2% reform)
+are RUNNING on Torch. Both passed inherited-state/native budget checks and
+entered the terminal-equilibrium stage. Each automatically proceeds through
+an exact two-date root-loop smoke to a 100-period continuation only after
+its own endpoint is verified. Separate jobs preserve independent failure handling.
+
+The common inherited state is the same one-permanent-shock iteration3 2023
+cross-section used in the current figures; its preceding history remains
+unconverged. Original adjusted/raw birth queues are reconstructed oldest-first
+from the four saved 2007--2019 birth flows, each divided by2.1. The 2023 due
+entry reproduces the saved row exactly. No immigration or population rescaling.
+Preferences remain0.09221854783921073, PAYGO payroll0.179, all property-tax
+revenue equally rebated to household heads. The fixed asset-price supply curve
+and elasticity0.63 remain unchanged. The 2% annual rate is0.08 per four-year
+period; the native user-cost identity is updated consistently. The policy
+validator retains all baseline checks while explicitly admitting this tax
+change; neither H0 nor r_bar is re-anchored to the inherited 2023 economy.
+
+Each arm allows24 terminal mappings/one hour, a25-minute smoke and up to two
+eight-mapping native path rounds/eight hours, capped at ten hours total.
+About32 minutes per100-date mapping implies roughly4--9hours per arm.
+Market/fiscal convergence, terminal approach and horizon robustness are separate
+checks; this is a provisional policy comparison, not an accepted production result.
+Driver: `code/cluster/run_e5f_inherited_2023_tax_long.py`; pinned contract and
+receipts: `output/model/e5f_original_queue_20260913a/inherited_2023_tax/`.
+The announced-four-shock run17711519 is independent and was not modified.
+
 **September 13, 23:40 UTC — SSJ continuation: measured block-Toeplitz initial Jacobian.**
 Two bounded ten-period diagnostics ran on Torch (jobs 17714834 and 17717654,
 batches `afternoon_original_queue_20260913a_ssj_toeplitz_10[_scaled]`), leaving
