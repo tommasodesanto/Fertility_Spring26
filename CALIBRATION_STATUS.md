@@ -1,5 +1,16 @@
 # Calibration Status
 
+**September 14 — 2007/2023 lifecycle figures.** The author-requested initial
+stationary model versus ACS2007, plus a comparison with the existing2023
+lifecycle slide, is in
+`output/model/e5f_original_queue_20260913a/lifecycle_comparison/`.
+Panels show ownership, rooms capped at9, and households with children at home,
+using the same ages, sample definitions and axes across years. Saved initial
+prices/distribution and aggregate housing checks pass; the2023 plotted arrays
+reproduce the prior verified figure exactly. Both figures were visually
+inspected. No model solve or deck edit. The2023 model is the unconverged
+one-permanent-shock cross-section; full age curves are not individual targets.
+
 **September 14 — outstanding, maximum urgency: permanent earnings heterogeneity.**
 Tommaso requests reassessing and prefers removing the permanent income component
 while retaining persistent Rouwenhorst earnings shocks. No code or current-run
