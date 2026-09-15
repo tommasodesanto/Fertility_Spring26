@@ -58,3 +58,35 @@ iterate reached the residual threshold but timed out before final verification;
 it is saved for recovery, not accepted. The separate four-shock policy ended
 at its evaluation budget and remains unconverged. `CALIBRATION_STATUS.md`
 contains the readable final assessment. No jobs were relaunched by this inspection.
+
+## Authorized recovery, September 15
+
+`recovery_manifest_20260915.json`, `recovery_submission_20260915.json` and
+`recovery_source_manifest_20260915.json` describe the separate recovery batch
+`long_successive_refit_recovery_20260915a`. Smoke job 17858190 was observed
+RUNNING. The old experiment and its output are untouched.
+
+The smoke first validates both cached roots and freshly re-audits both terminal
+states, then runs the existing native loop smoke. Success automatically submits
+stage 0. Its first two candidates reuse prior roots and terminal states; subsequent
+candidates use the retained scalar bracket/secant search. Only certified native
+roots contribute signed fertility gaps, and only a fitted root may dispatch the
+next historical stage. Policy still requires the fitted inherited 2023 state.
+
+Expected first recovery: two full 104-date mappings at observed 2,665–3,413
+seconds each, approximately 1.5–2.2 hours with reporting. Budgeting uses a
+conservative 3,900 seconds per mapping plus 900 seconds for artifacts. The root
+reserves its final evaluation within the chosen mapping count. If the next round
+cannot fit initial plus final evaluations, the candidate record is saved; the
+stage reports that continuation is required. No tolerance or scientific
+specification changes are part of this operation.
+
+All original caps remain: up to four rounds per candidate, six candidates per
+stage, 10 hours per candidate, 24 hours per stage and seven days for the chain.
+Every completed native mapping writes rows, fertility, graphs and best/latest
+receipts; the driver writes a one-minute heartbeat. A missing heartbeat for
+30 minutes requires investigation. Queue waiting time is outside solve estimates.
+
+Ten local routing and recovery tests, remote manifest/coordinate validation and
+source compilation passed before submission. Native smoke and long recovery
+remain subject to their saved gate receipts; scheduler RUNNING is not acceptance.

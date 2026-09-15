@@ -1,5 +1,40 @@
 # Calibration Status
 
+**September 15 — authorized recovery submitted; native smoke RUNNING.**
+At the author's request, recovery batch `long_successive_refit_recovery_20260915a`
+has been launched. Smoke job **17858190** is RUNNING on cs659. It checks both
+saved candidate roots against their native rows, freshly re-audits their cached
+stationary endpoints, and runs the retained six-date stationary / two-date
+changed-preference exact-loop smoke. Stage 0 starts automatically only after
+the smoke passes; this launch is not yet a recovered or fitted equilibrium.
+
+The isolated batch reuses trial 1 round 2's below-threshold best prices and
+learned Jacobian, followed by trial 2's saved best, then the retained bracket/secant
+fit. Root acceptance still requires fresh initial/final mappings and first-date
+state replay. Candidate and stage timeouts now preserve root receipts rather
+than discarding useful evidence. Root mapping budgets reserve 3,900 seconds
+per 104-date evaluation, scaled by horizon, plus 900 seconds for artifacts;
+the final verification is counted as a full mapping. An unfinished candidate
+is retained for continuation, not treated as an accepted fertility observation.
+
+Initial recovery is expected to need two full mappings, about 1.5–2.2 hours
+after its stage starts. Each candidate remains capped at 10 hours/four root
+rounds, each stage at 24 hours/six candidates, and the chain at seven days.
+Later fitted shocks and the matched policy retain their gated automatic dispatch.
+The model, initial calibration, target fingerprints, all numerical gates,
+population rule, fiscal rules, geographic scope and terminal boundary are
+unchanged. Terminal-distance and horizon robustness remain outstanding.
+No slide or ledger specification decisions were changed.
+
+Ten local controller tests pass, including recovery mismatch rejection, time
+reservation and preservation of an unfinished candidate. Python compilation,
+remote manifest/hash validation, and exact coordinate checks for both recovered
+roots pass; independent read-only review found no launch blocker. Native checks
+are running on the compute node. Manifest, submission and staged source hashes:
+`output/model/e5f_original_queue_20260913a/long_successive_refit/recovery_*_20260915.json`.
+Remote batch is under
+`/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/`.
+
 **September 15 — final job outcomes verified after Torch login renewal.**
 The user queue is empty. No new job was launched and no slides were changed.
 The big successive-surprise refit (17732824) ended FAILED, exit 124, after

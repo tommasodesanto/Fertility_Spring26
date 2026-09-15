@@ -40,7 +40,7 @@ def save(path, value):
     temporary.replace(path)
 
 
-def prepare(batch):
+def prepare(batch, recover_from=None):
     batch = Path(batch).resolve()
     manifest = batch / 'manifest.json'
     if manifest.exists():
@@ -111,6 +111,31 @@ def prepare(batch):
             root_mapping_seconds_observed=[1666, 2223],
             stage_wall_hours=24, policy_wall_hours=12, total_calendar_days=7,
             interpretation='Caps, not runtime predictions; stop with best evidence if exhausted'))
+    if recover_from is not None:
+        parent = Path(recover_from).resolve()
+        parent_manifest = parent / 'manifest.json'
+        previous = read(parent_manifest)
+        recovery_sources = []
+        for trial, mapping in ((1, 3), (2, 1)):
+            candidate = Path(previous['output']) / 'stage_0_2007' / f'trial_{trial:02d}'
+            round_path = candidate / 'round_02'
+            receipt = round_path / 'root_receipt.json'
+            r = read(receipt)
+            source = dict(psi=float(r['psi']), root_receipt=str(receipt),
+                native_rows=str(round_path / 'mappings' / f'mapping_{mapping:02d}' / 'rows.json'),
+                terminal_pickle=str(candidate / 'terminal/terminal.pkl.gz'),
+                terminal_receipt=str(candidate / 'terminal/root_receipt.json'))
+            for key in ('root_receipt', 'native_rows', 'terminal_pickle', 'terminal_receipt'):
+                m['file_sha256'][source[key]] = sha(source[key])
+            recovery_sources.append(source)
+        m.update(recovery_parent_manifest=str(parent_manifest), recovery_sources=recovery_sources,
+                 reserve_verification_time=True, mapping_seconds_budget_104=3900,
+                 artifact_reserve_seconds=900, preserve_unconverged_candidate=True)
+        m['file_sha256'][str(parent_manifest)] = sha(parent_manifest)
+        m['budget'].update(root_mapping_seconds_observed=[2665, 3413],
+            recovery_candidate_initial_expected_mappings=2,
+            mapping_seconds_budget_104=3900, artifact_reserve_seconds=900,
+            recovery_initial_estimated_hours=[1.5, 2.2])
     for key, name in script_paths.items():
         mode = 'stage' if key.startswith('stage_') else key
         argv = [PYTHON, str(driver), '--manifest', str(manifest), '--mode', mode]
@@ -153,8 +178,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--batch', type=Path, required=True)
     parser.add_argument('--submit', action='store_true')
+    parser.add_argument('--recover-from', type=Path,
+                        help='Previous frozen batch containing the first two candidate roots')
     args = parser.parse_args()
-    manifest = prepare(args.batch)
+    manifest = prepare(args.batch, args.recover_from)
     if args.submit:
         submit(manifest)
     else:

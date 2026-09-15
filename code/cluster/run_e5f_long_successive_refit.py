@@ -96,6 +96,20 @@ def manifest_contract(m, path):
         raise ValueError("manifest fit bounds or tolerance differ")
     if int(m["terminal_year"]) != 2423 or [horizon(y, int(m["terminal_year"])) for y in YEARS] != list(COUNTS):
         raise ValueError("manifest terminal boundary differs")
+    if m.get("recovery_sources"):
+        parent_path = m["recovery_parent_manifest"]
+        if parent_path not in m["file_sha256"]:
+            raise ValueError("recovery parent manifest must be pinned")
+        parent = read(parent_path)
+        for key in ("spec", "target_sha256", "initial_score", "initial_target_fingerprint",
+                    "shock_years", "year_targets", "psi_seeds", "bounds_relative",
+                    "fit_tolerance", "terminal_year", "contract"):
+            if m[key] != parent[key]:
+                raise ValueError("recovery changed scientific contract: " + key)
+        for source in m["recovery_sources"]:
+            for key in ("root_receipt", "terminal_pickle", "terminal_receipt", "native_rows"):
+                if source[key] not in m["file_sha256"]:
+                    raise ValueError("recovery input must be hash pinned: " + key)
     return sha(path)
 
 
@@ -180,8 +194,19 @@ def endpoint(c, psi, folder, deadline, start):
     deadline = min(deadline, time.monotonic() + float(c.manifest["terminal_seconds"]))
     controls = dict(c.controls, max_evaluations=int(getattr(c, "terminal_max_evaluations", 24)))
     kwargs = {} if start is None else {"start": np.asarray(start, float)}
-    result = terminal.solve_terminal(old=c.old, psi=float(psi), audit=c.audit,
-        controls=controls, deadline=deadline, folder=Path(folder), **kwargs)
+    recovered = next((r for r in c.manifest.get("recovery_sources", [])
+                      if float(r["psi"]) == float(psi)), None)
+    if recovered:
+        with gzip.open(recovered["terminal_pickle"], "rb") as stream:
+            result = pickle.load(stream)
+        if (float(result.parameters.psi_child) != float(psi)
+                or result.receipt != read(recovered["terminal_receipt"])):
+            raise ValueError("recovered endpoint does not match its preference/receipt")
+        dump_pickle(Path(folder) / "terminal.pkl.gz", result)
+        save(c.driver, Path(folder) / "root_receipt.json", result.receipt)
+    else:
+        result = terminal.solve_terminal(old=c.old, psi=float(psi), audit=c.audit,
+            controls=controls, deadline=deadline, folder=Path(folder), **kwargs)
     if not getattr(result, "verified", False):
         raise RuntimeError("candidate terminal endpoint was not verified")
     # A candidate endpoint is only usable after a fresh native one-step audit.
@@ -314,6 +339,11 @@ def run_mapping(c, scaled, toeplitz, *, inherited, endpoint_result, psi, count, 
     guess = initial_prices(c.old, endpoint_result, count, warm)
     controls = controls_for(c, toeplitz, receipt, count, round_number)
     controls["max_evaluations"] = int(max_evaluations)
+    if count >= 100 and c.manifest.get("reserve_verification_time"):
+        controls["max_evaluations"] = budgeted_root_evaluations(
+            deadline-time.monotonic(), count, controls["max_evaluations"], c.manifest)
+        if controls["max_evaluations"] < 2:
+            raise TimeoutError("Insufficient time for initial mapping and verification")
     with c.queue.original_queue_adapter(), scaled_root_context(c, scaled):
         native = c.rebated.evaluate_forecast
         with patch.object(c.rebated, "evaluate_forecast", capture):
@@ -383,23 +413,56 @@ def solve_candidate(c, scaled, toeplitz, *, inherited, psi, year, count, target,
     folder = Path(folder); folder.mkdir(parents=True, exist_ok=True)
     terminal = endpoint(c, psi, folder / "terminal", deadline, endpoint_start)
     warm, receipt = (next_guess(warm_receipt, count) if warm_receipt else initial_warm), warm_receipt
-    final = None
+    final, completed_rounds = None, 0
     for round_number in range(1, int(c.manifest["max_rounds"])+1):
-        if time.monotonic() >= deadline:
-            raise TimeoutError("Candidate root budget exhausted")
+        maximum = int(c.manifest.get("max_root_evaluations", 8))
+        if c.manifest.get("reserve_verification_time"):
+            maximum = budgeted_root_evaluations(deadline-time.monotonic(), count,
+                maximum, c.manifest)
+        if time.monotonic() >= deadline or maximum < 2:
+            if final is None:
+                raise TimeoutError("Insufficient time for initial mapping and verification")
+            break  # Persist the completed candidate instead of losing its root receipt.
         final, obs, root = run_mapping(c, scaled, toeplitz, inherited=inherited,
             endpoint_result=terminal, psi=psi, count=count, year=year,
             folder=folder / f"round_{round_number:02d}", deadline=deadline,
-            warm=warm, receipt=receipt, round_number=round_number, graphs=(round_number == 1))
+            warm=warm, receipt=receipt, round_number=round_number, graphs=(round_number == 1),
+            max_evaluations=maximum)
+        completed_rounds += 1
         warm, receipt = next_guess(root, count), root
         if final.path is not None and root.get("finite_horizon_market_fiscal_converged"):
             break
     passed, gap = accepted(final, obs, target)
     record = dict(psi=float(psi), calendar_year=year, target=float(target), model_tfr=(None if not obs else tfr(obs[0])),
         gap=gap, accepted=passed, root_receipt=receipt, endpoint_coordinates=np.asarray(terminal.coordinates, float).tolist(),
-        terminal_verified=True, rounds=round_number)
+        terminal_verified=True, rounds=completed_rounds)
     save(c.driver, folder / "candidate.json", record)
     return final, obs, record, terminal
+
+
+def budgeted_root_evaluations(remaining, count, maximum, manifest):
+    """Count the final replay as a full mapping, with extra time for artifacts."""
+    seconds = float(manifest["mapping_seconds_budget_104"]) * count / 104.
+    reserve = float(manifest["artifact_reserve_seconds"])
+    if not math.isfinite(seconds) or seconds <= 0 or reserve < 0:
+        raise ValueError("invalid mapping-time budget")
+    return max(0, min(int(maximum), int((remaining-reserve)//seconds)))
+
+
+def recovery_root(source, year, count):
+    """Recover only a matching native price/fiscal point; acceptance is rerun."""
+    root = read(source["root_receipt"])
+    if (int(root["calendar_year"]) != year or int(root["count"]) != count
+            or float(root["psi"]) != float(source["psi"])):
+        raise ValueError("recovery root belongs to another candidate or calendar")
+    rows = read(source["native_rows"])
+    if [r["calendar_year"] for r in rows] != list(range(year, year+4*count, 4)):
+        raise ValueError("recovery rows have a different calendar")
+    coords = [r[k] for k in ("asset_price", "pension_period_units", "equal_transfer_period_units") for r in rows]
+    if (not root["best"]["mapping_valid"] or exact_gap(coords, root["best"]["prices"]) > 0
+            or any(float(r["psi_child"]) != float(source["psi"]) for r in rows)):
+        raise ValueError("recovery native arrays do not match best coordinates")
+    return root
 
 
 def candidate_values(seed, history):
@@ -461,22 +524,31 @@ def stage(c, scaled, toeplitz, m, stage_index, deadline):
         psi_bounds=[PSI_SS-.20, PSI_SS+.02], original_queue=True,
         horizon_endpoint_year=2423, production_eligible=False))
     history, best, endpoint_start = [], None, None
+    recoveries = m.get("recovery_sources", []) if stage_index == 0 else []
     for trial in range(1, int(m.get("max_trials", 6))+1):
         if time.monotonic() >= deadline: break
-        proposed = list(candidate_values(SEEDS[stage_index], history))
+        recovered = recoveries[trial-1] if trial <= len(recoveries) else None
+        proposed = ([float(recovered["psi"])] if recovered else
+                    list(candidate_values(SEEDS[stage_index], history)))
         if not proposed: break
         psi = proposed[0]
         try:
             candidate_deadline = min(deadline, time.monotonic()+float(m.get("candidate_seconds", 36000)))
+            warm_receipt = (recovery_root(recovered, year, count) if recovered else
+                            (best or {}).get("root_receipt"))
             result, obs, record, terminal = solve_candidate(c, scaled, toeplitz, inherited=inherited,
                 psi=psi, year=year, count=count, target=target, folder=folder/f"trial_{trial:02d}",
-                deadline=candidate_deadline, endpoint_start=endpoint_start, warm_receipt=(best or {}).get("root_receipt"),
+                deadline=candidate_deadline, endpoint_start=endpoint_start, warm_receipt=warm_receipt,
                 initial_warm=stage_warm)
             history.append(record); endpoint_start=terminal.coordinates
             if record.get("gap") is not None and (best is None or abs(record["gap"]) < abs(best.get("gap", float("inf")))):
                 best = record
                 save(c.driver, folder / "best_so_far.json", best)
             save(c.driver, folder / "latest_completed.json", record)
+            if m.get("preserve_unconverged_candidate") and record.get("gap") is None:
+                save(c.driver, folder / "failure.json", dict(error="candidate requires continuation",
+                    candidate=record, candidates=history, calendar_year=year))
+                return
             if record["accepted"]:
                 proof = checkpoint_state(c, folder / "accepted_next_state.pkl.gz", state=result.next_state,
                     row=record, terminal=terminal, year=year, psi=psi)
@@ -487,7 +559,14 @@ def stage(c, scaled, toeplitz, m, stage_index, deadline):
                 return
         except Exception as exc:
             reject = dict(trial=trial, psi=float(psi), rejected=True, error_type=type(exc).__name__, error=str(exc))
+            if m.get("preserve_unconverged_candidate"):
+                reject["recoverable_root_receipts"] = [str(p) for p in
+                    sorted((folder/f"trial_{trial:02d}").glob("round_*/root_receipt.json"))]
             history.append(reject); save(c.driver, folder / "latest_completed.json", reject)
+            if m.get("preserve_unconverged_candidate") and isinstance(exc, TimeoutError):
+                save(c.driver, folder / "failure.json", dict(error="candidate requires continuation",
+                    candidate=reject, candidates=history, calendar_year=year))
+                return
     save(c.driver, folder / "failure.json", dict(error="no accepted candidate", candidates=history,
         valid_best=best, calendar_year=year))
 
@@ -534,6 +613,13 @@ def adopted_tax_validator(c, old, annual_tax):
 
 def smoke(c, scaled, toeplitz, m, deadline):
     out = Path(m["output"])/"smoke"; out.mkdir(parents=True, exist_ok=False)
+    for i, source in enumerate(m.get("recovery_sources", []), 1):
+        recovered_root = recovery_root(source, 2007, 104)
+        recovered_terminal = endpoint(c, source["psi"], out/f"recovered_terminal_{i}", deadline, None)
+        save(c.driver, out/f"recovery_input_{i}.json", dict(passed=True,
+            psi=source["psi"], root_source=source["root_receipt"],
+            native_coordinates_match=True, terminal_freshly_verified=recovered_terminal.verified,
+            old_best_score=recovered_root["best"]["score"], old_root_accepted=False))
     # Exact stationary six-date root smoke.
     psi = float(c.old.parameters.psi_child)
     terminal = endpoint(c, psi, out/"stationary_terminal", deadline,
