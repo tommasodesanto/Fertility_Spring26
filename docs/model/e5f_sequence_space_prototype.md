@@ -292,3 +292,18 @@ scaled gate near 0.2--0.5), or a smooth tenure margin (the previously rejected
 Frechet smoothing), or a rebate rule that is not evaluated date by date at
 \(10^{-6}\); (iii) the measured-Jacobian start remains the right tool for the
 smooth part of the problem and cannot fix a discontinuity.
+
+### September 14 close-out of the rescue arms
+
+Arm A (job 17732268) was cancelled by the experiment owner after its
+safeguard reset made it a duplicate of arm B (identical best score
+0.6681649545882107). Arm B (job 17732269) reached mapping 6 at score 0.447
+(housing \(2.6\times10^{-3}\), PAYGO \(3.4\times10^{-2}\), rebate 0.447 at
+date 101) under quarter damping, then hit the diagnostic's own 16200 s
+numerical deadline before its final replay; no receipt was written and the
+result is a checkpoint, not a certified root. The residual is still the
+threshold pair at dates 43--44 (\(-0.13,+0.43\)) and 69--70
+(\(+0.07,-0.42\)) plus the smooth tail (0.32 to 0.45 at dates 99--101). The
+practical floor of the current 104-date contract under a deterministic tenure
+margin is therefore of order 0.4--1.0 in scaled units. No further arm was
+launched.
