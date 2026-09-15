@@ -61,3 +61,31 @@ class TestScaledStep(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestToleranceVector(unittest.TestCase):
+    def test_blockwise_gate_certifies_when_each_block_meets_its_tolerance(self):
+        J, root, evaluate = _coupled_system()
+        start = np.exp(root + np.linspace(0.0, -0.6, 10))
+        tol = np.full(10, 1e-3)
+        receipt = solve_price_path_scaled(initial_prices=start, evaluate=evaluate, tolerance_vector=tol,
+                                          **_controls(J, 8))
+        self.assertTrue(receipt["converged"])
+        self.assertEqual(receipt["gate"], 1.0)
+        final = receipt["final"]
+        self.assertLessEqual(final["score"], 1.0)
+        self.assertAlmostEqual(final["score"], final["raw_max_abs"] / 1e-3, places=12)
+        self.assertTrue(all("raw_max_abs" in h for h in receipt["history"]))
+
+    def test_rejects_wrong_shape_tolerance(self):
+        J, root, evaluate = _coupled_system()
+        with self.assertRaisesRegex(ValueError, "tolerance_vector"):
+            solve_price_path_scaled(initial_prices=np.exp(root), evaluate=evaluate,
+                                    tolerance_vector=np.ones(3), **_controls(J, 4))
+
+    def test_without_tolerance_vector_behaviour_is_unchanged(self):
+        J, root, evaluate = _coupled_system()
+        start = np.exp(root + np.linspace(0.0, -0.6, 10))
+        receipt = solve_price_path_scaled(initial_prices=start, evaluate=evaluate, **_controls(J, 8))
+        self.assertIsNone(receipt["tolerance_vector"]); self.assertEqual(receipt["gate"], 2e-4)
+        self.assertEqual(receipt["final"]["score"], receipt["final"]["raw_max_abs"])

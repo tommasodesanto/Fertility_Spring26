@@ -45,3 +45,16 @@ class TestRescueSelection(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestLoosenedGatePieces(unittest.TestCase):
+    def test_block_tolerance_vector(self):
+        v = rescue.block_tolerance_vector(4, 2e-4, 0.5)
+        self.assertEqual(v.shape, (12,)); self.assertEqual(v[0], 2e-4); self.assertEqual(v[4], 0.5); self.assertEqual(v[11], 0.5)
+        with self.assertRaises(ValueError):
+            rescue.block_tolerance_vector(4, 2e-4, 0.0)
+
+    def test_warm_from_checkpoint_bypasses_replay_requirement(self):
+        ck = dict(prices=[1.0] * 6, score=0.4)
+        x, score = rescue.warm_coordinates(dict(best=None), 2, checkpoint=ck)
+        self.assertEqual(x.shape, (3, 2)); self.assertEqual(score, 0.4)

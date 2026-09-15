@@ -19,7 +19,8 @@ def solve_price_path_scaled(*, initial_prices, evaluate, project, slope,
                      market_tolerance, max_log_step, damping, max_evaluations,
                      deadline_monotonic, max_condition_number, worsening_factor,
                      final_reproduction_tolerance, callback=None,
-                     initial_jacobian=None, default_jacobian=None):
+                     initial_jacobian=None, default_jacobian=None,
+                     tolerance_vector=None):
     """Return a dict; only ``converged=True`` certifies the fresh final mapping.
 
     ``evaluate`` returns ``residual``, Boolean ``mapping_valid`` and optionally
@@ -30,6 +31,10 @@ def solve_price_path_scaled(*, initial_prices, evaluate, project, slope,
     ``initial_jacobian`` optionally supplies d(residual)/d(log price), a finite
     NxN matrix. ``default_jacobian`` optionally specifies a nonsingular reset
     matrix for differently scaled equations; the default remains ``-slope * I``.
+    ``tolerance_vector`` (diagnostic copy only) gives a per-coordinate gate; when
+    supplied the ledger ``score`` is ``max_i |r_i| / tol_i`` and convergence
+    means ``score <= 1``, while ``raw_max_abs`` keeps the retained max-abs
+    residual for comparability.  ``market_tolerance`` is then unused.
     """
     p0 = np.asarray(initial_prices, dtype=float)
     if p0.ndim != 1 or not p0.size or not np.isfinite(p0).all() or np.any(p0 <= 0):
@@ -43,6 +48,13 @@ def solve_price_path_scaled(*, initial_prices, evaluate, project, slope,
         raise ValueError('Invalid explicit numerical/time/evaluation limits')
     if not callable(evaluate) or not callable(project) or (callback is not None and not callable(callback)):
         raise ValueError('Evaluation, projection and optional callback must be callable')
+    if tolerance_vector is not None:
+        tolerance_vector = np.asarray(tolerance_vector, dtype=float)
+        if tolerance_vector.shape != p0.shape or not np.isfinite(tolerance_vector).all() or np.any(tolerance_vector <= 0):
+            raise ValueError('tolerance_vector must be a positive finite vector matching the coordinates')
+        gate = 1.0
+    else:
+        gate = float(market_tolerance)
     started = time.monotonic()
     ledger, best, evaluation_count = [], None, 0
     J0 = -float(slope) * np.eye(p0.size)
@@ -81,14 +93,17 @@ def solve_price_path_scaled(*, initial_prices, evaluate, project, slope,
         if residual.shape != p0.shape or not isinstance(reply['mapping_valid'], (bool, np.bool_)):
             raise ValueError('Evaluator returned invalid residual shape or non-Boolean mapping gate')
         valid = bool(reply['mapping_valid']) and bool(np.isfinite(residual).all())
-        score = float(np.max(np.abs(residual))) if valid else float('inf')
+        raw_max_abs = float(np.max(np.abs(residual))) if valid else float('inf')
+        score = (float(np.max(np.abs(residual) / tolerance_vector)) if (valid and tolerance_vector is not None)
+                 else raw_max_abs)
         point = dict(prices=prices.copy(), x=np.log(prices), residual=residual.copy(),
-                     score=score, mapping_valid=valid, payload=copy.deepcopy(reply.get('payload')))
+                     score=score, raw_max_abs=raw_max_abs, mapping_valid=valid,
+                     payload=copy.deepcopy(reply.get('payload')))
         improved = phase != 'final' and valid and (best is None or score < best['score'])
         if improved:
             best = copy.deepcopy(point)
         record = dict(evaluation=evaluation_count, phase=phase, prices=prices.copy(),
-            residual=residual.copy(), score=score, mapping_valid=valid,
+            residual=residual.copy(), score=score, raw_max_abs=raw_max_abs, mapping_valid=valid,
             new_best=improved, best_score=None if best is None else best['score'],
             elapsed_seconds=time.monotonic() - started,
             evaluation_seconds=time.monotonic() - began, **diagnostics)
@@ -101,7 +116,7 @@ def solve_price_path_scaled(*, initial_prices, evaluate, project, slope,
         current = sample(projected(p0), phase='initial')
         if not current['mapping_valid']:
             reason = 'invalid_initial_mapping'
-        while best is not None and best['score'] > market_tolerance and evaluation_count < max_evaluations - 1:
+        while best is not None and best['score'] > gate and evaluation_count < max_evaluations - 1:
             reset_reason = None
             try:
                 if not np.isfinite(J).all() or np.linalg.cond(J) > max_condition_number:
@@ -137,23 +152,24 @@ def solve_price_path_scaled(*, initial_prices, evaluate, project, slope,
             J += np.outer(y - J @ actual_step, actual_step) / float(actual_step @ actual_step)
             current = trial
         if best is not None:
-            if best['score'] <= market_tolerance:
+            if best['score'] <= gate:
                 reason = 'candidate_market_gate'
             # Deliberately do not project again: certify these identical prices.
             final = sample(best['prices'], phase='final')
     except TimeoutError:
         reason = 'time_or_evaluation_budget'
     reproduction = None if final is None or best is None else float(np.max(np.abs(final['residual'] - best['residual'])))
-    converged = bool(final is not None and best is not None and best['score'] <= market_tolerance
-        and final['mapping_valid'] and final['score'] <= market_tolerance
+    converged = bool(final is not None and best is not None and best['score'] <= gate
+        and final['mapping_valid'] and final['score'] <= gate
         and np.isfinite(reproduction) and reproduction <= final_reproduction_tolerance)
-    if final is not None and best is not None and best['score'] <= market_tolerance and not converged:
+    if final is not None and best is not None and best['score'] <= gate and not converged:
         reason = ('final_mapping_failed' if not final['mapping_valid'] else
-                  'final_market_gate_failed' if final['score'] > market_tolerance else
+                  'final_market_gate_failed' if final['score'] > gate else
                   'final_reproduction_failed')
     result = dict(converged=converged, status='converged' if converged else reason,
         best=best, final=final, final_reproduction_max_abs=reproduction,
         evaluations=evaluation_count, elapsed_seconds=time.monotonic() - started,
-        history=ledger, final_jacobian=J.copy(), final_damping=active_damping)
+        history=ledger, final_jacobian=J.copy(), final_damping=active_damping,
+        tolerance_vector=None if tolerance_vector is None else tolerance_vector.copy(), gate=gate)
     emit(dict(event='complete', converged=converged, status=result['status'], evaluations=evaluation_count))
     return result

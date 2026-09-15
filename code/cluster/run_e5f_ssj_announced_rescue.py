@@ -64,10 +64,22 @@ def select_jacobian(mode, announced_receipt, toeplitz_receipt, horizon):
     return J, info
 
 
-def warm_coordinates(announced_receipt, horizon):
-    best = announced_receipt.get("best")
-    if best is None or announced_receipt.get("final_reproduction_max_abs") != 0.0:
-        raise ValueError("Warm start requires an exactly reproduced announced best iterate")
+def block_tolerance_vector(horizon, housing_gate, fiscal_gate_scaled):
+    """Per-coordinate gate: housing rows at ``housing_gate``, both fiscal rows at
+    ``fiscal_gate_scaled`` (in the retained x200 units)."""
+    if not (np.isfinite(housing_gate) and housing_gate > 0 and np.isfinite(fiscal_gate_scaled) and fiscal_gate_scaled > 0):
+        raise ValueError("gates must be positive and finite")
+    return np.concatenate([np.full(horizon, float(housing_gate)), np.full(2 * horizon, float(fiscal_gate_scaled))])
+
+
+def warm_coordinates(announced_receipt, horizon, checkpoint=None):
+    """Warm start from a certified receipt's best, or from an uncertified callback checkpoint."""
+    if checkpoint is not None:
+        best = checkpoint
+    else:
+        best = announced_receipt.get("best")
+        if best is None or announced_receipt.get("final_reproduction_max_abs") != 0.0:
+            raise ValueError("Warm start requires an exactly reproduced announced best iterate")
     x = np.asarray(best["prices"], dtype=float)
     if x.shape != (3 * horizon,) or not np.isfinite(x).all() or np.any(x <= 0):
         raise ValueError("Announced best iterate has the wrong shape")
@@ -98,7 +110,15 @@ def main():
     c.spec_path = Path(announced["spec"])
     endpoint, receipt = ann.endpoint_from_manifest(announced)
     horizon = 104
-    guess, previous_best = warm_coordinates(announced_receipt, horizon)
+    checkpoint = read(m["warm_start_checkpoint"]) if m.get("warm_start_checkpoint") else None
+    guess, previous_best = warm_coordinates(announced_receipt, horizon, checkpoint)
+    budget = int(m.get("mapping_budget", 8))
+    if not 2 <= budget <= 16:
+        raise ValueError("mapping_budget must lie in 2..16")
+    tolerance = (block_tolerance_vector(horizon, float(m.get("housing_gate", 2e-4)), float(m["fiscal_gate_scaled"]))
+                 if m.get("fiscal_gate_scaled") is not None else None)
+    if tolerance is not None and m.get("step_rule", "clipped") != "scaled":
+        raise ValueError("A block-wise gate is only implemented in the scaled-step solver copy")
     jacobian, jacobian_info = select_jacobian(m["jacobian_mode"], announced_receipt, toeplitz_receipt, horizon)
     folder.mkdir(parents=True)
     end = time.time() + float(m["seconds"])
@@ -107,8 +127,16 @@ def main():
         manifest_sha256=sha(args.manifest), horizon=horizon, warm_start_from=m["announced_root_receipt"],
         previous_best_score=previous_best, previous_evaluations=announced_receipt.get("evaluations"),
         jacobian=jacobian_info, step_rule=m.get("step_rule", "clipped"), seconds=m["seconds"], deadline_unix=end,
-        root_mapping_cap=8, announced_deadline_not_applied=True, production_eligible=False,
-        fake_news_derivatives_constructed=False))
+        root_mapping_cap=budget, announced_deadline_not_applied=True, production_eligible=False,
+        fake_news_derivatives_constructed=False,
+        changes_relative_to_retained_root=dict(
+            warm_start=("uncertified callback checkpoint " + m["warm_start_checkpoint"]) if checkpoint else "certified announced best",
+            initial_jacobian=jacobian_info["mode"], step_rule=m.get("step_rule", "clipped"),
+            mapping_budget=budget, retained_budget=8,
+            housing_gate=float(m.get("housing_gate", 2e-4)), retained_housing_gate=2e-4,
+            fiscal_gate_scaled=m.get("fiscal_gate_scaled"), retained_fiscal_gate_scaled=2e-4,
+            per_mapping_plots_skipped=bool(m.get("skip_mapping_plots", False)),
+            frozen_operator_validation="root_controls passed with max_evaluations=8 and market_tolerance=2e-4 so the frozen validation passes; the diagnostic solver copy then applies the budget and gate above")))
     save(folder / "warm_start_jacobian.json", dict(jacobian=jacobian.tolist(), **jacobian_info))
     stop = threading.Event()
 
@@ -128,17 +156,40 @@ def main():
         def solve_with_jacobian(**kwargs):
             controls = dict(kwargs["root_controls"])
             if controls.get("max_evaluations") != 8:
-                raise ValueError("Rescue keeps the retained eight-mapping budget")
+                raise ValueError("Frozen operator validation expects the retained eight-mapping control")
             controls["initial_jacobian"] = jacobian
             return native_solve(**dict(kwargs, root_controls=controls))
-        step_solver = solve_price_path_scaled if m.get("step_rule", "clipped") == "scaled" else c.rebated._path_root_solver()
+        retained_solver = c.rebated._path_root_solver()
+
+        def step_solver(**kwargs):
+            if m.get("step_rule", "clipped") != "scaled":
+                return retained_solver(**kwargs)
+            kwargs = dict(kwargs, max_evaluations=budget)
+            if tolerance is not None:
+                kwargs["tolerance_vector"] = tolerance
+            return solve_price_path_scaled(**kwargs)
+        import run_e5f_successive_surprises_overnight as overnight
+        native_plot, native_graphs = ann.plot_packet, overnight.standard_graphs
+
+        def plot_packet(c_, m_, folder_, *a, **k):
+            if m.get("skip_mapping_plots") and "mappings" in Path(folder_).parts:
+                return None
+            return native_plot(c_, m_, folder_, *a, **k)
+
+        def standard_graphs(snapshot, result, folder_):
+            if m.get("skip_mapping_plots") and "mappings" in Path(folder_).parts:
+                return None
+            return native_graphs(snapshot, result, folder_)
         with c.queue.original_queue_adapter(), patch.object(c.rebated, "evaluate_forecast", evaluate), \
                 patch.object(c.rebated, "first_period_state", first), \
                 patch.object(c.rebated, "_path_root_solver", lambda: step_solver), \
                 patch.object(c.rebated, "solve_rebated_forecast", solve_with_jacobian), \
+                patch.object(ann, "plot_packet", plot_packet), \
+                patch.object(overnight, "standard_graphs", standard_graphs), \
                 c.cache.policy_cache(c.joined.pf, max_bytes=12 * 1024**3):
             result = ann.run_path(c, endpoint, announced, folder, deadline, guess=guess)
-        history = [dict(evaluation=e["evaluation"], phase=e["phase"], score=e["score"], evaluation_seconds=e.get("evaluation_seconds"))
+        history = [dict(evaluation=e["evaluation"], phase=e["phase"], score=e["score"], raw_max_abs=e.get("raw_max_abs", e["score"]),
+                        evaluation_seconds=e.get("evaluation_seconds"), safeguard=e.get("safeguard"))
                    for e in result.root_receipt.get("history", []) if "evaluation" in e]
         previous = [dict(evaluation=e["evaluation"], phase=e["phase"], score=e["score"], evaluation_seconds=e.get("evaluation_seconds"))
                     for e in announced_receipt.get("history", []) if "evaluation" in e]
