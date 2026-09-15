@@ -1,0 +1,102 @@
+{
+  "checked_utc": "2026-09-15T19:49:17.590979+00:00",
+  "job": 17858740,
+  "accepted_stages": [],
+  "receipts": {
+    "smoke/passed.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/output/smoke/passed.json",
+      "sha256": "8e48b9a6ea0868d00866d8829be046db23a82f324ac07f610d692c7a08df8dc3",
+      "summary": {
+        "passed": true,
+        "stationary_dates": 6,
+        "shifted_dates": 2,
+        "shifted_mode": "two native root mappings with a fixed-price household boundary; no GE claim",
+        "changed_preference": 0.12891531457859182,
+        "measured_derivative_receipt_sha256": "6dd937ba9da32180b3bd5d146692d58b6967539b2d8ab577ba20e773bb2cc41f"
+      }
+    },
+    "smoke/dispatch.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/output/smoke/dispatch.json",
+      "sha256": "a2ea4dcb4700bbedf855c7026865b4cbfa9be3ae15b23d139d4c240fa90bf4df",
+      "summary": {
+        "dispatched": true,
+        "next_key": "stage_0",
+        "script": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/scripts/stage_0.sbatch",
+        "job_id": "17858740"
+      }
+    },
+    "stage_0_2007/trial_01/candidate.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/output/stage_0_2007/trial_01/candidate.json",
+      "sha256": "be2a958ef2a70cb4af61cd226b6ffb260f3702eb549c2d7d35cfd7c21294757d",
+      "summary": {
+        "psi": 0.12891531457859182,
+        "calendar_year": 2007,
+        "target": 1.974875,
+        "model_tfr": 1.9532458455235102,
+        "gap": -0.02162915447648972,
+        "accepted": false,
+        "terminal_verified": true,
+        "rounds": 1
+      }
+    },
+    "stage_0_2007/trial_01/round_01/root_receipt.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/output/stage_0_2007/trial_01/round_01/root_receipt.json",
+      "sha256": "2516e0fdcee6d159d8a67aac1b6df2c67e2ea35017e8baf0cd4378c0fa45293c",
+      "summary": {
+        "converged": true,
+        "status": "converged",
+        "final_reproduction_max_abs": 0.0,
+        "evaluations": 2,
+        "elapsed_seconds": 5362.346849272028,
+        "final_damping": 1.0,
+        "schema": "e5f_rebated_permanent_surprise_v1",
+        "start_year": 2007,
+        "psi": 0.12891531457859182,
+        "finite_horizon_market_fiscal_converged": true,
+        "finite_root_status": "passed",
+        "boundary_status": "unverified",
+        "terminal_distance_passed": false,
+        "horizon_verified": false,
+        "production_eligible": false,
+        "information": "Current preference persists; later preference surprises are not anticipated",
+        "fiscal_information": "Payroll tax is 0.179; all property-tax revenue is rebated equally to current household heads",
+        "calendar_year": 2007,
+        "count": 104,
+        "round": 1,
+        "population_closure": "original_queue",
+        "original_queue": true,
+        "best_score": 0.00013425507845382716
+      }
+    },
+    "stage_0_2007/trial_01/round_01/terminal_distance.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/output/stage_0_2007/trial_01/round_01/terminal_distance.json",
+      "sha256": "b511449fe5e398b883ccd2af45a4573ddde48d385d55d0283db428c757f57e19",
+      "summary": {
+        "distribution_relative_l1": 0.0944634641418526,
+        "population_relative_gap": 0.017417538518509135,
+        "queue_relative_max": 0.012594022910560554,
+        "raw_queue_relative_max": 0.012643554326559725,
+        "terminal_steady_state_verified": true,
+        "horizon_comparison_passed": false,
+        "production_eligible": false
+      }
+    },
+    "stage_0_2007/trial_02/round_01/latest_completed.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/output/stage_0_2007/trial_02/round_01/latest_completed.json",
+      "sha256": "a4de973b68c8c4580eb5dfc5d3e414adf7e041c8561402b15e4a64c04d84e190",
+      "summary": {
+        "evaluation": 1,
+        "phase": "initial",
+        "score": 0.04838119134770295,
+        "mapping_valid": true,
+        "new_best": true,
+        "best_score": 0.04838119134770295,
+        "elapsed_seconds": 2568.816678378731,
+        "evaluation_seconds": 2568.8118258770555,
+        "round": 1,
+        "calendar_year": 2007,
+        "psi": 0.13391531457859182
+      }
+    }
+  }
+}

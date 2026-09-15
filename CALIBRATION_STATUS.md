@@ -1,5 +1,24 @@
 # Calibration Status
 
+**September 15 — first long recovery certified; fitting continues.**
+Smoke 17858190 passed in 13:04 and automatically launched stage-0 job
+**17858740**, now RUNNING on cs655. The saved first candidate was successfully
+recovered: its full **104-date forecast passes finite-horizon market/fiscal
+convergence**, with maximum scaled residual 0.000134255 and exact final
+reproduction (gap 0). Initial plus verification mappings took 5,362 seconds,
+about 89 minutes. This is a certified finite forecast, not terminal/horizon
+certification and not a fitted historical shock.
+
+The first candidate yields fertility 1.953246 against 1.974875, a gap of
+-0.021629 outside the 0.005 fit tolerance. It is now a valid observation for
+the scalar preference search. The controller has proceeded to the second
+recovered candidate, preference 0.1339153; its first warm-start mapping completed
+in 2,569 seconds with scaled residual 0.0483812, still unconverged. Zero of
+four historical shocks are accepted so far. Terminal-distance and horizon
+checks remain outstanding. No model, target, numerical gate, or slide changes.
+Source hashes and compact receipts:
+`output/model/e5f_original_queue_20260913a/long_successive_refit/recovery_progress_20260915.json`.
+
 **September 15 — authorized recovery submitted; native smoke RUNNING.**
 At the author's request, recovery batch `long_successive_refit_recovery_20260915a`
 has been launched. Smoke job **17858190** is RUNNING on cs659. It checks both
