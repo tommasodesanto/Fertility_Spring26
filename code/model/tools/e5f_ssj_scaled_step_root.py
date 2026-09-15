@@ -20,7 +20,7 @@ def solve_price_path_scaled(*, initial_prices, evaluate, project, slope,
                      deadline_monotonic, max_condition_number, worsening_factor,
                      final_reproduction_tolerance, callback=None,
                      initial_jacobian=None, default_jacobian=None,
-                     tolerance_vector=None):
+                     tolerance_vector=None, trim_count=0):
     """Return a dict; only ``converged=True`` certifies the fresh final mapping.
 
     ``evaluate`` returns ``residual``, Boolean ``mapping_valid`` and optionally
@@ -35,6 +35,11 @@ def solve_price_path_scaled(*, initial_prices, evaluate, project, slope,
     supplied the ledger ``score`` is ``max_i |r_i| / tol_i`` and convergence
     means ``score <= 1``, while ``raw_max_abs`` keeps the retained max-abs
     residual for comparability.  ``market_tolerance`` is then unused.
+    ``trim_count`` (diagnostic copy only) drops that many largest normalized
+    coordinates when computing the ``trimmed_score`` used for best-point
+    selection and the worsening safeguard, so a step that fixes the smooth
+    coordinates but moves a discrete threshold is not discarded.  Convergence
+    still requires the untrimmed ``score`` to pass the gate.
     """
     p0 = np.asarray(initial_prices, dtype=float)
     if p0.ndim != 1 or not p0.size or not np.isfinite(p0).all() or np.any(p0 <= 0):
@@ -55,6 +60,8 @@ def solve_price_path_scaled(*, initial_prices, evaluate, project, slope,
         gate = 1.0
     else:
         gate = float(market_tolerance)
+    if type(trim_count) is not int or trim_count < 0 or trim_count >= p0.size:
+        raise ValueError('trim_count must be a nonnegative integer smaller than the coordinate count')
     started = time.monotonic()
     ledger, best, evaluation_count = [], None, 0
     J0 = -float(slope) * np.eye(p0.size)
@@ -96,14 +103,19 @@ def solve_price_path_scaled(*, initial_prices, evaluate, project, slope,
         raw_max_abs = float(np.max(np.abs(residual))) if valid else float('inf')
         score = (float(np.max(np.abs(residual) / tolerance_vector)) if (valid and tolerance_vector is not None)
                  else raw_max_abs)
+        if valid and trim_count:
+            normalized = np.abs(residual) / (tolerance_vector if tolerance_vector is not None else 1.0)
+            trimmed_score = float(np.sort(normalized)[-(trim_count + 1)])
+        else:
+            trimmed_score = score
         point = dict(prices=prices.copy(), x=np.log(prices), residual=residual.copy(),
-                     score=score, raw_max_abs=raw_max_abs, mapping_valid=valid,
+                     score=score, raw_max_abs=raw_max_abs, trimmed_score=trimmed_score, mapping_valid=valid,
                      payload=copy.deepcopy(reply.get('payload')))
-        improved = phase != 'final' and valid and (best is None or score < best['score'])
+        improved = phase != 'final' and valid and (best is None or trimmed_score < best['trimmed_score'])
         if improved:
             best = copy.deepcopy(point)
         record = dict(evaluation=evaluation_count, phase=phase, prices=prices.copy(),
-            residual=residual.copy(), score=score, raw_max_abs=raw_max_abs, mapping_valid=valid,
+            residual=residual.copy(), score=score, raw_max_abs=raw_max_abs, trimmed_score=trimmed_score, mapping_valid=valid,
             new_best=improved, best_score=None if best is None else best['score'],
             elapsed_seconds=time.monotonic() - started,
             evaluation_seconds=time.monotonic() - began, **diagnostics)
@@ -138,10 +150,10 @@ def solve_price_path_scaled(*, initial_prices, evaluate, project, slope,
             if float(actual_step @ actual_step) <= np.finfo(float).tiny:
                 reason = 'projection_stalled_without_market_gate'
                 break
-            previous_best_score = best['score']
+            previous_best_score = best['trimmed_score']
             trial = sample(trial_prices, phase='iterate', damping=active_damping,
                 requested_log_step=step.copy(), actual_log_step=actual_step.copy(), reset_reason=reset_reason)
-            if not trial['mapping_valid'] or trial['score'] > worsening_factor * previous_best_score:
+            if not trial['mapping_valid'] or trial['trimmed_score'] > worsening_factor * previous_best_score:
                 current = copy.deepcopy(best)
                 active_damping *= .5
                 J = J0.copy()
@@ -170,6 +182,7 @@ def solve_price_path_scaled(*, initial_prices, evaluate, project, slope,
         best=best, final=final, final_reproduction_max_abs=reproduction,
         evaluations=evaluation_count, elapsed_seconds=time.monotonic() - started,
         history=ledger, final_jacobian=J.copy(), final_damping=active_damping,
-        tolerance_vector=None if tolerance_vector is None else tolerance_vector.copy(), gate=gate)
+        tolerance_vector=None if tolerance_vector is None else tolerance_vector.copy(), gate=gate,
+        trim_count=trim_count)
     emit(dict(event='complete', converged=converged, status=result['status'], evaluations=evaluation_count))
     return result

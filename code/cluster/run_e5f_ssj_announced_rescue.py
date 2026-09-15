@@ -136,6 +136,7 @@ def main():
             housing_gate=float(m.get("housing_gate", 2e-4)), retained_housing_gate=2e-4,
             fiscal_gate_scaled=m.get("fiscal_gate_scaled"), retained_fiscal_gate_scaled=2e-4,
             per_mapping_plots_skipped=bool(m.get("skip_mapping_plots", False)),
+            trim_count_for_acceptance=int(m.get("trim_count", 0)),
             frozen_operator_validation="root_controls passed with max_evaluations=8 and market_tolerance=2e-4 so the frozen validation passes; the diagnostic solver copy then applies the budget and gate above")))
     save(folder / "warm_start_jacobian.json", dict(jacobian=jacobian.tolist(), **jacobian_info))
     stop = threading.Event()
@@ -164,7 +165,7 @@ def main():
         def step_solver(**kwargs):
             if m.get("step_rule", "clipped") != "scaled":
                 return retained_solver(**kwargs)
-            kwargs = dict(kwargs, max_evaluations=budget)
+            kwargs = dict(kwargs, max_evaluations=budget, trim_count=int(m.get("trim_count", 0)))
             if tolerance is not None:
                 kwargs["tolerance_vector"] = tolerance
             return solve_price_path_scaled(**kwargs)
@@ -189,6 +190,7 @@ def main():
                 c.cache.policy_cache(c.joined.pf, max_bytes=12 * 1024**3):
             result = ann.run_path(c, endpoint, announced, folder, deadline, guess=guess)
         history = [dict(evaluation=e["evaluation"], phase=e["phase"], score=e["score"], raw_max_abs=e.get("raw_max_abs", e["score"]),
+                        trimmed_score=e.get("trimmed_score", e["score"]),
                         evaluation_seconds=e.get("evaluation_seconds"), safeguard=e.get("safeguard"))
                    for e in result.root_receipt.get("history", []) if "evaluation" in e]
         previous = [dict(evaluation=e["evaluation"], phase=e["phase"], score=e["score"], evaluation_seconds=e.get("evaluation_seconds"))

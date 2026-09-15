@@ -89,3 +89,38 @@ class TestToleranceVector(unittest.TestCase):
         receipt = solve_price_path_scaled(initial_prices=start, evaluate=evaluate, **_controls(J, 8))
         self.assertIsNone(receipt["tolerance_vector"]); self.assertEqual(receipt["gate"], 2e-4)
         self.assertEqual(receipt["final"]["score"], receipt["final"]["raw_max_abs"])
+
+
+class TestTrimmedAcceptance(unittest.TestCase):
+    def test_trimmed_score_ignores_worst_coordinates_but_gate_does_not(self):
+        J, root, evaluate = _coupled_system()
+        # A straddling discontinuity: coordinate 7 carries a +/-50-tolerance-unit jump whose sign
+        # flips across the smooth root, so no exact root exists and the full gate cannot pass.
+        start = np.exp(root + np.linspace(0.0, -0.6, 10))
+        def bumpy(prices):
+            reply = evaluate(prices)
+            r = np.array(reply["residual"])
+            # Slope is -1.9: residual is positive below the root and negative above, so a
+            # downward jump at the root leaves no sign change to exploit on either side.
+            r[7] += 50e-3 * (-1.0 if np.log(prices[7]) >= root[7] else 1.0)
+            return dict(residual=r, mapping_valid=True)
+        tol = np.full(10, 1e-3)
+        receipt = solve_price_path_scaled(initial_prices=start, evaluate=bumpy, tolerance_vector=tol, trim_count=1,
+                                          **_controls(J, 8))
+        hist = [h for h in receipt["history"] if h["phase"] != "final"]
+        # The trimmed score falls monotonically to the gate with no safeguard on the way, the
+        # smooth coordinates are solved, and the untrimmed gate correctly refuses certification.
+        reached = next(i for i, h in enumerate(hist) if h["trimmed_score"] <= 1.0)
+        self.assertFalse(any(h.get("safeguard") for h in hist[:reached + 1]))
+        trimmed = [h["trimmed_score"] for h in hist[:reached + 1]]
+        self.assertTrue(all(b < a for a, b in zip(trimmed[:-1], trimmed[1:])), trimmed)
+        self.assertFalse(receipt["converged"])
+        self.assertGreater(receipt["best"]["score"], 1.0)
+        self.assertLessEqual(receipt["best"]["trimmed_score"], 1.0)
+        smooth = np.delete(np.abs(receipt["best"]["residual"]), 7)
+        self.assertLess(float(smooth.max()), 1e-3)
+
+    def test_trim_count_validation(self):
+        J, root, evaluate = _coupled_system()
+        with self.assertRaisesRegex(ValueError, "trim_count"):
+            solve_price_path_scaled(initial_prices=np.exp(root), evaluate=evaluate, trim_count=10, **_controls(J, 4))
