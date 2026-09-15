@@ -307,3 +307,46 @@ threshold pair at dates 43--44 (\(-0.13,+0.43\)) and 69--70
 practical floor of the current 104-date contract under a deterministic tenure
 margin is therefore of order 0.4--1.0 in scaled units. No further arm was
 launched.
+
+### September 15: author-approved experiments in copies (no production change)
+
+The author confirmed the frozen `tenure_choice_kappa = 0.005` is the June 28
+lower search bound, not an estimate (issue M19), and approved testing larger
+values. Two experiment families were run, all in copied code and isolated
+batches; every deviation from the retained root is listed in each batch's
+`submission.json` under the local packet.
+
+**Loosened-gate 104-date root (jobs 17860152, 17865027).** Copied solver
+gains a per-coordinate tolerance vector (housing rows \(2\times10^{-4}\),
+fiscal rows 0.5 scaled, i.e. \(2.5\times10^{-3}\) relative) and a 12-mapping
+budget; warm start from the rescue checkpoint (0.447); extrapolated Toeplitz
+initial Jacobian; direction-preserving step. Job 17860152's first step was
+decisive evidence: the extrapolated Jacobian drove the housing residual from
+\(2.6\times10^{-3}\) at most dates to essentially zero everywhere except
+dates 43--44 and 70--71 (the tenure-threshold pair, \(+1.52/-1.15\) in the
+rebate row) and the tail, but the max-abs worsening safeguard then discarded
+the Jacobian and reset to a half-damped diagonal. The job was cancelled and
+relaunched as 17865027 with one further copied-solver change: best-point
+selection and the safeguard use a trimmed score that ignores the four worst
+normalized coordinates, while certification still requires every coordinate
+inside its gate. Result pending at the time of writing.
+
+**Tenure-smoothing probe (jobs 17866783, 17866789, 17866790, 17866791).**
+One native mapping of the fixed warm-start path per scale, everything else
+frozen; the 0.005 control reproduced the checkpoint residual to all digits.
+Ownership jumps between adjacent dates (percentage points):
+
+| scale | date 25 | date 44 | date 71 | median date-to-date change | mean ownership on the fixed path |
+|---|---|---|---|---|---|
+| 0.005 (frozen) | 1.25 | 1.33 | 1.67 | 0.160 | 0.732 |
+| 0.02 | 0.70 | 0.81 | 0.98 | 0.182 | 0.683 |
+| 0.05 | 0.45 | 0.22 | 0.50 | 0.107 | 0.678 |
+
+At 0.05 the mid-path flips fall by a factor of three to four and the profile
+becomes smooth except at dates 1--2 (a 2.5-point re-sorting of the 2007
+initial distribution, which was solved at 0.005; an initial-condition
+artifact that disappears once the initial state is re-solved at the same
+scale). The cost is the level: on the fixed price path ownership is about
+five points lower at every date, so a re-solved root would sit at different
+prices and the residuals on the fixed path are not meaningful. Mapping times
+were 1741--2260 s. The 0.1 probe is pending.
