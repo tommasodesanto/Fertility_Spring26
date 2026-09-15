@@ -1168,3 +1168,25 @@ Ermisch (1999); Becker and Lewis (1973); Barro and Becker (1989); Jones and
 Tertilt (2008); Kleven, Landais and Søgaard (2019); Kleven et al. (2019);
 Finer and Zolna (2016); de la Croix and Pommeret (2021). Each is used for its
 headline result only.
+
+## Errata and additions after consolidation (September 15, evening)
+
+Three claims were checked against local PDFs while consolidating this review
+with ChatGPT Pro's (see `structural_model_review_consolidated_20260915.md`):
+
+1. **H4, Baum-Snow and Han.** "No derivation of 0.63 exists" is too strong.
+   Their headline averages are 0.5 (floor space) and 0.3 (units); a
+   metro-aggregate floor-space elasticity of 0.61–0.63 appears on p. 1937
+   under their linear-IV specification. The deck should cite that page and
+   name the object.
+2. **H6, Greaney et al.** They use the same owner premium: services
+   \(\chi h+h^r\), \(\chi=1.0506\) calibrated to ownership 0.542, called the
+   non-pecuniary benefit of ownership (pp. 10–11, Table 1). This is a
+   precedent for keeping \(\chi\); the wedge alternative in H6 stands as an
+   alternative, not as the literature's convention.
+3. **P1, Scholz, Seshadri and Khitatrakun.** Their objective is
+   \(E\sum\beta^{j-S}n_jU(c_j/n_j)\) (p. 615): the scale multiplies utility.
+   The model uses \(U(c/e)\) only. At \(\sigma=2\) the SSK form makes the cost
+   of successive children rise in \(m\) (0.522, 0.580, 0.630 in units of
+   \(1/X\)) where the model's form makes it fall (0.234, 0.216, 0.203). That
+   is a third option for P1's author decision.
