@@ -1,0 +1,744 @@
+{
+  "checked_utc": "2026-09-15T16:02:50.890599+00:00",
+  "big": {
+    "stage_directories": [
+      "stage_0_2007"
+    ],
+    "accepted_stages": [],
+    "failure": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007/failure.json",
+      "sha256": "6504756a5c7d388120ff091d428c47c89666764299ef7d6790176d499fa9a513",
+      "scalars": {
+        "error": "manifest hard deadline"
+      }
+    },
+    "latest_completed": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007/latest_completed.json",
+      "sha256": "2808e94e8fc679e0e18a7cb28f799328f07419e246334e85660741712d07b69d",
+      "scalars": {
+        "trial": 2,
+        "psi": 0.13391531457859182,
+        "rejected": true,
+        "error_type": "TimeoutError",
+        "error": "Candidate root budget exhausted"
+      }
+    },
+    "trials": [
+      {
+        "trial": "trial_01",
+        "psi": 0.12891531457859182,
+        "terminal_verified": true,
+        "terminal_checks": {
+          "root_renewal": true,
+          "root_paygo": true,
+          "root_equal_rebate": true,
+          "housing_level": true,
+          "one_step_population_level": true,
+          "one_step_distribution_level_l1": true,
+          "one_step_distribution_normalized_l1": true,
+          "one_step_entry_queue": true,
+          "one_step_raw_queue": true,
+          "one_step_policy_reproduction": true,
+          "one_step_mass_accounting": true,
+          "one_step_feasibility_projection": true,
+          "household_audit": true,
+          "stationary_reconstruction": true,
+          "four_waiting_entry_vintages": true,
+          "four_waiting_raw_vintages": true
+        },
+        "rounds": [
+          {
+            "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007/trial_01/round_01",
+            "best": {
+              "evaluation": 7,
+              "phase": "iterate",
+              "score": 0.006696745957814698,
+              "mapping_valid": true,
+              "new_best": true,
+              "best_score": 0.006696745957814698,
+              "elapsed_seconds": 23824.137664735317,
+              "evaluation_seconds": 3412.226955054328,
+              "damping": 1.0,
+              "reset_reason": null,
+              "round": 1,
+              "calendar_year": 2007,
+              "psi": 0.12891531457859182
+            },
+            "matching_rows": true,
+            "rows_path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007/trial_01/round_01/mappings/mapping_08/rows.json",
+            "rows_sha256": "9a34a3d4e25122ad898ccb32b3f1d5e17fd07830b69bcbd69035917401920033",
+            "matching_mappings": [
+              "mapping_07",
+              "mapping_08"
+            ],
+            "max_gaps_percent": {
+              "relative_market_residual": 0.0037734082096609447,
+              "scaled_pension_budget_residual": 0.0014637936226189815,
+              "scaled_government_budget_residual": 0.003348372978907349
+            },
+            "max_mass_accounting_error": 1.6653345369377348e-15,
+            "max_policy_reproduction_error": 0.0,
+            "max_feasibility_projection": 0.0,
+            "first_fertility": 1.953245793953144,
+            "terminal_distance": {
+              "distribution_relative_l1": 0.09440054099931851,
+              "population_relative_gap": 0.01741951090112548,
+              "queue_relative_max": 0.0125965363216618,
+              "raw_queue_relative_max": 0.012645882885221171,
+              "terminal_steady_state_verified": true,
+              "horizon_comparison_passed": false,
+              "production_eligible": false
+            },
+            "selected_rows": [
+              {
+                "year": 2007,
+                "households": 0.9999999999997702,
+                "births": 0.1205806136313981,
+                "tfr": 1.953245793953144
+              },
+              {
+                "year": 2023,
+                "households": 1.0000000000006735,
+                "births": 0.12146339609427208,
+                "tfr": 1.9675456974000183
+              },
+              {
+                "year": 2063,
+                "households": 0.9530566853859054,
+                "births": 0.11327684199452108,
+                "tfr": 1.9931603494170007
+              }
+            ],
+            "root_receipt": {
+              "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007/trial_01/round_01/root_receipt.json",
+              "sha256": "436a17da4dce4c9f0e3f5f4b0ea7104b343098da4414d7aa9d409c7e965e3b2c",
+              "scalars": {
+                "converged": false,
+                "status": "evaluation_budget",
+                "final_reproduction_max_abs": 0.0,
+                "evaluations": 8,
+                "elapsed_seconds": 27216.43337154854,
+                "final_damping": 1.0,
+                "schema": "e5f_rebated_permanent_surprise_v1",
+                "start_year": 2007,
+                "psi": 0.12891531457859182,
+                "finite_horizon_market_fiscal_converged": false,
+                "finite_root_status": "failed",
+                "boundary_status": "not_evaluated_at_accepted_root",
+                "terminal_distance_passed": false,
+                "horizon_verified": false,
+                "production_eligible": false,
+                "information": "Current preference persists; later preference surprises are not anticipated",
+                "fiscal_information": "Payroll tax is 0.179; all property-tax revenue is rebated equally to current household heads",
+                "calendar_year": 2007,
+                "count": 104,
+                "round": 1,
+                "population_closure": "original_queue",
+                "original_queue": true
+              }
+            }
+          },
+          {
+            "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007/trial_01/round_02",
+            "best": {
+              "evaluation": 3,
+              "phase": "iterate",
+              "score": 0.00013425507845382716,
+              "mapping_valid": true,
+              "new_best": true,
+              "best_score": 0.00013425507845382716,
+              "elapsed_seconds": 8626.253265353851,
+              "evaluation_seconds": 3154.9710862943903,
+              "damping": 1.0,
+              "reset_reason": null,
+              "round": 2,
+              "calendar_year": 2007,
+              "psi": 0.12891531457859182
+            },
+            "matching_rows": true,
+            "rows_path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007/trial_01/round_02/mappings/mapping_03/rows.json",
+            "rows_sha256": "2b322eac7394e815d80b5c4792ee6b21d41706304ddfcf79dd0403c1204dd9b7",
+            "matching_mappings": [
+              "mapping_03"
+            ],
+            "max_gaps_percent": {
+              "relative_market_residual": 6.050704764460758e-05,
+              "scaled_pension_budget_residual": 5.0638005089784536e-05,
+              "scaled_government_budget_residual": 6.712753922691358e-05
+            },
+            "max_mass_accounting_error": 2.1094237467877974e-15,
+            "max_policy_reproduction_error": 0.0,
+            "max_feasibility_projection": 0.0,
+            "first_fertility": 1.9532458455235102,
+            "terminal_distance": {
+              "distribution_relative_l1": 0.0944634641418526,
+              "population_relative_gap": 0.017417538518509135,
+              "queue_relative_max": 0.012594022910560554,
+              "raw_queue_relative_max": 0.012643554326559725,
+              "terminal_steady_state_verified": true,
+              "horizon_comparison_passed": false,
+              "production_eligible": false
+            },
+            "selected_rows": [
+              {
+                "year": 2007,
+                "households": 0.9999999999997699,
+                "births": 0.12058061681501502,
+                "tfr": 1.9532458455235102
+              },
+              {
+                "year": 2023,
+                "households": 1.0000000000006746,
+                "births": 0.12146339517313914,
+                "tfr": 1.9675456824788886
+              },
+              {
+                "year": 2063,
+                "households": 0.9530566750008451,
+                "births": 0.11327681828032207,
+                "tfr": 1.9931599953401542
+              }
+            ],
+            "root_receipt": {
+              "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007/trial_01/round_02/root_receipt.json",
+              "sha256": "63243c789bb6d4ebe02994c4210ca764432510a8ab3a7fe2d354133b74ec3b48",
+              "scalars": {
+                "converged": false,
+                "status": "time_or_evaluation_budget",
+                "final": null,
+                "final_reproduction_max_abs": null,
+                "evaluations": 3,
+                "elapsed_seconds": 8626.282176389359,
+                "final_damping": 1.0,
+                "schema": "e5f_rebated_permanent_surprise_v1",
+                "start_year": 2007,
+                "psi": 0.12891531457859182,
+                "finite_horizon_market_fiscal_converged": false,
+                "finite_root_status": "failed",
+                "boundary_status": "not_evaluated_at_accepted_root",
+                "terminal_distance_passed": false,
+                "horizon_verified": false,
+                "production_eligible": false,
+                "information": "Current preference persists; later preference surprises are not anticipated",
+                "fiscal_information": "Payroll tax is 0.179; all property-tax revenue is rebated equally to current household heads",
+                "calendar_year": 2007,
+                "count": 104,
+                "round": 2,
+                "population_closure": "original_queue",
+                "original_queue": true
+              }
+            }
+          }
+        ]
+      },
+      {
+        "trial": "trial_02",
+        "psi": 0.13391531457859182,
+        "terminal_verified": true,
+        "terminal_checks": {
+          "root_renewal": true,
+          "root_paygo": true,
+          "root_equal_rebate": true,
+          "housing_level": true,
+          "one_step_population_level": true,
+          "one_step_distribution_level_l1": true,
+          "one_step_distribution_normalized_l1": true,
+          "one_step_entry_queue": true,
+          "one_step_raw_queue": true,
+          "one_step_policy_reproduction": true,
+          "one_step_mass_accounting": true,
+          "one_step_feasibility_projection": true,
+          "household_audit": true,
+          "stationary_reconstruction": true,
+          "four_waiting_entry_vintages": true,
+          "four_waiting_raw_vintages": true
+        },
+        "rounds": [
+          {
+            "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007/trial_02/round_01",
+            "best": {
+              "evaluation": 7,
+              "phase": "iterate",
+              "score": 0.04838119134770295,
+              "mapping_valid": true,
+              "new_best": true,
+              "best_score": 0.04838119134770295,
+              "elapsed_seconds": 20441.4654961871,
+              "evaluation_seconds": 3299.58957832586,
+              "damping": 1.0,
+              "reset_reason": null,
+              "round": 1,
+              "calendar_year": 2007,
+              "psi": 0.13391531457859182
+            },
+            "matching_rows": true,
+            "rows_path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007/trial_02/round_01/mappings/mapping_08/rows.json",
+            "rows_sha256": "51084f0d95fab9a0cce417466fab15f9c61cd4aaa5b0c9cfd26346e79d5b613f",
+            "matching_mappings": [
+              "mapping_07",
+              "mapping_08"
+            ],
+            "max_gaps_percent": {
+              "relative_market_residual": 0.024016313841852377,
+              "scaled_pension_budget_residual": 0.003663043105619949,
+              "scaled_government_budget_residual": 0.024190595673851473
+            },
+            "max_mass_accounting_error": 1.887379141862766e-15,
+            "max_policy_reproduction_error": 0.0,
+            "max_feasibility_projection": 0.0,
+            "first_fertility": 1.9901992205050245,
+            "terminal_distance": {
+              "distribution_relative_l1": 0.05472779943085012,
+              "population_relative_gap": 0.011020356106200557,
+              "queue_relative_max": 0.007678126594420132,
+              "raw_queue_relative_max": 0.007729477639653259,
+              "terminal_steady_state_verified": true,
+              "horizon_comparison_passed": false,
+              "production_eligible": false
+            },
+            "selected_rows": [
+              {
+                "year": 2007,
+                "households": 0.9999999999997677,
+                "births": 0.12286187637017036,
+                "tfr": 1.9901992205050245
+              },
+              {
+                "year": 2023,
+                "households": 1.0000000000006668,
+                "births": 0.12356949475615953,
+                "tfr": 2.0016616985472275
+              },
+              {
+                "year": 2063,
+                "households": 0.9649565896346542,
+                "births": 0.11734702982618951,
+                "tfr": 2.0206647799420487
+              }
+            ],
+            "root_receipt": {
+              "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007/trial_02/round_01/root_receipt.json",
+              "sha256": "2133441e3e16ed789fe7bd5c3ffc733eba377f1a8715f2a6a4321f5b2be9a67d",
+              "scalars": {
+                "converged": false,
+                "status": "evaluation_budget",
+                "final_reproduction_max_abs": 0.0,
+                "evaluations": 8,
+                "elapsed_seconds": 23863.831552712247,
+                "final_damping": 1.0,
+                "schema": "e5f_rebated_permanent_surprise_v1",
+                "start_year": 2007,
+                "psi": 0.13391531457859182,
+                "finite_horizon_market_fiscal_converged": false,
+                "finite_root_status": "failed",
+                "boundary_status": "not_evaluated_at_accepted_root",
+                "terminal_distance_passed": false,
+                "horizon_verified": false,
+                "production_eligible": false,
+                "information": "Current preference persists; later preference surprises are not anticipated",
+                "fiscal_information": "Payroll tax is 0.179; all property-tax revenue is rebated equally to current household heads",
+                "calendar_year": 2007,
+                "count": 104,
+                "round": 1,
+                "population_closure": "original_queue",
+                "original_queue": true
+              }
+            }
+          },
+          {
+            "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007/trial_02/round_02",
+            "best": {
+              "evaluation": 1,
+              "phase": "initial",
+              "score": 0.04838119134770295,
+              "mapping_valid": true,
+              "new_best": true,
+              "best_score": 0.04838119134770295,
+              "elapsed_seconds": 3308.5856848582625,
+              "evaluation_seconds": 3308.584121245891,
+              "round": 2,
+              "calendar_year": 2007,
+              "psi": 0.13391531457859182
+            },
+            "matching_rows": true,
+            "rows_path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007/trial_02/round_02/mappings/mapping_01/rows.json",
+            "rows_sha256": "51084f0d95fab9a0cce417466fab15f9c61cd4aaa5b0c9cfd26346e79d5b613f",
+            "matching_mappings": [
+              "mapping_01"
+            ],
+            "max_gaps_percent": {
+              "relative_market_residual": 0.024016313841852377,
+              "scaled_pension_budget_residual": 0.003663043105619949,
+              "scaled_government_budget_residual": 0.024190595673851473
+            },
+            "max_mass_accounting_error": 1.887379141862766e-15,
+            "max_policy_reproduction_error": 0.0,
+            "max_feasibility_projection": 0.0,
+            "first_fertility": 1.9901992205050245,
+            "terminal_distance": {
+              "distribution_relative_l1": 0.05472779943085012,
+              "population_relative_gap": 0.011020356106200557,
+              "queue_relative_max": 0.007678126594420132,
+              "raw_queue_relative_max": 0.007729477639653259,
+              "terminal_steady_state_verified": true,
+              "horizon_comparison_passed": false,
+              "production_eligible": false
+            },
+            "selected_rows": [
+              {
+                "year": 2007,
+                "households": 0.9999999999997677,
+                "births": 0.12286187637017036,
+                "tfr": 1.9901992205050245
+              },
+              {
+                "year": 2023,
+                "households": 1.0000000000006668,
+                "births": 0.12356949475615953,
+                "tfr": 2.0016616985472275
+              },
+              {
+                "year": 2063,
+                "households": 0.9649565896346542,
+                "births": 0.11734702982618951,
+                "tfr": 2.0206647799420487
+              }
+            ],
+            "root_receipt": {
+              "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007/trial_02/round_02/root_receipt.json",
+              "sha256": "9c56e00f77e8a1702a93cd1a5babddb732c06efc88a7ea38529f0fea271b20b3",
+              "scalars": {
+                "converged": false,
+                "status": "time_or_evaluation_budget",
+                "final": null,
+                "final_reproduction_max_abs": null,
+                "evaluations": 4,
+                "elapsed_seconds": 14009.345699092373,
+                "final_damping": 0.125,
+                "schema": "e5f_rebated_permanent_surprise_v1",
+                "start_year": 2007,
+                "psi": 0.13391531457859182,
+                "finite_horizon_market_fiscal_converged": false,
+                "finite_root_status": "failed",
+                "boundary_status": "not_evaluated_at_accepted_root",
+                "terminal_distance_passed": false,
+                "horizon_verified": false,
+                "production_eligible": false,
+                "information": "Current preference persists; later preference surprises are not anticipated",
+                "fiscal_information": "Payroll tax is 0.179; all property-tax revenue is rebated equally to current household heads",
+                "calendar_year": 2007,
+                "count": 104,
+                "round": 2,
+                "population_closure": "original_queue",
+                "original_queue": true
+              }
+            }
+          }
+        ]
+      },
+      {
+        "trial": "trial_03",
+        "psi": 0.13891531457859183,
+        "terminal_verified": true,
+        "terminal_checks": {
+          "root_renewal": true,
+          "root_paygo": true,
+          "root_equal_rebate": true,
+          "housing_level": true,
+          "one_step_population_level": true,
+          "one_step_distribution_level_l1": true,
+          "one_step_distribution_normalized_l1": true,
+          "one_step_entry_queue": true,
+          "one_step_raw_queue": true,
+          "one_step_policy_reproduction": true,
+          "one_step_mass_accounting": true,
+          "one_step_feasibility_projection": true,
+          "household_audit": true,
+          "stationary_reconstruction": true,
+          "four_waiting_entry_vintages": true,
+          "four_waiting_raw_vintages": true
+        },
+        "rounds": [
+          {
+            "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007/trial_03/round_01",
+            "best": {
+              "evaluation": 3,
+              "phase": "iterate",
+              "score": 1.2136146876092355,
+              "mapping_valid": true,
+              "new_best": true,
+              "best_score": 1.2136146876092355,
+              "elapsed_seconds": 9568.227548384108,
+              "evaluation_seconds": 2829.0928573766723,
+              "damping": 1.0,
+              "reset_reason": null,
+              "round": 1,
+              "calendar_year": 2007,
+              "psi": 0.13891531457859183
+            },
+            "matching_rows": true,
+            "rows_path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007/trial_03/round_01/mappings/mapping_03/rows.json",
+            "rows_sha256": "7dc5c3c393a5f63270d68ac308959d599fc5288d8ede6a0c24aee191d2ac0095",
+            "matching_mappings": [
+              "mapping_03"
+            ],
+            "max_gaps_percent": {
+              "relative_market_residual": 1.6725887472163077,
+              "scaled_pension_budget_residual": 0.6068073438046178,
+              "scaled_government_budget_residual": 0.28668307562372886
+            },
+            "max_mass_accounting_error": 1.887379141862766e-15,
+            "max_policy_reproduction_error": 0.0,
+            "max_feasibility_projection": 0.0,
+            "first_fertility": 2.027110632274109,
+            "terminal_distance": {
+              "distribution_relative_l1": 0.04988906149581425,
+              "population_relative_gap": 0.016830729433316982,
+              "queue_relative_max": 0.013965885052854565,
+              "raw_queue_relative_max": 0.01396183367485726,
+              "terminal_steady_state_verified": true,
+              "horizon_comparison_passed": false,
+              "production_eligible": false
+            },
+            "selected_rows": [
+              {
+                "year": 2007,
+                "households": 0.9999999999997657,
+                "births": 0.1251405453911898,
+                "tfr": 2.027110632274109
+              },
+              {
+                "year": 2023,
+                "households": 1.0000000000006701,
+                "births": 0.12563060217810687,
+                "tfr": 2.035048901361681
+              },
+              {
+                "year": 2063,
+                "households": 0.9767327918796741,
+                "births": 0.1213979614237379,
+                "tfr": 2.047143927941189
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "trial_1_round_2_detailed_status": {
+      "root_receipt.json": {
+        "converged": false,
+        "status": "time_or_evaluation_budget",
+        "final": null,
+        "final_reproduction_max_abs": null,
+        "evaluations": 3,
+        "elapsed_seconds": 8626.282176389359,
+        "final_damping": 1.0,
+        "schema": "e5f_rebated_permanent_surprise_v1",
+        "start_year": 2007,
+        "psi": 0.12891531457859182,
+        "finite_horizon_market_fiscal_converged": false,
+        "finite_root_status": "failed",
+        "boundary_status": "not_evaluated_at_accepted_root",
+        "terminal_distance_passed": false,
+        "horizon_verified": false,
+        "production_eligible": false,
+        "information": "Current preference persists; later preference surprises are not anticipated",
+        "fiscal_information": "Payroll tax is 0.179; all property-tax revenue is rebated equally to current household heads",
+        "calendar_year": 2007,
+        "count": 104,
+        "round": 2,
+        "population_closure": "original_queue",
+        "original_queue": true,
+        "best": {
+          "score": 0.00013425507845382716,
+          "mapping_valid": true
+        },
+        "history": [
+          {
+            "evaluation": 1,
+            "phase": "initial",
+            "score": 0.006696745957814698,
+            "mapping_valid": true,
+            "new_best": true,
+            "elapsed_seconds": 2664.6972457794473,
+            "evaluation_seconds": 2664.695132855326
+          },
+          {
+            "evaluation": 2,
+            "phase": "iterate",
+            "score": 0.0010234661105369346,
+            "mapping_valid": true,
+            "new_best": true,
+            "elapsed_seconds": 5471.246079932898,
+            "evaluation_seconds": 2806.5208975458518
+          },
+          {
+            "evaluation": 3,
+            "phase": "iterate",
+            "score": 0.00013425507845382716,
+            "mapping_valid": true,
+            "new_best": true,
+            "elapsed_seconds": 8626.253265353851,
+            "evaluation_seconds": 3154.9710862943903
+          }
+        ]
+      },
+      "latest_completed.json": {
+        "event": "complete",
+        "converged": false,
+        "status": "time_or_evaluation_budget",
+        "evaluations": 3,
+        "round": 2,
+        "calendar_year": 2007,
+        "psi": 0.12891531457859182
+      },
+      "latest_completed_mapping.json": {
+        "round": 2,
+        "mapping": 3,
+        "calendar_year": 2007,
+        "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_20260914a/output/stage_0_2007/trial_01/round_02/mappings/mapping_03"
+      },
+      "date_progress.json": {
+        "period": 100,
+        "dates": 104
+      }
+    }
+  },
+  "fourshock_policy": {
+    "complete": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/fourshock_tax_20260914b/policy/tax2/complete.json",
+      "sha256": "ae5b28d901c9fa0f57b73824824bf52f7cc88a7647646c53e7b80851971319de",
+      "scalars": {
+        "completed": true,
+        "production_eligible": false
+      }
+    },
+    "root_receipt": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/fourshock_tax_20260914b/policy/tax2/transition/root_receipt.json",
+      "sha256": "9e48f75b81e531658b201615030e18efea911579e295342cdb59389f99fd908a",
+      "scalars": {
+        "converged": false,
+        "status": "evaluation_budget",
+        "final_reproduction_max_abs": 0.0,
+        "evaluations": 8,
+        "elapsed_seconds": 12696.07449077908,
+        "final_damping": 1.0,
+        "schema": "e5f_rebated_permanent_surprise_v1",
+        "start_year": 2023,
+        "psi": 0.09221854783921073,
+        "finite_horizon_market_fiscal_converged": false,
+        "finite_root_status": "failed",
+        "boundary_status": "not_evaluated_at_accepted_root",
+        "terminal_distance_passed": false,
+        "horizon_verified": false,
+        "production_eligible": false,
+        "information": "Current preference persists; later preference surprises are not anticipated",
+        "fiscal_information": "Payroll tax is 0.179; all property-tax revenue is rebated equally to current household heads"
+      }
+    },
+    "initial_state": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/fourshock_tax_20260914b/policy/tax2/initial_state_verification.json",
+      "sha256": "6aa20485571d9ca95bf02a69642eefa0213932fcda890424c2be417515942312",
+      "scalars": {
+        "passed": true,
+        "calendar_year": 2023,
+        "source_history_converged": false,
+        "initial_mass": 1.0000000000009301,
+        "source_sha256": "795319f9a4462c5c1ece51b5bf0713e5cf85f3d6f701f775881e103a5d0b5549"
+      }
+    },
+    "endpoint_verification": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/fourshock_tax_20260914b/policy/tax2/endpoint_verification.json",
+      "sha256": "c30979b5f45bac822b88d5adf7a4ba87f7aa995820b0dee17b987d3d0d3084dc",
+      "scalars": {
+        "passed": true,
+        "source": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/inherited_2023_tax_20260913a/tax2/endpoint/terminal.pkl.gz",
+        "tax": 0.02
+      }
+    },
+    "last_round": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/fourshock_tax_20260914b/policy/tax2/transition/round_02",
+      "best": {
+        "evaluation": 7,
+        "phase": "iterate",
+        "score": 0.4833747755050668,
+        "mapping_valid": true,
+        "new_best": true,
+        "best_score": 0.4833747755050668,
+        "elapsed_seconds": 11583.025300970301,
+        "evaluation_seconds": 1687.1244814964011,
+        "damping": 1.0,
+        "reset_reason": null
+      },
+      "matching_rows": true,
+      "rows_path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/fourshock_tax_20260914b/policy/tax2/transition/round_02/mappings/mapping_08/rows.json",
+      "rows_sha256": "65f3203c4d12487623d644d4b8974c8792122f5ea5286624181736e555664718",
+      "matching_mappings": [
+        "mapping_07",
+        "mapping_08"
+      ],
+      "max_gaps_percent": {
+        "relative_market_residual": 0.24229825774966093,
+        "scaled_pension_budget_residual": 0.011870433387127616,
+        "scaled_government_budget_residual": 0.2416873877525334
+      },
+      "max_mass_accounting_error": 1.5543122344752192e-15,
+      "max_policy_reproduction_error": 0.0,
+      "max_feasibility_projection": 0.0,
+      "first_fertility": 1.6907297334884144,
+      "terminal_distance": {
+        "population_relative_gap": 0.10801097359471235,
+        "distribution_relative_l1": 0.44809333197087764,
+        "queue_relative_max": 0.08564918717226044,
+        "raw_queue_relative_max": 0.0855323796880505,
+        "terminal_verified": true,
+        "horizon_comparison_passed": false
+      },
+      "selected_rows": [
+        {
+          "year": 2023,
+          "households": 1.000000000000706,
+          "births": 0.10437458991597415,
+          "tfr": 1.6907297334884144
+        },
+        {
+          "year": 2063,
+          "households": 0.8745740611330163,
+          "births": 0.08545456544387556,
+          "tfr": 1.7788662882776864
+        }
+      ],
+      "root_receipt": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/fourshock_tax_20260914b/policy/tax2/transition/round_02/root_receipt.json",
+        "sha256": "9e48f75b81e531658b201615030e18efea911579e295342cdb59389f99fd908a",
+        "scalars": {
+          "converged": false,
+          "status": "evaluation_budget",
+          "final_reproduction_max_abs": 0.0,
+          "evaluations": 8,
+          "elapsed_seconds": 12696.07449077908,
+          "final_damping": 1.0,
+          "schema": "e5f_rebated_permanent_surprise_v1",
+          "start_year": 2023,
+          "psi": 0.09221854783921073,
+          "finite_horizon_market_fiscal_converged": false,
+          "finite_root_status": "failed",
+          "boundary_status": "not_evaluated_at_accepted_root",
+          "terminal_distance_passed": false,
+          "horizon_verified": false,
+          "production_eligible": false,
+          "information": "Current preference persists; later preference surprises are not anticipated",
+          "fiscal_information": "Payroll tax is 0.179; all property-tax revenue is rebated equally to current household heads"
+        }
+      }
+    }
+  },
+  "scheduler_accounting": [
+    "17722295|COMPLETED|08:18:38|0:0|2026-09-14T03:58:47",
+    "17722962|COMPLETED|08:22:26|0:0|2026-09-14T04:09:47",
+    "17732269|FAILED|04:30:17|124:0|2026-09-14T02:45:49",
+    "17732824|FAILED|1-00:00:45|124:0|2026-09-15T02:23:51",
+    "17735075|COMPLETED|07:26:37|0:0|2026-09-14T09:49:43"
+  ],
+  "queue_empty_at_initial_check": true
+}

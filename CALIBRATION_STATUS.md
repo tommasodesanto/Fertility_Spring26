@@ -1,5 +1,53 @@
 # Calibration Status
 
+**September 15 — final job outcomes verified after Torch login renewal.**
+The user queue is empty. No new job was launched and no slides were changed.
+The big successive-surprise refit (17732824) ended FAILED, exit 124, after
+24:00:45 with `manifest hard deadline`. It attempted three preference candidates
+for the first 2007 shock; **zero shocks were accepted**, and no later historical
+stage or policy from this refitted history ran.
+
+There is a recoverable numerical advance: trial 1, round 2, mapping 3 has
+scaled maximum residual 0.000134255, below the unchanged 0.0002 root gate.
+Its largest housing/PAYGO/rebate gaps are respectively
+0.000060507%/0.000050638%/0.000067128%. Native saved-coordinate matching,
+accounting, feasibility and policy reproduction checks pass. However, the
+candidate time limit expired before the required final verification rerun:
+the root receipt has `final=null`, `final_reproduction_max_abs=null`,
+`converged=false`, and `status=time_or_evaluation_budget`. This is a
+below-threshold saved iterate, **not an accepted equilibrium or fitted shock**.
+Its first-period fertility is 1.953246 against target 1.974875, outside the
+0.005 fit tolerance. The controller did not save an accepted next-state checkpoint.
+
+Trial 2 used preference 0.1339153 versus trial 1's 0.1289153, producing provisional
+first-period fertility 1.990199, but ended at its candidate root budget with
+housing/PAYGO/rebate gaps 0.024016%/0.003663%/0.024191%. These first two
+provisional values straddle the target; they are not a certified root bracket.
+Trial 3 at 0.1389153 was interrupted by the overall deadline. All three
+candidate stationary endpoints passed their 16 verification checks. Priority
+for recovery: preserve and verify the first saved low-residual candidate,
+retain its learned derivative matrix and reserve runtime for final verification;
+then continue fitting with accepted equilibria. Do not restart the search
+blindly or treat a timeout as evidence that fitting is impossible.
+
+The four-announced-shock 2% tax job (17735075) ended scheduler COMPLETED after
+07:26:37, but its numerical receipt is `converged=false`, `evaluation_budget`.
+The best is still round 2 mapping 7: housing/PAYGO/rebate gaps
+0.242298%/0.011870%/0.241687%. Final rerun reproduces exactly, but market/fiscal,
+terminal and horizon acceptance remain false. Thus the September 14 matched
+policy readout is unchanged: at 2063 births +1.001056% and household stock
++0.111223%, relative to its own four-shock 1% baseline; provisional throughout.
+
+Other final outcomes reconfirmed: one-shock 1% job 17722962 COMPLETED after
+08:22:26 and one-shock 2% job 17722295 COMPLETED after 08:18:38, both numerically
+unconverged; announced four-shock continuation 17732269 FAILED at its 04:30:17
+deadline, also unconverged. Their prior final diagnostics remain unchanged.
+Compact source paths, hashes, per-trial residuals, endpoint checks, and scheduler
+outcomes: `output/model/e5f_original_queue_20260913a/long_successive_refit/final_job_readout_20260915.json`.
+The separate ten-period derivative-assisted root did converge and reproduce
+exactly, but failed terminal-distance/horizon acceptance; it is evidence for
+numerical improvement, not a validated long-horizon history.
+
 **September 14, 13:07 UTC — morning readout; slides stay frozen.** The big
 successive-surprise refit has made substantial numerical progress but has
 accepted **zero of four fitted shocks**. At the first candidate of the first

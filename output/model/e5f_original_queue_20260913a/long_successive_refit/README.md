@@ -51,3 +51,10 @@ Sources: `code/cluster/run_e5f_long_successive_refit.py` and
 The September 14 requested first-candidate transition graph and comparison of
 the four-announced-shock tax policy with the frozen slide result are in
 `readout/README.md`. These are separate diagnostic artifacts; the deck is unchanged.
+
+Final job inspection after login renewal is in `final_job_readout_20260915.json`.
+The 24-hour refit ended without an accepted shock. A later first-candidate
+iterate reached the residual threshold but timed out before final verification;
+it is saved for recovery, not accepted. The separate four-shock policy ended
+at its evaluation budget and remains unconverged. `CALIBRATION_STATUS.md`
+contains the readable final assessment. No jobs were relaunched by this inspection.
