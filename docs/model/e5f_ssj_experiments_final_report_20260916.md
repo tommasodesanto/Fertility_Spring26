@@ -160,3 +160,38 @@ fiscal rows, at the size of one flip. Loosening only the fiscal gate is not
 sufficient at the frozen smoothing scale; at 0.05 the flips shrink three- to
 four-fold (Section 1), which would bring these housing residuals to roughly
 \(6\times10^{-4}\), and at 0.1 to about the gate.
+
+## 5. Prepared, not launched: the smoothed-scale transition test
+
+Author-approved on September 16 for launch when Torch is available. One
+command from the repository root:
+
+```bash
+code/cluster/submit_e5f_ssj_smoothed_transition.sh 0.05
+```
+
+It stages `code/cluster/run_e5f_ssj_smoothed_transition.py` (with the copied
+solver and rescue helpers) in a new batch
+`announced_original_queue_20260913c_ssj_smoothed_k0.05_<tag>`, writes the
+pinned manifest and sbatch through
+`code/cluster/prepare_e5f_ssj_smoothed_transition.py`, submits, and mirrors
+the contracts locally. The job then:
+
+1. re-solves the stationary equilibrium at the frozen scale (control) and at
+   0.05 with the frozen `solve_terminal`, and writes `fit_table.md`
+   (stationary moments side by side; the full SMM target table still needs
+   the calibration collector);
+2. re-solves the terminal at 0.05 and the final announced preference, warm
+   started from the frozen endpoint coordinates;
+3. runs the 104-date announced root with the inherited 2007 state replaced by
+   the 0.05 stationary state (removes the date-1 artifact), the 0.05 terminal,
+   the saved 104-date checkpoint as start, the extrapolated ten-date Toeplitz
+   `initial_jacobian`, the direction-preserving step, a 12-mapping budget, no
+   trimming, and the **retained** gates (max-abs \(2\times10^{-4}\)), so a
+   certification would mean the model meets its own tolerance.
+
+Budget: 31000 s numerical deadline, 540-minute Slurm cap, 3600 s per
+stationary solve. Every deviation is written into the job's
+`experiment_contract.json`. The announced preference path stays as fitted at
+0.005, which is a stated approximation. Pass a different scale as the first
+argument to test 0.1.
