@@ -134,4 +134,29 @@ gotcha), `output/model/e5f_sequence_space_prototype_20260913/README.md`
 
 ## 4. Job 17865027 close-out
 
-(filled in when the job ends)
+Twelve mappings, 21638 s, not certified (`evaluation_budget`), final replay
+exact. Full and trimmed normalized scores and raw max-abs residual by mapping:
+
+| mapping | 1 | 2 | 3 | 4 | 5 | 6\* | 7 | 8\* | 9\* | 10\* | 11 | final |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| full score | 13.2 | 37.3 | 20.3 | 17.6 | 13.8 | 42.9 | 12.0 | 32.9 | 28.3 | 27.3 | 11.5 | 11.5 |
+| trimmed score | 9.41 | 5.26 | 2.40 | 1.56 | 2.11 | 2.38 | 1.07 | 3.65 | 3.33 | 3.16 | 1.03 | 1.03 |
+| raw max-abs | 0.447 | 1.518 | 0.829 | 0.694 | 0.552 | 1.694 | 0.475 | 1.291 | 1.113 | 1.074 | 0.456 | 0.456 |
+
+\* safeguard fired (restored best, damping halved, Jacobian reset); final
+damping 0.0625.
+
+At the accepted best (mapping 11) every PAYGO and rebate row is inside the
+0.5 gate, including the threshold dates (rebate \(-0.456\) at date 70, 0.91
+of tolerance; \(-0.242\) at date 44). The coordinates that fail are the
+**housing** rows at the threshold dates: relative imbalance
+\(2.3\times10^{-3}\) at date 70, \(1.7\times10^{-3}\) at 71 and
+\(1.2\times10^{-3}\) at 44 (11, 8 and 6 times the unchanged
+\(2\times10^{-4}\) housing gate), plus 1.0--1.1 times the gate at dates 45
+and 98--99. Every other housing residual is numerically zero. The tenure flip
+therefore moves housing demand by about 0.2 percent at the dates where it
+occurs, so the discreteness floor is in the housing rows as well as the
+fiscal rows, at the size of one flip. Loosening only the fiscal gate is not
+sufficient at the frozen smoothing scale; at 0.05 the flips shrink three- to
+four-fold (Section 1), which would bring these housing residuals to roughly
+\(6\times10^{-4}\), and at 0.1 to about the gate.

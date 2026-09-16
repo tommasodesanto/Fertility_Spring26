@@ -362,3 +362,8 @@ residuals 1.52, 0.83, 0.69, 0.55; mapping 6 tripped the safeguard on the
 trimmed score (2.38 > 1.5 x 1.56) and reset to a half-damped diagonal from
 the mapping-4 best. The smooth part therefore reached a housing tail within
 1.6 times its gate before the threshold coordinates again dominated.
+Close-out: twelve mappings, best at mapping 11 with raw 0.456 (rebate rows all
+inside the 0.5 gate); the failing coordinates are the housing rows at the
+threshold dates (\(2.3\times10^{-3}\), \(1.7\times10^{-3}\),
+\(1.2\times10^{-3}\) at dates 70, 71, 44). See
+`docs/model/e5f_ssj_experiments_final_report_20260916.md`, Section 4.
