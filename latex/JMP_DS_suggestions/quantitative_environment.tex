@@ -19,30 +19,14 @@ of the other children. Maturation reduces $m_t$ but does not change $n_t$.
 
 \paragraph{Preferences.}
 Households value consumption, housing services, and children at home, and
-leave bequests at death. Let $c_t$ denote consumption, $s_t$ housing services,
-and $\tau$ the last period in which the household is alive. Conditional on
-being alive at date $t$, expected remaining lifetime utility is
+discount future utility by $\beta$. Let $c_t$ denote consumption and $s_t$
+housing services. Flow utility is
 \begin{equation}
- \begin{aligned}
- \mathbb E_t\Bigg[
- &\sum_{k=t}^{\tau}\beta^{k-t}
- \left\{
- \frac{\mathcal C(c_k,s_k;m_k)^{1-\sigma}}{1-\sigma}
- +\psi_k m_k-\xi_k+\varepsilon_k^F+\varepsilon_k^H
- \right\}\\
- &\qquad +\beta^{\tau-t+1}B(w^e_{\tau+1})
- \Bigg].
- \end{aligned}
+ u_t(c_t,s_t;m_t)
+ =\frac{\mathcal C(c_t,s_t;m_t)^{1-\sigma}}{1-\sigma}
+   +\psi_t m_t.
  \label{eq:env-flow-utility}
 \end{equation}
-The household discounts future utility by $\beta$. The expectation covers
-survival, earnings, birth success, child maturation, and taste shocks.
-Survival probabilities $s_a$ determine the distribution of $\tau$.
-Here $\xi_k$ equals $\xi$ in the period of a successful first birth and zero
-otherwise; $\varepsilon_k^F$ and $\varepsilon_k^H$ are the taste shocks
-associated with the household's chosen fertility and housing alternatives.
-The final term is utility from bequeathable wealth $w^e_{\tau+1}$, received
-at death and defined below.
 The parameter $\sigma>0$ governs curvature over the consumption aggregator
 $\mathcal C$, with the logarithmic limit understood when $\sigma=1$, while
 $\psi_t$ measures the direct utility benefit of a child at home.

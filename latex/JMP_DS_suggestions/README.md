@@ -21,19 +21,6 @@ first-order conditions, or equilibrium definition is included.
 
 Editorial points for the author (not manuscript prose):
 
-- Lifetime-utility revision: follows the exposition in Boar, Gorea, and
-  Midrigan, *Liquidity Constraints in the U.S. Housing Market*, ReStud 89(3),
-  1120–1154 (2022), DOI 10.1093/restud/rdab063. The author refers to published
-  page 1126; the accessible author-hosted manuscript was read at Section 3.1,
-  printed page 8. The publisher blocked the published PDF, so exact published
-  pagination was not independently checked. Source:
-  https://drive.google.com/file/d/1NBdnPJ-YW4MbHJ9R8Y1eQczP1fh_feAF/view
-  Their fixed terminal date is replaced by our random last living date, with
-  one additional discount period for bequests as in the presentation's Bellman
-  equation. Realized first-birth costs and chosen-alternative taste shocks are
-  included. This changes exposition, not preferences. The existing equation
-  label is retained to avoid breaking references.
-
 - This follows the presentation's sequential fertility/birth/housing timing.
   The alternative simultaneous specification remains a separate decision;
   see M11 in `docs/model/POST_PRESENTATION_ISSUES.md`.
