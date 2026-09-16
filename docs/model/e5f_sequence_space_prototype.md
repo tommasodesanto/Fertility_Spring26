@@ -341,6 +341,7 @@ Ownership jumps between adjacent dates (percentage points):
 | 0.005 (frozen) | 1.25 | 1.33 | 1.67 | 0.160 | 0.732 |
 | 0.02 | 0.70 | 0.81 | 0.98 | 0.182 | 0.683 |
 | 0.05 | 0.45 | 0.22 | 0.50 | 0.107 | 0.678 |
+| 0.1 | 0.33 | 0.09 | 0.26 | 0.058 | 0.710 |
 
 At 0.05 the mid-path flips fall by a factor of three to four and the profile
 becomes smooth except at dates 1--2 (a 2.5-point re-sorting of the 2007
@@ -349,4 +350,8 @@ artifact that disappears once the initial state is re-solved at the same
 scale). The cost is the level: on the fixed price path ownership is about
 five points lower at every date, so a re-solved root would sit at different
 prices and the residuals on the fixed path are not meaningful. Mapping times
-were 1741--2260 s. The 0.1 probe is pending.
+were 1741--2471 s. At 0.1 the mid-path flips are 0.1--0.3 points and the
+typical change 0.06 points, i.e. the profile is smooth, while the date-1
+initial re-sorting grows to 5.5 points (same artifact). Mean ownership on the
+fixed path is non-monotone in the scale (0.732, 0.683, 0.678, 0.710), so the
+level effect must be read off a re-solved root, not this probe.
