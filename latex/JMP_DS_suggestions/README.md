@@ -5,7 +5,10 @@ This directory is the agent-writable staging area for material proposed for
 into the protected draft by hand.
 
 Use clear, task-specific filenames. Do not overwrite or synchronize files in
-the protected draft directory.
+the protected draft directory. Under the September 16 authorization, agents may
+write appendix material and add tables and figures directly in the draft,
+sparingly and without changing existing author wording. Other prose and
+revisions remain subject to manual copy-and-paste.
 
 ## Consolidated theory proposal (9 September 2026)
 

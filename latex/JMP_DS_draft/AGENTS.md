@@ -1,16 +1,19 @@
-# Author-Owned Read-Only Draft
+# Author-Owned Draft — Limited Agent Permissions
 
-This directory and every subdirectory are controlled exclusively by Tommaso De
-Santo. After the initial scaffold was created on 2026-09-03, all agents and
-assistants have read access only.
+`latex/JMP_DS_draft/` is Tommaso De Santo's author-controlled manuscript.
+The September 16 authorization permits only these narrow exceptions to the
+read-only rule established on September 3:
 
-Agents may inspect and quote from these files. They must not create, edit,
-delete, rename, move, format, or overwrite anything in this subtree. They must
-also direct all compilation output to a temporary directory outside this
-subtree.
-
-All proposed prose, equations, citations, tables, or revisions must be written
-outside this directory, by default under `../JMP_DS_suggestions/`, so Tommaso
-can copy and paste them by hand. A normal request to draft or revise material
-does not waive this restriction. The policy changes only if Tommaso explicitly
-revokes it and asks for the repository guard instructions to be updated.
+- Agents may write appendix material and add tables and figures directly.
+- Exercise strict parsimony: make only the additions needed for the requested
+  work, with minimal LaTeX wiring, captions, labels, and table/figure notes.
+- Preserve all existing author wording, including in appendices, captions,
+  footnotes, and comments. Permission to add material does not authorize
+  rewriting, deleting, moving, or reformatting existing text.
+- Proposed main-text prose and revisions to existing author wording belong in
+  `latex/JMP_DS_suggestions/` for Tommaso to copy and paste by hand.
+- Outside these exceptions, the manuscript remains read-only. Ordinary drafting
+  requests do not expand these permissions; further exceptions require explicit
+  author authorization.
+- Keep all compilation artifacts and generated manuscript PDFs outside the
+  subtree. Compile a temporary copy when checking the manuscript.

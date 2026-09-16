@@ -108,21 +108,23 @@ layout unless there is a strong reason to add a new top-level category.
 
 ## Author-Owned JMP Draft
 
-`latex/JMP_DS_draft/` is Tommaso De Santo's author-controlled manuscript. After
-its initial creation on 2026-09-03, every agent and assistant must treat the
-entire subtree as strictly read-only.
+`latex/JMP_DS_draft/` is Tommaso De Santo's author-controlled manuscript.
+The September 16 authorization permits only these narrow exceptions to the
+read-only rule established on September 3:
 
-- Agents may inspect and quote from the draft, but must not create, edit,
-  delete, rename, move, format, or overwrite anything inside the subtree.
-- Agents must not write compilation artifacts or generated PDFs into the
-  subtree. If a read-only compilation check is needed, direct every output to a
-  temporary directory outside `latex/JMP_DS_draft/`.
-- All proposed prose, equations, citations, tables, or revisions must be
-  written outside the protected subtree, by default under
-  `latex/JMP_DS_suggestions/`, for Tommaso to copy and paste by hand.
-- A normal request to draft or revise text does not waive this restriction.
-  Only Tommaso may edit the protected files. The policy may change only if he
-  explicitly revokes it and asks for the guard instructions to be updated.
+- Agents may write appendix material and add tables and figures directly.
+- Exercise strict parsimony: make only the additions needed for the requested
+  work, with minimal LaTeX wiring, captions, labels, and table/figure notes.
+- Preserve all existing author wording, including in appendices, captions,
+  footnotes, and comments. Permission to add material does not authorize
+  rewriting, deleting, moving, or reformatting existing text.
+- Proposed main-text prose and revisions to existing author wording belong in
+  `latex/JMP_DS_suggestions/` for Tommaso to copy and paste by hand.
+- Outside these exceptions, the manuscript remains read-only. Ordinary drafting
+  requests do not expand these permissions; further exceptions require explicit
+  author authorization.
+- Keep all compilation artifacts and generated manuscript PDFs outside the
+  subtree. Compile a temporary copy when checking the manuscript.
 
 ## Calibration Guidance
 
