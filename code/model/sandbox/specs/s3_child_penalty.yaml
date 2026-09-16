@@ -1,0 +1,10 @@
+# NOT RUNNABLE: a working-age earnings penalty (1 - tau_c(m)) applied while
+# m>0 has no clean sandbox-only runtime hook. income_at_state (solver.py:226)
+# takes no child-state argument, so this switch cannot be honored without
+# editing the production package (see sandbox/mechanisms.py NOT_IMPLEMENTED
+# for the exact reason and the line where a package hook would be needed).
+# `run_ss.py --spec s3_child_penalty` will raise NotImplementedError with
+# that explanation rather than silently ignoring the request or producing
+# incorrect numbers.
+overrides:
+  child_earnings_penalty: 0.10

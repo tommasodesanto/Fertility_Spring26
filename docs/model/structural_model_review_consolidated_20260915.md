@@ -767,7 +767,7 @@ for the structural decisions; do not open parallel notes without an entry.
 | Date | Label | What was done | Pointer | Status |
 |---|---|---|---|---|
 | 2026-09-16 | P1 | Literature reading on the benefit and cost of children; three candidate specifications | `docs/model/child_cost_utility_lit_review_20260916.md` | Author decision pending |
-| 2026-09-16 | all | Sandbox for one-change stationary-state tests (spec files, moments vs targets, policy plots, regression gate) | `code/model/sandbox/` (being built) | In progress |
+| 2026-09-16 | all | Sandbox for one-change GE stationary-state tests: `make sandbox SPEC=name`, four output files, switches for S1/S2 and κ_H; about 15 min per full-grid solve locally | `code/model/sandbox/README.md` | Built; regression gate BLOCKED: the retained initial state was solved by a driver that exists only on cluster scratch (`bind_initial_balanced_pension`), fertility 2.002 vs 2.100 at the retained psi. Fetch that driver when the cluster is back. Until then compare specs against the sandbox's own baseline, not the deck. |
 | 2026-09-16 | M40, M41 | Guido's questions on transaction volumes and rooms per person over time added to the ledger | `docs/model/POST_PRESENTATION_ISSUES.md` | Open |
 
 # Combined table
