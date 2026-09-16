@@ -1,5 +1,10 @@
 # Python Model Codebase
 
+The behavior-preserving E5F refactor package is indexed at
+`../../output/model/e5f_refactor_baseline_20260916/README.md`. Stage 1 inventory
+is complete; stages 2–3 are limited to harness self-checks and deferred native
+cost measurement pending restoration of the exact certified source/input bundle.
+
 This folder contains the project's active Python model implementations. The
 former MATLAB code is archived for historical reference and parity checks.
 

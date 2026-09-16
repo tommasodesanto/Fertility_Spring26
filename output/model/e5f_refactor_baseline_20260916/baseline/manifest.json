@@ -1,0 +1,44 @@
+{
+  "schema": "e5f-refactor-baseline-v1",
+  "created": "2026-09-16",
+  "purpose": "Stage-1 behavior-preserving E5F refactor inventory",
+  "selected_reference": {
+    "name": "last certified recovery runtime",
+    "artifact": "output/model/e5f_original_queue_20260913a/long_successive_refit/recovery_source_manifest_20260915.json",
+    "status": "outstanding",
+    "reason": "The exact staged recovery source/input snapshot is unavailable locally; current local solver differs from the recorded recovery source."
+  },
+  "source_inventory": [
+    {"path": "code/cluster/run_e5f_long_successive_refit.py", "recorded_sha256": "d53ddbdcff7f46cebd6a36fe0d37b0f05983c1b6aa0bec892412022716b84cd0", "current_sha256": "d53ddbdcff7f46cebd6a36fe0d37b0f05983c1b6aa0bec892412022716b84cd0", "current_available": true, "match": true},
+    {"path": "code/cluster/prepare_e5f_long_successive_refit.py", "recorded_sha256": "1486bed9a8761bb6c71275a2bff2c8c58d6bc963a80ef99d0b932d93910d5be1", "current_sha256": "1486bed9a8761bb6c71275a2bff2c8c58d6bc963a80ef99d0b932d93910d5be1", "current_available": true, "match": true},
+    {"path": "code/model/tools/e5f_ssj_toeplitz_jacobian.py", "recorded_sha256": "94c448367c139682c3bc06336dba27ab3ddb384e99120201cc1000d8509dead0", "current_sha256": "94c448367c139682c3bc06336dba27ab3ddb384e99120201cc1000d8509dead0", "current_available": true, "match": true},
+    {"path": "code/model/tools/e5f_ssj_scaled_step_root.py", "recorded_sha256": "ffcb23342862d746c8f475f52582976527d2b86e3134c379791de5835efde3c4", "current_sha256": "c26d312afa179e296439ba94e8826a5f84f6823c6bf0ca1892889e5e55af059b", "current_available": true, "match": false, "current_role": "later diagnostic trimmed-score variant; commit 25a8b6bd"}
+  ],
+  "historical_resolution": {
+    "recorded_version": "recovery staged copy, hash ffcb2334…; exact bytes not present in local scratch or tracked history",
+    "git_history": ["25a8b6bd (2026-09-15 15:23 -0400): trimmed-score acceptance", "da875408 (2026-09-15 13:57 -0400): loosened-gate mode", "df1e72f1 (2026-09-13 19:37 -0400): Toeplitz Jacobian"],
+    "decision": "Do not use current local scaled-step solver as certified recovery baseline."
+  },
+  "dependencies": [
+    {"path": "code/model/tools/e5f_original_queue_terminal.py", "exists": true, "importable": null, "hash_certified": false},
+    {"path": "code/model/tools/run_e5f_transition_calibration.py", "exists": true, "importable": null, "hash_certified": false},
+    {"path": "code/model/tools/e5f_social_security.py", "exists": false, "importable": false, "hash_certified": false},
+    {"path": "code/model/tools/run_e5f_successive_surprises_overnight.py", "exists": true, "importable": null, "hash_certified": false},
+    {"path": "numpy", "exists": true, "importable": true, "hash_certified": false},
+    {"path": "matplotlib", "exists": true, "importable": true, "hash_certified": false}
+  ],
+  "representative_inputs": {
+    "local_artifacts": ["output/model/e5f_original_queue_20260913a/spec.json", "output/model/e5f_original_queue_20260913a/long_successive_refit/recovery_manifest_20260915.json", "output/model/e5f_original_queue_20260913a/long_successive_refit/recovery_source_manifest_20260915.json"],
+    "scratch_snapshot": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a",
+    "scratch_available": false,
+    "required_recovery_inputs_available": false,
+    "note": "Recorded scratch paths and hashes are retained in the recovery manifest; no cluster/SSH access or model run was attempted."
+  },
+  "dirty_source_handling": {
+    "full_status": "output/model/e5f_refactor_baseline_20260916/baseline/git_status_full.txt",
+    "working_tree": "heavily dirty before this task; source edits are user-owned and preserved",
+    "policy": "Refactor must use an explicit immutable source snapshot and reject mixed or dirty inputs; no current dirty source is promoted implicitly."
+  },
+  "verification": {"performed": ["git status -sb", "SHA-256 source comparison", "targeted git history lookup", "local path availability inventory"], "model_or_tests_run": false},
+  "baseline_status": "outstanding"
+}
