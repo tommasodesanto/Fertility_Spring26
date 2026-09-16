@@ -10,6 +10,41 @@ write appendix material and add tables and figures directly in the draft,
 sparingly and without changing existing author wording. Other prose and
 revisions remain subject to manual copy-and-paste.
 
+## Quantitative environment (16 September 2026)
+
+[quantitative_environment.tex](quantitative_environment.tex) is an insertable
+LaTeX environment subsection based on the saved September 14 presentation's
+model frames: households, preferences, fertility and child aging, firms and
+earnings, housing supply and rents, and financing institutions. The protected
+manuscript and presentation are unchanged. No household optimization problem,
+first-order conditions, or equilibrium definition is included.
+
+Editorial points for the author (not manuscript prose):
+
+- This follows the presentation's sequential fertility/birth/housing timing.
+  The alternative simultaneous specification remains a separate decision;
+  see M11 in `docs/model/POST_PRESENTATION_ISSUES.md`.
+- The deck's environment bullet includes retirement age among working ages,
+  whereas its earnings equation uses work for a < a_R and retirement for
+  a >= a_R. This proposal follows the explicit earnings equation.
+- The generic aggregator and its shape restrictions are carried over from
+  the preferences frame. This is not a new verification of those restrictions
+  for the quantitative functional form; its justification remains open (M05).
+  The prose distinguishes the aggregator cross-partial from the cross-partial
+  of full CRRA utility.
+- Adult entry, the treatment of dependents at parental death, and the
+  allocation of estates require their own agreed specification. The proposal
+  describes household maturation without inventing an entry law or estate
+  allocation. It is not yet a complete demographic closure.
+- The deck does not specify the earnings transition law or the housing-shock
+  scale in these environment frames. Neither is invented here.
+- The source keeps the deck's symbols, including s_a for survival and s_t
+  for housing services. The logarithmic limits of the two CRRA expressions
+  are made explicit. Financing timing follows the documented M06 check.
+
+Validation: compiled twice in a temporary wrapper outside the manuscript;
+inspect `tmp/pdfs/jmp_environment/preview.pdf` for the local reading copy.
+
 ## Consolidated theory proposal (9 September 2026)
 
 The new [full note](../../output/pdf/simplified_olg_consolidated_theory.pdf)

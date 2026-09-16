@@ -1,0 +1,129 @@
+% Proposed environment, based on the model frames in september_14_presentation.tex.
+% Insertable section: no document preamble. Author manuscript is untouched.
+% Open population-entry and estate-distribution details are recorded in README.md.
+\subsection{Environment}
+\label{subsec:quantitative-environment}
+
+\paragraph{Households.}
+Time is discrete. The economy is populated by overlapping generations of
+households that choose consumption, housing tenure and size, saving, and
+whether to try for a child. Adult age is denoted by $a\in\{0,\ldots,J\}$,
+and a household of age $a$ survives to the next period with probability $s_a$.
+Households work before retirement age $a_R$ and can attempt births during the
+fertile window $a\in[a_F^0,a_F^1]$. They differ in liquid wealth $b_t$,
+housing carried into the period $h_{t-1}$, idiosyncratic labor efficiency $z_t$, and family
+composition. Let $n_t$ denote children ever born and $m_t$ children currently
+at home. Children are dependents and do not work. Each dependent child matures
+and leaves the household with a fixed probability each period, independently
+of the other children. Maturation reduces $m_t$ but does not change $n_t$.
+
+\paragraph{Preferences.}
+Households value consumption, housing services, and children at home, and
+discount future utility by $\beta$. Let $c_t$ denote consumption and $s_t$
+housing services. Flow utility is
+\begin{equation}
+ u_t(c_t,s_t;m_t)
+ =\frac{\mathcal C(c_t,s_t;m_t)^{1-\sigma}}{1-\sigma}
+   +\psi_t m_t.
+ \label{eq:env-flow-utility}
+\end{equation}
+The parameter $\sigma>0$ governs curvature over the consumption aggregator
+$\mathcal C$, with the logarithmic limit understood when $\sigma=1$, while
+$\psi_t$ measures the direct utility benefit of a child at home.
+For a given number of children, $\mathcal C$ is increasing and concave in
+consumption and housing services. Children increase the household's needs,
+so $\mathcal C_m<0$, and raise the marginal contribution of housing services
+to the aggregator, $\mathcal C_{sm}>0$. The functional form of
+$\mathcal C$ is specified in the quantification.
+
+Households either rent or own their residence. An owner occupies $h_t$ units
+of housing, while a renter occupies $h_t^R$ units. Housing services are
+\begin{equation}
+ s_t=\mathbf{1}\{\text{own}\}\chi h_t
+     +\mathbf{1}\{\text{rent}\}h_t^R,
+ \qquad \chi>1.
+ \label{eq:env-housing-services}
+\end{equation}
+The parameter $\chi$ captures the additional services households obtain from
+owning a home of a given size.
+
+At death, households value the estate they leave. Let $w^e_{t+1}$ denote
+bequeathable wealth, comprising liquid wealth and housing value. Bequest
+utility is
+\begin{equation}
+ B(w^e_{t+1})
+ =\theta_0\frac{(\theta_1+w^e_{t+1})^{1-\sigma}}{1-\sigma}.
+ \label{eq:env-bequest-utility}
+\end{equation}
+The parameter $\theta_0$ scales the strength of the bequest motive, while
+$\theta_1$ shifts the wealth level at which it is evaluated; the logarithmic
+limit again applies when $\sigma=1$.
+
+\paragraph{Fertility.}
+During fertile ages, a household chooses whether to attempt a birth. An
+attempt succeeds with age-specific probability $\pi_a$ and, upon success,
+increases both $n_t$ and $m_t$ by one. The first birth carries a one-time
+utility cost $\xi$. Households observe extreme-value taste shocks
+$\varepsilon_t^F$ before choosing whether to attempt; their scale is
+$\kappa_1$ for the first birth and $\kappa_C$ for subsequent births.
+Birth success is then realized. Households subsequently observe housing
+taste shocks $\varepsilon_t^H$ and choose housing and saving conditional on
+the realized number of children. Thus, housing can adjust to a birth within
+the period.
+
+\paragraph{Production and income.}
+Competitive firms produce the consumption good using effective labor $L_t$
+with constant productivity $A$:
+\begin{equation}
+ Y_t=A L_t,\qquad w=A.
+ \label{eq:env-production}
+\end{equation}
+The wage per unit of effective labor therefore equals labor productivity.
+A working household supplies $e_a z_t$ units of effective labor, where $e_a$
+is the age--earnings profile and $z_t$ exposes the household to idiosyncratic
+earnings risk. Earnings are taxed at rate $\tau^w$. Retirees receive a
+pay-as-you-go pension $\varpi_t$, financed by current payroll taxes.
+Disposable income is
+\begin{equation}
+ y_t^d(a,z_t)=
+ \begin{cases}
+ (1-\tau^w)w e_a z_t, & a<a_R,\\
+ \varpi_t, & a\geq a_R.
+ \end{cases}
+ \label{eq:env-income}
+\end{equation}
+Households also receive a lump-sum transfer $T_t$ from property-tax revenue,
+which is rebated equally across households.
+
+\paragraph{Housing markets.}
+A unit of housing trades at price $P_t$. Aggregate housing supply is
+\begin{equation}
+ H_t^s=H_0 P_t^{\eta}.
+ \label{eq:env-housing-supply}
+\end{equation}
+Here $H_0$ sets the scale of supply and $\eta$ is its price elasticity.
+Owned housing can be as large as $\bar h$, whereas rental housing is limited
+to $\bar h^R<\bar h$. The largest homes are therefore available only through
+ownership. Housing depreciates at rate $\delta_H$ and is subject to a
+property tax at rate $\tau_t^p$. Selling an owner-occupied home costs a
+fraction $\psi^s$ of its sale value.
+
+Competitive landlords rent housing at a unit rent $r_t$. A landlord purchases
+at $P_t$, pays depreciation and property tax, and resells at $P_{t+1}$.
+Equating the return to the gross bond return $R_b$ gives
+\begin{equation}
+ r_t=(R_b+\delta_H+\tau_t^p)P_t-P_{t+1}.
+ \label{eq:env-rent}
+\end{equation}
+Rent covers financing, depreciation, and property taxes, net of the change
+in the value of the house.
+
+\paragraph{Saving and mortgage finance.}
+Households save in a one-period bond with gross return $R_b$. Borrowing is
+secured by housing: an owner can borrow up to a fraction $\phi$ of the
+home's purchase value, while renters cannot borrow. Buying a home requires
+a down payment of $(1-\phi)P_t h_t$. The household must finance this payment
+out of beginning-of-period liquid wealth and the proceeds from selling its
+previous home, net of selling costs. Current earnings and transfers arrive
+after the housing transaction and cannot finance the down payment.
+Households that retain their home do not make a new down payment.
