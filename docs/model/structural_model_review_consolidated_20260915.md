@@ -330,6 +330,25 @@ reopened decision.
 **Recommendations.** Change (both; Fable low to medium, ChatGPT medium;
 blocks).
 
+> **Follow-up, September 16: children at home by parent age, model versus
+> ACS 2005–06** (sandbox baseline, fixed \(\psi\); figure and table in
+> `output/model/sandbox/dependents_by_parent_age/`). The share of households
+> with any child at home matches the ACS at every age. The mean number does
+> not: the model peaks at 0.89 children at ages 34–38 against 1.44 in the ACS
+> (1.39 counting only children under 18), and is 0.75 against 1.18 at 30 and
+> 0.85 against 1.29 at 42. Above 58 the model's dependents (0.31 at 58, 0.19 at
+> 66) track the ACS count of own children of any age (0.30, 0.17) but not the
+> count of minors (0.06, 0.01): the memoryless tail is reproducing adult
+> children who live with their parents, not dependents. Reading: the constant
+> hazard empties the nest too early and too slowly at once. The young-age
+> shortfall of roughly 40 percent is larger than the sandbox's completed
+> fertility gap (11 percent) and sits on the space-demand margin the paper is
+> about. The doubt that memorylessness is harmless is answered: it is not. It
+> also says which fix: the young end needs a minimum duration (newborn flag or
+> a child-stage state); the old end needs an age-dependent exit. **Status:
+> author decision between the parent-age hazard plus newborn flag and a
+> child-stage state.**
+
 ## F4. Dependents of a dying household
 
 **Agreed.** If F3 removes dependency before any parental mortality, the
@@ -767,6 +786,7 @@ for the structural decisions; do not open parallel notes without an entry.
 | Date | Label | What was done | Pointer | Status |
 |---|---|---|---|---|
 | 2026-09-16 | P1 | Literature reading on the benefit and cost of children; three candidate specifications | `docs/model/child_cost_utility_lit_review_20260916.md` | Author decision pending |
+| 2026-09-16 | F3 | Children at home by parent age, model vs ACS: model 40% low at 30–42, tail above 58 mimics adult co-resident children | `output/model/sandbox/dependents_by_parent_age/` | Memorylessness is not harmless; fix type is the author's call |
 | 2026-09-16 | P1, F2 | First sandbox comparison at fixed parameters: S2 halves fertility, S1 mild and improves loss, \(\kappa_H=0\) inert in the steady state (table below) | `output/model/sandbox/` | Read; author decision pending |
 | 2026-09-16 | all | Sandbox for one-change GE stationary-state tests: `make sandbox SPEC=name`, four output files, switches for S1/S2 and κ_H; about 15 min per full-grid solve locally | `code/model/sandbox/README.md` | Built; regression gate BLOCKED: the retained initial state was solved by a driver that exists only on cluster scratch (`bind_initial_balanced_pension`), fertility 2.002 vs 2.100 at the retained psi. Fetch that driver when the cluster is back. Until then compare specs against the sandbox's own baseline, not the deck. |
 | 2026-09-16 | M40, M41 | Guido's questions on transaction volumes and rooms per person over time added to the ledger | `docs/model/POST_PRESENTATION_ISSUES.md` | Open |
