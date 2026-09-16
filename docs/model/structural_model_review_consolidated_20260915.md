@@ -767,8 +767,43 @@ for the structural decisions; do not open parallel notes without an entry.
 | Date | Label | What was done | Pointer | Status |
 |---|---|---|---|---|
 | 2026-09-16 | P1 | Literature reading on the benefit and cost of children; three candidate specifications | `docs/model/child_cost_utility_lit_review_20260916.md` | Author decision pending |
+| 2026-09-16 | P1, F2 | First sandbox comparison at fixed parameters: S2 halves fertility, S1 mild and improves loss, \(\kappa_H=0\) inert in the steady state (table below) | `output/model/sandbox/` | Read; author decision pending |
 | 2026-09-16 | all | Sandbox for one-change GE stationary-state tests: `make sandbox SPEC=name`, four output files, switches for S1/S2 and κ_H; about 15 min per full-grid solve locally | `code/model/sandbox/README.md` | Built; regression gate BLOCKED: the retained initial state was solved by a driver that exists only on cluster scratch (`bind_initial_balanced_pension`), fertility 2.002 vs 2.100 at the retained psi. Fetch that driver when the cluster is back. Until then compare specs against the sandbox's own baseline, not the deck. |
 | 2026-09-16 | M40, M41 | Guido's questions on transaction volumes and rooms per person over time added to the ledger | `docs/model/POST_PRESENTATION_ISSUES.md` | Open |
+
+> **Sandbox results, September 16 (fixed parameters, fixed \(\psi\), one GE
+> steady state per spec; levels are the sandbox's own baseline, not the deck's,
+> see the gate note above).**
+>
+> | Moment | Baseline | S2 SSK weighting | S1 log benefit | \(\kappa_H=0\) |
+> |---|---:|---:|---:|---:|
+> | Completed fertility | 1.872 | 1.016 | 1.920 | 1.871 |
+> | Childless 40–44 | 0.239 | 0.486 | 0.244 | 0.239 |
+> | Mean first-birth age | 26.96 | 30.25 | 26.55 | 26.97 |
+> | First births at 30+ | 0.285 | 0.478 | 0.261 | 0.285 |
+> | Ownership 30–55 | 0.459 | 0.474 | 0.453 | 0.452 |
+> | Mean rooms | 5.72 | 5.57 | 5.72 | 5.75 |
+> | Rooms response, first birth | 1.07 | 0.98 | 1.07 | 1.08 |
+> | Rooms, 3+ vs 1–2 children | 0.31 | 0.85 | 0.17 | 0.28 |
+> | Recent-parent ownership gap | 0.45 | 0.47 | 0.41 | 0.44 |
+> | Old p90/p50 | 4.12 | 3.78 | 4.17 | 4.11 |
+> | Wealth/earnings | 5.18 | 5.20 | 5.21 | 5.18 |
+> | Price | 0.791 | 0.779 | 0.790 | 0.793 |
+> | Loss (12 rows, sandbox) | 2535 | 8981 | 1951 | 2377 |
+>
+> Reading. **S2** (multiply utility by \(e(m)\)) more than doubles the cost of the
+> first child at \(\sigma=2\): fertility halves, childlessness doubles, first
+> births move four years later, and the three-plus families that remain are
+> strongly selected (rooms gap 0.85). Direction as derived; magnitude means S2
+> is not a free correction, \(\psi\) would have to roughly double and the
+> timing block re-estimated. **S1** (\(\psi\log(1+m)\)) is mild: fewer large
+> families (rooms gap 0.31 to 0.17), earlier first births, completed fertility
+> up 0.05, loss down a fifth; the intensive margin now responds to preferences
+> as intended. **\(\kappa_H=0\)** changes nothing in the stationary state
+> (ownership down 0.6 points, loss slightly better): the tenure shock's only
+> footprint is numerical, which supports F2's deterministic option; its
+> policy-sign role must come from the transition, not the level. Outputs:
+> `output/model/sandbox/*_psi_fixed/` and the three `compare_*` folders.
 
 # Combined table
 
