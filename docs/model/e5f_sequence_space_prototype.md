@@ -355,3 +355,10 @@ typical change 0.06 points, i.e. the profile is smooth, while the date-1
 initial re-sorting grows to 5.5 points (same artifact). Mean ownership on the
 fixed path is non-monotone in the scale (0.732, 0.683, 0.678, 0.710), so the
 level effect must be read off a re-solved root, not this probe.
+
+Job 17865027 (trimmed acceptance): initial 13.22 (trimmed 9.41, raw 0.447);
+mappings 2--5 accepted with trimmed scores 5.26, 2.40, 1.56, 2.11 and raw
+residuals 1.52, 0.83, 0.69, 0.55; mapping 6 tripped the safeguard on the
+trimmed score (2.38 > 1.5 x 1.56) and reset to a half-damped diagonal from
+the mapping-4 best. The smooth part therefore reached a housing tail within
+1.6 times its gate before the threshold coordinates again dominated.
