@@ -462,6 +462,35 @@ identical and start policy from the baseline's inherited 2023 households.
 Report receipts, expenditure, transfers and residuals alongside outcomes.
 A repaired stationary budget does not certify an unconverged transition.
 
+### M40 — Transaction volumes (Guido, September 14 talk)
+
+Question: how does the model do on housing transaction volumes; does it give a
+good sense of sales volume? The model produces a sales flow directly (owners
+who change size or tenure each period, plus estate sales at death) but no
+volume moment is targeted or reported. Deliverable: measure the model's annual
+sales-to-stock ratio and its age profile in the 2007 stationary state and along
+the transition, and compare with the U.S. existing-home turnover rate (sales
+divided by owner-occupied stock, roughly 4–6 percent a year in the 2000s;
+source to be pinned from NAR/Census before use). With one-period debt, a
+6 percent sale cost and no moving shocks, the model's turnover is likely far
+below the data; if so, this is evidence for the missing moving shock (P5/X3 of
+the structural review). Diagnostic only until a target contract exists.
+
+**Status:** open; raised September 14, recorded September 16.
+
+### M41 — Housing consumption per person in historical perspective (Guido)
+
+Question, separate from M40: put the model's housing consumption per person in
+historical perspective. Deliverable: a short data note on rooms (or square
+feet) per person in the U.S. over time (Census/AHS: rooms per household and
+household size, 1960s onward), the trend of rising space per person alongside
+falling household size, and where the model's 2007 and 2023 rooms per person
+sit against it. Flag that the model has one price per room and no quality
+dimension, so square-foot and quality growth are outside it. Ties to the
+geography question (M33): the historical series is national.
+
+**Status:** open; raised September 14, recorded September 16.
+
 ## Evidence and reproduction
 
 - Recognized original code: `/Users/tommasodesanto/Desktop/Projects/Fertility/Codes/code_per tommi_addingcontrolsandfixingthings.do`.
