@@ -127,6 +127,19 @@ rooms slope restricted to zero.
 **Recommendations.** Fable: Decide (low; blocks). ChatGPT: Keep (low; blocks,
 the cardinal interpretation must be chosen).
 
+> **Follow-up, September 16.** Reading done:
+> `child_cost_utility_lit_review_20260916.md` (PDF under `output/pdf/`), forms
+> read from 13 PDFs. Every fertility-choice paper on disk has a marginal cost of
+> children that is constant or rising in the number of children; ours is the
+> only one where it falls, because the deflating scale with exponent 0.7 under
+> \(\sigma=2\) is used without curvature elsewhere. Linear benefits exist
+> (Doepke–Kindermann) but always with linear or wage-proportional costs. The
+> income gradient comes everywhere from a wage-proportional cost, which we lack.
+> Three candidates written out: S1 concave \(v(m)\); S2 the SSK weighting
+> \(e\,U(X/e)\); S3 a wage-proportional child cost plus a per-child floor.
+> Lean S3, S2 as a one-line diagnostic. **Status: author decision pending; to be
+> tested in the sandbox.**
+
 ## P2. Sign and role of the cross-partial
 
 **Agreed, fully, on the mathematics.** The prompt's worry is reversed: with
@@ -744,6 +757,18 @@ calibration layer.
 
 **Both, with different weight.** The time cost of children: Fable's largest
 omission, ChatGPT's conditional alternative.
+
+# Follow-up log
+
+Every study that acts on a label above gets a dated entry under that label
+(quoted block) and a line here. This file is the single tracking document
+for the structural decisions; do not open parallel notes without an entry.
+
+| Date | Label | What was done | Pointer | Status |
+|---|---|---|---|---|
+| 2026-09-16 | P1 | Literature reading on the benefit and cost of children; three candidate specifications | `docs/model/child_cost_utility_lit_review_20260916.md` | Author decision pending |
+| 2026-09-16 | all | Sandbox for one-change stationary-state tests (spec files, moments vs targets, policy plots, regression gate) | `code/model/sandbox/` (being built) | In progress |
+| 2026-09-16 | M40, M41 | Guido's questions on transaction volumes and rooms per person over time added to the ledger | `docs/model/POST_PRESENTATION_ISSUES.md` | Open |
 
 # Combined table
 
