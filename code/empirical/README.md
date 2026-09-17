@@ -20,8 +20,9 @@ to live in the top-level calibration surface.
 The September 17 design review is in
 [`acs_fertility_pseudopanel_feasibility.md`](../../docs/model/acs_fertility_pseudopanel_feasibility.md),
 with a verified [sample and variable inventory](../../docs/model/acs_fertility_pseudopanel_inventory.md).
-It separates pooled fertility instruments from cohort validation; no new estimation
-or calibration target is approved by the memo.
+It now follows Kleven's matched pseudo-event study and within-PSID validation;
+the [original paper and replication code](../../docs/literature/kleven_pseudo_event/README.md)
+are downloaded. No new estimation or calibration target is approved by the memo.
 
 ### Historical Calibration Plotting
 

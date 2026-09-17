@@ -11,6 +11,26 @@ cannot guarantee a lower-usage worker. This wrapper supplies an explicit model
 and reasoning effort to `codex exec` for every named profile in
 `config/models.env`.
 
+## Verified OpenCode route
+
+When the user requests open-source models through OpenCode, use that route;
+do not substitute a Codex subagent because `opencode`, `kimi`, or `glm` is
+absent from PATH. The executable and model are recorded in `config/models.env`.
+The existing authenticated provider is OpenCode Go. Its credentials remain in
+the user's OpenCode auth store; never print or copy their values.
+
+September 17 smoke test: `run --pure --dir <empty-temp-directory> --model
+<configured-model> --format json`, with a no-tools prompt, returned exactly
+`OPENCODE_KIMI_OK 17`; exit 0 in 26.9 seconds. Session
+`ses_f503d4b8dffefvfuVcUocSO1I8`; provider-reported cost 0.024465.
+This verifies connectivity only. The CLI sent 7,970 input tokens even for this
+tiny test, so batch useful bounded work instead of repeating connectivity tests.
+
+The npx cache path may change. If absent, inspect existing OpenCode configuration,
+recent session provider/model metadata, and the installed npx cache before
+declaring the route unavailable. This route is not implemented by
+`scripts/codex-worker.sh`; invoke the configured OpenCode executable directly.
+
 ## Profiles
 
 | Profile | Model | Reasoning | Context | Default access / limit |

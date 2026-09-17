@@ -2,6 +2,11 @@
 
 Verified September 17, 2026. Metadata and existing outputs only; no new sample counts or estimates. Paths below are relative to the project root.
 
+Kleven follow-up: the revised plan uses his exact demographic matching benchmark,
+not fixed-cohort averages. Extract27 lacks `HISPAN`, needed to reconstruct his
+race/ethnicity categories; add it to the variable-gap list before implementation.
+The [original paper and code](../literature/kleven_pseudo_event/README.md) are local.
+
 ## Samples and files
 
 | Object | Verified evidence | Implication / unresolved item |
