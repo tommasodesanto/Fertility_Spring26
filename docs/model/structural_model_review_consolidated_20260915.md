@@ -777,6 +777,60 @@ calibration layer.
 **Both, with different weight.** The time cost of children: Fable's largest
 omission, ChatGPT's conditional alternative.
 
+# Where the mechanism stands (September 17)
+
+Written after the first sandbox tests, before any refit. Everything here is a
+steady state at the retained parameters with the child-preference level held
+fixed, so it is about direction and size, not about the slides' levels.
+
+**The mechanism on the slide is not what the model does at this calibration.**
+The slide says: children raise the value of space, large homes need a down
+payment, so house prices shift the timing of births. In the model, removing
+the down payment raises ownership among 30–55-year-olds by ten points and
+leaves completed fertility and the age at first birth unchanged. Giving
+households an unsecured credit line while keeping the down payment leaves
+ownership unchanged and raises completed fertility by 0.08 with first births a
+year earlier. The down payment governs ownership; liquidity governs births.
+
+**Why, most likely.** A renter can have six rooms and the parents' space floor
+is 2.3 rooms, so a family with one or two children fits in a rental. The
+owner-only sizes start at eight rooms and matter for three-plus families. The
+down payment therefore never blocks the space a first or second child needs;
+what blocks an early birth is that a renter cannot borrow at all and must
+save the child's cost in advance. That is a Sommer-type precautionary channel,
+and it is real in the model, but it is not the housing-collateral story.
+
+**Two ways this can still be a calibration artifact, both under test.**
+(1) The model gives households too much space: mean rooms 6.4 against 5.6 in
+the data, a first-birth rooms response of 0.98 against 0.72. If space were
+scarce at the data's level, the family-size unit might fall into the
+owner-only range for more households and the down payment might bind on the
+family margin. This is the author's prior and it is being tested by lowering
+the supply scale until mean rooms hit the data and repeating the
+no-down-payment comparison (task `TASK_muse_constrained_households_20260917.md`).
+(2) The baseline is the extreme liquidity case: zero unsecured credit for
+renters, and a down-payment test that ignores four years of current earnings.
+Real households have some unsecured credit (Kaplan and Violante calibrate a
+limit near three quarters of a quarter's income). Part of the fertility response
+to credit may be the artifact of starting from zero; a modest unsecured line
+belongs in the baseline decision for H1.
+
+**What survives either way.** The model, the calibration machinery, the
+transition and the property-tax experiment all stand. Two clean results
+already exist: easier mortgages raise ownership and not births; easier
+unsecured credit raises births and not ownership. The property-tax channel to
+young families runs through ownership and the allocation of large homes, so
+its fertility effect will be small unless the space margin binds, which is
+what the scarce-space test decides. If the down payment binds once rooms are
+right, the priority is the rooms calibration and the slide's sentence is
+kept. If it does not, the mechanism paragraph is rewritten around liquidity
+and the rental cap, and the paper's claim changes rather than disappears.
+
+**Decisions this touches.** H1 (unsecured credit in the baseline), H3 (the
+cap level is now load-bearing for the mechanism, not only for the ownership
+fit), P2 (a per-child floor would move the space margin to the second child),
+and the wording of the mechanism on the slides.
+
 # Follow-up log
 
 Every study that acts on a label above gets a dated entry under that label
