@@ -1,0 +1,10 @@
+# F3 candidate with the child-preference level re-normalized so that completed
+# fertility is 2.1 (psi root), because at fixed psi a longer dependency spell
+# mechanically lowers fertility (children are net costs while at home at the
+# retained parameters). Compare timing, rooms and the ACS profile with baseline.
+psi_mode: root
+overrides:
+  child_maturation_mode: parent_age
+  mu_young: 0.05
+  a_rise: 34.0
+  a_full: 62.0

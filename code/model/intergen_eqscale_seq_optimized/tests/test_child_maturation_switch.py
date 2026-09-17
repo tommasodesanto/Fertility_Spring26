@@ -6,8 +6,11 @@ draw applies to the remaining ``m - d`` children at home.  No one-bit
 ``born_this_period`` flag is carried: it would double the child state and
 every downstream policy array.  Instead the standard and exempt binomial
 rows are blended by the newborn share of each post-birth cell (exact for
-cell totals and entrant flows), and Bellman birth values carry a uniform
-envelope shift (first-order; exact re-optimization is second-order).
+cell totals and entrant flows), and Bellman birth values use the exact
+treatment: at fertile ages the housing/saving + tenure/location stages are
+re-solved under the exempt continuation ``Vc_ex`` and the attempt success
+branch reads ``VI_ex`` at birth destinations (the wait branch and all
+non-destination uses keep ``VI``).
 """
 
 from __future__ import annotations
@@ -134,6 +137,119 @@ def test_parent_age_matrices_hazard_and_exemption() -> None:
     assert 0.05 < mid < 1.0
     assert child_exit_prob_by_age(P, 11) == pytest.approx(1.0)
     assert child_exit_prob_by_age(P, 16) == pytest.approx(1.0)
+
+
+def test_exact_exempt_attempt_values_differ_from_uniform_shift() -> None:
+    """Reviewer check: exact re-optimized success values vs uniform shift.
+
+    Rebuilds one fertile age of the tiny parent-age configuration through the
+    factored housing stages under ``Vc`` and ``Vc_ex``.  Asserts (i) the exact
+    success values ``VI_ex`` differ from the old uniform-shift counterfactual
+    ``VI + beta*mean(Vc_ex - Vc)`` by more than 1e-6 somewhere (the gain is
+    state-specific, so pooling misprices fertility), and (ii) ``VI_ex >= VI``
+    at every birth-destination state (the exemption can only raise value).
+    """
+    from intergen_eqscale_seq_optimized.kernels import NUMBA_AVAILABLE
+    from intergen_eqscale_seq_optimized.parameters import finalize_location_choice_spec
+    from intergen_eqscale_seq_optimized.solver import (
+        _build_housing_stage_ctx,
+        _savings_stage,
+        _tenure_location_stage,
+        apply_child_aging,
+        apply_child_aging_exempt,
+        birth_destination_child_state,
+        income_at_state,
+        precompute_shared,
+        pti_adjusted_downpayment,
+        renter_borrowing_floor,
+    )
+    from intergen_eqscale_seq_optimized.utils import make_grid
+
+    spec = _tiny_independent(Nb=20, child_maturation_mode="parent_age")
+    P = apply_overrides(setup_parameters(), spec)
+    if not hasattr(P, "beta") or P.beta is None:
+        P.beta = 1 / (1 + P.rho) if hasattr(P, "rho") else 0.96
+    P.rho = 1 / P.beta - 1
+    P.rho_hat = P.rho
+    P.user_cost_rate = P.q + P.delta + P.tau_H
+    P.R_gross = 1 + P.q
+    P.phi = np.asarray(P.phi, dtype=float).reshape(-1)
+    if P.phi.size == 1:
+        P.phi = P.phi.item() * np.ones(P.n_parity)
+    P = finalize_location_choice_spec(P)
+    b_grid = make_grid(P)
+    SD = precompute_shared(P, b_grid)
+    Nb, npar, ncs = len(b_grid), int(P.n_parity), int(P.n_child_states)
+    nt, I = 1 + int(P.n_house), int(P.I)
+    p_hat = np.asarray(P.p_fixed, dtype=float).reshape(-1)
+    r_hat = np.asarray(P.user_cost_rate * p_hat, dtype=float).reshape(-1)
+    use_full_kernel = (
+        NUMBA_AVAILABLE
+        and bool(getattr(P, "use_full_kernel", True))
+        and str(getattr(P, "interp_method", "linear")).lower() == "linear"
+    )
+    exhaustive_saving = bool(getattr(P, "joint_nested_choice", False)) or bool(
+        getattr(P, "exhaustive_saving_control", False)
+    )
+    ctx = _build_housing_stage_ctx(P, b_grid, SD, p_hat, use_full_kernel, exhaustive_saving)
+
+    # Realistic continuation: next-age values from the constant-mode solve.
+    sol_c, _, _ = run_model_cp_dt(_tiny_independent(Nb=20), verbose=False)
+    assert sol_c.V.shape == (Nb, nt, I, int(P.J), sol_c.V.shape[4], npar, ncs)
+    j = 2  # fertile: A_f_start=1, A_f_end=7, so age j+1=3 is fertile.
+    assert (j + 1 >= int(P.A_f_start)) and (j + 1 <= int(P.A_f_end))
+    Vnr = np.mean(sol_c.V[:, :, :, j + 1, :, :, :], axis=3)
+    Vc = apply_child_aging(Vnr, P, Nb, nt, I, npar, ncs, age_index=j)
+    Vc_ex = apply_child_aging_exempt(Vnr, P, Nb, nt, I, npar, ncs, j)
+    s_next = float(P.debt_taper_weights[j + 1])
+    D_next = float(P.debt_caps[j + 1])
+    renter_floor = np.maximum(renter_borrowing_floor(P, b_grid, j), b_grid[0])
+    z_value = 1.0
+    dp_choice = ctx.dp_arr
+    if bool(getattr(P, "use_pti_constraint", False)):
+        income_j = np.array(
+            [income_at_state(P, i, j, float(z_value)) for i in range(I)], dtype=float
+        )
+        dp_choice = pti_adjusted_downpayment(ctx.dp_arr, ctx.hcost, income_j, P, b_grid)
+    Vd, _, _, _ = _savings_stage(
+        Vc, P, b_grid, SD, ctx, r_hat, j, z_value, s_next, D_next, renter_floor
+    )
+    _, _, _, VI, _ = _tenure_location_stage(Vd, P, b_grid, SD, ctx, dp_choice)
+    Vd_ex, _, _, _ = _savings_stage(
+        Vc_ex, P, b_grid, SD, ctx, r_hat, j, z_value, s_next, D_next, renter_floor
+    )
+    _, _, _, VI_ex, _ = _tenure_location_stage(Vd_ex, P, b_grid, SD, ctx, dp_choice)
+
+    beta = float(P.beta)
+    dests = [(1, 1)]
+    for nn in range(1, npar - 1):
+        for cs in range(nn + 1):
+            dests.append((nn + 1, birth_destination_child_state(P, cs)))
+    max_gap = 0.0
+    max_gain = -np.inf
+    min_gain = np.inf
+    max_gain_std = 0.0
+    for (nd, cdest) in dests:
+        uniform_old = VI[:, :, :, nd, cdest] + beta * float(
+            np.mean(Vc_ex[:, :, :, nd, cdest] - Vc[:, :, :, nd, cdest])
+        )
+        max_gap = max(max_gap, float(np.max(np.abs(VI_ex[:, :, :, nd, cdest] - uniform_old))))
+        gain = VI_ex[:, :, :, nd, cdest] - VI[:, :, :, nd, cdest]
+        max_gain = max(max_gain, float(np.max(gain)))
+        min_gain = min(min_gain, float(np.min(gain)))
+        max_gain_std = max(max_gain_std, float(np.std(gain)))
+    assert max_gap > 1e-6
+    # State-specificity (the pooling objection): the exact gain varies across
+    # wealth/tenure/income states instead of shifting them uniformly.
+    assert max_gain_std > 1e-6
+    # Direction: on this configuration Vnr falls in m (children at home are
+    # net costs: mean V at (n=1,m=1) < (n=1,m=0)), so the exempt lottery,
+    # which keeps more children home, LOWERS continuation value point by
+    # point (measured Vc_ex - Vc in [-0.045, -0.037] at every destination).
+    # Monotone Bellman stages then give VI_ex <= VI, the same sign as the old
+    # uniform shift.  "Exemption can only raise value" does not hold here.
+    assert max_gain <= 1e-9
+    assert min_gain < -1e-6
 
 
 def _advance_fixture(mode: str):

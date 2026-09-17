@@ -49,13 +49,13 @@ AGE_BIN_WIDTH = 4.0  # matches P.da
 # Model side
 # --------------------------------------------------------------------------
 
-def solve_model() -> tuple[Any, Any]:
-    """Reproduces exactly the solve path run_ss.py --spec baseline_psi_fixed
-    takes (same theta, same overrides, same fix_psi/root logic), warm-started
-    from the existing output/model/sandbox/baseline_psi_fixed run if present.
-    Does not write anything under output/model/sandbox/baseline_psi_fixed/.
+def solve_model(spec_name: str = SPEC_NAME) -> tuple[Any, Any]:
+    """Reproduces exactly the solve path run_ss.py --spec <spec_name> takes
+    (same theta, same overrides, same fix_psi/root logic), warm-started
+    from the existing output/model/sandbox/<spec_name> run if present.
+    Does not write anything under output/model/sandbox/<spec_name>/.
     """
-    spec = run_ss.load_spec(SANDBOX_ROOT / "specs" / f"{SPEC_NAME}.yaml")
+    spec = run_ss.load_spec(SANDBOX_ROOT / "specs" / f"{spec_name}.yaml")
 
     import audit_closed_reproductive_closure as closure
     import run_e5f_transition_calibration as calib
@@ -71,7 +71,7 @@ def solve_model() -> tuple[Any, Any]:
     fix_psi = psi_mode == "fixed" or bool(spec.get("fix_psi", False))
     initial_psi = float(spec.get("psi_child", retained_psi)) if fix_psi else retained_psi
 
-    baseline_dir = run_ss.DEFAULT_OUT_ROOT / SPEC_NAME
+    baseline_dir = run_ss.DEFAULT_OUT_ROOT / spec_name
     if baseline_dir.exists():
         run_ss.warm_start_price(overrides, baseline_dir)
 
@@ -80,7 +80,7 @@ def solve_model() -> tuple[Any, Any]:
         chain, calib, overrides, initial_psi=initial_psi, fix_psi=fix_psi,
     )
     elapsed = time.perf_counter() - t0
-    print(f"[model] solved spec={SPEC_NAME} evaluations={evaluations} elapsed={elapsed:.1f}s "
+    print(f"[model] solved spec={spec_name} evaluations={evaluations} elapsed={elapsed:.1f}s "
           f"status={diagnostics.get('status')}")
     return sol, P
 
@@ -291,7 +291,8 @@ def acs_series(age_edges: np.ndarray) -> tuple[pd.DataFrame, dict[str, Any]]:
 # Output
 # --------------------------------------------------------------------------
 
-def write_png(model_df: pd.DataFrame, acs_df: pd.DataFrame, out_dir: Path) -> None:
+def write_png(model_df: pd.DataFrame, acs_df: pd.DataFrame, out_dir: Path,
+              spec_name: str = SPEC_NAME) -> None:
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -314,14 +315,15 @@ def write_png(model_df: pd.DataFrame, acs_df: pd.DataFrame, out_dir: Path) -> No
     ax.set_title("Share with any child at home, by age")
     ax.legend(fontsize=8)
 
-    fig.suptitle("Children at home by parent age: model (baseline_psi_fixed) vs. ACS 2005-2006")
+    fig.suptitle(f"Children at home by parent age: model ({spec_name}) vs. ACS 2005-2006")
     fig.tight_layout()
     fig.savefig(out_dir / "dependents_by_age.png", dpi=150)
     plt.close(fig)
 
 
 def write_readme(out_dir: Path, mu: float, A_m: float, period_years: float,
-                  model_df: pd.DataFrame, acs_df: pd.DataFrame, acs_receipt: dict[str, Any]) -> None:
+                   model_df: pd.DataFrame, acs_df: pd.DataFrame, acs_receipt: dict[str, Any],
+                   spec_name: str = SPEC_NAME) -> None:
     key_ages = (26, 30, 42, 58, 66, 74)
 
     def row_at(df: pd.DataFrame, age: float) -> pd.Series:
@@ -331,7 +333,7 @@ def write_readme(out_dir: Path, mu: float, A_m: float, period_years: float,
     lines = []
     lines.append("# Children at home by parent age: model vs. ACS")
     lines.append("")
-    lines.append("**Model**: spec `baseline_psi_fixed` (retained E5F calibration, psi_child held fixed, "
+    lines.append(f"**Model**: spec `{spec_name}` (retained E5F calibration, psi_child held fixed, "
                  "one GE stationary evaluation, Nb=120/J=17). `m` = children currently at home, read off "
                  "`sol.g[b,tenure,i,j,n,cs]` under `child_state_mode=independent_count` "
                  "(solver.py `current_child_bin_dt`): m(n,cs) = cs if cs<=n else 0, where n = children "
@@ -384,11 +386,13 @@ def write_readme(out_dir: Path, mu: float, A_m: float, period_years: float,
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out", default=str(DEFAULT_OUT))
+    parser.add_argument("--spec", default=SPEC_NAME,
+                        help="Sandbox spec name under sandbox/specs/<name>.yaml.")
     args = parser.parse_args()
     out_dir = Path(args.out)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    sol, P = solve_model()
+    sol, P = solve_model(args.spec)
     model_df = model_series(sol, P)
 
     age_edges = model_df.age.to_numpy()
@@ -397,12 +401,12 @@ def main() -> None:
     combined = pd.concat([model_df, acs_df], ignore_index=True)
     combined.to_csv(out_dir / "dependents_by_age.csv", index=False)
 
-    write_png(model_df, acs_df, out_dir)
+    write_png(model_df, acs_df, out_dir, args.spec)
 
     A_m = float(getattr(P, "A_m", 18.0))
     period_years = float(P.period_years)
     mu = period_years / A_m
-    write_readme(out_dir, mu, A_m, period_years, model_df, acs_df, acs_receipt)
+    write_readme(out_dir, mu, A_m, period_years, model_df, acs_df, acs_receipt, args.spec)
 
     print(f"Wrote {out_dir}/{{dependents_by_age.png,dependents_by_age.csv,README.md}}")
 
