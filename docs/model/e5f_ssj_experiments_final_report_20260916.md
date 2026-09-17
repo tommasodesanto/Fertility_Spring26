@@ -242,3 +242,27 @@ frozen scale, or (ii) a numerical treatment of the flip that does not add
 taste noise, namely interpolating the tenure indifference point inside a
 wealth-grid cell so the mass moves continuously with the price without
 changing any household's preferences.
+
+**Own-rent stakes from the saved stationary solution (job 17907789,
+`stakes_diagnostic_20260916a/`).** With the six-product logit at
+\(\kappa_H=0.005\), \(\Delta V=\kappa_H[\log\sum_{\text{own}}p_j-\log p_{\text{rent}}]\)
+is recoverable from the saved float32 tenure probabilities wherever they are
+not saturated (\(|\Delta V|<0.44\)); 24 percent of the mass is saturated and
+firmly settled. State-weighted by the pre-decision distribution:
+
+| group | mass | own share | \(p_{25}\) | median \(\Delta V\) | \(p_{75}\) | share with \(|\Delta V|<0.02\) | \(<0.05\) |
+|---|---|---|---|---|---|---|---|
+| all | 1.00 | 0.555 | \(-0.002\) | 0.028 | 0.042 | 0.16 | 0.54 |
+| childless (\(n=0\)) | 0.31 | 0.136 | \(-0.054\) | \(-0.024\) | 0.000 | 0.16 | 0.39 |
+| parents (\(n\ge1\)) | 0.69 | 0.740 | 0.019 | 0.032 | 0.048 | 0.16 | 0.61 |
+| current renters | 0.49 | 0.094 | \(-0.057\) | \(-0.024\) | \(-0.002\) | 0.22 | 0.35 |
+| current owners | 0.51 | 0.993 | 0.027 | 0.035 | 0.053 | 0.10 | 0.73 |
+
+The typical stake is a few hundredths of a utility unit: six times the frozen
+noise scale, so tenure is effectively deterministic, but below a scale of
+0.05, at which more than half of households would be mixed toward 50/50
+whatever their family status. This is the mechanism behind the loss table
+above. It also says where the flips come from: the 5 percent of households
+within 0.005 of indifference are the grid nodes that switch when the price
+path moves, and their mass is concentrated among current renters with
+children (16 percent of that group within 0.005).
