@@ -1,14 +1,16 @@
 # September 14 paper baseline
 
-This branch is the active main development baseline for the model shown in the
-September 14 presentation. The immutable Monday reference is tag
-`paper-baseline-2026-09-14`; two main-only builder files are intentionally
-preserved, so 365 of 367 manifest sources match the tagged reference.
+This branch is active `main` development for the model shown in the September
+14 presentation. The immutable Monday reference is tag
+`paper-baseline-2026-09-14`; 365 of 367 manifest sources match that tag
+byte-for-byte. Two main-only builders,
+`build_simplified_olg_theory_slides.py` and
+`build_e5f_bounded_refinement_plan.py`, are intentionally preserved.
 
 The code is commit `70abd4a8` with the exact corrected `solver.py` used by
 job 17655042: SHA-256
 `2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da`.
-All 367 fetched Python source files match this worktree byte for byte. The
+The 365 restored source files match the frozen tag byte for byte. The
 pension helpers and exhaustive saving solver are included. The snapshot's
 experimental choice modules are retained for source identity; the retained
 calculation uses sequential household choices.
@@ -23,10 +25,12 @@ these choices does not resolve the outstanding economic questions in the ledger.
 From this worktree:
 
 ```bash
-python3 code/model/tools/check_paper_baseline.py
+python3 code/model/tools/check_paper_baseline.py --revision HEAD
 ```
 
-This checks the frozen source and evidence hashes without solving the model.
+Use `--revision HEAD` to check the committed source because ongoing local edits
+may be present in the `main` checkout. This checks the frozen source and
+evidence hashes without solving the model.
 The existing fiscal-accounting and exhaustive-saving tests also passed (36
 tests). A fresh end-to-end numerical replay has **not** been performed during
 this freeze.
@@ -65,6 +69,6 @@ presentation reference.
 3. Measure runtime, refactor, and require unchanged outputs and numerical gates
    for changes presented as efficiency improvements.
 
-Keep the reference commit/tag immutable. Later changes should be separate
-commits or branches derived from it. The ordinary `main` checkout retains
-ongoing author, sandbox and refactoring work; it is not the frozen reference.
+Keep the reference commit/tag immutable. Active `main` development retains
+ongoing author, sandbox and refactoring work; the immutable tag remains the
+paper reference.
