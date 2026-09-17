@@ -266,3 +266,31 @@ above. It also says where the flips come from: the 5 percent of households
 within 0.005 of indifference are the grid nodes that switch when the price
 path moves, and their mass is concentrated among current renters with
 children (16 percent of that group within 0.005).
+
+## 7. Overnight September 16--17: a receipted 104-date path under declared gates
+
+Job 17907712 (batch `announced_original_queue_20260913c_ssj_declared_gate_20260916a`,
+local packet `announced_declared_gate_20260916a/`). Warm start from the
+exactly replayed best of job 17865027; measured-Jacobian start; scaled step;
+no trimming; declared gates housing \(2.5\times10^{-3}\), fiscal 0.5 scaled.
+The initial mapping reproduced the warm start exactly (raw 0.4557, normalized
+0.919) and the final replay certified it: `converged=True`, reproduction gap
+0, two mappings, 3857 s including per-mapping plots. This is a finite-horizon
+market/fiscal equilibrium of the announced four-shock transition at the frozen
+tenure scale **up to one tenure flip**, documented as such:
+
+- housing residual above the retained \(2\times10^{-4}\) only at dates 44
+  (\(-1.2\times10^{-3}\)), 70 (\(-2.3\times10^{-3}\)), 71
+  (\(+1.7\times10^{-3}\)) and marginally 98--99 (\(-2.2\times10^{-4}\));
+- rebate residual above 0.1 only at dates 44 (\(-0.24\)), 70 (\(-0.46\)),
+  71 (\(+0.34\)); PAYGO at most \(1.3\times10^{-2}\);
+- every other date meets the retained gates;
+- terminal-distance diagnostic unchanged in kind (population 10 percent
+  above the endpoint at date 104), i.e. the terminal approach is unverified
+  exactly as in the announced contract.
+
+Accepted price path (every 13th date): 0.695, 0.601, 0.471, 0.388, 0.334,
+0.300, 0.280, 0.264; rebate path 0.183 to 0.096. Full rows, fertility path,
+figures and the standard diagnostics are in the batch. The receipt states
+its gates explicitly; it is not a certification under the retained contract
+and is not production eligible.
