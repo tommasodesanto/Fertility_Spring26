@@ -9,5 +9,11 @@
     "code/model/tools/build_e5f_bounded_refinement_plan.py": "preserve current-main builder"
   },
   "expected_source_files": 367,
-  "note": "No numerical replay; packet manifest copied unchanged."
+  "note": "No numerical replay; packet manifest copied unchanged.",
+  "verification": {
+    "committed_source_check": "passed: 367 source files and 83 artifacts; zero model solves",
+    "working_tree_source_check": "passed on clean integration worktree",
+    "calendar_policy_reuse": "passed: 9 pure tests with NUMBA_DISABLE_JIT=1",
+    "fiscal_and_exhaustive_saving": "passed previously: 36 tests"
+  }
 }
