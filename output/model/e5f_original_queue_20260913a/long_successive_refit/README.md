@@ -1,5 +1,9 @@
 # Successive permanent-surprise refit
 
+The [verified-candidate diagnostic packet](recovery_review/README.md) contains
+the PDF, five overview plots, all 17 standard household diagnostics, and full
+tables assembled from saved results on September 16. No new model solve.
+
 ## Final recovery assessment — September 16, 2026
 
 **No fitted shock has been accepted. The user queue is empty.** Recovery
