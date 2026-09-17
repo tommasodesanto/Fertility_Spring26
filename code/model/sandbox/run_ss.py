@@ -181,6 +181,7 @@ def solve_stationary_state(
     fix_psi: bool,
     psi_mode: str = "root",
     trace_path: Path | None = None,
+    candidate_theta: dict[str, float] | None = None,
 ) -> tuple[Any, Any, np.ndarray, dict[str, Any], int]:
     with mechanisms.sandbox_context():
         if psi_mode == "joint":
@@ -193,6 +194,7 @@ def solve_stationary_state(
                 completed_fertility_target=FERTILITY_TARGET,
                 completed_fertility_tolerance=FERTILITY_TOLERANCE,
                 normalize=not fix_psi,
+                candidate_theta=dict(candidate_theta or {}),
                 trace_path=trace_path,
             )
         else:
@@ -525,7 +527,7 @@ def main() -> None:
     trace_path = (out_dir / "residual_trace.csv") if psi_mode == "joint" else None
     sol, P, price, diagnostics, evaluations = solve_stationary_state(
         chain, calib, overrides, initial_psi=initial_psi, fix_psi=fix_psi, psi_mode=psi_mode,
-        trace_path=trace_path,
+        trace_path=trace_path, candidate_theta=theta,
     )
     total_seconds = time.perf_counter() - t0
     print_attribute_diff(P)
