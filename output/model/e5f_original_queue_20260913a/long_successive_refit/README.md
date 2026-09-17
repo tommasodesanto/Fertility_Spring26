@@ -1,5 +1,51 @@
 # Successive permanent-surprise refit
 
+## Final recovery assessment — September 16, 2026
+
+**No fitted shock has been accepted. The user queue is empty.** Recovery
+17858740 ended after 09:37:22 with a preserved candidate requiring continuation.
+The first candidate passes the 104-date finite market/fiscal root but misses
+the fertility target. The second remains unconverged after 11 mappings; later
+historical stages and policy were therefore not dispatched.
+
+| First-shock candidate | Preference level | Period TFR | Target | Numerical/fit status |
+|---|---:|---:|---:|---|
+| Recovered first candidate | 0.1289153 | 1.953246 | 1.974875 | Finite root verified; fertility gap −0.021629 exceeds 0.005 tolerance. |
+| Recovered second candidate | 0.1339153 | 1.990199 | 1.974875 | TFR provisional: finite root fails, so no accepted fit gap/bracket. |
+
+All historical targets remain visible below; structural parameters were not
+re-estimated. Their unchanged full [target-fit table](../../e5f_final_night_20260913/corrected_initial/target_fit.csv)
+and [parameter table](../../e5f_final_night_20260913/corrected_initial/parameters.csv)
+belong to the initial calibration, not to a newly fitted historical path.
+
+| Surprise date | Target observation years | TFR target | Final stage status |
+|---|---|---:|---|
+| 2007 | 2008–2011 | 1.974875 | Two candidates attempted; neither fitted and accepted. |
+| 2011 | 2012–2015 | 1.861000 | Not started. |
+| 2015 | 2016–2019 | 1.755375 | Not started. |
+| 2019 | 2020–2023 | 1.645750 | Not started. |
+
+The second candidate's maximum housing/PAYGO/rebate relative errors are
+0.020276%/0.003178%/0.020425%; its scaled joint score is 0.0408493 versus
+0.0002. It reproduces exactly, but reproduction does not establish equilibrium.
+The controller stopped before a round that could not fit its remaining
+candidate budget. Checkpoints survived. Both stationary endpoints passed;
+the first converged forecast still has a terminal household-mass gap of 1.742%
+and distribution L1 distance of 9.446%. Horizon robustness is unverified.
+
+The separate announced-path solver diagnostic 17865027 also failed after
+12 mappings/06:01:49, even with its explicitly relaxed fiscal gate and four
+terminal dates omitted from the trimmed acceptance score. Those diagnostic
+criteria are not production criteria. Four tenure-dispersion probes completed
+but reused the saved candidate and retained the baseline terminal endpoint;
+none solved a new equilibrium. Raising dispersion has not been demonstrated
+to fix convergence. The earlier untrimmed diagnostic 17860152 was cancelled.
+
+Evidence: [source receipts and scheduler records](recovery_final_readout_20260916.json),
+with remote paths, SHA-256 hashes, contracts and native-row residual maxima.
+No new jobs, code changes, target/gate changes or slide updates were made by
+this readout. The sections below preserve launch and earlier inspection history.
+
 Smoke job 17732511 passed native validation and automatically submitted
 first-stage job 17732824 (initially PENDING, Priority). Each stage dispatches
 its successor only after its acceptance checks pass. The passed smoke is

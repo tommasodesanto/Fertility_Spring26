@@ -1,0 +1,743 @@
+{
+  "checked_utc": "2026-09-17T01:22:09.742161+00:00",
+  "batch": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a",
+  "accepted_stages": [],
+  "stage_directories": [
+    "stage_0_2007"
+  ],
+  "policy_exists": false,
+  "receipts": {
+    "stage_0_2007/best_so_far.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/output/stage_0_2007/best_so_far.json",
+      "sha256": "be2a958ef2a70cb4af61cd226b6ffb260f3702eb549c2d7d35cfd7c21294757d",
+      "summary": {
+        "psi": 0.12891531457859182,
+        "calendar_year": 2007,
+        "target": 1.974875,
+        "model_tfr": 1.9532458455235102,
+        "gap": -0.02162915447648972,
+        "accepted": false,
+        "terminal_verified": true,
+        "rounds": 1
+      }
+    },
+    "stage_0_2007/contract.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/output/stage_0_2007/contract.json",
+      "sha256": "1c773761504bf3c7776cbede24c943dedb33dc81841ca7baf7b6143643be1270",
+      "summary": {
+        "stage": 0,
+        "calendar_year": 2007,
+        "count": 104,
+        "target": 1.974875,
+        "target_measurement": "period_tfr_topcode_adjusted",
+        "tolerance": 0.005,
+        "original_queue": true,
+        "horizon_endpoint_year": 2423,
+        "production_eligible": false
+      }
+    },
+    "stage_0_2007/failure.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/output/stage_0_2007/failure.json",
+      "sha256": "dabf7d1797dd4972938745923d58f018767127196fcb2dccce05babc8200eb65",
+      "summary": {
+        "error": "candidate requires continuation",
+        "candidate": {
+          "psi": 0.13391531457859182,
+          "calendar_year": 2007,
+          "target": 1.974875,
+          "model_tfr": 1.9901992275787084,
+          "gap": null,
+          "accepted": false,
+          "terminal_verified": true,
+          "rounds": 2
+        },
+        "calendar_year": 2007
+      }
+    },
+    "stage_0_2007/heartbeat.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/output/stage_0_2007/heartbeat.json",
+      "sha256": "25a34ceecde9b0734a6440378e5856b57fd431e856e3b22acbcf6da148fb47da",
+      "summary": {
+        "remaining_seconds": 51818.78687427472
+      }
+    },
+    "stage_0_2007/latest_completed.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/output/stage_0_2007/latest_completed.json",
+      "sha256": "3f4759e6813bcb0e9f4ec818523e86259a989b1b62511f344a472bbc2af903b3",
+      "summary": {
+        "psi": 0.13391531457859182,
+        "calendar_year": 2007,
+        "target": 1.974875,
+        "model_tfr": 1.9901992275787084,
+        "gap": null,
+        "accepted": false,
+        "terminal_verified": true,
+        "rounds": 2
+      }
+    },
+    "stage_0_2007/trial_01/candidate.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/output/stage_0_2007/trial_01/candidate.json",
+      "sha256": "be2a958ef2a70cb4af61cd226b6ffb260f3702eb549c2d7d35cfd7c21294757d",
+      "summary": {
+        "psi": 0.12891531457859182,
+        "calendar_year": 2007,
+        "target": 1.974875,
+        "model_tfr": 1.9532458455235102,
+        "gap": -0.02162915447648972,
+        "accepted": false,
+        "terminal_verified": true,
+        "rounds": 1
+      }
+    },
+    "stage_0_2007/trial_01/round_01/root_receipt.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/output/stage_0_2007/trial_01/round_01/root_receipt.json",
+      "sha256": "2516e0fdcee6d159d8a67aac1b6df2c67e2ea35017e8baf0cd4378c0fa45293c",
+      "summary": {
+        "converged": true,
+        "status": "converged",
+        "best": {
+          "score": 0.00013425507845382716,
+          "mapping_valid": true,
+          "payload": {
+            "trial": 1,
+            "boundary_diagnostics": {
+              "status": "unverified",
+              "all_checks_pass": false,
+              "reason": "Caller supplied continuation value/price without a terminal state"
+            },
+            "boundary_status": "unverified"
+          }
+        },
+        "final": {
+          "score": 0.00013425507845382716,
+          "mapping_valid": true,
+          "payload": {
+            "trial": 2,
+            "boundary_diagnostics": {
+              "status": "unverified",
+              "all_checks_pass": false,
+              "reason": "Caller supplied continuation value/price without a terminal state"
+            },
+            "boundary_status": "unverified"
+          }
+        },
+        "final_reproduction_max_abs": 0.0,
+        "evaluations": 2,
+        "elapsed_seconds": 5362.346849272028,
+        "final_damping": 1.0,
+        "schema": "e5f_rebated_permanent_surprise_v1",
+        "start_year": 2007,
+        "psi": 0.12891531457859182,
+        "finite_horizon_market_fiscal_converged": true,
+        "finite_root_status": "passed",
+        "boundary_status": "unverified",
+        "terminal_distance_passed": false,
+        "horizon_verified": false,
+        "production_eligible": false,
+        "information": "Current preference persists; later preference surprises are not anticipated",
+        "fiscal_information": "Payroll tax is 0.179; all property-tax revenue is rebated equally to current household heads",
+        "calendar_year": 2007,
+        "count": 104,
+        "round": 1,
+        "population_closure": "original_queue",
+        "original_queue": true
+      }
+    },
+    "stage_0_2007/trial_01/round_01/terminal_distance.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/output/stage_0_2007/trial_01/round_01/terminal_distance.json",
+      "sha256": "b511449fe5e398b883ccd2af45a4573ddde48d385d55d0283db428c757f57e19",
+      "summary": {
+        "distribution_relative_l1": 0.0944634641418526,
+        "population_relative_gap": 0.017417538518509135,
+        "queue_relative_max": 0.012594022910560554,
+        "raw_queue_relative_max": 0.012643554326559725,
+        "terminal_steady_state_verified": true,
+        "horizon_comparison_passed": false,
+        "production_eligible": false
+      }
+    },
+    "stage_0_2007/trial_02/candidate.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/output/stage_0_2007/trial_02/candidate.json",
+      "sha256": "3f4759e6813bcb0e9f4ec818523e86259a989b1b62511f344a472bbc2af903b3",
+      "summary": {
+        "psi": 0.13391531457859182,
+        "calendar_year": 2007,
+        "target": 1.974875,
+        "model_tfr": 1.9901992275787084,
+        "gap": null,
+        "accepted": false,
+        "terminal_verified": true,
+        "rounds": 2
+      }
+    },
+    "stage_0_2007/trial_02/round_01/root_receipt.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/output/stage_0_2007/trial_02/round_01/root_receipt.json",
+      "sha256": "48a581e90aefbab4c2cbad2f37ef7a258888e4ffb8aebdf01fbbba77d882970d",
+      "summary": {
+        "converged": false,
+        "status": "evaluation_budget",
+        "best": {
+          "score": 0.04084929937777653,
+          "mapping_valid": true,
+          "payload": {
+            "trial": 7,
+            "boundary_diagnostics": {
+              "status": "unverified",
+              "all_checks_pass": false,
+              "reason": "Caller supplied continuation value/price without a terminal state"
+            },
+            "boundary_status": "unverified"
+          }
+        },
+        "final": {
+          "score": 0.04084929937777653,
+          "mapping_valid": true,
+          "payload": {
+            "trial": 8,
+            "boundary_diagnostics": {
+              "status": "unverified",
+              "all_checks_pass": false,
+              "reason": "Caller supplied continuation value/price without a terminal state"
+            },
+            "boundary_status": "unverified"
+          }
+        },
+        "final_reproduction_max_abs": 0.0,
+        "evaluations": 8,
+        "elapsed_seconds": 21323.668659166433,
+        "final_damping": 0.015625,
+        "schema": "e5f_rebated_permanent_surprise_v1",
+        "start_year": 2007,
+        "psi": 0.13391531457859182,
+        "finite_horizon_market_fiscal_converged": false,
+        "finite_root_status": "failed",
+        "boundary_status": "not_evaluated_at_accepted_root",
+        "terminal_distance_passed": false,
+        "horizon_verified": false,
+        "production_eligible": false,
+        "information": "Current preference persists; later preference surprises are not anticipated",
+        "fiscal_information": "Payroll tax is 0.179; all property-tax revenue is rebated equally to current household heads",
+        "calendar_year": 2007,
+        "count": 104,
+        "round": 1,
+        "population_closure": "original_queue",
+        "original_queue": true
+      }
+    },
+    "stage_0_2007/trial_02/round_01/terminal_distance.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/output/stage_0_2007/trial_02/round_01/terminal_distance.json",
+      "sha256": "8bd1254f8462add23642e1cab4c4134a8ed977f3eb77e301c8893054693cfd31",
+      "summary": {
+        "distribution_relative_l1": 0.05473885867939255,
+        "population_relative_gap": 0.01102075394866997,
+        "queue_relative_max": 0.00767799912239564,
+        "raw_queue_relative_max": 0.007729335960776407,
+        "terminal_steady_state_verified": true,
+        "horizon_comparison_passed": false,
+        "production_eligible": false
+      }
+    },
+    "stage_0_2007/trial_02/round_02/root_receipt.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/output/stage_0_2007/trial_02/round_02/root_receipt.json",
+      "sha256": "04152ac8059c79a479c86ccae2b3d5b78b66fb96ae0275a4017deef9d72cd838",
+      "summary": {
+        "converged": false,
+        "status": "evaluation_budget",
+        "best": {
+          "score": 0.04084929937777653,
+          "mapping_valid": true,
+          "payload": {
+            "trial": 1,
+            "boundary_diagnostics": {
+              "status": "unverified",
+              "all_checks_pass": false,
+              "reason": "Caller supplied continuation value/price without a terminal state"
+            },
+            "boundary_status": "unverified"
+          }
+        },
+        "final": {
+          "score": 0.04084929937777653,
+          "mapping_valid": true,
+          "payload": {
+            "trial": 3,
+            "boundary_diagnostics": {
+              "status": "unverified",
+              "all_checks_pass": false,
+              "reason": "Caller supplied continuation value/price without a terminal state"
+            },
+            "boundary_status": "unverified"
+          }
+        },
+        "final_reproduction_max_abs": 0.0,
+        "evaluations": 3,
+        "elapsed_seconds": 7791.363573943265,
+        "final_damping": 0.0078125,
+        "schema": "e5f_rebated_permanent_surprise_v1",
+        "start_year": 2007,
+        "psi": 0.13391531457859182,
+        "finite_horizon_market_fiscal_converged": false,
+        "finite_root_status": "failed",
+        "boundary_status": "not_evaluated_at_accepted_root",
+        "terminal_distance_passed": false,
+        "horizon_verified": false,
+        "production_eligible": false,
+        "information": "Current preference persists; later preference surprises are not anticipated",
+        "fiscal_information": "Payroll tax is 0.179; all property-tax revenue is rebated equally to current household heads",
+        "calendar_year": 2007,
+        "count": 104,
+        "round": 2,
+        "population_closure": "original_queue",
+        "original_queue": true
+      }
+    },
+    "stage_0_2007/trial_02/round_02/terminal_distance.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/long_successive_refit_recovery_20260915a/output/stage_0_2007/trial_02/round_02/terminal_distance.json",
+      "sha256": "8bd1254f8462add23642e1cab4c4134a8ed977f3eb77e301c8893054693cfd31",
+      "summary": {
+        "distribution_relative_l1": 0.05473885867939255,
+        "population_relative_gap": 0.01102075394866997,
+        "queue_relative_max": 0.00767799912239564,
+        "raw_queue_relative_max": 0.007729335960776407,
+        "terminal_steady_state_verified": true,
+        "horizon_comparison_passed": false,
+        "production_eligible": false
+      }
+    }
+  },
+  "native_row_maxima": {
+    "trial_01/round_01/rows.json": {
+      "dates": 104,
+      "max_abs": {
+        "relative_market_residual": 6.050704764460758e-07,
+        "government_budget_residual": 8.902248777031829e-08,
+        "scaled_government_budget_residual": 6.712753922691357e-07,
+        "mass_accounting_residual": 2.1094237467877974e-15,
+        "pension_budget_residual": 2.0418304941260956e-07,
+        "scaled_pension_budget_residual": 5.063800508978454e-07
+      }
+    },
+    "trial_02/round_02/rows.json": {
+      "dates": 104,
+      "max_abs": {
+        "relative_market_residual": 0.00020276188889795777,
+        "government_budget_residual": 3.150039968283225e-05,
+        "scaled_government_budget_residual": 0.00020424649688888266,
+        "mass_accounting_residual": 1.9984014443252818e-15,
+        "pension_budget_residual": 1.4178386358587591e-05,
+        "scaled_pension_budget_residual": 3.177790488339593e-05
+      }
+    }
+  },
+  "auxiliary_ssj": {
+    "files": [
+      "best_so_far.json",
+      "comparison.json",
+      "controller_complete.json",
+      "controller_heartbeat.json",
+      "experiment_contract.json",
+      "fertility.json",
+      "fresh_terminal_check.json",
+      "graphs",
+      "irf_contract.json",
+      "irf_fertility.pdf",
+      "irf_fertility.png",
+      "irf_fertility_qa.json",
+      "latest_completed.json",
+      "latest_completed_mapping.json",
+      "mappings",
+      "root_receipt.json",
+      "rows.json",
+      "stationary_reference.json",
+      "terminal_distance.json",
+      "warm_start_jacobian.json"
+    ],
+    "receipts": {
+      "comparison.json": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c_ssj_loosened_gate_trimmed/run/comparison.json",
+        "sha256": "808d0c300647d16b3f5df6bf45520ddab2c29b725ba710e41a736eda5fb0e3bd",
+        "summary": {
+          "previous_best_score": 0.44714270236002046,
+          "production_eligible": false,
+          "rescue_best_score": 11.492498541860256,
+          "rescue_converged": false,
+          "step_rule": "scaled"
+        }
+      },
+      "experiment_contract.json": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c_ssj_loosened_gate_trimmed/run/experiment_contract.json",
+        "sha256": "45b2d6b3fbdcdfddfe7739e62fbaa9aa734ffafe36cc28b76a66393485304b53",
+        "summary": {
+          "announced_deadline_not_applied": true,
+          "changes_relative_to_retained_root": {
+            "fiscal_gate_scaled": 0.5,
+            "frozen_operator_validation": "root_controls passed with max_evaluations=8 and market_tolerance=2e-4 so the frozen validation passes; the diagnostic solver copy then applies the budget and gate above",
+            "housing_gate": 0.0002,
+            "initial_jacobian": "toeplitz",
+            "mapping_budget": 12,
+            "per_mapping_plots_skipped": true,
+            "retained_budget": 8,
+            "retained_fiscal_gate_scaled": 0.0002,
+            "retained_housing_gate": 0.0002,
+            "step_rule": "scaled",
+            "trim_count_for_acceptance": 4,
+            "warm_start": "uncertified callback checkpoint /scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c_ssj_rescue_toeplitz/run/best_so_far.json"
+          },
+          "deadline_unix": 1789544882.7826552,
+          "fake_news_derivatives_constructed": false,
+          "horizon": 104,
+          "manifest_sha256": "6163d86754fa7a585a008971a6a5c261b7eca7e3749f3a9fb88031a600905bc8",
+          "previous_best_score": 0.44714270236002046,
+          "previous_evaluations": 8,
+          "production_eligible": false,
+          "root_mapping_cap": 12,
+          "seconds": 25200,
+          "step_rule": "scaled",
+          "warm_start_from": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c/output/run/root_receipt.json"
+        }
+      },
+      "irf_contract.json": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c_ssj_loosened_gate_trimmed/run/irf_contract.json",
+        "sha256": "67ebdc566eba62a4d55fb7c8418797467405d9c96094ab5f4a493e924a14d13d",
+        "summary": {
+          "label": "Announced four-step preference path",
+          "shock_calendar_year": 2007,
+          "status_label": "Unconverged path; see root and terminal-distance receipts.",
+          "shock_description": "Four levels known in 2007; final level permanent.",
+          "production_eligible": false
+        }
+      },
+      "root_receipt.json": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c_ssj_loosened_gate_trimmed/run/root_receipt.json",
+        "sha256": "7f047159b0f1ed80d26db4e9dea19b01281d2719b0a1a8afd8d54c39f47bcedb",
+        "summary": {
+          "converged": false,
+          "status": "evaluation_budget",
+          "best": {
+            "score": 11.492498541860256,
+            "raw_max_abs": 0.45568512207947626,
+            "trimmed_score": 1.0336318394621142,
+            "mapping_valid": true,
+            "payload": {
+              "trial": 11,
+              "boundary_diagnostics": {
+                "status": "unverified",
+                "all_checks_pass": false,
+                "reason": "Caller supplied continuation value/price without a terminal state"
+              },
+              "boundary_status": "unverified"
+            }
+          },
+          "final": {
+            "score": 11.492498541860256,
+            "raw_max_abs": 0.45568512207947626,
+            "trimmed_score": 1.0336318394621142,
+            "mapping_valid": true,
+            "payload": {
+              "trial": 12,
+              "boundary_diagnostics": {
+                "status": "unverified",
+                "all_checks_pass": false,
+                "reason": "Caller supplied continuation value/price without a terminal state"
+              },
+              "boundary_status": "unverified"
+            }
+          },
+          "final_reproduction_max_abs": 0.0,
+          "evaluations": 12,
+          "elapsed_seconds": 21638.341429636814,
+          "final_damping": 0.0625,
+          "gate": 1.0,
+          "trim_count": 4,
+          "schema": "e5f_announced_original_queue_v1",
+          "start_year": 2007,
+          "psi": 0.09221854783921073,
+          "finite_horizon_market_fiscal_converged": false,
+          "finite_root_status": "failed",
+          "boundary_status": "not_evaluated_at_accepted_root",
+          "terminal_distance_passed": false,
+          "horizon_verified": false,
+          "production_eligible": false,
+          "information": "All four announced preference levels are known from 2007; no later surprise occurs.",
+          "fiscal_information": "PAYGO payroll tax 0.179 and equal 1% property-tax rebate each date.",
+          "population_law": "original_household_birth_vintage_queue",
+          "population_closure": "original_queue",
+          "original_queue": true,
+          "uses_person_demography": false,
+          "person_demography_case": null,
+          "person_A0": false,
+          "demographic_case": "original_queue",
+          "historical_age_reweighting_in_realized_state": false,
+          "outside_migration": false
+        }
+      }
+    }
+  },
+  "auxiliary_tenure_probes": {
+    "0.005": {
+      "summary.json": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c_ssj_tenure_probe_k0.005/summary.json",
+        "sha256": "ca9ff35e1e3b4262539ea1b47583200effc5df105a8d7302e6b41191aa33af2e",
+        "summary": {
+          "births_total": 5.9891918706451275,
+          "checkpoint_residual_max_abs": 0.44714270236002046,
+          "gates": {
+            "maximum_feasibility_projection_mass": 0.0,
+            "maximum_mass_accounting_error": 1.7763568394002505e-15,
+            "maximum_policy_reproduction_error": 0.0
+          },
+          "mapping_seconds": 2052.3272960800678,
+          "max_abs_housing": 0.0026438082824836446,
+          "max_abs_owner_jump_pp": 1.672889976468006,
+          "max_abs_paygo": 0.033689882857378735,
+          "max_abs_rebate": 0.44714270236002046,
+          "median_abs_owner_jump_pp": 0.16020906572340454,
+          "owner_rate_first": 0.567594177058775,
+          "owner_rate_last": 0.8008983693837995,
+          "owner_rate_mean": 0.7323687684295841,
+          "rebate_argmax_date": 101,
+          "rebate_residual_at": {
+            "100": 0.40966838349691603,
+            "101": 0.44714270236002046,
+            "102": 0.3604453704117733,
+            "43": -0.130767301059049,
+            "44": 0.4277957152620164,
+            "68": -0.03539899182034928,
+            "69": 0.07212111946553036,
+            "70": -0.41645466285281757,
+            "71": 0.045065377468431166,
+            "99": 0.3205640810071736
+          },
+          "reproduces_checkpoint_residual": 0.0,
+          "tenure_choice_kappa": 0.005
+        }
+      },
+      "probe_complete.json": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c_ssj_tenure_probe_k0.005/probe_complete.json",
+        "sha256": "e2b46c0dde6561fc40f9005bc0689343d8edd12902f001c22277216e59bca2ef",
+        "summary": {
+          "completed": true,
+          "elapsed_seconds": 2053.029508113861,
+          "max_abs_owner_jump_pp": 1.672889976468006,
+          "max_abs_rebate": 0.44714270236002046,
+          "tenure_choice_kappa": 0.005
+        }
+      },
+      "probe_contract.json": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c_ssj_tenure_probe_k0.005/probe_contract.json",
+        "sha256": "5f386f8621018afb9e67ced9c19ee977a4240b7dc1458e62404a88aa75978c84",
+        "summary": {
+          "baseline_tenure_choice_kappa": 0.005,
+          "checkpoint_score": 0.44714270236002046,
+          "horizon": 104,
+          "manifest_sha256": "04c6c56e5f9697d1eee2a6fdda36d18e86567ea2007b9561a0c4ea492a4dfaca",
+          "policy_cache_used": true,
+          "production_eligible": false,
+          "root_solved": false,
+          "started_unix": 1789505528.6216483,
+          "tenure_choice_kappa": 0.005,
+          "terminal_continuation": "kappa-0.005 endpoint retained (caveat: last dates mildly inconsistent at other scales)"
+        }
+      }
+    },
+    "0.02": {
+      "summary.json": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c_ssj_tenure_probe_k0.02/summary.json",
+        "sha256": "39eed1f221a68e23c42d76564782d8bbafcf4b8421f41351be4837fd846ffad9",
+        "summary": {
+          "births_total": 5.425176540997601,
+          "checkpoint_residual_max_abs": 0.44714270236002046,
+          "gates": {
+            "maximum_feasibility_projection_mass": 0.0,
+            "maximum_mass_accounting_error": 1.9984014443252818e-15,
+            "maximum_policy_reproduction_error": 0.0
+          },
+          "mapping_seconds": 1740.9769871765748,
+          "max_abs_housing": 0.2535153487009334,
+          "max_abs_owner_jump_pp": 0.9815486951130326,
+          "max_abs_paygo": 4.404422759149772,
+          "max_abs_rebate": 23.247539694736346,
+          "median_abs_owner_jump_pp": 0.18154001125880725,
+          "owner_rate_first": 0.5175346375306759,
+          "owner_rate_last": 0.7557565699186466,
+          "owner_rate_mean": 0.6830104060076345,
+          "rebate_argmax_date": 37,
+          "rebate_residual_at": {
+            "100": -20.014262808534607,
+            "101": -20.12322506516337,
+            "102": -20.588224105656657,
+            "43": -22.901258028194402,
+            "44": -22.397582531004193,
+            "68": -21.06390876322363,
+            "69": -20.752158669608047,
+            "70": -21.040168768043564,
+            "71": -21.126310585839157,
+            "99": -20.082387395409757
+          },
+          "reproduces_checkpoint_residual": null,
+          "tenure_choice_kappa": 0.02
+        }
+      },
+      "probe_complete.json": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c_ssj_tenure_probe_k0.02/probe_complete.json",
+        "sha256": "b8f7e7e7a94735cfac61e68b11dc6da6716230f726297dba5884a16e9c28794b",
+        "summary": {
+          "completed": true,
+          "elapsed_seconds": 1741.5812284946442,
+          "max_abs_owner_jump_pp": 0.9815486951130326,
+          "max_abs_rebate": 23.247539694736346,
+          "tenure_choice_kappa": 0.02
+        }
+      },
+      "probe_contract.json": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c_ssj_tenure_probe_k0.02/probe_contract.json",
+        "sha256": "192420c74a6a30add2668636e10f7050b1b48f6ebcb983554395f68e9a2fc62e",
+        "summary": {
+          "baseline_tenure_choice_kappa": 0.005,
+          "checkpoint_score": 0.44714270236002046,
+          "horizon": 104,
+          "manifest_sha256": "7a0ad4e1eef9a2950d7d976ed021b31b254fd6874d9d3f0ecaf76f0481b68fa6",
+          "policy_cache_used": true,
+          "production_eligible": false,
+          "root_solved": false,
+          "started_unix": 1789505530.3890698,
+          "tenure_choice_kappa": 0.02,
+          "terminal_continuation": "kappa-0.005 endpoint retained (caveat: last dates mildly inconsistent at other scales)"
+        }
+      }
+    },
+    "0.05": {
+      "summary.json": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c_ssj_tenure_probe_k0.05/summary.json",
+        "sha256": "263441e5e7f27dac812eeb1dbea0612467fffdeaea6ccc93adcec2f2fd9f9184",
+        "summary": {
+          "births_total": 4.460067873278817,
+          "checkpoint_residual_max_abs": 0.44714270236002046,
+          "gates": {
+            "maximum_feasibility_projection_mass": 0.0,
+            "maximum_mass_accounting_error": 1.4432899320127035e-15,
+            "maximum_policy_reproduction_error": 0.0
+          },
+          "mapping_seconds": 2260.112385981716,
+          "max_abs_housing": 0.5559665599022063,
+          "max_abs_owner_jump_pp": 2.5074885005767045,
+          "max_abs_paygo": 13.84112647954128,
+          "max_abs_rebate": 41.84419230035931,
+          "median_abs_owner_jump_pp": 0.10663833575247361,
+          "owner_rate_first": 0.5188498194707942,
+          "owner_rate_last": 0.7292966467126542,
+          "owner_rate_mean": 0.6778027961105693,
+          "rebate_argmax_date": 71,
+          "rebate_residual_at": {
+            "100": -40.880044484679345,
+            "101": -40.89191816469104,
+            "102": -41.31015768428002,
+            "43": -41.441705955082206,
+            "44": -41.101993701870946,
+            "68": -41.509303917237915,
+            "69": -41.22557439571601,
+            "70": -41.425643298107595,
+            "71": -41.84419230035931,
+            "99": -40.998865424453065
+          },
+          "reproduces_checkpoint_residual": null,
+          "tenure_choice_kappa": 0.05
+        }
+      },
+      "probe_complete.json": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c_ssj_tenure_probe_k0.05/probe_complete.json",
+        "sha256": "e4ebf894dc27238f14812296cc35ecd8aca8749d16b405dd013c2f50d4757655",
+        "summary": {
+          "completed": true,
+          "elapsed_seconds": 2260.669225692749,
+          "max_abs_owner_jump_pp": 2.5074885005767045,
+          "max_abs_rebate": 41.84419230035931,
+          "tenure_choice_kappa": 0.05
+        }
+      },
+      "probe_contract.json": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c_ssj_tenure_probe_k0.05/probe_contract.json",
+        "sha256": "0c16c007123627e75d4eea1cbda33ddacf8154137ce5296920dbfb0e70dc4b4e",
+        "summary": {
+          "baseline_tenure_choice_kappa": 0.005,
+          "checkpoint_score": 0.44714270236002046,
+          "horizon": 104,
+          "manifest_sha256": "2ad31993c4fbe4dab1c29d048ada10078e4d1e9be7efa92ded7b866204ac631e",
+          "policy_cache_used": true,
+          "production_eligible": false,
+          "root_solved": false,
+          "started_unix": 1789505534.7129593,
+          "tenure_choice_kappa": 0.05,
+          "terminal_continuation": "kappa-0.005 endpoint retained (caveat: last dates mildly inconsistent at other scales)"
+        }
+      }
+    },
+    "0.1": {
+      "summary.json": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c_ssj_tenure_probe_k0.1/summary.json",
+        "sha256": "88012c64af9b3258e5253f04b9708d6d855f9d702348743602636cc2bceb9115",
+        "summary": {
+          "births_total": 3.5325753531634074,
+          "checkpoint_residual_max_abs": 0.44714270236002046,
+          "gates": {
+            "maximum_feasibility_projection_mass": 0.0,
+            "maximum_mass_accounting_error": 1.3322676295501878e-15,
+            "maximum_policy_reproduction_error": 0.0
+          },
+          "mapping_seconds": 2470.201109529473,
+          "max_abs_housing": 0.7459967058329448,
+          "max_abs_owner_jump_pp": 5.4737014354262925,
+          "max_abs_paygo": 26.33942221074033,
+          "max_abs_rebate": 52.032936689760646,
+          "median_abs_owner_jump_pp": 0.05780803844385174,
+          "owner_rate_first": 0.5386596826774515,
+          "owner_rate_last": 0.7384525314030858,
+          "owner_rate_mean": 0.709711202000431,
+          "rebate_argmax_date": 75,
+          "rebate_residual_at": {
+            "100": -51.33162069361475,
+            "101": -51.24970420053564,
+            "102": -51.49764183762642,
+            "43": -49.902594797013,
+            "44": -49.62572388408945,
+            "68": -51.41346554839264,
+            "69": -51.19807294402566,
+            "70": -51.392100675259805,
+            "71": -51.92449672444976,
+            "99": -51.47091405680284
+          },
+          "reproduces_checkpoint_residual": null,
+          "tenure_choice_kappa": 0.1
+        }
+      },
+      "probe_complete.json": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c_ssj_tenure_probe_k0.1/probe_complete.json",
+        "sha256": "ee5062c02e9b47cb5ea797a95d4eaab314b716e6078bcbfeb3c012a9fe3e7e34",
+        "summary": {
+          "completed": true,
+          "elapsed_seconds": 2470.981949329376,
+          "max_abs_owner_jump_pp": 5.4737014354262925,
+          "max_abs_rebate": 52.032936689760646,
+          "tenure_choice_kappa": 0.1
+        }
+      },
+      "probe_contract.json": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c_ssj_tenure_probe_k0.1/probe_contract.json",
+        "sha256": "bc07b87849abee1d9bc40029e203dfbdec05bfdd0f97052fdbf7b038db6eac80",
+        "summary": {
+          "baseline_tenure_choice_kappa": 0.005,
+          "checkpoint_score": 0.44714270236002046,
+          "horizon": 104,
+          "manifest_sha256": "fe966c2acc17902f04930673a4dc340eac5c89b1424d82b5b585bab02fe9093d",
+          "policy_cache_used": true,
+          "production_eligible": false,
+          "root_solved": false,
+          "started_unix": 1789519682.6642764,
+          "tenure_choice_kappa": 0.1,
+          "terminal_continuation": "kappa-0.005 endpoint retained (caveat: last dates mildly inconsistent at other scales)"
+        }
+      }
+    }
+  },
+  "scheduler_sacct": "JobID|JobName|State|ExitCode|Elapsed|Start|End\n17858190|e5f_refit_smoke|COMPLETED|0:0|00:13:04|2026-09-15T13:17:20|2026-09-15T13:30:24\n17858740|e5f_refit_stage_0|COMPLETED|0:0|09:37:22|2026-09-15T13:30:23|2026-09-15T23:07:45\n17860152|e5f_ssj_loosened_gate|CANCELLED by 3653198|0:0|01:24:07|2026-09-15T13:56:58|2026-09-15T15:21:05\n17865027|e5f_ssj_gate_trimmed|COMPLETED|0:0|06:01:49|2026-09-15T20:47:48|2026-09-16T02:49:37\n17866783|e5f_tenure_probe_k0.005|COMPLETED|0:0|00:34:27|2026-09-15T16:51:56|2026-09-15T17:26:23\n17866789|e5f_tenure_probe_k0.02|COMPLETED|0:0|00:29:14|2026-09-15T16:51:58|2026-09-15T17:21:12\n17866790|e5f_tenure_probe_k0.05|COMPLETED|0:0|00:37:55|2026-09-15T16:52:01|2026-09-15T17:29:56\n17866791|e5f_tenure_probe_k0.1|COMPLETED|0:0|00:41:26|2026-09-15T20:47:48|2026-09-15T21:29:14\n"
+}

@@ -1,5 +1,58 @@
 # Calibration Status
 
+**September 16, 21:22 EDT — recovery ended; zero fitted shocks, queue empty.**
+Torch access is restored. Recovery stage 0, job **17858740**, ended scheduler
+COMPLETED after **09:37:22**, but its scientific receipt is
+`candidate requires continuation`. There is no accepted historical stage,
+no later-stage directory, and no policy run from this refitted history.
+
+The first candidate remains a verified 104-date finite market/fiscal root:
+preference 0.1289153 gives TFR 1.953246 versus the first target 1.974875
+(2008–2011 average), outside the 0.005 fit tolerance. The second candidate,
+preference 0.1339153, completed two rounds/11 native mappings without convergence.
+Its best scaled root score improved from 0.0483812 to 0.0408493 and did not
+improve in the second round; final reproduction is exact. Maximum relative
+housing/PAYGO/rebate residuals are **0.020276% / 0.003178% / 0.020425%**.
+The housing gate is 0.02%; the scaled joint root also fails its unchanged gate.
+Its provisional TFR 1.990199 is not an accepted equilibrium observation or a
+valid upper bracket for the preference fit.
+
+The controller preserved the second candidate and stopped when its remaining
+candidate budget could not accommodate another initial-plus-verification round.
+This was a controlled numerical-budget stop, not a login interruption or a
+new model exception. Both stationary endpoints passed their checks. Terminal
+and horizon validity remain outstanding: even the converged first candidate
+ends with a household-population gap of 1.742% and relative distribution L1
+distance of 9.446% from its terminal state. These measure different objects;
+neither is evidence of horizon independence.
+
+Hashed source receipts and native-row residual maxima are saved in
+`output/model/e5f_original_queue_20260913a/long_successive_refit/recovery_final_readout_20260916.json`.
+This read-only assessment launches no new jobs and changes no specification,
+targets, gates or slides. The separate solver and tenure probes are assessed
+separately; their scheduler completion cannot promote this history.
+
+**Separate September 15 diagnostic jobs, inspected September 16.**
+Job 17865027 (`e5f_ssj_gate_trimmed`) completed in 06:01:49 but exhausted
+12 mappings without convergence. Its contract explicitly relaxes the scaled
+fiscal gate from 0.0002 to 0.5, retains the 0.0002 housing gate, and excludes
+four terminal dates from its trimmed acceptance score. Even this diagnostic
+acceptance failed (trimmed score 1.033632 versus gate 1; full score 11.492499).
+These scores are not comparable to the retained root's differently scaled
+score. It uses a measured short-horizon Toeplitz derivative initialization;
+the contract says no fake-news derivatives were constructed. It supplies no
+validated production transition. The earlier variant 17860152 was cancelled
+after 01:24:07.
+
+All four tenure-dispersion probes (17866783, 17866789, 17866790, 17866791;
+kappa 0.005/0.02/0.05/0.1) completed in 29–41 minutes each. Their contracts
+say `policy_cache_used=true`, `root_solved=false`, `production_eligible=false`;
+all retain the kappa-0.005 terminal endpoint. They test responses at the saved
+candidate, not recalibrated or re-cleared equilibria. Ownership-jump measures
+are non-monotone in kappa, so these probes do not establish that simply raising
+dispersion fixes the solver. Auxiliary contracts, receipts, hashes and scheduler
+records are included in `recovery_final_readout_20260916.json` above.
+
 **September 15 — first long recovery certified; fitting continues.**
 Smoke 17858190 passed in 13:04 and automatically launched stage-0 job
 **17858740**, now RUNNING on cs655. The saved first candidate was successfully
