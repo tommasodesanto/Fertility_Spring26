@@ -1,0 +1,8 @@
+# Smoke/regression variant of baseline.yaml: same overrides, but psi/price/
+# rebate are solved with the fetched joint three-residual root
+# (sandbox/joint_psi.py) instead of the nested price-GE / psi-bisection loop,
+# against the snapshot that actually produced the retained calibration (see
+# sandbox/README.md's package-version notice).
+psi_mode: joint
+package_root: output/model/e5f_final_night_20260913/corrected_initial_source_fetched/code/model
+overrides:

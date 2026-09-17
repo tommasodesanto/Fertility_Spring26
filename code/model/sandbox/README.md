@@ -1,5 +1,19 @@
 # Stationary-state sandbox
 
+**Package-version notice (2026-09-16):** this sandbox currently imports
+`intergen_eqscale_seq_optimized` from `main`. The retained September 13 2007
+`corrected_initial` state was solved on a snapshot of branch
+`codex/balanced-social-security` at commit `70abd4a8` plus a corrected
+`solver.py` (sha256 `2992412586b81cef...`); `main`'s package differs from
+that snapshot in 8 files (`kernels.py`, `solver.py`, `parameters.py`,
+`utils.py`, plus three modules `main` lacks). A `psi_mode: joint` residual
+trace confirms the economy is not at the retained equilibrium even at the
+retained `(psi, transfer)`, consistent with a different solver rather than a
+different root method. The snapshot is being fetched into
+`output/model/e5f_final_night_20260913/corrected_initial_source_fetched/`.
+A `package_root` spec/CLI option lets `run_ss.py` import that snapshot
+instead of `main`'s package -- see below.
+
 Change one assumption, re-solve the 2007 general-equilibrium stationary
 state, and read moments-versus-targets and policy plots from one command.
 

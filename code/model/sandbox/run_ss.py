@@ -179,16 +179,31 @@ def solve_stationary_state(
     *,
     initial_psi: float,
     fix_psi: bool,
+    psi_mode: str = "root",
+    trace_path: Path | None = None,
 ) -> tuple[Any, Any, np.ndarray, dict[str, Any], int]:
     with mechanisms.sandbox_context():
-        sol, P, price, seconds, diagnostics = calib.solve_old_steady_state(
-            chain,
-            overrides,
-            initial_psi=initial_psi,
-            completed_fertility_target=FERTILITY_TARGET,
-            completed_fertility_tolerance=FERTILITY_TOLERANCE,
-            normalize=not fix_psi,
-        )
+        if psi_mode == "joint":
+            import joint_psi
+
+            sol, P, price, seconds, diagnostics = joint_psi.solve_old_steady_state_joint(
+                chain,
+                overrides,
+                initial_psi=initial_psi,
+                completed_fertility_target=FERTILITY_TARGET,
+                completed_fertility_tolerance=FERTILITY_TOLERANCE,
+                normalize=not fix_psi,
+                trace_path=trace_path,
+            )
+        else:
+            sol, P, price, seconds, diagnostics = calib.solve_old_steady_state(
+                chain,
+                overrides,
+                initial_psi=initial_psi,
+                completed_fertility_target=FERTILITY_TARGET,
+                completed_fertility_tolerance=FERTILITY_TOLERANCE,
+                normalize=not fix_psi,
+            )
     return sol, P, price, diagnostics, int(diagnostics["stationary_solves"])
 
 
@@ -411,6 +426,11 @@ def main() -> None:
     parser.add_argument("--fast", action="store_true", help="Coarser wealth grid (Nb=%d instead of %d)." % (FAST_NB, FULL_NB))
     parser.add_argument("--warm-start-from", default=None,
                         help="Output directory of a prior run to warm-start the price root from.")
+    parser.add_argument("--package-root", default=None,
+                        help="Directory containing an alternate intergen_eqscale_seq_optimized/ "
+                             "(e.g. a fetched pre-main snapshot) to import instead of this repo's "
+                             "code/model/. Overrides a spec's package_root key. Default: none, "
+                             "i.e. this sandbox imports the package on main as it always has.")
     args = parser.parse_args()
 
     spec = load_spec(SANDBOX_ROOT / "specs" / f"{args.spec}.yaml")
@@ -418,8 +438,60 @@ def main() -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
 
     sys.path.insert(0, str(TOOLS_ROOT))
+
+    package_root = args.package_root or spec.get("package_root")
+    if package_root:
+        # Inserted ahead of MODEL_ROOT/TOOLS_ROOT (both already in sys.path)
+        # so BOTH `import intergen_eqscale_seq_optimized` and the tools
+        # modules below (audit_closed_reproductive_closure,
+        # run_e5f_transition_calibration) resolve to this snapshot instead
+        # of main's package. Needed to reproduce the September 13
+        # corrected_initial state, which was solved on branch
+        # codex/balanced-social-security at commit 70abd4a8 plus a corrected
+        # solver.py -- main differs from that snapshot in 8 files. See
+        # sandbox/README.md's package-version notice.
+        package_root_path = Path(package_root)
+        if not package_root_path.is_absolute():
+            package_root_path = (REPO_ROOT / package_root_path).resolve()
+        sys.path.insert(0, str(package_root_path / "tools"))
+        sys.path.insert(0, str(package_root_path))
+        # `mechanisms` (imported at this file's top, before args/spec are
+        # known) already triggered `from intergen_eqscale_seq_optimized
+        # import solver`, caching main's copy in sys.modules -- inserting
+        # package_root into sys.path *after* that does nothing on its own.
+        # Purge the cached package and re-execute mechanisms.py so its
+        # `_solver`/`_ORIGINAL_PRECOMPUTE_SHARED` bindings pick up the
+        # snapshot's solver module instead.
+        import importlib
+
+        for name in list(sys.modules):
+            if name == "intergen_eqscale_seq_optimized" or name.startswith("intergen_eqscale_seq_optimized."):
+                del sys.modules[name]
+        importlib.reload(mechanisms)
+
     import audit_closed_reproductive_closure as closure
     import run_e5f_transition_calibration as calib
+    from intergen_eqscale_seq_optimized import solver as _resolved_solver
+
+    def _sha256(path: Path) -> str:
+        import hashlib
+        return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+    resolved_solver_path = Path(_resolved_solver.__file__).resolve()
+    provenance = {
+        "package_root_requested": package_root,
+        "resolved_solver_path": str(resolved_solver_path),
+        "resolved_solver_sha256": _sha256(resolved_solver_path),
+        "main_solver_sha256": _sha256(MODEL_ROOT / "intergen_eqscale_seq_optimized/solver.py"),
+        "resolved_closure_path": str(Path(closure.__file__).resolve()),
+        "resolved_calib_path": str(Path(calib.__file__).resolve()),
+    }
+    print("PACKAGE_PROVENANCE " + json.dumps(provenance))
+    if package_root and resolved_solver_path == (MODEL_ROOT / "intergen_eqscale_seq_optimized/solver.py").resolve():
+        raise RuntimeError(
+            "--package-root was given but intergen_eqscale_seq_optimized.solver still "
+            f"resolved to main's copy ({resolved_solver_path}); sys.path priority failed."
+        )
 
     chain = closure.load_chain(profile=PROFILE)
     theta, retained_psi, candidate = load_retained_theta()
@@ -429,8 +501,8 @@ def main() -> None:
     overrides, switches = apply_spec(overrides, spec)
 
     psi_mode = str(spec.get("psi_mode", "root")).lower()
-    if psi_mode not in ("root", "fixed"):
-        raise ValueError(f"psi_mode must be 'root' or 'fixed', got {psi_mode!r}")
+    if psi_mode not in ("root", "fixed", "joint"):
+        raise ValueError(f"psi_mode must be 'root', 'fixed', or 'joint', got {psi_mode!r}")
     fix_psi = psi_mode == "fixed" or bool(spec.get("fix_psi", False))
     initial_psi = float(spec.get("psi_child", retained_psi)) if fix_psi else retained_psi
 
@@ -450,8 +522,10 @@ def main() -> None:
         )
 
     t0 = time.perf_counter()
+    trace_path = (out_dir / "residual_trace.csv") if psi_mode == "joint" else None
     sol, P, price, diagnostics, evaluations = solve_stationary_state(
-        chain, calib, overrides, initial_psi=initial_psi, fix_psi=fix_psi,
+        chain, calib, overrides, initial_psi=initial_psi, fix_psi=fix_psi, psi_mode=psi_mode,
+        trace_path=trace_path,
     )
     total_seconds = time.perf_counter() - t0
     print_attribute_diff(P)

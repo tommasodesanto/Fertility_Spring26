@@ -11,6 +11,7 @@ predicate functions (independent_child_maturation_active, etc.).
 """
 from __future__ import annotations
 
+import os
 import sys
 from pathlib import Path
 
@@ -19,7 +20,14 @@ import numpy as np
 SANDBOX_ROOT = Path(__file__).resolve().parents[1]
 MODEL_ROOT = SANDBOX_ROOT.parent
 TOOLS_ROOT = MODEL_ROOT / "tools"
+_PACKAGE_ROOT = os.environ.get("SANDBOX_PACKAGE_ROOT")
 sys.path[:0] = [str(SANDBOX_ROOT), str(MODEL_ROOT), str(TOOLS_ROOT)]
+if _PACKAGE_ROOT:
+    # Test the sandbox's monkeypatch targets against an alternate package
+    # snapshot (e.g. the September 13 corrected_initial source), inserted
+    # ahead of MODEL_ROOT above so it wins import resolution. See
+    # sandbox/README.md's package-version notice.
+    sys.path.insert(0, str(Path(_PACKAGE_ROOT).resolve()))
 
 import mechanisms  # noqa: E402
 from intergen_eqscale_seq_optimized import solver as _solver  # noqa: E402
