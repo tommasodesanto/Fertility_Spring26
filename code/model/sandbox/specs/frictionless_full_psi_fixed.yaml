@@ -1,0 +1,9 @@
+# Frictionless benchmark, variant B: no down payment (phi = 1) AND an unsecured
+# credit line of five years of mean earnings that does not taper with age,
+# so borrowing is not constrained by housing collateral at any age. psi fixed.
+psi_mode: fixed
+overrides:
+  phi: 1.0
+  lambda_d: 5.0
+  debt_taper_start_age: 82.0
+  debt_taper_end_age: 86.0
