@@ -4920,6 +4920,17 @@ def forward_distribution_markov_income(
                         gs = gpl[:, to, id_, zz, nn, :]
                         if np.sum(gs) < 1e-15:
                             continue
+                        if tenure_probs is not None:
+                            all_probs = np.asarray(
+                                tenure_probs[:, to, id_, j, zz, nn, :, :], dtype=float
+                            )
+                            prob_sum = np.sum(all_probs, axis=-1)
+                            normalized_probs = np.divide(
+                                all_probs,
+                                prob_sum[:, :, None],
+                                out=np.zeros_like(all_probs),
+                                where=prob_sum[:, :, None] > 0,
+                            )
                         for tn in range(nt):
                             if tenure_probs is None:
                                 tcs = tenure_choice[:, to, id_, j, zz, nn, :]
@@ -4928,7 +4939,7 @@ def forward_distribution_markov_income(
                                     continue
                                 mt = gs * mk
                             else:
-                                pr = tenure_probs[:, to, id_, j, zz, nn, :, tn]
+                                pr = normalized_probs[:, :, tn]
                                 mt = gs * pr
                             if np.sum(mt) < 1e-15:
                                 continue
@@ -5340,6 +5351,18 @@ def advance_cohort_one_period_markov_income(
                     gs = gpl[:, to, id_, zz, nn, :]
                     if np.sum(gs) == 0.0 or np.sum(gs) < mass_pruning_tolerance:
                         continue
+                    normalized_probs = None
+                    if tenure_probs is not None:
+                        all_probs = np.asarray(
+                            tenure_probs[:, to, id_, j, zz, nn, :, :], dtype=float
+                        )
+                        prob_sum = np.sum(all_probs, axis=-1)
+                        normalized_probs = np.divide(
+                            all_probs,
+                            prob_sum[:, :, None],
+                            out=np.zeros_like(all_probs),
+                            where=prob_sum[:, :, None] > 0.0,
+                        )
                     for tn in range(nt):
                         if tenure_probs is None:
                             tcs = tenure_choice[:, to, id_, j, zz, nn, :]
@@ -5348,7 +5371,7 @@ def advance_cohort_one_period_markov_income(
                                 continue
                             mt = gs * mk
                         else:
-                            pr = tenure_probs[:, to, id_, j, zz, nn, :, tn]
+                            pr = normalized_probs[:, :, tn]
                             mt = gs * pr
                         if np.sum(mt) == 0.0 or np.sum(mt) < mass_pruning_tolerance:
                             continue

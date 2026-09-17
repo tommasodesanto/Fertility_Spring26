@@ -1,5 +1,10 @@
 # Calibration Status
 
+**Reference pointer (September 17, 2026):** The September 14 paper baseline is
+frozen in [`tmp/paper_baseline_sep14`](tmp/paper_baseline_sep14) on branch
+`codex/paper-baseline-sep14`, tagged `paper-baseline-2026-09-14`. This file is
+historical context for that reference; use its pinned manifest and source check.
+
 Updated: `2026-09-06` (discussion PDF ready; policy smoke failed and saving diagnosis completed; full search stopped)
 
 ## Absolute priority: order and information timing of discrete-choice shocks

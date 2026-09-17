@@ -1,5 +1,10 @@
 # Python Model Codebase
 
+**Frozen reference pointer (September 17, 2026):** This worktree is the
+September 14 paper baseline. Use the branch `codex/paper-baseline-sep14`, tag
+`paper-baseline-2026-09-14`, and `PAPER_BASELINE.md` for its pinned source and
+run recipes.
+
 This folder contains the project's active Python model implementations. The
 former MATLAB code is archived for historical reference and parity checks.
 
