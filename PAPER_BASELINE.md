@@ -60,6 +60,10 @@ shock. Preserve the actual curve as the reference; do not use those labels to
 choose a different run. The later successive-surprise recovery is not this
 presentation reference.
 
+The fresh native replay is
+`output/model/paper_baseline_sep14/replay_20260917/README.md`. It reproduces
+the initial-state recipe in Torch job 17923835 without running a transition.
+
 ## Next work
 
 1. Replay the original initial-state recipe and capture its fully resolved

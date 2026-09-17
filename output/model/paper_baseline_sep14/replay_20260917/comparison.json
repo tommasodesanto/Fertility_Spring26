@@ -1,0 +1,65 @@
+{
+  "status": "reproduced_exactly_with_parameter_metadata_difference",
+  "rows": {
+    "target_fit_reference": 13,
+    "target_fit_replay": 13,
+    "parameters_reference": 17,
+    "parameters_replay": 17
+  },
+  "loss": {
+    "reference": 179.2984242480252,
+    "replay": 179.2984242480252,
+    "absolute_difference": 0.0
+  },
+  "max_abs_difference": {
+    "target_fit_common_numeric_fields": "0.0",
+    "parameters_common_numeric_fields": "0.0095",
+    "parameter_estimates": "0.0"
+  },
+  "common_field_string_differences": {
+    "target_fit": [],
+    "parameters": [
+      [
+        "beta_annual",
+        "near_bound",
+        "True",
+        "False"
+      ]
+    ]
+  },
+  "source_contract": {
+    "objective_canonical_sha256": "4440ea07f4de957740ca6c04961d2806d9b9ef782c7a0e7dad4ce73e1db651b1",
+    "run_contract_sha256": "0bea8530b54478b6c57e4baf20b3a25072539702aef6859f7baedea931b0bbf9",
+    "initial_solve_contract_sha256": "9383de4767f9f95170194bf5fef634330467e17c07cdbf2e8b1060347e9592d4",
+    "repetitions": 2,
+    "exact_loss_equality": true
+  },
+  "gates": {
+    "preflight_status": "verified",
+    "rebate_accounting_status": "verified",
+    "pension_relative_gap": 3.068941321592033e-12,
+    "rebate_relative_gap": 3.8384144875262185e-07,
+    "rebate_residual": 7.162828880025174e-08
+  },
+  "artifacts": {
+    "target_fit_comparison_csv": "target_fit_comparison.csv",
+    "parameters_comparison_csv": "parameters_comparison.csv",
+    "replay_target_fit": "native_output/selected_target_fit.csv",
+    "replay_parameters": "native_output/selected_parameters.csv"
+  },
+  "parameter_metadata_difference": {
+    "parameter": "beta_annual",
+    "reference_retained_table": {
+      "upper": 0.99,
+      "near_bound": true,
+      "context": "capped-beta reporting table"
+    },
+    "replay_native_table": {
+      "upper": 0.9995,
+      "near_bound": false,
+      "context": "native structural restriction metadata"
+    },
+    "estimate_difference": "0.0",
+    "interpretation": "reporting metadata only; no changed estimate, target, loss, source, or numerical gate"
+  }
+}

@@ -1,0 +1,8 @@
+#!/bin/bash
+set -euo pipefail
+module load anaconda3/2025.06
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 NUMBA_DISABLE_JIT=0 PYTHONUNBUFFERED=1 MPLBACKEND=Agg
+export NUMBA_CACHE_DIR=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/output/cache/numba
+
+# Original job 17655042 command with only --output relocated for the fresh replay.
+python -B /scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/joint_source/run_e5f_joint_rebated_initial_scored.py --helper /scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/initial_v2/run_e5f_rebated_initial_overnight.py --helper-sha256 d9aa97b890442d45971ec622b4b41687da10ffa26eedaf0198f352c7e6ecb790 --joint /scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/joint_source/run_e5f_joint_rebated_initial_probe.py --joint-sha256 9eee3bca39f2a98f4a58cf18196d695b6a9db3e93ef18f8eaa2bf4dbb1243bbb --template /scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6 --proposal /scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template/proposal.json --output /scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/baseline_replay_20260917/replay
