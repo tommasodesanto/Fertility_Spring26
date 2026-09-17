@@ -18,6 +18,10 @@ def main():
     batch = Path(sys.argv[1]); kappa = float(sys.argv[2])
     seconds = int(sys.argv[3]) if len(sys.argv) > 3 else 31000
     minutes = int(sys.argv[4]) if len(sys.argv) > 4 else 540
+    import os
+    start_env = os.environ.get("E5F_SMOOTH_STATIONARY_START", "")
+    stationary_start = [float(x) for x in start_env.split(",")] if start_env else None
+    stationary_evaluations = int(os.environ.get("E5F_SMOOTH_STATIONARY_EVALS", "16"))
     receipt = f"{ANN}/output/run/root_receipt.json"
     ckpt = f"{R}/announced_original_queue_20260913c_ssj_rescue_toeplitz/run/best_so_far.json"
     toep = f"{R}/afternoon_original_queue_20260913a_ssj_toeplitz_10/derivative/derivative_receipt.json"
@@ -33,6 +37,7 @@ def main():
              tenure_choice_kappa=kappa, warm_start_checkpoint=ckpt, toeplitz_receipt=toep,
              jacobian_mode="toeplitz", step_rule="scaled", mapping_budget=12, trim_count=0,
              skip_mapping_plots=True, output=str(batch), seconds=seconds, stationary_seconds=3600,
+             stationary_start=stationary_start, stationary_evaluations=stationary_evaluations,
              author_request=f"Experiment only, author-approved 2026-09-16: re-solve stationary and terminal equilibria at tenure_choice_kappa={kappa}, then the 104-date announced root with the measured-Jacobian start at the retained gates. No production change.",
              file_sha256=pins)
     json.dump(m, open(batch / "manifest.json", "w"), indent=2, sort_keys=True)

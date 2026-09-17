@@ -136,6 +136,7 @@ def main():
             gates=("retained max-abs 2e-4" if m.get("fiscal_gate_scaled") is None
                    else f"housing {m.get('housing_gate', 2e-4)}, fiscal {m['fiscal_gate_scaled']} scaled"),
             per_mapping_plots_skipped=bool(m.get("skip_mapping_plots", True)),
+            stationary_start=m.get("stationary_start"), stationary_evaluations=int(m.get("stationary_evaluations", 16)),
             frozen_operator_validation="root_controls carry max_evaluations=8 and market_tolerance=2e-4; the solver copy applies the budget/gate above"),
         production_eligible=False))
     stop = threading.Event()
@@ -149,6 +150,10 @@ def main():
     threading.Thread(target=heartbeat, daemon=True).start()
     try:
         controls = dict(c.controls, max_evaluations=16)
+        probe_controls = dict(c.controls, max_evaluations=int(m.get("stationary_evaluations", 16)))
+        if probe_controls["max_evaluations"] not in (16, 24):
+            raise ValueError("stationary_evaluations must be 16 or 24 (frozen terminal solver)")
+        probe_start = np.asarray(m["stationary_start"], dtype=float) if m.get("stationary_start") else None
         probe_old = with_scale(c.old, kappa)
         with c.queue.original_queue_adapter(), runner.original_receipts(c), \
                 c.cache.policy_cache(c.joined.pf, max_bytes=12 * 1024**3):
@@ -158,9 +163,9 @@ def main():
                                                      folder=out / "stationary_control")
             if not control.verified:
                 raise RuntimeError("Control stationary solve at the frozen scale did not verify")
-            probe = terminal_solver.solve_terminal(old=probe_old, psi=psi0, audit=c.audit, controls=controls,
+            probe = terminal_solver.solve_terminal(old=probe_old, psi=psi0, audit=c.audit, controls=probe_controls,
                                                    deadline=min(deadline, time.monotonic() + stationary_cap),
-                                                   folder=out / "stationary_probe")
+                                                   folder=out / "stationary_probe", start=probe_start)
             if not probe.verified:
                 raise RuntimeError("Probe-scale stationary solve did not verify")
             rows, markdown = fit_table(control.endpoint_reference, probe.endpoint_reference, frozen_kappa, kappa)
@@ -169,7 +174,7 @@ def main():
             (out / "fit_table.md").write_text(markdown)
             save(out / "stage_status.json", dict(stationary="complete", elapsed_seconds=time.time() - started))
             # Stage 2: terminal at the probe scale and final preference.
-            endpoint = terminal_solver.solve_terminal(old=probe_old, psi=float(ann.FINAL_PSI), audit=c.audit, controls=controls,
+            endpoint = terminal_solver.solve_terminal(old=probe_old, psi=float(ann.FINAL_PSI), audit=c.audit, controls=probe_controls,
                                                       deadline=min(deadline, time.monotonic() + stationary_cap),
                                                       folder=out / "endpoint_probe",
                                                       start=np.asarray(frozen_endpoint.coordinates, dtype=float))
