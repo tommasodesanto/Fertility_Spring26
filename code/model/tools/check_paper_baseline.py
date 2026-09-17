@@ -14,7 +14,7 @@ def main() -> int:
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[3]
     packet = root / "output/model/paper_baseline_sep14"
-    manifest_name = "main_expected_source_manifest.json" if args.revision == "HEAD" else "manifest.json"
+    manifest_name = "main_expected_source_manifest.json" if (packet / "main_expected_source_manifest.json").exists() else "manifest.json"
     manifest = json.loads((packet / manifest_name).read_text())
     failures = []
     counts = {}
@@ -27,7 +27,7 @@ def main() -> int:
         counts[section] = len(entries)
         for relative, expected in entries.items():
             path = root / relative
-            if args.revision == "HEAD" and section == "source_files":
+            if args.revision == "HEAD":
                 blob = head_hashes.get(relative)
                 actual = hashlib.sha256(subprocess.check_output(["git", "cat-file", "blob", blob], cwd=root)).hexdigest() if blob else None
             else:

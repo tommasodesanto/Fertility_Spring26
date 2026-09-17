@@ -1,8 +1,9 @@
 # September 14 paper baseline
 
-This is the designated reference worktree for the model shown in the September
-14 presentation. Its branch is `codex/paper-baseline-sep14`. Start here rather
-than treating the historical status entries below as current instructions.
+This branch is the active main development baseline for the model shown in the
+September 14 presentation. The immutable Monday reference is tag
+`paper-baseline-2026-09-14`; two main-only builder files are intentionally
+preserved, so 365 of 367 manifest sources match the tagged reference.
 
 The code is commit `70abd4a8` with the exact corrected `solver.py` used by
 job 17655042: SHA-256
