@@ -195,3 +195,32 @@ stationary solve. Every deviation is written into the job's
 `experiment_contract.json`. The announced preference path stays as fitted at
 0.005, which is a stated approximation. Pass a different scale as the first
 argument to test 0.1.
+
+## 6. September 16 evening: smoothing-scale experiments (author-approved, copies only)
+
+**0.05 transition run (jobs 17904418, 17904647).** The probe-scale stationary
+solve from the 0.005 coordinates exhausted 16 evaluations (price 0.703 to
+0.576, rebate 0.187 to 0.140, residual still 0.029); relaunched from that
+iterate with the 24-evaluation budget it verified in 6 evaluations, and the
+0.05 terminal verified in 17. Fixed-theta stationary comparison, 0.05 versus
+0.005: price \(-17.9\) percent, housing stock \(-11.7\) percent, ownership
+0.566 to 0.600, entry flow \(-3.3\) percent. The 104-date root at 0.05 was
+running at the time of writing.
+
+**Track A recalibration panel at 0.05 (job 17905502; first attempt 17905057
+failed on the live panel size of 21).** Center: the September 4 baseline best
+(loss 30.48 at 0.005). Anchor at the same theta with scale 0.05: loss 379.17,
+of which 272.7 is the family ownership gap collapsing from 0.161 to 0.029
+(target 0.168). Best single-coordinate move: 316.86 (child room floor down),
+gap 0.031. The only move that restores the gap (fertility dispersion
+2.17 to 0.53, gap 0.1665) destroys the fertility timing moments (loss 1436).
+Mean rooms and wealth moments improve at 0.05; the room-response moments
+worsen. Reading: at 0.05 the tenure taste noise is comparable to the utility
+stakes that sort parents into ownership, so the mechanism the model is built
+around is smoothed away. A micro recalibration cannot recover it; 0.05 is not
+a usable scale. Anchors at 0.02 and 0.01 (jobs 17907117, 17907118) were
+launched to locate where the gap survives. Packet:
+`output/model/e5f_sequence_space_prototype_20260913/track_a_recal_kappa050/`.
+Track B (the frozen packet's objective) was sized but not launched: it needs
+a re-derived objective contract because the scale is pinned inside the
+template's fixed-parameter source.
