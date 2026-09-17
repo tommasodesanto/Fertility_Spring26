@@ -294,3 +294,25 @@ Accepted price path (every 13th date): 0.695, 0.601, 0.471, 0.388, 0.334,
 figures and the standard diagnostics are in the batch. The receipt states
 its gates explicitly; it is not a certification under the retained contract
 and is not production eligible.
+
+**0.05 transition root close-out (job 17904647).** Twelve mappings, 20719 s,
+not certified (`evaluation_budget`), final replay exact. Started from the
+0.005 checkpoint prices (about 18 percent too high for the 0.05 economy), so
+the initial residual was 71, concentrated at the last dates; the
+measured-Jacobian start (extrapolated from the 0.005 economy) brought it to
+0.370 by mapping 10 (71, 70, 59, 41, 19, 4.3, 2.9, 1.17, 0.60, 0.37), then
+mapping 11 tripped the safeguard. At the best point the residual above the
+retained gates sits at the unconverged tail (dates 98--103, housing up to
+\(1.9\times10^{-3}\), rebate 0.37) and at one remaining flip at date 34
+(housing \(-1.1\times10^{-3}\), rebate \(-0.20\)); the 0.005-economy flips at
+dates 44 and 70--71 are gone, as the fixed-path probe predicted. So at 0.05
+the flips are reduced, not eliminated, and the budget rather than a floor
+ended the run. Given the Track A result the scale is not usable, so no
+continuation was launched. Terminal distance: population 21 percent above the
+0.05 endpoint at date 104 (terminal approach unverified, as in every arm).
+
+## 8. Status at the close of September 17 morning
+
+No job is running. Nothing in production changed. The ledger carries active
+point 11 (WAIT) with the evidence trail; the design note for the interpolated
+tenure boundary is `docs/model/e5f_tenure_boundary_interpolation_design_20260916.md`.
