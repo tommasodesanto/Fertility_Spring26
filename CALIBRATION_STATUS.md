@@ -1,5 +1,11 @@
 # Calibration Status
 
+**September 14 paper baseline pointer (September 17, 2026):** The designated
+reference is frozen separately in `tmp/paper_baseline_sep14` on branch
+`codex/paper-baseline-sep14`, tag `paper-baseline-2026-09-14`. This `main`
+checkout remains ongoing work; use the reference worktree's manifest and
+source check for the paper baseline.
+
 **September 16, 21:22 EDT — recovery ended; zero fitted shocks, queue empty.**
 Torch access is restored. Recovery stage 0, job **17858740**, ended scheduler
 COMPLETED after **09:37:22**, but its scientific receipt is

@@ -1,5 +1,10 @@
 # Python Model Codebase
 
+**September 14 paper baseline pointer (September 17, 2026):** The designated
+reference is `tmp/paper_baseline_sep14` on branch `codex/paper-baseline-sep14`,
+tag `paper-baseline-2026-09-14`. This `main` checkout is ongoing work; use the
+reference worktree's `PAPER_BASELINE.md` and hash check for that baseline.
+
 The behavior-preserving E5F refactor package is indexed at
 `../../output/model/e5f_refactor_baseline_20260916/README.md`. Stage 1 inventory
 is complete; stages 2–3 are limited to harness self-checks and deferred native
