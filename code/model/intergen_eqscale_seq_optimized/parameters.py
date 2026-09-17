@@ -73,6 +73,16 @@ def setup_parameters() -> SimpleNamespace:
     # number ever born.
     P.child_state_mode = "shared_clock"
     P.stage_durations = np.array([P.A_m / P.period_years])
+    # Default-off parent-age maturation switch (2026-09-17).  "constant"
+    # reproduces the current age-invariant binomial law bit for bit.
+    # "parent_age" makes the per-child exit probability depend on the
+    # parent's calendar age, with a newborn exemption handled via m-d
+    # draws at birth realization (see solver/run_e5f notes).  Calendar ages
+    # convert to period indices as age_start + j * da, as elsewhere.
+    P.child_maturation_mode = "constant"
+    P.mu_young = 0.05
+    P.a_rise = 34.0
+    P.a_full = 62.0
     configure_child_state_process(P)
 
     P.kappa_fert = 4.5
@@ -354,6 +364,23 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         configure_child_state_process(P)
     if "child_state_mode" in od:
         configure_child_state_process(P)
+    maturation_keys = {"child_maturation_mode", "mu_young", "a_rise", "a_full"}
+    if maturation_keys & set(od):
+        P.child_maturation_mode = str(getattr(P, "child_maturation_mode", "constant"))
+        P.mu_young = float(getattr(P, "mu_young", 0.05))
+        P.a_rise = float(getattr(P, "a_rise", 34.0))
+        P.a_full = float(getattr(P, "a_full", 62.0))
+        if independent_child_maturation_active(P):
+            configure_child_state_process(P)
+        else:
+            validate_maturation_switch(P)
+    if "J" in od and parent_age_maturation_active(P) and independent_child_maturation_active(P):
+        configure_child_state_process(P)
+    if "age_start" in od or "da" in od:
+        if parent_age_maturation_active(P) and independent_child_maturation_active(P):
+            configure_child_state_process(P)
+        else:
+            validate_maturation_switch(P)
     if "H_own" in od:
         P.H_own = np.asarray(P.H_own, dtype=float)
         P.n_house = len(P.H_own)
@@ -869,11 +896,106 @@ def independent_child_maturation_active(P: SimpleNamespace) -> bool:
     return str(getattr(P, "child_state_mode", "shared_clock")).strip().lower() == "independent_count"
 
 
+def parent_age_maturation_active(P: SimpleNamespace) -> bool:
+    """Whether the default-off parent-age maturation law is active."""
+    return str(getattr(P, "child_maturation_mode", "constant")).strip().lower() == "parent_age"
+
+
+def validate_maturation_switch(P: SimpleNamespace) -> None:
+    mode = str(getattr(P, "child_maturation_mode", "constant")).strip().lower()
+    if mode not in {"constant", "parent_age"}:
+        raise ValueError("child_maturation_mode must be 'constant' or 'parent_age'.")
+    mu_young = float(getattr(P, "mu_young", 0.05))
+    a_rise = float(getattr(P, "a_rise", 34.0))
+    a_full = float(getattr(P, "a_full", 62.0))
+    if not np.isfinite(mu_young) or not 0.0 <= mu_young <= 1.0:
+        raise ValueError("mu_young must be finite and lie in [0, 1].")
+    if not np.isfinite(a_rise) or not np.isfinite(a_full) or not a_full > a_rise:
+        raise ValueError("a_full must exceed a_rise (both finite calendar ages).")
+    if mode == "parent_age" and not independent_child_maturation_active(P):
+        raise ValueError("child_maturation_mode='parent_age' requires child_state_mode='independent_count'.")
+
+
+def child_exit_prob_by_age(P: SimpleNamespace, age_index: int) -> float:
+    """Per-child exit probability mu(a) at parent model-age index j.
+
+    Calendar age is ``a = age_start + j * da``.  Below ``a_rise`` the
+    hazard is ``mu_young``; it rises linearly to one at ``a_full`` and
+    stays at one afterwards.
+    """
+    j = int(age_index)
+    if j < 0:
+        raise ValueError("age_index must be nonnegative.")
+    mu_young = float(getattr(P, "mu_young", 0.05))
+    a_rise = float(getattr(P, "a_rise", 34.0))
+    a_full = float(getattr(P, "a_full", 62.0))
+    age = float(getattr(P, "age_start", 18.0)) + float(j) * float(getattr(P, "da", 4.0))
+    if age < a_rise:
+        return float(np.clip(mu_young, 0.0, 1.0))
+    if age >= a_full:
+        return 1.0
+    weight = (age - a_rise) / max(a_full - a_rise, 1e-12)
+    return float(np.clip(mu_young + (1.0 - mu_young) * weight, 0.0, 1.0))
+
+
+def binomial_count_transition(mu: float, n_parity: int) -> np.ndarray:
+    """Binomial(m, 1 - mu) transition over at-home counts m (all parities)."""
+    mu_c = float(np.clip(float(mu), 0.0, 1.0))
+    survival = 1.0 - mu_c
+    npar = int(n_parity)
+    if npar < 2:
+        raise ValueError("n_parity must be at least two.")
+    Pa = np.zeros((npar, npar, npar))
+    for nn in range(npar):
+        for current in range(npar):
+            if current > nn:
+                Pa[current, current, nn] = 1.0
+                continue
+            for nxt in range(current + 1):
+                Pa[current, nxt, nn] = (
+                    math.comb(current, nxt)
+                    * survival**nxt
+                    * mu_c ** (current - nxt)
+                )
+    return Pa
+
+
+def exempt_count_transition(mu: float, n_parity: int) -> np.ndarray:
+    """Newborn-exempt transition: one birth-period child never leaves.
+
+    For post-birth at-home count ``m >= 1`` with birth indicator ``d = 1``,
+    next count is ``1 + Binomial(m - 1, 1 - mu)`` (draw on ``m - d``).
+    Row ``m = 0`` is an identity (no children, nothing to exempt).
+    """
+    mu_c = float(np.clip(float(mu), 0.0, 1.0))
+    survival = 1.0 - mu_c
+    npar = int(n_parity)
+    if npar < 2:
+        raise ValueError("n_parity must be at least two.")
+    Pa = np.zeros((npar, npar, npar))
+    for nn in range(npar):
+        for current in range(npar):
+            if current > nn:
+                Pa[current, current, nn] = 1.0
+                continue
+            if current == 0:
+                Pa[0, 0, nn] = 1.0
+                continue
+            for nxt in range(1, current + 1):
+                Pa[current, nxt, nn] = (
+                    math.comb(current - 1, nxt - 1)
+                    * survival ** (nxt - 1)
+                    * mu_c ** (current - nxt)
+                )
+    return Pa
+
+
 def configure_child_state_process(P: SimpleNamespace) -> None:
     """Build the child-state space and transition matrix for the selected mode."""
     mode = str(getattr(P, "child_state_mode", "shared_clock")).strip().lower()
     if mode not in {"shared_clock", "independent_count"}:
         raise ValueError("child_state_mode must be 'shared_clock' or 'independent_count'.")
+    validate_maturation_switch(P)
     durations = np.asarray(P.stage_durations, dtype=float).reshape(-1)
     if durations.size == 0 or np.any(~np.isfinite(durations)) or np.any(durations <= 0.0):
         raise ValueError("stage_durations must be finite and strictly positive.")
@@ -887,6 +1009,25 @@ def configure_child_state_process(P: SimpleNamespace) -> None:
         P.n_child_stages = 1
         P.n_child_states = int(P.n_parity)
         P.Pi_child = make_independent_child_count_transition_matrix(durations[0], P.n_parity)
+        # Age-dependent stacks are built only in parent_age mode.  In
+        # constant mode these attributes are absent so every existing array
+        # is bitwise identical to the pre-switch code.
+        for stale in ("Pi_child_by_age", "Pi_child_exempt_by_age"):
+            if hasattr(P, stale):
+                delattr(P, stale)
+        if parent_age_maturation_active(P):
+            npar = int(P.n_parity)
+            J = int(getattr(P, "J", 0))
+            if J < 2:
+                raise ValueError("parent_age maturation requires J >= 2.")
+            by_age = np.zeros((J, npar, npar, npar))
+            ex_age = np.zeros((J, npar, npar, npar))
+            for j in range(J):
+                mu = child_exit_prob_by_age(P, j)
+                by_age[j] = binomial_count_transition(mu, npar)
+                ex_age[j] = exempt_count_transition(mu, npar)
+            P.Pi_child_by_age = by_age
+            P.Pi_child_exempt_by_age = ex_age
     else:
         P.n_child_stages = len(durations)
         P.n_child_states = P.n_child_stages + 3

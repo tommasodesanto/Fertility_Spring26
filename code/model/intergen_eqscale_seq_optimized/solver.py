@@ -18,6 +18,7 @@ from .parameters import (
     finalize_location_choice_spec,
     get_fecundity_by_age,
     independent_child_maturation_active,
+    parent_age_maturation_active,
     readiness_childless_states,
     readiness_cumulative_probability,
     readiness_gate_active,
@@ -2511,6 +2512,15 @@ def solve_bellman_full_markov_income(
                     survival = float(P.survival_probs[j])
                     Vnr = survival * Vnr + (1.0 - survival) * Vbq
             Vc = apply_child_aging(Vnr, P, Nb, nt, I, npar, ncs, age_index=j)
+            # Parent-age newborn exemption (m-d): continuation with the
+            # birth-period child safe, used only for birth-destination values
+            # below.  Constant mode skips this (Vc_ex is None) bit for bit.
+            Vc_ex = (
+                apply_child_aging_exempt(Vnr, P, Nb, nt, I, npar, ncs, j)
+                if parent_age_maturation_active(P)
+                and independent_child_maturation_active(P)
+                else None
+            )
             Vd = np.zeros((Nb, nt, I, npar, ncs))
             cd = np.zeros_like(Vd)
             hd = np.zeros_like(Vd)
@@ -2768,10 +2778,18 @@ def solve_bellman_full_markov_income(
                     Vfa = np.empty((Nb, nt, I, 2))
                     settled_cs = readiness_settled_state(P)
                     Vfa[:, :, :, 0] = VI[:, :, :, 0, settled_cs]
+                    first_dest = VI[:, :, :, 1, 1]
+                    if Vc_ex is not None:
+                        # m-d envelope shift: the newborn is safe next period.
+                        # Uniform (wealth-pooled) first-order correction; exact
+                        # re-optimization is second-order by the envelope theorem.
+                        first_dest = first_dest + float(beta) * float(
+                            np.mean(Vc_ex[:, :, :, 1, 1] - Vc[:, :, :, 1, 1])
+                        )
                     Vfa[:, :, :, 1] = (
                         pi_j
                         * (
-                            VI[:, :, :, 1, 1]
+                            first_dest
                             - float(P.first_birth_fixed_cost)
                         )
                         + (1.0 - pi_j) * VI[:, :, :, 0, settled_cs]
@@ -2807,8 +2825,16 @@ def solve_bellman_full_markov_income(
                             destination_cs = birth_destination_child_state(P, cs)
                             V2 = np.empty((Nb, nt, I, 2))
                             V2[:, :, :, 0] = VI[:, :, :, nn, cs]
+                            cont_dest = VI[:, :, :, nn + 1, destination_cs]
+                            if Vc_ex is not None:
+                                cont_dest = cont_dest + float(beta) * float(
+                                    np.mean(
+                                        Vc_ex[:, :, :, nn + 1, destination_cs]
+                                        - Vc[:, :, :, nn + 1, destination_cs]
+                                    )
+                                )
                             V2[:, :, :, 1] = (
-                                pi_j * VI[:, :, :, nn + 1, destination_cs]
+                                pi_j * cont_dest
                                 + (1.0 - pi_j) * VI[:, :, :, nn, cs]
                             )
                             l2, p2 = logsumexp(V2 / kf_cont, axis=3)
@@ -3017,7 +3043,10 @@ def solve_bellman_core(
             if bool(getattr(P, "use_age_survival", False)):
                 survival = float(P.survival_probs[j])
                 Vnr = survival * Vnr + (1.0 - survival) * Vbq
-        Vc = apply_child_aging(Vnr, P, Nb, nt, I, npar, ncs)
+        if parent_age_maturation_active(P):
+            Vc = apply_child_aging(Vnr, P, Nb, nt, I, npar, ncs, age_index=j)
+        else:
+            Vc = apply_child_aging(Vnr, P, Nb, nt, I, npar, ncs)
 
         for i in range(I):
             yj = P.income[i, j]
@@ -4073,6 +4102,10 @@ def forward_distribution(
         and bool(getattr(P, "use_compiled_forward_distribution", True))
         and not bool(getattr(P, "enforce_feasibility_gate", True))
         and entry_idx.size == 1
+        # Parent-age maturation is age-dependent, which the compiled kernel's
+        # single-matrix signature cannot carry; use the Python path instead.
+        # Constant mode still uses the kernel bit for bit.
+        and not parent_age_maturation_active(P)
     ):
         bp_idx, bp_wt = interp_indices(b_grid, np.clip(bp_pol, bmin, bmax))
         pia_arg = np.asarray(Pia if Pia is not None else np.zeros((ncs, ncs, npar)), dtype=float)
@@ -4335,7 +4368,7 @@ def forward_distribution(
             for cs in range(ncs):
                 gp = gps[:, :, :, nn, cs]
                 if ust:
-                    Pi = Pia[:, :, nn]
+                    Pi = _child_Pa_for_age(P, Pia, j)[:, :, nn]
                     if not independent_child_maturation_active(P) and cs == K and nn >= 1:
                         pm = Pi[cs, csm1] if nn == 1 else Pi[cs, csm2]
                         if pm > 0:
@@ -4581,6 +4614,9 @@ def forward_distribution_markov_income(
     Pia = P.Pi_child if ust else None
 
     for j in range(J - 1):
+        # Parent-age m-d bookkeeping: post-birth newborn inflow per
+        # (parity, at-home) cell at age j.  Stays zero in constant mode.
+        newborn_inflow = np.zeros((npar, ncs))
         _gate_dead_mass_at_age(
             g[:, :, :, j, :, :, :],
             state_values[:, :, :, j, :, :, :],
@@ -4637,6 +4673,8 @@ def forward_distribution_markov_income(
                     else:
                         g[:, :, :, j, zz, 0, 0] = gc - realized1
                     g[:, :, :, j, zz, 1, 1] += realized1
+                    if parent_age_maturation_active(P):
+                        newborn_inflow[1, 1] += float(np.sum(realized1))
                     first_births_by_age[j] += float(np.sum(realized1))
                     total_births += float(np.sum(realized1))
                     for i in range(I):
@@ -4656,6 +4694,10 @@ def forward_distribution_markov_income(
                                 g[:, :, :, j, zz, nn, cs] -= realized2
                                 destination_cs = birth_destination_child_state(P, cs)
                                 g[:, :, :, j, zz, nn + 1, destination_cs] += realized2
+                                if parent_age_maturation_active(P):
+                                    newborn_inflow[nn + 1, destination_cs] += float(
+                                        np.sum(realized2)
+                                    )
                                 if nn == 1:
                                     second_attempts_by_age[j] += float(np.sum(m2))
                                     second_births_by_age[j] += float(np.sum(realized2))
@@ -4991,7 +5033,28 @@ def forward_distribution_markov_income(
                                     )
                         continue
                     if ust:
-                        Pi = Pia[:, :, nn]
+                        Pi = _child_Pa_for_age(P, Pia, j)[:, :, nn]
+                        if parent_age_maturation_active(P):
+                            # m-d exemption: blend the exempt row by the newborn
+                            # share of this cell (exact for cell totals/entrants).
+                            tot_cell = float(np.sum(gps[:, :, :, :, nn, cs]))
+                            if tot_cell > 0.0:
+                                surv_j = (
+                                    float(P.survival_probs[j])
+                                    if bool(getattr(P, "use_age_survival", False))
+                                    else 1.0
+                                )
+                                f_cell = float(
+                                    np.clip(
+                                        surv_j * newborn_inflow[nn, cs] / tot_cell,
+                                        0.0,
+                                        1.0,
+                                    )
+                                )
+                                if f_cell > 0.0:
+                                    Pi = _blended_child_Pi_for_cell(P, Pia, j, f_cell)[
+                                        :, :, nn
+                                    ]
                         if not independent_child_maturation_active(P) and cs == K and nn >= 1:
                             pm = Pi[cs, csm1] if nn == 1 else Pi[cs, csm2]
                             if pm > 0:
@@ -5308,7 +5371,15 @@ def advance_cohort_one_period_markov_income(
     Pi_z,
     *,
     mass_pruning_tolerance: float = 1e-15,
+    newborn_frac=None,
 ):
+    """Advance one cohort one period (Markov income).
+
+    ``newborn_frac`` is an optional ``(n_parity, n_child_states)`` array of
+    post-birth newborn shares per cell for the parent-age m-d exemption
+    (blended standard/exempt rows; ``None`` reproduces the constant path
+    bit for bit).
+    """
     Nb = len(b_grid)
     nt = 1 + P.n_house
     I = P.I
@@ -5423,7 +5494,20 @@ def advance_cohort_one_period_markov_income(
                                 )
                     continue
                 if ust:
-                    Pi = Pia[:, :, nn]
+                    Pi = _child_Pa_for_age(P, Pia, j)[:, :, nn]
+                    if parent_age_maturation_active(P) and newborn_frac is not None:
+                        f_cell = float(
+                            np.clip(
+                                float(np.asarray(newborn_frac, dtype=float)[nn, cs]),
+                                0.0,
+                                1.0,
+                            )
+                        )
+                        Pi_ex_cell = _child_Pa_exempt_for_age(P, j)
+                        if f_cell > 0.0 and Pi_ex_cell is not None:
+                            Pi = (1.0 - f_cell) * Pi + f_cell * np.asarray(
+                                Pi_ex_cell
+                            )[:, :, nn]
                     for csn in range(ncs):
                         wt_child = Pi[cs, csn]
                         if wt_child > 0:
@@ -7019,7 +7103,7 @@ def advance_cohort_one_period(
     g_next = np.zeros((Nb, nt, I, npar, ncs))
     if ust:
         for nn in range(npar):
-            Pi = Pia[:, :, nn]
+            Pi = _child_Pa_for_age(P, Pia, j)[:, :, nn]
             for i in range(I):
                 for ten in range(nt):
                     gin = gps[:, ten, i, nn, :]
@@ -7076,11 +7160,74 @@ def mean_housing_distribution(g_dist, j, hR_pol, P):
     return th / max(mn, 1e-12)
 
 
+def _child_Pa_for_age(P: SimpleNamespace, Pia, age_index) -> np.ndarray:
+    """Standard child transition for age ``j`` under parent_age, else ``Pia``.
+
+    In constant mode this returns ``Pia`` untouched, so every existing code
+    path is bitwise identical.  In parent_age mode it returns the
+    age-specific standard matrix ``P.Pi_child_by_age[j]`` (draw on all ``m``
+    children at home).  A ``None`` age falls back to ``Pia``.
+    """
+    if (
+        age_index is not None
+        and parent_age_maturation_active(P)
+        and independent_child_maturation_active(P)
+    ):
+        by_age = getattr(P, "Pi_child_by_age", None)
+        if by_age is not None:
+            return np.asarray(by_age[int(age_index)])
+    return Pia
+
+
+def _child_Pa_exempt_for_age(P: SimpleNamespace, age_index):
+    """Newborn-exempt child transition for age ``j`` (parent_age only).
+
+    Returns ``P.Pi_child_exempt_by_age[j]`` (draw on ``m - d`` with the
+    birth-period child safe), or ``None`` in constant mode.
+    """
+    if (
+        age_index is not None
+        and parent_age_maturation_active(P)
+        and independent_child_maturation_active(P)
+    ):
+        ex_age = getattr(P, "Pi_child_exempt_by_age", None)
+        if ex_age is not None:
+            return np.asarray(ex_age[int(age_index)])
+    return None
+
+
+def _blended_child_Pi_for_cell(
+    P: SimpleNamespace,
+    Pia,
+    age_index,
+    newborn_frac: float,
+) -> np.ndarray:
+    """Blend standard and exempt rows by the newborn share ``f`` of a cell.
+
+    Implements the m-d exemption without a one-bit state expansion: the
+    fraction ``f`` of post-birth mass that just arrived faces the exempt
+    row, the remainder faces the standard row.  The blend is exact for
+    cell totals and entrant flows (both linear in mass); only the
+    within-cell wealth split is pooled.  With ``f = 0`` (or constant mode)
+    this equals the standard matrix bit for bit.
+    """
+    Pi_std = np.asarray(_child_Pa_for_age(P, Pia, age_index))
+    if not parent_age_maturation_active(P):
+        return Pi_std
+    f = float(np.clip(float(newborn_frac), 0.0, 1.0))
+    if f <= 0.0:
+        return Pi_std
+    Pi_ex = _child_Pa_exempt_for_age(P, age_index)
+    if Pi_ex is None:
+        return Pi_std
+    return (1.0 - f) * Pi_std + f * np.asarray(Pi_ex)
+
+
 def apply_child_aging(Vn, P, Nb, nt, I, npar, ncs, age_index=None):
     Vc = np.zeros((Nb, nt, I, npar, ncs))
     K = P.n_child_stages
     if P.use_stochastic_aging and hasattr(P, "Pi_child"):
-        Pa = P.Pi_child
+        Pa = _child_Pa_for_age(P, P.Pi_child, age_index)
         for nn in range(npar):
             if readiness_gate_active(P) and nn == 0 and age_index is not None:
                 current_age = float(P.age_start) + float(age_index) * float(P.da)
@@ -7111,6 +7258,27 @@ def apply_child_aging(Vn, P, Nb, nt, I, npar, ncs, age_index=None):
                 else:
                     csn = 0 if nn == 0 else csm1 if nn == 1 else csm2
                 Vc[:, :, :, nn, cs] = Vn[:, :, :, nn, csn]
+    return Vc
+
+
+def apply_child_aging_exempt(Vn, P, Nb, nt, I, npar, ncs, age_index):
+    """Newborn-exempt continuation for parent_age Bellman birth values.
+
+    Applies the exempt matrix (draw on ``m - d``) to every cell.  Callers
+    use the resulting ``Vc_ex`` only for destination states reached by a
+    current-period birth; stayer states keep the standard ``Vc``.  This is
+    the m-d implementation (no one-bit state expansion: the flag would
+    double the child state and every downstream policy array).  In constant
+    mode there is no exempt matrix and this falls back to ``apply_child_aging``.
+    """
+    Pa_ex = _child_Pa_exempt_for_age(P, age_index)
+    if Pa_ex is None:
+        return apply_child_aging(Vn, P, Nb, nt, I, npar, ncs, age_index=age_index)
+    Vc = np.zeros((Nb, nt, I, npar, ncs))
+    for nn in range(npar):
+        Pi = np.asarray(Pa_ex)[:, :, nn]
+        Vnn = np.reshape(Vn[:, :, :, nn, :], (-1, ncs), order="F")
+        Vc[:, :, :, nn, :] = np.reshape(Vnn @ Pi.T, (Nb, nt, I, ncs), order="F")
     return Vc
 
 

@@ -815,6 +815,18 @@ limit near three quarters of a quarter's income). Part of the fertility response
 to credit may be the artifact of starting from zero; a modest unsecured line
 belongs in the baseline decision for H1.
 
+**Result of the scarce-space test (September 17, evening).** With the supply
+scale lowered until mean rooms equal the data (5.56, price up 4 percent), the
+share of family-forming households (ages 26–38, zero or one child at home)
+whose housing choice changes when the down payment is removed falls from 4.5
+to 2.8 percent, and completed fertility is flat with and without the down
+payment (1.840 against 1.835). Scarcer space lowers fertility a little (1.872
+to 1.840, about 0.4 percent per percent of price) through the cost of space,
+not through the collateral requirement. So the rooms misses are not what hides
+the mechanism: at the data's space level the down payment still governs
+ownership (0.437 to 0.532) and not births. The author's prior is rejected on
+this test. Tables: `output/model/sandbox/constrained/README.md`.
+
 **What survives either way.** The model, the calibration machinery, the
 transition and the property-tax experiment all stand. Two clean results
 already exist: easier mortgages raise ownership and not births; easier
@@ -840,6 +852,8 @@ for the structural decisions; do not open parallel notes without an entry.
 | Date | Label | What was done | Pointer | Status |
 |---|---|---|---|---|
 | 2026-09-16 | P1 | Literature reading on the benefit and cost of children; three candidate specifications | `docs/model/child_cost_utility_lit_review_20260916.md` | Author decision pending |
+| 2026-09-17 (evening) | H1, H3, X3 | Who-is-constrained table and scarce-space test (Muse): down payment binds for 4.5% of family-forming households at baseline, 2.8% once mean rooms equal the data; fertility flat with and without the down payment in both cases; scarcer space lowers fertility through cost (1.872→1.840). The rooms misses do not hide the mechanism | `output/model/sandbox/constrained/README.md` | Prior rejected; mechanism wording must change |
+| 2026-09-17 (evening) | F3 | Parent-age maturation switch built by Muse, default off, bitwise-nested, 6 new tests plus 52 neighbour tests pass; exemption implemented as m−d draws, no new state. Override keys `child_maturation_mode: parent_age`, `mu_young`, `a_rise`, `a_full` | `code/model/intergen_eqscale_seq_optimized/tests/test_child_maturation_switch.py` | ACS-profile test next; lead line-by-line check pending |
 | 2026-09-17 | H1, X3 | **Frictionless benchmark, steady state, fixed parameters and fixed ψ.** No down payment (φ=1): ownership 30–55 0.459→0.557, completed fertility 1.872→1.866, first-birth age unchanged. Unsecured credit line (five years' earnings, no age taper), down payment kept: ownership unchanged (0.450), completed fertility 1.872→1.948, first-birth age 26.96→25.79, wealth/earnings 5.18→4.43. Reading: at these parameters the timing mechanism runs through liquidity, not through the collateral requirement; the down payment governs ownership, not births. Both relaxed together trips a solver dead-mass invariant (does not solve). A sandbox bug was fixed on the way: a scalar φ override was silently reset to 0.80 by the package's `n_parity` length check | `output/model/sandbox/frictionless/` | Mechanism statement for the slides needs rewording; author to read |
 | 2026-09-17 (late) | all | Sandbox aligned to the recipe's own assembly: two bugs fixed (supply elasticity 1.75→0.63; child consumption floor 0.48→0). Baseline now matches ψ to 3e-6 and ownership within 1 point, but two wealth-distribution rows still differ (recent-parent gap 0.56 vs 0.14; old p90/p50 4.05 vs 4.50) because the recipe starts from a cluster-only checkpoint. **Plumbing stopped here.** Rule: cluster replay = exact levels; sandbox = quick direction-and-size tests | `code/model/sandbox/README.md` | Closed by decision |
 | 2026-09-17 | all | **Baseline is now solid.** Codex replayed the archived initial-state recipe on Torch (job 17923835, 14 min): all 13 moments and 17 parameters match exactly, loss 179.2984242480; slides PDF and figure sources mapped. Receipt: `output/model/paper_baseline_sep14/replay_20260917/README.md`. The sandbox's own assembly still lands elsewhere; it is being aligned to the recipe's functions so spec comparisons run at deck level | replay receipt | Sandbox alignment in progress |

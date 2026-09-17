@@ -843,6 +843,26 @@ def advance_sequential_calendar_distribution(
     stochastic = bool(P.use_stochastic_aging and hasattr(P, "Pi_child"))
     if int(P.I) != 1:
         raise NotImplementedError("The sequential transition is currently one-market only")
+    # Parent-age m-d exemption: newborn share per (age, parity, at-home)
+    # cell from the fertility-stage diff.  Stays None in constant mode, so
+    # the advance below reproduces the current path bit for bit.
+    use_parent_age = bool(model.parent_age_maturation_active(P)) and bool(
+        model.independent_child_maturation_active(P)
+    )
+    newborn_frac_by_age: list = [None] * int(P.J)
+    if use_parent_age and stochastic:
+        g_pre_stage = np.asarray(evaluation.g_pre, dtype=float)
+        inflow_stage = np.maximum(np.asarray(g_post, dtype=float) - g_pre_stage, 0.0)
+        for jj in range(int(P.J)):
+            tot_cell = np.sum(g_post[:, :, :, jj, :, :, :], axis=(0, 1, 2, 4))
+            inf_cell = np.sum(inflow_stage[:, :, :, jj, :, :, :], axis=(0, 1, 2, 4))
+            frac_cell = np.divide(
+                inf_cell,
+                tot_cell,
+                out=np.zeros_like(inf_cell),
+                where=tot_cell > 0,
+            )
+            newborn_frac_by_age[jj] = np.clip(frac_cell, 0.0, 1.0)
 
     for j in range(int(P.J) - 1):
         survival = float(P.survival_probs[j]) if bool(P.use_age_survival) else 1.0
@@ -866,6 +886,7 @@ def advance_sequential_calendar_distribution(
             stochastic,
             P.Pi_child if stochastic else None,
             Pi_z,
+            newborn_frac=newborn_frac_by_age[j],
         )
         if bool(getattr(P, "normalize_transition_mass_roundoff", False)):
             advanced = normalize_pure_transition_mass_roundoff(
