@@ -171,11 +171,12 @@ def write_distribution_diagnostics(sol: SimpleNamespace, P: SimpleNamespace, out
             wealth_age_z[j, zz] = weighted_liquid_wealth(gjz, b_grid)
             housing_age_z[j, zz] = mean_housing_for_distribution(gjz, sol, P, j, zz)
             if P.A_f_start - 1 <= j <= P.A_f_end and hasattr(sol, "fert_probs"):
+                risk_distribution = getattr(sol, "g_pre_choice", g) if bool(getattr(P, "joint_nested_choice", False)) else g
                 childless = np.sum(
-                    g[:, :, :, j, zz, 0, readiness_childless_states(P)],
+                    risk_distribution[:, :, :, j, zz, 0, readiness_childless_states(P)],
                     axis=-1,
                 )
-                settled = g[
+                settled = risk_distribution[
                     :, :, :, j, zz, 0, readiness_settled_state(P)
                 ]
                 cmass = float(np.sum(childless))
@@ -189,7 +190,7 @@ def write_distribution_diagnostics(sol: SimpleNamespace, P: SimpleNamespace, out
     plot_age_by_income_state(outdir, plt, ages, z_grid, own_age_z, "ownership rate", "Ownership by age and income state", "ownership_by_age_income_state.png", ylim=(0.0, 1.05))
     plot_age_by_income_state(outdir, plt, ages, z_grid, wealth_age_z, "mean liquid wealth", "Liquid wealth by age and income state", "liquid_wealth_by_age_income_state.png")
     plot_age_by_income_state(outdir, plt, ages, z_grid, housing_age_z, "mean housing services", "Housing by age and income state", "housing_by_age_income_state.png")
-    plot_age_by_income_state(outdir, plt, ages, z_grid, fert_age_z, "expected children", "Fertility policy by age and income state", "fertility_policy_by_age_income_state.png")
+    plot_age_by_income_state(outdir, plt, ages, z_grid, fert_age_z, "first-birth attempt probability" if bool(getattr(P, "joint_nested_choice", False)) else "expected children", "Fertility policy by age and income state", "fertility_policy_by_age_income_state.png")
 
     ages_to_plot = np.asarray(getattr(P, "diagnostic_policy_ages", np.array([30.0, 42.0])), dtype=float).reshape(-1)
     for age in ages_to_plot:
@@ -328,6 +329,13 @@ def plot_policy_childless_renter(
         else:
             owner_line = np.sum(tp[:, ten, i, j, zz, nn, cs, 1:], axis=1)
 
+        if bool(getattr(P, "joint_nested_choice", False)):
+            joint = getattr(sol, "joint_choice", None)
+            if joint is None:
+                raise RuntimeError("Joint policy diagnostic lacks original household probabilities")
+            owner_line = joint.probabilities[:, ten, i, j, zz, nn, cs, 1, :].sum(axis=-1)
+            h_line = hR_pol[:, ten, i, j, zz, nn, cs]
+
         valid = V[:, ten, i, j, zz, nn, cs] > -1e9
         c_line = np.where(valid, c_line, np.nan)
         h_line = np.where(valid, h_line, np.nan)
@@ -350,6 +358,11 @@ def plot_policy_childless_renter(
     axes[3].set_xlabel("liquid wealth")
     axes[3].set_ylim(-0.05, 1.05)
     axes[3].set_title("Owner-entry policy")
+    if bool(getattr(P, "joint_nested_choice", False)):
+        axes[0].set_title("Consumption if rent, no birth")
+        axes[1].set_title("Housing if rent, no birth")
+        axes[2].set_ylabel("first-birth attempt probability")
+        axes[3].set_title("Ex ante owner-choice probability")
     for ax in axes:
         ax.grid(alpha=0.2)
     axes[0].legend(frameon=False, ncols=max(1, min(3, len(z_grid))))

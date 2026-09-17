@@ -1,5 +1,10 @@
 # Calibration Status
 
+**Active development baseline (September 17, 2026):** This branch is the
+current-main integration of the immutable Monday paper reference. The original
+reference remains available at tag `paper-baseline-2026-09-14`; use this branch
+for ongoing development without switching branches.
+
 **September 14 paper baseline pointer (September 17, 2026):** The designated
 reference is frozen separately in `tmp/paper_baseline_sep14` on branch
 `codex/paper-baseline-sep14`, tag `paper-baseline-2026-09-14`. This `main`

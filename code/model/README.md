@@ -1,5 +1,9 @@
 # Python Model Codebase
 
+**Active development baseline (September 17, 2026):** This branch integrates
+the Monday paper reference into main while preserving current main-only work.
+The immutable reference is tag `paper-baseline-2026-09-14`.
+
 **September 14 paper baseline pointer (September 17, 2026):** The designated
 reference is `tmp/paper_baseline_sep14` on branch `codex/paper-baseline-sep14`,
 tag `paper-baseline-2026-09-14`. This `main` checkout is ongoing work; use the

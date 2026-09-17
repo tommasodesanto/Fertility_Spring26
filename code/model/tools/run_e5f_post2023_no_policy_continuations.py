@@ -982,7 +982,7 @@ def advance_from_evaluation(
     scheduled_raw_B, next_raw_queue = transition.advance_birth_vintage_queue(
         state.scheduled_raw_entries, float(evaluation.births), conversion
     )
-    entrants_next_by_loc = np.asarray(P.entry_shares, dtype=float).reshape(-1)
+    entrants_next_by_loc = np.asarray(P.entry_shares, dtype=float).reshape(-1).copy()
     entrants_next_by_loc /= np.sum(entrants_next_by_loc)
     entrants_next_by_loc *= float(outside_flow)
     retained_B = float(retention) * scheduled_B

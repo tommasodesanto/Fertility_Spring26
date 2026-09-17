@@ -1,0 +1,106 @@
+"""Small plumbing checks for dated joint-nested policy snapshots."""
+from __future__ import annotations
+
+from types import SimpleNamespace as NS
+from unittest import TestCase, main
+from unittest.mock import patch
+from pathlib import Path
+import json
+
+import numpy as np
+
+import run_dynamic_population_transition as calendar
+
+
+class JointNestedIntegrationTests(TestCase):
+    def setUp(self) -> None:
+        self.P = NS(
+            joint_nested_choice=True, I=1, J=1, n_house=1, n_parity=2,
+            n_child_states=2, H_own=np.array([1.0]), H0=np.array([1.0]),
+            user_cost_rate=1.0, r_bar=np.array([1.0]), xi_supply=np.array([1.0]),
+        )
+        self.g = np.zeros((1, 2, 1, 1, 1, 2, 2))
+        self.g[0, 0, 0, 0, 0, 0, 0] = 1.0
+        self.maps = calendar.TransitionMaps(None, None, None, None)
+        self.joint = object()
+        self.policy = calendar.PolicyBundle(
+            V=np.ones_like(self.g), c_pol=np.ones_like(self.g),
+            hR_pol=np.zeros_like(self.g), bp_pol=np.zeros_like(self.g),
+            tenure_choice=np.zeros_like(self.g, dtype=int),
+            tenure_probs=np.zeros(self.g.shape + (2,)), loc_probs=np.ones_like(self.g),
+            fert_probs=np.zeros_like(self.g), fert_value=np.zeros(self.g.shape[:-2]),
+            price=np.array([1.0]), maps=self.maps, joint_choice=self.joint,
+        )
+
+    def test_policy_bundle_owns_joint_choice(self) -> None:
+        self.assertIs(self.policy.joint_choice, self.joint)
+
+    def test_evaluation_uses_distribution_specific_kernel(self) -> None:
+        effective = np.full(self.g.shape + (2,), 0.5)
+        births = np.array([[0.25, 0.0]])
+
+        def factor(g_pre, policy, P, *, mode="natural"):
+            self.assertEqual(mode, "natural")
+            self.assertIs(policy.joint_choice, self.joint)
+            return g_pre.copy(), effective, births, births, births
+
+        with (
+            patch.object(calendar, "factor_joint_distribution", side_effect=factor),
+            patch.object(calendar, "gate_pre_fertility_distribution", side_effect=lambda g, *x: (g, 0.0)),
+            patch.object(calendar.model, "realize_current_cross_section", side_effect=lambda g, *x, **k: g),
+        ):
+            evaluation = calendar.evaluate_period(
+                np.array([1.0]), self.g, self.P, np.array([0.0]), NS(),
+                calendar.SolveCounter(), supplied_policy=self.policy,
+            )
+        self.assertIs(evaluation.policy.joint_choice, self.joint)
+        self.assertIs(evaluation.policy.tenure_probs, effective)
+        self.assertAlmostEqual(evaluation.births, 0.25)
+        np.testing.assert_array_equal(evaluation.inherited_g_pre, self.g)
+        self.assertFalse(np.shares_memory(evaluation.inherited_g_pre, self.g))
+
+    def test_inherited_state_precedes_candidate_price_projection(self) -> None:
+        gated = self.g.copy()
+        gated[0, 0, 0, 0, 0, 0, 0] = 0.75
+        gated[0, 1, 0, 0, 0, 0, 0] = 0.25
+        effective = np.full(self.g.shape + (2,), 0.5)
+        births = np.zeros((1, 2))
+        with (
+            patch.object(calendar, 'gate_pre_fertility_distribution', return_value=(gated, .25)),
+            patch.object(calendar, 'factor_joint_distribution', return_value=(gated.copy(), effective, births, births, births)),
+            patch.object(calendar.model, 'realize_current_cross_section', side_effect=lambda g, *x, **k: g),
+        ):
+            evaluation = calendar.evaluate_period(
+                np.array([1.0]), self.g, self.P, np.array([0.0]), NS(),
+                calendar.SolveCounter(), supplied_policy=self.policy)
+        np.testing.assert_array_equal(evaluation.g_pre, gated)
+        np.testing.assert_array_equal(evaluation.inherited_g_pre, self.g)
+        self.assertFalse(np.shares_memory(evaluation.inherited_g_pre, self.g))
+        self.assertFalse(np.array_equal(evaluation.inherited_g_pre, evaluation.g_pre))
+        self.assertEqual(evaluation.feasibility_projection_mass, .25)
+
+    def test_finalizer_inherits_raw_population_and_2019_end_queue(self) -> None:
+        import run_e5f_joint_nested_finalize as finalizer
+        raw = self.g.copy()
+        gated = raw.copy(); gated.flat[0] -= .1; gated.flat[-1] += .1
+        P = NS(joint_nested_choice=True, period_years=4)
+        evaluation = NS(policy=NS(joint_choice=object(), price=np.array([.7])),
+                        inherited_g_pre=raw, g_pre=gated, feasibility_projection_mass=.1)
+        packet = dict(parameters=P, evaluation=evaluation, b_grid=np.array([0.]),
+                      shared=NS(), supply_rule=object())
+        rows = [dict(period=str(t), years_from_start=str(4*t), adult_population='1',
+                     birth_queue_scheduled_flows=json.dumps([t+1]*4),
+                     birth_queue_raw_state_scheduled_flows=json.dumps([t+11]*4)) for t in range(5)]
+        with (patch.object(finalizer.audit, 'load_checkpoint', return_value=packet),
+              patch.object(finalizer.adapter, 'read_csv', return_value=rows),
+              patch.object(finalizer.policy.calendar, 'gate_pre_fertility_distribution', return_value=(gated, .1))):
+            _, _, state, _ = finalizer.prepare(Path('/unused/summary.json'), dict(best_candidate=dict(candidate='task_001')))
+        np.testing.assert_array_equal(state.g_pre, raw)
+        self.assertFalse(np.shares_memory(state.g_pre, raw))
+        self.assertEqual(state.scheduled_entries, [4]*4)
+        self.assertEqual(state.scheduled_raw_entries, [14]*4)
+        self.assertEqual(state.price_guess, .7)
+
+
+if __name__ == "__main__":
+    main()

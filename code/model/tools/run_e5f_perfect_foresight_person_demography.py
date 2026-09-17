@@ -671,14 +671,25 @@ def evaluate_path_at_prices_person_demography(
     demographic_primitives: AnnualDemographicPrimitives,
     supply_rule: calendar.HousingSupplyRule,
     transfer_path: Sequence[float] | None = None,
+    precomputed_value_path: Sequence[np.ndarray] | None = None,
+    observer: Any | None = None,
+    pension_path: Sequence[float] | None = None,
+    payroll_tax_path: Sequence[float] | None = None,
 ) -> PersonPathEvaluation:
-    """Evaluate a price path with endogenous births and coherent head stocks."""
+    """Evaluate a price path with endogenous births and coherent head stocks.
+
+    Optional precomputed values avoid repeating backward induction when this
+    tail supplies a historical continuation boundary. Every date is freshly
+    solved forward; a supplied value path must reproduce within 2e-10.
+    """
 
     started = time.perf_counter()
     price_path = np.asarray(prices, dtype=float).reshape(-1)
     psi_values = np.asarray(psi_path, dtype=float).reshape(-1)
     if price_path.shape != psi_values.shape or len(price_path) < 1:
         raise ValueError("Price and preference paths must have the same positive length")
+    pensions, payroll_taxes = pf.social_security.validated_fiscal_paths(
+        len(price_path), pension_path, payroll_tax_path)
     transfers = (
         np.zeros_like(price_path)
         if transfer_path is None
@@ -690,15 +701,29 @@ def evaluate_path_at_prices_person_demography(
         raise ValueError("Equal transfers must be finite and nonnegative")
 
     rents = pf.rents_from_asset_prices(price_path, terminal_price, base_parameters)
-    values, backward_solves = pf.backward_value_path(
-        prices=price_path,
-        rents=rents,
-        psi_path=psi_values,
-        terminal_V=terminal_V,
-        base_parameters=base_parameters,
-        b_grid=b_grid,
-        transfer_path=transfers,
-    )
+    if observer is not None and not callable(observer):
+        raise ValueError("Person-path observer must be callable")
+    if precomputed_value_path is None:
+        values, backward_solves = pf.backward_value_path(
+            prices=price_path,
+            rents=rents,
+            psi_path=psi_values,
+            terminal_V=terminal_V,
+            base_parameters=base_parameters,
+            b_grid=b_grid,
+            transfer_path=transfers,
+            pension_path=pensions,
+            payroll_tax_path=payroll_taxes,
+        )
+    else:
+        values = [np.asarray(value, dtype=float) for value in precomputed_value_path]
+        expected_shape = np.asarray(initial_state.g_pre).shape
+        if (len(values) != len(price_path) + 1
+                or any(value.shape != expected_shape or not np.isfinite(value).all()
+                       for value in values)
+                or not np.array_equal(values[-1], np.asarray(terminal_V, dtype=float))):
+            raise ValueError("Precomputed person value path has invalid shape, values or terminal boundary")
+        backward_solves = 0
     state = PersonPFState(
         g_pre=np.asarray(initial_state.g_pre, dtype=float).copy(),
         persons=CohortState(
@@ -722,6 +747,7 @@ def evaluate_path_at_prices_person_demography(
         parameters = copy.deepcopy(base_parameters)
         parameters.psi_child = float(psi)
         parameters.property_tax_lump_sum_transfer = float(transfer_value)
+        pf.social_security.apply_fiscal_date(parameters, period, pensions, payroll_taxes)
         period_years = int(round(float(parameters.period_years)))
         expected_year = pf.CALENDAR_START_YEAR + period * period_years
         if state.persons.year != expected_year:
@@ -756,6 +782,8 @@ def evaluate_path_at_prices_person_demography(
         forward_solves += 1
         reproduction = float(np.max(np.abs(policy.V - values[period])))
         maximum_reproduction = max(maximum_reproduction, reproduction)
+        if precomputed_value_path is not None and (not math.isfinite(reproduction) or reproduction > 2e-10):
+            raise RuntimeError(f"Precomputed person value path fails exact dated replay at {expected_year}: {reproduction}")
         evaluation = calendar.evaluate_period(
             np.array([float(price)]),
             state.g_pre,
@@ -766,6 +794,8 @@ def evaluate_path_at_prices_person_demography(
             supply_rule=supply_rule,
             supplied_policy=policy,
         )
+        if observer is not None:
+            observer(period, evaluation, parameters, b_grid, shared)
         accounting = transition.calendar_topcode_birth_accounting(
             evaluation.g_pre,
             evaluation.g_post_fertility,
@@ -897,6 +927,8 @@ def evaluate_path_at_prices_person_demography(
                 ),
             }
         )
+        if pensions is not None or payroll_taxes is not None:
+            rows[-1].update(pf.social_security.fiscal_accounts(evaluation.g_current, parameters))
         state = PersonPFState(g_pre=next_g, persons=next_persons)
 
     return PersonPathEvaluation(

@@ -1,0 +1,244 @@
+"""Pure joined-history tests: true calendar loops, stubbed economic/demographic kernels."""
+from types import SimpleNamespace
+import unittest
+from unittest.mock import patch
+
+import numpy as np
+
+import run_e5f_matched_pf_history as joined
+import test_e5f_pf_historical_bridge as bridge_tests
+
+pf = joined.pf
+person_pf = joined.person_pf
+REAL_BACKWARD = pf.backward_value_path
+
+
+class JoinedHistoryTests(unittest.TestCase):
+    conditioning = bridge_tests.HistoricalBridgeTests.conditioning
+
+    def setUp(self):
+        bridge_tests.HistoricalBridgeTests.setUp(self)
+        # Reuse the real backward loop. Only individual Bellman calls are
+        # replaced by a transparent future-value-sensitive recursion.
+        pf.backward_value_path.side_effect = REAL_BACKWARD
+
+        def solve(**kwargs):
+            P = kwargs['P']
+            return SimpleNamespace(
+                V=kwargs['continuation_V'] + kwargs['price'] + P.psi_child
+                  + P.property_tax_lump_sum_transfer,
+                price=np.array([kwargs['price']]), hR_pol=np.ones(self.shape),
+                joint_choice=self.joint_marker,
+            )
+        pf.solve_date_policy.side_effect = solve
+        self.g2023, _ = pf.transition.reweight_distribution_to_observed_age_path(
+            self.g, np.arange(18., 86., 4.), year=2023, initial_mass=1.)
+        heads = np.zeros((2, 101))
+        target = self.g2023.sum(axis=(0, 1, 2, 4, 5, 6))
+        heads[0, np.arange(18, 86, 4)] = target
+        self.people = person_pf.CohortState(2023, heads * 2., heads)
+        self.primitives = SimpleNamespace(initial_person_state=self.people,
+            headship_rates=np.full_like(heads, .5), block_inputs=lambda *args: ({}, {}, {}))
+
+        def couple(raw, people, **kwargs):
+            next_people = person_pf.CohortState(people.year + 4,
+                                                people.persons.copy(), people.heads.copy())
+            person_ledger = SimpleNamespace(person_identity_max_abs=0., head_identity_max_abs=0.,
+                total_net_migration=0., total_new_heads_from_nonheads=0.,
+                total_head_dissolutions=0., total_net_migrant_heads=0.)
+            ledger = SimpleNamespace(person=person_ledger, household_person_head_gap=0.,
+                household_heads=SimpleNamespace(added_mass=np.zeros(17), removed_mass=np.zeros(17)))
+            return self.g2023.copy(), next_people, ledger
+        self.couple = self.stack.enter_context(patch.object(person_pf, 'advance_household_person_block', side_effect=couple))
+
+    def run_joined(self, prices=None, observer=None, **fiscal_paths):
+        return joined.evaluate_history_and_person_tail(
+            years=[2007, 2011, 2015, 2019, 2023, 2027],
+            prices=np.ones(6) if prices is None else prices,
+            psi_path=np.full(6, .1), transfer_path=np.arange(6) * .01,
+            terminal_price=1., terminal_V=np.zeros(self.shape),
+            base_parameters=self.P, b_grid=np.arange(2.), initial_state=self.state,
+            historical_conditioning=self.conditioning(), initial_2023_persons=self.people,
+            demographic_primitives=self.primitives, supply_rule=object(),
+            birth_to_entry_conversion=1 / 2.1, observer=observer,
+            **fiscal_paths,
+        )
+
+    def fiscal_fixture(self):
+        self.P.J_R = 12
+        self.P.w_hat = np.array([1., 1.2])
+        self.P.income_age_profile = np.ones(17)
+        self.P.z_grid = np.array([1.])
+        self.P.tau_pay = .179
+        self.P.pension = 1.
+        self.P.scale_flows_to_period = True
+        pf.social_security.bind_social_security_income(self.P)
+
+        def solve(**kwargs):
+            P = kwargs['P']
+            return SimpleNamespace(
+                V=kwargs['continuation_V'] + kwargs['price'] + P.psi_child
+                  + P.property_tax_lump_sum_transfer + P.income.sum(),
+                price=np.array([kwargs['price']]), hR_pol=np.ones(self.shape),
+                joint_choice=self.joint_marker)
+        pf.solve_date_policy.side_effect = solve
+
+    def test_dated_pensions_and_taxes_enter_both_passes_and_future_anticipation(self):
+        self.fiscal_fixture()
+        pensions = np.arange(6) * .1 + 1.
+        taxes = np.arange(6) * .005 + .15
+        original_income = self.P.income.copy()
+        seen = []
+        def observe(period, evaluation, P, grid, shared):
+            seen.append((period, P.pension, P.tau_pay, P.income.copy()))
+        result = self.run_joined(observer=observe, pension_path=pensions, payroll_tax_path=taxes)
+        self.assertEqual(result.bellman_solves, 12)
+        self.assertLess(result.person_tail.maximum_policy_reproduction_error, 1e-12)
+        np.testing.assert_allclose([r['pension_period_units'] for r in result.rows], pensions)
+        np.testing.assert_allclose([r['payroll_tax_rate'] for r in result.rows], taxes)
+        for period, pension, tax, income in seen:
+            self.assertEqual(pension, pensions[period])
+            self.assertEqual(tax, taxes[period])
+            np.testing.assert_allclose(income[:, :12],
+                np.broadcast_to(4*(1-tax)*self.P.w_hat[:, None], (2, 12)))
+            np.testing.assert_allclose(income[:, 12:], pension)
+        np.testing.assert_array_equal(self.P.income, original_income)
+        changed = pensions.copy()
+        changed[-1] += .2
+        future = self.run_joined(pension_path=changed, payroll_tax_path=taxes)
+        # Two locations, five retirement ages: a future .2 pension increase
+        # raises the transparent household recursion already in 2007 by 2.
+        np.testing.assert_allclose(future.values[0] - result.values[0], 2., atol=1e-12)
+
+    def test_cached_values_from_wrong_pension_path_fail_replay(self):
+        self.fiscal_fixture()
+        pension = np.array([1.])
+        values, _ = REAL_BACKWARD(prices=np.ones(1), rents=np.ones(1),
+            psi_path=np.array([.1]), terminal_V=np.zeros(self.shape),
+            base_parameters=self.P, b_grid=np.arange(2.), pension_path=pension)
+        with self.assertRaisesRegex(RuntimeError, 'fails exact dated replay'):
+            person_pf.evaluate_path_at_prices_person_demography(
+                prices=[1.], psi_path=[.1], terminal_price=1.,
+                terminal_V=np.zeros(self.shape), base_parameters=self.P,
+                b_grid=np.arange(2.), initial_state=person_pf.PersonPFState(self.g2023, self.people),
+                demographic_primitives=self.primitives, supply_rule=object(),
+                precomputed_value_path=values, pension_path=[1.2])
+
+    def test_future_tail_changes_2007_value_and_each_date_is_solved_twice(self):
+        observations = []
+
+        def observer(period, evaluation, P, grid, shared):
+            observations.append((period, float(evaluation.policy.V.flat[0]),
+                                 P.property_tax_lump_sum_transfer))
+            self.assertIs(evaluation.policy.joint_choice, self.joint_marker)
+
+        result = self.run_joined(observer=observer)
+        self.assertEqual([p for p, _, _ in observations], list(range(6)))
+        np.testing.assert_allclose([t for _, _, t in observations], np.arange(6) * .01)
+        self.assertEqual([r['calendar_year'] for r in result.rows], [2007, 2011, 2015, 2019, 2023, 2027])
+        self.assertEqual(sum(r['calendar_year'] == 2023 for r in result.rows), 1)
+        self.assertEqual(result.bellman_solves, 12)
+        self.assertEqual(pf.solve_date_policy.call_count, 12)
+        self.assertEqual(pf.backward_value_path.call_count, 2)
+        self.assertEqual(result.person_tail.bellman_solves, 2)
+        self.assertEqual(len(result.values), 7)
+        self.assertLess(result.initial_2023_age_head_gap, 1e-13)
+        self.assertLess(result.person_tail.maximum_policy_reproduction_error, 1e-13)
+        first_value = observations[0][1]
+        observations.clear()
+        changed = np.ones(6)
+        changed[-1] = 1.03
+        self.run_joined(prices=changed, observer=observer)
+        self.assertAlmostEqual(observations[0][1] - first_value, .03)
+
+    def test_2023_age_mismatch_fails_before_person_forward(self):
+        changed_heads = self.people.heads.copy()
+        changed_heads[0, 18] += .001
+        self.people = person_pf.CohortState(2023, self.people.persons.copy(), changed_heads)
+        self.primitives.initial_person_state = self.people
+        with self.assertRaisesRegex(RuntimeError, '2023 household/person head-age identity'):
+            self.run_joined()
+        self.couple.assert_not_called()
+
+    def test_invalid_cached_values_fail_exact_forward_replay(self):
+        wrong = [np.zeros(self.shape), np.zeros(self.shape)]
+        pf.backward_value_path.reset_mock()
+        with self.assertRaisesRegex(RuntimeError, 'fails exact dated replay'):
+            person_pf.evaluate_path_at_prices_person_demography(
+                prices=[1.], psi_path=[.1], transfer_path=[0.], terminal_price=1.,
+                terminal_V=np.zeros(self.shape), base_parameters=self.P,
+                b_grid=np.arange(2.), initial_state=person_pf.PersonPFState(self.g2023, self.people),
+                demographic_primitives=self.primitives, supply_rule=object(),
+                precomputed_value_path=wrong,
+            )
+        pf.backward_value_path.assert_not_called()
+        self.couple.assert_not_called()
+
+    def test_old_person_evaluator_still_performs_backward_and_forward(self):
+        result = person_pf.evaluate_path_at_prices_person_demography(
+            prices=[1.], psi_path=[.1], transfer_path=[0.], terminal_price=1.,
+            terminal_V=np.zeros(self.shape), base_parameters=self.P,
+            b_grid=np.arange(2.), initial_state=person_pf.PersonPFState(self.g2023, self.people),
+            demographic_primitives=self.primitives, supply_rule=object(),
+        )
+        self.assertEqual(result.bellman_solves, 2)
+        self.assertEqual(pf.backward_value_path.call_count, 1)
+        self.assertEqual(pf.solve_date_policy.call_count, 2)
+        self.assertEqual(result.rows[0]['calendar_year'], 2023)
+
+
+class DiagnosticSmokeGateTests(unittest.TestCase):
+    def fixture(self):
+        history = SimpleNamespace(maximum_mass_accounting_error=0.,
+            maximum_policy_reproduction_error=0., maximum_feasibility_projection_mass=0.)
+        tail = SimpleNamespace(maximum_policy_reproduction_error=0.,
+            maximum_person_identity_error=0., maximum_head_identity_error=0.,
+            maximum_household_person_head_gap=0., maximum_age_head_gap=0.,
+            maximum_feasibility_projection_mass=0.,
+            rows=[{'calendar_year': 2023, 'raw_household_mass_residual': 0.},
+                  {'calendar_year': 2027, 'raw_household_mass_residual': 0.}])
+        return SimpleNamespace(history=history, person_tail=tail,
+            initial_2023_age_head_gap=0., bellman_solves=12,
+            rows=[dict(calendar_year=y, relative_market_residual=.9)
+                  for y in (2007, 2011, 2015, 2019, 2023, 2027)])
+
+    def test_conditional_prices_do_not_claim_market_clearing(self):
+        gates = joined.check_smoke_gates(self.fixture())
+        self.assertTrue(all(row['passed'] for row in gates.values()))
+        self.assertFalse(any('market' in key for key in gates))
+
+    def test_person_ledger_error_cannot_pass_smoke(self):
+        result = self.fixture()
+        result.person_tail.maximum_person_identity_error = 1e-5
+        with self.assertRaisesRegex(RuntimeError, 'person_identity'):
+            joined.check_smoke_gates(result)
+
+    def test_nan_and_projection_fail(self):
+        result = self.fixture()
+        result.history.maximum_mass_accounting_error = np.nan
+        with self.assertRaisesRegex(RuntimeError, 'historical_mass'):
+            joined.check_smoke_gates(result)
+        result = self.fixture()
+        result.person_tail.maximum_feasibility_projection_mass = 2e-6
+        with self.assertRaisesRegex(RuntimeError, 'person_projection'):
+            joined.check_smoke_gates(result)
+
+    def test_explicit_longer_horizon_preserves_count_gate(self):
+        result = self.fixture()
+        dates = list(range(2007, 2052, 4))
+        result.rows = [dict(calendar_year=y) for y in dates]
+        result.bellman_solves = 2 * len(dates)
+        self.assertTrue(all(r['passed'] for r in joined.check_smoke_gates(result, dates).values()))
+        result.bellman_solves -= 1
+        with self.assertRaisesRegex(RuntimeError, 'two Bellman calls'):
+            joined.check_smoke_gates(result, dates)
+
+    def test_missing_date_cannot_pass(self):
+        result = self.fixture()
+        result.rows.pop()
+        with self.assertRaisesRegex(RuntimeError, 'all supplied dates'):
+            joined.check_smoke_gates(result)
+
+
+if __name__ == '__main__':
+    unittest.main()

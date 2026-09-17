@@ -164,10 +164,11 @@ def scatter_redistribute(idx: np.ndarray, wt: np.ndarray, mass: np.ndarray, Nb: 
     )[:Nb]
 
 
-def scatter_redistribute_cols(idx: np.ndarray, wt: np.ndarray, mass: np.ndarray, Nb: int) -> np.ndarray:
+def scatter_redistribute_cols(idx: np.ndarray, wt: np.ndarray, mass: np.ndarray, Nb: int,
+                              *, mass_pruning_tolerance: float = 1e-15) -> np.ndarray:
     out = np.zeros((Nb, mass.shape[1]))
     for col in range(mass.shape[1]):
-        if np.sum(mass[:, col]) < 1e-15:
+        if np.sum(mass[:, col]) == 0.0 or np.sum(mass[:, col]) < mass_pruning_tolerance:
             continue
         out[:, col] = np.bincount(
             np.concatenate([idx[:, col], idx[:, col] + 1]),
@@ -177,11 +178,12 @@ def scatter_redistribute_cols(idx: np.ndarray, wt: np.ndarray, mass: np.ndarray,
     return out
 
 
-def scatter_redistribute_cols_sameidx(idx: np.ndarray, wt: np.ndarray, mass: np.ndarray, Nb: int) -> np.ndarray:
+def scatter_redistribute_cols_sameidx(idx: np.ndarray, wt: np.ndarray, mass: np.ndarray, Nb: int,
+                                      *, mass_pruning_tolerance: float = 1e-15) -> np.ndarray:
     out = np.zeros((Nb, mass.shape[1]))
     rows = np.concatenate([idx, idx + 1])
     for col in range(mass.shape[1]):
-        if np.sum(mass[:, col]) < 1e-15:
+        if np.sum(mass[:, col]) == 0.0 or np.sum(mass[:, col]) < mass_pruning_tolerance:
             continue
         out[:, col] = np.bincount(
             rows,
