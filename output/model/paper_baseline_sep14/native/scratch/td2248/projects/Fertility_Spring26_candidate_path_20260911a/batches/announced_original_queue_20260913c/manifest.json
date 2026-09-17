@@ -1,0 +1,65 @@
+{
+  "spec": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a/spec.json",
+  "endpoint_pickle": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_terminal_restart_v1/endpoint/terminal.pkl.gz",
+  "endpoint_receipt": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_terminal_restart_v1/endpoint/root_receipt.json",
+  "output": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c/output",
+  "psi_levels": [
+    0.12891531457859182,
+    0.11696608375682901,
+    0.10564290922456478,
+    0.09221854783921073
+  ],
+  "shock_years": [
+    2007,
+    2011,
+    2015,
+    2019
+  ],
+  "initial_seed_json": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c/source/initial_seed.json",
+  "periods_after_four": 100,
+  "absolute_deadline_unix": 1789358644.8560889,
+  "seconds": 21600,
+  "smoke_seconds": 1200,
+  "max_root_evaluations": 8,
+  "plotter": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c/source/build_e5f_stationary_shock_figures.py",
+  "file_sha256": {
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a/spec.json": "5262ccba5ce38eb185e6187c9b5ad5754cd38c86e221b638d6cd0a7c0bf1b8b2",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_auto_v2_6/A0_6/realized_fit.json": "e970dee333af959fc2f377e5fb11f55df4ddd7800e577550f5d90bde0f28e9fd",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_terminal_restart_v1/endpoint/terminal.pkl.gz": "22f85eda9fa8770c1213856cedcc480bd10fd8114700c0e2ead528a2784fce7c",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/afternoon_original_queue_20260913a_terminal_restart_v1/endpoint/root_receipt.json": "d4054a2c82867a881d0d96b6799ffb733858fd36ed9186d42c45cb6f60dd686e",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c/source/initial_seed.json": "f47632567145102bcd32c976596c2663902fedef3a1f3a2355a44a813add7f4c",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c/source/run_e5f_announced_original_queue.py": "061659b7903fbaa0711e3ba1c69d8f926a42364b2de1f92a62894388a3fcf119",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c/source/build_e5f_stationary_shock_figures.py": "97b20bd723b5a6099621e969b8bd322729a5134080651d22cdfd48cb7291580b",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913c/source/prepare_e5f_announced_original_queue.py": "2c84980e0133b46c3f3f8572c98fb05c50415f1e4df984225480e43c42bf8c7b"
+  },
+  "information": "All four preference levels known at time zero; final level permanent",
+  "scientific_contract": {
+    "population_law": "original_household_birth_vintage_queue",
+    "birth_to_entry_conversion": 0.47619047619047616,
+    "no_immigration": true,
+    "historical_age_conditioning": false,
+    "equal_property_tax_rebate": true,
+    "annual_property_tax": 0.01,
+    "payroll_tax": 0.179,
+    "structural_parameters_reestimated": false,
+    "shocks_reestimated": false,
+    "terminal_reconstructed_before_dispatch": true,
+    "production_eligible": false
+  },
+  "budget": {
+    "total_dates": 104,
+    "expected_seconds_per_full_mapping": 1955,
+    "maximum_long_root_evaluations": 8,
+    "maximum_long_root_rounds": 1,
+    "expected_full_stage_hours": [
+      3,
+      5
+    ],
+    "long_stage_wall_hours": 6,
+    "smoke_wall_minutes": 20,
+    "absolute_wall_hours": 7,
+    "stop": "Any failed smoke gate prevents dispatch; full root stops at eight mappings or deadline"
+  },
+  "retry_of": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/announced_original_queue_20260913b/manifest.json",
+  "retry_reason": "Six-date vector smoke holds inherited initial prices fixed and solves its own stationary household continuation at final preference. Full GE terminal, gates and original absolute deadline unchanged."
+}

@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "source_files": 367,
+  "artifacts": 83,
+  "model_solves": 0,
+  "hash_failures": [],
+  "verification_command": "python3 code/model/tools/check_paper_baseline.py",
+  "prior_unit_tests": {
+    "status": "passed",
+    "count": 36,
+    "command": "NUMBA_DISABLE_JIT=1 PYTHONPATH=code/model:code/model/tools condaPython -m unittest test_e5f_social_security test_e5f_stationary_paygo test_e5f_exhaustive_saving",
+    "fresh_run_in_this_freeze": false
+  },
+  "numerical_replay": {
+    "performed": false,
+    "model_solves": 0
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "status": "passed",
+  "schema": "e5f_boundary_policy_seed_native_equivalence_v1",
+  "maximum_seconds": 1200,
+  "checks": {
+    "valid_boundary_policy": {
+      "passed": true,
+      "coordinates": [
+        0.8297889604412145,
+        1.9096659002302994,
+        0.20781925700985404
+      ],
+      "policy_sha256": "a3107a94b30296094949913e939550efcc61be2fb7f921154a8a8887bf98cf4b",
+      "policy_field_sha256": {
+        "V": "78e0ee2493862b9fb3486be99f2f5cc29674faf764858440616418383778e12e",
+        "bp_pol": "5e5ca6a611262b1855b019979913ad5df5ed0004d7b1c727f791a692e8a17775",
+        "c_pol": "b17c7adf70fb9e5504c7e9a5920f9a1296f4aba17d98d511d7af261883b047bb",
+        "fert2_probs": "5beac6f3bacb34607548d9656e919455af66c0976767f773ab519d8294245396",
+        "fert_probs": "deb4c0e9b992b82d214b03cf0856f4806b3473366fe0693b1aea228ee9ea46eb",
+        "fert_value": "c52b56f2aea9029fd508418fd7936677b329fa86097b39c116abdadaa7b52929",
+        "hR_pol": "385a0e9e228dbd0429976ff261c8d39952dabac766ba4ba1a5fea30db30e2dbf",
+        "joint_choice": "bdb3e8def2bd2085215d38b989bdebbc6b63281c559828e32fcdf5733da2da7d",
+        "loc_probs": "971943f0706462a3c91d31ed25ee7a307b5b179f8d56ed27b71464f819b1725e",
+        "maps": "5a440daa06ec3afe6da9ff31d177ce64a1e5c498ce97fd45749b8643352912ed",
+        "price": "98fb89e3ef7a1f71998f8f8eb2661ac0eabb205e99b529883d6e0ca39d7e86ee",
+        "tenure_choice": "79d20d6ebc7e34cf2d7812b94156183a0f4b05015c263e748ef98b0aa6cade4b",
+        "tenure_probs": "4e84d59c4d60f7fa33357369b084e3e9df714b414ff888635f7ce59956fd1e75"
+      },
+      "bound_fiscal_sha256": {
+        "pension": "a33e33492714b269c377bed5f4f479e4a0c281da4b4df3e6de119f720bc0e1c8",
+        "property_tax_lump_sum_transfer": "d50ff8d4dfb0d3f505f387bb8fa89276f17a53c0d42238238e5c07839bff6afc",
+        "tau_pay": "8ba2e670e92fb23b800069cff0e9792184f9b7a7d0df0208f87d9ac36734c55d",
+        "income": "f99b29417231c689eeb847ea2f7764868a771bcd97934bcd16bbfb83c9fb361b"
+      },
+      "old_full_and_new_cached_account_fields_exact": true,
+      "old_full_and_new_cached_residual_fields_exact": true,
+      "documented_compact_schema_verified": true,
+      "old_full_and_new_cached_gates_exact": true
+    },
+    "accepted_count_six_replay": {
+      "passed": true,
+      "psi": 0.12891531457859182,
+      "root_evaluations": 2,
+      "actual_boundary_audit_calls": 2,
+      "final_residual_sha256": "a292c0abf360ed5e3a0337f7ead7fb240e4c682747a46080b41f0c5a5c2ef428",
+      "path_rows_sha256": "dd6e46550ecae97c05da061e2b3cc25084805c2dc12d0eba901b05e6ad0d4374",
+      "path_values_sha256": "502c61decc0703b5abaac2e0f359a926c4da355a0be183f394524e555363a14b",
+      "terminal_g_pre_sha256": "35d1c7af00f1b4fea5f2d80b5ffbab8dd4dcca65b0d001c83e09fe9f33d7c5f6",
+      "boundary_accounts_sha256": "60417741b2b577a7e0b9e7b930786223892486e20f09c0e8b745e5c164f4a8c9",
+      "boundary_gates_sha256": "a8a789e18e4db5cb096791e3eeab083db97e887c0c8f371fc71e2c83603e8b75",
+      "policy_mutation_checks": [
+        {
+          "before_sha256": "a3107a94b30296094949913e939550efcc61be2fb7f921154a8a8887bf98cf4b",
+          "after_sha256": "a3107a94b30296094949913e939550efcc61be2fb7f921154a8a8887bf98cf4b",
+          "field_sha256": {
+            "V": "78e0ee2493862b9fb3486be99f2f5cc29674faf764858440616418383778e12e",
+            "bp_pol": "5e5ca6a611262b1855b019979913ad5df5ed0004d7b1c727f791a692e8a17775",
+            "c_pol": "b17c7adf70fb9e5504c7e9a5920f9a1296f4aba17d98d511d7af261883b047bb",
+            "fert2_probs": "5beac6f3bacb34607548d9656e919455af66c0976767f773ab519d8294245396",
+            "fert_probs": "deb4c0e9b992b82d214b03cf0856f4806b3473366fe0693b1aea228ee9ea46eb",
+            "fert_value": "c52b56f2aea9029fd508418fd7936677b329fa86097b39c116abdadaa7b52929",
+            "hR_pol": "385a0e9e228dbd0429976ff261c8d39952dabac766ba4ba1a5fea30db30e2dbf",
+            "joint_choice": "bdb3e8def2bd2085215d38b989bdebbc6b63281c559828e32fcdf5733da2da7d",
+            "loc_probs": "971943f0706462a3c91d31ed25ee7a307b5b179f8d56ed27b71464f819b1725e",
+            "maps": "5a440daa06ec3afe6da9ff31d177ce64a1e5c498ce97fd45749b8643352912ed",
+            "price": "98fb89e3ef7a1f71998f8f8eb2661ac0eabb205e99b529883d6e0ca39d7e86ee",
+            "tenure_choice": "79d20d6ebc7e34cf2d7812b94156183a0f4b05015c263e748ef98b0aa6cade4b",
+            "tenure_probs": "4e84d59c4d60f7fa33357369b084e3e9df714b414ff888635f7ce59956fd1e75"
+          }
+        },
+        {
+          "before_sha256": "a3107a94b30296094949913e939550efcc61be2fb7f921154a8a8887bf98cf4b",
+          "after_sha256": "a3107a94b30296094949913e939550efcc61be2fb7f921154a8a8887bf98cf4b",
+          "field_sha256": {
+            "V": "78e0ee2493862b9fb3486be99f2f5cc29674faf764858440616418383778e12e",
+            "bp_pol": "5e5ca6a611262b1855b019979913ad5df5ed0004d7b1c727f791a692e8a17775",
+            "c_pol": "b17c7adf70fb9e5504c7e9a5920f9a1296f4aba17d98d511d7af261883b047bb",
+            "fert2_probs": "5beac6f3bacb34607548d9656e919455af66c0976767f773ab519d8294245396",
+            "fert_probs": "deb4c0e9b992b82d214b03cf0856f4806b3473366fe0693b1aea228ee9ea46eb",
+            "fert_value": "c52b56f2aea9029fd508418fd7936677b329fa86097b39c116abdadaa7b52929",
+            "hR_pol": "385a0e9e228dbd0429976ff261c8d39952dabac766ba4ba1a5fea30db30e2dbf",
+            "joint_choice": "bdb3e8def2bd2085215d38b989bdebbc6b63281c559828e32fcdf5733da2da7d",
+            "loc_probs": "971943f0706462a3c91d31ed25ee7a307b5b179f8d56ed27b71464f819b1725e",
+            "maps": "5a440daa06ec3afe6da9ff31d177ce64a1e5c498ce97fd45749b8643352912ed",
+            "price": "98fb89e3ef7a1f71998f8f8eb2661ac0eabb205e99b529883d6e0ca39d7e86ee",
+            "tenure_choice": "79d20d6ebc7e34cf2d7812b94156183a0f4b05015c263e748ef98b0aa6cade4b",
+            "tenure_probs": "4e84d59c4d60f7fa33357369b084e3e9df714b414ff888635f7ce59956fd1e75"
+          }
+        }
+      ],
+      "actual_boundary_audits": [
+        {
+          "terminal_g_sha256": "35d1c7af00f1b4fea5f2d80b5ffbab8dd4dcca65b0d001c83e09fe9f33d7c5f6",
+          "policy_sha256_before_actual_audit": "a3107a94b30296094949913e939550efcc61be2fb7f921154a8a8887bf98cf4b",
+          "policy_sha256_after_actual_audit": "a3107a94b30296094949913e939550efcc61be2fb7f921154a8a8887bf98cf4b",
+          "gates": {
+            "household_budget": true,
+            "finite_policy_arrays": true,
+            "probability_bounds": true,
+            "occupied_value_monotonicity": true,
+            "finite_nonnegative_household_mass": true,
+            "feasibility_projection": true,
+            "actual_head_mass_preserved": true
+          }
+        },
+        {
+          "terminal_g_sha256": "35d1c7af00f1b4fea5f2d80b5ffbab8dd4dcca65b0d001c83e09fe9f33d7c5f6",
+          "policy_sha256_before_actual_audit": "a3107a94b30296094949913e939550efcc61be2fb7f921154a8a8887bf98cf4b",
+          "policy_sha256_after_actual_audit": "a3107a94b30296094949913e939550efcc61be2fb7f921154a8a8887bf98cf4b",
+          "gates": {
+            "household_budget": true,
+            "finite_policy_arrays": true,
+            "probability_bounds": true,
+            "occupied_value_monotonicity": true,
+            "finite_nonnegative_household_mass": true,
+            "feasibility_projection": true,
+            "actual_head_mass_preserved": true
+          }
+        }
+      ],
+      "generated_checkpoint": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/boundary_policy_seed_verification_v2/solve_forecast/accepted_forecast.pkl.gz",
+        "sha256": "62d64043c68fd0e33ebab98aa9f450536ed30933355276dc03470d692ef10c8f"
+      }
+    }
+  },
+  "elapsed_seconds": 573.3548669274896,
+  "source_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_history_source_v2",
+  "case": "A0",
+  "count": 6,
+  "input_sha256": {
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_manifest_corrected_policy_seed_v1.json": "d7a587487dc6bf69c7c8c23a11faa4e088a61289c0f75a8818e462433c63b042",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_plan_corrected_auto_v2.json": "657bda8e319f3813397fc00c67ad2553aaf557db03fd2b4854ccac7f96570f45",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_replay_v6/summary.json": "991d092c75afa8aa2dd58157ddfe2dce224fe1967cbbdfcd31c75d56d04d5d9f",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_replay_v6/case/evaluation/raw/repetition_02/summary.json": "1ac58723db45545640fcacc9b83f542887709fc3474441687e271b9cd5626dd5",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_replay_v6/case/evaluation/raw/repetition_02/initial_state.pkl.gz": "8aeedcdc8f19845da72de89c79cde4d46ce5daf480fe3ce2102aba21fba41f2d",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_manifest_corrected_seeded_v1.json": "362888b891f9cb5ea13bf65ffd8a6025320965e43aa4fd37b00fe1242e75f550",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_seeded_v1_6/A0_6/contract_receipt.json": "7041e551fa1b1fbe884a97042886184b802c80941960587d0ae43d331264dc1a",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_seeded_v1_6/A0_6/window_2007/trial_00/fit.json": "9a2e2dc54959db0c82cb7ca0c4f827f2602acf264e9e9c847d61b560c1636d36",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_seeded_v1_6/A0_6/window_2007/trial_00/root_receipt.json": "afef61cfe452da5d838e7cba29247ff41a321005cbc9ecdcbdb734f4c891161d",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/histories_corrected_seeded_v1_6/A0_6/window_2007/trial_00/accepted_forecast.pkl.gz": "557f0876c40317b4a0dfb62cfc9de73adfc0f62807af3aa0294dba16be5cdafe",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source_extended_seed_v1/e5f_closed_finite_boundary.py": "8abc8829a7f4a3497c9b73e0392d55bdf631e8f4b7ee75bffbdb307cd6a4708a",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source_policy_seed_v1/e5f_closed_finite_boundary.py": "424b203529013977e245a1d958fcf703c8ac14e7fcf85a3f470baa082ce8f8f1",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/history_source_policy_seed_v1/run_e5f_final_rebated_history.py": "92e8b997744a81bfe181f56a151f9bee877741d7dfcc2bbe0f661490eaeb01a1",
+    "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/verify_e5f_boundary_policy_seed_v2.py": "7b590248e89c3d6a80743414511e80783d2fcea412369952a8acf90f935cdf45"
+  },
+  "no_history_advanced": true,
+  "source_promoted": false
+}
