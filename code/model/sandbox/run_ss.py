@@ -153,6 +153,34 @@ def apply_spec(overrides: dict[str, float], spec: dict[str, Any]) -> tuple[dict[
             switches[key] = value
         merged[key] = value
     mechanisms.check_switches_supported(switches)
+    if "phi" in merged and "n_parity" in merged:
+        # parameters.apply_overrides (parameters.py:351-374) is a single
+        # sequential function, not keyed off dict-iteration order: its
+        # "if 'n_parity' in od" block runs BEFORE its "if 'phi' in od" block,
+        # and resets P.phi to the 0.80 default whenever
+        # len(np.atleast_1d(P.phi)) != P.n_parity. Because the very first
+        # loop in apply_overrides (`for key, value in od.items():
+        # setattr(P, key, value)`) sets P.phi to whatever scalar/array this
+        # spec supplied BEFORE that n_parity check runs, a scalar phi
+        # override (len 1) never matches n_parity (4 here) and gets silently
+        # clobbered back to 0.80 -- the later "if 'phi' in od" block then only
+        # reshapes/broadcasts the ALREADY-CLOBBERED P.phi, it does not re-read
+        # od['phi']. This sandbox's build_overrides() always includes
+        # n_parity (from closure.make_overrides -> chain.common_overrides),
+        # so any spec that overrides `phi` with a bare scalar while n_parity
+        # is also present in the override dict silently loses the phi
+        # override -- exactly what happened for frictionless_nodp_psi_fixed
+        # (--spec output was bit-identical to baseline_psi_fixed).
+        #
+        # Fix (sandbox-only, no package edit): pre-broadcast phi to an array
+        # of length n_parity here, so len(np.atleast_1d(P.phi)) == P.n_parity
+        # already holds after the setattr loop and the n_parity block's reset
+        # condition is False, leaving the override intact for the later
+        # reshape block to pass through unchanged.
+        n_parity = int(merged["n_parity"])
+        phi_value = np.asarray(merged["phi"], dtype=float).reshape(-1)
+        if phi_value.size == 1:
+            merged["phi"] = np.full(n_parity, phi_value.item())
     return merged, switches
 
 
@@ -254,6 +282,13 @@ def parameter_rows(theta: dict[str, float], P: Any, price: np.ndarray, spec: dic
                  "child_benefit_form", "child_benefit_curvature", "scale_weighting"):
         rows.append({"parameter": name, "estimate": getattr(P, name, None), "lower": None, "upper": None,
                      "near_bound": False, "status": "externally fixed or sandbox switch"})
+    phi_value = np.asarray(getattr(P, "phi", None)).tolist() if hasattr(P, "phi") else None
+    rows.append({"parameter": "phi", "estimate": phi_value, "lower": None, "upper": None,
+                 "near_bound": False,
+                 "status": "financed share by parity; solved P.phi (default 0.80, spec-overridable; "
+                           "see apply_spec's phi/n_parity broadcast workaround)"})
+    rows.append({"parameter": "lambda_d", "estimate": getattr(P, "lambda_d", None), "lower": None, "upper": None,
+                 "near_bound": False, "status": "unsecured debt-line multiple of mean earnings (default 0.0, spec-overridable)"})
     rows.append({"parameter": "_solved_price", "estimate": json.dumps(list(np.asarray(price).ravel())),
                  "lower": None, "upper": None, "near_bound": False, "status": "warm-start cache (not a model parameter)"})
     return rows
