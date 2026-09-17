@@ -62,12 +62,12 @@ Two independent booleans/parameters, both default off.
 (a) `mortgage_origination_only: false` (default). When true, the collateral
 floor \(b'\ge-\phi P h\) is applied only on transactions (purchase or size
 change), exactly where the down-payment test already fires
-(`kernels.py:640-662`); for a stayer (`to == tn`) the floor is replaced by a
-no-cash-out rule: if \(b<0\) then \(b'\ge b\) (debt may not increase); if
-\(b\ge0\) then \(b'\ge 0\)... no: if \(b\ge0\) the stayer may still borrow up
-to \(-\phi P h\) (a first mortgage on an owned house is an origination);
-implement as: stayer floor \(=\min\{b,\,-\phi P h\}\) when \(b<0\), and
-\(-\phi P h\) when \(b\ge0\). The underwater-rollover taper logic at
+(`kernels.py:640-662`); for a stayer (`to == tn`) the floor becomes a
+no-cash-out rule. Precisely: if the stayer starts the period with debt
+(\(b<0\)), its floor is \(b\) itself, so debt may not increase; if it starts
+with no debt (\(b\ge0\)), its floor is \(-\phi P h\), because taking a first
+mortgage on a house already owned is an origination. In one formula the
+stayer floor is \(b\) when \(b<0\) and \(-\phi P h\) when \(b\ge0\). The underwater-rollover taper logic at
 `kernels.py:979-985` must be bypassed when this switch is on (a stayer is never
 forced below its own balance), leaving the code path untouched when off.
 
