@@ -136,7 +136,18 @@ component, with the same fixed-effect variance 0.3931 and the same after-tax
 scaling applied to both components (find the override keys the calibration
 layer uses in `local_panel.py`, `externals.py`, `e6b_profile.py`; convert to
 four-year parameters the way `local_panel.py:1063-1071` does; state every
-number). Both specs `psi_mode: fixed`.
+number). Also write `code/model/sandbox/specs/earnings_bgm_psi_fixed.yaml`: the
+Boar, Gorea and Midrigan (2020, NBER w23345, Table 2) post-tax-and-transfer
+process, annual persistence 0.964 and persistent innovation standard deviation
+0.150, converted to four years with the same formulas (four-year persistence
+\(0.964^4=0.864\); four-year innovation standard deviation
+\(0.150\sqrt{1+\rho^2+\rho^4+\rho^6}\)), on the same five Rouwenhorst
+points, with NO permanent types (find and set the override that disables the
+three-level permanent component so `Nz` is 5, and state the key) and NO
+additional after-tax scaling (the process is already post-tax). The
+transitory component (0.327 annual) is omitted; write in the spec's header
+comment that a four-year average of an annual i.i.d. shock of 0.327 has
+variance about 0.027 and is left out. All three earnings specs `psi_mode: fixed`.
 
 ## Deliverable
 
