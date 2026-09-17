@@ -224,3 +224,21 @@ launched to locate where the gap survives. Packet:
 Track B (the frozen packet's objective) was sized but not launched: it needs
 a re-derived objective contract because the scale is pinned inside the
 template's fixed-parameter source.
+
+**Anchors at 0.01 and 0.02 (jobs 17907118, 17907117), same theta and objective:**
+
+| scale | loss | family ownership gap (target 0.168) |
+|---|---|---|
+| 0.005 (frozen) | 31.85 | 0.161 |
+| 0.01 | 101.81 | 0.121 |
+| 0.02 | 299.31 | 0.062 |
+| 0.05 | 379.17 | 0.029 |
+
+The gap falls continuously and steeply with the tenure taste scale; there is
+no value that removes the threshold flips while keeping the mechanism. The
+smoothing route to a certifiable long transition is therefore closed on
+economic grounds. What remains: (i) gates commensurate with one flip at the
+frozen scale, or (ii) a numerical treatment of the flip that does not add
+taste noise, namely interpolating the tenure indifference point inside a
+wealth-grid cell so the mass moves continuously with the price without
+changing any household's preferences.
