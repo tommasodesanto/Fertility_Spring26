@@ -1,1 +1,108 @@
-{"batch_path":"/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/sandbox_psi_root_20260918a","note":"Smoke job 17938093 never scheduled within the 90-minute task window (cluster congestion: ~2800 jobs pending). Per the task gate, the ten production jobs were NOT submitted. To continue: wait for the smoke's four files, then run each spec's sbatch_command from the batch directory.","smoke":{"extra_args":"--fast","job_id":17938093,"job_name":"sandbox_root_smoke","out_dir":"output_runs/sw_penalty_psi_fixed","sbatch_command":"SANDBOX_SPEC=sw_penalty_psi_fixed SANDBOX_EXTRA_ARGS='--fast' sbatch --job-name=sandbox_root_smoke --time=01:00:00 scripts/run_spec.sbatch","spec":"sw_penalty_psi_fixed","status":"queued_not_started"},"specs":[{"job_id":null,"job_name":"sandbox_root_sw_penalty_psi_root","out_dir":"output_runs/sw_penalty_psi_root","sbatch_command":"SANDBOX_SPEC=sw_penalty_psi_root sbatch --job-name=sandbox_root_sw_penalty_psi_root --time=04:00:00 scripts/run_spec.sbatch","spec":"sw_penalty_psi_root","status":"not_submitted","time_limit":"04:00:00"},{"job_id":null,"job_name":"sandbox_root_sw_mortgage_psi_root","out_dir":"output_runs/sw_mortgage_psi_root","sbatch_command":"SANDBOX_SPEC=sw_mortgage_psi_root sbatch --job-name=sandbox_root_sw_mortgage_psi_root --time=04:00:00 scripts/run_spec.sbatch","spec":"sw_mortgage_psi_root","status":"not_submitted","time_limit":"04:00:00"},{"job_id":null,"job_name":"sandbox_root_sw_wedge_psi_root","out_dir":"output_runs/sw_wedge_psi_root","sbatch_command":"SANDBOX_SPEC=sw_wedge_psi_root sbatch --job-name=sandbox_root_sw_wedge_psi_root --time=04:00:00 scripts/run_spec.sbatch","spec":"sw_wedge_psi_root","status":"not_submitted","time_limit":"04:00:00"},{"estate_outer_loop":true,"job_id":null,"job_name":"sandbox_root_sw_estate_psi_root","out_dir":"output_runs/sw_estate_psi_root","sbatch_command":"SANDBOX_SPEC=sw_estate_psi_root sbatch --job-name=sandbox_root_sw_estate_psi_root --time=12:00:00 scripts/run_spec.sbatch","spec":"sw_estate_psi_root","status":"not_submitted","time_limit":"12:00:00"},{"estate_outer_loop":true,"job_id":null,"job_name":"sandbox_root_all_switches_psi_root","out_dir":"output_runs/all_switches_psi_root","sbatch_command":"SANDBOX_SPEC=all_switches_psi_root sbatch --job-name=sandbox_root_all_switches_psi_root --time=12:00:00 scripts/run_spec.sbatch","spec":"all_switches_psi_root","status":"not_submitted","time_limit":"12:00:00"},{"job_id":null,"job_name":"sandbox_root_earnings_e6b_psi_root","out_dir":"output_runs/earnings_e6b_psi_root","sbatch_command":"SANDBOX_SPEC=earnings_e6b_psi_root sbatch --job-name=sandbox_root_earnings_e6b_psi_root --time=04:00:00 scripts/run_spec.sbatch","spec":"earnings_e6b_psi_root","status":"not_submitted","time_limit":"04:00:00"},{"job_id":null,"job_name":"sandbox_root_earnings_bgm_psi_root","out_dir":"output_runs/earnings_bgm_psi_root","sbatch_command":"SANDBOX_SPEC=earnings_bgm_psi_root sbatch --job-name=sandbox_root_earnings_bgm_psi_root --time=04:00:00 scripts/run_spec.sbatch","spec":"earnings_bgm_psi_root","status":"not_submitted","time_limit":"04:00:00"},{"job_id":null,"job_name":"sandbox_root_credit_line_modest_psi_root","out_dir":"output_runs/credit_line_modest_psi_root","sbatch_command":"SANDBOX_SPEC=credit_line_modest_psi_root sbatch --job-name=sandbox_root_credit_line_modest_psi_root --time=04:00:00 scripts/run_spec.sbatch","spec":"credit_line_modest_psi_root","status":"not_submitted","time_limit":"04:00:00"},{"job_id":null,"job_name":"sandbox_root_s1_concave_benefit","out_dir":"output_runs/s1_concave_benefit","sbatch_command":"SANDBOX_SPEC=s1_concave_benefit sbatch --job-name=sandbox_root_s1_concave_benefit --time=04:00:00 scripts/run_spec.sbatch","spec":"s1_concave_benefit","status":"not_submitted","time_limit":"04:00:00"},{"job_id":null,"job_name":"sandbox_root_kappa_h_zero","out_dir":"output_runs/kappa_h_zero","sbatch_command":"SANDBOX_SPEC=kappa_h_zero sbatch --job-name=sandbox_root_kappa_h_zero --time=04:00:00 scripts/run_spec.sbatch","spec":"kappa_h_zero","status":"not_submitted","time_limit":"04:00:00"}]}
+{
+  "batch_path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/sandbox_psi_root_20260918a",
+  "note": "Ten production jobs submitted 2026-09-18 per lead decision (smoke 17938093 left queued in place; scheduler-congestion stall, snapshot hash-verified; Tuesday precedent job 17906967).",
+  "smoke": {
+    "extra_args": "--fast",
+    "job_id": 17938093,
+    "job_name": "sandbox_root_smoke",
+    "out_dir": "output_runs/sw_penalty_psi_fixed",
+    "sbatch_command": "SANDBOX_SPEC=sw_penalty_psi_fixed SANDBOX_EXTRA_ARGS='--fast' sbatch --job-name=sandbox_root_smoke --time=01:00:00 scripts/run_spec.sbatch",
+    "spec": "sw_penalty_psi_fixed",
+    "status": "queued_not_started"
+  },
+  "specs": [
+    {
+      "job_id": 17938995,
+      "job_name": "sandbox_root_sw_penalty_psi_root",
+      "out_dir": "output_runs/sw_penalty_psi_root",
+      "sbatch_command": "SANDBOX_SPEC=sw_penalty_psi_root sbatch --job-name=sandbox_root_sw_penalty_psi_root --time=04:00:00 scripts/run_spec.sbatch",
+      "spec": "sw_penalty_psi_root",
+      "status": "submitted",
+      "time_limit": "04:00:00"
+    },
+    {
+      "job_id": 17938996,
+      "job_name": "sandbox_root_sw_mortgage_psi_root",
+      "out_dir": "output_runs/sw_mortgage_psi_root",
+      "sbatch_command": "SANDBOX_SPEC=sw_mortgage_psi_root sbatch --job-name=sandbox_root_sw_mortgage_psi_root --time=04:00:00 scripts/run_spec.sbatch",
+      "spec": "sw_mortgage_psi_root",
+      "status": "submitted",
+      "time_limit": "04:00:00"
+    },
+    {
+      "job_id": 17938997,
+      "job_name": "sandbox_root_sw_wedge_psi_root",
+      "out_dir": "output_runs/sw_wedge_psi_root",
+      "sbatch_command": "SANDBOX_SPEC=sw_wedge_psi_root sbatch --job-name=sandbox_root_sw_wedge_psi_root --time=04:00:00 scripts/run_spec.sbatch",
+      "spec": "sw_wedge_psi_root",
+      "status": "submitted",
+      "time_limit": "04:00:00"
+    },
+    {
+      "estate_outer_loop": true,
+      "job_id": 17938998,
+      "job_name": "sandbox_root_sw_estate_psi_root",
+      "out_dir": "output_runs/sw_estate_psi_root",
+      "sbatch_command": "SANDBOX_SPEC=sw_estate_psi_root sbatch --job-name=sandbox_root_sw_estate_psi_root --time=12:00:00 scripts/run_spec.sbatch",
+      "spec": "sw_estate_psi_root",
+      "status": "submitted",
+      "time_limit": "12:00:00"
+    },
+    {
+      "estate_outer_loop": true,
+      "job_id": 17938999,
+      "job_name": "sandbox_root_all_switches_psi_root",
+      "out_dir": "output_runs/all_switches_psi_root",
+      "sbatch_command": "SANDBOX_SPEC=all_switches_psi_root sbatch --job-name=sandbox_root_all_switches_psi_root --time=12:00:00 scripts/run_spec.sbatch",
+      "spec": "all_switches_psi_root",
+      "status": "submitted",
+      "time_limit": "12:00:00"
+    },
+    {
+      "job_id": 17939000,
+      "job_name": "sandbox_root_earnings_e6b_psi_root",
+      "out_dir": "output_runs/earnings_e6b_psi_root",
+      "sbatch_command": "SANDBOX_SPEC=earnings_e6b_psi_root sbatch --job-name=sandbox_root_earnings_e6b_psi_root --time=04:00:00 scripts/run_spec.sbatch",
+      "spec": "earnings_e6b_psi_root",
+      "status": "submitted",
+      "time_limit": "04:00:00"
+    },
+    {
+      "job_id": 17939001,
+      "job_name": "sandbox_root_earnings_bgm_psi_root",
+      "out_dir": "output_runs/earnings_bgm_psi_root",
+      "sbatch_command": "SANDBOX_SPEC=earnings_bgm_psi_root sbatch --job-name=sandbox_root_earnings_bgm_psi_root --time=04:00:00 scripts/run_spec.sbatch",
+      "spec": "earnings_bgm_psi_root",
+      "status": "submitted",
+      "time_limit": "04:00:00"
+    },
+    {
+      "job_id": 17939002,
+      "job_name": "sandbox_root_credit_line_modest_psi_root",
+      "out_dir": "output_runs/credit_line_modest_psi_root",
+      "sbatch_command": "SANDBOX_SPEC=credit_line_modest_psi_root sbatch --job-name=sandbox_root_credit_line_modest_psi_root --time=04:00:00 scripts/run_spec.sbatch",
+      "spec": "credit_line_modest_psi_root",
+      "status": "submitted",
+      "time_limit": "04:00:00"
+    },
+    {
+      "job_id": 17939003,
+      "job_name": "sandbox_root_s1_concave_benefit",
+      "out_dir": "output_runs/s1_concave_benefit",
+      "sbatch_command": "SANDBOX_SPEC=s1_concave_benefit sbatch --job-name=sandbox_root_s1_concave_benefit --time=04:00:00 scripts/run_spec.sbatch",
+      "spec": "s1_concave_benefit",
+      "status": "submitted",
+      "time_limit": "04:00:00"
+    },
+    {
+      "job_id": 17939004,
+      "job_name": "sandbox_root_kappa_h_zero",
+      "out_dir": "output_runs/kappa_h_zero",
+      "sbatch_command": "SANDBOX_SPEC=kappa_h_zero sbatch --job-name=sandbox_root_kappa_h_zero --time=04:00:00 scripts/run_spec.sbatch",
+      "spec": "kappa_h_zero",
+      "status": "submitted",
+      "time_limit": "04:00:00"
+    }
+  ],
+  "submission_utc": "2026-09-18T05:34:18Z"
+}
