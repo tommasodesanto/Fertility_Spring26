@@ -1,0 +1,15 @@
+# Single switch: size-dependent rental wedge; psi_root twin of
+# sw_wedge_psi_fixed (same overrides; child level re-normalized). Rent per room is
+# r + 0.02 + 0.05 * max(0, h - 6.0): a real operating cost paid to the outside
+# landlord. It enters the renter budget only (not the property-tax base, not
+# the rebate, not wealth) and leaves the user cost r itself unchanged
+# (parameters.py:rental_wedge_total_cost). hR_max 11.0 replaces the renter cap
+# with the owner maximum (H_own top rung, parameters.py); chi 1.0 neutralizes
+# the owner service premium (default 1.10).
+psi_mode: root
+overrides:
+  rental_wedge_intercept: 0.02
+  rental_wedge_slope: 0.05
+  rental_wedge_knee: 6.0
+  hR_max: 11.0
+  chi: 1.0

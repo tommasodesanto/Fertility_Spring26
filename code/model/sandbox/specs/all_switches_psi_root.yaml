@@ -1,0 +1,30 @@
+# Combined switch spec, psi_root twin of all_switches_psi_fixed (same
+# overrides; child level re-normalized): all four single-switch specs plus
+# parent-age child maturation and log child benefit. Design choice, stated:
+# the two earnings-level specs and the modest credit line are NOT combined
+# here -- the earnings processes are mutually exclusive alternatives to the
+# live process, and the credit line is a credit environment, not a switch;
+# this file combines the Part 1-4 mechanism switches only. Entries: earnings
+# penalty [0, 0.2, 0.2, 0.2] by children at home; origination-only mortgage
+# with 0.11 amortization; rental wedge 0.02 + 0.05 * max(0, h - 6.0) with
+# hR_max 11.0 and chi 1.0; estates to ages 45-65 net of selling cost;
+# child_maturation_mode parent_age with mu_young 0.05, a_rise 34.0, a_full
+# 62.0 (same levels as maturation_parent_age_psi_fixed); child_benefit_form
+# log (same as s1_concave_benefit_psi_fixed).
+psi_mode: root
+overrides:
+  child_earnings_penalty: [0, 0.2, 0.2, 0.2]
+  mortgage_origination_only: true
+  mortgage_amortization: 0.11
+  rental_wedge_intercept: 0.02
+  rental_wedge_slope: 0.05
+  rental_wedge_knee: 6.0
+  hR_max: 11.0
+  chi: 1.0
+  estate_receiver: ages_45_65
+  bequest_net_of_selling_cost: true
+  child_maturation_mode: parent_age
+  mu_young: 0.05
+  a_rise: 34.0
+  a_full: 62.0
+  child_benefit_form: log

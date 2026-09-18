@@ -1,0 +1,30 @@
+# Boar-Gorea-Midrigan post-tax earnings process at fixed child level (psi fixed).
+# Annual inputs from Boar, Gorea and Midrigan (2020, NBER w23345, Table 2),
+# post-tax-and-transfer process: persistent rho 0.964, persistent innovation
+# sd 0.150. NO after-tax scaling is applied (the process is already post-tax),
+# unlike the live FL-HSV scaling by (1 - 0.181) in externals.py. Four-year
+# conversion exactly as local_panel.py:income_process_overrides (PERIOD_YEARS
+# = 4.0, calibration.py): rho_4 = 0.964^4 = 0.8635910556159999 (0.864
+# rounded); sigma_eps_4 = 0.150 * sqrt(1 + rho^2 + rho^4 + rho^6) =
+# 0.28442384272033844; sigma_log = sigma_eps_4 / sqrt(1 - rho_4^2) =
+# 0.5641171030081551; Rouwenhorst p = (1 + rho_4)/2 = 0.9317955278079999 on 5
+# states with binomial weights [1,4,6,4,1]/16 and the log grid normalized to
+# mean 1. The annual transitory sd 0.327 is omitted: a four-year average of an
+# annual i.i.d. shock with sd 0.327 has variance 0.327^2/4 = 0.026733 (about
+# 0.027) and is left out. The three-level permanent component is disabled via
+# permanent_income_levels_enabled: false (parameters.py, solver branches on
+# this flag; residual level/index arrays are then inert), its variance reset
+# to 0.0, so Nz = 5. Content checks on the embedded numbers: grid mean 1.0,
+# stationary gap 5.6e-17 (package gate 1e-10, parameters.py). Override keys
+# are the calibration layer's own dict keys (local_panel.py, externals.py,
+# e6b_profile.py, e5f_income_entry_profile.py passes them through).
+psi_mode: fixed
+overrides:
+  use_income_types: true
+  income_type_transition: markov
+  income_shock_persistence: 0.8635910556159999
+  z_grid: [0.2765725263626489, 0.48618547702709247, 0.8546630469076992, 1.5024079456590764, 2.6410755014464775]
+  z_weights: [0.0625, 0.25, 0.375, 0.25, 0.0625]
+  Pi_z: [[0.7538457431993805, 0.22071645331912, 0.024233614704291723, 0.0011825490685341885, 2.163970867360049e-05], [0.055179113329780004, 0.7659625505515264, 0.16642425179074063, 0.012138447060819462, 0.0002956372671335472], [0.00403893578404862, 0.11094950119382709, 0.7700231260442486, 0.1109495011938271, 0.00403893578404862], [0.0002956372671335472, 0.012138447060819462, 0.16642425179074066, 0.7659625505515264, 0.055179113329780004], [2.163970867360049e-05, 0.0011825490685341885, 0.024233614704291723, 0.22071645331912, 0.7538457431993805]]
+  permanent_income_levels_enabled: false
+  permanent_income_log_variance: 0.0

@@ -1,0 +1,15 @@
+# Modest unsecured credit line at fixed child-preference level (psi fixed).
+# lambda_d = 0.1875 = 0.75 * 0.25 * 1.0: three quarters of one quarter of mean
+# annual earnings, in the model's units (Kaplan and Violante 2014 reading in
+# the task note). Mean annual earnings equal 1.0 by the package's earnings
+# normalization: location wage w_hat = [1.0] (calibration.py:base_overrides),
+# the working-age income profile is normalized to mean 1
+# (normalize_income_profile, parameters.py:get_income_age_profile), and every
+# shock grid is normalized to mean 1. The age taper is untouched, so the
+# package defaults still apply (debt_taper_start_age 42.0, debt_taper_end_age
+# 62.0, parameters.py:setup_parameters); the debt cap stays lam * ybar * taper
+# (parameters.py:build_debt_caps). Contrast frictionless_full_psi_fixed, which
+# sets lambda_d 5.0 with the taper pushed to 82/86.
+psi_mode: fixed
+overrides:
+  lambda_d: 0.1875

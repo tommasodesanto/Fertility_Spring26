@@ -1,0 +1,12 @@
+# Single switch: estates paid to households; psi_root twin of
+# sw_estate_psi_fixed (same overrides; child level re-normalized).
+# estate_receiver ages_45_65: the aggregate estate flow of the period is paid
+# as an equal lump sum to every household aged 45 to 65 inclusive; the
+# transfer is an equilibrium object solved by outer iteration.
+# bequest_net_of_selling_cost true: the estate is valued net of the selling
+# cost, b + (1 - psi^s) P h, in the bequest utility (and, with the transfer
+# on, in the accounting). Defaults are none / false (parameters.py).
+psi_mode: root
+overrides:
+  estate_receiver: ages_45_65
+  bequest_net_of_selling_cost: true

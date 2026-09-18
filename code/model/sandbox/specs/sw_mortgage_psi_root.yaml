@@ -1,0 +1,13 @@
+# Single switch: mortgage block, both legs on; psi_root twin of
+# sw_mortgage_psi_fixed (same overrides; child level re-normalized).
+# mortgage_origination_only true: the collateral floor b' >= -phi P h applies
+# only on transactions (where the down-payment test fires); a stayer with debt
+# (b < 0) faces a no-cash-out floor at its own balance b, while a stayer with
+# b >= 0 may originate up to -phi P h. mortgage_amortization 0.11: a stayer in
+# debt must retire at least this share per period (b' >= b * (1 - 0.11)); a
+# thirty-year loan at a 2 percent real rate retires about 11 percent of
+# principal in four years. Defaults are false / 0.0 (parameters.py).
+psi_mode: root
+overrides:
+  mortgage_origination_only: true
+  mortgage_amortization: 0.11

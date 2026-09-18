@@ -1,0 +1,9 @@
+# Single switch: working-age earnings penalty for children at home (psi fixed).
+# child_earnings_penalty lists the proportional earnings cost by children at
+# home m = 0, 1, 2, 3+ (default all zeros, parameters.py:setup_parameters and
+# apply_overrides). Working-age after-tax earnings are scaled by (1 - entry)
+# in the household budget at ages below retirement only; pensions, the
+# payroll-tax base and the PAYGO balance use unpenalized earnings.
+psi_mode: fixed
+overrides:
+  child_earnings_penalty: [0, 0.2, 0.2, 0.2]
