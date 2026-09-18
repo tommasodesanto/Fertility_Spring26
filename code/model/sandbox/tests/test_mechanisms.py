@@ -113,10 +113,26 @@ def test_scale_weighting_multiply_changes_escale_under_power_form():
     assert not np.array_equal(modified.escale_flat, baseline.escale_flat)
 
 
-def test_child_earnings_penalty_is_rejected():
-    import pytest
-    with pytest.raises(NotImplementedError):
-        mechanisms.check_switches_supported({"child_earnings_penalty": 0.10})
-    # A zero/absent penalty is a no-op and must not raise.
+def test_child_earnings_penalty_is_supported():
+    # The package implements this switch natively (parameters.py:393-404),
+    # so the sandbox passes it straight through -- nothing must raise here.
+    mechanisms.check_switches_supported({"child_earnings_penalty": 0.10})
+    mechanisms.check_switches_supported({"child_earnings_penalty": [0, 0.2, 0.2, 0.2]})
     mechanisms.check_switches_supported({"child_earnings_penalty": 0.0})
     mechanisms.check_switches_supported({})
+
+
+def test_child_earnings_penalty_reaches_package_unchanged():
+    # The sandbox override path must hand the value to the package's own
+    # apply_overrides without modification (scalar broadcasts to 4 entries;
+    # a 4-vector is kept as-is).
+    from intergen_eqscale_seq_optimized.parameters import apply_overrides, setup_parameters
+
+    P = apply_overrides(setup_parameters(), {"child_earnings_penalty": [0, 0.2, 0.2, 0.2]})
+    np.testing.assert_array_equal(
+        np.asarray(P.child_earnings_penalty, dtype=float), [0.0, 0.2, 0.2, 0.2]
+    )
+    P = apply_overrides(setup_parameters(), {"child_earnings_penalty": 0.10})
+    np.testing.assert_allclose(
+        np.asarray(P.child_earnings_penalty, dtype=float), [0.10] * 4
+    )

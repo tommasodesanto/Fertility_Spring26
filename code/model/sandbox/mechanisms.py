@@ -7,7 +7,7 @@ temporarily monkeypatches `solver.precompute_shared` with a wrapper defined
 here, and restores the original function object when the `with` block exits.
 No package file is ever written to.
 
-Two of the three switches described in the sandbox task have a clean runtime
+Two of the switches described in the sandbox task have a clean runtime
 hook and are implemented below:
 
   (a) child_benefit_form in {"linear", "log", "power"} with
@@ -26,9 +26,16 @@ hook and are implemented below:
       eqscale_form == "linear", scale_weighting == "multiply" is a no-op
       (deflate and multiply coincide) and this is logged in summary.md.
 
-The third switch, (c) child_earnings_penalty, does NOT have a clean runtime
-hook and is deliberately NOT implemented here. See NOT_IMPLEMENTED below for
-the exact reason and the line where a package hook would need to be added.
+A third former switch, (c) child_earnings_penalty, is NOT implemented here
+because it needs no sandbox hook at all: the production package implements
+it directly (parameters.py:393-404, `apply_overrides` coerces a scalar or
+4-vector into P.child_earnings_penalty with one entry per m = 0, 1, 2, 3+).
+Like the other native package switches (mortgage_origination_only,
+mortgage_amortization, rental_wedge_intercept/slope/knee, estate_receiver,
+bequest_net_of_selling_cost, child_maturation_mode, mu_young, a_rise,
+a_full), it passes through the sandbox's override path untouched into the
+package's own apply_overrides (see _SANDBOX_ONLY_OVERRIDE_KEYS below, which
+lists the only keys stripped out before that call).
 
 Bitwise-off guarantee: when a spec leaves child_benefit_form == "linear" and
 scale_weighting == "deflate" (the defaults), `sandboxed_precompute_shared`
@@ -53,26 +60,14 @@ from intergen_eqscale_seq_optimized import solver as _solver
 # sandbox_context() is entered/exited or re-entered.
 _ORIGINAL_PRECOMPUTE_SHARED = _solver.precompute_shared
 
-NOT_IMPLEMENTED = {
-    "child_earnings_penalty": (
-        "No clean sandbox-only hook exists. income_at_state(P, i, j, z_value) "
-        "at code/model/intergen_eqscale_seq_optimized/solver.py:226 has no "
-        "child-state argument, and P.income built by "
-        "set_income_given_w_and_pension (parameters.py:725) is shaped (I, J) "
-        "with no child-count dimension. The Bellman-loop call sites that do "
-        "have the (nn, cs) child-state in scope (solver.py:2509, 2619, 3823, "
-        "5487, 5561, 5658, 5752, 5793, 5969, 6459) call income_at_state "
-        "without passing that state through. Applying (1 - tau_c(m)) from "
-        "sandbox code alone would require either widening income_at_state's "
-        "signature to accept an m/child-count argument (solver.py:226) and "
-        "threading it through every call site above, or building an "
-        "(I, J, n_child_states)-shaped income array and rewiring "
-        "set_income_given_w_and_pension (parameters.py:725) to use it -- both "
-        "are package edits, which this sandbox is not permitted to make. "
-        "The switch is therefore left unimplemented; requesting it raises "
-        "NotImplementedError with this message."
-    ),
-}
+# Formerly: child_earnings_penalty was listed here as NOT_IMPLEMENTED on the
+# theory that no sandbox-only hook existed (income_at_state takes no
+# child-state argument). That theory was wrong: the production package
+# implements the penalty natively (parameters.py:393-404), so no sandbox hook
+# is needed -- the override passes straight through to the package. The
+# mapping is kept (empty) so that check_switches_supported() remains a valid
+# call for existing callers.
+NOT_IMPLEMENTED: dict[str, str] = {}
 
 
 def _child_benefit_value(psi_child: float, nk: np.ndarray, form: str, curvature: float) -> np.ndarray:

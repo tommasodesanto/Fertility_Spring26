@@ -55,10 +55,9 @@ established them.
 
 ## Spec format
 
-`sandbox/specs/<name>.yaml` is a flat mapping (a tiny hand-rolled parser in
-`spec_io.py` reads it; PyYAML is not installed in `code/model/.venv`, and
-every spec here is a flat scalar mapping, so a real YAML parser was not worth
-adding):
+`sandbox/specs/<name>.yaml` is a flat mapping with scalar or flow-list
+values (a tiny YAML-subset parser in `spec_io.py` reads it; PyYAML is not
+installed in `code/model/.venv`):
 
 ```yaml
 # comment
@@ -76,8 +75,8 @@ below, which are validated by `mechanisms.check_switches_supported` first.
 Five specs are provided: `baseline`, `kappa_h_zero`
 (`tenure_choice_kappa: 0.0`), `s1_concave_benefit`
 (`child_benefit_form: log`), `s2_ssk_weighting` (`scale_weighting: multiply`),
-and `s3_child_penalty` (`child_earnings_penalty: 0.10` -- **not runnable**,
-see below).
+and `s3_child_penalty` (`child_earnings_penalty: 0.10` -- runnable: the
+package implements this switch natively, see below).
 
 ## Mechanism switches
 
@@ -97,17 +96,21 @@ edited.
   (the `gamma_e` branch), `multiply` is a documented no-op: production
   applies no sigma exponent there at all, at any sigma, so there is no
   well-defined "multiply" analogue without inventing a new functional form.
-- **child_earnings_penalty**: **not implemented**. `income_at_state`
-  (solver.py:226) has no child-state argument, and `P.income`
-  (parameters.py:725, `set_income_given_w_and_pension`) is shaped `(I, J)`
-  with no child-count dimension; the Bellman-loop call sites that do have
-  the child state in scope call `income_at_state` without it. Applying
-  `(1 - tau_c(m))` from sandbox code alone would need either a wider
-  `income_at_state` signature threaded through ~10 call sites, or an
-  `(I, J, n_child_states)` income array -- both are package edits this
-  sandbox may not make. Running `--spec s3_child_penalty` raises
-  `NotImplementedError` with this explanation rather than silently no-op'ing
-  or producing wrong numbers.
+- **child_earnings_penalty**: **implemented by the package, not the
+  sandbox.** `parameters.apply_overrides` (parameters.py:393-404) coerces a
+  scalar or 4-vector into `P.child_earnings_penalty` with one entry per
+  children-at-home state m = 0, 1, 2, 3+, so the sandbox passes the override
+  straight through with no hook of its own. (An earlier revision of this file
+  claimed no clean hook existed and `--spec s3_child_penalty` raised
+  `NotImplementedError`; that claim was wrong -- the package had the switch
+  all along -- and the guard has been removed.) The same pass-through covers
+  the other native package switches (`mortgage_origination_only`,
+  `mortgage_amortization`, `rental_wedge_intercept/slope/knee`,
+  `estate_receiver`, `bequest_net_of_selling_cost`,
+  `child_maturation_mode`, `mu_young`, `a_rise`, `a_full`): only the three
+  sandbox-invented keys (`child_benefit_form`, `child_benefit_curvature`,
+  `scale_weighting`) are stripped out before the package's `apply_overrides`
+  call.
 
 Each implemented switch has a bitwise-off unit test in
 `sandbox/tests/test_mechanisms.py`: at the default value
@@ -181,10 +184,7 @@ short-circuits at the first evaluation). `--fast` uses Nb=40 instead of 120.
    this caveat on every run.
 2. **Bellman/value-function warm start is not implemented** (see Warm start
    above) -- no such hook exists in the package.
-3. **`child_earnings_penalty` is not implemented** (see Mechanism switches
-   above) -- no clean sandbox-only hook exists; `--spec s3_child_penalty`
-   fails loudly rather than silently.
-4. **`scale_weighting: multiply` only changes anything under
+3. **`scale_weighting: multiply` only changes anything under
    `eqscale_form in {power, sqrt}`.** The retained calibration uses
    `eqscale_form=power` (via the E5 profile), so `s2_ssk_weighting.yaml`
    does have an effect; a spec that also sets `eqscale_form: linear` would
