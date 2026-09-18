@@ -104,5 +104,33 @@
       "time_limit": "04:00:00"
     }
   ],
-  "submission_utc": "2026-09-18T05:34:18Z"
+  "submission_utc": "2026-09-18T05:34:18Z",
+  "resubmission": {
+    "resubmission_utc": "2026-09-18T15:15:55Z",
+    "reason": "Prior ten jobs 17938995-17939004 and smoke 17938093 CANCELLED at zero elapsed by someone else (sacct-verified). Resubmitted exactly sw_estate_psi_root + all_switches_psi_root (12h) plus smoke sw_penalty_psi_fixed --fast (1h) from the batch directory with the sbatch_command lines as written. No script changes.",
+    "batch_path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/sandbox_psi_root_20260918a",
+    "sw_estate_psi_root": {
+      "job_id": 17948645,
+      "job_name": "sandbox_root_sw_estate_psi_root",
+      "sbatch_command": "SANDBOX_SPEC=sw_estate_psi_root sbatch --job-name=sandbox_root_sw_estate_psi_root --time=12:00:00 scripts/run_spec.sbatch",
+      "time_limit": "12:00:00",
+      "status_at_record": "FAILED within ~1 min (log shows same FileNotFoundError as siblings; sacct RUNNING at 0:08 then failed)"
+    },
+    "all_switches_psi_root": {
+      "job_id": 17948646,
+      "job_name": "sandbox_root_all_switches_psi_root",
+      "sbatch_command": "SANDBOX_SPEC=all_switches_psi_root sbatch --job-name=sandbox_root_all_switches_psi_root --time=12:00:00 scripts/run_spec.sbatch",
+      "time_limit": "12:00:00",
+      "status_at_record": "FAILED, 00:00:07 elapsed"
+    },
+    "smoke": {
+      "job_id": 17948647,
+      "job_name": "sandbox_root_smoke",
+      "spec": "sw_penalty_psi_fixed",
+      "sbatch_command": "SANDBOX_SPEC=sw_penalty_psi_fixed SANDBOX_EXTRA_ARGS='--fast' sbatch --job-name=sandbox_root_smoke --time=01:00:00 scripts/run_spec.sbatch",
+      "time_limit": "01:00:00",
+      "status_at_record": "FAILED, 00:00:07 elapsed"
+    },
+    "common_failure": "run_ss.py load_retained_theta() FileNotFoundError: output/model/e5f_final_night_20260913/corrected_initial/candidate_result.json missing; batch has candidate_result.json directly under e5f_final_night_20260913/ with no corrected_initial/ subdirectory"
+  }
 }
