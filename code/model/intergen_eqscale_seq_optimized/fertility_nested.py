@@ -71,7 +71,7 @@ def bellman_block(Vd, kernel_args, P, j, fecundity, deterministic_kernel):
     for product in range(nt):
         restricted = np.full_like(Vd, -1e10)
         restricted[:, product] = Vd[:, product]
-        value, _ = deterministic_kernel(restricted, *kernel_args, True)
+        value, _ = deterministic_kernel(restricted, *kernel_args, restricted, True)
         q[..., product] = np.where(value > -1e9, value + float(P.E_loc[0] - P.mu_stay), -np.inf)
     kappa = float(P.tenure_choice_kappa)
     value, wait = logsum(q, kappa)

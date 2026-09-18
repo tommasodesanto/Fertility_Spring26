@@ -14,16 +14,21 @@ from . import joint_nested
 
 from .parameters import (
     apply_overrides,
+    child_earnings_multiplier,
+    child_earnings_penalty_active,
+    children_at_home_count,
     fecundity_active,
     finalize_location_choice_spec,
     get_fecundity_by_age,
     independent_child_maturation_active,
+    mortgage_stay_floor_active,
     parent_age_maturation_active,
     readiness_childless_states,
     readiness_cumulative_probability,
     readiness_gate_active,
     readiness_settled_state,
     readiness_transition_hazard,
+    rental_wedge_active,
     setup_parameters,
     unsecured_debt_floor,
 )
@@ -132,17 +137,31 @@ def owner_borrowing_floor(
     b: Any,
     collateral_floor: Any,
     j: int,
+    *,
+    stay_on: bool = False,
+    stay_orig: bool = False,
+    amort: float = 0.0,
 ) -> np.ndarray:
     """Owner floor after separating secured from unsecured debt.
 
     Prices and therefore ``collateral_floor`` are those of the current solver
     iterate.  This convention is inert in stationary equilibrium.
+    With ``stay_on``, the stayer rule replaces the taper/line rollover: debt
+    may not rise (``stay_orig``), and with ``amort`` it must fall by at least
+    that share; with no debt the collateral floor applies under
+    ``stay_orig``.  Defaults reproduce the legacy floor bit for bit.
     """
 
     b_arr = np.asarray(b, dtype=float)
     bf_arr = effective_owner_collateral_floor(P, collateral_floor, j)
-    current_unsecured = b_arr - bf_arr
-    return bf_arr + debt_rule_at_age(P, current_unsecured, j)
+    if not stay_on:
+        current_unsecured = b_arr - bf_arr
+        return bf_arr + debt_rule_at_age(P, current_unsecured, j)
+    standard = bf_arr + debt_rule_at_age(P, b_arr - bf_arr, j)
+    amort_floor = b_arr * (1.0 - float(amort))
+    if stay_orig:
+        return np.where(b_arr < 0.0, np.maximum(amort_floor, b_arr), bf_arr)
+    return np.where(b_arr < 0.0, np.maximum(amort_floor, standard), standard)
 
 
 def effective_owner_collateral_floor(
@@ -236,6 +255,26 @@ def income_at_state(P: SimpleNamespace, i: int, j: int, z_value: float) -> float
     return income + float(getattr(P, "property_tax_lump_sum_transfer", 0.0))
 
 
+def penalized_income_at_state(P: SimpleNamespace, i: int, j: int, z_value: float, m: int) -> float:
+    """Working-age after-tax earnings net of the children-at-home time cost.
+
+    Multiplies the earnings part of ``income_at_state`` by
+    ``(1 - penalty(m))`` at working ages; the lump-sum fiscal transfer is
+    not earnings and is not scaled. Retirement ages are untouched. With the
+    switch off this equals ``income_at_state`` bit for bit.
+    """
+    mult = child_earnings_multiplier(P, int(j), int(m))
+    if mult == 1.0:
+        return income_at_state(P, i, j, z_value)
+    y = float(P.income[i, j])
+    if j < int(getattr(P, "J_R", P.J)):
+        income = y * float(z_value) * mult
+    else:
+        scale = float(getattr(P, "retirement_income_z_scale", 0.0))
+        income = y * (1.0 + scale * (float(z_value) - 1.0))
+    return income + float(getattr(P, "property_tax_lump_sum_transfer", 0.0))
+
+
 def birth_destination_child_state(P: SimpleNamespace, current_child_state: int) -> int:
     """Child-state destination after a successful upward birth attempt.
 
@@ -262,11 +301,11 @@ ENTRY_WEALTH_INCOME_RATIO_MODES = {
 }
 
 
-def annual_gross_income_at_state(P: SimpleNamespace, i: int, j: int, z_value: float) -> float:
+def annual_gross_income_at_state(P: SimpleNamespace, i: int, j: int, z_value: float, m: int = 0) -> float:
     """Annual gross-normalized income in the same units as PSID wealth ratios."""
     period_years = float(getattr(P, "period_years", getattr(P, "da", 1.0)))
     tau = float(getattr(P, "tau_pay", 0.0))
-    period_income = income_at_state(P, i, j, z_value)
+    period_income = penalized_income_at_state(P, i, j, z_value, int(m))
     annual_aftertax = period_income / max(period_years, 1e-12)
     if j < int(getattr(P, "J_R", P.J)):
         return annual_aftertax / max(1.0 - tau, 1e-12)
@@ -1522,7 +1561,8 @@ def solve_markov_income_at_prices(
     t_bellman = time.perf_counter() - t0
     t0 = time.perf_counter()
     g, stats = forward_distribution_markov_income(
-        bp_pol, hR_pol, tc, lp_j, fp, V, r, p, P, b_grid, SD, fast_stats=fast_stats, tenure_probs=tp
+        bp_pol, hR_pol, tc, lp_j, fp, V, r, p, P, b_grid, SD, fast_stats=fast_stats, tenure_probs=tp,
+        bp_pol_stay=getattr(P, "_bp_pol_stay", None),
     )
     t_dist = time.perf_counter() - t0
     if fast_stats:
@@ -1545,6 +1585,7 @@ def solve_markov_income_at_prices(
     if fast_stats and retain_payload:
         sol._model_payload = (V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, r, p, P._fert2_probs.copy())
         sol.joint_choice = getattr(P, "_joint_choice", None)
+        sol._bp_pol_stay = getattr(P, "_bp_pol_stay", None)
     if verbose:
         print(
             f"  Markov income fixed-price solve: own={100 * sol.own_rate:.1f}% "
@@ -1565,10 +1606,11 @@ def upgrade_fast_markov_solution(
     # an input; its other P._* fertility fields are KFE outputs.
     P._fert2_probs = fert2_probs
     P._joint_choice = getattr(fast_solution, "joint_choice", None)
+    P._bp_pol_stay = getattr(fast_solution, "_bp_pol_stay", None)
     start = time.perf_counter()
     g, stats = forward_distribution_markov_income(
         bp_pol, hR_pol, tc, lp_j, fp, V, r, p, P, b_grid, SD,
-        fast_stats=False, tenure_probs=tp,
+        fast_stats=False, tenure_probs=tp, bp_pol_stay=P._bp_pol_stay,
     )
     solution = pack_solution_markov_income(
         V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, g, stats, P.w_hat, p, P,
@@ -2461,6 +2503,7 @@ def _savings_stage(
     s_next: float,
     D_next: float,
     renter_floor: np.ndarray,
+    stay_floor: bool = False,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """Housing/saving stage for a given continuation array.
 
@@ -2468,6 +2511,9 @@ def _savings_stage(
     continuation (standard ``Vc`` or newborn-exempt ``Vc_ex``) and returns
     ``(Vd, cd, hd, bd)``.  Policies are re-optimized, so calling this with
     ``Vc_ex`` yields the exact exempt values, not an envelope shift.
+    With ``stay_floor``, owner cells use the stayer mortgage floors (no
+    cash-out, plus amortization) instead of the origination collateral
+    floor; renter cells match the standard solve bit for bit.
     """
     Nb = len(b_grid)
     I = P.I
@@ -2482,6 +2528,10 @@ def _savings_stage(
     b = ctx.b
     interp_method = str(getattr(P, "interp_method", "linear")).lower()
     use_value_kernel = NUMBA_AVAILABLE and interp_method == "linear"
+    stay_orig_on = bool(getattr(P, "mortgage_origination_only", False))
+    amort_rate = float(getattr(P, "mortgage_amortization", 0.0)) if stay_floor else 0.0
+    stay_flag = int(bool(stay_floor))
+    stay_orig_flag = int(bool(stay_floor) and stay_orig_on)
     Vd = np.zeros((Nb, ctx.hcost.shape[1], I, npar, ncs))
     cd = np.zeros_like(Vd)
     hd = np.zeros_like(Vd)
@@ -2494,10 +2544,31 @@ def _savings_stage(
         ri = r_hat[i]
         Rv = Rg * b + yj
         Rv_test = Rg * np.maximum(b, 0.0) + yj
+        # Children-at-home earnings adjustment per family cell: working-age
+        # earnings fall by the cell's penalty while fiscal transfers do not.
+        # All zeros when the switch is off, so resources match bit for bit.
+        pen_on = child_earnings_penalty_active(P)
+        if pen_on and int(j) < int(getattr(P, "J_R", P.J)):
+            base_earn = float(P.income[i, j]) * float(z_value)
+            yadj_v = np.empty(nc)
+            for _c in range(nc):
+                _nn, _cs = decode_flat_family_state(_c, npar)
+                _m = children_at_home_count(_nn, _cs, P)
+                yadj_v[_c] = base_earn * (child_earnings_multiplier(P, int(j), _m) - 1.0)
+            pen_flag = 1
+        else:
+            yadj_v = np.zeros(nc)
+            pen_flag = 0
         hRmax = P.hR_max
         Vcr = flat_nc(Vc_arr[:, 0, i, :, :], Nb, nc)
         Rv1d_full = np.ascontiguousarray(Rv[:, 0])
         Rvt1d_full = np.ascontiguousarray(Rv_test[:, 0])
+        wedge_on = rental_wedge_active(P)
+        wedge_w0 = float(getattr(P, "rental_wedge_intercept", 0.0))
+        wedge_w1 = float(getattr(P, "rental_wedge_slope", 0.0))
+        wedge_hk = float(getattr(P, "rental_wedge_knee", 6.0))
+        if wedge_on and ctx.exhaustive_saving:
+            raise NotImplementedError("Rental wedge requires the golden-section renter block")
         if ctx.use_full_kernel:
             bp_prev_r = np.zeros((Nb, nc))
             has_prev_r = 0
@@ -2507,11 +2578,23 @@ def _savings_stage(
                 ri, hRmax, P.c_min, P.c_bar_0, P.h_bar_0,
                 alpha, oms, beta, s_next, D_next, ctx.gs_alpha1, ctx.gs_alpha2, ctx.gs_tol,
                 int(ctx.exhaustive_saving),
+                np.ascontiguousarray(yadj_v), pen_flag,
+                int(wedge_on), wedge_w0, wedge_w1, wedge_hk,
             )
         else:
             Kr = (alpha**alpha * ((1 - alpha) / ri) ** (1 - alpha)) ** oms
             d_nc = SD.cb_flat + ri * SD.hb_flat
-            Rv_eff_nc = Rv + np.clip(SD.gb_flat - Rv_test, 0.0, SD.gb_flat)
+            if wedge_on:
+                wedge_w0 = float(getattr(P, "rental_wedge_intercept", 0.0))
+                wedge_w1 = float(getattr(P, "rental_wedge_slope", 0.0))
+                wedge_hk = float(getattr(P, "rental_wedge_knee", 6.0))
+            if pen_flag:
+                Rv_nc = Rv + yadj_v.reshape(1, -1)
+                Rv_test_nc = Rv_test + yadj_v.reshape(1, -1)
+            else:
+                Rv_nc = Rv
+                Rv_test_nc = Rv_test
+            Rv_eff_nc = Rv_nc + np.clip(SD.gb_flat - Rv_test_nc, 0.0, SD.gb_flat)
             cap_nc = ri * (hRmax - SD.hb_flat) / (1 - alpha)
             for c in range(nc):
                 Vbar = Vcr[:, c]
@@ -2522,28 +2605,51 @@ def _savings_stage(
                 hb_c = SD.hb_flat[0, c]
                 ht_cap_c = max(hRmax - hb_c, 1e-10)
                 lo = renter_floor.copy()
-                hi = np.maximum(Rv_eff_nc[:, c] - dc - 1e-6, lo)
-                bp, val = golden_renter(
-                    lo, hi, Rv_eff_nc[:, c], Vbar, b_grid, dc, pc, cc, cb_c, hb_c,
-                    ri, hRmax, ht_cap_c, Kr, alpha, oms, beta,
-                    ctx.gs_alpha1, ctx.gs_alpha2, ctx.gs_tol, interp_method, 1.0,
-                )
+                if wedge_on:
+                    wedge_cc = cb_c + hb_c * (ri + wedge_w0) + wedge_w1 * hb_c * max(hb_c - wedge_hk, 0.0)
+                    hi = np.maximum(Rv_eff_nc[:, c] - wedge_cc - 1e-6, lo)
+                    bp, val = golden_renter_wedge(
+                        lo, hi, Rv_eff_nc[:, c], Vbar, b_grid, cb_c, hb_c, pc,
+                        ri, hRmax, wedge_w0, wedge_w1, wedge_hk, alpha, oms, beta,
+                        ctx.gs_alpha1, ctx.gs_alpha2, ctx.gs_tol, interp_method, 1.0,
+                    )
+                else:
+                    hi = np.maximum(Rv_eff_nc[:, c] - dc - 1e-6, lo)
+                    bp, val = golden_renter(
+                        lo, hi, Rv_eff_nc[:, c], Vbar, b_grid, dc, pc, cc, cb_c, hb_c,
+                        ri, hRmax, ht_cap_c, Kr, alpha, oms, beta,
+                        ctx.gs_alpha1, ctx.gs_alpha2, ctx.gs_tol, interp_method, 1.0,
+                    )
                 bp_nc[:, c] = bp
                 Vo_nc[:, c] = val
-            surplus_nc = Rv_eff_nc - d_nc - bp_nc
-            ct_nc = alpha * np.maximum(surplus_nc, 1e-10)
-            ht_nc = (1 - alpha) / ri * np.maximum(surplus_nc, 1e-10)
-            cm = (SD.hb_flat + ht_nc) > hRmax
-            if np.any(cm):
-                ct_cap = np.maximum(Rv_eff_nc - SD.cb_flat - ri * hRmax - bp_nc, 1e-10)
-                hcap = np.tile(np.maximum(hRmax - SD.hb_flat, 1e-10), (Nb, 1))
-                ct_nc[cm] = ct_cap[cm]
-                ht_nc[cm] = hcap[cm]
-            co_nc = SD.cb_flat + np.maximum(ct_nc, P.c_min)
-            ho_nc = SD.hb_flat + np.maximum(ht_nc, 0.01)
-            bad = surplus_nc <= 1e-10
-            co_nc[bad] = P.c_bar_0 + P.c_min
-            ho_nc[bad] = P.h_bar_0 + 0.01
+            if wedge_on:
+                _, ct_nc, ht_nc = renter_wedge_flow_py(
+                    Rv_eff_nc - bp_nc, SD.cb_flat, SD.hb_flat, ri,
+                    wedge_w0, wedge_w1, wedge_hk, hRmax, alpha, oms, 1.0,
+                )
+                bad = (Rv_eff_nc - bp_nc - SD.cb_flat - (
+                    SD.hb_flat * (ri + wedge_w0)
+                    + wedge_w1 * SD.hb_flat * np.maximum(SD.hb_flat - wedge_hk, 0.0)
+                )) <= 1e-10
+                co_nc = SD.cb_flat + np.maximum(ct_nc, P.c_min)
+                ho_nc = SD.hb_flat + np.maximum(ht_nc, 0.01)
+                co_nc[bad] = P.c_bar_0 + P.c_min
+                ho_nc[bad] = P.h_bar_0 + 0.01
+            else:
+                surplus_nc = Rv_eff_nc - d_nc - bp_nc
+                ct_nc = alpha * np.maximum(surplus_nc, 1e-10)
+                ht_nc = (1 - alpha) / ri * np.maximum(surplus_nc, 1e-10)
+                cm = (SD.hb_flat + ht_nc) > hRmax
+                if np.any(cm):
+                    ct_cap = np.maximum(Rv_eff_nc - SD.cb_flat - ri * hRmax - bp_nc, 1e-10)
+                    hcap = np.tile(np.maximum(hRmax - SD.hb_flat, 1e-10), (Nb, 1))
+                    ct_nc[cm] = ct_cap[cm]
+                    ht_nc[cm] = hcap[cm]
+                co_nc = SD.cb_flat + np.maximum(ct_nc, P.c_min)
+                ho_nc = SD.hb_flat + np.maximum(ht_nc, 0.01)
+                bad = surplus_nc <= 1e-10
+                co_nc[bad] = P.c_bar_0 + P.c_min
+                ho_nc[bad] = P.h_bar_0 + 0.01
         Vd[:, 0, i, :, :] = unflat_nc(Vo_nc, Nb, npar, ncs)
         bd[:, 0, i, :, :] = unflat_nc(bp_nc, Nb, npar, ncs)
         cd[:, 0, i, :, :] = unflat_nc(co_nc, Nb, npar, ncs)
@@ -2566,6 +2672,8 @@ def _savings_stage(
                     oc, hsv, ctx.owner_h_bar_scale, ctx.owner_service_premium, P.c_min,
                     alpha, oms, beta, s_next, D_next, ctx.gs_alpha1, ctx.gs_alpha2, ctx.gs_tol,
                     ctx.strict_owner_hbar_feasibility, int(ctx.exhaustive_saving),
+                    np.ascontiguousarray(yadj_v), pen_flag,
+                    stay_flag, stay_orig_flag, amort_rate,
                 )
             else:
                 for c in range(nc):
@@ -2575,7 +2683,13 @@ def _savings_stage(
                     owner_residual_h = hsv - ctx.owner_h_bar_scale * SD.hb_flat[0, c]
                     nn_c, cs_c = decode_flat_family_state(c, npar)
                     bf_c = ctx.bmo[i, ten, nn_c, cs_c]
-                    lo = np.maximum(owner_borrowing_floor(P, b_grid, bf_c, j), b_grid[0])
+                    lo = np.maximum(
+                        owner_borrowing_floor(
+                            P, b_grid, bf_c, j,
+                            stay_on=stay_floor, stay_orig=stay_orig_on, amort=amort_rate,
+                        ),
+                        b_grid[0],
+                    )
                     hi = np.maximum(Rv_eff_nc[:, c] - oc - cb_c - 1e-6, lo)
                     if ctx.strict_owner_hbar_feasibility and owner_residual_h <= 0.0:
                         bp = lo.copy()
@@ -2592,7 +2706,13 @@ def _savings_stage(
                     Vo_nc[:, c] = val
                 co_nc = SD.cb_flat + np.maximum(Rv_eff_nc - oc - SD.cb_flat - bp_nc, P.c_min)
             if ctx.exhaustive_saving:
-                resources = Rv + np.clip(SD.gb_flat - Rv_test, 0.0, SD.gb_flat)
+                if pen_flag:
+                    res_base = Rv + yadj_v.reshape(1, -1)
+                    res_test = Rv_test + yadj_v.reshape(1, -1)
+                else:
+                    res_base = Rv
+                    res_test = Rv_test
+                resources = res_base + np.clip(SD.gb_flat - res_test, 0.0, SD.gb_flat)
                 co_nc = joint_nested.owner_consumption_from_solution(
                     resources, oc, bp_nc, SD.cb_flat, Vo_nc, co_nc)
             Vd[:, ten, i, :, :] = unflat_nc(Vo_nc, Nb, npar, ncs)
@@ -2608,12 +2728,15 @@ def _tenure_location_stage(
     SD: SimpleNamespace,
     ctx: SimpleNamespace,
     dp_choice: np.ndarray,
+    Vd_stay: np.ndarray | None = None,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray | None, np.ndarray, np.ndarray]:
     """Tenure choice + location logit for savings values ``Vd``.
 
     Returns ``(VH, tcj, prj_or_None, VI, lpj)`` where ``prj_or_None`` is the
     tenure-probability block when the tenure logit is active and ``None``
     otherwise (the caller then leaves ``tenure_probs`` untouched, as before).
+    ``Vd_stay`` supplies the stayer (to == tn) values; ``None`` reads the
+    standard ``Vd`` there, exactly as before.
     """
     Nb = len(b_grid)
     I = P.I
@@ -2623,15 +2746,17 @@ def _tenure_location_stage(
     birth_entry_grant = SD.birth_entry_grant
     tenure_choice_kappa = max(float(getattr(P, "tenure_choice_kappa", 0.0)), 0.0)
     use_tenure_logit = tenure_choice_kappa > 0.0
+    if Vd_stay is None:
+        Vd_stay = Vd
 
     if use_tenure_logit and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
         VH, tcj, prj = tenure_logit_kernel(
-            Vd, b_grid, ctx.heq, ctx.hcost, dp_choice, ctx.bmo, SD.birth_dp, birth_entry_grant, tenure_choice_kappa
+            Vd, b_grid, ctx.heq, ctx.hcost, dp_choice, ctx.bmo, SD.birth_dp, birth_entry_grant, tenure_choice_kappa, Vd_stay
         )
         prj_full: np.ndarray | None = prj
     elif (not use_tenure_logit) and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
         VH, tcj = tenure_choice_kernel(
-            Vd, b_grid, ctx.heq, ctx.hcost, dp_choice, ctx.bmo, SD.birth_dp, birth_entry_grant
+            Vd, b_grid, ctx.heq, ctx.hcost, dp_choice, ctx.bmo, SD.birth_dp, birth_entry_grant, Vd_stay
         )
         prj_full = None
     else:
@@ -2649,7 +2774,7 @@ def _tenure_location_stage(
                     Vopt[:, :, :, 0] = interp_on_grid(b_grid, Vd[:, 0, id_, :, :], ba)
                 for tn in range(1, nt):
                     hc = ctx.hcost[id_, tn]
-                    Vow = Vd[:, tn, id_, :, :]
+                    Vow = Vd_stay[:, tn, id_, :, :] if to == tn else Vd[:, tn, id_, :, :]
                     if to == tn:
                         Vopt[:, :, :, tn] = Vow
                     elif to == 0:
@@ -2821,6 +2946,11 @@ def solve_bellman_full_markov_income(
 
     ctx = _build_housing_stage_ctx(P, b_grid, SD, p_hat, use_full_kernel, exhaustive_saving)
 
+    stay_active = mortgage_stay_floor_active(P)
+    if stay_active and joint_active:
+        raise NotImplementedError("stayer mortgage floors: sequential Bellman path only")
+    bp_pol_stay: np.ndarray | None = np.ones_like(bp_pol) if stay_active else None
+
     Vbq = np.zeros((Nb, nt, I, npar, ncs))
     for i in range(I):
         for ten in range(nt):
@@ -2867,6 +2997,15 @@ def solve_bellman_full_markov_income(
                 Vc, P, b_grid, SD, ctx, r_hat, j, float(z_value),
                 s_next, D_next, renter_floor,
             )
+            if stay_active:
+                assert bp_pol_stay is not None
+                Vd_s, _, _, bd_s = _savings_stage(
+                    Vc, P, b_grid, SD, ctx, r_hat, j, float(z_value),
+                    s_next, D_next, renter_floor, stay_floor=True,
+                )
+                bp_pol_stay[:, :, :, j, zz, :, :] = bd_s
+            else:
+                Vd_s = Vd
 
             c_pol[:, :, :, j, zz, :, :] = cd
             hR_pol[:, :, :, j, zz, :, :] = hd
@@ -2906,7 +3045,7 @@ def solve_bellman_full_markov_income(
                 continue
 
             VH, tcj, prj_full, VI, lpj = _tenure_location_stage(
-                Vd, P, b_grid, SD, ctx, dp_choice,
+                Vd, P, b_grid, SD, ctx, dp_choice, Vd_s,
             )
             if prj_full is not None:
                 tenure_probs[:, :, :, j, zz, :, :, :] = prj_full
@@ -2927,8 +3066,15 @@ def solve_bellman_full_markov_income(
                     Vc_ex, P, b_grid, SD, ctx, r_hat, j, float(z_value),
                     s_next, D_next, renter_floor,
                 )
+                if stay_active:
+                    Vd_ex_s, _, _, _ = _savings_stage(
+                        Vc_ex, P, b_grid, SD, ctx, r_hat, j, float(z_value),
+                        s_next, D_next, renter_floor, stay_floor=True,
+                    )
+                else:
+                    Vd_ex_s = Vd_ex
                 _, _, _, VI_ex, _ = _tenure_location_stage(
-                    Vd_ex, P, b_grid, SD, ctx, dp_choice,
+                    Vd_ex, P, b_grid, SD, ctx, dp_choice, Vd_ex_s,
                 )
 
             if in_fert:
@@ -3019,6 +3165,7 @@ def solve_bellman_full_markov_income(
 
     P._fert2_probs = fert2_probs
     P._joint_choice = joint
+    P._bp_pol_stay = bp_pol_stay
     return (
         V,
         c_pol,
@@ -3048,6 +3195,12 @@ def solve_bellman_core(
         raise NotImplementedError("eqscale preferences: markov-income path only")
     if float(getattr(P, "transfer_floor_G0", 0.0)) != 0.0 or float(getattr(P, "transfer_floor_Gn", 0.0)) != 0.0:
         raise NotImplementedError("transfer floor: markov-income Bellman path only")
+    if child_earnings_penalty_active(P):
+        raise NotImplementedError("children-at-home earnings penalty: markov-income Bellman path only")
+    if mortgage_stay_floor_active(P):
+        raise NotImplementedError("stayer mortgage floors: full markov-income Bellman path only")
+    if rental_wedge_active(P):
+        raise NotImplementedError("rental wedge: factored markov-income Bellman path only")
     # Backward induction over age `j`. At each `j` we solve (per i, ten):
     # savings choice via golden-section (full mode) or plug-in at
     # stored_bp (eval mode); then tenure choice; then location logit;
@@ -3444,12 +3597,12 @@ def solve_bellman_core(
 
         if use_tenure_logit and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
             VH, tcj, prj = tenure_logit_kernel(
-                Vd, b_grid, heq, hcost, dp_choice, bmo, SD.birth_dp, birth_entry_grant, tenure_choice_kappa
+                Vd, b_grid, heq, hcost, dp_choice, bmo, SD.birth_dp, birth_entry_grant, tenure_choice_kappa, Vd
             )
             tenure_probs[:, :, :, j, :, :, :] = prj
         elif (not use_tenure_logit) and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
             VH, tcj = tenure_choice_kernel(
-                Vd, b_grid, heq, hcost, dp_choice, bmo, SD.birth_dp, birth_entry_grant
+                Vd, b_grid, heq, hcost, dp_choice, bmo, SD.birth_dp, birth_entry_grant, Vd
             )
         else:
             VH = np.zeros((Nb, nt, I, npar, ncs))
@@ -3567,6 +3720,126 @@ def solve_bellman_core(
         fert_value,
         {"bellman": time.perf_counter() - t0},
     )
+
+
+def renter_wedge_flow_py(S_raw, cbc, hbc, ri, w0, w1, hk, hRmax, alpha, oms, es=1.0):
+    """Numpy mirror of kernels.renter_wedge_flow (see its docstring for the
+    economics). All inputs broadcastable arrays or scalars; returns
+    ``(u_flow, ct, ht)`` with infeasible cells marked by u_flow = -1e10 and
+    (ct, ht) = 0. Cross-tested against the numba version."""
+    S_raw = np.asarray(S_raw, dtype=float)
+    cbc = np.asarray(cbc, dtype=float)
+    hbc = np.asarray(hbc, dtype=float)
+    ri1 = float(ri) + float(w0)
+    w1 = float(w1)
+    hk = float(hk)
+    S_raw, cbc, hbc = np.broadcast_arrays(S_raw, cbc, hbc)
+    Cc = hbc * ri1 + w1 * hbc * np.maximum(hbc - hk, 0.0)
+    S = S_raw - cbc - Cc
+    feasible = S > 1e-10
+    u = np.full_like(S, -1e10)
+    ct = np.zeros_like(S)
+    ht = np.zeros_like(S)
+    if not np.any(feasible):
+        return u, ct, ht
+    Sf = S[feasible]
+    hbc_f = hbc[feasible]
+    cbc_f = cbc[feasible]
+    S_raw_f = S_raw[feasible]
+    Kr1 = (alpha**alpha * ((1.0 - alpha) / ri1) ** (1.0 - alpha)) ** oms
+    ht_a = (1.0 - alpha) * Sf / ri1
+    h_a = hbc_f + ht_a
+    ua = Kr1 * np.maximum(Sf, 1e-10) ** oms / oms
+    if es != 1.0:
+        ua = es * ua
+    valid_a = h_a <= hk
+    u_f = np.where(valid_a, ua, -1e10)
+    ct_f = np.where(valid_a, alpha * Sf, 0.0)
+    ht_f = np.where(valid_a, ht_a, 0.0)
+    # Kink bunching candidate.
+    ht_k = hk - hbc_f
+    valid_k = (hbc_f < hk) & (hk <= float(hRmax)) & (Sf >= ri1 * ht_k)
+    ct_k = np.maximum(Sf - ri1 * ht_k, 1e-10)
+    u_k = (ct_k**alpha * np.maximum(ht_k, 1e-10) ** (1.0 - alpha)) ** oms / oms
+    if es != 1.0:
+        u_k = es * u_k
+    take_k = valid_k & (u_k > u_f)
+    u_f = np.where(take_k, u_k, u_f)
+    ct_f = np.where(take_k, ct_k, ct_f)
+    ht_f = np.where(take_k, ht_k, ht_f)
+    # Above-knee quadratic candidate.
+    S_eff = Sf + np.where(hbc_f < hk, w1 * hbc_f * (hk - hbc_f), 0.0)
+    A2 = ri1 + w1 * (2.0 * hbc_f - hk)
+    quad_b = w1 * (1.0 + alpha)
+    if quad_b > 0.0:
+        disc = A2 * A2 + 4.0 * quad_b * (1.0 - alpha) * S_eff
+        ht_b = (-A2 + np.sqrt(np.maximum(disc, 0.0))) / (2.0 * quad_b)
+    else:
+        ht_b = (1.0 - alpha) * S_eff / A2
+    h_b = hbc_f + ht_b
+    valid_b = h_b > hk
+    ct_b = np.maximum(S_eff - A2 * ht_b - w1 * ht_b**2, 1e-10)
+    u_b = (ct_b**alpha * np.maximum(ht_b, 1e-10) ** (1.0 - alpha)) ** oms / oms
+    if es != 1.0:
+        u_b = es * u_b
+    take_b = valid_b & (u_b > u_f)
+    u_f = np.where(take_b, u_b, u_f)
+    ct_f = np.where(take_b, ct_b, ct_f)
+    ht_f = np.where(take_b, ht_b, ht_f)
+    # Cap constraint.
+    h_best = hbc_f + ht_f
+    over_cap = h_best > float(hRmax)
+    if np.any(over_cap):
+        Ccap = float(hRmax) * ri1 + w1 * float(hRmax) * max(float(hRmax) - hk, 0.0)
+        ct_cap = np.maximum(S_raw_f - cbc_f - Ccap, 1e-10)
+        ht_use = np.maximum(float(hRmax) - hbc_f, 1e-10)
+        u_cap = (ct_cap**alpha * ht_use ** (1.0 - alpha)) ** oms / oms
+        if es != 1.0:
+            u_cap = es * u_cap
+        u_f = np.where(over_cap, u_cap, u_f)
+        ct_f = np.where(over_cap, ct_cap, ct_f)
+        ht_f = np.where(over_cap, ht_use, ht_f)
+    u[feasible] = u_f
+    ct[feasible] = ct_f
+    ht[feasible] = ht_f
+    return u, ct, ht
+
+
+def eval_renter_wedge(bp, Rv, Vbar, b_grid, cb_c, hb_c, pc, ri, hRmax, w0, w1, hk,
+                      alpha, oms, beta, vinterp=None, es=1.0):
+    """Renter objective at savings bp under the rental wedge (Python path)."""
+    if vinterp is None:
+        vinterp = make_value_interp(b_grid, Vbar, "linear")
+    u_flow, _, _ = renter_wedge_flow_py(Rv - bp, cb_c, hb_c, ri, w0, w1, hk, hRmax, alpha, oms, es)
+    f = u_flow + pc + beta * vinterp(bp)
+    bad = u_flow <= -1e9
+    if np.any(bad):
+        f = np.where(bad, -1e10, f)
+    return f
+
+
+def golden_renter_wedge(lo, hi, Rv, Vbar, b_grid, cb_c, hb_c, pc, ri, hRmax, w0, w1, hk,
+                        alpha, oms, beta, a1, a2, tol, method="linear", es=1.0):
+    """Golden-section renter savings search under the rental wedge."""
+    vinterp = make_value_interp(b_grid, Vbar, method)
+    d = hi - lo
+    x1 = lo + a1 * d
+    x2 = lo + a2 * d
+    f1 = eval_renter_wedge(x1, Rv, Vbar, b_grid, cb_c, hb_c, pc, ri, hRmax, w0, w1, hk, alpha, oms, beta, vinterp, es)
+    f2 = eval_renter_wedge(x2, Rv, Vbar, b_grid, cb_c, hb_c, pc, ri, hRmax, w0, w1, hk, alpha, oms, beta, vinterp, es)
+    d = a1 * a2 * d
+    while np.any(d > tol):
+        bt = f2 >= f1
+        xe = np.clip(np.where(bt, x2 + d, x1 - d), lo, hi)
+        fe = eval_renter_wedge(xe, Rv, Vbar, b_grid, cb_c, hb_c, pc, ri, hRmax, w0, w1, hk, alpha, oms, beta, vinterp, es)
+        x1n = np.where(bt, x2, xe)
+        f1n = np.where(bt, f2, fe)
+        x2n = np.where(bt, xe, x1)
+        f2n = np.where(bt, fe, f1)
+        d = d * a2
+        x1, x2, f1, f2 = x1n, x2n, f1n, f2n
+    bt = f2 >= f1
+    return np.where(bt, x2, x1), np.maximum(f1, f2)
 
 
 def golden_renter(lo, hi, Rv, Vbar, b_grid, dc, pc, cc, cb_c, hb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, a1, a2, tol, method="linear", es=1.0):
@@ -4055,7 +4328,9 @@ def _dead_mass_census_at_age(
     for b_idx, ten, i, zz, nn, cs in positive[:8]:
         b_now = float(b_grid[b_idx])
         z_value = float(z_grid[zz])
-        y_now = income_at_state(P, int(i), int(j), z_value)
+        y_now = penalized_income_at_state(
+            P, int(i), int(j), z_value, children_at_home_count(int(nn), int(cs), P)
+        )
         resources = float(P.R_gross) * b_now + y_now
         gG = float(SD.g_bar[nn, cs]) if hasattr(SD, "g_bar") else 0.0
         x_test = float(P.R_gross) * max(b_now, 0.0) + y_now
@@ -4661,6 +4936,7 @@ def forward_distribution_markov_income(
     SD: SimpleNamespace,
     fast_stats: bool = False,
     tenure_probs: np.ndarray | None = None,
+    bp_pol_stay: np.ndarray | None = None,
 ) -> tuple[np.ndarray, SimpleNamespace]:
     fec = get_fecundity_by_age(P)
     J = P.J
@@ -5108,6 +5384,7 @@ def forward_distribution_markov_income(
                         gpl[:, 0, id_, zz, :, :] += unflat_nc(moved, Nb, npar, ncs)
 
         gpt = np.zeros((Nb, nt, I, Nz, npar, ncs))
+        gpt_stay = np.zeros((Nb, nt, I, Nz, npar, ncs)) if bp_pol_stay is not None else None
         for zz in range(Nz):
             for nn in range(npar):
                 for id_ in range(I):
@@ -5146,7 +5423,10 @@ def forward_distribution_markov_income(
                                     rd[:, cs] = scatter_vec_kernel(idx, wt, mt[:, cs], Nb)
                                 else:
                                     rd[:, cs] = scatter_redistribute(idx, wt, mt[:, cs], Nb)
-                            gpt[:, tn, id_, zz, nn, :] += rd
+                            if bp_pol_stay is not None and to == tn:
+                                gpt_stay[:, tn, id_, zz, nn, :] += rd
+                            else:
+                                gpt[:, tn, id_, zz, nn, :] += rd
 
         gps = np.zeros((Nb, nt, I, Nz, npar, ncs))
         for zz in range(Nz):
@@ -5161,6 +5441,16 @@ def forward_distribution_markov_income(
                     else:
                         g_new = scatter_redistribute_cols(idx, wt, gf, Nb)
                     gps[:, ten, i, zz, :, :] = unflat_nc(g_new, Nb, npar, ncs)
+                    if gpt_stay is not None:
+                        assert bp_pol_stay is not None
+                        gf_s = flat_nc(gpt_stay[:, ten, i, zz, :, :], Nb, nc)
+                        bpv_s = flat_nc(bp_pol_stay[:, ten, i, j, zz, :, :], Nb, nc)
+                        idx_s, wt_s = interp_indices(b_grid, np.clip(bpv_s, bmin, bmax))
+                        if use_compiled_scatter:
+                            g_new_s = scatter_cols_kernel(idx_s, wt_s, gf_s, Nb)
+                        else:
+                            g_new_s = scatter_redistribute_cols(idx_s, wt_s, gf_s, Nb)
+                        gps[:, ten, i, zz, :, :] += unflat_nc(g_new_s, Nb, npar, ncs)
 
         for zz in range(Nz):
             for nn in range(npar):
@@ -5478,6 +5768,7 @@ def advance_cohort_horizon_markov_income(
     ust,
     Pia,
     Pi_z,
+    bp_pol_stay=None,
 ):
     g_out = g_in
     for step in range(1, horizon + 1):
@@ -5501,6 +5792,7 @@ def advance_cohort_horizon_markov_income(
             ust,
             Pia,
             Pi_z,
+            bp_pol_stay=bp_pol_stay,
         )
     return g_out
 
@@ -5525,6 +5817,7 @@ def advance_cohort_one_period_markov_income(
     *,
     mass_pruning_tolerance: float = 1e-15,
     newborn_frac=None,
+    bp_pol_stay=None,
 ):
     """Advance one cohort one period (Markov income).
 
@@ -5532,6 +5825,10 @@ def advance_cohort_one_period_markov_income(
     post-birth newborn shares per cell for the parent-age m-d exemption
     (blended standard/exempt rows; ``None`` reproduces the constant path
     bit for bit).
+    ``bp_pol_stay`` is an optional stayer savings policy with the same shape
+    as ``bp_pol``; when given, mass that stays in its tenure (to == tn) is
+    scattered with the stayer policy and all other mass with ``bp_pol``.
+    ``None`` reproduces the legacy single-policy scatter bit for bit.
     """
     Nb = len(b_grid)
     nt = 1 + P.n_house
@@ -5568,6 +5865,7 @@ def advance_cohort_one_period_markov_income(
                     gpl[:, 0, id_, zz, :, :] += unflat_nc(moved, Nb, npar, ncs)
 
     gpt = np.zeros((Nb, nt, I, Nz, npar, ncs))
+    gpt_stay = np.zeros((Nb, nt, I, Nz, npar, ncs)) if bp_pol_stay is not None else None
     for zz in range(Nz):
         for nn in range(npar):
             for id_ in range(I):
@@ -5607,7 +5905,10 @@ def advance_cohort_one_period_markov_income(
                                 rd[:, cs] = scatter_vec_kernel(idx, wt, mt[:, cs], Nb)
                             else:
                                 rd[:, cs] = scatter_redistribute(idx, wt, mt[:, cs], Nb)
-                        gpt[:, tn, id_, zz, nn, :] += rd
+                        if gpt_stay is not None and to == tn:
+                            gpt_stay[:, tn, id_, zz, nn, :] += rd
+                        else:
+                            gpt[:, tn, id_, zz, nn, :] += rd
 
     gps = np.zeros((Nb, nt, I, Nz, npar, ncs))
     for zz in range(Nz):
@@ -5621,6 +5922,15 @@ def advance_cohort_one_period_markov_income(
                 else:
                     g_new = scatter_redistribute_cols(idx, wt, gf, Nb, mass_pruning_tolerance=mass_pruning_tolerance)
                 gps[:, ten, i, zz, :, :] = unflat_nc(g_new, Nb, npar, ncs)
+                if gpt_stay is not None:
+                    gf_stay = flat_nc(gpt_stay[:, ten, i, zz, :, :], Nb, nc)
+                    bpv_stay = flat_nc(bp_pol_stay[:, ten, i, j, zz, :, :], Nb, nc)
+                    idx_s, wt_s = interp_indices(b_grid, np.clip(bpv_stay, b_grid[0], b_grid[-1]))
+                    if use_compiled_scatter:
+                        g_new_stay = scatter_cols_kernel(idx_s, wt_s, gf_stay, Nb)
+                    else:
+                        g_new_stay = scatter_redistribute_cols(idx_s, wt_s, gf_stay, Nb, mass_pruning_tolerance=mass_pruning_tolerance)
+                    gps[:, ten, i, zz, :, :] += unflat_nc(g_new_stay, Nb, npar, ncs)
 
     g_next = np.zeros_like(gj)
     for zz in range(Nz):
@@ -5825,12 +6135,14 @@ def add_annual_gross_liquid_wealth_moments(stats: SimpleNamespace, g: np.ndarray
             for i in range(P.I):
                 for zz in range(g7.shape[4]):
                     z_value = float(z_values[zz]) if zz < len(z_values) else 1.0
-                    y = annual_gross_income_at_state(P, i, j, z_value)
-                    if y <= 0:
-                        continue
                     for nn in range(P.n_parity):
                         for cs in range(P.n_child_states):
                             if childless_only and current_child_bin_dt(nn, cs, dep_last, hcut, getattr(P, "child_state_mode", "shared_clock")) != 2:
+                                continue
+                            y = annual_gross_income_at_state(
+                                P, i, j, z_value, children_at_home_count(nn, cs, P)
+                            )
+                            if y <= 0:
                                 continue
                             tenures = [0] if renter_only else range(g7.shape[1])
                             for ten in tenures:
@@ -5898,9 +6210,20 @@ def add_aggregate_wealth_gross_labor_diagnostics(
                 z_value = float(z_values[zz]) if zz < z_values.size else 1.0
                 state_mass = float(np.sum(g7[:, :, i, j, zz, :, :]))
                 if j < int(P.J_R):
-                    gross_labor_earnings_by_age[j] += (
-                        annual_gross_income_at_state(P, i, j, z_value) * state_mass
-                    )
+                    if child_earnings_penalty_active(P):
+                        for nn in range(int(P.n_parity)):
+                            for cs in range(int(P.n_child_states)):
+                                cell_mass = float(np.sum(g7[:, :, i, j, zz, nn, cs]))
+                                gross_labor_earnings_by_age[j] += (
+                                    annual_gross_income_at_state(
+                                        P, i, j, z_value, children_at_home_count(nn, cs, P)
+                                    )
+                                    * cell_mass
+                                )
+                    else:
+                        gross_labor_earnings_by_age[j] += (
+                            annual_gross_income_at_state(P, i, j, z_value) * state_mass
+                        )
                 for ten in range(g7.shape[1]):
                     housing_value = (
                         float(ph_arr[i]) * float(P.H_own[ten - 1])
@@ -6310,8 +6633,19 @@ def compute_markov_statistics(
                 yj = income_at_state(P, i, j, float(z_value))
                 mass = float(np.sum(g[:, :, i, j, zz, :, :]))
                 if j < P.J_R:
-                    worker_income += yj * mass
-                    worker_mass += mass
+                    if child_earnings_penalty_active(P):
+                        for nn in range(int(P.n_parity)):
+                            for cs in range(int(P.n_child_states)):
+                                cell = float(np.sum(g[:, :, i, j, zz, nn, cs]))
+                                ycell = penalized_income_at_state(
+                                    P, i, j, float(z_value),
+                                    children_at_home_count(nn, cs, P),
+                                )
+                                worker_income += ycell * cell
+                                worker_mass += cell
+                    else:
+                        worker_income += yj * mass
+                        worker_mass += mass
                     payroll_tax_revenue += period_scale * P.tau_pay * P.w_hat[i] * P.income_age_profile[j] * float(z_value) * mass
                 if a25s <= j <= aye:
                     gm = np.sum(
@@ -6322,7 +6656,7 @@ def compute_markov_statistics(
                     )
                     mh = float(np.sum(gm))
                     if mh > 1e-15:
-                        young_income += yj * mh
+                        young_income += penalized_income_at_state(P, i, j, float(z_value), 0) * mh
                         young_mass += mh
                         young_liquid += float(np.sum(gm * bg))
     stats.mean_income = worker_income / max(worker_mass, 1e-12)
@@ -6383,9 +6717,23 @@ def add_aggregate_wealth_bequest_flow_moments(
             for zz, z_value in enumerate(z_values):
                 state_mass = float(np.sum(wealth_arr[:, :, i, j, zz, :, :]))
                 if j < int(P.J_R):
-                    gross_earnings = float(P.income[i, j]) * float(z_value) * gross_up / max(period_years, 1e-12)
-                    aggregate_gross_labor_earnings += gross_earnings * state_mass
-                    gross_labor_earnings_by_age[j] += gross_earnings * state_mass
+                    if child_earnings_penalty_active(P):
+                        for nn in range(int(P.n_parity)):
+                            for cs in range(int(P.n_child_states)):
+                                cell_mass = float(np.sum(wealth_arr[:, :, i, j, zz, nn, cs]))
+                                cell_earn = (
+                                    penalized_income_at_state(
+                                        P, i, j, float(z_value),
+                                        children_at_home_count(nn, cs, P),
+                                    )
+                                    - float(getattr(P, "property_tax_lump_sum_transfer", 0.0))
+                                ) * gross_up / max(period_years, 1e-12)
+                                aggregate_gross_labor_earnings += cell_earn * cell_mass
+                                gross_labor_earnings_by_age[j] += cell_earn * cell_mass
+                    else:
+                        gross_earnings = float(P.income[i, j]) * float(z_value) * gross_up / max(period_years, 1e-12)
+                        aggregate_gross_labor_earnings += gross_earnings * state_mass
+                        gross_labor_earnings_by_age[j] += gross_earnings * state_mass
                 for ten in range(wealth_arr.shape[1]):
                     housing_value = float(ph_arr[i]) * float(P.H_own[ten - 1]) if ten > 0 else 0.0
                     mass_by_asset = np.sum(wealth_arr[:, ten, i, j, zz, :, :], axis=(1, 2))
@@ -6573,7 +6921,21 @@ def compute_statistics(
         else list(range(1, min(P.n_child_stages + 1, 3)))
     )
 
-    ti = sum(P.income[i, 0] * stats.worker_mass_by_loc[i] for i in range(I))
+    if child_earnings_penalty_active(P):
+        ti = 0.0
+        for i in range(I):
+            for nn in range(npar):
+                for cs in range(ncs):
+                    cell_mass = float(np.sum(g[:, :, i, : P.J_R, nn, cs]))
+                    ti += (
+                        float(P.income[i, 0])
+                        * child_earnings_multiplier(
+                            P, 0, children_at_home_count(nn, cs, P)
+                        )
+                        * cell_mass
+                    )
+    else:
+        ti = sum(P.income[i, 0] * stats.worker_mass_by_loc[i] for i in range(I))
     tmw = float(np.sum(stats.worker_mass_by_loc))
     mean_income = ti / max(tmw, 1e-12)
     tw = tm4 = 0.0
@@ -6649,7 +7011,10 @@ def compute_statistics(
             if mh < 1e-15:
                 continue
             ylw += float(np.sum(gs * bg))
-            yinc += P.income[i, jj] * mh
+            if child_earnings_penalty_active(P):
+                yinc += penalized_income_at_state(P, i, jj, 1.0, 0) * mh
+            else:
+                yinc += P.income[i, jj] * mh
             ycm += mh
     stats.young_liquid_wealth = ylw / max(ycm, 1e-12)
     stats.young_childless_renter_income = yinc / max(ycm, 1e-12)
@@ -7463,6 +7828,7 @@ def pack_solution_markov_income(
         fert_probs=fp,
         fert2_probs=getattr(P, "_fert2_probs", None),
         joint_choice=getattr(P, "_joint_choice", None),
+        bp_pol_stay=getattr(P, "_bp_pol_stay", None),
         fert_value=fv,
         g=g,
         g_collapsed=np.sum(g, axis=4),

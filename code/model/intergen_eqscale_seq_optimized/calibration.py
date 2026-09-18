@@ -10,7 +10,11 @@ from typing import Any
 
 import numpy as np
 
-from .solver import income_at_state, run_model_cp_dt
+from .parameters import (
+    child_earnings_penalty_active,
+    children_at_home_count,
+)
+from .solver import income_at_state, penalized_income_at_state, run_model_cp_dt
 from .target_system import TargetSystem
 
 
@@ -1526,9 +1530,18 @@ def housing_user_cost_share(sol: Any, P: Any | None) -> float:
     for i in range(P.I):
         for j in range(P.J):
             for zz, z_value in enumerate(z_grid):
-                yj = income_at_state(P, i, j, float(z_value))
-                mass_ijz = float(np.sum(g[:, :, i, j, zz, :, :]))
-                total_income += yj * mass_ijz
+                if child_earnings_penalty_active(P):
+                    for nn in range(int(P.n_parity)):
+                        for cs in range(int(P.n_child_states)):
+                            cell = float(np.sum(g[:, :, i, j, zz, nn, cs]))
+                            total_income += penalized_income_at_state(
+                                P, i, j, float(z_value),
+                                children_at_home_count(nn, cs, P),
+                            ) * cell
+                else:
+                    yj = income_at_state(P, i, j, float(z_value))
+                    mass_ijz = float(np.sum(g[:, :, i, j, zz, :, :]))
+                    total_income += yj * mass_ijz
                 total_housing += float(np.sum(g[:, 0, i, j, zz, :, :] * hR[:, 0, i, j, zz, :, :])) * user_cost[i]
                 for ten in range(1, 1 + int(P.n_house)):
                     mass = float(np.sum(g[:, ten, i, j, zz, :, :]))

@@ -52,7 +52,107 @@ def interp_scalar(bg, V, x):
 
 
 @njit(cache=True)
-def eval_renter_scalar(bp, Rv, Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es):
+def renter_wedge_flow(S_raw, cbc, hbc, ri, w0, w1, hk, hRmax, al, oms, es):
+    """Intratemporal renter allocation under the size-dependent rental wedge.
+
+    Total housing cost is C(h) = h*(ri + w0) + w1*h*max(0, h-hk); S_raw is
+    resources net of saving but before committed (cbc, hbc) spending. Below
+    the knee the allocation is Cobb-Douglas with effective rent ri + w0;
+    above it the quadratic cost yields a closed-form root; at the knee
+    itself there is a bunching interval (the marginal cost jumps), handled
+    by comparing candidate utilities; beyond hRmax the household is capped
+    at hRmax. Returns (u_flow, ct, ht) with the eqscale exponent applied to
+    utility but the family shifter left to the caller. Mirrored in Python
+    by solver.renter_wedge_flow_py; the two are cross-tested.
+    """
+    ri1 = ri + w0
+    Cc = hbc * ri1 + w1 * hbc * (hbc - hk if hbc > hk else 0.0)
+    S = S_raw - cbc - Cc
+    if S <= 1e-10:
+        return -1e10, 0.0, 0.0
+    Kr1 = (al ** al * ((1.0 - al) / ri1) ** (1.0 - al)) ** oms
+    # Candidate 1: interior below the knee.
+    ht_a = (1.0 - al) * S / ri1
+    h_a = hbc + ht_a
+    u_a = Kr1 * S ** oms / oms
+    if es != 1.0:
+        u_a = es * u_a
+    valid_a = (h_a <= hk)
+    # Candidate 2: bunching at the knee (affordable and below the cap).
+    ht_k = hk - hbc
+    valid_k = (hbc < hk) and (hk <= hRmax) and (S >= ri1 * ht_k)
+    if valid_k:
+        ct_k = S - ri1 * ht_k
+        if ct_k < 1e-10:
+            ct_k = 1e-10
+        u_k = (ct_k ** al * ht_k ** (1.0 - al)) ** oms / oms
+        if es != 1.0:
+            u_k = es * u_k
+    else:
+        u_k = -1e10
+        ct_k = 0.0
+    # Candidate 3: interior above the knee (quadratic root).
+    if hbc < hk:
+        S_eff = S + w1 * hbc * (hk - hbc)
+    else:
+        S_eff = S
+    A2 = ri1 + w1 * (2.0 * hbc - hk)
+    quad_b = w1 * (1.0 + al)
+    if quad_b > 0.0:
+        disc = A2 * A2 + 4.0 * quad_b * (1.0 - al) * S_eff
+        ht_b = (-A2 + np.sqrt(disc)) / (2.0 * quad_b)
+    else:
+        ht_b = (1.0 - al) * S_eff / A2
+    h_b = hbc + ht_b
+    valid_b = (h_b > hk)
+    if valid_b:
+        ct_b = S_eff - A2 * ht_b - w1 * ht_b * ht_b
+        if ct_b < 1e-10:
+            ct_b = 1e-10
+        u_b = (ct_b ** al * ht_b ** (1.0 - al)) ** oms / oms
+        if es != 1.0:
+            u_b = es * u_b
+    else:
+        u_b = -1e10
+        ct_b = 0.0
+    # Unconstrained pick among valid candidates.
+    u_best = u_a if valid_a else -1e10
+    ct_best = al * S if valid_a else 0.0
+    ht_best = ht_a if valid_a else 0.0
+    if valid_k and u_k > u_best:
+        u_best = u_k
+        ct_best = ct_k
+        ht_best = ht_k
+    if valid_b and u_b > u_best:
+        u_best = u_b
+        ct_best = ct_b
+        ht_best = ht_b
+    h_best = hbc + ht_best
+    if h_best > hRmax:
+        Ccap = hRmax * ri1 + w1 * hRmax * (hRmax - hk if hRmax > hk else 0.0)
+        ct = S_raw - cbc - Ccap
+        if ct < 1e-10:
+            ct = 1e-10
+        ht_use = hRmax - hbc
+        if ht_use < 1e-10:
+            ht_use = 1e-10
+        u = (ct ** al * ht_use ** (1.0 - al)) ** oms / oms
+        if es != 1.0:
+            u = es * u
+        return u, ct, ht_use
+    if u_best <= -1e9:
+        return -1e10, 0.0, 0.0
+    return u_best, ct_best, ht_best
+
+
+@njit(cache=True)
+def eval_renter_scalar(bp, Rv, Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es,
+                       hbc=0.0, w0=0.0, w1=0.0, hk=6.0, wedge_on=0):
+    if wedge_on != 0:
+        u_flow, _, _ = renter_wedge_flow(Rv - bp, cb_c, hbc, ri, w0, w1, hk, hRmax, alpha, oms, es)
+        if u_flow <= -1e9:
+            return -1e10
+        return u_flow + pc + beta * interp_scalar(bg, Vbar, bp)
     surplus = Rv - dc - bp
     if surplus <= 1e-10:
         return -1e10
@@ -76,7 +176,8 @@ def eval_renter_scalar(bp, Rv, Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, 
 
 
 @njit(cache=True)
-def golden_renter_kernel(lo, hi, Rv, Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, a1, a2, tol, es):
+def golden_renter_kernel(lo, hi, Rv, Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, a1, a2, tol, es,
+                         hbc=0.0, w0=0.0, w1=0.0, hk=6.0, wedge_on=0):
     n = Rv.size
     bp_out = np.empty(n)
     val_out = np.empty(n)
@@ -86,15 +187,18 @@ def golden_renter_kernel(lo, hi, Rv, Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_c
         d = hik - lok
         x1 = lok + a1 * d
         x2 = lok + a2 * d
-        f1 = eval_renter_scalar(x1, Rv[k], Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es)
-        f2 = eval_renter_scalar(x2, Rv[k], Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es)
+        f1 = eval_renter_scalar(x1, Rv[k], Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es,
+                                hbc, w0, w1, hk, wedge_on)
+        f2 = eval_renter_scalar(x2, Rv[k], Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es,
+                                hbc, w0, w1, hk, wedge_on)
         d = a1 * a2 * d
         while d > tol:
             if f2 >= f1:
                 xe = x2 + d
                 if xe > hik:
                     xe = hik
-                fe = eval_renter_scalar(xe, Rv[k], Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es)
+                fe = eval_renter_scalar(xe, Rv[k], Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es,
+                                        hbc, w0, w1, hk, wedge_on)
                 x1 = x2
                 f1 = f2
                 x2 = xe
@@ -103,7 +207,8 @@ def golden_renter_kernel(lo, hi, Rv, Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_c
                 xe = x1 - d
                 if xe < lok:
                     xe = lok
-                fe = eval_renter_scalar(xe, Rv[k], Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es)
+                fe = eval_renter_scalar(xe, Rv[k], Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es,
+                                        hbc, w0, w1, hk, wedge_on)
                 x2 = x1
                 f2 = f1
                 x1 = xe
@@ -608,6 +713,7 @@ def tenure_choice_kernel(
     bmo,                 # (I, nt, npar, ncs)
     birth_dp,            # (npar, ncs, nt, nt) bool
     birth_entry_grant,   # (I, nt, npar, ncs)
+    Vd_stay,             # (Nb, nt, I, npar, ncs) values read at to == tn
     strict_interpolated_support=False,
 ):
     # Discrete tenure-choice argmax over `tn` given conditional values Vd
@@ -616,6 +722,8 @@ def tenure_choice_kernel(
     # (to=0 -> tn>=1, with optional birth grant or entry grant), and
     # sell-then-rebuy (to>=1 -> tn != to). Infeasible states (below
     # down-payment threshold dp or below borrowing limit bm) get -1e10.
+    # A stayer (to == tn) reads Vd_stay, which carries the stayer mortgage
+    # floors when that switch is on and matches Vd bit for bit otherwise.
     Nb, nt, I, npar, ncs = Vd.shape
     VH = np.empty((Nb, nt, I, npar, ncs))
     tcj = np.empty((Nb, nt, I, npar, ncs), dtype=np.int16)
@@ -645,7 +753,7 @@ def tenure_choice_kernel(
                             dpn = dp_arr[id_, tn, nn, cs]
                             bmn = bmo[id_, tn, nn, cs]
                             if to == tn:
-                                v_tn = Vd[b, tn, id_, nn, cs]
+                                v_tn = Vd_stay[b, tn, id_, nn, cs]
                             elif to == 0:
                                 bab = bg_b - hc
                                 if birth_dp[nn, cs, to, tn]:
@@ -686,6 +794,7 @@ def tenure_logit_kernel(
     birth_dp,            # (npar, ncs, nt, nt) bool
     birth_entry_grant,   # (I, nt, npar, ncs)
     kappa,               # taste-shock scale
+    Vd_stay,             # (Nb, nt, I, npar, ncs) values read at to == tn
 ):
     Nb, nt, I, npar, ncs = Vd.shape
     VH = np.empty((Nb, nt, I, npar, ncs))
@@ -717,7 +826,7 @@ def tenure_logit_kernel(
                             dpn = dp_arr[id_, tn, nn, cs]
                             bmn = bmo[id_, tn, nn, cs]
                             if to == tn:
-                                v_tn = Vd[b, tn, id_, nn, cs]
+                                v_tn = Vd_stay[b, tn, id_, nn, cs]
                             elif to == 0:
                                 bab = bg_b - hc
                                 if birth_dp[nn, cs, to, tn]:
@@ -860,15 +969,30 @@ def full_renter_block_kernel(
     gs_alpha2,
     gs_tol,
     exhaustive_saving=0,
+    yadj_v=None,
+    pen_on=0,
+    wedge_on=0,
+    w0=0.0,
+    w1=0.0,
+    hk=6.0,
 ):
     # Full-Bellman renter block: golden-section search for bp + post-search
     # consumption / housing arithmetic, fused into one kernel per (i, j).
+    # yadj_v/pen_on carry the optional children-at-home earnings adjustment:
+    # resources for family cell c rise by yadj_v[c]. With pen_on == 0 the
+    # adjustment is skipped and the block is bit for bit the legacy one.
+    # wedge_on/w0/w1/hk carry the optional size-dependent rental wedge (see
+    # renter_wedge_flow). With wedge_on == 0 the block is bit for bit legacy.
+    # The wedge is not supported under exhaustive saving (its kink/candidate
+    # structure assumes linear rent); that combination raises below.
     # When bp_prev is given (j < J-1), the search interval is clamped to
     # [bp_prev - 2, bp_prev + 2] as a soft monotonicity prior — a
     # heuristic that mirrors the MATLAB implementation, not a strict
     # invariant of the model.
     if exhaustive_saving and has_prev:
         raise ValueError("Exhaustive saving requires the full feasible interval")
+    if exhaustive_saving and wedge_on != 0:
+        raise ValueError("Rental wedge requires the golden-section renter block")
     Nb, nc = Vc_flat.shape
     Vo = np.empty((Nb, nc))
     bp_out = np.empty((Nb, nc))
@@ -899,9 +1023,18 @@ def full_renter_block_kernel(
         if ht_cap_c < 1e-10:
             ht_cap_c = 1e-10
         for b in range(Nb):
-            Rvb = Rv1d[b]
+            if pen_on != 0:
+                if yadj_v is not None:
+                    Rvb = Rv1d[b] + yadj_v[c]
+                    Rvtb = Rvt1d[b] + yadj_v[c]
+                else:
+                    Rvb = Rv1d[b]
+                    Rvtb = Rvt1d[b]
+            else:
+                Rvb = Rv1d[b]
+                Rvtb = Rvt1d[b]
             if gc > 0.0:
-                Tb = gc - Rvt1d[b]
+                Tb = gc - Rvtb
                 if Tb > 0.0:
                     if Tb > gc:
                         Tb = gc
@@ -938,15 +1071,15 @@ def full_renter_block_kernel(
                 d = hi - lo
                 x1 = lo + gs_alpha1 * d
                 x2 = lo + gs_alpha2 * d
-                f1 = eval_renter_scalar(x1, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es)
-                f2 = eval_renter_scalar(x2, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es)
+                f1 = eval_renter_scalar(x1, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es, hbc, w0, w1, hk, wedge_on)
+                f2 = eval_renter_scalar(x2, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es, hbc, w0, w1, hk, wedge_on)
                 d = gs_alpha1 * gs_alpha2 * d
                 while d > gs_tol:
                     if f2 >= f1:
                         xe = x2 + d
                         if xe > hi:
                             xe = hi
-                        fe = eval_renter_scalar(xe, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es)
+                        fe = eval_renter_scalar(xe, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es, hbc, w0, w1, hk, wedge_on)
                         x1 = x2
                         f1 = f2
                         x2 = xe
@@ -955,7 +1088,7 @@ def full_renter_block_kernel(
                         xe = x1 - d
                         if xe < lo:
                             xe = lo
-                        fe = eval_renter_scalar(xe, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es)
+                        fe = eval_renter_scalar(xe, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es, hbc, w0, w1, hk, wedge_on)
                         x2 = x1
                         f2 = f1
                         x1 = xe
@@ -970,6 +1103,17 @@ def full_renter_block_kernel(
             bp_out[b, c] = bp_best
             Vo[b, c] = v_best
 
+            if wedge_on != 0:
+                uw, ctw, htw = renter_wedge_flow(Rvb - bp_best, cbc, hbc, ri, w0, w1, hk, hR_max, al, oms, es)
+                if uw <= -1e9:
+                    co[b, c] = c_bar_0 + c_min
+                    ho[b, c] = h_bar_0 + 0.01
+                else:
+                    ct_eff = ctw if ctw > c_min else c_min
+                    ht_eff = htw if htw > 0.01 else 0.01
+                    co[b, c] = cbc + ct_eff
+                    ho[b, c] = hbc + ht_eff
+                continue
             surplus = Rvb - dc - bp_best
             if surplus <= 1e-10:
                 co[b, c] = c_bar_0 + c_min
@@ -1031,7 +1175,19 @@ def full_owner_block_kernel(
     gs_tol,
     strict_hbar_feasibility=0,
     exhaustive_saving=0,
+    yadj_v=None,
+    pen_on=0,
+    stay_on=0,
+    stay_orig=0,
+    amort=0.0,
 ):
+    # yadj_v/pen_on carry the optional children-at-home earnings adjustment;
+    # see full_renter_block_kernel. With pen_on == 0 the block matches the
+    # legacy one bit for bit.
+    # stay_on/stay_orig/amort carry the optional stayer mortgage floors: a
+    # stayer (origin tenure == destination tenure) faces a no-cash-out rule
+    # instead of the origination collateral floor. With stay_on == 0 the
+    # floor block matches the legacy one bit for bit.
     if exhaustive_saving and has_prev:
         raise ValueError("Exhaustive saving requires the full feasible interval")
     Nb, nc = Vco_flat.shape
@@ -1063,9 +1219,18 @@ def full_owner_block_kernel(
         else:
             Ko_c = ht_c ** ((1.0 - alpha) * oms)
         for b in range(Nb):
-            Rvb = Rv1d[b]
+            if pen_on != 0:
+                if yadj_v is not None:
+                    Rvb = Rv1d[b] + yadj_v[c]
+                    Rvtb = Rvt1d[b] + yadj_v[c]
+                else:
+                    Rvb = Rv1d[b]
+                    Rvtb = Rvt1d[b]
+            else:
+                Rvb = Rv1d[b]
+                Rvtb = Rvt1d[b]
             if gc > 0.0:
-                Tb = gc - Rvt1d[b]
+                Tb = gc - Rvtb
                 if Tb > 0.0:
                     if Tb > gc:
                         Tb = gc
@@ -1077,6 +1242,22 @@ def full_owner_block_kernel(
             line_floor = -D_next
             unsecured_floor = rollover_floor if rollover_floor < line_floor else line_floor
             total_floor = bf + unsecured_floor
+            if stay_on != 0:
+                # Stayer mortgage floor: debt may not rise (no cash-out), and
+                # with amortization it must fall by at least that share. The
+                # taper/line rollover logic is bypassed: a stayer is never
+                # forced below its own balance. With no debt, a first mortgage
+                # on the owned house is an origination, so the collateral
+                # floor applies when stay_orig is on.
+                bb = b_grid[b]
+                if bb < 0.0:
+                    amort_floor = bb * (1.0 - amort)
+                    if stay_orig != 0:
+                        total_floor = amort_floor if amort_floor > bb else bb
+                    elif total_floor < amort_floor:
+                        total_floor = amort_floor
+                elif stay_orig != 0:
+                    total_floor = bf
             lo = total_floor
             if bg0 > lo:
                 lo = bg0

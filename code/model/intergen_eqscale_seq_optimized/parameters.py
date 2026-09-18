@@ -182,6 +182,19 @@ def setup_parameters() -> SimpleNamespace:
     P.chi = 1.10
     P.psi = 0.06
     P.phi = 0.80 * np.ones(P.n_parity)
+    # Default-off mortgage block. When origination-only is on, the collateral
+    # floor applies solely on transactions (where the down-payment test
+    # fires); a stayer faces a no-cash-out floor instead. The amortization
+    # rate forces stayers in debt to retire at least that share per period.
+    P.mortgage_origination_only = False
+    P.mortgage_amortization = 0.0
+    # Default-off size-dependent rental wedge. Rent per room is
+    # r + w0 + w1 * max(0, h - hk): a real operating cost paid to the outside
+    # landlord. It enters the renter budget only (not the property-tax base,
+    # not the rebate, not wealth) and leaves the user cost itself unchanged.
+    P.rental_wedge_intercept = 0.0
+    P.rental_wedge_slope = 0.0
+    P.rental_wedge_knee = 6.0
     P.use_pti_constraint = False
     P.pti_limit = 0.30
     P.parent_dp_waiver = False
@@ -216,6 +229,10 @@ def setup_parameters() -> SimpleNamespace:
     P.income_type_transition = "markov"
     P.income_shock_persistence = 0.85
     P.Pi_z = make_persistent_transition_matrix(P.z_weights, P.income_shock_persistence)
+    # Default-off per-period earnings cost of children at home, proportional
+    # to earnings (a time cost). Entry m = 0, 1, 2, 3+ counts children at
+    # home; all zeros nests the current model bit for bit.
+    P.child_earnings_penalty = np.zeros(4, dtype=float)
     # Default-off E6b permanent income level metadata. When enabled, the
     # ordinary z state is the Cartesian product of a permanent entry level and
     # the existing Markov income state; the solver still sees one transition
@@ -364,6 +381,18 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         configure_child_state_process(P)
     if "child_state_mode" in od:
         configure_child_state_process(P)
+    if "child_earnings_penalty" in od:
+        raw = getattr(P, "child_earnings_penalty", np.zeros(4))
+        if np.isscalar(raw) or (isinstance(raw, str)):
+            P.child_earnings_penalty = float(raw) * np.ones(4, dtype=float)
+        else:
+            P.child_earnings_penalty = np.asarray(raw, dtype=float).reshape(-1)
+        if P.child_earnings_penalty.size != 4:
+            raise ValueError("child_earnings_penalty must have one entry per m = 0, 1, 2, 3+.")
+        if np.any(~np.isfinite(P.child_earnings_penalty)) or np.any(
+            (P.child_earnings_penalty < 0.0) | (P.child_earnings_penalty >= 1.0)
+        ):
+            raise ValueError("child_earnings_penalty entries must lie in [0, 1).")
     maturation_keys = {"child_maturation_mode", "mu_young", "a_rise", "a_full"}
     if maturation_keys & set(od):
         P.child_maturation_mode = str(getattr(P, "child_maturation_mode", "constant"))
@@ -399,6 +428,22 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         P.phi = np.asarray(P.phi, dtype=float).reshape(-1)
         if P.phi.size == 1:
             P.phi = P.phi.item() * np.ones(P.n_parity)
+    P.mortgage_origination_only = bool(getattr(P, "mortgage_origination_only", False))
+    P.mortgage_amortization = float(getattr(P, "mortgage_amortization", 0.0))
+    if not np.isfinite(P.mortgage_amortization) or not 0.0 <= P.mortgage_amortization < 1.0:
+        raise ValueError("mortgage_amortization must lie in [0, 1).")
+    P.rental_wedge_intercept = float(getattr(P, "rental_wedge_intercept", 0.0))
+    P.rental_wedge_slope = float(getattr(P, "rental_wedge_slope", 0.0))
+    P.rental_wedge_knee = float(getattr(P, "rental_wedge_knee", 6.0))
+    if not np.isfinite(P.rental_wedge_knee):
+        raise ValueError("rental_wedge_knee must be finite.")
+    if (
+        not np.isfinite(P.rental_wedge_intercept)
+        or not np.isfinite(P.rental_wedge_slope)
+        or P.rental_wedge_intercept < 0.0
+        or P.rental_wedge_slope < 0.0
+    ):
+        raise ValueError("rental wedge intercept and slope must be finite and weakly nonnegative.")
     if "entry_wealth_mode" in od:
         P.entry_wealth_mode = str(P.entry_wealth_mode).lower()
     if "entry_wealth_ratio_nodes" in od:
@@ -894,6 +939,64 @@ def readiness_settled_state(P: SimpleNamespace) -> int:
 def independent_child_maturation_active(P: SimpleNamespace) -> bool:
     """Whether child_state is the number of children currently at home."""
     return str(getattr(P, "child_state_mode", "shared_clock")).strip().lower() == "independent_count"
+
+
+def child_earnings_penalty_active(P: SimpleNamespace) -> bool:
+    """Whether any children-at-home earnings penalty entry is nonzero."""
+    return bool(np.any(np.asarray(getattr(P, "child_earnings_penalty", np.zeros(4)), dtype=float) != 0.0))
+
+
+def mortgage_stay_floor_active(P: SimpleNamespace) -> bool:
+    """Whether stayer-specific mortgage floors must be computed."""
+    if bool(getattr(P, "mortgage_origination_only", False)):
+        return True
+    return float(getattr(P, "mortgage_amortization", 0.0)) > 0.0
+
+
+def rental_wedge_active(P: SimpleNamespace) -> bool:
+    """Whether the size-dependent rental wedge changes renter budgets."""
+    return (
+        float(getattr(P, "rental_wedge_intercept", 0.0)) != 0.0
+        or float(getattr(P, "rental_wedge_slope", 0.0)) != 0.0
+    )
+
+
+def rental_wedge_total_cost(h: float, ri: float, P: SimpleNamespace) -> float:
+    """Total rent paid for h rooms at base per-room rent ri, with the wedge."""
+    w0 = float(getattr(P, "rental_wedge_intercept", 0.0))
+    w1 = float(getattr(P, "rental_wedge_slope", 0.0))
+    hk = float(getattr(P, "rental_wedge_knee", 6.0))
+    return float(h) * (float(ri) + w0 + w1 * max(float(h) - hk, 0.0))
+
+
+def children_at_home_count(nn: int, cs: int, P: SimpleNamespace) -> int:
+    """Number of children at home for family state (nn, cs), top-coded at 3.
+
+    Under independent maturation the child state is that number (bounded by
+    children ever born); under the shared clock it is one when the state
+    lies in the dependent stages and zero otherwise.
+    """
+    if independent_child_maturation_active(P):
+        return int(min(max(int(cs), 0), int(nn), 3))
+    stages = int(getattr(P, "n_child_stages", 1))
+    if 1 <= int(cs) <= stages:
+        return 1 if int(nn) >= 1 else 0
+    return 0
+
+
+def child_earnings_multiplier(P: SimpleNamespace, j: int, m: int) -> float:
+    """After-tax earnings multiplier for age index j and m children at home.
+
+    Working ages scale by (1 - penalty); retirement ages are untouched, as
+    are pensions, the payroll-tax base, and the PAYGO balance (those use
+    unpenalized earnings by construction).
+    """
+    if int(j) >= int(getattr(P, "J_R", 0)):
+        return 1.0
+    penalty = np.asarray(getattr(P, "child_earnings_penalty", np.zeros(4)), dtype=float).reshape(-1)
+    if penalty.size == 0:
+        return 1.0
+    return float(1.0 - penalty[min(max(int(m), 0), penalty.size - 1)])
 
 
 def parent_age_maturation_active(P: SimpleNamespace) -> bool:

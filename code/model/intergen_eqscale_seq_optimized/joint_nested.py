@@ -86,9 +86,9 @@ def bellman_block(Vd, kernel_args, P, j, fecundity, deterministic_kernel):
     if np.any(kernel_args[-1]):
         raise NotImplementedError("Joint experimental entry grants are not implemented")
     rental = Vd.copy(); rental[:, 1:] = -1e10
-    qr, cr = deterministic_kernel(rental, *kernel_args, True)
+    qr, cr = deterministic_kernel(rental, *kernel_args, rental, True)
     owner = Vd.copy(); owner[:, 0] = -1e10
-    qo, co = deterministic_kernel(owner, *kernel_args, True)
+    qo, co = deterministic_kernel(owner, *kernel_args, owner, True)
     q = np.stack((qr, qo), axis=-1)
     q = np.where(q > -1e9, q + float(P.E_loc[0] - P.mu_stay), -np.inf)
     products = np.stack((cr, co), axis=-1)
