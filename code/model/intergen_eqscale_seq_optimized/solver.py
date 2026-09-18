@@ -14,9 +14,14 @@ from . import joint_nested
 
 from .parameters import (
     apply_overrides,
+    bequest_utility_net_active,
     child_earnings_multiplier,
     child_earnings_penalty_active,
     children_at_home_count,
+    estate_housing_value,
+    estate_receiver_active,
+    estate_recipient_age_indices,
+    estate_transfer_at_age,
     fecundity_active,
     finalize_location_choice_spec,
     get_fecundity_by_age,
@@ -252,7 +257,17 @@ def income_at_state(P: SimpleNamespace, i: int, j: int, z_value: float) -> float
     else:
         scale = float(getattr(P, "retirement_income_z_scale", 0.0))
         income = y * (1.0 + scale * (float(z_value) - 1.0))
-    return income + float(getattr(P, "property_tax_lump_sum_transfer", 0.0))
+    # The estate transfer enters exactly like the property-tax rebate: in the
+    # budget through this function, never in the down-payment test (which
+    # reads dp_arr/bmo, not income). Off, this returns the prior value bit
+    # for bit.
+    if not estate_receiver_active(P):
+        return income + float(getattr(P, "property_tax_lump_sum_transfer", 0.0))
+    return (
+        income
+        + float(getattr(P, "property_tax_lump_sum_transfer", 0.0))
+        + estate_transfer_at_age(P, int(j))
+    )
 
 
 def penalized_income_at_state(P: SimpleNamespace, i: int, j: int, z_value: float, m: int) -> float:
@@ -272,7 +287,15 @@ def penalized_income_at_state(P: SimpleNamespace, i: int, j: int, z_value: float
     else:
         scale = float(getattr(P, "retirement_income_z_scale", 0.0))
         income = y * (1.0 + scale * (float(z_value) - 1.0))
-    return income + float(getattr(P, "property_tax_lump_sum_transfer", 0.0))
+    # Fiscal lump sums are not earnings and are not scaled by the time cost;
+    # the estate transfer joins the rebate here on the same terms.
+    if not estate_receiver_active(P):
+        return income + float(getattr(P, "property_tax_lump_sum_transfer", 0.0))
+    return (
+        income
+        + float(getattr(P, "property_tax_lump_sum_transfer", 0.0))
+        + estate_transfer_at_age(P, int(j))
+    )
 
 
 def birth_destination_child_state(P: SimpleNamespace, current_child_state: int) -> int:
@@ -1103,6 +1126,103 @@ def set_entry_masses(P: SimpleNamespace, entry_by_loc: np.ndarray) -> tuple[np.n
     return shares, total
 
 
+def period_estate_flow_and_recipient_mass(
+    sol: SimpleNamespace, P: SimpleNamespace, b_grid: np.ndarray, p_hat: np.ndarray
+) -> tuple[float, float]:
+    """Per-period estate flow E and recipient mass H for the transfer.
+
+    E sums death-weighted net estates w^e = b' + (1 - psi) P h over the
+    solved distribution (max with zero, as in the bequest-flow moment);
+    death weights mirror that moment (terminal age dies surely, earlier ages
+    via survival_probs when active). H sums the solved mass at ages 45-65.
+    """
+    g = np.asarray(sol.g, dtype=float)
+    bp = np.asarray(getattr(sol, "bp_pol"), dtype=float)
+    bg = np.asarray(b_grid, dtype=float).reshape(-1)
+    ph = np.asarray(p_hat, dtype=float).reshape(-1)
+    del bg
+    J = int(P.J)
+    nt = 1 + int(P.n_house)
+    psi = float(getattr(P, "psi", 0.0))
+    recipient = set(int(k) for k in estate_recipient_age_indices(P))
+    use_survival = bool(getattr(P, "use_age_survival", False))
+    survival = np.asarray(getattr(P, "survival_probs", np.ones(max(J - 1, 0))), dtype=float)
+
+    def death_weight(j: int) -> float:
+        if use_survival and j < J - 1:
+            return float(1.0 - float(survival[j])) if j < survival.size else 0.0
+        if j == J - 1:
+            return 1.0
+        return 0.0
+
+    flow = 0.0
+    recipient_mass = 0.0
+    if g.ndim == 7:
+        for j in range(J):
+            d = death_weight(j)
+            for i in range(int(P.I)):
+                price = float(ph[i]) if i < ph.size else 0.0
+                for ten in range(nt):
+                    hv = (1.0 - psi) * price * float(P.H_own[ten - 1]) if ten > 0 else 0.0
+                    cell_g = g[:, ten, i, j, :, :, :]
+                    cell_bp = bp[:, ten, i, j, :, :, :]
+                    if j in recipient:
+                        recipient_mass += float(np.sum(cell_g))
+                    if d > 0.0:
+                        flow += float(d) * float(np.sum(cell_g * np.maximum(cell_bp + hv, 0.0)))
+    elif g.ndim == 6:
+        for j in range(J):
+            d = death_weight(j)
+            for i in range(int(P.I)):
+                price = float(ph[i]) if i < ph.size else 0.0
+                for ten in range(nt):
+                    hv = (1.0 - psi) * price * float(P.H_own[ten - 1]) if ten > 0 else 0.0
+                    cell_g = g[:, ten, i, j, :, :]
+                    cell_bp = bp[:, ten, i, j, :, :]
+                    if j in recipient:
+                        recipient_mass += float(np.sum(cell_g))
+                    if d > 0.0:
+                        flow += float(d) * float(np.sum(cell_g * np.maximum(cell_bp + hv, 0.0)))
+    else:
+        raise ValueError("estate flow needs a six- or seven-dimensional distribution")
+    return float(flow), float(recipient_mass)
+
+
+def _dispatch_stationary_solve(
+    P: SimpleNamespace, b_grid: np.ndarray, p_init: np.ndarray, verbose: bool
+) -> tuple[SimpleNamespace, SimpleNamespace, np.ndarray]:
+    solve_mode = str(getattr(P, "solve_mode", "ge")).lower()
+    do_pe = solve_mode in ("pe", "partial", "partial_equilibrium", "fixed")
+    if uses_markov_income(P):
+        if do_pe:
+            return solve_markov_income_partial_equilibrium(
+                np.asarray(P.p_fixed, dtype=float).reshape(-1),
+                P,
+                b_grid,
+                verbose=verbose,
+            )
+        return solve_markov_income_equilibrium(p_init, P, b_grid, verbose=verbose)
+    if uses_income_types(P):
+        if do_pe:
+            return solve_income_type_partial_equilibrium(
+                np.asarray(P.p_fixed, dtype=float).reshape(-1),
+                P,
+                b_grid,
+                verbose=verbose,
+            )
+        return solve_income_type_equilibrium(p_init, P, b_grid, verbose=verbose)
+    if do_pe:
+        return solve_partial_equilibrium_dt(
+            np.asarray(P.p_fixed, dtype=float).reshape(-1),
+            np.asarray(P.w_fixed, dtype=float).reshape(-1),
+            np.asarray(P.entry_shares_fixed, dtype=float).reshape(-1),
+            P,
+            b_grid,
+            verbose=verbose,
+        )
+    return solve_equilibrium(p_init, P, b_grid, verbose=verbose)
+
+
 def run_model_cp_dt(P_override: Any | None = None, verbose: bool = True) -> tuple[SimpleNamespace, SimpleNamespace, np.ndarray]:
     t_start = time.perf_counter()
     P = setup_parameters()
@@ -1140,39 +1260,50 @@ def run_model_cp_dt(P_override: Any | None = None, verbose: bool = True) -> tupl
     if hasattr(P, "p_init_override") and P.p_init_override is not None:
         p_init = np.asarray(P.p_init_override, dtype=float).reshape(-1)
 
-    solve_mode = str(getattr(P, "solve_mode", "ge")).lower()
-    do_pe = solve_mode in ("pe", "partial", "partial_equilibrium", "fixed")
-    if uses_markov_income(P):
-        if do_pe:
-            sol, P, p_eq = solve_markov_income_partial_equilibrium(
-                np.asarray(P.p_fixed, dtype=float).reshape(-1),
-                P,
-                b_grid,
-                verbose=verbose,
-            )
-        else:
-            sol, P, p_eq = solve_markov_income_equilibrium(p_init, P, b_grid, verbose=verbose)
-    elif uses_income_types(P):
-        if do_pe:
-            sol, P, p_eq = solve_income_type_partial_equilibrium(
-                np.asarray(P.p_fixed, dtype=float).reshape(-1),
-                P,
-                b_grid,
-                verbose=verbose,
-            )
-        else:
-            sol, P, p_eq = solve_income_type_equilibrium(p_init, P, b_grid, verbose=verbose)
-    elif do_pe:
-        sol, P, p_eq = solve_partial_equilibrium_dt(
-            np.asarray(P.p_fixed, dtype=float).reshape(-1),
-            np.asarray(P.w_fixed, dtype=float).reshape(-1),
-            np.asarray(P.entry_shares_fixed, dtype=float).reshape(-1),
-            P,
-            b_grid,
-            verbose=verbose,
-        )
+    # Estate-transfer equilibrium: T_E is an outer damped fixed point around
+    # the existing stationary solve (not a new Newton dimension). Start at 0,
+    # solve, compute E and H, update with damping 0.5 until the relative
+    # change is below 1e-6 and the paid-vs-generated gap is within 1e-10.
+    # Off, this block is skipped and the solve below is the prior path bit
+    # for bit.
+    if not estate_receiver_active(P):
+        sol, P, p_eq = _dispatch_stationary_solve(P, b_grid, p_init, verbose)
     else:
-        sol, P, p_eq = solve_equilibrium(p_init, P, b_grid, verbose=verbose)
+        transfer = 0.0
+        P.estate_lump_sum_transfer = 0.0
+        prev = None
+        flow = mass = 0.0
+        iterations = 0
+        converged = False
+        for _ in range(200):
+            sol, P, p_eq = _dispatch_stationary_solve(P, b_grid, p_init, False)
+            flow, mass = period_estate_flow_and_recipient_mass(sol, P, b_grid, p_eq)
+            iterations += 1
+            if mass <= 1e-14:
+                converged = True
+                break
+            paid_now = float(transfer) * float(mass)
+            rel = np.inf if prev is None and flow > 0.0 else (
+                abs(float(transfer) - float(prev)) / max(abs(float(transfer)), 1e-12)
+                if prev is not None else 0.0
+            )
+            if verbose:
+                print(f"  Estate loop {iterations}: T={transfer:.6f} E={flow:.6f} H={mass:.6f} rel={rel:.2e}")
+            if rel < 1e-6 and abs(paid_now - flow) <= 1e-10:
+                converged = True
+                break
+            prev = float(transfer)
+            transfer = 0.5 * float(transfer) + 0.5 * float(flow / mass)
+            P.estate_lump_sum_transfer = float(transfer)
+        P.estate_lump_sum_transfer = float(transfer)
+        paid = float(transfer) * float(mass)
+        sol.estate_transfer = float(transfer)
+        sol.estate_flow_generated = float(flow)
+        sol.estate_recipient_mass = float(mass)
+        sol.estate_flow_paid = float(paid)
+        sol.estate_flow_residual = float(paid - flow)
+        sol.estate_iterations = int(iterations)
+        sol.estate_converged = bool(converged)
 
     if verbose:
         elapsed = time.perf_counter() - t_start
@@ -2954,7 +3085,11 @@ def solve_bellman_full_markov_income(
     Vbq = np.zeros((Nb, nt, I, npar, ncs))
     for i in range(I):
         for ten in range(nt):
+            # Gross by default (bitwise nesting); net of the selling cost when
+            # the utility-side switch holds (alone or via the estate transfer).
             hv = p_hat[i] * P.H_own[ten - 1] if ten > 0 else 0.0
+            if ten > 0 and bequest_utility_net_active(P):
+                hv = estate_housing_value(P, float(p_hat[i]), float(P.H_own[ten - 1]), for_accounting=False)
             for nn in range(npar):
                 for cs in range(ncs):
                     nk = get_completed_fertility(nn, cs, P)
@@ -3201,6 +3336,8 @@ def solve_bellman_core(
         raise NotImplementedError("stayer mortgage floors: full markov-income Bellman path only")
     if rental_wedge_active(P):
         raise NotImplementedError("rental wedge: factored markov-income Bellman path only")
+    if estate_receiver_active(P) or bool(getattr(P, "bequest_net_of_selling_cost", False)):
+        raise NotImplementedError("estates paid to households: markov-income Bellman path only")
     # Backward induction over age `j`. At each `j` we solve (per i, ten):
     # savings choice via golden-section (full mode) or plug-in at
     # stored_bp (eval mode); then tenure choice; then location logit;
@@ -3303,7 +3440,11 @@ def solve_bellman_core(
     Vbq = np.zeros((Nb, nt, I, npar, ncs))
     for i in range(I):
         for ten in range(nt):
+            # Gross by default (bitwise nesting); net of the selling cost when
+            # the utility-side switch holds (alone or via the estate transfer).
             hv = p_hat[i] * P.H_own[ten - 1] if ten > 0 else 0.0
+            if ten > 0 and bequest_utility_net_active(P):
+                hv = estate_housing_value(P, float(p_hat[i]), float(P.H_own[ten - 1]), for_accounting=False)
             for nn in range(npar):
                 for cs in range(ncs):
                     nk = get_completed_fertility(nn, cs, P)
@@ -6740,7 +6881,14 @@ def add_aggregate_wealth_bequest_flow_moments(
                     total_wealth = float(np.sum(mass_by_asset * (bg_arr + housing_value)))
                     aggregate_wealth += total_wealth
                     wealth_by_age[j] += total_wealth
-                    estate = bp_arr[:, ten, i, j, zz, :, :] + housing_value
+                    # Death estates are gross by default; net of the selling
+                    # cost when the estate transfer is on (accounting side).
+                    estate_hv = housing_value
+                    if ten > 0 and estate_receiver_active(P):
+                        estate_hv = estate_housing_value(
+                            P, float(ph_arr[i]), float(P.H_own[ten - 1]), for_accounting=True
+                        )
+                    estate = bp_arr[:, ten, i, j, zz, :, :] + estate_hv
                     annual_bequest_flow += death_probability * float(
                         np.sum(death_arr[:, ten, i, j, zz, :, :] * np.maximum(estate, 0.0))
                     ) / max(period_years, 1e-12)

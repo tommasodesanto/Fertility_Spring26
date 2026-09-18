@@ -151,6 +151,15 @@ def setup_parameters() -> SimpleNamespace:
     P.normalize_bequest_utility = False
     P.estate_tax_rate = 0.0
     P.estate_tax_exemption = 0.0
+    # Default-off estates-paid-to-households switch. "none" nests the current
+    # model bit for bit (estates enter bequest utility only and leave the
+    # economy); "ages_45_65" pays the aggregate estate flow as an equal
+    # per-household lump sum to ages 45-65. bequest_net_of_selling_cost values
+    # the bequest-utility estate net of the selling cost on its own;
+    # estate_lump_sum_transfer is the solved equilibrium transfer (0 default).
+    P.estate_receiver = "none"
+    P.bequest_net_of_selling_cost = False
+    P.estate_lump_sum_transfer = 0.0
     P.u_bar = 0.0
     P.b_entry_fixed = 0.0
     P.entry_wealth_spread_nodes = 1
@@ -444,6 +453,13 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         or P.rental_wedge_slope < 0.0
     ):
         raise ValueError("rental wedge intercept and slope must be finite and weakly nonnegative.")
+    P.estate_receiver = str(getattr(P, "estate_receiver", "none")).strip().lower()
+    if P.estate_receiver not in ("none", "ages_45_65"):
+        raise ValueError("estate_receiver must be 'none' or 'ages_45_65'.")
+    P.bequest_net_of_selling_cost = bool(getattr(P, "bequest_net_of_selling_cost", False))
+    P.estate_lump_sum_transfer = float(getattr(P, "estate_lump_sum_transfer", 0.0))
+    if not np.isfinite(P.estate_lump_sum_transfer) or P.estate_lump_sum_transfer < 0.0:
+        raise ValueError("estate_lump_sum_transfer must be finite and weakly nonnegative.")
     if "entry_wealth_mode" in od:
         P.entry_wealth_mode = str(P.entry_wealth_mode).lower()
     if "entry_wealth_ratio_nodes" in od:
@@ -967,6 +983,62 @@ def rental_wedge_total_cost(h: float, ri: float, P: SimpleNamespace) -> float:
     w1 = float(getattr(P, "rental_wedge_slope", 0.0))
     hk = float(getattr(P, "rental_wedge_knee", 6.0))
     return float(h) * (float(ri) + w0 + w1 * max(float(h) - hk, 0.0))
+
+
+def estate_receiver_active(P: SimpleNamespace) -> bool:
+    """Whether aggregate estates are paid as lump sums to ages 45-65."""
+    return str(getattr(P, "estate_receiver", "none")).strip().lower() == "ages_45_65"
+
+
+def bequest_utility_net_active(P: SimpleNamespace) -> bool:
+    """Whether the bequest-utility estate is valued net of the selling cost.
+
+    True when the utility-side boolean is set or when the estate transfer is
+    on (the transfer values estates net in both utility and accounting).
+    """
+    if bool(getattr(P, "bequest_net_of_selling_cost", False)):
+        return True
+    return estate_receiver_active(P)
+
+
+def estate_housing_value(P: SimpleNamespace, price: float, rooms: float, *, for_accounting: bool) -> float:
+    """Housing leg of an estate: gross, or net of the selling cost.
+
+    The utility side nets out the selling cost when ``bequest_utility_net``
+    holds; the aggregate-flow accounting nets it out when the estate transfer
+    is on. Otherwise the gross value nests the current model bit for bit.
+    """
+    gross = float(price) * float(rooms)
+    net = bool(for_accounting and estate_receiver_active(P)) or bool(
+        (not for_accounting) and bequest_utility_net_active(P)
+    )
+    if net:
+        return float(1.0 - float(getattr(P, "psi", 0.0))) * gross
+    return gross
+
+
+def estate_recipient_age_indices(P: SimpleNamespace) -> np.ndarray:
+    """Model age indices whose calendar age lies in [45, 65].
+
+    Calendar ages convert as age_start + j * da, as elsewhere in the package.
+    """
+    ages = float(getattr(P, "age_start", 18.0)) + np.arange(int(P.J), dtype=float) * float(
+        getattr(P, "da", 4.0)
+    )
+    return np.flatnonzero((ages >= 45.0) & (ages <= 65.0))
+
+
+def estate_transfer_at_age(P: SimpleNamespace, j: int) -> float:
+    """Per-household estate transfer at age index j (0 outside 45-65)."""
+    if not estate_receiver_active(P):
+        return 0.0
+    transfer = float(getattr(P, "estate_lump_sum_transfer", 0.0))
+    if transfer == 0.0:
+        return 0.0
+    age = float(getattr(P, "age_start", 18.0)) + float(int(j)) * float(getattr(P, "da", 4.0))
+    if 45.0 <= age <= 65.0:
+        return transfer
+    return 0.0
 
 
 def children_at_home_count(nn: int, cs: int, P: SimpleNamespace) -> int:
