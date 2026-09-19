@@ -64,11 +64,17 @@ are under `output/setup/laptop_20260919/` (local generated files).
 | R | Blocked: `/usr/local/bin/R` and `Rscript` resolve to Intel R 4.5 and fail on this machine. Install native Apple Silicon R, then restore/check the packages required by each empirical driver. |
 | Torch | SSH configuration exists and the login host is reachable, but authentication is rejected. Renew interactive access with `ssh torch`, then verify `bash code/cluster/torch.sh status`. No job submitted. |
 
-The AT​​TOM assessor `.dta`, AHS raw data, PSID outputs, MMS family-size outputs,
-and mortgage-policy birth data were found locally. The CPS `jun24pub.csv`, NCHS
-natality raw directory and historical AT​​TOM source directory referenced by
-its README were not found in their expected locations. This was a targeted
-availability check, not a full data inventory or empirical reproduction.
+The ATTOM assessor `.dta`, AHS raw data, PSID outputs, MMS family-size outputs,
+and mortgage-policy birth data were found locally. Follow-up verification
+corrected the initial inventory: CPS `code/data/cps_fertility/cache/jun24pub.csv`
+is present (145,653,216 bytes), and all 37 NCHS natality files listed in
+`code/data/nchs_natality_timing/first_birth_counts_manifest.csv` exist at their
+external archive paths with matching byte sizes. Their hashes were not rerun.
+Only the original ATTOM shard directory referenced by `merge_to_stata.py`,
+`/Users/tommasodesanto/Desktop/019e6b85-e6d0-79f3-ac21-a5dc416c8dfa`, was confirmed
+absent. The merged ATTOM data remain available; the missing source folder
+affects rebuilding that merge. This was a targeted availability check, not a
+full data inventory or empirical reproduction.
 
 The checkout had substantial pre-existing edits. They were preserved. The
 September 19 generated memory snapshot incorrectly described it as clean;
