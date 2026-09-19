@@ -1,0 +1,21 @@
+{
+  "date": "2026-09-19",
+  "job_id": "18034069",
+  "name": "native_finance",
+  "status": "completed",
+  "elapsed": "3m24s",
+  "exit_code": 0,
+  "launcher": "code/cluster/submit_e5f_native_financing_diagnostic.sh",
+  "driver": "code/model/tools/run_e5f_native_financing_diagnostic.py",
+  "remote_root": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a",
+  "inputs": "fixed exact native parameters, psi, pension, rebate, baseline price, and growth rate",
+  "cases": ["baseline", "baseline_repeat", "mortgage_only", "unsecured_only", "both"],
+  "credit_cap_definition": "lambda=5 is five times age-specific after-tax four-year income from build_debt_caps",
+  "scope": "current-calibration mechanism diagnostic; no recalibration GE or transition",
+  "stop_rule": "halt on first error; no automatic retries",
+  "numerical_pass_established": true,
+  "birth_flows": {"baseline": 0.1155903878306699, "mortgage_only": 0.11638809385408035, "unsecured_only": 0.12377387987346156, "both": 0.12451625195091737},
+  "relative_to_baseline": {"mortgage_only": 0.00690114496872, "unsecured_only": 0.07079734047419, "both": 0.07721977828574},
+  "interpretation": "Current-calibration four-year birth flows at common initial population and prices; not completed fertility, GE, or revised-calibration results.",
+  "outstanding": ["author choice of earnings variant", "recalibration and GE closure"]
+}

@@ -1,0 +1,40 @@
+{
+  "solve_job": {
+    "id": "18034069",
+    "status": "COMPLETED",
+    "exit_code": 0,
+    "elapsed_seconds": 204
+  },
+  "report_job": {
+    "id": "18036306",
+    "status": "COMPLETED",
+    "exit_code": 0,
+    "elapsed_seconds": 11
+  },
+  "earlier_report_jobs": {
+    "18035268": "CSV fields failed while writing missing cases",
+    "18035719": "strict tolerance rejected float32 probability storage rounding",
+    "18036144": "float32 reporting tolerance failed JSON serialization"
+  },
+  "validation": {
+    "driver_unit_tests": 6,
+    "manual_first_birth_housing_boundary_checks": "passed",
+    "probability_rounding_and_error_rejection_serialization": "passed",
+    "all_case_g_pre_matches_checkpoint": true,
+    "supplementary_png_visually_inspected": true
+  },
+  "limitations": [
+    "Fixed prices and common initial households; no new calibration, GE or transition",
+    "Full standard policy diagnostic gallery not produced",
+    "Fertility-probability normalization not separately audited",
+    "Housing mediation and completed fertility not established"
+  ],
+  "report_source_note": "After successful execution, only wording native tolerance -> reporting arithmetic tolerance of 2e-11 was clarified in source/report; no arithmetic changed. CSV line endings normalized to LF; values unchanged.",
+  "artifact_sha256": {
+    "report/comparisons.csv": "0312fa578d9c5c648fc1b0b4a0545b7e9c1f8eb5b289417d550f659067a9ebc3",
+    "report/metadata.json": "513fa7a07f6db0a4adf45f4543699b76e9789635ebdee18ea792f122be376b63",
+    "report/native_financing_supplement.pdf": "3332aa4d06327866f869f2e031093200c8460cc67d259b3eaa727159490f6ecf",
+    "report/native_financing_supplement.png": "7f755d53bf1898f10103e9894b595a6acb5595b853795d99aeb5ea4a46dc93ae",
+    "report/report.md": "df880984239d837aba4782e5cf623adb0bf965459f787111542fe894ad5be9cc"
+  }
+}

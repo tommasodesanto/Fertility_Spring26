@@ -1,0 +1,55 @@
+{
+  "budget": {
+    "actual_rent": 0.11643025850217076,
+    "budget_excess_mass": 0.0,
+    "budget_tolerance": 1e-09,
+    "maximum_occupied_excess": 7.105427357601002e-15
+  },
+  "case": "baseline",
+  "contract": {
+    "checkpoint_sha256": "3322a61994fb3654d67f4b1d6cf2d0f7cacbb3668d06a417e192ee363c174993",
+    "solver_sha256": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da"
+  },
+  "elapsed_seconds": 36.79066472698469,
+  "interpretation": "fixed-price PE; residuals are diagnostics, not clearing gates",
+  "label": "baseline_01",
+  "mass": {
+    "birth_mass": 0.1155903878306699,
+    "current_mass": 0.9999999999997617,
+    "post_fertility_mass": 1.0000000000000229,
+    "pre_mass": 1.0000000000000229
+  },
+  "parameter_changes": [],
+  "policy_audit": {
+    "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+    "lower_node_mass_at_negative_steps": 0.0,
+    "maximum_occupied_value_drop": 0.0,
+    "occupied_negative_steps": 0,
+    "probabilities": {
+      "continuation_birth": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      },
+      "first_birth": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      },
+      "location": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      },
+      "tenure": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      }
+    },
+    "share_pre_choice_mass_at_negative_steps": 0.0,
+    "value_drop_tolerance": 1e-07
+  },
+  "relative_market_residual": 4.5166978872673303e-07,
+  "status": "completed"
+}

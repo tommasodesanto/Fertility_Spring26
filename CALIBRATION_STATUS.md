@@ -1,5 +1,24 @@
 # Calibration Status
 
+**September 19, 2026 — native financing diagnostic completed:** Torch job
+**18034069** (`native_finance`) completed in 3m24s with exit 0. Both baseline
+controls reproduced saved policies, current mass, and births at
+`atol=1e-10, rtol=0`; all five cases passed zero budget-excess mass and
+occupied wealth-value-drop gates. Current-calibration four-year birth flows
+at common initial population and prices were baseline **0.1155903878306699**,
+mortgage-only **0.11638809385408035** (**+0.690114496872%**), unsecured-only
+**0.12377387987346156** (**+7.079734047419%**), and both
+**0.12451625195091737** (**+7.721977828574%**). These are birth flows, not
+completed fertility; they are partial-equilibrium diagnostics, not GE or
+new-calibration results. Mortgage-only relaxes both deposit and collateral
+limits; `lambda=5` is five times age-specific after-tax four-year earnings and
+is zero in retirement. See the [submission receipt](output/model/native_financing_diagnostic_20260919/README.md)
+and [supplementary measured report](output/model/native_financing_diagnostic_20260919/report/report.md).
+Retained native full-fit references: [target fit](output/model/paper_baseline_sep14/replay_20260917/native_output/selected_target_fit.csv)
+and [parameters](output/model/paper_baseline_sep14/replay_20260917/native_output/selected_parameters.csv).
+Outstanding: author choice of earnings variant and recalibration/GE closure;
+no automatic launch follows.
+
 **Active development baseline (September 17, 2026):** This branch is the
 current-main integration of the immutable Monday paper reference. The original
 reference remains available at tag `paper-baseline-2026-09-14`; use this branch

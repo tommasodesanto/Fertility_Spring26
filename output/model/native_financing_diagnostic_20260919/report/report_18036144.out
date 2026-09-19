@@ -1,0 +1,14 @@
+baseline: measurement unavailable: TypeError: Object of type float32 is not JSON serializable
+mortgage_only: measurement unavailable: TypeError: Object of type float32 is not JSON serializable
+unsecured_only: measurement unavailable: TypeError: Object of type float32 is not JSON serializable
+both: measurement unavailable: TypeError: Object of type float32 is not JSON serializable
+Traceback (most recent call last):
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/build_e5f_native_financing_report.py", line 257, in <module>
+    main()
+    ~~~~^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/build_e5f_native_financing_report.py", line 253, in main
+    build(p.parse_args(argv))
+    ~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/build_e5f_native_financing_report.py", line 244, in build
+    raise RuntimeError(f"report incomplete; reasons saved in metadata.json: {missing}")
+RuntimeError: report incomplete; reasons saved in metadata.json: {'baseline': 'measurement unavailable: TypeError: Object of type float32 is not JSON serializable', 'mortgage_only': 'measurement unavailable: TypeError: Object of type float32 is not JSON serializable', 'unsecured_only': 'measurement unavailable: TypeError: Object of type float32 is not JSON serializable', 'both': 'measurement unavailable: TypeError: Object of type float32 is not JSON serializable'}

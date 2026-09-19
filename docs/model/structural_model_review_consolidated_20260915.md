@@ -691,6 +691,24 @@ blocks, reconcile the evidence). Same procedure; Fable supplies the finding.
 > any comparison must preserve empirical identification and reconcile the
 > earnings evidence, tax units, wealth gradients and fertility gradients.
 
+> **Follow-up, September 19.** The author wants the classic macro earnings
+> process, as in Boar–Gorea–Midrigan and Sommer. Candidate to test: an age
+> profile plus persistent AR(1) and iid transitory risk, with no permanent
+> type. This is a test candidate, not baseline adoption; the current sandbox
+> BGM variant omits iid transitory risk and is not the full candidate.
+
+> **Follow-up, September 19 (result).** The native fixed-price diagnostic
+> completed successfully: the two baseline controls reproduced saved policies,
+> current mass and births at `atol=1e-10, rtol=0`, and all five cases passed
+> the budget-excess, mass and occupied wealth-value-drop gates. Four-year
+> birth flows at common initial population and prices were baseline
+> 0.1155903878306699, mortgage-only 0.11638809385408035 (+0.690114496872%),
+> unsecured-only 0.12377387987346156 (+7.079734047419%), and both
+> 0.12451625195091737 (+7.721977828574%). These are current-calibration
+> birth-flow diagnostics, not completed fertility, GE offsets or revised-
+> calibration results. The earnings variant and recalibration/GE closure
+> remain outstanding.
+
 ## E2. Earnings risk and fertility
 
 **Agreed.** Keep. The channel already exists through continuation values and
@@ -724,6 +742,19 @@ preference and credit interpretations; then earnings and geographic scope;
 then identify the revised vector. Fable: F3 and E1 (parameter-level, cheap);
 then H1 and F2 in one refit; then H4 with D2's terminal condition; then D4
 with the final refit.
+
+> **Follow-up, September 19.** The author authorizes a two-stage evaluation:
+> (1) run matched native-reference fixed-parameter financing diagnostics for
+> four financing cases, crossing baseline versus full mortgage financing with
+> baseline versus expanded unsecured credit. Validate the reference first,
+> compare at common prices and population with preferences fixed, then assess
+> equilibrium effects under an explicit demographic closure. A positive closed
+> stationary population cannot be assumed when fertility changes under the
+> original births/2.1 entry rule; (2) after the author chooses economic changes
+> and the empirical contract is reconciled, recalibrate and repeat the
+> mechanism diagnostics. No automatic full-calibration launch. The September
+> 20 assessment must distinguish partial-equilibrium effects, GE offsets and
+> revised-calibration results; sandbox comparisons are not broader proof.
 
 ## X2. The smallest defensible set
 
@@ -885,6 +916,7 @@ for the structural decisions; do not open parallel notes without an entry.
 | 2026-09-17 | all | **Baseline is now solid.** Codex replayed the archived initial-state recipe on Torch (job 17923835, 14 min): all 13 moments and 17 parameters match exactly, loss 179.2984242480; slides PDF and figure sources mapped. Receipt: `output/model/paper_baseline_sep14/replay_20260917/README.md`. The sandbox's own assembly still lands elsewhere; it is being aligned to the recipe's functions so spec comparisons run at deck level | replay receipt | Sandbox alignment in progress |
 | 2026-09-17 | P1, F2 | `main` reconciled with the paper baseline (commit 40ccecb4, solver hash 2992412…). The four fixed-ψ steady states rerun on it are identical to every digit to the earlier runs (losses 2535.40 / 8981.09 / 1950.60 / 2376.63), so the earlier sandbox conclusions stand unchanged and the solver version never affected the sequential household problem. The remaining gap to the deck's levels is entirely in the original driver's parameter assembly, pending the Codex replay | `output/model/sandbox/baseline_code/` | Conclusions unchanged |
 | 2026-09-17 | E1 | Author tentatively leans toward removing permanent earnings types and considering persistent-plus-iid-transitory earnings risk; final decision pending | this section | Tentative—author decision pending |
+| 2026-09-19 | E1, X1 | Authorized test plan: classic macro earnings candidate (age profile + persistent AR(1) + iid transitory, no permanent type) and staged native-reference financing diagnostics before any recalibration; candidate/specification remains pending | `output/model/native_financing_diagnostic_20260919/README.md` | Test authorized; no baseline adoption or automatic full calibration |
 | 2026-09-17 | all | Branch question settled by the Codex session: the paper's code is the tagged worktree `tmp/paper_baseline_sep14/` (`paper-baseline-2026-09-14`, hashes checked). All sandbox specs now set `package_root` to it. The numerical replay of the original recipe, and the testing framework, are owned by that session; the sandbox gate becomes a comparison against that replay | `tmp/paper_baseline_sep14/PAPER_BASELINE.md` | Replay pending on their side |
 | 2026-09-17 (early) | all | Gate rerun on the production snapshot with the receipt-hash solver: the joint (price, ψ, transfer) root converges in 14 evaluations (33 s each) but to a different equilibrium: ψ 0.163 vs 0.149, mean rooms 6.05 vs 6.42, ownership 30–55 0.478 vs 0.540, recent-parent gap 0.46 vs 0.14; fertility rows match within 0.01. Solver version is ruled out; the remaining difference is in the parameter construction, which the sandbox re-implements. Next step: replay the fetched `run_capped_beta.py`/`run_profile.py` locally with the snapshot as `source_root` instead of re-implementing, and diff the resulting parameter object against the sandbox's | `output/model/sandbox/baseline_joint/` | Gate still open; sandbox valid for differences, not levels |
 | 2026-09-17 (early) | all | Production snapshot fetched (367 .py files, `corrected_initial_source_fetched/`, MANIFEST with hashes): every package file matches commit 70abd4a8 except `solver.py`, of which three versions exist (main 7a0baaa2…, the template's `corrected_initial_source` 3bd6782e…, and the receipt's 2992412… found only in `corrected_initial_source_v2`, a folder the template's own provenance fields do not name). The receipt-hash solver is local as `solver_receipt_hash.py`. Gate rerun against the snapshot with that solver is running (joint root, full grid) | `corrected_initial_source_fetched/MANIFEST.md` | Provenance fields in the template disagree with where the receipt hash lives; flag for the author |

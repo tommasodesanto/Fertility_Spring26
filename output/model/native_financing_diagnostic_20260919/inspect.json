@@ -1,0 +1,202 @@
+{
+  "cases": [
+    {
+      "case": "baseline",
+      "changed_fields": [],
+      "lambda_d": 0.0,
+      "phi": [
+        0.8,
+        0.8,
+        0.8,
+        0.8
+      ],
+      "taper": [
+        42.0,
+        62.0
+      ]
+    },
+    {
+      "case": "mortgage_only",
+      "changed_fields": [
+        "phi"
+      ],
+      "lambda_d": 0.0,
+      "phi": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "taper": [
+        42.0,
+        62.0
+      ]
+    },
+    {
+      "case": "unsecured_only",
+      "changed_fields": [
+        "debt_caps",
+        "debt_taper_end_age",
+        "debt_taper_start_age",
+        "debt_taper_weights",
+        "lambda_d"
+      ],
+      "lambda_d": 5.0,
+      "phi": [
+        0.8,
+        0.8,
+        0.8,
+        0.8
+      ],
+      "taper": [
+        82.0,
+        86.0
+      ]
+    },
+    {
+      "case": "both",
+      "changed_fields": [
+        "debt_caps",
+        "debt_taper_end_age",
+        "debt_taper_start_age",
+        "debt_taper_weights",
+        "lambda_d",
+        "phi"
+      ],
+      "lambda_d": 5.0,
+      "phi": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "taper": [
+        82.0,
+        86.0
+      ]
+    }
+  ],
+  "contract": {
+    "checkpoint_sha256": "3322a61994fb3654d67f4b1d6cf2d0f7cacbb3668d06a417e192ee363c174993",
+    "solver_sha256": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da"
+  },
+  "g_pre_mass": 1.0000000000000229,
+  "g_pre_shape": [
+    120,
+    6,
+    1,
+    17,
+    15,
+    4,
+    4
+  ],
+  "packet_keys": [
+    "b_grid",
+    "contract_sha256",
+    "demographic_seed",
+    "evaluation",
+    "parameters",
+    "shared",
+    "solution",
+    "stationary_g_pre",
+    "supply_rule"
+  ],
+  "policy_shapes": {
+    "V": [
+      120,
+      6,
+      1,
+      17,
+      15,
+      4,
+      4
+    ],
+    "bp_pol": [
+      120,
+      6,
+      1,
+      17,
+      15,
+      4,
+      4
+    ],
+    "c_pol": [
+      120,
+      6,
+      1,
+      17,
+      15,
+      4,
+      4
+    ],
+    "fert2_probs": [
+      120,
+      6,
+      1,
+      17,
+      15,
+      2,
+      2,
+      4
+    ],
+    "fert_probs": [
+      120,
+      6,
+      1,
+      17,
+      15,
+      4
+    ],
+    "fert_value": [
+      120,
+      6,
+      1,
+      17,
+      15
+    ],
+    "hR_pol": [
+      120,
+      6,
+      1,
+      17,
+      15,
+      4,
+      4
+    ],
+    "loc_probs": [
+      120,
+      6,
+      1,
+      1,
+      17,
+      15,
+      4,
+      4
+    ],
+    "price": [
+      1
+    ],
+    "tenure_choice": [
+      120,
+      6,
+      1,
+      17,
+      15,
+      4,
+      4
+    ],
+    "tenure_probs": [
+      120,
+      6,
+      1,
+      17,
+      15,
+      4,
+      4,
+      6
+    ]
+  },
+  "scope": "fixed-price full-lifecycle PE; saved pre-choice mass; no GE/closure claim",
+  "source_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model",
+  "status": "inspect_only"
+}
