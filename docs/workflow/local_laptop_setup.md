@@ -61,7 +61,7 @@ are under `output/setup/laptop_20260919/` (local generated files).
 | --- | --- |
 | Stata | Native StataMP 17 batch execution passed a generated-data assertion. Binary: `/Applications/Stata/StataMP.app/Contents/MacOS/stata-mp`. Not on the shell PATH. |
 | LaTeX | `latexmk -pdf` compiled a temporary copy of `latex/JMP_DS_draft` to four pages. Source and author PDF untouched. TeX Live 2021; an empty-bibliography warning remains. |
-| R | Blocked: `/usr/local/bin/R` and `Rscript` resolve to Intel R 4.5 and fail on this machine. Install native Apple Silicon R, then restore/check the packages required by each empirical driver. |
+| R | Repaired September 19: native R 4.6.1, 33 project packages load, 28 existing NCHS tests and the empirical runtime smoke pass. See the R installation receipt below. |
 | Torch | Initial authentication failure was resolved by the author later on September 19. One compute-node benchmark subsequently completed; see below. |
 
 The ATTOM assessor `.dta`, AHS raw data, PSID outputs, MMS family-size outputs,
@@ -79,6 +79,39 @@ full data inventory or empirical reproduction.
 The checkout had substantial pre-existing edits. They were preserved. The
 September 19 generated memory snapshot incorrectly described it as clean;
 live Git status was used for this setup work.
+
+## Native R installation receipt
+
+On the author's request, installed the official [CRAN R 4.6.1 Apple Silicon
+package](https://cran.r-project.org/bin/macosx/). The downloaded installer's
+SHA-1 matched CRAN (`fc9f4ada15589e8e037b9bf05563d21e97181635`), and
+`pkgutil --check-signature` confirmed the Apple-trusted Simon Urbanek installer
+signature and notarization. macOS administrator authentication authorized the
+system installation. The old framework versions 4.2 and 4.5-x86_64 remain;
+`R`, `Rscript`, and `/Applications/R.app` now use native ARM R 4.6.1.
+
+Packages were installed as CRAN macOS binaries into the separate user library
+`~/Library/R/arm64/4.6/library`, without copying Intel binary packages or changing
+the user's `.Renviron`. All 33 packages checked from the empirical/data scripts
+load successfully, including `data.table`, `haven`, `fixest`, `ggplot2`, `sf`,
+`tidycensus`, `ipumsr`, `modelsummary`, and `tidyverse`. The exact package/version
+receipt is `output/setup/laptop_20260919/r/packages.csv`. This is a runtime
+snapshot, not a historical package-version lock or full empirical reproduction.
+
+Verification:
+
+- `Rscript code/data/nchs_natality_timing/test_first_birth_timing_targets.R`:
+  all 28 existing deterministic checks pass.
+- Native architecture assertion; fixed-effects estimate agrees with a dummy-
+  variable regression to `1e-10`; clustered standard errors compute successfully.
+- Stata write/read numeric round trip, PNG graphics, `sf` coordinate transform,
+  and a five-row read of the existing ATTOM Stata file pass. The initial smoke
+  compared Stata display-format attributes as well as numeric data; the corrected
+  numeric comparison passes with tolerance `1e-12`.
+
+Installation script, smoke script, logs and session details are under
+`output/setup/laptop_20260919/r/`. No production data builder was rerun and no
+empirical output was overwritten. MATLAB installation remains author-owned.
 
 ## Full-grid timing replay, September 19
 
