@@ -1,0 +1,19 @@
+--- /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/psid_followup_mar2026/sa_rooms_first_birth_household_aligned_v1.do
++++ /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/setup/empirical_laptop_20260919/stata/sa_rooms_first_birth_household_aligned_v1.do
+@@ -1,6 +1,6 @@
+ clear all
+ set more off
+-set processors 8
++set processors 2
+ version 17.0
+ 
+ * Corrected first-birth housing-space target.
+@@ -13,7 +13,7 @@
+ 
+ local project "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26"
+ local source  "/Users/tommasodesanto/Desktop/Projects/Fertility/PSID/PSIDSHELF_MOBILITY.dta"
+-local outroot "`project'/code/data/psid_followup_mar2026/output"
++local outroot "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/setup/empirical_laptop_20260919/stata"
+ local outdir  "`outroot'/sa_rooms_first_birth_household_aligned_v1"
+ 
+ cap mkdir "`outroot'"

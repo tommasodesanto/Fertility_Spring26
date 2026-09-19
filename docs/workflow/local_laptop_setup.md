@@ -57,6 +57,11 @@ are under `output/setup/laptop_20260919/` (local generated files).
 
 ## Other workflows
 
+Two subsequent full empirical replays passed: the R PSID wealth-gradient builder
+and the Stata first-birth housing event study. Both reproduce the saved outputs
+to numerical precision. See [empirical replay receipts](../../output/setup/empirical_laptop_20260919/README.md)
+for runtime, memory, sample checks and isolated output paths.
+
 | Workflow | Verified status |
 | --- | --- |
 | Stata | Native StataMP 17 batch execution passed a generated-data assertion. Binary: `/Applications/Stata/StataMP.app/Contents/MacOS/stata-mp`. Not on the shell PATH. |
