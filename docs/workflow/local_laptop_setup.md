@@ -203,3 +203,22 @@ submission recipe. An earlier launcher job `18029664` exited before importing
 or solving the model because the node lacked `/usr/bin/time`; the corrected
 launcher uses Python's standard `resource` module. No failed model case was
 retried, and no calibration or policy job was submitted.
+
+### Bounded local calibration test
+
+The September 19 local mini-calibration uses the frozen paper-baseline initial
+objective, twelve scored restrictions, nine structural coordinates, and the
+separate completed-fertility normalization. It is a diagnostic neighborhood
+search, not a replacement production calibration. Staging and orchestration
+live in `code/model/tools/stage_local_paper_calibration.py` and
+`code/model/tools/run_local_mini_calibration.py`. Receipts and the run report
+live under `output/model/local_mini_calibration_20260919/`.
+
+The archived normalized seed uses NumPy 2 pickle namespaces. On this NumPy 1
+installation, the staged `runtime/sitecustomize.py` supplies import aliases.
+The frozen wrapper replaces `PYTHONPATH` for children, so this compatibility
+module must also be temporarily available in the virtual environment's
+`site-packages`. A `.pth` path is unreliable here: its macOS hidden flag
+was restored during the run, and Python skips hidden `.pth` files.
+Remove the temporary compatibility files after the run. Do not change the
+hash-pinned solver, scorer, objective, or target definitions for portability.

@@ -1,0 +1,44 @@
+{
+  "scope": "Diagnostic local nearby-parameter search of the frozen paper-baseline initial-state objective; not production promotion",
+  "workers": 6,
+  "threads_per_worker": 1,
+  "global_seconds": 1500,
+  "case_seconds": 420,
+  "verification_reserve_seconds": 240,
+  "maximum_new_proposals": 12,
+  "baseline_smoke_required": true,
+  "selected_repeat_required": true,
+  "estimated_wall_minutes": 15,
+  "stop_rules": [
+    "Baseline must reproduce full saved score tables before any candidate search",
+    "No new wave after any failed candidate",
+    "No new wave without case budget plus verification reserve",
+    "Terminate owned worker groups if sampled combined RSS exceeds24GiB",
+    "Stop all owned workers at25minutes"
+  ],
+  "input_checkpoint_sha256": "dfeb34f077e7a16804119eabd43cb8ee0611b0c3bb0180ec8af8ad7dc51b94e4",
+  "objective_canonical_sha256": "4440ea07f4de957740ca6c04961d2806d9b9ef782c7a0e7dad4ce73e1db651b1",
+  "reference_proposal": {
+    "case_id": "selected_parameters_probability_mass_fixed",
+    "initial_psi": 0.14749883802554029,
+    "parameters": {
+      "H0": 8.11210048056786,
+      "beta_annual": 0.99,
+      "chi": 1.0496534423047694,
+      "first_birth_fixed_cost": 0.26576477618628114,
+      "h_P": 2.3,
+      "kappa_fert": 0.33773423411167025,
+      "kappa_fert_continuation": 0.39785645171756406,
+      "theta0": 0.08105103333987912,
+      "theta1": 0.08520356663830632
+    },
+    "repetitions": 2
+  },
+  "reference_loss": 179.2984242480252,
+  "source": "September14 frozen paper baseline; all641 source pins including documentation restored",
+  "free_coordinates": 9,
+  "scored_moments": 12,
+  "separate_normalization": 2.1,
+  "identification_established": false,
+  "production_eligible": false
+}
