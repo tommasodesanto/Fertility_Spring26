@@ -1,5 +1,8 @@
 # Python Model Codebase
 
+Local installation and laptop smoke checks: [setup guide](../../docs/workflow/local_laptop_setup.md).
+The tested Apple Silicon dependency snapshot is `requirements-laptop.txt`.
+
 **Active development baseline (September 17, 2026):** This branch integrates
 the Monday paper reference into main while preserving current main-only work.
 The immutable reference is tag `paper-baseline-2026-09-14`.

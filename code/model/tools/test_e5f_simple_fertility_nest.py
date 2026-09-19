@@ -272,10 +272,11 @@ class SimpleFertilityNestTests(unittest.TestCase):
                 A_f_end=1 if fertile else 2, n_parity=2, n_child_states=2,
                 first_birth_fixed_cost=.01, birth_entry_grant=False)
             calls = []
-            def kernel(restricted, grants, rental_flag):
+            def kernel(restricted, grants, stay_values, strict_interpolated_support):
                 products = np.flatnonzero(np.any(restricted > -1e9, axis=(0, 2, 3)))
                 self.assertEqual(len(products), 1)
-                self.assertTrue(rental_flag)
+                np.testing.assert_array_equal(stay_values, restricted)
+                self.assertTrue(strict_interpolated_support)
                 product = int(products[0])
                 calls.append(product)
                 return np.where(np.isfinite(q[..., product]), q[..., product], -1e10), None
