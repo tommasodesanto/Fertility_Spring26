@@ -99,8 +99,9 @@ are comparable across rows, not with the slides' 179.
 | Parent-age maturation | 2464 | 0.167 | 0.210 | 26.5 | 0.449 | 4.36 | 1.39 | 0.45 |
 | Modest unsecured credit line | 2539 | 0.187 | 0.202 | 25.8 | 0.446 | 4.32 | 1.15 | 0.46 |
 | Concave child benefit (log) | 2111 | 0.199 | 0.210 | 25.9 | 0.449 | 4.15 | 1.10 | 0.43 |
-| Estate transfer to ages 45–65 | running on Torch (job 17949060, resubmitted 12:20) | | | | | | | |
-| All switches together | running on Torch (job 17949061, resubmitted 12:20) | | | | | | | |
+| Estate transfer to ages 45–65 | 2582 | 0.181 | 0.193 | 26.4 | 0.446 | 4.07 | 1.06 | 0.46 | | | | | | | |
+| All switches together | 962 | 0.480 | 0.223 | 27.6 | 0.426 | 4.44 | 0.97 | 0.27 |
+| Rental cap at 8 rooms (no other change) | 489 | 0.189 | 0.202 | 26.1 | 0.300 | 4.38 | 1.36 | 0.23 | | | | | | | |
 
 Targets: childless 0.198, first-birth age 26.0, ownership 0.648, p90/p50
 3.52, rooms response 0.72, recent-parent gap 0.16.
@@ -172,8 +173,23 @@ welfare-accounting choice more than a fit lever.
   repaired at noon, the smoke passed in 39 seconds, and the two rows that
   depend on it (estate transfer and all switches with ψ re-normalized; each
   estate iteration re-solves the equilibrium, so they are too slow for the
-  laptop) were resubmitted as jobs 17949060 and 17949061 with twelve-hour
-  limits. Their rows are filled in when they finish.
+  laptop) were resubmitted as jobs 17949060 and 17949061 and completed in
+  2.2 and 8.8 hours; their rows are in the table. Estate transfer: loss 2582
+  (2607), first births later by a third of a year, old-age tail 4.07 (4.32),
+  nothing else moves. All switches together: loss 962, ψ 0.480 (two and a
+  half times the baseline root), first-birth age 27.6 against 26.0, first
+  births 30+ 0.32 against 0.25, wealth/earnings 4.4, rooms 5.25 (below the
+  5.56 target for the first time), three-plus rooms gap 0.58 (target 0.35).
+  The switches do not add up: the penalty and the maturation law each need a
+  higher ψ and together push timing past the target, while the wedge alone
+  fits better (402) than all of them together.
+- Added September 19: rental cap raised from six to eight rooms, nothing
+  else changed. Fixed ψ: completed fertility 1.876 against 1.872, childless
+  0.238 against 0.239, first-birth age unchanged, ownership 0.31 against
+  0.46, recent-parent gap 0.21 against 0.46. ψ root: loss 489, ψ 0.189
+  (baseline 0.190). On the paper's model the cap is an ownership lever, not a
+  fertility lever; the July 1 audit claim (TFR +0.071 from the cap) was
+  measured on the earlier package and does not carry over.
 - Not done: nothing was fitted, no shock estimation, no transition, no
   production default changed, per the standing rule. The recovery batch
   (job 17858740) stays stopped.
@@ -195,8 +211,7 @@ automatic repacking; left for the Codex session.
 
 # 5. Next steps, in order
 
-1. Collect the two long Torch runs (estate transfer, all switches, ψ root)
-   when they finish and add their rows here.
+1. Done: both Torch runs collected (rows above).
 2. Decide F3, P1, H3/H6, H1, E1, F2 from the table; each has a recommendation
    above.
 3. With the decisions made, one refit under the same target contract, on

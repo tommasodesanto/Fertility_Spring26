@@ -1,0 +1,22 @@
+parameter,estimate,lower,upper,near_bound,status
+H0,8.11210048056786,0.2,80.0,False,"structural coordinate (retained, possibly spec-overridden)"
+beta_annual,0.99,0.94,0.99,True,"structural coordinate (retained, possibly spec-overridden)"
+chi,1.0496534423047694,0.1,5.0,False,"structural coordinate (retained, possibly spec-overridden)"
+first_birth_fixed_cost,0.26576477618628114,0.0,8.0,False,"structural coordinate (retained, possibly spec-overridden)"
+h_P,2.3,0.1,2.3,True,"structural coordinate (retained, possibly spec-overridden)"
+kappa_fert,0.33773423411167025,0.02,50.0,True,"structural coordinate (retained, possibly spec-overridden)"
+kappa_fert_continuation,0.39785645171756406,0.02,50.0,True,"structural coordinate (retained, possibly spec-overridden)"
+theta0,0.08105103333987912,0.0,8.0,True,"structural coordinate (retained, possibly spec-overridden)"
+theta1,0.08520356663830632,0.02,16.0,True,"structural coordinate (retained, possibly spec-overridden)"
+psi_child,0.18129970325273911,,,False,normalized to completed fertility 2.1 unless spec fixes psi
+payroll_tax,0.179,,,False,externally fixed (P.tau_pay)
+housing_supply_elasticity,,,,False,not applicable: this is a dated-transition supply_rule.elasticity value (0.63 in the retained report); the bare stationary solve has no such object
+tenure_choice_kappa,0.005,,,False,externally fixed or sandbox switch
+alpha_cons,0.733,,,False,externally fixed or sandbox switch
+sigma,2.0,,,False,externally fixed or sandbox switch
+child_benefit_form,,,,False,externally fixed or sandbox switch
+child_benefit_curvature,,,,False,externally fixed or sandbox switch
+scale_weighting,,,,False,externally fixed or sandbox switch
+phi,"[0.8, 0.8, 0.8, 0.8]",,,False,"financed share by parity; solved P.phi (default 0.80, spec-overridable; see apply_spec's phi/n_parity broadcast workaround)"
+lambda_d,0.0,,,False,"unsecured debt-line multiple of mean earnings (default 0.0, spec-overridable)"
+_solved_price,[0.8030272610657875],,,False,warm-start cache (not a model parameter)
