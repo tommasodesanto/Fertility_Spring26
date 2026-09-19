@@ -1,0 +1,23 @@
+cs602.hpc.nyu.edu
+Architecture:                            x86_64
+CPU op-mode(s):                          32-bit, 64-bit
+Address sizes:                           46 bits physical, 57 bits virtual
+Byte Order:                              Little Endian
+CPU(s):                                  128
+On-line CPU(s) list:                     0-127
+Vendor ID:                               GenuineIntel
+Model name:                              INTEL(R) XEON(R) PLATINUM 8592+
+CPU family:                              6
+Model:                                   207
+Thread(s) per core:                      1
+Core(s) per socket:                      64
+Socket(s):                               2
+Stepping:                                2
+CPU(s) scaling MHz:                      78%
+CPU max MHz:                             3900.0000
+CPU min MHz:                             800.0000
+BogoMIPS:                                3800.00
+Starting one full-grid solve: 17 ages, 120 wealth nodes, one thread
+  Markov income fixed-price solve: own=56.6% TFR=3.74
+{"status": "passed", "wall_seconds": 30.29907930997433, "timings": {"bellman_full": 22.660383420996368, "distribution": 7.632181120017776, "n_full": 1, "n_eval": 0, "n_dist": 1, "income_process": "markov", "bellman_mode": "full_only"}, "market_relative_residual": 4.5166976518417447e-07}
+PEAK_RSS_KIB 1187024

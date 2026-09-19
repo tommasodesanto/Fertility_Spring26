@@ -62,7 +62,7 @@ are under `output/setup/laptop_20260919/` (local generated files).
 | Stata | Native StataMP 17 batch execution passed a generated-data assertion. Binary: `/Applications/Stata/StataMP.app/Contents/MacOS/stata-mp`. Not on the shell PATH. |
 | LaTeX | `latexmk -pdf` compiled a temporary copy of `latex/JMP_DS_draft` to four pages. Source and author PDF untouched. TeX Live 2021; an empty-bibliography warning remains. |
 | R | Blocked: `/usr/local/bin/R` and `Rscript` resolve to Intel R 4.5 and fail on this machine. Install native Apple Silicon R, then restore/check the packages required by each empirical driver. |
-| Torch | SSH configuration exists and the login host is reachable, but authentication is rejected. Renew interactive access with `ssh torch`, then verify `bash code/cluster/torch.sh status`. No job submitted. |
+| Torch | Initial authentication failure was resolved by the author later on September 19. One compute-node benchmark subsequently completed; see below. |
 
 The ATTOM assessor `.dta`, AHS raw data, PSID outputs, MMS family-size outputs,
 and mortgage-policy birth data were found locally. Follow-up verification
@@ -107,7 +107,8 @@ cluster CPU model has not been recovered. The observed laptop phase total is
 about 22.5% lower, but this is not a controlled hardware speedup estimate.
 The 384-second Torch root time covers multiple household solves and must not
 be compared with this one-solve laptop timing. No matched old-Mac measurement
-is available yet; old-Mac access and renewed Torch authentication are pending.
+is available yet; old-Mac access is pending. Torch access was subsequently
+restored and a fresh matched run completed, as recorded below.
 
 All ten policy/value/distribution array comparisons pass at `rtol=atol=1e-9`;
 the largest absolute difference is below `1e-12`. Housing relative residual
@@ -131,3 +132,36 @@ code/model/.venv/bin/python code/model/tools/benchmark_saved_stationary.py \
 The driver pins one thread, writes provenance before solving, refuses an existing
 output folder, and stops after 15 minutes. Submit it through the established
 Slurm workflow on Torch, not on a login node.
+
+### Fresh Torch comparison after login renewal
+
+Job `18029672` completed successfully on `cs602`, an Intel Xeon Platinum 8592+
+node, with one allocated CPU and an empty Numba cache. Source-package hashes
+and the input checkpoint SHA-256 match the laptop receipt exactly. Every array
+comparison and the housing/pension gates passed.
+
+| Phase | M5 Pro | Fresh Torch run |
+| --- | ---: | ---: |
+| Household backward solution | 11.19233 s | 22.66038 s |
+| Stationary distribution and statistics | 5.32488 s | 7.63218 s |
+| Full solve call | 16.52084 s | 30.29908 s |
+
+The observed solve-call ratio is 1.834 (45.5% less elapsed time on the laptop).
+Both are single cold-cache observations, not repeated warm-speed estimates.
+The installed runtimes differ: laptop Python 3.10.21 / NumPy 1.24.3 / Numba
+0.58.1; Torch Python 3.13.5 / NumPy 2.1.3 / Numba 0.61.0. This compares the
+working installations, not CPU hardware alone. Diagnostics and checkpoint
+loading are outside the solve timer on both machines.
+
+Torch Python peak RSS, including input loading and diagnostics, was 1,187,024
+KiB (1.132 GiB); Slurm batch MaxRSS was 1,215,124 KiB. Laptop peak RSS was not
+recorded. When the author noticed high laptop RAM usage, no Python/model process
+remained; macOS showed zero swap and approximately 84 MiB compressed memory.
+This snapshot cannot attribute an earlier transient memory peak.
+
+Raw fresh-cluster receipts and hardware information are under
+`output/model/laptop_benchmark_20260919/torch/`; `torch_run.sh` preserves the
+submission recipe. An earlier launcher job `18029664` exited before importing
+or solving the model because the node lacked `/usr/bin/time`; the corrected
+launcher uses Python's standard `resource` module. No failed model case was
+retried, and no calibration or policy job was submitted.

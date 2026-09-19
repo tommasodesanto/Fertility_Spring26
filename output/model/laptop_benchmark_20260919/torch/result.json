@@ -1,0 +1,79 @@
+{
+  "status": "passed",
+  "wall_seconds": 30.29907930997433,
+  "timings": {
+    "bellman_full": 22.660383420996368,
+    "distribution": 7.632181120017776,
+    "n_full": 1,
+    "n_eval": 0,
+    "n_dist": 1,
+    "income_process": "markov",
+    "bellman_mode": "full_only"
+  },
+  "comparisons": {
+    "V": {
+      "max_abs_gap": 0.0,
+      "equal": true
+    },
+    "c_pol": {
+      "max_abs_gap": 0.0,
+      "equal": true
+    },
+    "hR_pol": {
+      "max_abs_gap": 0.0,
+      "equal": true
+    },
+    "bp_pol": {
+      "max_abs_gap": 0.0,
+      "equal": true
+    },
+    "tenure_choice": {
+      "max_abs_gap": 0.0,
+      "equal": true
+    },
+    "tenure_probs": {
+      "max_abs_gap": 0.0,
+      "equal": true
+    },
+    "loc_probs": {
+      "max_abs_gap": 0.0,
+      "equal": true
+    },
+    "fert_probs": {
+      "max_abs_gap": 0.0,
+      "equal": true
+    },
+    "fert_value": {
+      "max_abs_gap": 0.0,
+      "equal": true
+    },
+    "g": {
+      "max_abs_gap": 0.0,
+      "equal": true
+    }
+  },
+  "market_relative_residual": 4.5166976518417447e-07,
+  "fiscal": {
+    "actual_accounts": {
+      "payroll_tax_base_period": 2.9632058966780654,
+      "retiree_benefit_exposure": 0.2591985258304075,
+      "worker_household_mass": 0.7408014741693314,
+      "retiree_household_mass": 0.2591985258304075,
+      "payroll_tax_rate": 0.179,
+      "pension_period_units": 2.0463613896121218,
+      "payroll_tax_revenue": 0.5304138555053737,
+      "pension_outlays": 0.5304138555037261,
+      "pension_budget_residual": 1.6475709685437323e-12,
+      "scaled_pension_budget_residual": 3.106198964154021e-12,
+      "implied_balanced_pension_period": 2.0463613896184785,
+      "implied_balanced_payroll_tax": 0.17899999999944397
+    },
+    "normalized_age_income_max_gap": 5.50419085310061e-14,
+    "marginal_tolerance": 1e-09,
+    "fiscal_tolerance": 1e-06,
+    "marginal_gate": true,
+    "fiscal_gate": true
+  },
+  "full_equilibrium_search": false,
+  "calibration_run": false
+}
