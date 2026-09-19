@@ -1,0 +1,79 @@
+{
+  "status": "passed",
+  "wall_seconds": 16.520842833000188,
+  "timings": {
+    "bellman_full": 11.192328208999925,
+    "distribution": 5.324881917000084,
+    "n_full": 1,
+    "n_eval": 0,
+    "n_dist": 1,
+    "income_process": "markov",
+    "bellman_mode": "full_only"
+  },
+  "comparisons": {
+    "V": {
+      "max_abs_gap": 7.105427357601002e-15,
+      "equal": true
+    },
+    "c_pol": {
+      "max_abs_gap": 9.823253321883385e-13,
+      "equal": true
+    },
+    "hR_pol": {
+      "max_abs_gap": 9.237055564881302e-14,
+      "equal": true
+    },
+    "bp_pol": {
+      "max_abs_gap": 9.823253321883385e-13,
+      "equal": true
+    },
+    "tenure_choice": {
+      "max_abs_gap": 0.0,
+      "equal": true
+    },
+    "tenure_probs": {
+      "max_abs_gap": 0.0,
+      "equal": true
+    },
+    "loc_probs": {
+      "max_abs_gap": 0.0,
+      "equal": true
+    },
+    "fert_probs": {
+      "max_abs_gap": 3.4416913763379853e-15,
+      "equal": true
+    },
+    "fert_value": {
+      "max_abs_gap": 1.7763568394002505e-15,
+      "equal": true
+    },
+    "g": {
+      "max_abs_gap": 7.609066371774831e-17,
+      "equal": true
+    }
+  },
+  "market_relative_residual": 4.516697649166454e-07,
+  "fiscal": {
+    "actual_accounts": {
+      "payroll_tax_base_period": 2.9632058966780646,
+      "retiree_benefit_exposure": 0.2591985258304075,
+      "worker_household_mass": 0.7408014741693312,
+      "retiree_household_mass": 0.2591985258304075,
+      "payroll_tax_rate": 0.179,
+      "pension_period_units": 2.0463613896121218,
+      "payroll_tax_revenue": 0.5304138555053736,
+      "pension_outlays": 0.5304138555037261,
+      "pension_budget_residual": 1.6474599462412698e-12,
+      "scaled_pension_budget_residual": 3.105989651555359e-12,
+      "implied_balanced_pension_period": 2.046361389618478,
+      "implied_balanced_payroll_tax": 0.17899999999944402
+    },
+    "normalized_age_income_max_gap": 5.5042342211875095e-14,
+    "marginal_tolerance": 1e-09,
+    "fiscal_tolerance": 1e-06,
+    "marginal_gate": true,
+    "fiscal_gate": true
+  },
+  "full_equilibrium_search": false,
+  "calibration_run": false
+}

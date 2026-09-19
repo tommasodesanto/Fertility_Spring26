@@ -79,3 +79,55 @@ full data inventory or empirical reproduction.
 The checkout had substantial pre-existing edits. They were preserved. The
 September 19 generated memory snapshot incorrectly described it as clean;
 live Git status was used for this setup work.
+
+## Full-grid timing replay, September 19
+
+One saved-price stationary replay of the September 14 paper baseline completed
+on the Apple M5 Pro (48 GiB RAM) in **16.52084 seconds**. It recomputed the full
+household lifecycle and stationary distribution at the saved equilibrium price:
+17 ages, 120 wealth nodes, all original income/family/tenure states, one thread.
+It did not search for prices, recalibrate parameters or solve a transition.
+
+The matching frozen source is `tmp/paper_baseline_sep14`, checked against the
+paper manifest; the current-main solver has a different hash and was not used
+for this historical timing comparison. The driver reads the September 17
+Torch checkpoint using compatibility mappings for NumPy/Python pickle namespace
+renames; numerical data and parameters are unchanged.
+
+| Phase | M5 Pro, new measurement | Torch, saved September 17 measurement |
+| --- | ---: | ---: |
+| Household backward solution | 11.19233 s | 13.51177 s |
+| Stationary distribution and statistics | 5.32488 s | 7.79160 s |
+| Sum of those phases | 16.51721 s | 21.30337 s |
+
+The laptop used an initially empty Numba cache; its timing includes compilation.
+The Torch phase times come from the final solve inside a warmed 17-evaluation
+initial root, not a fresh benchmark job. Runtime versions differ, and the
+cluster CPU model has not been recovered. The observed laptop phase total is
+about 22.5% lower, but this is not a controlled hardware speedup estimate.
+The 384-second Torch root time covers multiple household solves and must not
+be compared with this one-solve laptop timing. No matched old-Mac measurement
+is available yet; old-Mac access and renewed Torch authentication are pending.
+
+All ten policy/value/distribution array comparisons pass at `rtol=atol=1e-9`;
+the largest absolute difference is below `1e-12`. Housing relative residual
+is `4.5167e-7`, below the unchanged `2.5e-5` gate, and stationary pension checks
+pass. The standard 17 diagnostic PNGs were generated; the market plot and
+age-30 policy panel were visually inspected. Existing policy kinks are retained,
+not diagnosed or changed by this portability benchmark.
+
+Receipts and diagnostics: `output/model/laptop_benchmark_20260919/`.
+To run the same single solve on another machine, use its matching source and
+checkpoint copies and a new output directory:
+
+```sh
+code/model/.venv/bin/python code/model/tools/benchmark_saved_stationary.py \
+  --source-root tmp/paper_baseline_sep14 \
+  --checkpoint output/model/paper_baseline_sep14/replay_20260917/native_output/raw/repetition_01/initial_state.pkl.gz \
+  --manifest output/model/paper_baseline_sep14/manifest.json \
+  --output output/model/laptop_benchmark_new_machine
+```
+
+The driver pins one thread, writes provenance before solving, refuses an existing
+output folder, and stops after 15 minutes. Submit it through the established
+Slurm workflow on Torch, not on a login node.
