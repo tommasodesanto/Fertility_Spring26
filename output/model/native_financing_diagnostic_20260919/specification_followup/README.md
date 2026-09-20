@@ -80,6 +80,36 @@ or entrant wealth fixed unless explicitly verified.
 
 ## Check-ins and present state
 
+### 11:54 Eastern: launched earnings diagnostic; housing source replay passed
+
+Torch jobs **18078286** (smoke) and **18078287** (full, `afterok` smoke)
+use `income_aggregation_v1/submission.json` and `launch_manifest.json` here.
+Remote root is
+`/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_aggregation_v1`.
+Results are under the corresponding repository-relative
+`output/model/native_financing_diagnostic_20260919/specification_followup/income_aggregation_v1/results/{smoke,full}`
+inside that root. The full design is 20 independent batches of 20,000 annual
+income paths, 120 years each; smoke uses two batches of 2,000 paths, 40 years.
+Seed is 20260920. Internal caps are 60/720 seconds, process caps 540/840
+seconds, allocation caps 10/15 minutes, one CPU/4 GB each. Scientific gates
+test mean normalization and analytically known level covariances; neither a
+successful run nor small approximation gaps adopt a new income process.
+The household/stationary solve budgets consumed by this chain are both zero.
+
+`housing_profiles_v1/full/target_recomputed.json` reproduces all four active
+housing targets exactly after the one-chunk smoke. The full empirical pass
+traversed 5,848,121 raw records in 24 chunks and 14.24 seconds. No model solve
+or target change occurred. National figures must retain the same row-specific
+definitions: ownership ages 30–55 in DUE structures is 0.6762604; all-age
+ownership is a different statistic. Supplemental empirical age plots and
+saved-array model comparisons are the next measurement step.
+
+The proposed wedge experiment is still blocked on correct rental expenditure
+in budget audits and isolated-source reproduction. Existing active switch-off
+tests are insufficient to establish reproduction of the frozen checkpoint.
+The saved-credit diagnostic is being narrowed to actual cohort debt/support
+and policy identity, avoiding unsupported native constraint-binding claims.
+
 ### Reviewed Fable assessment and current work
 
 The initial Max/Fable review completed in 517.5 seconds. A separately bounded,

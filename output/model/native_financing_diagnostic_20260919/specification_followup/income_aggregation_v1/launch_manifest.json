@@ -1,0 +1,372 @@
+{
+  "design": {
+    "smoke": [
+      2,
+      2000,
+      40
+    ],
+    "full": [
+      20,
+      20000,
+      120
+    ],
+    "seed": 20260920,
+    "internal_seconds": {
+      "smoke": 60,
+      "full": 720
+    },
+    "process_seconds": {
+      "smoke": 540,
+      "full": 840
+    },
+    "zero_household_model_or_equilibrium_solves": true,
+    "hypothesis": "Quantify differences between four-year averages of annual lognormal income and the current endpoint approximation; no process adoption or recalibration.",
+    "stop_rule": "Stop at failed validity gate or budget; never retry automatically."
+  },
+  "inputs": [
+    {
+      "path": "code/model/tools/diagnose_e5f_income_time_aggregation.py",
+      "sha256": "d07e31a95bd96fdf9784cd98aa5f9d8e210249553df862d416e19a2eed48737b"
+    },
+    {
+      "path": "code/model/tools/build_persistent_transitory_income_candidate.py",
+      "sha256": "7c9571fb38697e9433b32baabbd630656bd935179a4325f7b1e3bbb70e94d087"
+    },
+    {
+      "path": "output/model/native_financing_diagnostic_20260919/earnings_candidate/candidate.json",
+      "sha256": "35fcb1cfc2ae1067def0ec5985e44f0c16df28dedfd47a944444bfcaa4dc0447"
+    },
+    {
+      "path": "code/data/psid_followup_mar2026/output/psid_income_fixed_effect_md_20260727/md_autocovariance_fit.csv",
+      "sha256": "96e65681e37b6e1215efde8b786b8c88151186aef1023ca726648e2c9a41c5ab"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/__init__.py",
+      "sha256": "a7a5fd5a56d05e7460e2c44fd8b147c98fe70ce361d2e8d543257dffc72c253a"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/audit_timing_repaired_readout.py",
+      "sha256": "724d99fbe9be9e771c44663e2705d7bf9cb47c1c2ca1ca5873c51e15fb2430ac"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/benchmark_e1.py",
+      "sha256": "1f120b758764ba826a62e1d0e11c47496117100b4313ea144cd93dccb6360d20"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/build_e2_packet.py",
+      "sha256": "d6c959e1eab7918d749cdc8b3131239d9d42eb0cf027f2ad607c87f9484548ee"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/build_e5f_psinneg_iteration_packet.py",
+      "sha256": "79b715fac093f39150c2fa0ff6a4dae23c3c2b2f2c283ef3cdcb2820d9bf63cb"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/build_e6_decision_tables.py",
+      "sha256": "be589549305ba01d17b2f20484cb0926e468eb06064809c4c3cbe5c09d0a505f"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/build_e6_l1_comparison.py",
+      "sha256": "d9712571e269b84c5144fb684973e63e0c8e1cf599706d0e52e918f48e044ef9"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/build_e6_plain_comparison.py",
+      "sha256": "b41dab604d149ab24fa8f0394ed40421c9bf8fe2269ee4eb745ed37d4c41506c"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/build_e6_winner_diagnostics.py",
+      "sha256": "b4421e3b8595395926b6a07d6f2d206d3b765e4c39ff1ff124c33866f5150213"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/calibration.py",
+      "sha256": "b6e956c60ea11e43df9c61417a7c4ce8c3ebd60b00ba739b602fdb6472647fa6"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/cli.py",
+      "sha256": "f4c728ab4e12f882c6b7e20d5ca8b5309dd7945b001443ac2e3ce905be06d666"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/collect_e1.py",
+      "sha256": "e0684091323522eacda86c875ee0ad3840d5071b8b1b712c058d86e2bc69d5f2"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/collect_e5_probe.py",
+      "sha256": "0b10d00b2300746e1715f2ec58a59c831cf90996011b78ba4bfbc024225697c6"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/diagnostics.py",
+      "sha256": "3d77fc4ebddad9635407c65cd73f1add3cea8fd2f4a8250d125329c9113a654b"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e1_profile.py",
+      "sha256": "bf04570c636306e274ea7287606c97d80fb930082ef404be1105f1cb8adb4838"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e5_maturation_repair.py",
+      "sha256": "02a14892614ae287de9d961a900d76197dcef60750a82318ce50fe6536166b0f"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e5_profile.py",
+      "sha256": "24b670345aff47636d3e1de78065ad7a8bcf8579699c8c6fcb92ebb455f1578b"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e5_young_ownership_profile.py",
+      "sha256": "5d74f6558adb29c453f15309337b9d1840870eda9d5790e4d6780552f8a13c0d"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e5f_floor_profile.py",
+      "sha256": "7735bdecb21aca1fe3227f01525e2ed0be2b2cf1daf4fdb599ef0eeacadbadbf"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e5f_income_entry_profile.py",
+      "sha256": "171f489bf0deffcbb8e1ba12b94d872f3a8f10949849b636a643ff0ffbb6130c"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e6_plain_weighting.py",
+      "sha256": "fff0c093c3837ec3bc41823318648ba6b44eb95f7c7ccbafd439c5eadbebb6af"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e6a_profile.py",
+      "sha256": "e8fa2140fc32cb8c62a026a8a91fb99ab6898edb4745a17018fd18e9fae4a03f"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e6b_profile.py",
+      "sha256": "9e80ef51ad27bb2b7d5a545457248142c80e70fe98a7044e793c3aceb4a70a52"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/e6c_profile.py",
+      "sha256": "777a9441fde8d8f4135ce6d1c8cc6d9d3434768cd366177ce873d03aedcad524"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/externals.py",
+      "sha256": "56d1979d717f7bbaaf53322458c3479a72e3aad5d45c9992f5ab86ccb4be1dc3"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/fertility_nested.py",
+      "sha256": "02584fe2b84652b7152f1fa932b3934884abb6629ca2878be3629c22e56d0ea8"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/joint_nested.py",
+      "sha256": "d17fe2c6d430b8056ef89aff254cae18f1c3613f602eb1c61822ab2465e58c83"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/kernels.py",
+      "sha256": "6601ed08b13b1128258969e9796c71c544689af35ed42d6aebe83f66e92778ba"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/local_panel.py",
+      "sha256": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/parameters.py",
+      "sha256": "6e331ec390cebec5cbfc0e3cfad98d8eee7ed44fac7d7889de96e35696dd8eb1"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/parity_panel_e1.py",
+      "sha256": "f89a5e45ca97125bd813b973ada96387e75f2a14d511bfb321373ffe2bd817ee"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/production_profile.py",
+      "sha256": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/promotion_collect_e1.py",
+      "sha256": "ef6e7a96f2dfbcb31115bbe6b2efa1b1b0669faef1be175b3e20e644bbe777a5"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/promotion_worker_e1.py",
+      "sha256": "6acb9b926ae25149d7c3588f43e7c4d3cf9d5c225120adc77ae02cc9a44066b2"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_e1_chain.py",
+      "sha256": "23220d1ba96ddf7a7d926ae8c438086ef40bf37d398924622c69ad5978dd4443"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_e5_wealth_slice.py",
+      "sha256": "ca58e81065347d90cadd75114fa677fa9426c2a037810d6df1ba56ba0c1474c6"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_e5b_autopsy.py",
+      "sha256": "de9d8c5186e8e5b7e912302dd0c4df4d9c4f7a0945f7dcc1894dedb507117f7e"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_e5f_floor_strict_smoke.py",
+      "sha256": "577ca4ace08d1bbd2042e0d7a68dfb866bcfb8f1b3ca191ead1b35b978660f81"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_e6a_fecundity_tail_frontier.py",
+      "sha256": "fbcd78f7a8c50422ea498114afc24442c62e228ca5cc7a8aa238555571935282"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_e6b_income_level_diagnostic.py",
+      "sha256": "ae7267446536004ab2dbb41f85ca84e178ec11423e71c1f448f5566a3bddb5aa"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_e6c_projection_diagnostic.py",
+      "sha256": "284b05dcaef3c4e85d4f8e965fe5d2f61a386ee7da42ef5add8f31014d8800d1"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_e6c_timing_jacobian.py",
+      "sha256": "5218b0626ccf5730c93fcf7c090530784ceb3b03153789634af646f545befc62"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_family_gap_scan.py",
+      "sha256": "3b3661611af64e76ad5b2ca1465e1167ab81a577a7042c66cc2c71be35e727a2"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_fertility_frontier_scan.py",
+      "sha256": "c1dabaff2af31ec347c3c7b5e94f9888e5d681c5b2ea235892c17eb278f436ee"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/run_seq_smoke.py",
+      "sha256": "3eaec95dbb8bf63897c9c91376a4faefb1134335709bf3825077af86d7059dbf"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/solver.py",
+      "sha256": "b549dabeb03fdb9d476b2be58642ee2d876143b01f529af663e2cf50fc978562"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/state_layout.py",
+      "sha256": "9a051cc480d5e49d67474aa3cdc65f05d5e43d7918613b013bb3fd8e1ba0560d"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/target_system.py",
+      "sha256": "b9bf465e5e1c1e4999c3f55c3893256e22171722b25e5afb5856e36a83ea0c83"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/__init__.py",
+      "sha256": "39be22bcfab361bb43081d22c00c38985550913d1da981c80f8c5cae17c16d20"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_age_survival.py",
+      "sha256": "872729f043731a3a59dfac45fecd2f47a4fa042dfbd356a594a628c10563c090"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_bequest_normalization.py",
+      "sha256": "00c8352d7a86b5bf64e8423cd279527685ac1a3f9df38bd1e900c63429d3fe68"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_bequest_target_moments.py",
+      "sha256": "dfa75e2037a7ee336df968cffac5f0db3fd6ba83d5fb9db928919e9a0e09643a"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_calendar_time_continuation.py",
+      "sha256": "132a8fbea51a6e96a872c6f14ee5026926a1ff78fa606e51654b4b02201cef79"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_child_maturation_switch.py",
+      "sha256": "c2c6054119fd884820549f1902e58b375ad4b09f33dc7b24769e02af090bdbaa"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_code_repair_20260709.py",
+      "sha256": "8cfb44b5c128d10b11003a7492d21d820cafd2a68b3ed362cadb7df79e074600"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_combined_specification.py",
+      "sha256": "6b11fe0888e65bc063e8979f53a4940b75a53be8183a7cecc3b0c4b162edbc19"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_e4_packet_args.py",
+      "sha256": "8518e8fa21f9ec923bf0abed193ddd0a63c44c0ae66aac9c917abcbac7809730"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_e5_profile.py",
+      "sha256": "c23abcd1c8d9457980bbcd4005b600ffce82ebde51f512edb395b9b6962826c9"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_e5f_child_room_floor.py",
+      "sha256": "2e835b2fb57d7261ddbe7cb890d1ff2f79d71ba103c68f2f41b074f96d6185df"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_e5f_income_entry_profile.py",
+      "sha256": "3048dfc83ea41a7b8785e623ac8f6236f518f268772b14441c998a1149ef4b75"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_e5f_probe_contract.py",
+      "sha256": "e799109c95ac22f4e98fd8dfce80cd91fe80e7b4c95c230687c30e8135c53220"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_e5f_transition_calibration.py",
+      "sha256": "cc3380d58c5760f61ee95c1ef8679fdcf542b1b507bbeb256f24b530908cd9f6"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_e6_plain_weighting.py",
+      "sha256": "b800dd3997031ec130619748216baf7b68447be2b11f337c5f4626ca0315eb59"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_e6b_profile.py",
+      "sha256": "575ecf128367dd06b8261aa40183633ffbfdfd53919eba485b8413f29fbdf195"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_e6c_profile.py",
+      "sha256": "a42fa25b10c17372f68ea61cb69ae07592338501a2592f8a7afd1f97d7883d0f"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_entrant_feasibility.py",
+      "sha256": "379247bdd951a59fc3de6b83b23f051ea980f9652b817a6df385b53842df6c3c"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_entry_target_contract.py",
+      "sha256": "7d6e2626e92ef746896f70bd9bc9411f36ff03fb683c06a9d6aab9b8e9bd68f1"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_eqscale_seq.py",
+      "sha256": "f201375c87635da18795238f1a6d2c1bbaa063cde633124fec72456c64265c28"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_externals.py",
+      "sha256": "b115dcd5f72baf99a5c13af7e634a468bb6b77e6e95599a831ed08c91bda0ff0"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_fecundity.py",
+      "sha256": "04e25024d0749053c786496cc36c828cc245ee97b5359a4b379a436706a3ea7d"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_independent_child_maturation.py",
+      "sha256": "d2c8ecb94507eb0c32ce9773bc0e5784581b23a239e7416c6e8a6a8b3a84c0b2"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_literal_parity.py",
+      "sha256": "6f2ea9a4af4162c544f1d7ee51a28e068eb7db64a0671936cf9bd38a3db13be7"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_markov_renewal_closure.py",
+      "sha256": "24f97a01fea2dc368ede0ccb95ccf3f09aacbee1a922274798af72d5fdb22a8b"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_optimized_port.py",
+      "sha256": "9928dec1ca317637f203484890cfa34b99699f99ede17213acb3a69933aadc02"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_retirement_income_heterogeneity.py",
+      "sha256": "82f95bba77a12d952aa4be91a738ed8770d8b2af0a5d485402a9463a914e160a"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_switch_estate.py",
+      "sha256": "4a0fa90da25efa48be3bb8a2f36b25ac1c709807212072b75977cf02df86a106"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_switch_mortgage.py",
+      "sha256": "d6c14a9b5be7d13939b603fcd8d7c526b8d709591573f47f1e092e4f925b0a48"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_switch_penalty.py",
+      "sha256": "b4d350a9cb54e99cb08bc10d43ca196e9c4722972beb7d83d3e7a26d31045421"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_switch_wedge.py",
+      "sha256": "cc3d9e9e14c2050d75579cc314854dc664535a3bf305f1b4ef379f12e0581bb1"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/tests/test_transfer_floor.py",
+      "sha256": "5d419ebd9548545311aaa1aa2cbdcad1d2bdf6da7e7f48ce16328622cec050d7"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/two_shock_choice.py",
+      "sha256": "94a8ac241c3fd6eb655a5f1bc5553ceae8ce40fb332552563b9d83e9ed68712f"
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/utils.py",
+      "sha256": "2cbd83c01014f07c3046a628e8c925fe1ded9cb23ede3855f291c34597abc837"
+    }
+  ]
+}

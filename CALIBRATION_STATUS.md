@@ -1,5 +1,21 @@
 # Calibration Status
 
+**September 20, 11:54 EDT — first follow-up diagnostics:**
+The Claude Max/Fable review and focused clarification are complete; they are
+evidence for specification discussion, not adoption. A fresh 2005–2006 ACS
+extraction reproduces all four active housing targets exactly and supplies
+age profiles on the active 42-metro sample plus separately labeled national
+profiles. See the [housing replay receipt](output/model/native_financing_diagnostic_20260919/specification_followup/housing_profiles_v1/full/target_recomputed.json).
+Earnings aggregation smoke **18078286** and dependent full diagnostic
+**18078287** are submitted to Torch with immutable inputs, one CPU each,
+10/15-minute allocation caps and strict moment/plot/hash gates. This is an
+analytic/Monte Carlo measurement diagnostic, with **zero new household or
+equilibrium solves**, not a recalibration. The [launch manifest](output/model/native_financing_diagnostic_20260919/specification_followup/income_aggregation_v1/launch_manifest.json)
+and [submission receipt](output/model/native_financing_diagnostic_20260919/specification_followup/income_aggregation_v1/submission.json)
+govern this chain. Saved-credit and isolated rental-wedge work remain under
+review; no rental-wedge run is yet approved for launch. Follow-up monitoring
+is active under the September 20 authorization below.
+
 **September 20, 11:24 EDT — continued specification research authorized:**
 Tommaso requested an active goal, check-ins and bounded experiments/longer
 cluster jobs while away until tomorrow. The existing Claude Max/Fable review
