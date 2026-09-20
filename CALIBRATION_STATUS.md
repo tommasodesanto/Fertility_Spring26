@@ -1,5 +1,31 @@
 # Calibration Status
 
+**September 20, 14:23 EDT — specification diagnostic follow-up reviewed and complete:**
+All six exhaustive rental-cost cases passed; smoke **18080796** and production
+**18080797** completed in 4:50 and 12:04. Both zero-cost controls reproduce,
+574 source/input hashes agree before and after each stage, all 102 graph hashes
+are retained, and the initial population and entry cohort are bitwise fixed.
+Maximum independent saving gain is $1.78\times10^{-15}$; budget excess mass is
+zero. Fourteen full-checkpoint household evaluations were used across this
+follow-up; no new full stationary calibration was run. No jobs remain pending.
+
+The tested positive rental costs largely reproduce hard-cap fertility outcomes.
+At slope 0.2, financing 80% to 100% raises ownership **10.63 percentage points**,
+snapshot births **0.690%**, and explicit lifetime cohort births **0.234%**.
+The correctly indexed renter share above six rooms is **38.97%** without a
+surcharge, **1.058%** at slope 0.05, and almost zero at 0.2; matched empirical
+support is **6.02%**. These findings motivate milder costs and aligned age
+profiles, not adoption of an arbitrary slope. Existing room/lifecycle fit
+problems and non-monotone owner-entry segments in the unchanged control remain
+visible. Passing this diagnostic does not settle those specification issues.
+
+The [reviewed decision packet](output/model/native_financing_diagnostic_20260919/specification_followup/decision_packet.md)
+assesses Claude Max/Fable, conventional earnings, housing and fertility choices,
+and gives the measurement/identification/calibration sequence after the author
+chooses a specification. It links the complete 13-target/17-parameter readout
+and all diagnostic evidence. No baseline or target system has been changed.
+[Six-case results](output/model/native_financing_diagnostic_20260919/specification_followup/rental_wedge_exhaustive_v1/comparison.md).
+
 **September 20, 13:48 EDT — six-case exhaustive rental-cost test submitted:**
 Smoke **18080796** and dependent production **18080797** use a new reviewed
 solver that checks every linear-continuation segment. The original zero-wedge

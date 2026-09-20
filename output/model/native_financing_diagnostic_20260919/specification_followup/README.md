@@ -1,5 +1,29 @@
 # Specification follow-up: September 20–21
 
+## Final reviewed outcome — September 20
+
+The bounded follow-up is complete. All authorized batches are terminal; there
+are no pending jobs. The final decision artifact is
+[decision_packet.md](decision_packet.md). The six-case exhaustive rental batch
+completed both controls, all source/numerical/cohort gates and 102 standard
+plots. See its [full comparison](rental_wedge_exhaustive_v1/comparison.md),
+[reproducible saved-array check](rental_wedge_exhaustive_v1/lead_saved_array_review.md),
+and [visual review](rental_wedge_exhaustive_v1/lead_visual_review/receipt.json).
+
+Total use was fourteen full-checkpoint household evaluations, with no new full
+stationary calibration. Tiny numerical fixtures were separate verification.
+No baseline, target system, parameter estimate or diagnostic dose is adopted.
+The packet proposes a conventional earnings architecture and data-disciplined
+housing choice before refitting; it leaves identified author decisions and
+numerical questions explicit. The earlier stopped staging/method attempts are
+retained as historical receipts, not active jobs or economic findings.
+
+The supplemental rental-size reader initially selected the childless axis;
+that collection error was corrected before interpretation. The authoritative
+reproducible reader explicitly selects tenure axis one, verifies all NPZ hashes,
+and exactly reproduces every case's renter mass. Older pre-correction artifacts
+are preserved only as an audit trail and must not be used as findings.
+
 ## Authority and deliverable
 
 On September 20, Tommaso explicitly authorized an active goal, check-ins,

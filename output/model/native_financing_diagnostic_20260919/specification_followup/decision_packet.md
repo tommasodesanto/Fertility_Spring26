@@ -1,6 +1,6 @@
-# Specification decision packet — working draft
+# Specification decision packet — reviewed diagnostic recommendation
 
-September 20, 2026. **Awaiting the isolated rental-cost experiment and final review.** No model, target system or parameter estimate is adopted by this packet. The [run ledger and budgets](README.md) and `CALIBRATION_STATUS.md` govern current work.
+September 20, 2026. **Reviewed September 20: all planned diagnostic batches are terminal; no jobs remain in this follow-up.** No model, target system or parameter estimate is adopted by this packet. The [run ledger and budgets](README.md) and `CALIBRATION_STATUS.md` govern current work.
 
 The proposed direction is a conventional lifecycle earnings process with a persistent component and an independent transitory shock, together with a housing block whose room and ownership profiles can be checked against consistently measured data. The evidence supports proceeding with that earnings architecture; it does not support retaining the present income parameters without resolving their measurement and approximation. The housing specification is the principal remaining experimental decision. A broad refit should follow those choices.
 
@@ -8,17 +8,67 @@ The proposed direction is a conventional lifecycle earnings process with a persi
 
 | Question | Reviewed evidence | Consequence for the decision |
 |---|---|---|
-| Can a standard earnings process represent four-year income? | A continuous period proxy matches exact annual block-average level covariances at lags 0–2 and misses lag 4 by 0.0032%. The current 15-state discretization separately compresses level dispersion. | A tractable approximation is plausible; matching covariances does not establish conditional-distribution or household-choice equivalence. |
+| Can a standard earnings process represent four-year income? | A moment-matched period proxy matches exact annual block-average level covariances at lags 0–2 and misses lag 4 by 0.0032%. The current 15-state discretization separately compresses level dispersion. | A tractable approximation is plausible; matching covariances does not establish conditional-distribution or household-choice equivalence. |
 | Does numerical income resolution matter for fertility? | With 15/27/45 joint income states, explicit lifetime cohort births are 1.85772/1.81453/1.80688; conditional first-birth age is 24.7001/25.3963/25.5771. | It matters quantitatively. Entrant wealth–income composition also changes, so this is not an isolated incumbent-policy effect or a convergence result. |
 | Are rooms and ownership measured consistently? | The empirical reconstruction exactly reproduces the four active housing targets. Saved model policies reproduce the original uncapped moments; the empirical nine-room cap is then applied before weighting. | The excess old-age room profile and weak earlier ownership are substantive diagnostic problems, rather than a fixed renter-room plotting proxy. Sample differences remain explicit. |
-| Does the credit plateau reflect identical policies everywhere? | Refit credit allowances of four and twenty annual earnings give identical cohort populations and birth outcomes. Full policies differ; values and spending policies agree on audited occupied snapshot support. | There is saturation on the represented occupied region. This does not establish which native constraint binds. |
+| Does the credit plateau reflect identical policies everywhere? | Refit allowances of \(\lambda=1\) and \(\lambda=5\)—four and twenty annual earnings—give identical cohort populations and birth outcomes. Full policies differ; values and spending policies agree on audited occupied snapshot support. | There is saturation on the represented occupied region. This does not establish which native constraint binds. |
 | Does improved mortgage access necessarily raise lifetime fertility here? | The original/new-income pilot/refit financed-share experiments produce small effects. In the refit, unsecured credit can raise snapshot births while lowering lifetime cohort births. | Report both outcome clocks. The evidence is conditional on these checkpoints, not a theorem about fertility or a frictionless/GE benchmark. |
 | Is a literal six-room rental maximum consistent with the data? | In the matched ACS sample, 6.02% of renters occupy more than six rooms; the share is 9.58% among renters with resident children. Large units are predominantly owned, but their rental share is positive. | A hard maximum is an approximation with visible excluded support. These shares do not identify a rental-cost slope. |
-| Can a gradual rental cost replace the room cap? | Pending. The exact unchanged control passes; the initial positive-cost port was incompatible with the retained exhaustive saving method. A compatible implementation is under review. | No positive-cost result is currently available; the stopped run supplies no evidence for or against the wedge. |
+| What do isolated rental costs change? | The compatible exhaustive solver passes both controls and all six cases. Slopes 0.05, 0.2 and 1 at a ten-room maximum yield almost the same birth outcomes as the six-room hard cap. | These doses can approximately reproduce the cap on this checkpoint; they do not establish a better housing fit or identify a suitable cost slope. |
 
-Evidence: [earnings aggregation](income_aggregation_v1/results/full/receipt.json), [period proxy](income_aggregation_v1/moment_matched_period_proxy.md), [grid resolution](income_grid_resolution_v1/README.md), [cohort comparison](income_grid_cohort_v2/comparison.md), [housing overlay](housing_profiles_v1/reproducible_overlay_v1/overlay_receipt.md), [credit support](credit_policy_retention_v2/comparison.md), [full mechanism comparisons](../overnight/final_mechanisms/comparison.md), [rental control and stop](rental_wedge_v3/collection_receipt.json), [empirical rental size support](housing_profiles_v1/rental_size_support/README.md).
+Evidence: [earnings aggregation](income_aggregation_v1/results/full/receipt.json), [period proxy](income_aggregation_v1/moment_matched_period_proxy.md), [grid resolution](income_grid_resolution_v1/README.md), [cohort comparison](income_grid_cohort_v2/comparison.md), [housing overlay](housing_profiles_v1/reproducible_overlay_v1/overlay_receipt.md), [credit support](credit_policy_retention_v2/comparison.md), [full mechanism comparisons](../overnight/final_mechanisms/comparison.md), [rental control and stop](rental_wedge_v3/collection_receipt.json), [reviewed six-case readout](rental_wedge_exhaustive_v1/comparison.md), [empirical rental size support](housing_profiles_v1/rental_size_support/README.md).
+
+The unsecured-credit allowance is \(\lambda\) times the age-specific mean after-tax earnings over a four-year model period, and zero in retirement. Thus \(\lambda=1\) is four years of the corresponding mean annual earnings. The saved credit-policy check weights values by the population before choices and consumption, rented rooms and saving by the population after choices. It does not establish cohort-weighted spending-policy equality: the necessary cohort population after tenure choice was not retained.
 
 The finite local earnings refit improved its own search starting point but did not beat the retained benchmark under the identical objective. The complete **13-target and 17-parameter tables**, weights, contributions, actual bounds, near-bound flags and exact two-repetition verification are in the [search readout](../overnight/final_search/readout.md). The actual annual discount-factor upper bound is 0.99. The stationary fertility normalization in that table is a different object from explicit lifetime cohort births above. None of the new fixed-price diagnostics is a stationary calibration.
+
+**What the new rental experiment adds**
+
+The rental cost is $C(h)=rh+s h\max(h-6,0)$: ordinary rent below six rooms,
+with an increasing extra charge above six. Owner-service preferences remain
+unchanged. All cases use the original checkpoint's prices, preferences, native
+entry cohort and exactly identical pre-choice population. The two zero-cost
+controls reproduce their retained reference results, and the full six-case run
+passes the independent saving, budget, value, source and cohort checks.
+
+Raising the rental maximum from six to ten with no extra charge raises explicit
+lifetime cohort births from 1.872411 to 1.883435, about **0.59%**, and lowers
+snapshot ownership from 56.64% to 50.93%. Introducing slope 0.05 returns lifetime
+births to 1.872416; slopes 0.2 and 1 give 1.872411 at this precision. This is a
+controlled comparison of those costs, not a calibration of them.
+
+With slope 0.2 held fixed, raising the financed share from 0.8 to 1 increases
+snapshot total births **0.690%** and first births **1.046%**. Lifetime cohort
+births rise **0.234%**, while the probability of a first birth falls by about
+**0.034 percentage points** and conditional first-birth age falls **0.070 years**.
+Ownership rises by **10.63 percentage points**. Financing therefore moves tenure
+substantially here, with a much smaller lifetime fertility response; it is
+incorrect to infer the lifetime extensive margin from the snapshot first-birth
+flow. The aggregate housing residual is allowed to move because prices are
+fixed, so these are not market-clearing policy equilibria.
+
+The corrected saved-array calculation gives renter shares above six rooms of
+**38.97%** with no extra charge, **1.058%** at slope 0.05, **0.000735%** at slope
+0.2, and zero at slope 1. The corresponding empirical share is 6.02%. These
+checkpoint diagnostics therefore motivate inspecting milder positive costs;
+they do not estimate a slope. Empirical and model age composition must be
+aligned before making this an identifying target. [Reproducible saved-array check](rental_wedge_exhaustive_v1/lead_saved_array_review.md).
+
+The saved value comparisons show no occupied-state ordering violations above $10^{-7}$. The largest unoccupied difference is $2.98\times10^{-6}$ at values near $-6.86\times10^8$ (relative gap $4.34\times10^{-15}$); it is recorded rather than hidden. These checks concern a common feasible state set and fixed prices.
+
+The standard plots still show non-monotone owner-entry probabilities over
+wealth in both the unchanged control and the central wedge case. This feature
+predates the experiment. Its economic or numerical origin remains a question
+before adopting a specification for policy analysis; passing the current
+budget, value and saving audits does not settle it. [Visual review and control
+comparison](rental_wedge_exhaustive_v1/lead_visual_review/receipt.json).
+
+The substantive conclusion remains conditional: these isolated cost changes
+do not rescue the quantitative fertility mechanism or solve the room/lifecycle
+fit. They also do not prove that financing cannot matter under a defensible
+specification and calibration. The empirical positive rental support above six
+rooms must discipline the next housing proposal; a strong arbitrary slope that
+recreates a hard cap is not sufficient evidence for adopting it.
 
 **The earnings choice and the literature**
 
@@ -41,7 +91,7 @@ The paper's potential contribution is the interaction of housing space, tenure/f
 | Block | Lead recommendation for the next baseline proposal | What remains before a freeze |
 |---|---|---|
 | Earnings | Prefer persistent AR(1) plus iid transitory, with no permanent type in the proposed baseline and a clearly labeled type-based robustness process. | Choose one gross/net income concept, sample, age profile and treatment of measurement error. Report the long-lag covariance misfit. Validate the period approximation and grid jointly with entrant composition. |
-| Rental housing | Retain the hard-cap checkpoint as the reference while testing a gradual cost above six rooms with owner-service preference unchanged. | Complete the isolated test, then identify any proposed rental-cost parameters from explicit tenure-by-size evidence. Diagnostic slopes are not estimates. A finite slope is not literally the cap. Before GE or welfare use, specify who receives the extra rental expenditure or what real resource cost it represents. |
+| Rental housing | Retain the hard-cap checkpoint as the reference while testing a gradual cost above six rooms with owner-service preference unchanged. | Use the completed isolated test as a diagnostic, then identify any proposed rental-cost parameters from explicit tenure-by-size evidence. Diagnostic slopes are not estimates. A finite slope is not literally the cap. Before GE or welfare use, specify who receives the extra rental expenditure or what real resource cost it represents. |
 | Fertility preferences and child costs | Preserve the current architecture for the controlled housing comparison. Do not add an arbitrary earnings penalty merely because it improves fit. | If the income gradient or child-spending profile motivates a new cost, measure its identifying moment or impose a defended external restriction. Then refit the affected preference parameters together. |
 | Children at home | Keep the distinction between children ever born and children currently resident explicit. | Match the empirical definition and age profile before altering departure hazards. An age-of-parent approximation must be labeled; it is not an exact child-age state. |
 | Mortgage contract | Retain the present collateral experiment as a restricted channel. Defer a full amortization/refinancing contract until its state and data requirements are written down. | A single signed net asset cannot generally track both liquid wealth and mortgage principal. For example, liquid assets 10 and debt 50 versus assets 0 and debt 40 have the same net position but different scheduled payments. A net-debt approximation is possible only as an explicit simplification. |
@@ -60,3 +110,20 @@ These recommendations assess, rather than simply adopt, the [Claude Max/Fable re
 6. Only after the fit is credible, rerun the mortgage and credit mechanisms with both snapshot and lifetime outcomes, then evaluate equilibrium policy under an explicit closure.
 
 Tomorrow's author discussion should resolve three linked choices: the earnings measurement contract, the empirically supported housing-access specification, and which child-cost/departure margins genuinely need changing. The other extensions should remain separate unless those decisions require them.
+
+**Completion and next decision**
+
+The authorized bounded follow-up used fourteen full-checkpoint household
+evaluations and no new full stationary calibration. All experimental batches
+are complete or documented as failed/cancelled; none is waiting for laptop
+chaining. The six-case rental batch produced 102 standard plot hashes, with
+17 central-case images retained locally; selected images and the unchanged
+control were inspected. Full source, input, outcome and reproduction receipts
+are linked above. No baseline, target weight, income estimate or diagnostic
+rental-cost dose has been adopted.
+
+The next substantive step is the author discussion of the proposed earnings
+measurement contract and an empirically disciplined housing specification.
+The resulting parameter estimates and calibration results will need to be
+recomputed. Extra model blocks should be added only when their identifying
+evidence and state requirements are clear.
