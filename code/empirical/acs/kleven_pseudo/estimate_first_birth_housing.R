@@ -90,9 +90,11 @@ join_first_birth_housing <- function(panel, source_housing, audit_manifest,
   }
   if (any(is.na(origin) | is.na(cps) | !(origin %in% c("ACS", "CPS"))))
     fbh_stop("panel provenance has missing or unrecognized source_origin/from_cps")
-  if (any((origin == "CPS") != cps))
-    fbh_stop("panel source_origin and from_cps disagree")
+  if (any(cps & origin != "CPS"))
+    fbh_stop("from_cps=1 must have source_origin=CPS")
   eligible <- origin == "ACS" & !cps
+  relabeled_cps <- origin == "CPS" & cps
+  original_cps <- origin == "CPS" & !cps
 
   skey <- fbh_key(source_housing, source_key_cols, "source_housing")
   if (anyDuplicated(skey)) fbh_stop("source housing key is duplicated; refusing ambiguous join")
@@ -112,9 +114,10 @@ join_first_birth_housing <- function(panel, source_housing, audit_manifest,
     z[hit] <- suppressWarnings(as.numeric(vals[m[hit]]))
     out[[paste0("raw_", canonical[[nm]])]] <- z
   }
-  out$housing_join_status <- ifelse(cps, "cps_missing_outcome",
+  out$housing_join_status <- ifelse(relabeled_cps, "relabeled_cps_missing_outcome",
+                                    ifelse(original_cps, "original_cps_missing_outcome",
                                     ifelse(!eligible, "non_acs_excluded",
-                                           ifelse(is.na(m), "acs_source_unmatched", "acs_source_matched")))
+                                           ifelse(is.na(m), "acs_source_unmatched", "acs_source_matched"))))
   out$housing_source_key <- pkey
   cluster_cols <- setdiff(source_key_cols, "PERNUM")
   if (!length(cluster_cols)) fbh_stop("source key must include a household cluster component")
@@ -138,7 +141,8 @@ join_first_birth_housing <- function(panel, source_housing, audit_manifest,
     panel_rows = nrow(panel), acs_rows = sum(eligible), cps_rows = sum(cps),
     matched_acs_rows = sum(out$housing_join_status == "acs_source_matched"),
     unmatched_acs_rows = sum(out$housing_join_status == "acs_source_unmatched"),
-    cps_missing_outcome_rows = sum(out$housing_join_status == "cps_missing_outcome"),
+    relabeled_cps_missing_outcome_rows = sum(out$housing_join_status == "relabeled_cps_missing_outcome"),
+    original_cps_missing_outcome_rows = sum(out$housing_join_status == "original_cps_missing_outcome"),
     repeated_source_household_clusters = sum(duplicated(source_clusters)),
     source_household_clusters = length(unique(source_clusters)),
     weight_unchanged = TRUE, event_time_unchanged = TRUE,
@@ -369,7 +373,8 @@ estimate_first_birth_housing <- function(panel, source_housing, audit_manifest, 
         kk <- kk + 1L; curves[[kk]] <- z$curve; summaries[[kk]] <- z$summary
       }
       fit_name <- paste(outcome, gender, sep = "::")
-      fits[[fit_name]] <- list(cluster = reg, hetero_vcov = Vh,
+      fits[[fit_name]] <- list(cluster = reg, coefficients = stats::coef(reg),
+        cluster_vcov = as.matrix(stats::vcov(reg)), hetero_vcov = Vh,
         nobs = stats::nobs(reg), source_household_clusters = length(unique(gd$source_household_cluster)))
       if (!is.null(checkpoint)) checkpoint(list(name = fit_name, outcome = outcome,
         gender = gender, curve = do.call(rbind, lapply(seq_along(fit_states), function(ii) {
@@ -377,7 +382,9 @@ estimate_first_birth_housing <- function(panel, source_housing, audit_manifest, 
           curves[[kk - length(fit_states) + ii]]
         })), summary = do.call(rbind, lapply(seq_along(fit_states), function(ii) {
           summaries[[kk - length(fit_states) + ii]]
-        })), nobs = stats::nobs(reg)))
+        })), coefficients = stats::coef(reg),
+        vcov = list(cluster = as.matrix(stats::vcov(reg)), heteroskedastic = Vh),
+        nobs = stats::nobs(reg)))
     }
   }
   curves <- do.call(rbind, curves); summaries <- do.call(rbind, summaries)

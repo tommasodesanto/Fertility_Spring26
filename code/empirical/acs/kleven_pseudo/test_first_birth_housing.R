@@ -73,12 +73,21 @@ source_housing$OWNERSHP <- g$ownership_raw_expected
 panel <- g[, c(key_cols, "src_key", "source_origin", "from_cps", "wgt", "emp_lw",
                "t_es_lw", "cohort", "census", "statefip", "statename", "gender",
                "age_factor", "doiy_factor"), drop = FALSE]
-# Add one CPS donor with no source key: its housing outcome must remain missing.
+# Add a relabeled CPS donor and an original CPS row with no source key: neither
+# has ACS housing data, but both provenance classes must survive the join.
 cps <- panel[1, , drop = FALSE]
 cps[key_cols] <- list(NA_integer_, NA_integer_, NA_integer_, NA_integer_)
 cps$src_key <- "CPS:donor:1"; cps$source_origin <- "CPS"; cps$from_cps <- 1L
 cps$wgt <- 17; cps$emp_lw <- 1; cps$t_es_lw <- "-2"; cps$cohort <- 2010L
-panel <- rbind(panel, cps)
+original_cps <- panel[2, , drop = FALSE]
+original_cps[key_cols] <- list(NA_integer_, NA_integer_, NA_integer_, NA_integer_)
+original_cps$src_key <- "CPS:original:2"; original_cps$source_origin <- "CPS"; original_cps$from_cps <- 0L
+original_cps$wgt <- 18; original_cps$emp_lw <- 1; original_cps$t_es_lw <- "-2"; original_cps$cohort <- 2010L
+acs_2000_unavailable <- panel[3, , drop = FALSE]
+acs_2000_unavailable[key_cols] <- list(2000L, 200001L, 999999L, 1L)
+acs_2000_unavailable$src_key <- "2000:200001:999999:1"; acs_2000_unavailable$source_origin <- "ACS"; acs_2000_unavailable$from_cps <- 0L
+acs_2000_unavailable$wgt <- 19; acs_2000_unavailable$emp_lw <- 1; acs_2000_unavailable$t_es_lw <- "-2"; acs_2000_unavailable$cohort <- 2000L
+panel <- rbind(panel, cps, original_cps, acs_2000_unavailable)
 
 joined <- join_first_birth_housing(panel, source_housing, audit_manifest)
 expect(nrow(joined) == nrow(panel), "source join changes row count")
@@ -86,9 +95,15 @@ expect(identical(joined$first_birth_row_id, seq_len(nrow(panel))), "source join 
 expect(isTRUE(all.equal(joined$wgt, panel$wgt, check.attributes = FALSE)), "weights changed by join")
 expect(isTRUE(all.equal(joined$t_es_lw, panel$t_es_lw, check.attributes = FALSE)), "event time changed by join")
 expect(isTRUE(all.equal(joined$emp_lw, panel$emp_lw, check.attributes = FALSE)), "labor outcome changed by join")
-expect(joined$housing_join_status[nrow(joined)] == "cps_missing_outcome", "CPS row not retained as missing")
-expect(is.na(joined$raw_rooms[nrow(joined)]), "CPS housing was imputed")
-expect(attr(joined, "housing_join_audit")$repeated_source_household_clusters > 0,
+nn <- nrow(joined)
+expect(joined$housing_join_status[nn - 2L] == "relabeled_cps_missing_outcome", "relabeled CPS row not retained as missing")
+expect(joined$housing_join_status[nn - 1L] == "original_cps_missing_outcome", "original CPS row not retained as missing")
+expect(joined$housing_join_status[nn] == "acs_source_unmatched", "unavailable 2000 ACS row not audited")
+expect(all(is.na(joined$raw_rooms[(nn - 2L):nn])), "unavailable-source housing was imputed")
+join_audit <- attr(joined, "housing_join_audit")
+expect(join_audit$relabeled_cps_missing_outcome_rows == 1L && join_audit$original_cps_missing_outcome_rows == 1L,
+       "CPS provenance audit counts failed")
+expect(join_audit$repeated_source_household_clusters > 0,
        "repeated source household cluster was not recorded")
 
 expect_error(join_first_birth_housing(panel, rbind(source_housing, source_housing[1, ]), audit_manifest),
@@ -127,6 +142,9 @@ result <- estimate_first_birth_housing(panel, source_housing, audit_manifest, co
   checkpoint = function(x) checkpoints[[length(checkpoints) + 1L]] <<- x)
 expect(result$status == "ESTIMATION_COMPLETE_DIAGNOSTIC", "estimator did not complete tiny diagnostic")
 expect(length(checkpoints) == 6L, "per-outcome/gender checkpoints were not emitted")
+expect(is.numeric(checkpoints[[1L]]$coefficients) && is.matrix(checkpoints[[1L]]$vcov$cluster) &&
+       is.matrix(checkpoints[[1L]]$vcov$heteroskedastic),
+       "checkpoint omitted recoverable coefficients/covariances")
 expect(all(result$curves$estimate[result$curves$reference] == 0), "reference event is not zero")
 expect(all(is.finite(result$curves$estimate[!result$curves$reference])), "non-reference coefficient missing")
 expect(all(result$curves$source_household_clusters < result$curves$nobs),
