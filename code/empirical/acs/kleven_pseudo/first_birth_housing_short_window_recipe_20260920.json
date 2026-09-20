@@ -1,0 +1,17 @@
+{
+  "status": "PREPARED_NOT_RUN",
+  "purpose": "same-estimator common implied-event-cohort short-window sensitivity",
+  "source_year_overlap": [2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019],
+  "source_year_filter": "future estimator invocation must restrict true ACS source YEAR to 2005:2019; the compact support receipt does not retain source YEAR by cell",
+  "event_times": [-2, -1, 0, 1, 2, 3],
+  "reference_event": -2,
+  "pre_event_times": -1,
+  "post_event_times": [0, 1, 2, 3],
+  "contrast": "+3 minus -1 using the full covariance matrix",
+  "matching": "reuse completed source-key matches; no rematching",
+  "cohort": "support-only implied_pseudo_event_year = doiy - numeric(t_es_lw), with endpoint bins retained only as labels",
+  "support_gate": "source-matched true ACS rows with outcome_valid_rows > 0 in every event cell; after applying source YEAR 2005:2019 in the future invocation; missingness reported, never imputed",
+  "variance": "source-household clustered primary, heteroskedastic sensitivity",
+  "runtime_note": "No allocation submitted. The full saved fit took 7:52 including serialization; a short-window fit is expected to be shorter but must be timed at launch.",
+  "causal_status": "diagnostic sensitivity conditional on constructed matches; no causal claim"
+}
