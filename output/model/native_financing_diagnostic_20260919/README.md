@@ -43,6 +43,29 @@ and [complete parameter table](../paper_baseline_sep14/replay_20260917/native_ou
 The earnings variant and recalibration/GE closure remain outstanding; no
 automatic launch follows.
 
+## Rental-access interaction and earnings candidate
+
+Grouped native job **18037585** completed in 28 seconds and rental-access job
+**18037587** completed in 3m13s, both with exit 0. At common prices,
+pre-population, and fertility preferences, expanding the native rental room
+cap from 6 to 10 rooms reduced the mortgage-only birth-flow increment by
+**84.1755512677%** and the first-birth-flow increment by **88.4941545740%**.
+This supports a rental space-access role; it does not identify mediation or
+establish GE, recalibration, or a sign proof. All three rental cases passed
+zero budget/mass/value violations, the baseline control reproduced exactly,
+and each case wrote 17 standard PNGs. Group reconciliation was below `1e-12`.
+The grouped mortgage comparison attributes 98.89% of the mortgage first-birth increment
+to initial renters, who are 96.53% of eligible mass; renter Q3 first-birth
+rate rose 0.412 percentage points and mean rooms rose 0.342. See
+`grouped/metadata.json`, `grouped/groups.csv`, and
+`rental_access/comparisons.csv`.
+
+The persistent-plus-iid-transitory candidate uses the existing nested
+13-moment, 3-parameter fit: objective `39.5085474236852` versus
+`14.3178085110745` for the full fixed-effect fit. Flag: materially worse
+earnings fit; no full-model recalibration has run. See
+`earnings_candidate/README.md` and `earnings_candidate/candidate.json`.
+
 ## Reporting verification
 
 Report-only job **18036306** completed in 11 seconds with exit 0. All four
@@ -69,3 +92,12 @@ experiment=/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919
 native=/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches
 python "$experiment/code/model/tools/build_e5f_native_financing_report.py" --input "$experiment/run" --output "$experiment/report" --checkpoint "$native/baseline_replay_20260917/replay/case/evaluation/raw/repetition_02/initial_state.pkl.gz" --source-root "$native/final_night_20260913/corrected_initial_source_v2/code/model"
 ```
+
+## Earnings cohort launch and stop
+
+Job **18037924**, submitted with a one-hour allocation, failed after 20 seconds
+at `pre-mass changed at age 0` in the baseline cohort. No candidate earnings
+comparison or recalibration was produced. The feasibility projection changed
+the standardized entrant distribution; correction and a cluster smoke test
+are required before resubmission. See `income_cohort_18037924/status.json`.
+Launcher: `code/cluster/submit_e5f_native_income_followup.sh`.

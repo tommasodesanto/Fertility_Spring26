@@ -1,0 +1,92 @@
+{
+  "contract": {
+    "checkpoint_sha256": "3322a61994fb3654d67f4b1d6cf2d0f7cacbb3668d06a417e192ee363c174993",
+    "solver_sha256": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da"
+  },
+  "groups": {
+    "fertile_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "age26_38_indices": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "age26_38": [
+      26.0,
+      30.0,
+      34.0,
+      38.0
+    ],
+    "wealth_quartile_cuts": [
+      0.0,
+      0.1627906976744189,
+      0.720930232558139
+    ],
+    "duplicate_cuts": false,
+    "eligible_mass": 0.20541598598156685
+  },
+  "aggregate_reconciliation": {
+    "baseline": {
+      "eligible_mass": 0.20541598598156677,
+      "current_mass": 0.2054159859815296,
+      "birth_flow": 0.05064983385601245,
+      "firstbirth_flow": 0.05064983385601243,
+      "firstbirth_26_38": 0.020129972895321105,
+      "renter_mass": 0.1836670749752724,
+      "owner_mass": 0.02174891100625738,
+      "rooms_total": 0.8933475503594304,
+      "mass_renting_ge6_rooms": 0.03784674193825663,
+      "mass_owning_ge6_rooms": 0.020915092571864524,
+      "max_group_reconciliation_gap": 7.526201883933936e-13
+    },
+    "mortgage_only": {
+      "eligible_mass": 0.20541598598156677,
+      "current_mass": 0.20541598598152472,
+      "birth_flow": 0.051179789239183704,
+      "firstbirth_flow": 0.051179789239183704,
+      "firstbirth_26_38": 0.020291134994606344,
+      "renter_mass": 0.1542226798402263,
+      "owner_mass": 0.0511933061412984,
+      "rooms_total": 0.9256982296909444,
+      "mass_renting_ge6_rooms": 0.027015529445693746,
+      "mass_owning_ge6_rooms": 0.03351942215392052,
+      "max_group_reconciliation_gap": 9.032774528350274e-13
+    },
+    "unsecured_only": {
+      "eligible_mass": 0.20541598598156677,
+      "current_mass": 0.20541598598153016,
+      "birth_flow": 0.057580314732407996,
+      "firstbirth_flow": 0.05758031473240793,
+      "firstbirth_26_38": 0.022207081957650393,
+      "renter_mass": 0.17895332578645484,
+      "owner_mass": 0.026462660195075274,
+      "rooms_total": 0.984510058745885,
+      "mass_renting_ge6_rooms": 0.04656481546619637,
+      "mass_owning_ge6_rooms": 0.025428892595347072,
+      "max_group_reconciliation_gap": 7.782663402622347e-13
+    },
+    "both": {
+      "eligible_mass": 0.20541598598156677,
+      "current_mass": 0.20541598598152766,
+      "birth_flow": 0.05807729451494774,
+      "firstbirth_flow": 0.05807729451494767,
+      "firstbirth_26_38": 0.022352911197992972,
+      "renter_mass": 0.15623451756553375,
+      "owner_mass": 0.049181468415993794,
+      "rooms_total": 1.0227205325958932,
+      "mass_renting_ge6_rooms": 0.029327471872451185,
+      "mass_owning_ge6_rooms": 0.04439473721014506,
+      "max_group_reconciliation_gap": 8.957279362675763e-13
+    }
+  },
+  "room_threshold": 6.0,
+  "scope": "fertile-age initial childless pool; age 26-38 subtotal reported separately"
+}

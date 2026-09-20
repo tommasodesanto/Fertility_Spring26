@@ -1,0 +1,46 @@
+{
+  "status": "diagnostic_candidate_only",
+  "permanent_types": false,
+  "constructor": "code/model/tools/build_persistent_transitory_income_candidate.py",
+  "state_count": 15,
+  "persistent_states": 5,
+  "transitory_states": 3,
+  "period_years": 4.0,
+  "household_earnings_definition": "PSID RP/spouse combined real gross labor earnings residualized on integer age and year FE; candidate passes gross residual earnings through flat payroll-tax model",
+  "nested_fit": {
+    "moments": 13,
+    "free_parameters": 3,
+    "objective": 39.5085474236852,
+    "full_fixed_effect_objective": 14.3178085110745,
+    "objective_gap": 25.1907389126107,
+    "converged": true
+  },
+  "annual_coefficients_recovered_from_nested_fitted_covariances": {
+    "rho_annual": 0.9703033301891563,
+    "persistent_variance": 0.692826827789733,
+    "transitory_variance": 0.3444421950282869
+  },
+  "four_year_diagnostic_mapping": {
+    "rho_period": 0.8864006946319656,
+    "transitory_log_variance_period": 0.09785297241466638,
+    "transitory_log_sd_period": 0.31281459750891805,
+    "assumption": "log(1+(exp(V_trans_annual)-1)/4), preserving first two level moments of four independent annual mean-one shocks; coarse-period diagnostic, not exact lognormal aggregation"
+  },
+  "source_sample": {
+    "ages": "25-60",
+    "years": "1984-2019",
+    "person_years": 89936,
+    "persons": 12508,
+    "earnings": "positive RP/spouse combined real gross labor earnings",
+    "weight": "positive IW",
+    "moments": "exact calendar-year autocovariances at lags 0,1,2,4,6,8,10,12,16,20,24,28,32"
+  },
+  "source_sha256": {
+    "README.md": "73364bc45c34c7bac636720878417ba7d42d359f677430fad2ab013da9fee66f",
+    "md_autocovariance_fit.csv": "96e65681e37b6e1215efde8b786b8c88151186aef1023ca726648e2c9a41c5ab",
+    "md_fit_summary.csv": "5256e53f485633f09275f534c8fc39d4d069ced3cc82c33fdfbc6f9f7418ea72",
+    "md_parameter_estimates.csv": "bc891808e95220e07b5f64278448d35200f58813b226bd9e62e9737bb7e01e79",
+    "constructor.py": "7c9571fb38697e9433b32baabbd630656bd935179a4325f7b1e3bbb70e94d087"
+  },
+  "caveat": "Permanent-component removal worsens the earnings fit materially; this artifact does not choose adoption."
+}

@@ -709,6 +709,22 @@ blocks, reconcile the evidence). Same procedure; Fable supplies the finding.
 > calibration results. The earnings variant and recalibration/GE closure
 > remain outstanding.
 
+> **Follow-up, September 19 (rental interaction and earnings candidate).**
+> At common prices, pre-population and fertility preferences, expanding the
+> native rental room cap from 6 to 10 rooms reduced the mortgage-only
+> birth-flow increment by 84.1755512677% and the first-birth-flow increment by
+> 88.4941545740%. This supports a rental space-access role, but does not
+> identify mediation or establish GE, recalibration, or a sign proof. The
+> grouped and rental cases passed their stated checks, with reconciliation
+> below 1e-12 and 17 standard PNGs per case. The existing nested
+> persistent-plus-iid-transitory earnings candidate has objective 39.5085474236852
+> versus 14.3178085110745 for the full fixed-effect fit, so its earnings fit is
+> materially worse; no full-model recalibration has run. See the grouped,
+> rental-access, and earnings-candidate artifacts in
+> `output/model/native_financing_diagnostic_20260919/`. Author-approved
+> diagnostic/recalibration conditional checks may proceed; the earnings choice
+> and GE closure remain outstanding.
+
 ## E2. Earnings risk and fertility
 
 **Agreed.** Keep. The channel already exists through continuation values and

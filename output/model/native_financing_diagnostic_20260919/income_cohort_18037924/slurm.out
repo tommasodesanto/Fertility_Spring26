@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/code/model/tools/run_e5f_native_income_cohort_diagnostic.py", line 226, in <module>
+    if __name__ == "__main__": main()
+                               ~~~~^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/code/model/tools/run_e5f_native_income_cohort_diagnostic.py", line 196, in main
+    receipts.append(run_cohort(x, P, policy, label, a.output / label))
+                    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/code/model/tools/run_e5f_native_income_cohort_diagnostic.py", line 137, in run_cohort
+    if not np.allclose(ev.g_pre, g, atol=1e-10, rtol=0): raise ValueError(f"pre-mass changed at age {age}")
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: pre-mass changed at age 0

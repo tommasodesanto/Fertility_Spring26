@@ -16,8 +16,41 @@ is zero in retirement. See the [submission receipt](output/model/native_financin
 and [supplementary measured report](output/model/native_financing_diagnostic_20260919/report/report.md).
 Retained native full-fit references: [target fit](output/model/paper_baseline_sep14/replay_20260917/native_output/selected_target_fit.csv)
 and [parameters](output/model/paper_baseline_sep14/replay_20260917/native_output/selected_parameters.csv).
-Outstanding: author choice of earnings variant and recalibration/GE closure;
-no automatic launch follows.
+Author has authorized proceeding with diagnostic/recalibration conditional
+checks; the earnings variant and recalibration/GE closure remain outstanding,
+and no automatic launch follows.
+
+**September 19, 2026 — rental-access interaction and earnings candidate:**
+Torch jobs **18037585** (grouped native reconciliation, 28s) and **18037587**
+(rental access, 3m13s) completed with exit 0. At common prices, population,
+and fertility preferences, expanding the native rental room cap from 6 to 10
+rooms reduces the mortgage-only birth-flow increment by **84.1755512677%**
+and the first-birth-flow increment by **88.4941545740%**. This supports a role
+for rental space access, but does not identify mediation or establish GE,
+recalibration, or a sign proof. All three rental cases passed zero
+budget/mass/value violations; the baseline control reproduced exactly, and
+each case wrote 17 standard PNG diagnostics. Group reconciliation was below
+`1e-12`. In the grouped mortgage comparison, 98.89% of the mortgage first-birth
+increment came from initial renters, who account for 96.53% of eligible mass;
+the renter Q3 first-birth rate rose **0.412 percentage points** and mean rooms
+rose **0.342**. See [group metadata](output/model/native_financing_diagnostic_20260919/grouped/metadata.json),
+[groups](output/model/native_financing_diagnostic_20260919/grouped/groups.csv),
+and [rental comparisons](output/model/native_financing_diagnostic_20260919/rental_access/comparisons.csv).
+
+The persistent-plus-iid-transitory earnings candidate is a diagnostic artifact
+from the existing nested 13-moment, 3-parameter fit: objective **39.5085474236852**
+versus **14.3178085110745** for the full fixed-effect fit. This is materially
+worse earnings fit; no full-model recalibration has been run. See
+[candidate README](output/model/native_financing_diagnostic_20260919/earnings_candidate/README.md)
+and [candidate JSON](output/model/native_financing_diagnostic_20260919/earnings_candidate/candidate.json).
+
+**September 19, 2026 — earnings job failed before comparison:** Torch job
+**18037924** failed after 20 seconds at the baseline cohort's first age:
+`pre-mass changed at age 0`. The period feasibility projection changed the
+proposed initial distribution. There are no candidate-earnings results and no
+recalibration from this job. The starting-cohort construction must be corrected
+and smoke-tested without weakening the feasibility gate. Receipt:
+[failed earnings job](output/model/native_financing_diagnostic_20260919/income_cohort_18037924/status.json).
 
 **Active development baseline (September 17, 2026):** This branch is the
 current-main integration of the immutable Monday paper reference. The original

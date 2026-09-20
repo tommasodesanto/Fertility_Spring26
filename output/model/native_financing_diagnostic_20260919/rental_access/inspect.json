@@ -1,0 +1,41 @@
+{
+  "cases": [
+    {
+      "cap": "capped",
+      "case": "baseline_control",
+      "changed_fields": [],
+      "hR_max": 6.0,
+      "phi": 0.8
+    },
+    {
+      "cap": "open",
+      "case": "rental_access",
+      "changed_fields": [
+        "hR_max"
+      ],
+      "hR_max": 10.0,
+      "phi": 0.8
+    },
+    {
+      "cap": "open",
+      "case": "rental_access_mortgage",
+      "changed_fields": [
+        "hR_max",
+        "phi"
+      ],
+      "hR_max": 10.0,
+      "phi": 1.0
+    }
+  ],
+  "contract": {
+    "checkpoint_sha256": "3322a61994fb3654d67f4b1d6cf2d0f7cacbb3668d06a417e192ee363c174993",
+    "solver_sha256": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da"
+  },
+  "exact_loop": [
+    "baseline_control",
+    "rental_access",
+    "rental_access_mortgage"
+  ],
+  "scope": "fixed-price full-lifecycle PE; all contract and overrides checked before solve",
+  "status": "inspect_only"
+}
