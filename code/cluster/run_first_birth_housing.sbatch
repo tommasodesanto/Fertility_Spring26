@@ -26,5 +26,8 @@ test -s "${ROOT}/output/kleven_acs_pilot/source_audit_extract27_20260919/ne_extr
 test -s "${ROOT}/output/kleven_acs_pilot/source_audit_extract27_20260919/source_audit_manifest.json"
 export KLEVEN_ROOT="${ROOT}" ESTIMATOR_FILE="${ROOT}/code/empirical/acs/kleven_pseudo/estimate_first_birth_housing.R" OUTDIR
 export RUN_ESTIMATION="${RUN_ESTIMATION:-1}"
+export SECOND_BIRTH_DIAG_DIR="${ROOT}/output/kleven_acs_pilot/second_birth_proxy_diagnostic_20260920"
+export CANDIDATE_OUTDIR="${ROOT}/output/kleven_acs_pilot/second_birth_candidate_support_20260920"
 echo "preflight_pass run_estimation=${RUN_ESTIMATION} time=$(date -Is)"
+Rscript "${ROOT}/code/empirical/acs/kleven_pseudo/second_birth_candidate_support.R"
 Rscript "${SCRIPT}"
