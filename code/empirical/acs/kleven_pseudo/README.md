@@ -24,24 +24,27 @@ The OpenCode/Kimi source-map pass identified exact required fields, weights and 
 
 The verified extract27 source audit completed as Torch job `18078493`. Compact
 receipts are in `output/source_audit_extract27_20260919/`, and the full reduced
-Northeast packet remains on Torch. The audit found exact-key uniqueness and zero
-sex/age/ownership mismatches on 2,190,987 shared unique keys. It also found 107
-literal `ROOMS=28` values, all in the 2009 ACS 1-year sample; these are preserved
-as raw codes with missing outcome-safe values pending code review.
+Northeast packet remains on Torch. The authoritative digest and overlap values
+are in `output/source_audit_extract27_20260919/source_audit_manifest.json`;
+this README does not duplicate the hash. The audit found exact-key uniqueness
+and zero sex/age/ownership mismatches on 2,190,987 shared unique keys. It also
+found literal `ROOMS=28` values, which are preserved as raw codes with
+missing outcome-safe values pending code review.
 
 The NE-only second-birth roster diagnostic completed as Torch job `18078758`.
 It produced 6,872 strict event-0 anchors, 1,771 full-pre anchors, 6,325
 reference-period anchors, 70,063 post rows, 211,056 one-child donors, and
-21,919 negative-time donor targets. Matching and housing estimation remain
-unrun. Compact support receipts are in
+21,919 negative-time donor targets. This paragraph records the historical
+roster-only diagnostic; later transformed-support matching and first-birth
+housing results are indexed below. Compact support receipts are in
 `output/second_birth_proxy_diagnostic_20260920/`.
 
 ## Current validated package
 
 The source audit is documented in `source_audit_extract27_20260919.md`. Its
-verified extract has SHA-256
-`edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324`,
-9,919,999,546 bytes, exact source-key uniqueness, and zero sex, age, or
+authoritative SHA-256 and byte count are recorded in
+`output/source_audit_extract27_20260919/source_audit_manifest.json`; the
+verified extract has exact source-key uniqueness and zero sex, age, or
 ownership mismatches on 2,190,987 shared keys. Raw `ROOMS=28` values remain
 explicitly unknown for outcome analysis; they are not recoded to nine.
 

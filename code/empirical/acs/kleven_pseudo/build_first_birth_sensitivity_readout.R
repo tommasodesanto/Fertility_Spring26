@@ -92,15 +92,21 @@ same_contrast[, `:=`(
 )]
 fwrite(same_contrast, file.path(bundle, "full_vs_short_event3_minus_neg1.csv"))
 
-# Render state-separated saved-CSV curves for the short window.
-label_map <- c(rooms9 = "rooms", bedrooms5 = "bedrooms", ownership_lw = "ownership (pp)")
+# Render state-separated saved-CSV curves for the short window.  The saved
+# ownership estimates remain proportions; convert them to percentage points
+# only in this display layer.
+label_map <- c(rooms9 = "Rooms (cap 9)", bedrooms5 = "Bedrooms (cap 5)", ownership_lw = "Ownership (pp)")
 states <- sort(unique(as.character(curves$statename)))
 cols <- c(Men = "#1b6ca8", Women = "#c23b22")
 png(file.path(bundle, "short_window_housing_event_curves.png"),
     width = max(1800, 500 * length(states)), height = 1300, res = 150)
-par(mfrow = c(3, length(states)), mar = c(3.2, 3.2, 2.2, 0.8))
+par(mfrow = c(3, length(states)), mar = c(3.4, 4.8, 2.6, 0.8))
 for (o in c("rooms9", "bedrooms5", "ownership_lw")) {
-  z0 <- curves[outcome == o]
+  z0 <- copy(curves[outcome == o])
+  if (o == "ownership_lw")
+    z0[, `:=`(estimate = 100 * estimate,
+              conf.low = 100 * conf.low,
+              conf.high = 100 * conf.high)]
   ylim <- range(c(z0$conf.low, z0$conf.high), finite = TRUE)
   ylim <- ylim + c(-1, 1) * max(diff(ylim) * .03, .01)
   for (st in states) {
@@ -131,7 +137,8 @@ report <- c(
   paste0("- Joint target-anchor support at both event -2 and event -1: ", joint_counts[object == "target_joint_neg2_neg1_supported", count], " of ", joint_counts[object == "target_anchors", count], " target anchors; separate support counts are ", joint_counts[object == "target_neg2_supported", count], " at -2 and ", joint_counts[object == "target_neg1_supported", count], " at -1."),
   paste0("- Anchor receipt cross-check: ", sum(anchor$full_pre_supported & anchor$reference_supported), " anchors satisfy both full-pre and reference support; ", sum(anchor$full_pre_supported), " satisfy full-pre support and ", sum(anchor$reference_supported), " satisfy reference support."),
   "- Source-year support is reported in `joint_support_by_source_year.csv`; the compact anchor receipt has no state field, so a state breakdown is unavailable without reopening the joined source data.",
-  "- Gap indicators are preserved in `joint_support_by_gap.csv`; these are support flags, not estimates.",
+  paste0("- Gap flags in `joint_support_by_gap.csv`: reference_gap=TRUE for ", sum(anchor$gap_reference), " anchors and full_pre_gap=TRUE for ", sum(anchor$gap_full_pre), "; corresponding support flags are reference_supported=", sum(anchor$reference_supported), " and full_pre_supported=", sum(anchor$full_pre_supported), ". These are support flags, not estimates."),
+  "- `full_vs_short_event3_minus_neg1.csv` retains state-by-gender cells; any cell summary across those rows is an unweighted descriptive average, not a pooled Northeast estimate.",
   "",
   "## Short-window housing support and weights",
   "",
