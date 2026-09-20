@@ -248,14 +248,13 @@ fbh_support <- function(d, outcomes, event_times, cohort_col) {
   groups <- split(seq_len(nrow(d)), group_factor, drop = TRUE)
   rows <- vector("list", length(groups) * length(outcomes)); k <- 0L
   for (ix in groups) for (o in outcomes) {
-    z <- rep(FALSE, nrow(d)); z[ix] <- TRUE
     k <- k + 1L
     one <- support_keys[ix[1], , drop = FALSE]
     cl <- d$source_household_cluster[ix]
     rows[[k]] <- data.frame(outcome = o, statename = as.character(one$statename),
       gender = as.character(one$gender), event_time = as.character(one$event_time),
       cohort = as.character(one[[cohort_col]]), housing_join_status = as.character(one$housing_join_status),
-      rows = sum(z), valid_weight_rows = sum(z & is.finite(d$wgt) & d$wgt > 0),
+      rows = length(ix), valid_weight_rows = sum(is.finite(d$wgt[ix]) & d$wgt[ix] > 0),
       weight_sum = sum(d$wgt[ix][is.finite(d$wgt[ix]) & d$wgt[ix] > 0], na.rm = TRUE),
       missing_outcome = sum(is.na(d[[o]][ix])), source_household_clusters = length(unique(cl[!is.na(cl)])),
       stringsAsFactors = FALSE)

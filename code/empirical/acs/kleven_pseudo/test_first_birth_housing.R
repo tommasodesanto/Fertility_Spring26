@@ -137,6 +137,7 @@ expect(all(is.finite(result$summary$std.error)) && all(result$summary$std.error 
        "cluster contrast covariance failed")
 vt3 <- result$summary$statename == "Vermont" & result$summary$gender == "Men" &
   result$summary$outcome == "ownership_lw" & result$summary$contrast == "event_3_minus_event_neg1"
+expect(sum(vt3) == 1L, "known Vermont ownership contrast is not unique")
 expect(all(abs(result$summary$estimate[vt3] - 1) < 1e-8),
        "known Vermont ownership +3-minus--1 contrast changed")
 expect(max(abs(result$curves$estimate[result$curves$outcome == "ownership_lw"])) < 2,
