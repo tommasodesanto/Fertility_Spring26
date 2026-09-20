@@ -18,8 +18,10 @@ context for the ACS coresident second-birth proxy: they use longitudinal
 second-child birth-year records, one-child controls, an ID-year sample that is
 not mother-only, and a legacy direct rooms measure. The ACS proxy instead links
 coresident children in repeated cross-sections and infers event time from the
-second-oldest linked child's age. The ACS rooms variable is capped at 9, so
-literal comparisons to uncapped PSID rooms bins require an outcome recode.
+second-oldest linked child's age. The ACS rooms outcome requires a predeclared
+harmonization after the extract27 code audit because the raw source contains
+values above 9; literal comparisons to uncapped PSID rooms bins must use that
+documented outcome definition.
 The five-year-gap PSID restriction is relevant to ACS negative-time support,
 but does not make the populations or estimands identical. The saved PSID
 second-birth tables do not establish a causal effect or validate the ACS proxy.
