@@ -28,26 +28,31 @@ short_window_support <- function(d, outcomes = c("rooms9", "bedrooms5", "ownersh
   d[, cohort_num := suppressWarnings(as.integer(as.character(cohort)))]
   d <- d[event_num %in% events & cohort_num %in% cohorts &
            housing_join_status == "acs_source_matched" & positive_weight(wgt)]
-  if (!nrow(d)) stop("short-window support has no source-matched positive-weight rows")
-  cells <- rbindlist(lapply(outcomes, function(o) {
-    if (!o %in% names(d)) stop("support input missing outcome: ", o)
-    z <- d[, .(source_rows = .N,
-               outcome_valid_rows = sum(!is.na(get(o))),
-               missing_outcome_rows = sum(is.na(get(o))),
-               weight_sum = sum(wgt),
-               sum_weight_sq = sum(wgt^2)),
-           by = .(statename, gender, cohort = cohort_num, event_time = event_num)]
-    z[, outcome := o]
-    z
-  }), fill = TRUE)
   if (is.null(states)) states <- sort(unique(as.character(d$statename)))
   if (is.null(genders)) genders <- sort(unique(as.character(d$gender)))
   keys <- CJ(outcome = outcomes, statename = states,
              gender = genders, cohort = cohorts,
              event_time = events, unique = TRUE)
-  cells <- merge(keys, cells,
-                 by = c("outcome", "statename", "gender", "cohort", "event_time"),
-                 all.x = TRUE)
+  if (nrow(d)) {
+    cells <- rbindlist(lapply(outcomes, function(o) {
+      if (!o %in% names(d)) stop("support input missing outcome: ", o)
+      z <- d[, .(source_rows = .N,
+                 outcome_valid_rows = sum(!is.na(get(o))),
+                 missing_outcome_rows = sum(is.na(get(o))),
+                 weight_sum = sum(wgt),
+                 sum_weight_sq = sum(wgt^2)),
+             by = .(statename, gender, cohort = cohort_num, event_time = event_num)]
+      z[, outcome := o]
+      z
+    }), fill = TRUE)
+    cells <- merge(keys, cells,
+                   by = c("outcome", "statename", "gender", "cohort", "event_time"),
+                   all.x = TRUE)
+  } else {
+    cells <- keys
+    cells[, `:=`(source_rows = 0L, outcome_valid_rows = 0L,
+                 missing_outcome_rows = 0L, weight_sum = 0, sum_weight_sq = 0)]
+  }
   for (j in c("source_rows", "outcome_valid_rows", "missing_outcome_rows",
               "weight_sum", "sum_weight_sq"))
     set(cells, which(is.na(cells[[j]])), j, 0)
