@@ -4,6 +4,12 @@ One-off review, audit, and testing prompts live here instead of the repository
 root. They are useful context, but they are not active model or calibration
 state.
 
+- `PROMPT_fable_model_specification_20260920.md`: Claude Max/Fable review brief
+  to settle a provisional model specification before serious recalibration.
+  Includes the open structural choices, reviewed overnight evidence and its
+  limits, and a request for ranked author decisions and an identification plan.
+  Prepared for the user-launched session; submission is not yet recorded.
+
 - `HANDOFF_fable_september14_slides.md`: current fast-editing handoff for the
   shared September 14 Beamer deck, with author preferences, build commands,
   technical contacts and evidence boundaries. Both Fable and Codex edit the
