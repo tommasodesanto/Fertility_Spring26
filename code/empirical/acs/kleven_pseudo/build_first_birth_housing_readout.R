@@ -171,15 +171,20 @@ se_compare <- contrasts[contrast %in% c("post_minus_pre", "event_3_minus_event_n
 fwrite(se_compare, file.path(outdir, "contrast_se_comparison.csv"))
 
 # Re-render the saved curves with readable outcome labels.  State panels remain
-# separate so lines cannot be mistaken for one another.
-label_map <- c(rooms9 = "rooms", bedrooms5 = "bedrooms", ownership_lw = "ownership (pp)")
+# separate so lines cannot be mistaken for one another.  Ownership is stored
+# as a proportion in the receipt; convert it to percentage points only here.
+label_map <- c(rooms9 = "Rooms (cap 9)", bedrooms5 = "Bedrooms (cap 5)", ownership_lw = "Ownership (pp)")
 states <- sort(unique(as.character(curves$statename)))
 gcols <- c(Men = "#1b6ca8", Women = "#c23b22")
 png(file.path(outdir, "housing_event_curves_labeled.png"),
     width = max(1800, 500 * length(states)), height = 1300, res = 150)
-par(mfrow = c(3, length(states)), mar = c(3.2, 3.2, 2.2, 0.8), oma = c(0, 0, 0, 0))
+par(mfrow = c(3, length(states)), mar = c(3.4, 4.8, 2.6, 0.8), oma = c(0, 0, 0, 0))
 for (o in c("rooms9", "bedrooms5", "ownership_lw")) {
-  zo <- curves[outcome == o]
+  zo <- copy(curves[outcome == o])
+  if (o == "ownership_lw")
+    zo[, `:=`(estimate = 100 * estimate,
+              conf.low = 100 * conf.low,
+              conf.high = 100 * conf.high)]
   ylim <- range(c(zo$conf.low, zo$conf.high), finite = TRUE)
   ylim <- ylim + c(-1, 1) * max(diff(ylim) * 0.03, 0.01)
   for (st in states) {
