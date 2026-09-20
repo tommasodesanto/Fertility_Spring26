@@ -1,5 +1,48 @@
 # Calibration Status
 
+**September 19, 23:26 EDT — full overnight battery submitted:**
+Joint search **18049121** and original 48-cell mechanism grid **18050123** are
+running after successful smokes. New-income pilot smoke/grid **18050440/18050441**
+and refitted-income smoke/grid **18050443/18050451** are submitted. Every grid
+requires its own successful three-case smoke; the refitted-income smoke also
+requires the verified search. There are up to 96 joint search proposals and
+144 mechanism cells across three checkpoint families, plus controls. Each
+mechanism production allocation is six hours (five-hour controller budget),
+with 50–100 minutes estimated per family. No laptop chaining is required.
+
+Population replay **18050183** completed in 14s: the raw stationary and saved
+evaluated pre-choice arrays differ in 17 entries, with L1 3.51009e-15 and
+maximum 1.62824e-15, zero total-mass difference. Saved current mass and births
+replay exactly. New-income grids explicitly use the checkpoint's evaluated
+pre-choice population, allowing that input selection only when L1, maximum and
+total differences are at most 1e-12. The strict per-arm population equality,
+exact baseline-control checks and other numerical gates remain unchanged.
+This is an explicit floating-point-scale input correction, not a model or target
+change. The original running snapshot is untouched. Ten focused tests and shell
+syntax checks pass; new-income numerical smokes are still pending.
+[Full expanded receipt](output/model/native_financing_diagnostic_20260919/overnight/expanded_submission.json)
+and [population evidence](output/model/native_financing_diagnostic_20260919/overnight/population_diagnostic/report.json).
+
+
+**September 19, 23:16 EDT — larger overnight battery submitted:**
+Joint-search smoke **18049120** completed successfully (27m29s, exit 0);
+**18049121** is now running, with up to 96 joint proposals and two selected-point
+repetitions. Under the author's renewed overnight authorization, original-family
+dose smoke **18050122** completed (2m50s, exit 0), and **18050123** is running.
+Both controls and the combined arm passed, each with a completed cohort and
+17 standard plots.
+The new experiment has 48 combinations plus two controls: financed shares
+0.8/0.9/0.95/1, unsecured limits 0/0.25/1/5 times four-year after-tax earnings
+(zero in retirement), and rental room caps 6/8/10. At 60–120 seconds per arm,
+estimated production time is 50–100 minutes, with a five-hour controller budget
+and six-hour allocation. Source, initial population, preferences and prices are
+fixed within this original-checkpoint experiment; all numerical gates remain.
+See [expanded submission](output/model/native_financing_diagnostic_20260919/overnight/finance_dose_v1/submission.json).
+New-income mechanism comparisons remain blocked by the saved-population check;
+a bounded replay diagnostic is being repaired after an import failure. No
+population gate has been relaxed or new-income mechanism production submitted.
+
+
 **September 19, 22:45 EDT — coordinate result verified; mechanism smoke stopped:**
 Job **18047156** completed in 41m10s (exit 0), evaluating all 16 proposals.
 The selected loss is **502.74561411262744**, down from the same-income pilot's

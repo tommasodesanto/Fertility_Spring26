@@ -4,6 +4,86 @@ This is a full-lifecycle partial-equilibrium diagnostic from the frozen Septembe
 
 Run two independent `baseline` cases first. Both require all saved policy arrays to reproduce at `atol=1e-10, rtol=0`; only then run `mortgage_only`, `unsecured_only`, and `both` as independently timed processes.
 
+## Full battery and population correction — September 19, 23:26 EDT
+
+| Family | Smoke | 48-cell production | Dependency |
+|---|---|---|---|
+| Original paper checkpoint | 18050122, passed | 18050123, running | Own smoke |
+| New-income stationary pilot | 18050440 | 18050441 | Own smoke |
+| New-income selected refit | 18050443 | 18050451 | Verified search 18049121, then own smoke |
+
+All three use the dose design below: 48 cells and two controls per production
+job, plus three smoke cases. The two new-income snapshots are separate immutable
+folders `finance_dose_income_v2` and `finance_dose_refit_v2`, under the same
+native-financing remote parent. The original `finance_dose_v1` remains untouched.
+The full 144-cell mechanism battery complements up to 96 joint search proposals.
+
+The old new-income matrix failed a bitwise input-population check. The corrected
+read-only replay, job 18050183, completed in 14 seconds: raw stationary mass versus
+saved `evaluation.g_pre` has L1 3.5100904979533746e-15, maximum difference
+1.62824089953466e-15, 17 changed entries and no total-mass change. One saved-policy
+replay reproduces the saved evaluated pre-choice mass, current mass and births
+exactly. Job 18050052 was the preceding failed-import diagnostic; no model solve
+ran in either diagnostic. [Evidence](overnight/population_diagnostic/report.json).
+
+The new-income grids therefore explicitly select the saved evaluated pre-choice
+mass as their common input (`--population-source saved_evaluation`). This requires
+finite arrays of identical shape and absolute L1, maximum and total-mass differences
+from raw stationary mass no greater than 1e-12; larger differences fail. The
+per-arm `np.array_equal` population gate and original baseline/policy/budget/value
+checks are unchanged. Each checkpoint records the input choice and measured
+differences. The original family retains its raw stationary input. This corrects
+a floating-point-scale input discrepancy; no solver, objective, preferences or
+calibration result is changed. Ten focused tests, shell syntax and lead line
+review passed; the candidate-family numerical smokes remain pending.
+
+Reproduce with a fresh `DOSE_TAG`, `POPULATION_SOURCE=saved_evaluation`,
+`FAMILY=stationary_new_income` or `FAMILY=refit_new_income`, and `SUBMIT=1` using
+`code/cluster/submit_e5f_financing_dose.sh`; the refit requires `AFTER_JOB=18049121`.
+Every job fails closed on contract or numerical failure. Each mechanism grid has
+a 600-second per-case limit, five-hour controller budget and six-hour allocation.
+Expected time is 50–100 minutes per family. Future follow-ups collect full search
+fit/parameter tables and the unchanged diagnostic packets before interpretation.
+The full battery is diagnostic; cross-family prices, preferences and native entry
+wealth may differ, and it establishes neither convergence nor general equilibrium.
+
+[All jobs and stopping rules](overnight/expanded_submission.json).
+
+## Expanded overnight battery — September 19, 23:16 EDT
+
+The search smoke 18049120 passed, and the 96-proposal search 18049121 is running.
+The renewed author request adds a 48-cell original-family dose experiment:
+financed shares 0.8, 0.9, 0.95, 1; unsecured borrowing limits 0, 0.25, 1, 5 times
+four-year after-tax earnings (zero in retirement); and rental room caps 6, 8, 10.
+For example, 0.25 times four-year earnings is one annual earnings amount.
+The lower credit doses distinguish a response at moderate borrowing limits from
+one that requires the unusually large five-period limit. Mortgage access changes
+deposit and collateral constraints jointly, so these are not pure deposit effects.
+
+Smoke 18050122 completed in 2m50s (exit 0): two exact baseline controls and the
+combined extreme arm passed, each with a completed cohort and 17 standard plots.
+Production 18050123 is running and covers 48 cells plus two controls.
+Each case includes fixed-population total/first birth flows, housing and tenure,
+explicit lifetime cohort births and first-birth age, and 17 standard plots.
+Prices, preferences and initial population stay fixed; there is no GE claim or
+completed-fertility normalization in this exercise. Comparisons use each family’s
+own unchanged baseline. Source and numerical gates are unchanged.
+
+The 50 production arms imply approximately 50–100 minutes at 60–120 seconds each.
+Each case has a ten-minute limit, the controller a five-hour budget, and Slurm a
+six-hour allocation. Progress is written every 30 seconds and after every arm;
+the controller stops at the first failed gate. Seven focused tests and shell
+syntax checks passed. The exact-loop cluster smoke passed.
+
+New-income mechanism production is not resubmitted: a bounded population replay
+is diagnosing the failed equality guard. The original failed matrix and cancelled
+dependents remain historical receipts. The running dose snapshot is isolated at
+`/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1`.
+Reproduce staging/submission with `SUBMIT=1 bash code/cluster/submit_e5f_financing_dose.sh`
+and a **fresh** `DOSE_TAG`; do not overwrite a staged or running snapshot.
+[Expanded receipt](overnight/finance_dose_v1/submission.json) and
+[pinned plan](overnight/finance_dose_v1/plan.remote.json).
+
 ## Overnight progress — September 19, 22:45 EDT
 
 Coordinate job 18047156 completed all 16 proposals in 41m10s. Case 3 was selected

@@ -1,0 +1,176 @@
+{
+  "adapter_path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/run_e5f_income_candidate_calibration.py",
+  "adapter_sha256": "e688e4fa401097993dcd6cbca1b7fc9afe6911a2086e7bc74925c962bbaf92f2",
+  "beta_bounds": [
+    0.94,
+    0.99
+  ],
+  "candidate_id": "psid_persistent_iid_transitory_15state_diagnostic_20260919",
+  "candidate_json": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/earnings_candidate/candidate.json",
+  "candidate_json_sha256": "35fcb1cfc2ae1067def0ec5985e44f0c16df28dedfd47a944444bfcaa4dc0447",
+  "candidate_payload_fingerprint": "013e1f803b4e23d4920b14d6377af973e7a94e8d709b45143bd8dca1bdd7d425",
+  "case_timeout": 900,
+  "cold_solve_required": true,
+  "constructor_path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/build_persistent_transitory_income_candidate.py",
+  "constructor_sha256": "7c9571fb38697e9433b32baabbd630656bd935179a4325f7b1e3bbb70e94d087",
+  "controller_path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/run_e5f_income_candidate_search.py",
+  "controller_sha256": "1286ba54f1d2e5a64798150de3c6786c109d1f28733c0e47a8e769dad339fa18",
+  "dose_design": {
+    "case_seconds": 600,
+    "cells": 48,
+    "estimated_case_seconds": [
+      60,
+      120
+    ],
+    "estimated_wall_minutes": [
+      50,
+      100
+    ],
+    "extra_controls": 2,
+    "lambda_four_year_income": [
+      0.0,
+      0.25,
+      1.0,
+      5.0
+    ],
+    "phi": [
+      0.8,
+      0.9,
+      0.95,
+      1.0
+    ],
+    "rental_cap": [
+      6.0,
+      8.0,
+      10.0
+    ],
+    "slurm_seconds": 21600,
+    "threads": 1,
+    "total_seconds": 18000
+  },
+  "estimated_native_seconds": 1800,
+  "estimated_native_solves": [
+    36,
+    144
+  ],
+  "estimated_native_solves_max": 784,
+  "estimated_point_seconds": 400,
+  "estimated_search_wall_minutes": 110,
+  "estimated_trial_seconds": [
+    200,
+    500
+  ],
+  "factorial_controller_path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/run_e5f_financing_factorial.py",
+  "factorial_controller_sha256": "0cb6d5b1db5f1ab7b77912099f27ffb8908f8e446574ffcb3d69d724eda364b6",
+  "factorial_helper_sha256": {
+    "build_e5f_native_financing_report.py": "beccdda8ac758326c5ff75943831ef402c1e82d1e8a185eebaaac6c079ca65b5",
+    "run_e5f_native_financing_diagnostic.py": "ff65058d8e796069f82fcaf463256e906a500af876bb91d91c646c200d3582f2",
+    "run_e5f_native_income_cohort_diagnostic.py": "1ca604b4b6e83f5cd43b48163a4889512165caf5a4ffb88f6b8759c60a0e1d50",
+    "run_e5f_native_rental_access_diagnostic.py": "90d48059a3f76668b5e6c4ea0f789de14c2280e21ded7493dc41f67ca367a924"
+  },
+  "factorial_scope": "three binary finance/rental margins within each checkpoint family; fixed prices and preferences; no GE claim",
+  "fertility_normalization": 2.1,
+  "final_repetitions": 2,
+  "free_parameter_count": 9,
+  "free_parameters": [
+    "beta_annual",
+    "kappa_fert",
+    "kappa_fert_continuation",
+    "chi",
+    "H0",
+    "theta0",
+    "theta1",
+    "first_birth_fixed_cost",
+    "h_P"
+  ],
+  "hard_timeout_seconds": 3420,
+  "housing_supply_elasticity": 0.63,
+  "incumbent_checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_stationary_18040896/evaluation/raw/repetition_01/initial_state.pkl.gz",
+  "incumbent_checkpoint_sha256": "79f9dd5e56351bb6ced3a2b31d10657b1bfa8acd59c1c68436bfb671c99bb675",
+  "incumbent_score": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_stationary_18040896/evaluation/scored_repetition_01/score.json",
+  "incumbent_score_sha256": "3c128cfd382cbfeae4f40ff3ab68e0f78b79e0284d98562a06414f24c4472446",
+  "initial_contract_path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/baseline_replay_20260917/replay/case/initial_contract.json",
+  "interpretation": "bounded local diagnostic refit, not convergence or adoption",
+  "objective_canonical_sha256": "4440ea07f4de957740ca6c04961d2806d9b9ef782c7a0e7dad4ce73e1db651b1",
+  "overnight_case_timeout": 900,
+  "overnight_controller_path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/run_e5f_income_overnight_search.py",
+  "overnight_controller_sha256": "111776865158779fa9ab9de05308a0b7d3e98adf8b0280cfaf2ed159be58eb48",
+  "overnight_max_proposals": 96,
+  "overnight_search_seconds": 16200,
+  "overnight_slurm_seconds": 21600,
+  "overnight_verification_seconds": 1800,
+  "overnight_workers": 8,
+  "parameter_bounds": {
+    "H0": [
+      0.2,
+      80.0
+    ],
+    "beta_annual": [
+      0.94,
+      0.99
+    ],
+    "chi": [
+      0.1,
+      5.0
+    ],
+    "first_birth_fixed_cost": [
+      0.0,
+      8.0
+    ],
+    "h_P": [
+      0.1,
+      2.3
+    ],
+    "kappa_fert": [
+      0.02,
+      50.0
+    ],
+    "kappa_fert_continuation": [
+      0.02,
+      50.0
+    ],
+    "theta0": [
+      0.0,
+      8.0
+    ],
+    "theta1": [
+      0.02,
+      16.0
+    ]
+  },
+  "payroll_tax": 0.179,
+  "pilot_budget_seconds": 2100,
+  "pilot_initial_psi": 0.1489153145785918,
+  "pilot_parameters": {
+    "H0": 8.11210048056786,
+    "beta_annual": 0.99,
+    "chi": 1.0496534423047694,
+    "first_birth_fixed_cost": 0.26576477618628114,
+    "h_P": 2.3,
+    "kappa_fert": 0.33773423411167025,
+    "kappa_fert_continuation": 0.39785645171756406,
+    "theta0": 0.08105103333987912,
+    "theta1": 0.08520356663830632
+  },
+  "plan_path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/plan.json",
+  "run_contract_path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/baseline_replay_20260917/replay/case/run_contract.json",
+  "schema": "e5f_income_candidate_calibration_v1",
+  "search_max_proposals": 16,
+  "search_scope": "finite joint near/wide proposals; no convergence/adoption claim",
+  "search_seconds": 2100,
+  "search_threads_per_worker": 1,
+  "search_workers": 4,
+  "slurm_seconds": 3600,
+  "source_manifest_path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/working_contract.json",
+  "source_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2",
+  "status": "authorized_overnight_diagnostic",
+  "stop_condition": "One finite coordinate poll; stop dispatch with under 500s remaining; repeat selected point twice; abort on source/income/target mismatch.",
+  "target_signature": "a70b8106459693b4c931ba2a5a3ea398dd33d805c52ca19b1179fcaa2476782b",
+  "target_weight_contract": "frozen_12_scored_rows_plus_separate_psi_2_1_normalization",
+  "template_dir": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/baseline_replay_20260917/replay/case",
+  "verification_seconds": 1200,
+  "warmstart_policy": "reference-only; reject cached policy/distribution when income_candidate_fingerprint differs even if state_count matches",
+  "wrapper_path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/run_scored_candidate.py",
+  "wrapper_seconds": 2100,
+  "wrapper_sha256": "81322cae96620ff06d9275348c6a32711165ee6d5666834ebf9c3746916b65b6"
+}

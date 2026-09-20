@@ -1,0 +1,48 @@
+{
+  "timestamp": "2026-09-19T23:26:11.240939-04:00",
+  "family": "refit_new_income",
+  "status": "submitted; production requires successful exact-loop smoke",
+  "remote_root": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2",
+  "jobs": {
+    "smoke": "18050443",
+    "production": "18050451",
+    "smoke_dependency": "18049121",
+    "production_dependency": "18050443"
+  },
+  "design": {
+    "case_seconds": 600,
+    "cells": 48,
+    "estimated_case_seconds": [
+      60,
+      120
+    ],
+    "estimated_wall_minutes": [
+      50,
+      100
+    ],
+    "extra_controls": 2,
+    "lambda_four_year_income": [
+      0.0,
+      0.25,
+      1.0,
+      5.0
+    ],
+    "phi": [
+      0.8,
+      0.9,
+      0.95,
+      1.0
+    ],
+    "population_source": "saved_evaluation",
+    "rental_cap": [
+      6.0,
+      8.0,
+      10.0
+    ],
+    "slurm_seconds": 21600,
+    "threads": 1,
+    "total_seconds": 18000
+  },
+  "population_contract": "Use checkpoint evaluation.g_pre as fixed common mass, only if raw versus evaluated distribution has finite matching shape and L1, Linf, total-mass differences at most 1e-12. Strict bitwise unchanged-population and original baseline gates remain active.",
+  "validation": "10 focused tests; shell syntax; lead line review. Numerical smoke pending. Native solver and target contract unchanged."
+}

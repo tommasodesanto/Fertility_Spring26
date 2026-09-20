@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/overnight/population_diagnostic/code/model/tools/diagnose_e5f_saved_population.py", line 106, in <module>
+    if __name__ == "__main__": main()
+                               ~~~~^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/overnight/population_diagnostic/code/model/tools/diagnose_e5f_saved_population.py", line 59, in main
+    adapter = importlib.import_module("run_e5f_income_candidate_calibration")
+  File "/share/apps/anaconda3/2025.06/lib/python3.13/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1324, in _find_and_load_unlocked
+ModuleNotFoundError: No module named 'run_e5f_income_candidate_calibration'

@@ -11,8 +11,47 @@ def test_factorial_and_smoke_order_contract():
     assert [(0.8, 0.0, 6.0)] * 2 + [(1.0, 5.0, 10.0)] == [(0.8, 0.0, 6.0), (0.8, 0.0, 6.0), (1.0, 5.0, 10.0)]
 
 
+def test_dose_design_has_48_grid_arms_and_two_controls():
+    full = d.case_order("run", "dose")
+    assert len(full) == 50
+    assert len(set(full[2:])) == 48
+    assert full[:2] == [(0.8, 0.0, 6.0)] * 2
+
+
+def test_smoke_and_design_defaults():
+    for design in ("binary", "dose"):
+        assert len(d.case_order("smoke", design)) == 3
+        assert d.case_order("smoke", design)[-1] == (1.0, 5.0, 10.0)
+    assert len(d.case_order("run")) == 10
+    with pytest.raises(ValueError, match="invalid design"):
+        d.case_order("run", "invalid")
+
+
 def test_family_names_are_explicit():
     assert d.FAMILY_NAMES == ("original", "stationary_new_income", "refit_new_income")
+
+
+def test_population_source_default_is_identity_and_saved_evaluation_is_copy():
+    raw = np.zeros((2, 2)); evaluated = raw.copy(); evaluated[0, 0] = 5e-13
+    x = {"stationary_g_pre": raw, "evaluation": SimpleNamespace(g_pre=evaluated)}
+    assert d.prepare_population(x) is x
+    projected = d.prepare_population(x, "saved_evaluation")
+    assert projected is not x
+    assert np.array_equal(projected["stationary_g_pre"], evaluated)
+    assert projected["stationary_g_pre"] is not evaluated
+    assert np.array_equal(raw, np.zeros((2, 2)))
+
+
+def test_population_source_rejects_substantive_difference():
+    raw = np.zeros((2, 2)); evaluated = raw.copy(); evaluated[0, 0] = 2e-12
+    with pytest.raises(ValueError, match="population mismatch"):
+        d.prepare_population({"stationary_g_pre": raw, "evaluation": SimpleNamespace(g_pre=evaluated)}, "saved_evaluation")
+
+
+def test_population_source_rejects_nonfinite_values():
+    raw = np.zeros((2, 2)); evaluated = raw.copy(); evaluated[0, 0] = np.nan
+    with pytest.raises(ValueError, match="nonfinite"):
+        d.prepare_population({"stationary_g_pre": raw, "evaluation": SimpleNamespace(g_pre=evaluated)}, "saved_evaluation")
 
 
 def test_run_case_uses_exact_population_baseline_graph_and_cohort(monkeypatch, tmp_path):

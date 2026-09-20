@@ -16,7 +16,11 @@ POLICY_NAMES = ("V", "c_pol", "hR_pol", "bp_pol", "tenure_choice", "tenure_probs
 PHIS = (0.8, 1.0)
 LAMBDAS = (0.0, 5.0)
 CAPS = (6.0, 10.0)
+DOSE_PHIS = (0.8, 0.9, 0.95, 1.0)
+DOSE_LAMBDAS = (0.0, 0.25, 1.0, 5.0)
+DOSE_CAPS = (6.0, 8.0, 10.0)
 FAMILY_NAMES = ("original", "stationary_new_income", "refit_new_income")
+POPULATION_SOURCES = ("stationary", "saved_evaluation")
 
 def sha(path: Path) -> str:
     h = hashlib.sha256()
@@ -37,6 +41,33 @@ def install(source: Path) -> None:
     for p in (source, source / "tools", ROOT / "code/model/tools"):
         if str(p.resolve()) not in sys.path: sys.path.insert(0, str(p.resolve()))
 
+def population_audit(x: Mapping[str, Any]) -> dict[str, Any]:
+    raw = np.asarray(x["stationary_g_pre"])
+    evaluated = np.asarray(x["evaluation"].g_pre)
+    if raw.shape != evaluated.shape:
+        raise ValueError(f"population shape mismatch: {raw.shape} vs {evaluated.shape}")
+    if not np.isfinite(raw).all() or not np.isfinite(evaluated).all():
+        raise ValueError("population contains nonfinite values")
+    delta = evaluated - raw
+    l1 = float(np.abs(delta).sum())
+    linf = float(np.abs(delta).max(initial=0.0))
+    total_gap = float(abs(evaluated.sum() - raw.sum()))
+    if l1 > 1e-12 or linf > 1e-12 or total_gap > 1e-12:
+        raise ValueError(f"population mismatch exceeds tolerance: l1={l1}, linf={linf}, total_gap={total_gap}")
+    return {"raw_vs_evaluation_l1": l1, "raw_vs_evaluation_linf": linf,
+            "raw_vs_evaluation_changed_count": int(np.count_nonzero(delta)),
+            "raw_vs_evaluation_total_gap": total_gap}
+
+def prepare_population(x: Mapping[str, Any], source: str = "stationary") -> Mapping[str, Any]:
+    audit = population_audit(x)
+    if source not in POPULATION_SOURCES:
+        raise ValueError(f"invalid population source: {source}")
+    if source == "stationary":
+        return x
+    prepared = dict(x)
+    prepared["stationary_g_pre"] = np.asarray(x["evaluation"].g_pre).copy()
+    return prepared
+
 def validate(args: argparse.Namespace) -> dict[str, Any]:
     from run_e5f_income_candidate_calibration import validate_plan, read
     plan=read(args.plan);validate_plan(plan,require_source=True)
@@ -45,6 +76,12 @@ def validate(args: argparse.Namespace) -> dict[str, Any]:
         if sha(Path(__file__).with_name(name))!=pin:raise ValueError("factorial helper hash mismatch: "+name)
     args.source_root=Path(plan["source_root"])/"code/model"
     install(args.source_root)
+    population_source = getattr(args, "population_source", "stationary")
+    expected_population_source = plan.get("dose_design", {}).get("population_source", "stationary")
+    if population_source != expected_population_source:
+        raise ValueError("population source does not match plan")
+    if population_source == "saved_evaluation" and args.family == "original":
+        raise ValueError("saved_evaluation population source is not allowed for original family")
     if args.selection_summary:
         if args.family!="refit_new_income":raise ValueError("selection only allowed for refit family")
         from run_e5f_income_candidate_search import load_verified_score,validate_parameters
@@ -65,11 +102,13 @@ def validate(args: argparse.Namespace) -> dict[str, Any]:
     else:
         if getattr(P,"income_candidate_fingerprint",None)!=plan["candidate_payload_fingerprint"] or P.permanent_income_levels_enabled:raise ValueError("wrong candidate income")
         if args.family=="stationary_new_income" and actual!=plan["incumbent_checkpoint_sha256"]:raise ValueError("wrong stationary pilot checkpoint")
+    population = population_audit(x)
     return {"family":args.family,"checkpoint":str(args.checkpoint),"checkpoint_sha256":actual,
             "source_manifest":str(plan["source_manifest_path"]),"source_root":plan["source_root"],
             "candidate_fingerprint":getattr(P,"income_candidate_fingerprint",None),
             "price":np.asarray(x["evaluation"].policy.price).tolist(),
             "initial_population_shape":list(np.asarray(x["stationary_g_pre"]).shape),
+            "population_source": population_source, **population,
             "scope":"fixed-price partial equilibrium; within-family preferences and initial population fixed",
             "closure":"checkpoint population, fiscal objects, geography, prices and entry law held fixed; no GE claim"}
 
@@ -132,21 +171,30 @@ def run_case(x: Mapping[str, Any], phi: float, lam: float, cap: float, out: Path
     return {"status": "completed", "cohort":cohort,"phi": phi, "lambda": lam, "rental_cap": cap,
             "mortgage_access_label": "native joint deposit-and-collateral access", "metrics": metrics(ev, P),
             "budget": budget, "policy_audit": pa, "standard_graphs": graph,
-            "population": "common saved stationary pre-choice mass", "preferences": "family checkpoint unchanged"}
+            "population": "common contract pre-choice mass", "preferences": "family checkpoint unchanged"}
 
-def case_order(mode):
+def case_order(mode, design="binary"):
+    if design == "binary":
+        grid = [(p, l, c) for p in PHIS for l in LAMBDAS for c in CAPS]
+    elif design == "dose":
+        grid = [(p, l, c) for p in DOSE_PHIS for l in DOSE_LAMBDAS for c in DOSE_CAPS]
+    else:
+        raise ValueError(f"invalid design: {design}")
     controls=[(.8,0.,6.),(.8,0.,6.)]
-    return controls+([(1.,5.,10.)] if mode=="smoke" else [(p,l,c) for p in PHIS for l in LAMBDAS for c in CAPS])
+    return controls+([(1.,5.,10.)] if mode=="smoke" else grid)
 
 def run(args):
     contract=validate(args);out=args.output/args.family;out.mkdir(parents=True,exist_ok=False)
+    order=case_order(args.mode, args.design)
+    contract.update({"design": args.design, "grid_count": len(order) - 2})
     write(out/"contract.json",contract);write(out/"latest_completed.json",{"status":"awaiting_first_case"})
-    rows=[];started=time.monotonic();order=case_order(args.mode)
+    rows=[];started=time.monotonic()
     for i,(phi,lam,cap) in enumerate(order,1):
         label=f"arm_{i:02d}_phi{phi:g}_lambda{lam:g}_cap{cap:g}";case=out/"cases"/label
         cmd=[sys.executable,str(Path(__file__)),"--mode","case","--plan",str(args.plan),"--family",args.family,
              "--checkpoint",str(args.checkpoint),"--expected-hash",args.expected_hash,"--output",str(case),
-             "--phi",str(phi),"--lam",str(lam),"--cap",str(cap)]
+             "--phi",str(phi),"--lam",str(lam),"--cap",str(cap),"--design",args.design,
+             "--population-source",args.population_source,"--total-seconds",str(args.total_seconds)]
         case.parent.mkdir(parents=True,exist_ok=True)
         with (case.parent/(label+".log")).open("w") as f:
             proc=subprocess.Popen(cmd,stdout=f,stderr=subprocess.STDOUT,start_new_session=True)
@@ -154,7 +202,7 @@ def run(args):
                 start=time.monotonic();last=0.
                 while proc.poll() is None:
                     elapsed=time.monotonic()-start
-                    if elapsed>600 or time.monotonic()-started>9000:raise TimeoutError("factorial time budget exceeded")
+                    if elapsed>600 or time.monotonic()-started>args.total_seconds:raise TimeoutError("factorial time budget exceeded")
                     if time.monotonic()-last>30:
                         write(out/"heartbeat.json",{"case":label,"elapsed":elapsed,"updated":time.time()});last=time.monotonic()
                     time.sleep(.5)
@@ -164,17 +212,20 @@ def run(args):
         if proc.returncode:raise RuntimeError(f"{label} failed; see {label}.log")
         row=json.loads((case/"receipt.json").read_text());row.update(label=label)
         rows.append(row);write(out/"latest_completed.json",row)
-        write(out/"completed_summary.json",{"status":"partial","contract":contract,"cases":rows})
+        write(out/"completed_summary.json",{"status":"partial","contract":contract,"design":args.design,"grid_count":len(order)-2,"cases":rows})
     fields=["label","phi","lambda","rental_cap","birth_flow","first_birth_flow","mean_rooms","ownership","cumulative_explicit_births_per_initial_household","first_births_per_initial_household","first_birth_mean_age"]
     with (out/"comparisons.csv").open("w",newline="") as f:
         w=csv.DictWriter(f,fieldnames=fields,extrasaction="ignore");w.writeheader()
         for row in rows:w.writerow({**row,**row["metrics"],**row["cohort"]})
-    write(out/"summary.json",{"status":"complete","contract":contract,"cases":rows,"elapsed_seconds":time.monotonic()-started})
+    write(out/"summary.json",{"status":"complete","contract":contract,"design":args.design,"grid_count":len(order)-2,"cases":rows,"elapsed_seconds":time.monotonic()-started})
 
 def main(argv=None):
     p=argparse.ArgumentParser();p.add_argument("--plan",type=Path,required=True);p.add_argument("--family",choices=FAMILY_NAMES,required=True)
     p.add_argument("--checkpoint",type=Path);p.add_argument("--expected-hash");p.add_argument("--selection-summary",type=Path)
     p.add_argument("--output",type=Path,required=True);p.add_argument("--mode",choices=("inspect","smoke","run","case"),required=True)
+    p.add_argument("--design",choices=("binary","dose"),default="binary")
+    p.add_argument("--population-source",choices=POPULATION_SOURCES,default="stationary")
+    p.add_argument("--total-seconds",type=float,default=9000.)
     p.add_argument("--phi",type=float);p.add_argument("--lam",type=float);p.add_argument("--cap",type=float)
     a=p.parse_args(argv)
     def stop(signum,frame):raise KeyboardInterrupt("factorial terminated")
@@ -184,8 +235,9 @@ def main(argv=None):
             contract=validate(a)
             if a.mode=="inspect":write(a.output/"inspect.json",contract)
             else:
-                if (a.phi,a.lam,a.cap) not in case_order("run"):raise ValueError("unapproved factorial arm")
-                row=run_case(packet(a.checkpoint),a.phi,a.lam,a.cap,a.output,True);row["contract"]=contract;write(a.output/"receipt.json",row)
+                if (a.phi,a.lam,a.cap) not in case_order("run", a.design):raise ValueError("unapproved factorial arm")
+                x=prepare_population(packet(a.checkpoint), a.population_source)
+                row=run_case(x,a.phi,a.lam,a.cap,a.output,True);row["contract"]=contract;write(a.output/"receipt.json",row)
         else:run(a)
     except Exception as exc:
         write(a.output/"failure.json",{"status":"failed","error":str(exc)});raise

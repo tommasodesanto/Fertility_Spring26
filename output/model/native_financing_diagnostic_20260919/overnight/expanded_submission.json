@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-09-19T23:26:11.240939-04:00",
+  "status": "overnight battery submitted",
+  "search": {
+    "job": "18049121",
+    "state": "RUNNING",
+    "max_proposals": 96,
+    "smoke": "18049120",
+    "smoke_state": "COMPLETED",
+    "selected_verification": "two exact native repetitions"
+  },
+  "mechanism": {
+    "unique_cells_per_family": 48,
+    "families": {
+      "original": {
+        "smoke": "18050122",
+        "production": "18050123",
+        "smoke_state": "COMPLETED",
+        "production_state": "RUNNING",
+        "folder": "finance_dose_v1"
+      },
+      "stationary_new_income": {
+        "smoke": "18050440",
+        "production": "18050441",
+        "folder": "finance_dose_income_v2"
+      },
+      "refit_new_income": {
+        "smoke": "18050443",
+        "production": "18050451",
+        "smoke_dependency": "18049121",
+        "folder": "finance_dose_refit_v2"
+      }
+    },
+    "production_cases_each": 50,
+    "smoke_cases_each": 3,
+    "estimated_minutes_each": [
+      50,
+      100
+    ],
+    "case_seconds": 600,
+    "controller_seconds": 18000,
+    "slurm_seconds": 21600
+  },
+  "population_diagnostic": {
+    "job": "18050183",
+    "state": "COMPLETED",
+    "l1": 3.5100904979533746e-15,
+    "linf": 1.62824089953466e-15,
+    "changed_entries": 17,
+    "current_and_births_replay": "exact",
+    "report": "population_diagnostic/report.json"
+  },
+  "prior_matrix": {
+    "smoke": "18049130 FAILED",
+    "dependents": [
+      "18049131 CANCELLED",
+      "18049132 CANCELLED"
+    ]
+  },
+  "stopping": "Stop each matrix on first failed arm; production after successful own smoke only; refit after verified search only; no silent retry or target/gate changes.",
+  "automation_id": "earnings-refit-follow-up"
+}

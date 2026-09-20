@@ -1,0 +1,58 @@
+{
+  "timestamp_utc": "2026-09-20T03:15:35.131007+00:00",
+  "authorization": "User requested larger overnight battery before sleep; this expands mechanism doses after prior original-family controls passed.",
+  "remote_root": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1",
+  "family": "original",
+  "jobs": {
+    "smoke": "18050122",
+    "production": "18050123",
+    "production_dependency": "afterok:18050122"
+  },
+  "design": {
+    "case_seconds": 600,
+    "cells": 48,
+    "estimated_case_seconds": [
+      60,
+      120
+    ],
+    "estimated_wall_minutes": [
+      50,
+      100
+    ],
+    "extra_controls": 2,
+    "lambda_four_year_income": [
+      0.0,
+      0.25,
+      1.0,
+      5.0
+    ],
+    "phi": [
+      0.8,
+      0.9,
+      0.95,
+      1.0
+    ],
+    "rental_cap": [
+      6.0,
+      8.0,
+      10.0
+    ],
+    "slurm_seconds": 21600,
+    "threads": 1,
+    "total_seconds": 18000
+  },
+  "verification": "7 focused tests passed; bash -n passed; independent exact-loop smoke required before production. Native model, objective, population and numerical gates unchanged.",
+  "other_active_chain": {
+    "search_smoke": "18049120 completed exit 0 in 27m29s",
+    "search_production": "18049121 running"
+  },
+  "candidate_income_mechanism": "Blocked pending quantified population-consistency diagnostic; old matrix dependents 18049131/18049132 cancelled and not restarted.",
+  "last_verified_utc": "2026-09-20T03:18:43.911223+00:00",
+  "status": "smoke completed in 2m50s exit 0; production running",
+  "smoke_review": {
+    "cases": 3,
+    "standard_plots_each": 17,
+    "lifetime_cohorts": 3,
+    "controls": 2
+  }
+}
