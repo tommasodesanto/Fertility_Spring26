@@ -1,0 +1,235 @@
+{
+  "case_timeout_seconds": {
+    "cap10s005": 900,
+    "cap10s02": 900,
+    "cap10s1": 900,
+    "cap10zero": 600,
+    "cap6zero": 600
+  },
+  "cases": [
+    {
+      "cap": 6.0,
+      "name": "cap6zero",
+      "slope": 0.0
+    },
+    {
+      "cap": 10.0,
+      "name": "cap10zero",
+      "slope": 0.0
+    },
+    {
+      "cap": 10.0,
+      "name": "cap10s005",
+      "slope": 0.05
+    },
+    {
+      "cap": 10.0,
+      "name": "cap10s02",
+      "slope": 0.2
+    },
+    {
+      "cap": 10.0,
+      "name": "cap10s1",
+      "slope": 1.0
+    }
+  ],
+  "checkpoint": {
+    "checkpoint": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/paper_baseline_sep14/replay_20260917/native_output/raw/repetition_02/initial_state.pkl.gz",
+    "checkpoint_sha256": "3322a61994fb3654d67f4b1d6cf2d0f7cacbb3668d06a417e192ee363c174993"
+  },
+  "control": {
+    "cap": 6.0,
+    "case": "cap6zero",
+    "checkpoint": {
+      "checkpoint": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/paper_baseline_sep14/replay_20260917/native_output/raw/repetition_02/initial_state.pkl.gz",
+      "checkpoint_sha256": "3322a61994fb3654d67f4b1d6cf2d0f7cacbb3668d06a417e192ee363c174993"
+    },
+    "claim": "control reproduction is a prerequisite; no active off-equivalence is asserted here",
+    "comparisons": [
+      "all mandatory policy arrays versus the saved evaluation policy at 1e-10",
+      "g_current and births versus the saved evaluation at 1e-10",
+      "scalar metrics and cohort summaries versus every old cap6/phi=.8/lambda=0 receipt at 1e-10",
+      "raw stationary_g_pre bitwise unchanged; mass, budget, value, probability, and saving-oracle gates",
+      "module origins inside the experiment root only"
+    ],
+    "intercept": 0.0,
+    "knee": 6.0,
+    "slope": 0.0,
+    "source": {
+      "changed_source_vs_frozen": {
+        "code/model/intergen_eqscale_seq_optimized/kernels.py": {
+          "changed": true,
+          "frozen": "79370af16a97723c8de91a1735db5d8ac12830f57e28ad1b74dfac112321fc2a",
+          "ported": "ab9bcc73516d5908376f70f8aa585c9a8e08ec62759d73491fa886130a97d377"
+        },
+        "code/model/intergen_eqscale_seq_optimized/parameters.py": {
+          "changed": true,
+          "frozen": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5",
+          "ported": "28fc43e09ed3d1728db6c0d5c071d4bb8716f6b78e4b472599effa4b06710ae3"
+        },
+        "code/model/intergen_eqscale_seq_optimized/solver.py": {
+          "changed": true,
+          "frozen": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da",
+          "ported": "59159c85dac94b518557fc73b34eb8259b8c9dcf70826e41f0cf6f7987fad6c7"
+        },
+        "code/model/intergen_eqscale_seq_optimized/tests/test_rental_wedge_port_tiny.py": {
+          "changed": true,
+          "frozen": null,
+          "ported": "ce0cbab62901d0f26706d2cf04bc814f456b0616b309075f617aa46af4cf0710"
+        },
+        "code/model/intergen_eqscale_seq_optimized/tests/test_switch_wedge.py": {
+          "changed": true,
+          "frozen": null,
+          "ported": "cc3d9e9e14c2050d75579cc314854dc664535a3bf305f1b4ef379f12e0581bb1"
+        },
+        "code/model/tools/run_dynamic_population_transition.py": {
+          "changed": false,
+          "frozen": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362",
+          "ported": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362"
+        },
+        "code/model/tools/run_e5f_independent_numerical_audit.py": {
+          "changed": true,
+          "frozen": "656d766e0197e854c73e6b6fb7a3e97cd4fef57e75ad4c7a924d8b1ca5212528",
+          "ported": "7b217f08ea411707c5d5adfff87ebda529c37a6173c4be00f88adce92a507f98"
+        },
+        "code/model/tools/run_e5f_matched_pf_smoke.py": {
+          "changed": true,
+          "frozen": "91e0728387e55c3a33419298868b696820a4d4bd61809996e6a7842654aabf32",
+          "ported": "67f0a22ae2143bdd1f6ff9b32594b8a78259b3d6738facd71d7f58e1389de21d"
+        },
+        "code/model/tools/run_e5f_open_population_transition.py": {
+          "changed": false,
+          "frozen": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346",
+          "ported": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346"
+        },
+        "code/model/tools/run_e5f_perfect_foresight_transition.py": {
+          "changed": false,
+          "frozen": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be",
+          "ported": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be"
+        }
+      },
+      "control_required_before_wedge": true,
+      "manifest": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_rental_wedge_runtime_v4/source_manifest.json",
+      "manifest_sha256": "9adf4b9afea08acf1f6fe769eca935137420e3a08d8cd85d6478701591a05509",
+      "schema": "e5f_isolated_rental_wedge_source_v2",
+      "source_files": 537,
+      "source_root": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_rental_wedge_runtime_v4",
+      "wedge_port_reviewed": true
+    },
+    "status": "control_required_before_wedge"
+  },
+  "household_solves_planned": 5,
+  "max_lifecycle_solves": 8,
+  "planned_cli": {
+    "production": [
+      "python -B <EXPERIMENT_ROOT>/code/model/tools/run_e5f_isolated_rental_wedge.py --mode verify --stage production --phase before --launch-manifest <EXPERIMENT_ROOT>/launch_manifest.json --results <EXPERIMENT_ROOT>/results",
+      "python -B <EXPERIMENT_ROOT>/code/model/tools/run_e5f_isolated_rental_wedge.py --mode check-smoke --launch-manifest <EXPERIMENT_ROOT>/launch_manifest.json --results <EXPERIMENT_ROOT>/results",
+      "DEADLINE=$(( $(date +%s) + 3600 ))",
+      "timeout --signal=TERM --kill-after=30s 600s python -B <EXPERIMENT_ROOT>/code/model/tools/run_e5f_isolated_rental_wedge.py --mode case --case cap10zero --launch-manifest <EXPERIMENT_ROOT>/launch_manifest.json --results <EXPERIMENT_ROOT>/results --deadline-epoch $DEADLINE",
+      "timeout --signal=TERM --kill-after=30s 900s python -B <EXPERIMENT_ROOT>/code/model/tools/run_e5f_isolated_rental_wedge.py --mode case --case cap10s005 --launch-manifest <EXPERIMENT_ROOT>/launch_manifest.json --results <EXPERIMENT_ROOT>/results --deadline-epoch $DEADLINE",
+      "timeout --signal=TERM --kill-after=30s 900s python -B <EXPERIMENT_ROOT>/code/model/tools/run_e5f_isolated_rental_wedge.py --mode case --case cap10s1 --launch-manifest <EXPERIMENT_ROOT>/launch_manifest.json --results <EXPERIMENT_ROOT>/results --deadline-epoch $DEADLINE",
+      "python -B <EXPERIMENT_ROOT>/code/model/tools/run_e5f_isolated_rental_wedge.py --mode combine --launch-manifest <EXPERIMENT_ROOT>/launch_manifest.json --results <EXPERIMENT_ROOT>/results",
+      "python -B <EXPERIMENT_ROOT>/code/model/tools/run_e5f_isolated_rental_wedge.py --mode verify --stage production --phase after --launch-manifest <EXPERIMENT_ROOT>/launch_manifest.json --results <EXPERIMENT_ROOT>/results"
+    ],
+    "smoke": [
+      "python -B <EXPERIMENT_ROOT>/code/model/tools/run_e5f_isolated_rental_wedge.py --mode verify --stage smoke --phase before --launch-manifest <EXPERIMENT_ROOT>/launch_manifest.json --results <EXPERIMENT_ROOT>/results",
+      "DEADLINE=$(( $(date +%s) + 2700 ))",
+      "timeout --signal=TERM --kill-after=30s 600s python -B <EXPERIMENT_ROOT>/code/model/tools/run_e5f_isolated_rental_wedge.py --mode case --case cap6zero --launch-manifest <EXPERIMENT_ROOT>/launch_manifest.json --results <EXPERIMENT_ROOT>/results --deadline-epoch $DEADLINE",
+      "timeout --signal=TERM --kill-after=30s 900s python -B <EXPERIMENT_ROOT>/code/model/tools/run_e5f_isolated_rental_wedge.py --mode case --case cap10s02 --launch-manifest <EXPERIMENT_ROOT>/launch_manifest.json --results <EXPERIMENT_ROOT>/results --deadline-epoch $DEADLINE",
+      "python -B <EXPERIMENT_ROOT>/code/model/tools/run_e5f_isolated_rental_wedge.py --mode check-smoke --launch-manifest <EXPERIMENT_ROOT>/launch_manifest.json --results <EXPERIMENT_ROOT>/results",
+      "python -B <EXPERIMENT_ROOT>/code/model/tools/run_e5f_isolated_rental_wedge.py --mode verify --stage smoke --phase after --launch-manifest <EXPERIMENT_ROOT>/launch_manifest.json --results <EXPERIMENT_ROOT>/results"
+    ]
+  },
+  "port_blockers": [
+    "Frozen parameters.py has no rental_wedge_intercept/slope/knee fields or helper.",
+    "Frozen kernels.py and solver.py have no wedge-aware renter optimizer.",
+    "The active wedge is restricted to the Markov-income factored path and rejects exhaustive saving.",
+    "Existing dated_budget, budget_audit, and boundary gates omit the wedge cost.",
+    "The active path cannot be imported from this driver; a snapshot-local runner and module-origin checks are required."
+  ],
+  "runtime_pin_strategy": "nine runtime helpers copied from the finance_dose_v1 runtime tools directory and pinned by the plan.remote.json hashes; the ported snapshot supplies the frozen core and the five patched/frozen helpers; the two sets live in separate directories and never overwrite each other",
+  "saving_audit": {
+    "draws": 32,
+    "gain_tolerance": 1e-07,
+    "retained_definition": "run_e5f_independent_numerical_audit.saving_audit: weighted random sample plus deterministic mass-bearing age/tenure boundary states (first, last, modal occupied); per-state exact per-segment maximization against fixed production continuation; hard error only if the oracle is worse than the saved choice by more than 1e-8; reports maximum_value_gain and the draw-weighted shares of value gain above 1e-6, 1e-4 and 1e-3 (boundary states carry zero sample multiplicity and enter only the maximum)."
+  },
+  "schema": "e5f_isolated_rental_wedge_v1",
+  "scope": "fixed-price partial equilibrium on the original checkpoint; explicit lifetime births are cohort accounting, not a stationary normalization or a frictionless benchmark; positive slopes are findings",
+  "source": {
+    "changed_source_vs_frozen": {
+      "code/model/intergen_eqscale_seq_optimized/kernels.py": {
+        "changed": true,
+        "frozen": "79370af16a97723c8de91a1735db5d8ac12830f57e28ad1b74dfac112321fc2a",
+        "ported": "ab9bcc73516d5908376f70f8aa585c9a8e08ec62759d73491fa886130a97d377"
+      },
+      "code/model/intergen_eqscale_seq_optimized/parameters.py": {
+        "changed": true,
+        "frozen": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5",
+        "ported": "28fc43e09ed3d1728db6c0d5c071d4bb8716f6b78e4b472599effa4b06710ae3"
+      },
+      "code/model/intergen_eqscale_seq_optimized/solver.py": {
+        "changed": true,
+        "frozen": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da",
+        "ported": "59159c85dac94b518557fc73b34eb8259b8c9dcf70826e41f0cf6f7987fad6c7"
+      },
+      "code/model/intergen_eqscale_seq_optimized/tests/test_rental_wedge_port_tiny.py": {
+        "changed": true,
+        "frozen": null,
+        "ported": "ce0cbab62901d0f26706d2cf04bc814f456b0616b309075f617aa46af4cf0710"
+      },
+      "code/model/intergen_eqscale_seq_optimized/tests/test_switch_wedge.py": {
+        "changed": true,
+        "frozen": null,
+        "ported": "cc3d9e9e14c2050d75579cc314854dc664535a3bf305f1b4ef379f12e0581bb1"
+      },
+      "code/model/tools/run_dynamic_population_transition.py": {
+        "changed": false,
+        "frozen": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362",
+        "ported": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362"
+      },
+      "code/model/tools/run_e5f_independent_numerical_audit.py": {
+        "changed": true,
+        "frozen": "656d766e0197e854c73e6b6fb7a3e97cd4fef57e75ad4c7a924d8b1ca5212528",
+        "ported": "7b217f08ea411707c5d5adfff87ebda529c37a6173c4be00f88adce92a507f98"
+      },
+      "code/model/tools/run_e5f_matched_pf_smoke.py": {
+        "changed": true,
+        "frozen": "91e0728387e55c3a33419298868b696820a4d4bd61809996e6a7842654aabf32",
+        "ported": "67f0a22ae2143bdd1f6ff9b32594b8a78259b3d6738facd71d7f58e1389de21d"
+      },
+      "code/model/tools/run_e5f_open_population_transition.py": {
+        "changed": false,
+        "frozen": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346",
+        "ported": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346"
+      },
+      "code/model/tools/run_e5f_perfect_foresight_transition.py": {
+        "changed": false,
+        "frozen": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be",
+        "ported": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be"
+      }
+    },
+    "control_required_before_wedge": true,
+    "manifest": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_rental_wedge_runtime_v4/source_manifest.json",
+    "manifest_sha256": "9adf4b9afea08acf1f6fe769eca935137420e3a08d8cd85d6478701591a05509",
+    "schema": "e5f_isolated_rental_wedge_source_v2",
+    "source_files": 537,
+    "source_root": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_rental_wedge_runtime_v4",
+    "wedge_port_reviewed": true
+  },
+  "stage_seconds": {
+    "production": 3600,
+    "smoke": 2700
+  },
+  "stages": {
+    "production": [
+      "cap10zero",
+      "cap10s005",
+      "cap10s1"
+    ],
+    "smoke": [
+      "cap6zero",
+      "cap10s02"
+    ]
+  },
+  "status": "ready_for_staging"
+}

@@ -1,0 +1,20 @@
+{
+  "status": "failed_before_household_solve",
+  "jobs": {
+    "smoke": {
+      "id": "18079861",
+      "state": "FAILED",
+      "elapsed": "00:00:08",
+      "exit": "1:0"
+    },
+    "production": {
+      "id": "18079863",
+      "state": "CANCELLED",
+      "elapsed": "00:00:00"
+    }
+  },
+  "household_solves": 0,
+  "error": "ImportError: cannot import name 'solver' from 'intergen_housing_fertility_optimized' (unknown location)",
+  "phase": "verify before",
+  "changed_method": "recursive pinned sibling-package dependency collection, independently import-tested before a fresh rental_wedge_v2; patch, economic inputs and numerical gates unchanged"
+}

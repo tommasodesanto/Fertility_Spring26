@@ -90,7 +90,12 @@ These are provisional judgments from the reviewed evidence, not adoption decisio
    match. Annual-to-four-year aggregation and finite-grid resolution are separate
    issues; neither can be repaired by calling one convenient grid calibrated.
    The current grid sensitivity also changes entrant wealth composition, which
-   prevents a clean attribution to income policy responses alone.
+   prevents a clean attribution to income policy responses alone. A separate
+   [moment-matched period proxy](income_aggregation_v1/moment_matched_period_proxy.md)
+   exactly matches the annual block-average level covariances at lags zero,
+   one and two and misses lag four by only 0.0032%. That makes a tractable
+   period approximation worth considering, but says nothing by itself about
+   tails, shock timing or conditional household behavior.
 2. **Make room and ownership profiles part of specification assessment.**
    The exact empirical target replay is available, and the saved model profiles
    now use realized housing with the empirical cap applied before weighting.
@@ -132,6 +137,65 @@ reviewed decision packet.
 
 ## Check-ins and present state
 
+### 13:14 Eastern: complete-source rental test submitted; earlier staging failures preserved
+
+Final packaging attempt **18080236/18080237** uses
+[rental_wedge_v3/submission.json](rental_wedge_v3/submission.json). The full
+previously verified frozen snapshot supplies checkpoint serialization helpers
+that static imports missed. All 126 files from v2 are unchanged; the final
+snapshot has 537 Python files. Two inactive archive builders are explicitly
+excluded because their historical main-manifest pins disagree with the full
+snapshot; no conflicting pin was overwritten. All staged files are hash checked
+against the frozen root. Actual checkpoint deserialization now occurs in the
+pre-solve verification inside the cluster environment, before any household
+case. The patch, five-case plan, scientific gates and budgets are unchanged.
+This is the final bounded packaging correction; a further failure requires
+collection and review, not an automatic retry.
+
+Previous v2 smoke **18079902** failed while unpickling the checkpoint because
+`run_e5f_perfect_foresight_person_demography` was absent; dependent **18079903**
+was cancelled. Its 163 pre-case hash checks passed, but it consumed zero
+household solves. Both failed staging chains are preserved. Total household
+solves used before v3 remains seven, with five reserved for the latest batch.
+[Collected v2 failure](rental_wedge_v2/comparison.md).
+
+### 13:08 Eastern: isolated rental-cost smoke submitted after dependency repair
+
+Jobs **18079902** (smoke) and **18079903** (dependent production) use fresh
+[rental_wedge_v2/submission.json](rental_wedge_v2/submission.json). Five cases
+compare the original cap-six control, cap-ten zero wedge, and cap-ten slopes
+0.05, 0.2 and 1, with zero intercept and knee six. The original checkpoint,
+prices, owner service preference, financed share 0.8, zero unsecured credit,
+raw pre-choice population and native entry are fixed. The smoke includes the
+original control and slope 0.2; production requires the entire verified smoke
+and reuses its slope-0.2 output. This is a fixed-price diagnostic, not adoption.
+
+Observed comparable household solves take roughly one minute; the five solves
+plus new independent saving audits are provisionally budgeted at 15–30 minutes.
+Cases have 600/900-second process caps, stage budgets 2700/3600 seconds and
+45/60-minute allocations, one CPU/24 GB. Five more household evaluations are
+reserved: at most twelve of the sixteen allowed including the seven already
+used. Zero stationary evaluations have been run or allocated.
+
+The isolated patch passed nine tiny tests and seven driver tests; a separate
+zero-consumption knee fixture is finite and agrees between Python/Numba.
+Zero-wedge fixture outputs reproduce the frozen kernel exactly. Full
+checkpoint reproduction, strict budgets, occupied-value monotonicity, an
+independent saving audit, immutable source/import origins, cohort accounting
+and 17 standard plots gate each case. The additional saving-audit maximum
+value-gain threshold is conservatively set to **1e-7 before launch**; the
+retained audit previously reported gains without that hard positive-gain gate.
+A failure is a diagnostic stop, not grounds to relax this threshold.
+
+The initial v1 smoke **18079861** failed in its pre-solve import check after
+eight seconds; **18079863** was cancelled. It consumed **zero** household
+solves. The source collector had omitted two sibling packages imported by an
+audit helper. The changed staging method recursively includes package imports
+and checks all 36 added files against the already-verified full frozen snapshot.
+All prior 90 file hashes remain unchanged; the v2 snapshot has 126 Python files.
+Snapshot-only audit imports passed before resubmission. The patch and economic
+and numerical gates did not change. See the [v1 failure receipt](rental_wedge_v1/collection_receipt.json).
+
 ### 13:00 Eastern: income-grid results reviewed; wedge remains unlaunched
 
 Income-grid jobs **18079046/18079047** completed in 1m16s/9m51s. All three
@@ -146,13 +210,16 @@ stationary calibration moments. Entrant wealth marginals differ materially
 under the native conditional-entry rule; therefore the change cannot be
 attributed exclusively to incumbent household policy responses.
 
-The unlaunched isolated rental-cost patch is being corrected for the
-consumption-floor corner. When an unconstrained optimum has residual
-consumption below the minimum, a feasible constrained optimum may allocate
-less housing and exactly the minimum consumption. Marking that state
-infeasible would be incorrect. Both production kernels and the independent
-saving audit must evaluate the same constrained problem before lead approval.
-The unchanged zero-wedge path is preserved; no active model core is edited.
+The unlaunched isolated rental-cost patch is being corrected to retain
+feasible choices with low positive consumption. Direct inspection of frozen
+`kernels.py` and `solver.py` establishes that `c_min` is a reporting floor:
+it does not constrain the saving objective or its feasible interval. The
+lead's initial suggestion to impose a consumption-minimum corner would add
+a model restriction and was withdrawn before any run. The positive-wedge
+branch must report actual consumption and housing, without topping up spending
+or rejecting otherwise feasible choices below the reporting floor. The
+independent saving audit must evaluate the same objective. The zero-wedge
+legacy path remains bitwise unchanged for reproduction; no active core is edited.
 
 ### 12:34 Eastern: credit replay reproduced; income-grid jobs submitted
 

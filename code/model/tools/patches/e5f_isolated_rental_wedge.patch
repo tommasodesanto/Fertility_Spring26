@@ -1,0 +1,1075 @@
+--- a/code/model/intergen_eqscale_seq_optimized/parameters.py
++++ b/code/model/intergen_eqscale_seq_optimized/parameters.py
+@@ -172,6 +172,11 @@
+     P.chi = 1.10
+     P.psi = 0.06
+     P.phi = 0.80 * np.ones(P.n_parity)
++    # Isolated rental-wedge port.  The wedge is an outside-landlord operating
++    # cost in renter budgets only; zero slope preserves the frozen path.
++    P.rental_wedge_intercept = 0.0
++    P.rental_wedge_slope = 0.0
++    P.rental_wedge_knee = 6.0
+     P.use_pti_constraint = False
+     P.pti_limit = 0.30
+     P.parent_dp_waiver = False
+@@ -372,6 +377,18 @@
+         P.phi = np.asarray(P.phi, dtype=float).reshape(-1)
+         if P.phi.size == 1:
+             P.phi = P.phi.item() * np.ones(P.n_parity)
++    P.rental_wedge_intercept = float(getattr(P, "rental_wedge_intercept", 0.0))
++    P.rental_wedge_slope = float(getattr(P, "rental_wedge_slope", 0.0))
++    P.rental_wedge_knee = float(getattr(P, "rental_wedge_knee", 6.0))
++    if not np.isfinite(P.rental_wedge_knee) or P.rental_wedge_knee < 0.0:
++        raise ValueError("rental_wedge_knee must be finite and nonnegative.")
++    if (
++        not np.isfinite(P.rental_wedge_intercept)
++        or not np.isfinite(P.rental_wedge_slope)
++        or P.rental_wedge_intercept < 0.0
++        or P.rental_wedge_slope < 0.0
++    ):
++        raise ValueError("rental wedge intercept and slope must be finite and weakly nonnegative.")
+     if "entry_wealth_mode" in od:
+         P.entry_wealth_mode = str(P.entry_wealth_mode).lower()
+     if "entry_wealth_ratio_nodes" in od:
+@@ -869,6 +886,23 @@
+     return str(getattr(P, "child_state_mode", "shared_clock")).strip().lower() == "independent_count"
+ 
+ 
++def rental_wedge_active(P: SimpleNamespace) -> bool:
++    """Whether the size-dependent rental wedge changes renter budgets."""
++    return (
++        float(getattr(P, "rental_wedge_intercept", 0.0)) != 0.0
++        or float(getattr(P, "rental_wedge_slope", 0.0)) != 0.0
++    )
++
++
++def rental_wedge_total_cost(h: float, ri: float, P: SimpleNamespace) -> float:
++    """Total outside-landlord cost for h rooms at base rent ri."""
++    w0 = float(getattr(P, "rental_wedge_intercept", 0.0))
++    w1 = float(getattr(P, "rental_wedge_slope", 0.0))
++    hk = float(getattr(P, "rental_wedge_knee", 6.0))
++    rooms = np.asarray(h, dtype=float)
++    return rooms * (float(ri) + w0 + w1 * np.maximum(rooms - hk, 0.0))
++
++
+ def configure_child_state_process(P: SimpleNamespace) -> None:
+     """Build the child-state space and transition matrix for the selected mode."""
+     mode = str(getattr(P, "child_state_mode", "shared_clock")).strip().lower()
+--- a/code/model/intergen_eqscale_seq_optimized/kernels.py
++++ b/code/model/intergen_eqscale_seq_optimized/kernels.py
+@@ -52,7 +52,94 @@
+ 
+ 
+ @njit(cache=True)
+-def eval_renter_scalar(bp, Rv, Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es):
++def renter_wedge_flow(S_raw, cbc, hbc, ri, w0, w1, hk, hRmax, al, oms, es):
++    """Solve the renter intratemporal problem with a size wedge.
++
++    The full housing cost is h*(ri+w0)+w1*h*max(h-hk,0).  Candidate
++    allocations below the knee, at the knee, above the knee, and at the cap
++    are compared explicitly.  ``S_raw`` is resources before committed
++    housing, consumption, and saving choices.
++    """
++    # A renter with no strictly positive residual housing services is a dead
++    # state under the Cobb-Douglas flow utility.  Do not fabricate a tiny
++    # residual at the cap.
++    if hbc >= hRmax:
++        return -1e10, 0.0, 0.0
++    ri1 = ri + w0
++    Cc = hbc * ri1 + w1 * hbc * (hbc - hk if hbc > hk else 0.0)
++    S = S_raw - cbc - Cc
++    if S <= 1e-10:
++        return -1e10, 0.0, 0.0
++    Kr1 = (al ** al * ((1.0 - al) / ri1) ** (1.0 - al)) ** oms
++    ht_a = (1.0 - al) * S / ri1
++    h_a = hbc + ht_a
++    u_a = Kr1 * S ** oms / oms
++    if es != 1.0:
++        u_a = es * u_a
++    valid_a = h_a <= hk
++    ht_k = hk - hbc
++    valid_k = (hbc < hk) and (hk <= hRmax) and (S > ri1 * ht_k)
++    if valid_k:
++        ct_k = S - ri1 * ht_k
++        u_k = (ct_k ** al * ht_k ** (1.0 - al)) ** oms / oms
++        if es != 1.0:
++            u_k = es * u_k
++    else:
++        u_k = -1e10
++        ct_k = 0.0
++    if hbc < hk:
++        S_eff = S + w1 * hbc * (hk - hbc)
++    else:
++        S_eff = S
++    A2 = ri1 + w1 * (2.0 * hbc - hk)
++    quad_b = w1 * (1.0 + al)
++    if quad_b > 0.0:
++        disc = A2 * A2 + 4.0 * quad_b * (1.0 - al) * S_eff
++        ht_b = (-A2 + np.sqrt(disc)) / (2.0 * quad_b)
++    else:
++        ht_b = (1.0 - al) * S_eff / A2
++    h_b = hbc + ht_b
++    valid_b = h_b > hk
++    if valid_b:
++        ct_b = S_eff - A2 * ht_b - w1 * ht_b * ht_b
++        if ct_b < 1e-10:
++            ct_b = 1e-10
++        u_b = (ct_b ** al * ht_b ** (1.0 - al)) ** oms / oms
++        if es != 1.0:
++            u_b = es * u_b
++    else:
++        u_b = -1e10
++        ct_b = 0.0
++    u_best = u_a if valid_a else -1e10
++    ct_best = al * S if valid_a else 0.0
++    ht_best = ht_a if valid_a else 0.0
++    if valid_k and u_k > u_best:
++        u_best, ct_best, ht_best = u_k, ct_k, ht_k
++    if valid_b and u_b > u_best:
++        u_best, ct_best, ht_best = u_b, ct_b, ht_b
++    if hbc + ht_best > hRmax:
++        Ccap = hRmax * ri1 + w1 * hRmax * (hRmax - hk if hRmax > hk else 0.0)
++        ct = S_raw - cbc - Ccap
++        if ct <= 1e-10:
++            return -1e10, 0.0, 0.0
++        ht_use = hRmax - hbc
++        u = (ct ** al * ht_use ** (1.0 - al)) ** oms / oms
++        if es != 1.0:
++            u = es * u
++        return u, ct, ht_use
++    if u_best <= -1e9:
++        return -1e10, 0.0, 0.0
++    return u_best, ct_best, ht_best
++
++
++@njit(cache=True)
++def eval_renter_scalar(bp, Rv, Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es,
++                       hbc=0.0, w0=0.0, w1=0.0, hk=6.0, wedge_on=0):
++    if wedge_on != 0:
++        u_flow, _, _ = renter_wedge_flow(Rv - bp, cb_c, hbc, ri, w0, w1, hk, hRmax, alpha, oms, es)
++        if u_flow <= -1e9:
++            return -1e10
++        return u_flow + pc + beta * interp_scalar(bg, Vbar, bp)
+     surplus = Rv - dc - bp
+     if surplus <= 1e-10:
+         return -1e10
+@@ -76,7 +163,8 @@
+ 
+ 
+ @njit(cache=True)
+-def golden_renter_kernel(lo, hi, Rv, Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, a1, a2, tol, es):
++def golden_renter_kernel(lo, hi, Rv, Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, a1, a2, tol, es,
++                         hbc=0.0, w0=0.0, w1=0.0, hk=6.0, wedge_on=0):
+     n = Rv.size
+     bp_out = np.empty(n)
+     val_out = np.empty(n)
+@@ -86,15 +174,15 @@
+         d = hik - lok
+         x1 = lok + a1 * d
+         x2 = lok + a2 * d
+-        f1 = eval_renter_scalar(x1, Rv[k], Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es)
+-        f2 = eval_renter_scalar(x2, Rv[k], Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es)
++        f1 = eval_renter_scalar(x1, Rv[k], Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es, hbc, w0, w1, hk, wedge_on)
++        f2 = eval_renter_scalar(x2, Rv[k], Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es, hbc, w0, w1, hk, wedge_on)
+         d = a1 * a2 * d
+         while d > tol:
+             if f2 >= f1:
+                 xe = x2 + d
+                 if xe > hik:
+                     xe = hik
+-                fe = eval_renter_scalar(xe, Rv[k], Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es)
++                fe = eval_renter_scalar(xe, Rv[k], Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es, hbc, w0, w1, hk, wedge_on)
+                 x1 = x2
+                 f1 = f2
+                 x2 = xe
+@@ -103,7 +191,7 @@
+                 xe = x1 - d
+                 if xe < lok:
+                     xe = lok
+-                fe = eval_renter_scalar(xe, Rv[k], Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es)
++                fe = eval_renter_scalar(xe, Rv[k], Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es, hbc, w0, w1, hk, wedge_on)
+                 x2 = x1
+                 f2 = f1
+                 x1 = xe
+@@ -860,6 +948,10 @@
+     gs_alpha2,
+     gs_tol,
+     exhaustive_saving=0,
++    wedge_on=0,
++    wedge_w0=0.0,
++    wedge_w1=0.0,
++    wedge_hk=6.0,
+ ):
+     # Full-Bellman renter block: golden-section search for bp + post-search
+     # consumption / housing arithmetic, fused into one kernel per (i, j).
+@@ -869,6 +961,8 @@
+     # invariant of the model.
+     if exhaustive_saving and has_prev:
+         raise ValueError("Exhaustive saving requires the full feasible interval")
++    if exhaustive_saving and wedge_on:
++        raise ValueError("Rental wedge requires the golden-section renter block")
+     Nb, nc = Vc_flat.shape
+     Vo = np.empty((Nb, nc))
+     bp_out = np.empty((Nb, nc))
+@@ -895,6 +989,9 @@
+             cap_c = ri * (hR_max - hbc) / (1.0 - alpha)
+             ht_cap_pow = max(hR_max - hbc, 1e-10) ** (1.0 - alpha)
+         dc = cbc + ri * hbc
++        dc_wedge = cbc + hbc * (
++            ri + wedge_w0 + wedge_w1 * (hbc - wedge_hk if hbc > wedge_hk else 0.0)
++        )
+         ht_cap_c = hR_max - hbc
+         if ht_cap_c < 1e-10:
+             ht_cap_c = 1e-10
+@@ -913,7 +1010,7 @@
+             lo = unsecured_floor
+             if bg0 > lo:
+                 lo = bg0
+-            hi = Rvb - dc - 1e-6
++            hi = Rvb - (dc_wedge if wedge_on else dc) - 1e-6
+             if hi < lo:
+                 hi = lo
+             if has_prev:
+@@ -938,15 +1035,15 @@
+                 d = hi - lo
+                 x1 = lo + gs_alpha1 * d
+                 x2 = lo + gs_alpha2 * d
+-                f1 = eval_renter_scalar(x1, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es)
+-                f2 = eval_renter_scalar(x2, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es)
++                f1 = eval_renter_scalar(x1, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es, hbc, wedge_w0, wedge_w1, wedge_hk, wedge_on)
++                f2 = eval_renter_scalar(x2, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es, hbc, wedge_w0, wedge_w1, wedge_hk, wedge_on)
+                 d = gs_alpha1 * gs_alpha2 * d
+                 while d > gs_tol:
+                     if f2 >= f1:
+                         xe = x2 + d
+                         if xe > hi:
+                             xe = hi
+-                        fe = eval_renter_scalar(xe, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es)
++                        fe = eval_renter_scalar(xe, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es, hbc, wedge_w0, wedge_w1, wedge_hk, wedge_on)
+                         x1 = x2
+                         f1 = f2
+                         x2 = xe
+@@ -955,7 +1052,7 @@
+                         xe = x1 - d
+                         if xe < lo:
+                             xe = lo
+-                        fe = eval_renter_scalar(xe, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es)
++                        fe = eval_renter_scalar(xe, Rvb, Vc_flat[:, c], b_grid, dc, psic, cap_c, cbc, ri, hR_max, ht_cap_c, Kr, al, oms, beta, es, hbc, wedge_w0, wedge_w1, wedge_hk, wedge_on)
+                         x2 = x1
+                         f2 = f1
+                         x1 = xe
+@@ -970,6 +1067,23 @@
+             bp_out[b, c] = bp_best
+             Vo[b, c] = v_best
+ 
++            if wedge_on:
++                u_wedge, ct_wedge, ht_wedge = renter_wedge_flow(
++                    Rvb - bp_best, cbc, hbc, ri, wedge_w0, wedge_w1, wedge_hk,
++                    hR_max, al, oms, es,
++                )
++                if u_wedge <= -1e9:
++                    # The objective is infeasible.
++                    Vo[b, c] = -1e10
++                    bp_out[b, c] = 0.0
++                    co[b, c] = c_bar_0 + c_min
++                    ho[b, c] = h_bar_0 + 0.01
++                else:
++                    # Report the optimizer's actual flow allocation. Floors
++                    # here would alter the budget and can exceed hR_max.
++                    co[b, c] = cbc + ct_wedge
++                    ho[b, c] = hbc + ht_wedge
++                continue
+             surplus = Rvb - dc - bp_best
+             if surplus <= 1e-10:
+                 co[b, c] = c_bar_0 + c_min
+--- a/code/model/intergen_eqscale_seq_optimized/solver.py
++++ b/code/model/intergen_eqscale_seq_optimized/solver.py
+@@ -23,6 +23,7 @@
+     readiness_gate_active,
+     readiness_settled_state,
+     readiness_transition_hazard,
++    rental_wedge_active,
+     setup_parameters,
+     unsecured_debt_floor,
+ )
+@@ -2524,6 +2525,12 @@
+                 Rv = Rg * b + yj
+                 Rv_test = Rg * np.maximum(b, 0.0) + yj
+                 hRmax = P.hR_max
++                wedge_on = rental_wedge_active(P)
++                wedge_w0 = float(getattr(P, "rental_wedge_intercept", 0.0))
++                wedge_w1 = float(getattr(P, "rental_wedge_slope", 0.0))
++                wedge_hk = float(getattr(P, "rental_wedge_knee", 6.0))
++                if wedge_on and exhaustive_saving:
++                    raise NotImplementedError("Rental wedge requires the golden-section renter block")
+                 Vcr = flat_nc(Vc[:, 0, i, :, :], Nb, nc)
+                 Rv1d_full = np.ascontiguousarray(Rv[:, 0])
+                 Rvt1d_full = np.ascontiguousarray(Rv_test[:, 0])
+@@ -2535,7 +2542,7 @@
+                         cb_v, hb_v, psi_v_flat, gb_v, alpha_v, esc_v,
+                         ri, hRmax, P.c_min, P.c_bar_0, P.h_bar_0,
+                         alpha, oms, beta, s_next, D_next, gs_alpha1, gs_alpha2, gs_tol,
+-                        int(exhaustive_saving),
++                        int(exhaustive_saving), int(wedge_on), wedge_w0, wedge_w1, wedge_hk,
+                     )
+                 else:
+                     Kr = (alpha**alpha * ((1 - alpha) / ri) ** (1 - alpha)) ** oms
+@@ -2549,30 +2556,68 @@
+                         cc = cap_nc[0, c]
+                         cb_c = SD.cb_flat[0, c]
+                         hb_c = SD.hb_flat[0, c]
++                        al_c = float(alpha_v[c])
++                        es_c = float(esc_v[c])
+                         ht_cap_c = max(hRmax - hb_c, 1e-10)
+                         lo = renter_floor.copy()
+-                        hi = np.maximum(Rv_eff_nc[:, c] - dc - 1e-6, lo)
+-                        bp, val = golden_renter(
+-                            lo, hi, Rv_eff_nc[:, c], Vbar, b_grid, dc, pc, cc, cb_c, hb_c,
+-                            ri, hRmax, ht_cap_c, Kr, alpha, oms, beta,
+-                            gs_alpha1, gs_alpha2, gs_tol, interp_method, 1.0,
+-                        )
++                        if wedge_on:
++                            wedge_cc = cb_c + hb_c * (
++                                ri + wedge_w0 + wedge_w1 * max(hb_c - wedge_hk, 0.0)
++                            )
++                            hi = np.maximum(Rv_eff_nc[:, c] - wedge_cc - 1e-6, lo)
++                            bp, val = golden_renter_wedge(
++                                lo, hi, Rv_eff_nc[:, c], Vbar, b_grid, cb_c, hb_c, pc,
++                                ri, hRmax, wedge_w0, wedge_w1, wedge_hk, al_c, oms, beta,
++                                gs_alpha1, gs_alpha2, gs_tol, interp_method, es_c,
++                            )
++                        else:
++                            hi = np.maximum(Rv_eff_nc[:, c] - dc - 1e-6, lo)
++                            bp, val = golden_renter(
++                                lo, hi, Rv_eff_nc[:, c], Vbar, b_grid, dc, pc, cc, cb_c, hb_c,
++                                ri, hRmax, ht_cap_c, Kr, alpha, oms, beta,
++                                gs_alpha1, gs_alpha2, gs_tol, interp_method, 1.0,
++                            )
+                         bp_nc[:, c] = bp
+                         Vo_nc[:, c] = val
+-                    surplus_nc = Rv_eff_nc - d_nc - bp_nc
+-                    ct_nc = alpha * np.maximum(surplus_nc, 1e-10)
+-                    ht_nc = (1 - alpha) / ri * np.maximum(surplus_nc, 1e-10)
+-                    cm = (SD.hb_flat + ht_nc) > hRmax
+-                    if np.any(cm):
+-                        ct_cap = np.maximum(Rv_eff_nc - SD.cb_flat - ri * hRmax - bp_nc, 1e-10)
+-                        hcap = np.tile(np.maximum(hRmax - SD.hb_flat, 1e-10), (Nb, 1))
+-                        ct_nc[cm] = ct_cap[cm]
+-                        ht_nc[cm] = hcap[cm]
+-                    co_nc = SD.cb_flat + np.maximum(ct_nc, P.c_min)
+-                    ho_nc = SD.hb_flat + np.maximum(ht_nc, 0.01)
+-                    bad = surplus_nc <= 1e-10
+-                    co_nc[bad] = P.c_bar_0 + P.c_min
+-                    ho_nc[bad] = P.h_bar_0 + 0.01
++                    if wedge_on:
++                        ct_nc = np.zeros_like(bp_nc)
++                        ht_nc = np.zeros_like(bp_nc)
++                        bad = np.zeros_like(bp_nc, dtype=bool)
++                        flow_u_nc = np.zeros_like(bp_nc)
++                        for c in range(nc):
++                            flow_u_c, ct_c, ht_c = renter_wedge_flow_py(
++                                Rv_eff_nc[:, c] - bp_nc[:, c], SD.cb_flat[0, c], SD.hb_flat[0, c], ri,
++                                wedge_w0, wedge_w1, wedge_hk, hRmax,
++                                float(alpha_v[c]), oms, float(esc_v[c]),
++                            )
++                            flow_u_nc[:, c] = flow_u_c
++                            ct_nc[:, c] = ct_c
++                            ht_nc[:, c] = ht_c
++                        committed = SD.cb_flat + SD.hb_flat * (
++                            ri + wedge_w0 + wedge_w1 * np.maximum(SD.hb_flat - wedge_hk, 0.0)
++                        )
++                        bad = ((Rv_eff_nc - bp_nc - committed) <= 1e-10) | (flow_u_nc <= -1e9)
++                        co_nc = SD.cb_flat + ct_nc
++                        ho_nc = SD.hb_flat + ht_nc
++                        Vo_nc[bad] = -1e10
++                        bp_nc[bad] = 0.0
++                        co_nc[bad] = P.c_bar_0 + P.c_min
++                        ho_nc[bad] = P.h_bar_0 + 0.01
++                    else:
++                        surplus_nc = Rv_eff_nc - d_nc - bp_nc
++                        ct_nc = alpha * np.maximum(surplus_nc, 1e-10)
++                        ht_nc = (1 - alpha) / ri * np.maximum(surplus_nc, 1e-10)
++                        cm = (SD.hb_flat + ht_nc) > hRmax
++                        if np.any(cm):
++                            ct_cap = np.maximum(Rv_eff_nc - SD.cb_flat - ri * hRmax - bp_nc, 1e-10)
++                            hcap = np.tile(np.maximum(hRmax - SD.hb_flat, 1e-10), (Nb, 1))
++                            ct_nc[cm] = ct_cap[cm]
++                            ht_nc[cm] = hcap[cm]
++                        co_nc = SD.cb_flat + np.maximum(ct_nc, P.c_min)
++                        ho_nc = SD.hb_flat + np.maximum(ht_nc, 0.01)
++                        bad = surplus_nc <= 1e-10
++                        co_nc[bad] = P.c_bar_0 + P.c_min
++                        ho_nc[bad] = P.h_bar_0 + 0.01
+                 Vd[:, 0, i, :, :] = unflat_nc(Vo_nc, Nb, npar, ncs)
+                 bd[:, 0, i, :, :] = unflat_nc(bp_nc, Nb, npar, ncs)
+                 cd[:, 0, i, :, :] = unflat_nc(co_nc, Nb, npar, ncs)
+@@ -2869,6 +2914,8 @@
+         raise NotImplementedError("eqscale preferences: markov-income path only")
+     if float(getattr(P, "transfer_floor_G0", 0.0)) != 0.0 or float(getattr(P, "transfer_floor_Gn", 0.0)) != 0.0:
+         raise NotImplementedError("transfer floor: markov-income Bellman path only")
++    if rental_wedge_active(P):
++        raise NotImplementedError("rental wedge: markov-income Bellman path only")
+     # Backward induction over age `j`. At each `j` we solve (per i, ten):
+     # savings choice via golden-section (full mode) or plug-in at
+     # stored_bp (eval mode); then tenure choice; then location logit;
+@@ -3025,6 +3072,10 @@
+             Rv = Rg * b + yj
+             if not eval_mode:
+                 hRmax = P.hR_max
++                wedge_on = rental_wedge_active(P)
++                wedge_w0 = float(getattr(P, "rental_wedge_intercept", 0.0))
++                wedge_w1 = float(getattr(P, "rental_wedge_slope", 0.0))
++                wedge_hk = float(getattr(P, "rental_wedge_knee", 6.0))
+                 Vcr = flat_nc(Vc[:, 0, i, :, :], Nb, nc)
+                 Rv1d_full = np.ascontiguousarray(Rv[:, 0])
+                 if use_full_kernel:
+@@ -3039,6 +3090,7 @@
+                         cb_v, hb_v, psi_v_flat, gb_zero, alpha_v, esc_v,
+                         ri, hRmax, P.c_min, P.c_bar_0, P.h_bar_0,
+                         alpha, oms, beta, s_next, D_next, gs_alpha1, gs_alpha2, gs_tol,
++                        0, int(wedge_on), wedge_w0, wedge_w1, wedge_hk,
+                     )
+                 else:
+                     Kr = (alpha**alpha * ((1 - alpha) / ri) ** (1 - alpha)) ** oms
+@@ -3385,6 +3437,140 @@
+         fert_value,
+         {"bellman": time.perf_counter() - t0},
+     )
++
++
++def renter_wedge_flow_py(S_raw, cbc, hbc, ri, w0, w1, hk, hRmax, alpha, oms, es=1.0):
++    """Numpy mirror of kernels.renter_wedge_flow (see its docstring for the
++    economics). All inputs broadcastable arrays or scalars; returns
++    ``(u_flow, ct, ht)`` with infeasible cells marked by u_flow = -1e10 and
++    (ct, ht) = 0. Cross-tested against the numba version."""
++    S_raw = np.asarray(S_raw, dtype=float)
++    cbc = np.asarray(cbc, dtype=float)
++    hbc = np.asarray(hbc, dtype=float)
++    ri1 = float(ri) + float(w0)
++    w1 = float(w1)
++    hk = float(hk)
++    S_raw, cbc, hbc = np.broadcast_arrays(S_raw, cbc, hbc)
++    # The flow utility requires strictly positive residual housing services;
++    # committed housing at the cap therefore cannot be a feasible wedge state.
++    committed_infeasible = hbc >= float(hRmax)
++    Cc = hbc * ri1 + w1 * hbc * np.maximum(hbc - hk, 0.0)
++    S = S_raw - cbc - Cc
++    feasible = S > 1e-10
++    u = np.full_like(S, -1e10)
++    ct = np.zeros_like(S)
++    ht = np.zeros_like(S)
++    if not np.any(feasible):
++        return u, ct, ht
++    Sf = S[feasible]
++    hbc_f = hbc[feasible]
++    cbc_f = cbc[feasible]
++    S_raw_f = S_raw[feasible]
++    Kr1 = (alpha**alpha * ((1.0 - alpha) / ri1) ** (1.0 - alpha)) ** oms
++    ht_a = (1.0 - alpha) * Sf / ri1
++    h_a = hbc_f + ht_a
++    ua = Kr1 * np.maximum(Sf, 1e-10) ** oms / oms
++    if es != 1.0:
++        ua = es * ua
++    valid_a = h_a <= hk
++    u_f = np.where(valid_a, ua, -1e10)
++    ct_f = np.where(valid_a, alpha * Sf, 0.0)
++    ht_f = np.where(valid_a, ht_a, 0.0)
++    # Kink bunching candidate.
++    ht_k = hk - hbc_f
++    valid_k = (hbc_f < hk) & (hk <= float(hRmax)) & (Sf > ri1 * ht_k)
++    ct_k = np.maximum(Sf - ri1 * ht_k, 1e-10)
++    u_k = (ct_k**alpha * np.maximum(ht_k, 1e-10) ** (1.0 - alpha)) ** oms / oms
++    if es != 1.0:
++        u_k = es * u_k
++    take_k = valid_k & (u_k > u_f)
++    u_f = np.where(take_k, u_k, u_f)
++    ct_f = np.where(take_k, ct_k, ct_f)
++    ht_f = np.where(take_k, ht_k, ht_f)
++    # Above-knee quadratic candidate.
++    S_eff = Sf + np.where(hbc_f < hk, w1 * hbc_f * (hk - hbc_f), 0.0)
++    A2 = ri1 + w1 * (2.0 * hbc_f - hk)
++    quad_b = w1 * (1.0 + alpha)
++    if quad_b > 0.0:
++        disc = A2 * A2 + 4.0 * quad_b * (1.0 - alpha) * S_eff
++        ht_b = (-A2 + np.sqrt(np.maximum(disc, 0.0))) / (2.0 * quad_b)
++    else:
++        ht_b = (1.0 - alpha) * S_eff / A2
++    h_b = hbc_f + ht_b
++    valid_b = h_b > hk
++    ct_b = np.maximum(S_eff - A2 * ht_b - w1 * ht_b**2, 1e-10)
++    u_b = (ct_b**alpha * np.maximum(ht_b, 1e-10) ** (1.0 - alpha)) ** oms / oms
++    if es != 1.0:
++        u_b = es * u_b
++    take_b = valid_b & (u_b > u_f)
++    u_f = np.where(take_b, u_b, u_f)
++    ct_f = np.where(take_b, ct_b, ct_f)
++    ht_f = np.where(take_b, ht_b, ht_f)
++    # Cap constraint.
++    h_best = hbc_f + ht_f
++    over_cap = (h_best > float(hRmax)) & (~committed_infeasible[feasible])
++    if np.any(over_cap):
++        Ccap = float(hRmax) * ri1 + w1 * float(hRmax) * max(float(hRmax) - hk, 0.0)
++        ct_cap_raw = S_raw_f - cbc_f - Ccap
++        cap_feasible = ct_cap_raw > 1e-10
++        ct_cap = np.maximum(ct_cap_raw, 1e-10)
++        ht_use = float(hRmax) - hbc_f
++        u_cap = (ct_cap**alpha * ht_use ** (1.0 - alpha)) ** oms / oms
++        if es != 1.0:
++            u_cap = es * u_cap
++        take_cap = over_cap & cap_feasible
++        u_f = np.where(take_cap, u_cap, u_f)
++        ct_f = np.where(take_cap, ct_cap, ct_f)
++        ht_f = np.where(take_cap, ht_use, ht_f)
++        cap_dead = over_cap & ~cap_feasible
++        u_f = np.where(cap_dead, -1e10, u_f)
++        ct_f = np.where(cap_dead, 0.0, ct_f)
++        ht_f = np.where(cap_dead, 0.0, ht_f)
++    u[feasible] = u_f
++    ct[feasible] = ct_f
++    ht[feasible] = ht_f
++    u = np.where(committed_infeasible, -1e10, u)
++    ct = np.where(committed_infeasible, 0.0, ct)
++    ht = np.where(committed_infeasible, 0.0, ht)
++    return u, ct, ht
++
++
++def eval_renter_wedge(bp, Rv, Vbar, b_grid, cb_c, hb_c, pc, ri, hRmax, w0, w1, hk,
++                      alpha, oms, beta, vinterp=None, es=1.0):
++    """Renter objective at savings bp under the rental wedge (Python path)."""
++    if vinterp is None:
++        vinterp = make_value_interp(b_grid, Vbar, "linear")
++    u_flow, _, _ = renter_wedge_flow_py(Rv - bp, cb_c, hb_c, ri, w0, w1, hk, hRmax, alpha, oms, es)
++    f = u_flow + pc + beta * vinterp(bp)
++    bad = u_flow <= -1e9
++    if np.any(bad):
++        f = np.where(bad, -1e10, f)
++    return f
++
++
++def golden_renter_wedge(lo, hi, Rv, Vbar, b_grid, cb_c, hb_c, pc, ri, hRmax, w0, w1, hk,
++                        alpha, oms, beta, a1, a2, tol, method="linear", es=1.0):
++    """Golden-section renter savings search under the rental wedge."""
++    vinterp = make_value_interp(b_grid, Vbar, method)
++    d = hi - lo
++    x1 = lo + a1 * d
++    x2 = lo + a2 * d
++    f1 = eval_renter_wedge(x1, Rv, Vbar, b_grid, cb_c, hb_c, pc, ri, hRmax, w0, w1, hk, alpha, oms, beta, vinterp, es)
++    f2 = eval_renter_wedge(x2, Rv, Vbar, b_grid, cb_c, hb_c, pc, ri, hRmax, w0, w1, hk, alpha, oms, beta, vinterp, es)
++    d = a1 * a2 * d
++    while np.any(d > tol):
++        bt = f2 >= f1
++        xe = np.clip(np.where(bt, x2 + d, x1 - d), lo, hi)
++        fe = eval_renter_wedge(xe, Rv, Vbar, b_grid, cb_c, hb_c, pc, ri, hRmax, w0, w1, hk, alpha, oms, beta, vinterp, es)
++        x1n = np.where(bt, x2, xe)
++        f1n = np.where(bt, f2, fe)
++        x2n = np.where(bt, xe, x1)
++        f2n = np.where(bt, fe, f1)
++        d = d * a2
++        x1, x2, f1, f2 = x1n, x2n, f1n, f2n
++    bt = f2 >= f1
++    return np.where(bt, x2, x1), np.maximum(f1, f2)
++
+ 
+ 
+ def golden_renter(lo, hi, Rv, Vbar, b_grid, dc, pc, cc, cb_c, hb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, a1, a2, tol, method="linear", es=1.0):
+--- a/code/model/tools/run_e5f_matched_pf_smoke.py
++++ b/code/model/tools/run_e5f_matched_pf_smoke.py
+@@ -28,6 +28,7 @@
+ import run_e5f_open_population_transition as transition
+ import run_e5f_perfect_foresight_transition as pf
+ from intergen_eqscale_seq_optimized import solver as model
++from intergen_eqscale_seq_optimized.parameters import rental_wedge_total_cost
+ 
+ SCHEMA = 'e5f_matched_pf_primitive_smoke_v1'
+ FIELDS = ('V', 'c_pol', 'hR_pol', 'bp_pol', 'tenure_choice', 'tenure_probs',
+@@ -167,7 +168,7 @@
+                         grant = float(shared.gb_flat.reshape(-1)[flat])
+                         resources += np.clip(grant - (P.R_gross * np.maximum(grid, 0) + income), 0, grant)
+                         if tenure == 0:
+-                            cost = rent * p.hR_pol[index]
++                            cost = rental_wedge_total_cost(p.hR_pol[index], rent, P)
+                         else:
+                             h = P.H_own[tenure - 1]
+                             cost = (P.delta + P.tau_H) * p.price[0] * h
+--- a/code/model/tools/run_e5f_independent_numerical_audit.py
++++ b/code/model/tools/run_e5f_independent_numerical_audit.py
+@@ -26,6 +26,7 @@
+ sys.path[:0] = [str(ROOT / "code/model"), str(ROOT / "code/model/tools")]
+ import run_e5f_post2023_policy_mechanisms as policy
+ from intergen_eqscale_seq_optimized import solver as model
++from intergen_eqscale_seq_optimized.parameters import rental_wedge_active, rental_wedge_total_cost
+ from intergen_eqscale_seq_optimized.diagnostics import write_diagnostics
+ from intergen_eqscale_seq_optimized.kernels import (
+     eval_owner_scalar, eval_renter_scalar, njit,
+@@ -206,7 +207,9 @@
+                         grant = float(SD.gb_flat.reshape(-1)[cflat])
+                         Rv += np.clip(grant-Rvt,0,grant)
+                         if ten == 0:
+-                            housing_cost = P.user_cost_rate*p.price[0]*p.hR_pol[idx]
++                            housing_cost = rental_wedge_total_cost(
++                                p.hR_pol[idx], float(P.user_cost_rate*p.price[0]), P
++                            )
+                         else:
+                             h = P.H_own[ten-1]
+                             housing_cost = (P.delta+P.tau_H)*p.price[0]*h
+@@ -337,9 +340,72 @@
+     return bpbest,best
+ 
+ 
++def segment_enumerated_max(objective, lo, hi, bg):
++    """Global bounded search over every continuation-interpolation segment.
++
++    A single golden search over ``[lo, hi]`` is invalid when the continuation
++    is piecewise linear and the renter intratemporal problem has a knee or cap.
++    We therefore enumerate all intersected segments, retain both endpoints,
++    and run a high-precision bounded solve strictly inside each segment.
++    """
++    from scipy.optimize import minimize_scalar
++
++    lo, hi = float(lo), float(hi)
++    if not math.isfinite(lo) or not math.isfinite(hi) or hi < lo:
++        raise ValueError("invalid saving interval")
++    points = sorted({lo, hi} | {float(x) for x in np.asarray(bg).reshape(-1) if lo < float(x) < hi})
++
++    def checked_value(x):
++        value = float(objective(float(x)))
++        if not math.isfinite(value):
++            raise RuntimeError(f"saving oracle returned nonfinite value at endpoint/candidate {x}")
++        return value
++
++    best_x = points[0]
++    best_value = checked_value(best_x)
++    for left, right in zip(points[:-1], points[1:]):
++        for endpoint in (left, right):
++            value = checked_value(endpoint)
++            if value > best_value:
++                best_x, best_value = endpoint, value
++        if right - left <= 1e-14:
++            continue
++        result = minimize_scalar(
++            lambda x: -float(objective(float(x))),
++            bounds=(left, right),
++            method="bounded",
++            options={"xatol": 1e-12, "maxiter": 1000},
++        )
++        if not result.success or not math.isfinite(float(result.x)):
++            raise RuntimeError(f"segment bounded oracle failed: {result.message}")
++        candidate = float(result.x)
++        value = checked_value(candidate)
++        if value > best_value:
++            best_x, best_value = candidate, value
++    return best_x, best_value
++
++
++def segment_oracle_wedge(lo, hi, resources, continuation, bg, rent, hb, cb, pc,
++                         hmax, alpha, oms, beta, es, w0, w1, hk):
++    """Independent renter saving oracle for an active wedge.
++
++    The optimizer is deliberately separate from production golden search.
++    It evaluates the reviewed wedge renter flow and enumerates every
++    continuation segment before selecting the global maximum.
++    """
++    def objective(bp):
++        return float(np.asarray(model.eval_renter_wedge(
++            bp, resources, continuation, bg, cb, hb, pc, rent, hmax,
++            w0, w1, hk, alpha, oms, beta, es=es,
++        )))
++
++    return segment_enumerated_max(objective, lo, hi, bg)
++
++
+ def saving_audit(packet,out,draws):
+     P,bg,e,SD=packet["parameters"],packet["b_grid"],packet["evaluation"],packet["shared"]
+     p,g=e.policy,e.g_current
++    wedge_on = rental_wedge_active(P)
+     rng=np.random.default_rng(2026090501)
+     selected,counts=np.unique(rng.choice(g.size,draws,p=g.reshape(-1)/g.sum()),return_counts=True)
+     count_map=dict(zip(selected.tolist(),counts.tolist()))
+@@ -397,16 +463,34 @@
+             Ko=(max(P.chi,1e-8)*residual_h)**((1-al)*oms)
+         else:
+             lo=max(float(model.renter_borrowing_floor(P,bg[b],j)),bg[0])
+-            hi=max(resources-cb-rent*hb-1e-6,lo)
++            committed_rent = rental_wedge_total_cost(hb, rent, P) if wedge_on else rent * hb
++            hi=max(resources-cb-committed_rent-1e-6,lo)
+         cont=np.ascontiguousarray(Vc[:,ten,i,nn,cs])
+         bp=float(p.bp_pol[idx])
+         if bp<lo-1e-9 or bp>hi+1e-9: raise RuntimeError("Saved saving policy outside production feasible interval")
+-        optimum,value=segment_oracle(lo,hi,resources,cont,bg,rent,hb,cb,pc,P.hR_max,al,oms,P.beta,es,oc,Ko,bool(ten))
++        if wedge_on and not ten:
++            optimum,value=segment_oracle_wedge(
++                lo, hi, resources, cont, bg, rent, hb, cb, pc, P.hR_max,
++                al, oms, P.beta, es,
++                float(getattr(P, "rental_wedge_intercept", 0.0)),
++                float(getattr(P, "rental_wedge_slope", 0.0)),
++                float(getattr(P, "rental_wedge_knee", 6.0)),
++            )
++        else:
++            optimum,value=segment_oracle(lo,hi,resources,cont,bg,rent,hb,cb,pc,P.hR_max,al,oms,P.beta,es,oc,Ko,bool(ten))
+         if ten:
+             actual=float(eval_owner_scalar(bp,resources,cont,bg,oc,cb,pc,Ko,al,oms,P.beta,es))
+         else:
+-            Kr=(al**al*((1-al)/rent)**(1-al))**oms
+-            actual=float(eval_renter_scalar(bp,resources,cont,bg,cb+rent*hb,pc,rent*(P.hR_max-hb)/(1-al),cb,rent,P.hR_max,max(P.hR_max-hb,1e-10),Kr,al,oms,P.beta,es))
++            if wedge_on:
++                actual=float(model.eval_renter_wedge(
++                    bp, resources, cont, bg, cb, hb, pc, rent, P.hR_max,
++                    float(getattr(P, "rental_wedge_intercept", 0.0)),
++                    float(getattr(P, "rental_wedge_slope", 0.0)),
++                    float(getattr(P, "rental_wedge_knee", 6.0)), al, oms, P.beta, es=es,
++                ))
++            else:
++                Kr=(al**al*((1-al)/rent)**(1-al))**oms
++                actual=float(eval_renter_scalar(bp,resources,cont,bg,cb+rent*hb,pc,rent*(P.hR_max-hb)/(1-al),cb,rent,P.hR_max,max(P.hR_max-hb,1e-10),Kr,al,oms,P.beta,es))
+         gain=value-actual
+         if gain < -1e-8: raise RuntimeError("Independent global oracle worse than saved feasible choice")
+         max_gain=max(max_gain,gain)
+--- a/code/model/intergen_eqscale_seq_optimized/tests/test_switch_wedge.py
++++ b/code/model/intergen_eqscale_seq_optimized/tests/test_switch_wedge.py
+@@ -0,0 +1,120 @@
++"""Tests for the default-off size-dependent rental wedge switch.
++
++Rent per room is r + w0 + w1 * max(0, h - hk): a real operating cost paid to
++the outside landlord. It enters the renter budget only (not the
++property-tax base, not the rebate, not wealth) and leaves the user cost
++itself unchanged.
++"""
++
++from __future__ import annotations
++
++import numpy as np
++import pytest
++
++from intergen_eqscale_seq_optimized.kernels import renter_wedge_flow
++from intergen_eqscale_seq_optimized.parameters import (
++    apply_overrides,
++    rental_wedge_total_cost,
++    setup_parameters,
++)
++from intergen_eqscale_seq_optimized.solver import (
++    renter_wedge_flow_py,
++    run_model_cp_dt,
++)
++from intergen_eqscale_seq_optimized.tests.test_eqscale_seq import _tiny_markov
++
++
++WEDGE = {"rental_wedge_intercept": 0.02, "rental_wedge_slope": 0.05, "rental_wedge_knee": 6.0}
++
++
++def test_off_bitwise_identical() -> None:
++    """Zeros leave every solved array bit for bit unchanged."""
++    base, _, _ = run_model_cp_dt(_tiny_markov(), verbose=False)
++    explicit, _, _ = run_model_cp_dt(
++        {**_tiny_markov(), **WEDGE, "rental_wedge_intercept": 0.0, "rental_wedge_slope": 0.0},
++        verbose=False,
++    )
++    assert np.array_equal(base.V, explicit.V)
++    assert np.array_equal(base.g, explicit.g)
++    assert np.array_equal(base.c_pol, explicit.c_pol)
++    assert np.array_equal(base.hR_pol, explicit.hR_pol)
++    assert np.array_equal(base.bp_pol, explicit.bp_pol)
++
++
++def test_cost_of_eight_rooms() -> None:
++    """With w0 = 0.02, w1 = 0.05, hk = 6, eight rooms cost 8 * (r + 0.12)."""
++    P = apply_overrides(setup_parameters(), {**_tiny_markov(), **WEDGE})
++    r = 0.2
++    assert rental_wedge_total_cost(8.0, r, P) == pytest.approx(8.0 * (r + 0.02 + 0.10))
++    assert rental_wedge_total_cost(4.0, r, P) == pytest.approx(4.0 * (r + 0.02))
++
++
++def test_numba_python_mirror_agree() -> None:
++    """The numba intratemporal helper matches its Python mirror."""
++    numba_flow = getattr(renter_wedge_flow, "py_func", renter_wedge_flow)
++    rng = np.random.default_rng(3)
++    S_raw = rng.uniform(0.5, 6.0, size=25)
++    hbc = rng.uniform(0.1, 1.0, size=25)
++    args = dict(ri=0.2, w0=0.02, w1=0.05, hk=6.0, hRmax=11.0, al=0.7, oms=-1.0, es=1.0)
++    u_py, ct_py, ht_py = renter_wedge_flow_py(S_raw, 0.4, hbc, args["ri"], 0.02, 0.05, 6.0, 11.0, 0.7, -1.0, 1.0)
++    for k in range(25):
++        u_nb, ct_nb, ht_nb = numba_flow(
++            float(S_raw[k]), 0.4, float(hbc[k]), args["ri"], 0.02, 0.05, 6.0, 11.0, 0.7, -1.0, 1.0
++        )
++        assert u_nb == pytest.approx(u_py[k], rel=1e-12)
++        assert ct_nb == pytest.approx(ct_py[k], rel=1e-12)
++        assert ht_nb == pytest.approx(ht_py[k], rel=1e-12)
++
++
++def test_optimal_renter_housing_weakly_lower() -> None:
++    """The wedge (weakly) lowers rented rooms: intratemporally at every
++    (surplus, committed-rooms) point, and in equilibrium aggregate renter
++    demand. (A literal policy-function comparison can show higher h at a few
++    young-saver states: the wedge destroys the motive to save for a down
++    payment, so those households save much less and spend more today. The
++    substitution margin itself is monotone everywhere, as checked here.)"""
++    ri = 0.2875
++    for surplus in np.linspace(0.3, 10.0, 40):
++        for hbc in (0.1, 0.25, 0.5, 1.0, 2.0):
++            _, _, ht_base = renter_wedge_flow_py(
++                surplus, 0.05, hbc, ri, 0.0, 0.0, 6.0, 6.0, 0.7, -1.0, 1.0
++            )
++            _, _, ht_wedged = renter_wedge_flow_py(
++                surplus, 0.05, hbc, ri, 0.02, 0.05, 6.0, 6.0, 0.7, -1.0, 1.0
++            )
++            assert float(ht_wedged) <= float(ht_base) + 1e-9
++    base, _, _ = run_model_cp_dt(_tiny_markov(), verbose=False)
++    wedged, _, _ = run_model_cp_dt({**_tiny_markov(), **WEDGE}, verbose=False)
++    demand_base = float(np.sum(base.g[:, 0] * base.hR_pol[:, 0]))
++    demand_wedged = float(np.sum(wedged.g[:, 0] * wedged.hR_pol[:, 0]))
++    assert demand_wedged <= demand_base + 1e-9
++    assert np.all(np.isfinite(wedged.V))
++
++
++def test_python_branch_matches() -> None:
++    """The non-compiled renter path honors the wedge and conserves mass."""
++    sol, _, _ = run_model_cp_dt(
++        {**_tiny_markov(), **WEDGE, "use_full_kernel": False}, verbose=False
++    )
++    assert np.all(np.isfinite(sol.V))
++    assert float(np.sum(sol.g)) == pytest.approx(1.0, abs=1e-9)
++    base, _, _ = run_model_cp_dt(
++        {**_tiny_markov(), "use_full_kernel": False}, verbose=False
++    )
++    demand_base = float(np.sum(base.g[:, 0] * base.hR_pol[:, 0]))
++    demand_wedged = float(np.sum(sol.g[:, 0] * sol.hR_pol[:, 0]))
++    assert demand_wedged <= demand_base + 1e-9
++
++
++def test_tiny_smoke_both_modes() -> None:
++    """The tiny smoke solves with the wedge on; mass is conserved."""
++    sol, _, _ = run_model_cp_dt({**_tiny_markov(), **WEDGE}, verbose=False)
++    assert np.all(np.isfinite(sol.V))
++    assert float(np.sum(sol.g)) == pytest.approx(1.0, abs=1e-9)
++
++
++def test_wedge_rejects_negative() -> None:
++    with pytest.raises(ValueError):
++        apply_overrides(setup_parameters(), {"rental_wedge_intercept": -0.01})
++    with pytest.raises(ValueError):
++        apply_overrides(setup_parameters(), {"rental_wedge_slope": -0.01})
+--- a/code/model/intergen_eqscale_seq_optimized/tests/test_rental_wedge_port_tiny.py
++++ b/code/model/intergen_eqscale_seq_optimized/tests/test_rental_wedge_port_tiny.py
+@@ -0,0 +1,223 @@
++"""Tiny checks for the isolated rental-wedge port.
++
++These are the only permitted numerical checks before the frozen original
++control is reproduced.  They exercise the Python/Numba mirrors at the knee,
++the cap, an infeasible committed-housing state, and mass conservation on the
++existing tiny model.
++"""
++
++from __future__ import annotations
++
++import importlib.util
++import numpy as np
++import pytest
++import sys
++import types
++from pathlib import Path
++
++from intergen_eqscale_seq_optimized.kernels import full_renter_block_kernel, renter_wedge_flow
++from intergen_eqscale_seq_optimized.parameters import rental_wedge_total_cost
++from intergen_eqscale_seq_optimized.solver import renter_wedge_flow_py, run_model_cp_dt
++
++
++def _full_renter_fixture(resources=(5.0, 8.0, 12.0), hb=(5.0, 6.0)):
++    """Small two-column fixture for direct full-renter kernel calls."""
++    nb, nc = 3, 2
++    return (
++        np.asarray(resources), np.asarray(resources),
++        np.asarray([[0.1, 0.2], [0.4, 0.6], [0.8, 1.0]]),
++        np.zeros((nb, nc)), 0, np.asarray([-1.0, 0.0, 1.0]),
++        np.asarray([0.1, 0.1]), np.asarray(hb), np.zeros(nc), np.zeros(nc),
++        np.asarray([0.7, 0.62]), np.asarray([1.0, 1.15]),
++        0.2, 10.0, 0.01, 0.1, 0.1, 0.7, -1.0, 0.95,
++        0.0, 1.0, 0.618, 0.618, 1e-7, 0,
++    )
++
++
++def _frozen_full_renter_kernel():
++    frozen = Path.cwd() / "tmp/paper_baseline_sep14/code/model/intergen_eqscale_seq_optimized/kernels.py"
++    assert frozen.is_file(), f"frozen kernel missing: {frozen}"
++    spec = importlib.util.spec_from_file_location("frozen_e5f_kernels", frozen)
++    module = importlib.util.module_from_spec(spec)
++    assert spec.loader is not None
++    spec.loader.exec_module(module)
++    return module.full_renter_block_kernel
++
++
++def test_python_numba_agree_at_knee_and_cap() -> None:
++    numba_flow = getattr(renter_wedge_flow, "py_func", renter_wedge_flow)
++    for rooms_committed, surplus in ((5.5, 3.0), (6.0, 4.0), (8.0, 8.0)):
++        args = (surplus, 0.2, rooms_committed, 0.2, 0.0, 0.2, 6.0, 10.0, 0.7, -1.0, 1.0)
++        nb = numba_flow(*args)
++        py = renter_wedge_flow_py(*args)
++        assert np.allclose(nb, tuple(float(np.asarray(x)) for x in py), atol=1e-12, rtol=0.0)
++        assert 0.0 <= rooms_committed + nb[2] <= 10.0 + 1e-12
++
++
++def test_infeasible_committed_housing_returns_dead_state() -> None:
++    numba_flow = getattr(renter_wedge_flow, "py_func", renter_wedge_flow)
++    # Committed rooms already exceed the cap, and resources cannot pay cbc plus
++    # the full C(h) cost.  This must remain infeasible in both branches.
++    args = (3.0, 0.5, 11.0, 0.2, 0.0, 1.0, 6.0, 10.0, 0.7, -1.0, 1.0)
++    nb = numba_flow(*args)
++    py = renter_wedge_flow_py(*args)
++    assert nb[0] <= -1e9 and nb[1:] == (0.0, 0.0)
++    assert float(np.asarray(py[0])) <= -1e9
++    assert float(np.asarray(py[1])) == 0.0
++    assert float(np.asarray(py[2])) == 0.0
++
++
++def test_committed_cap_has_no_residual_housing_in_either_flow() -> None:
++    args = (20.0, 0.1, 10.0, 0.2, 0.0, 0.2, 6.0, 10.0, 0.7, -1.0, 1.0)
++    nb = getattr(renter_wedge_flow, "py_func", renter_wedge_flow)(*args)
++    py = renter_wedge_flow_py(*args)
++    assert nb == (-1e10, 0.0, 0.0)
++    assert tuple(float(np.asarray(x)) for x in py) == (-1e10, 0.0, 0.0)
++
++
++def test_full_cost_formula_above_knee() -> None:
++    assert rental_wedge_total_cost(8.0, 0.2, type("P", (), {
++        "rental_wedge_intercept": 0.0,
++        "rental_wedge_slope": 0.2,
++        "rental_wedge_knee": 6.0,
++    })()) == pytest.approx(8.0 * (0.2 + 0.2 * 2.0))
++
++
++def test_reporting_floor_does_not_constrain_positive_wedge_flow() -> None:
++    """A feasible c below P.c_min remains an objective allocation."""
++    # P.c_min is a frozen reporting floor, not an economic constraint in the
++    # wedge objective.  Here S=.05 gives c=.035<.04 while h remains positive.
++    args = (0.17, 0.10, 0.10, 0.20, 0.0, 0.20, 6.0, 10.0, 0.7, -1.0, 1.0)
++    nb = getattr(renter_wedge_flow, "py_func", renter_wedge_flow)(*args)
++    py = renter_wedge_flow_py(*args)
++    py_tuple = tuple(float(np.asarray(x)) for x in py)
++    assert np.allclose(nb, py_tuple, atol=1e-12, rtol=0.0)
++    assert 0.0 < nb[1] < 0.04
++    assert 0.0 < nb[2] and args[2] + nb[2] <= args[7] + 1e-12
++    total_h = args[2] + nb[2]
++    expenditure_gap = args[1] + nb[1] + total_h * (args[3] + args[4] + args[5] * max(total_h - args[6], 0.0)) - args[0]
++    assert expenditure_gap <= 1e-12
++    ht_grid = np.linspace(1e-6, (0.05 / 0.2) - 1e-6, 10001)
++    c_grid = 0.05 - 0.2 * ht_grid
++    utility_grid = (c_grid**args[8] * ht_grid ** (1.0 - args[8])) ** args[9] / args[9]
++    assert nb[0] >= float(np.max(utility_grid)) - 1e-6
++
++
++def test_full_renter_zero_wedge_matches_frozen_exactly() -> None:
++    args = _full_renter_fixture()
++    frozen = _frozen_full_renter_kernel().py_func(*args)
++    current = full_renter_block_kernel.py_func(*args, 0, 0.0, 0.0, 6.0)
++    assert all(np.array_equal(left, right) for left, right in zip(frozen, current))
++
++
++def test_full_renter_wedge_numba_python_and_budget() -> None:
++    args = _full_renter_fixture()
++    python = full_renter_block_kernel.py_func(*args, 1, 0.0, 0.2, 6.0)
++    compiled = full_renter_block_kernel(*args, 1, 0.0, 0.2, 6.0)
++    assert all(np.allclose(left, right, atol=1e-11, rtol=0.0)
++               for left, right in zip(python, compiled))
++    resources, _, _, _, _, _, cb, _, _, _, _, _, rent, *_ = args
++    for i in range(resources.size):
++        for c in range(cb.size):
++            if python[0][i, c] <= -1e9:
++                continue
++            total_h = python[3][i, c]
++            cost = total_h * (rent + 0.2 * max(total_h - 6.0, 0.0))
++            expenditure_gap = python[2][i, c] + cost + python[1][i, c] - resources[i]
++            assert expenditure_gap <= 1e-10
++            assert total_h <= 10.0 + 1e-12
++
++
++def test_full_renter_wedge_highfloor_budget_edge() -> None:
++    args = _full_renter_fixture(resources=(15.0, 16.0, 20.0), hb=(10.0, 6.0))
++    python = full_renter_block_kernel.py_func(*args, 1, 0.0, 0.2, 6.0)
++    compiled = full_renter_block_kernel(*args, 1, 0.0, 0.2, 6.0)
++    assert np.all(np.isfinite(python[1])) and np.all(np.isfinite(python[2]))
++    # With no strictly positive residual housing, the wedge utility is a dead
++    # state; a finite positive-wedge allocation at hb == hRmax is invalid.
++    assert np.all(python[0][:, 0] <= -1e9)
++    resources, _, _, _, _, _, cb, _, _, _, _, _, rent, *_ = args
++    for i in range(resources.size):
++        if python[0][i, 0] <= -1e9:
++            continue
++        total_h = python[3][i, 0]
++        cost = total_h * (rent + 0.2 * max(total_h - 6.0, 0.0))
++        expenditure_gap = python[2][i, 0] + cost + python[1][i, 0] - resources[i]
++        assert expenditure_gap <= 1e-10
++        assert total_h <= 10.0 + 1e-12
++    assert all(np.allclose(left, right, atol=1e-11, rtol=0.0)
++               for left, right in zip(python, compiled))
++
++
++def test_tiny_mass_conservation() -> None:
++    from intergen_eqscale_seq_optimized.tests.test_eqscale_seq import _tiny_markov
++
++    solution, _, _ = run_model_cp_dt(
++        {**_tiny_markov(), "rental_wedge_intercept": 0.0,
++         "rental_wedge_slope": 0.2, "rental_wedge_knee": 6.0,
++         "hR_max": 10.0, "use_full_kernel": False},
++        verbose=False,
++    )
++    assert np.isfinite(solution.V).all()
++    assert float(np.sum(solution.g)) == pytest.approx(1.0, abs=1e-9)
++
++
++def test_segment_oracle_beats_global_golden_and_dense_grid() -> None:
++    """A narrow later peak must survive the piecewise-global audit."""
++    # The audit helper imports the dated policy module for its full driver.  A
++    # stub is sufficient here because this test exercises only its independent
++    # segment enumerator, without reconstructing a model state.
++    fake_policy = types.ModuleType("run_e5f_post2023_policy_mechanisms")
++    fake_policy.baseline = types.SimpleNamespace()
++    fake_policy.calendar = types.SimpleNamespace()
++    fake_policy.transition = types.SimpleNamespace()
++    sys.modules.setdefault("run_e5f_post2023_policy_mechanisms", fake_policy)
++    tools_dir = Path(__file__).resolve().parents[2] / "tools"
++    sys.path.insert(0, str(tools_dir))
++    import run_e5f_independent_numerical_audit as audit
++    from scipy.optimize import minimize_scalar
++
++    def objective(x: float) -> float:
++        x = float(x)
++        if x < 1.2:
++            return 1.0 - (x - 0.4) ** 2
++        return 10.0 - ((x - 1.9) / 0.005) ** 2
++
++    global_result = minimize_scalar(
++        lambda x: -objective(x), bounds=(0.0, 2.0), method="bounded",
++        options={"xatol": 1e-12, "maxiter": 1000},
++    )
++    optimum, value = audit.segment_enumerated_max(
++        objective, 0.0, 2.0, np.asarray([0.0, 1.2, 2.0])
++    )
++    dense_x = np.linspace(0.0, 2.0, 20001)
++    dense_lower_bound = max(objective(x) for x in dense_x)
++    assert value > -float(global_result.fun) + 1.0
++    assert value >= dense_lower_bound - 1e-8
++    assert 1.89 < optimum < 1.91
++
++    # Exercise the actual wedge objective wrapper with the same alpha and
++    # expenditure scale that the saving audit supplies to production states.
++    continuation = np.asarray([0.0, 6.0, 30.0])
++    wedge_args = dict(
++        lo=0.0, hi=2.0, resources=15.0, continuation=continuation,
++        bg=np.asarray([0.0, 1.2, 2.0]), rent=0.2, hb=5.0, cb=0.5,
++        pc=0.0, hmax=10.0, alpha=0.7, oms=0.5, beta=0.95, es=1.0,
++        w0=0.0, w1=0.2, hk=6.0,
++    )
++    wedge_x, wedge_value = audit.segment_oracle_wedge(**wedge_args)
++    wedge_values = [
++        float(np.asarray(audit.model.eval_renter_wedge(
++            x, wedge_args["resources"], continuation, wedge_args["bg"],
++            wedge_args["cb"], wedge_args["hb"], wedge_args["pc"],
++            wedge_args["rent"], wedge_args["hmax"], wedge_args["w0"],
++            wedge_args["w1"], wedge_args["hk"], wedge_args["alpha"],
++            wedge_args["oms"], wedge_args["beta"], es=wedge_args["es"],
++        )))
++        for x in np.linspace(wedge_args["lo"], wedge_args["hi"], 2001)
++    ]
++    assert np.isfinite(wedge_value)
++    assert wedge_value >= max(wedge_values) - 1e-8
++    assert wedge_args["lo"] <= wedge_x <= wedge_args["hi"]
++    with pytest.raises(RuntimeError, match="nonfinite"):
++        audit.segment_enumerated_max(lambda _x: float("nan"), 1.0, 1.0, np.asarray([1.0]))

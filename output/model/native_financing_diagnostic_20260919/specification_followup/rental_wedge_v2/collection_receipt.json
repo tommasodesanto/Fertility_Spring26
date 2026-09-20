@@ -1,0 +1,56 @@
+{
+  "status": "terminal_failure_before_first_household_solve",
+  "remote_root": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2",
+  "jobs": {
+    "smoke": {
+      "id": "18079902",
+      "state": "FAILED",
+      "elapsed": "00:00:16",
+      "exit": "1:0",
+      "max_rss": "664820K"
+    },
+    "production": {
+      "id": "18079903",
+      "state": "CANCELLED",
+      "elapsed": "00:00:00",
+      "exit": "0:0"
+    }
+  },
+  "no_retries_or_new_jobs": true,
+  "pre_case_source_verification": {
+    "status": "verified",
+    "hash_count": 163,
+    "hashes_after_count": 163,
+    "bad_before": 0,
+    "bad_after": 0,
+    "before_after_equal": true,
+    "import_origin_count": 43,
+    "tree_sha256": "bfc59aaffa4455702eb39ad2712f0d5619e8835835957ee09f05233ffde898f7"
+  },
+  "failure": {
+    "case": "cap6zero",
+    "phase": "before",
+    "error": "ModuleNotFoundError: No module named 'run_e5f_perfect_foresight_person_demography'",
+    "failed_receipt": "results/failed_receipt.json",
+    "traceback_tail": "results/rw_smoke_18079902.err"
+  },
+  "solve_accounting": {
+    "solve_receipt_present": false,
+    "actual_household_solves_recorded": 0,
+    "reason": "failure occurred while loading checkpoint packet, before household solve"
+  },
+  "strict_gates": {
+    "saving_gain": "unavailable",
+    "control_reproduction": "unavailable",
+    "budget_value_cohort_population_entry": "unavailable",
+    "plots": "unavailable",
+    "production_source_after": "unavailable"
+  },
+  "artifacts_collected": [
+    "verify_smoke_before.json",
+    "failed_receipt.json",
+    "failure_case_cap6zero_1789924067.json",
+    "rw_smoke_18079902.err"
+  ],
+  "large_arrays_downloaded": false
+}

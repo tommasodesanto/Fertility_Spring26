@@ -1,0 +1,30 @@
+{
+  "status": "completed_deterministic_supplement",
+  "interpretation": "moment-matched approximation only; not an exact aggregated process and not adopted",
+  "source_receipt_sha256": "7bbfea8811b5fab27d04820fd600337afcdbb59279116b4c8bea68b5779fc666",
+  "formulas": {
+    "rho_period": "log1p(C_block_2) / log1p(C_block_1)",
+    "persistent_log_variance": "log1p(C_block_1) / rho_period",
+    "transitory_log_variance": "log1p(C_block_0) - persistent_log_variance",
+    "proxy_C0": "exp(Vp + Ve) - 1",
+    "proxy_Ck": "exp(Vp * rho_period**k) - 1 for k >= 1"
+  },
+  "inputs_exact_block_level_covariance": {"0": 1.1552361179785384, "1": 0.8501191392434537, "2": 0.7251512708803833, "4": 0.5348002896764752},
+  "matched_parameters": {
+    "rho_period": 0.8863302843656216,
+    "persistent_log_variance": 0.6941543659969618,
+    "transitory_log_variance": 0.07374591906411088,
+    "admissible": true
+  },
+  "proxy_level_covariance": {"0": 1.1552361179785384, "1": 0.8501191392434537, "2": 0.7251512708803833, "4": 0.534783152117317},
+  "relative_error_vs_exact_block": {"0": 0.0, "1": 0.0, "2": 0.0, "4": -0.00003204478289389367},
+  "continuous_endpoint_level_covariance": {"0": 1.204894804838208, "1": 0.8480336490469853, "2": 0.7235021047707455, "4": 0.5337346499729398},
+  "relative_error_vs_continuous_endpoint": {"0": -0.041214126461718514, "1": 0.002459206894457555, "2": 0.00227942130197456, "4": 0.0019644633235453846},
+  "source_hashes": {
+    "candidate_json": "35fcb1cfc2ae1067def0ec5985e44f0c16df28dedfd47a944444bfcaa4dc0447",
+    "constructor": "7c9571fb38697e9433b32baabbd630656bd935179a4325f7b1e3bbb70e94d087",
+    "driver": "d07e31a95bd96fdf9784cd98aa5f9d8e210249553df862d416e19a2eed48737b",
+    "local_panel": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+    "source_autocovariance_fit": "96e65681e37b6e1215efde8b786b8c88151186aef1023ca726648e2c9a41c5ab"
+  }
+}

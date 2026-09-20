@@ -1,0 +1,234 @@
+{
+  "changed_source_vs_frozen": {
+    "code/model/intergen_eqscale_seq_optimized/kernels.py": {
+      "changed": true,
+      "frozen": "79370af16a97723c8de91a1735db5d8ac12830f57e28ad1b74dfac112321fc2a",
+      "ported": "ab9bcc73516d5908376f70f8aa585c9a8e08ec62759d73491fa886130a97d377"
+    },
+    "code/model/intergen_eqscale_seq_optimized/parameters.py": {
+      "changed": true,
+      "frozen": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5",
+      "ported": "28fc43e09ed3d1728db6c0d5c071d4bb8716f6b78e4b472599effa4b06710ae3"
+    },
+    "code/model/intergen_eqscale_seq_optimized/solver.py": {
+      "changed": true,
+      "frozen": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da",
+      "ported": "59159c85dac94b518557fc73b34eb8259b8c9dcf70826e41f0cf6f7987fad6c7"
+    },
+    "code/model/intergen_eqscale_seq_optimized/tests/test_rental_wedge_port_tiny.py": {
+      "changed": true,
+      "frozen": null,
+      "ported": "ce0cbab62901d0f26706d2cf04bc814f456b0616b309075f617aa46af4cf0710"
+    },
+    "code/model/intergen_eqscale_seq_optimized/tests/test_switch_wedge.py": {
+      "changed": true,
+      "frozen": null,
+      "ported": "cc3d9e9e14c2050d75579cc314854dc664535a3bf305f1b4ef379f12e0581bb1"
+    },
+    "code/model/tools/run_dynamic_population_transition.py": {
+      "changed": false,
+      "frozen": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362",
+      "ported": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362"
+    },
+    "code/model/tools/run_e5f_independent_numerical_audit.py": {
+      "changed": true,
+      "frozen": "656d766e0197e854c73e6b6fb7a3e97cd4fef57e75ad4c7a924d8b1ca5212528",
+      "ported": "7b217f08ea411707c5d5adfff87ebda529c37a6173c4be00f88adce92a507f98"
+    },
+    "code/model/tools/run_e5f_matched_pf_smoke.py": {
+      "changed": true,
+      "frozen": "91e0728387e55c3a33419298868b696820a4d4bd61809996e6a7842654aabf32",
+      "ported": "67f0a22ae2143bdd1f6ff9b32594b8a78259b3d6738facd71d7f58e1389de21d"
+    },
+    "code/model/tools/run_e5f_open_population_transition.py": {
+      "changed": false,
+      "frozen": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346",
+      "ported": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346"
+    },
+    "code/model/tools/run_e5f_perfect_foresight_transition.py": {
+      "changed": false,
+      "frozen": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be",
+      "ported": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be"
+    }
+  },
+  "checkpoint": {
+    "local_copy_informational": {
+      "matches": true,
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/paper_baseline_sep14/replay_20260917/native_output/raw/repetition_02/initial_state.pkl.gz",
+      "sha256": "3322a61994fb3654d67f4b1d6cf2d0f7cacbb3668d06a417e192ee363c174993"
+    },
+    "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/baseline_replay_20260917/replay/case/evaluation/raw/repetition_02/initial_state.pkl.gz",
+    "sha256": "3322a61994fb3654d67f4b1d6cf2d0f7cacbb3668d06a417e192ee363c174993",
+    "verification": "sha256 before staging and before every case; never copied"
+  },
+  "created": "2026-09-20T13:12:19-0400",
+  "design": {
+    "auto_retries": false,
+    "case_timeout_seconds": {
+      "cap10s005": 900,
+      "cap10s02": 900,
+      "cap10s1": 900,
+      "cap10zero": 600,
+      "cap6zero": 600
+    },
+    "cases": [
+      {
+        "cap": 6.0,
+        "name": "cap6zero",
+        "slope": 0.0
+      },
+      {
+        "cap": 10.0,
+        "name": "cap10zero",
+        "slope": 0.0
+      },
+      {
+        "cap": 10.0,
+        "name": "cap10s005",
+        "slope": 0.05
+      },
+      {
+        "cap": 10.0,
+        "name": "cap10s02",
+        "slope": 0.2
+      },
+      {
+        "cap": 10.0,
+        "name": "cap10s1",
+        "slope": 1.0
+      }
+    ],
+    "cost_function": "C(h) = rent*h + slope*h*max(h-6,0); intercept 0; knee 6",
+    "cpus": 1,
+    "household_solves": 5,
+    "identity_gates": {
+      "entry_cohort_bitwise": true,
+      "policy_identity": false,
+      "population_bitwise": true
+    },
+    "max_lifecycle_solves": 8,
+    "mem_gb": 24,
+    "no_active_core": true,
+    "numba_disable_jit": 0,
+    "reproduction_tolerance": 1e-10,
+    "saving_audit": {
+      "draws": 32,
+      "gain_tolerance": 1e-07,
+      "retained_definition": "run_e5f_independent_numerical_audit.saving_audit: weighted random sample plus deterministic mass-bearing age/tenure boundary states (first, last, modal occupied); per-state exact per-segment maximization against fixed production continuation; hard error only if the oracle is worse than the saved choice by more than 1e-8; reports maximum_value_gain and the draw-weighted shares of value gain above 1e-6, 1e-4 and 1e-3 (boundary states carry zero sample multiplicity and enter only the maximum)."
+    },
+    "scope": "fixed-price partial equilibrium on the original checkpoint; chi, preferences, prices, phi=.8, lambda=0, raw stationary_g_pre, entry and fiscal contracts unchanged; no GE or stationary calibration; positive slopes are findings",
+    "slurm_minutes": {
+      "production": 60,
+      "smoke": 45
+    },
+    "stage_seconds": {
+      "production": 3600,
+      "smoke": 2700
+    },
+    "stages": {
+      "production": [
+        "cap10zero",
+        "cap10s005",
+        "cap10s1"
+      ],
+      "smoke": [
+        "cap6zero",
+        "cap10s02"
+      ]
+    },
+    "threads": 1
+  },
+  "driver": {
+    "local_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_isolated_rental_wedge.py",
+    "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v3/code/model/tools/run_e5f_isolated_rental_wedge.py",
+    "sha256": "b5217b95e3d711362ebc97b68fe831886be6fccc507f021d74d47e3c86ff4b99"
+  },
+  "experiment_root": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v3",
+  "frozen_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2",
+  "generated_files": {
+    "driver_plan.json": "cf86b8b3f1a07bd013793c3dcaa9ba4408968b8557d3c2a028337e2143dab7f2",
+    "production.sbatch": "a3e58f29f13087e61ebfda412d69894b2eccca63037c15c4375bd4bef3f00a7c",
+    "remote_finalize.sh": "b8bdae6112c93e5752c9a6e757ed02bbf4798a7373dc1f2df94f3adf6a44cae7",
+    "remote_stage.sh": "7ad2cafed4ee4ab296929f8b9ed07c50b1cbe77e9c02a4498605f51efc7898af",
+    "smoke.sbatch": "1a49c3024f55a2550bf2b938045b630c57f0ebe3999c1fa615980dcabe349d0c"
+  },
+  "local_commit": "1f689e3282d56abae9e95709ed1c796f5a166a61",
+  "local_factorial_informational": {
+    "note": "not staged and not imported; the runtime copy pinned above is staged for provenance only",
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_financing_factorial.py",
+    "sha256": "da5815cd8926208c322e38ec79a4255ddb40441cc4e035280d96229f526a542b"
+  },
+  "plan": {
+    "copy": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v3/plan.json",
+    "local_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/overnight/finance_dose_v1/plan.remote.json",
+    "remote_path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/plan.json",
+    "sha256": "1ae0ba4dfc1a66088e1f3803e80a0ba888f08b46874da3daf0ef4fab6ef76c4a"
+  },
+  "port_manifest": {
+    "copy": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v3/source_manifest.json",
+    "diff_path_local": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_rental_wedge_runtime_v4/rental_wedge_port.diff",
+    "frozen_source_root_local": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_complete_frozen_source",
+    "local_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_rental_wedge_runtime_v4/source_manifest.json",
+    "port_scope": {
+      "audits": "snapshot-local dated and independent audits use full rental_wedge_total_cost; active-wedge saving audit enumerates every b_grid segment with endpoint checks and an independent bounded solve per segment",
+      "kernels": "renter candidate branches, saving objective, committed cost, cap output",
+      "parameters": "rental_wedge_intercept/slope/knee defaults, validation, active predicate, total cost",
+      "solver": "Markov-income renter branch only; core path rejects active wedge"
+    },
+    "remaining_review_blockers": [
+      "Line-by-line verify quadratic above-knee candidate and cap consumption against C(h).",
+      "Review snapshot-local dated and independent budget gates and array broadcasting before any lifecycle run.",
+      "Verify Python and Numba branches on cap, knee, and infeasible committed-housing states.",
+      "Run the original frozen control and record mandatory policy/mass comparisons before wedge arms."
+    ],
+    "rental_wedge_port_reviewed": true,
+    "sha256": "9adf4b9afea08acf1f6fe769eca935137420e3a08d8cd85d6478701591a05509",
+    "snapshot": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_rental_wedge_runtime_v4",
+    "source_files": 537
+  },
+  "refit_v2_helpers_informational": {
+    "differing": [
+      "run_e5f_financing_factorial.py"
+    ],
+    "identical_to_finance_dose_v1": false,
+    "note": "informational; finance_dose_v1 produced the original summary and is the pinned runtime",
+    "plan": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/overnight/finance_dose_refit_v2/plan.remote.json"
+  },
+  "results_root": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v3/results",
+  "runtime_helpers": {
+    "build_e5f_native_financing_report.py": "beccdda8ac758326c5ff75943831ef402c1e82d1e8a185eebaaac6c079ca65b5",
+    "build_persistent_transitory_income_candidate.py": "7c9571fb38697e9433b32baabbd630656bd935179a4325f7b1e3bbb70e94d087",
+    "run_e5f_financing_factorial.py": "0cb6d5b1db5f1ab7b77912099f27ffb8908f8e446574ffcb3d69d724eda364b6",
+    "run_e5f_income_candidate_calibration.py": "e688e4fa401097993dcd6cbca1b7fc9afe6911a2086e7bc74925c962bbaf92f2",
+    "run_e5f_income_candidate_search.py": "1286ba54f1d2e5a64798150de3c6786c109d1f28733c0e47a8e769dad339fa18",
+    "run_e5f_income_overnight_search.py": "111776865158779fa9ab9de05308a0b7d3e98adf8b0280cfaf2ed159be58eb48",
+    "run_e5f_native_financing_diagnostic.py": "ff65058d8e796069f82fcaf463256e906a500af876bb91d91c646c200d3582f2",
+    "run_e5f_native_income_cohort_diagnostic.py": "1ca604b4b6e83f5cd43b48163a4889512165caf5a4ffb88f6b8759c60a0e1d50",
+    "run_e5f_native_rental_access_diagnostic.py": "90d48059a3f76668b5e6c4ea0f789de14c2280e21ded7493dc41f67ca367a924"
+  },
+  "runtime_helpers_used_by_driver": [
+    "run_e5f_native_rental_access_diagnostic",
+    "run_e5f_native_income_cohort_diagnostic",
+    "build_e5f_native_financing_report"
+  ],
+  "runtime_root": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1",
+  "schema": "e5f_isolated_rental_wedge_launch_v1",
+  "source_copy": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v3/source",
+  "ssh_host": "torch",
+  "summary": {
+    "local_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/overnight/final_mechanisms/original/summary.json",
+    "old_labels": {
+      "cap10": [
+        "arm_05_phi0.8_lambda0_cap10"
+      ],
+      "cap6": [
+        "arm_01_phi0.8_lambda0_cap6",
+        "arm_02_phi0.8_lambda0_cap6",
+        "arm_03_phi0.8_lambda0_cap6"
+      ]
+    },
+    "population_label": "common saved stationary pre-choice mass",
+    "remote_path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/original_production/original/summary.json",
+    "sha256": "2d6ed1dc986a04198c819e4d4594a3d868c9b725925ec5df3871f14403c88806"
+  }
+}

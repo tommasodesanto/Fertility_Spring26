@@ -1,5 +1,31 @@
 # Calibration Status
 
+**September 20, 13:14 EDT — final rental-test packaging correction submitted:**
+Smoke **18080236**, dependent production **18080237**, use the complete verified
+frozen source and deserialize the actual checkpoint before allowing a solve.
+[Latest submission](output/model/native_financing_diagnostic_20260919/specification_followup/rental_wedge_v3/submission.json).
+The v2 chain **18079902/18079903** failed/cancelled on an omitted serialization
+helper before any household solve. Both staging failures consumed zero solves;
+all economic inputs, patch equations and numerical gates remain unchanged.
+The five-case plan remains within the original envelope. Further failure will
+be collected and reviewed, with no automatic retry.
+
+**September 20, 13:08 EDT — isolated rental-cost test submitted:**
+Fresh smoke **18079902** and dependent production **18079903** test five
+fixed-price cases on the original checkpoint, preserving prices, preferences,
+population and entry. The reviewed patch changes only rental expenditure above
+six rooms; cap-six and cap-ten zero-wedge controls are retained. Numerical and
+source checks, including an additional strict saving audit, gate production.
+[Launch and stop contract](output/model/native_financing_diagnostic_20260919/specification_followup/README.md).
+Initial v1 smoke **18079861** failed before any solve on missing audit-package
+dependencies; **18079863** was cancelled. The fresh source collector fixes that
+staging omission with verified frozen hashes; no equation or gate was relaxed.
+At most twelve household solves are allocated including seven used; no stationary
+run or model adoption has occurred. Separately, a tractable period earnings
+proxy closely matches exact block-average covariances, but does not establish
+conditional-distribution or household-policy equivalence.
+[Reviewed earnings approximation](output/model/native_financing_diagnostic_20260919/specification_followup/income_aggregation_v1/moment_matched_period_proxy.md).
+
 **September 20, 13:00 EDT — income-grid cohort sensitivity completed:**
 Jobs **18079046/18079047** passed the baseline replay, source, budget, cohort
 and 17-plot-per-case checks. With 15, 27 and 45 joint income states, explicit
@@ -11,8 +37,10 @@ numerical/entry sensitivity, not a pure policy effect or stationary fit.
 Seven household evaluations have been used, including the failed credit-v1
 receipt attempt; no stationary evaluation or wedge household solve has run.
 The isolated rental-cost experiment remains under review: its positive-wedge
-solver must handle a feasible consumption-minimum corner correctly before
-launch. The adopted model and target system remain unchanged.
+solver must retain feasible choices with low positive consumption and report
+actual spending. Direct frozen-source inspection establishes that `c_min` is
+a reporting floor, not an objective constraint; imposing it would add a new
+model restriction. The adopted model and target system remain unchanged.
 
 **September 20, 12:34 EDT — credit replay reproduced; income-grid sensitivity launched:**
 Credit **18078912/18078913** completed all three replays with matching old
