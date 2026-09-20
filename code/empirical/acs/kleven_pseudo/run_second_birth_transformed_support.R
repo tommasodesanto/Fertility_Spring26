@@ -22,7 +22,7 @@ resolve_one <- function(nms, candidates, label) {
   if (length(hit) != 1L) fail(label, " resolves to ", length(hit), " columns")
   hit[[1L]]
 }
-key3 <- function(d, y, s, p) paste(d[[y]], d[[s]], d[[p]], sep = "\034")
+key4 <- function(d, y, sm, s, p) paste(d[[y]], d[[sm]], d[[s]], d[[p]], sep = "\034")
 num_equal <- function(a, b) {
   aa <- suppressWarnings(as.numeric(a)); bb <- suppressWarnings(as.numeric(b))
   !is.na(aa) & !is.na(bb) & aa != bb
@@ -45,68 +45,62 @@ setnames(prepared, tolower(names(prepared)))
 overlap_years <- 2005:2019
 
 py <- resolve_one(names(prepared), "year", "prepared year")
+psample <- resolve_one(names(prepared), "sample", "prepared sample")
 ps <- resolve_one(names(prepared), "serial", "prepared serial")
 pp <- resolve_one(names(prepared), "pernum", "prepared pernum")
 raw_shared <- c(sex = "sex", age = "age", race = "race", educ = "educ",
                 marst = "marst", statefip = "statefip")
 raw_cols <- vapply(raw_shared, function(x) resolve_one(names(prepared), x, paste("prepared", x)), character(1))
 hisp_col <- resolve_one(names(prepared), c("hispanic", "hispan"), "prepared Hispanic")
-clean_author_names <- c("gender", "edlevel", "marst", "race", "statefip")
-use_clean_author_cells <- all(clean_author_names %in% names(prepared))
-if (use_clean_author_cells) {
-  author_cols <- setNames(clean_author_names, clean_author_names)
-} else {
-  author_cols <- NULL
-  educd_col <- resolve_one(names(prepared), "educd", "prepared detailed education")
-}
+educd_col <- resolve_one(names(prepared), "educd", "prepared detailed education")
 
 packet_overlap <- packet[YEAR %in% overlap_years]
 prep_overlap <- prepared[get(py) %in% overlap_years]
-pk <- key3(packet_overlap, "YEAR", "SERIAL", "PERNUM")
-rk <- key3(prep_overlap, py, ps, pp)
-if (anyDuplicated(pk)) fail("packet overlap key (YEAR,SERIAL,PERNUM) is not unique")
-if (anyDuplicated(rk)) fail("prepared overlap key (year,serial,pernum) is not unique")
+pk <- key4(packet_overlap, "YEAR", "SAMPLE", "SERIAL", "PERNUM")
+rk <- key4(prep_overlap, py, psample, ps, pp)
+if (anyDuplicated(pk)) fail("packet overlap full key is not unique")
+if (anyDuplicated(rk)) fail("prepared overlap full key is not unique")
 idx <- match(pk, rk)
 if (anyNA(idx)) fail("prepared ACS does not cover every packet overlap key")
 
 concordance <- rbindlist(lapply(names(raw_shared), function(nm) {
-  a <- packet_overlap[[raw_shared[[nm]]]]
+  a <- packet_overlap[[toupper(raw_shared[[nm]])]]
   b <- prep_overlap[[raw_cols[[nm]]]][idx]
   data.table(field = nm, rows = length(a), missing_either = sum(xor(is.na(a), is.na(b))),
              mismatches = sum(num_equal(a, b)))
 }))
 write.csv(concordance, file.path(outdir, "raw_key_concordance.csv"), row.names = FALSE)
+if (any(concordance$rows != nrow(packet_overlap))) {
+  fail("raw concordance row count differs from packet overlap")
+}
+if (any(concordance$missing_either > 0L)) {
+  fail("shared raw fields have missing values after key join")
+}
 if (any(concordance$mismatches > 0L)) fail("shared raw fields disagree after key join")
 
 # Borrow only the prepared Hispanic field after the raw concordance gate. Keep
 # every packet row and every raw field; years outside 2005--2019 stay explicit.
 packet[, author_overlap_2005_2019 := FALSE]
-packet[match(pk, key3(packet, "YEAR", "SERIAL", "PERNUM")),
-       author_overlap_2005_2019 := TRUE]
+packet_full_key <- key4(packet, "YEAR", "SAMPLE", "SERIAL", "PERNUM")
+packet_idx <- match(pk, packet_full_key)
+packet[packet_idx, author_overlap_2005_2019 := TRUE]
 packet[, prepared_hispanic := NA_real_]
-packet[, (paste0("author_", names(author_cols), ".num")) := NA]
-prep_cells <- if (use_clean_author_cells) {
-  second_birth_author_cells(prep_overlap,
-    gender_col = author_cols[["gender"]], edlevel_col = author_cols[["edlevel"]],
-    marst_col = author_cols[["marst"]], race_col = author_cols[["race"]],
-    statefip_col = author_cols[["statefip"]])
-} else {
-  second_birth_author_cells_raw(prep_overlap, sex_col = raw_cols[["sex"]],
-    educd_col = educd_col, marst_col = raw_cols[["marst"]],
-    race_col = raw_cols[["race"]], hispan_col = hisp_col,
-    statefip_col = raw_cols[["statefip"]])
-}
-for (j in seq_len(nrow(packet_overlap))) {
-  ii <- match(pk[[j]], key3(packet, "YEAR", "SERIAL", "PERNUM"))
-  jj <- idx[[j]]
-  packet[ii, prepared_hispanic := if (tolower(hisp_col) == "hispan")
-    as.numeric(prep_overlap[[hisp_col]][jj] %in% 1:4) else as.numeric(prep_overlap[[hisp_col]][jj])]
-  packet[ii, `:=`(author_gender.num = prep_cells$gender.num[jj],
-                  author_edlevel.num = prep_cells$edlevel.num[jj],
-                  author_marst.num = prep_cells$marst.num[jj],
-                  author_race.num = prep_cells$race.num[jj],
-                  author_statefip.num = prep_cells$statefip.num[jj])]
-}
+packet[, `:=`(author_gender.num = NA_integer_, author_edlevel.num = NA_integer_,
+              author_marst.num = NA_integer_, author_race.num = NA_integer_,
+              author_statefip.num = NA_character_)]
+prep_cells <- second_birth_author_cells_raw(prep_overlap, sex_col = raw_cols[["sex"]],
+  educd_col = educd_col, marst_col = raw_cols[["marst"]],
+  race_col = raw_cols[["race"]], hispan_col = hisp_col,
+  statefip_col = raw_cols[["statefip"]])
+packet[packet_idx, `:=`(
+  prepared_hispanic = if (tolower(hisp_col) == "hispan")
+    as.numeric(prep_overlap[[hisp_col]][idx] %in% 1:4) else
+    as.numeric(prep_overlap[[hisp_col]][idx]),
+  author_gender.num = prep_cells$gender.num[idx],
+  author_edlevel.num = prep_cells$edlevel.num[idx],
+  author_marst.num = prep_cells$marst.num[idx],
+  author_race.num = prep_cells$race.num[idx],
+  author_statefip.num = prep_cells$statefip.num[idx])]
 
 # Build and match only on the verified overlap. 2020--2023 packet rows remain
 # in the saved join output but cannot enter this author-aligned diagnostic.
@@ -121,6 +115,8 @@ proxy <- build_second_birth_proxy(dt,
   full_pre_min_gap = 5L, reference_min_gap = 2L)
 matched <- second_birth_match_exact(proxy$donor_targets, proxy$one_child_donors,
   match_covariates = c("gender.num", "edlevel.num", "marst.num", "race.num", "statefip.num"))
+saveRDS(proxy, file.path(outdir, "proxy_checkpoint.rds"), compress = FALSE)
+saveRDS(matched, file.path(outdir, "matched_checkpoint.rds"), compress = FALSE)
 
 write.csv(proxy$audit, file.path(outdir, "builder_audit.csv"), row.names = FALSE)
 write.csv(matched$target_support, file.path(outdir, "target_support.csv"), row.names = FALSE)
