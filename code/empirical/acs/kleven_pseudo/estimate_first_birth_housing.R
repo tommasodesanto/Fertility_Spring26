@@ -138,7 +138,7 @@ join_first_birth_housing <- function(panel, source_housing, audit_manifest,
   status_tab <- table(out$housing_join_status, useNA = "ifany")
   source_clusters <- out$source_household_cluster[!is.na(out$source_household_cluster)]
   join_audit <- data.frame(
-    panel_rows = nrow(panel), acs_rows = sum(eligible), cps_rows = sum(cps),
+    panel_rows = nrow(panel), acs_rows = sum(eligible), cps_rows = sum(original_cps | relabeled_cps),
     matched_acs_rows = sum(out$housing_join_status == "acs_source_matched"),
     unmatched_acs_rows = sum(out$housing_join_status == "acs_source_unmatched"),
     relabeled_cps_missing_outcome_rows = sum(out$housing_join_status == "relabeled_cps_missing_outcome"),
