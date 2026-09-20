@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# Isolated rental-size wedge: five fixed-price household solves on the original checkpoint
-# (cap6 slope0, cap10 slope0, cap10 slopes .05/.2/1) from an immutable experiment root that
+# Isolated rental-size wedge: six fixed-price household solves on the original checkpoint
+# (cap6 slope0, cap10 slope0, cap10 slopes .05/.2/1, plus cap10 slope .2 at phi=1) from an immutable experiment root that
 # combines the reviewed rental-wedge source snapshot (frozen Sep-14 core + explicit isolated
-# patch, uploaded from tmp/e5f_rental_wedge_runtime_v4) with the nine finance_dose_v1 runtime
+# patch, uploaded from tmp/e5f_rental_wedge_exhaustive_v1) with the nine finance_dose_v1 runtime
 # helpers (copied remote-to-remote).  Dry-run by default: SUBMIT=0 parses, pins, writes the
 # launch manifest, the driver plan, and the sbatch scripts into a temporary directory and
 # submits nothing.  SUBMIT=1 requires source_manifest.rental_wedge_port_reviewed=true, stages a
 # fresh remote root, verifies every hash, makes the staged code read-only, and submits
-# smoke (cap6zero + cap10s02) -> production (afterok: cap10zero + cap10s005 + cap10s1 + combine).
+# smoke (cap6zero + cap10s02) -> production (afterok: cap10zero + cap10s005 + cap10s1 + cap10s02_phi1 + combine).
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 TAG="${TAG:-rental_wedge_v1}"; SUBMIT="${SUBMIT:-0}"; SSH_HOST="${SSH_HOST:-torch}"
@@ -19,7 +19,7 @@ REMOTE_SUMMARY="$RUNTIME/original_production/original/summary.json"
 LOCAL_SUMMARY="$ROOT/output/model/native_financing_diagnostic_20260919/overnight/final_mechanisms/original/summary.json"
 LOCAL_PLAN="$ROOT/output/model/native_financing_diagnostic_20260919/overnight/finance_dose_v1/plan.remote.json"
 REFIT_PLAN="$ROOT/output/model/native_financing_diagnostic_20260919/overnight/finance_dose_refit_v2/plan.remote.json"
-SNAPSHOT="$ROOT/tmp/e5f_rental_wedge_runtime_v4"
+SNAPSHOT="$ROOT/tmp/e5f_rental_wedge_exhaustive_v1"
 PORT_MANIFEST="$SNAPSHOT/source_manifest.json"
 LOCAL_CHECKPOINT="$ROOT/output/model/paper_baseline_sep14/replay_20260917/native_output/raw/repetition_02/initial_state.pkl.gz"
 CHECKPOINT_SHA=3322a61994fb3654d67f4b1d6cf2d0f7cacbb3668d06a417e192ee363c174993
@@ -108,7 +108,7 @@ manifest = {"schema": "e5f_isolated_rental_wedge_launch_v1", "created": time.str
                        "reproduction_tolerance": drv.TOL, "saving_audit": {"draws": drv.SAVING_DRAWS, "gain_tolerance": drv.SAVING_GAIN_TOLERANCE, "retained_definition": drv.RETAINED_SAVING_AUDIT_DEFINITION},
                        "cost_function": "C(h) = rent*h + slope*h*max(h-6,0); intercept 0; knee 6", "threads": 1, "numba_disable_jit": 0, "no_active_core": True, "auto_retries": False,
                        "identity_gates": {"population_bitwise": True, "entry_cohort_bitwise": True, "policy_identity": False},
-                       "scope": "fixed-price partial equilibrium on the original checkpoint; chi, preferences, prices, phi=.8, lambda=0, raw stationary_g_pre, entry and fiscal contracts unchanged; no GE or stationary calibration; positive slopes are findings"}}
+            "scope": "fixed-price partial equilibrium on the original checkpoint; five fixed-phi=.8 arms plus one matched cap10/slope=.2 financed-share contrast at phi=1; chi, preferences, prices, lambda=0, raw stationary_g_pre, entry and fiscal contracts otherwise unchanged; no GE or stationary calibration; positive slopes are findings"}}
 Path(out).write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
 frozen_pins = " ".join(f"{rel}:{base[rel]}" for rel in sorted(base))
 Path(stage, "pins.env").write_text(f"CHECKPOINT={ckpt}\nFROZEN={frozen}\nSUMMARY_SHA={manifest['summary']['sha256']}\nPLAN_SHA={manifest['plan']['sha256']}\nDRIVER_SHA={manifest['driver']['sha256']}\nPORT_SHA={manifest['port_manifest']['sha256']}\nREVIEWED={'1' if reviewed else '0'}\n"
@@ -228,7 +228,7 @@ PY
 if [[ "$SUBMIT" != 1 ]]; then
   echo "dry-run: syntax review and pins passed; nothing staged or submitted."
   echo "port reviewed marker: $REVIEWED (SUBMIT=1 requires 1)"
-  echo "household solves planned: 5 (smoke: cap6zero, cap10s02; production: cap10zero, cap10s005, cap10s1; combine reuses the verified smoke cap10s02)"
+  echo "household solves planned: 6 (smoke: cap6zero, cap10s02; production: cap10zero, cap10s005, cap10s1, cap10s02_phi1; combine reuses the verified smoke cap10s02)"
   echo "review: $MANIFEST $STAGE/driver_plan.json $STAGE/remote_stage.sh $STAGE/remote_finalize.sh $STAGE/smoke.sbatch $STAGE/production.sbatch"
   echo "remote root (untouched): $REMOTE_ROOT"; exit 0
 fi

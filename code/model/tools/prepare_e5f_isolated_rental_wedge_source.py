@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[3]
-DEFAULT_SNAPSHOT = ROOT / "tmp/e5f_rental_wedge_runtime_v4"
+DEFAULT_SNAPSHOT = ROOT / "tmp/e5f_rental_wedge_exhaustive_v1"
 DEFAULT_FROZEN = ROOT / "tmp/e5f_complete_frozen_source"
 DEFAULT_ACTIVE = ROOT
 DEFAULT_PATCH = ROOT / "code/model/tools/patches/e5f_isolated_rental_wedge.patch"
@@ -159,7 +159,9 @@ def assert_zero_slope_legacy_fragments(snapshot: Path) -> list[str]:
         "kernel legacy renter candidate": "surplus = Rv - dc - bp",
         "kernel legacy cap arithmetic": "ct = Rvb - cbc - ri * hR_max - bp_best",
         "solver legacy golden branch": "bp, val = golden_renter(",
-        "solver wedge rejection": "Rental wedge requires the golden-section renter block",
+        "kernel exhaustive wedge helper": "def exhaustive_saving_wedge_scalar(",
+        "kernel exhaustive wedge dispatch": "bp_best, v_best = exhaustive_saving_wedge_scalar(",
+        "solver unsupported fallback rejection": "exhaustive rental wedge requires the compiled segment solver",
     }
     missing = [label for label, fragment in required.items() if fragment not in text]
     if missing:
@@ -207,7 +209,7 @@ def write_manifest(snapshot: Path, frozen: Path, active: Path, patch_path: Path,
         "zero_slope_legacy_fragments": assert_zero_slope_legacy_fragments(snapshot),
         "port_scope": {
             "parameters": "rental_wedge_intercept/slope/knee defaults, validation, active predicate, total cost",
-            "kernels": "renter candidate branches, saving objective, committed cost, cap output",
+            "kernels": "renter candidate branches, saving objective, committed cost, cap output; active wedge exhaustive search checks every continuation segment, leaving the original exhaustive helper unchanged",
             "solver": "Markov-income renter branch only; core path rejects active wedge",
             "audits": "snapshot-local dated and independent audits use full rental_wedge_total_cost; active-wedge saving audit enumerates every b_grid segment with endpoint checks and an independent bounded solve per segment",
         },

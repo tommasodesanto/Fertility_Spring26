@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Isolated rental-size wedge: five fixed-price household solves on the original checkpoint.
+"""Isolated rental-size wedge: six fixed-price household solves on the original checkpoint.
 
 Design (fixed-price partial equilibrium; no GE, no stationary recalibration):
 
@@ -8,13 +8,15 @@ Design (fixed-price partial equilibrium; no GE, no stationary recalibration):
     cap10s005  hR_max=10, slope=0.05  finding
     cap10s02   hR_max=10, slope=0.2   finding (solved in the smoke stage, reused)
     cap10s1    hR_max=10, slope=1.0   finding
+    cap10s02_phi1 hR_max=10, slope=0.2, financed share=1.0 matched-finance contrast
 
 Every renter pays the full outside-landlord cost
 
     C(h) = rent * h + slope * h * max(h - 6, 0),
 
-with zero intercept and the knee fixed at six rooms.  Only the cap and the slope
-differ across arms; chi, preferences, prices, phi=.8, lambda=0, the raw saved
+with zero intercept and the knee fixed at six rooms.  The first five arms differ
+only in cap and slope; the sixth additionally sets the financed share to one.
+Chi, preferences, prices, lambda=0, the raw saved
 ``stationary_g_pre`` population, entry and fiscal contracts are untouched.
 
 The lifecycle modes run only from a staged, hash-pinned experiment root that
@@ -57,7 +59,7 @@ CHECKPOINT_SHA256 = "3322a61994fb3654d67f4b1d6cf2d0f7cacbb3668d06a417e192ee363c1
 SCHEMA = "e5f_isolated_rental_wedge_v1"
 KNEE = 6.0
 ZERO_INTERCEPT = 0.0
-MAX_LIFECYCLE_SOLVES = 8
+MAX_LIFECYCLE_SOLVES = 14
 CORE = "intergen_eqscale_seq_optimized"
 TOL = 1e-10
 SAVING_DRAWS = 32
@@ -142,6 +144,7 @@ class Case:
     name: str
     cap: float
     slope: float
+    financed_share: float = 0.8
 
 
 CASES = (
@@ -150,12 +153,13 @@ CASES = (
     Case("cap10s005", 10.0, 0.05),
     Case("cap10s02", 10.0, 0.2),
     Case("cap10s1", 10.0, 1.0),
+    Case("cap10s02_phi1", 10.0, 0.2, 1.0),
 )
 CASE_BY_NAME = {case.name: case for case in CASES}
 SMOKE_CASES = ("cap6zero", "cap10s02")
-PRODUCTION_CASES = ("cap10zero", "cap10s005", "cap10s1")
+PRODUCTION_CASES = ("cap10zero", "cap10s005", "cap10s1", "cap10s02_phi1")
 STAGE_CASES = {"smoke": SMOKE_CASES, "production": PRODUCTION_CASES}
-CASE_TIMEOUT_SECONDS = {"cap6zero": 600, "cap10zero": 600, "cap10s005": 900, "cap10s02": 900, "cap10s1": 900}
+CASE_TIMEOUT_SECONDS = {"cap6zero": 600, "cap10zero": 600, "cap10s005": 900, "cap10s02": 900, "cap10s1": 900, "cap10s02_phi1": 900}
 STAGE_SECONDS = {"smoke": 2700, "production": 3600}
 HOUSEHOLD_SOLVES_PLANNED = len(CASES)
 
@@ -410,6 +414,11 @@ def arm_parameters(base: Mapping[str, Any], case_name: str, *, source: Mapping[s
         return dict(base)
     out = dict(base)
     out.update({"hR_max": case.cap})
+    if case.financed_share != 0.8:
+        if "phi" not in base:
+            raise ContractError("checkpoint parameters must expose phi for the financing contrast")
+        import numpy as np
+        out["phi"] = np.full_like(np.asarray(base["phi"], dtype=float), case.financed_share).tolist()
     if case.slope > 0:
         out.update({"rental_wedge_intercept": ZERO_INTERCEPT, "rental_wedge_slope": case.slope, "rental_wedge_knee": KNEE})
     return out
@@ -453,7 +462,7 @@ def experiment_plan(source_root: Path, manifest: Path, checkpoint: Path | None, 
         "runtime_pin_strategy": "nine runtime helpers copied from the finance_dose_v1 runtime tools directory and pinned by the plan.remote.json hashes; the ported snapshot supplies the frozen core and the five patched/frozen helpers; the two sets live in separate directories and never overwrite each other",
         "planned_cli": planned_cli(),
         "control": control_spec(source, selected),
-        "scope": "fixed-price partial equilibrium on the original checkpoint; explicit lifetime births are cohort accounting, not a stationary normalization or a frictionless benchmark; positive slopes are findings",
+        "scope": "fixed-price partial equilibrium on the original checkpoint; five fixed-phi=.8 arms plus one matched cap10/slope=.2 financed-share contrast at phi=1; all other objects fixed; explicit lifetime births are cohort accounting, not a stationary normalization or a frictionless benchmark; positive slopes are findings",
     }
 
 
@@ -654,6 +663,8 @@ def build_arm(base: Any, case: Case, params: Any) -> tuple[Any, dict[str, Any]]:
     P = copy.deepcopy(base)
     if case.cap != float(base.hR_max):
         P.hR_max = float(case.cap)
+    if case.financed_share != 0.8:
+        P.phi = np.full_like(np.asarray(base.phi, dtype=float), case.financed_share)
     if case.slope > 0:
         P.rental_wedge_intercept = ZERO_INTERCEPT
         P.rental_wedge_slope = float(case.slope)
@@ -661,6 +672,10 @@ def build_arm(base: Any, case: Case, params: Any) -> tuple[Any, dict[str, Any]]:
     params.build_debt_caps(P)
     altered = changed(base, P)
     allowed = {"hR_max"} | ({"rental_wedge_intercept", "rental_wedge_slope", "rental_wedge_knee"} if case.slope > 0 else set())
+    if case.financed_share != 0.8:
+        # The frozen build_debt_caps formula is independent of phi, hR_max and
+        # the rental wedge. Only the financing share itself may differ here.
+        allowed |= {"phi"}
     if set(altered) - allowed:
         raise ContractError(f"unexpected parameter changes for {case.name}: {sorted(set(altered) - allowed)}")
     if case.name == "cap6zero" and altered:
@@ -668,7 +683,7 @@ def build_arm(base: Any, case: Case, params: Any) -> tuple[Any, dict[str, Any]]:
     active = bool(params.rental_wedge_active(P))
     if active != (case.slope > 0):
         raise ContractError(f"rental_wedge_active={active} disagrees with slope={case.slope}")
-    record = {"case": case.name, "hR_max": float(P.hR_max), "slope": float(case.slope), "intercept": ZERO_INTERCEPT, "knee": KNEE,
+    record = {"case": case.name, "hR_max": float(P.hR_max), "slope": float(case.slope), "financed_share": float(case.financed_share), "intercept": ZERO_INTERCEPT, "knee": KNEE,
               "effective_wedge": {"intercept": float(getattr(P, "rental_wedge_intercept", 0.0)), "slope": float(getattr(P, "rental_wedge_slope", 0.0)),
                                   "knee": float(getattr(P, "rental_wedge_knee", 6.0)), "active": active},
               "changed_fields": altered, "chi": float(P.chi), "phi": np.asarray(P.phi, dtype=float).tolist(), "lambda_d": float(getattr(P, "lambda_d", 0.0)),
@@ -963,7 +978,7 @@ def _solve_and_gate(a: argparse.Namespace, m: Mapping[str, Any], case: Case, sta
                    "household_solves": len(calls), "solve_wall_seconds": solve_wall, "case_wall_seconds": time.time() - started,
                    "policy_arrays": {"path": str(arrays), "sha256": sha256(arrays), "names": sorted(captured), "shapes": {n: list(v.shape) for n, v in captured.items()}},
                    "threads": {k: os.environ.get(k) for k in THREAD_VARS}, "job": os.environ.get("SLURM_JOB_ID"), "launch_manifest_sha256": sha256(a.launch_manifest),
-                   "scope": "fixed-price partial equilibrium on the original checkpoint; no GE, entry, fiscal, preference, price or population change; explicit lifetime births are cohort accounting, not a stationary normalization or frictionless benchmark"}
+                   "scope": "fixed-price partial equilibrium on the original checkpoint; five fixed-phi=.8 arms plus one matched cap10/slope=.2 financed-share contrast at phi=1; no GE, entry, fiscal, preference, price or population change beyond that explicit financing contrast; explicit lifetime births are cohort accounting, not a stationary normalization or frictionless benchmark"}
         receipt["file_hashes"] = hash_tree(out)
         write_json(out / "receipt.json", receipt)
     return status
@@ -1065,11 +1080,11 @@ def combine(a: argparse.Namespace, m: Mapping[str, Any]) -> None:
                 per[n] = {"max_abs_diff": mx, "count_above_tolerance": int(np.count_nonzero(d > TOL)), "identical": bool(np.array_equal(A[n], B[n])), "within_tolerance": bool(mx <= TOL)}
             pairs[f"{labels[i]}__vs__{labels[j]}"] = {"arrays": per, "policies_coincide_within_tolerance": all(per[n]["within_tolerance"] for n in POLICY_NAMES),
                                                       "distributions_coincide_within_tolerance": all(per[n]["within_tolerance"] for n in EXTRA_ARRAYS)}
-    fields = ["case", "cap", "slope", "status", *METRIC_KEYS, *COHORT_KEYS, "saving_max_value_gain", "dated_budget_max_excess", "independent_budget_max_excess", "solve_wall_seconds"]
+    fields = ["case", "cap", "slope", "financed_share", "status", *METRIC_KEYS, *COHORT_KEYS, "saving_max_value_gain", "dated_budget_max_excess", "independent_budget_max_excess", "solve_wall_seconds"]
     rows = []
     for name in labels:
         r = receipts[name]
-        rows.append({"case": name, "cap": r["arm"]["hR_max"], "slope": r["arm"]["slope"], "status": r["status"], **{k: r["metrics"].get(k) for k in METRIC_KEYS},
+        rows.append({"case": name, "cap": r["arm"]["hR_max"], "slope": r["arm"]["slope"], "financed_share": r["arm"]["financed_share"], "status": r["status"], **{k: r["metrics"].get(k) for k in METRIC_KEYS},
                      **{k: r["cohort"].get(k) for k in COHORT_KEYS}, "saving_max_value_gain": r["saving_gate"]["maximum_value_gain"],
                      "dated_budget_max_excess": r["dated_budget"].get("maximum_occupied_excess"), "independent_budget_max_excess": r["independent_budget"].get("maximum_occupied_excess"),
                      "solve_wall_seconds": r.get("solve_wall_seconds")})
@@ -1080,12 +1095,25 @@ def combine(a: argparse.Namespace, m: Mapping[str, Any]) -> None:
     total_solves = sum(int(receipts[n]["household_solves"]) for n in labels)
     if total_solves != HOUSEHOLD_SOLVES_PLANNED or total_solves > MAX_LIFECYCLE_SOLVES:
         raise RuntimeError(f"household solve count {total_solves} differs from the planned {HOUSEHOLD_SOLVES_PLANNED}")
+    base_name, contrast_name = "cap10s02", "cap10s02_phi1"
+    base_r, contrast_r = receipts[base_name], receipts[contrast_name]
+    metric_map = {"birth_flow": ("snapshot_birth_flow", base_r["metrics"].get("birth_flow"), contrast_r["metrics"].get("birth_flow")),
+                  "first_birth_flow": ("snapshot_first_birth_flow", base_r["metrics"].get("first_birth_flow"), contrast_r["metrics"].get("first_birth_flow")),
+                  "cumulative_explicit_births_per_initial_household": ("cohort_lifetime_births", base_r["cohort"].get("cumulative_explicit_births_per_initial_household"), contrast_r["cohort"].get("cumulative_explicit_births_per_initial_household")),
+                  "first_births_per_initial_household": ("cohort_first_births", base_r["cohort"].get("first_births_per_initial_household"), contrast_r["cohort"].get("first_births_per_initial_household")),
+                  "first_birth_mean_age": ("cohort_first_birth_mean_age", base_r["cohort"].get("first_birth_mean_age"), contrast_r["cohort"].get("first_birth_mean_age"))}
+    matched = {"base_case": base_name, "contrast_case": contrast_name, "base_financed_share": 0.8, "contrast_financed_share": 1.0, "findings": {}}
+    for key, (label, base_value, contrast_value) in metric_map.items():
+        absolute = float(contrast_value) - float(base_value)
+        matched["findings"][label] = {"base": float(base_value), "contrast": float(contrast_value), "absolute_delta": absolute,
+                                      "percent_delta": (100.0 * absolute / float(base_value)) if float(base_value) != 0.0 else None}
     write_json(results / "combined_summary.json", {
         "schema": SCHEMA, "status": "complete", "cases": rows, "receipts": checks, "household_solves_total": total_solves,
         "population_identity_bitwise": population_identity, "entry_cohort_identity_bitwise": entry_identity, "array_names": names,
         "pairwise_policy_comparison": pairs, "identity_is_gate": {"population": True, "entry_cohort": True, "policies": False},
         "tolerance": TOL, "job": os.environ.get("SLURM_JOB_ID"), "launch_manifest_sha256": sha256(a.launch_manifest),
-        "scope": "fixed-price partial equilibrium on the original checkpoint; slopes are findings; explicit lifetime births are cohort accounting, not a stationary normalization or a frictionless benchmark",
+        "matched_financing_comparison": matched,
+        "scope": "fixed-price partial equilibrium on the original checkpoint; five fixed-phi=.8 arms plus one matched cap10/slope=.2 financed-share contrast at phi=1; all other objects fixed; slopes are findings; explicit lifetime births are cohort accounting, not a stationary normalization or a frictionless benchmark",
     })
 
 
