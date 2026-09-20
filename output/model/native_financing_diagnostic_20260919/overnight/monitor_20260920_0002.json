@@ -1,0 +1,125 @@
+{
+  "monitor_id": "monitor_20260920_0002",
+  "timestamp_local": "2026-09-20T00:02:00-04:00",
+  "remote_host": "torch",
+  "source_root": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a",
+  "jobs": {
+    "18050123": {
+      "state": "COMPLETED",
+      "elapsed": "00:41:36",
+      "exit": "0:0",
+      "dependency": null
+    },
+    "18050440": {
+      "state": "COMPLETED",
+      "elapsed": "00:03:19",
+      "exit": "0:0",
+      "dependency": null
+    },
+    "18049121": {
+      "state": "RUNNING",
+      "elapsed": "00:54:11",
+      "exit": null,
+      "dependency": "18049120"
+    },
+    "18050441": {
+      "state": "RUNNING",
+      "elapsed": "00:32:57",
+      "exit": null,
+      "dependency": "18050440"
+    },
+    "18050443": {
+      "state": "PENDING",
+      "elapsed": null,
+      "exit": null,
+      "dependency": "18049121"
+    },
+    "18050451": {
+      "state": "PENDING",
+      "elapsed": null,
+      "exit": null,
+      "dependency": "18050443"
+    }
+  },
+  "original_grid": {
+    "path": "finance_dose_v1/original_production/original",
+    "status": "complete",
+    "cases": 50,
+    "controls": 2,
+    "unique_grid_arms": 48,
+    "case_status_completed": 50,
+    "cohort_status_completed": 50,
+    "primary_plots_per_case": 17,
+    "primary_plot_cases": 50,
+    "failed_gates": 0,
+    "baseline_duplicate_numeric_fields_exact": true,
+    "summary_sha256": "2d6ed1dc986a04198c819e4d4594a3d868c9b725925ec5df3871f14403c88806",
+    "comparisons_sha256": "9d729d9803f9988c7c2574bf1b4e46a23a3fb1a0e84f23184ca688ec1ac0ee48",
+    "graph_manifest": "monitor_20260920_0002/graph_manifest.json"
+  },
+  "stationary_new_income_smoke": {
+    "path": "finance_dose_income_v2/stationary_new_income_smoke/stationary_new_income",
+    "status": "complete",
+    "cases": 3,
+    "case_status_completed": 3,
+    "cohort_status_completed": 3,
+    "primary_plots_per_case": 17,
+    "failed_gates": 0,
+    "summary_sha256": "bd4259bf09a3b123340ba74b9edd1dd93ce5d722ae385b8ef939be9911e26bf7",
+    "comparisons_sha256": "6c969fc68c5be2a2e9f84d8ffecb143922a6134138ab0605661da5a2f7eae4b1"
+  },
+  "stationary_new_income_production": {
+    "path": "finance_dose_income_v2/stationary_new_income_production/stationary_new_income",
+    "status": "partial",
+    "completed_cases": 35,
+    "planned_grid_cases": 48,
+    "latest_completed_status": "completed",
+    "heartbeat_present": true,
+    "controls_and_plot_counts": "not terminal; not collected",
+    "planned_total_cases_including_controls": 50,
+    "completed_grid_cases": 33,
+    "controls_in_completed_count": 2
+  },
+  "income_search": {
+    "path": "income_overnight_v1/production",
+    "status": "RUNNING",
+    "completed": 27,
+    "success": 27,
+    "rejected_or_numerical_failure": 5,
+    "cases_seen": 32,
+    "active_latest_heartbeat": "case_040.heartbeat.json",
+    "active_latest_heartbeat_age_seconds_at_query": 8.1,
+    "budget_health": "heartbeat active; terminal selection not available",
+    "failed_cases": {
+      "1": "adapter failed: Child failed with exit 1; see .../cases/case_001/evaluation/initial_solve.log",
+      "3": "adapter failed: Child failed with exit 1; see .../cases/case_003/evaluation/initial_solve.log",
+      "7": "adapter failed: Child failed with exit 1; see .../cases/case_007/evaluation/initial_solve.log",
+      "24": "candidate exceeded 900s",
+      "30": "candidate exceeded 900s"
+    },
+    "unverified_best_loss_reported": false,
+    "processed_cases_including_rejections": 32
+  },
+  "receipts": {
+    "original_summary": "monitor_20260920_0002/original/summary.json",
+    "original_comparisons": "monitor_20260920_0002/original/comparisons.csv",
+    "stationary_new_income_smoke_summary": "monitor_20260920_0002/stationary_new_income_smoke/summary.json",
+    "stationary_new_income_smoke_comparisons": "monitor_20260920_0002/stationary_new_income_smoke/comparisons.csv"
+  },
+  "remote_readonly": true,
+  "jobs_started_or_cancelled": false,
+  "heavy_pngs_copied": false,
+  "lead_review": {
+    "artifact_hashes_match": true,
+    "original_checkpoint_pin_all_cases": true,
+    "baseline_metrics_exact": true,
+    "csv_metrics_match_all_cases": true,
+    "grid_unique_cells": 48,
+    "case_count_including_controls": 50,
+    "primary_packet_directory_manifest_matches": true,
+    "visual_review_of_all_primary_plots": false,
+    "cohort_status_completed": 50,
+    "numeric_gates_pass": true,
+    "note": "35 pilot production cases include 2 controls: 33 of 48 grid cells. Search 27 valid plus 5 rejected proposals are 32 processed; this is not overall job failure."
+  }
+}

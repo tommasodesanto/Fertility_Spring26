@@ -1,5 +1,25 @@
 # Calibration Status
 
+**September 20, 00:02 EDT — access restored; original mechanism grid completed:**
+Read-only Torch access works again. Original-family production **18050123**
+completed in 41m36s (exit 0). Its 50 case receipts cover two baseline controls
+and all 48 distinct grid cells. Lead checks confirm matching baseline metrics,
+50 completed lifetime cohorts, 17 primary diagnostic plots per arm, unchanged
+budget/value gates and exact agreement of the 50 comparison rows with receipts.
+Remote plot-packet metadata records all 50 directories with 17 PNGs each; this
+is availability/count verification, not a new visual audit of all plots.
+New-income smoke **18050440** completed in 3m19s (exit 0), including all three
+cases and its explicit saved-evaluation population contract. Production
+**18050441** and search **18049121** remain running in the scheduler snapshot;
+refit smoke/grid **18050443/18050451** remain dependent. The progress receipt
+records 35/50 pilot cases (33/48 grid cells plus two controls), and 32 processed
+search proposals (27 valid, five rejected), with an active heartbeat. No jobs or numerical
+gates were changed. These are fixed-price diagnostic results; economic comparisons
+and the final search fit/parameter report remain outstanding.
+[Collected original grid](output/model/native_financing_diagnostic_20260919/overnight/monitor_20260920_0002/original/comparisons.csv)
+and [graph packet metadata](output/model/native_financing_diagnostic_20260919/overnight/monitor_20260920_0002/graph_manifest.json).
+
+
 **September 19, 23:43 EDT — monitoring access blocked; job state unconfirmed:**
 The scheduled read-only SSH check to `torch` was denied authentication before any
 remote query. No fresh scheduler states, progress counts or failure receipts were

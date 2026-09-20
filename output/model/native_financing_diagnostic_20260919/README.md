@@ -4,6 +4,31 @@ This is a full-lifecycle partial-equilibrium diagnostic from the frozen Septembe
 
 Run two independent `baseline` cases first. Both require all saved policy arrays to reproduce at `atol=1e-10, rtol=0`; only then run `mortgage_only`, `unsecured_only`, and `both` as independently timed processes.
 
+## Completion receipt — September 20, 00:02 EDT
+
+Torch access is restored. Original production 18050123 completed in 41m36s,
+exit 0. The collected [summary](overnight/monitor_20260920_0002/original/summary.json)
+and [comparison table](overnight/monitor_20260920_0002/original/comparisons.csv)
+contain 50 cases: two controls plus all 48 distinct combinations. Lead review
+checked all case/cohort statuses, the budget and occupied-value gates, matching
+baseline metrics, and exact numerical equality between comparison rows and case
+receipts. Each arm records 17 primary standard diagnostic plots. The
+[packet manifest](overnight/monitor_20260920_0002/graph_manifest.json) confirms
+17 PNGs in each of 50 remote primary-packet directories and their total sizes;
+PNGs were not recopied or newly inspected, and this is not a file-hash audit.
+
+New-income smoke 18050440 completed in 3m19s, exit 0; its three
+[case receipts](overnight/monitor_20260920_0002/stationary_new_income_smoke/summary.json)
+pass the same checks and retain the pinned evaluated-population input.
+New-income grid 18050441 and earnings search 18049121 are still running in the
+scheduler snapshot. Refit smoke/grid 18050443/18050451 await their dependencies.
+The [progress receipt](overnight/monitor_20260920_0002.json) records 35/50 pilot
+cases including two controls, and 32 processed search proposals: 27 valid and
+five rejected, with an active heartbeat. Rejected proposals are expected search
+outcomes rather than overall job failures. No job was restarted or altered.
+The final economic comparison and verified
+selected search packet remain outstanding; the follow-up stays active.
+
 ## Monitoring access — September 19, 23:43 EDT
 
 SSH authentication to `torch` failed before the scheduled remote query. Current
