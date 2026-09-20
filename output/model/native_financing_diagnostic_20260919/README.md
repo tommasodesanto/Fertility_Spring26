@@ -4,6 +4,81 @@ This is a full-lifecycle partial-equilibrium diagnostic from the frozen Septembe
 
 Run two independent `baseline` cases first. Both require all saved policy arrays to reproduce at `atol=1e-10, rtol=0`; only then run `mortgage_only`, `unsecured_only`, and `both` as independently timed processes.
 
+## Reviewed overnight result — September 20 morning
+
+All final-chain jobs completed: search 18049121 (2h34m35s), original grid
+18050123 (41m36s), pilot smoke/grid 18050440/18050441 (3m19s/52m), and refit
+smoke/grid 18050443/18050451 (3m41s/53m23s), all exit 0. No further jobs were
+launched. [Consolidated review receipt](overnight/final_review.json).
+
+The classic persistent-plus-transitory income search selected case 60 from
+96 proposals, 89 valid and seven rejected. Its loss is 353.6588729140903,
+versus 502.74561411262744 for the prior local search and 179.2984242480252 for
+the retained original benchmark. All 13 target definitions, values and weights
+match the original comparison. This is a finite local diagnostic; identification,
+convergence and adoption are not established. The housing fit remains weak:
+ownership among heads 30–55 is 48.43% versus 64.83%, and capped mean rooms are
+6.677 versus 5.561. The recent-parent ownership gap improves greatly, but mean
+rooms worsen relative to the prior selected point. Annual discounting 0.99 and
+first-child housing requirement 2.3 are at their active upper bounds.
+
+[Full 13-row fit and 17-row parameter/bounds table](overnight/final_search/readout.md),
+[source/repetition/plot receipt](overnight/final_search/receipt.json), and
+[selected 17 standard plots](overnight/final_search/selected_standard_diagnostics/)
+are collected. The selected normalized child-preference level is 0.1922702943;
+the summary's 0.2394995040 is the initial normalization seed. Raw scorer CSVs retain
+the generic beta bound 0.9995; the readout reports the actual 0.99 restriction.
+Two native repetitions agree exactly on numeric fit, loss and price. Refit
+mechanisms use the second verified checkpoint; its file hash differs from the
+first repetition while the verified economic results agree. Lead visually
+inspected fertility by age, ownership by age and market clearing; all 17 selected
+plot hashes were checked, without claiming visual review of every plot.
+
+The mechanism battery has 144 distinct cells and six extra controls. All 150
+case receipts passed the original gates, and the graph manifest records 2,550
+primary PNGs. Prices, preferences and initial population stay fixed within each
+family; their values can differ across families. Mortgage relaxation changes
+both deposit and collateral access, with financed share 0.8 to 1.
+
+| Family | Mortgage: birth-flow change | Mortgage: explicit lifetime cohort births |
+|---|---:|---:|
+| Original | +0.690% | +0.234% |
+| New-income pilot | +0.174% | +0.085% |
+| New-income refit | +0.230% | +0.081% |
+
+These are different outcome definitions. Birth flow uses a fixed initial
+cross-section; explicit lifetime births sum all births in a simulated entry
+cohort. Neither is the separate stationary 2.1 normalization. At rental cap 10,
+the refit's mortgage birth-flow effect is only +0.00108%, compared with +0.230%
+at cap 6. This points to a rental-access interaction, not an identified mediation
+decomposition or a general-equilibrium result.
+
+The unsecured-credit result is not robust across income specifications or outcome
+clocks. With the original earnings process, the largest credit dose raises cohort
+births about 3.02%. In the new-income refit, credit of 0.25 times four-year earnings
+(one annual earnings amount) raises current birth flow 2.456% but lowers explicit
+cohort births 0.769%; credit of one four-year earnings amount gives +2.380% flow
+and -2.415% cohort births. Five four-year earnings amounts give identical new-income
+outcomes to one; the reason for that plateau has not been established. Credit is
+zero in retirement. These are diagnostic doses, not approved policy defaults.
+
+A bounded saved-output check found exactly identical entry distributions across
+the refit's baseline and credit arms. Summing the 17 age records exactly reproduces
+lifetime births. Higher births at age 18 are outweighed by lower later births;
+lifetime first births also decline. Thus the discrepancy is not an entry-population
+change or a summation error. The economic or numerical cause is still outstanding.
+Do not treat positive initial birth flows as proof of higher lifetime fertility.
+[Accounting evidence](overnight/final_mechanisms/cohort_accounting_check.json).
+
+[Complete contrasts](overnight/final_mechanisms/comparison.csv),
+[mechanism readout](overnight/final_mechanisms/comparison.md),
+[all family receipts](overnight/final_mechanisms/receipt.json), and
+[full graph manifest](overnight/final_mechanisms/graph_manifest.json) are collected.
+The next substantive decision is to diagnose the new-income housing fit and the
+credit/cohort response before adopting the earnings change or strengthening the
+slides' mortgage mechanism. The overnight battery alone supports neither a
+converged replacement calibration nor a literal frictionless benchmark.
+
 ## Completion receipt — September 20, 00:02 EDT
 
 Torch access is restored. Original production 18050123 completed in 41m36s,

@@ -1,5 +1,35 @@
 # Calibration Status
 
+**September 20 morning — overnight battery complete and reviewed:**
+All six final-chain jobs completed with exit 0. Search **18049121** evaluated
+96 proposals (89 valid, seven rejected); case 60 has loss **353.6588729140903**,
+with two exact native repetitions and 17 verified diagnostic PNGs. This improves
+on the prior local result 502.74561411262744, but remains worse than the retained
+179.2984242480252 under identical target definitions, values and weights.
+Ownership ages 30–55 is 0.48427 versus 0.64833; capped mean rooms 6.67698 versus
+5.56110. Annual discounting and first-child housing requirement remain at their
+actual upper bounds, 0.99 and 2.3. No convergence or adoption is established.
+[Complete 13-target/17-parameter readout](output/model/native_financing_diagnostic_20260919/overnight/final_search/readout.md).
+
+All three 48-cell financing/rental grids completed; 150 case receipts including
+controls pass the retained checks. Mortgage access has small effects: original,
+new-income pilot and refit birth flows rise 0.690%, 0.174%, 0.230%; explicit
+lifetime cohort births rise 0.234%, 0.085%, 0.081%. With rental cap 10, the refit's
+mortgage birth-flow increment falls to 0.00108%. Unsecured-credit results depend
+on earnings and the outcome: in the refit, credit equal to one annual after-tax
+earnings amount raises snapshot birth flow 2.456% but lowers explicit cohort
+births 0.769%; at four annual earnings, the changes are +2.380% and -2.415%.
+Saved entry populations are exactly identical in these credit comparisons;
+age-by-age totals reproduce the lifetime sums, with higher early births but lower
+later births and lifetime first births. The underlying cause remains unresolved.
+Do not interpret positive snapshot flow as a positive lifetime-fertility effect.
+These are fixed-price diagnostics, not a frictionless benchmark or GE evidence.
+[Full mechanism comparisons](output/model/native_financing_diagnostic_20260919/overnight/final_mechanisms/comparison.md)
+and [lead review](output/model/native_financing_diagnostic_20260919/overnight/final_review.json).
+Monitoring can stop. Further work should focus on the housing-fit and cohort
+response questions above; no further jobs have been launched.
+
+
 **September 20, 00:02 EDT — access restored; original mechanism grid completed:**
 Read-only Torch access works again. Original-family production **18050123**
 completed in 41m36s (exit 0). Its 50 case receipts cover two baseline controls

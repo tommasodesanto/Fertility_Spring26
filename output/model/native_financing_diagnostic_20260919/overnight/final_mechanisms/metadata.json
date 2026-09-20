@@ -1,0 +1,259 @@
+{
+  "across_family_fields_varying": [
+    "checkpoint_sha256",
+    "checkpoint",
+    "price",
+    "candidate_fingerprint",
+    "population_source",
+    "population_audit"
+  ],
+  "design": "dose",
+  "family_contracts": {
+    "original": {
+      "candidate_fingerprint": null,
+      "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/baseline_replay_20260917/replay/case/evaluation/raw/repetition_02/initial_state.pkl.gz",
+      "checkpoint_sha256": "3322a61994fb3654d67f4b1d6cf2d0f7cacbb3668d06a417e192ee363c174993",
+      "family": "original",
+      "initial_population_shape": [
+        120,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "population_source": null,
+      "price": [
+        0.7026083285154774
+      ],
+      "raw_vs_evaluation_changed_count": null,
+      "raw_vs_evaluation_l1": null,
+      "raw_vs_evaluation_linf": null,
+      "raw_vs_evaluation_total_gap": null,
+      "source_manifest": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/working_contract.json",
+      "source_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2"
+    },
+    "refit_new_income": {
+      "candidate_fingerprint": "013e1f803b4e23d4920b14d6377af973e7a94e8d709b45143bd8dca1bdd7d425",
+      "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/production/selected_verification/evaluation/raw/repetition_02/initial_state.pkl.gz",
+      "checkpoint_sha256": "b3491eedcee6250cf94833067646d3e6463496cbf5a64bdcabe7b13bc7e89eb2",
+      "family": "refit_new_income",
+      "initial_population_shape": [
+        120,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "population_source": "saved_evaluation",
+      "price": [
+        0.5469369720186884
+      ],
+      "raw_vs_evaluation_changed_count": 10,
+      "raw_vs_evaluation_l1": 7.272090560285096e-16,
+      "raw_vs_evaluation_linf": 3.0099644005948624e-16,
+      "raw_vs_evaluation_total_gap": 2.220446049250313e-16,
+      "source_manifest": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/working_contract.json",
+      "source_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2"
+    },
+    "stationary_new_income": {
+      "candidate_fingerprint": "013e1f803b4e23d4920b14d6377af973e7a94e8d709b45143bd8dca1bdd7d425",
+      "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_stationary_18040896/evaluation/raw/repetition_01/initial_state.pkl.gz",
+      "checkpoint_sha256": "79f9dd5e56351bb6ced3a2b31d10657b1bfa8acd59c1c68436bfb671c99bb675",
+      "family": "stationary_new_income",
+      "initial_population_shape": [
+        120,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "population_source": "saved_evaluation",
+      "price": [
+        0.6780300336814044
+      ],
+      "raw_vs_evaluation_changed_count": 17,
+      "raw_vs_evaluation_l1": 3.5100904979533746e-15,
+      "raw_vs_evaluation_linf": 1.62824089953466e-15,
+      "raw_vs_evaluation_total_gap": 0.0,
+      "source_manifest": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/working_contract.json",
+      "source_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2"
+    }
+  },
+  "grid": {
+    "controls": 2,
+    "lambdas": [
+      0,
+      0.25,
+      1,
+      5
+    ],
+    "phis": [
+      0.8,
+      0.9,
+      0.95,
+      1.0
+    ],
+    "production_cases_per_family": 50,
+    "rental_caps": [
+      6,
+      8,
+      10
+    ],
+    "unique_grid_arms": 48
+  },
+  "status": "complete",
+  "validation": {
+    "original": {
+      "baseline_numeric_match": true,
+      "case_count": 50,
+      "case_status_completed": 50,
+      "checkpoint_sha256": [
+        "3322a61994fb3654d67f4b1d6cf2d0f7cacbb3668d06a417e192ee363c174993"
+      ],
+      "cohort_status_completed": 50,
+      "comparisons_sha256": "9d729d9803f9988c7c2574bf1b4e46a23a3fb1a0e84f23184ca688ec1ac0ee48",
+      "controls": 2,
+      "design": "dose",
+      "failed_gates": [],
+      "grid_count": 48,
+      "grid_matches_approved": true,
+      "population_audit": [
+        [
+          null,
+          null,
+          null,
+          null
+        ]
+      ],
+      "population_sources": [
+        "stationary"
+      ],
+      "prices": [
+        [
+          0.7026083285154774
+        ]
+      ],
+      "primary_graph_cases_17": 50,
+      "source_manifest": [
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/working_contract.json"
+      ],
+      "source_root": [
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2"
+      ],
+      "status": "complete",
+      "summary_sha256": "2d6ed1dc986a04198c819e4d4594a3d868c9b725925ec5df3871f14403c88806",
+      "unique_grid_arms": 48
+    },
+    "refit_new_income": {
+      "baseline_numeric_match": true,
+      "case_count": 50,
+      "case_status_completed": 50,
+      "checkpoint_sha256": [
+        "b3491eedcee6250cf94833067646d3e6463496cbf5a64bdcabe7b13bc7e89eb2"
+      ],
+      "cohort_status_completed": 50,
+      "comparisons_sha256": "230bb0307dc1d1a54d49af6af45bc6adea0da903f4058543591a3cb8b47aee1a",
+      "controls": 2,
+      "design": "dose",
+      "failed_gates": [],
+      "grid_count": 48,
+      "grid_matches_approved": true,
+      "population_audit": [
+        [
+          7.272090560285096e-16,
+          3.0099644005948624e-16,
+          10,
+          2.220446049250313e-16
+        ]
+      ],
+      "population_sources": [
+        "saved_evaluation"
+      ],
+      "prices": [
+        [
+          0.5469369720186884
+        ]
+      ],
+      "primary_graph_cases_17": 50,
+      "source_manifest": [
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/working_contract.json"
+      ],
+      "source_root": [
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2"
+      ],
+      "status": "complete",
+      "summary_sha256": "a22c7cc58d0a937afa7414e2a90577d3fe86b922ddc601a6c71abb141008c37b",
+      "unique_grid_arms": 48
+    },
+    "refit_smoke": {
+      "case_count": 3,
+      "cases_completed": 3,
+      "comparisons_sha256": "2f271f9a7982fd108cb3dd8940317c45777a4ca564b2b5cad5025bd5120113a9",
+      "failed_gates": [],
+      "grid_count": 1,
+      "primary_graph_cases_17": 3,
+      "status": "complete",
+      "summary_sha256": "71ea386bff8a8464d7a1553360363828be45df7424c3867d2eff84383b27a70d"
+    },
+    "stationary_new_income": {
+      "baseline_numeric_match": true,
+      "case_count": 50,
+      "case_status_completed": 50,
+      "checkpoint_sha256": [
+        "79f9dd5e56351bb6ced3a2b31d10657b1bfa8acd59c1c68436bfb671c99bb675"
+      ],
+      "cohort_status_completed": 50,
+      "comparisons_sha256": "fcf496a1ec13a26fc068af3f4ae144cfc5aa40db3889e34c3fa76a621fde26d3",
+      "controls": 2,
+      "design": "dose",
+      "failed_gates": [],
+      "grid_count": 48,
+      "grid_matches_approved": true,
+      "population_audit": [
+        [
+          3.5100904979533746e-15,
+          1.62824089953466e-15,
+          17,
+          0.0
+        ]
+      ],
+      "population_sources": [
+        "saved_evaluation"
+      ],
+      "prices": [
+        [
+          0.6780300336814044
+        ]
+      ],
+      "primary_graph_cases_17": 50,
+      "source_manifest": [
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/working_contract.json"
+      ],
+      "source_root": [
+        "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2"
+      ],
+      "status": "complete",
+      "summary_sha256": "d0f8f90cd7fd3a595c6c79d27778771558d116743fddb5e41adda35cce513600",
+      "unique_grid_arms": 48
+    }
+  },
+  "within_family_contract_fixed_fields": [
+    "checkpoint_sha256",
+    "source_manifest",
+    "source_root",
+    "price",
+    "initial_population_shape",
+    "candidate_fingerprint",
+    "population_source",
+    "raw_vs_evaluation_l1",
+    "raw_vs_evaluation_linf",
+    "raw_vs_evaluation_changed_count",
+    "raw_vs_evaluation_total_gap"
+  ]
+}
