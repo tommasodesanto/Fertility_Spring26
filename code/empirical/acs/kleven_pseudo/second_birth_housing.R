@@ -85,10 +85,11 @@ second_birth_housing_support <- function(prepared, outcomes=c("rooms9","bedrooms
 }
 
 .sb2_event_support <- function(d, y, expected_times = c(-2L, -1L, 0L, 1L, 2L, 3L)) {
-  ok <- is.finite(as.numeric(d[[y]])) & is.finite(d$weight) & d$weight > 0
-  out <- d[, .(n_rows = .N, n_observed = sum(ok), weighted_rows = sum(weight[ok]),
-              weight_ess = if (sum(ok)) sum(weight[ok])^2 / sum(weight[ok]^2) else NA_real_,
-              source_household_clusters = data.table::uniqueN(source_household_cluster[ok])),
+  d <- data.table::copy(d)
+  d[, .sb2_observed := is.finite(as.numeric(get(y))) & is.finite(weight) & weight > 0]
+  out <- d[, .(n_rows = .N, n_observed = sum(.sb2_observed), weighted_rows = sum(weight[.sb2_observed]),
+              weight_ess = if (sum(.sb2_observed)) sum(weight[.sb2_observed])^2 / sum(weight[.sb2_observed]^2) else NA_real_,
+              source_household_clusters = data.table::uniqueN(source_household_cluster[.sb2_observed])),
           by = event_time]
   out <- merge(data.table::data.table(event_time = expected_times), out, by = "event_time", all.x = TRUE, sort = TRUE)
   out[is.na(n_rows), `:=`(n_rows = 0L, n_observed = 0L, weighted_rows = 0, source_household_clusters = 0L)]

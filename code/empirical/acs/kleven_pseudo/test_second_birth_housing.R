@@ -22,6 +22,12 @@ fit_panel <- rbindlist(lapply(seq_along(fit_times), function(i) { t <- fit_times
   person_key = paste0("f", i), YEAR = 2010L, SAMPLE = 1L, SERIAL = i,
   AGE_norm = 30, STATEFIP = 31L, event_time = t, weight = 1, rooms9 = t + 3,
   pseudo_role = "post", source_household_cluster = paste0("f", i)) }))
+support_probe <- copy(fit_panel[event_time != 2L | person_key != "f9"])
+support_probe[person_key == "f12", rooms9 := NA_real_]
+probe <- .sb2_event_support(support_probe, "rooms9", expected)
+expect(all(probe$n_observed <= probe$n_rows), "event support observed count exceeds row count")
+expect(all(is.finite(probe[n_observed > 0, weight_ess])), "event support ESS is not finite")
+expect(all(probe$source_household_clusters <= probe$n_observed), "event support cluster count exceeds observed count")
 fit <- fit_second_birth_housing(list(panel=fit_panel),outcomes="rooms9")
 expect("rooms9" %in% names(fit$fits),"pooled fit missing")
 expect(abs(fit$contrasts$rooms9$estimate - 4) < 1e-8,"known +3 minus -1 contrast failed")
