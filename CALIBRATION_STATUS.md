@@ -1,5 +1,20 @@
 # Calibration Status
 
+**September 19, 2026 — bounded income pilots completed:** stationary pilot
+Torch job **18040896** completed in 8m28s and full-cohort pilot job
+**18041070** completed in 2m16s, both exit 0. The stationary pilot has six
+GE solves and 17 diagnostic plots; its loss is **651.9418197098323** versus
+the retained **179.2984242480252** under the identical objective, with
+\(\psi=0.2429719621740803\) delivering stationary normalization 2.1000283897.
+The cohort exercise is a different fixed-preference exercise: explicit birth
+flows fall from 1.87241076 to 1.66643427, first-birth probability from
+0.82046004 to 0.76890885, and mean grid first-birth age rises 24.095 to
+25.702; mortgage effects are small and total births remain separate from
+first births. These are pilot diagnostics, not adoption or a completed-
+fertility claim. See the [pilot tables and source pins](output/model/native_financing_diagnostic_20260919/README.md).
+Bounded refit preparation may proceed; no full recalibration job has been
+launched or assigned an ID.
+
 **September 19, 2026 — native financing diagnostic completed:** Torch job
 **18034069** (`native_finance`) completed in 3m24s with exit 0. Both baseline
 controls reproduced saved policies, current mass, and births at

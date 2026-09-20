@@ -43,6 +43,71 @@ and [complete parameter table](../paper_baseline_sep14/replay_20260917/native_ou
 The earnings variant and recalibration/GE closure remain outstanding; no
 automatic launch follows.
 
+## Income pilot receipts
+
+Stationary job **18040896** completed in 8m28s with exit 0; cohort job
+**18041070** completed in 2m16s with exit 0. The stationary pilot held all nine structural parameters fixed and solved
+the new earnings equilibrium with normalized
+\(\psi=0.2429719621740803\), yielding 2.1000283897. Its six GE solves and 17
+plots passed. The objective is **651.9418197098323**, versus retained
+**179.2984242480252** under the identical objective. The cohort exercise is a
+different fixed-preference exercise: explicit birth flows are
+**1.87241076 → 1.66643427**, first-birth probability **0.82046004 →
+0.76890885**, and mean grid first-birth age **24.095 → 25.702**. Mortgage
+effects are small; total births and first births are reported separately.
+Do not read cohort birth flows as completed fertility or call them TFR.
+
+The stationary target-fit table below reports all 13 rows, including the
+unweighted normalization row. Displayed numbers are rounded; the linked CSVs
+retain full precision. `—` denotes a null weight or loss contribution.
+
+| Moment | Target | Model | Gap | Weight | Loss |
+|---|---:|---:|---:|---:|---:|
+| Initial model completed fertility | 2.1 | 2.10003 | 2.83897e-05 | — | — |
+| Childless women, ages 40–44 | 0.198279 | 0.233382 | 0.0351036 | 35532.3 | 43.7851 |
+| Exactly one child among mothers, ages 40–44 | 0.213655 | 0.198902 | -0.0147534 | 26952.8 | 5.86666 |
+| Period mean first-birth age | 25.9763 | 27.4911 | 1.51479 | 139.828 | 320.847 |
+| First births at age 30+ | 0.249278 | 0.307885 | 0.0586071 | 13866.1 | 47.6271 |
+| Wealth / annual gross labor earnings | 6.14586 | 6.69313 | 0.547266 | 7.5951 | 2.27473 |
+| Annual bequests / aggregate wealth | 0.0088 | 0.00700983 | -0.00179017 | 5.16529e+06 | 16.5533 |
+| Old wealth/income p90 / median, ages 76–84 | 3.51594 | 4.55287 | 1.03693 | 10.6164 | 11.415 |
+| Mean occupied rooms, capped at 9 | 5.5611 | 6.17848 | 0.61738 | 128.021 | 48.7962 |
+| Ownership, heads 30–55 | 0.648334 | 0.490673 | -0.157661 | 2339.36 | 58.1499 |
+| First-birth room response, −1 to +3 | 0.720246 | 1.29942 | 0.579172 | 137.565 | 46.145 |
+| Rooms: 3+ versus 1–2 resident children (model dependent proxy) | 0.347067 | 0.350358 | 0.00329151 | 280.528 | 0.00303925 |
+| Recent-parent ownership gap | 0.162896 | 0.119701 | -0.0431943 | 27055.8 | 50.4793 |
+
+The full 17-parameter diagnostic table reports estimate, bound, near-bound
+flag, and status. Beta is **0.99** at the active restricted upper bound;
+the raw generic table's upper bound is **0.9995** and should not be confused
+with the active pilot bound.
+
+| Parameter | Estimate | Active bounds | Near active bound | Status |
+|---|---:|---:|:---:|---|
+| beta_annual | 0.99 | 0.94–0.99 | True | Retained value; fixed in this pilot |
+| kappa_fert | 0.337734 | 0.02–50.0 | True | Retained value; fixed in this pilot |
+| kappa_fert_continuation | 0.397856 | 0.02–50.0 | True | Retained value; fixed in this pilot |
+| chi | 1.04965 | 0.1–5.0 | False | Retained value; fixed in this pilot |
+| H0 | 8.1121 | 0.2–80.0 | False | Retained value; fixed in this pilot |
+| theta0 | 0.081051 | 0.0–8.0 | False | Retained value; fixed in this pilot |
+| theta1 | 0.0852036 | 0.02–16.0 | True | Retained value; fixed in this pilot |
+| first_birth_fixed_cost | 0.265765 | 0.0–8.0 | False | Retained value; fixed in this pilot |
+| h_P | 2.3 | 0.1–2.3 | True | Retained value; fixed in this pilot |
+| hbar_child_rooms | 0 | fixed | False | zero restriction |
+| psi_child | 0.242972 | normalized | False | normalized to 2.1 |
+| payroll_tax | 0.179 | fixed | False | externally fixed |
+| pension_period | 2.04636 | derived | False | budget derived |
+| housing_supply_elasticity | 0.63 | fixed | False | externally fixed |
+| tenure_choice_kappa | 0.005 | fixed | False | externally fixed |
+| alpha_cons | 0.733 | fixed | False | externally fixed |
+| sigma | 2 | fixed | False | externally fixed |
+
+Source pins: [target-fit CSV](income_stationary_18040896/target_fit_comparison.csv),
+[parameter CSV](income_stationary_18040896/parameters_comparison.csv),
+[stationary receipt](income_stationary_18040896/collection_receipt.json), and
+[cohort receipt](income_cohort_18041070/job_receipt.json). Bounded refit
+preparation is in progress elsewhere; no full recalibration has been launched.
+
 ## Rental-access interaction and earnings candidate
 
 Grouped native job **18037585** completed in 28 seconds and rental-access job
