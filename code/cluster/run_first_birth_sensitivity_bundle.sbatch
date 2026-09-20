@@ -30,6 +30,9 @@ test -s "${ROOT}/output/kleven_acs_pilot/source_audit_extract27_20260919/ne_extr
 test -s "${ROOT}/overnight_ne_benchmark/ne_acs.RData"
 test -s "${CODE}/run_first_birth_short_window.R"
 test -s "${CODE}/run_second_birth_transformed_support.R"
+test -s "${CODE}/estimate_first_birth_housing.R"
+test -s "${CODE}/build_second_birth_proxy.R"
+test -s "${CODE}/second_birth_matching.R"
 cd "${CODE}"
 
 set +e

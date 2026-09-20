@@ -108,6 +108,28 @@ short_window_prepare <- function(d, states, genders,
 
 fixture <- function() {
   stopifnot(identical(SOURCE_YEARS, 2005:2019), identical(FIXED_COHORTS, 2007:2016))
+  # Exercise the same nested base-driver/source(local=TRUE) interface used by
+  # allocation mode, with a tiny estimator fixture rather than the full panel.
+  estimator_file <- tempfile(fileext = ".R")
+  writeLines(c(
+    "join_first_birth_housing <- function(...) invisible(NULL)",
+    "code_first_birth_housing <- function(...) invisible(NULL)",
+    "estimate_first_birth_housing <- function(...) invisible(NULL)"
+  ), estimator_file)
+  base_file <- tempfile(fileext = ".R")
+  writeLines(c(
+    "script_env <- environment()",
+    "source(Sys.getenv('ESTIMATOR_FILE'), local=TRUE)",
+    "if (!all(vapply(c('join_first_birth_housing','code_first_birth_housing','estimate_first_birth_housing'), exists, logical(1), envir=script_env, inherits=FALSE))) stop('tiny base interface failed')"
+  ), base_file)
+  old_estimator <- Sys.getenv("ESTIMATOR_FILE", unset = NA_character_)
+  Sys.setenv(ESTIMATOR_FILE = estimator_file)
+  ctx <- new.env(parent = globalenv())
+  sys.source(base_file, envir = ctx)
+  stopifnot(all(vapply(c("join_first_birth_housing", "code_first_birth_housing",
+                         "estimate_first_birth_housing"), exists, logical(1),
+                 envir = ctx, inherits = FALSE)))
+  if (is.na(old_estimator)) Sys.unsetenv("ESTIMATOR_FILE") else Sys.setenv(ESTIMATOR_FILE = old_estimator)
   d <- CJ(statename = c("A", "B"), gender = "Men", cohort = 2007:2008,
           event_time = SHORT_EVENTS, unique = TRUE)
   d[, `:=`(housing_join_status = "acs_source_matched", wgt = 1: .N,
@@ -127,7 +149,7 @@ fixture <- function() {
   dd <- d[statename == "A" & cohort == 2007 & event_time == -2]
   expected <- sum(dd$wgt)^2 / sum(dd$wgt^2)
   stopifnot(abs(b[outcome == "rooms9" & statename == "A" & cohort == 2007, kish_ess] - expected) < 1e-12)
-  cat("short-window fixture PASS: six-cell gate and Kish ESS\n")
+  cat("short-window end-to-end fixture PASS: base context, six-cell gate, and Kish ESS\n")
 }
 
 if (identical(Sys.getenv("SHORT_WINDOW_TEST", "0"), "1")) {
