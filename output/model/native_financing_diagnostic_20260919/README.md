@@ -4,6 +4,68 @@ This is a full-lifecycle partial-equilibrium diagnostic from the frozen Septembe
 
 Run two independent `baseline` cases first. Both require all saved policy arrays to reproduce at `atol=1e-10, rtol=0`; only then run `mortgage_only`, `unsecured_only`, and `both` as independently timed processes.
 
+## Overnight experiments — September 19
+
+The author requested more useful experiments overnight. The following jobs
+are submitted; successful smoke tests are required before production starts.
+The cluster owns all dependencies, so the laptop can be closed.
+
+| Job | Purpose | Dependency | Limit |
+|---|---|---|---|
+| 18049120 | Two joint proposals and two selected-point repetitions | Existing coordinate poll 18047156 succeeds | 1 hour, 2 CPUs |
+| 18049121 | Up to 96 joint parameter proposals and two selected-point repetitions | 18049120 succeeds | 6 hours, 8 CPUs |
+| 18049130 | Exact-loop financing smoke: two controls and combined treatment in each of two families | None | 3 hours, 1 CPU |
+| 18049131 | Eight financing/rental arms plus two controls in original and stationary-income families | 18049130 succeeds | 3 hours, 1 CPU |
+| 18049132 | Same eight arms plus two controls at the verified overnight refit | 18049130 and 18049121 succeed | 3 hours, 1 CPU |
+
+Search design: original structural point plus the four best distinct valid
+coordinate points are five centers. Seed 20260919 produces antithetic joint
+uniform directions, interleaving centers and two local scales (0.4 and 1).
+Positive-coordinate log widths are 0.55 for each fertility curvature and the
+bequest shift, 0.20 for housing preference, 0.35 for housing supply scale,
+and 0.30 for the first-child housing requirement. Additive widths are 0.012
+for annual discounting and 0.20 for the bequest level and first-birth cost.
+These are search-design choices, not priors. All nine authoritative bounds
+are enforced; annual discounting remains at most 0.99. The 12 scored targets,
+weights, source snapshot, and separate fertility normalization remain pinned.
+Known points are excluded. Search dispatch stops after 4.5 hours or 96 proposals,
+or six wholly failed batches; each point has a 900-second limit, and two
+repetitions reserve 30 minutes. The smoke requires a successful new proposal
+and exact selected-point verification. At roughly 400 seconds per point,
+96 points on eight workers plus verification is about 110 minutes. There are
+at most 784 native normalization solves for production (98 evaluations times
+eight); smoke adds at most 32. No optimum or adoption claim follows.
+
+The mechanism matrix varies the financed mortgage share between 0.8 and 1,
+unsecured credit between zero and five times **four-year** after-tax earnings
+(zero after retirement), and the rental room cap between 6 and 10. Mortgage
+access changes deposit and collateral limits jointly. Within each family,
+prices, preferences and initial stationary population are fixed. The three
+families are the retained paper checkpoint, the new-income stationary pilot,
+and the verified refit. The middle family retains the nine original structural
+parameters but has its own normalized child-preference level. Across-family
+comparisons therefore need not hold preferences, prices or entry wealth fixed.
+Each arm reports stationary-population birth flows, housing and tenure, and a
+full native lifetime cohort. Explicit cohort births are distinct from the 2.1
+normalization target. These are partial-equilibrium diagnostics, not a literal
+frictionless economy, identified mediation, or GE counterfactuals.
+
+Per-arm limit is 600 seconds, with 30-second heartbeats. Budget, mass,
+probability, occupied-value, saved-population and exact baseline-control gates
+remain active; all solved arms require 17 standard diagnostic plots. The matrix
+has 36 solves including both baseline-family smoke loops and repeated controls;
+at roughly 60–90 seconds including cohort/graphs, expect roughly 35–55 minutes
+across its stages, subject to measured smoke times. Failed dependencies block
+later jobs rather than triggering retries. Local verification: 17 focused tests
+and both shell syntax checks passed; live numerical smoke outcomes are pending.
+
+[Submission receipt](overnight/submission.json) and [complete staged plan](overnight/plan.remote.json)
+pin job IDs, source hashes, budgets and target/parameter bounds. Raw scored
+parameter tables retain the generic 0.9995 discount upper bound; readouts must
+annotate the active 0.99 search restriction from the plan. No production result
+has been reported yet. The existing app follow-up checks every 15 minutes and
+reports meaningful completion, failure, or required action.
+
 ## Bounded earnings refit — job 18047156
 
 Submitted and running on Torch, with exact saved-checkpoint income-payload and

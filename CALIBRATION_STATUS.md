@@ -1,5 +1,19 @@
 # Calibration Status
 
+**September 19, 2026 — overnight expansion authorized and submitted:**
+Joint-search smoke **18049120** depends on the verified coordinate poll
+**18047156**; search **18049121** depends on that smoke, with up to 96 joint
+proposals, all nine parameters, unchanged targets/weights, eight single-threaded
+workers and a six-hour allocation. Financing-matrix smoke **18049130** precedes
+original/pilot matrices **18049131**; refit matrix **18049132** waits for both
+the matrix smoke and the verified overnight selection. Each matrix crosses
+mortgage access, unsecured credit and rental-space access at fixed within-family
+prices/preferences. These are diagnostic runs; no adoption, convergence, GE or
+literal frictionless claim is implied. The full design, budgets, source pins,
+control and stopping rules are in the [experiment README](output/model/native_financing_diagnostic_20260919/README.md)
+and [job receipt](output/model/native_financing_diagnostic_20260919/overnight/submission.json).
+Live smoke outcomes and overnight results are outstanding.
+
 **September 19, 2026 — bounded income pilots completed:** stationary pilot
 Torch job **18040896** completed in 8m28s and full-cohort pilot job
 **18041070** completed in 2m16s, both exit 0. The stationary pilot has six

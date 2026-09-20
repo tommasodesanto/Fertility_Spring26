@@ -1,0 +1,58 @@
+{
+  "status": "submitted; production gated on successful smoke/dependency",
+  "jobs": {
+    "search_smoke": "18049120",
+    "search_production": "18049121",
+    "factorial_smoke": "18049130",
+    "factorial_baselines": "18049131",
+    "factorial_refit": "18049132"
+  },
+  "prior_coordinate_job": "18047156",
+  "remote_root": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1",
+  "verification": "17 targeted tests passed; two launchers pass bash -n; no laptop model solves",
+  "search": {
+    "max_new_proposals": 96,
+    "smoke_new_proposals": 2,
+    "parameters": 9,
+    "scored_moments": 12,
+    "separate_fertility_normalization": 2.1,
+    "workers": 8,
+    "threads_each": 1,
+    "walltime_hours": 6,
+    "search_seconds": 16200,
+    "case_seconds": 900,
+    "verification_seconds": 1800,
+    "estimated_native_solve_max": 784,
+    "estimated_wall_minutes": 110,
+    "proposal_seed": 20260919,
+    "repeat_selected": 2,
+    "interpretation": "finite joint local search, not convergence or adoption"
+  },
+  "matrix": {
+    "families": [
+      "original",
+      "stationary_new_income",
+      "refit_new_income"
+    ],
+    "phi": [
+      0.8,
+      1.0
+    ],
+    "lambda_four_year_income": [
+      0.0,
+      5.0
+    ],
+    "rental_cap": [
+      6.0,
+      10.0
+    ],
+    "distinct_arms_each": 8,
+    "extra_controls_each": 2,
+    "smoke_arms_each_baseline_family": 3,
+    "case_limit_seconds": 600,
+    "job_limit_hours": 3,
+    "normalization": "preferences and prices fixed within family; no new equilibrium",
+    "output": "stationary-population flows and native lifetime cohort; 17 standard plots per arm"
+  },
+  "automation_id": "earnings-refit-follow-up"
+}
