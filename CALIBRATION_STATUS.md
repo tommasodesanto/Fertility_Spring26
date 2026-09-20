@@ -1,5 +1,18 @@
 # Calibration Status
 
+**September 20, 13:47 EDT — empirical rental-size support verified; compatible solver in review:**
+The matched 2005–06/42-metro housing stream reproduces all four active targets
+exactly. Above-six-room homes account for **6.02% of renters**, rising to
+**9.58% among renters with resident children**. The renter share among all
+above-six-room homes is 6.94%; these are different denominators. This shows
+positive support beyond a literal cap, without identifying a rental premium.
+[Definitions, counts and reproduction](output/model/native_financing_diagnostic_20260919/specification_followup/housing_profiles_v1/rental_size_support/README.md).
+A compatible exhaustive rental-cost solver and a predeclared matched financing
+arm are undergoing final numerical review. No new jobs have been submitted;
+eight household evaluations and zero stationary evaluations have been used.
+The [working decision packet](output/model/native_financing_diagnostic_20260919/specification_followup/decision_packet.md)
+separates evidence, provisional recommendations and unresolved choices.
+
 **September 20, 13:18 EDT — rental control passed; positive-wedge experiment stopped:**
 Smoke **18080236** reproduced all original-control policy arrays exactly and
 passed budget, value, independent saving, source, cohort and17-plot checks.

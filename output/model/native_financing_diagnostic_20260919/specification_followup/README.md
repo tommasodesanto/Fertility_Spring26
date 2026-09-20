@@ -80,6 +80,11 @@ or entrant wealth fixed unless explicitly verified.
 
 ## Working interpretation for the author discussion
 
+The [working decision packet](decision_packet.md) combines the reviewed evidence,
+primary-literature checks, provisional specification choices and the subsequent
+calibration sequence. It remains a draft until the rental experiment and final
+review are resolved.
+
 These are provisional judgments from the reviewed evidence, not adoption decisions.
 
 1. **Set the earnings measurement contract before refitting preferences.**
@@ -516,3 +521,20 @@ submission. Proposed caps: credit smoke 10 minutes/production 20 minutes;
 income smoke 15 minutes/production 60 minutes. Their combined proposed six
 household solves leave ten of the initial sixteen available. The rental wedge
 port is still under development and no wedge solve is yet counted/submitted.
+
+## Rental size support and revised solver review — September 20, 13:47 EDT
+
+[Empirical support](housing_profiles_v1/rental_size_support/README.md) reproduces
+all four housing targets exactly. In the matched sample, 6.02% of renters occupy
+more than six rooms (9.58% among renters with current children). The 6.94% renter
+share among large homes has a different denominator. These diagnostic shares
+do not identify the rental wedge.
+
+The next proposed batch adds exhaustive saving support for the existing rental
+cost equation, preserving the original zero-wedge solver byte for byte. It has
+six cases: cap-six zero, cap-ten zero, slopes 0.05/0.2/1 at cap ten, and a matched
+slope-0.2 financed-share-one arm. The other five have financed share 0.8. Debt-cap
+derived fields, prices, preferences, entry and pre-choice population must stay
+unchanged. With eight solves already used, the complete batch would bring the
+total to fourteen of sixteen. No stationary solves are planned. Final numerical
+review and a fresh smoke gate are required before submission.

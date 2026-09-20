@@ -1,0 +1,98 @@
+{
+  "status": "full_pass",
+  "smoke": false,
+  "years": [
+    2005,
+    2006
+  ],
+  "active_metros": [
+    12060,
+    12420,
+    12580,
+    14460,
+    15380,
+    16740,
+    16980,
+    17140,
+    18140,
+    19100,
+    19740,
+    19820,
+    26420,
+    26900,
+    27260,
+    28140,
+    29820,
+    31080,
+    33100,
+    33340,
+    33460,
+    34980,
+    35380,
+    35620,
+    36420,
+    36740,
+    37980,
+    38060,
+    38300,
+    38900,
+    39300,
+    39580,
+    40900,
+    41180,
+    41620,
+    41700,
+    41740,
+    41860,
+    42660,
+    45300,
+    47260,
+    47900
+  ],
+  "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/Spatial_aggregate_withmicrodata/raw_data/extract27.dta",
+  "source_size": 9919999546,
+  "source_mtime_ns": 1751924817336253881,
+  "source_sha256_from_existing_canonical_receipt": "edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324e",
+  "source_hash_reuse_size_mtime_match": true,
+  "source_rehashed_this_pass": false,
+  "reused_reader": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/housing/inspect_early_housing.py",
+  "reader_sha256": "4dd1647e96b72c313801989fdd823303bd2dd8b144c568c0076b735402f3f84f",
+  "metro_file_sha256": "6b5bf84036a88562199482d427e8af12e9c6931ba5b6a39f48ceab4122f52e63",
+  "target_file_sha256": "6289f69e512fff09fef0df358e2231050b978aa3e9fe1a9808bb96dd8c733c5a",
+  "target_gate": {
+    "mean_rooms": {
+      "target": 5.561097376118652,
+      "recomputed": 5.561097376118652,
+      "pass": true
+    },
+    "ownership_30_55": {
+      "target": 0.6483340343191493,
+      "recomputed": 0.6483340343191493,
+      "pass": true
+    },
+    "family_rooms": {
+      "target": 0.3470669317962507,
+      "recomputed": 0.3470669317962507,
+      "pass": true
+    },
+    "recent_parent_ownership": {
+      "target": 0.16289550916123285,
+      "recomputed": 0.16289550916123285,
+      "pass": true
+    }
+  },
+  "chunk_size": 250000,
+  "time_limit_seconds": 300.0,
+  "progress_file": "/tmp/rental_support_full.ezum1s/base/progress.json",
+  "elapsed_seconds": 48.64030708300015,
+  "definitions": {
+    "rooms": "positive literal ROOMS; capped at 9 before aggregation",
+    "current_children": "NCHILD bins 0, 1, 2, 3+, unknown preserved",
+    "young_child": "NCHILD>0 and YNGCH<18, with YNGCH=99 in without-young-child denominator",
+    "recent_parent": "NCHILD>0 and ELDCH<4, ELDCH=99 excluded",
+    "DUE": "UNITSSTR in 3:10 for ownership/recent-parent only",
+    "family_rooms": "age 30-55, YNGCH<18, NCHILD>=3 versus NCHILD 1-2, no DUE restriction",
+    "weights": "HHWT",
+    "model_comparison": "empirical current children, not model CEB"
+  }
+}
