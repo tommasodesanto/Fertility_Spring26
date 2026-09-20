@@ -1,0 +1,685 @@
+{
+  "baseline_5x3_reproduction": {
+    "exact_reproduction": true,
+    "mc_reference_payload_fingerprint": "72128cbbd5787622f69fe8fb4c8532623993f46d0c046bce24a74c371adb2199",
+    "production_payload_fingerprint": "72128cbbd5787622f69fe8fb4c8532623993f46d0c046bce24a74c371adb2199",
+    "stationary_and_log_moment_gates": {
+      "log_moment_max_gap": 4.440892098500626e-16,
+      "mean_max_gap": 2.220446049250313e-16,
+      "passed": true,
+      "row_sum_max_gap": 2.220446049250313e-16,
+      "stationary_weight_max_gap": 5.551115123125783e-17
+    }
+  },
+  "continuous_endpoint_reference": {
+    "moments": {
+      "0": {
+        "level_covariance": 1.204894804838208,
+        "log_covariance": 0.7906798002043994
+      },
+      "1": {
+        "level_covariance": 0.8480336490469853,
+        "log_covariance": 0.6141221814124805
+      },
+      "2": {
+        "level_covariance": 0.7235021047707455,
+        "log_covariance": 0.5443583281929207
+      },
+      "4": {
+        "level_covariance": 0.5337346499729398,
+        "log_covariance": 0.4277057088252997
+      }
+    },
+    "quantiles": {
+      "0.01": 0.08509963235208673,
+      "0.05": 0.15599260634534223,
+      "0.5": 0.6734510942460962,
+      "0.95": 2.9074222616500696,
+      "0.99": 5.32947515524893
+    }
+  },
+  "diagnostic": "deterministic_income_grid_resolution",
+  "input_contract": {
+    "annual_parameters": {
+      "persistent_log_variance": 0.692826827789733,
+      "rho_annual": 0.9703033301891563,
+      "transitory_log_variance": 0.3444421950282869
+    },
+    "no_household_solves": true,
+    "no_new_monte_carlo": true,
+    "period_years": 4,
+    "persistent_nodes": [
+      5,
+      7,
+      9,
+      15,
+      25
+    ],
+    "rho_period": 0.8864006946319656,
+    "transitory_log_variance_period": 0.09785297241466638,
+    "transitory_nodes": [
+      3,
+      5
+    ]
+  },
+  "mc_block_average_reference": {
+    "exact_block_average_level_covariances": {
+      "0": 1.1552361179785384,
+      "1": 0.8501191392434537,
+      "2": 0.7251512708803833,
+      "4": 0.5348002896764752
+    },
+    "monte_carlo_quantiles": {
+      "0.01": {
+        "batches": 20,
+        "estimate": 0.08935809983908596,
+        "mc_se": 0.00015253275081391818
+      },
+      "0.05": {
+        "batches": 20,
+        "estimate": 0.16190057044551703,
+        "mc_se": 0.00021572187850398895
+      },
+      "0.25": {
+        "batches": 20,
+        "estimate": 0.3778248893932225,
+        "mc_se": 0.0003666433334906299
+      },
+      "0.5": {
+        "batches": 20,
+        "estimate": 0.682250512956811,
+        "mc_se": 0.000639682259082167
+      },
+      "0.75": {
+        "batches": 20,
+        "estimate": 1.2318547009049405,
+        "mc_se": 0.000931863605292263
+      },
+      "0.95": {
+        "batches": 20,
+        "estimate": 2.8833941883347007,
+        "mc_se": 0.002632591881351969
+      },
+      "0.99": {
+        "batches": 20,
+        "estimate": 5.232827303462372,
+        "mc_se": 0.007140996491552865
+      }
+    }
+  },
+  "plots": {
+    "all_present": true,
+    "files": [
+      "grid_resolution_moments_quantiles.png",
+      "grid_resolution_tail_comparison.png"
+    ]
+  },
+  "rows": [
+    {
+      "gates": {
+        "log_moment_max_gap": 4.440892098500626e-16,
+        "mean_max_gap": 2.220446049250313e-16,
+        "passed": true,
+        "row_sum_max_gap": 2.220446049250313e-16,
+        "stationary_weight_max_gap": 5.551115123125783e-17
+      },
+      "joint_states": 15,
+      "moments": {
+        "mean": 1.0000000000000002,
+        "moments": {
+          "0": {
+            "level_covariance": 0.9617580816488569,
+            "log_covariance": 0.7906798002043995
+          },
+          "1": {
+            "level_covariance": 0.6735909440158142,
+            "log_covariance": 0.6141221814124809
+          },
+          "2": {
+            "level_covariance": 0.5835992768191027,
+            "log_covariance": 0.5443583281929212
+          },
+          "4": {
+            "level_covariance": 0.44129158976490307,
+            "log_covariance": 0.42770570882530023
+          }
+        }
+      },
+      "persistent_states": 5,
+      "quantile_gap_vs_continuous_endpoint": {
+        "0.01": -0.010252402071511235,
+        "0.05": -0.027321461740926534,
+        "0.5": 0.0064751158866155345,
+        "0.95": 0.685455167448104,
+        "0.99": 0.8471014460820259
+      },
+      "quantile_gap_vs_mc_block": {
+        "0.01": -0.01451086955851047,
+        "0.05": -0.033229425841101334,
+        "0.5": -0.0023243028240993446,
+        "0.95": 0.7094832407634728,
+        "0.99": 0.9437492978685835
+      },
+      "quantiles": {
+        "0.01": 0.0748472302805755,
+        "0.05": 0.1286711446044157,
+        "0.5": 0.6799262101327117,
+        "0.95": 3.5928774290981735,
+        "0.99": 6.1765766013309555
+      },
+      "transitory_states": 3
+    },
+    {
+      "gates": {
+        "log_moment_max_gap": 4.440892098500626e-16,
+        "mean_max_gap": 0.0,
+        "passed": true,
+        "row_sum_max_gap": 2.220446049250313e-16,
+        "stationary_weight_max_gap": 5.551115123125783e-17
+      },
+      "joint_states": 25,
+      "moments": {
+        "mean": 1.0,
+        "moments": {
+          "0": {
+            "level_covariance": 0.9626110528602245,
+            "log_covariance": 0.7906798002043991
+          },
+          "1": {
+            "level_covariance": 0.6735909440158141,
+            "log_covariance": 0.6141221814124804
+          },
+          "2": {
+            "level_covariance": 0.5835992768191024,
+            "log_covariance": 0.5443583281929203
+          },
+          "4": {
+            "level_covariance": 0.44129158976490246,
+            "log_covariance": 0.42770570882529935
+          }
+        }
+      },
+      "persistent_states": 5,
+      "quantile_gap_vs_continuous_endpoint": {
+        "0.01": -0.0008998261951068398,
+        "0.05": -0.02732244039486567,
+        "0.5": 0.0064699444671344475,
+        "0.95": 0.6854278405469594,
+        "0.99": 0.16094863531173242
+      },
+      "quantile_gap_vs_mc_block": {
+        "0.01": -0.005158293682106074,
+        "0.05": -0.03323040449504047,
+        "0.5": -0.0023294742435804316,
+        "0.95": 0.7094559138623282,
+        "0.99": 0.2575964870982901
+      },
+      "quantiles": {
+        "0.01": 0.08419980615697989,
+        "0.05": 0.12867016595047656,
+        "0.5": 0.6799210387132306,
+        "0.95": 3.592850102197029,
+        "0.99": 5.490423790560662
+      },
+      "transitory_states": 5
+    },
+    {
+      "gates": {
+        "log_moment_max_gap": 0.0,
+        "mean_max_gap": 4.440892098500626e-16,
+        "passed": true,
+        "row_sum_max_gap": 2.220446049250313e-16,
+        "stationary_weight_max_gap": 5.551115123125783e-17
+      },
+      "joint_states": 21,
+      "moments": {
+        "mean": 1.0000000000000004,
+        "moments": {
+          "0": {
+            "level_covariance": 1.0300245641087213,
+            "log_covariance": 0.7906798002043994
+          },
+          "1": {
+            "level_covariance": 0.7234199125762327,
+            "log_covariance": 0.6141221814124805
+          },
+          "2": {
+            "level_covariance": 0.624022354554934,
+            "log_covariance": 0.5443583281929207
+          },
+          "4": {
+            "level_covariance": 0.46850081557302703,
+            "log_covariance": 0.42770570882529996
+          }
+        }
+      },
+      "persistent_states": 7,
+      "quantile_gap_vs_continuous_endpoint": {
+        "0.01": 0.0031375782351308473,
+        "0.05": 0.0181108416255219,
+        "0.5": 0.00437545476147283,
+        "0.95": -0.2684806674755653,
+        "0.99": -0.12250150454211539
+      },
+      "quantile_gap_vs_mc_block": {
+        "0.01": -0.0011208892518683872,
+        "0.05": 0.0122028775253471,
+        "0.5": -0.004423963949242049,
+        "0.95": -0.2444525941601965,
+        "0.99": -0.025853652755557732
+      },
+      "quantiles": {
+        "0.01": 0.08823721058721758,
+        "0.05": 0.17410344797086413,
+        "0.5": 0.677826549007569,
+        "0.95": 2.6389415941745042,
+        "0.99": 5.206973650706814
+      },
+      "transitory_states": 3
+    },
+    {
+      "gates": {
+        "log_moment_max_gap": 3.3306690738754696e-16,
+        "mean_max_gap": 2.220446049250313e-16,
+        "passed": true,
+        "row_sum_max_gap": 4.440892098500626e-16,
+        "stationary_weight_max_gap": 1.3877787807814457e-17
+      },
+      "joint_states": 35,
+      "moments": {
+        "mean": 1.0000000000000002,
+        "moments": {
+          "0": {
+            "level_covariance": 1.0309072175448162,
+            "log_covariance": 0.7906798002043992
+          },
+          "1": {
+            "level_covariance": 0.7234199125762327,
+            "log_covariance": 0.6141221814124803
+          },
+          "2": {
+            "level_covariance": 0.6240223545549338,
+            "log_covariance": 0.5443583281929204
+          },
+          "4": {
+            "level_covariance": 0.46850081557302675,
+            "log_covariance": 0.42770570882529935
+          }
+        }
+      },
+      "persistent_states": 7,
+      "quantile_gap_vs_continuous_endpoint": {
+        "0.01": 0.0031369071157902606,
+        "0.05": 0.018109517420116766,
+        "0.5": 0.004370299311707737,
+        "0.95": -0.26850073888002957,
+        "0.99": -0.12254110802345419
+      },
+      "quantile_gap_vs_mc_block": {
+        "0.01": -0.001121560371208974,
+        "0.05": 0.012201553319941966,
+        "0.5": -0.004429119399007142,
+        "0.95": -0.24447266556466074,
+        "0.99": -0.025893256236896534
+      },
+      "quantiles": {
+        "0.01": 0.08823653946787699,
+        "0.05": 0.174102123765459,
+        "0.5": 0.6778213935578039,
+        "0.95": 2.63892152277004,
+        "0.99": 5.2069340472254755
+      },
+      "transitory_states": 5
+    },
+    {
+      "gates": {
+        "log_moment_max_gap": 2.220446049250313e-16,
+        "mean_max_gap": 0.0,
+        "passed": true,
+        "row_sum_max_gap": 4.440892098500626e-16,
+        "stationary_weight_max_gap": 2.7755575615628914e-17
+      },
+      "joint_states": 27,
+      "moments": {
+        "mean": 1.0,
+        "moments": {
+          "0": {
+            "level_covariance": 1.0682642885016758,
+            "log_covariance": 0.7906798002043995
+          },
+          "1": {
+            "level_covariance": 0.7511047914906346,
+            "log_covariance": 0.6141221814124808
+          },
+          "2": {
+            "level_covariance": 0.6463212915866657,
+            "log_covariance": 0.5443583281929208
+          },
+          "4": {
+            "level_covariance": 0.483335098767545,
+            "log_covariance": 0.42770570882530007
+          }
+        }
+      },
+      "persistent_states": 9,
+      "quantile_gap_vs_continuous_endpoint": {
+        "0.01": 0.030670162933620654,
+        "0.05": 0.04302921469185861,
+        "0.5": 0.0033047462374704573,
+        "0.95": -0.606174764055269,
+        "0.99": -1.3733615031661235
+      },
+      "quantile_gap_vs_mc_block": {
+        "0.01": 0.02641169544662142,
+        "0.05": 0.03712125059168381,
+        "0.5": -0.005494672473244422,
+        "0.95": -0.5821466907399002,
+        "0.99": -1.2767136513795658
+      },
+      "quantiles": {
+        "0.01": 0.11576979528570738,
+        "0.05": 0.19902182103720084,
+        "0.5": 0.6767558404835666,
+        "0.95": 2.3012474975948005,
+        "0.99": 3.956113652082806
+      },
+      "transitory_states": 3
+    },
+    {
+      "gates": {
+        "log_moment_max_gap": 1.1102230246251565e-16,
+        "mean_max_gap": 0.0,
+        "passed": true,
+        "row_sum_max_gap": 3.3306690738754696e-16,
+        "stationary_weight_max_gap": 5.551115123125783e-17
+      },
+      "joint_states": 45,
+      "moments": {
+        "mean": 1.0,
+        "moments": {
+          "0": {
+            "level_covariance": 1.0691635685464957,
+            "log_covariance": 0.7906798002043993
+          },
+          "1": {
+            "level_covariance": 0.7511047914906345,
+            "log_covariance": 0.6141221814124804
+          },
+          "2": {
+            "level_covariance": 0.6463212915866655,
+            "log_covariance": 0.5443583281929207
+          },
+          "4": {
+            "level_covariance": 0.4833350987675446,
+            "log_covariance": 0.4277057088252997
+          }
+        }
+      },
+      "persistent_states": 9,
+      "quantile_gap_vs_continuous_endpoint": {
+        "0.01": -0.009342209412714783,
+        "0.05": -0.019522527714415844,
+        "0.5": 0.0032995989313581164,
+        "0.95": 0.44856247369085667,
+        "0.99": 0.7160248491888099
+      },
+      "quantile_gap_vs_mc_block": {
+        "0.01": -0.013600676899714018,
+        "0.05": -0.025430491814590644,
+        "0.5": -0.005499819779356763,
+        "0.95": 0.4725905470062255,
+        "0.99": 0.8126727009753676
+      },
+      "quantiles": {
+        "0.01": 0.07575742293937195,
+        "0.05": 0.1364700786309264,
+        "0.5": 0.6767506931774543,
+        "0.95": 3.3559847353409262,
+        "0.99": 6.04550000443774
+      },
+      "transitory_states": 5
+    },
+    {
+      "gates": {
+        "log_moment_max_gap": 3.3306690738754696e-16,
+        "mean_max_gap": 0.0,
+        "passed": true,
+        "row_sum_max_gap": 4.440892098500626e-16,
+        "stationary_weight_max_gap": 5.551115123125783e-17
+      },
+      "joint_states": 45,
+      "moments": {
+        "mean": 1.0,
+        "moments": {
+          "0": {
+            "level_covariance": 1.1221859015546505,
+            "log_covariance": 0.7906798002043991
+          },
+          "1": {
+            "level_covariance": 0.789868892098802,
+            "log_covariance": 0.6141221814124804
+          },
+          "2": {
+            "level_covariance": 0.6773533177101847,
+            "log_covariance": 0.5443583281929208
+          },
+          "4": {
+            "level_covariance": 0.5037741195570176,
+            "log_covariance": 0.4277057088252998
+          }
+        }
+      },
+      "persistent_states": 15,
+      "quantile_gap_vs_continuous_endpoint": {
+        "0.01": 0.018308471163080778,
+        "0.05": 0.005361220969819086,
+        "0.5": 0.001906981973263,
+        "0.95": -0.08066234709391651,
+        "0.99": -0.9187131780909858
+      },
+      "quantile_gap_vs_mc_block": {
+        "0.01": 0.014050003676081543,
+        "0.05": -0.0005467431303557146,
+        "0.5": -0.006892436737451879,
+        "0.95": -0.056634273778547684,
+        "0.99": -0.8220653263044282
+      },
+      "quantiles": {
+        "0.01": 0.10340810351516751,
+        "0.05": 0.16135382731516132,
+        "0.5": 0.6753580762193592,
+        "0.95": 2.826759914556153,
+        "0.99": 4.410761977157944
+      },
+      "transitory_states": 3
+    },
+    {
+      "gates": {
+        "log_moment_max_gap": 3.3306690738754696e-16,
+        "mean_max_gap": 0.0,
+        "passed": true,
+        "row_sum_max_gap": 2.220446049250313e-16,
+        "stationary_weight_max_gap": 5.551115123125783e-17
+      },
+      "joint_states": 75,
+      "moments": {
+        "mean": 1.0,
+        "moments": {
+          "0": {
+            "level_covariance": 1.1231086266837733,
+            "log_covariance": 0.7906798002043993
+          },
+          "1": {
+            "level_covariance": 0.789868892098802,
+            "log_covariance": 0.6141221814124802
+          },
+          "2": {
+            "level_covariance": 0.6773533177101847,
+            "log_covariance": 0.5443583281929204
+          },
+          "4": {
+            "level_covariance": 0.5037741195570175,
+            "log_covariance": 0.4277057088252994
+          }
+        }
+      },
+      "persistent_states": 15,
+      "quantile_gap_vs_continuous_endpoint": {
+        "0.01": -0.010546613642299238,
+        "0.05": 0.021776668349832995,
+        "0.5": 0.0019018452983414758,
+        "0.95": -0.34172808455788184,
+        "0.99": 0.7883400700041117
+      },
+      "quantile_gap_vs_mc_block": {
+        "0.01": -0.014805081129298472,
+        "0.05": 0.015868704249658194,
+        "0.5": -0.006897573412373403,
+        "0.95": -0.317700011242513,
+        "0.99": 0.8849879217906693
+      },
+      "quantiles": {
+        "0.01": 0.07455301870978749,
+        "0.05": 0.17776927469517523,
+        "0.5": 0.6753529395444376,
+        "0.95": 2.5656941770921877,
+        "0.99": 6.117815225253041
+      },
+      "transitory_states": 5
+    },
+    {
+      "gates": {
+        "log_moment_max_gap": 5.551115123125783e-16,
+        "mean_max_gap": 1.1102230246251565e-16,
+        "passed": true,
+        "row_sum_max_gap": 4.440892098500626e-16,
+        "stationary_weight_max_gap": 5.551115123125783e-17
+      },
+      "joint_states": 75,
+      "moments": {
+        "mean": 0.9999999999999999,
+        "moments": {
+          "0": {
+            "level_covariance": 1.1547592687073838,
+            "log_covariance": 0.7906798002043989
+          },
+          "1": {
+            "level_covariance": 0.8131315902783146,
+            "log_covariance": 0.6141221814124803
+          },
+          "2": {
+            "level_covariance": 0.6958696918163298,
+            "log_covariance": 0.5443583281929208
+          },
+          "4": {
+            "level_covariance": 0.5158573098534398,
+            "log_covariance": 0.42770570882529985
+          }
+        }
+      },
+      "persistent_states": 25,
+      "quantile_gap_vs_continuous_endpoint": {
+        "0.01": 0.002713784372480793,
+        "0.05": 0.01727464143032953,
+        "0.5": 0.0011199265155211746,
+        "0.95": -0.2811552210347763,
+        "0.99": -0.1475100407533665
+      },
+      "quantile_gap_vs_mc_block": {
+        "0.01": -0.0015446831145184414,
+        "0.05": 0.011366677330154729,
+        "0.5": -0.0076794921951937045,
+        "0.95": -0.2571271477194075,
+        "0.99": -0.05086218896680883
+      },
+      "quantiles": {
+        "0.01": 0.08781341672456752,
+        "0.05": 0.17326724777567176,
+        "0.5": 0.6745710207616173,
+        "0.95": 2.6262670406152933,
+        "0.99": 5.181965114495563
+      },
+      "transitory_states": 3
+    },
+    {
+      "gates": {
+        "log_moment_max_gap": 5.551115123125783e-16,
+        "mean_max_gap": 0.0,
+        "passed": true,
+        "row_sum_max_gap": 2.220446049250313e-16,
+        "stationary_weight_max_gap": 6.938893903907228e-17
+      },
+      "joint_states": 125,
+      "moments": {
+        "mean": 1.0,
+        "moments": {
+          "0": {
+            "level_covariance": 1.1556961567165775,
+            "log_covariance": 0.7906798002043989
+          },
+          "1": {
+            "level_covariance": 0.8131315902783148,
+            "log_covariance": 0.6141221814124802
+          },
+          "2": {
+            "level_covariance": 0.6958696918163298,
+            "log_covariance": 0.5443583281929206
+          },
+          "4": {
+            "level_covariance": 0.5158573098534397,
+            "log_covariance": 0.42770570882529935
+          }
+        }
+      },
+      "persistent_states": 25,
+      "quantile_gap_vs_continuous_endpoint": {
+        "0.01": 0.0027131164764544607,
+        "0.05": 0.0032738089310027085,
+        "0.5": 0.0011147958268286073,
+        "0.95": -0.05032813254360757,
+        "0.99": -0.14754945402343012
+      },
+      "quantile_gap_vs_mc_block": {
+        "0.01": -0.0015453510105447738,
+        "0.05": -0.002634155169172092,
+        "0.5": -0.007684622883886272,
+        "0.95": -0.026300059228238748,
+        "0.99": -0.050901602236872456
+      },
+      "quantiles": {
+        "0.01": 0.08781274882854119,
+        "0.05": 0.15926641527634494,
+        "0.5": 0.6745658900729248,
+        "0.95": 2.857094129106462,
+        "0.99": 5.1819257012255
+      },
+      "transitory_states": 5
+    }
+  ],
+  "source_files": {
+    "candidate_json": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/earnings_candidate/candidate.json",
+    "constructor": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/build_persistent_transitory_income_candidate.py",
+    "driver": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/diagnose_e5f_income_grid_resolution.py",
+    "local_panel": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/local_panel.py",
+    "mc_reference_receipt": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/income_aggregation_v1/results/full/receipt.json",
+    "source_autocovariance_fit": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/psid_followup_mar2026/output/psid_income_fixed_effect_md_20260727/md_autocovariance_fit.csv"
+  },
+  "source_hashes_after": {
+    "candidate_json": "35fcb1cfc2ae1067def0ec5985e44f0c16df28dedfd47a944444bfcaa4dc0447",
+    "constructor": "7c9571fb38697e9433b32baabbd630656bd935179a4325f7b1e3bbb70e94d087",
+    "driver": "b327098da9e61a48745534ce2330e989cf863523d9545b3e0da3684c9a2768de",
+    "local_panel": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+    "mc_reference_receipt": "7bbfea8811b5fab27d04820fd600337afcdbb59279116b4c8bea68b5779fc666",
+    "source_autocovariance_fit": "96e65681e37b6e1215efde8b786b8c88151186aef1023ca726648e2c9a41c5ab"
+  },
+  "source_hashes_before": {
+    "candidate_json": "35fcb1cfc2ae1067def0ec5985e44f0c16df28dedfd47a944444bfcaa4dc0447",
+    "constructor": "7c9571fb38697e9433b32baabbd630656bd935179a4325f7b1e3bbb70e94d087",
+    "driver": "b327098da9e61a48745534ce2330e989cf863523d9545b3e0da3684c9a2768de",
+    "local_panel": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+    "mc_reference_receipt": "7bbfea8811b5fab27d04820fd600337afcdbb59279116b4c8bea68b5779fc666",
+    "source_autocovariance_fit": "96e65681e37b6e1215efde8b786b8c88151186aef1023ca726648e2c9a41c5ab"
+  },
+  "source_hashes_unchanged": true,
+  "status": "completed"
+}

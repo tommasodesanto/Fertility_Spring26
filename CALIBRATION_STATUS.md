@@ -1,5 +1,50 @@
 # Calibration Status
 
+**September 20, 12:34 EDT — credit replay reproduced; income-grid sensitivity launched:**
+Credit **18078912/18078913** completed all three replays with matching old
+scalars/cohort summaries, all numerical/source gates and 17 plots per case.
+Credit doses 1 and 5 have exactly identical population distributions and births,
+but different policies over the full state space. Support-aware comparison is
+pending; do not call the policies identical or infer a binding constraint yet.
+[Policy comparison](output/model/native_financing_diagnostic_20260919/specification_followup/credit_policy_retention_v2/results/policy_comparison.json).
+Income-grid smoke **18079046** and production **18079047** now test 15, 27 and
+45 states with fixed annual parameters, prices and non-income preferences.
+[Launch receipt](output/model/native_financing_diagnostic_20260919/specification_followup/income_grid_cohort_v2/submission.json).
+Native entry is rebuilt at each grid, so entry wealth can change. These are
+cohort diagnostics, not stationary calibration or adopted specifications.
+
+
+**September 20, 12:30 EDT — replay packaging failure corrected:**
+Credit smoke **18078707** finished one household solve, cohort and 17 plots,
+then failed an import-origin check on Python's `__mp_main__` alias; dependent
+**18078708** was cancelled. A focused correction allows that alias only at the
+exact pinned driver path, retaining every scientific gate. Fresh corrected
+smoke **18078912** and production **18078913** are submitted under
+[credit_policy_retention_v2](output/model/native_financing_diagnostic_20260919/specification_followup/credit_policy_retention_v2/submission.json).
+The failed v1 evidence is preserved. Income-grid cohort staging uses fresh
+`income_grid_cohort_v2`, superseding the unsubmitted v1 draft. No specification
+or target was changed; wedge launch remains conditional on review.
+
+
+**September 20, 12:17 EDT — housing/cohort collections reviewed; policy replay submitted:**
+Housing collection **18078558** and saved-credit smoke/full **18078581/18078582**
+completed with all gates passing. Model housing profiles reproduce the saved
+baseline moments exactly; the empirical cap at nine is applied before weighting.
+[Reproducible age-profile overlay](output/model/native_financing_diagnostic_20260919/specification_followup/housing_profiles_v1/reproducible_overlay_v1/overlay_receipt.md).
+Refit credit doses 1 and 5 have exactly identical saved cohort distributions,
+with no observed mass at the wealth-grid floor. This does not yet identify the
+binding constraint or establish policy identity.
+[Complete saved-cohort diagnosis](output/model/native_financing_diagnostic_20260919/specification_followup/saved_credit_v1/results/comparison.md).
+Three unchanged fixed-price household replays are allocated to policy retention:
+smoke **18078707**, dependent two-case production **18078708**, with immutable
+source/input pins, original numerical and 17-plot gates, 10/20-minute allocation
+limits, and no target/specification adoption.
+[Launch receipt](output/model/native_financing_diagnostic_20260919/specification_followup/credit_policy_retention_v1/submission.json).
+The income-grid moment diagnostic is complete; a separate cohort sensitivity
+and isolated rental wedge remain under review and unsubmitted. See the
+[follow-up plan](output/model/native_financing_diagnostic_20260919/specification_followup/README.md).
+
+
 **September 20, 11:54 EDT — earnings aggregation diagnosis completed:**
 Jobs **18078286/18078287** completed and all validity gates passed. The current
 15-state chain reproduces its intended log moments but understates level

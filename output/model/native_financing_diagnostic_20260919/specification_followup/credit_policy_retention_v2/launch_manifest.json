@@ -1,0 +1,109 @@
+{
+  "checkpoint": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/production/selected_verification/evaluation/raw/repetition_02/initial_state.pkl.gz",
+    "sha256": "b3491eedcee6250cf94833067646d3e6463496cbf5a64bdcabe7b13bc7e89eb2",
+    "verification": "sha256 before every case; never copied"
+  },
+  "core": {
+    "parameters.py": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5",
+    "solver.py": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da"
+  },
+  "created": "2026-09-20T12:24:24-0400",
+  "design": {
+    "case_seconds": 600,
+    "cases": [
+      {
+        "cap": 6.0,
+        "label": "case_0_baseline_lambda0",
+        "lam": 0.0,
+        "phi": 0.8
+      },
+      {
+        "cap": 6.0,
+        "label": "case_1_credit_lambda1",
+        "lam": 1.0,
+        "phi": 0.8
+      },
+      {
+        "cap": 6.0,
+        "label": "case_2_credit_lambda5",
+        "lam": 5.0,
+        "phi": 0.8
+      }
+    ],
+    "household_solves": 3,
+    "no_active_core": true,
+    "numba_disable_jit": 0,
+    "policy_identity_gate": false,
+    "population_source": "saved_evaluation",
+    "production_minutes": 20,
+    "reproduction_tolerance": 1e-10,
+    "scope": "fixed-price partial-equilibrium replay; no new target, parameter, entry, source, population, GE or calibration change",
+    "smoke_minutes": 10,
+    "threads": 1,
+    "total_seconds": 1800
+  },
+  "experiment_root": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/credit_policy_retention_v2",
+  "frozen_copy": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/credit_policy_retention_v2/source",
+  "frozen_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2",
+  "generated_files": {
+    "production.sbatch": "d57727ea664de9c5660d2187ee9b1538b5db12ddb858e203c39a16f81f18a773",
+    "remote_finalize.sh": "64b7b911adb80517c1e2300573e343016bc034d839775baad548ec8ffa84a148",
+    "remote_stage.sh": "70f4df4c8b756c1c78086347eb1ebd55b63115ce58b9d430c8c62faf1922e083",
+    "smoke.sbatch": "564b2174ee5c58e827d6fd5c47130c9f587512d6eddd13ec4abfd0aaac4af905"
+  },
+  "local_commit": "3c1161c745433144fd6e2c4103207183b85f4424",
+  "local_factorial_informational": {
+    "note": "not staged; the runtime copy pinned above is what runs",
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_financing_factorial.py",
+    "sha256": "da5815cd8926208c322e38ec79a4255ddb40441cc4e035280d96229f526a542b"
+  },
+  "plan": {
+    "copy": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/credit_policy_retention_v2/plan.json",
+    "local_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/overnight/finance_dose_refit_v2/plan.remote.json",
+    "remote_path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/plan.json",
+    "sha256": "1e5ed04210b915076a294254c847c0ae2c807000181f596d4f8cc9014917bab1"
+  },
+  "results_root": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/credit_policy_retention_v2/results",
+  "runtime_helpers": {
+    "build_e5f_native_financing_report.py": "beccdda8ac758326c5ff75943831ef402c1e82d1e8a185eebaaac6c079ca65b5",
+    "build_persistent_transitory_income_candidate.py": "7c9571fb38697e9433b32baabbd630656bd935179a4325f7b1e3bbb70e94d087",
+    "run_e5f_financing_factorial.py": "da5815cd8926208c322e38ec79a4255ddb40441cc4e035280d96229f526a542b",
+    "run_e5f_income_candidate_calibration.py": "e688e4fa401097993dcd6cbca1b7fc9afe6911a2086e7bc74925c962bbaf92f2",
+    "run_e5f_income_candidate_search.py": "1286ba54f1d2e5a64798150de3c6786c109d1f28733c0e47a8e769dad339fa18",
+    "run_e5f_income_overnight_search.py": "111776865158779fa9ab9de05308a0b7d3e98adf8b0280cfaf2ed159be58eb48",
+    "run_e5f_native_financing_diagnostic.py": "ff65058d8e796069f82fcaf463256e906a500af876bb91d91c646c200d3582f2",
+    "run_e5f_native_income_cohort_diagnostic.py": "1ca604b4b6e83f5cd43b48163a4889512165caf5a4ffb88f6b8759c60a0e1d50",
+    "run_e5f_native_rental_access_diagnostic.py": "90d48059a3f76668b5e6c4ea0f789de14c2280e21ded7493dc41f67ca367a924"
+  },
+  "runtime_root": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2",
+  "schema": "credit_policy_retention_launch_v1",
+  "source_manifest": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/credit_policy_retention_v2/source_manifest.json",
+    "sha256": "8537f07db13dca570bd8e65e9119834cca0c1257afadd2f6b72af07ce4d8cf0f"
+  },
+  "ssh_host": "torch",
+  "summary": {
+    "local_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/overnight/final_mechanisms/refit_new_income/summary.json",
+    "old_labels": {
+      "case_0_baseline_lambda0": [
+        "arm_01_phi0.8_lambda0_cap6",
+        "arm_02_phi0.8_lambda0_cap6",
+        "arm_03_phi0.8_lambda0_cap6"
+      ],
+      "case_1_credit_lambda1": [
+        "arm_09_phi0.8_lambda1_cap6"
+      ],
+      "case_2_credit_lambda5": [
+        "arm_12_phi0.8_lambda5_cap6"
+      ]
+    },
+    "remote_path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/summary.json",
+    "sha256": "a22c7cc58d0a937afa7414e2a90577d3fe86b922ddc601a6c71abb141008c37b"
+  },
+  "wrapper": {
+    "local_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_credit_policy_retention.py",
+    "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/credit_policy_retention_v2/code/model/tools/run_e5f_credit_policy_retention.py",
+    "sha256": "05e306380ec40f4850237bfec294c012706af3177fde97036b7f38303304ce46"
+  }
+}

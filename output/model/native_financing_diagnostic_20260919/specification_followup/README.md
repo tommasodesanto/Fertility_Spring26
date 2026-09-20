@@ -80,6 +80,103 @@ or entrant wealth fixed unless explicitly verified.
 
 ## Check-ins and present state
 
+### 12:34 Eastern: credit replay reproduced; income-grid jobs submitted
+
+Corrected credit replay **18078912/18078913** completed all three cases. The
+lead checked every old-scalar/cohort reproduction gate (1e-10), source checks,
+zero occupied value drops, zero excess-budget mass, and 17 plots per case.
+Case runtimes were 61.2, 55.1 and 54.4 seconds. The two larger credit allowances
+have bitwise-identical snapshot populations and birth flows, but their complete
+policy arrays differ. Thus identical outcomes do **not** mean identical policies
+over the full state space. Occupied-state comparisons are being collected before
+interpreting this difference. [Raw policy comparison](credit_policy_retention_v2/results/policy_comparison.json).
+
+Income-grid smoke **18079046**, dependent production **18079047**, are submitted
+under [income_grid_cohort_v2/submission.json](income_grid_cohort_v2/submission.json).
+Frozen source and the nine runtime helpers are copied and checked before adding
+the experiment driver; every staged Python file is pinned, inputs are immutable,
+and the production driver checks the completed baseline policy/cohort/plot gates.
+Allocated household evaluations so far: four credit replays including the failed
+v1 receipt attempt, plus three income-grid cases, seven of sixteen. No stationary
+equilibrium evaluation or rental-wedge solve has yet been allocated.
+
+### 12:30 Eastern: replay failure isolated; corrected chain and grid staging
+
+Credit replay v1 smoke **18078707** failed after its one household solve,
+cohort and all 17 plots completed, during final import-origin receipt assembly.
+The check rejected Python's `__mp_main__` alias even though it pointed to the
+exact pinned driver. Production **18078708** was cancelled by dependency.
+The failed attempt and artifacts remain in `credit_policy_retention_v1/`.
+The changed method accepts that alias only at the exact pinned driver path;
+a focused fixture verifies that foreign paths are still rejected. No economic,
+source-hash, population or numerical gate changed. Fresh snapshot
+`credit_policy_retention_v2` has smoke **18078912**, production **18078913**.
+Including the completed v1 smoke, this replay chain uses at most four household
+solves. Its full arrays remain on Torch for compact comparative collection.
+
+The original `income_grid_cohort_v1/launch_manifest.json` is an unsubmitted
+implementation draft. The lead replaced its incomplete staging logic with
+explicit frozen-source copies and pinned runtime overlays. The actual launch
+uses fresh `income_grid_cohort_v2`; submission status is its `submission.json`
+when present. Design remains 5-by-3 smoke, then 9-by-3 and 15-by-3; three solves,
+900 seconds each, one CPU/24 GB, 20/40-minute allocations, 1050/2250-second
+stage process limits. Larger grids use the same three-point transitory process
+and native conditional-entry rule; their entry wealth marginal may change.
+No grid change is adopted, and lifetime-cohort results are not stationary fit.
+
+The isolated wedge port now has a segment-by-segment independent saving oracle
+and is being made reproducible as a frozen-source patch. Claude Max is doing a
+bounded two-file driver/launcher pass; lead review and full controls still gate
+launch. No wedge household solve has been launched.
+
+### 12:17 Eastern: saved-array results reviewed; credit replay submitted
+
+Housing collection **18078558** and saved-cohort debt jobs **18078581/18078582**
+completed with all retained gates passing. Housing outputs reproduce checkpoint
+uncapped rooms and ownership exactly, then apply the empirical cap at nine before
+weighting. The reproducible overlay is in
+[housing_profiles_v1/reproducible_overlay_v1](housing_profiles_v1/reproducible_overlay_v1/overlay_receipt.md).
+The model room profiles remain high into old age, where the empirical profile
+falls; ownership is too low earlier in adulthood. These are descriptive
+comparisons across checkpoints with different prices, preferences and entry
+wealth, not causal income comparisons. The model has no DUE structure category.
+Complete calibration tables remain in the [overnight readout](../overnight/final_search/readout.md).
+
+The [saved-credit comparison](saved_credit_v1/results/comparison.md) covers all
+12 family/dose cases. In the refit, the saved cohort populations for credit doses
+1 and 5 are bitwise identical; in the pilot they differ by less than 1e-46 in L1.
+Neither has observed cohort mass at the lower wealth-grid boundary. This weakens
+the particular grid-floor explanation, but retained arrays cannot establish
+native borrowing-constraint binding or policy identity. Negative liquid wealth
+is not itself a measure of unsecured borrowing. Shares aggregated across ages
+weight each age by surviving cohort mass.
+
+Credit policy retention smoke **18078707** and dependent production **18078708**
+are now submitted. [Submission](credit_policy_retention_v1/submission.json) and
+[immutable manifest](credit_policy_retention_v1/launch_manifest.json) govern the
+fresh remote `credit_policy_retention_v1` snapshot. One baseline solve precedes
+two treatment solves, with 10/20-minute allocation caps, one CPU/24 GB and
+per-case 600-second outer limits. All original source, population, numerical,
+cohort and 17-plot gates remain. The unchanged replay must reproduce the old
+case scalars within 1e-10 and retain full policy arrays. The comparison of the
+policies is an experimental result, not a gate requiring them to be identical.
+Three of the sixteen household evaluations are allocated to this chain.
+
+The deterministic [income-grid resolution diagnostic](income_grid_resolution_v1/README.md)
+is complete: ten grids, all stationary/normalization/log-moment gates, baseline
+fingerprint reproduced, and two supplemental plots. Its discretization limit
+is the continuous endpoint process. Its proximity to the exact annual block
+variance at a particular finite grid does not validate the aggregation mapping.
+The separate three-solve cohort sensitivity launcher and isolated rental-wedge
+port remain under review and have not been submitted.
+
+Two earlier housing collection attempts failed before model-data collection:
+18078441 used the wrong Python environment; 18078503 staged under login-only
+`/tmp`. The successful method uses explicit Anaconda and shared `/scratch`.
+No household solves were consumed by these collection attempts. The credit
+launcher was repaired through a bounded Claude Max review before lead review;
+no active model core or manuscript was edited.
+
 ### 11:52 Eastern: launched earnings diagnostic; housing source replay passed
 
 Torch jobs **18078286** (smoke) and **18078287** (full, `afterok` smoke)
@@ -178,13 +275,46 @@ stays quiet. Last author-facing start update: approximately 11:22 Eastern,
 September 20. End the follow-up after the final reviewed packet is delivered
 and every submitted job is terminal or explicitly blocked.
 
-At 11:24 Eastern, Torch authentication succeeded and the user queue was empty.
+Historical startup: at 11:24 Eastern, Torch authentication succeeded and the user queue was empty.
 Three bounded Luna tasks cover credit-code grounding, empirical-profile
-inventory, and deterministic collection of Fable's response. **No new model
-job has yet been submitted.** The completed September 19 overnight jobs are
+inventory, and deterministic collection of Fable's response. At that time no new model
+job had been submitted. The completed September 19 overnight jobs are
 historical evidence; their failed/cancelled jobs must not be revived.
 
 Keep task-owned changes separate from the repository's substantial unrelated
 dirty work. The active decision ledger and author manuscript are not part of
 this editing scope. Update this file and `CALIBRATION_STATUS.md` with reviewed
 launches/results; commit and push only task-owned changes.
+
+## Numerical follow-up design (submission status above)
+
+The source and array inventory changes the next steps. Factorial arms retained
+cohort distributions but **not treatment policy arrays**. Baseline policy and
+current-population arrays remain available in each pinned checkpoint. Thus the
+credit saved-array diagnostic now studies cohort debt/support and records policy
+identity as unavailable; the housing collector reads baseline checkpoints.
+No missing arrays are silently reconstructed.
+
+Two small fixed-price job chains are being prepared for lead review:
+
+- **Credit policy retention:** refit baseline control smoke, then credit doses
+  1 and 5 at financed share 0.8 and rental cap 6. Exactly three full household
+  solves, using the unchanged numerical path, but now retaining treatment policy
+  arrays. Every result must reproduce its previous arm's scalar/cohort receipt.
+  This is a disclosed replay with new retained outputs, not a restarted search.
+- **Income grid cohort sensitivity:** refit 5-by-3 baseline control, then 9-by-3
+  and 15-by-3 income grids, with the same annual parameters and period mapping.
+  Exactly three full household solves. Price and all non-income parameters are
+  fixed. Native conditional entry is rebuilt at each grid, and its wealth/income
+  marginals must be reported. Lifetime-cohort statistics are not stationary
+  calibration moments or direct ACS fits. A larger grid is not adopted by this
+  exercise. The apparent match of the 25-by-5 grid's level variance to the exact
+  annual block variance reflects opposing approximation differences; the
+  discretization convergence target is the continuous endpoint process.
+
+Both chains need immutable source/input manifests, baseline reproduction,
+full numerical gates, standard 17 plots, and Slurm smoke dependencies before
+submission. Proposed caps: credit smoke 10 minutes/production 20 minutes;
+income smoke 15 minutes/production 60 minutes. Their combined proposed six
+household solves leave ten of the initial sixteen available. The rental wedge
+port is still under development and no wedge solve is yet counted/submitted.

@@ -1,0 +1,46 @@
+{
+  "remote_stage": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/saved_credit_v1",
+  "files": {
+    "analyzer": {
+      "local": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/analyze_e5f_saved_credit_diagnostics.py",
+      "sha256": "e46a601be4a7d39ac421965874fb3651dd39b84d5bf3dedc6ade0de7c014ee1d"
+    },
+    "summary_original": {
+      "local": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/overnight/final_mechanisms/original/summary.json",
+      "sha256": "2d6ed1dc986a04198c819e4d4594a3d868c9b725925ec5df3871f14403c88806"
+    },
+    "summary_stationary_new_income": {
+      "local": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/overnight/final_mechanisms/stationary_new_income/summary.json",
+      "sha256": "d0f8f90cd7fd3a595c6c79d27778771558d116743fddb5e41adda35cce513600"
+    },
+    "summary_refit_new_income": {
+      "local": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/overnight/final_mechanisms/refit_new_income/summary.json",
+      "sha256": "a22c7cc58d0a937afa7414e2a90577d3fe86b922ddc601a6c71abb141008c37b"
+    }
+  },
+  "families": [
+    "original",
+    "stationary_new_income",
+    "refit_new_income"
+  ],
+  "smoke_family": [
+    "refit_new_income"
+  ],
+  "smoke": {
+    "wall_seconds": 240,
+    "outer_timeout": 270,
+    "slurm_time": "00:05:00"
+  },
+  "full": {
+    "wall_seconds": 720,
+    "outer_timeout": 840,
+    "slurm_time": "00:15:00"
+  },
+  "environment": {
+    "threads": "1",
+    "python_module": "anaconda3/2025.06"
+  },
+  "household_solves": 0,
+  "hypothesis": "Measure retained cohort debt and statutory/grid support; treatment policy arrays were not retained.",
+  "stop_rule": "Stop on failed source, cohort, flow, entry, plot or time gate; no automatic retry."
+}

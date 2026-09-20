@@ -1,0 +1,93 @@
+{
+  "method": "shared scratch staging, explicit Anaconda runtime; fixes login-node-only /tmp paths in failed jobs 18078441/18078503",
+  "household_solves": 0,
+  "cases": [
+    {
+      "family": "original",
+      "candidate_fingerprint": null,
+      "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/baseline_replay_20260917/replay/case/evaluation/raw/repetition_02/initial_state.pkl.gz",
+      "checkpoint_sha256": "3322a61994fb3654d67f4b1d6cf2d0f7cacbb3668d06a417e192ee363c174993",
+      "closure": "checkpoint population, fiscal objects, geography, prices and entry law held fixed; no GE claim",
+      "initial_population_shape": [
+        120,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "price": [
+        0.7026083285154774
+      ],
+      "scope": "fixed-price partial equilibrium; within-family preferences and initial population fixed",
+      "source_manifest": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/working_contract.json",
+      "source_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2",
+      "summary": "original_summary.json"
+    },
+    {
+      "family": "stationary_new_income",
+      "candidate_fingerprint": "013e1f803b4e23d4920b14d6377af973e7a94e8d709b45143bd8dca1bdd7d425",
+      "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_stationary_18040896/evaluation/raw/repetition_01/initial_state.pkl.gz",
+      "checkpoint_sha256": "79f9dd5e56351bb6ced3a2b31d10657b1bfa8acd59c1c68436bfb671c99bb675",
+      "closure": "checkpoint population, fiscal objects, geography, prices and entry law held fixed; no GE claim",
+      "initial_population_shape": [
+        120,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "population_source": "saved_evaluation",
+      "price": [
+        0.6780300336814044
+      ],
+      "raw_vs_evaluation_changed_count": 17,
+      "raw_vs_evaluation_l1": 3.5100904979533746e-15,
+      "raw_vs_evaluation_linf": 1.62824089953466e-15,
+      "raw_vs_evaluation_total_gap": 0.0,
+      "scope": "fixed-price partial equilibrium; within-family preferences and initial population fixed",
+      "source_manifest": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/working_contract.json",
+      "source_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2",
+      "summary": "stationary_new_income_summary.json"
+    },
+    {
+      "family": "refit_new_income",
+      "candidate_fingerprint": "013e1f803b4e23d4920b14d6377af973e7a94e8d709b45143bd8dca1bdd7d425",
+      "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/production/selected_verification/evaluation/raw/repetition_02/initial_state.pkl.gz",
+      "checkpoint_sha256": "b3491eedcee6250cf94833067646d3e6463496cbf5a64bdcabe7b13bc7e89eb2",
+      "closure": "checkpoint population, fiscal objects, geography, prices and entry law held fixed; no GE claim",
+      "initial_population_shape": [
+        120,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "population_source": "saved_evaluation",
+      "price": [
+        0.5469369720186884
+      ],
+      "raw_vs_evaluation_changed_count": 10,
+      "raw_vs_evaluation_l1": 7.272090560285096e-16,
+      "raw_vs_evaluation_linf": 3.0099644005948624e-16,
+      "raw_vs_evaluation_total_gap": 2.220446049250313e-16,
+      "scope": "fixed-price partial equilibrium; within-family preferences and initial population fixed",
+      "source_manifest": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/working_contract.json",
+      "source_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2",
+      "summary": "refit_new_income_summary.json"
+    }
+  ],
+  "inputs": {
+    "collect_e5f_saved_housing_profiles.py": "ca4ddb52c2f565ea3ef3dbdcf98fd10f7d5aa57a127a67e791c0d312318e14eb",
+    "original_summary.json": "2d6ed1dc986a04198c819e4d4594a3d868c9b725925ec5df3871f14403c88806",
+    "stationary_new_income_summary.json": "d0f8f90cd7fd3a595c6c79d27778771558d116743fddb5e41adda35cce513600",
+    "refit_new_income_summary.json": "a22c7cc58d0a937afa7414e2a90577d3fe86b922ddc601a6c71abb141008c37b"
+  },
+  "remote_root": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/housing_profiles_shared_v3",
+  "wall_seconds": 300
+}

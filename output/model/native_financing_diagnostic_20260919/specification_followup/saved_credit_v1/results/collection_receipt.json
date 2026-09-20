@@ -1,0 +1,163 @@
+{
+  "status": "complete",
+  "source": "Torch jobs 18078581 smoke / 18078582 full; read-only collection",
+  "smoke_receipt_status": "complete",
+  "full_receipt_status": "complete",
+  "full_case_count": 12,
+  "offdiag_max": 0.0,
+  "source_hashes_verified": true,
+  "manifest_analyzer_hash_match": true,
+  "entry_identity": {
+    "original": {
+      "baseline": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/original_production/original/cases/arm_01_phi0.8_lambda0_cap6/cohort/initial_native_entry.npz",
+      "comparisons": [
+        {
+          "identical": true,
+          "l1": 0.0,
+          "linf": 0.0,
+          "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/original_production/original/cases/arm_06_phi0.8_lambda0.25_cap6/cohort/initial_native_entry.npz"
+        },
+        {
+          "identical": true,
+          "l1": 0.0,
+          "linf": 0.0,
+          "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/original_production/original/cases/arm_09_phi0.8_lambda1_cap6/cohort/initial_native_entry.npz"
+        },
+        {
+          "identical": true,
+          "l1": 0.0,
+          "linf": 0.0,
+          "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/original_production/original/cases/arm_12_phi0.8_lambda5_cap6/cohort/initial_native_entry.npz"
+        }
+      ],
+      "status": "complete"
+    },
+    "stationary_new_income": {
+      "baseline": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_income_v2/stationary_new_income_production/stationary_new_income/cases/arm_01_phi0.8_lambda0_cap6/cohort/initial_native_entry.npz",
+      "comparisons": [
+        {
+          "identical": true,
+          "l1": 0.0,
+          "linf": 0.0,
+          "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_income_v2/stationary_new_income_production/stationary_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/cohort/initial_native_entry.npz"
+        },
+        {
+          "identical": true,
+          "l1": 0.0,
+          "linf": 0.0,
+          "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_income_v2/stationary_new_income_production/stationary_new_income/cases/arm_09_phi0.8_lambda1_cap6/cohort/initial_native_entry.npz"
+        },
+        {
+          "identical": true,
+          "l1": 0.0,
+          "linf": 0.0,
+          "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_income_v2/stationary_new_income_production/stationary_new_income/cases/arm_12_phi0.8_lambda5_cap6/cohort/initial_native_entry.npz"
+        }
+      ],
+      "status": "complete"
+    },
+    "refit_new_income": {
+      "baseline": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/cohort/initial_native_entry.npz",
+      "comparisons": [
+        {
+          "identical": true,
+          "l1": 0.0,
+          "linf": 0.0,
+          "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/cohort/initial_native_entry.npz"
+        },
+        {
+          "identical": true,
+          "l1": 0.0,
+          "linf": 0.0,
+          "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/cohort/initial_native_entry.npz"
+        },
+        {
+          "identical": true,
+          "l1": 0.0,
+          "linf": 0.0,
+          "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/cohort/initial_native_entry.npz"
+        }
+      ],
+      "status": "complete"
+    }
+  },
+  "cohort_lambda1_vs5": {
+    "original": {
+      "shape_equal": true,
+      "exact_equal": false,
+      "max_abs_diff": 0.00464295003506391,
+      "l1": 1.108340041081234,
+      "age_l1": [
+        0.0,
+        0.14095078317319926,
+        0.11067520811684158,
+        0.0885673819943026,
+        0.07335379925888141,
+        0.06576130280311145,
+        0.06164997727901046,
+        0.06109413366828079,
+        0.06258728231335324,
+        0.06471336897904276,
+        0.06676141247515519,
+        0.07068826518280255,
+        0.06480856295050898,
+        0.05638243586413346,
+        0.048904680026271415,
+        0.04018886756791753,
+        0.031252579428419754
+      ]
+    },
+    "stationary_new_income": {
+      "shape_equal": true,
+      "exact_equal": false,
+      "max_abs_diff": 2.1895288505075267e-47,
+      "l1": 9.499390048017943e-47,
+      "age_l1": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        3.508342463928057e-54,
+        6.567424837312419e-55,
+        6.714369587197253e-55,
+        1.2230633399567702e-51,
+        4.507883552336675e-49,
+        9.454188422508377e-47,
+        1.2142734518050107e-61,
+        9.672973023999516e-81,
+        2.554393263767076e-81,
+        2.3534153110319047e-113,
+        0.0
+      ]
+    },
+    "refit_new_income": {
+      "shape_equal": true,
+      "exact_equal": true,
+      "max_abs_diff": 0.0,
+      "l1": 0.0,
+      "age_l1": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "policy_identity": "unavailable: factorial retains no per-lambda policy arrays",
+  "no_solves_or_policy_replay": true
+}

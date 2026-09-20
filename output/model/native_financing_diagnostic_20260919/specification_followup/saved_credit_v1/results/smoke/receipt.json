@@ -1,0 +1,1691 @@
+{
+  "elapsed_seconds": 13.968019311956596,
+  "errors": [],
+  "families": {
+    "refit_new_income": {
+      "cases": [
+        {
+          "checkpoint_load": "loaded",
+          "cohort_array_shapes": {
+            "g_final": [
+              120,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ],
+            "g_pre_by_age": [
+              17,
+              120,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ],
+            "lifetime_g_pre": [
+              120,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "cohort_arrays": {
+            "diagonal_support_offdiag_max": 0.0,
+            "finite": true,
+            "masses": {
+              "g_final": 0.0,
+              "g_pre_by_age": 16.19867186881815,
+              "lifetime_g_pre": 1.0000000000000002
+            },
+            "missing_keys": [],
+            "nonnegative": true,
+            "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/cohort/cohort_arrays.npz",
+            "shape": [
+              17,
+              120,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ],
+            "shapes": {
+              "g_final": [
+                120,
+                6,
+                1,
+                17,
+                15,
+                4,
+                4
+              ],
+              "g_pre_by_age": [
+                17,
+                120,
+                6,
+                1,
+                17,
+                15,
+                4,
+                4
+              ],
+              "lifetime_g_pre": [
+                120,
+                6,
+                1,
+                17,
+                15,
+                4,
+                4
+              ]
+            },
+            "status": "complete"
+          },
+          "cohort_csv_mass": {
+            "max_abs_gap": 2.919886554764162e-14,
+            "rows": 17,
+            "status": "complete"
+          },
+          "contract": {
+            "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/production/selected_verification/evaluation/raw/repetition_02/initial_state.pkl.gz",
+            "checkpoint_actual_sha256": "b3491eedcee6250cf94833067646d3e6463496cbf5a64bdcabe7b13bc7e89eb2",
+            "checkpoint_sha256": "b3491eedcee6250cf94833067646d3e6463496cbf5a64bdcabe7b13bc7e89eb2",
+            "checkpoint_status": "verified",
+            "parameters_sha256": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5",
+            "solver_sha256": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da",
+            "source_manifest": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/working_contract.json",
+            "source_manifest_status": "exists",
+            "source_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2",
+            "source_status": "verified"
+          },
+          "debt_cap_source": {
+            "build_function": "intergen_eqscale_seq_optimized.parameters.build_debt_caps",
+            "module_file": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/intergen_eqscale_seq_optimized/parameters.py",
+            "module_sha256": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5",
+            "taper_override": null
+          },
+          "debt_support_status": "complete",
+          "elapsed_seconds": 6.988163002999499,
+          "family": "refit_new_income",
+          "flow": {
+            "age_rows": [
+              {
+                "age_years": 18.0,
+                "continuation": -1.942890293094024e-16,
+                "explicit": 0.2136042084615453,
+                "first": 0.2136042084615455
+              },
+              {
+                "age_years": 22.0,
+                "continuation": 0.07737069227189136,
+                "explicit": 0.284818571579272,
+                "first": 0.20744787930738062
+              },
+              {
+                "age_years": 26.0,
+                "continuation": 0.15841408410301067,
+                "explicit": 0.3237735050700181,
+                "first": 0.16535942096700745
+              },
+              {
+                "age_years": 30.0,
+                "continuation": 0.2229798546249812,
+                "explicit": 0.324880829277247,
+                "first": 0.10190097465226577
+              },
+              {
+                "age_years": 34.0,
+                "continuation": 0.2472404850594258,
+                "explicit": 0.3024111227666573,
+                "first": 0.05517063770723152
+              },
+              {
+                "age_years": 38.0,
+                "continuation": 0.22028704314318964,
+                "explicit": 0.2504670757963202,
+                "first": 0.030180032653130573
+              },
+              {
+                "age_years": 42.0,
+                "continuation": 0.13916349920832255,
+                "explicit": 0.15776509821593265,
+                "first": 0.018601599007610103
+              },
+              {
+                "age_years": 46.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 50.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 54.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 58.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 62.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 66.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 70.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 74.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 78.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 82.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              }
+            ],
+            "continuation_sum": 1.065455658410821,
+            "explicit_gap": 0.0,
+            "explicit_sum": 1.8577204111669925,
+            "first_gap": 0.0,
+            "first_sum": 0.7922647527561715,
+            "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/cohort/cohort_by_age.csv",
+            "rows": 17,
+            "status": "complete"
+          },
+          "frozen_import_audit": {
+            "bad_modules": {},
+            "model_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model",
+            "status": "verified"
+          },
+          "label": "arm_01_phi0.8_lambda0_cap6",
+          "lambda": 0.0,
+          "paths": {
+            "case": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6",
+            "cohort_arrays": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/cohort/cohort_arrays.npz",
+            "cohort_csv": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/cohort/cohort_by_age.csv",
+            "entry": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/cohort/initial_native_entry.npz"
+          },
+          "receipt_cohort": {
+            "arm": "arm_01_phi0.8_lambda0_cap6",
+            "cumulative_explicit_births_per_initial_household": 1.8577204111669925,
+            "entry_rule": "native conditional entrant for each process",
+            "first_birth_mean_age": 24.70009336511201,
+            "first_births_per_initial_household": 0.7922647527561715,
+            "initial_mass": 1.0,
+            "lifetime_cross_section": "normalized lifetime cohort distribution weighted by actual surviving mass; diagnostic graph input, not GE",
+            "rows": 17,
+            "scope": "fixed-price entry-cohort partial equilibrium; induced entry asset/income distribution; no pure-income-effect claim, GE, empirical fit, or production closure",
+            "status": "completed"
+          },
+          "standard_plots": {
+            "count": 17,
+            "paths": [
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/fertility_by_age.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/fertility_policy_by_age_income_state.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/housing_by_age_income_state.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/housing_market.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/housing_prices.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/income_state_outcomes.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/market_clearing_by_market.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/market_clearing_residuals.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/owner_rungs.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/ownership_by_age.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/ownership_by_age_income_state.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/policy_childless_renter_age30.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/policy_childless_renter_age42.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/tenure_services.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/wealth_dist_childless_renter_age42.png"
+            ],
+            "status": "complete"
+          },
+          "status": "complete",
+          "supplemental_plots": {
+            "paths": [
+              "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/saved_credit_v1/smoke/refit_new_income/lambda_0/debt_support_by_age.png",
+              "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/saved_credit_v1/smoke/refit_new_income/lambda_0/debt_support_share_by_age.png"
+            ],
+            "status": "complete"
+          }
+        },
+        {
+          "checkpoint_load": "loaded",
+          "cohort_array_shapes": {
+            "g_final": [
+              120,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ],
+            "g_pre_by_age": [
+              17,
+              120,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ],
+            "lifetime_g_pre": [
+              120,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "cohort_arrays": {
+            "diagonal_support_offdiag_max": 0.0,
+            "finite": true,
+            "masses": {
+              "g_final": 0.0,
+              "g_pre_by_age": 16.198671868818117,
+              "lifetime_g_pre": 1.000000000000001
+            },
+            "missing_keys": [],
+            "nonnegative": true,
+            "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/cohort/cohort_arrays.npz",
+            "shape": [
+              17,
+              120,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ],
+            "shapes": {
+              "g_final": [
+                120,
+                6,
+                1,
+                17,
+                15,
+                4,
+                4
+              ],
+              "g_pre_by_age": [
+                17,
+                120,
+                6,
+                1,
+                17,
+                15,
+                4,
+                4
+              ],
+              "lifetime_g_pre": [
+                120,
+                6,
+                1,
+                17,
+                15,
+                4,
+                4
+              ]
+            },
+            "status": "complete"
+          },
+          "cohort_csv_mass": {
+            "max_abs_gap": 2.9753977059954195e-14,
+            "rows": 17,
+            "status": "complete"
+          },
+          "contract": {
+            "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/production/selected_verification/evaluation/raw/repetition_02/initial_state.pkl.gz",
+            "checkpoint_actual_sha256": "b3491eedcee6250cf94833067646d3e6463496cbf5a64bdcabe7b13bc7e89eb2",
+            "checkpoint_sha256": "b3491eedcee6250cf94833067646d3e6463496cbf5a64bdcabe7b13bc7e89eb2",
+            "checkpoint_status": "verified",
+            "parameters_sha256": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5",
+            "solver_sha256": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da",
+            "source_manifest": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/working_contract.json",
+            "source_manifest_status": "exists",
+            "source_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2",
+            "source_status": "verified"
+          },
+          "debt_cap_source": {
+            "build_function": "intergen_eqscale_seq_optimized.parameters.build_debt_caps",
+            "module_file": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/intergen_eqscale_seq_optimized/parameters.py",
+            "module_sha256": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5",
+            "taper_override": [
+              82.0,
+              86.0
+            ]
+          },
+          "debt_support_status": "complete",
+          "elapsed_seconds": 2.215556656999979,
+          "family": "refit_new_income",
+          "flow": {
+            "age_rows": [
+              {
+                "age_years": 18.0,
+                "continuation": -1.3877787807814457e-16,
+                "explicit": 0.23578300939409433,
+                "first": 0.23578300939409447
+              },
+              {
+                "age_years": 22.0,
+                "continuation": 0.08448317803391014,
+                "explicit": 0.2910143737915013,
+                "first": 0.20653119575759116
+              },
+              {
+                "age_years": 26.0,
+                "continuation": 0.16398076191230132,
+                "explicit": 0.31806480656868746,
+                "first": 0.15408404465638614
+              },
+              {
+                "age_years": 30.0,
+                "continuation": 0.22264829757020954,
+                "explicit": 0.31547523868456034,
+                "first": 0.0928269411143508
+              },
+              {
+                "age_years": 34.0,
+                "continuation": 0.2424221236413978,
+                "explicit": 0.29218935226787673,
+                "first": 0.04976722862647892
+              },
+              {
+                "age_years": 38.0,
+                "continuation": 0.214243976948427,
+                "explicit": 0.2407272747847854,
+                "first": 0.026483297836358388
+              },
+              {
+                "age_years": 42.0,
+                "continuation": 0.13453622086734474,
+                "explicit": 0.15018163274288018,
+                "first": 0.015645411875535448
+              },
+              {
+                "age_years": 46.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 50.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 54.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 58.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 62.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 66.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 70.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 74.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 78.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 82.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              }
+            ],
+            "continuation_sum": 1.0623145589735905,
+            "explicit_gap": 0.0,
+            "explicit_sum": 1.8434356882343859,
+            "first_gap": 0.0,
+            "first_sum": 0.7811211292607954,
+            "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/cohort/cohort_by_age.csv",
+            "rows": 17,
+            "status": "complete"
+          },
+          "frozen_import_audit": {
+            "bad_modules": {},
+            "model_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model",
+            "status": "verified"
+          },
+          "label": "arm_06_phi0.8_lambda0.25_cap6",
+          "lambda": 0.25,
+          "paths": {
+            "case": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6",
+            "cohort_arrays": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/cohort/cohort_arrays.npz",
+            "cohort_csv": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/cohort/cohort_by_age.csv",
+            "entry": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/cohort/initial_native_entry.npz"
+          },
+          "receipt_cohort": {
+            "arm": "arm_06_phi0.8_lambda0.25_cap6",
+            "cumulative_explicit_births_per_initial_household": 1.8434356882343859,
+            "entry_rule": "native conditional entrant for each process",
+            "first_birth_mean_age": 24.239943781868938,
+            "first_births_per_initial_household": 0.7811211292607954,
+            "initial_mass": 1.0,
+            "lifetime_cross_section": "normalized lifetime cohort distribution weighted by actual surviving mass; diagnostic graph input, not GE",
+            "rows": 17,
+            "scope": "fixed-price entry-cohort partial equilibrium; induced entry asset/income distribution; no pure-income-effect claim, GE, empirical fit, or production closure",
+            "status": "completed"
+          },
+          "standard_plots": {
+            "count": 17,
+            "paths": [
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/fertility_by_age.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/fertility_policy_by_age_income_state.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/housing_by_age_income_state.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/housing_market.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/housing_prices.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/income_state_outcomes.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/market_clearing_by_market.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/market_clearing_residuals.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/owner_rungs.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/ownership_by_age.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/ownership_by_age_income_state.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/policy_childless_renter_age30.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/policy_childless_renter_age42.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/tenure_services.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/wealth_dist_childless_renter_age42.png"
+            ],
+            "status": "complete"
+          },
+          "status": "complete",
+          "supplemental_plots": {
+            "paths": [
+              "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/saved_credit_v1/smoke/refit_new_income/lambda_0.25/debt_support_by_age.png",
+              "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/saved_credit_v1/smoke/refit_new_income/lambda_0.25/debt_support_share_by_age.png"
+            ],
+            "status": "complete"
+          }
+        },
+        {
+          "checkpoint_load": "loaded",
+          "cohort_array_shapes": {
+            "g_final": [
+              120,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ],
+            "g_pre_by_age": [
+              17,
+              120,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ],
+            "lifetime_g_pre": [
+              120,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "cohort_arrays": {
+            "diagonal_support_offdiag_max": 0.0,
+            "finite": true,
+            "masses": {
+              "g_final": 0.0,
+              "g_pre_by_age": 16.198671868818156,
+              "lifetime_g_pre": 1.0000000000000004
+            },
+            "missing_keys": [],
+            "nonnegative": true,
+            "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/cohort/cohort_arrays.npz",
+            "shape": [
+              17,
+              120,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ],
+            "shapes": {
+              "g_final": [
+                120,
+                6,
+                1,
+                17,
+                15,
+                4,
+                4
+              ],
+              "g_pre_by_age": [
+                17,
+                120,
+                6,
+                1,
+                17,
+                15,
+                4,
+                4
+              ],
+              "lifetime_g_pre": [
+                120,
+                6,
+                1,
+                17,
+                15,
+                4,
+                4
+              ]
+            },
+            "status": "complete"
+          },
+          "cohort_csv_mass": {
+            "max_abs_gap": 3.0309088572266774e-14,
+            "rows": 17,
+            "status": "complete"
+          },
+          "contract": {
+            "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/production/selected_verification/evaluation/raw/repetition_02/initial_state.pkl.gz",
+            "checkpoint_actual_sha256": "b3491eedcee6250cf94833067646d3e6463496cbf5a64bdcabe7b13bc7e89eb2",
+            "checkpoint_sha256": "b3491eedcee6250cf94833067646d3e6463496cbf5a64bdcabe7b13bc7e89eb2",
+            "checkpoint_status": "verified",
+            "parameters_sha256": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5",
+            "solver_sha256": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da",
+            "source_manifest": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/working_contract.json",
+            "source_manifest_status": "exists",
+            "source_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2",
+            "source_status": "verified"
+          },
+          "debt_cap_source": {
+            "build_function": "intergen_eqscale_seq_optimized.parameters.build_debt_caps",
+            "module_file": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/intergen_eqscale_seq_optimized/parameters.py",
+            "module_sha256": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5",
+            "taper_override": [
+              82.0,
+              86.0
+            ]
+          },
+          "debt_support_status": "complete",
+          "elapsed_seconds": 2.3126646950258873,
+          "family": "refit_new_income",
+          "flow": {
+            "age_rows": [
+              {
+                "age_years": 18.0,
+                "continuation": -8.326672684688674e-17,
+                "explicit": 0.23789865850681627,
+                "first": 0.23789865850681635
+              },
+              {
+                "age_years": 22.0,
+                "continuation": 0.08515024125531484,
+                "explicit": 0.28489338238910716,
+                "first": 0.19974314113379232
+              },
+              {
+                "age_years": 26.0,
+                "continuation": 0.16207712870198338,
+                "explicit": 0.3111535228974201,
+                "first": 0.14907639419543672
+              },
+              {
+                "age_years": 30.0,
+                "continuation": 0.21853879021912048,
+                "explicit": 0.3096888342706107,
+                "first": 0.09115004405149024
+              },
+              {
+                "age_years": 34.0,
+                "continuation": 0.23789866054109543,
+                "explicit": 0.28712661540443635,
+                "first": 0.04922795486334092
+              },
+              {
+                "age_years": 38.0,
+                "continuation": 0.2103725240048178,
+                "explicit": 0.2358530096396916,
+                "first": 0.025480485634873817
+              },
+              {
+                "age_years": 42.0,
+                "continuation": 0.1318637254340058,
+                "explicit": 0.14623622425882812,
+                "first": 0.014372498824822333
+              },
+              {
+                "age_years": 46.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 50.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 54.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 58.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 62.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 66.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 70.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 74.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 78.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 82.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              }
+            ],
+            "continuation_sum": 1.0459010701563376,
+            "explicit_gap": 0.0,
+            "explicit_sum": 1.8128502473669104,
+            "first_gap": 0.0,
+            "first_sum": 0.7669491772105728,
+            "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/cohort/cohort_by_age.csv",
+            "rows": 17,
+            "status": "complete"
+          },
+          "frozen_import_audit": {
+            "bad_modules": {},
+            "model_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model",
+            "status": "verified"
+          },
+          "label": "arm_09_phi0.8_lambda1_cap6",
+          "lambda": 1.0,
+          "paths": {
+            "case": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6",
+            "cohort_arrays": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/cohort/cohort_arrays.npz",
+            "cohort_csv": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/cohort/cohort_by_age.csv",
+            "entry": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/cohort/initial_native_entry.npz"
+          },
+          "receipt_cohort": {
+            "arm": "arm_09_phi0.8_lambda1_cap6",
+            "cumulative_explicit_births_per_initial_household": 1.8128502473669104,
+            "entry_rule": "native conditional entrant for each process",
+            "first_birth_mean_age": 24.16413883670575,
+            "first_births_per_initial_household": 0.7669491772105728,
+            "initial_mass": 1.0,
+            "lifetime_cross_section": "normalized lifetime cohort distribution weighted by actual surviving mass; diagnostic graph input, not GE",
+            "rows": 17,
+            "scope": "fixed-price entry-cohort partial equilibrium; induced entry asset/income distribution; no pure-income-effect claim, GE, empirical fit, or production closure",
+            "status": "completed"
+          },
+          "standard_plots": {
+            "count": 17,
+            "paths": [
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/fertility_by_age.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/fertility_policy_by_age_income_state.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/housing_by_age_income_state.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/housing_market.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/housing_prices.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/income_state_outcomes.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/market_clearing_by_market.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/market_clearing_residuals.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/owner_rungs.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/ownership_by_age.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/ownership_by_age_income_state.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/policy_childless_renter_age30.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/policy_childless_renter_age42.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/tenure_services.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/wealth_dist_childless_renter_age42.png"
+            ],
+            "status": "complete"
+          },
+          "status": "complete",
+          "supplemental_plots": {
+            "paths": [
+              "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/saved_credit_v1/smoke/refit_new_income/lambda_1/debt_support_by_age.png",
+              "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/saved_credit_v1/smoke/refit_new_income/lambda_1/debt_support_share_by_age.png"
+            ],
+            "status": "complete"
+          }
+        },
+        {
+          "checkpoint_load": "loaded",
+          "cohort_array_shapes": {
+            "g_final": [
+              120,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ],
+            "g_pre_by_age": [
+              17,
+              120,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ],
+            "lifetime_g_pre": [
+              120,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "cohort_arrays": {
+            "diagonal_support_offdiag_max": 0.0,
+            "finite": true,
+            "masses": {
+              "g_final": 0.0,
+              "g_pre_by_age": 16.198671868818156,
+              "lifetime_g_pre": 1.0000000000000004
+            },
+            "missing_keys": [],
+            "nonnegative": true,
+            "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/cohort/cohort_arrays.npz",
+            "shape": [
+              17,
+              120,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ],
+            "shapes": {
+              "g_final": [
+                120,
+                6,
+                1,
+                17,
+                15,
+                4,
+                4
+              ],
+              "g_pre_by_age": [
+                17,
+                120,
+                6,
+                1,
+                17,
+                15,
+                4,
+                4
+              ],
+              "lifetime_g_pre": [
+                120,
+                6,
+                1,
+                17,
+                15,
+                4,
+                4
+              ]
+            },
+            "status": "complete"
+          },
+          "cohort_csv_mass": {
+            "max_abs_gap": 3.0309088572266774e-14,
+            "rows": 17,
+            "status": "complete"
+          },
+          "contract": {
+            "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/production/selected_verification/evaluation/raw/repetition_02/initial_state.pkl.gz",
+            "checkpoint_actual_sha256": "b3491eedcee6250cf94833067646d3e6463496cbf5a64bdcabe7b13bc7e89eb2",
+            "checkpoint_sha256": "b3491eedcee6250cf94833067646d3e6463496cbf5a64bdcabe7b13bc7e89eb2",
+            "checkpoint_status": "verified",
+            "parameters_sha256": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5",
+            "solver_sha256": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da",
+            "source_manifest": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/working_contract.json",
+            "source_manifest_status": "exists",
+            "source_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2",
+            "source_status": "verified"
+          },
+          "debt_cap_source": {
+            "build_function": "intergen_eqscale_seq_optimized.parameters.build_debt_caps",
+            "module_file": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/intergen_eqscale_seq_optimized/parameters.py",
+            "module_sha256": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5",
+            "taper_override": [
+              82.0,
+              86.0
+            ]
+          },
+          "debt_support_status": "complete",
+          "elapsed_seconds": 2.214104523998685,
+          "family": "refit_new_income",
+          "flow": {
+            "age_rows": [
+              {
+                "age_years": 18.0,
+                "continuation": -8.326672684688674e-17,
+                "explicit": 0.23789865850681627,
+                "first": 0.23789865850681635
+              },
+              {
+                "age_years": 22.0,
+                "continuation": 0.08515024125531484,
+                "explicit": 0.28489338238910716,
+                "first": 0.19974314113379232
+              },
+              {
+                "age_years": 26.0,
+                "continuation": 0.16207712870198338,
+                "explicit": 0.3111535228974201,
+                "first": 0.14907639419543672
+              },
+              {
+                "age_years": 30.0,
+                "continuation": 0.21853879021912048,
+                "explicit": 0.3096888342706107,
+                "first": 0.09115004405149024
+              },
+              {
+                "age_years": 34.0,
+                "continuation": 0.23789866054109543,
+                "explicit": 0.28712661540443635,
+                "first": 0.04922795486334092
+              },
+              {
+                "age_years": 38.0,
+                "continuation": 0.2103725240048178,
+                "explicit": 0.2358530096396916,
+                "first": 0.025480485634873817
+              },
+              {
+                "age_years": 42.0,
+                "continuation": 0.1318637254340058,
+                "explicit": 0.14623622425882812,
+                "first": 0.014372498824822333
+              },
+              {
+                "age_years": 46.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 50.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 54.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 58.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 62.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 66.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 70.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 74.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 78.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              },
+              {
+                "age_years": 82.0,
+                "continuation": 0.0,
+                "explicit": 0.0,
+                "first": 0.0
+              }
+            ],
+            "continuation_sum": 1.0459010701563376,
+            "explicit_gap": 0.0,
+            "explicit_sum": 1.8128502473669104,
+            "first_gap": 0.0,
+            "first_sum": 0.7669491772105728,
+            "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/cohort/cohort_by_age.csv",
+            "rows": 17,
+            "status": "complete"
+          },
+          "frozen_import_audit": {
+            "bad_modules": {},
+            "model_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model",
+            "status": "verified"
+          },
+          "label": "arm_12_phi0.8_lambda5_cap6",
+          "lambda": 5.0,
+          "paths": {
+            "case": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6",
+            "cohort_arrays": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/cohort/cohort_arrays.npz",
+            "cohort_csv": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/cohort/cohort_by_age.csv",
+            "entry": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/cohort/initial_native_entry.npz"
+          },
+          "receipt_cohort": {
+            "arm": "arm_12_phi0.8_lambda5_cap6",
+            "cumulative_explicit_births_per_initial_household": 1.8128502473669104,
+            "entry_rule": "native conditional entrant for each process",
+            "first_birth_mean_age": 24.16413883670575,
+            "first_births_per_initial_household": 0.7669491772105728,
+            "initial_mass": 1.0,
+            "lifetime_cross_section": "normalized lifetime cohort distribution weighted by actual surviving mass; diagnostic graph input, not GE",
+            "rows": 17,
+            "scope": "fixed-price entry-cohort partial equilibrium; induced entry asset/income distribution; no pure-income-effect claim, GE, empirical fit, or production closure",
+            "status": "completed"
+          },
+          "standard_plots": {
+            "count": 17,
+            "paths": [
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/fertility_by_age.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/fertility_policy_by_age_income_state.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/housing_by_age_income_state.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/housing_market.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/housing_prices.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/income_state_outcomes.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/market_clearing_by_market.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/market_clearing_residuals.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/owner_rungs.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/ownership_by_age.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/ownership_by_age_income_state.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/policy_childless_renter_age30.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/policy_childless_renter_age42.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/tenure_services.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+              "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/wealth_dist_childless_renter_age42.png"
+            ],
+            "status": "complete"
+          },
+          "status": "complete",
+          "supplemental_plots": {
+            "paths": [
+              "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/saved_credit_v1/smoke/refit_new_income/lambda_5/debt_support_by_age.png",
+              "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/saved_credit_v1/smoke/refit_new_income/lambda_5/debt_support_share_by_age.png"
+            ],
+            "status": "complete"
+          }
+        }
+      ],
+      "decomposition": {
+        "reason": "ordered saved-policy replay was not attempted; no symmetric cross-evaluation",
+        "status": "unavailable"
+      },
+      "entry_identity": {
+        "baseline": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/cohort/initial_native_entry.npz",
+        "comparisons": [
+          {
+            "identical": true,
+            "l1": 0.0,
+            "linf": 0.0,
+            "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/cohort/initial_native_entry.npz"
+          },
+          {
+            "identical": true,
+            "l1": 0.0,
+            "linf": 0.0,
+            "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/cohort/initial_native_entry.npz"
+          },
+          {
+            "identical": true,
+            "l1": 0.0,
+            "linf": 0.0,
+            "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/cohort/initial_native_entry.npz"
+          }
+        ],
+        "status": "complete"
+      },
+      "family": "refit_new_income",
+      "lambda1_vs_lambda5": {
+        "reason": "factorial retains no per-lambda policy arrays",
+        "status": "unavailable"
+      },
+      "status": "complete",
+      "validation": {
+        "checkpoint_sha256_values": [
+          "b3491eedcee6250cf94833067646d3e6463496cbf5a64bdcabe7b13bc7e89eb2"
+        ],
+        "errors": [],
+        "family": "refit_new_income",
+        "rows_seen": 50,
+        "selected": {
+          "0.0": {
+            "budget": {
+              "actual_rent": 0.09063372927997913,
+              "budget_excess_mass": 0.0,
+              "budget_tolerance": 1e-09,
+              "maximum_occupied_excess": 1.7763568394002505e-15
+            },
+            "cohort": {
+              "arm": "arm_01_phi0.8_lambda0_cap6",
+              "cumulative_explicit_births_per_initial_household": 1.8577204111669925,
+              "entry_rule": "native conditional entrant for each process",
+              "first_birth_mean_age": 24.70009336511201,
+              "first_births_per_initial_household": 0.7922647527561715,
+              "initial_mass": 1.0,
+              "lifetime_cross_section": "normalized lifetime cohort distribution weighted by actual surviving mass; diagnostic graph input, not GE",
+              "rows": 17,
+              "scope": "fixed-price entry-cohort partial equilibrium; induced entry asset/income distribution; no pure-income-effect claim, GE, empirical fit, or production closure",
+              "status": "completed"
+            },
+            "contract": {
+              "candidate_fingerprint": "013e1f803b4e23d4920b14d6377af973e7a94e8d709b45143bd8dca1bdd7d425",
+              "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/production/selected_verification/evaluation/raw/repetition_02/initial_state.pkl.gz",
+              "checkpoint_sha256": "b3491eedcee6250cf94833067646d3e6463496cbf5a64bdcabe7b13bc7e89eb2",
+              "closure": "checkpoint population, fiscal objects, geography, prices and entry law held fixed; no GE claim",
+              "family": "refit_new_income",
+              "initial_population_shape": [
+                120,
+                6,
+                1,
+                17,
+                15,
+                4,
+                4
+              ],
+              "population_source": "saved_evaluation",
+              "price": [
+                0.5469369720186884
+              ],
+              "raw_vs_evaluation_changed_count": 10,
+              "raw_vs_evaluation_l1": 7.272090560285096e-16,
+              "raw_vs_evaluation_linf": 3.0099644005948624e-16,
+              "raw_vs_evaluation_total_gap": 2.220446049250313e-16,
+              "scope": "fixed-price partial equilibrium; within-family preferences and initial population fixed",
+              "source_manifest": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/working_contract.json",
+              "source_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2"
+            },
+            "label": "arm_01_phi0.8_lambda0_cap6",
+            "lambda": 0.0,
+            "metrics": {
+              "birth_flow": 0.11468350159909416,
+              "first_birth_flow": 0.048909241397947056,
+              "market_residual": 1.0108669445430421e-07,
+              "mean_rooms": 7.0989387779377795,
+              "owner_mass": 0.4908400458122339,
+              "ownership": 0.4908400458124063,
+              "pre_mass": 1.000000000000011,
+              "renter_mass": 0.5091599541874154
+            },
+            "mortgage_access_label": "native joint deposit-and-collateral access",
+            "phi": 0.8,
+            "policy_audit": {
+              "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+              "lower_node_mass_at_negative_steps": 0.0,
+              "maximum_occupied_value_drop": 0.0,
+              "occupied_negative_steps": 0,
+              "probabilities": {
+                "continuation_birth": {
+                  "maximum": 1.0,
+                  "minimum": 0.0,
+                  "nonfinite": 0
+                },
+                "first_birth": {
+                  "maximum": 1.0,
+                  "minimum": 0.0,
+                  "nonfinite": 0
+                },
+                "location": {
+                  "maximum": 1.0,
+                  "minimum": 0.0,
+                  "nonfinite": 0
+                },
+                "tenure": {
+                  "maximum": 1.0,
+                  "minimum": 0.0,
+                  "nonfinite": 0
+                }
+              },
+              "share_pre_choice_mass_at_negative_steps": 0.0,
+              "value_drop_tolerance": 1e-07
+            },
+            "population": "common contract pre-choice mass",
+            "preferences": "family checkpoint unchanged",
+            "rental_cap": 6.0,
+            "standard_graphs": {
+              "count": 17,
+              "paths": [
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/fertility_by_age.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/fertility_policy_by_age_income_state.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/housing_by_age_income_state.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/housing_market.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/housing_prices.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/income_state_outcomes.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/market_clearing_by_market.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/market_clearing_residuals.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/owner_rungs.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/ownership_by_age.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/ownership_by_age_income_state.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/policy_childless_renter_age30.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/policy_childless_renter_age42.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/tenure_services.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_01_phi0.8_lambda0_cap6/standard_diagnostics/wealth_dist_childless_renter_age42.png"
+              ],
+              "status": "completed"
+            },
+            "status": "completed"
+          },
+          "0.25": {
+            "budget": {
+              "actual_rent": 0.09063372927997913,
+              "budget_excess_mass": 0.0,
+              "budget_tolerance": 1e-09,
+              "maximum_occupied_excess": 1.7763568394002505e-15
+            },
+            "cohort": {
+              "arm": "arm_06_phi0.8_lambda0.25_cap6",
+              "cumulative_explicit_births_per_initial_household": 1.8434356882343859,
+              "entry_rule": "native conditional entrant for each process",
+              "first_birth_mean_age": 24.239943781868938,
+              "first_births_per_initial_household": 0.7811211292607954,
+              "initial_mass": 1.0,
+              "lifetime_cross_section": "normalized lifetime cohort distribution weighted by actual surviving mass; diagnostic graph input, not GE",
+              "rows": 17,
+              "scope": "fixed-price entry-cohort partial equilibrium; induced entry asset/income distribution; no pure-income-effect claim, GE, empirical fit, or production closure",
+              "status": "completed"
+            },
+            "contract": {
+              "candidate_fingerprint": "013e1f803b4e23d4920b14d6377af973e7a94e8d709b45143bd8dca1bdd7d425",
+              "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/production/selected_verification/evaluation/raw/repetition_02/initial_state.pkl.gz",
+              "checkpoint_sha256": "b3491eedcee6250cf94833067646d3e6463496cbf5a64bdcabe7b13bc7e89eb2",
+              "closure": "checkpoint population, fiscal objects, geography, prices and entry law held fixed; no GE claim",
+              "family": "refit_new_income",
+              "initial_population_shape": [
+                120,
+                6,
+                1,
+                17,
+                15,
+                4,
+                4
+              ],
+              "population_source": "saved_evaluation",
+              "price": [
+                0.5469369720186884
+              ],
+              "raw_vs_evaluation_changed_count": 10,
+              "raw_vs_evaluation_l1": 7.272090560285096e-16,
+              "raw_vs_evaluation_linf": 3.0099644005948624e-16,
+              "raw_vs_evaluation_total_gap": 2.220446049250313e-16,
+              "scope": "fixed-price partial equilibrium; within-family preferences and initial population fixed",
+              "source_manifest": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/working_contract.json",
+              "source_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2"
+            },
+            "label": "arm_06_phi0.8_lambda0.25_cap6",
+            "lambda": 0.25,
+            "metrics": {
+              "birth_flow": 0.11750063599300378,
+              "first_birth_flow": 0.05161335420451452,
+              "market_residual": 0.01253481503954355,
+              "mean_rooms": 7.187921935893006,
+              "owner_mass": 0.49115954180445415,
+              "ownership": 0.49115954180462684,
+              "pre_mass": 1.000000000000011,
+              "renter_mass": 0.5088404581951945
+            },
+            "mortgage_access_label": "native joint deposit-and-collateral access",
+            "phi": 0.8,
+            "policy_audit": {
+              "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+              "lower_node_mass_at_negative_steps": 0.0,
+              "maximum_occupied_value_drop": 0.0,
+              "occupied_negative_steps": 0,
+              "probabilities": {
+                "continuation_birth": {
+                  "maximum": 1.0,
+                  "minimum": 0.0,
+                  "nonfinite": 0
+                },
+                "first_birth": {
+                  "maximum": 1.0,
+                  "minimum": 0.0,
+                  "nonfinite": 0
+                },
+                "location": {
+                  "maximum": 1.0,
+                  "minimum": 0.0,
+                  "nonfinite": 0
+                },
+                "tenure": {
+                  "maximum": 1.0,
+                  "minimum": 0.0,
+                  "nonfinite": 0
+                }
+              },
+              "share_pre_choice_mass_at_negative_steps": 0.0,
+              "value_drop_tolerance": 1e-07
+            },
+            "population": "common contract pre-choice mass",
+            "preferences": "family checkpoint unchanged",
+            "rental_cap": 6.0,
+            "standard_graphs": {
+              "count": 17,
+              "paths": [
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/fertility_by_age.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/fertility_policy_by_age_income_state.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/housing_by_age_income_state.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/housing_market.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/housing_prices.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/income_state_outcomes.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/market_clearing_by_market.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/market_clearing_residuals.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/owner_rungs.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/ownership_by_age.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/ownership_by_age_income_state.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/policy_childless_renter_age30.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/policy_childless_renter_age42.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/tenure_services.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_06_phi0.8_lambda0.25_cap6/standard_diagnostics/wealth_dist_childless_renter_age42.png"
+              ],
+              "status": "completed"
+            },
+            "status": "completed"
+          },
+          "1.0": {
+            "budget": {
+              "actual_rent": 0.09063372927997913,
+              "budget_excess_mass": 0.0,
+              "budget_tolerance": 1e-09,
+              "maximum_occupied_excess": 1.7763568394002505e-15
+            },
+            "cohort": {
+              "arm": "arm_09_phi0.8_lambda1_cap6",
+              "cumulative_explicit_births_per_initial_household": 1.8128502473669104,
+              "entry_rule": "native conditional entrant for each process",
+              "first_birth_mean_age": 24.16413883670575,
+              "first_births_per_initial_household": 0.7669491772105728,
+              "initial_mass": 1.0,
+              "lifetime_cross_section": "normalized lifetime cohort distribution weighted by actual surviving mass; diagnostic graph input, not GE",
+              "rows": 17,
+              "scope": "fixed-price entry-cohort partial equilibrium; induced entry asset/income distribution; no pure-income-effect claim, GE, empirical fit, or production closure",
+              "status": "completed"
+            },
+            "contract": {
+              "candidate_fingerprint": "013e1f803b4e23d4920b14d6377af973e7a94e8d709b45143bd8dca1bdd7d425",
+              "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/production/selected_verification/evaluation/raw/repetition_02/initial_state.pkl.gz",
+              "checkpoint_sha256": "b3491eedcee6250cf94833067646d3e6463496cbf5a64bdcabe7b13bc7e89eb2",
+              "closure": "checkpoint population, fiscal objects, geography, prices and entry law held fixed; no GE claim",
+              "family": "refit_new_income",
+              "initial_population_shape": [
+                120,
+                6,
+                1,
+                17,
+                15,
+                4,
+                4
+              ],
+              "population_source": "saved_evaluation",
+              "price": [
+                0.5469369720186884
+              ],
+              "raw_vs_evaluation_changed_count": 10,
+              "raw_vs_evaluation_l1": 7.272090560285096e-16,
+              "raw_vs_evaluation_linf": 3.0099644005948624e-16,
+              "raw_vs_evaluation_total_gap": 2.220446049250313e-16,
+              "scope": "fixed-price partial equilibrium; within-family preferences and initial population fixed",
+              "source_manifest": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/working_contract.json",
+              "source_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2"
+            },
+            "label": "arm_09_phi0.8_lambda1_cap6",
+            "lambda": 1.0,
+            "metrics": {
+              "birth_flow": 0.11741247289230274,
+              "first_birth_flow": 0.051551354709236386,
+              "market_residual": 0.01866091591846258,
+              "mean_rooms": 7.231410746583832,
+              "owner_mass": 0.4911811565174529,
+              "ownership": 0.491181156517629,
+              "pre_mass": 1.000000000000011,
+              "renter_mass": 0.508818843482189
+            },
+            "mortgage_access_label": "native joint deposit-and-collateral access",
+            "phi": 0.8,
+            "policy_audit": {
+              "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+              "lower_node_mass_at_negative_steps": 0.0,
+              "maximum_occupied_value_drop": 0.0,
+              "occupied_negative_steps": 0,
+              "probabilities": {
+                "continuation_birth": {
+                  "maximum": 1.0,
+                  "minimum": 0.0,
+                  "nonfinite": 0
+                },
+                "first_birth": {
+                  "maximum": 1.0,
+                  "minimum": 0.0,
+                  "nonfinite": 0
+                },
+                "location": {
+                  "maximum": 1.0,
+                  "minimum": 0.0,
+                  "nonfinite": 0
+                },
+                "tenure": {
+                  "maximum": 1.0,
+                  "minimum": 0.0,
+                  "nonfinite": 0
+                }
+              },
+              "share_pre_choice_mass_at_negative_steps": 0.0,
+              "value_drop_tolerance": 1e-07
+            },
+            "population": "common contract pre-choice mass",
+            "preferences": "family checkpoint unchanged",
+            "rental_cap": 6.0,
+            "standard_graphs": {
+              "count": 17,
+              "paths": [
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/fertility_by_age.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/fertility_policy_by_age_income_state.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/housing_by_age_income_state.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/housing_market.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/housing_prices.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/income_state_outcomes.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/market_clearing_by_market.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/market_clearing_residuals.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/owner_rungs.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/ownership_by_age.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/ownership_by_age_income_state.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/policy_childless_renter_age30.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/policy_childless_renter_age42.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/tenure_services.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_09_phi0.8_lambda1_cap6/standard_diagnostics/wealth_dist_childless_renter_age42.png"
+              ],
+              "status": "completed"
+            },
+            "status": "completed"
+          },
+          "5.0": {
+            "budget": {
+              "actual_rent": 0.09063372927997913,
+              "budget_excess_mass": 0.0,
+              "budget_tolerance": 1e-09,
+              "maximum_occupied_excess": 1.7763568394002505e-15
+            },
+            "cohort": {
+              "arm": "arm_12_phi0.8_lambda5_cap6",
+              "cumulative_explicit_births_per_initial_household": 1.8128502473669104,
+              "entry_rule": "native conditional entrant for each process",
+              "first_birth_mean_age": 24.16413883670575,
+              "first_births_per_initial_household": 0.7669491772105728,
+              "initial_mass": 1.0,
+              "lifetime_cross_section": "normalized lifetime cohort distribution weighted by actual surviving mass; diagnostic graph input, not GE",
+              "rows": 17,
+              "scope": "fixed-price entry-cohort partial equilibrium; induced entry asset/income distribution; no pure-income-effect claim, GE, empirical fit, or production closure",
+              "status": "completed"
+            },
+            "contract": {
+              "candidate_fingerprint": "013e1f803b4e23d4920b14d6377af973e7a94e8d709b45143bd8dca1bdd7d425",
+              "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/production/selected_verification/evaluation/raw/repetition_02/initial_state.pkl.gz",
+              "checkpoint_sha256": "b3491eedcee6250cf94833067646d3e6463496cbf5a64bdcabe7b13bc7e89eb2",
+              "closure": "checkpoint population, fiscal objects, geography, prices and entry law held fixed; no GE claim",
+              "family": "refit_new_income",
+              "initial_population_shape": [
+                120,
+                6,
+                1,
+                17,
+                15,
+                4,
+                4
+              ],
+              "population_source": "saved_evaluation",
+              "price": [
+                0.5469369720186884
+              ],
+              "raw_vs_evaluation_changed_count": 10,
+              "raw_vs_evaluation_l1": 7.272090560285096e-16,
+              "raw_vs_evaluation_linf": 3.0099644005948624e-16,
+              "raw_vs_evaluation_total_gap": 2.220446049250313e-16,
+              "scope": "fixed-price partial equilibrium; within-family preferences and initial population fixed",
+              "source_manifest": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/working_contract.json",
+              "source_root": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2"
+            },
+            "label": "arm_12_phi0.8_lambda5_cap6",
+            "lambda": 5.0,
+            "metrics": {
+              "birth_flow": 0.11741247289230274,
+              "first_birth_flow": 0.051551354709236386,
+              "market_residual": 0.01866091591846258,
+              "mean_rooms": 7.231410746583832,
+              "owner_mass": 0.4911811565174529,
+              "ownership": 0.491181156517629,
+              "pre_mass": 1.000000000000011,
+              "renter_mass": 0.508818843482189
+            },
+            "mortgage_access_label": "native joint deposit-and-collateral access",
+            "phi": 0.8,
+            "policy_audit": {
+              "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+              "lower_node_mass_at_negative_steps": 0.0,
+              "maximum_occupied_value_drop": 0.0,
+              "occupied_negative_steps": 0,
+              "probabilities": {
+                "continuation_birth": {
+                  "maximum": 1.0,
+                  "minimum": 0.0,
+                  "nonfinite": 0
+                },
+                "first_birth": {
+                  "maximum": 1.0,
+                  "minimum": 0.0,
+                  "nonfinite": 0
+                },
+                "location": {
+                  "maximum": 1.0,
+                  "minimum": 0.0,
+                  "nonfinite": 0
+                },
+                "tenure": {
+                  "maximum": 1.0,
+                  "minimum": 0.0,
+                  "nonfinite": 0
+                }
+              },
+              "share_pre_choice_mass_at_negative_steps": 0.0,
+              "value_drop_tolerance": 1e-07
+            },
+            "population": "common contract pre-choice mass",
+            "preferences": "family checkpoint unchanged",
+            "rental_cap": 6.0,
+            "standard_graphs": {
+              "count": 17,
+              "paths": [
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/fertility_by_age.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/fertility_policy_by_age_income_state.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/housing_by_age_income_state.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/housing_market.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/housing_prices.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/income_state_outcomes.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/market_clearing_by_market.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/market_clearing_residuals.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/owner_rungs.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/ownership_by_age.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/ownership_by_age_income_state.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/policy_childless_renter_age30.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/policy_childless_renter_age42.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/tenure_services.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+                "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_refit_v2/refit_new_income_production/refit_new_income/cases/arm_12_phi0.8_lambda5_cap6/standard_diagnostics/wealth_dist_childless_renter_age42.png"
+              ],
+              "status": "completed"
+            },
+            "status": "completed"
+          }
+        },
+        "selected_doses": [
+          0.0,
+          0.25,
+          1.0,
+          5.0
+        ],
+        "selected_labels": {
+          "0.0": "arm_01_phi0.8_lambda0_cap6",
+          "0.25": "arm_06_phi0.8_lambda0.25_cap6",
+          "1.0": "arm_09_phi0.8_lambda1_cap6",
+          "5.0": "arm_12_phi0.8_lambda5_cap6"
+        },
+        "source_manifest_values": [
+          "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/working_contract.json"
+        ],
+        "source_root_values": [
+          "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2"
+        ],
+        "summary": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/saved_credit_v1/summary_refit_new_income.json"
+      }
+    }
+  },
+  "scope": "saved cohort arrays only; no Bellman, equilibrium, or current-model fallback",
+  "smoke": true,
+  "status": "complete",
+  "strict": true,
+  "summaries": {
+    "original": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/saved_credit_v1/summary_original.json",
+    "refit_new_income": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/saved_credit_v1/summary_refit_new_income.json",
+    "stationary_new_income": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/saved_credit_v1/summary_stationary_new_income.json"
+  }
+}

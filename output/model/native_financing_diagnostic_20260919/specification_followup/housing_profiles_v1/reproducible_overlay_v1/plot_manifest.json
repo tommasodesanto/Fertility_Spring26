@@ -1,0 +1,22 @@
+{
+  "source_csv": "output/model/native_financing_diagnostic_20260919/specification_followup/housing_profiles_v1/full/housing_profile_by_age.csv",
+  "source_csv_sha256": "c7585b19f066520e5136bc500ecb41f2c2387036ca7613946fa653f59de4f332",
+  "plot_helper_sha256": "8f9f7c8ecec6d0423b38d7306efa0c0f67879619b0950d73c9683bed8b8c74f8",
+  "input_provenance_source_sha256": "edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324e",
+  "input_profile_driver_hash": "fc60749144def616db908cb2d7b1de974e47b76d65eb6e7d6e6425602ef8ab71",
+  "input_reader_hash": "4dd1647e96b72c313801989fdd823303bd2dd8b144c568c0076b735402f3f84f",
+  "aggregation": "sum HHWT, capped rooms and owner HHWT across tenure/current-child cells; ratios after aggregation",
+  "age_definition": "four-year bins beginning at 18; no equal-age weighting",
+  "model_data_used": true,
+  "model_overlay": {
+    "model_dir": "output/model/native_financing_diagnostic_20260919/specification_followup/housing_profiles_v1/model_collection_shared_v3",
+    "model_artifact_sha256": {
+      "original": "df799fe82509c10d5f1e5d9dc557ce9f04341a1827991d1e9a13c376ec6f8686",
+      "refit_new_income": "e4d82817a1cc99514c7e3da6c7726da2c27da6658818951372d5fc1c49fed262",
+      "stationary_new_income": "5879f6951905f85b39698bda4d4c877da6849991899f1253533a7f2d58922c3f"
+    },
+    "model_measurement": "physical rooms: renter hR_pol and owner H_own, each capped at 9 before g_current weighting",
+    "ownership_note": "model has no DUE classification; overlay is all-household/all-structure only",
+    "comparison_note": "checkpoint family prices and preferences may differ; overlay is descriptive and not a causal effect"
+  }
+}
