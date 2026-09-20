@@ -35,3 +35,15 @@ stationarity, log-income variance, and first two autocovariances. The iid input
 is a log standard deviation; the three-node quadrature matches its log variance.
 The failed first cohort job stopped on its baseline arm before candidate income
 was evaluated. It provides no earnings-model evidence.
+
+## Bounded refit execution
+
+Stationary pilot 18040896 and lifetime cohort 18041070 are complete; the full
+results and qualifications are in the parent README. Bounded refit 18047156
+uses `search_plan.remote.json`, staged in a separate `income_search_v1` runtime.
+The original `calibration_plan.remote.json` and pilot runtime remain the
+immutable launch receipt. The local `calibration_plan.json` tracks the current
+adapter hash for construction/preflight tests. Search source is
+`code/model/tools/run_e5f_income_candidate_search.py`; the cluster launcher is
+`code/cluster/submit_e5f_income_candidate_search.sh`. See the parent README for
+budgets, stopping rules, and complete pilot target/parameter tables.

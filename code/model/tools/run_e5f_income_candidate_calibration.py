@@ -167,7 +167,10 @@ def run_wrapped_probe(plan: dict[str, Any], contract: Path, output: Path) -> Non
         sys.argv = old_argv
 
 
-def run_scored_pilot(plan: dict[str, Any], output: Path, *, preflight_only: bool = False) -> dict[str, Any]:
+def run_scored_pilot(plan: dict[str, Any], output: Path, *, preflight_only: bool = False,
+                     parameters: dict[str, float] | None = None,
+                     initial_psi: float | None = None, repetitions: int = 1,
+                     case_id: str = "income_candidate_pilot") -> dict[str, Any]:
     """Run one exact scored candidate through the frozen wrapper.
 
     The wrapper's child process is redirected only to this adapter's probe
@@ -185,9 +188,13 @@ def run_scored_pilot(plan: dict[str, Any], output: Path, *, preflight_only: bool
     initial = read(Path(plan["initial_contract_path"]))
     candidate = read(_artifact(plan, "candidate_json"))
     overrides = candidate_overrides(candidate)
-    initial.update(case_id="income_candidate_pilot", repetitions=1,
-                   structural_candidate=plan["pilot_parameters"],
-                   initial_psi=float(plan["pilot_initial_psi"]),
+    if repetitions not in (1, 2):
+        raise ValueError("repetitions must be 1 or 2")
+    structural = copy.deepcopy(parameters if parameters is not None else plan["pilot_parameters"])
+    psi = float(plan["pilot_initial_psi"] if initial_psi is None else initial_psi)
+    initial.update(case_id=case_id, repetitions=repetitions,
+                   structural_candidate=structural,
+                   initial_psi=psi,
                    income_candidate_id=plan["candidate_id"],
                    income_candidate_payload_fingerprint=plan["candidate_payload_fingerprint"],
                    income_candidate_json_sha256=plan["candidate_json_sha256"],
@@ -198,7 +205,7 @@ def run_scored_pilot(plan: dict[str, Any], output: Path, *, preflight_only: bool
                    cold_solve_required=True)
     out = Path(output).resolve(); out.mkdir(parents=True, exist_ok=False)
     contract = copy.deepcopy(read(Path(plan["run_contract_path"])))
-    contract["case_id"] = "income_candidate_pilot"
+    contract["case_id"] = case_id
     contract["source_root"] = plan["source_root"]
     contract["initial_solve_contract"] = {"path": str(out / "initial_contract.json"),
                                           "sha256": ""}
@@ -268,6 +275,10 @@ def main() -> None:
     parser.add_argument("--output", type=Path)
     parser.add_argument("--contract", type=Path)
     parser.add_argument("--plan-path", dest="plan_path", type=Path)
+    parser.add_argument("--parameters-json", type=Path)
+    parser.add_argument("--initial-psi", type=float)
+    parser.add_argument("--repetitions", type=int, default=1)
+    parser.add_argument("--case-id", default="income_candidate_pilot")
     args = parser.parse_args()
     plan = read(args.plan)
     plan["plan_path"] = str(args.plan.resolve())
@@ -294,7 +305,10 @@ def main() -> None:
     if args.mode == "pilot":
         if not plan.get("pilot_parameters") or "pilot_initial_psi" not in plan:
             raise ValueError("pilot parameters and normalized initial psi are required")
-        print(json.dumps(run_scored_pilot(plan, args.output), indent=2, sort_keys=True))
+        parameters = read(args.parameters_json) if args.parameters_json else None
+        print(json.dumps(run_scored_pilot(
+            plan, args.output, parameters=parameters, initial_psi=args.initial_psi,
+            repetitions=args.repetitions, case_id=args.case_id), indent=2, sort_keys=True))
 
 
 if __name__ == "__main__":

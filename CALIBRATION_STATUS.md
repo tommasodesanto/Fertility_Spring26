@@ -12,8 +12,16 @@ flows fall from 1.87241076 to 1.66643427, first-birth probability from
 25.702; mortgage effects are small and total births remain separate from
 first births. These are pilot diagnostics, not adoption or a completed-
 fertility claim. See the [pilot tables and source pins](output/model/native_financing_diagnostic_20260919/README.md).
-Bounded refit preparation may proceed; no full recalibration job has been
-launched or assigned an ID.
+Bounded diagnostic refit **18047156** is running on Torch. The saved-checkpoint
+income audit passed exactly (all grid/weight/transition differences zero; log
+moments agree within `1e-12`), and the first four proposals have live heartbeats.
+The run allows at most 16 coordinate proposals across all nine structural
+parameters, with the same 12 scored targets plus separate fertility normalization,
+then two native repetitions of the selected point. Four workers, one thread each;
+one-hour Slurm limit, 35-minute search phase, 20-minute verification reserve.
+This is a bounded local diagnostic refit, not convergence or an adoption decision.
+See [search plan](output/model/native_financing_diagnostic_20260919/earnings_candidate/search_plan.remote.json)
+and [submission receipt](output/model/native_financing_diagnostic_20260919/income_search_18047156/submission.json).
 
 **September 19, 2026 — native financing diagnostic completed:** Torch job
 **18034069** (`native_finance`) completed in 3m24s with exit 0. Both baseline

@@ -4,6 +4,41 @@ This is a full-lifecycle partial-equilibrium diagnostic from the frozen Septembe
 
 Run two independent `baseline` cases first. Both require all saved policy arrays to reproduce at `atol=1e-10, rtol=0`; only then run `mortgage_only`, `unsecured_only`, and `both` as independently timed processes.
 
+## Bounded earnings refit — job 18047156
+
+Submitted and running on Torch, with exact saved-checkpoint income-payload and
+zero-solve wrapper preflight passed. The first four cases have live heartbeats.
+The controller tries at most 16 one-coordinate changes around the verified
+651.9418197098323 pilot. It keeps all nine structural coordinates available;
+all 12 scored moments and the separate 2.1 fertility normalization stay fixed.
+Annual discounting remains bounded above by 0.99; the retained scorer's generic
+0.9995 bound is not the search bound. Full pilot tables appear below.
+
+This is one bounded local poll, not a converged SMM fit or adoption decision.
+Search budget: 2,100 seconds; at most 900 seconds per trial; stop dispatching
+with less than 500 seconds remaining. Four single-threaded workers run at most
+16 trials (roughly 200–500 seconds each based on the six-solve 459-second pilot
+and a closer starting normalization). The native loop allows up to eight solves
+per evaluation; estimated total 36–144 solves including final verification.
+The selected point is repeated twice, reserving 1,200 seconds. Hard controller
+limit 3,420 seconds; Slurm limit 3,600 seconds. Contract changes abort; numerical
+failures are recorded; timeout cleanup includes descendants in new sessions.
+Latest completed case, best-so-far, and 30-second case heartbeats are retained.
+The selected result must provide all 13 fit rows, 17 parameter rows, and the
+same 17 diagnostic plots. No further search launches automatically.
+
+Sixteen targeted tests passed, covering constructor moments, source/target
+contracts, the complete batch loop, selection/repetition, budget stops,
+parameter binding, and descendant cleanup. The real pilot previously exercised
+the unchanged equilibrium/normalization loop; startup also preflighted the
+new two-repetition contract and checked the actual checkpoint's income arrays.
+
+Remote results: `/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_search_v1/results_18047156`.
+Source/target hashes and bounds: [search plan](earnings_candidate/search_plan.remote.json).
+Actual checkpoint audit: [receipt](income_search_18047156/income_payload_audit.json).
+Launch: `SUBMIT=1 bash code/cluster/submit_e5f_income_candidate_search.sh`.
+The app follow-up checks every ten minutes and reports completion or failure.
+
 ## Submission receipt (September 19, 2026)
 
 Torch job **18034069** (`native_finance`) was submitted from
