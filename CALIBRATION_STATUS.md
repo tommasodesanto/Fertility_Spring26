@@ -1,5 +1,22 @@
 # Calibration Status
 
+**September 19, 22:45 EDT — coordinate result verified; mechanism smoke stopped:**
+Job **18047156** completed in 41m10s (exit 0), evaluating all 16 proposals.
+The selected loss is **502.74561411262744**, down from the same-income pilot's
+651.9418197098323, with two successful native repetitions and exact numeric-fit
+verification. This remains a finite local diagnostic, not convergence or adoption.
+The [complete 13-target/17-parameter readout](output/model/native_financing_diagnostic_20260919/income_search_18047156/readout.md),
+source/verification receipt and all 17 standard plots have been collected and
+checked. Active annual-discount bounds use 0.99 as the upper limit.
+Joint-search smoke **18049120** is running; **18049121** waits on its success.
+Financing-matrix smoke **18049130** failed after 3m43s: the original-family
+controls and combined treatment passed, but the stationary-new-income baseline
+failed the unchanged-initial-population guard (`all arms changed saved initial
+population`). Its magnitude and cause have not been diagnosed. Dependents
+**18049131** and **18049132** were cancelled without running. No retry or gate
+change was made; the independent earnings-search chain continues. See the
+[monitor receipt](output/model/native_financing_diagnostic_20260919/overnight/monitor_20260919_2245.json).
+
 **September 19, 2026 — overnight expansion authorized and submitted:**
 Joint-search smoke **18049120** depends on the verified coordinate poll
 **18047156**; search **18049121** depends on that smoke, with up to 96 joint

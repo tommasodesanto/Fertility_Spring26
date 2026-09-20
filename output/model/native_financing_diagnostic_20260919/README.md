@@ -4,6 +4,25 @@ This is a full-lifecycle partial-equilibrium diagnostic from the frozen Septembe
 
 Run two independent `baseline` cases first. Both require all saved policy arrays to reproduce at `atol=1e-10, rtol=0`; only then run `mortgage_only`, `unsecured_only`, and `both` as independently timed processes.
 
+## Overnight progress — September 19, 22:45 EDT
+
+Coordinate job 18047156 completed all 16 proposals in 41m10s. Case 3 was selected
+with loss 502.74561411262744 and two verified native repetitions. Full target and
+parameter tables are in the [complete readout](income_search_18047156/readout.md),
+with source pins and 17 standard plots in the same folder. Lead checks confirmed
+all fit contributions sum to the selected loss, target/income fingerprints match,
+and both native repeats agree; the fertility-by-age plot was inspected.
+No convergence or adoption is implied.
+
+Mechanism smoke 18049130 stopped after 3m43s. Both original-family controls and
+the combined treatment passed. The stationary-new-income baseline failed the
+saved-initial-population equality check before completing; the difference's
+size and cause remain undiagnosed. Its downstream jobs 18049131 and 18049132
+were cancelled without running. No automatic retry or gate relaxation occurred.
+The joint earnings-search smoke 18049120 is running, independently of that
+failure, and search 18049121 remains dependent on its success.
+[Monitor and failure receipt](overnight/monitor_20260919_2245.json).
+
 ## Overnight experiments — September 19
 
 The author requested more useful experiments overnight. The following jobs

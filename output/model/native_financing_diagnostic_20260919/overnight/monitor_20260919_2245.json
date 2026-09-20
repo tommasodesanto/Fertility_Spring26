@@ -1,0 +1,39 @@
+{
+  "checked_at": "2026-09-20T02:45:11Z",
+  "coordinate_poll": {
+    "job": "18047156",
+    "state": "COMPLETED",
+    "elapsed": "00:41:10",
+    "exit_code": "0:0",
+    "status": "verified_selection",
+    "proposals": 16,
+    "selected_case": 3,
+    "selected_loss": 502.74561411262744,
+    "verification": "verified"
+  },
+  "joint_search_smoke": {
+    "job": "18049120",
+    "state": "RUNNING"
+  },
+  "joint_search": {
+    "job": "18049121",
+    "state": "PENDING",
+    "reason": "Dependency"
+  },
+  "factorial_smoke": {
+    "job": "18049130",
+    "state": "FAILED",
+    "elapsed": "00:03:43",
+    "exit_code": "1:0",
+    "completed_family": "original: two exact controls plus combined treatment",
+    "failed_family": "stationary_new_income",
+    "failed_arm": "baseline control phi0.8 lambda0 cap6",
+    "error": "all arms changed saved initial population",
+    "interpretation": "population-preservation guard failed; magnitude and cause not yet diagnosed"
+  },
+  "factorial_dependents": {
+    "18049131": "CANCELLED after failed dependency; never ran",
+    "18049132": "CANCELLED after failed dependency; never ran"
+  },
+  "action": "no retry or gate change; independent earnings search continues"
+}
