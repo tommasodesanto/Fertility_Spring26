@@ -1,5 +1,10 @@
 # Native fixed-price financing diagnostic
 
+September 20 onward: the author has authorized a new bounded
+[specification follow-up](specification_followup/README.md), with an active goal
+and check-ins. Its launch manifest and reviewed findings will live there; the
+completed overnight battery below remains a separate fixed experiment.
+
 This is a full-lifecycle partial-equilibrium diagnostic from the frozen September-14 native checkpoint. It holds checkpoint/schema inspection and one receipt plus compressed native arrays for every completed arm. Every arm applies the native sequential-fertility and current-choice period evaluator to the saved beginning-of-period mass. It does not calculate a stationary endpoint, a transition, a market-clearing price, or a fiscal-clearing transfer.
 
 Run two independent `baseline` cases first. Both require all saved policy arrays to reproduce at `atol=1e-10, rtol=0`; only then run `mortgage_only`, `unsecured_only`, and `both` as independently timed processes.

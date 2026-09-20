@@ -1,5 +1,15 @@
 # Calibration Status
 
+**September 20, 11:24 EDT — continued specification research authorized:**
+Tommaso requested an active goal, check-ins and bounded experiments/longer
+cluster jobs while away until tomorrow. The existing Claude Max/Fable review
+is running; no new model job has yet been submitted. The follow-up prioritizes
+the credit/cohort response, comparable housing/lifecycle evidence, and at most
+two carefully controlled specification variants before any adoption decision.
+Initial budgets, stop rules and reporting are in the
+[specification follow-up plan](output/model/native_financing_diagnostic_20260919/specification_followup/README.md).
+The adopted baseline, target definitions and weights remain unchanged.
+
 **September 20 morning — overnight battery complete and reviewed:**
 All six final-chain jobs completed with exit 0. Search **18049121** evaluated
 96 proposals (89 valid, seven rejected); case 60 has loss **353.6588729140903**,
