@@ -1,62 +1,49 @@
 #!/usr/bin/env Rscript
-# Driver for the approved first-birth housing estimator. It consumes only the
-# saved v5 panel and verified NE source packet; it never reloads national ACS.
+# Approved first-birth housing driver. It consumes the persisted author v5
+# panel and verified NE source packet; it never reloads national ACS or rematches.
 suppressPackageStartupMessages({library(data.table); library(jsonlite)})
 root <- Sys.getenv("KLEVEN_ROOT", "/scratch/td2248/projects/kleven_acs_pilot_20260917")
-panel_file <- Sys.getenv("PANEL_FILE", file.path(root, "overnight_ne_benchmark/ne_housing_v5/cps_acs_pseudo-panel.rds"))
-packet_file <- Sys.getenv("PACKET_FILE", file.path(root, "output/kleven_acs_pilot/source_audit_extract27_20260919/ne_extract27_housing_key_packet.rds"))
-audit_file <- Sys.getenv("AUDIT_MANIFEST_FILE", file.path(root, "output/kleven_acs_pilot/source_audit_extract27_20260919/source_audit_manifest.json"))
-estimator_file <- Sys.getenv("ESTIMATOR_FILE", file.path(dirname(normalizePath(commandArgs()[1])), "estimate_first_birth_housing.R"))
-outdir <- Sys.getenv("OUTDIR", file.path(root, "output/kleven_acs_pilot/first_birth_housing_20260920"))
-run_estimation <- identical(Sys.getenv("RUN_ESTIMATION", "1"), "1")
-dir.create(outdir, recursive=TRUE, showWarnings=FALSE)
-progress_file <- file.path(outdir, "progress.log")
-checkpoint <- function(stage, detail="") { z <- sprintf("%s\t%s\t%s", format(Sys.time(), "%FT%T%z"), stage, detail); write(z, progress_file, append=TRUE); cat(z,"\n") }
-options(error=function() { try(write_json(list(status="FAILED",error=geterrmessage(),generated=as.character(Sys.time())), file.path(outdir,"failure_receipt.json"), auto_unbox=TRUE, pretty=TRUE),silent=TRUE); q(save="no",status=1,runLast=FALSE) })
-require_cols <- function(x, cols, label) { m <- setdiff(cols,names(x)); if(length(m)) stop(label," missing: ",paste(m,collapse=","),call.=FALSE) }
-canonical_panel <- function(x) {
-  x <- as.data.table(x); w <- c("src_key","source_origin","from_cps","emp_lw","wgt","t_es_lw","cohort","census","statefip","statename","gender","age_factor","doiy_factor")
-  i <- match(toupper(w),toupper(names(x))); if(anyNA(i)) stop("v5 panel lacks: ",paste(w[is.na(i)],collapse=","),call.=FALSE)
-  setnames(x,names(x)[i],w); x
+panel_file <- Sys.getenv("PANEL_FILE", file.path(root,"overnight_ne_benchmark/ne_housing_v5/cps_acs_pseudo-panel.rds"))
+packet_file <- Sys.getenv("PACKET_FILE", file.path(root,"output/kleven_acs_pilot/source_audit_extract27_20260919/ne_extract27_housing_key_packet.rds"))
+audit_file <- Sys.getenv("AUDIT_MANIFEST_FILE", file.path(root,"output/kleven_acs_pilot/source_audit_extract27_20260919/source_audit_manifest.json"))
+lineage_file <- Sys.getenv("LINEAGE_FILE", file.path(root,"overnight_ne_benchmark/ne_housing_v5/lineage_forensics.json"))
+concordance_file <- Sys.getenv("CONCORDANCE_FILE", file.path(root,"output/kleven_acs_pilot/source_audit_extract27_20260919/ne_sex_age_ownership_concordance.csv"))
+year_sample_file <- Sys.getenv("YEAR_SAMPLE_FILE", file.path(root,"output/kleven_acs_pilot/source_audit_extract27_20260919/ne_year_sample_comparison.csv"))
+estimator_file <- Sys.getenv("ESTIMATOR_FILE", file.path(dirname(normalizePath(commandArgs()[1])),"estimate_first_birth_housing.R"))
+outdir <- Sys.getenv("OUTDIR", file.path(root,"output/kleven_acs_pilot/first_birth_housing_20260920")); dir.create(outdir,recursive=TRUE,showWarnings=FALSE)
+run_estimation <- identical(Sys.getenv("RUN_ESTIMATION","1"),"1"); tiny_driver_smoke <- identical(Sys.getenv("TINY_DRIVER_SMOKE","0"),"1"); progress_file <- file.path(outdir,"progress.log")
+checkpoint <- function(stage,detail=""){z<-sprintf("%s\t%s\t%s",format(Sys.time(),"%FT%T%z"),stage,detail);write(z,progress_file,append=TRUE);cat(z,"\n")}
+options(error=function(){try(write_json(list(status="FAILED",error=geterrmessage(),generated=as.character(Sys.time())),file.path(outdir,"failure_receipt.json"),auto_unbox=TRUE,pretty=TRUE),silent=TRUE);q(save="no",status=1,runLast=FALSE)})
+require_cols <- function(x,cols,label){m<-setdiff(cols,names(x));if(length(m))stop(label," missing: ",paste(m,collapse=","),call.=FALSE)}
+obs_pick <- function(d,nm){nx<-paste0(nm,".x");if(nx%in%names(d)){z<-d[[nx]];if(nm%in%names(d))z<-ifelse(!is.na(z),z,d[[nm]]);return(z)};if(nm%in%names(d))return(d[[nm]]);stop("v5 schema lacks observed ",nm,call.=FALSE)}
+canonical_panel <- function(x,lineage){
+  x <- as.data.frame(x); required <- c("t_es_lw","wgt","wgt_match","age_factor","doiy_factor","gender","census","statename","statefip","dataset","src_key.x","src_key","ownershp_raw.x","ownershp_raw","source_origin.x","source_origin","from_cps.x","from_cps","doiy","source_doiy","match_doiy","serial","pernum")
+  require_cols(x,required,"persisted v5 panel"); if(!tiny_driver_smoke && nrow(x)!=3779568L)stop("v5 panel row count differs from verified v6 setup",call.=FALSE)
+  if(!identical(as.integer(lineage$true_acs_source_conflicting_groups),0L))stop("lineage does not prove zero true-ACS source conflicts",call.=FALSE)
+  x$from_cps <- suppressWarnings(as.integer(obs_pick(x,"from_cps"))); x$source_origin <- as.character(obs_pick(x,"source_origin")); x$src_key <- as.character(obs_pick(x,"src_key")); x$dataset <- as.character(x$dataset)
+  if(any(is.na(x$from_cps)|!(x$from_cps%in%c(0L,1L))))stop("observed v5 from_cps is not binary",call.=FALSE)
+  true <- !is.na(x$src_key)&x$source_origin=="ACS"&x$from_cps==0L&x$dataset=="ACS"; if(any(true&is.na(x$src_key)))stop("true ACS row lacks source key",call.=FALSE)
+  z <- x$src_key[true]; parts <- strsplit(z,":",fixed=TRUE); if(any(lengths(parts)!=4L))stop("true ACS source key is not SAMPLE:YEAR:SERIAL:PERNUM",call.=FALSE)
+  mm <- do.call(rbind,parts); num <- suppressWarnings(apply(mm,2,as.numeric)); if(any(!is.finite(num)))stop("true ACS source key contains nonnumeric components",call.=FALSE)
+  x$SAMPLE <- NA_real_; x$YEAR <- NA_real_; x$SERIAL <- NA_real_; x$PERNUM <- NA_real_; x$SAMPLE[true]<-num[,1]; x$YEAR[true]<-num[,2]; x$SERIAL[true]<-num[,3]; x$PERNUM[true]<-num[,4]
+  # These fields are recovered from the verified source key; doiy/serial/pernum
+  # remain the observed panel identity and are not substituted for source IDs.
+  tn <- suppressWarnings(as.numeric(as.character(x$t_es_lw))); dy <- suppressWarnings(as.numeric(as.character(x$doiy))); tb <- pmax(-5, pmin(10, tn)); x$implied_pseudo_event_year <- ifelse(is.finite(tn) & is.finite(dy), dy - tb, NA_real_); x$cohort <- ifelse(is.na(x$implied_pseudo_event_year), "unavailable", as.character(x$implied_pseudo_event_year)); x
 }
-canonical_source <- function(x) {
-  x <- as.data.table(x); names(x) <- toupper(names(x)); k <- c("YEAR","SAMPLE","SERIAL","PERNUM")
-  require_cols(x,c(k,"ROOMS_RAW","BEDROOMS_RAW","OWNERSHP_RAW"),"source packet")
-  x <- x[,c(k,"ROOMS_RAW","BEDROOMS_RAW","OWNERSHP_RAW"),with=FALSE]
-  setnames(x,c("ROOMS_RAW","BEDROOMS_RAW","OWNERSHP_RAW"),c("ROOMS","BEDROOMS","OWNERSHP")); x
+canonical_source <- function(x){x<-as.data.frame(x);names(x)<-toupper(names(x));k<-c("YEAR","SAMPLE","SERIAL","PERNUM");require_cols(x,c(k,"ROOMS_RAW","BEDROOMS_RAW","OWNERSHP_RAW"),"source packet");x<-x[,c(k,"ROOMS_RAW","BEDROOMS_RAW","OWNERSHP_RAW"),drop=FALSE];names(x)[5:7]<-c("ROOMS","BEDROOMS","OWNERSHP");x}
+validate_overlap <- function(audit,conc,ys){
+ if(!identical(as.character(audit$input_sha256),"edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324e")||as.numeric(audit$input_size)!=9919999546)stop("source digest receipt mismatch",call.=FALSE)
+ if(as.numeric(audit$duplicate_key_groups_extract27)!=0||as.numeric(audit$duplicate_key_groups_prepared_ne)!=0||as.numeric(audit$unique_key_intersection)!=2190987)stop("source key audit evidence is not the verified result",call.=FALSE)
+ if(!all(conc$mismatch==0&conc$compared==conc$equal))stop("sex/age/ownership concordance is not zero-mismatch",call.=FALSE)
+ sh<-ys[!is.na(ys$N_extract27)&!is.na(ys$N_prepared_ne),]; sh<-sh[sh$year>=2005&sh$year<=2019,]; if(!nrow(sh)||!identical(as.integer(sort(unique(sh$year))),2005:2019)||any(sh$sample_product!="ACS 1-year")||any(sh$N_extract27!=sh$N_prepared_ne))stop("shared 2005-2019 ACS 1-year overlap is not exact",call.=FALSE)
+ list(status="PASS",verified=TRUE,key_columns=c("YEAR","SAMPLE","SERIAL","PERNUM"),source_key_unique=TRUE,overlap_verified=TRUE,source_packet=packet_file,source_sha256=as.character(audit$input_sha256),source_bytes=as.numeric(audit$input_size),unique_key_intersection=2190987,overlap_evidence=list(concordance=concordance_file,year_sample=year_sample_file,shared_years=c(2005L,2019L)))
 }
-coding <- list(
-  rooms_valid=function(x,year)!is.na(x)&x%in%c(1:27,30), rooms_transform=function(x,year)x,
-  rooms_cap=9, rooms_missing_codes=0, rooms_unknown_codes=28,
-  bedrooms_valid=function(x,year)!is.na(x)&x%in%c(1:6,22), bedrooms_transform=function(x,year)ifelse(x==22,21,x-1),
-  bedrooms_cap=5, bedrooms_missing_codes=0, bedrooms_unknown_codes=7,
-  ownership_valid=function(x,year)!is.na(x)&x%in%c(1,2), ownership_missing_codes=0, ownership_unknown_codes=c(3,9),
-  allow_uncapped_sensitivity=FALSE)
-make_manifest <- function(x) {
-  if(!identical(as.character(x$input_sha256),"edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324e")) stop("verified source SHA mismatch",call.=FALSE)
-  if(as.numeric(x$input_size)!=9919999546) stop("verified source byte mismatch",call.=FALSE)
-  list(status="PASS",verified=TRUE,key_columns=c("YEAR","SAMPLE","SERIAL","PERNUM"),source_key_unique=TRUE,overlap_verified=TRUE,source_packet=packet_file,source_sha256=x$input_sha256,source_bytes=as.numeric(x$input_size),unique_key_intersection=as.numeric(x$unique_key_intersection),source_scope="NE states 9,23,25,33,44,50; raw housing codes retained")
-}
-checkpoint("startup",paste0("run_estimation=",run_estimation))
-for(f in c(panel_file,packet_file,audit_file,estimator_file)) if(!file.exists(f)) stop("required input missing: ",f,call.=FALSE)
-source(estimator_file,local=TRUE); if(!all(vapply(c("join_first_birth_housing","code_first_birth_housing","estimate_first_birth_housing"),exists,logical(1)))) stop("incomplete estimator interface",call.=FALSE)
-checkpoint("estimator_loaded")
-manifest <- make_manifest(fromJSON(audit_file)); source_housing <- canonical_source(readRDS(packet_file))
-key <- do.call(paste,c(source_housing[,.(YEAR,SAMPLE,SERIAL,PERNUM)],sep=":")); if(anyDuplicated(key)) stop("source packet key duplicated",call.=FALSE)
-checkpoint("source_packet_loaded",sprintf("rows=%s cols=%s",nrow(source_housing),ncol(source_housing)))
-panel <- canonical_panel(readRDS(panel_file)); require_cols(panel,c("YEAR","SAMPLE","SERIAL","PERNUM","src_key","source_origin","from_cps","emp_lw","wgt","t_es_lw","cohort","census","statefip","statename","gender","age_factor","doiy_factor"),"v5 panel")
-if(!is.numeric(panel$wgt)&&!is.integer(panel$wgt)) stop("v5 weights are not numeric",call.=FALSE)
-checkpoint("v5_panel_loaded",sprintf("rows=%s cols=%s",nrow(panel),ncol(panel)))
-# Real-data interface smoke: exercise the exact join and coding path on up to 2,000 rows.
-smoke <- panel[seq_len(min(2000L,nrow(panel)))]; sk <- do.call(paste,c(smoke[,.(YEAR,SAMPLE,SERIAL,PERNUM)],sep=":")); ss <- source_housing[match(sk,key),]; ss <- ss[!is.na(YEAR)]
-if(nrow(ss)) { j <- join_first_birth_housing(smoke,ss,manifest); invisible(code_first_birth_housing(j,coding)); if(!identical(j$first_birth_row_id,seq_len(nrow(smoke)))) stop("smoke changed row order",call.=FALSE); checkpoint("interface_smoke_pass",sprintf("panel_rows=%s source_rows=%s",nrow(smoke),nrow(ss))) } else checkpoint("interface_smoke_skipped","no source keys in first panel rows")
-ready <- list(status="READY_FOR_LEAD_REVIEW",run_estimation=run_estimation,panel_file=panel_file,packet_file=packet_file,estimator_file=estimator_file,audit_manifest=manifest,panel_rows=nrow(panel),source_packet_rows=nrow(source_housing),coding_config=list(rooms_cap=9,bedrooms_cap=5,rooms_unknown_codes=28,bedrooms_unknown_codes=7,allow_uncapped_sensitivity=FALSE),analysis_scope="NE level housing outcomes with source-household clustering; diagnostic interpretation only",generated=as.character(Sys.time()))
-write_json(ready,file.path(outdir,"readiness_receipt.json"),auto_unbox=TRUE,pretty=TRUE)
-write.csv(data.table(variable=c("ROOMS","BEDROOMS","OWNERSHP"),cap=c(9,5,NA),unknown_codes=c("28","7","3,9")),file.path(outdir,"coding_config_receipt.csv"),row.names=FALSE)
-checkpoint("readiness_receipt_written")
-if(run_estimation) {
-  checkpoint("estimation_start")
-  result <- estimate_first_birth_housing(panel,source_housing,manifest,coding,checkpoint=function(x) { checkpoint("fit_complete",x$name); write_json(list(stage="fit_complete",detail=x$name,generated=as.character(Sys.time())),file.path(outdir,"latest_fit_checkpoint.json"),auto_unbox=TRUE,pretty=TRUE) })
-  write.csv(result$join_audit,file.path(outdir,"join_audit.csv"),row.names=FALSE); write.csv(result$code_audit,file.path(outdir,"housing_code_audit.csv"),row.names=FALSE); write.csv(result$support,file.path(outdir,"support.csv"),row.names=FALSE); write.csv(result$curves,file.path(outdir,"curves.csv"),row.names=FALSE); write.csv(result$summary,file.path(outdir,"contrasts.csv"),row.names=FALSE)
-  write_json(list(status=result$status,metadata=result$metadata,join_audit=result$join_audit,code_audit=result$code_audit,generated=as.character(Sys.time())),file.path(outdir,"result_receipt.json"),auto_unbox=TRUE,pretty=TRUE); checkpoint("estimation_complete",result$status)
-} else checkpoint("complete","readiness_only")
+coding <- list(rooms_valid=function(x,year)!is.na(x)&x%in%c(1:27,30),rooms_transform=function(x,year)x,rooms_cap=9,rooms_missing_codes=0,rooms_unknown_codes=28,bedrooms_valid=function(x,year)!is.na(x)&x%in%1:22,bedrooms_transform=function(x,year)ifelse(x==22,21,x-1),bedrooms_cap=5,bedrooms_missing_codes=0,bedrooms_unknown_codes=23,ownership_valid=function(x,year)!is.na(x)&x%in%c(1,2),ownership_missing_codes=0,ownership_unknown_codes=c(3,9),allow_uncapped_sensitivity=FALSE)
+checkpoint("startup",paste0("run_estimation=",run_estimation)); for(f in c(panel_file,packet_file,audit_file,lineage_file,concordance_file,year_sample_file,estimator_file))if(!file.exists(f))stop("required input missing: ",f,call.=FALSE)
+source(estimator_file,local=TRUE); if(!all(vapply(c("join_first_birth_housing","code_first_birth_housing","estimate_first_birth_housing"),exists,logical(1))))stop("incomplete estimator interface",call.=FALSE); checkpoint("estimator_loaded")
+lineage<-fromJSON(lineage_file,simplifyVector=FALSE); audit<-fromJSON(audit_file); manifest<-validate_overlap(audit,read.csv(concordance_file),read.csv(year_sample_file)); source_housing<-canonical_source(readRDS(packet_file)); sk<-do.call(paste,c(source_housing[,c("YEAR","SAMPLE","SERIAL","PERNUM")],sep=":"));if(anyDuplicated(sk))stop("source packet key duplicated",call.=FALSE);checkpoint("source_packet_loaded",sprintf("rows=%s",nrow(source_housing)))
+panel<-canonical_panel(readRDS(panel_file),lineage); checkpoint("v5_panel_loaded",sprintf("rows=%s true_acs=%s",nrow(panel),sum(panel$source_origin=="ACS"&panel$from_cps==0L,na.rm=TRUE))); write_json(list(status="V5_SCHEMA_VERIFIED",panel_rows=nrow(panel),observed_fields=c("src_key.x/src_key coalesced","source_origin.x/source_origin coalesced","from_cps.x/from_cps coalesced"),true_acs_source_key="SAMPLE:YEAR:SERIAL:PERNUM parsed to YEAR,SAMPLE,SERIAL,PERNUM",retained_panel_years=c("doiy","source_doiy","match_doiy"),cohort_definition="implied_pseudo_event_year=doiy−numeric(t_es_lw), with t_es_lw clipped to [-5,10]; support label only, not biological birth year",lineage_file=lineage_file,source_year_differs_from_doiy=lineage$observed_source_year_differs_from_doiy),file.path(outdir,"panel_interface_receipt.json"),auto_unbox=TRUE,pretty=TRUE)
+# Smoke only unique true-ACS source keys, so donor reuse cannot duplicate source rows.
+ix<-which(panel$source_origin=="ACS"&panel$from_cps==0L);ix<-ix[seq_len(min(2000L,length(ix)))]; smoke<-panel[ix,]; needed<-unique(do.call(paste,c(smoke[,c("YEAR","SAMPLE","SERIAL","PERNUM")],sep=":"))); ss<-source_housing[match(needed,sk),,drop=FALSE];if(anyNA(ss$YEAR))stop("real-data smoke source key unmatched",call.=FALSE);j<-join_first_birth_housing(smoke,ss,manifest);invisible(code_first_birth_housing(j,coding));if(!identical(j$first_birth_row_id,seq_len(nrow(smoke))))stop("smoke changed row order",call.=FALSE);checkpoint("interface_smoke_pass",sprintf("unique_true_acs_rows=%s",nrow(smoke)))
+ready<-list(status="READY_FOR_LEAD_REVIEW",run_estimation=run_estimation,panel_file=panel_file,packet_file=packet_file,estimator_file=estimator_file,audit_manifest=manifest,panel_rows=nrow(panel),source_packet_rows=nrow(source_housing),cohort_col="cohort=implied_pseudo_event_year from doiy−binned event time; support label only",coding_config=list(rooms_cap=9,bedrooms_valid="1:22 transformed x-1",bedrooms_cap=5,rooms_unknown_codes=28,bedrooms_unknown_codes=23,allow_uncapped_sensitivity=FALSE),generated=as.character(Sys.time()));write_json(ready,file.path(outdir,"readiness_receipt.json"),auto_unbox=TRUE,pretty=TRUE);write.csv(data.table(variable=c("ROOMS","BEDROOMS","OWNERSHP"),cap=c(9,5,NA),unknown_codes=c("28","23","3,9")),file.path(outdir,"coding_config_receipt.csv"),row.names=FALSE);checkpoint("readiness_receipt_written")
+if(run_estimation){checkpoint("estimation_start");result<-estimate_first_birth_housing(panel,source_housing,manifest,coding,cohort_col="cohort",checkpoint=function(x){nm<-gsub("[^A-Za-z0-9_.-]","_",x$name);if(!is.null(x$curve))write.csv(x$curve,file.path(outdir,paste0("checkpoint_",nm,"_curve.csv")),row.names=FALSE);if(!is.null(x$summary))write.csv(x$summary,file.path(outdir,paste0("checkpoint_",nm,"_summary.csv")),row.names=FALSE);saveRDS(x,file.path(outdir,"latest_fit_checkpoint.rds"));checkpoint("fit_complete",x$name)});write.csv(result$join_audit,file.path(outdir,"join_audit.csv"),row.names=FALSE);write.csv(result$code_audit,file.path(outdir,"housing_code_audit.csv"),row.names=FALSE);write.csv(result$support,file.path(outdir,"support.csv"),row.names=FALSE);write.csv(result$curves,file.path(outdir,"curves.csv"),row.names=FALSE);write.csv(result$summary,file.path(outdir,"contrasts.csv"),row.names=FALSE);saveRDS(result$fits,file.path(outdir,"fits.rds"));write_json(list(status=result$status,metadata=result$metadata,join_audit=result$join_audit,code_audit=result$code_audit,generated=as.character(Sys.time())),file.path(outdir,"result_receipt.json"),auto_unbox=TRUE,pretty=TRUE);png(file.path(outdir,"housing_event_curves.png"),width=1600,height=1000,res=150);par(mfrow=c(1,3),mar=c(4,4,2,1));for(o in c("rooms9","bedrooms5","ownership_lw")){z<-result$curves[result$curves$outcome==o,];plot(as.numeric(z$event_time),z$estimate,type="n",xlab="Event time",ylab=o);for(g in unique(z$gender)){q<-z[z$gender==g,];lines(as.numeric(q$event_time),q$estimate,type="b",pch=16);};abline(v=-2,lty=2)};dev.off();checkpoint("estimation_complete",result$status)}else checkpoint("complete","readiness_only")

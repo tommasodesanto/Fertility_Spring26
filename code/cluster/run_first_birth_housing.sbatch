@@ -16,6 +16,8 @@ exec > >(tee -a "${OUTDIR}/launcher.log") 2>&1
 trap 's=$?; echo "launcher_exit=${s} line=${LINENO} time=$(date -Is)" >> "${OUTDIR}/launcher.log"; exit ${s}' EXIT
 echo "startup time=$(date -Is) host=$(hostname) job=${SLURM_JOB_ID:-none}"
 module load r/4.5.1
+export R_LIBS_USER="${ROOT}/Rlibs:/scratch/td2248/R_libs"
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
 command -v Rscript
 Rscript -e 'stopifnot(requireNamespace("data.table",quietly=TRUE),requireNamespace("jsonlite",quietly=TRUE),requireNamespace("fixest",quietly=TRUE)); cat("R_DEPENDENCY_SMOKE_PASS\\n")'
 test -s "${SCRIPT}"
