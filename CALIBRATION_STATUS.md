@@ -1,5 +1,18 @@
 # Calibration Status
 
+**September 20, 13:18 EDT — rental control passed; positive-wedge experiment stopped:**
+Smoke **18080236** reproduced all original-control policy arrays exactly and
+passed budget, value, independent saving, source, cohort and17-plot checks.
+Its next case stopped before solving: the retained checkpoint uses an
+exhaustive saving solver, whereas the current isolated wedge supports only
+global golden-section search. Production **18080237** was cancelled. No
+positive-wedge result exists, and the guard has not been bypassed.
+[Reviewed stopped-run receipt](output/model/native_financing_diagnostic_20260919/specification_followup/rental_wedge_v3/collection_receipt.json).
+Total work used eight household evaluations and zero stationary evaluations;
+no battery jobs remain running. The next step is a bounded design for wedge
+support within the existing exhaustive solver, followed by lead review before
+any new implementation or launch. The active goal and check-ins continue.
+
 **September 20, 13:14 EDT — final rental-test packaging correction submitted:**
 Smoke **18080236**, dependent production **18080237**, use the complete verified
 frozen source and deserialize the actual checkpoint before allowing a solve.

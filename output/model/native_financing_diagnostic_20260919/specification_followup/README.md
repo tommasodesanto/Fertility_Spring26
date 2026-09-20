@@ -86,6 +86,14 @@ These are provisional judgments from the reviewed evidence, not adoption decisio
    A persistent earnings component and an independent transitory component are
    the proposed baseline architecture. A permanent household type is a separate
    choice and is not needed to explain the no-type candidate's dispersion.
+   The existing joint income index records the persistent and transitory
+   realizations: five persistent nodes times three transitory nodes gives
+   fifteen joint states. A transitory shock can be independent across dates
+   and still matter for today's choice. Current total earnings alone generally
+   cannot replace both components: the same total caused by a persistent shock
+   or a temporary shock implies different future earnings. A permanent type
+   would be another distinct source of heterogeneity, not another name for the
+   persistent component.
    The existing finite chain misses level dispersion even when its log moments
    match. Annual-to-four-year aggregation and finite-grid resolution are separate
    issues; neither can be repaired by calling one convenient grid calibrated.
@@ -136,6 +144,33 @@ remaining author choices must be incorporated before this is called a final
 reviewed decision packet.
 
 ## Check-ins and present state
+
+### 13:18 Eastern: control verified; positive rental-cost branch stopped
+
+Final smoke **18080236** completed the original control, then stopped before
+solving slope 0.2: the patch rejects positive wedges when the checkpoint uses
+its **exhaustive saving solver**, which checks every interpolation segment.
+The patch currently supports a global golden-section search instead. Switching
+methods solely to bypass that guard would compromise the controlled comparison.
+Dependent **18080237** was cancelled; no positive-wedge result exists.
+[Complete stopped-run receipt](rental_wedge_v3/collection_receipt.json).
+
+The lead rechecked the completed control: all policy differences are exactly
+zero, reproduction passes, independent saving-oracle maximum value gain is
+4.44e-16 (gate1e-7), budget excess mass and occupied value drops are zero,
+source hashes pass before/after, cohort accounting completes, and all17 plot
+hashes were independently recomputed. The control household solve took28.74s.
+**Eight household evaluations have now been used; zero stationary evaluations.**
+There are no running jobs in this experiment battery.
+
+The next step is a bounded, read-only design for supporting the convex rental
+cost inside the existing exhaustive solver: maximize separately on each
+wealth interpolation interval, including endpoints and any interior optimum.
+A new implementation, independent validation and exact-loop smoke would be
+required before another batch. This is a changed numerical method requiring
+lead review, not an automatic retry, a relaxed gate or an economic conclusion
+about rental costs. The goal and daytime check-ins remain active while that
+feasibility assessment and the decision packet are completed.
 
 ### 13:14 Eastern: complete-source rental test submitted; earlier staging failures preserved
 

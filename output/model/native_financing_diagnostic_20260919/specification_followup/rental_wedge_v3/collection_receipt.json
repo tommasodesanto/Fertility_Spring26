@@ -1,0 +1,99 @@
+{
+  "arrays_downloaded": false,
+  "cap6zero_gates": {
+    "budget_excess_mass": 0.0,
+    "budget_maximum_occupied_excess": 7.105427357601002e-15,
+    "cohort_initial_mass": 1.0,
+    "cohort_rows": 17,
+    "control_policy_max_abs_diff": {
+      "V": 0.0,
+      "bp_pol": 0.0,
+      "c_pol": 0.0,
+      "fert2_probs": 0.0,
+      "fert_probs": 0.0,
+      "fert_value": 0.0,
+      "hR_pol": 0.0,
+      "loc_probs": 0.0,
+      "price": 0.0,
+      "tenure_choice": 0.0,
+      "tenure_probs": 0.0
+    },
+    "control_reproduction_passed": true,
+    "entry_rule": "native conditional entrant for each process",
+    "maximum_absolute_saving_gap": 8.881784197001252e-16,
+    "maximum_value_gain": 4.440892098500626e-16,
+    "population_mass": 1.0000000000000229,
+    "population_shape": [
+      120,
+      6,
+      1,
+      17,
+      15,
+      4,
+      4
+    ],
+    "saving_gain_tolerance": 1e-07,
+    "saving_gate_passed": true,
+    "standard_plot_count": 17,
+    "status": "passed_control"
+  },
+  "failure": {
+    "artifact": "results/failure_case_cap10s02_1789924502.json",
+    "case": "cap10s02",
+    "error": "NotImplementedError: Rental wedge requires the golden-section renter block",
+    "failed_at": 1789924502.2543862,
+    "phase": "before"
+  },
+  "jobs": {
+    "production": {
+      "elapsed": "00:00:00",
+      "exit": "0:0",
+      "id": "18080237",
+      "state": "CANCELLED"
+    },
+    "smoke": {
+      "elapsed": "00:01:25",
+      "exit": "1:0",
+      "id": "18080236",
+      "max_rss": "2320700K",
+      "state": "FAILED"
+    }
+  },
+  "lead_review": {
+    "actual_solve_count": 1,
+    "all_source_hashes_before_and_after_passed": true,
+    "control_reproduction_passed": true,
+    "independent_saving_gain": 4.440892098500626e-16,
+    "interpretation": "zero-wedge control only; no positive-wedge result exists; preserve exhaustive saving architecture before any newly designed experiment",
+    "occupied_negative_steps": 0,
+    "remote_standard_plots_rehashed": 17
+  },
+  "no_retries_or_new_jobs": true,
+  "partial_run": {
+    "cap6zero_actual_household_solves": 1,
+    "cap6zero_case_wall_seconds": 52.55239176750183,
+    "cap6zero_solve_wall_seconds": 28.73583698272705,
+    "completed_cases": [
+      "cap6zero"
+    ],
+    "pending_cases": [
+      "cap10s02"
+    ],
+    "stage": "smoke",
+    "status": "partial"
+  },
+  "remote_root": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v3",
+  "source_packaging": {
+    "checkpoint_deserialization": "passed before first case",
+    "manifest_sha256": "9adf4b9afea08acf1f6fe769eca935137420e3a08d8cd85d6478701591a05509",
+    "pre_case_bad_after": 0,
+    "pre_case_bad_before": 0,
+    "pre_case_before_after_equal": true,
+    "pre_case_hash_count": 574,
+    "pre_case_hashes_after_count": 574,
+    "pre_case_status": "verified",
+    "source_files": 537
+  },
+  "status": "terminal_failure_after_one_completed_control_case",
+  "strict_gates_for_unrun_cases": "unavailable; execution stopped at cap10s02 before its solve"
+}

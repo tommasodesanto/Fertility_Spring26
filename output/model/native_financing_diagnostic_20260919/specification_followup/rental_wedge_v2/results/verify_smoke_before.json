@@ -1,0 +1,2343 @@
+{
+  "checked": 1789924057.421704,
+  "checkpoint": {
+    "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/baseline_replay_20260917/replay/case/evaluation/raw/repetition_02/initial_state.pkl.gz",
+    "checkpoint_sha256": "3322a61994fb3654d67f4b1d6cf2d0f7cacbb3668d06a417e192ee363c174993"
+  },
+  "hashes": {
+    "checkpoint": {
+      "actual": "3322a61994fb3654d67f4b1d6cf2d0f7cacbb3668d06a417e192ee363c174993",
+      "expected": "3322a61994fb3654d67f4b1d6cf2d0f7cacbb3668d06a417e192ee363c174993",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/baseline_replay_20260917/replay/case/evaluation/raw/repetition_02/initial_state.pkl.gz"
+    },
+    "driver": {
+      "actual": "7edb7f3ee15c7e2b3b94af643ad3ac88ed6af78cb661b3446b1b30391487e68f",
+      "expected": "7edb7f3ee15c7e2b3b94af643ad3ac88ed6af78cb661b3446b1b30391487e68f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/run_e5f_isolated_rental_wedge.py"
+    },
+    "frozen_original/code/model/intergen_eqscale_seq_optimized/kernels.py": {
+      "actual": "79370af16a97723c8de91a1735db5d8ac12830f57e28ad1b74dfac112321fc2a",
+      "expected": "79370af16a97723c8de91a1735db5d8ac12830f57e28ad1b74dfac112321fc2a",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/intergen_eqscale_seq_optimized/kernels.py"
+    },
+    "frozen_original/code/model/intergen_eqscale_seq_optimized/parameters.py": {
+      "actual": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5",
+      "expected": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/intergen_eqscale_seq_optimized/parameters.py"
+    },
+    "frozen_original/code/model/intergen_eqscale_seq_optimized/solver.py": {
+      "actual": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da",
+      "expected": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/intergen_eqscale_seq_optimized/solver.py"
+    },
+    "frozen_original/code/model/tools/run_dynamic_population_transition.py": {
+      "actual": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362",
+      "expected": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/tools/run_dynamic_population_transition.py"
+    },
+    "frozen_original/code/model/tools/run_e5f_independent_numerical_audit.py": {
+      "actual": "656d766e0197e854c73e6b6fb7a3e97cd4fef57e75ad4c7a924d8b1ca5212528",
+      "expected": "656d766e0197e854c73e6b6fb7a3e97cd4fef57e75ad4c7a924d8b1ca5212528",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/tools/run_e5f_independent_numerical_audit.py"
+    },
+    "frozen_original/code/model/tools/run_e5f_matched_pf_smoke.py": {
+      "actual": "91e0728387e55c3a33419298868b696820a4d4bd61809996e6a7842654aabf32",
+      "expected": "91e0728387e55c3a33419298868b696820a4d4bd61809996e6a7842654aabf32",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/tools/run_e5f_matched_pf_smoke.py"
+    },
+    "frozen_original/code/model/tools/run_e5f_open_population_transition.py": {
+      "actual": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346",
+      "expected": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/tools/run_e5f_open_population_transition.py"
+    },
+    "frozen_original/code/model/tools/run_e5f_perfect_foresight_transition.py": {
+      "actual": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be",
+      "expected": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/tools/run_e5f_perfect_foresight_transition.py"
+    },
+    "generated/driver_plan.json": {
+      "actual": "32cbb6726af149affd7abf6fd9f7b10fda7b75f344587c810441c4d17667f67a",
+      "expected": "32cbb6726af149affd7abf6fd9f7b10fda7b75f344587c810441c4d17667f67a",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/driver_plan.json"
+    },
+    "generated/production.sbatch": {
+      "actual": "0942155708e08e600b73332bab8e1a5103fd6569f7a749c75558ba44fd44cf8f",
+      "expected": "0942155708e08e600b73332bab8e1a5103fd6569f7a749c75558ba44fd44cf8f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/production.sbatch"
+    },
+    "generated/remote_finalize.sh": {
+      "actual": "79df5af295eddb10e930c5b38a65cef82455cdb81cfdd481c68867fff9742b41",
+      "expected": "79df5af295eddb10e930c5b38a65cef82455cdb81cfdd481c68867fff9742b41",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/remote_finalize.sh"
+    },
+    "generated/remote_stage.sh": {
+      "actual": "34c04683bdb78f46049ba8bf7ef9e088e1385b475b835c84828aaf340abdb584",
+      "expected": "34c04683bdb78f46049ba8bf7ef9e088e1385b475b835c84828aaf340abdb584",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/remote_stage.sh"
+    },
+    "generated/smoke.sbatch": {
+      "actual": "d2acfd920adb5f41a2e5b1376793f7d95b920c60c468cb86885d423523a4edec",
+      "expected": "d2acfd920adb5f41a2e5b1376793f7d95b920c60c468cb86885d423523a4edec",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/smoke.sbatch"
+    },
+    "helper_copy/build_e5f_native_financing_report.py": {
+      "actual": "beccdda8ac758326c5ff75943831ef402c1e82d1e8a185eebaaac6c079ca65b5",
+      "expected": "beccdda8ac758326c5ff75943831ef402c1e82d1e8a185eebaaac6c079ca65b5",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/build_e5f_native_financing_report.py"
+    },
+    "helper_copy/build_persistent_transitory_income_candidate.py": {
+      "actual": "7c9571fb38697e9433b32baabbd630656bd935179a4325f7b1e3bbb70e94d087",
+      "expected": "7c9571fb38697e9433b32baabbd630656bd935179a4325f7b1e3bbb70e94d087",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/build_persistent_transitory_income_candidate.py"
+    },
+    "helper_copy/run_e5f_financing_factorial.py": {
+      "actual": "0cb6d5b1db5f1ab7b77912099f27ffb8908f8e446574ffcb3d69d724eda364b6",
+      "expected": "0cb6d5b1db5f1ab7b77912099f27ffb8908f8e446574ffcb3d69d724eda364b6",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/run_e5f_financing_factorial.py"
+    },
+    "helper_copy/run_e5f_income_candidate_calibration.py": {
+      "actual": "e688e4fa401097993dcd6cbca1b7fc9afe6911a2086e7bc74925c962bbaf92f2",
+      "expected": "e688e4fa401097993dcd6cbca1b7fc9afe6911a2086e7bc74925c962bbaf92f2",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/run_e5f_income_candidate_calibration.py"
+    },
+    "helper_copy/run_e5f_income_candidate_search.py": {
+      "actual": "1286ba54f1d2e5a64798150de3c6786c109d1f28733c0e47a8e769dad339fa18",
+      "expected": "1286ba54f1d2e5a64798150de3c6786c109d1f28733c0e47a8e769dad339fa18",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/run_e5f_income_candidate_search.py"
+    },
+    "helper_copy/run_e5f_income_overnight_search.py": {
+      "actual": "111776865158779fa9ab9de05308a0b7d3e98adf8b0280cfaf2ed159be58eb48",
+      "expected": "111776865158779fa9ab9de05308a0b7d3e98adf8b0280cfaf2ed159be58eb48",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/run_e5f_income_overnight_search.py"
+    },
+    "helper_copy/run_e5f_native_financing_diagnostic.py": {
+      "actual": "ff65058d8e796069f82fcaf463256e906a500af876bb91d91c646c200d3582f2",
+      "expected": "ff65058d8e796069f82fcaf463256e906a500af876bb91d91c646c200d3582f2",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/run_e5f_native_financing_diagnostic.py"
+    },
+    "helper_copy/run_e5f_native_income_cohort_diagnostic.py": {
+      "actual": "1ca604b4b6e83f5cd43b48163a4889512165caf5a4ffb88f6b8759c60a0e1d50",
+      "expected": "1ca604b4b6e83f5cd43b48163a4889512165caf5a4ffb88f6b8759c60a0e1d50",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/run_e5f_native_income_cohort_diagnostic.py"
+    },
+    "helper_copy/run_e5f_native_rental_access_diagnostic.py": {
+      "actual": "90d48059a3f76668b5e6c4ea0f789de14c2280e21ded7493dc41f67ca367a924",
+      "expected": "90d48059a3f76668b5e6c4ea0f789de14c2280e21ded7493dc41f67ca367a924",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/run_e5f_native_rental_access_diagnostic.py"
+    },
+    "helper_runtime/build_e5f_native_financing_report.py": {
+      "actual": "beccdda8ac758326c5ff75943831ef402c1e82d1e8a185eebaaac6c079ca65b5",
+      "expected": "beccdda8ac758326c5ff75943831ef402c1e82d1e8a185eebaaac6c079ca65b5",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/build_e5f_native_financing_report.py"
+    },
+    "helper_runtime/build_persistent_transitory_income_candidate.py": {
+      "actual": "7c9571fb38697e9433b32baabbd630656bd935179a4325f7b1e3bbb70e94d087",
+      "expected": "7c9571fb38697e9433b32baabbd630656bd935179a4325f7b1e3bbb70e94d087",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/build_persistent_transitory_income_candidate.py"
+    },
+    "helper_runtime/run_e5f_financing_factorial.py": {
+      "actual": "0cb6d5b1db5f1ab7b77912099f27ffb8908f8e446574ffcb3d69d724eda364b6",
+      "expected": "0cb6d5b1db5f1ab7b77912099f27ffb8908f8e446574ffcb3d69d724eda364b6",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/run_e5f_financing_factorial.py"
+    },
+    "helper_runtime/run_e5f_income_candidate_calibration.py": {
+      "actual": "e688e4fa401097993dcd6cbca1b7fc9afe6911a2086e7bc74925c962bbaf92f2",
+      "expected": "e688e4fa401097993dcd6cbca1b7fc9afe6911a2086e7bc74925c962bbaf92f2",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/run_e5f_income_candidate_calibration.py"
+    },
+    "helper_runtime/run_e5f_income_candidate_search.py": {
+      "actual": "1286ba54f1d2e5a64798150de3c6786c109d1f28733c0e47a8e769dad339fa18",
+      "expected": "1286ba54f1d2e5a64798150de3c6786c109d1f28733c0e47a8e769dad339fa18",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/run_e5f_income_candidate_search.py"
+    },
+    "helper_runtime/run_e5f_income_overnight_search.py": {
+      "actual": "111776865158779fa9ab9de05308a0b7d3e98adf8b0280cfaf2ed159be58eb48",
+      "expected": "111776865158779fa9ab9de05308a0b7d3e98adf8b0280cfaf2ed159be58eb48",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/run_e5f_income_overnight_search.py"
+    },
+    "helper_runtime/run_e5f_native_financing_diagnostic.py": {
+      "actual": "ff65058d8e796069f82fcaf463256e906a500af876bb91d91c646c200d3582f2",
+      "expected": "ff65058d8e796069f82fcaf463256e906a500af876bb91d91c646c200d3582f2",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/run_e5f_native_financing_diagnostic.py"
+    },
+    "helper_runtime/run_e5f_native_income_cohort_diagnostic.py": {
+      "actual": "1ca604b4b6e83f5cd43b48163a4889512165caf5a4ffb88f6b8759c60a0e1d50",
+      "expected": "1ca604b4b6e83f5cd43b48163a4889512165caf5a4ffb88f6b8759c60a0e1d50",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/run_e5f_native_income_cohort_diagnostic.py"
+    },
+    "helper_runtime/run_e5f_native_rental_access_diagnostic.py": {
+      "actual": "90d48059a3f76668b5e6c4ea0f789de14c2280e21ded7493dc41f67ca367a924",
+      "expected": "90d48059a3f76668b5e6c4ea0f789de14c2280e21ded7493dc41f67ca367a924",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/run_e5f_native_rental_access_diagnostic.py"
+    },
+    "plan_copy": {
+      "actual": "1ae0ba4dfc1a66088e1f3803e80a0ba888f08b46874da3daf0ef4fab6ef76c4a",
+      "expected": "1ae0ba4dfc1a66088e1f3803e80a0ba888f08b46874da3daf0ef4fab6ef76c4a",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/plan.json"
+    },
+    "plan_runtime": {
+      "actual": "1ae0ba4dfc1a66088e1f3803e80a0ba888f08b46874da3daf0ef4fab6ef76c4a",
+      "expected": "1ae0ba4dfc1a66088e1f3803e80a0ba888f08b46874da3daf0ef4fab6ef76c4a",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/plan.json"
+    },
+    "port_manifest_copy": {
+      "actual": "64a5c570b7895275c3be4b2acdd41c83e0e7016e9fc5bcbf66f21092dea37994",
+      "expected": "64a5c570b7895275c3be4b2acdd41c83e0e7016e9fc5bcbf66f21092dea37994",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source_manifest.json"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/__init__.py": {
+      "actual": "a7a5fd5a56d05e7460e2c44fd8b147c98fe70ce361d2e8d543257dffc72c253a",
+      "expected": "a7a5fd5a56d05e7460e2c44fd8b147c98fe70ce361d2e8d543257dffc72c253a",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/__init__.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/audit_timing_repaired_readout.py": {
+      "actual": "724d99fbe9be9e771c44663e2705d7bf9cb47c1c2ca1ca5873c51e15fb2430ac",
+      "expected": "724d99fbe9be9e771c44663e2705d7bf9cb47c1c2ca1ca5873c51e15fb2430ac",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/audit_timing_repaired_readout.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/benchmark_e1.py": {
+      "actual": "1f120b758764ba826a62e1d0e11c47496117100b4313ea144cd93dccb6360d20",
+      "expected": "1f120b758764ba826a62e1d0e11c47496117100b4313ea144cd93dccb6360d20",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/benchmark_e1.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/build_e2_packet.py": {
+      "actual": "d6c959e1eab7918d749cdc8b3131239d9d42eb0cf027f2ad607c87f9484548ee",
+      "expected": "d6c959e1eab7918d749cdc8b3131239d9d42eb0cf027f2ad607c87f9484548ee",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/build_e2_packet.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/build_e5f_psinneg_iteration_packet.py": {
+      "actual": "79b715fac093f39150c2fa0ff6a4dae23c3c2b2f2c283ef3cdcb2820d9bf63cb",
+      "expected": "79b715fac093f39150c2fa0ff6a4dae23c3c2b2f2c283ef3cdcb2820d9bf63cb",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/build_e5f_psinneg_iteration_packet.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/build_e6_decision_tables.py": {
+      "actual": "be589549305ba01d17b2f20484cb0926e468eb06064809c4c3cbe5c09d0a505f",
+      "expected": "be589549305ba01d17b2f20484cb0926e468eb06064809c4c3cbe5c09d0a505f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/build_e6_decision_tables.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/build_e6_l1_comparison.py": {
+      "actual": "d9712571e269b84c5144fb684973e63e0c8e1cf599706d0e52e918f48e044ef9",
+      "expected": "d9712571e269b84c5144fb684973e63e0c8e1cf599706d0e52e918f48e044ef9",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/build_e6_l1_comparison.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/build_e6_plain_comparison.py": {
+      "actual": "b41dab604d149ab24fa8f0394ed40421c9bf8fe2269ee4eb745ed37d4c41506c",
+      "expected": "b41dab604d149ab24fa8f0394ed40421c9bf8fe2269ee4eb745ed37d4c41506c",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/build_e6_plain_comparison.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/build_e6_winner_diagnostics.py": {
+      "actual": "b4421e3b8595395926b6a07d6f2d206d3b765e4c39ff1ff124c33866f5150213",
+      "expected": "b4421e3b8595395926b6a07d6f2d206d3b765e4c39ff1ff124c33866f5150213",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/build_e6_winner_diagnostics.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/calibration.py": {
+      "actual": "7981fdaa24a1d59e9d8761f349708f627a565bea8cb840f47887bad1f1650d5d",
+      "expected": "7981fdaa24a1d59e9d8761f349708f627a565bea8cb840f47887bad1f1650d5d",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/calibration.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/cli.py": {
+      "actual": "f4c728ab4e12f882c6b7e20d5ca8b5309dd7945b001443ac2e3ce905be06d666",
+      "expected": "f4c728ab4e12f882c6b7e20d5ca8b5309dd7945b001443ac2e3ce905be06d666",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/cli.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/collect_e1.py": {
+      "actual": "e0684091323522eacda86c875ee0ad3840d5071b8b1b712c058d86e2bc69d5f2",
+      "expected": "e0684091323522eacda86c875ee0ad3840d5071b8b1b712c058d86e2bc69d5f2",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/collect_e1.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/collect_e5_probe.py": {
+      "actual": "0b10d00b2300746e1715f2ec58a59c831cf90996011b78ba4bfbc024225697c6",
+      "expected": "0b10d00b2300746e1715f2ec58a59c831cf90996011b78ba4bfbc024225697c6",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/collect_e5_probe.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/diagnostics.py": {
+      "actual": "3d77fc4ebddad9635407c65cd73f1add3cea8fd2f4a8250d125329c9113a654b",
+      "expected": "3d77fc4ebddad9635407c65cd73f1add3cea8fd2f4a8250d125329c9113a654b",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/diagnostics.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e1_profile.py": {
+      "actual": "bf04570c636306e274ea7287606c97d80fb930082ef404be1105f1cb8adb4838",
+      "expected": "bf04570c636306e274ea7287606c97d80fb930082ef404be1105f1cb8adb4838",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e1_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e5_maturation_repair.py": {
+      "actual": "02a14892614ae287de9d961a900d76197dcef60750a82318ce50fe6536166b0f",
+      "expected": "02a14892614ae287de9d961a900d76197dcef60750a82318ce50fe6536166b0f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e5_maturation_repair.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e5_profile.py": {
+      "actual": "24b670345aff47636d3e1de78065ad7a8bcf8579699c8c6fcb92ebb455f1578b",
+      "expected": "24b670345aff47636d3e1de78065ad7a8bcf8579699c8c6fcb92ebb455f1578b",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e5_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e5_young_ownership_profile.py": {
+      "actual": "5d74f6558adb29c453f15309337b9d1840870eda9d5790e4d6780552f8a13c0d",
+      "expected": "5d74f6558adb29c453f15309337b9d1840870eda9d5790e4d6780552f8a13c0d",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e5_young_ownership_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e5f_floor_profile.py": {
+      "actual": "7735bdecb21aca1fe3227f01525e2ed0be2b2cf1daf4fdb599ef0eeacadbadbf",
+      "expected": "7735bdecb21aca1fe3227f01525e2ed0be2b2cf1daf4fdb599ef0eeacadbadbf",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e5f_floor_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e5f_income_entry_profile.py": {
+      "actual": "171f489bf0deffcbb8e1ba12b94d872f3a8f10949849b636a643ff0ffbb6130c",
+      "expected": "171f489bf0deffcbb8e1ba12b94d872f3a8f10949849b636a643ff0ffbb6130c",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e5f_income_entry_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e6_plain_weighting.py": {
+      "actual": "fff0c093c3837ec3bc41823318648ba6b44eb95f7c7ccbafd439c5eadbebb6af",
+      "expected": "fff0c093c3837ec3bc41823318648ba6b44eb95f7c7ccbafd439c5eadbebb6af",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e6_plain_weighting.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e6a_profile.py": {
+      "actual": "e8fa2140fc32cb8c62a026a8a91fb99ab6898edb4745a17018fd18e9fae4a03f",
+      "expected": "e8fa2140fc32cb8c62a026a8a91fb99ab6898edb4745a17018fd18e9fae4a03f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e6a_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e6b_profile.py": {
+      "actual": "9e80ef51ad27bb2b7d5a545457248142c80e70fe98a7044e793c3aceb4a70a52",
+      "expected": "9e80ef51ad27bb2b7d5a545457248142c80e70fe98a7044e793c3aceb4a70a52",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e6b_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e6c_profile.py": {
+      "actual": "777a9441fde8d8f4135ce6d1c8cc6d9d3434768cd366177ce873d03aedcad524",
+      "expected": "777a9441fde8d8f4135ce6d1c8cc6d9d3434768cd366177ce873d03aedcad524",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e6c_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/externals.py": {
+      "actual": "56d1979d717f7bbaaf53322458c3479a72e3aad5d45c9992f5ab86ccb4be1dc3",
+      "expected": "56d1979d717f7bbaaf53322458c3479a72e3aad5d45c9992f5ab86ccb4be1dc3",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/externals.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/fertility_nested.py": {
+      "actual": "c9e04c42689e14ba46cd1050a20675582b93497543d40770eb63a1a619e4bc42",
+      "expected": "c9e04c42689e14ba46cd1050a20675582b93497543d40770eb63a1a619e4bc42",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/fertility_nested.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/joint_nested.py": {
+      "actual": "64ef6c882746e4c251ec9739fbafe316d184b190ed5a567e22f49904a32d3cbc",
+      "expected": "64ef6c882746e4c251ec9739fbafe316d184b190ed5a567e22f49904a32d3cbc",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/joint_nested.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/kernels.py": {
+      "actual": "ab9bcc73516d5908376f70f8aa585c9a8e08ec62759d73491fa886130a97d377",
+      "expected": "ab9bcc73516d5908376f70f8aa585c9a8e08ec62759d73491fa886130a97d377",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/kernels.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/local_panel.py": {
+      "actual": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+      "expected": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/local_panel.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/parameters.py": {
+      "actual": "28fc43e09ed3d1728db6c0d5c071d4bb8716f6b78e4b472599effa4b06710ae3",
+      "expected": "28fc43e09ed3d1728db6c0d5c071d4bb8716f6b78e4b472599effa4b06710ae3",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/parameters.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/parity_panel_e1.py": {
+      "actual": "f89a5e45ca97125bd813b973ada96387e75f2a14d511bfb321373ffe2bd817ee",
+      "expected": "f89a5e45ca97125bd813b973ada96387e75f2a14d511bfb321373ffe2bd817ee",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/parity_panel_e1.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/production_profile.py": {
+      "actual": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f",
+      "expected": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/production_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/promotion_collect_e1.py": {
+      "actual": "ef6e7a96f2dfbcb31115bbe6b2efa1b1b0669faef1be175b3e20e644bbe777a5",
+      "expected": "ef6e7a96f2dfbcb31115bbe6b2efa1b1b0669faef1be175b3e20e644bbe777a5",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/promotion_collect_e1.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/promotion_worker_e1.py": {
+      "actual": "6acb9b926ae25149d7c3588f43e7c4d3cf9d5c225120adc77ae02cc9a44066b2",
+      "expected": "6acb9b926ae25149d7c3588f43e7c4d3cf9d5c225120adc77ae02cc9a44066b2",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/promotion_worker_e1.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_e1_chain.py": {
+      "actual": "23220d1ba96ddf7a7d926ae8c438086ef40bf37d398924622c69ad5978dd4443",
+      "expected": "23220d1ba96ddf7a7d926ae8c438086ef40bf37d398924622c69ad5978dd4443",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_e1_chain.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_e5_wealth_slice.py": {
+      "actual": "ca58e81065347d90cadd75114fa677fa9426c2a037810d6df1ba56ba0c1474c6",
+      "expected": "ca58e81065347d90cadd75114fa677fa9426c2a037810d6df1ba56ba0c1474c6",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_e5_wealth_slice.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_e5b_autopsy.py": {
+      "actual": "de9d8c5186e8e5b7e912302dd0c4df4d9c4f7a0945f7dcc1894dedb507117f7e",
+      "expected": "de9d8c5186e8e5b7e912302dd0c4df4d9c4f7a0945f7dcc1894dedb507117f7e",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_e5b_autopsy.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_e5f_floor_strict_smoke.py": {
+      "actual": "577ca4ace08d1bbd2042e0d7a68dfb866bcfb8f1b3ca191ead1b35b978660f81",
+      "expected": "577ca4ace08d1bbd2042e0d7a68dfb866bcfb8f1b3ca191ead1b35b978660f81",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_e5f_floor_strict_smoke.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_e6a_fecundity_tail_frontier.py": {
+      "actual": "fbcd78f7a8c50422ea498114afc24442c62e228ca5cc7a8aa238555571935282",
+      "expected": "fbcd78f7a8c50422ea498114afc24442c62e228ca5cc7a8aa238555571935282",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_e6a_fecundity_tail_frontier.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_e6b_income_level_diagnostic.py": {
+      "actual": "ae7267446536004ab2dbb41f85ca84e178ec11423e71c1f448f5566a3bddb5aa",
+      "expected": "ae7267446536004ab2dbb41f85ca84e178ec11423e71c1f448f5566a3bddb5aa",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_e6b_income_level_diagnostic.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_e6c_projection_diagnostic.py": {
+      "actual": "284b05dcaef3c4e85d4f8e965fe5d2f61a386ee7da42ef5add8f31014d8800d1",
+      "expected": "284b05dcaef3c4e85d4f8e965fe5d2f61a386ee7da42ef5add8f31014d8800d1",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_e6c_projection_diagnostic.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_e6c_timing_jacobian.py": {
+      "actual": "5218b0626ccf5730c93fcf7c090530784ceb3b03153789634af646f545befc62",
+      "expected": "5218b0626ccf5730c93fcf7c090530784ceb3b03153789634af646f545befc62",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_e6c_timing_jacobian.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_family_gap_scan.py": {
+      "actual": "3b3661611af64e76ad5b2ca1465e1167ab81a577a7042c66cc2c71be35e727a2",
+      "expected": "3b3661611af64e76ad5b2ca1465e1167ab81a577a7042c66cc2c71be35e727a2",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_family_gap_scan.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_fertility_frontier_scan.py": {
+      "actual": "c1dabaff2af31ec347c3c7b5e94f9888e5d681c5b2ea235892c17eb278f436ee",
+      "expected": "c1dabaff2af31ec347c3c7b5e94f9888e5d681c5b2ea235892c17eb278f436ee",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_fertility_frontier_scan.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_seq_smoke.py": {
+      "actual": "3eaec95dbb8bf63897c9c91376a4faefb1134335709bf3825077af86d7059dbf",
+      "expected": "3eaec95dbb8bf63897c9c91376a4faefb1134335709bf3825077af86d7059dbf",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_seq_smoke.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/solver.py": {
+      "actual": "59159c85dac94b518557fc73b34eb8259b8c9dcf70826e41f0cf6f7987fad6c7",
+      "expected": "59159c85dac94b518557fc73b34eb8259b8c9dcf70826e41f0cf6f7987fad6c7",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/solver.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/state_layout.py": {
+      "actual": "9a051cc480d5e49d67474aa3cdc65f05d5e43d7918613b013bb3fd8e1ba0560d",
+      "expected": "9a051cc480d5e49d67474aa3cdc65f05d5e43d7918613b013bb3fd8e1ba0560d",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/state_layout.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/target_system.py": {
+      "actual": "b9bf465e5e1c1e4999c3f55c3893256e22171722b25e5afb5856e36a83ea0c83",
+      "expected": "b9bf465e5e1c1e4999c3f55c3893256e22171722b25e5afb5856e36a83ea0c83",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/target_system.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/__init__.py": {
+      "actual": "39be22bcfab361bb43081d22c00c38985550913d1da981c80f8c5cae17c16d20",
+      "expected": "39be22bcfab361bb43081d22c00c38985550913d1da981c80f8c5cae17c16d20",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/__init__.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_age_survival.py": {
+      "actual": "872729f043731a3a59dfac45fecd2f47a4fa042dfbd356a594a628c10563c090",
+      "expected": "872729f043731a3a59dfac45fecd2f47a4fa042dfbd356a594a628c10563c090",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_age_survival.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_bequest_normalization.py": {
+      "actual": "00c8352d7a86b5bf64e8423cd279527685ac1a3f9df38bd1e900c63429d3fe68",
+      "expected": "00c8352d7a86b5bf64e8423cd279527685ac1a3f9df38bd1e900c63429d3fe68",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_bequest_normalization.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_bequest_target_moments.py": {
+      "actual": "dfa75e2037a7ee336df968cffac5f0db3fd6ba83d5fb9db928919e9a0e09643a",
+      "expected": "dfa75e2037a7ee336df968cffac5f0db3fd6ba83d5fb9db928919e9a0e09643a",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_bequest_target_moments.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_calendar_time_continuation.py": {
+      "actual": "132a8fbea51a6e96a872c6f14ee5026926a1ff78fa606e51654b4b02201cef79",
+      "expected": "132a8fbea51a6e96a872c6f14ee5026926a1ff78fa606e51654b4b02201cef79",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_calendar_time_continuation.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_code_repair_20260709.py": {
+      "actual": "8cfb44b5c128d10b11003a7492d21d820cafd2a68b3ed362cadb7df79e074600",
+      "expected": "8cfb44b5c128d10b11003a7492d21d820cafd2a68b3ed362cadb7df79e074600",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_code_repair_20260709.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_combined_specification.py": {
+      "actual": "6b11fe0888e65bc063e8979f53a4940b75a53be8183a7cecc3b0c4b162edbc19",
+      "expected": "6b11fe0888e65bc063e8979f53a4940b75a53be8183a7cecc3b0c4b162edbc19",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_combined_specification.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_e4_packet_args.py": {
+      "actual": "8518e8fa21f9ec923bf0abed193ddd0a63c44c0ae66aac9c917abcbac7809730",
+      "expected": "8518e8fa21f9ec923bf0abed193ddd0a63c44c0ae66aac9c917abcbac7809730",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_e4_packet_args.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_e5_profile.py": {
+      "actual": "c23abcd1c8d9457980bbcd4005b600ffce82ebde51f512edb395b9b6962826c9",
+      "expected": "c23abcd1c8d9457980bbcd4005b600ffce82ebde51f512edb395b9b6962826c9",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_e5_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_e5f_child_room_floor.py": {
+      "actual": "2e835b2fb57d7261ddbe7cb890d1ff2f79d71ba103c68f2f41b074f96d6185df",
+      "expected": "2e835b2fb57d7261ddbe7cb890d1ff2f79d71ba103c68f2f41b074f96d6185df",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_e5f_child_room_floor.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_e5f_income_entry_profile.py": {
+      "actual": "3048dfc83ea41a7b8785e623ac8f6236f518f268772b14441c998a1149ef4b75",
+      "expected": "3048dfc83ea41a7b8785e623ac8f6236f518f268772b14441c998a1149ef4b75",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_e5f_income_entry_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_e5f_probe_contract.py": {
+      "actual": "e799109c95ac22f4e98fd8dfce80cd91fe80e7b4c95c230687c30e8135c53220",
+      "expected": "e799109c95ac22f4e98fd8dfce80cd91fe80e7b4c95c230687c30e8135c53220",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_e5f_probe_contract.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_e5f_transition_calibration.py": {
+      "actual": "cc3380d58c5760f61ee95c1ef8679fdcf542b1b507bbeb256f24b530908cd9f6",
+      "expected": "cc3380d58c5760f61ee95c1ef8679fdcf542b1b507bbeb256f24b530908cd9f6",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_e5f_transition_calibration.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_e6_plain_weighting.py": {
+      "actual": "b800dd3997031ec130619748216baf7b68447be2b11f337c5f4626ca0315eb59",
+      "expected": "b800dd3997031ec130619748216baf7b68447be2b11f337c5f4626ca0315eb59",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_e6_plain_weighting.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_e6b_profile.py": {
+      "actual": "575ecf128367dd06b8261aa40183633ffbfdfd53919eba485b8413f29fbdf195",
+      "expected": "575ecf128367dd06b8261aa40183633ffbfdfd53919eba485b8413f29fbdf195",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_e6b_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_e6c_profile.py": {
+      "actual": "a42fa25b10c17372f68ea61cb69ae07592338501a2592f8a7afd1f97d7883d0f",
+      "expected": "a42fa25b10c17372f68ea61cb69ae07592338501a2592f8a7afd1f97d7883d0f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_e6c_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_entrant_feasibility.py": {
+      "actual": "379247bdd951a59fc3de6b83b23f051ea980f9652b817a6df385b53842df6c3c",
+      "expected": "379247bdd951a59fc3de6b83b23f051ea980f9652b817a6df385b53842df6c3c",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_entrant_feasibility.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_entry_target_contract.py": {
+      "actual": "7d6e2626e92ef746896f70bd9bc9411f36ff03fb683c06a9d6aab9b8e9bd68f1",
+      "expected": "7d6e2626e92ef746896f70bd9bc9411f36ff03fb683c06a9d6aab9b8e9bd68f1",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_entry_target_contract.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_eqscale_seq.py": {
+      "actual": "f201375c87635da18795238f1a6d2c1bbaa063cde633124fec72456c64265c28",
+      "expected": "f201375c87635da18795238f1a6d2c1bbaa063cde633124fec72456c64265c28",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_eqscale_seq.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_externals.py": {
+      "actual": "b115dcd5f72baf99a5c13af7e634a468bb6b77e6e95599a831ed08c91bda0ff0",
+      "expected": "b115dcd5f72baf99a5c13af7e634a468bb6b77e6e95599a831ed08c91bda0ff0",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_externals.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_fecundity.py": {
+      "actual": "04e25024d0749053c786496cc36c828cc245ee97b5359a4b379a436706a3ea7d",
+      "expected": "04e25024d0749053c786496cc36c828cc245ee97b5359a4b379a436706a3ea7d",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_fecundity.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_independent_child_maturation.py": {
+      "actual": "d2c8ecb94507eb0c32ce9773bc0e5784581b23a239e7416c6e8a6a8b3a84c0b2",
+      "expected": "d2c8ecb94507eb0c32ce9773bc0e5784581b23a239e7416c6e8a6a8b3a84c0b2",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_independent_child_maturation.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_literal_parity.py": {
+      "actual": "6f2ea9a4af4162c544f1d7ee51a28e068eb7db64a0671936cf9bd38a3db13be7",
+      "expected": "6f2ea9a4af4162c544f1d7ee51a28e068eb7db64a0671936cf9bd38a3db13be7",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_literal_parity.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_markov_renewal_closure.py": {
+      "actual": "24f97a01fea2dc368ede0ccb95ccf3f09aacbee1a922274798af72d5fdb22a8b",
+      "expected": "24f97a01fea2dc368ede0ccb95ccf3f09aacbee1a922274798af72d5fdb22a8b",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_markov_renewal_closure.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_optimized_port.py": {
+      "actual": "9928dec1ca317637f203484890cfa34b99699f99ede17213acb3a69933aadc02",
+      "expected": "9928dec1ca317637f203484890cfa34b99699f99ede17213acb3a69933aadc02",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_optimized_port.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_rental_wedge_port_tiny.py": {
+      "actual": "ce0cbab62901d0f26706d2cf04bc814f456b0616b309075f617aa46af4cf0710",
+      "expected": "ce0cbab62901d0f26706d2cf04bc814f456b0616b309075f617aa46af4cf0710",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_rental_wedge_port_tiny.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_retirement_income_heterogeneity.py": {
+      "actual": "82f95bba77a12d952aa4be91a738ed8770d8b2af0a5d485402a9463a914e160a",
+      "expected": "82f95bba77a12d952aa4be91a738ed8770d8b2af0a5d485402a9463a914e160a",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_retirement_income_heterogeneity.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_switch_wedge.py": {
+      "actual": "cc3d9e9e14c2050d75579cc314854dc664535a3bf305f1b4ef379f12e0581bb1",
+      "expected": "cc3d9e9e14c2050d75579cc314854dc664535a3bf305f1b4ef379f12e0581bb1",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_switch_wedge.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_transfer_floor.py": {
+      "actual": "5d419ebd9548545311aaa1aa2cbdcad1d2bdf6da7e7f48ce16328622cec050d7",
+      "expected": "5d419ebd9548545311aaa1aa2cbdcad1d2bdf6da7e7f48ce16328622cec050d7",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_transfer_floor.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/two_shock_choice.py": {
+      "actual": "94a8ac241c3fd6eb655a5f1bc5553ceae8ce40fb332552563b9d83e9ed68712f",
+      "expected": "94a8ac241c3fd6eb655a5f1bc5553ceae8ce40fb332552563b9d83e9ed68712f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/two_shock_choice.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/utils.py": {
+      "actual": "2cbd83c01014f07c3046a628e8c925fe1ded9cb23ede3855f291c34597abc837",
+      "expected": "2cbd83c01014f07c3046a628e8c925fe1ded9cb23ede3855f291c34597abc837",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/utils.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/__init__.py": {
+      "actual": "a7a5fd5a56d05e7460e2c44fd8b147c98fe70ce361d2e8d543257dffc72c253a",
+      "expected": "a7a5fd5a56d05e7460e2c44fd8b147c98fe70ce361d2e8d543257dffc72c253a",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/__init__.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/calibration.py": {
+      "actual": "35daac257a685489d3512b07170b547999cb29272bc6fce5e74e0a4cd01d3e93",
+      "expected": "35daac257a685489d3512b07170b547999cb29272bc6fce5e74e0a4cd01d3e93",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/calibration.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/cli.py": {
+      "actual": "ba5c36ca7ecf6b84eaa3570bfb8cc1923ca3ae8187d9564d081cf8db4c8a89fd",
+      "expected": "ba5c36ca7ecf6b84eaa3570bfb8cc1923ca3ae8187d9564d081cf8db4c8a89fd",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/cli.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/diagnostics.py": {
+      "actual": "6f076d7360e066b7a6c47d5a603e14340bd3971d7ab03a4e8c00f2bb50fe3d7d",
+      "expected": "6f076d7360e066b7a6c47d5a603e14340bd3971d7ab03a4e8c00f2bb50fe3d7d",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/diagnostics.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/kernels.py": {
+      "actual": "14db87b84dbc9716a1185b4f7b544ff7bd9459dac647a171881c2dc072591450",
+      "expected": "14db87b84dbc9716a1185b4f7b544ff7bd9459dac647a171881c2dc072591450",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/kernels.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/local_panel.py": {
+      "actual": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+      "expected": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/local_panel.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/parameters.py": {
+      "actual": "1a7ec1e026755202622a377227838c23e84239d6873a0b8c5f8b4eec2b04dcc0",
+      "expected": "1a7ec1e026755202622a377227838c23e84239d6873a0b8c5f8b4eec2b04dcc0",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/parameters.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/production_profile.py": {
+      "actual": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f",
+      "expected": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/production_profile.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/solver.py": {
+      "actual": "98d18955a47490870292617b0b48a59b0fb70bd5867f5e345740b55af246d7ff",
+      "expected": "98d18955a47490870292617b0b48a59b0fb70bd5867f5e345740b55af246d7ff",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/solver.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/utils.py": {
+      "actual": "3c1f997c3a9d2355f4f756aebd52d180f8c839c44059d7e9330af2cd2da25c26",
+      "expected": "3c1f997c3a9d2355f4f756aebd52d180f8c839c44059d7e9330af2cd2da25c26",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/utils.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/__init__.py": {
+      "actual": "582bdfdf4274b863393d2ccf6a644d02299ccb4ba6010e94a695f110a0fc016f",
+      "expected": "582bdfdf4274b863393d2ccf6a644d02299ccb4ba6010e94a695f110a0fc016f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/__init__.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/audit_new_moment_jacobian.py": {
+      "actual": "45b1efd491b008ee6ae270262a833e37d530b7e2551c47c6bce3c97f29bf8603",
+      "expected": "45b1efd491b008ee6ae270262a833e37d530b7e2551c47c6bce3c97f29bf8603",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/audit_new_moment_jacobian.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/audit_repaired_target_system.py": {
+      "actual": "e1101ee2e50cafbd02df53ab875dea67baa29e2f39aca09f0d9d14b62296405e",
+      "expected": "e1101ee2e50cafbd02df53ab875dea67baa29e2f39aca09f0d9d14b62296405e",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/audit_repaired_target_system.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/benchmark_m5.py": {
+      "actual": "1c4c36b77ace63431ed8bf47b3476597c2e0d3a0ca19bb576a2aec957aa89b76",
+      "expected": "1c4c36b77ace63431ed8bf47b3476597c2e0d3a0ca19bb576a2aec957aa89b76",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/benchmark_m5.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/calibration.py": {
+      "actual": "92a80b4b18509d8de4b79f758b3ff1a5de032363841d16d879bab7794c0fe69a",
+      "expected": "92a80b4b18509d8de4b79f758b3ff1a5de032363841d16d879bab7794c0fe69a",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/calibration.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/calibration_collect.py": {
+      "actual": "10e4dfca4f5edbeb6f4aaa6436db0918027a441944218af8ffbab8f841b604ab",
+      "expected": "10e4dfca4f5edbeb6f4aaa6436db0918027a441944218af8ffbab8f841b604ab",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/calibration_collect.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/calibration_search.py": {
+      "actual": "296252c012cd5d507238a3fd8d90afb9321a310521fdd00d2f1f03e6aef4ff98",
+      "expected": "296252c012cd5d507238a3fd8d90afb9321a310521fdd00d2f1f03e6aef4ff98",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/calibration_search.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/cli.py": {
+      "actual": "52d879bb878f7d41537c9a37c720c7efd8dab580a79d8b2ac6671502a10d6550",
+      "expected": "52d879bb878f7d41537c9a37c720c7efd8dab580a79d8b2ac6671502a10d6550",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/cli.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/collect_beta_profile.py": {
+      "actual": "fafa022d5424e2e63389853b86ffeecc7a312a55356a95b320a3abf340972a3f",
+      "expected": "fafa022d5424e2e63389853b86ffeecc7a312a55356a95b320a3abf340972a3f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/collect_beta_profile.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/diagnose_wealth_structure.py": {
+      "actual": "0ea0b55791aa174ba26ef6ad03481527809096ebdb30071841af7e63c0f8a0b5",
+      "expected": "0ea0b55791aa174ba26ef6ad03481527809096ebdb30071841af7e63c0f8a0b5",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/diagnose_wealth_structure.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/diagnostic_parity.py": {
+      "actual": "688c79f520b42aa02e7676a58a7df89021abb63eb0a81051058e8e762bef5301",
+      "expected": "688c79f520b42aa02e7676a58a7df89021abb63eb0a81051058e8e762bef5301",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/diagnostic_parity.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/diagnostics.py": {
+      "actual": "6f076d7360e066b7a6c47d5a603e14340bd3971d7ab03a4e8c00f2bb50fe3d7d",
+      "expected": "6f076d7360e066b7a6c47d5a603e14340bd3971d7ab03a4e8c00f2bb50fe3d7d",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/diagnostics.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/kernels.py": {
+      "actual": "14db87b84dbc9716a1185b4f7b544ff7bd9459dac647a171881c2dc072591450",
+      "expected": "14db87b84dbc9716a1185b4f7b544ff7bd9459dac647a171881c2dc072591450",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/kernels.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/local_panel.py": {
+      "actual": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+      "expected": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/local_panel.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/m5_profile.py": {
+      "actual": "7ab85bcd8dc546f942356ba8452739e6a59b5f62ddb3fa7213dcc2719ee59eed",
+      "expected": "7ab85bcd8dc546f942356ba8452739e6a59b5f62ddb3fa7213dcc2719ee59eed",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/m5_profile.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/new_moment_profile.py": {
+      "actual": "05bca887184b34f4ef6d547a07d8d06eb030dd74632e8b6b45d1fe7b402a80a5",
+      "expected": "05bca887184b34f4ef6d547a07d8d06eb030dd74632e8b6b45d1fe7b402a80a5",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/new_moment_profile.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/parameters.py": {
+      "actual": "f824cfdad58ee3d5b576ca51b005fff32642b560fd05436881c0e4187ceb1f30",
+      "expected": "f824cfdad58ee3d5b576ca51b005fff32642b560fd05436881c0e4187ceb1f30",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/parameters.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/parity_panel.py": {
+      "actual": "bfabedc6e622e579f081caaab3bcaf847cc9495041830ceb61a31e614dc8f59f",
+      "expected": "bfabedc6e622e579f081caaab3bcaf847cc9495041830ceb61a31e614dc8f59f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/parity_panel.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/production_profile.py": {
+      "actual": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f",
+      "expected": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/production_profile.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/promotion_collect.py": {
+      "actual": "188bebf788c78f29b894749df4026f4489c81dcddc83ec65e0f3201e35b564bb",
+      "expected": "188bebf788c78f29b894749df4026f4489c81dcddc83ec65e0f3201e35b564bb",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/promotion_collect.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/promotion_contract.py": {
+      "actual": "f9d0cff139ba04d9c8deea26960253c4bcad85c1a4e1da6d1415fb4304eefade",
+      "expected": "f9d0cff139ba04d9c8deea26960253c4bcad85c1a4e1da6d1415fb4304eefade",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/promotion_contract.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/promotion_worker.py": {
+      "actual": "6392c70766097f91f421101d1383d52f5dec5bbff60d0e7085ce882c94ee654f",
+      "expected": "6392c70766097f91f421101d1383d52f5dec5bbff60d0e7085ce882c94ee654f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/promotion_worker.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/solver.py": {
+      "actual": "4edf76ea08d07e4e1af7f98914afe1d7f7d1602bc805466b5847577d0cf92ce7",
+      "expected": "4edf76ea08d07e4e1af7f98914afe1d7f7d1602bc805466b5847577d0cf92ce7",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/solver.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/state_layout.py": {
+      "actual": "9a051cc480d5e49d67474aa3cdc65f05d5e43d7918613b013bb3fd8e1ba0560d",
+      "expected": "9a051cc480d5e49d67474aa3cdc65f05d5e43d7918613b013bb3fd8e1ba0560d",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/state_layout.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/target_system.py": {
+      "actual": "b9bf465e5e1c1e4999c3f55c3893256e22171722b25e5afb5856e36a83ea0c83",
+      "expected": "b9bf465e5e1c1e4999c3f55c3893256e22171722b25e5afb5856e36a83ea0c83",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/target_system.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/utils.py": {
+      "actual": "70113e4d7936f30388349dd67d4ab3a7d59ebc201c2a028695db81c64aecc26e",
+      "expected": "70113e4d7936f30388349dd67d4ab3a7d59ebc201c2a028695db81c64aecc26e",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/utils.py"
+    },
+    "source_copy/code/model/tools/audit_closed_reproductive_closure.py": {
+      "actual": "29b18b58bf51c036e734f235817b1713985e73d232c6a15d776b0ff826c40064",
+      "expected": "29b18b58bf51c036e734f235817b1713985e73d232c6a15d776b0ff826c40064",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/audit_closed_reproductive_closure.py"
+    },
+    "source_copy/code/model/tools/e5f_social_security.py": {
+      "actual": "f7bb7db2774be7ef7d2ca2a635eafa3cb27ba79a503fe69b6f00c1eef9658455",
+      "expected": "f7bb7db2774be7ef7d2ca2a635eafa3cb27ba79a503fe69b6f00c1eef9658455",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/e5f_social_security.py"
+    },
+    "source_copy/code/model/tools/run_dynamic_population_transition.py": {
+      "actual": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362",
+      "expected": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_dynamic_population_transition.py"
+    },
+    "source_copy/code/model/tools/run_e5f_independent_numerical_audit.py": {
+      "actual": "7b217f08ea411707c5d5adfff87ebda529c37a6173c4be00f88adce92a507f98",
+      "expected": "7b217f08ea411707c5d5adfff87ebda529c37a6173c4be00f88adce92a507f98",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_independent_numerical_audit.py"
+    },
+    "source_copy/code/model/tools/run_e5f_matched_pf_smoke.py": {
+      "actual": "67f0a22ae2143bdd1f6ff9b32594b8a78259b3d6738facd71d7f58e1389de21d",
+      "expected": "67f0a22ae2143bdd1f6ff9b32594b8a78259b3d6738facd71d7f58e1389de21d",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_matched_pf_smoke.py"
+    },
+    "source_copy/code/model/tools/run_e5f_open_population_transition.py": {
+      "actual": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346",
+      "expected": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_open_population_transition.py"
+    },
+    "source_copy/code/model/tools/run_e5f_perfect_foresight_transition.py": {
+      "actual": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be",
+      "expected": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_perfect_foresight_transition.py"
+    },
+    "source_copy/code/model/tools/run_e5f_post2023_no_policy_continuations.py": {
+      "actual": "0ed39dcd8c5c332ce0a9619402ba4fb6e4d7aff40a4a5c6aefb38c39d9d22147",
+      "expected": "0ed39dcd8c5c332ce0a9619402ba4fb6e4d7aff40a4a5c6aefb38c39d9d22147",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_post2023_no_policy_continuations.py"
+    },
+    "source_copy/code/model/tools/run_e5f_post2023_policy_mechanisms.py": {
+      "actual": "345f2b54718bde99d11ee490e649bf005cc6b20125b6a7dbdb0ab698abf6b2f8",
+      "expected": "345f2b54718bde99d11ee490e649bf005cc6b20125b6a7dbdb0ab698abf6b2f8",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_post2023_policy_mechanisms.py"
+    },
+    "source_copy/code/model/tools/run_e5f_transition_calibration.py": {
+      "actual": "32f5be1c16ec591ef514af91cec2223f8aecd259808b1fc806f9742d5fd64435",
+      "expected": "32f5be1c16ec591ef514af91cec2223f8aecd259808b1fc806f9742d5fd64435",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_transition_calibration.py"
+    },
+    "source_copy/code/model/tools/run_intergen_funded_property_tax_test.py": {
+      "actual": "fe99765bfffd493845c77033e5f2406797f972b0aff2eeb1f271c59f4c6fa73b",
+      "expected": "fe99765bfffd493845c77033e5f2406797f972b0aff2eeb1f271c59f4c6fa73b",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_intergen_funded_property_tax_test.py"
+    },
+    "summary_runtime": {
+      "actual": "2d6ed1dc986a04198c819e4d4594a3d868c9b725925ec5df3871f14403c88806",
+      "expected": "2d6ed1dc986a04198c819e4d4594a3d868c9b725925ec5df3871f14403c88806",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/original_production/original/summary.json"
+    }
+  },
+  "hashes_after": {
+    "checkpoint": {
+      "actual": "3322a61994fb3654d67f4b1d6cf2d0f7cacbb3668d06a417e192ee363c174993",
+      "expected": "3322a61994fb3654d67f4b1d6cf2d0f7cacbb3668d06a417e192ee363c174993",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/baseline_replay_20260917/replay/case/evaluation/raw/repetition_02/initial_state.pkl.gz"
+    },
+    "driver": {
+      "actual": "7edb7f3ee15c7e2b3b94af643ad3ac88ed6af78cb661b3446b1b30391487e68f",
+      "expected": "7edb7f3ee15c7e2b3b94af643ad3ac88ed6af78cb661b3446b1b30391487e68f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/run_e5f_isolated_rental_wedge.py"
+    },
+    "frozen_original/code/model/intergen_eqscale_seq_optimized/kernels.py": {
+      "actual": "79370af16a97723c8de91a1735db5d8ac12830f57e28ad1b74dfac112321fc2a",
+      "expected": "79370af16a97723c8de91a1735db5d8ac12830f57e28ad1b74dfac112321fc2a",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/intergen_eqscale_seq_optimized/kernels.py"
+    },
+    "frozen_original/code/model/intergen_eqscale_seq_optimized/parameters.py": {
+      "actual": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5",
+      "expected": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/intergen_eqscale_seq_optimized/parameters.py"
+    },
+    "frozen_original/code/model/intergen_eqscale_seq_optimized/solver.py": {
+      "actual": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da",
+      "expected": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/intergen_eqscale_seq_optimized/solver.py"
+    },
+    "frozen_original/code/model/tools/run_dynamic_population_transition.py": {
+      "actual": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362",
+      "expected": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/tools/run_dynamic_population_transition.py"
+    },
+    "frozen_original/code/model/tools/run_e5f_independent_numerical_audit.py": {
+      "actual": "656d766e0197e854c73e6b6fb7a3e97cd4fef57e75ad4c7a924d8b1ca5212528",
+      "expected": "656d766e0197e854c73e6b6fb7a3e97cd4fef57e75ad4c7a924d8b1ca5212528",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/tools/run_e5f_independent_numerical_audit.py"
+    },
+    "frozen_original/code/model/tools/run_e5f_matched_pf_smoke.py": {
+      "actual": "91e0728387e55c3a33419298868b696820a4d4bd61809996e6a7842654aabf32",
+      "expected": "91e0728387e55c3a33419298868b696820a4d4bd61809996e6a7842654aabf32",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/tools/run_e5f_matched_pf_smoke.py"
+    },
+    "frozen_original/code/model/tools/run_e5f_open_population_transition.py": {
+      "actual": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346",
+      "expected": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/tools/run_e5f_open_population_transition.py"
+    },
+    "frozen_original/code/model/tools/run_e5f_perfect_foresight_transition.py": {
+      "actual": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be",
+      "expected": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_source_v2/code/model/tools/run_e5f_perfect_foresight_transition.py"
+    },
+    "generated/driver_plan.json": {
+      "actual": "32cbb6726af149affd7abf6fd9f7b10fda7b75f344587c810441c4d17667f67a",
+      "expected": "32cbb6726af149affd7abf6fd9f7b10fda7b75f344587c810441c4d17667f67a",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/driver_plan.json"
+    },
+    "generated/production.sbatch": {
+      "actual": "0942155708e08e600b73332bab8e1a5103fd6569f7a749c75558ba44fd44cf8f",
+      "expected": "0942155708e08e600b73332bab8e1a5103fd6569f7a749c75558ba44fd44cf8f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/production.sbatch"
+    },
+    "generated/remote_finalize.sh": {
+      "actual": "79df5af295eddb10e930c5b38a65cef82455cdb81cfdd481c68867fff9742b41",
+      "expected": "79df5af295eddb10e930c5b38a65cef82455cdb81cfdd481c68867fff9742b41",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/remote_finalize.sh"
+    },
+    "generated/remote_stage.sh": {
+      "actual": "34c04683bdb78f46049ba8bf7ef9e088e1385b475b835c84828aaf340abdb584",
+      "expected": "34c04683bdb78f46049ba8bf7ef9e088e1385b475b835c84828aaf340abdb584",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/remote_stage.sh"
+    },
+    "generated/smoke.sbatch": {
+      "actual": "d2acfd920adb5f41a2e5b1376793f7d95b920c60c468cb86885d423523a4edec",
+      "expected": "d2acfd920adb5f41a2e5b1376793f7d95b920c60c468cb86885d423523a4edec",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/smoke.sbatch"
+    },
+    "helper_copy/build_e5f_native_financing_report.py": {
+      "actual": "beccdda8ac758326c5ff75943831ef402c1e82d1e8a185eebaaac6c079ca65b5",
+      "expected": "beccdda8ac758326c5ff75943831ef402c1e82d1e8a185eebaaac6c079ca65b5",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/build_e5f_native_financing_report.py"
+    },
+    "helper_copy/build_persistent_transitory_income_candidate.py": {
+      "actual": "7c9571fb38697e9433b32baabbd630656bd935179a4325f7b1e3bbb70e94d087",
+      "expected": "7c9571fb38697e9433b32baabbd630656bd935179a4325f7b1e3bbb70e94d087",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/build_persistent_transitory_income_candidate.py"
+    },
+    "helper_copy/run_e5f_financing_factorial.py": {
+      "actual": "0cb6d5b1db5f1ab7b77912099f27ffb8908f8e446574ffcb3d69d724eda364b6",
+      "expected": "0cb6d5b1db5f1ab7b77912099f27ffb8908f8e446574ffcb3d69d724eda364b6",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/run_e5f_financing_factorial.py"
+    },
+    "helper_copy/run_e5f_income_candidate_calibration.py": {
+      "actual": "e688e4fa401097993dcd6cbca1b7fc9afe6911a2086e7bc74925c962bbaf92f2",
+      "expected": "e688e4fa401097993dcd6cbca1b7fc9afe6911a2086e7bc74925c962bbaf92f2",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/run_e5f_income_candidate_calibration.py"
+    },
+    "helper_copy/run_e5f_income_candidate_search.py": {
+      "actual": "1286ba54f1d2e5a64798150de3c6786c109d1f28733c0e47a8e769dad339fa18",
+      "expected": "1286ba54f1d2e5a64798150de3c6786c109d1f28733c0e47a8e769dad339fa18",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/run_e5f_income_candidate_search.py"
+    },
+    "helper_copy/run_e5f_income_overnight_search.py": {
+      "actual": "111776865158779fa9ab9de05308a0b7d3e98adf8b0280cfaf2ed159be58eb48",
+      "expected": "111776865158779fa9ab9de05308a0b7d3e98adf8b0280cfaf2ed159be58eb48",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/run_e5f_income_overnight_search.py"
+    },
+    "helper_copy/run_e5f_native_financing_diagnostic.py": {
+      "actual": "ff65058d8e796069f82fcaf463256e906a500af876bb91d91c646c200d3582f2",
+      "expected": "ff65058d8e796069f82fcaf463256e906a500af876bb91d91c646c200d3582f2",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/run_e5f_native_financing_diagnostic.py"
+    },
+    "helper_copy/run_e5f_native_income_cohort_diagnostic.py": {
+      "actual": "1ca604b4b6e83f5cd43b48163a4889512165caf5a4ffb88f6b8759c60a0e1d50",
+      "expected": "1ca604b4b6e83f5cd43b48163a4889512165caf5a4ffb88f6b8759c60a0e1d50",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/run_e5f_native_income_cohort_diagnostic.py"
+    },
+    "helper_copy/run_e5f_native_rental_access_diagnostic.py": {
+      "actual": "90d48059a3f76668b5e6c4ea0f789de14c2280e21ded7493dc41f67ca367a924",
+      "expected": "90d48059a3f76668b5e6c4ea0f789de14c2280e21ded7493dc41f67ca367a924",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/run_e5f_native_rental_access_diagnostic.py"
+    },
+    "helper_runtime/build_e5f_native_financing_report.py": {
+      "actual": "beccdda8ac758326c5ff75943831ef402c1e82d1e8a185eebaaac6c079ca65b5",
+      "expected": "beccdda8ac758326c5ff75943831ef402c1e82d1e8a185eebaaac6c079ca65b5",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/build_e5f_native_financing_report.py"
+    },
+    "helper_runtime/build_persistent_transitory_income_candidate.py": {
+      "actual": "7c9571fb38697e9433b32baabbd630656bd935179a4325f7b1e3bbb70e94d087",
+      "expected": "7c9571fb38697e9433b32baabbd630656bd935179a4325f7b1e3bbb70e94d087",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/build_persistent_transitory_income_candidate.py"
+    },
+    "helper_runtime/run_e5f_financing_factorial.py": {
+      "actual": "0cb6d5b1db5f1ab7b77912099f27ffb8908f8e446574ffcb3d69d724eda364b6",
+      "expected": "0cb6d5b1db5f1ab7b77912099f27ffb8908f8e446574ffcb3d69d724eda364b6",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/run_e5f_financing_factorial.py"
+    },
+    "helper_runtime/run_e5f_income_candidate_calibration.py": {
+      "actual": "e688e4fa401097993dcd6cbca1b7fc9afe6911a2086e7bc74925c962bbaf92f2",
+      "expected": "e688e4fa401097993dcd6cbca1b7fc9afe6911a2086e7bc74925c962bbaf92f2",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/run_e5f_income_candidate_calibration.py"
+    },
+    "helper_runtime/run_e5f_income_candidate_search.py": {
+      "actual": "1286ba54f1d2e5a64798150de3c6786c109d1f28733c0e47a8e769dad339fa18",
+      "expected": "1286ba54f1d2e5a64798150de3c6786c109d1f28733c0e47a8e769dad339fa18",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/run_e5f_income_candidate_search.py"
+    },
+    "helper_runtime/run_e5f_income_overnight_search.py": {
+      "actual": "111776865158779fa9ab9de05308a0b7d3e98adf8b0280cfaf2ed159be58eb48",
+      "expected": "111776865158779fa9ab9de05308a0b7d3e98adf8b0280cfaf2ed159be58eb48",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/run_e5f_income_overnight_search.py"
+    },
+    "helper_runtime/run_e5f_native_financing_diagnostic.py": {
+      "actual": "ff65058d8e796069f82fcaf463256e906a500af876bb91d91c646c200d3582f2",
+      "expected": "ff65058d8e796069f82fcaf463256e906a500af876bb91d91c646c200d3582f2",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/run_e5f_native_financing_diagnostic.py"
+    },
+    "helper_runtime/run_e5f_native_income_cohort_diagnostic.py": {
+      "actual": "1ca604b4b6e83f5cd43b48163a4889512165caf5a4ffb88f6b8759c60a0e1d50",
+      "expected": "1ca604b4b6e83f5cd43b48163a4889512165caf5a4ffb88f6b8759c60a0e1d50",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/run_e5f_native_income_cohort_diagnostic.py"
+    },
+    "helper_runtime/run_e5f_native_rental_access_diagnostic.py": {
+      "actual": "90d48059a3f76668b5e6c4ea0f789de14c2280e21ded7493dc41f67ca367a924",
+      "expected": "90d48059a3f76668b5e6c4ea0f789de14c2280e21ded7493dc41f67ca367a924",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/code/model/tools/run_e5f_native_rental_access_diagnostic.py"
+    },
+    "plan_copy": {
+      "actual": "1ae0ba4dfc1a66088e1f3803e80a0ba888f08b46874da3daf0ef4fab6ef76c4a",
+      "expected": "1ae0ba4dfc1a66088e1f3803e80a0ba888f08b46874da3daf0ef4fab6ef76c4a",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/plan.json"
+    },
+    "plan_runtime": {
+      "actual": "1ae0ba4dfc1a66088e1f3803e80a0ba888f08b46874da3daf0ef4fab6ef76c4a",
+      "expected": "1ae0ba4dfc1a66088e1f3803e80a0ba888f08b46874da3daf0ef4fab6ef76c4a",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/plan.json"
+    },
+    "port_manifest_copy": {
+      "actual": "64a5c570b7895275c3be4b2acdd41c83e0e7016e9fc5bcbf66f21092dea37994",
+      "expected": "64a5c570b7895275c3be4b2acdd41c83e0e7016e9fc5bcbf66f21092dea37994",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source_manifest.json"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/__init__.py": {
+      "actual": "a7a5fd5a56d05e7460e2c44fd8b147c98fe70ce361d2e8d543257dffc72c253a",
+      "expected": "a7a5fd5a56d05e7460e2c44fd8b147c98fe70ce361d2e8d543257dffc72c253a",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/__init__.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/audit_timing_repaired_readout.py": {
+      "actual": "724d99fbe9be9e771c44663e2705d7bf9cb47c1c2ca1ca5873c51e15fb2430ac",
+      "expected": "724d99fbe9be9e771c44663e2705d7bf9cb47c1c2ca1ca5873c51e15fb2430ac",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/audit_timing_repaired_readout.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/benchmark_e1.py": {
+      "actual": "1f120b758764ba826a62e1d0e11c47496117100b4313ea144cd93dccb6360d20",
+      "expected": "1f120b758764ba826a62e1d0e11c47496117100b4313ea144cd93dccb6360d20",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/benchmark_e1.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/build_e2_packet.py": {
+      "actual": "d6c959e1eab7918d749cdc8b3131239d9d42eb0cf027f2ad607c87f9484548ee",
+      "expected": "d6c959e1eab7918d749cdc8b3131239d9d42eb0cf027f2ad607c87f9484548ee",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/build_e2_packet.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/build_e5f_psinneg_iteration_packet.py": {
+      "actual": "79b715fac093f39150c2fa0ff6a4dae23c3c2b2f2c283ef3cdcb2820d9bf63cb",
+      "expected": "79b715fac093f39150c2fa0ff6a4dae23c3c2b2f2c283ef3cdcb2820d9bf63cb",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/build_e5f_psinneg_iteration_packet.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/build_e6_decision_tables.py": {
+      "actual": "be589549305ba01d17b2f20484cb0926e468eb06064809c4c3cbe5c09d0a505f",
+      "expected": "be589549305ba01d17b2f20484cb0926e468eb06064809c4c3cbe5c09d0a505f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/build_e6_decision_tables.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/build_e6_l1_comparison.py": {
+      "actual": "d9712571e269b84c5144fb684973e63e0c8e1cf599706d0e52e918f48e044ef9",
+      "expected": "d9712571e269b84c5144fb684973e63e0c8e1cf599706d0e52e918f48e044ef9",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/build_e6_l1_comparison.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/build_e6_plain_comparison.py": {
+      "actual": "b41dab604d149ab24fa8f0394ed40421c9bf8fe2269ee4eb745ed37d4c41506c",
+      "expected": "b41dab604d149ab24fa8f0394ed40421c9bf8fe2269ee4eb745ed37d4c41506c",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/build_e6_plain_comparison.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/build_e6_winner_diagnostics.py": {
+      "actual": "b4421e3b8595395926b6a07d6f2d206d3b765e4c39ff1ff124c33866f5150213",
+      "expected": "b4421e3b8595395926b6a07d6f2d206d3b765e4c39ff1ff124c33866f5150213",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/build_e6_winner_diagnostics.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/calibration.py": {
+      "actual": "7981fdaa24a1d59e9d8761f349708f627a565bea8cb840f47887bad1f1650d5d",
+      "expected": "7981fdaa24a1d59e9d8761f349708f627a565bea8cb840f47887bad1f1650d5d",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/calibration.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/cli.py": {
+      "actual": "f4c728ab4e12f882c6b7e20d5ca8b5309dd7945b001443ac2e3ce905be06d666",
+      "expected": "f4c728ab4e12f882c6b7e20d5ca8b5309dd7945b001443ac2e3ce905be06d666",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/cli.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/collect_e1.py": {
+      "actual": "e0684091323522eacda86c875ee0ad3840d5071b8b1b712c058d86e2bc69d5f2",
+      "expected": "e0684091323522eacda86c875ee0ad3840d5071b8b1b712c058d86e2bc69d5f2",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/collect_e1.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/collect_e5_probe.py": {
+      "actual": "0b10d00b2300746e1715f2ec58a59c831cf90996011b78ba4bfbc024225697c6",
+      "expected": "0b10d00b2300746e1715f2ec58a59c831cf90996011b78ba4bfbc024225697c6",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/collect_e5_probe.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/diagnostics.py": {
+      "actual": "3d77fc4ebddad9635407c65cd73f1add3cea8fd2f4a8250d125329c9113a654b",
+      "expected": "3d77fc4ebddad9635407c65cd73f1add3cea8fd2f4a8250d125329c9113a654b",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/diagnostics.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e1_profile.py": {
+      "actual": "bf04570c636306e274ea7287606c97d80fb930082ef404be1105f1cb8adb4838",
+      "expected": "bf04570c636306e274ea7287606c97d80fb930082ef404be1105f1cb8adb4838",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e1_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e5_maturation_repair.py": {
+      "actual": "02a14892614ae287de9d961a900d76197dcef60750a82318ce50fe6536166b0f",
+      "expected": "02a14892614ae287de9d961a900d76197dcef60750a82318ce50fe6536166b0f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e5_maturation_repair.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e5_profile.py": {
+      "actual": "24b670345aff47636d3e1de78065ad7a8bcf8579699c8c6fcb92ebb455f1578b",
+      "expected": "24b670345aff47636d3e1de78065ad7a8bcf8579699c8c6fcb92ebb455f1578b",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e5_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e5_young_ownership_profile.py": {
+      "actual": "5d74f6558adb29c453f15309337b9d1840870eda9d5790e4d6780552f8a13c0d",
+      "expected": "5d74f6558adb29c453f15309337b9d1840870eda9d5790e4d6780552f8a13c0d",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e5_young_ownership_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e5f_floor_profile.py": {
+      "actual": "7735bdecb21aca1fe3227f01525e2ed0be2b2cf1daf4fdb599ef0eeacadbadbf",
+      "expected": "7735bdecb21aca1fe3227f01525e2ed0be2b2cf1daf4fdb599ef0eeacadbadbf",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e5f_floor_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e5f_income_entry_profile.py": {
+      "actual": "171f489bf0deffcbb8e1ba12b94d872f3a8f10949849b636a643ff0ffbb6130c",
+      "expected": "171f489bf0deffcbb8e1ba12b94d872f3a8f10949849b636a643ff0ffbb6130c",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e5f_income_entry_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e6_plain_weighting.py": {
+      "actual": "fff0c093c3837ec3bc41823318648ba6b44eb95f7c7ccbafd439c5eadbebb6af",
+      "expected": "fff0c093c3837ec3bc41823318648ba6b44eb95f7c7ccbafd439c5eadbebb6af",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e6_plain_weighting.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e6a_profile.py": {
+      "actual": "e8fa2140fc32cb8c62a026a8a91fb99ab6898edb4745a17018fd18e9fae4a03f",
+      "expected": "e8fa2140fc32cb8c62a026a8a91fb99ab6898edb4745a17018fd18e9fae4a03f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e6a_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e6b_profile.py": {
+      "actual": "9e80ef51ad27bb2b7d5a545457248142c80e70fe98a7044e793c3aceb4a70a52",
+      "expected": "9e80ef51ad27bb2b7d5a545457248142c80e70fe98a7044e793c3aceb4a70a52",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e6b_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/e6c_profile.py": {
+      "actual": "777a9441fde8d8f4135ce6d1c8cc6d9d3434768cd366177ce873d03aedcad524",
+      "expected": "777a9441fde8d8f4135ce6d1c8cc6d9d3434768cd366177ce873d03aedcad524",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e6c_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/externals.py": {
+      "actual": "56d1979d717f7bbaaf53322458c3479a72e3aad5d45c9992f5ab86ccb4be1dc3",
+      "expected": "56d1979d717f7bbaaf53322458c3479a72e3aad5d45c9992f5ab86ccb4be1dc3",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/externals.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/fertility_nested.py": {
+      "actual": "c9e04c42689e14ba46cd1050a20675582b93497543d40770eb63a1a619e4bc42",
+      "expected": "c9e04c42689e14ba46cd1050a20675582b93497543d40770eb63a1a619e4bc42",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/fertility_nested.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/joint_nested.py": {
+      "actual": "64ef6c882746e4c251ec9739fbafe316d184b190ed5a567e22f49904a32d3cbc",
+      "expected": "64ef6c882746e4c251ec9739fbafe316d184b190ed5a567e22f49904a32d3cbc",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/joint_nested.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/kernels.py": {
+      "actual": "ab9bcc73516d5908376f70f8aa585c9a8e08ec62759d73491fa886130a97d377",
+      "expected": "ab9bcc73516d5908376f70f8aa585c9a8e08ec62759d73491fa886130a97d377",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/kernels.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/local_panel.py": {
+      "actual": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+      "expected": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/local_panel.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/parameters.py": {
+      "actual": "28fc43e09ed3d1728db6c0d5c071d4bb8716f6b78e4b472599effa4b06710ae3",
+      "expected": "28fc43e09ed3d1728db6c0d5c071d4bb8716f6b78e4b472599effa4b06710ae3",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/parameters.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/parity_panel_e1.py": {
+      "actual": "f89a5e45ca97125bd813b973ada96387e75f2a14d511bfb321373ffe2bd817ee",
+      "expected": "f89a5e45ca97125bd813b973ada96387e75f2a14d511bfb321373ffe2bd817ee",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/parity_panel_e1.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/production_profile.py": {
+      "actual": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f",
+      "expected": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/production_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/promotion_collect_e1.py": {
+      "actual": "ef6e7a96f2dfbcb31115bbe6b2efa1b1b0669faef1be175b3e20e644bbe777a5",
+      "expected": "ef6e7a96f2dfbcb31115bbe6b2efa1b1b0669faef1be175b3e20e644bbe777a5",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/promotion_collect_e1.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/promotion_worker_e1.py": {
+      "actual": "6acb9b926ae25149d7c3588f43e7c4d3cf9d5c225120adc77ae02cc9a44066b2",
+      "expected": "6acb9b926ae25149d7c3588f43e7c4d3cf9d5c225120adc77ae02cc9a44066b2",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/promotion_worker_e1.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_e1_chain.py": {
+      "actual": "23220d1ba96ddf7a7d926ae8c438086ef40bf37d398924622c69ad5978dd4443",
+      "expected": "23220d1ba96ddf7a7d926ae8c438086ef40bf37d398924622c69ad5978dd4443",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_e1_chain.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_e5_wealth_slice.py": {
+      "actual": "ca58e81065347d90cadd75114fa677fa9426c2a037810d6df1ba56ba0c1474c6",
+      "expected": "ca58e81065347d90cadd75114fa677fa9426c2a037810d6df1ba56ba0c1474c6",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_e5_wealth_slice.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_e5b_autopsy.py": {
+      "actual": "de9d8c5186e8e5b7e912302dd0c4df4d9c4f7a0945f7dcc1894dedb507117f7e",
+      "expected": "de9d8c5186e8e5b7e912302dd0c4df4d9c4f7a0945f7dcc1894dedb507117f7e",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_e5b_autopsy.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_e5f_floor_strict_smoke.py": {
+      "actual": "577ca4ace08d1bbd2042e0d7a68dfb866bcfb8f1b3ca191ead1b35b978660f81",
+      "expected": "577ca4ace08d1bbd2042e0d7a68dfb866bcfb8f1b3ca191ead1b35b978660f81",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_e5f_floor_strict_smoke.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_e6a_fecundity_tail_frontier.py": {
+      "actual": "fbcd78f7a8c50422ea498114afc24442c62e228ca5cc7a8aa238555571935282",
+      "expected": "fbcd78f7a8c50422ea498114afc24442c62e228ca5cc7a8aa238555571935282",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_e6a_fecundity_tail_frontier.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_e6b_income_level_diagnostic.py": {
+      "actual": "ae7267446536004ab2dbb41f85ca84e178ec11423e71c1f448f5566a3bddb5aa",
+      "expected": "ae7267446536004ab2dbb41f85ca84e178ec11423e71c1f448f5566a3bddb5aa",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_e6b_income_level_diagnostic.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_e6c_projection_diagnostic.py": {
+      "actual": "284b05dcaef3c4e85d4f8e965fe5d2f61a386ee7da42ef5add8f31014d8800d1",
+      "expected": "284b05dcaef3c4e85d4f8e965fe5d2f61a386ee7da42ef5add8f31014d8800d1",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_e6c_projection_diagnostic.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_e6c_timing_jacobian.py": {
+      "actual": "5218b0626ccf5730c93fcf7c090530784ceb3b03153789634af646f545befc62",
+      "expected": "5218b0626ccf5730c93fcf7c090530784ceb3b03153789634af646f545befc62",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_e6c_timing_jacobian.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_family_gap_scan.py": {
+      "actual": "3b3661611af64e76ad5b2ca1465e1167ab81a577a7042c66cc2c71be35e727a2",
+      "expected": "3b3661611af64e76ad5b2ca1465e1167ab81a577a7042c66cc2c71be35e727a2",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_family_gap_scan.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_fertility_frontier_scan.py": {
+      "actual": "c1dabaff2af31ec347c3c7b5e94f9888e5d681c5b2ea235892c17eb278f436ee",
+      "expected": "c1dabaff2af31ec347c3c7b5e94f9888e5d681c5b2ea235892c17eb278f436ee",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_fertility_frontier_scan.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/run_seq_smoke.py": {
+      "actual": "3eaec95dbb8bf63897c9c91376a4faefb1134335709bf3825077af86d7059dbf",
+      "expected": "3eaec95dbb8bf63897c9c91376a4faefb1134335709bf3825077af86d7059dbf",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/run_seq_smoke.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/solver.py": {
+      "actual": "59159c85dac94b518557fc73b34eb8259b8c9dcf70826e41f0cf6f7987fad6c7",
+      "expected": "59159c85dac94b518557fc73b34eb8259b8c9dcf70826e41f0cf6f7987fad6c7",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/solver.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/state_layout.py": {
+      "actual": "9a051cc480d5e49d67474aa3cdc65f05d5e43d7918613b013bb3fd8e1ba0560d",
+      "expected": "9a051cc480d5e49d67474aa3cdc65f05d5e43d7918613b013bb3fd8e1ba0560d",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/state_layout.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/target_system.py": {
+      "actual": "b9bf465e5e1c1e4999c3f55c3893256e22171722b25e5afb5856e36a83ea0c83",
+      "expected": "b9bf465e5e1c1e4999c3f55c3893256e22171722b25e5afb5856e36a83ea0c83",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/target_system.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/__init__.py": {
+      "actual": "39be22bcfab361bb43081d22c00c38985550913d1da981c80f8c5cae17c16d20",
+      "expected": "39be22bcfab361bb43081d22c00c38985550913d1da981c80f8c5cae17c16d20",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/__init__.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_age_survival.py": {
+      "actual": "872729f043731a3a59dfac45fecd2f47a4fa042dfbd356a594a628c10563c090",
+      "expected": "872729f043731a3a59dfac45fecd2f47a4fa042dfbd356a594a628c10563c090",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_age_survival.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_bequest_normalization.py": {
+      "actual": "00c8352d7a86b5bf64e8423cd279527685ac1a3f9df38bd1e900c63429d3fe68",
+      "expected": "00c8352d7a86b5bf64e8423cd279527685ac1a3f9df38bd1e900c63429d3fe68",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_bequest_normalization.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_bequest_target_moments.py": {
+      "actual": "dfa75e2037a7ee336df968cffac5f0db3fd6ba83d5fb9db928919e9a0e09643a",
+      "expected": "dfa75e2037a7ee336df968cffac5f0db3fd6ba83d5fb9db928919e9a0e09643a",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_bequest_target_moments.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_calendar_time_continuation.py": {
+      "actual": "132a8fbea51a6e96a872c6f14ee5026926a1ff78fa606e51654b4b02201cef79",
+      "expected": "132a8fbea51a6e96a872c6f14ee5026926a1ff78fa606e51654b4b02201cef79",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_calendar_time_continuation.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_code_repair_20260709.py": {
+      "actual": "8cfb44b5c128d10b11003a7492d21d820cafd2a68b3ed362cadb7df79e074600",
+      "expected": "8cfb44b5c128d10b11003a7492d21d820cafd2a68b3ed362cadb7df79e074600",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_code_repair_20260709.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_combined_specification.py": {
+      "actual": "6b11fe0888e65bc063e8979f53a4940b75a53be8183a7cecc3b0c4b162edbc19",
+      "expected": "6b11fe0888e65bc063e8979f53a4940b75a53be8183a7cecc3b0c4b162edbc19",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_combined_specification.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_e4_packet_args.py": {
+      "actual": "8518e8fa21f9ec923bf0abed193ddd0a63c44c0ae66aac9c917abcbac7809730",
+      "expected": "8518e8fa21f9ec923bf0abed193ddd0a63c44c0ae66aac9c917abcbac7809730",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_e4_packet_args.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_e5_profile.py": {
+      "actual": "c23abcd1c8d9457980bbcd4005b600ffce82ebde51f512edb395b9b6962826c9",
+      "expected": "c23abcd1c8d9457980bbcd4005b600ffce82ebde51f512edb395b9b6962826c9",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_e5_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_e5f_child_room_floor.py": {
+      "actual": "2e835b2fb57d7261ddbe7cb890d1ff2f79d71ba103c68f2f41b074f96d6185df",
+      "expected": "2e835b2fb57d7261ddbe7cb890d1ff2f79d71ba103c68f2f41b074f96d6185df",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_e5f_child_room_floor.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_e5f_income_entry_profile.py": {
+      "actual": "3048dfc83ea41a7b8785e623ac8f6236f518f268772b14441c998a1149ef4b75",
+      "expected": "3048dfc83ea41a7b8785e623ac8f6236f518f268772b14441c998a1149ef4b75",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_e5f_income_entry_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_e5f_probe_contract.py": {
+      "actual": "e799109c95ac22f4e98fd8dfce80cd91fe80e7b4c95c230687c30e8135c53220",
+      "expected": "e799109c95ac22f4e98fd8dfce80cd91fe80e7b4c95c230687c30e8135c53220",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_e5f_probe_contract.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_e5f_transition_calibration.py": {
+      "actual": "cc3380d58c5760f61ee95c1ef8679fdcf542b1b507bbeb256f24b530908cd9f6",
+      "expected": "cc3380d58c5760f61ee95c1ef8679fdcf542b1b507bbeb256f24b530908cd9f6",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_e5f_transition_calibration.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_e6_plain_weighting.py": {
+      "actual": "b800dd3997031ec130619748216baf7b68447be2b11f337c5f4626ca0315eb59",
+      "expected": "b800dd3997031ec130619748216baf7b68447be2b11f337c5f4626ca0315eb59",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_e6_plain_weighting.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_e6b_profile.py": {
+      "actual": "575ecf128367dd06b8261aa40183633ffbfdfd53919eba485b8413f29fbdf195",
+      "expected": "575ecf128367dd06b8261aa40183633ffbfdfd53919eba485b8413f29fbdf195",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_e6b_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_e6c_profile.py": {
+      "actual": "a42fa25b10c17372f68ea61cb69ae07592338501a2592f8a7afd1f97d7883d0f",
+      "expected": "a42fa25b10c17372f68ea61cb69ae07592338501a2592f8a7afd1f97d7883d0f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_e6c_profile.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_entrant_feasibility.py": {
+      "actual": "379247bdd951a59fc3de6b83b23f051ea980f9652b817a6df385b53842df6c3c",
+      "expected": "379247bdd951a59fc3de6b83b23f051ea980f9652b817a6df385b53842df6c3c",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_entrant_feasibility.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_entry_target_contract.py": {
+      "actual": "7d6e2626e92ef746896f70bd9bc9411f36ff03fb683c06a9d6aab9b8e9bd68f1",
+      "expected": "7d6e2626e92ef746896f70bd9bc9411f36ff03fb683c06a9d6aab9b8e9bd68f1",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_entry_target_contract.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_eqscale_seq.py": {
+      "actual": "f201375c87635da18795238f1a6d2c1bbaa063cde633124fec72456c64265c28",
+      "expected": "f201375c87635da18795238f1a6d2c1bbaa063cde633124fec72456c64265c28",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_eqscale_seq.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_externals.py": {
+      "actual": "b115dcd5f72baf99a5c13af7e634a468bb6b77e6e95599a831ed08c91bda0ff0",
+      "expected": "b115dcd5f72baf99a5c13af7e634a468bb6b77e6e95599a831ed08c91bda0ff0",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_externals.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_fecundity.py": {
+      "actual": "04e25024d0749053c786496cc36c828cc245ee97b5359a4b379a436706a3ea7d",
+      "expected": "04e25024d0749053c786496cc36c828cc245ee97b5359a4b379a436706a3ea7d",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_fecundity.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_independent_child_maturation.py": {
+      "actual": "d2c8ecb94507eb0c32ce9773bc0e5784581b23a239e7416c6e8a6a8b3a84c0b2",
+      "expected": "d2c8ecb94507eb0c32ce9773bc0e5784581b23a239e7416c6e8a6a8b3a84c0b2",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_independent_child_maturation.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_literal_parity.py": {
+      "actual": "6f2ea9a4af4162c544f1d7ee51a28e068eb7db64a0671936cf9bd38a3db13be7",
+      "expected": "6f2ea9a4af4162c544f1d7ee51a28e068eb7db64a0671936cf9bd38a3db13be7",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_literal_parity.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_markov_renewal_closure.py": {
+      "actual": "24f97a01fea2dc368ede0ccb95ccf3f09aacbee1a922274798af72d5fdb22a8b",
+      "expected": "24f97a01fea2dc368ede0ccb95ccf3f09aacbee1a922274798af72d5fdb22a8b",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_markov_renewal_closure.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_optimized_port.py": {
+      "actual": "9928dec1ca317637f203484890cfa34b99699f99ede17213acb3a69933aadc02",
+      "expected": "9928dec1ca317637f203484890cfa34b99699f99ede17213acb3a69933aadc02",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_optimized_port.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_rental_wedge_port_tiny.py": {
+      "actual": "ce0cbab62901d0f26706d2cf04bc814f456b0616b309075f617aa46af4cf0710",
+      "expected": "ce0cbab62901d0f26706d2cf04bc814f456b0616b309075f617aa46af4cf0710",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_rental_wedge_port_tiny.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_retirement_income_heterogeneity.py": {
+      "actual": "82f95bba77a12d952aa4be91a738ed8770d8b2af0a5d485402a9463a914e160a",
+      "expected": "82f95bba77a12d952aa4be91a738ed8770d8b2af0a5d485402a9463a914e160a",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_retirement_income_heterogeneity.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_switch_wedge.py": {
+      "actual": "cc3d9e9e14c2050d75579cc314854dc664535a3bf305f1b4ef379f12e0581bb1",
+      "expected": "cc3d9e9e14c2050d75579cc314854dc664535a3bf305f1b4ef379f12e0581bb1",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_switch_wedge.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/tests/test_transfer_floor.py": {
+      "actual": "5d419ebd9548545311aaa1aa2cbdcad1d2bdf6da7e7f48ce16328622cec050d7",
+      "expected": "5d419ebd9548545311aaa1aa2cbdcad1d2bdf6da7e7f48ce16328622cec050d7",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/tests/test_transfer_floor.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/two_shock_choice.py": {
+      "actual": "94a8ac241c3fd6eb655a5f1bc5553ceae8ce40fb332552563b9d83e9ed68712f",
+      "expected": "94a8ac241c3fd6eb655a5f1bc5553ceae8ce40fb332552563b9d83e9ed68712f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/two_shock_choice.py"
+    },
+    "source_copy/code/model/intergen_eqscale_seq_optimized/utils.py": {
+      "actual": "2cbd83c01014f07c3046a628e8c925fe1ded9cb23ede3855f291c34597abc837",
+      "expected": "2cbd83c01014f07c3046a628e8c925fe1ded9cb23ede3855f291c34597abc837",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/utils.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/__init__.py": {
+      "actual": "a7a5fd5a56d05e7460e2c44fd8b147c98fe70ce361d2e8d543257dffc72c253a",
+      "expected": "a7a5fd5a56d05e7460e2c44fd8b147c98fe70ce361d2e8d543257dffc72c253a",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/__init__.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/calibration.py": {
+      "actual": "35daac257a685489d3512b07170b547999cb29272bc6fce5e74e0a4cd01d3e93",
+      "expected": "35daac257a685489d3512b07170b547999cb29272bc6fce5e74e0a4cd01d3e93",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/calibration.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/cli.py": {
+      "actual": "ba5c36ca7ecf6b84eaa3570bfb8cc1923ca3ae8187d9564d081cf8db4c8a89fd",
+      "expected": "ba5c36ca7ecf6b84eaa3570bfb8cc1923ca3ae8187d9564d081cf8db4c8a89fd",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/cli.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/diagnostics.py": {
+      "actual": "6f076d7360e066b7a6c47d5a603e14340bd3971d7ab03a4e8c00f2bb50fe3d7d",
+      "expected": "6f076d7360e066b7a6c47d5a603e14340bd3971d7ab03a4e8c00f2bb50fe3d7d",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/diagnostics.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/kernels.py": {
+      "actual": "14db87b84dbc9716a1185b4f7b544ff7bd9459dac647a171881c2dc072591450",
+      "expected": "14db87b84dbc9716a1185b4f7b544ff7bd9459dac647a171881c2dc072591450",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/kernels.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/local_panel.py": {
+      "actual": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+      "expected": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/local_panel.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/parameters.py": {
+      "actual": "1a7ec1e026755202622a377227838c23e84239d6873a0b8c5f8b4eec2b04dcc0",
+      "expected": "1a7ec1e026755202622a377227838c23e84239d6873a0b8c5f8b4eec2b04dcc0",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/parameters.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/production_profile.py": {
+      "actual": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f",
+      "expected": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/production_profile.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/solver.py": {
+      "actual": "98d18955a47490870292617b0b48a59b0fb70bd5867f5e345740b55af246d7ff",
+      "expected": "98d18955a47490870292617b0b48a59b0fb70bd5867f5e345740b55af246d7ff",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/solver.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility/utils.py": {
+      "actual": "3c1f997c3a9d2355f4f756aebd52d180f8c839c44059d7e9330af2cd2da25c26",
+      "expected": "3c1f997c3a9d2355f4f756aebd52d180f8c839c44059d7e9330af2cd2da25c26",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility/utils.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/__init__.py": {
+      "actual": "582bdfdf4274b863393d2ccf6a644d02299ccb4ba6010e94a695f110a0fc016f",
+      "expected": "582bdfdf4274b863393d2ccf6a644d02299ccb4ba6010e94a695f110a0fc016f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/__init__.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/audit_new_moment_jacobian.py": {
+      "actual": "45b1efd491b008ee6ae270262a833e37d530b7e2551c47c6bce3c97f29bf8603",
+      "expected": "45b1efd491b008ee6ae270262a833e37d530b7e2551c47c6bce3c97f29bf8603",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/audit_new_moment_jacobian.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/audit_repaired_target_system.py": {
+      "actual": "e1101ee2e50cafbd02df53ab875dea67baa29e2f39aca09f0d9d14b62296405e",
+      "expected": "e1101ee2e50cafbd02df53ab875dea67baa29e2f39aca09f0d9d14b62296405e",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/audit_repaired_target_system.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/benchmark_m5.py": {
+      "actual": "1c4c36b77ace63431ed8bf47b3476597c2e0d3a0ca19bb576a2aec957aa89b76",
+      "expected": "1c4c36b77ace63431ed8bf47b3476597c2e0d3a0ca19bb576a2aec957aa89b76",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/benchmark_m5.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/calibration.py": {
+      "actual": "92a80b4b18509d8de4b79f758b3ff1a5de032363841d16d879bab7794c0fe69a",
+      "expected": "92a80b4b18509d8de4b79f758b3ff1a5de032363841d16d879bab7794c0fe69a",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/calibration.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/calibration_collect.py": {
+      "actual": "10e4dfca4f5edbeb6f4aaa6436db0918027a441944218af8ffbab8f841b604ab",
+      "expected": "10e4dfca4f5edbeb6f4aaa6436db0918027a441944218af8ffbab8f841b604ab",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/calibration_collect.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/calibration_search.py": {
+      "actual": "296252c012cd5d507238a3fd8d90afb9321a310521fdd00d2f1f03e6aef4ff98",
+      "expected": "296252c012cd5d507238a3fd8d90afb9321a310521fdd00d2f1f03e6aef4ff98",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/calibration_search.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/cli.py": {
+      "actual": "52d879bb878f7d41537c9a37c720c7efd8dab580a79d8b2ac6671502a10d6550",
+      "expected": "52d879bb878f7d41537c9a37c720c7efd8dab580a79d8b2ac6671502a10d6550",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/cli.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/collect_beta_profile.py": {
+      "actual": "fafa022d5424e2e63389853b86ffeecc7a312a55356a95b320a3abf340972a3f",
+      "expected": "fafa022d5424e2e63389853b86ffeecc7a312a55356a95b320a3abf340972a3f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/collect_beta_profile.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/diagnose_wealth_structure.py": {
+      "actual": "0ea0b55791aa174ba26ef6ad03481527809096ebdb30071841af7e63c0f8a0b5",
+      "expected": "0ea0b55791aa174ba26ef6ad03481527809096ebdb30071841af7e63c0f8a0b5",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/diagnose_wealth_structure.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/diagnostic_parity.py": {
+      "actual": "688c79f520b42aa02e7676a58a7df89021abb63eb0a81051058e8e762bef5301",
+      "expected": "688c79f520b42aa02e7676a58a7df89021abb63eb0a81051058e8e762bef5301",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/diagnostic_parity.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/diagnostics.py": {
+      "actual": "6f076d7360e066b7a6c47d5a603e14340bd3971d7ab03a4e8c00f2bb50fe3d7d",
+      "expected": "6f076d7360e066b7a6c47d5a603e14340bd3971d7ab03a4e8c00f2bb50fe3d7d",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/diagnostics.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/kernels.py": {
+      "actual": "14db87b84dbc9716a1185b4f7b544ff7bd9459dac647a171881c2dc072591450",
+      "expected": "14db87b84dbc9716a1185b4f7b544ff7bd9459dac647a171881c2dc072591450",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/kernels.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/local_panel.py": {
+      "actual": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+      "expected": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/local_panel.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/m5_profile.py": {
+      "actual": "7ab85bcd8dc546f942356ba8452739e6a59b5f62ddb3fa7213dcc2719ee59eed",
+      "expected": "7ab85bcd8dc546f942356ba8452739e6a59b5f62ddb3fa7213dcc2719ee59eed",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/m5_profile.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/new_moment_profile.py": {
+      "actual": "05bca887184b34f4ef6d547a07d8d06eb030dd74632e8b6b45d1fe7b402a80a5",
+      "expected": "05bca887184b34f4ef6d547a07d8d06eb030dd74632e8b6b45d1fe7b402a80a5",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/new_moment_profile.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/parameters.py": {
+      "actual": "f824cfdad58ee3d5b576ca51b005fff32642b560fd05436881c0e4187ceb1f30",
+      "expected": "f824cfdad58ee3d5b576ca51b005fff32642b560fd05436881c0e4187ceb1f30",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/parameters.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/parity_panel.py": {
+      "actual": "bfabedc6e622e579f081caaab3bcaf847cc9495041830ceb61a31e614dc8f59f",
+      "expected": "bfabedc6e622e579f081caaab3bcaf847cc9495041830ceb61a31e614dc8f59f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/parity_panel.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/production_profile.py": {
+      "actual": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f",
+      "expected": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/production_profile.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/promotion_collect.py": {
+      "actual": "188bebf788c78f29b894749df4026f4489c81dcddc83ec65e0f3201e35b564bb",
+      "expected": "188bebf788c78f29b894749df4026f4489c81dcddc83ec65e0f3201e35b564bb",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/promotion_collect.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/promotion_contract.py": {
+      "actual": "f9d0cff139ba04d9c8deea26960253c4bcad85c1a4e1da6d1415fb4304eefade",
+      "expected": "f9d0cff139ba04d9c8deea26960253c4bcad85c1a4e1da6d1415fb4304eefade",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/promotion_contract.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/promotion_worker.py": {
+      "actual": "6392c70766097f91f421101d1383d52f5dec5bbff60d0e7085ce882c94ee654f",
+      "expected": "6392c70766097f91f421101d1383d52f5dec5bbff60d0e7085ce882c94ee654f",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/promotion_worker.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/solver.py": {
+      "actual": "4edf76ea08d07e4e1af7f98914afe1d7f7d1602bc805466b5847577d0cf92ce7",
+      "expected": "4edf76ea08d07e4e1af7f98914afe1d7f7d1602bc805466b5847577d0cf92ce7",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/solver.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/state_layout.py": {
+      "actual": "9a051cc480d5e49d67474aa3cdc65f05d5e43d7918613b013bb3fd8e1ba0560d",
+      "expected": "9a051cc480d5e49d67474aa3cdc65f05d5e43d7918613b013bb3fd8e1ba0560d",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/state_layout.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/target_system.py": {
+      "actual": "b9bf465e5e1c1e4999c3f55c3893256e22171722b25e5afb5856e36a83ea0c83",
+      "expected": "b9bf465e5e1c1e4999c3f55c3893256e22171722b25e5afb5856e36a83ea0c83",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/target_system.py"
+    },
+    "source_copy/code/model/intergen_housing_fertility_optimized/utils.py": {
+      "actual": "70113e4d7936f30388349dd67d4ab3a7d59ebc201c2a028695db81c64aecc26e",
+      "expected": "70113e4d7936f30388349dd67d4ab3a7d59ebc201c2a028695db81c64aecc26e",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/utils.py"
+    },
+    "source_copy/code/model/tools/audit_closed_reproductive_closure.py": {
+      "actual": "29b18b58bf51c036e734f235817b1713985e73d232c6a15d776b0ff826c40064",
+      "expected": "29b18b58bf51c036e734f235817b1713985e73d232c6a15d776b0ff826c40064",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/audit_closed_reproductive_closure.py"
+    },
+    "source_copy/code/model/tools/e5f_social_security.py": {
+      "actual": "f7bb7db2774be7ef7d2ca2a635eafa3cb27ba79a503fe69b6f00c1eef9658455",
+      "expected": "f7bb7db2774be7ef7d2ca2a635eafa3cb27ba79a503fe69b6f00c1eef9658455",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/e5f_social_security.py"
+    },
+    "source_copy/code/model/tools/run_dynamic_population_transition.py": {
+      "actual": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362",
+      "expected": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_dynamic_population_transition.py"
+    },
+    "source_copy/code/model/tools/run_e5f_independent_numerical_audit.py": {
+      "actual": "7b217f08ea411707c5d5adfff87ebda529c37a6173c4be00f88adce92a507f98",
+      "expected": "7b217f08ea411707c5d5adfff87ebda529c37a6173c4be00f88adce92a507f98",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_independent_numerical_audit.py"
+    },
+    "source_copy/code/model/tools/run_e5f_matched_pf_smoke.py": {
+      "actual": "67f0a22ae2143bdd1f6ff9b32594b8a78259b3d6738facd71d7f58e1389de21d",
+      "expected": "67f0a22ae2143bdd1f6ff9b32594b8a78259b3d6738facd71d7f58e1389de21d",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_matched_pf_smoke.py"
+    },
+    "source_copy/code/model/tools/run_e5f_open_population_transition.py": {
+      "actual": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346",
+      "expected": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_open_population_transition.py"
+    },
+    "source_copy/code/model/tools/run_e5f_perfect_foresight_transition.py": {
+      "actual": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be",
+      "expected": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_perfect_foresight_transition.py"
+    },
+    "source_copy/code/model/tools/run_e5f_post2023_no_policy_continuations.py": {
+      "actual": "0ed39dcd8c5c332ce0a9619402ba4fb6e4d7aff40a4a5c6aefb38c39d9d22147",
+      "expected": "0ed39dcd8c5c332ce0a9619402ba4fb6e4d7aff40a4a5c6aefb38c39d9d22147",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_post2023_no_policy_continuations.py"
+    },
+    "source_copy/code/model/tools/run_e5f_post2023_policy_mechanisms.py": {
+      "actual": "345f2b54718bde99d11ee490e649bf005cc6b20125b6a7dbdb0ab698abf6b2f8",
+      "expected": "345f2b54718bde99d11ee490e649bf005cc6b20125b6a7dbdb0ab698abf6b2f8",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_post2023_policy_mechanisms.py"
+    },
+    "source_copy/code/model/tools/run_e5f_transition_calibration.py": {
+      "actual": "32f5be1c16ec591ef514af91cec2223f8aecd259808b1fc806f9742d5fd64435",
+      "expected": "32f5be1c16ec591ef514af91cec2223f8aecd259808b1fc806f9742d5fd64435",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_transition_calibration.py"
+    },
+    "source_copy/code/model/tools/run_intergen_funded_property_tax_test.py": {
+      "actual": "fe99765bfffd493845c77033e5f2406797f972b0aff2eeb1f271c59f4c6fa73b",
+      "expected": "fe99765bfffd493845c77033e5f2406797f972b0aff2eeb1f271c59f4c6fa73b",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_intergen_funded_property_tax_test.py"
+    },
+    "summary_runtime": {
+      "actual": "2d6ed1dc986a04198c819e4d4594a3d868c9b725925ec5df3871f14403c88806",
+      "expected": "2d6ed1dc986a04198c819e4d4594a3d868c9b725925ec5df3871f14403c88806",
+      "ok": true,
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/finance_dose_v1/original_production/original/summary.json"
+    }
+  },
+  "import_origins": {
+    "__main__": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/run_e5f_isolated_rental_wedge.py",
+    "audit_closed_reproductive_closure": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/audit_closed_reproductive_closure.py",
+    "build_e5f_native_financing_report": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/build_e5f_native_financing_report.py",
+    "e5f_social_security": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/e5f_social_security.py",
+    "intergen_eqscale_seq_optimized": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/__init__.py",
+    "intergen_eqscale_seq_optimized.calibration": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/calibration.py",
+    "intergen_eqscale_seq_optimized.diagnostics": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/diagnostics.py",
+    "intergen_eqscale_seq_optimized.e5_profile": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e5_profile.py",
+    "intergen_eqscale_seq_optimized.e5_young_ownership_profile": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e5_young_ownership_profile.py",
+    "intergen_eqscale_seq_optimized.e5f_floor_profile": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e5f_floor_profile.py",
+    "intergen_eqscale_seq_optimized.e5f_income_entry_profile": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e5f_income_entry_profile.py",
+    "intergen_eqscale_seq_optimized.e6b_profile": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/e6b_profile.py",
+    "intergen_eqscale_seq_optimized.externals": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/externals.py",
+    "intergen_eqscale_seq_optimized.joint_nested": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/joint_nested.py",
+    "intergen_eqscale_seq_optimized.kernels": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/kernels.py",
+    "intergen_eqscale_seq_optimized.local_panel": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/local_panel.py",
+    "intergen_eqscale_seq_optimized.parameters": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/parameters.py",
+    "intergen_eqscale_seq_optimized.production_profile": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/production_profile.py",
+    "intergen_eqscale_seq_optimized.solver": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/solver.py",
+    "intergen_eqscale_seq_optimized.target_system": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/target_system.py",
+    "intergen_eqscale_seq_optimized.utils": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_eqscale_seq_optimized/utils.py",
+    "intergen_housing_fertility_optimized": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/__init__.py",
+    "intergen_housing_fertility_optimized.calibration": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/calibration.py",
+    "intergen_housing_fertility_optimized.diagnostics": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/diagnostics.py",
+    "intergen_housing_fertility_optimized.kernels": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/kernels.py",
+    "intergen_housing_fertility_optimized.local_panel": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/local_panel.py",
+    "intergen_housing_fertility_optimized.m5_profile": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/m5_profile.py",
+    "intergen_housing_fertility_optimized.new_moment_profile": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/new_moment_profile.py",
+    "intergen_housing_fertility_optimized.parameters": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/parameters.py",
+    "intergen_housing_fertility_optimized.production_profile": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/production_profile.py",
+    "intergen_housing_fertility_optimized.solver": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/solver.py",
+    "intergen_housing_fertility_optimized.target_system": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/target_system.py",
+    "intergen_housing_fertility_optimized.utils": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/intergen_housing_fertility_optimized/utils.py",
+    "run_dynamic_population_transition": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_dynamic_population_transition.py",
+    "run_e5f_independent_numerical_audit": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_independent_numerical_audit.py",
+    "run_e5f_matched_pf_smoke": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_matched_pf_smoke.py",
+    "run_e5f_native_income_cohort_diagnostic": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/run_e5f_native_income_cohort_diagnostic.py",
+    "run_e5f_native_rental_access_diagnostic": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools/run_e5f_native_rental_access_diagnostic.py",
+    "run_e5f_open_population_transition": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_open_population_transition.py",
+    "run_e5f_perfect_foresight_transition": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_perfect_foresight_transition.py",
+    "run_e5f_post2023_no_policy_continuations": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_post2023_no_policy_continuations.py",
+    "run_e5f_post2023_policy_mechanisms": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_post2023_policy_mechanisms.py",
+    "run_e5f_transition_calibration": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source/code/model/tools/run_e5f_transition_calibration.py"
+  },
+  "job": "18079902",
+  "phase": "before",
+  "source": {
+    "changed_source_vs_frozen": {
+      "code/model/intergen_eqscale_seq_optimized/kernels.py": {
+        "changed": true,
+        "frozen": "79370af16a97723c8de91a1735db5d8ac12830f57e28ad1b74dfac112321fc2a",
+        "ported": "ab9bcc73516d5908376f70f8aa585c9a8e08ec62759d73491fa886130a97d377"
+      },
+      "code/model/intergen_eqscale_seq_optimized/parameters.py": {
+        "changed": true,
+        "frozen": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5",
+        "ported": "28fc43e09ed3d1728db6c0d5c071d4bb8716f6b78e4b472599effa4b06710ae3"
+      },
+      "code/model/intergen_eqscale_seq_optimized/solver.py": {
+        "changed": true,
+        "frozen": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da",
+        "ported": "59159c85dac94b518557fc73b34eb8259b8c9dcf70826e41f0cf6f7987fad6c7"
+      },
+      "code/model/intergen_eqscale_seq_optimized/tests/test_rental_wedge_port_tiny.py": {
+        "changed": true,
+        "frozen": null,
+        "ported": "ce0cbab62901d0f26706d2cf04bc814f456b0616b309075f617aa46af4cf0710"
+      },
+      "code/model/intergen_eqscale_seq_optimized/tests/test_switch_wedge.py": {
+        "changed": true,
+        "frozen": null,
+        "ported": "cc3d9e9e14c2050d75579cc314854dc664535a3bf305f1b4ef379f12e0581bb1"
+      },
+      "code/model/tools/run_dynamic_population_transition.py": {
+        "changed": false,
+        "frozen": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362",
+        "ported": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362"
+      },
+      "code/model/tools/run_e5f_independent_numerical_audit.py": {
+        "changed": true,
+        "frozen": "656d766e0197e854c73e6b6fb7a3e97cd4fef57e75ad4c7a924d8b1ca5212528",
+        "ported": "7b217f08ea411707c5d5adfff87ebda529c37a6173c4be00f88adce92a507f98"
+      },
+      "code/model/tools/run_e5f_matched_pf_smoke.py": {
+        "changed": true,
+        "frozen": "91e0728387e55c3a33419298868b696820a4d4bd61809996e6a7842654aabf32",
+        "ported": "67f0a22ae2143bdd1f6ff9b32594b8a78259b3d6738facd71d7f58e1389de21d"
+      },
+      "code/model/tools/run_e5f_open_population_transition.py": {
+        "changed": false,
+        "frozen": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346",
+        "ported": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346"
+      },
+      "code/model/tools/run_e5f_perfect_foresight_transition.py": {
+        "changed": false,
+        "frozen": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be",
+        "ported": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be"
+      }
+    },
+    "control_required_before_wedge": true,
+    "manifest": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source_manifest.json",
+    "manifest_sha256": "64a5c570b7895275c3be4b2acdd41c83e0e7016e9fc5bcbf66f21092dea37994",
+    "schema": "e5f_isolated_rental_wedge_source_v2",
+    "source_files": 126,
+    "source_root": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/source",
+    "wedge_port_reviewed": true
+  },
+  "stage": "smoke",
+  "status": "verified",
+  "sys_path": [
+    "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/rental_wedge_v2/code/model/tools",
+    "/share/apps/anaconda3/2025.06/lib/python313.zip",
+    "/share/apps/anaconda3/2025.06/lib/python3.13",
+    "/share/apps/anaconda3/2025.06/lib/python3.13/lib-dynload",
+    "/share/apps/anaconda3/2025.06/lib/python3.13/site-packages"
+  ],
+  "tree": {
+    "code": {
+      "model/tools/build_e5f_native_financing_report.py": "beccdda8ac758326c5ff75943831ef402c1e82d1e8a185eebaaac6c079ca65b5",
+      "model/tools/build_persistent_transitory_income_candidate.py": "7c9571fb38697e9433b32baabbd630656bd935179a4325f7b1e3bbb70e94d087",
+      "model/tools/run_e5f_financing_factorial.py": "0cb6d5b1db5f1ab7b77912099f27ffb8908f8e446574ffcb3d69d724eda364b6",
+      "model/tools/run_e5f_income_candidate_calibration.py": "e688e4fa401097993dcd6cbca1b7fc9afe6911a2086e7bc74925c962bbaf92f2",
+      "model/tools/run_e5f_income_candidate_search.py": "1286ba54f1d2e5a64798150de3c6786c109d1f28733c0e47a8e769dad339fa18",
+      "model/tools/run_e5f_income_overnight_search.py": "111776865158779fa9ab9de05308a0b7d3e98adf8b0280cfaf2ed159be58eb48",
+      "model/tools/run_e5f_isolated_rental_wedge.py": "7edb7f3ee15c7e2b3b94af643ad3ac88ed6af78cb661b3446b1b30391487e68f",
+      "model/tools/run_e5f_native_financing_diagnostic.py": "ff65058d8e796069f82fcaf463256e906a500af876bb91d91c646c200d3582f2",
+      "model/tools/run_e5f_native_income_cohort_diagnostic.py": "1ca604b4b6e83f5cd43b48163a4889512165caf5a4ffb88f6b8759c60a0e1d50",
+      "model/tools/run_e5f_native_rental_access_diagnostic.py": "90d48059a3f76668b5e6c4ea0f789de14c2280e21ded7493dc41f67ca367a924"
+    },
+    "inputs": {
+      "driver_plan.json": "32cbb6726af149affd7abf6fd9f7b10fda7b75f344587c810441c4d17667f67a",
+      "frozen_comparison.json": "8b247418d0bfab1a7cddff3114f70b3645e69fa01b164cb80ef3f834f45f82ce",
+      "launch_manifest.json": "c0c02299be54ad832ccfe2364e542d807c34710d0eaf19122f8705009ca7f322",
+      "plan.json": "1ae0ba4dfc1a66088e1f3803e80a0ba888f08b46874da3daf0ef4fab6ef76c4a",
+      "production.sbatch": "0942155708e08e600b73332bab8e1a5103fd6569f7a749c75558ba44fd44cf8f",
+      "remote_finalize.sh": "79df5af295eddb10e930c5b38a65cef82455cdb81cfdd481c68867fff9742b41",
+      "remote_stage.sh": "34c04683bdb78f46049ba8bf7ef9e088e1385b475b835c84828aaf340abdb584",
+      "smoke.sbatch": "d2acfd920adb5f41a2e5b1376793f7d95b920c60c468cb86885d423523a4edec",
+      "source_manifest.json": "64a5c570b7895275c3be4b2acdd41c83e0e7016e9fc5bcbf66f21092dea37994",
+      "source_nonpython_manifest.json": "c61cb558cacfd542cb4cd2895715af55a8ee93a98bc905d2da0ea30a66708fa1"
+    },
+    "source": {
+      "code/model/.gitignore": "4b7787cd6884504cba6417cf0b0df0504a06374114cc53a9ceb0159c6edb5db0",
+      "code/model/Makefile": "e21bc70ec1df39ba13138fa8a11ae90e6ea718039f0099f444bcdae64fbdc3bc",
+      "code/model/PLAN.md": "92391c9c4cb2e834ce3adb33398e036826b808dd333f72c44881ce9026a6674b",
+      "code/model/README.md": "e0086e901a2e9344a10cf5d218c0b8c39192ac63e0c83de3b855d08a3e60443d",
+      "code/model/benchmarks/README.md": "5815e793dd64a58ace18e1d2096e6856781fb53c3a364b63befca6a81d514d30",
+      "code/model/benchmarks/accounting_scale_fast_iter1_2026_05_05.json": "0c1a574af55d2b1d718e9b6ef41c91a40e350277365c1d1d0ce780568f65a0bb",
+      "code/model/benchmarks/accounting_scale_fast_live_stop_2026_05_05.json": "a79096fede73b2d9cc609d9b4969ad54a4b30d41c44789eae7016f0a16c388c1",
+      "code/model/benchmarks/accounting_scale_fast_live_stop_fixed_vo_2026_05_05.json": "6f164bb8ea22f556d2b5da616c04cc3d0e0af64c1c0b942c14e8b5c46f0df84f",
+      "code/model/benchmarks/accounting_scale_psi_sensitivity_iter1_2026_05_05.json": "1717ce3a46233f724b68ec522ea6536127670c5f7d2d5ab93a4c51535255f598",
+      "code/model/benchmarks/fast_ge_iter1.json": "0f51f6049bf3ba28376a1f484d0f59a864390f9efb835e069e15fd12382335bd",
+      "code/model/benchmarks/fast_ge_iter1_2026_05_05_final_default.json": "289be294c88b7517e09e4f41193b432bd9b551f945dfe280e9581a19377dea0e",
+      "code/model/benchmarks/fast_ge_iter1_2026_05_05_post_scaled_patch_default.json": "7ac6ab64fc55aca390bc614493c9798651809b1b4914583d6bd8cd3b34000666",
+      "code/model/benchmarks/fast_ge_iter1_2026_05_05_postclosure_default.json": "3f97c6c1c2d0c4bbec5805e38e692066488f3a286522ed4dedd4b90beb5a6bf0",
+      "code/model/benchmarks/fast_ge_iter1_2026_05_05_postclosure_default_logupdate.json": "e7b8f878745e0bca4be7d2352ca47160e4a9adea35e23929e5b6043a0383b1a3",
+      "code/model/benchmarks/fast_ge_iter1_2026_05_05_postclosure_default_rerun.json": "c3cc6ebfcc1801bca562464323b33dd58eaeeb2afc82190088521c4b944686eb",
+      "code/model/benchmarks/fast_ge_iter1_2026_05_05_preclosure.json": "5672d829db24ad6df7b8c89569245c0a8078b9dbf6218098540a68f5b8539b77",
+      "code/model/benchmarks/fast_ge_iter1_compiled_forward.json": "fcc2e56d4045464dcb1b54b6f74a5e970ce0fd0fde9f5e4c5a8972a242c3d1d1",
+      "code/model/benchmarks/fast_ge_iter1_compiled_forward_warm.json": "96b33ae995283b49d210c8add533abf699488a2dc4e5e9f10e1277f9120ac1ae",
+      "code/model/benchmarks/fast_ge_iter1_final_distribution.json": "b5ce0d15a22f5f83fa15461bb066f59449c9277bd86c047370984a4bd6b68320",
+      "code/model/benchmarks/fast_ge_iter1_no_mass_rescale_2026_05_05.json": "870b265d4f512f2576d08c4a601bc8845e0afac44410faf97a04f2a2a7f12274",
+      "code/model/benchmarks/fast_ge_iter1_tenure_preidx.json": "2ff601022f9fafc80a6099592084bb97d7a456d90c1b04add8b0ad42b2540f41",
+      "code/model/benchmarks/grad_descent_bench.json": "992a93d93562f1469d2c89024b38f3e46abaa051febb90b90651b3a37907a863",
+      "code/model/benchmarks/howard_baseline_eval6.json": "4557f98dc59348eac3d7760f48c0b417733f904b8ff7eff678156c560c6c6172",
+      "code/model/benchmarks/howard_baseline_iter1.json": "9c46f7315daf195a2eac86d2eb4572a8096068f651be62fcefc3885802e8e3f3",
+      "code/model/benchmarks/howard_kernel_eval6.json": "a4363f3651f38fbf31ced56bf79cff0c757b5ef81ff0e0e9a6ae3fc208ef3973",
+      "code/model/benchmarks/howard_kernel_eval6_full_kernel.json": "b0c53365a24d95c8271bb2855a0568dac06766a07cc0d784034775c77a046267",
+      "code/model/benchmarks/howard_kernel_eval6_lockernel.json": "2aaec3aa0a326e64a7670b0192e2c8e8c06b13a3b4cb6d5ccb9a3a3f01ff251d",
+      "code/model/benchmarks/howard_kernel_eval6_parallel.json": "ed380ef91ff2dbef459b5c94623b11f42bf7770375d3e211149480aa7627ba80",
+      "code/model/benchmarks/howard_kernel_eval6_tcjkernel.json": "66feb05f794fbde73fd30fab10c12b08e65d7ffca263921f1698db2c8c19e8ed",
+      "code/model/benchmarks/howard_kernel_eval6_warm.json": "214b2034268e3868392a3ec0c5db23f2c29a1dd47a8a970e55eb8efda14486bc",
+      "code/model/benchmarks/matlab_fast_ge_converged.json": "6125b2dc0d22ecbb46553882a99f63b26be7470841e36ab5b58f4cc79176952d",
+      "code/model/benchmarks/matlab_fast_ge_iter1.json": "70c229852205cf890bb6b568b28dacec4c0b74a29d876b80b3fd1b4747cb020a",
+      "code/model/benchmarks/matlab_solve_theta_x0_benchmark.json": "c1063d587acc369b9e0a0c00d168eb873d70e31d97e928640dbc85c08ff9af9a",
+      "code/model/benchmarks/matlab_solve_theta_x0_fast.json": "984e7490baa3b83cde582a4aa431b76dcf01c59c319463dc055d1219c238b93d",
+      "code/model/benchmarks/mini_parameter_solve_10_fast_2026_05_05.json": "fdf754d155705c43435e160dc734499787c4651e271aee0ededc28c9ef28d846",
+      "code/model/benchmarks/outside_closure_fast_calibrated_iter50_2026_05_05.json": "8543a8b8ca693da252c3b0ecafe226f12353e49de5d4be5b3b9880a2b113c0c0",
+      "code/model/benchmarks/outside_closure_fast_damped_iter30_2026_05_05.json": "44a639be8ed793ff6f1d31f23dd4dc7c3551ef4ec45e2c128bbdc92dda94efdd",
+      "code/model/benchmarks/outside_closure_fast_iter8_2026_05_05.json": "68babfd899d1a17143937da6649eda3385dc2e5ec19f78d0541436d034685705",
+      "code/model/benchmarks/python_fast_ge_converged.json": "ce01be69692b739eff7e4f5f58342ca0166d8406dc8c887c5810c00b4eb083c1",
+      "code/model/benchmarks/python_fast_ge_converged_distopt_dense.json": "54c2e73cff95d2760ad8b4fb7aefd80d57643da8325bb9552ca3363f3bdedfdd",
+      "code/model/benchmarks/scaled_equilibrium_fast_iter80_2026_05_05.json": "8e74d7e41cb017438332071df06676b72ac784cf3700509fcce582783396a9dc",
+      "code/model/benchmarks/scaled_equilibrium_fast_iter80_fixed_vo_2026_05_05.json": "b91d9b4c556fbf146fd2729c031470f68fadb375666b71c306432853fc6393bd",
+      "code/model/benchmarks/scaled_equilibrium_low_outside_flow_forcefull_iter80_fixed_vo_2026_05_05.json": "de2241994ed7aa781eb8a059bf38f2fc5e87887fe670a12106c9cbed5633f04c",
+      "code/model/benchmarks/scaled_equilibrium_low_outside_flow_iter160_fixed_vo_2026_05_05.json": "c218e70c4a93cc28a40cd43836bedb7d095d89b9aff30a62be9e0195d7f704f8",
+      "code/model/benchmarks/scaled_equilibrium_outside_flow_sensitivity_2026_05_05.json": "161e7f08ad4c97ada31406f88f2294ef746ad7eef454dc0972d0cac4cc5a0c47",
+      "code/model/benchmarks/scaled_equilibrium_outside_flow_sensitivity_fixed_vo_2026_05_05.json": "6f415988008f098e6352e65de702981c304e2938662742bf951a98ae872e4658",
+      "code/model/benchmarks/scaled_equilibrium_psi_sensitivity_2026_05_05.json": "d781a630442709b1b7390178b4274b5276d4aeb3e963bee8878f42cbdef615bb",
+      "code/model/benchmarks/scaled_equilibrium_psi_sensitivity_fixed_vo_2026_05_05.json": "b0044d437aae602953b1d587a94cc9a98c7424e89f34e720382165c8bc2345c0",
+      "code/model/benchmarks/solve_theta_x0_bench_parallel.json": "34ca9d229db2b1ead00a1c8fb5ee29a25c9b6c9d5ac377c020770cf506b6616c",
+      "code/model/benchmarks/solve_theta_x0_bench_parallel_cold.json": "57a984c82e638026c9b99276f9ad689f426c843413513205a7330fecea627156",
+      "code/model/benchmarks/solve_theta_x0_bench_parallel_run3.json": "76090e097c659f3f5b90f30a4fc4b9fbc713f67e74ff928a6d1250a5d02bdf0c",
+      "code/model/benchmarks/solve_theta_x0_fast.json": "9b4d5fd08c5be6dd92fcc68c88b0767f6bdaf557c159bbc1c1510ffe5ec03813",
+      "code/model/benchmarks/solve_theta_x0_fast_cached_eval.json": "53dba868bc28a501bf6ff7796d9e9d84f215bb7b7a5b9f43402c2cc01d50de51",
+      "code/model/benchmarks/solve_theta_x0_fast_compiled_forward.json": "2b927fbfc735bd6ae82a146ac9974a0b4b418abe88479ef1ef89f408363486a5",
+      "code/model/benchmarks/solve_theta_x0_fast_eval_kernel.json": "c41755978cef800b851e3a1c933a5069e271e4940a2ff71f886eb8a421b43b99",
+      "code/model/benchmarks/solve_theta_x0_fast_eval_kernel_run2.json": "bf60debe69037279b4e52152853960e193952a53c7ed329685eba83849b3a32f",
+      "code/model/benchmarks/solve_theta_x0_fast_full_kernel.json": "b0fa16b0632d8eafd3aea518bec6c4267ac91b0135b044d01b04288309646d2c",
+      "code/model/benchmarks/solve_theta_x0_fast_interp_eval.json": "cbac5549543f5aee15f534c3870280738fbcab3c6c9de89ff2c69d095e0ab654",
+      "code/model/benchmarks/solve_theta_x0_fast_iter6_tenure_preidx.json": "e62f5325caf1b1005c532b0a8747147cedbdb65da74732b45241b7ca47a27392",
+      "code/model/benchmarks/solve_theta_x0_fast_post_kernel.json": "35cf1ed8de2e14a3a8e49479f8a2544b1b0554d264d8572bb7f5644ab7241735",
+      "code/model/benchmarks/solve_theta_x0_fast_tenure_kernel.json": "d21f9812c1565ee9f3853507d8c42e81c9cff9b28220488bcd9ae6a251f0b5b8",
+      "code/model/demographic_transition/README.md": "c36bf2eeee6cbeef1480e8bb4456dbbba37dc4c367c92d910618dc051f1a7ca3",
+      "code/model/docs/README.md": "22c4eaf96e1af60d637b8635581d52699dc9d7336ba88191f6d21617108f5db9",
+      "code/model/docs/architecture.html": "1fd0609df3898fac7167c47fb4bdc949a0989806b0e1e13acd54d5cb849772b3",
+      "code/model/docs/tour.html": "fdbad80b7fa7abcc42053bde314a588581dc6a65d3baaadadd4c47652ce63a4b",
+      "code/model/docs/tour_data.json": "62834b49a357dfec1ac1edc6d1036dfb3db81735a94810de1605535331ca1f64",
+      "code/model/experiments/population_closure_2026_05_05/README.md": "db6409b354ee486f6642ccd51aa13712ac2cfda48287e10c600bdb96588fd8fc",
+      "code/model/intergen_eqscale_seq/IMPLEMENTATION_STATUS.md": "9249e85c60e043b90e9bda9f799d8960541380d20a9d5ad15730aeabc9538cf1",
+      "code/model/intergen_eqscale_seq/README.md": "7e3f0bf8a58bbc3fbc48d9af898626b3cd46edfeaaac9727efe8be69314fc1b3",
+      "code/model/intergen_eqscale_seq_optimized/IMPLEMENTATION_STATUS.md": "17866cf3c5eb35fd0252934828585635dc646449fa134f09cc674ff76d65f896",
+      "code/model/intergen_eqscale_seq_optimized/PORT_HANDOFF.md": "f946798a22ab7a8af6d0b569cb42ae839957451ee54d4499ef0e3e8b0223e25a",
+      "code/model/intergen_eqscale_seq_optimized/README.md": "b54b5aa3ec1856030c2cf527ecae6f0bb65fa0c2f5301fb30a93abbbec95b23c",
+      "code/model/intergen_eqscale_seq_optimized/__init__.py": "a7a5fd5a56d05e7460e2c44fd8b147c98fe70ce361d2e8d543257dffc72c253a",
+      "code/model/intergen_eqscale_seq_optimized/audit_timing_repaired_readout.py": "724d99fbe9be9e771c44663e2705d7bf9cb47c1c2ca1ca5873c51e15fb2430ac",
+      "code/model/intergen_eqscale_seq_optimized/benchmark_e1.py": "1f120b758764ba826a62e1d0e11c47496117100b4313ea144cd93dccb6360d20",
+      "code/model/intergen_eqscale_seq_optimized/build_e2_packet.py": "d6c959e1eab7918d749cdc8b3131239d9d42eb0cf027f2ad607c87f9484548ee",
+      "code/model/intergen_eqscale_seq_optimized/build_e5f_psinneg_iteration_packet.py": "79b715fac093f39150c2fa0ff6a4dae23c3c2b2f2c283ef3cdcb2820d9bf63cb",
+      "code/model/intergen_eqscale_seq_optimized/build_e6_decision_tables.py": "be589549305ba01d17b2f20484cb0926e468eb06064809c4c3cbe5c09d0a505f",
+      "code/model/intergen_eqscale_seq_optimized/build_e6_l1_comparison.py": "d9712571e269b84c5144fb684973e63e0c8e1cf599706d0e52e918f48e044ef9",
+      "code/model/intergen_eqscale_seq_optimized/build_e6_plain_comparison.py": "b41dab604d149ab24fa8f0394ed40421c9bf8fe2269ee4eb745ed37d4c41506c",
+      "code/model/intergen_eqscale_seq_optimized/build_e6_winner_diagnostics.py": "b4421e3b8595395926b6a07d6f2d206d3b765e4c39ff1ff124c33866f5150213",
+      "code/model/intergen_eqscale_seq_optimized/calibration.py": "7981fdaa24a1d59e9d8761f349708f627a565bea8cb840f47887bad1f1650d5d",
+      "code/model/intergen_eqscale_seq_optimized/cli.py": "f4c728ab4e12f882c6b7e20d5ca8b5309dd7945b001443ac2e3ce905be06d666",
+      "code/model/intergen_eqscale_seq_optimized/cluster/submit_e1_promotion.sh": "9d6da7349129bf91efa3613e9c1a5301e1a6d3ac8ae88fd8c9d0ee51373c205a",
+      "code/model/intergen_eqscale_seq_optimized/collect_e1.py": "e0684091323522eacda86c875ee0ad3840d5071b8b1b712c058d86e2bc69d5f2",
+      "code/model/intergen_eqscale_seq_optimized/collect_e5_probe.py": "0b10d00b2300746e1715f2ec58a59c831cf90996011b78ba4bfbc024225697c6",
+      "code/model/intergen_eqscale_seq_optimized/diagnostics.py": "3d77fc4ebddad9635407c65cd73f1add3cea8fd2f4a8250d125329c9113a654b",
+      "code/model/intergen_eqscale_seq_optimized/e1_profile.py": "bf04570c636306e274ea7287606c97d80fb930082ef404be1105f1cb8adb4838",
+      "code/model/intergen_eqscale_seq_optimized/e5_maturation_repair.py": "02a14892614ae287de9d961a900d76197dcef60750a82318ce50fe6536166b0f",
+      "code/model/intergen_eqscale_seq_optimized/e5_profile.py": "24b670345aff47636d3e1de78065ad7a8bcf8579699c8c6fcb92ebb455f1578b",
+      "code/model/intergen_eqscale_seq_optimized/e5_target_provenance.csv": "38e6507fdc81ae264d54ab02d9fb6c824114a3da85cfc67c901eca819bf6e78b",
+      "code/model/intergen_eqscale_seq_optimized/e5_young_ownership_profile.py": "5d74f6558adb29c453f15309337b9d1840870eda9d5790e4d6780552f8a13c0d",
+      "code/model/intergen_eqscale_seq_optimized/e5f_floor_profile.py": "7735bdecb21aca1fe3227f01525e2ed0be2b2cf1daf4fdb599ef0eeacadbadbf",
+      "code/model/intergen_eqscale_seq_optimized/e5f_income_entry_profile.py": "171f489bf0deffcbb8e1ba12b94d872f3a8f10949849b636a643ff0ffbb6130c",
+      "code/model/intergen_eqscale_seq_optimized/e6_plain_weighting.py": "fff0c093c3837ec3bc41823318648ba6b44eb95f7c7ccbafd439c5eadbebb6af",
+      "code/model/intergen_eqscale_seq_optimized/e6a_profile.py": "e8fa2140fc32cb8c62a026a8a91fb99ab6898edb4745a17018fd18e9fae4a03f",
+      "code/model/intergen_eqscale_seq_optimized/e6b_profile.py": "9e80ef51ad27bb2b7d5a545457248142c80e70fe98a7044e793c3aceb4a70a52",
+      "code/model/intergen_eqscale_seq_optimized/e6c_profile.py": "777a9441fde8d8f4135ce6d1c8cc6d9d3434768cd366177ce873d03aedcad524",
+      "code/model/intergen_eqscale_seq_optimized/externals.py": "56d1979d717f7bbaaf53322458c3479a72e3aad5d45c9992f5ab86ccb4be1dc3",
+      "code/model/intergen_eqscale_seq_optimized/fertility_nested.py": "c9e04c42689e14ba46cd1050a20675582b93497543d40770eb63a1a619e4bc42",
+      "code/model/intergen_eqscale_seq_optimized/joint_nested.py": "64ef6c882746e4c251ec9739fbafe316d184b190ed5a567e22f49904a32d3cbc",
+      "code/model/intergen_eqscale_seq_optimized/kernels.py": "ab9bcc73516d5908376f70f8aa585c9a8e08ec62759d73491fa886130a97d377",
+      "code/model/intergen_eqscale_seq_optimized/local_panel.py": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+      "code/model/intergen_eqscale_seq_optimized/parameters.py": "28fc43e09ed3d1728db6c0d5c071d4bb8716f6b78e4b472599effa4b06710ae3",
+      "code/model/intergen_eqscale_seq_optimized/parity_panel_e1.py": "f89a5e45ca97125bd813b973ada96387e75f2a14d511bfb321373ffe2bd817ee",
+      "code/model/intergen_eqscale_seq_optimized/production_profile.py": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f",
+      "code/model/intergen_eqscale_seq_optimized/promotion_collect_e1.py": "ef6e7a96f2dfbcb31115bbe6b2efa1b1b0669faef1be175b3e20e644bbe777a5",
+      "code/model/intergen_eqscale_seq_optimized/promotion_worker_e1.py": "6acb9b926ae25149d7c3588f43e7c4d3cf9d5c225120adc77ae02cc9a44066b2",
+      "code/model/intergen_eqscale_seq_optimized/run_e1_chain.py": "23220d1ba96ddf7a7d926ae8c438086ef40bf37d398924622c69ad5978dd4443",
+      "code/model/intergen_eqscale_seq_optimized/run_e5_wealth_slice.py": "ca58e81065347d90cadd75114fa677fa9426c2a037810d6df1ba56ba0c1474c6",
+      "code/model/intergen_eqscale_seq_optimized/run_e5b_autopsy.py": "de9d8c5186e8e5b7e912302dd0c4df4d9c4f7a0945f7dcc1894dedb507117f7e",
+      "code/model/intergen_eqscale_seq_optimized/run_e5f_floor_strict_smoke.py": "577ca4ace08d1bbd2042e0d7a68dfb866bcfb8f1b3ca191ead1b35b978660f81",
+      "code/model/intergen_eqscale_seq_optimized/run_e6a_fecundity_tail_frontier.py": "fbcd78f7a8c50422ea498114afc24442c62e228ca5cc7a8aa238555571935282",
+      "code/model/intergen_eqscale_seq_optimized/run_e6b_income_level_diagnostic.py": "ae7267446536004ab2dbb41f85ca84e178ec11423e71c1f448f5566a3bddb5aa",
+      "code/model/intergen_eqscale_seq_optimized/run_e6c_projection_diagnostic.py": "284b05dcaef3c4e85d4f8e965fe5d2f61a386ee7da42ef5add8f31014d8800d1",
+      "code/model/intergen_eqscale_seq_optimized/run_e6c_timing_jacobian.py": "5218b0626ccf5730c93fcf7c090530784ceb3b03153789634af646f545befc62",
+      "code/model/intergen_eqscale_seq_optimized/run_family_gap_scan.py": "3b3661611af64e76ad5b2ca1465e1167ab81a577a7042c66cc2c71be35e727a2",
+      "code/model/intergen_eqscale_seq_optimized/run_fertility_frontier_scan.py": "c1dabaff2af31ec347c3c7b5e94f9888e5d681c5b2ea235892c17eb278f436ee",
+      "code/model/intergen_eqscale_seq_optimized/run_seq_smoke.py": "3eaec95dbb8bf63897c9c91376a4faefb1134335709bf3825077af86d7059dbf",
+      "code/model/intergen_eqscale_seq_optimized/solver.py": "59159c85dac94b518557fc73b34eb8259b8c9dcf70826e41f0cf6f7987fad6c7",
+      "code/model/intergen_eqscale_seq_optimized/state_layout.py": "9a051cc480d5e49d67474aa3cdc65f05d5e43d7918613b013bb3fd8e1ba0560d",
+      "code/model/intergen_eqscale_seq_optimized/target_system.py": "b9bf465e5e1c1e4999c3f55c3893256e22171722b25e5afb5856e36a83ea0c83",
+      "code/model/intergen_eqscale_seq_optimized/tests/__init__.py": "39be22bcfab361bb43081d22c00c38985550913d1da981c80f8c5cae17c16d20",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_age_survival.py": "872729f043731a3a59dfac45fecd2f47a4fa042dfbd356a594a628c10563c090",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_bequest_normalization.py": "00c8352d7a86b5bf64e8423cd279527685ac1a3f9df38bd1e900c63429d3fe68",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_bequest_target_moments.py": "dfa75e2037a7ee336df968cffac5f0db3fd6ba83d5fb9db928919e9a0e09643a",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_calendar_time_continuation.py": "132a8fbea51a6e96a872c6f14ee5026926a1ff78fa606e51654b4b02201cef79",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_code_repair_20260709.py": "8cfb44b5c128d10b11003a7492d21d820cafd2a68b3ed362cadb7df79e074600",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_combined_specification.py": "6b11fe0888e65bc063e8979f53a4940b75a53be8183a7cecc3b0c4b162edbc19",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_e4_packet_args.py": "8518e8fa21f9ec923bf0abed193ddd0a63c44c0ae66aac9c917abcbac7809730",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_e5_profile.py": "c23abcd1c8d9457980bbcd4005b600ffce82ebde51f512edb395b9b6962826c9",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_e5f_child_room_floor.py": "2e835b2fb57d7261ddbe7cb890d1ff2f79d71ba103c68f2f41b074f96d6185df",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_e5f_income_entry_profile.py": "3048dfc83ea41a7b8785e623ac8f6236f518f268772b14441c998a1149ef4b75",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_e5f_probe_contract.py": "e799109c95ac22f4e98fd8dfce80cd91fe80e7b4c95c230687c30e8135c53220",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_e5f_transition_calibration.py": "cc3380d58c5760f61ee95c1ef8679fdcf542b1b507bbeb256f24b530908cd9f6",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_e6_plain_weighting.py": "b800dd3997031ec130619748216baf7b68447be2b11f337c5f4626ca0315eb59",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_e6b_profile.py": "575ecf128367dd06b8261aa40183633ffbfdfd53919eba485b8413f29fbdf195",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_e6c_profile.py": "a42fa25b10c17372f68ea61cb69ae07592338501a2592f8a7afd1f97d7883d0f",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_entrant_feasibility.py": "379247bdd951a59fc3de6b83b23f051ea980f9652b817a6df385b53842df6c3c",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_entry_target_contract.py": "7d6e2626e92ef746896f70bd9bc9411f36ff03fb683c06a9d6aab9b8e9bd68f1",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_eqscale_seq.py": "f201375c87635da18795238f1a6d2c1bbaa063cde633124fec72456c64265c28",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_externals.py": "b115dcd5f72baf99a5c13af7e634a468bb6b77e6e95599a831ed08c91bda0ff0",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_fecundity.py": "04e25024d0749053c786496cc36c828cc245ee97b5359a4b379a436706a3ea7d",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_independent_child_maturation.py": "d2c8ecb94507eb0c32ce9773bc0e5784581b23a239e7416c6e8a6a8b3a84c0b2",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_literal_parity.py": "6f2ea9a4af4162c544f1d7ee51a28e068eb7db64a0671936cf9bd38a3db13be7",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_markov_renewal_closure.py": "24f97a01fea2dc368ede0ccb95ccf3f09aacbee1a922274798af72d5fdb22a8b",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_optimized_port.py": "9928dec1ca317637f203484890cfa34b99699f99ede17213acb3a69933aadc02",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_rental_wedge_port_tiny.py": "ce0cbab62901d0f26706d2cf04bc814f456b0616b309075f617aa46af4cf0710",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_retirement_income_heterogeneity.py": "82f95bba77a12d952aa4be91a738ed8770d8b2af0a5d485402a9463a914e160a",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_switch_wedge.py": "cc3d9e9e14c2050d75579cc314854dc664535a3bf305f1b4ef379f12e0581bb1",
+      "code/model/intergen_eqscale_seq_optimized/tests/test_transfer_floor.py": "5d419ebd9548545311aaa1aa2cbdcad1d2bdf6da7e7f48ce16328622cec050d7",
+      "code/model/intergen_eqscale_seq_optimized/two_shock_choice.py": "94a8ac241c3fd6eb655a5f1bc5553ceae8ce40fb332552563b9d83e9ed68712f",
+      "code/model/intergen_eqscale_seq_optimized/utils.py": "2cbd83c01014f07c3046a628e8c925fe1ded9cb23ede3855f291c34597abc837",
+      "code/model/intergen_housing_fertility/IMPLEMENTATION_STATUS.md": "9249e85c60e043b90e9bda9f799d8960541380d20a9d5ad15730aeabc9538cf1",
+      "code/model/intergen_housing_fertility/README.md": "7e3f0bf8a58bbc3fbc48d9af898626b3cd46edfeaaac9727efe8be69314fc1b3",
+      "code/model/intergen_housing_fertility/__init__.py": "a7a5fd5a56d05e7460e2c44fd8b147c98fe70ce361d2e8d543257dffc72c253a",
+      "code/model/intergen_housing_fertility/calibration.py": "35daac257a685489d3512b07170b547999cb29272bc6fce5e74e0a4cd01d3e93",
+      "code/model/intergen_housing_fertility/cli.py": "ba5c36ca7ecf6b84eaa3570bfb8cc1923ca3ae8187d9564d081cf8db4c8a89fd",
+      "code/model/intergen_housing_fertility/diagnostics.py": "6f076d7360e066b7a6c47d5a603e14340bd3971d7ab03a4e8c00f2bb50fe3d7d",
+      "code/model/intergen_housing_fertility/kernels.py": "14db87b84dbc9716a1185b4f7b544ff7bd9459dac647a171881c2dc072591450",
+      "code/model/intergen_housing_fertility/local_panel.py": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+      "code/model/intergen_housing_fertility/parameters.py": "1a7ec1e026755202622a377227838c23e84239d6873a0b8c5f8b4eec2b04dcc0",
+      "code/model/intergen_housing_fertility/production_profile.py": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f",
+      "code/model/intergen_housing_fertility/solver.py": "98d18955a47490870292617b0b48a59b0fb70bd5867f5e345740b55af246d7ff",
+      "code/model/intergen_housing_fertility/utils.py": "3c1f997c3a9d2355f4f756aebd52d180f8c839c44059d7e9330af2cd2da25c26",
+      "code/model/intergen_housing_fertility_howard_test/IMPLEMENTATION_STATUS.md": "8e42a7500c114103c45b7cd10fa261790f213ef419dd34448e0c240f15327164",
+      "code/model/intergen_housing_fertility_howard_test/README.md": "c3d72981bdfd4ff7c7119acf7a9aca4acfd56fde9459d9ef48dbecf572ccda35",
+      "code/model/intergen_housing_fertility_optimized/CALIBRATION_RUNBOOK.md": "79aa430a8679760b02d0a6a2da3a5f7e77378b0256558048cb86f9bffb6720d0",
+      "code/model/intergen_housing_fertility_optimized/IMPLEMENTATION_STATUS.md": "3d0e7412634b249a2949967d7a8cff2196f096735364827572dc41a77c4ae23f",
+      "code/model/intergen_housing_fertility_optimized/PROMOTION_RUNBOOK.md": "5c0064c3ac8dddd29c6fd2e117d016a7d31d14133eb9b45a7a27ff4cc952b8b0",
+      "code/model/intergen_housing_fertility_optimized/README.md": "2a6dbf9ef4c59d65d4e51a3eb511eeb47207aff92707f12554afa4c322c839ac",
+      "code/model/intergen_housing_fertility_optimized/REFACTOR_REPORT.md": "477f161d3da5e132f877970003bc85e28b39cb3d3574a2eab7eecb6d957abd09",
+      "code/model/intergen_housing_fertility_optimized/__init__.py": "582bdfdf4274b863393d2ccf6a644d02299ccb4ba6010e94a695f110a0fc016f",
+      "code/model/intergen_housing_fertility_optimized/audit_new_moment_jacobian.py": "45b1efd491b008ee6ae270262a833e37d530b7e2551c47c6bce3c97f29bf8603",
+      "code/model/intergen_housing_fertility_optimized/audit_repaired_target_system.py": "e1101ee2e50cafbd02df53ab875dea67baa29e2f39aca09f0d9d14b62296405e",
+      "code/model/intergen_housing_fertility_optimized/benchmark_m5.py": "1c4c36b77ace63431ed8bf47b3476597c2e0d3a0ca19bb576a2aec957aa89b76",
+      "code/model/intergen_housing_fertility_optimized/calibration.py": "92a80b4b18509d8de4b79f758b3ff1a5de032363841d16d879bab7794c0fe69a",
+      "code/model/intergen_housing_fertility_optimized/calibration_collect.py": "10e4dfca4f5edbeb6f4aaa6436db0918027a441944218af8ffbab8f841b604ab",
+      "code/model/intergen_housing_fertility_optimized/calibration_search.py": "296252c012cd5d507238a3fd8d90afb9321a310521fdd00d2f1f03e6aef4ff98",
+      "code/model/intergen_housing_fertility_optimized/cli.py": "52d879bb878f7d41537c9a37c720c7efd8dab580a79d8b2ac6671502a10d6550",
+      "code/model/intergen_housing_fertility_optimized/cluster/submit_beta_profile.sh": "147c21ddc78d97194b12ee4cf682be692fdb70d7fc62fe97e7d1514a4c03887d",
+      "code/model/intergen_housing_fertility_optimized/cluster/submit_beta_profile_collector.sh": "9ae60c2882c4d35cc1c4264d368db95f290402392adb2bb224b9ded8ec240262",
+      "code/model/intergen_housing_fertility_optimized/cluster/submit_final_winner_jacobian.sh": "447d143a7d19ad224dccee483dac32c26cb5494c4e1dfc90b8f475b8a162825a",
+      "code/model/intergen_housing_fertility_optimized/cluster/submit_overnight_new_moment_battery.sh": "cba8c3be2f27020619c0c3af5aa29164c819b50ce473e3b04d66959b76b41465",
+      "code/model/intergen_housing_fertility_optimized/cluster/submit_overnight_new_moment_collector.sh": "e0b3ff7bc660da91645a59318d81e5dcf8572e86c2bdcfc8d78f715659c0dc5d",
+      "code/model/intergen_housing_fertility_optimized/cluster/submit_promotion_battery.sh": "0c1a18ebc553cc67f4c166bcd3d5c48eae2ed2b2a332b0eee69c7acf06341964",
+      "code/model/intergen_housing_fertility_optimized/cluster/submit_six_hour_calibration.sh": "a3c736607f3c9b712c43c3702d50d33cee8535453f533ccf304eb381ba6693ac",
+      "code/model/intergen_housing_fertility_optimized/cluster/submit_six_hour_collector.sh": "567a8b0bc519ac6971f55bf3b053dc434e34a76c120b4b5435a6c85b983d6bef",
+      "code/model/intergen_housing_fertility_optimized/cluster/submit_three_hour_new_moment_collector.sh": "b33d4e1af6d63cfa93a1a609c645e39bd36e074d2026016ff5536681d92d905a",
+      "code/model/intergen_housing_fertility_optimized/cluster/submit_three_hour_new_moments.sh": "4fa4bda7dbfac38d10425e8739b384debccb021bb0e6d0a15508ad5ddb760787",
+      "code/model/intergen_housing_fertility_optimized/cluster/submit_weight_tilt_basin_search.sh": "42278cc3a650d78a1b105af6dabf259999455649a15d758fa0fb34316f6abff8",
+      "code/model/intergen_housing_fertility_optimized/collect_beta_profile.py": "fafa022d5424e2e63389853b86ffeecc7a312a55356a95b320a3abf340972a3f",
+      "code/model/intergen_housing_fertility_optimized/diagnose_wealth_structure.py": "0ea0b55791aa174ba26ef6ad03481527809096ebdb30071841af7e63c0f8a0b5",
+      "code/model/intergen_housing_fertility_optimized/diagnostic_parity.py": "688c79f520b42aa02e7676a58a7df89021abb63eb0a81051058e8e762bef5301",
+      "code/model/intergen_housing_fertility_optimized/diagnostics.py": "6f076d7360e066b7a6c47d5a603e14340bd3971d7ab03a4e8c00f2bb50fe3d7d",
+      "code/model/intergen_housing_fertility_optimized/kernels.py": "14db87b84dbc9716a1185b4f7b544ff7bd9459dac647a171881c2dc072591450",
+      "code/model/intergen_housing_fertility_optimized/local_panel.py": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+      "code/model/intergen_housing_fertility_optimized/m5_profile.py": "7ab85bcd8dc546f942356ba8452739e6a59b5f62ddb3fa7213dcc2719ee59eed",
+      "code/model/intergen_housing_fertility_optimized/new_moment_profile.py": "05bca887184b34f4ef6d547a07d8d06eb030dd74632e8b6b45d1fe7b402a80a5",
+      "code/model/intergen_housing_fertility_optimized/parameters.py": "f824cfdad58ee3d5b576ca51b005fff32642b560fd05436881c0e4187ceb1f30",
+      "code/model/intergen_housing_fertility_optimized/parity_panel.py": "bfabedc6e622e579f081caaab3bcaf847cc9495041830ceb61a31e614dc8f59f",
+      "code/model/intergen_housing_fertility_optimized/production_profile.py": "922e0b947ceefb3072647ad83d8fae3c2f40a24abbb5916481da702c6126cc3f",
+      "code/model/intergen_housing_fertility_optimized/promotion_collect.py": "188bebf788c78f29b894749df4026f4489c81dcddc83ec65e0f3201e35b564bb",
+      "code/model/intergen_housing_fertility_optimized/promotion_contract.py": "f9d0cff139ba04d9c8deea26960253c4bcad85c1a4e1da6d1415fb4304eefade",
+      "code/model/intergen_housing_fertility_optimized/promotion_worker.py": "6392c70766097f91f421101d1383d52f5dec5bbff60d0e7085ce882c94ee654f",
+      "code/model/intergen_housing_fertility_optimized/solver.py": "4edf76ea08d07e4e1af7f98914afe1d7f7d1602bc805466b5847577d0cf92ce7",
+      "code/model/intergen_housing_fertility_optimized/state_layout.py": "9a051cc480d5e49d67474aa3cdc65f05d5e43d7918613b013bb3fd8e1ba0560d",
+      "code/model/intergen_housing_fertility_optimized/target_system.py": "b9bf465e5e1c1e4999c3f55c3893256e22171722b25e5afb5856e36a83ea0c83",
+      "code/model/intergen_housing_fertility_optimized/utils.py": "70113e4d7936f30388349dd67d4ab3a7d59ebc201c2a028695db81c64aecc26e",
+      "code/model/intergen_seq_fertility/IMPLEMENTATION_STATUS.md": "9249e85c60e043b90e9bda9f799d8960541380d20a9d5ad15730aeabc9538cf1",
+      "code/model/intergen_seq_fertility/README.md": "7e3f0bf8a58bbc3fbc48d9af898626b3cd46edfeaaac9727efe8be69314fc1b3",
+      "code/model/intergen_surrogate_calibration/README.md": "0f766ff016d9fa40f1ccdca85e0d46099633bf9c72a49c7118e97cd488ea1725",
+      "code/model/pyproject.toml": "190d8304fc8978693bab94d70b4971f9aa30a7c78cde9051af6c193eb8876c0f",
+      "code/model/tools/audit_closed_reproductive_closure.py": "29b18b58bf51c036e734f235817b1713985e73d232c6a15d776b0ff826c40064",
+      "code/model/tools/e5f_social_security.py": "f7bb7db2774be7ef7d2ca2a635eafa3cb27ba79a503fe69b6f00c1eef9658455",
+      "code/model/tools/matlab_reference_fast_converged.m": "6548fb5c468552ac7550aa7b3648773202f194d865cc3e894f283975f9d6b36d",
+      "code/model/tools/matlab_reference_fast_iter1.m": "993b84e12e978fe3f7b0de66bcf66f7d786b4d3ed2dcdedd25e7cfc8dbe4e5af",
+      "code/model/tools/matlab_reference_solve_theta_x0_benchmark.m": "0a62b91becca21e6381ff96811b9e0c734081ade23be297e58a03c37fa31253e",
+      "code/model/tools/matlab_reference_solve_theta_x0_fast.m": "7b0a5b5341b627e302036a378d948afa41ffd400efc2e13378006abb106ce054",
+      "code/model/tools/run_dynamic_population_transition.py": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362",
+      "code/model/tools/run_e5f_independent_numerical_audit.py": "7b217f08ea411707c5d5adfff87ebda529c37a6173c4be00f88adce92a507f98",
+      "code/model/tools/run_e5f_matched_pf_smoke.py": "67f0a22ae2143bdd1f6ff9b32594b8a78259b3d6738facd71d7f58e1389de21d",
+      "code/model/tools/run_e5f_open_population_transition.py": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346",
+      "code/model/tools/run_e5f_perfect_foresight_transition.py": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be",
+      "code/model/tools/run_e5f_post2023_no_policy_continuations.py": "0ed39dcd8c5c332ce0a9619402ba4fb6e4d7aff40a4a5c6aefb38c39d9d22147",
+      "code/model/tools/run_e5f_post2023_policy_mechanisms.py": "345f2b54718bde99d11ee490e649bf005cc6b20125b6a7dbdb0ab698abf6b2f8",
+      "code/model/tools/run_e5f_transition_calibration.py": "32f5be1c16ec591ef514af91cec2223f8aecd259808b1fc806f9742d5fd64435",
+      "code/model/tools/run_intergen_funded_property_tax_test.py": "fe99765bfffd493845c77033e5f2406797f972b0aff2eeb1f271c59f4c6fa73b",
+      "code/model/tools/tour_template.html": "02ce781714d444adc8d990cd74cb4929b706289bfe04a0ab909dd6aefdcbbb50",
+      "code/model/tools/tour_widgets.js": "049fecde9f8f4baed1c323c8ad19ca3636ddf3caec19d3bba4a2e1b4ebcf73e6"
+    }
+  },
+  "tree_sha256": "bfc59aaffa4455702eb39ad2712f0d5619e8835835957ee09f05233ffde898f7"
+}

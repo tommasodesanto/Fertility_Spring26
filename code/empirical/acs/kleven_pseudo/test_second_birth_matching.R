@@ -38,6 +38,29 @@ expect(out2$donor_weights[person_key == "d1" & target_event_time == -5,
 expect(out2$donor_weights[person_key == "d1" & target_event_time == -5,
                           wgt] == 10, "PERWT times normalized matching weight failed")
 
+cells <- second_birth_author_cells(data.table::data.table(
+  gender = c("Men", "Women"), edlevel = c("Below HS", "College +"),
+  marst = c("Married, spouse present", "Divorced"),
+  race = c("White, non-hispanic", "Hispanic"), statefip = c(50, 9)))
+expect(identical(cells$gender.num, c(1L, 2L)) &&
+       identical(cells$edlevel.num, c(1L, 2L)) &&
+       identical(cells$marst.num, c(4L, 1L)) &&
+       identical(cells$race.num, c(4L, 2L)) &&
+       identical(cells$statefip.num, c("50", "09")),
+       "author transformed-cell order changed")
+unknown_cells <- second_birth_author_cells(data.table::data.table(
+  gender = "Men", edlevel = "Below HS", marst = "Married, spouse present",
+  race = "Other", statefip = 50))
+expect(unknown_cells$author_cell_missing, "unrecognized race label was silently coarsened")
+raw_cells <- second_birth_author_cells_raw(data.table::data.table(
+  sex = c(1, 2), educd = c(62, 101), marst = c(1, 6), race = c(1, 2),
+  hispan = c(0, 0), statefip = c(50, 9)))
+expect(identical(raw_cells$gender.num, c(1L, 2L)) &&
+       identical(raw_cells$edlevel.num, c(3L, 2L)) &&
+       identical(raw_cells$marst.num, c(4L, 5L)) &&
+       identical(raw_cells$race.num, c(4L, 1L)),
+       "raw author recode does not match vendor cell definitions")
+
 bad <- dt; bad$target_event_time[1] <- 0L
 tryCatch({ second_birth_match_exact(bad, donors, c("gender.num", "edlevel.num", "marst.num", "race.num", "statefip.num"));
            stop("nonnegative target accepted", call. = FALSE) }, error = function(e) invisible(e))

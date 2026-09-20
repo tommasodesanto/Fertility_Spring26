@@ -24,6 +24,68 @@ if (!requireNamespace("data.table", quietly = TRUE)) {
                                 paste(miss, collapse = ", ")))
 }
 
+# Reproduce the author's factor-cell order after clean_acs.R. This helper only
+# accepts the cleaned labels; it does not guess mappings from raw EDUC or RACE.
+second_birth_author_cells <- function(d,
+    gender_col = "gender", edlevel_col = "edlevel", marst_col = "marst",
+    race_col = "race", statefip_col = "statefip") {
+  .sbm_require(d, c(gender_col, edlevel_col, marst_col, race_col, statefip_col),
+               "prepared author rows")
+  out <- data.table::copy(d)
+  out[, gender.num := match(as.character(get(gender_col)), c("Men", "Women"))]
+  out[, edlevel.num := match(as.character(get(edlevel_col)),
+                             c("Below HS", "College +", "HS grad", "Some college"))]
+  out[, marst.num := match(as.character(get(marst_col)), c(
+    "Divorced", "Divorced or widowed", "Married, spouse absent",
+    "Married, spouse present", "Never married/single", "Widowed"))]
+  out[, race.num := match(as.character(get(race_col)), c(
+    "Black, non-hispanic", "Hispanic", "Other, non-hispanic",
+    "White, non-hispanic"))]
+  out[, statefip.num := sprintf("%02d", as.numeric(get(statefip_col)))]
+  out[, author_cell_missing := is.na(gender.num) | is.na(edlevel.num) |
+       is.na(marst.num) | is.na(race.num) | is.na(statefip.num)]
+  out
+}
+
+# Exact raw ACS route used when the prepared source retains IPUMS raw fields.
+# EDUC alone is insufficient for the author's ACS education bins, so EDUCD and
+# HISPAN are required rather than inferred from a general education code.
+second_birth_author_cells_raw <- function(d, sex_col = "sex", educd_col = "educd",
+    marst_col = "marst", race_col = "race", hispan_col = "hispan",
+    statefip_col = "statefip") {
+  .sbm_require(d, c(sex_col, educd_col, marst_col, race_col, hispan_col, statefip_col),
+               "prepared raw ACS rows")
+  sex <- suppressWarnings(as.numeric(d[[sex_col]]))
+  educd <- suppressWarnings(as.numeric(d[[educd_col]]))
+  marst <- suppressWarnings(as.numeric(d[[marst_col]]))
+  race <- suppressWarnings(as.numeric(d[[race_col]]))
+  hisp_raw <- suppressWarnings(as.numeric(d[[hispan_col]]))
+  hispanic <- if (tolower(hispan_col) == "hispanic") hisp_raw else
+    ifelse(is.na(hisp_raw), NA_real_, as.numeric(hisp_raw %in% 1:4))
+  labels <- data.table::data.table(
+    gender = ifelse(sex == 2, "Women", ifelse(sex == 1, "Men", NA_character_)),
+    edlevel = data.table::fcase(
+      educd >= 2 & educd <= 61, "Below HS",
+      educd >= 62 & educd <= 64, "HS grad",
+      educd >= 65 & educd <= 100, "Some college",
+      educd >= 101 & educd <= 116, "College +",
+      default = NA_character_),
+    marst_label = data.table::fcase(
+      marst == 1, "Married, spouse present",
+      marst %in% 2:3, "Married, spouse absent",
+      marst == 4, "Divorced", marst == 5, "Widowed",
+      marst == 6, "Never married/single", marst == 7, "Divorced or widowed",
+      default = NA_character_),
+    race_label = data.table::fcase(
+      race == 1 & hispanic == 0, "White, non-hispanic",
+      race == 2 & hispanic == 0, "Black, non-hispanic",
+      race >= 3 & race <= 9 & hispanic == 0, "Other, non-hispanic",
+      hispanic == 1, "Hispanic", default = NA_character_),
+    statefip = d[[statefip_col]])
+  second_birth_author_cells(labels, gender_col = "gender", edlevel_col = "edlevel",
+    marst_col = "marst_label", race_col = "race_label", statefip_col = "statefip")
+}
+
 #' Match event-0 donor targets to one-child donor rows in exact cells.
 #'
 #' `targets` is the `donor_targets` table from build_second_birth_proxy().
