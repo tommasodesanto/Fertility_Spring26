@@ -172,6 +172,21 @@ lead review, not an automatic retry, a relaxed gate or an economic conclusion
 about rental costs. The goal and daytime check-ins remain active while that
 feasibility assessment and the decision packet are completed.
 
+The bounded Luna design is now reviewed in principle. A new wedge-only Numba
+helper can enumerate every savings interpolation segment and run a bounded
+one-dimensional maximization within each segment, evaluating all endpoints.
+The intratemporal value is concave in remaining resources under the monotone
+convex rental cost, and continuation is affine within each segment. Thus this
+preserves the exhaustive architecture; a single global golden search does not.
+The existing zero-wedge helper must remain byte-for-byte unchanged. Required
+fixtures compare the new helper to the independent Python/SciPy segment oracle,
+include a narrow later continuation peak that defeats global golden search,
+and cover the housing knee/cap, infeasibility, heterogeneous preferences and
+correct budget sign. The actual wealth grid has120 nodes; runtime must be
+measured on a bounded direct-kernel fixture before any launch estimate, not
+inferred from an80-node example. No implementation or new launch has yet been
+authorized as a concrete batch; these are the next review conditions.
+
 ### 13:14 Eastern: complete-source rental test submitted; earlier staging failures preserved
 
 Final packaging attempt **18080236/18080237** uses
