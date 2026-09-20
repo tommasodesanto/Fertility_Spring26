@@ -72,8 +72,9 @@ tied second-oldest age, are flagged as twin/close-birth ambiguity rather than
 silently treated as one second birth.
 
 The event-0 rule is the existing contract's `NCHILD==2`, `YNGCH==0`,
-`ELDCH>=1`, and observed-`FERTYR==2` rule. For $t>0$, `FERTYR` is not
-required; the second-oldest linked child supplies the clock. An interview with
+`ELDCH>=1`, with observed `FERTYR==1` excluded and missing/unknown status
+retained as flagged support. For $t>0$, `FERTYR` is not required; the
+second-oldest linked child supplies the clock. An interview with
 no older child (for example ages `[0,0]`) cannot identify a second birth. Rows
 where `NCHILD` and the linked-child count disagree are link-quality failures
 for the strict sample and are reported, not repaired from `ELDCH` or `YNGCH`.
@@ -168,3 +169,11 @@ diagnostic in Torch job `18078758`, whose compact receipts are under
 `code/empirical/acs/kleven_pseudo/output/second_birth_proxy_diagnostic_20260920/`.
 It reports roster, link, gap, event-time, and donor support without matching,
 housing estimation, or causal interpretation.
+
+The current housing estimator consumes these strict `post_rows`: its primary
+post population remains mothers with `NCHILD==2` and exactly two valid linked
+children at each retained row. Consequently, an observed third coresident
+child later in the clock is selected out of the primary post path; this is a
+composition restriction, not evidence that no third birth occurred. Any wider
+`NCHILD>=2` sensitivity must be labeled separately and must not be pooled into
+the strict result.
