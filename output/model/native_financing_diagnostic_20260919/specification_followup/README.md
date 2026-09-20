@@ -538,3 +538,18 @@ derived fields, prices, preferences, entry and pre-choice population must stay
 unchanged. With eight solves already used, the complete batch would bring the
 total to fourteen of sixteen. No stationary solves are planned. Final numerical
 review and a fresh smoke gate are required before submission.
+
+## Exhaustive rental-cost batch submitted — September 20, 13:48 EDT
+
+Smoke **18080796** and dependent production **18080797** use a new reviewed
+solver that checks every linear-continuation segment. The original zero-wedge
+exhaustive helper is unchanged; 12 direct numerical fixtures, 10 driver tests,
+a clean 537-file patch rebuild and the launcher dry-run passed. This resolves
+the prior method incompatibility without relaxing the numerical gates.
+The six cases retain both zero-cost controls, three positive slopes, and a
+predeclared 80%-versus-100% financing comparison at slope 0.2. Prices,
+preferences, initial population and native entry remain fixed. Estimated total
+compute is 15–30 minutes; production requires both smoke cases to pass.
+[Submission](rental_wedge_exhaustive_v1/submission.json).
+Eight household evaluations were used before this batch; all six would bring
+the total to fourteen of sixteen. No stationary evaluations are planned.
