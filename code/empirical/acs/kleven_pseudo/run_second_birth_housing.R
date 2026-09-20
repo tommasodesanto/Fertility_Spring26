@@ -153,8 +153,15 @@ for (spec_name in names(specs)) {
     rec <- fit_result$fits[[y]]
     statuses[[y]] <- data.table(outcome = y, status = "FIT_COMPLETE", nobs = rec$nobs, error = NA_character_)
     curves[[y]] <- fit_result$curves
-    one_contrast <- as.data.table(fit_result$contrasts[[y]])
-    one_contrast[, outcome := y]
+    contrast <- fit_result$contrasts[[y]]
+    one_contrast <- data.table(
+      outcome = y,
+      contrast = "+3 minus -1",
+      estimate = as.numeric(contrast$estimate),
+      std_error = as.numeric(contrast$se),
+      lower = as.numeric(contrast$lower),
+      upper = as.numeric(contrast$upper)
+    )
     contrasts[[y]] <- one_contrast
     saveRDS(fit_result, file.path(spec_dir, paste0("fit_result_", y, ".rds")), compress = FALSE)
     checkpoint("fit_complete", paste(spec_name, y))

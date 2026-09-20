@@ -85,5 +85,8 @@ for (spec in c("primary", "joint_negative", "fertyr_event0_yes")) {
   stopifnot(nrow(st) == 3L, all(st$status == "FIT_COMPLETE"),
             file.exists(file.path(outdir, spec, "curves.csv")),
             file.exists(file.path(outdir, spec, "contrasts.csv")))
+  ct <- fread(file.path(outdir, spec, "contrasts.csv"))
+  stopifnot(nrow(ct) == 3L, all(ct$contrast == "+3 minus -1"),
+            all(is.finite(ct$estimate)), all(is.finite(ct$std_error)))
 }
 cat("PASS: second-birth housing driver dependency closure, three specifications, and nine tiny fits\n")
