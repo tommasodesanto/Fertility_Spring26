@@ -184,8 +184,9 @@ include a narrow later continuation peak that defeats global golden search,
 and cover the housing knee/cap, infeasibility, heterogeneous preferences and
 correct budget sign. The actual wealth grid has120 nodes; runtime must be
 measured on a bounded direct-kernel fixture before any launch estimate, not
-inferred from an80-node example. No implementation or new launch has yet been
-authorized as a concrete batch; these are the next review conditions.
+inferred from an80-node example. Implementation remains to be done under the active research goal. A new
+batch requires these checks and an explicit reviewed launch contract; no
+additional author approval is needed for that already-authorized diagnostic work.
 
 ### 13:14 Eastern: complete-source rental test submitted; earlier staging failures preserved
 
