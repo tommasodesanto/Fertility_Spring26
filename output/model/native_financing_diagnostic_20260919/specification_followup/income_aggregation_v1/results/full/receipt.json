@@ -1,0 +1,319 @@
+{
+  "annual_primitives": {
+    "persistent_log_variance": 0.692826827789733,
+    "rho_annual": 0.9703033301891563,
+    "transitory_log_variance": 0.3444421950282869
+  },
+  "continuous_endpoint_moments": {
+    "mean": {
+      "value": 1.0
+    },
+    "moments": {
+      "0": {
+        "level_covariance": 1.204894804838208,
+        "log_covariance": 0.7906798002043994
+      },
+      "1": {
+        "level_covariance": 0.8480336490469853,
+        "log_covariance": 0.6141221814124805
+      },
+      "2": {
+        "level_covariance": 0.7235021047707455,
+        "log_covariance": 0.5443583281929207
+      },
+      "4": {
+        "level_covariance": 0.5337346499729398,
+        "log_covariance": 0.4277057088252997
+      }
+    }
+  },
+  "design": {
+    "annual_years_per_batch": 120,
+    "batches": 20,
+    "block_years": 4,
+    "households_per_batch": 20000,
+    "mode": "full",
+    "retain_raw_panels": false,
+    "seed": 20260920,
+    "total_time_budget_seconds": 720.0
+  },
+  "diagnostic": "annual_lognormal_to_four_year_block_average",
+  "elapsed_seconds": 4.265702039003372,
+  "exact_annual_level_covariances": {
+    "0": 1.8215010281292874,
+    "1": 0.9586435713909713,
+    "2": 0.9199296164747395,
+    "4": 0.8480336490469853
+  },
+  "exact_annual_level_mean": 1.0,
+  "exact_block_average_level_covariances": {
+    "0": 1.1552361179785384,
+    "1": 0.8501191392434537,
+    "2": 0.7251512708803833,
+    "4": 0.5348002896764752
+  },
+  "exact_block_average_level_mean": 1.0,
+  "markov_payload_moments": {
+    "mean": {
+      "value": 1.0000000000000002
+    },
+    "moments": {
+      "0": {
+        "level_covariance": 0.961758081648857,
+        "log_covariance": 0.7906798002043995
+      },
+      "1": {
+        "level_covariance": 0.6735909440158141,
+        "log_covariance": 0.6141221814124806
+      },
+      "2": {
+        "level_covariance": 0.5835992768191026,
+        "log_covariance": 0.544358328192921
+      },
+      "4": {
+        "level_covariance": 0.4412915897649028,
+        "log_covariance": 0.4277057088253
+      }
+    }
+  },
+  "monte_carlo": {
+    "annual_level_covariance": {
+      "0": {
+        "batches": 20,
+        "estimate": 1.821456961844817,
+        "mc_se": 0.004922595332825758
+      },
+      "1": {
+        "batches": 20,
+        "estimate": 0.9583715528590119,
+        "mc_se": 0.0031449093465640825
+      },
+      "2": {
+        "batches": 20,
+        "estimate": 0.9186957219556474,
+        "mc_se": 0.0031085988572869274
+      },
+      "4": {
+        "batches": 20,
+        "estimate": 0.8478844709928524,
+        "mc_se": 0.00317386108041698
+      }
+    },
+    "annual_mean": {
+      "batches": 20,
+      "estimate": 1.0012944837136646,
+      "mc_se": 0.0006814451569110242
+    },
+    "block_level_covariance": {
+      "0": {
+        "batches": 20,
+        "estimate": 1.1549848967802736,
+        "mc_se": 0.0034773199386493683
+      },
+      "1": {
+        "batches": 20,
+        "estimate": 0.8495923327131472,
+        "mc_se": 0.0030135574674419983
+      },
+      "2": {
+        "batches": 20,
+        "estimate": 0.7245295820807435,
+        "mc_se": 0.002555387728906844
+      },
+      "4": {
+        "batches": 20,
+        "estimate": 0.5346128175179414,
+        "mc_se": 0.0023343764496298967
+      }
+    },
+    "block_log_covariance": {
+      "0": {
+        "batches": 20,
+        "estimate": 0.7663534089854623,
+        "mc_se": 0.0007972378290867849
+      },
+      "1": {
+        "batches": 20,
+        "estimate": 0.615584746154174,
+        "mc_se": 0.0007897347775080223
+      },
+      "2": {
+        "batches": 20,
+        "estimate": 0.5457215443315641,
+        "mc_se": 0.0007653366020629219
+      },
+      "4": {
+        "batches": 20,
+        "estimate": 0.4288611146691895,
+        "mc_se": 0.0007069945286516233
+      }
+    },
+    "block_mean": {
+      "batches": 20,
+      "estimate": 1.0012944837136646,
+      "mc_se": 0.0006814451569110255
+    },
+    "block_quantiles": {
+      "0.01": {
+        "batches": 20,
+        "estimate": 0.08935809983908596,
+        "mc_se": 0.00015253275081391818
+      },
+      "0.05": {
+        "batches": 20,
+        "estimate": 0.16190057044551703,
+        "mc_se": 0.00021572187850398895
+      },
+      "0.25": {
+        "batches": 20,
+        "estimate": 0.3778248893932225,
+        "mc_se": 0.0003666433334906299
+      },
+      "0.5": {
+        "batches": 20,
+        "estimate": 0.682250512956811,
+        "mc_se": 0.000639682259082167
+      },
+      "0.75": {
+        "batches": 20,
+        "estimate": 1.2318547009049405,
+        "mc_se": 0.000931863605292263
+      },
+      "0.95": {
+        "batches": 20,
+        "estimate": 2.8833941883347007,
+        "mc_se": 0.002632591881351969
+      },
+      "0.99": {
+        "batches": 20,
+        "estimate": 5.232827303462372,
+        "mc_se": 0.007140996491552865
+      }
+    }
+  },
+  "payload_contract": {
+    "candidate_json_fingerprint": "013e1f803b4e23d4920b14d6377af973e7a94e8d709b45143bd8dca1bdd7d425",
+    "expected_candidate_json_sha256": {},
+    "expected_candidate_payload_fingerprints": {},
+    "rebuilt_15_state_payload_fingerprint": "72128cbbd5787622f69fe8fb4c8532623993f46d0c046bce24a74c371adb2199"
+  },
+  "period_mapping": {
+    "mapping_is_transitory_moment_match_only": true,
+    "persistent_path_is_not_block_averaged": true,
+    "rho_period": 0.8864006946319656,
+    "transitory_log_variance_period": 0.09785297241466638
+  },
+  "plots": {
+    "files": [
+      "level_covariance_comparison.png",
+      "block_average_quantiles.png"
+    ],
+    "status": "written"
+  },
+  "source_files": {
+    "candidate_json": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_aggregation_v1/output/model/native_financing_diagnostic_20260919/earnings_candidate/candidate.json",
+    "constructor": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_aggregation_v1/code/model/tools/build_persistent_transitory_income_candidate.py",
+    "driver": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_aggregation_v1/code/model/tools/diagnose_e5f_income_time_aggregation.py",
+    "local_panel": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_aggregation_v1/code/model/intergen_eqscale_seq_optimized/local_panel.py",
+    "source_autocovariance_fit": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_aggregation_v1/code/data/psid_followup_mar2026/output/psid_income_fixed_effect_md_20260727/md_autocovariance_fit.csv"
+  },
+  "source_hashes_after": {
+    "candidate_json": "35fcb1cfc2ae1067def0ec5985e44f0c16df28dedfd47a944444bfcaa4dc0447",
+    "constructor": "7c9571fb38697e9433b32baabbd630656bd935179a4325f7b1e3bbb70e94d087",
+    "driver": "d07e31a95bd96fdf9784cd98aa5f9d8e210249553df862d416e19a2eed48737b",
+    "local_panel": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+    "source_autocovariance_fit": "96e65681e37b6e1215efde8b786b8c88151186aef1023ca726648e2c9a41c5ab"
+  },
+  "source_hashes_before": {
+    "candidate_json": "35fcb1cfc2ae1067def0ec5985e44f0c16df28dedfd47a944444bfcaa4dc0447",
+    "constructor": "7c9571fb38697e9433b32baabbd630656bd935179a4325f7b1e3bbb70e94d087",
+    "driver": "d07e31a95bd96fdf9784cd98aa5f9d8e210249553df862d416e19a2eed48737b",
+    "local_panel": "9ca95295f924e878c4f371c9faf6f6fedf1898ac44dc7e47faccd9e527c1993c",
+    "source_autocovariance_fit": "96e65681e37b6e1215efde8b786b8c88151186aef1023ca726648e2c9a41c5ab"
+  },
+  "status": "completed",
+  "validity": {
+    "all_batches_completed": true,
+    "all_dependencies_unchanged": true,
+    "all_exact_level_moment_checks_pass": true,
+    "all_mean_one_checks_pass": true,
+    "all_required_plots_present": true,
+    "completed_batches": 20,
+    "exact_level_moment_checks": {
+      "annual_lag_0": {
+        "estimate": 1.821456961844817,
+        "gap": 4.406628447028993e-05,
+        "passed": true,
+        "target": 1.8215010281292874,
+        "tolerance": 0.03053557199695455
+      },
+      "annual_lag_1": {
+        "estimate": 0.9583715528590119,
+        "gap": 0.00027201853195946146,
+        "passed": true,
+        "target": 0.9586435713909713,
+        "tolerance": 0.019869456079384496
+      },
+      "annual_lag_2": {
+        "estimate": 0.9186957219556474,
+        "gap": 0.0012338945190920603,
+        "passed": true,
+        "target": 0.9199296164747395,
+        "tolerance": 0.019651593143721564
+      },
+      "annual_lag_4": {
+        "estimate": 0.8478844709928524,
+        "gap": 0.00014917805413294793,
+        "passed": true,
+        "target": 0.8480336490469853,
+        "tolerance": 0.02004316648250188
+      },
+      "block_lag_0": {
+        "estimate": 1.1549848967802736,
+        "gap": 0.00025122119826481715,
+        "passed": true,
+        "target": 1.1552361179785384,
+        "tolerance": 0.02186391963189621
+      },
+      "block_lag_1": {
+        "estimate": 0.8495923327131472,
+        "gap": 0.0005268065303065672,
+        "passed": true,
+        "target": 0.8501191392434537,
+        "tolerance": 0.01908134480465199
+      },
+      "block_lag_2": {
+        "estimate": 0.7245295820807435,
+        "gap": 0.0006216887996398635,
+        "passed": true,
+        "target": 0.7251512708803833,
+        "tolerance": 0.016332326373441064
+      },
+      "block_lag_4": {
+        "estimate": 0.5346128175179414,
+        "gap": 0.00018747215853376353,
+        "passed": true,
+        "target": 0.5348002896764752,
+        "tolerance": 0.015006258697779381
+      }
+    },
+    "mean_one_checks": {
+      "annual_mean": {
+        "estimate": 1.0012944837136646,
+        "gap": 0.0012944837136645848,
+        "passed": true,
+        "target": 1.0,
+        "tolerance": 0.0050886709414661455
+      },
+      "block_mean": {
+        "estimate": 1.0012944837136646,
+        "gap": 0.0012944837136645848,
+        "passed": true,
+        "target": 1.0,
+        "tolerance": 0.005088670941466153
+      }
+    },
+    "statistical_tolerance": "6 batch standard errors + 0.001 absolute floor",
+    "stop_reason": null
+  }
+}

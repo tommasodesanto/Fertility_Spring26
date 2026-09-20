@@ -1,6 +1,15 @@
 # Calibration Status
 
-**September 20, 11:54 EDT — first follow-up diagnostics:**
+**September 20, 11:54 EDT — earnings aggregation diagnosis completed:**
+Jobs **18078286/18078287** completed and all validity gates passed. The current
+15-state chain reproduces its intended log moments but understates level
+variance relative to both the continuous endpoint process and exact annual
+four-year averages (0.961758 versus 1.204895 and 1.155236). A bounded grid
+resolution check is underway before drawing household-fit conclusions.
+[Full numerical receipt](output/model/native_financing_diagnostic_20260919/specification_followup/income_aggregation_v1/results/full/receipt.json).
+No household model was solved and no specification adopted.
+
+**September 20, 11:52 EDT — first follow-up diagnostics:**
 The Claude Max/Fable review and focused clarification are complete; they are
 evidence for specification discussion, not adoption. A fresh 2005–2006 ACS
 extraction reproduces all four active housing targets exactly and supplies

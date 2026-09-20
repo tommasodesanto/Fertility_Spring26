@@ -1,0 +1,143 @@
+{
+  "remote_root": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_aggregation_v1",
+  "results_root": "output/model/native_financing_diagnostic_20260919/specification_followup/income_aggregation_v1/results",
+  "source_hash_pins_verified": true,
+  "modes": {
+    "smoke": {
+      "status": "completed",
+      "batches": 2,
+      "households_per_batch": 2000,
+      "annual_years_per_batch": 40,
+      "all_gates": true,
+      "plots": [
+        "level_covariance_comparison.png",
+        "block_average_quantiles.png"
+      ],
+      "source_hashes_unchanged": true,
+      "block_level_covariance": {
+        "0": {
+          "exact": 1.1552361179785384,
+          "continuous": 1.204894804838208,
+          "continuous_gap": 0.049658686859669565,
+          "15_state": 0.961758081648857,
+          "15_state_gap": -0.1934780363296814,
+          "mc": 1.1479712337873127,
+          "mc_gap": -0.007264884191225729
+        },
+        "1": {
+          "exact": 0.8501191392434537,
+          "continuous": 0.8480336490469853,
+          "continuous_gap": -0.0020854901964684203,
+          "15_state": 0.6735909440158141,
+          "15_state_gap": -0.17652819522763963,
+          "mc": 0.8538790702310775,
+          "mc_gap": 0.0037599309876237275
+        },
+        "2": {
+          "exact": 0.7251512708803833,
+          "continuous": 0.7235021047707455,
+          "continuous_gap": -0.001649166109637834,
+          "15_state": 0.5835992768191026,
+          "15_state_gap": -0.14155199406128072,
+          "mc": 0.7182354331959021,
+          "mc_gap": -0.00691583768448123
+        },
+        "4": {
+          "exact": 0.5348002896764752,
+          "continuous": 0.5337346499729398,
+          "continuous_gap": -0.0010656397035353482,
+          "15_state": 0.4412915897649028,
+          "15_state_gap": -0.0935086999115724,
+          "mc": 0.5486474666550362,
+          "mc_gap": 0.013847176978560971
+        }
+      },
+      "block_log_covariance_mc": {
+        "0": {
+          "estimate": 0.7518381416260205,
+          "mc_se": 0.01926916151200503
+        },
+        "1": {
+          "estimate": 0.5992393199171737,
+          "mc_se": 0.019802750288666068
+        },
+        "2": {
+          "estimate": 0.5298838679901072,
+          "mc_se": 0.018343888099197292
+        },
+        "4": {
+          "estimate": 0.4161835573982984,
+          "mc_se": 0.014153538818698295
+        }
+      }
+    },
+    "full": {
+      "status": "completed",
+      "batches": 20,
+      "households_per_batch": 20000,
+      "annual_years_per_batch": 120,
+      "all_gates": true,
+      "plots": [
+        "level_covariance_comparison.png",
+        "block_average_quantiles.png"
+      ],
+      "source_hashes_unchanged": true,
+      "block_level_covariance": {
+        "0": {
+          "exact": 1.1552361179785384,
+          "continuous": 1.204894804838208,
+          "continuous_gap": 0.049658686859669565,
+          "15_state": 0.961758081648857,
+          "15_state_gap": -0.1934780363296814,
+          "mc": 1.1549848967802736,
+          "mc_gap": -0.00025122119826481715
+        },
+        "1": {
+          "exact": 0.8501191392434537,
+          "continuous": 0.8480336490469853,
+          "continuous_gap": -0.0020854901964684203,
+          "15_state": 0.6735909440158141,
+          "15_state_gap": -0.17652819522763963,
+          "mc": 0.8495923327131472,
+          "mc_gap": -0.0005268065303065672
+        },
+        "2": {
+          "exact": 0.7251512708803833,
+          "continuous": 0.7235021047707455,
+          "continuous_gap": -0.001649166109637834,
+          "15_state": 0.5835992768191026,
+          "15_state_gap": -0.14155199406128072,
+          "mc": 0.7245295820807435,
+          "mc_gap": -0.0006216887996398635
+        },
+        "4": {
+          "exact": 0.5348002896764752,
+          "continuous": 0.5337346499729398,
+          "continuous_gap": -0.0010656397035353482,
+          "15_state": 0.4412915897649028,
+          "15_state_gap": -0.0935086999115724,
+          "mc": 0.5346128175179414,
+          "mc_gap": -0.00018747215853376353
+        }
+      },
+      "block_log_covariance_mc": {
+        "0": {
+          "estimate": 0.7663534089854623,
+          "mc_se": 0.0007972378290867849
+        },
+        "1": {
+          "estimate": 0.615584746154174,
+          "mc_se": 0.0007897347775080223
+        },
+        "2": {
+          "estimate": 0.5457215443315641,
+          "mc_se": 0.0007653366020629219
+        },
+        "4": {
+          "estimate": 0.4288611146691895,
+          "mc_se": 0.0007069945286516233
+        }
+      }
+    }
+  }
+}

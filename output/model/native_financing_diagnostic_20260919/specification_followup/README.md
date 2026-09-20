@@ -80,7 +80,7 @@ or entrant wealth fixed unless explicitly verified.
 
 ## Check-ins and present state
 
-### 11:54 Eastern: launched earnings diagnostic; housing source replay passed
+### 11:52 Eastern: launched earnings diagnostic; housing source replay passed
 
 Torch jobs **18078286** (smoke) and **18078287** (full, `afterok` smoke)
 use `income_aggregation_v1/submission.json` and `launch_manifest.json` here.
@@ -109,6 +109,29 @@ in budget audits and isolated-source reproduction. Existing active switch-off
 tests are insufficient to establish reproduction of the frozen checkpoint.
 The saved-credit diagnostic is being narrowed to actual cohort debt/support
 and policy identity, avoiding unsupported native constraint-binding claims.
+
+### 11:54 Eastern: earnings diagnostic completed and reviewed
+
+Both jobs completed with exit zero (7/8 seconds). The full result passes every
+normalization, covariance, batch-completion, source-hash and plot gate. Results
+and the collection receipt are in `income_aggregation_v1/`. The lead inspected
+the covariance figure and the full numerical receipt.
+
+The current 15-state chain matches the continuous endpoint approximation's
+log covariances to numerical precision, but not its level covariances. At lag
+zero, level variance is 0.961758 (15-state), 1.204895 (continuous endpoint),
+and 1.155236 (exact four-year average of annual earnings). At lag one the
+corresponding covariances are 0.673591, 0.848034 and 0.850119. Monte Carlo
+reproduces the analytically known block moments within its declared uncertainty.
+This establishes a numerical-distribution difference, not its effect on
+household choices, calibration or the preferred specification.
+
+A bounded deterministic grid-resolution diagnostic now compares persistent
+node counts 5/7/9/15/25 and transitory counts 3/5, holding annual parameters and
+period mapping fixed. It must reproduce the existing 5-by-3 payload and report
+both log and level moments. This uses no household solves or new Monte Carlo.
+A household sensitivity run remains conditional on reviewing a coherent
+population/entry mapping and its actual solve count.
 
 ### Reviewed Fable assessment and current work
 
