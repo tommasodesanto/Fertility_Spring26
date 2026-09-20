@@ -2,8 +2,8 @@
 
 This is a partial-equilibrium diagnostic.  It uses the saved original policy
 arrays for the two native arms and solves only the two candidate-income arms.
-All arms start from the same age-zero entry cohort with income integrated out
-and then redrawn from each process's stationary weights.
+All arms use the native conditional entry wealth/income rule. Changing income
+can therefore change entry assets; this is a specification comparison.
 """
 from __future__ import annotations
 
@@ -91,6 +91,31 @@ def standardized_entry_cohort(P: Any, grid: np.ndarray, z_weights: np.ndarray, b
     return seed
 
 
+def place_native_entry_cohort(base6: np.ndarray, shape: tuple[int, ...]) -> np.ndarray:
+    """Insert the native conditional entrant (b,ten,I,z,n,m) at age zero."""
+    base6 = np.asarray(base6, dtype=float)
+    if base6.ndim != 6 or len(shape) != 7 or tuple(shape[:3]) != tuple(base6.shape[:3]) or tuple(shape[4:]) != tuple(base6.shape[3:]):
+        raise ValueError("native entrant and lifecycle state shapes are incompatible")
+    out = np.zeros(shape, dtype=float)
+    out[:, :, :, 0, :, :, :] = base6
+    return out
+
+
+def native_entry_cohort(P: Any, grid: np.ndarray, shape: tuple[int, ...]) -> np.ndarray:
+    calendar = importlib.import_module("run_e5f_matched_pf_smoke").pf.calendar
+    return place_native_entry_cohort(calendar.entrant_cohort(np.ones(int(P.I)), P, grid), shape)
+
+
+def normalized_lifetime_cross_section(age_pre: list[np.ndarray]) -> np.ndarray:
+    """Aggregate age-specific pre-masses by actual surviving mass."""
+    if not age_pre:
+        raise ValueError("cannot aggregate an empty cohort")
+    total = float(sum(np.asarray(g, dtype=float).sum() for g in age_pre))
+    if not np.isfinite(total) or total <= 0:
+        raise ValueError("lifetime cohort has nonpositive mass")
+    return np.asarray(sum(np.asarray(g, dtype=float) for g in age_pre) / total)
+
+
 def synthetic_mass_flow(pre: np.ndarray, post: np.ndarray, deaths: np.ndarray, entry: np.ndarray) -> float:
     arrays = [np.asarray(v, dtype=float) for v in (pre, post, deaths, entry)]
     if any(np.any(v < -1e-12) for v in arrays):
@@ -125,28 +150,32 @@ def run_cohort(x: Mapping[str, Any], P: Any, policy: Any, label: str, out: Path)
     shared = model.precompute_shared(P, grid)
     P._fert2_probs = np.asarray(policy.fert2_probs).copy()
     policy = calendar.policy_from_solution(policy, np.asarray(policy.price), P, grid, shared)
-    g = standardized_entry_cohort(P, grid, np.asarray(P.z_weights), x["parameters"], tuple(np.asarray(x["stationary_g_pre"]).shape))
+    g = native_entry_cohort(P, grid, tuple(np.asarray(x["stationary_g_pre"]).shape))
+    np.savez_compressed(out / "initial_native_entry.npz", g_pre=g,
+                        income_marginal=g.sum(axis=(0, 1, 2, 3, 5, 6)),
+                        wealth_marginal=g.sum(axis=(1, 2, 3, 4, 5, 6)))
     price = np.asarray(x["evaluation"].policy.price)
     initial_mass = float(g.sum())
     if abs(initial_mass - 1.0) > 1e-10: raise ValueError("entry mass must equal one")
     rental = importlib.import_module("run_e5f_native_rental_access_diagnostic")
     audit = importlib.import_module("run_e5f_independent_numerical_audit")
-    rows, births_total, first_total = [], 0.0, 0.0
+    rows, births_total, first_total, age_pre = [], 0.0, 0.0, []
     for age in range(int(P.J)):
         ev = calendar.evaluate_period(price, g, P, grid, shared, calendar.SolveCounter(), supply_rule=x["supply_rule"], supplied_policy=policy)
         if not np.allclose(ev.g_pre, g, atol=1e-10, rtol=0):
             # evaluate_period returns the calendar's gated copy.  Its only
             # allowed mutation is the native dead-node relocation; retaining
-            # this as a hard failure keeps the common-entry comparison honest.
+            # this as a hard failure prevents silently altered initial states.
             delta = float(np.abs(np.asarray(ev.g_pre) - np.asarray(g)).sum())
-            projected = float(getattr(ev, "projected_mass", np.nan))
+            projected = float(getattr(ev, "feasibility_projection_mass", np.nan))
             raise ValueError(
-                f"standardized cohort is infeasible under {label} age {age}: "
+                f"native cohort is infeasible under {label} age {age}: "
                 f"native dead-node projection mass={projected:.17g}, L1 change={delta:.17g}; "
-                "common non-income entry marginal cannot be silently projected"
+                "the supplied cohort cannot be silently projected"
             )
         if abs(float(g.sum()) - float(g[:, :, :, age, ...].sum())) > 1e-10:
             raise ValueError("cohort occupies unexpected ages")
+        age_pre.append(np.asarray(g, dtype=float).copy())
         rental.gates(ev)
         budget = primitive.dated_budget(ev, P, shared, grid, float(P.user_cost_rate * price[0]))
         if float(budget.get("budget_excess_mass", np.inf)) > 2e-10 or float(budget.get("maximum_occupied_excess", np.inf)) > 1e-9:
@@ -172,8 +201,10 @@ def run_cohort(x: Mapping[str, Any], P: Any, policy: Any, label: str, out: Path)
     import csv
     with (out / "cohort_by_age.csv").open("w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(rows[0])); w.writeheader(); w.writerows(rows)
-    np.savez_compressed(out / "cohort_arrays.npz", g_final=g)
-    receipt = {"status": "completed", "arm": label, "initial_mass": 1.0, "cumulative_explicit_births_per_initial_household": births_total, "first_births_per_initial_household": first_total, "first_birth_mean_age": (sum(r["age_years"] * r["exact_first_birth_flow"] for r in rows) / first_total if first_total else None), "rows": len(rows), "scope": "fixed-price entry-cohort partial equilibrium; no GE, empirical fit, or production closure"}
+    lifetime_pre = normalized_lifetime_cross_section(age_pre)
+    np.savez_compressed(out / "cohort_arrays.npz", g_final=g,
+                        g_pre_by_age=np.stack(age_pre), lifetime_g_pre=lifetime_pre)
+    receipt = {"status": "completed", "arm": label, "initial_mass": 1.0, "entry_rule": "native conditional entrant for each process", "lifetime_cross_section": "normalized lifetime cohort distribution weighted by actual surviving mass; diagnostic graph input, not GE", "cumulative_explicit_births_per_initial_household": births_total, "first_births_per_initial_household": first_total, "first_birth_mean_age": (sum(r["age_years"] * r["exact_first_birth_flow"] for r in rows) / first_total if first_total else None), "rows": len(rows), "scope": "fixed-price entry-cohort partial equilibrium; induced entry asset/income distribution; no pure-income-effect claim, GE, empirical fit, or production closure"}
     (out / "receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
     return receipt
 
@@ -207,18 +238,28 @@ def main(argv: list[str] | None = None) -> None:
             (a.output / "latest_completed.json").write_text(json.dumps(receipts, indent=2))
             continue
         rental = importlib.import_module("run_e5f_native_rental_access_diagnostic")
-        x2 = dict(x); x2["stationary_g_pre"] = standardized_entry_cohort(P, np.asarray(x["b_grid"]), np.asarray(P.z_weights), x["parameters"], tuple(np.asarray(x["stationary_g_pre"]).shape))
+        x2 = dict(x); x2["stationary_g_pre"] = native_entry_cohort(P, np.asarray(x["b_grid"]), tuple(np.asarray(x["stationary_g_pre"]).shape))
         ev, budget, shared, model = rental.native_solve(x2, P)
         rental.gates(ev)
         policy = ev.policy
         (a.output / label).mkdir(parents=True, exist_ok=True)
         save_full_arrays(a.output / label / "full_policy_arrays.npz", ev, x2["stationary_g_pre"])
-        graphs = rental.standard_graphs(x2, P, ev, shared, model, a.output / label)
-        (a.output / label / "standard_graphs.json").write_text(json.dumps(graphs, indent=2))
-        if graphs["status"] != "completed": raise RuntimeError(graphs)
-        # Keep the original non-income entry marginal for every arm.
-        receipts.append(run_cohort(x, P, policy, label, a.output / label))
+        # Use the same native entry rule with each process's income states.
+        cohort_receipt = run_cohort(x, P, policy, label, a.output / label)
+        receipts.append(cohort_receipt)
         (a.output / "latest_completed.json").write_text(json.dumps(receipts, indent=2))
+        # Standard graphs require a full lifecycle pre-mass, not the age-zero
+        # solve object.  Use the normalized lifetime cohort diagnostic only.
+        cohort_npz = np.load(a.output / label / "cohort_arrays.npz")
+        x_graph = dict(x2); x_graph["stationary_g_pre"] = cohort_npz["lifetime_g_pre"]
+        graph_shared = model.precompute_shared(P, np.asarray(x["b_grid"]))
+        graph_policy = primitive.pf.calendar.policy_from_solution(policy, np.asarray(policy.price), P, np.asarray(x["b_grid"]), graph_shared)
+        graph_ev = primitive.pf.calendar.evaluate_period(np.asarray(policy.price), x_graph["stationary_g_pre"], P, np.asarray(x["b_grid"]), graph_shared, primitive.pf.calendar.SolveCounter(), supply_rule=x["supply_rule"], supplied_policy=graph_policy)
+        rental.gates(graph_ev)
+        np.testing.assert_allclose(graph_ev.g_pre, x_graph["stationary_g_pre"], atol=1e-10, rtol=0)
+        graphs = rental.standard_graphs(x_graph, P, graph_ev, graph_shared, model, a.output / label)
+        (a.output / label / "standard_graphs.json").write_text(json.dumps({"input": "normalized_lifetime_cohort_distribution", **graphs}, indent=2))
+        if graphs["status"] != "completed": raise RuntimeError(graphs)
     import csv
     import matplotlib.pyplot as plt
     fig, axes = plt.subplots(1, 3, figsize=(12, 4))
@@ -230,7 +271,7 @@ def main(argv: list[str] | None = None) -> None:
             ax.plot(ages, [float(r[key]) for r in rows], label=label)
             ax.set_title(key.replace("_", " ")); ax.set_xlabel("Age")
     axes[0].legend(fontsize=7); fig.tight_layout(); fig.savefig(a.output / "cohort_comparison.png", dpi=160); plt.close(fig)
-    (a.output / "receipt.json").write_text(json.dumps({"status": "completed", "arms": receipts, "contract": contract, "candidate_sha256": hashlib.sha256(a.candidate_json.read_bytes()).hexdigest(), "entry": "common non-income native entrant marginal; income independently redrawn in every arm; no offspring entry", "scope": "fixed-price diagnostic; no recalibration or GE"}, indent=2))
+    (a.output / "receipt.json").write_text(json.dumps({"status": "completed", "arms": receipts, "contract": contract, "candidate_sha256": hashlib.sha256(a.candidate_json.read_bytes()).hexdigest(), "entry": "native conditional wealth/income entry rule for each process; entry asset distributions may differ; no offspring entry", "scope": "fixed-price diagnostic; no recalibration or GE"}, indent=2))
 
 
 if __name__ == "__main__": main()

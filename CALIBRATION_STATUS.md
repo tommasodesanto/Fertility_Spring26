@@ -52,6 +52,38 @@ recalibration from this job. The starting-cohort construction must be corrected
 and smoke-tested without weakening the feasibility gate. Receipt:
 [failed earnings job](output/model/native_financing_diagnostic_20260919/income_cohort_18037924/status.json).
 
+**September 19 — corrected earnings comparison submitted:** Torch job
+**18040822** uses the native conditional entry wealth/income rule in all four
+arms. Gate-only job **18040625** found zero L1 change for native entry and
+0.0023731346586869503 for the independent income redraw used by the failed
+job. The entry asset distribution may therefore differ across earnings
+processes; this is a specification comparison, not a pure income-risk effect
+at common initial assets. The one-hour allocation stops at the first failed
+gate. Submission is not completion; [receipt](output/model/native_financing_diagnostic_20260919/income_cohort_18040822/submission.json).
+
+**September 19 — stationary earnings pilot running; cohort graphics repair:**
+Job **18040822** passed both existing-income lifetime cohorts and solved the
+first candidate-income policy, but stopped in the standard graph routine:
+the supplied age-zero-only distribution gives empty older-age denominators.
+No completed candidate comparison is available. The reporting input is being
+changed to the normalized full lifetime cohort cross-section.
+
+Independent Torch job **18040896** passed the frozen candidate-specific target
+and source preflight and is running the native stationary equilibrium pilot.
+It holds all nine structural parameters fixed, changes the recorded income
+process, and re-normalizes the fertility preference to the unchanged 2.1 target.
+It retains the fiscal, market and diagnostic checks and the full scored table.
+Maximum eight stationary solves, 1800s native / 2100s wrapper, one-hour allocation.
+This is not a structural recalibration or adoption decision. [Submission](output/model/native_financing_diagnostic_20260919/income_stationary_18040896/submission.json).
+
+**September 19 — latest active earnings jobs:** **18040896** has entered its
+first stationary equilibrium solve (native heartbeat verified). **18041070**
+relaunches the cohort diagnostic with standard graphs evaluated on the
+normalized full lifetime cross-section, after the numerical cohort completes.
+Both have one-hour allocations. Existing cohort arms passed all 17 ages in
+18040822; candidate completion remains unverified. Fourteen focused income/
+cohort/contract tests pass. No new calibration result is claimed.
+
 **Active development baseline (September 17, 2026):** This branch is the
 current-main integration of the immutable Monday paper reference. The original
 reference remains available at tag `paper-baseline-2026-09-14`; use this branch

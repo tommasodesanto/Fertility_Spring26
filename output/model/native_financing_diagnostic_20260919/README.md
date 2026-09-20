@@ -101,3 +101,31 @@ comparison or recalibration was produced. The feasibility projection changed
 the standardized entrant distribution; correction and a cluster smoke test
 are required before resubmission. See `income_cohort_18037924/status.json`.
 Launcher: `code/cluster/submit_e5f_native_income_followup.sh`.
+
+Job **18040822** replaces the independent redraw with the native conditional
+entry rule for both earnings processes, following gate-only job **18040625**.
+The original native entrant has zero gate-induced L1 change; the independent
+redraw changes by 0.0023731346586869503. All feasibility checks remain active.
+The entry asset distribution may change with income. See
+`income_cohort_18040822/submission.json`; this is a submitted diagnostic,
+not a completed recalibration.
+
+Job **18040822** subsequently stopped after both old-income cohorts completed:
+the first candidate solve reached the standard plot routine with an age-zero-only
+distribution, causing division by zero for empty older ages. No completed
+candidate comparison is claimed. The corrected plotting packet must use the
+normalized full lifetime cohort cross-section.
+
+Independent stationary pilot **18040896** passed candidate-specific frozen
+wrapper preflight and is running. It keeps nine structural parameters fixed,
+solves the new income specification from fresh policies/distributions, and
+normalizes fertility to 2.1 under the unchanged target contract. It permits
+at most eight stationary solves (1800 seconds native, 2100 seconds wrapper).
+See `income_stationary_18040896/submission.json` and
+`earnings_candidate/calibration_plan.remote.json`. It is not a structural search.
+
+Latest cohort submission: **18041070**. The graph packet now uses a normalized
+full lifetime cohort distribution after all ages complete, preserving the
+original standard plot set. Stationary pilot **18040896** has entered its first
+native equilibrium solve. Both jobs have one-hour allocations; no completed
+new-income comparison or recalibration is claimed at submission.
