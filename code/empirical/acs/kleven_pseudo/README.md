@@ -35,3 +35,45 @@ reference-period anchors, 70,063 post rows, 211,056 one-child donors, and
 21,919 negative-time donor targets. Matching and housing estimation remain
 unrun. Compact support receipts are in
 `output/second_birth_proxy_diagnostic_20260920/`.
+
+## Current validated package
+
+The source audit is documented in `source_audit_extract27_20260919.md`. Its
+verified extract has SHA-256
+`edb1afe53d4b6e6c5c5b8075bb83b81e1569c3cd9b619fe030af2fba0d33324`,
+9,919,999,546 bytes, exact source-key uniqueness, and zero sex, age, or
+ownership mismatches on 2,190,987 shared keys. Raw `ROOMS=28` values remain
+explicitly unknown for outcome analysis; they are not recoded to nine.
+
+The completed first-birth housing fit is summarized in
+`first_birth_housing_run_report_20260920_job18079576.md`. Torch job 18079576
+used source-household clustered uncertainty with heteroskedastic sensitivity
+and produced state-separated rooms, bedrooms, and ownership curves. Its
+matched pseudo-panel estimates are descriptive conditional on the constructed
+source-key matches.
+
+The corrected short-window and transformed-support bundle is recorded in
+`first_birth_sensitivity_bundle_receipt_18080591.md` and the compact readout
+under `output/first_birth_sensitivity_bundle_18080591/`. Job 18080591 passed
+the six-event support gate for all 360 requested outcome/state/gender/cohort
+groups and saved event -2 weighted baselines, Kish effective sample sizes, and
+the comparable +3 minus -1 contrast. The full-versus-short table compares
+that common contrast only; post-minus-pre estimates use different windows and
+are not treated as a replication check.
+
+The transformed second-birth stage verified raw-field concordance and donor
+support. It is still a coresident roster proxy with conditional matching
+uncertainty, not an observed biological second-birth event. The pending next
+step is estimator review using the saved anchor, gap, donor-reuse, and source
+weight receipts; no further allocation is active.
+
+The saved PSID comparisons in `psid_comparison_reference.md` provide external
+descriptive context with different longitudinal samples and event clocks.
+They do not validate the ACS proxy or establish a causal effect.
+
+The original motivation included twin and same-sex fertility shocks. This ACS
+package does not estimate or validate those instruments. The verified extract
+supports coresident sex-composition and same-age roster proxies, but it does
+not establish historical first-two-birth links, exact twinning, nonresident
+children, biological parentage, or the instrument-realization outcome clock.
+A dedicated design must define and audit those objects before any IV claim.
