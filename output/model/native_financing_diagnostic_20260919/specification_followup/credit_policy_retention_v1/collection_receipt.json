@@ -1,5 +1,5 @@
 {
-  "status": "blocked_before_policy_results",
+  "status": "final_receipt_failed_after_case_artifacts",
   "jobs": {
     "smoke": {
       "id": "18078707",
@@ -22,7 +22,7 @@
   "failure": {
     "case": 0,
     "error": "RuntimeError: import origin violation: __mp_main__ loaded from /scratch/td2248/projects/Fertility_Spring26_specification_20260920/credit_policy_retention_v1/code/model/tools/run_e5f_credit_policy_retention.py",
-    "mode": "case",
+    "mode": "postsolve final-receipt import-origin check after one household solve",
     "status": "failed"
   },
   "dependency": "production was cancelled after smoke failure; no restart/cancellation performed by this collection step",
@@ -31,7 +31,23 @@
     "failure_case_0_1789921118.json",
     "launch_manifest.json",
     "source_manifest.json",
+    "case_0_baseline_lambda0/policy_arrays.npz (remote retained; not downloaded)",
+    "case_0_baseline_lambda0/cohort/cohort_arrays.npz (remote retained; not downloaded)",
+    "case_0_baseline_lambda0/standard_diagnostics (17 PNGs; remote retained; not downloaded)",
     "concise smoke stderr"
   ],
-  "large_arrays_downloaded": false
+  "large_arrays_downloaded": false,
+  "execution_stage": "postsolve_case_artifacts_present_before_final_receipt",
+  "case_artifacts": {
+    "case_0_baseline_lambda0": {
+      "household_solves": 1,
+      "policy_arrays": "completed",
+      "cohort_arrays": "completed",
+      "cohort_receipt": "completed",
+      "standard_diagnostics_png_count": 17,
+      "standard_diagnostics_summary": "present",
+      "final_case_receipt": "failed_at_postsolve_import_origin_check"
+    }
+  },
+  "final_receipt_gate": "failed at postsolve __mp_main__ import-origin check; no final policy comparison/population-numeric-plot gate receipt"
 }

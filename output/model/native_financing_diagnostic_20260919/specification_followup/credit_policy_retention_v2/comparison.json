@@ -1,0 +1,147 @@
+{
+  "status": "complete",
+  "tolerance": 1e-10,
+  "global_policy_comparison_source": "results/policy_comparison.json",
+  "global_lambda1_vs_lambda5": {
+    "arrays": {
+      "V": {
+        "count_above_tolerance": 120387,
+        "identical": false,
+        "max_abs_diff": 9999999971.851248,
+        "within_tolerance": false
+      },
+      "births": {
+        "count_above_tolerance": 0,
+        "identical": true,
+        "max_abs_diff": 0.0,
+        "within_tolerance": true
+      },
+      "bp_pol": {
+        "count_above_tolerance": 106632,
+        "identical": false,
+        "max_abs_diff": 1.3999999999999986,
+        "within_tolerance": false
+      },
+      "c_pol": {
+        "count_above_tolerance": 83268,
+        "identical": false,
+        "max_abs_diff": 0.7000000000000002,
+        "within_tolerance": false
+      },
+      "fert2_probs": {
+        "count_above_tolerance": 7385,
+        "identical": false,
+        "max_abs_diff": 1.0,
+        "within_tolerance": false
+      },
+      "fert_probs": {
+        "count_above_tolerance": 1223,
+        "identical": false,
+        "max_abs_diff": 1.0,
+        "within_tolerance": false
+      },
+      "fert_value": {
+        "count_above_tolerance": 4869,
+        "identical": false,
+        "max_abs_diff": 9999999971.838017,
+        "within_tolerance": false
+      },
+      "g_current": {
+        "count_above_tolerance": 0,
+        "identical": true,
+        "max_abs_diff": 0.0,
+        "within_tolerance": true
+      },
+      "g_post_fertility": {
+        "count_above_tolerance": 0,
+        "identical": true,
+        "max_abs_diff": 0.0,
+        "within_tolerance": true
+      },
+      "g_pre": {
+        "count_above_tolerance": 0,
+        "identical": true,
+        "max_abs_diff": 0.0,
+        "within_tolerance": true
+      },
+      "hR_pol": {
+        "count_above_tolerance": 32377,
+        "identical": false,
+        "max_abs_diff": 4.0099318541846,
+        "within_tolerance": false
+      },
+      "loc_probs": {
+        "count_above_tolerance": 24700,
+        "identical": false,
+        "max_abs_diff": 1.0,
+        "within_tolerance": false
+      },
+      "price": {
+        "count_above_tolerance": 0,
+        "identical": true,
+        "max_abs_diff": 0.0,
+        "within_tolerance": true
+      },
+      "tenure_choice": {
+        "count_above_tolerance": 715,
+        "identical": false,
+        "max_abs_diff": 4.0,
+        "within_tolerance": false
+      },
+      "tenure_probs": {
+        "count_above_tolerance": 29487,
+        "identical": false,
+        "max_abs_diff": 1.0,
+        "within_tolerance": false
+      }
+    },
+    "distributions_coincide_within_tolerance": true,
+    "policies_coincide_within_tolerance": false
+  },
+  "support_aware_lambda1_vs_lambda5": {
+    "mass_source": "global retained arrays: V weighted by policy g_pre; c_pol/hR_pol/bp_pol weighted by policy g_current. Separate cohort check uses actual cohort g_pre_by_age and is reported for V only.",
+    "thresholds": [
+      0.0,
+      1e-12
+    ],
+    "occupied_support_threshold": 1e-12,
+    "occupied_support_states_across_17_cohort_ages": 887575,
+    "cohort_g_pre_by_age_exact_bitwise": true,
+    "cohort_g_pre_by_age_max_abs_diff": 0.0,
+    "cohort_g_pre_by_age_l1_diff": 0.0,
+    "global_retained_support": {
+      "V": {
+        "mass_phase": "policy_arrays.npz:g_pre",
+        "states_mass_gt_1e-12": 773067,
+        "max_abs_diff_on_mass_gt_1e-12": 0.0,
+        "mass_where_diff_gt_1e-10": 0.0
+      },
+      "c_pol": {
+        "mass_phase": "policy_arrays.npz:g_current",
+        "states_mass_gt_1e-12": 766677,
+        "max_abs_diff_on_mass_gt_1e-12": 0.0,
+        "mass_where_diff_gt_1e-10": 0.0
+      },
+      "hR_pol": {
+        "mass_phase": "policy_arrays.npz:g_current",
+        "states_mass_gt_1e-12": 766677,
+        "max_abs_diff_on_mass_gt_1e-12": 0.0,
+        "mass_where_diff_gt_1e-10": 0.0
+      },
+      "bp_pol": {
+        "mass_phase": "policy_arrays.npz:g_current",
+        "states_mass_gt_1e-12": 766677,
+        "max_abs_diff_on_mass_gt_1e-12": 0.0,
+        "mass_where_diff_gt_1e-10": 0.0
+      }
+    },
+    "cohort_V_only": {
+      "mass_source": "cohort/cohort_arrays.npz:g_pre_by_age",
+      "occupied_support_threshold": 1e-12,
+      "occupied_support_states_across_17_cohort_ages": 887575,
+      "max_abs_diff_on_mass_gt_1e-12": 0.0,
+      "cohort_mass_where_diff_gt_1e-10": 0.0
+    }
+  },
+  "interpretation_boundary": "Global arrays differ off occupied support; support-aware equality is an accounting result for retained cohort mass, not a causal claim. Policy identity is reported, not used as a gate. Cohort post-tenure mass was not retained, so no cohort-weighted c_pol/hR_pol/bp_pol claim is made."
+}

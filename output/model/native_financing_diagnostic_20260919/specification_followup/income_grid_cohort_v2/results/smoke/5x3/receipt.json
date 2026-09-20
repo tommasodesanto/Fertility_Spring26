@@ -1,0 +1,55 @@
+{
+  "status": "completed",
+  "arm": "5x3",
+  "initial_mass": 1.0,
+  "entry_rule": "native conditional entrant for each process",
+  "lifetime_cross_section": "normalized lifetime cohort distribution weighted by actual surviving mass; diagnostic graph input, not GE",
+  "cumulative_explicit_births_per_initial_household": 1.8577204111669925,
+  "first_births_per_initial_household": 0.7922647527561715,
+  "first_birth_mean_age": 24.70009336511201,
+  "rows": 17,
+  "scope": "fixed-price entry-cohort partial equilibrium; induced entry asset/income distribution; no pure-income-effect claim, GE, empirical fit, or production closure",
+  "persistent_states": 5,
+  "transitory_states": 3,
+  "joint_income_states": 15,
+  "price": [
+    0.5469369720186884
+  ],
+  "budget": {
+    "budget_excess_mass": 0.0,
+    "maximum_occupied_excess": 1.7763568394002505e-15,
+    "actual_rent": 0.09063372927997913,
+    "budget_tolerance": 1e-09
+  },
+  "entry_distribution": "native conditional wealth/income rule rebuilt for each grid; no cross-grid bitwise equality asserted",
+  "entry_distribution_summary": "entry_distribution_summary.json (marginal and conditional wealth/income arrays)",
+  "full_parameter_fingerprint": "a321116667a1b20522d86e497ce0393b9fad8f300211310e205b971611176ee9",
+  "income_payload_fingerprint": "fccda031d452b38bf235bbde370b6e7c465d38351e0a2f01d8bbd85f0cc28fdf",
+  "interpretation": "fixed-price entry-cohort specification comparison; marginal and conditional entry distributions may change; not a pure policy effect",
+  "baseline_policy_max_abs_gap": 0.0,
+  "standard_graphs": {
+    "status": "completed",
+    "count": 17,
+    "paths": [
+      "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_grid_cohort_v2/results/smoke/5x3/standard_diagnostics/fertility_by_age.png",
+      "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_grid_cohort_v2/results/smoke/5x3/standard_diagnostics/fertility_policy_by_age_income_state.png",
+      "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_grid_cohort_v2/results/smoke/5x3/standard_diagnostics/housing_by_age_income_state.png",
+      "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_grid_cohort_v2/results/smoke/5x3/standard_diagnostics/housing_market.png",
+      "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_grid_cohort_v2/results/smoke/5x3/standard_diagnostics/housing_prices.png",
+      "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_grid_cohort_v2/results/smoke/5x3/standard_diagnostics/income_state_outcomes.png",
+      "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_grid_cohort_v2/results/smoke/5x3/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+      "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_grid_cohort_v2/results/smoke/5x3/standard_diagnostics/market_clearing_by_market.png",
+      "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_grid_cohort_v2/results/smoke/5x3/standard_diagnostics/market_clearing_residuals.png",
+      "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_grid_cohort_v2/results/smoke/5x3/standard_diagnostics/owner_rungs.png",
+      "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_grid_cohort_v2/results/smoke/5x3/standard_diagnostics/ownership_by_age.png",
+      "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_grid_cohort_v2/results/smoke/5x3/standard_diagnostics/ownership_by_age_income_state.png",
+      "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_grid_cohort_v2/results/smoke/5x3/standard_diagnostics/policy_childless_renter_age30.png",
+      "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_grid_cohort_v2/results/smoke/5x3/standard_diagnostics/policy_childless_renter_age42.png",
+      "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_grid_cohort_v2/results/smoke/5x3/standard_diagnostics/tenure_services.png",
+      "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_grid_cohort_v2/results/smoke/5x3/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+      "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_grid_cohort_v2/results/smoke/5x3/standard_diagnostics/wealth_dist_childless_renter_age42.png"
+    ]
+  },
+  "household_solves": 1,
+  "baseline_cohort_max_abs_gap": 0.0
+}

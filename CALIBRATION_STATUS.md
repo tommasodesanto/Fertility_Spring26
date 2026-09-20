@@ -1,11 +1,28 @@
 # Calibration Status
 
+**September 20, 13:00 EDT — income-grid cohort sensitivity completed:**
+Jobs **18079046/18079047** passed the baseline replay, source, budget, cohort
+and 17-plot-per-case checks. With 15, 27 and 45 joint income states, explicit
+lifetime births are **1.85772, 1.81453 and 1.80688**; conditional first-birth
+ages are **24.7001, 25.3963 and 25.5771**. The same annual process and prices
+are used, but native entrant wealth–income composition is rebuilt. This is a
+numerical/entry sensitivity, not a pure policy effect or stationary fit.
+[Full three-case comparison](output/model/native_financing_diagnostic_20260919/specification_followup/income_grid_cohort_v2/comparison.md).
+Seven household evaluations have been used, including the failed credit-v1
+receipt attempt; no stationary evaluation or wedge household solve has run.
+The isolated rental-cost experiment remains under review: its positive-wedge
+solver must handle a feasible consumption-minimum corner correctly before
+launch. The adopted model and target system remain unchanged.
+
 **September 20, 12:34 EDT — credit replay reproduced; income-grid sensitivity launched:**
 Credit **18078912/18078913** completed all three replays with matching old
 scalars/cohort summaries, all numerical/source gates and 17 plots per case.
 Credit doses 1 and 5 have exactly identical population distributions and births,
-but different policies over the full state space. Support-aware comparison is
-pending; do not call the policies identical or infer a binding constraint yet.
+but different policies over the full state space. On audited states with mass above 1e-12, values and post-tenure consumption,
+housing and saving policies match exactly. Cohort pre-choice masses and audited
+values also match; cohort post-tenure policies were not independently weighted.
+This is support-specific saturation, not global policy equality or proof of
+which constraint binds.
 [Policy comparison](output/model/native_financing_diagnostic_20260919/specification_followup/credit_policy_retention_v2/results/policy_comparison.json).
 Income-grid smoke **18079046** and production **18079047** now test 15, 27 and
 45 states with fixed annual parameters, prices and non-income preferences.

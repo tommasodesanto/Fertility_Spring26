@@ -1,0 +1,170 @@
+{
+  "status": "complete",
+  "remote_root": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/income_grid_cohort_v2",
+  "jobs": {
+    "smoke": {
+      "id": "18079046",
+      "state": "COMPLETED",
+      "elapsed": "00:01:16",
+      "exit": "0:0",
+      "max_rss": "2064180K"
+    },
+    "production": {
+      "id": "18079047",
+      "state": "COMPLETED",
+      "elapsed": "00:09:51",
+      "exit": "0:0",
+      "max_rss": "4757820K"
+    }
+  },
+  "no_new_jobs_or_cancellations": true,
+  "scope": "fixed-price entry-cohort partial-equilibrium income-grid comparison; induced entry composition changes; no pure-policy, GE, calibration, or target-fit claim",
+  "source_pins": {
+    "checkpoint_sha256": "b3491eedcee6250cf94833067646d3e6463496cbf5a64bdcabe7b13bc7e89eb2",
+    "baseline_summary_sha256": "a22c7cc58d0a937afa7414e2a90577d3fe86b922ddc601a6c71abb141008c37b",
+    "source_hashes_before_equal_after": true,
+    "smoke_source_manifest_entries": 547,
+    "production_source_manifest_entries": 547,
+    "smoke_module_origin_count": 7,
+    "production_module_origin_count": 7
+  },
+  "case_contract": {
+    "smoke_baseline_policy_max_abs_gap": 0.0,
+    "smoke_baseline_cohort_max_abs_gap": 0.0,
+    "production_baseline_gate": "not requested/recorded; production arms are grid variants",
+    "all_case_status_completed": true,
+    "all_cases_one_household_solve": true,
+    "all_case_standard_plot_count_17": true,
+    "per_age_saved_artifact_checks": {
+      "5x3": {
+        "rows": 17,
+        "all_numeric_finite": true,
+        "mass_nonnegative": true,
+        "max_abs_mass_minus_one": 0.3663864727830508,
+        "birth_flow_nonnegative": true
+      },
+      "15x3": {
+        "rows": 17,
+        "all_numeric_finite": true,
+        "mass_nonnegative": true,
+        "max_abs_mass_minus_one": 0.36638647278307923,
+        "birth_flow_nonnegative": true
+      },
+      "9x3": {
+        "rows": 17,
+        "all_numeric_finite": true,
+        "mass_nonnegative": true,
+        "max_abs_mass_minus_one": 0.36638647278305914,
+        "birth_flow_nonnegative": true
+      }
+    },
+    "per_age_checks_pass": true
+  },
+  "cases": [
+    {
+      "mode": "production",
+      "arm": "15x3",
+      "status": "completed",
+      "household_solves": 1,
+      "births_per_initial_household": 1.8068821235222545,
+      "first_births_per_initial_household": 0.7816077754059347,
+      "first_birth_mean_age": 25.577069211924403,
+      "rows": 17,
+      "joint_income_states": 45,
+      "budget_max_occupied_excess": 1.4210854715202004e-14,
+      "standard_plot_count": 17,
+      "baseline_policy_max_abs_gap": null,
+      "baseline_cohort_max_abs_gap": null,
+      "full_parameter_fingerprint": "ac4abbdbf161320fcec50c8f26c261dba1ae871c5932d6b98add42a695095c39",
+      "income_payload_fingerprint": "053a8dfd623ae5a06e0b4decc6ff879d85b607bba78def317d1f531679377229"
+    },
+    {
+      "mode": "production",
+      "arm": "9x3",
+      "status": "completed",
+      "household_solves": 1,
+      "births_per_initial_household": 1.8145270495054324,
+      "first_births_per_initial_household": 0.7827373803772777,
+      "first_birth_mean_age": 25.396344565907782,
+      "rows": 17,
+      "joint_income_states": 27,
+      "budget_max_occupied_excess": 1.7763568394002505e-15,
+      "standard_plot_count": 17,
+      "baseline_policy_max_abs_gap": null,
+      "baseline_cohort_max_abs_gap": null,
+      "full_parameter_fingerprint": "6ebaa3d6588e8be12462b9f4f4071398a57159199ffdd89cab1ac29c49341d54",
+      "income_payload_fingerprint": "b2b60adfc0c084c7541dd62f803a7951501e750e893f5313539ac414aaef20c4"
+    },
+    {
+      "mode": "smoke",
+      "arm": "5x3",
+      "status": "completed",
+      "household_solves": 1,
+      "births_per_initial_household": 1.8577204111669925,
+      "first_births_per_initial_household": 0.7922647527561715,
+      "first_birth_mean_age": 24.70009336511201,
+      "rows": 17,
+      "joint_income_states": 15,
+      "budget_max_occupied_excess": 1.7763568394002505e-15,
+      "standard_plot_count": 17,
+      "baseline_policy_max_abs_gap": 0.0,
+      "baseline_cohort_max_abs_gap": 0.0,
+      "full_parameter_fingerprint": "a321116667a1b20522d86e497ce0393b9fad8f300211310e205b971611176ee9",
+      "income_payload_fingerprint": "fccda031d452b38bf235bbde370b6e7c465d38351e0a2f01d8bbd85f0cc28fdf"
+    }
+  ],
+  "entry_wealth_marginal": {
+    "grid_length": 120,
+    "marginal_mass_9x3": 1.0000000000000002,
+    "marginal_mass_15x3": 0.9999999999999998,
+    "l1_9x3_vs_15x3": 0.39573351064607976,
+    "mean_wealth": "unavailable: saved entry summaries contain no wealth-node values; no checkpoint/new HH load performed",
+    "pairwise_l1_saved_summaries": {
+      "15x3_vs_5x3": {
+        "grid_length_a": 120,
+        "grid_length_b": 120,
+        "mass_a": 0.9999999999999998,
+        "mass_b": 1.0,
+        "l1": 0.39030814056758517,
+        "max_abs_component_difference": 0.029429818459504865
+      },
+      "15x3_vs_9x3": {
+        "grid_length_a": 120,
+        "grid_length_b": 120,
+        "mass_a": 0.9999999999999998,
+        "mass_b": 1.0000000000000002,
+        "l1": 0.39573351064607976,
+        "max_abs_component_difference": 0.026392813782377816
+      },
+      "5x3_vs_9x3": {
+        "grid_length_a": 120,
+        "grid_length_b": 120,
+        "mass_a": 1.0,
+        "mass_b": 1.0000000000000002,
+        "l1": 0.354668498907649,
+        "max_abs_component_difference": 0.029745944074026698
+      }
+    }
+  },
+  "plot_manifest": {
+    "file": "results/plot_manifest.json",
+    "graph_count": 51,
+    "copied_production_15x3_png_count": 17,
+    "copied_directory": "results/plots/production_15x3_standard_diagnostics"
+  },
+  "artifacts_not_downloaded": [
+    "policy arrays/checkpoints",
+    "other plot images"
+  ],
+  "readout_correction": "15/27/45 are joint income-state counts for 5x3/9x3/15x3, not requested ages",
+  "comparison_contract": {
+    "aggregate_rows": 3,
+    "aggregate_source": "case receipt.json",
+    "fields": [
+      "lifetime_explicit_births",
+      "first_birth_probability",
+      "conditional_first_birth_age"
+    ],
+    "supplemental_age_profiles": "retained in each case cohort_by_age.csv with 17 saved age rows"
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "status": "complete",
+  "experiment": "credit_policy_retention_v2",
+  "remote_root": "/scratch/td2248/projects/Fertility_Spring26_specification_20260920/credit_policy_retention_v2",
+  "jobs": {
+    "smoke": "18078912",
+    "production": "18078913"
+  },
+  "no_new_jobs_or_cancellations": true,
+  "arrays_downloaded": false,
+  "source_and_checkpoint_verification": [
+    {
+      "file": "verify_smoke_18078912.json",
+      "job": "18078912",
+      "status": "verified",
+      "hash_count": 1102,
+      "bad_hashes": 0,
+      "import_origin_count": 45
+    },
+    {
+      "file": "verify_production_18078913.json",
+      "job": "18078913",
+      "status": "verified",
+      "hash_count": 1102,
+      "bad_hashes": 0,
+      "import_origin_count": 45
+    }
+  ],
+  "smoke_check": {
+    "case": "case_0_baseline_lambda0",
+    "checked": 1789921616.8451774,
+    "job": "18078913",
+    "receipt_sha256": "2f18efd8175ce93aaaabab39c1997f0fa5e962e72278f7712a49e0c4706625fb",
+    "status": "verified"
+  },
+  "cases": [
+    {
+      "case": "case_0_baseline_lambda0",
+      "status": "completed",
+      "lambda": 0.0,
+      "phi": 0.8,
+      "rental_cap": 6.0,
+      "household_solves": 1,
+      "reproduction_passed": true,
+      "reproduction_tolerance": 1e-10,
+      "budget_max_occupied_excess": 1.7763568394002505e-15,
+      "occupied_negative_steps": 0,
+      "max_occupied_value_drop": 0.0,
+      "standard_graph_count": 17,
+      "cohort_status": "completed",
+      "cohort_rows": 17,
+      "cohort_initial_mass": 1.0
+    },
+    {
+      "case": "case_1_credit_lambda1",
+      "status": "completed",
+      "lambda": 1.0,
+      "phi": 0.8,
+      "rental_cap": 6.0,
+      "household_solves": 1,
+      "reproduction_passed": true,
+      "reproduction_tolerance": 1e-10,
+      "budget_max_occupied_excess": 1.7763568394002505e-15,
+      "occupied_negative_steps": 0,
+      "max_occupied_value_drop": 0.0,
+      "standard_graph_count": 17,
+      "cohort_status": "completed",
+      "cohort_rows": 17,
+      "cohort_initial_mass": 1.0
+    },
+    {
+      "case": "case_2_credit_lambda5",
+      "status": "completed",
+      "lambda": 5.0,
+      "phi": 0.8,
+      "rental_cap": 6.0,
+      "household_solves": 1,
+      "reproduction_passed": true,
+      "reproduction_tolerance": 1e-10,
+      "budget_max_occupied_excess": 1.7763568394002505e-15,
+      "occupied_negative_steps": 0,
+      "max_occupied_value_drop": 0.0,
+      "standard_graph_count": 17,
+      "cohort_status": "completed",
+      "cohort_rows": 17,
+      "cohort_initial_mass": 1.0
+    }
+  ],
+  "standard_diagnostics_remote_png_counts": {
+    "case_0_baseline_lambda0": 17,
+    "case_1_credit_lambda1": 17,
+    "case_2_credit_lambda5": 17
+  },
+  "policy_comparison_file": "results/policy_comparison.json",
+  "policy_identity_is_gate": false,
+  "all_cases_completed": true,
+  "all_case_reproduction_passed": true,
+  "all_case_cohort_completed": true,
+  "all_case_plot_manifests_complete": true,
+  "all_source_hashes_ok": true,
+  "matching_lambda1_lambda5_receipt_numeric_fields": {
+    "count": 39,
+    "max_abs_difference": 0.0,
+    "tolerance": 1e-10,
+    "all_within_tolerance": true
+  }
+}

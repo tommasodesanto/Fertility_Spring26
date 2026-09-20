@@ -78,7 +78,81 @@ births, lifetime first-birth probabilities and the model's stationary
 normalization. Across-checkpoint comparisons do not hold prices, preferences
 or entrant wealth fixed unless explicitly verified.
 
+## Working interpretation for the author discussion
+
+These are provisional judgments from the reviewed evidence, not adoption decisions.
+
+1. **Set the earnings measurement contract before refitting preferences.**
+   A persistent earnings component and an independent transitory component are
+   the proposed baseline architecture. A permanent household type is a separate
+   choice and is not needed to explain the no-type candidate's dispersion.
+   The existing finite chain misses level dispersion even when its log moments
+   match. Annual-to-four-year aggregation and finite-grid resolution are separate
+   issues; neither can be repaired by calling one convenient grid calibrated.
+   The current grid sensitivity also changes entrant wealth composition, which
+   prevents a clean attribution to income policy responses alone.
+2. **Make room and ownership profiles part of specification assessment.**
+   The exact empirical target replay is available, and the saved model profiles
+   now use realized housing with the empirical cap applied before weighting.
+   Excess old-age housing and weak earlier ownership are visible. An aggregate
+   room moment alone cannot tell us whether changing housing preferences fixes
+   lifecycle demand or merely compensates for another error. The age profiles
+   remain diagnostics until their sample definitions, uncertainty and identifying
+   role are specified; they have not silently become weighted SMM targets.
+3. **Keep the mortgage mechanism claim conditional.** The reviewed experiments
+   establish small responses to higher financed shares at these checkpoints.
+   They do not show that housing constraints never affect fertility, that the
+   slides' causal argument is established, or that a frictionless equilibrium was
+   constructed. The rental-cost test isolates one housing-access margin and
+   cannot adjudicate the full paper mechanism on its own.
+4. **Separate snapshot and lifetime fertility.** More births in the current
+   stationary population can coexist with fewer lifetime births along an entry
+   cohort. High-credit saturation is supported on occupied states of the refit;
+   full policy arrays differ and no native constraint-binding claim follows.
+5. **Avoid a bundle of simultaneous model revisions.** Fable's suggestions on
+   estates, mortgage contracts, child costs and population closure remain
+   separate proposals. None has been adopted or shown necessary by this day's
+   numerical evidence. The isolated rental experiment keeps the owner service
+   preference, prices and population contract fixed.
+
+After the specification decision, the calibration sequence should be: pin the
+income/entry measurement contract and numerical grid; freeze the housing and
+fertility equations; document each active target's estimator and uncertainty;
+check which parameter combinations the moments identify; then run a matched
+objective search with full lifecycle plots and independent selected-point
+verification. Changing model structure will generally change the fitted
+parameters, so the current refit is diagnostic evidence rather than a set of
+estimates to preserve. The [complete overnight target/parameter tables](../overnight/final_search/readout.md)
+remain the reference for the unchanged current target system. A larger optimizer
+budget should follow these decisions, not substitute for them.
+
+The open numerical task is the isolated rental-cost test below. Its outcome and
+remaining author choices must be incorporated before this is called a final
+reviewed decision packet.
+
 ## Check-ins and present state
+
+### 13:00 Eastern: income-grid results reviewed; wedge remains unlaunched
+
+Income-grid jobs **18079046/18079047** completed in 1m16s/9m51s. All three
+case gates passed, including exact baseline policy/cohort reproduction,
+unchanged source, numerical budgets and 17 plots per case. The lead reviewed
+the aggregate receipts and two of the largest-grid standard plots; the latter
+retain the standard plotting layout, whose 45-state legends are crowded.
+The [complete cohort comparison](income_grid_cohort_v2/comparison.md) records
+births 1.85772/1.81453/1.80688 and conditional first-birth ages
+24.7001/25.3963/25.5771 at 15/27/45 joint income states. These numbers are not
+stationary calibration moments. Entrant wealth marginals differ materially
+under the native conditional-entry rule; therefore the change cannot be
+attributed exclusively to incumbent household policy responses.
+
+The unlaunched isolated rental-cost patch is being corrected for the
+consumption-floor corner. When an unconstrained optimum has residual
+consumption below the minimum, a feasible constrained optimum may allocate
+less housing and exactly the minimum consumption. Marking that state
+infeasible would be incorrect. Both production kernels and the independent
+saving audit must evaluate the same constrained problem before lead approval.
+The unchanged zero-wedge path is preserved; no active model core is edited.
 
 ### 12:34 Eastern: credit replay reproduced; income-grid jobs submitted
 
@@ -88,8 +162,14 @@ zero occupied value drops, zero excess-budget mass, and 17 plots per case.
 Case runtimes were 61.2, 55.1 and 54.4 seconds. The two larger credit allowances
 have bitwise-identical snapshot populations and birth flows, but their complete
 policy arrays differ. Thus identical outcomes do **not** mean identical policies
-over the full state space. Occupied-state comparisons are being collected before
-interpreting this difference. [Raw policy comparison](credit_policy_retention_v2/results/policy_comparison.json).
+over the full state space. The follow-up support comparison found zero differences in value on pre-choice
+states and in consumption, housing and saving on post-tenure states with mass
+greater than 1e-12. Actual lifetime-cohort pre-choice masses are bitwise equal,
+with equal values on their audited occupied support. Cohort post-tenure masses
+were not retained, so the latter check does not cover cohort-weighted spending
+policies. [Reviewed comparison](credit_policy_retention_v2/comparison.md).
+This supports saturation on the represented occupied region, not a general
+claim that credit constraints never matter. [Raw policy comparison](credit_policy_retention_v2/results/policy_comparison.json).
 
 Income-grid smoke **18079046**, dependent production **18079047**, are submitted
 under [income_grid_cohort_v2/submission.json](income_grid_cohort_v2/submission.json).
