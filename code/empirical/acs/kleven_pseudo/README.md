@@ -28,3 +28,10 @@ Northeast packet remains on Torch. The audit found exact-key uniqueness and zero
 sex/age/ownership mismatches on 2,190,987 shared unique keys. It also found 107
 literal `ROOMS=28` values, all in the 2009 ACS 1-year sample; these are preserved
 as raw codes with missing outcome-safe values pending code review.
+
+The NE-only second-birth roster diagnostic completed as Torch job `18078758`.
+It produced 6,872 strict event-0 anchors, 1,771 full-pre anchors, 6,325
+reference-period anchors, 70,063 post rows, 211,056 one-child donors, and
+21,919 negative-time donor targets. Matching and housing estimation remain
+unrun. Compact support receipts are in
+`output/second_birth_proxy_diagnostic_20260920/`.

@@ -163,5 +163,8 @@ from that directory with:
 Rscript test_second_birth_proxy_builder.R
 ```
 
-The current result is only a source-level and synthetic-contract check. No
-empirical ACS support, housing estimate, or causal result has been produced.
+The source-level tests are supplemented by the NE-only empirical support
+diagnostic in Torch job `18078758`, whose compact receipts are under
+`code/empirical/acs/kleven_pseudo/output/second_birth_proxy_diagnostic_20260920/`.
+It reports roster, link, gap, event-time, and donor support without matching,
+housing estimation, or causal interpretation.

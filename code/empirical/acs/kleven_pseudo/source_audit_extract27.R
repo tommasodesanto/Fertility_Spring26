@@ -108,10 +108,12 @@ saveRDS(housing_packet, file.path(outdir, "ne_extract27_housing_key_packet.rds")
 checkpoint("ne_packet_saved_immediate", sprintf("rows=%s cols=%s", nrow(housing_packet), ncol(housing_packet)))
 
 sample_product <- function(x) {
-  fifelse(x %% 100L == 1L, "ACS 1-year",
-  fifelse(x %% 100L == 3L, "ACS 5-year",
-  fifelse(x %% 100L == 2L, "PRCS 1-year",
-  fifelse(x %% 100L == 4L, "PRCS 5-year", "unknown"))))
+  out <- fifelse(x %% 100L == 1L, "ACS 1-year",
+         fifelse(x %% 100L == 3L, "ACS 5-year",
+         fifelse(x %% 100L == 2L, "PRCS 1-year",
+         fifelse(x %% 100L == 4L, "PRCS 5-year", "unknown"))))
+  out[x == 200004L] <- "ACS 2000"
+  out
 }
 
 # Compact national fingerprint: no national key merge or national housing join.

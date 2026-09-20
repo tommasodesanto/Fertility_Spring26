@@ -73,3 +73,25 @@ requires lead review of this explicit 2009 code anomaly.
 
 Compact durable receipts are under
 `code/empirical/acs/kleven_pseudo/output/source_audit_extract27_20260919/`.
+
+## NE proxy readiness diagnostic — 2026-09-20
+
+The existing strict roster builder ran on the verified NE packet as Torch job
+`18078758` and completed in 51 seconds with exit code `0:0` and peak memory
+`5,630,184 KB`. It used explicit match covariates `SEX`, `EDUC`, `MARST`,
+`RACE`, and `STATEFIP`, with `FERTYR` codes yes=`2`, no=`1`, and unknown=`0,8`.
+No matching or housing estimation ran.
+
+The diagnostic found 1,439,607 female rows with valid age, 722,337 valid
+MOMLOC links, 6,872 strict event-0 anchors, 1,771 anchors supporting the full
+−5 through −1 pre-window, 6,325 supporting the reference period −2, 70,063
+strict post rows, 211,056 one-child donors, and 21,919 negative-time donor
+targets. At event 0, `FERTYR` counts were 7,931 yes, 496 no, and 16 unknown;
+the strict anchors all come from the observed-yes group after the other roster
+and age rules. The support and link tables are saved under
+`code/empirical/acs/kleven_pseudo/output/second_birth_proxy_diagnostic_20260920/`.
+
+The historical sample label `200004` is recorded as `ACS 2000` from
+`extractor27.do`, rather than inferred as a PRCS 5-year code. This metadata
+correction changes labels only; it does not change row counts, keys, or
+concordance.
