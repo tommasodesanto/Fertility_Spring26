@@ -4,6 +4,16 @@ This is a full-lifecycle partial-equilibrium diagnostic from the frozen Septembe
 
 Run two independent `baseline` cases first. Both require all saved policy arrays to reproduce at `atol=1e-10, rtol=0`; only then run `mortgage_only`, `unsecured_only`, and `both` as independently timed processes.
 
+## Monitoring access — September 19, 23:43 EDT
+
+SSH authentication to `torch` failed before the scheduled remote query. Current
+job states, progress counts and failure logs could not be checked. This is a
+monitoring-access failure, not evidence that any submitted job failed. No jobs
+were changed or restarted. All dependencies remain cluster-managed and do not
+require the laptop to stay open. Restore SSH access before collecting fresh
+receipts; the follow-up remains active, with no repeated notification while the
+same access blocker persists. [Receipt](overnight/monitor_20260919_2343.json).
+
 ## Full battery and population correction — September 19, 23:26 EDT
 
 | Family | Smoke | 48-cell production | Dependency |

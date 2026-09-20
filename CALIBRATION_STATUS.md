@@ -1,5 +1,17 @@
 # Calibration Status
 
+**September 19, 23:43 EDT — monitoring access blocked; job state unconfirmed:**
+The scheduled read-only SSH check to `torch` was denied authentication before any
+remote query. No fresh scheduler states, progress counts or failure receipts were
+obtained; the earlier submitted/running states are historical observations only.
+No jobs were started, cancelled or restarted. Submitted Slurm jobs and their
+cluster-managed dependencies do not require an open laptop or continuing SSH
+session, so this access failure is not evidence of a job failure. SSH access needs
+to be restored before the next live collection; repeated unchanged authentication
+failures should remain quiet. The follow-up remains active because terminal job
+outcomes have not been established. [Monitoring receipt](output/model/native_financing_diagnostic_20260919/overnight/monitor_20260919_2343.json).
+
+
 **September 19, 23:26 EDT — full overnight battery submitted:**
 Joint search **18049121** and original 48-cell mechanism grid **18050123** are
 running after successful smokes. New-income pilot smoke/grid **18050440/18050441**
