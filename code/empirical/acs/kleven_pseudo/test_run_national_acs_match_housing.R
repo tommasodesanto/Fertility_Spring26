@@ -27,7 +27,8 @@ adapter_env <- new.env(parent = globalenv())
 adapter_env$req <- function(ok, msg, stage = "test") if (!isTRUE(ok)) stop(msg, call. = FALSE)
 adapter_env$estimator_pool_columns <- c("wgt","age_factor","doiy_factor","statefip","gender","event_time",
                                         "rooms_raw","ownershp_raw","bedrooms_raw","source_origin","from_cps",
-                                        "source_year","source_sample","source_serial","source_pernum","source_hh_cluster")
+                                        "source_year","source_sample","source_serial","source_pernum","source_hh_cluster",
+                                        "matching_sample","t_es_lw")
 adapter_env$resolve <- function(nms, want, required = TRUE) {
   hit <- nms[tolower(nms) == tolower(want)]
   if (!length(hit) && !required) return(NA_character_)
@@ -83,6 +84,7 @@ pool_fixture <- data.frame(
   rooms_raw = c(5, NA), bedrooms_raw = c(2, NA), wgt = c(1, 2),
   age_factor = factor(c(25, 26)), doiy_factor = factor(c(2005, 2005)),
   statefip = c(50L, 50L), gender = c("Women", "Women"), event_time = c(-1L, 0L),
+  matching_sample = c("Weekly", "Annual"), t_es_lw = c(-1L, NA_integer_),
   author_control = c("keep_a", "keep_b"), stringsAsFactors = FALSE)
 pool_one <- narrow_pool(pool_fixture)
 pool_two <- dplyr::bind_rows(narrow_pool(pool_fixture[1, , drop = FALSE]),
@@ -91,7 +93,8 @@ pool_wide_then_narrow <- narrow_pool(dplyr::bind_rows(pool_fixture, pool_fixture
 pool_cols <- adapter_env$estimator_pool_columns
 stopifnot(identical(names(pool_one), pool_cols),
           isTRUE(all.equal(pool_two, pool_one, check.attributes = TRUE)),
-          nrow(pool_wide_then_narrow) == 4L,
+          nrow(pool_one) == 1L, nrow(pool_wide_then_narrow) == 2L,
+          all(pool_one$matching_sample == "Weekly"),
           !"author_control" %in% names(pool_one))
 
 # Actual estimator equality on a small balanced panel: narrowing before
@@ -128,6 +131,8 @@ fit_fixture$source_ownershp_raw <- 1L
 fit_fixture$rooms_raw <- pmax(1, pmin(30, 6 + (fit_fixture$event_time >= 0)))
 fit_fixture$ownershp_raw <- ifelse(fit_fixture$event_time >= 0 & fit_fixture$statefip == 50L, 1L, 2L)
 fit_fixture$bedrooms_raw <- ifelse(fit_fixture$event_time >= 0, 5L, 4L)
+fit_fixture$matching_sample <- "Weekly"
+fit_fixture$t_es_lw <- fit_fixture$event_time
 wide_fit <- estimate_national_first_birth_housing(
   fit_fixture, source_origin_col = "source_origin", from_cps_col = "from_cps")
 narrow_fit <- estimate_national_first_birth_housing(

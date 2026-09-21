@@ -36,9 +36,12 @@ HEARTBEAT_FILE="$ROOT/output/acs_national_production_${SLURM_JOB_ID:-manual}.hea
 Rscript --vanilla "$SNAPSHOT_ROOT/code/empirical/acs/kleven_pseudo/run_national_acs_match_housing.R" &
 PID=$!
 (
+  trap 'kill "$SLEEP_PID" 2>/dev/null || true; exit 0' TERM INT
   while kill -0 "$PID" 2>/dev/null; do
     printf '%s production_heartbeat pid=%s outdir=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$PID" "$OUTDIR" >> "$HEARTBEAT_FILE"
-    sleep 300
+    sleep 300 &
+    SLEEP_PID=$!
+    wait "$SLEEP_PID"
   done
 ) &
 HEARTBEAT=$!

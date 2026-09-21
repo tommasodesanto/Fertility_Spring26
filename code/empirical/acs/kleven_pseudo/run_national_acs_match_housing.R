@@ -115,9 +115,20 @@ normalize_lineage <- function(d) {
 }
 estimator_pool_columns <- c("wgt","age_factor","doiy_factor","statefip","gender","event_time",
                             "rooms_raw","ownershp_raw","bedrooms_raw","source_origin","from_cps",
-                            "source_year","source_sample","source_serial","source_pernum","source_hh_cluster")
+                            "source_year","source_sample","source_serial","source_pernum","source_hh_cluster",
+                            "matching_sample","t_es_lw")
 narrow_estimator_panel <- function(d) {
   z <- normalize_lineage(d)
+  req(all(c("matching_sample","t_es_lw") %in% names(z)),
+      "matching_sample/t_es_lw absent; refusing mixed-clock estimator pool", "pool")
+  sample_label <- as.character(z$matching_sample)
+  req(all(sample_label %in% c("Weekly", "Annual")), "unexpected matching_sample label", "pool")
+  event_value <- suppressWarnings(as.numeric(as.character(z$event_time)))
+  weekly_value <- suppressWarnings(as.numeric(as.character(z$t_es_lw)))
+  observed_clock <- !is.na(event_value) & !is.na(weekly_value)
+  req(all(event_value[observed_clock] == weekly_value[observed_clock]),
+      "event_time differs from weekly t_es_lw", "pool")
+  z <- z[sample_label == "Weekly", , drop=FALSE]
   req(all(estimator_pool_columns %in% names(z)),
       paste("estimator pooling columns absent:", paste(setdiff(estimator_pool_columns, names(z)), collapse=",")), "pool")
   z[, estimator_pool_columns, drop=FALSE]
