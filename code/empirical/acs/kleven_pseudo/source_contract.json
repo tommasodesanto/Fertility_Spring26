@@ -1,0 +1,35 @@
+{
+  "paper": "Kleven, The Geography of Child Penalties and Gender Norms, November 2025",
+  "code_zip_sha256": "fb0f69ec11613786df6b1c3bf14af6f44cb56e6937498ae9d6a6df040c430323",
+  "vendor_sha256": {
+    "clean_acs.R": "5e297ed920286ac29a16b2cf25f9c1a1f594aa7af7d9383c34db5eb496804d44",
+    "clean_cps.R": "aa5f21c1386efdf89c2a3183804a3428474b447251728e84078e8d9fcb663643",
+    "matching.R": "7433ec92c6072a879d2e1cfc967e8f737c915d6264440d7e96e5d7762f0f1354",
+    "functions.R": "4b527a9d4a3d241c92e40ee49d8639be3705054725a0145ef9f72cada52003c0",
+    "setup.R": "711fb9dab97124406afc3f0d35ba2cb4b068c7c3915125a35fc7ee89d47f0440"
+  },
+  "pilot_statefip": 50,
+  "first_birth_age": [
+    25,
+    45
+  ],
+  "event_window": [
+    -5,
+    10
+  ],
+  "reference_event": -2,
+  "outcome": "emp_lw",
+  "match_variables": [
+    "doiy",
+    "age",
+    "gender.num",
+    "edlevel.num",
+    "marst.num",
+    "race.num",
+    "statefip.num"
+  ],
+  "early_donors": "Original cleaned CPS, childless, 1995-1999, relabeled ACS as author code",
+  "status": "preparation submitted; not a validated replication",
+  "prep_job": "17917426",
+  "remote_root": "/scratch/td2248/projects/kleven_acs_pilot_20260917"
+}
