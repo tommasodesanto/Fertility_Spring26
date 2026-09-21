@@ -35,20 +35,21 @@ export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
 HEARTBEAT_FILE="$ROOT/output/acs_national_production_${SLURM_JOB_ID:-manual}.heartbeat"
 Rscript --vanilla "$SNAPSHOT_ROOT/code/empirical/acs/kleven_pseudo/run_national_acs_match_housing.R" &
 PID=$!
-(
-  trap 'kill "$SLEEP_PID" 2>/dev/null || true; exit 0' TERM INT
-  while kill -0 "$PID" 2>/dev/null; do
-    printf '%s production_heartbeat pid=%s outdir=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$PID" "$OUTDIR" >> "$HEARTBEAT_FILE"
-    sleep 300 &
-    SLEEP_PID=$!
-    wait "$SLEEP_PID"
+# Keep the heartbeat outside OUTDIR: the R driver refuses a nonempty output
+# directory at startup.  Run it in its own process group so cleanup also
+# terminates an in-flight sleep when the driver exits early.
+setsid sh -c '
+  target="$1"; heartbeat_file="$2"; outdir="$3"
+  while kill -0 "$target" 2>/dev/null; do
+    printf "%s production_heartbeat pid=%s outdir=%s\\n" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$target" "$outdir" >> "$heartbeat_file"
+    sleep 300
   done
-) &
+' sh "$PID" "$HEARTBEAT_FILE" "$OUTDIR" &
 HEARTBEAT=$!
 set +e
 wait "$PID"
 STATUS=$?
 set -e
-kill "$HEARTBEAT" 2>/dev/null || true
+kill -- -"$HEARTBEAT" 2>/dev/null || kill "$HEARTBEAT" 2>/dev/null || true
 wait "$HEARTBEAT" 2>/dev/null || true
 exit "$STATUS"
