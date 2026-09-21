@@ -10,7 +10,55 @@ write appendix material and add tables and figures directly in the draft,
 sparingly and without changing existing author wording. Other prose and
 revisions remain subject to manual copy-and-paste.
 
-## Quantitative environment (16 September 2026)
+## Active JMP Draft mock — September 21, 2026
+
+Open [JMP_DS_mock.tex](JMP_DS_mock.tex); the reader PDF is
+[output/pdf/JMP_DS_mock.pdf](../../output/pdf/JMP_DS_mock.pdf).
+The main source copies the author draft’s preamble and seven-section input
+structure. Matching files are under `sections/`:
+
+1. `00_abstract.tex` — empty abstract.
+2. `01_introduction.tex` — heading and label only.
+3. `02_empirical_evidence.tex` — heading and label only.
+4. `03_model.tex` — the author’s current adapted model text copied verbatim,
+   then the remainder of the September 16 environment example, beginning after
+   its flow-utility display.
+5. `04_quantification.tex` — heading and label only.
+6. `05_policy.tex` — heading and label only.
+7. `06_conclusion.tex` — heading and label only.
+
+This is the single agent-maintained mock. Preserve accepted mathematics and
+notation across it, the protected author draft, and `../JMP_slides.tex`.
+The author draft is never automatically overwritten. Initial setup preserves
+all its files unchanged; the mock contains additional proposed environment
+text because the author’s adaptation is still in progress. No optimization,
+equilibrium, empirical, calibration or policy sections have been filled in.
+The old income-excluding purchase timing survives in the copied continuation
+and deck; it is a known decision/implementation item, not newly endorsed text.
+
+The original `quantitative_environment.tex` below and earlier theory proposals
+remain reference material. Make subsequent mock edits in `sections/03_model.tex`
+rather than maintaining two competing versions of the environment.
+
+Build twice from this directory with output outside the source tree:
+
+```sh
+pdflatex -interaction=nonstopmode -halt-on-error -output-directory=../../tmp/pdfs/jmp_setup/mock JMP_DS_mock.tex
+```
+
+The directory must already exist; copy the resulting PDF to
+`../../output/pdf/JMP_DS_mock.pdf`. The corresponding deck builds twice from
+`latex/` using `JMP_slides.tex`, with output under `tmp/pdfs/jmp_setup/slides/`.
+The centralized source and coordination registry is [latex/README.md](../README.md).
+
+Setup verification: the mock compiled twice without warnings and all four
+pages were visually checked. The deck source and delivered 44-page PDF are
+exact copies of their September 14 counterparts. A fresh deck build stops at
+the missing legacy asset `../../Outputs/Graphs/own_f_c_y_all.png`; restore that
+asset before rebuilding. The delivered deck PDF is the existing September PDF,
+not the output of that failed build.
+
+## Original environment reference (16 September 2026)
 
 [quantitative_environment.tex](quantitative_environment.tex) is an insertable
 LaTeX environment subsection based on the saved September 14 presentation's
