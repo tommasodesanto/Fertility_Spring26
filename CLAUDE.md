@@ -126,6 +126,17 @@ read-only rule established on September 3:
 - Keep all compilation artifacts and generated manuscript PDFs outside the
   subtree. Compile a temporary copy when checking the manuscript.
 
+## Frozen September 14 Reference
+
+Preserve tag `paper-baseline-2026-09-14` and its reference checkout at
+`tmp/paper_baseline_sep14/`. Do not edit the reference, move the tag, or overwrite
+its retained results. New earnings, model and calibration work belongs in
+separate working code and output locations. Use its `PAPER_BASELINE.md` and
+`code/model/tools/check_paper_baseline.py` to verify source identity. Changes
+claimed to preserve behavior require regression comparisons; economic changes
+must be labeled explicitly. Preservation does not certify the old calibration
+or transition results, and does not imply a fresh numerical replay.
+
 ## Coordinated JMP Documents
 
 Maintain three coordinated document roles, with exact source paths recorded in
