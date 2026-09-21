@@ -356,8 +356,8 @@ def main():
     cases.append(constructed_equilibrium(0., rental_cap_binds=False))
     report = {"scope": "Analytical equilibrium witnesses, original-problem checks, and conditional figures; no calibration or policy simulation.",
               "source_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-              "specification_source": "latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex",
-              "specification_sha256": hashlib.sha256((ROOT / "latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex").read_bytes()).hexdigest(),
+              "specification_source": "latex/JMP_DS_mock/simplified_olg_amendment_proposal.tex",
+              "specification_sha256": hashlib.sha256((ROOT / "latex/JMP_DS_mock/simplified_olg_amendment_proposal.tex").read_bytes()).hexdigest(),
               "equilibria": []}
     for case in cases:
         checks = check_equilibrium(case)

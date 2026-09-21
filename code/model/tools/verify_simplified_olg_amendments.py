@@ -508,7 +508,7 @@ def main():
     plt.close(fig)
     summary = dict(status='passed', verified_at_utc=datetime.now(timezone.utc).isoformat(),
                    verification_code_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-                   proposal_sha256=hashlib.sha256((ROOT/'latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex').read_bytes()).hexdigest(), scope='Conditional analytical checks; no GE or calibrated result',
+                   proposal_sha256=hashlib.sha256((ROOT/'latex/JMP_DS_mock/simplified_olg_amendment_proposal.tex').read_bytes()).hexdigest(), scope='Conditional analytical checks; no GE or calibrated result',
                    binding_cases=len(fertility), primitive_sufficient_cases=sum(int(r['primitive_sufficient']) for r in fertility),
                    negative_response_cases=sum(int(r['derivative']<0) for r in fertility),
                    max_finite_difference_error=max(abs(r['derivative']-r['finite_difference']) for r in fertility),

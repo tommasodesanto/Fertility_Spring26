@@ -194,7 +194,7 @@ def main():
         compile_decks()
     receipt['generated_utc']=datetime.now(timezone.utc).isoformat()
     receipt['sources']={str(path.relative_to(ROOT)):hashlib.sha256(path.read_bytes()).hexdigest()
-        for path in (Path(__file__),SOURCE,ROOT/'latex/JMP_DS_suggestions/simplified_olg_utilitarian.tex')}
+        for path in (Path(__file__),SOURCE,ROOT/'latex/JMP_DS_mock/simplified_olg_utilitarian.tex')}
     receipt_path.write_text(json.dumps(receipt,indent=2)+'\n')
     print('Theory illustrations checked'+('; slide PDFs compiled.' if not args.figures_only else '.'))
 

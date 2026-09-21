@@ -28,7 +28,7 @@ from verify_simplified_olg_local_transition import young_choices, complex_jacobi
 ROOT = Path(__file__).resolve().parents[3]
 OUT = ROOT / "output/model/simplified_olg_amendments"
 TMP = ROOT / "tmp/pdfs/simplified_olg_polish"
-SOURCE = ROOT / "latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex"
+SOURCE = ROOT / "latex/JMP_DS_mock/simplified_olg_amendment_proposal.tex"
 PDF = ROOT / "output/pdf/simplified_olg_amendment_proposal.pdf"
 BLUE, RED, GRAY = "#26527a", "#b0493d", "#7a7a7a"
 

@@ -477,12 +477,12 @@ def main():
              for tau in (0., .02, .05)
              for cost in (0., .5, 1.5)
              for eps in (1e-3, 1e-5, 1e-7)]
-    source = ROOT/'latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex'
+    source = ROOT/'latex/JMP_DS_mock/simplified_olg_amendment_proposal.tex'
     result = dict(scope='Conditional checks plus a complete analytical committed-transfer equilibrium path; no calibration or numerical equilibrium solve',
                   source=str(source.relative_to(ROOT)),
                   source_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
                   verifier_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-                  constrained_theorem_sha256=hashlib.sha256((ROOT/'latex/JMP_DS_suggestions/simplified_olg_constrained_efficiency.tex').read_bytes()).hexdigest(),
+                  constrained_theorem_sha256=hashlib.sha256((ROOT/'latex/JMP_DS_mock/simplified_olg_constrained_efficiency.tex').read_bytes()).hexdigest(),
                   input_sha256={name:hashlib.sha256((OUT/name).read_bytes()).hexdigest()
                                 for name in ('transition_verification.json','transition_phi80.csv')},
                   direct_cases=cases,

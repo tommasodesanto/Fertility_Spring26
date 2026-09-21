@@ -140,8 +140,8 @@ zero('common child-cost scaling delivers replacement', nbar/scale-1/nu)
 zero('common child-cost scaling preserves child goods', chi*scale*n/scale-chi*n)
 zero('common child-cost scaling preserves child housing', kappa*scale*n/scale-kappa*n)
 
-note = ROOT/'latex/JMP_DS_suggestions/simplified_olg_utilitarian.tex'
-old = ROOT/'latex/JMP_DS_suggestions/simplified_olg_conventional_finance.tex'
+note = ROOT/'latex/JMP_DS_mock/simplified_olg_utilitarian.tex'
+old = ROOT/'latex/JMP_DS_mock/simplified_olg_conventional_finance.tex'
 text, prior = note.read_text(), old.read_text()
 new_model = text.split(r'\section{Environment}',1)[1].split(r'\section{Equilibrium and the welfare comparison}',1)[0]
 old_model = prior.split(r'\section{Environment}',1)[1].split(r'\section{Equilibrium and financing}',1)[0]

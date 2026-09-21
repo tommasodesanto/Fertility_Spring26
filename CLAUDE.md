@@ -119,7 +119,7 @@ read-only rule established on September 3:
   footnotes, and comments. Permission to add material does not authorize
   rewriting, deleting, moving, or reformatting existing text.
 - Proposed main-text prose and revisions to existing author wording belong in
-  `latex/JMP_DS_suggestions/` for Tommaso to copy and paste by hand.
+  `latex/JMP_DS_mock/` for Tommaso to copy and paste by hand.
 - Outside these exceptions, the manuscript remains read-only. Ordinary drafting
   requests do not expand these permissions; further exceptions require explicit
   author authorization.

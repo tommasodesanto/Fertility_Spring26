@@ -1,4 +1,4 @@
-# JMP Draft Suggestions
+# JMP Draft Mock and Supporting Suggestions
 
 This directory is the agent-writable staging area for material proposed for
 `../JMP_DS_draft/`. Nothing here is part of the paper unless Tommaso copies it
@@ -30,7 +30,7 @@ structure. Matching files are under `sections/`:
 This is the single agent-maintained mock. Synchronize it only when Tommaso
 explicitly requests synchronization, not automatically after draft, slide or
 model changes. When synchronization is requested, preserve accepted mathematics and
-notation across it, the protected author draft, and `../JMP_slides.tex`.
+notation across it, the protected author draft, and `../JMP_slides/JMP_slides.tex`.
 The author draft is never automatically overwritten. Initial setup preserves
 all its files unchanged; the mock contains additional proposed environment
 text because the author’s adaptation is still in progress. No optimization,
@@ -50,7 +50,7 @@ pdflatex -interaction=nonstopmode -halt-on-error -output-directory=../../tmp/pdf
 
 The directory must already exist; copy the resulting PDF to
 `../../output/pdf/JMP_DS_mock.pdf`. The corresponding deck builds twice from
-`latex/` using `JMP_slides.tex`, with output under `tmp/pdfs/jmp_setup/slides/`.
+`latex/` using `JMP_slides/JMP_slides.tex`, with output under `tmp/pdfs/jmp_setup/slides/`.
 The centralized source and coordination registry is [latex/README.md](../README.md).
 
 Setup verification: the mock compiled twice without warnings and all four
@@ -166,8 +166,8 @@ decision is recorded above. Compile the compact source twice from the repository
 
 ```sh
 mkdir -p tmp/pdfs/simplified_olg_paper_core output/pdf
-pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=tmp/pdfs/simplified_olg_paper_core latex/JMP_DS_suggestions/simplified_olg_paper_core.tex
-pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=tmp/pdfs/simplified_olg_paper_core latex/JMP_DS_suggestions/simplified_olg_paper_core.tex
+pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=tmp/pdfs/simplified_olg_paper_core latex/JMP_DS_mock/simplified_olg_paper_core.tex
+pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=tmp/pdfs/simplified_olg_paper_core latex/JMP_DS_mock/simplified_olg_paper_core.tex
 cp tmp/pdfs/simplified_olg_paper_core/simplified_olg_paper_core.pdf output/pdf/simplified_olg_paper_core.pdf
 ```
 
@@ -195,8 +195,8 @@ From the repository root:
 
 ```sh
 mkdir -p tmp/pdfs/simplified_olg_independent_review output/pdf
-pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=tmp/pdfs/simplified_olg_independent_review latex/JMP_DS_suggestions/simplified_olg_independent_review.tex
-pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=tmp/pdfs/simplified_olg_independent_review latex/JMP_DS_suggestions/simplified_olg_independent_review.tex
+pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=tmp/pdfs/simplified_olg_independent_review latex/JMP_DS_mock/simplified_olg_independent_review.tex
+pdflatex -interaction=nonstopmode -halt-on-error -file-line-error -output-directory=tmp/pdfs/simplified_olg_independent_review latex/JMP_DS_mock/simplified_olg_independent_review.tex
 cp tmp/pdfs/simplified_olg_independent_review/simplified_olg_independent_review.pdf output/pdf/simplified_olg_independent_review.pdf
 ```
 

@@ -477,7 +477,7 @@ def main():
     }
     report["source_sha256"] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     evidence = [
-        "latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex",
+        "latex/JMP_DS_mock/simplified_olg_amendment_proposal.tex",
         "output/pdf/simplified_olg_amendment_proposal.pdf",
         "output/model/simplified_olg_amendments/theory_slides_misallocation.pdf",
         "output/model/simplified_olg_amendments/combined_transition_figure.pdf",

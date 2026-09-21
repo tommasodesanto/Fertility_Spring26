@@ -645,7 +645,7 @@ def main():
     if args.welfare_only:
         report=stationary_credit_welfare_checks()
         report["source_sha256"]=hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
-        report["original_specification_sha256"]=hashlib.sha256((ROOT/"latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex").read_bytes()).hexdigest()
+        report["original_specification_sha256"]=hashlib.sha256((ROOT/"latex/JMP_DS_mock/simplified_olg_amendment_proposal.tex").read_bytes()).hexdigest()
         target=OUT/"local_transition_welfare_checks.json"
         target.write_text(json.dumps(serializable(report),indent=2)+"\n")
         print(json.dumps(dict(output=str(target),type_count=len(report["weights"]),
@@ -707,7 +707,7 @@ def main():
                               first_fertility=rows[0]["fertility"],final_cohort=final["cohort"])),flush=True)
     report=dict(scope="Analytical cubic and original-equation checks. Finite terminally closed paths are supporting evidence, not the convergence proof.",
                 source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-                original_specification_sha256=hashlib.sha256((ROOT/"latex/JMP_DS_suggestions/simplified_olg_amendment_proposal.tex").read_bytes()).hexdigest(),
+                original_specification_sha256=hashlib.sha256((ROOT/"latex/JMP_DS_mock/simplified_olg_amendment_proposal.tex").read_bytes()).hexdigest(),
                 analytical=analytical,cases=results,elapsed_seconds=time.monotonic()-start)
     if not args.smoke:
         byname={r["name"]:r for r in results}
