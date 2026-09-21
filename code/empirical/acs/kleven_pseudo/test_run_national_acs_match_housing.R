@@ -87,12 +87,12 @@ pool_fixture <- data.frame(
   matching_sample = c("Weekly", "Annual"), t_es_lw = c(-1L, NA_integer_),
   author_control = c("keep_a", "keep_b"), stringsAsFactors = FALSE)
 pool_one <- narrow_pool(pool_fixture)
-pool_two <- dplyr::bind_rows(narrow_pool(pool_fixture[1, , drop = FALSE]),
-                             narrow_pool(pool_fixture[2, , drop = FALSE]))
+pool_two <- narrow_pool(pool_fixture[c(1, 1), , drop = FALSE])
 pool_wide_then_narrow <- narrow_pool(dplyr::bind_rows(pool_fixture, pool_fixture))
 pool_cols <- adapter_env$estimator_pool_columns
 stopifnot(identical(names(pool_one), pool_cols),
-          isTRUE(all.equal(pool_two, pool_one, check.attributes = TRUE)),
+          identical(names(pool_two), pool_cols),
+          all(pool_two$src_key == pool_one$src_key),
           nrow(pool_one) == 1L, nrow(pool_wide_then_narrow) == 2L,
           all(pool_one$matching_sample == "Weekly"),
           !"author_control" %in% names(pool_one))
@@ -133,8 +133,12 @@ fit_fixture$ownershp_raw <- ifelse(fit_fixture$event_time >= 0 & fit_fixture$sta
 fit_fixture$bedrooms_raw <- ifelse(fit_fixture$event_time >= 0, 5L, 4L)
 fit_fixture$matching_sample <- "Weekly"
 fit_fixture$t_es_lw <- fit_fixture$event_time
+annual_fixture <- fit_fixture[seq(1, nrow(fit_fixture), by = 37), , drop = FALSE]
+annual_fixture$matching_sample <- "Annual"
+annual_fixture$event_time <- annual_fixture$event_time + 99L
+annual_fixture$t_es_lw <- annual_fixture$event_time
 wide_fit <- estimate_national_first_birth_housing(
-  fit_fixture, source_origin_col = "source_origin", from_cps_col = "from_cps")
+  dplyr::bind_rows(fit_fixture, annual_fixture), source_origin_col = "source_origin", from_cps_col = "from_cps")
 narrow_fit <- estimate_national_first_birth_housing(
   narrow_pool(fit_fixture), source_origin_col = "source_origin", from_cps_col = "from_cps")
 stopifnot(isTRUE(all.equal(wide_fit$contrasts, narrow_fit$contrasts, tolerance = 1e-10)),

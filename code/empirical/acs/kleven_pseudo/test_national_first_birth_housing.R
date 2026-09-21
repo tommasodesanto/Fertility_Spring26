@@ -24,6 +24,8 @@ g$doiy_factor <- factor(g$year)
 g$wgt <- 1 + (seq_len(nrow(g)) %% 5)
 g$wgt[2] <- NA_real_ # missing author weight remains missing and is excluded
 g$event_time <- as.integer(g$event_time)
+g$matching_sample <- "Weekly"
+g$t_es_lw <- g$event_time
 g$SAMPLE <- 200501L
 g$SERIAL <- as.integer((seq_len(nrow(g)) - 1L) %% 80L + 1L) # reused clusters
 g$source_year.x <- g$year

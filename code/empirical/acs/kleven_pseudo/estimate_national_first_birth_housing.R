@@ -169,6 +169,21 @@ estimate_national_first_birth_housing <- function(
   if (!identical(as.integer(ref), -2L)) nfh_stop("ref must be -2")
   if (!length(event_times) || anyDuplicated(event_times) || !(ref %in% event_times) ||
       !all(c(-1L, 3L) %in% event_times)) nfh_stop("event_times must include unique -1, 3 and reference -2")
+  if (!all(c("matching_sample", "t_es_lw") %in% names(panel)))
+    nfh_stop("matching_sample/t_es_lw are required to select the Weekly event clock")
+  matching_sample <- as.character(panel$matching_sample)
+  if (any(!matching_sample %in% c("Weekly", "Annual")))
+    nfh_stop("matching_sample must contain only Weekly or Annual")
+  panel <- panel[matching_sample == "Weekly", , drop = FALSE]
+  if (!nrow(panel)) nfh_stop("no Weekly rows available for estimation")
+  if (!"event_time" %in% names(panel)) panel$event_time <- panel$t_es_lw
+  event_value <- suppressWarnings(as.numeric(as.character(panel$event_time)))
+  weekly_value <- suppressWarnings(as.numeric(as.character(panel$t_es_lw)))
+  one_clock_missing <- xor(is.na(event_value), is.na(weekly_value))
+  if (any(one_clock_missing)) nfh_stop("Weekly event_time/t_es_lw missingness disagrees")
+  observed_clock <- !is.na(event_value) & !is.na(weekly_value)
+  if (any(event_value[observed_clock] != weekly_value[observed_clock]))
+    nfh_stop("event_time differs from Weekly t_es_lw")
   if (is.null(rooms_col)) rooms_col <- nfh_resolve(panel, c("rooms_raw", "ROOMS_RAW", "raw_rooms"), "raw ROOMS")
   if (is.null(ownership_col)) ownership_col <- nfh_resolve(panel, c("ownershp_raw", "OWNERSHP_RAW", "ownership_raw", "raw_ownership"), "raw OWNERSHP")
   if (is.null(bedrooms_col)) bedrooms_col <- nfh_resolve(panel, c("bedrooms_raw", "BEDROOMS_RAW", "raw_bedrooms"), "raw BEDROOMS", required = FALSE)

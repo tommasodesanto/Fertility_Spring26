@@ -123,12 +123,20 @@ narrow_estimator_panel <- function(d) {
       "matching_sample/t_es_lw absent; refusing mixed-clock estimator pool", "pool")
   sample_label <- as.character(z$matching_sample)
   req(all(sample_label %in% c("Weekly", "Annual")), "unexpected matching_sample label", "pool")
+  z <- z[sample_label == "Weekly", , drop=FALSE]
+  req(nrow(z) > 0L, "no Weekly rows available for estimator pool", "pool")
+  # Saved state panels resolve the event clock as t_es_lw.  Carry that
+  # canonical value under event_time for the estimator, while checking an
+  # independently supplied event_time when present.  Annual rows are removed
+  # before comparison because they use a different clock.
+  if (!("event_time" %in% names(z))) z$event_time <- z$t_es_lw
   event_value <- suppressWarnings(as.numeric(as.character(z$event_time)))
   weekly_value <- suppressWarnings(as.numeric(as.character(z$t_es_lw)))
+  one_clock_missing <- xor(is.na(event_value), is.na(weekly_value))
+  req(!any(one_clock_missing), "weekly event_time/t_es_lw missingness disagrees", "pool")
   observed_clock <- !is.na(event_value) & !is.na(weekly_value)
   req(all(event_value[observed_clock] == weekly_value[observed_clock]),
       "event_time differs from weekly t_es_lw", "pool")
-  z <- z[sample_label == "Weekly", , drop=FALSE]
   req(all(estimator_pool_columns %in% names(z)),
       paste("estimator pooling columns absent:", paste(setdiff(estimator_pool_columns, names(z)), collapse=",")), "pool")
   z[, estimator_pool_columns, drop=FALSE]
