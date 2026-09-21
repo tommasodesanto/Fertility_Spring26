@@ -5,9 +5,13 @@ version 17.0
 * Custom full-sample extensions. Exact author arms are staged and executed by
 * launch_psid_housing_fullsample_torch.sh in separate Stata processes because
 * the author files intentionally begin with clear all.
-args source outroot arm variant
+args source outroot arm variant ado_root
 if "`arm'" == "" local arm "aligned_first_ownership"
 if "`variant'" == "" local variant "all"
+if "`ado_root'" != "" {
+    sysdir set PLUS "`ado_root'"
+    mata: mata mlib index
+}
 capture confirm file "`source'"
 if _rc {
     di as error "Missing PSID shelf: `source'"
@@ -68,6 +72,7 @@ if "`arm'" == "aligned_first_ownership" {
     * Outcome-specific missingness: this arm does not require rooms observed.
     replace HOMEOWN = 0 if HOMEOWN == 2
     replace HOMEOWN = . if HOMEOWN == 3
+    assert inlist(HOMEOWN, 0, 1) | missing(HOMEOWN)
     gen double own = HOMEOWN
     drop if missing(own)
     bysort ID: egen double year_entry = min(year)
@@ -94,8 +99,9 @@ if "`arm'" == "aligned_first_ownership" {
     local im = colnumb(b,"F1event")
     assert !missing(`ip') & !missing(`im') & `ip' > 0 & `im' > 0
     local vv = V[`ip',`ip'] + V[`im',`im'] - 2*V[`ip',`im']
-    assert `vv' >= 0
+    assert `vv' >= 0 & `vv' < .
     local est = b[1,`ip'] - b[1,`im']
+    assert `est' < .
     preserve
         clear
         svmat2 b, names(col) rnames(coefficient_name)
@@ -118,6 +124,9 @@ if "`arm'" == "aligned_first_ownership" {
     gen str80 sample_note = "corrected HH-year selection; ownership missingness only"
     export delimited using "`outdir'/contrast.csv", replace
     save "`outdir'/contrast.dta", replace
+    file open _psid_complete using "`outdir'/STATA_COMPLETE", write replace
+    file write _psid_complete "PASS: aligned first-ownership arm completed" _n
+    file close _psid_complete
     log close _all
     exit
 }
@@ -148,6 +157,7 @@ if "`arm'" == "second_ownership" {
     }
     replace HOMEOWN = 0 if HOMEOWN == 2
     replace HOMEOWN = . if HOMEOWN == 3
+    assert inlist(HOMEOWN, 0, 1) | missing(HOMEOWN)
     gen double own = HOMEOWN
     drop if missing(own)
     gen byte stay_one_control = missing(second_child_year)
@@ -163,7 +173,8 @@ if "`arm'" == "second_ownership" {
     }
     gen byte F7event = cond(stay_one_control,0,K < -6 & !missing(K))
     drop F2event
-    * Exact legacy second-birth scripts are unweighted; this extension matches that command.
+    * Exact legacy second-birth rooms scripts are unweighted and omit F6.
+    * This corrected ownership extension retains the same clock but includes F6.
     eventstudyinteract own L*event F*event, vce(cluster ID) absorb(year) ///
         cohort(cohort) control_cohort(stay_one_control) covariates(i.AGEREP i.EDUYEAR)
     matrix b = e(b_iw)
@@ -173,7 +184,8 @@ if "`arm'" == "second_ownership" {
     local im = colnumb(b,"F1event")
     assert !missing(`ip') & !missing(`im') & `ip' > 0 & `im' > 0
     local vv = V[`ip',`ip'] + V[`im',`im'] - 2*V[`ip',`im']
-    assert `vv' >= 0
+    assert `vv' >= 0 & `vv' < .
+    assert b[1,`ip'] < . & b[1,`im'] < .
     preserve
         clear
         svmat2 b, names(col) rnames(coefficient_name)
@@ -193,9 +205,12 @@ if "`arm'" == "second_ownership" {
     gen double contrast_ci_lo = contrast_l3_minus_f1 - 1.96*contrast_se
     gen double contrast_ci_hi = contrast_l3_minus_f1 + 1.96*contrast_se
     gen long estimation_observations = `nobs'
-    gen str32 weighting = "unweighted author-style extension"
+    gen str48 weighting = "unweighted corrected extension; F6 included"
     export delimited using "`outdir'/contrast.csv", replace
     save "`outdir'/contrast.dta", replace
+    file open _psid_complete using "`outdir'/STATA_COMPLETE", write replace
+    file write _psid_complete "PASS: corrected second-ownership arm completed" _n
+    file close _psid_complete
     log close _all
     exit
 }

@@ -9,6 +9,7 @@ SOURCE=""
 OUTROOT=""
 STAGE="first"
 STATA_BIN="${STATA_BIN:-stata-mp}"
+STATA_PLUS="${STATA_PLUS:-}"
 AUTHOR_SOURCE="/Users/tommasodesanto/Desktop/Projects/Fertility/PSID/PSIDSHELF_MOBILITY.dta"
 AUTHOR_OUTPUT="/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/psid_followup_mar2026/output"
 KNOWN_SHA="f1c5d48d5ef5357c40e743895dd25c73cd45789f779d1d575408f671fe637029"
@@ -29,6 +30,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 [[ -n "$SOURCE" && -n "$OUTROOT" ]] || usage
+STATA_PLUS="${STATA_PLUS:-$OUTROOT/ado}"
 [[ -f "$SOURCE" ]] || { echo "Missing PSID shelf: $SOURCE" >&2; exit 601; }
 command -v "$STATA_BIN" >/dev/null 2>&1 || { echo "StataMP unavailable: $STATA_BIN" >&2; exit 127; }
 case "$STAGE" in first|first_rooms|first_ownership|aligned_first_ownership|second|all) ;; *) echo "Invalid stage: $STAGE" >&2; exit 2 ;; esac
@@ -37,6 +39,7 @@ if [[ -e "$OUTROOT" && -n "$(find "$OUTROOT" -mindepth 1 -print -quit 2>/dev/nul
   exit 73
 fi
 mkdir -p "$OUTROOT"
+mkdir -p "$STATA_PLUS"
 REMOTE_SHA="$(sha256sum "$SOURCE" | awk '{print $1}')"
 [[ "$REMOTE_SHA" == "$KNOWN_SHA" ]] || { echo "PSID source checksum mismatch: $REMOTE_SHA" >&2; exit 74; }
 MANIFEST="$OUTROOT/run_manifest.csv"
@@ -49,14 +52,14 @@ stage_author_script() {
   local sentinel="$3"
   local temp_do
   temp_do="$(mktemp "${TMPDIR:-/tmp}/psid_author_XXXXXX.do")"
-  python3 - "$script" "$temp_do" "$AUTHOR_SOURCE" "$SOURCE" "$AUTHOR_OUTPUT" "$OUTROOT" "$PROJECT_DIR" <<'PY'
+  python3 - "$script" "$temp_do" "$AUTHOR_SOURCE" "$SOURCE" "$AUTHOR_OUTPUT" "$OUTROOT" "$PROJECT_DIR" "$STATA_PLUS" <<'PY'
 from pathlib import Path
 import sys
-src, dst, old_source, new_source, old_output, new_output, project_dir = sys.argv[1:]
+src, dst, old_source, new_source, old_output, new_output, project_dir, stata_plus = sys.argv[1:]
 text = Path(src).read_text()
 name = Path(src).name
 if name in {"sa_replication_own_only.do", "sa_rooms_second_birth_with_onechild_controls_v1.do"}:
-    source_forms = ['local dta  "`root'/PSID/PSIDSHELF_MOBILITY.dta"']
+    source_forms = ["local dta  \"`root'/PSID/PSIDSHELF_MOBILITY.dta\""]
 else:
     source_forms = [f'local source  "{old_source}"']
 source_hits = sum(text.count(form) for form in source_forms)
@@ -77,6 +80,10 @@ for form in output_forms:
 text = text.replace("/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26", project_dir)
 text = text.replace('local root "/Users/tommasodesanto/Desktop/Projects/Fertility"', 'local root "' + str(Path(project_dir).parent) + '"')
 text = text.replace("/Users/tommasodesanto/Desktop/Projects/Fertility", str(Path(project_dir).parent))
+startup_anchor = "clear all\n"
+if text.count(startup_anchor) != 1:
+    raise SystemExit(f"expected exactly one clear-all startup anchor in {name}")
+text = text.replace(startup_anchor, startup_anchor + f'sysdir set PLUS "{stata_plus}"\nmata: mata mlib index\n', 1)
 if name == "sa_replication_own_only.do":
     hook = '''
 
@@ -102,7 +109,10 @@ preserve
     export delimited using "`outdir'/own_f_c_y_all_repl_contrast.csv", replace
 restore
 '''
-    text = text.replace("matrix var = e(V_iw)", "matrix var = e(V_iw)" + hook, 1)
+    hook_anchor = "matrix var = e(V_iw)"
+    if text.count(hook_anchor) != 1:
+        raise SystemExit(f"expected exactly one covariance hook in {name}")
+    text = text.replace(hook_anchor, hook_anchor + hook, 1)
 elif name == "sa_rooms_first_birth_household_aligned_v1.do":
     hook = '''
 
@@ -112,7 +122,55 @@ preserve
     export delimited using "`outdir'/event_study_covariance.csv", replace
 restore
 '''
-    text = text.replace("matrix V = e(V_iw)", "matrix V = e(V_iw)" + hook, 1)
+    hook_anchor = "matrix V = e(V_iw)"
+    if text.count(hook_anchor) != 1:
+        raise SystemExit(f"expected exactly one covariance hook in {name}")
+    text = text.replace(hook_anchor, hook_anchor + hook, 1)
+elif name == "sa_rooms_second_birth_with_onechild_controls_v1.do":
+    hook = '''
+
+* Portable export hook: preserve the exact unweighted legacy rooms regression
+* while exporting full covariance and the requested +3 minus -1 contrast.
+local hook_ip = colnumb(var, "L3event")
+local hook_im = colnumb(var, "F1event")
+local hook_bp = colnumb(b, "L3event")
+local hook_bm = colnumb(b, "F1event")
+assert !missing(`hook_ip') & !missing(`hook_im') & `hook_ip' > 0 & `hook_im' > 0
+assert `hook_bp' == `hook_ip' & `hook_bm' == `hook_im'
+local hook_v = var[`hook_ip',`hook_ip'] + var[`hook_im',`hook_im'] - 2*var[`hook_ip',`hook_im']
+assert `hook_v' >= 0 & `hook_v' < .
+preserve
+    clear
+    svmat2 var, names(col) rnames(row_name)
+    export delimited using "`outdir'/rooms_s_c_y_`variant'_covariance.csv", replace
+restore
+preserve
+    clear
+    set obs 1
+    gen double estimate = b[1,`hook_bp'] - b[1,`hook_bm']
+    gen double standard_error = sqrt(`hook_v')
+    gen double ci_lo = estimate - 1.96*standard_error
+    gen double ci_hi = estimate + 1.96*standard_error
+    export delimited using "`outdir'/rooms_s_c_y_`variant'_contrast.csv", replace
+restore
+'''
+    hook_anchor = "matrix var = e(V_iw)"
+    if text.count(hook_anchor) != 1:
+        raise SystemExit(f"expected exactly one covariance hook in {name}")
+    text = text.replace(hook_anchor, hook_anchor + hook, 1)
+completion_dir = {
+    "sa_rooms_first_birth_household_aligned_v1.do": Path(new_output) / "sa_rooms_first_birth_household_aligned_v1",
+    "sa_replication_own_only.do": Path(new_output) / "sa_replication",
+    "sa_rooms_second_birth_with_onechild_controls_v1.do": Path(new_output) / "sa_rooms_second_birth_with_onechild_controls_v1",
+}[name]
+completion_path = completion_dir / "STATA_COMPLETE"
+if name == "sa_rooms_second_birth_with_onechild_controls_v1.do":
+    completion_path = completion_dir / "STATA_COMPLETE_`variant'"
+text += f'''\n\ncapture file close _psid_complete
+file open _psid_complete using "{completion_path}", write replace
+file write _psid_complete "PASS: generated PSID arm completed" _n
+file close _psid_complete
+'''
 Path(dst).write_text(text)
 PY
   if [[ -n "$variant" ]]; then
@@ -122,12 +180,31 @@ PY
   fi
   rm -f "$temp_do"
   [[ -f "$3" ]] || { echo "Expected completion sentinel missing: $3" >&2; return 75; }
+  case "$(basename "$script")" in
+    sa_rooms_first_birth_household_aligned_v1.do) marker="$OUTROOT/sa_rooms_first_birth_household_aligned_v1/STATA_COMPLETE" ;;
+    sa_replication_own_only.do) marker="$OUTROOT/sa_replication/STATA_COMPLETE" ;;
+    sa_rooms_second_birth_with_onechild_controls_v1.do) marker="$OUTROOT/sa_rooms_second_birth_with_onechild_controls_v1/STATA_COMPLETE_${variant}" ;;
+  esac
+  [[ -f "$marker" ]] || { echo "Generated Stata completion marker missing: $marker" >&2; return 79; }
 }
 
 run_custom() {
   local arm="$1"
   local variant="${2:-all}"
-  "$STATA_BIN" -b do "$SCRIPT_DIR/psid_housing_fullsample_driver.do" "$SOURCE" "$OUTROOT" "$arm" "$variant"
+  local temp_do
+  temp_do="$(mktemp "${TMPDIR:-/tmp}/psid_driver_XXXXXX.do")"
+  python3 - "$SCRIPT_DIR/psid_housing_fullsample_driver.do" "$temp_do" "$STATA_PLUS" <<'PY'
+from pathlib import Path
+import sys
+src, dst, stata_plus = sys.argv[1:]
+text = Path(src).read_text()
+startup_anchor = "clear all\n"
+if text.count(startup_anchor) != 1:
+    raise SystemExit("expected exactly one clear-all startup anchor in custom driver")
+Path(dst).write_text(text.replace(startup_anchor, startup_anchor + f'sysdir set PLUS "{stata_plus}"\nmata: mata mlib index\n', 1))
+PY
+  "$STATA_BIN" -b do "$temp_do" "$SOURCE" "$OUTROOT" "$arm" "$variant" "$STATA_PLUS"
+  rm -f "$temp_do"
   [[ -f "$OUTROOT/$(if [[ "$arm" == "aligned_first_ownership" ]]; then echo first_birth_aligned_ownership/contrast.csv; else echo second_birth_ownership/${variant}/contrast.csv; fi)" ]] || { echo "Custom completion sentinel missing" >&2; return 76; }
 }
 
@@ -138,7 +215,7 @@ if [[ "$STAGE" == first || "$STAGE" == first_rooms || "$STAGE" == all ]]; then
 fi
 if [[ "$STAGE" == first || "$STAGE" == first_ownership || "$STAGE" == all ]]; then
   stage_author_script "$SCRIPT_DIR/sa_replication_own_only.do" "" "$OUTROOT/sa_replication/own_f_c_y_all_repl_estimates.dta"
-  [[ -f "$OUTROOT/sa_replication/own_f_c_y_all_repl_covariance.csv" && -f "$OUTROOT/sa_replication/own_f_c_y_all_repl_contrast.csv" ]] || { echo "First-birth ownership covariance/contrast export missing" >&2; exit 78; }
+  [[ -f "$OUTROOT/sa_replication/own_f_c_y_all_repl_covariance.csv" && -f "$OUTROOT/sa_replication/own_f_c_y_all_repl_contrast.csv" && -f "$OUTROOT/sa_replication/own_f_c_y_all_repl.png" ]] || { echo "First-birth ownership covariance/contrast/graph export missing" >&2; exit 78; }
   printf '%s\n' "first_birth_ownership,passed,$SOURCE,unweighted,exact author command intentionally has no [pw=IW]" >> "$MANIFEST"
 fi
 if [[ "$STAGE" == first || "$STAGE" == aligned_first_ownership || "$STAGE" == all ]]; then
@@ -148,10 +225,11 @@ fi
 if [[ "$STAGE" == second || "$STAGE" == all ]]; then
   for variant in all no_third_by3 no_third_by3_gap5; do
     stage_author_script "$SCRIPT_DIR/sa_rooms_second_birth_with_onechild_controls_v1.do" "$variant" "$OUTROOT/sa_rooms_second_birth_with_onechild_controls_v1/rooms_s_c_y_${variant}_summary.csv"
+    [[ -f "$OUTROOT/sa_rooms_second_birth_with_onechild_controls_v1/rooms_s_c_y_${variant}_covariance.csv" && -f "$OUTROOT/sa_rooms_second_birth_with_onechild_controls_v1/rooms_s_c_y_${variant}_contrast.csv" ]] || { echo "Second-birth rooms covariance/contrast export missing" >&2; exit 80; }
     run_custom second_ownership "$variant"
   done
   printf '%s\n' "second_birth_rooms,passed,$SOURCE,unweighted,exact legacy direct-ACTUALROOMS_ arm; variants all/no_third_by3/no_third_by3_gap5" >> "$MANIFEST"
-  printf '%s\n' "second_birth_ownership,passed,$SOURCE,unweighted,new same-clock ownership extension; not author-original" >> "$MANIFEST"
+  printf '%s\n' "second_birth_ownership,passed,$SOURCE,unweighted,corrected ownership extension; includes F6 unlike legacy rooms arm; not author-original" >> "$MANIFEST"
 fi
 printf '%s\n' 'source_sha256_known,recorded,f1c5d48d5ef5357c40e743895dd25c73cd45789f779d1d575408f671fe637029,,from corrected first-birth audit metadata' >> "$MANIFEST"
 echo "PSID full-sample staging complete: $MANIFEST"
