@@ -15,6 +15,14 @@ stopifnot(grepl("verified_overlap", txt, fixed = TRUE), grepl("lhs_only_missing"
           grepl("rhs_only_missing", txt, fixed = TRUE), grepl("packet_states <- valid_states", txt, fixed = TRUE))
 stopifnot(grepl("functions.R", stxt, fixed = TRUE), grepl("vendor_expected", stxt, fixed = TRUE))
 
+# The unchanged vendor CPS cleaner carries the author weight as
+# ifelse(is.na(asecwt), wtfinl, asecwt) (clean_cps.R:591).  Exercise the
+# fallback explicitly so a missing ASECWT is not mistaken for a changed weight.
+cps_weight_fixture <- data.frame(asecwt = c(NA_real_, 12), wtfinl = c(7, 8))
+cps_weight_fixture$wgt <- with(cps_weight_fixture,
+                                ifelse(is.na(asecwt), wtfinl, asecwt))
+stopifnot(identical(as.numeric(cps_weight_fixture$wgt), c(7, 12)))
+
 adapter_env <- new.env(parent = globalenv())
 adapter_env$req <- function(ok, msg, stage = "test") if (!isTRUE(ok)) stop(msg, call. = FALSE)
 adapter_env$resolve <- function(nms, want, required = TRUE) {

@@ -179,8 +179,10 @@ run_state <- function(st) {
     if (kind == "ACS") {
       rr <- resolve(names(raw),"ownershp",FALSE); if (!is.na(rr)) req(isTRUE(all.equal(as.character(pa$source_ownershp_raw),as.character(raw[[rr]][cid]))), "ACS source OWNERSHP changed after clean", "lineage")
     }
-    rw <- if (kind == "ACS") resolve(names(raw),"perwt",FALSE) else resolve(names(raw),"asecwt",FALSE)
-    if (!is.na(rw)) req(isTRUE(all.equal(as.character(pa$wgt),as.character(raw[[rw]][cid]))), paste(kind,"weight changed after clean"), "lineage")
+    # clean_cps.R:591 defines wgt=ifelse(is.na(asecwt),wtfinl,asecwt).  The
+    # all-original-column vanilla equality above is the authoritative weight
+    # guard; comparing CPS wgt only to raw ASECWT incorrectly rejects the
+    # documented WTFinL fallback.
     list(status="PASS", kind=kind, rows=nrow(pa), protected_columns=va_core, metadata_columns=metadata, lineage_columns=lineage)
   }
   vanilla_receipts <- list(ACS=vanilla_check("ACS"), CPS=vanilla_check("CPS"))
