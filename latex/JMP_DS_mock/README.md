@@ -27,7 +27,7 @@ structure. Matching files are under `sections/`:
 6. `05_policy.tex` — heading and label only.
 7. `06_conclusion.tex` — heading and label only.
 
-This is the single agent-maintained mock. Synchronize it only when Tommaso
+This is the single agent-maintained mock. Synchronize its content only when Tommaso
 explicitly requests synchronization, not automatically after draft, slide or
 model changes. When synchronization is requested, preserve accepted mathematics and
 notation across it, the protected author draft, and `../JMP_slides/JMP_slides.tex`.
@@ -201,3 +201,11 @@ cp tmp/pdfs/simplified_olg_independent_review/simplified_olg_independent_review.
 ```
 
 This review does not modify the author-controlled manuscript.
+
+### Standing typesetting synchronization — September 21, 2026
+
+Mirror draft typesetting changes in the mock automatically, including heading
+styles and spacing, while preserving wording. Content synchronization still
+requires an explicit request. Both manuscript preambles now use the same compact
+run-in subsubsection style; the mock's model subheaders use that command, and
+the forced break before its first subheader is removed.

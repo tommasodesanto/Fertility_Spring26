@@ -23,7 +23,7 @@ manuscript before updating the agent-maintained representations. Proposed
 experiments do not silently replace accepted model choices.
 
 For each substantive change, check all three documents and the corresponding
-code. Synchronize the mock only on Tommaso’s explicit request; changes to the
+code. Synchronize mock content only on Tommaso’s explicit request; changes to the
 draft, slides or model do not trigger automatic mock updates. Apply other
 authorized changes within the assigned scope; provide the exact
 manuscript-side change for the author to integrate unless he specifically
@@ -624,3 +624,11 @@ Archived material:
   diagnostic images, and theory experiments moved out of the active folder.
 - `archive/intergenerational_housing_fertility_v3_20260609/`: archived v3
   source, PDF, and bundle readme used to initialize the v4 draft.
+
+### Standing typesetting synchronization — September 21, 2026
+
+Mirror draft typesetting changes in the mock automatically, including heading
+styles and spacing, while preserving wording. Content synchronization still
+requires an explicit request. Both manuscript preambles now use the same compact
+run-in subsubsection style; the mock's model subheaders use that command, and
+the forced break before its first subheader is removed.

@@ -147,7 +147,10 @@ sources; do not create competing dated decks or another mock manuscript.
 For an accepted change to model mathematics, definitions, timing, notation,
 empirical measurements or quantitative results, check all three representations
 and the implemented model. Synchronize the mock only when Tommaso explicitly
-requests it; draft, slide or model changes do not trigger automatic mock updates.
+requests it; draft, slide or model changes do not trigger automatic mock updates. Typesetting
+changes are the standing exception: mirror draft heading styles, spacing, and
+other formatting changes in the mock without a separate request, preserving
+its wording. This does not authorize automatic content synchronization.
 Update other authorized documents within the assigned scope and record material
 discrepancies in `latex/README.md`. An
 experimental result is not an accepted specification change. Different levels

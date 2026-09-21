@@ -3,7 +3,7 @@
 In this Section, I develop a model of fertility and housing decisions. Agents live a finite number of periods in an overlapping generations economy. They are subject to persistent idiosyncratic income shock and transitory fertility and housing taste shock. They derive utility from consumption, housing, and fertility, and can save using a one-period liquid asset or by purchasing a home. They can either rent or own a home, and pay transaction costs when seeling the home. Owners can borrow against their home equity, subject to liquidity constraint. Households' have a fertile period of their lives during which they can attempt to have kids, which give them utility but affect their housing and consumption needs. They also have a retirement age, after which they do not work and receive pension benefits. Such benefits are financed by a payroll tax which is imposed on workers, who supply labor inelastically. 
 
 \subsection{The economy}
-I begin by describing agents and their preferences, the income process, the markets in which agents can trade and the fertility process. Time is discrete.\\
+I begin by describing agents and their preferences, the income process, the markets in which agents can trade and the fertility process. Time is discrete.
 
 \subsubsection*{Households and Preferences.}
 The economy is populated by overlapping generation of households, who live for at most T periods. Households are also denoted as `adults'. Adult age is denoted by $a\in[0,J]$. Agents can die at each period, and I denote $s_a$ their probability of surviving to next period.  Households work before retirement age $a_R$ and can attempt births during the
@@ -49,7 +49,7 @@ The parameter $\theta_0$ scales the strength of the bequest motive, while
 $\theta_1$ shifts the wealth level at which it is evaluated; the logarithmic
 limit again applies when $\sigma=1$.
 
-\paragraph{Fertility.}
+\subsubsection*{Fertility.}
 During fertile ages, a household chooses whether to attempt a birth. An
 attempt succeeds with age-specific probability $\pi_a$ and, upon success,
 increases both $n_t$ and $m_t$ by one. The first birth carries a one-time
@@ -61,7 +61,7 @@ taste shocks $\varepsilon_t^H$ and choose housing and saving conditional on
 the realized number of children. Thus, housing can adjust to a birth within
 the period.
 
-\paragraph{Production and income.}
+\subsubsection*{Production and income.}
 Competitive firms produce the consumption good using effective labor $L_t$
 with constant productivity $A$:
 \begin{equation}
@@ -85,7 +85,7 @@ Disposable income is
 Households also receive a lump-sum transfer $T_t$ from property-tax revenue,
 which is rebated equally across households.
 
-\paragraph{Housing markets.}
+\subsubsection*{Housing markets.}
 A unit of housing trades at price $P_t$. Aggregate housing supply is
 \begin{equation}
  H_t^s=H_0 P_t^{\eta}.
@@ -108,7 +108,7 @@ Equating the return to the gross bond return $R_b$ gives
 Rent covers financing, depreciation, and property taxes, net of the change
 in the value of the house.
 
-\paragraph{Saving and mortgage finance.}
+\subsubsection*{Saving and mortgage finance.}
 Households save in a one-period bond with gross return $R_b$. Borrowing is
 secured by housing: an owner can borrow up to a fraction $\phi$ of the
 home's purchase value, while renters cannot borrow. Buying a home requires
