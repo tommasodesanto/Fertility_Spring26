@@ -1,5 +1,53 @@
 # LaTeX Workspace
 
+## Coordinated JMP sources — author instruction, September 21, 2026
+
+These are the three ongoing document roles. This registry supersedes older
+working-document labels below; the dated notes remain historical evidence.
+
+| Role | Source | Ownership and use |
+|---|---|---|
+| **JMP Draft** | [JMP_DS_draft/JMP_DS_draft.tex](JMP_DS_draft/JMP_DS_draft.tex), with its existing section files | Tommaso's manuscript. Preserve his text and in-progress edits; existing narrow appendix/table/figure permissions remain. |
+| **JMP Slides** | [september_14_presentation.tex](september_14_presentation.tex) | The existing September 14 source becomes the single continuing JMP deck. Next presentation: **October 15, 2026**. Keep using this source rather than creating another dated working deck. Its current content/PDF is still the September 14 version. |
+| **JMP Draft mock** | Existing source identity awaiting confirmation; likely [intergenerational_housing_fertility_paper_draft.tex](intergenerational_housing_fertility_paper_draft.tex) | Agent-maintained manuscript for developed exposition, equations and proposed changes. Do not create a duplicate or overwrite the candidate while its identity is unresolved. |
+
+Coordination means common accepted mathematics, timing, variable definitions,
+model measurement and result provenance. The prose, detail and ordering may
+legitimately differ between manuscript, mock and slides. Read Tommaso's latest
+manuscript before updating the agent-maintained representations. Proposed
+experiments do not silently replace accepted model choices.
+
+For each substantive change, check all three documents and the corresponding
+code. Apply the authorized mock/slide changes together; provide the exact
+manuscript-side change for the author to integrate unless he specifically
+assigns that edit. Record unresolved differences here. The mock becomes the
+main agent-writing destination once identified; `JMP_DS_suggestions/` remains
+available for small insertable patches, not a competing fourth manuscript.
+
+### Initial coordination items
+
+- **Mock identity:** confirmation requested September 21. The candidate above
+  is an existing dirty working file and has not been modified by this setup.
+- **Income at purchase:** the author objects to excluding current income from
+  the acquisition/down-payment test and recalls an earlier correction. The
+  September 21 check confirms that the September 14 slide and quantitative
+  solver exclude earnings from the ordinary purchase gate, although income
+  enters the flow budget. The simplified-theory prompt explicitly includes
+  income for the down payment, but also says that theory is not literally the
+  quantitative model. This is a documented cross-model timing difference, not
+  evidence that the quantitative correction was implemented. Resolve receipt
+  and return timing consistently in the solver, mock and slides; provide the
+  author-side equation for integration. Sources: slide lines 156–178,
+  `../code/model/intergen_eqscale_seq_optimized/solver.py` (down-payment arrays,
+  tenure dispatch and flow resources), M06 in
+  `../docs/model/POST_PRESENTATION_ISSUES.md`, and
+  `../docs/prompts/oracle_simplified_olg_consolidated_theory.md`.
+- **Specification:** September 20–21 income and housing diagnostics are not
+  adopted changes. Their current status remains in `../CALIBRATION_STATUS.md`.
+- **Synchronization:** this establishes ownership and procedure; it is not a
+  claim that existing mathematical content has already been reconciled. No
+  manuscript prose, slide equation or numerical model was changed in this setup.
+
 September 13 accepted schematic: the September deck now labels the direct
 fixed-price fertility response `A'` (right panel only), the same-period housing
 adjustment `B`, and the later demographic endpoint `C`. Initial point `A`,

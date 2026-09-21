@@ -126,6 +126,28 @@ read-only rule established on September 3:
 - Keep all compilation artifacts and generated manuscript PDFs outside the
   subtree. Compile a temporary copy when checking the manuscript.
 
+## Coordinated JMP Documents
+
+Maintain three coordinated document roles, with exact source paths recorded in
+`latex/README.md`: the author-owned **JMP Draft**, the single evolving **JMP
+Slides**, and the agent-maintained **JMP Draft mock**. Reuse the existing
+sources; do not create competing dated decks or another mock manuscript.
+
+For an accepted change to model mathematics, definitions, timing, notation,
+empirical measurements or quantitative results, check all three representations
+and the implemented model. Update the authorized agent-owned documents in the
+same task and record any remaining discrepancy in `latex/README.md`. An
+experimental result is not an accepted specification change. Different levels
+of exposition are allowed; contradictory economics are not.
+
+Preserve the author's draft and existing wording under the permissions above.
+Synchronization does not authorize overwriting that draft: provide the exact
+corresponding proposed change in the mock or suggestions area for author
+integration unless the author explicitly delegates the protected edit. Read
+new author changes before revising the other documents. Do not claim full
+synchronization while a required author-side change or source identity remains
+unresolved.
+
 ## Calibration Guidance
 
 Calibration changes frequently. Do not hard-code current targets, losses, best
