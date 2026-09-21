@@ -7,6 +7,69 @@ that can still change the theory, quantitative interpretation, or paper-facing
 claims. `CALIBRATION_STATUS.md` remains the source for numerical results and
 reproducibility contracts.
 
+## Current decision map — September 21, 2026
+
+**Resume here: E1, earnings components.** Author request: make decisions visible
+across sequential chats and use bounded Luna checks to collect evidence quickly.
+This map records choices; it does not adopt a model, authorize a new run, or
+synchronize the mock. Numerical results remain in `CALIBRATION_STATUS.md`.
+Older entries below retain their dated context and are not current run status.
+
+### Paper-level map
+
+| ID | Decision | Discussion status | Next action / dependency |
+|---|---|---|---|
+| E | Earnings process and measurement | ACTIVE | Resolve E1–E7 below; separate author choices from numerical validation. |
+| T | When income becomes available for housing purchases | OPEN; author objects to current exclusion | Write one consistent receipt, purchase and return timing; review code against it. Depends on E2/E3. |
+| H | Access to family-sized rental housing and ownership services | OPEN; retaining current restriction is a lead recommendation | Assess matched tenure/room/age evidence before selecting a replacement or extra parameters. |
+| F | Fertility choice timing, child costs and children at home | OPEN; retaining current architecture is a lead recommendation | Record maintained choices and required lifecycle validation; avoid simultaneous untracked changes. |
+| M | Target population, geography and model observers | OPEN | Resolve metropolitan scope versus national external inputs and recent-parent approximation before a new target contract. |
+| C | Joint calibration and validation | WAITING on E/T/H/F/M | Freeze specification and measurement; verify numerics; jointly refit and inspect full tables plus matched lifecycle figures. |
+| P | Central mechanism and policy claims | WAITING on C | Test mechanisms at a credible fit; financing dominance and architectural impossibility are not established. |
+
+Dependencies: **economic choices + measurement → numerical validation → joint
+calibration → mechanism assessment → paper claim**. Evidence extraction for
+independent nodes may proceed in parallel; adoption follows those dependencies.
+
+### Earnings decision map
+
+Lead recommendations below are proposals, not author approvals. The author's
+preference for a conventional process and reassessment of permanent types is
+recorded; exact measurement and implementation choices remain open.
+
+| ID | Exact question | Lead recommendation | Evidence / next check | Status |
+|---|---|---|---|---|
+| E1 | Which earnings components are present? | Age profile + persistent AR(1) + iid transitory shock; no permanent household type in proposed baseline. | Explain state/information implications and disclose long-lag covariance misfit; obtain explicit specification choice. | ACTIVE; diagnostic candidate exists, not adopted |
+| E2 | Whose earnings, gross or disposable, which sample and taxes? | Gross head-plus-spouse labor earnings with explicit model tax treatment. | Verify PSID builder, ages/sample, deterministic age profile, units and consistent wealth/earnings denominator. | OPEN |
+| E3 | What income does a four-year model period represent? | Test the period-average proxy; do not substitute annual shock parameters directly. | Verify aggregation and level covariance matching, plus conditional distribution/choice errors. Decide measurement-error treatment jointly with E4. | OPEN |
+| E4 | How are persistence and shock variances disciplined? | External estimation under E1/E2, with a sourced measurement-error assumption or labeled sensitivity. | Document estimators, moments and uncertainty; show long-lag residuals. Do not choose variances to repair housing fit. | OPEN |
+| E5 | How many income states are adequate? | Choose after a controlled approximation check, not by fixing 15 states in advance. | Compare resolution while holding entrant composition fixed; existing 15/27/45 comparison changes entry too. | OPEN; previous diagnostic is not a clean grid test |
+| E6 | How do initial income and wealth relate at entry? | State one empirically defensible common entrant rule before grid comparison/refit. | Inspect empirical conditioning and mapping; distinguish entry choices from discretization effects. | OPEN; exact rule not selected |
+| E7 | What must pass before adopting the earnings candidate? | Check earnings moments, numerical stability and joint housing/fertility/wealth lifecycle fit, then refit all existing free coordinates. | Prespecify approximation checks and full fit reporting; preserve identification and target provenance. | WAITING on E1–E6 and M |
+
+Evidence: [reviewed morning view](../../output/model/native_financing_diagnostic_20260919/specification_followup/quantification_v1/morning_view.md),
+[specification packet](../../output/model/native_financing_diagnostic_20260919/specification_followup/decision_packet.md),
+and [canonical status](../../CALIBRATION_STATUS.md).
+
+### Tracking procedure for this discussion
+
+- Use stable IDs above in chat and bounded worker requests. Start each resumed
+  discussion with the active ID and any newly verified evidence.
+- For each author choice, append the date and the author's wording, the chosen
+  alternative, remaining objections, affected dependent IDs, and implementation
+  status: not started / implemented / verified. Agreement is not verification.
+- At the end of each substantive exchange, record only the delta: settled,
+  still open, evidence pending, and the next ID. Reopen dependent choices when
+  an upstream assumption changes; do not erase the prior choice.
+- Use Luna for bounded read-only source checks, extraction and comparisons;
+  the lead reviews economic conclusions and model-critical changes. Each task
+  needs a concrete deliverable and a time/stop limit. No duplicate broad audits.
+- The mock is synchronized only on the author's explicit request. This ledger
+  can be updated independently of manuscript or slide drafting.
+
+**September 21 setup delta:** decision tracking requested; E1 is the next
+substantive choice. No economic choice or new numerical run adopted by setup.
+
 ## High priority — weak policy effects: calibration or economic mechanism? (September 14)
 
 **Author priority: very important. Status: open.** Establish how much of the
