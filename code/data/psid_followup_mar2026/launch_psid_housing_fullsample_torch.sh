@@ -54,9 +54,29 @@ from pathlib import Path
 import sys
 src, dst, old_source, new_source, old_output, new_output, project_dir = sys.argv[1:]
 text = Path(src).read_text()
-text = text.replace(old_source, new_source).replace(old_output, new_output)
-text = text.replace("/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26", project_dir)
 name = Path(src).name
+if name in {"sa_replication_own_only.do", "sa_rooms_second_birth_with_onechild_controls_v1.do"}:
+    source_forms = ['local dta  "`root'/PSID/PSIDSHELF_MOBILITY.dta"']
+else:
+    source_forms = [f'local source  "{old_source}"']
+source_hits = sum(text.count(form) for form in source_forms)
+if source_hits != 1:
+    raise SystemExit(f"expected one anchored source assignment in {name}, found {source_hits}")
+for form in source_forms:
+    text = text.replace(form, 'local dta  ' + f'"{new_source}"' if 'local dta' in form else 'local source  ' + f'"{new_source}"')
+output_forms = [
+    'local outroot "`project\'/code/data/psid_followup_mar2026/output"',
+    f'local out_root "{old_output}"',
+]
+output_hits = sum(text.count(form) for form in output_forms)
+if output_hits != 1:
+    raise SystemExit(f"expected one anchored output assignment in {name}, found {output_hits}")
+for form in output_forms:
+    if form in text:
+        text = text.replace(form, form.split('"')[0] + f'"{new_output}"')
+text = text.replace("/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26", project_dir)
+text = text.replace('local root "/Users/tommasodesanto/Desktop/Projects/Fertility"', 'local root "' + str(Path(project_dir).parent) + '"')
+text = text.replace("/Users/tommasodesanto/Desktop/Projects/Fertility", str(Path(project_dir).parent))
 if name == "sa_replication_own_only.do":
     hook = '''
 
