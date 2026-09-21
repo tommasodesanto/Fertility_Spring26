@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Candidate second-stage launcher. Submit only after lead review, e.g.
-# sbatch --dependency=afterok:${SOURCE_JOB_ID} .../run_national_acs_match_housing.sbatch
+# State matcher, exact housing bridge, and reviewed pooled-women estimator.
+# Smoke uses STATEFIP=50 and performs vanilla-versus-adapter clean/match gates;
+# production pools completed state panels after the smoke passes.
 #SBATCH --job-name=acs-match-housing
 #SBATCH --account=torch_pr_570_general
 #SBATCH --partition=cs

@@ -50,12 +50,12 @@ req(file.exists(acs_file), paste("ACS raw input absent:", acs_file))
 req(file.exists(cps_file), paste("CPS raw input absent:", cps_file))
 req(dir.exists(vendor_dir), paste("vendor directory absent:", vendor_dir))
 
-vendor_expected <- c(
-  clean_acs.R = "5e297ed920286ac29a16b2cf25f9c1a1f594aa7af7d9383c34db5eb496804d44",
-  clean_cps.R = "aa5f21c1386efdf89c2a3183804a3428474b447251728e84078e8d9fcb663643",
-  matching.R = "7433ec92c6072a879d2e1cfc967e8f737c915d6264440d7e96e5d7762f0f1354",
-  setup.R = "711fb9dab97124406afc3f0d35ba2cb4b068c7c3915125a35fc7ee89d47f0440"
-)
+contract_file <- Sys.getenv("SOURCE_CONTRACT", file.path(root, "code", "empirical", "acs", "kleven_pseudo", "source_contract.json"))
+req(file.exists(contract_file), paste("canonical source contract absent:", contract_file), "startup")
+contract <- jsonlite::fromJSON(contract_file, simplifyVector = FALSE)
+vendor_expected <- unlist(contract$vendor_sha256, use.names = TRUE)
+req(identical(sort(names(vendor_expected)), sort(c("clean_acs.R", "clean_cps.R", "matching.R", "setup.R", "functions.R"))),
+    "canonical source contract vendor set is incomplete", "startup")
 vendor_hash <- vapply(names(vendor_expected), function(nm) {
   p <- file.path(vendor_dir, nm)
   req(file.exists(p), paste("vendor file absent:", p))

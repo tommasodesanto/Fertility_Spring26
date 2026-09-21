@@ -1,8 +1,14 @@
-# Kleven ACS Northeast employment and housing diagnostics
+# Kleven ACS employment and housing diagnostics
 
 ## Current validated package — 2026-09-20
 
-The current package uses the verified Northeast ACS extract and the preserved author matching lineage. It contains descriptive matched pseudo-panel diagnostics for employment and housing; it does not establish a causal fertility shock or a national replication.
+The current package uses the verified ACS extract27 source, the preserved author matching lineage, and descriptive matched pseudo-panel diagnostics for employment and housing. The existing New England results remain the validated benchmark; the national state-by-state restart is an authorized, separately gated replication path and does not establish a causal fertility shock.
+
+## National state-by-state restart — 2026-09-21
+
+The completed source partition job `18152950` ran for 18:22 with exit `0:0` and retained all 50 states plus DC: 51,401,670 ACS rows and 57,179,816 CPS rows. Its durable output is `/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/`. The cancelled VT matcher `18153370` is not a successful receipt and its partial output is not reused.
+
+The reviewed national adapter leaves the vendor cleaner and matcher unchanged, carries CPS month in source identity, validates the complete canonical vendor hash set, stages one 38-field extract27 housing/roster packet for all states, and runs the reviewed national first-birth estimator only after the true-ACS housing bridge passes. The estimator writes full covariance fits, the `+3/-1` contrast, event curves, PNG diagnostics, and per-fit checkpoints. Local checks pass with `NATIONAL_ACS_MATCH_HOUSING_TEST_PASS`, `R_PARSE_PASS`, and the independent national estimator fixture. A fresh 8-CPU/128-GB/45-minute Vermont smoke remains the next gate; no new matcher job has been submitted yet.
 
 | Stage | Status and authoritative artifacts |
 | --- | --- |
@@ -49,7 +55,7 @@ All raw data loading, cleaning, matching, estimation and plotting run on Torch i
 
 Preparation job **17917426**: partition `cs`, account `torch_pr_570_general`, 8 allocated CPUs and 128 GiB (thread counts capped at one), 30-minute walltime. Two sequential original-file downloads, approximately 4.2 GB total; each has a 3 GB / 10-minute cap and atomic rename. Data are loaded sequentially on a compute node to inspect schemas and retain Vermont observations with labels. Expected preparation is minutes, but no observed throughput yet; hard caps govern the job. Job 17917334 was cancelled while pending because its default partition was unsuitable; no scientific computation ran there. A partition-specific test established the accepted CPU/memory allocation before replacement.
 
-The author's full pipeline reports roughly 63 hours on a 1.5 TB RAM server. Do not launch `MASTER.R`, all figures, or national matching from this pilot. The next stages must clean, run the exact matching/regression path on a smaller supported demographic slice, and only then run the full Vermont sample. Freeze national resources from measured pilot time/memory before launching national work. No automatic production promotion or repeated retries.
+The author's full pipeline reports roughly 63 hours on a 1.5 TB RAM server. Do not launch `MASTER.R` or its all-figures battery from this pilot. The approved national path uses the gated state matcher and pooled-women estimator described above, with a fresh VT smoke required before production and no automatic promotion or repeated retries.
 
 ## Files and evidence
 
