@@ -27,7 +27,9 @@ structure. Matching files are under `sections/`:
 6. `05_policy.tex` — heading and label only.
 7. `06_conclusion.tex` — heading and label only.
 
-This is the single agent-maintained mock. Preserve accepted mathematics and
+This is the single agent-maintained mock. Synchronize it only when Tommaso
+explicitly requests synchronization, not automatically after draft, slide or
+model changes. When synchronization is requested, preserve accepted mathematics and
 notation across it, the protected author draft, and `../JMP_slides.tex`.
 The author draft is never automatically overwritten. Initial setup preserves
 all its files unchanged; the mock contains additional proposed environment

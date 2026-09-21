@@ -135,8 +135,10 @@ sources; do not create competing dated decks or another mock manuscript.
 
 For an accepted change to model mathematics, definitions, timing, notation,
 empirical measurements or quantitative results, check all three representations
-and the implemented model. Update the authorized agent-owned documents in the
-same task and record any remaining discrepancy in `latex/README.md`. An
+and the implemented model. Synchronize the mock only when Tommaso explicitly
+requests it; draft, slide or model changes do not trigger automatic mock updates.
+Update other authorized documents within the assigned scope and record material
+discrepancies in `latex/README.md`. An
 experimental result is not an accepted specification change. Different levels
 of exposition are allowed; contradictory economics are not.
 

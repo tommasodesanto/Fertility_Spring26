@@ -18,7 +18,9 @@ manuscript before updating the agent-maintained representations. Proposed
 experiments do not silently replace accepted model choices.
 
 For each substantive change, check all three documents and the corresponding
-code. Apply the authorized mock/slide changes together; provide the exact
+code. Synchronize the mock only on Tommaso’s explicit request; changes to the
+draft, slides or model do not trigger automatic mock updates. Apply other
+authorized changes within the assigned scope; provide the exact
 manuscript-side change for the author to integrate unless he specifically
 assigns that edit. Record unresolved differences here. The suggestions material is the source for the main agent-writing mock;
 consolidation should preserve useful existing content and avoid a competing
