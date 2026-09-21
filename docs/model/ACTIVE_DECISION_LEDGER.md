@@ -75,6 +75,54 @@ and joint housing/wealth/fertility fit. Next decision: whether to retain E1 as
 the proposed baseline while requiring those explicit validation checks. Do not
 repeat the historical response of shrinking risk solely to make the model fit.
 
+### E1 earnings-only test recovered — September 21
+
+Author requested baseline plus earnings replacement, then a quick nearby
+calibration to test immediate failure, and recalled that the housing floor
+remains. The requested experiment already exists; do not describe it as unrun.
+
+Lead verified all **367/367 frozen September 14 Python source hashes** against
+`income_stationary_18040896/initial_contract.json#source_sha256`, using
+`tmp/paper_baseline_sep14/output/model/paper_baseline_sep14/manifest.json`.
+No mismatches. The earnings adapter applies income overrides after the native
+parenthood binding and rebuilds corresponding debt caps; the frozen source,
+utility/floors and target system are retained. This is an earnings-process
+replacement, not a separately controlled change of entry composition.
+
+Completed evidence under `output/model/native_financing_diagnostic_20260919/`:
+
+- Stationary pilot 18040896 holds all nine structural coordinates fixed,
+  re-solves equilibrium and the maintained fertility normalization, and passes
+  recorded numerical gates. Loss 651.9418 versus retained 179.2984 under the
+  identical objective. Recorded budget-excess mass and stationary feasibility
+  projection mass are zero. Full tables: `income_stationary_18040896/`.
+- Coordinate search 18047156 completed 16 proposals and two exact selected
+  repetitions; selected loss 502.7456. Full tables: `income_search_18047156/readout.md`.
+- Joint local search 18049121 completed 96 proposals, 89 valid and seven
+  rejected; selected loss 353.6589 with two exact repetitions. Full 13-target,
+  17-parameter tables and 17 figures: `overnight/final_search/readout.md`.
+- Later local sensitivity panel is complete; see canonical status. These
+  experiments show successful solves and persistent fit problems, not convergence
+  or validity at every parameter value or under every income approximation.
+
+Floor distinction: the active adapter sets consumption subsistence intercepts
+`c_bar_0=c_bar_n=0`, but keeps a housing-service requirement
+`hbar(m)=h_P*1{m>0}`, where m counts children at home. Positive consumption
+reporting clamps are not a restored Stone–Geary consumption intercept. Renter
+surplus deducts rent times this housing requirement; owner services must exceed
+it. The solver explicitly rejects positive population mass on infeasible states.
+A permanent income type changes income heterogeneity; it does not remove this
+requirement or provide insurance. The August E5F profile introduced a child
+housing floor in place of expenditure-share tilts; the September adapter made
+it parenthood-only. That implementation history is not sufficient economic
+justification for retaining it.
+
+**Decision delta:** immediate earnings-only feasibility/local-refit check is
+COMPLETE using verified saved runs. E1 adoption remains OPEN. No duplicate
+calibration launched; no floor removed or parameter altered. Remaining distinct
+questions are the housing-floor rationale and affordability under better-resolved
+income risk, period approximation, entry mapping, and credible joint fit.
+
 ### Tracking procedure for this discussion
 
 - Use stable IDs above in chat and bounded worker requests. Start each resumed
