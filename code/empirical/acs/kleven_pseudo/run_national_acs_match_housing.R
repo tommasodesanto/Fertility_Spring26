@@ -82,9 +82,10 @@ coalesce_field <- function(d, stem) {
   out
 }
 normalize_lineage <- function(d) {
-  for (stem in c("src_key","source_origin","source_doiy","source_year","source_month",
-                 "source_sample","source_serial","source_pernum","source_sex","source_age",
-                 "source_hhcluster","source_ownershp_raw","ownershp_raw","rooms_raw","bedrooms_raw"))
+  introduced_lineage <- c("src_key","source_origin","source_doiy","source_year","source_month",
+                          "source_sample","source_serial","source_pernum","source_sex","source_age",
+                          "source_hhcluster","source_ownershp_raw","ownershp_raw","rooms_raw","bedrooms_raw")
+  for (stem in introduced_lineage)
     d[[stem]] <- coalesce_field(d, stem)
   raw_from_cps <- if (any(c("from_cps.x","from_cps","from_cps.y") %in% names(d))) coalesce_field(d, "from_cps") else rep(0L, nrow(d))
   cps_flag <- as.character(d$source_origin) == "CPS" |
@@ -97,6 +98,14 @@ normalize_lineage <- function(d) {
                                paste(d$source_sample,d$source_year,d$source_serial,sep=":"),
                                paste("CPS",d$source_year,d$source_month,d$source_serial,sep=":"))
   d$source_hh_cluster <- d$source_hhcluster
+  # Matching joins can leave stale adapter-generated suffixes beside the
+  # canonical fields.  Remove only those introduced metadata suffixes so the
+  # estimator cannot resolve a partial .x field ahead of the complete plain
+  # field; retain every author/source column outside this explicit contract.
+  introduced_metadata <- unique(c(introduced_lineage, "source_hh_cluster", "from_cps"))
+  stale <- unlist(lapply(introduced_metadata, function(stem)
+    intersect(c(paste0(stem, ".x"), paste0(stem, ".y")), names(d))), use.names = FALSE)
+  if (length(stale)) d[stale] <- NULL
   d
 }
 fn_env <- new.env(parent=globalenv()); fx <- parse(file=file.path(vendor_dir,"functions.R")); for (e in fx) if (is.call(e) && identical(e[[1L]],as.name("<-")) && is.call(e[[3L]]) && identical(e[[3L]][[1L]],as.name("function"))) eval(e,envir=fn_env)

@@ -65,7 +65,10 @@ x <- data.frame(
 )
 n <- normalize(x)
 stopifnot(all(as.integer(n$from_cps) == c(0L, 1L)))
-stopifnot(identical(n$source_hhcluster, c("11:2005:10", "CPS:2005:3:20")))
+stopifnot(identical(n$source_origin, c("ACS", "CPS")),
+          identical(n$source_hhcluster, c("11:2005:10", "CPS:2005:3:20")),
+          !any(c("source_origin.x", "source_origin.y", "from_cps.x",
+                 "source_hhcluster.x") %in% names(n)))
 
 acs_raw <- data.frame(YEAR = 2005L, SAMPLE = 11L, SERIAL = 10L, PERNUM = 1L,
                       SEX = 2L, AGE = 30L, OWNERSHP = 1L)
