@@ -1,5 +1,17 @@
 # Calibration Status
 
+**September 21 — author-requested local twenty-minute refinement launched:**
+A two-repetition local anchor smoke now gates up to twenty nearby joint proposals
+with ten single-threaded workers. The entire native run, including smoke and any
+selected verification, has a 1,200-second budget. Starting loss is 326.9831988727637;
+the diagnostic income process, housing floor, nine coordinates, complete target
+system and bounds are unchanged. All 641 source hashes and zero-solve wrapper
+preflight passed; the September 14 reference is untouched. Stop on failed smoke
+or unexpected source/accounting/contract errors. Any unverified improvement is
+provisional. [Live plan and receipts](output/model/native_financing_diagnostic_20260919/specification_followup/quantification_v1/local_refinement/README.md).
+No new result is available at launch; this is a local process, not a Torch job.
+
+
 **September 21 morning — quantification panel complete and centrally reviewed:**
 Smoke **18153070** and production **18153071** both completed successfully
 (33m26s and 59m38s). All **28 full objectives / 168 nested stationary solves**

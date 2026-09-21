@@ -1,0 +1,26 @@
+{
+  "status": "launched_smoke",
+  "pid": 45680,
+  "started_utc": "2026-09-21T21:32:50.880758+00:00",
+  "command": [
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/income_refinement_local_20260921/venv/bin/python",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_income_local_refinement.py",
+    "--plan",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/income_refinement_local_20260921/local_refinement_plan.json",
+    "--anchor-score",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/quantification_v1/local_refinement/anchor_score.json",
+    "--anchor-psi",
+    "0.23949950404168222",
+    "--output",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/quantification_v1/local_refinement/run",
+    "--seconds",
+    "1200",
+    "--workers",
+    "10"
+  ],
+  "threads_per_worker": 1,
+  "maximum_workers": 10,
+  "budget_seconds": 1200,
+  "preflight": "passed;641sourcefiles;income+objectiveunchanged",
+  "runtime_note": "isolated same-Python environment reusing project packages; import aliases for NumPy2/Python3.13 checkpoint class names; no numerical source edits"
+}
