@@ -141,8 +141,14 @@ wide_fit <- estimate_national_first_birth_housing(
   dplyr::bind_rows(fit_fixture, annual_fixture), source_origin_col = "source_origin", from_cps_col = "from_cps")
 narrow_fit <- estimate_national_first_birth_housing(
   narrow_pool(fit_fixture), source_origin_col = "source_origin", from_cps_col = "from_cps")
+without_event_time <- fit_fixture
+without_event_time$event_time <- NULL
+without_event_fit <- estimate_national_first_birth_housing(
+  without_event_time, source_origin_col = "source_origin", from_cps_col = "from_cps")
 stopifnot(isTRUE(all.equal(wide_fit$contrasts, narrow_fit$contrasts, tolerance = 1e-10)),
-          isTRUE(all.equal(wide_fit$fit_status, narrow_fit$fit_status, tolerance = 1e-10)))
+          isTRUE(all.equal(wide_fit$fit_status, narrow_fit$fit_status, tolerance = 1e-10)),
+          isTRUE(all.equal(narrow_fit$contrasts, without_event_fit$contrasts, tolerance = 1e-10)),
+          isTRUE(all.equal(narrow_fit$fit_status, without_event_fit$fit_status, tolerance = 1e-10)))
 
 acs_raw <- data.frame(YEAR = 2005L, SAMPLE = 11L, SERIAL = 10L, PERNUM = 1L,
                       SEX = 2L, AGE = 30L, OWNERSHP = 1L)
