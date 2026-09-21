@@ -57,8 +57,13 @@ assert int(row["estimation_observations"]) > 0
 with (root / "event_study_covariance.csv").open(newline="") as fh:
     rows = list(csv.DictReader(fh))
 assert rows
-numeric = [float(value) for r in rows for key, value in r.items()
-           if key != "row_name" and value not in ("", ".")]
+numeric = []
+for row in rows:
+    for key, value in row.items():
+        if key == "row_name":
+            continue
+        assert value not in ("", "."), (key, value)
+        numeric.append(float(value))
 assert numeric and all(math.isfinite(value) for value in numeric)
 PY
 printf '%s\n' "PASS: synthetic dependency, cohort regression, full covariance, and export smoke" \
