@@ -6,7 +6,7 @@
 #SBATCH --account=torch_pr_570_general
 #SBATCH --partition=cs
 #SBATCH --nodes=1
-#SBATCH --cpus-per-task=8
+#SBATCH --cpus-per-task=4
 #SBATCH --mem=128G
 #SBATCH --time=08:00:00
 #SBATCH --output=/scratch/td2248/projects/kleven_acs_pilot_20260917/output/acs_national_production_%j.log
@@ -31,12 +31,13 @@ export PROJECT_ROOT="$SNAPSHOT_ROOT" VENDOR_DIR="$SNAPSHOT_ROOT/vendor"
 export SOURCE_CONTRACT="$SNAPSHOT_ROOT/code/empirical/acs/kleven_pseudo/source_contract.json"
 export HOUSING_RAW="$ROOT/inputs/ACS/local_extract27_20260919/extract27.dta"
 export PHASE=production RUN_PRODUCTION=YES STATEFIP="$ALL_STATES"
-mkdir -p "$OUTDIR"
+export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+HEARTBEAT_FILE="$ROOT/output/acs_national_production_${SLURM_JOB_ID:-manual}.heartbeat"
 Rscript --vanilla "$SNAPSHOT_ROOT/code/empirical/acs/kleven_pseudo/run_national_acs_match_housing.R" &
 PID=$!
 (
   while kill -0 "$PID" 2>/dev/null; do
-    printf '%s production_heartbeat pid=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$PID" >> "$OUTDIR/progress.log"
+    printf '%s production_heartbeat pid=%s outdir=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$PID" "$OUTDIR" >> "$HEARTBEAT_FILE"
     sleep 300
   done
 ) &
