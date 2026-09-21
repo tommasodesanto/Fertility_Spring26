@@ -51,6 +51,30 @@ Evidence: [reviewed morning view](../../output/model/native_financing_diagnostic
 [specification packet](../../output/model/native_financing_diagnostic_20260919/specification_followup/decision_packet.md),
 and [canonical status](../../CALIBRATION_STATUS.md).
 
+### E1 historical check — September 21
+
+Author asks whether this proposed standard earnings architecture caused problems
+months earlier. E1 remains ACTIVE; no specification adopted.
+
+The July 17 income-risk feasibility memo diagnoses insufficient resources to
+finance committed Stone–Geary consumption/housing minima under realistic
+income risk. The July 22 reconciliation explicitly distinguishes the old floor
+architecture from the replacement equivalence-scale specification without that
+floor apparatus. This is evidence about the interaction of risk and required
+spending, not proof that the exact persistent-plus-iid candidate failed.
+The July 23 memory also records a wealth-measurement timing repair, so historical
+fit deterioration must not automatically be attributed to earnings economics.
+
+Sources: `docs/model/intergen_income_risk_feasibility_decision_memo_20260717.md`,
+`docs/model/eqscale_calibration_reconciliation_20260722.md` (architecture deltas),
+and `memory/AGENT_MEMORY.md` (July 23 E-strand repair entry).
+
+Current candidate issues remain separate: earnings covariance fit without a
+permanent component, period aggregation, discretization, entrant composition,
+and joint housing/wealth/fertility fit. Next decision: whether to retain E1 as
+the proposed baseline while requiring those explicit validation checks. Do not
+repeat the historical response of shrinking risk solely to make the model fit.
+
 ### Tracking procedure for this discussion
 
 - Use stable IDs above in chat and bounded worker requests. Start each resumed
