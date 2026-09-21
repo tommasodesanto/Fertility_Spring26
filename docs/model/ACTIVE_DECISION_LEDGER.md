@@ -180,6 +180,35 @@ Sources: `code/model/intergen_eqscale_seq_optimized/local_panel.py` function
 existing conversion. No target, estimator, income parameter or running-job input
 changed. Next: quantify whether the approximation matters for relevant moments.
 
+### E3 literature grounding — September 21
+
+Author requests an established multi-year OLG convention, not a bespoke
+approximation adopted merely because it matches a few moments.
+
+Verified primary precedents:
+
+- De Nardi (2004), *Wealth Inequality and Intergenerational Links*, Section 4
+  p.752 and Appendix A pp.765–766: aggregate PSID income within complete five-year
+  cells, estimate the income process at that frequency, then discretize it.
+  This is direct period-frequency estimation, not evidence for a particular
+  annual-to-period closed-form mapping or a persistent-plus-iid decomposition.
+  https://users.nber.org/~denardim/research/denardi.pdf
+- Doepke and Kindermann (2019), *Bargaining over Babies*, p.3283: three-year
+  model periods, but each woman's wage is fixed over her lifecycle. This supports
+  multi-year fertility timing, not a conversion of persistent/transitory earnings
+  shocks. https://faculty.wcas.northwestern.edu/mdo738/research/Doepke_Kindermann_AER_2019.pdf
+
+Lead recommendation: discipline the four-year earnings representation against
+consistently constructed period-income moments, following the direct aggregation
+principle, before choosing between the existing conversion and a replacement.
+Retain PSID and the household earnings definition. The empirical observation
+schedule matters: later biennial PSID observations are not four consecutive
+annual earnings observations, and missing years must not be invented silently.
+The previous moment-matched proxy is diagnostic evidence, not a literature
+requirement or an adopted replacement. No implementation or data estimator
+changed by this discussion; E3 remains open pending the specific measurement
+and observation mapping.
+
 ### Tracking procedure for this discussion
 
 - Use stable IDs above in chat and bounded worker requests. Start each resumed

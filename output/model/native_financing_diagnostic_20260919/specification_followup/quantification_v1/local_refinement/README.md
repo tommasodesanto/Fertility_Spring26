@@ -27,7 +27,12 @@ income and target fingerprints are required; path relocation is documented.
 Latest and best receipts and heartbeats remain accessible during execution.
 Incomplete or rejected evaluations are reported, not assigned fabricated losses.
 
-Status: launched; see `launch.json`, `controller.log`, and `run/heartbeat.json`.
+Status: STOPPED at the 600-second smoke timeout; no refinement proposals
+started and no complete scored objective was returned. Twelve stationary-solve
+records were saved (six per repetition), but the second repetition and complete
+smoke receipt were unfinished. The controller and children have exited. No
+restart, model modification or gate relaxation followed. See
+`completion_receipt.json` and `run/failure.json`; the last heartbeat is historical.
 The two-repetition local smoke gates all proposals. Three mocked controller
 checks passed, including a failing-smoke stop, and native zero-solve wrapper
 preflight passed. All 641 scientific source files match their pins.

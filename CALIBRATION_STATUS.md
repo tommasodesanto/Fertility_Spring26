@@ -1,5 +1,15 @@
 # Calibration Status
 
+**September 21 — local refinement stopped at its smoke timeout:**
+The anchor smoke reached its 600-second stage cap before returning the complete
+scored two-repetition receipt. It saved twelve stationary-solve records (six
+per repetition), but the second repetition summary and final raw summary are
+absent. **Zero refinement proposals started; no new scored fit is available.**
+The controller and its model children have exited. No retry or changed gate;
+this establishes a runtime limit, not an economic or numerical-model failure.
+[Preserved partial-run receipt](output/model/native_financing_diagnostic_20260919/specification_followup/quantification_v1/local_refinement/completion_receipt.json).
+
+
 **September 21 — author-requested local twenty-minute refinement launched:**
 A two-repetition local anchor smoke now gates up to twenty nearby joint proposals
 with ten single-threaded workers. The entire native run, including smoke and any
