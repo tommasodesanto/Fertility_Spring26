@@ -236,6 +236,34 @@ matched earnings-moment checks follow those choices. Current proposed components
 remain age profile + AR(1) + iid, without a permanent type; not finally adopted.
 No new estimation, run, tax adjustment or mock synchronization authorized here.
 
+### Literature-first earnings direction — September 21
+
+Author explicitly requests plain-vanilla literature practice, reusing completed
+reviews; own estimation only for a concrete gap with validation and references.
+This supersedes recommendations to default to the own-PSID-plus-HSV construction.
+
+Lead recommends Sommer (2016 JME), already in the September 20 decision packet,
+as the main earnings-architecture reference: age profile + AR(1) + iid, no fixed
+type. Published Table 2 and Section 4.1 verify annual rho=0.95, persistent innovation
+SD=0.21, transitory SD=0.17. These are reference values, NOT newly adopted model
+parameters. The paper selects them from literature ranges for its cohort; it does
+not directly estimate this triplet on our target sample. Published source:
+https://www.kamilasommer.net/Fertility.pdf .
+
+Necessary departures to resolve before importing parameters: annual to four-year
+period income; wage risk with endogenous labor supply to exogenous household
+labor earnings; age/entry mapping and existing tax/retirement accounting. Do not
+add HSV compression or borrow BGM's measurement-error multiplier automatically.
+BGM remains a close housing/liquidity comparison, not a source of extra components
+to splice into Sommer's process. Own PSID is validation/robustness evidence by
+default. A source incompatibility must be stated rather than silently repaired.
+
+Bounded next validation: reconcile income units and normalization against the
+native budget; document four-year mapping; check discretized mean, dispersion and
+serial covariance against that declared process with fixed entry composition.
+Use existing aggregation receipts; recompute only if the chosen source changes
+inputs. No new numerical run or paper/mock edits made by this update.
+
 ### Tracking procedure for this discussion
 
 - Use stable IDs above in chat and bounded worker requests. Start each resumed
