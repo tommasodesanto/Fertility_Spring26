@@ -18,7 +18,7 @@ log using "`outroot'/smoke_setup.log", replace text
 local task_ado "`ado_root'"
 cap mkdir "`task_ado'"
 sysdir set PLUS "`task_ado'"
-foreach pkg in ftools reghdfe avar ivreg2 moremata {
+foreach pkg in require ftools reghdfe avar ivreg2 moremata {
     capture which `pkg'
     if _rc ssc install `pkg', replace
 }
@@ -27,26 +27,33 @@ if _rc {
     copy "http://fmwww.bc.edu/repec/bocode/s/svmat2.ado" "`task_ado'/svmat2.ado", replace
     copy "http://fmwww.bc.edu/repec/bocode/s/svmat2.sthlp" "`task_ado'/svmat2.sthlp", replace
 }
+capture confirm file "`task_ado'/l/lmoremata.mlib"
+if _rc ssc install moremata, replace
 capture which eventstudyinteract
 if _rc net install eventstudyinteract, from("https://raw.githubusercontent.com/lsun20/EventStudyInteract/main") replace
 mata: mata mlib index
-foreach pkg in eventstudyinteract ftools reghdfe avar svmat2 {
+foreach pkg in require eventstudyinteract ftools reghdfe avar ivreg2 svmat2 {
     capture which `pkg'
     if _rc {
         di as error "required Stata package unavailable after setup: `pkg'"
         exit 199
     }
 }
+capture confirm file "`task_ado'/l/lmoremata.mlib"
+if _rc {
+    di as error "required moremata Mata library unavailable after setup"
+    exit 199
+}
 
-set obs 900
-gen long ID = ceil(_n / 15)
-gen long year = 1999 + mod(_n - 1, 15)
+set obs 1800
+gen long ID = ceil(_n / 30)
+gen long year = 1990 + mod(_n - 1, 30)
 gen long HHID = ID
 gen long FID = ID
 gen byte CURRENT = 1
 gen byte SEX = 2
 gen byte REL = 1
-gen int AGEREP = 25 + mod(ID, 12) + (year - 1999)
+gen int AGEREP = 25 + mod(ID, 12) + (year - 1990)
 gen int EDUYEAR = 12 + mod(ID, 5)
 gen int DEATHYEAR = 2100
 gen double IW = 1 + mod(ID, 7) / 10

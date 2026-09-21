@@ -15,6 +15,29 @@ STATA_BIN="${STATA_BIN:-stata-mp}"
 mkdir -p "$OUTROOT"
 mkdir -p "$ADO_ROOT"
 cd "$OUTROOT"
+required_ado=(
+  require.ado
+  eventstudyinteract.ado
+  svmat2.ado
+  a/avar.ado
+  f/ftools.ado
+  i/ivreg2.ado
+  r/reghdfe.ado
+  l/livreg2.mlib
+  l/lftools.mlib
+  l/lmoremata.mlib
+)
+for rel in "${required_ado[@]}"; do
+  [[ -s "$ADO_ROOT/$rel" ]] || { echo "required dependency missing or empty: $ADO_ROOT/$rel" >&2; exit 78; }
+done
+{
+  printf '%s\n' 'PSID synthetic smoke dependency inventory'
+  for rel in "${required_ado[@]}"; do
+    version_line="$(grep -m1 '^*!' "$ADO_ROOT/$rel" || true)"
+    printf '%s\t%s\n' "$rel" "$version_line"
+    shasum -a 256 "$ADO_ROOT/$rel"
+  done
+} > "$OUTROOT/DEPENDENCY_INVENTORY.txt"
 set +e
 "$STATA_BIN" -b do "$SCRIPT_DIR/test_psid_housing_fullsample_stata_smoke.do" \
   "$DRIVER" "$FIXTURE" "$OUTROOT" "$ADO_ROOT" > "$OUTROOT/stata_stdout.log" 2>&1
