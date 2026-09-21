@@ -138,6 +138,48 @@ component and period-average interpretation require separate assessment.
 Source: `code/data/psid_followup_mar2026/output/psid_income_fixed_effect_md_20260727/README.md`;
 `output/model/native_financing_diagnostic_20260919/earnings_candidate/candidate.json`.
 
+### Measurement principle and four-year clarification — September 21
+
+**Author instruction:** apply the same measurement/estimation operation to data
+and model counterparts. When a target is a regression coefficient, construct
+comparable model observations and estimate the corresponding specification:
+outcome/transformation, regressors and controls, fixed effects, sample and age
+restrictions, weights, timing/event windows, and units must be aligned. For
+panel moments also align observation spacing and relevant selection/missingness.
+Do not compare a data conditional coefficient to an unrelated unconditional
+model difference. If the model cannot represent a data covariate or observation
+clock, document the approximation and assess it explicitly; do not silently
+claim exact equivalence or change the target to obtain a fit. Empirical
+uncertainty remains a data-estimation object; distinguish model simulation error.
+For externally estimated earnings processes, check the simulated process through
+the empirical measurement operation, not just the nominal parameter labels.
+
+**Four-year conversion already exists.** The persistent AR(1) uses
+$\rho_4=\rho_a^4$ and innovation variance
+$\sigma_{\eta,4}^2=\sigma_{\eta,a}^2\sum_{k=0}^{3}\rho_a^{2k}$.
+These are the exact four-year transition formulas for the annual latent AR(1)
+observed every fourth year, before discretization. The current earnings candidate
+also converts the iid annual shock: its period log variance is
+$\log[1+(\exp(V_{\varepsilon,a})-1)/4]$, matching the first two level moments of the
+average of four independent mean-one annual shocks with a lognormal proxy.
+Thus neither component was simply left in annual units.
+
+The remaining issue is narrower: a four-year endpoint persistent state times an
+averaged transitory proxy is not the exact four-year average of total annual
+earnings along the persistent path. The saved moment-matched period proxy is an
+alternative approximation to those block-average level covariances; its household
+choice equivalence is unverified. Treat this as approximation validation, not
+an established missing conversion or a newly reopened earnings-source choice.
+
+Sources: `code/model/intergen_eqscale_seq_optimized/local_panel.py` function
+`income_process_overrides`; `code/model/tools/build_persistent_transitory_income_candidate.py`;
+`output/model/native_financing_diagnostic_20260919/earnings_candidate/candidate.json`;
+`output/model/native_financing_diagnostic_20260919/specification_followup/income_aggregation_v1/moment_matched_period_proxy.md`.
+
+**Delta:** measurement principle recorded; E3 remains an accuracy check on an
+existing conversion. No target, estimator, income parameter or running-job input
+changed. Next: quantify whether the approximation matters for relevant moments.
+
 ### Tracking procedure for this discussion
 
 - Use stable IDs above in chat and bounded worker requests. Start each resumed
