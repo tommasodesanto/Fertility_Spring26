@@ -10,6 +10,12 @@
 \usepackage{xcolor}
 \usepackage[round]{natbib}
 \usepackage{microtype}
+\usepackage{titlesec}
+
+% Compact run-in headings within each numbered subsection.
+\titleformat{\subsubsection}[runin]
+  {\normalfont\normalsize\bfseries}{\thesubsubsection}{0.6em}{}
+\titlespacing*{\subsubsection}{0pt}{0.6\baselineskip}{0.6em}
 \usepackage{hyperref}
 
 \graphicspath{{../figures/}{figures/}}
