@@ -44,6 +44,12 @@ if _rc {
     di as error "required moremata Mata library unavailable after setup"
     exit 199
 }
+capture noisily ftools, compile
+if _rc {
+    di as error "ftools Mata compilation failed"
+    exit 199
+}
+mata: mata mlib index
 
 set obs 1800
 gen long ID = ceil(_n / 30)

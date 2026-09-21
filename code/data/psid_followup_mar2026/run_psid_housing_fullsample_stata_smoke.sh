@@ -21,10 +21,10 @@ required_ado=(
   svmat2.ado
   a/avar.ado
   f/ftools.ado
+  f/ftools.mata
   i/ivreg2.ado
   r/reghdfe.ado
   l/livreg2.mlib
-  l/lftools.mlib
   l/lmoremata.mlib
 )
 for rel in "${required_ado[@]}"; do
@@ -47,6 +47,12 @@ if [[ "$stata_rc" -ne 0 ]]; then
   cat "$OUTROOT/stata_stdout.log" >&2
   exit "$stata_rc"
 fi
+[[ -s "$ADO_ROOT/l/lftools.mlib" ]] || {
+  echo "ftools compile did not produce lftools.mlib" >&2
+  exit 79
+}
+printf '%s\n' 'l/lftools.mlib compiled during smoke' >> "$OUTROOT/DEPENDENCY_INVENTORY.txt"
+shasum -a 256 "$ADO_ROOT/l/lftools.mlib" >> "$OUTROOT/DEPENDENCY_INVENTORY.txt"
 
 [[ -f "$OUTROOT/first_birth_aligned_ownership/contrast.csv" ]] || {
   echo "contrast export missing" >&2
