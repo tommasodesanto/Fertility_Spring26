@@ -7,7 +7,7 @@
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=128G
-#SBATCH --time=08:00:00
+#SBATCH --time=00:45:00
 #SBATCH --output=/scratch/td2248/projects/kleven_acs_pilot_20260917/output/acs_match_housing_%j.log
 #SBATCH --error=/scratch/td2248/projects/kleven_acs_pilot_20260917/output/acs_match_housing_%j.log
 set -euo pipefail

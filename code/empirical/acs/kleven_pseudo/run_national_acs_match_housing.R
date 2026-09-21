@@ -77,6 +77,19 @@ run_state <- function(st) {
     ep <- file.path(cleandir, if (kind=="ACS") "acs_clean.RData" else "cps_clean.RData"); req(file.exists(ep), paste(kind,"cleaner did not write",ep), "clean")
   }
   clean_one("clean_acs.R","ACS"); clean_one("clean_cps.R","CPS")
+  vanilla_check <- function(kind) {
+    vroot <- file.path(work, "vanilla"); vraw <- file.path(vroot, "Data", "Raw_Data"); vclean <- file.path(vroot, "Data", "Cleaned_Data")
+    dir.create(file.path(vraw, kind), recursive=TRUE, showWarnings=FALSE); dir.create(vclean, recursive=TRUE, showWarnings=FALSE)
+    src <- file.path(rawdir, kind, if (kind == "ACS") "raw_acs.RData" else "raw_cps.RData"); file.copy(src, file.path(vraw, kind, basename(src)), overwrite=TRUE)
+    txt <- paste(readLines(file.path(vendor_dir, if (kind == "ACS") "clean_acs.R" else "clean_cps.R"), warn=FALSE), collapse="\n"); ex <- parse(text=txt); h1 <- paste(deparse(ex[[1L]]),collapse=" "); h2 <- paste(deparse(ex[[2L]]),collapse=" "); req(grepl("^rm\\(list = setdiff",h1) && grepl("setup\\.R",h2), paste(kind,"vanilla head changed"), "vanilla")
+    ee <- new.env(parent=globalenv()); ee$rawdir <- file.path(vroot,"Data","Raw_Data"); ee$cleandir <- vclean; ee$wrkdir <- vroot; ee$apply_labels <- apply_labels; list2env(list(min.age=min.age,max.age=max.age,t.min=t.min,t.max=t.max,ref=ref,age.cutoff=age.cutoff,seed.val=seed.val),ee)
+    for (i in 3:length(ex)) tryCatch(eval(ex[[i]],envir=ee), error=function(e) fail(paste(kind,"vanilla cleaner",conditionMessage(e)),"vanilla"))
+    ve <- new.env(); load(file.path(vclean, if (kind=="ACS") "acs_clean.RData" else "cps_clean.RData"), envir=ve); pe <- new.env(); load(file.path(cleandir, if (kind=="ACS") "acs_clean.RData" else "cps_clean.RData"), envir=pe); va <- if(kind=="ACS") ve$acs else ve$cps; pa <- if(kind=="ACS") pe$acs else pe$cps
+    protected <- intersect(c("id","serial","pernum","doiy","wgt","age","gender","child","edlevel","marst","race","statefip","emp_lw","earnings_ly","source_origin","source_doiy","from_cps"), intersect(names(va),names(pa))); req(nrow(va)==nrow(pa) && length(protected)>0L, paste(kind,"vanilla/adapter dimensions differ"),"vanilla")
+    for (cc in protected) req(isTRUE(all.equal(va[[cc]],pa[[cc]],check.attributes=TRUE)), paste(kind,"vanilla/adapter protected column differs:",cc),"vanilla")
+    list(status="PASS", kind=kind, rows=nrow(pa), protected_columns=protected)
+  }
+  vanilla_receipts <- list(ACS=vanilla_check("ACS"), CPS=vanilla_check("CPS"))
   mt <- paste(readLines(file.path(vendor_dir,"matching.R"),warn=FALSE),collapse="\n"); mt <- patch_once(mt,"subset(select=c(age1b,match_bin,", "subset(select=c(age1b,match_bin,src_key,ownershp_raw,rooms_raw,bedrooms_raw,source_origin,source_doiy,from_cps,", "match-source-select"); mt <- patch_once(mt,"subset(select=-c(from_cps))","identity()","match-preserve-from-cps")
   mx <- parse(text=mt); pick <- function(nm) { z <- NULL; for (e in mx) if (is.call(e)&&identical(e[[1L]],as.name("<-"))&&identical(e[[2L]],as.name(nm))&&is.call(e[[3L]])&&identical(e[[3L]][[1L]],as.name("function"))) z <- e; z }; defs <- lapply(c("run_match","fn_match","fn_pseudo_panel"),pick); req(!any(vapply(defs,is.null,logical(1))),"matching API definitions missing","match")
   me <- new.env(parent=globalenv()); me$cleandir <- normalizePath(cleandir); me$wrkdir <- normalizePath(work); list2env(list(min.age=min.age,max.age=max.age,t.min=t.min,t.max=t.max,ref=ref,age.cutoff=age.cutoff,seed.val=seed.val),me); for (fn in ls(fn_env)) assign(fn,get(fn,envir=fn_env),envir=me); for (e in defs) eval(e,envir=me)
@@ -84,8 +97,8 @@ run_state <- function(st) {
   source_cols <- intersect(c("src_key","src_key.x","src_key.y","source_origin","source_origin.x","source_origin.y","from_cps","from_cps.x","from_cps.y","ownershp_raw"),names(panel)); req(any(grepl("src_key",source_cols)),"matched panel lost source key","lineage")
   saveRDS(panel,file.path(work,"cps_acs_pseudo-panel.rds"),compress=FALSE)
   hp <- file.path(st_dir,"housing_narrow.rds"); housing_status <- "PENDING_RAW_EXTRACT_STAGE"
-  if (file.exists(hp)) { h <- data.table::as.data.table(readRDS(hp)); hk <- paste(h$SAMPLE,h$YEAR,h$SERIAL,h$PERNUM,sep=":"); pk <- if ("src_key.x" %in% names(panel)) panel$src_key.x else if ("src_key" %in% names(panel)) panel$src_key else panel$src_key.y; m <- match(pk,hk); panel$rooms_raw <- h$ROOMS_RAW[m]; panel$bedrooms_raw <- h$BEDROOMS_RAW[m]; panel$ownershp_raw <- h$OWNERSHP_RAW[m]; saveRDS(panel,file.path(work,"cps_acs_pseudo-panel_housing.rds"),compress=FALSE); housing_status <- "HOUSING_BRIDGE_COMPLETE" }
-  rec <- list(status="STATE_MATCH_COMPLETE", statefip=st, panel_rows=nrow(panel), panel_columns=names(panel), source_columns=source_cols, housing_status=housing_status, generated=stamp()); jsonlite::write_json(rec,file.path(work,"state_receipt.json"),auto_unbox=TRUE,pretty=TRUE); rec
+  if (file.exists(hp)) { h <- data.table::as.data.table(readRDS(hp)); hk <- paste(h$SAMPLE,h$YEAR,h$SERIAL,h$PERNUM,sep=":"); req(!anyDuplicated(hk), "housing partition key duplicated", "housing"); pk <- if ("src_key.x" %in% names(panel)) panel$src_key.x else if ("src_key" %in% names(panel)) panel$src_key else panel$src_key.y; m <- match(pk,hk); nmatch <- sum(!is.na(m)); req(nmatch > 0L, paste("no matched housing rows for FIPS",st), "housing"); panel$rooms_raw <- h$ROOMS_RAW[m]; panel$bedrooms_raw <- h$BEDROOMS_RAW[m]; panel$ownershp_raw <- h$OWNERSHP_RAW[m]; saveRDS(panel,file.path(work,"cps_acs_pseudo-panel_housing.rds"),compress=FALSE); housing_status <- "HOUSING_BRIDGE_COMPLETE" }
+  rec <- list(status="STATE_MATCH_COMPLETE", statefip=st, panel_rows=nrow(panel), panel_columns=names(panel), source_columns=source_cols, vanilla_adapter=vanilla_receipts, housing_status=housing_status, generated=stamp()); jsonlite::write_json(rec,file.path(work,"state_receipt.json"),auto_unbox=TRUE,pretty=TRUE); rec
 }
 prepare_housing <- function() {
   hp <- Sys.getenv("HOUSING_RAW", file.path(root,"inputs","ACS","local_extract27_20260919","extract27.dta"))
