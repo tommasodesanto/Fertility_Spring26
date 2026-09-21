@@ -1,0 +1,20 @@
+{
+  "collection_scope": "bounded Torch receipt collection; raw source receipts copied unchanged",
+  "remote_root": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_fit_sensitivity_v1",
+  "jobs": {
+    "smoke_18153070": {"state": "COMPLETED", "exit_code": "0:0", "elapsed": "00:33:26", "start": "2026-09-21T03:28:08Z", "end": "2026-09-21T04:01:34Z"},
+    "production_18153071": {"state": "COMPLETED", "exit_code": "0:0", "elapsed": "00:59:38", "start": "2026-09-21T04:01:45Z", "end": "2026-09-21T05:01:23Z", "allocated_cpus": 8}
+  },
+  "smoke": {"status": "passed", "anchor_evaluations": 2, "probe_evaluations": 1, "anchor_loss": 353.6588729140903, "stationary_solves": 18, "path": "smoke/smoke_summary.json"},
+  "production": {"status": "verified_selection", "objective_evaluations": 28, "accepted_valid": 28, "rejected": 0, "incomplete": 0, "stationary_solves_actual": 168, "stationary_solves_maximum": 224, "path": "production/summary.json"},
+  "selected": {"case_id": "income_fit_sensitivity_probe_03_full_kappa_fert_continuation_plus", "loss": 326.9831988727637, "remote_case_dir": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_fit_sensitivity_v1/production/cases/probe_03_full_kappa_fert_continuation_plus", "local_case_dir": "selected", "standard_graph_count": 17},
+  "repetitions": {"exact_selected_repetitions": ["final_rep_01", "final_rep_02"], "losses": [326.9831988727637, 326.9831988727637], "anchor_smoke_repetitions": ["smoke_anchor_01", "smoke_anchor_02"]},
+  "fingerprints": {"target_fingerprint": "a70b8106459693b4c931ba2a5a3ea398dd33d805c52ca19b1179fcaa2476782b", "objective_canonical_sha256": "4440ea07f4de957740ca6c04961d2806d9b9ef782c7a0e7dad4ce73e1db651b1", "prior_plan_sha256": "6f3665488e63db302c14ae810dc5c68f44d403ee85b6dfd6b48cb88fa1334ccd", "source_receipts": ["selected/receipts/contract.json", "selected/receipts/verified_evaluation_receipt.json", "final_rep_01/receipts/verified_evaluation_receipt.json", "final_rep_02/receipts/verified_evaluation_receipt.json"]},
+  "actual_search_bounds": {"beta_annual": [0.94, 0.99], "kappa_fert": [0.02, 50.0], "kappa_fert_continuation": [0.02, 50.0], "chi": [0.1, 5.0], "H0": [0.2, 80.0], "theta0": [0.0, 8.0], "theta1": [0.02, 16.0], "first_birth_fixed_cost": [0.0, 8.0], "h_P": [0.1, 2.3]},
+  "tables": {"selected_complete_target_fit": "selected/target_fit.csv", "selected_complete_parameters": "selected/parameters.csv", "all_cases": "production/cases.csv", "finite_difference_jacobian": "production/finite_difference_jacobian.json"},
+  "scheduler_timezone": {"remote_date": "EDT -0400", "sacct_query_timezone": "UTC", "raw_receipt": "scheduler_raw_receipt.txt"},
+  "graph_hash_verification": {"path": "graph_hash_verification.json", "fresh_local_sha256_count": 51, "sets": {"selected": 17, "final_rep_01": 17, "final_rep_02": 17}},
+  "source_hash_note": "Source/objective hashes are copied certified receipt values; no fresh remote source-tree rehash was performed.",
+  "logs": ["logs/smoke_18153070.out", "logs/production_18153071.out"],
+  "blockers": []
+}

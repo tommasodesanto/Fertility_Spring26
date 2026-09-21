@@ -1,0 +1,179 @@
+{
+  "status": "reviewed_complete_saved_panel",
+  "summary_sha256": "a85cff4097a6b6b8dbdccf2e91843343bdd0ddded73987511aa80e421480ad2b",
+  "objective": "4440ea07f4de957740ca6c04961d2806d9b9ef782c7a0e7dad4ce73e1db651b1",
+  "target_fingerprint": "a70b8106459693b4c931ba2a5a3ea398dd33d805c52ca19b1179fcaa2476782b",
+  "objective_evaluations": 28,
+  "verified_target_rows": 364,
+  "verified_loss_contributions": 336,
+  "stationary_solves": 168,
+  "rejected_or_incomplete": 0,
+  "exact_anchor_repeats": true,
+  "exact_selected_repeats": true,
+  "original_reference_arrays_equal": true,
+  "selected_loss": 326.9831988727637,
+  "anchor_loss": 353.6588729140903,
+  "improvement_percent": 7.542769624730039,
+  "bounds": {
+    "H0": [
+      0.2,
+      80.0
+    ],
+    "beta_annual": [
+      0.94,
+      0.99
+    ],
+    "chi": [
+      0.1,
+      5.0
+    ],
+    "first_birth_fixed_cost": [
+      0.0,
+      8.0
+    ],
+    "h_P": [
+      0.1,
+      2.3
+    ],
+    "kappa_fert": [
+      0.02,
+      50.0
+    ],
+    "kappa_fert_continuation": [
+      0.02,
+      50.0
+    ],
+    "theta0": [
+      0.0,
+      8.0
+    ],
+    "theta1": [
+      0.02,
+      16.0
+    ]
+  },
+  "selected_array_signatures": {
+    "raw/repetition_01/initial_state.pkl.gz": "288c6a6549491ef870b64031d964db3cd113d455f77fd8d1405f12a67ea12e49",
+    "raw/repetition_01/policy_array_summary.json": "825db95a113de33362ad607f864c8da630377916bafbb6b303b7df034f03b6a9"
+  },
+  "selected_source_fingerprints": {
+    "economic_source_manifest_7e872053": "612ea34da2f462cb50dcf6881dd3005d8495f827c833525436b150500ebf11cf",
+    "fertility_provenance_file_sha256": "940735a0f1a635d031cf0323b1822d44f891afe62f5ae3e993eeeef99b8ef41b",
+    "housing_wealth_provenance_file_sha256": "ccadd2285a3ab7f71f6f1c2722cba64e8e94a2f987ca8f289a58ec1ee84efceb",
+    "lead_decision_file_sha256": "b1d399c290d257e56e008afb6d7b76ac1f69191685c8d9e89a4b0bfb06533c9a",
+    "observation_snapshot_manifest_70abd4a8": "76406fcc10206d9e30bcc29d4e18accdf7fffdd9219e50e6e11c1c3360f01336",
+    "parameter_table_file_sha256": "c8d813e7cb749521e0e3520c48af9d5baf367e02fa161288dcc735e76d96d592",
+    "scorer_file_sha256": "a76ece9d0b38de4ff60ea259884306554ea62a42ed88faaad6b35a3375ebbfb3",
+    "target_fit_file_sha256": "d51be4a035dd2ee6165d769bd260e1397bf1e623e438113d3567d39569b49356",
+    "working_weights_file_sha256": "6289f69e512fff09fef0df358e2231050b978aa3e9fe1a9808bb96dd8c733c5a"
+  },
+  "scaled_singular_values": [
+    3.8127768156249315,
+    2.1868159953993387,
+    1.0520339501228944,
+    0.8398039804543966,
+    0.6388114174435993,
+    0.3172144799988147,
+    0.2095441602775129,
+    0.023764860471623638,
+    0.012949163786853504
+  ],
+  "scaled_condition": 294.4419329606296,
+  "half_substitution_condition": 556.5215327159847,
+  "coordinate_scaling": "delta parameter divided by planned full step; rows multiplied by sqrt(actual weight); no log transform",
+  "response_checks": [
+    {
+      "parameter": "H0",
+      "method": "central",
+      "full_step": 0.507769224049852,
+      "weighted_response_norm": 2.754124062043046,
+      "half_step_available": true,
+      "half_relative_difference": 0.04459364090551019,
+      "full_half_cosine": 0.9991074211026882
+    },
+    {
+      "parameter": "beta_annual",
+      "method": "one-sided",
+      "full_step": 0.001,
+      "weighted_response_norm": 0.8371171984401222,
+      "half_step_available": true,
+      "half_relative_difference": 0.9068964373525242,
+      "full_half_cosine": 0.9548802935996787
+    },
+    {
+      "parameter": "chi",
+      "method": "central",
+      "full_step": 0.04765297356765779,
+      "weighted_response_norm": 2.85806099614861,
+      "half_step_available": true,
+      "half_relative_difference": 0.145318313464248,
+      "full_half_cosine": 0.9926819487877607
+    },
+    {
+      "parameter": "first_birth_fixed_cost",
+      "method": "central",
+      "full_step": 0.01,
+      "weighted_response_norm": 0.24819233653115672,
+      "half_step_available": false,
+      "half_relative_difference": null,
+      "full_half_cosine": null
+    },
+    {
+      "parameter": "h_P",
+      "method": "one-sided",
+      "full_step": 0.05,
+      "weighted_response_norm": 0.801047197103631,
+      "half_step_available": true,
+      "half_relative_difference": 0.010231476171016907,
+      "full_half_cosine": 0.9999767181419787
+    },
+    {
+      "parameter": "kappa_fert",
+      "method": "central",
+      "full_step": 0.009888557752912053,
+      "weighted_response_norm": 1.1527045490857164,
+      "half_step_available": true,
+      "half_relative_difference": 0.0003737963899279505,
+      "full_half_cosine": 0.9999999302294955
+    },
+    {
+      "parameter": "kappa_fert_continuation",
+      "method": "central",
+      "full_step": 0.017324684663692143,
+      "weighted_response_norm": 1.7385138302407015,
+      "half_step_available": false,
+      "half_relative_difference": null,
+      "full_half_cosine": null
+    },
+    {
+      "parameter": "theta0",
+      "method": "central",
+      "full_step": 0.008539174699952684,
+      "weighted_response_norm": 0.41886157424057796,
+      "half_step_available": false,
+      "half_relative_difference": null,
+      "full_half_cosine": null
+    },
+    {
+      "parameter": "theta1",
+      "method": "central",
+      "full_step": 0.003674361494458432,
+      "weighted_response_norm": 0.02161635417412631,
+      "half_step_available": false,
+      "half_relative_difference": null,
+      "full_half_cosine": null
+    }
+  ],
+  "limitations": "Finite local descriptive map, not an identification proof. Beta and h_P one-sided at upper bounds. Four coordinates lack half steps. No missing or rejected probes. Variation across finite differences may reflect curvature or numerical/grid effects; exact repetition alone does not settle accuracy.",
+  "source_fingerprints_identical_all_28": true,
+  "numerical_gate_receipts_checked": [
+    "smoke_anchor_01",
+    "smoke_anchor_02",
+    "selected",
+    "final_rep_01",
+    "final_rep_02"
+  ],
+  "standard_graphs_rehashed": 51,
+  "standard_graphs_equal_across_three_sets": true,
+  "source_verification_scope": "Certified pinned-run receipts checked for equality; no fresh morning rehash of the remote source tree."
+}

@@ -1,5 +1,45 @@
 # Calibration Status
 
+**September 21 morning — quantification panel complete and centrally reviewed:**
+Smoke **18153070** and production **18153071** both completed successfully
+(33m26s and 59m38s). All **28 full objectives / 168 nested stationary solves**
+are valid; zero rejected or incomplete attempts. Two fresh anchors match the
+saved reference and two final selected repetitions match exactly. The full
+13-target/17-parameter tables, actual search bounds, source/objective receipts
+and unchanged 17-figure set are collected. The lead independently recomputed
+all 364 target gaps and 336 scored contributions.
+
+Best tested loss **326.983198873**, versus anchor **353.658872914**, is a
+**7.54% improvement under the identical target system**. It raises the existing
+continuation-fertility taste scale by 5% and mainly improves first-birth age
+and childlessness. Mean rooms remain **6.6780 versus 5.5611**, and ownership
+ages 30–55 **0.483892 versus 0.648334**. This is a finite local diagnostic,
+not convergence, certification or adoption of the income candidate. Actual
+upper bounds are beta **0.99** and child-space requirement **2.3**.
+
+Positive/negative probes were paired for seven interior coordinates; beta and
+the child-space requirement use inward one-sided differences. Beta's weighted
+response changes by 90.7% between full and half steps; four coordinates have
+no half-step checks. Local conditioning depends on step and coordinate scaling
+and is not identification proof. Standard figures clear markets tightly but
+lack matched empirical lifecycle overlays, leaving lifecycle validation open.
+
+The [reviewed morning recommendation](output/model/native_financing_diagnostic_20260919/specification_followup/quantification_v1/morning_view.md)
+retains the hard housing-access proxy and existing fertility architecture,
+proposes persistent-plus-transitory earnings without permanent types, and
+requires a closed earnings/period/grid/entry and target-population/observer
+contract before joint refitting. The recent-parent observer is the approved
+synchronized current-birth/empty-home proxy including former parents in the
+control; the obsolete lifetime-childless warning does not describe it. No new
+variant, target/weight change or policy run is adopted. Proposed approximation
+checks and joint refitting remain **unrun**.
+
+[Complete reviewed tables, sensitivity analysis and 17 figures](output/model/native_financing_diagnostic_20260919/specification_followup/quantification_v1/sensitivity/lead_analysis/README.md),
+[raw collection](output/model/native_financing_diagnostic_20260919/specification_followup/quantification_v1/sensitivity/collected/collection_receipt.json).
+All panel jobs are terminal. The morning follow-up
+`quantification-morning-review` was deleted after review; no new jobs or retries
+were launched.
+
 **September 20, 23:28 EDT — quantification/fit panel submitted on Torch:**
 Smoke **18153070** and dependent production **18153071** are submitted. The
 production stage starts only after successful smoke and is cancelled if that

@@ -1,4 +1,27 @@
-# Quantification and specification follow-up — September 20 evening
+# Quantification and specification follow-up — September 20–21
+
+## Reviewed outcome — September 21 morning
+
+The sole authorized calibration panel is complete. Smoke **18153070** and
+production **18153071** both exited successfully; all **28 objectives / 168
+stationary solves** are valid. Two anchors and two selected repetitions match
+exactly. The best tested loss is **326.983198873**, 7.54% below the anchor
+353.658872914, mainly through fertility timing; the room/ownership level gaps
+remain large. No variant, target change, policy experiment or new search was
+adopted or launched during collection.
+
+Start with the [reviewed recommendation](morning_view.md), then the
+[complete 13-target/17-parameter readout and 17 figures](sensitivity/lead_analysis/README.md).
+[Collection receipt](sensitivity/collected/collection_receipt.json) and
+[independent lead checks](sensitivity/lead_analysis/review_receipt.json) preserve
+job outcomes, fingerprints, actual bounds and repetitions. The paired local
+map uses one-sided beta and child-space differences, reports half-step
+instability and makes no identification claim. The prior saved-fit and Claude
+reviews below remain supporting evidence and were not repeated.
+
+The morning deliverable is complete; the scheduled follow-up
+`quantification-morning-review` was deleted after review. The measurement/grid/entry check and joint refit are proposed
+next work, not running jobs.
 
 ## Authorization and priority
 
@@ -34,10 +57,9 @@ well-defined next experiments. Aim for a morning report by September 21 at
 
 ## Cluster status and numerical limits
 
-**Update:** the author restored Torch authentication and the normal queue probe
-now succeeds. A [controlled calibration panel](sensitivity/DESIGN.md) is in
-preparation; inspect a submission receipt before calling it launched.
-The following failure is retained as history.
+**Historical preparation record:** access was restored and the controlled
+panel subsequently ran successfully; see the reviewed outcome above. The
+following access failure and prelaunch limits are retained as history.
 
 At 23:05 EDT September 20, `code/cluster/torch.sh status` failed SSH authentication
 with `Permission denied (gssapi-keyex,gssapi-with-mic,password,keyboard-interactive)`.
@@ -95,7 +117,7 @@ Smoke **18153070**, production **18153071**, submitted 23:28 EDT.
 [Immutable launch manifest](sensitivity/launch_manifest.json),
 [submission](sensitivity/submission.json), and [design](sensitivity/DESIGN.md).
 Production depends on successful smoke and requires no laptop chaining.
-Three local tests and an independent mocked full loop passed; the native smoke
-is the remaining numerical gate. The controlled panel is the sole new model
+Three local tests and an independent mocked full loop passed; the native
+smoke and production subsequently passed as recorded above. The controlled panel is the sole new model
 batch; no additional experiment is preapproved for automatic launch.
-Read the [working morning view](morning_view.md) and update it from these jobs.
+Read the [reviewed morning view](morning_view.md).

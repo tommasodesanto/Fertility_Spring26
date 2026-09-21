@@ -1,5 +1,17 @@
 # Specification follow-up: September 20–21
 
+## Quantification panel reviewed — September 21 morning
+
+The new calibration panel completed all **28 objectives / 168 stationary
+solves**, with exact anchors and selected repetitions and the standard 17
+figures. Best tested loss **326.9832** improves 7.54% on its same-contract
+anchor, chiefly in fertility timing; room and ownership fit remain unresolved.
+The [morning recommendation](quantification_v1/morning_view.md) retains a
+parsimonious proposed baseline and puts measurement, grid/entry validation and
+joint calibration before policy interpretation. [Complete tables, actual bounds
+and figures](quantification_v1/sensitivity/lead_analysis/README.md). No baseline
+was adopted and no further job launched. The morning follow-up was deleted after review.
+
 ## Renewed quantification-first work — September 20 evening
 
 The author renewed overnight authorization with specification and calibration

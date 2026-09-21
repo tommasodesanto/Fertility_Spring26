@@ -1,9 +1,20 @@
 # Quantification: proposed baseline and the next calibration
 
-**Working lead recommendation, September 20 evening.** Numerical-panel results
-are pending. This document must be updated from actual smoke/production receipts
-before the morning report. It is a proposal for the author, not an adopted
-baseline or a claim that the calibration is complete.
+**Reviewed morning recommendation, September 21.** The numerical panel completed
+successfully: 28 valid objective evaluations, 168 stationary solves, exact
+anchor and selected repetitions, and all 17 standard diagnostic figures. The
+best tested loss fell from **353.6589 to 326.9832 (7.54%)** under the identical
+objective. This remains a proposal for the author, not an adopted baseline or
+completed calibration. [Complete reviewed tables and figures](sensitivity/lead_analysis/README.md).
+
+My recommendation is to retain the parsimonious housing/fertility architecture,
+use conventional persistent-plus-transitory earnings without permanent types as
+the proposed baseline, and close its measurement and numerical implementation
+before a joint refit. The overnight result gives no reason to abandon the
+housing mechanism or to add a family-specific ownership preference. It also
+does not repair the core housing fit: mean rooms are **6.6780 versus 5.5611**,
+and ownership at ages 30–55 is **48.389% versus 64.833%**. Further policy
+interpretation should wait for those levels and matched lifecycle profiles.
 
 The next milestone is a coherent, inspectable baseline. The hard tenure/space
 restriction is a legitimate approximation to limited access to family-sized
@@ -66,9 +77,8 @@ Sampling uncertainty alone does not measure approximation error. Any later
 change to this row or its weight needs a new identifying/measurement contract;
 it must not simply be dropped because it is difficult to fit.
 
-The new panel, if its launch and smoke succeed, changes one structural
-coordinate at a time around the selected point and checks selected responses
-at half step. Each point solves prices and the stationary population and
+The completed panel changed one structural coordinate at a time around the
+selected point and checked selected responses at half step. Each point solves prices and the stationary population and
 re-normalizes the child-preference scale under the unchanged contract. It can
 show which existing parameters move several residuals together, whether local
 responses are stable, and where further search would be uninformative without
@@ -94,8 +104,10 @@ geographic switch is not automatically a remedy for weak ownership fit.
 
 ## Work still required before adoption
 
-1. Finish and review the controlled fit panel with every target, actual bounds,
-   numerical gates, exact selected repetitions and the unchanged 17 plots.
+1. **Completed:** the controlled fit panel, all 13 target and 17 parameter rows,
+   actual bounds, numerical receipts, exact repetitions and 17 standard plots.
+   The paired response analysis is descriptive. Beta is notably step-sensitive;
+   four coordinates, including the selected continuation scale, lack half steps.
 2. Close the earnings measurement/period/grid/entry contract. If the numerical
    approximation changes, jointly refit the structural parameters under that
    candidate rather than rank specifications at old parameter values.
@@ -107,8 +119,50 @@ geographic switch is not automatically a remedy for weak ownership fit.
 
 ## Numerical execution receipt
 
-Submitted at 23:28 EDT: smoke **18153070**, dependent production **18153071**.
-The local three-test suite and independent mocked 28-evaluation loop pass.
-The real native smoke and production remain pending review. Replace this
-paragraph with terminal outcomes, actual counts and verified fit/sensitivity
-findings before the morning report. Submission alone is not numerical success.
+Smoke **18153070** and production **18153071** both completed successfully,
+with elapsed times **33m26s** and **59m38s**. All 24 parameter probes, two
+anchor evaluations and two selected repetitions completed; there were no
+rejected or incomplete attempts. Each evaluation used six stationary solves,
+for **168 total** rather than the maximum 224. No retry or new job was launched
+by the morning collection. The scheduled morning follow-up was deleted after review.
+
+The selected probe increases the existing continuation-fertility taste scale
+by 5%; other structural parameters are unchanged. Its improvement is chiefly
+first-birth age and childlessness. Mean rooms and overall ownership together
+still account for about 68.2% of the objective. Both beta and the child-space
+requirement remain at their actual upper bounds, **0.99** and **2.3**. This is
+not the old scorer's generic beta bound of 0.9995.
+
+The lead paired the positive/negative probes for seven interior coordinates;
+beta and the child-space requirement have inward one-sided differences. In
+units of one planned full step, weighted half-step responses differ by 90.7%
+for beta, 14.5% for the ownership preference, 4.46% for H0, 1.02% for the
+child-space requirement and 0.0374% for the first fertility taste scale.
+Conditioning changes with the step choice; neither a derivative map nor exact
+repetition proves identification or numerical accuracy. Full definitions and
+all responses are in the [local analysis](sensitivity/lead_analysis/README.md).
+
+The unchanged figures show tight market clearing, large income-state
+heterogeneity and owner demand concentrated at the largest housing rung. They
+contain no matched empirical lifecycle overlays, so the lifecycle-fit question
+is still open. The existing synchronized recent-parent proxy remains explicit;
+the obsolete lifetime-childless-control warning is not the active observer.
+
+## Concrete next calibration step
+
+First record the proposed baseline in one measurement contract: gross
+head-plus-spouse earnings and tax treatment; a four-year income approximation;
+the entry wealth–income rule; the metro target population and maintained
+recent-parent observer. Keep the hard rental-size proxy and current fertility
+architecture while these choices are settled.
+
+Then the next numerical task should be a **bounded approximation check with
+entrant composition held fixed**, including the step-sensitive beta response,
+so income-grid changes are not confounded with changed entrants. After that
+check and the measurement contract are closed, jointly refit the nine existing
+coordinates, re-solving prices and normalization, with complete fit tables and
+matched housing/fertility/wealth lifecycle validation. The selected point is
+one reproducible starting candidate; it is not a certified optimum. Do not
+replace the fixed target system or drop a difficult row without a new
+measurement and identification contract. These are proposed next tasks, not
+newly submitted work.
