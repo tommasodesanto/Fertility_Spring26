@@ -9,43 +9,38 @@ reproducibility contracts.
 
 ## Current decision map — September 21, 2026
 
-**Resume here: E1, earnings components.** Author request: make decisions visible
-across sequential chats and use bounded Luna checks to collect evidence quickly.
-This map records choices; it does not adopt a model, authorize a new run, or
-synchronize the mock. Numerical results remain in `CALIBRATION_STATUS.md`.
-Older entries below retain their dated context and are not current run status.
+**Working sequence: earnings/timing → housing and measurement → joint fit → paper claim.**
+Keep this map current rather than adding a new memo for each discussion.
+Older entries below are history; this map records current direction and remaining work.
 
-### Paper-level map
+**Communication:** author requests no incremental updates to the JMP drafting task.
+Batch any eventual drafting handoff around a settled block; do not message it for each
+change. No automatic mock synchronization. Use bounded Luna evidence checks only
+where useful; lead resolves economics. Reuse completed literature and diagnostics.
 
-| ID | Decision | Discussion status | Next action / dependency |
+### Work packages and completion conditions
+
+| Order | Work | Concrete deliverable / completion condition | Status |
 |---|---|---|---|
-| E | Earnings process and measurement | ACTIVE | Resolve E1–E7 below; separate author choices from numerical validation. |
-| T | When income becomes available for housing purchases | OPEN; author objects to current exclusion | Write one consistent receipt, purchase and return timing; review code against it. Depends on E2/E3. |
-| H | Access to family-sized rental housing and ownership services | OPEN; retaining current restriction is a lead recommendation | Assess matched tenure/room/age evidence before selecting a replacement or extra parameters. |
-| F | Fertility choice timing, child costs and children at home | OPEN; retaining current architecture is a lead recommendation | Record maintained choices and required lifecycle validation; avoid simultaneous untracked changes. |
-| M | Target population, geography and model observers | OPEN | Resolve metropolitan scope versus national external inputs and recent-parent approximation before a new target contract. |
-| C | Joint calibration and validation | WAITING on E/T/H/F/M | Freeze specification and measurement; verify numerics; jointly refit and inspect full tables plus matched lifecycle figures. |
-| P | Central mechanism and policy claims | WAITING on C | Test mechanisms at a credible fit; financing dominance and architectural impossibility are not established. |
+| 1 | Earnings and purchase timing | One specification sheet: income equation/concept, sourced parameters, four-year mapping, age/entry assumptions, taxes and purchase budget; explicit departures and a minimal validation plan. | ACTIVE; prepare recommendation from existing evidence, no new literature survey. |
+| 2 | Housing and target measurement | One choice on housing-access proxy; reconcile rooms/ownership/lifecycle observers and geography using existing evidence. | NEXT; substantive author choices, no policy interpretation yet. |
+| 3 | Implementation and joint fit | Reconciled source contract, exact-loop smoke and benchmark, then bounded calibration; full target/parameter tables and standard figures with matched empirical profiles. | AFTER specification; run budget based on full objective timing. |
+| 4 | Mechanism and paper lane | Assess housing/fertility mechanism at credible fit and choose defensible central claim. | AFTER fit; end-of-week objective, not a promise of positive results. |
 
-Dependencies: **economic choices + measurement → numerical validation → joint
-calibration → mechanism assessment → paper claim**. Evidence extraction for
-independent nodes may proceed in parallel; adoption follows those dependencies.
+### Earnings: what is decided, what remains
 
-### Earnings decision map
+| ID | Object | Current direction | Remaining work |
+|---|---|---|---|
+| E1 | Components | Proposed age profile + AR(1) + iid; no permanent type. | Include in the single recommended specification; disclose covariance-fit tradeoff. |
+| E2 | Source | AUTHOR: literature-first, plain vanilla; own estimation only for a concrete gap. Lead recommends already-reviewed Sommer (2016) as main architecture reference. | Verify wage-to-household-earnings interpretation before importing parameters. Own PSID is validation/robustness by default. |
+| E3 | Four-year income | A complete period-income definition is required; existing endpoint conversion is not absent but does not define the full-period average. | Reuse aggregation receipts and specify one mapping with validation. |
+| E4 | Taxes and measurement error | Follow the chosen source consistently; no automatic own-PSID-plus-HSV combination. | Explicit gross-to-spendable-income accounting and documented treatment of transitory risk. |
+| E5/E6 | Grid, age profile and entry | Treat as documented implementation/validation objects. | Fix entry composition for grid checks; trace the age profile and entry distribution; escalate only material economic choices. |
+| T | Current income and housing purchase | AUTHOR-AGREED: current income can help finance purchase; consumption/saving/purchase share period resources, mortgage restrictions remain. | Reconcile exact four-year timing and native code; not implemented yet. |
+| E7 | Acceptance | Specification and earnings validation precede joint refit/adoption. | Do not turn diagnostic candidate status into a final calibration claim. |
 
-Lead recommendations below are proposals, not author approvals. The author's
-preference for a conventional process and reassessment of permanent types is
-recorded; exact measurement and implementation choices remain open.
-
-| ID | Exact question | Lead recommendation | Evidence / next check | Status |
-|---|---|---|---|---|
-| E1 | Which earnings components are present? | Age profile + persistent AR(1) + iid transitory shock; no permanent household type in proposed baseline. | Explain state/information implications and disclose long-lag covariance misfit; obtain explicit specification choice. | ACTIVE; diagnostic candidate exists, not adopted |
-| E2 | Preserve the established PSID earnings source and check its implementation | Retain PSID gross reference-person-plus-spouse labor earnings and explicit model tax treatment; do not reopen source selection without a concrete discrepancy. | July 27 empirical packet is already the candidate source. Verify units, age profile and tax application as implementation checks, not a new source decision. | MAINTAINED; source-choice clarification September 21 |
-| E3 | What income does a four-year model period represent? | Test the period-average proxy; do not substitute annual shock parameters directly. | Verify aggregation and level covariance matching, plus conditional distribution/choice errors. Decide measurement-error treatment jointly with E4. | OPEN |
-| E4 | How are persistence and shock variances disciplined? | External estimation under E1/E2, with a sourced measurement-error assumption or labeled sensitivity. | Document estimators, moments and uncertainty; show long-lag residuals. Do not choose variances to repair housing fit. | OPEN |
-| E5 | How many income states are adequate? | Choose after a controlled approximation check, not by fixing 15 states in advance. | Compare resolution while holding entrant composition fixed; existing 15/27/45 comparison changes entry too. | OPEN; previous diagnostic is not a clean grid test |
-| E6 | How do initial income and wealth relate at entry? | State one empirically defensible common entrant rule before grid comparison/refit. | Inspect empirical conditioning and mapping; distinguish entry choices from discretization effects. | OPEN; exact rule not selected |
-| E7 | What must pass before adopting the earnings candidate? | Check earnings moments, numerical stability and joint housing/fertility/wealth lifecycle fit, then refit all existing free coordinates. | Prespecify approximation checks and full fit reporting; preserve identification and target provenance. | WAITING on E1–E6 and M |
+Preserve the September 14 reference. Existing searches are diagnostic evidence,
+not proof that these final choices have already been implemented or calibrated.
 
 Evidence: [reviewed morning view](../../output/model/native_financing_diagnostic_20260919/specification_followup/quantification_v1/morning_view.md),
 [specification packet](../../output/model/native_financing_diagnostic_20260919/specification_followup/decision_packet.md),
