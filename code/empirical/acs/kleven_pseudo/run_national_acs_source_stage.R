@@ -1,0 +1,187 @@
+#!/usr/bin/env Rscript
+# National ACS source stage for the first-birth housing replication.
+#
+# This stage inventories the author's national ACS/CPS objects and writes
+# state-partitioned checkpoints. It deliberately stops before the expensive
+# national matcher unless the inventory and key gates pass. The vendor cleaner
+# and matcher are staged separately and are never edited by this script.
+
+options(stringsAsFactors = FALSE, scipen = 999)
+started <- Sys.time()
+stamp <- function() format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
+fail <- function(msg, stage = phase) {
+  rec <- list(status = "FAILED", stage = stage, error = msg,
+              started = stamp0, ended = stamp(),
+              elapsed_seconds = as.numeric(difftime(Sys.time(), started, units = "secs")))
+  if (dir.exists(outdir) && requireNamespace("jsonlite", quietly = TRUE))
+    jsonlite::write_json(rec, file.path(outdir, "failure_receipt.json"),
+                         auto_unbox = TRUE, pretty = TRUE)
+  message("FAIL: ", msg)
+  stop(msg, call. = FALSE)
+}
+req <- function(ok, msg) if (!isTRUE(ok)) fail(msg)
+stamp0 <- stamp()
+phase <- Sys.getenv("PHASE", "inventory")
+root <- Sys.getenv("PROJECT_ROOT", "/scratch/td2248/projects/kleven_acs_pilot_20260917")
+outdir <- Sys.getenv("OUTDIR", file.path(root, "output", "national_acs_source_stage"))
+state_text <- Sys.getenv("STATEFIP", "50")
+states <- suppressWarnings(as.integer(strsplit(state_text, ",", fixed = TRUE)[[1]]))
+req(length(states) > 0L && all(is.finite(states) & states >= 1L & states <= 56L),
+    "STATEFIP must be a comma-separated list of valid states")
+if (dir.exists(outdir) && length(list.files(outdir, all.files = TRUE, no.. = TRUE)))
+  fail("OUTDIR exists and is non-empty; refusing overwrite", "startup")
+dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
+
+pkgs <- c("jsonlite", "digest")
+missing <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly = TRUE)]
+req(!length(missing), paste("missing required R packages:", paste(missing, collapse = ", ")))
+
+acs_file <- Sys.getenv("ACS_RAW", file.path(root, "inputs", "ACS", "raw_acs.RData"))
+cps_file <- Sys.getenv("CPS_RAW", file.path(root, "inputs", "CPS", "raw_cps.RData"))
+vendor_dir <- Sys.getenv("VENDOR_DIR", file.path(root, "vendor"))
+housing_packet <- Sys.getenv("HOUSING_PACKET", "")
+housing_raw <- Sys.getenv("HOUSING_RAW", file.path(root, "inputs", "ACS", "local_extract27_20260919", "extract27.dta"))
+req(file.exists(acs_file), paste("ACS raw input absent:", acs_file))
+req(file.exists(cps_file), paste("CPS raw input absent:", cps_file))
+req(dir.exists(vendor_dir), paste("vendor directory absent:", vendor_dir))
+
+vendor_expected <- c(
+  clean_acs.R = "5e297ed920286ac29a16b2cf25f9c1a1f594aa7af7d9383c34db5eb496804d44",
+  clean_cps.R = "aa5f21c1386efdf89c2a3183804a3428474b447251728e84078e8d9fcb663643",
+  matching.R = "7433ec92c6072a879d2e1cfc967e8f737c915d6264440d7e96e5d7762f0f1354",
+  setup.R = "711fb9dab97124406afc3f0d35ba2cb4b068c7c3915125a35fc7ee89d47f0440"
+)
+vendor_hash <- vapply(names(vendor_expected), function(nm) {
+  p <- file.path(vendor_dir, nm)
+  req(file.exists(p), paste("vendor file absent:", p))
+  digest::digest(file = p, algo = "sha256")
+}, character(1))
+req(all(vendor_hash == vendor_expected),
+    paste("vendor hash mismatch:", paste(names(vendor_hash)[vendor_hash != vendor_expected], collapse = ", ")))
+
+resolve_one <- function(nms, want, label, required = TRUE) {
+  hit <- nms[tolower(nms) == tolower(want)]
+  if (!length(hit) && !required) return(NA_character_)
+  req(length(hit) == 1L, sprintf("%s field '%s' resolves to %d columns", label, want, length(hit)))
+  hit[[1L]]
+}
+load_object <- function(path, label) {
+  env <- new.env(parent = emptyenv())
+  objs <- load(path, envir = env)
+  req("data" %in% objs, paste(label, "must contain object named data"))
+  d <- env$data
+  req(is.data.frame(d), paste(label, "data object is not a data.frame"))
+  d
+}
+source_inventory <- function(d, label, need_housing = FALSE) {
+  nms <- names(d)
+  cols <- list(
+    year = resolve_one(nms, "year", label), sample = resolve_one(nms, "sample", label, FALSE),
+    serial = resolve_one(nms, "serial", label), pernum = resolve_one(nms, "pernum", label),
+    statefip = resolve_one(nms, "statefip", label), sex = resolve_one(nms, "sex", label),
+    age = resolve_one(nms, "age", label), race = resolve_one(nms, "race", label, FALSE),
+    hispan = resolve_one(nms, "hispan", label, FALSE), birthqtr = resolve_one(nms, "birthqtr", label, FALSE),
+    educd = resolve_one(nms, "educd", label, FALSE), marst = resolve_one(nms, "marst", label, FALSE),
+    perwt = resolve_one(nms, "perwt", label, FALSE),
+    rooms = resolve_one(nms, "rooms", label, FALSE), bedrooms = resolve_one(nms, "bedrooms", label, FALSE),
+    ownershp = resolve_one(nms, "ownershp", label, FALSE)
+  )
+  if (need_housing)
+    req(all(!is.na(unlist(cols[c("rooms", "bedrooms", "ownershp")], use.names = FALSE)),
+        paste(label, "missing a required housing field")))
+  state <- suppressWarnings(as.integer(d[[cols$statefip]]))
+  yr <- suppressWarnings(as.integer(d[[cols$year]]))
+  list(label = label, rows = nrow(d), columns = ncol(d), fields = nms,
+       resolved = cols, years = range(yr, na.rm = TRUE),
+       states = sort(unique(state[is.finite(state)])),
+       rows_by_state = as.list(table(state[is.finite(state)])),
+       hispan_status = ifelse(is.na(cols$hispan), "ABSENT", "PRESENT"),
+       birthqtr_status = ifelse(is.na(cols$birthqtr), "ABSENT", "PRESENT"))
+}
+
+message("PHASE ", phase, " start ", stamp())
+partition_dir <- file.path(outdir, "partitions")
+if (phase == "partition_smoke") dir.create(partition_dir, recursive = TRUE, showWarnings = FALSE)
+partition_one <- function(path, label) {
+  d <- load_object(path, label)
+  meta <- source_inventory(d, label, need_housing = FALSE)
+  if (phase == "partition_smoke") {
+    s <- suppressWarnings(as.integer(d[[meta$resolved$statefip]]))
+    for (st in states) {
+      sd <- d[s == st, , drop = FALSE]
+      req(nrow(sd) > 0L, sprintf("%s state %s partition is empty", label, st))
+      st_dir <- file.path(partition_dir, sprintf("statefip_%02d", st))
+      dir.create(st_dir, recursive = TRUE, showWarnings = FALSE)
+      data <- sd
+      save(data, file = file.path(st_dir, paste0(tolower(label), "_raw.RData")), compress = FALSE)
+      rm(data, sd)
+    }
+  }
+  rm(d); invisible(gc(verbose = FALSE))
+  meta
+}
+acs_meta <- partition_one(acs_file, "ACS")
+cps_meta <- partition_one(cps_file, "CPS")
+jsonlite::write_json(list(status = "SCHEMA_PASS", phase = phase,
+                          author_inputs = list(ACS = acs_meta, CPS = cps_meta),
+                          vendor_sha256 = as.list(vendor_hash),
+                          hispan_used_by_author_cleaner = !is.na(acs_meta$resolved$hispan),
+                          birthqtr_status = acs_meta$birthqtr_status,
+                          states_requested = states, generated = stamp()),
+                     file.path(outdir, "source_schema_receipt.json"),
+                     auto_unbox = TRUE, pretty = TRUE)
+
+if (phase == "inventory") {
+  jsonlite::write_json(list(status = "INVENTORY_COMPLETE", next_phase = "partition_smoke",
+                            source_schema = file.path(outdir, "source_schema_receipt.json"),
+                            no_matching_run = TRUE, generated = stamp()),
+                       file.path(outdir, "stage_receipt.json"), auto_unbox = TRUE, pretty = TRUE)
+  message("INVENTORY_COMPLETE ", outdir)
+  quit(save = "no", status = 0L)
+}
+
+req(identical(phase, "partition_smoke"), "PHASE must be inventory or partition_smoke")
+
+# Housing is attached only after matching, but the smoke also materializes the
+# narrow source fields needed by the later bridge when a packet or raw extract
+# is available. It never carries the full extract into the matched panel.
+housing_partition_receipt <- list(status = "NOT_RUN")
+if (nzchar(housing_packet)) {
+  req(file.exists(housing_packet), paste("HOUSING_PACKET absent:", housing_packet))
+  req(requireNamespace("data.table", quietly = TRUE), "data.table required for HOUSING_PACKET")
+  hp <- data.table::as.data.table(readRDS(housing_packet))
+  need <- c("YEAR", "SAMPLE", "SERIAL", "PERNUM", "STATEFIP", "ROOMS_RAW", "BEDROOMS_RAW", "OWNERSHP_RAW")
+  req(all(need %in% names(hp)), paste("housing packet missing:", paste(setdiff(need, names(hp)), collapse = ", ")))
+  for (st in states) {
+    hs <- hp[STATEFIP == st, ..need]
+    req(nrow(hs) > 0L, sprintf("housing packet state %s partition is empty", st))
+    st_dir <- file.path(partition_dir, sprintf("statefip_%02d", st))
+    saveRDS(hs, file.path(st_dir, "housing_narrow.rds"), compress = FALSE)
+  }
+  housing_partition_receipt <- list(status = "PACKET_PARTITION_COMPLETE", rows = nrow(hp),
+                                    states = states, fields = need)
+  rm(hp); invisible(gc(verbose = FALSE))
+} else {
+  housing_partition_receipt <- list(status = "PENDING_RAW_EXTRACT_STAGE",
+                                    raw_path = housing_raw,
+                                    raw_present = file.exists(housing_raw),
+                                    required_next = "read only YEAR,SAMPLE,SERIAL,PERNUM,STATEFIP,ROOMS,BEDROOMS,OWNERSHP and partition once")
+}
+partition_meta <- list(status = "PARTITION_COMPLETE", states = states,
+                       ACS_rows_by_state = vapply(states, function(st) {
+                         e <- new.env(parent = emptyenv()); load(file.path(partition_dir, sprintf("statefip_%02d", st), "acs_raw.RData"), envir = e); nrow(e$data)
+                       }, numeric(1)),
+                       CPS_rows_by_state = vapply(states, function(st) {
+                         e <- new.env(parent = emptyenv()); load(file.path(partition_dir, sprintf("statefip_%02d", st), "cps_raw.RData"), envir = e); nrow(e$data)
+                       }, numeric(1)),
+                       ACS_hispan = acs_meta$hispan_status,
+                       ACS_birthqtr = acs_meta$birthqtr_status,
+                       housing = housing_partition_receipt,
+                       next_gate = "run unchanged vendor cleaner/matcher on partition; then exact four-part housing bridge",
+                       generated = stamp())
+jsonlite::write_json(partition_meta, file.path(outdir, "partition_receipt.json"),
+                     auto_unbox = TRUE, pretty = TRUE)
+jsonlite::write_json(list(status = "PARTITION_SMOKE_READY", no_full_matching = TRUE,
+                          output = outdir, generated = stamp()),
+                     file.path(outdir, "stage_receipt.json"), auto_unbox = TRUE, pretty = TRUE)
+message("PARTITION_SMOKE_READY ", outdir)
