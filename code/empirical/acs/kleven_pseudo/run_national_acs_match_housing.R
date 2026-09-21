@@ -11,6 +11,7 @@ root <- Sys.getenv("PROJECT_ROOT", "/scratch/td2248/projects/kleven_acs_pilot_20
 source_out <- Sys.getenv("PARTITION_OUTDIR", file.path(root, "output", "national_acs_source_stage"))
 outdir <- Sys.getenv("OUTDIR", file.path(root, "output", "national_acs_match_housing"))
 phase <- Sys.getenv("PHASE", "preflight")
+resume <- identical(Sys.getenv("RESUME"), "YES")
 state_text <- Sys.getenv("STATEFIP", if (phase == "smoke") "50" else "1,2,4,5,6,8,9,10,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,44,45,46,47,48,49,50,51,53,54,55,56")
 states <- suppressWarnings(as.integer(strsplit(state_text, ",", fixed=TRUE)[[1]]))
 valid_states <- c(1L,2L,4L,5L,6L,8L,9L,10L,11L,12L,13L,15L,16L,17L,18L,19L,20L,21L,22L,23L,24L,25L,26L,27L,28L,29L,30L,31L,32L,33L,34L,35L,36L,37L,38L,39L,40L,41L,42L,44L,45L,46L,47L,48L,49L,50L,51L,53L,54L,55L,56L)
@@ -22,7 +23,7 @@ fail <- function(msg, stage="startup") {
 req <- function(ok, msg, stage="startup") if (!isTRUE(ok)) fail(msg, stage)
 req(length(states)>0L && all(is.finite(states) & states %in% valid_states), "STATEFIP contains an invalid FIPS")
 if (identical(phase, "production")) req(identical(Sys.getenv("RUN_PRODUCTION"), "YES"), "production requires RUN_PRODUCTION=YES")
-if (dir.exists(outdir) && length(list.files(outdir, all.files=TRUE, no..=TRUE))) fail("OUTDIR exists and is non-empty; refusing overwrite")
+if (dir.exists(outdir) && length(list.files(outdir, all.files=TRUE, no..=TRUE)) && !(phase == "production" && resume)) fail("OUTDIR exists and is non-empty; refusing overwrite")
 dir.create(outdir, recursive=TRUE, showWarnings=FALSE)
 vendor_dir <- Sys.getenv("VENDOR_DIR", file.path(root,"vendor"))
 req(dir.exists(vendor_dir), paste("vendor directory absent:", vendor_dir))
@@ -44,7 +45,11 @@ pr <- jsonlite::fromJSON(partition_receipt, simplifyVector=FALSE); sr <- jsonlit
 req(identical(pr$status, "PARTITION_COMPLETE"), paste("source stage status is", pr$status), "source_gate")
 req(identical(sr$status, "SCHEMA_PASS"), paste("source schema status is", sr$status), "source_gate")
 for (st in states) { sd <- file.path(source_out,"partitions",sprintf("statefip_%02d",st)); req(file.exists(file.path(sd,"acs_raw.RData")) && file.exists(file.path(sd,"cps_raw.RData")), paste("partition missing for FIPS",st), "source_gate") }
-writeLines(paste(stamp(), "PHASE", phase, "start", paste(states, collapse=",")), file.path(outdir,"progress.log"))
+if (resume && file.exists(file.path(outdir,"progress.log"))) {
+  cat(paste(stamp(), "PHASE", phase, "resume", paste(states, collapse=","), "RESUME=YES"), "\n", file=file.path(outdir,"progress.log"), append=TRUE)
+} else {
+  writeLines(paste(stamp(), "PHASE", phase, "start", paste(states, collapse=",")), file.path(outdir,"progress.log"))
+}
 logp <- function(...) { z <- paste(stamp(), ..., collapse=" "); cat(z,"\n",file=file.path(outdir,"progress.log"),append=TRUE); message(z) }
 resolve <- function(nms, want, required=TRUE) { h <- nms[tolower(nms) == tolower(want)]; if (!length(h) && !required) return(NA_character_); req(length(h)==1L, paste("field",want,"resolved",length(h),"times"), "source_adapter"); h[[1L]] }
 load_data <- function(path) { e <- new.env(parent=emptyenv()); load(path,envir=e); req("data" %in% ls(e), paste("data object absent",path),"source_adapter"); e$data }
@@ -107,6 +112,15 @@ normalize_lineage <- function(d) {
     intersect(c(paste0(stem, ".x"), paste0(stem, ".y")), names(d))), use.names = FALSE)
   if (length(stale)) d[stale] <- NULL
   d
+}
+estimator_pool_columns <- c("wgt","age_factor","doiy_factor","statefip","gender","event_time",
+                            "rooms_raw","ownershp_raw","bedrooms_raw","source_origin","from_cps",
+                            "source_year","source_sample","source_serial","source_pernum","source_hh_cluster")
+narrow_estimator_panel <- function(d) {
+  z <- normalize_lineage(d)
+  req(all(estimator_pool_columns %in% names(z)),
+      paste("estimator pooling columns absent:", paste(setdiff(estimator_pool_columns, names(z)), collapse=",")), "pool")
+  z[, estimator_pool_columns, drop=FALSE]
 }
 fn_env <- new.env(parent=globalenv()); fx <- parse(file=file.path(vendor_dir,"functions.R")); for (e in fx) if (is.call(e) && identical(e[[1L]],as.name("<-")) && is.call(e[[3L]]) && identical(e[[3L]][[1L]],as.name("function"))) eval(e,envir=fn_env)
 req(exists("apply_labels",envir=fn_env,inherits=FALSE), "vendor apply_labels missing", "vendor_adapter"); apply_labels <- get("apply_labels",envir=fn_env)
@@ -206,6 +220,7 @@ run_state <- function(st) {
   }
   panel <- run_panel(mt, cleandir, "adapter")
   panel <- normalize_lineage(panel)
+  logp("state_match_complete", st, nrow(panel))
   match_receipt <- list(status="NOT_RUN", reason="production does not duplicate the author matcher")
   if (phase == "smoke") {
     vanilla_panel <- run_panel(mt_vanilla, file.path(work,"vanilla","Data","Cleaned_Data"), "vanilla")
@@ -245,7 +260,7 @@ run_state <- function(st) {
       lhs <- suppressWarnings(as.numeric(panel[[if (pair[[1L]] == "ownershp_raw") "source_ownershp_raw" else pair[[1L]]]][observed_match])); rhs <- suppressWarnings(as.numeric(h[[pair[[2L]]]][m[observed_match]])); lhs_missing <- is.na(lhs); rhs_missing <- is.na(rhs); equal <- (lhs_missing & rhs_missing) | (!lhs_missing & !rhs_missing & lhs == rhs); mismatch <- sum(!equal); req(mismatch == 0L, paste("housing",pair[[2L]],"concordance failed"), "housing"); concordance[[pair[[2L]]]] <- list(compared=length(lhs), observed_shared=sum(!lhs_missing & !rhs_missing), lhs_missing=sum(lhs_missing), rhs_missing=sum(rhs_missing), both_missing=sum(lhs_missing & rhs_missing), lhs_only_missing=sum(lhs_missing & !rhs_missing), rhs_only_missing=sum(!lhs_missing & rhs_missing), mismatches=mismatch)
     }
     panel$rooms_raw <- NA_real_; panel$bedrooms_raw <- NA_real_; panel$ownershp_raw <- NA_real_; panel$rooms_raw[observed_match] <- h$ROOMS_RAW[m[observed_match]]; panel$bedrooms_raw[observed_match] <- h$BEDROOMS_RAW[m[observed_match]]; panel$ownershp_raw[observed_match] <- h$OWNERSHP_RAW[m[observed_match]]
-    saveRDS(panel,file.path(work,"cps_acs_pseudo-panel_housing.rds"),compress=FALSE); housing_status <- "HOUSING_BRIDGE_COMPLETE"; bridge_receipt <- list(status=housing_status, true_acs_rows=sum(true_acs), verified_overlap_rows=sum(verified_overlap), verified_overlap_eligible=sum(observed_match), verified_overlap_unmatched=verified_unmatched, overlap_missing_key=overlap_missing_key, out_of_verified_overlap=sum(out_of_overlap), non_true_acs_rows=sum(!true_acs), key_unique=TRUE, concordance=concordance, source_hhcluster=TRUE)
+    saveRDS(panel,file.path(work,"cps_acs_pseudo-panel_housing.rds"),compress=FALSE); housing_status <- "HOUSING_BRIDGE_COMPLETE"; bridge_receipt <- list(status=housing_status, true_acs_rows=sum(true_acs), verified_overlap_rows=sum(verified_overlap), verified_overlap_eligible=sum(observed_match), verified_overlap_unmatched=verified_unmatched, overlap_missing_key=overlap_missing_key, out_of_verified_overlap=sum(out_of_overlap), non_true_acs_rows=sum(!true_acs), key_unique=TRUE, concordance=concordance, source_hhcluster=TRUE); logp("state_housing_complete", st, nrow(panel))
     if (phase == "smoke") run_national_estimation(panel, file.path(work,"national_first_birth_housing"), paste0("statefip_",st))
   }
   rec <- list(status="STATE_MATCH_COMPLETE", statefip=st, panel_rows=nrow(panel), panel_columns=names(panel), source_columns=source_cols, vanilla_adapter=vanilla_receipts, matching=match_receipt, housing_status=housing_status, housing_bridge=bridge_receipt, generated=stamp()); jsonlite::write_json(rec,file.path(work,"state_receipt.json"),auto_unbox=TRUE,pretty=TRUE); rec
@@ -281,17 +296,42 @@ prepare_housing <- function() {
   jsonlite::write_json(list(status="HOUSING_PACKET_MANIFEST_COMPLETE", states=packet_states, fields=names(h)[names(h) %in% expected_packet_fields], rows=as.numeric(nrow(h)), key_unique=TRUE, packets=manifest_rows, generated=stamp()), manifest_file, auto_unbox=TRUE, pretty=TRUE)
   jsonlite::write_json(list(status="HOUSING_RAW_PARTITION_COMPLETE", rows=nrow(h), key_unique=TRUE, fields=names(h), roster_fields=need, manifest=manifest_file, generated=stamp()), file.path(outdir,"housing_partition_receipt.json"), auto_unbox=TRUE, pretty=TRUE); rm(h); invisible(gc()); TRUE
 }
+if (phase == "production") {
+  jsonlite::write_json(list(status="NATIONAL_PRODUCTION_START", phase=phase, resume=resume,
+                            states=states, source_out=source_out, source_partition=pr,
+                            source_schema=sr, vendor_sha256=as.list(vh),
+                            estimator_pool_columns=estimator_pool_columns, generated=stamp()),
+                       file.path(outdir,"production_start_receipt.json"), auto_unbox=TRUE, pretty=TRUE)
+}
 logp("gates passed; matcher adapter staged")
 if (phase %in% c("smoke","production")) prepare_housing()
 if (phase == "preflight") { jsonlite::write_json(list(status="MATCHER_PREFLIGHT_PASS", states=states, source_out=source_out, vendor_sha256=as.list(vh), no_job_submitted=TRUE, generated=stamp()), file.path(outdir,"stage_receipt.json"), auto_unbox=TRUE, pretty=TRUE); message("MATCHER_PREFLIGHT_PASS ",outdir); quit(save="no",status=0L) }
-results <- lapply(states, function(st) { logp("state_start",st); z <- run_state(st); logp("state_complete",st,z$panel_rows); z })
+results <- lapply(states, function(st) {
+  work <- file.path(outdir, sprintf("statefip_%02d", st)); sr <- file.path(work, "state_receipt.json")
+  hp <- file.path(work, "cps_acs_pseudo-panel_housing.rds")
+  if (phase == "production" && resume && file.exists(sr) && file.exists(hp)) {
+    z <- jsonlite::fromJSON(sr, simplifyVector=FALSE); req(identical(z$status, "STATE_MATCH_COMPLETE"), paste("resume receipt invalid for FIPS", st), "resume")
+    logp("state_reuse", st, z$panel_rows); return(z)
+  }
+  logp("state_start",st); z <- run_state(st); logp("state_complete",st,z$panel_rows); z
+})
 national_fit_status <- "NOT_RUN"
 if (phase == "production") {
   panel_paths <- file.path(outdir, sprintf("statefip_%02d", states), "cps_acs_pseudo-panel_housing.rds")
   req(all(file.exists(panel_paths)), "production state panels incomplete", "pool")
   logp("pool_start", length(panel_paths))
-  panels <- lapply(seq_along(panel_paths), function(i) { z <- readRDS(panel_paths[[i]]); logp("pool_state_loaded", states[[i]], nrow(z)); z })
+  panels <- lapply(seq_along(panel_paths), function(i) {
+    z <- readRDS(panel_paths[[i]])
+    narrow <- narrow_estimator_panel(z)
+    logp("pool_state_loaded", states[[i]], nrow(z), "narrow_columns", ncol(narrow))
+    rm(z); invisible(gc()); narrow
+  })
   pooled <- dplyr::bind_rows(panels)
+  pool_manifest <- list(status="NATIONAL_ESTIMATOR_POOL_COMPLETE", states=states,
+                        columns=estimator_pool_columns,
+                        per_state_rows=vapply(panels, nrow, integer(1)), pooled_rows=nrow(pooled),
+                        full_state_panels_preserved=TRUE, generated=stamp())
+  jsonlite::write_json(pool_manifest, file.path(outdir,"national_pool_manifest.json"), auto_unbox=TRUE, pretty=TRUE)
   pooled_file <- file.path(outdir, "national_cps_acs_pseudo-panel_housing.rds")
   saveRDS(pooled, pooled_file, compress=FALSE)
   logp("pool_complete", nrow(pooled), pooled_file)

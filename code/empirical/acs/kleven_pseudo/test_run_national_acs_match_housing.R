@@ -25,6 +25,9 @@ stopifnot(identical(as.numeric(cps_weight_fixture$wgt), c(7, 12)))
 
 adapter_env <- new.env(parent = globalenv())
 adapter_env$req <- function(ok, msg, stage = "test") if (!isTRUE(ok)) stop(msg, call. = FALSE)
+adapter_env$estimator_pool_columns <- c("wgt","age_factor","doiy_factor","statefip","gender","event_time",
+                                        "rooms_raw","ownershp_raw","bedrooms_raw","source_origin","from_cps",
+                                        "source_year","source_sample","source_serial","source_pernum","source_hh_cluster")
 adapter_env$resolve <- function(nms, want, required = TRUE) {
   hit <- nms[tolower(nms) == tolower(want)]
   if (!length(hit) && !required) return(NA_character_)
@@ -44,6 +47,7 @@ extract_function <- function(name) {
 coalesce_field <- extract_function("coalesce_field")
 normalize <- extract_function("normalize_lineage")
 add_lineage <- extract_function("add_lineage")
+narrow_pool <- extract_function("narrow_estimator_panel")
 
 x <- data.frame(
   src_key.x = c("11:2005:10:1", NA), src_key = c(NA, "CPS:2005:3:20:1"),
@@ -69,6 +73,26 @@ stopifnot(identical(n$source_origin, c("ACS", "CPS")),
           identical(n$source_hhcluster, c("11:2005:10", "CPS:2005:3:20")),
           !any(c("source_origin.x", "source_origin.y", "from_cps.x",
                  "source_hhcluster.x") %in% names(n)))
+
+pool_fixture <- data.frame(
+  src_key = c("11:2005:10:1", "CPS:2005:3:20:1"), source_origin = c("ACS", "CPS"),
+  source_doiy = c(2005L, 2005L), source_year = c(2005L, 2005L), source_month = c(NA, 3L),
+  source_sample = c(11L, NA), source_serial = c(10L, 20L), source_pernum = c(1L, 1L),
+  source_sex = c(2L, 2L), source_age = c(30L, 30L), source_hhcluster = c("11:2005:10", NA),
+  source_ownershp_raw = c(1L, NA), from_cps = c(0L, 1L), ownershp_raw = c(1L, NA),
+  rooms_raw = c(5, NA), bedrooms_raw = c(2, NA), wgt = c(1, 2),
+  age_factor = factor(c(25, 26)), doiy_factor = factor(c(2005, 2005)),
+  statefip = c(50L, 50L), gender = c("Women", "Women"), event_time = c(-1L, 0L),
+  author_control = c("keep_a", "keep_b"), stringsAsFactors = FALSE)
+pool_one <- narrow_pool(pool_fixture)
+pool_two <- dplyr::bind_rows(narrow_pool(pool_fixture[1, , drop = FALSE]),
+                             narrow_pool(pool_fixture[2, , drop = FALSE]))
+pool_wide_then_narrow <- narrow_pool(dplyr::bind_rows(pool_fixture, pool_fixture))
+pool_cols <- adapter_env$estimator_pool_columns
+stopifnot(identical(names(pool_one), pool_cols),
+          isTRUE(all.equal(pool_two, pool_one, check.attributes = TRUE)),
+          nrow(pool_wide_then_narrow) == 4L,
+          !"author_control" %in% names(pool_one))
 
 acs_raw <- data.frame(YEAR = 2005L, SAMPLE = 11L, SERIAL = 10L, PERNUM = 1L,
                       SEX = 2L, AGE = 30L, OWNERSHP = 1L)
