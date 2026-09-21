@@ -9,7 +9,7 @@ working-document labels below; the dated notes remain historical evidence.
 |---|---|---|
 | **JMP Draft** | [JMP_DS_draft/JMP_DS_draft.tex](JMP_DS_draft/JMP_DS_draft.tex), with its existing section files | Tommaso's manuscript. Preserve his text and in-progress edits; existing narrow appendix/table/figure permissions remain. |
 | **JMP Slides** | [september_14_presentation.tex](september_14_presentation.tex) | The existing September 14 source becomes the single continuing JMP deck. Next presentation: **October 15, 2026**. Keep using this source rather than creating another dated working deck. Its current content/PDF is still the September 14 version. |
-| **JMP Draft mock** | Existing source identity awaiting confirmation; likely [intergenerational_housing_fertility_paper_draft.tex](intergenerational_housing_fertility_paper_draft.tex) | Agent-maintained manuscript for developed exposition, equations and proposed changes. Do not create a duplicate or overwrite the candidate while its identity is unresolved. |
+| **JMP Draft mock** | Existing [JMP_DS_suggestions/](JMP_DS_suggestions/README.md) material, notably [quantitative_environment.tex](JMP_DS_suggestions/quantitative_environment.tex) | The author recalled the suggestions material on September 21. The quantitative environment is an insertable section, not yet a consolidated full mock manuscript. Develop this material into the coordinated agent-maintained mock; the older full paper draft is not the designated mock. |
 
 Coordination means common accepted mathematics, timing, variable definitions,
 model measurement and result provenance. The prose, detail and ordering may
@@ -20,14 +20,16 @@ experiments do not silently replace accepted model choices.
 For each substantive change, check all three documents and the corresponding
 code. Apply the authorized mock/slide changes together; provide the exact
 manuscript-side change for the author to integrate unless he specifically
-assigns that edit. Record unresolved differences here. The mock becomes the
-main agent-writing destination once identified; `JMP_DS_suggestions/` remains
-available for small insertable patches, not a competing fourth manuscript.
+assigns that edit. Record unresolved differences here. The suggestions material is the source for the main agent-writing mock;
+consolidation should preserve useful existing content and avoid a competing
+fourth manuscript.
 
 ### Initial coordination items
 
-- **Mock identity:** confirmation requested September 21. The candidate above
-  is an existing dirty working file and has not been modified by this setup.
+- **Mock source located:** `JMP_DS_suggestions/quantitative_environment.tex`
+  was created September 16 as an insertable environment section. The folder
+  also contains separate theory proposals. A single full mock has not yet
+  been assembled; do not describe those fragments as an already complete draft.
 - **Income at purchase:** the author objects to excluding current income from
   the acquisition/down-payment test and recalls an earlier correction. The
   September 21 check confirms that the September 14 slide and quantitative
