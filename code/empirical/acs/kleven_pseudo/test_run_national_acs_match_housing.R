@@ -94,6 +94,47 @@ stopifnot(identical(names(pool_one), pool_cols),
           nrow(pool_wide_then_narrow) == 4L,
           !"author_control" %in% names(pool_one))
 
+# Actual estimator equality on a small balanced panel: narrowing before
+# binding must reproduce the wide helper's contrasts and fit sample.
+estimator_file <- file.path(dirname(matcher_file), "estimate_national_first_birth_housing.R")
+source(estimator_file, local = TRUE)
+set.seed(20260921)
+fit_fixture <- expand.grid(statefip = c(6L, 17L, 50L), age = 25:28,
+                            year = 2005:2007, event_time = -5:10, rep = 1:2,
+                            KEEP.OUT.ATTRS = FALSE)
+fit_fixture <- fit_fixture[order(fit_fixture$statefip, fit_fixture$year,
+                                 fit_fixture$age, fit_fixture$event_time, fit_fixture$rep), ]
+fit_fixture$gender <- "Women"
+fit_fixture$age_factor <- factor(fit_fixture$age)
+fit_fixture$doiy_factor <- factor(fit_fixture$year)
+fit_fixture$wgt <- 1 + (seq_len(nrow(fit_fixture)) %% 5)
+fit_fixture$event_time <- as.integer(fit_fixture$event_time)
+fit_fixture$source_year <- fit_fixture$year
+fit_fixture$source_sample <- 200501L
+fit_fixture$source_serial <- seq_len(nrow(fit_fixture))
+fit_fixture$source_pernum <- 1L
+fit_fixture$source_month <- NA_integer_
+fit_fixture$source_origin <- "ACS"
+fit_fixture$from_cps <- 0L
+fit_fixture$source_doiy <- fit_fixture$year
+fit_fixture$source_sex <- 2L
+fit_fixture$source_age <- fit_fixture$age
+fit_fixture$source_hhcluster <- paste(fit_fixture$source_sample,
+                                      fit_fixture$source_year,
+                                      fit_fixture$source_serial, sep = ":")
+fit_fixture$src_key <- paste(fit_fixture$source_sample, fit_fixture$source_year,
+                             fit_fixture$source_serial, fit_fixture$source_pernum, sep = ":")
+fit_fixture$source_ownershp_raw <- 1L
+fit_fixture$rooms_raw <- pmax(1, pmin(30, 6 + (fit_fixture$event_time >= 0)))
+fit_fixture$ownershp_raw <- ifelse(fit_fixture$event_time >= 0 & fit_fixture$statefip == 50L, 1L, 2L)
+fit_fixture$bedrooms_raw <- ifelse(fit_fixture$event_time >= 0, 5L, 4L)
+wide_fit <- estimate_national_first_birth_housing(
+  fit_fixture, source_origin_col = "source_origin", from_cps_col = "from_cps")
+narrow_fit <- estimate_national_first_birth_housing(
+  narrow_pool(fit_fixture), source_origin_col = "source_origin", from_cps_col = "from_cps")
+stopifnot(isTRUE(all.equal(wide_fit$contrasts, narrow_fit$contrasts, tolerance = 1e-10)),
+          isTRUE(all.equal(wide_fit$fit_status, narrow_fit$fit_status, tolerance = 1e-10)))
+
 acs_raw <- data.frame(YEAR = 2005L, SAMPLE = 11L, SERIAL = 10L, PERNUM = 1L,
                       SEX = 2L, AGE = 30L, OWNERSHP = 1L)
 acs_lineage <- add_lineage(acs_raw, "ACS")
