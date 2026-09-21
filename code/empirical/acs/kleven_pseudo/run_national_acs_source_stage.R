@@ -24,10 +24,15 @@ stamp0 <- stamp()
 phase <- Sys.getenv("PHASE", "inventory")
 root <- Sys.getenv("PROJECT_ROOT", "/scratch/td2248/projects/kleven_acs_pilot_20260917")
 outdir <- Sys.getenv("OUTDIR", file.path(root, "output", "national_acs_source_stage"))
-state_text <- Sys.getenv("STATEFIP", "50")
+valid_state_fips <- c(1L, 2L, 4L, 5L, 6L, 8L, 9L, 10L, 11L, 12L, 13L,
+                      15L, 16L, 17L, 18L, 19L, 20L, 21L, 22L, 23L, 24L,
+                      25L, 26L, 27L, 28L, 29L, 30L, 31L, 32L, 33L, 34L,
+                      35L, 36L, 37L, 38L, 39L, 40L, 41L, 42L, 44L, 45L,
+                      46L, 47L, 48L, 49L, 50L, 51L, 53L, 54L, 55L, 56L)
+state_text <- Sys.getenv("STATEFIP", paste(valid_state_fips, collapse = ","))
 states <- suppressWarnings(as.integer(strsplit(state_text, ",", fixed = TRUE)[[1]]))
-req(length(states) > 0L && all(is.finite(states) & states >= 1L & states <= 56L),
-    "STATEFIP must be a comma-separated list of valid states")
+req(length(states) > 0L && all(is.finite(states) & states %in% valid_state_fips),
+    "STATEFIP must be an explicit comma-separated list of valid state FIPS including DC=11")
 if (dir.exists(outdir) && length(list.files(outdir, all.files = TRUE, no.. = TRUE)))
   fail("OUTDIR exists and is non-empty; refusing overwrite", "startup")
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
@@ -102,26 +107,37 @@ source_inventory <- function(d, label, need_housing = FALSE) {
 message("PHASE ", phase, " start ", stamp())
 partition_dir <- file.path(outdir, "partitions")
 if (phase == "partition_smoke") dir.create(partition_dir, recursive = TRUE, showWarnings = FALSE)
+progress_file <- file.path(outdir, "progress.log")
+checkpoint <- function(...) {
+  line <- paste(stamp(), paste(..., collapse = " "))
+  cat(line, "\n", file = progress_file, append = TRUE)
+  message(line)
+}
 partition_one <- function(path, label) {
   d <- load_object(path, label)
   meta <- source_inventory(d, label, need_housing = FALSE)
+  partition_rows <- setNames(integer(length(states)), as.character(states))
   if (phase == "partition_smoke") {
     s <- suppressWarnings(as.integer(d[[meta$resolved$statefip]]))
     for (st in states) {
-      sd <- d[s == st, , drop = FALSE]
+      sd <- d[!is.na(s) & s == st, , drop = FALSE]
       req(nrow(sd) > 0L, sprintf("%s state %s partition is empty", label, st))
+      partition_rows[as.character(st)] <- nrow(sd)
       st_dir <- file.path(partition_dir, sprintf("statefip_%02d", st))
       dir.create(st_dir, recursive = TRUE, showWarnings = FALSE)
       data <- sd
       save(data, file = file.path(st_dir, paste0(tolower(label), "_raw.RData")), compress = FALSE)
       rm(data, sd)
+      checkpoint("state_complete", label, st, partition_rows[as.character(st)])
     }
   }
   rm(d); invisible(gc(verbose = FALSE))
+  meta$partition_rows <- partition_rows
   meta
 }
 acs_meta <- partition_one(acs_file, "ACS")
 cps_meta <- partition_one(cps_file, "CPS")
+req(!is.na(acs_meta$resolved$sample), "ACS raw source lacks SAMPLE; national bridge cannot be keyed safely")
 jsonlite::write_json(list(status = "SCHEMA_PASS", phase = phase,
                           author_inputs = list(ACS = acs_meta, CPS = cps_meta),
                           vendor_sha256 = as.list(vendor_hash),
@@ -168,12 +184,8 @@ if (nzchar(housing_packet)) {
                                     required_next = "read only YEAR,SAMPLE,SERIAL,PERNUM,STATEFIP,ROOMS,BEDROOMS,OWNERSHP and partition once")
 }
 partition_meta <- list(status = "PARTITION_COMPLETE", states = states,
-                       ACS_rows_by_state = vapply(states, function(st) {
-                         e <- new.env(parent = emptyenv()); load(file.path(partition_dir, sprintf("statefip_%02d", st), "acs_raw.RData"), envir = e); nrow(e$data)
-                       }, numeric(1)),
-                       CPS_rows_by_state = vapply(states, function(st) {
-                         e <- new.env(parent = emptyenv()); load(file.path(partition_dir, sprintf("statefip_%02d", st), "cps_raw.RData"), envir = e); nrow(e$data)
-                       }, numeric(1)),
+                       ACS_rows_by_state = acs_meta$partition_rows,
+                       CPS_rows_by_state = cps_meta$partition_rows,
                        ACS_hispan = acs_meta$hispan_status,
                        ACS_birthqtr = acs_meta$birthqtr_status,
                        housing = housing_partition_receipt,
