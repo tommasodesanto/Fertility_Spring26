@@ -40,7 +40,7 @@ recorded; exact measurement and implementation choices remain open.
 | ID | Exact question | Lead recommendation | Evidence / next check | Status |
 |---|---|---|---|---|
 | E1 | Which earnings components are present? | Age profile + persistent AR(1) + iid transitory shock; no permanent household type in proposed baseline. | Explain state/information implications and disclose long-lag covariance misfit; obtain explicit specification choice. | ACTIVE; diagnostic candidate exists, not adopted |
-| E2 | Whose earnings, gross or disposable, which sample and taxes? | Gross head-plus-spouse labor earnings with explicit model tax treatment. | Verify PSID builder, ages/sample, deterministic age profile, units and consistent wealth/earnings denominator. | OPEN |
+| E2 | Preserve the established PSID earnings source and check its implementation | Retain PSID gross reference-person-plus-spouse labor earnings and explicit model tax treatment; do not reopen source selection without a concrete discrepancy. | July 27 empirical packet is already the candidate source. Verify units, age profile and tax application as implementation checks, not a new source decision. | MAINTAINED; source-choice clarification September 21 |
 | E3 | What income does a four-year model period represent? | Test the period-average proxy; do not substitute annual shock parameters directly. | Verify aggregation and level covariance matching, plus conditional distribution/choice errors. Decide measurement-error treatment jointly with E4. | OPEN |
 | E4 | How are persistence and shock variances disciplined? | External estimation under E1/E2, with a sourced measurement-error assumption or labeled sensitivity. | Document estimators, moments and uncertainty; show long-lag residuals. Do not choose variances to repair housing fit. | OPEN |
 | E5 | How many income states are adequate? | Choose after a controlled approximation check, not by fixing 15 states in advance. | Compare resolution while holding entrant composition fixed; existing 15/27/45 comparison changes entry too. | OPEN; previous diagnostic is not a clean grid test |
@@ -122,6 +122,21 @@ COMPLETE using verified saved runs. E1 adoption remains OPEN. No duplicate
 calibration launched; no floor removed or parameter altered. Remaining distinct
 questions are the housing-floor rationale and affordability under better-resolved
 income risk, period approximation, entry mapping, and credible joint fit.
+
+### E2 clarification — September 21
+
+The author recalls that the earnings source was settled earlier and objects to
+reopening it. The July 27 PSID earnings-decomposition packet and current
+`earnings_candidate/candidate.json` agree on combined reference-person/spouse
+gross labor earnings. Retain that source. The prior E2 wording incorrectly
+presented source selection as a fresh open decision; no newly discovered source
+error supports doing so. Income-period aggregation and numerical resolution
+remain E3/E5 implementation checks. Do not imply that the existing persistent
+AR(1) annual-to-period transformation was itself shown wrong: the new iid
+component and period-average interpretation require separate assessment.
+
+Source: `code/data/psid_followup_mar2026/output/psid_income_fixed_effect_md_20260727/README.md`;
+`output/model/native_financing_diagnostic_20260919/earnings_candidate/candidate.json`.
 
 ### Tracking procedure for this discussion
 
