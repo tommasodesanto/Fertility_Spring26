@@ -50,9 +50,12 @@ stage_author_script() {
   local script="$1"
   local variant="${2:-}"
   local sentinel="$3"
-  local temp_do
-  temp_do="$(mktemp "${TMPDIR:-/tmp}/psid_author_XXXXXX.do")"
-  python3 - "$script" "$temp_do" "$AUTHOR_SOURCE" "$SOURCE" "$AUTHOR_OUTPUT" "$OUTROOT" "$PROJECT_DIR" "$STATA_PLUS" <<'PY'
+  local stem
+  stem="$(basename "$script" .do)"
+  local suffix="${variant:-default}"
+  local generated_do="$OUTROOT/generated_${stem}_${suffix}.do"
+  local batch_log="$OUTROOT/batch_${stem}_${suffix}.log"
+  python3 - "$script" "$generated_do" "$AUTHOR_SOURCE" "$SOURCE" "$AUTHOR_OUTPUT" "$OUTROOT" "$PROJECT_DIR" "$STATA_PLUS" <<'PY'
 from pathlib import Path
 import sys
 src, dst, old_source, new_source, old_output, new_output, project_dir, stata_plus = sys.argv[1:]
@@ -84,6 +87,14 @@ startup_anchor = "clear all\n"
 if text.count(startup_anchor) != 1:
     raise SystemExit(f"expected exactly one clear-all startup anchor in {name}")
 text = text.replace(startup_anchor, startup_anchor + f'sysdir set PLUS "{stata_plus}"\nmata: mata mlib index\n', 1)
+# The author template requests eight processors before opening its log.  Keep
+# that template untouched, but cap only the staged copy to one processor so a
+# small allocation or license cannot fail before any diagnostic is written.
+processor_lines = [line for line in text.splitlines() if line.strip().startswith("set processors ")]
+if len(processor_lines) > 1:
+    raise SystemExit(f"multiple processor settings in {name}")
+if processor_lines:
+    text = text.replace(processor_lines[0], "set processors 1", 1)
 if name == "sa_replication_own_only.do":
     hook = '''
 
@@ -174,11 +185,20 @@ file close _psid_complete
 Path(dst).write_text(text)
 PY
   if [[ -n "$variant" ]]; then
-    "$STATA_BIN" -b do "$temp_do" "$variant"
+    set +e
+    "$STATA_BIN" -b do "$generated_do" "$variant" >"$batch_log" 2>&1
+    stata_rc=$?
+    set -e
   else
-    "$STATA_BIN" -b do "$temp_do"
+    set +e
+    "$STATA_BIN" -b do "$generated_do" >"$batch_log" 2>&1
+    stata_rc=$?
+    set -e
   fi
-  rm -f "$temp_do"
+  if [[ "$stata_rc" -ne 0 ]]; then
+    cat "$batch_log" >&2
+    return "$stata_rc"
+  fi
   [[ -f "$3" ]] || { echo "Expected completion sentinel missing: $3" >&2; return 75; }
   case "$(basename "$script")" in
     sa_rooms_first_birth_household_aligned_v1.do) marker="$OUTROOT/sa_rooms_first_birth_household_aligned_v1/STATA_COMPLETE" ;;

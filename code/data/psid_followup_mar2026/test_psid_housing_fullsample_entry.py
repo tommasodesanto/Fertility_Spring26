@@ -94,6 +94,9 @@ def test_actual_launcher_generator_runs_for_all_author_templates():
         assert new_output in text
         assert text.count("mata: mata mlib index") == 1
         assert "clear all\nsysdir set PLUS" in text
+        if name == "sa_rooms_first_birth_household_aligned_v1.do":
+            assert "set processors 1" in text
+            assert "set processors 8" not in text
 
 
 if __name__ == "__main__":
