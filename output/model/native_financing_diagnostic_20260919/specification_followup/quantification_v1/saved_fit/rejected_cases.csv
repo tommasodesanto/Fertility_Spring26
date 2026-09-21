@@ -1,0 +1,100 @@
+case,status,seed_label,direction,scale,objective,reason
+7,numerical_failure,prior_case_1,0,near,,"adapter failed (1): 8/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/code/model/tools/run_e5f_income_candidate_search.py"", line 426, in main
+    result = run_scored_pilot(plan, args.output, parameters=params, initial_psi=args.initial_psi,
+                              repetitions=args.repetitions, case_id=args.case_id)
+  File ""/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/code/model/tools/run_e5f_income_candidate_calibration.py"", line 234, in run_scored_pilot
+    wrapper.run(str(out / ""run_contract.json""), sha(out / ""run_contract.json""), out / ""evaluation"")
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/run_scored_candidate.py"", line 227, in run
+    run_child([sys.executable,str(root/DRIVER),'--contract',str(files['initial_solve_contract']),
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        '--contract-sha256',c['initial_solve_contract']['sha256'],'--case','new_balanced',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        '--output',str(out/'raw')],cwd=root,env=env,log=out/'initial_solve.log',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        seconds=min(initial['seconds'],remaining()))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/code/model/tools/run_e5f_income_candidate_calibration.py"", line 231, in child
+    return original_child(command, **kwargs)
+  File ""/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/run_scored_candidate.py"", line 142, in run_child
+    require(code==0,f'Child failed with exit {code}; see {log}')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/run_scored_candidate.py"", line 37, in require
+    raise ValueError(message)
+ValueError: Child failed with exit 1; see /scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/production/cases/case_007/evaluation/initial_solve.log
+"
+3,numerical_failure,prior_case_10,0,near,,"adapter failed (1): 8/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/code/model/tools/run_e5f_income_candidate_search.py"", line 426, in main
+    result = run_scored_pilot(plan, args.output, parameters=params, initial_psi=args.initial_psi,
+                              repetitions=args.repetitions, case_id=args.case_id)
+  File ""/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/code/model/tools/run_e5f_income_candidate_calibration.py"", line 234, in run_scored_pilot
+    wrapper.run(str(out / ""run_contract.json""), sha(out / ""run_contract.json""), out / ""evaluation"")
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/run_scored_candidate.py"", line 227, in run
+    run_child([sys.executable,str(root/DRIVER),'--contract',str(files['initial_solve_contract']),
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        '--contract-sha256',c['initial_solve_contract']['sha256'],'--case','new_balanced',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        '--output',str(out/'raw')],cwd=root,env=env,log=out/'initial_solve.log',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        seconds=min(initial['seconds'],remaining()))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/code/model/tools/run_e5f_income_candidate_calibration.py"", line 231, in child
+    return original_child(command, **kwargs)
+  File ""/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/run_scored_candidate.py"", line 142, in run_child
+    require(code==0,f'Child failed with exit {code}; see {log}')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/run_scored_candidate.py"", line 37, in require
+    raise ValueError(message)
+ValueError: Child failed with exit 1; see /scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/production/cases/case_003/evaluation/initial_solve.log
+"
+1,numerical_failure,prior_case_3,0,near,,"adapter failed (1): 8/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/code/model/tools/run_e5f_income_candidate_search.py"", line 426, in main
+    result = run_scored_pilot(plan, args.output, parameters=params, initial_psi=args.initial_psi,
+                              repetitions=args.repetitions, case_id=args.case_id)
+  File ""/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/code/model/tools/run_e5f_income_candidate_calibration.py"", line 234, in run_scored_pilot
+    wrapper.run(str(out / ""run_contract.json""), sha(out / ""run_contract.json""), out / ""evaluation"")
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/run_scored_candidate.py"", line 227, in run
+    run_child([sys.executable,str(root/DRIVER),'--contract',str(files['initial_solve_contract']),
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        '--contract-sha256',c['initial_solve_contract']['sha256'],'--case','new_balanced',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        '--output',str(out/'raw')],cwd=root,env=env,log=out/'initial_solve.log',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        seconds=min(initial['seconds'],remaining()))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/code/model/tools/run_e5f_income_candidate_calibration.py"", line 231, in child
+    return original_child(command, **kwargs)
+  File ""/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/run_scored_candidate.py"", line 142, in run_child
+    require(code==0,f'Child failed with exit {code}; see {log}')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/run_scored_candidate.py"", line 37, in require
+    raise ValueError(message)
+ValueError: Child failed with exit 1; see /scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/production/cases/case_001/evaluation/initial_solve.log
+"
+24,numerical_failure,prior_case_10,2,wide,,candidate exceeded 900s
+30,numerical_failure,originalseed,3,wide,,candidate exceeded 900s
+45,numerical_failure,prior_case_5,4,wide,,"adapter failed (1): 8/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/code/model/tools/run_e5f_income_candidate_search.py"", line 426, in main
+    result = run_scored_pilot(plan, args.output, parameters=params, initial_psi=args.initial_psi,
+                              repetitions=args.repetitions, case_id=args.case_id)
+  File ""/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/code/model/tools/run_e5f_income_candidate_calibration.py"", line 234, in run_scored_pilot
+    wrapper.run(str(out / ""run_contract.json""), sha(out / ""run_contract.json""), out / ""evaluation"")
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/run_scored_candidate.py"", line 227, in run
+    run_child([sys.executable,str(root/DRIVER),'--contract',str(files['initial_solve_contract']),
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        '--contract-sha256',c['initial_solve_contract']['sha256'],'--case','new_balanced',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        '--output',str(out/'raw')],cwd=root,env=env,log=out/'initial_solve.log',
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        seconds=min(initial['seconds'],remaining()))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/code/model/tools/run_e5f_income_candidate_calibration.py"", line 231, in child
+    return original_child(command, **kwargs)
+  File ""/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/run_scored_candidate.py"", line 142, in run_child
+    require(code==0,f'Child failed with exit {code}; see {log}')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""/scratch/td2248/projects/Fertility_Spring26_candidate_path_20260911a/batches/final_night_20260913/corrected_initial_template_v6/inputs/run_scored_candidate.py"", line 37, in require
+    raise ValueError(message)
+ValueError: Child failed with exit 1; see /scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/income_overnight_v1/production/cases/case_045/evaluation/initial_solve.log
+"
+64,numerical_failure,prior_case_5,6,wide,,candidate exceeded 900s

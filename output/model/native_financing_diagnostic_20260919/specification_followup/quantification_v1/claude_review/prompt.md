@@ -1,0 +1,17 @@
+Continue our earlier model-specification review, incorporating your corrections. The author explicitly authorizes further Claude Max discussion and overnight experiments. His latest instruction is decisive: FIRST settle quantification, specification choices and a credible calibration; do not keep presenting policy responses from underfitting checkpoints as the answer. A hard tenure/size restriction is understood to be a proxy; literal large-rental support alone cannot adjudicate its economic purpose. Do not engineer a positive effect, but do not mistake fixed-parameter diagnostics for a refitted specification comparison.
+
+Bounded read-only review, 20 minutes and at most 40 turns. No edits, commands, agents, model jobs, or broad archive searches. Read bounded startup portions (memory/AGENT_MEMORY.md top100, memory/daily/2026-09-20.md, CALIBRATION_STATUS.md top260). Then read:
+- output/model/native_financing_diagnostic_20260919/specification_followup/decision_packet.md
+- output/model/native_financing_diagnostic_20260919/overnight/final_search/readout.md
+- docs/model/structural_model_specification_fable_20260920.md (your prior critique plus corrections)
+- output/model/native_financing_diagnostic_20260919/specification_followup/income_aggregation_v1/moment_matched_period_proxy.md
+- output/model/native_financing_diagnostic_20260919/specification_followup/housing_profiles_v1/reproducible_overlay_v1/overlay_receipt.md
+Follow direct code/source pointers only when necessary for an actual disputed equation; label unverified assertions. Use primary literature only if needed. Avoid spending the review repeating policy effects.
+
+Deliver a concrete decision memo, <=1800 words, with:
+1. A proposed MINIMAL baseline specification and a decision table: keep/fix now/test/defer, economic reason, identifying evidence, adoption status. Cover earnings measurement and period mapping/grid/entry, tenure/space proxy and ownership preference, fertility choice timing and taste dispersion, child goods/time/space costs and children-at-home law, liquid wealth/mortgages, bequests, geography/normalization.
+2. Which unresolved decisions actually prevent a defensible calibration and which can be explicitly fixed provisionally. Distinguish empirical quantities to estimate from structural parameters to fit and numerical approximations to validate. Identify compensation/confounding among parameters. Counts of moments do not establish identification.
+3. At most TWO next numerical experiments aimed at model selection/fit, each with exact held-fixed objects, reestimated parameters, complete retained target system, useful outcome and interpretation/stop rule. Include whether the already completed 96-proposal search can answer the question before requesting new solves. Prefer tractable experiments in the existing architecture; no policy battery or wholesale model rewrite.
+4. What can actually be recommended tomorrow if no cluster access is available tonight, versus what requires a real joint refit. Current Torch SSH authentication is unavailable; do not assume jobs run.
+
+The lead retains economics/identification judgment and independently reviews your recommendation. Do not propose arbitrary target deletion/reweighting, enlarged bounds, added free parameters without identifying evidence, or relaxed numerical gates. A finite search cannot prove an unreachable target. The author needs a clear baseline proposal and a calibration path, not an expanding list of caveats or a claimed negative paper result.

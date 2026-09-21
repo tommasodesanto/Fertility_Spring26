@@ -1,5 +1,53 @@
 # Calibration Status
 
+**September 20, 23:28 EDT — quantification/fit panel submitted on Torch:**
+Smoke **18153070** and dependent production **18153071** are submitted. The
+production stage starts only after successful smoke and is cancelled if that
+dependency fails; no laptop chaining is required. This is a controlled local
+calibration diagnosis around verified case 60, not another policy battery.
+There are 24 probes in all nine existing structural coordinates, two exact
+anchor evaluations and two final selected repetitions: at most **28 full
+objective evaluations / 224 nested stationary solves**. All target definitions,
+weights, bounds, economic source and numerical gates remain unchanged.
+Three unit checks and an independent full mocked loop passed; the real native
+smoke remains pending. One-hour smoke and three-hour production allocations,
+900-second case limits and a hard 07:30 EDT cutoff apply.
+[Submission](output/model/native_financing_diagnostic_20260919/specification_followup/quantification_v1/sensitivity/submission.json)
+and [design](output/model/native_financing_diagnostic_20260919/specification_followup/quantification_v1/sensitivity/DESIGN.md).
+
+Claude Max's second review is complete and centrally assessed; additional family
+ownership preferences and claims that the architecture cannot fit were not
+accepted. The saved 96-case audit verifies all 89 valid full fits, 1,157 target
+rows and 1,513 parameter rows. The [working recommendation](output/model/native_financing_diagnostic_20260919/specification_followup/quantification_v1/morning_view.md)
+separates retained model choices, external earnings measurement, approximation
+checks and target-population/observer decisions. No new baseline is adopted.
+Morning follow-up **quantification-morning-review** is active; local collection
+requires the laptop/app to be available, whereas submitted jobs run remotely.
+
+
+**September 20 evening — Torch access restored; controlled fit panel in preparation:**
+The author refreshed Torch login and the standard SSH/queue probe now succeeds.
+The proposed computation is a 28-evaluation finite-difference panel around the
+verified selected new-income fit, with all nine coordinates, inward bound
+perturbations and selected half-step checks. It preserves the complete target
+system and re-solves equilibrium/normalization at each point. This tests local
+calibration trade-offs, not policy responses or a new adopted specification.
+[Design and gates](output/model/native_financing_diagnostic_20260919/specification_followup/quantification_v1/sensitivity/DESIGN.md).
+Implementation, exact-loop smoke and job submission remain pending.
+
+
+**September 20, 23:05 EDT — quantification-first overnight follow-up authorized:**
+Tommaso renewed overnight research authorization and clarified that specification
+choices and credible calibration come before further policy interpretation.
+A bounded Claude Max review and Luna extraction of the existing 96-case full
+fit history are underway; a second Luna pass scopes reusable calibration code.
+The [new work plan](output/model/native_financing_diagnostic_20260919/specification_followup/quantification_v1/README.md)
+owns the budget, stop rules and morning deliverable. Torch currently rejects
+SSH authentication, so **no new model job is submitted**. The author has been
+asked to refresh the usual login; local review continues. Earlier diagnostics
+remain conditional evidence, and no specification or target has been adopted.
+
+
 **September 20, 14:23 EDT — specification diagnostic follow-up reviewed and complete:**
 All six exhaustive rental-cost cases passed; smoke **18080796** and production
 **18080797** completed in 4:50 and 12:04. Both zero-cost controls reproduce,

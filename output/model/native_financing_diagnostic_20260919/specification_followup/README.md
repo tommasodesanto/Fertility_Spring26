@@ -1,5 +1,12 @@
 # Specification follow-up: September 20–21
 
+## Renewed quantification-first work — September 20 evening
+
+The author renewed overnight authorization with specification and calibration
+as the priority. Follow [quantification_v1/README.md](quantification_v1/README.md)
+for current work, access status and the morning deliverable. The completed
+diagnostic batch below is historical evidence, not the new task’s outcome.
+
 ## Final reviewed outcome — September 20
 
 The bounded follow-up is complete. All authorized batches are terminal; there

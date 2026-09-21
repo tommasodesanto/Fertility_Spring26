@@ -1,0 +1,98 @@
+{
+  "actual_bounds": {
+    "H0": [
+      0.2,
+      80.0
+    ],
+    "beta_annual": [
+      0.94,
+      0.99
+    ],
+    "chi": [
+      0.1,
+      5.0
+    ],
+    "first_birth_fixed_cost": [
+      0.0,
+      8.0
+    ],
+    "h_P": [
+      0.1,
+      2.3
+    ],
+    "kappa_fert": [
+      0.02,
+      50.0
+    ],
+    "kappa_fert_continuation": [
+      0.02,
+      50.0
+    ],
+    "theta0": [
+      0.0,
+      8.0
+    ],
+    "theta1": [
+      0.02,
+      16.0
+    ]
+  },
+  "block_assignment": {
+    "Annual bequests / aggregate wealth": "wealth",
+    "Childless women, ages 40\u201344": "fertility",
+    "Exactly one child among mothers, ages 40\u201344": "fertility",
+    "First births at age 30+": "fertility",
+    "First-birth room response, \u22121 to +3": "housing",
+    "Mean occupied rooms, capped at 9": "housing",
+    "Old wealth/income p90 / median, ages 76\u201384": "wealth",
+    "Ownership, heads 30\u201355": "ownership",
+    "Period mean first-birth age": "fertility",
+    "Recent-parent ownership gap": "ownership",
+    "Rooms: 3+ versus 1\u20132 resident children (model dependent proxy)": "housing",
+    "Wealth / annual gross labor earnings": "wealth"
+  },
+  "case_counts": {
+    "rejected": 7,
+    "total": 96,
+    "valid": 89
+  },
+  "incumbent_case": 3,
+  "incumbent_loss": 502.74561411262744,
+  "inputs": {
+    "output/model/native_financing_diagnostic_20260919/income_search_18047156/receipt.json": "31ee9156a51c40d5213ec4b5042339b0976baef34ddb4c7557ce1db3ccccf67b",
+    "output/model/native_financing_diagnostic_20260919/income_search_18047156/selected_target_fit.csv": "0f14fddd2dbacb0c28bbd64e8a7c8ace63177255b2cc7605e4061edf1a246d96",
+    "output/model/native_financing_diagnostic_20260919/overnight/final_search/cases.json": "b90ad9c6933021383a0489fd6b238469a9dccf09f8b3eb4c1f8df56d392e036d",
+    "output/model/native_financing_diagnostic_20260919/overnight/final_search/receipt.json": "a6bcd55967143de40f04327925592ac89a5ee9c011b2deeead5c6f306effe179",
+    "output/model/native_financing_diagnostic_20260919/overnight/final_search/summary.json": "588a740fc9f4c3ed04e2d944d311ec2cdfe5da14828a4ca3e69b395259eff190",
+    "output/model/native_financing_diagnostic_20260919/overnight/plan.remote.json": "6f3665488e63db302c14ae810dc5c68f44d403ee85b6dfd6b48cb88fa1334ccd"
+  },
+  "near_bound_rule": "min(estimate-lower, upper-estimate) <= 0.01*(upper-lower)",
+  "output_sha256": {
+    "README.md": "bfccf7093f2377a15c68ef999db2401ebfb045bac4fa08e0321e8bf5d6a242b0",
+    "all_valid_parameters.csv": "d93d496ac2fb2ab618e1785c1ac1611aa2348140abc3ae2940b0a9bf6de8a1f9",
+    "all_valid_target_fit.csv": "ae3b82c91c63020fb5dc055aa1a211f1877241cfb486e1c0ae8246981ff3c8e4",
+    "observed_room_ownership_frontier.csv": "96e5459d6f1551e43bdd2488c8d1fedf48237a62328c85b3429a125e35e3b6c6",
+    "ranked_fit_tradeoffs.csv": "cc8b9fe6d41eac84b736f1724368ebc5e9e39c0d11312826d2074c03b6880c46",
+    "rejected_cases.csv": "67fcaf3fda4fe58ee2a2674facd8894921c805e9f91b39c18794766065c5c3d6",
+    "saved_fit_tradeoffs.png": "e6641f01bee3fa5bbec57b0732ebb2649e9e094e86362a20c9a05bc2305da860",
+    "selected_case60_reproduction.json": "d8f1b16605b27b6483da6f81b8dd55cbe52ca33bdc9e2036bcbb7f751e613c41"
+  },
+  "recomputed_total_loss_max_abs_error": 4.547473508864641e-13,
+  "schema": "e5f_saved_income_fit_tradeoffs_v1",
+  "script_sha256": "ac4056b0e6edd33187acc506b79808ffdaf97008d6be64fb1cb1da44a6b6bf92",
+  "selected_case": 60,
+  "source_fingerprints": {
+    "economic_source_manifest_7e872053": "612ea34da2f462cb50dcf6881dd3005d8495f827c833525436b150500ebf11cf",
+    "fertility_provenance_file_sha256": "940735a0f1a635d031cf0323b1822d44f891afe62f5ae3e993eeeef99b8ef41b",
+    "housing_wealth_provenance_file_sha256": "ccadd2285a3ab7f71f6f1c2722cba64e8e94a2f987ca8f289a58ec1ee84efceb",
+    "lead_decision_file_sha256": "b1d399c290d257e56e008afb6d7b76ac1f69191685c8d9e89a4b0bfb06533c9a",
+    "observation_snapshot_manifest_70abd4a8": "76406fcc10206d9e30bcc29d4e18accdf7fffdd9219e50e6e11c1c3360f01336",
+    "parameter_table_file_sha256": "c8d813e7cb749521e0e3520c48af9d5baf367e02fa161288dcc735e76d96d592",
+    "scorer_file_sha256": "a76ece9d0b38de4ff60ea259884306554ea62a42ed88faaad6b35a3375ebbfb3",
+    "target_fit_file_sha256": "d51be4a035dd2ee6165d769bd260e1397bf1e623e438113d3567d39569b49356",
+    "working_weights_file_sha256": "6289f69e512fff09fef0df358e2231050b978aa3e9fe1a9808bb96dd8c733c5a"
+  },
+  "source_fingerprints_sha256": "00552bbbecb2e3ce018cc2c8d50f3f7d780ca4eb81d0362db9e5843a3f614af1",
+  "status": "verified",
+  "target_signature_sha256": "b22cb5d32368abb79b3ac167bc73af89b1b9ad6e7286039d67f18e85b881a15d"
+}
