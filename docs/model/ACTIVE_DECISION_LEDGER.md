@@ -42,6 +42,52 @@ where useful; lead resolves economics. Reuse completed literature and diagnostic
 Preserve the September 14 reference. Existing searches are diagnostic evidence,
 not proof that these final choices have already been implemented or calibrated.
 
+### Earnings and wealth: pre-calibration specification sheet
+
+Purpose: expose changes that would invalidate a joint refit before launching it.
+This is a recommendation/checklist, not an adopted source or completed code change.
+Use one frozen specification; new tastes, tax schedules or debt states are not
+routine implementation choices. No tests or model runs were launched for this inventory.
+
+| Object | Proposed treatment | Must be closed before joint refit |
+|---|---|---|
+| Earnings risk | Literature-first age profile + AR(1) + iid without permanent type; Sommer is the proposed main reference. | Record income concept, annual parameters, measurement-error interpretation, and wage-to-exogenous-household-earnings departure. Own PSID remains validation evidence by default. |
+| Period resources | Define four-year gross earnings and the map to spendable resources, with consistent flow versus stock units. | Pin process aggregation, mean normalization, tax application, annual return/discount conversion and timing of housing/consumption. Current income can finance purchase: author-agreed direction. |
+| Entry | Pin the joint distribution of initial wealth and earnings at the model entry age, including how persistent and iid shocks relate to wealth. | Existing code multiplies empirical wealth/income ratios by entry-state annual gross income. Changing the income grid/process can therefore change entrants' wealth; explicitly choose what stays fixed. Do not automatically interpret a transitory high-income draw as greater inherited wealth. |
+| Lifecycle earnings and retirement | Document age profile, retirement age and existing pension financing; propose retaining existing pension institution for the baseline. | Replacement earnings must enter the payroll/pension balance consistently. Decide how earnings risk ends at retirement, instead of importing another paper's pension rule inadvertently. Trace entry/young-age profile rather than extrapolating silently. |
+| Wealth and debt | Propose retaining existing financial-asset and housing-equity representation; implement author-approved current-income financing within it. | Reconcile liquid assets, net financial assets, mortgage debt and housing equity, interest/repayment timing and any borrowing limit. Write the accumulation identity: purchase income must not also appear as unspent next-period wealth. Full amortizing mortgage states would be an explicit extension, not a small parameter edit. |
+| Bequests and initial resources | Propose retaining existing bequest preference and estate convention as maintained assumptions. | Distinguish utility from leaving an estate, estate receipts and externally initialized entrant wealth; do not claim a parent-child transfer mechanism without an actual receiver rule. Document whether estate receipts enter the entry distribution. |
+| Child costs and low-income feasibility | Retain current cost/floor structure provisionally while closing housing choices. | State the resident-child space requirement and absence of a consumption subsistence floor. No automatic minimum-income transfer, risk compression or relaxed feasibility gate to make the new process solve. A failure must be diagnosed. |
+| Wealth targets and identification | Pin the complete empirical target/weight/parameter contract before recalibration. | Match wealth components, gross/net and annual/period income, ages, family sample, population/geography, observation timing, and mean-of-ratios versus ratio-of-means. State which moments discipline saving/bequest parameters. Keep wealth at entry externally disciplined rather than adjusting it to hit later wealth targets. |
+
+**What is already known:** frozen `solver.py:264–272` converts model period income
+to annual income and grosses up working-age earnings; `:401–422` constructs entry
+wealth as a ratio times income; `:5562` and `:5747–5805` distinguish financial-wealth
+and total-estate observations. The income-grid cohort comparison already documents
+changed entrant distributions. Thus these are concrete interactions, not a request
+to reopen all institutions. Sources are under `tmp/paper_baseline_sep14/code/model/`
+and `output/model/native_financing_diagnostic_20260919/specification_followup/`.
+
+**Lead verification after the bounded worker inventory:** the worker cited the
+unoptimized sibling package, so its numerical defaults and historical target rows
+were not accepted as operative production pins. The lead checked the frozen
+optimized implementation directly: `solver.py:2460–2472` constructs down payments,
+secured debt limits and estate utility on financial wealth plus gross housing;
+`:228–236` applies retirement-income scaling and adds the property-tax rebate;
+`:7298–7333` contains the bequest utility. In particular, the annual-income helper
+calls this resource-income function: verify whether rebates belong in each
+empirical denominator rather than assuming its "gross" label resolves that.
+The paper baseline note separately pins balanced PAYGO accounting. Source identity
+and operative overrides must be reconciled before adopting an implementation.
+
+**Order:** close the above economic mappings and the housing/observer decisions;
+then run cheap accounting/distribution checks, an exact-loop smoke at the final
+specification, and a bounded joint refit. No guarantee that validation will find
+nothing; the purpose is to avoid tests on knowingly unfinished specifications.
+Keep full fitted tables and the standard 17 diagnostics; assess lifecycle overlays
+alongside the fit. Stop and amend the specification explicitly if a check exposes
+a substantive inconsistency, rather than silently adding another mechanism.
+
 Evidence: [reviewed morning view](../../output/model/native_financing_diagnostic_20260919/specification_followup/quantification_v1/morning_view.md),
 [specification packet](../../output/model/native_financing_diagnostic_20260919/specification_followup/decision_packet.md),
 and [canonical status](../../CALIBRATION_STATUS.md).
