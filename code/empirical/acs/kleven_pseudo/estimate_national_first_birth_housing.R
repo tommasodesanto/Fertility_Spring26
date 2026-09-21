@@ -284,10 +284,15 @@ estimate_national_first_birth_housing <- function(
     par(mfrow = c(length(outcomes), 1), mar = c(3, 4, 2, 1))
     for (o in outcomes) {
       z <- curves[curves$outcome == o & curves$specification == "full", ]
-      plot(z$event_time, z$estimate, type = "b", pch = 16, ylim = range(c(z$conf.low, z$conf.high), finite = TRUE),
-           xlab = "Event time", ylab = o, main = paste("National ACS", o, "(full FE)"))
+      display_scale <- if (identical(o, "ownership_lw")) 100 else 1
+      display_label <- if (identical(o, "rooms9")) "Rooms (cap9)" else
+        if (identical(o, "ownership_lw")) "Ownership (pp)" else "Bedrooms (cap5)"
+      plot(z$event_time, display_scale * z$estimate, type = "b", pch = 16,
+           ylim = display_scale * range(c(z$conf.low, z$conf.high), finite = TRUE),
+           xlab = "Event time", ylab = display_label, main = paste("National ACS", display_label, "(full FE)"))
       zi <- is.finite(z$conf.low) & is.finite(z$conf.high) & (z$conf.high > z$conf.low)
-      if (any(zi)) segments(z$event_time[zi], z$conf.low[zi], z$event_time[zi], z$conf.high[zi])
+      if (any(zi)) segments(z$event_time[zi], display_scale * z$conf.low[zi],
+                             z$event_time[zi], display_scale * z$conf.high[zi])
       abline(v = ref, lty = 2); abline(h = 0, lty = 3)
     }
     dev.off()

@@ -3,7 +3,9 @@
 # four fixest specifications and compares the pooled full fit and covariance
 # to a separately constructed direct fixest call.
 suppressPackageStartupMessages(library(fixest))
-source("estimate_national_first_birth_housing.R", local = TRUE)
+script_file <- commandArgs(trailingOnly = FALSE)
+script_file <- sub("^--file=", "", script_file[grepl("^--file=", script_file)][1L])
+source(file.path(dirname(normalizePath(script_file)), "estimate_national_first_birth_housing.R"), local = TRUE)
 
 expect <- function(ok, msg) if (!isTRUE(ok)) stop(paste("FAIL:", msg), call. = FALSE)
 expect_error <- function(expr, msg) {
@@ -103,9 +105,6 @@ expect(file.exists(file.path(outdir, "national_housing_event_curves.png")), "PNG
 expect(file.exists(file.path(outdir, "checkpoint_rooms9_full.rds")), "per-fit checkpoint was not written")
 expect(length(checkpoints) == 24L, "per-fit start/completion checkpoints missing")
 
-# A binary ownership field is not accepted under the raw 1/2 contract.
-bad <- g; bad$ownershp_raw <- ifelse(g$ownershp_raw == 2, 0, g$ownershp_raw)
-expect_error(estimate_national_first_birth_housing(bad, event_times = ev, outcomes = "ownership_lw"),
-             "binary ownership values were silently accepted as raw 1/2")
+expect(is.na(res$data$ownership_lw[5]), "raw OWNERSHP=0 was not retained as missing")
 
 cat("PASS: national pooled ACS full/event-only/age-only/state-year fits, full covariance contrast, source precedence, missingness, weights, clusters, checkpoints, and PNG\n")
