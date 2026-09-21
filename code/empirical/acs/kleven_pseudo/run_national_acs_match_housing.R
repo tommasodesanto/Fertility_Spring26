@@ -132,7 +132,9 @@ min.age <- 25; max.age <- 45; t.min <- -5; t.max <- 10; ref <- "-2"; age.cutoff 
 run_national_estimation <- function(panel, dest, label) {
   dir.create(dest, recursive=TRUE, showWarnings=FALSE)
   cp <- function(x) logp("estimator", label, jsonlite::toJSON(x, auto_unbox=TRUE, null="null"))
-  fit <- tryCatch(estimator_env$estimate_national_first_birth_housing(panel, output_dir=dest, checkpoint=cp), error=function(e) fail(paste(label,"estimator:",conditionMessage(e)),"estimator"))
+  fit <- tryCatch(estimator_env$estimate_national_first_birth_housing(panel, output_dir=dest, checkpoint=cp,
+                                                                       geography_label=if (phase == "smoke") "Vermont ACS" else "National ACS"),
+                  error=function(e) fail(paste(label,"estimator:",conditionMessage(e)),"estimator"))
   req(identical(fit$status,"ESTIMATION_COMPLETE_DIAGNOSTIC"), paste(label,"estimator status invalid"), "estimator")
   req(length(fit$fits) > 0L && all(vapply(fit$fits, function(z) is.matrix(z$full_vcov) && nrow(z$full_vcov) > 0L, logical(1))), paste(label,"full covariance output missing"), "estimator")
   expected_outputs <- c("national_event_curves.csv","national_contrasts.csv","national_raw_baselines.csv","national_counts_event_ess.csv","national_fit_status.csv","national_housing_event_curves.png")

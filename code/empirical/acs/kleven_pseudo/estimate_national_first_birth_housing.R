@@ -134,12 +134,34 @@ nfh_event_curve <- function(reg, data, outcome, specification, event_times, ref,
   }
   do.call(rbind, out)
 }
+nfh_plot_housing_event_curves <- function(curves, path, geography_label = "National ACS") {
+  png(path, width = 1800, height = 1100, res = 140)
+  on.exit(dev.off(), add = TRUE)
+  outcomes <- unique(curves$outcome)
+  par(mfrow = c(length(outcomes), 1), mar = c(4, 4, 2, 1))
+  for (o in outcomes) {
+    z <- curves[curves$outcome == o & curves$specification == "full", ]
+    display_scale <- if (identical(o, "ownership_lw")) 100 else 1
+    display_label <- if (identical(o, "rooms9")) "Rooms (cap9)" else
+      if (identical(o, "ownership_lw")) "Ownership (pp)" else "Bedrooms (cap5)"
+    plot(z$event_time, display_scale * z$estimate, type = "b", pch = 16,
+         ylim = display_scale * range(c(z$conf.low, z$conf.high), finite = TRUE),
+         xlab = "Years relative to first birth", ylab = display_label,
+         main = paste(geography_label, display_label, "(full FE)"))
+    zi <- is.finite(z$conf.low) & is.finite(z$conf.high) & (z$conf.high > z$conf.low)
+    if (any(zi)) segments(z$event_time[zi], display_scale * z$conf.low[zi],
+                           z$event_time[zi], display_scale * z$conf.high[zi])
+    abline(v = -2, lty = 2); abline(h = 0, lty = 3)
+  }
+  invisible(path)
+}
 
 estimate_national_first_birth_housing <- function(
     panel, output_dir = NULL, checkpoint = NULL, event_times = as.integer(-5:10),
     ref = -2L, women_only = TRUE, outcomes = NULL, weight_col = "wgt",
     rooms_col = NULL, ownership_col = NULL, bedrooms_col = NULL,
-    source_origin_col = NULL, from_cps_col = NULL) {
+    source_origin_col = NULL, from_cps_col = NULL,
+    geography_label = "National ACS") {
   if (!is.data.frame(panel)) nfh_stop("panel must be a data.frame")
   if (!requireNamespace("fixest", quietly = TRUE)) nfh_stop("fixest is required")
   if (!is.null(output_dir) && !requireNamespace("jsonlite", quietly = TRUE)) nfh_stop("jsonlite is required when output_dir is used")
@@ -280,22 +302,7 @@ estimate_national_first_birth_housing <- function(
     utils::write.csv(raw_baselines, file.path(output_dir, "national_raw_baselines.csv"), row.names = FALSE)
     utils::write.csv(counts, file.path(output_dir, "national_counts_event_ess.csv"), row.names = FALSE)
     utils::write.csv(status, file.path(output_dir, "national_fit_status.csv"), row.names = FALSE)
-    png(file.path(output_dir, "national_housing_event_curves.png"), width = 1800, height = 1100, res = 140)
-    par(mfrow = c(length(outcomes), 1), mar = c(3, 4, 2, 1))
-    for (o in outcomes) {
-      z <- curves[curves$outcome == o & curves$specification == "full", ]
-      display_scale <- if (identical(o, "ownership_lw")) 100 else 1
-      display_label <- if (identical(o, "rooms9")) "Rooms (cap9)" else
-        if (identical(o, "ownership_lw")) "Ownership (pp)" else "Bedrooms (cap5)"
-      plot(z$event_time, display_scale * z$estimate, type = "b", pch = 16,
-           ylim = display_scale * range(c(z$conf.low, z$conf.high), finite = TRUE),
-           xlab = "Event time", ylab = display_label, main = paste("National ACS", display_label, "(full FE)"))
-      zi <- is.finite(z$conf.low) & is.finite(z$conf.high) & (z$conf.high > z$conf.low)
-      if (any(zi)) segments(z$event_time[zi], display_scale * z$conf.low[zi],
-                             z$event_time[zi], display_scale * z$conf.high[zi])
-      abline(v = ref, lty = 2); abline(h = 0, lty = 3)
-    }
-    dev.off()
+    nfh_plot_housing_event_curves(curves, file.path(output_dir, "national_housing_event_curves.png"), geography_label)
   }
   list(status = "ESTIMATION_COMPLETE_DIAGNOSTIC", fits = fits, curves = curves,
        contrasts = contrasts, summary = contrasts, raw_baselines = raw_baselines,

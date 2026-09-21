@@ -34,7 +34,8 @@ checkpoint <- function(x) {
 }
 fit <- estimate_national_first_birth_housing(
   panel, output_dir = outdir, checkpoint = checkpoint,
-  source_origin_col = "source_origin", from_cps_col = "from_cps")
+  source_origin_col = "source_origin", from_cps_col = "from_cps",
+  geography_label = "Vermont ACS")
 if (!identical(fit$status, "ESTIMATION_COMPLETE_DIAGNOSTIC"))
   stop("estimator status invalid: ", fit$status, call. = FALSE)
 jsonlite::write_json(list(status = fit$status, panel_file = panel_file,
