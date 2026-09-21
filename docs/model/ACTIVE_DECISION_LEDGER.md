@@ -209,6 +209,33 @@ requirement or an adopted replacement. No implementation or data estimator
 changed by this discussion; E3 remains open pending the specific measurement
 and observation mapping.
 
+### Earnings block consolidation — September 21, after Fable review
+
+**Author-approved direction for T:** current income may help finance a housing
+purchase. Consumption, saving and purchase expenses share the period resource
+budget; mortgage financing restrictions remain. Exact four-year timing and code
+implementation still require reconciliation. No model equation/code was changed
+by this discussion. Prior OPEN entries describe earlier discussion.
+
+**E2 correction:** own PSID is NOT an author-approved maintained source. July 16
+and July 23 explicitly approved literature inputs; the current no-permanent-type
+PSID process is diagnostic. Source selection is OPEN. Fable's completed review
+is in `output/model/native_financing_diagnostic_20260919/specification_followup/quantification_v1/claude_review/earnings_source_assessment/final.md`.
+It favors own household earnings after validation, rather than the lead's proposed
+literature baseline. This is advice, not adoption. Lead qualifications: model/data
+observer matching does not by itself prohibit imported wage-process proxies;
+tax-progressivity compression requires a coherent disposable-income mapping and
+normalization; equivalization requires consistency rather than automatically
+implying double-counting; long-lag covariance misfit alone does not establish the
+sign of precautionary-saving bias or explain historical permanent-type adoption.
+
+Keep the block compact: (1) components, (2) income concept/source and measurement
+error, (3) four-year income representation. Age profile and entrant conditions
+must be documented as part of that specification. Numerical discretization and
+matched earnings-moment checks follow those choices. Current proposed components
+remain age profile + AR(1) + iid, without a permanent type; not finally adopted.
+No new estimation, run, tax adjustment or mock synchronization authorized here.
+
 ### Tracking procedure for this discussion
 
 - Use stable IDs above in chat and bounded worker requests. Start each resumed
