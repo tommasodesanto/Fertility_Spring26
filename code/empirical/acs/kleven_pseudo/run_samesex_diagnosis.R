@@ -12,9 +12,16 @@ options(fixest_nthreads = 1)
 
 args_env <- function(name, default = NULL) { v <- Sys.getenv(name, unset = ""); if (nzchar(v)) v else default }
 ROOT <- args_env("ROOT")
-LIB_PATH <- file.path(ROOT, "samesex_diagnosis_lib.R")
-source(file.path(ROOT, "twins_samesex_iv_lib.R"))
-source(LIB_PATH)
+# The national identity's lib_md5 was pinned against the ORIGINAL
+# production twins_samesex_iv_lib.R (roster/instrument construction), NOT
+# this diagnosis file -- verify_reproduction must check that hash, since
+# that is the code whose reproduction on af$ss is actually being tested.
+# The diagnosis lib's own hash is tracked separately (informational, not
+# part of the reproduction gate).
+ORIGINAL_LIB_PATH <- file.path(ROOT, "twins_samesex_iv_lib.R")
+DIAG_LIB_PATH <- file.path(ROOT, "samesex_diagnosis_lib.R")
+source(ORIGINAL_LIB_PATH)
+source(DIAG_LIB_PATH)
 
 FIXTURE_MODE <- isTRUE(as.logical(args_env("DIAGNOSTIC_FIXTURE_MODE", "0")))
 NATIONAL_OUTDIR <- args_env("NATIONAL_OUTDIR")
@@ -114,7 +121,7 @@ if (FIXTURE_MODE) {
                              fs_se = ref_fit$fs_se, rf_nobs_fit = ref_fit$rf_nobs, fs_nobs_fit = ref_fit$fs_nobs)
   write_json_atomic(saved_receipt_fix, file.path(nat_outdir, "fit_receipts", "SameSex2_pooled0_5__ROOMS_out.json"))
   identity_fix <- list(analytic_frames_path = af_path, analytic_frames_size_bytes = file.info(af_path)$size,
-                        analytic_frames_md5 = unname(tools::md5sum(af_path)), lib_md5 = unname(tools::md5sum(LIB_PATH)),
+                        analytic_frames_md5 = unname(tools::md5sum(af_path)), lib_md5 = unname(tools::md5sum(ORIGINAL_LIB_PATH)),
                         controls_fml = controls_fix, weight_var = "mother_weight", cluster_var = "household_key",
                         outcomes = outcomes_fix)
   write_json_atomic(identity_fix, file.path(nat_outdir, "analytic_frames_identity.json"))
@@ -126,7 +133,7 @@ if (FIXTURE_MODE) {
 write_status("stage_A_reproduction_gate")
 identity <- jsonlite::fromJSON(file.path(NATIONAL_OUTDIR, "analytic_frames_identity.json"))
 saved_receipt_path <- file.path(NATIONAL_OUTDIR, "fit_receipts", "SameSex2_pooled0_5__ROOMS_out.json")
-repro <- verify_reproduction(national_outdir = NATIONAL_OUTDIR, identity = identity, lib_path = LIB_PATH,
+repro <- verify_reproduction(national_outdir = NATIONAL_OUTDIR, identity = identity, lib_path = ORIGINAL_LIB_PATH,
                               saved_receipt_path = saved_receipt_path)
 bump(2)
 save_case("A_reproduction_gate", repro[intersect(names(repro), c("pass", "gate", "stage", "checks"))])
@@ -213,7 +220,9 @@ tmp_meta <- paste0(meta_rds_path, ".tmp")
 saveRDS(metadata_all, tmp_meta); atomic_rename(tmp_meta, meta_rds_path)
 metadata_identity <- list(
   metadata_rds_path = meta_rds_path, metadata_rds_size_bytes = file.info(meta_rds_path)$size,
-  metadata_rds_md5 = unname(tools::md5sum(meta_rds_path)), lib_md5 = unname(tools::md5sum(LIB_PATH)),
+  metadata_rds_md5 = unname(tools::md5sum(meta_rds_path)),
+  original_production_lib_md5 = unname(tools::md5sum(ORIGINAL_LIB_PATH)),
+  diagnosis_lib_md5 = unname(tools::md5sum(DIAG_LIB_PATH)),
   national_analytic_frames_md5 = identity$analytic_frames_md5,
   n_states = length(STATEFIP_LIST), statefip_list = STATEFIP_LIST,
   n_full_pool = nrow(metadata_all), n_eligible_primary = sum(metadata_all$eligible),
