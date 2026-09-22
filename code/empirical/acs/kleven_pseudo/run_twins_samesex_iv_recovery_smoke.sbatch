@@ -19,6 +19,10 @@ set -euo pipefail
 ROOT_REPO=/scratch/td2248/projects/kleven_acs_pilot_20260917
 OUTDIR="${OUTDIR:?set OUTDIR to a fresh directory}"
 CODE_ROOT="${CODE_ROOT:?set CODE_ROOT to an immutable code snapshot dir}"
+if [ -d "$OUTDIR" ]; then
+  echo "OUTDIR already exists, refusing to reuse: $OUTDIR" >&2
+  exit 1
+fi
 module load r/4.5.1
 export R_LIBS_USER="$ROOT_REPO/Rlibs:/scratch/td2248/R_libs"
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1

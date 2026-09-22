@@ -11,6 +11,39 @@
 # time; it does not compute or claim a national effect estimate.
 suppressMessages({ library(data.table); library(fixest); library(jsonlite) })
 options(warn = 1)
+data.table::setDTthreads(1)
+options(fixest_nthreads = 1)
+
+#' A fit result passes only if: RF/FS/IV coefficients and SEs are all
+#' finite; AR ran without any error grid point (ar_n_errors is a finite
+#' length-1 numeric equal to 0, and there is no ar_error field -- missing
+#' ar_n_errors is a FAIL, not a pass, since that would let a swallowed AR
+#' failure through); AR reports valid finite grid endpoints and a
+#' non-missing component count. A bounded/interior AR confidence interval
+#' is NOT required -- boundary-touching, disconnected, or empty accepted
+#' sets are legitimate honest outcomes. actual_nobs (rf/fs/iv) must equal
+#' the independently computed expected complete-case count for that
+#' design/outcome (same Y/D/Z/controls/weight/cluster columns), or the
+#' mismatch is reported explicitly rather than assumed benign.
+check_fit_gate <- function(r, expected_n) {
+  fin1 <- function(x) is.numeric(x) && length(x) == 1 && is.finite(x)
+  coefs_ok <- fin1(r$rf_coef) && fin1(r$rf_se) && fin1(r$fs_coef) && fin1(r$fs_se) &&
+    fin1(r$iv_coef) && fin1(r$iv_se)
+  ar_n_errors_ok <- fin1(r$ar_n_errors) && identical(as.numeric(r$ar_n_errors), 0)
+  no_ar_error_field <- is.null(r$ar_error)
+  ar_grid_ok <- fin1(r$ar_grid_min) && fin1(r$ar_grid_max) && fin1(r$ar_n_components)
+  nobs_ok <- fin1(r$rf_nobs_fit) && fin1(r$fs_nobs_fit) && fin1(r$iv_nobs_fit) &&
+    r$rf_nobs_fit == expected_n && r$fs_nobs_fit == expected_n && r$iv_nobs_fit == expected_n
+  list(
+    pass = identical(r$status, "full_fit") && coefs_ok && ar_n_errors_ok &&
+      no_ar_error_field && ar_grid_ok && nobs_ok,
+    status_full_fit = identical(r$status, "full_fit"), coefs_finite = coefs_ok,
+    ar_n_errors_ok = ar_n_errors_ok, no_ar_error_field = no_ar_error_field, ar_grid_ok = ar_grid_ok,
+    expected_n = expected_n, actual_rf_nobs = r$rf_nobs_fit %||% NA_integer_,
+    actual_fs_nobs = r$fs_nobs_fit %||% NA_integer_, actual_iv_nobs = r$iv_nobs_fit %||% NA_integer_,
+    nobs_match = nobs_ok
+  )
+}
 
 args_env <- function(name, default = NULL) {
   v <- Sys.getenv(name, unset = ""); if (nzchar(v)) v else default
@@ -66,10 +99,10 @@ ar_grid_own <- seq(-0.5, 0.5, by = 0.02)
 
 receipt_dir <- file.path(outdir, "probe_primary_receipts")
 dir.create(receipt_dir, recursive = TRUE, showWarnings = FALSE)
-make_cb <- function(design, oc) {
-  force(design); force(oc)
+make_cb <- function(design, oc, expected_n = NA_integer_) {
+  force(design); force(oc); force(expected_n)
   function(res) {
-    res$design <- design; res$outcome <- oc
+    res$design <- design; res$outcome <- oc; res$expected_complete_case_n <- expected_n
     fn <- file.path(receipt_dir, sprintf("%s__%s.json", design, oc))
     tmp <- paste0(fn, ".tmp")
     jsonlite::write_json(res, tmp, auto_unbox = TRUE, pretty = TRUE, digits = 10, null = "null", na = "null")
@@ -77,40 +110,55 @@ make_cb <- function(design, oc) {
   }
 }
 
+ctrl_vars <- all.vars(stats::as.formula(paste("~", controls_fml)))
+complete_case_n <- function(dt, outcome, treatment, instrument) {
+  cols <- unique(c(outcome, treatment, instrument, weight_var, cluster_var, ctrl_vars))
+  sum(stats::complete.cases(dt[, ..cols]))
+}
+
 results <- list()
+gate_checks <- list()
 t_fit0 <- Sys.time()
 for (oc in outcomes) {
   ar_grid <- if (oc == "OWNERSHP_out") ar_grid_own else ar_grid_rooms
+  exp_n1 <- complete_case_n(t1_scaled, oc, "treatment_2plus", "twin_like_proxy")
   r1 <- tryCatch(fit_instrument_outcome(t1_scaled, oc, "treatment_2plus", "twin_like_proxy",
                    controls_fml, weight_var, cluster_var, ar_grid,
-                   primary_callback = make_cb("Twin1_probe", oc)),
+                   primary_callback = make_cb("Twin1_probe", oc, exp_n1)),
                  error = function(e) list(status = "error", message = conditionMessage(e)))
   r1$design <- "Twin1_probe"; r1$outcome <- oc
   results[[length(results) + 1]] <- r1
+  gate_checks[[length(gate_checks) + 1]] <- c(list(design = "Twin1_probe", outcome = oc),
+                                                check_fit_gate(r1, exp_n1))
   if (n_ss_generated > 0) {
+    exp_n2 <- complete_case_n(ss_scaled, oc, "treatment_3plus", "samesex")
     r2 <- tryCatch(fit_instrument_outcome(ss_scaled, oc, "treatment_3plus", "samesex",
                      controls_fml, weight_var, cluster_var, ar_grid,
-                     primary_callback = make_cb("SameSex2_probe", oc)),
+                     primary_callback = make_cb("SameSex2_probe", oc, exp_n2)),
                    error = function(e) list(status = "error", message = conditionMessage(e)))
     r2$design <- "SameSex2_probe"; r2$outcome <- oc
     results[[length(results) + 1]] <- r2
+    gate_checks[[length(gate_checks) + 1]] <- c(list(design = "SameSex2_probe", outcome = oc),
+                                                  check_fit_gate(r2, exp_n2))
   }
   cat(sprintf("PROBE: outcome %s done, elapsed_sec=%.1f\n", oc, as.numeric(Sys.time() - t_fit0, units = "secs")))
 }
 elapsed_fit <- as.numeric(Sys.time() - t_fit0, units = "secs")
 
-status_ok <- vapply(results, function(r) identical(r$status, "full_fit"), logical(1))
-ar_error_free <- vapply(results, function(r) is.null(r$ar_n_errors) || identical(r$ar_n_errors, 0L), logical(1))
-counts_match <- (n_t1_generated >= target_n)
+per_case_pass <- vapply(gate_checks, function(g) isTRUE(g$pass), logical(1))
+counts_match <- (n_t1_generated >= target_n)  # honest outcome-level missingness is NOT required
+                                               # to hit target_n; this only checks the GENERATED
+                                               # replicated sample reached the target scale.
 
 gate <- list(
-  all_full_fit = all(status_ok), n_full_fit = sum(status_ok), n_total = length(results),
-  all_ar_error_free = all(ar_error_free),
+  n_full_fit = sum(per_case_pass), n_total = length(gate_checks),
+  all_cases_pass = all(per_case_pass),
   n_t1_generated = n_t1_generated, n_t1_unique_households = n_t1_unique_hh,
   n_ss_generated = n_ss_generated, n_ss_unique_households = n_ss_unique_hh,
   target_twin1_n = target_n, counts_match_target = counts_match,
   elapsed_replicate_sec = elapsed_replicate, elapsed_fit_sec = elapsed_fit,
-  gate_pass = all(status_ok) && all(ar_error_free) && counts_match
+  per_case = gate_checks,
+  gate_pass = all(per_case_pass) && counts_match
 )
 jsonlite::write_json(gate, file.path(outdir, "probe_gate_receipt.json"), auto_unbox = TRUE, pretty = TRUE)
 utils::write.csv(data.table::rbindlist(lapply(results, function(r) data.table(
@@ -119,8 +167,8 @@ utils::write.csv(data.table::rbindlist(lapply(results, function(r) data.table(
   ar_n_errors = r$ar_n_errors %||% NA_integer_)), fill = TRUE),
   file.path(outdir, "probe_results_table.csv"), row.names = FALSE)
 
-cat(sprintf("PROBE_GATE: %s (full_fit=%d/%d, ar_error_free=%s, n_t1=%d>=%d)\n",
+cat(sprintf("PROBE_GATE: %s (pass=%d/%d cases, n_t1=%d>=%d)\n",
             if (gate$gate_pass) "PASS" else "FAIL",
-            gate$n_full_fit, gate$n_total, gate$all_ar_error_free, n_t1_generated, target_n))
+            gate$n_full_fit, gate$n_total, n_t1_generated, target_n))
 if (!gate$gate_pass) quit(status = 1)
 cat("PROBE_COMPLETE\n")

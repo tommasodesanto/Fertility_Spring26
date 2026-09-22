@@ -19,6 +19,8 @@ suppressMessages({
 })
 options(warn = 1)  # print warnings as they occur (to the job log), instead
                     # of buffering/truncating into "N warnings" at exit.
+data.table::setDTthreads(1)
+options(fixest_nthreads = 1)
 
 args_env <- function(name, default = NULL) {
   v <- Sys.getenv(name, unset = "")
@@ -102,6 +104,8 @@ for (i in seq_along(statefip_list)) {
                                            sample_gate_totals = sample_gate_totals,
                                            elapsed_sec = as.numeric(Sys.time() - t0, units = "secs")))
 }
+rm(gate)  # last loop iteration's gate$data (a gated-but-not-yet-rostered
+          # wide state table) must not linger in the global environment
 mr_pre_minor_gate <- data.table::rbindlist(mr_list, use.names = TRUE, fill = TRUE)
 built <- list(
   link_audit = data.table::rbindlist(audit_list, use.names = TRUE, fill = TRUE)[
