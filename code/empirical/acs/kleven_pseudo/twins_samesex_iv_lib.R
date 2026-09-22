@@ -264,6 +264,9 @@ ar_confidence_set_legacy <- function(data, outcome, endog, instrument, controls_
                                weight_var, cluster_var, grid, alpha = 0.05) {
   n_grid <- length(grid)
   status <- character(n_grid)  # "accept" | "reject" | "error"
+  pvalues <- rep(NA_real_, n_grid)
+  wald_stats <- rep(NA_real_, n_grid)
+  nobs_seen <- rep(NA_integer_, n_grid)
   for (i in seq_len(n_grid)) {
     b0 <- grid[i]
     yy <- data[[outcome]] - b0 * data[[endog]]
@@ -279,6 +282,7 @@ ar_confidence_set_legacy <- function(data, outcome, endog, instrument, controls_
     if (is.null(fit)) { status[i] <- "error"; next }
     wt <- tryCatch(fixest::wald(fit, instrument, print = FALSE), error = function(e) NULL)
     if (is.null(wt) || is.na(wt$p)) { status[i] <- "error"; next }
+    pvalues[i] <- wt$p; wald_stats[i] <- unname(wt$stat); nobs_seen[i] <- stats::nobs(fit)
     status[i] <- if (wt$p > alpha) "accept" else "reject"
   }
 
@@ -326,7 +330,8 @@ ar_confidence_set_legacy <- function(data, outcome, endog, instrument, controls_
     # or touch the boundary); NOT a claim of a single bounded CI -- consult
     # fully_interior_bounded / components before interpreting as a CI.
     summary_lower = if (n_accepted > 0) min(grid[accepted]) else NA_real_,
-    summary_upper = if (n_accepted > 0) max(grid[accepted]) else NA_real_
+    summary_upper = if (n_accepted > 0) max(grid[accepted]) else NA_real_,
+    pvalues = pvalues, stats = wald_stats, status_vec = status, nobs_per_grid = nobs_seen
   )
 }
 
@@ -357,18 +362,25 @@ ar_confidence_set <- function(data, outcome, endog, instrument, controls_fml,
                      error = function(e) NULL)
     if (is.null(fit)) return(list(pi = NA_real_, V = NA_real_, df2 = NA_real_))
     wt <- tryCatch(fixest::wald(fit, instrument, print = FALSE), error = function(e) NULL)
-    if (is.null(wt)) return(list(pi = NA_real_, V = NA_real_, df2 = NA_real_))
+    if (is.null(wt)) return(list(pi = NA_real_, V = NA_real_, df2 = NA_real_, nobs = NA_integer_))
     b <- unname(stats::coef(fit)[instrument])
     v <- unname(diag(stats::vcov(fit))[instrument])
-    list(pi = b, V = v, df2 = unname(wt$df2))
+    list(pi = b, V = v, df2 = unname(wt$df2), nobs = stats::nobs(fit))
   }
   fy <- fit_one(outcome)
   fd <- fit_one(endog)
   fs <- fit_one(paste0("(", outcome, ") + (", endog, ")"))
   base_ok <- !is.na(fy$pi) && !is.na(fd$pi) && !is.na(fs$pi) &&
     !is.na(fy$V) && !is.na(fd$V) && !is.na(fs$V)
+  # The pi(beta)/V(beta) algebra is only valid if the three regressions ran
+  # on the IDENTICAL complete-case sample (same nobs/df2, same regressor
+  # names in the same order). Any divergence (e.g. Y or D each individually
+  # complete but a different subset than Y+D under an unusual NA pattern)
+  # invalidates the shortcut; fail explicitly rather than silently proceed.
+  identical_sample <- base_ok && fy$nobs == fd$nobs && fd$nobs == fs$nobs &&
+    isTRUE(all.equal(fy$df2, fd$df2)) && isTRUE(all.equal(fd$df2, fs$df2))
   n_grid <- length(grid)
-  if (!base_ok) {
+  if (!identical_sample) {
     return(list(grid_min = suppressWarnings(min(grid, na.rm = TRUE)),
                 grid_max = suppressWarnings(max(grid, na.rm = TRUE)), n_grid = n_grid,
                 n_accepted = 0L, n_rejected = 0L, n_errors = n_grid,
@@ -376,11 +388,16 @@ ar_confidence_set <- function(data, outcome, endog, instrument, controls_fml,
                 fully_interior_bounded = FALSE, extent_unknown_due_to_errors = TRUE,
                 all_grid_points_accepted = FALSE, empty_accepted_set = TRUE,
                 summary_lower = NA_real_, summary_upper = NA_real_,
-                base_regression_failure = TRUE))
+                base_regression_failure = TRUE,
+                base_regression_nobs = c(Y = fy$nobs, D = fd$nobs, sum = fs$nobs),
+                pvalues = rep(NA_real_, n_grid), stats = rep(NA_real_, n_grid),
+                status_vec = rep("error", n_grid)))
   }
   C <- (fs$V - fy$V - fd$V) / 2
   df2 <- fy$df2
   status <- character(n_grid)
+  pvalues <- rep(NA_real_, n_grid)
+  wald_stats <- rep(NA_real_, n_grid)
   for (i in seq_len(n_grid)) {
     b0 <- grid[i]
     if (is.na(b0)) { status[i] <- "error"; next }
@@ -389,6 +406,7 @@ ar_confidence_set <- function(data, outcome, endog, instrument, controls_fml,
     if (is.na(V_b0) || V_b0 <= 0 || is.na(df2)) { status[i] <- "error"; next }
     wald_stat <- pi_b0^2 / V_b0
     p <- stats::pf(wald_stat, df1 = 1, df2 = df2, lower.tail = FALSE)
+    wald_stats[i] <- wald_stat; pvalues[i] <- p
     status[i] <- if (is.na(p)) "error" else if (p > alpha) "accept" else "reject"
   }
   accepted <- status == "accept"
@@ -418,7 +436,9 @@ ar_confidence_set <- function(data, outcome, endog, instrument, controls_fml,
        empty_accepted_set = n_accepted == 0,
        summary_lower = if (n_accepted > 0) min(grid[accepted]) else NA_real_,
        summary_upper = if (n_accepted > 0) max(grid[accepted]) else NA_real_,
-       base_regression_failure = FALSE)
+       base_regression_failure = FALSE,
+       base_regression_nobs = c(Y = fy$nobs, D = fd$nobs, sum = fs$nobs),
+       pvalues = pvalues, stats = wald_stats, status_vec = status)
 }
 
 #' Fit RF, FS, and 2SLS for one outcome/instrument/treatment triple, with an
