@@ -1,0 +1,16 @@
+diff --git a/tmp/income_refinement_local_20260921/template/inputs/run_scored_candidate.py b/code/model/tools/run_e5f_earnings_wealth_scored_candidate.py
+index 289bf743..4460a149 100644
+--- a/tmp/income_refinement_local_20260921/template/inputs/run_scored_candidate.py
++++ b/code/model/tools/run_e5f_earnings_wealth_scored_candidate.py
+@@ -4 +4 @@ Run schema e5f_scored_initial_candidate_run_v1 requires source_root, case_id,
+-seconds (<=2100), wrapper_sha256; initial_solve_contract, working_objective,
++seconds (<=7200), wrapper_sha256; initial_solve_contract, working_objective,
+@@ -10 +10 @@ unchanged: new_balanced, normalize/observe_early True, eight solves per repetiti
+-one or two repetitions, <=1800 seconds. Two repetitions are the exact-loop smoke.
++one or two repetitions, <=6900 seconds. Two repetitions are the exact-loop smoke.
+@@ -77 +77 @@ def preflight(contract_path, expected_sha256):
+-    require(type(c.get('seconds')) is int and 1<=c['seconds']<=2100,'Invalid wrapper budget')
++    require(type(c.get('seconds')) is int and 1<=c['seconds']<=7200,'Invalid wrapper budget')
+@@ -99 +99 @@ def preflight(contract_path, expected_sha256):
+-    require(1<=initial['seconds']<=1800 and c['seconds']>=initial['seconds'], 'Original solve/wrapper budget mismatch')
++    require(1<=initial['seconds']<=6900 and c['seconds']>=initial['seconds'], 'Original solve/wrapper budget mismatch')

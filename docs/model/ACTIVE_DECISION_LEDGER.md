@@ -7,6 +7,26 @@ that can still change the theory, quantitative interpretation, or paper-facing
 claims. `CALIBRATION_STATUS.md` remains the source for numerical results and
 reproducibility contracts.
 
+## Earnings decision delta — September 22, 00:26 EDT
+
+Latest author instruction authorizes deep source review, own-data estimates or
+published transformations, implementation, tested longer refinement and a final
+plausibility audit. This supersedes the held-launch and endpoint-selection notes
+below. The selected candidate directly estimates four-year gross-household
+PSID earnings: persistent AR(1) plus iid, no fixed type. Period rho0.776144670,
+innovation SD0.437435453 and iid SD0.164990611; iid precision is weak.
+Current income enters purchase eligibility once. Inherited negative entrant debt
+fails feasibility under new income support; zero assets at18 is an explicit
+externally fixed candidate convention, supported by standard lifecycle examples,
+not an empirical estimate or paper adoption. Initial stationary income at18 and
+four-year realized income known at decision remain approximations.
+
+A frozen local repeated smoke is running; only success triggers bounded joint
+refinement. Full targets, gates, actual parameter bounds and17 plots are retained.
+Source/data reviews are complete; full household fit, exact repetitions,
+parameter plausibility and household-grid robustness remain to be assessed.
+[Live evidence and execution](../../output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/README.md).
+
 ## Current decision map — September 21, 2026
 
 **Working sequence: earnings/timing → housing and measurement → joint fit → paper claim.**

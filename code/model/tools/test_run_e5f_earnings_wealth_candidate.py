@@ -4,6 +4,7 @@ import hashlib
 import json
 import shutil
 import sys
+import types
 from pathlib import Path
 
 import pytest
@@ -103,6 +104,72 @@ def test_run_case_pins_repetitions_and_calls_candidate(monkeypatch, tmp_path):
     assert calls == []
     candidate.run_case(plan_path, plan, "literature_income", tmp_path / "case", 1, preflight=True)
     assert calls == [True]
+
+
+def test_direct_period_requires_pinned_loaded_constructor(monkeypatch, tmp_path):
+    plan = _plan(tmp_path)
+    plan["income_specification"] = {
+        "author_decision": "approved_diagnostic",
+        "mapping": "direct_period",
+        "constructor_arguments": {},
+        "max_relative_discrete_level_covariance_error": 0.01,
+    }
+    with pytest.raises(ValueError, match="direct-period constructor path/hash"):
+        candidate.verify_plan(plan)
+    period_path = Path(candidate.period_income.__file__).resolve()
+    plan["files"]["period_income"] = {"path": str(period_path), "sha256": _sha(period_path)}
+    monkeypatch.setattr(candidate.period_income, "build_period_earnings_process", lambda **_: (
+        {"z_grid": __import__("numpy").array([0.5, 1.5]),
+         "z_weights": __import__("numpy").array([0.5, 0.5])},
+        {"stationary": True, "iid_transition_independent": True,
+         "continuous_level_covariances": [1.0], "discrete_level_covariances": [1.0]},
+    ))
+    overrides, metadata = candidate.candidate(plan)
+    assert metadata["stationary"] and overrides["z_weights"] @ overrides["z_grid"] == 1
+
+
+def _probe_modules(monkeypatch, tmp_path, rule):
+    solver = types.ModuleType("intergen_eqscale_seq_optimized.solver")
+    solver.make_grid = lambda bound: __import__("numpy").array([0.0, 1.0])
+    parameters = types.ModuleType("intergen_eqscale_seq_optimized.parameters")
+    parameters.build_debt_caps = lambda bound: bound
+    package = types.ModuleType("intergen_eqscale_seq_optimized")
+    package.solver = solver
+    monkeypatch.setitem(sys.modules, "intergen_eqscale_seq_optimized", package)
+    monkeypatch.setitem(sys.modules, "intergen_eqscale_seq_optimized.solver", solver)
+    monkeypatch.setitem(sys.modules, "intergen_eqscale_seq_optimized.parameters", parameters)
+    parent = types.ModuleType("e5f_parenthood_utility")
+    parent.bind_parenthood_utility = lambda base, structural: types.SimpleNamespace(age_start=25)
+    monkeypatch.setitem(sys.modules, "e5f_parenthood_utility", parent)
+    monkeypatch.setitem(sys.modules, "run_e5f_matched_pf_smoke", types.ModuleType("run_e5f_matched_pf_smoke"))
+    monkeypatch.setattr(candidate.accounting, "install_fixed_entry", lambda model: None)
+    monkeypatch.setattr(candidate, "candidate", lambda plan: (
+        {"z_grid": __import__("numpy").array([0.5, 1.5]),
+         "z_weights": __import__("numpy").array([0.5, 0.5])},
+        {"components": {"persistent_weights": [1.0], "iid_weights": [1.0]},
+         "stationary": True},
+    ))
+    captured = {}
+    def fake_run_path(*args, **kwargs):
+        captured["bound"] = parent.bind_parenthood_utility(None, {})
+    monkeypatch.setattr(candidate.runpy, "run_path", fake_run_path)
+    initial = tmp_path / "initial.json"
+    initial.write_text(json.dumps({"earnings_wealth_arm": "literature_income"}))
+    plan = {"source_root": str(tmp_path), "entry_specification": {"rule": rule}}
+    candidate.run_probe(plan, initial, tmp_path / "probe" / "out")
+    return captured["bound"]
+
+
+def test_zero_assets_entry_sets_exact_zero_node_for_all_income(monkeypatch, tmp_path):
+    bound = _probe_modules(monkeypatch, tmp_path, "zero_assets")
+    assert bound.fixed_reference_entry_conditional.tolist() == [[1.0, 1.0], [0.0, 0.0]]
+    receipt = json.loads((tmp_path / "probe" / "entry_wealth.json").read_text())
+    assert receipt["rule"] == "zero_assets" and receipt["candidate_wealth_mean"] == 0.0
+
+
+def test_unknown_entry_rule_fails_without_fallback(monkeypatch, tmp_path):
+    with pytest.raises(ValueError, match="unsupported entry-wealth rule"):
+        _probe_modules(monkeypatch, tmp_path, "unknown_rule")
 
 
 def test_grid_gate_measures_error_against_intended_endpoint_process(tmp_path):

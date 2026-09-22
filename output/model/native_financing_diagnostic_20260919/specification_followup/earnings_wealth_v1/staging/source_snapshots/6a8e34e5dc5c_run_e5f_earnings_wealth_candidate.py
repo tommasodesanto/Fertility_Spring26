@@ -115,22 +115,9 @@ def run_probe(plan, initial_path, output):
             bound = bind_original(base, structural)
             grid = model.make_grid(bound)
             components = metadata["components"]
-            entry_rule = plan.get("entry_specification", {}).get("rule", "fixed_reference_marginal")
-            if entry_rule == "fixed_reference_marginal":
-                conditional, entry_receipt = accounting.rank_coupled_entry(
-                    model, bound, grid, np.asarray(components["persistent_weights"]),
-                    np.asarray(components["iid_weights"]))
-            elif entry_rule == "zero_assets":
-                zero = np.flatnonzero(np.asarray(grid) == 0.)
-                if len(zero) != 1:
-                    raise ValueError("zero-asset entry requires an exact zero grid node")
-                conditional = np.zeros((len(grid), len(overrides["z_grid"])))
-                conditional[zero[0], :] = 1.
-                entry_receipt = dict(rule="zero_assets", entry_age=float(bound.age_start),
-                    externally_fixed=True, empirical_joint_distribution_estimated=False,
-                    candidate_wealth_mean=0., candidate_wealth_marginal=conditional[:, 0].tolist())
-            else:
-                raise ValueError("unsupported entry-wealth rule; no fallback")
+            conditional, entry_receipt = accounting.rank_coupled_entry(
+                model, bound, grid, np.asarray(components["persistent_weights"]),
+                np.asarray(components["iid_weights"]))
             for key, value in overrides.items():
                 setattr(bound, key, copy.deepcopy(value))
             bound.fixed_reference_entry_grid = grid.copy()
@@ -188,7 +175,7 @@ def run_case(plan_path, plan, arm, output, repetitions, preflight=False):
             sort_keys=True, separators=(",", ":")).encode()).hexdigest(),
         additional_runtime_files={k: plan["files"][k] for k in ("adapter", "accounting", "income", "period_income") if k in plan["files"]},
         changed_economic_objects=([] if arm == "reference" else
-            ["income process", "entry wealth: " + plan.get("entry_specification", {}).get("rule", "fixed_reference_marginal_rank_coupling")] +
+            ["income process", "entry wealth-income rank coupling"] +
             (["current-income purchase eligibility", "ordinary transaction wealth map",
               "end-of-period owner mortgage floor"] if arm.endswith("purchase") else [])),
         interpretation="Native score source fingerprints identify the frozen base; this additional contract identifies economic runtime changes.")

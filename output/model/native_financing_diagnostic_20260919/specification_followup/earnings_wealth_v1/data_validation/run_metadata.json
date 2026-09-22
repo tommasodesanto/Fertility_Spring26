@@ -1,0 +1,187 @@
+{
+  "annual_era_only": [
+    1984,
+    1997
+  ],
+  "block_construction_validation": {
+    "checks": [
+      {
+        "blocks": 7812,
+        "offset": 0,
+        "overlap_violations": 0,
+        "persons": 3932
+      },
+      {
+        "blocks": 7957,
+        "offset": 1,
+        "overlap_violations": 0,
+        "persons": 3982
+      },
+      {
+        "blocks": 7339,
+        "offset": 2,
+        "overlap_violations": 0,
+        "persons": 3911
+      },
+      {
+        "blocks": 5190,
+        "offset": 3,
+        "overlap_violations": 0,
+        "persons": 3294
+      }
+    ],
+    "passed": true
+  },
+  "bootstrap_reps": 199,
+  "bootstrap_seed": 20260921,
+  "bootstrap_weight_test": {
+    "description": "omitted persons receive frequency zero; selected-person support count matches",
+    "passed": true
+  },
+  "concept": "RP/spouse combined real gross labor earnings (2022 dollars per source builder)",
+  "covariance_lags": [
+    0,
+    1,
+    2
+  ],
+  "earnings_variable": "EARNINDRRC",
+  "entrant_ages_18_24_represented": false,
+  "extract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/psid_followup_mar2026/output/psid_income_fixed_effect_md_20260727/psid_income_md_extract.dta",
+  "extract_sha256": "147da916b58700ceb5dc1846921c7c6983e467d926bf946c7a52e85e9ce0c2a5",
+  "fit": "stationary persistent AR(1) plus iid transitory at four-year frequency; rho in [1e-8,1-1e-8], both variances >=0",
+  "input_age_max": 60,
+  "input_age_min": 25,
+  "n_input_persons_after_filters": 6769,
+  "n_input_rows_after_filters": 48329,
+  "nonoverlap_stride_years": 4,
+  "period_definition": "sum of four observed annual gross earnings; log mean used for covariance because log(sum)=log(mean)+constant",
+  "post_1997_biennial_years_excluded_from_blocks": [
+    1999,
+    2001,
+    2003,
+    2005,
+    2007,
+    2009,
+    2011,
+    2013,
+    2015,
+    2017,
+    2019
+  ],
+  "residualization": "weighted least squares of log four-year mean on block-start integer age and block-start calendar-year fixed effects",
+  "source_variable_labels": {
+    "AGEREP": "Ind's reported age at time of interview",
+    "DEATHYEAR": "Ind's death year, last reported or best estimate",
+    "EARNINDRRC": "RP/SP's combined earnings (real USD 2022), tax year ",
+    "ID": "Unique ID [(ER30001*1000)+ER30002]",
+    "IW": "Ind's longitudinal weight",
+    "RELTOHEAD_": "",
+    "year": "Survey year"
+  },
+  "status": "diagnostic_only_not_adopted",
+  "synthetic_observer_recovery": {
+    "covariance_summary": {
+      "0": {
+        "analytic_truth": 0.54,
+        "finite_FE_projection_gap": -0.005362057403164311,
+        "mean_bias_vs_analytic_truth": -0.005362057403164311,
+        "median": 0.536128050675778,
+        "monte_carlo_se_of_mean": 0.001384612186533655,
+        "observed_average_covariance_after_FE": 0.5346379425968357,
+        "p025": 0.5075477288003698,
+        "p975": 0.5569342289558367,
+        "reps": 100
+      },
+      "1": {
+        "analytic_truth": 0.4,
+        "finite_FE_projection_gap": -0.005778647518612845,
+        "mean_bias_vs_analytic_truth": -0.005778647518612845,
+        "median": 0.3969330867269277,
+        "monte_carlo_se_of_mean": 0.001567780725805451,
+        "observed_average_covariance_after_FE": 0.3942213524813872,
+        "p025": 0.3643854150313976,
+        "p975": 0.41891635924455867,
+        "reps": 100
+      },
+      "2": {
+        "analytic_truth": 0.32000000000000006,
+        "finite_FE_projection_gap": -0.0052127970627144915,
+        "mean_bias_vs_analytic_truth": -0.0052127970627144915,
+        "median": 0.31515474856610937,
+        "monte_carlo_se_of_mean": 0.0017894825559210425,
+        "observed_average_covariance_after_FE": 0.31478720293728557,
+        "p025": 0.27746308872889563,
+        "p975": 0.34618181141220694,
+        "reps": 100
+      }
+    },
+    "note": "Each synthetic path uses the exact observed block starts for each person. An observed gap of g four-year periods advances persistence with rho^g and innovation variance Vp*(1-rho^(2g)); the reported projection gap is the finite-sample effect of the same age/year FE residualization and missingness pattern.",
+    "offset_shape": 0,
+    "parameter_summary": {
+      "iid_variance_4yr": {
+        "mean": 0.04043586401298155,
+        "mean_bias": 0.0004358640129815475,
+        "median": 0.04164851774888828,
+        "monte_carlo_se_of_mean": 0.0016554453649071273,
+        "p025": 0.008441542459888603,
+        "p975": 0.07202547156964548,
+        "reps": 100,
+        "true": 0.04
+      },
+      "persistent_variance_4yr": {
+        "mean": 0.4942020785838542,
+        "mean_bias": -0.005797921416145824,
+        "median": 0.49271973617461373,
+        "monte_carlo_se_of_mean": 0.0021800799042666955,
+        "p025": 0.4488510768513519,
+        "p975": 0.5310183125449448,
+        "reps": 100,
+        "true": 0.5
+      },
+      "rho_4yr": {
+        "mean": 0.7982460215653785,
+        "mean_bias": -0.0017539784346215503,
+        "median": 0.8038082390209932,
+        "monte_carlo_se_of_mean": 0.0025659728864285258,
+        "p025": 0.7536859208047371,
+        "p975": 0.8437545871581431,
+        "reps": 100,
+        "true": 0.8
+      }
+    },
+    "replications": 100,
+    "status": "same_observer_monte_carlo_executed",
+    "support": {
+      "annual_year_max": 1997,
+      "annual_year_min": 1984,
+      "block_start_max": 1992,
+      "block_start_min": 1984,
+      "blocks": 7812,
+      "complete_annual_blocks": true,
+      "nonoverlap_stride_years": 4,
+      "offset": 0,
+      "pair_counts": {
+        "0": 7812,
+        "1": 3836,
+        "2": 1449
+      },
+      "pair_persons": {
+        "0": 3932,
+        "1": 2431,
+        "2": 1449
+      },
+      "persons_with_blocks": 3932
+    },
+    "truth": {
+      "iid_variance_4yr": 0.04,
+      "persistent_variance_4yr": 0.5,
+      "rho_4yr": 0.8
+    }
+  },
+  "timing_contract": {
+    "EARNINDRRC": "RP/SP's combined earnings (real USD 2022), tax year ",
+    "interpretation": "retain survey-year label for year; source labels EARNINDRRC as tax-year earnings. No survey-to-tax-year shift was applied; a common shift would not change within-person covariance but remains a reporting limitation.",
+    "year": "Survey year"
+  },
+  "weight_definition": "geometric mean of four annual IW weights for each block; geometric mean of block weights for covariance pairs"
+}

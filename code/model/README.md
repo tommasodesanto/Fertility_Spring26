@@ -37,6 +37,19 @@ exact source contracts are in
 Sequential saved policies now need their own continuation-birth probabilities;
 old incomplete bundles must be rebuilt from their matching solution or re-solved.
 
+## Earnings and wealth candidate tools
+
+`tools/build_period_earnings_process.py` constructs the externally estimated
+period AR(1)-plus-iid process. `tools/run_e5f_earnings_wealth_candidate.py` applies
+explicit earnings, entry and purchase changes to an immutable native snapshot.
+`tools/prepare_e5f_earnings_wealth_run.py` pins its inputs;
+`tools/run_e5f_earnings_wealth_search.py` runs repeated smoke and bounded joint
+refinement. The scored wrapper differs from its frozen parent only in allowed
+runtime budgets. Local and Torch launchers are under `code/cluster/`.
+The [earnings packet](../../output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/README.md)
+owns the selected specification, reproduction commands, caveats and run status.
+These are candidate tools, not a replacement for the September14 reference.
+
 ## Current E5F calibration and policy audit utilities
 
 `tools/build_e5f_utility_review_packet.py` rebuilds the fixed model scorecard, complete

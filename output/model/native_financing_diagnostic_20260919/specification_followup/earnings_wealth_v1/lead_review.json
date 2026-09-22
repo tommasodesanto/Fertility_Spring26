@@ -1,0 +1,80 @@
+{
+  "annual_input_sha256": "147da916b58700ceb5dc1846921c7c6983e467d926bf946c7a52e85e9ce0c2a5",
+  "cluster": {
+    "action": "user notified asynchronously; no credential workaround",
+    "status": "authentication_blocked"
+  },
+  "income_grid": {
+    "household_grid_convergence": "not established",
+    "iid_nodes": 3,
+    "joint_states": 45,
+    "maximum_absolute_log_covariance_error": 1.1102230246251565e-16,
+    "maximum_relative_level_covariance_error": 0.04613368813221941,
+    "persistent_nodes": 15
+  },
+  "income_moment_identification": "three parameters, three covariance moments; exact point fit is mechanical, not goodness-of-fit evidence",
+  "limits": [
+    "Positive-earnings survivor sample of complete annual-era blocks; no post1997 annual interpolation",
+    "Tax-year earnings aligned to survey-year labels; absolute calendar shift unresolved, constant shift does not change lag lengths or age/year residual column spaces",
+    "Transitory variance weakly measured; baseline bootstrap lower tail reaches zero",
+    "Estimated age25\u201360 risk extrapolated to entry18 under an externally fixed stationary initial process",
+    "Stationary AR1+iid lognormal process omits richer heterogeneity; no proof of exact aggregation or annual within-block decisions",
+    "No completed household objective or calibration result yet"
+  ],
+  "model_tests": [
+    {
+      "arm": "income_and_purchase_fixed_entry",
+      "completed_full_objectives": 0,
+      "elapsed_seconds": 19.404622541998833,
+      "error": "forward_age_30: dead-node mass 3.16347282998e-12 exceeds 1.0e-12; census=[{age=30.0,b=-3.046511627906977,child_state=0,income=0.13469260315867213,location=0,mass=5.621459533368761e-17,parity=0,slack=-0.11643793079481624,tenure=0,transfer=0.0,unsecured_position=-3.046511627906977,z=0.04352796175135016};{age=30.0,b=-3.046511627906977,child_state=0,income=0.1792474563142873,location=0,mass=2.2485838133475045e-16,parity=0,slack=-0.07188307763920099,tenure=0,transfer=0.0,unsecured_position=-3.046511627906977,z=0.05792653968743761};{age=30.0,b=-3.046511627906977,child_state=0,income=0.23854057195176928,location=0,mass=5.621459533368761e-17,parity=0,slack=-0.012589962001718913,tenure=0,transfer=0.0,unsecured_position=-3.046511627906977,z=0.07708801113473236};{age=30.0,b=-3.046511627906977,child_state=0,income=0.19515809544894133,location=0,mass=9.928186891583316e-16,parity=0,slack=-0.05597243850454703,tenure=0,transfer=0.0,unsecured_position=-3.046511627906977,z=0.06306830453162064};{age=30.0,b=-3.046511627906977,child_state=0,income=0.2597142780524793,location=0,mass=3.9712747566333265e-15,parity=0,slack=0.008583744098991097,tenure=0,transfer=0.0,unsecured_position=-3.046511627906977,z=0.08393061605640208};{age=30.0,b=-3.046511627906977,child_state=0,income=0.3456249461194792,location=0,mass=9.928186891583316e-16,parity=0,slack=0.09449441216599075,tenure=0,transfer=0.0,unsecured_position=-3.046511627906977,z=0.11169395410138769};{age=30.0,b=-3.046511627906977,child_state=0,income=0.2827674373060469,location=0,mass=5.218728566748819e-15,parity=0,slack=0.031636903352558754,tenure=0,transfer=0.0,unsecured_position=-3.046511627906977,z=0.09138059482810174};{age=30.0,b=-3.046511627906977,child_state=0,income=0.3763038405747469,location=0,mass=2.0874914266995277e-14,parity=0,slack=0.12517330662125836,tenure=0,transfer=0.0,unsecured_position=-3.046511627906977,z=0.1216083050984463}]",
+      "error_type": "InfeasibleThetaError",
+      "failure": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/direct_period_local_feasibility_20260922/evaluation/raw/failure.json",
+      "stationary_solves_started": 1,
+      "status": "failed_feasibility_gate"
+    },
+    {
+      "arm": "income_only_fixed_entry",
+      "completed_full_objectives": 0,
+      "elapsed_seconds": 19.367079375000685,
+      "error": "forward_age_30: dead-node mass 3.16347029263e-12 exceeds 1.0e-12; census=[{age=30.0,b=-3.046511627906977,child_state=0,income=0.13469260315867213,location=0,mass=5.621459581592224e-17,parity=0,slack=-0.11643793079481624,tenure=0,transfer=0.0,unsecured_position=-3.046511627906977,z=0.04352796175135016};{age=30.0,b=-3.046511627906977,child_state=0,income=0.1792474563142873,location=0,mass=2.2485838326368896e-16,parity=0,slack=-0.07188307763920099,tenure=0,transfer=0.0,unsecured_position=-3.046511627906977,z=0.05792653968743761};{age=30.0,b=-3.046511627906977,child_state=0,income=0.23854057195176928,location=0,mass=5.621459581592224e-17,parity=0,slack=-0.012589962001718913,tenure=0,transfer=0.0,unsecured_position=-3.046511627906977,z=0.07708801113473236};{age=30.0,b=-3.046511627906977,child_state=0,income=0.19515809544894133,location=0,mass=9.928186977134741e-16,parity=0,slack=-0.05597243850454703,tenure=0,transfer=0.0,unsecured_position=-3.046511627906977,z=0.06306830453162064};{age=30.0,b=-3.046511627906977,child_state=0,income=0.2597142780524793,location=0,mass=3.9712747908538964e-15,parity=0,slack=0.008583744098991097,tenure=0,transfer=0.0,unsecured_position=-3.046511627906977,z=0.08393061605640208};{age=30.0,b=-3.046511627906977,child_state=0,income=0.3456249461194792,location=0,mass=9.928186977134741e-16,parity=0,slack=0.09449441216599075,tenure=0,transfer=0.0,unsecured_position=-3.046511627906977,z=0.11169395410138769};{age=30.0,b=-3.046511627906977,child_state=0,income=0.2827674373060469,location=0,mass=5.218728612178133e-15,parity=0,slack=0.031636903352558754,tenure=0,transfer=0.0,unsecured_position=-3.046511627906977,z=0.09138059482810174};{age=30.0,b=-3.046511627906977,child_state=0,income=0.3763038405747469,location=0,mass=2.0874914448712532e-14,parity=0,slack=0.12517330662125836,tenure=0,transfer=0.0,unsecured_position=-3.046511627906977,z=0.1216083050984463}]",
+      "error_type": "InfeasibleThetaError",
+      "failure": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/direct_period_income_only_control_20260922/evaluation/raw/failure.json",
+      "stationary_solves_started": 1,
+      "status": "failed_feasibility_gate"
+    },
+    {
+      "arm": "income_and_purchase_zero_assets_at18",
+      "completed_full_objectives": 0,
+      "completed_stationary_solves": 2,
+      "output": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/direct_period_zero_entry_control_20260922",
+      "receipt": "staging/zero_entry_runtime_pilot.json",
+      "source": "Sommer2016/DeNardi2004 entry convention, not empirical fitting",
+      "started_stationary_solves": 3,
+      "status": "runtime_pilot_stopped_before_full_objective"
+    }
+  ],
+  "overnight_execution": {
+    "bundle": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v2",
+    "independent_runtime_review": "Luna checked actual saved schema, repetition paths and budgets; no further blocker found",
+    "operational_correction": "staging/startup_contract_repair.json",
+    "preflight": "all three arms passed; zero solves",
+    "receipt": "local_execution.json",
+    "status": "native_smoke_running_search_gated",
+    "unit_checks": "36 passed"
+  },
+  "point_estimates": {
+    "persistent_innovation_sd_four_year": 0.43743545312066157,
+    "rho_four_year": 0.7761446698586146,
+    "stationary_persistent_log_variance": 0.48126267515968074,
+    "transitory_log_variance": 0.027221901561653328,
+    "transitory_sd_four_year": 0.1649906105257306
+  },
+  "reviewed_repairs": [
+    "bootstrap omitted persons have zero weights at all lags",
+    "synthetic transition respects missing period gaps",
+    "100-replication synthetic error distinguished from one-draw sampling error"
+  ],
+  "scope": "direct four-year PSID gross household earnings, no fixed permanent type",
+  "selected_offset": 0,
+  "selection_rule": "earliest complete nonoverlapping four-year grid, selected before uncertainty/recovery assessment; other offsets robustness"
+}

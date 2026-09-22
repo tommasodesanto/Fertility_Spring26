@@ -1,0 +1,21 @@
+{
+  "status": "runtime_pilot_stopped_before_full_objective",
+  "reason": "Measured 246\u2013255 seconds per stationary solve implies the full normalization plus validation may exceed the pilot 1400-second native cap. Preserve this pilot and proceed to an explicitly larger exact-loop smoke; no numerical gate changed.",
+  "pid": 30009,
+  "completed_stationary_solves": 2,
+  "started_stationary_solves": 3,
+  "completed_full_objectives": 0,
+  "heartbeat": {
+    "case": "new_balanced",
+    "completed_repetitions": 0,
+    "elapsed_seconds": 660.0858393750004,
+    "phase": "stationary_equilibrium",
+    "psi_child": 0.20916656048422563,
+    "repetition": 1,
+    "stationary_solves": 3
+  },
+  "seconds_per_completed_stationary_solve": [
+    246.24061274999985,
+    254.97883570799968
+  ]
+}

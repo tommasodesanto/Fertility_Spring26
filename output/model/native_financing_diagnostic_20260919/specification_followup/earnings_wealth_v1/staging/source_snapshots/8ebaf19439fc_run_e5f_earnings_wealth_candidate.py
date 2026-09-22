@@ -188,7 +188,7 @@ def run_case(plan_path, plan, arm, output, repetitions, preflight=False):
             sort_keys=True, separators=(",", ":")).encode()).hexdigest(),
         additional_runtime_files={k: plan["files"][k] for k in ("adapter", "accounting", "income", "period_income") if k in plan["files"]},
         changed_economic_objects=([] if arm == "reference" else
-            ["income process", "entry wealth: " + plan.get("entry_specification", {}).get("rule", "fixed_reference_marginal_rank_coupling")] +
+            ["income process", "entry wealth-income rank coupling"] +
             (["current-income purchase eligibility", "ordinary transaction wealth map",
               "end-of-period owner mortgage floor"] if arm.endswith("purchase") else [])),
         interpretation="Native score source fingerprints identify the frozen base; this additional contract identifies economic runtime changes.")

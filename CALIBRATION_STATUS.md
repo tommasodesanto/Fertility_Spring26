@@ -1,5 +1,39 @@
 # Calibration Status
 
+**September 22, 00:26 EDT — reviewed earnings candidate in native smoke; longer search gated:**
+Direct four-year PSID gross-household earnings estimates are complete: period
+rho 0.776144670, persistent innovation SD 0.437435453, transitory SD 0.164990611.
+The 199-person-bootstrap and 100-replication same-observer checks are saved;
+three covariance moments identify three parameters exactly, with weak transitory
+precision. The 45-state grid passes distribution checks, not household convergence.
+Both inherited-entry-wealth variants fail the unchanged dead-mass gate; the
+separate zero-assets-at-age18 pilot completed two stationary solves and was
+stopped to allocate enough time for the full normalization loop. Zero entry wealth
+is an explicit externally fixed candidate restriction, not an adopted estimate.
+The current frozen V2 bundle is running repeated-anchor/inward-beta smoke locally
+under the author's open-laptop overnight authorization; Torch authentication is
+blocked. A controller metadata mismatch stopped V1 before any solve; its receipt
+and the reviewed operational correction are preserved. V2 passed 36 unit checks
+and all three zero-solve native preflights, and native progress is confirmed.
+Only verified smoke triggers four-worker finite joint refinement, at most 64
+proposals plus two selected repetitions, unchanged complete targets and gates,
+actual beta upper0.99, and 17 standard plots. No full objective or refit is yet
+reported. Follow-up `earnings-overnight-review` is active and quiet while healthy.
+[Current specification, receipts and evidence](output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/README.md).
+
+**September 21 late night — author-authorized earnings completion sequence:**
+The author has now explicitly authorized parallel primary-source reviews,
+selection of a defensible earnings specification, own-data estimation and/or
+published-estimate conversion, implementation, tests, and a longer calibration
+followed by a literature/common-sense audit. The laptop remains open. Four
+bounded source/data/timing reviews have been collected or are being corrected;
+a direct four-year PSID validation and a reusable bounded search controller are
+in preparation. No new household solve or cluster job has yet started. The
+previous held endpoint plan is historical, not the selected new specification.
+Persistent AR(1) plus transitory risk without a fixed permanent type remains the
+intended architecture; the full target system and September 14 reference remain
+pinned. [Current work packet](output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/README.md).
+
 **September 21 night — launch preparation stopped after author clarification:**
 The author asked for the best defensible specification, not an arbitrary
 approximation selected merely to run overnight. No job has been submitted by
@@ -226,7 +260,7 @@ separates evidence, provisional recommendations and unresolved choices.
 
 **September 20, 13:18 EDT — rental control passed; positive-wedge experiment stopped:**
 Smoke **18080236** reproduced all original-control policy arrays exactly and
-passed budget, value, independent saving, source, cohort and17-plot checks.
+passed budget, value, independent saving, source, cohort and 17-plot checks.
 Its next case stopped before solving: the retained checkpoint uses an
 exhaustive saving solver, whereas the current isolated wedge supports only
 global golden-section search. Production **18080237** was cancelled. No
@@ -1187,7 +1221,7 @@ The manifest and submission receipt, together with the full scientific
 contract are under `output/model/e5f_original_queue_20260913a/announced_sequence/`.
 
 **September13 — introductory slide simplified at the author's request.**
-The September14 deck replaces the housing/fertility comparison with two historical
+The September 14 deck replaces the housing/fertility comparison with two historical
 data panels: period fertility and children ever born at ages40–44. The frame
 now starts in1980 at the author's request: the CPS measure is2.988 in1980,
 2.447 in1985 and2.147 in1988, revealing older cohorts above replacement.
@@ -1247,7 +1281,7 @@ them again unless a new substantive issue appears. The four main jobs continue.
 
 **September 13, 20:18 UTC — bounded native sequence-space check passed startup.**
 Retry job17703357 is RUNNING on cs612 and its started.json confirms that the
-frozen runtime loaded and source/input pins passed. Jobs17703005 and17703266
+frozen runtime loaded and source/input pins passed. Jobs17703005 and 17703266
 failed before any native mapping (output-directory creation, then premature
 module import). The author asked to retry; both repairs were reviewed before
 the new immutable submission. This remains the same two-period, six-mapping
@@ -1513,7 +1547,7 @@ Full66row comparison, 132raw-level-cell checks and native evidence are under
 `output/model/e5f_final_night_20260913/history_A0_6/policy_comparison/` and
 `history_A0_6/policy_state_verification_v2.json` in that packet.
 
-The current `verified_history_readout.pdf` has41pages: complete13initial moments,
+The current `verified_history_readout.pdf` has41pages: complete 13initial moments,
 17parameter/restriction rows, four fitted fertility windows, all13untargeted2023
 Data/Model comparisons, paired policy tables, all51native diagnostics and six
 comparison figures. All41draft pages visually inspected and225displayed source
@@ -1559,7 +1593,7 @@ policy reserve are enforced after queue wait. Earlier sources remain frozen.
 Account check13:00UTC:42% weekly remaining, creditbalance unchanged;20%floor.
 
 `output/model/e5f_final_night_20260913/verified_history_readout.pdf` is the current
-20-page discussion report: complete initial13moment and17parameter tables,
+20-page discussion report: complete initial13moment and 17parameter tables,
 four-window fertility fit, all13untargeted2023Data/Model rows with actual data
 vintages/caveats,17native initial diagnostics and five history/2023figures.
 All20pages were rendered and visually inspected;157numeric source cells checked.
@@ -1633,7 +1667,7 @@ first-vintage horizon diagnostic, not a horizon-adequacy certificate or a full
 historical result. Evidence: `fixed_preference_horizon_comparison/` in the packet.
 
 Both32-GiB100-period ordinary starts now complete valid nonconstant mappings.
-Actual physical Slurm steps are17677004 (A0) and17676958 (A+), with measured peaks
+Actual physical Slurm steps are17677004 (A0) and 17676958 (A+), with measured peaks
 about16.8/17.0GiB. The array shorthand passed to `sstat` had repeated the base
 task; subsequent checks use these physical job IDs. Pending48-GiB duplicate
 array17663986 is cancelled, with outputs preserved in `pending_48g_retirement.json`.
@@ -1749,7 +1783,7 @@ the report. Current jobs and evidence are in the final-night packet below.
 Recovery17603133 passed both exact numerical repetitions. The selected original
 objective is179.2984252281 versus182.6491468669 for the rebated seed (1.83% lower).
 This is a verified candidate from a search stopped by numerical evaluation limits,
-not a converged optimizer. All13 target rows and17 parameter/restriction rows are
+not a converged optimizer. All13 target rows and 17 parameter/restriction rows are
 in `output/model/e5f_final_night_20260913/initial_search_recovered/`.
 The displayed beta bound is the actual enforced0.99; the unchanged raw scorer
 metadata with0.9995 is preserved separately. Housing moments remain weak.
@@ -1919,7 +1953,7 @@ uses the same ages40–44 observer throughout. Period fertility is now plotted a
 the start of its four-year window; all values reproduce the original figure.
 This supersedes the incomplete historical-stock preview below. Source receipts,
 full values and reproduction commands are in the recovered_sequence packet's
-README; its figure historical_fit_stock_forecast.pdf is now in the September14
+README; its figure historical_fit_stock_forecast.pdf is now in the September 14
 deck, frame Fertility and Housing. Both deck PDF copies were compiled twice and
 the changed frame visually checked. No calibration or fiscal specification
 changed; no-rebate and horizon limitations persist. Initial cross-sectional
@@ -1949,7 +1983,7 @@ household-formation conversion and replacement normalization must be explicit
 before its long search; the old2.1 normalization alone does not certify
 replacement. No diagnostic entry parameter is promoted silently.
 Author refinement: each demographic branch gets independent short and long
-forecast tracks, now6and100four-year dates (24and400years), giving four
+forecast tracks, now6and 100four-year dates (24and400years), giving four
 parallel history/policy tracks from two initial calibrations. Short results
 remain provisional; long results still need terminal/horizon checks. Shock
 sequences are refitted by track, with fixed-shock comparisons to identify
@@ -2009,7 +2043,7 @@ baseline/policy claims. The completed1%-tax equal-rebate stationary case is usef
 conditional evidence, not a recalibrated historical baseline.
 
 At the author's request, the recovered no-rebate fertility figure was sent to
-the September14slides task for provisional use. It shows the three fitted windows
+the September 14slides task for provisional use. It shows the three fitted windows
 and the final candidate1.633313 versus1.64575; both fiscal regime and failed
 horizon/final-fit status are labeled. The established plotting driver now has
 an opt-in --sequence-base mode; the prior patch graph packet remains intact.
@@ -2404,7 +2438,7 @@ explicitly selected CARRYING household distributions into2023, not resetting
 them to a stationary distribution. Exact two-solve smoke17496911 passed:
 pinned seed period fertility2.1000010284 at psi.1612271565 (63seconds), and
 1.9827650812 at psi.1412271565 (75seconds). Operator/source/household-budget/
-market/PAYGO checks passed and17standardgraphs were saved.
+market/PAYGO checks passed and 17standardgraphs were saved.
 Four independent fits17496961_0–3 now target the unchanged four period-fertility
 windows, each oneCPU/16GiB, max8stationary GEs/1800seconds. All structural
 parameters stay fixed at the pinned historical initial point; only psi varies.
@@ -2976,10 +3010,10 @@ Remote:70abd4a8snapshot, batches/fixed_beta_profiles_20260911/results/beta_098
 and beta_099. Originalrawscorer retains nine-free metadata; explicit profile
 reports mark eightfree and beta fixed. No permanentglobalbeta ceiling has been
 promoted. Existing currentcalibration is a reference, never an eligible profile
-result. Full fit/parameter tables and17standardgraphs are selected outputs.
+result. Full fit/parameter tables and 17standardgraphs are selected outputs.
 
 Primary transition17393936 exhausted8mappings after29m10s includingterminal.
-It retained exactmappingreplay, checkpointreload and17graphs but remained
+It retained exactmappingreplay, checkpointreload and 17graphs but remained
 unconverged: housing0.0068260761, fiscal0.0000477796, against2e-4/1e-6gates.
 The two17394807 branches completed theirterminals but stopped at the missing
 acceptedhistory gate; theirterminals are reusable. StatusFAILED is thus a
@@ -3134,7 +3168,7 @@ rooms now overshoot1.26589562 versus0.72024626; average rooms6.22643 versus5.561
 ownership30–55is0.572675 versus0.648334. Initial completed-fertility normalization
 2.10009165 remains within its gate. This is pre-2007 initial calibration, not a
 2023 recalibration, historical shock fit, horizon certificate or policy result.
-Allfulltables,parameterboundsand17originalplots:
+Allfulltables,parameterboundsand 17originalplots:
 `output/model/e5f_matched_pf_20260909a/initial_calibration_contract/three_hour_continuation/collected_17376529/READOUT.md`.
 Remote batch `three_hour_continuation_20260911` under the70abd4a8snapshot.
 The two-round search cap was reached before the three-hour wall cap. No additional
@@ -3253,7 +3287,7 @@ verification and horizon certification remain outstanding. No new search launche
 
 **September11,10:11 EDT — access restored; complete candidate ranking and two resumed jobs.**
 Root17362744 completed normally in25:12: eight mappings/96Bellmans, exact final
-replay,643source hashes, checkpoint reload and17graphs verified. It hit its
+replay,643source hashes, checkpoint reload and 17graphs verified. It hit its
 evaluation budget: maxhousing0.0087467491, fiscal3.03e-10. The horizon remains
 uncertified. Collected37artifacts in `history_probe/root_round_01/completed_17362744/`.
 The isolated continuation change is reviewed and committed450bce1c;88puretests
@@ -3275,7 +3309,7 @@ This is the lowest observed candidate, not a final estimate or optimum.
 The complete solve-observe-score wrapper now has9passing preflight/process tests
 in addition to18scorer tests. It requires the approved objective fingerprint and
 exact641-file observation snapshot, preserving all634economic files. Original
-numeric gates and17graph filenames are enforced. Startup job17370341 failed in
+numeric gates and 17graph filenames are enforced. Startup job17370341 failed in
 3seconds, before any model solve, because two existing test-fixture CSVs were
 missing at their expected relative paths. Byte-identical pinned copies repaired
 packaging; all27tests then passed. Both failure and repair are retained. Replacement
@@ -3296,7 +3330,7 @@ work; automatic heartbeat is now hourly with a shorter prompt. No reset credit
 was redeemed. Unfinished wrapper/continuation edits remain unverified and unused.
 
 Local complete scoring now passes18 scorer tests and independent arithmetic.
-All19 sensitivity cases have13 fitted rows,12 contributions and17 parameter rows.
+All19 sensitivity cases have13 fitted rows,12 contributions and 17 parameter rows.
 The12-by9 weighted Jacobian has numerical rank9 and condition number1856.4;
 this is not a strong-identification certificate. Under the frozen working rule,
 baseline loss1499.851825 falls to1428.171606 at the reproduced joint smoke,
@@ -3323,7 +3357,7 @@ Four pages rendered and visually checked, with all printed numeric cells checked
 Array17362324 finished:22 fresh cases passed, one failed the unchanged strict
 initial housing-equilibrium gate (index1), and the verified two-repetition smoke
 supplies the24th proposal. Thus23 valid candidates, one retained failure. Final
-collector verifies all634 source pins, checkpoints, numerical gates and17graph
+collector verifies all634 source pins, checkpoints, numerical gates and 17graph
 hashes per valid case. Its original `partial` flag means23/24 valid, not a running
 array. Full unchanged results: `initial_joint_round_01/smoke_readout/`.
 
@@ -3368,7 +3402,7 @@ evidence: `initial_fit_readout/graph_reduction/branch_audit/completed_17362437/`
 **September 11, 02:46 EDT — verified joint improvement; actual historical root submitted.**
 The two-fresh-loop joint smoke17360699 passes:8GE,1150.19 seconds,
 634 source pins, exact numerical normalization/prices/early/legacy moments,
-2 checkpoint hashes and17 original graph hashes. Reporting-gate fixes preserve
+2 checkpoint hashes and 17 original graph hashes. Reporting-gate fixes preserve
 all numerical checks: the graph quantity receipt exists only after repetition02,
 and measured walltime is excluded from exact numerical-result equality alone.
 Both original failures and gate revisions are retained. Revised run-plan SHA
@@ -3413,7 +3447,7 @@ completed result is inferred from submission. Keep-awake process63896 is active.
 **September 11, 02:00 EDT — full sensitivity panel and balanced terminal pass.**
 All **19 cases of17358647** are independently verified with unchanged source/input
 pins, complete parameters and early measurements, normalized fertility, fiscal,
-market, household/accounting gates, checkpoint hashes and17graph hashes per case.
+market, household/accounting gates, checkpoint hashes and 17graph hashes per case.
 No completed case failed. Full raw panel and local derivatives/proposals are in
 `initial_sensitivity_panel/`. The nine-column scaled Jacobian has numerical rank9
 but condition numbers about1242-1894; this is not an identification certificate.
@@ -3431,7 +3465,7 @@ The array remains gated; no joint array is submitted yet.
 Balanced terminal **17358773 passed**: seven mappings including fresh reproduction,
 366.0seconds; asset price0.5195037691, period pension1.5558604502, housing residual
 -2.2372e-6 and relative pension residual-2.0517e-7. Actual fiscal accounting,
-checkpoint reload and17graphs pass. This uses a diagnostic preference change
+checkpoint reload and 17graphs pass. This uses a diagnostic preference change
 -0.25 and unchanged serialized demographic projections through2100, not an
 estimated shock or a calibrated historical/policy equilibrium. Its terminal
 checkpoint receipt was written before graphs, so its graph flag is interim;
@@ -3471,7 +3505,7 @@ reversals of at least1percentage point represent0.04645%. This is not an optimiz
 error diagnosis. One two-node branch audit is indicated. Permanent-income ownership
 rises through age70, with middle exceeding high at74/78/82 in both cases. Full
 receipts: `initial_fit_readout/graph_reduction/`. A four-page working PDF with all13
-restrictions,2validation observations and17parameters is in `morning_review/`;
+restrictions,2validation observations and 17parameters is in `morning_review/`;
 its current operational as-of is01:21 and requires refresh before final delivery.
 
 
@@ -3958,7 +3992,7 @@ Full100-date root17309773is RUNNING oncs616; all58startup tests passed and the
 first complete backward/forward evaluation is underway with fresh heartbeats.
 SourceF96a41873, maximum6paths,21000seconds, allmarket/feasibility/replay gates
 unchanged. No completed root evaluation or new equilibrium yet. The full1212
-fit rows across the anchor and100probes reproduce their gaps and weighted losses.
+fit rows across the anchor and 100probes reproduce their gaps and weighted losses.
 A12by100moment-price sensitivity packet is saved as a diagnostic at the supplied
 price anchor; it is not the11-parameter identification matrix. Horizon stability,
 matched re-estimation and new policies remain pending.
@@ -4126,7 +4160,7 @@ Both choice arms now restore the retained old completed-fertility normalization
 of2.1 (tolerance0.0005), with the original historical preference decline and an
 arm-specific2007 supply anchor. Jobs17277586/17277587 passed33 startup tests and
 the full initialization loop. Terminal price/population roots17277907 sequential
-and17277683 nested then passed all population/accounting and housing-market
+and 17277683 nested then passed all population/accounting and housing-market
 gates, each with eight evaluations including an uncached identical-price replay.
 Sequential endpoint price0.46420547, signed housing residual4.619e-6; nested
 price0.46391036, residual−1.991e-5; replay differences zero. These are stationary
@@ -4138,7 +4172,7 @@ is intentional and reported. The diagnostic continuation holds the normalized
 demographic inputs. Neither continuation is silently promoted as estimated.
 Full small receipts and independent source/arithmetic verification are under
 `output/model/e5f_matched_pf_20260909a/meeting_receipts/`. Normalized historical
-path smokes17278316 sequential and17278317 nested now pass all accounting,
+path smokes17278316 sequential and 17278317 nested now pass all accounting,
 reproduction, actual-rent budget and12-target measurement gates. They cover
 12dates2007–2051 (24 Bellman solves), taking420.68/631.59seconds respectively.
 Their supplied prices do not clear markets: maximum absolute gaps71.08%/70.93%.
@@ -4148,7 +4182,7 @@ complete12-row fits and all11 coordinates/bounds are in each arm's
 Both2055 final populations are far from their stationary endpoints, so this
 short horizon is explicitly uncertified. Both twelve-coordinate price panels17278556/17278629 and collectors
 17278711/17278712 passed; their log-price Jacobian condition numbers are3.681
-and3.634. Finite-horizon market roots17279004 sequential and17279843 nested
+and3.634. Finite-horizon market roots17279004 sequential and 17279843 nested
 are running. At19:15UTC the sequential maximum gap fell from71.08% to0.3107%
 in five valid mappings; its strict tolerance is0.02%, so it is not yet accepted.
 Both28-date supplied-price horizon checks17278557/17278633 also passed, taking
@@ -4453,7 +4487,7 @@ and22 full dates. Observed impact runtime2m28–2m45; expected35–45minutes wit
 two paths parallel, queue and harder future roots additional. Each date30min,
 stage4h, Slurm4h05; each path2CPU/48GiB, numerical threads1. Heartbeat30s,
 checkpoints/entryqueues/latest summaries perdate; fail closed with no retries
-or relaxed gates. Full paths reproduce their2023/2027 smokes; every2023 point
+or relaxed gates. Full paths reproduce their2023/2027 smokes; every 2023 point
 reproduces verified impact. Restore root transfer, independent ledger, full
 policy replay, household and finite2e-10 mass/queue gates at each date.
 Collector checks all11dates and common initialstate, with householdmass equal
@@ -5075,8 +5109,8 @@ Job `17105914` has completed all four historical verification cases. Independent
 verification checked all 84 receipt artifact hashes and unchanged source,
 target, market, accounting, population, budget and occupied-value gates.
 The two anchors reproduce loss451.3564277560195, all twelve fit rows, all
-parameters,253 historical entries and17 diagnostic PNGs exactly. They took
-1774.48 and1782.49 seconds. The minus and plus probes took1508.22 and1547.47
+parameters,253 historical entries and 17 diagnostic PNGs exactly. They took
+1774.48 and 1782.49 seconds. The minus and plus probes took1508.22 and1547.47
 seconds. The complete four-policy/eight-date smoke is now running; search
 `17106283` still awaits successful completion through its automatic dependency.
 
@@ -5671,7 +5705,7 @@ there or submit a duplicate.
 **September 7, 02:46 UTC: repeated full histories independently verified.**
 Both starting histories in smoke17087058 pass every unchanged gate and
 reproduce all12 target rows, all parameters,253 numeric historical entries
-and17 standard PNGs exactly. The lead checked42 original artifact hashes,
+and 17 standard PNGs exactly. The lead checked42 original artifact hashes,
 replayed the target/measurement validators and inspected all17 graphs.
 No occupied value decreases remain; budget excess mass is5.6441e-12.
 The starting loss is485.2815288403; this is an unoptimized experiment,
@@ -6104,7 +6138,7 @@ ceiling from0.5 to2.0 in an isolated source snapshot; all other parameter
 bounds, model equations, target measurements and numerical gates remain fixed.
 The source/default-domain checks and concurrent loop smoke `17022832` passed.
 Both runs reproduce all twelve rows, parameters,253 numeric history entries
-and17 standard PNGs exactly. The fixed-to-estimated-domain bridge differs by
+and 17 standard PNGs exactly. The fixed-to-estimated-domain bridge differs by
 at most4.8e-12 in fit entries and2.2e-11 in history entries, within the declared
 roundoff-only tolerances. Full search `17023172` uses cpu_short/cpu48 with12CPUs/96GB and a six-hour
 allocation. The earlier8.5-hour request was first rejected by the short queue;

@@ -1,5 +1,113 @@
 # Earnings, entry wealth and purchase timing
 
+## Live review — September 22, 00:26 EDT
+
+The primary-source reviews and direct four-year PSID point estimates are done.
+The main candidate uses the earliest complete four-year block grid (1984-based
+survey-year labels), with gross RP/spouse labor earnings and age/year fixed
+effects. It has **persistent AR(1) plus iid transitory risk, no fixed permanent
+type**. Three covariance moments identify three parameters; their exact fit is
+not evidence that the specification is universally correct.
+
+| Object | Four-year estimate | Interpretation |
+|---|---:|---|
+| Persistent coefficient | 0.776144670 | Per model period |
+| Persistent innovation SD | 0.437435453 | Log earnings innovation, not stationary SD |
+| Transitory SD | 0.164990611 | Period iid log earnings shock |
+| Persistent stationary variance | 0.481262675 | Initial stationary distribution is externally imposed |
+
+The other two estimable block alignments give persistence 0.7971 and 0.8135,
+with positive transitory variances. A fourth alignment lacks the third moment
+and is reported as underidentified. The main sample has 7,812 blocks and 1,449
+eight-year pairs. The corrected 199-draw person bootstrap shows that the main
+transitory estimate is uncertain, with its lower percentile at zero. The
+100-replication synthetic exercise applies the same age/year regression,
+missingness, weights and covariance observer; its small mean projection effects
+are reported explicitly. [Complete data evidence](data_validation/README.md).
+
+The 15 persistent by 3 iid grid reproduces all five log covariances to rounding;
+level covariance errors are at most 4.61%. This is distribution validation,
+not household-grid convergence. The analogous annual persistent coefficient is
+0.93861 and innovation SD 0.23932 under an endpoint embedding. These conversions
+are comparisons only: the period transitory SD cannot be mechanically called an
+annual estimate. [Literature](literature/annual_sources_review.md),
+[multi-year precedents](literature/multiyear_review.md),
+[timing](literature/timing_review.md), [lead receipt](lead_review.json).
+
+**Native testing found a specific issue.** Income-only and income-plus-purchase
+both stop at the unchanged feasibility gate with about 3.16e-12 dead mass
+(tolerance 1e-12). The difference is only 2.5e-18, isolating this failure from the
+purchase adapter. The evidence points to inherited negative entrant debt under
+new low-income support. That entry distribution was measured for ages 25–35 but
+imposed at age 18. A distinct zero-assets-at-18 test, supported as an external
+entry convention by Sommer and De Nardi, completed two stationary solves (246–255 seconds each) and was deliberately stopped before its full objective to set an adequate smoke budget. It is not yet adopted.
+[Failure diagnosis](staging/feasibility_diagnosis.md).
+
+Torch authentication has expired; no cluster job has been submitted. Under the
+author's explicit open-laptop overnight authorization, the frozen V2 bundle is
+**running native smoke locally**: two exact anchor repetitions and one inward-beta
+probe. Its successful receipt alone triggers the longer search. V1 stopped
+before solving on a controller metadata mismatch; the correction and old receipt
+are preserved in [startup repair](staging/startup_contract_repair.json). All
+three V2 zero-solve native preflights passed, 36 unit checks passed, and native
+progress is confirmed. [Execution/monitor registration](local_execution.json),
+[immutable V2 plan](staging/frozen_v2_plan.json),
+[source inventory](staging/frozen_v2_hash_manifest.json).
+
+The longer search has four single-threaded workers, a fixed deterministic seed,
+at most 64 joint proposals over the nine existing coordinates, and two exact
+selected repetitions. The production controller has 18,800 seconds including 4,400
+reserved for verification; the smoke supervisor has 7,000 seconds and the full
+local supervisor 28,000 seconds (about 7.8 hours) including overhead. At most 69
+full objectives /552 nested solves are authorized; time limits will likely bind
+first. Estimated full objectives take 1,500–2,100 seconds from measured stationary
+solve times. Every case records progress, and latest/best results are saved.
+Unexpected failures stop the stage; no automatic retry or gate relaxation.
+The follow-up checks every 20 minutes and stays quiet while healthy.
+
+No full objective has completed yet. The final review requires complete 13-target
+and 17-parameter tables, actual bounds, exact selected repeats, and 17 standard
+plots, followed by the [parameter and literature audit](literature/parameter_validation_rubric.md).
+The September 14 reference, target system and numerical gates remain unchanged.
+The four-year information approximation, weak iid estimate, and stationary
+initial income at18 remain explicit limitations even if the search succeeds.
+
+## Authorized sequence recorded September 21 late night (status superseded above)
+
+The author authorizes reviews, own-data estimation and/or transformation of
+published estimates, implementation, tested longer calibration, and a final
+parameter/plausibility review. The older endpoint-only run plan below is held;
+the live September22 section above records execution. The older launch-status notes below are historical.
+
+1. Verify annual and multi-year primary sources, actual gross-household earnings
+   inputs, and purchase timing. Evidence is saved under [literature](literature/).
+2. Construct observed complete four-year PSID gross-earnings blocks (no filled
+   biennial years); report support, covariance fit and sensitivity to block
+   alignment before choosing direct period estimates or transformed literature
+   inputs. A binding zero transitory variance is a finding, not permission to
+   quietly drop the intended component.
+3. Freeze a single main specification, including its income concept, period
+   information set, entry law, grid and purchase accounting. State approximation
+   errors and any empirically unmeasured restriction. No preference parameter may
+   compensate for a silent income-definition or target change.
+4. Verify the income grid and budget math; run the exact calibration loop as a
+   smoke with repeated anchor and a nearby proposal. Measure runtime and memory.
+5. Run a finite, seeded joint calibration in the nine existing coordinates on
+   Torch with the complete unchanged target system, actual bounds, progress,
+   checkpoints, separate verification budget, and stop-on-contract-failure.
+   Re-evaluate the selected point twice and retain all 17 standard diagnostics.
+6. Review all targets and parameters, grid sensitivity, boundary behavior and
+   literature comparability. Deliver a supported candidate or a precise failure;
+   do not call a bounded search convergence, or equate a successful solve with a
+   publishable calibration.
+
+Planning budget: up to 35 minutes for direct data validation, 45 minutes for
+controller preparation in parallel, followed by exact-loop smoke and a bounded
+four-hour joint search if the specification and numerical gates pass. Actual
+solve counts and allocations are set from the smoke, not promised in advance.
+
+## Historical decisions and superseded preparation
+
 **Launch on hold after author clarification:** acceleration did not authorize
 selection of an arbitrary period approximation. Worker staging stopped; no
 lead submission. The plan gate is pending again. The proposed overnight

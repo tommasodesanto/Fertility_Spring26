@@ -1,0 +1,237 @@
+{
+  "adapter_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_candidate.py",
+  "adapter_sha256": "7226a653785ed38dd0dc0726030ede27a885826a0fa036debe5109caad1299ae",
+  "budget_interpretation": "Smoke at most7000s; production18800s includes at most14400s proposals and4400s selected verification. At most3 smoke +64 proposal +2 verification objectives.",
+  "cases": [
+    {
+      "arm": "reference",
+      "id": "reference",
+      "native_seconds": 2100,
+      "repetitions": 1,
+      "seconds": 2200,
+      "wrapper_seconds": 2150
+    },
+    {
+      "arm": "literature_income",
+      "id": "income_only",
+      "native_seconds": 2100,
+      "repetitions": 1,
+      "seconds": 2200,
+      "wrapper_seconds": 2150
+    },
+    {
+      "arm": "literature_income_purchase",
+      "id": "income_purchase",
+      "native_seconds": 4200,
+      "repetitions": 2,
+      "seconds": 4400,
+      "wrapper_seconds": 4350
+    }
+  ],
+  "config_fixed": true,
+  "entry_specification": {
+    "basis": "Model entry age18 lies outside inherited age25\u201335 wealth sample; negative entry debt fails support under new income. Zero assets is standard in Sommer2016 and DeNardi2004; stationary income at entry remains an external restriction.",
+    "classification": "externally_fixed_candidate_convention",
+    "rule": "zero_assets",
+    "status": "tested_in_smoke_before_refit_not_paper_adoption"
+  },
+  "execution_contract": {
+    "authorization": "Latest user says laptop remains open overnight and permits iteration as long as needed; Torch authentication expired and user was notified. Use bounded local execution under that instruction.",
+    "estimated_seconds_per_full_objective": [
+      1500,
+      2100
+    ],
+    "expected_nested_solves_per_objective": 6,
+    "interpretation": "Proposed earnings/entry/purchase specification; finite joint calibration diagnostic; no convergence or policy adoption.",
+    "maximum_nested_solves_per_objective": 8,
+    "memory_gib": 48,
+    "observed_single_case_rss_gib": 3.3,
+    "physical_cores": 18,
+    "route": "local_fallback",
+    "stationary_seconds_observed": [
+      246.24061275,
+      255.0
+    ],
+    "threads_each": 1,
+    "workers": 4
+  },
+  "expected_stationary_solves": "six per objective historically; at most eight; time cap may stop proposals before64",
+  "expected_wall_minutes": [
+    40,
+    70
+  ],
+  "files": {
+    "accounting": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_earnings_wealth_contract.py",
+      "sha256": "325362bdfd62725b7fb2617dd5e561af5e13444b072392460e74dc9b1e5518a5"
+    },
+    "adapter": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_candidate.py",
+      "sha256": "7226a653785ed38dd0dc0726030ede27a885826a0fa036debe5109caad1299ae"
+    },
+    "controller": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_smoke.py",
+      "sha256": "4fff234e308d45c6216b126dfd9ad7f0fa3aa33618130419d296cd1d0ac391cf"
+    },
+    "income": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/build_literature_period_income.py",
+      "sha256": "f79854ecef8b08972b73c22cb0a7ee4d400117debb5e8295a8981932bdfa227a"
+    },
+    "initial_contract": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/income_refinement_local_20260921/local_initial_contract.json",
+      "sha256": "71c00ea0e9e9458ae2c4859f8683e1e50c5dff065cdadc681036509b04efaab4"
+    },
+    "period_estimates": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/data_validation/fit.csv",
+      "sha256": "1a52337e85678e749e5ff5b87ed8e662dee7eb1e480033dfb441b9282f9f1e79"
+    },
+    "period_income": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/build_period_earnings_process.py",
+      "sha256": "ce00e6b5cebf11de9b995d10ea33a76b040c18d75c705c4c2f495adc8ed6c1ce"
+    },
+    "period_input_receipt": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/data_validation/run_metadata.json",
+      "sha256": "bcadf9451f4570b91cd799337fe5e3c1b72f503c83d815949a86bde761824d80"
+    },
+    "run_contract": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/staging/search_run_contract.local.json",
+      "sha256": "85973b5154d84df6ec228e0b464c3a084ffa3a3a2e6e7f4659dd7454cb3bc6f8"
+    },
+    "search_controller": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_search.py",
+      "sha256": "3164cc2df1b2102211c53d7a5480aae5e8a24f819c4658f72d1da7005775c202"
+    },
+    "wrapper": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_scored_candidate.py",
+      "sha256": "f2010e6801e80ea0446c5b700576be6f08391a9c63f5c90683e169fdfca6a69d"
+    }
+  },
+  "income_specification": {
+    "author_decision": "approved_diagnostic",
+    "authorization_basis": "Author delegated literature review, own-data estimation, specification design, implementation, tests and longer calibration. Lead-reviewed directperiod candidate after corrected bootstrap and same-observer MonteCarlo; zeroentry income/purchase smoke gates all parameter search.",
+    "constructor_arguments": {
+      "n_iid": 3,
+      "n_persistent": 15,
+      "persistent_innovation_sd_period": 0.43743545312066157,
+      "rho_period": 0.7761446698586146,
+      "transitory_sd_period": 0.1649906105257306
+    },
+    "entry_wealth": "Zero assets at18 independent of current income; separately declared externally fixed assumption",
+    "grid_gate_interpretation": "Distribution approximation; household grid convergence is independently checked, not implied.",
+    "information_set": "current period persistent and transitory state observed before choices; no next-period state observed; period total known at coarse decision as maintained four-year approximation, not annual-sequential equivalence",
+    "initial_income_distribution": "stationary; externally imposed at age18, not identified by ages25\u201360 estimation",
+    "mapping": "direct_period",
+    "max_relative_discrete_level_covariance_error": 0.05,
+    "source": "PSID EARNINDRRC complete observed annual cells, offset0; age/year residualized; estimated directly at four-year frequency"
+  },
+  "initial_psi": 0.1489153145785918,
+  "maximum_full_objectives": 69,
+  "maximum_stationary_solves": 552,
+  "native_artifact_paths": [
+    "parameters.csv",
+    "early_measurement.json",
+    "summary.json",
+    "initial_state.pkl.gz",
+    "stationary_solves.json"
+  ],
+  "objective_canonical_sha256": "4440ea07f4de957740ca6c04961d2806d9b9ef782c7a0e7dad4ce73e1db651b1",
+  "operational_revision": {
+    "previous_execution": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922/execution.json",
+    "reason": "Controller validation expected nonexistent top-level source_fingerprints; corrected to require pinned initial_contract, whose native manifest is checked before solving. Prior attempt stopped before any model solve. Economics, targets and gates unchanged.",
+    "version": 2
+  },
+  "parameter_bounds": {
+    "H0": [
+      0.2,
+      80.0
+    ],
+    "beta_annual": [
+      0.94,
+      0.99
+    ],
+    "chi": [
+      0.1,
+      5.0
+    ],
+    "first_birth_fixed_cost": [
+      0.0,
+      8.0
+    ],
+    "h_P": [
+      0.1,
+      2.3
+    ],
+    "kappa_fert": [
+      0.02,
+      50.0
+    ],
+    "kappa_fert_continuation": [
+      0.02,
+      50.0
+    ],
+    "theta0": [
+      0.0,
+      8.0
+    ],
+    "theta1": [
+      0.02,
+      16.0
+    ]
+  },
+  "production_total_seconds": 18800,
+  "python": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/income_refinement_local_20260921/venv/bin/python",
+  "reference_loss": 179.2984242480252,
+  "schema": "e5f_earnings_wealth_search_v1",
+  "search_arm": "literature_income_purchase",
+  "search_config": {
+    "arm": "literature_income_purchase",
+    "case_timeout": 2200,
+    "coordinate_widths": {
+      "H0": 0.35,
+      "beta_annual": 0.012,
+      "chi": 0.2,
+      "first_birth_fixed_cost": 0.2,
+      "h_P": 0.3,
+      "kappa_fert": 0.55,
+      "kappa_fert_continuation": 0.55,
+      "theta0": 0.2,
+      "theta1": 0.55
+    },
+    "max_proposals": 64,
+    "native_seconds": 2100,
+    "search_dispatch_window_seconds": 14400,
+    "search_seconds": 18800,
+    "seed": 20260922,
+    "smoke_anchor_seconds": 4400,
+    "verification_seconds": 4400,
+    "workers": 4,
+    "wrapper_seconds": 2150
+  },
+  "smoke_seconds": 7000,
+  "source_root": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/income_refinement_local_20260921/source",
+  "starting_structural_parameters": {
+    "H0": 8.11210048056786,
+    "beta_annual": 0.99,
+    "chi": 1.0496534423047694,
+    "first_birth_fixed_cost": 0.26576477618628114,
+    "h_P": 2.3,
+    "kappa_fert": 0.33773423411167025,
+    "kappa_fert_continuation": 0.39785645171756406,
+    "theta0": 0.08105103333987912,
+    "theta1": 0.08520356663830632
+  },
+  "status": "validated_by_lead",
+  "stop": "failed smoke or source/accounting/unknown error stops; only explicitly expected numerical proposal rejection continues; selected two repetitions mandatory",
+  "structural_parameters": {
+    "H0": 8.11210048056786,
+    "beta_annual": 0.99,
+    "chi": 1.0496534423047694,
+    "first_birth_fixed_cost": 0.26576477618628114,
+    "h_P": 2.3,
+    "kappa_fert": 0.33773423411167025,
+    "kappa_fert_continuation": 0.39785645171756406,
+    "theta0": 0.08105103333987912,
+    "theta1": 0.08520356663830632
+  },
+  "total_seconds": 26000
+}
