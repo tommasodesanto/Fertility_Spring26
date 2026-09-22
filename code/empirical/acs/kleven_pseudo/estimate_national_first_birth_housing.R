@@ -35,11 +35,31 @@ nfh_json_line <- function(path, object) {
   if (!is.null(path)) {
     dir.create(dirname(path), recursive = TRUE, showWarnings = FALSE)
     if (!requireNamespace("jsonlite", quietly = TRUE)) nfh_stop("jsonlite is required for failure receipts")
-    jsonlite::write_json(object, path, auto_unbox = TRUE, pretty = TRUE)
+    jsonlite::write_json(object, path, auto_unbox = TRUE, pretty = TRUE, digits = 17)
   }
 }
 
 nfh_safe_name <- function(x) gsub("[^A-Za-z0-9_.-]+", "_", x)
+
+nfh_write_fit_artifacts <- function(fit, output_dir) {
+  if (is.null(output_dir)) return(invisible(NULL))
+  key <- nfh_safe_name(paste(fit$outcome, fit$specification, sep = "__"))
+  prefix <- file.path(output_dir, paste0("fit_", key))
+  b <- fit$coefficients
+  V <- as.matrix(fit$full_vcov)
+  coeff <- data.frame(term = names(b), estimate = as.numeric(b), stringsAsFactors = FALSE)
+  covar <- data.frame(term = rownames(V), V, check.names = FALSE, stringsAsFactors = FALSE)
+  utils::write.csv(coeff, paste0(prefix, "_coefficients.csv"), row.names = FALSE)
+  utils::write.csv(covar, paste0(prefix, "_full_vcov.csv"), row.names = FALSE)
+  utils::write.csv(fit$contrast, paste0(prefix, "_contrast.csv"), row.names = FALSE)
+  nfh_json_line(paste0(prefix, "_receipt.json"), list(
+    outcome = fit$outcome, specification = fit$specification, formula = fit$formula,
+    nobs = fit$nobs, source_hh_clusters = fit$source_hh_clusters,
+    coefficients = as.list(b), full_vcov = lapply(seq_len(nrow(V)), function(i) as.numeric(V[i, ])),
+    coefficient_terms = names(b), contrast = fit$contrast,
+    checkpoint = file.path(output_dir, paste0("checkpoint_", nfh_safe_name(paste(fit$outcome, fit$specification, sep = "::")), ".rds"))))
+  invisible(NULL)
+}
 
 nfh_weighted_mean <- function(y, w) {
   ok <- is.finite(y) & is.finite(w) & w > 0
@@ -157,7 +177,8 @@ nfh_plot_housing_event_curves <- function(curves, path, geography_label = "Natio
 }
 
 estimate_national_first_birth_housing <- function(
-    panel, output_dir = NULL, checkpoint = NULL, event_times = as.integer(-5:10),
+    panel, output_dir = NULL, checkpoint = NULL, reuse_dir = NULL,
+    event_times = as.integer(-5:10),
     ref = -2L, women_only = TRUE, outcomes = NULL, weight_col = "wgt",
     rooms_col = NULL, ownership_col = NULL, bedrooms_col = NULL,
     source_origin_col = NULL, from_cps_col = NULL,
@@ -165,6 +186,10 @@ estimate_national_first_birth_housing <- function(
   if (!is.data.frame(panel)) nfh_stop("panel must be a data.frame")
   if (!requireNamespace("fixest", quietly = TRUE)) nfh_stop("fixest is required")
   if (!is.null(output_dir) && !requireNamespace("jsonlite", quietly = TRUE)) nfh_stop("jsonlite is required when output_dir is used")
+  if (!is.null(reuse_dir)) {
+    if (length(reuse_dir) != 1L || is.na(reuse_dir) || !dir.exists(reuse_dir))
+      nfh_stop("reuse_dir must be an existing checkpoint directory")
+  }
   event_times <- as.integer(event_times)
   if (!identical(as.integer(ref), -2L)) nfh_stop("ref must be -2")
   if (!length(event_times) || anyDuplicated(event_times) || !(ref %in% event_times) ||
@@ -249,6 +274,53 @@ estimate_national_first_birth_housing <- function(
     event_only = "OUTCOME ~ i(event_time, ref = -2)",
     age_only = "OUTCOME ~ i(event_time, ref = -2) | age_factor",
     state_year = "OUTCOME ~ i(event_time, ref = -2) | statefip + doiy_factor")
+  reuse_fit <- function(path, outcome, specification, formula_text) {
+    if (!file.exists(path)) return(NULL)
+    cached <- tryCatch(readRDS(path), error = function(e)
+      nfh_stop("cannot read reuse checkpoint ", path, ": ", conditionMessage(e)))
+    required <- c("outcome", "specification", "formula", "coefficients", "full_vcov",
+                  "nobs", "source_hh_clusters", "event_curve", "contrast")
+    if (!is.list(cached) || !all(required %in% names(cached)) ||
+        !identical(as.character(cached$outcome), as.character(outcome)) ||
+        !identical(as.character(cached$specification), as.character(specification)) ||
+        !identical(as.character(cached$formula), as.character(formula_text)))
+      nfh_stop("reuse checkpoint metadata mismatch for ", outcome, "/", specification)
+    b <- cached$coefficients; V <- cached$full_vcov
+    if (!is.numeric(b) || is.null(names(b)) || !is.matrix(V) ||
+        nrow(V) != length(b) || ncol(V) != length(b) ||
+        !identical(rownames(V), names(b)) || !identical(colnames(V), names(b)) ||
+        any(!is.finite(b)) || any(!is.finite(V)) ||
+        !is.data.frame(cached$event_curve) || !is.data.frame(cached$contrast) ||
+        length(cached$nobs) != 1L || length(cached$source_hh_clusters) != 1L ||
+        !is.finite(as.numeric(cached$nobs)) || as.numeric(cached$nobs) <= 0 ||
+        !is.finite(as.numeric(cached$source_hh_clusters)) || as.numeric(cached$source_hh_clusters) <= 0)
+      nfh_stop("reuse checkpoint contents invalid for ", outcome, "/", specification)
+    cv <- cached$event_curve; ct <- cached$contrast
+    curve_ok <- all(c("event_time", "reference", "estimate", "variance") %in% names(cv)) &&
+      nrow(cv) == length(event_times) && identical(as.integer(cv$event_time), event_times) &&
+      identical(as.logical(cv$reference), event_times == ref) &&
+      all(paste0("event_time::", cv$event_time[cv$event_time != ref]) %in% names(b))
+    contrast_ok <- nrow(ct) == 1L && all(c("contrast", "estimate", "variance", "std.error") %in% names(ct)) &&
+      identical(as.character(ct$contrast[[1L]]), "+3_minus_-1") &&
+      all(c("event_time::3", "event_time::-1") %in% names(b))
+    if (isTRUE(contrast_ok)) {
+      expected_estimate <- unname(b[["event_time::3"]] - b[["event_time::-1"]])
+      L <- setNames(numeric(length(b)), names(b)); L[["event_time::3"]] <- 1; L[["event_time::-1"]] <- -1
+      expected_variance <- as.numeric(t(L) %*% V %*% L)
+      tol <- 1e-9 * max(1, abs(expected_variance), max(abs(V), na.rm = TRUE))
+      contrast_ok <- is.finite(expected_variance) && expected_variance >= 0 &&
+        isTRUE(all.equal(as.numeric(ct$estimate[[1L]]), expected_estimate, tolerance = tol)) &&
+        isTRUE(all.equal(as.numeric(ct$variance[[1L]]), expected_variance, tolerance = tol)) &&
+        isTRUE(all.equal(as.numeric(ct$std.error[[1L]]), sqrt(max(0, expected_variance)), tolerance = tol))
+    }
+    if (!isTRUE(curve_ok) || !isTRUE(contrast_ok))
+      nfh_stop("reuse checkpoint event grid/reference or contrast mismatch for ", outcome, "/", specification)
+    # fixest keeps the fitted model and design data in this object.  Reuse only
+    # the exact coefficient/covariance/curve/contrast receipt so continuation
+    # does not retain a second copy of the national panel in memory.
+    cached$model <- NULL
+    cached
+  }
   fits <- list(); curves <- list(); contrasts <- list(); status <- list(); kk <- 0L
   for (outcome in outcomes) {
     od <- dat[base & is.finite(dat[[outcome]]), , drop = FALSE]
@@ -262,26 +334,42 @@ estimate_national_first_birth_housing <- function(
       nfh_stop("missing event support for ", outcome)
     for (spec in names(formulas)) {
       nm <- paste(outcome, spec, sep = "::")
-      emit(list(stage = "fit_start", outcome = outcome, specification = spec,
-                nobs = nrow(od), base_nobs = base_n))
+      formula_text <- paste(deparse(stats::as.formula(sub("OUTCOME", outcome, formulas[[spec]], fixed = TRUE))), collapse = " ")
+      cached <- if (!is.null(reuse_dir)) reuse_fit(
+        file.path(reuse_dir, paste0("checkpoint_", nfh_safe_name(nm), ".rds")),
+        outcome, spec, formula_text) else NULL
+      emit(list(stage = if (is.null(cached)) "fit_start" else "fit_reused",
+                outcome = outcome, specification = spec, nobs = if (is.null(cached)) nrow(od) else cached$nobs,
+                base_nobs = base_n, reuse_dir = if (is.null(cached)) NULL else reuse_dir))
       one <- tryCatch({
-        fml <- stats::as.formula(sub("OUTCOME", outcome, formulas[[spec]], fixed = TRUE))
-        # All specifications use the same outcome-specific rows and author weight.
-        reg <- fixest::feols(fml, data = od, weights = ~.weight,
-                             vcov = ~source_hh_cluster)
-        b <- stats::coef(reg); V <- as.matrix(stats::vcov(reg))
-        expected <- setdiff(event_times, ref)
-        for (ev in expected) if (!(paste0("event_time::", ev) %in% names(b)))
-          nfh_stop("missing event coefficient for ", outcome, "/", spec, "/", ev)
-        fit_data <- od[fixest::obs(reg), , drop = FALSE]
-        cv <- nfh_event_curve(reg, fit_data, outcome, spec, event_times, ref, "source_hh_cluster")
-        ct <- nfh_contrast(reg, event_times, ref, outcome, spec, "source_hh_cluster")
-        fit <- list(outcome = outcome, specification = spec, formula = paste(deparse(fml), collapse = " "),
-          coefficients = b, full_vcov = V, nobs = stats::nobs(reg), source_hh_clusters = length(unique(fit_data$source_hh_cluster)),
-          event_curve = cv, contrast = ct, model = reg)
-        if (!is.null(output_dir)) saveRDS(fit, file.path(output_dir, paste0("checkpoint_", nfh_safe_name(nm), ".rds")))
+        fit <- if (!is.null(cached)) cached else {
+          fml <- stats::as.formula(sub("OUTCOME", outcome, formulas[[spec]], fixed = TRUE))
+          # All specifications use the same outcome-specific rows and author weight.
+          reg <- fixest::feols(fml, data = od, weights = ~.weight,
+                               vcov = ~source_hh_cluster)
+          b <- stats::coef(reg); V <- as.matrix(stats::vcov(reg))
+          expected <- setdiff(event_times, ref)
+          for (ev in expected) if (!(paste0("event_time::", ev) %in% names(b)))
+            nfh_stop("missing event coefficient for ", outcome, "/", spec, "/", ev)
+          fit_data <- od[fixest::obs(reg), , drop = FALSE]
+          cv <- nfh_event_curve(reg, fit_data, outcome, spec, event_times, ref, "source_hh_cluster")
+          ct <- nfh_contrast(reg, event_times, ref, outcome, spec, "source_hh_cluster")
+          fit <- list(outcome = outcome, specification = spec, formula = paste(deparse(fml), collapse = " "),
+            coefficients = b, full_vcov = V, nobs = stats::nobs(reg), source_hh_clusters = length(unique(fit_data$source_hh_cluster)),
+            event_curve = cv, contrast = ct, model = reg)
+          fit
+        }
+        # The regression object retains design data and can duplicate the
+        # national panel.  Coefficients, covariance, curves, and contrasts are
+        # sufficient for all continuation/reporting work.
+        fit$model <- NULL
+        nfh_write_fit_artifacts(fit, output_dir)
+        if (!is.null(output_dir)) {
+          to_save <- fit
+          saveRDS(to_save, file.path(output_dir, paste0("checkpoint_", nfh_safe_name(nm), ".rds")))
+        }
         emit(list(stage = "fit_complete", outcome = outcome, specification = spec,
-                  nobs = fit$nobs, clusters = fit$source_hh_clusters, contrast = ct))
+                  nobs = fit$nobs, clusters = fit$source_hh_clusters, contrast = fit$contrast))
         fit
       }, error = function(e) {
         failure <- list(stage = "fit_failure", outcome = outcome, specification = spec, error = conditionMessage(e))

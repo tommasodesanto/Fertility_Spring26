@@ -105,7 +105,39 @@ expect(abs(direct_contrast - got_contrast) < 1e-10, "+3 minus -1 contrast differ
 
 expect(file.exists(file.path(outdir, "national_housing_event_curves.png")), "PNG diagnostic was not written")
 expect(file.exists(file.path(outdir, "checkpoint_rooms9_full.rds")), "per-fit checkpoint was not written")
+expect(is.null(res$fits[["rooms9::full"]]$model), "new fit retained the large fixest model")
+expect(file.exists(file.path(outdir, "fit_rooms9__full_coefficients.csv")), "per-fit coefficient artifact missing")
+expect(file.exists(file.path(outdir, "fit_rooms9__full_full_vcov.csv")), "per-fit covariance artifact missing")
+expect(file.exists(file.path(outdir, "fit_rooms9__full_contrast.csv")), "per-fit contrast artifact missing")
+expect(file.exists(file.path(outdir, "fit_rooms9__full_receipt.json")), "per-fit JSON receipt missing")
 expect(length(checkpoints) == 24L, "per-fit start/completion checkpoints missing")
+
+# A continuation may reuse an exact completed fit without rerunning fixest or
+# retaining the serialized model/design matrix.  The output directory is new,
+# so the original checkpoints remain untouched.
+original_checkpoint_identity <- file.info(file.path(outdir, "checkpoint_rooms9_full.rds"))
+reuse_outdir <- tempfile("national_first_birth_housing_reuse_")
+dir.create(reuse_outdir)
+reused <- estimate_national_first_birth_housing(
+  g, output_dir = reuse_outdir, reuse_dir = outdir, event_times = ev,
+  outcomes = "rooms9")
+expect(identical(sort(names(reused$fits)),
+                sort(paste("rooms9", c("full", "event_only", "age_only", "state_year"), sep = "::"))),
+       "reuse did not recover all completed rooms specifications")
+expect(all(vapply(reused$fits, function(z) is.null(z$model), logical(1))),
+       "reused fit retained the large fixest model")
+expect(isTRUE(all.equal(reused$fits[["rooms9::full"]]$coefficients,
+                        res$fits[["rooms9::full"]]$coefficients, tolerance = 0)),
+       "reused coefficients changed")
+expect(isTRUE(all.equal(reused$fits[["rooms9::full"]]$full_vcov,
+                        res$fits[["rooms9::full"]]$full_vcov, tolerance = 0)),
+       "reused covariance changed")
+expect(file.exists(file.path(reuse_outdir, "national_contrasts.csv")),
+       "reuse did not emit compact result tables")
+after_checkpoint_identity <- file.info(file.path(outdir, "checkpoint_rooms9_full.rds"))
+expect(identical(original_checkpoint_identity$size, after_checkpoint_identity$size) &&
+         identical(original_checkpoint_identity$mtime, after_checkpoint_identity$mtime),
+       "reuse changed the original checkpoint")
 
 expect(is.na(res$data$ownership_lw[5]), "raw OWNERSHP=0 was not retained as missing")
 
