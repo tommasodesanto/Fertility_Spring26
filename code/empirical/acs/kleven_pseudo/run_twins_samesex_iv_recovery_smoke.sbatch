@@ -52,18 +52,40 @@ STATUS_PATH="$VT_OUTDIR/status_heartbeat.json" \
 SAMPLE_LABEL=young \
 /usr/bin/time -v Rscript --vanilla "$CODE_ROOT/run_twins_samesex_iv.R" 2>&1
 
-echo "=== gate: VT must show 18 full_fit + 18 primary_receipts + analytic identity ==="
+echo "=== gate: VT must show 18 full_fit + valid AR + nobs agreement + 18 primary_receipts + analytic identity ==="
 python3 - "$VT_OUTDIR" << 'PYEOF'
 import json, sys, os
 d = sys.argv[1]
 tally = json.load(open(os.path.join(d, "fit_status_tally.json")))
 full = sum(r["N"] for r in tally if r["status"] == "full_fit")
 assert full == 18, f"expected 18 full_fit, got {full}: {tally}"
+
+# all18full_fit alone is not enough: inspect each of the 18 fit_receipts
+# for a genuinely completed AR (present/finite/==0 errors, no ar_error
+# field) and actual nobs agreeing with the receipt's own recorded
+# complete-case count (n_usable_prefit) -- a missing/mismatched field
+# fails the gate rather than being silently accepted.
+fr_dir = os.path.join(d, "fit_receipts")
+files = [f for f in os.listdir(fr_dir) if f.endswith(".json")]
+assert len(files) == 18, f"expected 18 fit_receipts, got {len(files)}"
+bad = []
+for f in files:
+    r = json.load(open(os.path.join(fr_dir, f)))
+    def fin1(x):
+        return isinstance(x, (int, float)) and x == x  # not NaN
+    ok = (r.get("status") == "full_fit" and fin1(r.get("ar_n_errors")) and r.get("ar_n_errors") == 0
+          and "ar_error" not in r
+          and fin1(r.get("ar_grid_min")) and fin1(r.get("ar_grid_max")) and fin1(r.get("ar_n_components"))
+          and fin1(r.get("rf_nobs_fit")) and fin1(r.get("fs_nobs_fit")) and fin1(r.get("iv_nobs_fit")))
+    if not ok:
+        bad.append(f)
+assert not bad, f"fit_receipts failed AR/nobs gate: {bad}"
+
 n_primary = len([f for f in os.listdir(os.path.join(d, "primary_receipts")) if f.endswith(".json")])
 assert n_primary == 18, f"expected 18 primary_receipts, got {n_primary}"
 assert os.path.exists(os.path.join(d, "analytic_frames_identity.json")), "missing analytic_frames_identity.json"
 assert os.path.exists(os.path.join(d, "analytic_frames.rds")), "missing analytic_frames.rds"
-print("VT_GATE_PASS: 18/18 full_fit, 18 primary_receipts, analytic frames+identity present")
+print("VT_GATE_PASS: 18/18 full_fit with valid AR+nobs fields, 18 primary_receipts, analytic frames+identity present")
 PYEOF
 
 echo "=== stage 2: compute-only scaled memory probe (target Twin1 N=857607) ==="
