@@ -1,5 +1,33 @@
 # Economic decision library
 
+## September 22 — single-process earnings baseline direction
+
+Author chooses a plain-vanilla starting specification: deterministic age earnings
+profile times one persistent log AR(1), represented initially by seven total
+Rouwenhorst states, without a separate iid component or fixed permanent type.
+This is a specification direction, not an implemented or calibrated result.
+Persistent-plus-transitory earnings and fixed permanent heterogeneity are deferred
+robustness alternatives, not prerequisites for the first baseline.
+
+Parameters must be disciplined for the existing four-year household earnings
+concept. Do not merely delete iid variance from the fitted two-component process
+or import quarterly HANK coefficients. Preserve a documented variance/persistence
+fit and disclose longer-lag covariance misses. Seven states is the initial
+numerical approximation; compare selected results at a richer resolution before
+claiming adequacy. Income risk remains important for precautionary saving,
+affordability and fertility sorting; these channels must be inspected in the
+full target table, wealth/ownership/rooms age profiles and feasibility checks.
+
+The preference comparison remains authorized, using identical earnings and grids
+in both arms: parenthood housing minimum versus no minimum with child-dependent
+housing shares, retaining the same power equivalence scale. Zero entry wealth is
+explicitly authorized ONLY for this experiment, not adopted for the paper.
+The cluster run is not yet submitted. Implement and smoke-test the revised
+specification and time the complete objective before the one-hour production
+allocation. Do not change income dispersion, entry wealth, numerical gates or
+model bounds to make a candidate pass without explicit disclosure.
+
+
 Living reference for decisions that otherwise require reopening the same literature and implementation notes. It links source conventions to the project's experimental choices; a literature precedent is not an author decision. “Open” means the author has not adopted the object as a production specification. Page references below are printed pages.
 
 | Object | Literature convention and source | Project direction or experiment | Author status | Next decisive check |
