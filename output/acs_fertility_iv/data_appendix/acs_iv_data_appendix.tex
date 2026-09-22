@@ -1,0 +1,19 @@
+% Standalone build of the ACS sibling-composition housing appendix.
+% Build (from this directory): pdflatex, bibtex, pdflatex, pdflatex.
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage[round]{natbib}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\acsivfigdir}{figures}
+\renewcommand{\thesection}{\Alph{section}}
+\begin{document}
+\input{../../../latex/JMP_DS_draft/sections/appendix_acs_fertility_iv.tex}
+\clearpage
+\bibliographystyle{plainnat}
+\bibliography{../../../latex/JMP_DS_draft/sections/appendix_acs_fertility_iv}
+\end{document}
