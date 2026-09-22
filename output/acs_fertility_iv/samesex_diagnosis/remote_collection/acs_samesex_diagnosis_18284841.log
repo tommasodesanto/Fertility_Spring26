@@ -1,0 +1,48 @@
+=== stage 0: local fixture tests (meaningful sex/order/link/unequal-weight/group-contrast assertions) ===
+stage0_tests: elapsed_sec=3.307 user_sec=1.618 system_sec=0.256
+PASS: sex_order_audit: detects 1 invalid sex1 (code 9) 
+PASS: sex_order_audit: detects 2 rows with a2==a3 
+PASS: sex_order_audit: detects 1 NCHILD-vs-linked mismatch 
+PASS: sex_order_audit: no duplicate PERSON keys in fixture 
+PASS: sex_order_audit: h1's 2 mothers flagged as multi-mother HH, not duplicates 
+PASS: sex_order_audit: duplicate PERSON key flagged even with identical values 
+PASS: key coverage: person-key join, shared household h1 for 2 mothers, passes (not flagged duplicate) 
+PASS: key coverage: two distinct mothers, same HH, different Z/D values -- correctly passes (legitimate, not a conflict) 
+PASS: key coverage: duplicate cache person_key fails even with identical values 
+PASS: key coverage: a cached person_key absent from metadata is caught, not silently dropped 
+PASS: key coverage: recomputed event_age mismatch detected, not silently accepted 
+PASS: key coverage: an extra metadata person_key not in cache fails (strict, not just a warning) 
+PASS: ambiguity sensitivity: excludes exactly the 1 row with a2==a3 
+PASS: sex_cell_counts: all 4 ordered cells present 
+PASS: sex_cell_counts: BB weighted N = 1+5 = 6 
+PASS: rf_fs_diagnostic_fit: reaches full_fit on unequal weights/shared HH/missing controls 
+PASS: rf_fs_diagnostic_fit: NEVER returns an iv_coef or AR field -- IV/AR is not fit 
+PASS: rf_fs_diagnostic_fit: named b and full V returned 
+PASS: rf_fs_diagnostic_fit: V diagonal matches reported SE 
+PASS: rf_fs_diagnostic_fit: nobs equals the ONE common complete-case sample size (controls included upfront, not left to feols to drop) 
+PASS: rf_fs_diagnostic_fit: the common complete-case sample correctly excludes the missing-mat_age rows 
+PASS: joint_bb_gg_rf_fs: reaches full_fit 
+PASS: joint_bb_gg_rf_fs: BB coefficient recovers its true +2.0 vs mixed reference 
+PASS: joint_bb_gg_rf_fs: GG coefficient recovers its true -1.0 vs mixed reference (wrong reference would blend these) 
+PASS: joint_bb_gg_rf_fs: BB and GG have opposite signs as designed -- a BB-vs-(GG+mixed) reference would NOT show this contrast cleanly 
+PASS: additive_sex_control_rf_fs: logs both added controls as constant when sex1/sex2 are constant 
+PASS: event_age_case_list: all 6 ages (0:5) enumerated for 1 outcome 
+PASS: event-age diagnostic: all 6 ages (0:5) reported, none dropped 
+PASS: event-age diagnostic table has no iv_coef column (RF/FS only) 
+SKIP: local fixture RDS not found at /tmp/acs_iv_fixture/partitions/statefip_99/housing_narrow.rds 
+
+ALL SAMESEX DIAGNOSIS TESTS PASSED
+stage0_tests: elapsed_sec=1.936 user_sec=1.283 system_sec=0.206
+=== stage A-E: run_samesex_diagnosis.R ===
+           used  (Mb) gc trigger  (Mb)  max used   (Mb)
+Ncells  4288511 229.1    6827761 364.7   6827761  364.7
+Vcells 33620086 256.6  120726552 921.1 235794045 1799.0
+           used  (Mb) gc trigger   (Mb)   max used    (Mb)
+Ncells  5205154 278.0   15725077  839.9   62995028  3364.3
+Vcells 58617196 447.3  206108194 1572.5 1522809136 11618.2
+           used  (Mb) gc trigger   (Mb)   max used    (Mb)
+Ncells  5205396 278.0   15725077  839.9   62995028  3364.3
+Vcells 59115084 451.1  164886556 1258.0 1522809136 11618.2
+SAMESEX_DIAGNOSIS_COMPLETE n_stage_regressions=56 n_case_receipts=31
+samesex_diagnosis_driver: elapsed_sec=1136.143 user_sec=1064.707 system_sec=14.160
+SAMESEX_DIAGNOSIS_BATCH_COMPLETE

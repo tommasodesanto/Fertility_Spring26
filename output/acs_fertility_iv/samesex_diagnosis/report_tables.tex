@@ -1,0 +1,49 @@
+\newcommand{\spectab}{\begin{tabular}{@{}llrrrrrrr@{}}\toprule
+Case & Outcome & RF & (SE) & FS pp & (SE) & $F$ & N & HH \\\midrule
+A: baseline pooled 0-5 [samesex] & Rooms & $-$0.0376 & (0.0051) & 3.27 & (0.12) & 715 & 656,985 & 656,159 \\
+A: baseline pooled 0-5 [samesex] & Bedrooms & $-$0.0341 & (0.0028) & 3.27 & (0.12) & 715 & 656,986 & 656,160 \\
+A: baseline pooled 0-5 [samesex] & Owner & $-$0.25 & (0.15) & 3.27 & (0.12) & 715 & 656,986 & 656,160 \\
+D: + first-child boy, second-child boy [samesex] & Rooms & $-$0.0380 & (0.0051) & 3.27 & (0.12) & 714 & 656,985 & 656,159 \\
+D: + first-child boy, second-child boy [samesex] & Bedrooms & $-$0.0342 & (0.0028) & 3.27 & (0.12) & 714 & 656,986 & 656,160 \\
+D: + first-child boy, second-child boy [samesex] & Owner & $-$0.25 & (0.15) & 3.27 & (0.12) & 714 & 656,986 & 656,160 \\
+D: joint BB, GG vs mixed [bothboys] & Rooms & $-$0.0306 & (0.0061) & 3.28 & (0.15) & 490 & 656,985 & 656,159 \\
+D: joint BB, GG vs mixed [bothgirls] & Rooms & $-$0.0454 & (0.0063) & 3.27 & (0.15) & 454 & 656,985 & 656,159 \\
+D: joint BB, GG vs mixed [BB minus GG] & Rooms & 0.0148 & (0.0072) & 0.01 & (0.18) & 0 & 656,985 & 656,159 \\
+D: joint BB, GG vs mixed [bothboys] & Bedrooms & $-$0.0322 & (0.0033) & 3.28 & (0.15) & 490 & 656,986 & 656,160 \\
+D: joint BB, GG vs mixed [bothgirls] & Bedrooms & $-$0.0363 & (0.0035) & 3.27 & (0.15) & 454 & 656,986 & 656,160 \\
+D: joint BB, GG vs mixed [BB minus GG] & Bedrooms & 0.0041 & (0.0039) & 0.01 & (0.18) & 0 & 656,986 & 656,160 \\
+D: joint BB, GG vs mixed [bothboys] & Owner & $-$0.20 & (0.18) & 3.28 & (0.15) & 490 & 656,986 & 656,160 \\
+D: joint BB, GG vs mixed [bothgirls] & Owner & $-$0.29 & (0.18) & 3.27 & (0.15) & 454 & 656,986 & 656,160 \\
+D: joint BB, GG vs mixed [BB minus GG] & Owner & 0.09 & (0.21) & 0.01 & (0.18) & 0 & 656,986 & 656,160 \\
+E: exclude second = third child age [samesex] & Rooms & $-$0.0378 & (0.0051) & 3.27 & (0.12) & 744 & 645,485 & 644,680 \\
+E: exclude second = third child age [samesex] & Bedrooms & $-$0.0347 & (0.0028) & 3.27 & (0.12) & 744 & 645,486 & 644,681 \\
+E: exclude second = third child age [samesex] & Owner & $-$0.23 & (0.15) & 3.27 & (0.12) & 744 & 645,486 & 644,681 \\
+\bottomrule\end{tabular}}
+\newcommand{\agetab}{\begin{tabular}{@{}lrrrrrrr@{}}\toprule
+Outcome, age & RF & (SE) & FS pp & (SE) & $F$ & N & HH \\\midrule
+Rooms, 0 & $-$0.0086 & (0.0120) & 0.09 & (0.10) & 0.9 & 120,739 & 120,720 \\
+Bedrooms, 0 & $-$0.0037 & (0.0066) & 0.09 & (0.10) & 0.9 & 120,739 & 120,720 \\
+Owner, 0 & $-$0.20 & (0.34) & 0.09 & (0.10) & 0.9 & 120,739 & 120,720 \\
+Rooms, 1 & $-$0.0149 & (0.0121) & 1.20 & (0.20) & 35.7 & 119,153 & 119,120 \\
+Bedrooms, 1 & $-$0.0278 & (0.0066) & 1.20 & (0.20) & 35.7 & 119,153 & 119,120 \\
+Owner, 1 & 0.04 & (0.35) & 1.20 & (0.20) & 35.7 & 119,153 & 119,120 \\
+Rooms, 2 & $-$0.0455 & (0.0122) & 3.10 & (0.30) & 108.8 & 115,894 & 115,880 \\
+Bedrooms, 2 & $-$0.0403 & (0.0066) & 3.10 & (0.30) & 108.8 & 115,894 & 115,880 \\
+Owner, 2 & $-$0.59 & (0.35) & 3.10 & (0.30) & 108.8 & 115,894 & 115,880 \\
+Rooms, 3 & $-$0.0508 & (0.0124) & 4.67 & (0.35) & 173.6 & 108,847 & 108,825 \\
+Bedrooms, 3 & $-$0.0399 & (0.0068) & 4.67 & (0.35) & 173.6 & 108,847 & 108,825 \\
+Owner, 3 & $-$0.53 & (0.36) & 4.67 & (0.35) & 173.6 & 108,847 & 108,825 \\
+Rooms, 4 & $-$0.0607 & (0.0129) & 5.58 & (0.39) & 206.1 & 100,106 & 100,092 \\
+Bedrooms, 4 & $-$0.0535 & (0.0071) & 5.58 & (0.39) & 206.1 & 100,106 & 100,092 \\
+Owner, 4 & 0.19 & (0.38) & 5.58 & (0.39) & 206.1 & 100,106 & 100,092 \\
+Rooms, 5 & $-$0.0528 & (0.0134) & 6.04 & (0.41) & 213.5 & 92,246 & 92,229 \\
+Bedrooms, 5 & $-$0.0450 & (0.0073) & 6.04 & (0.41) & 213.6 & 92,247 & 92,230 \\
+Owner, 5 & $-$0.33 & (0.40) & 6.04 & (0.41) & 213.6 & 92,247 & 92,230 \\
+\bottomrule\end{tabular}}
+\newcommand{\celltab}{\begin{tabular}{@{}lrrrrrr@{}}\toprule
+Cell & N & Weighted N & $D$ (w) & Rooms (w) & Bedrooms (w) & Owner (w) \\\midrule
+BB & 173,813 & 19,406,301 & 0.2450 & 5.8346 & 2.9613 & 0.5371 \\
+BG & 164,253 & 18,506,860 & 0.2122 & 5.8570 & 2.9877 & 0.5354 \\
+GG & 156,161 & 17,637,416 & 0.2458 & 5.8099 & 2.9529 & 0.5324 \\
+GB & 162,759 & 18,355,920 & 0.2141 & 5.8598 & 2.9935 & 0.5382 \\
+\bottomrule\end{tabular}}

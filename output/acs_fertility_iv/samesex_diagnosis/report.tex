@@ -1,0 +1,18 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.7in,landscape]{geometry}
+\usepackage{booktabs,graphicx,parskip}
+\input{report_tables.tex}
+\begin{document}
+\section*{Same-sex diagnosis, national ACS 2005--2019: collected results}
+Job 18284841 (COMPLETED 0:0). 31/31 receipts; 27 regression cases all full fit; 0 warnings; baseline reproduction exact; 51-state key coverage one-to-one with 0 recompute mismatches. No IV or AR fits. RF: rooms, bedrooms, owner (pp). FS: pp of 3+ coresident children. BB$-$GG from each fit's saved clustered covariance. For the BB$-$GG row, ``$F$'' is the squared $t$ on the FS contrast.
+
+\medskip\footnotesize\spectab
+
+\medskip\normalsize\textbf{Reduced form and first stage by second child's age}\par\footnotesize\agetab
+
+\medskip\normalsize\textbf{Unadjusted weighted means by sex cell}\par\footnotesize\celltab
+\clearpage
+\includegraphics[width=\linewidth,height=0.9\textheight,keepaspectratio]{samesex_diagnosis.pdf}
+
+\footnotesize Rows 1--2: RF and FS by second child's age, 95\% CI. Row 3: pooled RF by specification (baseline; +first/second-child-boy controls; joint BB and GG vs mixed; BB$-$GG; excluding second = third child age).
+\end{document}
