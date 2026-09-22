@@ -1,0 +1,232 @@
+{
+  "audit_limits": [
+    "Read-only checkpoint inspection; no household optimizer or equilibrium solver was called.",
+    "V<=-1e6 and V<=-1e8 masses are diagnostic summaries, not new gates.",
+    "A missing saved conditional entry matrix is reported; the unconditional marginal is used only when stored grid indices/weights exist."
+  ],
+  "checkpoint": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_01/initial_state.pkl.gz",
+  "checkpoint_sha256": "22e1fcba26a0df337daf707e556016d95c7736fae10eac82a9612a4d25e011bf",
+  "entry": {
+    "active_entry_rule_metadata": null,
+    "age": 18.0,
+    "censor_to_frontier": true,
+    "fixed_reference_conditional_meaning": "present; weighted marginal is computed from this matrix",
+    "fixed_reference_conditional_shape": [
+      160,
+      45
+    ],
+    "marginal_comparison": {
+      "available": true,
+      "max_abs_gap": 0.0,
+      "mean_wealth_gap_model_units": 0.0,
+      "normalized_l1": 0.0,
+      "realized_total_before_normalization": 1.0,
+      "reference_total_before_normalization": 1.0,
+      "total_variation_distance": 0.0
+    },
+    "mode": "income_ratio_distribution",
+    "ratio_nodes": [
+      -2.22252859121604,
+      -0.0526403178090525,
+      0.104244689233362,
+      0.351572998737395,
+      3.1034542945567
+    ],
+    "ratio_source": "PSID reference-person childless renters ages 18-24, primary rows of code/data/psid_followup_mar2026/output/intergen_income_entry_targets_20260716/block2_entry_wealth_18_24.csv: weighted quintile-bin means of wealth over annual family income; mean 0.258855836903436 (person-bootstrap SE 0.125965630995927, 499 replications), weighted median 0.0985177806342346.",
+    "ratio_weights": [
+      0.19942576269679177,
+      0.20037747293780178,
+      0.1998633085085668,
+      0.20008786061209277,
+      0.20024559524474678
+    ],
+    "realized_age18_prechoice_marginal_source": "g_beginning_distribution age index 0 (beginning-of-period/pre-choice)",
+    "realized_age18_prechoice_marginal_sum_before_normalization": 0.06173345618121426,
+    "realized_age18_prechoice_mean_wealth": 0.0,
+    "reference_marginal_mean_wealth": 0.0,
+    "reference_marginal_source": "P.fixed_reference_entry_conditional weighted by current income-state probabilities",
+    "reference_marginal_sum": 1.0,
+    "saved_censored_mass": 0.0,
+    "saved_censored_share": 0.0,
+    "saved_total_entry_mass": 0.058823529411764705
+  },
+  "income_weight_error": null,
+  "native_state_type": "builtins.dict",
+  "occupied_low_value_states": {
+    "age18_prechoice_mass": 0.06173345618121426,
+    "available": true,
+    "interpretation": "diagnostic occupancy only; thresholds below the production cutoff are not new feasibility gates",
+    "thresholds": {
+      "-1000000.0": {
+        "occupied_probability_mass_conditional_on_age18": 0.0,
+        "occupied_raw_population_mass": 0.0,
+        "occupied_state_count": 0,
+        "value_state_count_all_choices": 44061,
+        "value_state_share_all_choices": 0.06374565972222222
+      },
+      "-100000000.0": {
+        "occupied_probability_mass_conditional_on_age18": 0.0,
+        "occupied_raw_population_mass": 0.0,
+        "occupied_state_count": 0,
+        "value_state_count_all_choices": 33602,
+        "value_state_share_all_choices": 0.04861400462962963
+      },
+      "-1000000000.0": {
+        "occupied_probability_mass_conditional_on_age18": 0.0,
+        "occupied_raw_population_mass": 0.0,
+        "occupied_state_count": 0,
+        "value_state_count_all_choices": 25225,
+        "value_state_share_all_choices": 0.03649450231481482
+      }
+    },
+    "value_shape_age18": [
+      160,
+      6,
+      1,
+      45,
+      4,
+      4
+    ]
+  },
+  "saved_arrays": {
+    "V": {
+      "dtype": "float64",
+      "finite": true,
+      "max": 3.6079197088053747,
+      "min": -10000000000.0,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        45,
+        4,
+        4
+      ]
+    },
+    "age18_prechoice_timing": "g_beginning_distribution age index 0 (beginning-of-period/pre-choice)",
+    "g": {
+      "dtype": "float64",
+      "finite": true,
+      "max": 0.007881943654018248,
+      "min": 0.0,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        45,
+        4,
+        4
+      ]
+    },
+    "g_beginning_distribution": {
+      "dtype": "float64",
+      "finite": true,
+      "max": 0.007882105976364481,
+      "min": 0.0,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        45,
+        4,
+        4
+      ]
+    },
+    "income_grid": {
+      "dtype": "float64",
+      "finite": true,
+      "max": 13.854357403671944,
+      "min": 0.04352796175135016,
+      "shape": [
+        45
+      ]
+    },
+    "income_state_count": 45,
+    "wealth_grid": {
+      "dtype": "float64",
+      "finite": true,
+      "max": 3000.0,
+      "min": -12.0,
+      "shape": [
+        160
+      ]
+    },
+    "wealth_grid_max": 3000.0,
+    "wealth_grid_min": -12.0
+  },
+  "schema": "e5f_earnings_entry_checkpoint_audit_v1",
+  "source_equivalence": {
+    "all_entry_helpers_equivalent": false,
+    "annual_gross_income_runtime_entry_gap_by_income_state": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "annual_gross_income_runtime_entry_max_abs_gap": 0.0,
+    "helper_ast_equivalence_docstrings_ignored": {
+      "_censor_entry_dead_mass": true,
+      "_linear_grid_weights_for_points": true,
+      "annual_gross_income_at_state": true,
+      "entry_wealth_grid_weights": true,
+      "entry_wealth_ratio_distribution": true,
+      "income_at_state": false
+    },
+    "optimized_solver_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/source/code/model/intergen_eqscale_seq_optimized/solver.py",
+    "optimized_solver_sha256": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da",
+    "runtime_formula_note": "The source AST differs for income_at_state because optimized code adds property_tax_lump_sum_transfer; the entry conversion is equal for this checkpoint if that transfer is zero. The numeric gap is reported above.",
+    "seq_solver_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/source/code/model/intergen_eqscale_seq/solver.py",
+    "seq_solver_sha256": "a56a9b2197c4000e0b00d24407a298cf633850fdd3347806380d28425ddfd702"
+  },
+  "source_hashes": {
+    "audit_cli": "46c4eba6a278e42f7cc042e94e54de23eceaf258e8461a8d4bba8542fc4d884f",
+    "checkpoint": "22e1fcba26a0df337daf707e556016d95c7736fae10eac82a9612a4d25e011bf",
+    "optimized_solver": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da",
+    "seq_solver": "a56a9b2197c4000e0b00d24407a298cf633850fdd3347806380d28425ddfd702"
+  },
+  "source_root": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/source"
+}

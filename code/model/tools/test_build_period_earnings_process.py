@@ -78,6 +78,40 @@ def test_covariance_errors_are_recorded_for_requested_resolution_grid():
     assert errors[(15, 5)] <= errors[(5, 3)] + 1e-14
 
 
+def test_zero_iid_supports_a_pure_persistent_ar1_with_one_iid_state():
+    rho = 0.7345934905942886
+    stationary_variance = 0.5084845767213341
+    innovation_sd = np.sqrt(stationary_variance * (1.0 - rho**2))
+    overrides, meta = _candidate(
+        rho_period=rho,
+        persistent_innovation_sd_period=innovation_sd,
+        transitory_sd_period=0.0,
+        n_persistent=7,
+        n_iid=1,
+    )
+    assert overrides["z_grid"].size == 7
+    np.testing.assert_array_equal(meta["components"]["iid_levels"], [1.0])
+    np.testing.assert_array_equal(meta["components"]["iid_weights"], [1.0])
+    np.testing.assert_array_equal(overrides["Pi_z"].shape, (7, 7))
+    expected = stationary_variance * rho ** np.arange(5)
+    np.testing.assert_allclose(meta["continuous_period_log_covariances"], expected, atol=1e-14)
+    np.testing.assert_allclose(meta["discrete_period_log_covariances"], expected, atol=1e-12)
+    assert meta["transitory_sd_period"] == 0.0
+    assert {row["joint_states"] for row in meta["resolution_table"]} == {5, 9, 15}
+
+
+@pytest.mark.parametrize(
+    "kwargs",
+    [
+        {"transitory_sd_period": 0.0, "n_iid": 3},
+        {"transitory_sd_period": 0.085, "n_iid": 1},
+    ],
+)
+def test_iid_variance_and_iid_dimension_must_collapse_together(kwargs):
+    with pytest.raises(ValueError):
+        _candidate(**kwargs)
+
+
 @pytest.mark.parametrize(
     "kwargs",
     [
@@ -85,7 +119,6 @@ def test_covariance_errors_are_recorded_for_requested_resolution_grid():
         {"rho_period": np.nan},
         {"persistent_innovation_sd_period": 0.0},
         {"persistent_innovation_sd_period": np.inf},
-        {"transitory_sd_period": 0.0},
         {"transitory_sd_period": -0.1},
         {"n_persistent": 1},
         {"n_iid": 3.5},

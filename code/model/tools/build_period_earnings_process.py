@@ -52,9 +52,21 @@ def _validate_inputs(
     persistent_sd = _positive_finite(
         "persistent_innovation_sd_period", persistent_innovation_sd_period
     )
-    transitory_sd = _positive_finite("transitory_sd_period", transitory_sd_period)
+    transitory_sd = float(transitory_sd_period)
+    if not np.isfinite(transitory_sd) or transitory_sd < 0.0:
+        raise ValueError("transitory_sd_period must be finite and nonnegative")
     n_persistent = _integer_count("n_persistent", n_persistent)
-    n_iid = _integer_count("n_iid", n_iid)
+    n_iid_numeric = float(n_iid)
+    if not np.isfinite(n_iid_numeric) or not n_iid_numeric.is_integer():
+        raise ValueError("n_iid must be an integer")
+    n_iid = int(n_iid_numeric)
+    if transitory_sd == 0.0:
+        if n_iid != 1:
+            raise ValueError("zero transitory SD requires n_iid=1")
+    elif n_iid < 2:
+        raise ValueError("positive transitory SD requires n_iid at least 2")
+    else:
+        n_iid = _integer_count("n_iid", n_iid)
     return rho_period, persistent_sd, transitory_sd, n_persistent, n_iid
 
 
@@ -69,7 +81,11 @@ def _components(
     persistent, persistent_weights, persistent_transition = _literature._rouwenhorst_period(
         n_persistent, rho_period, persistent_variance
     )
-    iid, iid_weights = _literature._iid_lognormal_rule(transitory_sd, n_iid)
+    if transitory_sd == 0.0:
+        iid = np.ones(1, dtype=float)
+        iid_weights = np.ones(1, dtype=float)
+    else:
+        iid, iid_weights = _literature._iid_lognormal_rule(transitory_sd, n_iid)
     return (
         {
             "persistent_levels": persistent,
@@ -127,8 +143,9 @@ def _resolution_table(
     continuous_level_covariances: np.ndarray,
 ) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
+    iid_counts = _DIAGNOSTIC_IID_COUNTS if transitory_sd > 0.0 else (1,)
     for n_persistent in _DIAGNOSTIC_PERSISTENT_COUNTS:
-        for n_iid in _DIAGNOSTIC_IID_COUNTS:
+        for n_iid in iid_counts:
             raw_components, _ = _components(
                 rho_period,
                 persistent_sd,
@@ -166,8 +183,8 @@ def build_period_earnings_process(
     deviations are standard deviations of log earnings shocks at that same
     frequency.  The stationary persistent log variance is
     \(\sigma_p^2/(1-\rho^2)\), while the independent transitory log variance is
-    \(\sigma_e^2\).  A zero transitory standard deviation is rejected rather
-    than silently collapsing the iid state dimension.
+    \(\sigma_e^2\).  A zero transitory standard deviation requires the explicit
+    single iid node ``n_iid=1``, giving a pure persistent process.
     """
     rho_period, persistent_sd, transitory_sd, n_persistent, n_iid = _validate_inputs(
         rho_period,

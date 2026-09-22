@@ -1,0 +1,34 @@
+{
+  "submitted_at_utc": "2026-09-22T22:59:52.222389+00:00",
+  "launcher_exit": 0,
+  "jobs": [
+    {
+      "cell": "A",
+      "smoke_job": "18288614",
+      "production_array": "18288616"
+    },
+    {
+      "cell": "B",
+      "smoke_job": "18288617",
+      "production_array": "18288618"
+    },
+    {
+      "cell": "C",
+      "smoke_job": "18288619",
+      "production_array": "18288629"
+    },
+    {
+      "cell": "D",
+      "smoke_job": "18288635",
+      "production_array": "18288688"
+    }
+  ],
+  "local_bundle": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_entry_battery_20260922_v1",
+  "remote_bundle": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1",
+  "output_root": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/results",
+  "manifest_sha256": "bdc38a3290b6b8d1ceafec02814b20150c69880131f023d8a7072dd5fae2649c",
+  "smoke_native_preflight": "passed_all_four_zero_solves",
+  "production_dependency": "each 10-worker array afterok its own cell smoke",
+  "worker_allocation": "one CPU,32GiB,one hour",
+  "total_production_workers": 40
+}

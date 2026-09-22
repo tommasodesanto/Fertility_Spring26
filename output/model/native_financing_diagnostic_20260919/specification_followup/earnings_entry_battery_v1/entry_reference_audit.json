@@ -1,0 +1,71 @@
+{
+  "schema": "inherited_entry_reference_audit_v1",
+  "read_only_source_checkpoint": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/inputs/normalized_checkpoint/normalized_old.pkl.gz",
+  "checkpoint_sha256": "dfeb34f077e7a16804119eabd43cb8ee0611b0c3bb0180ec8af8ad7dc51b94e4",
+  "checkpoint_internal_contract_sha256": "not reserialized; verified against frozen initial_contract.json",
+  "frozen_contract_declared_checkpoint_sha256": "dfeb34f077e7a16804119eabd43cb8ee0611b0c3bb0180ec8af8ad7dc51b94e4",
+  "entry_age": 18.0,
+  "entry_mode": "income_ratio_distribution",
+  "income_state_count": 15,
+  "entry_ratio_source": "PSID reference-person childless renters ages 18-24, primary rows of code/data/psid_followup_mar2026/output/intergen_income_entry_targets_20260716/block2_entry_wealth_18_24.csv: weighted quintile-bin means of wealth over annual family income; mean 0.258855836903436 (person-bootstrap SE 0.125965630995927, 499 replications), weighted median 0.0985177806342346.",
+  "ratio_nodes": [
+    -2.22252859121604,
+    -0.0526403178090525,
+    0.104244689233362,
+    0.351572998737395,
+    3.1034542945567
+  ],
+  "ratio_weights": [
+    0.19942576269679177,
+    0.20037747293780178,
+    0.1998633085085668,
+    0.20008786061209277,
+    0.20024559524474678
+  ],
+  "empirical_ratio_measurement": "NETWORTH2R / INCFAMR; diagnostic cross-denominator mapping to model annual gross labor income",
+  "model_income_conversion": {
+    "formula": "annual_gross_income_at_state(P,0,0,z) = P.income[0,0]*z / period_years / (1-tau_pay)",
+    "period_years": 4.0,
+    "tau_pay": 0.179,
+    "annual_gross_income_by_state": [
+      0.07990275669933332,
+      0.12109016778745041,
+      0.1835084212421827,
+      0.2781013626631413,
+      0.421454053125045,
+      0.23667815739022335,
+      0.3586784608427142,
+      0.543566164664643,
+      0.8237577876129989,
+      1.2483795658468093,
+      0.701059043512309,
+      1.062433396725639,
+      1.6100851032786943,
+      2.4400344038407664,
+      3.6977970169419097
+    ]
+  },
+  "pre_grid_wealth_points_min_model_units": -8.218459594666779,
+  "pre_grid_wealth_points_max_model_units": 11.475944032627325,
+  "wealth_grid_min_model_units": -12.0,
+  "wealth_grid_max_model_units": 30.0,
+  "probability_mass_outside_wealth_grid_before_interpolation_conditional_on_entry": 0.0,
+  "grid_rule": "_linear_grid_weights_for_points clips points to [b_grid[0], b_grid[-1]] before linear interpolation; no points lie outside here.",
+  "frontier_censor_flag": true,
+  "frontier_censor_rule": "After interpolation, for each entrant state column, move mass on nodes with V <= DEAD_VALUE_CUTOFF (-1e9) to nearest weakly higher wealth node with V > cutoff; if no alive node exists above, leave mass for unchanged feasibility gate.",
+  "saved_solution_entry_censored_mass": 0.0,
+  "saved_solution_entry_censored_share": 0.0,
+  "independent_checkpoint_replay_moved_mass": 0.0,
+  "independent_replay_total_entry_mass": 0.058823529411764705,
+  "frontier_censor_adjustment_model_wealth_units": "0.0; no entrant mass moved, so the aggregate entry wealth adjustment is exactly zero in this checkpoint",
+  "censor_mass_unit": "population mass per model period; saved and replay moved mass both zero",
+  "source_hashes": {
+    "tmp/earnings_wealth_direct_period_20260922_v5/inputs/normalized_checkpoint/normalized_old.pkl.gz": "dfeb34f077e7a16804119eabd43cb8ee0611b0c3bb0180ec8af8ad7dc51b94e4",
+    "tmp/earnings_wealth_direct_period_20260922_v5/source/code/model/intergen_eqscale_seq/solver.py": "a56a9b2197c4000e0b00d24407a298cf633850fdd3347806380d28425ddfd702",
+    "code/data/psid_followup_mar2026/estimate_intergen_income_entry_targets.R": "ba04f9bebb789ef22a878459b42b1b26fc14154554338c7a47e12e143234944f",
+    "code/data/psid_followup_mar2026/output/intergen_income_entry_targets_20260716/block2_entry_wealth_18_24.csv": "1f35e20bab3f3c82910c93ae4500ca22cb995b18c3a8ce617e894a421d6d4068",
+    "tmp/earnings_wealth_direct_period_20260922_v5/inputs/initial_contract.json": "a8a647f6c56ea563201286f5f1fa69d13c6ac5384d11088e017227bbdc3822ab"
+  },
+  "frozen_initial_contract_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/inputs/initial_contract.json",
+  "frozen_initial_contract_sha256": "a8a647f6c56ea563201286f5f1fa69d13c6ac5384d11088e017227bbdc3822ab"
+}

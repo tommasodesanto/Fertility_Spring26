@@ -1,0 +1,91 @@
+{
+  "bootstrap_transformation": {
+    "available_draw_fields": [
+      "rho_4yr",
+      "persistent_variance_4yr",
+      "iid_variance_4yr"
+    ],
+    "iid_lower_bound_draws": 19,
+    "limitation": "Raw bootstrap covariance moments are not saved. These intervals transform saved fitted AR1-plus-iid parameter draws. Nineteen of 199 offset-0 draws hit the iid-variance lower bound, so their fitted covariance moments need not equal the raw bootstrap moments. These are descriptive transformed-fit intervals, not a direct bootstrap of the proposed pure-AR1 estimator.",
+    "maximum_pair_count_weighted_fit_objective": 8.041143509690039e-06,
+    "pure_ar1_transform": {
+      "innovation_sd": "sqrt(gamma0 * (1-rho^2))",
+      "rho": "gamma1 / gamma0",
+      "stationary_variance": "gamma0"
+    },
+    "reconstructed_moments": {
+      "gamma0": "persistent_variance_4yr + iid_variance_4yr",
+      "gamma1": "persistent_variance_4yr * rho_4yr"
+    }
+  },
+  "lead_review": "Point estimator and held-out covariance arithmetic verified. Removed incorrect claim that every constrained bootstrap fit exactly matches its three moments; boundary fits are approximate. No new resampling performed.",
+  "person_bootstrap_percentile_intervals": {
+    "innovation_sd_four_year": {
+      "median": 0.4832148865073748,
+      "p2_5": 0.45690192491949416,
+      "p97_5": 0.5154289538600844
+    },
+    "method": "2.5th, 50th, and 97.5th percentiles; linear interpolation of order statistics",
+    "rho_four_year": {
+      "median": 0.7323470731535189,
+      "p2_5": 0.6916718453304692,
+      "p97_5": 0.7689915925347551
+    }
+  },
+  "point_fit": {
+    "empirical_log_covariances": {
+      "gamma0": 0.5084845767213341,
+      "gamma1": 0.3735294601270841,
+      "gamma2_holdout": 0.28991289951280225
+    },
+    "heldout_gamma2": {
+      "data": 0.28991289951280225,
+      "model_implied": 0.2743923099545548,
+      "model_minus_data": -0.015520589558247422,
+      "percent_of_data": -5.353535349523849
+    },
+    "pure_ar1_method_of_moments": {
+      "innovation_sd": 0.4838308245314463,
+      "innovation_variance": 0.23409226676677922,
+      "rho_four_year": 0.7345934905942886,
+      "stationary_log_variance": 0.5084845767213341
+    }
+  },
+  "source_sample": {
+    "bootstrap_draws_available": 199,
+    "bootstrap_seed": 20260921,
+    "invalid_draw_details": [],
+    "invalid_transformed_draws": 0,
+    "offset": 0,
+    "person_bootstrap_replicates_requested": 199,
+    "valid_transformed_draws": 199
+  },
+  "sources": [
+    {
+      "path": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/data_validation/bootstrap_draws.csv",
+      "sha256": "7b8fbdf273f8761b73030a9656ea19ea0698e62eaab7a3d42b7665bd95a508f4"
+    },
+    {
+      "path": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/data_validation/block_covariances.csv",
+      "sha256": "6f48862eac8a40105e82c9cc8acb5f725dfdf265acdef99ace658052292b547c"
+    },
+    {
+      "path": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/data_validation/fit.csv",
+      "sha256": "1a52337e85678e749e5ff5b87ed8e662dee7eb1e480033dfb441b9282f9f1e79"
+    },
+    {
+      "path": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/data_validation/README.md",
+      "sha256": "61273698cefbd2a91eb123c79f18ec4396453ffd2fd4fe17fbeaec9515f37ee7"
+    },
+    {
+      "path": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/data_validation/run_metadata.json",
+      "sha256": "bcadf9451f4570b91cd799337fe5e3c1b72f503c83d815949a86bde761824d80"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/psid_followup_mar2026/output/psid_income_fixed_effect_md_20260727/psid_income_md_extract.dta",
+      "sha256": "147da916b58700ceb5dc1846921c7c6983e467d926bf946c7a52e85e9ce0c2a5"
+    }
+  ],
+  "status": "descriptive_external_estimate_only",
+  "uncertainty_scope": "Intervals describe person-resampling uncertainty under the fixed block construction, age/year residualization, weights, offset-0 sample, and fitted three-component-moment estimator. They do not include alternative measurement/specification uncertainty, finite-state approximation error, household-model parameter uncertainty, model-fit uncertainty, or uncertainty in age profile or entry wealth."
+}
