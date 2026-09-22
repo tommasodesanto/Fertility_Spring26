@@ -74,6 +74,14 @@ chk_mismatch <- verify_key_coverage_and_recompute(metadata2, cached_mismatch)
 stopifnot_msg(chk_mismatch$n_recompute_mismatches == 1 && !isTRUE(chk_mismatch$one_to_one_and_recomputed_equal),
               "key coverage: recomputed event_age mismatch detected, not silently accepted")
 
+## extra key (metadata has a person not in cache) -- must FAIL (strict: no
+## legitimate reason for extra eligible mothers vs the original cache)
+metadata_extra <- rbindlist(list(metadata2, data.table(person_key = "p9", household_key = "h9",
+                                                         eligible = TRUE, samesex = 1, treatment_3plus = 1, event_age = 0)))
+chk_extra <- verify_key_coverage_and_recompute(metadata_extra, cached_match)
+stopifnot_msg(chk_extra$n_metadata_keys_not_in_cache == 1 && !isTRUE(chk_extra$one_to_one_and_recomputed_equal),
+              "key coverage: an extra metadata person_key not in cache fails (strict, not just a warning)")
+
 ## ---- ambiguity_sensitivity_exclude_a2_eq_a3 -------------------------------
 ss_fix <- data.table(a2 = c(3, 2, NA, 5), a3 = c(3, NA, 1, 4), samesex = c(1, 0, 1, 0))
 sens <- ambiguity_sensitivity_exclude_a2_eq_a3(ss_fix)
@@ -103,8 +111,9 @@ stopifnot_msg(is.null(fit[["iv_coef"]]) && is.null(fit[["ar_summary_lower"]]),
               "rf_fs_diagnostic_fit: NEVER returns an iv_coef or AR field -- IV/AR is not fit")
 stopifnot_msg(!is.null(fit$rf_b) && !is.null(fit$rf_V), "rf_fs_diagnostic_fit: named b and full V returned")
 stopifnot_msg(abs(sqrt(fit$rf_V[["Z"]][["Z"]]) - fit$rf_se) < 1e-9, "rf_fs_diagnostic_fit: V diagonal matches reported SE")
-stopifnot_msg(fit$rf_nobs < fit$n_usable_prefit,
-              "rf_fs_diagnostic_fit: actual post-fit nobs (feols drops missing-control rows) is below the prefit Y/D/Z-only complete-case count -- prefit vs actual nobs are correctly distinct")
+stopifnot_msg(fit$rf_nobs == fit$n_usable && isTRUE(fit$rf_nobs_matches_usable),
+              "rf_fs_diagnostic_fit: nobs equals the ONE common complete-case sample size (controls included upfront, not left to feols to drop)")
+stopifnot_msg(fit$n_usable < n, "rf_fs_diagnostic_fit: the common complete-case sample correctly excludes the missing-mat_age rows")
 
 ## ---- joint_bb_gg_rf_fs: four-cell toy DGP with DISTINCT BB/GG levels, catches wrong reference
 set.seed(22)
@@ -130,11 +139,17 @@ fit_const <- additive_sex_control_rf_fs(dconst, "Y", "mat_age", "mother_weight",
 stopifnot_msg(length(fit_const$constant_added_controls) == 2,
               "additive_sex_control_rf_fs: logs both added controls as constant when sex1/sex2 are constant")
 
-## ---- event_age_rf_fs_diagnostic: all 6 ages kept, no IV/AR fields --------
+## ---- event_age_case_list / event_age_summary_row: all 6 ages, no IV/AR ---
+cases <- event_age_case_list(outcomes = "Y", ages = 0:5)
+stopifnot_msg(length(cases) == 6, "event_age_case_list: all 6 ages (0:5) enumerated for 1 outcome")
 ea <- sample(0:5, n, replace = TRUE)
 dfit[, event_age := ea]
-tab <- event_age_rf_fs_diagnostic(dfit, outcomes = "Y", controls_fml = "mat_age",
-                                   weight_var = "mother_weight", cluster_var = "household_key", ages = 0:5)
+rows_ea <- lapply(cases, function(cs) {
+  d <- dfit[event_age == cs$event_age]
+  r <- rf_fs_diagnostic_fit(d, cs$outcome, "D", "Z", "mat_age", "mother_weight", "household_key")
+  event_age_summary_row(r, cs$outcome, cs$event_age)
+})
+tab <- rbindlist(rows_ea)
 stopifnot_msg(nrow(tab) == 6, "event-age diagnostic: all 6 ages (0:5) reported, none dropped")
 stopifnot_msg(!("iv_coef" %in% names(tab)), "event-age diagnostic table has no iv_coef column (RF/FS only)")
 
