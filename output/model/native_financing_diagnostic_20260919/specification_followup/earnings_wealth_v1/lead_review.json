@@ -1,4 +1,83 @@
 {
+  "anchor_review": {
+    "actual_bounds_verified": {
+      "H0": [
+        0.2,
+        80.0
+      ],
+      "beta_annual": [
+        0.94,
+        0.99
+      ],
+      "chi": [
+        0.1,
+        5.0
+      ],
+      "first_birth_fixed_cost": [
+        0.0,
+        8.0
+      ],
+      "h_P": [
+        0.1,
+        2.3
+      ],
+      "kappa_fert": [
+        0.02,
+        50.0
+      ],
+      "kappa_fert_continuation": [
+        0.02,
+        50.0
+      ],
+      "theta0": [
+        0.0,
+        8.0
+      ],
+      "theta1": [
+        0.02,
+        16.0
+      ]
+    },
+    "adoption_status": "not adopted; household-grid robustness and final parameter plausibility review outstanding",
+    "completed_stationary_solves": 12,
+    "fit_diagnosis": {
+      "interpretation": "Large initial fit errors; no refinement result or comparison with another specification is claimed.",
+      "mean_first_birth_age": {
+        "model": 28.20611600575362,
+        "target": 25.976263860992496
+      },
+      "mean_rooms": {
+        "model": 6.4476620194521805,
+        "target": 5.561097376118652
+      },
+      "timing_rows_loss_share": 0.7410008621236293
+    },
+    "full_numeric_target_fit_exact": true,
+    "full_parameter_rows": 17,
+    "full_target_fit_rows": 13,
+    "loss": 1160.3761384370134,
+    "native_array_equality": {
+      "evidence": "completed raw summary plus reviewed generated probe lines199-212",
+      "lead_loaded_full_checkpoints_again": false,
+      "result": "passed native assertions for price,V,g,all extracted moments and psi across both repetitions"
+    },
+    "parameter_table_byte_exact": true,
+    "quality_gates": "all passed in both repetitions; zero occupied value drops and budget/transaction violation mass",
+    "repetitions": 2,
+    "reviewed_at": "2026-09-22T03:17:59.099707-04:00",
+    "source_objective_runtime_and_generated_code_hashes_verified": true,
+    "standard_graphs_copied_and_independently_hash_verified": 17,
+    "status": "verified_starting_point_probe_running",
+    "tables_and_figures": "anchor_readout/README.md",
+    "target_table_metadata_difference_only": "model_checkpoint_sha256; numerical values, target definitions, weights and losses exactly equal",
+    "visual_limitations": "45-state legend is crowded; extended wealth axis compresses occupied range. Standard figures preserved; eventual supplemental occupied-range views may be useful.",
+    "visual_review": [
+      "fertility_by_age",
+      "ownership_by_age",
+      "housing_market",
+      "policy_childless_renter_age30"
+    ]
+  },
   "annual_input_sha256": "147da916b58700ceb5dc1846921c7c6983e467d926bf946c7a52e85e9ce0c2a5",
   "cluster": {
     "action": "user notified asynchronously; no credential workaround",
@@ -19,7 +98,7 @@
     "Transitory variance weakly measured; baseline bootstrap lower tail reaches zero",
     "Estimated age25\u201360 risk extrapolated to entry18 under an externally fixed stationary initial process",
     "Stationary AR1+iid lognormal process omits richer heterogeneity; no proof of exact aggregation or annual within-block decisions",
-    "One normalized native solution passed; scored two-repetition anchor, inward probe and refit remain pending."
+    "Starting point scored twice exactly; inward-beta probe running and joint refinement remains gated. No final fit or adoption."
   ],
   "model_tests": [
     {
@@ -80,7 +159,7 @@
     "preflight": "three native source/input arms plus160-node/entry/full-load setup passed; zero solves",
     "receipt": "local_execution.json",
     "reporting_comparison_note": "staging/numeric_comparison_review.json",
-    "status": "first_native_solution_passed_repetition_two_running",
+    "status": "anchor_verified_probe_running",
     "unit_checks": "42 passed plus full native zero-solve configuration"
   },
   "point_estimates": {

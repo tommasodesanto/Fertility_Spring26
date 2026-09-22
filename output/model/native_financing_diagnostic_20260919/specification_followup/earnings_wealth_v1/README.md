@@ -1,6 +1,6 @@
 # Earnings, entry wealth and purchase timing
 
-## Live review — September 22, 02:40 EDT
+## Live review — September 22, 03:17 EDT
 
 The primary-source reviews and direct four-year PSID point estimates are done.
 The main candidate uses the earliest complete four-year block grid (1984-based
@@ -101,8 +101,15 @@ The follow-up checks every 20 minutes and stays quiet while healthy.
 
 The first normalized native solution passed in2,085 seconds after six stationary
 solves: zero budget/transaction violations, zero occupied-value drops, fiscal and
-stationary-operator checks passed. The second repetition is running; no scored
-anchor, complete smoke or refit is available yet. [First native receipt](staging/v4_first_native_pass.json).
+stationary-operator checks passed. Both repetitions now score exactly at **1160.3761384370134** after12 completed
+stationary solves. Exact native price, value, distribution, moments and psi checks
+passed; full target values match apart from the checkpoint-file hash, and parameter
+tables are byte-identical. The inward-beta smoke probe is running; the longer
+search has not started. [Full13-target fit, all17 parameters with actual bounds,
+and17 standard figures](anchor_readout/README.md). These are starting parameters,
+not a refitted or adopted calibration. First-birth age is28.21 versus25.98 and
+mean rooms6.45 versus5.56; the two timing rows account for74.1% of loss. Both
+beta and h_P start exactly at their actual upper bounds0.99 and2.3. [First native receipt](staging/v4_first_native_pass.json).
 The final review requires complete 13-target
 and 17-parameter tables, actual bounds, exact selected repeats, and 17 standard
 plots, followed by the [parameter and literature audit](literature/parameter_validation_rubric.md).

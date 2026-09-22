@@ -1,5 +1,17 @@
 # Calibration Status
 
+**September 22, 03:17 EDT — V4 starting point reproduces exactly; nearby smoke probe running:**
+Two scored repetitions completed12 stationary solves and agree exactly in native
+price, value, distribution, all extracted moments and normalized fertility utility.
+Starting-point loss is1160.3761384370134. All13 target rows and17 parameters are
+collected with actual bounds; all17 standard figures have verified original hashes.
+The fit is still poor: mean first-birth age28.21 versus25.98 and mean rooms6.45
+versus5.56; fertility timing accounts for74.1% of loss. This is a numerical smoke
+success at the starting parameters, not a refinement result or adopted calibration.
+The inward-beta point is running; only its successful smoke receipt starts search.
+The known final wall-clock-comparison issue below remains a reporting task.
+[Complete target/parameter tables and standard figures](output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/anchor_readout/README.md).
+
 **September 22, 02:40 EDT — first V4 native solution passes all quality checks:**
 The first normalized solution completed six stationary solves and passed the
 household budget, exact transaction, feasibility, fiscal and occupied-value
