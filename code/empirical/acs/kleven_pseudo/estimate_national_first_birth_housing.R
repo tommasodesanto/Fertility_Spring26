@@ -178,6 +178,7 @@ nfh_plot_housing_event_curves <- function(curves, path, geography_label = "Natio
 
 estimate_national_first_birth_housing <- function(
     panel, output_dir = NULL, checkpoint = NULL, reuse_dir = NULL,
+    allow_refit_checkpoint = NULL,
     event_times = as.integer(-5:10),
     ref = -2L, women_only = TRUE, outcomes = NULL, weight_col = "wgt",
     rooms_col = NULL, ownership_col = NULL, bedrooms_col = NULL,
@@ -189,6 +190,14 @@ estimate_national_first_birth_housing <- function(
   if (!is.null(reuse_dir)) {
     if (length(reuse_dir) != 1L || is.na(reuse_dir) || !dir.exists(reuse_dir))
       nfh_stop("reuse_dir must be an existing checkpoint directory")
+  }
+  if (!is.null(allow_refit_checkpoint)) {
+    if (length(allow_refit_checkpoint) != 1L || is.na(allow_refit_checkpoint) ||
+        !file.exists(allow_refit_checkpoint))
+      nfh_stop("allow_refit_checkpoint must name an existing checkpoint")
+    if (is.null(reuse_dir) || !identical(normalizePath(dirname(allow_refit_checkpoint)),
+                                         normalizePath(reuse_dir)))
+      nfh_stop("allow_refit_checkpoint must be inside reuse_dir")
   }
   event_times <- as.integer(event_times)
   if (!identical(as.integer(ref), -2L)) nfh_stop("ref must be -2")
@@ -277,7 +286,14 @@ estimate_national_first_birth_housing <- function(
   reuse_fit <- function(path, outcome, specification, formula_text) {
     if (!file.exists(path)) return(NULL)
     cached <- tryCatch(readRDS(path), error = function(e)
-      nfh_stop("cannot read reuse checkpoint ", path, ": ", conditionMessage(e)))
+      if (!is.null(allow_refit_checkpoint) &&
+          identical(normalizePath(path), normalizePath(allow_refit_checkpoint))) {
+        emit(list(stage = "fit_repair_refit", outcome = outcome, specification = specification,
+                  checkpoint = normalizePath(path), reason = "explicitly diagnosed truncated checkpoint",
+                  read_error = conditionMessage(e)))
+        NULL
+      } else nfh_stop("cannot read reuse checkpoint ", path, ": ", conditionMessage(e)))
+    if (is.null(cached)) return(NULL)
     required <- c("outcome", "specification", "formula", "coefficients", "full_vcov",
                   "nobs", "source_hh_clusters", "event_curve", "contrast")
     if (!is.list(cached) || !all(required %in% names(cached)) ||

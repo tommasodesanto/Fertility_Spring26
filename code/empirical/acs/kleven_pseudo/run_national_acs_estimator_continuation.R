@@ -40,7 +40,8 @@ nac_states <- c(1L, 2L, 4L, 5L, 6L, 8L, 9L, 10L, 11L, 12L, 13L, 15L, 16L, 17L,
 
 nac_validate_inputs <- function(root, production_dir, snapshot_root, panel_file,
                                 reuse_dir, expected_panel_bytes = 6354971545,
-                                expected_pool_rows = 47310973) {
+                                expected_pool_rows = 47310973,
+                                repair_checkpoint = NULL) {
   nac_under(production_dir, root, "production_dir")
   nac_under(snapshot_root, root, "snapshot_root")
   nac_under(panel_file, root, "panel_file")
@@ -91,11 +92,24 @@ nac_validate_inputs <- function(root, production_dir, snapshot_root, panel_file,
   reuse_files <- file.path(reuse_dir, paste0("checkpoint_rooms9_",
                                               c("full", "event_only", "age_only", "state_year"), ".rds"))
   nac_require(all(file.exists(reuse_files)), "completed rooms checkpoint set is incomplete")
+  repair_identity <- NULL
+  if (!is.null(repair_checkpoint)) {
+    expected_repair <- file.path(reuse_dir, "checkpoint_ownership_lw_event_only.rds")
+    nac_require(identical(normalizePath(repair_checkpoint, mustWork = FALSE),
+                           normalizePath(expected_repair, mustWork = FALSE)),
+                "repair checkpoint is not the explicitly diagnosed ownership event-only path")
+    repair_identity <- nac_file_identity(repair_checkpoint, "diagnosed repair checkpoint")
+    nac_require(identical(as.numeric(repair_identity$bytes), 793083904),
+                "diagnosed repair checkpoint byte identity changed")
+    nac_require(identical(repair_identity$mtime, "2026-09-22T00:01:32.511815Z"),
+                "diagnosed repair checkpoint mtime identity changed")
+  }
   receipt_paths <- c(production = prod_receipt, pool = pool_receipt, snapshot = source_contract,
                      setNames(state_receipts, paste0("state_", nac_states)))
   if (!is.null(stage)) receipt_paths <- c(receipt_paths, stage = stage_receipt)
   list(panel = panel_id, receipts = lapply(receipt_paths, nac_file_identity),
-       receipt_paths = receipt_paths, production = prod, pool = pool, stage = stage)
+       receipt_paths = receipt_paths, production = prod, pool = pool, stage = stage,
+       repair_checkpoint = repair_checkpoint, repair_identity = repair_identity)
 }
 
 nac_main <- function() {
@@ -104,17 +118,21 @@ nac_main <- function() {
   snapshot_root <- Sys.getenv("SNAPSHOT_ROOT", file.path(root, "snapshots/national_acs_f81814dd"))
   panel_file <- Sys.getenv("PANEL_FILE", file.path(production_dir, "national_cps_acs_pseudo-panel_housing.rds"))
   reuse_dir <- Sys.getenv("REUSE_DIR", file.path(production_dir, "national_first_birth_housing"))
+  repair_checkpoint <- Sys.getenv("REPAIR_CHECKPOINT", file.path(reuse_dir, "checkpoint_ownership_lw_event_only.rds"))
   outdir <- Sys.getenv("OUTDIR", file.path(root, "output/national_acs_estimator_continuation_20260921a"))
   code_root <- Sys.getenv("CONTINUATION_CODE_ROOT", snapshot_root)
   nac_require(!dir.exists(outdir) || !length(list.files(outdir, all.files = TRUE, no.. = TRUE)),
               "OUTDIR exists and is non-empty; refusing overwrite: ", outdir)
   nac_under(outdir, root, "OUTDIR")
-  contract <- nac_validate_inputs(root, production_dir, snapshot_root, panel_file, reuse_dir)
+  contract <- nac_validate_inputs(root, production_dir, snapshot_root, panel_file, reuse_dir,
+                                  repair_checkpoint = repair_checkpoint)
   dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
   start_panel <- contract$panel
   nac_write_json(list(status = "CONTINUATION_INPUT_CONTRACT_PASS", root = root,
                       production_dir = production_dir, snapshot_root = snapshot_root,
                       reuse_dir = reuse_dir, panel = start_panel,
+                      repair_checkpoint = contract$repair_checkpoint,
+                      repair_checkpoint_identity = contract$repair_identity,
                       receipts = contract$receipts, receipt_paths = contract$receipt_paths,
                       expected_panel_bytes = 6354971545, expected_pool_rows = 47310973,
                       generated = format(Sys.time(), tz = "UTC")),
@@ -134,7 +152,8 @@ nac_main <- function() {
                                        file.path(outdir, "latest_checkpoint.json"))
   fit <- tryCatch(estimate_national_first_birth_housing(
     panel, output_dir = outdir, checkpoint = latest, reuse_dir = reuse_dir,
-    outcomes = c("ownership_lw", "bedrooms5", "rooms9"),
+    allow_refit_checkpoint = repair_checkpoint,
+    outcomes = c("ownership_lw", "rooms9", "bedrooms5"),
     source_origin_col = "source_origin", from_cps_col = "from_cps",
     geography_label = "National ACS"), error = function(e) {
       nac_write_json(list(status = "CONTINUATION_FAILED", error = conditionMessage(e),
@@ -156,6 +175,8 @@ nac_main <- function() {
                       specifications = unique(fit$curves$specification),
                       input_identity_start = start_panel, input_identity_end = end_panel,
                       receipt_identity_start = contract$receipts, receipt_identity_end = end_receipts,
+                      repair_checkpoint = contract$repair_checkpoint,
+                      repair_checkpoint_identity = contract$repair_identity,
                       reuse_dir = reuse_dir, output_dir = outdir,
                       generated = format(Sys.time(), tz = "UTC")),
                  file.path(outdir, "continuation_receipt.json"))

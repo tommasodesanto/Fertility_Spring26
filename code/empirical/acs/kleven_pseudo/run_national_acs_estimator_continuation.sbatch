@@ -21,6 +21,7 @@ PRODUCTION_DIR="${PRODUCTION_DIR:-$ROOT/output/national_acs_production_20260921a
 OUTDIR="${OUTDIR:-$ROOT/output/national_acs_estimator_continuation_20260921a}"
 PANEL_FILE="${PANEL_FILE:-$PRODUCTION_DIR/national_cps_acs_pseudo-panel_housing.rds}"
 REUSE_DIR="${REUSE_DIR:-$PRODUCTION_DIR/national_first_birth_housing}"
+REPAIR_CHECKPOINT="${REPAIR_CHECKPOINT:-$REUSE_DIR/checkpoint_ownership_lw_event_only.rds}"
 
 case "$SNAPSHOT_ROOT" in "$ROOT"/*) ;; *) echo "SNAPSHOT_ROOT must be under approved ROOT" >&2; exit 2 ;; esac
 case "$CONTINUATION_CODE_ROOT" in "$ROOT"/*) ;; *) echo "CONTINUATION_CODE_ROOT must be under approved ROOT" >&2; exit 2 ;; esac
@@ -37,7 +38,7 @@ test -d "$REUSE_DIR"
 module load r/4.5.1
 export R_LIBS_USER="$ROOT/Rlibs:/scratch/td2248/R_libs"
 export PROJECT_ROOT="$ROOT" SNAPSHOT_ROOT="$SNAPSHOT_ROOT" CONTINUATION_CODE_ROOT="$CONTINUATION_CODE_ROOT"
-export PRODUCTION_DIR="$PRODUCTION_DIR" OUTDIR="$OUTDIR" PANEL_FILE="$PANEL_FILE" REUSE_DIR="$REUSE_DIR"
+export PRODUCTION_DIR="$PRODUCTION_DIR" OUTDIR="$OUTDIR" PANEL_FILE="$PANEL_FILE" REUSE_DIR="$REUSE_DIR" REPAIR_CHECKPOINT="$REPAIR_CHECKPOINT"
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
 
 HEARTBEAT_FILE="$ROOT/output/acs_national_estimator_cont_${SLURM_JOB_ID:-manual}.heartbeat"

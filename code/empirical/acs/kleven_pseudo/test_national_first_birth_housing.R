@@ -139,6 +139,30 @@ expect(identical(original_checkpoint_identity$size, after_checkpoint_identity$si
          identical(original_checkpoint_identity$mtime, after_checkpoint_identity$mtime),
        "reuse changed the original checkpoint")
 
+# The only allowed repair is an explicitly named, unreadable checkpoint.  The
+# corrupt source remains untouched while its fit is recomputed in a new dir.
+broken_reuse <- tempfile("national_first_birth_housing_broken_")
+dir.create(broken_reuse)
+file.copy(list.files(outdir, pattern = "^checkpoint_rooms9_.*\\.rds$", full.names = TRUE),
+          broken_reuse)
+bad_event_checkpoint <- file.path(broken_reuse, "checkpoint_rooms9_event_only.rds")
+writeBin(as.raw(c(1L, 2L, 3L)), bad_event_checkpoint)
+bad_identity <- file.info(bad_event_checkpoint)
+repair_events <- list()
+repair_outdir <- tempfile("national_first_birth_housing_repair_")
+dir.create(repair_outdir)
+repaired <- estimate_national_first_birth_housing(
+  g, output_dir = repair_outdir, reuse_dir = broken_reuse,
+  allow_refit_checkpoint = bad_event_checkpoint, outcomes = "rooms9", event_times = ev,
+  checkpoint = function(x) repair_events[[length(repair_events) + 1L]] <<- x)
+expect(any(vapply(repair_events, function(x) identical(x$stage, "fit_repair_refit"), logical(1))),
+       "explicit repair did not record its diagnosed checkpoint")
+expect(identical(file.info(bad_event_checkpoint)$size, bad_identity$size),
+       "repair changed the diagnosed original checkpoint")
+expect_error(estimate_national_first_birth_housing(
+  g, reuse_dir = broken_reuse, outcomes = "rooms9", event_times = ev),
+  "cannot read reuse checkpoint")
+
 expect(is.na(res$data$ownership_lw[5]), "raw OWNERSHP=0 was not retained as missing")
 
 cat("PASS: national pooled ACS full/event-only/age-only/state-year fits, full covariance contrast, source precedence, missingness, weights, clusters, checkpoints, and PNG\n")
