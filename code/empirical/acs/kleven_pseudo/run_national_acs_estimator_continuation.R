@@ -44,6 +44,10 @@ nac_validate_inputs <- function(root, production_dir, snapshot_root, panel_file,
   nac_under(production_dir, root, "production_dir")
   nac_under(snapshot_root, root, "snapshot_root")
   nac_under(panel_file, root, "panel_file")
+  expected_panel <- file.path(production_dir, "national_cps_acs_pseudo-panel_housing.rds")
+  nac_require(identical(normalizePath(panel_file, mustWork = FALSE),
+                         normalizePath(expected_panel, mustWork = FALSE)),
+              "panel_file must be the exact production pooled-panel path")
   expected_reuse <- normalizePath(file.path(production_dir, "national_first_birth_housing"), mustWork = FALSE)
   nac_require(identical(normalizePath(reuse_dir, mustWork = FALSE), expected_reuse),
               "reuse_dir must be the completed national fit directory")
@@ -52,10 +56,10 @@ nac_validate_inputs <- function(root, production_dir, snapshot_root, panel_file,
   pool_receipt <- file.path(production_dir, "national_pool_manifest.json")
   stage_receipt <- file.path(production_dir, "stage_receipt.json")
   source_contract <- file.path(snapshot_root, "code/empirical/acs/kleven_pseudo/source_contract.json")
-  for (p in c(prod_receipt, pool_receipt, stage_receipt, source_contract, panel_file))
+  for (p in c(prod_receipt, pool_receipt, source_contract, panel_file))
     nac_require(file.exists(p), "required contract file absent: ", p)
   prod <- nac_read_json(prod_receipt); pool <- nac_read_json(pool_receipt)
-  stage <- nac_read_json(stage_receipt); source <- nac_read_json(source_contract)
+  source <- nac_read_json(source_contract)
   nac_require(identical(as.character(prod$status), "NATIONAL_PRODUCTION_START") &&
                 identical(as.character(prod$phase), "production"),
               "production receipt is not the national production contract")
@@ -65,11 +69,21 @@ nac_validate_inputs <- function(root, production_dir, snapshot_root, panel_file,
                 identical(as.integer(pool$pooled_rows), as.integer(expected_pool_rows)) &&
                 identical(as.integer(unlist(pool$states)), nac_states),
               "pool manifest mismatch")
-  nac_require(identical(as.character(stage$status), "MATCH_HOUSING_STAGE_COMPLETE") &&
-                identical(as.character(stage$phase), "production"),
-              "stage receipt is not a completed production receipt")
+  state_receipts <- file.path(production_dir, sprintf("statefip_%02d/state_receipt.json", nac_states))
+  nac_require(all(file.exists(state_receipts)), "one or more terminal state receipts are absent")
+  state_status <- vapply(state_receipts, function(p) as.character(nac_read_json(p)$status), character(1))
+  nac_require(all(state_status == "STATE_MATCH_COMPLETE"), "one or more state receipts are not terminal")
+  stage <- if (file.exists(stage_receipt)) nac_read_json(stage_receipt) else NULL
+  if (!is.null(stage)) {
+    nac_require(identical(as.character(stage$status), "MATCH_HOUSING_STAGE_COMPLETE") &&
+                  identical(as.character(stage$phase), "production"),
+                "present stage receipt is not a completed production receipt")
+  }
   nac_require(identical(as.character(source$remote_root), normalizePath(root, mustWork = FALSE)),
               "snapshot source contract remote root mismatch")
+  prod_vendor <- sort(unlist(prod$vendor_sha256)); source_vendor <- sort(unlist(source$vendor_sha256))
+  nac_require(length(prod_vendor) > 0L && identical(prod_vendor, source_vendor),
+              "production vendor SHA-256 receipt differs from snapshot contract")
   panel_id <- nac_file_identity(panel_file, "pooled panel")
   nac_require(identical(as.numeric(panel_id$bytes), as.numeric(expected_panel_bytes)),
               "pooled panel byte identity mismatch: got ", panel_id$bytes,
@@ -77,9 +91,11 @@ nac_validate_inputs <- function(root, production_dir, snapshot_root, panel_file,
   reuse_files <- file.path(reuse_dir, paste0("checkpoint_rooms9_",
                                               c("full", "event_only", "age_only", "state_year"), ".rds"))
   nac_require(all(file.exists(reuse_files)), "completed rooms checkpoint set is incomplete")
-  list(panel = panel_id, receipts = lapply(c(prod_receipt, pool_receipt, stage_receipt, source_contract), nac_file_identity),
-       receipt_paths = c(production = prod_receipt, pool = pool_receipt, stage = stage_receipt,
-                         snapshot = source_contract), production = prod, pool = pool, stage = stage)
+  receipt_paths <- c(production = prod_receipt, pool = pool_receipt, snapshot = source_contract,
+                     setNames(state_receipts, paste0("state_", nac_states)))
+  if (!is.null(stage)) receipt_paths <- c(receipt_paths, stage = stage_receipt)
+  list(panel = panel_id, receipts = lapply(receipt_paths, nac_file_identity),
+       receipt_paths = receipt_paths, production = prod, pool = pool, stage = stage)
 }
 
 nac_main <- function() {
@@ -128,12 +144,18 @@ nac_main <- function() {
     })
   end_panel <- nac_file_identity(panel_file, "pooled panel")
   nac_require(nac_same_identity(start_panel, end_panel), "pooled panel size/mtime changed during continuation")
+  end_receipts <- lapply(contract$receipt_paths, nac_file_identity)
+  nac_require(length(end_receipts) == length(contract$receipts) &&
+                all(vapply(seq_along(end_receipts), function(i)
+                  nac_same_identity(contract$receipts[[i]], end_receipts[[i]]), logical(1))),
+              "production/snapshot receipt size or mtime changed during continuation")
   nac_require(identical(fit$status, "ESTIMATION_COMPLETE_DIAGNOSTIC") && length(fit$fits) == 12L,
               "continuation did not produce all 12 fits")
   nac_write_json(list(status = "NATIONAL_ACS_ESTIMATOR_CONTINUATION_COMPLETE",
                       fit_count = length(fit$fits), outcomes = unique(fit$curves$outcome),
                       specifications = unique(fit$curves$specification),
                       input_identity_start = start_panel, input_identity_end = end_panel,
+                      receipt_identity_start = contract$receipts, receipt_identity_end = end_receipts,
                       reuse_dir = reuse_dir, output_dir = outdir,
                       generated = format(Sys.time(), tz = "UTC")),
                  file.path(outdir, "continuation_receipt.json"))

@@ -32,7 +32,6 @@ test -r "$SNAPSHOT_ROOT/code/empirical/acs/kleven_pseudo/source_contract.json"
 test -r "$PANEL_FILE"
 test -r "$PRODUCTION_DIR/production_start_receipt.json"
 test -r "$PRODUCTION_DIR/national_pool_manifest.json"
-test -r "$PRODUCTION_DIR/stage_receipt.json"
 test -d "$REUSE_DIR"
 
 module load r/4.5.1
@@ -41,4 +40,21 @@ export PROJECT_ROOT="$ROOT" SNAPSHOT_ROOT="$SNAPSHOT_ROOT" CONTINUATION_CODE_ROO
 export PRODUCTION_DIR="$PRODUCTION_DIR" OUTDIR="$OUTDIR" PANEL_FILE="$PANEL_FILE" REUSE_DIR="$REUSE_DIR"
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
 
-Rscript --vanilla "$CONTINUATION_CODE_ROOT/code/empirical/acs/kleven_pseudo/run_national_acs_estimator_continuation.R"
+HEARTBEAT_FILE="$ROOT/output/acs_national_estimator_cont_${SLURM_JOB_ID:-manual}.heartbeat"
+Rscript --vanilla "$CONTINUATION_CODE_ROOT/code/empirical/acs/kleven_pseudo/run_national_acs_estimator_continuation.R" &
+PID=$!
+setsid sh -c '
+  target="$1"; heartbeat_file="$2"; outdir="$3"
+  while kill -0 "$target" 2>/dev/null; do
+    printf "%s estimator_continuation_heartbeat pid=%s outdir=%s\\n" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$target" "$outdir" >> "$heartbeat_file"
+    sleep 300
+  done
+' sh "$PID" "$HEARTBEAT_FILE" "$OUTDIR" &
+HEARTBEAT=$!
+set +e
+wait "$PID"
+STATUS=$?
+set -e
+kill -- -"$HEARTBEAT" 2>/dev/null || kill "$HEARTBEAT" 2>/dev/null || true
+wait "$HEARTBEAT" 2>/dev/null || true
+exit "$STATUS"
