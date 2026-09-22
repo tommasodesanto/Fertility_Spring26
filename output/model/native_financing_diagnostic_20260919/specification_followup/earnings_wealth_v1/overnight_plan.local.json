@@ -1,31 +1,31 @@
 {
   "adapter_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_candidate.py",
-  "adapter_sha256": "28d0783b3517b739fe735ba132142d3b787d8101cda3ac7409b04c4df24eefd9",
-  "budget_interpretation": "Smoke at most7000s; production18800s includes at most14400s proposals and4400s selected verification. At most3 smoke +64 proposal +2 verification objectives.",
+  "adapter_sha256": "f64e651058a09390697dc3c1daaf37dbf482a2117e86a9b69ecd4171b64ad29f",
+  "budget_interpretation": "Smoke at most10000s; production18800s includes at most12400s proposal execution plus6400s selected verification. Total local supervisor32000s.69 full objectives/552 nested solves maximum; time budget likely binds first.",
   "cases": [
     {
       "arm": "reference",
       "id": "reference",
-      "native_seconds": 2100,
+      "native_seconds": 3100,
       "repetitions": 1,
-      "seconds": 2200,
-      "wrapper_seconds": 2150
+      "seconds": 3200,
+      "wrapper_seconds": 3150
     },
     {
       "arm": "literature_income",
       "id": "income_only",
-      "native_seconds": 2100,
+      "native_seconds": 3100,
       "repetitions": 1,
-      "seconds": 2200,
-      "wrapper_seconds": 2150
+      "seconds": 3200,
+      "wrapper_seconds": 3150
     },
     {
       "arm": "literature_income_purchase",
       "id": "income_purchase",
-      "native_seconds": 4200,
+      "native_seconds": 6200,
       "repetitions": 2,
-      "seconds": 4400,
-      "wrapper_seconds": 4350
+      "seconds": 6400,
+      "wrapper_seconds": 6350
     }
   ],
   "config_fixed": true,
@@ -38,9 +38,10 @@
   "execution_contract": {
     "authorization": "Latest user says laptop remains open overnight and permits iteration as long as needed; Torch authentication expired and user was notified. Use bounded local execution under that instruction.",
     "estimated_seconds_per_full_objective": [
-      1500,
-      2100
+      1900,
+      2800
     ],
+    "estimated_single_case_rss_gib": 4.5,
     "expected_nested_solves_per_objective": 6,
     "interpretation": "Proposed earnings/entry/purchase specification; finite joint calibration diagnostic; no convergence or policy adoption.",
     "maximum_nested_solves_per_objective": 8,
@@ -57,17 +58,17 @@
   },
   "expected_stationary_solves": "six per objective historically; at most eight; time cap may stop proposals before64",
   "expected_wall_minutes": [
-    40,
-    70
+    90,
+    530
   ],
   "files": {
     "accounting": {
       "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_earnings_wealth_contract.py",
-      "sha256": "a6b3f4edc6a43d4e49d0e820540435ceae8bba3c0abfe0d9b798a52d170ec914"
+      "sha256": "d6f90f376a5214a861ae7fb63f209f56837dc2b6e55c6d4407f346c261256e80"
     },
     "adapter": {
       "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_candidate.py",
-      "sha256": "28d0783b3517b739fe735ba132142d3b787d8101cda3ac7409b04c4df24eefd9"
+      "sha256": "f64e651058a09390697dc3c1daaf37dbf482a2117e86a9b69ecd4171b64ad29f"
     },
     "controller": {
       "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_smoke.py",
@@ -80,6 +81,10 @@
     "initial_contract": {
       "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/income_refinement_local_20260921/local_initial_contract.json",
       "sha256": "71c00ea0e9e9458ae2c4859f8683e1e50c5dff065cdadc681036509b04efaab4"
+    },
+    "local_supervisor": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/cluster/run_e5f_earnings_wealth_local.py",
+      "sha256": "036f4029412a489fae2f7cba69e49baadb2a77f45de7a205ab933ed6df0399a4"
     },
     "period_estimates": {
       "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/data_validation/fit.csv",
@@ -125,6 +130,11 @@
     "source": "PSID EARNINDRRC complete observed annual cells, offset0; age/year residualized; estimated directly at four-year frequency"
   },
   "initial_psi": 0.1489153145785918,
+  "local_supervision": {
+    "search_seconds": 21000,
+    "smoke_seconds": 10000,
+    "total_seconds": 32000
+  },
   "maximum_full_objectives": 69,
   "maximum_stationary_solves": 552,
   "native_artifact_paths": [
@@ -136,10 +146,10 @@
   ],
   "objective_canonical_sha256": "4440ea07f4de957740ca6c04961d2806d9b9ef782c7a0e7dad4ce73e1db651b1",
   "operational_revision": {
-    "previous_execution": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v2/execution.json",
-    "reason": "Return native infeasible value for interpolation outside either grid endpoint in both tenure kernels; preserve exact native interpolation within support including endpoints. Forward maps keep placeholders only for zero-probability branches and the unchanged occupied accounting gate remains active.",
-    "review_receipt": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/staging/purchase_support_correction.json",
-    "version": 3
+    "previous_execution": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v3/execution.json",
+    "reason": "Explicit numerical wealth-domain correction for occupied monotonicity failure at the old upper edge",
+    "review_receipt": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/staging/wealth_grid_correction.json",
+    "version": 4
   },
   "parameter_bounds": {
     "H0": [
@@ -186,7 +196,7 @@
   "search_arm": "literature_income_purchase",
   "search_config": {
     "arm": "literature_income_purchase",
-    "case_timeout": 2200,
+    "case_timeout": 3200,
     "coordinate_widths": {
       "H0": 0.35,
       "beta_annual": 0.012,
@@ -199,12 +209,12 @@
       "theta1": 0.55
     },
     "max_proposals": 64,
-    "native_seconds": 2100,
+    "native_seconds": 3100,
     "search_dispatch_window_seconds": 14400,
     "search_seconds": 18800,
     "seed": 20260922,
-    "smoke_anchor_seconds": 4400,
-    "verification_seconds": 4400,
+    "smoke_anchor_seconds": 6400,
+    "verification_seconds": 6400,
     "workers": 4,
     "wrapper_seconds": 2150
   },
@@ -234,5 +244,15 @@
     "theta0": 0.08105103333987912,
     "theta1": 0.08520356663830632
   },
-  "total_seconds": 26000
+  "total_seconds": 26000,
+  "wealth_grid_specification": {
+    "economic_saving_cap_added": false,
+    "extra_nodes": 40,
+    "interpretation": "Numerical-domain expansion chosen to put the old top far inside support. Not a rigorous reachability bound and not proof of convergence.",
+    "mode": "append_upper_tail",
+    "original_knots": "all preserved exactly",
+    "original_nodes": 120,
+    "original_upper": 30,
+    "upper": 3000
+  }
 }

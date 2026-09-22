@@ -1,6 +1,6 @@
 # Earnings, entry wealth and purchase timing
 
-## Live review — September 22, 00:57 EDT
+## Live review — September 22, 01:54 EDT
 
 The primary-source reviews and direct four-year PSID point estimates are done.
 The main candidate uses the earliest complete four-year block grid (1984-based
@@ -59,25 +59,43 @@ stated support contract; no accounting gate, income input, target or bound was
 relaxed. Finite-grid robustness remains outstanding. The failed V2 evidence is
 preserved in [reviewed correction](staging/purchase_support_correction.json).
 
+**V3 failure and V4 numerical-domain correction:** V3 passed purchase accounting
+(zero unsupported transaction mass, maximum map error3.55e-15), then failed the
+occupied-value check. All25 drops are in the final wealth interval27.807→30,
+owner product5 and income state44; affected lower-node mass9.18e-8 and maximum
+value drop6.64e-4. It completed six stationary solves, zero scored objectives.
+Rejecting transactions at the upper edge can remove a sale/downsizing option
+when wealth rises. The regression test reproduces that loss and removes it by
+extending support. V4 preserves all120 original wealth knots and appends40
+geometric knots from30 to3000. No economic saving cap is added. The generated
+probe changes only grid assignment and expected geometry to160 nodes; source,
+target, normalization, accounting and value-quality gates remain intact.
+The upper endpoint is a declared numerical choice, not a proven reachability
+bound or convergence result.42 checks and a native zero-solve full-setup test
+passed, including all641 source files and exact entry/grid agreement.
+[Failure, correction and budgets](staging/wealth_grid_correction.json),
+[full native setup](staging/v4_native_geometry_preflight.json).
+
 Torch authentication has expired; no cluster job has been submitted. Under the
-author's explicit open-laptop overnight authorization, the corrected frozen V3 bundle is
+author's explicit open-laptop overnight authorization, the corrected frozen V4 bundle is
 **running native smoke locally**: two exact anchor repetitions and one inward-beta
 probe. Its successful receipt alone triggers the longer search. V1 stopped
 before solving on a controller metadata mismatch; the correction and old receipt
 are preserved in [startup repair](staging/startup_contract_repair.json). All
-three V3 zero-solve native preflights passed, 39 unit checks passed, and native
+three V4 zero-solve native preflights passed, 42 unit checks passed, and native
 progress is confirmed. [Execution/monitor registration](local_execution.json),
-[immutable V3 plan](staging/frozen_v3_plan.json),
-[source inventory](staging/frozen_v3_hash_manifest.json).
+[immutable V4 plan](staging/frozen_v4_plan.json),
+[source inventory](staging/frozen_v4_hash_manifest.json).
 
 The longer search has four single-threaded workers, a fixed deterministic seed,
 at most 64 joint proposals over the nine existing coordinates, and two exact
-selected repetitions. The production controller has 18,800 seconds including 4,400
-reserved for verification; the smoke supervisor has 7,000 seconds and the full
-local supervisor 28,000 seconds (about 7.8 hours) including overhead. At most 69
+selected repetitions. The production controller has 18,800 seconds including 6,400
+reserved for verification; the smoke supervisor has 10,000 seconds and the full
+local supervisor 32,000 seconds (about 8.9 hours) including overhead. At most 69
 full objectives /552 nested solves are authorized; time limits will likely bind
-first. Estimated full objectives take 1,500–2,100 seconds from measured stationary
-solve times. Every case records progress, and latest/best results are saved.
+first. Estimated full objectives take 1,900–2,800 seconds from measured stationary
+solve times scaled for the larger grid. Per-objective outer cap is3,200 seconds;
+two-repetition cap is6,400 seconds. Every case records progress, and latest/best results are saved.
 Unexpected failures stop the stage; no automatic retry or gate relaxation.
 The follow-up checks every 20 minutes and stays quiet while healthy.
 

@@ -1,5 +1,21 @@
 # Calibration Status
 
+**September 22, 01:54 EDT — upper-grid value loss isolated; V4 expanded-domain smoke running:**
+V3 passed exact transaction accounting but failed25 occupied-value comparisons,
+all in the final wealth interval27.807→30. Maximum drop6.64e-4; affected mass9.18e-8.
+Six stationary solves completed; zero scored objectives or proposals. The upper
+support restriction can remove a sale option as wealth rises. V4 preserves all120
+original wealth knots and appends40 geometric upper-tail nodes to3000, with no
+new economic saving cap. Only the declared grid/probe geometry changes; all
+source, target, normalization, accounting and value-quality checks remain.
+42 focused tests and the full native160-node zero-solve configuration passed;
+independent review found no integration blocker. The new repeated smoke started
+01:54 EDT, then search only on success. Budgets are explicit:3,200 seconds/case,
+6,400 repeated anchor/selection,18,800 total production and32,000 supervisor.
+No income input, target, structural bound or tolerance changed. Domain/density
+robustness is still needed; neither convergence nor paper adoption is claimed.
+[Current evidence and corrected run](output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/README.md).
+
 **September 22, 00:57 EDT — smoke caught transaction clipping; reviewed V3 correction running:**
 V2 completed six stationary solves but zero scored objectives or repetitions,
 then failed the unchanged purchase-accounting gate: out-of-grid transaction mass

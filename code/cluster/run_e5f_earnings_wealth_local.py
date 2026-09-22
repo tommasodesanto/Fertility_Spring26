@@ -19,12 +19,16 @@ def main():
     from run_e5f_earnings_wealth_smoke import _kill_group
     from run_e5f_earnings_wealth_candidate import verify_plan
     verify_plan(plan)
+    supervision=plan.get('local_supervision',{})
+    stages=[('smoke',int(supervision.get('smoke_seconds',7000))),('search',int(supervision.get('search_seconds',21000)))]
+    total_limit=int(supervision.get('total_seconds',28000))
+    if min([total_limit]+[limit for _,limit in stages])<=0:raise ValueError('positive supervision budgets required')
     out=root/'output';out.mkdir(exist_ok=False)
     env=dict(os.environ,OMP_NUM_THREADS='1',OPENBLAS_NUM_THREADS='1',MKL_NUM_THREADS='1',NUMBA_NUM_THREADS='1',NUMBA_DISABLE_JIT='0',MPLBACKEND='Agg',PYTHONUNBUFFERED='1',NUMBA_CACHE_DIR=str(root/'numba_cache'))
-    receipt={'schema':'earnings_local_overnight_v1','pid':os.getpid(),'started_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'bundle':str(root),'status':'running','stages':[],'maximum_total_seconds':28000,'retry_policy':'no automatic retries'}
+    receipt={'schema':'earnings_local_overnight_v1','pid':os.getpid(),'started_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'bundle':str(root),'status':'running','stages':[],'maximum_total_seconds':total_limit,'retry_policy':'no automatic retries'}
     started=time.monotonic();write(root/'execution.json',receipt)
     signal.signal(signal.SIGTERM,lambda *_: (_ for _ in ()).throw(KeyboardInterrupt('supervisor terminated')))
-    for mode,limit in [('smoke',7000),('search',21000)]:
+    for mode,limit in stages:
         command=[plan['python'],'-B',str(root/'tools/run_e5f_earnings_wealth_search.py'),'--mode',mode,'--plan',str(root/'plan.json'),'--output',str(out/mode)]
         if mode=='search':command+=['--verified-smoke',str(out/'smoke/smoke_receipt.json')]
         phase={'stage':mode,'status':'running','seconds_limit':limit,'started_utc':datetime.datetime.now(datetime.timezone.utc).isoformat()};receipt['stages'].append(phase);write(root/'execution.json',receipt)
@@ -34,7 +38,7 @@ def main():
                 proc=subprocess.Popen(command,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
                 phase['pid']=proc.pid;write(root/'execution.json',receipt)
                 while proc.poll() is None:
-                    if time.monotonic()-t>limit or time.monotonic()-started>28000:raise TimeoutError('declared stage/total allocation exhausted')
+                    if time.monotonic()-t>limit or time.monotonic()-started>total_limit:raise TimeoutError('declared stage/total allocation exhausted')
                     if time.monotonic()-last>=30:
                         write(root/'heartbeat.json',{'status':'running','stage':mode,'elapsed_seconds':time.monotonic()-t,'updated_unix':time.time(),'pid':proc.pid});last=time.monotonic()
                     time.sleep(1)

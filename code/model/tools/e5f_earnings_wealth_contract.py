@@ -85,6 +85,47 @@ def _replace_once(source: str, before: str, after: str) -> str:
     return source.replace(before, after)
 
 
+def extend_upper_transaction_grid(core, *, upper, extra_nodes):
+    """Preserve every original knot and append a declared geometric tail.
+
+    This expands the numerical wealth domain, not an economic saving limit.
+    Full transaction-support and occupied-value gates remain necessary; this
+    constructor alone does not establish convergence or a reachability bound.
+    """
+    core = np.asarray(core, dtype=float)
+    if (core.ndim != 1 or len(core) != 120 or not np.isfinite(core).all()
+            or not np.all(np.diff(core) > 0) or core[-1] != 30.
+            or not np.isfinite(upper) or upper <= core[-1]
+            or int(extra_nodes) != extra_nodes or extra_nodes < 1):
+        raise ValueError("unsupported explicit upper transaction-grid contract")
+    result = np.r_[core, np.geomspace(core[-1], upper, int(extra_nodes) + 1)[1:]]
+    np.testing.assert_array_equal(result[:len(core)], core)
+    return result
+
+
+def install_explicit_transaction_grid(model):
+    original = model.make_grid
+
+    def make_grid(P):
+        if not hasattr(P, "earnings_transaction_grid"):
+            return original(P)
+        grid = np.asarray(P.earnings_transaction_grid, dtype=float)
+        if len(grid) != int(P.Nb) or grid[-1] != P.b_max:
+            raise ValueError("explicit transaction-grid metadata mismatch")
+        return grid.copy()
+
+    model.make_grid = make_grid
+
+
+def rewrite_probe_grid(source, expected_nodes):
+    """Change only the declared numerical geometry; retain all native gates."""
+    if expected_nodes <= 120:
+        raise ValueError("transaction-grid probe requires an explicit extension")
+    source = _replace_once(source, "    grid=np.asarray(old.b_grid).copy()\n",
+                           "    grid=np.asarray(model.make_grid(base)).copy()\n")
+    return _replace_once(source, "if (len(grid)!=120 or", f"if (len(grid)!={int(expected_nodes)} or")
+
+
 def _ordinary_forward_maps(P, b_grid, hc, he, phi_choice, birth_dp, birth_entry_grant):
     """Exact transaction wealth, without inventing a collateral-limit transfer.
 

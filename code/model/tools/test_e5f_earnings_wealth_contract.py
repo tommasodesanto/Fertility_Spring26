@@ -71,6 +71,59 @@ def test_fixed_entry_requires_exact_reference_grid_and_income_node():
         model.entry_wealth_grid_weights(P.fixed_reference_entry_grid, P, z_value=1.25)
 
 
+def test_expanded_grid_preserves_original_knots_and_does_not_mutate_reference():
+    core = np.linspace(-12., 30., 120)
+    full = contract.extend_upper_transaction_grid(core, upper=3000., extra_nodes=40)
+    np.testing.assert_array_equal(full[:120], core)
+    assert len(full) == 160 and full[-1] == 3000. and np.all(np.diff(full) > 0)
+    model = SimpleNamespace(make_grid=lambda P: core.copy())
+    contract.install_explicit_transaction_grid(model)
+    np.testing.assert_array_equal(model.make_grid(SimpleNamespace()), core)
+    P = SimpleNamespace(earnings_transaction_grid=full, Nb=160, b_max=3000.)
+    np.testing.assert_array_equal(model.make_grid(P), full)
+    P.Nb = 120
+    with pytest.raises(ValueError, match="metadata mismatch"):
+        model.make_grid(P)
+
+
+def test_probe_grid_rewrite_changes_geometry_only():
+    probe = FROZEN_MODEL / "tools/run_e5f_initial_revision_probe.py"
+    original = probe.read_text()
+    revised = contract.rewrite_probe_grid(original, 160)
+    reverted = revised.replace("    grid=np.asarray(model.make_grid(base)).copy()\n",
+                               "    grid=np.asarray(old.b_grid).copy()\n")
+    reverted = reverted.replace("if (len(grid)!=160 or", "if (len(grid)!=120 or")
+    assert reverted == original
+    compile(revised, str(probe), "exec")
+
+
+def test_upper_tail_removes_sale_option_loss_at_old_grid_edge(tmp_path):
+    core = np.r_[np.linspace(-12., 27.80722452368194, 119), 30.]
+    extended = contract.extend_upper_transaction_grid(core, upper=3000., extra_nodes=40)
+    price = .71508
+    costs = price * np.array([[0., 8., 10.]])
+    sales = .94 * costs
+    economic_floor = np.full((1, 3, 1, 1), -100.)
+    birth_dp = np.zeros((1, 1, 3, 3), dtype=bool)
+    grants = np.zeros((1, 3, 1, 1))
+    original = solver.tenure_choice_kernel, solver.tenure_logit_kernel
+    try:
+        contract._install_transaction_support(solver, tmp_path / "edge.diff")
+        changes = []
+        for grid in (core, extended):
+            values = np.zeros((len(grid), 3, 1, 1, 1))
+            values[:, 0] = -10.
+            values[:, 1, 0, 0, 0] = 1. + .01 * grid
+            args = (values, grid, sales, costs, economic_floor, economic_floor, birth_dp, grants)
+            argmax = solver.tenure_choice_kernel(*args)[0]
+            logit = solver.tenure_logit_kernel(*args, .1)[0]
+            changes.append([a[119, 2, 0, 0, 0] - a[118, 2, 0, 0, 0] for a in (argmax, logit)])
+    finally:
+        solver.tenure_choice_kernel, solver.tenure_logit_kernel = original
+    assert max(changes[0]) < 0.  # Reproduce artificial sale-option loss.
+    assert min(changes[1]) > 0.  # The same two original knots retain the option.
+
+
 def test_install_purchase_income_compiles_frozen_markov_solver(tmp_path):
     # This exercises only the source-anchor rewrite; it does not call the model.
     original = solver.solve_bellman_full_markov_income

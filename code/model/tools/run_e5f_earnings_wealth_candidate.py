@@ -110,10 +110,29 @@ def run_probe(plan, initial_path, output):
         import run_e5f_matched_pf_smoke as primitive
         bind_original = parent.bind_parenthood_utility
         accounting.install_fixed_entry(model)
+        grid_spec = plan.get("wealth_grid_specification")
+        if grid_spec:
+            if grid_spec.get("mode") != "append_upper_tail":
+                raise ValueError("unsupported declared wealth-grid change")
+            accounting.install_explicit_transaction_grid(model)
 
         def bind(base, structural):
             bound = bind_original(base, structural)
             grid = model.make_grid(bound)
+            if grid_spec:
+                if hasattr(bound, "earnings_transaction_grid"):
+                    raise ValueError("wealth-grid extension must be bound exactly once")
+                original_grid = grid.copy()
+                grid = accounting.extend_upper_transaction_grid(grid,
+                    upper=grid_spec["upper"], extra_nodes=grid_spec["extra_nodes"])
+                bound.earnings_transaction_grid = grid.copy()
+                bound.Nb = len(grid)
+                bound.b_max = float(grid[-1])
+                write(output.parent / "wealth_grid.json", dict(
+                    original_grid=original_grid.tolist(), grid=grid.tolist(),
+                    original_knots_preserved=bool(np.array_equal(grid[:len(original_grid)], original_grid)),
+                    economic_saving_constraint_changed=False,
+                    interpretation="Expanded numerical wealth domain; convergence not established"))
             components = metadata["components"]
             entry_rule = plan.get("entry_specification", {}).get("rule", "fixed_reference_marginal")
             if entry_rule == "fixed_reference_marginal":
@@ -158,7 +177,16 @@ def run_probe(plan, initial_path, output):
     probe = source / "code/model/tools/run_e5f_initial_revision_probe.py"
     sys.argv = [str(probe), "--contract", str(initial_path), "--contract-sha256", digest(initial_path),
                 "--case", "new_balanced", "--output", str(output)]
-    runpy.run_path(str(probe), run_name="__main__")
+    if arm != "reference" and plan.get("wealth_grid_specification"):
+        generated = output.parent / "probe_grid.generated.py"
+        revised = accounting.rewrite_probe_grid(probe.read_text(),
+            120 + int(plan["wealth_grid_specification"]["extra_nodes"]))
+        generated.write_text(revised)
+        # __file__ retains the frozen root for its unchanged source/seed checks.
+        exec(compile(revised, str(generated), "exec"),
+             {"__name__": "__main__", "__file__": str(probe)})
+    else:
+        runpy.run_path(str(probe), run_name="__main__")
 
 
 def run_case(plan_path, plan, arm, output, repetitions, preflight=False):
@@ -222,6 +250,9 @@ def run_case(plan_path, plan, arm, output, repetitions, preflight=False):
         runtime_contract["generated_solver_sha256"] = digest(output / "evaluation/purchase_source.generated.py")
         runtime_contract["generated_tenure_support_sha256"] = digest(output / "evaluation/purchase_source.tenure.py")
         runtime_contract["source_diff_sha256"] = digest(output / "evaluation/purchase_source.diff")
+    if arm != "reference" and plan.get("wealth_grid_specification"):
+        runtime_contract["generated_probe_grid_sha256"] = digest(output / "evaluation/probe_grid.generated.py")
+        runtime_contract["numerical_wealth_grid"] = read(output / "evaluation/wealth_grid.json")
     runtime_contract["status"] = "verified_diagnostic"
     write(output / "runtime_contract.json", runtime_contract)
     return result

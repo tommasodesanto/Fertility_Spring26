@@ -91,7 +91,7 @@ def prepare(plan_path: Path, bundle: Path, execution_root: Path, python_path: st
     rewritten["bundle_status"] = "prepared_hash_verified"
     rewritten["bundle_parent_plan_sha256"] = digest(plan_path)
 
-    for key in CODE_KEYS:
+    for key in (*CODE_KEYS, *(["local_supervisor"] if "local_supervisor" in files else [])):
         src = _basename_path(files[key], root, key)
         dst = tools / src.name
         copy_pinned(src, dst, files[key]["sha256"], key, manifest)
