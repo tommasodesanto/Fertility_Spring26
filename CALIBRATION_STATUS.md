@@ -1,5 +1,7 @@
 # Calibration Status
 
+**Reader format:** [September 22 earnings/wealth PDF review](output/pdf/earnings_wealth_review.pdf) contains the reviewed synthesis, complete tables and original 17-figure packet. This is a reporting update only.
+
 **September 22, 08:20 EDT — earnings search stopped; terminal review delivered, no adoption:**
 V5 stopped at 07:50 EDT after proposal006 exceeded its 3,100-second native
 limit during the seventh stationary solve. Seven of eight proposals were scored;

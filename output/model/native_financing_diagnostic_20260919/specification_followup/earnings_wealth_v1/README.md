@@ -1,5 +1,7 @@
 # Earnings, entry wealth and purchase timing
 
+**Reader report:** [PDF review](../../../../pdf/earnings_wealth_review.pdf), with a short synthesis, all 13 target rows and 17 parameter rows for each reported point, and all 17 original search diagnostic figures. Rebuild from the repository root with `python code/model/tools/build_e5f_earnings_wealth_review_pdf.py` (ReportLab and pypdf required). Original figure crowding is disclosed; no model run is performed.
+
 ## Terminal review — September 22, 08:20 EDT
 
 **The full numerical smoke passed, but the longer calibration stopped before final verification.** At07:50 EDT proposal006 exceeded its3,100-second native limit during the seventh stationary solve. Seven of eight proposals scored. The best valid search proposal has loss1087.2816148857435, worse than the one-repeat smoke point1040.4468628084285. Neither has the planned final exact repetitions; no calibration was adopted or restart launched.
