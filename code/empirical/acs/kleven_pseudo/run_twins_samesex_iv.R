@@ -172,6 +172,27 @@ outcomes <- c("ROOMS_out", "OWNERSHP_out", "BEDROOMS_out")
 ar_grid_rooms <- seq(-3, 3, by = 0.1)
 ar_grid_own <- seq(-0.5, 0.5, by = 0.02)
 
+receipt_dir <- file.path(outdir, "fit_receipts")
+dir.create(receipt_dir, recursive = TRUE, showWarnings = FALSE)
+
+# Small atomic per-fit checkpoint: written immediately after each individual
+# design/outcome fit completes, independent of the outcome-level loop, so
+# completed RF/FS/IV work survives an interruption mid-outcome. Also serves
+# as the driver's progress heartbeat (well under a 5-minute cadence for 18
+# fits nationally).
+checkpoint_fit <- function(res) {
+  results[[length(results) + 1]] <<- res
+  fname <- file.path(receipt_dir, sprintf("%s__%s.json", res$design %||% "NA", res$outcome %||% "NA"))
+  tmp <- paste0(fname, ".tmp")
+  jsonlite::write_json(res, tmp, auto_unbox = TRUE, pretty = TRUE, digits = 10, null = "null", na = "null")
+  file.rename(tmp, fname)
+  saveRDS(results, paste0(file.path(outdir, "checkpoint_results.rds"), ".tmp"))
+  file.rename(paste0(file.path(outdir, "checkpoint_results.rds"), ".tmp"),
+              file.path(outdir, "checkpoint_results.rds"))
+  write_status("estimating", list(last_completed = fname, n_fits_done = length(results),
+                                   elapsed_sec = as.numeric(Sys.time() - t0, units = "secs")))
+}
+
 results <- list()
 for (oc in outcomes) {
   ar_grid <- if (oc == "OWNERSHP_out") ar_grid_own else ar_grid_rooms
@@ -181,7 +202,7 @@ for (oc in outcomes) {
     cluster_var = "household_key", ar_grid = ar_grid),
     error = function(e) list(status = "error", message = conditionMessage(e)))
   res_t1$design <- "Twin1_pooled0_5"; res_t1$outcome <- oc
-  results[[length(results) + 1]] <- res_t1
+  checkpoint_fit(res_t1)
 
   res_ss <- tryCatch(fit_instrument_outcome(
     ss[eligible == TRUE], outcome = oc, treatment = "treatment_3plus", instrument = "samesex",
@@ -189,7 +210,7 @@ for (oc in outcomes) {
     cluster_var = "household_key", ar_grid = ar_grid),
     error = function(e) list(status = "error", message = conditionMessage(e)))
   res_ss$design <- "SameSex2_pooled0_5"; res_ss$outcome <- oc
-  results[[length(results) + 1]] <- res_ss
+  checkpoint_fit(res_ss)
 
   for (ea in c(3, 5)) {
     t1_ea <- t1[event_age == ea]
@@ -198,15 +219,13 @@ for (oc in outcomes) {
                      controls_fml, "mother_weight", "household_key", ar_grid),
                    error = function(e) list(status = "error", message = conditionMessage(e)))
     r1$design <- paste0("Twin1_event", ea); r1$outcome <- oc
-    results[[length(results) + 1]] <- r1
+    checkpoint_fit(r1)
     r2 <- tryCatch(fit_instrument_outcome(ss_ea, oc, "treatment_3plus", "samesex",
                      controls_fml, "mother_weight", "household_key", ar_grid),
                    error = function(e) list(status = "error", message = conditionMessage(e)))
     r2$design <- paste0("SameSex2_event", ea); r2$outcome <- oc
-    results[[length(results) + 1]] <- r2
+    checkpoint_fit(r2)
   }
-  write_status("estimating", list(completed_outcome = oc, elapsed_sec = as.numeric(Sys.time() - t0, units = "secs")))
-  saveRDS(results, file.path(outdir, "checkpoint_results.rds"))
 }
 
 results_dt <- data.table::rbindlist(lapply(results, function(r) {
@@ -229,6 +248,7 @@ results_dt <- data.table::rbindlist(lapply(results, function(r) {
     iv_nobs_fit = r$iv_nobs_fit %||% NA_integer_, iv_error = r$iv_error %||% NA_character_,
     ar_summary_lower = r$ar_summary_lower %||% NA_real_, ar_summary_upper = r$ar_summary_upper %||% NA_real_,
     ar_fully_interior_bounded = r$ar_fully_interior_bounded %||% NA,
+    ar_extent_unknown_due_to_errors = r$ar_extent_unknown_due_to_errors %||% NA,
     ar_n_components = r$ar_n_components %||% NA_integer_,
     ar_all_grid_points_accepted = r$ar_all_grid_points_accepted %||% NA,
     ar_empty_accepted_set = r$ar_empty_accepted_set %||% NA,

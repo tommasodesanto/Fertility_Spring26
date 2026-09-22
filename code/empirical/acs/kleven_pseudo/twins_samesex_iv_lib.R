@@ -308,12 +308,18 @@ ar_confidence_set <- function(data, outcome, endog, instrument, controls_fml,
     any(vapply(components, function(c) c$touches_grid_boundary, logical(1)))
   all_grid_accepted <- n_accepted == n_grid
 
+  # A grid point that errored is neither accepted nor rejected: its true
+  # accept/reject status is unknown, so it could hide a wider (or
+  # disconnected) true AR set. Any error anywhere on the grid means set
+  # completeness/extent is unknown -- never certify "fully bounded" when
+  # n_errors > 0, even if every non-error point looks interior.
   list(
     grid_min = min(grid), grid_max = max(grid), n_grid = n_grid,
     n_accepted = n_accepted, n_rejected = sum(status == "reject"),
     n_errors = n_errors,
     n_components = length(components), components = components,
-    fully_interior_bounded = length(components) > 0 && !any_boundary_touch,
+    fully_interior_bounded = length(components) > 0 && !any_boundary_touch && n_errors == 0,
+    extent_unknown_due_to_errors = n_errors > 0,
     all_grid_points_accepted = all_grid_accepted,
     empty_accepted_set = n_accepted == 0,
     # Convenience summary across ALL accepted points (may span >1 component
@@ -368,6 +374,19 @@ fit_instrument_outcome <- function(data, outcome, treatment, instrument,
     list(coef = b, se = se, ci_lower = b - z * se, ci_upper = b + z * se,
          nobs = stats::nobs(fit), error = NA_character_)
   }
+  # Compact full receipt (named b, full clustered V, formula, weights/cluster
+  # definitions, actual nobs) -- extracted values only, never the fit object
+  # itself, so a small per-fit JSON/CSV can be written without serializing
+  # fixest internals.
+  full_receipt <- function(fit, label) {
+    if (is.null(fit)) return(list(stage = label, status = "fit_failed"))
+    list(stage = label, status = "ok",
+         formula = deparse(stats::formula(fit)),
+         weight_var = weight_var, cluster_var = cluster_var,
+         nobs = stats::nobs(fit),
+         b = as.list(stats::coef(fit)),
+         V = apply(as.matrix(stats::vcov(fit)), 1, as.list))
+  }
 
   rf_err <- if (is.null(rf_fit)) "rf_fit_failed" else NA_character_
   fs_err <- if (is.null(fs_fit)) "fs_fit_failed" else NA_character_
@@ -377,10 +396,19 @@ fit_instrument_outcome <- function(data, outcome, treatment, instrument,
   out$rf_ci_lower <- rfx$ci_lower; out$rf_ci_upper <- rfx$ci_upper
   out$rf_nobs_fit <- rfx$nobs
   out$rf_error <- rf_err %||% rfx$error
+  out$rf_receipt <- full_receipt(rf_fit, "rf")
+  if (!is.null(rf_fit)) {
+    fit_idx <- tryCatch(fixest::obs(rf_fit), error = function(e) NULL)
+    if (!is.null(fit_idx)) {
+      out$n_households_fit_rf <- length(unique(usable[[cluster_var]][fit_idx]))
+      out$n_instrument_positive_fit_rf <- sum(usable[[instrument]][fit_idx] == 1, na.rm = TRUE)
+    }
+  }
   out$fs_coef <- fsx$coef; out$fs_se <- fsx$se
   out$fs_ci_lower <- fsx$ci_lower; out$fs_ci_upper <- fsx$ci_upper
   out$fs_nobs_fit <- fsx$nobs
   out$fs_error <- fs_err %||% fsx$error
+  out$fs_receipt <- full_receipt(fs_fit, "fs")
 
   fs_wald <- if (!is.null(fs_fit)) tryCatch(fixest::wald(fs_fit, instrument, print = FALSE), error = function(e) NULL) else NULL
   out$first_stage_F <- if (!is.null(fs_wald)) unname(fs_wald$stat) else NA_real_
@@ -398,6 +426,7 @@ fit_instrument_outcome <- function(data, outcome, treatment, instrument,
   out$iv_ci_lower <- ivx$ci_lower; out$iv_ci_upper <- ivx$ci_upper
   out$iv_nobs_fit <- ivx$nobs
   out$iv_error <- if (is.null(iv_fit)) "iv_fit_failed" else ivx$error
+  out$iv_receipt <- full_receipt(iv_fit, "iv")
 
   if (!is.null(ar_grid) && !is.null(iv_fit) && !is.na(out$iv_coef)) {
     ar <- tryCatch(ar_confidence_set(usable, outcome, treatment, instrument,
@@ -406,6 +435,7 @@ fit_instrument_outcome <- function(data, outcome, treatment, instrument,
     if (!is.null(ar)) {
       out$ar_summary_lower <- ar$summary_lower; out$ar_summary_upper <- ar$summary_upper
       out$ar_fully_interior_bounded <- ar$fully_interior_bounded
+      out$ar_extent_unknown_due_to_errors <- ar$extent_unknown_due_to_errors
       out$ar_n_components <- ar$n_components
       out$ar_all_grid_points_accepted <- ar$all_grid_points_accepted
       out$ar_empty_accepted_set <- ar$empty_accepted_set
@@ -416,6 +446,16 @@ fit_instrument_outcome <- function(data, outcome, treatment, instrument,
       out$ar_error <- "ar_confidence_set_failed"
     }
   }
-  out$status <- if (is.null(rf_fit) && is.null(fs_fit) && is.null(iv_fit)) "error" else "fit"
+  # RF is the primary estimand and is always reported when it fits, even if
+  # FS/IV fail (weak/absent first stage does not invalidate the RF). Status
+  # distinguishes a clean full fit from a partial failure so downstream
+  # readers cannot mistake a broken IV/FS leg for a complete result.
+  out$status <- if (is.null(rf_fit)) {
+    "error"
+  } else if (is.null(fs_fit) || is.null(iv_fit)) {
+    "partial_failure"
+  } else {
+    "full_fit"
+  }
   out
 }
