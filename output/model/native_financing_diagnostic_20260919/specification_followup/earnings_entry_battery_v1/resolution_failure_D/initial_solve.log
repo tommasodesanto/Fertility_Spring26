@@ -1,0 +1,69 @@
+Traceback (most recent call last):
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/tools/run_e5f_earnings_wealth_candidate.py", line 286, in <module>
+    main()
+    ~~~~^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/tools/run_e5f_earnings_wealth_candidate.py", line 280, in main
+    run_probe(plan, args.contract, args.output)
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/tools/run_e5f_earnings_wealth_candidate.py", line 186, in run_probe
+    exec(compile(revised, str(generated), "exec"),
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         {"__name__": "__main__", "__file__": str(probe)})
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_resolution_20260922_v1/results/smoke/D/worker_01/proposal_01_resolution_smoke/result/evaluation/probe_grid.generated.py", line 270, in <module>
+    main()
+    ~~~~^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_resolution_20260922_v1/results/smoke/D/worker_01/proposal_01_resolution_smoke/result/evaluation/probe_grid.generated.py", line 148, in main
+    sol,P,price,_,normalization=calibration.solve_old_steady_state(adapter,{},
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+        initial_psi=float(base.psi_child),completed_fertility_target=2.1,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        completed_fertility_tolerance=5e-4,normalize=c['normalize'])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/source/code/model/tools/run_e5f_transition_calibration.py", line 799, in solve_old_steady_state
+    initial = evaluate(float(initial_psi))
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/source/code/model/tools/run_e5f_transition_calibration.py", line 782, in evaluate
+    solution, parameters, price, seconds = closure.solve_ge(chain, overrides)
+                                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/source/code/model/tools/audit_closed_reproductive_closure.py", line 156, in solve_ge
+    sol, parameters, price = chain.run_model_cp_dt(dict(base), verbose=False)
+                             ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_resolution_20260922_v1/results/smoke/D/worker_01/proposal_01_resolution_smoke/result/evaluation/probe_grid.generated.py", line 134, in ge
+    sol,P,price,fiscal=solve_balanced_initial_equilibrium(model=model,parameters=P,
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+        b_grid=grid,initial_prices=old.solution.p_eq,payroll_tax=.179,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        marginal_tolerance=1e-9,fiscal_tolerance=1e-6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/source/code/model/tools/e5f_stationary_paygo.py", line 98, in solve_balanced_initial_equilibrium
+    sol, P, prices = model.solve_markov_income_equilibrium(
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        np.asarray(initial_prices, dtype=float), P, b_grid, verbose=False)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/source/code/model/intergen_eqscale_seq_optimized/solver.py", line 1213, in solve_markov_income_equilibrium
+    sol_it = fast_solve(p)
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/source/code/model/intergen_eqscale_seq_optimized/solver.py", line 1200, in fast_solve
+    solution = solve_markov_income_at_prices(
+        price_arr, P, b_grid, verbose=False, fast_stats=True, SD=SD_shared,
+        retain_payload=True,
+    )
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/source/code/model/intergen_eqscale_seq_optimized/solver.py", line 1523, in solve_markov_income_at_prices
+    g, stats = forward_distribution_markov_income(
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        bp_pol, hR_pol, tc, lp_j, fp, V, r, p, P, b_grid, SD, fast_stats=fast_stats, tenure_probs=tp
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/source/code/model/intergen_eqscale_seq_optimized/solver.py", line 4584, in forward_distribution_markov_income
+    _gate_dead_mass_at_age(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        g[:, :, :, j, :, :, :],
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        markov_income=True,
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/source/code/model/intergen_eqscale_seq_optimized/solver.py", line 3944, in _gate_dead_mass_at_age
+    raise InfeasibleThetaError(stage, dead_mass, census)
+intergen_eqscale_seq_optimized.solver.InfeasibleThetaError: forward_age_30: dead-node mass 2.49567345695e-12 exceeds 1.0e-12; census=[{age=30.0,b=-3.1860465116279073,child_state=0,income=0.13469260315867215,location=0,mass=4.8737087342995014e-18,parity=0,slack=-0.1279400926552814,tenure=0,transfer=0.0,unsecured_position=-3.1860465116279073,z=0.04352796175135017};{age=30.0,b=-3.1860465116279073,child_state=0,income=0.17924745631428735,location=0,mass=1.9494834937197996e-17,parity=0,slack=-0.08338523949966614,tenure=0,transfer=0.0,unsecured_position=-3.1860465116279073,z=0.057926539687437634};{age=30.0,b=-3.1860465116279073,child_state=0,income=0.23854057195176936,location=0,mass=4.8737087342995014e-18,parity=0,slack=-0.024092123862184067,tenure=0,transfer=0.0,unsecured_position=-3.1860465116279073,z=0.07708801113473239};{age=30.0,b=-3.1860465116279073,child_state=0,income=0.1951580954489414,location=0,mass=8.471039996701212e-17,parity=0,slack=-0.06747460036501218,tenure=0,transfer=0.0,unsecured_position=-3.1860465116279073,z=0.06306830453162066};{age=30.0,b=-3.1860465116279073,child_state=0,income=0.2597142780524794,location=0,mass=3.3884159986804833e-16,parity=0,slack=-0.002918417761474057,tenure=0,transfer=0.0,unsecured_position=-3.1860465116279073,z=0.08393061605640209};{age=30.0,b=-3.1860465116279073,child_state=0,income=0.34562494611947936,location=0,mass=8.471039996701212e-17,parity=0,slack=0.0829922503055256,tenure=0,transfer=0.0,unsecured_position=-3.1860465116279073,z=0.11169395410138773};{age=30.0,b=-3.1860465116279073,child_state=0,income=0.2827674373060469,location=0,mass=4.288969235328114e-16,parity=0,slack=0.020134741492093156,tenure=0,transfer=0.0,unsecured_position=-3.1860465116279073,z=0.09138059482810175};{age=30.0,b=-3.1860465116279073,child_state=0,income=0.3763038405747471,location=0,mass=1.715587694131245e-15,parity=0,slack=0.11367114476079365,tenure=0,transfer=0.0,unsecured_position=-3.1860465116279073,z=0.12160830509844635}]

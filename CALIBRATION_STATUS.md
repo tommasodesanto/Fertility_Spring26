@@ -10,6 +10,9 @@ At 19:24 EDT, four bounded income-resolution checks were submitted: A18290336, B
 
 At 19:32 EDT all four coarse common-parameter smokes are verified and production arrays are released. The entry audits show no censoring in those four smoke checkpoints and marginal discrepancies below 2.6e-16. Finite searches and finer-income checks remain in progress; the reviewed recommendation is still due around21:00.
 
+
+The D richer-income check (45 states with inherited wealth, job18290340) failed after one started and zero completed stationary solves: at age30, dead-node mass2.50e-12 exceeded the unchanged1e-12 gate. The coarse21-state smoke passed, so the result is sensitive to income support/resolution. This tiny failing mass is neither silently discarded nor treated as proof of economic impossibility. Failure evidence is preserved at `resolution_failure_D/`; no retry or gate change, and no dependents require cancellation. Other checks and the separately authorized coarse diagnostic continue.
+
 ## September 22 — single-process earnings baseline direction
 
 Author chooses a plain-vanilla starting specification: deterministic age earnings
