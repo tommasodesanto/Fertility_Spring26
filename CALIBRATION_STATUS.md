@@ -1,5 +1,19 @@
 # Calibration Status
 
+**September 21 evening — broader earnings literature reviewed:**
+The author requests plain-vanilla OLG/family grounding, prioritizing top-five and
+top-field journals, with new four-year calculations where necessary. De Nardi
+(2004, ReStud) and Bick (2016, JEEA; working version inspected) provide direct
+precedents for constructing multi-year income before estimating its process.
+Sommer (2016, JME) remains an annual US fertility/risk reference, not a complete
+four-year conversion. A four-year JEDC example was found, but its shock table is
+annual and its full conversion is unverified; it is secondary under the author's
+journal preference. The lead recommends improving period-income construction
+before fitting a parsimonious approximation, rather than forcing an exact
+AR(1)-plus-iid decomposition with a negative variance. The prepared endpoint
+adapter is diagnostic only; no household run, new calibration or adoption.
+[Reviewed sources, scope and recommendation](output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/README.md#literature-review-and-revised-recommendation).
+
 **September 21 evening — earnings/purchase implementation prepared; no model job launched:**
 The authorized three-arm diagnostic is implemented with separately pinned runtime
 adapters on the immutable native source. Cheap checks cover entry wealth,

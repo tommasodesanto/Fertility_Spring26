@@ -1,7 +1,47 @@
 # Earnings, entry wealth and purchase timing
 
-**September 21 evening: implementation and cheap checks completed; model runs
-await the income-period decision. No new calibration result or submitted job.**
+**September 21 evening: implementation and cheap checks completed; the author
+requests a broader, top-five/top-field literature grounding and improved
+four-year aggregation. No new calibration result or submitted job.**
+
+## Literature review and revised recommendation
+
+Prioritize journal quality and the relevant economic object over finding exactly
+four-year periods. The following are verified precedents, not interchangeable
+parameter estimates:
+
+| Reference | Period and verified implementation | Use here |
+|---|---|---|
+| [De Nardi (2004), Review of Economic Studies](https://users.nber.org/~denardim/research/denardi.pdf), pp. 747, 752, 765–766 | Five-year OLG model; estimates the earnings process after aggregating PSID earnings into complete five-year cells. | Main precedent for matching income measurement to model frequency. Published Table 3 uses persistence 0.85 and variance 0.30; do not substitute values attributed to this source by later implementations. |
+| [Bick (2016), JEEA; inspected working-paper version](https://mpra.ub.uni-muenchen.de/41757/1/MPRA_paper_41757.pdf), printed pp. 10, 44–45, Appendix C.1 | Three-year fertility/labor-supply model; constructs period income by summing monthly allocations of annual gross income, then estimates the process. Reports period persistence 0.882 and innovation SD 0.272. | Closely relevant family-model measurement method; these German spousal-income estimates are not US household parameters. |
+| [Sommer (2016), JME](https://www.kamilasommer.net/Fertility.pdf), Section 4.1/Table 2 | Annual fertility model with persistent AR(1) plus iid wage risk: 0.95, 0.21, 0.17. | US fertility/risk architecture and candidate annual inputs; not a four-year conversion recipe. |
+| [Doepke and Kindermann (2019), AER](https://faculty.wcas.northwestern.edu/mdo738/research/Doepke_Kindermann_AER_2019.pdf) | Three-year fertility decisions. | Supports multi-year family-model timing; does not supply our stochastic-income aggregation. |
+
+A secondary exact-four-year example is [Kolasa (2024), JEDC; inspected Warsaw
+working paper](https://www.wne.uw.edu.pl/download_file/4023/0), pp. 12, 20, 22.
+It combines fertility timing with persistent and transitory earnings risk, but
+Table 1 explicitly labels 0.9, sqrt(0.03), and 0.25 as **annual values**. The
+reviewed text does not establish its complete four-year shock conversion.
+It is not the main source under the author's journal preference, nor a ready-made
+four-year parameter vector. No exact-four-year stochastic-earnings implementation
+meeting the requested journal priority was verified in this bounded search.
+
+**Lead recommendation:** retain a simple persistent-risk architecture without a
+fixed permanent type, but construct the four-year earnings object before fitting
+its finite process. Use four-year totals (or means with the explicit factor four)
+consistently in data and model. First aggregate a sourced annual process; fit a
+nonnegative, parsimonious period approximation and disclose errors in variance,
+serial covariance and low-income tails. Direct estimation on matching four-year
+data is the alternative when an adequate annual source cannot represent the
+intended household-income concept. The simple process is an approximation, not
+an exact decomposition of aggregated annual shocks. Do not require exact matching
+of three covariances when that implies a negative variance, or add a permanent
+type merely to avoid that algebraic rejection.
+
+This supersedes the earlier request for an immediate yes/no adoption of the
+endpoint approximation. The calculations below remain useful diagnostic evidence:
+their 7.84% excess variance is not a demonstrated household-fit failure. Further
+process fitting, lifecycle/entry validation and household runs remain unrun.
 
 The author authorized implementation after returning home. This packet keeps
 the September 14 reference intact and prepares three diagnostic arms: the
@@ -30,7 +70,8 @@ The proposed alternative uses the conventional four-year persistent transition
 \(\log[1+(\exp(0.17^2)-1)/4]\). Its continuous level variance is 7.84% above
 the exact four-year-average variance; lag-one through lag-four covariances
 differ by less than 0.6%. It approximates the aggregate flow; it is not the exact
-distribution of four years of total earnings. **Author choice is pending.**
+distribution of four years of total earnings. **Retained diagnostic, not adopted;
+aggregation is under revision as described above.**
 
 [Complete aggregation and grid receipt](income_aggregation_check.json).
 The prepared grid has 15 persistent by 3 iid nodes. Its first five level

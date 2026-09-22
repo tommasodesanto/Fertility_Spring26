@@ -22,7 +22,7 @@ where useful; lead resolves economics. Reuse completed literature and diagnostic
 
 | Order | Work | Concrete deliverable / completion condition | Status |
 |---|---|---|---|
-| 1 | Earnings and purchase timing | One specification sheet: income equation/concept, sourced parameters, four-year mapping, age/entry assumptions, taxes and purchase budget; explicit departures and a minimal validation plan. | ACTIVE; prepare recommendation from existing evidence, no new literature survey. |
+| 1 | Earnings and purchase timing | One specification sheet: income equation/concept, sourced parameters, four-year mapping, age/entry assumptions, taxes and purchase budget; explicit departures and a minimal validation plan. | ACTIVE; bounded OLG/family literature review completed at author request; improve four-year aggregation before runs. |
 | 2 | Housing and target measurement | One choice on housing-access proxy; reconcile rooms/ownership/lifecycle observers and geography using existing evidence. | NEXT; substantive author choices, no policy interpretation yet. |
 | 3 | Implementation and joint fit | Reconciled source contract, exact-loop smoke and benchmark, then bounded calibration; full target/parameter tables and standard figures with matched empirical profiles. | AFTER specification; run budget based on full objective timing. |
 | 4 | Mechanism and paper lane | Assess housing/fertility mechanism at credible fit and choose defensible central claim. | AFTER fit; end-of-week objective, not a promise of positive results. |
@@ -32,8 +32,8 @@ where useful; lead resolves economics. Reuse completed literature and diagnostic
 | ID | Object | Current direction | Remaining work |
 |---|---|---|---|
 | E1 | Components | Proposed age profile + AR(1) + iid; no permanent type. | Include in the single recommended specification; disclose covariance-fit tradeoff. |
-| E2 | Source | AUTHOR: literature-first, plain vanilla; own estimation only for a concrete gap. Lead recommends already-reviewed Sommer (2016) as main architecture reference. | Verify wage-to-household-earnings interpretation before importing parameters. Own PSID is validation/robustness by default. |
-| E3 | Four-year income | Exact block-covariance fit is inadmissible for the proposed Sommer parameters (negative iid variance). Conventional endpoint approximation is prepared with disclosed error. | Author choice pending; no household run. See earnings_wealth_v1 packet. |
+| E2 | Source | AUTHOR: literature-first, plain vanilla; prioritize top-five/top-field journals. Sommer (JME) is an annual architecture reference; De Nardi (ReStud) and Bick (JEEA) ground period-income measurement. | Verify wage-to-household-earnings interpretation before importing parameters. Own PSID is validation/robustness by default. |
+| E3 | Four-year income | Exact block-covariance fit is inadmissible for the proposed Sommer parameters (negative iid variance). Conventional endpoint approximation is prepared with disclosed error. | AUTHOR requests improved specification/calculations; endpoint adapter stays diagnostic. Fit the process to four-year income and disclose approximation errors. No household run. |
 | E4 | Taxes and measurement error | Follow the chosen source consistently; no automatic own-PSID-plus-HSV combination. | Explicit gross-to-spendable-income accounting and documented treatment of transitory risk. |
 | E5/E6 | Grid, age profile and entry | Treat as documented implementation/validation objects. | Fix entry composition for grid checks; trace the age profile and entry distribution; escalate only material economic choices. |
 | T | Current income and housing purchase | AUTHOR-AGREED direction implemented in an isolated adapter: current income enters purchase eligibility once; actual transaction wealth and final mortgage limit preserved. | Cheap native-kernel/accounting tests pass; full equilibrium and exact repetitions remain unrun. |
@@ -47,9 +47,13 @@ not proof that these final choices have already been implemented or calibrated.
 [Prepared earnings/wealth diagnostic](../../output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/README.md)
 keeps the original reference and structural vector, uses four full objective
 evaluations across three arms, and stops on the first failure. No job is
-submitted. Exact four-year block matching fails admissibility; the pending
-author choice is the conventional approximation versus improving aggregation
-before household runs. The native entry check preserves the reference wealth
+submitted. Exact four-year block matching fails admissibility. The author has requested
+broader OLG/family grounding and improved aggregation; the earlier yes/no
+endpoint-adoption question is superseded. The main verified period-measurement
+precedents are De Nardi (2004, ReStud, five years) and Bick (2016, JEEA, three
+years). No exact-four-year stochastic-income implementation in the prioritized
+journals was verified. The endpoint adapter remains diagnostic before household
+runs. The native entry check preserves the reference wealth
 marginal; its rank coupling to persistent income is a diagnostic assumption,
 not an estimated joint distribution. Purchase eligibility, forward wealth and
 end debt were changed together and tested; no fit or specification is adopted.
@@ -63,7 +67,7 @@ routine implementation choices. No tests or model runs were launched for this in
 
 | Object | Proposed treatment | Must be closed before joint refit |
 |---|---|---|
-| Earnings risk | Literature-first age profile + AR(1) + iid without permanent type; Sommer is the proposed main reference. | Record income concept, annual parameters, measurement-error interpretation, and wage-to-exogenous-household-earnings departure. Own PSID remains validation evidence by default. |
+| Earnings risk | Literature-first age profile and persistent risk without permanent type; Sommer supplies annual architecture, with four-year process fitting under revision. | Record income concept, annual parameters, measurement-error interpretation, and wage-to-exogenous-household-earnings departure. Own PSID remains validation evidence by default. |
 | Period resources | Define four-year gross earnings and the map to spendable resources, with consistent flow versus stock units. | Pin process aggregation, mean normalization, tax application, annual return/discount conversion and timing of housing/consumption. Current income can finance purchase: author-agreed direction. |
 | Entry | Pin the joint distribution of initial wealth and earnings at the model entry age, including how persistent and iid shocks relate to wealth. | Existing code multiplies empirical wealth/income ratios by entry-state annual gross income. Changing the income grid/process can therefore change entrants' wealth; explicitly choose what stays fixed. Do not automatically interpret a transitory high-income draw as greater inherited wealth. |
 | Lifecycle earnings and retirement | Document age profile, retirement age and existing pension financing; propose retaining existing pension institution for the baseline. | Replacement earnings must enter the payroll/pension balance consistently. Decide how earnings risk ends at retirement, instead of importing another paper's pension rule inadvertently. Trace entry/young-age profile rather than extrapolating silently. |
