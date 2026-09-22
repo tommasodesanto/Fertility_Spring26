@@ -1,5 +1,18 @@
 # Calibration Status
 
+**September 22, 02:40 EDT — first V4 native solution passes all quality checks:**
+The first normalized solution completed six stationary solves and passed the
+household budget, exact transaction, feasibility, fiscal and occupied-value
+checks in2,085 seconds. The repeated anchor is still running; its scored13/17
+readout, inward-beta smoke point and joint refinement remain pending. The larger
+wealth grid has cleared the previous failure at this point, not established
+numerical convergence. A reporting-only final comparator defect was found:
+the frozen controller includes normalization wall-clock time in exact equality.
+The active source excludes that field only; the running bundle stays immutable.
+Final collection must preserve its raw status and verify saved scientific arrays
+and tables independently before issuing a separate lead completion receipt.
+[First pass and review procedure](output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/README.md).
+
 **September 22, 01:54 EDT — upper-grid value loss isolated; V4 expanded-domain smoke running:**
 V3 passed exact transaction accounting but failed25 occupied-value comparisons,
 all in the final wealth interval27.807→30. Maximum drop6.64e-4; affected mass9.18e-8.

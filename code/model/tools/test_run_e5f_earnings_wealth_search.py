@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import random
+import copy
 from pathlib import Path
 
 import pytest
@@ -74,6 +75,19 @@ def test_receipt_requires_complete_native_tables(tmp_path):
     bad["parameters"] = bad["parameters"][:-1]
     with pytest.raises(search.ContractError, match="13 targets and 17 parameters"):
         search._validate_receipt(bad, point, repetitions=1)
+
+
+def test_numeric_replay_excludes_only_wall_clock_time(tmp_path):
+    a = _receipt(_plan(tmp_path)["starting_structural_parameters"], 1.)
+    a["normalization"] = dict(psi_child=.2, completed_fertility=2.1,
+        target=2.1, absolute_gap=0., stationary_solves=6, stationary_solve_seconds=100.)
+    b = copy.deepcopy(a)
+    b["normalization"]["stationary_solve_seconds"] = 200.
+    assert search._numeric_fit(a) == search._numeric_fit(b)
+    for key in ("psi_child", "completed_fertility", "stationary_solves"):
+        changed = copy.deepcopy(b)
+        changed["normalization"][key] += .001
+        assert search._numeric_fit(a) != search._numeric_fit(changed)
 
 
 def test_unexpected_failure_is_fatal_and_all_gate_failures_stop(tmp_path):

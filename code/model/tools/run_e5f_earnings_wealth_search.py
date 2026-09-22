@@ -154,12 +154,18 @@ def classify_failure(error: BaseException) -> str:
 
 
 def _numeric_fit(receipt: dict[str, Any]) -> Any:
+    normalization = receipt.get("normalization")
+    if isinstance(normalization, dict):
+        # Wall-clock duration is provenance, not a numerical model outcome.
+        # Retain every economic field and the deterministic solve count.
+        normalization = {k: v for k, v in normalization.items()
+                         if k != "stationary_solve_seconds"}
     return {
         "loss": receipt.get("loss"),
         "target_fit": [(r.get("restriction_id", r.get("target")), r.get("target"), r.get("model"), r.get("gap"), r.get("loss_contribution")) for r in receipt.get("target_fit", [])],
         "parameters": [(r.get("parameter"), r.get("estimate")) for r in receipt.get("parameters", [])],
         "price": receipt.get("_native_price"),
-        "normalization": receipt.get("normalization"),
+        "normalization": normalization,
     }
 
 

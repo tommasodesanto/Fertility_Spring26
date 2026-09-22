@@ -1,6 +1,6 @@
 # Earnings, entry wealth and purchase timing
 
-## Live review — September 22, 01:54 EDT
+## Live review — September 22, 02:40 EDT
 
 The primary-source reviews and direct four-year PSID point estimates are done.
 The main candidate uses the earliest complete four-year block grid (1984-based
@@ -99,7 +99,11 @@ two-repetition cap is6,400 seconds. Every case records progress, and latest/best
 Unexpected failures stop the stage; no automatic retry or gate relaxation.
 The follow-up checks every 20 minutes and stays quiet while healthy.
 
-No full objective has completed yet. The final review requires complete 13-target
+The first normalized native solution passed in2,085 seconds after six stationary
+solves: zero budget/transaction violations, zero occupied-value drops, fiscal and
+stationary-operator checks passed. The second repetition is running; no scored
+anchor, complete smoke or refit is available yet. [First native receipt](staging/v4_first_native_pass.json).
+The final review requires complete 13-target
 and 17-parameter tables, actual bounds, exact selected repeats, and 17 standard
 plots, followed by the [parameter and literature audit](literature/parameter_validation_rubric.md).
 The September 14 reference, target system and numerical gates remain unchanged.
@@ -373,3 +377,13 @@ is justified before those results are reviewed.
 Active tools: `code/model/tools/build_literature_period_income.py`,
 `e5f_earnings_wealth_contract.py`, `run_e5f_earnings_wealth_candidate.py`, and
 `run_e5f_earnings_wealth_smoke.py`. Tests use the corresponding `test_*.py` files.
+
+### Final comparison reporting note
+
+The frozen V4 controller compares normalization runtime as well as numerical
+outcomes. This can produce a false final comparison mismatch. The active source
+now excludes only `stationary_solve_seconds`, with a focused regression test;
+the live bundle is untouched. Final collection must retain the raw status and
+perform exact saved-array/moment/parameter checks before recording a separate
+lead verification. No model rerun or tolerance relaxation is warranted for a
+runtime-only difference. [Reviewed procedure](staging/numeric_comparison_review.json).

@@ -1,0 +1,10 @@
+{
+  "status": "reviewed_reporting_only_comparator_correction",
+  "running_bundle_modified": false,
+  "running_controller_sha256": "3164cc2df1b2102211c53d7a5480aae5e8a24f819c4658f72d1da7005775c202",
+  "active_corrected_controller_sha256": "61157a8e142feb8990845dfc124125ae1808b0b9cd412b5ba44c37254e1de1f3",
+  "defect": "The frozen controller compares the entire normalization dict, including stationary_solve_seconds copied by the scorer. Runtime necessarily varies between identical numerical evaluations. It can therefore label final numeric_fit_equal false even when all economic quantities reproduce exactly.",
+  "correction": "Active _numeric_fit excludes only stationary_solve_seconds. It retains every other normalization field including solve count, all selected moments/parameters and price. No source objective, model, target or tolerance changed.",
+  "validation": "6 search-controller tests pass, including timing-only invariance and strict rejection of changed psi, normalized fertility or solve count.",
+  "completion_procedure": "Do not edit the live bundle or its final summary, duplicate jobs, or rerun a model merely for this reporting defect. If final verification has matching scientific values, independently compare original-selected and both repeated saved price,V,g,all native moments/psi, full13/17 tables and unchanged source/target fingerprints. Save a separate lead completion receipt showing raw controller status and all differences; override reporting status only when those exact checks pass."
+}
