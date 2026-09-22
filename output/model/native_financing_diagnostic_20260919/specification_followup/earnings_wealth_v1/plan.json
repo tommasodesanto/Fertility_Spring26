@@ -1,0 +1,101 @@
+{
+  "adapter_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_candidate.py",
+  "adapter_sha256": "781c9fa8146d8dfc55262592f9d4f2385ee4858c61822692a2331500d9c6318a",
+  "cases": [
+    {
+      "arm": "reference",
+      "id": "reference",
+      "native_seconds": 1800,
+      "repetitions": 1,
+      "seconds": 2200,
+      "wrapper_seconds": 2100
+    },
+    {
+      "arm": "literature_income",
+      "id": "literature_income",
+      "native_seconds": 1800,
+      "repetitions": 1,
+      "seconds": 2200,
+      "wrapper_seconds": 2100
+    },
+    {
+      "arm": "literature_income_purchase",
+      "id": "literature_income_purchase",
+      "native_seconds": 1800,
+      "repetitions": 2,
+      "seconds": 2200,
+      "wrapper_seconds": 2100
+    }
+  ],
+  "expected_stationary_solves": 24,
+  "expected_wall_minutes": [
+    40,
+    70
+  ],
+  "files": {
+    "accounting": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_earnings_wealth_contract.py",
+      "sha256": "325362bdfd62725b7fb2617dd5e561af5e13444b072392460e74dc9b1e5518a5"
+    },
+    "adapter": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_candidate.py",
+      "sha256": "781c9fa8146d8dfc55262592f9d4f2385ee4858c61822692a2331500d9c6318a"
+    },
+    "controller": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_smoke.py",
+      "sha256": "4fff234e308d45c6216b126dfd9ad7f0fa3aa33618130419d296cd1d0ac391cf"
+    },
+    "income": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/build_literature_period_income.py",
+      "sha256": "f79854ecef8b08972b73c22cb0a7ee4d400117debb5e8295a8981932bdfa227a"
+    },
+    "initial_contract": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/income_refinement_local_20260921/local_initial_contract.json",
+      "sha256": "71c00ea0e9e9458ae2c4859f8683e1e50c5dff065cdadc681036509b04efaab4"
+    },
+    "run_contract": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/income_refinement_local_20260921/local_run_contract.json",
+      "sha256": "eb56c60ab4ecee903c3f597a86c734298595b71d404be934159585c220505360"
+    },
+    "wrapper": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/income_refinement_local_20260921/template/inputs/run_scored_candidate.py",
+      "sha256": "81322cae96620ff06d9275348c6a32711165ee6d5666834ebf9c3746916b65b6"
+    }
+  },
+  "income_specification": {
+    "author_decision": "pending",
+    "constructor_arguments": {
+      "iid_states": 3,
+      "n_persistent": 15,
+      "period_years": 4,
+      "persistent_innovation_sd_annual": 0.21,
+      "rho_annual": 0.95,
+      "transitory_sd_annual": 0.17
+    },
+    "grid_gate_interpretation": "diagnostic distribution approximation, not household-grid convergence",
+    "mapping": "conventional_endpoint",
+    "max_relative_discrete_level_covariance_error": 0.05
+  },
+  "initial_psi": 0.1489153145785918,
+  "maximum_full_objectives": 4,
+  "maximum_stationary_solves": 32,
+  "objective_canonical_sha256": "4440ea07f4de957740ca6c04961d2806d9b9ef782c7a0e7dad4ce73e1db651b1",
+  "python": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/income_refinement_local_20260921/venv/bin/python",
+  "reference_loss": 179.2984242480252,
+  "schema": "e5f_earnings_wealth_smoke_v1",
+  "source_root": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/income_refinement_local_20260921/source",
+  "status": "prepared_income_decision_pending",
+  "stop": "first failed case, unchanged native gates, no retry or parameter search",
+  "structural_parameters": {
+    "H0": 8.11210048056786,
+    "beta_annual": 0.99,
+    "chi": 1.0496534423047694,
+    "first_birth_fixed_cost": 0.26576477618628114,
+    "h_P": 2.3,
+    "kappa_fert": 0.33773423411167025,
+    "kappa_fert_continuation": 0.39785645171756406,
+    "theta0": 0.08105103333987912,
+    "theta1": 0.08520356663830632
+  },
+  "total_seconds": 6600
+}

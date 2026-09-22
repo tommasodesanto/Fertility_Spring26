@@ -33,14 +33,26 @@ where useful; lead resolves economics. Reuse completed literature and diagnostic
 |---|---|---|---|
 | E1 | Components | Proposed age profile + AR(1) + iid; no permanent type. | Include in the single recommended specification; disclose covariance-fit tradeoff. |
 | E2 | Source | AUTHOR: literature-first, plain vanilla; own estimation only for a concrete gap. Lead recommends already-reviewed Sommer (2016) as main architecture reference. | Verify wage-to-household-earnings interpretation before importing parameters. Own PSID is validation/robustness by default. |
-| E3 | Four-year income | A complete period-income definition is required; existing endpoint conversion is not absent but does not define the full-period average. | Reuse aggregation receipts and specify one mapping with validation. |
+| E3 | Four-year income | Exact block-covariance fit is inadmissible for the proposed Sommer parameters (negative iid variance). Conventional endpoint approximation is prepared with disclosed error. | Author choice pending; no household run. See earnings_wealth_v1 packet. |
 | E4 | Taxes and measurement error | Follow the chosen source consistently; no automatic own-PSID-plus-HSV combination. | Explicit gross-to-spendable-income accounting and documented treatment of transitory risk. |
 | E5/E6 | Grid, age profile and entry | Treat as documented implementation/validation objects. | Fix entry composition for grid checks; trace the age profile and entry distribution; escalate only material economic choices. |
-| T | Current income and housing purchase | AUTHOR-AGREED: current income can help finance purchase; consumption/saving/purchase share period resources, mortgage restrictions remain. | Reconcile exact four-year timing and native code; not implemented yet. |
+| T | Current income and housing purchase | AUTHOR-AGREED direction implemented in an isolated adapter: current income enters purchase eligibility once; actual transaction wealth and final mortgage limit preserved. | Cheap native-kernel/accounting tests pass; full equilibrium and exact repetitions remain unrun. |
 | E7 | Acceptance | Specification and earnings validation precede joint refit/adoption. | Do not turn diagnostic candidate status into a final calibration claim. |
 
 Preserve the September 14 reference. Existing searches are diagnostic evidence,
 not proof that these final choices have already been implemented or calibrated.
+
+### September 21 evening implementation receipt
+
+[Prepared earnings/wealth diagnostic](../../output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/README.md)
+keeps the original reference and structural vector, uses four full objective
+evaluations across three arms, and stops on the first failure. No job is
+submitted. Exact four-year block matching fails admissibility; the pending
+author choice is the conventional approximation versus improving aggregation
+before household runs. The native entry check preserves the reference wealth
+marginal; its rank coupling to persistent income is a diagnostic assumption,
+not an estimated joint distribution. Purchase eligibility, forward wealth and
+end debt were changed together and tested; no fit or specification is adopted.
 
 ### Earnings and wealth: pre-calibration specification sheet
 

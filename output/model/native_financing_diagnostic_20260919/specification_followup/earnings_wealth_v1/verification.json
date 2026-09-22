@@ -1,0 +1,58 @@
+{
+  "frozen_source_file_count": 641,
+  "full_objective_evaluations": 0,
+  "household_equilibrium_solves": 0,
+  "jobs_submitted": [],
+  "native_entry_marginal_max_gap": 1.1102230246251565e-16,
+  "plan_sha256": "e95367228d3842b9c3005049d505b1997939293274eb75c1115ff3e86f3b0b24",
+  "reference_preflight": {
+    "arm": "reference",
+    "household_solves": 0,
+    "status": "preflight_passed"
+  },
+  "runtime_file_pins": {
+    "accounting": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_earnings_wealth_contract.py",
+      "sha256": "325362bdfd62725b7fb2617dd5e561af5e13444b072392460e74dc9b1e5518a5"
+    },
+    "adapter": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_candidate.py",
+      "sha256": "781c9fa8146d8dfc55262592f9d4f2385ee4858c61822692a2331500d9c6318a"
+    },
+    "controller": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_smoke.py",
+      "sha256": "4fff234e308d45c6216b126dfd9ad7f0fa3aa33618130419d296cd1d0ac391cf"
+    },
+    "income": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/build_literature_period_income.py",
+      "sha256": "f79854ecef8b08972b73c22cb0a7ee4d400117debb5e8295a8981932bdfa227a"
+    },
+    "initial_contract": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/income_refinement_local_20260921/local_initial_contract.json",
+      "sha256": "71c00ea0e9e9458ae2c4859f8683e1e50c5dff065cdadc681036509b04efaab4"
+    },
+    "run_contract": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/income_refinement_local_20260921/local_run_contract.json",
+      "sha256": "eb56c60ab4ecee903c3f597a86c734298595b71d404be934159585c220505360"
+    },
+    "wrapper": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/income_refinement_local_20260921/template/inputs/run_scored_candidate.py",
+      "sha256": "81322cae96620ff06d9275348c6a32711165ee6d5666834ebf9c3746916b65b6"
+    }
+  },
+  "status": "cheap_checks_passed_model_run_blocked_by_pending_income_decision",
+  "tests": {
+    "command": "NUMBA_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 code/model/.venv/bin/python -m pytest -q code/model/tools/test_build_literature_period_income.py code/model/tools/test_run_e5f_earnings_wealth_smoke.py code/model/tools/test_e5f_earnings_wealth_contract.py code/model/tools/test_run_e5f_earnings_wealth_candidate.py",
+    "failed": 0,
+    "passed": 27
+  },
+  "unrun": [
+    "all three native model arms",
+    "non-reference native preflight after income decision",
+    "exact full-model repetitions",
+    "17 solution diagnostics per completed arm",
+    "household-grid convergence",
+    "calibration refit"
+  ],
+  "utc": "2026-09-22T01:00:22.616797+00:00"
+}

@@ -1,5 +1,19 @@
 # Calibration Status
 
+**September 21 evening — earnings/purchase implementation prepared; no model job launched:**
+The authorized three-arm diagnostic is implemented with separately pinned runtime
+adapters on the immutable native source. Cheap checks cover entry wealth,
+purchase accounting and stop-on-failure orchestration. The reference passes the
+zero-solve 641-file/source/target preflight. A material aggregation choice is
+pending: Sommer's annual parameters cannot match the variance and first two
+covariances of four-year average earnings with an independent AR(1)-plus-iid
+period process; the implied iid log variance is negative. The constructor stops
+rather than clipping it. A disclosed conventional endpoint approximation is
+prepared, subject to the author's pending choice; no full objective or parameter
+search has run. The proposed 45-state grid and fixed reference entry-wealth
+marginal have only distribution/accounting checks, not household convergence.
+[Implementation, equations, exact stop rule and verification](output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/README.md).
+
 **September 21 — local refinement stopped at its smoke timeout:**
 The anchor smoke reached its 600-second stage cap before returning the complete
 scored two-repetition receipt. It saved twelve stationary-solve records (six

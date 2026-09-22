@@ -1,5 +1,13 @@
 # Specification follow-up: September 20–21
 
+## Earnings and purchase timing — September 21 evening
+
+The [implementation packet](earnings_wealth_v1/README.md) records completed
+cheap checks, explicit purchase equations and the prepared three-arm smoke.
+No new model job has been launched. The income-period decision is pending after
+exact block-covariance matching implied a negative iid variance; the conventional
+approximation is available as a disclosed diagnostic alternative.
+
 ## Quantification panel reviewed — September 21 morning
 
 The new calibration panel completed all **28 objectives / 168 stationary
