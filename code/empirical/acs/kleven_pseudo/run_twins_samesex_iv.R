@@ -216,7 +216,7 @@ identity <- list(
 )
 jsonlite::write_json(identity, file.path(outdir, "analytic_frames_identity.json"), auto_unbox = TRUE, pretty = TRUE)
 write_status("analytic_frames_saved", list(n_t1_rows = nrow(t1_slim), n_ss_rows = nrow(ss_slim)))
-rm(mr, mr_sample, minor_gate); gc(FALSE)
+rm(mr, mr_sample, minor_gate, t1, ss); gc(FALSE)
 ar_grid_rooms <- seq(-3, 3, by = 0.1)
 ar_grid_own <- seq(-0.5, 0.5, by = 0.02)
 
@@ -261,7 +261,7 @@ results <- list()
 for (oc in outcomes) {
   ar_grid <- if (oc == "OWNERSHP_out") ar_grid_own else ar_grid_rooms
   res_t1 <- tryCatch(fit_instrument_outcome(
-    t1, outcome = oc, treatment = "treatment_2plus", instrument = "twin_like_proxy",
+    t1_slim, outcome = oc, treatment = "treatment_2plus", instrument = "twin_like_proxy",
     controls_fml = controls_fml, weight_var = "mother_weight",
     cluster_var = "household_key", ar_grid = ar_grid,
     primary_callback = make_primary_cb("Twin1_pooled0_5", oc)),
@@ -270,7 +270,7 @@ for (oc in outcomes) {
   checkpoint_fit(res_t1)
 
   res_ss <- tryCatch(fit_instrument_outcome(
-    ss[eligible == TRUE], outcome = oc, treatment = "treatment_3plus", instrument = "samesex",
+    ss_slim, outcome = oc, treatment = "treatment_3plus", instrument = "samesex",
     controls_fml = controls_fml, weight_var = "mother_weight",
     cluster_var = "household_key", ar_grid = ar_grid,
     primary_callback = make_primary_cb("SameSex2_pooled0_5", oc)),
@@ -279,8 +279,8 @@ for (oc in outcomes) {
   checkpoint_fit(res_ss)
 
   for (ea in c(3, 5)) {
-    t1_ea <- t1[event_age == ea]
-    ss_ea <- ss[eligible == TRUE & event_age == ea]
+    t1_ea <- t1_slim[event_age == ea]
+    ss_ea <- ss_slim[event_age == ea]
     r1 <- tryCatch(fit_instrument_outcome(t1_ea, oc, "treatment_2plus", "twin_like_proxy",
                      controls_fml, "mother_weight", "household_key", ar_grid,
                      primary_callback = make_primary_cb(paste0("Twin1_event", ea), oc)),
