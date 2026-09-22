@@ -16,17 +16,17 @@ percentage points in this table; rooms are in rooms.
 
 | Outcome and design | Estimate | 95% CI | Estimator N | Source/person clusters | Weights and fixed effects |
 |---|---:|---:|---:|---:|---|
-| ACS rooms, full | 0.4877752162 | [0.4720065124, 0.5035439199] | 14,155,689 | 2,765,428 source households | ACS weight; state + age + year FE |
+| ACS rooms, full | 0.4877752162 | [0.4720065124, 0.5035439199] | 14,155,689 | 2,765,428 source households | Author matched weight wgt; state + age + year FE |
 | PSID rooms, saved reference | 0.7202462624 | [0.5531365618, 0.8873559630] | 49,457 | 4,112 person IDs | IW pweight; person + survey-year FE |
-| ACS ownership, full | 3.2914338710 pp | [2.8697870362, 3.7130807059] pp | 14,155,711 | 2,765,435 source households | ACS weight; state + age + year FE |
+| ACS ownership, full | 3.2914338710 pp | [2.8697870362, 3.7130807059] pp | 14,155,711 | 2,765,435 source households | Author matched weight wgt; state + age + year FE |
 | PSID ownership, original arm | 2.1222167479 pp | [0.7516320202, 3.4928014755] pp | 252,343 | 23,761 IDs | Unweighted; survey-year FE |
 | PSID ownership, aligned sensitivity | 8.5139268026 pp | [4.4733560153, 12.5544975899] pp | 52,945 | 4,202 person IDs | IW pweight; person + survey-year FE; F6 included |
 
 The PSID ownership rows are intentionally separate. The original arm has no
 person fixed effects and is unweighted; the aligned sensitivity adds person
-fixed effects, inverse-weighting, and F6. Neither is interchangeable with the
-ACS design, which uses state, age, and year fixed effects on matched
-repeated cross-sections.
+fixed effects, PSID individual survey weights (IW), and F6. Neither is
+interchangeable with the ACS design, which uses state, age, and year fixed
+effects on matched repeated cross-sections.
 
 ![ACS--PSID first-birth comparison](national_acs_primary_vs_psid.png)
 
@@ -73,11 +73,13 @@ The ACS housing fields are measured on the matched household row. ROOMS keeps
 valid codes 1--27 and 30 and caps them at 9 (0 and 28 are non-room or unknown
 codes); ownership maps OWNERSHP==1 to owner and OWNERSHP==2 to renter. No CPS
 housing imputation is used. The event is the first-birth matched event clock,
-not a person-level panel transition. The saved PSID rooms reference uses the
-first biological birth, shifts ACTUALROOMS forward one observed interview,
-omits -2, and reports L3 minus F1. Its ownership reference uses the same
-first-birth clock, with the original arm and the separately identified aligned
-sensitivity described above.
+not a person-level panel transition. The ACS sample follows the author
+first-birth matching design for women ages 25--45. The saved PSID rooms
+reference uses the first biological birth, shifts ACTUALROOMS forward one
+observed interview, omits -2, and reports L3 minus F1. The corrected PSID arms
+use the women-18-and-over reference-spouse, household-deduplicated sample;
+the original PSID ownership arm preserves its own clock and sample definition.
+No rooms recoding or harmonization beyond the saved PSID reference is imposed.
 
 ## Reproducibility and identity receipts
 
