@@ -129,16 +129,124 @@ def test_install_purchase_income_compiles_frozen_markov_solver(tmp_path):
     original = solver.solve_bellman_full_markov_income
     maps = solver.build_forward_tenure_transition_maps
     tenure = solver.tenure_choice_kernel, solver.tenure_logit_kernel
+    allocation = solver.full_renter_block_kernel, solver.full_owner_block_kernel
     try:
         diff = contract.install_purchase_income(solver, tmp_path / "purchase_income.diff")
     finally:
         solver.solve_bellman_full_markov_income = original
         solver.build_forward_tenure_transition_maps = maps
         solver.tenure_choice_kernel, solver.tenure_logit_kernel = tenure
+        solver.full_renter_block_kernel, solver.full_owner_block_kernel = allocation
     assert "diagnostic/solve_bellman_full_markov_income" in diff
     assert "dp_choice = dp_arr - income_for_purchase" in diff
     assert (tmp_path / "purchase_income.diff").exists()
     assert (tmp_path / "purchase_income.tenure.py").exists()
+    assert (tmp_path / "purchase_income.allocation.py").exists()
+    assert "diagnostic/full_renter_block_kernel.allocation" in diff
+    assert "diagnostic/full_owner_block_kernel.allocation" in diff
+
+
+def _renter_kernel_args(grid, continuation, *, hmax):
+    one = np.ones(1)
+    zero = np.zeros(1)
+    resources = np.full(len(grid), .001)
+    return (
+        resources, resources.copy(), continuation, np.zeros((len(grid), 1)), 0,
+        grid, zero, zero, zero, zero, one * .733, one, .1, hmax, .04, .1, .1,
+        .733, -1., .96, 0., 0., .3819660112501051, .6180339887498949, 1e-8, 1,
+    )
+
+
+@pytest.mark.parametrize("hmax", [0.001, 10.])
+def test_exact_allocation_output_preserves_value_saving_and_removes_renter_floor(tmp_path, hmax):
+    grid = np.array([0., 1., 2.])
+    negative = np.full((3, 1), -1e12)
+    original = kernels.full_renter_block_kernel
+    owner_original = kernels.full_owner_block_kernel
+    try:
+        native = original(*_renter_kernel_args(grid, negative, hmax=hmax))
+        contract._install_exact_allocation_output(kernels, tmp_path / "allocation.diff")
+        corrected = kernels.full_renter_block_kernel(*_renter_kernel_args(grid, negative, hmax=hmax))
+    finally:
+        kernels.full_renter_block_kernel = original
+        kernels.full_owner_block_kernel = owner_original
+    np.testing.assert_array_equal(corrected[0], native[0])
+    np.testing.assert_array_equal(corrected[1], native[1])
+    assert corrected[2][0, 0] < native[2][0, 0]
+    assert corrected[2][0, 0] > 1e-10
+    assert corrected[3][0, 0] < native[3][0, 0]
+    assert corrected[2][0, 0] + .1 * corrected[3][0, 0] + corrected[1][0, 0] == pytest.approx(.001)
+    assert native[2][0, 0] + .1 * native[3][0, 0] + native[1][0, 0] > .001
+    assert (tmp_path / "allocation.allocation.py").exists()
+
+
+@pytest.mark.parametrize("hmax", [0.001, 10.])
+def test_exact_allocation_output_keeps_normal_and_infeasible_renter_behavior(tmp_path, hmax):
+    grid = np.array([0., 1., 2.])
+    high = np.zeros((3, 1))
+    original = kernels.full_renter_block_kernel
+    owner_original = kernels.full_owner_block_kernel
+    try:
+        native = original(*_renter_kernel_args(grid, high, hmax=hmax))
+        contract._install_exact_allocation_output(kernels, tmp_path / "allocation.diff")
+        corrected = kernels.full_renter_block_kernel(*_renter_kernel_args(grid, high, hmax=hmax))
+    finally:
+        kernels.full_renter_block_kernel = original
+        kernels.full_owner_block_kernel = owner_original
+    for got, expected in zip(corrected, native):
+        np.testing.assert_array_equal(got, expected)
+
+
+def test_exact_allocation_output_removes_owner_floor_but_keeps_optimizer(tmp_path):
+    grid = np.array([0., 1., 2.])
+    zero = np.zeros(1)
+    negative = np.full((len(grid), 1), -1e12)
+    args = (
+        np.full(len(grid), .001), np.full(len(grid), .001), negative,
+        np.zeros((len(grid), 1)), 0, grid, zero, zero, zero, zero,
+        np.full(1, .733), np.ones(1), zero, 0., 1., 1., 1., .04, .733, -1.,
+        .96, 0., 0., .3819660112501051, .6180339887498949, 1e-8, 0, 1,
+    )
+    original = kernels.full_owner_block_kernel
+    renter_original = kernels.full_renter_block_kernel
+    try:
+        native = original(*args)
+        contract._install_exact_allocation_output(kernels, tmp_path / "owner.diff")
+        corrected = kernels.full_owner_block_kernel(*args)
+    finally:
+        kernels.full_owner_block_kernel = original
+        kernels.full_renter_block_kernel = renter_original
+    np.testing.assert_array_equal(corrected[0], native[0])
+    np.testing.assert_array_equal(corrected[1], native[1])
+    assert corrected[2][1, 0] < native[2][1, 0]
+    assert corrected[2][1, 0] + corrected[1][1, 0] == pytest.approx(.001)
+    assert native[2][1, 0] + native[1][1, 0] > .001
+
+
+def test_exact_allocation_output_preserves_infeasible_and_nonexhaustive_outputs(tmp_path):
+    grid = np.array([0., 1., 2.])
+    continuation = np.zeros((len(grid), 1))
+    original = kernels.full_renter_block_kernel
+    owner_original = kernels.full_owner_block_kernel
+    try:
+        infeasible_args = list(_renter_kernel_args(grid, continuation, hmax=10.))
+        infeasible_args[0] = np.zeros(len(grid))
+        infeasible_args[1] = np.zeros(len(grid))
+        infeasible_args[-1] = 1
+        native_infeasible = original(*infeasible_args)
+        nonexhaustive_args = list(_renter_kernel_args(grid, continuation, hmax=10.))
+        nonexhaustive_args[-1] = 0
+        native_nonexhaustive = original(*nonexhaustive_args)
+        contract._install_exact_allocation_output(kernels, tmp_path / "allocation.diff")
+        corrected_infeasible = kernels.full_renter_block_kernel(*infeasible_args)
+        corrected_nonexhaustive = kernels.full_renter_block_kernel(*nonexhaustive_args)
+    finally:
+        kernels.full_renter_block_kernel = original
+        kernels.full_owner_block_kernel = owner_original
+    for got, expected in zip(corrected_infeasible, native_infeasible):
+        np.testing.assert_array_equal(got, expected)
+    for got, expected in zip(corrected_nonexhaustive, native_nonexhaustive):
+        np.testing.assert_array_equal(got, expected)
 
 
 @pytest.mark.parametrize("boundary", ["upper_sale", "lower_purchase", "exact_endpoint"])

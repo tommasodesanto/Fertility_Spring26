@@ -67,7 +67,7 @@
     "reviewed_at": "2026-09-22T03:17:59.099707-04:00",
     "source_objective_runtime_and_generated_code_hashes_verified": true,
     "standard_graphs_copied_and_independently_hash_verified": 17,
-    "status": "verified_starting_point_probe_running",
+    "status": "verified_v4_starting_point_historical",
     "tables_and_figures": "anchor_readout/README.md",
     "target_table_metadata_difference_only": "model_checkpoint_sha256; numerical values, target definitions, weights and losses exactly equal",
     "visual_limitations": "45-state legend is crowded; extended wealth axis compresses occupied range. Standard figures preserved; eventual supplemental occupied-range views may be useful.",
@@ -98,7 +98,7 @@
     "Transitory variance weakly measured; baseline bootstrap lower tail reaches zero",
     "Estimated age25\u201360 risk extrapolated to entry18 under an externally fixed stationary initial process",
     "Stationary AR1+iid lognormal process omits richer heterogeneity; no proof of exact aggregation or annual within-block decisions",
-    "Starting point scored twice exactly; inward-beta probe running and joint refinement remains gated. No final fit or adoption."
+    "V5 smoke running; no search result. Current-allocation output fix does not repair finite infeasibility-sentinel contamination of continuation values; grid robustness and final parameter review remain outstanding."
   ],
   "model_tests": [
     {
@@ -149,19 +149,31 @@
       "receipt": "staging/wealth_grid_correction.json",
       "started_stationary_solves": 6,
       "status": "failed_occupied_monotonicity_after_six_stationary_solves"
+    },
+    {
+      "arm": "direct_income_zero_entry_purchase_v4",
+      "completed_full_objectives": 2,
+      "completed_native_repetitions": 3,
+      "completed_stationary_solves": 18,
+      "launched_proposals": 0,
+      "receipt": "staging/allocation_output_correction.json",
+      "started_stationary_solves": 18,
+      "status": "two_scored_anchors_then_probe_budget_gate_failure"
     }
   ],
   "overnight_execution": {
-    "bundle": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v4",
+    "allocation_correction": "staging/allocation_output_correction.json",
+    "bundle": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5",
     "first_native_receipt": "staging/v4_first_native_pass.json",
-    "independent_runtime_review": "Luna reviewed model configuration/import order and generated probe; lead checked exact original-knot preservation and retained numerical gates",
-    "operational_correction": "staging/wealth_grid_correction.json",
-    "preflight": "three native source/input arms plus160-node/entry/full-load setup passed; zero solves",
+    "independent_runtime_review": "Luna independently reviewed current-allocation formulas; lead reviewed source diff, native compiled regressions, runtime source hashes and saved-state accounting.",
+    "operational_correction": "staging/allocation_output_correction.json",
+    "preflight": "three frozen native source/input arms passed; zero household solves",
     "receipt": "local_execution.json",
-    "reporting_comparison_note": "staging/numeric_comparison_review.json",
-    "status": "anchor_verified_probe_running",
-    "unit_checks": "42 passed plus full native zero-solve configuration"
+    "reporting_comparison_note": "V5 includes previously tested exclusion of wall-clock seconds; V4 immutable. Scientific final equality still required.",
+    "status": "v5_native_smoke_running",
+    "unit_checks": "29 actual compiled/control tests passed; saved54state allocation replay passes unchanged budget tolerance"
   },
+  "parameter_rubric_correction": "Definition labels corrected against implementation: H0 supply intercept, theta1 wealth shift, h_P parenthood-only housing floor, fertility/tenure kappa shock scales.",
   "point_estimates": {
     "persistent_innovation_sd_four_year": 0.43743545312066157,
     "rho_four_year": 0.7761446698586146,

@@ -249,6 +249,7 @@ def run_case(plan_path, plan, arm, output, repetitions, preflight=False):
             raise RuntimeError("purchase-accounting repetitions differ")
         runtime_contract["generated_solver_sha256"] = digest(output / "evaluation/purchase_source.generated.py")
         runtime_contract["generated_tenure_support_sha256"] = digest(output / "evaluation/purchase_source.tenure.py")
+        runtime_contract["generated_allocation_output_sha256"] = digest(output / "evaluation/purchase_source.allocation.py")
         runtime_contract["source_diff_sha256"] = digest(output / "evaluation/purchase_source.diff")
     if arm != "reference" and plan.get("wealth_grid_specification"):
         runtime_contract["generated_probe_grid_sha256"] = digest(output / "evaluation/probe_grid.generated.py")

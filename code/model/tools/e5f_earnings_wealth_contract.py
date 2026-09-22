@@ -189,6 +189,57 @@ def _install_transaction_support(model: Any, diff_path: Path):
     return "".join(diffs)
 
 
+def _install_exact_allocation_output(model: Any, diff_path: Path):
+    """Clone native full kernels with exact exhaustive-saving output arithmetic.
+
+    The optimizer and its returned value/saving arrays are left untouched.  In
+    exhaustive-saving mode only, realized consumption and housing report the
+    allocation used by that optimizer even when continuation value is deeply
+    negative; genuinely infeasible and nonexhaustive branches retain native
+    placeholders/floors.
+    """
+    from numba import njit
+
+    replacements = {
+        "full_renter_block_kernel": (
+            "if exhaustive_saving and v_best > -1e9:",
+            "if exhaustive_saving:",
+            2,
+        ),
+        "full_owner_block_kernel": (
+            "            ct_eff = ct if ct > c_min else c_min\n"
+            "            co[b, c] = cbc + ct_eff",
+            "            ct_eff = ct if ct > c_min else c_min\n"
+            "            if exhaustive_saving and ct > 1e-10:\n"
+            "                ct_eff = ct\n"
+            "            co[b, c] = cbc + ct_eff",
+            1,
+        ),
+    }
+    generated = []
+    diffs = []
+    for name in ("full_renter_block_kernel", "full_owner_block_kernel"):
+        original = getattr(model, name)
+        python_function = getattr(original, "py_func", original)
+        source = inspect.getsource(python_function)
+        before, after, expected = replacements[name]
+        if source.count(before) != expected:
+            raise ValueError(f"allocation patch anchor count != {expected}: {name}")
+        revised = source.replace(before, after)
+        revised = _replace_once(
+            revised, "@njit(cache=True, parallel=True)",
+            "@njit(cache=False, parallel=True)")
+        namespace = dict(python_function.__globals__)
+        exec(compile(revised, str(diff_path.with_suffix(".allocation.py")), "exec"), namespace)
+        setattr(model, name, namespace[name])
+        generated.append(revised)
+        diffs.extend(difflib.unified_diff(
+            source.splitlines(True), revised.splitlines(True),
+            fromfile=f"frozen/{name}", tofile=f"diagnostic/{name}.allocation"))
+    diff_path.with_suffix(".allocation.py").write_text("\n".join(generated))
+    return "".join(diffs)
+
+
 def install_purchase_income(model: Any, diff_path: Path):
     """Apply the reviewed timing change only to the supported Markov branch.
 
@@ -229,6 +280,7 @@ def install_purchase_income(model: Any, diff_path: Path):
                                       tofile="diagnostic/solve_bellman_full_markov_income"))
     diff_path.parent.mkdir(parents=True, exist_ok=True)
     diff += _install_transaction_support(model, diff_path)
+    diff += _install_exact_allocation_output(model, diff_path)
     diff_path.write_text(diff)
     diff_path.with_suffix(".generated.py").write_text(revised)
     # Use the original module globals so every calendar/stationary caller sees

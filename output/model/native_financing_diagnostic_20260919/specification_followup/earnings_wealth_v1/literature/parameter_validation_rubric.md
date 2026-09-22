@@ -6,6 +6,13 @@ bounds. It defines what can be compared with external evidence and what must be
 judged in the model's own normalized units. It does not assess the current fit,
 select parameters, or change any bound.
 
+**Lead definition correction, September 22:** the table below was checked against
+`e5f_parenthood_utility.parenthood_utility_metadata`, the frozen solver's housing
+supply rule, fertility logit, and `bequest_utility_vec`. Earlier labels incorrectly
+called H0 a utility scale, theta1 a child-dependence parameter, and h_P a per-child
+requirement. These are documentation corrections only; no parameter, equation,
+target or bound changed.
+
 ## Evidence classes
 
 Use one status for every row in the eventual full table:
@@ -31,21 +38,21 @@ household process. See [multiyear review](multiyear_review.md).
 | Row | Object and class | Audit rule |
 |---|---|---|
 | `beta_annual` | Annual discount factor; **directly comparable after period conversion** | Record \(\beta_4=\beta_a^4\). At the live bounds [0.94, 0.99], the implied four-year factors are 0.78075 and 0.96060. Check the four-year factor and the implied patience against saving, ownership, housing, and old-wealth profiles. Do not compare annual beta directly with a four-year Bellman coefficient. |
-| `kappa_fert` | Fertility taste/curvature; **model-specific** | Audit sign, local curvature, and fertility response by age, current income, wealth, and number of children. Literature can motivate the fertility mechanism, but cannot port this normalized coefficient. |
-| `kappa_fert_continuation` | Continuation fertility taste; **model-specific** | Check its ordering relative to `kappa_fert`, the continuation hazard, and the extensive/intensive fertility margins. Treat near-bound values as an identification warning, not as evidence for a new bound. |
-| `chi` | Housing/ownership taste scale; **model-specific** | Check the tenure response and housing services conditional on income, wealth, age, and children. It is not a portable housing-price elasticity. |
-| `H0` | Housing utility or baseline housing scale; **model-specific normalized unit** | Inspect implied rooms/services and the consumption-housing tradeoff. Compare only to the model's normalized housing unit, never to a dollar rent or published utility level. |
+| `kappa_fert` | First-birth extreme-value taste-shock scale; **model-specific utility units** | Audit positivity and the smoothness of first-birth responses by age, current income and wealth. Literature can motivate the fertility mechanism, but cannot port this normalized coefficient. |
+| `kappa_fert_continuation` | Subsequent-birth extreme-value taste-shock scale; **model-specific utility units** | Report its relation to `kappa_fert` and the subsequent-birth hazard; distinct margin-specific scales do not impose an ordering restriction in this sequential specification. Treat near-bound values as an identification warning, not as evidence for a new bound. |
+| `chi` | Multiplier on owner housing services relative to rental services; **model-specific** | Check the tenure response and housing services conditional on income, wealth, age, and children. It is not a portable housing-price elasticity. |
+| `H0` | Housing supply intercept; **model-specific quantity normalization** | The supply rule is \(H^s=H_0(r/\bar r)^\xi\). Check its units jointly with rents, prices, rooms demand and market clearing; it is not a utility coefficient. |
 | `theta0` | Bequest utility intercept/scale; **model-specific** | Inspect bequest probability and bequest flow by age, wealth, and number of children. Compare the resulting aggregate bequest flow to the target only after verifying the target's timing and denominator. |
-| `theta1` | Child-dependent bequest scale; **model-specific** | Audit the marginal bequest incentive across child counts and death ages. Check that the implied child tilt is economically ordered and does not create corner behavior. |
-| `first_birth_fixed_cost` | First-birth utility cost; **model-specific normalized flow cost** | Inspect first-birth timing, childlessness, and first-birth age response. Do not compare its level to an observed dollar cost without the complete utility and period normalization. |
-| `h_P` | Minimum housing requirement per resident child; **model-specific physical model unit** | The live upper bound is 2.3. Translate it into required rooms/services for each child count and inspect the housing kink. It should be audited jointly with room caps and the first-birth housing response. |
+| `theta1` | Shift inside bequest utility in wealth units; **model-specific** | The bequest utility uses \(\theta_1+b\) (or per-child estate under equal division). Audit marginal bequest incentives and low-estate behavior. Child dependence is governed separately by the bequest specification and any child-scale parameter. |
+| `first_birth_fixed_cost` | First-birth utility cost; **model-specific one-time utility cost** | Inspect first-birth timing, childlessness, and first-birth age response. Do not compare its level to an observed dollar cost without the complete utility and period normalization. |
+| `h_P` | Housing-services floor whenever dependent children are present; **model-specific physical model unit** | The live upper bound is 2.3 and the maintained rule is \(\bar h(m)=h_P\mathbf{1}\{m>0\}\), with zero additional per-child slope. Inspect this first-child kink. It should be audited jointly with room caps and the first-birth housing response. |
 | `hbar_child_rooms` | Child-space restriction; **fixed restriction** | Record whether zero means inactive. Verify the constraint in policy functions and the rooms-by-child plots; do not interpret zero as an estimated preference. |
 | `psi_child` | Fertility normalization to completed fertility 2.1; **derived/fixed normalization** | Recompute the normalization from the stated fertility target and preserve the target contract. It is not an independent preference estimate. |
 | `payroll_tax` | Payroll tax; **directly comparable external fiscal object** | Compare rate, tax base, incidence, and period treatment with the authoritative source contract. Keep separate from income-risk or utility normalization. |
 | `pension_period` | Pension replacement/period object; **derived or externally fixed contract value** | Recompute from the pension rule and annual-to-four-year timing. Audit retirement income and wealth accumulation; do not compare the scalar without the benefit formula. |
 | `housing_supply_elasticity` | Housing supply elasticity; **directly comparable only with same supply object** | Require the same geographic market, supply definition, and price/rent measure as the source. Inspect price, rent, quantity, and market residual plots together. |
-| `tenure_choice_kappa` | Tenure-choice shifter; **model-specific** | Check ownership probability, renter/owner housing services, and sensitivity around the financing threshold. It is not a portable ownership rate or mortgage coefficient. |
-| `alpha_cons` | Consumption share/utility curvature; **model-specific normalization** | Verify utility curvature and expenditure shares over age, wealth, tenure, and children. Do not compare its level with a demand-system share unless the utility aggregator is identical. |
+| `tenure_choice_kappa` | Tenure extreme-value taste-shock scale; **model-specific utility units** | Check ownership probability, renter/owner housing services, and sensitivity around the financing threshold. It is not a portable ownership rate or mortgage coefficient. |
+| `alpha_cons` | Consumption exponent in the consumption-housing composite; **model-specific normalization** | Verify utility curvature and expenditure shares over age, wealth, tenure, and children. Do not compare its level with a demand-system share unless the utility aggregator is identical. |
 | `sigma` | Relative-risk-aversion/utility curvature; **model-specific but economically interpretable** | Check consumption smoothing, saving, wealth concentration, and bequest behavior. Literature can provide a broad risk-aversion context, but the normalized level is not directly portable across aggregators. |
 
 The nine live search coordinates are the first nine active rows through `h_P`.

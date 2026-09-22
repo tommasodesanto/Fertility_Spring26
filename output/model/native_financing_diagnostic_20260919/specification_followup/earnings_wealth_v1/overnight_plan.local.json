@@ -1,6 +1,12 @@
 {
   "adapter_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_candidate.py",
-  "adapter_sha256": "f64e651058a09390697dc3c1daaf37dbf482a2117e86a9b69ecd4171b64ad29f",
+  "adapter_sha256": "ce7385436a71edf8d83507b6e9f24f5b6ce5ea29fc777f987bb9162960c59f1b",
+  "allocation_output_correction": {
+    "continuation_sentinel_distortion_resolved": false,
+    "rule": "For exhaustive saving, report chosen feasible current c and housing without legacy output-only floors, regardless of continuation-value magnitude.",
+    "strict_budget_gate_changed": false,
+    "values_saving_optimizer_changed": false
+  },
   "budget_interpretation": "Smoke at most10000s; production18800s includes at most12400s proposal execution plus6400s selected verification. Total local supervisor32000s.69 full objectives/552 nested solves maximum; time budget likely binds first.",
   "cases": [
     {
@@ -38,7 +44,7 @@
   "execution_contract": {
     "authorization": "Latest user says laptop remains open overnight and permits iteration as long as needed; Torch authentication expired and user was notified. Use bounded local execution under that instruction.",
     "estimated_seconds_per_full_objective": [
-      1900,
+      2000,
       2800
     ],
     "estimated_single_case_rss_gib": 4.5,
@@ -50,25 +56,25 @@
     "physical_cores": 18,
     "route": "local_fallback",
     "stationary_seconds_observed": [
-      246.24061275,
-      255.0
+      338.329,
+      340.47
     ],
     "threads_each": 1,
     "workers": 4
   },
   "expected_stationary_solves": "six per objective historically; at most eight; time cap may stop proposals before64",
   "expected_wall_minutes": [
-    90,
+    170,
     530
   ],
   "files": {
     "accounting": {
       "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_earnings_wealth_contract.py",
-      "sha256": "d6f90f376a5214a861ae7fb63f209f56837dc2b6e55c6d4407f346c261256e80"
+      "sha256": "71eebc1d42e28ccd304f921535f0d154f3a994451b5c53bcb8097233ce18669a"
     },
     "adapter": {
       "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_candidate.py",
-      "sha256": "f64e651058a09390697dc3c1daaf37dbf482a2117e86a9b69ecd4171b64ad29f"
+      "sha256": "ce7385436a71edf8d83507b6e9f24f5b6ce5ea29fc777f987bb9162960c59f1b"
     },
     "controller": {
       "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_smoke.py",
@@ -104,7 +110,7 @@
     },
     "search_controller": {
       "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_search.py",
-      "sha256": "3164cc2df1b2102211c53d7a5480aae5e8a24f819c4658f72d1da7005775c202"
+      "sha256": "61157a8e142feb8990845dfc124125ae1808b0b9cd412b5ba44c37254e1de1f3"
     },
     "wrapper": {
       "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_scored_candidate.py",
@@ -146,10 +152,10 @@
   ],
   "objective_canonical_sha256": "4440ea07f4de957740ca6c04961d2806d9b9ef782c7a0e7dad4ce73e1db651b1",
   "operational_revision": {
-    "previous_execution": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v3/execution.json",
-    "reason": "Explicit numerical wealth-domain correction for occupied monotonicity failure at the old upper edge",
-    "review_receipt": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/staging/wealth_grid_correction.json",
-    "version": 4
+    "previous_execution": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v4/execution.json",
+    "reason": "Exact current-allocation outputs independent of continuation-value magnitude, preserving exhaustive optimization and all gates; include previously reviewed wall-clock-only comparator correction.",
+    "review_receipt": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/staging/allocation_output_correction.json",
+    "version": 5
   },
   "parameter_bounds": {
     "H0": [
@@ -210,13 +216,13 @@
     },
     "max_proposals": 64,
     "native_seconds": 3100,
-    "search_dispatch_window_seconds": 14400,
+    "search_dispatch_window_seconds": 12400,
     "search_seconds": 18800,
     "seed": 20260922,
     "smoke_anchor_seconds": 6400,
     "verification_seconds": 6400,
     "workers": 4,
-    "wrapper_seconds": 2150
+    "wrapper_seconds": 3150
   },
   "smoke_seconds": 7000,
   "source_root": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/income_refinement_local_20260921/source",

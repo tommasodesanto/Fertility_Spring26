@@ -1,5 +1,34 @@
 # Calibration Status
 
+**September 22, 04:28 EDT — reviewed allocation correction; V5 native smoke running:**
+The strict V4 probe failure is preserved. V5 removes only output floors that
+inflated reported spending relative to the exhaustive optimizer's feasible
+allocation when continuation values were very negative. Values and chosen saving
+are unchanged in compiled regressions; all54 saved-state accounting gaps close
+to5.55e-17. Independent review,29 actual compiled/control tests and three frozen
+source/input preflights passed. The new immutable bundle started04:26 EDT and
+native progress is confirmed. Two exact anchors plus inward-beta smoke still gate
+search; no target, tolerance, bound, entry or wealth grid changed. Continuation
+interpolation of finite infeasibility values remains an explicit concern; this
+correction is not numerical-convergence evidence. Before V5:35 stationary solves
+started,32 completed,3 incomplete; two scored objectives, all from V4 anchors.
+[Current run and reviewed correction](output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/README.md).
+
+**September 22, 04:20 EDT — V4 smoke stopped; exact allocation-output correction under test:**
+The inward-beta probe completed six stationary solves and one raw repetition,
+then the strict scorer rejected budget-excess mass2.0213e-23. Search never started.
+A saved-state audit isolates54 low-wealth renter states with positive current
+surplus but very negative continuation values. Their reported policies reinstate
+legacy consumption/housing output floors absent from the exhaustive objective,
+creating spending gaps up to0.04117. Reporting the chosen feasible allocation
+closes every gap to5.55e-17 without changing saved value, saving or population.
+Independent review supports a narrow output correction; native tests and a new
+immutable V5 smoke are required before search. No gate will be relaxed. Finite
+infeasibility values contaminating continuation interpolation remain a distinct
+numerical limitation. V4 records18 completed stationary solves, two scored anchor
+objectives, one unscored probe, and zero search proposals.
+[Failure, state census and proposed correction](output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/staging/allocation_output_correction.json).
+
 **September 22, 03:17 EDT — V4 starting point reproduces exactly; nearby smoke probe running:**
 Two scored repetitions completed12 stationary solves and agree exactly in native
 price, value, distribution, all extracted moments and normalized fertility utility.

@@ -1,6 +1,26 @@
 # Earnings, entry wealth and purchase timing
 
-## Live review — September 22, 03:17 EDT
+## Live review — September 22, 04:28 EDT
+
+**Current execution:** the separately reviewed frozen **V5 smoke is running**
+locally from04:26 EDT; native progress is confirmed. V4 passed two scored anchors
+but stopped on the inward-beta budget check, so no search ran. The affected54
+renter states had positive current surplus but legacy output floors added spending
+when continuation values were deeply negative. V5 reports the optimizer's exact
+feasible current allocation, preserving value/saving optimization and all gates.
+All54 saved-state budget gaps fall to5.55e-17;29 native compiled/control tests and
+three source/input preflights pass. Exact V5 anchor repeats and an inward-beta
+probe must pass before the unchanged bounded search starts. Generated allocation
+source is separately hashed. [Reviewed correction and preserved failure](staging/allocation_output_correction.json),
+[immutable V5 plan](staging/frozen_v5_plan.json), [V5 source inventory](staging/frozen_v5_hash_manifest.json).
+V5 also includes the previously reviewed wall-clock-only comparison correction.
+
+**Still unresolved:** the output fix does not remove finite infeasibility values
+from continuation interpolation. This may distort choices in tiny-mass states;
+it remains an adoption concern alongside density/domain convergence. Parameter
+object labels in the [validation rubric](literature/parameter_validation_rubric.md)
+have been corrected against the implementation before any final plausibility audit.
+The earlier execution narrative below records V2–V4 history, not the live run.
 
 The primary-source reviews and direct four-year PSID point estimates are done.
 The main candidate uses the earliest complete four-year block grid (1984-based

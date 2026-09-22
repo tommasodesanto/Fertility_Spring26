@@ -1,0 +1,81 @@
+{
+  "status": "reviewed_v5_correction_smoke_running",
+  "failed_bundle": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v4",
+  "probe_beta_annual": 0.985,
+  "completed_native_repetitions": 1,
+  "completed_scored_objectives": 0,
+  "completed_stationary_solves": 6,
+  "v4_total_completed_stationary_solves": 18,
+  "v4_total_scored_objectives": 2,
+  "search_started": false,
+  "failed_gate": "strict scorer requires budget_excess_mass == 0",
+  "budget_excess_mass": 2.021318923814137e-23,
+  "maximum_gap_all_positive_mass": 0.04117331865386065,
+  "affected_states": 54,
+  "saved_state_census": "v4_probe_budget_states.csv",
+  "diagnosis": "Full renter kernel reports the objective allocation only if exhaustive_saving AND v_best > -1e9. With deeply negative continuation and positive current surplus it reinstates legacy output-only consumption and housing floors, adding spending not used by the objective. All54 observed violations are renter states. Owner kernel also retains an unconditional output consumption floor; no owner violation was observed here.",
+  "proposed_numerical_correction": "For exhaustive saving only, reconstruct current c and housing exactly from the chosen feasible surplus regardless of continuation-value magnitude. Renter branch already requires surplus >1e-10; owner exact consumption branch must require ct >1e-10. Preserve actual infeasible placeholders, nonexhaustive behavior, value/saving optimizer, prices, targets, bounds, grids, entry and all gates.",
+  "required_validation": [
+    "independent source review",
+    "native compiled regression reproducing floor overspend with deeply negative continuation then removing it",
+    "exact unchanged optimized value and saving arrays in regression",
+    "unchanged nonexhaustive branch and infeasible placeholders",
+    "saved54state replay of current-allocation accounting",
+    "new immutable V5 two-anchor plus inward-beta smoke before any search"
+  ],
+  "next_action": "No launch until reviewed correction and all focused checks pass; no reuse of V4 smoke as V5 verification.",
+  "independent_review": "Luna confirms current-allocation formula conditional on surplus >1e-10; sentinel-contaminated continuation remains an explicit unresolved limitation.",
+  "saved_state_replay": {
+    "states": 54,
+    "all_current_surplus_positive": true,
+    "minimum_surplus": 7.677030344044322e-06,
+    "maximum_absolute_exact_budget_gap": 5.551115123125783e-17,
+    "gate_tolerance": 1e-09,
+    "values_saving_probabilities_population_changed": false,
+    "receipt": "v4_probe_budget_allocation_replay.csv"
+  },
+  "outstanding": "Output correction does not repair interpolation of finite infeasibility sentinels into continuation values. Those can distort choices at tiny positive-mass states; inspect and bound before adoption, alongside grid robustness.",
+  "v5_run_size_if_validated": {
+    "wealth_nodes": 160,
+    "income_nodes": 45,
+    "other_state_dimensions": "unchanged",
+    "four_single_thread_workers": true,
+    "maximum_objectives": 69,
+    "maximum_stationary_solves": 552,
+    "observed_stationary_seconds": [
+      338.329,
+      340.47
+    ],
+    "observed_full_objective_seconds": [
+      2064.8722381670013,
+      2085.3765
+    ],
+    "smoke_expected_minutes": 104,
+    "maximum_smoke_seconds": 10000,
+    "production_controller_seconds": 18800,
+    "included_selected_verification_seconds": 6400,
+    "maximum_supervisor_seconds": 32000,
+    "case_outer_native_seconds": [
+      3200,
+      3100
+    ],
+    "selected_outer_native_seconds": [
+      6400,
+      6200
+    ],
+    "stop": "Any smoke failure stops. Search proposals only after verified exact-loop smoke; unchanged source/target/numerical gates and named expected rejection policy."
+  },
+  "lead_diff_review": "Both compiled-kernel clones alter output reconstruction only. Renter current-surplus branch unchanged; owner requires ct>1e-10. Values, saving optimizer, infeasible placeholders and nonexhaustive paths unchanged. Generated allocation source is separately hashed.",
+  "native_validation": {
+    "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 NUMBA_DISABLE_JIT=0 tmp/income_refinement_local_20260921/venv/bin/python -m pytest -q code/model/tools/test_e5f_earnings_wealth_contract.py code/model/tools/test_run_e5f_earnings_wealth_search.py",
+    "passed": 29,
+    "elapsed_seconds": 8.11,
+    "scope": "Actual native compiled renter/owner allocation, existing support/accounting regressions, search-controller reporting checks; zero household/equilibrium solves."
+  },
+  "v5_bundle": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5",
+  "v5_started_utc": "2026-09-22T08:26:55.884762+00:00",
+  "v5_supervisor_pid": 51407,
+  "v5_plan_sha256": "10823c4a968d8a05e70b47230cd6add7fb8d5c0ce34426af04270fb0788d4956",
+  "v5_preflight": "three source/input arms passed",
+  "running_bundle_modified": false
+}
