@@ -447,7 +447,7 @@ ar_confidence_set <- function(data, outcome, endog, instrument, controls_fml,
 fit_instrument_outcome <- function(data, outcome, treatment, instrument,
                                     controls_fml, weight_var = "mother_weight",
                                     cluster_var = "household_key",
-                                    ar_grid = NULL) {
+                                    ar_grid = NULL, primary_callback = NULL) {
   # Project to only the columns the formulas actually use BEFORE any copy,
   # so the (possibly very wide, list-column-bearing) national mother roster
   # is never carried into feols() or the AR loop. all.vars() correctly
@@ -548,6 +548,14 @@ fit_instrument_outcome <- function(data, outcome, treatment, instrument,
   out$iv_nobs_fit <- ivx$nobs
   out$iv_error <- if (is.null(iv_fit)) "iv_fit_failed" else ivx$error
   out$iv_receipt <- full_receipt(iv_fit, "iv")
+
+  # Primary (RF/FS/IV) results are complete and extracted at this point.
+  # Invoke the caller's persistence callback ONCE here, before AR runs, so
+  # basic effects are saved even if AR subsequently errors or is slow. The
+  # callback receives `out` as built so far (no AR fields yet); any callback
+  # error is NOT swallowed -- it propagates, since a failed persistence write
+  # must not be silently ignored.
+  if (!is.null(primary_callback)) primary_callback(out)
 
   if (!is.null(ar_grid) && !is.null(iv_fit) && !is.na(out$iv_coef)) {
     ar <- tryCatch(ar_confidence_set(usable, outcome, treatment, instrument,

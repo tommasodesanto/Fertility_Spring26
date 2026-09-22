@@ -175,6 +175,48 @@ ss <- build_controls(ss, "event_age")
 controls_fml <- "i(mat_age_at_event) + i(RACE) + i(survey_year) + i(event_age)"
 
 outcomes <- c("ROOMS_out", "OWNERSHP_out", "BEDROOMS_out")
+
+## ---- Save slim analytic frames + identity receipt BEFORE any estimation --
+## Persisted for a future reviewed estimator-only recovery loader (not
+## implemented yet -- no automatic resume this pass). Counts/audits are
+## already saved above, so SameSex2 keeps only the eligible==TRUE rows.
+ctrl_vars <- all.vars(stats::as.formula(paste("~", controls_fml)))
+t1_needed <- unique(c("person_key", "household_key", "mother_weight",
+                       "twin_like_proxy", "treatment_2plus", "event_age", outcomes, ctrl_vars))
+ss_needed <- unique(c("person_key", "household_key", "mother_weight",
+                       "samesex", "treatment_3plus", "event_age", outcomes, ctrl_vars))
+t1_slim <- t1[, ..t1_needed]
+ss_slim <- ss[eligible == TRUE, ..ss_needed]
+analytic_frames_path <- file.path(outdir, "analytic_frames.rds")
+tmp_af <- paste0(analytic_frames_path, ".tmp")
+saveRDS(list(t1 = t1_slim, ss = ss_slim), tmp_af)
+file.rename(tmp_af, analytic_frames_path)
+driver_file <- tryCatch({
+  a <- commandArgs(trailingOnly = FALSE)
+  normalizePath(sub("^--file=", "", a[grepl("^--file=", a)]), mustWork = FALSE)
+}, error = function(e) NA_character_)
+identity <- list(
+  analytic_frames_path = analytic_frames_path,
+  analytic_frames_size_bytes = file.info(analytic_frames_path)$size,
+  analytic_frames_md5 = unname(tools::md5sum(analytic_frames_path)),
+  driver_script = driver_file,
+  driver_md5 = if (!is.na(driver_file)) unname(tools::md5sum(driver_file)) else NA_character_,
+  lib_path = file.path(script_dir, "twins_samesex_iv_lib.R"),
+  lib_md5 = unname(tools::md5sum(file.path(script_dir, "twins_samesex_iv_lib.R"))),
+  sample_label = sample_label, age_lo = age_lo, age_hi = age_hi,
+  controls_fml = controls_fml, outcomes = outcomes,
+  weight_var = "mother_weight", cluster_var = "household_key",
+  ar_grid_rooms = list(min = -3, max = 3, by = 0.1),
+  ar_grid_own = list(min = -0.5, max = 0.5, by = 0.02),
+  partition_dir = partition_dir, statefip_list = statefip_list,
+  n_t1_rows = nrow(t1_slim), n_ss_rows = nrow(ss_slim),
+  automatic_resume_implemented = FALSE,
+  note = "Identity recorded for a future REVIEWED estimator-only loader; no automatic resume is implemented this pass.",
+  generated = format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
+)
+jsonlite::write_json(identity, file.path(outdir, "analytic_frames_identity.json"), auto_unbox = TRUE, pretty = TRUE)
+write_status("analytic_frames_saved", list(n_t1_rows = nrow(t1_slim), n_ss_rows = nrow(ss_slim)))
+rm(mr, mr_sample, minor_gate); gc(FALSE)
 ar_grid_rooms <- seq(-3, 3, by = 0.1)
 ar_grid_own <- seq(-0.5, 0.5, by = 0.02)
 
@@ -199,13 +241,30 @@ checkpoint_fit <- function(res) {
                                    elapsed_sec = as.numeric(Sys.time() - t0, units = "secs")))
 }
 
+primary_receipt_dir <- file.path(outdir, "primary_receipts")
+dir.create(primary_receipt_dir, recursive = TRUE, showWarnings = FALSE)
+# Writes RF/FS/IV (no AR yet) atomically, invoked from inside
+# fit_instrument_outcome BEFORE AR runs -- so a slow/failing AR cannot
+# erase already-computed primary effects.
+make_primary_cb <- function(design, oc) {
+  force(design); force(oc)
+  function(res) {
+    res$design <- design; res$outcome <- oc
+    fn <- file.path(primary_receipt_dir, sprintf("%s__%s.json", design, oc))
+    tmp <- paste0(fn, ".tmp")
+    jsonlite::write_json(res, tmp, auto_unbox = TRUE, pretty = TRUE, digits = 10, null = "null", na = "null")
+    file.rename(tmp, fn)
+  }
+}
+
 results <- list()
 for (oc in outcomes) {
   ar_grid <- if (oc == "OWNERSHP_out") ar_grid_own else ar_grid_rooms
   res_t1 <- tryCatch(fit_instrument_outcome(
     t1, outcome = oc, treatment = "treatment_2plus", instrument = "twin_like_proxy",
     controls_fml = controls_fml, weight_var = "mother_weight",
-    cluster_var = "household_key", ar_grid = ar_grid),
+    cluster_var = "household_key", ar_grid = ar_grid,
+    primary_callback = make_primary_cb("Twin1_pooled0_5", oc)),
     error = function(e) list(status = "error", message = conditionMessage(e)))
   res_t1$design <- "Twin1_pooled0_5"; res_t1$outcome <- oc
   checkpoint_fit(res_t1)
@@ -213,7 +272,8 @@ for (oc in outcomes) {
   res_ss <- tryCatch(fit_instrument_outcome(
     ss[eligible == TRUE], outcome = oc, treatment = "treatment_3plus", instrument = "samesex",
     controls_fml = controls_fml, weight_var = "mother_weight",
-    cluster_var = "household_key", ar_grid = ar_grid),
+    cluster_var = "household_key", ar_grid = ar_grid,
+    primary_callback = make_primary_cb("SameSex2_pooled0_5", oc)),
     error = function(e) list(status = "error", message = conditionMessage(e)))
   res_ss$design <- "SameSex2_pooled0_5"; res_ss$outcome <- oc
   checkpoint_fit(res_ss)
@@ -222,12 +282,14 @@ for (oc in outcomes) {
     t1_ea <- t1[event_age == ea]
     ss_ea <- ss[eligible == TRUE & event_age == ea]
     r1 <- tryCatch(fit_instrument_outcome(t1_ea, oc, "treatment_2plus", "twin_like_proxy",
-                     controls_fml, "mother_weight", "household_key", ar_grid),
+                     controls_fml, "mother_weight", "household_key", ar_grid,
+                     primary_callback = make_primary_cb(paste0("Twin1_event", ea), oc)),
                    error = function(e) list(status = "error", message = conditionMessage(e)))
     r1$design <- paste0("Twin1_event", ea); r1$outcome <- oc
     checkpoint_fit(r1)
     r2 <- tryCatch(fit_instrument_outcome(ss_ea, oc, "treatment_3plus", "samesex",
-                     controls_fml, "mother_weight", "household_key", ar_grid),
+                     controls_fml, "mother_weight", "household_key", ar_grid,
+                     primary_callback = make_primary_cb(paste0("SameSex2_event", ea), oc)),
                    error = function(e) list(status = "error", message = conditionMessage(e)))
     r2$design <- paste0("SameSex2_event", ea); r2$outcome <- oc
     checkpoint_fit(r2)
