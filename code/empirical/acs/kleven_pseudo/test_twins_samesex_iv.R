@@ -341,3 +341,22 @@ stopifnot_msg(!is.na(pf$rf_coef), "receipts: RF stays populated regardless of FS
 
 cat("\n--- Item 1/1b/2/3/4/4b/4c corrected-gate, receipt, and AR-honesty checks: ALL PASS ---\n\n")
 cat("ALL TESTS PASSED\n")
+
+## ---- primary_callback fires once, before AR, with RF/FS/IV already set --
+cb_calls <- list()
+cb <- function(res) { cb_calls[[length(cb_calls) + 1]] <<- res }
+fit_cb <- fit_instrument_outcome(sim, outcome = "Y", treatment = "D", instrument = "Z",
+                                  controls_fml = controls_fml, weight_var = "mother_weight",
+                                  cluster_var = "household_key", ar_grid = seq(0, 2, by = 0.05),
+                                  primary_callback = cb)
+stopifnot_msg(length(cb_calls) == 1, "primary_callback: invoked exactly once")
+snap <- cb_calls[[1]]
+stopifnot_msg(!is.na(snap$rf_coef) && !is.na(snap$fs_coef) && !is.na(snap$iv_coef),
+              "primary_callback: RF/FS/IV already populated at callback time")
+stopifnot_msg(is.null(snap$ar_summary_lower) && is.null(snap$ar_fully_interior_bounded),
+              "primary_callback: fires BEFORE AR fields are attached to out")
+stopifnot_msg(!is.null(fit_cb$ar_summary_lower),
+              "primary_callback: final returned result still has AR fields after AR runs")
+
+cat("\n--- primary_callback ordering check: PASS ---\n")
+cat("ALL TESTS PASSED\n")

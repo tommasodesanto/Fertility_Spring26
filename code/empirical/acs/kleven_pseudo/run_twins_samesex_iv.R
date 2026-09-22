@@ -17,6 +17,8 @@ suppressMessages({
   library(fixest)
   library(jsonlite)
 })
+options(warn = 1)  # print warnings as they occur (to the job log), instead
+                    # of buffering/truncating into "N warnings" at exit.
 
 args_env <- function(name, default = NULL) {
   v <- Sys.getenv(name, unset = "")
@@ -41,21 +43,30 @@ unlink(list.files(outdir, pattern = "\\.tmp$", full.names = TRUE, recursive = TR
 last_heartbeat_time <- Sys.time()
 heartbeat_interval_sec <- 300
 
+atomic_rename <- function(tmp, final) {
+  ok <- file.rename(tmp, final)
+  if (!isTRUE(ok)) stop(sprintf("atomic rename failed: %s -> %s", tmp, final))
+  invisible(TRUE)
+}
+
 write_status <- function(phase, extra = list()) {
   st <- c(list(phase = phase, generated = format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
                statefip_list = statefip_list, sample_label = sample_label,
                outdir = normalizePath(outdir, mustWork = FALSE)), extra)
   tmp <- paste0(status_path, ".tmp")
   jsonlite::write_json(st, tmp, auto_unbox = TRUE, pretty = TRUE, digits = 6)
-  file.rename(tmp, status_path)
+  atomic_rename(tmp, status_path)
 }
 
 write_status("loading_partitions")
 
 # Process one state partition at a time and keep only the much smaller
 # per-mother roster in memory across states; never hold all 51 raw
-# person-level partitions (59M rows nationally) simultaneously. This keeps
-# the job inside the authorized 64GB envelope.
+# person-level partitions (59M rows nationally) simultaneously. This bounds
+# the SOURCE-LOADING phase's memory to roughly one state at a time; it is
+# NOT a guarantee that the full job (loading + estimation) fits in any
+# specific memory limit -- job 18247804 OOM-killed at 64G during estimation
+# despite this per-state loading design (see output/acs_fertility_iv/RESULTS.md).
 t0 <- Sys.time()
 mr_list <- vector("list", length(statefip_list))
 audit_list <- vector("list", length(statefip_list))
@@ -134,6 +145,7 @@ jsonlite::write_json(built$child_relate_audit, file.path(outdir, "child_relate_a
                       auto_unbox = TRUE, pretty = TRUE)
 jsonlite::write_json(sample_gate_totals, file.path(outdir, "sample_gate_receipt.json"),
                       auto_unbox = TRUE, pretty = TRUE)
+rm(built); gc(FALSE)
 
 ## ---- Instrument construction ---------------------------------------------
 t1 <- build_twin1(mr_sample, age_grid = 0:5)
@@ -190,11 +202,20 @@ ss_slim <- ss[eligible == TRUE, ..ss_needed]
 analytic_frames_path <- file.path(outdir, "analytic_frames.rds")
 tmp_af <- paste0(analytic_frames_path, ".tmp")
 saveRDS(list(t1 = t1_slim, ss = ss_slim), tmp_af)
-file.rename(tmp_af, analytic_frames_path)
+atomic_rename(tmp_af, analytic_frames_path)
 driver_file <- tryCatch({
   a <- commandArgs(trailingOnly = FALSE)
   normalizePath(sub("^--file=", "", a[grepl("^--file=", a)]), mustWork = FALSE)
 }, error = function(e) NA_character_)
+# Source-partition metadata (path/size/mtime) via file.info() only -- the
+# raw state partitions are NOT reloaded/hashed here (too large; already
+# read once above).
+source_partitions <- lapply(statefip_list, function(sf) {
+  p <- sprintf("%s/statefip_%02d/housing_narrow.rds", partition_dir, sf)
+  fi <- file.info(p)
+  list(statefip = sf, path = p, size_bytes = fi$size,
+       mtime = format(fi$mtime, "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"))
+})
 identity <- list(
   analytic_frames_path = analytic_frames_path,
   analytic_frames_size_bytes = file.info(analytic_frames_path)$size,
@@ -209,12 +230,16 @@ identity <- list(
   ar_grid_rooms = list(min = -3, max = 3, by = 0.1),
   ar_grid_own = list(min = -0.5, max = 0.5, by = 0.02),
   partition_dir = partition_dir, statefip_list = statefip_list,
+  source_partitions = source_partitions,
   n_t1_rows = nrow(t1_slim), n_ss_rows = nrow(ss_slim),
   automatic_resume_implemented = FALSE,
   note = "Identity recorded for a future REVIEWED estimator-only loader; no automatic resume is implemented this pass.",
   generated = format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
 )
-jsonlite::write_json(identity, file.path(outdir, "analytic_frames_identity.json"), auto_unbox = TRUE, pretty = TRUE)
+identity_path <- file.path(outdir, "analytic_frames_identity.json")
+tmp_id <- paste0(identity_path, ".tmp")
+jsonlite::write_json(identity, tmp_id, auto_unbox = TRUE, pretty = TRUE)
+atomic_rename(tmp_id, identity_path)
 write_status("analytic_frames_saved", list(n_t1_rows = nrow(t1_slim), n_ss_rows = nrow(ss_slim)))
 rm(mr, mr_sample, minor_gate, t1, ss); gc(FALSE)
 ar_grid_rooms <- seq(-3, 3, by = 0.1)
@@ -233,10 +258,10 @@ checkpoint_fit <- function(res) {
   fname <- file.path(receipt_dir, sprintf("%s__%s.json", res$design %||% "NA", res$outcome %||% "NA"))
   tmp <- paste0(fname, ".tmp")
   jsonlite::write_json(res, tmp, auto_unbox = TRUE, pretty = TRUE, digits = 10, null = "null", na = "null")
-  file.rename(tmp, fname)
-  saveRDS(results, paste0(file.path(outdir, "checkpoint_results.rds"), ".tmp"))
-  file.rename(paste0(file.path(outdir, "checkpoint_results.rds"), ".tmp"),
-              file.path(outdir, "checkpoint_results.rds"))
+  atomic_rename(tmp, fname)
+  cr_path <- file.path(outdir, "checkpoint_results.rds")
+  saveRDS(results, paste0(cr_path, ".tmp"))
+  atomic_rename(paste0(cr_path, ".tmp"), cr_path)
   write_status("estimating", list(last_completed = fname, n_fits_done = length(results),
                                    elapsed_sec = as.numeric(Sys.time() - t0, units = "secs")))
 }
@@ -253,7 +278,7 @@ make_primary_cb <- function(design, oc) {
     fn <- file.path(primary_receipt_dir, sprintf("%s__%s.json", design, oc))
     tmp <- paste0(fn, ".tmp")
     jsonlite::write_json(res, tmp, auto_unbox = TRUE, pretty = TRUE, digits = 10, null = "null", na = "null")
-    file.rename(tmp, fn)
+    atomic_rename(tmp, fn)
   }
 }
 
