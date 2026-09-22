@@ -1,0 +1,59 @@
+{
+  "status": "proposed continuous income approximation only; no finite-grid or household run",
+  "annual_source": {
+    "paper": "Sommer (2016), JME, Section 4.1/Table 2",
+    "url": "https://www.kamilasommer.net/Fertility.pdf",
+    "rho": 0.95,
+    "persistent_innovation_sd": 0.21,
+    "iid_sd": 0.17
+  },
+  "assumptions": [
+    "Stationary annual persistent state, not Sommer zero initial state",
+    "Mean-one annual levels; deterministic age profile excluded from this covariance calculation",
+    "Applying wage risk to exogenous household earnings is a diagnostic proxy",
+    "No empirical re-estimation or preference calibration"
+  ],
+  "period_years": 4,
+  "income_definition": "Z_t = (Y_4t + Y_4t+1 + Y_4t+2 + Y_4t+3)/4; four-year totals are 4 times the mean",
+  "objective": "Sum of squared relative errors in mean-one level variance and autocovariances at 4, 8, 12, 16 years; equal weights, nonnegative component variances",
+  "fit": {
+    "rho": 0.8230784065528538,
+    "persistent_stationary_log_variance": 0.44027776952440284,
+    "persistent_innovation_sd": 0.37683954735878034,
+    "iid_variance": 8.367097332096386e-20,
+    "mean_normalizing_log_intercept": -0.22013888476220142,
+    "sum_squared_relative_errors": 0.00140151477213139
+  },
+  "exact_block_level_covariances": [
+    0.5410473089109002,
+    0.4478372566498819,
+    0.35169172585197866,
+    0.27814772535653054,
+    0.22123129172087078
+  ],
+  "fitted_level_covariances": [
+    0.5531385731627735,
+    0.43674929107191574,
+    0.3475252001967159,
+    0.2782594783308399,
+    0.22392784268484314
+  ],
+  "relative_errors_percent": [
+    2.2347887241528497,
+    -2.475891724800087,
+    -1.1847096047452614,
+    0.040177561821197944,
+    1.2188831620504323
+  ],
+  "verification": {
+    "independent_covariance_formula_max_gap": 5.551115123125783e-17,
+    "optimizer_starts": 3,
+    "objective_max_gap": 9.540979117872439e-18
+  },
+  "unrun": [
+    "Four-year low-income-tail comparison",
+    "Finite-grid approximation/convergence",
+    "Lifecycle initial-condition validation",
+    "Household equilibrium and calibration"
+  ]
+}

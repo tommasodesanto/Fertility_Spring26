@@ -31,7 +31,7 @@ where useful; lead resolves economics. Reuse completed literature and diagnostic
 
 | ID | Object | Current direction | Remaining work |
 |---|---|---|---|
-| E1 | Components | Proposed age profile + AR(1) + iid; no permanent type. | Include in the single recommended specification; disclose covariance-fit tradeoff. |
+| E1 | Components | LEAD proposal: Sommer annual AR(1) + iid inputs, aggregated to four-year income and approximated by one period AR(1), rho 0.82308 and innovation SD 0.37684; no permanent type. | Constrained period iid variance reaches zero; continuous covariance errors <=2.48%. Tail/grid/entry and household validation remain unrun; not adopted. |
 | E2 | Source | AUTHOR: literature-first, plain vanilla; prioritize top-five/top-field journals. Sommer (JME) is an annual architecture reference; De Nardi (ReStud) and Bick (JEEA) ground period-income measurement. | Verify wage-to-household-earnings interpretation before importing parameters. Own PSID is validation/robustness by default. |
 | E3 | Four-year income | Exact block-covariance fit is inadmissible for the proposed Sommer parameters (negative iid variance). Conventional endpoint approximation is prepared with disclosed error. | AUTHOR requests improved specification/calculations; endpoint adapter stays diagnostic. Fit the process to four-year income and disclose approximation errors. No household run. |
 | E4 | Taxes and measurement error | Follow the chosen source consistently; no automatic own-PSID-plus-HSV combination. | Explicit gross-to-spendable-income accounting and documented treatment of transitory risk. |

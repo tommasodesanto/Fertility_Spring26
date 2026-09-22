@@ -1,5 +1,15 @@
 # Calibration Status
 
+**September 21 — concrete income conversion calculated, diagnostic proposal only:**
+A constrained fit to the exact four-year aggregates of Sommer annual earnings
+risk gives period persistence 0.823078407 and innovation SD 0.376839547. The
+independent period iid variance reaches zero; the lead now recommends a single
+period AR(1) approximation. The five continuous level-moment errors are at most
+2.48%. This uses stationary annual risk and is not a household fit or empirical
+re-estimation. Tails, grids, entry and household responses remain unvalidated;
+no runtime adapter, run plan or baseline changed.
+[Calculation and caveats](output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/README.md#concrete-four-year-proposal--september-21).
+
 **September 21 evening — broader earnings literature reviewed:**
 The author requests plain-vanilla OLG/family grounding, prioritizing top-five and
 top-field journals, with new four-year calculations where necessary. De Nardi

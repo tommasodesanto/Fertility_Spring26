@@ -4,6 +4,33 @@
 requests a broader, top-five/top-field literature grounding and improved
 four-year aggregation. No new calibration result or submitted job.**
 
+## Concrete four-year proposal — September 21
+
+Use Sommer's annual risk inputs (0.95, 0.21, 0.17), aggregate annual earnings
+**levels** over four years, and approximate normalized block income with one
+lognormal AR(1). An equal-weight fit of relative errors in stationary level
+variance and four autocovariances, allowing a nonnegative independent iid
+variance, gives period persistence **0.823078407** and innovation SD
+**0.376839547**. The fitted independent iid variance is effectively zero
+(8.4e-20, an active lower bound). Thus this is a recommendation for one period
+income state, revising the earlier proposed separate four-year iid component.
+Annual iid risk is still included in the aggregated target distribution.
+
+The stationary log variance is 0.44027777; normalize exp(z) by its mean.
+Continuous level-moment errors are +2.23%, -2.48%, -1.18%, +0.04%, +1.22%
+for variance and lags 1–4 respectively. This is an approximation selected by
+a declared income-moment criterion, not an exact temporal aggregation or
+empirical parameter estimate. The annual covariance formula was independently
+recomputed and three optimizer starts agree in objective within 1e-10.
+[Complete calculation and restrictions](period_proxy_fit.json).
+
+This calculation assumes stationary annual risk and excludes the deterministic
+age profile. It does not copy Sommer's zero persistent state at entry. Using
+her wage process for exogenous household earnings remains a diagnostic proxy.
+Low-income tails, finite-grid accuracy, lifecycle/entry assumptions and household
+responses are not yet validated. The existing adapter and run plan have **not**
+been changed or launched; no model specification has been adopted.
+
 ## Literature review and revised recommendation
 
 Prioritize journal quality and the relevant economic object over finding exactly
@@ -40,8 +67,8 @@ type merely to avoid that algebraic rejection.
 
 This supersedes the earlier request for an immediate yes/no adoption of the
 endpoint approximation. The calculations below remain useful diagnostic evidence:
-their 7.84% excess variance is not a demonstrated household-fit failure. Further
-process fitting, lifecycle/entry validation and household runs remain unrun.
+their 7.84% excess variance is not a demonstrated household-fit failure. The concrete continuous fit above is now available; tail, grid, lifecycle/entry
+validation and household runs remain unrun.
 
 The author authorized implementation after returning home. This packet keeps
 the September 14 reference intact and prepares three diagnostic arms: the
