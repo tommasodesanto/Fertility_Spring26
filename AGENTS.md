@@ -193,6 +193,20 @@ and whether the estimate is near a bound. If a concise chat answer is needed,
 lead with the scalar loss and a short interpretation, then link to or include
 the complete tables rather than omitting them.
 
+Experimental-change disclosure:
+
+- Before launching an experiment and when presenting its results, prominently
+  list every economic change relative to the named reference: earnings,
+  initial wealth and income distributions, timing, transfers/floors, preferences
+  and targets. Label each as author-adopted, proposed or experimental.
+- Experimental authorization permits exploration, not silent adoption. A fallback
+  introduced to obtain a feasible run must be disclosed as an additional change
+  in the user-facing update and result comparison; recording it only in files is
+  insufficient. Never describe a bundled change as changing only one object.
+- Present target and model moments first when the author requests fit; a weighted
+  loss cannot substitute for the economic comparison. Keep specification changes
+  separate from recalibration and numerical corrections in any attribution.
+
 Counterfactual contract discipline:
 
 - Before a production policy run, reconcile every entry, population, fiscal,

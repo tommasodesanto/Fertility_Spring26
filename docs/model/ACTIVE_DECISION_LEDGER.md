@@ -7,6 +7,22 @@ that can still change the theory, quantitative interpretation, or paper-facing
 claims. `CALIBRATION_STATUS.md` remains the source for numerical results and
 reproducibility contracts.
 
+## Current clarification — September 22, author review
+
+[Shared economic decision library](../literature/economic_decisions.md) records
+source conventions, experimental implementations, adoption status and the next
+decisive check. Use this index instead of reopening disconnected literature notes.
+
+The intended entry-wealth proposal preserved heterogeneous empirical wealth.
+The successful overnight earnings runs instead used zero assets at age 18 as an
+experimental fallback; this was not adopted and is not an earnings-only comparison.
+All overnight stages are terminal. The lead recommends empirical age-appropriate
+entry wealth conditional on income as primary and zero wealth as sensitivity;
+this recommendation is not an author decision. Resolve the 18–24 versus 25–35
+source-label discrepancy and debt feasibility without silently truncating debt.
+Claude's penalty-exposure and persistence criticisms remain claims to verify.
+Older running-status and launch notes below are historical.
+
 ## Earnings decision delta — September 22, 00:26 EDT
 
 Latest author instruction authorizes deep source review, own-data estimates or
