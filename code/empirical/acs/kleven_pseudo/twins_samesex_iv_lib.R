@@ -450,9 +450,16 @@ fit_instrument_outcome <- function(data, outcome, treatment, instrument,
   # FS/IV fail (weak/absent first stage does not invalidate the RF). Status
   # distinguishes a clean full fit from a partial failure so downstream
   # readers cannot mistake a broken IV/FS leg for a complete result.
-  out$status <- if (is.null(rf_fit)) {
+  # full_fit requires the fit object AND its required coefficient to have
+  # actually been extracted (not "coefficient_not_found"/NA) -- a fitted
+  # model missing the coefficient of interest is a partial failure, not a
+  # clean fit, even though feols() itself did not error.
+  rf_ok <- !is.null(rf_fit) && is.na(rfx$error) && !is.na(rfx$coef)
+  fs_ok <- !is.null(fs_fit) && is.na(fsx$error) && !is.na(fsx$coef)
+  iv_ok <- !is.null(iv_fit) && is.na(ivx$error) && !is.na(ivx$coef)
+  out$status <- if (!rf_ok) {
     "error"
-  } else if (is.null(fs_fit) || is.null(iv_fit)) {
+  } else if (!fs_ok || !iv_ok) {
     "partial_failure"
   } else {
     "full_fit"

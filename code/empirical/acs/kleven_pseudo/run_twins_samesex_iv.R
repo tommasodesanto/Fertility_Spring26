@@ -34,6 +34,12 @@ status_path <- args_env("STATUS_PATH", file.path(outdir, "status_heartbeat.json"
 sample_label <- args_env("SAMPLE_LABEL", "young")
 
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
+# Cleanup: a prior interrupted run in this OUTDIR can leave partial .tmp
+# files from the atomic tmp+rename writes; remove them so stale partial
+# state is never mistaken for a completed receipt.
+unlink(list.files(outdir, pattern = "\\.tmp$", full.names = TRUE, recursive = TRUE))
+last_heartbeat_time <- Sys.time()
+heartbeat_interval_sec <- 300
 
 write_status <- function(phase, extra = list()) {
   st <- c(list(phase = phase, generated = format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
