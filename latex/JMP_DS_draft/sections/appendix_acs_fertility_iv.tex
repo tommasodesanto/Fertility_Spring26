@@ -279,8 +279,9 @@ where $\hat V_\delta$, $\hat V_\pi$, and $\hat C_{\delta\pi}$ are the clustered
 variances and covariance of the reduced-form and first-stage coefficients. The
 statistic is compared with the 5 percent critical value of an $F$ distribution with
 one numerator degree of freedom and the denominator degrees of freedom of the
-clustered regressions. The size of this test does not depend on the strength of the
-instrument.
+clustered regressions. Under the maintained assumptions and the large-sample
+household-cluster approximation, this inference remains valid when the instrument
+is weak.
 
 We evaluate the test on a finite grid of candidate values: from $-3$ to $3$ in
 steps of $0.1$ for rooms and bedrooms, and from $-50$ to $50$ percentage points in
@@ -429,8 +430,8 @@ $-0.0341$ to $-0.0342$, and the first stage stays at 3.27 percentage points.
 
 \paragraph{Tied second and third children.}
 In 11,500 estimation-sample mothers the second and third linked children are
-recorded at the same age, so which of them is labeled second, and therefore the
-instrument and the event age, is arbitrary. Dropping these mothers also leaves the
+recorded at the same age, making the sex of the child labeled second ambiguous
+while leaving the event age unchanged. Dropping these mothers also leaves the
 estimates essentially unchanged: $-0.0378$ for rooms, $-0.0347$ for bedrooms, and a
 first stage of 3.27 points on 645,486 mothers.
 
@@ -452,8 +453,8 @@ conventional threshold; we do not draw conclusions from it.
 At event age 0 the first stage is essentially zero, 0.09 percentage points
 ($F=0.9$), and the room and bedroom reduced forms are small, with confidence
 intervals that include zero. This is the first year of exposure to the instrument,
-not a period before it. The instrument has not yet shifted fertility, and little
-time has passed for housing to adjust, so the small differences are not evidence
+not a period before it. The estimated third-child difference is small and imprecise,
+and little time has passed for housing to adjust, so the small differences are not evidence
 that sibling sex has no direct effect. By event age 1 the bedroom reduced form is already $-0.0278$
 (0.0066), while the first stage is 1.20 points. From age 1 to age 5 the first stage
 rises about fivefold, to 6.04 points, whereas the bedroom reduced form rises about
@@ -519,7 +520,8 @@ mother smaller. Ownership in percentage points.
 \par\medskip
 \begin{minipage}{0.97\linewidth}
 \footnotesize\textit{Notes:} Same-sex estimation sample, event ages 0--5. Weighted
-means use the ACS person weight, and the weighted count is the sum of weights.
+means use the ACS person weight, and the weighted count is the sum of weights
+across the annual samples, not a single-year population estimate.
 ``Three or more children'' is the share with three or more linked resident children.
 Rooms and bedrooms are capped at nine and five; ownership is a share. Means are not
 adjusted for controls.
@@ -558,7 +560,9 @@ The two designs measure different objects, and their estimates should not be
 averaged or set against each other. Under its assumptions, the same-age design
 says that a second young child is associated with more space and a higher
 likelihood of owning. The same-sex design yields a negative estimate for a third
-child, and the checks show that the negative difference does not come from how the
-sex of each child, tied ages, or a single sex composition is handled. Whether it
+child. The negative association persists after adding separate controls for the sex
+of each child, excluding tied second and third ages, and separating two-boy and
+two-girl families; the limitations of the birth-order and age-only proxies are
+unchanged. Whether it
 reflects an effect of the third child or a direct effect of sibling composition on
 housing is not identified by these data.

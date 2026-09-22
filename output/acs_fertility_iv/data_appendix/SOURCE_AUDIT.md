@@ -5,7 +5,10 @@ Appendix source: `latex/JMP_DS_draft/sections/appendix_acs_fertility_iv.tex`
 (pdflatex, bibtex, pdflatex x2), 12 pages. Tables and figures come from
 `code/empirical/acs/kleven_pseudo/build_acs_iv_appendix_tables.py`, which the
 appendix `\input`s through `\acsivtabdir` and `\acsivfigdir`. It is not wired into
-the author's main draft. Status: ready for lead final review.
+the author's main draft. Status: prose, tables and figures accepted by the lead
+(2026-09-22). Five precision edits were then applied: the tie paragraph (the event age
+is unchanged), the age-0 wording, the AR large-sample qualification, the Table 6
+weighted-count note, and the closing persistence sentence. Ready for lead delivery.
 
 Author: claude-opus-5-5, 2026-09-22. Local only in the integration pass: no SSH,
 no jobs, no re-estimation.
