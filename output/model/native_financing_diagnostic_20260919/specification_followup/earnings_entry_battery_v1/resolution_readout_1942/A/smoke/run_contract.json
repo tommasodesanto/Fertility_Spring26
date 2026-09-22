@@ -1,0 +1,81 @@
+{
+  "case_id": "A_resolution_smoke",
+  "expected_graph_filenames": [
+    "fertility_by_age.png",
+    "fertility_policy_by_age_income_state.png",
+    "housing_by_age_income_state.png",
+    "housing_market.png",
+    "housing_prices.png",
+    "income_state_outcomes.png",
+    "liquid_wealth_by_age_income_state.png",
+    "market_clearing_by_market.png",
+    "market_clearing_residuals.png",
+    "owner_rungs.png",
+    "ownership_by_age.png",
+    "ownership_by_age_income_state.png",
+    "policy_childless_renter_age30.png",
+    "policy_childless_renter_age42.png",
+    "tenure_services.png",
+    "wealth_dist_childless_renter_age30.png",
+    "wealth_dist_childless_renter_age42.png"
+  ],
+  "initial_solve_contract": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_resolution_20260922_v1/results/smoke/A/worker_01/proposal_01_resolution_smoke/result/initial_contract.json",
+    "sha256": "10d737b9dfc2b814a0ca90a2a6a37405443467b30225194f605d511b379567be"
+  },
+  "objective_source_files": {
+    "economic_source_manifest_7e872053": {
+      "hash_kind": "canonical_json",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/inputs/objective_source_files/economic_source_manifest_7e872053/economic_source.json"
+    },
+    "fertility_provenance_file_sha256": {
+      "hash_kind": "bytes",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/inputs/objective_source_files/fertility_provenance_file_sha256/fertility_target_contract.json"
+    },
+    "housing_wealth_provenance_file_sha256": {
+      "hash_kind": "bytes",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/inputs/objective_source_files/housing_wealth_provenance_file_sha256/observer_contract.json"
+    },
+    "lead_decision_file_sha256": {
+      "hash_kind": "bytes",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/inputs/objective_source_files/lead_decision_file_sha256/lead_methodological_decision.json"
+    },
+    "observation_snapshot_manifest_70abd4a8": {
+      "hash_kind": "canonical_json",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/inputs/objective_source_files/observation_snapshot_manifest_70abd4a8/observation_snapshot.json"
+    },
+    "parameter_table_file_sha256": {
+      "hash_kind": "bytes",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/inputs/objective_source_files/parameter_table_file_sha256/parameters.csv"
+    },
+    "scorer_file_sha256": {
+      "hash_kind": "bytes",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/inputs/objective_source_files/scorer_file_sha256/score_initial.py"
+    },
+    "target_fit_file_sha256": {
+      "hash_kind": "bytes",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/inputs/objective_source_files/target_fit_file_sha256/target_fit.csv"
+    },
+    "working_weights_file_sha256": {
+      "hash_kind": "bytes",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/inputs/objective_source_files/working_weights_file_sha256/working_weights.csv"
+    }
+  },
+  "schema": "e5f_scored_initial_candidate_run_v1",
+  "scorer": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/inputs/scorer/score_initial.py",
+    "sha256": "a76ece9d0b38de4ff60ea259884306554ea62a42ed88faaad6b35a3375ebbfb3"
+  },
+  "seconds": 3150,
+  "source_root": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/source",
+  "validator": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/inputs/validator/panel_validator.py",
+    "sha256": "8f2295bd03cd9070fff74db7ffd2d196a0751953d5f9369d8098aa6b94fd9fea"
+  },
+  "working_objective": {
+    "canonical_sha256": "4440ea07f4de957740ca6c04961d2806d9b9ef782c7a0e7dad4ce73e1db651b1",
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/inputs/working_objective/working_contract.json",
+    "sha256": "be21e426f6b2f67b220ab42a65d928b77d8a86354702c6510ad136f02f09ce1b"
+  },
+  "wrapper_sha256": "f2010e6801e80ea0446c5b700576be6f08391a9c63f5c90683e169fdfca6a69d"
+}

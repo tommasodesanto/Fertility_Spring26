@@ -13,6 +13,8 @@ At 19:32 EDT all four coarse common-parameter smokes are verified and production
 
 The D richer-income check (45 states with inherited wealth, job18290340) failed after one started and zero completed stationary solves: at age30, dead-node mass2.50e-12 exceeded the unchanged1e-12 gate. The coarse21-state smoke passed, so the result is sensitive to income support/resolution. This tiny failing mass is neither silently discarded nor treated as proof of economic impossibility. Failure evidence is preserved at `resolution_failure_D/`; no retry or gate change, and no dependents require cancellation. Other checks and the separately authorized coarse diagnostic continue.
 
+The A richer-income check is now verified at15states. Its common-parameter mean first-birth age differs from the seven-state result by +0.523years (childlessness +1.85percentage points), so coarse-grid adequacy is not established. B/C resolution cases remain running in the19:42 snapshot. Full moments and diagnostics are in the battery packet; the author review remains scheduled for21:00.
+
 ## September 22 — single-process earnings baseline direction
 
 Author chooses a plain-vanilla starting specification: deterministic age earnings

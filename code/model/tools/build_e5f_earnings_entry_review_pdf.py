@@ -79,7 +79,35 @@ def narrative(path):
         if k not in d: raise ValueError(f'narrative missing key {k}')
     return d
 
-def build(readout,narrative_path,output):
+def resolution_story(readout, resolution_readout):
+    fine=Path(resolution_readout)
+    coarse=Path(readout)
+    by_cell={}
+    status=[]
+    for arm in "ABCD":
+        cp=coarse/arm/"smoke"
+        fp=fine/arm/"smoke"
+        if not (fp/"score.json").exists():
+            status.append(f"{arm}: no verified finer-grid score")
+            continue
+        c=read_json(cp/"score.json"); f=read_json(fp/"score.json")
+        assert c["contract_sha256"]==f["contract_sha256"], "Resolution comparison mixes objectives"
+        assert read_json(cp/"plan.json")["structural_parameters"]==read_json(fp/"plan.json")["structural_parameters"], "Resolution comparison mixes parameters"
+        cr={r["restriction_id"]:r for r in c["target_fit"]}
+        fr={r["restriction_id"]:r for r in f["target_fit"]}
+        assert cr.keys()==fr.keys()
+        for key in cr:
+            assert cr[key]["target"]==fr[key]["target"] and cr[key]["actual_weight"]==fr[key]["actual_weight"]
+        by_cell[arm]={k:fr[k]["model"]-cr[k]["model"] for k in cr}
+        status.append(f"{arm}: scored at finer resolution")
+    labels={}
+    for row in read_csv(coarse/"common_smoke_targets.csv"):
+        labels.setdefault(row["restriction_id"],row["label"])
+    rows=[["Moment","A change","B change","C change","D change"]]
+    rows += [[label]+[fmt(by_cell[a][k]) if a in by_cell else "unavailable" for a in "ABCD"] for k,label in labels.items()]
+    return [para("Income-grid sensitivity at common parameters","H1"),para("Entries are finer-grid minus coarse-grid model moments, in each moment's original units. A/B compare 15 versus 7 income states; C/D compare 45 versus 21. Preferences, targets and the wealth grid are held fixed; equilibrium and the existing fertility normalization are resolved."),make_table(rows,[2.55*inch]+[1.1*inch]*4),Spacer(1,9),para("; ".join(status)),para("Unavailable does not mean zero change. Failure or unfinished status is described in the brief review. These are single-point sensitivity checks, not grid-convergence certificates. Full finer-grid tables and original diagnostic figures are retained in the accompanying resolution readout.","Small"),PageBreak()]
+
+def build(readout,narrative_path,output,resolution_readout=None):
     readout=Path(readout); output=Path(output); narr=narrative(narrative_path); output.parent.mkdir(parents=True,exist_ok=True)
     summary=read_json(readout/'collection_summary.json') if (readout/'collection_summary.json').exists() else {}
     arms=['A','B','C','D']; cells=['selected','smoke']; available=[]; missing=[]
@@ -111,6 +139,8 @@ def build(readout,narrative_path,output):
         common=[['Moment','Target','A','B','C','D']]+[[r['label'],fmt(r['target'])]+[fmt(r[a]) if a in r else '-' for a in arms] for r in grouped.values()]
         story += [PageBreak(),para('Common parameters: smoke comparison','H1'),para('Each available smoke uses identical preference and housing parameters. Missing cells have no verified scored result.'),make_table(common,[2.1*inch,.85*inch,.9*inch,.9*inch,.9*inch,.9*inch]),PageBreak()]
     else: story.append(PageBreak())
+    if resolution_readout is not None:
+        story += resolution_story(readout,resolution_readout)
     for arm,cell,base in available:
         if cell!='selected': continue
         score=read_json(base/'score.json')
@@ -130,5 +160,5 @@ def build(readout,narrative_path,output):
     return {'output':str(output),'pages':len(__import__('pypdf').PdfReader(str(output)).pages),'available_cells':[f'{a}/{c}' for a,c,_ in available],'explicit_missing_cells':missing,'sha256':hashlib.sha256(output.read_bytes()).hexdigest()}
 
 def main():
-    ap=argparse.ArgumentParser(); ap.add_argument('--readout',required=True); ap.add_argument('--narrative',required=True); ap.add_argument('--output',required=True); args=ap.parse_args(); print(json.dumps(build(args.readout,args.narrative,args.output),indent=2))
+    ap=argparse.ArgumentParser(); ap.add_argument('--readout',required=True); ap.add_argument('--narrative',required=True); ap.add_argument('--output',required=True); ap.add_argument('--resolution-readout'); args=ap.parse_args(); print(json.dumps(build(args.readout,args.narrative,args.output,args.resolution_readout),indent=2))
 if __name__=='__main__': main()

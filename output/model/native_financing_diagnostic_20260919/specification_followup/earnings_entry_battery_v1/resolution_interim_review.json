@@ -1,0 +1,101 @@
+{
+  "status": "interim_not_author_review",
+  "A": "verified 15-state common-parameter point",
+  "A_comparison": [
+    {
+      "restriction_id": "initial_normalization",
+      "target": 2.1,
+      "coarse_model": 2.1000022974902244,
+      "finer_model": 2.1000117071565394,
+      "finer_minus_coarse": 9.409666315018939e-06
+    },
+    {
+      "restriction_id": "cps_childlessness",
+      "target": 0.19827875100684264,
+      "coarse_model": 0.1672987153473428,
+      "finer_model": 0.1858451701034109,
+      "finer_minus_coarse": 0.018546454756068087
+    },
+    {
+      "restriction_id": "cps_exactly_one",
+      "target": 0.21365532522014702,
+      "coarse_model": 0.26401357142379867,
+      "finer_model": 0.24961686478803313,
+      "finer_minus_coarse": -0.014396706635765533
+    },
+    {
+      "restriction_id": "nchs_mean_age",
+      "target": 25.976263860992496,
+      "coarse_model": 27.708891092875355,
+      "finer_model": 28.231966007673904,
+      "finer_minus_coarse": 0.5230749147985492
+    },
+    {
+      "restriction_id": "nchs_share30",
+      "target": 0.2492780130410667,
+      "coarse_model": 0.3297224300011042,
+      "finer_model": 0.3606738820408346,
+      "finer_minus_coarse": 0.03095145203973043
+    },
+    {
+      "restriction_id": "wealth_earnings",
+      "target": 6.14586139445743,
+      "coarse_model": 5.96957352564861,
+      "finer_model": 6.103084149835596,
+      "finer_minus_coarse": 0.1335106241869859
+    },
+    {
+      "restriction_id": "bequest_wealth",
+      "target": 0.0088,
+      "coarse_model": 0.00726619513492665,
+      "finer_model": 0.007152073332314378,
+      "finer_minus_coarse": -0.0001141218026122718
+    },
+    {
+      "restriction_id": "old_dispersion",
+      "target": 3.51593508651872,
+      "coarse_model": 3.343353531985002,
+      "finer_model": 3.3448556858989655,
+      "finer_minus_coarse": 0.0015021539139636886
+    },
+    {
+      "restriction_id": "mean_rooms",
+      "target": 5.561097376118652,
+      "coarse_model": 6.454154717562975,
+      "finer_model": 6.448254811781755,
+      "finer_minus_coarse": -0.005899905781220127
+    },
+    {
+      "restriction_id": "ownership_30_55",
+      "target": 0.6483340343191493,
+      "coarse_model": 0.5514657031628333,
+      "finer_model": 0.5621871896754601,
+      "finer_minus_coarse": 0.010721486512626832
+    },
+    {
+      "restriction_id": "first_birth_rooms",
+      "target": 0.7202462623815278,
+      "coarse_model": 1.2733376183123415,
+      "finer_model": 1.2708846609046658,
+      "finer_minus_coarse": -0.0024529574076757044
+    },
+    {
+      "restriction_id": "family_rooms",
+      "target": 0.3470669317962507,
+      "coarse_model": 0.2955750836218174,
+      "finer_model": 0.30367266258740777,
+      "finer_minus_coarse": 0.00809757896559038
+    },
+    {
+      "restriction_id": "recent_parent_ownership",
+      "target": 0.16289550916123285,
+      "coarse_model": 0.11453583632346453,
+      "finer_model": 0.11379083257287576,
+      "finer_minus_coarse": -0.0007450037505887797
+    }
+  ],
+  "B": "running at collection",
+  "C": "running at collection",
+  "D": "failed unchanged feasibility gate; see resolution_failure_D/review.json",
+  "interpretation": "A passes at15states but first-birth timing moves about0.523years relative to7states; seven-state numerical adequacy is not established. Economic specification selection must be separated from numerical resolution."
+}
