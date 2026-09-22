@@ -260,7 +260,7 @@ build_samesex2 <- function(mother_rows, age_grid = 0:5) {
 #' boundary-touching accepted run into a "bounded" interval, and it keeps
 #' regression failures (`error`) distinct from rejections (`reject`) so a
 #' string of numerical errors cannot be mistaken for a rejection region.
-ar_confidence_set <- function(data, outcome, endog, instrument, controls_fml,
+ar_confidence_set_legacy <- function(data, outcome, endog, instrument, controls_fml,
                                weight_var, cluster_var, grid, alpha = 0.05) {
   n_grid <- length(grid)
   status <- character(n_grid)  # "accept" | "reject" | "error"
@@ -330,6 +330,97 @@ ar_confidence_set <- function(data, outcome, endog, instrument, controls_fml,
   )
 }
 
+#' Fast Anderson-Rubin grid inversion: computationally equivalent to
+#' ar_confidence_set_legacy() for a single instrument/single endogenous
+#' regressor with IDENTICAL X/sample/weights/clustering across the Y, D, and
+#' Y+D regressions, but runs exactly 3 regressions total instead of
+#' length(grid) regressions. For beta0, the residualized instrument
+#' coefficient is pi(beta0) = pi_Y - beta0*pi_D with variance
+#' V(beta0) = V_Y - 2*beta0*C + beta0^2*V_D, where C is the covariance of
+#' the two instrument coefficients recovered from Var(pi_Y+pi_D) via a third
+#' regression of (Y+D) on the same RHS: C = (V_sum - V_Y - V_D)/2. This is
+#' the same finite-sample Wald test as the legacy per-grid-point regression
+#' (same df, same clustered-SE convention), not a different or new
+#' scientific estimator -- it is an algebraic shortcut. If V(beta0) <= 0 the
+#' grid point is an explicit "error" (invalid variance), never silently
+#' accepted or rejected.
+ar_confidence_set <- function(data, outcome, endog, instrument, controls_fml,
+                               weight_var, cluster_var, grid, alpha = 0.05) {
+  w_fml <- stats::as.formula(paste0("~", weight_var))
+  c_fml <- stats::as.formula(paste0("~", cluster_var))
+  rhs <- if (nzchar(controls_fml)) paste0(instrument, " + ", controls_fml) else instrument
+  fit_one <- function(lhs_expr) {
+    dloc <- data.table::copy(data)
+    dloc[, .ar_lhs := eval(parse(text = lhs_expr), envir = dloc)]
+    fit <- tryCatch(fixest::feols(stats::as.formula(paste0(".ar_lhs ~ ", rhs)),
+                                   data = dloc, weights = w_fml, cluster = c_fml, notes = FALSE),
+                     error = function(e) NULL)
+    if (is.null(fit)) return(list(pi = NA_real_, V = NA_real_, df2 = NA_real_))
+    wt <- tryCatch(fixest::wald(fit, instrument, print = FALSE), error = function(e) NULL)
+    if (is.null(wt)) return(list(pi = NA_real_, V = NA_real_, df2 = NA_real_))
+    b <- unname(stats::coef(fit)[instrument])
+    v <- unname(diag(stats::vcov(fit))[instrument])
+    list(pi = b, V = v, df2 = unname(wt$df2))
+  }
+  fy <- fit_one(outcome)
+  fd <- fit_one(endog)
+  fs <- fit_one(paste0("(", outcome, ") + (", endog, ")"))
+  base_ok <- !is.na(fy$pi) && !is.na(fd$pi) && !is.na(fs$pi) &&
+    !is.na(fy$V) && !is.na(fd$V) && !is.na(fs$V)
+  n_grid <- length(grid)
+  if (!base_ok) {
+    return(list(grid_min = suppressWarnings(min(grid, na.rm = TRUE)),
+                grid_max = suppressWarnings(max(grid, na.rm = TRUE)), n_grid = n_grid,
+                n_accepted = 0L, n_rejected = 0L, n_errors = n_grid,
+                n_components = 0L, components = list(),
+                fully_interior_bounded = FALSE, extent_unknown_due_to_errors = TRUE,
+                all_grid_points_accepted = FALSE, empty_accepted_set = TRUE,
+                summary_lower = NA_real_, summary_upper = NA_real_,
+                base_regression_failure = TRUE))
+  }
+  C <- (fs$V - fy$V - fd$V) / 2
+  df2 <- fy$df2
+  status <- character(n_grid)
+  for (i in seq_len(n_grid)) {
+    b0 <- grid[i]
+    if (is.na(b0)) { status[i] <- "error"; next }
+    pi_b0 <- fy$pi - b0 * fd$pi
+    V_b0 <- fy$V - 2 * b0 * C + b0^2 * fd$V
+    if (is.na(V_b0) || V_b0 <= 0 || is.na(df2)) { status[i] <- "error"; next }
+    wald_stat <- pi_b0^2 / V_b0
+    p <- stats::pf(wald_stat, df1 = 1, df2 = df2, lower.tail = FALSE)
+    status[i] <- if (is.na(p)) "error" else if (p > alpha) "accept" else "reject"
+  }
+  accepted <- status == "accept"
+  n_accepted <- sum(accepted)
+  n_errors <- sum(status == "error")
+  components <- list()
+  if (n_accepted > 0) {
+    idx <- which(accepted)
+    breaks <- which(diff(idx) > 1)
+    starts <- c(idx[1], idx[breaks + 1]); ends <- c(idx[breaks], idx[length(idx)])
+    for (k in seq_along(starts)) {
+      lo_idx <- starts[k]; hi_idx <- ends[k]
+      touches <- lo_idx == 1L || hi_idx == n_grid
+      components[[k]] <- list(lower = grid[lo_idx], upper = grid[hi_idx],
+                               touches_grid_boundary = touches,
+                               extent = if (touches) "grid_truncated_extent_unknown" else "interior_bounded")
+    }
+  }
+  any_boundary_touch <- length(components) > 0 &&
+    any(vapply(components, function(c) c$touches_grid_boundary, logical(1)))
+  list(grid_min = min(grid), grid_max = max(grid), n_grid = n_grid,
+       n_accepted = n_accepted, n_rejected = sum(status == "reject"), n_errors = n_errors,
+       n_components = length(components), components = components,
+       fully_interior_bounded = length(components) > 0 && !any_boundary_touch && n_errors == 0,
+       extent_unknown_due_to_errors = n_errors > 0,
+       all_grid_points_accepted = n_accepted == n_grid,
+       empty_accepted_set = n_accepted == 0,
+       summary_lower = if (n_accepted > 0) min(grid[accepted]) else NA_real_,
+       summary_upper = if (n_accepted > 0) max(grid[accepted]) else NA_real_,
+       base_regression_failure = FALSE)
+}
+
 #' Fit RF, FS, and 2SLS for one outcome/instrument/treatment triple, with an
 #' AR grid-search diagnostic. controls_fml is a fixest-style RHS string
 #' (e.g. "poly(mat_age,2) + i(race) + i(survey_year) + i(event_age)").
@@ -337,7 +428,17 @@ fit_instrument_outcome <- function(data, outcome, treatment, instrument,
                                     controls_fml, weight_var = "mother_weight",
                                     cluster_var = "household_key",
                                     ar_grid = NULL) {
-  data <- data.table::copy(data)
+  # Project to only the columns the formulas actually use BEFORE any copy,
+  # so the (possibly very wide, list-column-bearing) national mother roster
+  # is never carried into feols() or the AR loop. all.vars() correctly
+  # skips fixest's i()/poly() wrapper function names and returns only the
+  # underlying variable symbols.
+  ctrl_vars <- if (nzchar(controls_fml)) all.vars(stats::as.formula(paste("~", controls_fml))) else character(0)
+  needed_vars <- unique(c(outcome, treatment, instrument, weight_var, cluster_var, ctrl_vars))
+  missing_vars <- setdiff(needed_vars, names(data))
+  if (length(missing_vars) > 0) stop(sprintf("fit_instrument_outcome: missing required columns: %s",
+                                              paste(missing_vars, collapse = ", ")))
+  data <- data.table::copy(data[, ..needed_vars])
   data[[instrument]] <- as.numeric(data[[instrument]])
   data[[treatment]] <- as.numeric(data[[treatment]])
   usable <- data[!is.na(data[[outcome]]) & !is.na(data[[treatment]]) &
