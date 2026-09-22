@@ -55,3 +55,16 @@ An age-18 zero-liquid-asset entrant rule could be a separately labelled
 Sommer/De Nardi-style sensitivity, but it changes the entry wealth contract
 and cannot be used as a numerical repair. No gate relaxation or production
 model change is justified by this receipt.
+
+## September22 transaction-support correction
+
+The V2 zero-entry smoke completed six stationary solves then failed purchase
+accounting, with zero complete scored objectives. This is separate from the
+earlier inherited-entry-debt failure. Both native tenure kernels still clipped
+transaction wealth outside numerical support; backward choices could therefore
+assign positive probability to branches whose forward maps destroyed wealth.
+The maximum error matches the net sale value of the largest home at the final
+price. V3 enforces the already stated support restriction in both kernels, with
+exact unchanged native interpolation on supported transactions and no tolerance
+relaxation.39 unit checks and separately executed native compiled boundary tests
+pass. Full correction, counts and unchanged contracts: `purchase_support_correction.json`.

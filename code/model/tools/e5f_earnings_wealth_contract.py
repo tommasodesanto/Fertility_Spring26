@@ -110,6 +110,44 @@ def _ordinary_forward_maps(P, b_grid, hc, he, phi_choice, birth_dp, birth_entry_
     return idx, wt
 
 
+def _install_transaction_support(model: Any, diff_path: Path):
+    """Exclude unsupported transaction wealth before tenure choice/logit.
+
+    Conditional values are solved only on b_grid. Clipping a sale or purchase
+    to an endpoint changes resources. Keep the original interpolation exactly
+    within support, and give unsupported transactions the native infeasible
+    value. The forward map may retain placeholders only on zero-probability
+    branches; the independent occupied-branch audit still checks this.
+    """
+    from numba import njit
+    support = '''def _interp_on_transaction_grid(bg, values, x, strict_interpolated_support=False):
+    if x < bg[0] or x > bg[-1]:
+        return -1e10
+    return _native_transaction_interp(bg, values, x, strict_interpolated_support)
+'''
+    sources = []
+    diffs = []
+    for name in ("tenure_choice_kernel", "tenure_logit_kernel"):
+        original = getattr(model, name)
+        python_function = getattr(original, "py_func", original)
+        namespace = dict(python_function.__globals__)
+        namespace["_native_transaction_interp"] = namespace["_interp_with_clip"]
+        exec(compile(support, str(diff_path.with_suffix(".tenure.py")), "exec"), namespace)
+        namespace["_interp_on_transaction_grid"] = njit(cache=False)(namespace["_interp_on_transaction_grid"])
+        source = inspect.getsource(python_function)
+        revised = _replace_once(source, "@njit(cache=True)", "@njit(cache=False)")
+        if "_interp_with_clip(" not in revised:
+            raise ValueError("missing native tenure interpolation call sites")
+        revised = revised.replace("_interp_with_clip(", "_interp_on_transaction_grid(")
+        exec(compile(revised, str(diff_path.with_suffix(".tenure.py")), "exec"), namespace)
+        setattr(model, name, namespace[name])
+        sources.append(revised)
+        diffs.extend(difflib.unified_diff(source.splitlines(True), revised.splitlines(True),
+            fromfile=f"frozen/{name}", tofile=f"diagnostic/{name}"))
+    diff_path.with_suffix(".tenure.py").write_text(support + "\n".join(sources))
+    return "".join(diffs)
+
+
 def install_purchase_income(model: Any, diff_path: Path):
     """Apply the reviewed timing change only to the supported Markov branch.
 
@@ -149,6 +187,7 @@ def install_purchase_income(model: Any, diff_path: Path):
                                       fromfile="frozen/solve_bellman_full_markov_income",
                                       tofile="diagnostic/solve_bellman_full_markov_income"))
     diff_path.parent.mkdir(parents=True, exist_ok=True)
+    diff += _install_transaction_support(model, diff_path)
     diff_path.write_text(diff)
     diff_path.with_suffix(".generated.py").write_text(revised)
     # Use the original module globals so every calendar/stationary caller sees

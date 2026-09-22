@@ -75,14 +75,64 @@ def test_install_purchase_income_compiles_frozen_markov_solver(tmp_path):
     # This exercises only the source-anchor rewrite; it does not call the model.
     original = solver.solve_bellman_full_markov_income
     maps = solver.build_forward_tenure_transition_maps
+    tenure = solver.tenure_choice_kernel, solver.tenure_logit_kernel
     try:
         diff = contract.install_purchase_income(solver, tmp_path / "purchase_income.diff")
     finally:
         solver.solve_bellman_full_markov_income = original
         solver.build_forward_tenure_transition_maps = maps
+        solver.tenure_choice_kernel, solver.tenure_logit_kernel = tenure
     assert "diagnostic/solve_bellman_full_markov_income" in diff
     assert "dp_choice = dp_arr - income_for_purchase" in diff
     assert (tmp_path / "purchase_income.diff").exists()
+    assert (tmp_path / "purchase_income.tenure.py").exists()
+
+
+@pytest.mark.parametrize("boundary", ["upper_sale", "lower_purchase", "exact_endpoint"])
+def test_transaction_support_applies_to_argmax_and_logit(tmp_path, boundary):
+    grid = np.array([-1., 0., 1.])
+    values = np.zeros((3, 2, 1, 1, 1))
+    cost = np.array([[0., .3]])
+    sale = cost.copy()
+    # Nonbinding economic thresholds isolate the numerical support condition.
+    dp = np.full((1, 2, 1, 1), -10.)
+    floor = dp.copy()
+    birth_dp = np.zeros((1, 1, 2, 2), dtype=bool)
+    grants = np.zeros((1, 2, 1, 1))
+    if boundary == "upper_sale":
+        values[:, 0] = 10.
+        b, old, desired = 2, 1, 0
+    else:
+        values[:, 1] = 10.
+        b, old, desired = 0, 0, 1
+        if boundary == "exact_endpoint":
+            cost[:, 1] = 1.
+            b = 1  # b=0 minus price=1 reaches lower endpoint exactly.
+    args = (values, grid, sale, cost, dp, floor, birth_dp, grants)
+    original = solver.tenure_choice_kernel, solver.tenure_logit_kernel
+    reference_choice = original[0](*args)[1]
+    assert reference_choice[b, old, 0, 0, 0] == desired
+    try:
+        contract._install_transaction_support(solver, tmp_path / "support.diff")
+        deterministic = solver.tenure_choice_kernel(*args)
+        probabilistic = solver.tenure_logit_kernel(*args, .1)
+    finally:
+        solver.tenure_choice_kernel, solver.tenure_logit_kernel = original
+    if boundary == "exact_endpoint":
+        assert deterministic[1][b, old, 0, 0, 0] == desired
+        assert probabilistic[2][b, old, 0, 0, 0, desired] > .999
+    else:
+        assert deterministic[1][b, old, 0, 0, 0] != desired
+        assert probabilistic[2][b, old, 0, 0, 0, desired] == 0.
+    # Every branch at b=0 stays on-grid in the .3-price examples, so the
+    # correction must preserve both conditional values and probabilities there.
+    if boundary != "exact_endpoint":
+        native_logit = original[1](*args, .1)
+        for got, expected in zip(probabilistic, native_logit):
+            np.testing.assert_array_equal(got[1], expected[1])
+        native_deterministic = original[0](*args)
+        for got, expected in zip(deterministic, native_deterministic):
+            np.testing.assert_array_equal(got[1], expected[1])
 
 
 def test_income_shift_changes_tenure_feasibility_threshold():

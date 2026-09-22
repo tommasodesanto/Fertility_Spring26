@@ -1,5 +1,19 @@
 # Calibration Status
 
+**September 22, 00:57 EDT — smoke caught transaction clipping; reviewed V3 correction running:**
+V2 completed six stationary solves but zero scored objectives or repetitions,
+then failed the unchanged purchase-accounting gate: out-of-grid transaction mass
+9.1736e-5, maximum mapped-wealth error6.72174. The backward tenure kernels still
+clipped unsupported transactions, especially upper-grid sales. V3 applies the
+stated numerical-support contract to both compiled tenure kernels: unsupported
+transactions are infeasible; native interpolation within the grid and at exact
+endpoints is unchanged. No target, income estimate, entry law, economic threshold,
+parameter bound or numerical tolerance changed.39 tests and direct compiled
+boundary checks pass; a bounded independent review found no runtime blocker.
+The V3 repeated smoke started00:57 EDT; longer search remains gated on success.
+Prior failure evidence is preserved. No new fit or specification adoption.
+[Diagnosis, counts and corrected run](output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/README.md).
+
 **September 22, 00:26 EDT — reviewed earnings candidate in native smoke; longer search gated:**
 Direct four-year PSID gross-household earnings estimates are complete: period
 rho 0.776144670, persistent innovation SD 0.437435453, transitory SD 0.164990611.

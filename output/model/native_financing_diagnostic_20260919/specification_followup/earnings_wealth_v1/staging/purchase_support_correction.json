@@ -1,0 +1,357 @@
+{
+  "completed_full_objectives": 0,
+  "completed_stationary_solves": 6,
+  "diagnosis": "Backward tenure interpolation still clipped out-of-grid transactions, notably upper-grid owner sales, despite the documented exact transaction-support contract. Maximum observed wealth error equals final price times ten rooms times net sale factor0.94. No solved policy arrays were saved; state attribution is inference plus a deterministic counterexample.",
+  "failure": {
+    "case": "new_balanced",
+    "completed_repetitions": 0,
+    "elapsed_seconds": 1501.2444757080011,
+    "error": "purchase accounting gate failed: {'transaction_outside_grid_mass': 9.173572701981737e-05, 'purchase_threshold_violation_mass': 0.0, 'end_mortgage_floor_violation_mass': 0.0, 'maximum_occupied_transaction_wealth_error': 6.721741917152443, 'maximum_occupied_end_debt_shortfall': 0.0, 'mass_tolerance': 2e-10, 'wealth_tolerance': 1e-09}",
+    "error_type": "RuntimeError",
+    "phase": "stationary_equilibrium",
+    "psi_child": 0.19109626949648997,
+    "repetition": 1,
+    "stationary_solves": 6,
+    "status": "failed_initial_candidate_loop"
+  },
+  "launched_proposals": 0,
+  "previous_bundle": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v2",
+  "previous_execution": {
+    "bundle": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v2",
+    "maximum_total_seconds": 28000,
+    "pid": 33215,
+    "retry_policy": "no automatic retries",
+    "schema": "earnings_local_overnight_v1",
+    "stages": [
+      {
+        "elapsed_seconds": 1502.889813165999,
+        "error": "smoke exited 1; see smoke.log and native receipts",
+        "pid": 33217,
+        "seconds_limit": 7000,
+        "stage": "smoke",
+        "started_utc": "2026-09-22T04:26:24.706654+00:00",
+        "status": "failed_or_stopped"
+      }
+    ],
+    "started_utc": "2026-09-22T04:26:24.705972+00:00",
+    "status": "stopped"
+  },
+  "previous_plan_sha256": "1441393517206a4a571b1834d1223c29407a744db116503dc559c9ca21dea56f",
+  "relaunch_authority": "Explicit overnight implementation/testing/iteration authorization; separately versioned operational correction, not silent retry.",
+  "remaining_limits": "Finite-grid support is a numerical restriction; household grid sensitivity still required before claiming adoption or convergence.",
+  "repair": "Return native infeasible value for interpolation outside either grid endpoint in both tenure kernels; preserve exact native interpolation within support including endpoints. Forward maps keep placeholders only for zero-probability branches and the unchanged occupied accounting gate remains active.",
+  "started_stationary_solves": 6,
+  "stationary_solves": [
+    {
+      "fiscal": {
+        "actual_accounts": {
+          "implied_balanced_payroll_tax": 0.178999999999,
+          "implied_balanced_pension_period": 2.0463613896235526,
+          "payroll_tax_base_period": 2.963205896679083,
+          "payroll_tax_rate": 0.179,
+          "payroll_tax_revenue": 0.5304138555055558,
+          "pension_budget_residual": 2.963185252724543e-12,
+          "pension_outlays": 0.5304138555025926,
+          "pension_period_units": 2.046361389612121,
+          "retiree_benefit_exposure": 0.2591985258298537,
+          "retiree_household_mass": 0.2591985258298537,
+          "scaled_pension_budget_residual": 5.586553258304742e-12,
+          "worker_household_mass": 0.740801474169417
+        },
+        "fiscal_gate": true,
+        "fiscal_tolerance": 1e-06,
+        "marginal_gate": true,
+        "marginal_tolerance": 1e-09,
+        "method": "exogenous_one_market_age_income_recursion",
+        "normalized_age_income_max_gap": 6.968557675346432e-14,
+        "predicted_accounts": {
+          "implied_balanced_payroll_tax": 0.179,
+          "implied_balanced_pension_period": 2.046361389612121,
+          "payroll_tax_base_period": 2.9632058966759045,
+          "payroll_tax_rate": 0.179,
+          "payroll_tax_revenue": 0.5304138555049869,
+          "pension_budget_residual": 0.0,
+          "pension_outlays": 0.5304138555049869,
+          "pension_period_units": 2.046361389612121,
+          "retiree_benefit_exposure": 0.2591985258310237,
+          "retiree_household_mass": 0.2591985258310237,
+          "scaled_pension_budget_residual": 0.0,
+          "worker_household_mass": 0.7408014741689763
+        }
+      },
+      "index": 0,
+      "market_error": 3.6951060270677254e-07,
+      "price": 0.711213244356902,
+      "psi_child": 0.1489153145785918,
+      "seconds": 250.67573591699875,
+      "status": "completed"
+    },
+    {
+      "fiscal": {
+        "actual_accounts": {
+          "implied_balanced_payroll_tax": 0.17899999999836733,
+          "implied_balanced_pension_period": 2.0463613896307855,
+          "payroll_tax_base_period": 2.9632058966812496,
+          "payroll_tax_rate": 0.179,
+          "payroll_tax_revenue": 0.5304138555059437,
+          "pension_budget_residual": 4.837907852106582e-12,
+          "pension_outlays": 0.5304138555011058,
+          "pension_period_units": 2.046361389612121,
+          "retiree_benefit_exposure": 0.2591985258291271,
+          "retiree_household_mass": 0.2591985258291271,
+          "scaled_pension_budget_residual": 9.1210057993147e-12,
+          "worker_household_mass": 0.7408014741698381
+        },
+        "fiscal_gate": true,
+        "fiscal_tolerance": 1e-06,
+        "marginal_gate": true,
+        "marginal_tolerance": 1e-09,
+        "method": "exogenous_one_market_age_income_recursion",
+        "normalized_age_income_max_gap": 9.313209925476684e-14,
+        "predicted_accounts": {
+          "implied_balanced_payroll_tax": 0.179,
+          "implied_balanced_pension_period": 2.046361389612121,
+          "payroll_tax_base_period": 2.9632058966759045,
+          "payroll_tax_rate": 0.179,
+          "payroll_tax_revenue": 0.5304138555049869,
+          "pension_budget_residual": 0.0,
+          "pension_outlays": 0.5304138555049869,
+          "pension_period_units": 2.046361389612121,
+          "retiree_benefit_exposure": 0.2591985258310237,
+          "retiree_household_mass": 0.2591985258310237,
+          "scaled_pension_budget_residual": 0.0,
+          "worker_household_mass": 0.7408014741689763
+        }
+      },
+      "index": 1,
+      "market_error": 9.356961285612973e-09,
+      "price": 0.7263842156688693,
+      "psi_child": 0.3989153145785918,
+      "seconds": 248.93301299999985,
+      "status": "completed"
+    },
+    {
+      "fiscal": {
+        "actual_accounts": {
+          "implied_balanced_payroll_tax": 0.17899999999885038,
+          "implied_balanced_pension_period": 2.0463613896252637,
+          "payroll_tax_base_period": 2.963205896680032,
+          "payroll_tax_rate": 0.179,
+          "payroll_tax_revenue": 0.5304138555057257,
+          "pension_budget_residual": 3.4066083287598303e-12,
+          "pension_outlays": 0.5304138555023191,
+          "pension_period_units": 2.046361389612121,
+          "retiree_benefit_exposure": 0.25919852582972003,
+          "retiree_household_mass": 0.25919852582972003,
+          "scaled_pension_budget_residual": 6.4225477773611e-12,
+          "worker_household_mass": 0.7408014741694935
+        },
+        "fiscal_gate": true,
+        "fiscal_tolerance": 1e-06,
+        "marginal_gate": true,
+        "marginal_tolerance": 1e-09,
+        "method": "exogenous_one_market_age_income_recursion",
+        "normalized_age_income_max_gap": 7.530608081562917e-14,
+        "predicted_accounts": {
+          "implied_balanced_payroll_tax": 0.179,
+          "implied_balanced_pension_period": 2.046361389612121,
+          "payroll_tax_base_period": 2.9632058966759045,
+          "payroll_tax_rate": 0.179,
+          "payroll_tax_revenue": 0.5304138555049869,
+          "pension_budget_residual": 0.0,
+          "pension_outlays": 0.5304138555049869,
+          "pension_period_units": 2.046361389612121,
+          "retiree_benefit_exposure": 0.2591985258310237,
+          "retiree_household_mass": 0.2591985258310237,
+          "scaled_pension_budget_residual": 0.0,
+          "worker_household_mass": 0.7408014741689763
+        }
+      },
+      "index": 2,
+      "market_error": 1.2888540580874133e-07,
+      "price": 0.7165134268904836,
+      "psi_child": 0.20916656048422563,
+      "seconds": 247.25878258400007,
+      "status": "completed"
+    },
+    {
+      "fiscal": {
+        "actual_accounts": {
+          "implied_balanced_payroll_tax": 0.17899999999888253,
+          "implied_balanced_pension_period": 2.0463613896248956,
+          "payroll_tax_base_period": 2.9632058966798716,
+          "payroll_tax_rate": 0.179,
+          "payroll_tax_revenue": 0.530413855505697,
+          "pension_budget_residual": 3.3112401709445294e-12,
+          "pension_outlays": 0.5304138555023857,
+          "pension_period_units": 2.046361389612121,
+          "retiree_benefit_exposure": 0.2591985258297526,
+          "retiree_household_mass": 0.2591985258297526,
+          "scaled_pension_budget_residual": 6.242748255110324e-12,
+          "worker_household_mass": 0.7408014741694811
+        },
+        "fiscal_gate": true,
+        "fiscal_tolerance": 1e-06,
+        "marginal_gate": true,
+        "marginal_tolerance": 1e-09,
+        "method": "exogenous_one_market_age_income_recursion",
+        "normalized_age_income_max_gap": 7.436586069164974e-14,
+        "predicted_accounts": {
+          "implied_balanced_payroll_tax": 0.179,
+          "implied_balanced_pension_period": 2.046361389612121,
+          "payroll_tax_base_period": 2.9632058966759045,
+          "payroll_tax_rate": 0.179,
+          "payroll_tax_revenue": 0.5304138555049869,
+          "pension_budget_residual": 0.0,
+          "pension_outlays": 0.5304138555049869,
+          "pension_period_units": 2.046361389612121,
+          "retiree_benefit_exposure": 0.2591985258310237,
+          "retiree_household_mass": 0.2591985258310237,
+          "scaled_pension_budget_residual": 0.0,
+          "worker_household_mass": 0.7408014741689763
+        }
+      },
+      "index": 3,
+      "market_error": 1.9147555974857336e-07,
+      "price": 0.7151807625528757,
+      "psi_child": 0.19233461120477305,
+      "seconds": 247.5075535420001,
+      "status": "completed"
+    },
+    {
+      "fiscal": {
+        "actual_accounts": {
+          "implied_balanced_payroll_tax": 0.1789999999988768,
+          "implied_balanced_pension_period": 2.0463613896249613,
+          "payroll_tax_base_period": 2.963205896679931,
+          "payroll_tax_rate": 0.179,
+          "payroll_tax_revenue": 0.5304138555057076,
+          "pension_budget_residual": 3.3282265832212943e-12,
+          "pension_outlays": 0.5304138555023794,
+          "pension_period_units": 2.046361389612121,
+          "retiree_benefit_exposure": 0.2591985258297495,
+          "retiree_household_mass": 0.2591985258297495,
+          "scaled_pension_budget_residual": 6.274773082705567e-12,
+          "worker_household_mass": 0.7408014741694869
+        },
+        "fiscal_gate": true,
+        "fiscal_tolerance": 1e-06,
+        "marginal_gate": true,
+        "marginal_tolerance": 1e-09,
+        "method": "exogenous_one_market_age_income_recursion",
+        "normalized_age_income_max_gap": 7.493138054481818e-14,
+        "predicted_accounts": {
+          "implied_balanced_payroll_tax": 0.179,
+          "implied_balanced_pension_period": 2.046361389612121,
+          "payroll_tax_base_period": 2.9632058966759045,
+          "payroll_tax_rate": 0.179,
+          "payroll_tax_revenue": 0.5304138555049869,
+          "pension_budget_residual": 0.0,
+          "pension_outlays": 0.5304138555049869,
+          "pension_period_units": 2.046361389612121,
+          "retiree_benefit_exposure": 0.2591985258310237,
+          "retiree_household_mass": 0.2591985258310237,
+          "scaled_pension_budget_residual": 0.0,
+          "worker_household_mass": 0.7408014741689763
+        }
+      },
+      "index": 4,
+      "market_error": 5.352736521972522e-08,
+      "price": 0.7150016920099508,
+      "psi_child": 0.19016364637346397,
+      "seconds": 246.99790737500007,
+      "status": "completed"
+    },
+    {
+      "fiscal": {
+        "actual_accounts": {
+          "implied_balanced_payroll_tax": 0.17899999999888405,
+          "implied_balanced_pension_period": 2.0463613896248782,
+          "payroll_tax_base_period": 2.963205896679871,
+          "payroll_tax_rate": 0.179,
+          "payroll_tax_revenue": 0.5304138555056969,
+          "pension_budget_residual": 3.3066882565435662e-12,
+          "pension_outlays": 0.5304138555023902,
+          "pension_period_units": 2.046361389612121,
+          "retiree_benefit_exposure": 0.2591985258297548,
+          "retiree_household_mass": 0.2591985258297548,
+          "scaled_pension_budget_residual": 6.234166438565161e-12,
+          "worker_household_mass": 0.7408014741694808
+        },
+        "fiscal_gate": true,
+        "fiscal_tolerance": 1e-06,
+        "marginal_gate": true,
+        "marginal_tolerance": 1e-09,
+        "method": "exogenous_one_market_age_income_recursion",
+        "normalized_age_income_max_gap": 7.4495964952348e-14,
+        "predicted_accounts": {
+          "implied_balanced_payroll_tax": 0.179,
+          "implied_balanced_pension_period": 2.046361389612121,
+          "payroll_tax_base_period": 2.9632058966759045,
+          "payroll_tax_rate": 0.179,
+          "payroll_tax_revenue": 0.5304138555049869,
+          "pension_budget_residual": 0.0,
+          "pension_outlays": 0.5304138555049869,
+          "pension_period_units": 2.046361389612121,
+          "retiree_benefit_exposure": 0.2591985258310237,
+          "retiree_household_mass": 0.2591985258310237,
+          "scaled_pension_budget_residual": 0.0,
+          "worker_household_mass": 0.7408014741689763
+        }
+      },
+      "index": 5,
+      "market_error": 2.2603094508035745e-08,
+      "price": 0.7150789273566428,
+      "psi_child": 0.19109626949648997,
+      "seconds": 247.3175587909991,
+      "status": "completed"
+    }
+  ],
+  "status": "reviewed_transaction_support_correction",
+  "unchanged": [
+    "income estimates and grid",
+    "entry law",
+    "purchase threshold and budget identity",
+    "final mortgage floor",
+    "full targets and weights",
+    "parameters and bounds",
+    "numerical tolerances",
+    "frozen641-file base source",
+    "search seed and budgets"
+  ],
+  "validation": {
+    "compiled_validation": {
+      "cases": [
+        {
+          "case": "upper_sale",
+          "passed": true,
+          "probability": 0.0,
+          "selected": 1
+        },
+        {
+          "case": "lower_purchase",
+          "passed": true,
+          "probability": 0.0,
+          "selected": 0
+        },
+        {
+          "case": "exact_endpoint",
+          "passed": true,
+          "probability": 1.0,
+          "selected": 1
+        }
+      ],
+      "compiled_signatures": [
+        1,
+        1
+      ],
+      "kernel_types": [
+        "CPUDispatcher",
+        "CPUDispatcher"
+      ],
+      "numba_disable_jit": 0
+    },
+    "independent_static_review": "Luna found no runtime blocker; lead checked each changed line against stated support contract",
+    "unit_tests": "39 passed"
+  }
+}

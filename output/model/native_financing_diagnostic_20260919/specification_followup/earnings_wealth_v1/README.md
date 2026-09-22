@@ -1,6 +1,6 @@
 # Earnings, entry wealth and purchase timing
 
-## Live review — September 22, 00:26 EDT
+## Live review — September 22, 00:57 EDT
 
 The primary-source reviews and direct four-year PSID point estimates are done.
 The main candidate uses the earliest complete four-year block grid (1984-based
@@ -43,16 +43,32 @@ imposed at age 18. A distinct zero-assets-at-18 test, supported as an external
 entry convention by Sommer and De Nardi, completed two stationary solves (246–255 seconds each) and was deliberately stopped before its full objective to set an adequate smoke budget. It is not yet adopted.
 [Failure diagnosis](staging/feasibility_diagnosis.md).
 
+**V2 smoke failure and V3 correction:** V2 completed six stationary equilibrium
+solves, then failed the independent purchase-accounting gate before any scored
+objective or complete repetition. Out-of-grid transaction mass was
+9.173572702e-5; maximum wealth-map error was6.721741917. Threshold and final
+mortgage-floor violations were zero. The wealth error equals net proceeds from
+selling the largest home at the final price, consistent with upper-grid sales;
+no solved policy arrays survived, so this state attribution is an inference.
+The backward tenure kernels still clipped transactions despite the documented
+support contract. V3 rejects interpolation outside either endpoint in both
+compiled kernels and preserves native interpolation exactly within support.
+Boundary tests check upper sales, lower purchases and exact endpoints, with both
+argmax and logit choices. Native Numba compilation passes. This implements the
+stated support contract; no accounting gate, income input, target or bound was
+relaxed. Finite-grid robustness remains outstanding. The failed V2 evidence is
+preserved in [reviewed correction](staging/purchase_support_correction.json).
+
 Torch authentication has expired; no cluster job has been submitted. Under the
-author's explicit open-laptop overnight authorization, the frozen V2 bundle is
+author's explicit open-laptop overnight authorization, the corrected frozen V3 bundle is
 **running native smoke locally**: two exact anchor repetitions and one inward-beta
 probe. Its successful receipt alone triggers the longer search. V1 stopped
 before solving on a controller metadata mismatch; the correction and old receipt
 are preserved in [startup repair](staging/startup_contract_repair.json). All
-three V2 zero-solve native preflights passed, 36 unit checks passed, and native
+three V3 zero-solve native preflights passed, 39 unit checks passed, and native
 progress is confirmed. [Execution/monitor registration](local_execution.json),
-[immutable V2 plan](staging/frozen_v2_plan.json),
-[source inventory](staging/frozen_v2_hash_manifest.json).
+[immutable V3 plan](staging/frozen_v3_plan.json),
+[source inventory](staging/frozen_v3_hash_manifest.json).
 
 The longer search has four single-threaded workers, a fixed deterministic seed,
 at most 64 joint proposals over the nine existing coordinates, and two exact

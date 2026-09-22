@@ -1,6 +1,6 @@
 {
   "adapter_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_candidate.py",
-  "adapter_sha256": "7226a653785ed38dd0dc0726030ede27a885826a0fa036debe5109caad1299ae",
+  "adapter_sha256": "28d0783b3517b739fe735ba132142d3b787d8101cda3ac7409b04c4df24eefd9",
   "budget_interpretation": "Smoke at most7000s; production18800s includes at most14400s proposals and4400s selected verification. At most3 smoke +64 proposal +2 verification objectives.",
   "cases": [
     {
@@ -63,11 +63,11 @@
   "files": {
     "accounting": {
       "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_earnings_wealth_contract.py",
-      "sha256": "325362bdfd62725b7fb2617dd5e561af5e13444b072392460e74dc9b1e5518a5"
+      "sha256": "a6b3f4edc6a43d4e49d0e820540435ceae8bba3c0abfe0d9b798a52d170ec914"
     },
     "adapter": {
       "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_candidate.py",
-      "sha256": "7226a653785ed38dd0dc0726030ede27a885826a0fa036debe5109caad1299ae"
+      "sha256": "28d0783b3517b739fe735ba132142d3b787d8101cda3ac7409b04c4df24eefd9"
     },
     "controller": {
       "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_earnings_wealth_smoke.py",
@@ -136,9 +136,10 @@
   ],
   "objective_canonical_sha256": "4440ea07f4de957740ca6c04961d2806d9b9ef782c7a0e7dad4ce73e1db651b1",
   "operational_revision": {
-    "previous_execution": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922/execution.json",
-    "reason": "Controller validation expected nonexistent top-level source_fingerprints; corrected to require pinned initial_contract, whose native manifest is checked before solving. Prior attempt stopped before any model solve. Economics, targets and gates unchanged.",
-    "version": 2
+    "previous_execution": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v2/execution.json",
+    "reason": "Return native infeasible value for interpolation outside either grid endpoint in both tenure kernels; preserve exact native interpolation within support including endpoints. Forward maps keep placeholders only for zero-probability branches and the unchanged occupied accounting gate remains active.",
+    "review_receipt": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/staging/purchase_support_correction.json",
+    "version": 3
   },
   "parameter_bounds": {
     "H0": [

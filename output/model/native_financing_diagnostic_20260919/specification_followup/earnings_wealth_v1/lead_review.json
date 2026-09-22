@@ -51,16 +51,25 @@
       "source": "Sommer2016/DeNardi2004 entry convention, not empirical fitting",
       "started_stationary_solves": 3,
       "status": "runtime_pilot_stopped_before_full_objective"
+    },
+    {
+      "arm": "direct_income_zero_entry_purchase_v2",
+      "completed_full_objectives": 0,
+      "completed_stationary_solves": 6,
+      "launched_proposals": 0,
+      "receipt": "staging/purchase_support_correction.json",
+      "started_stationary_solves": 6,
+      "status": "failed_purchase_accounting_gate_after_six_stationary_solves"
     }
   ],
   "overnight_execution": {
-    "bundle": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v2",
-    "independent_runtime_review": "Luna checked actual saved schema, repetition paths and budgets; no further blocker found",
-    "operational_correction": "staging/startup_contract_repair.json",
+    "bundle": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v3",
+    "independent_runtime_review": "Luna reviewed both kernel rewrites; lead verified exact support and unchanged within-grid interpolation",
+    "operational_correction": "staging/purchase_support_correction.json",
     "preflight": "all three arms passed; zero solves",
     "receipt": "local_execution.json",
-    "status": "native_smoke_running_search_gated",
-    "unit_checks": "36 passed"
+    "status": "corrected_v3_native_smoke_running_search_gated",
+    "unit_checks": "39 passed plus native compiled support checks"
   },
   "point_estimates": {
     "persistent_innovation_sd_four_year": 0.43743545312066157,

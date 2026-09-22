@@ -220,6 +220,7 @@ def run_case(plan_path, plan, arm, output, repetitions, preflight=False):
         if repetitions == 2 and audits[0] != audits[1]:
             raise RuntimeError("purchase-accounting repetitions differ")
         runtime_contract["generated_solver_sha256"] = digest(output / "evaluation/purchase_source.generated.py")
+        runtime_contract["generated_tenure_support_sha256"] = digest(output / "evaluation/purchase_source.tenure.py")
         runtime_contract["source_diff_sha256"] = digest(output / "evaluation/purchase_source.diff")
     runtime_contract["status"] = "verified_diagnostic"
     write(output / "runtime_contract.json", runtime_contract)
