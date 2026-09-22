@@ -1,0 +1,198 @@
+# National ACS Twin1 / SameSex2 housing IV driver. Reads state RDS
+# partitions from the national_acs_source_stage_20260921 housing_narrow
+# packet, builds the mother roster, constructs both instruments at each
+# observed event age 0:5, runs RF/FS/2SLS/AR for ROOMS/OWNERSHP/BEDROOMS,
+# and writes checkpoints + a compact status heartbeat.
+#
+# Env vars:
+#   ROOT            repo root for source() (kleven_pseudo dir)
+#   PARTITION_DIR    dir containing partitions/statefip_XX/housing_narrow.rds
+#   STATEFIP_LIST    comma-separated state codes to load
+#   OUTDIR           output directory (created if absent)
+#   STATUS_PATH      path to status JSON heartbeat (optional)
+#   SAMPLE_LABEL     "young" (21-35) or "wide" (25-45); default young
+
+suppressMessages({
+  library(data.table)
+  library(fixest)
+  library(jsonlite)
+})
+
+args_env <- function(name, default = NULL) {
+  v <- Sys.getenv(name, unset = "")
+  if (nzchar(v)) v else default
+}
+
+script_dir <- args_env("ROOT", dirname(sys.frame(1)$ofile))
+source(file.path(script_dir, "twins_samesex_iv_lib.R"))
+
+partition_dir <- args_env("PARTITION_DIR",
+  "/scratch/td2248/projects/kleven_acs_pilot_20260917/output/national_acs_source_stage_20260921/partitions")
+statefip_list <- as.integer(strsplit(args_env("STATEFIP_LIST", "50"), ",")[[1]])
+outdir <- args_env("OUTDIR", "output_acs_twins_samesex_smoke")
+status_path <- args_env("STATUS_PATH", file.path(outdir, "status_heartbeat.json"))
+sample_label <- args_env("SAMPLE_LABEL", "young")
+
+dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
+
+write_status <- function(phase, extra = list()) {
+  st <- c(list(phase = phase, generated = format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
+               statefip_list = statefip_list, sample_label = sample_label,
+               outdir = normalizePath(outdir, mustWork = FALSE)), extra)
+  tmp <- paste0(status_path, ".tmp")
+  jsonlite::write_json(st, tmp, auto_unbox = TRUE, pretty = TRUE, digits = 6)
+  file.rename(tmp, status_path)
+}
+
+write_status("loading_partitions")
+
+# Process one state partition at a time and keep only the much smaller
+# per-mother roster in memory across states; never hold all 51 raw
+# person-level partitions (59M rows nationally) simultaneously. This keeps
+# the job inside the authorized 64GB envelope.
+t0 <- Sys.time()
+mr_list <- vector("list", length(statefip_list))
+audit_list <- vector("list", length(statefip_list))
+total_rows <- 0L
+for (i in seq_along(statefip_list)) {
+  sf <- statefip_list[i]
+  p <- sprintf("%s/statefip_%02d/housing_narrow.rds", partition_dir, sf)
+  if (!file.exists(p)) stop(sprintf("missing partition for statefip %d: %s", sf, p))
+  dt_state <- readRDS(p)
+  total_rows <- total_rows + nrow(dt_state)
+  built_state <- build_mother_roster(dt_state)
+  mr_list[[i]] <- add_outcomes(built_state$mother_rows)
+  audit_list[[i]] <- built_state$link_audit
+  rm(dt_state, built_state); gc(FALSE)
+  write_status("loading_partitions", list(loaded = i, of = length(statefip_list),
+                                           statefip = sf, rows_seen = total_rows,
+                                           elapsed_sec = as.numeric(Sys.time() - t0, units = "secs")))
+}
+mr <- data.table::rbindlist(mr_list, use.names = TRUE, fill = TRUE)
+built <- list(link_audit = data.table::rbindlist(audit_list, use.names = TRUE, fill = TRUE)[
+  , .(N = sum(N)), by = .(link_invalid_reason, child_relate)])
+rm(mr_list, audit_list); gc(FALSE)
+write_status("loaded", list(rows = total_rows, mother_rows = nrow(mr),
+                             elapsed_sec = as.numeric(Sys.time() - t0, units = "secs")))
+
+## ---- Roster build (per-state build already applied above) ----------------
+mr[, weight_positive := PERWT > 0 & is.finite(PERWT)]
+mr <- mr[weight_positive == TRUE]
+
+age_lo <- if (sample_label == "young") 21 else 25
+age_hi <- if (sample_label == "young") 35 else 45
+mr_sample <- mr[AGE_norm >= age_lo & AGE_norm <= age_hi]
+
+n_unique_mothers <- uniqueN(mr_sample$person_key)
+n_households <- uniqueN(mr_sample$household_key)
+
+write_status("roster_built", list(
+  n_unique_mothers = n_unique_mothers, n_households = n_households,
+  any_sex_missing = sum(mr_sample$any_sex_missing),
+  any_non_biological = sum(mr_sample$any_non_biological),
+  nchild_link_mismatch = sum(mr_sample$nchild_link_mismatch),
+  elapsed_sec = as.numeric(Sys.time() - t0, units = "secs")))
+
+jsonlite::write_json(built$link_audit, file.path(outdir, "link_audit.json"), auto_unbox = TRUE, pretty = TRUE)
+
+## ---- Instrument construction ---------------------------------------------
+t1 <- build_twin1(mr_sample, age_grid = 0:5)
+ss <- build_samesex2(mr_sample, age_grid = 0:5)
+
+t1[, mother_weight := PERWT]
+t1[, household_key := household_key]
+ss[, mother_weight := PERWT]
+
+counts <- list(
+  sample_label = sample_label, age_lo = age_lo, age_hi = age_hi,
+  n_unique_mothers_sample = n_unique_mothers,
+  n_households_sample = n_households,
+  Twin1_eligible_N = nrow(t1),
+  Twin1_proxy_positive_N = sum(t1$twin_like_proxy),
+  Twin1_contamination_risk_N = sum(t1$contamination_risk),
+  Twin1_treatment_2plus_N = sum(t1$treatment_2plus),
+  SameSex2_eligible_pool_N = nrow(ss),
+  SameSex2_primary_age_tie_excluded_N = sum(ss$primary_age_tie),
+  SameSex2_sex_missing_excluded_N = sum(!ss$primary_age_tie & (is.na(ss$sex1) | is.na(ss$sex2))),
+  SameSex2_primary_eligible_N = sum(ss$eligible),
+  SameSex2_positive_samesex_N = sum(ss$eligible & ss$samesex == 1),
+  SameSex2_both_boys_N = sum(ss$both_boys, na.rm = TRUE),
+  SameSex2_both_girls_N = sum(ss$both_girls, na.rm = TRUE),
+  SameSex2_treatment_3plus_N = sum(ss$eligible & ss$treatment_3plus)
+)
+jsonlite::write_json(counts, file.path(outdir, "counts.json"), auto_unbox = TRUE, pretty = TRUE, digits = 6)
+write_status("instruments_built", counts)
+
+## ---- Controls -------------------------------------------------------------
+build_controls <- function(d, event_age_col) {
+  d[, mat_age_at_event := round(AGE_norm - get(event_age_col))]
+  d[, survey_year := YEAR]
+  d
+}
+t1 <- build_controls(t1, "event_age")
+ss <- build_controls(ss, "event_age")
+
+controls_fml <- "i(mat_age_at_event) + i(RACE) + i(survey_year) + i(event_age)"
+
+outcomes <- c("ROOMS_out", "OWNERSHP_out", "BEDROOMS_out")
+ar_grid_rooms <- seq(-3, 3, by = 0.1)
+ar_grid_own <- seq(-0.5, 0.5, by = 0.02)
+
+results <- list()
+for (oc in outcomes) {
+  ar_grid <- if (oc == "OWNERSHP_out") ar_grid_own else ar_grid_rooms
+  res_t1 <- tryCatch(fit_instrument_outcome(
+    t1, outcome = oc, treatment = "treatment_2plus", instrument = "twin_like_proxy",
+    controls_fml = controls_fml, weight_var = "mother_weight",
+    cluster_var = "household_key", ar_grid = ar_grid),
+    error = function(e) list(status = "error", message = conditionMessage(e)))
+  res_t1$design <- "Twin1_pooled0_5"; res_t1$outcome <- oc
+  results[[length(results) + 1]] <- res_t1
+
+  res_ss <- tryCatch(fit_instrument_outcome(
+    ss[eligible == TRUE], outcome = oc, treatment = "treatment_3plus", instrument = "samesex",
+    controls_fml = controls_fml, weight_var = "mother_weight",
+    cluster_var = "household_key", ar_grid = ar_grid),
+    error = function(e) list(status = "error", message = conditionMessage(e)))
+  res_ss$design <- "SameSex2_pooled0_5"; res_ss$outcome <- oc
+  results[[length(results) + 1]] <- res_ss
+
+  for (ea in c(3, 5)) {
+    t1_ea <- t1[event_age == ea]
+    ss_ea <- ss[eligible == TRUE & event_age == ea]
+    r1 <- tryCatch(fit_instrument_outcome(t1_ea, oc, "treatment_2plus", "twin_like_proxy",
+                     controls_fml, "mother_weight", "household_key", ar_grid),
+                   error = function(e) list(status = "error", message = conditionMessage(e)))
+    r1$design <- paste0("Twin1_event", ea); r1$outcome <- oc
+    results[[length(results) + 1]] <- r1
+    r2 <- tryCatch(fit_instrument_outcome(ss_ea, oc, "treatment_3plus", "samesex",
+                     controls_fml, "mother_weight", "household_key", ar_grid),
+                   error = function(e) list(status = "error", message = conditionMessage(e)))
+    r2$design <- paste0("SameSex2_event", ea); r2$outcome <- oc
+    results[[length(results) + 1]] <- r2
+  }
+  write_status("estimating", list(completed_outcome = oc, elapsed_sec = as.numeric(Sys.time() - t0, units = "secs")))
+  saveRDS(results, file.path(outdir, "checkpoint_results.rds"))
+}
+
+`%||%` <- function(a, b) if (is.null(a)) b else a
+results_dt <- data.table::rbindlist(lapply(results, function(r) {
+  data.table(design = r$design %||% NA_character_, outcome = r$outcome %||% NA_character_,
+             status = r$status %||% NA_character_, n_usable = r$n_usable %||% NA_integer_,
+             n_households = r$n_households %||% NA_integer_,
+             n_instrument_positive = r$n_instrument_positive %||% NA_integer_,
+             rf_coef = r$rf_coef %||% NA_real_, rf_se = r$rf_se %||% NA_real_,
+             fs_coef = r$fs_coef %||% NA_real_, fs_se = r$fs_se %||% NA_real_,
+             first_stage_F = r$first_stage_F %||% NA_real_,
+             iv_coef = r$iv_coef %||% NA_real_, iv_se = r$iv_se %||% NA_real_,
+             ar_lower = r$ar_lower %||% NA_real_, ar_upper = r$ar_upper %||% NA_real_,
+             ar_bounded = r$ar_bounded %||% NA,
+             ar_grid_min = r$ar_grid_min %||% NA_real_, ar_grid_max = r$ar_grid_max %||% NA_real_)
+}), fill = TRUE)
+
+utils::write.csv(results_dt, file.path(outdir, "rf_fs_iv_ar_table.csv"), row.names = FALSE)
+jsonlite::write_json(counts, file.path(outdir, "counts_final.json"), auto_unbox = TRUE, pretty = TRUE, digits = 6)
+
+write_status("complete", list(elapsed_sec = as.numeric(Sys.time() - t0, units = "secs"),
+                               n_rows_table = nrow(results_dt)))
+cat("DRIVER_COMPLETE\n")
