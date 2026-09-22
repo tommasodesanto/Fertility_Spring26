@@ -1,0 +1,193 @@
+{
+  "reviewed_at": "2026-09-22T06:20:43.966549-04:00",
+  "status": "verified_smoke_search_running",
+  "plan_sha256": "10823c4a968d8a05e70b47230cd6add7fb8d5c0ce34426af04270fb0788d4956",
+  "checks": {
+    "anchor_exact_tables_and_native_moments": true,
+    "anchor_exact_arrays": {
+      "evidence": "Native generated probe lines 205\u2013212 requires exact price,V,g,all native moments,psi across repetitions before passed_initial_candidate_loop; probe content hash independently verified.",
+      "lead_reloaded_checkpoints": false
+    },
+    "pinned_runtime_files_current_hash_verified": 12,
+    "generated_code_hashes_verified": true,
+    "same_source_objective_anchor_probe": true,
+    "full_target_and_parameter_tables_checked": true,
+    "independent_collection_validation": {
+      "full_target_parameter_csvs_byte_exact": true,
+      "actual_bound_annotations_verified": true,
+      "original_graphs_sha256_verified": 34
+    }
+  },
+  "arms": {
+    "anchor": {
+      "loss": 1160.3761384370134,
+      "repetitions": 2,
+      "completed_stationary_solves": 12,
+      "quality_gates": [
+        {
+          "repetition": 1,
+          "stationary_solves_started": 6,
+          "stationary_solves_completed": 6,
+          "budget_mass": 0.0,
+          "purchase": {
+            "end_mortgage_floor_violation_mass": 0.0,
+            "mass_tolerance": 2e-10,
+            "maximum_occupied_end_debt_shortfall": 0.0,
+            "maximum_occupied_transaction_wealth_error": 2.842170943040401e-14,
+            "purchase_threshold_violation_mass": 0.0,
+            "transaction_outside_grid_mass": 0.0,
+            "wealth_tolerance": 1e-09
+          },
+          "occupied_value_drops": 0,
+          "price": 0.7148674758799216,
+          "psi": 0.19105506267539188
+        },
+        {
+          "repetition": 2,
+          "stationary_solves_started": 6,
+          "stationary_solves_completed": 6,
+          "budget_mass": 0.0,
+          "purchase": {
+            "end_mortgage_floor_violation_mass": 0.0,
+            "mass_tolerance": 2e-10,
+            "maximum_occupied_end_debt_shortfall": 0.0,
+            "maximum_occupied_transaction_wealth_error": 2.842170943040401e-14,
+            "purchase_threshold_violation_mass": 0.0,
+            "transaction_outside_grid_mass": 0.0,
+            "wealth_tolerance": 1e-09
+          },
+          "occupied_value_drops": 0,
+          "price": 0.7148674758799216,
+          "psi": 0.19105506267539188
+        }
+      ],
+      "runtime_contract": {
+        "frozen_source_manifest_sha256": "76406fcc10206d9e30bcc29d4e18accdf7fffdd9219e50e6e11c1c3360f01336",
+        "generated_allocation_output_sha256": "86c56d2666f69f757dd69a5b87647686bbd5c4205a8a07cf20651317065e4d8a",
+        "generated_probe_grid_sha256": "ef59d5709213d981279d8eb98b15426126a30ad8d42f76e05ffa1e4e1f981183",
+        "generated_solver_sha256": "900b8bac964a2f91e8f9f47c566cd89c25e316e5db0afbe0975b58cf1a52bd28",
+        "generated_tenure_support_sha256": "01ff6c5402cf8317d4b927916f0ac1233026fece2716138163a44990b13403a0",
+        "plan_sha256": "12699389a63d14db1f2dd09a0ea867e004b5e3a8bf2ff8c48d6b81974137961e",
+        "source_diff_sha256": "592a3c90bbc187ba6aecd5fe0b6491ef2f90aa965f4043eae0101baceac23e4f"
+      },
+      "source_fingerprints": {
+        "economic_source_manifest_7e872053": "612ea34da2f462cb50dcf6881dd3005d8495f827c833525436b150500ebf11cf",
+        "fertility_provenance_file_sha256": "940735a0f1a635d031cf0323b1822d44f891afe62f5ae3e993eeeef99b8ef41b",
+        "housing_wealth_provenance_file_sha256": "ccadd2285a3ab7f71f6f1c2722cba64e8e94a2f987ca8f289a58ec1ee84efceb",
+        "lead_decision_file_sha256": "b1d399c290d257e56e008afb6d7b76ac1f69191685c8d9e89a4b0bfb06533c9a",
+        "observation_snapshot_manifest_70abd4a8": "76406fcc10206d9e30bcc29d4e18accdf7fffdd9219e50e6e11c1c3360f01336",
+        "parameter_table_file_sha256": "c8d813e7cb749521e0e3520c48af9d5baf367e02fa161288dcc735e76d96d592",
+        "scorer_file_sha256": "a76ece9d0b38de4ff60ea259884306554ea62a42ed88faaad6b35a3375ebbfb3",
+        "target_fit_file_sha256": "d51be4a035dd2ee6165d769bd260e1397bf1e623e438113d3567d39569b49356",
+        "working_weights_file_sha256": "6289f69e512fff09fef0df358e2231050b978aa3e9fe1a9808bb96dd8c733c5a"
+      },
+      "wrapper_summary_sha256": "bd6ca62c6a0de5499222b82701898fa2c1bc88f618184336040247c9f07e677a"
+    },
+    "probe": {
+      "loss": 1040.4468628084285,
+      "repetitions": 1,
+      "completed_stationary_solves": 6,
+      "quality_gates": [
+        {
+          "repetition": 1,
+          "stationary_solves_started": 6,
+          "stationary_solves_completed": 6,
+          "budget_mass": 0.0,
+          "purchase": {
+            "end_mortgage_floor_violation_mass": 0.0,
+            "mass_tolerance": 2e-10,
+            "maximum_occupied_end_debt_shortfall": 0.0,
+            "maximum_occupied_transaction_wealth_error": 2.842170943040401e-14,
+            "purchase_threshold_violation_mass": 0.0,
+            "transaction_outside_grid_mass": 0.0,
+            "wealth_tolerance": 1e-09
+          },
+          "occupied_value_drops": 0,
+          "price": 0.7126819216394684,
+          "psi": 0.19240976544988367
+        }
+      ],
+      "runtime_contract": {
+        "frozen_source_manifest_sha256": "76406fcc10206d9e30bcc29d4e18accdf7fffdd9219e50e6e11c1c3360f01336",
+        "generated_allocation_output_sha256": "86c56d2666f69f757dd69a5b87647686bbd5c4205a8a07cf20651317065e4d8a",
+        "generated_probe_grid_sha256": "ef59d5709213d981279d8eb98b15426126a30ad8d42f76e05ffa1e4e1f981183",
+        "generated_solver_sha256": "900b8bac964a2f91e8f9f47c566cd89c25e316e5db0afbe0975b58cf1a52bd28",
+        "generated_tenure_support_sha256": "01ff6c5402cf8317d4b927916f0ac1233026fece2716138163a44990b13403a0",
+        "plan_sha256": "615c19ac31a8203a50db8c39f1a1c5286c723f29e6b2b1f84ccfd9781b206d30",
+        "source_diff_sha256": "592a3c90bbc187ba6aecd5fe0b6491ef2f90aa965f4043eae0101baceac23e4f"
+      },
+      "source_fingerprints": {
+        "economic_source_manifest_7e872053": "612ea34da2f462cb50dcf6881dd3005d8495f827c833525436b150500ebf11cf",
+        "fertility_provenance_file_sha256": "940735a0f1a635d031cf0323b1822d44f891afe62f5ae3e993eeeef99b8ef41b",
+        "housing_wealth_provenance_file_sha256": "ccadd2285a3ab7f71f6f1c2722cba64e8e94a2f987ca8f289a58ec1ee84efceb",
+        "lead_decision_file_sha256": "b1d399c290d257e56e008afb6d7b76ac1f69191685c8d9e89a4b0bfb06533c9a",
+        "observation_snapshot_manifest_70abd4a8": "76406fcc10206d9e30bcc29d4e18accdf7fffdd9219e50e6e11c1c3360f01336",
+        "parameter_table_file_sha256": "c8d813e7cb749521e0e3520c48af9d5baf367e02fa161288dcc735e76d96d592",
+        "scorer_file_sha256": "a76ece9d0b38de4ff60ea259884306554ea62a42ed88faaad6b35a3375ebbfb3",
+        "target_fit_file_sha256": "d51be4a035dd2ee6165d769bd260e1397bf1e623e438113d3567d39569b49356",
+        "working_weights_file_sha256": "6289f69e512fff09fef0df358e2231050b978aa3e9fe1a9808bb96dd8c733c5a"
+      },
+      "wrapper_summary_sha256": "29e119e3d8a1d63795c4348c4eb2f999f5eeae05af15a4eaa07ecf1665545c05"
+    }
+  },
+  "actual_bounds": {
+    "H0": [
+      0.2,
+      80.0
+    ],
+    "beta_annual": [
+      0.94,
+      0.99
+    ],
+    "chi": [
+      0.1,
+      5.0
+    ],
+    "first_birth_fixed_cost": [
+      0.0,
+      8.0
+    ],
+    "h_P": [
+      0.1,
+      2.3
+    ],
+    "kappa_fert": [
+      0.02,
+      50.0
+    ],
+    "kappa_fert_continuation": [
+      0.02,
+      50.0
+    ],
+    "theta0": [
+      0.0,
+      8.0
+    ],
+    "theta1": [
+      0.02,
+      16.0
+    ]
+  },
+  "adopted": false,
+  "smoke_totals": {
+    "started_stationary_solves": 18,
+    "completed_stationary_solves": 18,
+    "incomplete_stationary_solves": 0,
+    "scored_objectives": 3
+  },
+  "search_selection_limit": "Frozen search starts from the repeated anchor and excludes the one-repeat smoke probe from its candidate pool. If selected loss exceeds probe loss, report this explicitly; selected is not best of every evaluated point. No live run changed.",
+  "outstanding": [
+    "Finite continuation-sentinel interpolation may distort choices in tiny-mass states.",
+    "Household-grid density/domain convergence not established.",
+    "Four-year income known at decision.",
+    "Weak iid estimate and extrapolated stationary age18 risk.",
+    "Final search result, original-selection versus both exact repetitions, and final parameter plausibility review pending."
+  ],
+  "visual_review": {
+    "probe_figures_inspected": [
+      "fertility_by_age",
+      "housing_market"
+    ],
+    "note": "Standard figures retained. Fertility timing remains late; housing-market figure reports maximum relative clearing residual 3.27e-8. Full selected visual/parameter review pending."
+  }
+}

@@ -98,7 +98,7 @@
     "Transitory variance weakly measured; baseline bootstrap lower tail reaches zero",
     "Estimated age25\u201360 risk extrapolated to entry18 under an externally fixed stationary initial process",
     "Stationary AR1+iid lognormal process omits richer heterogeneity; no proof of exact aggregation or annual within-block decisions",
-    "V5 smoke running; no search result. Current-allocation output fix does not repair finite infeasibility-sentinel contamination of continuation values; grid robustness and final parameter review remain outstanding."
+    "V5 full smoke passed; four-worker bounded search is running. Final selection/repeats and parameter plausibility remain pending. Output correction does not fix finite infeasibility-sentinel interpolation; household-grid robustness remains outstanding."
   ],
   "model_tests": [
     {
@@ -170,8 +170,11 @@
     "preflight": "three frozen native source/input arms passed; zero household solves",
     "receipt": "local_execution.json",
     "reporting_comparison_note": "V5 includes previously tested exclusion of wall-clock seconds; V4 immutable. Scientific final equality still required.",
-    "status": "v5_native_smoke_running",
-    "unit_checks": "29 actual compiled/control tests passed; saved54state allocation replay passes unchanged budget tolerance"
+    "status": "v5_verified_smoke_search_running",
+    "unit_checks": "29 actual compiled/control tests passed; saved54state allocation replay passes unchanged budget tolerance",
+    "smoke_review": "staging/v5_smoke_lead_review.json",
+    "smoke_readout": "smoke_v5/README.md",
+    "search_started_utc": "2026-09-22T10:12:19.778732+00:00"
   },
   "parameter_rubric_correction": "Definition labels corrected against implementation: H0 supply intercept, theta1 wealth shift, h_P parenthood-only housing floor, fertility/tenure kappa shock scales.",
   "point_estimates": {
@@ -195,5 +198,15 @@
     "lower": -12,
     "original_nodes_preserved": 120,
     "upper": 3000
+  },
+  "smoke_v5_review": {
+    "receipt": "staging/v5_smoke_lead_review.json",
+    "full_tables_and_figures": "smoke_v5/README.md",
+    "reviewed_at": "2026-09-22T06:21:50.591236-04:00",
+    "anchor_loss": 1160.3761384370134,
+    "probe_loss": 1040.4468628084285,
+    "stationary_solves_completed": 18,
+    "scored_objectives": 3,
+    "search_selection_limit": "Search does not include single-repeat smoke probe in its candidate pool; disclose if final selection is worse."
   }
 }

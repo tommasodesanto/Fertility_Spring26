@@ -1,5 +1,22 @@
 # Calibration Status
 
+**September 22, 06:12 EDT — V5 full smoke passed; four-worker search started:**
+Two exact starting-point repetitions and the inward-beta probe passed every
+unchanged numerical gate, completing 18 stationary solves and three scored
+objectives. Starting loss is 1160.3761; the single-repeat probe at annual discount
+factor 0.985 gives 1040.4469 under the identical objective. The full 13-target and
+17-parameter tables and original 17 diagnostic figures for each point are
+[available here](output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/README.md).
+The bounded joint search started automatically at 06:12 EDT with four single-thread
+workers; its selected point and two final exact repetitions are pending. The
+frozen search initializes from the repeated anchor and does not include the
+one-repeat smoke probe in its selection pool; report this limitation if its final
+selection is worse than the probe. No running code or selection rule was changed.
+The fit remains poor, especially fertility timing. Passing accounting/value gates
+does not resolve continuation-sentinel interpolation, household-grid robustness,
+weak transitory precision or stationary income risk imposed at age 18. No adoption.
+[Lead smoke verification](output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/staging/v5_smoke_lead_review.json).
+
 **September 22, 04:28 EDT — reviewed allocation correction; V5 native smoke running:**
 The strict V4 probe failure is preserved. V5 removes only output floors that
 inflated reported spending relative to the exhaustive optimizer's feasible

@@ -1,0 +1,599 @@
+{
+  "schema": "earnings_wealth_v1_smoke_v5_collection",
+  "collected_at": "2026-09-22",
+  "source_root": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke",
+  "target_root": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5",
+  "status": "verified_smoke_collection",
+  "scope": {
+    "numerical_smoke_only": true,
+    "anchor_repeated": 2,
+    "probe_repeated": false,
+    "probe_repetitions": 1,
+    "refit": false,
+    "adoption": false
+  },
+  "arms": {
+    "anchor": {
+      "source_arm": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor",
+      "wrapper_summary_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/summary.json",
+      "raw_summary_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/summary.json",
+      "runtime_contract_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/runtime_contract.json",
+      "repetitions": {
+        "01": {
+          "target_count": 13,
+          "parameter_count": 17,
+          "stationary_solve_count": 6,
+          "source_receipt": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_01/stationary_solves.json",
+          "source_score": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/scored_repetition_01/score.json"
+        },
+        "02": {
+          "target_count": 13,
+          "parameter_count": 17,
+          "stationary_solve_count": 6,
+          "source_receipt": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_02/stationary_solves.json",
+          "source_score": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/scored_repetition_02/score.json"
+        }
+      }
+    },
+    "probe": {
+      "source_arm": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe",
+      "wrapper_summary_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/summary.json",
+      "raw_summary_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/summary.json",
+      "runtime_contract_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/runtime_contract.json",
+      "repetitions": {
+        "01": {
+          "target_count": 13,
+          "parameter_count": 17,
+          "stationary_solve_count": 6,
+          "source_receipt": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/repetition_01/stationary_solves.json",
+          "source_score": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/scored_repetition_01/score.json"
+        }
+      }
+    }
+  },
+  "runtime_hashes": {
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/runtime_contract.json": "70dd0436fcdd4df431faa813f0bba9d9de2c6634a353fc96a3a4c4589208ced5",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/summary.json": "bd6ca62c6a0de5499222b82701898fa2c1bc88f618184336040247c9f07e677a",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/summary.json": "160fa68b1b162c7e0e9182e8d856814c61eabeefd6c7b7f39d05851937193d52",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/runtime_contract.json": "4f7d94dcfc76cc561c14526f620a9dd4806fd2c418b47f0532e96c770e639c67",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/summary.json": "29e119e3d8a1d63795c4348c4eb2f999f5eeae05af15a4eaa07ecf1665545c05",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/summary.json": "19df02b5e46d9463d1bdcf10799620338af74d21cd2c540c3568c3a1d6b49d57"
+  },
+  "files": [
+    {
+      "kind": "target",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/wrapper_summary.json",
+      "sha256": "bd6ca62c6a0de5499222b82701898fa2c1bc88f618184336040247c9f07e677a",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/summary.json"
+    },
+    {
+      "kind": "target",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/raw_summary.json",
+      "sha256": "160fa68b1b162c7e0e9182e8d856814c61eabeefd6c7b7f39d05851937193d52",
+      "source": null
+    },
+    {
+      "kind": "target",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/runtime_contract.json",
+      "sha256": "70dd0436fcdd4df431faa813f0bba9d9de2c6634a353fc96a3a4c4589208ced5",
+      "source": null
+    },
+    {
+      "kind": "target",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/parameters_actual_bounds.csv",
+      "sha256": "fad6e72800504c10e3d54cd29809401e0556d31fc79657c9d246b188f47c04fc",
+      "source": null
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/graphs/market_clearing_by_market.png",
+      "sha256": "23acab7b0fdcfa90cd84c40c395aa19ffda9044b151f623eca7a447a00a9ba11",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_02/standard_diagnostics/market_clearing_by_market.png",
+      "summary_sha256": "23acab7b0fdcfa90cd84c40c395aa19ffda9044b151f623eca7a447a00a9ba11",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/graphs/housing_by_age_income_state.png",
+      "sha256": "4557f61639ce21eade2beb06bc0943e2b491dff704190c13a9d9561f51da9054",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_02/standard_diagnostics/housing_by_age_income_state.png",
+      "summary_sha256": "4557f61639ce21eade2beb06bc0943e2b491dff704190c13a9d9561f51da9054",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/graphs/income_state_outcomes.png",
+      "sha256": "413dcfb094272b23de6b07e4fd03cb7d89f463ae807e864514ef3f04144538a9",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_02/standard_diagnostics/income_state_outcomes.png",
+      "summary_sha256": "413dcfb094272b23de6b07e4fd03cb7d89f463ae807e864514ef3f04144538a9",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/graphs/ownership_by_age.png",
+      "sha256": "68bc9411745a72f8b92a2df591777448aaf97bdf4a4f570d946ad864e5381302",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_02/standard_diagnostics/ownership_by_age.png",
+      "summary_sha256": "68bc9411745a72f8b92a2df591777448aaf97bdf4a4f570d946ad864e5381302",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/graphs/market_clearing_residuals.png",
+      "sha256": "e5be7e81053395370785cd072c793f374a73ca6b1b4b5f7ce073a48a24e08dd7",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_02/standard_diagnostics/market_clearing_residuals.png",
+      "summary_sha256": "e5be7e81053395370785cd072c793f374a73ca6b1b4b5f7ce073a48a24e08dd7",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/graphs/owner_rungs.png",
+      "sha256": "de6748865ff1f8c9969ae629fb2787be2d02376761853ebf0ce328d38258a1f1",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_02/standard_diagnostics/owner_rungs.png",
+      "summary_sha256": "de6748865ff1f8c9969ae629fb2787be2d02376761853ebf0ce328d38258a1f1",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/graphs/liquid_wealth_by_age_income_state.png",
+      "sha256": "0ae480349807d7a9fb10ee96ce4b07f83ef84933d5d1c1fd1ccda600c6d72fe7",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_02/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+      "summary_sha256": "0ae480349807d7a9fb10ee96ce4b07f83ef84933d5d1c1fd1ccda600c6d72fe7",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/graphs/ownership_by_age_income_state.png",
+      "sha256": "8dc5de1eb59ec2ba4ce31de7f08b3e971d5ac0765ffe82c4b2b7e8357620fb00",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_02/standard_diagnostics/ownership_by_age_income_state.png",
+      "summary_sha256": "8dc5de1eb59ec2ba4ce31de7f08b3e971d5ac0765ffe82c4b2b7e8357620fb00",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/graphs/housing_market.png",
+      "sha256": "ee24874a26beb22b1532e77a1d92d61c2ae3a9b29b24ac1aabe1db1871e087c4",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_02/standard_diagnostics/housing_market.png",
+      "summary_sha256": "ee24874a26beb22b1532e77a1d92d61c2ae3a9b29b24ac1aabe1db1871e087c4",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/graphs/policy_childless_renter_age30.png",
+      "sha256": "015c01bac4c84ea6cd6ca5a2b5ba2ffad4423d1c2a6440ef0fb8446b9ecddb22",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_02/standard_diagnostics/policy_childless_renter_age30.png",
+      "summary_sha256": "015c01bac4c84ea6cd6ca5a2b5ba2ffad4423d1c2a6440ef0fb8446b9ecddb22",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/graphs/wealth_dist_childless_renter_age30.png",
+      "sha256": "5c3b0df475434101e50dfac6526e598404449690ce2c4c350ba02f432b8685b9",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_02/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+      "summary_sha256": "5c3b0df475434101e50dfac6526e598404449690ce2c4c350ba02f432b8685b9",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/graphs/tenure_services.png",
+      "sha256": "e4bfd7c06beb25de730689962db358ff0250bf01c21c425f9e0928f7c59aebfe",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_02/standard_diagnostics/tenure_services.png",
+      "summary_sha256": "e4bfd7c06beb25de730689962db358ff0250bf01c21c425f9e0928f7c59aebfe",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/graphs/policy_childless_renter_age42.png",
+      "sha256": "99e5763e696f7513f37e8521ddcaa6e7e9ea3679f84492d16084696b8f9f12f2",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_02/standard_diagnostics/policy_childless_renter_age42.png",
+      "summary_sha256": "99e5763e696f7513f37e8521ddcaa6e7e9ea3679f84492d16084696b8f9f12f2",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/graphs/wealth_dist_childless_renter_age42.png",
+      "sha256": "f9a857e79f6c4a6de0c4abdc8d653cad6752ecfdfbdbe4ac1d1db2f8e3246db1",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_02/standard_diagnostics/wealth_dist_childless_renter_age42.png",
+      "summary_sha256": "f9a857e79f6c4a6de0c4abdc8d653cad6752ecfdfbdbe4ac1d1db2f8e3246db1",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/graphs/fertility_by_age.png",
+      "sha256": "4323110cb7a7ba537baa5147edd55a3f45f4cd54ac392680db01d60465fded16",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_02/standard_diagnostics/fertility_by_age.png",
+      "summary_sha256": "4323110cb7a7ba537baa5147edd55a3f45f4cd54ac392680db01d60465fded16",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/graphs/housing_prices.png",
+      "sha256": "1511c4520cca6bb1bff7ade7294a47fb6dae2d9bc8cfb48593e2c1fa3f75f33e",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_02/standard_diagnostics/housing_prices.png",
+      "summary_sha256": "1511c4520cca6bb1bff7ade7294a47fb6dae2d9bc8cfb48593e2c1fa3f75f33e",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/graphs/fertility_policy_by_age_income_state.png",
+      "sha256": "8e10ad4fd47dde53758ed654b89345e105e19d3b1f9346a7c5b74d22cf5fd12f",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_anchor/evaluation/raw/repetition_02/standard_diagnostics/fertility_policy_by_age_income_state.png",
+      "summary_sha256": "8e10ad4fd47dde53758ed654b89345e105e19d3b1f9346a7c5b74d22cf5fd12f",
+      "byte_match": true
+    },
+    {
+      "kind": "target",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/wrapper_summary.json",
+      "sha256": "29e119e3d8a1d63795c4348c4eb2f999f5eeae05af15a4eaa07ecf1665545c05",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/summary.json"
+    },
+    {
+      "kind": "target",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/raw_summary.json",
+      "sha256": "19df02b5e46d9463d1bdcf10799620338af74d21cd2c540c3568c3a1d6b49d57",
+      "source": null
+    },
+    {
+      "kind": "target",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/runtime_contract.json",
+      "sha256": "4f7d94dcfc76cc561c14526f620a9dd4806fd2c418b47f0532e96c770e639c67",
+      "source": null
+    },
+    {
+      "kind": "target",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/parameters_actual_bounds.csv",
+      "sha256": "406295366c9bcb0774ec73c8a23326b7143fb8199aa579089328d8ada0f4ffd2",
+      "source": null
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/graphs/market_clearing_by_market.png",
+      "sha256": "27256791903901360f27f2ce590658abc9aa5262b8a10318b861a0702f753147",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/repetition_01/standard_diagnostics/market_clearing_by_market.png",
+      "summary_sha256": "27256791903901360f27f2ce590658abc9aa5262b8a10318b861a0702f753147",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/graphs/housing_by_age_income_state.png",
+      "sha256": "5ce717220e9bf9afa041ae895bd7d5cf080b0bfd45f273f7badf888766509760",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/repetition_01/standard_diagnostics/housing_by_age_income_state.png",
+      "summary_sha256": "5ce717220e9bf9afa041ae895bd7d5cf080b0bfd45f273f7badf888766509760",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/graphs/income_state_outcomes.png",
+      "sha256": "b22a800a56fb2ed7be0ca70668fb12da0436a563ca4e8ae44e3110db26d1549d",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/repetition_01/standard_diagnostics/income_state_outcomes.png",
+      "summary_sha256": "b22a800a56fb2ed7be0ca70668fb12da0436a563ca4e8ae44e3110db26d1549d",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/graphs/ownership_by_age.png",
+      "sha256": "15089b6d5f0df6b3f1fa079c7bf7d1461c4f518c96820f4fae173f8018b24ccf",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/repetition_01/standard_diagnostics/ownership_by_age.png",
+      "summary_sha256": "15089b6d5f0df6b3f1fa079c7bf7d1461c4f518c96820f4fae173f8018b24ccf",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/graphs/market_clearing_residuals.png",
+      "sha256": "cff5046d04187468b4e2c9f2e0ab8394303ea2f692ed2782a7f4d47d9bf166f5",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/repetition_01/standard_diagnostics/market_clearing_residuals.png",
+      "summary_sha256": "cff5046d04187468b4e2c9f2e0ab8394303ea2f692ed2782a7f4d47d9bf166f5",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/graphs/owner_rungs.png",
+      "sha256": "441e696c2bed6cb40716d0cbd01172308b28205f65cc0ad9ba793e7d79054494",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/repetition_01/standard_diagnostics/owner_rungs.png",
+      "summary_sha256": "441e696c2bed6cb40716d0cbd01172308b28205f65cc0ad9ba793e7d79054494",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/graphs/liquid_wealth_by_age_income_state.png",
+      "sha256": "64b272f7bd1926603750e05c9252e0830bb284e6073566865379174093234bff",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/repetition_01/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+      "summary_sha256": "64b272f7bd1926603750e05c9252e0830bb284e6073566865379174093234bff",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/graphs/ownership_by_age_income_state.png",
+      "sha256": "fe7a67dc7f924df57ad6836cf47207ef1aaa4f6a9a537edc14c6cadcec21e648",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/repetition_01/standard_diagnostics/ownership_by_age_income_state.png",
+      "summary_sha256": "fe7a67dc7f924df57ad6836cf47207ef1aaa4f6a9a537edc14c6cadcec21e648",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/graphs/housing_market.png",
+      "sha256": "4d746a3f82c3c98b51b7dd0c64b972090d249b4d9c1b6c418751f7047995962c",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/repetition_01/standard_diagnostics/housing_market.png",
+      "summary_sha256": "4d746a3f82c3c98b51b7dd0c64b972090d249b4d9c1b6c418751f7047995962c",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/graphs/policy_childless_renter_age30.png",
+      "sha256": "e28382a71962275a7bd082696ec57359e1520e98072754be8f3b8803a5830c68",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/repetition_01/standard_diagnostics/policy_childless_renter_age30.png",
+      "summary_sha256": "e28382a71962275a7bd082696ec57359e1520e98072754be8f3b8803a5830c68",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/graphs/wealth_dist_childless_renter_age30.png",
+      "sha256": "524c67f06f44b1d4405494cc898a5bc4df0852a4f5164de4e3ef7d8e02689c89",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/repetition_01/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+      "summary_sha256": "524c67f06f44b1d4405494cc898a5bc4df0852a4f5164de4e3ef7d8e02689c89",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/graphs/tenure_services.png",
+      "sha256": "8d8b6c8b5309b33c40d08c473343dffb10d5b31f15f2f2623b9aa63ac4cb952e",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/repetition_01/standard_diagnostics/tenure_services.png",
+      "summary_sha256": "8d8b6c8b5309b33c40d08c473343dffb10d5b31f15f2f2623b9aa63ac4cb952e",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/graphs/policy_childless_renter_age42.png",
+      "sha256": "0bad6a7aaaf844a45196eef1b0ec81582be1104e2a461e7cbad91eda4f17d457",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/repetition_01/standard_diagnostics/policy_childless_renter_age42.png",
+      "summary_sha256": "0bad6a7aaaf844a45196eef1b0ec81582be1104e2a461e7cbad91eda4f17d457",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/graphs/wealth_dist_childless_renter_age42.png",
+      "sha256": "fc8e015fc3510a911e08c5ce5c6dbe198921e05b908b817b989ed3649533d40e",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/repetition_01/standard_diagnostics/wealth_dist_childless_renter_age42.png",
+      "summary_sha256": "fc8e015fc3510a911e08c5ce5c6dbe198921e05b908b817b989ed3649533d40e",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/graphs/fertility_by_age.png",
+      "sha256": "382bf28d7c91725c8c6e14eec7cf817cddbd8f5948df6cc53739d5a3629ed552",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/repetition_01/standard_diagnostics/fertility_by_age.png",
+      "summary_sha256": "382bf28d7c91725c8c6e14eec7cf817cddbd8f5948df6cc53739d5a3629ed552",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/graphs/housing_prices.png",
+      "sha256": "1797fa5eb16d58db73951c88eca842d50c04e02cb78ee257d32ec9435f51481a",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/repetition_01/standard_diagnostics/housing_prices.png",
+      "summary_sha256": "1797fa5eb16d58db73951c88eca842d50c04e02cb78ee257d32ec9435f51481a",
+      "byte_match": true
+    },
+    {
+      "kind": "standard_graph",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/graphs/fertility_policy_by_age_income_state.png",
+      "sha256": "26263b3d5da9f88b13b9cdc2dab837613885d06c5bb4f91d0aab947866503c9d",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5/output/smoke/smoke_probe/evaluation/raw/repetition_01/standard_diagnostics/fertility_policy_by_age_income_state.png",
+      "summary_sha256": "26263b3d5da9f88b13b9cdc2dab837613885d06c5bb4f91d0aab947866503c9d",
+      "byte_match": true
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/initial_contract.json",
+      "sha256": "35d26103efc30d77bd79137da526fee3636a1029806140d231a3dd299b9d2765"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/parameters.csv",
+      "sha256": "e56abd2946c5311cf44753187368187e3a9be2aed719a41a9478f6e4f217b158"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/repetitions/repetition_01/parameters.csv",
+      "sha256": "e56abd2946c5311cf44753187368187e3a9be2aed719a41a9478f6e4f217b158"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/repetitions/repetition_01/raw_parameters.csv",
+      "sha256": "5b79ffad60ff60616608400dce5af59babc96493b9acd7610d19f7c23fc9b736"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/repetitions/repetition_01/raw_stationary_solves.json",
+      "sha256": "e3be5da4641ca79df5b6d5f338105359c6b11d502558836d58b803a100cce53e"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/repetitions/repetition_01/raw_summary.json",
+      "sha256": "1056f378e4e3ccdec7ddd8f6e473b111ea025ad9f7c259c1c717eb07e658ea15"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/repetitions/repetition_01/recent_parent.json",
+      "sha256": "ff65a201f27ed6ee611012d923e1a003ee40f9608645b2fb3c4631443446ffa3"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/repetitions/repetition_01/score.json",
+      "sha256": "f210150be7af886c30833ab0cea8832520bc113addab7e4748c935020b5a1183"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/repetitions/repetition_01/target_fit.csv",
+      "sha256": "68748ba66f6db9b33e1b3a7ed403e41f2d7f82eb29318f2c89cb71db81e4059b"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/repetitions/repetition_01/verified_evaluation_receipt.json",
+      "sha256": "66c278dadc7646fe9433900fc6abd28998f9ee31aedbceff91ff2ee7aaa7b768"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/repetitions/repetition_02/parameters.csv",
+      "sha256": "e56abd2946c5311cf44753187368187e3a9be2aed719a41a9478f6e4f217b158"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/repetitions/repetition_02/raw_parameters.csv",
+      "sha256": "5b79ffad60ff60616608400dce5af59babc96493b9acd7610d19f7c23fc9b736"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/repetitions/repetition_02/raw_stationary_solves.json",
+      "sha256": "3055965adb0c038a7a5bf8e641758d4bd557765109af85b8ce5a9df1cbf98927"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/repetitions/repetition_02/raw_summary.json",
+      "sha256": "a0afb2e94611d5902ac15e0739e1aacc8152911836844edc3f59a728f94aadcd"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/repetitions/repetition_02/recent_parent.json",
+      "sha256": "ddecf5d1085f1ef73b6d9b6bf0af052e3a9cceeb99b3ab0449aa05ee729f8c6e"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/repetitions/repetition_02/score.json",
+      "sha256": "6b998dee386a2cd939061bc7393c47250fb498c89397722dced2656ab205c8e9"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/repetitions/repetition_02/target_fit.csv",
+      "sha256": "b111db6942899661e8a5ee663fbefee08ac3d65a94022d5c1ac0833b126e48b2"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/repetitions/repetition_02/verified_evaluation_receipt.json",
+      "sha256": "bea7dae8b3dcf62db4632fc7f9a31f8e64c0e8c35005ce04f5e05f9eb9600997"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/run_contract.json",
+      "sha256": "f485b161b44e8b2677b0cb3ddb904545c90925384532d85d0137b3f07bdb27ef"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/score.json",
+      "sha256": "f210150be7af886c30833ab0cea8832520bc113addab7e4748c935020b5a1183"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/seed_mapping.json",
+      "sha256": "b80f5f02279b3b3e32ac49d48410a9f41c0183939a3f03298206e7feacab05ed"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/smoke_plan.json",
+      "sha256": "12699389a63d14db1f2dd09a0ea867e004b5e3a8bf2ff8c48d6b81974137961e"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/target_fit.csv",
+      "sha256": "68748ba66f6db9b33e1b3a7ed403e41f2d7f82eb29318f2c89cb71db81e4059b"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/anchor/verified_evaluation_receipt.json",
+      "sha256": "66c278dadc7646fe9433900fc6abd28998f9ee31aedbceff91ff2ee7aaa7b768"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/frozen_v5_hash_manifest.json",
+      "sha256": "e379dfe0532a0edea3bbe963a8f61f146cddb79fe55238720495fffc4a045505"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/frozen_v5_plan.json",
+      "sha256": "10823c4a968d8a05e70b47230cd6add7fb8d5c0ce34426af04270fb0788d4956"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/initial_contract.json",
+      "sha256": "80e49439e0a5e116494a0be446b7097900a3e0d014b8c7381e7d404448c045a7"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/parameters.csv",
+      "sha256": "905822249b01c72bc20d79f1815b37d1b6c82caecceca2ac7ad13814bb54db84"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/repetitions/repetition_01/parameters.csv",
+      "sha256": "905822249b01c72bc20d79f1815b37d1b6c82caecceca2ac7ad13814bb54db84"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/repetitions/repetition_01/raw_parameters.csv",
+      "sha256": "552b47b27eb8cae58b594bafc47381e535a2ad8d6ec1afd9e71e5bd9831e2dca"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/repetitions/repetition_01/raw_stationary_solves.json",
+      "sha256": "22c156a03bee89f60e99b9f949e6506b37c2761f6c5b2d084103c3e7c5c05458"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/repetitions/repetition_01/raw_summary.json",
+      "sha256": "4ac515cc530269bdd12ea161eccdcbec90f6958c50ce69ef352d899273203835"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/repetitions/repetition_01/recent_parent.json",
+      "sha256": "fbc6c7a6e2c7fe2abc6235b8d5ad4d32e0dc4517014b6348125dc7a272a4a4b2"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/repetitions/repetition_01/score.json",
+      "sha256": "86d0a1710a1a7d9d538a1065508dff27a2171393c58acf73f27c5cd6cd9cd5c7"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/repetitions/repetition_01/target_fit.csv",
+      "sha256": "8dc220e8bcbbb84ccc004f7b5b236ff89c57c6d2d23bdb077dc19a931d9f44dd"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/repetitions/repetition_01/verified_evaluation_receipt.json",
+      "sha256": "3a1f8fe163fef704df3dbe9bc263e3743f1508d2b72cb08becae4fa293f7fddb"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/run_contract.json",
+      "sha256": "d863309ade31b747336b080d852f19247d8b77472d04ad75ba0df4b4bd120c92"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/score.json",
+      "sha256": "86d0a1710a1a7d9d538a1065508dff27a2171393c58acf73f27c5cd6cd9cd5c7"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/seed_mapping.json",
+      "sha256": "b80f5f02279b3b3e32ac49d48410a9f41c0183939a3f03298206e7feacab05ed"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/smoke_plan.json",
+      "sha256": "615c19ac31a8203a50db8c39f1a1c5286c723f29e6b2b1f84ccfd9781b206d30"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/target_fit.csv",
+      "sha256": "8dc220e8bcbbb84ccc004f7b5b236ff89c57c6d2d23bdb077dc19a931d9f44dd"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/probe/verified_evaluation_receipt.json",
+      "sha256": "3a1f8fe163fef704df3dbe9bc263e3743f1508d2b72cb08becae4fa293f7fddb"
+    },
+    {
+      "kind": "target_artifact",
+      "path": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/smoke_v5/README.md",
+      "sha256": "31e468b4063321fab9a492149e76939e5d89db7ba9f8fd219681f8716ab50f29"
+    }
+  ]
+}

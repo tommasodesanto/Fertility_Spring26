@@ -1,26 +1,41 @@
 # Earnings, entry wealth and purchase timing
 
-## Live review — September 22, 04:28 EDT
+## Live review — September 22, 06:12 EDT
 
-**Current execution:** the separately reviewed frozen **V5 smoke is running**
-locally from04:26 EDT; native progress is confirmed. V4 passed two scored anchors
-but stopped on the inward-beta budget check, so no search ran. The affected54
-renter states had positive current surplus but legacy output floors added spending
-when continuation values were deeply negative. V5 reports the optimizer's exact
-feasible current allocation, preserving value/saving optimization and all gates.
-All54 saved-state budget gaps fall to5.55e-17;29 native compiled/control tests and
-three source/input preflights pass. Exact V5 anchor repeats and an inward-beta
-probe must pass before the unchanged bounded search starts. Generated allocation
-source is separately hashed. [Reviewed correction and preserved failure](staging/allocation_output_correction.json),
-[immutable V5 plan](staging/frozen_v5_plan.json), [V5 source inventory](staging/frozen_v5_hash_manifest.json).
-V5 also includes the previously reviewed wall-clock-only comparison correction.
+**The full V5 smoke passed, and the four-worker search started automatically.**
+Two exact starting-point repetitions and the inward-beta probe completed 18
+stationary solves and three scored objectives. Both points pass the strict budget,
+transaction, feasibility, fiscal and occupied-value gates. The repeated starting
+loss is 1160.3761384370134; lowering annual beta from 0.99 to 0.985 gives
+1040.4468628084285 in a single repetition under the identical target system.
+The fit remains poor: mean first-birth age is 28.21 at the anchor and 28.11 at the
+probe versus 25.98 in the data. This is smoke evidence, not a completed refinement.
+[Full 13-target and 17-parameter tables and 17 standard figures for each point](smoke_v5/README.md),
+[independent lead checks](staging/v5_smoke_lead_review.json).
+
+The immutable search started at 06:12 EDT with four single-thread workers and the
+unchanged time/64-proposal ceiling. Its selected point and two final exact
+repetitions are still pending. **Selection limitation:** the frozen controller
+starts from the repeated anchor and does not include the single-repeat smoke
+probe in its candidate pool. If the final selected loss exceeds 1040.4469, the
+final report must explicitly disclose the better smoke observation. The live
+selection rule has not been changed.
+
+V5's separately reviewed output correction removes only legacy reported-spending
+floors that were absent from the exhaustive optimizer's feasible allocation.
+All 54 saved-state budget gaps fall to 5.55e-17; 29 native compiled/control tests
+and three source/input preflights pass. Values/saving optimization and all gates
+are preserved. Generated allocation source is separately hashed. V5 also includes
+the previously reviewed exclusion of wall-clock time from numeric comparisons.
+[Correction and preserved V4 failure](staging/allocation_output_correction.json),
+[immutable V5 plan](staging/frozen_v5_plan.json), [source inventory](staging/frozen_v5_hash_manifest.json).
 
 **Still unresolved:** the output fix does not remove finite infeasibility values
 from continuation interpolation. This may distort choices in tiny-mass states;
-it remains an adoption concern alongside density/domain convergence. Parameter
-object labels in the [validation rubric](literature/parameter_validation_rubric.md)
-have been corrected against the implementation before any final plausibility audit.
-The earlier execution narrative below records V2–V4 history, not the live run.
+it remains an adoption concern alongside household-grid density/domain robustness.
+The final selected parameter review must use the corrected
+[validation rubric](literature/parameter_validation_rubric.md). No candidate has
+been adopted for the paper. The execution narrative below records V2–V4 history.
 
 The primary-source reviews and direct four-year PSID point estimates are done.
 The main candidate uses the earliest complete four-year block grid (1984-based
