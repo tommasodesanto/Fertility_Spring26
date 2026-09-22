@@ -1,5 +1,21 @@
 # Calibration Status
 
+**September 22, 08:20 EDT — earnings search stopped; terminal review delivered, no adoption:**
+V5 stopped at 07:50 EDT after proposal006 exceeded its 3,100-second native
+limit during the seventh stationary solve. Seven of eight proposals were scored;
+final selected-point repetitions were never run. The controller classified the
+inner timeout traceback as a fatal contract error; no source/target mismatch is
+shown. The best scored proposal has loss1087.2816, worse than the single-repeat
+smoke probe1040.4469. It improves first-birth timing but worsens childlessness,
+rooms and ownership; beta is at0.99 and the bequest scale is zero, making the
+bequest wealth-shift parameter inactive at this point. No convergence or
+identification claim is warranted. Search counts49/48/1 started/completed/incomplete
+stationary solves; V5 including smoke67/66/1; all attempts102/98/4. All processes
+have ended; no retry or model change was launched. The continuation-sentinel,
+wealth-grid and initial-condition concerns remain open.
+[Reviewed report with complete13-target/17-parameter tables, literature/data evidence and next steps](output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/terminal_review.md).
+[Original17 figures and source/failure receipts](output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/search_readout/README.md).
+
 **September 22, 06:12 EDT — V5 full smoke passed; four-worker search started:**
 Two exact starting-point repetitions and the inward-beta probe passed every
 unchanged numerical gate, completing 18 stationary solves and three scored

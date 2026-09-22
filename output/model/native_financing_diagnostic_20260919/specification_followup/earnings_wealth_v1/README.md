@@ -1,6 +1,16 @@
 # Earnings, entry wealth and purchase timing
 
-## Live review — September 22, 06:12 EDT
+## Terminal review — September 22, 08:20 EDT
+
+**The full numerical smoke passed, but the longer calibration stopped before final verification.** At07:50 EDT proposal006 exceeded its3,100-second native limit during the seventh stationary solve. Seven of eight proposals scored. The best valid search proposal has loss1087.2816148857435, worse than the one-repeat smoke point1040.4468628084285. Neither has the planned final exact repetitions; no calibration was adopted or restart launched.
+
+[Full reviewed report: complete13-target/17-parameter tables, empirical uncertainty, all17-figure assessment and next steps](terminal_review.md).
+[Collected search tables, all17 original graphs and failure/source fingerprints](search_readout/README.md).
+[Lead verification and honest solve counts](staging/v5_terminal_lead_review.json).
+
+The best search point improves fertility timing but worsens childlessness, rooms and ownership. Its bequest scale is zero, making the wealth-shift parameter inactive at that point; beta remains at its actual0.99 bound. Fit, identification, continuation-sentinel interpolation, wealth-grid robustness and initial-condition validation remain unresolved. All local stages are terminal. The follow-up was deleted after this reviewed report; any corrective run requires a separately reviewed new plan.
+
+## Historical smoke/start review — September 22, 06:12 EDT
 
 **The full V5 smoke passed, and the four-worker search started automatically.**
 Two exact starting-point repetitions and the inward-beta probe completed 18

@@ -1,5 +1,5 @@
 {
-  "status": "v5_verified_smoke_search_running",
+  "status": "terminal_search_timeout_no_final_verification",
   "bundle": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/earnings_wealth_direct_period_20260922_v5",
   "plan_sha256": "10823c4a968d8a05e70b47230cd6add7fb8d5c0ce34426af04270fb0788d4956",
   "supervisor_sha256": "036f4029412a489fae2f7cba69e49baadb2a77f45de7a205ab933ed6df0399a4",
@@ -13,7 +13,7 @@
   "search_controller_verification_seconds": 6400,
   "maximum_full_objectives": 69,
   "maximum_stationary_solves": 552,
-  "status_note": "V5 smoke passed: two exact anchor repetitions and one inward-beta probe, 18 completed stationary solves and three scored objectives. Four-worker search started automatically at 06:12 EDT. First batch cases001\u2013004 running; selected/repeated final result pending.",
+  "status_note": "V5 stopped07:50 EDT after inner native timeout at case006 seventh solve. Eight proposals attempted, seven scored. No final selected repetitions; no retry. Best valid search loss1087.2816148857435 is worse than one-repeat smoke1040.4468628084285.",
   "automation_id": "earnings-overnight-review",
   "started_utc": "2026-09-22T08:26:55.884762+00:00",
   "supervisor_pid": 51407,
@@ -29,7 +29,7 @@
   },
   "first_native_receipt": "staging/v4_first_native_pass.json",
   "reporting_comparison_note": "staging/numeric_comparison_review.json",
-  "checked_at": "2026-09-22T06:21:50.591236-04:00",
+  "checked_at": "2026-09-22T08:18:24.170639-04:00",
   "failure_review": "staging/allocation_output_correction.json",
   "historical_v4_anchor_readout": "anchor_readout/README.md",
   "historical_v4_anchor_loss": 1160.3761384370134,
@@ -42,5 +42,27 @@
   "smoke_scored_objectives": 3,
   "smoke_anchor_loss": 1160.3761384370134,
   "smoke_probe_loss": 1040.4468628084285,
-  "search_selection_limit": "Repeated anchor seeds the frozen search; single-repeat inward-beta smoke probe is outside its selection pool. Disclose if selected loss is worse than this probe."
+  "search_selection_limit": "Repeated anchor seeds the frozen search; single-repeat inward-beta smoke probe is outside its selection pool. Disclose if selected loss is worse than this probe.",
+  "terminal_report": "terminal_review.md",
+  "terminal_review": "staging/v5_terminal_lead_review.json",
+  "terminal_readout": "search_readout/README.md",
+  "search_finished_utc": "2026-09-22T11:50:29.769700+00:00",
+  "search_stationary_solves": {
+    "started": 49,
+    "completed": 48,
+    "incomplete": 1
+  },
+  "v5_stationary_solves": {
+    "started": 67,
+    "completed": 66,
+    "incomplete": 1
+  },
+  "all_attempt_stationary_solves": {
+    "started": 102,
+    "completed": 98,
+    "incomplete": 4
+  },
+  "final_selected_verification": "unrun",
+  "followup_status": "deleted_after_terminal_review",
+  "followup_deleted_at": "2026-09-22T08:19:36.007129-04:00"
 }

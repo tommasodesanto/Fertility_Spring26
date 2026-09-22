@@ -98,7 +98,7 @@
     "Transitory variance weakly measured; baseline bootstrap lower tail reaches zero",
     "Estimated age25\u201360 risk extrapolated to entry18 under an externally fixed stationary initial process",
     "Stationary AR1+iid lognormal process omits richer heterogeneity; no proof of exact aggregation or annual within-block decisions",
-    "V5 full smoke passed; four-worker bounded search is running. Final selection/repeats and parameter plausibility remain pending. Output correction does not fix finite infeasibility-sentinel interpolation; household-grid robustness remains outstanding."
+    "V5 search stopped on inner native timeout after seven scored/eight attempted proposals; final selected exact repeats unrun. Best search point has theta0=0, so theta1 is inactive; no identification/adoption. Continuation-sentinel and household-grid concerns remain."
   ],
   "model_tests": [
     {
@@ -170,11 +170,13 @@
     "preflight": "three frozen native source/input arms passed; zero household solves",
     "receipt": "local_execution.json",
     "reporting_comparison_note": "V5 includes previously tested exclusion of wall-clock seconds; V4 immutable. Scientific final equality still required.",
-    "status": "v5_verified_smoke_search_running",
+    "status": "terminal_search_timeout_no_final_verification",
     "unit_checks": "29 actual compiled/control tests passed; saved54state allocation replay passes unchanged budget tolerance",
     "smoke_review": "staging/v5_smoke_lead_review.json",
     "smoke_readout": "smoke_v5/README.md",
-    "search_started_utc": "2026-09-22T10:12:19.778732+00:00"
+    "search_started_utc": "2026-09-22T10:12:19.778732+00:00",
+    "terminal_review": "staging/v5_terminal_lead_review.json",
+    "terminal_report": "terminal_review.md"
   },
   "parameter_rubric_correction": "Definition labels corrected against implementation: H0 supply intercept, theta1 wealth shift, h_P parenthood-only housing floor, fertility/tenure kappa shock scales.",
   "point_estimates": {
@@ -208,5 +210,16 @@
     "stationary_solves_completed": 18,
     "scored_objectives": 3,
     "search_selection_limit": "Search does not include single-repeat smoke probe in its candidate pool; disclose if final selection is worse."
+  },
+  "terminal_result": {
+    "best_scored_search_loss": 1087.2816148857435,
+    "better_single_repeat_smoke_loss": 1040.4468628084285,
+    "search_proposals_attempted": 8,
+    "search_proposals_scored": 7,
+    "final_exact_repetitions": "unrun",
+    "all17_standard_figures_inspected": true,
+    "report": "terminal_review.md",
+    "receipt": "staging/v5_terminal_lead_review.json",
+    "adopted": false
   }
 }
