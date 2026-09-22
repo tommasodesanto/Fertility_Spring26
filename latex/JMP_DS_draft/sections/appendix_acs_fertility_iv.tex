@@ -1,34 +1,35 @@
 % Data appendix: ACS same-age and same-sex sibling designs for housing.
 % Self-contained component. Requires amsmath, booktabs, graphicx, natbib
-% (all loaded by the main draft). The figure directory can be overridden by
-% defining \acsivfigdir before this file is input.
+% (all loaded by the main draft). The figure and table directories can be
+% overridden by defining \acsivfigdir and \acsivtabdir before this file is input.
 \providecommand{\acsivfigdir}{../../output/acs_fertility_iv/data_appendix/figures}
+\providecommand{\acsivtabdir}{../../output/acs_fertility_iv/data_appendix/tables}
 
 \section{Housing and Additional Children: Evidence from Sibling Composition in the ACS}
 \label{app:acs_iv}
 
-This appendix asks how the housing a young mother occupies changes when she has
-an additional child, using two features of her children that are plausibly
-unrelated to her housing preferences except through family size. The first is
-whether her two oldest children are recorded at the same age, which in most cases
-reflects a twin birth. The second is whether her two oldest children have the same
-sex, which \citet{angrist1998children} show raises the probability of a third
-birth. Both sources of variation have a long history in the study of fertility and
-labor supply. Housing is a different outcome, and for the sibling-sex design an
-awkward one: children of the same sex can share a bedroom, so the composition of a
-family can change the housing it needs without changing its size.
+This appendix asks how the housing a young mother occupies differs when she has
+an additional child. We use two features of her children that the literature has
+used as sources of variation in family size. The first is whether her two oldest
+resident children are recorded at the same age, an age-only proxy for a twin
+birth. The second is whether her two oldest resident children have the same sex,
+which \citet{angrist1998children} show raises the probability of a third birth.
+Each delivers a causal effect of the additional child only under assumptions we
+state in Section~\ref{app:acs_iv_equations}. Housing is a different outcome from
+the labor-market outcomes for which these designs were developed, and for the
+sibling-sex design an awkward one: children of the same sex can share a bedroom,
+so the composition of a family might change the housing it needs without changing
+its size.
 
 The two designs study different families at different margins, and they give
-answers of opposite sign. Mothers whose two oldest children
-are the same age live in about a third of a room more than comparable mothers, and
-are about three percentage points more likely to own their home. Mothers whose two
-oldest children have the same sex live in slightly \emph{fewer} rooms, a difference
-almost entirely accounted for by bedrooms. Taken at face value, the corresponding
-instrumental-variable estimate says that a third child reduces a family's dwelling
-by more than a full room. We read this estimate as evidence that the exclusion
-restriction fails for housing outcomes, not as an effect of children, and we
-explain below why a small direct effect of sibling sex on housing is enough to
-produce it.
+answers of opposite sign. Mothers whose two oldest children are recorded at the
+same age live in about a third of a room more than comparable mothers, and are
+about three percentage points more likely to own their home. Mothers whose two
+oldest children have the same sex live in slightly \emph{fewer} rooms and fewer
+bedrooms. Scaled by the first stage, the second design implies that a third child
+reduces a family's dwelling by more than a full room. We report this estimate as
+it is, set out what would have to be true for it to be an effect of the third
+child, and describe the checks we ran on its measurement.
 
 \subsection{Data and the mother sample}
 \label{app:acs_iv_data}
@@ -42,39 +43,41 @@ first three of these. No person is followed across years, so every quantity belo
 is measured once, at the interview.
 
 The ACS does not ask women how many children they have borne; it asks only whether
-a woman gave birth in the past twelve months, and it records no birth histories. We therefore reconstruct each
-woman's children from the household roster. IPUMS assigns to each person the
-person number of a probable mother living in the same household, using
-relationship, age, and marital information \citep{ipumsusa_vardocs}. These links
-identify social as well as biological relationships: a stepmother or adoptive
-mother is linked in the same way as a birth mother. We keep every link in which the
-child's age is nonnegative and below the mother's age. The household relationship
-variable, which records each person's relationship to the householder rather than
-to the mother, cannot separate biological from other links and is not used to
-filter them. Among all valid links in the 2005--2019 records, before any
-restriction on ages, 91 percent of linked children are recorded as the
-householder's child and 4 percent as the householder's grandchild, the latter
-typically a young mother living in her own parents' home. Only 1,692 links fail
-because the recorded child is not younger than the recorded mother.
+a woman gave birth in the past twelve months, and it records no birth histories.
+We therefore reconstruct each woman's resident children from the household roster.
+IPUMS assigns to each person the person number of a probable mother living in the
+same household, using relationship, age, and marital information
+\citep{ipumsusa_vardocs}. These links identify social as well as biological
+relationships: a stepmother or adoptive mother is linked in the same way as a birth
+mother. We keep every link in which the child's age is nonnegative and below the
+mother's age. The household relationship variable, which records each person's
+relationship to the householder rather than to the mother, cannot separate
+biological from other links and is not used to filter them. Among all valid links
+in the 2005--2019 records, before any restriction on ages, 91 percent of linked
+children are recorded as the householder's child and 4 percent as the
+householder's grandchild. Only 1,692 links fail because the recorded child is not
+younger than the recorded mother.
 
-For each woman we count her linked coresident children, $n_i$, and order them by
+For each woman we count her linked resident children, $m_i$, and order them by
 age, $a_{i1}\ge a_{i2}\ge\cdots$, where ages are whole years at the interview. The
-count $n_i$ is the number of her children living with her, not the number she has
+count $m_i$ is the number of her children living with her, not the number she has
 borne. Children who have left home, died, or live with another parent are
 missing, and a woman can be linked to a child she did not bear. Following
 \citet[pp.~452--453]{angrist1998children}, we limit these errors by studying young
 mothers: the base sample consists of women aged 21 to 35 at the interview whose
 oldest linked child, if any, is younger than 18. Angrist and Evans additionally
-drop mothers whose count of coresident children differs from their reported
+drop mothers whose count of resident children differs from their reported
 children ever born and mothers whose children's ages or sexes were imputed by the
 Census Bureau. The ACS does not collect children ever born, and our extract does
-not carry imputation flags, so neither restriction is applied here.
+not carry imputation flags, so neither restriction is applied here; imputed ages
+and sexes, if any, enter the instruments as recorded.
 
-Table~\ref{tab:acsiv_sample} reports the resulting samples. The 59,046,776 person
-records in the source files fall to 46,373,936 once the sample is limited to the
-2005--2019 one-year files. The base sample contains 4,024,238 women living in
-3,783,862 households. It includes women with no linked child, who enter neither
-design, and it counts women rather than mothers.
+Table~\ref{tab:acsiv_sample} reports the samples. The 59,046,776 person records in
+the extract fall to 46,373,936 once the sample is limited to the 2005--2019
+one-year files. The base sample contains 4,024,238 women living in 3,783,862
+households. It includes women with no linked child, who enter neither design.
+Because several eligible women can live in one household, household counts are
+reported alongside counts of mothers throughout.
 
 \begin{table}[htbp]
 \centering
@@ -85,35 +88,35 @@ design, and it counts women rather than mothers.
 \toprule
  & Count \\
 \midrule
-\multicolumn{2}{@{}l}{\textit{Source records}} \\
+\multicolumn{2}{@{}l}{\textit{Source records and base sample}} \\
 ACS person records, fifty states and the District of Columbia & 59,046,776 \\
-\quad in the 2005--2019 one-year samples & 46,373,936 \\
-Women aged 21--35 with positive person weight and no linked child aged 18 or older & 4,024,238 \\
-\quad households containing at least one such woman & 3,783,862 \\
+\quad of which in the 2005--2019 one-year samples & 46,373,936 \\
+Base sample: women aged 21--35, positive person weight, no linked child aged 18 or older & 4,024,238 \\
+Households containing at least one base-sample woman & 3,783,862 \\
 \addlinespace
 \multicolumn{2}{@{}l}{\textit{Same-age design}} \\
-Mothers whose oldest linked child is aged 0--5 & 857,607 \\
-\quad with two or more linked children & 325,171 \\
-\quad whose two oldest linked children are the same age & 16,496 \\
-\quad whose three oldest linked children are the same age & 388 \\
+Estimation sample: base-sample women whose oldest linked child is aged 0--5 & 857,607 \\
+\quad within it, two or more linked children & 325,171 \\
+\quad within it, two oldest linked children the same age & 16,496 \\
+\quad within it, three oldest linked children the same age & 388 \\
 \addlinespace
 \multicolumn{2}{@{}l}{\textit{Same-sex design}} \\
-Women with two or more linked children & 1,132,295 \\
-\quad whose two oldest linked children are the same age & 32,186 \\
-Mothers meeting all criteria (text) & 656,986 \\
-\quad two oldest children of the same sex & 329,974 \\
-\qquad two boys & 173,813 \\
-\qquad two girls & 156,161 \\
-\quad three or more linked children & 148,775 \\
+Base-sample women with two or more linked children & 1,132,295 \\
+\quad among them, two oldest linked children the same age (second child of any age) & 32,186 \\
+Estimation sample (criteria in Section~\ref{app:acs_iv_instruments}) & 656,986 \\
+\quad within it, two boys & 173,813 \\
+\quad within it, two girls & 156,161 \\
+\quad within it, boy then girl & 164,253 \\
+\quad within it, girl then boy & 162,759 \\
+\quad within it, three or more linked children & 148,775 \\
 \bottomrule
 \end{tabular}
 \par\medskip
 \begin{minipage}{0.95\linewidth}
-\footnotesize\textit{Notes:} Counts of person records, unweighted. Nested entries are subsets of the entry above
-them. In the same-sex design, the count of women whose two oldest children share an
-age is taken over all women with two or more linked children, whatever the age of
-the second child; the criteria for the estimation sample are listed in
-Section~\ref{app:acs_iv_instruments}.
+\footnotesize\textit{Notes:} Counts of person records, unweighted. Indented rows
+are subsets of the row they refer to; they are not successive exclusions, and the
+same-sex estimation sample is not obtained by subtracting the rows above it. The
+four sex compositions partition the same-sex estimation sample.
 \end{minipage}
 \end{table}
 
@@ -128,17 +131,17 @@ quarters.
 excluding bathrooms, porches, balconies, foyers, halls, and half-rooms. IPUMS codes
 valid counts from 1 to 27 and a top category of 30. In the 2009 file, 107 person
 records carry the value 28, which the codebook does not define; they are treated as
-missing. We cap the count at nine rooms because the Census Bureau imposed
-a national top code of nine rooms through the 2007 survey
-\citep{ipumsusa_vardocs}. Without the cap, a family's measured size would depend on
-the survey year in which it was interviewed.
+missing. We cap the count at nine rooms because the Census Bureau imposed a
+national top code of nine rooms through the 2007 survey \citep{ipumsusa_vardocs}.
+Without the cap, a family's measured size would depend on the survey year in which
+it was interviewed.
 
 \emph{Bedrooms} counts rooms that would be listed as bedrooms if the unit were for
-sale or rent, whatever their current use. The IPUMS code minus one is the number of
-bedrooms; valid codes run from 1 (no bedroom) to 22. We cap the count at five,
-again because a national top code of five bedrooms applied through 2007. Bedrooms
-are a component of rooms, and we report them to see which part of the dwelling
-moves.
+sale or rent. The IPUMS code minus one is the number of bedrooms; valid codes run
+from 1 (no bedroom) to 22. We cap the count at five, again because a national top
+code of five bedrooms applied through 2007. Bedrooms are a component of rooms, but
+because the two counts are capped separately, capped rooms minus capped bedrooms is
+not a count of the other rooms in the dwelling.
 
 \emph{Ownership} equals one if the unit is owned or being bought, including units
 held with a mortgage, and zero if it is rented, including units occupied without
@@ -146,63 +149,65 @@ payment of cash rent. Other codes are missing.
 
 Every mother in both estimation samples has a valid tenure code and a valid bedroom
 count. One mother in the same-sex sample lacks a valid room count, which is why the
-room samples in Table~\ref{tab:acsiv_pooled} are one observation smaller.
+room samples in that design are one observation smaller.
 
 \subsection{The two instruments}
 \label{app:acs_iv_instruments}
 
 \paragraph{Same-age oldest pair.}
-This design studies the move from one to two children among mothers whose first
-child is young. The sample consists of mothers with at least one linked child whose
-oldest linked child is aged 0 to 5. The instrument and the treatment are
+This design studies the move from one to two resident children among mothers whose
+oldest child is young. The sample consists of base-sample women with at least one
+linked child whose oldest linked child is aged 0 to 5. The instrument and the
+treatment are
 \begin{equation}
-Z_i^{A}=\mathbf{1}\{n_i\ge 2,\ a_{i1}=a_{i2}\},
+Z_i^{A}=\mathbf{1}\{m_i\ge 2,\ a_{i1}=a_{i2}\},
 \qquad
-D_i^{A}=\mathbf{1}\{n_i\ge 2\},
+D_i^{A}=\mathbf{1}\{m_i\ge 2\},
 \label{eq:acsiv_twin_def}
 \end{equation}
-so the instrument indicates that the two oldest children are recorded at the same
-age and the treatment indicates a second coresident child. Every mother with
+so the instrument indicates that the two oldest resident children are recorded at
+the same age and the treatment indicates a second resident child. Every mother with
 $Z_i^{A}=1$ has $D_i^{A}=1$ by construction. The event age is the oldest child's
-age, $e_i=a_{i1}$, which measures the time since the first birth in whole years.
+age, $e_i=a_{i1}$. If that child is the mother's first birth, $e_i$ measures the
+years since that birth; the data do not confirm that it is.
 
-The instrument is a proxy for a twin first birth, not a twin indicator. Ages are
-recorded in whole years and our extract carries no quarter of birth, so two
-children born within a year of each other can share an age at the interview. A
-step-sibling or adopted child of the same age produces the same record.
-\citet[p.~454]{angrist1998children} measure the resulting error in the 1980 Census:
-defining twins by age in years alone yields a second-birth twin rate 35 percent
-higher than defining them by age and quarter of birth, and for that reason they
-restrict their twins analysis to 1980. In our sample 1.9 percent of eligible mothers
-have a same-age pair. Genuine twin births are themselves not random:
-\citet[p.~775]{angrist2010multiple} note that twinning varies with maternal age and
-race and that twin births change child spacing and child health.
+The instrument is an age-only proxy for a twin birth, not a twin indicator, and we
+have not measured what share of same-age pairs are twins. Ages are recorded in whole
+years and our extract carries no quarter of birth, so two children born within a
+year of each other can share an age at the interview, and a step-sibling or adopted
+child of the same age produces the same record. \citet[p.~454]{angrist1998children}
+measure the resulting error in the 1980 Census: defining twins by age in years
+alone yields a second-birth twin rate 35 percent higher than defining them by age
+and quarter of birth, and for that reason they restrict their twins analysis to
+1980. In our sample 1.9 percent of eligible mothers have a same-age pair, and 388
+have three oldest children of the same age. Twin births are themselves not
+random: \citet[p.~775]{angrist2010multiple} note that twinning varies with maternal
+age and race and that twin births change child spacing and child health.
 
 \paragraph{Same-sex oldest pair.}
-This design studies the move from two to three children. The sample consists of
-mothers with at least two linked children whose two oldest children have different
-ages, whose second-oldest child is aged 0 to 5, and whose two oldest children both
-have a recorded sex. The instrument and treatment are
+This design studies the move from two to three resident children. The sample
+consists of base-sample women with at least two linked children whose two oldest
+children have different ages, whose second-oldest child is aged 0 to 5, and whose
+two oldest children both have a recorded sex. The instrument and treatment are
 \begin{equation}
 Z_i^{B}=\mathbf{1}\{s_{i1}=s_{i2}\},
 \qquad
-D_i^{B}=\mathbf{1}\{n_i\ge 3\},
+D_i^{B}=\mathbf{1}\{m_i\ge 3\},
 \label{eq:acsiv_samesex_def}
 \end{equation}
 where $s_{ik}$ is the sex of the $k$th oldest linked child. The event age is the
-second child's age, $e_i=a_{i2}$, so the clock starts at the second birth, when the
-instrument is realized. The requirement that the two oldest children differ in age
-removes the mothers who drive the first design and makes the order of the first
-two children well defined; the order of the second and third children is not
-checked, so when they share an age the child labeled second is arbitrary. The sample
-is not restricted to mothers with exactly two children, and it does not condition
-on the treatment. Every mother who satisfies the age and ordering criteria has a
-recorded sex for both children.
+second child's age, $e_i=a_{i2}$, which proxies for the years since the second
+birth, when the instrument is realized. The requirement that the two oldest
+children differ in age removes the mothers who drive the first design and makes
+the order of the first two children well defined. The sample is not restricted to
+mothers with exactly two children and does not condition on the treatment. When the
+second and third children share an age, the child labeled second is arbitrary;
+Section~\ref{app:acs_iv_diagnostics} drops these mothers.
 
-The instrument predicts a third coresident child, not a second, and its first stage
-is positive: parents of two boys or two girls are more likely to have another
-child. At event age 0 the second child was born within the past year, but a third
-child may already be present, so no event age in this design precedes treatment.
+The instrument predicts a third resident child, and its first stage is positive:
+mothers of two boys or two girls are more likely to have another child. Because the
+instrument is realized at the second birth, no event age in this design precedes
+the instrument, and event age 0 cannot serve as a period before exposure.
 
 \subsection{Estimating equations and inference}
 \label{app:acs_iv_equations}
@@ -223,9 +228,8 @@ $e_i$), her race, the survey year, and the event age. We do not control for the
 mother's current marital status, education, or state of residence, all of which can
 respond to fertility; \citet[p.~465, footnote~12]{angrist1998children} exclude
 education and husband's earnings for the same reason. Regressions are weighted by
-the mother's ACS person weight. Standard errors are clustered by household, because
-several eligible women can live in one household, and each outcome is estimated on
-the mothers for whom it is observed.
+the mother's ACS person weight. Standard errors are clustered by household, and each
+outcome is estimated on the mothers for whom it is observed.
 
 With one instrument and one endogenous variable, two-stage least squares is the
 ratio of the two coefficients:
@@ -233,196 +237,151 @@ ratio of the two coefficients:
 \hat\beta=\hat\delta/\hat\pi .
 \label{eq:acsiv_ratio}
 \end{equation}
-If the instrument is as good as randomly assigned given $W_i$, affects housing only
-through the additional child, and moves every mother's fertility in the same
-direction, $\beta$ is the average effect of the additional child for mothers whose
-fertility responds to the instrument. For the first design these are mothers who,
-without a same-age pair, would have one coresident child at that event age. For the
-second they are mothers who have a third child because their first two share a sex.
-The two groups differ in age, in family size, and in the margin they cross, so the
-two estimates answer different questions.
+The ratio is a causal effect under three assumptions: the instrument is as good as
+randomly assigned given $W_i$; it affects housing only through the additional
+child; and it moves every mother's fertility in the same direction. Under them,
+$\beta$ is the average effect of the additional child for mothers whose fertility
+responds to the instrument. For the first design these are mothers who, without a
+same-age pair, would have one resident child at that event age. For the second they
+are mothers who have a third child because their first two share a sex. The two
+groups differ in age, in family size, and in the margin they cross, so the two
+estimates answer different questions. We do not test these assumptions, and no
+sign restriction on the housing effect is imposed or tested.
 
-Our baseline does not include separate controls for the sex of the first and second
-child. \citet[pp.~460--461]{angrist1998children} add them because the same-sex
-indicator is an interaction of the two children's sexes: with slightly more boys
-than girls born, it is mildly correlated with each child's sex, and a child's sex
-may affect parents for reasons unrelated to family size. The same authors report
-that their estimates are virtually unchanged by these controls (pp.~466--467); we do
-not report that specification here.
+The baseline does not include separate indicators for the sex of the first and
+second child. \citet[pp.~460--461]{angrist1998children} add them because the
+same-sex indicator is an interaction of the two children's sexes: with slightly
+more boys than girls born, it is mildly correlated with each child's sex, and a
+child's sex may affect parents for reasons unrelated to family size. They report
+that their estimates are virtually unchanged by these controls (pp.~466--467).
+Section~\ref{app:acs_iv_diagnostics} reports the same check.
 
-We report three measures of uncertainty. Confidence intervals are the estimate plus
-or minus 1.96 clustered standard errors. The first-stage $F$ statistic is
-$(\hat\pi/\widehat{\mathrm{se}}(\hat\pi))^2$ from the clustered covariance; with a
-single instrument and a single endogenous variable, it coincides with the
-Kleibergen--Paap statistic \citep{andrews2019weak}. Because a large $F$
-guards against weak-instrument bias but says nothing about the exclusion
-restriction, we also invert the Anderson--Rubin test
-\citep{anderson1949estimation}, which \citet{andrews2019weak} recommend
-reporting whenever there is a single instrument. For each candidate value $\beta_0$
-we regress $Y_i-\beta_0D_i$ on $Z_i$ and $W_i$ and test whether the coefficient on
-$Z_i$ is zero at the 5 percent level with the same clustered covariance. The
-candidates form a grid from $-3$ to $3$ in steps of $0.1$ for rooms and bedrooms,
-and from $-50$ to $50$ percentage points in steps of $2$ for ownership. The tables
-report the smallest and largest grid values that are not rejected. With one
-instrument, the Anderson--Rubin set is the set of $\beta_0$ satisfying a quadratic
-inequality, and it is a bounded interval exactly when the first-stage $F$ exceeds
-the critical value of 3.84; every first-stage $F$ in our tables does. The exact
-endpoints lie between the last accepted and the first rejected grid value. Where one grid value is accepted, as for rooms in
-the pooled same-age design, the set lies within one grid step of that value; it is
-not a point. For bedrooms in the same design no grid value is accepted: the set is
-narrower than the grid step and lies between two adjacent grid values, in line with
-the conventional interval of $[0.305,0.361]$.
+Confidence intervals for the reduced form, first stage, and two-stage estimate are
+the estimate plus or minus 1.96 clustered standard errors. The first-stage $F$
+statistic is the household-clustered Wald statistic
+$(\hat\pi/\widehat{\mathrm{se}}(\hat\pi))^2$. With a single instrument and a single
+endogenous variable, this is the statistic to which the Kleibergen--Paap robust
+$F$ reduces \citep[pp.~16--17]{andrews2018weak}.
+
+A large first stage protects against weak-instrument bias. It says nothing about
+the exclusion restriction. Because inference on $\hat\beta$ can still be unreliable
+when the first stage is imprecise, we also report the Anderson--Rubin test
+\citep{anderson1949estimation}, which \citet[p.~3]{andrews2018weak} recommend
+whenever there is a single instrument. The hypothesis $\beta=\beta_0$ says that, net
+of the controls, the instrument has no effect on $Y_i-\beta_0D_i$. Its coefficient
+on that variable is $\hat\delta-\beta_0\hat\pi$, and the test statistic is
+\begin{equation}
+AR(\beta_0)=\frac{(\hat\delta-\beta_0\hat\pi)^2}
+{\hat V_\delta-2\beta_0\hat C_{\delta\pi}+\beta_0^2\hat V_\pi},
+\label{eq:acsiv_ar}
+\end{equation}
+where $\hat V_\delta$, $\hat V_\pi$, and $\hat C_{\delta\pi}$ are the clustered
+variances and covariance of the reduced-form and first-stage coefficients. The
+statistic is compared with the 5 percent critical value of an $F$ distribution with
+one numerator degree of freedom and the denominator degrees of freedom of the
+clustered regressions. The size of this test does not depend on the strength of the
+instrument.
+
+We evaluate the test on a finite grid of candidate values: from $-3$ to $3$ in
+steps of $0.1$ for rooms and bedrooms, and from $-50$ to $50$ percentage points in
+steps of $2$ for ownership. The tables report the smallest and largest grid values
+that are not rejected. In every cell with at least one accepted value, the accepted
+grid values form one unbroken run. Values between grid points were not evaluated,
+so the reported ranges describe the grid, not the exact endpoints of a continuous
+confidence set. A single entry in braces means that one tested value was accepted
+and its neighbors on the grid were rejected; it is not a zero-width interval.
+``None'' means that no tested value was accepted.
 
 \subsection{Results}
 \label{app:acs_iv_results}
 
 Table~\ref{tab:acsiv_pooled} reports the estimates pooled over event ages 0 to 5,
-and Table~\ref{tab:acsiv_ages} reports them at event ages 3 and 5. Figure~\ref{fig:acsiv_rf} plots all eighteen reduced
-forms. We report every design, outcome, and window that was estimated.
+and Table~\ref{tab:acsiv_ages} reports them at event ages 3 and 5.
+Figure~\ref{fig:acsiv_rf} plots all eighteen reduced forms.
 
 \begin{table}[htbp]
 \centering
 \footnotesize
 \caption{Pooled estimates, event ages 0--5}
 \label{tab:acsiv_pooled}
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}lrrrrrrrl@{}}
-\toprule
- & & & Instrument & Reduced & First stage & First-stage & & AR accepted \\
-Outcome & Mothers & Households & equal to one & form & (pp) & $F$ & 2SLS & grid values \\
-\midrule
-\multicolumn{9}{@{}l}{\textit{A. Same-age oldest pair, event age 0--5}} \\
-Rooms & 857,607 & 855,366 & 16,496 & 0.329 & 66.21 & 77,396 & 0.496 & \{0.5\} \\
- & & & & (0.017) & (0.24) & & (0.026) & \\
-Bedrooms & 857,607 & 855,366 & 16,496 & 0.221 & 66.21 & 77,396 & 0.333 & none \\
- & & & & (0.010) & (0.24) & & (0.014) & \\
-Owner (pp) & 857,607 & 855,366 & 16,496 & 3.11 & 66.21 & 77,396 & 4.69 & [4, 6] \\
- & & & & (0.46) & (0.24) & & (0.70) & \\
-\addlinespace
-\multicolumn{9}{@{}l}{\textit{B. Same-sex oldest pair, event age 0--5}} \\
-Rooms & 656,985 & 656,159 & 329,974 & $-$0.038 & 3.27 & 715 & $-$1.149 & [$-$1.4, $-$0.9] \\
- & & & & (0.005) & (0.12) & & (0.164) & \\
-Bedrooms & 656,986 & 656,160 & 329,974 & $-$0.034 & 3.27 & 715 & $-$1.042 & [$-$1.2, $-$0.9] \\
- & & & & (0.003) & (0.12) & & (0.096) & \\
-Owner (pp) & 656,986 & 656,160 & 329,974 & $-$0.25 & 3.27 & 715 & $-$7.50 & [$-$16, 0] \\
- & & & & (0.15) & (0.12) & & (4.51) & \\
-\bottomrule
-\end{tabular}
+\input{\acsivtabdir/tab_acs_iv_pooled.tex}
 \par\medskip
 \begin{minipage}{0.97\linewidth}
 \footnotesize\textit{Notes:} Each row reports the reduced form and first stage of
 equation~\eqref{eq:acsiv_rf_fs} and the two-stage least-squares estimate of
-equation~\eqref{eq:acsiv_ratio}, with clustered standard errors in parentheses.
-The treatment is a second coresident child in panel~A and a third in panel~B. Rooms
-and bedrooms are counts, capped at nine and five; ownership and the first stage are
-in percentage points. ``AR accepted grid values'' gives the smallest and largest
-values of the effect not rejected by the Anderson--Rubin test at the 5 percent
-level on the grid described in the text; braces denote a single accepted value and
-``none'' an accepted set narrower than the grid step. Regressions weighted by the
-ACS person weight; standard errors clustered by household.
+equation~\eqref{eq:acsiv_ratio}, with household-clustered standard errors in
+parentheses; 95 percent confidence intervals are the estimate $\pm1.96$ standard
+errors. The treatment is a second resident child in panel~A and a third in
+panel~B. Rooms and bedrooms are counts, capped at nine and five; ownership and the
+first stage are in percentage points. ``AR accepted grid values'' gives the
+smallest and largest grid values of the effect not rejected by the Anderson--Rubin
+test at the 5 percent level (grid in the text); braces denote a single accepted grid
+value and ``none'' that no grid value was accepted. Regressions weighted by the ACS
+person weight.
 \end{minipage}
 \end{table}
 
 \paragraph{Same-age oldest pair.}
 The first stage is large, 66 percentage points, because a same-age pair guarantees
-a second child: the coefficient is approximately one minus the probability that a comparable
-mother without such a pair already has a second coresident child. Mothers with a
-same-age pair live in 0.33 more rooms (standard error 0.017) and 0.22 more bedrooms,
-and they are 3.1 percentage points more likely to own. Scaling by the first stage,
-a second child is associated with half a room, a third of a bedroom, and a
+a second child: the coefficient is approximately one minus the probability that a
+comparable mother without such a pair already has a second resident child. Mothers
+with a same-age pair live in 0.33 more rooms (standard error 0.017) and 0.22 more
+bedrooms, and they are 3.1 percentage points more likely to own. Scaled by the first
+stage, a second child is associated with half a room, a third of a bedroom, and a
 4.7-point higher ownership rate. The first stage falls from 52 points at event age
 3 to 35 points at event age 5, as more mothers without a same-age pair have a second
 child, while the room and bedroom reduced forms change little. The two-stage
-estimates therefore rise with the event age, to 1.1 rooms and 15 points of ownership at age 5.
-At event age 3 the ownership reduced form is 1.6 points and its confidence interval
-includes zero. These magnitudes carry the qualifications above: the proxy mixes
-twins with closely spaced and blended sibling pairs, and twin births are associated
-with maternal characteristics that may affect housing directly.
+estimates therefore rise with the event age, to 1.1 rooms and 15 points of
+ownership at age 5. At event age 3 the ownership reduced form is 1.6 points and its
+confidence interval includes zero. These magnitudes carry the qualifications
+above: the proxy mixes twins with closely spaced and blended sibling pairs in an
+unmeasured proportion, and twin births are associated with maternal
+characteristics that may affect housing directly.
 
 \paragraph{Same-sex oldest pair.}
 The first stage is 3.3 percentage points pooled over event ages 0 to 5 and rises to
-4.7 points at event age 3 and 6.0 points at event age 5, consistent with more
-third births as time passes since the second. With more than 650,000 mothers it is
-precisely estimated, with an $F$ statistic of 715. The pooled figure is smaller
-than the 6.2 points that \citet[p.~461]{angrist1998children} estimate in the 1980
-Census, but the samples differ: ours ends five years after the second birth,
-whereas theirs includes mothers whose second child is up to seventeen, and the
-two censuses are a generation apart. Mothers whose two oldest
+4.7 points at event age 3 and 6.0 points at event age 5. With more than 650,000
+mothers it is precisely estimated, with an $F$ statistic of 715. The pooled figure
+is smaller than the 6.2 points that \citet[p.~461]{angrist1998children} estimate in
+the 1980 Census, but the samples differ: ours ends five years after the second
+child's birth, whereas theirs includes mothers whose second child is up to
+seventeen, and the two censuses are a generation apart. Mothers whose two oldest
 children share a sex live in 0.038 fewer rooms (standard error 0.005) and 0.034
 fewer bedrooms (0.003), and they are 0.25 percentage points less likely to own, a
 difference whose confidence interval includes zero. The room and bedroom
-differences are larger at event ages 3 and 5, about 0.05 and 0.04 respectively, and
-the ownership differences remain small and imprecise.
+differences are close in magnitude, but because the two counts are capped
+separately we do not read their difference as a statement about other rooms, and we
+do not test them against each other.
 
-The two-stage estimate for rooms is $-1.15$, with an Anderson--Rubin set between
-$-1.4$ and $-0.9$. It is large because the reduced form, though small, is divided by
-a first stage of 0.033:
-$-0.0376/0.0327=-1.15$. Taken literally, a third child would cost the family more
-than a full room of living space. We do not interpret it this way. The estimate is
-what one would obtain if same-sex siblings changed housing directly. Under the
-exclusion restriction the reduced form equals $\pi\beta$, and any direct effect of
-sibling sex on housing adds to it in full while the first stage stays the same, so
-the direct effect enters the two-stage estimate multiplied by $1/\pi$, about 31.
-\citet{jones2015exclusion} shows how such direct effects on mothers whose fertility
-does not respond to the instrument bias the instrumental-variable estimand.
-Bedrooms are the natural channel. Two children of the same sex can share a bedroom
-more easily than a boy and a girl, so a family with same-sex children may need one
-fewer bedroom at a given size, whether or not it has a third child.
-\citet[p.~775]{angrist2010multiple} raise economies of scale in room or clothes
-sharing as a potential violation of the same-sex exclusion restriction, attributing
-the concern to \citet{rosenzweig2000natural}. They check it in Israeli subsamples
-in which sex composition does not predict family size and find no reduced-form
-relation between sex composition and their outcomes, which concern the children's
-schooling and later lives rather than housing (p.~799). The pattern in Table~\ref{tab:acsiv_pooled}, in which the
-bedroom difference accounts for nearly all of the room difference, is what this
-channel predicts. It is consistent with the channel but does not establish it, and
-we do not test the rooms and bedrooms differences against each other, which would
-require their joint covariance.
+The two-stage estimate for rooms is $-1.15$, and the Anderson--Rubin test accepts
+grid values from $-1.4$ to $-0.9$. It is large because the reduced form, though
+small, is divided by a first stage of 0.033: $-0.0376/0.0327=-1.15$. Read under the
+assumptions of Section~\ref{app:acs_iv_equations}, a third child reduces the family's
+dwelling by more than a full room. The data alone cannot tell this reading apart
+from a failure of the exclusion restriction. A genuine negative effect is possible
+if a larger family has less to spend on housing, or delays a move it would otherwise
+make. Alternatively, sibling sex may affect housing directly. Under the exclusion
+restriction the reduced form equals $\pi\beta$. Any direct effect of sibling sex on
+housing adds to the reduced form in full while leaving the first stage unchanged,
+so it enters the two-stage estimate multiplied by $1/\pi$, about 31.
+\citet{jones2015exclusion} shows how direct effects on mothers whose fertility does
+not respond to the instrument bias the instrumental-variable estimand. Bedrooms are
+a natural candidate channel, since two children of the same sex can share a bedroom
+more easily than a boy and a girl. \citet[p.~775]{angrist2010multiple} raise
+economies of scale through room or clothes sharing as a potential violation of the
+same-sex exclusion restriction, attributing the concern to
+\citet{rosenzweig2000natural}. In Israeli subsamples in which sex composition does
+not predict family size, they find no reduced-form relation between sex composition
+and their outcomes, which concern the children's schooling and later lives rather
+than housing (p.~799). A negative bedroom reduced form is consistent with the
+room-sharing hypothesis, but it does not identify it.
 
 \begin{table}[htbp]
 \centering
 \footnotesize
 \caption{Estimates at event ages 3 and 5}
 \label{tab:acsiv_ages}
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{@{}lrrrrrrrl@{}}
-\toprule
- & & & Instrument & Reduced & First stage & First-stage & & AR accepted \\
-Outcome & Mothers & Households & equal to one & form & (pp) & $F$ & 2SLS & grid values \\
-\midrule
-\multicolumn{9}{@{}l}{\textit{A. Same-age oldest pair, event age 3}} \\
-Rooms & 147,986 & 147,922 & 2,726 & 0.332 & 52.46 & 49,032 & 0.633 & [0.5, 0.7] \\
- & & & & (0.042) & (0.24) & & (0.080) & \\
-Bedrooms & 147,986 & 147,922 & 2,726 & 0.212 & 52.46 & 49,032 & 0.405 & \{0.4\} \\
- & & & & (0.023) & (0.24) & & (0.043) & \\
-Owner (pp) & 147,986 & 147,922 & 2,726 & 1.63 & 52.46 & 49,032 & 3.11 & [0, 6] \\
- & & & & (1.14) & (0.24) & & (2.17) & \\
-\addlinespace
-\multicolumn{9}{@{}l}{\textit{A. Same-age oldest pair, event age 5}} \\
-Rooms & 142,101 & 142,039 & 2,498 & 0.382 & 34.83 & 24,972 & 1.096 & [0.9, 1.3] \\
- & & & & (0.041) & (0.22) & & (0.119) & \\
-Bedrooms & 142,101 & 142,039 & 2,498 & 0.234 & 34.83 & 24,972 & 0.671 & [0.6, 0.8] \\
- & & & & (0.023) & (0.22) & & (0.067) & \\
-Owner (pp) & 142,101 & 142,039 & 2,498 & 5.26 & 34.83 & 24,972 & 15.11 & [10, 20] \\
- & & & & (1.15) & (0.22) & & (3.30) & \\
-\addlinespace
-\multicolumn{9}{@{}l}{\textit{B. Same-sex oldest pair, event age 3}} \\
-Rooms & 108,847 & 108,825 & 54,561 & $-$0.051 & 4.67 & 174 & $-$1.089 & [$-$1.6, $-$0.6] \\
- & & & & (0.012) & (0.35) & & (0.284) & \\
-Bedrooms & 108,847 & 108,825 & 54,561 & $-$0.040 & 4.67 & 174 & $-$0.856 & [$-$1.2, $-$0.6] \\
- & & & & (0.007) & (0.35) & & (0.165) & \\
-Owner (pp) & 108,847 & 108,825 & 54,561 & $-$0.53 & 4.67 & 174 & $-$11.31 & [$-$26, 2] \\
- & & & & (0.36) & (0.35) & & (7.82) & \\
-\addlinespace
-\multicolumn{9}{@{}l}{\textit{B. Same-sex oldest pair, event age 5}} \\
-Rooms & 92,246 & 92,229 & 46,201 & $-$0.053 & 6.04 & 214 & $-$0.874 & [$-$1.3, $-$0.5] \\
- & & & & (0.013) & (0.41) & & (0.235) & \\
-Bedrooms & 92,247 & 92,230 & 46,201 & $-$0.045 & 6.04 & 214 & $-$0.745 & [$-$1.0, $-$0.5] \\
- & & & & (0.007) & (0.41) & & (0.137) & \\
-Owner (pp) & 92,247 & 92,230 & 46,201 & $-$0.33 & 6.04 & 214 & $-$5.41 & [$-$18, 6] \\
- & & & & (0.40) & (0.41) & & (6.59) & \\
-\bottomrule
-\end{tabular}
+\input{\acsivtabdir/tab_acs_iv_ages.tex}
 \par\medskip
 \begin{minipage}{0.97\linewidth}
 \footnotesize\textit{Notes:} See Table~\ref{tab:acsiv_pooled}. Event age is the
@@ -448,9 +407,158 @@ relative to mothers of one boy and one girl. Ownership in percentage points.
 \end{minipage}
 \end{figure}
 
+\subsection{Checks on the same-sex design}
+\label{app:acs_iv_diagnostics}
+
+We ran four checks on the same-sex estimates, all on the estimation sample and with
+the specification of equation~\eqref{eq:acsiv_rf_fs} unless stated. They ask
+whether the negative housing difference depends on how the instrument is coded,
+which sibling compositions carry it, and when it appears after the second child's
+birth. They check coding, measurement, and sensitivity. None of them tests the
+exclusion restriction, and none certifies a causal reading in either direction.
+Table~\ref{tab:acsiv_diag_specs} and Figure~\ref{fig:acsiv_diag_specs} report the
+pooled estimates; Table~\ref{tab:acsiv_diag_ages} and
+Figure~\ref{fig:acsiv_diag_ages} report them by the age of the second child;
+Table~\ref{tab:acsiv_diag_cells} reports unadjusted means.
+
+\paragraph{Sex of each child.}
+Adding separate indicators for a boy first and a boy second, as
+\citet{angrist1998children} do, leaves the estimates essentially unchanged. The room
+reduced form moves from $-0.0376$ to $-0.0380$, the bedroom reduced form from
+$-0.0341$ to $-0.0342$, and the first stage stays at 3.27 percentage points.
+
+\paragraph{Tied second and third children.}
+In 11,500 estimation-sample mothers the second and third linked children are
+recorded at the same age, so which of them is labeled second, and therefore the
+instrument and the event age, is arbitrary. Dropping these mothers also leaves the
+estimates essentially unchanged: $-0.0378$ for rooms, $-0.0347$ for bedrooms, and a
+first stage of 3.27 points on 645,486 mothers.
+
+\paragraph{Two boys and two girls.}
+Replacing the same-sex indicator with separate indicators for two boys and two
+girls, both measured against the 327,012 mothers of one boy and one girl, shows
+that both compositions carry the negative difference. For rooms the coefficients
+are $-0.0306$ (standard error 0.0061) for two boys and $-0.0454$ (0.0063) for two
+girls; for bedrooms they are $-0.0322$ (0.0033) and $-0.0363$ (0.0035). The first
+stages are very similar, 3.28 and 3.27 points. The difference between the two boys
+and two girls coefficients, with a standard error from their joint covariance, is
+$0.0148$ rooms (0.0072), with a 95 percent confidence interval of $[0.0006,0.0289]$.
+For bedrooms it is $0.0041$ (0.0039) and for ownership $0.09$ points (0.21), both
+with intervals that include zero. The room difference is one of several contrasts
+we examined, is not adjusted for multiple comparisons, and lies close to the
+conventional threshold; we do not draw conclusions from it.
+
+\paragraph{Age of the second child.}
+At event age 0 the first stage is essentially zero, 0.09 percentage points
+($F=0.9$), and the room and bedroom reduced forms are small, with confidence
+intervals that include zero. This is the first year of exposure to the instrument,
+not a period before it. The instrument has not yet shifted fertility, and little
+time has passed for housing to adjust, so the small differences are not evidence
+that sibling sex has no direct effect. By event age 1 the bedroom reduced form is already $-0.0278$
+(0.0066), while the first stage is 1.20 points. From age 1 to age 5 the first stage
+rises about fivefold, to 6.04 points, whereas the bedroom reduced form rises about
+1.6-fold, to $-0.0450$. With a constant effect of the third child and no direct
+effect, the two would move proportionally across ages. We read the gap only
+descriptively. Each event age is a different cross-section of mothers, not the
+same families followed over time, and both the composition of mothers and the
+effect of a third child may differ across ages. The ownership reduced form is
+imprecise at every age, and every one of its confidence intervals includes zero.
+
+\paragraph{Unadjusted means.}
+Table~\ref{tab:acsiv_diag_cells} reports the number of mothers and the weighted and
+unweighted means of the treatment and the three outcomes for each of the four sex
+compositions. The ordering matches the regressions. Mothers of two boys or two
+girls are more likely to have a third resident child (0.245 and 0.246, weighted)
+than mothers of a boy and a girl (0.212 and 0.214). They also live in slightly
+fewer rooms and bedrooms. Ownership rates differ little across the four groups.
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Same-sex design: alternative specifications, event ages 0--5}
+\label{tab:acsiv_diag_specs}
+\input{\acsivtabdir/tab_acs_iv_diag_specs.tex}
+\par\medskip
+\begin{minipage}{0.97\linewidth}
+\footnotesize\textit{Notes:} Reduced-form and first-stage coefficients from
+equation~\eqref{eq:acsiv_rf_fs}, household-clustered standard errors in
+parentheses. ``With first- and second-child sex'' adds indicators for a boy first
+and a boy second. ``Excluding tied second and third ages'' drops mothers whose
+second and third linked children are recorded at the same age. The two-boys and
+two-girls rows are the coefficients on separate indicators in a single regression,
+relative to mothers of one boy and one girl; their first stage is the corresponding
+coefficient in the first-stage regression. The last row is the difference between
+them, with a standard error from their joint clustered covariance. The mothers
+column refers to bedrooms and ownership; room samples are one mother smaller.
+Ownership in percentage points.
+\end{minipage}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Same-sex design by age of the second child}
+\label{tab:acsiv_diag_ages}
+\input{\acsivtabdir/tab_acs_iv_diag_ages.tex}
+\par\medskip
+\begin{minipage}{0.97\linewidth}
+\footnotesize\textit{Notes:} Reduced form and first stage of
+equation~\eqref{eq:acsiv_rf_fs} estimated separately at each age of the second
+child, household-clustered standard errors in parentheses. The first stage and
+mothers columns refer to bedrooms and ownership; at age 5 the room sample is one
+mother smaller. Ownership in percentage points.
+\end{minipage}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\footnotesize
+\caption{Same-sex design: means by sex of the two oldest children}
+\label{tab:acsiv_diag_cells}
+\input{\acsivtabdir/tab_acs_iv_diag_cells.tex}
+\par\medskip
+\begin{minipage}{0.97\linewidth}
+\footnotesize\textit{Notes:} Same-sex estimation sample, event ages 0--5. Weighted
+means use the ACS person weight, and the weighted count is the sum of weights.
+``Three or more children'' is the share with three or more linked resident children.
+Rooms and bedrooms are capped at nine and five; ownership is a share. Means are not
+adjusted for controls.
+\end{minipage}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{\acsivfigdir/acs_iv_samesex_specs.pdf}
+\caption{Same-sex design: reduced forms across specifications}
+\label{fig:acsiv_diag_specs}
+\par\medskip
+\begin{minipage}{0.97\linewidth}
+\footnotesize\textit{Notes:} Reduced-form coefficients from
+Table~\ref{tab:acsiv_diag_specs} with 95 percent confidence intervals from
+household-clustered standard errors. Ownership in percentage points.
+\end{minipage}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{\acsivfigdir/acs_iv_samesex_by_age.pdf}
+\caption{Same-sex design by age of the second child}
+\label{fig:acsiv_diag_ages}
+\par\medskip
+\begin{minipage}{0.97\linewidth}
+\footnotesize\textit{Notes:} First stage (percentage points of a third resident
+child) and reduced forms from Table~\ref{tab:acsiv_diag_ages}, with 95 percent
+confidence intervals from household-clustered standard errors. Each age is a
+separate cross-section of mothers.
+\end{minipage}
+\end{figure}
+
+\paragraph{Summary.}
 The two designs measure different objects, and their estimates should not be
-averaged or set against each other. Under its assumptions, the same-age design says
-that a second young child raises the space a family occupies and its likelihood of
-owning. The same-sex design does not deliver a credible estimate for a third child,
-because sibling sex appears to act on housing directly, through the composition of
-the family and not only its size.
+averaged or set against each other. Under its assumptions, the same-age design
+says that a second young child is associated with more space and a higher
+likelihood of owning. The same-sex design yields a negative estimate for a third
+child, and the checks show that the negative difference does not come from how the
+sex of each child, tied ages, or a single sex composition is handled. Whether it
+reflects an effect of the third child or a direct effect of sibling composition on
+housing is not identified by these data.

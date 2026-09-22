@@ -60,13 +60,14 @@ fourth manuscript.
   `../docs/prompts/oracle_simplified_olg_consolidated_theory.md`.
 - **Specification:** September 20–21 income and housing diagnostics are not
   adopted changes. Their current status remains in `../CALIBRATION_STATUS.md`.
-- **ACS sibling-composition housing appendix (September 22, first phase):**
+- **ACS sibling-composition housing appendix (September 22):**
   agent-added appendix component
   `JMP_DS_draft/sections/appendix_acs_fertility_iv.tex` with its own `.bib`;
-  not wired into `JMP_DS_draft.tex`. Standalone build, PDF, tables, figure and
-  `SOURCE_AUDIT.md` in `../output/acs_fertility_iv/data_appendix/`; tables from
-  `../code/empirical/acs/kleven_pseudo/build_acs_iv_appendix_tables.py`. The
-  same-sex diagnostic subsection is pending the national diagnosis results.
+  not wired into `JMP_DS_draft.tex`. It includes the same-sex design checks.
+  The standalone build, PDF, tables, figures, 18-row CI companion CSV and
+  `SOURCE_AUDIT.md` are in `../output/acs_fertility_iv/data_appendix/`, built by
+  `../code/empirical/acs/kleven_pseudo/build_acs_iv_appendix_tables.py`. Awaiting
+  lead final review.
 - **Synchronization:** this establishes ownership and procedure; it is not a
   claim that existing mathematical content has already been reconciled. The
   author manuscript and numerical model are unchanged, and the new deck is an
