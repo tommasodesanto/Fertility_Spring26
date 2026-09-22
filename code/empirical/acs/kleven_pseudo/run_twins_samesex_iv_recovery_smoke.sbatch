@@ -44,13 +44,22 @@ cleanup_heartbeat() { kill "$HEARTBEAT_PID" 2>/dev/null || true; }
 trap cleanup_heartbeat EXIT
 
 echo "=== stage 1: real VT driver (STATEFIP_LIST=50) ==="
+# /usr/bin/time -v is not present on compute nodes here; use bash's
+# reserved `time` keyword timing the whole env-prefixed command group
+# instead (wall/user/sys only -- no MaxRSS from this timer). Actual peak
+# memory for the whole smoke job comes from Slurm sacct MaxRSS on the
+# .batch step after the job ends; per-stage memory attribution is not
+# available from this timer and is not fabricated.
+TIMEFORMAT='stage1_vt_driver: elapsed_sec=%R user_sec=%U system_sec=%S'
+time {
 ROOT="$CODE_ROOT" \
 PARTITION_DIR="$ROOT_REPO/output/national_acs_source_stage_20260921/partitions" \
 STATEFIP_LIST=50 \
 OUTDIR="$VT_OUTDIR" \
 STATUS_PATH="$VT_OUTDIR/status_heartbeat.json" \
 SAMPLE_LABEL=young \
-/usr/bin/time -v Rscript --vanilla "$CODE_ROOT/run_twins_samesex_iv.R" 2>&1
+Rscript --vanilla "$CODE_ROOT/run_twins_samesex_iv.R"
+} 2>&1
 
 echo "=== gate: VT must show 18 full_fit + valid AR + nobs agreement + 18 primary_receipts + analytic identity ==="
 python3 - "$VT_OUTDIR" << 'PYEOF'
@@ -89,10 +98,13 @@ print("VT_GATE_PASS: 18/18 full_fit with valid AR+nobs fields, 18 primary_receip
 PYEOF
 
 echo "=== stage 2: compute-only scaled memory probe (target Twin1 N=857607) ==="
+TIMEFORMAT='stage2_scaled_probe: elapsed_sec=%R user_sec=%U system_sec=%S'
+time {
 ROOT="$CODE_ROOT" \
 VT_OUTDIR="$VT_OUTDIR" \
 PROBE_OUTDIR="$PROBE_OUTDIR" \
 TARGET_TWIN1_N=857607 \
-/usr/bin/time -v Rscript --vanilla "$CODE_ROOT/probe_scaled_memory.R" 2>&1
+Rscript --vanilla "$CODE_ROOT/probe_scaled_memory.R"
+} 2>&1
 
 echo "RECOVERY_SMOKE_COMPLETE"
