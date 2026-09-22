@@ -53,29 +53,57 @@ write_status("loading_partitions")
 t0 <- Sys.time()
 mr_list <- vector("list", length(statefip_list))
 audit_list <- vector("list", length(statefip_list))
+relate_audit_list <- vector("list", length(statefip_list))
 total_rows <- 0L
+sample_gate_totals <- list(n_input = 0L, n_excluded_year_out_of_range = 0L,
+                            n_excluded_non_acs1yr_product = 0L, n_kept = 0L)
 for (i in seq_along(statefip_list)) {
   sf <- statefip_list[i]
   p <- sprintf("%s/statefip_%02d/housing_narrow.rds", partition_dir, sf)
   if (!file.exists(p)) stop(sprintf("missing partition for statefip %d: %s", sf, p))
-  dt_state <- readRDS(p)
-  total_rows <- total_rows + nrow(dt_state)
+  dt_state_raw <- readRDS(p)
+  total_rows <- total_rows + nrow(dt_state_raw)
+  # Enforce the common national ACS 1-year product, 2005-2019, BEFORE any
+  # roster fitting (SAMPLE == YEAR*100+1; source_audit_extract27_20260919.md
+  # documented codes). Explicit exclusion counts accumulate across states.
+  gate <- apply_source_sample_gate(dt_state_raw)
+  dt_state <- gate$data
+  sample_gate_totals$n_input <- sample_gate_totals$n_input + gate$counts$n_input
+  sample_gate_totals$n_excluded_year_out_of_range <-
+    sample_gate_totals$n_excluded_year_out_of_range + gate$counts$n_excluded_year_out_of_range
+  sample_gate_totals$n_excluded_non_acs1yr_product <-
+    sample_gate_totals$n_excluded_non_acs1yr_product + gate$counts$n_excluded_non_acs1yr_product
+  sample_gate_totals$n_kept <- sample_gate_totals$n_kept + gate$counts$n_kept
+  rm(dt_state_raw)
   built_state <- build_mother_roster(dt_state)
   mr_list[[i]] <- add_outcomes(built_state$mother_rows)
   audit_list[[i]] <- built_state$link_audit
+  relate_audit_list[[i]] <- built_state$child_relate_audit
   rm(dt_state, built_state); gc(FALSE)
   write_status("loading_partitions", list(loaded = i, of = length(statefip_list),
                                            statefip = sf, rows_seen = total_rows,
+                                           sample_gate_totals = sample_gate_totals,
                                            elapsed_sec = as.numeric(Sys.time() - t0, units = "secs")))
 }
-mr <- data.table::rbindlist(mr_list, use.names = TRUE, fill = TRUE)
-built <- list(link_audit = data.table::rbindlist(audit_list, use.names = TRUE, fill = TRUE)[
-  , .(N = sum(N)), by = .(link_invalid_reason, child_relate)])
-rm(mr_list, audit_list); gc(FALSE)
-write_status("loaded", list(rows = total_rows, mother_rows = nrow(mr),
+mr_pre_minor_gate <- data.table::rbindlist(mr_list, use.names = TRUE, fill = TRUE)
+built <- list(
+  link_audit = data.table::rbindlist(audit_list, use.names = TRUE, fill = TRUE)[
+    , .(N = sum(N)), by = .(link_invalid_reason, child_relate)],
+  child_relate_audit = data.table::rbindlist(relate_audit_list, use.names = TRUE, fill = TRUE)[
+    , .(N = sum(N)), by = child_relate]
+)
+rm(mr_list, audit_list, relate_audit_list); gc(FALSE)
+write_status("loaded", list(rows = total_rows, mother_rows = nrow(mr_pre_minor_gate),
+                             sample_gate_totals = sample_gate_totals,
                              elapsed_sec = as.numeric(Sys.time() - t0, units = "secs")))
 
-## ---- Roster build (per-state build already applied above) ----------------
+## ---- Sample-scope gates applied before roster fitting ---------------------
+# Oldest-linked-child minor (<18) gate, applied before Twin1/SameSex2
+# construction, with explicit exclusion counts (not a silent filter).
+minor_gate <- apply_oldest_child_minor_gate(mr_pre_minor_gate)
+mr <- minor_gate$data
+rm(mr_pre_minor_gate); gc(FALSE)
+
 mr[, weight_positive := PERWT > 0 & is.finite(PERWT)]
 mr <- mr[weight_positive == TRUE]
 
@@ -89,11 +117,17 @@ n_households <- uniqueN(mr_sample$household_key)
 write_status("roster_built", list(
   n_unique_mothers = n_unique_mothers, n_households = n_households,
   any_sex_missing = sum(mr_sample$any_sex_missing),
-  any_non_biological = sum(mr_sample$any_non_biological),
+  mother_is_householder_share = mean(mr_sample$mother_is_householder, na.rm = TRUE),
   nchild_link_mismatch = sum(mr_sample$nchild_link_mismatch),
+  sample_gate_totals = sample_gate_totals,
+  n_excluded_oldest_child_adult = minor_gate$n_excluded_oldest_child_adult,
   elapsed_sec = as.numeric(Sys.time() - t0, units = "secs")))
 
 jsonlite::write_json(built$link_audit, file.path(outdir, "link_audit.json"), auto_unbox = TRUE, pretty = TRUE)
+jsonlite::write_json(built$child_relate_audit, file.path(outdir, "child_relate_audit.json"),
+                      auto_unbox = TRUE, pretty = TRUE)
+jsonlite::write_json(sample_gate_totals, file.path(outdir, "sample_gate_receipt.json"),
+                      auto_unbox = TRUE, pretty = TRUE)
 
 ## ---- Instrument construction ---------------------------------------------
 t1 <- build_twin1(mr_sample, age_grid = 0:5)
@@ -175,24 +209,44 @@ for (oc in outcomes) {
   saveRDS(results, file.path(outdir, "checkpoint_results.rds"))
 }
 
-`%||%` <- function(a, b) if (is.null(a)) b else a
 results_dt <- data.table::rbindlist(lapply(results, function(r) {
-  data.table(design = r$design %||% NA_character_, outcome = r$outcome %||% NA_character_,
-             status = r$status %||% NA_character_, n_usable = r$n_usable %||% NA_integer_,
-             n_households = r$n_households %||% NA_integer_,
-             n_instrument_positive = r$n_instrument_positive %||% NA_integer_,
-             rf_coef = r$rf_coef %||% NA_real_, rf_se = r$rf_se %||% NA_real_,
-             fs_coef = r$fs_coef %||% NA_real_, fs_se = r$fs_se %||% NA_real_,
-             first_stage_F = r$first_stage_F %||% NA_real_,
-             iv_coef = r$iv_coef %||% NA_real_, iv_se = r$iv_se %||% NA_real_,
-             ar_lower = r$ar_lower %||% NA_real_, ar_upper = r$ar_upper %||% NA_real_,
-             ar_bounded = r$ar_bounded %||% NA,
-             ar_grid_min = r$ar_grid_min %||% NA_real_, ar_grid_max = r$ar_grid_max %||% NA_real_)
+  data.table(
+    design = r$design %||% NA_character_, outcome = r$outcome %||% NA_character_,
+    status = r$status %||% NA_character_,
+    error_message = r$message %||% NA_character_,
+    n_usable_prefit = r$n_usable %||% NA_integer_,
+    n_households_prefit = r$n_households %||% NA_integer_,
+    n_instrument_positive = r$n_instrument_positive %||% NA_integer_,
+    rf_coef = r$rf_coef %||% NA_real_, rf_se = r$rf_se %||% NA_real_,
+    rf_ci_lower = r$rf_ci_lower %||% NA_real_, rf_ci_upper = r$rf_ci_upper %||% NA_real_,
+    rf_nobs_fit = r$rf_nobs_fit %||% NA_integer_, rf_error = r$rf_error %||% NA_character_,
+    fs_coef = r$fs_coef %||% NA_real_, fs_se = r$fs_se %||% NA_real_,
+    fs_ci_lower = r$fs_ci_lower %||% NA_real_, fs_ci_upper = r$fs_ci_upper %||% NA_real_,
+    fs_nobs_fit = r$fs_nobs_fit %||% NA_integer_, fs_error = r$fs_error %||% NA_character_,
+    first_stage_F = r$first_stage_F %||% NA_real_, first_stage_F_df = r$first_stage_F_df %||% NA_character_,
+    iv_coef = r$iv_coef %||% NA_real_, iv_se = r$iv_se %||% NA_real_,
+    iv_ci_lower = r$iv_ci_lower %||% NA_real_, iv_ci_upper = r$iv_ci_upper %||% NA_real_,
+    iv_nobs_fit = r$iv_nobs_fit %||% NA_integer_, iv_error = r$iv_error %||% NA_character_,
+    ar_summary_lower = r$ar_summary_lower %||% NA_real_, ar_summary_upper = r$ar_summary_upper %||% NA_real_,
+    ar_fully_interior_bounded = r$ar_fully_interior_bounded %||% NA,
+    ar_n_components = r$ar_n_components %||% NA_integer_,
+    ar_all_grid_points_accepted = r$ar_all_grid_points_accepted %||% NA,
+    ar_empty_accepted_set = r$ar_empty_accepted_set %||% NA,
+    ar_n_errors = r$ar_n_errors %||% NA_integer_,
+    ar_grid_min = r$ar_grid_min %||% NA_real_, ar_grid_max = r$ar_grid_max %||% NA_real_,
+    ar_components_json = as.character(r$ar_components_json %||% NA_character_))
 }), fill = TRUE)
 
 utils::write.csv(results_dt, file.path(outdir, "rf_fs_iv_ar_table.csv"), row.names = FALSE)
 jsonlite::write_json(counts, file.path(outdir, "counts_final.json"), auto_unbox = TRUE, pretty = TRUE, digits = 6)
 
+# Explicit fit-status tally so a run with error/insufficient_support rows
+# cannot be reported as a clean success by omission.
+status_tally <- results_dt[, .N, by = status]
+jsonlite::write_json(status_tally, file.path(outdir, "fit_status_tally.json"),
+                      auto_unbox = TRUE, pretty = TRUE)
+
 write_status("complete", list(elapsed_sec = as.numeric(Sys.time() - t0, units = "secs"),
-                               n_rows_table = nrow(results_dt)))
+                               n_rows_table = nrow(results_dt),
+                               fit_status_tally = as.list(setNames(status_tally$N, status_tally$status))))
 cat("DRIVER_COMPLETE\n")

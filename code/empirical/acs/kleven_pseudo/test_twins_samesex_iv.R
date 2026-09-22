@@ -164,9 +164,9 @@ stopifnot_msg(abs(fit$fs_coef - 0.5) < 0.1, "synthetic DGP: first-stage coef rec
 stopifnot_msg(fit$first_stage_F > 10, "synthetic DGP: first-stage F is strong (>10) as designed")
 stopifnot_msg(abs(fit$iv_coef - beta_true) < 0.35,
               "synthetic DGP: 2SLS coefficient recovers true beta within tolerance")
-stopifnot_msg(!is.na(fit$ar_lower) && !is.na(fit$ar_upper) && fit$ar_bounded,
-              "synthetic DGP: AR confidence set is bounded on a strong instrument")
-stopifnot_msg(fit$ar_lower <= beta_true && beta_true <= fit$ar_upper,
+stopifnot_msg(isTRUE(fit$ar_fully_interior_bounded),
+              "synthetic DGP: AR confidence set is interior-bounded on a strong instrument")
+stopifnot_msg(fit$ar_summary_lower <= beta_true && beta_true <= fit$ar_summary_upper,
               "synthetic DGP: AR set covers the true beta")
 
 ## ---- Weak-instrument case: AR should be unbounded/wide, not fabricated --
@@ -178,10 +178,122 @@ fitw <- fit_instrument_outcome(simw, outcome = "Y", treatment = "D", instrument 
                                 controls_fml = controls_fml, weight_var = "mother_weight",
                                 cluster_var = "household_key",
                                 ar_grid = seq(-2, 4, by = 0.1))
-cat(sprintf("Weak-IV DGP: FS=%.3f FS-F=%.2f AR bounded=%s [%.2f, %.2f] (grid %.1f..%.1f)\n",
-            fitw$fs_coef, fitw$first_stage_F, fitw$ar_bounded, fitw$ar_lower, fitw$ar_upper,
+cat(sprintf("Weak-IV DGP: FS=%.3f FS-F=%.2f AR interior_bounded=%s all_accepted=%s [%.2f, %.2f] (grid %.1f..%.1f)\n",
+            fitw$fs_coef, fitw$first_stage_F, fitw$ar_fully_interior_bounded,
+            fitw$ar_all_grid_points_accepted, fitw$ar_summary_lower, fitw$ar_summary_upper,
             min(seq(-2,4,by=0.1)), max(seq(-2,4,by=0.1))))
 stopifnot_msg(fitw$first_stage_F < 10, "weak-IV DGP: first-stage F is weak as designed")
+stopifnot_msg(!isTRUE(fitw$ar_fully_interior_bounded),
+              "weak-IV DGP: AR set is NOT reported as interior-bounded (honest grid-truncation)")
 
 cat("\n--- Fixture 2 numerical sanity checks: ALL PASS ---\n\n")
+
+## ---- Item 1: source sample gate (YEAR 2005:2019, ACS-1yr SAMPLE=YEAR*100+1) ----
+mixed <- rbindlist(list(
+  data.table(YEAR = 2015, SAMPLE = 201501, SERIAL = 100, PERNUM = 1),  # keep: in-range ACS1yr
+  data.table(YEAR = 2003, SAMPLE = 200301, SERIAL = 101, PERNUM = 1),  # drop: year out of range
+  data.table(YEAR = 2021, SAMPLE = 202101, SERIAL = 102, PERNUM = 1),  # drop: year out of range
+  data.table(YEAR = 2015, SAMPLE = 201502, SERIAL = 103, PERNUM = 1),  # drop: non-1yr product (e.g. 3yr/5yr code)
+  data.table(YEAR = 2010, SAMPLE = 200304, SERIAL = 104, PERNUM = 1)   # drop: mismatched sample/year (PRCS-like code)
+), fill = TRUE)
+gate1 <- apply_source_sample_gate(mixed)
+stopifnot_msg(gate1$counts$n_kept == 1, "sample gate: keeps exactly the in-range ACS-1yr row")
+stopifnot_msg(gate1$counts$n_excluded_year_out_of_range == 2, "sample gate: flags both out-of-range years")
+stopifnot_msg(gate1$counts$n_excluded_non_acs1yr_product == 2, "sample gate: flags both non-1yr in-range products")
+stopifnot_msg(nrow(gate1$data) == 1 && gate1$data$SERIAL == 100, "sample gate: gated data retains only the valid row")
+
+## ---- Item 1b: oldest-linked-child minor (<18) gate -----------------------
+minor_fixture <- rbindlist(list(
+  data.table(person_key = "m1", household_key = "h1", linked_child_count = 1L, a1 = 5),   # keep: minor
+  data.table(person_key = "m2", household_key = "h2", linked_child_count = 1L, a1 = 20),  # drop: adult oldest child
+  data.table(person_key = "m3", household_key = "h3", linked_child_count = 0L, a1 = NA_real_) # keep: no linked child
+), fill = TRUE)
+gate2 <- apply_oldest_child_minor_gate(minor_fixture)
+stopifnot_msg(gate2$n_excluded_oldest_child_adult == 1, "minor gate: excludes exactly the adult-oldest-child mother")
+stopifnot_msg(nrow(gate2$data) == 2 && !("m2" %in% gate2$data$person_key),
+              "minor gate: m2 (oldest child age 20) removed, m1/m3 retained")
+
+## ---- Item 2: RELATE honesty (relationship-to-householder, not biology) ---
+relate_fixture <- rbindlist(list(
+  # H20: mother IS the householder (RELATE=1), one RELATE=3 linked child (own child of householder)
+  data.table(YEAR=2015, SAMPLE=201501, SERIAL=20, PERNUM=1, SEX=2, AGE=30, RELATE=1, MOMLOC=0, NCHILD=1, PERWT=1, HHWT=1, STATEFIP=6, RACE=1),
+  data.table(YEAR=2015, SAMPLE=201501, SERIAL=20, PERNUM=2, SEX=1, AGE=2,  RELATE=3, MOMLOC=1, NCHILD=NA, PERWT=1, HHWT=1, STATEFIP=6, RACE=1),
+  # H21: mother is NOT the householder (RELATE=3, e.g. she is the householder's daughter), linked child RELATE=4
+  # (grandchild-of-householder-coded, historically miscalled "adopted" -- must NOT be dropped or reclassified)
+  data.table(YEAR=2015, SAMPLE=201501, SERIAL=21, PERNUM=1, SEX=2, AGE=45, RELATE=1, MOMLOC=0, NCHILD=0, PERWT=1, HHWT=1, STATEFIP=6, RACE=1),
+  data.table(YEAR=2015, SAMPLE=201501, SERIAL=21, PERNUM=2, SEX=2, AGE=22, RELATE=3, MOMLOC=0, NCHILD=1, PERWT=1, HHWT=1, STATEFIP=6, RACE=1),
+  data.table(YEAR=2015, SAMPLE=201501, SERIAL=21, PERNUM=3, SEX=1, AGE=1,  RELATE=4, MOMLOC=2, NCHILD=NA, PERWT=1, HHWT=1, STATEFIP=6, RACE=1)
+), fill = TRUE)
+built_r <- build_mother_roster(relate_fixture)
+mrr <- built_r$mother_rows
+stopifnot_msg(!("any_non_biological" %in% names(mrr)),
+              "RELATE: any_non_biological (invalid biology claim) removed from roster output")
+h20 <- mrr[household_key == "2015_201501_20"]
+stopifnot_msg(nrow(h20) == 1 && h20$linked_child_count == 1 && isTRUE(h20$mother_is_householder),
+              "RELATE: householder mother (H20) links her RELATE=3 child normally")
+h21 <- mrr[household_key == "2015_201501_21" & PERNUM == 2]
+stopifnot_msg(nrow(h21) == 1 && h21$linked_child_count == 1 && !isTRUE(h21$mother_is_householder),
+              "RELATE: non-householder mother (H21, RELATE=3 herself) still links her RELATE=4 child, not dropped")
+stopifnot_msg(4 %in% built_r$child_relate_audit$child_relate,
+              "RELATE: raw child RELATE=4 appears in the descriptive audit, not reclassified/hidden")
+
+## ---- Item 3: BEDROOMS valid range 1:22 only -------------------------------
+bed_fixture <- data.table(BEDROOMS = c(0, 1, 5, 22, 23, 99), ROOMS = 5, OWNERSHP = 1)
+bed_out <- add_outcomes(bed_fixture)
+stopifnot_msg(is.na(bed_out$BEDROOMS_out[bed_out$BEDROOMS == 0]), "BEDROOMS=0 (not-in-universe) stays missing")
+stopifnot_msg(!is.na(bed_out$BEDROOMS_out[bed_out$BEDROOMS == 1]), "BEDROOMS=1 valid")
+stopifnot_msg(bed_out$BEDROOMS_out[bed_out$BEDROOMS == 22] == 5, "BEDROOMS=22 (21+ top code) valid, capped at 5")
+stopifnot_msg(is.na(bed_out$BEDROOMS_out[bed_out$BEDROOMS == 23]), "BEDROOMS=23 (out of documented 1:22 range) excluded")
+stopifnot_msg(is.na(bed_out$BEDROOMS_out[bed_out$BEDROOMS == 99]), "BEDROOMS=99 (sentinel) excluded")
+
+## ---- Item 4: AR component honesty edge cases ------------------------------
+set.seed(11)
+n2 <- 600
+mat_age2 <- round(runif(n2, 25, 40))
+cl2 <- paste0("hh", seq_len(n2))
+
+# (a) all-grid-accepted: near-zero first stage -> AR statistic never rejects
+# across a modest grid.
+Za <- rbinom(n2, 1, 0.15)
+Da <- rbinom(n2, 1, 0.35)  # independent of Za: no first stage at all
+Ya <- 5 + 0.02 * (mat_age2 - 30) + rnorm(n2)
+sima <- data.table(Y = Ya, D = Da, Z = Za, mat_age = mat_age2, household_key = cl2, mother_weight = 1)
+ar_a <- ar_confidence_set(sima, "Y", "D", "Z", "mat_age", "mother_weight", "household_key",
+                           grid = seq(-1, 1, by = 0.25))
+stopifnot_msg(isTRUE(ar_a$all_grid_points_accepted) || ar_a$n_accepted == ar_a$n_grid,
+              "AR: null-first-stage case accepts the full grid (honestly non-bounded)")
+stopifnot_msg(!ar_a$fully_interior_bounded, "AR: full-grid-accepted case is NOT reported as interior-bounded")
+
+# (b) empty accepted set: grid placed far from any plausible beta with a
+# reasonably informative instrument -> every grid point rejected.
+Zb <- rbinom(n2, 1, 0.4)
+Db <- rbinom(n2, 1, pmin(pmax(0.2 + 0.5 * Zb, 0.01), 0.99))
+Yb <- 5 + 0.8 * Db + rnorm(n2, sd = 0.3)
+simb <- data.table(Y = Yb, D = Db, Z = Zb, mat_age = mat_age2, household_key = cl2, mother_weight = 1)
+ar_b <- ar_confidence_set(simb, "Y", "D", "Z", "mat_age", "mother_weight", "household_key",
+                           grid = seq(50, 60, by = 1))
+stopifnot_msg(ar_b$empty_accepted_set, "AR: grid far from the true effect yields an explicit empty accepted set")
+stopifnot_msg(is.na(ar_b$summary_lower) && is.na(ar_b$summary_upper),
+              "AR: empty accepted set reports NA bounds rather than a fabricated interval")
+
+# (c) one-sided boundary touch: grid whose lower edge cuts into the true
+# accepted region -> component must be flagged grid_truncated, not bounded.
+ar_c <- ar_confidence_set(simb, "Y", "D", "Z", "mat_age", "mother_weight", "household_key",
+                           grid = seq(0.8, 5, by = 0.2))
+if (ar_c$n_accepted > 0) {
+  touches_lo <- any(vapply(ar_c$components, function(k) k$touches_grid_boundary, logical(1)))
+  stopifnot_msg(touches_lo, "AR: boundary-touching accepted run is flagged touches_grid_boundary")
+  stopifnot_msg(!ar_c$fully_interior_bounded,
+                "AR: boundary-touching case is not reported as fully_interior_bounded")
+} else {
+  cat("PASS (vacuous): AR one-sided-boundary case had zero accepted points on this grid\n")
+}
+
+# (d) explicit error handling: an NA grid point must surface as an error,
+# not as a silent rejection or acceptance.
+ar_d <- ar_confidence_set(simb, "Y", "D", "Z", "mat_age", "mother_weight", "household_key",
+                           grid = c(0.8, NA, 0.9))
+stopifnot_msg(ar_d$n_errors >= 1, "AR: NA grid point is counted as an explicit error, not silently dropped")
+
+cat("\n--- Item 1/1b/2/3/4 corrected-gate and AR-honesty checks: ALL PASS ---\n\n")
 cat("ALL TESTS PASSED\n")

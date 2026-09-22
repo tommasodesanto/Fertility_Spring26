@@ -19,7 +19,10 @@
 suppressMessages({
   library(data.table)
   library(fixest)
+  library(jsonlite)
 })
+
+`%||%` <- function(a, b) if (is.null(a) || (length(a) == 1 && is.na(a))) b else a
 
 .safe_key <- function(d, cols) {
   do.call(paste, c(lapply(cols, function(v) as.character(d[[v]])), sep = "_"))
@@ -28,7 +31,38 @@ suppressMessages({
 age_missing_codes <- c(999)
 rooms_valid_codes <- c(1:27, 30)
 rooms_cap <- 9
+bedrooms_valid_codes <- 1:22
 bedrooms_cap <- 5
+acs_year_lo <- 2005L
+acs_year_hi <- 2019L
+
+#' Restrict to the common national ACS 1-year product, 2005-2019, before any
+#' roster fitting. SAMPLE == YEAR*100 + 1 is the documented IPUMS ACS 1-year
+#' code (source_audit_extract27_20260919.md records observed codes 200701,
+#' 201101, 201501, 201901, 202301, all matching this pattern; not invented
+#' here). Returns the gated data.table plus exclusion counts, so a downstream
+#' driver can report what the sample gate dropped rather than silently
+#' filtering.
+apply_source_sample_gate <- function(dt, year_lo = acs_year_lo, year_hi = acs_year_hi) {
+  dt <- data.table::as.data.table(dt)
+  n0 <- nrow(dt)
+  year_num <- suppressWarnings(as.numeric(dt$YEAR))
+  sample_num <- suppressWarnings(as.numeric(dt$SAMPLE))
+  in_year <- !is.na(year_num) & year_num >= year_lo & year_num <= year_hi
+  in_product <- !is.na(sample_num) & !is.na(year_num) & sample_num == (year_num * 100 + 1)
+  keep <- in_year & in_product
+  gated <- dt[keep]
+  list(
+    data = gated,
+    counts = list(
+      n_input = n0,
+      n_excluded_year_out_of_range = sum(!in_year),
+      n_excluded_non_acs1yr_product = sum(in_year & !in_product),
+      n_kept = nrow(gated),
+      year_lo = year_lo, year_hi = year_hi
+    )
+  )
+}
 
 #' Build one row per eligible mother with the ordered linked-child age/sex
 #' roster. Mirrors the MOMLOC join and validity rules in
@@ -95,8 +129,13 @@ build_mother_roster <- function(dt, female_code = 2, max_linked = 10) {
 
   valid_links <- links[link_valid == TRUE]
   valid_links[, sex_missing := is.na(child_sex) | !(child_sex %in% c(1, 2))]
-  valid_links[, non_biological_relate := !is.na(child_relate) &
-                !(child_relate %in% c(3, 4))]  # 3 biological, 4 adopted (IPUMS RELATE)
+  # RELATE is the child's relationship to the HOUSEHOLD HEAD/HOUSEHOLDER, not
+  # to the MOMLOC-linked mother (who need not be the householder, e.g. a
+  # young mother living with her own parents). It cannot establish or refute
+  # biological/adoptive status of the mother link, so it is retained only as
+  # a raw descriptive tabulation (relationship-to-householder), never used to
+  # filter or reclassify a valid MOMLOC link. Biological relation to the
+  # linked mother is unresolved by this source and is not claimed here.
 
   setorder(valid_links, mother_person_key, -child_age)
   roster <- valid_links[, .(
@@ -104,8 +143,7 @@ build_mother_roster <- function(dt, female_code = 2, max_linked = 10) {
     linked_sexes = list(child_sex),
     linked_relate = list(child_relate),
     linked_child_count = .N,
-    any_sex_missing = any(sex_missing),
-    any_non_biological = any(non_biological_relate)
+    any_sex_missing = any(sex_missing)
   ), by = mother_person_key]
 
   mother_rows <- merge(mother, roster, by.x = "person_key",
@@ -123,9 +161,33 @@ build_mother_roster <- function(dt, female_code = 2, max_linked = 10) {
   mother_rows[, nchild_link_mismatch := is.na(NCHILD_norm) |
                 NCHILD_norm != linked_child_count]
   mother_rows[, any_sex_missing := replace(any_sex_missing, is.na(any_sex_missing), FALSE)]
-  mother_rows[, any_non_biological := replace(any_non_biological, is.na(any_non_biological), FALSE)]
+  # Descriptive only: relationship of THIS mother row to her own household's
+  # head. RELATE==1 (Head/Householder) is the standard IPUMS-USA harmonized
+  # code; other values (e.g. she is a child, sibling, or other relative of
+  # the householder) do not affect roster validity, only interpretation.
+  mother_rows[, mother_is_householder := RELATE_norm == 1]
 
-  list(mother_rows = mother_rows, link_audit = link_audit)
+  # Relationship-to-householder distribution among linked children, raw
+  # codes only, for the receipt -- not a biology claim.
+  child_relate_audit <- valid_links[, .N, by = child_relate]
+
+  list(mother_rows = mother_rows, link_audit = link_audit,
+       child_relate_audit = child_relate_audit)
+}
+
+#' Restrict the mother roster to households where the oldest linked child is
+#' a minor (<18), the approved-design sample scope for both Twin1 and
+#' SameSex2. Mothers with zero linked children pass through unaffected (they
+#' are excluded downstream by the Twin1/SameSex2 eligibility rules on other
+#' grounds, not this gate). Returns exclusion counts alongside the gated
+#' roster so a driver can report what this filter removed.
+apply_oldest_child_minor_gate <- function(mother_rows, minor_age_max = 17) {
+  d <- data.table::copy(mother_rows)
+  d[, oldest_child_adult := linked_child_count >= 1 & !is.na(a1) & a1 > minor_age_max]
+  n_excluded <- sum(d$oldest_child_adult, na.rm = TRUE)
+  list(data = d[oldest_child_adult == FALSE],
+       n_excluded_oldest_child_adult = n_excluded,
+       n_input = nrow(d))
 }
 
 #' Recode housing outcomes under the reviewed coding contract.
@@ -139,8 +201,11 @@ add_outcomes <- function(d) {
   d[, ownershp_valid := OWNERSHP_num %in% c(1, 2)]
   d[, OWNERSHP_out := ifelse(ownershp_valid, as.numeric(OWNERSHP_num == 1), NA_real_)]
 
+  # Valid raw codes are 1:22 (22 is a top code for 21+ bedrooms); codes 0/23+
+  # and other out-of-range values are unknown/not-in-universe and must stay
+  # missing, matching run_second_birth_housing_readout.R:29's reviewed rule.
   d[, BEDROOMS_num := suppressWarnings(as.numeric(BEDROOMS))]
-  d[, bedrooms_valid := !is.na(BEDROOMS_num) & BEDROOMS_num >= 1]
+  d[, bedrooms_valid := !is.na(BEDROOMS_num) & BEDROOMS_num %in% bedrooms_valid_codes]
   d[, BEDROOMS_out := ifelse(bedrooms_valid, pmin(BEDROOMS_num - 1, bedrooms_cap), NA_real_)]
   d
 }
@@ -182,14 +247,24 @@ build_samesex2 <- function(mother_rows, age_grid = 0:5) {
   d[eligible_pool == TRUE]
 }
 
-#' Anderson-Rubin confidence set for a single-instrument single-endog IV
-#' fit via grid inversion: for each candidate beta0, test H0: instrument
+#' Anderson-Rubin confidence set for a single-instrument single-endog IV fit
+#' via grid inversion: for each candidate beta0, test H0: instrument
 #' coefficient = 0 in the regression of (y - beta0*d) on instrument+controls
 #' via fixest::wald(); beta0 is in the AR set if not rejected at `alpha`.
+#'
+#' A finite grid can only ever report a truncated view of the true
+#' (possibly unbounded) AR set. This function returns every maximal
+#' contiguous run of accepted grid points as a separate component, and
+#' flags any component touching a grid edge as extent-unknown (the true AR
+#' set may extend past what the grid covers). It never collapses a
+#' boundary-touching accepted run into a "bounded" interval, and it keeps
+#' regression failures (`error`) distinct from rejections (`reject`) so a
+#' string of numerical errors cannot be mistaken for a rejection region.
 ar_confidence_set <- function(data, outcome, endog, instrument, controls_fml,
                                weight_var, cluster_var, grid, alpha = 0.05) {
-  keep <- rep(NA, length(grid))
-  for (i in seq_along(grid)) {
+  n_grid <- length(grid)
+  status <- character(n_grid)  # "accept" | "reject" | "error"
+  for (i in seq_len(n_grid)) {
     b0 <- grid[i]
     yy <- data[[outcome]] - b0 * data[[endog]]
     dloc <- data.table::copy(data)
@@ -201,17 +276,52 @@ ar_confidence_set <- function(data, outcome, endog, instrument, controls_fml,
                     cluster = stats::as.formula(paste0("~", cluster_var)), notes = FALSE),
       error = function(e) NULL
     )
-    if (is.null(fit)) { keep[i] <- NA; next }
+    if (is.null(fit)) { status[i] <- "error"; next }
     wt <- tryCatch(fixest::wald(fit, instrument, print = FALSE), error = function(e) NULL)
-    keep[i] <- if (is.null(wt)) NA else (wt$p > alpha)
+    if (is.null(wt) || is.na(wt$p)) { status[i] <- "error"; next }
+    status[i] <- if (wt$p > alpha) "accept" else "reject"
   }
-  in_set <- grid[which(keep)]
-  list(grid = grid, keep = keep,
-       bounded = length(in_set) > 0 && length(in_set) < length(grid),
-       lower = if (length(in_set) > 0) min(in_set) else NA_real_,
-       upper = if (length(in_set) > 0) max(in_set) else NA_real_,
-       disconnected = length(in_set) > 0 &&
-         any(diff(sort(unique(c(which(keep), NA))), na.rm = TRUE) > 1, na.rm = TRUE))
+
+  accepted <- status == "accept"
+  n_accepted <- sum(accepted)
+  n_errors <- sum(status == "error")
+
+  components <- list()
+  if (n_accepted > 0) {
+    idx <- which(accepted)
+    breaks <- which(diff(idx) > 1)
+    starts <- c(idx[1], idx[breaks + 1])
+    ends <- c(idx[breaks], idx[length(idx)])
+    for (k in seq_along(starts)) {
+      lo_idx <- starts[k]; hi_idx <- ends[k]
+      touches_lo <- lo_idx == 1L
+      touches_hi <- hi_idx == n_grid
+      components[[k]] <- list(
+        lower = grid[lo_idx], upper = grid[hi_idx],
+        touches_grid_boundary = touches_lo || touches_hi,
+        extent = if (touches_lo || touches_hi) "grid_truncated_extent_unknown" else "interior_bounded"
+      )
+    }
+  }
+
+  any_boundary_touch <- length(components) > 0 &&
+    any(vapply(components, function(c) c$touches_grid_boundary, logical(1)))
+  all_grid_accepted <- n_accepted == n_grid
+
+  list(
+    grid_min = min(grid), grid_max = max(grid), n_grid = n_grid,
+    n_accepted = n_accepted, n_rejected = sum(status == "reject"),
+    n_errors = n_errors,
+    n_components = length(components), components = components,
+    fully_interior_bounded = length(components) > 0 && !any_boundary_touch,
+    all_grid_points_accepted = all_grid_accepted,
+    empty_accepted_set = n_accepted == 0,
+    # Convenience summary across ALL accepted points (may span >1 component
+    # or touch the boundary); NOT a claim of a single bounded CI -- consult
+    # fully_interior_bounded / components before interpreting as a CI.
+    summary_lower = if (n_accepted > 0) min(grid[accepted]) else NA_real_,
+    summary_upper = if (n_accepted > 0) max(grid[accepted]) else NA_real_
+  )
 }
 
 #' Fit RF, FS, and 2SLS for one outcome/instrument/treatment triple, with an
@@ -249,10 +359,29 @@ fit_instrument_outcome <- function(data, outcome, treatment, instrument,
     data = usable, weights = w_fml, cluster = c_fml, notes = FALSE),
     error = function(e) NULL)
 
-  out$rf_coef <- if (!is.null(rf_fit)) unname(stats::coef(rf_fit)[instrument]) else NA_real_
-  out$rf_se <- if (!is.null(rf_fit)) unname(sqrt(diag(stats::vcov(rf_fit)))[instrument]) else NA_real_
-  out$fs_coef <- if (!is.null(fs_fit)) unname(stats::coef(fs_fit)[instrument]) else NA_real_
-  out$fs_se <- if (!is.null(fs_fit)) unname(sqrt(diag(stats::vcov(fs_fit)))[instrument]) else NA_real_
+  extract_coef <- function(fit, coefname, z = stats::qnorm(0.975)) {
+    if (is.null(fit) || is.na(coefname) || !(coefname %in% names(stats::coef(fit))))
+      return(list(coef = NA_real_, se = NA_real_, ci_lower = NA_real_, ci_upper = NA_real_,
+                  nobs = NA_integer_, error = "coefficient_not_found"))
+    b <- unname(stats::coef(fit)[coefname])
+    se <- unname(sqrt(diag(stats::vcov(fit)))[coefname])
+    list(coef = b, se = se, ci_lower = b - z * se, ci_upper = b + z * se,
+         nobs = stats::nobs(fit), error = NA_character_)
+  }
+
+  rf_err <- if (is.null(rf_fit)) "rf_fit_failed" else NA_character_
+  fs_err <- if (is.null(fs_fit)) "fs_fit_failed" else NA_character_
+  rfx <- extract_coef(rf_fit, instrument)
+  fsx <- extract_coef(fs_fit, instrument)
+  out$rf_coef <- rfx$coef; out$rf_se <- rfx$se
+  out$rf_ci_lower <- rfx$ci_lower; out$rf_ci_upper <- rfx$ci_upper
+  out$rf_nobs_fit <- rfx$nobs
+  out$rf_error <- rf_err %||% rfx$error
+  out$fs_coef <- fsx$coef; out$fs_se <- fsx$se
+  out$fs_ci_lower <- fsx$ci_lower; out$fs_ci_upper <- fsx$ci_upper
+  out$fs_nobs_fit <- fsx$nobs
+  out$fs_error <- fs_err %||% fsx$error
+
   fs_wald <- if (!is.null(fs_fit)) tryCatch(fixest::wald(fs_fit, instrument, print = FALSE), error = function(e) NULL) else NULL
   out$first_stage_F <- if (!is.null(fs_wald)) unname(fs_wald$stat) else NA_real_
   out$first_stage_F_df <- if (!is.null(fs_wald))
@@ -264,19 +393,29 @@ fit_instrument_outcome <- function(data, outcome, treatment, instrument,
     data = usable, weights = w_fml, cluster = c_fml, notes = FALSE),
     error = function(e) NULL)
   iv_coefname <- paste0("fit_", treatment)
-  out$iv_coef <- if (!is.null(iv_fit)) unname(stats::coef(iv_fit)[iv_coefname]) else NA_real_
-  out$iv_se <- if (!is.null(iv_fit)) unname(sqrt(diag(stats::vcov(iv_fit)))[iv_coefname]) else NA_real_
+  ivx <- extract_coef(iv_fit, iv_coefname)
+  out$iv_coef <- ivx$coef; out$iv_se <- ivx$se
+  out$iv_ci_lower <- ivx$ci_lower; out$iv_ci_upper <- ivx$ci_upper
+  out$iv_nobs_fit <- ivx$nobs
+  out$iv_error <- if (is.null(iv_fit)) "iv_fit_failed" else ivx$error
 
   if (!is.null(ar_grid) && !is.null(iv_fit) && !is.na(out$iv_coef)) {
     ar <- tryCatch(ar_confidence_set(usable, outcome, treatment, instrument,
                                       controls_fml, weight_var, cluster_var, ar_grid),
                    error = function(e) NULL)
     if (!is.null(ar)) {
-      out$ar_lower <- ar$lower; out$ar_upper <- ar$upper
-      out$ar_bounded <- ar$bounded; out$ar_disconnected <- ar$disconnected
-      out$ar_grid_min <- min(ar_grid); out$ar_grid_max <- max(ar_grid)
+      out$ar_summary_lower <- ar$summary_lower; out$ar_summary_upper <- ar$summary_upper
+      out$ar_fully_interior_bounded <- ar$fully_interior_bounded
+      out$ar_n_components <- ar$n_components
+      out$ar_all_grid_points_accepted <- ar$all_grid_points_accepted
+      out$ar_empty_accepted_set <- ar$empty_accepted_set
+      out$ar_n_errors <- ar$n_errors
+      out$ar_grid_min <- ar$grid_min; out$ar_grid_max <- ar$grid_max
+      out$ar_components_json <- jsonlite::toJSON(ar$components, auto_unbox = TRUE)
+    } else {
+      out$ar_error <- "ar_confidence_set_failed"
     }
   }
-  out$status <- "fit"
+  out$status <- if (is.null(rf_fit) && is.null(fs_fit) && is.null(iv_fit)) "error" else "fit"
   out
 }
