@@ -1,10 +1,50 @@
 # Earnings, entry wealth and purchase timing
 
-**September 21 evening: implementation and cheap checks completed; the author
-requests a broader, top-five/top-field literature grounding and improved
-four-year aggregation. No new calibration result or submitted job.**
+**Launch on hold after author clarification:** acceleration did not authorize
+selection of an arbitrary period approximation. Worker staging stopped; no
+lead submission. The plan gate is pending again. The proposed overnight
+specification below is retained as evidence, not an approved run.
 
-## Concrete four-year proposal — September 21
+**Live decision: retain persistent plus transitory income. The single-component
+proposal below is withdrawn. A bounded three-arm overnight diagnostic is being
+staged on Torch; no final earnings specification or calibration is adopted.**
+
+## Live overnight specification
+
+The classic decomposition is an age profile, a persistent AR(1), and independent
+iid risk; see [Storesletten, Telmer and Yaron (2004), JME](https://doi.org/10.1016/j.jmoneco.2003.06.005).
+Their richer specification also permits fixed heterogeneity. For the no-fixed-type
+fertility application we use [Sommer (2016), JME, Section 4.1/Table 2](https://www.kamilasommer.net/Fertility.pdf)
+as the annual parameter source: rho 0.95, persistent innovation SD 0.21, iid SD
+0.17. The classic reference does not certify our four-year approximation.
+
+The **diagnostic** four-year conversion retains independent persistent and iid
+components. Persistent endpoint persistence is 0.95^4 = 0.81450625 and its
+innovation SD is 0.21 sqrt(1 + 0.95^2 + 0.95^4 + 0.95^6) = 0.390176278.
+The temporary log variance is log(1 + [exp(0.17^2)-1]/4), giving SD 0.085461555.
+This matches the level variance of the average of four independent mean-one
+lognormal temporary factors, approximating their average as lognormal. Combining
+it with the persistent endpoint is an approximation to total period earnings,
+not an exact annual-to-four-year aggregation. Its continuous variance exceeds the
+exact four-year-average variance by 7.8387%; lag 1–4 covariances differ by <0.6%.
+
+The model uses 15 persistent by 3 iid nodes, independent iid transitions, mean-one
+income risk, and the retained age profile, taxes and period units. Stationary
+entry risk and wage-to-exogenous-household-earnings mapping are diagnostic
+assumptions. Entry wealth marginal is preserved under the documented rank
+coupling. No permanent type or single-component collapse is introduced.
+
+Tonight compares the reference once, new earnings once, and new earnings plus
+current-income purchase accounting twice, with original structural parameters.
+This is four full objectives, at most 32 nested stationary solves (24 expected),
+110-minute controller cap, and stop at the first failure. It is the numerical
+smoke/diagnostic itself; no dependent search or policy run is scheduled. Each
+successful arm must retain full targets/parameters and the standard 17 plots.
+The constructor, accounting and controller code/pins are unchanged from the
+previous 27 passing focused tests. All three local zero-solve native preflights
+now pass; Torch relocation/preflight and scheduler receipt are still required.
+
+## Withdrawn single-component proposal — September 21
 
 Use Sommer's annual risk inputs (0.95, 0.21, 0.17), aggregate annual earnings
 **levels** over four years, and approximate normalized block income with one
@@ -12,8 +52,9 @@ lognormal AR(1). An equal-weight fit of relative errors in stationary level
 variance and four autocovariances, allowing a nonnegative independent iid
 variance, gives period persistence **0.823078407** and innovation SD
 **0.376839547**. The fitted independent iid variance is effectively zero
-(8.4e-20, an active lower bound). Thus this is a recommendation for one period
-income state, revising the earlier proposed separate four-year iid component.
+(8.4e-20, an active lower bound). This was a proposed one-state
+approximation; it was withdrawn after the author reaffirmed the intended
+persistent-plus-transitory structure. It is not the overnight specification.
 Annual iid risk is still included in the aggregated target distribution.
 
 The stationary log variance is 0.44027777; normalize exp(z) by its mean.
@@ -28,8 +69,8 @@ This calculation assumes stationary annual risk and excludes the deterministic
 age profile. It does not copy Sommer's zero persistent state at entry. Using
 her wage process for exogenous household earnings remains a diagnostic proxy.
 Low-income tails, finite-grid accuracy, lifecycle/entry assumptions and household
-responses are not yet validated. The existing adapter and run plan have **not**
-been changed or launched; no model specification has been adopted.
+responses are not yet validated. The single-component fit has not been installed in the adapter or run plan;
+no model specification has been adopted.
 
 ## Literature review and revised recommendation
 
@@ -175,10 +216,10 @@ timings and the larger income grid; it has not been measured on these arms.
 The first failed case stops the loop. No silent retry, target change, search,
 floor relaxation or policy run is authorized by this packet.
 
-Before launch: resolve the income approximation; re-pin files after any edits;
+Before launch: retain the live diagnostic approximation above; re-pin files after any edits;
 stage an independent Torch bundle; pass all three native zero-solve preflights;
-then submit this exact smoke loop. The local plan is deliberately blocked at
-the income decision and is not a submitted batch.
+then submit this exact smoke loop. The local plan authorizes this bounded diagnostic and is not itself a scheduler
+submission. Record the scheduler receipt before claiming launch.
 
 After successful completion, collect all 13 target rows and 17 parameter rows,
 the standard 17 figures, native exact repetitions and the additional accounting

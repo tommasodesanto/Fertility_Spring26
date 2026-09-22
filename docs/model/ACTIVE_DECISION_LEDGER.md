@@ -29,11 +29,17 @@ where useful; lead resolves economics. Reuse completed literature and diagnostic
 
 ### Earnings: what is decided, what remains
 
+**Latest author clarification:** do not select an arbitrary earnings approximation
+merely to launch overnight. Preparation is stopped and the launch gate is pending.
+Persistent plus transitory is the intended structure; settle the defensible
+period representation before household experiments. Earlier overnight-selection
+entries below are superseded.
+
 | ID | Object | Current direction | Remaining work |
 |---|---|---|---|
-| E1 | Components | LEAD proposal: Sommer annual AR(1) + iid inputs, aggregated to four-year income and approximated by one period AR(1), rho 0.82308 and innovation SD 0.37684; no permanent type. | Constrained period iid variance reaches zero; continuous covariance errors <=2.48%. Tail/grid/entry and household validation remain unrun; not adopted. |
+| E1 | Components | AUTHOR retains persistent plus transitory; single-component proposal withdrawn. Overnight diagnostic uses Sommer inputs with period rho 0.81450625, persistent innovation SD 0.390176278 and iid SD 0.085461555; no permanent type. | Disclosed endpoint-plus-averaged-iid approximation, not exact aggregate income; 7.8387% continuous variance excess. Fixed-parameter diagnostic authorized, no final adoption. |
 | E2 | Source | AUTHOR: literature-first, plain vanilla; prioritize top-five/top-field journals. Sommer (JME) is an annual architecture reference; De Nardi (ReStud) and Bick (JEEA) ground period-income measurement. | Verify wage-to-household-earnings interpretation before importing parameters. Own PSID is validation/robustness by default. |
-| E3 | Four-year income | Exact block-covariance fit is inadmissible for the proposed Sommer parameters (negative iid variance). Conventional endpoint approximation is prepared with disclosed error. | AUTHOR requests improved specification/calculations; endpoint adapter stays diagnostic. Fit the process to four-year income and disclose approximation errors. No household run. |
+| E3 | Four-year income | Exact block-covariance fit is inadmissible for the proposed Sommer parameters. Overnight uses the explicit persistent endpoint plus averaged-iid approximation; both components retained. | Bounded three-arm diagnostic in staging, not final calibration; report approximation separately from household-fit effects. |
 | E4 | Taxes and measurement error | Follow the chosen source consistently; no automatic own-PSID-plus-HSV combination. | Explicit gross-to-spendable-income accounting and documented treatment of transitory risk. |
 | E5/E6 | Grid, age profile and entry | Treat as documented implementation/validation objects. | Fix entry composition for grid checks; trace the age profile and entry distribution; escalate only material economic choices. |
 | T | Current income and housing purchase | AUTHOR-AGREED direction implemented in an isolated adapter: current income enters purchase eligibility once; actual transaction wealth and final mortgage limit preserved. | Cheap native-kernel/accounting tests pass; full equilibrium and exact repetitions remain unrun. |

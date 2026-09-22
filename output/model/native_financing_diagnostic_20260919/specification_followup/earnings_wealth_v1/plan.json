@@ -64,6 +64,7 @@
   },
   "income_specification": {
     "author_decision": "pending",
+    "authorization_basis": "User clarified that acceleration was not authorization to choose an arbitrary approximation or launch. Preserve persistent plus transitory; settle a defensible period specification first.",
     "constructor_arguments": {
       "iid_states": 3,
       "n_persistent": 15,
@@ -73,7 +74,9 @@
       "transitory_sd_annual": 0.17
     },
     "grid_gate_interpretation": "diagnostic distribution approximation, not household-grid convergence",
+    "known_continuous_level_variance_excess_percent": 7.838718691652136,
     "mapping": "conventional_endpoint",
+    "mapping_interpretation": "Exact four-year persistent endpoint transition plus moment-matched lognormal approximation to average annual iid levels; not exact four-year aggregate earnings.",
     "max_relative_discrete_level_covariance_error": 0.05
   },
   "initial_psi": 0.1489153145785918,
@@ -84,7 +87,7 @@
   "reference_loss": 179.2984242480252,
   "schema": "e5f_earnings_wealth_smoke_v1",
   "source_root": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/income_refinement_local_20260921/source",
-  "status": "prepared_income_decision_pending",
+  "status": "on_hold_specification_not_authorized_for_launch",
   "stop": "first failed case, unchanged native gates, no retry or parameter search",
   "structural_parameters": {
     "H0": 8.11210048056786,

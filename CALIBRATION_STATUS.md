@@ -1,10 +1,33 @@
 # Calibration Status
 
+**September 21 night — launch preparation stopped after author clarification:**
+The author asked for the best defensible specification, not an arbitrary
+approximation selected merely to run overnight. No job has been submitted by
+the lead; the staging worker has been told to stop and return its receipt.
+The plan is blocked again. Persistent plus transitory remains intended; the
+endpoint-plus-averaged-iid approximation is not adopted or authorized for launch.
+The preparation notes below are superseded by this instruction.
+
+**September 21 night — persistent plus transitory diagnostic preparing for Torch:**
+The author requests an overnight run; the lead selects the existing disclosed
+four-year endpoint-plus-averaged-iid approximation for a bounded diagnostic.
+Sommer annual inputs (0.95, 0.21, 0.17) map to period persistence 0.81450625,
+persistent innovation SD 0.390176278, and iid SD 0.085461555. Both components
+remain; the prior single-component recommendation is withdrawn. The 7.8387%
+continuous variance excess versus exact four-year aggregate earnings is explicit.
+No final model adoption, source re-estimation or preference search is implied.
+Four full objectives across reference, income, and income-plus-purchase arms;
+at most 32 nested solves, 110-minute controller cap, fixed structural parameters,
+unchanged complete target system/gates/17 plots. All three local native zero-solve
+preflights passed. Torch staging/preflight/submission is pending.
+[Live specification and run contract](output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/README.md#live-overnight-specification).
+
 **September 21 — concrete income conversion calculated, diagnostic proposal only:**
 A constrained fit to the exact four-year aggregates of Sommer annual earnings
 risk gives period persistence 0.823078407 and innovation SD 0.376839547. The
-independent period iid variance reaches zero; the lead now recommends a single
-period AR(1) approximation. The five continuous level-moment errors are at most
+independent period iid variance reaches zero; the lead proposed a single
+period AR(1) approximation, subsequently withdrawn after the author clarified
+that persistent plus transitory remains the intended specification. The five continuous level-moment errors are at most
 2.48%. This uses stationary annual risk and is not a household fit or empirical
 re-estimation. Tails, grids, entry and household responses remain unvalidated;
 no runtime adapter, run plan or baseline changed.

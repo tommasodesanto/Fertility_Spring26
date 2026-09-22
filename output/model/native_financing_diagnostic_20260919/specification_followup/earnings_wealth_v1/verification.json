@@ -1,10 +1,33 @@
 {
+  "all_arms_local_preflight": {
+    "cases": [
+      {
+        "arm": "reference",
+        "household_solves": 0,
+        "status": "preflight_passed"
+      },
+      {
+        "arm": "literature_income",
+        "household_solves": 0,
+        "status": "preflight_passed"
+      },
+      {
+        "arm": "literature_income_purchase",
+        "household_solves": 0,
+        "status": "preflight_passed"
+      }
+    ],
+    "solves": 0,
+    "status": "preflight_passed"
+  },
   "frozen_source_file_count": 641,
   "full_objective_evaluations": 0,
   "household_equilibrium_solves": 0,
   "jobs_submitted": [],
+  "local_preflight_plan_sha256": "b4d57ef1ce275bdaca17fa851c9e0292736253761842d5ee09baf72b4fec0a22",
   "native_entry_marginal_max_gap": 1.1102230246251565e-16,
-  "plan_sha256": "e95367228d3842b9c3005049d505b1997939293274eb75c1115ff3e86f3b0b24",
+  "plan_sha256": "712a8d537e94c9516748aab2040ca13c8f057e889eb49072545737fa02a16010",
+  "prior_validation_status": "cheap_checks_passed_model_run_blocked_by_pending_income_decision",
   "reference_preflight": {
     "arm": "reference",
     "household_solves": 0,
@@ -40,7 +63,7 @@
       "sha256": "81322cae96620ff06d9275348c6a32711165ee6d5666834ebf9c3746916b65b6"
     }
   },
-  "status": "cheap_checks_passed_model_run_blocked_by_pending_income_decision",
+  "status": "cheap_checks_and_preflights_passed_launch_on_hold_after_author_clarification",
   "tests": {
     "command": "NUMBA_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 code/model/.venv/bin/python -m pytest -q code/model/tools/test_build_literature_period_income.py code/model/tools/test_run_e5f_earnings_wealth_smoke.py code/model/tools/test_e5f_earnings_wealth_contract.py code/model/tools/test_run_e5f_earnings_wealth_candidate.py",
     "failed": 0,
@@ -48,11 +71,10 @@
   },
   "unrun": [
     "all three native model arms",
-    "non-reference native preflight after income decision",
     "exact full-model repetitions",
     "17 solution diagnostics per completed arm",
     "household-grid convergence",
     "calibration refit"
   ],
-  "utc": "2026-09-22T01:00:22.616797+00:00"
+  "utc": "2026-09-22T03:24:47.471597+00:00"
 }
