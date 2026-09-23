@@ -1,0 +1,142 @@
+{
+  "all_experiment_jobs_terminal": true,
+  "attempted_objectives": 464,
+  "case_counts": {
+    "B_floor": {
+      "collection_rejected": 0,
+      "failed": 9,
+      "incomplete": 0,
+      "rejected": 0,
+      "running": 0,
+      "unrun": 126,
+      "verified_scored": 193
+    },
+    "B_shares": {
+      "collection_rejected": 0,
+      "failed": 10,
+      "incomplete": 0,
+      "rejected": 0,
+      "running": 0,
+      "unrun": 126,
+      "verified_scored": 192
+    },
+    "D_floor": {
+      "collection_rejected": 0,
+      "failed": 0,
+      "incomplete": 0,
+      "rejected": 0,
+      "running": 0,
+      "unrun": 4,
+      "verified_scored": 36
+    },
+    "D_shares": {
+      "collection_rejected": 0,
+      "failed": 1,
+      "incomplete": 0,
+      "rejected": 0,
+      "running": 0,
+      "unrun": 16,
+      "verified_scored": 23
+    }
+  },
+  "claims_not_established": [
+    "Converged search or global optimum",
+    "Income/wealth grid convergence at selected points",
+    "No continuation-sentinel effect on choices",
+    "Empirical validity of inherited joint wealth-income law",
+    "Utility winner or paper adoption",
+    "New matched first-birth model-panel estimator"
+  ],
+  "delivery_utc": "2026-09-23T14:00:00Z",
+  "entry_audits": {
+    "B_floor": {
+      "V_g_finite": true,
+      "censored_share": 0.0,
+      "marginal_L1": 2.6363053450342844e-16,
+      "population_share_V_le_minus_1e6": 2.590863408227148e-11
+    },
+    "B_shares": {
+      "V_g_finite": true,
+      "censored_share": 0.0,
+      "marginal_L1": 1.4907779871675686e-16,
+      "population_share_V_le_minus_1e6": 9.538939654379938e-12
+    },
+    "D_floor": {
+      "V_g_finite": true,
+      "censored_share": 0.0,
+      "marginal_L1": 7.068998164605489e-17,
+      "population_share_V_le_minus_1e6": 2.2624700494225744e-11
+    },
+    "D_shares": {
+      "V_g_finite": true,
+      "censored_share": 0.0,
+      "marginal_L1": 1.3579632210380943e-16,
+      "population_share_V_le_minus_1e6": 3.5684536127895934e-11
+    }
+  },
+  "failed_objectives": 20,
+  "failure_review": "execution_failure_review.json",
+  "figure_visual_review": "figure_visual_review.json",
+  "final_wording_integrity": "pdf_final_wording_integrity.json",
+  "independent_comparison_review": "checkpoint_review/independent_lead_support.json",
+  "job_responsibility": "All experiment stages are terminal; no live or uncollected experiment jobs remain. Six missing repeats and numerical sensitivity checks are outstanding work, not queued jobs. No responsibility assumed for unrelated18293508.",
+  "manifest_sha256": "a895112b283f724c532f53e214457ceb142cacd44d9ac74deb84ed6dbf40f3d5",
+  "no_new_runs_or_gates_changed": true,
+  "pdf": "output/pdf/utility_target_review.pdf",
+  "pdf_numeric_review": "final_pdf_numeric_review.json",
+  "pdf_pages": 53,
+  "pdf_qa": "../target_review_v1/overnight/report_tables/final_pdf_qa.json",
+  "pdf_sha256": "9b6bbf6a3986291bd14eb8878631af4f8e01d253bed849b0d625101e8ec40cc9",
+  "reviewed_utc": "2026-09-23T13:40:17.304764+00:00",
+  "schema": "utility_overnight_final_lead_review_v1",
+  "scientific_repetitions": {
+    "B_floor": "Two repetitions unrun/unavailable",
+    "B_shares": "Two repetitions unrun/unavailable",
+    "D_floor": "Original selected versus both repeats exact for all finite signature fields and V/g bytes. Seven identical NaNs are unused fixed-type diagnostic defaults. Independent receipt does not alter raw finalizer failure.",
+    "D_shares": "Two repetitions unrun/unavailable"
+  },
+  "scored_objectives": 444,
+  "selection": [
+    {
+      "case_id": "worker09_proposal16",
+      "cell": "B_floor",
+      "checkpoint_sha256": "83a28e46b36e2fbe30338d366611f3ec209f0c5a68309ee4ee9fa8523b66adee",
+      "exact_repeats_are_selection": false,
+      "loss": 464.8522255676939,
+      "stage": "production"
+    },
+    {
+      "case_id": "worker33_proposal01",
+      "cell": "B_shares",
+      "checkpoint_sha256": "5c382f34f852b10efc2d4253753ce8811c504b3cf95c4d4cce89399e0c60a5f4",
+      "exact_repeats_are_selection": false,
+      "loss": 851.2713381271443,
+      "stage": "production"
+    },
+    {
+      "case_id": "worker37_proposal17",
+      "cell": "D_floor",
+      "checkpoint_sha256": "e4afbe7ca2197c5ea8f2dbde2ccaf0bdde9a286932818c2466eb186f48b467ae",
+      "exact_repeats_are_selection": false,
+      "loss": 416.48144430587246,
+      "stage": "production"
+    },
+    {
+      "case_id": "worker39_proposal18",
+      "cell": "D_shares",
+      "checkpoint_sha256": "a195eef80e565dbf3ca0b65bd56ffc1ecdc9ba24a39118eb1b3855c2286bc2e9",
+      "exact_repeats_are_selection": false,
+      "loss": 1524.038170288845,
+      "stage": "production"
+    }
+  ],
+  "source_manifest_sha256": "76406fcc10206d9e30bcc29d4e18accdf7fffdd9219e50e6e11c1c3360f01336",
+  "stationary_solves": {
+    "completed_solves": 2571,
+    "started_solves": 2590,
+    "unfinished_solves": 19
+  },
+  "status": "terminal experiment reviewed; PDF QA complete; delivery held for10:00EDT",
+  "target_system_sha256": "10d80bcfca64aad511058b4a1d427283c3c2f548803213f21688e091f7457107",
+  "unrun_objectives": 272
+}

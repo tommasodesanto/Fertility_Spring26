@@ -1,5 +1,17 @@
 # Overnight utility comparison — September 22–23
 
+## September 23, 09:40 EDT — terminal results collected and reviewed
+
+Torch access returned at09:22EDT. All four smokes passed;20 of40 production workers completed and20 failed after retaining earlier cases. The reviewed inventory has **444 scored/20 failed/272 unrun objectives** and **2,590 started/2,571 completed/19 unfinished stationary solves**. Nineteen failures were the strict initial housing-equilibrium gate; one was the unchanged exact-zero budget-mass gate. All experiment jobs are terminal. No new run, retry or relaxed gate.
+
+The selected losses under the identical objective are B_floor464.8522, B_shares851.2713, D_floor416.4814 and D_shares1524.0382. B means one persistent earnings process; D adds iid risk. All retain inherited heterogeneous wealth. The main floor/shares cases predict ownership39.49%/51.33% versus64.83%, rooms6.48/7.09 versus5.56, and recent-parent ownership gaps12.50/5.51pp versus16.29pp. Neither is an adopted fit. All four selected entry marginals are preserved without censoring.
+
+Only D_floor completed both selected repetitions. Independent original-selected-versus-both checks agree exactly in price, finite V/g bytes, all finite moments, psi and full tables. Seven matching NaNs are unused fixed-type diagnostic defaults; they caused the raw finalizer JSON serialization to fail. That raw failure remains preserved alongside the separate reviewed comparison. The other six repetitions remain unrun/unavailable. No grid-convergence or harmless-continuation claim.
+
+Working recommendation: retain persistent earnings, heterogeneous entry wealth and the floor as the comparison baseline, while fixing the chosen birth-timing/model-data observer before a further long refit. Do not choose utility solely by weighted loss. All six Opus5.5 phases and empirical checks are complete; target changes remain unadopted. The53-page PDF includes all13 target rows,17/19 parameter rows and17 original diagnostics per selected cell. Delivery is held for10:00EDT.
+
+[Final lead review](final_lead_review.json), [complete selected target table](final_readout/selected_target_fits.csv), [complete selected parameter table](final_readout/selected_parameters.csv), [failure evidence](execution_failure_review.json), [checkpoint comparisons](checkpoint_review/independent_lead_support.json).
+
 Author authorizes **40 production workers**, with fixed current targets while a separate Opus5.5/lead target review proceeds. Deadline: **September23 10:00 America/New_York**. Laptop remains open for local review and reporting; Torch computation runs independently.
 
 ## Submitted experiment

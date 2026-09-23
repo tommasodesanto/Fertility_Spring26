@@ -1,5 +1,9 @@
 # Overnight target review — September 22–23
 
+## September23 final model evidence
+
+Access returned09:22EDT; actual overnight model evidence is now collected and reviewed. See sibling `../../utility_overnight_v1/final_lead_review.json`. The final53-page PDF replaces the earlier uncollected-results draft, includes all four selected fits and68 original diagnostic figures, and remains held for10:00EDT. Research findings below remain unchanged.
+
 Author authorization: a literature-first review by **Opus 5.5 through Claude Max**, with lead criticism, targeted empirical work where useful, and repeated discussion. Laptop remains open, powered and connected. Deliver at **September 23, 10:00 America/New_York**, neither an early provisional verdict nor a delayed preferred outcome. Research proceeds alongside the separately documented utility calibration under the existing frozen targets.
 
 ## Live execution

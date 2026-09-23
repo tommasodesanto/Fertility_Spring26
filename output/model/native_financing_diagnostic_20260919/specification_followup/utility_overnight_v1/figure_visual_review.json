@@ -1,0 +1,168 @@
+{
+  "pdf": "output/pdf/utility_target_review.pdf",
+  "reviewed_pdf_sha256": "9b6bbf6a3986291bd14eb8878631af4f8e01d253bed849b0d625101e8ec40cc9",
+  "reviewed_at": "2026-09-23T09:40:00-04:00",
+  "appendix_pages_inspected": [
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52
+  ],
+  "figure_slots_reviewed": 68,
+  "appendix_coverage": {
+    "B_floor": "17 original diagnostic figures, pages 14-22",
+    "B_shares": "17 original diagnostic figures, pages 24-32",
+    "D_floor": "17 original diagnostic figures, pages 34-42",
+    "D_shares": "17 original diagnostic figures, pages 44-52"
+  },
+  "pdf_composition": "pass",
+  "source_image_readability": "limitations_present",
+  "summary": "All four appendices and all 68 original diagnostic figure slots were reviewed. Page composition is clean: figures, captions, headings, margins and footers do not collide, and all expected appendix pages are present. Several source PNGs have legends that overlap plotted data or are clipped within their own image bounds. The PDF preserves those source images as provided; these are source-figure readability limitations, not PDF placement defects.",
+  "source_image_limitations": [
+    {
+      "figure": "housing_by_age_income_state.png",
+      "pdf_pages": [
+        15,
+        25,
+        35,
+        45
+      ],
+      "description": "The long income-state legend is drawn over the plot and covers parts of the age profiles. On the D variants it also runs through the plot title/top area.",
+      "source_files": [
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/B_floor/selected/standard_diagnostics/housing_by_age_income_state.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/B_shares/selected/standard_diagnostics/housing_by_age_income_state.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/D_floor/selected/standard_diagnostics/housing_by_age_income_state.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/D_shares/selected/standard_diagnostics/housing_by_age_income_state.png"
+      ],
+      "cause": "Present in source PNGs; the PDF embeds the complete source image."
+    },
+    {
+      "figure": "fertility_policy_by_age_income_state.png",
+      "pdf_pages": [
+        14,
+        24,
+        34,
+        44
+      ],
+      "description": "The income-state legend sits inside the right side of the plot, obscuring the ends of some age profiles; the more numerous D-state labels are tightly stacked and crowded.",
+      "source_files": [
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/B_floor/selected/standard_diagnostics/fertility_policy_by_age_income_state.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/B_shares/selected/standard_diagnostics/fertility_policy_by_age_income_state.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/D_floor/selected/standard_diagnostics/fertility_policy_by_age_income_state.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/D_shares/selected/standard_diagnostics/fertility_policy_by_age_income_state.png"
+      ],
+      "cause": "Present in source PNGs; the PDF embeds the complete source image."
+    },
+    {
+      "figure": "ownership_by_age_income_state.png",
+      "pdf_pages": [
+        19,
+        29,
+        39,
+        49
+      ],
+      "description": "The income-state legend occupies the left side of the chart and overlaps the early-age profiles; labels are crowded, especially in the D variants.",
+      "source_files": [
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/B_floor/selected/standard_diagnostics/ownership_by_age_income_state.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/B_shares/selected/standard_diagnostics/ownership_by_age_income_state.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/D_floor/selected/standard_diagnostics/ownership_by_age_income_state.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/D_shares/selected/standard_diagnostics/ownership_by_age_income_state.png"
+      ],
+      "cause": "Present in source PNGs; the PDF embeds the complete source image."
+    },
+    {
+      "figure": "liquid_wealth_by_age_income_state.png",
+      "pdf_pages": [
+        17,
+        27,
+        37,
+        47
+      ],
+      "description": "The many-state legend is placed over the right edge of the age profiles, reducing visibility of the older-age values.",
+      "source_files": [
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/B_floor/selected/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/B_shares/selected/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/D_floor/selected/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/D_shares/selected/standard_diagnostics/liquid_wealth_by_age_income_state.png"
+      ],
+      "cause": "Present in source PNGs; the PDF embeds the complete source image."
+    },
+    {
+      "figure": "income_state_outcomes.png",
+      "pdf_pages": [
+        16,
+        26,
+        36,
+        46
+      ],
+      "description": "Many numeric income-state tick labels are packed closely and overlap along the horizontal axis, particularly in the D variants.",
+      "source_files": [
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/B_floor/selected/standard_diagnostics/income_state_outcomes.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/B_shares/selected/standard_diagnostics/income_state_outcomes.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/D_floor/selected/standard_diagnostics/income_state_outcomes.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/D_shares/selected/standard_diagnostics/income_state_outcomes.png"
+      ],
+      "cause": "Present in source PNGs; the PDF embeds the complete source image."
+    },
+    {
+      "figure": "wealth_dist_childless_renter_age30.png and wealth_dist_childless_renter_age42.png",
+      "pdf_pages": [
+        21,
+        22,
+        31,
+        32,
+        41,
+        42,
+        51,
+        52
+      ],
+      "description": "The legends crowd the right side of the wealth axes. The 21-state D variants extend beyond the original image's lower plotting area, clipping the last legend entries; the lower wealth values are compressed near zero on the 0-3000 horizontal scale. The B variants are less crowded but still have dense labels.",
+      "source_files": [
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/B_floor/selected/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/B_floor/selected/standard_diagnostics/wealth_dist_childless_renter_age42.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/B_shares/selected/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/B_shares/selected/standard_diagnostics/wealth_dist_childless_renter_age42.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/D_floor/selected/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/D_floor/selected/standard_diagnostics/wealth_dist_childless_renter_age42.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/D_shares/selected/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/D_shares/selected/standard_diagnostics/wealth_dist_childless_renter_age42.png"
+      ],
+      "cause": "Crowding and clipping are visible in the original source PNGs; PDF placement preserves their full image bounds."
+    }
+  ],
+  "economic_interpretation": "None; this receipt reports only visual properties and makes no adoption judgment.",
+  "initially_rendered_pdf_sha256": "7ceb4968a29f5cf152cd678eb1281be4ad3ced22cfff348b1abc8eb6df1f1ab0",
+  "appendix_image_integrity": "pass: all 68 extracted PDF figure images were decoded and pixel-matched to the corresponding final_readout source PNGs, 17 per cell; appendix page positions unchanged."
+}

@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/tools/run_e5f_preference_share_candidate.py", line 260, in <module>
+    if __name__=='__main__': main()
+                             ~~~~^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/tools/run_e5f_preference_share_candidate.py", line 258, in main
+    else: print(json.dumps(run_case(args.plan,plan,args.arm,args.output,args.repetitions)))
+                           ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/tools/run_e5f_preference_share_candidate.py", line 233, in run_case
+    result = earnings.run_case(plan_path, plan, arm, output, repetitions, preflight)
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/tools/run_e5f_earnings_wealth_candidate.py", line 240, in run_case
+    result = wrapper.run(str(output / "run_contract.json"), digest(output / "run_contract.json"),
+                         output / "evaluation")
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/tools/run_e5f_earnings_wealth_scored_candidate.py", line 231, in run
+    reps,graphs=validate_raw(out/'raw',initial,c['initial_solve_contract']['sha256'],validator,
+                ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                            c['expected_graph_filenames'])
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/tools/run_e5f_earnings_wealth_scored_candidate.py", line 175, in validate_raw
+    validator.validate_summary(view,initial,early,parameters,ges)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/inputs/validator/panel_validator.py", line 36, in validate_summary
+    budget=final['household_budget'];assert budget['budget_excess_mass']==0 and budget['maximum_occupied_excess']<=budget['budget_tolerance']<=1e-9
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

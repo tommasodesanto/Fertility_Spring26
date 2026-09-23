@@ -1,0 +1,225 @@
+{
+  "all_age_occupied_low_value_states": {
+    "available": true,
+    "interpretation": "Diagnostic of very low saved values; does not by itself establish choice contamination.",
+    "thresholds": {
+      "-1000000.0": {
+        "occupied_population_share": 2.590863408227148e-11,
+        "occupied_raw_population_mass": 2.5908634082271446e-11,
+        "occupied_state_count": 159
+      },
+      "-100000000.0": {
+        "occupied_population_share": 3.2711221006428345e-13,
+        "occupied_raw_population_mass": 3.27112210064283e-13,
+        "occupied_state_count": 75
+      },
+      "-1000000000.0": {
+        "occupied_population_share": 2.6984515055528847e-14,
+        "occupied_raw_population_mass": 2.6984515055528812e-14,
+        "occupied_state_count": 47
+      }
+    },
+    "timing": "saved beginning-of-period distribution",
+    "total_mass": 0.9999999999999987
+  },
+  "audit_limits": [
+    "Read-only checkpoint inspection; no household optimizer or equilibrium solver was called.",
+    "V<=-1e6 and V<=-1e8 masses are diagnostic summaries, not new gates.",
+    "A missing saved conditional entry matrix is reported; the unconditional marginal is used only when stored grid indices/weights exist."
+  ],
+  "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/results/production/B_floor/worker09_proposal16/result/evaluation/raw/repetition_01/initial_state.pkl.gz",
+  "checkpoint_sha256": "83a28e46b36e2fbe30338d366611f3ec209f0c5a68309ee4ee9fa8523b66adee",
+  "entry": {
+    "active_entry_rule_metadata": null,
+    "age": 18.0,
+    "censor_to_frontier": true,
+    "fixed_reference_conditional_meaning": "present; weighted marginal is computed from this matrix",
+    "fixed_reference_conditional_shape": [
+      160,
+      15
+    ],
+    "marginal_comparison": {
+      "available": true,
+      "max_abs_gap": 5.551115123125783e-17,
+      "mean_wealth_gap_model_units": 2.7755575615628914e-17,
+      "normalized_l1": 2.6363053450342844e-16,
+      "realized_total_before_normalization": 1.0000000000000002,
+      "reference_total_before_normalization": 0.9999999999999999,
+      "total_variation_distance": 1.3181526725171422e-16
+    },
+    "mode": "income_ratio_distribution",
+    "ratio_nodes": [
+      -2.22252859121604,
+      -0.0526403178090525,
+      0.104244689233362,
+      0.351572998737395,
+      3.1034542945567
+    ],
+    "ratio_source": "PSID reference-person childless renters ages 18-24, primary rows of code/data/psid_followup_mar2026/output/intergen_income_entry_targets_20260716/block2_entry_wealth_18_24.csv: weighted quintile-bin means of wealth over annual family income; mean 0.258855836903436 (person-bootstrap SE 0.125965630995927, 499 replications), weighted median 0.0985177806342346.",
+    "ratio_weights": [
+      0.19942576269679177,
+      0.20037747293780178,
+      0.1998633085085668,
+      0.20008786061209277,
+      0.20024559524474678
+    ],
+    "realized_age18_prechoice_marginal_source": "g_beginning_distribution age index 0 (beginning-of-period/pre-choice)",
+    "realized_age18_prechoice_marginal_sum_before_normalization": 0.06173345618096683,
+    "realized_age18_prechoice_mean_wealth": 0.18651967924681823,
+    "reference_marginal_mean_wealth": 0.1865196792468182,
+    "reference_marginal_source": "P.fixed_reference_entry_conditional weighted by current income-state probabilities",
+    "reference_marginal_sum": 0.9999999999999999,
+    "saved_censored_mass": 0.0,
+    "saved_censored_share": 0.0,
+    "saved_total_entry_mass": 0.058823529411764705
+  },
+  "income_weight_error": null,
+  "native_state_type": "builtins.dict",
+  "occupied_low_value_states": {
+    "age18_prechoice_mass": 0.06173345618096683,
+    "available": true,
+    "interpretation": "diagnostic occupancy only; additional thresholds are not new feasibility gates",
+    "thresholds": {
+      "-1000000.0": {
+        "occupied_probability_mass_conditional_on_age18": 0.0,
+        "occupied_raw_population_mass": 0.0,
+        "occupied_state_count": 0,
+        "value_state_count_all_choices": 15178,
+        "value_state_share_all_choices": 0.06587673611111111
+      },
+      "-100000000.0": {
+        "occupied_probability_mass_conditional_on_age18": 0.0,
+        "occupied_raw_population_mass": 0.0,
+        "occupied_state_count": 0,
+        "value_state_count_all_choices": 11457,
+        "value_state_share_all_choices": 0.0497265625
+      },
+      "-1000000000.0": {
+        "occupied_probability_mass_conditional_on_age18": 0.0,
+        "occupied_raw_population_mass": 0.0,
+        "occupied_state_count": 0,
+        "value_state_count_all_choices": 8215,
+        "value_state_share_all_choices": 0.035655381944444446
+      }
+    },
+    "value_shape_age18": [
+      160,
+      6,
+      1,
+      15,
+      4,
+      4
+    ]
+  },
+  "saved_arrays": {
+    "V": {
+      "dtype": "float64",
+      "finite": true,
+      "max": 2.6468127661134435,
+      "min": -10000000000.0,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ]
+    },
+    "age18_prechoice_timing": "g_beginning_distribution age index 0 (beginning-of-period/pre-choice)",
+    "g": {
+      "dtype": "float64",
+      "finite": true,
+      "max": 0.004005591817482948,
+      "min": 0.0,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ]
+    },
+    "g_beginning_distribution": {
+      "dtype": "float64",
+      "finite": true,
+      "max": 0.004005591817624113,
+      "min": 0.0,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ]
+    },
+    "income_grid": {
+      "dtype": "float64",
+      "finite": true,
+      "max": 11.194101127105801,
+      "min": 0.05388932006414422,
+      "shape": [
+        15
+      ]
+    },
+    "income_state_count": 15,
+    "wealth_grid": {
+      "dtype": "float64",
+      "finite": true,
+      "max": 3000.0,
+      "min": -12.0,
+      "shape": [
+        160
+      ]
+    },
+    "wealth_grid_max": 3000.0,
+    "wealth_grid_min": -12.0
+  },
+  "schema": "e5f_earnings_entry_checkpoint_audit_v1",
+  "source_equivalence": {
+    "all_entry_helpers_equivalent": false,
+    "annual_gross_income_runtime_entry_gap_by_income_state": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "annual_gross_income_runtime_entry_max_abs_gap": 0.0,
+    "helper_ast_equivalence_docstrings_ignored": {
+      "_censor_entry_dead_mass": true,
+      "_linear_grid_weights_for_points": true,
+      "annual_gross_income_at_state": true,
+      "entry_wealth_grid_weights": true,
+      "entry_wealth_ratio_distribution": true,
+      "income_at_state": false
+    },
+    "optimized_solver_path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/source/code/model/intergen_eqscale_seq_optimized/solver.py",
+    "optimized_solver_sha256": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da",
+    "runtime_formula_note": "The source AST differs for income_at_state because optimized code adds property_tax_lump_sum_transfer; the entry conversion is equal for this checkpoint if that transfer is zero. The numeric gap is reported above.",
+    "seq_solver_path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/source/code/model/intergen_eqscale_seq/solver.py",
+    "seq_solver_sha256": "a56a9b2197c4000e0b00d24407a298cf633850fdd3347806380d28425ddfd702"
+  },
+  "source_hashes": {
+    "audit_cli": "b63d160e184fd46386addab5d43ae46e2fa1b1efad675a76a1c1d4242c63db11",
+    "checkpoint": "83a28e46b36e2fbe30338d366611f3ec209f0c5a68309ee4ee9fa8523b66adee",
+    "optimized_solver": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da",
+    "seq_solver": "a56a9b2197c4000e0b00d24407a298cf633850fdd3347806380d28425ddfd702"
+  },
+  "source_root": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/source"
+}

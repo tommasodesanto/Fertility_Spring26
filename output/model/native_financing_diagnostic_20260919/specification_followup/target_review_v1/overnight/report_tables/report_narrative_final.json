@@ -2,60 +2,77 @@
   "title": "Utility comparison and calibration targets",
   "date": "September 23, 2026 | Prepared for the 10:00 EDT review",
   "summary": [
-    "The target review is complete; the overnight model comparison remains uncollected. All 40 production workers and their smoke and verification dependencies were submitted successfully. Torch login expired afterward. Repeated authentication failures prevent verification of their outcomes; elapsed time is not evidence that they succeeded or failed.",
-    "My recommendation is to retain one persistent earnings process plus the age profile, and heterogeneous initial wealth, as the working direction. No new utility winner or adopted calibration can be named without collecting the numerical evidence. Zero entry wealth is not a necessary default, and was not used in this experiment.",
-    "The existing targets largely reproduce. The main unresolved issue is whether the model and data measure the same objects, especially housing changes around a first birth. The work below narrows those decisions and quantifies alternatives. It does not justify replacing hard targets merely because a model misses them."
+    "The overnight experiment produced 444 scored evaluations and 2,571 completed stationary solves. All four starting smokes passed. Twenty of the 40 search workers finished normally; twenty stopped at a numerical gate after preserving their earlier results. The results are now collected and reviewed. This was a substantial finite search, not a converged calibration.",
+    "My working recommendation remains one persistent earnings process plus the age profile, with heterogeneous initial wealth. Keep the housing floor as the comparison baseline for now, but do not adopt either utility specification from this run. The floor achieves a better overall fit under the frozen objective; child-dependent shares improve ownership in the main comparison but create larger misses elsewhere. Neither delivers a satisfactory housing fit.",
+    "The target review largely reproduces the existing empirical numbers. The priority is a narrow measurement decision: align birth timing and the first-birth housing comparison in the model and data. Do not replace a hard target simply to improve fit. The alternative moments below remain proposals, and the overnight jobs used the original targets and inherited wealth throughout."
   ],
   "recommendations": [
-    "First, settle a single measurement contract: the household population and geography, within-period birth timing, and the first-birth housing comparison. Preserve the audited targets unless there is a stated conceptual reason to change them; implement any new empirical and model measurement together.",
-    "Keep the simple persistent-income process and heterogeneous entry wealth as the working direction. The proposed common-income-scale entry distribution is a candidate harmonization, not an adopted repair. Its units and current renter budgets are checked; its coarse discretization, joint income-wealth distribution and continuation feasibility still require validation.",
-    "Collect the submitted floor-versus-child-share comparison and assess the full fit, lifecycle plots, actual parameter bounds and original-selected-versus-two-repeat checks. The share specification has one additional searched coordinate; lower weighted loss alone would not establish better economics or a converged calibration.",
-    "Treat the linked-minor-child housing target as a measured candidate, old-age wealth-level dispersion as a conceptual alternative, and bequest coverage as a mapping to resolve. No target was dropped, reweighted or changed in the overnight jobs. Retain replacement identifying information if a target is eventually changed."
+    "Keep persistent income plus the age profile and heterogeneous entry wealth as the working direction. The simple-income floor case is the current comparison baseline, not an adopted paper calibration. Supplementary persistent+iid results do not establish that extra income risk is needed; they use a different numerical approximation and much less search.",
+    "Decide the within-period birth clock and implement the corresponding model/data housing observer together before the next long refit. Preserve audited wealth and housing targets unless their economic definition is explicitly changed. National ownership is higher than the current target, so changing geography cannot explain away low model ownership.",
+    "Before adopting a utility specification, complete the six missing selected-point repetitions, selected-point income/wealth-resolution and continuation-value checks, and diagnose the ownership-versus-rooms tradeoff using the retained plots. These tasks were not silently rerun. Lower weighted loss is insufficient: the share model has one extra search coordinate and neither search is proven optimal.",
+    "Consider the common-income-scale entry law only as a separately reviewed candidate. Its units and current renter budgets are checked, but the joint distribution, tail discretization and dynamic feasibility remain untested. The linked-minor-child room gap and wealth-level dispersion are also candidates, not overnight target replacements."
   ],
   "limitations": [
-    "Current objective weights mix sampling uncertainty, across-year variation and an external bequest tolerance. The loss is a working diagnostic distance, not a chi-squared statistic or proof of an efficient SMM estimator.",
-    "No new selected checkpoints, exact repetitions or 17-figure packets have been collected. Completed, rejected, incomplete and unrun counts are unknown. Historical September 22 B calculations appear only where explicitly labeled as measurement checks; they are not tonight's results.",
-    "Four-year decision timing, stationary income risk at entry, wealth-grid robustness and finite infeasibility values remain model limitations. Positive current renter slack alone says nothing conclusive about continuation choices."
+    "The objective mixes sampling uncertainty, across-year variation and an external bequest tolerance. Its numerical value is a diagnostic distance, not a chi-squared test or evidence of efficient SMM weighting. Twelve scored moments versus nine or ten searched coordinates is a counting check, not proof of identification.",
+    "Only the persistent+iid floor selection has both exact repetitions. The other three selections have no completed repeat receipts because their production arrays contained failed workers. All four selected checkpoints pass the original scoring gates; this does not establish global numerical reliability or grid convergence.",
+    "All selected entry distributions preserve the intended wealth marginal without censoring. Very small all-age masses still have deeply negative saved values; small population mass does not bound their effect on continuation choices. Four-year information timing, stationary risk at age 18 and household-grid robustness remain explicit limitations.",
+    "The standard diagnostic images are retained unchanged. Some source legends overlap plotted lines; the 21-state wealth figures clip the last legend entries within the source PNG. Full-domain wealth-policy axes also compress the occupied range. These source readability limits are disclosed; no ad hoc graph replaces the agreed set."
   ],
-  "scientific_verification_status": "Uncollected: no scientific pass/fail verdict for the overnight comparison. Original selected checkpoints must be compared independently against both repetitions.",
+  "scientific_verification_status": "Independent saved-checkpoint comparison verifies the ORIGINAL selected D_floor point against BOTH repeats: price, finite V/g array bytes, all finite native moments, early/fiscal/budget measurements, psi, normalization, full 13 targets, 17 parameters and loss agree exactly. Seven NaN locations agree as well: they are in unused permanent-income-type diagnostics, absent because this experiment has no fixed types. Frozen solver/calibration source confirms these explicit missing defaults. The raw finalizer nevertheless FAILED during strict JSON serialization of those NaNs, and that receipt is preserved. This is a separate reviewed comparison, not a repaired or successful raw finalizer. B_floor, B_shares and D_shares have no two-repeat verification.",
   "sections": [
     {
-      "title": "Exactly what was submitted",
+      "title": "Experiment and actual execution",
       "paragraphs": [
         "40 production workers: 18 per utility with 15-state persistent earnings, plus 2 per utility with 7-by-3 persistent+iid earnings. Each arm has its own two-case smoke, search, two selected repetitions and final comparison. No zero-entry fallback is allowed.",
-        "All arms retain inherited heterogeneous entry wealth, the deterministic age profile, current-income purchase eligibility, transfer rules, four-year timing, power equivalence scale, complete target/weight system and 160-node wealth grid with upper 3000. The floor arm estimates 9 structural coordinates; the shares arm estimates 10; fertility utility is normalized separately in every evaluation.",
+        "Named reference: the inherited-wealth B/D design in the September 22 earnings/entry battery. The overnight floor arm retains that utility; the shares arm changes its housing preference as stated below. All arms retain heterogeneous entry wealth, the age profile, current-income purchase eligibility, transfers, four-year timing, equivalence scale and target/weight system. Wealth remains 160 nodes up to 3000; persistent income uses the previously tested 15-node refinement rather than 7 nodes, while persistent+iid stays at 21. The search recalibrates 9 floor or 10 share coordinates, with fertility utility normalized separately.",
         "The utility difference is experimental. The floor imposes an additional housing requirement only when children live at home. The alternative removes that requirement and lets the housing share of expenditure rise with current dependents. Both retain the existing equivalence scale. No manuscript specification has been adopted.",
-        "The planned search cutoff was 08:00 EDT and repetition cutoff 09:00 EDT. Actual stop status, completed solves, selected fits and repetition equality remain unverified. These limits are not completion receipts. The run manifest and source/target fingerprints are retained in the reproducibility packet."
+        "Search and verification have terminated, with 464 attempted objectives out of 736 planned: 444 scored, 20 failed and 272 unrun. Stationary solves: 2,590 started, 2,571 completed, 19 unfinished. The 19 equilibrium failures stopped incomplete initial solves; the budget-rejected case completed its numerical solves but was not scored. No retry, gate relaxation or extra computation was launched after collection.",
+        "Nineteen worker failures were the unchanged initial housing-equilibrium strict gate. One worker failed the exact-zero budget-excess-mass test: mass 1.47e-24, maximum occupied spending excess 1.42e-14. The mass test remained binding even though the latter is below the 1e-9 tolerance. These failures are recorded as failures; they are not evidence that the economic specification is impossible.",
+        "Only the supplementary floor chain completed both repeats. A NaN in unused fixed-type diagnostic fields prevented its finalizer receipt from serializing. Independent comparisons of the selected point with both saved repetitions pass as described above. Other expected repeats were not completed; one scheduler terminal row is absent, so its detailed cancellation status is not asserted. All experiment jobs are terminal in the fresh scheduler check and no experiment job remains queued.",
+        "Scored counts include smoke evaluations and, for D_floor only, its two repeats. Selection includes smoke and production only. B denotes persistent income and D persistent+iid income throughout the tables. Equal worker allocations did not yield identical search histories or equally optimized estimates."
       ],
       "table": {
         "headers": [
           "Earnings and utility",
-          "Production workers",
-          "Collected outcome"
+          "Workers completed / failed",
+          "Scored objectives / selected loss"
         ],
         "rows": [
           [
-            "Persistent income + housing floor",
-            "18",
-            "Uncollected"
+            "Persistent + floor",
+            "9 / 9",
+            "193 / 464.8522"
           ],
           [
-            "Persistent income + child shares",
-            "18",
-            "Uncollected"
+            "Persistent + child shares",
+            "8 / 10",
+            "192 / 851.2713"
           ],
           [
-            "Persistent + iid income + floor",
-            "2",
-            "Uncollected"
+            "Persistent + iid + floor",
+            "2 / 0",
+            "36 / 416.4814"
           ],
           [
-            "Persistent + iid income + shares",
-            "2",
-            "Uncollected"
+            "Persistent + iid + shares",
+            "1 / 1",
+            "23 / 1524.0382"
           ]
         ]
       }
+    },
+    {
+      "title": "Economic interpretation and parameter checks",
+      "paragraphs": [
+        "In the main persistent-income comparison, the floor predicts ownership 39.49% versus the 64.83% target, while shares predict 51.33%. Shares therefore improve this margin, but mean rooms rise from 6.48 to 7.09 against 5.56, and the recent-parent ownership gap falls from 12.50 to 5.51 percentage points against 16.29. The floor is closer on childlessness and the first-birth room response. These are different tradeoffs, not a clean utility winner.",
+        "Adding iid risk gives a lower observed floor loss, with ownership 44.55% and first-birth age 26.41. It does not remove the housing misses. The supplementary shares point gives ownership 36.68% and a negative recent-parent ownership gap. Only two workers were assigned to each supplementary arm; search coverage and grid differences prevent treating the four selected values as pure causal effects of income risk or utility.",
+        "The standard plots show low ownership through much of the lifecycle, while most owner housing demand is concentrated in the largest available owner product. Market residuals at the selected points are small. This makes the joint tenure-and-housing-size choice a concrete diagnostic priority: a clearing housing market does not guarantee plausible ownership or unit sizes. The plots suggest where to look; they do not identify the causal source of the miss.",
+        "The annual discount factors are 0.97625, 0.99000, 0.98241 and 0.97871 in B_floor, B_shares, D_floor and D_shares, respectively. Their four-year factors are 0.90833, 0.96060, 0.93146 and 0.91753. The shares/persistent point is at the actual annual upper bound 0.99; the floor points are interior. The actual floor estimates are 2.0442 and 2.1493 housing-service units, below the 2.3 bound; the floor is triggered by positive dependent children and is not a per-child increment.",
+        "The housing-share tilts in B_shares are a first-dependent jump 0.05135 and slope 0.03288 per dependent. Relative to childless housing exponent 0.267, the one-dependent exponent becomes about 0.3512. In D_shares the corresponding exponent is about 0.2872. These are utility-expenditure weights, not direct room increments or empirically portable elasticities.",
+        "H0 is a housing-supply intercept, chi scales owner services, theta0 scales bequest utility, and theta1 is a wealth shift in that utility. Fertility kappas are taste-shock scales and the first-birth cost is in normalized utility units. Their levels cannot be certified against unrelated literature coefficients. Several are flagged within 1% of very wide raw bounds; that mechanical flag is not proof the optimum binds. The full 17/19-row tables preserve all external, derived and searched values.",
+        "The income architecture has standard precedents, but four-year household earnings coefficients cannot be imported unchanged from annual wages. The maintained direct-data persistent process has rho4 0.73459 and innovation SD 0.48383; persistent+iid has rho4 0.77614, persistent innovation SD 0.43744 and iid SD 0.16499. The earlier reviewed income packet documents uncertainty and weak iid precision; no new external income coefficient was calibrated to improve these fits.",
+        "All four selected wealth marginals match their intended inherited entry marginal to L1 <= 2.64e-16, and saved entry censoring is zero. All selected V and distribution arrays are finite. Population shares with saved V <= -1e6 are 2.59e-11, 9.54e-12, 2.26e-11 and 3.57e-11. These checks establish preservation of the intended initial condition, not that the empirical proxy or finite continuation penalties are harmless."
+      ]
     },
     {
       "title": "All 13 current target values and working scales",
@@ -155,7 +172,7 @@
     {
       "title": "Decisions needed before adopting a calibration",
       "paragraphs": [
-        "These are proposed next steps, not changes made to the running jobs. Correct existing measurement mismatches explicitly; do not discard a hard-to -fit moment without replacing its identifying information."
+        "These are proposed next steps, not changes made to the submitted jobs. Correct existing measurement mismatches explicitly; do not discard a hard-to-fit moment without replacing its identifying information."
       ],
       "table": {
         "headers": [
@@ -297,7 +314,7 @@
       "title": "Two concrete measurement alternatives",
       "paragraphs": [
         "Linked minor children: the ACS family-room gap falls from 0.347067 to 0.336220 rooms when groups use linked children under 18. The paired difference is -0.010847, SE 0.008077 under the same 1,000 metro draws. It is a better candidate for current dependents, but the model departure process still needs a stated age interpretation.",
-        "Old-age dispersion: on the exact same PSID sample, p90/p50 of household wealth-to -family-income ratios is 3.515935 (SE 0.306911), whereas p90/p50 of wealth levels is 4.919429 (SE 0.579804). These measure different things. Constant model pensions make the two model ratios coincide; that does not justify using either data number interchangeably.",
+        "Old-age dispersion: on the exact same PSID sample, p90/p50 of household wealth-to-family-income ratios is 3.515935 (SE 0.306911), whereas p90/p50 of wealth levels is 4.919429 (SE 0.579804). These measure different things. Constant model pensions make the two model ratios coincide; that does not justify using either data number interchangeably.",
         "The national ownership counterpart is 67.626%, above the current 42-metro 64.833% target. A population change therefore does not mechanically fix historical low model ownership. Choose geography from the paper claim, not from the fit."
       ]
     },

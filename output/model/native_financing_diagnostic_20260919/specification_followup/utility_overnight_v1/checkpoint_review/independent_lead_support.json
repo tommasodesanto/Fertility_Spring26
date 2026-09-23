@@ -1,0 +1,162 @@
+{
+  "schema": "utility_overnight_checkpoint_comparison_independent_review_v1",
+  "status": "read-only comparator/source review complete",
+  "selection_hash_checks": {
+    "all_four_case_ids_and_checkpoint_hashes_match_final_readout_selection": true,
+    "cells": [
+      {
+        "cell": "B_floor",
+        "selection_case_id_matches": true,
+        "selection_checkpoint_sha256_matches_comparison": true,
+        "selection_checkpoint_sha256_matches_entry_audit": true,
+        "selected_case_id": "worker09_proposal16",
+        "checkpoint_sha256": "83a28e46b36e2fbe30338d366611f3ec209f0c5a68309ee4ee9fa8523b66adee",
+        "comparison_status": "two_repetitions_unavailable",
+        "entry_audit": {
+          "mode": "income_ratio_distribution",
+          "age": 18.0,
+          "income_state_count": 15,
+          "fixed_reference_conditional_shape": [
+            160,
+            15
+          ],
+          "censored_share": 0.0,
+          "entry_marginal_max_abs_gap": 5.551115123125783e-17,
+          "annual_gross_income_runtime_entry_max_abs_gap": 0.0,
+          "all_entry_helpers_equivalent": false
+        }
+      },
+      {
+        "cell": "B_shares",
+        "selection_case_id_matches": true,
+        "selection_checkpoint_sha256_matches_comparison": true,
+        "selection_checkpoint_sha256_matches_entry_audit": true,
+        "selected_case_id": "worker33_proposal01",
+        "checkpoint_sha256": "5c382f34f852b10efc2d4253753ce8811c504b3cf95c4d4cce89399e0c60a5f4",
+        "comparison_status": "two_repetitions_unavailable",
+        "entry_audit": {
+          "mode": "income_ratio_distribution",
+          "age": 18.0,
+          "income_state_count": 15,
+          "fixed_reference_conditional_shape": [
+            160,
+            15
+          ],
+          "censored_share": 0.0,
+          "entry_marginal_max_abs_gap": 5.551115123125783e-17,
+          "annual_gross_income_runtime_entry_max_abs_gap": 0.0,
+          "all_entry_helpers_equivalent": false
+        }
+      },
+      {
+        "cell": "D_floor",
+        "selection_case_id_matches": true,
+        "selection_checkpoint_sha256_matches_comparison": true,
+        "selection_checkpoint_sha256_matches_entry_audit": true,
+        "selected_case_id": "worker37_proposal17",
+        "checkpoint_sha256": "e4afbe7ca2197c5ea8f2dbde2ccaf0bdde9a286932818c2466eb186f48b467ae",
+        "comparison_status": "finite_values_and_array_bytes_equal_with_reported_nonfinite_locations",
+        "entry_audit": {
+          "mode": "income_ratio_distribution",
+          "age": 18.0,
+          "income_state_count": 21,
+          "fixed_reference_conditional_shape": [
+            160,
+            21
+          ],
+          "censored_share": 0.0,
+          "entry_marginal_max_abs_gap": 2.7755575615628914e-17,
+          "annual_gross_income_runtime_entry_max_abs_gap": 0.0,
+          "all_entry_helpers_equivalent": false
+        }
+      },
+      {
+        "cell": "D_shares",
+        "selection_case_id_matches": true,
+        "selection_checkpoint_sha256_matches_comparison": true,
+        "selection_checkpoint_sha256_matches_entry_audit": true,
+        "selected_case_id": "worker39_proposal18",
+        "checkpoint_sha256": "a195eef80e565dbf3ca0b65bd56ffc1ecdc9ba24a39118eb1b3855c2286bc2e9",
+        "comparison_status": "two_repetitions_unavailable",
+        "entry_audit": {
+          "mode": "income_ratio_distribution",
+          "age": 18.0,
+          "income_state_count": 21,
+          "fixed_reference_conditional_shape": [
+            160,
+            21
+          ],
+          "censored_share": 0.0,
+          "entry_marginal_max_abs_gap": 5.551115123125783e-17,
+          "annual_gross_income_runtime_entry_max_abs_gap": 0.0,
+          "all_entry_helpers_equivalent": false
+        }
+      }
+    ]
+  },
+  "comparator_review": {
+    "fields_compared_in_checker": [
+      "price",
+      "V",
+      "g",
+      "psi",
+      "moments",
+      "early_measurement",
+      "fiscal",
+      "household_budget",
+      "normalization excluding stationary_solve_seconds",
+      "target_fit excluding checkpoint provenance metadata",
+      "parameters",
+      "loss"
+    ],
+    "field_coverage_matches_original_finalizer_intent": true,
+    "comparison_method": "Finite scalar/list/dict fields use exact Python equality; V and g are checked for all-finite values and compared by shape, dtype, and byte SHA-256. Both repeats are compared separately against the original selected signature.",
+    "D_floor_receipt_status": "finite_values_and_array_bytes_equal_with_reported_nonfinite_locations",
+    "D_floor_repeat_differences": [
+      [],
+      []
+    ],
+    "D_floor_V_g_finite_and_byte_equal": true,
+    "other_cells": "B_floor, B_shares, and D_shares comparison receipts correctly report two_repetitions_unavailable; no repeat equality claim supported for them."
+  },
+  "D_floor_nonfinite_diagnostic_fields": {
+    "paths": [
+      "$.moments.permanent_income_childless_by_level[0]",
+      "$.moments.permanent_income_childless_high_minus_low",
+      "$.moments.permanent_income_completed_fertility_by_level[0]",
+      "$.moments.permanent_income_completed_fertility_high_minus_low",
+      "$.moments.permanent_income_level_values[0]",
+      "$.moments.permanent_income_own_rate_3055_by_level[0]",
+      "$.moments.permanent_income_own_rate_3055_high_minus_low"
+    ],
+    "review": "Exactly seven matching NaNs, all under optional permanent-income-by-level moment diagnostics. solver.py computes these only inside `if permanent_income_levels_enabled`; parameters.py defaults that flag to False. calibration.py serializes np.nan defaults when those solution attributes are absent. The saved D_floor comparison reports the same seven paths for selected and both repeats. No finite field or V/g array discrepancy is reported.",
+    "raw_finalizer_failure_preserved": "failure_evidence/finalizer_18304086_3.stderr remains unchanged. The independent comparison explains the serialization failure; it does not overwrite or replace the raw failed-finalizer record."
+  },
+  "entry_audit_review": {
+    "reviewed_cells": [
+      "B_floor",
+      "B_shares",
+      "D_floor",
+      "D_shares"
+    ],
+    "common_findings": "All four audits describe age-18 income_ratio_distribution entry, zero saved censored share, 160-point wealth grid, finite saved V/g arrays, and age-18 realized marginal matching its fixed-reference marginal to floating-point precision.",
+    "B_cells": "15 income states and conditional entry matrix shape 160x15.",
+    "D_cells": "21 income states and conditional entry matrix shape 160x21.",
+    "qualification": "All audits report all_entry_helpers_equivalent=false because income_at_state source AST differs by the optimized property_tax_lump_sum_transfer term. Their checkpoint-specific annual gross-income entry-conversion gap is exactly 0.0; retain this source-equivalence qualification rather than calling the helper implementations identical."
+  },
+  "limitations": [
+    "No repeat comparison can be supported for B_floor, B_shares, or D_shares because both repeat receipts are unavailable.",
+    "D_floor equality support is specific to the saved comparison artifact; the raw finalizer still failed while serializing NaN and remains failed in the scheduler record.",
+    "No model interpretation, economic adoption, or new solve was performed."
+  ],
+  "sources": [
+    "code/model/tools/review_e5f_utility_saved_checkpoints.py",
+    "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/checkpoint_review/D_floor_comparison.json",
+    "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/checkpoint_review/*_entry_audit.json",
+    "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/selection.json",
+    "tmp/utility_overnight_20260923_v1/source/code/model/intergen_eqscale_seq_optimized/solver.py:5990-6062",
+    "tmp/utility_overnight_20260923_v1/source/code/model/intergen_eqscale_seq_optimized/parameters.py:213,485-492",
+    "tmp/utility_overnight_20260923_v1/source/code/model/intergen_eqscale_seq_optimized/calibration.py:1426-1454",
+    "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/failure_evidence/finalizer_18304086_3.stderr"
+  ]
+}

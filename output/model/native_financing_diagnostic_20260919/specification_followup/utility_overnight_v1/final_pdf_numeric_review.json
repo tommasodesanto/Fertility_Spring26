@@ -1,0 +1,46 @@
+{
+  "review_type": "independent_mechanical_pdf_numeric_qa",
+  "reviewed_pdf": "output/pdf/utility_target_review.pdf",
+  "pdf_sha256": "6c42870e9d08802229e14ce9d4102dee0ae14d085c2f075d56d458bf666af353",
+  "source_directory": "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout",
+  "method": "Extracted current PDF pages 1, 13, 23, 33, and 43 with pdftotext -layout. Independently matched selected CSVs to the previously inspected unchanged table pages using row identity and the builder formatting convention; after the PDF hash changed, re-extracted the same pages and confirmed all current selected-CSV formatted values remain present. Did not invoke the builder validator.",
+  "formatting_convention": "blank/None as dash; absolute values >=1000 with comma separators and 2 decimals; otherwise 5 significant digits",
+  "pages_checked": {
+    "1": "13-moment target/model table",
+    "13": "B_floor selected target fit and parameters",
+    "23": "B_shares selected target fit and parameters",
+    "33": "D_floor selected target fit and parameters",
+    "43": "D_shares selected target fit and parameters"
+  },
+  "checks": {
+    "page_1_moment_cells": 65,
+    "selected_target_fit_cells": 260,
+    "parameter_rows": 72,
+    "parameter_estimate_and_bound_cells": 216,
+    "parameter_near_bound_flags": 72,
+    "total_displayed_cells_checked": 613,
+    "mismatches": 0
+  },
+  "cell_counts": {
+    "B_floor": {
+      "target_rows": 13,
+      "parameter_rows": 17
+    },
+    "B_shares": {
+      "target_rows": 13,
+      "parameter_rows": 19
+    },
+    "D_floor": {
+      "target_rows": 13,
+      "parameter_rows": 17
+    },
+    "D_shares": {
+      "target_rows": 13,
+      "parameter_rows": 19
+    }
+  },
+  "omissions": [],
+  "limitations": [
+    "Numeric/text consistency only; visual layout and figures are outside this review. The current PDF has a different hash than initially assigned; the parent confirmed the only new content is a paragraph on page 6 and the inspected table pages/values are unchanged."
+  ]
+}

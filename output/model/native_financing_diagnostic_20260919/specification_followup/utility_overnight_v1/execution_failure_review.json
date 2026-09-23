@@ -1,0 +1,162 @@
+{
+  "schema": "utility_overnight_execution_failure_review_v1",
+  "status": "read-only scheduler/controller review complete",
+  "scope": "No reruns, cancellations, frozen bundle edits, checkpoint downloads, or outcome interpretation.",
+  "remote_results_root": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/results",
+  "scheduler_counts": {
+    "smokes": {
+      "completed": 4,
+      "failed": 0,
+      "source": "scheduler_terminal_0923.txt"
+    },
+    "production_array_tasks": {
+      "completed": 20,
+      "failed": 20,
+      "total": 40,
+      "by_cell": {
+        "B_floor": {
+          "completed": 9,
+          "failed": 9,
+          "array_task_ids_failed": [
+            7,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18
+          ]
+        },
+        "B_shares": {
+          "completed": 8,
+          "failed": 10,
+          "array_task_ids_failed": [
+            25,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36
+          ]
+        },
+        "D_floor": {
+          "completed": 2,
+          "failed": 0
+        },
+        "D_shares": {
+          "completed": 1,
+          "failed": 1,
+          "array_task_ids_failed": [
+            40
+          ]
+        }
+      },
+      "interpretation": "These are Slurm production worker-task terminal counts, not counts of completed proposals/objectives inside partially run tasks."
+    },
+    "selected_repeats": {
+      "completed": 2,
+      "completed_task_ids": [
+        5,
+        6
+      ],
+      "cell": "D_floor",
+      "other_expected_repeat_tasks_without_completed_status": 6,
+      "details": "Only D_floor selected_repeat_01/02 status.json files exist. Scheduler terminal shows cancellation groups for repeat task IDs 2, 3-4, and 7-8; task ID 1 has no terminal row in the saved ledger. Thus six non-D_floor repeats produced no completed receipt; one of their scheduler terminal details is absent in the saved ledger."
+    },
+    "finalizers": {
+      "failed": 1,
+      "failed_task_id": 3,
+      "slurm_job": "18304086_3",
+      "elapsed": "00:00:15",
+      "cancelled": 3,
+      "cancelled_task_ids": [
+        1,
+        2,
+        4
+      ]
+    }
+  },
+  "production_failure_categories": [
+    {
+      "category": "initial housing-equilibrium strict convergence gate",
+      "count": 19,
+      "array_task_ids": [
+        7,
+        11,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        25,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        40
+      ],
+      "evidence": "Controller failure JSONs name adapter exit 1; worker/child logs terminate with RuntimeError: Initial housing equilibrium failed its unchanged strict gate. Frozen source requires sol.converged and sol.timings.strict_converged. Saved logs do not disaggregate which boolean failed for each case."
+    },
+    {
+      "category": "household-budget validation assertion",
+      "count": 1,
+      "array_task_ids": [
+        12
+      ],
+      "actual_compared_fields": "budget_excess_mass == 0 and maximum_occupied_excess <= budget_tolerance <= 1e-9",
+      "saved_values": {
+        "budget_excess_mass": 1.4692935653193956e-24,
+        "maximum_occupied_excess": 1.4210854715202004e-14,
+        "budget_tolerance": 1e-09
+      },
+      "note": "Failure was the validator\u2019s exact-zero test on budget_excess_mass; maximum occupied excess is below the stated tolerance. Record the gate result without inferring a scientific or economic mismatch."
+    }
+  ],
+  "D_floor_finalizer": {
+    "stderr": "ValueError: Out of range float values are not JSON compliant: nan at canon(signature), run_e5f_utility_overnight.py:434. Source sets allow_nan=False while hashing the assembled scientific signature.",
+    "failure_stage": "signature JSON canonicalization while constructing receipt, after signatures and repeat comparison boolean are computed but before receipt is written; this is not a reported field-by-field mismatch.",
+    "fields_in_signature": [
+      "price",
+      "V",
+      "g",
+      "moments",
+      "early_measurement",
+      "fiscal",
+      "household_budget",
+      "psi",
+      "normalization",
+      "target_fit",
+      "parameters",
+      "loss"
+    ],
+    "nonfinite_field": "Not identified by the 15-second stderr/source evidence; do not attribute NaN to a particular field or claim the exact comparison passed/failed.",
+    "repeat_status_receipts": "Both D_floor repeats are completed and report objective 416.48144430587246, identical parameter values and objective canonical hashes. Finalizer equality certificate was not written; lead owns direct scientific signature validation."
+  },
+  "interpretation_limit": "Controller failure categories describe saved numerical gates and receipt serialization. They do not by themselves establish a scientific mismatch or specification failure.",
+  "evidence_files": [
+    "failure_evidence/scheduler_terminal_0923.txt",
+    "failure_evidence/dependency_sacct_terminal.txt",
+    "failure_evidence/controller_failure_json_bundle.json",
+    "failure_evidence/production_worker07.log",
+    "failure_evidence/production_worker07_initial_solve.log",
+    "failure_evidence/production_worker12.log",
+    "failure_evidence/worker12_budget_gate_metrics.json",
+    "failure_evidence/finalizer_18304086_3.stderr",
+    "failure_evidence/D_floor_repeat01_status.json",
+    "failure_evidence/D_floor_repeat02_status.json",
+    "failure_evidence/run_e5f_utility_overnight_local_source.py",
+    "failure_evidence/panel_validator_local_source.py"
+  ]
+}

@@ -306,10 +306,10 @@ def build_story(narr, readout):
                 smoke_plans[cell] = plan
         if selected:
             story += [para("Selected points: all 13 target moments", "H1"),
-                      para("Each value is the model moment at the collector-selected lowest-loss verified smoke or production case. Exact repeats are verification evidence and are excluded from selection. The table is descriptive of finite search results, not a convergence certificate.")]
+                      para("B uses one persistent earnings process; D adds iid risk. All cells retain heterogeneous entry wealth. Each value is from the lowest-loss verified smoke or production case. Repeats are excluded from selection. These finite-search results are not a convergence certificate.")]
             story.append(make_table(selected_comparison(selected), [2.45*inch, .72*inch, 1.0*inch, 1.0*inch, 1.0*inch, 1.0*inch]))
         if smoke:
-            story += [Spacer(1, 8), para("Common smoke anchors: all 13 target moments", "H1"),
+            story += [PageBreak(), para("Common smoke anchors: all 13 target moments", "H1"),
                       para("These are the cell-specific smoke_01 anchor cases copied by the collector. Missing cells remain unavailable. A smoke anchor is a checked starting point, not a search result.")]
             story.append(make_table(selected_comparison(smoke), [2.45*inch, .72*inch, 1.0*inch, 1.0*inch, 1.0*inch, 1.0*inch]))
         if len(smoke_plans) == len(CELLS):
@@ -412,7 +412,9 @@ def build_story(narr, readout):
                     story.append(PageBreak())
             story.append(PageBreak())
     if narr.get("sources"):
-        story += [PageBreak(), para("Sources", "H1")]
+        if not story or not isinstance(story[-1], PageBreak):
+            story.append(PageBreak())
+        story.append(para("Sources", "H1"))
         for source in narr["sources"]:
             label = escape(ascii_text(source["label"]))
             url = escape(str(source["url"]), {'"': "&quot;"})

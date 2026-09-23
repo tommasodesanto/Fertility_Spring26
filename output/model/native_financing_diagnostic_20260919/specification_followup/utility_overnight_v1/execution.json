@@ -1,52 +1,117 @@
 {
-  "updated_utc": "2026-09-23T05:51:02.736533+00:00",
-  "status": "fresh cluster status unavailable pending Torch login",
-  "source_commit": "ca90cc77",
-  "source_pushed": true,
+  "blocking_review": {
+    "available_work": "Deadline report remains scheduled at14:00UTC; inspect collection if access returns, otherwise deliver reviewed research with explicitly uncollected runs.",
+    "condition": "Torch authentication unavailable; fresh scheduler and output collection require user login refresh.",
+    "evidence": "Saved probes at05:23UTC, preceding continuation05:42UTC, and fresh05:50UTC all permission denied. Research continued meanwhile and now has no independent unfinished check requiring repetition.",
+    "no_restarts_or_credential_workarounds": true,
+    "observed_on_consecutive_goal_turns": true,
+    "resolution": "Access restored; all results collected. Historical block remains evidence only.",
+    "superseded_utc": "2026-09-23T13:40:17.304764+00:00"
+  },
+  "collector_remote_version": "Latest reviewed collector uploaded09:23EDT and completed before rsync",
+  "execution_independent_of_laptop": true,
+  "final_counts": {
+    "attempted_cases": 464,
+    "case_counts_by_cell": {
+      "B_floor": {
+        "collection_rejected": 0,
+        "failed": 9,
+        "incomplete": 0,
+        "rejected": 0,
+        "running": 0,
+        "unrun": 126,
+        "verified_scored": 193
+      },
+      "B_shares": {
+        "collection_rejected": 0,
+        "failed": 10,
+        "incomplete": 0,
+        "rejected": 0,
+        "running": 0,
+        "unrun": 126,
+        "verified_scored": 192
+      },
+      "D_floor": {
+        "collection_rejected": 0,
+        "failed": 0,
+        "incomplete": 0,
+        "rejected": 0,
+        "running": 0,
+        "unrun": 4,
+        "verified_scored": 36
+      },
+      "D_shares": {
+        "collection_rejected": 0,
+        "failed": 1,
+        "incomplete": 0,
+        "rejected": 0,
+        "running": 0,
+        "unrun": 16,
+        "verified_scored": 23
+      }
+    },
+    "manifest_sha256": "a895112b283f724c532f53e214457ceb142cacd44d9ac74deb84ed6dbf40f3d5",
+    "planned_cases": 736,
+    "selected_cells": 4,
+    "selection_stages": [
+      "smoke",
+      "production"
+    ],
+    "source_file_count": 641,
+    "source_manifest_sha256": "76406fcc10206d9e30bcc29d4e18accdf7fffdd9219e50e6e11c1c3360f01336",
+    "stationary_solves": {
+      "completed_solves": 2571,
+      "started_solves": 2590,
+      "unfinished_solves": 19
+    },
+    "status_semantics": {
+      "live_liveness_checked": false,
+      "running": "unresolved started status/heartbeat; this is not live-process or scheduler proof"
+    },
+    "target_system_sha256": "10d80bcfca64aad511058b4a1d427283c3c2f548803213f21688e091f7457107",
+    "verification_is_selection_pool": false
+  },
+  "final_lead_review": "final_lead_review.json",
+  "final_readout": "final_readout/",
+  "job_responsibility": "All experiment stages are terminal; no live or uncollected experiment jobs remain. Six missing repeats and numerical sensitivity checks are outstanding work, not queued jobs. No responsibility assumed for unrelated18293508.",
+  "laptop_authorized_open": true,
+  "last_access_probe": "authorized access succeeded, fresh scheduler and native results collected",
+  "last_access_probe_exit_code": 0,
+  "last_access_probe_utc": "2026-09-23T13:22:00Z",
+  "last_native_check_note": "Historical observations before SSH expired at23:28EDT; not live status.",
+  "last_verified_job_status": "All four smokes terminal;20 production workers completed,20 failed;2 repeats completed,6 unavailable; all finalizers terminal",
   "latest_native_check": {
     "B_floor": {
-      "stationary_solves_started": 2,
-      "failure": false
+      "failure": false,
+      "stationary_solves_started": 2
     },
     "B_shares": {
-      "stationary_solves_started": 2,
-      "failure": false
+      "failure": false,
+      "stationary_solves_started": 2
     },
     "D_floor": {
-      "stationary_solves_started": 1,
-      "failure": false
+      "failure": false,
+      "stationary_solves_started": 1
     },
     "D_shares": {
-      "stationary_solves_started": 1,
-      "failure": false
+      "failure": false,
+      "stationary_solves_started": 1
     }
   },
-  "lead_next": [
-    "After author refreshes Torch login, confirm authorized BatchMode access; upload latest external collector and collect actual scheduler/native receipts. No duplicate jobs or model runs.",
-    "All six Opus5.5 Max phases and bounded empirical checks are reviewed. Latest published-source correction is in target_review_v1/overnight/primary_source_spotchecks.json. No further broad review.",
-    "Research PDF draft is rendered and reviewed; incorporate any collected model evidence, verify original selected versus both repetitions, and conduct final all-page QA.",
-    "Deliver at10:00EDT regardless of access; explicitly label any uncollected outcomes. Scheduled heartbeat remains active."
-  ],
-  "research_session": "ddba136f-1d0c-4f8e-9b12-14876c7d8c96",
-  "research_model_confirmed": "claude-opus-5-5",
-  "laptop_authorized_open": true,
-  "ssh_status": "authentication_expired_after_submission",
-  "ssh_probe_error": "Permission denied (gssapi-keyex,gssapi-with-mic,password,keyboard-interactive); torch.sh status exit2",
-  "user_refresh_requested": true,
-  "collector_remote_version": "Initial external helper only. Upload latest local nine-test collector after login returns. Frozen bundle unchanged.",
   "latest_pushed_commit": "19fa5396",
-  "last_access_probe_utc": "2026-09-23T05:50:26Z",
-  "last_access_probe": "torch.sh status failed exit2; SSH255 permission denied; no fresh scheduler evidence",
-  "last_verified_job_status": "four smokes running; production dependency queued",
-  "last_native_check_note": "Historical observations before SSH expired at23:28EDT; not live status.",
+  "lead_next": [
+    "Finish final PDF visual/numeric QA and scoped backup",
+    "Deliver reviewed53-page PDF and concise chat at10:00EDT",
+    "Delete deadline follow-up after delivery; no live experiment jobs remain"
+  ],
   "no_scored_objectives_at_last_observation": true,
-  "execution_independent_of_laptop": true,
-  "last_access_probe_exit_code": 2,
-  "blocking_review": {
-    "condition": "Torch authentication unavailable; fresh scheduler and output collection require user login refresh.",
-    "observed_on_consecutive_goal_turns": true,
-    "evidence": "Saved probes at05:23UTC, preceding continuation05:42UTC, and fresh05:50UTC all permission denied. Research continued meanwhile and now has no independent unfinished check requiring repetition.",
-    "available_work": "Deadline report remains scheduled at14:00UTC; inspect collection if access returns, otherwise deliver reviewed research with explicitly uncollected runs.",
-    "no_restarts_or_credential_workarounds": true
-  }
+  "research_model_confirmed": "claude-opus-5-5",
+  "research_session": "ddba136f-1d0c-4f8e-9b12-14876c7d8c96",
+  "source_commit": "ca90cc77",
+  "source_pushed": true,
+  "ssh_probe_error": "Permission denied (gssapi-keyex,gssapi-with-mic,password,keyboard-interactive); torch.sh status exit2",
+  "ssh_status": "access restored at09:22EDT",
+  "status": "All experiment stages terminal and collected; independent scientific review complete",
+  "updated_utc": "2026-09-23T13:40:17.304764+00:00",
+  "user_refresh_requested": true
 }

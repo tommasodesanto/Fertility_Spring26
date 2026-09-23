@@ -1,0 +1,43 @@
+Traceback (most recent call last):
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/tools/run_e5f_preference_share_candidate.py", line 260, in <module>
+    if __name__=='__main__': main()
+                             ~~~~^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/tools/run_e5f_preference_share_candidate.py", line 254, in main
+    if args.mode=='probe-child': run_probe(plan,args.contract,args.output)
+                                 ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/tools/run_e5f_preference_share_candidate.py", line 225, in run_probe
+    earnings.run_probe(plan, initial_path, output)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/tools/run_e5f_earnings_wealth_candidate.py", line 186, in run_probe
+    exec(compile(revised, str(generated), "exec"),
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+         {"__name__": "__main__", "__file__": str(probe)})
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/results/production/B_floor/worker07_proposal03/result/evaluation/probe_grid.generated.py", line 270, in <module>
+    main()
+    ~~~~^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/results/production/B_floor/worker07_proposal03/result/evaluation/probe_grid.generated.py", line 148, in main
+    sol,P,price,_,normalization=calibration.solve_old_steady_state(adapter,{},
+                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+        initial_psi=float(base.psi_child),completed_fertility_target=2.1,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        completed_fertility_tolerance=5e-4,normalize=c['normalize'])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/source/code/model/tools/run_e5f_transition_calibration.py", line 799, in solve_old_steady_state
+    initial = evaluate(float(initial_psi))
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/source/code/model/tools/run_e5f_transition_calibration.py", line 782, in evaluate
+    solution, parameters, price, seconds = closure.solve_ge(chain, overrides)
+                                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/source/code/model/tools/audit_closed_reproductive_closure.py", line 156, in solve_ge
+    sol, parameters, price = chain.run_model_cp_dt(dict(base), verbose=False)
+                             ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/results/production/B_floor/worker07_proposal03/result/evaluation/probe_grid.generated.py", line 134, in ge
+    sol,P,price,fiscal=solve_balanced_initial_equilibrium(model=model,parameters=P,
+                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+        b_grid=grid,initial_prices=old.solution.p_eq,payroll_tax=.179,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        marginal_tolerance=1e-9,fiscal_tolerance=1e-6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/source/code/model/tools/e5f_stationary_paygo.py", line 101, in solve_balanced_initial_equilibrium
+    raise RuntimeError('Initial housing equilibrium failed its unchanged strict gate')
+RuntimeError: Initial housing equilibrium failed its unchanged strict gate
