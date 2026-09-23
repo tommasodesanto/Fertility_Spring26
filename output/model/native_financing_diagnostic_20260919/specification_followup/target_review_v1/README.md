@@ -1,5 +1,13 @@
 # Target validation before the utility comparison
 
+## September 23 — age-grouping decision confirmed
+
+The author accepts the current common four-year grouping and bunching births
+before age18 into the youngest model age group as an explicit approximation.
+Keep first-birth mean age 25.976 and age30+ share 24.928%. No numerical target
+changes. Separate parameter identification remains under review; cost removal
+and a common fertility taste scale remain two distinct deferred checks.
+
 ## September 23 — author requires measurement and identification review
 
 Agreement on proposed fertility outcomes does not close their age/population

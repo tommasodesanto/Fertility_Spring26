@@ -1,5 +1,15 @@
 # Calibration Status
 
+## September 23 — fertility age grouping explicitly accepted
+
+The author accepts common four-year age grouping, including the existing
+assignment of first births before age18 to the youngest model age group. This
+is a disclosed approximation, not a claim that the model generates teenage
+births. Retain mean first-birth age 25.976 and the age30+ share of 24.928%.
+This closes that measurement choice. Separate identification of the fertility
+parameters remains to be assessed; the two simplification checks are deferred.
+No numerical target, code, weight or experiment changes.
+
 ## September 23 — measurement and identification must both be resolved
 
 The author clarifies that the target review must establish the measurement,
