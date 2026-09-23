@@ -59,6 +59,6 @@ The complete current inventory is in `report_tables/`; model values there remain
 
 All six Opus phases are complete; lead corrections are recorded in `phase5_lead_review.json` and `phase6_lead_review.json`. Additional empirical windows are in `empirical_rooms/covariance_replay/analysis/window_followup/`, with nine independently verified contrasts and explicit support changes. They establish prebirth room movement, not a unique exact model calendar counterpart. No further broad literature review is needed. The research draft and QA receipt are in `report_tables/`; the ten-page preview under `tmp/pdfs/` is not the final deliverable. Continue with cluster collection when authentication returns, numerical/fit review, and final PDF/chat at10:00EDT.
 
-## September23 01:50EDT published-source check
+## September23 01:49EDT published-source check
 
 The lead checked Sommer's published2016 JME Table2. It targets cumulative births at45(1.90)and25(.80), plus children at home at35(1.43); the earlier working-paper first-birth-age target25.5 is not its published target. The final narrative now uses the published table and preserves the version distinction in `primary_source_spotchecks.json`. This source correction changes no target, job or economic specification. The draft must be regenerated for final delivery. Fresh cluster collection remains unavailable.
