@@ -1,0 +1,43 @@
+{
+  "schema": "opus_phase5_lead_review_v1",
+  "reviewed_utc": "2026-09-23T05:32:36.730072+00:00",
+  "status": "reviewed with substantive corrections; no adoption",
+  "source": "phase5_evidence_integration/final.md",
+  "source_sha256": "74bdb7e3bc2d55efb543d54b80e442cc52aa027da65f1eca1b46c278c92c299c",
+  "native_observer_source_sha256": "32f5be1c16ec591ef514af91cec2223f8aecd259808b1fc806f9742d5fd64435",
+  "accepted_with_qualification": [
+    "Fixed-common-cohort within-cohort differences remove the demonstrated additive cohort constants; conditional SEs exclude estimated-weight uncertainty. Additional windows can be calculated from saved covariance without a new regression.",
+    "The current observer creates first-birth/control branches from identical origin risk-set states, advances them one model period, allows treated continuation births and holds controls childless, then measures destination choices. It is not the literal empirical regression.",
+    "Common-scale wealth avoids own-income division and is a defensible candidate unit convention. Actual seed and native renter-floor arithmetic now verified. Tail compression and joint-law approximation require checking before adoption.",
+    "Minor-child and old-age wealth-level alternatives offer concrete measurement choices, with measured uncertainty. Their adoption remains explicit and cannot retroactively change frozen objective comparisons.",
+    "Full fit and lifecycle diagnostics are useful; mixed weights and moment counts do not establish efficient SMM or identification."
+  ],
+  "lead_corrections": [
+    "REJECT the claimed proven unique -4/+4 empirical counterpart. It follows only from a new piecewise-constant housing interpolation, a within-period birth date U, zero pre-origin treatment effect and compatible cohort weighting. The implemented observer contains no U process or sampled empirical regression. Those assumptions must be specified and validated, not declared exact from code.",
+    "Even under that proposed interpolation, the statement that -1/+3 can never equal the destination contrast unless the origin contrast is zero is algebraically false. With U=0 and equal nonzero origin/destination effects it does equal it. Equality at special effects would still not justify a general operator match.",
+    "Uniform timing -2/+2 equals one-half destination effect only under the added interpolation and timing/heterogeneity independence assumptions. It is not an automatic scaling correction to the current target.",
+    "Source-permitted zero/98 means no automatic missing-code recode; it does not prove all room values are economically clean or rule out an outlier sensitivity.",
+    "Closer single rank correlation does not establish a better joint entry law; the denominator and rank discretization must be judged separately. Candidate R/profile correction affects reporting only, not model runs.",
+    "Old-age model W/pension is algebraically proportional to W because pensions are constant. Calling a wealth-level target a mandatory code correction is too strong: the conceptual target and omitted empirical income dispersion must be decided explicitly.",
+    "Minor children under18 are not exactly the stochastic model-dependent category. The small measured change supports practical alignment but does not establish exact equivalence.",
+    "The active primary income grid has15states, not7; supplementary grid21. Neither wealth-grid nor household income-grid convergence has been established.",
+    "REJECT the blanket ban on reporting parameter estimates or forming a qualified working specification preference. Report all diagnostic estimates/bounds as required, and distinguish finite-search judgment from adopted calibration and inference."
+  ],
+  "conditional_timing_algebra": {
+    "defined_effects": "D0=treated-minus-control housing at origin date;D1=at next model date; pre-origin effect0 by proposed matched-intervention construction.",
+    "assumptions": "Piecewise-constant housing across model periods; common calendar U in[0,4); a timing law independent of effect heterogeneity for scalar expectation formula. Not implemented/certified in current observer.",
+    "minus1_plus3": "a*D0+(1-a)*(D1-D0)=(1-a)*D1+(2*a-1)*D0, where a=Pr(U<1).",
+    "uniform_minus1_plus3": ".75*D1-.5*D0",
+    "counterexample_to_opus_never_claim": {
+      "a": 1,
+      "D0": 1,
+      "D1": 1,
+      "empirical_interpolated_contrast": 1,
+      "native_destination_contrast": 1
+    },
+    "uniform_minus2_plus2": ".5*D1 conditional on stated assumptions",
+    "minus4_plus4": "D1 conditional on stated interpolation and zero pre-origin effect; not a uniqueness or empirical regression identification theorem."
+  },
+  "next_bounded_work": "Luna computes -4/+4 and prebirth contrasts from existing coefficients/covariance only, reproducing prior four contrasts as an alignment gate. No target/observer replacement, no refit, no new model solve.",
+  "not_done": "No common-calendar model observer, tail-threshold experiment or candidate-target re-scoring has been adopted or executed."
+}
