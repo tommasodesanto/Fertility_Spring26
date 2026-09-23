@@ -1,0 +1,65 @@
+{
+  "source_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/PSID/PSIDSHELF_MOBILITY.dta",
+  "source_sha256_recorded_in_target_metadata": "f1c5d48d5ef5357c40e743895dd25c73cd45789f779d1d575408f671fe637029",
+  "builder_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/psid_followup_mar2026/sa_rooms_first_birth_household_aligned_v1.do",
+  "source_sha256_recomputed": false,
+  "raw_rows": 3533123,
+  "reconstructed_prefit_input_rows": 49872,
+  "target_receipt_prefit_input_rows": 49872,
+  "reconstructed_prefit_input_ids": 4527,
+  "target_receipt_prefit_input_ids": 4527,
+  "reconstructed_prefit_treated_ids": 2486,
+  "target_receipt_prefit_treated_ids": 2486,
+  "reconstructed_never_treated_ids": 2041,
+  "target_receipt_confirmed_never_ids": 1654,
+  "target_estimation_rows": 49457,
+  "target_estimation_ids": 4112,
+  "singleton_pruning": {
+    "iterations": [
+      {
+        "iteration": 1,
+        "singleton_person_ids": 415,
+        "singleton_years": 0,
+        "rows_removed": 415
+      }
+    ],
+    "reconstructed_rows": 49457,
+    "reconstructed_ids": 4112,
+    "reconstructed_never_treated_ids": 1654,
+    "reconstructed_treated_ids": 2458,
+    "target_rows": 49457,
+    "target_ids": 4112,
+    "target_confirmed_never_ids": 1654,
+    "counts_match": true
+  },
+  "prefit_count_consistency": {
+    "rows": true,
+    "ids": true,
+    "treated_ids": true
+  },
+  "event_window_denominator_definition": "Unique treated women with valid rooms and covariates at exact K=+3 or K=+4 after reproducing the target builder's iterative person/year-FE singleton pruning. This matches saved e(sample) row/person/control counts, but no individual e(sample) marker is saved, so identity is not asserted from count agreement alone.",
+  "e_sample_singleton_reconstruction": [
+    {
+      "iteration": 1,
+      "singleton_person_ids": 415,
+      "singleton_years": 0,
+      "rows_removed": 415
+    }
+  ],
+  "child_identity_audit": {
+    "child_id_variables": 20,
+    "documented_labels": "RELCHI#ID fields are labeled `Ind's child #, unique ID` in the local PSID shelf.",
+    "treated_biological_slot_id_missing_with_year": 0,
+    "treated_id_slot_pairs_with_multiple_child_ids": 0,
+    "treated_child_ids_seen_in_multiple_slots": 0,
+    "treated_child_ids_with_conflicting_birth_years": 0,
+    "treated_child_id_observations": 203237,
+    "firstbirth_slot_vs_childid_mismatches": 0,
+    "second_child_year_slot_vs_childid_mismatches": 0,
+    "later_distinct_year_slot_vs_childid_mismatches": 0,
+    "share_identity_usable": true
+  },
+  "candidate_quantitative_status": "Candidate descriptive evidence: child IDs/slot histories reconcile and singleton-pruned aggregate sample counts match; no individual e(sample) marker is saved.",
+  "birth_definition": "Biological child TYPE==1. Second child counts a second biological child even if same recorded birth year; later distinct birth requires a strictly later distinct recorded year. No birth-order tie is imputed.",
+  "limitations": "RELCHIREP explicitly counts children with or without records. Documented second-birth shares are observed lower bounds when second-child birth years are absent; table reports sample counts with missing biological birth records and reported child count >=2."
+}

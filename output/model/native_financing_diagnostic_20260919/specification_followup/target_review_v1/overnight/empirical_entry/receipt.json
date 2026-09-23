@@ -1,0 +1,553 @@
+{
+  "schema": "empirical_entry_units_receipt_v1",
+  "scope": "Bounded entry-wealth units check; all writes within empirical_entry folder.",
+  "execution": {
+    "PSID_data_read_only": true,
+    "active_model_solve_called": false,
+    "equilibrium_solve_called": false,
+    "active_code_or_targets_changed": false,
+    "ssh_attempted": false,
+    "bootstrap_reps": 499,
+    "person_cluster_bootstrap_seed": 20260715
+  },
+  "sample": {
+    "source": "PSIDSHELF_MOBILITY.dta; Block 2 from estimate_intergen_income_entry_targets.R",
+    "filters": [
+      "reference persons RELTOHEAD_ == 10",
+      "ages 18-24 inclusive",
+      "alive in interview year",
+      "years 1984-2019 inclusive",
+      "IW > 0",
+      "RELCHIREP == 0",
+      "HOMEOWN == 2",
+      "INCFAMR > 1000",
+      "finite NETWORTH2R"
+    ],
+    "family_years": 1835,
+    "persons": 1346,
+    "survey_waves": 14,
+    "total_IW_weight": 40916.8850389123,
+    "gross_labor_missing": 0,
+    "gross_labor_zero": 67,
+    "gross_labor_positive_le_1000": 26,
+    "gross_labor_gt_1000": 1742,
+    "gross_excluded_IW_weight": 1892.67800158262,
+    "gross_excluded_IW_weight_share": 0.046256649297293
+  },
+  "replication": {
+    "original_weighted_mean_ratio": 0.258855836903437,
+    "original_weighted_median_ratio": 0.0985177806342346,
+    "original_person_bootstrap_se_mean": 0.125965630995927,
+    "five_weighted_bin_nodes": [
+      -2.22252859121604,
+      -0.0526403178090525,
+      0.104244689233362,
+      0.351572998737395,
+      3.1034542945567
+    ],
+    "five_bin_weight_shares": [
+      0.199425762696792,
+      0.200377472937802,
+      0.199863308508567,
+      0.200087860612093,
+      0.200245595244747
+    ],
+    "saved_values_replicated": true
+  },
+  "ratios": [
+    {
+      "sample": "all July rows",
+      "measure": "family income",
+      "family_years": "1835",
+      "persons": "1346",
+      "weighted_mean_row_ratio": "0.258855836903437",
+      "weighted_median_row_ratio": "0.0985177806342346",
+      "ratio_of_weighted_sums": "0.368911040425729"
+    },
+    {
+      "sample": "common gross-denominator support",
+      "measure": "family income",
+      "family_years": "1742",
+      "persons": "1296",
+      "weighted_mean_row_ratio": "0.28589453721326",
+      "weighted_median_row_ratio": "0.108484315727883",
+      "ratio_of_weighted_sums": "0.372220300730246"
+    },
+    {
+      "sample": "common gross-denominator support",
+      "measure": "RP+spouse gross labor earnings",
+      "family_years": "1742",
+      "persons": "1296",
+      "weighted_mean_row_ratio": "0.912034868930348",
+      "weighted_median_row_ratio": "0.13479769875",
+      "ratio_of_weighted_sums": "0.483212189610856"
+    }
+  ],
+  "rank_correlations": [
+    {
+      "income_measure": "INCFAMR family income",
+      "spearman": "0.32972119012854",
+      "family_years": "1835",
+      "persons": "1346"
+    },
+    {
+      "income_measure": "EARNINDRRC gross labor earnings, finite positive",
+      "spearman": "0.282327070567364",
+      "family_years": "1768",
+      "persons": "1310"
+    },
+    {
+      "income_measure": "EARNINDRRC gross labor earnings > $1,000",
+      "spearman": "0.279931748415961",
+      "family_years": "1742",
+      "persons": "1296"
+    }
+  ],
+  "group_level_normalization": "See group_level_normalization.csv; wealth and family-income levels within wealth and income quintiles, including quotient of group weighted means and wealth divided by full-sample weighted mean family income.",
+  "joint_distribution": "See joint_earnings_tercile_wealth_quintile.csv; earnings terciles x wealth quintiles re-ranked on the common gross-denominator eligible sample; cells are shares of total IW.",
+  "model_side": {
+    "schema": "entry_units_model_mapping_v1",
+    "inputs": {
+      "utility_bundle_manifest_sha256": "a895112b283f724c532f53e214457ceb142cacd44d9ac74deb84ed6dbf40f3d5",
+      "B_floor_template_sha256": "f79854ecef8b08972b73c22cb0a7ee4d400117debb5e8295a8981932bdfa227a",
+      "template_plan_sha256": "0ce0d53a3543c006f4e71b1fcecc157ea2fb217855b2927659046aa5112120b8",
+      "checkpoint_sha256": "dfeb34f077e7a16804119eabd43cb8ee0611b0c3bb0180ec8af8ad7dc51b94e4",
+      "entry_reference_audit_sha256": "228dc080465169515189923afee9687e93df9beedcf16ebeb1f90099e99088d5",
+      "selected_B_checkpoint_audit_sha256": "3f96929befe712be146650835eb867bdc58a44e5a2af66611c22616fe4653588",
+      "mapping": "B15 period-process input and saved pre-solve inherited checkpoint; no solver/equilibrium invocation"
+    },
+    "definition": {
+      "wealth": "beginning/pre-choice liquid wealth, model units",
+      "income": "age-18 annual gross income = P.income[0,0]*z/(period_years*(1-tau_pay))",
+      "period_years": 4.0,
+      "tau_pay": 0.179,
+      "P_income_0_0": 2.366300230946882,
+      "age18_income_profile": 0.720554272517321,
+      "rank_rule": "old total-income rank intervals overlapped with new B persistent-rank intervals; no perfect-correlation claim"
+    },
+    "B15": {
+      "z_grid": [
+        0.053889320064144215,
+        0.07889281555450708,
+        0.1154973998318959,
+        0.16908573073694466,
+        0.24753790458017835,
+        0.36239021434206165,
+        0.5305315469710142,
+        0.7766868728573968,
+        1.1370530214708614,
+        1.664621379372013,
+        2.436970206611771,
+        3.5676724217935187,
+        5.222996356169135,
+        7.646355301544813,
+        11.1941011271058
+      ],
+      "z_weights": [
+        6.103515625e-05,
+        0.0008544921875,
+        0.00555419921875,
+        0.022216796875,
+        0.06109619140625,
+        0.1221923828125,
+        0.18328857421875,
+        0.20947265625,
+        0.18328857421875,
+        0.1221923828125,
+        0.06109619140625,
+        0.022216796875,
+        0.00555419921875,
+        0.0008544921875,
+        6.103515625e-05
+      ],
+      "weighted_mean_z": 1.0,
+      "annual_gross_income_by_state": [
+        0.0388301798152725,
+        0.056846555318721036,
+        0.0832221449135139,
+        0.12183544570421878,
+        0.17836449475523244,
+        0.2611218172626402,
+        0.3822767728751881,
+        0.5596450446455145,
+        0.8193084126995582,
+        1.19945004703018,
+        1.75596929437153,
+        2.570701606465538,
+        3.7634523397800694,
+        5.509613981713583,
+        8.065957394127043
+      ],
+      "weighted_mean_annual_gross_income": 0.7205542725173208,
+      "annual_gross_income_min": 0.0388301798152725,
+      "annual_gross_income_max": 8.065957394127043
+    },
+    "inherited_reference_level_marginal": {
+      "mean_wealth": 0.18651967924681834,
+      "min_supported_grid_wealth": -8.5,
+      "max_supported_grid_wealth": 11.571428571428571,
+      "raw_reference_conditional_shape": [
+        120,
+        15
+      ],
+      "new_rank_coupled_conditional_shape": [
+        120,
+        15
+      ],
+      "marginal_max_abs_gap": 5.551115123125783e-17,
+      "marginal_L1_gap": 2.6396595955054114e-16
+    },
+    "implied_ratio_if_keep_level_marginal": {
+      "weighted_mean": 0.25447286183660206,
+      "weighted_median": 0.0,
+      "weighted_quintile_means": [
+        {
+          "bin": 1,
+          "weight": 0.19970194700672142,
+          "mean": -2.183322359232261
+        },
+        {
+          "bin": 2,
+          "weight": 0.16153028086203625,
+          "mean": -0.06240476503260185
+        },
+        {
+          "bin": 3,
+          "weight": 0.2214684729351573,
+          "mean": 0.020599527322992334
+        },
+        {
+          "bin": 4,
+          "weight": 0.21708423593133555,
+          "mean": 0.39107258457481614
+        },
+        {
+          "bin": 5,
+          "weight": 0.20021506326474955,
+          "mean": 3.0522628922171933
+        }
+      ],
+      "pooled_distribution_states": 169
+    },
+    "july_ratio_node_mapping": {
+      "nodes": [
+        -2.22252859121604,
+        -0.0526403178090525,
+        0.104244689233362,
+        0.351572998737395,
+        3.1034542945567
+      ],
+      "weights": [
+        0.19942576269679177,
+        0.20037747293780178,
+        0.1998633085085668,
+        0.20008786061209277,
+        0.20024559524474678
+      ],
+      "weighted_mean": 0.25885583690343694,
+      "weighted_median": 0.104244689233362,
+      "weighted_quintile_means": [
+        {
+          "bin": 1,
+          "weight": 0.19942576269679177,
+          "mean": -2.22252859121604
+        },
+        {
+          "bin": 2,
+          "weight": 0.20037747293780178,
+          "mean": -0.0526403178090525
+        },
+        {
+          "bin": 3,
+          "weight": 0.1998633085085668,
+          "mean": 0.104244689233362
+        },
+        {
+          "bin": 4,
+          "weight": 0.20008786061209277,
+          "mean": 0.35157299873739495
+        },
+        {
+          "bin": 5,
+          "weight": 0.20024559524474678,
+          "mean": 3.1034542945567
+        }
+      ],
+      "conditional_mean_ratio_each_state": 0.25885583690343694,
+      "pooled_entry_wealth_mean": 0.18651967924681825
+    },
+    "state_conditional": [
+      {
+        "state": 1,
+        "z": 0.053889320064144215,
+        "weight": 6.103515625e-05,
+        "annual_gross_income": 0.0388301798152725,
+        "conditional_mean_wealth": 0.02068329495629763,
+        "implied_mean_wealth_income_ratio": 0.532660292965282,
+        "july_ratio_node_conditional_mean": 0.25885583690343694,
+        "conditional_wealth_mean_july": 0.010051418693193308
+      },
+      {
+        "state": 2,
+        "z": 0.07889281555450708,
+        "weight": 0.0008544921875,
+        "annual_gross_income": 0.056846555318721036,
+        "conditional_mean_wealth": 0.02068329495629763,
+        "implied_mean_wealth_income_ratio": 0.36384429699095744,
+        "july_ratio_node_conditional_mean": 0.25885583690343694,
+        "conditional_wealth_mean_july": 0.014715062652105058
+      },
+      {
+        "state": 3,
+        "z": 0.1154973998318959,
+        "weight": 0.00555419921875,
+        "annual_gross_income": 0.0832221449135139,
+        "conditional_mean_wealth": 0.020683294956297636,
+        "implied_mean_wealth_income_ratio": 0.2485311448988983,
+        "july_ratio_node_conditional_mean": 0.25885583690343694,
+        "conditional_wealth_mean_july": 0.021542537970486747
+      },
+      {
+        "state": 4,
+        "z": 0.16908573073694466,
+        "weight": 0.022216796875,
+        "annual_gross_income": 0.12183544570421878,
+        "conditional_mean_wealth": 0.029450802636568872,
+        "implied_mean_wealth_income_ratio": 0.24172606310372846,
+        "july_ratio_node_conditional_mean": 0.25885583690343694,
+        "conditional_wealth_mean_july": 0.03153781626226881
+      },
+      {
+        "state": 5,
+        "z": 0.24753790458017835,
+        "weight": 0.06109619140625,
+        "annual_gross_income": 0.17836449475523244,
+        "conditional_mean_wealth": 0.041314770541063084,
+        "implied_mean_wealth_income_ratio": 0.23163113599351076,
+        "july_ratio_node_conditional_mean": 0.25885583690343694,
+        "conditional_wealth_mean_july": 0.04617069056372439
+      },
+      {
+        "state": 6,
+        "z": 0.36239021434206165,
+        "weight": 0.1221923828125,
+        "annual_gross_income": 0.2611218172626402,
+        "conditional_mean_wealth": 0.06576179692211005,
+        "implied_mean_wealth_income_ratio": 0.2518433641872439,
+        "july_ratio_node_conditional_mean": 0.25885583690343694,
+        "conditional_wealth_mean_july": 0.06759290654126707
+      },
+      {
+        "state": 7,
+        "z": 0.5305315469710142,
+        "weight": 0.18328857421875,
+        "annual_gross_income": 0.3822767728751881,
+        "conditional_mean_wealth": 0.09906065812029119,
+        "implied_mean_wealth_income_ratio": 0.2591333430363401,
+        "july_ratio_node_conditional_mean": 0.25885583690343694,
+        "conditional_wealth_mean_july": 0.09895457397135189
+      },
+      {
+        "state": 8,
+        "z": 0.7766868728573968,
+        "weight": 0.20947265625,
+        "annual_gross_income": 0.5596450446455145,
+        "conditional_mean_wealth": 0.14070527446665754,
+        "implied_mean_wealth_income_ratio": 0.2514187801944746,
+        "july_ratio_node_conditional_mean": 0.25885583690343694,
+        "conditional_wealth_mean_july": 0.14486738640057598
+      },
+      {
+        "state": 9,
+        "z": 1.1370530214708614,
+        "weight": 0.18328857421875,
+        "annual_gross_income": 0.8193084126995582,
+        "conditional_mean_wealth": 0.2034109019520627,
+        "implied_mean_wealth_income_ratio": 0.24827146749517612,
+        "july_ratio_node_conditional_mean": 0.25885583690343694,
+        "conditional_wealth_mean_july": 0.21208276485137065
+      },
+      {
+        "state": 10,
+        "z": 1.664621379372013,
+        "weight": 0.1221923828125,
+        "annual_gross_income": 1.19945004703018,
+        "conditional_mean_wealth": 0.3130946822133017,
+        "implied_mean_wealth_income_ratio": 0.26103186455202476,
+        "july_ratio_node_conditional_mean": 0.25885583690343694,
+        "conditional_wealth_mean_july": 0.31048464574786405
+      },
+      {
+        "state": 11,
+        "z": 2.436970206611771,
+        "weight": 0.06109619140625,
+        "annual_gross_income": 1.75596929437153,
+        "conditional_mean_wealth": 0.49905192286635147,
+        "implied_mean_wealth_income_ratio": 0.2842031033606226,
+        "july_ratio_node_conditional_mean": 0.25885583690343694,
+        "conditional_wealth_mean_july": 0.45454290127128
+      },
+      {
+        "state": 12,
+        "z": 3.5676724217935187,
+        "weight": 0.022216796875,
+        "annual_gross_income": 2.570701606465538,
+        "conditional_mean_wealth": 0.6894581399916414,
+        "implied_mean_wealth_income_ratio": 0.2681984319991065,
+        "july_ratio_node_conditional_mean": 0.25885583690343694,
+        "conditional_wealth_mean_july": 0.6654411157706466
+      },
+      {
+        "state": 13,
+        "z": 5.222996356169135,
+        "weight": 0.00555419921875,
+        "annual_gross_income": 3.7634523397800694,
+        "conditional_mean_wealth": 0.9571963415195305,
+        "implied_mean_wealth_income_ratio": 0.25433996636595313,
+        "july_ratio_node_conditional_mean": 0.25885583690343694,
+        "conditional_wealth_mean_july": 0.9741916050599678
+      },
+      {
+        "state": 14,
+        "z": 7.646355301544813,
+        "weight": 0.0008544921875,
+        "annual_gross_income": 5.509613981713583,
+        "conditional_mean_wealth": 0.9571963415195305,
+        "implied_mean_wealth_income_ratio": 0.17373201547267494,
+        "july_ratio_node_conditional_mean": 0.25885583690343694,
+        "conditional_wealth_mean_july": 1.426195738251347
+      },
+      {
+        "state": 15,
+        "z": 11.1941011271058,
+        "weight": 6.103515625e-05,
+        "annual_gross_income": 8.065957394127043,
+        "conditional_mean_wealth": 0.9571963415195305,
+        "implied_mean_wealth_income_ratio": 0.11867113781390427,
+        "july_ratio_node_conditional_mean": 0.25885583690343694,
+        "conditional_wealth_mean_july": 2.087920151684221
+      }
+    ],
+    "rank_mapping_receipt": {
+      "rule": "reference wealth marginal; old total-income rank coupled to new persistent rank; iid independent conditional on persistent rank",
+      "empirical_joint_distribution_estimated": false,
+      "wealth_marginal_max_gap": 1.1102230246251565e-16,
+      "reference_wealth_mean": 0.18651967924681834,
+      "candidate_wealth_mean": 0.18651967924681828
+    }
+  },
+  "inputs": {
+    "PSID shelf": {
+      "artifact": "PSIDSHELF_MOBILITY.dta",
+      "path": "../PSID/PSIDSHELF_MOBILITY.dta",
+      "sha256": "f1c5d48d5ef5357c40e743895dd25c73cd45789f779d1d575408f671fe637029"
+    },
+    "July Block 2 builder": {
+      "artifact": "estimate_intergen_income_entry_targets.R",
+      "path": "code/data/psid_followup_mar2026/estimate_intergen_income_entry_targets.R",
+      "sha256": "ba04f9bebb789ef22a878459b42b1b26fc14154554338c7a47e12e143234944f"
+    },
+    "aggregate gross earnings observer": {
+      "artifact": "audit_aggregate_wealth_earnings_ratio.R",
+      "path": "code/data/psid_followup_mar2026/audit_aggregate_wealth_earnings_ratio.R",
+      "sha256": "b0937972056646d555ae67297a35d8789cdb60bbb7ed57f442779a149bac48f6"
+    },
+    "July entry node CSV": {
+      "artifact": "block2_entry_wealth_18_24.csv",
+      "path": "code/data/psid_followup_mar2026/output/intergen_income_entry_targets_20260716/block2_entry_wealth_18_24.csv",
+      "sha256": "1f35e20bab3f3c82910c93ae4500ca22cb995b18c3a8ce617e894a421d6d4068"
+    },
+    "entry reference audit": {
+      "artifact": "entry_reference_audit.json",
+      "path": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/entry_reference_audit.json",
+      "sha256": "228dc080465169515189923afee9687e93df9beedcf16ebeb1f90099e99088d5"
+    },
+    "selected B checkpoint audit": {
+      "artifact": "selected_B_checkpoint_audit.json",
+      "path": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/selected_B_checkpoint_audit.json",
+      "sha256": "3f96929befe712be146650835eb867bdc58a44e5a2af66611c22616fe4653588"
+    },
+    "overnight utility manifest": {
+      "artifact": "utility_overnight_v1/manifest.json",
+      "path": "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/manifest.json",
+      "sha256": "a895112b283f724c532f53e214457ceb142cacd44d9ac74deb84ed6dbf40f3d5"
+    },
+    "frozen temporary manifest": {
+      "artifact": "tmp/utility_overnight_20260923_v1/manifest.json",
+      "path": "tmp/utility_overnight_20260923_v1/manifest.json",
+      "sha256": "a895112b283f724c532f53e214457ceb142cacd44d9ac74deb84ed6dbf40f3d5"
+    },
+    "new B15 template plan": {
+      "artifact": "B_floor/template_plan.json",
+      "path": "tmp/utility_overnight_20260923_v1/inputs/utility_templates/B_floor/template_plan.json",
+      "sha256": "0ce0d53a3543c006f4e71b1fcecc157ea2fb217855b2927659046aa5112120b8"
+    },
+    "prepared normalized checkpoint": {
+      "artifact": "normalized_old.pkl.gz",
+      "path": "tmp/utility_overnight_20260923_v1/inputs/normalized_checkpoint/normalized_old.pkl.gz",
+      "sha256": "dfeb34f077e7a16804119eabd43cb8ee0611b0c3bb0180ec8af8ad7dc51b94e4"
+    },
+    "B15 period earnings constructor": {
+      "artifact": "build_period_earnings_process.py",
+      "path": "tmp/utility_overnight_20260923_v1/tools/build_period_earnings_process.py",
+      "sha256": "6ae44e25fd364f71a1380bc0bd6cd569a0bad19d9eb135d0a0b4ca9ad38fe019"
+    },
+    "rank-coupled entry adapter": {
+      "artifact": "e5f_earnings_wealth_contract.py",
+      "path": "tmp/utility_overnight_20260923_v1/tools/e5f_earnings_wealth_contract.py",
+      "sha256": "71eebc1d42e28ccd304f921535f0d154f3a994451b5c53bcb8097233ce18669a"
+    },
+    "solver entry conversion helpers": {
+      "artifact": "solver.py",
+      "path": "tmp/utility_overnight_20260923_v1/source/code/model/intergen_eqscale_seq_optimized/solver.py",
+      "sha256": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da"
+    },
+    "prepared checkpoint parameter source": {
+      "artifact": "parameters.py",
+      "path": "tmp/utility_overnight_20260923_v1/source/code/model/intergen_eqscale_seq_optimized/parameters.py",
+      "sha256": "c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5"
+    }
+  },
+  "outputs_sha256": {
+    "README.md": "ebfa2a487c5c490298e73eec7fd3af76f47f0db6b012cff12600825efaa3a77e",
+    "bootstrap_draws.csv": "895077f2272f3cc8ad8f640c635721892c4d69886074c4e10267c9b98b8293e6",
+    "bootstrap_summary.csv": "136f2b00cfcbb9af0542ffc7f974b9c423ae596e9c0da3981caeabaf42f54285",
+    "group_level_normalization.csv": "65b8536a025b3b7e1f327b13a26eb224acc953d5aacc92714a19a75b719a6d3c",
+    "joint_earnings_tercile_wealth_quintile.csv": "ade2f1e8520698ac74800f3661837ab24cd0802987278e918c19a2dc969567ab",
+    "legacy_entry_nodes.csv": "8fbca67d1c2c8634fd4e1809c74ad746d0095ff93a5c19b46c6db75c680a1b3a",
+    "model_entry_mapping.json": "73aaf27e4d6cc1502548c231a3ef03d328b8c8bb4ee63f6d89c92f924fe745b8",
+    "model_entry_mapping.py": "7c084dd2bd17c14830d2ba35875eb34ade0478a44dbdcd69a991e6a5019b6e95",
+    "model_entry_mapping_by_state.csv": "4c389893b763ffb0addd17a6cf54d32918f62bbd67d7f457192ff10125862d68",
+    "ratio_summary.csv": "98eee43e75b5e9b9f61c26ce04347d61c0686ec9c7e3f4bbbb30555f0af84f5c",
+    "replicate_entry_units.R": "428128618f1c9f870ede57e05c292e9c368af39be23abab8019e3928d8219205",
+    "sample_counts.csv": "567d874eb20012412453a382bf742d95444a777c1ada7f835dab8e9d6674ce4b",
+    "source_variable_labels.csv": "6def78360f59d1a5c8906cca8d541bd3e028ed62c1b523059490fb7b44cb5884",
+    "weighted_rank_correlations.csv": "f7dfd3b09f2fcf56f1a1e5b4ea6b78b34951b3300e508bc8c34310cf9f682917"
+  },
+  "limitations": [
+    "Gross earnings eligibility excludes 93 sample family-years (5.1% unweighted, 4.6% of IW mass).",
+    "The row-ratio mean differs from ratio of weighted sums because E[W/Y] is not E[W]/E[Y].",
+    "Rank coupling in the model comparison is imposed; the empirical gross-labor rank correlation is descriptive and below 0.30.",
+    "Model amounts are model units, wealth is beginning/pre-choice liquid wealth, and earnings are annual gross at age 18.",
+    "No result establishes that the July decision was wrong, validates the new B15 earnings process outside its saved inputs, or recommends changing a target.",
+    "Model implied ratio-bin masses are uneven because wealth-grid/state atoms can cross a cumulative-weight cut; see model_entry_mapping.json.",
+    "PSID year is survey-year labeled, while EARNINDRRC is tax-year earnings; no survey/tax-year shift is applied."
+  ],
+  "rank_correlation_method": {
+    "empirical_observations": "family-year rows with IW weights; repeated persons remain repeated records",
+    "weighted_tie_rank": "For each exact income or wealth value, rank=(weight below + 0.5*weight tied)/total weight.",
+    "correlation": "IW-weighted Pearson correlation of the two weighted midpoint-rank variables.",
+    "source_variable_labels": {
+      "year": "Survey year",
+      "INCFAMR": "FU's total family income (real USD 2022), tax year",
+      "EARNINDRRC": "RP/SP's combined earnings (real USD 2022), tax year"
+    },
+    "model_comparison": {
+      "weighted_spearman": 0.09774300077015782,
+      "definition": "Weighted Pearson correlation of weighted midpoint ranks; exact ties share their pooled weight rank. Weights are B15 entry joint probabilities over beginning/pre-choice wealth-grid nodes and age-18 annual gross income states.",
+      "sample": "Model age-18 entrants, not the empirical age-18-24 PSID family-year sample.",
+      "interpretation": "Generated by the inherited wealth-level marginal plus interval-overlap rank coupling to B15 persistent income ranks; it is imposed and not estimated."
+    }
+  },
+  "bootstrap_node_se_note": "Fixed-original-bin bootstrap only: bin membership is frozen at the point estimate in each replicate; these are not SEs for re-estimated weighted quantile nodes. Original July builder reports node bootstrap SE as missing."
+}

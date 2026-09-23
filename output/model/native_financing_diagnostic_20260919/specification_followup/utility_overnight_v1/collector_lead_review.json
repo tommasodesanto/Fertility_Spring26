@@ -1,21 +1,26 @@
 {
   "status": "lead_reviewed_source_and_template_preflight_actual_score_collection_pending",
-  "updated_utc": "2026-09-23T03:26:11.453526+00:00",
+  "updated_utc": "2026-09-23T04:01:39.916996+00:00",
   "collector": "code/model/tools/collect_e5f_utility_overnight.py",
-  "sha256": "49c53f81d608503a5ccf9a934e09e9509001069ce87409055b51f2d8b7209a2d",
-  "checks_passed": 6,
+  "sha256": "b82912e5466167e95012c8ae78d638a03244f93faf6d50ecccd4b5da814fe3c3",
+  "checks_passed": 9,
   "empty_fixture": "tmp/collection_v1",
   "fixture_scope": "all4 frozen templates641sources each, runtime/target pins;736planned0attempted0selected. Not an actual scored-case collection.",
   "lead_corrections": [
     "Actual run/initial/runtime contract provenance and dynamic plan/parameter/source ties enforced.",
     "Complete target rows reconcile values, weights, residuals and weighted contributions with12scored plus separate normalization.",
     "Counts distinguish running, incomplete timeout, scientific rejection, fatal failure and collection corruption.",
-    "Selection excludes repetitions and includes both smoke cases; selectedcheckpoint byteshashed once; othercheckpoint hashes compared throughreceipts."
+    "Selection excludes repetitions and includes both smoke cases; selectedcheckpoint byteshashed once; othercheckpoint hashes compared throughreceipts.",
+    "Verified table exports are built only after selected checkpoint byte-hash checks; corrupt leaders cannot remain exported.",
+    "File-based running/started status does not establish liveness without scheduler or process confirmation.",
+    "Raw finalizer receipt is copied and bound to the collector-selected case and checkpoint hash; it is not independent scientific revalidation.",
+    "Completed repeat count is distinguished from collector-verified repeat count."
   ],
   "remote_collection_root": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_collection_v1",
   "still_required": [
     "Firstactualfloorandshare scored receipts must pass collector",
     "Selected checkpoint entry/low-value audits via separatehelper",
     "Final scientific verification receipts and PDF/table review"
-  ]
+  ],
+  "remote_upload_status": "Latest repairs are local only while Torch authentication is unavailable."
 }

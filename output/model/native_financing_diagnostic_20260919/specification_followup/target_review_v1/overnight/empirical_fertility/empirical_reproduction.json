@@ -1,0 +1,816 @@
+{
+  "schema": "independent_empirical_fertility_reproduction_v1",
+  "created_utc": "2026-09-23T03:55:46.773037+00:00",
+  "read_only": true,
+  "cps": {
+    "source": "/Users/tommasodesanto/Desktop/Projects/Datasets/CPS/extract3/cps_00003.dat.gz",
+    "compressed_size_bytes": 663131999,
+    "compressed_sha256": "b8581daf254bfd8b1ea138f614ee3127f9d59724ff8443e20b6539a5893359fc",
+    "loader": "/Users/tommasodesanto/Desktop/Projects/Datasets/CPS/extract3/loader.do",
+    "loader_sha256": "eb40824c7a3f11d5ca12400e9935ed6ae8cb5439cbe30009c047be90280bfab3",
+    "reference_builder": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/parameter_target_audit/fertility/extract_fertility_availability.py",
+    "reference_builder_sha256": "e987ddbc52e7c12be523b29e28c84fe90d1b285905d46e6fb532940c16e1e37e",
+    "sample": "June 2004/2006; female (SEX=2); age 40-44; valid FREVER 0-20; FRSUPPWT>0; exclude 999/NIU; supplied supplement weight divided by 10,000.",
+    "record_width_bytes": 261,
+    "partitions": {
+      "2004": {
+        "june_partition_rows": 137264,
+        "june_partition_sha256_uncompressed": "44e233bb4780c844892f8e75fc34206533bb753906bba68c3ffc9ced374df786",
+        "female_age_40_44_frever_code_counts": {
+          "2": 1936,
+          "0": 1060,
+          "1": 950,
+          "3": 1034,
+          "5": 131,
+          "4": 418,
+          "6": 40,
+          "10": 3,
+          "8": 9,
+          "999": 7,
+          "7": 12,
+          "9": 6,
+          "11": 1
+        },
+        "valid_weighted_sample_n": 5600
+      },
+      "2006": {
+        "june_partition_rows": 135953,
+        "june_partition_sha256_uncompressed": "8bd7a843587d2f7dfb70d9309473855f4c87d1271636572f50e8a7950cf3426a",
+        "female_age_40_44_frever_code_counts": {
+          "1": 888,
+          "0": 1057,
+          "2": 1799,
+          "3": 986,
+          "4": 350,
+          "5": 125,
+          "8": 9,
+          "6": 38,
+          "999": 8,
+          "7": 13,
+          "10": 3,
+          "9": 2,
+          "12": 2
+        },
+        "valid_weighted_sample_n": 5272
+      }
+    },
+    "moments": [
+      {
+        "window": "2004",
+        "n_unweighted": 5600,
+        "sum_supplement_weights": 11534656.993600009,
+        "weighted_shares_0_1_2_3plus": {
+          "0": 0.19283861219576473,
+          "1": 0.1736284899855469,
+          "2": 0.34475417737228076,
+          "3+": 0.28877872044640557
+        },
+        "weighted_childlessness_share": 0.19283861219576473,
+        "weighted_exactly_one_among_mothers": 0.2151100047759691,
+        "weighted_mean_children_ever_born_uncapped": 1.8946580625003218,
+        "weighted_mean_children_ever_born_capped_at_3": 1.7294730060693302,
+        "weighted_mean_children_ever_born_capped_at_5": 1.8712915395903162,
+        "weighted_3plus_conditional_mean_uncapped": 3.5720125644148815,
+        "weighted_3plus_conditional_mean_capped_at_5": 3.4910975895376355,
+        "weighted_mean_with_3plus_replaced_by_3_602": 1.9034215892059205,
+        "conditional_2plus_mean_observed_same_population": 2.7165591217763803,
+        "3plus_share_among_2plus_observed_same_population": 0.4558227701208541,
+        "same_population_identity_diagnostic_only": {
+          "hypothetical_completed_mean": 2.1,
+          "required_mean_among_2plus": 3.040681102192366,
+          "assumed_3plus_group_value": 3.602359422009,
+          "required_3plus_share_among_2plus_if_other_groups_are_exactly_2_and_3_602": 0.6494679582484588,
+          "interpretation": "Arithmetic applied only to this single CPS population. It does not compare the age-40-44 stock observer to the model's separate completed-fertility normalization."
+        },
+        "weighted_denominators": {
+          "all_valid_sample": 11534656.993600009,
+          "mothers": 9310329.746800011,
+          "exactly_one": 2002745.0762999975,
+          "3plus": 3330963.487399994
+        }
+      },
+      {
+        "window": "2006",
+        "n_unweighted": 5272,
+        "sum_supplement_weights": 11234864.996399973,
+        "weighted_shares_0_1_2_3plus": {
+          "0": 0.20386405489820464,
+          "1": 0.16889319169460607,
+          "2": 0.3435779575310337,
+          "3+": 0.2836647958761592
+        },
+        "weighted_childlessness_share": 0.20386405489820464,
+        "weighted_exactly_one_among_mothers": 0.21214114591071642,
+        "weighted_mean_children_ever_born_uncapped": 1.8616754439151708,
+        "weighted_mean_children_ever_born_capped_at_3": 1.7070434943851436,
+        "weighted_mean_children_ever_born_capped_at_5": 1.8415328894676959,
+        "weighted_3plus_conditional_mean_uncapped": 3.545122101078554,
+        "weighted_3plus_conditional_mean_capped_at_5": 3.474113802762015,
+        "weighted_mean_with_3plus_replaced_by_3_602": 1.8779116568734153,
+        "conditional_2plus_mean_observed_same_population": 2.6987673321458803,
+        "3plus_share_among_2plus_observed_same_population": 0.4522408498707835,
+        "same_population_identity_diagnostic_only": {
+          "hypothetical_completed_mean": 2.1,
+          "required_mean_among_2plus": 3.078723186223518,
+          "assumed_3plus_group_value": 3.602359422009,
+          "required_3plus_share_among_2plus_if_other_groups_are_exactly_2_and_3_602": 0.6732092509376209,
+          "interpretation": "Arithmetic applied only to this single CPS population. It does not compare the age-40-44 stock observer to the model's separate completed-fertility normalization."
+        },
+        "weighted_denominators": {
+          "all_valid_sample": 11234864.996399973,
+          "mothers": 8944479.86199997,
+          "exactly_one": 1897492.2075000003,
+          "3plus": 3186935.6859000046
+        }
+      },
+      {
+        "window": "2004+2006 pooled weighted records",
+        "n_unweighted": 10872,
+        "sum_supplement_weights": 22769521.989999805,
+        "weighted_shares_0_1_2_3plus": {
+          "0": 0.19827875100684264,
+          "1": 0.17129201418953638,
+          "2": 0.3441738107256618,
+          "3+": 0.2862554240779669
+        },
+        "weighted_childlessness_share": 0.19827875100684264,
+        "weighted_exactly_one_among_mothers": 0.2136553252201481,
+        "weighted_mean_children_ever_born_uncapped": 1.8783838839209661,
+        "weighted_mean_children_ever_born_capped_at_3": 1.7184059078747502,
+        "weighted_mean_children_ever_born_capped_at_5": 1.8566081212581498,
+        "weighted_3plus_conditional_mean_uncapped": 3.558864435709847,
+        "weighted_3plus_conditional_mean_capped_at_5": 3.4827933438416117,
+        "weighted_mean_with_3plus_replaced_by_3_602": 1.890834559669306,
+        "conditional_2plus_mean_observed_same_population": 2.7078247255826753,
+        "3plus_share_among_2plus_observed_same_population": 0.4540643235987178,
+        "same_population_identity_diagnostic_only": {
+          "hypothetical_completed_mean": 2.1,
+          "required_mean_among_2plus": 3.059356830765085,
+          "assumed_3plus_group_value": 3.602359422009,
+          "required_3plus_share_among_2plus_if_other_groups_are_exactly_2_and_3_602": 0.6611231014804959,
+          "interpretation": "Arithmetic applied only to this single CPS population. It does not compare the age-40-44 stock observer to the model's separate completed-fertility normalization."
+        },
+        "weighted_denominators": {
+          "all_valid_sample": 22769521.989999805,
+          "mothers": 18254809.608799804,
+          "exactly_one": 3900237.283800007,
+          "3plus": 6517899.173299987
+        }
+      }
+    ]
+  },
+  "nchs": {
+    "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/nchs_natality_timing/first_birth_counts_year_age.csv",
+    "source_sha256": "5ef20c138a103c79b472b372fa8c5199cd5f3a0b544faff73e908f3803360c45",
+    "year_rows": [
+      {
+        "year": 2003,
+        "first_birth_count": 1636534,
+        "mean_recorded_single_age": 25.23296980081074,
+        "mean_single_age_interval_midpoint_age_plus_0_5": 25.73296980081074,
+        "mean_exact_single_age_midpoint_age_plus_0_5": 25.73296980081074,
+        "age_plus_half_is_single_year_interval_midpoint_assumption": true,
+        "mean_current_cell_midpoint_mapping": 26.047395287846143,
+        "single_age_bin_midpoint_effect_years": 0.5,
+        "mapping_effect_beyond_exact_age_midpoint_years": 0.31442548703540396,
+        "mapping_effect_beyond_single_age_interval_midpoint_years": 0.31442548703540396,
+        "difference_vs_recorded_single_age_total_years": 0.814425487035404,
+        "first_bin_total_mapping_contribution_years_ages_below_22": 0.2422598613899864,
+        "mapping_effect_by_age_bracket": {
+          "under_18": {
+            "first_birth_count": 127025,
+            "share": 0.07761830796060455,
+            "mapping_contribution_years": 0.2507729750802611
+          },
+          "18_21": {
+            "first_birth_count": 428956,
+            "share": 0.2621124889553165,
+            "mapping_contribution_years": -0.00851311369027469
+          },
+          "22_41": {
+            "first_birth_count": 1072187,
+            "share": 0.655157179746953,
+            "mapping_contribution_years": 0.0706068434875169
+          },
+          "42_45": {
+            "first_birth_count": 7621,
+            "share": 0.004656792953889134,
+            "mapping_contribution_years": 0.0030970942247457124
+          },
+          "over_45": {
+            "first_birth_count": 745,
+            "share": 0.00045523038323676745,
+            "mapping_contribution_years": -0.0015383120668437074
+          }
+        }
+      },
+      {
+        "year": 2004,
+        "first_birth_count": 1633723,
+        "mean_recorded_single_age": 25.21649692144874,
+        "mean_single_age_interval_midpoint_age_plus_0_5": 25.71649692144874,
+        "mean_exact_single_age_midpoint_age_plus_0_5": 25.71649692144874,
+        "age_plus_half_is_single_year_interval_midpoint_assumption": true,
+        "mean_current_cell_midpoint_mapping": 26.03269464897048,
+        "single_age_bin_midpoint_effect_years": 0.5,
+        "mapping_effect_beyond_exact_age_midpoint_years": 0.3161977275217396,
+        "mapping_effect_beyond_single_age_interval_midpoint_years": 0.3161977275217396,
+        "difference_vs_recorded_single_age_total_years": 0.8161977275217396,
+        "first_bin_total_mapping_contribution_years_ages_below_22": 0.24385315013622258,
+        "mapping_effect_by_age_bracket": {
+          "under_18": {
+            "first_birth_count": 126675,
+            "share": 0.07753762418720922,
+            "mapping_contribution_years": 0.2519922287927635
+          },
+          "18_21": {
+            "first_birth_count": 427830,
+            "share": 0.26187425897780714,
+            "mapping_contribution_years": -0.00813907865654092
+          },
+          "22_41": {
+            "first_birth_count": 1070365,
+            "share": 0.6551692055507574,
+            "mapping_contribution_years": 0.07073322711377633
+          },
+          "42_45": {
+            "first_birth_count": 8094,
+            "share": 0.004954328242915108,
+            "mapping_contribution_years": 0.0031663874475660807
+          },
+          "over_45": {
+            "first_birth_count": 759,
+            "share": 0.00046458304131116474,
+            "mapping_contribution_years": -0.0015550371758247879
+          }
+        }
+      },
+      {
+        "year": 2005,
+        "first_birth_count": 1640920,
+        "mean_recorded_single_age": 25.150531409209467,
+        "mean_single_age_interval_midpoint_age_plus_0_5": 25.650531409209467,
+        "mean_exact_single_age_midpoint_age_plus_0_5": 25.650531409209467,
+        "age_plus_half_is_single_year_interval_midpoint_assumption": true,
+        "mean_current_cell_midpoint_mapping": 25.967932623162618,
+        "single_age_bin_midpoint_effect_years": 0.5,
+        "mapping_effect_beyond_exact_age_midpoint_years": 0.3174012139531506,
+        "mapping_effect_beyond_single_age_interval_midpoint_years": 0.3174012139531506,
+        "difference_vs_recorded_single_age_total_years": 0.8174012139531506,
+        "first_bin_total_mapping_contribution_years_ages_below_22": 0.24088956195305072,
+        "mapping_effect_by_age_bracket": {
+          "under_18": {
+            "first_birth_count": 126452,
+            "share": 0.07706164834361212,
+            "mapping_contribution_years": 0.25010725690466323
+          },
+          "18_21": {
+            "first_birth_count": 433085,
+            "share": 0.26392816225044485,
+            "mapping_contribution_years": -0.00921769495161251
+          },
+          "22_41": {
+            "first_birth_count": 1072424,
+            "share": 0.6535504473100456,
+            "mapping_contribution_years": 0.07491772907880945
+          },
+          "42_45": {
+            "first_birth_count": 8149,
+            "share": 0.004966116568754114,
+            "mapping_contribution_years": 0.0032466543158715844
+          },
+          "over_45": {
+            "first_birth_count": 810,
+            "share": 0.0004936255271433098,
+            "mapping_contribution_years": -0.0016527313945835264
+          }
+        }
+      },
+      {
+        "year": 2006,
+        "first_birth_count": 1700092,
+        "mean_recorded_single_age": 25.047572131390538,
+        "mean_single_age_interval_midpoint_age_plus_0_5": 25.547572131390538,
+        "mean_exact_single_age_midpoint_age_plus_0_5": 25.547572131390538,
+        "age_plus_half_is_single_year_interval_midpoint_assumption": true,
+        "mean_current_cell_midpoint_mapping": 25.861605136663194,
+        "single_age_bin_midpoint_effect_years": 0.5,
+        "mapping_effect_beyond_exact_age_midpoint_years": 0.31403300527265543,
+        "mapping_effect_beyond_single_age_interval_midpoint_years": 0.31403300527265543,
+        "difference_vs_recorded_single_age_total_years": 0.8140330052726554,
+        "first_bin_total_mapping_contribution_years_ages_below_22": 0.23918734986106635,
+        "mapping_effect_by_age_bracket": {
+          "under_18": {
+            "first_birth_count": 130989,
+            "share": 0.07704818327478748,
+            "mapping_contribution_years": 0.24869330600932185
+          },
+          "18_21": {
+            "first_birth_count": 458046,
+            "share": 0.2694242429233242,
+            "mapping_contribution_years": -0.009505956148255506
+          },
+          "22_41": {
+            "first_birth_count": 1101821,
+            "share": 0.6480949266275001,
+            "mapping_contribution_years": 0.07342102662679431
+          },
+          "42_45": {
+            "first_birth_count": 8404,
+            "share": 0.004943261894062204,
+            "mapping_contribution_years": 0.0030939502097533547
+          },
+          "over_45": {
+            "first_birth_count": 832,
+            "share": 0.0004893852803260058,
+            "mapping_contribution_years": -0.0016693214249581788
+          }
+        }
+      }
+    ],
+    "pooled": {
+      "period": "2003-2006 pooled annual first-birth counts, ages 12-49",
+      "first_birth_count": 6611269,
+      "mean_recorded_single_age": 25.16076278245523,
+      "mean_single_age_interval_midpoint_age_plus_0_5": 25.66076278245523,
+      "mean_exact_single_age_midpoint_age_plus_0_5": 25.66076278245523,
+      "age_plus_half_is_single_year_interval_midpoint_assumption_not_exact_continuous_age": true,
+      "mean_current_cell_midpoint_mapping": 25.976263860992496,
+      "single_age_bin_midpoint_effect_years": 0.5,
+      "mapping_effect_beyond_exact_age_midpoint_years": 0.3155010785372667,
+      "difference_vs_recorded_single_age_total_years": 0.8155010785372667,
+      "first_bin_total_mapping_contribution_years_ages_below_22": 0.24152337471066446,
+      "mapping_effect_by_age_bracket": {
+        "under_18": {
+          "first_birth_count": 511141,
+          "share": 0.07731359894749404,
+          "mapping_contribution_years": 0.25037424736461333
+        },
+        "18_21": {
+          "first_birth_count": 1747917,
+          "share": 0.26438449259892466,
+          "mapping_contribution_years": -0.008850872653948886
+        },
+        "22_41": {
+          "first_birth_count": 4316797,
+          "share": 0.652945296886271,
+          "mapping_contribution_years": 0.07243170713519598
+        },
+        "42_45": {
+          "first_birth_count": 32268,
+          "share": 0.004880757385609329,
+          "mapping_contribution_years": 0.0031505297999521726
+        },
+        "over_45": {
+          "first_birth_count": 3146,
+          "share": 0.0004758541817009715,
+          "mapping_contribution_years": -0.0016045331085454244
+        }
+      },
+      "share_first_births_age_30plus_exact_age": 0.2492780130410667,
+      "mapping": "age<22 -> 20; 22-25 -> 24; 26-29 -> 28; 30-33 -> 32; 34-37 -> 36; 38-41 -> 40; age>=42 -> 44",
+      "operator": "Pooled period first-birth counts; no female exposure denominator; not cohort completed fertility."
+    }
+  },
+  "model_b_local_receipt": {
+    "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/B/selected/native_summary.json",
+    "source_sha256": "d7046d2e7af4f54017ecb97f6ce916e8d5e1f718731cb6e31e59b69256129827",
+    "frozen_run_provenance": {
+      "source_commit": "70abd4a80df979903b05d361f47ac2bf5aab2c23+tenure_probability_mass_fix_v2",
+      "initial_contract_sha256": "cf95e1ea707034d6bf3fe6aeff191276d3063e0198ca709d0d8245aadd748960",
+      "evaluation_receipt_sha256": "d1f9d74b451fe46a870f1d54482ec387bae0033e2de0463b305bbd2cdad87ff2",
+      "input_sha256": {
+        "early_measurement": "3b6ff81162a3f98b3f5dfae63f985cdd1850cf59db8482b44f023bcdb73399d3",
+        "normalization": "eb00c39c4fcf7163f97e114484cd152ad52085d006da531a0170e28fa9eaf610",
+        "parameters": "8353b3e1bb2a3ba2d0f0077e8832ae5ad220661d56ad9d6d8381b25ecdacfaeb",
+        "recent_parent_observation": "35772ecf9e029e5d46399598340b17148dd603ad797ade2c3efb93cb6294affd"
+      },
+      "source_fingerprints": {
+        "economic_source_manifest_7e872053": "612ea34da2f462cb50dcf6881dd3005d8495f827c833525436b150500ebf11cf",
+        "fertility_provenance_file_sha256": "940735a0f1a635d031cf0323b1822d44f891afe62f5ae3e993eeeef99b8ef41b",
+        "housing_wealth_provenance_file_sha256": "ccadd2285a3ab7f71f6f1c2722cba64e8e94a2f987ca8f289a58ec1ee84efceb",
+        "lead_decision_file_sha256": "b1d399c290d257e56e008afb6d7b76ac1f69191685c8d9e89a4b0bfb06533c9a",
+        "observation_snapshot_manifest_70abd4a8": "76406fcc10206d9e30bcc29d4e18accdf7fffdd9219e50e6e11c1c3360f01336",
+        "parameter_table_file_sha256": "c8d813e7cb749521e0e3520c48af9d5baf367e02fa161288dcc735e76d96d592",
+        "scorer_file_sha256": "a76ece9d0b38de4ff60ea259884306554ea62a42ed88faaad6b35a3375ebbfb3",
+        "target_fit_file_sha256": "d51be4a035dd2ee6165d769bd260e1397bf1e623e438113d3567d39569b49356",
+        "working_weights_file_sha256": "6289f69e512fff09fef0df358e2231050b978aa3e9fe1a9808bb96dd8c733c5a"
+      },
+      "normalization_path_frozen_source_sha256": {
+        "code/model/intergen_eqscale_seq_optimized/calibration.py": "7981fdaa24a1d59e9d8761f349708f627a565bea8cb840f47887bad1f1650d5d",
+        "code/model/intergen_eqscale_seq_optimized/run_e1_chain.py": "23220d1ba96ddf7a7d926ae8c438086ef40bf37d398924622c69ad5978dd4443",
+        "code/model/intergen_eqscale_seq_optimized/solver.py": "2992412586b81cef3a3e58d92191bb51f54d3f9cc600d7675bbadaed7d1682da",
+        "code/model/tools/audit_closed_reproductive_closure.py": "29b18b58bf51c036e734f235817b1713985e73d232c6a15d776b0ff826c40064",
+        "code/model/tools/run_e5f_open_population_transition.py": "5517eb0f806d0530de674c1b4eca9f919f48cd4d7de535e9ca066ddacb0fd346",
+        "code/model/tools/run_e5f_transition_calibration.py": "32f5be1c16ec591ef514af91cec2223f8aecd259808b1fc806f9742d5fd64435"
+      }
+    },
+    "normalization": {
+      "absolute_gap": 2.8791292776553234e-06,
+      "completed_fertility": 2.1000028791292777,
+      "psi_child": 0.17100378708201594,
+      "stationary_solve_seconds": 448.7773278928362,
+      "stationary_solves": 6,
+      "status": "derived_intercept",
+      "target": 2.1,
+      "implementation": "solve_old_steady_state varies psi_child until chain.extract_moments(...)[tfr] is within tolerance of 2.1. The chain is loaded by run_e5f_open_population_transition.configure_sequential_model from audit_closed_reproductive_closure.load_chain, which reloads run_e1_chain; that chain imports intergen_eqscale_seq_optimized.calibration.extract_moments. Under literal_topcode, it values parity_dist with P.tfr_top_bin_weight. The frozen solver computes parity_dist from g starting at P.A_f_end; model ages start at 18 in four-year cells, and A_f_end=7 puts this normalization on post-fertility age cells starting at 46.",
+      "normalization_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_transition_calibration.py",
+      "normalization_source_sha256": "32f5be1c16ec591ef514af91cec2223f8aecd259808b1fc806f9742d5fd64435",
+      "calibration_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/calibration.py",
+      "calibration_source_sha256": "b6e956c60ea11e43df9c61417a7c4ce8c3ebd60b00ba739b602fdb6472647fa6",
+      "solver_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/solver.py",
+      "solver_source_sha256": "b549dabeb03fdb9d476b2be58642ee2d876143b01f529af663e2cf50fc978562",
+      "chain_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/run_e1_chain.py",
+      "chain_source_sha256": "23220d1ba96ddf7a7d926ae8c438086ef40bf37d398924622c69ad5978dd4443",
+      "transition_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_open_population_transition.py",
+      "transition_source_sha256": "b4ce8b965f607e5337455de46b8c23d53fc07e00e4198d6ad383869723f8f2ca",
+      "chain_loader_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/audit_closed_reproductive_closure.py",
+      "chain_loader_source_sha256": "29b18b58bf51c036e734f235817b1713985e73d232c6a15d776b0ff826c40064",
+      "observer_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_initial_fertility_observer.py",
+      "observer_source_sha256": "2be39f66b90f3265f1d21d96dd68626fcfc43b569e8526ab2ea0414a4bef07b7"
+    },
+    "post_fertility_ages_46plus_normalization_population": {
+      "age_cell_starts_included": [
+        46.0,
+        50.0,
+        54.0,
+        58.0,
+        62.0,
+        66.0,
+        70.0,
+        74.0,
+        78.0,
+        82.0
+      ],
+      "shares_from_saved_stationary_summary_0_1_2_3plus": [
+        0.1483452528829332,
+        0.17920755078216558,
+        0.3130391086317947,
+        0.35940808770310656
+      ],
+      "top_bin_value": 3.602359422009,
+      "mean_using_top_bin_value_3_602359422009": 2.1000028791292777,
+      "mean_if_top_bin_is_literal_3": 1.8835100311550748,
+      "saved_model_normalization_statistic": 2.1000028791292777,
+      "independent_observer_g_post_fertility_shares_ages_46plus_0_1_2_3plus": [
+        0.14834525288293313,
+        0.17920755078216555,
+        0.313039108631795,
+        0.35940808770310617
+      ],
+      "independent_observer_g_post_fertility_shares_age42_cell_0_1_2_3plus": [
+        0.148345252882933,
+        0.17920755078216524,
+        0.31303910863179374,
+        0.359408087703108
+      ],
+      "interpretation": "The stationary solver forms parity_dist from g over age indices starting at P.A_f_end. With 18-start, four-year periods and A_f_end=7 (fertility through the cell starting at 42), this is the post-fertility 46+ population. Applying the calibrated top-bin value reproduces the 2.1 normalization; literal 3 gives the saved mean_completed_fertility. The independent initial-fertility observer reads g_post_fertility and is retained separately. Neither is the CPS [40,45) age-projected observer."
+    },
+    "uniform_birth_time_age_40_44": {
+      "0": 0.16889931300719657,
+      "1": 0.2121479253397807,
+      "2": 0.3486029193382024,
+      "3plus": 0.2703498423148203
+    },
+    "constant_post_cell_age_40_44": {
+      "0": 0.15695801262815104,
+      "1": 0.1926193312019399,
+      "2": 0.3309369894336144,
+      "3plus": 0.31948566673629475
+    },
+    "uniform_birth_time_window_parity_mass_age_40_44": [
+      0.013033422923108804,
+      0.016370780815998104,
+      0.026900578806804173,
+      0.020862037680015277
+    ],
+    "same_evaluation_full_age_pre_fertility_parity_mass_by_age": [
+      [
+        0.06173345618077391,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.04901357011899901,
+        0.012719886061774776,
+        0.0,
+        0.0
+      ],
+      [
+        0.036056572636260616,
+        0.0215293638471701,
+        0.004147519697335233,
+        0.0
+      ],
+      [
+        0.025033201782792357,
+        0.024748428622238673,
+        0.011063738291159846,
+        0.0008880874845671574
+      ],
+      [
+        0.017381243357867376,
+        0.022444314752250588,
+        0.018319329401373926,
+        0.0035885686692591133
+      ],
+      [
+        0.012874236549384807,
+        0.017426583121174045,
+        0.022634601165722218,
+        0.008798035344460404
+      ],
+      [
+        0.010487103734285496,
+        0.013132990380593521,
+        0.022087231196097547,
+        0.016026130869764198
+      ],
+      [
+        0.009157865168469425,
+        0.011063101483468642,
+        0.019324986095579005,
+        0.02218750343322347
+      ],
+      [
+        0.009157865168469448,
+        0.01106310148346874,
+        0.01932498609557899,
+        0.02218750343322355
+      ],
+      [
+        0.009157865168469462,
+        0.011063101483468596,
+        0.019324986095579057,
+        0.022187503433223572
+      ],
+      [
+        0.009157865168469465,
+        0.01106310148346868,
+        0.019324986095579078,
+        0.022187503433223444
+      ],
+      [
+        0.00915786516846946,
+        0.011063101483468701,
+        0.019324986095579064,
+        0.022187503433223506
+      ],
+      [
+        0.009157865168469437,
+        0.011063101483468677,
+        0.019324986095579037,
+        0.022187503433223496
+      ],
+      [
+        0.008600392089908456,
+        0.010389649633177655,
+        0.018148602812612373,
+        0.020836868146837443
+      ],
+      [
+        0.007899439788848146,
+        0.00954286860953894,
+        0.016669448749687964,
+        0.019138614099611425
+      ],
+      [
+        0.006990626562884886,
+        0.008444982501435197,
+        0.014751665223491642,
+        0.016936758514246048
+      ],
+      [
+        0.005802547251171183,
+        0.007009730752899673,
+        0.012244572603438374,
+        0.01405830231046296
+      ]
+    ],
+    "same_evaluation_full_age_post_fertility_parity_mass_by_age": [
+      [
+        0.049013570118999115,
+        0.01271988606177479,
+        0.0,
+        0.0
+      ],
+      [
+        0.036056572636261885,
+        0.021529363847171686,
+        0.0041475196973401966,
+        0.0
+      ],
+      [
+        0.02503320178279321,
+        0.024748428622241882,
+        0.011063738291161406,
+        0.0008880874845695938
+      ],
+      [
+        0.01738124335786922,
+        0.02244431475225166,
+        0.018319329401375317,
+        0.0035885686692618867
+      ],
+      [
+        0.012874236549387802,
+        0.01742658312117543,
+        0.022634601165724036,
+        0.008798035344463731
+      ],
+      [
+        0.010487103734286235,
+        0.01313299038059351,
+        0.02208723119609753,
+        0.016026130869764253
+      ],
+      [
+        0.009157865168469463,
+        0.01106310148346869,
+        0.019324986095579016,
+        0.022187503433223683
+      ],
+      [
+        0.009157865168469425,
+        0.011063101483468642,
+        0.019324986095579005,
+        0.02218750343322347
+      ],
+      [
+        0.009157865168469448,
+        0.01106310148346874,
+        0.01932498609557899,
+        0.02218750343322355
+      ],
+      [
+        0.009157865168469462,
+        0.011063101483468596,
+        0.019324986095579057,
+        0.022187503433223572
+      ],
+      [
+        0.009157865168469465,
+        0.01106310148346868,
+        0.019324986095579078,
+        0.022187503433223444
+      ],
+      [
+        0.00915786516846946,
+        0.011063101483468701,
+        0.019324986095579064,
+        0.022187503433223506
+      ],
+      [
+        0.009157865168469437,
+        0.011063101483468677,
+        0.019324986095579037,
+        0.022187503433223496
+      ],
+      [
+        0.008600392089908456,
+        0.010389649633177655,
+        0.018148602812612373,
+        0.020836868146837443
+      ],
+      [
+        0.007899439788848146,
+        0.00954286860953894,
+        0.016669448749687964,
+        0.019138614099611425
+      ],
+      [
+        0.006990626562884886,
+        0.008444982501435197,
+        0.014751665223491642,
+        0.016936758514246048
+      ],
+      [
+        0.005802547251171183,
+        0.007009730752899673,
+        0.012244572603438374,
+        0.01405830231046296
+      ]
+    ],
+    "same_evaluation_full_age_post_fertility_parity_shares_by_age": [
+      [
+        0.7939547394766433,
+        0.2060452605233568,
+        0.0,
+        0.0
+      ],
+      [
+        0.5840685888487696,
+        0.34874710050458474,
+        0.06718431064664572,
+        0.0
+      ],
+      [
+        0.4055046215052616,
+        0.4008916745204458,
+        0.17921786622094982,
+        0.014385837753342727
+      ],
+      [
+        0.2815530578261523,
+        0.3635680899921396,
+        0.29674880582962293,
+        0.05813004635208517
+      ],
+      [
+        0.20854553342506837,
+        0.2822875017745918,
+        0.36665047716511445,
+        0.14251648763522545
+      ],
+      [
+        0.1698771522459779,
+        0.21273700183160163,
+        0.357783810636345,
+        0.2596020352860754
+      ],
+      [
+        0.148345252882933,
+        0.17920755078216524,
+        0.31303910863179374,
+        0.359408087703108
+      ],
+      [
+        0.1483452528829331,
+        0.17920755078216538,
+        0.3130391086317952,
+        0.35940808770310634
+      ],
+      [
+        0.14834525288293302,
+        0.1792075507821664,
+        0.31303910863179396,
+        0.35940808770310656
+      ],
+      [
+        0.14834525288293335,
+        0.17920755078216422,
+        0.3130391086317953,
+        0.35940808770310717
+      ],
+      [
+        0.14834525288293346,
+        0.17920755078216566,
+        0.31303910863179574,
+        0.35940808770310523
+      ],
+      [
+        0.1483452528829332,
+        0.1792075507821658,
+        0.3130391086317951,
+        0.35940808770310584
+      ],
+      [
+        0.14834525288293304,
+        0.17920755078216563,
+        0.3130391086317951,
+        0.35940808770310617
+      ],
+      [
+        0.14834525288293257,
+        0.17920755078216583,
+        0.313039108631795,
+        0.35940808770310667
+      ],
+      [
+        0.1483452528829336,
+        0.17920755078216552,
+        0.31303910863179546,
+        0.35940808770310545
+      ],
+      [
+        0.1483452528829329,
+        0.1792075507821654,
+        0.3130391086317951,
+        0.3594080877031065
+      ],
+      [
+        0.1483452528829331,
+        0.17920755078216555,
+        0.3130391086317951,
+        0.3594080877031062
+      ]
+    ],
+    "legacy_stationary_moments": {
+      "mean_completed_fertility": 1.8835100311550748,
+      "tfr": 2.1000028791292777,
+      "parity_share_0": 0.1483452528829332,
+      "parity_share_1": 0.17920755078216558,
+      "parity_share_2plus": 0.6724471963349012,
+      "parity_share_3plus": 0.35940808770310656
+    },
+    "observer_warning": "The 40-44 shares are projected stock moments; the separately recorded normalization uses the post-fertility age-46+ parity distribution from the stationary solver. The saved initial-fertility observer uses g_pre/g_post_fertility and is also distinct. Do not infer incompatibility or a loss bound across these observers.",
+    "fertility_receipt_sha256": "38a035a203621f490ca4a52644a28a6d246d245fa0c3087141f4fb134d2b0899"
+  },
+  "scope_limits": [
+    "No raw-data standard errors were recomputed.",
+    "No target, weight, builder, or model code was edited.",
+    "2.1 is shown only as a hypothetical identity applied within one weighted CPS sample; it is kept separate from the model's full-population normalization and age-40-44 projected stock observer.",
+    "The current NCHS age mapping is compared with exact single-age midpoints. The midpoint differences are measurement arithmetic, not evidence of an economic target error."
+  ]
+}

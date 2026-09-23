@@ -18,6 +18,9 @@ class UtilityCollectorTests(unittest.TestCase):
             evaluation = case / "result/evaluation"
             (evaluation / "raw").mkdir(parents=True)
             (case / "status.json").write_text(json.dumps({"status": "started"}))
+            running_status, reason = collector._attempt_status(case, evaluation, False)
+            self.assertEqual(running_status, "running")
+            self.assertIn("liveness is unknown", reason)
             failure = evaluation / "raw/failure.json"
             failure.write_text(json.dumps({"error_type": "TimeoutExpired", "error": "native timeout"}))
             self.assertEqual(collector._attempt_status(case, evaluation, False)[0], "incomplete")
@@ -90,6 +93,50 @@ class UtilityCollectorTests(unittest.TestCase):
         self.assertEqual(counts["failed"], 1)
         self.assertEqual(counts["incomplete"], 1)
         self.assertEqual(counts["collection_rejected"], 1)
+
+    def test_corrupt_selected_candidate_is_removed_before_score_table_export(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            bad_checkpoint, good_checkpoint = root / "bad.pkl", root / "good.pkl"
+            bad_checkpoint.write_bytes(b"corrupted")
+            good_checkpoint.write_bytes(b"verified")
+            bad = {"loss": 1.0, "checkpoint_path": bad_checkpoint,
+                   "checkpoint_sha256": "0" * 64,
+                   "score": {"target_fit": [{"restriction_id": "bad"}], "parameters": []},
+                   "plan": {"parameter_bounds": {}}}
+            import hashlib
+            good_hash = hashlib.sha256(good_checkpoint.read_bytes()).hexdigest()
+            good = {"loss": 2.0, "checkpoint_path": good_checkpoint,
+                    "checkpoint_sha256": good_hash,
+                    "score": {"target_fit": [{"restriction_id": "good"}], "parameters": []},
+                    "plan": {"parameter_bounds": {}}}
+            verified = {("production", "B_floor", "bad_case"): bad,
+                        ("smoke", "B_floor", "good_case"): good}
+            inventory = [
+                {"stage": "production", "cell": "B_floor", "case_id": "bad_case", "status": "verified_scored"},
+                {"stage": "smoke", "cell": "B_floor", "case_id": "good_case", "status": "verified_scored"},
+            ]
+            candidates = [("production", "B_floor", "bad_case", bad),
+                          ("smoke", "B_floor", "good_case", good)]
+            selected = collector.selected_checkpoint_candidates(candidates, inventory, verified, "B_floor")
+            targets, _ = collector.score_table_rows(verified)
+            self.assertEqual([item[1] for item in selected], ["good_case"])
+            self.assertNotIn(("production", "B_floor", "bad_case"), verified)
+            self.assertEqual({row["restriction_id"] for row in targets}, {"good"})
+            self.assertEqual(inventory[0]["status"], "collection_rejected")
+
+    def test_scientific_receipt_mismatch_requires_review(self):
+        receipt = {"status": "verified_exact_twice", "selected": {
+            "case_id": "old_case", "checkpoint_sha256": "a" * 64}}
+        selected = {"case_id": "selected_case", "checkpoint_sha256": "b" * 64}
+        self.assertEqual(
+            collector.scientific_receipt_status(receipt, selected, "a" * 64),
+            "not_applicable_selected_binding_mismatch_requires_review")
+
+    def test_raw_completed_repeat_count_is_not_verified_repeat_count(self):
+        repeats = [{"status": "completed"}, {"status": "completed"}]
+        verified = {("verification", "B_floor", "selected_repeat_01"): {"score": {}}}
+        self.assertEqual(collector.verification_counts(repeats, verified, "B_floor"), (2, 1))
 
 
 if __name__ == "__main__":

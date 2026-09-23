@@ -1,0 +1,73 @@
+{
+  "schema": "old_wealth_dispersion_robustness_v1",
+  "status": "empirical_checks_complete_model_level_quantiles_recovered_algebraically",
+  "data": {
+    "builder_estimand": "weighted Q90(NETWORTHR/INCFAMR) / weighted Q50(NETWORTHR/INCFAMR)",
+    "wealth_measure": "NETWORTHR, the PSID-SHELF family net-worth measure; INCFAMR, total family income",
+    "builder_estimate": 3.51593508651872,
+    "builder_bootstrap_se": 0.306910785103348,
+    "reproduces_saved_builder_point_and_se": true,
+    "wealth_level_estimand": "weighted Q90(NETWORTHR) / weighted Q50(NETWORTHR), same observations and weights",
+    "wealth_level_p90_p50": 4.91942877481612,
+    "wealth_level_bootstrap_se": 0.579803959750935,
+    "wealth_level_p50_shelf_real_dollars": 259332.49040259,
+    "wealth_level_p90_shelf_real_dollars": 1275767.71553123,
+    "bootstrap": {
+      "unit": "person ID",
+      "reps": 499,
+      "seed": 20260715,
+      "population_persons": 918,
+      "population_definition": "All living positive-weight PSID reference persons ages 65-84 in waves 2003/05, before age-76-84 outcome and children-history filters; this exactly follows the existing builder and is not a 416-person final-sample-only bootstrap."
+    },
+    "sample": {"family_years": 644, "persons": 416},
+    "income_and_sample_response": {
+      "living_reference_person_records_age_76_84": 650,
+      "missing_income_records": 3,
+      "zero_income_records": 0,
+      "negative_income_records": 0,
+      "income_at_or_below_1000_records": 3,
+      "observed_completed_children_records": 650,
+      "no_children_history_filter_change": 0,
+      "no_children_filter_estimate": 3.51593508651872
+    },
+    "nonasset_income_denominator": {
+      "status": "not_computed",
+      "reason": "The selected shelf contract provides family income and reference-person earnings, but not a defensible household non-asset-income decomposition."
+    }
+  },
+  "model": {
+    "saved_b_full_level_distribution_available_locally": false,
+    "wealth_level_quantiles_recovered_algebraically": true,
+    "reason": "B checkpoint is named under /scratch and was not read. Frozen source plus saved B moments suffice because the annual denominator is constant over all selected observations.",
+    "observer_wealth": "b + pH for owners; b for renters",
+    "wealth_timing": "beginning-of-period asset distribution; no transaction wedge subtracted",
+    "age_76_84_overlap": {"age_cell_74": 0.5, "age_cell_78": 1.0, "age_cell_82": 0.75},
+    "annual_income": "Same positive constant in all selected age/location/z/tenure cells: period pension / 4; no payroll gross-up at retirement. Frozen defaults set retirement_income_z_scale=0; B records property_tax_lump_sum_transfer=0; estate transfers are confined to ages 45-65.",
+    "selected_b_pension_period": 2.046361389612122,
+    "selected_b_annual_old_income": 0.5115903474030306,
+    "selected_b_property_tax_lump_sum_transfer": 0.0,
+    "selected_b_ratio_p90_p50": 3.7277115325482555,
+    "selected_b_median_wealth_income_ratio": 4.264110944673869,
+    "selected_b_p90_wealth_income_ratio": 15.895375544526019,
+    "selected_b_median_wealth_level_model_units": 2.18147799955077,
+    "selected_b_p90_wealth_level_model_units": 8.131920696925702,
+    "selected_b_wealth_level_p90_p50": 3.7277115325482555,
+    "data_wealth_level_ratio_gap_model_minus_data": -1.1917172422678645,
+    "data_wealth_level_ratio_gap_in_empirical_se": -2.055379619655904,
+    "target_ratio_gap_model_minus_data": 0.2117764460295355,
+    "target_ratio_gap_in_empirical_se": 0.6900260802442073,
+    "source_check": "Pinned 2026-09-22 B contract matches code at commit 70abd4a80df979903b05d361f47ac2bf5aab2c23: parameter-builder SHA256 c0c1c18500fba069152659eaf588c3c895993cdcecb104cee7d6edca6bfae6a5 and observer SHA256 169bf4c108af35f1c2f76d74da568a0aedc256ca32395a5b5477eb153a8a2e59 match the frozen contract. The only later code correction is solver-only tenure-probability mass conservation (contract scope); it leaves income construction untouched. Frozen parameter defaults: J_R=12, period_years=4, retirement_income_z_scale=0; pension builder assigns P.income[i,j]=P.pension for all locations and j>=J_R; annual-income observer calls annual_gross_income_at_state; estate transfers only ages 45-65. B summary records pension 2.046361389612122 and property-tax transfer 0."
+  },
+  "outputs": [
+    "build_old_wealth_robustness.R",
+    "wealth_results.csv",
+    "bootstrap_draws.csv",
+    "sample_counts.csv",
+    "nonasset_income_status.csv",
+    "run_metadata.csv",
+    "input_hashes.sha256",
+    "frozen_b_source_hashes.sha256",
+    "README.md"
+  ],
+  "interpretation": "The exact old-age dispersion target is reproducible. In this window, observed-children selection has no empirical effect. B's ratio moment equals its wealth-level p90/p50 exactly because income is constant across selected observations. The model level ratio is 2.055 empirical SE below the PSID level ratio while its family-income-ratio target gap is 0.690 SE; this difference does not isolate a causal denominator effect from the remaining sample, coverage, and asset-definition mappings. Model wealth quantile levels are model units, not dollar-calibrated."
+}

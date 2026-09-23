@@ -1,0 +1,39 @@
+{
+  "reviewed_utc": "2026-09-23T04:01:39.916996+00:00",
+  "status": "empirical checks reviewed; final recommendations and cluster collection pending",
+  "checks": [
+    {
+      "claim": "Target contract integrity",
+      "finding": "All 13 current values and weights reproduce existing receipts. The prior integrity note mislabels first-birth rooms uncertainty as bootstrap: it is a person-clustered covariance-aware contrast SE. No value or weight changed."
+    },
+    {
+      "claim": "Normalization forces excess 3+ children at ages 40–44",
+      "finding": "Not established. B projected 40–44 share .270350 is below CPS .286255. The normalized ages-46+ distribution is distinct and reproduces 2.1000029 using top-bin 3.602359422009."
+    },
+    {
+      "claim": "NCHS 25.976 is a coding error",
+      "finding": "No. Raw recorded-age mean 25.1608, midpoint convention 25.6608 and model-cell mapped mean 25.9763 are different documented measures. Support/coarsening choices remain."
+    },
+    {
+      "claim": "Old-wealth target and counterpart",
+      "finding": "PSID ratio 3.5159350865 (SE .3069107851) reproduces; same-sample levels ratio 4.9194287748 (SE .5798039598). Constant model retirement income means its two ratios are exactly equal at 3.72771153255. These are candidate measurement comparisons, not a target replacement."
+    },
+    {
+      "claim": "Entry mapping",
+      "finding": "B15 preserves the inherited wealth-level marginal. This does not reproduce a newly estimated wealth/earnings joint distribution. Imposed weighted Spearman .09774 versus empirical .27993 uses different entry-age samples and is descriptive."
+    },
+    {
+      "claim": "First-birth room comparison",
+      "finding": "Target .7202462623815278 and SE .0852600513385958 reproduced. Both model and data can include subsequent children. The data history and singleton-count checks pass; counterfactual and weighting differences remain, with no quantified explanation of the fit gap."
+    },
+    {
+      "claim": "Identification and utility search",
+      "finding": "Nine floor versus ten share coordinates plus separately normalized psi. Twelve scored moments plus normalization exceed raw parameter counts but do not prove informative identification. Loss differences do not establish causal mechanism or justify target selection."
+    }
+  ],
+  "rules": [
+    "No new target, weight or entry law adopted.",
+    "No scientific result inferred from uncollected remote jobs.",
+    "Saved source receipts are evidence; inspect actual model call paths for competing definitions."
+  ]
+}

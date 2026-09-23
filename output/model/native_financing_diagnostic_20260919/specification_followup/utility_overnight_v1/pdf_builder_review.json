@@ -1,0 +1,18 @@
+{
+  "builder": "code/model/tools/build_e5f_utility_target_review_pdf.py",
+  "python_compile": "passed",
+  "fixture": "synthetic; two selected cells (17 and 19 parameter rows), four smoke anchors, missing selected arms, long table/narrative text",
+  "fixture_pdf_pages": 28,
+  "fixture_pdf_sha256": "9f1e59430984df69f7b245c0006afe36294b7f70c4f27bf96b57b92b1a33ab8a",
+  "clickable_urls": [
+    "https://example.org/fixture?a=1&b=2"
+  ],
+  "visual_review": "Rendered and inspected comparative tables, status/common-parameters table, parameter/target tables, and paired diagnostic layout; no clipping or overlap found.",
+  "missing_readout_path": "Narrative-only output builds, keeps recommendations, limitations, sections, and source links; reports numeric results unavailable.",
+  "empty_collector_path": "Built from empty collector fixture; all four selected cells explicitly unavailable; no fabricated values.",
+  "marker": "PDF skill marker command succeeded once before first PDF render; marker tool emits no receipt file or stdout.",
+  "reviewed_utc": "2026-09-23T04:01:39.916996+00:00",
+  "lead_source_review": "Read complete builder; checked target-row reconciliation, selection hash binding, parameter dimensions, raw-repeat labels and missing-result paths.",
+  "actual_results_pdf": "Not produced; final actual readout and all-page QA remain required.",
+  "lead_visual_review": "Freshly rendered current synthetic fixture page 2 from the SHA-pinned PDF: table headers, finalizer wording and shared-coordinate block are legible. Agent inspected comparison/parameter/figure pages. Actual final PDF requires all-page QA."
+}

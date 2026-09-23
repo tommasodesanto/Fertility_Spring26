@@ -137,6 +137,71 @@ def selection_candidates(inventory, verified):
             if stage in ("smoke", "production")]
 
 
+def selected_checkpoint_candidates(candidate_rows, inventory, verified, cell):
+    """Return the best checkpoint-byte-verified candidate, rejecting bad leaders."""
+    for stage, _, case_id, evidence in candidate_rows:
+        checkpoint = evidence["checkpoint_path"]
+        if checkpoint.is_file() and sha(checkpoint) == evidence["checkpoint_sha256"]:
+            return [(stage, case_id, evidence)]
+        for row in inventory:
+            if row["stage"] == stage and row["cell"] == cell and row["case_id"] == case_id:
+                row["status"] = "collection_rejected"
+                row["validity_exception"] = (
+                    "selected checkpoint is missing or its bytes differ from the score/receipt hash")
+                break
+        verified.pop((stage, cell, case_id), None)
+    return []
+
+
+def scientific_receipt_status(receipt, selected_record, reported_checkpoint_sha256=None):
+    """Describe copied finalizer evidence without treating it as a fresh audit."""
+    if not receipt:
+        return "not_present"
+    selected = receipt.get("selected")
+    if not isinstance(selected, dict) or not selected.get("case_id"):
+        return "not_applicable_missing_selected_identity_requires_review"
+    if not reported_checkpoint_sha256:
+        return "not_applicable_missing_checkpoint_identity_requires_review"
+    if (selected.get("case_id") != selected_record.get("case_id")
+            or reported_checkpoint_sha256 != selected_record.get("checkpoint_sha256")):
+        return "not_applicable_selected_binding_mismatch_requires_review"
+    if receipt.get("status") == "verified_exact_twice":
+        return "raw_receipt_reports_exact_twice_selected_binding_matches_not_independently_revalidated"
+    return "raw_receipt_status_requires_review_selected_binding_matches"
+
+
+def verification_counts(repeats, verified, cell):
+    """Keep runner-reported completions distinct from collector-verified repeats."""
+    raw_count = sum(item.get("status") == "completed" for item in repeats)
+    verified_count = sum(
+        ("verification", cell, f"selected_repeat_{number:02d}") in verified
+        for number in (1, 2))
+    return raw_count, verified_count
+
+
+def score_table_rows(verified):
+    """Build exported fit tables from the final verified map after selection checks."""
+    all_targets, all_parameters = [], []
+    for (stage, cell, case_id), evidence in verified.items():
+        for item in evidence["score"]["target_fit"]:
+            all_targets.append({"stage": stage, "cell": cell, "case_id": case_id, **item})
+        for item in evidence["score"]["parameters"]:
+            item = dict(item)
+            bounds = evidence["plan"].get("parameter_bounds", {})
+            name = item["parameter"]
+            if name in bounds:
+                low, high = map(float, bounds[name])
+                estimate = float(item["estimate"])
+                item.update(actual_lower=low, actual_upper=high,
+                            near_actual_bound=min(estimate-low, high-estimate) <= .01*(high-low),
+                            restriction_type="searched")
+            else:
+                item.update(actual_lower=None, actual_upper=None, near_actual_bound=None,
+                            restriction_type="externally_fixed_or_derived")
+            all_parameters.append({"stage": stage, "cell": cell, "case_id": case_id, **item})
+    return all_targets, all_parameters
+
+
 def count_statuses(inventory, cell):
     rows = [row for row in inventory if row["cell"] == cell]
     return {state: sum(row["status"] == state for row in rows)
@@ -453,7 +518,7 @@ def _attempt_status(case_dir, evaluation, verified, error=None):
     if status.get("status") == "completed":
         return "collection_rejected", "runner marked case completed but score/summary is missing"
     if status.get("status") == "started" or optional(case_dir / "heartbeat.json"):
-        return "running", "case has a live runner status/heartbeat and no score yet"
+        return "running", "unresolved started status/heartbeat; liveness is unknown without a scheduler/process check"
     return "incomplete", "case started without a verified score/status"
 
 
@@ -538,46 +603,13 @@ def collect(manifest_path, results_root, output):
             row["status"], row["validity_exception"] = _attempt_status(case_dir, evaluation, False)
         inventory.append(row)
 
-    # Keep all collected score rows, including smoke and adaptive proposals.
-    all_targets, all_parameters = [], []
-    for (stage, cell, case_id), evidence in verified.items():
-        for item in evidence["score"]["target_fit"]:
-            all_targets.append({"stage": stage, "cell": cell, "case_id": case_id, **item})
-        for item in evidence["score"]["parameters"]:
-            item = dict(item)
-            bounds = evidence["plan"].get("parameter_bounds", {})
-            name = item["parameter"]
-            if name in bounds:
-                low, high = map(float, bounds[name])
-                estimate = float(item["estimate"])
-                item.update(actual_lower=low, actual_upper=high,
-                            near_actual_bound=min(estimate-low, high-estimate) <= .01*(high-low),
-                            restriction_type="searched")
-            else:
-                item.update(actual_lower=None, actual_upper=None, near_actual_bound=None,
-                            restriction_type="externally_fixed_or_derived")
-            all_parameters.append({"stage": stage, "cell": cell, "case_id": case_id, **item})
-    write_csv(output / "all_target_fits.csv", all_targets)
-    write_csv(output / "all_parameters.csv", all_parameters)
-
     selected, receipts, copied_graphs, selected_support = [], [], [], []
     for cell in CELLS:
         candidate_rows = [(stage, c, case_id, evidence)
                           for stage, c, case_id, evidence in selection_candidates(inventory, verified)
                           if c == cell]
         candidate_rows.sort(key=lambda row: row[3]["loss"])
-        candidates = []
-        for stage, _, case_id, evidence in candidate_rows:
-            checkpoint = evidence["checkpoint_path"]
-            if checkpoint.is_file() and sha(checkpoint) == evidence["checkpoint_sha256"]:
-                candidates.append((stage, case_id, evidence))
-                break
-            for row in inventory:
-                if row["stage"] == stage and row["cell"] == cell and row["case_id"] == case_id:
-                    row["status"] = "collection_rejected"
-                    row["validity_exception"] = "selected checkpoint is missing or its bytes differ from the score/receipt hash"
-                    break
-            verified.pop((stage, cell, case_id), None)
+        candidates = selected_checkpoint_candidates(candidate_rows, inventory, verified, cell)
         if not candidates:
             continue
         stage, case_id, best = candidates[0]
@@ -645,9 +677,33 @@ def collect(manifest_path, results_root, output):
                     shutil.copy2(receipt_path, receipt_dest)
                     repeat_row["receipt_copy"] = str(receipt_dest.relative_to(output))
                 repeats.append(repeat_row)
+        raw_finalizer_path = results_root / "verification" / cell / "receipt.json"
+        raw_finalizer_receipt = optional(raw_finalizer_path)
+        finalizer_selected = raw_finalizer_receipt.get("selected", {})
+        reported_checkpoint_sha256 = finalizer_selected.get("checkpoint_sha256")
+        if not reported_checkpoint_sha256 and finalizer_selected.get("score_path"):
+            selected_score_path = resolve_path(finalizer_selected["score_path"])
+            if selected_score_path.is_file():
+                reported_checkpoint_sha256 = read(selected_score_path).get("checkpoint_sha256")
+        scientific_status = scientific_receipt_status(
+            raw_finalizer_receipt, selected_record, reported_checkpoint_sha256)
+        if raw_finalizer_path.is_file():
+            comparison_dest = output / cell / "verification" / "scientific_comparison.json"
+            comparison_dest.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(raw_finalizer_path, comparison_dest)
+        raw_repeat_count, verified_repeat_count = verification_counts(repeats, verified, cell)
         receipts.append({**selected_record, "repeats": repeats,
-                         "repeat_count": len([item for item in repeats if item.get("status") == "completed"]),
+                         "repeat_count": raw_repeat_count,
+                         "verified_repeat_count": verified_repeat_count,
+                         "scientific_receipt_status": scientific_status,
                          "selection_includes_smoke": True})
+
+    # Export score rows only after selected checkpoint bytes have been checked;
+    # a candidate rejected during that final selection pass must not survive in
+    # the all-cases fit tables.
+    all_targets, all_parameters = score_table_rows(verified)
+    write_csv(output / "all_target_fits.csv", all_targets)
+    write_csv(output / "all_parameters.csv", all_parameters)
 
     # Detect manifest target inconsistencies even if no case happened to run.
     if set(target_hash_by_cell.values()) - {manifest["target_system_sha256"]}:
@@ -672,6 +728,10 @@ def collect(manifest_path, results_root, output):
         "case_counts_by_cell": by_cell, "stationary_solves": solve_counts,
         "selected_cells": len(selected), "selection_stages": ["smoke", "production"],
         "verification_is_selection_pool": False,
+        "status_semantics": {
+            "running": "unresolved started status/heartbeat; this is not live-process or scheduler proof",
+            "live_liveness_checked": False,
+        },
     })
     (output / "README.md").write_text(
         "# Utility overnight collection\n\n"
