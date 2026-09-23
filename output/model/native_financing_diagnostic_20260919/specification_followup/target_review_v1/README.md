@@ -1,5 +1,12 @@
 # Target validation before the utility comparison
 
+## September 23 — provisional estate-flow target
+
+Author requests showing 0.880% annual bequests / aggregate wealth as a
+provisional literature benchmark while 2007 recomputation proceeds. Do not
+label it a remeasured 2007 estimate or completed empirical work. Theta1 stays
+externally fixed as recorded below; continue reviewing the other targets.
+
 ## September 23 — externally fixed theta1 chosen
 
 Author fixes the bequest wealth shift using DUE's 1%-of-median-annual-earnings

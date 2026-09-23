@@ -1,5 +1,14 @@
 # Calibration Status
 
+## September 23 — provisional bequest-flow entry while recomputation proceeds
+
+Latest author instruction supersedes the interim-use rejection below: record
+annual bequests / aggregate wealth = 0.880% as the provisional borrowed
+literature benchmark, with 2007 recomputation explicitly in progress. It is
+not a newly measured 2007 value or a finalized target. Continue the remaining
+target discussion while the empirical work proceeds. No calibration launch,
+weight update or rescoring follows from this provisional entry.
+
 ## September 23 — historical bequest-flow number rejected for next calibration
 
 Author rejects carrying the 1986-based 0.880% into the new 2007 calibration.
