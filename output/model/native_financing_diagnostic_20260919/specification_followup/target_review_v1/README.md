@@ -1,5 +1,15 @@
 # Target validation before the utility comparison
 
+## September 23 — saved-search identification check
+
+[Descriptive evidence](fertility_saved_search_identification_check.json) covers
+all193 B_floor evaluations. Mean first-birth age and the age30+ share have
+correlation0.999 in this sample. This raises a concrete question about their
+distinct information but is not a formal identification test. Saved isolated
+coordinate comparisons exist for H0, beta and chi, not the three fertility
+parameters. No new solves or rescoring; retain chosen targets and open
+identification status.
+
 ## September 23 — age-grouping decision confirmed
 
 The author accepts the current common four-year grouping and bunching births

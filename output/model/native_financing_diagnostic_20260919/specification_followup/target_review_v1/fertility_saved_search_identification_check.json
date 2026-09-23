@@ -1,0 +1,55 @@
+{
+  "scope": "Read-only descriptive check of saved persistent-income, inherited-wealth floor experiment. Original frozen objective/target values; no national-target rescoring or new model runs.",
+  "case_count": 193,
+  "unique_structural_vectors": 192,
+  "age_mean_share30_correlation": 0.9991613870580961,
+  "deduplicated_correlation": 0.9991587711837155,
+  "one_coordinate_pair_counts": {
+    "H0": 11,
+    "beta_annual": 10,
+    "chi": 10
+  },
+  "fertility_only_coordinate_pairs": 0,
+  "exploratory_all_moment_proximity_thresholds": {
+    "cps_childlessness": 0.01,
+    "cps_exactly_one": 0.01,
+    "nchs_mean_age": 0.2,
+    "nchs_share30": 0.01,
+    "wealth_earnings": 0.2,
+    "bequest_wealth": 0.0005,
+    "old_dispersion": 0.2,
+    "mean_rooms": 0.1,
+    "ownership_30_55": 0.01,
+    "first_birth_rooms": 0.05,
+    "family_rooms": 0.05,
+    "recent_parent_ownership": 0.02
+  },
+  "all_moment_proximity_pairs": [
+    {
+      "cases": [
+        [
+          "production",
+          "worker01_proposal01"
+        ],
+        [
+          "smoke",
+          "smoke_01"
+        ]
+      ],
+      "same_structural_parameters": true
+    }
+  ],
+  "threshold_caution": "Illustrative absolute tolerances for checking selected examples across all moments; not statistical uncertainty, an SMM objective or an identification test. No counterexample with distinct parameter vectors found within these tolerances.",
+  "interpretation": [
+    "The two timing moments move almost together across this search sample. This is not a local Jacobian, a formal rank test or proof of nonidentification.",
+    "Saved isolated-coordinate pairs cover H0, beta and chi; no such pair covers xi, kappa_1 or kappa_C.",
+    "Examples with similar fertility alone can have very different housing outcomes; they do not demonstrate equivalent full-system fits.",
+    "The earlier claim that the late-birth share supplies distinct identifying information should be stated as a hypothesis, not an established result.",
+    "Keep chosen outcomes; do not certify separate identification or remove parameters solely from this descriptive check."
+  ],
+  "source_files": {
+    "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/all_parameters.csv": "dcc62a58f5a6009115f169df832aea5a53d0af20fa12c919b17ec7794dc0cf8d",
+    "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/all_target_fits.csv": "7d57aa4a7bf2ed5765f41c1cf60e5f235d1981ca745a0e1f2afa921c6c8584d8",
+    "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/final_readout/collection_summary.json": "727b5b6c8760e463e4a8d4c5440c428b8396a339b87dc80fae9f92ae0feb9123"
+  }
+}

@@ -1,5 +1,18 @@
 # Calibration Status
 
+## September 23 — saved-search identification evidence
+
+A read-only check of all193 verified B_floor evaluations finds correlation
+0.999 between mean first-birth age and the age30+ share. They move nearly
+together over that search sample; this does not prove formal redundancy or
+nonidentification. Exact comparisons holding the other eight searched
+coordinates fixed exist for H0, beta and chi, but none for xi, kappa_1 or
+kappa_C. The saved trials therefore do not supply the missing controlled
+fertility sensitivity test. Similar fertility outcomes alone can accompany
+very different housing outcomes; no equivalent-full-fit claim is supported.
+Receipt: `target_review_v1/fertility_saved_search_identification_check.json`.
+No new model runs, objective changes or rescoring.
+
 ## September 23 — fertility age grouping explicitly accepted
 
 The author accepts common four-year age grouping, including the existing
