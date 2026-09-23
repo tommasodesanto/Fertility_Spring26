@@ -1,5 +1,7 @@
 # Target validation before the utility comparison
 
+**Later author clarification, September 22:** complete target reconciliation is the first task tomorrow morning, September 23. Tonight's experimental comparisons may retain the frozen targets and weights while income, initial wealth and numerical checks take priority. The earlier launch hold in the dated report is superseded; its substantive findings are unchanged. See the latest `CALIBRATION_STATUS.md`.
+
 September 22, 2026. The author made target validation the first step before any further overnight calibration. No jobs, target changes, weight changes or paper edits were made in this review.
 
 The complete 13-row frozen target system (12 scored rows plus the separate fertility normalization) is numerically consistent with the actual scorer. This does not settle whether every empirical and model measurement is comparable. Main remaining decisions are the national versus 42-metro population; the first-birth room-response estimator and matching model measurement; child-group definitions; and wealth/income concepts. Existing room caps, fractional age masks and repaired recent-parent observer are implemented and were checked in the actual scored source. Working scales mix sampling uncertainty, temporal variation and an external tolerance, so they are not uniformly sampling standard errors.
