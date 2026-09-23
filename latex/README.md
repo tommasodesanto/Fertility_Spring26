@@ -1,5 +1,19 @@
 # LaTeX Workspace
 
+## AHS rooms target pending coordinated numerical update — September 23
+
+After the national ACS document update below, the author selected the 2007
+national AHS mean of 5.729 rooms (ages 18--85, occupied units) as the main
+quantity moment for the free supply level $H_0$. The empirical estimator is
+reproducible in `code/data/ahs_supply_snapshot/build_ahs_2007_room_target.py`.
+The mock still displays the earlier 2005--06 ACS nine-capped value 5.608;
+slides and scored model receipts also retain earlier targets. This is a
+document/model measurement discrepancy, not a new fit. The author draft's
+quantification section is a placeholder. Do not claim synchronization until
+the model's uncapped observer, new target-and-weight contract, and authorized
+document updates are completed. The separate price-and-quantity anchor is
+deferred as an extra.
+
 ## National housing targets — September 23 author decision
 
 The mock quantification section now uses the national 2005–2006 ACS household

@@ -1,5 +1,27 @@
 # Calibration Status
 
+## September 23 — author chooses 2007 AHS rooms as main supply-level quantity target
+
+The author chooses the nationally weighted 2007 AHS occupied-room mean as the
+main empirical quantity moment for the free housing-supply level $H_0$.
+`code/data/ahs_supply_snapshot/build_ahs_2007_room_target.py` reproduces the
+2007 national PUF v2.0 estimate for occupied units with householders aged
+18--85: 5.729434240102641 rooms, Fay-BRR SE 0.008933865036622756, 37,793
+sample units. The AHS PUF topcodes rooms at 21; 5.684708786004939 is the
+nine-capped diagnostic on the same observations. The old pooled 2005--06 ACS
+5.607885960068579 is not a directly comparable tail correction. Raw-source
+SHA-256 and full estimator definitions are in the script and its folder README.
+
+This is an author choice of the empirical moment and identification *method*,
+not an externally fixed numerical $H_0$, a new weight, or an adopted fit.
+$H_0$ remains free and is disciplined by mean physical rooms conditional on
+housing demand and the reference user cost. The current E5F scored observer
+still caps rooms at nine, so the new AHS number must **not** be paired with it.
+Implement and verify the uncapped model counterpart and pin a complete new
+target/weight fingerprint before the next calibration; frozen runs remain
+unchanged. The alternate price-and-quantity anchor is a deferred extra, not
+part of the main method. No model solve, rescoring or target-contract edit yet.
+
 ## September 23 — supply literature and elasticity provenance review
 
 The advisor checklist already includes external supply elasticity 0.63. Its
