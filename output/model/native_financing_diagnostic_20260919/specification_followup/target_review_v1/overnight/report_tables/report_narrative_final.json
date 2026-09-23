@@ -1,0 +1,378 @@
+{
+  "title": "Utility comparison and calibration targets",
+  "date": "September 23, 2026 | Prepared for the 10:00 EDT review",
+  "summary": [
+    "The target review is complete; the overnight model comparison remains uncollected. All 40 production workers and their smoke and verification dependencies were submitted successfully. Torch login expired afterward. Repeated authentication failures prevent verification of their outcomes; elapsed time is not evidence that they succeeded or failed.",
+    "My recommendation is to retain one persistent earnings process plus the age profile, and heterogeneous initial wealth, as the working direction. No new utility winner or adopted calibration can be named without collecting the numerical evidence. Zero entry wealth is not a necessary default, and was not used in this experiment.",
+    "The existing targets largely reproduce. The main unresolved issue is whether the model and data measure the same objects, especially housing changes around a first birth. The work below narrows those decisions and quantifies alternatives. It does not justify replacing hard targets merely because a model misses them."
+  ],
+  "recommendations": [
+    "First, settle a single measurement contract: the household population and geography, within-period birth timing, and the first-birth housing comparison. Preserve the audited targets unless there is a stated conceptual reason to change them; implement any new empirical and model measurement together.",
+    "Keep the simple persistent-income process and heterogeneous entry wealth as the working direction. The proposed common-income-scale entry distribution is a candidate harmonization, not an adopted repair. Its units and current renter budgets are checked; its coarse discretization, joint income-wealth distribution and continuation feasibility still require validation.",
+    "Collect the submitted floor-versus-child-share comparison and assess the full fit, lifecycle plots, actual parameter bounds and original-selected-versus-two-repeat checks. The share specification has one additional searched coordinate; lower weighted loss alone would not establish better economics or a converged calibration.",
+    "Treat the linked-minor-child housing target as a measured candidate, old-age wealth-level dispersion as a conceptual alternative, and bequest coverage as a mapping to resolve. No target was dropped, reweighted or changed in the overnight jobs. Retain replacement identifying information if a target is eventually changed."
+  ],
+  "limitations": [
+    "Current objective weights mix sampling uncertainty, across-year variation and an external bequest tolerance. The loss is a working diagnostic distance, not a chi-squared statistic or proof of an efficient SMM estimator.",
+    "No new selected checkpoints, exact repetitions or 17-figure packets have been collected. Completed, rejected, incomplete and unrun counts are unknown. Historical September 22 B calculations appear only where explicitly labeled as measurement checks; they are not tonight's results.",
+    "Four-year decision timing, stationary income risk at entry, wealth-grid robustness and finite infeasibility values remain model limitations. Positive current renter slack alone says nothing conclusive about continuation choices."
+  ],
+  "scientific_verification_status": "Uncollected: no scientific pass/fail verdict for the overnight comparison. Original selected checkpoints must be compared independently against both repetitions.",
+  "sections": [
+    {
+      "title": "Exactly what was submitted",
+      "paragraphs": [
+        "40 production workers: 18 per utility with 15-state persistent earnings, plus 2 per utility with 7-by-3 persistent+iid earnings. Each arm has its own two-case smoke, search, two selected repetitions and final comparison. No zero-entry fallback is allowed.",
+        "All arms retain inherited heterogeneous entry wealth, the deterministic age profile, current-income purchase eligibility, transfer rules, four-year timing, power equivalence scale, complete target/weight system and 160-node wealth grid with upper 3000. The floor arm estimates 9 structural coordinates; the shares arm estimates 10; fertility utility is normalized separately in every evaluation.",
+        "The utility difference is experimental. The floor imposes an additional housing requirement only when children live at home. The alternative removes that requirement and lets the housing share of expenditure rise with current dependents. Both retain the existing equivalence scale. No manuscript specification has been adopted.",
+        "The planned search cutoff was 08:00 EDT and repetition cutoff 09:00 EDT. Actual stop status, completed solves, selected fits and repetition equality remain unverified. These limits are not completion receipts. The run manifest and source/target fingerprints are retained in the reproducibility packet."
+      ],
+      "table": {
+        "headers": [
+          "Earnings and utility",
+          "Production workers",
+          "Collected outcome"
+        ],
+        "rows": [
+          [
+            "Persistent income + housing floor",
+            "18",
+            "Uncollected"
+          ],
+          [
+            "Persistent income + child shares",
+            "18",
+            "Uncollected"
+          ],
+          [
+            "Persistent + iid income + floor",
+            "2",
+            "Uncollected"
+          ],
+          [
+            "Persistent + iid income + shares",
+            "2",
+            "Uncollected"
+          ]
+        ]
+      }
+    },
+    {
+      "title": "All 13 current target values and working scales",
+      "paragraphs": [
+        "There are 12 scored empirical rows plus one separate fertility normalization. Values below remain those used by the frozen experiment. A working scale is the denominator used to turn a moment gap into its loss contribution; the final column states why these scales should not all be called comparable standard errors.",
+        "The accompanying target_contract.csv gives all target values, working weights and scales, with estimator, sample, fixed effects, uncertainty and model-measurement provenance. It excludes historical model values. This table contains no new model fit."
+      ],
+      "table": {
+        "headers": [
+          "Moment",
+          "Frozen target",
+          "Working scale",
+          "Scale origin"
+        ],
+        "rows": [
+          [
+            "Mean children ever born, age 46+",
+            "2.1",
+            "-",
+            "Separate model normalization"
+          ],
+          [
+            "Childless, women 40\u201344",
+            "0.1982788",
+            "0.00530504",
+            "Pooled CPS approximate GVF"
+          ],
+          [
+            "One child among mothers 40\u201344",
+            "0.2136553",
+            "0.00609113",
+            "Pooled CPS approximate GVF"
+          ],
+          [
+            "Mean age at first birth",
+            "25.97626",
+            "0.0845674",
+            "Across-year variation"
+          ],
+          [
+            "Share of first births 30+",
+            "0.249278",
+            "0.00849226",
+            "Across-year variation"
+          ],
+          [
+            "Aggregate wealth/annual gross earnings",
+            "6.145861",
+            "0.362855",
+            "Saved sampling estimate"
+          ],
+          [
+            "Annual bequests/wealth",
+            "0.0088",
+            "0.00044",
+            "Externally assigned 5% tolerance"
+          ],
+          [
+            "Old wealth/income ratio, p90/p50",
+            "3.515935",
+            "0.306911",
+            "Person bootstrap"
+          ],
+          [
+            "Mean rooms",
+            "5.561097",
+            "0.0883812",
+            "42-metro bootstrap"
+          ],
+          [
+            "Homeownership, ages 30\u201355",
+            "0.648334",
+            "0.0206753",
+            "42-metro bootstrap"
+          ],
+          [
+            "Room response around first birth",
+            "0.7202463",
+            "0.0852601",
+            "Person-cluster regression covariance"
+          ],
+          [
+            "Rooms, 3+ versus 1\u20132 resident children",
+            "0.3470669",
+            "0.0597052",
+            "42-metro bootstrap"
+          ],
+          [
+            "Ownership gap, recent parents",
+            "0.1628955",
+            "0.00607952",
+            "42-metro bootstrap"
+          ]
+        ]
+      }
+    },
+    {
+      "title": "Decisions needed before adopting a calibration",
+      "paragraphs": [
+        "These are proposed next steps, not changes made to the running jobs. Correct existing measurement mismatches explicitly; do not discard a hard-to -fit moment without replacing its identifying information."
+      ],
+      "table": {
+        "headers": [
+          "Moment",
+          "Proposed disposition"
+        ],
+        "rows": [
+          [
+            "Mean children ever born, age 46+",
+            "Keep frozen; settle population and 3+ representation before adoption."
+          ],
+          [
+            "Childless, women 40\u201344",
+            "Retain empirical share; align age interpolation and household interpretation."
+          ],
+          [
+            "One child among mothers 40\u201344",
+            "Retain empirical share; same age and top-bin contract."
+          ],
+          [
+            "Mean age at first birth",
+            "Retain matched 4-year-bin diagnostic; explicitly choose within-period birth timing."
+          ],
+          [
+            "Share of first births 30+",
+            "Retain matched age threshold; inspect late birth flows separately."
+          ],
+          [
+            "Aggregate wealth/annual gross earnings",
+            "Retain audited stock/flow units; no denominator substitution."
+          ],
+          [
+            "Annual bequests/wealth",
+            "Literature value verified; recipient/estate coverage needs matching."
+          ],
+          [
+            "Old wealth/income ratio, p90/p50",
+            "Author choice: retain ratio dispersion, or jointly replace both sides with wealth-level dispersion (4.91943)."
+          ],
+          [
+            "Mean rooms",
+            "Room cap implemented; population/structure coverage must match paper claim."
+          ],
+          [
+            "Homeownership, ages 30\u201355",
+            "Age mask implemented; choose target geography explicitly."
+          ],
+          [
+            "Room response around first birth",
+            "Rebuild chosen common-cohort contrast and matching model observer together."
+          ],
+          [
+            "Rooms, 3+ versus 1\u20132 resident children",
+            "Prefer linked minor-child grouping candidate 0.33622 after model-dependent mapping review."
+          ],
+          [
+            "Ownership gap, recent parents",
+            "Active model compares current new-parent flows with empty-dependent homes, including former parents; survey timing remains approximate."
+          ]
+        ]
+      }
+    },
+    {
+      "title": "First-birth room response: what the replay establishes",
+      "paragraphs": [
+        "One 330-second replay reproduced the original estimate 0.7202463, clustered SE 0.0852601, 49,457 observations and 4,112 people. The full 900-by-900 cohort-interaction covariance was recovered. This reproduces the implementation; it does not settle the empirical comparison or its model counterpart.",
+        "The following contrasts use common cohorts at both endpoints. The uncertainty conditions on the selected cohort weights. It excludes uncertainty from estimating those weights. The omitted event-2 coefficient is set to zero only for supported reference observations. Different windows and cohort weights are different estimands, not interchangeable robustness numbers.",
+        "The current model comparison advances treated and control branches by one four-year step, permitting subsequent births. It is not literally the same regression and cohort weighting. A four-year gap between data endpoints alone is insufficient to establish an exact counterpart.",
+        "Codebooks do not support automatically treating the 100 zero-room records as missing: zero denotes a shared-room response. The only surviving raw 98 is in 1991, when 1\u201398 are allowed counts. This resolves a coding interpretation, not the economic plausibility of 98 rooms. Aggregate census exports completed; a subsequent metadata export failed and is preserved.",
+        "Additional saved-covariance calculations give an eight-year -4/+4 contrast of 1.24358 rooms (SE 0.12145; 25 common cohorts, fixed preperiod weights). On the 23 cohorts also observed at -2, the same-weight -4/+4 change is 1.25709, of which 0.39841 (SE 0.10105) occurs between -4 and -2. The remaining -2/+4 contrast is 0.85868 (SE 0.10092). The longer change therefore includes substantial prebirth movement; adopting it solely to bring the target closer to the model would be unjustified.",
+        "Opus initially proposed an exact -4/+4 match, then withdrew that claim after the lead challenged its timing assumptions. An explicit model-panel observation rule and matched auxiliary regression are the recommended direction. Uniform birth dates or endpoint/midpoint conventions are sensitivity assumptions, not established timing facts or mathematical bounds. Marginal event-time support does not reproduce full individual interview histories, and education controls cannot simply be dropped only on the model side."
+      ],
+      "table": {
+        "headers": [
+          "Contrast",
+          "Cohort weights",
+          "Estimate",
+          "Conditional SE"
+        ],
+        "rows": [
+          [
+            "-1 to +3",
+            "Common 27, preperiod",
+            ".81139749",
+            ".07660629"
+          ],
+          [
+            "-1 to +3",
+            "Common 27, postperiod",
+            ".79775926",
+            ".07545040"
+          ],
+          [
+            "-2 to +2",
+            "Common 27, preperiod",
+            ".73459943",
+            ".07562861"
+          ],
+          [
+            "-2 to +2",
+            "Common 27, postperiod",
+            ".70389142",
+            ".07542286"
+          ],
+          [
+            "-4 to +4",
+            "Common 25, preperiod",
+            "1.24358063",
+            "0.12144944"
+          ],
+          [
+            "-4 to +4",
+            "Common 25, postperiod",
+            "1.18619706",
+            "0.12203751"
+          ],
+          [
+            "-4 to +4",
+            "Shared 23, preperiod",
+            "1.25709236",
+            "0.12656790"
+          ],
+          [
+            "-4 to -2",
+            "Same shared 23 / weights",
+            "0.39841451",
+            "0.10104629"
+          ],
+          [
+            "-2 to +4",
+            "Same shared 23 / weights",
+            "0.85867786",
+            "0.10092342"
+          ]
+        ]
+      }
+    },
+    {
+      "title": "Two concrete measurement alternatives",
+      "paragraphs": [
+        "Linked minor children: the ACS family-room gap falls from 0.347067 to 0.336220 rooms when groups use linked children under 18. The paired difference is -0.010847, SE 0.008077 under the same 1,000 metro draws. It is a better candidate for current dependents, but the model departure process still needs a stated age interpretation.",
+        "Old-age dispersion: on the exact same PSID sample, p90/p50 of household wealth-to -family-income ratios is 3.515935 (SE 0.306911), whereas p90/p50 of wealth levels is 4.919429 (SE 0.579804). These measure different things. Constant model pensions make the two model ratios coincide; that does not justify using either data number interchangeably.",
+        "The national ownership counterpart is 67.626%, above the current 42-metro 64.833% target. A population change therefore does not mechanically fix historical low model ownership. Choose geography from the paper claim, not from the fit."
+      ]
+    },
+    {
+      "title": "Proposed entry wealth: units checked, equilibrium not run",
+      "paragraphs": [
+        "Use each entrant household's nonhousing net worth divided by the same-wave mean gross earnings of working reference-person households. Unlike division by own earnings, this preserves zero-earnings entrants without imposing an arbitrary denominator floor. The established 18\u201324 childless-renter sample remains 1,835 family-years/1,346 people, including 67 zero-earnings observations.",
+        "The proposed 15 wealth means are formed within 3 earnings terciles and 5 normalized-wealth bins. Actual cell probabilities are retained. Their weighted mean is 0.185775923 model units because mean annual gross working earnings are 1 in the actual frozen parameter object. The native annual return is 2%; working survival is 1, with retirement survival below 1.",
+        "An initial postprocessor mistakenly read source defaults rather than the serialized seed. Its 1.112608 conversion and 0.206696 wealth mean are rejected and preserved. The corrected readout uses actual parameters after both frozen utility bindings. No submitted job or inherited entry law was changed.",
+        "Inherited unsecured debt can roll over: at age 18 the renter saving floor equals min(b,0). Thus current feasible resources depend on R*b+Y-min(b,0), not R*b+Y alone. All 85 positive node/income pairs and 119 interpolated grid/income points have positive current slack. No Bellman or equilibrium was solved for this candidate.",
+        "The 3-by-5 means retain only 20.88% of empirical wealth variance; joint dependence is approximated. The induced weighted rank correlation is 0.24089, versus 0.28250 in the empirical rows. Product coupling places 0.2774% of mass on nine combinations absent from a finer empirical rank-overlap construction. These are disclosed approximation choices, not pass/fail tests."
+      ],
+      "table": {
+        "headers": [
+          "Checked object",
+          "Value"
+        ],
+        "rows": [
+          [
+            "Actual mean annual gross working earnings",
+            "1"
+          ],
+          [
+            "Proposed mean initial wealth",
+            "0.18577592"
+          ],
+          [
+            "Minimum current renter slack, continuous nodes",
+            "0.082387965"
+          ],
+          [
+            "Minimum current renter slack, grid support",
+            "0.071924528"
+          ],
+          [
+            "Full household/continuation/equilibrium validity",
+            "Not tested for this candidate"
+          ]
+        ]
+      }
+    },
+    {
+      "title": "Literature checks and what they do not settle",
+      "paragraphs": [
+        "Kaplan, Mitman and Violante (2020, JPE) discipline initial assets and asset-income correlation empirically, along with aggregate/lifecycle wealth and ownership. This supports measuring entry conditions rather than setting them by convenience; it does not supply a four-year fertility-model entry law for us.",
+        "De Nardi and Yang (2014, EER) use the 0.0088 bequest/wealth ratio. The original Gale-Scholz working-paper construction measures transfers to children with spouse-status adjustments and excludes pension/trust wealth. Our model total positive estates need an explicit coverage bridge. Published use alone is not validation of our observer or synthetic 5% tolerance.",
+        "Sommer (2016, JME), Table 2, targets cumulative births at ages 45 (1.90) and 25 (0.80), plus children at home at age 35 (1.43). The age-25 stock disciplines timing. The earlier 2014 working paper instead targeted first-birth age 25.5. This illustrates cohort-specific measurement; neither version requires every model to normalize fertility to 2.1.",
+        "Current model normalization pools ages 46+. CPS 40\u201344 in 2004/2006 gives capped mean 1.856608 and a 3+ representative 3.482793, versus inherited 2024 representative 3.602359. Decide population, top-bin representation and timing together. This mismatch alone does not prove the current closure impossible."
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "label": "Kaplan, Mitman, Violante (2020), JPE",
+      "url": "https://violante.economics.princeton.edu/sites/g/files/toruqf5621/files/documents/kaplan-et-al-2020-the-housing-boom-and-bust-model-meets-evidence.pdf"
+    },
+    {
+      "label": "De Nardi and Yang (2014), European Economic Review",
+      "url": "https://users.nber.org/~denardim/research/De-Nardi_Yang_EER.pdf"
+    },
+    {
+      "label": "Sommer (2016), Journal of Monetary Economics",
+      "url": "https://www.kamilasommer.net/Fertility.pdf"
+    },
+    {
+      "label": "Gale and Scholz, IRP Discussion Paper 1019-93, September 1993 (working paper)",
+      "url": "https://www.irp.wisc.edu/publications/dps/pdfs/dp101993.pdf"
+    },
+    {
+      "label": "Official PSID 1985, 1993 and 1994 family codebooks",
+      "url": "https://psidonline.isr.umich.edu/documents/psid/codebook/FAM1985_codebook.pdf"
+    },
+    {
+      "label": "Official PSID 1991 family codebook",
+      "url": "https://psidonline.isr.umich.edu/documents/psid/codebook/FAM1991_codebook.pdf"
+    }
+  ]
+}

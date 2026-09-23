@@ -1,0 +1,26 @@
+{
+  "status": "reviewed_report_ready_held_until_10AM_EDT",
+  "reviewed_utc": "2026-09-23T13:07:01.376529+00:00",
+  "pdf": "output/pdf/utility_target_review.pdf",
+  "pdf_sha256": "5aacb98dad32a2a6217fd0428b3058158dfc2f50ad5ed676fd0541814d38363d",
+  "pages": 10,
+  "all_pages_visually_inspected": true,
+  "render": "pdftoppm at1500pixels; pages1\u201310 inspected individually; no clipping or overlapping text/tables.",
+  "source_narrative": "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/report_tables/report_narrative_final.json",
+  "narrative_sha256": "2fdd60167e1f681c63c6d4a22090bc0e4568366f339d9210cca1c2c2a3782b44",
+  "target_contract_sha256": "ab5a19a0dd62a76ebf36c24ea594c416384703cecad861882045e4054cf6eb55",
+  "independent_numeric_review": "final_evidence_check.json",
+  "independent_numeric_review_sha256": "32f9099aa10ef47b544d5cf3b4ae4c804ab8a0eaa9a940e480c6606fab0cb60f",
+  "lead_checks": [
+    "13 target-only CSV rows exactly equal inventory after removal of historical model column.",
+    "All13 displayed targets and12 scales checked to displayed precision.",
+    "Displayed room residual taken from separately verified same23cohort matrix-comparison receipt; table deliberately excludes distinct29cohort contrast.",
+    "All10 PDF pages visually inspected; collection absence explicit on pages1\u20133.",
+    "No current model moments, estimated parameters, solve counts or17diagnostic plots invented."
+  ],
+  "limitations": [
+    "New cluster outcomes and selected-versus-both-repeat evidence remain uncollected.",
+    "Review validates the available research report, not the overnight calibration or adoption."
+  ],
+  "delivery_hold": "Deliver no earlier than2026-09-23T14:00:00Z; refresh authentication and any accessible job evidence first."
+}

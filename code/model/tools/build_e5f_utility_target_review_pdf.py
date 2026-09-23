@@ -266,7 +266,7 @@ def build_story(narr, readout):
     for item in narr["summary"]:
         story.append(para(item))
     if readout is None:
-        story += [para("Collection status", "H1"), para("No collector readout was supplied. Results, score tables, parameter estimates, and diagnostic plots are unavailable; this document contains narrative content only.")]
+        story += [para("Collection status", "H1"), para("Overnight calibration results remain uncollected. The empirical review and frozen target definitions are available below; new model moments, estimated parameters, numerical verification and diagnostic plots are unavailable.")]
     else:
         summary_path = readout / "collection_summary.json"
         inventory_path = readout / "inventory.json"

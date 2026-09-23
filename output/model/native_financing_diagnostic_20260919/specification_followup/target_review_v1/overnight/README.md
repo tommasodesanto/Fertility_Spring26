@@ -62,3 +62,7 @@ All six Opus phases are complete; lead corrections are recorded in `phase5_lead_
 ## September23 01:49EDT published-source check
 
 The lead checked Sommer's published2016 JME Table2. It targets cumulative births at45(1.90)and25(.80), plus children at home at35(1.43); the earlier working-paper first-birth-age target25.5 is not its published target. The final narrative now uses the published table and preserves the version distinction in `primary_source_spotchecks.json`. This source correction changes no target, job or economic specification. The draft must be regenerated for final delivery. Fresh cluster collection remains unavailable.
+
+## September23 morning report ready for scheduled delivery
+
+The available-evidence report is prepared at `output/pdf/utility_target_review.pdf` (ten pages), using `report_tables/report_narrative_final.json`. All pages were visually inspected, Luna checked the numerical claims, and the lead verified the thirteen-row target-only CSV and the separately computed same-cohort room contrast. `report_tables/final_pdf_qa.json` pins the sources and PDF hash. No new model fit, parameter estimate, solve count, repeated solution or diagnostic graph has been collected. Do not deliver before10:00EDT; refresh access and incorporate any verified collection first. `target_contract.csv` excludes historical model values.

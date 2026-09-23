@@ -1,0 +1,58 @@
+{
+  "schema": "final_report_evidence_check_v1",
+  "status": "final narrative evidence QA complete; no narrative/contract edits",
+  "report_source": "report_tables/report_narrative_final.json",
+  "checked": [
+    {
+      "object": "13-row target/scale table and target contract",
+      "result": "All 13 target values, working weights/scales, and provenance rows match target_inventory.csv exactly after excluding selected_B_model_value. Final report table preserves all target numbers."
+    },
+    {
+      "object": "final versus draft empirical numeric content",
+      "result": "Final narrative retains the draft\u2019s numeric empirical claims and table values. The room-contrast table adds the same-23-cohort -2 to +4 residual estimate 0.858677856 (conditional SE 0.100923418). Other observed wording/formatting changes do not alter the empirical numbers."
+    },
+    {
+      "object": "room event-window contrast accounting",
+      "result": "window_followup/lead_review.json has nine independently checked base contrasts; these include the own-29-cohort -4/-2 result (0.4038603, SE 0.0856278), which is intentionally not displayed in the report table. The report table displays the other relevant eight base rows plus the derived same-23-cohort -2/+4 residual, totaling nine rows. The residual is separately verified in lead_review.json as estimate 0.858677856, variance 0.0101855363, conditional SE 0.100923418, using identity (-4/+4)-(-4/-2) on identical 23 cohorts/weights. The earlier broad window_results.json request for a different same-support -4/-2 contrast remains unavailable for cohorts 1984 and 1985; it is not the derived residual."
+    },
+    {
+      "object": "submitted worker-count table",
+      "result": "Four final table rows match utility_overnight_v1/submission.json: B_floor 18, B_shares 18, D_floor 2, D_shares 2. Each is labeled uncollected, consistent with progress/status receipts. Submission records 40 workers total; job IDs are retained in submission.json and are not outcomes."
+    },
+    {
+      "object": "other empirical checks",
+      "result": "The previously checked first-birth replay target/sample, ACS paired child-mapping estimates, old-wealth alternatives, corrected entry wealth units/slacks, and fertility sample/normalization claims still match their saved receipts to displayed precision."
+    }
+  ],
+  "discrepancies": [],
+  "incomplete_checks": [
+    "Fresh selected model outcomes and exact repeats remain uncollected; the final narrative labels them uncollected and preserves the run cutoffs as plans rather than completion evidence.",
+    "No broad external literature/source re-audit or PDF visual QA was performed; lead owns PDF visual QA."
+  ],
+  "authoritative_receipts": [
+    "report_tables/target_inventory.csv",
+    "empirical_rooms/covariance_replay/analysis/window_followup/window_results.csv",
+    "empirical_rooms/covariance_replay/analysis/window_followup/window_results.json",
+    "phase6_lead_review.json",
+    "empirical_acs_child_mapping/housing_profiles_v1_child_mapping_recomputed.json",
+    "empirical_acs_child_mapping/uncertainty/lead_review.json",
+    "empirical_old_wealth/receipt.json",
+    "empirical_entry/receipt.json",
+    "empirical_entry/common_scale_candidate/lead_review.json",
+    "empirical_entry/common_scale_candidate/renter_slack_correction.json",
+    "empirical_fertility/empirical_reproduction.json",
+    "progress_receipt.json",
+    "report_tables/target_contract.csv",
+    "report_tables/report_narrative_draft.json",
+    "report_tables/report_narrative_final.json",
+    "empirical_rooms/covariance_replay/analysis/window_followup/lead_review.json",
+    "../utility_overnight_v1/submission.json"
+  ],
+  "review_history": [
+    {
+      "revision": "initial draft check",
+      "observation": "Initially flagged the missing table row as if the -2/+4 residual were the omitted ninth base contrast; also described the table as eight rows.",
+      "correction": "Inspection of empirical_rooms/covariance_replay/analysis/window_followup/lead_review.json showed nine base contrasts including the own-29-cohort -4/-2 result, plus a separately computed derived -2/+4 residual. The final narrative now includes that residual as a ninth displayed row; it appropriately omits the own-29-cohort contrast."
+    }
+  ]
+}
