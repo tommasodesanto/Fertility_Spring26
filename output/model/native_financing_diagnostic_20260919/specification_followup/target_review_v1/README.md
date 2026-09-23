@@ -1,5 +1,18 @@
 # Target validation before the utility comparison
 
+## September 23 — decision: retain the 2.10 normalization
+
+The author retains 2.10 mean children ever born at ages 46+ as the imposed
+completed-fertility normalization for the reference steady state, determining
+the fertility utility scale separately. It is not a measured 2007 fertility
+statistic or period TFR. This closes the normalization decision only; other
+fertility targets remain open. The existing decision PDF already recommends
+retaining this value.
+
+Add alternative completed-fertility normalizations and transitions from different
+initial conditions to the long-term, low-priority list. No calculation now and
+no change to frozen target values or experiments.
+
 ## September 23, 14:31 EDT — decision: use the national housing sample
 
 The author chooses a nationally weighted U.S. housing sample instead of the

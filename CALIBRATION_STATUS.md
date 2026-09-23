@@ -1,5 +1,18 @@
 # Calibration Status
 
+## September 23 — completed-fertility normalization retained
+
+The author retains mean children ever born of 2.10 at ages 46+ as the imposed
+normalization for the reference steady state, determining the fertility utility
+scale separately. This decision concerns the steady-state justification; it is
+not a claim that 2.10 is a directly measured 2007 completed-fertility statistic
+or period TFR. The other fertility target decisions remain open.
+
+Low-priority, long-term work: assess robustness to alternative completed-fertility
+normalizations and transitions from different initial conditions. No calculation
+is requested now. The retained normalization requires no change to the frozen
+experiments or current numerical target value.
+
 ## September 23, 14:31 EDT — national housing sample chosen
 
 The author chooses a nationally weighted U.S. housing sample for calibration,
