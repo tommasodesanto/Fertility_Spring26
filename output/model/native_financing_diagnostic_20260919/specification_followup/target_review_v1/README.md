@@ -1,5 +1,21 @@
 # Target validation before the utility comparison
 
+## September 23, 14:31 EDT — decision: use the national housing sample
+
+The author chooses a nationally weighted U.S. housing sample instead of the
+42 selected metros. Keep the 2007 reference. Other measurement choices remain
+open; do not overwrite the frozen experimental targets or present the existing
+fits as national calibrations.
+
+The four national point estimates with the existing definitions are already in
+[`../housing_profiles_v1/full/target_recomputed.json`](../housing_profiles_v1/full/target_recomputed.json).
+Remaining tasks: calculate national uncertainty and proposed weights, check the
+geography of housing normalizations and comparison series, then save the chosen
+target set and rescore existing solutions after the other definitions are agreed.
+Changing geography alone needs no new household or equilibrium solve. Refit only
+after the target review is complete. The lunch PDF is a pre-decision record;
+its recommendation to retain the 42 metros is superseded by this decision.
+
 ## September 23, 12:08 EDT — reviewed lunch packet ready
 
 Read the [five-page decision PDF](../../../../pdf/calibration_lunch_decisions.pdf)

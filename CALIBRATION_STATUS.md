@@ -1,5 +1,26 @@
 # Calibration Status
 
+## September 23, 14:31 EDT — national housing sample chosen
+
+The author chooses a nationally weighted U.S. housing sample for calibration,
+replacing the inherited 42-metro restriction. The 2007 reference economy stays
+unchanged. This settles geography; the remaining target definitions and weights
+will be decided separately. Existing frozen experiments retain their original
+targets and must not be relabeled national calibrations.
+
+The four national ACS point estimates under the current definitions are already
+verified in `specification_followup/housing_profiles_v1/full/target_recomputed.json`
+under the September 19 diagnostic packet: mean rooms 5.6078859601, ownership
+30–55 0.6762604169, family-room gap 0.3850996497, and recent-parent ownership gap
+0.1276083636. These are inputs to the new target set, not a substitute for the
+remaining decisions about child groups and measurement.
+
+Next: calculate uncertainty for the national sample and proposed weights; check
+housing normalizations and comparison series against the same population; after
+the measurement decisions, save the new complete target set and rescore saved
+solutions. A geography-only rescore requires no household or equilibrium solve.
+A refit follows once the target decisions are complete. No new runs launched.
+
 ## September 23, 12:08 EDT — lunch decisions and saved-policy diagnostic ready
 
 The bounded lunch task is complete. `output/pdf/calibration_lunch_decisions.pdf`
