@@ -2,6 +2,28 @@
 
 ## September 23, 11:29 EDT — bounded first-birth measurement calculation
 
+**Author priority, clarified before departure:** The post-lunch meeting must
+start with decisions, not another request for two hours of review. Overnight
+research is complete. An additional 20-minute agent, `lunch_decision_evidence`,
+assembles all 13 rows and cross-cutting choices from existing evidence into
+`lunch_decision_evidence.json`; the lead supplies recommendations. For every
+choice state what can be decided immediately, the consequence, and the exact
+calculation (if any) required after that choice. An unfinished first-birth
+measurement calculation must not delay decisions on the remaining targets.
+
+Grounding is complete; receipts are `lunch_first_birth_empirical_inventory.json`
+and `lunch_first_birth_model_inventory.json` (agent write in progress).
+Joint PSID histories exist locally; selected model checkpoints remain remote,
+and Torch access was freshly confirmed. The first bounded model calculation
+will reproduce the saved destination birth/control contrast and extract the
+immediate-origin contrast from the same birth-weighted cohorts. This is a
+measurement diagnostic, not yet an identical empirical regression. Agent
+`first_birth_model_match` owns the new measurement helper and focused test;
+lead must review its core and verify saved-moment reproduction before running
+it remotely or interpreting any new contrast. No automatic annual projection
+or causal claim. Empirical four-year pairs may contain intervening interviews;
+do not unnecessarily select only four-year gaps between adjacent records.
+
 The author is away for approximately 90 minutes and requests a useful calculation
 before resuming calibration decisions after lunch. The lead selects one question:
 how much of the first-birth housing-fit discrepancy reflects unlike model/data
