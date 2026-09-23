@@ -1,5 +1,16 @@
 # Calibration Status
 
+## September 23 — first-birth rooms provisionally recorded at 0.770
+
+Author chooses 0.770 rooms as a provisional discussion value while taking the
+deferred PSID timing/reference-period review to Claude. This is the original-date,
+common-sample Sun–Abraham +3 coefficient (0.7702743583506019), not the
+timing-corrected coefficient (0.4030177877382122), nor the frozen -1-to-+3
+target (0.7202462623815278). It is not a finalized measurement decision or
+authorization to edit frozen targets, weights, or results. The advisor checklist
+owner was sent this decision. Review handoff: `docs/prompts/first_birth_timing_claude_handoff.md`.
+The author and lead now proceed to externally calibrated parameters.
+
 ## September 23 — supply literature and elasticity provenance review
 
 The advisor checklist already includes external supply elasticity 0.63. Its

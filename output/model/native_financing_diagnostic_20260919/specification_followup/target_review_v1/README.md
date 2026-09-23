@@ -1,5 +1,13 @@
 # Target validation before the utility comparison
 
+## September 23 — provisional first-birth rooms entry
+
+Author records 0.770 rooms provisionally and takes the deferred timing and
+reference-period issue to Claude. This labels the original-date common-sample
++3 coefficient, not the corrected-date estimate or a finalized target. Frozen
+objectives and weights remain unchanged. The handoff is
+`docs/prompts/first_birth_timing_claude_handoff.md` at the repository root.
+
 ## September 23 — housing supply review remains open
 
 [Source and implementation review](housing_supply_review.json) verifies that
