@@ -1,0 +1,20 @@
+{
+  "reviewed_utc": "2026-09-23T03:37:00Z",
+  "status": "literature_memo_received_substantive_claims_require_correction_and_data_checks",
+  "model": "claude-opus-5-5",
+  "session": "ddba136f-1d0c-4f8e-9b12-14876c7d8c96",
+  "not_accepted": [
+    "Normalization incompatibility, implied actual model 3+ shares or loss lower bounds across different observer populations",
+    "Arbitrary empirical acceptance thresholds and inference that room-response residual proves housing-floor causality",
+    "Unverified 1.7 percent wealth-timing adjustment and asset-coverage bias without model mapping",
+    "Equating current-income PTI precedent with immediately liquid down-payment income",
+    "Equating wide-interval near-bound flags with binding optima or identification failure"
+  ],
+  "independent_bounded_checks": [
+    {"agent":"target_cps_nchs_check","output":"empirical_fertility","limit_minutes":60},
+    {"agent":"target_entry_units_check","output":"empirical_entry","limit_minutes":75},
+    {"agent":"target_room_estimand_check","output":"empirical_rooms","limit_minutes":60},
+    {"agent":"target_old_wealth_check","output":"empirical_old_wealth","limit_minutes":60}
+  ],
+  "next": "Resume exact Max session with phase2_adversarial/prompt.md, then adjudicate empirical receipts; no live target or observer changes."
+}

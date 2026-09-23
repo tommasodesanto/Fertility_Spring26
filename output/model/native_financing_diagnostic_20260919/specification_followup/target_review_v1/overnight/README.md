@@ -22,3 +22,9 @@ Time windows guide work and can be adjusted for useful evidence; they are not in
 Automation `overnight-utility-and-target-review` runs on the hour and at :20/:40, including **10:00 EDT**. Only one heartbeat can attach to this task; that same follow-up handles iteration and final delivery. Stay quiet during healthy unchanged work, notify meaningful failure or required action. Current model-work status is in the sibling `utility_overnight_v1/README.md`. Lead owns economics, identification and final review. Routine collection, tabulation and independent bounded checks go to cheaper agents with distinct ownership. Preserve all unrelated dirty files and author documents.
 
 The existing `review.json` launch hold is superseded by the author's latest controlled-experiment authorization, not by a finding that all mappings are settled. July signed-off wealth decisions remain the starting point. Existing `fable_reply/lead_review.json` is useful criticism but is not the requested new Opus review.
+
+## Reviewed progress at 23:40 EDT
+
+Phase 1 finished at 23:25 EDT. The lead rejected unsupported normalization impossibility, room-gap causality, wealth-timing approximations and arbitrary acceptance thresholds; see `phase1_lead_review.json`. The same Opus 5.5 Max session resumed at 23:35 EDT for a 50-minute adversarial correction pass (`phase2_adversarial/`). Four distinct Luna checks cover CPS/NCHS, entry units and joint distribution, first-birth room estimands, and old-age wealth definitions. Their bounded scripts and candidate outputs live in the four `empirical_*` folders. These checks do not alter running targets. After reviewing the receipts, send verified findings back to Opus for adjudication.
+
+Torch authentication expired after successful submission; all cluster jobs remain autonomous. Monitoring and collection await author login refresh. Current compact status and recovery actions are in the sibling `utility_overnight_v1/execution.json`.
