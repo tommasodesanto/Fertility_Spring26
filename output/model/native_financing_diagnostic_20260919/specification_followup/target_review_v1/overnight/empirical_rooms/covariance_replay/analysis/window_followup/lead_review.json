@@ -1,0 +1,97 @@
+{
+  "status": "lead_independently_verified_saved_cohort_contrasts",
+  "reviewed_utc": "2026-09-23T05:37:55.157464+00:00",
+  "verified_contrasts": [
+    {
+      "name": "common_cohorts_fixed_prebirth_IW",
+      "estimate": 0.8113974907627939,
+      "variance": 0.0058685232701998526,
+      "se": 0.07660628740645152,
+      "max_abs_gap": 1.1102230246251565e-16,
+      "cohorts": 27
+    },
+    {
+      "name": "common_cohorts_fixed_postbirth_IW",
+      "estimate": 0.7977592564504334,
+      "variance": 0.005692762550663198,
+      "se": 0.07545039794900486,
+      "max_abs_gap": 2.220446049250313e-16,
+      "cohorts": 27
+    },
+    {
+      "name": "common_cohorts_minus2_to_plus2_fixed_minus2_IW",
+      "estimate": 0.7345994311302175,
+      "variance": 0.0057196864806778065,
+      "se": 0.07562860887705,
+      "max_abs_gap": 1.1102230246251565e-16,
+      "cohorts": 27
+    },
+    {
+      "name": "common_cohorts_minus2_to_plus2_fixed_plus2_IW",
+      "estimate": 0.7038914204111438,
+      "variance": 0.00568860851018408,
+      "se": 0.07542286463788074,
+      "max_abs_gap": 1.3877787807814457e-17,
+      "cohorts": 27
+    },
+    {
+      "name": "minus4_to_plus4_fixed_minus4_weights",
+      "estimate": 1.2435806309099569,
+      "variance": 0.014749966686433217,
+      "se": 0.12144944086504976,
+      "max_abs_gap": 1.3877787807814457e-17,
+      "cohorts": 25
+    },
+    {
+      "name": "minus4_to_plus4_fixed_plus4_weights",
+      "estimate": 1.1861970556797348,
+      "variance": 0.014893152952244113,
+      "se": 0.12203750633409433,
+      "max_abs_gap": 2.220446049250313e-16,
+      "cohorts": 25
+    },
+    {
+      "name": "minus4_to_minus2_own_common_support_fixed_minus4_weights",
+      "estimate": 0.40386029654218714,
+      "variance": 0.007332121902863485,
+      "se": 0.08562781033556496,
+      "max_abs_gap": 0.0,
+      "cohorts": 29
+    },
+    {
+      "name": "threeway_common_support_minus4_to_plus4_fixed_minus4_weights",
+      "estimate": 1.2570923617049576,
+      "variance": 0.016019433511519042,
+      "se": 0.12656790079447094,
+      "max_abs_gap": 4.440892098500626e-16,
+      "cohorts": 23
+    },
+    {
+      "name": "threeway_common_support_minus4_to_minus2_fixed_minus4_weights",
+      "estimate": 0.3984145053712965,
+      "variance": 0.010210351882909644,
+      "se": 0.10104628584420926,
+      "max_abs_gap": 5.551115123125783e-17,
+      "cohorts": 23
+    }
+  ],
+  "max_abs_numeric_gap": 4.440892098500626e-16,
+  "derived_minus2_to_plus4_same23cohorts_fixed_minus4_weights": {
+    "estimate": 0.8586778563336614,
+    "variance": 0.010185536279568964,
+    "conditional_se": 0.10092341789480261,
+    "identity": "(-4 to+4)-(-4 to-2)=-2 to+4 on exact same23cohorts/weights"
+  },
+  "interpretation": "Substantial estimated room growth occurs before birth. This is a conditional auxiliary-regression contrast, not proof of a causal anticipation effect or a validated model calendar mapping. No target adoption.",
+  "limitations": [
+    "Fixed-cohort-weight uncertainty only.",
+    "Exact25cohort pretrend unavailable because1984/1985lack-2support;23cohort sensitivity explicitly changes support.",
+    "Within-cohort differences cancel additive endpoint constants; no general design-rank/identification claim."
+  ],
+  "input_sha256": {
+    "analyze_windows.py": "e2ec780dc92968c88239841906ca95de2e4582f8cc8f66f7f03ac4abb62d5f40",
+    "window_results.json": "fa49e160c82f195367efdfda663a8c7d31de7ad1aa38acb86e76fa7127719a83",
+    "window_results.csv": "0ac74129aaa6610f58432913f5d330e795dc759c4a2641b867e3fa884e3b2939",
+    "receipt.json": "dac40eeb99f2b984e4baf197c6468f5f8c575451717f5fca3c11f138b5bd7c75"
+  }
+}

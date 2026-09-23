@@ -1,0 +1,36 @@
+{
+  "status": "completed_with_one_requested_same_support_contrast_unavailable",
+  "script_sha256": "e2ec780dc92968c88239841906ca95de2e4582f8cc8f66f7f03ac4abb62d5f40",
+  "input_sha256": {
+    "cohort_interaction_coefficients.csv": "fc04ab0172a59c1b10b7b09d2391095cc4307c0dd8b337388ef35b718852eb70",
+    "cohort_interaction_covariance.csv": "d3bebf902f0976ad92b5ae25bc349621d5207ca469d03b6ecca543547e253bc4",
+    "estimation_cohort_event_support.csv": "ae1c4144293a4395a1cdb0c38b0416e668f4e5ea2af013a0416be4cffe044703",
+    "replay_analysis.json": "d2db04814dee2af8e670dd03d7a316c5ff3fde75bbf0ad08ea78fa20bbf2c4fd",
+    "execution.json": "49c4c879a63adc4dc810322a750bc7851a96462b0435955112eff2e975e60c52"
+  },
+  "summary": {
+    "old_validation_max_abs_estimate_gap": 0.0,
+    "old_validation_max_abs_variance_gap": 0.0,
+    "old_validation_max_abs_se_gap": 0.0,
+    "minus4_plus4_preweighted": {
+      "estimate": 1.2435806309099569,
+      "se": 0.12144944086504975
+    },
+    "minus4_plus4_postweighted": {
+      "estimate": 1.186197055679735,
+      "se": 0.12203750633409434
+    },
+    "threeway_minus4_plus4": {
+      "estimate": 1.257092361704958,
+      "se": 0.12656790079447097
+    },
+    "threeway_minus4_minus2": {
+      "estimate": 0.3984145053712966,
+      "se": 0.10104628584420926
+    },
+    "same_support_minus2_unavailable_cohorts": [
+      1984,
+      1985
+    ]
+  }
+}

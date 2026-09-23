@@ -194,7 +194,9 @@
         "One 330-second replay reproduced the original estimate 0.7202463, clustered SE 0.0852601,49,457 observations and 4,112 people. The full 900-by-900 cohort-interaction covariance was recovered. This reproduces the implementation; it does not settle the empirical comparison or its model counterpart.",
         "The following contrasts use common cohorts at both endpoints. The uncertainty conditions on the selected cohort weights. It excludes uncertainty from estimating those weights. The omitted event-2 coefficient is set to zero only for supported reference observations. Different windows and cohort weights are different estimands, not interchangeable robustness numbers.",
         "The current model comparison advances treated and control branches by one four-year step, permitting subsequent births. It is not literally the same regression and cohort weighting. A four-year gap between data endpoints alone is insufficient to establish an exact counterpart.",
-        "Codebooks do not support automatically treating the 100 zero-room records as missing: zero denotes a shared-room response. The only surviving raw 98 is in 1991, when 1\u201398 are allowed counts. This resolves a coding interpretation, not the economic plausibility of 98 rooms. Aggregate census exports completed; a subsequent metadata export failed and is preserved."
+        "Codebooks do not support automatically treating the 100 zero-room records as missing: zero denotes a shared-room response. The only surviving raw 98 is in 1991, when 1\u201398 are allowed counts. This resolves a coding interpretation, not the economic plausibility of 98 rooms. Aggregate census exports completed; a subsequent metadata export failed and is preserved.",
+        "Additional saved-covariance calculations give an eight-year -4/+4 contrast of 1.24358 rooms (SE 0.12145; 25 common cohorts, fixed preperiod weights). On the 23 cohorts also observed at -2, the same-weight -4/+4 change is 1.25709, of which 0.39841 (SE 0.10105) occurs between -4 and -2. The remaining -2/+4 contrast is 0.85868 (SE 0.10092). The longer change therefore includes substantial prebirth movement; adopting it solely to bring the target closer to the model would be unjustified.",
+        "Opus initially proposed an exact -4/+4 match, then withdrew that claim after the lead challenged its timing assumptions. An explicit model-panel observation rule and matched auxiliary regression are the recommended direction. Uniform birth dates or endpoint/midpoint conventions are sensitivity assumptions, not established timing facts or mathematical bounds. Marginal event-time support does not reproduce full individual interview histories, and education controls cannot simply be dropped only on the model side."
       ],
       "table": {
         "headers": [
@@ -227,6 +229,30 @@
             "Common 27, postperiod",
             ".70389142",
             ".07542286"
+          ],
+          [
+            "-4 to+4",
+            "Common25,preperiod",
+            "1.24358063",
+            "0.12144944"
+          ],
+          [
+            "-4 to+4",
+            "Common25,postperiod",
+            "1.18619706",
+            "0.12203751"
+          ],
+          [
+            "-4 to+4",
+            "Shared23,preperiod",
+            "1.25709236",
+            "0.12656790"
+          ],
+          [
+            "-4 to-2",
+            "Same shared23/weights",
+            "0.39841451",
+            "0.10104629"
           ]
         ]
       }

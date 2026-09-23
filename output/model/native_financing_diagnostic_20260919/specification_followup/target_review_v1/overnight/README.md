@@ -54,3 +54,7 @@ The common-scale entry construction is prospective. The lead identified an error
 ## September23 01:25EDT integration
 
 The complete current inventory is in `report_tables/`; model values there remain historical September22 B. Exact PSID covariance, paired ACS uncertainty, room-code aggregate exports and the corrected entry-wealth candidate are verified. See `empirical_rooms/room_code_followup/lead_review.json` for the export-complete/metadata-failed distinction. See `empirical_entry/common_scale_candidate/lead_review.json` for the actual-checkpoint return/profile/survival correction, preserved rejected calculations, and current renter slack limits. The running model law is unchanged. A focused Opus phase5 incorporates this new evidence; it does not repeat the literature review or adopt targets.
+
+## September23 01:40EDT reviewed research checkpoint
+
+All six Opus phases are complete; lead corrections are recorded in `phase5_lead_review.json` and `phase6_lead_review.json`. Additional empirical windows are in `empirical_rooms/covariance_replay/analysis/window_followup/`, with nine independently verified contrasts and explicit support changes. They establish prebirth room movement, not a unique exact model calendar counterpart. No further broad literature review is needed. The research draft and QA receipt are in `report_tables/`; the ten-page preview under `tmp/pdfs/` is not the final deliverable. Continue with cluster collection when authentication returns, numerical/fit review, and final PDF/chat at10:00EDT.
