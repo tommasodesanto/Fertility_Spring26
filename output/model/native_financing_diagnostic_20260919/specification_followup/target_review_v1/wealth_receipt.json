@@ -1,0 +1,259 @@
+{
+  "schema": "wealth_target_source_audit_v1",
+  "audit_scope": [
+    "wealth_earnings",
+    "bequest_wealth",
+    "old_dispersion",
+    "linked_entry_wealth_note"
+  ],
+  "status": "bounded_source_audit_complete_with_mapping_questions_open",
+  "execution": {
+    "read_only_except_owned_receipt": true,
+    "raw_data_reruns": false,
+    "model_solves_or_regressions": false,
+    "calibration_decisions": false,
+    "note": "Source arithmetic was reproduced from saved builder outputs and the selected B observer receipt. No raw-data pass, literature review, regression, model solve, target change, or weight change was performed."
+  },
+  "selected_case": {
+    "path": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/B/selected",
+    "target_fit": "target_fit.csv",
+    "native_receipt": "native_summary.json#/early_measurement/housing_wealth",
+    "observer_id": "e5f_initial_housing_wealth_diagnostic_v1",
+    "target_contract_activated": false,
+    "observer_production_eligible": false,
+    "source_validation_boundary": "Selected B is a diagnostic selected point, not an adopted or converged calibration. The stored target rows are auditable; economic equivalence to the model observer is assessed separately below."
+  },
+  "sources_consulted": {
+    "target_fit": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/B/selected/target_fit.csv",
+    "selected_case_observer": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/B/selected/native_summary.json",
+    "selected_case_score_receipt": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/B/selected/score.json",
+    "empirical_contract": "output/model/e5f_matched_pf_20260909a/design_research/observer_contract/observer_contract.json",
+    "wealth_builder": "output/model/e5f_matched_pf_20260909a/design_research/wealth/build_initial_wealth.R",
+    "wealth_earnings_saved_results": "output/model/e5f_matched_pf_20260909a/design_research/wealth/aggregate_wealth_results.csv",
+    "wealth_earnings_saved_components": "output/model/e5f_matched_pf_20260909a/design_research/wealth/aggregate_yearly_components.csv",
+    "old_wealth_saved_results": "output/model/e5f_matched_pf_20260909a/design_research/wealth/old_wealth_results.csv",
+    "prior_audit": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/literature/live_wealth_contract_review.md",
+    "prior_observer_audit": "output/model/e5f_matched_pf_20260909a/design_research/observer_contract/README.md",
+    "external_bequest_provenance": "code/model/intergen_eqscale_seq_optimized/e5_target_provenance.csv",
+    "model_observer_code": "code/model/tools/e5f_initial_housing_observer.py",
+    "model_wealth_accounting_code": "code/model/intergen_housing_fertility_optimized/solver.py",
+    "battery_final_lead_review": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_lead_review.json"
+  },
+  "targets": {
+    "wealth_earnings": {
+      "target_value": 6.14586139445743,
+      "target_formula": "sum(IW*NETWORTHR) / sum_{age<=65}(IW*EARNINDRRC)",
+      "authoritative_builder": "output/model/e5f_matched_pf_20260909a/design_research/wealth/build_initial_wealth.R; mirrors code/data/psid_followup_mar2026/audit_aggregate_wealth_earnings_ratio.R",
+      "authoritative_record": "output/model/e5f_matched_pf_20260909a/design_research/observer_contract/observer_contract.json#/records/4 (id psid_wealth_gross_earnings_2003_2005)",
+      "empirical_source_validation": {
+        "status": "saved_scalar_reproduced",
+        "sample": "National PSID reference persons (RELTOHEAD_=10), positive IW, finite NETWORTHR, ages 18-85; EARNINDRRC finite and nonnegative for working-age records; waves 2003 and 2005.",
+        "counts": {
+          "wealth_family_years": 10828,
+          "wealth_reference_person_ids": 6018,
+          "earnings_family_years": 9265,
+          "earnings_reference_person_ids": 5215
+        },
+        "saved_component_reproduction": {
+          "weighted_NETWORTHR_sum": 142236760337.2118,
+          "weighted_annual_EARNINDRRC_sum_ages_18_65": 23143502791.2419,
+          "ratio": 6.145861394457448,
+          "saved_builder_value": 6.14586139445743,
+          "absolute_difference": 1.78e-14
+        },
+        "aggregation": "Ratio of weighted aggregate sums; not a mean of household-level wealth/earnings ratios. The builder bootstraps reference-person IDs (999 replications, seed 20260723).",
+        "geography_and_weights": "National PSID with positive family/reference-person IW; no geography subsample or fixed effects. Model is aggregated over all locations. Survey weights and population masses are conceptually parallel, but survey sample composition is not otherwise matched.",
+        "validation_limit": "Reproduced from saved component outputs and the pinned contract, not by rereading raw PSID microdata."
+      },
+      "weight_basis": {
+        "status": "empirical_person_cluster_bootstrap_se",
+        "standard_error": 0.36285515343369,
+        "replications": 999,
+        "seed": 20260723,
+        "formula": "1 / SE^2",
+        "weight": 7.595098472533724,
+        "receipt_weight": 7.595098472533724,
+        "calibrated_smm": false
+      },
+      "selected_B_model_observer": {
+        "model_value": 6.059250757484152,
+        "stored_target_fit_model_value": 6.059250757484152,
+        "numerator_total_beginning_wealth": 4.488701893503985,
+        "denominator_annual_gross_labor_earnings": 0.7408014741690158,
+        "reproduced_ratio": 6.059250757484152,
+        "formula": "sum g_asset*(b + owner*p*H) over living ages 18-85 / sum working-cell mass*[four-year after-payroll-tax labor-income flow / 4 / (1-tau_pay)] over ages 18-65",
+        "age_coverage": "Selected observer uses all 17 four-year cells labeled 18 through 82 for the wealth stock and the 12 working cells (18-65) for earnings; this agrees with the empirical age ranges at the cell-interval level.",
+        "flow_units": "Empirical EARNINDRRC is annual gross earnings. Model P.income is a four-year after-payroll-tax flow; observer divides by four and grosses up by 1/(1-tau_pay), so the stored ratio has annual units.",
+        "accounting_timing": "Beginning-period wealth from the pre-transaction balance-sheet distribution; the observer annualizes earnings once."
+      },
+      "mapping_assessment": {
+        "classification": "approximate_with_open_component_and_calendar_mapping",
+        "verified": [
+          "saved empirical scalar and aggregate-sum calculation",
+          "annual versus four-year flow conversion",
+          "model beginning-period wealth timing",
+          "national geography and stated age coverage"
+        ],
+        "open": [
+          "PSID NETWORTHR is a composite total-net-worth measure while model wealth is liquid/net financial b plus owner gross housing value pH; the builder has no separate housing-equity, mortgage-debt, and nonhousing-wealth reconciliation",
+          "exact within-wave valuation/reference dates for the wealth stock and earnings flow were not certified",
+          "RP/spouse combined gross labor earnings versus the model household labor-income aggregation remains a maintained household-concept approximation"
+        ],
+        "smallest_closure": "Using existing source documentation, pin the PSID NETWORTHR component and mortgage/debt treatment against model b+pH and certify the 2003/2005 stock/flow reference dates. If the objects remain different, retain the row only under an explicitly approximate target contract."
+      },
+      "selected_B_fit": {
+        "gap": -0.08661063697327798,
+        "loss_contribution": 0.05697389019048865,
+        "scored_in_diagnostic": true,
+        "production_eligible": false
+      }
+    },
+    "bequest_wealth": {
+      "target_value": 0.0088,
+      "target_formula": "annual bequest flow / aggregate wealth",
+      "authoritative_builder": "No project microdata builder; inherited provenance ledger identifies the Gale-Scholz historical normalization transmitted through De Nardi-Yang.",
+      "authoritative_record": "output/model/e5f_matched_pf_20260909a/design_research/observer_contract/observer_contract.json#/records/6 (id external_annual_bequest_wealth); source trail code/model/intergen_eqscale_seq_optimized/e5_target_provenance.csv",
+      "empirical_source_validation": {
+        "status": "external_value_and_formula_recorded_no_microdata_reproduction",
+        "sample": "External restriction; no PSID sample, dated measurement window, geography sample, or in-repository empirical builder.",
+        "data_formula": "Annual bequest flow divided by aggregate wealth.",
+        "source_claim": "Gale-Scholz historical normalization transmitted through De Nardi-Yang; not freshly literature-reviewed in this audit.",
+        "validation_limit": "The 0.0088 value is reproduced from the saved provenance contract only; there are no underlying observations or estimated standard error to independently recalculate."
+      },
+      "weight_basis": {
+        "status": "inherited_synthetic_scale_not_standard_error",
+        "scale": 0.00044000000000000007,
+        "scale_rule": "five percent of target value",
+        "formula": "1 / scale^2",
+        "weight": 5165289.256198346,
+        "receipt_weight": 5165289.256198346,
+        "empirical_standard_error": null,
+        "calibrated_smm": false
+      },
+      "selected_B_model_observer": {
+        "model_value": 0.00632875816960756,
+        "stored_target_fit_model_value": 0.00632875816960756,
+        "numerator_annual_bequest_flow": 0.02840790877944627,
+        "denominator_aggregate_beginning_wealth": 4.488701893503985,
+        "reproduced_ratio": 0.00632875816960756,
+        "formula": "annualized expected nonnegative post-saving estate flow divided by beginning-period aggregate liquid/net financial wealth plus owner gross housing value; annualizes model-period flow exactly once",
+        "timing_and_mortality": "Saved observer uses the current/death distribution and post-saving estate policy; pre-terminal death probabilities follow survival, while terminal death probability is forced to one.",
+        "housing_and_debt": "Model denominator uses the same b+owner*pH total-wealth construction as wealth_earnings. The external target has no source-level component/mortgage treatment here to establish equivalence."
+      },
+      "mapping_assessment": {
+        "classification": "external_restriction_with_open_economic_mapping",
+        "verified": [
+          "saved target value and synthetic scale/weight arithmetic",
+          "saved B model flow-to-stock ratio",
+          "model annualization and stated terminal-death convention"
+        ],
+        "open": [
+          "historical source's exact population, calendar, wealth definition and death/estate timing are not reproduced here",
+          "model excludes negative estates by max(estate,0) and forces terminal death",
+          "weight expresses an inherited five-percent synthetic tolerance, not sampling uncertainty"
+        ],
+        "smallest_closure": "Keep it labeled as an externally fixed restriction, and have the author explicitly accept that status and the model's mortality/nonnegative-estate convention before any production use; otherwise a new measured target contract and bequest-block identification check are needed."
+      },
+      "selected_B_fit": {
+        "gap": -0.0024712418303924405,
+        "loss_contribution": 31.544608389883148,
+        "scored_in_diagnostic": true,
+        "production_eligible": false
+      }
+    },
+    "old_dispersion": {
+      "target_value": 3.51593508651872,
+      "target_formula": "weighted Q_0.90(NETWORTHR/INCFAMR) / weighted Q_0.50(NETWORTHR/INCFAMR)",
+      "authoritative_builder": "output/model/e5f_matched_pf_20260909a/design_research/wealth/build_initial_wealth.R; mirrors code/data/psid_followup_mar2026/audit_intergen_bequest_family_size_targets.R",
+      "authoritative_record": "output/model/e5f_matched_pf_20260909a/design_research/observer_contract/observer_contract.json#/records/5 (id psid_old_wealth_dispersion_2003_2005)",
+      "empirical_source_validation": {
+        "status": "saved_scalar_and_quantiles_reproduced",
+        "sample": "Living national PSID reference persons, relation_to_head=10, positive IW, ages 76-84, finite completed-child count observed, INCFAMR>1000; waves 2003 and 2005.",
+        "counts": {
+          "valid_family_years": 644,
+          "reference_person_ids": 416,
+          "bootstrap_population_living_reference_ids_ages_65_84": 918
+        },
+        "saved_weighted_median_networth_over_family_income": 7.28579300191372,
+        "saved_weighted_p90_networth_over_family_income": 25.616375248541,
+        "reproduced_p90_over_p50": 3.51593508651872,
+        "aggregation": "Quantiles are taken over household NETWORTHR/INCFAMR ratios, then p90 is divided by p50; this is not a ratio of aggregate means. The weighted-quantile convention is the smallest ordered value reaching the requested cumulative positive weight. Bootstrap resamples reference-person IDs (499 replications, seed 20260715).",
+        "geography_and_weights": "National PSID; positive IW and person-ID clustering. No geography restrictions or fixed effects.",
+        "validation_limit": "Reproduced from saved builder output and pinned definitions, not a new raw-data pass."
+      },
+      "weight_basis": {
+        "status": "empirical_person_cluster_bootstrap_se",
+        "standard_error": 0.306910785103348,
+        "replications": 499,
+        "seed": 20260715,
+        "formula": "1 / SE^2",
+        "weight": 10.616361531535473,
+        "receipt_weight": 10.616361531535473,
+        "calibrated_smm": false
+      },
+      "selected_B_model_observer": {
+        "model_value": 3.7277115325482555,
+        "stored_target_fit_model_value": 3.7277115325482555,
+        "model_p50_total_wealth_over_annual_income": 4.264110944673869,
+        "model_p90_total_wealth_over_annual_income": 15.895375544526019,
+        "reproduced_p90_over_p50": 3.7277115325482555,
+        "age_rule": "Uniform within-cell overlap for ages 76-84: one-half of label-74 cell (ages 74-77), all of label-78 cell (78-81), and three-quarters of label-82 cell (82-85). This is an explicit projection approximation, not exact annual-age model states.",
+        "income_rule": "Model annual gross income helper yields pension income at retirement under this case (retirement z scale and property-tax transfer are zero); four-year flow is annualized. PSID INCFAMR is annual family income with broader components.",
+        "model_sample": "Living model mass in the age-overlap cells with positive pension-proxy income. The observer does not impose the PSID INCFAMR>1000 cutoff or observed completed-child-history filter.",
+        "quantile_rule": "Same weighted quantile algorithm as the empirical builder; model value is a quantile ratio, not a ratio of means.",
+        "legacy_stationary_crosscheck": {
+          "value": 3.564953586185623,
+          "source": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/B/selected/native_summary.json#/legacy_stationary_moments/old_total_wealth_to_annual_income_p90_p50_7684",
+          "difference_from_scored_early_observer": -0.1627579463626324,
+          "reason_visible_in_source": "The legacy solver selects four-year labels by their start age (labels 78 and 82); the scored early observer applies explicit uniform within-cell 76-84 overlap weights. They are distinct saved observers, not duplicate reproductions.",
+          "implication": "The target_fit value is faithfully reproduced from the named early observer, but a model-code-path discrepancy remains material and should be reconciled before production activation."
+        }
+      },
+      "mapping_assessment": {
+        "classification": "empirical_statistic_verified_model_proxy_mapping_open",
+        "verified": [
+          "saved empirical p50, p90, p90/p50",
+          "saved B model p50, p90 and p90/p50",
+          "same weighted quantile convention",
+          "declared age-overlap weights and annual income units",
+          "The frozen scorer explicitly selects the early observer with76-84 age overlap; legacy label-start moment3.56495 is not used. The scored observer identity is unambiguous."
+        ],
+        "open": [
+          "INCFAMR includes pensions, transfers, asset income and other family components; model old-age denominator is pension income proxy",
+          "data impose income>1000 in real dollars but model only requires positive income",
+          "data require observed completed-child history but model has no corresponding missingness selection",
+          "age overlap assumes constant distribution/policy within four-year cells",
+          "PSID NETWORTHR versus model b+pH component and housing-debt treatment is not reconciled"
+        ],
+        "smallest_closure": "Preserve the explicit scored76-84 overlap observer; reconcile total family income versus modeled pension and income/child-history sample filters. Do not replace the active observer with a legacy readout."
+      },
+      "selected_B_fit": {
+        "gap": 0.2117764460295355,
+        "loss_contribution": 0.47613599141718527,
+        "scored_in_diagnostic": true,
+        "production_eligible": false
+      }
+    }
+  },
+  "linked_entry_wealth_note": {
+    "selected_B_entry_rule": "fixed_reference_marginal",
+    "classification": "externally_fixed_diagnostic_only",
+    "source_contract": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/B/selected/plan.json#/entry_specification",
+    "source_basis": "Inherited checkpoint-P wealth marginal; historical source ratios are young childless-renter NETWORTH2R/INCFAMR quintile-bin means. This differs from wealth_earnings, whose denominator is RP/spouse gross labor earnings.",
+    "model_conversion": "wealth = empirical ratio * four-year after-payroll-tax P.income * old entrant z / (4*(1-tau_pay)); the converted nodes are rank-coupled to the new persistent income rank, with iid income independent conditional on persistent rank.",
+    "saved_marginal_check": {
+      "reference_mean": 0.18651967924681834,
+      "candidate_mean": 0.18651967924681823,
+      "max_absolute_node_gap": 5.551115123125783e-17,
+      "entry_censoring": "Selected B receipt reports zero entry censoring.",
+      "censoring_status": "Final lead review reports selected-cell entry_censored_mass=0; selected entry_wealth.json itself does not carry a censoring field."
+    },
+    "interpretation": "This battery holds the inherited wealth marginal fixed in model asset units while coupling it to new persistent-income ranks. The family-income-to-model-earnings conversion happened in the inherited reference construction; its denominator mismatch remains unresolved, but the battery did not rescale the wealth marginal using new income draws.",
+    "smallest_closure": "Keep the inherited entry rule expressly diagnostic until the author chooses between retaining the INCFAMR-based ratio, replacing it with a denominator-aligned gross-labor measure, or fixing an externally specified wealth marginal."
+  },
+  "overall_stop": "These three stored target rows have reproducible values and weights, but only the arithmetic is fully validated. wealth_earnings still needs component/calendar reconciliation; old_dispersion compares PSID family income with a pension proxy and approximate age/sample mapping; bequest_wealth remains external with synthetic precision and distinct death/estate rules. No target adoption, deletion, or reweighting is recommended or performed by this receipt.",
+  "lead_corrections": [
+    "Removed unsupported ambiguity of the scored old-age observer: frozen score_initial.MOMENT_PATHS and actual target row agree on the early age-overlap observer.",
+    "Clarified actual battery fixed_reference_marginal; new-income rank coupling preserves existing asset marginal and is not a new income-proportional wealth rescaling."
+  ]
+}

@@ -1,5 +1,9 @@
 # Calibration Status
 
+## September 22 late evening — target review precedes overnight utility comparison
+
+The author requests a longer overnight comparison of the existing parenthood housing floor and the no-floor, child-dependent-share alternative, but explicitly makes target validation the first step before proceeding. No new model or cluster jobs have been submitted. The bounded review of all 13 target definitions, saved source outputs, actual model measurements and working weights is complete. All frozen values and weights match the scored contract. Substantive closure remains for target geography, the first-birth room-response estimator and model counterpart, resident-child versus dependent groups, and wealth/income concepts. Room caps and fractional age masks are already implemented correctly in the scored observer. National housing levels are available, but changing the population requires an explicit target-system decision. This was a saved-evidence/code audit, not a fresh microdata replication. No target is dropped, reweighted or replaced. Status and receipts: `output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/`.
+
 ## September 22 evening — earnings/entry battery complete, no adoption
 
 All four smokes and all 40 coarse-search workers finished successfully. The final collection verifies 163 scored objectives (A61, B61, C22, D19), 924 completed stationary solves, and no failed or incomplete attempted coarse objective. The fixed budgets left 81 planned proposals unrun. All cells selected worker05/proposal01; their nine structural coordinates coincide, while equilibrium and the fertility utility scale are solved and normalized separately. These are finite-search observations, not converged calibrations or adoption.

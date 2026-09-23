@@ -1,0 +1,150 @@
+{
+  "status": "frozen_target_integrity_verified_substantive_findings_in_review_json",
+  "objective_fingerprint": "4440ea07f4de957740ca6c04961d2806d9b9ef782c7a0e7dad4ce73e1db651b1",
+  "target_count": 13,
+  "scored": 12,
+  "normalized": 1,
+  "rows": [
+    {
+      "id": "initial_normalization",
+      "target": 2.1,
+      "weight": null,
+      "working_scale": null,
+      "weight_rationale": "Separate exact normalization within tolerance5e-4",
+      "model_observation": "final.normalization.completed_fertility",
+      "target_and_weight_match_frozen_contract": true
+    },
+    {
+      "id": "cps_childlessness",
+      "target": 0.19827875100684264,
+      "weight": 35532.3042455214,
+      "working_scale": 0.005305035738317728,
+      "weight_rationale": "CPS official annual generalized-variance approximations pooled with fixed observed weights and correlation-one working convention; not design-exact pooled SE",
+      "model_observation": "fertility.uniform_birth_time.moments.childless_rate_40_44",
+      "target_and_weight_match_frozen_contract": true
+    },
+    {
+      "id": "cps_exactly_one",
+      "target": 0.21365532522014702,
+      "weight": 26952.820824310795,
+      "working_scale": 0.0060911302714076404,
+      "weight_rationale": "CPS official annual generalized-variance approximations pooled with fixed observed weights and correlation-one working convention; not design-exact pooled SE",
+      "model_observation": "fertility.uniform_birth_time.moments.exactly_one_among_mothers_40_44",
+      "target_and_weight_match_frozen_contract": true
+    },
+    {
+      "id": "nchs_mean_age",
+      "target": 25.976263860992496,
+      "weight": 139.82806784479274,
+      "working_scale": 0.0845673694617251,
+      "weight_rationale": "2003\u20132006 annual temporal SD: chosen typical-year discrepancy scale for approximate stationary target; not sampling SE",
+      "model_observation": "fertility.uniform_birth_time.moments.period_mean_age_first_birth",
+      "target_and_weight_match_frozen_contract": true
+    },
+    {
+      "id": "nchs_share30",
+      "target": 0.2492780130410667,
+      "weight": 13866.065434728798,
+      "working_scale": 0.00849226186213262,
+      "weight_rationale": "2003\u20132006 annual temporal SD: chosen typical-year discrepancy scale for approximate stationary target; not sampling SE",
+      "model_observation": "fertility.uniform_birth_time.moments.period_share_first_births_age30plus",
+      "target_and_weight_match_frozen_contract": true
+    },
+    {
+      "id": "wealth_earnings",
+      "target": 6.14586139445743,
+      "weight": 7.595098472533724,
+      "working_scale": 0.36285515343369,
+      "weight_rationale": "Recorded empirical bootstrap standard error under the retained estimator/sample",
+      "model_observation": "housing_wealth.moments.aggregate_wealth_to_annual_gross_labor_earnings",
+      "target_and_weight_match_frozen_contract": true
+    },
+    {
+      "id": "bequest_wealth",
+      "target": 0.0088,
+      "weight": 5165289.256198346,
+      "working_scale": 0.00044000000000000007,
+      "weight_rationale": "Inherited synthetic five-percent target scale; not empirical SE",
+      "model_observation": "housing_wealth.moments.annual_bequest_flow_to_aggregate_wealth",
+      "target_and_weight_match_frozen_contract": true
+    },
+    {
+      "id": "old_dispersion",
+      "target": 3.51593508651872,
+      "weight": 10.616361531535473,
+      "working_scale": 0.306910785103348,
+      "weight_rationale": "Recorded empirical bootstrap standard error under the retained estimator/sample",
+      "model_observation": "housing_wealth.moments.old_total_wealth_to_annual_income_p90_p50_7684",
+      "target_and_weight_match_frozen_contract": true
+    },
+    {
+      "id": "mean_rooms",
+      "target": 5.561097376118652,
+      "weight": 128.02070205233477,
+      "working_scale": 0.08838120078007809,
+      "weight_rationale": "Recorded empirical bootstrap standard error under the retained estimator/sample",
+      "model_observation": "housing_wealth.moments.aggregate_mean_occupied_rooms_capped9_18_85",
+      "target_and_weight_match_frozen_contract": true
+    },
+    {
+      "id": "ownership_30_55",
+      "target": 0.6483340343191493,
+      "weight": 2339.3623724673616,
+      "working_scale": 0.020675272863460718,
+      "weight_rationale": "Recorded empirical bootstrap standard error under the retained estimator/sample",
+      "model_observation": "housing_wealth.moments.own_rate_30_55",
+      "target_and_weight_match_frozen_contract": true
+    },
+    {
+      "id": "first_birth_rooms",
+      "target": 0.7202462623815278,
+      "weight": 137.5652749002964,
+      "working_scale": 0.0852600513385958,
+      "weight_rationale": "Recorded empirical bootstrap standard error under the retained estimator/sample",
+      "model_observation": "housing_wealth.moments.housing_increment_0to1",
+      "target_and_weight_match_frozen_contract": true
+    },
+    {
+      "id": "family_rooms",
+      "target": 0.3470669317962507,
+      "weight": 280.52808370152104,
+      "working_scale": 0.059705154633000496,
+      "weight_rationale": "Recorded empirical bootstrap standard error under the retained estimator/sample",
+      "model_observation": "housing_wealth.moments.prime30_55_model_dependent_3plus_minus_1to2_rooms_capped9",
+      "target_and_weight_match_frozen_contract": true
+    },
+    {
+      "id": "recent_parent_ownership",
+      "target": 0.16289550916123285,
+      "weight": 27055.822957508266,
+      "working_scale": 0.006079524679464666,
+      "weight_rationale": "Recorded empirical bootstrap standard error under the retained estimator/sample",
+      "model_observation": "ownership_current_birth_from_empty_dependent_home_minus_current_empty_home_30_55",
+      "target_and_weight_match_frozen_contract": true
+    }
+  ],
+  "runtime_example": {
+    "cell": "B selected",
+    "ss_seconds": [
+      78.00046628096607,
+      95.18522731401026,
+      68.75213338900357,
+      68.87074790999759,
+      68.81146471889224,
+      68.80760724993888
+    ],
+    "ss_sum_seconds": 448.4276468628086,
+    "ss_mean_seconds": 74.73794114380144,
+    "full_objective_seconds": 483.79505827394314
+  },
+  "weight_interpretation": "Fixed working minimum-distance weights, not statisticallyefficientGMM, a fullcovariancematrix, standarderrors or overidentificationtest. Cross-moment covarianceignored and temporal/modelmapping uncertainty remains explicit.",
+  "flags": [
+    "Old empirical source files contain blocked or inactive labels which are not sufficient evidence of current observer status. Resolve against frozen scorer, working contract and current receipts.",
+    "No target, weight or observer was changed by this audit. No overnight comparison has been submitted."
+  ],
+  "reference_paths": [
+    "docs/model/empirical_specification_review.md",
+    "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/B/selected/target_fit.csv",
+    "output/model/e5f_matched_pf_20260909a/initial_calibration_contract/lead_methodological_decision.json"
+  ]
+}

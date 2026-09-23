@@ -1,0 +1,88 @@
+{
+  "schema": "bounded_fertility_target_validation_v1",
+  "scope": ["initial_normalization", "cps_childlessness", "cps_exactly_one", "nchs_mean_age", "nchs_share30"],
+  "read_only_audit": true,
+  "source_receipt": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/B/selected/target_fit.csv",
+  "model_observer_receipt": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/B/selected/native_summary.json",
+  "empirical_contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/fertility_target_contract.json",
+  "empirical_verification": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/verification.json",
+  "lead_decision": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/initial_calibration_contract/lead_methodological_decision.json",
+  "current_model_observer_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_initial_fertility_observer.py",
+  "overall_finding": "Empirical CPS and NCHS scalars reproduce in saved source receipts, and the selected B packet contains the actual current diagnostic model observer and moments used by target_fit.csv. The run explicitly records empirical_target_contract_activated=false, diagnostic_only=true, production_smm_eligible=false, stationarity_certified_by_observer=false, and weights_or_standard_errors_adopted=false. Thus the legacy CPS blocked_by_age_window_mapping label is stale as a statement that no mapper exists; it remains a valid production-eligibility warning about unresolved female exposure and assumptions. The NCHS 'adapter available' wording also predates the implemented/saved period diagnostic adapter, while its population, age-tail, and stationarity qualifications remain open. This receipt makes no adoption, removal, or reweighting decision.",
+  "mapping_readout": {
+    "cps_age_window": "CPS women aged 40-44 are interpreted as [40,45). Four-year model cells [38,42) and [42,46) overlap by 2 and 3 years. The current uniform_birth_time mapper uses overlap weights 0.5 and 0.75 and linearly interpolates pre/post-fertility parity within each cell, with post shares 0.75 and 0.375. This is an explicit diagnostic approximation, not an exact within-age survey reconstruction.",
+    "cps_population_and_denominators": "The empirical rates use female CPS records and FRSUPPWT-weighted denominators. The model uses mass of one household reproductive member across model age, not a certified female exposure population; it uses endogenous model age mass, without empirical age-composition reweighting. Exactly-one is literal parity-one mass divided by all parity-positive mass, not a continuation second-birth hazard.",
+    "nchs_period_and_counts": "The empirical targets pool 2003-2006 first-birth counts from the US-named raw files, age/order only, with no residence filter; they are period flows, not cohort completed-fertility measures or female-age-specific rates. The model uses first-birth event-flow counts from the same stationary evaluation and takes the count-weighted age-cell midpoint or share of flow in cells starting at age 30 or above. It is not a calendar 2003-2006 dated replay.",
+    "nchs_age_mapping": "Both source and model use four-year midpoint classes. The source maps ages <=21 to 20, 22-25 to 24, 26-29 to 28, 30-33 to 32, 34-37 to 36, 38-41 to 40, and ages >=42 to 44. The model uses cells starting 18,22,...,42 with midpoints 20,24,...,44, and age-start >=30 for share30. Boundary classes therefore pool ages the model does not represent individually, including source ages below 18 and above 45; those are explicit approximations, not exact maternal-age support.",
+    "weights": "The selected B score uses frozen working minimum-distance weights. CPS weights are inverse squared pooled correlation-one candidate SEs derived from annual official approximate Census GVFs with observed annual bases held fixed; this is not a design-exact pooled SE, and cross-year covariance/random-ratio-base uncertainty is not certified. NCHS has no probability-sample SE; its weights use 2003-2006 annual temporal SD as a typical-year discrepancy scale, not sampling uncertainty. These are experimental score inputs; the saved run says the empirical target contract and weights are not activated as production SMM inputs."
+  },
+  "rows": [
+    {
+      "id": "initial_normalization",
+      "target": 2.1,
+      "model": 2.1000028791292777,
+      "gap": 0.0000028791292776553234,
+      "empirical_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/OVERNIGHT_PLAN.md",
+      "empirical_builder_or_receipt": "Author-selected stationary model completed-fertility normalization; not an empirical estimate.",
+      "provenance_confirmed": true,
+      "observer": "final.normalization.completed_fertility in the saved selected-B native run; separate from CPS/NCHS observers.",
+      "mapping": "Exact as the chosen model normalization; top-parity representative and stock/flow identity remain separate model-definition qualifications.",
+      "weight_basis": "No empirical SE or SMM weight; exact normalization tolerance 5e-4, unscored.",
+      "material_blocker": "Verify normalization/top-parity and renewal/entry identities separately before interpreting it as an empirical completed-fertility fact."
+    },
+    {
+      "id": "cps_childlessness",
+      "target": 0.19827875100684264,
+      "model": 0.16889931300719657,
+      "gap": -0.02937943799964607,
+      "empirical_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/parameter_target_audit/fertility/fertility_availability.json; source partitions independently hashed in design_research/fertility_contract/verification.json",
+      "empirical_builder_or_receipt": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/parameter_target_audit/fertility/extract_fertility_availability.py; /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/verify_fertility_contract.py",
+      "provenance_confirmed": "Yes for the saved 2004/2006 selected partitions and reproduced scalar (10,872 records; pooled weighted denominator 22,769,521.99); full 6GB extract and official supplement-weight crosswalk were not verified.",
+      "observer": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_initial_fertility_observer.py; saved actual output at native_summary.json#early_measurement.fertility.uniform_birth_time.moments.childless_rate_40_44.",
+      "mapping": "Approximate, implemented, and saved: [40,45) overlap across cells starting 38 and 42 with weights .5/.75 and uniform within-cell birth-time interpolation. Model age mass proxies women; empirical CPS ages are not used as weights.",
+      "weight_basis": "SE scale .005305035738317728; inverse-variance weight 35532.3042455214. Pooled fixed-base, correlation-one combination of annual official approximate GVF SEs; cross-year covariance and random ratio-base treatment unresolved.",
+      "material_blocker": "Legacy blocked_by_age_window_mapping metadata does not reflect the saved diagnostic adapter. Production mapping remains open because model household-member mass is not certified female population; weight contract is not activated. CPS FRSUPPWT/10000 is inherited from the loader; official Census crosswalk remains unverified."
+    },
+    {
+      "id": "cps_exactly_one",
+      "target": 0.21365532522014702,
+      "model": 0.25526140052585194,
+      "gap": 0.041606075305704926,
+      "empirical_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/parameter_target_audit/fertility/fertility_availability.json; source partitions independently hashed in design_research/fertility_contract/verification.json",
+      "empirical_builder_or_receipt": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/parameter_target_audit/fertility/extract_fertility_availability.py; /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/verify_fertility_contract.py",
+      "provenance_confirmed": "Yes for the saved 2004/2006 selected partitions and reproduced scalar (weighted numerator 3,900,237.2838; weighted mother denominator 18,254,809.6088); full 6GB extract and official supplement-weight crosswalk were not verified.",
+      "observer": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_initial_fertility_observer.py; saved actual output at native_summary.json#early_measurement.fertility.uniform_birth_time.moments.exactly_one_among_mothers_40_44.",
+      "mapping": "Approximate, implemented, and saved using the same [40,45) projection as childlessness; model numerator is literal parity-one mass, denominator is all parity-positive mass. It is not a sequential second-birth hazard.",
+      "weight_basis": "SE scale .0060911302714076404; inverse-variance weight 26952.820824310795. Pooled fixed-base, correlation-one combination of annual official approximate GVF SEs; cross-year covariance and random ratio-base treatment unresolved.",
+      "material_blocker": "Legacy blocked_by_age_window_mapping metadata does not reflect the saved diagnostic adapter. Production mapping remains open because household reproductive-member mass is not certified female exposure, and CPS pooled-GVF convention is not design-exact or activated."
+    },
+    {
+      "id": "nchs_mean_age",
+      "target": 25.976263860992496,
+      "model": 27.296065365870597,
+      "gap": 1.3198015048781002,
+      "empirical_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/nchs_natality_timing/first_birth_counts_year_age.csv",
+      "empirical_builder_or_receipt": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/nchs_natality_timing/build_first_birth_timing.R; /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/verify_fertility_contract.py",
+      "provenance_confirmed": "Yes for saved source/cache hashes and reconstructed 6,611,269 first births. Builder uses age/order only and no residence filter; US-named raw files are not certified US-resident births.",
+      "observer": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_initial_fertility_observer.py; saved actual output at native_summary.json#early_measurement.fertility.uniform_birth_time.moments.period_mean_age_first_birth.",
+      "mapping": "Approximate, implemented, and saved: first-birth flow in four-year model cells weighted by midpoints 20,...,44. Source bins collapse ages <=21 and >=42 to boundary midpoints; model cannot separately represent those ages. Stationary model flow is compared with pooled 2003-2006 period counts.",
+      "weight_basis": "Scale .0845673694617251 years; inverse-variance weight 139.82806784479274, using the annual 2003-2006 temporal SD. This is a typical-year discrepancy convention, not a sampling SE.",
+      "material_blocker": "Legacy adapter-available wording is now partly stale because a saved period-flow diagnostic mapper exists. Production-period comparability remains open: no residence filter, boundary-age pooling, and stationary model population versus a four-year historical period target; uncertainty scale is a declared discrepancy convention, not sampling error."
+    },
+    {
+      "id": "nchs_share30",
+      "target": 0.2492780130410667,
+      "model": 0.30195260402501845,
+      "gap": 0.05267459098395175,
+      "empirical_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/nchs_natality_timing/first_birth_counts_year_age.csv",
+      "empirical_builder_or_receipt": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/nchs_natality_timing/build_first_birth_timing.R; /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/verify_fertility_contract.py",
+      "provenance_confirmed": "Yes for saved source/cache hashes and reconstructed 6,611,269 first births. Builder uses age/order only and no residence filter; US-named raw files are not certified US-resident births.",
+      "observer": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_initial_fertility_observer.py; saved actual output at native_summary.json#early_measurement.fertility.uniform_birth_time.moments.period_share_first_births_age30plus.",
+      "mapping": "Approximate, implemented, and saved: flow at model cell starts >=30 divided by all first-birth flow; the empirical numerator is exact maternal age >=30 among grouped event counts. Four-year grouping plus first/last boundary pooling blurs individual age even though the threshold is at a model-cell boundary.",
+      "weight_basis": "Scale .00849226186213262; inverse-variance weight 13866.065434728798, using the annual 2003-2006 temporal SD. This is a typical-year discrepancy convention, not a sampling SE.",
+      "material_blocker": "Legacy adapter-available wording is now partly stale. Production comparability remains open because model age-cell flow proxies maternal ages and the empirical period counts have unverified residence scope; temporal SD is not a sampling uncertainty estimate and the stationary-period approximation is not certified."
+    }
+  ],
+  "smallest_closure_step": "Reconcile the saved contract/metadata against the already pinned selected-B run: record the current observer source and native_summary receipt, replace the stale categorical CPS 'blocked_by_age_window_mapping' statement with 'diagnostic adapter executed; production female-population mapping open', and update the NCHS adapter status similarly while retaining the explicit boundary-age/residence/stationarity caveats. No new solve or source-data scan is needed for that metadata closure. Keep the target system nonactivated until the author closes the remaining population/period/weight conventions; this audit does not make that choice.",
+  "scope_stop": "No target changes, weight changes, removals, empirical rescans, model solves, tests, commits, or other writes performed. Only this receipt was created."
+}

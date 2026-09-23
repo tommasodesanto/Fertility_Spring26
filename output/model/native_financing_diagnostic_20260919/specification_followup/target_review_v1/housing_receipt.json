@@ -1,0 +1,104 @@
+{
+  "title": "Housing target source audit receipt",
+  "date": "2026-09-22",
+  "scope": [
+    "mean_rooms",
+    "ownership_30_55",
+    "first_birth_rooms",
+    "family_rooms",
+    "recent_parent_ownership"
+  ],
+  "inputs": {
+    "model_fit": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/B/selected/target_fit.csv",
+    "review": "docs/model/empirical_specification_review.md",
+    "housing_reproduction": "output/model/native_financing_diagnostic_20260919/specification_followup/housing_profiles_v1/full/target_recomputed.json",
+    "observer_contract": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_wealth_v1/staging/contracts/observer_contract.json",
+    "quantification": "output/model/native_financing_diagnostic_20260919/specification_followup/quantification_v1/morning_view.md",
+    "national_data_receipt": "code/empirical/acs/kleven_pseudo/README.md and code/data/Spatial_aggregate_withmicrodata/documentation/README.md",
+    "psid_reference_review": "code/data/psid_followup_mar2026/output/first_birth_correction_review/README.md, especially author-recognized reference, full-wave validation, and normalization audit"
+  },
+  "findings": [
+    {
+      "row": "mean_rooms",
+      "value": 5.561097376118652,
+      "model_value": 6.245418272573934,
+      "weight": 128.02070205233477,
+      "weight_basis": "42-metro bootstrap SE 0.0883812; inverse marginal variance candidate, currently frozen working weight; covariance with other source blocks not estimated.",
+      "source": "ACS 2005-06, household heads age 18-85, occupied owner/renter homes, positive HHWT, 42 MET2013 cities; pooled weighted ratio sum(HHWT*min(ROOMS,9))/sum(HHWT). Four ACS housing targets exactly reproduce from housing_profiles_v1/full/target_recomputed.json.",
+      "provenance": "Builder cited in target contract: early housing inspect/summarize scripts. No FE; 42-metro paired bootstrap, 1,000 draws, seed 20260910. Source filters require ROOMS>0; values capped at 9 before aggregation. Do not reinterpret ROOM=0 as a zero-room home. Active ACS path is 42 metros, not admitted-PUMA footprint.",
+      "model_mapping": "Confirmed in actual selected B native_summary.json: full-state realized renter and owner rooms are capped at9 before aggregation; cap_before_income_aggregation=true. Frozen e5f_initial_housing_observer.py implements this exact order. Uniform within-cell age exposure and national versus42-metro population remain stated approximations.",
+      "blocker": "Geographic/economic population interpretation remains open; there is no missing full-state cap implementation.",
+      "smallest_closure": "Select the quantitative population and preserve the verified full-state cap operator under the chosen target contract."
+    },
+    {
+      "row": "ownership_30_55",
+      "value": 0.6483340343191493,
+      "model_value": 0.45327755436570333,
+      "weight": 2339.3623724673616,
+      "weight_basis": "42-metro bootstrap SE 0.0206753; inverse marginal variance candidate/frozen working weight; cross-row covariance unavailable.",
+      "source": "ACS 2005-06 heads age 30-55, DUE structures UNITSSTR 3:10, positive HHWT and common valid owner/rooms/head/household/geography filters; sum(HHWT*owner)/sum(HHWT), owner=OWNERSHP 1. Four housing targets reproduce exactly from target_recomputed.json.",
+      "provenance": "No FE; 42 MET2013 cities; 1,000 paired metro bootstrap draws, seed 20260910. Fixed source sample is 42 cities, not the former admitted-PUMA footprint.",
+      "model_mapping": "Actual B age_overlap_weights30_55 uses half of the54-57 cell and no58+ mass, matching uniform exposure on[30,56). Tenure is measured from current realized housing choices. Within-cell uniformity and absent ACS structure state remain approximations; no whole-cell age-mask bug is present.",
+      "blocker": "Choose national versus42metro population and economic interpretation of the ACS structure sample; uniform age exposure is an implemented approximation, not an unimplemented mask.",
+      "smallest_closure": "Retain verified age overlap and tenure measurement; resolve geography/structure sample in the declared population contract."
+    },
+    {
+      "row": "first_birth_rooms",
+      "value": 0.7202462623815278,
+      "model_value": 1.341457349893516,
+      "weight": 137.5652749002964,
+      "weight_basis": "Inverse squared person-clustered contrast SE 0.08526005; working diagonal weight. Not a certified SMM weight; other-source covariance is absent.",
+      "source": "PSID longitudinal women age 18+, current reference/spouse, positive IW, single-FID dwelling, one woman per household-year; confirmed never-treated controls. 49,457 estimation woman-years and 4,112 women. Event-study-interact contrast beta(+3)-beta(-1), omitted -2, person/year FE plus age/education, IW weighting, cluster by woman ID. Primary scalar reproduces exactly from sa_rooms_first_birth_household_aligned_v1/target_receipt.csv.",
+      "provenance": "Corrected ACTUALROOMS_ is shifted forward one observed interview within person. Target receipt excludes multiple reference/spouse women per household-year and multiple-FU dwelling cases; first biological birth history is the event clock. Retains national PSID and uncapped room units. Latest first_birth_correction_review accepts Tommaso's identified Ludovica-era source as the working author-recognized baseline; full-wave timing validation verifies shifted room values on all 345,751 fitted common-sample rows, with no outcome-value/missing-code recoding. Author explicitly reaffirmed event year -2 as the intended reference. The current target row remains the later +3 minus -1 contrast, so source reproducibility does not establish that it is the author-selected target. Latest completed binned timing diagnostic reports0.426502 (SE0.163226), +3/+4 relative to-3/-2, on149402 observations and14453 clusters. It changes sample/support/controls as well as bins and is not a promoted replacement for0.720246.",
+      "model_mapping": "Actual B saved paired branch completed under the stationary policy at both dates, with uncapped rooms, destination continuation births0.01916838209091419 and no Census age bridge. Its response1.341457349893516 matches the score. It is implemented, but it is not the same person/year fixed-effects regression or cohort weighting as the empirical estimator.",
+      "blocker": "Author-selected -2 reference and the active +3-minus-1 scalar are different estimands. Under the original -2/-6 omitted-event design, +3 is 0.796859 on the original sample, 0.770274 on the original common sample, and 0.403018 on the timing-adjusted common sample (SE 0.155235); 3,297 of 9,309 +3 observations are from cohorts without observed -2, and 2,235 lack both -2 and -6. These are support facts, not a corrected estimate/SE. A normalization audit also moves the displayed +3-minus-1 contrast from 0.720246 to 0.758780 under an arbitrary alternative normalization with unchanged fitted observations, establishing normalization sensitivity; 0.758780 is not promoted. Therefore keep 0.720246 and its weight only provisionally, not as settled author-reference target.",
+      "smallest_closure": "Specify an estimator/support treatment consistent with the author-selected -2 reference, preserving unsupported cohorts as an explicit issue; estimate and save a full covariance/contrast only after that design is fixed. Decide whether target should be +3 relative to -2 or another predeclared contrast, then issue a new target/weight fingerprint. Do not replace with the timing-shifted +0.403 coefficient or normalization probe."
+    },
+    {
+      "row": "family_rooms",
+      "value": 0.3470669317962507,
+      "model_value": 0.30564902845515984,
+      "weight": 280.52808370152104,
+      "weight_basis": "42-metro bootstrap SE 0.0597052; inverse marginal variance candidate/frozen working weight; covariance with PSID block absent.",
+      "source": "ACS 2005-06 heads age 30-55 with YNGCH<18; difference in weighted mean min(ROOMS,9) for NCHILD>=3 versus NCHILD=1-2; common ACS validity/geography filters. Exact scalar reproduced from housing_profiles_v1/full/target_recomputed.json.",
+      "provenance": "No FE; 42 MET2013 city clusters; 1,000 paired metro bootstrap draws, seed 20260910. NCHILD counts all resident own children; YNGCH requires at least one minor; ROOMS>0 then cap 9.",
+      "model_mapping": "Actual B source requires independent_count and high cutoff3, applies m<=n, compares m>=3 against1<=m<=2, and caps full-state occupied rooms before aggregation. These implemented operations differ from ACS resident own-child counts with YNGCH<18; resident adult children and deterministic child ages are not represented.",
+      "blocker": "Resident-own-child versus model-dependent-group mapping remains approximate. Full-state caps and high-group construction are already implemented and saved.",
+      "smallest_closure": "Explicitly reconcile empirical child grouping with the model dependent concept; keep existing implementation unchanged until a named replacement measurement contract is agreed."
+    },
+    {
+      "row": "recent_parent_ownership",
+      "value": 0.16289550916123285,
+      "model_value": 0.11783631702937053,
+      "weight": 27055.822957508266,
+      "weight_basis": "42-metro bootstrap SE 0.00607952; inverse marginal variance candidate/frozen working weight, yielding a large contribution; no joint covariance with other moments.",
+      "source": "ACS 2005-06 heads age 30-55; both comparison groups restricted to DUE structures UNITSSTR 3:10 and common positive HHWT/valid sample; Pr(owner|NCHILD>0, ELDCH<4) minus Pr(owner|NCHILD=0). ELDCH is oldest resident own child. Four housing target receipt reproduces this scalar exactly.",
+      "provenance": "Four cross-sectional ACS housing targets reproduce exactly for42metros; national cross-sectional counterparts also exist in housing_profiles_v1/full/target_recomputed.json. National matched pseudo-panel/event-study estimation is a separate data product and is not needed to establish these level targets.",
+      "model_mapping": "Active scorer approximation is synchronized post-fertility snapshot: ownership among current births from formerly empty-dependent homes minus ownership among currently empty-dependent homes, including former parents in the control; ages 30-55 with uniform age overlap. This is not lifetime-childless n=0 versus all m>0. The target_fit historical warning/observer_contract text claiming lifetime-childless controls is stale for the active scorer and must be updated in the target metadata/contract; source CSV model metadata separately records the synchronized observer.",
+      "blocker": "ACS exact recent parent requires oldest resident own child under age 4; ACS control NCHILD=0 includes former parents with no resident own children. Model (n,m) does not track child ages, time since birth or former-parent residence, so exact groups cannot be reconstructed. Structure-type and age mapping remain approximations. The current synchronized proxy is explicit and useful but not exact ACS equivalence.",
+      "smallest_closure": "Keep current scored proxy unchanged while recording it as maintained approximation; update stale metadata warning to describe actual observer and add an exactness flag. Any move to exact ACS groups requires richer resident-child-age/recency state or a new observed model-data bridge plus a new complete target/weight fingerprint."
+    }
+  ],
+  "cross_cutting_open_choices": [
+    "No adoption, dropping, or reweighting is implied by this source audit. Current 42-metro housing weights are diagonal marginal-variance working weights; joint covariance across independently sourced ACS/PSID rows is not estimated.",
+    "Uniform annual-age exposure and full-state room caps already exist in the actual scored observer. Geography, structure/sample interpretation and resident-child proxies remain substantive choices.",
+    "National cross-sectional levels exist. Do not conflate those receipts with separately unfinished national ACS pseudo-panel estimation; no target geography changed in this audit.",
+    "The model target_fit source metadata and older observer-contract warnings disagree with the repaired recent-parent observer; repair provenance metadata separately without changing its current values/weight."
+  ],
+  "reproduction": "The four ACS target scalars match housing_profiles_v1/full/target_recomputed.json exactly. The first-birth PSID target and SE match the authoritative corrected target_receipt.csv exactly. The five listed target_fit entries match their named scalar source outputs; no regressions, raw-data scans or model solves were run.",
+  "lead_corrections": {
+    "evidence": "Actual B native_summary.json early_measurement.housing_wealth and frozen bundle source/code/model/tools/e5f_initial_housing_observer.py",
+    "removed_false_blockers": [
+      "missing full-state room caps",
+      "whole54-57 age cell included at ages30-55",
+      "paired branch not implemented",
+      "national cross-sectional housing targets unavailable"
+    ],
+    "preserved_open_questions": [
+      "population/geography",
+      "resident child mapping",
+      "PSID estimator/reference support and data-model estimator mismatch",
+      "weight interpretation"
+    ]
+  }
+}
