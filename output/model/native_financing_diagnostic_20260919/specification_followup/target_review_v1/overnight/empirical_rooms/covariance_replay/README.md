@@ -51,3 +51,9 @@ line-by-line approval:
 ```bash
 /Applications/Stata/StataMP.app/Contents/MacOS/stata-mp -q -b /absolute/path/to/replay_v1.do
 ```
+
+## Terminal review
+
+The single replay finished at00:46EDT in330.1seconds. The existing target/SE and49,457observation/4,112person counts reproduce; independent covariance and four candidate-contrast checks are in `analysis/lead_review.json`. Conditional-weight candidate SEs are now available, while100 zero-room source codes and one raw98 require the separate coding follow-up. No second regression has been authorized or run here.
+
+The full covariance CSV and Stata estimate object are committed as deterministic `.gz` files; their uncompressed originals remain locally. `compressed_evidence.json` verifies exact compression round trips and both hashes. On a fresh checkout, decompress those two files with `gzip -dk output/cohort_interaction_covariance.csv.gz output/eventstudyinteract_replay.ster.gz` from this directory before running the analyzer. All other inputs are compact aggregate outputs; no household microdata are written.

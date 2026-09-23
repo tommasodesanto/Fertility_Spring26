@@ -1,0 +1,16 @@
+{
+  "reviewed_utc": "2026-09-23T04:44:08.409716+00:00",
+  "status": "passed",
+  "lead_checks": [
+    "Read complete builder and exact inherited sample/group/metro aggregation checks.",
+    "Independently regenerated1000paired draws from42aggregate metro rows; original and candidate draw vectors agree below1e-14.",
+    "Reproduced variance-of-difference covariance identity and script/statistics hashes."
+  ],
+  "candidate_minus_existing": -0.0108473079106437,
+  "paired_difference_se": 0.008076787107759595,
+  "limitations": [
+    "Metro resampling conditional on fixed sample/group definitions, not ACS official design-based uncertainty.",
+    "This small empirical grouping shift does not establish model dependent-child comparability or identify utility parameters.",
+    "No target, weight, sample or model adoption."
+  ]
+}

@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-09-23T04:42:51.472509+00:00",
-  "phase": "Reviewed exact room-estimator replay running; entry and ACS uncertainty calculations underway",
+  "updated_utc": "2026-09-23T04:59:42.556565+00:00",
+  "phase": "Exact room-estimator covariance and ACS uncertainty reviewed; narrow coding and entry-debt checks remain",
   "phase1_status": "complete; lead critique saved",
   "phase2_status": "complete; lead corrections saved",
   "phase3": "phase3_empirical_adjudication/receipt.json",
@@ -13,19 +13,21 @@
     "empirical_old_wealth"
   ],
   "worker_status": "All four bounded empirical checks completed and reviewed; no target edits or model solves.",
-  "next": "Review terminal regression gates and full-covariance contrasts; review corrected common-scale entry and ACS uncertainty; no changes to frozen targets.",
+  "next": "Finish native debt-floor and room-code cross-tab checks, then a focused Opus integration only if new evidence warrants. SSH remains unavailable; no model run/target modification.",
   "collector": "Latest local source has nine passing tests and finalizer binding checks; upload external helper after SSH returns.",
   "pdf": "Builder checked with synthetic fixtures only. PDF marker already invoked once. No actual results PDF produced.",
   "delivery_utc": "2026-09-23T14:00:00Z",
   "phase3_status": "completed at04:12:13UTC; corrections required",
-  "latest_pushed_commit": "63ba77aa",
+  "latest_pushed_commit": "b600afb7",
   "worker_followups": {
     "empirical_acs_child_mapping": "Complete; lead rerun passed all new gates, candidate shift-.010847.",
     "empirical_rooms/common_cohort_contrast_review.json": "Complete independent review; candidate .811397/.797759, no SE yet.",
     "empirical_fertility/late_fertility_diagnostic.json": "Complete; lead read stock-flow calculation, late firstbirth2.528% vs NCHS.536%, no all-order empirical cache.",
-    "empirical_rooms/covariance_replay": "One reviewed20-minute/four-processor exact empirical replay launched04:40:30UTC, Stata pid63812; execution.json gives live status. No automatic retry.",
-    "empirical_entry/common_scale_candidate": "Bounded45-minute data-only construction running; no law adopted.",
-    "empirical_acs_child_mapping/uncertainty": "Bounded20-minute paired authoritative metro-bootstrap calculation running."
+    "empirical_rooms/covariance_replay": "Completed330.1seconds; target/SE and49457/4112 reproduced. Four fixed-cohort contrasts independently checked, conditional SEs available.",
+    "empirical_entry/common_scale_candidate": "Empirical construction complete; lead caught debt-rollover omission in requested R*b+Y test. Corrected native renter-floor slack check underway; old negative-cash percentages are NOT infeasible-mass evidence.",
+    "empirical_acs_child_mapping/uncertainty": "Completed and independently verified1000paired draws. Existing SE.059705/candidate.058386; difference-.010847 paired SE.008077. No target change.",
+    "empirical_rooms/room_code_followup": "Official codebook review complete:0is substantive shared-room response,98year-specific. One R extraction failed; separate15min Stata preprocessing-only method authorized for aggregate cross-tab, no regression.",
+    "report_tables": "13current target/12weight inventory independently verified; historical B model values labeled; metadata corrections reviewed."
   },
   "phase4": "phase4_final_measurement_choices/receipt.json",
   "phase4_cap_seconds": 1800,

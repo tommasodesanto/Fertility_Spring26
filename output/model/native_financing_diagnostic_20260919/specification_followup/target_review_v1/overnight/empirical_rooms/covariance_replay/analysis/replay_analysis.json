@@ -1,0 +1,630 @@
+{
+  "status": "analyzed completed exact replay; candidate contrasts are not adopted",
+  "execution_status": "process_completed_pending_scientific_review",
+  "execution_elapsed_seconds": 330.1,
+  "processors": 4,
+  "replay_script_sha256": "1549edd99ec09441d9a4c668b8cd87c858f3ac13cb0fbe926644d9f865e1a6dd",
+  "target_gate": {
+    "expected": 0.7202462623815278,
+    "observed": 0.720246262381528,
+    "full_precision_abs_gap": 2.220446049250313e-16,
+    "tolerance": 1e-09
+  },
+  "se_gate": {
+    "expected": 0.0852600513385958,
+    "observed": 0.0852600513385958,
+    "full_precision_abs_gap": 0.0,
+    "tolerance": 1e-09
+  },
+  "sample_gates": {
+    "observations": 49457,
+    "people": 4112,
+    "observations_exact_pass": true,
+    "people_exact_pass": true
+  },
+  "cohort_interaction_matrix_dimensions": [
+    900,
+    900
+  ],
+  "cohort_event_coefficient_count": 900,
+  "full_covariance_cells": 810000,
+  "covariance_max_symmetry_abs_gap": 0.0,
+  "covariance_max_diagonal_vs_marginal_variance_abs_gap": 0.0,
+  "room_code_diagnostics": {
+    "before_room_edu_drop": {
+      "observations": 159476,
+      "room_code_0_count": 305,
+      "room_code_9_count": 5110,
+      "room_code_98_count": 26,
+      "room_code_99_count": 602,
+      "minimum_nonmissing_rooms": 0.0
+    },
+    "post_room_edu_pre_cohort_filters": {
+      "observations": 147078,
+      "room_code_0_count": 299,
+      "room_code_9_count": 4337,
+      "room_code_98_count": 2,
+      "room_code_99_count": 0,
+      "minimum_nonmissing_rooms": 0.0
+    },
+    "e_sample": {
+      "observations": 49457,
+      "room_code_0_count": 100,
+      "room_code_9_count": 2266,
+      "room_code_98_count": 1,
+      "room_code_99_count": 0,
+      "minimum_nonmissing_rooms": 0.0
+    }
+  },
+  "contrasts": [
+    {
+      "name": "common_cohorts_fixed_prebirth_IW",
+      "start_event_time": -1,
+      "end_event_time": 3,
+      "start_event_coefficient": "F1event",
+      "end_event_coefficient": "L3event",
+      "omitted_start_support_rule": null,
+      "weight_endpoint": -1,
+      "common_cohorts": [
+        1971,
+        1972,
+        1974,
+        1975,
+        1976,
+        1978,
+        1982,
+        1986,
+        1987,
+        1988,
+        1989,
+        1990,
+        1991,
+        1992,
+        1993,
+        1994,
+        1996,
+        1998,
+        2000,
+        2002,
+        2004,
+        2006,
+        2008,
+        2010,
+        2012,
+        2014,
+        2016
+      ],
+      "cohort_count": 27,
+      "start_endpoint_cohort_count": 34,
+      "end_endpoint_cohort_count": 32,
+      "retained_start_weight_mass": 0.808855283732278,
+      "retained_end_weight_mass": 0.8831045096860448,
+      "estimate": 0.8113974907627938,
+      "variance": 0.005868523270199852,
+      "standard_error": 0.0766062874064515,
+      "variance_independent_contrast_form": 0.005868523270199852,
+      "linear_form_variance_abs_gap": 0.0,
+      "within_cohort_normalization_loading_max_abs": 0.0,
+      "standard_error_interpretation": "conditional on these fixed cohort weights; excludes sampling variation in estimated cohort shares",
+      "weight_shares": {
+        "1971": 0.013334621591726385,
+        "1972": 0.015050040922174532,
+        "1974": 0.011005788170816,
+        "1975": 0.017303980706064773,
+        "1976": 0.02314211254804959,
+        "1978": 0.033919653514589844,
+        "1982": 0.039714989176893124,
+        "1986": 0.03256443665857493,
+        "1987": 0.04155523082331922,
+        "1988": 0.04008589062450383,
+        "1989": 0.04183340722522754,
+        "1990": 0.03189396065012935,
+        "1991": 0.051811620605842525,
+        "1992": 0.04330731321212288,
+        "1993": 0.044627116484648906,
+        "1994": 0.044919700031768144,
+        "1996": 0.0318750950059987,
+        "1998": 0.039009599219728006,
+        "2000": 0.04848466928710713,
+        "2002": 0.03333915728472076,
+        "2004": 0.05517163055649089,
+        "2006": 0.0373390799649228,
+        "2008": 0.04135961637004471,
+        "2010": 0.04907533020408059,
+        "2012": 0.0524664035785622,
+        "2014": 0.04318726910494315,
+        "2016": 0.042622286476949475
+      },
+      "previous_candidate_estimate": 0.8113974907627932,
+      "gap_from_previous_candidate": 5.551115123125783e-16
+    },
+    {
+      "name": "common_cohorts_fixed_postbirth_IW",
+      "start_event_time": -1,
+      "end_event_time": 3,
+      "start_event_coefficient": "F1event",
+      "end_event_coefficient": "L3event",
+      "omitted_start_support_rule": null,
+      "weight_endpoint": 3,
+      "common_cohorts": [
+        1971,
+        1972,
+        1974,
+        1975,
+        1976,
+        1978,
+        1982,
+        1986,
+        1987,
+        1988,
+        1989,
+        1990,
+        1991,
+        1992,
+        1993,
+        1994,
+        1996,
+        1998,
+        2000,
+        2002,
+        2004,
+        2006,
+        2008,
+        2010,
+        2012,
+        2014,
+        2016
+      ],
+      "cohort_count": 27,
+      "start_endpoint_cohort_count": 34,
+      "end_endpoint_cohort_count": 32,
+      "retained_start_weight_mass": 0.808855283732278,
+      "retained_end_weight_mass": 0.8831045096860448,
+      "estimate": 0.7977592564504337,
+      "variance": 0.0056927625506632005,
+      "standard_error": 0.07545039794900489,
+      "variance_independent_contrast_form": 0.0056927625506632,
+      "linear_form_variance_abs_gap": 8.673617379884035e-19,
+      "within_cohort_normalization_loading_max_abs": 0.0,
+      "standard_error_interpretation": "conditional on these fixed cohort weights; excludes sampling variation in estimated cohort shares",
+      "weight_shares": {
+        "1971": 0.016021664587549663,
+        "1972": 0.017579198191584145,
+        "1974": 0.012174002662845197,
+        "1975": 0.03483211476515338,
+        "1976": 0.02009095182709903,
+        "1978": 0.03728538355724451,
+        "1982": 0.041163827033046226,
+        "1986": 0.045787177735839825,
+        "1987": 0.04563401040437565,
+        "1988": 0.04443631015502833,
+        "1989": 0.04070306236677198,
+        "1990": 0.03172735931445953,
+        "1991": 0.05162580505877693,
+        "1992": 0.042189983551945275,
+        "1993": 0.047086394781521976,
+        "1994": 0.041503098632931223,
+        "1996": 0.036295857486961354,
+        "1998": 0.03408443721681806,
+        "2000": 0.044974705551345334,
+        "2002": 0.029009955801529458,
+        "2004": 0.04850775200894224,
+        "2006": 0.03290064999104537,
+        "2008": 0.037895961679004844,
+        "2010": 0.043979023011223126,
+        "2012": 0.044404666514902935,
+        "2014": 0.03840533070518031,
+        "2016": 0.0397013154068741
+      },
+      "previous_candidate_estimate": 0.797759256450433,
+      "gap_from_previous_candidate": 6.661338147750939e-16
+    },
+    {
+      "name": "common_cohorts_minus2_to_plus2_fixed_minus2_IW",
+      "start_event_time": -2,
+      "end_event_time": 2,
+      "start_event_coefficient": "F2event omitted reference; normalized to zero",
+      "end_event_coefficient": "L2event",
+      "omitted_start_support_rule": "start event-time observation must be positive for every included cohort",
+      "weight_endpoint": -2,
+      "common_cohorts": [
+        1972,
+        1973,
+        1975,
+        1976,
+        1977,
+        1979,
+        1983,
+        1987,
+        1988,
+        1989,
+        1990,
+        1991,
+        1992,
+        1993,
+        1994,
+        1995,
+        1997,
+        1999,
+        2001,
+        2003,
+        2005,
+        2007,
+        2009,
+        2011,
+        2013,
+        2015,
+        2017
+      ],
+      "cohort_count": 27,
+      "start_endpoint_cohort_count": 34,
+      "end_endpoint_cohort_count": 33,
+      "retained_start_weight_mass": 0.8360333629872185,
+      "retained_end_weight_mass": 0.8750673402887972,
+      "estimate": 0.7345994311302176,
+      "variance": 0.005719686480677807,
+      "standard_error": 0.07562860887705,
+      "variance_independent_contrast_form": 0.005719686480677807,
+      "linear_form_variance_abs_gap": 0.0,
+      "within_cohort_normalization_loading_max_abs": null,
+      "standard_error_interpretation": "conditional on these fixed cohort weights; excludes sampling variation in estimated cohort shares",
+      "weight_shares": {
+        "1972": 0.01614863619857633,
+        "1973": 0.014623645343301708,
+        "1975": 0.010597669452023735,
+        "1976": 0.008889679853900146,
+        "1977": 0.03076414809075857,
+        "1979": 0.04878343924005173,
+        "1983": 0.041642415604808726,
+        "1987": 0.04842964117719773,
+        "1988": 0.04092668674545792,
+        "1989": 0.04486726297794532,
+        "1990": 0.026652772681276676,
+        "1991": 0.045936789943780434,
+        "1992": 0.04754962081168296,
+        "1993": 0.041619684014893174,
+        "1994": 0.042520607461672584,
+        "1995": 0.02360718329495049,
+        "1997": 0.032355059234789034,
+        "1999": 0.02473335835873975,
+        "2001": 0.042111055688843026,
+        "2003": 0.04676902848002868,
+        "2005": 0.06541856841189882,
+        "2007": 0.04405051851250092,
+        "2009": 0.04880621249693932,
+        "2011": 0.03262553165783491,
+        "2013": 0.03889108859434938,
+        "2015": 0.043765366005613905,
+        "2017": 0.04691432966618407
+      },
+      "reference_zero_support": {
+        "1972": {
+          "observations_at_minus2": 16,
+          "weight_at_minus2": 397.1000027656555
+        },
+        "1973": {
+          "observations_at_minus2": 16,
+          "weight_at_minus2": 359.6000018119812
+        },
+        "1975": {
+          "observations_at_minus2": 12,
+          "weight_at_minus2": 260.5999984741211
+        },
+        "1976": {
+          "observations_at_minus2": 10,
+          "weight_at_minus2": 218.600001335144
+        },
+        "1977": {
+          "observations_at_minus2": 30,
+          "weight_at_minus2": 756.5000004768372
+        },
+        "1979": {
+          "observations_at_minus2": 45,
+          "weight_at_minus2": 1199.599992156029
+        },
+        "1983": {
+          "observations_at_minus2": 49,
+          "weight_at_minus2": 1023.999992847443
+        },
+        "1987": {
+          "observations_at_minus2": 51,
+          "weight_at_minus2": 1190.899987399578
+        },
+        "1988": {
+          "observations_at_minus2": 40,
+          "weight_at_minus2": 1006.399996876717
+        },
+        "1989": {
+          "observations_at_minus2": 45,
+          "weight_at_minus2": 1103.299995958805
+        },
+        "1990": {
+          "observations_at_minus2": 23,
+          "weight_at_minus2": 655.3999963402748
+        },
+        "1991": {
+          "observations_at_minus2": 42,
+          "weight_at_minus2": 1129.599997758865
+        },
+        "1992": {
+          "observations_at_minus2": 39,
+          "weight_at_minus2": 1169.260012030602
+        },
+        "1993": {
+          "observations_at_minus2": 31,
+          "weight_at_minus2": 1023.441015958786
+        },
+        "1994": {
+          "observations_at_minus2": 37,
+          "weight_at_minus2": 1045.595004618168
+        },
+        "1995": {
+          "observations_at_minus2": 25,
+          "weight_at_minus2": 580.5080030560493
+        },
+        "1997": {
+          "observations_at_minus2": 24,
+          "weight_at_minus2": 795.6210018992424
+        },
+        "1999": {
+          "observations_at_minus2": 20,
+          "weight_at_minus2": 608.2009992599487
+        },
+        "2001": {
+          "observations_at_minus2": 31,
+          "weight_at_minus2": 1035.523998737335
+        },
+        "2003": {
+          "observations_at_minus2": 34,
+          "weight_at_minus2": 1150.065003037453
+        },
+        "2005": {
+          "observations_at_minus2": 50,
+          "weight_at_minus2": 1608.663008928299
+        },
+        "2007": {
+          "observations_at_minus2": 38,
+          "weight_at_minus2": 1083.215994715691
+        },
+        "2009": {
+          "observations_at_minus2": 47,
+          "weight_at_minus2": 1200.159993648529
+        },
+        "2011": {
+          "observations_at_minus2": 29,
+          "weight_at_minus2": 802.2720031738281
+        },
+        "2013": {
+          "observations_at_minus2": 38,
+          "weight_at_minus2": 956.344003200531
+        },
+        "2015": {
+          "observations_at_minus2": 43,
+          "weight_at_minus2": 1076.204005599022
+        },
+        "2017": {
+          "observations_at_minus2": 46,
+          "weight_at_minus2": 1153.638004541397
+        }
+      }
+    },
+    {
+      "name": "common_cohorts_minus2_to_plus2_fixed_plus2_IW",
+      "start_event_time": -2,
+      "end_event_time": 2,
+      "start_event_coefficient": "F2event omitted reference; normalized to zero",
+      "end_event_coefficient": "L2event",
+      "omitted_start_support_rule": "start event-time observation must be positive for every included cohort",
+      "weight_endpoint": 2,
+      "common_cohorts": [
+        1972,
+        1973,
+        1975,
+        1976,
+        1977,
+        1979,
+        1983,
+        1987,
+        1988,
+        1989,
+        1990,
+        1991,
+        1992,
+        1993,
+        1994,
+        1995,
+        1997,
+        1999,
+        2001,
+        2003,
+        2005,
+        2007,
+        2009,
+        2011,
+        2013,
+        2015,
+        2017
+      ],
+      "cohort_count": 27,
+      "start_endpoint_cohort_count": 34,
+      "end_endpoint_cohort_count": 33,
+      "retained_start_weight_mass": 0.8360333629872185,
+      "retained_end_weight_mass": 0.8750673402887972,
+      "estimate": 0.7038914204111438,
+      "variance": 0.005688608510184079,
+      "standard_error": 0.07542286463788073,
+      "variance_independent_contrast_form": 0.005688608510184079,
+      "linear_form_variance_abs_gap": 0.0,
+      "within_cohort_normalization_loading_max_abs": null,
+      "standard_error_interpretation": "conditional on these fixed cohort weights; excludes sampling variation in estimated cohort shares",
+      "weight_shares": {
+        "1972": 0.017187137855860537,
+        "1973": 0.017461309648887507,
+        "1975": 0.03342038678178305,
+        "1976": 0.0169243899421579,
+        "1977": 0.03322903754486981,
+        "1979": 0.04589519807552048,
+        "1983": 0.028893697696501783,
+        "1987": 0.04274507969672037,
+        "1988": 0.04094220148433304,
+        "1989": 0.03993153615906402,
+        "1990": 0.027857100499954292,
+        "1991": 0.04303495957681995,
+        "1992": 0.04040499643600519,
+        "1993": 0.04235689854059944,
+        "1994": 0.04113303635634405,
+        "1995": 0.02556396808900016,
+        "1997": 0.04188737989738868,
+        "1999": 0.039474411460943444,
+        "2001": 0.047049804000080526,
+        "2003": 0.039994424110690305,
+        "2005": 0.0631595326313769,
+        "2007": 0.04021161916853219,
+        "2009": 0.04833104295065975,
+        "2011": 0.02888221700351917,
+        "2013": 0.03331465933333342,
+        "2015": 0.039356317908224005,
+        "2017": 0.04135765715083006
+      },
+      "reference_zero_support": {
+        "1972": {
+          "observations_at_minus2": 16,
+          "weight_at_minus2": 397.1000027656555
+        },
+        "1973": {
+          "observations_at_minus2": 16,
+          "weight_at_minus2": 359.6000018119812
+        },
+        "1975": {
+          "observations_at_minus2": 12,
+          "weight_at_minus2": 260.5999984741211
+        },
+        "1976": {
+          "observations_at_minus2": 10,
+          "weight_at_minus2": 218.600001335144
+        },
+        "1977": {
+          "observations_at_minus2": 30,
+          "weight_at_minus2": 756.5000004768372
+        },
+        "1979": {
+          "observations_at_minus2": 45,
+          "weight_at_minus2": 1199.599992156029
+        },
+        "1983": {
+          "observations_at_minus2": 49,
+          "weight_at_minus2": 1023.999992847443
+        },
+        "1987": {
+          "observations_at_minus2": 51,
+          "weight_at_minus2": 1190.899987399578
+        },
+        "1988": {
+          "observations_at_minus2": 40,
+          "weight_at_minus2": 1006.399996876717
+        },
+        "1989": {
+          "observations_at_minus2": 45,
+          "weight_at_minus2": 1103.299995958805
+        },
+        "1990": {
+          "observations_at_minus2": 23,
+          "weight_at_minus2": 655.3999963402748
+        },
+        "1991": {
+          "observations_at_minus2": 42,
+          "weight_at_minus2": 1129.599997758865
+        },
+        "1992": {
+          "observations_at_minus2": 39,
+          "weight_at_minus2": 1169.260012030602
+        },
+        "1993": {
+          "observations_at_minus2": 31,
+          "weight_at_minus2": 1023.441015958786
+        },
+        "1994": {
+          "observations_at_minus2": 37,
+          "weight_at_minus2": 1045.595004618168
+        },
+        "1995": {
+          "observations_at_minus2": 25,
+          "weight_at_minus2": 580.5080030560493
+        },
+        "1997": {
+          "observations_at_minus2": 24,
+          "weight_at_minus2": 795.6210018992424
+        },
+        "1999": {
+          "observations_at_minus2": 20,
+          "weight_at_minus2": 608.2009992599487
+        },
+        "2001": {
+          "observations_at_minus2": 31,
+          "weight_at_minus2": 1035.523998737335
+        },
+        "2003": {
+          "observations_at_minus2": 34,
+          "weight_at_minus2": 1150.065003037453
+        },
+        "2005": {
+          "observations_at_minus2": 50,
+          "weight_at_minus2": 1608.663008928299
+        },
+        "2007": {
+          "observations_at_minus2": 38,
+          "weight_at_minus2": 1083.215994715691
+        },
+        "2009": {
+          "observations_at_minus2": 47,
+          "weight_at_minus2": 1200.159993648529
+        },
+        "2011": {
+          "observations_at_minus2": 29,
+          "weight_at_minus2": 802.2720031738281
+        },
+        "2013": {
+          "observations_at_minus2": 38,
+          "weight_at_minus2": 956.344003200531
+        },
+        "2015": {
+          "observations_at_minus2": 43,
+          "weight_at_minus2": 1076.204005599022
+        },
+        "2017": {
+          "observations_at_minus2": 46,
+          "weight_at_minus2": 1153.638004541397
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "All four contrasts use coefficients from this one regression and impose fixed common-cohort weights.",
+    "Their standard errors are conditional on those chosen cohort weights and exclude sampling variation in estimated cohort shares.",
+    "The -2 to +2 candidate assigns the omitted F2event coefficient zero only when the same cohort has observed support at -2 and +2.",
+    "Cohort composition changes across support intersections and weight endpoints.",
+    "These are descriptive alternative aggregations, not new calibration targets and not evidence of causal identification or adoption."
+  ],
+  "input_hashes": {
+    "execution.json": "49c4c879a63adc4dc810322a750bc7851a96462b0435955112eff2e975e60c52",
+    "replay_v1.do": "1549edd99ec09441d9a4c668b8cd87c858f3ac13cb0fbe926644d9f865e1a6dd",
+    "target_receipt.csv": "840753fffa969bf78098be1f123396f87dad914402b25fa1510406399663f81c",
+    "event_study_estimates.csv": "8ba851754dfa1191534505dfb168eb85d1394a6ef78a40029090e50e92ee5028",
+    "reproduction_gates.csv": "3163b86fa82b7f78d5431214fd38cef3a99ba81e22453ed27810dd6b425ca92f",
+    "room_code_diagnostics.csv": "b141582d4c8dfabb2dafdea206c4cbb413fe16c64a1d6a6c34b8a1b3a0fc758f",
+    "cohort_interaction_coefficients.csv": "fc04ab0172a59c1b10b7b09d2391095cc4307c0dd8b337388ef35b718852eb70",
+    "cohort_interaction_covariance.csv": "d3bebf902f0976ad92b5ae25bc349621d5207ca469d03b6ecca543547e253bc4",
+    "iw_coefficients.csv": "a0c6a66cd71e8a2cdcc5c020264715dcf5dd26f8ce498b61e54fac2245416725",
+    "iw_covariance.csv": "9006b8c1b0047b112b3c793a6ba6f22d70d7c9e0d22e9245b52c375d575787c7",
+    "estimation_cohort_event_support.csv": "ae1c4144293a4395a1cdb0c38b0416e668f4e5ea2af013a0416be4cffe044703",
+    "eventstudyinteract_replay.ster": "0344a30eb4abfc45ffbbc0e1bf92bb23ca324242573757175ba010e64c11233e",
+    "sa_rooms_first_birth_household_aligned_v1.log": "33671a0c281cb9556ce1a883a313ffeff664a3ac021023283c35c058fd3add65",
+    "replay_v1.log": "d33303ad5327dcf2a185f762e21c022647eb01582a154b97005d83e8e70a7d60",
+    "stata_batch_console.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "lead_preflight.json": "c066541f591aae95ba114c970769890c8befd2beaa7d81b75bfa5bc14b7407f0",
+    "source_package_manifest.json": "5118925a24cd3e25d1cc22eb23a3c4da496498b429e45485ab696fb34100a172",
+    "previous_common_cohort_contrast.json": "abd8edac8ea041ad65156e9ebbbf3e82b75781a16187c21524c41e7c5b99792d",
+    "previous_common_cohort_contrast.csv": "00ceb5aa8476656264aaab90256baf288432284585bef3ffb24fdfd90f194d8a"
+  },
+  "postprocessor_sha256": "5302fb307806b480987b4798f8930e6c0fba3b0dda6ebf9eea4c6085910144a2"
+}

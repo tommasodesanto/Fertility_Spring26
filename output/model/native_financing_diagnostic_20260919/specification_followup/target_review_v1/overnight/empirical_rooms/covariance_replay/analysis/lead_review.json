@@ -1,0 +1,39 @@
+{
+  "reviewed_utc": "2026-09-23T04:52:43.753546+00:00",
+  "status": "independently verified exact empirical replay and candidate linear contrasts",
+  "checks": [
+    "Lead read entire postprocessor and original export diff.",
+    "Read terminal numeric/count gates: target gap2.22e-16, SEgap0,49457observations/4112people.",
+    "Independent NumPy matrix reconstruction verified all810000ordered covariance cells, finite coefficients, symmetry and diagonal equality.",
+    "Recomputed all4linear contrasts and c\u2032Vc standard errors to1e-13; all supported post-endpoint coefficients have positive marginal variance."
+  ],
+  "candidate_results": [
+    {
+      "name": "common_cohorts_fixed_prebirth_IW",
+      "estimate": 0.8113974907627939,
+      "conditional_se": 0.0766062874064515
+    },
+    {
+      "name": "common_cohorts_fixed_postbirth_IW",
+      "estimate": 0.7977592564504338,
+      "conditional_se": 0.07545039794900488
+    },
+    {
+      "name": "common_cohorts_minus2_to_plus2_fixed_minus2_IW",
+      "estimate": 0.7345994311302175,
+      "conditional_se": 0.07562860887705
+    },
+    {
+      "name": "common_cohorts_minus2_to_plus2_fixed_plus2_IW",
+      "estimate": 0.7038914204111437,
+      "conditional_se": 0.07542286463788074
+    }
+  ],
+  "coding_followup": "Actual estimation sample contains100 raw zero-room codes and1 raw98; source-year meanings under separate bounded review, no refit yet.",
+  "limits": [
+    "SEs condition on chosen aggregation weights.",
+    "Common support and covariance do not establish parallel trends, no anticipation, causal identification or exact model counterpart.",
+    "These calculations do not settle outcome coding or adopt targets."
+  ],
+  "analysis_sha256": "d2db04814dee2af8e670dd03d7a316c5ff3fde75bbf0ad08ea78fa20bbf2c4fd"
+}
