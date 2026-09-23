@@ -1,0 +1,46 @@
+{
+  "review_status": "saved-artifact review complete",
+  "review_scope": "stata_census_v3 aggregate exports, log assertions, script lineage, and recorded hashes; no raw data read or rerun",
+  "v3_execution": {
+    "execution_json_status": "failed",
+    "exit_code_recorded": 0,
+    "log_failure": "Stata r(198) at variable name singleton_pruned_confirmed_controls, which exceeds Stata's 32-character variable-name limit",
+    "failed_stage": "metadata sample_receipt.csv export block, after the two requested aggregate exports were written",
+    "requested_aggregate_exports_complete": true,
+    "full_execution_complete": false,
+    "regression_or_estimator_run": false
+  },
+  "logged_sample_assertions": {
+    "aggregate_equivalent_singleton_pruned_rows": 49457,
+    "aggregate_equivalent_singleton_pruned_people": 4112,
+    "aligned_raw_code_0_rows": 100,
+    "aligned_raw_code_98_rows": 1,
+    "aligned_raw_code_99_rows": 0,
+    "assertions_passed_before_exports": true,
+    "individual_e_sample_row_identity_established": false
+  },
+  "aggregate_export_review": {
+    "cell_csv_grouped_rows": 63,
+    "cell_csv_observation_sums_by_code": {"0": 100, "98": 1},
+    "cell_csv_people_cell_sums_by_code": {"0": 100, "98": 1},
+    "totals_csv_rows_by_code": {"0": 100, "98": 1},
+    "cell_and_totals_aggregates_match": true,
+    "code_99_group_present": false,
+    "synthetic_grouping_smoke_artifacts_present": true
+  },
+  "script_lineage": {
+    "v3_sha256_matches_lead_correction_plan": true,
+    "v3_diff_from_v2": "output directory isolated to v3; grouped observation count uses ID instead of rooms_raw_aligned",
+    "no_economic_or_sample_change_claimed": true
+  },
+  "reviewed_sha256": {
+    "stata_census_v3/room_code_census.do": "d323538e0449c6421e8e727070317be0c0d92aff808d635245d0e115ddf14928",
+    "stata_census_v3/suspect_code_cells.csv": "5cbc7a50ee7bf30cdd3e5f7c657fc36645150849c3513cd5298f037a70b317d4",
+    "stata_census_v3/suspect_code_totals.csv": "ca84ea2569f784f77ae70294692cfda865e61c2e0da85f4354a7e442d326a173"
+  },
+  "unresolved": [
+    "The metadata sample receipt was not exported because of r(198).",
+    "Singleton-pruned aggregate counts match the recorded support, but individual regression e(sample) row identity remains unverified.",
+    "Economic interpretation and any recoding decision remain with the lead; no recode was authorized by this review."
+  ]
+}

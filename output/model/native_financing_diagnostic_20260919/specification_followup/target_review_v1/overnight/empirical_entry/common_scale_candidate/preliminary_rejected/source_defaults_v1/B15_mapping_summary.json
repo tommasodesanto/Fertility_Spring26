@@ -1,0 +1,164 @@
+{
+  "schema": "common_scale_candidate_B15_mapping_v1",
+  "inputs": {
+    "empirical_nodes_sha256": "0ca0b1dcd78a299c25ed898f0b7762de27a434b84d37fbee536a70011e8d4636",
+    "prior_frozen_B15_mapping_sha256": "73aaf27e4d6cc1502548c231a3ef03d328b8c8bb4ee63f6d89c92f924fe745b8",
+    "selected_B_grid_sha256": "ed385fb39da3b5e78902ac85b90fd43edf7bcd3792c87a85b68d71905f9ef371",
+    "selected_B_checkpoint_audit_sha256": "3f96929befe712be146650835eb867bdc58a44e5a2af66611c22616fe4653588",
+    "income_age_profile_source_sha256": "0aac95bca815d56d42c6c59f63c7cb59af7bd1c7d094d4438b368184e476b9f5",
+    "saved_lifecycle_sha256": "0e55a4897ef9ab4fe3e845799264db2d7dcd010b21640bba8f316cf539877a2f",
+    "utility_manifest_sha256": "a895112b283f724c532f53e214457ceb142cacd44d9ac74deb84ed6dbf40f3d5",
+    "utility_hash_manifest_sha256": "b13ae7029c146fbd11da36e85aad7ad21c57091746219a5c84125ef9ee75b7e3"
+  },
+  "method": {
+    "rank_overlap": "Actual earnings-tercile probability intervals overlapped with B15 discrete z-state rank intervals; within each empirical tercile, actual conditional omega-quintile probabilities distribute the overlap. Both empirical node and B15 z marginals are preserved exactly.",
+    "wealth_scale": "b_model = omega * model stationary-working-population-weighted mean annual gross earnings. Reconstructed P.income age profile from frozen source defaults; age weights are saved B stationary working-age masses (12 periods, one location); z mean is B15 invariant-weighted mean.",
+    "cash_only_resource_sign": "R_gross*b + Y_age18 <= 0 retained only as a descriptive cash-only statistic; withdrawn as a feasibility or necessary-resource test because age-18 unsecured debt rollover is allowed. See renter_slack_correction.json for source-traced renter-floor gate.",
+    "return": "R_gross=1.04^period_years from frozen parameter source; no equilibrium solve.",
+    "grid_support": "Compared exact scaled node values with selected B wealth-grid min/max; no clipping, censoring, or interpolation."
+  },
+  "model_working_age_scale": {
+    "annual_gross_mean_per_working_household": 1.1126080647468453,
+    "period_years": 4.0,
+    "J_R": 12,
+    "age_nodes": [
+      18.0,
+      22.0,
+      26.0,
+      30.0,
+      34.0,
+      38.0,
+      42.0,
+      46.0,
+      50.0,
+      54.0,
+      58.0,
+      62.0
+    ],
+    "saved_age_mass": [
+      0.06173345618077387,
+      0.06173345618076609,
+      0.06173345618075914,
+      0.06173345618075089,
+      0.06173345618074251,
+      0.061733456180740734,
+      0.06173345618074075,
+      0.06173345618074074,
+      0.06173345618074073,
+      0.061733456180740734,
+      0.06173345618074073,
+      0.06173345618074073
+    ],
+    "profile_default_breaks": [
+      18,
+      25,
+      35,
+      45,
+      55
+    ],
+    "profile_default_values": [
+      0.565,
+      0.838,
+      1.0,
+      0.985,
+      0.935
+    ],
+    "profile_unscaled_mean": 0.8724166666666667,
+    "profile_normalized": [
+      0.6476263253414842,
+      0.6476263253414842,
+      0.9605501958162193,
+      0.9605501958162193,
+      0.9605501958162193,
+      1.1462412837902378,
+      1.1462412837902378,
+      1.1290476645333842,
+      1.1290476645333842,
+      1.1290476645333842,
+      1.0717356003438723,
+      1.0717356003438723
+    ],
+    "age18_normalized_profile": 0.6476263253414842,
+    "P_income_age18_aftertax_period": 2.366300230946882,
+    "tau_pay": 0.179,
+    "z_weighted_mean": 0.9999999999999999,
+    "z_weights_source": "Frozen B15 distribution; invariant mean z preserved by rank overlap coupling."
+  },
+  "empirical_comparison": {
+    "family_years": 1835.0,
+    "persons": 1346.0,
+    "E_omega": 0.185775923243504,
+    "pooled_ratio_of_weighted_sums_NW2_over_EARNINDRRC": 0.486502230049851,
+    "raw_weighted_spearman_omega_gross_earnings": 0.282504564043582,
+    "same_sample_node_imputed_weighted_spearman": 0.283598469458786,
+    "cash_only_direct_unbinned_nonpositive_Rb_plus_Y_mass_descriptive_withdrawn_as_feasibility": 0.0697282796003369,
+    "inherited_reference_level_law_imposed_spearman": 0.09774300077015782,
+    "age_sample_note": "PSID childless-renter family-years ages18-24; mapped model is age-18 entrant distribution."
+  },
+  "working_age_mass_source": {
+    "source": "Saved selected B seven-state native_lifecycle_2023.csv, 12 working age cells, used only for age weights; all masses equal to numerical precision.",
+    "why_usable_for_illustrative_mapping": "The frozen model has 12 four-year working cells, one location, no age survival (source use_age_survival=False; survival probabilities are one), equal entry replacement across age. Thus age masses are equal independent of income-state resolution; the saved B07 mass confirms this invariant.",
+    "resolution_limit": "No B15 stationary equilibrium/checkpoint was solved or validated; this uses the common demographic timing/profile and is a unit mapping only."
+  },
+  "B15": {
+    "states": 15,
+    "probability_sum": 1.0,
+    "annual_gross_income_age18_by_state": [
+      0.0388301798152725,
+      0.056846555318721036,
+      0.0832221449135139,
+      0.12183544570421878,
+      0.17836449475523244,
+      0.2611218172626402,
+      0.3822767728751881,
+      0.5596450446455145,
+      0.8193084126995582,
+      1.19945004703018,
+      1.75596929437153,
+      2.570701606465538,
+      3.7634523397800694,
+      5.509613981713583,
+      8.065957394127043
+    ],
+    "aftertax_period_income_age18_by_state": [
+      0.12751831051335488,
+      0.18668408766667988,
+      0.2733015238959796,
+      0.40010760369265447,
+      0.5857490007761833,
+      0.8575240478905105,
+      1.2553969221221175,
+      1.8378743266158695,
+      2.6906088273053492,
+      3.9389939544471115,
+      5.766603162716104,
+      8.442184075632825,
+      12.359177483837748,
+      18.093572315947405,
+      26.488604082313206
+    ],
+    "R_gross": 1.1698585600000002
+  },
+  "discretization": {
+    "candidate_product_cells_absent_from_empirical_rank_overlap": 9,
+    "candidate_mass_on_absent_combinations": 0.002774336550193751,
+    "interpretation": "Product-within-tercile mapping can assign probability to omega-quintile/z-rank combinations with zero support in the finer microdata rank-overlap table."
+  },
+  "candidate": {
+    "wealth_nodes": 15,
+    "min_b": -0.6091358801322836,
+    "max_b": 1.7432626053046971,
+    "mean_b": 0.2066957904365135,
+    "mean_omega": 0.18577592324350406,
+    "model_imposed_weighted_spearman_wealth_z": 0.24089066643592977,
+    "grid_min": -12.0,
+    "grid_max": 3000.0,
+    "outside_grid_mass": 0,
+    "outside_grid_support_pairs": 0,
+    "cash_only_nonpositive_Rb_plus_Y_mass_descriptive_withdrawn_as_feasibility": 0.017955065869277066,
+    "cash_only_nonpositive_support_pairs_descriptive_withdrawn_as_feasibility": 5,
+    "cash_only_min_Rb_plus_Y_descriptive": -0.5850845130625311,
+    "cash_only_max_Rb_plus_Y_descriptive": 28.527974763456807,
+    "actual_childless_renter_slack_correction": "renter_slack_correction.json"
+  }
+}

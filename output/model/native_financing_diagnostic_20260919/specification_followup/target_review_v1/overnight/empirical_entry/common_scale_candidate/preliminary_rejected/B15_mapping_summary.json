@@ -1,0 +1,49 @@
+{
+  "schema": "common_scale_candidate_B15_mapping_v1",
+  "inputs": {
+    "empirical_nodes_sha256": "f743179378282fa0dff1c0a646dfc325dc1b6f23f05cc0d9301a53eb614170f3",
+    "prior_frozen_B15_mapping_sha256": "73aaf27e4d6cc1502548c231a3ef03d328b8c8bb4ee63f6d89c92f924fe745b8",
+    "selected_B_grid_sha256": "ed385fb39da3b5e78902ac85b90fd43edf7bcd3792c87a85b68d71905f9ef371",
+    "selected_B_checkpoint_audit_sha256": "3f96929befe712be146650835eb867bdc58a44e5a2af66611c22616fe4653588"
+  },
+  "method": {
+    "rank_overlap": "Actual earnings-tercile probability intervals overlapped with B15 discrete z-state rank intervals; within each empirical tercile, actual conditional wealth-quintile probabilities distribute the overlap. No correlation or exact quantile mass imposed.",
+    "wealth_scale": "b_model = omega * B15 weighted mean age-18 annual gross earnings per working household; candidate omega is nonhousing NETWORTH2R divided by same-wave weighted EARNINDRRC mean among working-age RP.",
+    "annual_gross_return": "R=1.04^period_years; period_years read from frozen B15 mapping; no equilibrium solve.",
+    "cashflow_test": "R*b + annual gross Y_age18 > 0 evaluated on every positive-mass node pair.",
+    "grid_support": "Compared exact scaled node values with selected B wealth-grid min/max; no clipping, censoring, or interpolation."
+  },
+  "B15": {
+    "states": 15,
+    "probability_sum": 1.0,
+    "weighted_mean_annual_gross_earnings": 0.720554272517321,
+    "min_annual_gross_earnings": 0.0388301798152725,
+    "max_annual_gross_earnings": 8.065957394127043,
+    "R_gross": 1.1698585600000002,
+    "source": {
+      "wealth": "beginning/pre-choice liquid wealth, model units",
+      "income": "age-18 annual gross income = P.income[0,0]*z/(period_years*(1-tau_pay))",
+      "period_years": 4.0,
+      "tau_pay": 0.179,
+      "P_income_0_0": 2.366300230946882,
+      "age18_income_profile": 0.720554272517321,
+      "rank_rule": "old total-income rank intervals overlapped with new B persistent-rank intervals; no perfect-correlation claim"
+    }
+  },
+  "candidate": {
+    "wealth_nodes": 15,
+    "min_b": -0.39091542419124214,
+    "max_b": 1.1373754066007555,
+    "mean_b": 0.13386163522395664,
+    "mean_omega": 0.18577592324350395,
+    "model_imposed_weighted_spearman": 0.24177453468091553,
+    "grid_min": -12.0,
+    "grid_max": 3000.0,
+    "outside_grid_mass": 0,
+    "outside_grid_support_pairs": 0,
+    "R_b_plus_Y_nonpositive_mass": 0.07975926209173594,
+    "nonpositive_support_pairs": 8,
+    "minimum_R_b_plus_Y": -0.4184855754108833,
+    "maximum_R_b_plus_Y": 9.396525749472417
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "schema": "common_scale_candidate_validation_v1",
+  "checks": {
+    "exact_July_sample": true,
+    "all_earnings_finite_zero_included": true,
+    "actual_node_probabilities_sum_to_one": true,
+    "node_mean_exactly_recovers_Eomega": true,
+    "B15_joint_preserves_all_empirical_node_marginals": true,
+    "B15_joint_preserves_all_income_marginals": true,
+    "candidate_support_inside_saved_grid": true,
+    "frozen_utility_manifests_identical": true,
+    "aggregate_builder_2005_2019_matches_saved_yearly_rows_and_weighted_earnings": true,
+    "preliminary_calcs_labeled_rejected": true,
+    "cash_only_sign_decomposition_sums_by_each_axis": true,
+    "renter_floor_source_verified": true,
+    "all_candidate_mass_passes_current_childless_renter_resource_floor_gate": true,
+    "continuous_node_and_grid_interpolation_slack_positive": true
+  },
+  "all_pass": true,
+  "aggregate_builder_year_checks": [
+    {
+      "year": 2005,
+      "working_rows_match": true,
+      "IW_earnings_total_match": true
+    },
+    {
+      "year": 2007,
+      "working_rows_match": true,
+      "IW_earnings_total_match": true
+    },
+    {
+      "year": 2009,
+      "working_rows_match": true,
+      "IW_earnings_total_match": true
+    },
+    {
+      "year": 2011,
+      "working_rows_match": true,
+      "IW_earnings_total_match": true
+    },
+    {
+      "year": 2013,
+      "working_rows_match": true,
+      "IW_earnings_total_match": true
+    },
+    {
+      "year": 2015,
+      "working_rows_match": true,
+      "IW_earnings_total_match": true
+    },
+    {
+      "year": 2017,
+      "working_rows_match": true,
+      "IW_earnings_total_match": true
+    },
+    {
+      "year": 2019,
+      "working_rows_match": true,
+      "IW_earnings_total_match": true
+    }
+  ],
+  "key_invariants": {
+    "node_probability_sum": 1.0000000000000002,
+    "E_omega": 0.185775923243504,
+    "weighted_node_mean_omega": 0.18577592324350406,
+    "product_mass_on_absent_combinations": 0.002774336550193751,
+    "cash_only_mapped_nonpositive_Rb_plus_Y_mass_descriptive_withdrawn_as_feasibility": 0.017955065869277066,
+    "cash_only_direct_PSIDs_nonpositive_Rb_plus_Y_mass_descriptive_withdrawn_as_feasibility": 0.0697282796003369
+  },
+  "scope": {
+    "raw_person_rows_exported": false,
+    "model_solve": false,
+    "equilibrium_solve": false,
+    "target_or_live_law_changed": false,
+    "bootstrap": false
+  },
+  "cash_only_sign_mass_by_axis_descriptive_withdrawn_as_feasibility": {
+    "income_state": 0.017955065869277066,
+    "earnings_tercile": 0.017955065869277066,
+    "omega_node": 0.017955065869277066
+  },
+  "current_renter_gate": {
+    "min_continuous_slack": 0.024051367069752527,
+    "min_interpolation_support_slack": 0.012962537490098791,
+    "nonpositive_candidate_mass": 0.0,
+    "source": "renter_slack_correction.json"
+  },
+  "interpretation": "Former Rb+Y sign counts are cash-only descriptive statistics. Source-traced rollover renter-floor slack is positive across all continuous candidate node/state pairs and their selected-grid interpolation support. This is a current-period gate result, not a full Bellman or equilibrium validation."
+}

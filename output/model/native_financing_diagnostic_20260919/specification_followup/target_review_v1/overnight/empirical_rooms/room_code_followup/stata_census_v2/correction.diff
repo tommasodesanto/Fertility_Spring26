@@ -1,0 +1,44 @@
+--- /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/empirical_rooms/room_code_followup/stata_census/room_code_census.do
++++ /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/empirical_rooms/room_code_followup/stata_census_v2/room_code_census.do
+@@ -1,6 +1,6 @@
+ clear all
+ set more off
+-set processors 8
++set processors 4
+ version 17.0
+ 
+ * Read-only data census: clone of the approved rooms-builder prefix through K.
+@@ -8,7 +8,7 @@
+ * only to this task's separate stata_census folder.
+ local project "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26"
+ local source "/Users/tommasodesanto/Desktop/Projects/Fertility/PSID/PSIDSHELF_MOBILITY.dta"
+-local outdir "`project'/output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/empirical_rooms/room_code_followup/stata_census"
++local outdir "`project'/output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/empirical_rooms/room_code_followup/stata_census_v2"
+ cap mkdir "`outdir'"
+ capture confirm file "`outdir'/suspect_code_cells.csv"
+ if !_rc {
+@@ -112,7 +112,7 @@
+ while `more' {
+     sort ID year
+     by ID: gen long audit_n_id = _N
+-    by year: gen long audit_n_year = _N
++    bysort year: gen long audit_n_year = _N
+     quietly count if audit_n_id == 1
+     local one_id_rows = r(N)
+     quietly count if audit_n_year == 1
+@@ -147,6 +147,15 @@
+ quietly count if retained_control_tag
+ local retained_controls = r(N)
+ drop retained_id_tag retained_control_tag
++
++assert `retained_rows' == 49457
++assert `retained_people' == 4112
++quietly count if rooms_raw_aligned == 0
++assert r(N) == 100
++quietly count if rooms_raw_aligned == 98
++assert r(N) == 1
++quietly count if rooms_raw_aligned == 99
++assert r(N) == 0
+ 
+ * No personal IDs are exported. Event time/cohort 999999/0 identify confirmed
+ * childless controls; REL 1/2 mean reference person/spouse-partner.

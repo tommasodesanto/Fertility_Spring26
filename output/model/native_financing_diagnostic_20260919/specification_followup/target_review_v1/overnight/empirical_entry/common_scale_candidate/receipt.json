@@ -1,0 +1,59 @@
+{
+  "schema": "common_scale_candidate_receipt_v2_actual_seed",
+  "status": "verified_candidate_construction_not_adopted",
+  "sample": {
+    "July_family_years": 1835,
+    "persons": 1346,
+    "waves": 14,
+    "July_IW_mass": 40916.8850389123,
+    "earnings_zero_rows": 67,
+    "positive_earnings_le_1000_rows": 26,
+    "all_current_earnings_finite": true
+  },
+  "findings": {
+    "model_mean_annual_working_gross": 0.9999999999999996,
+    "mean_entry_wealth": 0.1857759232435039,
+    "empirical_node_marginal_max_gap": 1.3877787807814457e-17,
+    "income_marginal_max_gap": 2.7755575615628914e-17,
+    "min_continuous_current_slack": 0.08238796504508777,
+    "min_interpolation_current_slack": 0.0719245281877734,
+    "positive_node_state_pairs": 85,
+    "positive_grid_state_pairs": 119
+  },
+  "execution": {
+    "raw_data_reread_for_correction": false,
+    "model_solves": 0,
+    "equilibrium_solves": 0,
+    "frozen_bundle_changed": false,
+    "running_entry_law_changed": false
+  },
+  "lineage": {
+    "raw_data_builder_and_prior_validation": "preliminary_rejected/source_defaults_v1/receipt.json",
+    "preserved_correction_plan": "preliminary_rejected/source_defaults_v1/correction_plan.json",
+    "actual_saved_parameter_extraction": "actual_frozen_parameters.json",
+    "central_independent_arithmetic": "lead_review.json",
+    "correction": "Default-based model scale and return replaced with actual frozen checkpoint values. Original raw-data aggregates retained. R builder only removes the invalid direct cash-sign diagnostic; it was not rerun."
+  },
+  "outputs_sha256": {
+    "B15_mapping_summary.json": "7447980531d9fd541b1127b9566b42979ceda7e39dc822401e43f49cf71d1ddf",
+    "README.md": "53a722ca644d004fd765697468eafd0305c627cee61629281d71ce17f5174d08",
+    "actual_frozen_parameters.json": "29bbaa308acfa63123d42c8ef6564d5902b0a38a27b55f287d9b1ff38ba1c74e",
+    "build_common_scale_candidate.R": "4e1c7a13bc73ea62ba1d68988c53e121ae9d1edc0be652aff3202ef84d6dea66",
+    "candidate_metrics.csv": "9df4f88376fd3ef4537a7590122ff4e106de64586f5afa8fa3d26303fdd12be6",
+    "cash_only_resource_sign_decomposition.csv": "ac16e4b840b48a4d5287fa54b54ff174110114eee52dda6dfe9f7257eec8f6b8",
+    "discretization_support.csv": "ff2911ddc6a99d168775b7a83a89ad92b06be8ad66e8a53285f69376fc6747f7",
+    "earnings_terciles.csv": "3cbc0cf9157de1788d32954bd22994f22a41087d7299602edec295e266ce0ddd",
+    "entry_nodes_3x5.csv": "0ca0b1dcd78a299c25ed898f0b7762de27a434b84d37fbee536a70011e8d4636",
+    "extract_frozen_parameters.py": "8ca08235c96a2f6c4da0dedeac113a0d60ea55a8e8bc810b48137ec7cb1aad9e",
+    "lead_review.json": "2ee16bb24f24046773f3f340eef27a525819982b5ddecf8cb79ac7d4c653ab15",
+    "map_frozen_B15.py": "3955b697ee7012f5baa064b1dda362a8f82e70beb0a198eb20d1341fa78bc1b8",
+    "mapped_joint_wealth_income.csv": "dbcd34f1ea983af2939d913884a470599467458ffdd26ec4dcca8fc0d1a34598",
+    "renter_slack_correction.json": "e5481a45f7f8e8feab2d520e16fff8b67c8d4393bdddb4ef913441a09370f171",
+    "renter_slack_correction.py": "64ab0ae5440740d8a63120d0d60f82f193c426ba3526cd695100a29e1c30db04",
+    "renter_slack_grid_support.csv": "4e4ab0eb6c5138ad392745b049f150c2fbfd0f87815320647d4d8e5664829c00",
+    "support_counts.csv": "43d95e266291af6d6fbaafd732040ca7a9270b73b02e451a8d488adae1f80e61",
+    "validation.json": "2db27c42cab11b1ba632aff41fa22145e6229b73e4012427effb894c04b14882",
+    "verify_saved_candidate.py": "a279ef2be67e7f556f610c2799b1fc604e750ab74e7e71fa468ee89b9ae97c0e",
+    "wave_normalizers.csv": "5ff4055744333737b3e0b7769ada619c02e479c85488b4c05c1b82abef5e0ef3"
+  }
+}

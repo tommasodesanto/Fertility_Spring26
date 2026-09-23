@@ -1,0 +1,10 @@
+{
+  "reviewed_utc": "2026-09-23T05:04:27.284839+00:00",
+  "diagnosis": "Prior Stata preprocessing failed r(5) because by year followed sort ID year. Original failure preserved.",
+  "correction": "Use bysort year, isolated v2 output, four processors, exact aggregate gates. No regression or recoding.",
+  "source_sha256": "ca3105ccac6d23a2410b561a0be9a2f1379fb63dc27bffdc31eaeea873129df3",
+  "v2_sha256": "563d154bbd860cf3dbf858c9fb33268b1b6570aa672e569dcbbc293608e60340",
+  "synthetic_smoke": "passed seven-row cascading-singleton example retaining four core rows across two pruning iterations",
+  "real_data_run": "not yet launched",
+  "wall_cap_seconds": 180
+}

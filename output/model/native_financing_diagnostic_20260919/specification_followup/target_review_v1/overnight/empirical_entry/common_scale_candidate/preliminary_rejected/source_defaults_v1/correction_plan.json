@@ -1,0 +1,7 @@
+{
+  "status": "separately_reviewed_reporting_correction",
+  "time_utc": "2026-09-23T05:16:48.060496+00:00",
+  "cause": "Candidate mapper read source defaults rather than actual serialized inherited parameters. Actual seed has R_gross=1.02^4 not1.04^4, different normalized age profile, and retirement survival enabled. Working-age survival is still exactly one. The running bundle and raw data are untouched.",
+  "method": "Extract actual inherited parameter object under frozen imports, bind both utility adapters and B15 income without solving, inspect actual annual gross incomes and debt floors. Remap the same saved empirical nodes using the actual working-age mean, recompute current renter slack and retain false prior results here.",
+  "scope": "No raw data reads, no solves, no changed launched jobs, no candidate adoption."
+}

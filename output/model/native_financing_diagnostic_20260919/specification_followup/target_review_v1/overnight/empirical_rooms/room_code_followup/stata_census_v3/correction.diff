@@ -1,0 +1,20 @@
+--- /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/empirical_rooms/room_code_followup/stata_census_v2/room_code_census.do
++++ /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/empirical_rooms/room_code_followup/stata_census_v3/room_code_census.do
+@@ -8,7 +8,7 @@
+ * only to this task's separate stata_census folder.
+ local project "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26"
+ local source "/Users/tommasodesanto/Desktop/Projects/Fertility/PSID/PSIDSHELF_MOBILITY.dta"
+-local outdir "`project'/output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/empirical_rooms/room_code_followup/stata_census_v2"
++local outdir "`project'/output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/empirical_rooms/room_code_followup/stata_census_v3"
+ cap mkdir "`outdir'"
+ capture confirm file "`outdir'/suspect_code_cells.csv"
+ if !_rc {
+@@ -168,7 +168,7 @@
+     gen byte audit_reporter_role = REL
+     egen byte audit_person_tag = tag(rooms_raw_aligned year rooms_source_year ///
+         audit_event_time audit_reporter_role audit_cohort ID)
+-    collapse (count) observations=rooms_raw_aligned ///
++    collapse (count) observations=ID ///
+         (sum) people=audit_person_tag, ///
+         by(rooms_raw_aligned year rooms_source_year audit_event_time ///
+            audit_reporter_role audit_cohort)

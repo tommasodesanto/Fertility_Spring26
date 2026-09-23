@@ -1,0 +1,42 @@
+{
+  "status": "bounded read-only codebook review complete; requested cell-level raw-data cross-tab unavailable",
+  "completed_replay_e_sample": {
+    "observations": 49457,
+    "aligned_raw_code_0_rows": 100,
+    "aligned_raw_code_98_rows": 1,
+    "aligned_raw_code_99_rows": 0,
+    "source": "../covariance_replay/output/room_code_diagnostics.csv"
+  },
+  "sample_reconstruction_context": {
+    "prior_singleton_pruned_rows": 49457,
+    "prior_singleton_pruned_people": 4112,
+    "prior_confirmed_childless_controls": 1654,
+    "person_singletons_removed": 415,
+    "singleton_years_removed": 0,
+    "individual_e_sample_marker_saved": false,
+    "use": "Aggregate counts match but do not establish individual row identity."
+  },
+  "raw_grouped_counts": {
+    "produced": false,
+    "dimensions_requested": ["aligned interview year", "source-row year", "event time", "reporter role", "first-birth cohort/control status"],
+    "reason": "The one selected-column local read attempt stopped during in-memory first-birth construction before tabulation. The raw read was not repeated under the at-most-one-read limit."
+  },
+  "codebook_findings": {
+    "code_0": "Substantive response: no room for exclusive family-unit use / family unit shares a room; not a generic missing-value code.",
+    "code_98": "Code meaning is wave-dependent: actual rooms through the 1993 wave in the examined codebooks; DK beginning in 1994.",
+    "code_99": "NA, DK or refusal depending on wave; builder recodes by aligned interview year.",
+    "year_alignment": "Builder shifts ACTUALROOMS_ from the previous shelf row to the interview year it represents, then applies wave-specific recodes. The aligned interview year is the codebook wave; source-row year is the storage row."
+  },
+  "interpretation": {
+    "coding_bug_established": false,
+    "economics_established": false,
+    "candidate_action": "Retain code 0 as valid for the current rooms-available-to-family-unit measure, subject to author review of shared-room responses. Continue wave-specific code-98 handling. Any exclusion of zeros is a separately labeled sample/estimand change requiring authorization and a new test.",
+    "not_done": ["No regression", "No target or source-code change", "No censoring", "No second raw-data read"]
+  },
+  "raw_attempt": {
+    "selected_field_read": true,
+    "completed_tabulation": false,
+    "failure": "R data.table subset assignment length mismatch in first-candidate construction after selected PSID fields were loaded.",
+    "retry": false
+  }
+}

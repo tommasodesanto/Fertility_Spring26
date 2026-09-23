@@ -1,0 +1,3 @@
+# Preliminary results rejected after lead review
+
+Preserved exactly as observed before correction; do not treat as current candidate results. The preliminary wealth-quintile classifier used raw `NETWORTH2R` rather than wave-normalized `omega`. Its `variance share removed by nodes` label used 1-MSE/variance (the explained share), so the label was reversed. The preliminary B15 mapping incorrectly scaled `omega` by the age-18 annual gross-income mean rather than the model working-age annual gross-income mean and used annual gross Y in the period after-tax cash-flow condition. Its reported 7.9759% nonpositive-resource mass is rejected and must not be cited. Corrected outputs are at the parent directory.

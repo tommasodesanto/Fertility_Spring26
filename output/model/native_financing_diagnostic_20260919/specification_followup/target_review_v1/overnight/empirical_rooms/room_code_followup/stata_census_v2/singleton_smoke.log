@@ -1,0 +1,72 @@
+
+. clear all
+
+. set more off
+
+. set processors 1
+    The maximum number of processors or cores being used is changed from 8 to
+    1.  It can be set to any number between 1 and 8
+
+. input ID year
+
+            ID       year
+  1. 1 2000
+  2. 1 2001
+  3. 2 2000
+  4. 2 2001
+  5. 3 2002
+  6. 4 2002
+  7. 4 2003
+  8. end
+
+. local more = 1
+
+. local prune_iter = 0
+
+. local removed_person_ids = 0
+
+. local removed_years = 0
+
+. while `more' {
+  2.     sort ID year
+  3.     by ID: gen long audit_n_id = _N
+  4.     bysort year: gen long audit_n_year = _N
+  5.     quietly count if audit_n_id == 1
+  6.     local one_id_rows = r(N)
+  7.     quietly count if audit_n_year == 1
+  8.     local one_year_rows = r(N)
+  9.     if `one_id_rows' == 0 & `one_year_rows' == 0 {
+ 10.         local more = 0
+ 11.         drop audit_n_id audit_n_year
+ 12.     }
+ 13.     else {
+ 14.         egen byte audit_id_tag = tag(ID) if audit_n_id == 1
+ 15.         quietly count if audit_id_tag
+ 16.         local one_ids = r(N)
+ 17.         egen byte audit_year_tag = tag(year) if audit_n_year == 1
+ 18.         quietly count if audit_year_tag
+ 19.         local one_years = r(N)
+ 20.         local removed_person_ids = `removed_person_ids' + `one_ids'
+ 21.         local removed_years = `removed_years' + `one_years'
+ 22.         local prune_iter = `prune_iter' + 1
+ 23.         drop if audit_n_id == 1 | audit_n_year == 1
+ 24.         drop audit_n_id audit_n_year audit_id_tag audit_year_tag
+ 25.     }
+ 26. }
+(2 observations deleted)
+(1 observation deleted)
+
+. 
+. assert _N == 4
+
+. assert ID <= 2
+
+. assert `prune_iter' == 2
+
+. assert `removed_person_ids' == 2
+
+. di "SINGLETON_SMOKE_PASSED"
+SINGLETON_SMOKE_PASSED
+
+. 
+end of do-file

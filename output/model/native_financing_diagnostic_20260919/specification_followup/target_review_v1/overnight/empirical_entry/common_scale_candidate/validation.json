@@ -1,0 +1,27 @@
+{
+  "schema": "common_scale_candidate_validation_v2_actual_seed",
+  "status": "verified_saved_aggregate_candidate",
+  "checks": {
+    "both_utility_bindings_same_income_and_credit": true,
+    "actual_checkpoint_hash_matches": true,
+    "model_mean_annual_working_gross_is_one": true,
+    "node_mapping_uses_actual_model_gross_mean": true,
+    "empirical_node_marginal_preserved": true,
+    "income_marginal_preserved": true,
+    "mass_one": true,
+    "native_annual_return_two_percent": true,
+    "no_credit_or_transfer_override": true,
+    "inherited_debt_rollover_at_entry": true,
+    "working_survival_one": true,
+    "all_occupied_continuous_current_slacks_positive": true,
+    "reported_continuous_min_correct": true,
+    "neighboring_grid_slacks_correct": true,
+    "all_neighboring_grid_current_slacks_positive": true,
+    "positive_grid_support_count_correct": true
+  },
+  "raw_aggregate_metrics_unchanged_except_removed_wrong_return_statistic": true,
+  "lead_review_file": "lead_review.json",
+  "original_raw_data_validation": "preliminary_rejected/source_defaults_v1/receipt.json",
+  "not_adopted": true,
+  "model_solves": 0
+}

@@ -1,0 +1,63 @@
+{
+  "schema": "age18_childless_renter_slack_correction_v2_actual_parameters",
+  "scope": "Frozen-code algebra and saved candidate aggregates only; no solve and no raw-person reread.",
+  "source_files": {
+    "tmp/utility_overnight_20260923_v1/source/code/model/intergen_eqscale_seq/parameters.py": "0aac95bca815d56d42c6c59f63c7cb59af7bd1c7d094d4438b368184e476b9f5",
+    "tmp/utility_overnight_20260923_v1/source/code/model/intergen_eqscale_seq/solver.py": "a56a9b2197c4000e0b00d24407a298cf633850fdd3347806380d28425ddfd702"
+  },
+  "frozen_source_checks": {
+    "lambda_d_actual_zero": true,
+    "taper_actual_starts_42_ends_62": true,
+    "transfer_floors_actual_zero": true,
+    "age18_actual_next_taper_one": true,
+    "renter_floor_clipped_to_grid": true,
+    "native_unsecured_floor_formula": true,
+    "childless_utility_cbar_zero": true,
+    "childless_utility_eqscale_zeros_hbar": true,
+    "gate_required_flow_definition": true,
+    "gate_slack_definition": true
+  },
+  "configuration": {
+    "lambda_d": 0.0,
+    "debt_taper_start_age": 42.0,
+    "debt_taper_end_age": 62.0,
+    "entry_age": 18,
+    "next_age_node": 22,
+    "next_period_taper_s": 1.0,
+    "next_period_debt_cap_D": 0.0,
+    "age18_renter_floor": "max(min(b,0), b_grid[0])",
+    "transfer_floor_G0": 0.0,
+    "transfer_floor_Gn": 0.0,
+    "childless_cbar_both_overnight_utilities": 0.0,
+    "childless_hbar_both_overnight_utilities": 0.0,
+    "current_resources": "R_gross*b + P.income[0,0]*z",
+    "required_flow": "cbar + r_hat*hbar = 0 at childless entry under both frozen utility variants",
+    "slack": "R_gross*b + P.income[0,0]*z + transfer - required_flow - renter_floor",
+    "R_gross": 1.08243216,
+    "P_income_age18_aftertax_period": 2.366300230946882,
+    "utility_templates": [
+      "B_floor (eqscale childless cbar/hbar zero)",
+      "B_shares (childless cbar/hbar zero)"
+    ]
+  },
+  "candidate_support": {
+    "joint_candidate_mass": 1.0000000000000002,
+    "positive_node_state_pairs": 85,
+    "continuous_candidate_node_min_slack": 0.08238796504508777,
+    "continuous_candidate_nonpositive_slack_mass": 0.0,
+    "interpolation_grid_state_support_points": 119,
+    "interpolation_grid_state_min_slack": 0.0719245281877734,
+    "interpolation_grid_support_nonpositive_slack_mass": 0.0,
+    "grid_min_max": [
+      -12.0,
+      3000.0
+    ],
+    "interpretation": "Within the current-period resource/floor gate used by frozen solver.py, all candidate mass passes strictly if recorded slack is positive. This is not Bellman continuation viability, utility optimality, or an equilibrium result. The previously reported Rb+Y sign shares are cash-only descriptive statistics and are withdrawn as feasibility/necessity measures."
+  },
+  "limitations": [
+    "No Bellman or equilibrium solve was run; future value and optimal housing/consumption choices are not checked.",
+    "All-age/parent states can have positive child-dependent housing floors; this diagnostic concerns childless entrant state only.",
+    "Interpolation support applies the age-18 floor at neighboring frozen wealth-grid nodes; it does not certify all future policy transitions.",
+    "Candidate common-scale entry law is still not adopted or equilibrium-validated."
+  ]
+}

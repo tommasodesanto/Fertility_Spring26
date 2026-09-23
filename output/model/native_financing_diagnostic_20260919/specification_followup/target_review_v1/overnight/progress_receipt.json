@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-09-23T04:59:42.556565+00:00",
-  "phase": "Exact room-estimator covariance and ACS uncertainty reviewed; narrow coding and entry-debt checks remain",
+  "updated_utc": "2026-09-23T05:23:21.894404+00:00",
+  "phase": "Covariance, room codes and corrected actual-seed entry mapping reviewed; focused Opus integration running",
   "phase1_status": "complete; lead critique saved",
   "phase2_status": "complete; lead corrections saved",
   "phase3": "phase3_empirical_adjudication/receipt.json",
@@ -13,23 +13,26 @@
     "empirical_old_wealth"
   ],
   "worker_status": "All four bounded empirical checks completed and reviewed; no target edits or model solves.",
-  "next": "Finish native debt-floor and room-code cross-tab checks, then a focused Opus integration only if new evidence warrants. SSH remains unavailable; no model run/target modification.",
+  "next": "Review phase5 integration; prepare bounded morning decision report; collect cluster only after authentication refresh.",
   "collector": "Latest local source has nine passing tests and finalizer binding checks; upload external helper after SSH returns.",
   "pdf": "Builder checked with synthetic fixtures only. PDF marker already invoked once. No actual results PDF produced.",
   "delivery_utc": "2026-09-23T14:00:00Z",
   "phase3_status": "completed at04:12:13UTC; corrections required",
-  "latest_pushed_commit": "b600afb7",
+  "latest_pushed_commit": "2bd1a8d6",
   "worker_followups": {
     "empirical_acs_child_mapping": "Complete; lead rerun passed all new gates, candidate shift-.010847.",
     "empirical_rooms/common_cohort_contrast_review.json": "Complete independent review; candidate .811397/.797759, no SE yet.",
     "empirical_fertility/late_fertility_diagnostic.json": "Complete; lead read stock-flow calculation, late firstbirth2.528% vs NCHS.536%, no all-order empirical cache.",
     "empirical_rooms/covariance_replay": "Completed330.1seconds; target/SE and49457/4112 reproduced. Four fixed-cohort contrasts independently checked, conditional SEs available.",
-    "empirical_entry/common_scale_candidate": "Empirical construction complete; lead caught debt-rollover omission in requested R*b+Y test. Corrected native renter-floor slack check underway; old negative-cash percentages are NOT infeasible-mass evidence.",
+    "empirical_entry/common_scale_candidate": "Complete corrected candidate: actual serialized seed, not source defaults. Native annual gross working mean1, R=1.02^4, working survival1 with retirement survival enabled; meanwealth.185775923. No solves. All85node-state/119grid-state current renter slacks positive, minima.082388/.071925; full Bellman viability untested. Earlier default-based scale and cash-only feasibility claims preserved and rejected.",
     "empirical_acs_child_mapping/uncertainty": "Completed and independently verified1000paired draws. Existing SE.059705/candidate.058386; difference-.010847 paired SE.008077. No target change.",
-    "empirical_rooms/room_code_followup": "Official codebook review complete:0is substantive shared-room response,98year-specific. One R extraction failed; separate15min Stata preprocessing-only method authorized for aggregate cross-tab, no regression.",
+    "empirical_rooms/room_code_followup": "Both requested aggregate exports verified; script failed afterward on Stata metadata name length.100zero,1raw98(aligned1991),0raw99. Official0sharedroom and1991allowed1\u201398count; no automatic recode. No new fit. Individual e(sample) identity unverified.",
     "report_tables": "13current target/12weight inventory independently verified; historical B model values labeled; metadata corrections reviewed."
   },
   "phase4": "phase4_final_measurement_choices/receipt.json",
   "phase4_cap_seconds": 1800,
-  "phase4_status": "completed 04:23:11UTC; lead qualifications saved in phase4_lead_review.json"
+  "phase4_status": "completed 04:23:11UTC; lead qualifications saved in phase4_lead_review.json",
+  "phase5": "phase5_evidence_integration/receipt.json",
+  "phase5_cap_seconds": 1800,
+  "phase5_status": "running"
 }

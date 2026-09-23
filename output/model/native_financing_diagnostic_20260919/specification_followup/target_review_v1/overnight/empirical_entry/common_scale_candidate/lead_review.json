@@ -1,0 +1,50 @@
+{
+  "schema": "entry_common_scale_lead_review_v2",
+  "status": "verified_saved_aggregate_candidate",
+  "checks": {
+    "both_utility_bindings_same_income_and_credit": true,
+    "actual_checkpoint_hash_matches": true,
+    "model_mean_annual_working_gross_is_one": true,
+    "node_mapping_uses_actual_model_gross_mean": true,
+    "empirical_node_marginal_preserved": true,
+    "income_marginal_preserved": true,
+    "mass_one": true,
+    "native_annual_return_two_percent": true,
+    "no_credit_or_transfer_override": true,
+    "inherited_debt_rollover_at_entry": true,
+    "working_survival_one": true,
+    "all_occupied_continuous_current_slacks_positive": true,
+    "reported_continuous_min_correct": true,
+    "neighboring_grid_slacks_correct": true,
+    "all_neighboring_grid_current_slacks_positive": true,
+    "positive_grid_support_count_correct": true
+  },
+  "findings": {
+    "model_mean_annual_working_gross": 0.9999999999999996,
+    "mean_entry_wealth": 0.1857759232435039,
+    "empirical_node_marginal_max_gap": 1.3877787807814457e-17,
+    "income_marginal_max_gap": 2.7755575615628914e-17,
+    "min_continuous_current_slack": 0.08238796504508777,
+    "min_interpolation_current_slack": 0.0719245281877734,
+    "positive_node_state_pairs": 85,
+    "positive_grid_state_pairs": 119
+  },
+  "limitations": [
+    "Current childless renter resource check only; no household, continuation, later-child-state or equilibrium validation.",
+    "Joint 3x5 node/rank coupling is a proposed discretization; ages18-24 proxy and cross-wave normalization remain assumptions.",
+    "Raw microdata construction was reviewed earlier; this pass checks saved aggregate arithmetic and actual serialized parameters."
+  ],
+  "source_trace": [
+    "Actual normalized_old checkpoint, not source defaults, supplies return/profile/survival/credit/transfers.",
+    "Native run rebases only supply, initializes utility, binds listed structural coordinates, replaces z, rebuilds debt caps, then analytically balances pension.",
+    "Extraction reproduces the relevant binding operations in both arms without model solves."
+  ],
+  "inputs_sha256": {
+    "actual_frozen_parameters.json": "29bbaa308acfa63123d42c8ef6564d5902b0a38a27b55f287d9b1ff38ba1c74e",
+    "entry_nodes_3x5.csv": "0ca0b1dcd78a299c25ed898f0b7762de27a434b84d37fbee536a70011e8d4636",
+    "mapped_joint_wealth_income.csv": "dbcd34f1ea983af2939d913884a470599467458ffdd26ec4dcca8fc0d1a34598",
+    "renter_slack_grid_support.csv": "4e4ab0eb6c5138ad392745b049f150c2fbfd0f87815320647d4d8e5664829c00",
+    "B15_mapping_summary.json": "7447980531d9fd541b1127b9566b42979ceda7e39dc822401e43f49cf71d1ddf",
+    "renter_slack_correction.json": "e5481a45f7f8e8feab2d520e16fff8b67c8d4393bdddb4ef913441a09370f171"
+  }
+}

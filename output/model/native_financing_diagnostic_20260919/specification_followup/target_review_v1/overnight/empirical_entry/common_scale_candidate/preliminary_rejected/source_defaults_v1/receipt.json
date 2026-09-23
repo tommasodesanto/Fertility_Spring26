@@ -1,0 +1,233 @@
+{
+  "schema": "common_scale_candidate_receipt_v1",
+  "scope": "Candidate data construction only; all outputs confined to common_scale_candidate/. No adoption.",
+  "execution": {
+    "PSID_data_read_only": true,
+    "active_model_or_GE_solve": false,
+    "source_or_target_changes": false,
+    "SSH_attempted": false,
+    "bootstrap_reps": 0,
+    "raw_person_rows_exported": false,
+    "reproduction_commands": [
+      "Rscript output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/empirical_entry/common_scale_candidate/build_common_scale_candidate.R",
+      "python3 output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/empirical_entry/common_scale_candidate/map_frozen_B15.py",
+      "python3 output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/empirical_entry/common_scale_candidate/renter_slack_correction.py"
+    ]
+  },
+  "sample": {
+    "July_family_years": 1835,
+    "persons": 1346,
+    "waves": 14,
+    "July_IW_mass": 40916.8850389123,
+    "earnings_zero_rows": 67,
+    "positive_earnings_le_1000_rows": 26,
+    "all_current_earnings_finite": true
+  },
+  "candidate": {
+    "E_omega": 0.185775923243504,
+    "weighted_3x5_node_mean": 0.18577592324350406,
+    "pooled_ratio_weighted_sums_NW2_gross_earnings": 0.486502230049851,
+    "raw_weighted_spearman": 0.282504564043582,
+    "node_imputed_weighted_spearman": 0.283598469458786,
+    "MSE": 1.25274231072056,
+    "MSE_over_variance": 0.791213275762162,
+    "B15_model_working_age_gross_mean": 1.1126080647468453,
+    "B15_imposed_spearman": 0.24089066643592977,
+    "mapped_candidate_grid_support_loss": 0,
+    "product_mass_on_microdata_absent_combinations": 0.002774336550193751,
+    "cash_only_direct_unbinned_Rb_plus_Y_nonpositive_mass_descriptive_withdrawn_as_feasibility": 0.0697282796003369,
+    "cash_only_mapped_Rb_plus_Y_nonpositive_mass_descriptive_withdrawn_as_feasibility": 0.017955065869277066,
+    "age18_renter_floor_gate_nonpositive_mass": 0.0,
+    "age18_renter_floor_gate_min_continuous_slack": 0.024051367069752527,
+    "age18_renter_floor_gate_min_interpolation_slack": 0.012962537490098791
+  },
+  "validation": {
+    "schema": "common_scale_candidate_validation_v1",
+    "checks": {
+      "exact_July_sample": true,
+      "all_earnings_finite_zero_included": true,
+      "actual_node_probabilities_sum_to_one": true,
+      "node_mean_exactly_recovers_Eomega": true,
+      "B15_joint_preserves_all_empirical_node_marginals": true,
+      "B15_joint_preserves_all_income_marginals": true,
+      "candidate_support_inside_saved_grid": true,
+      "frozen_utility_manifests_identical": true,
+      "aggregate_builder_2005_2019_matches_saved_yearly_rows_and_weighted_earnings": true,
+      "preliminary_calcs_labeled_rejected": true,
+      "cash_only_sign_decomposition_sums_by_each_axis": true,
+      "renter_floor_source_verified": true,
+      "all_candidate_mass_passes_current_childless_renter_resource_floor_gate": true,
+      "continuous_node_and_grid_interpolation_slack_positive": true
+    },
+    "all_pass": true,
+    "aggregate_builder_year_checks": [
+      {
+        "year": 2005,
+        "working_rows_match": true,
+        "IW_earnings_total_match": true
+      },
+      {
+        "year": 2007,
+        "working_rows_match": true,
+        "IW_earnings_total_match": true
+      },
+      {
+        "year": 2009,
+        "working_rows_match": true,
+        "IW_earnings_total_match": true
+      },
+      {
+        "year": 2011,
+        "working_rows_match": true,
+        "IW_earnings_total_match": true
+      },
+      {
+        "year": 2013,
+        "working_rows_match": true,
+        "IW_earnings_total_match": true
+      },
+      {
+        "year": 2015,
+        "working_rows_match": true,
+        "IW_earnings_total_match": true
+      },
+      {
+        "year": 2017,
+        "working_rows_match": true,
+        "IW_earnings_total_match": true
+      },
+      {
+        "year": 2019,
+        "working_rows_match": true,
+        "IW_earnings_total_match": true
+      }
+    ],
+    "key_invariants": {
+      "node_probability_sum": 1.0000000000000002,
+      "E_omega": 0.185775923243504,
+      "weighted_node_mean_omega": 0.18577592324350406,
+      "product_mass_on_absent_combinations": 0.002774336550193751,
+      "cash_only_mapped_nonpositive_Rb_plus_Y_mass_descriptive_withdrawn_as_feasibility": 0.017955065869277066,
+      "cash_only_direct_PSIDs_nonpositive_Rb_plus_Y_mass_descriptive_withdrawn_as_feasibility": 0.0697282796003369
+    },
+    "scope": {
+      "raw_person_rows_exported": false,
+      "model_solve": false,
+      "equilibrium_solve": false,
+      "target_or_live_law_changed": false,
+      "bootstrap": false
+    },
+    "cash_only_sign_mass_by_axis_descriptive_withdrawn_as_feasibility": {
+      "income_state": 0.017955065869277066,
+      "earnings_tercile": 0.017955065869277066,
+      "omega_node": 0.017955065869277066
+    },
+    "current_renter_gate": {
+      "min_continuous_slack": 0.024051367069752527,
+      "min_interpolation_support_slack": 0.012962537490098791,
+      "nonpositive_candidate_mass": 0.0,
+      "source": "renter_slack_correction.json"
+    },
+    "interpretation": "Former Rb+Y sign counts are cash-only descriptive statistics. Source-traced rollover renter-floor slack is positive across all continuous candidate node/state pairs and their selected-grid interpolation support. This is a current-period gate result, not a full Bellman or equilibrium validation."
+  },
+  "inputs": {
+    "PSID shelf": {
+      "artifact": "PSIDSHELF_MOBILITY.dta",
+      "path": "../PSID/PSIDSHELF_MOBILITY.dta",
+      "sha256": "f1c5d48d5ef5357c40e743895dd25c73cd45789f779d1d575408f671fe637029"
+    },
+    "July Block 2 builder": {
+      "artifact": "estimate_intergen_income_entry_targets.R",
+      "path": "code/data/psid_followup_mar2026/estimate_intergen_income_entry_targets.R",
+      "sha256": "ba04f9bebb789ef22a878459b42b1b26fc14154554338c7a47e12e143234944f"
+    },
+    "aggregate gross earnings builder": {
+      "artifact": "audit_aggregate_wealth_earnings_ratio.R",
+      "path": "code/data/psid_followup_mar2026/audit_aggregate_wealth_earnings_ratio.R",
+      "sha256": "b0937972056646d555ae67297a35d8789cdb60bbb7ed57f442779a149bac48f6"
+    },
+    "July Block 2 saved nodes": {
+      "artifact": "block2_entry_wealth_18_24.csv",
+      "path": "code/data/psid_followup_mar2026/output/intergen_income_entry_targets_20260716/block2_entry_wealth_18_24.csv",
+      "sha256": "1f35e20bab3f3c82910c93ae4500ca22cb995b18c3a8ce617e894a421d6d4068"
+    },
+    "frozen B15 entry mapping input": {
+      "artifact": "model_entry_mapping.json",
+      "path": "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/empirical_entry/model_entry_mapping.json",
+      "sha256": "73aaf27e4d6cc1502548c231a3ef03d328b8c8bb4ee63f6d89c92f924fe745b8"
+    },
+    "utility_overnight_v1 manifest": {
+      "artifact": "manifest.json",
+      "path": "output/model/native_financing_diagnostic_20260919/specification_followup/utility_overnight_v1/manifest.json",
+      "sha256": "a895112b283f724c532f53e214457ceb142cacd44d9ac74deb84ed6dbf40f3d5"
+    },
+    "tmp utility manifest": {
+      "artifact": "manifest.json",
+      "path": "tmp/utility_overnight_20260923_v1/manifest.json",
+      "sha256": "a895112b283f724c532f53e214457ceb142cacd44d9ac74deb84ed6dbf40f3d5"
+    },
+    "tmp utility hash manifest": {
+      "artifact": "hash_manifest.json",
+      "path": "tmp/utility_overnight_20260923_v1/hash_manifest.json",
+      "sha256": "b13ae7029c146fbd11da36e85aad7ad21c57091746219a5c84125ef9ee75b7e3"
+    },
+    "B_floor frozen template plan": {
+      "artifact": "template_plan.json",
+      "path": "tmp/utility_overnight_20260923_v1/inputs/utility_templates/B_floor/template_plan.json",
+      "sha256": "0ce0d53a3543c006f4e71b1fcecc157ea2fb217855b2927659046aa5112120b8"
+    },
+    "frozen model parameter source": {
+      "artifact": "parameters.py",
+      "path": "tmp/utility_overnight_20260923_v1/source/code/model/intergen_eqscale_seq/parameters.py",
+      "sha256": "0aac95bca815d56d42c6c59f63c7cb59af7bd1c7d094d4438b368184e476b9f5"
+    },
+    "frozen model income_at_state source": {
+      "artifact": "solver.py",
+      "path": "tmp/utility_overnight_20260923_v1/source/code/model/intergen_eqscale_seq/solver.py",
+      "sha256": "a56a9b2197c4000e0b00d24407a298cf633850fdd3347806380d28425ddfd702"
+    },
+    "saved selected-B lifecycle summary": {
+      "artifact": "native_lifecycle_2023.csv",
+      "path": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/B/selected/native_lifecycle_2023.csv",
+      "sha256": "0e55a4897ef9ab4fe3e845799264db2d7dcd010b21640bba8f316cf539877a2f"
+    },
+    "saved selected-B wealth grid": {
+      "artifact": "wealth_grid.json",
+      "path": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/B/selected/wealth_grid.json",
+      "sha256": "ed385fb39da3b5e78902ac85b90fd43edf7bcd3792c87a85b68d71905f9ef371"
+    },
+    "selected B checkpoint audit": {
+      "artifact": "selected_B_checkpoint_audit.json",
+      "path": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/selected_B_checkpoint_audit.json",
+      "sha256": "3f96929befe712be146650835eb867bdc58a44e5a2af66611c22616fe4653588"
+    }
+  },
+  "outputs_sha256": {
+    "B15_mapping_summary.json": "ce1a978d191faf667c15428581022c57f85a30e488e4561e94e97a0c2214474f",
+    "README.md": "686631fc79ba758d35a8acc39acab3e2f0347790149c91da2270d97d94c13611",
+    "build_common_scale_candidate.R": "70ce804bba29cfdc527ebb5646d04e5bebcbd481521de6b100f2e057688f690e",
+    "candidate_metrics.csv": "cfe8c2c4db9992b5f476e0d85014407baa87d1a1f231e536078606916641151a",
+    "cash_only_resource_sign_decomposition.csv": "ac16e4b840b48a4d5287fa54b54ff174110114eee52dda6dfe9f7257eec8f6b8",
+    "discretization_support.csv": "ff2911ddc6a99d168775b7a83a89ad92b06be8ad66e8a53285f69376fc6747f7",
+    "earnings_terciles.csv": "3cbc0cf9157de1788d32954bd22994f22a41087d7299602edec295e266ce0ddd",
+    "entry_nodes_3x5.csv": "0ca0b1dcd78a299c25ed898f0b7762de27a434b84d37fbee536a70011e8d4636",
+    "map_frozen_B15.py": "111bddbee6a535df4f76ff854fdbe4dcad498fbd28ab2f8d0926739854bf5718",
+    "mapped_joint_wealth_income.csv": "33849db6ef86b541750c3200936770e491a2c46dbf780d7994477858e0a3018b",
+    "preliminary_rejected/B15_mapping_summary.json": "f246c85261dd4732e1ac430633df808b15e914ad7cf7684013cc1fe222a7b70e",
+    "preliminary_rejected/DISCREPANCY.md": "9c46ed4a34120d1d0d082d5784ab9163599fb76ca9f9217698569f7652185c32",
+    "preliminary_rejected/build_common_scale_candidate.R": "1f52e19e9427e14f87499575c3ca6ef6468c3f9b53aece19138c1c5be59aae19",
+    "preliminary_rejected/candidate_metrics.csv": "1b03e0acc25b73956fd8faea6ed35db69785cf399760c7639236fe560a0031f4",
+    "preliminary_rejected/earnings_terciles.csv": "3cbc0cf9157de1788d32954bd22994f22a41087d7299602edec295e266ce0ddd",
+    "preliminary_rejected/entry_nodes_3x5.csv": "f743179378282fa0dff1c0a646dfc325dc1b6f23f05cc0d9301a53eb614170f3",
+    "preliminary_rejected/map_frozen_B15.py": "fdfeacef969603c1e2256c9606a85540b7466d9fddeea1cfcb20fbdc67bd04f2",
+    "preliminary_rejected/mapped_joint_wealth_income.csv": "946824019d204ac8ab9dada53d63a4b375734d4cf727d3c42724d3dacb695fd2",
+    "preliminary_rejected/support_counts.csv": "43d95e266291af6d6fbaafd732040ca7a9270b73b02e451a8d488adae1f80e61",
+    "preliminary_rejected/wave_normalizers.csv": "3832a0737d518d66a29ffffd498aca0becdc73e4e58dfa342670a25d847cc5d7",
+    "renter_slack_correction.json": "6ca19f5573a831cd7e19cf15697541e04570f94b28e645199b32e40bba6bc6b3",
+    "renter_slack_correction.py": "3feb828c80259bc7c8683a53410c1f3365a8e31e7f8dca47d3a01b8dc69cf850",
+    "renter_slack_grid_support.csv": "28af4ab37bc447102520bbf51fa04cf10e9399a654301ec50eea7d5f3995aa0c",
+    "support_counts.csv": "43d95e266291af6d6fbaafd732040ca7a9270b73b02e451a8d488adae1f80e61",
+    "validation.json": "b418c0e9f34c824b3ff66f88f9875a50e703984b18001ab4f6897184a98a8b89",
+    "wave_normalizers.csv": "5ff4055744333737b3e0b7769ada619c02e479c85488b4c05c1b82abef5e0ef3"
+  }
+}
