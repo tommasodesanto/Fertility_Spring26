@@ -1,31 +1,36 @@
 # LaTeX Workspace
 
-## Mock quantification restored from the reviewed July text — September 23, 2026
+## Mock quantification: current 2007 calibration in the reviewed July style — September 23, 2026
 
-At the author's explicit request, `JMP_DS_mock/sections/04_quantification.tex`
-now starts from `quantification_rewrite_review.tex`, the paragraph-reviewed
-July 17 calibration text, rather than the new September scaffold. All body
-wording is copied unchanged except the section title/labels, one short
-provenance footnote and two table captions identifying the July reference.
-Historical numerical inputs, 14 parameter estimates and 15 fit rows are retained
-as placeholders for the forthcoming item-by-item update, not adopted as current
-results. The current 13-row target review remains separate.
+The author's clarification supersedes the literal July restoration. July supplies
+the prose and organization, not obsolete economic content or historical tables.
+`JMP_DS_mock/sections/04_quantification.tex` now opens with the stationary reference
+economy representing 2007 and distinguishes that date from surrounding-year
+CPS, ACS, natality and PSID observations. It preserves the three-part July
+organization and economic-block explanations where applicable.
 
-The source includes the two later July 17 qualifications documented in
-`docs/model/quantification_note_reaudit_and_study_guide_20260720.md`; it is not
-claimed to be byte-identical to the earlier circulated PDF. Subsequent changes
-should preserve the reviewed wording wherever accurate. Income, utility,
-measurement and estimates will be updated only through the agreed review.
+The section uses the current nine searched floor-specification parameters plus
+the separate fertility normalization, all 13 working target rows, and current
+working external restrictions. Earnings, entry mapping and the alternative
+child-dependent-share utility remain provisional. Historical 14-parameter and
+15-moment tables and July fit claims are removed. Model moments are left blank
+pending the chosen specification; no experimental fit is adopted.
 
-A temporary full-mock copy was compiled with bibliography and repeated LaTeX
-passes. All new citations resolve, no overfull boxes or compilation errors occur,
-and pages 4–10 were visually inspected. The pre-existing empirical-appendix
-reference remains undefined. The author draft, slides, other mock sections and
-existing full-mock PDF were not changed. The existing model-text difference
-about current income at purchase remains unresolved; this restoration does not
-certify model/manuscript synchronization.
+The [five-page PDF excerpt](../output/pdf/JMP_DS_mock_quantification.pdf) is
+compiled from the same mock section; all pages are visually checked, with no
+unresolved references, compilation errors or overfull boxes. Independent review
+verified all 13 target values and the nine-plus-one parameter accounting.
+Author draft, slides and other mock sections are unchanged.
 
-A readable [PDF excerpt of the restored quantification section](../output/pdf/JMP_DS_mock_quantification.pdf) is available. It is generated from the same mock section, with all six pages rendered and inspected; its historical tables remain labelled July reference.
+A specific representation discrepancy is recorded for the subsequent coordinated
+review: the slides say annual depreciation is 2%, but the serialized seed used
+by the current comparison has period depreciation 0.043279309359, equivalent
+to 1.1% annually; the inspected candidate adapters do not reset that field.
+The mock retains 1.1%. Supply elasticity is explicitly rebased to 0.63 (as in
+selected parameter receipts), so the seed's older 1.75 is not carried forward.
+This document correction does not alter model parameters. The existing
+model-text/current-income-purchase discrepancy remains open; full manuscript
+synchronization is not claimed.
 
 ## Coordinated JMP sources — author instruction, September 21, 2026
 

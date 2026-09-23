@@ -51,10 +51,13 @@ an explicit recorded decision.
 
 Preparation completed: [13-row decision sheet](target_decisions_20260923.csv),
 with current values, unresolved choices, required calculations and evidence;
-the lead checked every row and corrected three overstatements. The initial mock scaffold was subsequently replaced at the author's request
-by the reviewed July 17 prose, with minimal provenance labels. That mock now
-retains historical July tables as update placeholders; it is not the current
-13-row target inventory. The decision sheet remains current. Both preparation
+the lead checked every row and corrected three overstatements. The mock uses the
+reviewed July prose and organization while describing the current 2007 stationary
+calibration. The author explicitly corrected the earlier literal restoration:
+obsolete July economics and the historical 14/15 tables are removed. The mock
+now contains all 13 current working targets and the current parameter roles,
+with model-fit values left blank pending specification decisions. The decision
+sheet remains current. Both preparation
 and restoration checks are recorded in `target_decisions_20260923_review.json`.
 These artifacts organize the discussion; they do not mark the target decisions
 complete.

@@ -4,7 +4,7 @@
   "scored": 12,
   "normalization": 1,
   "decisions_match_current_contract": true,
-  "lead_review": "All13 decision rows read; corrected bequest coverage requirement, stock-versus-spacing language and contrast terminology. Mock prose checked and corrected to household earnings, explicit entrant proxy, scale/weight relationship and source vintages.",
+  "lead_review": "All 13 target decision rows remain verified. Mock corrected to current2007content usingJulyprose/organization; independent target and parameter-accounting check passed.",
   "contract_sha256": "ab5a19a0dd62a76ebf36c24ea594c416384703cecad861882045e4054cf6eb55",
   "no_targets_weights_or_model_changed": true,
   "previous_mock_review": {
@@ -15,7 +15,7 @@
     "status": "superseded_by_author_requested_July_restoration"
   },
   "restored_mock_review": {
-    "status": "verified_July_text_restoration_not_current_fit",
+    "status": "superseded_by_author_clarification_use_July_style_with_current_2007_content",
     "body_equality_after_removing_declared_provenance_changes": true,
     "source": "latex/quantification_rewrite_review.tex",
     "source_sha256": "57025191201da26d4392f050f6d2e3dd7fab6ab795f8351e25d1f6776c6d2a34",
@@ -47,5 +47,60 @@
     "other_main_content_style_and_list_metadata_exactly_preserved": true,
     "no_target_or_model_adoption": true,
     "sharing_changed": false
+  },
+  "current_mock_review": {
+    "status": "current_2007_calibration_working_draft_not_adoption",
+    "source": "latex/JMP_DS_mock/sections/04_quantification.tex",
+    "source_sha256": "cc1679585acfe6416feb072c62f4d598cda4ff5efd56026eae8c33d3d2cf8cfb",
+    "historical_tables_removed": true,
+    "current_target_values_verified": 13,
+    "searched_floor_parameters": 9,
+    "fertility_normalizations": 1,
+    "model_fit_column": "blank pending chosen specification",
+    "compile": "Temporary wrapper of same mock section; BibTeX and repeatedLaTeX; no warnings/errors/overfulls",
+    "visual_review": "All5pages inspected; updatedpages1,2,3,5rechecked",
+    "pdf_sha256": "34c02c61d86f2e3a089613bd75cbd789c771fe68bd8209782ef0f2bd3e1115f1",
+    "serialized_fixed_inputs": {
+      "fields": {
+        "period_years": 4.0,
+        "age_start": 18.0,
+        "J_R": 12,
+        "A_m": 18.0,
+        "alpha_cons": 0.733,
+        "eqscale_form": "power",
+        "sigma": 2.0,
+        "delta": 0.04327930935900004,
+        "tau_H": 0.04,
+        "psi": 0.06,
+        "phi": [
+          0.8,
+          0.8,
+          0.8,
+          0.8
+        ],
+        "hR_max": 6.0,
+        "eta_supply": [
+          1.75
+        ]
+      },
+      "known_serialized_classes_read_as_records": [
+        "e5f_matched_pf_initial_state.NormalizedOldState",
+        "run_dynamic_population_transition.PolicyBundle",
+        "run_dynamic_population_transition.TransitionMaps",
+        "run_e5f_perfect_foresight_transition.PFInitialState",
+        "run_e5f_perfect_foresight_transition.HistoricalConditioning",
+        "run_dynamic_population_transition.HousingSupplyRule",
+        "run_e5f_perfect_foresight_person_demography.AnnualDemographicPrimitives",
+        "demographic_transition.person_cohort_law.CohortState"
+      ],
+      "model_solved": false
+    },
+    "fixed_input_notes": "Seed depreciation .043279309359 is1.1%annual; no candidate reset seen. Seed eta1.75 rebasedto.63 inselectedparameterreceipt. Parentutility explicitly pinsalpha.733,sigma2,scale.7/.7. Remaining currentvalues fromsignedcurrentcontracts. No modelsolve."
+  },
+  "advisor_2007_update_review": {
+    "tab": "t.umcf44buj7j3",
+    "objective_and_mock_progress_corrected": true,
+    "all_13_values_preserved": true,
+    "user_simplified_main_list_retained": true
   }
 }
