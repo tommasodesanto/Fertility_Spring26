@@ -1,23 +1,29 @@
 # LaTeX Workspace
 
-## Provisional mock quantification — September 23, 2026
+## Mock quantification restored from the reviewed July text — September 23, 2026
 
-At the author's explicit request, the existing mock section
-`JMP_DS_mock/sections/04_quantification.tex` now contains a first quantification
-draft and all 13 current working targets. Earnings, utility, the population
-mapping, birth timing and working weights are explicitly provisional; no
-experimental fit is adopted. The draft is to evolve alongside the row-by-row
-target decisions, not substitute for those decisions.
+At the author's explicit request, `JMP_DS_mock/sections/04_quantification.tex`
+now starts from `quantification_rewrite_review.tex`, the paragraph-reviewed
+July 17 calibration text, rather than the new September scaffold. All body
+wording is copied unchanged except the section title/labels, one short
+provenance footnote and two table captions identifying the July reference.
+Historical numerical inputs, 14 parameter estimates and 15 fit rows are retained
+as placeholders for the forthcoming item-by-item update, not adopted as current
+results. The current 13-row target review remains separate.
 
-The existing model section excludes current earnings from purchase eligibility;
-the experimental calculations include them. The quantification note explicitly
-flags this unresolved discrepancy without altering the model, author draft or
-slides. A temporary copy compiled twice with no errors or overfull boxes; all
-changed pages were visually inspected. The inherited empirical-appendix
-reference remains unresolved, and the bibliography is still empty. No full-mock
-PDF was replaced, because other sections contain separate in-progress work.
-Evidence and the ordered review plan are in
-`output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/`.
+The source includes the two later July 17 qualifications documented in
+`docs/model/quantification_note_reaudit_and_study_guide_20260720.md`; it is not
+claimed to be byte-identical to the earlier circulated PDF. Subsequent changes
+should preserve the reviewed wording wherever accurate. Income, utility,
+measurement and estimates will be updated only through the agreed review.
+
+A temporary full-mock copy was compiled with bibliography and repeated LaTeX
+passes. All new citations resolve, no overfull boxes or compilation errors occur,
+and pages 4–10 were visually inspected. The pre-existing empirical-appendix
+reference remains undefined. The author draft, slides, other mock sections and
+existing full-mock PDF were not changed. The existing model-text difference
+about current income at purchase remains unresolved; this restoration does not
+certify model/manuscript synchronization.
 
 ## Coordinated JMP sources — author instruction, September 21, 2026
 

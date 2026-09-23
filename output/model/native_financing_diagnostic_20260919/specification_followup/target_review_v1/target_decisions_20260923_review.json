@@ -4,11 +4,27 @@
   "scored": 12,
   "normalization": 1,
   "decisions_match_current_contract": true,
-  "mock_target_and_scale_cells_verified": 26,
   "lead_review": "All13 decision rows read; corrected bequest coverage requirement, stock-versus-spacing language and contrast terminology. Mock prose checked and corrected to household earnings, explicit entrant proxy, scale/weight relationship and source vintages.",
-  "compile": "temporary full-mock copy compiled twice; no errors or overfull boxes; existing app:empirical-data unresolved and empty bibliography",
-  "visual_review": "changed pages4-6 inspected, revised page6 rechecked; no orphan quantification text on page7",
-  "mock_sha256": "f4a225c4d64584db990233e7002188d9ea5cc724433178bcfbae97056ad96376",
   "contract_sha256": "ab5a19a0dd62a76ebf36c24ea594c416384703cecad861882045e4054cf6eb55",
-  "no_targets_weights_or_model_changed": true
+  "no_targets_weights_or_model_changed": true,
+  "previous_mock_review": {
+    "mock_target_and_scale_cells_verified": 26,
+    "compile": "temporary full-mock copy compiled twice; no errors or overfull boxes; existing app:empirical-data unresolved and empty bibliography",
+    "visual_review": "changed pages4-6 inspected, revised page6 rechecked; no orphan quantification text on page7",
+    "mock_sha256": "f4a225c4d64584db990233e7002188d9ea5cc724433178bcfbae97056ad96376",
+    "status": "superseded_by_author_requested_July_restoration"
+  },
+  "restored_mock_review": {
+    "status": "verified_July_text_restoration_not_current_fit",
+    "body_equality_after_removing_declared_provenance_changes": true,
+    "source": "latex/quantification_rewrite_review.tex",
+    "source_sha256": "57025191201da26d4392f050f6d2e3dd7fab6ab795f8351e25d1f6776c6d2a34",
+    "mock_sha256": "5d059e57654427d4ea7ddad26c4d07f471a7b0fdd96ba5fb0b06b52b799b6544",
+    "historical_parameter_rows": 14,
+    "historical_target_rows": 15,
+    "new_target_system_adopted": false,
+    "compile": "Temporary full mock; BibTeX plus repeated LaTeX passes, no errors, new citations all resolve; existing app:empirical-data reference unresolved.",
+    "visual_review": "Pages4-10 inspected; original text, footnote, 3tables and bibliography readable with no clipping.",
+    "independent_review": "quantification_style_compare agent verified no undeclared body differences."
+  }
 }

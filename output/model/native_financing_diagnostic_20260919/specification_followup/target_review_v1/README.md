@@ -49,11 +49,13 @@ an explicit recorded decision.
 
 Preparation completed: [13-row decision sheet](target_decisions_20260923.csv),
 with current values, unresolved choices, required calculations and evidence;
-the lead checked every row and corrected three overstatements. The provisional
-mock quantification draft is in the existing section named above. Its 13 values
-and working scales match the frozen inventory, and its changed pages were
-compiled and visually checked. These artifacts organize the discussion; they
-do not mark the target decisions complete.
+the lead checked every row and corrected three overstatements. The initial mock scaffold was subsequently replaced at the author's request
+by the reviewed July 17 prose, with minimal provenance labels. That mock now
+retains historical July tables as update placeholders; it is not the current
+13-row target inventory. The decision sheet remains current. Both preparation
+and restoration checks are recorded in `target_decisions_20260923_review.json`.
+These artifacts organize the discussion; they do not mark the target decisions
+complete.
 
 **Later author clarification, September 22:** complete target reconciliation is the first task tomorrow morning, September 23. Tonight's experimental comparisons may retain the frozen targets and weights while income, initial wealth and numerical checks take priority. The earlier launch hold in the dated report is superseded; its substantive findings are unchanged. See the latest `CALIBRATION_STATUS.md`.
 
