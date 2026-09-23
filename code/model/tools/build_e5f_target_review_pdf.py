@@ -104,21 +104,34 @@ def build_decision_review(packet, output):
     packet = Path(packet)
     review = json.loads((packet / 'lunch_decision_review.json').read_text())
     contract_path = packet / 'overnight/report_tables/target_contract.csv'
+    national_path = packet.parent / 'housing_profiles_v1/full/target_recomputed.json'
     with contract_path.open(newline='') as handle:
         contract = {row['internal_key']: float(row['current_value']) for row in csv.DictReader(handle)}
+    national = json.loads(national_path.read_text())['recomputed']['national']
+    national_override_keys = {
+        'mean_rooms', 'ownership_30_55', 'family_rooms', 'recent_parent_ownership'
+    }
+    if set(national) != national_override_keys:
+        raise ValueError('National source must contain exactly the four authorized housing overrides')
     checks = []
     for row in review['rows']:
         key, value = row['key'], float(row['target'])
         if key not in contract:
             raise ValueError(f'Missing target in contract: {key}')
-        gap = value - contract[key]
-        checks.append({'key': key, 'review_value': value, 'contract_value': contract[key],
+        expected = float(national[key]) if key in national_override_keys else contract[key]
+        gap = value - expected
+        checks.append({'key': key, 'review_value': value, 'expected_value': expected,
+                       'source': 'national_override' if key in national_override_keys else 'frozen_contract',
                        'absolute_gap': abs(gap), 'matches': abs(gap) <= 1e-12})
     if len(checks) != 13 or {r['key'] for r in review['rows']} != set(contract) or not all(x['matches'] for x in checks):
-        raise ValueError('Lunch review rows do not exactly match the 13-row target contract')
+        raise ValueError('Lunch review rows do not match the authorized national/frozen target sources')
     (packet / 'lunch_decision_table_checks.json').write_text(json.dumps({
-        'schema': 'lunch_decision_table_checks_v1', 'contract_path': str(contract_path),
-        'rows_checked': len(checks), 'all_match_within_1e-12': True, 'checks': checks
+        'schema': 'lunch_decision_table_checks_v2_national_housing', 'contract_path': str(contract_path),
+        'national_override_path': str(national_path), 'authorized_national_override_keys': sorted(national_override_keys),
+        'rows_checked': len(checks), 'all_match_within_1e-12': True,
+        'frozen_rows_unchanged': all(x['matches'] for x in checks if x['source'] == 'frozen_contract'),
+        'national_overrides_match_source': all(x['matches'] for x in checks if x['source'] == 'national_override'),
+        'checks': checks
     }, indent=2) + '\n')
     styles = getSampleStyleSheet()
     styles.add(ParagraphStyle('LunchTitle', fontName='Helvetica-Bold', fontSize=18, leading=21,
@@ -147,7 +160,7 @@ def build_decision_review(packet, output):
     for item in review['decisions']:
         story += [p(item['decision'], 'LunchHead'), p('Recommendation: ' + item['recommendation']),
                   p('Next action: ' + item['next_operation'], 'LunchTiny')]
-    story += [PageBreak(), p('Complete current target table', 'LunchTitle'),
+    story += [PageBreak(), p('Current target table', 'LunchTitle'),
               p('Parameter connections describe economic margins, not one-to-one identification. Confidence concerns measurement comparability, not model fit.')]
     target_data = [['Target', 'Value', 'Parameter connection', 'Confidence / decision']]
     for row in review['rows']:
@@ -186,7 +199,7 @@ def build_decision_review(packet, output):
     def footer(canvas, doc):
         canvas.setFont('Helvetica', 8)
         canvas.setFillColor(colors.HexColor('#52616b'))
-        canvas.drawString(44, 25, 'Calibration lunch decisions | lead recommendations; no adoption')
+        canvas.drawString(44, 25, 'Calibration decisions | September 23, 2026')
         canvas.drawRightString(568, 25, str(doc.page))
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)

@@ -1,21 +1,22 @@
 {
-  "schema": "lunch_pdf_final_qa_v1",
-  "reviewed_utc": "2026-09-23T16:08:46.492079+00:00",
+  "schema": "lunch_pdf_final_qa_v2_national_housing",
+  "reviewed_utc": "2026-09-23T18:43:45.494961+00:00",
   "pdf": "output/pdf/calibration_lunch_decisions.pdf",
-  "pdf_sha256": "4625cc0ca7f6f00170549bc9a79252e5988c60eadc34d29df71e7e18b3c470e8",
+  "pdf_sha256": "341d329109dc21dba1e59d17b123a731eb85390ed22a211491d32d48dc12128f",
   "pages": 5,
-  "visual_review": "Lead inspected all five rendered pages; diagnostic image resized/separated from table, last page rerendered and inspected. No clipped content, text collisions or missing figure labels.",
-  "target_checks": "All 13 values and identities match current contract.",
-  "selected_fit_numeric_cells_checked": 104,
+  "visual_review": "Lead inspected all five fresh final renders after correcting the footer; no clipping, text collisions or missing figure labels.",
+  "target_checks": "13 rows verified: four national housing values match housing_profiles_v1/full/target_recomputed.json recomputed.national; the other nine match the frozen target contract.",
+  "selected_fit_numeric_cells_checked": "104 historical verification cells; not repeated or changed by this national-document update.",
   "parameter_rows_verified": {
-    "B_floor": 17,
-    "B_shares": 19
+    "B_floor": "17 historical verification rows; not repeated or changed",
+    "B_shares": "19 historical verification rows; not repeated or changed"
   },
   "actual_bounds_checked": {
-    "beta_annual_upper": 0.99,
-    "h_P_upper": 2.3
+    "beta_annual_upper": "0.99 historical verification; not repeated or changed",
+    "h_P_upper": "2.3 historical verification; not repeated or changed"
   },
-  "common_target_weight_fingerprint": "10d80bcfca64aad511058b4a1d427283c3c2f548803213f21688e091f7457107",
+  "common_target_weight_fingerprint": "10d80bcfca64aad511058b4a1d427283c3c2f548803213f21688e091f7457107 (historical only; weights remain open for the national target population)",
   "measurement_review": "lunch_first_birth_final_review.json",
-  "unchanged_standard_plots": true
+  "unchanged_standard_plots": true,
+  "render_directory": "tmp/pdfs/calibration_national_final"
 }

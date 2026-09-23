@@ -2,20 +2,20 @@
   "schema": "target_lunch_decision_review_v1",
   "title": "Calibration decisions after lunch",
   "date": "September 23, 2026",
-  "status": "Reviewed recommendations and completed saved-policy diagnostic; author decisions pending",
+  "status": "National housing geography adopted for documents; other target definitions and weights remain open",
   "summary": [
     "Keep the 2007 stationary reference and most of the existing target construction. The completed review does not justify rebuilding the July strategy. The main first-birth housing comparison does need a common measurement rule before it can support an adopted calibration.",
     "Decisions on fertility, wealth and housing levels can be made now. The first-birth diagnostic is a separate calculation from saved policies and must not hold up those decisions. Confidence flags below assess measurement comparability, not how well a selected model fits.",
-    "The present reference combines 2004/2006 CPS fertility stocks, 2003-2006 natality timing, 2003/2005 PSID wealth and 2005/2006 ACS housing in 42 metropolitan areas. These are nearby-year measurements used for a stationary 2007 economy, not one identical population observed in 2007."
+    "The present reference combines 2004/2006 CPS fertility stocks, 2003-2006 natality timing, 2003/2005 PSID wealth and national 2005/2006 ACS housing. These are nearby-year measurements used for a stationary 2007 economy, not one identical population observed in 2007."
   ],
   "decisions": [
     {
       "decision": "Reference economy and housing population",
-      "recommendation": "Retain the current 2007 reference and the 42-metro housing targets for the controlled utility comparison; name that housing population explicitly. Do not switch geography to improve fit.",
-      "evidence": "Housing scalars reproduce. National counterparts already exist: mean rooms 5.607886 instead of 5.561097; ownership 67.6260% instead of 64.8334%; recent-parent ownership gap 12.7608 instead of 16.2896 percentage points.",
-      "alternative": "Choose national housing targets if the intended quantitative claim requires a nationally representative housing population. Change all affected housing rows together, retaining the same substantive definitions.",
-      "consequence": "Keeping the current population preserves the existing comparison. A national switch raises the ownership target and cannot explain away the model's low ownership.",
-      "next_operation": "Record the population choice. A chosen geography change needs a new complete target/weight contract and saved-moment rescore, not a household solve merely to change the data scalars."
+      "recommendation": "The author has selected the current 2007 reference with national US housing targets. The four national housing values replace the prior 42-metro document values for the next comparison.",
+      "evidence": "The verified national values are mean rooms 5.607885960068579, ownership 0.6762604168538028, family rooms 0.38509964969278165 and recent-parent ownership gap 0.12760836356692162.",
+      "alternative": "The former 42-metro document values remain historical comparison values; they are not the current selected housing population.",
+      "consequence": "The selected national ownership target is higher than the former 42-metro target. This decision does not by itself explain model fit.",
+      "next_operation": "Defer loss calculation and rescoring until the next run. Record the complete national target/weight contract before that comparison."
     },
     {
       "decision": "Fertility stocks, timing and normalization",
@@ -35,11 +35,11 @@
     },
     {
       "decision": "Children in the family-room and recent-parent rows",
-      "recommendation": "For the family-room row, prefer resident minor children as the empirical proxy for model dependents, conditional on explicitly accepting that proxy. Retain the recent-parent ownership row provisionally with its actual stock-versus-flow qualification.",
-      "evidence": "Counting linked resident children below 18 changes the family-room gap from 0.347067 to 0.336220 rooms; the paired difference is -0.010847 (SE 0.008077). The recent-parent observer already includes former parents among empty-home controls; the remaining issue is exact child recency, not that repaired coding problem.",
-      "alternative": "Keep the existing resident-own-child grouping, including resident adults, or require a simulated-history observer that tracks resident children's ages for both housing rows.",
-      "consequence": "The measured minor-child change is small. It cannot account for large overall housing misses. Minor age and stochastic model dependence are still not exactly the same object.",
-      "next_operation": "If the minor-child proxy is accepted, pin its measured uncertainty and rescore without silently changing other definitions. An exact recent-child-age comparison needs a declared history-based measurement procedure using saved policies."
+      "recommendation": "Retain the current selected national resident-own-child family-room row and the national recent-parent ownership row, with the existing stock-versus-flow qualification for recent parents. The minor-child definition remains a proposed choice pending discussion.",
+      "evidence": "The national family-room target is 0.38509964969278165 and the national recent-parent ownership gap is 0.12760836356692162. The linked-minor 0.336220 candidate was measured for 42 metros, not nationally.",
+      "alternative": "A national linked-minor candidate has not yet been measured. The existing 42-metro minor-child candidate is not a national alternative.",
+      "consequence": "The population choice does not silently alter the child grouping. Minor age and stochastic model dependence are still not exactly the same object.",
+      "next_operation": "Defer loss calculation and rescoring until the next run. An exact recent-child-age comparison remains separate saved-policy measurement work."
     },
     {
       "decision": "First-birth housing response",
@@ -51,11 +51,11 @@
     },
     {
       "decision": "Weights and specification choice",
-      "recommendation": "Retain the frozen weights for controlled comparisons and call the objective a working minimum-distance criterion. Do not optimize the target definitions or weights around the utility result.",
+      "recommendation": "Treat weighting and uncertainty as open decisions for the national population. The frozen weights remain historical comparison weights and are not adopted for the new population.",
       "evidence": "Scales mix empirical sampling uncertainty, annual temporal variation and an external bequest tolerance; cross-moment covariance is not used. The floor estimates nine structural coordinates, the shares alternative ten, with fertility utility normalized separately.",
-      "alternative": "Choose a new weighting rule on substantive grounds, name the full replacement contract and preserve all affected identifying information. A new rule is not a revision of old scores.",
+      "alternative": "Choose a weighting rule on substantive grounds, name the full replacement contract and preserve all affected identifying information. A new rule is not a revision of old scores.",
       "consequence": "A lower loss is useful search evidence but not an efficient-SMM test, identification proof or numerical-convergence certificate.",
-      "next_operation": "After the author decisions, implement the selected measurements and rescore the same saved candidates. Revisit utility only after that comparison; new behavioral solutions are needed for a refit, not for a purely scalar target rescore."
+      "next_operation": "Defer loss calculation and rescoring until the next run. Revisit utility only after that comparison; new behavioral solutions are needed for a refit, not for a purely scalar target rescore."
     }
   ],
   "rows": [
@@ -134,20 +134,20 @@
     {
       "key": "mean_rooms",
       "label": "Mean rooms, capped at 9",
-      "target": 5.561097376118652,
-      "display": "5.56110 rooms",
+      "target": 5.607885960068579,
+      "display": "5.60789 rooms",
       "parameter_connection": "Housing supply intercept H0; demand jointly",
       "confidence": "Confident conditional on population",
-      "recommendation": "Keep 42-metro value unless the whole housing-population choice changes."
+      "recommendation": "National US value selected; prior 42-metro value is historical."
     },
     {
       "key": "ownership_30_55",
       "label": "Ownership, ages 30-55",
-      "target": 0.6483340343191493,
-      "display": "64.8334%",
+      "target": 0.6762604168538028,
+      "display": "67.6260%",
       "parameter_connection": "Owner service multiplier chi; credit restrictions fixed",
       "confidence": "Confident conditional on population",
-      "recommendation": "Keep; no identified scalar or age-mask bug explains the low model ownership."
+      "recommendation": "National US value selected; no identified scalar or age-mask bug explains low model ownership."
     },
     {
       "key": "first_birth_rooms",
@@ -161,20 +161,20 @@
     {
       "key": "family_rooms",
       "label": "Rooms, 3+ versus 1-2 resident children",
-      "target": 0.3470669317962507,
-      "display": "0.347067 rooms",
+      "target": 0.38509964969278165,
+      "display": "0.385100 rooms",
       "parameter_connection": "Housing preferences; child-share slope in alternative",
       "confidence": "Medium",
-      "recommendation": "Prefer measured minor-child candidate 0.336220 if its dependent proxy is accepted."
+      "recommendation": "National resident-own-child value selected; a national minor-child candidate is not yet measured."
     },
     {
       "key": "recent_parent_ownership",
       "label": "Recent-parent ownership gap",
-      "target": 0.16289550916123285,
-      "display": "16.2896 pp",
+      "target": 0.12760836356692162,
+      "display": "12.7608 pp",
       "parameter_connection": "Owner service multiplier and parenthood housing demand",
       "confidence": "Medium; recency approximation",
-      "recommendation": "Retain provisionally; exact child-age history measurement remains distinct work."
+      "recommendation": "National US value selected provisionally; exact child-age history measurement remains distinct work."
     }
   ],
   "other_decisions": [
@@ -265,9 +265,9 @@
     "lunch_targets_and_selected_moments.csv"
   ],
   "not_done_or_claimed": [
-    "No author target decisions recorded by this receipt.",
-    "No new target contract, target removal, weight change or utility adoption.",
+    "National housing geography and four corresponding values adopted for documents; other target definitions and weights remain open.",
+    "No new target-weight contract, target removal or utility adoption.",
     "No matched simulated-panel event-study estimate yet.",
-    "No household or equilibrium solve, calibration search or paper edit."
+    "No household or equilibrium solve, calibration search, author-owned manuscript edit or new fit."
   ]
 }

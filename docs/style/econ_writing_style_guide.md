@@ -122,6 +122,10 @@ production-paper tables. In particular, a calibration slide defaults to
 
 ## 7. Workflow checks (LaTeX)
 
+- Author preference, September 23: use Claude Opus 5.5 for draft edits for now.
+  The lead checks the economic content, numbers, and scope before applying or
+  accepting the edit. If that model is unavailable, report the limitation
+  rather than silently using a different drafting model.
 - Compile twice; require zero errors, zero undefined references, zero overfull boxes
   above ~2pt. Render pages to images and look at them before declaring victory —
   overlapping TikZ labels and clipped boxes do not show up in logs.

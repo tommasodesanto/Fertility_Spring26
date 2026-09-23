@@ -1,0 +1,39 @@
+{
+  "schema": "national_document_update_v1",
+  "reviewed_utc": "2026-09-23T18:41:44.110600+00:00",
+  "author_decision": "National US housing sample, 2007 reference. Defer losses/rescoring until next run; need and method of uncertainty/weight calculation remain open.",
+  "national_values_source": "../housing_profiles_v1/full/target_recomputed.json:recomputed.national",
+  "mock_source": "latex/JMP_DS_mock/sections/04_quantification.tex",
+  "mock_source_sha256": "ff446fbf964a2801803f0bd22691d5a54b9ac18d1b44314da72dcd62000c5072",
+  "exact_table_changes": 4,
+  "other_nine_targets_unchanged": true,
+  "new_model_fits": false,
+  "opus_review": {
+    "model": "claude-opus-5-5",
+    "auth": "first-party Claude Max",
+    "verdict": "APPROVE, no replacement needed",
+    "receipt": "overnight/draft_national_targets/receipt.json",
+    "response": "overnight/draft_national_targets/final.md",
+    "lead_verification": "All four values and scope independently checked. Opus reported no daily note, but the lead loaded the existing September23 note; no reliance on that retrieval claim."
+  },
+  "latex_checks": {
+    "excerpt_pages": 5,
+    "full_mock_pages": 9,
+    "excerpt_warnings": [],
+    "full_mock_preexisting_warning": "Undefined app:empirical-data reference in the separately edited empirical section; unchanged by this task.",
+    "overfull_boxes": 0,
+    "rendered_and_lead_inspected": [
+      "excerpt page1",
+      "excerpt page4",
+      "full mock page4",
+      "full mock page8"
+    ]
+  },
+  "pdfs": {
+    "JMP_DS_mock_quantification.pdf": "2886b3662ac8d3b8de83c73f45797363665bc1227890d70ca93659e192c8c8c3",
+    "JMP_DS_mock.pdf": "9d2f761d2b8b58a002f563a1a88f982b2abeb03e3de5cf780b274a0a991bdb6d"
+  },
+  "protected_author_manuscript_edited": false,
+  "slides_edited": false,
+  "no_calculations_launched": true
+}

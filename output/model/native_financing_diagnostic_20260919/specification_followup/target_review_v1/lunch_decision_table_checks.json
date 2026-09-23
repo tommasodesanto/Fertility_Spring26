@@ -1,97 +1,119 @@
 {
-  "schema": "lunch_decision_table_checks_v1",
+  "schema": "lunch_decision_table_checks_v2_national_housing",
   "contract_path": "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/report_tables/target_contract.csv",
+  "national_override_path": "output/model/native_financing_diagnostic_20260919/specification_followup/housing_profiles_v1/full/target_recomputed.json",
+  "authorized_national_override_keys": [
+    "family_rooms",
+    "mean_rooms",
+    "ownership_30_55",
+    "recent_parent_ownership"
+  ],
   "rows_checked": 13,
   "all_match_within_1e-12": true,
+  "frozen_rows_unchanged": true,
+  "national_overrides_match_source": true,
   "checks": [
     {
       "key": "initial_normalization",
       "review_value": 2.1,
-      "contract_value": 2.1,
+      "expected_value": 2.1,
+      "source": "frozen_contract",
       "absolute_gap": 0.0,
       "matches": true
     },
     {
       "key": "cps_childlessness",
       "review_value": 0.19827875100684264,
-      "contract_value": 0.19827875100684264,
+      "expected_value": 0.19827875100684264,
+      "source": "frozen_contract",
       "absolute_gap": 0.0,
       "matches": true
     },
     {
       "key": "cps_exactly_one",
       "review_value": 0.21365532522014702,
-      "contract_value": 0.21365532522014702,
+      "expected_value": 0.21365532522014702,
+      "source": "frozen_contract",
       "absolute_gap": 0.0,
       "matches": true
     },
     {
       "key": "nchs_mean_age",
       "review_value": 25.976263860992496,
-      "contract_value": 25.976263860992496,
+      "expected_value": 25.976263860992496,
+      "source": "frozen_contract",
       "absolute_gap": 0.0,
       "matches": true
     },
     {
       "key": "nchs_share30",
       "review_value": 0.2492780130410667,
-      "contract_value": 0.2492780130410667,
+      "expected_value": 0.2492780130410667,
+      "source": "frozen_contract",
       "absolute_gap": 0.0,
       "matches": true
     },
     {
       "key": "wealth_earnings",
       "review_value": 6.14586139445743,
-      "contract_value": 6.14586139445743,
+      "expected_value": 6.14586139445743,
+      "source": "frozen_contract",
       "absolute_gap": 0.0,
       "matches": true
     },
     {
       "key": "bequest_wealth",
       "review_value": 0.0088,
-      "contract_value": 0.0088,
+      "expected_value": 0.0088,
+      "source": "frozen_contract",
       "absolute_gap": 0.0,
       "matches": true
     },
     {
       "key": "old_dispersion",
       "review_value": 3.51593508651872,
-      "contract_value": 3.51593508651872,
+      "expected_value": 3.51593508651872,
+      "source": "frozen_contract",
       "absolute_gap": 0.0,
       "matches": true
     },
     {
       "key": "mean_rooms",
-      "review_value": 5.561097376118652,
-      "contract_value": 5.561097376118652,
+      "review_value": 5.607885960068579,
+      "expected_value": 5.607885960068579,
+      "source": "national_override",
       "absolute_gap": 0.0,
       "matches": true
     },
     {
       "key": "ownership_30_55",
-      "review_value": 0.6483340343191493,
-      "contract_value": 0.6483340343191493,
+      "review_value": 0.6762604168538028,
+      "expected_value": 0.6762604168538028,
+      "source": "national_override",
       "absolute_gap": 0.0,
       "matches": true
     },
     {
       "key": "first_birth_rooms",
       "review_value": 0.7202462623815278,
-      "contract_value": 0.7202462623815278,
+      "expected_value": 0.7202462623815278,
+      "source": "frozen_contract",
       "absolute_gap": 0.0,
       "matches": true
     },
     {
       "key": "family_rooms",
-      "review_value": 0.3470669317962507,
-      "contract_value": 0.3470669317962507,
+      "review_value": 0.38509964969278165,
+      "expected_value": 0.38509964969278165,
+      "source": "national_override",
       "absolute_gap": 0.0,
       "matches": true
     },
     {
       "key": "recent_parent_ownership",
-      "review_value": 0.16289550916123285,
-      "contract_value": 0.16289550916123285,
+      "review_value": 0.12760836356692162,
+      "expected_value": 0.12760836356692162,
+      "source": "national_override",
       "absolute_gap": 0.0,
       "matches": true
     }

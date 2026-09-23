@@ -1,5 +1,28 @@
 # LaTeX Workspace
 
+## National housing targets — September 23 author decision
+
+The mock quantification section now uses the national 2005–2006 ACS household
+sample for the 2007 reference economy. Its four housing targets are mean rooms
+5.608, ownership at ages 30–55 67.63%, family-room gap 0.385, and recent-parent
+ownership gap 12.76 percentage points. Exact values come from
+`output/model/native_financing_diagnostic_20260919/specification_followup/housing_profiles_v1/full/target_recomputed.json`.
+The other nine target rows and surrounding prose remain unchanged. Model-fit
+entries remain blank. Uncertainty/weighting is open; losses and rescoring are
+deferred until the next calibration run.
+
+Opus 5.5 approved the minimal mock edit through Claude Max; the lead checked all
+four values. The full mock and quantification excerpt PDFs were rebuilt, and
+their changed pages inspected. The excerpt has no compilation warnings; the
+full mock retains the pre-existing unresolved `app:empirical-data` reference
+in the separate empirical section. Review: `target_review_v1/national_document_update_review.json`
+under the September 19 specification-followup packet.
+
+The author draft's quantification section is still a placeholder. The existing
+slides and frozen model-fit receipts retain the 42-metro targets and historical
+fits; updating their displayed fit requires the next agreed calibration. Only
+the mock and current discussion documents are updated on this instruction.
+
 ## Mock quantification: current 2007 calibration in the reviewed July style — September 23, 2026
 
 The author's clarification supersedes the literal July restoration. July supplies

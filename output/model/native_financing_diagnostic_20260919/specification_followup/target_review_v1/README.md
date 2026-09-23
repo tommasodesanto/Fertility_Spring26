@@ -9,12 +9,12 @@ fits as national calibrations.
 
 The four national point estimates with the existing definitions are already in
 [`../housing_profiles_v1/full/target_recomputed.json`](../housing_profiles_v1/full/target_recomputed.json).
-Remaining tasks: calculate national uncertainty and proposed weights, check the
-geography of housing normalizations and comparison series, then save the chosen
-target set and rescore existing solutions after the other definitions are agreed.
-Changing geography alone needs no new household or equilibrium solve. Refit only
-after the target review is complete. The lunch PDF is a pre-decision record;
-its recommendation to retain the 42 metros is superseded by this decision.
+The author requests these four values in the discussion document and mock draft
+now. Recalculating uncertainty and choosing weights remain open; losses and
+rescoring are deferred until the next calibration run. Continue the remaining
+target decisions without starting those calculations. The decision PDF now
+shows the national values; the historical selected-fit CSV and frozen
+numerical contracts retain their original 42-metro targets.
 
 ## September 23, 12:08 EDT — reviewed lunch packet ready
 

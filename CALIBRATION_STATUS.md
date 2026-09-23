@@ -15,11 +15,12 @@ under the September 19 diagnostic packet: mean rooms 5.6078859601, ownership
 0.1276083636. These are inputs to the new target set, not a substitute for the
 remaining decisions about child groups and measurement.
 
-Next: calculate uncertainty for the national sample and proposed weights; check
-housing normalizations and comparison series against the same population; after
-the measurement decisions, save the new complete target set and rescore saved
-solutions. A geography-only rescore requires no household or equilibrium solve.
-A refit follows once the target decisions are complete. No new runs launched.
+Author follow-up: update these four values in the discussion document and mock
+draft now. The value and method of recalculating uncertainty/weights remain
+open. Defer losses and rescoring until the next calibration run; do not start
+those calculations during the target discussion. Continue the remaining target
+decisions first. Frozen numerical contracts and old fit receipts stay unchanged.
+No new runs launched.
 
 ## September 23, 12:08 EDT — lunch decisions and saved-policy diagnostic ready
 
