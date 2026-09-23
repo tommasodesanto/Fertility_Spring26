@@ -82,6 +82,18 @@ def narrative(path):
         if k not in d: raise ValueError(f'narrative missing key {k}')
     return d
 
+def selected_comparison_story(readout):
+    grouped={}
+    for arm in 'ABCD':
+        path=Path(readout)/arm/'selected'/'target_fit.csv'
+        if not path.exists(): continue
+        for row in read_csv(path):
+            item=grouped.setdefault(row['restriction_id'],{'label':moment_label(row),'target':row['target']})
+            assert float(item['target'])==float(row['target'])
+            item[arm]=row['model']
+    rows=[['Moment','Target','A','B','C','D']]+[[r['label'],fmt(r['target'])]+[fmt(r[a]) if a in r else '-' for a in 'ABCD'] for r in grouped.values()]
+    return [PageBreak(),para('Selected points: targets and model moments','H1'),para('A/B use one persistent earnings shock; C/D add iid earnings risk. A/C enter with zero assets; B/D use the inherited wealth marginal. Each column is its best verified observed point, including smoke. Search coverage can differ; this is not a comparison of converged calibrations.'),make_table(rows,[2.1*inch,.85*inch,.9*inch,.9*inch,.9*inch,.9*inch]),Spacer(1,8),para('Full gaps, weights, loss contributions, all17 parameter restrictions and original figures follow in the appendix. The next page holds the nine search parameters fixed across the four specifications.','Small')]
+
 def resolution_story(readout, resolution_readout):
     fine=Path(resolution_readout)
     coarse=Path(readout)
@@ -132,6 +144,7 @@ def build(readout,narrative_path,output,resolution_readout=None):
     for x in narr['recommendations']: story.append(para(x))
     story.append(para('Limitations','H2'))
     for x in narr['limitations']: story.append(para(x))
+    story += selected_comparison_story(readout)
     if (readout/'common_smoke_targets.csv').exists():
         grouped={}
         for row in read_csv(readout/'common_smoke_targets.csv'):

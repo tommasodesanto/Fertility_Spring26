@@ -17,6 +17,8 @@ The A richer-income check is now verified at15states. Its common-parameter mean 
 
 At20:02, A/B richer-grid smokes are both verified with no entry censoring; their mean first-birth ages move +0.523/+0.548years relative to7states. C45 is running; D45 remains failed. The main snapshot verifies142 scored points, with A finished and B/C/D still in progress. Each common-parameter case holds nine search coordinates fixed but separately normalizes the fertility utility scale. No early author review or adoption.
 
+All resolution checks are now terminal: A/B15states scored; C45 reached its3,100-second runtime limit (four completed plus one incomplete normalization solve), while D45 failed the unchanged dead-mass gate. Resolution totals18started/16completed/twoincomplete, two scored objectives. No retries or gate/limit changes. The last coarse workers are still running; final review remains21:00.
+
 ## September 22 — single-process earnings baseline direction
 
 Author chooses a plain-vanilla starting specification: deterministic age earnings
