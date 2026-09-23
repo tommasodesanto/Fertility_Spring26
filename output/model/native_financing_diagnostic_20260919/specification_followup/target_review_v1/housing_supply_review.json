@@ -1,0 +1,72 @@
+{
+  "status": "focused source and implementation review; no author adoption or numerical change",
+  "date": "2026-09-23",
+  "checklist": {
+    "elasticity_entry_present": true,
+    "display": "Housing-supply elasticity (\u03b7): 0.63.",
+    "section": "External parameters and maintained assumptions",
+    "source": "fresh read by advisor-checklist task",
+    "H0_status": "Under review"
+  },
+  "implemented_supply": {
+    "equation": "H_s = H0 * (user_cost / r_bar)^eta; user_cost = user_cost_rate * asset_price",
+    "source": "tmp/utility_overnight_20260923_v1/source/code/model/intergen_eqscale_seq_optimized/solver.py:7167",
+    "H0_interpretation": "Quantity supplied at the reference user cost r_bar; level scale, not itself a log intercept",
+    "eta": 0.63,
+    "elasticity_status": "Fixed in current experiments; exact empirical derivation unresolved in saved September audit",
+    "redundancy": "Holding eta fixed, only H0/r_bar**eta determines the supply curve. Do not estimate H0 and r_bar independently.",
+    "r_bar_empirical_anchor": "Not established by inspected records; constructor default is not evidence of actual checkpoint or data normalization"
+  },
+  "provenance": [
+    {
+      "path": "output/model/e5f_matched_pf_20260909a/parameter_target_audit/README.md:55",
+      "finding": "Explicitly states exact empirical derivation of 0.63 unresolved; no citation can be inferred."
+    },
+    {
+      "path": "CALIBRATION_STATUS.md:4093",
+      "finding": "September 11 common 0.63 approved subject to stated verification."
+    },
+    {
+      "path": "docs/model/eqscale_calibration_reconciliation_20260722.md:298",
+      "finding": "Historical H0-to-occupied-rooms association, not proof of separate identification."
+    }
+  ],
+  "literature": [
+    {
+      "paper": "Greaney, Parkhomenko and Van Nieuwerburgh, Dynamic Urban Economics, December 5 2025",
+      "source": "DUE.txt:1252-1310; printed pp.31-32, equation3.6",
+      "registration": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4897077",
+      "finding": "Residential inverse supply r_i = rbar_i * (N_i/N_i0)**(1/xi_i) when construction positive; initial population anchor, rent shifter matches observed initial rents; slope combines Baum-Snow-Han and Saiz. Residential quantity is housing units/population, not this project room measure.",
+      "qualification": "This is calibration-method precedent; no common numeric H0 or transferable local elasticity."
+    },
+    {
+      "paper": "Kaplan, Mitman and Violante (2020), JPE",
+      "source": "printed p.3305",
+      "url": "https://violante.scholar.princeton.edu/sites/g/files/toruqf5621/files/documents/kaplan-et-al-2020-the-housing-boom-and-bust-model-meets-evidence.pdf",
+      "finding": "Construction exponent0.6 implies price elasticity1.5; new-land-permit scale matches construction employment share5%.",
+      "qualification": "Explicit construction sector differs from this reduced-form stock-supply curve."
+    },
+    {
+      "paper": "Sommer, Sullivan and Verbrugge (2013), JME",
+      "source": "pp.857,866 and Table1",
+      "url": "https://kamilasommer.net/RentPriceRatio.pdf",
+      "finding": "Fixed aggregate housing stock; rental allocation endogenous. Housing expenditure/wage is targeted.",
+      "qualification": "Not precedent for a positive-elasticity H0 calibration."
+    }
+  ],
+  "lead_assessment": [
+    "Mean rooms is informative about supply scale conditional on separately disciplined housing demand, but is not a stand-alone estimate of construction technology or proof of identification.",
+    "For a paper about affordability, inspect both physical quantities and housing cost relative to earnings. Physical room units and normalized earnings leave a real relative price; do not assume it can be set arbitrarily.",
+    "A proposed transparent supply anchor is H0 = H_data * (r_bar/r_data)**eta, provided H_data and r_data match model quantity, population, price and period units. At the observed price the supplied stock equals the data; household demand may still fail to match, revealing a demand-side mismatch rather than solving it by definition.",
+    "One adjustable H0 cannot generally force both quantity and price fits with all demand parameters fixed. A joint demand/supply fit or externally anchored supply with quantity validation requires explicit complete target/parameter bookkeeping.",
+    "Current rooms target is capped9 and age18-85, whereas physical supply is not capped9. Use the matched observer in SMM; do not directly substitute capped mean rooms for physical H_data in the proposed anchoring equation.",
+    "Do not silently replace 0.63 with historical1.75 or KMV1.5; geography, housing stock versus units, horizon and aggregation require a source-specific choice."
+  ],
+  "recommendation": "Keep the supply block open. Favor an explicit observed quantity and cost anchor with externally sourced elasticity; first verify matched price/quantity units and the existing demand restrictions. This is a recommendation for discussion, not adoption.",
+  "actions_excluded": [
+    "new model solves",
+    "target or weight changes",
+    "frozen bundle edits",
+    "paper or slide edits"
+  ]
+}
