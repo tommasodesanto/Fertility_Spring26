@@ -1,0 +1,63 @@
+{
+  "status": "reviewed_with_material_corrections",
+  "author_adoption": false,
+  "new_model_jobs": 0,
+  "model": "claude-fable-5-1",
+  "auth": "Claude Max first-party",
+  "duration_seconds": 550.2,
+  "raw_answer_sha256": "6fd885a22623d4fcf8b8c179a4f87c1e4dd1fe23562988b875689c02d5bc1a91",
+  "accepted_advice": [
+    "A controlled two-utility diagnostic can use the same frozen income process, entry distribution, timing, targets and weights in both arms, without treating either result as adopted.",
+    "Do not rescale entrant wealth immediately just to normalize denominators; an empirical construction must address age, income concepts, zero/negative earnings and the joint distribution.",
+    "Current 18-24 childless-renter entry proxy remains experimental at model entry18.",
+    "Full economic fit tables and standard diagnostics, parameter bounds and income-grid sensitivity are required; loss alone cannot choose a utility architecture.",
+    "The old-age family-income versus pension denominator is a real mismatch to settle before final adoption."
+  ],
+  "corrections": [
+    {
+      "claim": "Entry rank coupling imposes perfect wealth-income rank correlation.",
+      "judgment": "Incorrect. The adapter maps probability intervals of old total-income ranks into persistent-income ranks while retaining conditional wealth dispersion. The empirical joint distribution is not estimated, but this is not perfect rank correlation.",
+      "evidence": "code/model/tools/e5f_earnings_wealth_contract.py:17-59; entry_reference_audit.json and selected_B_checkpoint_audit.json."
+    },
+    {
+      "claim": "Income timing cannot explain housing misses and tightening it must move ownership the wrong way.",
+      "judgment": "Not established. Affordability weakly expands mechanically at fixed state/prices, but no controlled timing counterfactual isolates equilibrium prices, saving, fertility or aggregate ownership effects."
+    },
+    {
+      "claim": "The entrant denominator discrepancy is second order because young renters mostly receive labor income.",
+      "judgment": "Unsupported quantitative claim; requires actual family-versus-labor-income decomposition in the selected sample."
+    },
+    {
+      "claim": "The asset-income wedge implies the observed sign of the old-age quantile-ratio gap.",
+      "judgment": "Not established without recomputing the joint distribution and both quantiles; no monotone sign follows generally."
+    },
+    {
+      "claim": "Small theta0 implies nearly all bequests are accidental.",
+      "judgment": "Unsupported without a measured decomposition or controlled no-motive comparison. Parameter magnitude alone is insufficient."
+    },
+    {
+      "claim": "A housing-floor bound hit makes this no longer a floor-versus-share comparison.",
+      "judgment": "It remains a bounded specification comparison; it cannot establish the unrestricted relative fit of both model classes."
+    },
+    {
+      "claim": "Strip business and vehicles from empirical net worth.",
+      "judgment": "Not adopted. A composite model asset can represent these holdings; reconcile asset coverage before removing components."
+    }
+  ],
+  "verified_timing": {
+    "income_eligibility": "Y/R augments eligible resources; not undiscounted Y added to transaction wealth.",
+    "transaction_wealth": "x = b + sale proceeds - purchase cost; income is not also added to x.",
+    "budget": "c + owner costs + b_next = R*x + Y, with applicable household spending definitions.",
+    "end_debt": "b_next >= -phi*pH remains in force for owners.",
+    "interpretation": "Permits current-period income to support purchase with temporary within-period financing. Correct accounting does not certify the economic timing assumption.",
+    "evidence": "code/model/tools/e5f_earnings_wealth_contract.py:243-282 and independent occupied transaction audit."
+  },
+  "bequest_primary_reference_check": {
+    "url": "https://users.nber.org/~denardim/research/De-Nardi_Yang_EER.pdf",
+    "paper": "De Nardi and Yang (2014), European Economic Review 72, 182-196",
+    "location": "Table2, printed p187, PDF page6; adjacent calibration paragraph.",
+    "verified": "The published article lists data bequest/wealth .0088 and attributes that moment to Gale and Scholz (1994). It targets wealth/after-tax earnings6.90, which is not comparable directly to project gross-earnings target6.14586. Its third moment is a decedent bequest-distribution statistic, not our living-old wealth/income ratio.",
+    "unverified": "Original Gale-Scholz numerator/denominator coverage and modern empirical applicability, including inter-vivos or spousal transfer treatment, remain unverified here. Synthetic5% target scale remains a project choice."
+  },
+  "next_decision": "Author discussion of explicit diagnostic timing and preserved B entry law; exact-loop smoke and bounded reviewed design still required before any overnight launch."
+}
