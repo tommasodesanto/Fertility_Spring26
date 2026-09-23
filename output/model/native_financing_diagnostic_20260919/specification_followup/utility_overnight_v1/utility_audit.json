@@ -1,0 +1,67 @@
+{
+  "schema": "utility_overnight_readonly_audit_v1",
+  "status": "inventory_complete_prelaunch_changes_required",
+  "scope": "Read-only technical/economic inventory of existing preference comparison adapters, tests, matched earnings-entry receipts, and runtimes. No source edits, model solves, SSH, or job submissions.",
+  "formula": {
+    "shared_fixed_objects": [
+      "Four-year lifecycle; fixed alpha_cons=0.733; sigma=2; power equivalence scale e(m)=((2+0.7*m)/2)^0.7.",
+      "psi_child remains separately normalized, outside structural search coordinates.",
+      "Same eight structural coordinates in both arms: H0, beta_annual, chi, first_birth_fixed_cost, kappa_fert, kappa_fert_continuation, theta0, theta1."
+    ],
+    "floor_control": {
+      "flow_utility": "-e(m) / [c^0.733 * (s - h_P*1{m>0})^0.267] + psi_child*m",
+      "structural_coordinates": 9,
+      "additional_coordinate": "h_P",
+      "bounds": {"h_P": [0.1, 2.3]},
+      "floor": "hbar(m)=h_P*1{m>0}; h_P is constrained below hR_max by the utility validator."
+    },
+    "child_dependent_shares": {
+      "flow_utility": "-e(m) / [c^alpha(m) * s^(1-alpha(m))] + psi_child*m",
+      "structural_coordinates": 10,
+      "replaces": "h_P is removed; housing floor jump and slope are fixed to zero.",
+      "bounds": {"delta_alpha_jump": [0.0, 0.25], "delta_alpha": [0.0, 0.25]},
+      "shares": "alpha(0)=0.733; alpha(m)=clip(0.733-delta_alpha_jump-delta_alpha*m,0.05,0.95) for m>0."
+    },
+    "state_mapping": "The optimized solver sets nk=cs for valid independent child maturation states (and zero for invalid cells); it applies nk to both alpha and the equivalence scale. This is current dependent children at home, not children ever born nn.",
+    "identification_count": "The active objective has 13 target rows versus 9 or 10 structural coordinates. The count is arithmetically adequate but does not establish informative/local identification; no comparison-specific Jacobian has been built."
+  },
+  "implementation_findings": {
+    "utility_formula": "Existing adapter implements the stated share formula through the native precompute_shared path; unit test checks retained scale, zero hbar/cbar, alpha values at m=1..3, and deep-copy discipline.",
+    "zero_floor": "Existing share adapter sets child_room_floor=False and hbar_first_child_jump=hbar_child_rooms=0; solver consequently sets h_bar=0. No changed model kernel appears necessary for this preference mapping.",
+    "target_contract": "Preparation hashes the objective without parameter_restrictions for the shared target/weight/measurement fingerprint; it changes the objective fingerprint only for the alternative parameter restrictions. This preserves target rows and weights if verified per generated plan.",
+    "income_process": "Direct-period constructor supports n_persistent=15,n_iid=1 and n_persistent=7,n_iid=3; persistent state is Markov and iid innovations are conditionally independent. No separate permanent household fixed type is introduced.",
+    "current_income_purchase_timing": "Inherited earnings adapter applies y/R to the purchase down-payment eligibility threshold and does not add income to transaction wealth x; final mortgage floor remains. Its independent audit checks occupied transaction support, threshold violations, and end-of-period debt floor.",
+    "entry_distribution": "The adapter currently hard-requires zero_assets and each plan is overwritten to zero_assets. Underlying earnings adapter already supports fixed_reference_marginal via rank_coupled_entry: preserves the wealth marginal to 2e-14, asserts conditional weights sum to one, couples old total-income ranks to new persistent ranks, and makes iid independent conditional on persistent rank. It explicitly does not estimate the joint distribution. B's saved inherited-entry mean is 0.186519679 and marginal gap is 5.55e-17; earlier audit records no original censoring. Replace all zero-entry assertions/labels and add a matched-arm inherited-entry regression; do not describe rank coupling as perfect correlation.",
+    "design_mismatch": "Current preparation applies one grid configuration globally and creates 20 matched worker pairs with two sequential candidate plans per worker. Current requested design needs 18 pairs on 15-state persistent-only income plus 2 pairs per utility arm on 21=7x3 persistent+iid; per-pair grid assignment and manifest/validator checks are required. Runner currently hardcodes 40 tasks, 20 matched pairs, and one objective fingerprint per preference arm; the 40-task/20-pair structure can remain if the 18+2 grid allocation is represented explicitly."
+  },
+  "parameter_bounds_and_count": {
+    "shared_parameter_bounds": "Use the frozen V5 parameter_bounds unchanged for the eight common structural coordinates; beta annual remains [0.94,0.99], H0 [0.2,80], chi [0.1,5], first_birth_fixed_cost [0,8], kappa_fert and kappa_fert_continuation [0.02,50], theta0 [0,8], theta1 [0.02,16].",
+    "utility_specific_bounds": "Floor h_P [0.1,2.3]; shares delta_alpha_jump and delta_alpha [0,0.25] each, softzero transform.",
+    "risk": "Retaining all 13 frozen targets gives 13>=10 by count, but do not infer identification or economic adoption from that count or any bound hits."
+  },
+  "runtime_receipts": {
+    "B15_single_process_inherited_entry": {"seconds": 1187.4117127821082, "stationary_solves": 6, "status": "verified_scored"},
+    "C21_persistent_iid_zero_entry": {"seconds": 1265.0599164249143, "stationary_solves": 6, "status": "verified_scored"},
+    "D21_persistent_iid_inherited_entry": {"seconds": 1698.7396701769903, "stationary_solves": 6, "status": "verified_scored"},
+    "C45": "Timed out at 3061 seconds in fifth normalization solve after four completed solves; avoid 45-state overnight configuration.",
+    "D45": "Failed after one started/zero completed solves at age 30: dead-node mass 2.49567345695e-12 exceeded unchanged 1e-12 gate. Preserve; do not retry or relax gate."
+  },
+  "small_necessary_checks": [
+    "Zero-solve preflight both utility arms using the same fixed_reference_marginal entry file/marginal and the shared target fingerprint.",
+    "Pure utility boundary check across m=0..3, both delta bounds, clipping, h_P bounds, exact zero hbar in share arm, and owner residual feasibility at the smallest housing-service state.",
+    "Run the requested paired smoke at 15 persistent states first; verify inherited wealth marginal, entry weights, purchase accounting, all unchanged household/numerical gates, target rows/weights, and full parameter counts/bounds.",
+    "Run only the declared 21-state 7x3 sensitivity pairs after the primary smoke passes; retain the same frozen targets, entry marginal, wealth grid, and gates. No 45-state retry."
+  ],
+  "source_evidence": [
+    {"path": "code/model/tools/run_e5f_preference_share_candidate.py", "lines": "32-40,47-119", "supports": "Current zero-entry hard requirement; preference bindings, share bounds/formula, zero floor, power scale metadata."},
+    {"path": "code/model/tools/prepare_e5f_preference_comparison.py", "lines": "23-28,93-115,160-181,247-280,316-379", "supports": "Eight shared coordinates, arm-specific draws, forced zero entry, global grid configuration, current 40-worker paired design and shared target fingerprint."},
+    {"path": "code/model/tools/run_e5f_preference_comparison.py", "lines": "22-28,54-118,121-144", "supports": "Hardcoded 40 tasks, 20 matched pairs, matched draws, 3200-second objective cap."},
+    {"path": "code/model/intergen_eqscale_seq_optimized/solver.py", "lines": "2398-2462", "supports": "Current dependent-child state mapping, hbar/alpha rules, and equivalence-scale formula."},
+    {"path": "code/model/tools/run_e5f_earnings_wealth_candidate.py", "lines": "137-160,166-176", "supports": "Both entry-law branches, inherited rank-coupled marginal binding, purchase-accounting audit."},
+    {"path": "code/model/tools/e5f_earnings_wealth_contract.py", "lines": "16-59,280-355", "supports": "Inherited marginal-preserving coupling; no estimated joint distribution; unchanged purchase and mortgage-floor checks."},
+    {"path": "code/model/tools/test_run_e5f_preference_share_candidate.py", "lines": "22-45,60-99", "supports": "Existing pure tests for native utility arrays, fingerprint, generated contracts and zero-solve preflight; currently lacks inherited-entry assertion."},
+    {"path": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/resolution_final/collection_summary.json", "lines": "selected and stationary_solves", "supports": "15-state B runtime and resolution completion counts."},
+    {"path": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/collection_summary.json", "lines": "selected", "supports": "21-state C/D runtime receipts."},
+    {"path": "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/resolution_failure_D/review.json", "lines": "1-18", "supports": "D45 age-30 unchanged dead-node-mass failure."}
+  ]
+}

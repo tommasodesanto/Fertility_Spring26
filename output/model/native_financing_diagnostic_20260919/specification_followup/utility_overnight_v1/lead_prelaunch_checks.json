@@ -1,0 +1,38 @@
+{
+  "status": "reviewed_and_submitted",
+  "reviewed_utc": "2026-09-23T03:08:53.038048+00:00",
+  "checks": {
+    "utility_tests": {
+      "command": "tmp/income_refinement_local_20260921/venv/bin/python -m pytest -q code/model/tools/test_run_e5f_preference_share_candidate.py",
+      "passed": 10
+    },
+    "frozen_accounting_tests": {
+      "command": "tmp/income_refinement_local_20260921/venv/bin/python -m pytest -q code/model/tools/test_e5f_earnings_wealth_contract.py",
+      "passed": 23
+    }
+  },
+  "test_isolation_note": "Combined invocation initially gave27 pass6 fail because utility tests import the newer active solver before accounting tests select frozen source. Separate processes pass10+23. No kernel or gate changed in response. Frozen source contract remains authoritative.",
+  "lead_economic_review": [
+    "Shared power equivalence scale uses current dependent children m, e(m)=((2+0.7m)/2)^0.7 at sigma2.",
+    "Floor utility uses alpha=.733 and parenthood floor h_P; share utility removes floor and uses alpha(m)=clip(.733-delta_jump-delta*m,.05,.95).",
+    "Inherited entry rank mapping preserves old wealth marginal; no zero fallback and not an estimated empirical joint distribution.",
+    "Current-income down-payment eligibility usesY/R; budget income enters once. Timing convention retained experimentally, not resolved by accounting tests.",
+    "Source wrappers preserve household and market gates; alternate restrictions change objective metadata but not target-and-weight payload."
+  ],
+  "pending": [
+    "Exact-loop smoke completion",
+    "Production and selected repeated scientific verification",
+    "Final independent collection and PDF review"
+  ],
+  "numerical_risks": [
+    "15-state primary resolution is not convergence evidence",
+    "21-state supplementary retained as exploratory;45-state prior failure preserved",
+    "Continuation sentinel effects and wealth-grid robustness unresolved"
+  ],
+  "memory_allocation_evidence": "Previous D21 completed tasks MaxRSS5.1\u20135.5GiB fromsacct;16GiB per job leaves headroom.",
+  "manifest_sha256": "a895112b283f724c532f53e214457ceb142cacd44d9ac74deb84ed6dbf40f3d5",
+  "driver_checks": 3,
+  "local_zero_solve_preflights": 8,
+  "remote_zero_solve_preflights": 4,
+  "submitted_utc": "2026-09-23T03:15:34Z"
+}

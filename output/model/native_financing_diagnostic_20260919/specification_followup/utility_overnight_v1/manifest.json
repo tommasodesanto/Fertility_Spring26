@@ -1,0 +1,318 @@
+{
+  "adapter_source_change": {
+    "bundled_sha256": "907c1ba428366690c512bb8867a3af7e5464ef18661dc687c7b7b80567f6459c",
+    "new": "if plan.get('entry_specification', {}).get('rule') != 'fixed_reference_marginal':",
+    "old": "if plan.get('entry_specification', {}).get('rule') != 'zero_assets':",
+    "original_sha256": "36b8eff2f345c9df9ded2f11bff150d599e39c094411197f70f0e8a35f59ecfc",
+    "scientific_meaning": "accept fixed reference wealth marginal and rank coupling; no zero fallback"
+  },
+  "case_seconds": 7200,
+  "entry_rule": "fixed_reference_marginal",
+  "frozen_v5_plan_sha256": "10823c4a968d8a05e70b47230cd6add7fb8d5c0ce34426af04270fb0788d4956",
+  "launcher": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/tools/submit_e5f_utility_overnight.sh",
+    "sha256": "174e977a2c6b51b08b549ab97a4da94f179b40682142094f6475914898107e0f"
+  },
+  "maximum_nested_solves_per_objective": 8,
+  "maximum_objectives": {
+    "production": 720,
+    "smoke": 8,
+    "total": 736,
+    "verification": 8
+  },
+  "maximum_proposals_per_worker": 18,
+  "maximum_stationary_solves": 5888,
+  "native_seconds_per_objective": 6900,
+  "observed_seconds_per_objective": {
+    "B_15x1": 1187,
+    "D_7x3": 1699
+  },
+  "paired_seed_count": 18,
+  "production_stop_utc": "2026-09-23T12:00:00Z",
+  "proposal_scale_design": {
+    "initial_scales": {
+      "broad": 3.2,
+      "local": 0.8,
+      "medium": 1.6
+    },
+    "paired_primary_chains": "seed IDs 1-6 local, 7-12 medium, 13-18 broad",
+    "selection": "each persistent worker proposes around its own best valid point; shared random innovations pair seed IDs but parameter vectors can diverge",
+    "supplementary_chains": "seed ID 1 local, 2 medium"
+  },
+  "report_deadline_utc": "2026-09-23T14:00:00Z",
+  "runner": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/tools/run_e5f_utility_overnight.py",
+    "sha256": "84a14f02abb64e4674e120b931805b376d5c613d7bdecd18205c98d2187904b3"
+  },
+  "schema": "e5f_utility_overnight_manifest_v1",
+  "selected_B_plan_sha256": "944d51c221f93b563f12cbb07a986431240fe36a4f63e2bd69f442994bd876e4",
+  "smoke_case_seconds": 7200,
+  "source_file_count": 641,
+  "source_manifest_sha256": "76406fcc10206d9e30bcc29d4e18accdf7fffdd9219e50e6e11c1c3360f01336",
+  "status": "ready",
+  "target_system_sha256": "10d80bcfca64aad511058b4a1d427283c3c2f548803213f21688e091f7457107",
+  "templates": {
+    "B_floor": {
+      "bounds": {
+        "H0": [
+          0.2,
+          80.0
+        ],
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "h_P": [
+          0.1,
+          2.3
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ],
+        "theta1": [
+          0.02,
+          16.0
+        ]
+      },
+      "entry_rule": "fixed_reference_marginal",
+      "income_grid": {
+        "iid": 1,
+        "persistent": 15
+      },
+      "objective_canonical_sha256": "4440ea07f4de957740ca6c04961d2806d9b9ef782c7a0e7dad4ce73e1db651b1",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/inputs/utility_templates/B_floor/template_plan.json",
+      "seed_parameters": {
+        "H0": 7.579566558818859,
+        "beta_annual": 0.9861354184363632,
+        "chi": 1.0094388767653766,
+        "first_birth_fixed_cost": 0.3151947070287402,
+        "h_P": 2.3,
+        "kappa_fert": 0.2933055318704186,
+        "kappa_fert_continuation": 0.4538659805118368,
+        "theta0": 0.04024742184861621,
+        "theta1": 0.09234772467336418
+      },
+      "sha256": "0ce0d53a3543c006f4e71b1fcecc157ea2fb217855b2927659046aa5112120b8",
+      "target_system_sha256": "10d80bcfca64aad511058b4a1d427283c3c2f548803213f21688e091f7457107"
+    },
+    "B_shares": {
+      "bounds": {
+        "H0": [
+          0.2,
+          80.0
+        ],
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "delta_alpha": [
+          0.0,
+          0.25
+        ],
+        "delta_alpha_jump": [
+          0.0,
+          0.25
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ],
+        "theta1": [
+          0.02,
+          16.0
+        ]
+      },
+      "entry_rule": "fixed_reference_marginal",
+      "income_grid": {
+        "iid": 1,
+        "persistent": 15
+      },
+      "objective_canonical_sha256": "6ce178adc3d203f9e5e376bcff322e7b0f9a7bd6f34e16e347bf3abe1a88b3fd",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/inputs/utility_templates/B_shares/template_plan.json",
+      "seed_parameters": {
+        "H0": 7.579566558818859,
+        "beta_annual": 0.9861354184363632,
+        "chi": 1.0094388767653766,
+        "delta_alpha": 0.016919,
+        "delta_alpha_jump": 0.020344,
+        "first_birth_fixed_cost": 0.3151947070287402,
+        "kappa_fert": 0.2933055318704186,
+        "kappa_fert_continuation": 0.4538659805118368,
+        "theta0": 0.04024742184861621,
+        "theta1": 0.09234772467336418
+      },
+      "sha256": "231eb27c5f66a926013bf55ddb1cf754a032699c091a53458a3e80e0e915e7ca",
+      "target_system_sha256": "10d80bcfca64aad511058b4a1d427283c3c2f548803213f21688e091f7457107"
+    },
+    "D_floor": {
+      "bounds": {
+        "H0": [
+          0.2,
+          80.0
+        ],
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "h_P": [
+          0.1,
+          2.3
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ],
+        "theta1": [
+          0.02,
+          16.0
+        ]
+      },
+      "entry_rule": "fixed_reference_marginal",
+      "income_grid": {
+        "iid": 3,
+        "persistent": 7
+      },
+      "objective_canonical_sha256": "4440ea07f4de957740ca6c04961d2806d9b9ef782c7a0e7dad4ce73e1db651b1",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/inputs/utility_templates/D_floor/template_plan.json",
+      "seed_parameters": {
+        "H0": 7.579566558818859,
+        "beta_annual": 0.9861354184363632,
+        "chi": 1.0094388767653766,
+        "first_birth_fixed_cost": 0.3151947070287402,
+        "h_P": 2.3,
+        "kappa_fert": 0.2933055318704186,
+        "kappa_fert_continuation": 0.4538659805118368,
+        "theta0": 0.04024742184861621,
+        "theta1": 0.09234772467336418
+      },
+      "sha256": "95ef4ab37091e0e53ea5539f9b5a131ea004080f15a04c47eff41a4d25d3fde1",
+      "target_system_sha256": "10d80bcfca64aad511058b4a1d427283c3c2f548803213f21688e091f7457107"
+    },
+    "D_shares": {
+      "bounds": {
+        "H0": [
+          0.2,
+          80.0
+        ],
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "delta_alpha": [
+          0.0,
+          0.25
+        ],
+        "delta_alpha_jump": [
+          0.0,
+          0.25
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ],
+        "theta1": [
+          0.02,
+          16.0
+        ]
+      },
+      "entry_rule": "fixed_reference_marginal",
+      "income_grid": {
+        "iid": 3,
+        "persistent": 7
+      },
+      "objective_canonical_sha256": "6ce178adc3d203f9e5e376bcff322e7b0f9a7bd6f34e16e347bf3abe1a88b3fd",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/inputs/utility_templates/D_shares/template_plan.json",
+      "seed_parameters": {
+        "H0": 7.579566558818859,
+        "beta_annual": 0.9861354184363632,
+        "chi": 1.0094388767653766,
+        "delta_alpha": 0.016919,
+        "delta_alpha_jump": 0.020344,
+        "first_birth_fixed_cost": 0.3151947070287402,
+        "kappa_fert": 0.2933055318704186,
+        "kappa_fert_continuation": 0.4538659805118368,
+        "theta0": 0.04024742184861621,
+        "theta1": 0.09234772467336418
+      },
+      "sha256": "2d6d81267e6f0fb02534f46a275d0e4c4da9dd16acdd4cd16d295b73caf6d9c0",
+      "target_system_sha256": "10d80bcfca64aad511058b4a1d427283c3c2f548803213f21688e091f7457107"
+    }
+  },
+  "total_workers": 40,
+  "verification_stop_utc": "2026-09-23T13:00:00Z",
+  "wealth_grid": {
+    "nodes": 160,
+    "upper": 3000
+  },
+  "workers": {
+    "B_floor": 18,
+    "B_shares": 18,
+    "D_floor": 2,
+    "D_shares": 2
+  }
+}

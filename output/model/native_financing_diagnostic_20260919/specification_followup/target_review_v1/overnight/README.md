@@ -1,0 +1,24 @@
+# Overnight target review — September 22–23
+
+Author authorization: a literature-first review by **Opus 5.5 through Claude Max**, with lead criticism, targeted empirical work where useful, and repeated discussion. Laptop remains open, powered and connected. Deliver at **September 23, 10:00 America/New_York**, neither an early provisional verdict nor a delayed preferred outcome. Research proceeds alongside the separately documented utility calibration under the existing frozen targets.
+
+## Live execution
+
+`phase1_literature/receipt.json`: first-party Max checked, exact model `claude-opus-5-5`; launched 22:59 EDT. Read-only literature/implemented-observer review, maximum 75 minutes and 100 turns. `run_opus_review.py` preserves every attempted phase and writes heartbeat, exit status, session and model. Use a fresh reviewed phase for follow-ups, passing `--resume SESSION_ID` to retain the conversation. A successful process is not a lead-reviewed conclusion. Never substitute API billing or another model silently.
+
+## Productive overnight sequence
+
+1. **23:00–00:15:** Opus primary-source comparison of all 12 scored targets plus normalization, entry wealth and timing; identify at most four concrete feasible empirical checks. Lead completes cluster launch and reviews claims against code and July sign-offs.
+2. **00:15–03:30:** Lead challenges the literature memo and dispatches distinct bounded data checks to inexpensive workers. Reuse authoritative builders and available inputs. Preserve original definitions/results; any new sample, regression, geography, denominator or weight is a separately named candidate. No target changes enter running calibrations. Send the concrete receipts and disagreements back to Opus.
+3. **03:30–06:30:** Opus/lead second review; resolve discrepancies with targeted source or data checks. Examine identifying information and weight interpretation. Distinguish demonstrated error, defensible approximation, author choice and optional robustness. Extend useful checks within scope; no repetitive broad audits or automatic retries.
+4. **06:30–09:00:** Integrate target judgments with completed model comparisons without choosing targets to fit results. Collect full evidence and parameter interpretation. Finish unresolved high-value checks and write explicit decisions/outstanding items.
+5. **09:00–09:50:** Build the readable PDF and complete-table attachments, independently check numbers and render every page. Make the economic recommendation concise; retain the evidence appendix.
+6. **10:00:** Deliver PDF and substantive chat, including failures/incomplete work. Delete follow-up after delivery. Do not claim paper adoption, identification or convergence from a finite experiment.
+
+Time windows guide work and can be adjusted for useful evidence; they are not instructions to idle or manufacture activity. No model or scientific gate change is authorized merely to obtain a successful result. Repairs need a diagnosed, separately reviewed, versioned plan.
+
+## Coordination
+
+Automation `overnight-utility-and-target-review` runs on the hour and at :20/:40, including **10:00 EDT**. Only one heartbeat can attach to this task; that same follow-up handles iteration and final delivery. Stay quiet during healthy unchanged work, notify meaningful failure or required action. Current model-work status is in the sibling `utility_overnight_v1/README.md`. Lead owns economics, identification and final review. Routine collection, tabulation and independent bounded checks go to cheaper agents with distinct ownership. Preserve all unrelated dirty files and author documents.
+
+The existing `review.json` launch hold is superseded by the author's latest controlled-experiment authorization, not by a finding that all mappings are settled. July signed-off wealth decisions remain the starting point. Existing `fable_reply/lead_review.json` is useful criticism but is not the requested new Opus review.
