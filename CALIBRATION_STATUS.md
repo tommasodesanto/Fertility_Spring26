@@ -1,5 +1,14 @@
 # Calibration Status
 
+## September 23 — historical bequest-flow number rejected for next calibration
+
+Author rejects carrying the 1986-based 0.880% into the new 2007 calibration.
+Lead withdraws the suggestion to use it as an interim target. Later papers'
+reuse is not evidence of validity for 2007. The next run requires a reviewed,
+appropriately dated measurement; no replacement value is available yet.
+Historical frozen experiments remain unchanged. The 2007 SCF/mortality input
+work continues; it must state estate definitions and allocation assumptions.
+
 ## September 23 — estate-flow source correction and current remeasurement
 
 Lead corrects an overstated data dependency: HRS exit estates are not required
