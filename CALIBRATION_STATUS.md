@@ -1,5 +1,22 @@
 # Calibration Status
 
+## September 23 — estate-flow source correction and current remeasurement
+
+Lead corrects an overstated data dependency: HRS exit estates are not required
+to reproduce Gale–Scholz's constructed annual flow. Their 1993 working paper,
+pp. 12–13, uses SCF wealth, life-table mortality and child-recipient assumptions;
+the separate Hurd–Smith estate-percentile source uses exit interviews. Theta1
+is now fixed, so that percentile is no longer required to calibrate theta1.
+Observed pre-death wealth and realized estates are distinct, but mortality-
+weighted wealth is a legitimate explicitly assumption-based estimator used
+by the cited source, not an undocumented substitute for observed estates.
+
+Two bounded workers now check the exact original estimator and public 2007
+SCF/mortality inputs. No new flow estimate is available or adopted yet. The
+historical 0.880% is also used in Guvenen–Ozkan–Madera (2024), section 3.1;
+later reuse supplies precedent, not a new measurement. Keep household-exit
+versus child-recipient allocations explicit when reviewing a new candidate.
+
 ## September 23 — externally fixed bequest shift adopted
 
 Author adopts the DUE-inspired restriction theta1 = 1% of median annual
