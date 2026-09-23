@@ -122,6 +122,10 @@ production-paper tables. In particular, a calibration slide defaults to
 
 ## 7. Workflow checks (LaTeX)
 
+- Author preference, September 23: display numbers with at most three decimal
+  places in prose, tables and checklists; use fewer when sufficient. Retain full
+  precision in source data and calculations. Use scientific notation for small
+  numerical tolerances when rounding would hide their meaning.
 - Author preference, September 23: use Claude Opus 5.5 for draft edits for now.
   The lead checks the economic content, numbers, and scope before applying or
   accepting the edit. If that model is unavailable, report the limitation
