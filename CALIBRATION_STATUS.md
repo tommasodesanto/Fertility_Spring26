@@ -1,5 +1,15 @@
 # Calibration Status
 
+## September 23 — beta target vintage chosen: 2005/2007
+
+The author explicitly chooses pooled PSID 2005/2007 for aggregate net wealth
+/ annual gross labor earnings: 6.927 (full precision 6.92658379107299).
+Existing person-cluster bootstrap SE is 0.417310142072186; weights remain a
+separate decision. Source: `output/model/e5f_matched_pf_20260909a/design_research/wealth/aggregate_wealth_results.csv`,
+row `initial_2005_2007`. This supersedes the open-vintage note below and the
+6.146 value for the next calibration target set. Frozen experiments retain
+their old contracts; no rescoring, model run or parameter estimate adoption.
+
 ## September 23 — aggregate wealth target approach retained
 
 The author retains aggregate household net wealth (including housing net of

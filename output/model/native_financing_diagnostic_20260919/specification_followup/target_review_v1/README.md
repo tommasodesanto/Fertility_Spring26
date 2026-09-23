@@ -1,5 +1,14 @@
 # Target validation before the utility comparison
 
+## September 23 — beta data-year decision
+
+Author chooses pooled PSID 2005/2007: aggregate net wealth / annual gross
+labor earnings 6.927, full precision 6.92658379107299, existing bootstrap
+SE 0.417310142072186. Source: `initial_2005_2007` in the September9 design
+research `wealth/aggregate_wealth_results.csv`. This supersedes the pending
+vintage and 6.146 discussion below for the next target set. Weights remain
+open; no frozen experiment, model run or rescoring changes.
+
 ## September 23 — beta target approach accepted
 
 Retain aggregate net wealth / annual gross labor earnings as the main beta
