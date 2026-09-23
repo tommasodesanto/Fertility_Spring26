@@ -6,11 +6,12 @@ The author chooses the nationally weighted 2007 AHS occupied-room mean as the
 main empirical quantity moment for the free housing-supply level $H_0$.
 `code/data/ahs_supply_snapshot/build_ahs_2007_room_target.py` reproduces the
 2007 national PUF v2.0 estimate for occupied units with householders aged
-18--85: 5.729434240102641 rooms, Fay-BRR SE 0.008933865036622756, 37,793
-sample units. The AHS PUF topcodes rooms at 21; 5.684708786004939 is the
+18--85: 5.729 rooms, Fay-BRR SE 0.009, 37,793
+sample units. The AHS PUF topcodes rooms at 21; 5.685 is the
 nine-capped diagnostic on the same observations. The old pooled 2005--06 ACS
-5.607885960068579 is not a directly comparable tail correction. Raw-source
-SHA-256 and full estimator definitions are in the script and its folder README.
+5.608 is not a directly comparable tail correction. Raw-source SHA-256 and
+full-precision estimates are in the receipt; estimator definitions are in the
+script and its folder README.
 
 This is an author choice of the empirical moment and identification *method*,
 not an externally fixed numerical $H_0$, a new weight, or an adopted fit.

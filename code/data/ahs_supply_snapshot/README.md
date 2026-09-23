@@ -16,10 +16,10 @@ python3 code/data/ahs_supply_snapshot/build_ahs_2007_room_target.py
 ```
 
 The ignored receipt is `output/ahs_2007_room_target.json` in this folder. The
-full-precision main estimate is 5.729434240102641 rooms (SE
-0.008933865036622756; 37,793 sample units); imposing a nine-room cap on the
-same AHS records gives 5.684708786004939. The one-off 2005--06 ACS target
-5.607885960068579 is from a different survey/year and must not be subtracted
+main estimate is 5.729 rooms (SE 0.009; 37,793 sample units); imposing a
+nine-room cap on the same AHS records gives 5.685. Full precision is in the
+JSON receipt. The one-off 2005--06 ACS target 5.608 is from a different
+survey/year and must not be subtracted
 from the AHS estimate as a pure topcode effect. The next numerical calibration
 must compare the AHS target with the model's *uncapped occupied physical rooms*,
 not its existing nine-capped observer. The supply-level parameter remains free;
