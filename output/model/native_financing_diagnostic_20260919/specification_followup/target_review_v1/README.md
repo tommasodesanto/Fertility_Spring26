@@ -1,5 +1,14 @@
 # Target validation before the utility comparison
 
+## September 23 — beta target approach accepted
+
+Retain aggregate net wealth / annual gross labor earnings as the main beta
+moment, including housing net of debt. Existing value 6.146 is unchanged;
+the data-year choice remains open. A supplementary literature review is
+delegated, separately from the discussion document, for lead review before
+its findings are accepted. References belong in
+`docs/literature/economic_decisions.md`. No model runs, weights or rescoring.
+
 ## September 23 — saved-search identification check
 
 [Descriptive evidence](fertility_saved_search_identification_check.json) covers

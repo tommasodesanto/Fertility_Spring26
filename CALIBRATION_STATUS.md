@@ -1,5 +1,16 @@
 # Calibration Status
 
+## September 23 — aggregate wealth target approach retained
+
+The author retains aggregate household net wealth (including housing net of
+debt) divided by annual gross labor earnings as the main moment disciplining
+beta. The existing 6.146 remains the current value; this does not resolve the
+2003/2005 versus 2005/2007 observation-period choice or adopt new weights or
+experimental parameter estimates. A bounded supplementary literature review
+is delegated, with references to be maintained in
+`docs/literature/economic_decisions.md` after lead verification. Bequest-target
+decisions remain open. No numerical contracts, model runs or rescoring change.
+
 ## September 23 — saved-search identification evidence
 
 A read-only check of all193 verified B_floor evaluations finds correlation
