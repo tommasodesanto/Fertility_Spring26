@@ -1,0 +1,61 @@
+{
+  "age_cell_definition": "four-year interval [start,start+4); last fertile cell [42,46), represented by midpoint 44",
+  "all_order_future_source": "If needed, reconstruct from archived CDC/NCHS Natality public-use detail files for 2003-2006, retaining every live-birth-order record and age of mother (NCHS README documents mager and lbo_rec for these years); aggregate all known-order births by maternal age using an explicitly stated unknown-order policy. The local project cache has no such all-order-by-age table.",
+  "interpretation_limits": [
+    "Pre/post are the same evaluation's within-cell fertility-choice distributions; their difference is validated against contemporaneous modeled transition flows. They are not adjacent-age stocks or a cohort trajectory.",
+    "The model transition vector explicitly counts first, second, and third births entering 3+. The top-code-adjusted child flow weights third-bin entry by T-2=1.602359422009; because the model has no separate 4+ state/flow, this is a top-coded measurement convention, not observed fourth-or-later births.",
+    "The 42+ NCHS denominator is all cached first births at ages 12-49 in 2003-2006; the model denominator is total stationary model first-birth flow. Similar age labels do not make the populations, period, or selection mechanism identical.",
+    "The 40-44 CPS stock projection is a separate observer statistic. The terminal-cell flow is not a same-population CPS completed-fertility comparison, and no fundamental inconsistency or loss lower bound follows from this diagnostic."
+  ],
+  "method": "Read existing B native_summary and existing pooled NCHS first-birth age cache; no checkpoint load, model solve, CPS rerun, raw NCHS access, or download.",
+  "model_population_and_phase": "model household reproductive member proxies for the maternal population; not certified female exposure; pre/post fertility of the same evaluation; no aging or cohort splicing",
+  "model_variants": {
+    "constant_post_cell": {
+      "age42_cell_topbin_mean_change": 0.23651841823946196,
+      "age42_cell_topbin_mean_post": 2.100002879129281,
+      "age42_cell_topbin_mean_pre": 1.863484460889819,
+      "first_birth_flow_age42plus": 0.001329238565816054,
+      "first_birth_share_age42plus": 0.02528242745773724,
+      "max_parity_transition_stock_flow_identity_abs_error": 1.465841337200402e-16,
+      "max_same_cell_topbin_stock_flow_identity_abs_error": 3.0531133177191805e-15,
+      "sum_explicit_flow_vector_minus_saved_total": -1.3877787807814457e-17,
+      "sum_first_flow_vector_minus_saved_total": 0.0,
+      "third_birth_entry_share_cell42_mass": 0.09980605241702852
+    },
+    "uniform_birth_time": {
+      "age42_cell_topbin_mean_change": 0.23651841823946196,
+      "age42_cell_topbin_mean_post": 2.100002879129281,
+      "age42_cell_topbin_mean_pre": 1.863484460889819,
+      "first_birth_flow_age42plus": 0.001329238565816054,
+      "first_birth_share_age42plus": 0.02528242745773724,
+      "max_parity_transition_stock_flow_identity_abs_error": 1.465841337200402e-16,
+      "max_same_cell_topbin_stock_flow_identity_abs_error": 3.0531133177191805e-15,
+      "sum_explicit_flow_vector_minus_saved_total": -1.3877787807814457e-17,
+      "sum_first_flow_vector_minus_saved_total": 0.0,
+      "third_birth_entry_share_cell42_mass": 0.09980605241702852
+    }
+  },
+  "nchs_all_birth_orders": {
+    "available": false,
+    "reason": "The checked-in cache is first-birth-only; its builder/README defines order==1. It cannot establish all-birth flow at ages 42-45."
+  },
+  "nchs_first_birth_counts_age42plus": 35414,
+  "nchs_first_birth_counts_total_ages12_49": 6611269,
+  "nchs_period": "2003-2006 pooled, exact ages as stored, first live birth only",
+  "nchs_share_age42plus": 0.0053566115673103,
+  "primary_source_references": [
+    "NCHS Natality public-use files (2003-2006) as locally documented in code/data/nchs_natality_timing/README.md; cache has only first-birth counts.",
+    "CDC/NCHS 2003 Natality public-use documentation: https://ftp.cdc.gov/pub/Health_Statistics/NCHS/Dataset_Documentation/DVS/natality/Nat2003doc.pdf"
+  ],
+  "source_sha256": {
+    "code/data/nchs_natality_timing/README.md": "305fa903bd3eda81b00a54bddfeb6e1b89a4afe11ddf2e5ee130280714a468cf",
+    "code/data/nchs_natality_timing/first_birth_counts_year_age.csv": "5ef20c138a103c79b472b372fa8c5199cd5f3a0b544faff73e908f3803360c45",
+    "code/model/tools/e5f_initial_fertility_observer.py": "2be39f66b90f3265f1d21d96dd68626fcfc43b569e8526ab2ea0414a4bef07b7",
+    "code/model/tools/run_e5f_open_population_transition.py": "b4ce8b965f607e5337455de46b8c23d53fc07e00e4198d6ad383869723f8f2ca",
+    "code/model/tools/run_e5f_transition_calibration.py": "32f5be1c16ec591ef514af91cec2223f8aecd259808b1fc806f9742d5fd64435",
+    "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/B/selected/native_summary.json": "d7046d2e7af4f54017ecb97f6ce916e8d5e1f718731cb6e31e59b69256129827",
+    "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/phase3_empirical_adjudication/final.md": "2eb4935eccedd1f1ed30151f52a4d3dfd8cd56797d7eee56c2002f6c50e90fed"
+  },
+  "status": "complete_saved_artifact_diagnostic",
+  "topbin_value_children": 3.602359422009
+}

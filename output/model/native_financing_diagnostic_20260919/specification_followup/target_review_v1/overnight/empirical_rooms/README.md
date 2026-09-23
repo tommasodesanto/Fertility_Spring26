@@ -1,5 +1,31 @@
 # First-birth rooms estimand audit
 
+## Additional saved-coefficient aggregation, September 23
+
+`common_cohort_contrast.py` examines a concrete way to remove one demonstrated
+normalization dependence. It first reproduces the current 0.720246 target from
+the saved cohort coefficients and original aggregation weights. It then keeps
+the 27 birth cohorts observed at both -1 and +3, takes the contrast within each
+cohort, and uses the same cohort weights at both endpoints. Fixed pre-birth
+weights give 0.811397 rooms; fixed post-birth weights give 0.797759. The common
+cohorts retain 80.89% of fitted pre-birth weight and 88.31% of fitted post-birth
+weight. These are candidate aggregations of an existing regression, not new
+regressions or adopted targets.
+
+An additive cohort-specific normalization cancels in each within-cohort
+contrast. The script verifies this algebra and the source hashes. A first
+positive-variance guard stopped on cohort 1971; its observed -1 coefficient is
+the sole omitted baseline rather than missing endpoint support. The corrected
+guard verifies that case explicitly and retains the cohort. The independent
+`common_cohort_contrast_review.json` checks this treatment and the calculation.
+
+The change from 0.720246 also changes cohort composition and weights; it cannot
+be attributed solely to normalization. This construction does not establish
+causal identification, individual balance, parallel trends, or equivalence to
+the model's counterfactual or the author's -2 reference preference. The full
+coefficient covariance is unavailable, so no standard error or calibration
+weight is supplied. The current target and running objective are unchanged.
+
 This is a read-only audit of the saved PSID event-study outputs, the active
 model observer, and a sample-only PSID birth-history count. It ran no regression,
 model solve, or remote checkpoint fetch, and it changed no live target or

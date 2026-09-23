@@ -1,6 +1,6 @@
 {
-  "updated_utc": "2026-09-23T04:01:39.916996+00:00",
-  "phase": "empirical adjudication with Opus; collector and PDF preparation",
+  "updated_utc": "2026-09-23T04:42:51.472509+00:00",
+  "phase": "Reviewed exact room-estimator replay running; entry and ACS uncertainty calculations underway",
   "phase1_status": "complete; lead critique saved",
   "phase2_status": "complete; lead corrections saved",
   "phase3": "phase3_empirical_adjudication/receipt.json",
@@ -13,8 +13,21 @@
     "empirical_old_wealth"
   ],
   "worker_status": "All four bounded empirical checks completed and reviewed; no target edits or model solves.",
-  "next": "Review phase 3 recommendations against receipts; resolve only material concrete discrepancies. Await Torch login refresh for actual collection.",
+  "next": "Review terminal regression gates and full-covariance contrasts; review corrected common-scale entry and ACS uncertainty; no changes to frozen targets.",
   "collector": "Latest local source has nine passing tests and finalizer binding checks; upload external helper after SSH returns.",
   "pdf": "Builder checked with synthetic fixtures only. PDF marker already invoked once. No actual results PDF produced.",
-  "delivery_utc": "2026-09-23T14:00:00Z"
+  "delivery_utc": "2026-09-23T14:00:00Z",
+  "phase3_status": "completed at04:12:13UTC; corrections required",
+  "latest_pushed_commit": "63ba77aa",
+  "worker_followups": {
+    "empirical_acs_child_mapping": "Complete; lead rerun passed all new gates, candidate shift-.010847.",
+    "empirical_rooms/common_cohort_contrast_review.json": "Complete independent review; candidate .811397/.797759, no SE yet.",
+    "empirical_fertility/late_fertility_diagnostic.json": "Complete; lead read stock-flow calculation, late firstbirth2.528% vs NCHS.536%, no all-order empirical cache.",
+    "empirical_rooms/covariance_replay": "One reviewed20-minute/four-processor exact empirical replay launched04:40:30UTC, Stata pid63812; execution.json gives live status. No automatic retry.",
+    "empirical_entry/common_scale_candidate": "Bounded45-minute data-only construction running; no law adopted.",
+    "empirical_acs_child_mapping/uncertainty": "Bounded20-minute paired authoritative metro-bootstrap calculation running."
+  },
+  "phase4": "phase4_final_measurement_choices/receipt.json",
+  "phase4_cap_seconds": 1800,
+  "phase4_status": "completed 04:23:11UTC; lead qualifications saved in phase4_lead_review.json"
 }

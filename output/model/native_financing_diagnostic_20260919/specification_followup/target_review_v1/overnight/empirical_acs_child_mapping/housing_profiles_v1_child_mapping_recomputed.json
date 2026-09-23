@@ -1,0 +1,153 @@
+{
+  "status": "computed",
+  "period": "ACS 1-year 2005 and 2006 pooled, household-weighted",
+  "sample": "Same 42 active MET2013 geographies and exact head age 30-55, positive HHWT, occupied household and ROOMS>0 filters; family universe additionally NCHILD>0 and YNGCH<18.",
+  "relationship_measure": "Counts household person rows whose MOMLOC or POPLOC equals the head PERNUM (1), split AGE<18 versus AGE>=18. These are resident children with an observed ACS parent pointer to the head. A secondary RELATE=3 count is retained as a relationship-category comparison.",
+  "existing_four_moment_reproduction": {
+    "mean_rooms": 5.561097376118652,
+    "ownership_30_55": 0.6483340343191493,
+    "family_rooms": 0.3470669317962507,
+    "recent_parent_ownership": 0.16289550916123285
+  },
+  "expected_existing_four_moments": {
+    "mean_rooms": 5.561097376118652,
+    "ownership_30_55": 0.6483340343191493,
+    "family_rooms": 0.3470669317962507,
+    "recent_parent_ownership": 0.16289550916123285
+  },
+  "target_reproduction_max_abs_gap": 0.0,
+  "family_sample": {
+    "households": 275009,
+    "household_weight": 29286406.0,
+    "families_with_adult_resident_own_child": 40450,
+    "weighted_share_with_adult_resident_own_child": 0.14952247810810243,
+    "families_with_any_minor_linked_child": 275009,
+    "weighted_share_with_zero_linked_minor_children": 0.0
+  },
+  "existing_NCHILD_grouping": {
+    "high_3plus": {
+      "households": 70750,
+      "household_weight": 7789684.0,
+      "mean_rooms_cap9": 6.5584537190468835
+    },
+    "low_1to2": {
+      "households": 204259,
+      "household_weight": 21496722.0,
+      "mean_rooms_cap9": 6.211386787250633
+    },
+    "rooms_difference_high_minus_low": 0.3470669317962507
+  },
+  "under18_resident_child_grouping_candidate": {
+    "high_3plus": {
+      "households": 55266,
+      "household_weight": 6091723.0,
+      "mean_rooms_cap9": 6.569984879483194
+    },
+    "low_1to2": {
+      "households": 219743,
+      "household_weight": 23194683.0,
+      "mean_rooms_cap9": 6.233765255597587
+    },
+    "rooms_difference_high_minus_low": 0.336219623885607,
+    "households_excluded_from_two_groups": 0
+  },
+  "paired_moment_shift_candidate_minus_existing": -0.0108473079106437,
+  "nchild_relationship_count_concordance": {
+    "meaning": "Secondary check: RELATE=3 all-age resident children, capped at 3, compared with NCHILD categories capped at 3 in the family_rooms universe. Primary parent-linked counts also match NCHILD after this cap. This verifies bins only; exact counts above 3 are unavailable because NCHILD is top-coded.",
+    "denominator_by_NCHILD_bin": {
+      "0": 0,
+      "1": 84446,
+      "2": 119813,
+      "3": 70750
+    },
+    "exact_bin_agreement_by_NCHILD_bin": {
+      "0": 0,
+      "1": 83814,
+      "2": 119199,
+      "3": 70257
+    },
+    "mismatch_households": 1739,
+    "mismatch_weighted_share": 0.007788835543699012,
+    "parent_link_count_bin_agreement_households": 275009,
+    "parent_link_count_mismatch_households": 0,
+    "parent_link_count_mismatch_weighted_share": 0.0
+  },
+  "age_count_distribution_weighted": {
+    "1": 0.40191490208801994,
+    "2": 0.3900799572334004,
+    "3": 0.1513221868193728,
+    "4": 0.04140412449380098,
+    "5": 0.010318746520143168,
+    "6": 0.0030970341666369033,
+    "7": 0.001225005212315912,
+    "8": 0.000388234732524025,
+    "9": 0.00014703067354867648,
+    "10": 4.9237861415975724e-05,
+    "11": 4.0462458930604185e-05,
+    "12": 3.277971356403377e-06,
+    "13": 9.799768534247596e-06
+  },
+  "RELATE3_only_candidate_for_comparison": {
+    "adult_child_weighted_share": 0.14859313908302713,
+    "rooms_difference_high_minus_low": 0.3369175550424943
+  },
+  "year_record_ranges": [
+    {
+      "year": 2005,
+      "start_record": 0,
+      "end_record": 2878380,
+      "raw_records": 2878380
+    },
+    {
+      "year": 2006,
+      "start_record": 2878380,
+      "end_record": 5848121,
+      "raw_records": 2969741
+    }
+  ],
+  "active_metros": [
+    12060,
+    12420,
+    12580,
+    14460,
+    15380,
+    16740,
+    16980,
+    17140,
+    18140,
+    19100,
+    19740,
+    19820,
+    26420,
+    26900,
+    27260,
+    28140,
+    29820,
+    31080,
+    33100,
+    33340,
+    33460,
+    34980,
+    35380,
+    35620,
+    36420,
+    36740,
+    37980,
+    38060,
+    38300,
+    38900,
+    39300,
+    39580,
+    40900,
+    41180,
+    41620,
+    41700,
+    41740,
+    41860,
+    42660,
+    45300,
+    47260,
+    47900
+  ],
+  "elapsed_seconds": 2.8183069999940926
+}

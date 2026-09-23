@@ -1,0 +1,62 @@
+{
+  "status": "candidate saved-coefficient aggregation only; not adopted",
+  "source_hashes": {
+    "coefficients_original.csv": "98eeff83d4dfb16bcf9ec3ff3c76c5094619c2c9aff9e4eeeff92ba3f56c684e",
+    "input_support.csv": "bf64cf9a7ab00c565960a30cfce553b166a2dd7c86e59deb58c0e531ce2da482",
+    "estimation_support_original.csv": "9b7b904d44acd746628307739a3d7309e7e749bda82fae34c990d4245840069d"
+  },
+  "current_target_reproduced": 0.7202462623815273,
+  "cohorts_before": 34,
+  "cohorts_after": 32,
+  "common_cohorts": 27,
+  "excluded_before": [
+    1973,
+    1979,
+    1980,
+    1981,
+    1995,
+    1997,
+    2018
+  ],
+  "excluded_after": [
+    1970,
+    1977,
+    1983,
+    1984,
+    1985
+  ],
+  "before_weight_retained": 0.808855283732278,
+  "after_weight_retained": 0.8831045096860448,
+  "variants": [
+    {
+      "name": "common_cohorts_fixed_prebirth_IW",
+      "estimate": 0.8113974907627932,
+      "standard_error": null,
+      "shifted_estimate": 0.8113974907627931,
+      "maximum_cohort_invariance_gap": 3.3306690738754696e-16
+    },
+    {
+      "name": "common_cohorts_fixed_postbirth_IW",
+      "estimate": 0.797759256450433,
+      "standard_error": null,
+      "shifted_estimate": 0.7977592564504329,
+      "maximum_cohort_invariance_gap": 3.3306690738754696e-16
+    }
+  ],
+  "no_new_regression": true,
+  "endpoint_normalizations": [
+    {
+      "cohort": 1971,
+      "sole_supported_baseline": "F1event"
+    }
+  ],
+  "implementation_note": "Initial positive-variance guard stopped at cohort 1971: its observed -1 is the sole omitted baseline. The corrected guard verifies this supported normalization explicitly instead of excluding the cohort.",
+  "limitations": [
+    "Fixed cohort weights remove this additive-normalization dependence only.",
+    "Cohort composition and endpoint weighting differ from the frozen aggregate contrast.",
+    "People observed at both endpoints are not necessarily identical.",
+    "No full covariance matrix is saved, so no SE or calibration weight is supplied.",
+    "The author has not chosen this -1 to +3 contrast instead of a -2 reference window.",
+    "Parallel trends, controls, anticipation and the model counterfactual remain separate issues."
+  ]
+}

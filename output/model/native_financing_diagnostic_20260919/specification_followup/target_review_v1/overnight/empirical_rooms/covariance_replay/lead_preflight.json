@@ -1,0 +1,16 @@
+{
+  "reviewed_utc": "2026-09-23T04:39:16.428974+00:00",
+  "status": "approved for one bounded exact empirical replay",
+  "checks": [
+    "Lead reviewed full unified diff and installed ado interaction-order and covariance extraction lines.",
+    "Only processor count/output paths and diagnostic exports differ; no new sample restriction or outcome recoding.",
+    "Synthetic export smoke recorded4coefficients/16covariance cells; runtime coefficient/diagonal equality assertions remain active.",
+    "Target and SE absolute reproduction tolerance1e-9; observation/ID counts exact; full-precision discrepancies preserved.",
+    "Lead corrected intermediate census label and interaction-weighted wording before launch."
+  ],
+  "staged_sha256": "1549edd99ec09441d9a4c668b8cd87c858f3ac13cb0fbe926644d9f865e1a6dd",
+  "max_seconds": 1200,
+  "processors": 4,
+  "automatic_retry": false,
+  "interpretation": "Successful replay is reproduction of existing estimator only, not validation of its empirical or causal interpretation."
+}

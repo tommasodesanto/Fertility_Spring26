@@ -30,3 +30,17 @@ Phases 1 and 2 finished. Their lead reviews reject unsupported cross-population 
 The same Opus 5.5 Max session is running `phase3_empirical_adjudication/` (60 minutes / 65 turns), asked for concrete recommendations for all 13 rows using the verified data. Lead review follows before any final recommendation. No new target or model change is adopted.
 
 Torch authentication expired after successful submission; jobs remain autonomous and fresh collection awaits author login refresh. The external collector has nine passing checks and now binds raw finalizer receipts to the selected checkpoint while distinguishing completed from verified repeats. Upload the latest helper after access returns. `build_e5f_utility_target_review_pdf.py` has synthetic-fixture QA only; an actual-results PDF is still pending. The PDF skill marker was invoked once already and must not be repeated. Current compact execution status is in the sibling `utility_overnight_v1/execution.json`.
+
+## Further reviewed progress at 00:25 EDT
+
+Opus phase3 finished; `phase3_lead_review.json` rejects treating the room contrast as settled despite the saved normalization witness, privileging the birth-date-only observer, and exact-cancellation/identification claims unsupported by heterogeneous equilibrium choices. Phase4 is a bounded30-minute same-session correction with all new evidence.
+
+The additional ACS child-link check reproduces every existing housing target, and changes the candidate family-room gap from.347067 to.336220 when counting only resident own children under18. The lead reran all asserted gates. Fixed-common-cohort room contrasts of.811397/.797759 pass independent algebra/source review, but have different weights/composition and lack full-covariance uncertainty. Saved B late-cell accounting verifies the.236518 rise in top-coded mean children and a2.528% first-birth tail at42+, versus.536% in the first-birth-only NCHS cache. These are diagnostics, not changes to tonight's calibration.
+
+A bounded worker is staging an exact local Stata replay to recover the missing covariance and inspect source outcome codes. Its real-data regression may start only after lead review and synthetic export smoke; it must preserve the old sample and estimator and write to a separate directory. Latest reviewed backup is63ba77aa; fresh cluster collection remains unavailable after the00:22EDT authentication probe.
+
+## Reviewed progress at 00:38 EDT
+
+All four Opus phases are complete, with lead corrections saved in `phase4_lead_review.json`. The final review does not adopt targets or certify identification. Remaining local work is narrowly directed at missing uncertainty and an explicit prospective entry-wealth construction: the exact room-estimator covariance replay is staged but not launched, a common working-income scale is being constructed without model solves, and the existing metro-bootstrap method is being applied to the minor-child room candidate. Cluster monitoring remains unavailable pending authorized login renewal.
+
+At00:40EDT the lead approved and launched one exact PSID replay after reviewing the full diff, installed-ado covariance ordering and synthetic export smoke. It has four processors and a20-minute cap, no retry, and no sample or estimator changes. Read `empirical_rooms/covariance_replay/execution.json` for status; the resulting estimator still requires methodological judgment even if reproduction passes.

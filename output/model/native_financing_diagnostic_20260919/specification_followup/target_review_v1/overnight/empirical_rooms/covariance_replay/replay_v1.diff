@@ -1,0 +1,248 @@
+--- code/data/psid_followup_mar2026/sa_rooms_first_birth_household_aligned_v1.do
++++ output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/empirical_rooms/covariance_replay/replay_v1.do
+@@ -1,6 +1,6 @@
+ clear all
+ set more off
+-set processors 8
++set processors 4
+ version 17.0
+ 
+ * Corrected first-birth housing-space target.
+@@ -13,8 +13,8 @@
+ 
+ local project "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26"
+ local source  "/Users/tommasodesanto/Desktop/Projects/Fertility/PSID/PSIDSHELF_MOBILITY.dta"
+-local outroot "`project'/code/data/psid_followup_mar2026/output"
+-local outdir  "`outroot'/sa_rooms_first_birth_household_aligned_v1"
++local outroot "`project'/output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/empirical_rooms/covariance_replay"
++local outdir  "`outroot'/output"
+ 
+ cap mkdir "`outroot'"
+ cap mkdir "`outdir'"
+@@ -58,6 +58,12 @@
+ by ID: gen double rooms = ACTUALROOMS_[_n-1] if _n > 1
+ by ID: gen double rooms_source_year = year[_n-1] if _n > 1
+ 
++* Diagnostic-only flags record raw aligned room codes; they never filter rows.
++gen byte room_code_0 = rooms == 0 if !missing(rooms)
++gen byte room_code_9 = rooms == 9 if !missing(rooms)
++gen byte room_code_98 = rooms == 98 if !missing(rooms)
++gen byte room_code_99 = rooms == 99 if !missing(rooms)
++
+ * Fertility history is a person-level object and is constructed before any
+ * sample restriction or household reporter selection. TYPE==1 is biological.
+ gen double first_biological_birth_candidate = .
+@@ -112,7 +118,31 @@
+ local excl_bad_room_gap = r(N)
+ replace rooms = . if !inlist(rooms_alignment_gap_years, 1, 2)
+ drop rooms_alignment_gap_years
++* Pre-fit code census before the original room/education missingness filter.
++local prefit_candidate_rows = _N
++quietly count if room_code_0 == 1
++local prefit_room0 = r(N)
++quietly count if room_code_9 == 1
++local prefit_room9 = r(N)
++quietly count if room_code_98 == 1
++local prefit_room98 = r(N)
++quietly count if room_code_99 == 1
++local prefit_room99 = r(N)
++quietly summarize rooms
++local prefit_min_rooms = r(min)
++
+ drop if missing(rooms) | missing(EDUYEAR)
++local estimation_input_rows = _N
++quietly count if room_code_0 == 1
++local input_room0 = r(N)
++quietly count if room_code_9 == 1
++local input_room9 = r(N)
++quietly count if room_code_98 == 1
++local input_room98 = r(N)
++quietly count if room_code_99 == 1
++local input_room99 = r(N)
++quietly summarize rooms
++local input_min_rooms = r(min)
+ 
+ bysort ID: egen double year_entry = min(year)
+ drop if !missing(first_child_year) & first_child_year < year_entry
+@@ -165,6 +195,16 @@
+ eventstudyinteract rooms L*event F*event [pw=IW], ///
+     vce(cluster ID) absorb(ID year) cohort(first_child_year) ///
+     control_cohort(never_treated) covariates(i.AGEREP i.EDUYEAR)
++quietly count if e(sample) & room_code_0 == 1
++local es_room0 = r(N)
++quietly count if e(sample) & room_code_9 == 1
++local es_room9 = r(N)
++quietly count if e(sample) & room_code_98 == 1
++local es_room98 = r(N)
++quietly count if e(sample) & room_code_99 == 1
++local es_room99 = r(N)
++quietly summarize rooms if e(sample)
++local es_min_rooms = r(min)
+ 
+ quietly count if e(sample)
+ local sample_obs = r(N)
+@@ -187,6 +227,91 @@
+ 
+ matrix b = e(b_iw)
+ matrix V = e(V_iw)
++matrix b_interact = e(b_interact)
++matrix V_interact = e(V_interact)
++matrix b_full = e(b)
++matrix V_full = e(V)
++
++* e(b_interact) is cohort x event time. e(V_interact) is only its marginal
++* variance array: the ado applies diagonal(e(V)) before reshaping it. The full
++* interaction covariance is the leading q x q block of e(V), ordered event-time
++* outermost and cohort innermost by the ado's bcohort_rel_varlist construction.
++local cohortnames : rownames b_interact
++local eventnames : colnames b_interact
++local rawnames : colnames b_full
++local ncohort = rowsof(b_interact)
++local nevent = colsof(b_interact)
++local n_interactions = `ncohort' * `nevent'
++file open bfh using "`outdir'/cohort_interaction_coefficients.csv", write replace
++file write bfh "matrix_index,cohort_index,cohort,event_index,event,stata_interaction_name,estimate,marginal_variance" _n
++forvalues i = 1/`n_interactions' {
++    local event_index = ceil(`i' / `ncohort')
++    local cohort_index = mod(`i' - 1, `ncohort') + 1
++    local cohort : word `cohort_index' of `cohortnames'
++    local event : word `event_index' of `eventnames'
++    local rawname : word `i' of `rawnames'
++    local beta = b_interact[`cohort_index', `event_index']
++    local beta_full = b_full[1, `i']
++    local vari = V_interact[`cohort_index', `event_index']
++    local vari_full = V_full[`i', `i']
++    assert abs(`beta' - `beta_full') <= 1e-14
++    assert abs(`vari' - `vari_full') <= 1e-14
++    local beta_export : display %24.17g `beta'
++    local vari_export : display %24.17g `vari'
++    file write bfh `"`i',`cohort_index',`cohort',`event_index',`event',`rawname',`beta_export',`vari_export'"' _n
++}
++file close bfh
++file open vfh using "`outdir'/cohort_interaction_covariance.csv", write replace
++file write vfh "row_index,column_index,covariance" _n
++forvalues i = 1/`n_interactions' {
++    forvalues j = 1/`n_interactions' {
++        local cov = V_full[`i', `j']
++        local cov_export : display %24.17g `cov'
++        file write vfh `"`i',`j',`cov_export'"' _n
++    }
++}
++file close vfh
++
++* Also export the aggregation used by the frozen target, with its full covariance.
++local coefnames : colnames b
++local ncoefs = colsof(b)
++file open iwfh using "`outdir'/iw_coefficients.csv", write replace
++file write iwfh "matrix_index,event_coefficient,estimate,variance,standard_error" _n
++forvalues i = 1/`ncoefs' {
++    local coef : word `i' of `coefnames'
++    local beta = b[1, `i']
++    local vari = V[`i', `i']
++    local serr = sqrt(`vari')
++    local beta_export : display %24.17g `beta'
++    local vari_export : display %24.17g `vari'
++    local serr_export : display %24.17g `serr'
++    file write iwfh `"`i',`coef',`beta_export',`vari_export',`serr_export'"' _n
++}
++file close iwfh
++file open iwvfh using "`outdir'/iw_covariance.csv", write replace
++file write iwvfh "row_index,row_name,column_index,column_name,covariance" _n
++forvalues i = 1/`ncoefs' {
++    local rowname : word `i' of `coefnames'
++    forvalues j = 1/`ncoefs' {
++        local colname : word `j' of `coefnames'
++        local cov = V[`i', `j']
++        local cov_export : display %24.17g `cov'
++        file write iwvfh `"`i',`rowname',`j',`colname',`cov_export'"' _n
++    }
++}
++file close iwvfh
++estimates save "`outdir'/eventstudyinteract_replay.ster", replace
++
++gen byte __replay_esample = e(sample)
++preserve
++    keep if __replay_esample
++    gen str24 cohort_group = cond(never_treated, "never_treated", string(first_child_year, "%9.0g"))
++    collapse (count) estimation_observations=ID (sum) longitudinal_weight=IW, by(cohort_group K)
++    rename K event_time
++    sort cohort_group event_time
++    export delimited using "`outdir'/estimation_cohort_event_support.csv", replace
++restore
++drop __replay_esample
+ matrix variance = vecdiag(V)
+ matrix combined = b \ variance
+ matrix rownames combined = b variance
+@@ -207,6 +332,13 @@
+ assert `contrast_variance' > 0
+ local target_estimate = `component_p3' - `component_m1'
+ local target_se = sqrt(`contrast_variance')
++* Nonfatal reproduction gates. Numeric tolerances match the original log's
++* nine-decimal result display; sample counts must match exactly.
++local gate_numeric_tolerance = 1e-9
++local gate_target_pass = abs(`target_estimate' - .7202462623815278) <= `gate_numeric_tolerance'
++local gate_se_pass = abs(`target_se' - .0852600513385958) <= `gate_numeric_tolerance'
++local gate_obs_pass = `sample_obs' == 49457
++local gate_ids_pass = `sample_ids' == 4112
+ 
+ preserve
+     clear
+@@ -283,6 +415,58 @@
+ gen str32 status = "corrected_primary_target"
+ export delimited using "`outdir'/target_receipt.csv", replace
+ save "`outdir'/target_receipt.dta", replace
++preserve
++    clear
++    set obs 1
++    gen double target_expected = .7202462623815278
++    gen double target_observed = `target_estimate'
++    gen double target_abs_tolerance = `gate_numeric_tolerance'
++    gen byte target_pass = `gate_target_pass'
++    gen double se_expected = .0852600513385958
++    gen double se_observed = `target_se'
++    gen double se_abs_tolerance = `gate_numeric_tolerance'
++    gen byte se_pass = `gate_se_pass'
++    gen long observations_expected = 49457
++    gen long observations_observed = `sample_obs'
++    gen byte observations_pass = `gate_obs_pass'
++    gen long people_expected = 4112
++    gen long people_observed = `sample_ids'
++    gen byte people_pass = `gate_ids_pass'
++    export delimited using "`outdir'/reproduction_gates.csv", replace
++restore
++preserve
++    clear
++    set obs 3
++    gen str40 stage = ""
++    replace stage = "before_room_edu_drop" in 1
++    replace stage = "post_room_edu_pre_cohort_filters" in 2
++    replace stage = "e_sample" in 3
++    gen long observations = .
++    replace observations = `prefit_candidate_rows' in 1
++    replace observations = `estimation_input_rows' in 2
++    replace observations = `sample_obs' in 3
++    gen long room_code_0_count = .
++    replace room_code_0_count = `prefit_room0' in 1
++    replace room_code_0_count = `input_room0' in 2
++    replace room_code_0_count = `es_room0' in 3
++    gen long room_code_9_count = .
++    replace room_code_9_count = `prefit_room9' in 1
++    replace room_code_9_count = `input_room9' in 2
++    replace room_code_9_count = `es_room9' in 3
++    gen long room_code_98_count = .
++    replace room_code_98_count = `prefit_room98' in 1
++    replace room_code_98_count = `input_room98' in 2
++    replace room_code_98_count = `es_room98' in 3
++    gen long room_code_99_count = .
++    replace room_code_99_count = `prefit_room99' in 1
++    replace room_code_99_count = `input_room99' in 2
++    replace room_code_99_count = `es_room99' in 3
++    gen double minimum_nonmissing_rooms = .
++    replace minimum_nonmissing_rooms = `prefit_min_rooms' in 1
++    replace minimum_nonmissing_rooms = `input_min_rooms' in 2
++    replace minimum_nonmissing_rooms = `es_min_rooms' in 3
++    export delimited using "`outdir'/room_code_diagnostics.csv", replace
++restore
+ 
+ di as result "CORRECTED_FIRST_BIRTH_ROOMS_TARGET estimate=" %12.9f `target_estimate' " se=" %12.9f `target_se'
+ di as result "Receipt: `outdir'/target_receipt.csv"

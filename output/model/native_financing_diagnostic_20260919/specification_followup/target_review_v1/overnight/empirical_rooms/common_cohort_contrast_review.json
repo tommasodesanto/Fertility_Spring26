@@ -1,0 +1,25 @@
+{
+  "review_status": "independent bounded review; candidate aggregation verified, not adopted",
+  "scope": "Read-only review of saved-coefficient contrast and original normalization witness; no regression, raw-data scan, model solve, or output regeneration.",
+  "checks": {
+    "formula": "For common supported cohorts g at K=-1 and K=+3, form d_g = beta_g(+3) - beta_g(-1). For fixed endpoint weights q_g, the reported aggregate is sum_g(q_g d_g)/sum_g(q_g), with q from the fitted-sample -1 support or +3 support, restricted to the common cohort set.",
+    "cohort_support": "34 cohorts have fitted support at -1; 32 at +3; intersection 27. Excluded from -1 set: 1973, 1979, 1980, 1981, 1995, 1997, 2018. Excluded from +3 set: 1970, 1977, 1983, 1984, 1985.",
+    "reproduced_values": {
+      "frozen_input_support_weighted_target": 0.7202462623815273,
+      "common_cohort_fixed_prebirth_weights": 0.8113974907627932,
+      "common_cohort_fixed_postbirth_weights": 0.797759256450433,
+      "prebirth_weight_mass_retained": 0.808855283732278,
+      "postbirth_weight_mass_retained": 0.8831045096860448,
+      "arbitrary_additive_shift_max_invariance_gap": 3.3306690738754696e-16
+    },
+    "normalization": "The 1971 cohort has observed fitted support at K=-1 and +3 but no K=-2 row; among its supported event coefficients F1event at K=-1 is the sole zero-coefficient/zero-variance event and is the omitted baseline. The revised guard checks support and the singleton zero-variance supported event explicitly; it does not discard 1971. The output records this case. Original witness also establishes that recent even-year cohorts lack K=-2 and use a different pooled pre-event normalization.",
+    "source_integrity": "All nine paths and SHA-256 values listed in first_birth_correction_review/verification.json matched current local bytes. Independently checked the three files consumed by this aggregation against those manifest entries: coefficients_original.csv 98eeff83d4dfb16bcf9ec3ff3c76c5094619c2c9aff9e4eeeff92ba3f56c684e; input_support.csv bf64cf9a7ab00c565960a30cfce553b166a2dd7c86e59deb58c0e531ce2da482; estimation_support_original.csv 9b7b904d44acd746628307739a3d7309e7e749bda82fae34c990d4245840069d."
+  },
+  "interpretation": {
+    "established": "For the same common cohort set and weights fixed across the two endpoints, a cohort-specific additive constant applied equally to beta_g(-1) and beta_g(+3) cancels in d_g. The saved numerical perturbation tests this algebra to floating-point tolerance. The two weight choices produce different aggregates, so the choice of fixed cohort weights remains substantive.",
+    "not_established": "This is only invariance to that additive cohort-normalization transformation. It does not establish absence of all rank deficiency, causal identification, parallel trends, no anticipation, equivalence to the frozen -2-reference estimand, balanced individuals at both endpoints, or the model counterfactual. It does not show that normalization explains a causal residual.",
+    "uncertainty": "No full cross-coefficient covariance matrix is available in the saved artifacts. Standard errors for either linear contrast are unavailable and correctly left null; do not infer them from endpoint variances.",
+    "disposition": "Treat both estimates as candidate saved-coefficient aggregations for diagnosis only. They are not an adopted calibration target or replacement for 0.7202462624. The aggregate gap cannot be attributed solely to the changed reference/estimand because common-cohort restrictions and fixed endpoint-weight choices also alter composition/weights."
+  },
+  "blockers": "No mathematical or source-integrity blocker found for the stated narrow algebraic claim. No covariance-based uncertainty is available; broader causal or calibration interpretation remains unresolved and outside this review."
+}
