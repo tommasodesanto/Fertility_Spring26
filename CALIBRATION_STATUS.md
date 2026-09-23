@@ -1,9 +1,26 @@
 # Calibration Status
 
+## September 23 — fertility timing retained; separate simplification checks
+
+The author accepts the existing NCHS 2003–2006 birth-timing targets: mean
+first-birth age 25.976 years and first births at ages 30+ of 24.928%, using
+the current model age-grouping convention. Full-precision targets are unchanged.
+This retains the timing targets alongside the accepted CPS fertility shares
+and 2.10 normalization; it adopts no experimental estimates or objective weights.
+
+The author clarifies two distinct deferred checks after recalibration:
+- Test a zero-first-child-cost version, allowing other parameters to adjust.
+- Assess whether separate taste scales for first and additional children
+  (kappa_1 and kappa_C) are needed, or a common scale is sufficient.
+
+Both checks concern fit and behavior; retain the current parameters for now.
+A requested Luna read-only audit of the fertility formulas in the continuing
+slides is underway. No new model run or slide edit is authorized by this audit.
+
 ## September 23 — CPS fertility shares retained; first-child cost check deferred
 
-The author retains childlessness among women aged 40–44 (0.19827875100684264)
-and exactly one child among mothers aged 40–44 (0.21365532522014702), using
+The author retains childlessness among women aged 40–44 (19.828%)
+and exactly one child among mothers aged 40–44 (21.366%), using
 the existing pooled June 2004/2006 CPS definitions and sampling weights.
 This accepts the two target definitions and values, not an SMM-weight decision
 or any experimental parameter estimate. Birth-timing targets remain open.

@@ -1,9 +1,26 @@
 # Target validation before the utility comparison
 
+## September 23 — decision: retain birth timing; two deferred checks
+
+Retain mean first-birth age 25.976 years and first births at ages 30+ of
+24.928%, from NCHS 2003–2006 with the existing model age grouping. The author
+accepts these targets alongside the two CPS shares and 2.10 normalization;
+full-precision values and frozen experiments are unchanged.
+
+Keep two distinct follow-ups after recalibration: test whether the first-child
+cost can be removed, and assess whether the first-child and additional-child
+taste scales (kappa_1 and kappa_C) can be replaced by one common scale. Let
+remaining parameters adjust when evaluating simpler specifications. Retain
+both scales and the cost now; no new run or parameter removal.
+
+The author also requested a bounded Luna check of the continuing slides'
+fertility formulas against implemented code. This is read-only and separate
+from the deferred recalibration tests.
+
 ## September 23 — decision: retain both CPS fertility shares
 
-The author retains 19.8278751% childlessness among women aged 40–44 and
-21.3655325% exactly one child among mothers aged 40–44, with the existing
+The author retains 19.828% childlessness among women aged 40–44 and
+21.366% exactly one child among mothers aged 40–44, with the existing
 pooled June 2004/2006 CPS definitions and sampling weights. Objective weights
 and birth-timing targets remain separate decisions.
 
