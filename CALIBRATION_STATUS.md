@@ -1,5 +1,26 @@
 # Calibration Status
 
+## September 23 — measurement and identification must both be resolved
+
+The author clarifies that the target review must establish the measurement,
+economic information and separate identification of each parameter block. The
+earlier agreement on fertility outcomes is not final approval of the age-group
+and population approximations or evidence of separate parameter identification.
+The birth-timing values remain recorded proposals; their age mapping is open.
+
+The existing NCHS counts reproduce mean first-birth age 25.976 under model-cell
+mapping. Raw completed-year ages give 25.161; a uniform-within-single-year
+midpoint proxy gives 25.661. Thus the difference is not solely four-year
+grouping. The mapping also absorbs first births below age 18 (7.731%) into the
+youngest model cell and ages above 45 (0.048%) into the oldest. These support
+assumptions must be distinguished from using common bins. No target is changed.
+
+Existing reviewed moment counts and search results do not establish separate
+identification of xi, kappa_1 and kappa_C. Main parameter–target associations
+are economic hypotheses, not identification findings. Evidence and reproduced
+arithmetic are in `target_review_v1/fertility_measurement_identification_review.json`
+under the September19 specification-followup packet. No new model solves.
+
 ## September 23 — fertility timing retained; separate simplification checks
 
 The author accepts the existing NCHS 2003–2006 birth-timing targets: mean

@@ -1,0 +1,48 @@
+{
+  "status": "measurement_and_identification_review_open_no_target_change",
+  "scope": "Recompute only existing national NCHS 2003\u20132006 age-count aggregates and inspect frozen observer/first-birth equations. No new microdata extraction, household/equilibrium solves, rescoring or adoption.",
+  "source": {
+    "path": "code/data/nchs_natality_timing/first_birth_counts_year_age.csv",
+    "sha256": "5ef20c138a103c79b472b372fa8c5199cd5f3a0b544faff73e908f3803360c45",
+    "observer": "tmp/utility_overnight_20260923_v1/source/code/model/tools/e5f_initial_fertility_observer.py",
+    "observer_sha256": "2be39f66b90f3265f1d21d96dd68626fcfc43b569e8526ab2ea0414a4bef07b7"
+  },
+  "age_mapping": {
+    "at_or_below21": 20,
+    "22_to25": 24,
+    "26_to29": 28,
+    "30_to33": 32,
+    "34_to37": 36,
+    "38_to41": 40,
+    "at_or_above42": 44
+  },
+  "arithmetic": {
+    "first_births": 6611269,
+    "raw_completed_year_age_mean": 25.16076278245523,
+    "annual_age_interval_midpoint_proxy": 25.66076278245523,
+    "four_year_model_cell_mean": 25.976263860992496,
+    "share30plus": 0.2492780130410667,
+    "below18_share": 0.07731359894749404,
+    "above45_share": 0.0004758541817009715,
+    "coarse_minus_annual_midpoint": 0.3155010785372672,
+    "outside_support_contribution_to_coarse_minus_annual_midpoint": 0.24876971425606795
+  },
+  "measurement_findings": [
+    "The 25.976 grouped mean is reproduced exactly from existing counts.",
+    "The 25.161 raw mean records completed integer ages; adding 0.5 gives a 25.661 proxy under a uniform-within-single-year approximation, not an observed continuous-age mean.",
+    "Common four-year grouping is a measurement choice; collapsing births below18/above45 is a separate support assumption.",
+    "Age30 is a model-cell boundary; the observed 30+ share still includes outside-model-support births in its denominator.",
+    "Reproduction establishes arithmetic, not population equivalence or structural identification."
+  ],
+  "identification_findings": [
+    "Current retrieved reviews explicitly do not establish structural identification. More moments than free parameters is necessary but insufficient.",
+    "First-birth attempt probability has index pi_a*(DeltaV-xi)/kappa_1; DeltaV depends on the rest of the model and continuation values. Cost and scale can partly substitute in aggregate moments.",
+    "The common-scale restriction kappa_1=kappa_C is distinct from removing xi. Both remain deferred simplification checks.",
+    "A local sensitivity assessment should renormalize psi consistently with the2.10 normalization, inspect distinct moment responses and account for other jointly estimated parameters. No such new calculation is run here."
+  ],
+  "slide_core_lead_check": {
+    "source": "latex/JMP_slides/JMP_slides.tex:302\u2013322 versus frozen solver.py:2765\u20132825",
+    "finding": "Core first-birth success-branch cost, first/later taste scales and logistic attempt formula match the inspected sequential code. This is not a full slide certification; shock-location convention and experimental versus reference restrictions require separate care."
+  },
+  "next_decision": "Retain the proposed fertility outcomes for review while explicitly deciding support/age measurement and establishing the evidence needed for separate parameter identification."
+}

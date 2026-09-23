@@ -1,5 +1,20 @@
 # Target validation before the utility comparison
 
+## September 23 — author requires measurement and identification review
+
+Agreement on proposed fertility outcomes does not close their age/population
+mapping or prove separate parameter identification. Review both before closing
+the block. [Bounded arithmetic and code review](fertility_measurement_identification_review.json)
+reproduces the existing grouped mean (25.976) and distinguishes raw completed-year
+ages (25.161) from an annual midpoint proxy (25.661). First births below age18
+are 7.731% of the data and are collapsed into the youngest model cell; this is
+a substantive support approximation, separate from common four-year bins.
+
+Main parameter–target associations are hypotheses about informative variation.
+Neither reproducing scalars nor having more moments than parameters proves
+identification. The cost-removal and common-taste-scale checks remain distinct.
+No targets, weights, frozen sources or model runs changed in this review.
+
 ## September 23 — decision: retain birth timing; two deferred checks
 
 Retain mean first-birth age 25.976 years and first births at ages 30+ of
