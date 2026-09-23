@@ -1,5 +1,29 @@
 # Calibration Status
 
+## September 23 — externally fixed bequest shift adopted
+
+Author adopts the DUE-inspired restriction theta1 = 1% of median annual
+gross working earnings, expressed in our wealth units. For the current
+15-state persistent-income specification, mean annual gross working earnings
+are 1 and the weighted median is 0.8193084126995582. Thus fix theta1 at
+0.008193084126995582 (display 0.008) in the next calibration. This supersedes
+the proposal below to estimate both bequest parameters. Theta0 remains free;
+its estate-flow target requires the requested vintage/measurement update.
+
+The conversion uses `target_review_v1/overnight/empirical_entry/common_scale_candidate/actual_frozen_parameters.json`:
+the inverse-CDF median over annual gross income by age/state with weights
+`working_age_mass * z_weights`. This preserves DUE's relative-to-median-earnings
+restriction, not identical dollar values or behavior. No factor of four is
+applied to the wealth stock. Other income specifications require their own
+unit mapping. The fixed value is below the former free search bound 0.020;
+it must be declared as an external restriction, not clipped into that box.
+
+Low priority: compare with a calibration that estimates theta1 internally,
+allowing other free parameters to adjust and using an explicitly justified
+estate-shape target. The old shape row no longer identifies a free theta1;
+the next objective's complete target/weight bookkeeping remains to be finalized.
+No frozen source, target contract, model run or paper edit changes here.
+
 ## September 23 — bequest interpretation and literature-based target direction
 
 Author accepts household death as the relevant estate event and requests

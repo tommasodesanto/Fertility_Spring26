@@ -1,5 +1,21 @@
 # Target validation before the utility comparison
 
+## September 23 — externally fixed theta1 chosen
+
+Author fixes the bequest wealth shift using DUE's 1%-of-median-annual-earnings
+restriction: theta1 = 0.008193084126995582 (display 0.008), mapped from the
+current 15-state persistent-income model's gross working-income median
+0.8193084126995582 and mean 1. Source: the saved actual-parameter extraction
+in `overnight/empirical_entry/common_scale_candidate/actual_frozen_parameters.json`.
+Use the age/state weighted inverse-CDF median; do not multiply by four.
+This replaces the proposed internal theta1 calibration for the next run,
+not the frozen experiments. Theta0 stays internally calibrated; its target
+remeasurement remains pending. Final target/weight bookkeeping is still open.
+
+Low-priority follow-up: compare against a run estimating theta1 internally,
+with a justified estate-shape target and other parameters allowed to adjust.
+No new run or paper edit.
+
 ## September 23 — beta data-year decision
 
 Author chooses pooled PSID 2005/2007: aggregate net wealth / annual gross
