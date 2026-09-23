@@ -1,5 +1,7 @@
 # Overnight target review — September 22–23
 
+**Delivery update:** The author returned before10AM and explicitly requested the report immediately. The reviewed53-page PDF is released on that instruction; all experiment jobs are terminal. Artifact/source backup: `b6032d94`.
+
 ## September23 final model evidence
 
 Access returned09:22EDT; actual overnight model evidence is now collected and reviewed. See sibling `../../utility_overnight_v1/final_lead_review.json`. The final53-page PDF replaces the earlier uncollected-results draft, includes all four selected fits and68 original diagnostic figures, and remains held for10:00EDT. Research findings below remain unchanged.

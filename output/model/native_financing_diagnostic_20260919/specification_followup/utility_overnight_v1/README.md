@@ -1,5 +1,7 @@
 # Overnight utility comparison — September 22–23
 
+**Delivery update:** The author returned before10AM and explicitly requested the report immediately. The reviewed53-page PDF is released on that instruction; all experiment jobs are terminal. Artifact/source backup: `b6032d94`.
+
 ## September 23, 09:40 EDT — terminal results collected and reviewed
 
 Torch access returned at09:22EDT. All four smokes passed;20 of40 production workers completed and20 failed after retaining earlier cases. The reviewed inventory has **444 scored/20 failed/272 unrun objectives** and **2,590 started/2,571 completed/19 unfinished stationary solves**. Nineteen failures were the strict initial housing-equilibrium gate; one was the unchanged exact-zero budget-mass gate. All experiment jobs are terminal. No new run, retry or relaxed gate.
