@@ -1,5 +1,14 @@
 # Calibration Status
 
+## September 23 — ownership target accepted; supply level under review
+
+Author accepts chi, the owner housing-service multiplier, with national ACS
+ownership among reference persons aged 30–55 equal to 0.6762604168538028
+(display 67.626%). This does not adopt a fitted estimate or objective weight.
+Author explicitly questions the H0-to-mean-rooms association and requests the
+implemented supply equation and its historical rationale. H0 and that target
+association are not newly approved. No model run or numerical contract edits.
+
 ## September 23 — provisional bequest-flow entry while recomputation proceeds
 
 Latest author instruction supersedes the interim-use rejection below: record
