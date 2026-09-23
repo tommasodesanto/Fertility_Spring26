@@ -15,6 +15,8 @@ The D richer-income check (45 states with inherited wealth, job18290340) failed 
 
 The A richer-income check is now verified at15states. Its common-parameter mean first-birth age differs from the seven-state result by +0.523years (childlessness +1.85percentage points), so coarse-grid adequacy is not established. B/C resolution cases remain running in the19:42 snapshot. Full moments and diagnostics are in the battery packet; the author review remains scheduled for21:00.
 
+At20:02, A/B richer-grid smokes are both verified with no entry censoring; their mean first-birth ages move +0.523/+0.548years relative to7states. C45 is running; D45 remains failed. The main snapshot verifies142 scored points, with A finished and B/C/D still in progress. Each common-parameter case holds nine search coordinates fixed but separately normalizes the fertility utility scale. No early author review or adoption.
+
 ## September 22 — single-process earnings baseline direction
 
 Author chooses a plain-vanilla starting specification: deterministic age earnings

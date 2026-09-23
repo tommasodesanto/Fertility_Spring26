@@ -57,12 +57,15 @@ class Doc(BaseDocTemplate):
         canv.saveState(); canv.setStrokeColor(colors.HexColor('#c8d2d8')); canv.line(.55*inch,.38*inch,7.95*inch,.38*inch); canv.setFont('Helvetica',7); canv.setFillColor(colors.HexColor('#52616b')); canv.drawString(.55*inch,.23*inch,'Earnings entry review - diagnostic readout'); canv.drawRightString(7.95*inch,.23*inch,str(doc.page)); canv.restoreState()
 
 def cell_path(readout,arm,cell): return Path(readout)/arm/cell
+def moment_label(row):
+    return 'Initial fertility normalization' if row.get('restriction_id')=='initial_normalization' else row.get('label',row.get('restriction_id',''))
+
 def target_rows(path):
     rows=read_csv(path)
     if len(rows)!=13: raise ValueError(f'{path}: expected 13 target rows, found {len(rows)}')
     out=[['Target moment','Target','Model','Gap','Actual weight','Loss contribution']]
     for r in rows:
-        out.append([r.get('label') or r.get('restriction_id',''),fmt(r.get('target')),fmt(r.get('model')),fmt(r.get('gap')),fmt(r.get('actual_weight')) if r.get('actual_weight') else '-',fmt(r.get('loss_contribution')) if r.get('loss_contribution') else '-'])
+        out.append([moment_label(r),fmt(r.get('target')),fmt(r.get('model')),fmt(r.get('gap')),fmt(r.get('actual_weight')) if r.get('actual_weight') else '-',fmt(r.get('loss_contribution')) if r.get('loss_contribution') else '-'])
     return out
 def parameter_rows(path):
     rows=read_csv(path)
@@ -102,7 +105,7 @@ def resolution_story(readout, resolution_readout):
         status.append(f"{arm}: scored at finer resolution")
     labels={}
     for row in read_csv(coarse/"common_smoke_targets.csv"):
-        labels.setdefault(row["restriction_id"],row["label"])
+        labels.setdefault(row["restriction_id"],moment_label(row))
     rows=[["Moment","A change","B change","C change","D change"]]
     rows += [[label]+[fmt(by_cell[a][k]) if a in by_cell else "unavailable" for a in "ABCD"] for k,label in labels.items()]
     return [para("Income-grid sensitivity at common parameters","H1"),para("Entries are finer-grid minus coarse-grid model moments, in each moment's original units. A/B compare 15 versus 7 income states; C/D compare 45 versus 21. Preferences, targets and the wealth grid are held fixed; equilibrium and the existing fertility normalization are resolved."),make_table(rows,[2.55*inch]+[1.1*inch]*4),Spacer(1,9),para("; ".join(status)),para("Unavailable does not mean zero change. Failure or unfinished status is described in the brief review. These are single-point sensitivity checks, not grid-convergence certificates. Full finer-grid tables and original diagnostic figures are retained in the accompanying resolution readout.","Small"),PageBreak()]
@@ -133,11 +136,11 @@ def build(readout,narrative_path,output,resolution_readout=None):
         grouped={}
         for row in read_csv(readout/'common_smoke_targets.csv'):
             key=row['restriction_id']
-            item=grouped.setdefault(key,{'label':row['label'],'target':row['target']})
+            item=grouped.setdefault(key,{'label':moment_label(row),'target':row['target']})
             if float(item['target'])!=float(row['target']): raise ValueError('Mixed targets in common smoke comparison')
             item[row['cell_id']]=row['model']
         common=[['Moment','Target','A','B','C','D']]+[[r['label'],fmt(r['target'])]+[fmt(r[a]) if a in r else '-' for a in arms] for r in grouped.values()]
-        story += [PageBreak(),para('Common parameters: smoke comparison','H1'),para('Each available smoke uses identical preference and housing parameters. Missing cells have no verified scored result.'),make_table(common,[2.1*inch,.85*inch,.9*inch,.9*inch,.9*inch,.9*inch]),PageBreak()]
+        story += [PageBreak(),para('Common parameters: smoke comparison','H1'),para('Each available smoke holds the nine search parameters fixed. Equilibrium and the fertility utility scale are resolved separately to match the same normalization target in each specification. Missing cells have no verified scored result.'),make_table(common,[2.1*inch,.85*inch,.9*inch,.9*inch,.9*inch,.9*inch]),PageBreak()]
     else: story.append(PageBreak())
     if resolution_readout is not None:
         story += resolution_story(readout,resolution_readout)
