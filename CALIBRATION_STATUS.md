@@ -1,5 +1,16 @@
 # Calibration Status
 
+## September 23, 11:29 EDT — first-birth measurement diagnostic
+
+During the author's approximately 90-minute absence, prepare one bounded
+calculation comparing the first-birth housing response on a common model/data
+measurement basis. Reuse completed target research; preserve the original
+empirical estimator and all targets/weights. Only candidate measurement from
+existing data/saved policies is in scope, with the protocol reviewed before
+its fit is inspected. No new household or equilibrium solves or calibration
+search. Return a reviewed result or explicit limitation around 13:00 EDT.
+The target-review README records scope, workers and stopping rules.
+
 ## September 23 — calibration strategy and target decisions first
 
 After reviewing the overnight fit, the author requests a roughly two-hour first

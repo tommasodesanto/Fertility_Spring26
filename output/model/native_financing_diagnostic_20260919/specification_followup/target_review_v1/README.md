@@ -1,5 +1,31 @@
 # Target validation before the utility comparison
 
+## September 23, 11:29 EDT — bounded first-birth measurement calculation
+
+The author is away for approximately 90 minutes and requests a useful calculation
+before resuming calibration decisions after lunch. The lead selects one question:
+how much of the first-birth housing-fit discrepancy reflects unlike model/data
+measurements? Deadline for a reviewed result or precise limitation: about 13:00 EDT.
+
+Two ten-minute read-only agents inventory the empirical sample/estimator and
+saved-model propagation respectively (`first_birth_empirical_match` and
+`first_birth_model_match`). The lead then specifies the common statistic before
+inspecting its model fit, reviews measurement code, and authorizes only bounded
+candidate measurement using existing data and saved policies. Preserve the
+original regression/target and objective. No new household/equilibrium solve,
+calibration search, target adoption, document rewrite, or broad literature review.
+
+A model comparison must state its birth/interview timing and interpolation;
+there is no automatic exact eight-year bridge. Education cannot silently be
+removed only from the model estimator. Marginal event-time support cannot stand
+in for joint panel histories. Report any reduced empirical estimator as a new
+candidate alongside the unchanged original. If checkpoints/access or valid
+observation histories are unavailable, stop that dependent calculation and
+report the evidence available; do not substitute the inherited seed for selected
+floor/share checkpoints or improvise a convenient target. Aim for one comparison
+table, one supplemental event-time plot, and a recommendation, with uncertainty
+and unresolved ingredients stated. Existing six-phase review is reused.
+
 ## September 23 — author-led calibration decisions
 
 The author requests a roughly two-hour first block reviewing the calibration
