@@ -1,5 +1,48 @@
 # Target validation before the utility comparison
 
+## September 23, 12:08 EDT — reviewed lunch packet ready
+
+Read the [five-page decision PDF](../../../../pdf/calibration_lunch_decisions.pdf)
+first. It gives six recommended choices, all 13 current targets and their
+parameter connections/confidence flags, followed by a supplemental native
+first-birth timing diagnostic. These are recommendations for author decisions,
+not adopted changes. The July economic definitions are the starting point.
+
+- [Complete current targets and both selected fits](lunch_targets_and_selected_moments.csv)
+  includes model values, gaps, actual weights and loss contributions; the
+  selected fits and objective are unchanged.
+- [Decision source](lunch_decision_review.json) separates the choice, evidence,
+  consequence and operation required after the choice.
+- [First-birth comparison](lunch_first_birth_comparison.csv),
+  [supplemental figure](lunch_first_birth_branch_comparison.pdf),
+  [scientific review](lunch_first_birth_final_review.json), and
+  [PDF/table QA](lunch_pdf_final_qa.json) retain exact evidence.
+
+The active scored destination response reproduces exactly at selected B_floor
+and B_shares. Immediate responses are 0.902596503 / 0.997422993 rooms; destination
+responses are 0.987250816 / 1.043654597. Moving the native reading to the origin
+therefore reduces it by 0.084654313 / 0.046231604, but neither native reading
+automatically equals the PSID -1/+3 regression. A common simulated-panel
+estimator remains unimplemented. Do not describe this as having shown that the
+empirical miss survives (or disappears under) identical measurement.
+
+The helper uses actual selected checkpoints, g_pre, and the active
+begin/finish observer with destination continuation births. It does not use
+the different legacy native statistic. A one-cohort smoke and two full
+fixed-policy measurements all completed 0:0; no household/GE solves or searches
+were performed. All source, checkpoint, helper and loader identities are
+recorded. `lunch_first_birth_helper_review.json` preserves rejected draft
+approaches and the independent review. No jobs remain active.
+
+Rebuild the PDF and supplemental native-date plot (the original 17-plot sets
+remain unchanged):
+
+```sh
+code/model/.venv/bin/python code/model/tools/build_e5f_target_review_pdf.py \
+  --packet output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1 \
+  --decision-review --output output/pdf/calibration_lunch_decisions.pdf
+```
+
 ## September 23, 11:29 EDT — bounded first-birth measurement calculation
 
 **Author priority, clarified before departure:** The post-lunch meeting must

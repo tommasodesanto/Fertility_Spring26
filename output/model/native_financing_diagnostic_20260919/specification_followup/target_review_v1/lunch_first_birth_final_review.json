@@ -1,0 +1,60 @@
+{
+  "schema": "first_birth_lunch_final_review_v1",
+  "reviewed_utc": "2026-09-23T16:05:35.105260+00:00",
+  "status": "native diagnostic complete; empirical matched estimator not implemented",
+  "checks": [
+    {
+      "cell": "B_floor",
+      "saved_D1_reproduced_exactly": true,
+      "all_source_checkpoint_helper_loader_hashes_match": true,
+      "max_branch_relative_mass_gap": 2.1741387810913976e-12,
+      "treated_projection_mass": 0.0,
+      "control_projection_mass": 0.0,
+      "native_measurement_seconds": 16.17259642505087
+    },
+    {
+      "cell": "B_shares",
+      "saved_D1_reproduced_exactly": true,
+      "all_source_checkpoint_helper_loader_hashes_match": true,
+      "max_branch_relative_mass_gap": 3.1485181584062247e-12,
+      "treated_projection_mass": 1.5476540544796358e-167,
+      "control_projection_mass": 1.54672257695948e-167,
+      "native_measurement_seconds": 17.230796013958752
+    }
+  ],
+  "scheduler": [
+    {
+      "job": "18350401",
+      "role": "one-cohort smoke",
+      "state": "COMPLETED",
+      "exit": "0:0",
+      "elapsed_seconds": 19
+    },
+    {
+      "job": "18350593",
+      "role": "B_floor full measurement",
+      "state": "COMPLETED",
+      "exit": "0:0",
+      "elapsed_seconds": 19
+    },
+    {
+      "job": "18350595",
+      "role": "B_shares full measurement",
+      "state": "COMPLETED",
+      "exit": "0:0",
+      "elapsed_seconds": 21
+    }
+  ],
+  "counts": {
+    "single_cohort_smokes": 1,
+    "full_saved_policy_measurements": 2,
+    "failed_measurements": 0,
+    "new_household_or_equilibrium_solves": 0
+  },
+  "limits": [
+    "No annual interpolation or matched regression; no target or weight change.",
+    "No claim that larger model response rejects an economic mechanism under a common estimator.",
+    "No utility adoption or comparison with historical fits under different targets."
+  ],
+  "decision_sheet": "lunch_decision_review.json"
+}

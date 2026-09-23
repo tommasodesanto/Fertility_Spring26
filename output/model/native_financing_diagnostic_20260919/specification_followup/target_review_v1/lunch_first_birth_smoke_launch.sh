@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+module load anaconda3/2025.06
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 MPLBACKEND=Agg PYTHONUNBUFFERED=1
+export NUMBA_CACHE_DIR=/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/first_birth_lunch_measurement_20260923_v1/numba_cache
+python3 /scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/first_birth_lunch_measurement_20260923_v1/measure_e5f_first_birth_origin_destination.py --checkpoint /scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/results/production/B_floor/worker09_proposal16/result/evaluation/raw/repetition_01/initial_state.pkl.gz --checkpoint-sha256 83a28e46b36e2fbe30338d366611f3ec209f0c5a68309ee4ee9fa8523b66adee --source-root /scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/source --source-manifest /scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/hash_manifest.json --source-manifest-sha256 b13ae7029c146fbd11da36e85aad7ad21c57091746219a5c84125ef9ee75b7e3 --saved-d1 0.9872508159626951 --smoke-one-cohort --output /scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/first_birth_lunch_measurement_20260923_v1/B_floor_smoke.json

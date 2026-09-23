@@ -1,0 +1,70 @@
+{
+  "status": "all_measurements_completed_and_reviewed",
+  "collection": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/first_birth_lunch_measurement_20260923_v1",
+  "frozen_bundle": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1",
+  "source_manifest_sha256": "b13ae7029c146fbd11da36e85aad7ad21c57091746219a5c84125ef9ee75b7e3",
+  "helper_sha256": "c55f42f661db2f064575542443fafecba4f55f5d08b46a3367c2eeaca30def69",
+  "audit_loader_sha256": "b63d160e184fd46386addab5d43ae46e2fa1b1efad675a76a1c1d4242c63db11",
+  "source_files": 641,
+  "cases": [
+    {
+      "cell": "B_floor",
+      "selection": {
+        "case_id": "worker09_proposal16",
+        "cell": "B_floor",
+        "checkpoint_sha256": "83a28e46b36e2fbe30338d366611f3ec209f0c5a68309ee4ee9fa8523b66adee",
+        "exact_repeats_are_selection": false,
+        "loss": 464.8522255676939,
+        "stage": "production"
+      },
+      "saved_d1": 0.9872508159626951
+    },
+    {
+      "cell": "B_shares",
+      "selection": {
+        "case_id": "worker33_proposal01",
+        "cell": "B_shares",
+        "checkpoint_sha256": "5c382f34f852b10efc2d4253753ce8811c504b3cf95c4d4cce89399e0c60a5f4",
+        "exact_repeats_are_selection": false,
+        "loss": 851.2713381271443,
+        "stage": "production"
+      },
+      "saved_d1": 1.0436545968870465
+    }
+  ],
+  "scope": "saved-policy measurement only; no household/GE solve; no target changes",
+  "budget": "one single-core smoke <=5min; full B_floor/B_shares <=10min each after reviewed smoke",
+  "smoke_submission": {
+    "returncode": 0,
+    "stdout": "18350401\n",
+    "stderr": "",
+    "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/results/production/B_floor/worker09_proposal16/result/evaluation/raw/repetition_01/initial_state.pkl.gz"
+  },
+  "smoked_helper_sha256": "d284699fe7bc36f27737b7a0235b42d43d03e0e090f5602594ea61d299fb8e66",
+  "post_smoke_change": "Only external loader path/hash guard and receipt; origin/destination measurement functions unchanged.",
+  "smoke_review": {
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "scheduler_seconds": 19,
+    "receipt": "lunch_first_birth_smoke.json",
+    "reviewed_utc": "2026-09-23T16:01:12.743157+00:00",
+    "full_measurement_authorized": true
+  },
+  "full_submissions": [
+    {
+      "cell": "B_floor",
+      "returncode": 0,
+      "stdout": "18350593\n",
+      "stderr": "",
+      "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/results/production/B_floor/worker09_proposal16/result/evaluation/raw/repetition_01/initial_state.pkl.gz"
+    },
+    {
+      "cell": "B_shares",
+      "returncode": 0,
+      "stdout": "18350595\n",
+      "stderr": "",
+      "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/results/production/B_shares/worker33_proposal01/result/evaluation/raw/repetition_01/initial_state.pkl.gz"
+    }
+  ],
+  "final_review": "lunch_first_birth_final_review.json"
+}

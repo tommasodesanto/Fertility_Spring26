@@ -1,0 +1,13 @@
+{
+  "schema": "lunch_first_birth_checkpoint_inventory_v1",
+  "inspected_read_only": true,
+  "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/results/production/B_floor/worker09_proposal16/result/evaluation/raw/repetition_01/initial_state.pkl.gz",
+  "checkpoint_sha256": "83a28e46b36e2fbe30338d366611f3ec209f0c5a68309ee4ee9fa8523b66adee",
+  "source_root": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/source",
+  "packet_keys": ["parameters", "b_grid", "evaluation", "shared", "supply_rule", "solution", "stationary_g_pre", "demographic_seed", "contract_sha256"],
+  "evaluation_fields": ["policy", "g_pre", "g_post_fertility", "g_current", "births", "births_by_loc", "demand_by_loc", "supply_by_loc", "relative_market_residual", "feasibility_projection_mass", "inherited_g_pre"],
+  "active_profile": {"housing_event_horizon": 1, "sequential_births": true, "joint_nested_choice": false, "fertility_nest_choice": false, "two_shock_choice": false, "J": 17, "I": 1, "n_house": 5, "use_postdecision_current_distribution": true},
+  "dimensions": {"g_current": [160, 6, 1, 17, 15, 4, 4], "bp_pol": [160, 6, 1, 17, 15, 4, 4], "price": [1]},
+  "inspection_command": "ssh -o BatchMode=yes torch 'module load anaconda3/2025.06; cd SOURCE/code/model; PYTHONPATH=$PWD:$PWD/tools python3 - < inspect_pickle.py'",
+  "limit": "Inspection only; no checkpoint measurement, household solve, or GE solve was run."
+}

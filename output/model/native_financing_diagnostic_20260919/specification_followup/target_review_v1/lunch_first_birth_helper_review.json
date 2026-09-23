@@ -1,0 +1,43 @@
+{
+  "schema": "first_birth_helper_lead_preflight_v1",
+  "reviewed_utc": "2026-09-23T15:59:34.980726+00:00",
+  "status": "exact active scorer reviewed; one-cohort smoke passed; bounded full measurements submitted",
+  "reviewed_active_source": [
+    "tmp/utility_overnight_20260923_v1/source/code/model/tools/e5f_initial_housing_observer.py:_stationary_birth_diagnostic",
+    "tmp/utility_overnight_20260923_v1/source/code/model/tools/run_e5f_transition_calibration.py:begin_dated_first_birth_housing_branch",
+    "tmp/utility_overnight_20260923_v1/source/code/model/tools/run_e5f_transition_calibration.py:finish_dated_first_birth_housing_branch"
+  ],
+  "rejected_before_execution": [
+    "Worker v1 constructed birth mass from g_current (post-birth and post-housing distribution); invalid origin cohort.",
+    "Lead initially considered native forward replay; stopped on tracing active scorer. The legacy native statistic lacks active destination continuation births and is not the scored D1."
+  ],
+  "reviewed_core": [
+    "Uses actual checkpoint evaluation.g_pre; same fecundity, attempt probabilities, age bounds and settled childless state as active begin function.",
+    "Separate origin n=1,m=1 treated and n=0,settled control receive identical successful-birth mass. Native current-choice mapping is applied exactly once, followed by native mass-roundoff gate.",
+    "Origin mean housing is pooled realized housing divided by origin branch mass; saved prices, menus and renter policies used. No annual interpolation.",
+    "D1 calls active begin then finish with same saved policy at both dates, including treated-only continuation births, survival and native feasibility gates.",
+    "Full D1 must reproduce saved scored value within2e-10 before D0 is returned. Nonfinite values/tolerances rejected.",
+    "One-cohort smoke chooses largest positive age-income birth mass before housing measurement; it makes no full saved-D1 equality claim.",
+    "All641 frozen source files and selected checkpoint hash checked before computation; imported native/measurement modules must resolve inside frozen source."
+  ],
+  "local_tests": "3 focused tests pass: exact origin-loop weights/smoke, unsupported joint-profile rejection, finite/mismatch equality gate. Native one-cohort smoke pending.",
+  "scope": "No household, Bellman or equilibrium solution, no KFE replay, no changed target/weight or source bundle.",
+  "independent_review": {
+    "worker": "first_birth_empirical_match",
+    "finding": "No defect found in origin construction, destination continuation births, smoke mask or checkpoint schema. External loader binding qualification resolved with required SHA guard before loading; helper copy hash checked by launch script.",
+    "independent_scope": "Read-only active source review, no cluster command or repeated empirical audit"
+  },
+  "smoke": {
+    "job": "18350401",
+    "state": "COMPLETED",
+    "exit": "0:0",
+    "elapsed_scheduler_seconds": 19,
+    "receipt": "lunch_first_birth_smoke.json",
+    "aggregate_D1_gate": "not claimed for one-cohort smoke"
+  },
+  "full_jobs": {
+    "B_floor": "18350593",
+    "B_shares": "18350595"
+  },
+  "post_smoke_change": "Only provenance: external checkpoint-loader hash guard and hash receipt. Measurement functions unchanged."
+}

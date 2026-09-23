@@ -1,0 +1,118 @@
+{
+  "branch_counts": {
+    "positive_age_income_blocks": 101,
+    "selected_blocks": 101
+  },
+  "checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/results/production/B_floor/worker09_proposal16/result/evaluation/raw/repetition_01/initial_state.pkl.gz",
+  "checkpoint_sha256": "83a28e46b36e2fbe30338d366611f3ec209f0c5a68309ee4ee9fa8523b66adee",
+  "d0_origin_postbirth_minus_control": 0.9025965026597573,
+  "d1_absolute_gap": 0.0,
+  "d1_destination_birth_minus_control": 0.9872508159626951,
+  "d1_gate": "PASS",
+  "destination": {
+    "branch_mass_roundoff_gates": [
+      {
+        "actual_mass_before_normalization": 0.052226684345528254,
+        "expected_mass": 0.05222668434557693,
+        "relative_gap": 9.320205053383137e-13,
+        "relative_tolerance": 5e-09,
+        "stage": "treated_branch_advancement"
+      },
+      {
+        "actual_mass_before_normalization": 0.05222668434550854,
+        "expected_mass": 0.05222668434557693,
+        "relative_gap": 1.3094788454190192e-12,
+        "relative_tolerance": 5e-09,
+        "stage": "control_branch_advancement"
+      },
+      {
+        "actual_mass_before_normalization": 0.05222668434557697,
+        "expected_mass": 0.05222668434557697,
+        "relative_gap": 0.0,
+        "relative_tolerance": 5e-09,
+        "stage": "treated_destination_feasibility_gate"
+      },
+      {
+        "actual_mass_before_normalization": 0.05222668434557692,
+        "expected_mass": 0.05222668434557697,
+        "relative_gap": 1.0628886732297226e-15,
+        "relative_tolerance": 5e-09,
+        "stage": "control_destination_feasibility_gate"
+      },
+      {
+        "actual_mass_before_normalization": 0.05222668434557697,
+        "expected_mass": 0.05222668434557697,
+        "relative_gap": 0.0,
+        "relative_tolerance": 5e-09,
+        "stage": "treated_destination_fertility"
+      },
+      {
+        "actual_mass_before_normalization": 0.052226684345463424,
+        "expected_mass": 0.05222668434557697,
+        "relative_gap": 2.1741387810913976e-12,
+        "relative_tolerance": 5e-09,
+        "stage": "treated_destination_current_choice"
+      },
+      {
+        "actual_mass_before_normalization": 0.0522266843455157,
+        "expected_mass": 0.05222668434557697,
+        "relative_gap": 1.1731633730773063e-12,
+        "relative_tolerance": 5e-09,
+        "stage": "control_destination_current_choice"
+      }
+    ],
+    "census_age_bridge_applied": false,
+    "control_feasibility_projection_mass": 0.0,
+    "control_mean_housing": 5.985822962579589,
+    "destination_mass": 0.052226684345576965,
+    "destination_period": 1,
+    "destination_price": 0.6238481395127092,
+    "housing_response": 0.9872508159626951,
+    "origin_mass": 0.05222668434557693,
+    "origin_period": 0,
+    "origin_price": 0.6238481395127092,
+    "status": "complete_one_period_dated_matched_branch_did",
+    "survival_loss": 0.0,
+    "treated_continuation_births": 0.018996598234845247,
+    "treated_feasibility_projection_mass": 0.0,
+    "treated_mean_housing": 6.973073778542284
+  },
+  "diagnostic_only": true,
+  "elapsed_seconds": 16.17259642505087,
+  "external_checkpoint_loader": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/first_birth_lunch_measurement_20260923_v1/audit_e5f_earnings_entry_checkpoint.py",
+    "sha256": "b63d160e184fd46386addab5d43ae46e2fa1b1efad675a76a1c1d4242c63db11"
+  },
+  "helper_sha256": "c55f42f661db2f064575542443fafecba4f55f5d08b46a3367c2eeaca30def69",
+  "limitation": "Active stationary behavioral branch diagnostic only; no annual interpolation, regression, target replacement, household solve, or GE solve.",
+  "origin": {
+    "control_origin_mean_housing": 5.621513829395334,
+    "d0_origin_postbirth_minus_control": 0.9025965026597573,
+    "origin_mass": 0.05222668434557693,
+    "origin_mass_gates": [
+      {
+        "actual_mass_before_normalization": 0.05222668434552815,
+        "expected_mass": 0.05222668434557693,
+        "relative_gap": 9.340134216006194e-13,
+        "relative_tolerance": 5e-09,
+        "stage": "treated_origin_current_choice"
+      },
+      {
+        "actual_mass_before_normalization": 0.05222668434550856,
+        "expected_mass": 0.05222668434557693,
+        "relative_gap": 1.309080262166558e-12,
+        "relative_tolerance": 5e-09,
+        "stage": "control_origin_current_choice"
+      }
+    ],
+    "treated_origin_mean_housing": 6.524110332055091
+  },
+  "saved_d1": 0.9872508159626951,
+  "schema": "e5f_first_birth_origin_destination_v2",
+  "source_root": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/source",
+  "source_validation": {
+    "manifest_sha256": "b13ae7029c146fbd11da36e85aad7ad21c57091746219a5c84125ef9ee75b7e3",
+    "source_files_verified": 641
+  },
+  "status": "complete"
+}

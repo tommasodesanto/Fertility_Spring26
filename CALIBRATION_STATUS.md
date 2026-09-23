@@ -1,5 +1,35 @@
 # Calibration Status
 
+## September 23, 12:08 EDT — lunch decisions and saved-policy diagnostic ready
+
+The bounded lunch task is complete. `output/pdf/calibration_lunch_decisions.pdf`
+contains six recommended decisions, all 13 current targets with parameter
+connections/confidence flags, and a supplemental first-birth graph. The full
+target/model/gap/weight/contribution comparison is
+`target_review_v1/lunch_targets_and_selected_moments.csv` under the current
+specification-followup packet. No target, weight, entry law or utility choice
+has been adopted; the author can decide the other rows immediately.
+
+The new helper reproduces the **active scored** first-birth destination contrast
+exactly at both selected persistent-income checkpoints. Floor: immediate
+birth/control response 0.902596503 rooms, next-date response 0.987250816.
+Shares: 0.997422993 and 1.043654597. The additional four-year response is only
+0.084654313 / 0.046231604 rooms. This establishes the native branch timing;
+it does **not** compute the PSID regression on comparable simulated histories
+or settle whether the miss survives an identical empirical/model estimator.
+The original empirical contrast remains 0.720246262 (SE 0.085260051).
+
+One exact-loop cohort smoke and two full fixed-policy measurement jobs
+18350401 / 18350593 / 18350595 completed 0:0 in 19 / 19 / 21 seconds.
+They used saved policies only: zero household/Bellman/equilibrium solves,
+no calibration search, and no frozen-bundle modification. All 641 frozen
+source files, selected checkpoints and external helper/loader hashes were
+checked. Source review rejected the draft use of the post-choice distribution
+and the legacy native moment before execution; the final helper uses g_pre
+and the active begin/finish observer, including treated continuation births.
+See `target_review_v1/lunch_first_birth_final_review.json` and
+`lunch_pdf_final_qa.json`. No diagnostic jobs remain active.
+
 ## September 23, 11:29 EDT — first-birth measurement diagnostic
 
 During the author's approximately 90-minute absence, prepare one bounded

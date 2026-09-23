@@ -1,0 +1,273 @@
+{
+  "schema": "target_lunch_decision_review_v1",
+  "title": "Calibration decisions after lunch",
+  "date": "September 23, 2026",
+  "status": "Reviewed recommendations and completed saved-policy diagnostic; author decisions pending",
+  "summary": [
+    "Keep the 2007 stationary reference and most of the existing target construction. The completed review does not justify rebuilding the July strategy. The main first-birth housing comparison does need a common measurement rule before it can support an adopted calibration.",
+    "Decisions on fertility, wealth and housing levels can be made now. The first-birth diagnostic is a separate calculation from saved policies and must not hold up those decisions. Confidence flags below assess measurement comparability, not how well a selected model fits.",
+    "The present reference combines 2004/2006 CPS fertility stocks, 2003-2006 natality timing, 2003/2005 PSID wealth and 2005/2006 ACS housing in 42 metropolitan areas. These are nearby-year measurements used for a stationary 2007 economy, not one identical population observed in 2007."
+  ],
+  "decisions": [
+    {
+      "decision": "Reference economy and housing population",
+      "recommendation": "Retain the current 2007 reference and the 42-metro housing targets for the controlled utility comparison; name that housing population explicitly. Do not switch geography to improve fit.",
+      "evidence": "Housing scalars reproduce. National counterparts already exist: mean rooms 5.607886 instead of 5.561097; ownership 67.6260% instead of 64.8334%; recent-parent ownership gap 12.7608 instead of 16.2896 percentage points.",
+      "alternative": "Choose national housing targets if the intended quantitative claim requires a nationally representative housing population. Change all affected housing rows together, retaining the same substantive definitions.",
+      "consequence": "Keeping the current population preserves the existing comparison. A national switch raises the ownership target and cannot explain away the model's low ownership.",
+      "next_operation": "Record the population choice. A chosen geography change needs a new complete target/weight contract and saved-moment rescore, not a household solve merely to change the data scalars."
+    },
+    {
+      "decision": "Fertility stocks, timing and normalization",
+      "recommendation": "Keep both CPS shares, both grouped NCHS timing targets and the separately imposed 2.1 normalization. Use one stated within-cell timing convention; retain the implemented uniform-time approximation for now.",
+      "evidence": "The empirical scalars and implemented age mapping reproduce. Mean first-birth age 25.9763 is the data mapped to model age cells, not an arithmetic error. Raw recorded-age mean 25.1608 is a different object. The 2.1 anchor concerns age-46+ mean children ever born and is not a measured period TFR.",
+      "alternative": "Adopt a different birth-time or maternal-age-support convention jointly for data and model. Do not replace the grouped mean with the raw mean while leaving its model observer unchanged.",
+      "consequence": "The model approximates one reproductive household member and within-cell age exposure. Accepting that approximation permits decisions now; it does not certify exact female survey exposure.",
+      "next_operation": "Write the accepted population, age and timing conventions into the contract. Recompute only if a different convention is chosen."
+    },
+    {
+      "decision": "Saving and bequest targets",
+      "recommendation": "Retain the three signed-off economic objects: aggregate wealth/gross earnings, annual bequests/wealth and living-old wealth-to-income dispersion. Keep the existing scalar values for this comparison.",
+      "evidence": "The July review explicitly selected these objects. Current arithmetic reproduces. The bequest weight is a chosen 5% tolerance, not a sampling standard error. Constant modeled pension income makes the model's old-age wealth and wealth/income percentile ratios coincide.",
+      "alternative": "If the intended third object is pure wealth dispersion, choose the already measured same-sample levels ratio 4.919429 (SE 0.579804), replacing the current wealth/income ratio 3.515935 (SE 0.306911). This is a conceptual choice, not a mandatory code correction.",
+      "consequence": "Retaining the current dispersion accepts omitted retirement-income heterogeneity as a measurement approximation. Neither option fixes or validates the entrant-wealth mapping.",
+      "next_operation": "No new data audit is needed to retain these rows. A chosen levels-dispersion alternative can be rescored on saved model values under a separately named contract."
+    },
+    {
+      "decision": "Children in the family-room and recent-parent rows",
+      "recommendation": "For the family-room row, prefer resident minor children as the empirical proxy for model dependents, conditional on explicitly accepting that proxy. Retain the recent-parent ownership row provisionally with its actual stock-versus-flow qualification.",
+      "evidence": "Counting linked resident children below 18 changes the family-room gap from 0.347067 to 0.336220 rooms; the paired difference is -0.010847 (SE 0.008077). The recent-parent observer already includes former parents among empty-home controls; the remaining issue is exact child recency, not that repaired coding problem.",
+      "alternative": "Keep the existing resident-own-child grouping, including resident adults, or require a simulated-history observer that tracks resident children's ages for both housing rows.",
+      "consequence": "The measured minor-child change is small. It cannot account for large overall housing misses. Minor age and stochastic model dependence are still not exactly the same object.",
+      "next_operation": "If the minor-child proxy is accepted, pin its measured uncertainty and rescore without silently changing other definitions. An exact recent-child-age comparison needs a declared history-based measurement procedure using saved policies."
+    },
+    {
+      "decision": "First-birth housing response",
+      "recommendation": "Keep the original PSID regression as empirical evidence; require an explicitly matched auxiliary statistic on data and simulated model histories before adopting this row as evidence for one utility specification.",
+      "evidence": "The 0.720246 target and clustered SE 0.085260 reproduce exactly. The current scored model contrast instead compares two branches from the same pre-birth households at the next model date, permitting another birth only in the treated branch. These are different estimators.",
+      "alternative": "Explicitly accept the current forced-branch comparison as a provisional approximation. It must not be described as the identical PSID regression or used to claim that a housing mechanism is rejected by the data.",
+      "consequence": "A longer empirical window, division by two, or a favorable timing projection is not an automatic correction. Preserve this identifying information for the housing-preference block; do not drop the row simply because it is difficult to fit.",
+      "next_operation": "Declare birth/interview timing, sample, joint observation histories, controls and weights on both sides before calculating the candidate fit. If education is absent from the model, any reduced empirical regression must drop it on the data side too and be labeled a new candidate. The lunch calculation only exposes origin and destination branch responses."
+    },
+    {
+      "decision": "Weights and specification choice",
+      "recommendation": "Retain the frozen weights for controlled comparisons and call the objective a working minimum-distance criterion. Do not optimize the target definitions or weights around the utility result.",
+      "evidence": "Scales mix empirical sampling uncertainty, annual temporal variation and an external bequest tolerance; cross-moment covariance is not used. The floor estimates nine structural coordinates, the shares alternative ten, with fertility utility normalized separately.",
+      "alternative": "Choose a new weighting rule on substantive grounds, name the full replacement contract and preserve all affected identifying information. A new rule is not a revision of old scores.",
+      "consequence": "A lower loss is useful search evidence but not an efficient-SMM test, identification proof or numerical-convergence certificate.",
+      "next_operation": "After the author decisions, implement the selected measurements and rescore the same saved candidates. Revisit utility only after that comparison; new behavioral solutions are needed for a refit, not for a purely scalar target rescore."
+    }
+  ],
+  "rows": [
+    {
+      "key": "initial_normalization",
+      "label": "Mean children ever born, ages 46+",
+      "target": 2.1,
+      "display": "2.1000",
+      "parameter_connection": "Fertility utility scale psi (separate normalization)",
+      "confidence": "Confident as normalization",
+      "recommendation": "Keep; do not label it period TFR or a measured cohort target."
+    },
+    {
+      "key": "cps_childlessness",
+      "label": "Childless women, ages 40-44",
+      "target": 0.19827875100684264,
+      "display": "19.8279%",
+      "parameter_connection": "First-birth taste scale and birth cost jointly",
+      "confidence": "Medium",
+      "recommendation": "Keep empirical share; accept stated female-exposure and age-cell approximation."
+    },
+    {
+      "key": "cps_exactly_one",
+      "label": "Exactly one child, among mothers 40-44",
+      "target": 0.21365532522014702,
+      "display": "21.3655%",
+      "parameter_connection": "Continuation-birth taste scale; other fertility preferences",
+      "confidence": "Medium",
+      "recommendation": "Keep conditional stock; it is not a second-birth hazard."
+    },
+    {
+      "key": "nchs_mean_age",
+      "label": "Mean first-birth age, grouped",
+      "target": 25.976263860992496,
+      "display": "25.9763 years",
+      "parameter_connection": "First-birth cost and taste scale jointly",
+      "confidence": "Medium",
+      "recommendation": "Keep grouped data/model convention; no substitution of the raw mean."
+    },
+    {
+      "key": "nchs_share30",
+      "label": "Share of first births at ages 30+",
+      "target": 0.2492780130410667,
+      "display": "24.9278%",
+      "parameter_connection": "First-birth cost and taste scale jointly",
+      "confidence": "Medium",
+      "recommendation": "Keep; same period, support and timing contract as mean age."
+    },
+    {
+      "key": "wealth_earnings",
+      "label": "Aggregate wealth / annual gross earnings",
+      "target": 6.14586139445743,
+      "display": "6.14586",
+      "parameter_connection": "Annual discount factor beta",
+      "confidence": "Confident on audited definition",
+      "recommendation": "Retain the July stock/flow definition and current early-period value."
+    },
+    {
+      "key": "bequest_wealth",
+      "label": "Annual bequest flow / wealth",
+      "target": 0.0088,
+      "display": "0.8800%",
+      "parameter_connection": "Bequest strength theta0",
+      "confidence": "Medium",
+      "recommendation": "Retain borrowed restriction; 5% tolerance is assigned, coverage approximate."
+    },
+    {
+      "key": "old_dispersion",
+      "label": "Old wealth/income, p90/p50",
+      "target": 3.51593508651872,
+      "display": "3.51594",
+      "parameter_connection": "Bequest wealth shift theta1; retirement saving",
+      "confidence": "Medium",
+      "recommendation": "Retain signed-off object; pure wealth-level alternative is an explicit optional choice."
+    },
+    {
+      "key": "mean_rooms",
+      "label": "Mean rooms, capped at 9",
+      "target": 5.561097376118652,
+      "display": "5.56110 rooms",
+      "parameter_connection": "Housing supply intercept H0; demand jointly",
+      "confidence": "Confident conditional on population",
+      "recommendation": "Keep 42-metro value unless the whole housing-population choice changes."
+    },
+    {
+      "key": "ownership_30_55",
+      "label": "Ownership, ages 30-55",
+      "target": 0.6483340343191493,
+      "display": "64.8334%",
+      "parameter_connection": "Owner service multiplier chi; credit restrictions fixed",
+      "confidence": "Confident conditional on population",
+      "recommendation": "Keep; no identified scalar or age-mask bug explains the low model ownership."
+    },
+    {
+      "key": "first_birth_rooms",
+      "label": "First-birth room response, -1 to +3",
+      "target": 0.7202462623815278,
+      "display": "0.720246 rooms",
+      "parameter_connection": "Parenthood housing floor h_P, or share-jump parameter",
+      "confidence": "Problematic model/data match",
+      "recommendation": "Retain empirical evidence; repair common estimator before using fit for adoption."
+    },
+    {
+      "key": "family_rooms",
+      "label": "Rooms, 3+ versus 1-2 resident children",
+      "target": 0.3470669317962507,
+      "display": "0.347067 rooms",
+      "parameter_connection": "Housing preferences; child-share slope in alternative",
+      "confidence": "Medium",
+      "recommendation": "Prefer measured minor-child candidate 0.336220 if its dependent proxy is accepted."
+    },
+    {
+      "key": "recent_parent_ownership",
+      "label": "Recent-parent ownership gap",
+      "target": 0.16289550916123285,
+      "display": "16.2896 pp",
+      "parameter_connection": "Owner service multiplier and parenthood housing demand",
+      "confidence": "Medium; recency approximation",
+      "recommendation": "Retain provisionally; exact child-age history measurement remains distinct work."
+    }
+  ],
+  "other_decisions": [
+    "Entry wealth: retain heterogeneity and the reviewed 18-24 childless-renter proxy. The running inherited law and the new common-income-scale candidate are different laws. The candidate has positive current renter slack, but no full continuation/equilibrium validation or adoption. Choose units explicitly before a new refit; zero entry is not the baseline recommendation.",
+    "External housing depreciation: the inspected serialized input uses 1.1% annually; the slides say 2%. Existing comparisons use 1.1%. Reconcile this restriction before a new refit; a change would require new solutions, not target rescoring. No silent model change is made here.",
+    "Parameter connections in the table describe informative economic margins, not one-to-one identification. Fixed borrowing, earnings and housing restrictions affect many of these moments."
+  ],
+  "first_birth_diagnostic": {
+    "status": "Two complete fixed-policy measurements; original scored D1 reproduced exactly in both",
+    "estimator": "Same-origin successful-first-birth households, cloned into a birth branch and a childless control; stationary saved policy at origin and four years later. No empirical regression is simulated.",
+    "no_new_household_or_equilibrium_solves": true,
+    "paragraphs": [
+      "The immediate response is already 0.903 rooms under the selected floor and 0.997 under selected child-dependent shares. Four years later the corresponding responses are 0.987 and 1.044. Moving the native reading from the destination date to the origin reduces the response by only 0.085 and 0.046 rooms, respectively.",
+      "These calculations establish that most of this model branch response occurs at the birth decision. They do not establish that the empirical miss survives a common estimator: the PSID coefficient contrast uses different comparison households, timing, controls and weights. Neither native date is automatically the empirical -1/+3 contrast.",
+      "Both cases use persistent earnings with 15 income states and inherited heterogeneous entry wealth, but are separately recalibrated selected points. Their difference cannot be attributed to utility alone. Each destination response reproduces its original scored value exactly; the full contracts and checkpoint identities were checked. No new household or equilibrium was solved.",
+      "The returned mass checks pass unchanged. The floor has zero destination projection mass; the shares case has tiny recorded projections around 1.55e-167, not exactly zero. This measurement replay adds no grid-convergence or continuation-value certificate."
+    ],
+    "comparison_table": [
+      [
+        "Statistic (rooms)",
+        "PSID",
+        "Floor",
+        "Shares"
+      ],
+      [
+        "Original empirical -1/+3 contrast",
+        "0.720246 (SE 0.085260)",
+        "Different estimator",
+        "Different estimator"
+      ],
+      [
+        "Immediate native response D0",
+        "Not computed",
+        "0.902597",
+        "0.997423"
+      ],
+      [
+        "Four-year destination response D1",
+        "Not computed",
+        "0.987251",
+        "1.043655"
+      ],
+      [
+        "Additional native response D1-D0",
+        "Not computed",
+        "0.084654",
+        "0.046232"
+      ],
+      [
+        "Gap from saved scored D1",
+        "Not applicable",
+        "0 exactly",
+        "0 exactly"
+      ]
+    ],
+    "table_widths": [
+      225,
+      85,
+      101,
+      101
+    ],
+    "branch_results": [
+      {
+        "cell": "B_floor",
+        "label": "Selected floor",
+        "receipt": "lunch_first_birth_B_floor.json"
+      },
+      {
+        "cell": "B_shares",
+        "label": "Selected shares",
+        "receipt": "lunch_first_birth_B_shares.json"
+      }
+    ],
+    "plot_caption": "Supplemental diagnostic only. Dashed segments connect two model dates; no annual path or birth-date interpolation is assumed. This is not an overlay of the PSID event-study coefficients. The standard 17 plots per selected case remain unchanged."
+  },
+  "source_evidence": [
+    "lunch_decision_evidence.json",
+    "target_decisions_20260923.csv",
+    "july_decision_review.json",
+    "overnight/phase5_lead_review.json",
+    "overnight/phase6_lead_review.json",
+    "overnight/report_tables/target_contract.csv",
+    "lunch_first_birth_empirical_inventory.json",
+    "lunch_first_birth_model_inventory.json",
+    "lunch_first_birth_comparison.csv",
+    "lunch_first_birth_helper_review.json",
+    "lunch_first_birth_final_review.json",
+    "lunch_targets_and_selected_moments.csv"
+  ],
+  "not_done_or_claimed": [
+    "No author target decisions recorded by this receipt.",
+    "No new target contract, target removal, weight change or utility adoption.",
+    "No matched simulated-panel event-study estimate yet.",
+    "No household or equilibrium solve, calibration search or paper edit."
+  ]
+}

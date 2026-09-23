@@ -1,0 +1,27 @@
+{
+  "schema": "lunch_first_birth_model_inventory_v1",
+  "status": "read_only_inventory",
+  "scope": "fixed-2007 selected-checkpoint first-birth origin/destination diagnostic; no household or GE solve",
+  "native_reuse": {
+    "observer_location": "code/model/intergen_eqscale_seq_optimized/solver.py:forward_distribution_markov_income",
+    "propagation": "advance_cohort_horizon_markov_income and advance_cohort_one_period_markov_income",
+    "realized_choice": "realize_current_choices_markov_income",
+    "behavioral_timing": "first-birth mass is taken from the age-j childless risk set, forced to n=1,m=1, then propagated one model period; a same-origin childless control is propagated with the same policies"
+  },
+  "selected_checkpoints": {
+    "B_floor": {
+      "case_id": "worker09_proposal16",
+      "loss": 464.8522255676939,
+      "checkpoint_sha256": "83a28e46b36e2fbe30338d366611f3ec209f0c5a68309ee4ee9fa8523b66adee",
+      "remote_checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/results/production/B_floor/worker09_proposal16/result/evaluation/scored_repetition_01/raw/repetition_01/initial_state.pkl.gz"
+    },
+    "B_shares": {
+      "case_id": "worker33_proposal01",
+      "loss": 851.2713381271443,
+      "checkpoint_sha256": "5c382f34f852b10efc2d4253753ce8811c504b3cf95c4d4cce89399e0c60a5f4",
+      "remote_checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_overnight_20260923_v1/results/production/B_shares/worker33_proposal01/result/evaluation/scored_repetition_01/raw/repetition_01/initial_state.pkl.gz"
+    }
+  },
+  "measurement_limit": "The native destination contrast and the added same-origin immediate contrast are behavioral branch diagnostics. Neither is an annual interpolation, simulated empirical regression, or matched empirical estimator.",
+  "availability": "Selected checkpoint bytes are remote-only; the local normalized seed is not a selected point."
+}
