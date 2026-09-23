@@ -1,5 +1,15 @@
 # Target validation before the utility comparison
 
+## September 23 — housing supply review remains open
+
+[Source and implementation review](housing_supply_review.json) verifies that
+elasticity 0.63 is present in the checklist, while its empirical provenance is
+unresolved. H0 is the supply level at the reference user cost. DUE uses observed
+initial rents to anchor its supply level; KMV uses construction employment.
+The proposed quantity/cost anchor is for discussion, not an adopted target or
+specification. Capped mean rooms and physical supplied stock are distinct.
+No new model runs, target/weight changes or paper edits.
+
 ## September 23 — provisional estate-flow target
 
 Author requests showing 0.880% annual bequests / aggregate wealth as a

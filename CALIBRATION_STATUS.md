@@ -1,5 +1,21 @@
 # Calibration Status
 
+## September 23 — supply literature and elasticity provenance review
+
+The advisor checklist already includes external supply elasticity 0.63. Its
+empirical derivation remains unresolved in the saved September audit; prior
+conditional approval does not resolve the citation or national applicability.
+Implemented supply is H0*(user_cost/r_bar)^eta. H0 is the level scale at the
+reference cost, not itself a log intercept. DUE anchors its supply shifter to
+observed initial rents; Kaplan–Mitman–Violante use construction employment to
+discipline their land scale. Neither provides a transferable numerical H0.
+Mean rooms can discipline H0 conditional on housing demand, but does not certify
+the implied housing cost relative to earnings. Lead proposes reviewing a matched
+quantity/cost anchor and external elasticity together; no choice is adopted.
+The capped-room observer must not be substituted directly for uncapped physical
+supply in an anchoring equation. Evidence: target_review_v1/housing_supply_review.json
+under the September19 specification-followup packet. No solves or contract edits.
+
 ## September 23 — ownership target accepted; supply level under review
 
 Author accepts chi, the owner housing-service multiplier, with national ACS
