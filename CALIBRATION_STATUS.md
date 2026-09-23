@@ -1,5 +1,19 @@
 # Calibration Status
 
+## September 23 — bequest interpretation and literature-based target direction
+
+Author accepts household death as the relevant estate event and requests
+established literature calibration for both bequest parameters, updating
+empirical targets when their source years do not suit the 2007 reference.
+No new numerical targets are yet adopted. De Nardi–Yang estimate both
+parameters using estate flow/wealth and an upper-tail estate-at-death moment;
+the retained December 2025 DUE source instead fixes its shift and targets an
+old–young ownership gap. These are distinct strategies. Lead recommends the
+De Nardi–Yang strategy for the existing two-parameter block, pending precise
+source and available-data checks. Current living-old p90/p50 is not their
+estate-at-death statistic. A bounded read-only source/vintage feasibility
+review is delegated; no model, frozen target contract or run changes.
+
 ## September 23 — beta target vintage chosen: 2005/2007
 
 The author explicitly chooses pooled PSID 2005/2007 for aggregate net wealth
