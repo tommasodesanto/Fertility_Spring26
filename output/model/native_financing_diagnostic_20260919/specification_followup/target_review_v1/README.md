@@ -13,6 +13,8 @@ empirical calculations in [the overnight packet](overnight/README.md). Preserve
 the rationale of signed-off July choices; reopen a row only for a specific
 unresolved definition, changed reference sample, or model-data discrepancy.
 
+The advisor-facing [working checklist](https://docs.google.com/document/d/1hxESCRA89O028-Kx4LmBjdM19R_CobIkn_GkJdMgbbo/edit?tab=t.0) now links to a [Parameters and targets details tab](https://docs.google.com/document/d/1hxESCRA89O028-Kx4LmBjdM19R_CobIkn_GkJdMgbbo/edit?tab=t.umcf44buj7j3) in the same document. It separates completed evidence from pending decisions, lists all 13 working values, and records four next actions. Native readback verified both links and exact preservation of every other main-list paragraph and its formatting/list metadata. Sharing was unchanged.
+
 Working order:
 
 1. State the reference economy, population and units, distinguishing cohort

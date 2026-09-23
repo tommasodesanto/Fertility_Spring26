@@ -25,6 +25,8 @@ existing full-mock PDF were not changed. The existing model-text difference
 about current income at purchase remains unresolved; this restoration does not
 certify model/manuscript synchronization.
 
+A readable [PDF excerpt of the restored quantification section](../output/pdf/JMP_DS_mock_quantification.pdf) is available. It is generated from the same mock section, with all six pages rendered and inspected; its historical tables remain labelled July reference.
+
 ## Coordinated JMP sources — author instruction, September 21, 2026
 
 The former `JMP_DS_suggestions/` folder is now `JMP_DS_mock/`; its original
