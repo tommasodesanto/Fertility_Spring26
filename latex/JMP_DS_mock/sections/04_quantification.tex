@@ -1,4 +1,146 @@
 \section{Quantification}
 \label{sec:quantification}
 
-% Author text.
+The calibration uses a stationary economy with four-year periods. A model
+household represents an adult household unit. Housing quantities are measured
+in occupied rooms, with housing services adjusted for tenure; financial
+quantities are measured relative to model earnings.
+
+\medskip
+\noindent\fbox{\parbox{0.94\linewidth}{\textit{Provisional quantitative
+contract.} The population counterpart, cohort alignment, within-period birth
+timing, model-data observer, and working weights are under review.  In
+particular, whether current earnings can be used at the purchase transaction is
+an unresolved coordination item: the model text and an experimental calculation
+use different timing conventions.  The earnings process and the utility
+specification are also provisional inputs.  Thus the targets below define a
+working calibration exercise rather than an adopted quantitative specification.}}
+
+\subsection{Population, units, and external inputs}
+
+The stationary economy aggregates household decisions over age, earnings, assets,
+tenure, housing, and the number of children ever born and currently at home.
+The model records completed fertility through children ever born and housing needs
+through current dependents; these are distinct objects.  A four-year model period
+therefore requires an explicit observer before an age- or event-time statistic can
+be compared with its annual or biennial data counterpart.
+
+The maintained earnings input combines an age--earnings profile with idiosyncratic
+earnings risk.  Its parameters are estimated outside the household calibration,
+after aggregating earnings to the model period.  This separation is useful because
+earnings risk changes both resources at entry and the value of future housing and
+fertility choices.  The measured earnings of the reference person and spouse
+are represented by one exogenous household earnings process; household labor
+supply is not a separate choice in this specification.
+
+Entrants draw heterogeneous initial liquid wealth.  The working entry distribution
+uses the nonhousing-wealth distribution of childless renters ages 18--24 as a
+proxy for wealth at entry.  Its conversion from family-income ratios to the
+model's earnings units and its joint distribution with earnings remain
+provisional.  It is an external input to the
+calibration, alongside the age profile, survival, fertility-success probabilities,
+institutional tax and mortgage rules, and the housing menu.  These inputs determine
+the feasible choices faced by a household before the parameters governing its
+preferences and housing demand are selected.
+
+\subsection{Calibration strategy}
+
+Conditional on the external inputs, the calibration jointly selects the parameters
+that govern intertemporal choice, the consumption--housing aggregator, the value of
+owner-occupied services, the bequest motive, fertility costs and taste dispersion,
+and the housing-supply intercept.  Alternative specifications may represent
+children's housing needs through a minimum housing-service requirement or through
+child-dependent housing expenditure shares.  The latter comparison is exploratory;
+it is not a maintained utility choice.  Financing parameters and the age profile
+are treated as institutional or external inputs.
+
+Let $d_j(\vartheta)=\widehat m_j(\vartheta)-m_j$ denote the difference between
+the model statistic and its empirical counterpart for moment $j$.  The working
+criterion is
+\begin{equation}
+ \mathcal L(\vartheta)=\sum_{j\in\mathcal J}w_j d_j(\vartheta)^2,
+ \label{eq:working-calibration-criterion}
+\end{equation}
+where $\mathcal J$ contains the scored rows in Table~\ref{tab:working-targets}.
+The separate completed-fertility normalization is imposed and checked outside this
+sum.  The $w_j$ are working discrepancy weights: they translate differences into a
+common diagnostic scale, but do not yet constitute an efficient-SMM weighting
+matrix or a statistical test of the model.  If $s_j$ denotes the working scale
+reported in the table, then $w_j=1/s_j^2$.
+
+The fertility block informs the level and timing of childbearing: it includes
+childlessness, one-child status among mothers, the mean age at first birth, and the
+share of first births at age 30 or older.  The saving and bequest block informs wealth
+accumulation and transfers through aggregate wealth relative to gross earnings,
+bequests relative to wealth, and old-age wealth dispersion.  The housing block
+disciplines average occupied space, tenure, the change in rooms around a first
+birth, the room difference across families with different numbers of resident
+children, and the ownership difference for recent parents.  Taken together, these
+blocks are intended to discipline the joint fertility, saving, tenure, and housing
+choices rather than any one margin in isolation.
+
+\subsection{Working moments and measurement}
+
+Table~\ref{tab:working-targets} reports the complete working target set currently
+under review.  Twelve rows are scored in the diagnostic criterion and one row is a
+separate model normalization.  The reported scale identifies the unit used in the
+working criterion; it is not reported for the normalization.  No model estimates
+are reported in this table.
+
+\begin{table}[htbp]
+\centering
+\caption{Working targets under review}
+\label{tab:working-targets}
+\small
+\begin{tabularx}{\linewidth}{@{}X r r@{}}
+\toprule
+Moment & Target & Working scale \\
+\midrule
+Mean children ever born, ages 46+ (normalization) & 2.100000 & -- \\
+Childless women, ages 40--44 & 0.198279 & 0.005305 \\
+Exactly one child among mothers, ages 40--44 & 0.213655 & 0.006091 \\
+Period mean age at first birth & 25.976264 & 0.084567 \\
+First births at age 30+ & 0.249278 & 0.008492 \\
+Wealth / annual gross labor earnings & 6.145861 & 0.362855 \\
+Annual bequests / aggregate wealth & 0.008800 & 0.000440 \\
+Old wealth/income p90 / median, ages 76--84 & 3.515935 & 0.306911 \\
+Mean occupied rooms, capped at 9 & 5.561097 & 0.088381 \\
+Ownership, heads ages 30--55 & 0.648334 & 0.020675 \\
+First-birth room response, $-1$ to $+3$ & 0.720246 & 0.085260 \\
+Rooms: 3+ versus 1--2 resident children & 0.347067 & 0.059705 \\
+Recent-parent ownership gap & 0.162896 & 0.006080 \\
+\bottomrule
+\end{tabularx}
+\begin{flushleft}\footnotesize
+\textit{Notes:} Fertility stocks use the June 2004 and 2006 CPS supplements;
+first-birth timing uses NCHS counts for 2003--2006. Wealth and old-age dispersion
+use the 2003 and 2005 PSID waves. Housing levels and group differences use the
+2005--2006 ACS in 42 metropolitan areas; the first-birth response uses a PSID
+event study. The bequest restriction is external. Working scales combine
+several conventions: approximate survey
+sampling variation, temporal variation, bootstrap uncertainty, regression
+uncertainty, and an externally assigned tolerance for bequests.  They are retained
+for the present exercise while the target-and-observer contract is finalized.
+\end{flushleft}
+\end{table}
+
+The fertility shares use pooled cross-sectional measures of children ever born,
+whereas the timing statistics use first-birth flows.  The model counterpart must
+therefore distinguish a stationary stock from a period flow and must state how a
+birth within a four-year period is dated.  The completed-fertility normalization
+is a model-side restriction on older households; it is not asserted to be the same
+object as the CPS fertility cohorts in the table.
+
+The wealth and bequest moments use explicit stock--flow denominators.  Aggregate
+wealth is compared with annual gross labor earnings, and the old-age dispersion
+uses a wealth-to-income ratio within its stated age range.  Initial wealth is
+heterogeneous in the model, so these moments assess both lifecycle saving and the
+distribution inherited at entry.  A common definition of wealth, income, and estate
+coverage is required before these statistics can be interpreted as a fit.
+
+Housing moments measure occupied rooms and owner occupancy over their stated
+populations.  The first-birth room response is an event-time comparison in the
+data, while the family-room and recent-parent moments are cross-sectional group
+differences. Fit comparisons require consistent population and event-time rules,
+complete moment and parameter tables, and lifecycle wealth, tenure and
+housing-size profiles.

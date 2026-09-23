@@ -1,5 +1,60 @@
 # Target validation before the utility comparison
 
+## September 23 — author-led calibration decisions
+
+The author requests a roughly two-hour first block reviewing the calibration
+strategy and every target, with targeted recomputation and rescoring where
+justified, followed by a decision tree for earnings and utility by the evening.
+The mock quantification section is now explicitly authorized as provisional.
+This does not adopt any experimental specification or authorize another search.
+
+Reuse the completed six-phase Opus review and its independently checked
+empirical calculations in [the overnight packet](overnight/README.md). Preserve
+the rationale of signed-off July choices; reopen a row only for a specific
+unresolved definition, changed reference sample, or model-data discrepancy.
+
+Working order:
+
+1. State the reference economy, population and units, distinguishing cohort
+   fertility, period timing and cross-sectional household moments. Different
+   data sources need justified mappings, not mechanically identical samples.
+2. Review all five fertility rows, including the separate mean-fertility
+   normalization; all three wealth/bequest rows; and all five housing rows.
+   Each row needs its empirical object, model measurement, uncertainty,
+   economic role and explicit retain/repair/decision status.
+3. Review external restrictions, normalization, free parameters and informative
+   variation jointly. A count of moments is not an identification test. Explain
+   the mixed working weights and any proposed replacement independently of
+   which specification fits better.
+4. Recompute only the quantities needed by agreed changes. Distinguish a
+   target/weight rescore of saved moments, a new measurement from saved model
+   outputs, and a change requiring a fresh solution or normalization. Preserve
+   all old scores and label candidate contracts separately.
+5. Compare the retained reference and experimental fits under common definitions
+   where recoverable. Diagnose remaining fit and numerical issues before choosing
+   another search. Do not attribute a changed ranking to utility alone when
+   earnings, initial distributions, timing or numerical grids also differ.
+
+The two-hour checkpoint should deliver row-level decisions and named blockers,
+not an unsupported promise that a new simulated-panel estimator or full refit is
+already complete. The evening decision tree should distinguish measurement
+repairs, numerical validation, and genuine economic specification choices.
+
+Parallel preparation is bounded: a target decision sheet from existing evidence
+(10-minute collection task) and a provisional draft of
+`latex/JMP_DS_mock/sections/04_quantification.tex` (20-minute drafting task).
+The lead owns identification, target choices, and review. Author draft and
+slides are unchanged; no empirical candidate becomes an active target without
+an explicit recorded decision.
+
+Preparation completed: [13-row decision sheet](target_decisions_20260923.csv),
+with current values, unresolved choices, required calculations and evidence;
+the lead checked every row and corrected three overstatements. The provisional
+mock quantification draft is in the existing section named above. Its 13 values
+and working scales match the frozen inventory, and its changed pages were
+compiled and visually checked. These artifacts organize the discussion; they
+do not mark the target decisions complete.
+
 **Later author clarification, September 22:** complete target reconciliation is the first task tomorrow morning, September 23. Tonight's experimental comparisons may retain the frozen targets and weights while income, initial wealth and numerical checks take priority. The earlier launch hold in the dated report is superseded; its substantive findings are unchanged. See the latest `CALIBRATION_STATUS.md`.
 
 September 22, 2026. The author made target validation the first step before any further overnight calibration. No jobs, target changes, weight changes or paper edits were made in this review.

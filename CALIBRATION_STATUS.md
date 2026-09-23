@@ -1,5 +1,16 @@
 # Calibration Status
 
+## September 23 — calibration strategy and target decisions first
+
+After reviewing the overnight fit, the author requests a roughly two-hour first
+block to work through every target, selectively recompute and rescore, and
+develop an earnings/utility decision tree by the evening. The mock quantification
+section is explicitly authorized as provisional. The completed six-phase target
+review and July sign-offs are the starting evidence; no repeated broad audit.
+The current targets, weights and experimental model specifications remain
+unchanged. No new calibration run is launched. The ordered work plan is in
+`output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/README.md`.
+
 **Delivery update:** The author returned before10AM and explicitly requested the report immediately. The reviewed53-page PDF is released on that instruction; all experiment jobs are terminal. Artifact/source backup: `b6032d94`.
 
 ## September 23, 09:40 EDT — terminal results collected and reviewed

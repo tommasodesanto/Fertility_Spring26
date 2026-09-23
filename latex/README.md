@@ -1,5 +1,24 @@
 # LaTeX Workspace
 
+## Provisional mock quantification — September 23, 2026
+
+At the author's explicit request, the existing mock section
+`JMP_DS_mock/sections/04_quantification.tex` now contains a first quantification
+draft and all 13 current working targets. Earnings, utility, the population
+mapping, birth timing and working weights are explicitly provisional; no
+experimental fit is adopted. The draft is to evolve alongside the row-by-row
+target decisions, not substitute for those decisions.
+
+The existing model section excludes current earnings from purchase eligibility;
+the experimental calculations include them. The quantification note explicitly
+flags this unresolved discrepancy without altering the model, author draft or
+slides. A temporary copy compiled twice with no errors or overfull boxes; all
+changed pages were visually inspected. The inherited empirical-appendix
+reference remains unresolved, and the bibliography is still empty. No full-mock
+PDF was replaced, because other sections contain separate in-progress work.
+Evidence and the ordered review plan are in
+`output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/`.
+
 ## Coordinated JMP sources — author instruction, September 21, 2026
 
 The former `JMP_DS_suggestions/` folder is now `JMP_DS_mock/`; its original
