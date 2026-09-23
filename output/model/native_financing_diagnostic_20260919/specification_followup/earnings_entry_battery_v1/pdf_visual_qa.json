@@ -1,0 +1,125 @@
+{
+  "pdf": "output/pdf/earnings_entry_review.pdf",
+  "sha256": "42f4341ead39ef1c09b5bf5865c1e529a1e10c1a641d1233cbbd23318e9b50ea",
+  "page_count": 44,
+  "rendered_pages_verified": 44,
+  "inspected_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44
+  ],
+  "status": "pass_with_preserved_source_limitations",
+  "summary": "All 44 pages were visually reviewed. PDF composition passes: no page-level clipping, missing pages, split/orphan rows, or PDF-induced overlaps were found. Text tables and page transitions are legible. Legend overlap or clipping in four repeated diagnostic figure types is intrinsic to the preserved source PNGs; PDF embedding preserves the complete source-image bounds.",
+  "defects": [
+    {
+      "pages": [
+        27,
+        37
+      ],
+      "type": "source_image_legend_overlap",
+      "description": "The housing-by-age-and-income-state figure legend overlaps its title and upper plot area, reducing readability.",
+      "cause": "Intrinsic to the preserved original PNG; PDF embeds the full source-image bounds without additional clipping or overlap.",
+      "source_examples": [
+        "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/C/selected/standard_diagnostics/housing_by_age_income_state.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/D/selected/standard_diagnostics/housing_by_age_income_state.png"
+      ]
+    },
+    {
+      "pages": [
+        31,
+        41
+      ],
+      "type": "source_image_legend_overlap",
+      "description": "The ownership-by-age-and-income-state figure legend extends into the space above its plot and overlaps the lower chart area.",
+      "cause": "Intrinsic to the preserved original PNG; PDF embeds the full source-image bounds without additional clipping or overlap.",
+      "source_examples": [
+        "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/C/selected/standard_diagnostics/ownership_by_age_income_state.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/D/selected/standard_diagnostics/ownership_by_age_income_state.png"
+      ]
+    },
+    {
+      "pages": [
+        33,
+        34,
+        43,
+        44
+      ],
+      "type": "source_image_legend_clipping",
+      "description": "The childless-renter wealth-distribution figures have long income-state legends crowded against the plot bounds; the age-42 variant is visibly clipped within the original PNG. These are source-figure readability limitations, not PDF-page clipping.",
+      "cause": "Intrinsic to the preserved original PNG; PDF embeds the full source-image bounds without additional clipping or overlap.",
+      "source_examples": [
+        "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/C/selected/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/C/selected/standard_diagnostics/wealth_dist_childless_renter_age42.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/D/selected/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+        "output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/final_readout/D/selected/standard_diagnostics/wealth_dist_childless_renter_age42.png"
+      ]
+    }
+  ],
+  "other_observations": [
+    "Updated page 1 text fits within its text area.",
+    "Numeric tables on pages 2-5, 15, 25, and 35 are not visually overlapped or clipped.",
+    "No PDF composition defects were observed across pages 1-44.",
+    "Repeated multi-panel policy figures remain legible at page scale, though their legends are small."
+  ],
+  "pdf_composition_status": "pass",
+  "source_image_readability_status": "limitations_present",
+  "prior_agent_review_sha256": "d28abd8beecc3d60ab4b5865ae595b8a1b293f4f71d8c7a87f31256931051c6e",
+  "lead_review": {
+    "changed_pages_reinspected": [
+      1,
+      27,
+      31,
+      33,
+      34,
+      37,
+      41,
+      43,
+      44
+    ],
+    "table_page_reinspected": 5,
+    "correction": "B source wealth legends are intact; removed false-positive B23/24 warnings after direct source-image inspection. Preserved C/D source limitations are explicitly captioned.",
+    "formatted_table_cells_found_in_corresponding_pages": 600,
+    "all_pages_rendered": 44
+  }
+}

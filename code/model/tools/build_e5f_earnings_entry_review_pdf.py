@@ -160,14 +160,16 @@ def build(readout,narrative_path,output,resolution_readout=None):
     for arm,cell,base in available:
         if cell!='selected': continue
         score=read_json(base/'score.json')
-        story += [para(f'{arm} / {cell}: complete numeric readout','H1'),para(f"Loss: {fmt(score.get('loss'),9)}. Best verified observed point in this cell, including smoke; not a converged calibration. Exact values remain in the accompanying CSV files."),make_table(target_rows(base/'target_fit.csv'),[2.1*inch,.82*inch,.82*inch,.82*inch,1.05*inch,1.05*inch]),Spacer(1,8),para('All 17 parameters','H2'),make_table(parameter_rows(base/'parameters_actual_bounds.csv'),[1.55*inch,.9*inch,.9*inch,.9*inch,.85*inch,1.25*inch]),PageBreak()]
+        story += [para(f'{arm} / {cell}: complete numeric readout','H1'),para(f"Loss: {fmt(score.get('loss'),9)}. Best verified observed point in this cell, including smoke; not a converged calibration. Exact values remain in the accompanying CSV files."),make_table(target_rows(base/'target_fit.csv'),[2.1*inch,.82*inch,.82*inch,.82*inch,1.05*inch,1.05*inch]),Spacer(1,8),para('All 17 parameters','H2'),para('Near bound means within 1% of the raw bound width; wide log-search bounds can flag small positive scales. This is not evidence of identification or convergence.','Small'),make_table(parameter_rows(base/'parameters_actual_bounds.csv'),[1.55*inch,.9*inch,.9*inch,.9*inch,.85*inch,1.25*inch]),PageBreak()]
         plots=sorted((base/'standard_diagnostics').glob('*.png'))
         if len(plots)!=17: raise ValueError(f'{base}: expected 17 standard diagnostics, found {len(plots)}')
         for i in range(0,17,2):
             story.append(para(f'Appendix: {arm} / {cell} original standard diagnostics ({i+1}-{min(i+2,17)} of 17)','H1'))
             for q in plots[i:i+2]:
                 story += [para(q.stem.replace('_',' '),'H2')]
-                im=Image(str(q)); im._restrictSize(7.1*inch,3.65*inch); story += [im,para('Original diagnostic image retained without substitution or redesign.','Cap')]
+                im=Image(str(q)); im._restrictSize(7.1*inch,3.65*inch)
+                caption='Original source legend is crowded or clipped; image retained unchanged.' if arm in 'CD' and q.stem in {'housing_by_age_income_state','ownership_by_age_income_state','wealth_dist_childless_renter_age30','wealth_dist_childless_renter_age42'} else 'Original diagnostic image retained without substitution or redesign.'
+                story += [im,para(caption,'Cap')]
             if i + 2 < 17:
                 story.append(PageBreak())
         story.append(PageBreak())

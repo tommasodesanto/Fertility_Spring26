@@ -1,5 +1,25 @@
 # Earnings and entry-wealth diagnostic battery
 
+## Final reviewed state — September22, prepared for21:00 EDT
+
+All four smokes and all 40 coarse-search workers finished successfully. The final collection verifies 163 scored objectives (A61, B61, C22, D19), 924 completed stationary solves, and no failed or incomplete attempted coarse objective. The fixed budgets left 81 planned proposals unrun. All cells selected worker05/proposal01; their nine structural coordinates coincide, while equilibrium and the fertility utility scale are solved and normalized separately. These are finite-search observations, not converged calibrations or adoption.
+
+The selected heterogeneous-wealth single-process case B predicts ownership 45.3% versus 64.8%, mean rooms 6.25 versus 5.56, first-birth room response 1.34 versus 0.72, and first-birth age 27.30 versus 25.98. Main housing misses persist across all four cells. The parenthood-only housing floor is at its 2.3 upper bound. Full target rows, weights, contributions, parameters and actual bounds are retained; weighted loss alone does not choose the specification.
+
+The finer-income checks are also terminal: A/B passed at 15 states, each with six completed stationary solves. First-birth age increases 0.523/0.548 years and childlessness 1.85/1.84 percentage points versus seven states at the common smoke parameters, so seven-state adequacy is unproven. C45 timed out during the fifth solve after four completed solves; this is a runtime stop, not a failed scientific gate. D45 failed at age30 with dead-node mass 2.49567345695e-12 above the unchanged 1e-12 gate. No retries or relaxed gates. Combined main and resolution counts: 167 attempted objectives, 165 scored; 942 started/940 completed/two incomplete stationary solves.
+
+Selected A/B/C/D checkpoints preserve the intended entry-wealth marginal (L1<=2.1e-16), with no entry censoring. The finer B case also passes: zero entry wealth is not necessary for numerical feasibility in the simple-process test. Tiny occupied low-value masses remain in some cases; these do not bound the effect of finite infeasibility values on choices.
+
+Working recommendation: one persistent earnings process plus the age profile; retain heterogeneous starting wealth after harmonizing the income denominator. Neither entry law is adopted here. Complete selected-point resolution/continuation checks, then the deferred housing-floor versus child-share comparison before a long refit. Exact selected repetitions, richer-grid checks at selected search parameters, wealth-grid convergence and the preference comparison remain unrun.
+
+**Experimental changes relative to the September22 morning V5 smoke:** A/B use a single persistent process and its stationary entrant-income distribution; C/D retain persistent plus iid risk. A/C have zero entrant assets; B/D use the inherited heterogeneous marginal with diagnostic income-rank coupling. The age profile, timing, current-income purchase eligibility, housing-floor/equivalence-scale forms, transfer rules and target/weight system are retained. Search changes nine parameters and re-normalizes fertility utility separately. Wealth stays at160 nodes with upper3000; income resolutions are7/21 versus15/45. The exploratory level-covariance criterion is15%, with errors11.21/10.12% coarse and5.13/4.61% finer; V5's frozen5% contract and household gates are unchanged. The inherited18–24 childless-renter wealth/family-income proxy still requires harmonization with model gross earnings; stationary risk at18 and four-year information timing remain explicit assumptions.
+
+Reader report: [reviewed PDF](../../../../pdf/earnings_entry_review.pdf). [Complete selected and common-parameter tables/figures](final_readout/README.md); [finer-resolution tables](resolution_final/README.md); [central verification](final_lead_review.json); [PDF visual QA](pdf_visual_qa.json). The44-page PDF contains all13 targets and17 parameters per cell plus all17 original standard figures per cell. All600 displayed table cells were checked against the source tables. Crowded/clipped legends intrinsic to some original C/D source figures are preserved and explicitly flagged.
+
+The chronology below is historical; references there to running or pending work are superseded by the final state above. Failed evidence and immutable bundles remain intact.
+
+## Preserved launch and interim chronology
+
 Author-authorized September 22 evening comparison; reviewed opinion scheduled for around 21:00 America/New_York, not earlier. This is a finite diagnostic, not model adoption or a converged calibration. Original submission at 19:00 EDT (superseded below): smokes A18288614, B18288617, C18288619, D18288635; dependent ten-worker production arrays A18288616, B18288618, C18288629, D18288688. All 244 remote plans and four zero-solve native preflights passed. See [submission](submission.json) and [lead launch review](launch_review.json). Each worker has one CPU, 32 GiB and one hour.
 
 | Cell | Earnings risk, plus the common age profile | Entry wealth |

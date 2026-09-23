@@ -1,0 +1,499 @@
+{
+  "status": "terminal_review_complete_no_adoption",
+  "prepared_for": "2026-09-22 21:00 America/New_York",
+  "main": {
+    "cells": {
+      "A": {
+        "not_started": 0,
+        "verified_scored": 61
+      },
+      "B": {
+        "not_started": 0,
+        "verified_scored": 61
+      },
+      "C": {
+        "not_started": 39,
+        "verified_scored": 22
+      },
+      "D": {
+        "not_started": 42,
+        "verified_scored": 19
+      }
+    },
+    "manifest_sha256": "bdc38a3290b6b8d1ceafec02814b20150c69880131f023d8a7072dd5fae2649c",
+    "note": "Finite paired design; selection includes smoke. Unfinished solves include currently running solves. No exact repeats or grid convergence asserted.",
+    "objective_canonical_sha256": "4440ea07f4de957740ca6c04961d2806d9b9ef782c7a0e7dad4ce73e1db651b1",
+    "selected": [
+      {
+        "case_directory": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/results/production/A/worker_05/proposal_01_proposal_01",
+        "case_id": "A_worker05_proposal01",
+        "cell_id": "A",
+        "checkpoint_sha256": "7b1016a3a41a47e5da4ff8ff1f2702b2a32efc6645562b7cdc2054555eb52068",
+        "completed_solves": 6,
+        "count_evidence": "native heartbeat and per-solve records",
+        "exact_repetitions_completed": 0,
+        "failure_message": "",
+        "failure_type": "",
+        "grid_robustness_completed": false,
+        "loss": 665.4461845104298,
+        "normalized_objective_seconds": 463.8423167860019,
+        "output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_collection_v1/final_readout/A/selected",
+        "proposal_index": 1,
+        "stage": "production",
+        "started_solves": 6,
+        "status": "verified_scored",
+        "task_id": 5,
+        "unfinished_solves": 0
+      },
+      {
+        "case_directory": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/results/production/B/worker_05/proposal_01_proposal_01",
+        "case_id": "B_worker05_proposal01",
+        "cell_id": "B",
+        "checkpoint_sha256": "657702f6bbfa2408dcc1bdec695a97462e4350be2184bab161dbfe240229a23f",
+        "completed_solves": 6,
+        "count_evidence": "native heartbeat and per-solve records",
+        "exact_repetitions_completed": 0,
+        "failure_message": "",
+        "failure_type": "",
+        "grid_robustness_completed": false,
+        "loss": 648.8983297659712,
+        "normalized_objective_seconds": 483.79505827394314,
+        "output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_collection_v1/final_readout/B/selected",
+        "proposal_index": 1,
+        "stage": "production",
+        "started_solves": 6,
+        "status": "verified_scored",
+        "task_id": 5,
+        "unfinished_solves": 0
+      },
+      {
+        "case_directory": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/results/production/C/worker_05/proposal_01_proposal_01",
+        "case_id": "C_worker05_proposal01",
+        "cell_id": "C",
+        "checkpoint_sha256": "65cf7ad2b04d394df54d937a04b51887033115d719f8a7fb1a589b3920a08587",
+        "completed_solves": 6,
+        "count_evidence": "native heartbeat and per-solve records",
+        "exact_repetitions_completed": 0,
+        "failure_message": "",
+        "failure_type": "",
+        "grid_robustness_completed": false,
+        "loss": 567.8127540851415,
+        "normalized_objective_seconds": 1265.0599164249143,
+        "output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_collection_v1/final_readout/C/selected",
+        "proposal_index": 1,
+        "stage": "production",
+        "started_solves": 6,
+        "status": "verified_scored",
+        "task_id": 5,
+        "unfinished_solves": 0
+      },
+      {
+        "case_directory": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_20260922_v1/results/production/D/worker_05/proposal_01_proposal_01",
+        "case_id": "D_worker05_proposal01",
+        "cell_id": "D",
+        "checkpoint_sha256": "9ea2b6fad018dbc28114dd346c41b1764f6b70a74cfd617d0ab6532222761416",
+        "completed_solves": 6,
+        "count_evidence": "native heartbeat and per-solve records",
+        "exact_repetitions_completed": 0,
+        "failure_message": "",
+        "failure_type": "",
+        "grid_robustness_completed": false,
+        "loss": 586.9012245870538,
+        "normalized_objective_seconds": 1698.7396701769903,
+        "output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/earnings_entry_battery_collection_v1/final_readout/D/selected",
+        "proposal_index": 1,
+        "stage": "production",
+        "started_solves": 6,
+        "status": "verified_scored",
+        "task_id": 5,
+        "unfinished_solves": 0
+      }
+    ],
+    "source_inventory_sha256": "76406fcc10206d9e30bcc29d4e18accdf7fffdd9219e50e6e11c1c3360f01336",
+    "stationary_solves": {
+      "completed_solves": 924,
+      "started_solves": 924,
+      "unfinished_solves": 0
+    }
+  },
+  "resolution": {
+    "status": "resolution_terminal",
+    "selected_verified_cells": [
+      "A",
+      "B"
+    ],
+    "failed_unscored_cells": {
+      "C": "native3100-second timeout;4 completed plus1 incomplete stationary solve",
+      "D": "age30 dead-node mass2.4957e-12 above unchanged1e-12 gate;1 incomplete stationary solve"
+    },
+    "total_stationary_solves": {
+      "completed_solves": 16,
+      "started_solves": 18,
+      "unfinished_solves": 2
+    },
+    "finer_grid": "A/B15 totalstates, C/D45; all economic parameters and numerical household gates held fixed; equilibrium and fertility scale normalized separately",
+    "next": "No retries. Complete final main collection and selected checkpoint audits, then review PDF for21:00delivery."
+  },
+  "total_objectives": {
+    "attempted": 167,
+    "scored": 165,
+    "unscored": 2,
+    "planned_proposals_unrun": 81
+  },
+  "total_stationary_solves": {
+    "started": 942,
+    "completed": 940,
+    "incomplete": 2
+  },
+  "selected_checkpoint_audits": {
+    "A": {
+      "checkpoint_sha256": "7b1016a3a41a47e5da4ff8ff1f2702b2a32efc6645562b7cdc2054555eb52068",
+      "entry_censored_mass": 0,
+      "entry_marginal_l1": 0.0,
+      "occupied_low_value_share": 0.0
+    },
+    "B": {
+      "checkpoint_sha256": "657702f6bbfa2408dcc1bdec695a97462e4350be2184bab161dbfe240229a23f",
+      "entry_censored_mass": 0,
+      "entry_marginal_l1": 2.0654729012206663e-16,
+      "occupied_low_value_share": 3.7313036475715816e-63
+    },
+    "C": {
+      "checkpoint_sha256": "65cf7ad2b04d394df54d937a04b51887033115d719f8a7fb1a589b3920a08587",
+      "entry_censored_mass": 0,
+      "entry_marginal_l1": 0.0,
+      "occupied_low_value_share": 0.0
+    },
+    "D": {
+      "checkpoint_sha256": "9ea2b6fad018dbc28114dd346c41b1764f6b70a74cfd617d0ab6532222761416",
+      "entry_censored_mass": 0,
+      "entry_marginal_l1": 1.2219297297090537e-16,
+      "occupied_low_value_share": 2.0075602063758116e-11
+    }
+  },
+  "selected_nine_coordinates_equal_across_cells": true,
+  "selected_nine_coordinates": {
+    "beta_annual": "0.9861354184363632",
+    "kappa_fert": "0.2933055318704186",
+    "kappa_fert_continuation": "0.4538659805118368",
+    "chi": "1.0094388767653766",
+    "H0": "7.579566558818859",
+    "theta0": "0.04024742184861621",
+    "theta1": "0.09234772467336418",
+    "first_birth_fixed_cost": "0.3151947070287402",
+    "h_P": "2.3"
+  },
+  "near_bound_rows": {
+    "A": [
+      {
+        "estimate": "0.2933055318704186",
+        "interpretation": "structural coordinate",
+        "lower": "0.02",
+        "near_bound": "True",
+        "parameter": "kappa_fert",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "log",
+        "upper": "50.0",
+        "actual_lower": "0.02",
+        "actual_upper": "50.0",
+        "near_actual_bound": "True"
+      },
+      {
+        "estimate": "0.4538659805118368",
+        "interpretation": "structural coordinate",
+        "lower": "0.02",
+        "near_bound": "True",
+        "parameter": "kappa_fert_continuation",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "log",
+        "upper": "50.0",
+        "actual_lower": "0.02",
+        "actual_upper": "50.0",
+        "near_actual_bound": "True"
+      },
+      {
+        "estimate": "0.04024742184861621",
+        "interpretation": "structural coordinate",
+        "lower": "0.0",
+        "near_bound": "True",
+        "parameter": "theta0",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "softzero",
+        "upper": "8.0",
+        "actual_lower": "0.0",
+        "actual_upper": "8.0",
+        "near_actual_bound": "True"
+      },
+      {
+        "estimate": "0.09234772467336418",
+        "interpretation": "structural coordinate",
+        "lower": "0.02",
+        "near_bound": "True",
+        "parameter": "theta1",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "log",
+        "upper": "16.0",
+        "actual_lower": "0.02",
+        "actual_upper": "16.0",
+        "near_actual_bound": "True"
+      },
+      {
+        "estimate": "2.3",
+        "interpretation": "mapped first-child requirement",
+        "lower": "0.1",
+        "near_bound": "True",
+        "parameter": "h_P",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "log",
+        "upper": "2.3",
+        "actual_lower": "0.1",
+        "actual_upper": "2.3",
+        "near_actual_bound": "True"
+      }
+    ],
+    "B": [
+      {
+        "estimate": "0.2933055318704186",
+        "interpretation": "structural coordinate",
+        "lower": "0.02",
+        "near_bound": "True",
+        "parameter": "kappa_fert",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "log",
+        "upper": "50.0",
+        "actual_lower": "0.02",
+        "actual_upper": "50.0",
+        "near_actual_bound": "True"
+      },
+      {
+        "estimate": "0.4538659805118368",
+        "interpretation": "structural coordinate",
+        "lower": "0.02",
+        "near_bound": "True",
+        "parameter": "kappa_fert_continuation",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "log",
+        "upper": "50.0",
+        "actual_lower": "0.02",
+        "actual_upper": "50.0",
+        "near_actual_bound": "True"
+      },
+      {
+        "estimate": "0.04024742184861621",
+        "interpretation": "structural coordinate",
+        "lower": "0.0",
+        "near_bound": "True",
+        "parameter": "theta0",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "softzero",
+        "upper": "8.0",
+        "actual_lower": "0.0",
+        "actual_upper": "8.0",
+        "near_actual_bound": "True"
+      },
+      {
+        "estimate": "0.09234772467336418",
+        "interpretation": "structural coordinate",
+        "lower": "0.02",
+        "near_bound": "True",
+        "parameter": "theta1",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "log",
+        "upper": "16.0",
+        "actual_lower": "0.02",
+        "actual_upper": "16.0",
+        "near_actual_bound": "True"
+      },
+      {
+        "estimate": "2.3",
+        "interpretation": "mapped first-child requirement",
+        "lower": "0.1",
+        "near_bound": "True",
+        "parameter": "h_P",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "log",
+        "upper": "2.3",
+        "actual_lower": "0.1",
+        "actual_upper": "2.3",
+        "near_actual_bound": "True"
+      }
+    ],
+    "C": [
+      {
+        "estimate": "0.2933055318704186",
+        "interpretation": "structural coordinate",
+        "lower": "0.02",
+        "near_bound": "True",
+        "parameter": "kappa_fert",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "log",
+        "upper": "50.0",
+        "actual_lower": "0.02",
+        "actual_upper": "50.0",
+        "near_actual_bound": "True"
+      },
+      {
+        "estimate": "0.4538659805118368",
+        "interpretation": "structural coordinate",
+        "lower": "0.02",
+        "near_bound": "True",
+        "parameter": "kappa_fert_continuation",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "log",
+        "upper": "50.0",
+        "actual_lower": "0.02",
+        "actual_upper": "50.0",
+        "near_actual_bound": "True"
+      },
+      {
+        "estimate": "0.04024742184861621",
+        "interpretation": "structural coordinate",
+        "lower": "0.0",
+        "near_bound": "True",
+        "parameter": "theta0",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "softzero",
+        "upper": "8.0",
+        "actual_lower": "0.0",
+        "actual_upper": "8.0",
+        "near_actual_bound": "True"
+      },
+      {
+        "estimate": "0.09234772467336418",
+        "interpretation": "structural coordinate",
+        "lower": "0.02",
+        "near_bound": "True",
+        "parameter": "theta1",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "log",
+        "upper": "16.0",
+        "actual_lower": "0.02",
+        "actual_upper": "16.0",
+        "near_actual_bound": "True"
+      },
+      {
+        "estimate": "2.3",
+        "interpretation": "mapped first-child requirement",
+        "lower": "0.1",
+        "near_bound": "True",
+        "parameter": "h_P",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "log",
+        "upper": "2.3",
+        "actual_lower": "0.1",
+        "actual_upper": "2.3",
+        "near_actual_bound": "True"
+      }
+    ],
+    "D": [
+      {
+        "estimate": "0.2933055318704186",
+        "interpretation": "structural coordinate",
+        "lower": "0.02",
+        "near_bound": "True",
+        "parameter": "kappa_fert",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "log",
+        "upper": "50.0",
+        "actual_lower": "0.02",
+        "actual_upper": "50.0",
+        "near_actual_bound": "True"
+      },
+      {
+        "estimate": "0.4538659805118368",
+        "interpretation": "structural coordinate",
+        "lower": "0.02",
+        "near_bound": "True",
+        "parameter": "kappa_fert_continuation",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "log",
+        "upper": "50.0",
+        "actual_lower": "0.02",
+        "actual_upper": "50.0",
+        "near_actual_bound": "True"
+      },
+      {
+        "estimate": "0.04024742184861621",
+        "interpretation": "structural coordinate",
+        "lower": "0.0",
+        "near_bound": "True",
+        "parameter": "theta0",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "softzero",
+        "upper": "8.0",
+        "actual_lower": "0.0",
+        "actual_upper": "8.0",
+        "near_actual_bound": "True"
+      },
+      {
+        "estimate": "0.09234772467336418",
+        "interpretation": "structural coordinate",
+        "lower": "0.02",
+        "near_bound": "True",
+        "parameter": "theta1",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "log",
+        "upper": "16.0",
+        "actual_lower": "0.02",
+        "actual_upper": "16.0",
+        "near_actual_bound": "True"
+      },
+      {
+        "estimate": "2.3",
+        "interpretation": "mapped first-child requirement",
+        "lower": "0.1",
+        "near_bound": "True",
+        "parameter": "h_P",
+        "status": "diagnostic candidate; not a certified estimate",
+        "structural_coordinate": "True",
+        "transform": "log",
+        "upper": "2.3",
+        "actual_lower": "0.1",
+        "actual_upper": "2.3",
+        "near_actual_bound": "True"
+      }
+    ]
+  },
+  "near_bound_convention": "Within1% raw bound width; descriptive, not identification evidence.",
+  "readout_checks": {
+    "target_rows_per_selected": 13,
+    "parameter_rows_per_selected": 17,
+    "original_graphs_per_selected": 17,
+    "formatted_pdf_table_cells_checked": 600
+  },
+  "pdf": "output/pdf/earnings_entry_review.pdf",
+  "pdf_sha256": "42f4341ead39ef1c09b5bf5865c1e529a1e10c1a641d1233cbbd23318e9b50ea",
+  "pdf_qa": "pdf_visual_qa.json",
+  "unrun": [
+    "Exact selected-point repetitions",
+    "Finer-income checks at selected search parameters",
+    "Wealth-grid convergence",
+    "Housing-floor versus child-dependent-share comparison"
+  ],
+  "remaining_limitations": [
+    "Entry family-income versus model earnings denominator and diagnostic rank coupling",
+    "Stationary entrant income risk at age18 and four-year information timing",
+    "Seven-state sensitivity and continuation infeasibility-value effects",
+    "Housing fit misses and h_P upper bound; finite search is not convergence"
+  ],
+  "recommendation": "One persistent process plus age profile as working direction; retain heterogeneous wealth after harmonization. Verify numerical resolution and continuation treatment, then settle housing preference comparison before long refit."
+}
