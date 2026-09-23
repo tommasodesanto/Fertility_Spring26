@@ -1,5 +1,18 @@
 # Calibration Status
 
+## September 23 — CPS fertility shares retained; first-child cost check deferred
+
+The author retains childlessness among women aged 40–44 (0.19827875100684264)
+and exactly one child among mothers aged 40–44 (0.21365532522014702), using
+the existing pooled June 2004/2006 CPS definitions and sampling weights.
+This accepts the two target definitions and values, not an SMM-weight decision
+or any experimental parameter estimate. Birth-timing targets remain open.
+
+After recalibration, assess whether the first-child cost materially affects fit
+and behavior, including a comparison with a zero-cost version that permits the
+remaining parameters to adjust. The author would prefer removing this parameter
+if it proves unnecessary. Retain it for now; no new calculation is launched.
+
 ## September 23 — completed-fertility normalization retained
 
 The author retains mean children ever born of 2.10 at ages 46+ as the imposed

@@ -1,5 +1,17 @@
 # Target validation before the utility comparison
 
+## September 23 — decision: retain both CPS fertility shares
+
+The author retains 19.8278751% childlessness among women aged 40–44 and
+21.3655325% exactly one child among mothers aged 40–44, with the existing
+pooled June 2004/2006 CPS definitions and sampling weights. Objective weights
+and birth-timing targets remain separate decisions.
+
+Deferred check: after recalibration, compare fit and behavior with a version
+that sets the first-child cost to zero and permits the remaining parameters to
+adjust. Consider removing the cost if it proves unnecessary. Keep it for now;
+no new calculation, target-value change or frozen-bundle edit.
+
 ## September 23 — decision: retain the 2.10 normalization
 
 The author retains 2.10 mean children ever born at ages 46+ as the imposed
