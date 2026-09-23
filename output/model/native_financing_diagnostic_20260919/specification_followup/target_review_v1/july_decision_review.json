@@ -1,0 +1,37 @@
+{
+  "status": "bounded_historical_decision_check_complete",
+  "scope": "July signed-off wealth targets and entrant-wealth construction; no empirical rebuild or model run",
+  "findings": [
+    {
+      "fact": "Saving and bequest target block explicitly signed off July24, including project aggregate wealth/gross-earnings, borrowed .0088 bequests/wealth and project living-old dispersion.",
+      "source": "docs/model/e5_target_review_20260724.md:40-66",
+      "implication": "Do not present the selection of these economic objects as an unmade decision or casually replace them."
+    },
+    {
+      "fact": "The age18 entry proxy deliberately changed from25-35 to18-24 following the July16 circularity audit. The builder designated18-24 primary if at least500 family-years and18-26 robustness. Actual primary sample1835 family-years and1346 persons; same five nodes as actual September battery.",
+      "sources": [
+        "docs/model/m5_recalibration_contract_20260716.md:31",
+        "docs/model/intergen_m4_calibration_audit_20260716.md:61",
+        "code/data/psid_followup_mar2026/estimate_intergen_income_entry_targets.R:590",
+        "code/data/psid_followup_mar2026/output/intergen_income_entry_targets_20260716/block2_entry_wealth_18_24.csv"
+      ],
+      "implication": "This was a constructed and checked proxy, not a recent arbitrary fallback. An entirely fresh age-band design is not justified merely by noticing18-24 versus18."
+    },
+    {
+      "fact": "July23 aggregate-wealth audit explicitly distinguishes family income from RP/spouse gross labor earnings and specifies beginning-of-period b+pH, including mortgage debt inside b.",
+      "source": "docs/model/intergen_wealth_target_beta_audit_20260723.md:13-50",
+      "implication": "Preserve these established definitions. Broad warnings about unexamined gross versus net accounting overstate what is newly unresolved."
+    },
+    {
+      "fact": "The initial-wealth builder still uses NETWORTH2R/INCFAMR. The newer experiment preserves the resulting wealth marginal while remapping income ranks.",
+      "sources": [
+        "code/data/psid_followup_mar2026/estimate_intergen_income_entry_targets.R:387-424",
+        "code/model/tools/e5f_earnings_wealth_contract.py:17-59"
+      ],
+      "implication": "Family-income versus model-labor-income interpretation remains a legitimate compatibility question. Its materiality and whether it warrants rebuilding the adopted proxy have not been established by the earlier stylized example."
+    }
+  ],
+  "lead_correction": "The prior recommendation to rebuild entry wealth and change the old-age dispersion target before an overnight comparison was too broad. Preserve the prior economic definitions for a controlled diagnostic; verify how the new earnings representation and purchase timing interact with them. Tomorrow review concrete unresolved target mappings against the signed-off July rationale, rather than reopen every object.",
+  "no_targets_weights_or_entry_changed": true,
+  "no_jobs_submitted": true
+}

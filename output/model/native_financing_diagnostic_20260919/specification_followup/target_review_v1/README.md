@@ -19,3 +19,7 @@ python3 code/model/tools/build_e5f_target_review_pdf.py --packet output/model/na
 ```
 
 This review relies on saved empirical receipts and implemented source; it does not certify a fresh raw-data replication or structural identification. Geography remains pending the author's response.
+
+## July decisions retained
+
+The [bounded July decision trace](july_decision_review.json) confirms explicit July24 saving/bequest sign-off and a deliberately constructed18–24 entrant-wealth proxy with1835 family-years. The lead withdraws the broad before-launch reconstruction recommendation. Compare new income/timing implementation against established definitions; the family-income conversion issue is a compatibility question whose quantitative materiality has not yet been established. No target or entry change follows from this review.
