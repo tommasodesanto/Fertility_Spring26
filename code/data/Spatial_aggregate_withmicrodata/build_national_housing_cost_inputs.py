@@ -51,7 +51,7 @@ def main():
                          household_rate_times_owner_structure_share=(household_flow/household_stock)*(1-land)))
     with (OUT / 'estimates.csv').open('w') as f:
         writer = csv.DictWriter(f, fieldnames=list(rows[0])); writer.writeheader(); writer.writerows(rows)
-    receipt = dict(status='calculated_candidate_not_adopted', reference_year=2007,
+    receipt = dict(status='calculated_and_adopted_for_next_calibration', reference_year=2007,
         units='Current dollars in millions; depreciation annual flow, stocks year-end',
         estimator='BEA owner-occupied depreciation / BEA owner-occupied structures stock times (1 - implied national land share); algebraically depreciation / national housing value',
         housing_value='Fed FL155035013 + FL155012013: owner-occupied real estate plus mobile homes, excluding separately held vacant land',
@@ -78,9 +78,9 @@ def main():
     assert sum(map(int, tax_row[121:123])) == taxes
     assert sum(map(int, tax_row[56:58])) == value
     results = [dict(parameter='housing_depreciation', annual_rate=rows[1]['annual_depreciation'],
-                    reference_period='2007', status='recommended_candidate_not_adopted'),
+                    reference_period='2007', status='adopted_for_next_calibration'),
                dict(parameter='property_tax', annual_rate=taxes/value,
-                    reference_period='2007–2011 ACS five-year', status='recommended_candidate_not_adopted')]
+                    reference_period='2007–2011 ACS five-year', status='adopted_for_next_calibration')]
     with (OUT.parent / 'national_inputs.csv').open('w') as f:
         writer = csv.DictWriter(f, fieldnames=list(results[0])); writer.writeheader(); writer.writerows(results)
     print(json.dumps(results,indent=2))

@@ -1,13 +1,13 @@
 # Target validation before the utility comparison
 
-## September 23 — national depreciation and property tax calculated
+## September 23 — national depreciation and property tax adopted
 
-Reviewed candidates are annual depreciation **1.416%** (2007 national BEA/Fed)
+Author adopts annual depreciation **1.416%** (2007 national BEA/Fed)
 and property tax **1.060%** (2007–2011 ACS national owner-tax/value ratio).
 Definitions, period/aggregation differences from DUE, retained official data,
 full-precision values and reproducible calculation are in
-[national housing inputs](national_housing_inputs/README.md). Adoption pending;
-no model, paper, slide, frozen target or objective changes.
+[national housing inputs](national_housing_inputs/README.md). Implementation and paper/slide reconciliation pending. No model run, frozen
+target or objective changes.
 
 ## September 23 — curvature retained with further review
 
