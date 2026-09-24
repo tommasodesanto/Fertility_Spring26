@@ -1,5 +1,14 @@
 # Calibration Status
 
+## September 23 — OpenGo accounting review dispatched
+
+Author requests OpenCode Go for a bounded read-only review of maturation,
+household entry and parental death. Kimi K3 worker launched with a30minute
+limit; no model runs or specification changes. Review prompt and scope:
+`output/model/demographic_accounting_review/opengo_maturation_20260923/`.
+Live receipt: `tmp/maturation_opengo_20260923/execution.json`. Collection and
+lead source checks are scheduled; output is not yet reviewed or complete.
+
 ## September 23 — next review starts with maturation
 
 Author sets September 24 review order: start with child maturation, then
