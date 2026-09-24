@@ -1,13 +1,14 @@
-# OpenCode Go maturation and parental-death review
+# OpenGo maturation and parental-death review
 
-Author requested OpenGo for a bounded overnight read-only review. Route:
-`opencode-go/kimi-k3`; configured authenticated CLI, no fallback model.
-Maximum 30 minutes; no model runs, code edits or specification changes.
-The launch succeeded locally; substantive result is not yet collected.
+Completed by OpenCode Go / Kimi K3, exit0,359seconds;22read and12grep calls.
+No model runs or source edits. Start with [reviewed decision aid](reviewed_decision_aid.md).
+The raw worker report contains material errors and is preserved only as evidence;
+[lead review](lead_review.json) records source checks and corrections. Do not use
+its loss percentages or conservation claims without the corrections.
 
-Supervisor, live execution receipt, JSON events and eventual worker report:
-`tmp/maturation_opengo_20260923/` at the repository root.
-The retained prompt defines scope, source checks, worked examples and stop rules.
-Follow-up `review-opengo-maturation-accounting` will collect and verify citations,
-record limitations, and delete itself. The review is preparation for tomorrow's
-author decisions, beginning with maturation. No claims of completion yet.
+The review prepares tomorrow's maturation-first discussion. It does not adopt a
+new clock, entry conversion or parental-death rule. Actual checkpoint parameters
+and population exposure remain unmeasured in this bounded task.
+
+Launch prompt: `prompt.md`; execution: `execution.json`. Full local read-tool
+trace remains under `tmp/maturation_opengo_20260923/`; its hash is retained.

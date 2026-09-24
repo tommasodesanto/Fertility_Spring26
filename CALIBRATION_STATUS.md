@@ -1,5 +1,18 @@
 # Calibration Status
 
+## September 24 — OpenGo accounting review collected and corrected
+
+OpenCode Go/Kimi K3 completed the bounded read-only review (359 seconds,
+exit0;22read/12grep calls). Lead source checks confirm distinct departure and
+birth-queue entry clocks, different conversion/top-bin units, and removal of
+dependents with household death in the inspected advancement path. No saved
+run settings or dependent-loss mass were remeasured. Material worker errors
+were corrected: omitted cumulative survival in hand examples, unsupported
+no-double-counting claim, and overstatements about normalization/conservation.
+Use `output/model/demographic_accounting_review/opengo_maturation_20260923/reviewed_decision_aid.md`
+and `lead_review.json`, not the raw report. Tomorrow's order remains maturation,
+parental death, then entry accounting. No specification change or model run.
+
 ## September 24 (overnight) — first-birth rooms: recommend 0.73, not 0.60
 
 Sixteen further Torch fits (one change at a time; receipts verified). The

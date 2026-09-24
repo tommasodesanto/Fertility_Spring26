@@ -1,0 +1,44 @@
+{
+  "status": "reviewed_with_material_corrections_source_only",
+  "worker_model": "opencode-go/kimi-k3",
+  "worker_elapsed_seconds": 359.25662899017334,
+  "worker_exit": 0,
+  "tools": {
+    "read_completed": 22,
+    "grep_completed": 12
+  },
+  "no_model_runs": true,
+  "checkpoint_parameters_reverified": false,
+  "review_head": "ad462128dcaf8aa83090d8d98ccbd7ad630e58da",
+  "source_sha256": {
+    "code/model/intergen_eqscale_seq_optimized/parameters.py": "6e331ec390cebec5cbfc0e3cfad98d8eee7ed44fac7d7889de96e35696dd8eb1",
+    "code/model/intergen_eqscale_seq_optimized/e5_profile.py": "24b670345aff47636d3e1de78065ad7a8bcf8579699c8c6fcb92ebb455f1578b",
+    "code/model/intergen_eqscale_seq_optimized/e5_maturation_repair.py": "02a14892614ae287de9d961a900d76197dcef60750a82318ce50fe6536166b0f",
+    "code/model/intergen_eqscale_seq_optimized/solver.py": "b549dabeb03fdb9d476b2be58642ee2d876143b01f529af663e2cf50fc978562",
+    "code/model/intergen_eqscale_seq_optimized/run_e1_chain.py": "23220d1ba96ddf7a7d926ae8c438086ef40bf37d398924622c69ad5978dd4443",
+    "code/model/tools/run_e5f_open_population_transition.py": "b4ce8b965f607e5337455de46b8c23d53fc07e00e4198d6ad383869723f8f2ca",
+    "code/model/tools/measure_e5f_dependent_parent_death.py": "71eca7d0ce69f5cf1b137595ef0c86228dbb9af9dffcc28440e5c43fcb0ffb16"
+  },
+  "corrections": [
+    "Worker death arithmetic omits cumulative parental survival. Reject4.0\u201314.2% and any claimed measured/current-run loss. Correct illustrative recurrence gives2.98258965% for birth at22 and10.47890381% at42 conditional on the explicitly shown schedule and immediate first maturation draw; not population estimates or bounds.",
+    "No-double-counting claim for transition rejected: separately evolving dependent and entrant systems do not establish a combined person identity.",
+    "Outside-option scale closure is not itself a person-conservation proof; normalized closure scales mass, while empirical age reweighting is conditional on selected bridge options.",
+    "1/2.1 versus1/2 implies a4.7619% arithmetic reduction, not an estimated mortality/formation loss.",
+    "Parent-age ramp code exists, but changing its activation is an economic change and requires validation; no claim it is merely safe activation.",
+    "Aggregate top-bin pool or weights can change equilibrium via entry/mass; no assurance that policy solutions need not be recomputed."
+  ],
+  "illustrative_arithmetic": {
+    "mu": 0.2222222222222222,
+    "survival": [
+      0.9391263063710125,
+      0.9184976343249724,
+      0.8849521927812863,
+      0.8300468061015381,
+      0.0
+    ],
+    "loss_per100_birth_at22": 2.982589652790172,
+    "loss_per100_birth_at42": 10.478903814339672,
+    "queue_households_per100": 47.61904761904762
+  },
+  "events_sha256": "ddb189e4adecab94dd398a710d11206fccc2b5afbd9392f23c291b05c4dc14e2"
+}
