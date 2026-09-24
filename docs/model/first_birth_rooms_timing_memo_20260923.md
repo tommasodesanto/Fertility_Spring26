@@ -186,3 +186,16 @@ omitted: +3/+4 = 1.30 (0.10). The −3/−2-to-+3/+4 increment is 1.03 / 1.00 /
 about five years before the birth. The baseline decides whether that ~0.5 room
 is counted; author to choose jointly with the horizon. Flat-pre-period total
 adjustment ≈ 1.4 at +3/+4 and ≈ 1.6 completed.
+
+### All adults done properly, split by pre-treatment status (September 24)
+
+Author asked why the all-adult arm was unweighted and whether conditioning on
+head/spouse status selects. A2 (all adults, every household-design choice):
+0.97 (0.05), flat pre-period. Split by whether the adult was head or spouse in
+the −3/−2 window: A2h **1.47 (0.05)** with a flat pre-period (+0.15, +0.04,
+−0.03); A2n (not yet heading a household) −0.38 (0.08), rooms fall at the
+birth as they leave the parental dwelling and recover by +7/+8. The household
+design's pre-rise is a row-selection artifact (status required row by row);
+fixing status at baseline removes it. Moving variables: MOVEDFREF_ and
+WHYMOVED1_ verified NEXT-wave like rooms (changers 100%/0%); HOMEOWN
+contemporaneous. MOVEDFREF_ empty in the shelf for 1984–1985.

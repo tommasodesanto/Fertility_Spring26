@@ -117,3 +117,26 @@ chooses is how much of the anticipatory adjustment (roughly 0.5 rooms between
 anticipation ahead of a planned birth, not a background trend. Which object
 the model should match is the outstanding author decision; both are now
 available with standard errors.
+
+## All adults with the household-design choices, split by status at baseline (jobs 18427139/18427141)
+
+| Arm | Population | +3/+4 vs −3/−2 (SE) | Rows | Treated / control persons | Path before baseline (≤−8, −7/−6, −5/−4) |
+|---|---|---|---|---|---|
+| A2 | all current adults 18+, IW weights, biological first birth, confirmed-childless controls, entry at first adult observation | 0.97 (0.05) | 187,873 | 8,064 / 6,008 | −0.15, −0.20, −0.17 |
+| A2h | A2, treated adults who were reference person or spouse in the −3/−2 window | **1.47 (0.05)** | 117,853 | 3,302 / 6,008 | +0.15, +0.04, −0.03 |
+| A2n | A2, treated adults who were not (mostly living in a parent's household) | −0.38 (0.08) | 87,239 | 2,097 / 6,008 | −0.68, −0.50, −0.26 |
+| A | old choices (unweighted, first child record, last cohort) | 0.82 (0.03) | 300,684 | 12,564 | −0.08, −0.16, −0.14 |
+
+A2h path: +0.61 at the birth, +1.19 at +1/+2, +1.47 at +3/+4, +1.62 at +5/+6,
++1.64 at +7/+8, with a flat pre-period. A2n path: −0.83 at the birth, −0.65,
+−0.38, −0.12, +0.03: these adults leave a larger parental dwelling for a
+smaller one of their own and recover the difference over eight years. The
+pooled A2 is the weighted mixture.
+
+Interpretation of the household design's pre-baseline rise: H keeps only rows
+in which the woman is reference person or spouse, so its far pre-birth rows
+come from women who headed a household six to eight years before the birth, a
+selected group whose rooms rise as they age; conditioning on status at the
+baseline window (A2h) fixes the group before the birth and the pre-period is
+flat. The status-at-baseline design is therefore the cleaner analogue of a
+model household that exists before the fertility decision.

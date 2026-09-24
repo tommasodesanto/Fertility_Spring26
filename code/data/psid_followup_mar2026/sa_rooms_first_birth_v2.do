@@ -3,6 +3,13 @@
 * Arms:
 *   H    household design, baseline window -3/-2 (headline)
 *   Hb4, Hb6  household design with earlier baseline windows -5/-4 and -7/-6
+*   A2   all current adults 18+ with every other household-design choice:
+*        IW weights, biological first birth, confirmed-childless controls,
+*        entry at first adult observation, codes cleaned (baseline -3/-2)
+*   A2h  A2, treated adults who were reference person or spouse in the
+*        baseline window (pre-treatment status); all controls retained
+*   A2n  A2, treated adults who were NOT reference person or spouse in the
+*        baseline window; all controls retained
 *   H21  household design, baseline window -2/-1 (sensitivity)
 *   A    all-adult design, baseline window -3/-2 (robustness)
 * Reconciliation arms (one change from H or A): Hentry = August entry rule
@@ -53,15 +60,16 @@ if "`mode'" == "toy" {
     gen double rooms_shift = rooms
     tempfile toydata
     save `toydata'
-    foreach arm in H H21 A Hentry Hctrl Hshift Ashift Hb4 Hb6 {
+    foreach arm in H H21 A Hentry Hctrl Hshift Ashift Hb4 Hb6 A2 A2h A2n {
         use `toydata', clear
         do "sa_rooms_first_birth_v2.do" `arm' "`outdir'/`arm'"
     }
     di "ROOMS_V2_TOY_PASS"
     exit
 }
-assert inlist("`mode'","H","H21","A","Hentry","Hctrl","Hshift","Ashift","Hb4","Hb6")
+assert inlist("`mode'","H","H21","A","Hentry","Hctrl","Hshift","Ashift","Hb4","Hb6") | inlist("`mode'","A2","A2h","A2n")
 local household = substr("`mode'",1,1) == "H"
+local alladult2 = substr("`mode'",1,2) == "A2"
 if inlist("`mode'","Hshift","Ashift") {
     replace rooms = rooms_shift
     replace rooms = . if year <= 1984 & rooms == 9
@@ -73,7 +81,24 @@ local baseline_lo = cond("`mode'"=="H21", -2, cond("`mode'"=="Hb4", -5, cond("`m
 local baseline_hi = cond("`mode'"=="H21", -1, cond("`mode'"=="Hb4", -4, cond("`mode'"=="Hb6", -6, -2)))
 
 keep if current & !missing(rooms, AGEREP, EDUYEAR) & AGEREP >= 18
-if !`household' {
+if `alladult2' {
+    * All current adults with the household design's other choices.
+    keep if !missing(iw) & iw > 0
+    gen double f_c_y = bio_first_year
+    drop if missing(f_c_y) & !(relchirep_max == 0)
+    drop if !missing(f_c_y) & f_c_y < year_entry_adult
+    gen byte control = missing(f_c_y) & relchirep_max == 0
+    local weightspec "[pw=iw]"
+    if "`mode'" != "A2" {
+        gen byte hs_row = inlist(rel,1,2) & inrange(year - f_c_y, `baseline_lo', `baseline_hi')
+        bysort ID: egen byte hs_base = max(hs_row)
+        gen byte base_row = inrange(year - f_c_y, `baseline_lo', `baseline_hi')
+        bysort ID: egen byte has_base = max(base_row)
+        keep if control | (has_base & hs_base == cond("`mode'" == "A2h", 1, 0))
+        drop hs_row hs_base base_row has_base
+    }
+}
+else if !`household' {
     * All adults; first child record; untreated = no recorded first child.
     gen double f_c_y = relchi1_year
     drop if !missing(f_c_y) & f_c_y < year_entry_adult

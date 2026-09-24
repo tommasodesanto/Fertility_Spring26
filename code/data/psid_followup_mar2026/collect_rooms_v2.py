@@ -18,9 +18,9 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 OUT = HERE / 'output/sa_rooms_first_birth_v2'
 REMOTE = '/scratch/td2248/projects/Fertility_Spring26_rooms_v2_20260924'
-ARMS = ['H', 'H21', 'A', 'Hentry', 'Hctrl', 'Hshift', 'Ashift', 'Hb4', 'Hb6']
-PLOT_ARMS = ['H', 'H21', 'A', 'Hb4', 'Hb6']
-ACCEPTED_ESTIMATOR_SHA256 = {'20ca592a4928bcbcc6e0b41c01507939d8cfe822a3e16f98078ebf974b36f2ed', '46010a9b799d6750407e18740913b318be8a9c99f389d55f026fa97ccd9da292'}  # H, H21, A ran under this revision
+ARMS = ['H', 'H21', 'A', 'Hentry', 'Hctrl', 'Hshift', 'Ashift', 'Hb4', 'Hb6', 'A2', 'A2h', 'A2n']
+PLOT_ARMS = ['H', 'H21', 'A', 'Hb4', 'Hb6', 'A2', 'A2h', 'A2n']
+ACCEPTED_ESTIMATOR_SHA256 = {'c40cac0dfed12ea25c380a79786aa6397c68e9d2f05f7de91230f20b36d7c369', '20ca592a4928bcbcc6e0b41c01507939d8cfe822a3e16f98078ebf974b36f2ed', '46010a9b799d6750407e18740913b318be8a9c99f389d55f026fa97ccd9da292'}  # H, H21, A ran under this revision
 FILES = ['run_receipt.json', 'coefficients.csv', 'covariance.csv', 'input_support.csv',
          'fitted_support.csv', 'fit_receipt.csv', 'sample_key_hashes.json', 'completion.txt', 'estimation.log']
 NAMES = ['Wleft', 'Wm2', 'Wm1', None, 'Wp1', 'Wp2', 'Wp3', 'Wp4', 'Wp5', 'Wp6', 'Wright']
@@ -106,7 +106,7 @@ def render(out, label='Torch full fits', check_receipts=True):
     path_rows, summary = [], []
     panels = [(axes[0], ['H', 'H21'], 'Household design: one woman per household-year, IW weights'),
               (axes[1], [a for a in ['H', 'Hb4', 'Hb6'] if (out/a/'fit_receipt.csv').exists()], 'Household design: earlier baseline windows'),
-              (axes[2], ['A'], 'All-adult design (robustness): every adult, unweighted')]
+              (axes[2], [a for a in ['A2', 'A2h', 'A2n', 'A'] if (out/a/'fit_receipt.csv').exists()], 'All current adults, household-design choices; split by status at baseline')]
     seen = set()
     for ax, arms, title in panels:
         for arm in arms:
@@ -123,7 +123,13 @@ def render(out, label='Torch full fits', check_receipts=True):
             if arm == 'H21':
                 style = dict(color='#b5541c', marker='s', linewidth=1.2, linestyle='--', capsize=3, label=f'baseline {hi-1}/{hi} (sensitivity), x shifted one year')
             if arm == 'A':
-                style = dict(color='#555555', marker='o', linewidth=1.6, capsize=3, label=f'baseline {hi-1}/{hi}')
+                style = dict(color='#bbbbbb', marker='o', linewidth=1.0, linestyle=':', capsize=2, label='old choices: unweighted, first child record, last cohort')
+            if arm == 'A2':
+                style = dict(color='#333333', marker='o', linewidth=1.6, capsize=3, label='all adults, IW weights, biological history, childless controls')
+            if arm == 'A2h':
+                style = dict(color='#176a99', marker='^', linewidth=1.3, linestyle='-.', capsize=3, label='treated who were head/spouse in the baseline window')
+            if arm == 'A2n':
+                style = dict(color='#c0392b', marker='v', linewidth=1.3, linestyle='--', capsize=3, label='treated who were NOT head/spouse in the baseline window')
             if arm == 'Hb4':
                 style = dict(color='#2a9d8f', marker='^', linewidth=1.3, linestyle='-.', capsize=3, label='baseline −5/−4')
             if arm == 'Hb6':

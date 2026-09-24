@@ -1,5 +1,18 @@
 # Calibration Status
 
+## September 24 (afternoon) — first-birth rooms: status-at-baseline design
+
+All current adults with the household-design choices (IW, biological birth,
+confirmed-childless controls, entry rule, cleaned codes): +3/+4 vs −3/−2 =
+0.968 (0.045). Split on a pre-treatment characteristic, reference person or
+spouse in the baseline window: **1.465 (0.050)** with a flat pre-period for
+those already heading a household; −0.383 (0.076) for those in another
+household at baseline (leave the parental dwelling, recover by +7/+8). The
+household design's pre-baseline rise is a row-selection artifact. Candidate
+headline objects now: 1.03 (women heads/spouses row by row), 1.47 (adults
+heading a household at baseline). Author decision pending; moving variables
+verified next-wave-dated like rooms, ownership contemporaneous.
+
 ## September 24 (later) — first-birth rooms: baseline choice is the open decision
 
 Household design with earlier omitted windows: −5/−4 baseline gives +3/+4 =
