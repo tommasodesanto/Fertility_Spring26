@@ -1,5 +1,21 @@
 # Calibration Status
 
+## September 23 — financed share retained; existing assistance follow-up
+
+Author retains phi = 0.80, requiring a 20% upfront contribution from available
+purchase resources under the reviewed current-income eligibility accounting.
+DUE December 5, 2025 Table 1 lists 0.8 as a standard value, not an estimated
+national average mortgage ratio. No purchase-accounting change is adopted.
+
+Deferred experiment: measure and represent existing low-down-payment loans or
+down-payment assistance available to eligible low-income households. These may
+weaken the baseline borrowing constraint and reduce the incremental effects
+of further credit assistance. This is an explicit hypothesis, not a finding
+or a claim of universal eligibility among poor households. Program eligibility,
+coverage and costs must be established before specifying that comparison.
+Advisor checklist owner notified to retain this as an indented follow-up.
+No new run, frozen-contract, paper or slide edits.
+
 ## September 23 — national housing-cost inputs adopted for next calibration
 
 Author requested national versions of DUE's depreciation/property-tax approach.

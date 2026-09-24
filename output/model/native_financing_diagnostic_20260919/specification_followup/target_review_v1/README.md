@@ -1,5 +1,14 @@
 # Target validation before the utility comparison
 
+## September 23 — 80% financing retained
+
+Author retains the 80% financed-share benchmark (20% upfront contribution),
+following DUE's standard-value restriction. Deferred follow-up: account for
+existing low-down-payment options or assistance for eligible low-income
+households; these could weaken the baseline constraint and reduce incremental
+credit-policy effects. Eligibility, coverage and costs are unmeasured here;
+this is a future hypothesis, not a completed result. No new run or model edit.
+
 ## September 23 — national depreciation and property tax adopted
 
 Author adopts annual depreciation **1.416%** (2007 national BEA/Fed)
