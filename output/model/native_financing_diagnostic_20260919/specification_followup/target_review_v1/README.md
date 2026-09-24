@@ -1,5 +1,9 @@
 # Target validation before the utility comparison
 
+## September 23 — income tax and pension source review
+
+[Primary-source review](payroll_tax_review/lead_review.json) checks the latest public DUE (December 5, 2025), Kaplan–Mitman–Violante (2020), Sommer–Sullivan (2018), and Sommer (2016). DUE retains 17.9% in its table versus 15.6% in the text, and allows tax revenue to finance pensions and other government spending. Our reviewed PAYGO rule sends payroll revenue to pensions. Recommendation: distinguish the tax-burden calibration from pension-benefit calibration and choose financing explicitly. This is a recommendation only; no parameter, model, or paper change was made. The retained worker receipt has page/table inaccuracies corrected in the lead review.
+
 ## September 23 — 80% financing retained
 
 Author retains the 80% financed-share benchmark (20% upfront contribution),

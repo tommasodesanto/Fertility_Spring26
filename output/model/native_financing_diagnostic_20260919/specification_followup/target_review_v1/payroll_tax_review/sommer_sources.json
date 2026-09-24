@@ -1,0 +1,34 @@
+{
+  "scope": "Bounded primary-source comparison of how the requested Sommer papers handle labor-income taxation, payroll taxes, and retirement income; not a tax-system redesign recommendation.",
+  "sources": [
+    {
+      "citation": "Sommer, Kamila, and Paul Sullivan. 2018. \"Implications of US Tax Policy for House Prices, Rents, and Homeownership.\" American Economic Review 108(2): 241–274. DOI: 10.1257/aer.20141751.",
+      "primary_source": "https://kamilasommer.net/Taxes.pdf",
+      "official_journal_landing_page": "https://www.aeaweb.org/articles?id=10.1257/aer.20141751",
+      "relevant_pages": "AER pp. 248–250 (model tax system, eqs. (4)–(13)); p. 257 (Table 2 tax parameters); p. 259 (aggregate tax-rate fit); pp. 271–272 (revenue closure and revenue-neutral experiment).",
+      "labor_income_tax": "Explicitly separates payroll tax from progressive income tax: T(w, y_tilde) = tau_p w + eta(y_tilde), eq. (9), p. 250. The payroll rate is 0.076 (2009-based); progressive income tax has five marginal brackets (10%, 15%, 25%, 28%, 33%) with 2009 single-filer thresholds, p. 257/Table 2 and p. 259. Payroll tax plus income tax yields model average federal tax rate 0.19, versus CBO 2007 estimate 0.20, p. 259. Footnote 28 on p. 260 stresses that Gouveia–Strauss effective income-tax rates exclude Social Security obligations.",
+      "retirement_and_pension": "No explicit lifecycle retirement/pension-benefit process is modeled. The paper explicitly notes it lacks a full-fledged deterministic lifecycle with retirement (p. 259); labor income is an idiosyncratic endowment process. Therefore tau_p is not paired with a modelled Social Security benefit/replacement schedule.",
+      "budget_closure": "All tax proceeds finance non-utility government expenditures, p. 250 n.12; there is no payroll-tax-to-pension-benefit budget identity. In the mortgage-interest-deduction reform, baseline closure allows aggregate revenue to move; a separate revenue-neutral case cuts income tax rates across the board until total revenue returns to baseline (pp. 271–272, Table 8).",
+      "decision_use": "Closest reference if the intended object is to distinguish a payroll levy from progressive income taxation while avoiding a pension-benefit calibration. It supports explicit tax components with general-revenue closure, but does not establish that payroll-tax receipts should finance a calibrated pension in this project's model."
+    },
+    {
+      "citation": "Sommer, Kamila. 2016. \"Fertility choice in a life cycle model with idiosyncratic uninsurable earnings risk.\" Journal of Monetary Economics 83: 27–38. DOI: 10.1016/j.jmoneco.2016.08.002.",
+      "primary_source": "https://www.kamilasommer.net/Fertility.pdf",
+      "relevant_pages": "JME pp. 29–30 (age/endowment process); p. 31 (Table 2); p. 32 (retirement-transfer specification and replacement-rate calibration); p. 30 n.12 (possible unmodeled-government transfer caveat).",
+      "labor_income_tax": "No labor-income tax or payroll-tax wedge appears in the household budget constraint (eqs. (1)–(4), p. 30). The model uses gross labor earnings/endowments and focuses on earnings risk, not tax policy.",
+      "retirement_and_pension": "Households work through age 65, live to age 80 with certainty, and after retirement receive a government pension transfer equal to a constant w-bar (p. 29, Section 3.1). The transfer is proportional to household earnings in the last working period with a 0.40 replacement rate (p. 32); Table 2, p. 31, records replacement rate b = 0.40 as exogenous. It is an imposed replacement rule, not an estimated benefit formula.",
+      "budget_closure": "No pension-financing or government-budget closure is specified. The pension is an exogenous transfer in household resources. The only separate government-transfer remark is a theoretical caveat about rare infeasible child-quality-floor cases, not a pension funding rule (p. 30 n.12).",
+      "decision_use": "Useful reference when retirement income itself matters: it cleanly treats pension replacement as a separate exogenous benefit assumption, while omitting payroll taxation and its financing. Thus it cannot justify bundling a payroll tax and replacement rate as a balanced Social Security system."
+    },
+    {
+      "citation": "Sommer, Kamila, Paul Sullivan, and Randal Verbrugge. 2013. \"The Equilibrium Effect of Fundamentals on House Prices and Rents.\" Journal of Monetary Economics 60(7): 854–870. DOI: 10.1016/j.jmoneco.2013.04.017.",
+      "primary_source": "https://www.kamilasommer.net/RentPriceRatio.pdf",
+      "official_publisher_page": "https://www.sciencedirect.com/science/article/pii/S0304393213000664",
+      "relevant_pages": "Publisher/author PDF confirms this is a housing-market fundamentals paper; use 2018 paper for the explicit tax architecture and 2016 paper for fertility/pension replacement details.",
+      "labor_income_tax_and_retirement": "Not used as a reference for tax-financed pension calibration in this review; the paper's focus is housing-market responses to interest rates, down-payment requirements, and household incomes.",
+      "decision_use": "Related housing model lineage, but it does not sharpen the tax-versus-pension separation question enough to add a third substantive comparison."
+    }
+  ],
+  "synthesis": "The two Sommer references illustrate different modular choices. Sommer–Sullivan (2018) has a distinct 7.6% payroll tax and progressive income tax, but no modeled pension benefit; all tax revenue goes to non-utility spending, with a separate revenue-neutral reform closure. Sommer (2016) has no labor/payroll tax, but imposes an exogenous 40% pension replacement transfer after age 65 without specifying its financing. They are complements for separating the tax wedge from benefit calibration, not evidence for any particular balanced payroll-tax/pension parameter pair.",
+  "verification_note": "Numeric values are reported only where visible in the primary PDFs: 2018 payroll tax 0.076; 2016 pension replacement rate 0.40. No payroll tax rate is inferred for the 2016 paper and no pension replacement value is inferred for the 2018 paper."
+}

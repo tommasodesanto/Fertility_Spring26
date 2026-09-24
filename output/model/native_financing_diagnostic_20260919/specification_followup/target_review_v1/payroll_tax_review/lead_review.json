@@ -1,0 +1,44 @@
+{
+  "status": "primary_sources_reviewed_no_parameter_change",
+  "date": "2026-09-23",
+  "DUE": {
+    "latest_public_version_found": "December 5, 2025",
+    "author_page": "https://sites.google.com/view/briangreaney/research",
+    "current_download": "https://drive.google.com/file/d/1RLT_B_MBqpr2NrYDPjFcB-53kATJj5ly/view",
+    "fresh_download_sha256": "e41363b627785d83f84e5b1ac8572516d38c1f26650a11649fea772b94343620",
+    "fresh_download_matches_previously_checked": true,
+    "tax_table_p27": 0.179,
+    "tax_text_p31": 0.156,
+    "source_footnote33": "OECD United States, income tax, single person without children, 100% average wage; accessed May15 2025; text average2005\u20132009",
+    "budget_pp10_11": "Payroll tax revenues finance pension transfers and wasteful government spending. It does not state that all revenue must become pensions.",
+    "pension_calibration": "Separate benefit symbol in household budget; numerical pension calibration not established by this bounded check.",
+    "conclusion": "Current public version retains table-text discrepancy. Earlier lead advice missed the non-pension spending component."
+  },
+  "KMV2020": {
+    "title": "The Housing Boom and Bust: Model Meets Evidence",
+    "url": "https://violante.economics.princeton.edu/sites/g/files/toruqf5621/files/documents/kaplan-et-al-2020-the-housing-boom-and-bust-model-meets-evidence.pdf",
+    "budget_page": 3296,
+    "calibration_page": 3306,
+    "tax": "Progressive income taxation; tax level calibrated so aggregate tax revenue is20% of output. Progressivity approximately0.15 from HSV2017.",
+    "pensions": "Benefits linked to pre-retirement earnings proxy. Their 1998 Social Security formula calculation yields aggregate replacement rate0.40. Not a tax rate or automatically transferable2007 input.",
+    "residual": "Government spends positive residual of tax/permit revenue over pensions on services not valued by households."
+  },
+  "our_model": {
+    "tax_rate": 0.179,
+    "pension_budget": "Reviewed PAYGO rule sends payroll revenue to pension outlays; differs from DUE residual government spending.",
+    "source": "code/model/intergen_eqscale_seq_optimized/parameters.py:set_income_given_w_and_pension, resolve_pension_value; solver.py:pension_budget_residual and implied_balanced_pension"
+  },
+  "no_model_edits": true,
+  "Sommer_Sullivan_2018": {
+    "url": "https://kamilasommer.net/Taxes.pdf",
+    "tax": "7.6% payroll tax plus separate progressive income taxes; 2009 tax schedules.",
+    "source_locations": "Equation 9 and government spending text p249; Table 1 p253; calibration p255; no explicit retirement p258. These central checks correct worker page/table references.",
+    "pension": "No explicitly modeled retirement; tax proceeds finance government expenditures that do not affect individuals. Not a pension-funding calibration."
+  },
+  "Sommer_2016": {
+    "url": "https://www.kamilasommer.net/Fertility.pdf",
+    "pension": "40% of household earnings in last working period; p32 and Table 2 p31. Footnote15 cites Munnell and Soto2006 HRS/SSA household replacement estimate44%.",
+    "financing": "Household budget equation2 does not include an explicit payroll tax; no explicit pension-budget closure established. Cannot import as a financed pension system without specifying financing."
+  },
+  "recommendation_not_adopted": "Separate calibration of the earnings tax burden and pension benefits; explicitly specify residual government spending or pension financing. Do not silently choose between DUE17.9% and15.6%, nor replace current tax with another paper's replacement rate."
+}
