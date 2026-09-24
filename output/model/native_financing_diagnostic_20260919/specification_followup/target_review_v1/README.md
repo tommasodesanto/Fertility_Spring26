@@ -1,5 +1,12 @@
 # Target validation before the utility comparison
 
+## September 23 — curvature retained with further review
+
+Author retains sigma = 2. Review its interpretation and literature support for
+the consumption–housing composite, floor and child-dependent shares later.
+No numerical change. Bequest source/input workers are complete, but the 2007
+estate-flow calculation has not been performed; do not mark remeasurement done.
+
 ## September 23 — provisional first-birth rooms entry
 
 Author records 0.770 rooms provisionally and takes the deferred timing and

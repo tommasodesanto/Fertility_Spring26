@@ -1,5 +1,19 @@
 # Calibration Status
 
+## September 23 — retain utility curvature 2; interpretation review deferred
+
+Author retains sigma = 2 as the benchmark. Add a follow-up to review its
+interpretation and literature support under the consumption–housing composite,
+housing floor and child-dependent shares. Do not describe this as an empirical
+estimate of risk aversion over nondurable consumption. Advisor checklist owner
+notified; no utility implementation or frozen experiment changes.
+
+Bequest follow-up status checked at this decision: source-method review and
+2007 SCF/mortality input collection are complete, but no new estate-flow target
+has been calculated. Spousal estate allocation and the SCF age95+ treatment
+remain unresolved implementation assumptions. The provisional 0.880% remains
+explicitly historical, not a new 2007 estimate.
+
 ## September 23 — first-birth rooms provisionally recorded at 0.770
 
 Author chooses 0.770 rooms as a provisional discussion value while taking the
