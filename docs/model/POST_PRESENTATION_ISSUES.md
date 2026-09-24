@@ -209,6 +209,19 @@ The slides are messy, the notation is not transparent, and it is unclear whether
 
 ### M13 — Parental death and children
 
+**September 23 author decision — household interpretation:** retain conventional
+family households (one adult man and one adult woman) as a single decision unit;
+count each child separately and preserve the distinct first-child cost.
+
+- **Deferred robustness:** vary the person-to-household formation conversion,
+  potentially with a stochastic factor, and assess effects on household counts,
+  housing demand and fertility/policy conclusions. State the implied household
+  composition and conserve people consistently. Distinguish the literal
+  two-adult factor $1/2$ from the retained $1/2.1$ entry normalization; keep the
+  reference fertility choice of 2.1 separate. This is a future test, not a
+  numerical change or a new run. The separate maturation/entry and parental-death
+  issues below are not closed by accepting the household abstraction.
+
 **Current-branch qualification, September 15:** the retained original-birth-queue
 recovery uses endogenous household propagation and a separate recorded-birth
 entry queue, without historical age-mass rescaling or immigration. The

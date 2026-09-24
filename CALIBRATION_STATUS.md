@@ -1,5 +1,21 @@
 # Calibration Status
 
+## September 23 — conventional households retained; formation robustness deferred
+
+Author accepts the conventional family-household abstraction (one adult man and
+one adult woman), with one household decision-maker and individually counted
+children. The first-child cost remains distinct; no marriage, bargaining or
+single-household model is requested. Record future robustness to the conversion
+from maturing people into new households, potentially using a stochastic
+household-formation factor. See M13 in `docs/model/POST_PRESENTATION_ISSUES.md`.
+
+Keep the literal two-adult conversion $1/2$ distinct from the retained entry
+conversion $1/2.1$ and from the separately chosen reference fertility of 2.1.
+This decision changes no numerical rule and does not certify exact person
+conservation or replacement under the retained conversion. Maturation/entry and
+parental-death reconciliation remain separate outstanding work. No robustness
+run, recalibration or manuscript update is requested now.
+
 ## September 23 (evening) — first-birth rooms: provisional value moves to 0.60
 
 Author decision after the timing review: record 0.602 rooms (SE 0.126), the
