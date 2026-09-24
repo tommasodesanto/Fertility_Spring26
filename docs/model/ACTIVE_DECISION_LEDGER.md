@@ -7,6 +7,50 @@ that can still change the theory, quantitative interpretation, or paper-facing
 claims. `CALIBRATION_STATUS.md` remains the source for numerical results and
 reproducibility contracts.
 
+## September 24 — author decision: dependency, adult entry and parental death
+
+**Adopted for the next implementation; not yet implemented or numerically
+validated.** Retain independent binomial departure from parental dependency,
+with probability $2/9$ per four-year period (18-year mean absent parental
+death). Retain a separate aggregate birth-to-adult-entry queue, adjusting entry
+to half of each cohort after 16 years and half after 20 years: mean delay 18
+years, not exact chronological age-18 entry. Apply the retained $1/2.1$
+birth-to-household conversion once, preserving demographic top-bin weights.
+Do not adopt the parent-age departure switch or a newborn exemption.
+
+At parental-household death, remove its remaining dependency count without
+adding another adult-entry flow. Under the previously reviewed last-birth age
+42 and first-mortality age 66, those offspring's cohorts have already generated
+their scheduled adult entries. This support is archived evidence, not a fresh
+verification of the latest selected parameter object.
+
+**Requires explicit scrutiny and robustness; the author accepts this as a
+working approximation, not a resolved literal lifecycle or support account.**
+An offspring can cease affecting parental needs before scheduled adult entry,
+or remain dependent after its cohort has entered. Adult dependency is possible,
+but chronological adulthood does not establish economic self-sufficiency.
+Parental death terminates the modeled parental burden without tracing how the
+adult offspring replaces support, housing or consumption. There is no
+genealogical matching; estate pooling and exogenous entrant wealth remain
+separate, with no additional estate payment implied.
+
+Follow-ups under this decision:
+- Verify selected fertility/mortality support and implement/test the 16/20 split,
+  queue initialization, single conversion, top-bin units and no duplicate entry.
+- Measure early-departure gaps, post-entry dependency overlap and dependency
+  removed at parental death, by parent age, using consistent resource definitions.
+- Compare the selected entry timing with the retained 20-year queue; assess
+  constant versus parent-age-dependent departure (including the latter's
+  shorter dependency for late births), and explicit treatment of support lost
+  at parental death. Report effects on fertility timing, housing and population
+  with specification changes distinguished from recalibration.
+- Keep aggregate entry, population and anticipated prices consistent with the
+  chosen equilibrium concept; a forward ledger alone does not resolve support.
+
+No model run, production source change, or manuscript update is authorized by
+this ledger entry. Earlier recommendations to unify departure and entry, change
+the dependency law, or add a care pool remain historical proposals.
+
 ## Current clarification — September 22, author review
 
 [Shared economic decision library](../literature/economic_decisions.md) records
