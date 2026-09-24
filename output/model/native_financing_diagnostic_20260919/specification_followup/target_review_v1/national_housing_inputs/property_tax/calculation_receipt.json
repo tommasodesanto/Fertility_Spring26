@@ -1,0 +1,32 @@
+{
+  "status": "lead_verified_candidate_not_adopted",
+  "dataset": "2011 ACS five-year summary file (2007\u20132011)",
+  "geography": "01000US: United States",
+  "taxes_dollars": 210300424500,
+  "value_dollars": 19842731247500,
+  "annual_property_tax_rate": 0.010598360773872594,
+  "estimator": "ratio of aggregate owner-occupied taxes to aggregate owner-occupied housing value; value-weighted rate, not population-weighted county mean",
+  "source_base_url": "https://www2.census.gov/programs-surveys/acs/summary_file/2011/data/5_year_seq_by_state/UnitedStates/All_Geographies_Not_Tracts_Block_Groups/",
+  "tech_doc_url": "https://www2.census.gov/programs-surveys/acs/summary_file/2011/documentation/5_year/ACS_2007-2011_SF_Tech_Doc.pdf",
+  "checks": [
+    "US geography verified against national LOGRECNO 0000001",
+    "One-based source positions 56 and 121 verified against official technical documentation",
+    "With/without-mortgage subtotals sum exactly for both numerator and denominator"
+  ],
+  "raw_sha256": {
+    "20115us0103000.zip": "3590fd82ac6f9774b7c327ecc59b163564295807d0954352a31134c47fb06af7",
+    "g20115us.csv": "14f4ccbd8ab854a4bce3c8bde3d220c20e8fc2a2e50cf828a385b5c9cb438c47",
+    "acs_tech.pdf": "d49ad0713c2c2a452489672ae53c0b8b6c15bb83c581468cb0fbc3e8ee4a1f01"
+  },
+  "retained_extract_sha256": {
+    "sequence_positions.txt": "492b1dc19dac1b4ed6ca27b910515efc26514927fd9fb4ba9ab56eff9e70ac0c",
+    "us_geography.csv": "b44c82f93bf5b367b897b474af139a1b2be1ba4b0bc56c1e4acdab3d3b30776f",
+    "us_estimates_sequence_0103.csv": "0ccf4ae9b29cebacb2817c04bb6f3509c0275c612235e9b74f0494e0f415cac6"
+  },
+  "limitations": [
+    "2007\u20132011 pooled measure, not 2007-only",
+    "Owner-occupied proxy, does not directly measure landlord taxes",
+    "Self-reported effective tax burden, not statutory marginal tax rate",
+    "Ratio uncertainty not computed; numerator-denominator covariance not supplied"
+  ]
+}

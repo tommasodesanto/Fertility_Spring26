@@ -1,0 +1,58 @@
+{
+  "status": "calculated_candidate_not_adopted",
+  "reference_year": 2007,
+  "units": "Current dollars in millions; depreciation annual flow, stocks year-end",
+  "estimator": "BEA owner-occupied depreciation / BEA owner-occupied structures stock times (1 - implied national land share); algebraically depreciation / national housing value",
+  "housing_value": "Fed FL155035013 + FL155012013: owner-occupied real estate plus mobile homes, excluding separately held vacant land",
+  "sources": [
+    {
+      "file": "BEA_Section5.xlsx",
+      "url": "https://apps.bea.gov/national/FixedAssets/Release/XLS/Section5All_xls.xlsx",
+      "vintage": "File created Sep 15 2025 10:18AM",
+      "sha256": "aa5cd550221a1ff738968669cf40dae175851eb2e563d0f3daf44553ec820e47"
+    },
+    {
+      "file": "BOGZ1FL155035013A.csv",
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=BOGZ1FL155035013A",
+      "sha256": "965533836f6b838a9d29c5f99e45bdbbafa4ae231178bce469a19bbbfa283b6e"
+    },
+    {
+      "file": "BOGZ1FL155012013A.csv",
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=BOGZ1FL155012013A",
+      "sha256": "00267badec6125502aaf60ff3d9e58226dccdcae847fcb61f25bd2824820bb0c"
+    },
+    {
+      "file": "BOGZ1FL155012665A.csv",
+      "url": "https://fred.stlouisfed.org/graph/fredgraph.csv?id=BOGZ1FL155012665A",
+      "sha256": "f1c835e2aa2aab61a616a6399b6cc0dfc83a5d24a5101198f46b138651a7c642"
+    }
+  ],
+  "retrieved": "2026-09-23",
+  "candidate": {
+    "year": 2007,
+    "owner_structures_stock_million": 13073488.0,
+    "owner_depreciation_flow_million": 316854.0,
+    "owner_real_estate_ex_mobile_million": 22042249.0,
+    "mobile_home_value_million": 332175.0,
+    "housing_value_million": 22374424.0,
+    "implied_land_share": 0.4156949917459327,
+    "structures_rate": 0.024236378233567047,
+    "annual_depreciation": 0.01416143718381309,
+    "household_structures_rate": 0.024158851004044753,
+    "household_rate_times_owner_structure_share": 0.014116137635327151
+  },
+  "checks": [
+    "Owner structures match independent Federal Reserve series exactly in all three years",
+    "Product formula equals direct flow/value within 1e-16",
+    "Positive rate and land share strictly between zero and one"
+  ],
+  "limitations": [
+    "National owner-occupied stock proxy; applying one common rate to rental housing remains a model approximation.",
+    "Residual land share combines replacement-cost structures with market-value housing; it is not a direct land appraisal.",
+    "Unlike DUE, uses matched owner-occupied BEA row 11, and a 2007 national Fed residual land share rather than a later Bay Area tract estimate. Row 7 household-rate variant retained as sensitivity.",
+    "BEA stocks include residential fixed assets; this calculation retains the Fed mapping to BEA owner-occupied row 11 rather than claiming parcel-by-parcel identity.",
+    "Annual flow divided by year-end stock follows the selected convention. Adjacent years show sensitivity, not an estimated confidence interval.",
+    "Official series are revised. Retained download hashes govern these values; cached web pages can contain earlier vintages.",
+    "No model, target contract, objective, or paper edits; no new solves."
+  ]
+}

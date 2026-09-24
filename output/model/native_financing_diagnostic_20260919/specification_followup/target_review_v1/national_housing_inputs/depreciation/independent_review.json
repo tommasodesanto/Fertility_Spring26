@@ -1,0 +1,34 @@
+{
+  "review_status": "arithmetic_pass_with_scope_and_vintage_caveats",
+  "review_scope": "Independent read-only review of the retained national depreciation candidate, source extracts, and build script; no adoption or model changes.",
+  "arithmetic": {
+    "status": "pass",
+    "2007_housing_value_million": "22042249 + 332175 = 22374424",
+    "2007_implied_land_share": "1 - 13073488 / 22374424 = 0.4156949917",
+    "2007_structures_rate": "316854 / 13073488 = 0.0242363782",
+    "2007_net_annual_rate": "0.0242363782 * (1 - 0.4156949917) = 316854 / 22374424 = 0.0141614372 (1.416%)",
+    "cross_source_stock_check": "BEA owner-occupied structures stocks in 2006–2008 match the retained Fed FL155012665 annual observations exactly.",
+    "household_row_variant": "BEA household row 7 gives 0.0141161376 (1.412%) after applying the same owner structure share, 0.00453 percentage points below the row 11 candidate."
+  },
+  "assessment": {
+    "pass": "The script faithfully implements the stated DUE-inspired arithmetic. Its row 11 depreciation flow, matched row 11 structures stock, and national owner housing value are consistently kept separate before the algebraic cancellation. The numerator is not taken from the mismatched Fed flow metadata. Mobile homes are added to owner-occupied real estate, and the selected housing-value denominator excludes separately held vacant land as specified.",
+    "limitations": [
+      "The residual 41.57% land share is an implied national residual: replacement-cost BEA structures divided by Fed market-value owner housing. It is not a direct land valuation and combines different valuation concepts.",
+      "The flow is annual 2007 depreciation and the BEA/Fed stock observations are annual-series values indexed to 2007; the retained extracts alone do not expose quarterly dates or prove whether an underlying stock is a within-year average or year-end value. The receipt's year-end wording therefore needs confirmation against the underlying series convention before describing the ratio as definitively annual-flow over year-end stock. This does not alter the direct flow / housing-value calculation.",
+      "A national owner-occupied rate does not establish a rental-unit depreciation rate. Extending one common rate to rental housing remains a model approximation.",
+      "Annual rates vary from 1.322% in 2006 to 1.543% in 2008 under the same construction. These adjacent-year values are sensitivity evidence, not a sampling interval.",
+      "The chosen BEA row 11 measure differs from DUE's household row 7 measure; the row 7 variant is close but does not resolve which population/sector mapping is preferred. This is a scope choice, not an arithmetic error."
+    ],
+    "blockers": [],
+    "adoption": "No adoption recommendation; arithmetic supports the candidate conditional on the author's accepted method, while source-period convention and the owner-to-rental extrapolation remain limitations."
+  },
+  "files_reviewed": [
+    "code/data/Spatial_aggregate_withmicrodata/build_national_housing_cost_inputs.py",
+    "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/national_housing_inputs/depreciation/receipt.json",
+    "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/national_housing_inputs/depreciation/estimates.csv",
+    "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/national_housing_inputs/depreciation/sources/BEA_Section5.xlsx",
+    "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/national_housing_inputs/depreciation/sources/BOGZ1FL155012665A.csv",
+    "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/national_housing_inputs/depreciation/sources/BOGZ1FL155012013A.csv",
+    "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/national_housing_inputs/depreciation/sources/BOGZ1FL155035013A.csv"
+  ]
+}

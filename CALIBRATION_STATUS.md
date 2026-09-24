@@ -1,5 +1,23 @@
 # Calibration Status
 
+## September 23 — national housing-cost inputs calculated; adoption pending
+
+Author requested national versions of DUE's depreciation/property-tax approach.
+Reviewed candidates: annual depreciation 1.416% (2007 BEA owner-occupied
+structures depreciation / national Fed housing value, equivalent to the land
+adjustment) and annual property tax 1.060% (2007–2011 ACS national aggregate
+owner taxes / aggregate home value). Exact proposed rates are
+0.01416143718381309 and 0.010598360773872594. Depreciation uses matched
+owner-occupied BEA row 11; the broader household-rate variant is 1.412%.
+Tax aggregation is a national ratio of sums, not DUE's population-weighted
+county average. Both use owner-housing proxies; a common rental rate remains
+an approximation. Tax is pooled 2007–2011, not an exact2007 observation.
+Independent depreciation arithmetic and lead ACS extraction/stock-timing checks
+pass. Source files, hashes, reproduction driver and limitations are under
+`target_review_v1/national_housing_inputs/` in the September19 follow-up packet.
+No adoption, model run, frozen-contract, paper or slide edits. Checklist owner
+notified with the proposed values and their status.
+
 ## September 23 — housing depreciation method accepted
 
 Author accepts following DUE's method: annual structures depreciation times

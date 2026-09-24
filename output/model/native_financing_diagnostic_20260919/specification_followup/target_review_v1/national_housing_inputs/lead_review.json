@@ -1,0 +1,20 @@
+{
+  "status": "reviewed_candidates_not_adopted",
+  "depreciation": {
+    "annual": 0.01416143718381309,
+    "independent_review": "depreciation/independent_review.json",
+    "timing_question_resolved": "BEA FAAt501-A cell A2 explicitly says yearend estimates; FRED downloaded metadata for both value series says Annual, End of Period. Annual CSV date labels are not literal January stock dates.",
+    "scope_judgment": "Prefer owner-occupied row11 to match owner-housing value denominator. Householdrow7 variant changes rate by only0.00453percentage points, but is not the preferred matched scope. Owner-to-rental common-rate extrapolation remains explicit."
+  },
+  "property_tax": {
+    "annual": 0.010598360773872594,
+    "independent_checks": "Lead separately extracted USLOGRECNO0000001 at one-based columns56and121 from original official sequence, verified geoid01000US and mortgage subtotals; seeproperty_tax/calculation_receipt.json",
+    "period": "2007\u20132011 pooled, not2007-only",
+    "aggregation_choice": "National taxes/value reproduces aggregate tax burden; explicit departure from DUE populationweighted county rates."
+  },
+  "no_model_or_paper_changes": true,
+  "metadata_hashes": {
+    "owner_real_estate_metadata.html": "3a44ac5bebc803683e09a8aa376f762e08c6a52914c1e6e9039bb01de7dd6b83",
+    "mobile_homes_metadata.html": "316a0584d6f7416ee40d0e994092b8a7542c692a11796f0658f011f2d3eb24b7"
+  }
+}
