@@ -4,6 +4,8 @@
 % utility_overnight_v1 frozen contracts. Earnings/utility remain provisional.
 % Four ACS targets updated to the author-chosen national sample from
 % specification_followup/housing_profiles_v1/full/target_recomputed.json.
+% Sep 23 evening author decisions (CALIBRATION_STATUS.md): PSID 2005/07 wealth,
+% theta_1 fixed externally, first-birth rooms 0.600, national housing costs.
 \section{Quantification}
 \label{sec:quantification}
 \label{sec:quant_calibration}
@@ -12,15 +14,11 @@ I calibrate a stationary reference economy representing 2007, before the
 subsequent decline in fertility. I use observations from the surrounding years
 to discipline fertility, housing, and household wealth. Housing moments use
 the national household sample in the 2005--2006 ACS; fertility moments come from the
-2004 and 2006 CPS and 2003--2006 natality records, while wealth moments use the
-2003 and 2005 PSID. This initial steady state provides the starting point for
+2004 and 2006 CPS and 2003--2006 natality records, while aggregate wealth uses the
+2005 and 2007 PSID. This initial steady state provides the starting point for
 the historical transition, in which changes in fertility preferences account
 for the subsequent path of births while the other structural parameters remain
-fixed.\footnote{This working section describes the 2007 calibration under
-review. The persistent-earnings process and parenthood housing floor provide
-the comparison specification; earnings, entry-wealth mapping, and the
-alternative utility with child-dependent housing shares remain provisional.
-No new set of parameter estimates or model fit is adopted here.}
+fixed.
 
 I organize the model parameters into two groups. The first consists of
 parameters assigned from external evidence, measured directly in the data, or
@@ -51,8 +49,8 @@ $i_{\mathrm{ann}}=0.02$, the proportional selling cost to $\psi^s=0.06$,
 and the labor-income tax rate to $\tau_{\mathrm{pay}}=0.179$, retaining
 the external restrictions used in the housing-finance calibration
 \citep{greaneyDynamicUrbanEconomics2025}. Annual housing depreciation is
-$\delta_{\mathrm{ann}}=0.011$ and the annual property-tax rate is
-$\tau^p_{\mathrm{ann}}=0.01$. Mortgage debt cannot exceed a share
+$\delta_{\mathrm{ann}}=1.416\%$ and the annual property-tax rate is
+$\tau^p_{\mathrm{ann}}=1.060\%$. Mortgage debt cannot exceed a share
 $\phi=0.80$ of the value of the house, so a purchase requires at least
 20 percent equity. Purchase eligibility accounts for current earnings as well
 as existing resources. The model imposes no separate payment-to-income limit.
@@ -63,15 +61,10 @@ budget; the pension is therefore determined within each candidate equilibrium.
 I impose a deterministic lifecycle profile of household earnings, $e_a$,
 normalized to average one over working ages. Within age, log earnings follow
 a persistent AR(1) process estimated from the PSID at the model's four-year
-frequency. The working process has persistence $\rho_z=0.7346$ and innovation
-standard deviation $\sigma_z=0.4838$ in log earnings. It has no fixed permanent
+frequency. The process has persistence $\rho_z=0.735$ and innovation
+standard deviation $\sigma_z=0.484$ in log earnings. It has no fixed permanent
 household types and is approximated with 15 income states. Entrants draw from
-the stationary earnings-risk distribution.\footnote{The comparison with a
-persistent process plus an independent transitory component is retained as an
-alternative. Its four-year persistence is 0.7761, persistent innovation
-standard deviation is 0.4374, and transitory standard deviation is 0.1650.
-Neither adding transitory risk nor assuming stationary income risk at age 18
-is an adopted resolution of the earnings specification.}
+the stationary earnings-risk distribution.
 
 \paragraph{Housing products and supply.}
 Housing is indivisible and available in a limited assortment of types and
@@ -85,14 +78,13 @@ intercept $H_0$ is estimated jointly with household parameters.
 \paragraph{Entry wealth and bequests.}
 Households enter at age 18 with heterogeneous nonhousing wealth and debt,
 constructed from the PSID wealth-to-family-income distribution of childless
-renters aged 18--24. The joint entry distribution retains the reference
-mapping between wealth and earnings.\footnote{The empirical family-income
-denominator must be reconciled with the model's gross-earnings units. The
-working experiments retain the inherited heterogeneous entry law; zero
-entrant wealth is not imposed in this calibration.}
+renters aged 18\nobreakdash--24. The joint entry distribution retains the reference
+mapping between wealth and earnings.
 Bequest utility does not vary directly with the number of children. Children
 affect estate accumulation through their effects on housing needs, tenure,
-and saving.
+and saving. I fix the bequest wealth shift $\theta_1$ at 1 percent of median
+annual gross earnings, or $\theta_1=0.008$ under the earnings normalization
+above.
 
 \begin{table}[H]
 \centering
@@ -109,29 +101,31 @@ Risk aversion $\sigma$ & 2 & Maintained preference restriction \\
 Equivalence scale $(\omega,\nu)$ & $(0.7,0.7)$ & Maintained power scale \\
 Consumption weight $\alpha_0$ & 0.733 & CEX 2019--2023, childless renters \\
 Annual real return & 2\% & External return restriction \\
-Annual depreciation; property tax & 1.1\%; 1\% & Maintained housing costs \\
+Annual depreciation; property tax & 1.416\%; 1.060\% & Maintained housing-cost restrictions \\
 Financed share $\phi$ & 0.80 & 20\% equity requirement \\
 Sale cost $\psi^s$ & 6\% & External transaction cost \\
 Payroll tax & 17.9\% & External tax restriction \\
-Income persistence $\rho_z$ & 0.7346 & Four-year PSID process \\
-Income innovation SD $\sigma_z$ & 0.4838 & Four-year log-earnings innovation \\
+Income persistence $\rho_z$ & 0.735 & Four-year PSID process \\
+Income innovation SD $\sigma_z$ & 0.484 & Four-year log-earnings innovation \\
 Owner house sizes & $2,4,6,8,10$ & Rooms \\
 Largest rental unit & 6 & Rooms \\
 Housing-supply elasticity $\eta$ & 0.63 & Maintained supply restriction \\
 Tenure taste-shock scale & 0.005 & Fixed in the working calibration \\
 Entry wealth and debt & Heterogeneous & PSID childless renters aged 18--24 \\
+Bequest wealth shift $\theta_1$ & 0.008 & 1\% of median annual gross earnings \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \subsection{Internally Estimated Parameters}
 
-I estimate nine parameters jointly using twelve moments describing
+I estimate eight parameters jointly using moments describing
 childlessness, fertility timing and family size, housing consumption, tenure,
 and wealth accumulation. Separately, I choose the fertility utility scale
 $\psi_0$ so that mean children ever born among households aged 46 and above
 is 2.1 in the stationary economy. This is a normalization of the initial
-steady state, not a period total fertility rate. Although the parameters are
+steady state, not an observed 2007 statistic or a period total fertility
+rate. Although the parameters are
 chosen jointly, I organize the discussion into economic blocks and describe
 which moments are most informative about each block.
 
@@ -151,12 +145,7 @@ demand under the maintained equivalence scale. The floor is the same for
 all households with dependent children, rather than increasing with each
 additional child. Ownership rates and the ownership gap associated with
 recent parenthood are particularly informative about the owner housing-service
-multiplier $\chi$, while mean occupied rooms helps discipline the
-housing-supply intercept $H_0$.\footnote{The alternative utility removes
-$h_P$ and estimates two child-dependent housing-share parameters, a parenthood shift and a slope in the
-number of dependent children. That specification
-has ten jointly searched parameters and the same separate fertility
-normalization.}
+multiplier $\chi$.
 
 \paragraph{Fertility and family size.}
 Childlessness is particularly informative about the first-birth utility cost
@@ -168,12 +157,10 @@ outcomes respond to the costs, timing, and utility value of children.
 
 \paragraph{Bequests.}
 The bequest parameters $\theta_0$ and $\theta_1$ govern the strength and wealth
-dependence of the bequest motive. Annual bequests relative to aggregate wealth
-are particularly informative about $\theta_0$, while the p90-to-median ratio
-of wealth relative to family income among households aged 76--84 provides
-information about the wealth shift $\theta_1$. These moments also respond to
-saving and tenure choices, so the two bequest parameters are disciplined
-jointly with those blocks.
+dependence of the bequest motive. With $\theta_1$ fixed, annual bequests
+relative to aggregate wealth are particularly informative about $\theta_0$.
+This moment also responds to saving and tenure choices, so $\theta_0$ is
+disciplined jointly with those blocks.
 
 \begin{table}[H]
 \centering
@@ -190,9 +177,8 @@ $\kappa_1$ & First-birth taste dispersion & Mean first-birth age; share at 30+ \
 $\kappa_C$ & Later-birth taste dispersion & Exactly one child among mothers \\
 $h_P$ & Parenthood housing floor & First-birth room response; family room differences \\
 $\chi$ & Owner housing-service multiplier & Ownership level; recent-parent gap \\
-$H_0$ & Housing-supply intercept & Mean occupied rooms \\
+$H_0$ & Housing-supply scale & --- \\
 $\theta_0$ & Bequest-motive strength & Annual bequests / wealth \\
-$\theta_1$ & Bequest wealth shift & Old-age wealth/income p90 / median \\
 \addlinespace
 $\psi_0$ & Utility from children & Mean children ever born: 2.1 normalization \\
 \bottomrule
@@ -204,14 +190,8 @@ $\psi_0$ & Utility from children & Mean children ever born: 2.1 normalization \\
 The target system combines children-ever-born distributions from the CPS,
 first-birth timing from natality records, tenure and housing-size moments
 from the ACS, housing responses around childbirth from the PSID event study,
-and wealth moments from the PSID. Table~\ref{tab:quant_fit} reports the
-working targets for the 2007 reference economy.\footnote{The empirical
-first-birth room response and recent-parent ownership gap require a common
-observation rule in the data and model before their fit can be interpreted.
-The other population, timing, and weighting choices are being reviewed row
-by row. Model moments and parameter estimates will be inserted for the chosen
-specification; historical July fits and unadopted experimental fits are not
-substituted for that comparison.}
+and aggregate wealth from the PSID. Table~\ref{tab:quant_fit} reports the
+targets for the 2007 reference economy.
 
 \begin{table}[H]
 \centering
@@ -230,13 +210,12 @@ First births at age 30+ (\%) & 24.93 & --- \\
 \addlinespace
 Mean occupied rooms, capped at nine & 5.608 & --- \\
 Ownership, household heads 30--55 (\%) & 67.63 & --- \\
-First-birth room response, $-1$ to $+3$ (rooms) & 0.720 & --- \\
+First-birth room response, $-3/{-2}$ to $+3/{+4}$ (rooms) & 0.600 & --- \\
 Rooms: 3+ versus 1--2 resident children & 0.385 & --- \\
 Recent-parent ownership gap (percentage points) & 12.76 & --- \\
 \addlinespace
-Wealth / annual gross earnings & 6.146 & --- \\
+Wealth / annual gross earnings & 6.927 & --- \\
 Annual bequests / wealth (\%) & 0.88 & --- \\
-Wealth/income p90 / median, ages 76--84 & 3.516 & --- \\
 \bottomrule
 \end{tabularx}
 \end{table}

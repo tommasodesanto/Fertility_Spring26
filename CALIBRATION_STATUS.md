@@ -1,5 +1,17 @@
 # Calibration Status
 
+## September 24 — minimal quantitative mock update completed
+
+Authenticated Claude Max Opus5.5 updated only mock quantification, preserving
+July organization and unaffected prose. Lead reviewed the accepted numeric
+changes and rebuilt PDFs; output/pdf/JMP_DS_mock_quantification.pdf is the
+five-page excerpt. Model cells remain blank; no model/target-contract change.
+First-birth0.600 remains the author choice in the mock, with the newer0.73
+recommendation awaiting decision outside paper prose. Review and limitations:
+`output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/mock_evening_update/lead_review.json`.
+Full mock retains its preexisting empirical-appendix reference warning and
+unedited model-text discrepancies; see latex/README.md.
+
 ## September 24 — OpenGo accounting review collected and corrected
 
 OpenCode Go/Kimi K3 completed the bounded read-only review (359 seconds,

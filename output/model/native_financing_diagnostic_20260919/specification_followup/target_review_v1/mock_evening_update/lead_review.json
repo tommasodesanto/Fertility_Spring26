@@ -1,0 +1,49 @@
+{
+  "status": "accepted_minimal_mock_update_not_calibration_adoption",
+  "drafting_model": "claude-opus-5-5",
+  "session": "11d7acd5-76b5-4d5d-a843-3c8c461f039d",
+  "checks": {
+    "wealth2005_2007": true,
+    "wealth_target": true,
+    "rooms_target": true,
+    "housing_costs": true,
+    "fixed_theta1": true,
+    "old_wealth_shape_removed": true,
+    "eight_free": true,
+    "three_subsections": true,
+    "no_workflow_footnotes": true
+  },
+  "visual_review": {
+    "excerpt_pages": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "full_mock_pages": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "clipping_or_overlap": false
+  },
+  "compile": "both exit0; excerpt no warnings; full mock preexisting undefined app:empirical-data",
+  "sha256": {
+    "latex/JMP_DS_mock/sections/04_quantification.tex": "93e237f94011ea933f23ef8a3ee187b73f54e22c40ba72bd14b5a82a18d61be0",
+    "output/pdf/JMP_DS_mock_quantification.pdf": "bfdc8ade04d07cc05cfa543bd21bb7168a93c6b1d95bca0e595f0b68dcb01c21",
+    "output/pdf/JMP_DS_mock.pdf": "b76f7af82f65fdb00300c329d10726eb8388b93365093e29b5fdf255aac32da6"
+  },
+  "limitations_outside_paper_prose": [
+    "Author-chosen .600 preserved; newer unadopted .726/.73 room-code-cleaning evidence requires author decision. Do not use this mock as certification of .600 empirical validity.",
+    "H0 identifying row left blank; inherited prose says intercept while table says scale. Exact supply interpretation awaits separate task.",
+    "Historical .880 bequest flow kept as instructed interim literature value, not remeasured2007 result.",
+    "Retained earnings/entry/tax/pension/maturation descriptions are maintained mock assumptions; removing workflow footnotes is not an adoption decision.",
+    "Other mock model section retains known current-income purchase-timing discrepancy; only quantification section edited.",
+    "Old-age wealthshape removed from calibrated-parameter presentation after fixing theta1; this does not change a model objective or its identification contract."
+  ],
+  "model_fits": "all blank; no estimates/runs adopted"
+}

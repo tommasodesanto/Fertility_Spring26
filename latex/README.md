@@ -1,5 +1,31 @@
 # LaTeX Workspace
 
+## September 24 — quantitative mock updated through Opus 5.5
+
+The existing quantification section now reflects the September23 accepted
+choices with the July/Corina-reviewed organization preserved. Changes include
+PSID2005/07 aggregate wealth6.927, external theta1 restriction, national annual
+housing costs1.416%/1.060%, and the chosen first-birth rooms0.600 with its
+−3/−2 to+3/+4 window. Internal table now has eight parameters plus separate
+2.1 fertility normalization; obsolete theta1/old-age-shape identification is
+removed. All model-fit cells remain blank. Workflow/uncertainty and alternative
+robustness footnotes were removed at the author's request.
+
+Opus5.5 drafted and corrected the minimal patch; lead checked the diff, values,
+all five excerpt pages and affected full-mock pages4–9. Both compile; the full
+mock retains the pre-existing empirical-section app:empirical-data reference
+warning. Outputs: `../output/pdf/JMP_DS_mock_quantification.pdf` and
+`../output/pdf/JMP_DS_mock.pdf`. Review: target_review_v1/mock_evening_update/
+under the September19 specification-followup output.
+
+External working-note limitations: Claude subsequently recommends0.73 after
+room-code cleaning, not yet author-adopted; the mock retains chosen0.600 and
+does not certify its measurement. H0 identification remains blank; inherited
+intercept/scale terminology is unresolved. Tax/pension and maturation accounting
+remain tomorrow's decisions. The unedited model section's current-income
+purchase-timing discrepancy remains. No author draft, slide or model change,
+new fit, or full representation synchronization is claimed.
+
 ## National housing targets — September 23 author decision
 
 The mock quantification section now uses the national 2005–2006 ACS household
