@@ -1,5 +1,22 @@
 # Target validation before the utility comparison
 
+## September 23 — first-birth housing target chosen: 0.600 rooms
+
+Author adopts 0.600 rooms for the next calibration: corrected-date PSID
+Sun–Abraham response in the +3/+4 interview window relative to −3/−2.
+This is the rounded chosen target; the underlying estimate remains 0.602
+(SE 0.126), as recorded in the timing memo. It supersedes the earlier
+provisional 0.770 and provisional 0.60 decision status.
+
+Deferred follow-up: reassess timing, measurement and the model mechanism if
+the calibrated model substantially understates the housing response. A poor
+fit triggers diagnosis, not automatic target adjustment or selection of a
+better-fitting horizon. Claude retains ownership of empirical follow-ups.
+The matching model observer and weight must be specified in the new target
+contract before the next run; this decision does not certify their completion.
+Existing frozen runs, the old 0.720246 target and their fingerprints remain
+unchanged. No run or manuscript edit is requested here.
+
 ## September 23 — income tax and pension source review
 
 [Primary-source review](payroll_tax_review/lead_review.json) checks the latest public DUE (December 5, 2025), Kaplan–Mitman–Violante (2020), Sommer–Sullivan (2018), and Sommer (2016). DUE retains 17.9% in its table versus 15.6% in the text, and allows tax revenue to finance pensions and other government spending. Our reviewed PAYGO rule sends payroll revenue to pensions. Recommendation: distinguish the tax-burden calibration from pension-benefit calibration and choose financing explicitly. This is a recommendation only; no parameter, model, or paper change was made. The retained worker receipt has page/table inaccuracies corrected in the lead review.

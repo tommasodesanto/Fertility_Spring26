@@ -1,5 +1,22 @@
 # Calibration Status
 
+## September 23 — first-birth housing target chosen: 0.600 rooms
+
+Author adopts 0.600 rooms for the next calibration: corrected-date PSID
+Sun–Abraham response in the +3/+4 interview window relative to −3/−2.
+This is the rounded chosen target; the underlying estimate remains 0.602
+(SE 0.126), as recorded in the timing memo. It supersedes the earlier
+provisional 0.770 and provisional 0.60 decision status.
+
+Deferred follow-up: reassess timing, measurement and the model mechanism if
+the calibrated model substantially understates the housing response. A poor
+fit triggers diagnosis, not automatic target adjustment or selection of a
+better-fitting horizon. Claude retains ownership of empirical follow-ups.
+The matching model observer and weight must be specified in the new target
+contract before the next run; this decision does not certify their completion.
+Existing frozen runs, the old 0.720246 target and their fingerprints remain
+unchanged. No run or manuscript edit is requested here.
+
 ## September 23 — conventional households retained; formation robustness deferred
 
 Author accepts the conventional family-household abstraction (one adult man and
