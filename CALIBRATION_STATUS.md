@@ -1,5 +1,24 @@
 # Calibration Status
 
+## September 24 — maturation and adult-entry decision adopted; verification pending
+
+The author adopts, for the next implementation, independent binomial departure
+from parental dependency with probability $2/9$ per four-year period (18-year
+mean absent parental death), plus a separate birth-entry queue splitting each
+cohort equally at 16 and 20 years (mean delay 18 years, not literal age-18
+entry). Preserve demographic top-bin weights and apply the $1/2.1$
+birth-to-household conversion once. Do not use parent-age departure or a newborn
+exemption. No additional adult-entry flow is assigned at parental-household
+death, conditional on the reviewed last-birth age 42 / first-mortality age 66
+support; verification against the latest selected settings remains outstanding.
+
+This is adopted but not implemented or validated. Scrutiny/robustness remains
+for departures before scheduled entry, dependency after entry, and support lost
+at parental death: adulthood does not establish self-sufficiency, and the model
+does not trace replacement support. No new run or manuscript edit is recorded.
+Decision source: `docs/model/ACTIVE_DECISION_LEDGER.md`, “September 24 — author
+decision: dependency, adult entry and parental death.”
+
 ## September 24 — 2007 child-directed bequest-flow reconstruction complete
 
 The author adopted **0.7291023472616158%** (ratio `0.007291023472616158`) as the
