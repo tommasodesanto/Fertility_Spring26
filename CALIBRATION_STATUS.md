@@ -1,5 +1,18 @@
 # Calibration Status
 
+## September 24 (evening) — ownership and moving on the final specification
+
+Same design as the rooms headline, items rebuilt from official yearly PSID
+variables (shelf moving items verified next-wave dated; ownership verified
+contemporaneous). +3/+4 vs −3/−2, household design / status-at-baseline
+design: ownership +0.161 (0.019) / +0.269 (0.013) on a 0.42 base; moved since
+last interview −0.159 (0.017) / −0.211 (0.012) on a 0.55 base; moved for more
+space +0.020 (0.010) / +0.010 (0.006), peaking at +1/+2 (+0.034 / +0.021) on a
+0.07 base; neighbourhood moves null. Package
+`code/data/psid_followup_mar2026/output/sa_first_birth_outcomes_v3/`. No
+target changed; the tenure-at-first-birth model moment should be revisited
+against the new ownership path when the horizon is set.
+
 ## September 24 (afternoon) — first-birth rooms: status-at-baseline design
 
 All current adults with the household-design choices (IW, biological birth,

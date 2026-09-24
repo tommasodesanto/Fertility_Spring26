@@ -199,3 +199,14 @@ design's pre-rise is a row-selection artifact (status required row by row);
 fixing status at baseline removes it. Moving variables: MOVEDFREF_ and
 WHYMOVED1_ verified NEXT-wave like rooms (changers 100%/0%); HOMEOWN
 contemporaneous. MOVEDFREF_ empty in the shelf for 1984–1985.
+
+### Ownership and moving on the same specification (September 24, later)
+
+Rebuilt from official yearly variables (moving items in the shelf are
+next-wave dated like rooms; ownership contemporaneous, 0 mismatches). +3/+4
+vs −3/−2, H / A2h: ownership +0.16 (0.02) / +0.27 (0.01) on a 0.42 base with
+flat A2h pre-period; moved since last interview −0.16 / −0.21 on a 0.55 base
+(moving rises into the baseline window, then falls); moved for more space
++0.02 / +0.01 at +3/+4 and +0.034 / +0.021 at +1/+2 on a 0.07 base;
+neighbourhood moves null. Package
+`code/data/psid_followup_mar2026/output/sa_first_birth_outcomes_v3/`.
