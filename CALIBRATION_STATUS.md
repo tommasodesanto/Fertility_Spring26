@@ -1,5 +1,13 @@
 # Calibration Status
 
+## September 23 — selling transaction cost retained
+
+Author accepts the retained selling fee of 6% of gross house value per sale,
+following Dynamic Urban Economics, December 5, 2025, Table 1 p.27. That source
+labels the value "standard value" and supplies no specific empirical citation
+for this row. It is not an annual charge or an empirical estimate from DUE.
+Advisor checklist owner notified. No numerical or paper changes.
+
 ## September 23 — retain utility curvature 2; interpretation review deferred
 
 Author retains sigma = 2 as the benchmark. Add a follow-up to review its
