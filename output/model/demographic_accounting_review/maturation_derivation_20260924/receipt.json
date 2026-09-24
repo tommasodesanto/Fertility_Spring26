@@ -1,0 +1,422 @@
+{
+  "schema": "maturation_unified_accounting_derivation_v1",
+  "created_utc": "2026-09-24T17:05:52.329396+00:00",
+  "status": "complete_derivation_with_exact_toy_checks_not_implemented_or_adopted",
+  "review_head_before_commit": "5e6b9c4382233b0465f391630401c00c8a958941",
+  "owned_directory": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/demographic_accounting_review/maturation_derivation_20260924",
+  "root_request": "Retain /2.1 as primary; derive unified ordinary/death departure accounting for transition and stationary use, including top-bin, inheritance, boundaries, implementation costs.",
+  "scope": {
+    "model_solves": 0,
+    "equilibrium_solves": 0,
+    "checkpoint_loads": 0,
+    "source_edits": 0,
+    "canonical_status_edits": 0,
+    "paper_edits": 0,
+    "new_subagents": 0,
+    "external_searches": 0,
+    "pure_accounting_check_runs": 1
+  },
+  "main_results": [
+    "Common factor 1/2.1 on disjoint ordinary and parent-death departure routes is internally consistent. No change to 1/2 is required.",
+    "With c=1/f, exact normalized identity is delta(f H+C)=B-f X-(1-rho)F+f I+f JH+JC. f=2.1 is a replacement-unit index, not a literal adult count.",
+    "If literal P=2H+C is additionally required, c=1/2.1 contributes residual -rho F/21; attribution to mortality, emigration or another resident class would require an additional explicit assumption.",
+    "Forward-only tagged third-child first moment z transports as s K(mprime|m) mprime/m z, adds delta on third births and is completely released at parental death. It preserves existing adjusted birth units without changing household decision states.",
+    "Closed steady replacement requires lifetime demographic births per entrant b=1/c. Under no reproductive mortality, state-independent later survival and matching top-bin units, retained b=2.1 and c=1/2.1 can preserve the old reference equilibrium after fixed-policy verification.",
+    "A positive constant-size terminal population is impossible under closed permanently subreplacement fertility; this is preexisting and distinct from maturation unification.",
+    "Keep one entry stream, existing entrant wealth, existing estate allocation if active, and one set of timing/unit metadata across stationary and dated drivers."
+  ],
+  "proposed_defaults_not_adopted": {
+    "conversion": 0.47619047619047616,
+    "replacement_weight": 2.1,
+    "ordinary_hazard": 0.2222222222222222,
+    "no_newborn_exemption": true,
+    "forced_release_at_parental_exit": true,
+    "top_bin_weight": 3.602359422009,
+    "extra_third_slot_weight": 0.602359422009,
+    "top_bin_ledger": "one tagged first moment conditional on existing forward state; absent from Bellman states",
+    "entrant_lifecycle": "existing model age18",
+    "estate_and_entry_assets": "existing separately accounted rules; no genealogy or additional estate payout"
+  },
+  "genuine_remaining_choices": [
+    "Whether adjusted birth renewal units are retained using the proposed tagged moment, or renewal intentionally uses literal state births while completed-fertility reporting remains weighted.",
+    "For a production terminal transition only: preserve an explicit applicable open closure or solve a compatible declining-population tail; do not impose a positive closed stationary endpoint under subreplacement fertility."
+  ],
+  "conditional_implementation_caveat": "Stationary estate pool is explicitly solved. Inspected open/PF/dynamic drivers contain no explicit estate references. If the selected serialized parameter object enables the pool, its dated flow/transfer closure must be traced or supplied; no current-run violation is asserted.",
+  "assumptions_for_tag_closure": [
+    "Fertility state3 is absorbing in births; extra demographic weight attaches at transition2->3.",
+    "Each represented dependent faces identical independent binomial departure; newborn not exempt.",
+    "Household policies depend on existing state, not identity of remaining children.",
+    "Tag uses same transport and age-bridge weights as household mass.",
+    "Extra top-bin units retain existing decision/resource approximation, with shared third-slot demographic timing."
+  ],
+  "historical_receipt_reuse": {
+    "label": "historical September12 literal-dependent checkpoint, not latest weighted effect",
+    "R": 0.00597224246788276,
+    "M": 0.10930230596860412,
+    "B": 0.11527454834637194,
+    "R_div_2p1": 0.002843924984706076,
+    "literal_flow_identity_residual": -9.01149406831725e-11,
+    "source_checkpoint_sha256": "120ffc45c0fb8756f4182f999c96b7c0236adf315cb938190ec31cd2068c87c2",
+    "not_interpreted_as": "difference from old adjusted birth queue, current cohort probability, or current equilibrium effect"
+  },
+  "verification": {
+    "status": "passed",
+    "scope": "Exact rational toy bookkeeping and exhaustive subset enumeration; no model imports, model solves, checkpoint loading or equilibrium tests.",
+    "enumerated_tagged_transition_cases": 18,
+    "mixing_cases": 36,
+    "checks": [
+      {
+        "name": "no_death_births.H_next",
+        "exact": "418/189",
+        "decimal": 2.2116402116402116
+      },
+      {
+        "name": "no_death_births.C_next",
+        "exact": "14/9",
+        "decimal": 1.5555555555555556
+      },
+      {
+        "name": "no_death_births.entry",
+        "exact": "40/189",
+        "decimal": 0.21164021164021163
+      },
+      {
+        "name": "ordinary_realized.H_next",
+        "exact": "31/21",
+        "decimal": 1.4761904761904763
+      },
+      {
+        "name": "ordinary_realized.C_next",
+        "exact": "0",
+        "decimal": 0.0
+      },
+      {
+        "name": "ordinary_realized.entry",
+        "exact": "10/21",
+        "decimal": 0.47619047619047616
+      },
+      {
+        "name": "death_release.H_next",
+        "exact": "20/21",
+        "decimal": 0.9523809523809523
+      },
+      {
+        "name": "death_release.C_next",
+        "exact": "0",
+        "decimal": 0.0
+      },
+      {
+        "name": "death_release.entry",
+        "exact": "20/21",
+        "decimal": 0.9523809523809523
+      },
+      {
+        "name": "half_survive.H_next",
+        "exact": "409/378",
+        "decimal": 1.082010582010582
+      },
+      {
+        "name": "half_survive.C_next",
+        "exact": "7/9",
+        "decimal": 0.7777777777777778
+      },
+      {
+        "name": "half_survive.entry",
+        "exact": "110/189",
+        "decimal": 0.582010582010582
+      },
+      {
+        "name": "retention_outside_bridge.H_next",
+        "exact": "1433/420",
+        "decimal": 3.4119047619047618
+      },
+      {
+        "name": "retention_outside_bridge.C_next",
+        "exact": "22/7",
+        "decimal": 3.142857142857143
+      },
+      {
+        "name": "retention_outside_bridge.entry",
+        "exact": "181/210",
+        "decimal": 0.861904761904762
+      },
+      {
+        "name": "ten_ordinary_two_death_entrants",
+        "exact": "40/7",
+        "decimal": 5.714285714285714
+      },
+      {
+        "name": "third_birth_weight",
+        "exact": "1602359422009/1000000000000",
+        "decimal": 1.602359422009
+      },
+      {
+        "name": "third_birth_two_slots_M",
+        "exact": "2602359422009/4500000000000",
+        "decimal": 0.5783020937797778
+      },
+      {
+        "name": "third_birth_two_slots_C_next",
+        "exact": "18216515954063/9000000000000",
+        "decimal": 2.024057328229222
+      },
+      {
+        "name": "third_birth_all_three_M",
+        "exact": "400262158001/500000000000",
+        "decimal": 0.800524316002
+      },
+      {
+        "name": "third_birth_all_three_C_next",
+        "exact": "2801835106007/1000000000000",
+        "decimal": 2.801835106007
+      },
+      {
+        "name": "third_birth_two_to_one_conditional_C",
+        "exact": "2602359422009/2000000000000",
+        "decimal": 1.3011797110045
+      },
+      {
+        "name": "estate_pool_transfer",
+        "exact": "50",
+        "decimal": 50.0
+      },
+      {
+        "name": "entry_asset_boundary_inflow",
+        "exact": "20/3",
+        "decimal": 6.666666666666667
+      },
+      {
+        "name": "finite_cohort_ordinary_share",
+        "exact": "3572/6561",
+        "decimal": 0.5444292028654169
+      },
+      {
+        "name": "finite_cohort_death_share",
+        "exact": "2989/6561",
+        "decimal": 0.45557079713458315
+      }
+    ]
+  },
+  "artifacts": {
+    "review.md": "4f7df3b0b20daec92f35cddccb857166d5806b1d454e6a8b5d70145cd637fdc5",
+    "accounting_checks.py": "a13966553fd4bcfb978efd59e69b8301fa47f309174ef3c879b7cdfcf5260227",
+    "hand_checks.json": "b7f9af7e677a6d0e71743ce324c69d913b8f8a671bce318bfae53dfa3648a1c7"
+  },
+  "prior_review_reused": {
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/demographic_accounting_review/alternatives_review_20260924/review.md": "9ea2f134a607241cfbb764ebf83459d4939b9479b6ac6bc138fe6484f9794bd6",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/demographic_accounting_review/alternatives_review_20260924/receipt.json": "6126224bdf076842e73264909df5e23aa80baa093cae9a01f04bcb37baf14753"
+  },
+  "evidence": {
+    "S1": [
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/e5_maturation_repair.py",
+        "lines": [
+          [
+            17,
+            33
+          ]
+        ],
+        "sha256": "02a14892614ae287de9d961a900d76197dcef60750a82318ce50fe6536166b0f",
+        "claim": "Independent-child-count interpretation, 18-year absent-exit mean, no added household state."
+      },
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/parameters.py",
+        "lines": [
+          [
+            150,
+            163
+          ],
+          [
+            1116,
+            1140
+          ],
+          [
+            1210,
+            1248
+          ]
+        ],
+        "sha256": "6e331ec390cebec5cbfc0e3cfad98d8eee7ed44fac7d7889de96e35696dd8eb1",
+        "claim": "Estate switch defaults and exact binomial child kernel."
+      },
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/e5_profile.py",
+        "lines": [
+          [
+            175,
+            184
+          ]
+        ],
+        "sha256": "24b670345aff47636d3e1de78065ad7a8bcf8579699c8c6fcb92ebb455f1578b",
+        "claim": "Source top-bin weight and potential-entrant factor 0.5; actual serialized configuration must be checked."
+      }
+    ],
+    "S2": [
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/solver.py",
+        "lines": [
+          [
+            924,
+            1056
+          ],
+          [
+            1070,
+            1085
+          ],
+          [
+            1129,
+            1188
+          ],
+          [
+            1263,
+            1306
+          ],
+          [
+            4595,
+            4631
+          ],
+          [
+            4871,
+            4880
+          ],
+          [
+            5220,
+            5255
+          ],
+          [
+            5619,
+            5664
+          ],
+          [
+            5689,
+            5730
+          ]
+        ],
+        "sha256": "b549dabeb03fdb9d476b2be58642ee2d876143b01f529af663e2cf50fc978562",
+        "claim": "Normalized stationary entrant distribution, actual optional renewal scale closure, ordinary departure counter, terminal and estate treatment."
+      }
+    ],
+    "S3": [
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_open_population_transition.py",
+        "lines": [
+          [
+            302,
+            370
+          ],
+          [
+            740,
+            785
+          ],
+          [
+            828,
+            921
+          ],
+          [
+            1214,
+            1267
+          ]
+        ],
+        "sha256": "b4ce8b965f607e5337455de46b8c23d53fc07e00e4198d6ad383869723f8f2ca",
+        "claim": "Explicit /replacement fertility normalization, top-bin birth weights, survival-first one-market advancement, actual queue insertion, outside/retention and observed-age bridge."
+      }
+    ],
+    "S4": [
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_perfect_foresight_transition.py",
+        "lines": [
+          [
+            73,
+            110
+          ],
+          [
+            346,
+            445
+          ],
+          [
+            620,
+            710
+          ],
+          [
+            795,
+            806
+          ]
+        ],
+        "sha256": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be",
+        "claim": "PF initial state, dated births/queue/advancement, inherited historical closure, terminal queue gate. No estate string found in bounded search of this file."
+      }
+    ],
+    "S5": [
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_dynamic_population_transition.py",
+        "lines": [
+          [
+            371,
+            390
+          ]
+        ],
+        "sha256": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362",
+        "claim": "Existing exogenous entrant wealth/income distribution for childless age-zero renters."
+      }
+    ],
+    "S6": [
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/child_accounting/README.md",
+        "lines": [
+          [
+            1,
+            40
+          ]
+        ],
+        "sha256": "a44b34cfbf795b3d7a1fcec54f92596718bd92d51b969d0885d6b9cd33aa3498",
+        "claim": "Historical child accounting timing and scope; not current checkpoint."
+      },
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/child_accounting/initial_parent_death.json",
+        "lines": [
+          [
+            1,
+            29
+          ]
+        ],
+        "sha256": "67229f34043ef162a708aa43b75cb06d9c634251fcee58752de72058a5b3f6be",
+        "claim": "Archived literal-dependent flows and first/last fertile ages; only reused existing receipt, no checkpoint loaded."
+      }
+    ],
+    "S7": [
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/empirical_entry/common_scale_candidate/actual_frozen_parameters.json",
+        "lines": [
+          [
+            1,
+            49
+          ]
+        ],
+        "sha256": "29bbaa308acfa63123d42c8ef6564d5902b0a38a27b55f287d9b1ff38ba1c74e",
+        "claim": "Existing newer parameter extraction confirms age survival in serialized seed and source/adapter distinction; no inference of unrecorded settings."
+      },
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/CALIBRATION_STATUS.md",
+        "lines": [
+          [
+            95,
+            173
+          ],
+          [
+            436,
+            471
+          ]
+        ],
+        "sha256": "97d0a5f0d21213effa438f54aa1322181ba9b177cfc0b4fbaf9241781d9f14a8",
+        "claim": "Current reviewed accounting context and retained two-adult/reference-fertility conventions; source line numbers at review time."
+      }
+    ]
+  },
+  "limits": [
+    "No new source implementation, policy replay, endpoint solve, model calibration or model-native test was performed.",
+    "Actual source defaults are not certified as current serialized run settings.",
+    "Implementation estimate1-2 focused engineering days is a scope judgment, not a measured runtime.",
+    "Tagged ledger is a newly derived proposal; household cost/housing top-bin approximation remains explicit.",
+    "Exact chronological child ages cannot be recovered under the retained m-only household state.",
+    "All unrelated working-tree modifications were preserved."
+  ]
+}
