@@ -1,5 +1,15 @@
 # Calibration Status
 
+## September 23 — housing depreciation method accepted
+
+Author accepts following DUE's method: annual structures depreciation times
+one minus the land share, using national inputs for the national calibration.
+Numeric remeasurement remains pending. DUE December 5, 2025 pp.29–30 uses
+BEA 2016 structures depreciation 2.38% and the Bay Area land share 53.9%
+from Davis–Larson–Oliner–Shui (2021), yielding 1.1%. The author has not adopted
+that regional scalar as the national value. Advisor checklist owner notified;
+no model, frozen contract or paper edits.
+
 ## September 23 — selling transaction cost retained
 
 Author accepts the retained selling fee of 6% of gross house value per sale,
