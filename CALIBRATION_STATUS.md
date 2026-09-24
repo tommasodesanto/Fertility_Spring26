@@ -1,5 +1,21 @@
 # Calibration Status
 
+## September 24 (overnight) — first-birth rooms: recommend 0.73, not 0.60
+
+Sixteen further Torch fits (one change at a time; receipts verified). The
+provisional 0.60 was estimated with 4,559 PSID non-room codes (9/98/99 = don't
+know or not answered) treated as room counts. With those set to missing, the
+identical design and sample give **0.726 rooms (SE 0.033)** for the +3/+4
+window versus −3/−2 under corrected dates (N=311,453). Recommendation awaiting
+author confirmation: adopt 0.73 and retire 0.60. The gap to the August
+household specification (0.93 in window form, matching its annual receipt) is
+the unit definition (+0.16, women who are heads/spouses versus all adults) and
+survey weights (+0.06); comparison group, household de-duplication and
+birth-history definition move it by at most 0.03. Frozen target 0.720246 and
+its weight remain unchanged. Memo section "Overnight follow-ups" in
+`docs/model/first_birth_rooms_timing_memo_20260923.md`; results in
+`code/data/psid_followup_mar2026/output/first_birth_correction_review/sequence_designs/`.
+
 ## September 23 — OpenGo accounting review dispatched
 
 Author requests OpenCode Go for a bounded read-only review of maturation,

@@ -593,3 +593,13 @@ window: 0.602 (SE 0.126); corrected −2-only +3/+4: 0.66/0.56. Author records
 `docs/model/first_birth_rooms_timing_memo_20260923.md`. Raw PSID source file
 has moved to `~/Desktop/Projects/Datasets/PSID-SHELF/`; the path in
 `review_first_birth_event_study_corrections.py` is stale.
+
+## September 23–24 overnight: one-change-at-a-time sequence, codes cleaned
+
+`sequence_designs/` holds sixteen Torch fits (`audit_rooms_sequence.do`,
+collector `collect_rooms_sequence.py`). Key result: with PSID non-room codes
+(9/98/99) set to missing, the corrected-date window design gives 0.726
+(SE 0.033) instead of 0.602 (SE 0.126); the remaining gap to the August
+household specification (0.93 in window form) is the unit definition and the
+survey weights. Full table in the memo
+`docs/model/first_birth_rooms_timing_memo_20260923.md`.

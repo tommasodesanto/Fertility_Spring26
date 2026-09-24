@@ -78,3 +78,77 @@ true +4 and true +5 readings.
 
 Frozen target 0.720246 and its weight; slides; paper text. Bundle for the
 run: `/tmp/psid_rooms_window_20260923/task_root` (private; not in Git).
+
+## Overnight follow-ups (September 23–24): sequence to the household specification
+
+Torch jobs 18391624/18391626, 18395474/18395475, 18396745/18396746; sixteen
+fits, all pass, receipts and covariances verified. Extended frozen sample
+`/tmp/psid_rooms_sequence_20260923/analysis_sample.dta` (rows and both room
+columns asserted identical to the reference sample). Estimator
+`code/data/psid_followup_mar2026/audit_rooms_sequence.do`; results and figure
+in `code/data/psid_followup_mar2026/output/first_birth_correction_review/sequence_designs/`.
+All arms: corrected room dates, two-year windows, headline = +3/+4 window
+versus the −3/−2 baseline window, Sun–Abraham as in the original code.
+
+### Finding 1: non-room codes must be cleaned everywhere
+
+The PSID codes "don't know / not answered" as 9 (through 1984), 99 (1985–1993)
+and 98/99 (1994 on). The original code, the September 12 timing comparison and
+tonight's first pass left them as room counts. In the full common sample there
+are 4,559 such rows (1.3%), 912 inside the −3 to +4 event window; each is a
+~90-room outlier against a mean of six. With them set to missing:
+
+| Arm | +3/+4 rooms (SE) | N |
+|---|---|---|
+| S0 original spec, corrected dates, codes retained | 0.602 (0.126) | 315,737 |
+| **S0c same, codes cleaned** | **0.726 (0.033)** | 311,453 |
+| B21c baseline −2/−1, window +2/+3, codes cleaned | 0.553 (0.025) | 317,403 |
+
+The standard error falls four-fold because the outliers dominated the residual
+variance. Cleaned full-sample path (S0c): −0.13 at −7/−6, −0.14 at −5/−4, 0 at
+−3/−2, 0.18 at −1/0, 0.49 at +1/+2, 0.73 at +3/+4, 0.97 at +5/+6, 1.10, 1.24,
+1.35 at ≥+11. Note the mild pre-birth slope (about 0.07 rooms per year over the
+seven years before the baseline), now statistically visible.
+
+**Recommendation for the morning:** replace the provisional 0.60 with
+**0.73 (SE 0.03)**. This is the same design and sample as the 0.60; the only
+change is treating the codebook's non-answers as missing, which is not a
+modelling choice. The 0.60 should not be used.
+
+### Finding 2: what separates the full-sample number from the August household number
+
+One change per fit, codes cleaned throughout, corrected dates, −3/−2 baseline:
+
+| Step | Change added | +3/+4 rooms (SE) | N | Never-treated rows |
+|---|---|---|---|---|
+| S0c | original specification | 0.73 (0.03) | 311,453 | 100,889 |
+| S1c | comparison group = confirmed-childless only (unknown histories dropped) | 0.73 (0.03) | 285,205 | 74,641 |
+| S2c | women who are current reference person or spouse | 0.89 (0.06) | 118,928 | 22,693 |
+| S3c | single-family-unit dwellings, one woman per household-year | 0.90 (0.06) | 101,852 | 20,049 |
+| S4ac | first birth from full biological-child history | 0.93 (0.06) | 101,160 | 20,049 |
+| S4c | first-birth-after-first-observation rule (as in the August code) | 0.88 (0.07) | 60,178 | 20,049 |
+| S6 | PSID longitudinal weights | 0.93 (0.08) | 41,419 | 14,796 |
+
+The S6 endpoint is the August specification in window form and matches its
+annual numbers (+3 = 1.20, +4 = 0.83 relative to −2; −1 = 0.48). So the
+0.73-versus-0.93 gap is the unit (+0.16: women who already head a household
+or are spouses, versus all adults including adult children living with
+parents) and the survey weights (+0.06). The comparison group, the household
+de-duplication and the birth-history definition each move it by 0.03 or less.
+The August entry rule removes 40% of the household sample and lowers the
+estimate by 0.06. With codes retained the same sequence looked very different
+(S4 = 1.34 with SE 0.24), which was the outlier contamination, not design.
+
+The household-unit arms (S2c onward) show a larger pre-birth rise (−0.33 at
+−5/−4 versus −0.14 in the full sample): women who are already heads or spouses
+are moving into larger dwellings in the years before the first birth. This is
+the household-formation selection discussed above; it is a population
+definition, not an error, and it should be stated when either number is used.
+
+### Not done
+
+The annual −2-only design and the September 12 timing pair were not rerun with
+codes cleaned; if the annual curve is needed for the write-up, that is one
+Torch array. Rooms were not rebuilt from the raw yearly variables (would
+recover 1969 and 1976 answers and the 1977–1978 references). Moving variables
+remain unverified.
