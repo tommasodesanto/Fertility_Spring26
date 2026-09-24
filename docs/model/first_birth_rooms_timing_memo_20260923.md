@@ -174,3 +174,15 @@ path: +0.41 at −1/0, +0.82 at +1/+2, +1.03 at +3/+4, ~1.2 from +5/+6. Househol
 formation shows as a rise from −0.5 at seven years out to the baseline.
 Horizon for the model target remains the author's decision; frozen target and
 weight unchanged.
+
+### Baseline choice (September 24, later)
+
+Author questioned the pre-birth rise. Earlier-baseline household fits: with the
+−7/−6 window omitted the far pre-period is flat (+0.22, +0.14, +0.04 at ≤−12,
+−11/−10, −9/−8; SEs 0.11–0.17), then +0.14 at −5/−4, +0.49 at −3/−2, +0.83 at
+the birth, +1.21, **+1.43 (0.13) at +3/+4**, +1.57 at +5/+6. With −5/−4
+omitted: +3/+4 = 1.30 (0.10). The −3/−2-to-+3/+4 increment is 1.03 / 1.00 /
+0.94 across baselines. Interpretation: no long-run drift; anticipation starts
+about five years before the birth. The baseline decides whether that ~0.5 room
+is counted; author to choose jointly with the horizon. Flat-pre-period total
+adjustment ≈ 1.4 at +3/+4 and ≈ 1.6 completed.

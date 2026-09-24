@@ -1,5 +1,14 @@
 # Calibration Status
 
+## September 24 (later) — first-birth rooms: baseline choice is the open decision
+
+Household design with earlier omitted windows: −5/−4 baseline gives +3/+4 =
+1.296 (0.097); −7/−6 baseline gives 1.431 (0.130) with a flat path before it
+(no long-run drift). The −3/−2-to-+3/+4 increment is stable at 0.94–1.03. So
+the headline depends on whether the ~0.5-room anticipatory adjustment between
+−6 and −2 counts as response: 1.03 (from −3/−2) versus about 1.4 (from the
+flat period). Author decision pending, to be taken with the horizon.
+
 ## September 24 — first-birth rooms: final empirical version (household design)
 
 Author chose the household unit (one woman, reference person or spouse, per

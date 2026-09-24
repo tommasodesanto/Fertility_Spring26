@@ -2,6 +2,7 @@
 * Sun-Abraham interacted-cohort event study in two-year interview windows.
 * Arms:
 *   H    household design, baseline window -3/-2 (headline)
+*   Hb4, Hb6  household design with earlier baseline windows -5/-4 and -7/-6
 *   H21  household design, baseline window -2/-1 (sensitivity)
 *   A    all-adult design, baseline window -3/-2 (robustness)
 * Reconciliation arms (one change from H or A): Hentry = August entry rule
@@ -52,14 +53,14 @@ if "`mode'" == "toy" {
     gen double rooms_shift = rooms
     tempfile toydata
     save `toydata'
-    foreach arm in H H21 A Hentry Hctrl Hshift Ashift {
+    foreach arm in H H21 A Hentry Hctrl Hshift Ashift Hb4 Hb6 {
         use `toydata', clear
         do "sa_rooms_first_birth_v2.do" `arm' "`outdir'/`arm'"
     }
     di "ROOMS_V2_TOY_PASS"
     exit
 }
-assert inlist("`mode'","H","H21","A","Hentry","Hctrl","Hshift","Ashift")
+assert inlist("`mode'","H","H21","A","Hentry","Hctrl","Hshift","Ashift","Hb4","Hb6")
 local household = substr("`mode'",1,1) == "H"
 if inlist("`mode'","Hshift","Ashift") {
     replace rooms = rooms_shift
@@ -68,8 +69,8 @@ if inlist("`mode'","Hshift","Ashift") {
     replace rooms = . if year >= 1994 & inlist(rooms,98,99)
 }
 capture mkdir "`outdir'"
-local baseline_lo = cond("`mode'"=="H21", -2, -3)
-local baseline_hi = cond("`mode'"=="H21", -1, -2)
+local baseline_lo = cond("`mode'"=="H21", -2, cond("`mode'"=="Hb4", -5, cond("`mode'"=="Hb6", -7, -3)))
+local baseline_hi = cond("`mode'"=="H21", -1, cond("`mode'"=="Hb4", -4, cond("`mode'"=="Hb6", -6, -2)))
 
 keep if current & !missing(rooms, AGEREP, EDUYEAR) & AGEREP >= 18
 if !`household' {
@@ -140,7 +141,8 @@ gen byte checksum = Wleft+Wm2+Wm1+Wp1+Wp2+Wp3+Wp4+Wp5+Wp6+Wright
 assert checksum+inrange(K,`baseline_lo',`baseline_hi')==1 if !missing(K)
 assert checksum==0 if missing(K)
 drop checksum
-local headline = cond("`mode'"=="H21", "Wp2", "Wp3")
+* Headline = the window containing +3/+4: Wp((4-b)/2) for even baselines; +2/+3 for the -2/-1 baseline.
+local headline = cond("`mode'"=="H21", "Wp2", "Wp" + string((4-`baseline_hi')/2))
 
 quietly count
 local input_obs = r(N)

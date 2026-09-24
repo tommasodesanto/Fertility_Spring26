@@ -95,3 +95,25 @@ robustness design only.
 sbatch code/cluster/run_rooms_v2.sh toy <task_root>; sbatch --array=0-2 --dependency=afterok:<smoke> code/cluster/run_rooms_v2.sh full <task_root>
 code/model/.venv/bin/python3 code/data/psid_followup_mar2026/collect_rooms_v2.py
 ```
+
+## Baseline choice and the pre-birth path (added September 24, jobs 18426651/18426654)
+
+Two further household fits move the omitted window earlier. Same sample rules;
+support requires every treated cohort in the chosen baseline window.
+
+| Baseline window | +3/+4 minus baseline (SE) | Rows | Path before the baseline |
+|---|---|---|---|
+| −3/−2 (headline) | 1.03 (0.07) | 63,338 | −0.50, −0.50, −0.34 at ≤−8, −7/−6, −5/−4 |
+| −5/−4 | 1.30 (0.10) | 59,623 | −0.12, −0.28, −0.19 at ≤−10, −9/−8, −7/−6 |
+| −7/−6 | 1.43 (0.13) | 56,749 | +0.22, +0.14, +0.04 at ≤−12, −11/−10, −9/−8 |
+
+Read together: relative to six or more years before the birth the path is flat
+within noise (the −7/−6 baseline shows no drift further back), rises by about
+0.15 at −5/−4, 0.5 at −3/−2, 0.8 at the birth, 1.2 at +1/+2, 1.4 at +3/+4 and
+1.6 at +5/+6. The increment from −3/−2 to +3/+4 is 1.03, 1.00 and 0.94 across
+the three baselines, so the post-baseline response is stable; what the baseline
+chooses is how much of the anticipatory adjustment (roughly 0.5 rooms between
+−6 and −2) is counted as response. This is household formation and
+anticipation ahead of a planned birth, not a background trend. Which object
+the model should match is the outstanding author decision; both are now
+available with standard errors.
