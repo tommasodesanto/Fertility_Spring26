@@ -581,3 +581,15 @@ The existing presentation task is restoring the four assets referenced by its
 May source, with an original-specification/measurement-review note; only rooms
 has been coefficient-by-coefficient reproduced in this audit. Empirical jobs
 are complete and collection remains paused; no additional runs are launched.
+
+## September 23: window and −2-only designs on corrected dates
+
+Author-chosen follow-up: original specification, data adjustments only. Four
+Torch fits (smoke 18388849, array 18388850) under `window_designs/`: two-year
+windows with a −3/−2 baseline and an annual design restricted to cohorts
+observed at −2, each with original and corrected room dates. Corrected +3/+4
+window: 0.602 (SE 0.126); corrected −2-only +3/+4: 0.66/0.56. Author records
+0.60 provisionally. Decision memo:
+`docs/model/first_birth_rooms_timing_memo_20260923.md`. Raw PSID source file
+has moved to `~/Desktop/Projects/Datasets/PSID-SHELF/`; the path in
+`review_first_birth_event_study_corrections.py` is stale.

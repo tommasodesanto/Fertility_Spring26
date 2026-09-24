@@ -1,0 +1,288 @@
+{
+  "scope": "512 deterministic evenly spaced raw person indices (same construction as review_first_birth_event_study_corrections.py --check-raw-timing); aggregate counts and two masked example tables only",
+  "matched_person_ids": 512,
+  "waves": [
+    1984,
+    1985,
+    2017,
+    2019
+  ],
+  "next_wave_map": {
+    "1984": 1985,
+    "1985": 1986,
+    "2017": 2019,
+    "2019": null
+  },
+  "usability_gate": "CURRENT==1 on the shelf row labelled year=wave; shelf value observed; raw same-wave value observed (and raw next-wave value observed when a next wave exists); rooms additionally restricted to 1..8 (year<=1984) or 1..20 (year>1984) on the raw side, mirroring the established rooms audit and the project's 0/99-are-not-room-counts convention; FID>0; 0<=AGEREP<=120",
+  "raw_variables_used": {
+    "family_interview_number": {
+      "1984": "V10002",
+      "1985": "V11102",
+      "1986": "V12502",
+      "2017": "ER66002",
+      "2019": "ER72002"
+    },
+    "age": {
+      "1984": "ER30432",
+      "1985": "ER30466",
+      "1986": "ER30501",
+      "2017": "ER34504",
+      "2019": "ER34704"
+    },
+    "rooms": {
+      "1983": "V8969",
+      "1984": "V10432",
+      "1985": "V11614",
+      "1986": "V13019",
+      "2013": "ER53028",
+      "2015": "ER60029",
+      "2017": "ER66029",
+      "2019": "ER72029"
+    }
+  },
+  "raw_label_check": {
+    "V10002": "1984 INTERVIEW NUMBER",
+    "V11102": "1985 INTERVIEW NUMBER",
+    "V12502": "1986 INTERVIEW NUMBER",
+    "ER66002": "2017 FAMILY INTERVIEW (ID) NUMBER",
+    "ER72002": "2019 FAMILY INTERVIEW (ID) NUMBER",
+    "ER30432": "AGE OF INDIVIDUAL                     84",
+    "ER30466": "AGE OF INDIVIDUAL                     85",
+    "ER30501": "AGE OF INDIVIDUAL                     86",
+    "ER34504": "AGE OF INDIVIDUAL                     17",
+    "ER34704": "AGE OF INDIVIDUAL                     19",
+    "V8969": "B1 ACTUAL # ROOMS",
+    "V10432": "B1 ACTUAL # ROOMS",
+    "V11614": "A5 ACTUAL # ROOMS",
+    "V13019": "A5 ACTUAL # ROOMS",
+    "ER53028": "A8 ACTUAL # ROOMS",
+    "ER60029": "A8 ACTUAL # ROOMS",
+    "ER66029": "A8 ACTUAL # ROOMS",
+    "ER72029": "A8 ACTUAL # ROOMS"
+  },
+  "shelf_label_check": {
+    "FID": "Family ID, wave-specific",
+    "HHID": "Household ID, wave-specific",
+    "AGEREP": "Ind's reported age at time of interview",
+    "ACTUALROOMS_": "",
+    "CURRENT": "Ind is current member of fam unit? ",
+    "ID": "Unique ID [(ER30001*1000)+ER30002]",
+    "year": "Survey year"
+  },
+  "task1_counts": {
+    "1984": {
+      "next_wave": 1985,
+      "variables": {
+        "FID": {
+          "usable_persons": 125,
+          "same_wave_matches": 125,
+          "next_wave_matches": 0,
+          "both": 0,
+          "neither": 0,
+          "changers_n": 125,
+          "changers_same_wave_matches": 125,
+          "changers_next_wave_matches": 0
+        },
+        "AGEREP": {
+          "usable_persons": 128,
+          "same_wave_matches": 128,
+          "next_wave_matches": 9,
+          "both": 9,
+          "neither": 0,
+          "changers_n": 119,
+          "changers_same_wave_matches": 119,
+          "changers_next_wave_matches": 0
+        },
+        "rooms": {
+          "usable_persons": 121,
+          "same_wave_matches": 52,
+          "next_wave_matches": 121,
+          "both": 52,
+          "neither": 0,
+          "changers_n": 69,
+          "changers_same_wave_matches": 0,
+          "changers_next_wave_matches": 69
+        }
+      }
+    },
+    "1985": {
+      "next_wave": 1986,
+      "variables": {
+        "FID": {
+          "usable_persons": 126,
+          "same_wave_matches": 126,
+          "next_wave_matches": 0,
+          "both": 0,
+          "neither": 0,
+          "changers_n": 126,
+          "changers_same_wave_matches": 126,
+          "changers_next_wave_matches": 0
+        },
+        "AGEREP": {
+          "usable_persons": 128,
+          "same_wave_matches": 128,
+          "next_wave_matches": 14,
+          "both": 14,
+          "neither": 0,
+          "changers_n": 114,
+          "changers_same_wave_matches": 114,
+          "changers_next_wave_matches": 0
+        },
+        "rooms": {
+          "usable_persons": 124,
+          "same_wave_matches": 69,
+          "next_wave_matches": 124,
+          "both": 69,
+          "neither": 0,
+          "changers_n": 55,
+          "changers_same_wave_matches": 0,
+          "changers_next_wave_matches": 55
+        }
+      }
+    },
+    "2017": {
+      "next_wave": 2019,
+      "variables": {
+        "FID": {
+          "usable_persons": 152,
+          "same_wave_matches": 152,
+          "next_wave_matches": 0,
+          "both": 0,
+          "neither": 0,
+          "changers_n": 152,
+          "changers_same_wave_matches": 152,
+          "changers_next_wave_matches": 0
+        },
+        "AGEREP": {
+          "usable_persons": 166,
+          "same_wave_matches": 166,
+          "next_wave_matches": 0,
+          "both": 0,
+          "neither": 0,
+          "changers_n": 166,
+          "changers_same_wave_matches": 166,
+          "changers_next_wave_matches": 0
+        },
+        "rooms": {
+          "usable_persons": 151,
+          "same_wave_matches": 59,
+          "next_wave_matches": 151,
+          "both": 59,
+          "neither": 0,
+          "changers_n": 92,
+          "changers_same_wave_matches": 0,
+          "changers_next_wave_matches": 92
+        }
+      }
+    },
+    "2019": {
+      "next_wave": null,
+      "variables": {
+        "FID": {
+          "usable_persons": 168,
+          "same_wave_matches": 168,
+          "next_wave_matches": null,
+          "both": null,
+          "neither": 0
+        },
+        "AGEREP": {
+          "usable_persons": 168,
+          "same_wave_matches": 168,
+          "next_wave_matches": null,
+          "both": null,
+          "neither": 0
+        },
+        "rooms": {
+          "usable_persons": 147,
+          "same_wave_matches": 56,
+          "next_wave_matches": null,
+          "both": null,
+          "neither": 91
+        }
+      }
+    }
+  },
+  "task2_examples": {
+    "annual_1983_1986": {
+      "person": "person_A",
+      "rows": [
+        {
+          "year_label": 1983,
+          "raw_rooms_official_variable": 4,
+          "shelf_ACTUALROOMS__on_row_labelled_this_year": 2.0,
+          "preceding_row_year_label": 1982,
+          "shelf_ACTUALROOMS__on_preceding_row": 4.0
+        },
+        {
+          "year_label": 1984,
+          "raw_rooms_official_variable": 2,
+          "shelf_ACTUALROOMS__on_row_labelled_this_year": 4.0,
+          "preceding_row_year_label": 1983,
+          "shelf_ACTUALROOMS__on_preceding_row": 2.0
+        },
+        {
+          "year_label": 1985,
+          "raw_rooms_official_variable": 4,
+          "shelf_ACTUALROOMS__on_row_labelled_this_year": 3.0,
+          "preceding_row_year_label": 1984,
+          "shelf_ACTUALROOMS__on_preceding_row": 4.0
+        },
+        {
+          "year_label": 1986,
+          "raw_rooms_official_variable": 3,
+          "shelf_ACTUALROOMS__on_row_labelled_this_year": 4.0,
+          "preceding_row_year_label": 1985,
+          "shelf_ACTUALROOMS__on_preceding_row": 3.0
+        }
+      ]
+    },
+    "biennial_2013_2019": {
+      "person": "person_B",
+      "rows": [
+        {
+          "year_label": 2013,
+          "raw_rooms_official_variable": 6,
+          "shelf_ACTUALROOMS__on_row_labelled_this_year": 7.0,
+          "preceding_row_year_label": 2011,
+          "shelf_ACTUALROOMS__on_preceding_row": 6.0
+        },
+        {
+          "year_label": 2015,
+          "raw_rooms_official_variable": 7,
+          "shelf_ACTUALROOMS__on_row_labelled_this_year": 9.0,
+          "preceding_row_year_label": 2013,
+          "shelf_ACTUALROOMS__on_preceding_row": 7.0
+        },
+        {
+          "year_label": 2017,
+          "raw_rooms_official_variable": 9,
+          "shelf_ACTUALROOMS__on_row_labelled_this_year": 5.0,
+          "preceding_row_year_label": 2015,
+          "shelf_ACTUALROOMS__on_preceding_row": 9.0
+        },
+        {
+          "year_label": 2019,
+          "raw_rooms_official_variable": 5,
+          "shelf_ACTUALROOMS__on_row_labelled_this_year": 2.0,
+          "preceding_row_year_label": 2017,
+          "shelf_ACTUALROOMS__on_preceding_row": 5.0
+        }
+      ]
+    }
+  },
+  "anomalies": [],
+  "elapsed_seconds": 0.25713262500357814,
+  "files": {
+    "/Users/tommasodesanto/Desktop/Projects/Datasets/PSID-SHELF/Construction_Files/Data/Users/DD/Dropbox (University of Michigan)/Data/PSID/PSID_CMS/PSID_COMPLETE_MAIN_STUDY_1968_2019.dta": {
+      "bytes": 9579079729,
+      "mtime_ns": 1696873684000000000,
+      "observations": 82573,
+      "note": "located via mdfind; path differs from the task text / review_first_birth_event_study_corrections.py hard-code"
+    },
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/PSID/PSIDSHELF_MOBILITY.dta": {
+      "bytes": 6300266005,
+      "mtime_ns": 1730930638959661722,
+      "observations": 3533123
+    }
+  }
+}

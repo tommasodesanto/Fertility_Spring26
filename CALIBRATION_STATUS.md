@@ -1,5 +1,20 @@
 # Calibration Status
 
+## September 23 (evening) — first-birth rooms: provisional value moves to 0.60
+
+Author decision after the timing review: record 0.602 rooms (SE 0.126), the
+two-year window +3/+4 versus −3/−2 under corrected room dates and the original
+Sun–Abraham specification (N=315,737), as the provisional first-birth housing
+response, replacing the 0.770 placeholder. The 0.770 was the original-date +3
+coefficient and measured rooms four to five years after the birth. Frozen target
+0.7202462623815278, its weight and fingerprint are unchanged until the horizon is
+set on model grounds and a new target contract is named. Companion −2-only annual
+design gives +3 = 0.66, +4 = 0.56 (SE 0.18). Memo:
+`docs/model/first_birth_rooms_timing_memo_20260923.md`; results:
+`code/data/psid_followup_mar2026/output/first_birth_correction_review/window_designs/`.
+Ownership variables are not affected by the rooms date offset; moving variables
+remain unverified.
+
 ## September 23 — financed share retained; existing assistance follow-up
 
 Author retains phi = 0.80, requiring a 20% upfront contribution from available
