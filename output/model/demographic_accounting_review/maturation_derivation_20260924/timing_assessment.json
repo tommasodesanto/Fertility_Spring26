@@ -1,0 +1,253 @@
+{
+  "schema": "maturation_timing_assessment_v1",
+  "status": "passed_pure_arithmetic_not_model_experiment",
+  "scope": {
+    "model_solves": 0,
+    "equilibrium_solves": 0,
+    "checkpoint_loads": 0,
+    "source_changes": 0,
+    "new_empirical_estimates": 0
+  },
+  "mu": 0.2222222222222222,
+  "period_years": 4,
+  "queue_waiting_slots": 4,
+  "queue_effect_lag_years": 20,
+  "geometric_delay_no_parent_death": {
+    "mean_years": 18.0,
+    "variance_years_squared": 252.0,
+    "sd_years": 15.874507866387544,
+    "median_years": 12,
+    "fraction_enter_before18": 0.6340496875476299,
+    "fraction_enter_after20": 0.28462802079628785
+  },
+  "normalized_pulse_and_step": [
+    {
+      "years": 4,
+      "geometric_cdf": 0.2222222222222222,
+      "geometric_point_mass": 0.2222222222222222,
+      "queue_cdf": 0,
+      "step_new_entry_fraction_of_long_run_increment": 0.2222222222222222,
+      "step_queue_entry_fraction_of_long_run_increment": 0,
+      "step_cumulative_extra_entrants_normalized": 0.2222222222222222,
+      "step_queue_cumulative_extra_entrants_normalized": 0
+    },
+    {
+      "years": 8,
+      "geometric_cdf": 0.3950617283950617,
+      "geometric_point_mass": 0.1728395061728395,
+      "queue_cdf": 0,
+      "step_new_entry_fraction_of_long_run_increment": 0.3950617283950617,
+      "step_queue_entry_fraction_of_long_run_increment": 0,
+      "step_cumulative_extra_entrants_normalized": 0.6172839506172839,
+      "step_queue_cumulative_extra_entrants_normalized": 0
+    },
+    {
+      "years": 12,
+      "geometric_cdf": 0.5294924554183813,
+      "geometric_point_mass": 0.13443072702331962,
+      "queue_cdf": 0,
+      "step_new_entry_fraction_of_long_run_increment": 0.5294924554183813,
+      "step_queue_entry_fraction_of_long_run_increment": 0,
+      "step_cumulative_extra_entrants_normalized": 1.1467764060356653,
+      "step_queue_cumulative_extra_entrants_normalized": 0
+    },
+    {
+      "years": 16,
+      "geometric_cdf": 0.6340496875476299,
+      "geometric_point_mass": 0.10455723212924858,
+      "queue_cdf": 0,
+      "step_new_entry_fraction_of_long_run_increment": 0.6340496875476299,
+      "step_queue_entry_fraction_of_long_run_increment": 0,
+      "step_cumulative_extra_entrants_normalized": 1.7808260935832951,
+      "step_queue_cumulative_extra_entrants_normalized": 0
+    },
+    {
+      "years": 20,
+      "geometric_cdf": 0.7153719792037122,
+      "geometric_point_mass": 0.08132229165608224,
+      "queue_cdf": 1,
+      "step_new_entry_fraction_of_long_run_increment": 0.7153719792037122,
+      "step_queue_entry_fraction_of_long_run_increment": 1,
+      "step_cumulative_extra_entrants_normalized": 2.4961980727870072,
+      "step_queue_cumulative_extra_entrants_normalized": 1
+    },
+    {
+      "years": 28,
+      "geometric_cdf": 0.8278176170491592,
+      "geometric_point_mass": 0.049194966557383084,
+      "queue_cdf": 1,
+      "step_new_entry_fraction_of_long_run_increment": 0.8278176170491592,
+      "step_queue_entry_fraction_of_long_run_increment": 1,
+      "step_cumulative_extra_entrants_normalized": 4.1026383403279425,
+      "step_queue_cumulative_extra_entrants_normalized": 3
+    },
+    {
+      "years": 40,
+      "geometric_cdf": 0.9189868897775879,
+      "geometric_point_mass": 0.02314660292068916,
+      "queue_cdf": 1,
+      "step_new_entry_fraction_of_long_run_increment": 0.9189868897775879,
+      "step_queue_entry_fraction_of_long_run_increment": 1,
+      "step_cumulative_extra_entrants_normalized": 6.783545885778442,
+      "step_queue_cumulative_extra_entrants_normalized": 6
+    }
+  ],
+  "queue_impulse_check": [
+    {
+      "entry_year": 4,
+      "entry": 0.0
+    },
+    {
+      "entry_year": 8,
+      "entry": 0.0
+    },
+    {
+      "entry_year": 12,
+      "entry": 0.0
+    },
+    {
+      "entry_year": 16,
+      "entry": 0.0
+    },
+    {
+      "entry_year": 20,
+      "entry": 1.0
+    },
+    {
+      "entry_year": 24,
+      "entry": 0.0
+    },
+    {
+      "entry_year": 28,
+      "entry": 0.0
+    },
+    {
+      "entry_year": 32,
+      "entry": 0.0
+    },
+    {
+      "entry_year": 36,
+      "entry": 0.0
+    },
+    {
+      "entry_year": 40,
+      "entry": 0.0
+    },
+    {
+      "entry_year": 44,
+      "entry": 0.0
+    }
+  ],
+  "historical_literal_departure_flows": {
+    "M": 0.10930230596860412,
+    "R": 0.00597224246788276,
+    "B": 0.11527454834637194,
+    "R_over_M_plus_R": 0.05180885589131848,
+    "R_over_dependent_stock": 0.011996486843230939,
+    "R_div_2p1": 0.002843924984706076,
+    "label": "Historical stationary flow share, not current cohort probability or difference versus queued entry."
+  },
+  "historical_age_specific_illustrations": [
+    {
+      "birth_parent_age": 18,
+      "ordinary_route_probability": 0.9768020804782985,
+      "death_route_probability": 0.023197919521701332,
+      "mean_entry_delay_with_release_years": 17.675229126696184,
+      "earliest_possible_death_release_delay_years": 52
+    },
+    {
+      "birth_parent_age": 30,
+      "ordinary_route_probability": 0.9506959669640807,
+      "death_route_probability": 0.04930403303591917,
+      "mean_entry_delay_with_release_years": 17.309743537497134,
+      "earliest_possible_death_release_delay_years": 40
+    },
+    {
+      "birth_parent_age": 42,
+      "ordinary_route_probability": 0.8952109618566033,
+      "death_route_probability": 0.10478903814339671,
+      "mean_entry_delay_with_release_years": 16.53295346599245,
+      "earliest_possible_death_release_delay_years": 28
+    }
+  ],
+  "age_specific_limits": "Actual historical survival schedule; no birth-age weights used. These are conditional cohort illustrations, not aggregate estimates or population bounds.",
+  "hybrid_death_entry": {
+    "result_under_reviewed_support": "zero additional entries if already-entered offspring are excluded",
+    "latest_birth_parent_age": 42,
+    "first_mortality_parent_age": 66,
+    "minimum_child_age_at_start_of_death_period": 24,
+    "minimum_delay_to_next_date_death_release": 28,
+    "assumes_queue_lag_years": 20,
+    "latest_selected_parameter_reverification": false
+  },
+  "cohort_moment_derivation": {
+    "formula": "a_prime(k+1,xprime) += s * choice_transport * K(mprime|m) * (mprime/m) * a(k,x); inject births at k=0; remove death-trigger early entries from matching future queue slot",
+    "holds_if": "Identity-symmetric thinning and existing state-only household policies. It is a forward accounting statistic, not an age-restricted dependence law."
+  },
+  "sources": {
+    "output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/child_accounting/initial_parent_death.json": {
+      "sha256": "67229f34043ef162a708aa43b75cb06d9c634251fcee58752de72058a5b3f6be",
+      "lines": [
+        [
+          1,
+          29
+        ]
+      ]
+    },
+    "output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/child_accounting/README.md": {
+      "sha256": "a44b34cfbf795b3d7a1fcec54f92596718bd92d51b969d0885d6b9cd33aa3498",
+      "lines": [
+        [
+          1,
+          39
+        ]
+      ]
+    },
+    "code/model/tools/run_e5f_open_population_transition.py": {
+      "sha256": "b4ce8b965f607e5337455de46b8c23d53fc07e00e4198d6ad383869723f8f2ca",
+      "lines": [
+        [
+          231,
+          238
+        ],
+        [
+          351,
+          370
+        ],
+        [
+          867,
+          921
+        ],
+        [
+          1228,
+          1247
+        ],
+        [
+          1479,
+          1482
+        ]
+      ]
+    },
+    "code/model/tools/run_e5f_perfect_foresight_transition.py": {
+      "sha256": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be",
+      "lines": [
+        [
+          650,
+          685
+        ]
+      ]
+    }
+  },
+  "verification": [
+    "Exact geometric pulse sums and moments",
+    "Exact four-slot pop-append queue impulse produces20yr next-date lag",
+    "Step response equals cumulative pulse kernel",
+    "Age-specific death/ordinary routes add to1 with terminal release",
+    "Mortality adjustment is zero through20yr under reviewed fertility/survival support",
+    "Enumerated child subsets reproduce attached-cohort first-moment formula"
+  ],
+  "artifacts": {
+    "timing_assessment.md": "780b47a1783c4c66fbbd54ec3ffc26253260641e5b59f2c49df5b3373b8a2b96",
+    "timing_arithmetic.py": "bd089a00ef077d8f4bfa19e8264ff1bdd1510cc2d606f2f35ca8c6d59d858cb9"
+  }
+}
