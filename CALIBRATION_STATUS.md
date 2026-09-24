@@ -1,5 +1,24 @@
 # Calibration Status
 
+## September 24 — cluster-only experimental commute calibration launched
+
+Torch smoke job `18471839`, dependent eight-worker search array `18471840`,
+and dependent selected-export job `18471841` were submitted from the selected
+September 23 B-floor checkpoint. The total smoke/search/export deadline is
+20:56:08 EDT on September 24. At launch, the smoke was running and the other
+jobs were dependency-pending; no new fit or result is claimed. The complete
+source, objective, preflight, jobs, and limitations are in
+`output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/payroll_tax_review/commute_calibration_20260924/README.md`.
+
+The experimental run uses the newly chosen 1.465-room PSID first-birth target,
+all other accepted target/cost updates, externally fixed $\theta_1$, and the
+**proposed** PAYGO rate 8.751%. It keeps the existing stationary demographic
+entry law because the adopted 16/20 birth-entry queue is unimplemented. The
+model observers for first-birth rooms and child-directed bequests remain
+approximate; no native source or numerical gate was changed. Eight free
+coordinates, twelve positively weighted rows with retained weights, and the
+separate $2.1$ fertility normalization define this new, incomparable loss.
+
 ## September 24 — fixed-parameter pension payroll-tax diagnostic complete
 
 Two stationary household/market solves of the selected September 23 configuration
