@@ -1,0 +1,22 @@
+{
+  "status": "prepared_waiting_for_torch_authentication_and_root_review",
+  "selected_cell": "B_floor",
+  "selected_case": "worker09_proposal16",
+  "selected_checkpoint_sha256": "83a28e46b36e2fbe30338d366611f3ec209f0c5a68309ee4ee9fa8523b66adee",
+  "selected_checkpoint_local": false,
+  "torch_authentication_at_last_probe": "permission_denied",
+  "model_solves": 0,
+  "cluster_submissions": 0,
+  "source_edits": 0,
+  "two_case_loop_dry_run": "passed locally without checkpoint/model imports or solves; remote hash-verified dry run pending",
+  "static_target_mapping": "all 13 selected target model cells reproduced exactly from saved early and recent-parent receipts",
+  "runtime_patch_static_check": {
+    "status": "passed_zero_solve",
+    "generated_solver_sha256": "900b8bac964a2f91e8f9f47c566cd89c25e316e5db0afbe0975b58cf1a52bd28",
+    "tenure_support_sha256": "01ff6c5402cf8317d4b927916f0ac1233026fece2716138163a44990b13403a0",
+    "allocation_output_sha256": "86c56d2666f69f757dd69a5b87647686bbd5c4205a8a07cf20651317065e4d8a",
+    "source_diff_sha256": "592a3c90bbc187ba6aecd5fe0b6491ef2f90aa965f4043eae0101baceac23e4f"
+  },
+  "review": "Independent read-only review found two disclosures, both addressed: housing supply elasticity is read and checked from selected P; external 1800-second timeout covers preflight/setup as well as solves.",
+  "next_gate": "Root reviews wrapper core lines, Torch login refreshes, remote zero-solve dry run checks selected checkpoint hash, then one submission at most."
+}

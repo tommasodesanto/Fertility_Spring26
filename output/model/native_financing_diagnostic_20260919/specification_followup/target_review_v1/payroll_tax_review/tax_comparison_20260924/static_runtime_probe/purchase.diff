@@ -1,0 +1,182 @@
+--- frozen/solve_bellman_full_markov_income
++++ diagnostic/solve_bellman_full_markov_income
+@@ -7,6 +7,15 @@
+     continuation_V: np.ndarray | None = None,
+ ):
+     t0 = time.perf_counter()
++    if (bool(getattr(P, "joint_nested_choice", False))
++            or bool(getattr(P, "use_pti_constraint", False))
++            or float(P.lambda_d) != 0.0
++            or not bool(getattr(P, "use_tenure_kernel", True))
++            or not bool(getattr(P, "use_full_kernel", True))
++            or not NUMBA_AVAILABLE
++            or str(getattr(P, "interp_method", "linear")) != "linear"
++            or np.any(SD.birth_dp) or np.any(SD.birth_entry_grant)):
++        raise ValueError("unsupported mechanism combined with purchase-income diagnostic")
+     fec = get_fecundity_by_age(P)
+     J = P.J
+     I = P.I
+@@ -246,7 +255,7 @@
+                             Rv1d_full, Rvt1d_full, Vco, bp_prev_o, has_prev_o, b_grid,
+                             cb_v, hb_v, psi_v_flat, gb_v, alpha_v, esc_v, bf_v,
+                             oc, hsv, owner_h_bar_scale, owner_service_premium, P.c_min,
+-                            alpha, oms, beta, s_next, D_next, gs_alpha1, gs_alpha2, gs_tol,
++                            alpha, oms, beta, 0.0, 0.0, gs_alpha1, gs_alpha2, gs_tol,
+                             strict_owner_hbar_feasibility, int(exhaustive_saving),
+                         )
+                     else:
+@@ -285,7 +294,12 @@
+             hR_pol[:, :, :, j, zz, :, :] = hd
+             bp_pol[:, :, :, j, zz, :, :] = bd
+ 
+-            dp_choice = dp_arr
++            income_for_purchase = np.array([
++                income_at_state(P, i, j, float(z_value)) for i in range(I)
++            ], dtype=float).reshape(I, 1, 1, 1) / Rg
++            dp_choice = dp_arr - income_for_purchase
++            # Require actual post-transaction wealth to lie on the solved grid.
++            bmo_purchase = np.maximum(bmo - income_for_purchase, b_grid[0])
+             if bool(getattr(P, "use_pti_constraint", False)):
+                 income_j = np.array([income_at_state(P, i, j, float(z_value)) for i in range(I)], dtype=float)
+                 dp_choice = pti_adjusted_downpayment(dp_arr, hcost, income_j, P, b_grid)
+@@ -320,12 +334,12 @@
+ 
+             if use_tenure_logit and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
+                 VH, tcj, prj = tenure_logit_kernel(
+-                    Vd, b_grid, heq, hcost, dp_choice, bmo, SD.birth_dp, birth_entry_grant, tenure_choice_kappa
++                    Vd, b_grid, heq, hcost, dp_choice, bmo_purchase, SD.birth_dp, birth_entry_grant, tenure_choice_kappa
+                 )
+                 tenure_probs[:, :, :, j, zz, :, :, :] = prj
+             elif (not use_tenure_logit) and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
+                 VH, tcj = tenure_choice_kernel(
+-                    Vd, b_grid, heq, hcost, dp_choice, bmo, SD.birth_dp, birth_entry_grant
++                    Vd, b_grid, heq, hcost, dp_choice, bmo_purchase, SD.birth_dp, birth_entry_grant
+                 )
+             else:
+                 VH = np.zeros((Nb, nt, I, npar, ncs))
+--- frozen/tenure_choice_kernel
++++ diagnostic/tenure_choice_kernel
+@@ -1,4 +1,4 @@
+-@njit(cache=True)
++@njit(cache=False)
+ def tenure_choice_kernel(
+     Vd,                  # (Nb, nt, I, npar, ncs)
+     b_grid,              # (Nb,)
+@@ -35,7 +35,7 @@
+                             v0 = Vd[b, 0, id_, nn, cs]
+                         else:
+                             ba = bg_b + sp
+-                            v0 = _interp_with_clip(b_grid, Vd[:, 0, id_, nn, cs], ba, strict_interpolated_support)
++                            v0 = _interp_on_transaction_grid(b_grid, Vd[:, 0, id_, nn, cs], ba, strict_interpolated_support)
+                         if v0 > best_v:
+                             best_v = v0
+                             best_tn = 0
+@@ -50,20 +50,20 @@
+                                 bab = bg_b - hc
+                                 if birth_dp[nn, cs, to, tn]:
+                                     bag = bab if bab > bmn else bmn
+-                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bag, strict_interpolated_support)
++                                    v_tn = _interp_on_transaction_grid(b_grid, Vd[:, tn, id_, nn, cs], bag, strict_interpolated_support)
+                                 elif birth_entry_grant[id_, tn, nn, cs] > 0:
+                                     gfix = birth_entry_grant[id_, tn, nn, cs]
+                                     babg = bab + gfix
+-                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], babg, strict_interpolated_support)
++                                    v_tn = _interp_on_transaction_grid(b_grid, Vd[:, tn, id_, nn, cs], babg, strict_interpolated_support)
+                                     if (bg_b + gfix) < dpn or babg < bmn:
+                                         v_tn = NEG_INF
+                                 else:
+-                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bab, strict_interpolated_support)
++                                    v_tn = _interp_on_transaction_grid(b_grid, Vd[:, tn, id_, nn, cs], bab, strict_interpolated_support)
+                                     if bg_b < dpn or bab < bmn:
+                                         v_tn = NEG_INF
+                             else:
+                                 bar = bg_b + sp - hc
+-                                v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bar, strict_interpolated_support)
++                                v_tn = _interp_on_transaction_grid(b_grid, Vd[:, tn, id_, nn, cs], bar, strict_interpolated_support)
+                                 dpc = dpn - sp
+                                 if bg_b < dpc or bar < bmn:
+                                     v_tn = NEG_INF
+--- frozen/tenure_logit_kernel
++++ diagnostic/tenure_logit_kernel
+@@ -1,4 +1,4 @@
+-@njit(cache=True)
++@njit(cache=False)
+ def tenure_logit_kernel(
+     Vd,                  # (Nb, nt, I, npar, ncs)
+     b_grid,              # (Nb,)
+@@ -30,7 +30,7 @@
+                             v0 = Vd[b, 0, id_, nn, cs]
+                         else:
+                             ba = bg_b + sp
+-                            v0 = _interp_with_clip(b_grid, Vd[:, 0, id_, nn, cs], ba)
++                            v0 = _interp_on_transaction_grid(b_grid, Vd[:, 0, id_, nn, cs], ba)
+                         vals[0] = v0
+                         if v0 > best_v:
+                             best_v = v0
+@@ -45,20 +45,20 @@
+                                 bab = bg_b - hc
+                                 if birth_dp[nn, cs, to, tn]:
+                                     bag = bab if bab > bmn else bmn
+-                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bag)
++                                    v_tn = _interp_on_transaction_grid(b_grid, Vd[:, tn, id_, nn, cs], bag)
+                                 elif birth_entry_grant[id_, tn, nn, cs] > 0:
+                                     gfix = birth_entry_grant[id_, tn, nn, cs]
+                                     babg = bab + gfix
+-                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], babg)
++                                    v_tn = _interp_on_transaction_grid(b_grid, Vd[:, tn, id_, nn, cs], babg)
+                                     if (bg_b + gfix) < dpn or babg < bmn:
+                                         v_tn = NEG_INF
+                                 else:
+-                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bab)
++                                    v_tn = _interp_on_transaction_grid(b_grid, Vd[:, tn, id_, nn, cs], bab)
+                                     if bg_b < dpn or bab < bmn:
+                                         v_tn = NEG_INF
+                             else:
+                                 bar = bg_b + sp - hc
+-                                v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bar)
++                                v_tn = _interp_on_transaction_grid(b_grid, Vd[:, tn, id_, nn, cs], bar)
+                                 dpc = dpn - sp
+                                 if bg_b < dpc or bar < bmn:
+                                     v_tn = NEG_INF
+--- frozen/full_renter_block_kernel
++++ diagnostic/full_renter_block_kernel.allocation
+@@ -1,4 +1,4 @@
+-@njit(cache=True, parallel=True)
++@njit(cache=False, parallel=True)
+ def full_renter_block_kernel(
+     Rv1d,           # (Nb,)
+     Rvt1d,          # (Nb,) debt-blind means-test resources
+@@ -148,7 +148,7 @@
+                         ct = 1e-10
+                     ct_eff = ct if ct > c_min else c_min
+                     ht_eff = ht_cap_c if ht_cap_c > 0.01 else 0.01
+-                    if exhaustive_saving and v_best > -1e9:
++                    if exhaustive_saving:
+                         # Report the intratemporal allocation used by the
+                         # objective, without the legacy output-only floors.
+                         ct_eff = ct
+@@ -159,7 +159,7 @@
+                     ct = al * surplus
+                     ct_eff = ct if ct > c_min else c_min
+                     ht_eff = ht_unc if ht_unc > 0.01 else 0.01
+-                    if exhaustive_saving and v_best > -1e9:
++                    if exhaustive_saving:
+                         ct_eff = ct
+                         ht_eff = ht_unc
+                     co[b, c] = cbc + ct_eff
+--- frozen/full_owner_block_kernel
++++ diagnostic/full_owner_block_kernel.allocation
+@@ -1,4 +1,4 @@
+-@njit(cache=True, parallel=True)
++@njit(cache=False, parallel=True)
+ def full_owner_block_kernel(
+     Rv1d,           # (Nb,)
+     Rvt1d,          # (Nb,) debt-blind means-test resources
+@@ -136,5 +136,7 @@
+ 
+             ct = Rvb - oc - cbc - bp_best
+             ct_eff = ct if ct > c_min else c_min
++            if exhaustive_saving and ct > 1e-10:
++                ct_eff = ct
+             co[b, c] = cbc + ct_eff
+     return Vo, bp_out, co

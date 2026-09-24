@@ -1,5 +1,19 @@
 # Calibration Status
 
+## September 24 — fixed-parameter pension payroll-tax diagnostic complete
+
+Two stationary household/market solves of the selected September 23 configuration
+completed in 243 seconds of Torch job `18467349`: payroll tax 17.9% versus the
+**proposed, not adopted** 8.751017424959717%, with the same nine structural
+coordinates, fixed fertility utility scale, balanced PAYGO pension, and frozen
+old target contract. The lower-rate case raises aggregate wealth by 38.6% and
+ownership at ages 30–55 from 39.5% to 41.9%; mean first-birth age moves from
+26.658 to 25.942 and childlessness at ages 40–44 from 16.9% to 12.5%.
+Demographic entry is held fixed, and the new maturation/split-entry decision
+below is not implemented; these are diagnostic comparisons, not an adopted tax
+rate, recalibration, or new demographic steady state. Full target, parameter,
+gate and graph packet: `output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/payroll_tax_review/tax_comparison_20260924/README.md`.
+
 ## September 24 — maturation and adult-entry decision adopted; verification pending
 
 The author adopts, for the next implementation, independent binomial departure

@@ -1,0 +1,72 @@
+{
+  "status": "pass_with_readability_limits",
+  "scope": "independent read-only check of local job 18467349 receipt, tables, parameter rows, and sampled existing standard diagnostic PNGs; no solves or source edits",
+  "execution": {
+    "status": "completed_collected",
+    "job_id": "18467349",
+    "completed_cases": 2,
+    "native_solve_count": 2,
+    "elapsed_seconds": 226.50111358996946,
+    "external_timeout_seconds": 1800,
+    "exit": "0:0"
+  },
+  "identity": {
+    "selected_checkpoint_sha256": "83a28e46b36e2fbe30338d366611f3ec209f0c5a68309ee4ee9fa8523b66adee",
+    "target_sha256": "10d80bcfca64aad511058b4a1d427283c3c2f548803213f21688e091f7457107",
+    "source_manifest_sha256": "76406fcc10206d9e30bcc29d4e18accdf7fffdd9219e50e6e11c1c3360f01336",
+    "psi_child": 0.14245465246024056
+  },
+  "parameters": {
+    "per_case_full_rows": 17,
+    "changed_estimates_only": [
+      {
+        "parameter": "payroll_tax",
+        "current": 0.179,
+        "proposal": 0.08751017424959717
+      },
+      {
+        "parameter": "pension_period",
+        "current": 2.0463613896121235,
+        "proposal": 1.0004326356570097
+      }
+    ]
+  },
+  "targets": {
+    "rows": 13,
+    "weighted_rows": 12,
+    "same_target_fingerprint_both_cases": true,
+    "baseline_replay_max_abs_delta": 1.83201890635587e-06,
+    "calibrated_smm": false
+  },
+  "recomputed_percent_changes": {
+    "disposable_annual_working_income": 11.143705937913229,
+    "pension_over_mean_working_gross": -51.111634497424504,
+    "house_price": 0.7214834539389869,
+    "aggregate_wealth": 38.5731827674952,
+    "ownership_30_55": 6.044905023607705,
+    "childlessness_40_44": -25.848977698598052,
+    "model_tfr": 7.2193456113682775
+  },
+  "static_means": {
+    "annual_gross_working_income_both": 1.0000000000009,
+    "annual_disposable_per_gross_1_current": 0.8210000000007732,
+    "annual_disposable_per_gross_1_proposal": 0.9124898257511269
+  },
+  "visual_review": {
+    "standard_png_count_per_case": 17,
+    "sampled_existing_graphs": [
+      "fertility_by_age",
+      "fertility_policy_by_age_income_state",
+      "market_clearing_residuals",
+      "policy_childless_renter_age30",
+      "ownership_by_age_income_state"
+    ],
+    "gross_pathology": "No obvious probability or policy pathology in sampled graphs; fertility-by-age curves are smooth and taper to zero at the terminal childbearing age, and policy surfaces are finite-looking and smoothly ordered. This is visual screening, not an independent full numerical audit.",
+    "readability": "Fertility-policy and age-income panels have legends that overlap/crop the plotted area; single-market residual chart renders as a solid block and is not interpretable at this scale. These are presentation limits in existing files."
+  },
+  "limits": [
+    "Independent check did not recalculate native gates; used Sol\u2019s independent gate receipt and reconciled its summary against the listed local result artifacts.",
+    "Job preserves its prior sequential household-entry implementation; the Sept. 24 maturation/split-entry change is explicitly absent.",
+    "No new plots, model solves, remote requests, or source edits."
+  ]
+}
