@@ -1,0 +1,139 @@
+{
+  "date": "2026-09-24",
+  "status": "proposal_pending_author_choice_no_parameter_change",
+  "maintained_closure": "all pension payroll receipts distributed through existing PAYGO pension rule; pension endogenous",
+  "recommendation": {
+    "rate": 0.08751017424959717,
+    "display_percent": 8.75,
+    "definition": "combined employee-employer OASI statutory rate multiplied by taxable-to-total covered earnings ratio in 2007",
+    "model_mapping_condition": "uncapped gross working earnings treated as a proxy for covered cash labor earnings plus net self-employment; combined burden attributed to households",
+    "limitations": [
+      "not exact cash paycheck mapping",
+      "coverage and survey income concept may differ",
+      "OASI includes survivors, not only retired workers",
+      "does not simultaneously match actual 2007 benefits because actual system accumulated reserves"
+    ]
+  },
+  "alternative": {
+    "rate": 0.106,
+    "definition": "flat statutory combined OASI abstraction without cap adjustment",
+    "not_effective_rate": true
+  },
+  "ssa_2007_statutory": {
+    "oasi_employee": 0.053,
+    "oasi_employer": 0.053,
+    "oasi_combined": 0.106,
+    "di_combined": 0.018,
+    "oasdi_combined": 0.124,
+    "hi_combined": 0.029,
+    "oasdi_cap_dollars": 97500,
+    "hi_cap": null,
+    "source": "https://www.ssa.gov/policy/docs/statcomps/supplement/2008/2a1-2a7.html#table2.a3"
+  },
+  "ssa_2007_earnings_2025_vintage": {
+    "units": "millions of current dollars",
+    "covered_wages": 5900235,
+    "taxable_wages": 4973300,
+    "covered_self_employment": 481071,
+    "taxable_self_employment": 294900,
+    "covered_total": 6381306,
+    "taxable_total": 5268200,
+    "taxable_fraction": 0.8255676815999734,
+    "source": "https://www.ssa.gov/policy/docs/statcomps/supplement/2025/4b.html#table4.b1",
+    "tables": [
+      "4.B1",
+      "4.B2"
+    ],
+    "denominator_definition": "covered wages including amounts above cap, plus reported self-employment net earnings",
+    "numerator_definition": "reported OASDI taxable wages plus taxable self-employment earnings"
+  },
+  "definition_checks": {
+    "oasdi_effective_covered": 0.1023703925183967,
+    "oasi_employee_only_effective_covered": 0.043755087124798586,
+    "oasi_wage_only_effective_covered": 0.08934725481273202,
+    "oasi_belowcap_laborcost_denominator_employer_oasi_only": 0.10066476733143401,
+    "statutory_over_effective_ratio": 1.211287726358149
+  },
+  "ssa_actual_2007": {
+    "units": "billions of dollars",
+    "oasi_net_contributions": 560.9,
+    "oasi_benefit_payments": 489.1,
+    "source": "https://www.ssa.gov/oact/TR/TR08/II_cyoper.html",
+    "table": "II.B1",
+    "note": "not used to mix source-vintage numerator and denominator in recommendation"
+  },
+  "literature": [
+    {
+      "paper": "Conesa and Krueger (1999)",
+      "country": "United States",
+      "payroll_rate": 0.107,
+      "rate_status": "Observed historical OASI rate of 10.7% is the calibration target; authors choose the replacement rate to match it, implying 50% replacement given model demographics.",
+      "tax_base": "flat uncapped model labor earnings",
+      "closure": "PAYGO pensions only",
+      "source": "https://editorialexpress.com/jrust/econ698s/conesa.pdf",
+      "pages": "759-762,765-766"
+    },
+    {
+      "paper": "Fuster, Ayse Imrohoroglu and Selahattin Imrohoroglu (2007)",
+      "country": "United States",
+      "payroll_rate": 0.103,
+      "rate_status": "endogenous model payroll rate associated with 44% average-earner replacement",
+      "general_labor_income_tax_separate": 0.17,
+      "tax_base": "flat labor earnings; no employee-employer split in budget",
+      "closure": "PAYGO payroll tax balances pension budget each period",
+      "source": "https://drive.google.com/file/d/1vbwO9zf5CA0NM35VKVQwStIptjrw3tvU/view",
+      "author_source": "https://sites.google.com/usc.edu/ayse-imrohoroglu/research",
+      "pages": "116-118,120,123,125(Table2)"
+    },
+    {
+      "paper": "Huggett and Ventura (1999)",
+      "country": "United States",
+      "payroll_rate": null,
+      "rate_status": "endogenous to benefit schedule; not extracted as external calibration",
+      "tax_base": "proportional uncapped earnings in eq5; benefit-crediting earnings capped separately",
+      "closure": "PAYGO, baseline benefits include hospital and medical transfers",
+      "source": "https://editorialexpress.com/jrust/econ698s/hugget.pdf",
+      "pages": "504-508,512-514"
+    }
+  ],
+  "supplemental_base_check": {
+    "paper": "Huggett and Parra, September25 2008 manuscript, later JPE2010",
+    "payroll_rate": 0.106,
+    "tax_base": "capped earnings, cap2.42 mean earnings",
+    "source": "https://economics.ucr.edu/wp-content/uploads/2019/11/Huggett.pdf",
+    "pages": "9,14",
+    "limitation": "not cited as proof of separate annual PAYGO budget closure"
+  },
+  "self_employment_source": {
+    "url": "https://www.irs.gov/pub/irs-prior/f1040sse--2007.pdf",
+    "pages": "1-2",
+    "ordinary_profit_to_net_earnings_factor": 0.9235
+  },
+  "verification": {
+    "matched_component_sums": true,
+    "model_runs": 0,
+    "data_runs": 0,
+    "code_edits": 0,
+    "parameter_edits": 0
+  },
+  "implemented_base": {
+    "source_review": "independent base worker; lead code spot-check",
+    "current_rate": 0.179,
+    "years_per_period": 4,
+    "household_income": "4*(1-tau_pay)*w_hat*income_age_profile*z",
+    "payroll_revenue": "tau_pay times four-year gross working earnings; flat pension divides receipts by survival-weighted retirement exposure",
+    "no_features": [
+      "individual spouse earnings",
+      "statutory cap",
+      "employer-cost gross-up",
+      "payroll tax on pensions",
+      "payroll tax on asset income"
+    ],
+    "sources": [
+      "code/model/intergen_eqscale_seq_optimized/parameters.py:818-859",
+      "code/model/tools/e5f_social_security.py:78-115",
+      "code/model/tools/e5f_stationary_paygo.py:51-65"
+    ],
+    "interpretation": "aggregate flat approximation; empirical cash wages vs employer compensation not established by code"
+  }
+}
