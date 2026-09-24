@@ -1,5 +1,23 @@
 # Calibration Status
 
+## September 24 — first-birth rooms: final empirical version (household design)
+
+Author chose the household unit (one woman, reference person or spouse, per
+single-family-unit household-year), PSID weights, biological birth history,
+entry at first adult observation, −3/−2 baseline window. Rooms rebuilt from the
+official year-specific PSID variables (verified against the shifted column,
+zero mismatches); non-room codes to missing. Result: **+3/+4 versus −3/−2 =
+1.025 rooms (SE 0.073)**, N=63,338 household-years, 3,655 treated and 1,654
+confirmed-childless women. Sensitivity −2/−1 baseline: +2/+3 = 0.763 (0.059).
+Robustness all current adults unweighted: 0.820 (0.032). Reconciliation with
+0.77 / 0.72 / 0.60 / 0.73 / 0.93 is tabulated in the package README. Frozen
+target 0.7202462623815278 and its weight are UNCHANGED; outstanding: horizon of
+the model target (read from the saved window path once the model observation
+rule is fixed), interpretation of the pre-baseline household-formation rise,
+new target contract `psid_first_birth_rooms_household_window_v2_20260924`
+pending that decision. Package:
+`code/data/psid_followup_mar2026/output/sa_rooms_first_birth_v2/`.
+
 ## September 24 — minimal quantitative mock update completed
 
 Authenticated Claude Max Opus5.5 updated only mock quantification, preserving

@@ -152,3 +152,25 @@ codes cleaned; if the annual curve is needed for the write-up, that is one
 Torch array. Rooms were not rebuilt from the raw yearly variables (would
 recover 1969 and 1976 answers and the 1977–1978 references). Moving variables
 remain unverified.
+
+## Final version (September 24): household design, official room variables
+
+Author decisions: household unit, PSID weights, biological birth history,
+entry at first adult observation, −3/−2 baseline headline with −2/−1 as
+sensitivity. Rooms rebuilt from the 41 official year-specific PSID variables
+(verified: 811,486 overlaps, 0 mismatches; recovers 1969, 1975, 1976). Full
+package: `code/data/psid_followup_mar2026/output/sa_rooms_first_birth_v2/`
+(README, target receipt, window path, figure).
+
+| Design | Window | Rooms (SE) | N |
+|---|---|---|---|
+| **Household** | **+3/+4 vs −3/−2** | **1.03 (0.07)** | 63,338 |
+| Household, sensitivity | +2/+3 vs −2/−1 | 0.76 (0.06) | 65,053 |
+| All adults, robustness | +3/+4 vs −3/−2 | 0.82 (0.03) | 300,684 |
+
+Reconciliation fits: rebuilt vs shifted rooms ±0.02; control-cohort
+designation 0.00; August entry rule −0.05 with 24% fewer rows. The household
+path: +0.41 at −1/0, +0.82 at +1/+2, +1.03 at +3/+4, ~1.2 from +5/+6. Household
+formation shows as a rise from −0.5 at seven years out to the baseline.
+Horizon for the model target remains the author's decision; frozen target and
+weight unchanged.
