@@ -4,6 +4,12 @@ One-off review, audit, and testing prompts live here instead of the repository
 root. They are useful context, but they are not active model or calibration
 state.
 
+- `HANDOFF_fable_empirical_mock.md`: September 24 empirical-writing brief for
+  Tommaso's existing Fable session. Maps the revised PSID, descriptive housing
+  evidence, ACS pseudo-panel and national instrument exercises to the existing
+  mock, with author style and scope constraints. Prepared for manual handoff;
+  no drafting session or numerical work dispatched.
+
 - `PROMPT_fable_model_specification_20260920.md`: Claude Max/Fable review brief
   to settle a provisional model specification before serious recalibration.
   Includes the open structural choices, reviewed overnight evidence and its
