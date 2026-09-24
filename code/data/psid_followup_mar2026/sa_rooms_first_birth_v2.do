@@ -26,7 +26,10 @@
 * Rooms: official year-specific PSID variables merged to the interview year;
 * codes 9 (through 1984), 99 (1985-1993), 98/99 (1994 on) set to missing.
 version 17.0
-args mode outdir
+args arm outdir
+* An arm is DESIGN or DESIGN_OUTCOME; outcome defaults to rooms.
+local mode = cond(strpos("`arm'","_")>0, substr("`arm'",1,strpos("`arm'","_")-1), "`arm'")
+local outcome = cond(strpos("`arm'","_")>0, substr("`arm'",strpos("`arm'","_")+1,.), "rooms")
 timer clear 1
 timer on 1
 if "`mode'" == "toy" {
@@ -43,6 +46,10 @@ if "`mode'" == "toy" {
     replace relchi1_year = bio_first_year-1 if mod(ID,13)==0
     gen double K = year-bio_first_year
     gen double rooms = 4+ID/100+0.2*(K>=0 & !missing(K))+rnormal()
+    gen byte own = runiform() < 0.5+0.1*(K>=0 & !missing(K))
+    gen byte moved = runiform() < 0.2
+    gen byte moved_space = moved & runiform() < 0.4
+    gen byte moved_nbhd = moved & runiform() < 0.2
     gen byte AGEREP = 25+mod(ID,10)
     gen byte EDUYEAR = 12+mod(ID,4)
     gen double relchirep_max = cond(missing(bio_first_year), cond(mod(ID,10)==0,0,1), 1)
@@ -60,14 +67,19 @@ if "`mode'" == "toy" {
     gen double rooms_shift = rooms
     tempfile toydata
     save `toydata'
-    foreach arm in H H21 A Hentry Hctrl Hshift Ashift Hb4 Hb6 A2 A2h A2n {
+    foreach a in H H21 A Hentry Hctrl Hshift Ashift Hb4 Hb6 A2 A2h A2n H_own A2h_moved A2h_moved_space H_moved_nbhd {
         use `toydata', clear
-        do "sa_rooms_first_birth_v2.do" `arm' "`outdir'/`arm'"
+        do "sa_rooms_first_birth_v2.do" `a' "`outdir'/`a'"
     }
     di "ROOMS_V2_TOY_PASS"
     exit
 }
 assert inlist("`mode'","H","H21","A","Hentry","Hctrl","Hshift","Ashift","Hb4","Hb6") | inlist("`mode'","A2","A2h","A2n")
+assert inlist("`outcome'","rooms","own","moved","moved_space","moved_nbhd")
+if "`outcome'" != "rooms" {
+    drop rooms
+    rename `outcome' rooms
+}
 local household = substr("`mode'",1,1) == "H"
 local alladult2 = substr("`mode'",1,2) == "A2"
 if inlist("`mode'","Hshift","Ashift") {
@@ -239,7 +251,9 @@ quietly timer list 1
 local seconds = r(t1)
 clear
 set obs 1
-gen str8 arm = "`mode'"
+gen str24 arm = "`arm'"
+gen str8 design = "`mode'"
+gen str16 outcome = "`outcome'"
 gen int baseline_lo = `baseline_lo'
 gen int baseline_hi = `baseline_hi'
 gen double input_observations = `input_obs'
@@ -259,4 +273,4 @@ gen str12 weights = cond("`weightspec'"=="","none","pw=IW")
 gen double runtime_seconds = `seconds'
 format headline_effect headline_se reference_mean_rooms %24.17g
 export delimited using "`outdir'/fit_receipt.csv", replace
-di "ROOMS_V2_ARM_PASS `mode'"
+di "ROOMS_V2_ARM_PASS `arm'"
