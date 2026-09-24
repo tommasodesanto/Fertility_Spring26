@@ -1,0 +1,395 @@
+{
+  "schema": "demographic_accounting_alternatives_review_v1",
+  "created_utc": "2026-09-24T16:22:43.369408+00:00",
+  "status": "bounded_source_grounded_review_for_author_discussion_not_adoption",
+  "review_head_before_commit": "9ad9ef8e83580d91835c21daa101c79c557c9bd1",
+  "owned_files": [
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/demographic_accounting_review/alternatives_review_20260924/review.md",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/demographic_accounting_review/alternatives_review_20260924/receipt.json"
+  ],
+  "review_sha256": "9ea2f134a607241cfbb764ebf83459d4939b9479b6ac6bc138fe6484f9794bd6",
+  "review_word_count_whitespace": 1796,
+  "scope": {
+    "model_runs": 0,
+    "equilibrium_runs": 0,
+    "empirical_runs": 0,
+    "new_subagents": 0,
+    "source_edits": 0,
+    "canonical_status_edits": 0,
+    "paper_edits": 0,
+    "checkpoint_loads": 0,
+    "new_literature_searches": 0,
+    "checks": "Source reads, algebraic derivation, exact rational hand-example arithmetic, review structure and hash verification only."
+  },
+  "recommendation": "A, conditional on explicit economic-age approximation and separately resolved conversion/top-bin units; retain ordinary 2/9 hazard and release dependents at parental household death through a single entry operator. Not adopted.",
+  "established_facts": [
+    "Accepted context is two-adult household, one decision maker, individually counted children, distinct first-child cost, and reference CEB 2.1; explicit child-age state expansion is ruled out by task.",
+    "Source stationary potential maturation-entry counter and dated birth queue use different clocks and conversion/unit conventions.",
+    "Source advancement applies survival before survivor maturation; terminal households and attached dependent counts exit.",
+    "Existing historical checkpoint explicitly records birth support through parent node 42, mortality beginning at 66, and dependent-loss flow. Its quantitative receipt is historical, not latest.",
+    "Existing newer frozen-parameter receipt confirms age survival but does not establish every setting needed for an accounting change.",
+    "Current profile source uses literal three-dependent state with top-bin reporting mean 3.602359422009; transition source adds extra top-bin units only to demographic renewal."
+  ],
+  "derived_conclusions_not_empirical_estimates": [
+    "With literal two-adult households and no residual resident pool, common dependency exits conserve person counts only at c=1/2 after explicit migration/death flows; c=1/2.1 leaves 1/21 of retained departing persons unassigned.",
+    "Reference CEB 2.1 does not prove closed stationary replacement. Under internally consistent literal units and no reproductive mortality, c=1/2 implies 1.05 descendant couples per reference entrant.",
+    "Finite parent-age/n/m states cannot determine exact chronological offspring age for all fertility histories. A and C necessarily approximate age if all entrants start at model age 18.",
+    "A corrects disappearance without requiring an orphan-care model under verified late-mortality support, but assumes offspring survival while dependent and resets the economic lifecycle.",
+    "B can close a separate aggregate demographic stock only by ceasing to interpret m as literal household membership; cost/housing and transfer meaning must then be reconsidered.",
+    "A cap changes mean dependence and its response to birth timing. All-birth weights, first-draw timing, newborn exemption and fixed counterfactual hazard must be explicit.",
+    "A top-bin scalar pool cannot enforce parent-age-dependent release without additional parent-age information; a person ledger alone does not supply missing resource demands.",
+    "At fixed units and c, A adds cR to departure-only stationary renewal; without dependent death F=B. Its first entry response can occur after one four-year step, whereas the four-slot queue has a twenty-year effect lag. No equilibrium magnitude or sign is inferred."
+  ],
+  "author_choices_outstanding": [
+    "Economic versus chronological entrant age",
+    "Person-to-household conversion and meaning of /2.1",
+    "Literal versus expanded top-bin demographic units and resource mapping",
+    "Whether a parental-age cap is desired, and its duration restriction"
+  ],
+  "retained_approximations_if_A_adopted": [
+    "Memoryless dependence, including first-period departure",
+    "Age-18 economic lifecycle reset for early/late and death-triggered entrants",
+    "Joint household exit treated as two adult deaths",
+    "No independent offspring mortality before entry",
+    "Pooled or external estate/entry-wealth accounting without genealogical matching"
+  ],
+  "not_adopted": [
+    "c=1/2",
+    "c=1/2.1 as literal person conservation",
+    "Parental cap at 60, 62, or 66",
+    "Any new hazard value",
+    "Top-bin auxiliary pool or blanket multiplier",
+    "Offspring inheritance kernel",
+    "Migration as a replacement residual"
+  ],
+  "hand_checks": {
+    "example1_literal_H_next": "2",
+    "example1_literal_P_next": "4",
+    "example1_retained_conversion_P_next": "82/21",
+    "example1_missing_people": "2/21",
+    "conversion_residual_fraction": "1/21",
+    "uncapped_counted_mean_years": 18,
+    "age_example_convention": "Birth at beginning of age-42 period; first draw 42-to-46; household death applied at current node 66 before survivor maturation on 66-to-70; cap evaluated at 62 acts on arrival at 66. No cohort loss probability is computed."
+  },
+  "future_checks_only": [
+    "Deterministic complete flow ledger including terminal and top-bin cases",
+    "Inspect selected serialized P and adapter overrides",
+    "Fixed-policy no-shock stationary/transition identity and initialization test",
+    "Only afterward scope fresh equilibrium and standard diagnostics"
+  ],
+  "evidence": {
+    "S1": [
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/e5_maturation_repair.py",
+        "lines": [
+          [
+            17,
+            33
+          ]
+        ],
+        "sha256": "02a14892614ae287de9d961a900d76197dcef60750a82318ce50fe6536166b0f",
+        "claim": "Independent-count override and 18-year expected duration."
+      },
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/parameters.py",
+        "lines": [
+          [
+            1094,
+            1113
+          ],
+          [
+            1138,
+            1165
+          ],
+          [
+            1168,
+            1243
+          ]
+        ],
+        "sha256": "6e331ec390cebec5cbfc0e3cfad98d8eee7ed44fac7d7889de96e35696dd8eb1",
+        "claim": "Current-age hazard indexing, optional newborn exemption, and constant binomial count law."
+      }
+    ],
+    "S2": [
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/e5_profile.py",
+        "lines": [
+          [
+            175,
+            184
+          ]
+        ],
+        "sha256": "24b670345aff47636d3e1de78065ad7a8bcf8579699c8c6fcb92ebb455f1578b",
+        "claim": "Source E5 literal-topcode profile: weight 3.602359422009 and entrant factor 0.5; these are not a claim about every serialized run."
+      },
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/solver.py",
+        "lines": [
+          [
+            4871,
+            4873
+          ],
+          [
+            5619,
+            5664
+          ]
+        ],
+        "sha256": "b549dabeb03fdb9d476b2be58642ee2d876143b01f529af663e2cf50fc978562",
+        "claim": "Survival before forward advancement and literal lost-count times conversion in potential maturation-entry counter."
+      }
+    ],
+    "S3": [
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_open_population_transition.py",
+        "lines": [
+          [
+            302,
+            370
+          ],
+          [
+            740,
+            785
+          ],
+          [
+            867,
+            921
+          ],
+          [
+            1479,
+            1482
+          ]
+        ],
+        "sha256": "b4ce8b965f607e5337455de46b8c23d53fc07e00e4198d6ad383869723f8f2ca",
+        "claim": "Separate birth conversion/queue, top-bin adjustment, raw dependent observer, survival-first advancement, terminal removal, and next-date queue lag metadata."
+      }
+    ],
+    "S4": [
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_open_population_transition.py",
+        "lines": [
+          [
+            1214,
+            1261
+          ]
+        ],
+        "sha256": "b4ce8b965f607e5337455de46b8c23d53fc07e00e4198d6ad383869723f8f2ca",
+        "claim": "Dated use of queue despite separately measured maturation; optional retention/outside entry and age bridge."
+      },
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_perfect_foresight_transition.py",
+        "lines": [
+          [
+            650,
+            696
+          ]
+        ],
+        "sha256": "75fc8af3205b584c95eb997f90cd496dd7cc046c228c52146ab91bdc44df82be",
+        "claim": "Perfect-foresight driver also inserts queue entrants and optionally conditions historical age distribution."
+      }
+    ],
+    "S5": [
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/child_accounting/README.md",
+        "lines": [
+          [
+            1,
+            40
+          ]
+        ],
+        "sha256": "a44b34cfbf795b3d7a1fcec54f92596718bd92d51b969d0885d6b9cd33aa3498",
+        "claim": "Historical checkpoint scope, mortality timing, flow interpretation, and dependent-loss evidence."
+      },
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/current_candidate_transition/overnight_20260912/child_accounting/initial_parent_death.json",
+        "lines": [
+          [
+            1,
+            29
+          ]
+        ],
+        "sha256": "67229f34043ef162a708aa43b75cb06d9c634251fcee58752de72058a5b3f6be",
+        "claim": "Archived exact flow values and checkpoint hash; not remeasured."
+      }
+    ],
+    "S6": [
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/parameters.py",
+        "lines": [
+          [
+            150,
+            162
+          ]
+        ],
+        "sha256": "6e331ec390cebec5cbfc0e3cfad98d8eee7ed44fac7d7889de96e35696dd8eb1",
+        "claim": "Estate recipient switch and default-off interpretation."
+      },
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/solver.py",
+        "lines": [
+          [
+            1129,
+            1188
+          ],
+          [
+            1263,
+            1306
+          ]
+        ],
+        "sha256": "b549dabeb03fdb9d476b2be58642ee2d876143b01f529af663e2cf50fc978562",
+        "claim": "Possible pooled estate allocation to ages 45-65 and paid-versus-generated estate gate; no claim switch is active in every run."
+      },
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_dynamic_population_transition.py",
+        "lines": [
+          [
+            371,
+            389
+          ]
+        ],
+        "sha256": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362",
+        "claim": "New household distribution uses exogenous entry-wealth weights at age index zero, childless renters."
+      }
+    ],
+    "S7": [
+      {
+        "path": "/Users/tommasodesanto/.codex/worktrees/d606/Fertility_Spring26/output/model/demographic_accounting_review/lead_review.md",
+        "lines": [
+          [
+            23,
+            31
+          ],
+          [
+            33,
+            95
+          ]
+        ],
+        "sha256": "042a8704a788e84b4567f266fb0a6cfc97b88b4c4d397fd8caba6bdfa9b370df",
+        "claim": "Prior reviewed corrections on normalization, birth-weighted duration, cap timing, age-free top-bin pools, and GE feedback; original raw numerical recommendations not adopted."
+      }
+    ],
+    "S8": [
+      {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/empirical_entry/common_scale_candidate/actual_frozen_parameters.json",
+        "lines": [
+          [
+            1,
+            15
+          ],
+          [
+            31,
+            49
+          ],
+          [
+            97,
+            109
+          ]
+        ],
+        "sha256": "29bbaa308acfa63123d42c8ef6564d5902b0a38a27b55f287d9b1ff38ba1c74e",
+        "claim": "Existing no-solve extraction from a newer serialized seed confirms active retirement survival; it does not verify all demographic switches."
+      }
+    ]
+  },
+  "startup_and_prior_context": [
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/memory/AGENT_MEMORY.md",
+      "lines": [
+        [
+          1,
+          47
+        ],
+        [
+          2058,
+          2090
+        ]
+      ],
+      "sha256": "b153e63f7bf6ae36ae6fe72f0d9f5efc80d27fe2ebc979cc6b5d3ca8ff5a2a6b",
+      "claim": "Startup context; source-constructor versus actual-run warning and demographic counting gotchas."
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/memory/daily/2026-09-24.md",
+      "lines": [
+        [
+          1,
+          42
+        ]
+      ],
+      "sha256": "45857273f4207934d2eb52ec570fc6ca354ba5eeaf1451b5b917df0c98a34fb7",
+      "claim": "Latest daily context read after memory."
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/CALIBRATION_STATUS.md",
+      "lines": [
+        [
+          95,
+          107
+        ],
+        [
+          133,
+          173
+        ],
+        [
+          328,
+          360
+        ],
+        [
+          2633,
+          2662
+        ],
+        [
+          2720,
+          2733
+        ],
+        [
+          5129,
+          5141
+        ]
+      ],
+      "sha256": "97d0a5f0d21213effa438f54aa1322181ba9b177cfc0b4fbaf9241781d9f14a8",
+      "claim": "Latest reviewed accounting status, accepted couple interpretation, estate event, and historical closure caveats; line numbers are time-of-review."
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/README.md",
+      "lines": [
+        [
+          1,
+          29
+        ],
+        [
+          160,
+          170
+        ]
+      ],
+      "sha256": "e909c2baf0e61d2421a33627196b6958c7609cf250de207d1ebae00e6eeca120",
+      "claim": "Active source and immutable reference pointers."
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/demographic_accounting_review/opengo_maturation_20260923/reviewed_decision_aid.md",
+      "lines": [
+        [
+          1,
+          46
+        ]
+      ],
+      "sha256": "58380c0e46cee388354ca95b49f8f97be3c9d9a78ec9332a89b728769e1450f1",
+      "claim": "Prior corrected source review and task agenda."
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/demographic_accounting_review/opengo_maturation_20260923/lead_review.json",
+      "lines": [
+        [
+          1,
+          51
+        ]
+      ],
+      "sha256": "d9cd0990d3b8222f913fe80c1a591fdfb5b9c2209b96564fb07d2b378242affd",
+      "claim": "Prior material error rejection and source-only limits."
+    }
+  ],
+  "limits": [
+    "No selected latest checkpoint was remeasured or opened.",
+    "No numerical forecast, calibration effect, welfare effect, or new inherited-wealth estimate is claimed.",
+    "Startup documents were loaded in order; detailed rereads targeted latest guidance and demographic entries rather than repeating unrelated retrospective calibration records.",
+    "Review is conditional and does not resolve author choices by implementation.",
+    "No fresh literature search was needed for the algebra/source review; existing literature packet was consulted but no paper claim is newly certified."
+  ]
+}
