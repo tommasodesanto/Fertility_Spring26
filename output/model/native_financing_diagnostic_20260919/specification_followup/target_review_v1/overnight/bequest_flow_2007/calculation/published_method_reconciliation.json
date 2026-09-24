@@ -1,0 +1,24 @@
+{
+  "status": "source_comparison_complete; author_adopted_next_calibration_candidate_is_not_exact_replication",
+  "published_estimand": {
+    "source": "Gale and Scholz (1993), IRP Discussion Paper 1019-93, pp. 12-14; De Nardi and Yang (2014), Table 2 borrows the resulting annual estate-flow / aggregate-wealth value.",
+    "numerator": "Annual child-directed bequest flow, constructed by weighting household bequeathable net worth (excluding pensions and estimated trusts) by one-year death risk and the assumed share accruing to children: 25% when a married head dies; 75% when single or both spouses die in the same year.",
+    "denominator": "Aggregate SCF net worth; same-year dollar units cancel in the ratio.",
+    "historical_check": "$105bn / $11,976bn = 0.8765%, reported as 0.88% (1986; historical, not the 2007 update).",
+    "citation_url": "https://www.irp.wisc.edu/publications/dps/pdfs/dp101993.pdf"
+  },
+  "closest_existing_2007_scenario": {
+    "scenario": "Head-death household-wealth proxy; GS 25/75 child shares; estate proxy NETWORTH minus TRUSTS, clipped at zero; qx95 for topcoded ages; aggregate signed NETWORTH denominator.",
+    "ratio": 0.007291,
+    "display_percent": "0.7291%",
+    "candidate_summary_path": "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/bequest_flow_2007/calculation/candidate_summary.md",
+    "candidate_receipt_path": "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/bequest_flow_2007/calculation/candidate_receipt.json"
+  },
+  "documented_vs_undocumented": {
+    "documented": "GS states household-specific SCF wealth and mortality, excludes pensions and estimated trusts from bequest base, separately treats life insurance, and applies 25/75 child-recipient shares. Candidate's trust-excluded version is closer to that numerator definition than the 0.7514% trust-included row.",
+    "undocumented_material": "GS does not describe how household assets are owned or divided when one spouse dies, nor the exact joint-death probability construction. Its half-share rule is explicit for life insurance only and must not be transferred to estates as if sourced. Existing equal-split/independent-spouse scenario with trust-excluded estate and qx95 is 0.6624%, 0.0667 percentage points below the head-whole-PEU-wealth proxy (0.7291%).",
+    "undocumented_measurement": "The published child-recipient flow requires child eligibility; existing SCF extraction only has current rostered KIDS, not lifetime offspring. The candidate therefore applies the 25/75 allocation mechanically to all PEUs. No exact historical child-eligibility rule was recovered in the existing receipts.",
+    "routine_sensitivity": "SCF age 95+ is topcoded; trust-excluded head-proxy ratio is 0.7291% with q95 and 0.7826% with q100plus. This is a reported sensitivity, not an impediment to a transparent candidate. The 2007 public SCF and official NCHS mortality source are already in the existing input receipt."
+  },
+  "conclusion": "The author adopted the 0.7291023472616158% trust-excluded head-death scenario as the next-calibration target for the unchanged GS/DNY child-directed flow / aggregate-wealth estimand. It remains an assumption-based construction, not an exact replication. Defer refinement of estate allocation at spouse death and child-recipient eligibility/share assumptions; do not reopen the adopted target or frozen contracts absent a specific revised decision."
+}

@@ -2,21 +2,21 @@
 
 ## September 24 — 2007 child-directed bequest-flow reconstruction complete
 
-The closest reconstruction of the published Gale–Scholz/De Nardi–Yang child-
-directed annual bequest-flow estimand is **0.7291%**: the 2007 SCF mortality-
-weighted, positive `NETWORTH - TRUSTS` estate proxy is $674.4908 billion per
-year, divided by aggregate signed SCF `NETWORTH` of $92.5096 trillion (same
-2022-dollar units). This replaces the earlier 0.7514% trust-inclusive row as
-the method-matching candidate; it is not an author-adopted target or an exact
-replication. Construction and source comparison are complete on the available
-inputs. The published description does not specify whether whole-household
-wealth is attributed at one spouse's death or only joint death, nor how marital
-estate ownership is divided; the candidate uses a disclosed head-death/whole-
-PEU-wealth proxy and 25%/75% child shares. SCF current-roster children do not
-establish lifetime-child eligibility, and public ages are top-coded at 95.
-These are documented method limitations, not unfinished data work; no further
-recalculation is pending absent a specific missing input or revised estimator.
-Receipt and exact arithmetic: `output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/bequest_flow_2007/calculation/verified_receipt.json`.
+The author adopted **0.7291023472616158%** (ratio `0.007291023472616158`) as the
+next-calibration target for the annual child-directed bequest-flow / aggregate-
+wealth moment. It is the 2007 SCF mortality-weighted, positive
+`NETWORTH - TRUSTS` estate proxy: $674.4908 billion per year divided by
+aggregate signed SCF `NETWORTH` of $92.5096 trillion (same 2022-dollar units).
+This replaces the earlier 0.7514% trust-inclusive row and does not claim an
+exact Gale–Scholz/De Nardi–Yang replication. Construction and source comparison
+are complete on the available inputs. Deferred refinement marker: revisit how
+household wealth is allocated at one spouse's death versus joint death, and the
+child-recipient eligibility/share assumptions. The published description does
+not specify marital estate ownership, and current SCF rostered children do not
+establish lifetime-child eligibility; public ages are top-coded at 95. These
+limitations do not reopen the adopted target or frozen contracts. The full
+receipt and exact arithmetic are in
+`output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/bequest_flow_2007/calculation/verified_receipt.json`.
 
 ## September 24 (evening) — ownership and moving on the final specification
 
