@@ -1,5 +1,13 @@
 # Calibration Status
 
+## September 23 — next review starts with maturation
+
+Author sets September 24 review order: start with child maturation, then
+proceed through the remaining unresolved assumptions. Parental-death
+accounting follows; income-tax and pension calibration also remains open.
+Retain accepted choices. This records the agenda, not authorization for
+new experiments or numerical changes. Checklist owner notified.
+
 ## September 23 — first-birth housing target chosen: 0.600 rooms
 
 Author adopts 0.600 rooms for the next calibration: corrected-date PSID
