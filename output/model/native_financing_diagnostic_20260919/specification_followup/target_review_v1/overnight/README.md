@@ -72,3 +72,15 @@ The lead checked Sommer's published2016 JME Table2. It targets cumulative births
 ## September23 morning report ready for scheduled delivery
 
 The available-evidence report is prepared at `output/pdf/utility_target_review.pdf` (ten pages), using `report_tables/report_narrative_final.json`. All pages were visually inspected, Luna checked the numerical claims, and the lead verified the thirteen-row target-only CSV and the separately computed same-cohort room contrast. `report_tables/final_pdf_qa.json` pins the sources and PDF hash. No new model fit, parameter estimate, solve count, repeated solution or diagnostic graph has been collected. Do not deliver before10:00EDT; refresh access and incorporate any verified collection first. `target_contract.csv` excludes historical model values.
+
+## September 24 — adopted 2007 bequest-flow sensitivity
+
+The author adopted the 2007 trust-excluded child-directed estate-flow ratio
+`0.7291023472616158%` as the next-calibration target. Its bounded assumption
+robustness is in `bequest_flow_2007/calculation/robustness_summary.md` with
+exact rows in `.csv` and formulas/source distinctions in `.json`. The q95/q99,
+spouse allocation and partner mapping scenarios span `0.662442%–0.734846%`;
+the q100+ terminal mortality mapping is reported separately as an extreme
+sensitivity. Whole-estate transfers are a different estimand. The saved table
+does not quantify lifetime-child eligibility because SCF `KIDS` is a current
+roster count, not offspring history.

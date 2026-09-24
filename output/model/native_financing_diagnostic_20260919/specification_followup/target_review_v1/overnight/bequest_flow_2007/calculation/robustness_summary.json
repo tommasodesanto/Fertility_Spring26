@@ -1,0 +1,155 @@
+{
+  "status": "robustness_summary_complete_adopted_target_unchanged",
+  "adopted_target": {
+    "ratio": 0.007291023472616159,
+    "percent": 0.7291023472616158,
+    "flow_usd": 674489508272.7325,
+    "denominator_usd": 92509578498272.6,
+    "definition": {
+      "estimator": "head_death_household_wealth_proxy",
+      "age95_mapping": "qx95",
+      "wealth_measure": "networth_excluding_trust",
+      "marital_rule": "legal_married_only",
+      "denominator": "total_networth",
+      "annual_flow_2022_usd": 674489508272.7325,
+      "denominator_2022_usd": 92509578498272.6,
+      "ratio_percent": 0.7291023472616158
+    }
+  },
+  "same_child_directed_scenario_range_q95_q99": {
+    "minimum_percent": 0.6624424643047314,
+    "maximum_percent": 0.7348463162858536,
+    "interpretation": "Scenario envelope for the quantified trust-excluded child-directed alternatives using q95 or q99, not an uncertainty interval; the q100+ terminal mapping is shown separately as an extreme mechanical sensitivity."
+  },
+  "scenarios": [
+    {
+      "scenario": "adopted_baseline",
+      "estimand_class": "Adopted child-directed construction",
+      "annual_flow_2022_usd": 674489508272.7325,
+      "denominator_2022_usd": 92509578498272.6,
+      "ratio_percent": 0.7291023472616158,
+      "difference_vs_adopted_pp": 0.0,
+      "estate_measure": "networth_excluding_trust",
+      "age95_mapping": "qx95",
+      "marital_rule": "legal_married_only",
+      "denominator_measure": "total_networth",
+      "interpretation": "Published elements: 25% married-head death; 75% otherwise; trust-excluded estate proxy; aggregate net-worth denominator. Assumed: head qx applied to whole PEU estate; legal marital status; qx95; shares applied to every PEU because lifetime-child status is unavailable."
+    },
+    {
+      "scenario": "spouse_death_equal_split_child_flow",
+      "estimand_class": "Same child-directed estimand; spouse-death/wealth-allocation alternative",
+      "annual_flow_2022_usd": 612822731521.877,
+      "denominator_2022_usd": 92509578498272.6,
+      "ratio_percent": 0.6624424643047314,
+      "difference_vs_adopted_pp": -0.06665988295688441,
+      "estate_measure": "networth_excluding_trust",
+      "age95_mapping": "qx95",
+      "marital_rule": "legal_married_only",
+      "denominator_measure": "total_networth",
+      "interpretation": "Published 25%/75% child shares retained. Assumed: independent spouse deaths, half of PEU wealth attributed to a single spouse death, full wealth at joint death; no SCF ownership evidence supports this allocation."
+    },
+    {
+      "scenario": "cohabiting_partner_treated_as_married",
+      "estimand_class": "Same child-directed estimand; partner-recipient mapping alternative",
+      "annual_flow_2022_usd": 646181147067.613,
+      "denominator_2022_usd": 92509578498272.6,
+      "ratio_percent": 0.6985018822452845,
+      "difference_vs_adopted_pp": -0.03060046501633129,
+      "estate_measure": "networth_excluding_trust",
+      "age95_mapping": "qx95",
+      "marital_rule": "partner_treated_married",
+      "denominator_measure": "total_networth",
+      "interpretation": "Only change: SCF living-with-partner households receive the 25% share as married households. This legal/cohabiting mapping is not resolved by the published description."
+    },
+    {
+      "scenario": "topcoded_age_maps_to_qx99",
+      "estimand_class": "Same child-directed estimand; 95+ mortality mapping",
+      "annual_flow_2022_usd": 679803229806.1262,
+      "denominator_2022_usd": 92509578498272.6,
+      "ratio_percent": 0.7348463162858536,
+      "difference_vs_adopted_pp": 0.005743969024237794,
+      "estate_measure": "networth_excluding_trust",
+      "age95_mapping": "qx99",
+      "marital_rule": "legal_married_only",
+      "denominator_measure": "total_networth",
+      "interpretation": "Only change: every SCF age top-coded at 95 maps to NCHS qx99; mechanical age mapping, not an uncertainty interval."
+    },
+    {
+      "scenario": "topcoded_age_maps_to_qx100plus",
+      "estimand_class": "Same child-directed estimand; terminal mortality mapping",
+      "annual_flow_2022_usd": 723973810804.8193,
+      "denominator_2022_usd": 92509578498272.6,
+      "ratio_percent": 0.782593351474775,
+      "difference_vs_adopted_pp": 0.05349100421315922,
+      "estate_measure": "networth_excluding_trust",
+      "age95_mapping": "qx100plus",
+      "marital_rule": "legal_married_only",
+      "denominator_measure": "total_networth",
+      "interpretation": "Only change: every SCF age top-coded at 95 maps to terminal NCHS 100+ qx=1.0; extreme mechanical sensitivity, not a plausible point estimate or uncertainty bound."
+    },
+    {
+      "scenario": "trusts_included_in_estate_base",
+      "estimand_class": "Child-directed measurement check",
+      "annual_flow_2022_usd": 695098729231.2592,
+      "denominator_2022_usd": 92509578498272.6,
+      "ratio_percent": 0.7513802792261545,
+      "difference_vs_adopted_pp": 0.022277931964538644,
+      "estate_measure": "networth_including_trust",
+      "age95_mapping": "qx95",
+      "marital_rule": "legal_married_only",
+      "denominator_measure": "total_networth",
+      "interpretation": "Only change: include trust assets in positive estate base; denominator remains aggregate signed NETWORTH. This departs from GS trust-excluded numerator treatment."
+    },
+    {
+      "scenario": "trusts_excluded_from_denominator",
+      "estimand_class": "Child-directed denominator measurement check",
+      "annual_flow_2022_usd": 674489508272.7325,
+      "denominator_2022_usd": 91073158738094.94,
+      "ratio_percent": 0.7406018607660313,
+      "difference_vs_adopted_pp": 0.01149951350441547,
+      "estate_measure": "networth_excluding_trust",
+      "age95_mapping": "qx95",
+      "marital_rule": "legal_married_only",
+      "denominator_measure": "same_as_numerator_wealth",
+      "interpretation": "Only change: denominator becomes aggregate signed NETWORTH-TRUSTS rather than aggregate NETWORTH. This changes the published denominator concept."
+    },
+    {
+      "scenario": "whole_estate_not_child_directed",
+      "estimand_class": "Different estimand: gross all-estate transfer",
+      "annual_flow_2022_usd": 1385032312136.815,
+      "denominator_2022_usd": 92509578498272.6,
+      "ratio_percent": 1.4971771946433388,
+      "difference_vs_adopted_pp": 0.7680748473817229,
+      "estate_measure": "networth_excluding_trust",
+      "age95_mapping": "qx95",
+      "marital_rule": "legal_married_only",
+      "denominator_measure": "total_networth",
+      "interpretation": "This removes the child shares and measures gross modeled estate leaving decedent ownership under equal-split/independent-death assumptions. Not a robustness estimate of the adopted child-directed moment."
+    },
+    {
+      "scenario": "lifetime_child_eligibility_alternative",
+      "estimand_class": "Child-directed eligibility: not quantifiable from saved data",
+      "annual_flow_2022_usd": "",
+      "denominator_2022_usd": "",
+      "ratio_percent": "",
+      "difference_vs_adopted_pp": "",
+      "estate_measure": "unchanged",
+      "age95_mapping": "unchanged",
+      "marital_rule": "unchanged",
+      "denominator_measure": "unchanged",
+      "interpretation": "SCF KIDS counts currently rostered natural/step/foster children, not all living offspring or lifetime child status. No valid saved alternative eligibility measure; no numeric sensitivity reported."
+    }
+  ],
+  "equations": {
+    "adopted_ratio": "sum_i WGT_i * qx(head age, head sex) * alpha_i * max(NETWORTH_i-TRUSTS_i,0) / sum_i WGT_i * NETWORTH_i, with WGT=X42001/5 across all five implicates; alpha=.25 for legally married SCF head and .75 otherwise.",
+    "spouse_alternative": "For married couples assume independent deaths: P(one)=qh*(1-qs)+qs*(1-qh), P(both)=qh*qs; assign half PEU estate to one decedent and all to joint death, then apply .25 and .75 child shares respectively. Singles use .75*qh*estate.",
+    "interpretive_guardrail": "All-estate transfer excludes recipient shares and is a different estimand. Scenario differences are sensitivity analyses, not sampling uncertainty."
+  },
+  "main_result": "Among quantified same-child-directed alternatives, spouse death/wealth allocation has the largest q95 change (equal-split independent-spouse scenario: -0.0666598829568844 percentage points). Mapping all 95+ observations to terminal q100+ raises the ratio by 0.0534910042131592 points; this is an extreme mapping. Child eligibility cannot be quantified from KIDS.",
+  "source_basis": {
+    "scenario_grid": "scenario_estimates.csv (saved 72-row computation; no raw SCF rebuild)",
+    "adoption_and_arithmetic": "verified_receipt.json",
+    "published_vs_undocumented": "published_method_reconciliation.json",
+    "published_conventions": "GS 1993 IRP pp. 12-14: trust/pension treatment and 25%/75% child shares; marital estate ownership at one-spouse vs joint death and lifetime-child eligibility are undocumented in reviewed sources."
+  }
+}
