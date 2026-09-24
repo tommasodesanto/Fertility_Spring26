@@ -210,3 +210,11 @@ flat A2h pre-period; moved since last interview −0.16 / −0.21 on a 0.55 base
 +0.02 / +0.01 at +3/+4 and +0.034 / +0.021 at +1/+2 on a 0.07 base;
 neighbourhood moves null. Package
 `code/data/psid_followup_mar2026/output/sa_first_birth_outcomes_v3/`.
+
+### Reason for move among movers (September 24, later)
+
+Conditional on moving: share of moves for more space +0.13 (0.02) / +0.14
+(0.02) at +3/+4 on a 0.12 base, flat pre-period, elevated for a decade;
+neighbourhood share null. Original code was unconditional (non-movers coded
+0 via WHYMOVED1_ == 0); both versions now reported side by side in
+`output/sa_first_birth_outcomes_v3/`.

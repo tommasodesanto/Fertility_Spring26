@@ -67,7 +67,7 @@ if "`mode'" == "toy" {
     gen double rooms_shift = rooms
     tempfile toydata
     save `toydata'
-    foreach a in H H21 A Hentry Hctrl Hshift Ashift Hb4 Hb6 A2 A2h A2n H_own A2h_moved A2h_moved_space H_moved_nbhd {
+    foreach a in H H21 A Hentry Hctrl Hshift Ashift Hb4 Hb6 A2 A2h A2n H_own A2h_moved A2h_moved_space H_moved_nbhd H_space_c A2h_nbhd_c {
         use `toydata', clear
         do "sa_rooms_first_birth_v2.do" `a' "`outdir'/`a'"
     }
@@ -75,8 +75,13 @@ if "`mode'" == "toy" {
     exit
 }
 assert inlist("`mode'","H","H21","A","Hentry","Hctrl","Hshift","Ashift","Hb4","Hb6") | inlist("`mode'","A2","A2h","A2n")
-assert inlist("`outcome'","rooms","own","moved","moved_space","moved_nbhd")
-if "`outcome'" != "rooms" {
+assert inlist("`outcome'","rooms","own","moved","moved_space","moved_nbhd","space_c","nbhd_c")
+if inlist("`outcome'","space_c","nbhd_c") {
+    * Conditional on having moved since the previous interview: share of moves for the reason.
+    drop rooms
+    gen byte rooms = cond("`outcome'"=="space_c", moved_space, moved_nbhd) if moved == 1
+}
+else if "`outcome'" != "rooms" {
     drop rooms
     rename `outcome' rooms
 }

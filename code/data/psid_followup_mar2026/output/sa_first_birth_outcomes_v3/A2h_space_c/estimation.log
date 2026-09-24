@@ -1,0 +1,536 @@
+-------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /scratch/td2248/projects/Fertility_Spring26_rooms_v3_20260924/resu
+> lts/A2h_space_c/estimation.log
+  log type:  text
+ opened on:  24 Sep 2026, 12:05:44
+
+. mata: mata mlib index
+.mlib libraries to be searched are now
+    lmatabase;lmataado;lmatabma;lmatacate;lmatacollect;lmatadata;lmataerm;lmata
+> fc;lmatagsem;lmatah2o;lmatahetdid;lmataivqreg;lmatajm;lmatalasso;lmatamcmc;lm
+> atameta;lmatami;lmatamixlog;lmatanumlib;lmataopt;lmatapath;lmatapostest;lmata
+> pss;lmatarw;lmatasem;lmatasp;lmatasubexpr;lmatasvy;lmatatab;lmatats;lasdoc;li
+> vreg2;lspmat
+
+. use "/scratch/td2248/projects/Fertility_Spring26_rooms_v3_20260924/analysis_s
+> ample.dta", clear
+(PSID-SHELF, 1968–2019, Beta Release 2023.01. Long format. Compiled: 2023/10/11
+> .)
+
+. do "sa_rooms_first_birth_v2.do" A2h_space_c "/scratch/td2248/projects/Fertili
+> ty_Spring26_rooms_v3_20260924/results/A2h_space_c"
+
+. * First-birth housing-space event study, version 2 (September 24, 2026).
+. * Sun-Abraham interacted-cohort event study in two-year interview windows.
+. * Arms:
+. *   H    household design, baseline window -3/-2 (headline)
+. *   Hb4, Hb6  household design with earlier baseline windows -5/-4 and -7/-6
+. *   A2   all current adults 18+ with every other household-design choice:
+. *        IW weights, biological first birth, confirmed-childless controls,
+. *        entry at first adult observation, codes cleaned (baseline -3/-2)
+. *   A2h  A2, treated adults who were reference person or spouse in the
+. *        baseline window (pre-treatment status); all controls retained
+. *   A2n  A2, treated adults who were NOT reference person or spouse in the
+. *        baseline window; all controls retained
+. *   H21  household design, baseline window -2/-1 (sensitivity)
+. *   A    all-adult design, baseline window -3/-2 (robustness)
+. * Reconciliation arms (one change from H or A): Hentry = August entry rule
+. * (birth after first observation as head/spouse); Hctrl = last first-birth
+. * cohort as control cohort with childless women retained as untreated;
+. * Hshift, Ashift = shelf rooms shifted one interview (codes cleaned) instead
+. * of the rebuilt official variables.
+. * Household design: one woman per single-family-unit household-year (current
+. * reference person or spouse), PSID longitudinal weight IW, first birth from
+. * the full biological-child history, confirmed-childless women as the control
+. * cohort, first birth no earlier than the woman's first adult observation.
+. * All-adult design: every current adult 18+, unweighted, last first-birth
+. * cohort as control cohort, first child record as in the original code.
+. * Rooms: official year-specific PSID variables merged to the interview year;
+. * codes 9 (through 1984), 99 (1985-1993), 98/99 (1994 on) set to missing.
+. version 17.0
+
+. args arm outdir
+
+. * An arm is DESIGN or DESIGN_OUTCOME; outcome defaults to rooms.
+. local mode = cond(strpos("`arm'","_")>0, substr("`arm'",1,strpos("`arm'","_")
+> -1), "`arm'")
+
+. local outcome = cond(strpos("`arm'","_")>0, substr("`arm'",strpos("`arm'","_"
+> )+1,.), "rooms")
+
+. timer clear 1
+
+. timer on 1
+
+. if "`mode'" == "toy" {
+.     capture mkdir "`outdir'"
+.     clear
+.     set seed 24092026
+.     set obs 8000
+.     gen long ID = ceil(_n/40)
+.     bysort ID: gen int year = 1979+_n
+.     keep if year<=1997 | mod(year,2)==1
+.     gen double bio_first_year = 1985+3*mod(ID,7)
+.     replace bio_first_year = . if mod(ID,5)==0
+.     gen double relchi1_year = bio_first_year
+.     replace relchi1_year = bio_first_year-1 if mod(ID,13)==0
+.     gen double K = year-bio_first_year
+.     gen double rooms = 4+ID/100+0.2*(K>=0 & !missing(K))+rnormal()
+.     gen byte own = runiform() < 0.5+0.1*(K>=0 & !missing(K))
+.     gen byte moved = runiform() < 0.2
+.     gen byte moved_space = moved & runiform() < 0.4
+.     gen byte moved_nbhd = moved & runiform() < 0.2
+.     gen byte AGEREP = 25+mod(ID,10)
+.     gen byte EDUYEAR = 12+mod(ID,4)
+.     gen double relchirep_max = cond(missing(bio_first_year), cond(mod(ID,10)=
+> =0,0,1), 1)
+.     replace relchirep_max = . if mod(ID,17)==0 & missing(bio_first_year)
+.     gen byte woman = mod(ID,2)==0
+.     gen byte current = 1
+.     gen double rel = 1+mod(ID,3)
+.     gen double hhid = ceil(ID/2)
+.     gen double fid = hhid
+.     gen int n_current_fids = 1+(mod(hhid,9)==0)
+.     gen double iw = 1+mod(ID,4)
+.     replace iw = 0 if mod(ID,19)==0
+.     bysort ID: egen double year_entry_adult = min(year)
+.     drop K
+.     gen double rooms_shift = rooms
+.     tempfile toydata
+.     save `toydata'
+.     foreach a in H H21 A Hentry Hctrl Hshift Ashift Hb4 Hb6 A2 A2h A2n H_own 
+> A2h_moved A2h_moved_space H_moved_nbhd H_space_c A2h_nbhd_c {
+  2.         use `toydata', clear
+  3.         do "sa_rooms_first_birth_v2.do" `a' "`outdir'/`a'"
+  4.     }
+.     di "ROOMS_V2_TOY_PASS"
+.     exit
+. }
+
+. assert inlist("`mode'","H","H21","A","Hentry","Hctrl","Hshift","Ashift","Hb4"
+> ,"Hb6") | inlist("`mode'","A2","A2h","A2n")
+
+. assert inlist("`outcome'","rooms","own","moved","moved_space","moved_nbhd","s
+> pace_c","nbhd_c")
+
+. if inlist("`outcome'","space_c","nbhd_c") {
+.     * Conditional on having moved since the previous interview: share of move
+> s for the reason.
+.     drop rooms
+.     gen byte rooms = cond("`outcome'"=="space_c", moved_space, moved_nbhd) if
+>  moved == 1
+(661,602 missing values generated)
+. }
+
+. else if "`outcome'" != "rooms" {
+.     drop rooms
+.     rename `outcome' rooms
+. }
+
+. local household = substr("`mode'",1,1) == "H"
+
+. local alladult2 = substr("`mode'",1,2) == "A2"
+
+. if inlist("`mode'","Hshift","Ashift") {
+.     replace rooms = rooms_shift
+.     replace rooms = . if year <= 1984 & rooms == 9
+.     replace rooms = . if inrange(year,1985,1993) & rooms == 99
+.     replace rooms = . if year >= 1994 & inlist(rooms,98,99)
+. }
+
+. capture mkdir "`outdir'"
+
+. local baseline_lo = cond("`mode'"=="H21", -2, cond("`mode'"=="Hb4", -5, cond(
+> "`mode'"=="Hb6", -7, -3)))
+
+. local baseline_hi = cond("`mode'"=="H21", -1, cond("`mode'"=="Hb4", -4, cond(
+> "`mode'"=="Hb6", -6, -2)))
+
+. 
+. keep if current & !missing(rooms, AGEREP, EDUYEAR) & AGEREP >= 18
+(745,541 observations deleted)
+
+. if `alladult2' {
+.     * All current adults with the household design's other choices.
+.     keep if !missing(iw) & iw > 0
+(37,513 observations deleted)
+.     gen double f_c_y = bio_first_year
+(20,264 missing values generated)
+.     drop if missing(f_c_y) & !(relchirep_max == 0)
+(4,696 observations deleted)
+.     drop if !missing(f_c_y) & f_c_y < year_entry_adult
+(20,572 observations deleted)
+.     gen byte control = missing(f_c_y) & relchirep_max == 0
+.     local weightspec "[pw=iw]"
+.     if "`mode'" != "A2" {
+.         gen byte hs_row = inlist(rel,1,2) & inrange(year - f_c_y, `baseline_l
+> o', `baseline_hi')
+.         bysort ID: egen byte hs_base = max(hs_row)
+.         gen byte base_row = inrange(year - f_c_y, `baseline_lo', `baseline_hi
+> ')
+.         bysort ID: egen byte has_base = max(base_row)
+.         keep if control | (has_base & hs_base == cond("`mode'" == "A2h", 1, 0
+> ))
+(26,400 observations deleted)
+.         drop hs_row hs_base base_row has_base
+.     }
+. }
+
+. else if !`household' {
+.     * All adults; first child record; untreated = no recorded first child.
+.     gen double f_c_y = relchi1_year
+.     drop if !missing(f_c_y) & f_c_y < year_entry_adult
+.     quietly summarize f_c_y
+.     gen byte control = f_c_y == r(max)
+.     local weightspec ""
+. }
+
+. else {
+.     keep if woman & inlist(rel,1,2)
+.     keep if !missing(iw) & iw > 0
+.     keep if !missing(hhid) & hhid > 0 & !missing(fid) & fid > 0 & n_current_f
+> ids == 1
+.     gen byte priority = rel != 1
+.     sort hhid year priority ID
+.     by hhid year: keep if _n == 1
+.     drop priority
+.     isid hhid year
+.     gen double f_c_y = bio_first_year
+.     drop if missing(f_c_y) & !(relchirep_max == 0)
+.     if "`mode'" == "Hentry" {
+.         bysort ID: egen double year_entry_hh = min(year)
+.         drop if !missing(f_c_y) & f_c_y < year_entry_hh
+.         drop year_entry_hh
+.     }
+.     else {
+.         drop if !missing(f_c_y) & f_c_y < year_entry_adult
+.     }
+.     gen byte control = missing(f_c_y) & relchirep_max == 0
+.     if "`mode'" == "Hctrl" {
+.         quietly summarize f_c_y
+.         replace control = f_c_y == r(max)
+.     }
+.     local weightspec "[pw=iw]"
+. }
+
+. gen double K = year - f_c_y
+(15,568 missing values generated)
+
+. 
+. * Cohort support: every treated cohort must be observed in the baseline windo
+> w.
+. gen byte in_reference = inrange(K,`baseline_lo',`baseline_hi')
+
+. bysort f_c_y: egen long reference_rows = total(in_reference)
+
+. gen byte treated = !missing(f_c_y) & control==0
+
+. gen byte unsupported = treated & reference_rows==0
+
+. preserve
+
+.     gen long rows = 1
+
+.     collapse (sum) rows (max) unsupported, by(f_c_y K control)
+
+.     export delimited using "`outdir'/input_support.csv", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_rooms_v3_20260924/results/A2h
+    > _space_c/input_support.csv not found)
+file /scratch/td2248/projects/Fertility_Spring26_rooms_v3_20260924/results/A2h_
+> space_c/input_support.csv saved
+
+. restore
+
+. quietly count if unsupported
+
+. local dropped_rows = r(N)
+
+. quietly levelsof f_c_y if unsupported, local(dropped_cohorts) separate(" ")
+
+. drop if unsupported
+(0 observations deleted)
+
+. drop in_reference reference_rows unsupported treated
+
+. 
+. local b = `baseline_hi'
+
+. gen byte Wleft = K<=`b'-6 & !missing(K)
+
+. gen byte Wm2 = inrange(K,`b'-5,`b'-4)
+
+. gen byte Wm1 = inrange(K,`b'-3,`b'-2)
+
+. gen byte Wp1 = inrange(K,`b'+1,`b'+2)
+
+. gen byte Wp2 = inrange(K,`b'+3,`b'+4)
+
+. gen byte Wp3 = inrange(K,`b'+5,`b'+6)
+
+. gen byte Wp4 = inrange(K,`b'+7,`b'+8)
+
+. gen byte Wp5 = inrange(K,`b'+9,`b'+10)
+
+. gen byte Wp6 = inrange(K,`b'+11,`b'+12)
+
+. gen byte Wright = K>=`b'+13 & !missing(K)
+
+. local dummies Wleft Wm2 Wm1 Wp1 Wp2 Wp3 Wp4 Wp5 Wp6 Wright
+
+. gen byte checksum = Wleft+Wm2+Wm1+Wp1+Wp2+Wp3+Wp4+Wp5+Wp6+Wright
+
+. assert checksum+inrange(K,`baseline_lo',`baseline_hi')==1 if !missing(K)
+
+. assert checksum==0 if missing(K)
+
+. drop checksum
+
+. * Headline = the window containing +3/+4: Wp((4-b)/2) for even baselines; +2/
+> +3 for the -2/-1 baseline.
+. local headline = cond("`mode'"=="H21", "Wp2", "Wp" + string((4-`baseline_hi')
+> /2))
+
+. 
+. quietly count
+
+. local input_obs = r(N)
+
+. eventstudyinteract rooms `dummies' `weightspec', ///
+>     vce(cluster ID) absorb(ID year) cohort(f_c_y) control_cohort(control) ///
+>     covariates(i.AGEREP i.EDUYEAR)
+(obs=391,540)
+
+IW estimates for dynamic effects                        Number of obs = 27,462
+Absorbing 2 HDFE groups                                 F(537, 5487)  =   4.86
+                                                        Prob > F      = 0.0000
+                                                        R-squared     = 0.2607
+                                                        Adj R-squared = 0.0511
+                                                        Root MSE      = 0.3508
+                                 (Std. err. adjusted for 5,488 clusters in ID)
+------------------------------------------------------------------------------
+             |               Robust
+       rooms | Coefficient  std. err.      t    P>|t|     [95% conf. interval]
+-------------+----------------------------------------------------------------
+       Wleft |   .0080172   .0171901     0.47   0.641    -.0256822    .0417166
+         Wm2 |  -.0043563   .0178909    -0.24   0.808    -.0394296    .0307171
+         Wm1 |   .0083137   .0147371     0.56   0.573    -.0205768    .0372042
+         Wp1 |    .049812   .0128654     3.87   0.000     .0245907    .0750332
+         Wp2 |   .1142995   .0168962     6.76   0.000     .0811762    .1474227
+         Wp3 |   .1421001   .0201543     7.05   0.000     .1025896    .1816106
+         Wp4 |    .146714   .0223807     6.56   0.000     .1028388    .1905891
+         Wp5 |   .0672873    .022865     2.94   0.003     .0224629    .1121118
+         Wp6 |   .0850082   .0271317     3.13   0.002     .0318194     .138197
+      Wright |   .0584559    .020393     2.87   0.004     .0184775    .0984342
+------------------------------------------------------------------------------
+
+. 
+. matrix b = e(b_iw)
+
+. matrix V = e(V_iw)
+
+. local n = e(N)
+
+. local clusters = e(N_clust)
+
+. local h = colnumb("b","`headline'")
+
+. assert !missing(`h') & `h'>0
+
+. local effect = b[1,`h']
+
+. local effect_se = sqrt(V[`h',`h'])
+
+. assert !missing(`effect',`effect_se') & `effect_se'>0
+
+. if "`weightspec'" == "" {
+.     quietly summarize rooms if e(sample) & inrange(K,`baseline_lo',`baseline_
+> hi')
+. }
+
+. else {
+.     quietly summarize rooms [aw=iw] if e(sample) & inrange(K,`baseline_lo',`b
+> aseline_hi')
+. }
+
+. local premean = r(mean)
+
+. quietly count if e(sample) & control
+
+. local control_rows = r(N)
+
+. egen byte ctag = tag(ID) if e(sample) & control
+
+. quietly count if ctag
+
+. local control_ids = r(N)
+
+. egen byte ttag = tag(ID) if e(sample) & !control & !missing(f_c_y)
+
+. quietly count if ttag
+
+. local treated_ids = r(N)
+
+. drop ctag ttag
+
+. preserve
+
+.     keep if e(sample)
+(1,567 observations deleted)
+
+.     sort ID year
+
+.     export delimited ID year using "`outdir'/private_sample_keys.csv", replac
+> e
+(file
+    /scratch/td2248/projects/Fertility_Spring26_rooms_v3_20260924/results/A2h
+    > _space_c/private_sample_keys.csv not found)
+file /scratch/td2248/projects/Fertility_Spring26_rooms_v3_20260924/results/A2h_
+> space_c/private_sample_keys.csv saved
+
+.     gen byte in_reference = inrange(K,`baseline_lo',`baseline_hi')
+
+.     bysort f_c_y: egen long reference_rows = total(in_reference)
+
+.     quietly count if !missing(f_c_y) & control==0 & reference_rows==0
+
+.     local fitted_unsupported = r(N)
+
+.     gen long rows = 1
+
+.     collapse (sum) rows, by(f_c_y K control)
+
+.     export delimited using "`outdir'/fitted_support.csv", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_rooms_v3_20260924/results/A2h
+    > _space_c/fitted_support.csv not found)
+file /scratch/td2248/projects/Fertility_Spring26_rooms_v3_20260924/results/A2h_
+> space_c/fitted_support.csv saved
+
+. restore
+
+. local names : colnames b
+
+. tempname points covariance
+
+. postfile `points' str20 coefficient double estimate standard_error using "`ou
+> tdir'/coefficients.dta", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_rooms_v3_20260924/results/A2h
+    > _space_c/coefficients.dta not found)
+
+. postfile `covariance' str20 coefficient_i str20 coefficient_j double covarian
+> ce using "`outdir'/covariance.dta", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_rooms_v3_20260924/results/A2h
+    > _space_c/covariance.dta not found)
+
+. forvalues i = 1/`=colsof(b)' {
+  2.     local name : word `i' of `names'
+  3.     post `points' ("`name'") (b[1,`i']) (sqrt(V[`i',`i']))
+  4.     forvalues j = 1/`=colsof(b)' {
+  5.         local other : word `j' of `names'
+  6.         post `covariance' ("`name'") ("`other'") (V[`i',`j'])
+  7.     }
+  8. }
+
+. postclose `points'
+
+. postclose `covariance'
+
+. preserve
+
+.     use "`outdir'/coefficients.dta", clear
+
+.     format estimate standard_error %24.17g
+
+.     export delimited using "`outdir'/coefficients.csv", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_rooms_v3_20260924/results/A2h
+    > _space_c/coefficients.csv not found)
+file /scratch/td2248/projects/Fertility_Spring26_rooms_v3_20260924/results/A2h_
+> space_c/coefficients.csv saved
+
+.     use "`outdir'/covariance.dta", clear
+
+.     format covariance %24.17g
+
+.     export delimited using "`outdir'/covariance.csv", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_rooms_v3_20260924/results/A2h
+    > _space_c/covariance.csv not found)
+file /scratch/td2248/projects/Fertility_Spring26_rooms_v3_20260924/results/A2h_
+> space_c/covariance.csv saved
+
+. restore
+
+. timer off 1
+
+. quietly timer list 1
+
+. local seconds = r(t1)
+
+. clear
+
+. set obs 1
+Number of observations (_N) was 0, now 1.
+
+. gen str24 arm = "`arm'"
+
+. gen str8 design = "`mode'"
+
+. gen str16 outcome = "`outcome'"
+
+. gen int baseline_lo = `baseline_lo'
+
+. gen int baseline_hi = `baseline_hi'
+
+. gen double input_observations = `input_obs'
+
+. gen double observations = `n'
+
+. gen double clusters = `clusters'
+
+. gen double treated_individuals = `treated_ids'
+
+. gen double control_individuals = `control_ids'
+
+. gen double control_rows = `control_rows'
+
+. gen str12 headline = "`headline'"
+
+. gen double headline_effect = `effect'
+
+. gen double headline_se = `effect_se'
+
+. gen double reference_mean_rooms = `premean'
+
+. gen long dropped_unsupported_rows = `dropped_rows'
+
+. gen str120 dropped_cohorts = "`dropped_cohorts'"
+(1 missing value generated)
+
+. gen long fitted_unsupported_rows = `fitted_unsupported'
+
+. gen str12 weights = cond("`weightspec'"=="","none","pw=IW")
+
+. gen double runtime_seconds = `seconds'
+
+. format headline_effect headline_se reference_mean_rooms %24.17g
+
+. export delimited using "`outdir'/fit_receipt.csv", replace
+(file
+    /scratch/td2248/projects/Fertility_Spring26_rooms_v3_20260924/results/A2h
+    > _space_c/fit_receipt.csv not found)
+file /scratch/td2248/projects/Fertility_Spring26_rooms_v3_20260924/results/A2h_
+> space_c/fit_receipt.csv saved
+
+. di "ROOMS_V2_ARM_PASS `arm'"
+ROOMS_V2_ARM_PASS A2h_space_c
+
+. 
+end of do-file
+
+. 
+end of do-file

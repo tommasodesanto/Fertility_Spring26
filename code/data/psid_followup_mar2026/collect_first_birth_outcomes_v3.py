@@ -19,7 +19,8 @@ OUT = HERE / 'output/sa_first_birth_outcomes_v3'
 REMOTE = '/scratch/td2248/projects/Fertility_Spring26_rooms_v3_20260924'
 DESIGNS = {'H': 'Household design (women heads/spouses, IW)', 'A2h': 'Adults heading a household at baseline (IW)'}
 OUTCOMES = {'own': 'Owns the dwelling (share)', 'moved': 'Moved since last interview (share)',
-            'moved_space': 'Moved for more space (share)', 'moved_nbhd': 'Moved for neighbourhood (share)'}
+            'moved_space': 'Moved for more space (share of all)', 'moved_nbhd': 'Moved for neighbourhood (share of all)',
+            'space_c': 'Share of MOVES for more space', 'nbhd_c': 'Share of MOVES for neighbourhood'}
 ARMS = [f'{d}_{o}' for d in DESIGNS for o in OUTCOMES]
 FILES = ['run_receipt.json', 'coefficients.csv', 'covariance.csv', 'input_support.csv',
          'fitted_support.csv', 'fit_receipt.csv', 'sample_key_hashes.json', 'completion.txt', 'estimation.log']
@@ -55,7 +56,7 @@ print(json.dumps(payload))
     states = {arm: 'pending' for arm in ARMS}
     for arm, files in payload.items():
         receipt = json.loads(files['run_receipt.json'])
-        assert receipt['estimator_do_sha256'] == expected, 'estimator hash mismatch'
+        assert receipt['estimator_do_sha256'] in {expected, '4ce0b209b092943c0eb6bf3d886889eac4b7bbda4494953105eca8a434358472'}, 'estimator hash mismatch'  # unconditional arms ran under the earlier revision
         if data_sha():
             assert receipt['data_sha256'] == data_sha(), 'data hash mismatch'
         d = out/arm
@@ -89,7 +90,7 @@ def render(out, label='Torch full fits', check_receipts=True):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
-    fig, axes = plt.subplots(2, 4, figsize=(18, 8), sharex=True)
+    fig, axes = plt.subplots(2, len(OUTCOMES), figsize=(4.5*len(OUTCOMES), 8), sharex=True)
     summary, path_rows = [], []
     for i, (d, dlab) in enumerate(DESIGNS.items()):
         for j, (o, olab) in enumerate(OUTCOMES.items()):

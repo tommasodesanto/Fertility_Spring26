@@ -50,3 +50,26 @@ the two years after, then return to baseline. Neighbourhood-motivated moves do
 not respond. Together with the rooms path this is one event: a move to a
 larger, owned dwelling between two years before and two years after the first
 birth, followed by a decade of stability.
+
+## Reason for move among movers (conditional versions; jobs 18431541/18431542)
+
+`space_c` and `nbhd_c` are the same reason indicators restricted to
+household-years that moved since the previous interview, so they read as the
+share of moves made for that reason. The sample of movers is itself an outcome
+of the birth (moving falls by 16–21 points afterwards), so these condition on
+a post-treatment event; they are reported beside, not instead of, the
+unconditional versions.
+
+| Outcome, design | Baseline share of moves | −1/0 | +1/+2 | +3/+4 | +5/+6 | Mover rows |
+|---|---|---|---|---|---|---|
+| Share of moves for more space, H | 0.122 | +0.054 (0.017) | +0.140 (0.021) | +0.133 (0.023) | +0.108 (0.026) | 19,456 |
+| Share of moves for more space, A2h | 0.123 | +0.050 (0.013) | +0.114 (0.017) | +0.142 (0.020) | +0.147 (0.022) | 27,462 |
+| Share of moves for neighbourhood, H | 0.054 | −0.017 (0.012) | −0.011 (0.014) | −0.017 (0.014) | +0.022 (0.018) | 19,456 |
+| Share of moves for neighbourhood, A2h | 0.058 | −0.022 (0.009) | +0.005 (0.011) | −0.002 (0.013) | +0.012 (0.015) | 27,462 |
+
+Pre-periods are flat (H: +0.02, +0.03, +0.03; A2h: +0.01, 0.00, +0.01 for
+space). Among households that move, the share moving for more space doubles
+from 12% to about 25% from the birth window onward and stays elevated for a
+decade; neighbourhood-motivated moves do not change. The unconditional space
+indicator rises less because the overall probability of moving falls after
+the birth; the two views are consistent.

@@ -18,6 +18,15 @@ limitations do not reopen the adopted target or frozen contracts. The full
 receipt and exact arithmetic are in
 `output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/bequest_flow_2007/calculation/verified_receipt.json`.
 
+## September 24 (late) — reason for move among movers
+
+Conditional on having moved: share of moves for more space +0.133 (0.023) /
++0.142 (0.020) at +3/+4 (H / status-at-baseline) on a 0.12 base, flat
+pre-period, elevated through +11; neighbourhood share null. The author's
+original code was unconditional (non-movers coded 0), which is why the
+unconditional space effect is small: overall moving falls after the birth.
+Both versions in `output/sa_first_birth_outcomes_v3/`.
+
 ## September 24 (evening) — ownership and moving on the final specification
 
 Same design as the rooms headline, items rebuilt from official yearly PSID
