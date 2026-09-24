@@ -1,0 +1,38 @@
+{
+  "status": "computation_complete_source_comparison_complete_candidate_not_author_adopted",
+  "reference_year": 2007,
+  "published_estimand": "Annual child-directed bequest flow divided by aggregate net worth, following the unchanged Gale-Scholz / De Nardi-Yang definition.",
+  "verified_candidate": {
+    "scenario": "head-death household-wealth proxy; legal marriage only for the 25% child share; 75% otherwise; estate base max(NETWORTH - TRUSTS, 0); qx95 mapping for public SCF ages top-coded at 95; denominator aggregate signed NETWORTH",
+    "annual_flow_2022_usd": 674489508272.7325,
+    "aggregate_networth_denominator_2022_usd": 92509578498272.6,
+    "ratio": 0.007291023472616158,
+    "display_percent": "0.7291023473%",
+    "saved_scenario_row_ratio_percent": 0.7291023472616158,
+    "five_implicate_mean_ratio_percent": 0.7291118811191621,
+    "arithmetic_check": "674489508272.7325 / 92509578498272.6 * 100 = 0.7291023472616158 percent"
+  },
+  "comparison": {
+    "preferred_method_matching_candidate": "The 0.7291% trust-excluded estate-base row matches the published exclusion of estimated trusts more closely than the 0.7514% trust-inclusive numerator row.",
+    "historical_reference": "Gale-Scholz 1986 value is $105bn / $11,976bn = 0.8765%, reported as 0.88%; it is historical and was not reused as the 2007 estimate.",
+    "source_reconciliation": "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/bequest_flow_2007/calculation/published_method_reconciliation.json"
+  },
+  "input_validation": {
+    "scf_joined_rows": 22085,
+    "unique_peus": 4417,
+    "rows_per_peu": 5,
+    "weights": "WGT = X42001/5 checked row-by-row; five-implicate pooling retained.",
+    "source_hashes": {
+      "scf_full_public_zip_sha256": "7542b6feb77fcecffd60864e5bf6a6fc87f571caa596012fbcdc80f6c5aa9576",
+      "scf_summary_zip_sha256": "13830f9ac36d3d5dbb85a2858b941840af147fe3f3109605468662074294097d",
+      "nchs_2007_qx_csv_sha256": "9c9b90f34f3641bb11f16b0dfda0fb4016eb7e64032acdc0e1c282e3c830e628"
+    }
+  },
+  "limitations_not_pending_work": [
+    "GS documents 25% for a married head death and 75% for a single head or same-year death of both spouses, but does not specify whether whole-household wealth is attributed at one spouse death or only joint death, or how marital estate ownership is split. This candidate explicitly uses head death times whole PEU wealth.",
+    "GS child-directed shares require child eligibility; the available SCF KIDS variable counts current rostered children and cannot establish lifetime offspring. The candidate applies the shares mechanically to the SCF PEUs.",
+    "SCF public ages are top-coded at 95; qx95 is the reported candidate and qx99/qx100+ are disclosed sensitivity scenarios, not uncertainty intervals."
+  ],
+  "adoption": "Not author-adopted and does not alter a frozen target contract.",
+  "completion": "The available-data computation and source comparison are complete. No further recalculation is pending unless a concrete missing input or a revised estimator is identified."
+}
