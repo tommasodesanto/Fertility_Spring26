@@ -1,6 +1,33 @@
 # Paired overnight calibration
 
-Submitted once on September 25, 2026. Smoke array `18490899` was scheduler-confirmed running in both arms. Search `18490902` has 40 one-thread workers and depends on successful completion of both exact-loop smokes. Repetitions `18490903` and export `18490906` follow the completed stages. There are no calibration results yet.
+Submitted once on September 25, 2026 and now complete. Smoke array `18490899`, 40-worker search `18490902`, repetitions `18490903` and export `18490906` all completed with exit 0:0. The final artifacts are in `final_results/`; the launch narrative below remains as the reproducibility record.
+
+## Reviewed results
+
+All 728 planned objectives scored, including four seeds and four selected repetitions. The 17.9% arm completed 2,024 stationary solves and the 8.751% arm 2,217: 4,241 started/completed, zero incomplete. There were no rejected or unrun objectives. Workers finished at 06:12:39 EDT, repetitions at 06:25:16 and exports at 06:25:52, before the amended eight-hour ceiling. Exhausting this finite bank is not evidence of convergence.
+
+| Moment | Target | Tax 17.9% | Tax 8.751% |
+| --- | ---: | ---: | ---: |
+| Ownership, heads 30–55 (%) | 67.626 | 64.524 | 75.676 |
+| Mean occupied rooms | 5.608 | 6.711 | 6.544 |
+| First-birth room response | 1.465 | 0.924 | 0.789 |
+| Aggregate wealth / annual gross earnings | 6.927 | 5.357 | 6.045 |
+| Mean first-birth age | 25.976 | 26.542 | 26.342 |
+| Weighted loss, identical objective | — | 291.732 | 280.411 |
+
+The lower-tax selection is closer on wealth and birth timing, but farther from ownership and first-birth housing. The actual balanced pensions are 51.159% and 25.011% of mean gross working earnings. These selected comparisons include recalibration; they are not a tax-only effect. The common structural-seed comparisons, with separate fertility normalization, are saved under `final_results/matched_smokes/`.
+
+The selected points pass the retained numerical gates and match both exact repetitions. Five other high-tax points have tiny budget-excess mass (maximum 1.58e-23). The unchanged frozen rule counts spending gaps above 1e-9 and rejects mass above 2e-10; both selected points have exactly zero excess mass. Do not confuse the spending-gap threshold with the mass threshold or with the strict-zero rule used by an older workflow.
+
+Independent direct reads of all six saved selected/repeated checkpoints on Torch confirm identical native prices, values and distributions, evaluated values/current distributions, pre-choice distributions, fertility utility scales, and byte-identical full target/parameter tables. See `final_results/collection_scientific_repeat_audit.json`. All native moment and normalization equality is additionally verified by the completed exporter; it did not persist separate per-moment hashes. The final selected checkpoint hashes are `de1da882335328f9c0a6ace673c85e10522c8e68c09555f6a7da1717d93c33d7` and `d5ef71bdaf9960273035c722a2428a55f14bab160e0596881c8a981e67b8ead1`; the field `selected_checkpoint_sha256` in inherited receipts names the original seed, not these final cases.
+
+Neither tax rate is adopted by this experiment. A small weighted-loss difference cannot determine the desired pension coverage and benefit level. Both fits still overpredict mean rooms and underpredict the chosen first-birth response; the empirical/model observer differences below remain unresolved. Exact repetition does not prove grid convergence or validate a transition.
+
+- **17.9%:** [reviewed PDF, full tables and 17 figures](final_results/greaney_179/paired_greaney_179_review.pdf), [all target fits](final_results/greaney_179/target_fit.csv), [all parameters and restrictions](final_results/greaney_179/parameters.csv).
+- **8.751%:** [reviewed PDF, full tables and 17 figures](final_results/oasi_087510/paired_oasi_087510_review.pdf), [all target fits](final_results/oasi_087510/target_fit.csv), [all parameters and restrictions](final_results/oasi_087510/parameters.csv).
+- `final_results/pdf_qa/` records remote rendering of all 42 pages and visual inspection. Some original income-state legends remain crowded; the agreed figure set is preserved. Full-size table inspection found no overlapping columns.
+
+Every free parameter and its actual bound appears in the CSVs. The two taste-shock estimates are inside the inherited 1%-of-full-range lower-bound screen; neither equals the lower bound of 0.02. The bounds are broad (0.02–50), so these flags do not establish binding constraints.
 
 ## Common specification and fiscal comparison
 
@@ -22,7 +49,7 @@ A single objective is capped at 3,100 seconds. Queue delay and failures may leav
 
 Eight focused unit/caller tests passed on Torch. Native zero-solve preflight bound both seeds at both rates and checked the generated runtime sources. A three-page report-only fixture verified the table layout for all 13 target rows and 25 parameter/restriction rows. Independent and lead source reviews are in the [maturation review packet](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/demographic_accounting_review/maturation_implementation_20260925/README.md).
 
-At final collection, compare the original selected checkpoint against both exact repetitions for native prices, V, g, policy values, current/pre distributions, all native moments, psi, normalization, source/target contracts, tables and loss. Only stationary_solve_seconds is excluded from normalization comparison. Both numerical comparison tolerances are zero. Missing or failed repetitions must remain explicit. Numerical repeat verification and final all-page visual QA have not occurred yet.
+The final exporter compared the original selected checkpoint against both exact repetitions for native prices, V, g, policy values, current/pre distributions, all native moments, psi, normalization, source/target contracts, tables and loss. Only stationary_solve_seconds is excluded from normalization comparison. Both numerical comparison tolerances are zero; all four repetitions passed. Final all-page visual QA is complete.
 
 ## Files and responsibility
 

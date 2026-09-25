@@ -1,0 +1,140 @@
+{
+  "adult_entry_adjusted_birth_children": 0.1296403298876232,
+  "adult_entry_birth_to_household_conversion": 0.47619047619047616,
+  "adult_entry_entry_rate": 0.06173345618096674,
+  "adult_entry_gate": {
+    "births_per_entry": 2.1000011648075043,
+    "entry_E": 0.06173345618096674,
+    "entry_residual": -3.424171096666484e-08,
+    "fertility_gap": 1.1648075042280936e-06,
+    "potential_B": 0.06173349042267771
+  },
+  "adult_entry_stationary_relative_gap": 5.546699325150453e-07,
+  "annual_depreciation": 0.01416143718381309,
+  "annual_property_tax": 0.010598360773872594,
+  "case_checkpoint_sha256": "10c17bd9a7e90e5b59deeb5d1cf0b138c34a5b5a46f6b3be97e82b5b4b9902bd",
+  "chosen_solve_seconds": 106.29014915495645,
+  "demographic_queue": "split 16/20 birth-vintage entry, single /2.1 conversion; final normalized closed-renewal gate passed",
+  "display_count": 13,
+  "fiscal": {
+    "actual_accounts": {
+      "implied_balanced_payroll_tax": 0.17899999999932986,
+      "implied_balanced_pension_period": 2.0463613896197845,
+      "payroll_tax_base_period": 2.963205896679928,
+      "payroll_tax_rate": 0.179,
+      "payroll_tax_revenue": 0.5304138555057071,
+      "pension_budget_residual": 1.985744901844555e-12,
+      "pension_outlays": 0.5304138555037213,
+      "pension_period_units": 2.0463613896121235,
+      "retiree_benefit_exposure": 0.2591985258304049,
+      "retiree_household_mass": 0.2591985258304049,
+      "scaled_pension_budget_residual": 3.74376513967816e-12,
+      "worker_household_mass": 0.7408014741692679
+    },
+    "fiscal_gate": true,
+    "fiscal_tolerance": 1e-06,
+    "marginal_gate": true,
+    "marginal_tolerance": 1e-09,
+    "normalized_age_income_max_gap": 5.0031159770647093e-14
+  },
+  "free_count": 8,
+  "household_budget": {
+    "actual_rent": 0.10357660033436035,
+    "budget_excess_mass": 0.0,
+    "budget_tolerance": 1e-09,
+    "maximum_occupied_excess": 7.105427357601002e-15
+  },
+  "loss": 460.8323907306636,
+  "market_residual": 9.513131445804654e-07,
+  "model_observer_warning": "First-birth housing is an unmatched stationary proxy for the PSID panel +3/+4 versus -3/-2 estimate",
+  "normalization": {
+    "absolute_gap": 1.164811786136255e-06,
+    "completed_fertility": 2.1000011648117862,
+    "psi_child": 0.14265794009269567,
+    "stationary_solve_seconds": 500.6139807999134,
+    "stationary_solves": 5,
+    "status": "derived_intercept",
+    "target": 2.1
+  },
+  "objective_stationary_solve_seconds": 500.6139807999134,
+  "objective_stationary_solves": 5,
+  "operator_gates": {
+    "birth_flow": 0.11623919354288009,
+    "birth_flow_abs_error": 2.4980018054066022e-15,
+    "effective_mature_flow_B": 0.055075648615417985,
+    "entry_flow_E": 0.06173345618096674,
+    "mature_flow_abs_error": 5.823119764158946e-14,
+    "one_step_constant_path_nesting_l1": 3.72803829783298e-13,
+    "reconstructed_baseline_births": 0.11623919354288009,
+    "reconstructed_effective_mature_flow_B": 0.055075648615359754,
+    "stationary_birth_flow": 0.1162391935428776,
+    "stationary_feasibility_projection_mass": 0.0,
+    "stationary_post_fertility_nesting_l1": 1.3481984565337162e-14,
+    "stationary_post_fertility_nesting_max_abs": 1.0217709731524458e-16,
+    "stationary_topcode_adjusted_birth_flow": 0.1296403298876232,
+    "top_bin_entry_birth_flow": 0.022247740892057888,
+    "topcode_adjusted_birth_flow": 0.12964032988762608,
+    "topcode_adjusted_birth_flow_abs_error": 2.886579864025407e-15,
+    "zero_entry_mass_accounting_residual": 9.992007221626409e-16
+  },
+  "payroll_tax": 0.179,
+  "period_depreciation": 0.05545379079326218,
+  "period_property_tax": 0.042393443095490375,
+  "point": {
+    "H0": 8.967215659504557,
+    "beta_annual": 0.9762497404726131,
+    "chi": 0.8879849680171324,
+    "first_birth_fixed_cost": 0.35326910501721936,
+    "h_P": 2.044201723718249,
+    "kappa_fert": 0.2092758576051789,
+    "kappa_fert_continuation": 0.48206876668272913,
+    "theta0": 0.08816920777433607
+  },
+  "policy_array_gates": {
+    "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+    "lower_node_mass_at_negative_steps": 0.0,
+    "maximum_occupied_value_drop": 0.0,
+    "occupied_negative_steps": 0,
+    "probabilities": {
+      "continuation_birth": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      },
+      "first_birth": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      },
+      "location": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      },
+      "tenure": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      }
+    },
+    "share_pre_choice_mass_at_negative_steps": 0.0,
+    "value_drop_tolerance": 1e-07
+  },
+  "price": 0.5745337728297211,
+  "purchase_accounting": {
+    "end_mortgage_floor_violation_mass": 0.0,
+    "mass_tolerance": 2e-10,
+    "maximum_occupied_end_debt_shortfall": 0.0,
+    "maximum_occupied_transaction_wealth_error": 1.4210854715202004e-14,
+    "purchase_threshold_violation_mass": 0.0,
+    "transaction_outside_grid_mass": 0.0,
+    "wealth_tolerance": 1e-09
+  },
+  "selected_checkpoint_sha256": "83a28e46b36e2fbe30338d366611f3ec209f0c5a68309ee4ee9fa8523b66adee",
+  "source_manifest_sha256": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6",
+  "status": "verified_experimental_point",
+  "target_system_sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+  "theta1_external": 0.008193084126995582,
+  "user_cost_rate": 0.18027939388875253,
+  "weighted_count": 12
+}

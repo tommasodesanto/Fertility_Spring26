@@ -1,0 +1,602 @@
+{
+  "greaney_179": {
+    "comparisons": [
+      {
+        "all_fields_exact": true,
+        "case_checkpoint_sha256": "62a0e8f12a72080bf5f0d24a9c5f2754dcf3c48f01208ce9ea9deefe8ec7066c",
+        "exact_fields": {
+          "arrays": true,
+          "full_13_target_csv_sha256": true,
+          "full_25_parameter_csv_sha256": true,
+          "loss": true,
+          "objective_sha256": true,
+          "price": true,
+          "psi_child": true,
+          "reference_checkpoint_sha256": true,
+          "source_manifest_sha256": true
+        },
+        "repeat": "repeat_01"
+      },
+      {
+        "all_fields_exact": true,
+        "case_checkpoint_sha256": "95ad9dc1a235292f57f1c48b3c9de8bf8fe1d86f317b743069c5429bd3cab682",
+        "exact_fields": {
+          "arrays": true,
+          "full_13_target_csv_sha256": true,
+          "full_25_parameter_csv_sha256": true,
+          "loss": true,
+          "objective_sha256": true,
+          "price": true,
+          "psi_child": true,
+          "reference_checkpoint_sha256": true,
+          "source_manifest_sha256": true
+        },
+        "repeat": "repeat_02"
+      }
+    ],
+    "exporter_exact_chain_moment_comparison_documented_in": "selected_export/final_pair_receipt.json; render_pair.py scientific_checkpoint/same_numerics zero-tolerance",
+    "repeats": [
+      {
+        "arrays": {
+          "evaluated_g_current": {
+            "dtype": "float64",
+            "sha256": "901bcf51417bed9d43913f68173c688e84989a5368b0f32e7cd404f619586cba",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "evaluated_policy_V": {
+            "dtype": "float64",
+            "sha256": "0702ac54c0ebb7d90f738edc281acfe546c3e2359fd2d3a1e922f0967f9650db",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "native_V": {
+            "dtype": "float64",
+            "sha256": "0702ac54c0ebb7d90f738edc281acfe546c3e2359fd2d3a1e922f0967f9650db",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "native_g": {
+            "dtype": "float64",
+            "sha256": "22cd3d81797f28ca8cbf931e67920778338eb9909217d4d00b77e3f51b6823bf",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "native_p_eq": {
+            "dtype": "float64",
+            "sha256": "cf9a59e76e6f8b994b0bae8884157ee45f400ff168f2422ac12e26e835c2a0af",
+            "shape": [
+              1
+            ]
+          },
+          "stationary_g_pre": {
+            "dtype": "float64",
+            "sha256": "dc7448d0f3d7241be2c1b53a79cbd991d523a54b4927e7ccc17402b9d27a0360",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          }
+        },
+        "case": "results/run_001/greaney_179/repeat_01/selected_repeat",
+        "case_checkpoint_sha256": "62a0e8f12a72080bf5f0d24a9c5f2754dcf3c48f01208ce9ea9deefe8ec7066c",
+        "full_13_target_csv_sha256": "6515388a0b9b908768c7c13e64af89708ef5ffe6d74710898d53bad9ba765a51",
+        "full_25_parameter_csv_sha256": "014de5c8b507b8226568611619ecad47707cbce9fb711bd17e086d741c8a3025",
+        "label": "repeat_01",
+        "loss": 291.73166273362773,
+        "objective_sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+        "price": 0.6015631201460675,
+        "psi_child": 0.1516284670051572,
+        "reference_checkpoint_sha256": "83a28e46b36e2fbe30338d366611f3ec209f0c5a68309ee4ee9fa8523b66adee",
+        "source_manifest_sha256": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6"
+      },
+      {
+        "arrays": {
+          "evaluated_g_current": {
+            "dtype": "float64",
+            "sha256": "901bcf51417bed9d43913f68173c688e84989a5368b0f32e7cd404f619586cba",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "evaluated_policy_V": {
+            "dtype": "float64",
+            "sha256": "0702ac54c0ebb7d90f738edc281acfe546c3e2359fd2d3a1e922f0967f9650db",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "native_V": {
+            "dtype": "float64",
+            "sha256": "0702ac54c0ebb7d90f738edc281acfe546c3e2359fd2d3a1e922f0967f9650db",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "native_g": {
+            "dtype": "float64",
+            "sha256": "22cd3d81797f28ca8cbf931e67920778338eb9909217d4d00b77e3f51b6823bf",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "native_p_eq": {
+            "dtype": "float64",
+            "sha256": "cf9a59e76e6f8b994b0bae8884157ee45f400ff168f2422ac12e26e835c2a0af",
+            "shape": [
+              1
+            ]
+          },
+          "stationary_g_pre": {
+            "dtype": "float64",
+            "sha256": "dc7448d0f3d7241be2c1b53a79cbd991d523a54b4927e7ccc17402b9d27a0360",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          }
+        },
+        "case": "results/run_001/greaney_179/repeat_02/selected_repeat",
+        "case_checkpoint_sha256": "95ad9dc1a235292f57f1c48b3c9de8bf8fe1d86f317b743069c5429bd3cab682",
+        "full_13_target_csv_sha256": "6515388a0b9b908768c7c13e64af89708ef5ffe6d74710898d53bad9ba765a51",
+        "full_25_parameter_csv_sha256": "014de5c8b507b8226568611619ecad47707cbce9fb711bd17e086d741c8a3025",
+        "label": "repeat_02",
+        "loss": 291.73166273362773,
+        "objective_sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+        "price": 0.6015631201460675,
+        "psi_child": 0.1516284670051572,
+        "reference_checkpoint_sha256": "83a28e46b36e2fbe30338d366611f3ec209f0c5a68309ee4ee9fa8523b66adee",
+        "source_manifest_sha256": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6"
+      }
+    ],
+    "selected": {
+      "arrays": {
+        "evaluated_g_current": {
+          "dtype": "float64",
+          "sha256": "901bcf51417bed9d43913f68173c688e84989a5368b0f32e7cd404f619586cba",
+          "shape": [
+            160,
+            6,
+            1,
+            17,
+            15,
+            4,
+            4
+          ]
+        },
+        "evaluated_policy_V": {
+          "dtype": "float64",
+          "sha256": "0702ac54c0ebb7d90f738edc281acfe546c3e2359fd2d3a1e922f0967f9650db",
+          "shape": [
+            160,
+            6,
+            1,
+            17,
+            15,
+            4,
+            4
+          ]
+        },
+        "native_V": {
+          "dtype": "float64",
+          "sha256": "0702ac54c0ebb7d90f738edc281acfe546c3e2359fd2d3a1e922f0967f9650db",
+          "shape": [
+            160,
+            6,
+            1,
+            17,
+            15,
+            4,
+            4
+          ]
+        },
+        "native_g": {
+          "dtype": "float64",
+          "sha256": "22cd3d81797f28ca8cbf931e67920778338eb9909217d4d00b77e3f51b6823bf",
+          "shape": [
+            160,
+            6,
+            1,
+            17,
+            15,
+            4,
+            4
+          ]
+        },
+        "native_p_eq": {
+          "dtype": "float64",
+          "sha256": "cf9a59e76e6f8b994b0bae8884157ee45f400ff168f2422ac12e26e835c2a0af",
+          "shape": [
+            1
+          ]
+        },
+        "stationary_g_pre": {
+          "dtype": "float64",
+          "sha256": "dc7448d0f3d7241be2c1b53a79cbd991d523a54b4927e7ccc17402b9d27a0360",
+          "shape": [
+            160,
+            6,
+            1,
+            17,
+            15,
+            4,
+            4
+          ]
+        }
+      },
+      "case": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/results/run_001/greaney_179/worker_04/point_07",
+      "case_checkpoint_sha256": "de1da882335328f9c0a6ace673c85e10522c8e68c09555f6a7da1717d93c33d7",
+      "full_13_target_csv_sha256": "6515388a0b9b908768c7c13e64af89708ef5ffe6d74710898d53bad9ba765a51",
+      "full_25_parameter_csv_sha256": "014de5c8b507b8226568611619ecad47707cbce9fb711bd17e086d741c8a3025",
+      "label": "selected",
+      "loss": 291.73166273362773,
+      "objective_sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+      "price": 0.6015631201460675,
+      "psi_child": 0.1516284670051572,
+      "reference_checkpoint_sha256": "83a28e46b36e2fbe30338d366611f3ec209f0c5a68309ee4ee9fa8523b66adee",
+      "source_manifest_sha256": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6"
+    }
+  },
+  "oasi_087510": {
+    "comparisons": [
+      {
+        "all_fields_exact": true,
+        "case_checkpoint_sha256": "8e12db59838510e17f844864827a76d54571716fa7d0ee256ef7627f8a2d9e43",
+        "exact_fields": {
+          "arrays": true,
+          "full_13_target_csv_sha256": true,
+          "full_25_parameter_csv_sha256": true,
+          "loss": true,
+          "objective_sha256": true,
+          "price": true,
+          "psi_child": true,
+          "reference_checkpoint_sha256": true,
+          "source_manifest_sha256": true
+        },
+        "repeat": "repeat_01"
+      },
+      {
+        "all_fields_exact": true,
+        "case_checkpoint_sha256": "dbd89fac16c0b81c358881a4b2f6511f0c9474dfb8ce1c81420104251631799c",
+        "exact_fields": {
+          "arrays": true,
+          "full_13_target_csv_sha256": true,
+          "full_25_parameter_csv_sha256": true,
+          "loss": true,
+          "objective_sha256": true,
+          "price": true,
+          "psi_child": true,
+          "reference_checkpoint_sha256": true,
+          "source_manifest_sha256": true
+        },
+        "repeat": "repeat_02"
+      }
+    ],
+    "exporter_exact_chain_moment_comparison_documented_in": "selected_export/final_pair_receipt.json; render_pair.py scientific_checkpoint/same_numerics zero-tolerance",
+    "repeats": [
+      {
+        "arrays": {
+          "evaluated_g_current": {
+            "dtype": "float64",
+            "sha256": "8d0bff7e729e9d567133f73a68e148623c8ccda134305f7d183a26a3af82a121",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "evaluated_policy_V": {
+            "dtype": "float64",
+            "sha256": "a4db144c7338760912d5c818470ba01da7ade2aaddeb91be21d3f027a7c273a8",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "native_V": {
+            "dtype": "float64",
+            "sha256": "a4db144c7338760912d5c818470ba01da7ade2aaddeb91be21d3f027a7c273a8",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "native_g": {
+            "dtype": "float64",
+            "sha256": "2fb99238027381d313ae93eb85b4ef05cb8a863d5936aa8c3fff176bd1b44c5a",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "native_p_eq": {
+            "dtype": "float64",
+            "sha256": "9cbaf8c18684bd706b3240dd1c9b950feab163e07750b6cb3cbf5c108102a54b",
+            "shape": [
+              1
+            ]
+          },
+          "stationary_g_pre": {
+            "dtype": "float64",
+            "sha256": "d1f28442b71111e7595dba4e1de10084449514976793dacdc4c559ce54b68438",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          }
+        },
+        "case": "results/run_001/oasi_087510/repeat_01/selected_repeat",
+        "case_checkpoint_sha256": "8e12db59838510e17f844864827a76d54571716fa7d0ee256ef7627f8a2d9e43",
+        "full_13_target_csv_sha256": "4cb53428a545b5e97f934bcbca4a47be03609a388eed4831d3354af1133455d6",
+        "full_25_parameter_csv_sha256": "f501117da0157b86d166b38e554af01bbbe28d3f594c2f1c15d920802f612240",
+        "label": "repeat_01",
+        "loss": 280.41079921120206,
+        "objective_sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+        "price": 0.6127484936903277,
+        "psi_child": 0.13539452644572644,
+        "reference_checkpoint_sha256": "83a28e46b36e2fbe30338d366611f3ec209f0c5a68309ee4ee9fa8523b66adee",
+        "source_manifest_sha256": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6"
+      },
+      {
+        "arrays": {
+          "evaluated_g_current": {
+            "dtype": "float64",
+            "sha256": "8d0bff7e729e9d567133f73a68e148623c8ccda134305f7d183a26a3af82a121",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "evaluated_policy_V": {
+            "dtype": "float64",
+            "sha256": "a4db144c7338760912d5c818470ba01da7ade2aaddeb91be21d3f027a7c273a8",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "native_V": {
+            "dtype": "float64",
+            "sha256": "a4db144c7338760912d5c818470ba01da7ade2aaddeb91be21d3f027a7c273a8",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "native_g": {
+            "dtype": "float64",
+            "sha256": "2fb99238027381d313ae93eb85b4ef05cb8a863d5936aa8c3fff176bd1b44c5a",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          },
+          "native_p_eq": {
+            "dtype": "float64",
+            "sha256": "9cbaf8c18684bd706b3240dd1c9b950feab163e07750b6cb3cbf5c108102a54b",
+            "shape": [
+              1
+            ]
+          },
+          "stationary_g_pre": {
+            "dtype": "float64",
+            "sha256": "d1f28442b71111e7595dba4e1de10084449514976793dacdc4c559ce54b68438",
+            "shape": [
+              160,
+              6,
+              1,
+              17,
+              15,
+              4,
+              4
+            ]
+          }
+        },
+        "case": "results/run_001/oasi_087510/repeat_02/selected_repeat",
+        "case_checkpoint_sha256": "dbd89fac16c0b81c358881a4b2f6511f0c9474dfb8ce1c81420104251631799c",
+        "full_13_target_csv_sha256": "4cb53428a545b5e97f934bcbca4a47be03609a388eed4831d3354af1133455d6",
+        "full_25_parameter_csv_sha256": "f501117da0157b86d166b38e554af01bbbe28d3f594c2f1c15d920802f612240",
+        "label": "repeat_02",
+        "loss": 280.41079921120206,
+        "objective_sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+        "price": 0.6127484936903277,
+        "psi_child": 0.13539452644572644,
+        "reference_checkpoint_sha256": "83a28e46b36e2fbe30338d366611f3ec209f0c5a68309ee4ee9fa8523b66adee",
+        "source_manifest_sha256": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6"
+      }
+    ],
+    "selected": {
+      "arrays": {
+        "evaluated_g_current": {
+          "dtype": "float64",
+          "sha256": "8d0bff7e729e9d567133f73a68e148623c8ccda134305f7d183a26a3af82a121",
+          "shape": [
+            160,
+            6,
+            1,
+            17,
+            15,
+            4,
+            4
+          ]
+        },
+        "evaluated_policy_V": {
+          "dtype": "float64",
+          "sha256": "a4db144c7338760912d5c818470ba01da7ade2aaddeb91be21d3f027a7c273a8",
+          "shape": [
+            160,
+            6,
+            1,
+            17,
+            15,
+            4,
+            4
+          ]
+        },
+        "native_V": {
+          "dtype": "float64",
+          "sha256": "a4db144c7338760912d5c818470ba01da7ade2aaddeb91be21d3f027a7c273a8",
+          "shape": [
+            160,
+            6,
+            1,
+            17,
+            15,
+            4,
+            4
+          ]
+        },
+        "native_g": {
+          "dtype": "float64",
+          "sha256": "2fb99238027381d313ae93eb85b4ef05cb8a863d5936aa8c3fff176bd1b44c5a",
+          "shape": [
+            160,
+            6,
+            1,
+            17,
+            15,
+            4,
+            4
+          ]
+        },
+        "native_p_eq": {
+          "dtype": "float64",
+          "sha256": "9cbaf8c18684bd706b3240dd1c9b950feab163e07750b6cb3cbf5c108102a54b",
+          "shape": [
+            1
+          ]
+        },
+        "stationary_g_pre": {
+          "dtype": "float64",
+          "sha256": "d1f28442b71111e7595dba4e1de10084449514976793dacdc4c559ce54b68438",
+          "shape": [
+            160,
+            6,
+            1,
+            17,
+            15,
+            4,
+            4
+          ]
+        }
+      },
+      "case": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/results/run_001/oasi_087510/worker_05/point_04",
+      "case_checkpoint_sha256": "d5ef71bdaf9960273035c722a2428a55f14bab160e0596881c8a981e67b8ead1",
+      "full_13_target_csv_sha256": "4cb53428a545b5e97f934bcbca4a47be03609a388eed4831d3354af1133455d6",
+      "full_25_parameter_csv_sha256": "f501117da0157b86d166b38e554af01bbbe28d3f594c2f1c15d920802f612240",
+      "label": "selected",
+      "loss": 280.41079921120206,
+      "objective_sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+      "price": 0.6127484936903277,
+      "psi_child": 0.13539452644572644,
+      "reference_checkpoint_sha256": "83a28e46b36e2fbe30338d366611f3ec209f0c5a68309ee4ee9fa8523b66adee",
+      "source_manifest_sha256": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6"
+    }
+  }
+}

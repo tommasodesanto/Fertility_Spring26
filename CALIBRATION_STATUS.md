@@ -1,5 +1,51 @@
 # Calibration Status
 
+## September 25 — paired overnight calibration completed; both tax rates reviewed
+
+All stages of the existing Torch chain completed with exit 0:0. All 728
+planned normalized objectives scored: 364 per tax arm, including two seeds,
+360 proposals and two selected repetitions. There were 4,241 stationary
+solves started and completed (2,024 at 17.9%; 2,217 at 8.751%), with no
+incomplete, rejected or unrun objectives. The finite proposal bank finished
+before the eight-hour ceiling: workers ended at 06:12:39 EDT, repetitions at
+06:25:16, and exports at 06:25:52. No replacement run or retry was submitted.
+
+The selected weighted losses under the identical new objective are 291.732
+and 280.411. The lower-tax selection improves wealth, mean rooms and birth
+timing, but fits ownership and the first-birth room response less closely.
+Target / high-tax / low-tax values are ownership 67.626% / 64.524% / 75.676%,
+mean rooms 5.608 / 6.711 / 6.544, first-birth room response 1.465 / 0.924 /
+0.789, wealth/earnings 6.927 / 5.357 / 6.045, and mean first-birth age
+25.976 / 26.542 / 26.342. These are separately recalibrated selections.
+Matched structural-seed results are retained separately, with fertility
+utility scale normalized in each case; they are not fixed-preference effects.
+
+The actual balanced pensions equal 51.159% and 25.011% of mean gross working
+earnings. Both selected points pass the retained fiscal, market, household,
+purchase and stationary birth-entry gates, with zero selected budget-excess
+mass. Five nonselected high-tax receipts have trace budget-excess mass up to
+1.58e-23: the frozen predicate counts spending excess above 1e-9 and rejects
+mass above 2e-10, so these pass its existing rule. No collection-time gate was
+relaxed. This is distinct from older workflows with an exact-zero mass rule.
+
+Both original selected checkpoints match each of their two repetitions at
+zero tolerance under the reviewed exporter. Full 13-row fit tables, all 25
+parameter/restriction rows, matched seeds, numerical receipts and both
+21-page PDFs are in the preparation packet's `final_results/`. All pages were
+rendered on Torch and visually checked; some inherited income-state legends
+remain crowded. No source, target, figure set or frozen result was rewritten.
+The two taste-shock parameters are flagged by a broad 1%-of-range proximity
+screen, but neither estimate equals its lower bound.
+
+The run establishes successful execution and exact repetition of these
+points, not convergence, grid robustness or a validated demographic
+transition. Both arms retain the unmatched native first-birth observer and
+all-positive-estates bequest observer. The common floor utility, B15 earnings,
+inherited entry wealth, accepted cost/target updates and split 16/20 adult-entry
+accounting are disclosed in the packet. Neither tax rate is adopted. The
+small loss advantage does not decide the fiscal specification: the benefit
+level and tax coverage must be chosen on economic grounds.
+
 ## September 25 — paired overnight calibration launched; first-birth target 1.465
 
 The author requests implementation of the adopted maturation/entry decision

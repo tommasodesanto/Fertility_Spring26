@@ -1,0 +1,40 @@
+{
+  "review_date": "2026-09-25",
+  "status": "reviewed_experimental_comparison_ready_for_delivery",
+  "jobs": [18490899, 18490902, 18490903, 18490906],
+  "terminal_status": "all completed 0:0",
+  "objectives": {"planned": 728, "scored": 728, "rejected": 0, "incomplete": 0, "unrun": 0},
+  "stationary_solves": {"started": 4241, "completed": 4241, "incomplete": 0},
+  "final_export_completed_edt": "2026-09-25 06:25:52",
+  "budget_interpretation": "Eight-hour ceiling; finite proposal bank completed earlier. No additional jobs or retries.",
+  "target": {"first_birth_rooms": 1.465, "display_rows": 13, "weighted_rows": 12, "free_parameters": 8},
+  "selected_loss": {"tax_179": 291.73166273362773, "tax_087510": 280.41079921120206},
+  "lead_checks": [
+    "Read full target, parameter/restriction and numerical receipts for both selected cases.",
+    "Independently summed all twelve loss contributions for each selected case; reproduced exported losses.",
+    "Reviewed four direct original-versus-repeat checkpoint comparisons with identical array hashes, full table hashes and source/objective pins.",
+    "Reviewed exporter scientific_checkpoint/same_numerics coverage of all native moments and normalization; only stationary_solve_seconds excluded, tolerances zero, corresponding legacy NaNs permitted.",
+    "Inspected both all-21-page rendered contact sheets and full-size front/table pages; collection worker inspected all pages and remaining full-size table pages.",
+    "Verified pension/gross-working-earnings ratios from actual payroll base, worker mass and pension: 0.5115903474030076 and 0.2501081589141575."
+  ],
+  "verification_evidence": [
+    "final_results/collection_scientific_repeat_audit.json",
+    "final_results/collection_gate_audit.json",
+    "final_results/greaney_179/final_pair_receipt.json",
+    "final_results/oasi_087510/final_pair_receipt.json",
+    "final_results/pdf_qa/pdf_qa_receipt.json"
+  ],
+  "budget_predicate": "Frozen run_e5f_matched_pf_smoke.py counts spending excess >1e-9 and rejects occupied mass >2e-10. Both selected masses are zero; five other high-tax traces up to1.5772527755377255e-23 pass this unchanged predicate.",
+  "scientific_audit_limit": "Completed exporter verifies all native moments. The independent direct checkpoint audit saves array/table hashes but does not separately persist each derived chain-moment hash.",
+  "pdf_limit": "Some inherited income-state legends are crowded. Full-size table inspection found no overlap; unchanged standard seventeen-figure set preserved.",
+  "economic_assessment": "The lower-tax selection improves wealth, mean rooms and birth timing but worsens ownership and first-birth housing fit. Both fits overpredict mean rooms and underpredict the first-birth response. Separately recalibrated results do not identify a tax-only effect or decide pension coverage by weighted loss.",
+  "limitations": [
+    "Finite search and exact repetition are not convergence or grid-robustness evidence.",
+    "Stationary adult-entry accounting passed; transition validation remains separate.",
+    "Native first-birth observer does not match the PSID panel estimator.",
+    "Model bequest observer includes all positive estates; target is child-directed.",
+    "Both arms use pension-only PAYGO; 17.9% is not an exact reproduction of DUE government accounting.",
+    "No paper-baseline or tax-rate adoption."
+  ],
+  "remaining_job_responsibility": "None: all submitted stages terminal and collected. Further economic choices or numerical experiments require a separate task scope."
+}
