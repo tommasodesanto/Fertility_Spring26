@@ -1,0 +1,18 @@
+{
+  "review": "September 25 paired calibration runner and export, read-only source review",
+  "status": "source_review_passed_execution_pending",
+  "scope": "run_pair.py, prepare_bank.py, run_task.sh, submit.sh, render_pair.py in overnight_pair_20260925_preparation/runner",
+  "checks": {
+    "adult_entry": "Both arms explicitly set split_birth_vintage; closed stationary renewal is checked on the final normalized solution at the frozen 0.0005 tolerance.",
+    "paired_search": "Both arms use two common structural seeds and one fixed bank per arm: 20 workers x 18 proposals, half joint three-coordinate and half one-coordinate draws. Payroll tax arms are 0.179 and 0.08751017424959717.",
+    "timing": "One shared 21600-second deadline; search cutoff leaves 4500 seconds for repeats and export, with the final 900 seconds reserved for export. Two selected repeats per arm are scheduled after workers; partial export is explicitly labeled when repeats are missing.",
+    "pins": "Preflight checks the reviewed lock and hashes the objective, proposal bank, source manifest, ancestor, runtime scripts and external tax driver before a native solve. The lock must carry both repeat tolerances as 0.0 for the exact-repeat claim.",
+    "export": "Current exporter compares selected versus completed repeats across pinned checkpoints, source and target hashes, native price/value/distribution arrays, evaluated policy and distributions, native moments, psi, normalization, loss and complete tables; array shapes are checked. The ancestor report with outdated tax and queue wording is moved into INTERNAL_NOT_FOR_DELIVERY. Planned objective count of 364 per arm equals two seeds, 360 proposals and two repeats."
+  },
+  "pending": [
+    "Verify final generated lock actually pins repeat_model_absolute_tolerance=0.0 and repeat_loss_absolute_tolerance=0.0.",
+    "Complete Torch zero-solve preflight and render fixture; no model imports, tests, or solves were run for this review on the Mac.",
+    "Lead signs off on target semantics and launch contract before submission."
+  ],
+  "launch_readiness": "No remaining source-level blocker in the reviewed draft; execution and final lock checks remain pending."
+}

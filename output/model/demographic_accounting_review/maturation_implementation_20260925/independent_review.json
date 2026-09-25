@@ -1,0 +1,40 @@
+{
+  "schema": "independent_maturation_implementation_review_v1",
+  "date": "2026-09-25",
+  "scope": "Read-only mathematical and source review of adopted independent dependency departure and split 16/20-year adult entry. No local model import, test, solve, hash, or rendering.",
+  "verdict": "No mathematical blocker in the reviewed implementation diff; Torch execution and actual frozen-source integration remain required before calibration launch.",
+  "source_derived_identities": {
+    "dependency_departure": "Each of m children currently at home independently leaves with probability 2/9 per four-year period; parental household death removes remaining dependent units and creates no additional adult-entry flow.",
+    "dated_entry": "At period t, the queue returns B_t = (adjusted_births_(t-3) + adjusted_births_(t-4))/(2*2.1) for injection into household age zero at t+1. A date-zero birth impulse enters at dates four and five, corresponding to 16 and 20 years.",
+    "stationary_closed": "With constant births, B=adjusted_births/2.1 and the closed stationary condition is E=B. The queue delay changes dated dynamics, not this stationary flow identity.",
+    "stock": "For potential entrant-household queue stock Q, Q_(t+1)=Q_t+adjusted_births_t/2.1-B_t. The household stock obeys H_(t+1)=H_t-household_exits_t+entrants_(t+1), apart from an explicit empirical age bridge where applicable.",
+    "unit_conversion": "The existing KFE entrant_conversion_factor=0.5 scales surviving child departures for a diagnostic. The separate birth-vintage queue converts top-bin-adjusted birth children to potential new households once by 1/2.1 and does not multiply by 0.5 again.",
+    "top_bin": "Adjusted births equal explicit birth children plus (tfr_top_bin_weight-3)*third-birth flow in the literal 3+ state. The active Markov KFE collects third_births_by_age in both sequential and joint branches and scales it with the solved distribution."
+  },
+  "selected_frozen_evidence": {
+    "entry_E": 0.06173345618094337,
+    "topcode_adjusted_birth_children": 0.12964029045028488,
+    "births_over_entry": 2.100000525975797,
+    "saved_completed_fertility": 2.1000005259789205,
+    "birth_queue_B": 0.061733471642992796,
+    "birth_queue_B_minus_E": 1.5462049425540858e-8,
+    "surviving_departure_KFE_households": 0.05515116139576231,
+    "last_fertile_parent_age": 42,
+    "first_parent_mortality_transition": "66 to 70",
+    "interpretation": "The selected normalizer's fertility tolerance explains the small E-B gap. The KFE departure flow is a different object. Both scheduled entries from the latest eligible birth precede first modeled parent mortality under these frozen supports."
+  },
+  "diff_review": {
+    "adult_entry_helper": "Three- and four-slot queues, constant prehistory, impulse timing, single conversion, finite/nonnegative slot validation, and a closed E-B gate match the adopted rule.",
+    "markov_solver": "The parameter override is default-off and validated. The active Markov KFE attaches adjusted births and birth-based potential entry in both fast and full paths; both packers copy all statistic fields. Fixed-price and final equilibrium solutions expose E-B residuals. The household Bellman problem and old default branch are untouched by these additions.",
+    "open_transition": "The explicit split option calls the new queue while the legacy option delegates the existing 20-year queue function. Retained local entry plus preexisting outside flow enters age zero once; surviving departure and parental death stay diagnostics, not new adult entries. Metadata identifies the two exact lags.",
+    "text_check": "git diff --check passed for the three modified tracked implementation files. No execution check was run on the Mac under the author's cluster-only preference."
+  },
+  "torch_validation_needed": [
+    "Run the two focused queue/caller tests on Torch, including the date-zero impulse and constant-prehistory checks.",
+    "Run a selected-point Markov fast/full statistic check and verify both carry the same adjusted birth flow and E-B residual.",
+    "Confirm the frozen source clone includes adult_entry.py and the new parameter field; enable split_birth_vintage explicitly for the authorized new calibration, keeping historical source bundles unchanged.",
+    "Apply require_closed_stationary_renewal only after the completed-fertility intercept is normalized to 2.1, with the existing fertility tolerance, and preserve numerical gates.",
+    "Confirm the real transition caller injects a birth impulse only at dates four and five, leaves the old route unchanged when selected, and records parent-death dependent loss without extra adult entry."
+  ],
+  "scope_limit": "This review establishes source-level accounting and selected-receipt consistency; it is not a numerical replay, a calibrated fit, or a validation of unnormalized cohort growth after shocks."
+}

@@ -1,0 +1,23 @@
+{
+  "date": "2026-09-25",
+  "status": "source_review_passed_pending_frozen_runtime_launch_checks",
+  "scope": "Lead line-by-line review of adult_entry.py, parameter override, active Markov solver additions, transition caller, and the two focused test files. No local model execution.",
+  "verified": [
+    "Explicit births plus (top-bin representative minus 3) times third-birth flow preserves demographic top-bin weights.",
+    "Births are converted once by 1/2.1; independent 2/9 household dependency departures do not create additional adult entries.",
+    "Three and four waiting slots under pop-at-t/inject-at-t+1 imply birth-cohort entry after 16 and 20 years, with equal weights.",
+    "Constant prehistory preserves a constant entry flow and exact queue-stock conservation.",
+    "The stationary opt-in is restricted to one market, normalized population, four-year periods, and literal 3+ fertility units.",
+    "Both fast and full Markov solutions expose adjusted births and the stationary entry residual; the household Bellman problem is unchanged.",
+    "The final closed renewal gate uses the existing 0.0005 completed-fertility tolerance after psi normalization, not during intermediate normalizer solves.",
+    "The existing transition closure remains separate; no outside-entry or retention valve is introduced into the closed calibration.",
+    "Legacy default behavior and the frozen September 14 reference are preserved."
+  ],
+  "execution_evidence": "Integrator reports all five helper and three transition-caller tests passed on Torch; compact final execution receipt is owned by the paired-run integration packet.",
+  "limits": [
+    "Source and unit checks do not establish a new equilibrium or transition result.",
+    "The split timing has no direct effect on household decisions in the constant-birth reference steady state.",
+    "Household support after dependency departure or parental death remains an abstraction, not a genealogical care model.",
+    "Frozen-runtime preflight, exact-loop smoke, and original-versus-both-selected-repetition comparisons remain separate launch/result gates."
+  ]
+}

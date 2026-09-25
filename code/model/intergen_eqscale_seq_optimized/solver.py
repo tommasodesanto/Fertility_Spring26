@@ -11,6 +11,7 @@ from typing import Any
 import numpy as np
 
 from . import joint_nested
+from .adult_entry import adjusted_births, potential_entry_households
 
 from .parameters import (
     apply_overrides,
@@ -1434,6 +1435,15 @@ def solve_markov_income_equilibrium(
     else:
         best_sol = solve_markov_income_at_prices(best_p, P, b_grid, verbose=False, fast_stats=False, SD=SD_shared)
     best_sol = attach_markov_market_accounting(best_sol, P, b_grid)
+    if str(getattr(P, "adult_entry_clock", "child_departure")) == "split_birth_vintage":
+        best_sol.adult_entry_stationary_residual = (
+            float(best_sol.entry_rate) - float(best_sol.adult_entry_potential_total)
+        )
+        best_sol.adult_entry_stationary_relative_gap = abs(
+            best_sol.adult_entry_stationary_residual
+        ) / max(
+            float(best_sol.entry_rate), float(best_sol.adult_entry_potential_total), 1e-12
+        )
     best_sol.timings = {
         **getattr(best_sol, "timings", {}),
         "income_process": "markov",
@@ -1681,6 +1691,11 @@ def solve_markov_income_at_prices(
     SD: SimpleNamespace | None = None,
     retain_payload: bool = False,
 ) -> SimpleNamespace:
+    if str(getattr(P, "adult_entry_clock", "child_departure")) == "split_birth_vintage":
+        if int(P.I) != 1 or str(getattr(P, "population_closure", "normalized")) != "normalized":
+            raise ValueError("Split birth-vintage stationary entry requires the closed one-market normalized closure")
+        if float(P.period_years) != 4.0:
+            raise ValueError("Split birth-vintage entry requires four-year model periods")
     p = np.asarray(p_eq, dtype=float).reshape(-1).copy()
     r = P.user_cost_rate * p
     if SD is None:
@@ -1700,6 +1715,13 @@ def solve_markov_income_at_prices(
         sol = pack_fast_solution_markov_income(stats, p, P)
     else:
         sol = pack_solution_markov_income(V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, g, stats, P.w_hat, p, P)
+    if str(getattr(P, "adult_entry_clock", "child_departure")) == "split_birth_vintage":
+        sol.adult_entry_stationary_residual = (
+            float(sol.entry_rate) - float(sol.adult_entry_potential_total)
+        )
+        sol.adult_entry_stationary_relative_gap = abs(sol.adult_entry_stationary_residual) / max(
+            float(sol.entry_rate), float(sol.adult_entry_potential_total), 1e-12
+        )
     sol.b_grid = np.asarray(b_grid, dtype=float).copy()
     sol.timings = {
         "bellman_full": float(btime.get("bellman", t_bellman)),
@@ -5809,6 +5831,18 @@ def forward_distribution_markov_income(
     stats.entrants_mature_by_loc = entrants_mature_by_loc
     stats.entrants_mature_total = entrants_mature_total
     stats.mature_entry_shares = entrants_mature_by_loc / max(entrants_mature_total, 1e-12)
+    if str(getattr(P, "adult_entry_clock", "child_departure")) == "split_birth_vintage":
+        if not (bool(getattr(P, "sequential_births", False)) or bool(getattr(P, "joint_nested_choice", False))):
+            raise ValueError("Split birth-vintage entry requires observed sequential third-birth flow")
+        if float(P.period_years) != 4.0:
+            raise ValueError("Split birth-vintage entry requires four-year model periods")
+        if int(P.I) != 1 or int(P.n_parity) != 4 or str(getattr(P, "fertility_units", "")) != "literal_topcode":
+            raise ValueError("Split birth-vintage stationary entry requires one market and literal 3+ fertility units")
+        top_weight = float(getattr(P, "tfr_top_bin_weight"))
+        birth_children = adjusted_births(total_births, float(np.sum(third_births_by_age)), top_weight)
+        stats.adult_entry_adjusted_birth_children = birth_children
+        stats.adult_entry_potential_total = potential_entry_households(birth_children)
+        stats.adult_entry_potential_by_loc = np.array([stats.adult_entry_potential_total])
     attach_entry_wealth_stats(stats, b_grid, entry_idx, entry_wt, P)
     stats.housing_increment_0to1_eventstudy_t3 = (
         (birth_es3_post_sum - birth_es3_control_post_sum) / birth_es3_mass if birth_es3_mass > 1e-12 else 0.0

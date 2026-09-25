@@ -1,5 +1,73 @@
 # Calibration Status
 
+## September 25 — paired overnight calibration launched; first-birth target 1.465
+
+The author requests implementation of the adopted maturation/entry decision
+and preparation of a paired overnight calibration with the accepted target
+updates. The final first-birth instruction is **1.465 rooms in both arms**;
+it supersedes the brief 1.400 instruction and the earlier pending clarification.
+This is the chosen experimental calibration level; the native observer still
+does not reproduce the empirical Sun–Abraham estimator.
+
+The proposed pair retains the same pension-only PAYGO rule and compares the
+historical DUE table rate 17.9% with the 2007 OASI proxy 8.751%. It does not
+replicate DUE's full fiscal structure or add ordinary income taxation. Neither
+rate is adopted as the paper baseline. Both arms must share targets, weights,
+structural seed bank, bounds, entry wealth, income process, and numerical gates;
+the fertility utility scale is normalized separately to 2.1. The actual beta
+upper bound must be 0.99, correcting the earlier experimental contract error.
+
+The national housing values are unchanged. Their source is **national
+2005–2006 ACS measurement for the 2007 reference economy**, not a 2007-only
+ACS extract. The inherited 42-metro sample strings in the commute objective
+must be corrected in the fresh contract, while the frozen experiment remains
+untouched. Geography-only adoption is recorded in
+`target_review_v1/national_document_update_review.json` and its source review.
+
+Implementation and independent source review are in
+`output/model/demographic_accounting_review/maturation_implementation_20260925/`.
+The selected checkpoint uses the closed normalized population route; its
+adjusted births divided by entry reproduce the 2.1 fertility normalization.
+No outside migration or retention valve is needed or authorized for this
+calibration. Under constant births the 16/20 timing changes the transition
+queue, not steady-state household decisions. The fresh code must report
+birth-based adult-entry accounting and enforce replacement after fertility
+normalization, without rejecting intermediate normalization solves.
+
+The frozen-source patch passed independent and lead source review. All eight
+focused helper/transition-caller tests passed on Torch. The actual native
+runtime preflight passed separately for both tax rates and both common
+structural seeds, with zero household/equilibrium solves. A report-only fixture
+fit all 13 targets and 25 parameter/restriction rows. Lead reviewed the final
+exporter and its original-versus-both-repetitions scientific comparison; this
+is a code check, not a claim that numerical repetitions have already passed.
+
+The detached chain was submitted once: smoke array **18490899** (both tasks
+running at collection), 40-worker search **18490902** after successful smokes,
+four selected repetitions **18490903** after search termination, and two exports
+**18490906** after repetition termination. The author then explicitly extended
+the runtime deadline from six to **eight hours**, preserving source, targets,
+lock and job IDs. The original clock and amendment are saved separately. From
+the 00:49:12 EDT first smoke start, search ends at 07:34:12, repetitions at
+08:34:12, and export at 08:49:12, retaining the 75-minute reserve. Attempts to
+extend Slurm worker walltime returned an error; its 6h10 limit from worker
+start remains and may shorten the search slightly. No replacement jobs were
+submitted. Each
+arm has 20 one-thread workers and at most 360 proposals from the same bank;
+half are three-coordinate moves and half one-coordinate moves around the two
+common seeds. Selection includes both seeds. There are at most 728 normalized
+objectives including smokes and repeats; this is bounded search, not convergence.
+Observed median 817 seconds refers to a full normalized objective, not one
+stationary solve. No calibration outcome is available yet.
+
+Ready lock SHA256 is
+`6443195fa3f7de0dce5cc8a4c05e2709b99d586421c96a35dba3c07e93e061a1`.
+Remote results are under
+`/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/results/run_001`.
+The cluster jobs continue with the laptop closed; local monitoring and retrieval
+still require access. Preparation and subsequent collection receipts are under
+`output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/payroll_tax_review/overnight_pair_20260925_preparation/`.
+
 ## September 25 — DUE tax-source reconciliation; no fiscal adoption
 
 The focused Fable review traces DUE's 17.9% to its earlier 2012–2016

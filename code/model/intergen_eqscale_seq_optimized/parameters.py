@@ -10,6 +10,7 @@ from typing import Any, Mapping
 import numpy as np
 
 SUPPORTED_DYNAMIC_OVERRIDE_KEYS = {
+    "adult_entry_clock",
     "p_init_override",
     "calibrate_outside_value_to_entry_prob", "collect_ge_trace", "diagnostic_policy_ages",
     "enforce_feasibility_gate", "entry_shares_fixed", "entry_wealth_censor_to_frontier",
@@ -268,6 +269,9 @@ def setup_parameters() -> SimpleNamespace:
     P.entry_by_loc = P.E_total * P.entry_shares
     P.population_closure = "normalized"
     P.normalize_population_mass = True
+    # The selected closed one-market calibration may opt into birth-cohort
+    # adult-entry accounting. Household child departure remains a separate law.
+    P.adult_entry_clock = "child_departure"
     # Default-off transition accounting guard.  Selected transition drivers may
     # remove floating-point scatter error from pure cohort redistributions only
     # after a strict relative mass gate; the established model path is unchanged.
@@ -359,6 +363,10 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
         raise ValueError(f"Unknown parameter override(s): {unknown}")
     for key, value in od.items():
         setattr(P, key, _coerce_value(value))
+    if str(getattr(P, "adult_entry_clock", "child_departure")) not in {
+        "child_departure", "split_birth_vintage"
+    }:
+        raise ValueError("adult_entry_clock must be child_departure or split_birth_vintage")
 
     if "eps_loc" in od:
         P.kappa_loc = P.eps_loc

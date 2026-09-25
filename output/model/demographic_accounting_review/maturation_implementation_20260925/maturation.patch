@@ -1,0 +1,530 @@
+diff --git a/code/model/intergen_eqscale_seq_optimized/parameters.py b/code/model/intergen_eqscale_seq_optimized/parameters.py
+index ef0044e8..c871658e 100644
+--- a/code/model/intergen_eqscale_seq_optimized/parameters.py
++++ b/code/model/intergen_eqscale_seq_optimized/parameters.py
+@@ -10,6 +10,7 @@ from typing import Any, Mapping
+ import numpy as np
+ 
+ SUPPORTED_DYNAMIC_OVERRIDE_KEYS = {
++    "adult_entry_clock",
+     "p_init_override",
+     "calibrate_outside_value_to_entry_prob", "collect_ge_trace", "diagnostic_policy_ages",
+     "enforce_feasibility_gate", "entry_shares_fixed", "entry_wealth_censor_to_frontier",
+@@ -268,6 +269,9 @@ def setup_parameters() -> SimpleNamespace:
+     P.entry_by_loc = P.E_total * P.entry_shares
+     P.population_closure = "normalized"
+     P.normalize_population_mass = True
++    # The selected closed one-market calibration may opt into birth-cohort
++    # adult-entry accounting. Household child departure remains a separate law.
++    P.adult_entry_clock = "child_departure"
+     # Default-off transition accounting guard.  Selected transition drivers may
+     # remove floating-point scatter error from pure cohort redistributions only
+     # after a strict relative mass gate; the established model path is unchanged.
+@@ -359,6 +363,10 @@ def apply_overrides(P: SimpleNamespace, overrides: Any | None) -> SimpleNamespac
+         raise ValueError(f"Unknown parameter override(s): {unknown}")
+     for key, value in od.items():
+         setattr(P, key, _coerce_value(value))
++    if str(getattr(P, "adult_entry_clock", "child_departure")) not in {
++        "child_departure", "split_birth_vintage"
++    }:
++        raise ValueError("adult_entry_clock must be child_departure or split_birth_vintage")
+ 
+     if "eps_loc" in od:
+         P.kappa_loc = P.eps_loc
+diff --git a/code/model/intergen_eqscale_seq_optimized/solver.py b/code/model/intergen_eqscale_seq_optimized/solver.py
+index 66a8cce1..cc65dc44 100644
+--- a/code/model/intergen_eqscale_seq_optimized/solver.py
++++ b/code/model/intergen_eqscale_seq_optimized/solver.py
+@@ -11,6 +11,7 @@ from typing import Any
+ import numpy as np
+ 
+ from . import joint_nested
++from .adult_entry import adjusted_births, potential_entry_households
+ 
+ from .parameters import (
+     apply_overrides,
+@@ -1434,6 +1435,15 @@ def solve_markov_income_equilibrium(
+     else:
+         best_sol = solve_markov_income_at_prices(best_p, P, b_grid, verbose=False, fast_stats=False, SD=SD_shared)
+     best_sol = attach_markov_market_accounting(best_sol, P, b_grid)
++    if str(getattr(P, "adult_entry_clock", "child_departure")) == "split_birth_vintage":
++        best_sol.adult_entry_stationary_residual = (
++            float(best_sol.entry_rate) - float(best_sol.adult_entry_potential_total)
++        )
++        best_sol.adult_entry_stationary_relative_gap = abs(
++            best_sol.adult_entry_stationary_residual
++        ) / max(
++            float(best_sol.entry_rate), float(best_sol.adult_entry_potential_total), 1e-12
++        )
+     best_sol.timings = {
+         **getattr(best_sol, "timings", {}),
+         "income_process": "markov",
+@@ -1681,6 +1691,11 @@ def solve_markov_income_at_prices(
+     SD: SimpleNamespace | None = None,
+     retain_payload: bool = False,
+ ) -> SimpleNamespace:
++    if str(getattr(P, "adult_entry_clock", "child_departure")) == "split_birth_vintage":
++        if int(P.I) != 1 or str(getattr(P, "population_closure", "normalized")) != "normalized":
++            raise ValueError("Split birth-vintage stationary entry requires the closed one-market normalized closure")
++        if float(P.period_years) != 4.0:
++            raise ValueError("Split birth-vintage entry requires four-year model periods")
+     p = np.asarray(p_eq, dtype=float).reshape(-1).copy()
+     r = P.user_cost_rate * p
+     if SD is None:
+@@ -1700,6 +1715,13 @@ def solve_markov_income_at_prices(
+         sol = pack_fast_solution_markov_income(stats, p, P)
+     else:
+         sol = pack_solution_markov_income(V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, g, stats, P.w_hat, p, P)
++    if str(getattr(P, "adult_entry_clock", "child_departure")) == "split_birth_vintage":
++        sol.adult_entry_stationary_residual = (
++            float(sol.entry_rate) - float(sol.adult_entry_potential_total)
++        )
++        sol.adult_entry_stationary_relative_gap = abs(sol.adult_entry_stationary_residual) / max(
++            float(sol.entry_rate), float(sol.adult_entry_potential_total), 1e-12
++        )
+     sol.b_grid = np.asarray(b_grid, dtype=float).copy()
+     sol.timings = {
+         "bellman_full": float(btime.get("bellman", t_bellman)),
+@@ -5809,6 +5831,18 @@ def forward_distribution_markov_income(
+     stats.entrants_mature_by_loc = entrants_mature_by_loc
+     stats.entrants_mature_total = entrants_mature_total
+     stats.mature_entry_shares = entrants_mature_by_loc / max(entrants_mature_total, 1e-12)
++    if str(getattr(P, "adult_entry_clock", "child_departure")) == "split_birth_vintage":
++        if not (bool(getattr(P, "sequential_births", False)) or bool(getattr(P, "joint_nested_choice", False))):
++            raise ValueError("Split birth-vintage entry requires observed sequential third-birth flow")
++        if float(P.period_years) != 4.0:
++            raise ValueError("Split birth-vintage entry requires four-year model periods")
++        if int(P.I) != 1 or int(P.n_parity) != 4 or str(getattr(P, "fertility_units", "")) != "literal_topcode":
++            raise ValueError("Split birth-vintage stationary entry requires one market and literal 3+ fertility units")
++        top_weight = float(getattr(P, "tfr_top_bin_weight"))
++        birth_children = adjusted_births(total_births, float(np.sum(third_births_by_age)), top_weight)
++        stats.adult_entry_adjusted_birth_children = birth_children
++        stats.adult_entry_potential_total = potential_entry_households(birth_children)
++        stats.adult_entry_potential_by_loc = np.array([stats.adult_entry_potential_total])
+     attach_entry_wealth_stats(stats, b_grid, entry_idx, entry_wt, P)
+     stats.housing_increment_0to1_eventstudy_t3 = (
+         (birth_es3_post_sum - birth_es3_control_post_sum) / birth_es3_mass if birth_es3_mass > 1e-12 else 0.0
+diff --git a/code/model/tools/run_e5f_open_population_transition.py b/code/model/tools/run_e5f_open_population_transition.py
+index 63f0e430..12d53a6f 100644
+--- a/code/model/tools/run_e5f_open_population_transition.py
++++ b/code/model/tools/run_e5f_open_population_transition.py
+@@ -41,6 +41,7 @@ for path in (MODEL_ROOT, TOOLS_ROOT):
+ 
+ import audit_closed_reproductive_closure as closure_audit
+ import run_dynamic_population_transition as calendar
++from intergen_eqscale_seq_optimized.adult_entry import SplitBirthEntryQueue
+ 
+ 
+ DEFAULT_SOURCE = closure_audit.E5F_FLOOR_SOURCE
+@@ -236,6 +237,12 @@ def parse_args() -> argparse.Namespace:
+             "injection, four slots imply a five-date/20-year effect lag."
+         ),
+     )
++    parser.add_argument(
++        "--adult-entry-timing",
++        choices=("legacy-20", "split-16-20"),
++        default="legacy-20",
++        help="Select the existing single 20-year queue or equal 16/20-year birth-cohort entry.",
++    )
+     parser.add_argument(
+         "--initial-birth-pipeline-multiplier",
+         type=float,
+@@ -370,6 +377,26 @@ def advance_birth_vintage_queue(
+     return due, queue
+ 
+ 
++def advance_adult_entry_clock(
++    queue: list[float] | SplitBirthEntryQueue,
++    current_births: float,
++    birth_to_household_conversion: float,
++    timing: str,
++) -> tuple[float, list[float] | SplitBirthEntryQueue]:
++    """Advance the selected birth-cohort clock without reading parental states."""
++    if timing == "legacy-20":
++        if not isinstance(queue, list):
++            raise TypeError("Legacy entry clock requires a single vintage queue")
++        return advance_birth_vintage_queue(queue, current_births, birth_to_household_conversion)
++    if timing == "split-16-20":
++        if not isinstance(queue, SplitBirthEntryQueue):
++            raise TypeError("Split entry clock requires two cohort queues")
++        if not math.isclose(float(birth_to_household_conversion), 1.0 / 2.1, rel_tol=0, abs_tol=1e-15):
++            raise ValueError("Split entry clock requires the retained 1/2.1 conversion")
++        return queue.step(current_births)
++    raise ValueError(f"Unknown adult-entry timing: {timing}")
++
++
+ def preference_shifter_at_date(
+     period: int,
+     old_value: float,
+@@ -1076,6 +1103,7 @@ def run_birth_vintage_scenario(
+         None,
+     ]
+     | None = None,
++    adult_entry_timing: str = "legacy-20",
+ ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
+     """Run the open transition with a dated birth-to-entry queue.
+ 
+@@ -1086,6 +1114,10 @@ def run_birth_vintage_scenario(
+     """
+     if delay_periods < 1:
+         raise ValueError("The birth-to-entry delay must be at least one period")
++    if adult_entry_timing not in {"legacy-20", "split-16-20"}:
++        raise ValueError("Unknown adult-entry timing")
++    if adult_entry_timing == "split-16-20" and float(parameters.period_years) != 4.0:
++        raise ValueError("The adopted split-entry queue requires four-year model periods")
+     P = copy.deepcopy(parameters)
+     shared = calendar.model.precompute_shared(P, b_grid)
+     g_pre = np.asarray(initial_g_pre, dtype=float).copy()
+@@ -1117,6 +1149,15 @@ def run_birth_vintage_scenario(
+         * float(baseline_raw_births)
+         * float(initial_birth_pipeline_multiplier)
+     ] * int(delay_periods)
++    if adult_entry_timing == "split-16-20":
++        split_queue = SplitBirthEntryQueue.constant_prehistory(
++            float(baseline_births) * float(initial_birth_pipeline_multiplier)
++        )
++        split_raw_queue = SplitBirthEntryQueue.constant_prehistory(
++            float(baseline_raw_births) * float(initial_birth_pipeline_multiplier)
++        )
++        scheduled_entries = list(split_queue.due_in_16 + split_queue.due_in_20)
++        scheduled_raw_entries = list(split_raw_queue.due_in_16 + split_raw_queue.due_in_20)
+     target_indices = dict(population_target_indices or {})
+     target_age_years = dict(population_age_target_years or {})
+     initial_mass = float(np.sum(g_pre))
+@@ -1225,16 +1266,22 @@ def run_birth_vintage_scenario(
+         adjusted_births = float(
+             birth_accounting["topcode_adjusted_birth_children"]
+         )
+-        scheduled_B, scheduled_entries = advance_birth_vintage_queue(
+-            scheduled_entries,
+-            adjusted_births,
+-            renewal_conversion,
+-        )
+-        scheduled_raw_B, scheduled_raw_entries = advance_birth_vintage_queue(
+-            scheduled_raw_entries,
+-            float(evaluation.births),
+-            renewal_conversion,
+-        )
++        if adult_entry_timing == "split-16-20":
++            scheduled_B, split_queue = advance_adult_entry_clock(
++                split_queue, adjusted_births, renewal_conversion, adult_entry_timing
++            )
++            scheduled_raw_B, split_raw_queue = advance_adult_entry_clock(
++                split_raw_queue, float(evaluation.births), renewal_conversion, adult_entry_timing
++            )
++            scheduled_entries = list(split_queue.due_in_16 + split_queue.due_in_20)
++            scheduled_raw_entries = list(split_raw_queue.due_in_16 + split_raw_queue.due_in_20)
++        else:
++            scheduled_B, scheduled_entries = advance_adult_entry_clock(
++                scheduled_entries, adjusted_births, renewal_conversion, adult_entry_timing
++            )
++            scheduled_raw_B, scheduled_raw_entries = advance_adult_entry_clock(
++                scheduled_raw_entries, float(evaluation.births), renewal_conversion, adult_entry_timing
++            )
+         new_potential_B = renewal_conversion * adjusted_births
+         new_potential_raw_B = renewal_conversion * float(evaluation.births)
+         retained_B = retention * scheduled_B
+@@ -1476,10 +1523,10 @@ def run_birth_vintage_scenario(
+         "maximum_absolute_dual_clock_raw_flow_gap_percent": max(
+             abs(float(row["dual_clock_raw_flow_gap_percent"])) for row in path_rows
+         ),
+-        "birth_vintage_queue_waiting_slots": delay_periods,
+-        "birth_to_entry_effect_lag_dates": delay_periods + 1,
+-        "birth_to_entry_effect_lag_years": (delay_periods + 1)
+-        * float(P.period_years),
++        "adult_entry_timing": adult_entry_timing,
++        "birth_vintage_queue_waiting_slots": [3, 4] if adult_entry_timing == "split-16-20" else delay_periods,
++        "birth_to_entry_effect_lag_dates": [4, 5] if adult_entry_timing == "split-16-20" else delay_periods + 1,
++        "birth_to_entry_effect_lag_years": [16.0, 20.0] if adult_entry_timing == "split-16-20" else (delay_periods + 1) * float(P.period_years),
+         "initial_birth_pipeline_multiplier": initial_birth_pipeline_multiplier,
+         "old_psi_child": old_psi_child,
+         "new_psi_child": new_psi_child,
+@@ -1760,7 +1807,13 @@ def make_paper_transition_plot(
+         color="#6a4c93",
+         label="Locally born entrants",
+     )
+-    axes[1].axvline(delay_years, color="black", lw=1.0, ls="--", alpha=0.65)
++    if delay_years == 18.0:
++        axes[1].axvline(
++            delay_years, color="black", lw=1.0, ls="--", alpha=0.65,
++            label="Mean 18-year entry delay",
++        )
++    else:
++        axes[1].axvline(delay_years, color="black", lw=1.0, ls="--", alpha=0.65)
+     axes[1].axhline(1.0, color="black", lw=0.8, alpha=0.45)
+     axes[1].set(
+         title="Births reach entry with a delay",
+@@ -2198,6 +2251,10 @@ def main() -> None:
+         )
+     if args.policy_case != "none" and args.renewal_clock != "birth-vintage":
+         raise ValueError("The dated tenure policy requires the birth-vintage clock")
++    if args.adult_entry_timing == "split-16-20" and args.renewal_clock != "birth-vintage":
++        raise ValueError("Split adult entry requires the birth-vintage renewal clock")
++    if args.adult_entry_timing == "split-16-20" and args.birth_to_entry_delay_periods != 4:
++        raise ValueError("The legacy delay option must remain at its four-slot default in split mode")
+     if not 0.0 < args.outside_origin_entry_share < 1.0:
+         raise ValueError("--outside-origin-entry-share must lie strictly between zero and one")
+     renewal_conversion = effective_birth_to_household_conversion(
+@@ -2422,6 +2479,7 @@ def main() -> None:
+         scenario = (
+             "preference_decline_open_birth_vintage_"
+             + str(args.housing_supply_mode).replace("-", "_")
++            + ("_split_16_20" if args.adult_entry_timing == "split-16-20" else "")
+             + momentum_suffix
+             + census_suffix
+             + age_suffix
+@@ -2440,6 +2498,7 @@ def main() -> None:
+             retention=retention,
+             effective_birth_to_household_conversion=renewal_conversion,
+             delay_periods=int(args.birth_to_entry_delay_periods),
++            adult_entry_timing=str(args.adult_entry_timing),
+             initial_birth_pipeline_multiplier=float(
+                 args.initial_birth_pipeline_multiplier
+             ),
+@@ -2516,7 +2575,7 @@ def main() -> None:
+         old_B=B_old,
+         stationary_endpoint=stationary_endpoint,
+         delay_years=(
+-            float(scenario_summary.get("birth_to_entry_effect_lag_years", 0.0))
++            (18.0 if args.adult_entry_timing == "split-16-20" else float(scenario_summary.get("birth_to_entry_effect_lag_years", 0.0)))
+             if args.renewal_clock == "birth-vintage"
+             else 0.0
+         ),
+@@ -2572,12 +2631,10 @@ def main() -> None:
+         "preference_transition_years": int(args.preference_transition_periods)
+         * float(old_parameters.period_years),
+         "renewal_clock": args.renewal_clock,
+-        "birth_vintage_queue_waiting_slots": int(args.birth_to_entry_delay_periods),
+-        "birth_to_entry_effect_lag_dates": int(args.birth_to_entry_delay_periods) + 1,
+-        "birth_to_entry_effect_lag_years": (
+-            int(args.birth_to_entry_delay_periods) + 1
+-        )
+-        * float(old_parameters.period_years),
++        "adult_entry_timing": args.adult_entry_timing,
++        "birth_vintage_queue_waiting_slots": [3, 4] if args.adult_entry_timing == "split-16-20" else int(args.birth_to_entry_delay_periods),
++        "birth_to_entry_effect_lag_dates": [4, 5] if args.adult_entry_timing == "split-16-20" else int(args.birth_to_entry_delay_periods) + 1,
++        "birth_to_entry_effect_lag_years": [16.0, 20.0] if args.adult_entry_timing == "split-16-20" else (int(args.birth_to_entry_delay_periods) + 1) * float(old_parameters.period_years),
+         "initial_birth_pipeline_multiplier": float(
+             args.initial_birth_pipeline_multiplier
+         ),
+diff --git a/code/model/intergen_eqscale_seq_optimized/adult_entry.py b/code/model/intergen_eqscale_seq_optimized/adult_entry.py
+new file mode 100644
+index 00000000..3a829f4b
+--- /dev/null
++++ b/code/model/intergen_eqscale_seq_optimized/adult_entry.py
+@@ -0,0 +1,101 @@
++"""Aggregate birth-cohort entry, separate from parental child dependency.
++
++One model period is four years. ``births_t`` counts children born during date t,
++including the extra children represented by the 3+ top bin. The queue returns
++potential entrant *households* for date t+1: half of cohort t-3 (age 16 at
++entry) and half of cohort t-4 (age 20). Retention, if any, acts after this
++queue; parental survival and the child-departure transition never enter it.
++"""
++
++from __future__ import annotations
++
++from dataclasses import dataclass
++import math
++
++
++REPLACEMENT_FERTILITY = 2.1
++
++
++def adjusted_births(raw_births: float, top_bin_entries: float,
++                    top_bin_weight: float, top_state: int = 3) -> float:
++    """Return child units after adding the excess represented by the top bin."""
++    raw = float(raw_births)
++    top = float(top_bin_entries)
++    weight = float(top_bin_weight)
++    if not all(map(math.isfinite, (raw, top, weight))):
++        raise ValueError("Birth accounting inputs must be finite")
++    if raw < 0 or top < 0 or top > raw + 1e-12 or weight < top_state:
++        raise ValueError("Invalid birth or top-bin accounting inputs")
++    return raw + (weight - top_state) * top
++
++
++def potential_entry_households(adjusted_birth_children: float) -> float:
++    """Apply the retained birth-to-household conversion exactly once."""
++    births = float(adjusted_birth_children)
++    if not math.isfinite(births) or births < 0:
++        raise ValueError("Adjusted births must be finite and nonnegative")
++    return births / REPLACEMENT_FERTILITY
++
++
++@dataclass(frozen=True)
++class SplitBirthEntryQueue:
++    """Pending potential household flows, before any geographic retention.
++
++    The first tuple has three waiting slots and the second four. At date t,
++    popping each first slot supplies date t+1 entry. Appending date-t births
++    therefore makes their effects arrive at dates t+4 and t+5, respectively.
++    """
++
++    due_in_16: tuple[float, float, float]
++    due_in_20: tuple[float, float, float, float]
++
++    def __post_init__(self) -> None:
++        if len(self.due_in_16) != 3 or len(self.due_in_20) != 4:
++            raise ValueError("Split entry requires three and four waiting slots")
++        if any(not math.isfinite(x) or x < 0 for x in self.due_in_16 + self.due_in_20):
++            raise ValueError("Pending cohort flows must be finite and nonnegative")
++
++    @classmethod
++    def constant_prehistory(cls, adjusted_birth_children: float) -> "SplitBirthEntryQueue":
++        half = 0.5 * potential_entry_households(adjusted_birth_children)
++        return cls((half,) * 3, (half,) * 4)
++
++    @property
++    def stock(self) -> float:
++        return sum(self.due_in_16) + sum(self.due_in_20)
++
++    def step(self, adjusted_birth_children: float) -> tuple[float, "SplitBirthEntryQueue"]:
++        """Return potential entry at t+1 and the queue after date-t births."""
++        half = 0.5 * potential_entry_households(adjusted_birth_children)
++        due = self.due_in_16[0] + self.due_in_20[0]
++        next_queue = SplitBirthEntryQueue(
++            self.due_in_16[1:] + (half,),
++            self.due_in_20[1:] + (half,),
++        )
++        return due, next_queue
++
++
++def require_closed_stationary_renewal(entry_households: float,
++                                      adjusted_birth_children: float,
++                                      fertility_tolerance: float) -> dict[str, float]:
++    """Gate B=E using the existing completed-fertility tolerance in child units.
++
++    Call this only after the fertility-intercept normalization has completed.
++    Since B = births/2.1, the equivalent gate is
++    ``abs(births/E - 2.1) <= fertility_tolerance``. No outside entrants or
++    retention coefficient are introduced by the closed stationary model.
++    """
++    E = float(entry_households)
++    tolerance = float(fertility_tolerance)
++    B = potential_entry_households(adjusted_birth_children)
++    if not math.isfinite(E) or E <= 0 or not math.isfinite(tolerance) or tolerance < 0:
++        raise ValueError("Invalid closed-renewal gate inputs")
++    completed = float(adjusted_birth_children) / E
++    gap = completed - REPLACEMENT_FERTILITY
++    if abs(gap) > tolerance:
++        raise ValueError(
++            f"Closed birth-entry renewal failed: births/E={completed:.12g}, "
++            f"target={REPLACEMENT_FERTILITY:.12g}, tolerance={tolerance:.12g}"
++        )
++    return {"entry_E": E, "potential_B": B, "births_per_entry": completed,
++            "fertility_gap": gap, "entry_residual": E - B}
+diff --git a/code/model/intergen_eqscale_seq_optimized/tests/test_adult_entry.py b/code/model/intergen_eqscale_seq_optimized/tests/test_adult_entry.py
+new file mode 100644
+index 00000000..1c7554d8
+--- /dev/null
++++ b/code/model/intergen_eqscale_seq_optimized/tests/test_adult_entry.py
+@@ -0,0 +1,62 @@
++"""Accounting tests for aggregate entry, independent of the household DP."""
++
++import unittest
++
++from intergen_eqscale_seq_optimized.adult_entry import (
++    SplitBirthEntryQueue,
++    adjusted_births,
++    potential_entry_households,
++    require_closed_stationary_renewal,
++)
++
++
++class AdultEntryTests(unittest.TestCase):
++    def test_top_bin_and_single_conversion(self):
++        children = adjusted_births(100.0, 10.0, 3.6)
++        self.assertAlmostEqual(children, 106.0)
++        self.assertAlmostEqual(potential_entry_households(children), 106.0 / 2.1)
++
++    def test_impulse_arrives_at_16_and_20_years(self):
++        queue = SplitBirthEntryQueue.constant_prehistory(0.0)
++        due = []
++        for t in range(7):
++            flow, queue = queue.step(2.1 if t == 0 else 0.0)
++            due.append(flow)
++        self.assertEqual(due, [0.0, 0.0, 0.0, 0.5, 0.5, 0.0, 0.0])
++        # Each returned flow is injected at t+1, hence dates 4 and 5.
++
++    def test_constant_births_and_prehistory(self):
++        queue = SplitBirthEntryQueue.constant_prehistory(21.0)
++        self.assertAlmostEqual(queue.stock, 35.0)  # 3*5 + 4*5 pending households
++        for _ in range(9):
++            due, queue = queue.step(21.0)
++            self.assertAlmostEqual(due, 10.0)
++            self.assertAlmostEqual(queue.stock, 35.0)
++
++    def test_queue_mass_and_parental_death_independence(self):
++        queue = SplitBirthEntryQueue.constant_prehistory(0.0)
++        parent_alive = True
++        for t, births in enumerate((2.1, 0.0, 0.0, 0.0, 0.0)):
++            old_stock = queue.stock
++            if t == 1:
++                parent_alive = False
++            due, queue = queue.step(births)
++            self.assertAlmostEqual(queue.stock, old_stock + births / 2.1 - due)
++            if t == 3:
++                self.assertFalse(parent_alive)
++                self.assertAlmostEqual(due, 0.5)
++            if t == 4:
++                self.assertAlmostEqual(due, 0.5)
++
++    def test_closed_stationary_basis_and_fertility_gate(self):
++        E = 0.06173345618094337
++        births = 0.12964029045028488
++        receipt = require_closed_stationary_renewal(E, births, 1e-6)
++        self.assertAlmostEqual(receipt["potential_B"], births / 2.1)
++        self.assertLess(abs(receipt["entry_residual"]), 2e-8)
++        with self.assertRaises(ValueError):
++            require_closed_stationary_renewal(E, births * 0.9, 1e-6)
++
++
++if __name__ == "__main__":
++    unittest.main()
+diff --git a/code/model/tools/test_run_e5f_open_population_adult_entry.py b/code/model/tools/test_run_e5f_open_population_adult_entry.py
+new file mode 100644
+index 00000000..efdf5c4e
+--- /dev/null
++++ b/code/model/tools/test_run_e5f_open_population_adult_entry.py
+@@ -0,0 +1,40 @@
++"""Small accounting tests for the selectable transition entry clocks."""
++
++import unittest
++
++import run_e5f_open_population_transition as transition
++from intergen_eqscale_seq_optimized.adult_entry import SplitBirthEntryQueue
++
++
++class AdultEntryCallerTests(unittest.TestCase):
++    def test_split_cohort_injects_half_at_dates_four_and_five(self):
++        queue = SplitBirthEntryQueue.constant_prehistory(0.0)
++        entry_next = []
++        for t in range(7):
++            due, queue = transition.advance_adult_entry_clock(
++                queue, 2.1 if t == 0 else 0.0, 1 / 2.1, "split-16-20"
++            )
++            entry_next.append(due)
++        self.assertEqual(entry_next, [0.0, 0.0, 0.0, 0.5, 0.5, 0.0, 0.0])
++
++    def test_legacy_single_queue_remains_twenty_years(self):
++        queue = [0.0] * 4
++        entry_next = []
++        for t in range(7):
++            due, queue = transition.advance_adult_entry_clock(
++                queue, 2.1 if t == 0 else 0.0, 1 / 2.1, "legacy-20"
++            )
++            entry_next.append(due)
++        self.assertEqual(entry_next, [0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0])
++
++    def test_constant_prehistory_no_transitional_entry_jump(self):
++        queue = SplitBirthEntryQueue.constant_prehistory(21.0)
++        for _ in range(8):
++            due, queue = transition.advance_adult_entry_clock(
++                queue, 21.0, 1 / 2.1, "split-16-20"
++            )
++            self.assertAlmostEqual(due, 10.0)
++
++
++if __name__ == "__main__":
++    unittest.main()
