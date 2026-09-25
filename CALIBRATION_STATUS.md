@@ -1,16 +1,18 @@
 # Calibration Status
 
-## September 24 — cluster-only experimental commute calibration launched
+## September 24 — cluster-only experimental commute calibration completed
 
-Torch smoke job `18471839`, dependent eight-worker search array `18471840`,
-and dependent selected-export job `18471841` were submitted from the selected
-September 23 B-floor checkpoint. The total smoke/search/export deadline is
-20:56:08 EDT on September 24. At launch, the smoke was running and the other
-jobs were dependency-pending; no new fit or result is claimed. The complete
-source, objective, preflight, jobs, and limitations are in
+Torch smoke job `18471839`, eight-worker search array `18471840`, and selected
+export job `18471841` ran from the selected September 23 B-floor checkpoint.
+The export finished before the shared 20:56:08 EDT deadline. The best scored
+case has experimental loss **381.0485741441105**; 23 of at most 41 planned
+objectives scored, one additional objective timed out inside a native solve,
+and 17 were not attempted. One worker ended with external timeout code 124;
+the other seven workers and export completed. The full target fit, parameter
+table, source pins, scheduler and numerical audit, PDF, and limitations are in
 `output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/payroll_tax_review/commute_calibration_20260924/README.md`.
 
-The experimental run uses the newly chosen 1.465-room PSID first-birth target,
+The frozen experimental run uses the 1.465-room PSID first-birth target,
 all other accepted target/cost updates, externally fixed $\theta_1$, and the
 **proposed** PAYGO rate 8.751%. It keeps the existing stationary demographic
 entry law because the adopted 16/20 birth-entry queue is unimplemented. The
@@ -18,6 +20,24 @@ model observers for first-birth rooms and child-directed bequests remain
 approximate; no native source or numerical gate was changed. Eight free
 coordinates, twelve positively weighted rows with retained weights, and the
 separate $2.1$ fertility normalization define this new, incomparable loss.
+The author has since questioned the interpretation of “the new one”: 1.465
+was our reading of that answer, and the first-birth target choice is pending
+clarification. No frozen target or scored result has been edited or rerun.
+
+The frozen objective accidentally retained the legacy annual discount-factor
+search upper bound **0.9995**, although the requested cap was **0.99**. This
+was a preflight/review error. Every scored candidate and the selected estimate
+is at or below 0.99 (maximum 0.9762497404726131), but this does not make the
+run contract comply with the requested bound. The original export PDF rounds
+the bound to 1; the reviewed PDF and exact CSV show it correctly. Treat this
+fit as an experimental diagnostic pending target and contract review, not an
+adopted calibration.
+The earlier two-rate fixed-parameter diagnostic below isolates the proposed
+payroll-tax change, holding the selected structural parameters and utility
+scale fixed. This calibration instead bundles the lower rate with updated
+targets, external $\theta_1$, cost inputs, and fertility re-normalization;
+there is no high-tax refit under the same updated contract to identify a
+tax-only change in fit.
 
 ## September 24 — fixed-parameter pension payroll-tax diagnostic complete
 
