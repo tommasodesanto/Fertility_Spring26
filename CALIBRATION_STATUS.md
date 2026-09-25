@@ -1,5 +1,29 @@
 # Calibration Status
 
+## September 25 — pension target and payroll-tax rule adopted
+
+Author adopts the CPS ASEC 2008 (income 2007) ratio of mean household Social
+Security income among reference-person ages 66+ to mean gross household labor
+earnings among reference-person ages 18–65: 0.2294460118659327. Both means
+include zeros, sum all household members and use household supplement weights.
+At current model R/W = 0.34988932240113957 this implies payroll tax
+0.08028070961941502 (8.028%). Calibrate the baseline tax from this pension
+ratio and the baseline demographics; hold the tax fixed during transitions,
+with equal retiree pensions balancing PAYGO. No additional government spending
+is adopted. This supersedes the competing proposed tax anchors, not frozen runs.
+Implementation in the next run is pending; no existing model results changed.
+
+Source and reproducible comparison: output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/payroll_tax_review/pension_comparison_2007_2023/.
+The identically defined 2023 ratio is 0.23006527502610769. Social Security
+includes survivor/disability and railroad benefits; age topcoding includes85+;
+survey income measurement changed between years. This is not an own-lifetime-
+earnings replacement rate. The earlier29.456% aggregate proxy is superseded.
+
+Deferred check: inspect saving, ownership and fertility after recalibration;
+implausible outcomes require diagnosis, not an automatic return to17.9% for fit.
+A separate general tax financing government purchases requires its own empirical
+justification and remains optional robustness. No draft synchronization requested.
+
 ## September 25 — paired overnight calibration completed; both tax rates reviewed
 
 All stages of the existing Torch chain completed with exit 0:0. All 728
