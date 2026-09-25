@@ -1,0 +1,14 @@
+{
+  "reason": "User shortened the total task deadline after the one authorized Fable session had launched.",
+  "launch_started_utc": "2026-09-25T03:15:17.979930+00:00",
+  "existing_fable_session_id": "934b631d-99a6-453f-836a-4e9f0101677c",
+  "existing_child_pid": 46436,
+  "existing_child_process_group": 46436,
+  "existing_supervisor_pid": 46429,
+  "hard_harvest_cutoff_utc": "2026-09-25T03:27:18+00:00",
+  "lead_delivery_cutoff_utc": "2026-09-25T03:30:18+00:00",
+  "maximum_elapsed_from_launch_seconds": 720,
+  "enforcer": "This worker monitors the existing Claude CLI child and sends SIGTERM to process group 46436 at the hard harvest cutoff if it has not returned. No restart, resume, or duplicate request.",
+  "live_steering": "Not possible through the closed stdin; no second CLI process will be started.",
+  "preserve_existing_supervisor_receipt_until_terminal": true
+}

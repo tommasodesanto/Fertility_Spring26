@@ -1,5 +1,7 @@
 # Pension payroll-tax source reviews
 
+- **September 25 bounded Fable review:** `fable_options_review_20260925/lead_review.json` records the author-shortened fifteen-minute attempt. Fable 5.1 collected sources but returned no final opinion before its research cutoff; one session stopped with exit143, without retry. No specification was adopted. The lead overview separates baseline generosity from the transition financing rule; a closure comparison should preserve the same initial steady state.
+
 - **September 25 literature comparison:** `olg_paygo_source_comparison_20260925.md` compares four U.S. OLG papers, their payroll bases, numerical rates, benefit calibration, and PAYGO closure. It distinguishes externally targeted rates from endogenous financing rates and confirms that pension income is outside the payroll base. This review does not adopt a tax rate or modify a run.
 
 - **September 24 commute run:** `commute_calibration_20260924/` retains the
