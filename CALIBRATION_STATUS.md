@@ -1,5 +1,27 @@
 # Calibration Status
 
+## September 25 — DUE tax-source reconciliation; no fiscal adoption
+
+The focused Fable review traces DUE's 17.9% to its earlier 2012–2016
+calibration and OECD average personal income tax, rather than Social Security
+contributions. The December 2025 paper instead states 15.6% for 2005–2009
+while retaining 17.9% in its table. A carried-over table entry is an inference;
+which rate its latest numerical implementation uses remains unverified.
+Independent retrieval of current OECD data gives 17.979% for 2012–2016 and
+16.954% for 2005–2009 on gross wages. Converting the latter to a labor-cost
+denominator gives 15.583%; this numerical match does not establish the exact
+series selected by DUE or recover its historical data vintage.
+
+DUE's tax finances pensions and other government spending. Our proposed
+8.751% instead measures an OASI contribution proxy, and our current PAYGO
+equation sends all receipts to pensions. These are different fiscal objects:
+8.751% is not an estimate of total personal taxes, and substituting it for the
+sole 17.9% levy changes disposable income as well as pension finance. No
+additional tax, pension benefit, fiscal closure, or overnight run is adopted
+by this review. Source evidence, full Fable report, independent arithmetic,
+and qualifications are in
+`output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/payroll_tax_review/fable_due_rate_review_20260925/`.
+
 ## September 24 — cluster-only experimental commute calibration completed
 
 Torch smoke job `18471839`, eight-worker search array `18471840`, and selected

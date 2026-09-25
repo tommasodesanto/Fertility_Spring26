@@ -1,0 +1,77 @@
+{
+  "status": "completed_fable_review_with_central_primary_data_verification_and_qualified_inferences",
+  "date_utc": "2026-09-25",
+  "fable_session": "dd7f94a8-c2ae-40a0-b44c-a4e119ccc498",
+  "route": "authenticated firstParty Claude Max, claude-fable-5-1 max; fresh author-authorized narrowed task",
+  "artifact_roles": {
+    "preliminary.md": "Fable early provisional report",
+    "fable_report.md": "Full report recovered from actual Write tool payload; preserve unchanged",
+    "final.md": "CLI terminal summary; supervisor overwrote final.md with terminal result, so original full report is separately restored",
+    "lead_review.json": "Central qualifications and independent verification"
+  },
+  "independent_verification": {
+    "DUE_current_primary_text": "tmp/pdfs/DUE_latest_checked.txt, lines410\u2013442,1266,1420,1462\u20131465: working earnings taxed; pensions plus other spending; table .179; prose .156 for2005\u201309; footnote33 Income tax/singlechildless100%AW",
+    "OECD": "Fresh HTTP200 CSV retrieval of income-tax and employerSSC series, named lead_oecd_*.csv; income-tax metadata confirms gross wage denominator",
+    "arithmetic": {
+      "income_tax_mean_2005_2009": 16.954006,
+      "income_tax_mean_2012_2016": 17.9792756,
+      "income_tax_labor_cost_mean_2005_2009_calculated": 15.583059526869311,
+      "oasi_proxy": 0.08751017424959717,
+      "rows": [
+        {
+          "year": 2005,
+          "income_pct_gross_wage": 16.621145,
+          "employer_ssc_pct_gross_wage": 8.834222,
+          "income_pct_labor_cost_calculated": 15.271984027229964
+        },
+        {
+          "year": 2006,
+          "income_pct_gross_wage": 16.760309,
+          "employer_ssc_pct_gross_wage": 8.84359,
+          "income_pct_labor_cost_calculated": 15.398526454336908
+        },
+        {
+          "year": 2007,
+          "income_pct_gross_wage": 17.191223,
+          "employer_ssc_pct_gross_wage": 8.79516,
+          "income_pct_labor_cost_calculated": 15.801459366390931
+        },
+        {
+          "year": 2008,
+          "income_pct_gross_wage": 17.674972,
+          "employer_ssc_pct_gross_wage": 8.758899,
+          "income_pct_labor_cost_calculated": 16.251517956245586
+        },
+        {
+          "year": 2009,
+          "income_pct_gross_wage": 16.522381,
+          "employer_ssc_pct_gross_wage": 8.758477,
+          "income_pct_labor_cost_calculated": 15.19180983014317
+        }
+      ],
+      "employer_url": "https://sdmx.oecd.org/public/rest/v1/data/OECD.CTP.TPS,DSD_TAX_WAGES_COMP@DF_TW_COMP,/USA.AV_R_EMPER_SSC..S_C0.AW100._Z.A?startPeriod=2005&endPeriod=2009&dimensionAtObservation=AllDimensions&format=csvfilewithlabels",
+      "caveat": "Calculation corroborates numerical match, not DUE intended denominator; historical accessed vintage unavailable."
+    },
+    "earlier_DUE_primary_excerpts": "Reviewed primary_source_excerpts.md: worker extracted NBER printedp28 and AEA passage from actual saved WebFetch PDF payloads. Confirms2012\u20132016=17.9, OECD Average income tax rate and Sept14 2023 access date. IDs and source paths preserved."
+  },
+  "central_qualifications": [
+    "Earlier2012\u201316=17.9 provenance confirmed in primary excerpts. Current17.9792756 is an approximate, not exact, reproduction of the historical printed number. The vintage/truncation explanation remains unverified.",
+    "Stale table entry is a plausible version-history inference, not verified knowledge of December implementation or author intent.",
+    "15.5830595 labor-cost conversion is independently reproduced arithmetic. It does not verify the exact OECD dataflow or denominator DUE selected.",
+    "No displayed government budget equation in inspected pages does not prove there is no underlying constraint. DUE says revenue funds pensions plus other spending; pension amount and precise transition spending rule remain unestablished.",
+    "Using a17.9 levy does not logically require adopting all of DUE. What is unsupported is calling an OECD personal-income-tax number an empirical pension contribution rate.",
+    "8.751 is a pension-program contribution proxy, not an estimate of total personal taxes. Replacing the sole17.9 levy changes total disposable earnings as well as pension financing.",
+    "Do not mechanically add17.9 or15.6 to8.751: periods, individual-versus-household base, gross wages versus compensation and employer incidence differ."
+  ],
+  "decision": "No rate, benefit level, closure, new general tax, model run or overnight launch adopted. Separate pension financing from the desired total earnings-tax burden before constructing another contract.",
+  "scope": "No model solves or empirical estimation; only small text/network reads and arithmetic.",
+  "execution_summary": {
+    "status": "completed",
+    "exit_code": 0,
+    "finished_utc": "2026-09-25T03:49:43.245884+00:00",
+    "result_subtype": "success",
+    "is_error": false,
+    "elapsed_seconds": 680.4
+  },
+  "reviewed_utc": "2026-09-25T03:55:00Z"
+}
