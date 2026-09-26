@@ -1,0 +1,81 @@
+{
+  "allocated_CPU_hours_if_four_jobs_reserve_42_hours": 1680,
+  "allocated_GiB_hours_if_four_jobs_reserve_42_hours": 20160,
+  "already_verified_smoke_pairs_reused": 4,
+  "arms": 4,
+  "barrier_proposal": {
+    "all_four_arms_join": true,
+    "original_inadmissible_fraction_max": 0.5,
+    "proposed_combined_inadmissible_plus_timeout_fraction_max": 0.5,
+    "timeout_scientific_loss": "unknown, no scored loss",
+    "unknown_error": "stop future common dispatch"
+  },
+  "de_waves": 12,
+  "existing_failed_or_timed_out_points_retried": false,
+  "explicit_scheduling_verification_margin_seconds": 6300,
+  "export_reserve_seconds": 900,
+  "fresh_clock_only": true,
+  "inventory_checkpoint_hashes_reverified": false,
+  "inventory_is_preliminary": true,
+  "inventory_sha256": "33334a68b6da64a6d8b8a61a86c5f0748d893299ed65dd25742d70677d6a7ae1",
+  "launch_permitted": false,
+  "max_fresh_elapsed_seconds": 151200,
+  "max_objective_worker_CPU_hours": 1365.0,
+  "maximum_new_native_stationary_calls": 12558,
+  "maximum_new_objective_attempts": 546,
+  "maximum_new_repeat_attempts": 8,
+  "maximum_new_search_attempts": 538,
+  "memory_GiB_per_arm": 120,
+  "new_de_generations": 3,
+  "new_native_stationary_calls_per_objective_cap": 23,
+  "new_smoke_objectives": 0,
+  "normalization_budget_assumptions": {
+    "assumed_seconds_per_stationary_call": 360,
+    "assumed_setup_observer_scoring_allowance_seconds": 720,
+    "calculation": "23 * 360 + 720 = 9000",
+    "empirical_guarantee": false,
+    "fertility_target": 2.1,
+    "fertility_tolerance": 0.0005,
+    "maximum_logged_solve_seconds_in_these_two_cases": 313.08,
+    "observed_interrupted_normalizations_completed_solve_counts": [
+      10,
+      11
+    ],
+    "proposed_guard": "Before each solve, check unchanged maximum23-call count and absolute deadline; parent owns external timeout and kill/reap evidence.",
+    "root_finder_and_economic_normalization_changed": false
+  },
+  "notes": [
+    "The long ceiling allows consumed timeout slots, not guaranteed scientific completion or an optimum.",
+    "Final share statuses and checkpoint/table hashes must be verified before an immutable reuse manifest is approved.",
+    "Only never-dispatched floor initial points and genuinely new DE vectors may be evaluated; no failed case is retried.",
+    "Any selection unchanged from an already twice-verified original can reuse its repeat evidence, reducing work below this ceiling.",
+    "Controller prototype is not production integrated. A new reviewed contract, artifact-authentication and global-barrier tests are still required."
+  ],
+  "objective_cap_seconds": 9000,
+  "original_clock_or_jobs_changed": false,
+  "parent_contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+  "parent_run": "run_001",
+  "population_per_arm": 40,
+  "readiness_seconds_outside_fresh_clock": 1800,
+  "remaining_initial_new_attempts_by_arm": {
+    "floor_concave": 29,
+    "floor_linear": 29,
+    "shares_concave": 0,
+    "shares_linear": 0
+  },
+  "remaining_initial_waves": 3,
+  "repeat_waves": 1,
+  "schema": "utility_four_arm_recovery_budget_proposal_v1",
+  "slurm_partition_limit_checked": true,
+  "slurm_partition_limits": {
+    "MaxTime": "UNLIMITED",
+    "State": "UP",
+    "method": "bounded read-only scontrol show partition cs",
+    "note": "Partition wall-time ceiling only; availability/account/QOS admission and readiness remain launch checks.",
+    "partition": "cs"
+  },
+  "status": "preparation_only_lead_review_required",
+  "total_search_waves": 15,
+  "upper_time_for_wave_accounting_seconds": 144900,
+  "workers_per_arm": 10
+}

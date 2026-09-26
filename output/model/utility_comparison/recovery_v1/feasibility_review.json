@@ -1,0 +1,197 @@
+{
+  "schema": "utility_recovery_feasibility_review_v1",
+  "status": "bounded_read_only_review_complete",
+  "scope": "Review saved floor initial_0005 native feasibility failures and prospective failure/timeout classification; no recovery approval or launch",
+  "evidence": [
+    "/Users/tommasodesanto/.codex/worktrees/962e/Fertility_Spring26/output/model/utility_comparison/run_001/floor_linear/initial_0005_record.json",
+    "/Users/tommasodesanto/.codex/worktrees/962e/Fertility_Spring26/output/model/utility_comparison/run_001/floor_linear/initial_0005_failure.json",
+    "/Users/tommasodesanto/.codex/worktrees/962e/Fertility_Spring26/output/model/utility_comparison/run_001/floor_concave/initial_0005_record.json",
+    "/Users/tommasodesanto/.codex/worktrees/962e/Fertility_Spring26/output/model/utility_comparison/run_001/floor_concave/initial_0005_failure.json",
+    "/Users/tommasodesanto/.codex/worktrees/962e/Fertility_Spring26/output/model/utility_comparison/run_001/share_deadline_postmortem.json"
+  ],
+  "exact_native_source": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/source/code/model/intergen_eqscale_seq_optimized/solver.py",
+    "method": "One bounded SSH text read of exact class, census, gate and gate callers; no model import",
+    "source_hash_receipt": "/Users/tommasodesanto/.codex/worktrees/962e/Fertility_Spring26/output/model/utility_comparison/run_001/supplemental_birth_wait/availability.json",
+    "dead_value_cutoff": {
+      "line": 81,
+      "value": -1000000000
+    },
+    "dead_mass_tolerance": {
+      "line": 82,
+      "value": 1e-12
+    },
+    "exception_class_lines": [
+      85,
+      101
+    ],
+    "census_lines": [
+      3865,
+      3938
+    ],
+    "mass_gate_lines": [
+      3941,
+      3966
+    ],
+    "markov_entry_gate_lines": [
+      4540,
+      4550
+    ],
+    "markov_forward_gate_lines": [
+      4606,
+      4616
+    ],
+    "terminal_forward_gate_lines": [
+      5062,
+      5072
+    ]
+  },
+  "observed": {
+    "exact_error_type": "InfeasibleThetaError",
+    "stage": "forward_age_34",
+    "message_template": "forward_age_34: dead-node mass {mass:.12g} exceeds 1.0e-12; census=[{sorted_key=value,...};...]",
+    "linear_dead_mass_reported": 1.19443474042e-12,
+    "concave_dead_mass_reported": 1.19378693038e-12,
+    "same_structural_point": true,
+    "census_rows_per_failure": 4,
+    "census_summary": {
+      "age": 34,
+      "location": 0,
+      "tenure": 0,
+      "current_children_values": [
+        1,
+        2
+      ],
+      "children_ever_born_values": [
+        1,
+        2
+      ],
+      "wealth_values": [
+        -0.11627906976744207,
+        0
+      ],
+      "income": 0.219771479538767,
+      "income_state": 0.05388932006414422,
+      "transfer": 0,
+      "slack_values": [
+        -0.03350248616398435,
+        -0.0239173512802634
+      ],
+      "dominant_state": "age 34, renter, zero wealth, one child ever born and one currently at home",
+      "dominant_linear_mass": 1.1944347404170972e-12,
+      "dominant_concave_mass": 1.1937869303791421e-12
+    },
+    "interpretation": "These occupied Bellman-dead renter states violate the existing mass gate and have negative current-tenure budget slack. Their small mass does not excuse the gate failure."
+  },
+  "supported_classification": {
+    "observed_cases": "Reject the failed evaluated cases; no scored loss or accepted equilibrium.",
+    "terminology": "Reviewed native feasibility rejection of an attempted objective evaluation; not proof that the structural parameter vector is globally infeasible.",
+    "scope_limit": "A failure can arise during an intermediate equilibrium-price or fertility-normalization evaluation. The census does not identify which price/psi path failed.",
+    "primitive_or_model_bug_excluded": false,
+    "candidate_specific_global_infeasibility_established": false,
+    "evidence_for_common_candidate_mechanism": "Both benefit-curvature arms fail at the same structural point in the same renter resource states. This is consistent with the common floor/resources restriction, but is not a proof excluding a primitive, transition, interpolation, or model bug.",
+    "unchanged_gate": 1e-12,
+    "automatic_retry": false
+  },
+  "classification_validation_required": [
+    "Authenticate original frozen contract/source, arm, candidate coordinates and candidate identity before using failure data.",
+    "Restrict continuation classification to approved search stages; smoke, anchor validation and selected-repeat failures stop.",
+    "Use exact native exception class and structured stage/dead_mass/census when available. Existing text receipts require strict full grammar parsing, not an error-prefix substring whitelist.",
+    "Require the literal unchanged 1.0e-12 threshold, finite total mass strictly above it and a known reviewed forward stage. Do not alter the numerical acceptance predicate.",
+    "Require nonempty finite census rows with all twelve expected keys, no duplicate keys or states, positive row masses and valid integer location/tenure/children indices; row ages must agree with the stage.",
+    "Native census stores only first eight positive cells. A full eight-row census is potentially truncated; it cannot establish coverage without additional saved evidence. The reviewed cases have four rows.",
+    "For complete census, compare row-mass sum with the total after native .12g formatting, rather than demanding exact equality to a rounded message or introducing a mass-gate tolerance.",
+    "For the narrow reviewed renter-deficit signature, require renter/location-zero states, consistent wealth/unsecured position, zero transfers and strictly negative finite slack. New state families require review.",
+    "The saved census lacks rent, debt floor and gross return; its slack arithmetic cannot independently be recomputed here. Authentication of the producer does not resolve all possible model errors.",
+    "Rejected cases consume their original planned slots, receive no finite loss, cannot become incumbents or selected repeats, and are not silently replaced."
+  ],
+  "variants_that_remain_fatal": [
+    "entry-stage InfeasibleThetaError",
+    "Unreviewed forward age/stage, terminal-stage variant or changed error grammar",
+    "Owner/location/child-state variants outside the reviewed signature",
+    "Nonnegative slack, empty or incomplete census, potentially truncated eight-row census, nonfinite values, invalid indices, negative row masses or inconsistent mass totals",
+    "Total mass at or below the unchanged gate, or a different threshold in the message",
+    "Source/contract/point mismatch or untrusted imitation of the native class name",
+    "Unknown exception, accounting/probability/array failure, or apparent success lacking complete validated output",
+    "Any such failure during smoke, retained-anchor validation or selected repetition"
+  ],
+  "prospective_timeout_policy": {
+    "acceptable_basis": "Positive controller process-boundary evidence that the owned candidate process reached its approved deadline and was terminated/reaped; preserve dispatch, deadline, kill event and return code.",
+    "raw_exception_insufficient": "Do not broadly reclassify SystemError or any near-deadline error as timeout. The two historical share failures have a separate saved causal postmortem; this does not authorize all future SystemError cases.",
+    "objective_semantics": "Keep full fertility normalization, all targets and all numerical gates. Timeout is censored/unscored computational evidence, not economic infeasibility or convergence.",
+    "budget_semantics": "Consume the planned slot and actual compute budget without automatic retries, resets, replacement proposals or relaxed gates. A global search deadline stops dispatch.",
+    "collection": "A partial receipt/checkpoint from a terminated process cannot be accepted. Early process exit alone cannot substitute for validated successful artifacts.",
+    "fairness": "Retain common anchors and matched planned proposal coverage. Do not compare best losses as equal-search evidence when completion differs; report timeout/rejection/coverage counts separately."
+  },
+  "concrete_policy_tests": [
+    {
+      "case": "Each original floor initial_0005 receipt with authenticated matching record",
+      "expected": "Reviewed rejected evaluation, no finite loss; unchanged gate"
+    },
+    {
+      "case": "Exact same failure during smoke or selected repeat",
+      "expected": "Fatal stop"
+    },
+    {
+      "case": "Mass exactly 1e-12 or below; changed threshold; NaN/Inf; negative row mass",
+      "expected": "Fatal classification failure"
+    },
+    {
+      "case": "Empty, malformed, duplicate-key, wrong-age or eight-row potentially truncated census",
+      "expected": "Fatal pending review"
+    },
+    {
+      "case": "Census sum inconsistent with .12g header, positive/nonnegative slack, entry or owner variant",
+      "expected": "Fatal pending review"
+    },
+    {
+      "case": "Native message text under different exception type/source/candidate",
+      "expected": "Fatal"
+    },
+    {
+      "case": "Externally evidenced candidate deadline and kill/reap event",
+      "expected": "Timed out and unscored; next distinct planned proposal only if common budget permits"
+    },
+    {
+      "case": "Bare SystemError or near-deadline exit without positive timeout provenance",
+      "expected": "Fatal"
+    },
+    {
+      "case": "Global deadline, controller interruption or unknown subprocess failure",
+      "expected": "Stop dispatch; do not count as a reusable candidate-local timeout"
+    },
+    {
+      "case": "Partial success files after a timeout or failure",
+      "expected": "Never accepted or selected"
+    },
+    {
+      "case": "Process exit zero with missing normalization/target/gate/table/checkpoint validation",
+      "expected": "Never accepted"
+    },
+    {
+      "case": "Rejection/timeout creates replacement candidate or duplicate retry",
+      "expected": "Policy validation fails"
+    },
+    {
+      "case": "Fixtures only assert early return or mocked success without checking required artifact validation",
+      "expected": "Insufficient test; add negative acceptance tests"
+    }
+  ],
+  "remains_for_lead_review": [
+    "Approve exact narrow rejection predicate and terminology before recovery integration.",
+    "Keep common anchors, matched coverage and reporting of incomplete objectives explicit.",
+    "Review a genuinely process-boundary timeout implementation; avoid Numba-wrapped inner-alarm ambiguity.",
+    "The finite recovery budget and normalization-call budget belong to lead's separate preparation.",
+    "No claim that either frozen observed structural point is mathematically inadmissible for all equilibrium/normalization paths."
+  ],
+  "work_performed": {
+    "ssh_exact_source_reads": 1,
+    "model_imports": 0,
+    "unpickles": 0,
+    "solves": 0,
+    "launches": 0,
+    "retries": 0,
+    "source_or_contract_mutations": false,
+    "policy_test_execution": false
+  }
+}

@@ -4,6 +4,12 @@ The author delegated tonight's experimental choice; the reviewed fixed-rent
 utility normalization is chosen for the comparison. The design and assumptions are in
 [`docs/model/utility_four_arm_preparation.md`](../../../docs/model/utility_four_arm_preparation.md).
 
+The main research task subsequently requested a separate recovery design.
+[`docs/model/utility_four_arm_recovery_v1.md`](../../../docs/model/utility_four_arm_recovery_v1.md)
+contains the proposed policy, reuse conditions and fresh finite budget;
+`recovery_v1/` holds its review and cost evidence. This is preparation only,
+not an approved launch, retry or extension of `run_001`.
+
 ## Outcome in progress: planned recalibration not achieved
 
 By the 01:45 EDT check, all four searches had stopped during their initial
