@@ -60,6 +60,14 @@ These are candidate tools, not a replacement for the September14 reference.
 
 ## Current E5F calibration and policy audit utilities
 
+`tools/diagnose_saved_utility_birth_incentives.py` authenticates a saved
+floor/linear utility-comparison checkpoint on Torch and recovers finite
+attempt-minus-wait logit gaps. It verifies the pre-choice population by
+reproducing saved birth flows and the post-birth distribution, without solving
+the model. Endpoints and unavailable choices are separate categories. The
+September 26 receipt and reproduction command are linked from
+`../../CALIBRATION_STATUS.md`; this is not a zero-taste-shock equilibrium.
+
 `tools/build_e5f_utility_review_packet.py` rebuilds the fixed model scorecard, complete
 target/parameter tables, data overlays and utility/pension visual review
 from saved results with no model solves. Run `python3 code/model/tools/build_e5f_utility_review_packet.py`

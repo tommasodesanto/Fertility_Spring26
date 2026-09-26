@@ -1,5 +1,41 @@
 # Calibration Status
 
+## September 26 — saved fertility incentives measured, no new solves
+
+The coordinating lead inspected the verified floor/linear selected point from
+the four-arm comparison (Torch job 18602589, 14 seconds). No preference, target,
+weight, parameter, solver or equilibrium changed. The recovered object is the
+optimized attempt-minus-wait value gap excluding the current taste draw,
+retaining the solved future shock-inclusive continuation values. It is not
+the value of children versus lifetime childlessness or a zero-shock equilibrium.
+
+Of expected first births, 54.654% arise at positive finite gaps and 45.346% at
+negative finite gaps. For later births the shares are 29.763% and 70.237%.
+Thus “children are always a net cost” is not established by the flow equation
+and is contradicted as a claim about every occupied dynamic decision state.
+Current taste draws frequently overturn the systematic preference to wait,
+especially for later births; this does not by itself establish misspecification
+or quantify the effect of eliminating future taste uncertainty. Age-specific
+results show later-birth gaps becoming more favorable near the fertility end.
+
+Saved pre-fertility mass was authenticated with the checkpoint and replayed
+through the birth accounting only: post-fertility distribution L1 error
+3.204e-15; birth-flow error 4.163e-16. Zero probability endpoints were not
+inverted; unavailable-choice mass 4.943e-15 is disclosed separately. The first
+diagnostic attempt (18602545) stopped on these zero/zero probabilities; the
+revised diagnostic classifies them without changing the original 1e-12 gate.
+No new household or equilibrium solve occurred in either attempt.
+
+The actual checkpoint confirms sequential choice, independent child departures,
+no readiness gate, no child-conditioned transfer floor, and conception
+probabilities 0.980 at 18 through 0.501 at 42. These are inherited experimental
+settings, not newly adopted restrictions. The old ACS quantity target and
+unmatched first-birth/estate observers remain limitations of this selected point.
+
+Source: `code/model/tools/diagnose_saved_utility_birth_incentives.py`.
+Receipt, summary, age table, graph, full original target/parameter tables and
+reproduction command: `output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/utility_fertility_rationale_review/saved_floor_linear_20260926/README.md`.
+
 ## September 26 morning — utility searches stopped early; share collection blocked
 
 All four searches in array18567879 stopped during their initial populations;
