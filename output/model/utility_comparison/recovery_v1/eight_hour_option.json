@@ -1,0 +1,130 @@
+{
+  "adaptive_center_changes_are_recalibration": true,
+  "allocated_CPU_hours_at_max_reservation": 320,
+  "allocated_GiB_hours_at_max_reservation": 3840,
+  "arm_count": 4,
+  "clock": {
+    "absolute_total_seconds": 28800,
+    "readiness_and_reuse_verification_until_seconds": 1800,
+    "repetition_cutoff_seconds": 25800,
+    "report_and_visual_QA_cutoff_seconds": 28800,
+    "search_cutoff_seconds": 21600,
+    "start": "first recovery controller ready; readiness is included, not added afterward"
+  },
+  "controller_choices": [
+    "8-hour absolute clock including verification and export",
+    "4200-second candidate cap",
+    "2 rounds of20 proposals per arm;12 local/8 global",
+    "candidate-local rejection/timeout versus unknown-failure halt",
+    "common phase barriers and duplicate policy",
+    "more-than-half inadmissible operational stop",
+    "reuse of already-verified smoke/repeat evidence",
+    "unchanged inherited23-call algorithmic safeguard, not a scientific target"
+  ],
+  "duplicate_handling": "One frozen vector/arm/scientific-key lookup: reuse authenticated outcome; linked skipped duplicate consumes planned slot with no new solve. Never replace duplicate with fresh draw.",
+  "fixed_round_budget_no_extra_rounds": true,
+  "global_design": "Eight prespecified full-range joint draws each round; shared common-coordinate streams and housing-family streams; same original bounds.",
+  "global_points_per_round_per_arm": 8,
+  "historical_upper_bound_scenario": "budget_proposal.json; not authorized and not the default option",
+  "implementation_status": "Documentation and deterministic arithmetic only. Existing policy prototype unchanged; proposal-bank builder, round coordinator, result authentication and integration tests not implemented. No agents, model solves or new heavy tests used for this revision.",
+  "launch_permitted": false,
+  "local_points_per_round_per_arm": 12,
+  "maximum_new_objectives": 168,
+  "maximum_new_repeat_objectives": 8,
+  "maximum_new_repeats_per_arm": 2,
+  "maximum_new_search_objectives": 160,
+  "maximum_new_stationary_calls": 3864,
+  "maximum_search_wave_seconds": 16800,
+  "maximum_stationary_calls_per_objective": 23,
+  "memory_GiB_per_arm": 120,
+  "new_points_per_arm": 40,
+  "new_points_per_round_per_arm": 20,
+  "new_smokes": 0,
+  "objective_cap_CPU_hours_before_supervision": 196,
+  "objective_cap_rationale": "Observed completed objectives in snapshot at most3018.968s,4\u201313 stationary calls;3100s failures completed10/11 solves before interruption.4200s adds1100s for several further solves. Successful-only timing is censored; no convergence guarantee.",
+  "objective_cap_seconds": 4200,
+  "observed_successful_only_timing": {
+    "floor_concave": {
+      "maximum_seconds": 1223.1519365470158,
+      "median_seconds": 579.1428639479564,
+      "minimum_seconds": 551.9994470298989,
+      "stationary_calls_max": 6,
+      "stationary_calls_min": 4,
+      "successful_receipts_count_including_two_smokes": 4
+    },
+    "floor_linear": {
+      "maximum_seconds": 1396.89758557803,
+      "median_seconds": 869.0080528605031,
+      "minimum_seconds": 856.7032806930365,
+      "stationary_calls_max": 6,
+      "stationary_calls_min": 6,
+      "successful_receipts_count_including_two_smokes": 4
+    },
+    "shares_concave": {
+      "maximum_seconds": 3018.967511016992,
+      "median_seconds": 1112.2817965929862,
+      "minimum_seconds": 572.109253603965,
+      "stationary_calls_max": 13,
+      "stationary_calls_min": 5,
+      "successful_receipts_count_including_two_smokes": 22
+    },
+    "shares_linear": {
+      "maximum_seconds": 2337.2657370819943,
+      "median_seconds": 1070.5334284749697,
+      "minimum_seconds": 566.7538349010283,
+      "stationary_calls_max": 13,
+      "stationary_calls_min": 4,
+      "successful_receipts_count_including_two_smokes": 20
+    }
+  },
+  "old_verified_smoke_pairs_reused": 4,
+  "original_run_modified": false,
+  "paired_draws_do_not_imply_identical_round2_physical_parameters": true,
+  "parent_contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+  "replacement_slots": 0,
+  "retained_common_points_per_arm": 3,
+  "retained_common_successful_initial_slots": [
+    0,
+    1,
+    2
+  ],
+  "retained_extra_unmatched_points_role": "retain and report as historical/cumulative evidence; exclude from matched-start winner selection and adaptive centers",
+  "retained_inventory_sha256": "33334a68b6da64a6d8b8a61a86c5f0748d893299ed65dd25742d70677d6a7ae1",
+  "retry_failed_cases": false,
+  "reuse_requires_terminal_original_run_and_verified_hashes": true,
+  "rng_seed_proposal": 20260926,
+  "round_1_local_design": "Two antithetic pairs around each of the three common retained feasible anchor sets, in transformed unit coordinates; SD0.04 and reflected original bounds.",
+  "round_2_local_design": "Six antithetic pairs around each arm's own eligible best among the common retained bank and round1; same perturbation streams for common coordinates, SD0.04 and reflected bounds.",
+  "rounds": 2,
+  "scheduled_search_window_seconds": 19800,
+  "schema": "utility_recovery_eight_hour_option_v2",
+  "scientific_constraints": [
+    "unchanged utility/fiscal/earnings/entry/transfer/mortality specification",
+    "same targets, weights, observers and full fit/parameter reports",
+    "fertility normalization2.1 within0.0005",
+    "all inherited equilibrium/fiscal/feasibility/accounting/value/probability acceptance gates",
+    "source/target/point/checkpoint integrity"
+  ],
+  "scientific_normalization": {
+    "algorithm_unchanged": true,
+    "partial_normalization_score_allowed": false,
+    "target": 2.1,
+    "tolerance": 0.0005
+  },
+  "scientific_runtime_modified": false,
+  "search_supervision_margin_seconds": 3000,
+  "search_waves": 4,
+  "status": "proposal_only_requires_lead_review_and_new_contract",
+  "stopping": {
+    "deadline": "stop with explicit incomplete/unrun slots; no extension or additional round",
+    "extra_combined_unavailable_guard_from42hour_scenario": "not proposed for this eight-hour option",
+    "original_more_than_half_inadmissible_guard": "retain prospectively per20-proposal round; operational guard, not an economic acceptance condition",
+    "process_proven_timeout": "consume slot as censored scientific loss, not inadmissibility",
+    "reviewed_candidate_rejection": "consume slot unscored; no acceptance-gate change",
+    "unknown_failure": "stop new common dispatch, preserve already-running siblings within deadlines",
+    "unresolved_missing_or_unrun": "cannot silently cross common round barrier; report partial coverage"
+  },
+  "supersedes_as_default": "d755209d:docs/model/utility_four_arm_recovery_v1.md (42-hour proposal)",
+  "waves_per_round": 2,
+  "workers_per_arm": 10
+}

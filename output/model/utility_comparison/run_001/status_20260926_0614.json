@@ -1,0 +1,656 @@
+{
+  "arms": {
+    "floor_concave": {
+      "best_so_far": {
+        "age_seconds": 4766.271016120911,
+        "data": {
+          "candidate_id": "floor_concave_initial_0001",
+          "case_output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/floor_concave/floor_concave_initial_0001",
+          "finished_epoch": 1790398494.6490424,
+          "loss": 302.7217706171634,
+          "point": {
+            "H0": 8.645523389672618,
+            "beta_annual": 0.9622366891116222,
+            "chi": 1.1266080567418069,
+            "first_birth_fixed_cost": 0.506777288216908,
+            "h_P": 1.8900476600128304,
+            "kappa_fert": 0.2092758576051789,
+            "kappa_fert_continuation": 0.48206876668272913,
+            "theta0": 0.08816920777433607
+          },
+          "receipt_sha256": "32beb77bde379776ff3454912ddfebbe79e5c8879ffe0df5596ec36606f7bdaf",
+          "returncode": 0,
+          "stage": "initial",
+          "started_epoch": 1790397940.394818,
+          "status": "success",
+          "target_system_sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58"
+        }
+      },
+      "controller_summary": {
+        "age_seconds": 3556.4640929698944,
+        "data": {
+          "arm": "floor_concave",
+          "automatic_retry": false,
+          "best": {
+            "candidate_id": "floor_concave_initial_0001",
+            "case_output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/floor_concave/floor_concave_initial_0001",
+            "finished_epoch": 1790398494.6490424,
+            "loss": 302.7217706171634,
+            "point": {
+              "H0": 8.645523389672618,
+              "beta_annual": 0.9622366891116222,
+              "chi": 1.1266080567418069,
+              "first_birth_fixed_cost": 0.506777288216908,
+              "h_P": 1.8900476600128304,
+              "kappa_fert": 0.2092758576051789,
+              "kappa_fert_continuation": 0.48206876668272913,
+              "theta0": 0.08816920777433607
+            },
+            "receipt_sha256": "32beb77bde379776ff3454912ddfebbe79e5c8879ffe0df5596ec36606f7bdaf",
+            "returncode": 0,
+            "stage": "initial",
+            "started_epoch": 1790397940.394818,
+            "status": "success",
+            "target_system_sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58"
+          },
+          "clock": {
+            "contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+            "end_epoch": 1790424780.3007965,
+            "repeat_cutoff_epoch": 1790423880.3007965,
+            "rule": "clock begins immediately before first exact-loop smoke dispatch",
+            "search_cutoff_epoch": 1790419380.3007965,
+            "start_epoch": 1790395980.3007965
+          },
+          "collection": {
+            "returncode": 0,
+            "status": "success",
+            "timed_out": false
+          },
+          "contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+          "counts": {
+            "de": {
+              "attempted": 0,
+              "failed": 0,
+              "inadmissible": 0,
+              "incomplete": 0,
+              "planned": 120,
+              "reused": 0,
+              "succeeded": 0,
+              "timed_out": 0,
+              "unrun": 120
+            },
+            "initial": {
+              "attempted": 10,
+              "failed": 1,
+              "inadmissible": 7,
+              "incomplete": 0,
+              "planned": 40,
+              "reused": 1,
+              "succeeded": 2,
+              "timed_out": 0,
+              "unrun": 29
+            },
+            "repeat": {
+              "attempted": 2,
+              "failed": 0,
+              "inadmissible": 0,
+              "incomplete": 0,
+              "planned": 2,
+              "reused": 0,
+              "succeeded": 2,
+              "timed_out": 0,
+              "unrun": 0
+            },
+            "smoke": {
+              "attempted": 2,
+              "failed": 0,
+              "inadmissible": 0,
+              "incomplete": 0,
+              "planned": 2,
+              "reused": 0,
+              "succeeded": 2,
+              "timed_out": 0,
+              "unrun": 0
+            }
+          },
+          "elapsed_since_shared_clock_seconds": 3724.1544716358185,
+          "gate_relaxation": false,
+          "identification": "moment/parameter counts are not a numerical rank or identification result",
+          "local_numerical_workers": 0,
+          "phase": "finished",
+          "schema": "e5f_utility_arm_controller_v1",
+          "stop_reason": "case_failed_no_retry"
+        }
+      },
+      "export_complete": true,
+      "heartbeat": {
+        "age_seconds": 3556.4381630420685,
+        "data": {
+          "arm": "floor_concave",
+          "completed_cases": 14,
+          "contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+          "epoch": 1790399704.4706376,
+          "phase": "finished",
+          "pid": 3089819,
+          "stop_reason": "case_failed_no_retry"
+        }
+      },
+      "latest_completed": {
+        "age_seconds": 3579.0553896427155,
+        "data": {
+          "candidate_id": "repeat_0",
+          "case_output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/floor_concave/repeat_0",
+          "finished_epoch": 1790399681.8551896,
+          "loss": 302.7217706171634,
+          "point": {
+            "H0": 8.645523389672618,
+            "beta_annual": 0.9622366891116222,
+            "chi": 1.1266080567418069,
+            "first_birth_fixed_cost": 0.506777288216908,
+            "h_P": 1.8900476600128304,
+            "kappa_fert": 0.2092758576051789,
+            "kappa_fert_continuation": 0.48206876668272913,
+            "theta0": 0.08816920777433607
+          },
+          "receipt_sha256": "27562aaf7ec1a753fe73b57816d6cc5300bf612b440378c9871d91c473f90b44",
+          "returncode": 0,
+          "stage": "repeat",
+          "started_epoch": 1790399166.3588228,
+          "status": "success",
+          "target_system_sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58"
+        }
+      },
+      "terminal": true
+    },
+    "floor_linear": {
+      "best_so_far": {
+        "age_seconds": 4455.673171281815,
+        "data": {
+          "candidate_id": "floor_linear_initial_0001",
+          "case_output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/floor_linear/floor_linear_initial_0001",
+          "finished_epoch": 1790398805.1712427,
+          "loss": 285.6397320445495,
+          "point": {
+            "H0": 8.645523389672618,
+            "beta_annual": 0.9622366891116222,
+            "chi": 1.1266080567418069,
+            "first_birth_fixed_cost": 0.506777288216908,
+            "h_P": 1.8900476600128304,
+            "kappa_fert": 0.2092758576051789,
+            "kappa_fert_continuation": 0.48206876668272913,
+            "theta0": 0.08816920777433607
+          },
+          "receipt_sha256": "3fd7423b2b8022d562696218fd0954e818676824838e531f01639dfc584e8a8a",
+          "returncode": 0,
+          "stage": "initial",
+          "started_epoch": 1790397921.7496474,
+          "status": "success",
+          "target_system_sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58"
+        }
+      },
+      "controller_summary": {
+        "age_seconds": 3059.188290834427,
+        "data": {
+          "arm": "floor_linear",
+          "automatic_retry": false,
+          "best": {
+            "candidate_id": "floor_linear_initial_0001",
+            "case_output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/floor_linear/floor_linear_initial_0001",
+            "finished_epoch": 1790398805.1712427,
+            "loss": 285.6397320445495,
+            "point": {
+              "H0": 8.645523389672618,
+              "beta_annual": 0.9622366891116222,
+              "chi": 1.1266080567418069,
+              "first_birth_fixed_cost": 0.506777288216908,
+              "h_P": 1.8900476600128304,
+              "kappa_fert": 0.2092758576051789,
+              "kappa_fert_continuation": 0.48206876668272913,
+              "theta0": 0.08816920777433607
+            },
+            "receipt_sha256": "3fd7423b2b8022d562696218fd0954e818676824838e531f01639dfc584e8a8a",
+            "returncode": 0,
+            "stage": "initial",
+            "started_epoch": 1790397921.7496474,
+            "status": "success",
+            "target_system_sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58"
+          },
+          "clock": {
+            "contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+            "end_epoch": 1790424780.3007965,
+            "repeat_cutoff_epoch": 1790423880.3007965,
+            "rule": "clock begins immediately before first exact-loop smoke dispatch",
+            "search_cutoff_epoch": 1790419380.3007965,
+            "start_epoch": 1790395980.3007965
+          },
+          "collection": {
+            "returncode": 0,
+            "status": "success",
+            "timed_out": false
+          },
+          "contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+          "counts": {
+            "de": {
+              "attempted": 0,
+              "failed": 0,
+              "inadmissible": 0,
+              "incomplete": 0,
+              "planned": 120,
+              "reused": 0,
+              "succeeded": 0,
+              "timed_out": 0,
+              "unrun": 120
+            },
+            "initial": {
+              "attempted": 10,
+              "failed": 1,
+              "inadmissible": 7,
+              "incomplete": 0,
+              "planned": 40,
+              "reused": 1,
+              "succeeded": 2,
+              "timed_out": 0,
+              "unrun": 29
+            },
+            "repeat": {
+              "attempted": 2,
+              "failed": 0,
+              "inadmissible": 0,
+              "incomplete": 0,
+              "planned": 2,
+              "reused": 0,
+              "succeeded": 2,
+              "timed_out": 0,
+              "unrun": 0
+            },
+            "smoke": {
+              "attempted": 2,
+              "failed": 0,
+              "inadmissible": 0,
+              "incomplete": 0,
+              "planned": 2,
+              "reused": 0,
+              "succeeded": 2,
+              "timed_out": 0,
+              "unrun": 0
+            }
+          },
+          "elapsed_since_shared_clock_seconds": 4221.349975347519,
+          "gate_relaxation": false,
+          "identification": "moment/parameter counts are not a numerical rank or identification result",
+          "local_numerical_workers": 0,
+          "phase": "finished",
+          "schema": "e5f_utility_arm_controller_v1",
+          "stop_reason": "case_failed_no_retry"
+        }
+      },
+      "export_complete": true,
+      "heartbeat": {
+        "age_seconds": 3059.156660079956,
+        "data": {
+          "arm": "floor_linear",
+          "completed_cases": 14,
+          "contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+          "epoch": 1790400201.6667876,
+          "phase": "finished",
+          "pid": 2403887,
+          "stop_reason": "case_failed_no_retry"
+        }
+      },
+      "latest_completed": {
+        "age_seconds": 3083.28338432312,
+        "data": {
+          "candidate_id": "repeat_0",
+          "case_output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/floor_linear/repeat_0",
+          "finished_epoch": 1790400177.5134532,
+          "loss": 285.6397320445495,
+          "point": {
+            "H0": 8.645523389672618,
+            "beta_annual": 0.9622366891116222,
+            "chi": 1.1266080567418069,
+            "first_birth_fixed_cost": 0.506777288216908,
+            "h_P": 1.8900476600128304,
+            "kappa_fert": 0.2092758576051789,
+            "kappa_fert_continuation": 0.48206876668272913,
+            "theta0": 0.08816920777433607
+          },
+          "receipt_sha256": "07f075a9ad25b1431327b051785677941343a595611c7e0b7bd73e479e55ea9f",
+          "returncode": 0,
+          "stage": "repeat",
+          "started_epoch": 1790399321.7738857,
+          "status": "success",
+          "target_system_sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58"
+        }
+      },
+      "terminal": true
+    },
+    "shares_concave": {
+      "best_so_far": {
+        "age_seconds": 1634.2818224430084,
+        "data": {
+          "candidate_id": "shares_concave_initial_0038",
+          "case_output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_concave/shares_concave_initial_0038",
+          "finished_epoch": 1790401626.8120728,
+          "loss": 434.6464875639052,
+          "point": {
+            "H0": 6.727347044520778,
+            "beta_annual": 0.9748438428733873,
+            "chi": 1.1250850187426138,
+            "delta_alpha": 0.03897536437154123,
+            "delta_alpha_jump": 0.07780442689806688,
+            "first_birth_fixed_cost": 0.7192494742080143,
+            "kappa_fert": 0.2220225872143764,
+            "kappa_fert_continuation": 0.4600373435057613,
+            "theta0": 0.16170195865582743
+          },
+          "receipt_sha256": "1ec68319d8183c7d94b04894e2b7df076684aa85399c6c442eaa5bcc93450675",
+          "returncode": 0,
+          "stage": "initial",
+          "started_epoch": 1790400377.6298778,
+          "status": "success",
+          "target_system_sha256": "ca530838e9123f5efad5a7fa8bf1805f7971eca0306df6ae29e36480082b6fc8"
+        }
+      },
+      "controller_summary": {
+        "age_seconds": 734.4084610939026,
+        "data": {
+          "arm": "shares_concave",
+          "automatic_retry": false,
+          "best": {
+            "candidate_id": "shares_concave_initial_0038",
+            "case_output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_concave/shares_concave_initial_0038",
+            "finished_epoch": 1790401626.8120728,
+            "loss": 434.6464875639052,
+            "point": {
+              "H0": 6.727347044520778,
+              "beta_annual": 0.9748438428733873,
+              "chi": 1.1250850187426138,
+              "delta_alpha": 0.03897536437154123,
+              "delta_alpha_jump": 0.07780442689806688,
+              "first_birth_fixed_cost": 0.7192494742080143,
+              "kappa_fert": 0.2220225872143764,
+              "kappa_fert_continuation": 0.4600373435057613,
+              "theta0": 0.16170195865582743
+            },
+            "receipt_sha256": "1ec68319d8183c7d94b04894e2b7df076684aa85399c6c442eaa5bcc93450675",
+            "returncode": 0,
+            "stage": "initial",
+            "started_epoch": 1790400377.6298778,
+            "status": "success",
+            "target_system_sha256": "ca530838e9123f5efad5a7fa8bf1805f7971eca0306df6ae29e36480082b6fc8"
+          },
+          "clock": {
+            "contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+            "end_epoch": 1790424780.3007965,
+            "repeat_cutoff_epoch": 1790423880.3007965,
+            "rule": "clock begins immediately before first exact-loop smoke dispatch",
+            "search_cutoff_epoch": 1790419380.3007965,
+            "start_epoch": 1790395980.3007965
+          },
+          "collection": null,
+          "contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+          "counts": {
+            "de": {
+              "attempted": 0,
+              "failed": 0,
+              "inadmissible": 0,
+              "incomplete": 0,
+              "planned": 120,
+              "reused": 0,
+              "succeeded": 0,
+              "timed_out": 0,
+              "unrun": 120
+            },
+            "initial": {
+              "attempted": 39,
+              "failed": 2,
+              "inadmissible": 17,
+              "incomplete": 0,
+              "planned": 40,
+              "reused": 1,
+              "succeeded": 20,
+              "timed_out": 0,
+              "unrun": 0
+            },
+            "repeat": {
+              "attempted": 0,
+              "failed": 0,
+              "inadmissible": 0,
+              "incomplete": 0,
+              "planned": 2,
+              "reused": 0,
+              "succeeded": 0,
+              "timed_out": 0,
+              "unrun": 2
+            },
+            "smoke": {
+              "attempted": 2,
+              "failed": 0,
+              "inadmissible": 0,
+              "incomplete": 0,
+              "planned": 2,
+              "reused": 0,
+              "succeeded": 2,
+              "timed_out": 0,
+              "unrun": 0
+            }
+          },
+          "elapsed_since_shared_clock_seconds": 6546.387766122818,
+          "gate_relaxation": false,
+          "identification": "moment/parameter counts are not a numerical rank or identification result",
+          "local_numerical_workers": 0,
+          "phase": "initial",
+          "schema": "e5f_utility_arm_controller_v1",
+          "stop_reason": null
+        }
+      },
+      "export_complete": false,
+      "heartbeat": {
+        "age_seconds": 13.829721450805664,
+        "data": {
+          "active": 2,
+          "arm": "shares_concave",
+          "completed_cases": 41,
+          "contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+          "epoch": 1790403247.2543933,
+          "pending": 0,
+          "phase": "repeat",
+          "pid": 816170,
+          "stop_reason": "case_failed_no_retry"
+        }
+      },
+      "latest_completed": {
+        "age_seconds": 734.4359622001648,
+        "data": {
+          "candidate_id": "shares_concave_initial_0035",
+          "case_output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_concave/shares_concave_initial_0035",
+          "finished_epoch": 1790402526.6499927,
+          "loss": 3077.5673757175414,
+          "point": {
+            "H0": 12.096544843698155,
+            "beta_annual": 0.9636867141199013,
+            "chi": 1.2466807590949527,
+            "delta_alpha": 0.01651779097640852,
+            "delta_alpha_jump": 0.08200529505428547,
+            "first_birth_fixed_cost": 0.5347874244878712,
+            "kappa_fert": 0.15987741360686344,
+            "kappa_fert_continuation": 1.177574338069939,
+            "theta0": 0.08095730586101635
+          },
+          "receipt_sha256": "1a6e19b3cc2b865c3e493e0b0147e619d76b009e0d8d218ff4fbc103b0fd3e91",
+          "returncode": 0,
+          "stage": "initial",
+          "started_epoch": 1790400269.3029563,
+          "status": "success",
+          "target_system_sha256": "ca530838e9123f5efad5a7fa8bf1805f7971eca0306df6ae29e36480082b6fc8"
+        }
+      },
+      "terminal": false
+    },
+    "shares_linear": {
+      "best_so_far": {
+        "age_seconds": 939.8880307674408,
+        "data": {
+          "candidate_id": "shares_linear_initial_0038",
+          "case_output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_linear/shares_linear_initial_0038",
+          "finished_epoch": 1790402321.1298475,
+          "loss": 406.6421635115564,
+          "point": {
+            "H0": 6.727347044520778,
+            "beta_annual": 0.9748438428733873,
+            "chi": 1.1250850187426138,
+            "delta_alpha": 0.03897536437154123,
+            "delta_alpha_jump": 0.07780442689806688,
+            "first_birth_fixed_cost": 0.7192494742080143,
+            "kappa_fert": 0.2220225872143764,
+            "kappa_fert_continuation": 0.4600373435057613,
+            "theta0": 0.16170195865582743
+          },
+          "receipt_sha256": "ff433e62800740ef37f62f5befea13c7151e46430d467a3760f7fffdb282ba93",
+          "returncode": 0,
+          "stage": "initial",
+          "started_epoch": 1790400926.1490347,
+          "status": "success",
+          "target_system_sha256": "ca530838e9123f5efad5a7fa8bf1805f7971eca0306df6ae29e36480082b6fc8"
+        }
+      },
+      "controller_summary": {
+        "age_seconds": 639.415194272995,
+        "data": {
+          "arm": "shares_linear",
+          "automatic_retry": false,
+          "best": {
+            "candidate_id": "shares_linear_initial_0038",
+            "case_output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_linear/shares_linear_initial_0038",
+            "finished_epoch": 1790402321.1298475,
+            "loss": 406.6421635115564,
+            "point": {
+              "H0": 6.727347044520778,
+              "beta_annual": 0.9748438428733873,
+              "chi": 1.1250850187426138,
+              "delta_alpha": 0.03897536437154123,
+              "delta_alpha_jump": 0.07780442689806688,
+              "first_birth_fixed_cost": 0.7192494742080143,
+              "kappa_fert": 0.2220225872143764,
+              "kappa_fert_continuation": 0.4600373435057613,
+              "theta0": 0.16170195865582743
+            },
+            "receipt_sha256": "ff433e62800740ef37f62f5befea13c7151e46430d467a3760f7fffdb282ba93",
+            "returncode": 0,
+            "stage": "initial",
+            "started_epoch": 1790400926.1490347,
+            "status": "success",
+            "target_system_sha256": "ca530838e9123f5efad5a7fa8bf1805f7971eca0306df6ae29e36480082b6fc8"
+          },
+          "clock": {
+            "contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+            "end_epoch": 1790424780.3007965,
+            "repeat_cutoff_epoch": 1790423880.3007965,
+            "rule": "clock begins immediately before first exact-loop smoke dispatch",
+            "search_cutoff_epoch": 1790419380.3007965,
+            "start_epoch": 1790395980.3007965
+          },
+          "collection": null,
+          "contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+          "counts": {
+            "de": {
+              "attempted": 0,
+              "failed": 0,
+              "inadmissible": 0,
+              "incomplete": 0,
+              "planned": 120,
+              "reused": 0,
+              "succeeded": 0,
+              "timed_out": 0,
+              "unrun": 120
+            },
+            "initial": {
+              "attempted": 39,
+              "failed": 1,
+              "inadmissible": 17,
+              "incomplete": 0,
+              "planned": 40,
+              "reused": 1,
+              "succeeded": 19,
+              "timed_out": 2,
+              "unrun": 0
+            },
+            "repeat": {
+              "attempted": 0,
+              "failed": 0,
+              "inadmissible": 0,
+              "incomplete": 0,
+              "planned": 2,
+              "reused": 0,
+              "succeeded": 0,
+              "timed_out": 0,
+              "unrun": 2
+            },
+            "smoke": {
+              "attempted": 2,
+              "failed": 0,
+              "inadmissible": 0,
+              "incomplete": 0,
+              "planned": 2,
+              "reused": 0,
+              "succeeded": 2,
+              "timed_out": 0,
+              "unrun": 0
+            }
+          },
+          "elapsed_since_shared_clock_seconds": 6641.287856340408,
+          "gate_relaxation": false,
+          "identification": "moment/parameter counts are not a numerical rank or identification result",
+          "local_numerical_workers": 0,
+          "phase": "initial",
+          "schema": "e5f_utility_arm_controller_v1",
+          "stop_reason": null
+        }
+      },
+      "export_complete": false,
+      "heartbeat": {
+        "age_seconds": 8.797065734863281,
+        "data": {
+          "active": 2,
+          "arm": "shares_linear",
+          "completed_cases": 41,
+          "contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+          "epoch": 1790403252.1892738,
+          "pending": 0,
+          "phase": "repeat",
+          "pid": 2458384,
+          "stop_reason": "case_failed_no_retry"
+        }
+      },
+      "latest_completed": {
+        "age_seconds": 639.4603199958801,
+        "data": {
+          "candidate_id": "shares_linear_initial_0035",
+          "case_output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_linear/shares_linear_initial_0035",
+          "finished_epoch": 1790402621.553592,
+          "loss": 3144.945699048858,
+          "point": {
+            "H0": 12.096544843698155,
+            "beta_annual": 0.9636867141199013,
+            "chi": 1.2466807590949527,
+            "delta_alpha": 0.01651779097640852,
+            "delta_alpha_jump": 0.08200529505428547,
+            "first_birth_fixed_cost": 0.5347874244878712,
+            "kappa_fert": 0.15987741360686344,
+            "kappa_fert_continuation": 1.177574338069939,
+            "theta0": 0.08095730586101635
+          },
+          "receipt_sha256": "6ed8a4e46b2d3ed3170b65d7889aa0ec455dbeda7da3b760371bef40fb5e671d",
+          "returncode": 0,
+          "stage": "initial",
+          "started_epoch": 1790400449.5327609,
+          "status": "success",
+          "target_system_sha256": "ca530838e9123f5efad5a7fa8bf1805f7971eca0306df6ae29e36480082b6fc8"
+        }
+      },
+      "terminal": false
+    }
+  },
+  "observed_epoch": 1790403260.8050404,
+  "slurm": "18567886|FAILED|2:0|01:10:26\n18567886.batch|FAILED|2:0|01:10:26\n18567886.extern|COMPLETED|0:0|01:10:26\n18567887|FAILED|2:0|01:02:10\n18567887.batch|FAILED|2:0|01:02:10\n18567887.extern|COMPLETED|0:0|01:02:11\n18567888|RUNNING|0:0|02:01:26\n18567888.batch|RUNNING|0:0|02:01:26\n18567888.extern|RUNNING|0:0|02:01:26\n18567879|RUNNING|0:0|02:01:26\n18567879.batch|RUNNING|0:0|02:01:26\n18567879.extern|RUNNING|0:0|02:01:26\n"
+}

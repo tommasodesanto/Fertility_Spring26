@@ -6,8 +6,10 @@ utility normalization is chosen for the comparison. The design and assumptions a
 
 The main research task subsequently requested a separate recovery design.
 [`docs/model/utility_four_arm_recovery_v1.md`](../../../docs/model/utility_four_arm_recovery_v1.md)
-contains the proposed policy, reuse conditions and fresh finite budget;
-`recovery_v1/` holds its review and cost evidence. This is preparation only,
+contains the proposed policy, reuse conditions and a smaller **eight-hour
+option** with at most forty new points per arm. `recovery_v1/eight_hour_option.json`
+is the current budget proposal; the earlier 42-hour calculation is an
+unapproved upper-bound illustration, superseded as the default. This is preparation only,
 not an approved launch, retry or extension of `run_001`.
 
 ## Outcome in progress: planned recalibration not achieved
@@ -28,6 +30,10 @@ overlaps documented in `export/visual_review_receipt.json`. Read each PDF
 with the early-stop and three-successful-point limitation below. The two
 share arms were finishing already-running cases under the original limits;
 their final counts, repetitions and exports were still pending at this check.
+The 02:14 EDT heartbeat now shows both share arms running their two selected
+repetitions. Their initial trials are finished; export and actual-report QA
+remain pending. The exact heartbeat and raw count snapshot is retained in
+`run_001/status_20260926_0614.json`.
 
 ## Launch and stop evidence
 

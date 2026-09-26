@@ -1,4 +1,4 @@
-# Utility comparison recovery proposal, version 1
+# Utility comparison recovery: eight-hour option (plan revision 2)
 
 **Preparation only; no launch is approved or implemented.** The main research
 task requested this separate recovery design after all four searches in
@@ -8,11 +8,14 @@ controllers finish their existing repetitions and exports. The experimental
 utility choices and adopted common pension update remain exactly as disclosed
 in [the original design](utility_four_arm_preparation.md).
 
-The proposed recovery completes the same initial proposal bank and, if its
-checks pass, the same three finite differential-evolution generations. It
-reuses authenticated completed evaluations and never retries a failed or
-timed-out point. The necessary changes are to failure handling, time budgets
-and coordinated search bookkeeping, not the objective or model mathematics.
+The recommended option for review is a **fresh eight-hour limit**, including
+verification, repetitions, reports and visual review. It starts from three
+retained feasible points per arm and allows **two rounds of twenty new points
+per arm**, with paired local and global moves. It is a smaller search with a
+clear coverage tradeoff, not completion of the original 546-objective recovery
+scenario. That scenario's 42-hour calculation is retained only as an
+**unapproved upper-bound illustration**, not the default proposal or an
+authorized extension. No failed or timed-out point is retried.
 
 ## What the failures establish
 
@@ -55,17 +58,16 @@ Other legacy failures need their own positive evidence before reuse.
    their original deadlines. A shared four-arm barrier blocks the next common
    phase after any fatal failure or missing/unrun result. This avoids letting
    unaffected arms advance through additional generations alone.
-4. Keep the original stop above 50% inadmissible proposals. Additionally stop
-   above 50% combined rejected and timed-out slots, reporting the categories
-   separately. This proposed computational guard is at least as restrictive
-   as the old one and leaves at least twenty scored slots in a forty-slot
-   barrier. It is an explicit search-policy choice for lead review.
-5. Use typed outcomes in DE bookkeeping. A timeout is not the old `None`
-   representation for a scientifically rejected evaluation. Finite planned
-   coordinates can still provide proposal geometry. A successful new trial
-   may replace an unscored slot, but that is not evidence of an objective
-   improvement over its unknown parent. Unrun/missing results cannot cross
-   the barrier. Donor streams, bounds, mutation 0.7 and crossover 1 stay fixed.
+4. Retain the original operational stop above 50% inadmissible proposals,
+   applied prospectively to each twenty-proposal round. This is a conservative
+   controller choice, not a scientific acceptance condition. The additional
+   combined rejection-plus-timeout threshold proposed for the 42-hour scenario
+   is not proposed here. Timeouts remain separately visible and unscored.
+5. Use typed outcomes and choose adaptive centers only from successful scored
+   cases. A timeout is not a rejected scientific evaluation or evidence of a
+   worse loss. Unexplained missing/unrun results cannot silently cross the
+   common round barrier. This small design uses direct local/global moves,
+   not three generations of DE or an implicit claim that those ran.
 6. Deduplicate by arm, scientific source/target identity and the full parameter
    vector. Reuse a prior success through its original receipt; a duplicate
    failed or timed-out point keeps its linked rejected/censored outcome and
@@ -78,7 +80,7 @@ They cannot guarantee equal numbers of successful evaluations. Final reports
 must retain failures, time censoring and all incomplete/unrun slots; a best
 loss is not evidence of an equally explored or globally optimized comparison.
 
-## Reuse and finite cost
+## Retained points and two matched rounds
 
 The [bounded inventory](../../output/model/utility_comparison/recovery_v1/observed_reuse_inventory.json)
 records existing controller outcomes and receipt hashes. It is preliminary:
@@ -88,8 +90,12 @@ made only after the existing run is terminal and checked against the original
 approved contract
 `c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a`.
 
-Reuse the four exact smoke pairs, the inherited anchors and every other valid
-completed point. Authenticate original receipts, checkpoint bytes, complete
+Reuse the four exact smoke pairs and the common feasible initial slots
+`0000`, `0001` and `0002`: these are successful in all four arms in the bounded
+inventory. Keep the additional completed share-arm points as cumulative
+evidence, but exclude those unmatched points from the primary matched-start
+selection and adaptive centers. This avoids giving the share arms a larger
+starting search in the primary comparison. Authenticate original receipts, checkpoint bytes, complete
 target and parameter tables, arm/point identity and all scientific pins on
 Torch. Record the old contract as ancestry in a distinct recovery contract;
 never rewrite an old receipt with a new fingerprint. New controller code must
@@ -97,39 +103,78 @@ not change the economic source, target system, observers or numerical gates.
 If that identity cannot be established, reuse is not approved. No extra anchor
 solve is needed merely because orchestration changed.
 
-Each floor arm has 29 never-dispatched initial proposals left. The share arms
-already dispatched all 39 new proposals; their duplicate smoke seed supplies
-slot zero. Thus the ceiling is **58 new initial objectives, 480 genuinely new
-DE objectives and at most eight selected repetitions: 546 new objectives**.
-An unchanged selected point can reuse its existing two exact repetitions.
-Failures and duplicates can reduce work; they do not create replacements.
+Each round contains twelve local moves and eight global draws per arm. In
+round one, take two opposite pairs of local perturbations around each of the
+three common retained anchor sets. In round two, take six opposite pairs
+around each arm's best eligible point from that common bank and round one.
+Use the existing transformed coordinates, reflected original bounds and local
+standard deviation 0.04. Draw eight additional full-range points in each
+round. Pin the complete random streams before launch, with proposed seed
+20260926. Common coordinates use common draws; floor and share coordinates
+use their respective matched family streams.
+
+Round-two centers may differ across arms. That is limited recalibration;
+paired perturbations do not mean identical physical parameter vectors. The
+common retained anchors separately show conditional utility comparisons.
+Each arm has at most forty new points and the same two rounds. At most two
+selected repetitions per arm bring the total to **168 new objectives**,
+including 160 search points. Reuse existing exact repetition evidence if the
+selected original is unchanged. Failures and duplicates consume their slots;
+there are no replacement draws, extra rounds or automatic retries.
+
+## Eight hours, including verification and reporting
 
 Keep the existing normalization algorithm, target 2.1, tolerance 0.0005 and
-maximum 23 stationary solves. Propose a 9,000-second process cap using an
-explicit planning allowance of 360 seconds per native solve and 720 seconds
-for setup, observers and scoring: \(23\times360+720=9{,}000\). The largest
-logged completed solve in the two diagnosed share timeouts was 313.080
-seconds; 360 and 720 are assumptions, not measured upper bounds. Check the
-solve-count limit and absolute deadline before every native call. No partial
-normalization is scored, and no wider fertility tolerance is allowed.
+maximum 23 stationary solves. Propose a **4,200-second candidate cap**. In the
+saved timing inventory, successful objectives used four to thirteen native
+solves and at most 3,018.968 seconds. The diagnosed 3,100-second timeouts had
+completed ten or eleven solves; the additional 1,100 seconds allows several
+more solves at their observed rates. This is a computational allowance, not
+a guarantee: successful-only timing omits the unresolved tail. A case that
+still exceeds the cap is censored, never scored from a partial normalization.
+Check the inherited solve-count limit and absolute deadline before each call.
 
-With ten workers per arm, three remaining initial waves and twelve DE waves
-take at most 37.500 hours at that cap; one concurrent repeat wave plus a
-15-minute export allowance gives **40.250 hours** of wave accounting. Propose
-a **fresh 42-hour ceiling** to leave 1.750 hours for verification, scheduling
-and bounded shutdown. This is a new budget for review, not an extension of
-tonight's run or a promise that all numerical cases converge. At most 12,558
-native stationary calls fit the finite case count. The objective caps account
-for 1,365 CPU-hours before supervision overhead; reserving all forty CPUs for
-the full 42 hours would
-allocate 1,680 CPU-hours and 20,160 GiB-hours. Readiness has a separate
-30-minute limit. A read-only check of partition `cs` reports `MaxTime=UNLIMITED`;
-account/QOS admission and availability still require prelaunch checks. The exact arithmetic is in the
-[budget proposal](../../output/model/utility_comparison/recovery_v1/budget_proposal.json).
+With ten workers per arm, each twenty-point round needs two waves. The four
+search waves account for 280 minutes at the cap. Use one absolute clock,
+beginning when the first recovery controller is ready:
 
-A shorter fresh window must explicitly reduce the number of generations or
-increase reviewed resources before launch. The current evidence cannot
-support promising this full worst-case schedule in another eight hours.
+| Window after start | Work and cutoff |
+| --- | --- |
+| 0–30 minutes | Four-arm readiness and authenticated reuse verification; abort if incomplete. |
+| 30 minutes–6 hours | Two rounds; 280 minutes of capped waves plus 50 minutes for coordination and shutdown. |
+| 6 hours–7 hours 10 minutes | Both selected repeats concurrently within each arm, if needed. |
+| 7 hours 10 minutes–8 hours | Full reports, collection and qualified visual review. |
+
+Readiness is included in the eight hours. All stage and case deadlines are
+absolute, with no extension. Early completion creates slack, not permission
+for an extra round. If verification, valid-case coverage or reports remain
+incomplete, report that explicitly at the cutoff.
+
+The maximum is 3,864 new stationary calls from the finite case count, not a
+forecast. Candidate caps account for **196 CPU-hours** before supervision;
+reserving forty CPUs for all eight hours would allocate **320 CPU-hours** and
+3,840 GiB-hours at the original 120 GiB per arm. This buys a matched small
+search, not 546 objectives or full reoptimization. The machine-readable
+[eight-hour option](../../output/model/utility_comparison/recovery_v1/eight_hour_option.json)
+records the timing evidence, counts and arithmetic. The earlier
+[42-hour calculation](../../output/model/utility_comparison/recovery_v1/budget_proposal.json)
+is historical, unapproved and superseded as the default proposal.
+
+## Scientific requirements and controller choices
+
+Scientific acceptance still requires the same economic specification,
+targets, weights, observers, fertility target/tolerance, fiscal and numerical
+gates, and source/target/point/checkpoint integrity. All full target-fit and
+parameter-bound tables remain required. No deadline permits accepting a
+failed gate or an incomplete normalization.
+
+The eight-hour ceiling, 4,200-second cap, number and mix of moves, shared
+barriers, candidate-local failure policy and 50% rejection stop are controller
+choices. The inherited 23-call guard is an algorithmic safeguard, not an
+economic target. Reusing verified smoke/repeat evidence is an execution
+choice. Changes to these choices need a new reviewed contract, but need not
+change scientific acceptance. The eight-hour option explicitly changes
+search coverage and orchestration while preserving the science.
 
 ## Concrete prototype and review boundary
 
@@ -141,11 +186,14 @@ fatal stopping without importing or solving the model. It is not wired into
 the frozen runner or controller and grants no launch permission.
 
 Before deployment, lead review must approve the narrow rejection predicate,
-censored-outcome semantics, combined availability guard and fresh budget.
-Production integration still needs authenticated artifact reuse; typed DE
-selection, scientific-key duplicate prevention and four-arm barriers; preserved full success validation; external
-timeout ownership; and synthetic tests of those integration points. Tests
+censored-outcome semantics and this smaller eight-hour design. Production
+integration still needs authenticated artifact reuse, the finite paired-move
+bank, typed round selection, scientific-key duplicate prevention and four-arm
+barriers; preserved full success validation; external timeout ownership; and
+synthetic tests of those integration points. Tests
 must demonstrate that missing/altered fingerprints, partial or late outputs,
 smoke/repeat failures and unrelated kernel/accounting errors cannot become
 accepted points. A new immutable snapshot and reviewed contract must bind
 these changes. No numerical run or submission is authorized by this packet.
+This revision changes only the plan and cost documentation. It adds no agents,
+model work or heavy tests; the existing monitor and result collection continue.
