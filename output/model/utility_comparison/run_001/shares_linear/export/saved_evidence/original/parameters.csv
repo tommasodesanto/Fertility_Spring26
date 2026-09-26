@@ -1,0 +1,30 @@
+parameter,estimate,lower,upper,status,near_bound
+H0,6.727347044520778,0.2,80.0,experimental free coordinate,False
+beta_annual,0.9748438428733873,0.94,0.99,experimental free coordinate,False
+chi,1.1250850187426138,0.1,5.0,experimental free coordinate,False
+first_birth_fixed_cost,0.7192494742080143,0.0,8.0,experimental free coordinate,False
+kappa_fert,0.2220225872143764,0.02,50.0,experimental free coordinate,True
+kappa_fert_continuation,0.4600373435057613,0.02,50.0,experimental free coordinate,True
+theta0,0.16170195865582743,0.0,8.0,experimental free coordinate,False
+delta_alpha_jump,0.07780442689806688,0.0,0.25,experimental free coordinate,False
+delta_alpha,0.03897536437154123,0.0,0.25,experimental free coordinate,False
+theta1,0.008193084126995582,,,externally fixed B15,
+psi_child,0.10389657876907762,,,normalized to 2.1,
+payroll_tax,0.08028070961950022,,,derived from adopted pension ratio and baseline demographics,
+pension_period,0.917784047463731,,,endogenous balanced PAYGO,
+housing_supply_elasticity,0.63,,,retained external setting,
+tenure_choice_kappa,0.005,,,retained external setting,
+alpha_cons,0.733,,,retained external setting,
+sigma,2.0,,,retained external setting,
+selling_cost,0.06,,,retained external setting,
+financed_share,0.8,,,retained external setting,
+annual_depreciation,0.01416143718381309,,,author adopted input,
+period_depreciation,0.05545379079326218,,,four-year compounded,
+annual_property_tax,0.010598360773872594,,,author adopted input,
+period_property_tax,0.042393443095490375,,,four-year linear source convention,
+income_process,15,,,retained B15 persistent-state count,
+entrant_conversion_factor,0.5,,,legacy child-departure diagnostic; inactive in split-birth entry,
+adult_entry_birth_to_household_conversion,0.47619047619047616,,,effective closed stationary birth conversion,
+child_benefit_exponent,1.0,,,fixed sensitivity; not estimated,
+utility_reference_rent,0.11046592704873838,,,fixed experimental common normalization,
+pension_to_gross_worker_earnings,0.2294460118659327,,,adopted CPS2007 target,

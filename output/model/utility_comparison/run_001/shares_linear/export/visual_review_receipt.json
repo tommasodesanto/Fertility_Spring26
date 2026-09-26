@@ -1,0 +1,485 @@
+{
+  "arm": "shares_linear",
+  "boundary_observation": {
+    "comparison_is_descriptive_only": "The selected parameter points differ across floor and share arms; no causal attribution to the preference form is established.",
+    "finding": "In both selected share-arm source PNGs, housing after tenure choice falls from 10 to 6 near the far-right liquid-wealth boundary, approximately 2700-3000; owner-entry probability also declines there. The corresponding selected floor-arm age30 PNGs remain at 10 through the right endpoint. Age 42 housing remains at 10 in the inspected share PNGs.",
+    "floor_reference_images": {
+      "floor_concave": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/floor_concave/export/standard_diagnostics/policy_childless_renter_age30.png",
+        "sha256": "9d0f173f76cadabdef62ae9a44adeed692334a0a3238cef77732717b765f5d61"
+      },
+      "floor_linear": {
+        "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/floor_linear/export/standard_diagnostics/policy_childless_renter_age30.png",
+        "sha256": "8b3f4d9360390711c89d43407bc9b79b72a7e33be3089840c426310905ced947"
+      }
+    },
+    "occupied_mass_at_affected_nodes": "UNKNOWN from compact receipts; no zero-mass claim inferred from distribution PNGs.",
+    "page": 19,
+    "saved_gate_scope": "Recorded occupied value-monotonicity, purchase and budget gates pass; these do not resolve the housing-policy boundary feature or identify mass at these specific nodes.",
+    "source_figure": "policy_childless_renter_age30.png"
+  },
+  "calibration_or_optimizer_convergence_certified": false,
+  "collection_review_receipt": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_linear/export/share_collection_review_receipt.json",
+    "sha256": "e0efdc53225792118fd059869ead730ffbdf60834fadfc5560584270b45bf7a4"
+  },
+  "collector_rerun": false,
+  "contact_sheet": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_linear/export/visual_qa/contact_sheet.png",
+    "sha256": "3551e7463a32bc73775ee8ae35d59777c9fdcc50adadcd6b3b79b5764c7dc35a"
+  },
+  "contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+  "elapsed_seconds": 681.406546,
+  "export_path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_linear/export",
+  "failure_records": [
+    {
+      "candidate_id": "shares_linear_initial_0012",
+      "case_output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_linear/shares_linear_initial_0012",
+      "finished_epoch": 1790401331.6008313,
+      "point": {
+        "H0": 4.2294353874354575,
+        "beta_annual": 0.9824455916876286,
+        "chi": 2.1499946266991854,
+        "delta_alpha": 0.02689333908216311,
+        "delta_alpha_jump": 0.031457043927844576,
+        "first_birth_fixed_cost": 4.561392985987453,
+        "kappa_fert": 3.0809966813916474,
+        "kappa_fert_continuation": 13.77737653949627,
+        "theta0": 0.2936658628146715
+      },
+      "returncode": 1,
+      "stage": "initial",
+      "started_epoch": 1790398230.6686826,
+      "status": "failed"
+    },
+    {
+      "candidate_id": "shares_linear_initial_0022",
+      "case_output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_linear/shares_linear_initial_0022",
+      "finished_epoch": 1790401686.2372317,
+      "point": {
+        "H0": 3.8134539739953013,
+        "beta_annual": 0.9771095596985144,
+        "chi": 2.1488701025409895,
+        "delta_alpha": 0.06603527246532367,
+        "delta_alpha_jump": 0.0863957752791767,
+        "first_birth_fixed_cost": 0.48571742472811164,
+        "kappa_fert": 0.1084577027584286,
+        "kappa_fert_continuation": 2.7759491108994685,
+        "theta0": 0.29934237172818184
+      },
+      "returncode": -9,
+      "stage": "initial",
+      "started_epoch": 1790398585.8825097,
+      "status": "timed_out"
+    },
+    {
+      "candidate_id": "shares_linear_initial_0025",
+      "case_output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_linear/shares_linear_initial_0025",
+      "finished_epoch": 1790401864.7054954,
+      "point": {
+        "H0": 4.328201540420203,
+        "beta_annual": 0.9692404682456883,
+        "chi": 2.3772781998554247,
+        "delta_alpha": 0.030669113655879123,
+        "delta_alpha_jump": 0.16933985523656148,
+        "first_birth_fixed_cost": 1.049787690997449,
+        "kappa_fert": 0.1876367615861508,
+        "kappa_fert_continuation": 1.519788418560325,
+        "theta0": 0.02083794076781412
+      },
+      "returncode": -9,
+      "stage": "initial",
+      "started_epoch": 1790398764.315336,
+      "status": "timed_out"
+    }
+  ],
+  "full_search_completed": false,
+  "historical_target_system_caveat": {
+    "finding": "The author had chosen AHS mean rooms 5.7294342401, SE 0.0089338650. The frozen run instead used old ACS mean rooms 5.607885960, capped at 9, with weight 128.0207021. These exports remain a historical experiment under that old target system; next calibration requires the accepted AHS observer and weight decision.",
+    "original_targets_exports_and_figures_preserved": true,
+    "source": "Lead input reconciliation communicated 2026-09-26; not re-estimated in this reporting pass."
+  },
+  "identification_or_grid_robustness_certified": false,
+  "layout_findings": {
+    "all_pages_reviewed": 22,
+    "all_standard_figures_present": 17,
+    "no_new_pdf_page_or_table_clipping_observed": true,
+    "qualified_not_unconditional_pass": true,
+    "table_pages_readable_and_complete": [
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "local_copy_verification": {
+    "all45_pdf_tables_figures_pages_and_source_receipts_match_remote_sha256": true,
+    "large_checkpoints_downloaded": false
+  },
+  "missing_requested_compact_artifacts": [],
+  "model_solves": 0,
+  "new_cluster_jobs": 0,
+  "pdf": {
+    "filename": "utility_shares_linear_review.pdf",
+    "pages": 22,
+    "sha256": "c5b39a04db974e3ad7376a1aefba309532e07266d0ae5d7b3dad22952f299a39"
+  },
+  "preserved_plot_and_format_limitations": [
+    {
+      "finding": "Dense 15-income-state legends overlap some plotted curves; inherited source-image design.",
+      "pages": [
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    {
+      "finding": "Income-state x-axis labels overlap and are not individually readable; inherited source-image design.",
+      "pages": [
+        18
+      ]
+    },
+    {
+      "finding": "Consumption-panel legend strokes overlap left y-axis tick labels; inherited source-image design.",
+      "pages": [
+        19,
+        21
+      ]
+    },
+    {
+      "finding": "Tiny normalization and bequest gaps use scientific notation, so this preserved PDF is not strictly plain-decimal-only. Full precision remains in CSV.",
+      "pages": [
+        2
+      ]
+    }
+  ],
+  "rendered_page_sha256": {
+    "page_01.png": "e4d15a8215a3150cab431a2fc57dd9141d0fca92ca71f0d391798b8bac6d0a5c",
+    "page_02.png": "0102004a82c54fa077617b50b1f1b5a8a3e57f65902d3c8ff82e14d27c5430ec",
+    "page_03.png": "f3625d5f7221dd1edcbe44f7e00b507de6e34b19516e5a17ff300bc137bdbcfc",
+    "page_04.png": "ba5b1184a35a76591249209f9357abf25593f83739b3a99b5c934d5af26593b7",
+    "page_05.png": "fb571d4aa6996d82c8dd3971fffa3522f865cf8bc5988f54f89fec1ecb296a58",
+    "page_06.png": "17a8db4a23a8829bb322788cffd183417dcdeef62796be0c8ee6b649c2c94030",
+    "page_07.png": "54bb1aa70c04e66faeaf3e4eb4ef1629d2222927a9da95df48f3fac5d0f7af59",
+    "page_08.png": "a6b07be135b471bec1bac37fa5c8bc5cac8bf438079bfa808f792f20e181fa32",
+    "page_09.png": "b4426be8544dd51ad6084077f927d611c2c0438dd268bdd4f2c56693e71f01a4",
+    "page_10.png": "3d6429983045448e20a8c05626a955b44e8d7e7d4eb2f987523020e95326d98e",
+    "page_11.png": "060792e95d6d44fd7739c8c6628e6a8fec77f1ce42c69179435433315ef5de02",
+    "page_12.png": "dace3f58278561c480f135394b14b12d5546c69f8e409e378dd07db593b83db8",
+    "page_13.png": "9a7e75c7d6a8afc2a62d2849b47d72d0b895e4901256a8052b307d5a72680c3c",
+    "page_14.png": "f991f64dbb605518ce836e0ab3e39b30aa82cd65bd5f5da629ca6293c1f06f3e",
+    "page_15.png": "cdefe9b26644c0ac46489109fed5ba809376278a5e79a5df74a0af4ce5f560d3",
+    "page_16.png": "a9bfd63940eda100e5cc071d548779349cec9ba78836eb329298fdfbeeec51ab",
+    "page_17.png": "47c58b3f82da28a4e449a420a1532f8fb0b3f69409e8f982afdeea1994895524",
+    "page_18.png": "651bdde45f21522f8d5ea62d96252e3c496a0e194a60fe2140039246cb84ac15",
+    "page_19.png": "b50a3403d5ec7e3846725fdb0fba567d5c70dd3ad0b90cadbb39e256c45dc735",
+    "page_20.png": "b7a20bcb97b6fed4a31237e61df0fd7289b1ed4590407d4cfb34656cfef382c3",
+    "page_21.png": "0ccf9fe05abbc911d0e1fbba9f6f69c42965e368668d1dc40f08303b4dc1ce76",
+    "page_22.png": "299e08e5c2a07ba03ca4ba749e31ed93a5196fae69329635287b00fa3ead59d8"
+  },
+  "repetition_evidence": {
+    "atol": 0,
+    "cases": [
+      {
+        "gate_checks": {
+          "adult_entry": true,
+          "budget": true,
+          "fiscal": true,
+          "market": true,
+          "normalization": true,
+          "operator": true,
+          "policy": true,
+          "purchase": true,
+          "status": true
+        },
+        "label": "original",
+        "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_linear/shares_linear_initial_0038/case",
+        "pins": {
+          "initial_state.pkl.gz": "469fc8cc02d0d824dad9d9291e32469691f70ed697f0cc2c5ebf7fbb46e849aa",
+          "parameters.csv": "bf11cc183c45a730c8c7e779b5c4dfa510ccb28f7121d496a31fd9dbde4e95fd",
+          "receipt.json": "ff433e62800740ef37f62f5befea13c7151e46430d467a3760f7fffdb282ba93",
+          "target_fit.csv": "fbc738f525c1914ac8e2cb40bc737dd698b9f9facf1d225e298a21397b62a178"
+        }
+      },
+      {
+        "gate_checks": {
+          "adult_entry": true,
+          "budget": true,
+          "fiscal": true,
+          "market": true,
+          "normalization": true,
+          "operator": true,
+          "policy": true,
+          "purchase": true,
+          "status": true
+        },
+        "label": "repeat_0",
+        "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_linear/repeat_0/case",
+        "pins": {
+          "initial_state.pkl.gz": "2be0a1fc7503db5f4469918971f2e78ae31c39921155faeae99446699ec71e77",
+          "parameters.csv": "bf11cc183c45a730c8c7e779b5c4dfa510ccb28f7121d496a31fd9dbde4e95fd",
+          "receipt.json": "a39e63dffd23a420d4f77343855c56c8ec4f7f861d7306bf1dc0469176e2f59b",
+          "target_fit.csv": "fbc738f525c1914ac8e2cb40bc737dd698b9f9facf1d225e298a21397b62a178"
+        }
+      },
+      {
+        "gate_checks": {
+          "adult_entry": true,
+          "budget": true,
+          "fiscal": true,
+          "market": true,
+          "normalization": true,
+          "operator": true,
+          "policy": true,
+          "purchase": true,
+          "status": true
+        },
+        "label": "repeat_1",
+        "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_linear/repeat_1/case",
+        "pins": {
+          "initial_state.pkl.gz": "010b51ede69ece86b6b05445c4c8f57fd5a044cc20ac52c8e3b549c9ab34f287",
+          "parameters.csv": "bf11cc183c45a730c8c7e779b5c4dfa510ccb28f7121d496a31fd9dbde4e95fd",
+          "receipt.json": "8e8c798c1e0340cf8d931832b3cbdcf4360c43000d2c2fef13f3683915145870",
+          "target_fit.csv": "fbc738f525c1914ac8e2cb40bc737dd698b9f9facf1d225e298a21397b62a178"
+        }
+      }
+    ],
+    "comparison_fields": [
+      "V",
+      "evaluated_price",
+      "g",
+      "loss",
+      "moments",
+      "native_V",
+      "native_g",
+      "native_price",
+      "normalization",
+      "parameter_table",
+      "price",
+      "psi",
+      "receipt",
+      "stationary_g_pre",
+      "target_table"
+    ],
+    "current_three_compressed_checkpoint_hashes_verified_remotely": true,
+    "original_against_repeat_0": "exact_comparison_passed",
+    "original_against_repeat_1": "exact_comparison_passed",
+    "rtol": 0,
+    "scientific_array_comparison_method": "Authenticated existing zero-tolerance exporter receipt; no native unpickle or recomparison in this collection pass",
+    "scientific_receipt_and_full_csv_comparison_rechecked": true,
+    "source_receipt_sha256": {
+      "collection_receipt.json": "60a3002a09dde20f26f6073c4fa1b5f4e50f26c1e61d759e40bc0b4747f28296",
+      "receipt.json": "ff433e62800740ef37f62f5befea13c7151e46430d467a3760f7fffdb282ba93",
+      "repetition_verification.json": "ee447b842b35090821a1ccd8ff09420185ebc3d269254b2097442c5c87a312a2"
+    }
+  },
+  "reviewed_at_utc": "2026-09-26T15:34:04.406546+00:00",
+  "schema": "utility_share_visual_review_v1",
+  "scope": "Existing saved export and compact evidence only; all 22pages via contact sheet, cover and all table pages1-5 at full image size, and all 17native diagnostic PNGs individually reviewed. No collector rerun, checkpoint unpickle, native import, model solve or new cluster job.",
+  "source_and_input_pins": {
+    "arm_catalog": {
+      "actual": "8e02c7f13e9a79f8cedc59c0151315eb9c8cb2ef38128b7674d48f484ede0324",
+      "expected": "8e02c7f13e9a79f8cedc59c0151315eb9c8cb2ef38128b7674d48f484ede0324",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/launch_v1/arm_catalog.json"
+    },
+    "budget": {
+      "actual": "fc6c3712f0098c9d7bb76176d7d150d16e2fe02c4b292512def89b0ffdfe370f",
+      "expected": "fc6c3712f0098c9d7bb76176d7d150d16e2fe02c4b292512def89b0ffdfe370f",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/launch_v1/budget.json"
+    },
+    "collect_e5f_utility_comparison.py": {
+      "actual": "0e801e4954273b0ad77ff2b88e1c498ce97bfda2b6bd4dfc672647eadbb0213f",
+      "expected": "0e801e4954273b0ad77ff2b88e1c498ce97bfda2b6bd4dfc672647eadbb0213f",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/tools/collect_e5f_utility_comparison.py"
+    },
+    "e5f_utility_comparison_design.py": {
+      "actual": "036d772c51dc372cf7c533fd1de21525dd146158dc11c303f8f69da36525cbcb",
+      "expected": "036d772c51dc372cf7c533fd1de21525dd146158dc11c303f8f69da36525cbcb",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/tools/e5f_utility_comparison_design.py"
+    },
+    "e5f_utility_comparison_runtime.py": {
+      "actual": "c52b686d0a6f9364021994eecbf3d8edaf5806ff42c2b365ec22b51888824916",
+      "expected": "c52b686d0a6f9364021994eecbf3d8edaf5806ff42c2b365ec22b51888824916",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/tools/e5f_utility_comparison_runtime.py"
+    },
+    "integrated_check_receipt": {
+      "actual": "28a9d01706cf868528fdf4f79d7aefedfdbeae292cc5790b2bc04bfb780df7ff",
+      "expected": "28a9d01706cf868528fdf4f79d7aefedfdbeae292cc5790b2bc04bfb780df7ff",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/checks_v2/validation_receipt.json"
+    },
+    "parent_lock": {
+      "actual": "6443195fa3f7de0dce5cc8a4c05e2709b99d586421c96a35dba3c07e93e061a1",
+      "expected": "6443195fa3f7de0dce5cc8a4c05e2709b99d586421c96a35dba3c07e93e061a1",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/inputs/launch_lock.json"
+    },
+    "parent_objective": {
+      "actual": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+      "expected": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/inputs/objective.json"
+    },
+    "parent_source_inventory": {
+      "actual": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6",
+      "expected": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/inputs/source_manifest.json"
+    },
+    "pension_measurement_contract": {
+      "actual": "f7b18cd5481ef4ee028af26b4895b5824f20e300affca9a3017b9e59b082726b",
+      "expected": "f7b18cd5481ef4ee028af26b4895b5824f20e300affca9a3017b9e59b082726b",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/inputs/pension_measurement_contract.json"
+    },
+    "pension_receipt": {
+      "actual": "e39b0cd922ce62ee1d6dec59b828819758a83c22041d545247acedf242696b07",
+      "expected": "e39b0cd922ce62ee1d6dec59b828819758a83c22041d545247acedf242696b07",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/inputs/pension_receipt.json"
+    },
+    "proposal_bank": {
+      "actual": "3f15c3a4c8f2f508a780189faf423fd354e8a8355878b23bef49ffe0ba131d8f",
+      "expected": "3f15c3a4c8f2f508a780189faf423fd354e8a8355878b23bef49ffe0ba131d8f",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/launch_v1/proposal_bank.json"
+    },
+    "provenance": {
+      "actual": "b8ab2702703457a6c13722c256796b2e97e5bc6d1a2ba2d9581e11d81de8a8ac",
+      "expected": "b8ab2702703457a6c13722c256796b2e97e5bc6d1a2ba2d9581e11d81de8a8ac",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/inputs/proposed_common_contract.json"
+    },
+    "reference_rent_source": {
+      "actual": "51a457250b6caedd3b47b0fcc3aae08e2c19327346c839dd768337547e18b8c1",
+      "expected": "51a457250b6caedd3b47b0fcc3aae08e2c19327346c839dd768337547e18b8c1",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/results/run_001/oasi_087510/worker_05/point_04/receipt.json"
+    },
+    "report_dependency_receipt": {
+      "actual": "d95539ad7214606e9f691b8136300c8389dde092134bf3d9d55ac68e4cc80a8d",
+      "expected": "d95539ad7214606e9f691b8136300c8389dde092134bf3d9d55ac68e4cc80a8d",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/layout_fixture_v2_setup/package_receipt.json"
+    },
+    "report_layout_visual_receipt": {
+      "actual": "cbdfe8aaa94a703714f0d6345c8d7fb5e87b18b35c8b7f6fb7ea7b6a5ed6b39f",
+      "expected": "cbdfe8aaa94a703714f0d6345c8d7fb5e87b18b35c8b7f6fb7ea7b6a5ed6b39f",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/layout_fixture_v2/visual_review_receipt.json"
+    },
+    "reportlab_installed_record": {
+      "actual": "d2149aada3f62d8bb337525e8dd2df9d0e8fca9cfba8fcbffeeac810b17a0c24",
+      "expected": "d2149aada3f62d8bb337525e8dd2df9d0e8fca9cfba8fcbffeeac810b17a0c24",
+      "path": "/scratch/td2248/commute_pdf_qa_deps/reportlab-5.0.1.dist-info/RECORD"
+    },
+    "run_e5f_utility_comparison.py": {
+      "actual": "70a894c9e4df52f10a390ea533381bf62b8d684c4ccf5f2ee8362fd82e035c0f",
+      "expected": "70a894c9e4df52f10a390ea533381bf62b8d684c4ccf5f2ee8362fd82e035c0f",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/tools/run_e5f_utility_comparison.py"
+    },
+    "run_e5f_utility_comparison_search.py": {
+      "actual": "9fe4e7cecdfe61d5e1137e67b350b2bb8a00bda73abb86cb0e2a7cdd99fe21e7",
+      "expected": "9fe4e7cecdfe61d5e1137e67b350b2bb8a00bda73abb86cb0e2a7cdd99fe21e7",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/tools/run_e5f_utility_comparison_search.py"
+    },
+    "submit_e5f_utility_comparison.sh": {
+      "actual": "86d2162bef66e6af8e06e30af16bcd2a6923bf774629bb58f7ceb405ab5b41fa",
+      "expected": "86d2162bef66e6af8e06e30af16bcd2a6923bf774629bb58f7ceb405ab5b41fa",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/submit_e5f_utility_comparison.sh"
+    },
+    "target_provenance": {
+      "actual": "7b1acfa16968d1e111d3752cdbea0af6e918424c5bc5eccd7f16684f0ff343be",
+      "expected": "7b1acfa16968d1e111d3752cdbea0af6e918424c5bc5eccd7f16684f0ff343be",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/launch_v1/target_provenance.json"
+    },
+    "timing_receipt": {
+      "actual": "4c332767b462bdaefca0e32ea10268c845a83378cb73f309ac8c4dddbec4f1d1",
+      "expected": "4c332767b462bdaefca0e32ea10268c845a83378cb73f309ac8c4dddbec4f1d1",
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/inputs/observed_timing.json"
+    }
+  },
+  "source_array_job_id": 18567879,
+  "source_contract_target_edits": false,
+  "source_image_identity": "All17standard PNG hashes match the pre-existing frozen export collection receipt. Existing source PNGs and PDF were preserved without rendering or editing.",
+  "standard_figure_sha256": {
+    "fertility_by_age.png": "ee1fc294cce8e97e16f5fefc1be100d03f1b0b95c2bef1b792c31d54daae6673",
+    "fertility_policy_by_age_income_state.png": "24ee20fac785e1cbe811fe9d65a44a0a644cc177dc9ea3e053cdc3911056a755",
+    "housing_by_age_income_state.png": "c50847b8e10dab47a6ea5de2a930839c7b842098021c69b92803bb89a53f75e6",
+    "housing_market.png": "9040029456f2caa1ceabffc1559fd7df1bd17b2f79cae8792a61a69ea06dbded",
+    "housing_prices.png": "28aeb8cd40f5e4df2dce7c0b824ed54940bb4421edc41ba7d8e37b58b5237e1d",
+    "income_state_outcomes.png": "9ed95bcce822495a660f0330e03fe4eeb9858acff9f129b2dcbbee3c274fc903",
+    "liquid_wealth_by_age_income_state.png": "8ffcca22f15868eec9217376f29a133bab9d875c5696f80fd109c4bab6f9cda1",
+    "market_clearing_by_market.png": "ecef0f6cc745870d81b6c0406cc1c4f1c268fde657a895b2b18db32adadb936d",
+    "market_clearing_residuals.png": "ef4946870eaca966ae0a6d87e30cf6bbcb5bb4d2b1e33d5e9909318539b6337a",
+    "owner_rungs.png": "afdc453fa430d770286dabda7b4acac2355a4dcb8c962a8776024b0e9e5df95a",
+    "ownership_by_age.png": "a158b6111719202a8366f59ccb41dd1763b4a324070d7ba45ee6ccc4816cff65",
+    "ownership_by_age_income_state.png": "28d1d1cfc73ca0e39b1227d4c502c9ecf9abc33c90253304e48ff2845ba5ac4e",
+    "policy_childless_renter_age30.png": "d8fc8f4042d390085b0d58832d17c18b71289dd700a42dd969d63fef99455638",
+    "policy_childless_renter_age42.png": "548237b0be0c0d819f5401652d01b478abb3d3bec19395173866e8beb96cde52",
+    "tenure_services.png": "e6d7f9dec82cf4d169af017455e3d16920f407354e099bea9a601d375357325b",
+    "wealth_dist_childless_renter_age30.png": "1be72d1a52facd5428222c1078a40e0bbf9a16f8556e3edbbc27a1e9340551ef",
+    "wealth_dist_childless_renter_age42.png": "8115cf130ff6a33608bfcb4b8c2a38cc300b17425edd1cf77d388eb8809ab8a3"
+  },
+  "started_at_utc": "2026-09-26T15:22:43+00:00",
+  "status": "qualified_visual_review_complete_search_incomplete_historical_target_system",
+  "table_completeness": {
+    "all_target_and_parameter_names_present_in_pdf": true,
+    "bounds_and_near_bound_flags_checked": true,
+    "fixed_or_derived_parameter_rows": 20,
+    "free_parameter_rows": 9,
+    "full_target_table_and_parameter_csv_match_original_and_each_repeat": true,
+    "parameter_rows": 29,
+    "parameters_sha256": "bf11cc183c45a730c8c7e779b5c4dfa510ccb28f7121d496a31fd9dbde4e95fd",
+    "positively_weighted_rows": 12,
+    "share_parameter_count_correction": "Share arms have 29 rows, not 28 floor rows.",
+    "target_fit_sha256": "fbc738f525c1914ac8e2cb40bc737dd698b9f9facf1d225e298a21397b62a178",
+    "target_rows": 13
+  },
+  "terminal_counts": {
+    "de": {
+      "attempted": 0,
+      "failed": 0,
+      "inadmissible": 0,
+      "incomplete": 0,
+      "planned": 120,
+      "reused": 0,
+      "succeeded": 0,
+      "timed_out": 0,
+      "unrun": 120
+    },
+    "initial": {
+      "attempted": 39,
+      "failed": 1,
+      "inadmissible": 17,
+      "incomplete": 0,
+      "planned": 40,
+      "reused": 1,
+      "succeeded": 19,
+      "timed_out": 2,
+      "unrun": 0
+    },
+    "repeat": {
+      "attempted": 2,
+      "failed": 0,
+      "inadmissible": 0,
+      "incomplete": 0,
+      "planned": 2,
+      "reused": 0,
+      "succeeded": 2,
+      "timed_out": 0,
+      "unrun": 0
+    },
+    "smoke": {
+      "attempted": 2,
+      "failed": 0,
+      "inadmissible": 0,
+      "incomplete": 0,
+      "planned": 2,
+      "reused": 0,
+      "succeeded": 2,
+      "timed_out": 0,
+      "unrun": 0
+    }
+  },
+  "terminal_metadata_sha256": {
+    "complete.json": "aa44b3ce04dae1033617849a9daa3154bca9352ed1172171134725186c51d28a",
+    "controller_summary.json": "aa44b3ce04dae1033617849a9daa3154bca9352ed1172171134725186c51d28a",
+    "selected.json": "3e6190632bb8a029418a1022b9dd4c8d1e60c65050f49cc31bc82a0c5ecb81a5"
+  },
+  "terminal_stop_reason": "case_failed_no_retry",
+  "unresolved_evidence": [
+    "Occupied mass at the affected far-right age30 childless-renter nodes is not established by compact evidence.",
+    "Native scientific arrays were not re-unpickled in this pass; the existing exact-comparison proof was authenticated through current checkpoint and receipt hashes."
+  ]
+}

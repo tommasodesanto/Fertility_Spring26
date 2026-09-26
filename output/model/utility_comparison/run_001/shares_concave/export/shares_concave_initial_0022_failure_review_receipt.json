@@ -1,0 +1,38 @@
+{
+  "arm": "shares_concave",
+  "candidate_id": "shares_concave_initial_0022",
+  "copied_raw_failure": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_concave/export/saved_evidence/terminal/shares_concave_initial_0022.failure.json",
+    "sha256": "be8f59acbb0b885b0b04d116b4ffb65e883b7bf1bb9d329519a5034c3ab7d98e"
+  },
+  "copied_traceback": {
+    "bytes": 7795,
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_concave/export/saved_evidence/terminal/shares_concave_initial_0022.traceback.txt",
+    "sha256": "fb590a81a5c436ac7c890c4a84a774a1db3da8d7c0fcc67637d76be7ba9a35c1",
+    "source_byte_offset": 719
+  },
+  "finding": "The first exception is TimeoutError: objective wall budget exhausted, raised by the frozen runner alarm at line278. Explicit direct-cause chains lead through two _numba_unpickle SystemErrors to the final tenure_logit_kernel CPUDispatcher SystemError. This establishes a budget-alarm cause in the saved chain, independently of elapsed wall time.",
+  "no_native_import_or_solve": true,
+  "raw_failed_and_timed_out_counts_not_reclassified": true,
+  "raw_failure": {
+    "automatic_retry": false,
+    "error": "CPUDispatcher(<function tenure_logit_kernel at 0x14c1b64a6160>) returned a result with an exception set",
+    "error_type": "SystemError",
+    "status": "unclassified_failure_stop"
+  },
+  "raw_failure_classification_preserved": true,
+  "reviewed_at_utc": "2026-09-26T15:35:59.907041+00:00",
+  "schema": "utility_saved_failure_cause_review_v1",
+  "scope": "One explicitly requested existing failure and its traceback only.",
+  "source_failure": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_concave/shares_concave_initial_0022/failure.json",
+    "sha256": "be8f59acbb0b885b0b04d116b4ffb65e883b7bf1bb9d329519a5034c3ab7d98e"
+  },
+  "source_log": {
+    "bytes": 8514,
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_concave/shares_concave_initial_0022.log",
+    "sha256": "d9073cbec7aba6710c481ef362085446ba8c48af51b4c2f9cc910d43cb96f3b8"
+  },
+  "source_or_original_result_edits": false,
+  "status": "objective_wall_alarm_in_exception_chain_established_from_saved_traceback"
+}

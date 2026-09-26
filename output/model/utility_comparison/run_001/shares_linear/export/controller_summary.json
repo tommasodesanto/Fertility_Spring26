@@ -1,0 +1,90 @@
+{
+  "arm": "shares_linear",
+  "automatic_retry": false,
+  "best": {
+    "candidate_id": "shares_linear_initial_0038",
+    "case_output": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_linear/shares_linear_initial_0038",
+    "finished_epoch": 1790402321.1298475,
+    "loss": 406.6421635115564,
+    "point": {
+      "H0": 6.727347044520778,
+      "beta_annual": 0.9748438428733873,
+      "chi": 1.1250850187426138,
+      "delta_alpha": 0.03897536437154123,
+      "delta_alpha_jump": 0.07780442689806688,
+      "first_birth_fixed_cost": 0.7192494742080143,
+      "kappa_fert": 0.2220225872143764,
+      "kappa_fert_continuation": 0.4600373435057613,
+      "theta0": 0.16170195865582743
+    },
+    "receipt_sha256": "ff433e62800740ef37f62f5befea13c7151e46430d467a3760f7fffdb282ba93",
+    "returncode": 0,
+    "stage": "initial",
+    "started_epoch": 1790400926.1490347,
+    "status": "success",
+    "target_system_sha256": "ca530838e9123f5efad5a7fa8bf1805f7971eca0306df6ae29e36480082b6fc8"
+  },
+  "clock": {
+    "contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+    "end_epoch": 1790424780.3007965,
+    "repeat_cutoff_epoch": 1790423880.3007965,
+    "rule": "clock begins immediately before first exact-loop smoke dispatch",
+    "search_cutoff_epoch": 1790419380.3007965,
+    "start_epoch": 1790395980.3007965
+  },
+  "collection": null,
+  "contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+  "counts": {
+    "de": {
+      "attempted": 0,
+      "failed": 0,
+      "inadmissible": 0,
+      "incomplete": 0,
+      "planned": 120,
+      "reused": 0,
+      "succeeded": 0,
+      "timed_out": 0,
+      "unrun": 120
+    },
+    "initial": {
+      "attempted": 39,
+      "failed": 1,
+      "inadmissible": 17,
+      "incomplete": 0,
+      "planned": 40,
+      "reused": 1,
+      "succeeded": 19,
+      "timed_out": 2,
+      "unrun": 0
+    },
+    "repeat": {
+      "attempted": 2,
+      "failed": 0,
+      "inadmissible": 0,
+      "incomplete": 0,
+      "planned": 2,
+      "reused": 0,
+      "succeeded": 2,
+      "timed_out": 0,
+      "unrun": 0
+    },
+    "smoke": {
+      "attempted": 2,
+      "failed": 0,
+      "inadmissible": 0,
+      "incomplete": 0,
+      "planned": 2,
+      "reused": 0,
+      "succeeded": 2,
+      "timed_out": 0,
+      "unrun": 0
+    }
+  },
+  "elapsed_since_shared_clock_seconds": 7991.5904886722565,
+  "gate_relaxation": false,
+  "identification": "moment/parameter counts are not a numerical rank or identification result",
+  "local_numerical_workers": 0,
+  "phase": "repeat",
+  "schema": "e5f_utility_arm_controller_v1",
+  "stop_reason": "case_failed_no_retry"
+}

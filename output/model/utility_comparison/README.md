@@ -1,21 +1,23 @@
 # Four-arm utility comparison
 
-## Morning readout: incomplete search and collection
+## Collected comparison
 
-The [bounded failure readout](run_001/readout.md) contains all verified floor
-moments and parameters, the four arms' last observed counts, exact stopping
-evidence and links to both actual reviewed reports. The intended full
-recalibration was not achieved. Share final reports and repetitions remain
-unverified because normal Torch SSH access did not return. There is no
-supported four-arm winner. `run_001/final_readout_receipt.json` records the
-checks and the exact remaining limitations. The sections below retain the
-chronology; their in-progress observations are not final share certification.
-The bounded readout has been delivered to the main task and the heartbeat is
-paused. **This utility task retains responsibility for collecting and
-verifying the existing share outputs when normal Torch access is restored.**
-The jobs are not declared accounted for, and polling is not silently replaced
-by a new run. An access-refresh message to this or the main task should trigger
-that remaining collection.
+The [complete four-arm readout](run_001/comparison.md) now links every target,
+parameter, actual report and qualified visual review. Normal cluster access
+returned on September 26 and both share exports were retrieved. All four
+selected originals match each of their two repeats exactly. Every report has
+17 standard figures and 22 reviewed pages; floor parameter tables have 28 rows
+and share tables have 29. The original [bounded failure readout](run_001/readout.md)
+and its receipt remain the historical account of the earlier access block.
+
+**The intended recalibration was not achieved:** all searches stopped in their
+initial populations, no DE generation ran, and coverage differs across arms.
+The run also retains the old ACS mean-room target, rather than the author's
+prior AHS choice. The readout records the next-contract correction and an
+unresolved upper-wealth housing-policy feature in the share packets. Exact
+repetition does not establish a preferred specification or grid robustness.
+`run_001/collection_completion_receipt.json` records the final collection checks.
+The heartbeat remains paused; all four original jobs are now accounted for.
 
 The author delegated tonight's experimental choice; the reviewed fixed-rent
 utility normalization is chosen for the comparison. The design and assumptions are in
