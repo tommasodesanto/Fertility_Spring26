@@ -1,5 +1,40 @@
 # Calibration Status
 
+## September 26 — softened housing requirement tested; recommendation only
+
+One controlled soft-floor experiment completed on Torch (18603346, 188.6 seconds
+after setup). The only economic change replaces parent housing surplus with a
+zero-anchored softplus, width fixed experimentally at 10% of the inherited
+1.890-room requirement. Childless utility, all preferences including the child
+benefit, earnings, entry, mortality, bequests, credit, fiscal rule, products,
+supply, targets and weights remain unchanged. No recalibration or benefit
+normalization was run; no production specification is automatically adopted.
+
+The inherited first-birth housing proxy changes 0.78475 to 0.76351 rooms,
+retaining 97.3% of the response. Zero first-birth attempt probabilities cover
+4.8724% of risk mass in the control versus 0.000455% after softening; endpoints
+do not distinguish infeasibility from underflow. Only 0.01151% of parent renters
+choose housing below the former floor. Fertility rises 2.10000 to 2.19184 with
+the benefit held fixed. Housing and PAYGO clear, but normalized entry is held
+fixed and the soft demographic replacement gap is 4.190%, not a closed-renewal
+production equilibrium. The diagnostic loss worsens 285.640 to 436.915 without
+recalibration; this is not a fit-based specification winner.
+
+Lead recommendation: use the soft requirement in the next calibration and close
+this utility experiment. The first-birth proxy remains below the 1.465-room
+target and is not a matched event-study estimator; the old ACS quantity target
+is retained only for comparison. Later births still often arise at negative
+attempt-minus-wait gaps (positive-gap share 29.763% to 27.297%), so the experiment
+does not resolve the separate taste-shock interpretation issue.
+
+All 48 focused numerical checks passed; the control replays every saved policy,
+value and population array and full target table exactly. Both cases pass the
+unchanged scientific gates, with zero budget-excess and feasibility-projection
+mass and all 17 standard figures. The initial job18603272 stopped before the
+soft solve on report wiring, corrected without relaxing gates. Complete fits,
+all parameters/bounds, graphs, provenance and reproduction instructions:
+`output/model/soft_housing_probe/README.md`.
+
 ## September 26 — saved fertility incentives measured, no new solves
 
 The coordinating lead inspected the verified floor/linear selected point from

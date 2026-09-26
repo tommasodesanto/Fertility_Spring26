@@ -1,0 +1,38 @@
+{
+  "flags": {
+    "exhaustive_saving_control": true,
+    "bellman_mode": null,
+    "interp_method": "linear",
+    "use_full_kernel": null,
+    "howard_iter": null,
+    "joint_nested_choice": false,
+    "preference_spec": "eqscale",
+    "owner_h_bar_scale": 1.0,
+    "Nb": 160,
+    "J": 17,
+    "Nz": 15,
+    "n_parity": 4,
+    "n_child_states": 4
+  },
+  "pins": {
+    "receipt.json": "3fd7423b2b8022d562696218fd0954e818676824838e531f01639dfc584e8a8a",
+    "initial_state.pkl.gz": "c2863ae2fe153a92043df45657d5dc7982bb69753afda0557efa85d1c8871f18",
+    "target_fit.csv": "407f8f520793e2cd5dc74c0dfd0cdbd077ad37b388d22d6a003581b5c21caed6",
+    "parameters.csv": "2ae4639a1587d323adca9868e124710b4a6d738104251cf12ffdc84500cbb082"
+  },
+  "contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+  "fixed_psi": 0.1339982278467087,
+  "grid_shape": [
+    160,
+    6,
+    1,
+    17,
+    15,
+    4,
+    4
+  ],
+  "chosen_reference_solve_seconds": 134.9839967340231,
+  "experiment": "Only parent housing services softened with zero-anchored softplus delta=.1*hP; childless services unchanged.",
+  "fixed": "Earnings, wealth, entry, mortality, bequests, credit, shocks, child benefits, fiscal rule, supply, housing products, targets and weights.",
+  "budget": "One control Bellman replay; one softened stationary housing equilibrium; no search, no normalization, 25 minute allocation including reporting."
+}

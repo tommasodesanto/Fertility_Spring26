@@ -60,6 +60,14 @@ These are candidate tools, not a replacement for the September14 reference.
 
 ## Current E5F calibration and policy audit utilities
 
+`tools/run_e5f_soft_housing_probe.py` and `tools/e5f_soft_housing_adapter.py`
+implement the isolated September 26 housing-requirement sensitivity on Torch.
+They authenticate the saved floor/linear control, replay its policies, and
+soften only parent housing services at fixed preferences. The full fit,
+incentive diagnostics and numerical receipts are indexed by
+`../../output/model/soft_housing_probe/README.md`. This is an experimental
+comparison with normalized entry and a reported reproduction gap.
+
 `tools/diagnose_saved_utility_birth_incentives.py` authenticates a saved
 floor/linear utility-comparison checkpoint on Torch and recovers finite
 attempt-minus-wait logit gaps. It verifies the pre-choice population by
