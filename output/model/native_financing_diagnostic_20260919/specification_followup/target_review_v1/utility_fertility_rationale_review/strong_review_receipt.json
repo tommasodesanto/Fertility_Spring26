@@ -1,0 +1,80 @@
+{
+  "schema": "preference_architecture_decision_review_v1",
+  "date": "2026-09-25",
+  "status": "review_complete_no_adoption_or_run",
+  "report": "docs/model/preference_architecture_decision_review.md",
+  "recommendation": {
+    "working_baseline": "Retain imposed inside-CRRA equivalence scale, parenthood-only housing-service requirement, and separate linear flow benefit in current children at home.",
+    "ranked_runner_up": "Same material architecture with v(m)=m^0.86; fixed sensitivity exponent, not a transferred empirical estimate.",
+    "do_not_add_now": [
+      "Nonhousing subsistence jump",
+      "Additional free equivalence-scale or benefit-curvature parameter",
+      "Fertility inside the material composite",
+      "Outside family-size utility multiplier",
+      "Simultaneous housing-slope and benefit-curvature changes"
+    ],
+    "housing_reversal_evidence": "A material reliably measured population of matched parents below the implied housing-service floor favors smooth crowding over the hard floor. No bunching at the Stone-Geary threshold is not a rejection.",
+    "benefit_reversal_evidence": "A matched bounded mild-concavity refit improves the full fit and count/timing restrictions without worse late-birth concentration or numerical failures. Equal fit obtained by changing shock scales does not identify curvature."
+  },
+  "main_new_findings": [
+    "Dustmann-Fitzenberger-Zimmermann EJ2022 Eq1a p1712 provides a direct scale-plus-housing-minimum/no-nonhousing-minimum precedent, with exogenous composition and no fertility validation.",
+    "Sommer JME2016 Table2 estimates child-composite curvature kappa=0.14; Baudin-de la Croix-Gobbi AER2015 Table3 estimates log shift nu=9.362. Neither validates arbitrary log(1+m) curvature in this model.",
+    "The scale's declining increments do not establish calibrated deterministic corner choices or shock dominance.",
+    "The exactly-one-child target is conditional on motherhood, not an unconditional female share.",
+    "With common age window and fixed top-bin representative, mean, childlessness, and one-child share determine remaining count shares; 3+ is not automatically an independent curvature moment.",
+    "Concavity in children at home affects overlap and spacing; using ever-born children or birth rewards changes the reward horizon.",
+    "A scalar multiplicative child factor inside the CRRA Cobb-Douglas composite is an effective equivalence-scale change; additive inside terms impose consumption-child substitution and risk restrictions.",
+    "A hard Stone-Geary lower support does not generally imply bunching at the minimum."
+  ],
+  "current_evidence": {
+    "case": "September25 low-tax selected experimental B15 floor point",
+    "loss": 280.41079921120206,
+    "free_count": 8,
+    "weighted_count": 12,
+    "normalization": "psi separately normalized to completed fertility 2.1",
+    "psi": 0.13539452644572644,
+    "h_P": 1.8900476600128304,
+    "first_birth_fixed_cost": 0.506777288216908,
+    "kappa_first": 0.2092758576051789,
+    "kappa_continuation": 0.48206876668272913,
+    "frozen_tax": 0.08751017424959717,
+    "fit_and_parameters": "payroll_tax_review/overnight_pair_20260925_preparation/final_results/oasi_087510/{target_fit.csv,parameters.csv,receipt.json}",
+    "limitations": [
+      "Finite-search selected point, not convergence",
+      "Unmatched first-birth model-panel observer",
+      "Frozen tax predates adopted pension-rule implementation",
+      "Compact receipt omits branch switches and statewise deterministic birth gaps",
+      "No new floor-support distribution or CEX joint-needs estimate was constructed"
+    ]
+  },
+  "comparison_proposal": {
+    "arms": ["v(m)=m", "v(m)=m^0.86"],
+    "maximum_normalized_objectives": 20,
+    "schedule": "Per arm: two identical anchor loop smokes, six predeclared +/- coordinate moves in first-birth cost and both taste scales, two selected exact repetitions.",
+    "other_structural_coordinates": "Five remaining coordinates fixed; psi re-normalized in each case.",
+    "common_contract": "Same adopted nonpreference launch contract including new pension rule, targets, weights, earnings, entry, housing, survival, bequests, and numerical gates; disclose common updates separately.",
+    "compute": "Torch only; four one-thread workers; proposed four-hour total cap with one-hour verification/export reserve; coordinate with other jobs.",
+    "not_launch_ready_until": "Pin inherited normalization iteration limit, maximum stationary-solve count, coordinate step sizes, source/target fingerprints, and exact loop smoke.",
+    "status": "Not implemented or launched by this review"
+  },
+  "primary_checks": [
+    {"source": "Dustmann, Fitzenberger, Zimmermann 2022", "url": "https://www.rfberlin.com/wp-content/uploads/2026/02/ueab097.pdf", "checked": "Full primary PDF text, Eq1a and demand formulas p1712; explicit scope exclusion p1711."},
+    {"source": "Scholz, Seshadri, Khitatrakun 2006", "url": "https://users.ssc.wisc.edu/~aseshadr/Publications/optimality.pdf", "checked": "Full primary PDF text pp615/619: outer multiplier, scale, exogenous family composition."},
+    {"source": "Sommer 2016", "url": "https://www.kamilasommer.net/Fertility.pdf", "checked": "Full primary PDF text pp30-34, utility p33, Table2 p31: current dependents, quality floor, curvature and calibration moments."},
+    {"source": "Baudin, de la Croix, Gobbi 2015", "url": "https://perso.uclouvain.be/david.delacroix/pdfpubli/aer15.pdf", "checked": "Full primary PDF text Eq1 p1860, Table3 p1867: log(n+nu), nu=9.362."},
+    {"source": "van Doornik et al. BCB WP612, 2024", "url": "https://www.bcb.gov.br/content/publicacoes/WorkingPaperSeries/WP612.pdf", "checked": "Full primary PDF text Eq1-3 pp13-14 and footnote9 smooth-cost alternative."},
+    {"source": "Szabo December2022 draft", "url": "https://benceszabo.github.io/papers_currentversion/bence_szabo_fertility_housing_current.pdf", "checked": "Reused prior downloaded primary-text extraction /tmp/szabo.txt, period utility p19 and Table5. Fresh web fetch timed out; no new download."},
+    {"source": "Doepke-Kindermann NBER version of 2019 paper", "url": "https://www.nber.org/system/files/working_papers/w22072/w22072.pdf", "checked": "Primary indexed text of quantitative utility passage, printed p25 in indexed version; full-PDF open errored. Only linear birth reward/partner heterogeneity/child-cost distinction used."},
+    {"source": "Pollak-Wales 1979", "url": "https://news.fbc.keio.ac.jp/~hayami/pdf/consumption/PollakWales1979.pdf", "checked": "Primary indexed passage p217 distinguishing conditional demands and unconditional family preferences; fresh full-PDF open timed out."}
+  ],
+  "work_scope": {
+    "model_imports_or_solves": 0,
+    "empirical_estimations": 0,
+    "jobs_launched": 0,
+    "source_or_canonical_status_edits": 0,
+    "author_draft_or_slides_edits": 0,
+    "commits_or_pushes": 0,
+    "files_owned": ["docs/model/preference_architecture_decision_review.md", "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/utility_fertility_rationale_review/strong_review_receipt.json"],
+    "integration": "Lead owns indexing and any commit/push. Existing unrelated changes were left untouched."
+  }
+}
