@@ -1,5 +1,36 @@
 # Calibration Status
 
+## September 26 later — author chooses estate-funded entry and residual sink
+
+**Author decision, implementation pending:** fund the empirically disciplined
+entrant asset distribution from the available estate pool and absorb the
+remainder in an explicit sink with no household utility or subsequent household
+rebate. No inheritance payments to existing adults and no proportional-to-wealth
+redistribution are adopted. This supersedes the adult-receipt and externally
+funded entry recommendations in `docs/model/estate_entry_closure_decision.md`;
+that sheet remains evidence for the earlier proposal, not the adopted closure.
+
+Keep the entry distribution fixed rather than adjusting it to exhaust estates.
+For consistently dated available estates B and entrant positive-asset funding E,
+the recipient account is B = E + residual sink, with residual sink nonnegative.
+Record entrant debts and creditor claims separately. The saved reference audit
+has B=0.10926839267386716 and E=0.031699569131501536 per four-year period,
+so this funding condition holds at that point. Source:
+`output/model/estate_receiver_probe/results/recipient_evidence/accounts_v1/resource_account.json`.
+This does not certify feasibility under revised parameters or policy paths.
+Fail and report a funding shortfall; do not silently reduce entrant wealth,
+borrow from unrelated accounts, or add external support.
+
+This decision changes recipients/funding only. It does not adopt the proposed
+entry-unit/joint-distribution remapping, mortality revisions, estate valuation
+change, or a replacement bequest target. Preserve the existing donor preference
+pending the separate bequest specification/calibration discussion; do not claim
+own-parent/own-child transmission or recipient welfare from a residual sink.
+Implementation must name the absorbing counterparty/use of resources, reconcile
+financial claims and physical housing, and pin payment timing before production
+use. No model code or solved case changed with this decision. The concurrently
+running housing-cost diagnostic keeps its frozen estate/entry contract.
+
 ## September 26 later — simple first-child housing loading requested
 
 **Completed:** job18604498 solved all four new points in 631 seconds after
