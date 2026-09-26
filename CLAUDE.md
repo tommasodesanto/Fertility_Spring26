@@ -76,8 +76,10 @@ calibration state here.
 - Older plans, archived scripts, transcript summaries, and remembered loss
   values are background unless `CALIBRATION_STATUS.md` says they are live.
 
-If these sources disagree, pause and report the discrepancy before making
-substantive changes.
+If these sources disagree about a material fact, check their dates, scope, and
+underlying evidence. Use the designated source of truth for that claim when
+the conflict is resolvable. Otherwise, report it and avoid substantive
+changes that depend on the disputed fact; continue independent work.
 
 ## Project Organization And File Hygiene
 
