@@ -1,5 +1,30 @@
 # Calibration Status
 
+## September 26 — four-utility overnight comparison launched
+
+The author authorized the full eight-hour comparison. Torch array 18567879
+has four arms: floor/linear, floor/mild concavity, normalized housing shares/
+linear, and normalized housing shares/mild concavity. Each arm has ten search
+workers after its exact-loop smoke; psi normalizes separately. The utility task
+reported all four initial smokes running with fresh heartbeats at launch; this
+is not a completed smoke or result claim. The common contract incorporates the
+adopted pension rule; inherited entry wealth, mortality and estate treatment
+remain common, with new mortality/estate diagnostics unadopted. The fixed
+reference-rent expenditure normalization is explicitly experimental.
+
+Shared clock: September 26 00:13 EDT start; search cutoff 06:43, repetitions
+cutoff 07:58, final end 08:13. Maximum 652 new normalized objectives, not
+stationary solves; no automatic resubmission or relaxed gates. Source commit
+`d5dbf04d68ff000e1a1b8e66994cdffd31a01580` on the preparation branch.
+Frozen remote contract:
+`/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/launch_v1/contract.json`,
+SHA256 `c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a`.
+Results are the sibling `results/run_001`. Task
+`01a0dbbf-c270-72f1-b3a8-025240bc11c6` owns monitoring, collection and actual-result
+QA. Cluster controllers own deadlines, repetitions and export independently of
+the laptop. Historical report-fixture QA is not final-result QA. No utility
+specification is adopted by this experiment.
+
 ## September 26 — estate recipient diagnostic completed; not adopted
 
 The author requests the three-way estate test: unchanged control, net-of-selling-
