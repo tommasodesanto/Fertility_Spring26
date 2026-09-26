@@ -1,0 +1,190 @@
+{
+  "cases": [
+    {
+      "case": "no_receipt",
+      "clipped_wealth_loss": 0.0,
+      "generated_gross_period": 0.12734443256116368,
+      "generated_net_period": 0.11468995548722899,
+      "interpretation": "fixed receipt scale; funding residual reported, not closed",
+      "loss": 281.1902879200032,
+      "market_residual": 1.2189565404153502e-05,
+      "paid_minus_generated": -0.11468995548722899,
+      "paid_period": 0.0,
+      "price": 0.6132748212026005,
+      "seconds": 70.37396939692553
+    },
+    {
+      "case": "conditional_mean",
+      "clipped_wealth_loss": 0.0,
+      "generated_gross_period": 0.1292169631263634,
+      "generated_net_period": 0.11621828645834616,
+      "interpretation": "fixed receipt scale; funding residual reported, not closed",
+      "loss": 584.3918830207601,
+      "market_residual": 0.028461189357589393,
+      "paid_minus_generated": -0.001528330971119804,
+      "paid_period": 0.11468995548722635,
+      "price": 0.6132748212026005,
+      "seconds": 60.85440777905751
+    },
+    {
+      "case": "receipt_lottery",
+      "clipped_wealth_loss": 0.0,
+      "generated_gross_period": 0.1346851421356084,
+      "generated_net_period": 0.12159352731265045,
+      "interpretation": "fixed receipt scale; funding residual reported, not closed",
+      "loss": 388.61181278521275,
+      "market_residual": 0.02580528824703495,
+      "paid_minus_generated": -0.006903571825426766,
+      "paid_period": 0.11468995548722369,
+      "price": 0.6132748212026005,
+      "seconds": 61.39058091503102
+    }
+  ],
+  "comparison": [
+    {
+      "certain_minus_control": 0.09607414582971563,
+      "conditional_mean": 2.1957381677899583,
+      "lottery_minus_certain": -0.05653466354884884,
+      "lottery_minus_control": 0.03953948228086679,
+      "moment": "initial_normalization",
+      "no_receipt": 2.0996640219602427,
+      "receipt_lottery": 2.1392035042411095,
+      "target": 2.1
+    },
+    {
+      "certain_minus_control": -0.032276797424618336,
+      "conditional_mean": 0.1509896221720436,
+      "lottery_minus_certain": 0.019021407363277204,
+      "lottery_minus_control": -0.013255390061341132,
+      "moment": "cps_childlessness",
+      "no_receipt": 0.18326641959666193,
+      "receipt_lottery": 0.1700110295353208,
+      "target": 0.19827875100684264
+    },
+    {
+      "certain_minus_control": -0.006446933895563223,
+      "conditional_mean": 0.22475818645121012,
+      "lottery_minus_certain": 0.0041674365766358745,
+      "lottery_minus_control": -0.002279497318927348,
+      "moment": "cps_exactly_one",
+      "no_receipt": 0.23120512034677335,
+      "receipt_lottery": 0.228925623027846,
+      "target": 0.21365532522014702
+    },
+    {
+      "certain_minus_control": -0.042754513270601535,
+      "conditional_mean": 26.302295217387776,
+      "lottery_minus_certain": 0.05860190424781919,
+      "lottery_minus_control": 0.015847390977217657,
+      "moment": "nchs_mean_age",
+      "no_receipt": 26.345049730658378,
+      "receipt_lottery": 26.360897121635595,
+      "target": 25.976263860992496
+    },
+    {
+      "certain_minus_control": -0.0024391192516078353,
+      "conditional_mean": 0.24485747642206715,
+      "lottery_minus_certain": 0.003466740482650693,
+      "lottery_minus_control": 0.0010276212310428579,
+      "moment": "nchs_share30",
+      "no_receipt": 0.24729659567367498,
+      "receipt_lottery": 0.24832421690471784,
+      "target": 0.2492780130410667
+    },
+    {
+      "certain_minus_control": -0.09050162554898833,
+      "conditional_mean": 5.9861674056189615,
+      "lottery_minus_certain": 0.2888944714782449,
+      "lottery_minus_control": 0.19839284592925654,
+      "moment": "wealth_earnings",
+      "no_receipt": 6.07666903116795,
+      "receipt_lottery": 6.275061877097206,
+      "target": 6.92658379107299
+    },
+    {
+      "certain_minus_control": 0.00021248485730010046,
+      "conditional_mean": 0.007284652557227962,
+      "lottery_minus_certain": -4.1296283783545835e-05,
+      "lottery_minus_control": 0.00017118857351655463,
+      "moment": "bequest_wealth",
+      "no_receipt": 0.007072167699927861,
+      "receipt_lottery": 0.007243356273444416,
+      "target": 0.007291023472616158
+    },
+    {
+      "certain_minus_control": -0.10688533247227827,
+      "conditional_mean": 2.878542907938065,
+      "lottery_minus_certain": -0.0700634875470234,
+      "lottery_minus_control": -0.17694882001930168,
+      "moment": "old_dispersion",
+      "no_receipt": 2.9854282404103434,
+      "receipt_lottery": 2.8084794203910417,
+      "target": 3.51593508651872
+    },
+    {
+      "certain_minus_control": 0.17136977717369017,
+      "conditional_mean": 6.718176014829632,
+      "lottery_minus_certain": -0.01766163931657605,
+      "lottery_minus_control": 0.15370813785711412,
+      "moment": "mean_rooms",
+      "no_receipt": 6.546806237655942,
+      "receipt_lottery": 6.700514375513056,
+      "target": 5.607885960068579
+    },
+    {
+      "certain_minus_control": -0.0196674277710982,
+      "conditional_mean": 0.7372700919713513,
+      "lottery_minus_certain": 0.021658089097277955,
+      "lottery_minus_control": 0.0019906613261797546,
+      "moment": "ownership_30_55",
+      "no_receipt": 0.7569375197424495,
+      "receipt_lottery": 0.7589281810686292,
+      "target": 0.6762604168538028
+    },
+    {
+      "certain_minus_control": -0.054830737658043915,
+      "conditional_mean": 0.7361639568891478,
+      "lottery_minus_certain": 0.023500284260821402,
+      "lottery_minus_control": -0.03133045339722251,
+      "moment": "first_birth_rooms",
+      "no_receipt": 0.7909946945471917,
+      "receipt_lottery": 0.7596642411499692,
+      "target": 1.465
+    },
+    {
+      "certain_minus_control": -0.015358960697490431,
+      "conditional_mean": 0.20532868045053387,
+      "lottery_minus_certain": 0.006714309180639866,
+      "lottery_minus_control": -0.008644651516850566,
+      "moment": "family_rooms",
+      "no_receipt": 0.2206876411480243,
+      "receipt_lottery": 0.21204298963117374,
+      "target": 0.38509964969278165
+    },
+    {
+      "certain_minus_control": -0.053622552927186984,
+      "conditional_mean": 0.036055466870777764,
+      "lottery_minus_certain": 0.03750898863025842,
+      "lottery_minus_control": -0.016113564296928562,
+      "moment": "recent_parent_ownership",
+      "no_receipt": 0.08967801979796475,
+      "receipt_lottery": 0.07356445550103619,
+      "target": 0.12760836356692162
+    }
+  ],
+  "source_pins": {
+    "diagnostic_files": {
+      "e5f_estate_receipt_jump.py": "a38f92048c5b2e42942a34da99f55b7deb511c10ef0df2d81c059cf8e76b4712",
+      "e5f_estate_receipt_risk_adapter.py": "072ce3417b12f8230de6b7b7dbdc595fb0050f7cd8f21fbcb41758feffe8f4c5",
+      "run_e5f_estate_receipt_risk.py": "67e888d12d15a2742973596a4bdad01e288f2cc139bcdf3ee2ce1b69af95d052",
+      "test_e5f_estate_receipt_jump.py": "3cf467c538f8fb6b4d66893bf51f42ce25c055c562a8805fc7c32bc6549ff207",
+      "test_e5f_estate_receipt_risk_adapter.py": "4bd2732b8e78c072fe9998232d028d96438d19c79e3a5682e8bbfa62b76d827a"
+    },
+    "frozen_source_manifest": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6",
+    "objective": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+    "receipt_profile": "2eee25640eeadd30a7ff798b2f81354e79fbdab5dec3b7a6000aa0526eda04d7",
+    "retained_net_checkpoint": "fa0b8e4764a57c9066ee449b04bac1b20fb54d32d909df7c3109b3bd91bb42db",
+    "selected_original_checkpoint": "d5ef71bdaf9960273035c722a2428a55f14bab160e0596881c8a981e67b8ead1"
+  },
+  "status": "complete_tables_and_figures_visual_review_pending"
+}

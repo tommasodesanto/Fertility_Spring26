@@ -1,0 +1,179 @@
+{
+  "adopted": false,
+  "budget_seconds": 1500,
+  "cases": [
+    "no_receipt",
+    "conditional_mean",
+    "receipt_lottery"
+  ],
+  "entry_grid_rule": "original point masses and income conditionals retained exactly; zero mass at inserted knots",
+  "estimated_minutes": 10,
+  "fixed_price": [
+    0.6132748212026005
+  ],
+  "fixed_reference_estate_pool": 0.11468995548722899,
+  "installed_hooks": {
+    "additional_persistent_states": 0,
+    "clipping_tolerance": 0.0,
+    "cohort_source_sha256": "35fe73902d84a6f9823fe68f113f53ad2a22544c42744f805a1aed0a8c3c07ce",
+    "function_sha256": {
+      "bellman": {
+        "generated": "5fcf019b300c66d645782a5678614b277f1b725f5c03c1c940f4deb3c2f8f200",
+        "original": "7ae6b1de0fe5cad81408bac6989f24e61a1a884cd60e996ceb1716f6036fb9e3"
+      },
+      "forward": {
+        "generated": "6293b2f5419f07f3b67bdb3ef8a86c420b254a9051fcf04e49023edc8dc6414c",
+        "original": "924a187431a25e4339424d6c3c99e3fa95acf2124dca634587dec93070e40eb6"
+      }
+    },
+    "income_observer_unchanged": true,
+    "risk": "IID across receiving periods; no family linkage or lifetime receipt cap",
+    "timing": "start of receiving period, before interest and choices; paid once as liquid wealth"
+  },
+  "maximum_household_solves": 4,
+  "profile": [
+    {
+      "age": 18.0,
+      "probability": 0.0,
+      "published_age_supported": false,
+      "relative_mean": 0.0,
+      "relative_positive_amount": 0.0
+    },
+    {
+      "age": 22.0,
+      "probability": 0.0,
+      "published_age_supported": false,
+      "relative_mean": 0.0,
+      "relative_positive_amount": 0.0
+    },
+    {
+      "age": 26.0,
+      "probability": 0.046265241134270926,
+      "published_age_supported": true,
+      "relative_mean": 3.075915929333334,
+      "relative_positive_amount": 66.48438123139604
+    },
+    {
+      "age": 30.0,
+      "probability": 0.04481620840672795,
+      "published_age_supported": true,
+      "relative_mean": 4.067946168,
+      "relative_positive_amount": 90.76952987815244
+    },
+    {
+      "age": 34.0,
+      "probability": 0.046753281208518266,
+      "published_age_supported": true,
+      "relative_mean": 5.366702961333333,
+      "relative_positive_amount": 114.78772874566803
+    },
+    {
+      "age": 38.0,
+      "probability": 0.04993437446860761,
+      "published_age_supported": true,
+      "relative_mean": 6.795606878666667,
+      "relative_positive_amount": 136.09075813974363
+    },
+    {
+      "age": 42.0,
+      "probability": 0.05597664412969502,
+      "published_age_supported": true,
+      "relative_mean": 8.607123470666666,
+      "relative_positive_amount": 153.76276310391887
+    },
+    {
+      "age": 46.0,
+      "probability": 0.061211088720908996,
+      "published_age_supported": true,
+      "relative_mean": 10.171801973333334,
+      "relative_positive_amount": 166.17580549353576
+    },
+    {
+      "age": 50.0,
+      "probability": 0.0669988850620316,
+      "published_age_supported": true,
+      "relative_mean": 11.828404577333332,
+      "relative_positive_amount": 176.54628978350735
+    },
+    {
+      "age": 54.0,
+      "probability": 0.07388277022069004,
+      "published_age_supported": true,
+      "relative_mean": 13.834143094666668,
+      "relative_positive_amount": 187.24450982744247
+    },
+    {
+      "age": 58.0,
+      "probability": 0.07774172675910479,
+      "published_age_supported": true,
+      "relative_mean": 14.373186837333336,
+      "relative_positive_amount": 184.88381254858103
+    },
+    {
+      "age": 62.0,
+      "probability": 0.07874174417403973,
+      "published_age_supported": true,
+      "relative_mean": 14.86978616,
+      "relative_positive_amount": 188.84247886526245
+    },
+    {
+      "age": 66.0,
+      "probability": 0.07643775244719639,
+      "published_age_supported": true,
+      "relative_mean": 14.007794676,
+      "relative_positive_amount": 183.25754260862993
+    },
+    {
+      "age": 70.0,
+      "probability": 0.06855991974785869,
+      "published_age_supported": true,
+      "relative_mean": 11.747833778666667,
+      "relative_positive_amount": 171.35133503468816
+    },
+    {
+      "age": 74.0,
+      "probability": 0.0586099711019535,
+      "published_age_supported": true,
+      "relative_mean": 9.958111873333333,
+      "relative_positive_amount": 169.9047395196792
+    },
+    {
+      "age": 78.0,
+      "probability": 0.042774294645533124,
+      "published_age_supported": true,
+      "relative_mean": 6.6158623253333335,
+      "relative_positive_amount": 154.6691156489759
+    },
+    {
+      "age": 82.0,
+      "probability": 0.0,
+      "published_age_supported": false,
+      "relative_mean": 0.0,
+      "relative_positive_amount": 0.0
+    }
+  ],
+  "rank_mapping": "age-only pooled usual-income groups50/40/10; no labor-income rank mapping",
+  "scale": 0.014109595344202822,
+  "scientific_scope": "fixed-price/fixed-scale risk attribution; unbalanced estates and housing reported; no GE or recalibration",
+  "source_pins": {
+    "diagnostic_files": {
+      "e5f_estate_receipt_jump.py": "a38f92048c5b2e42942a34da99f55b7deb511c10ef0df2d81c059cf8e76b4712",
+      "e5f_estate_receipt_risk_adapter.py": "4b548bf463d4c98cbb3f1872987295bd1f0181ae1df17147e22959eb7799214c",
+      "run_e5f_estate_receipt_risk.py": "8391a0c8a316452803d3ae66cdad419403c147b3749a7964b4a4832545875a97",
+      "test_e5f_estate_receipt_jump.py": "3cf467c538f8fb6b4d66893bf51f42ce25c055c562a8805fc7c32bc6549ff207",
+      "test_e5f_estate_receipt_risk_adapter.py": "45a9179a75a0cb11c7fb618a0892c9016abe50d6a881d35b83936cb5eabecb96"
+    },
+    "frozen_source_manifest": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6",
+    "objective": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+    "receipt_profile": "2eee25640eeadd30a7ff798b2f81354e79fbdab5dec3b7a6000aa0526eda04d7",
+    "retained_net_checkpoint": "fa0b8e4764a57c9066ee449b04bac1b20fb54d32d909df7c3109b3bd91bb42db",
+    "selected_original_checkpoint": "d5ef71bdaf9960273035c722a2428a55f14bab160e0596881c8a981e67b8ead1"
+  },
+  "support": "exact age nodes26..78; experimental zero receipts at18,22,82",
+  "wealth_grid_bounds": [
+    -12.0,
+    3000.0
+  ],
+  "wealth_grid_nodes": 319,
+  "wealth_grid_subdivision": 2
+}

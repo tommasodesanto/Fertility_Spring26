@@ -1,0 +1,12 @@
+{
+  "amount_unit_caveat": "The accessible HTML amount header says 'Fraction'. Numeric amounts are retained as published but treated only as relative amount weights; they are not labeled dollars.",
+  "income_concept_caveat": "Usual-income percentile within age does not directly match the model's labor-earnings income states.",
+  "mapping_assumption": "Diagnostic constant-Poisson arrival intensity within each age/income cell: p4=-expm1((4/3)*log1p(-p3)); mean4=(4/3)*p3*amount3; conditional_amount4=mean4/p4, with explicit p3=0 and p3=1 limits.",
+  "published_measure": "probability of any inheritance during the prior three years and total receipt conditional on receipt, pooled SCF 1995--2016, by usual-income percentile within age.",
+  "record_count": 168,
+  "source_method": "Parsed the first HTML table after h5#fig3; Figure 4 living gifts are excluded.",
+  "source_sha256": "fd2f1290c139d65759ccaa3c9b182db4fa678cfd7e41e931c3096e2d07968928",
+  "source_url": "https://www.federalreserve.gov/econres/notes/feds-notes/how-does-intergenerational-wealth-transmission-affect-wealth-concentration-accessible-20180601.htm",
+  "uncertainty": "Unavailable in the published HTML table.",
+  "undefined_tails": "No interpolation or extrapolation outside ages 25--80; no age-18 or age-82 assumption."
+}

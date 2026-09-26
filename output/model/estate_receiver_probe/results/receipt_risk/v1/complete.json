@@ -1,0 +1,394 @@
+{
+  "cases": [
+    {
+      "case": "no_receipt",
+      "clipped_wealth_loss": 0.0,
+      "estate_accounts": {
+        "generated_gross_period": 0.12734443256116368,
+        "generated_net_period": 0.11468995548722899,
+        "interpretation": "fixed receipt scale; funding residual reported, not closed",
+        "paid_minus_generated": -0.11468995548722899,
+        "paid_period": 0.0
+      },
+      "experimental_changes": "age-pooled receipt profile, restricted age support, IID zero/positive risk versus certain conditional mean, start-period wealth timing; fixed net-valuation price and fixed scale; no recalibration; inherited experimental tax",
+      "fiscal": {
+        "actual_accounts": {
+          "implied_balanced_payroll_tax": 0.08751017424951502,
+          "implied_balanced_pension_period": 1.0004326356579492,
+          "payroll_tax_base_period": 2.963205896677233,
+          "payroll_tax_rate": 0.08751017424959717,
+          "payroll_tax_revenue": 0.2593106643556585,
+          "pension_budget_residual": 2.4347190930029683e-13,
+          "pension_outlays": 0.25931066435541505,
+          "pension_period_units": 1.0004326356570097,
+          "retiree_benefit_exposure": 0.25919852583089625,
+          "retiree_household_mass": 0.25919852583089625,
+          "scaled_pension_budget_residual": 9.38919769864775e-13,
+          "worker_household_mass": 0.7408014741690232
+        },
+        "fiscal_gate": true,
+        "fiscal_tolerance": 1e-06,
+        "marginal_gate": true,
+        "marginal_tolerance": 1e-09,
+        "normalized_age_income_max_gap": 1.5138931774849596e-14
+      },
+      "fixed_preference_birth_replacement_gap": 0.00015998954318457827,
+      "household_budget": {
+        "actual_rent": 0.1105608130536379,
+        "budget_excess_mass": 0.0,
+        "budget_tolerance": 1e-09,
+        "maximum_occupied_excess": 2.842170943040401e-14
+      },
+      "loss": 281.1902879200032,
+      "market_clearing_required": false,
+      "operator_gates": {
+        "birth_flow": 0.11582165756744633,
+        "birth_flow_abs_error": 7.216449660063518e-16,
+        "effective_mature_flow_B": 0.05493189045508065,
+        "entry_flow_E": 0.06173345618081536,
+        "mature_flow_abs_error": 8.187894806610529e-16,
+        "one_step_constant_path_nesting_l1": 9.766324660247108e-14,
+        "reconstructed_baseline_births": 0.11582165756744633,
+        "reconstructed_effective_mature_flow_B": 0.05493189045508147,
+        "stationary_birth_flow": 0.11582165756744561,
+        "stationary_feasibility_projection_mass": 0.0,
+        "stationary_post_fertility_nesting_l1": 3.2187458757543317e-15,
+        "stationary_post_fertility_nesting_max_abs": 4.331208842631156e-17,
+        "stationary_topcode_adjusted_birth_flow": 0.12961951689405976,
+        "top_bin_entry_birth_flow": 0.02290635594375756,
+        "topcode_adjusted_birth_flow": 0.12961951689406057,
+        "topcode_adjusted_birth_flow_abs_error": 8.049116928532385e-16,
+        "zero_entry_mass_accounting_residual": 2.220446049250313e-16
+      },
+      "payroll_tax": 0.08751017424959717,
+      "policy_array_gates": {
+        "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+        "lower_node_mass_at_negative_steps": 0.0,
+        "maximum_occupied_value_drop": 0.0,
+        "occupied_negative_steps": 0,
+        "probabilities": {
+          "continuation_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "first_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "location": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "tenure": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          }
+        },
+        "share_pre_choice_mass_at_negative_steps": 0.0,
+        "value_drop_tolerance": 1e-07
+      },
+      "price": [
+        0.6132748212026005
+      ],
+      "purchase_accounting": {
+        "end_mortgage_floor_violation_mass": 0.0,
+        "mass_tolerance": 2e-10,
+        "maximum_occupied_end_debt_shortfall": 0.0,
+        "maximum_occupied_transaction_wealth_error": 1.4210854715202004e-14,
+        "purchase_threshold_violation_mass": 0.0,
+        "transaction_outside_grid_mass": 0.0,
+        "wealth_tolerance": 1e-09
+      },
+      "receipt_scale": 0.014109595344202822,
+      "relative_market_residual": 1.2189565404153502e-05,
+      "source_pins": {
+        "diagnostic_files": {
+          "e5f_estate_receipt_jump.py": "a38f92048c5b2e42942a34da99f55b7deb511c10ef0df2d81c059cf8e76b4712",
+          "e5f_estate_receipt_risk_adapter.py": "072ce3417b12f8230de6b7b7dbdc595fb0050f7cd8f21fbcb41758feffe8f4c5",
+          "run_e5f_estate_receipt_risk.py": "67e888d12d15a2742973596a4bdad01e288f2cc139bcdf3ee2ce1b69af95d052",
+          "test_e5f_estate_receipt_jump.py": "3cf467c538f8fb6b4d66893bf51f42ce25c055c562a8805fc7c32bc6549ff207",
+          "test_e5f_estate_receipt_risk_adapter.py": "4bd2732b8e78c072fe9998232d028d96438d19c79e3a5682e8bbfa62b76d827a"
+        },
+        "frozen_source_manifest": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6",
+        "objective": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+        "receipt_profile": "2eee25640eeadd30a7ff798b2f81354e79fbdab5dec3b7a6000aa0526eda04d7",
+        "retained_net_checkpoint": "fa0b8e4764a57c9066ee449b04bac1b20fb54d32d909df7c3109b3bd91bb42db",
+        "selected_original_checkpoint": "d5ef71bdaf9960273035c722a2428a55f14bab160e0596881c8a981e67b8ead1"
+      },
+      "status": "completed_experimental_fixed_price_case",
+      "target_system_sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+      "wall_seconds": 70.37396939692553,
+      "zero_receipt_exact_reproduction": true
+    },
+    {
+      "case": "conditional_mean",
+      "clipped_wealth_loss": 0.0,
+      "estate_accounts": {
+        "generated_gross_period": 0.1292169631263634,
+        "generated_net_period": 0.11621828645834616,
+        "interpretation": "fixed receipt scale; funding residual reported, not closed",
+        "paid_minus_generated": -0.001528330971119804,
+        "paid_period": 0.11468995548722635
+      },
+      "experimental_changes": "age-pooled receipt profile, restricted age support, IID zero/positive risk versus certain conditional mean, start-period wealth timing; fixed net-valuation price and fixed scale; no recalibration; inherited experimental tax",
+      "fiscal": {
+        "actual_accounts": {
+          "implied_balanced_payroll_tax": 0.08751017424951948,
+          "implied_balanced_pension_period": 1.0004326356578979,
+          "payroll_tax_base_period": 2.963205896677181,
+          "payroll_tax_rate": 0.08751017424959717,
+          "payroll_tax_revenue": 0.2593106643556539,
+          "pension_budget_residual": 2.302047441560262e-13,
+          "pension_outlays": 0.2593106643554237,
+          "pension_period_units": 1.0004326356570097,
+          "retiree_benefit_exposure": 0.2591985258309049,
+          "retiree_household_mass": 0.2591985258309049,
+          "scaled_pension_budget_residual": 8.877565630709738e-13,
+          "worker_household_mass": 0.7408014741690112
+        },
+        "fiscal_gate": true,
+        "fiscal_tolerance": 1e-06,
+        "marginal_gate": true,
+        "marginal_tolerance": 1e-09,
+        "normalized_age_income_max_gap": 1.464800503114816e-14
+      },
+      "fixed_preference_birth_replacement_gap": 0.043601814275303734,
+      "household_budget": {
+        "actual_rent": 0.1105608130536379,
+        "budget_excess_mass": 0.0,
+        "budget_tolerance": 1e-09,
+        "maximum_occupied_excess": 2.842170943040401e-14
+      },
+      "loss": 584.3918830207601,
+      "market_clearing_required": false,
+      "operator_gates": {
+        "birth_flow": 0.12099406900185786,
+        "birth_flow_abs_error": 3.608224830031759e-16,
+        "effective_mature_flow_B": 0.05738521726583699,
+        "entry_flow_E": 0.06173345618081283,
+        "mature_flow_abs_error": 1.4779844015322396e-15,
+        "one_step_constant_path_nesting_l1": 9.307743462881289e-14,
+        "reconstructed_baseline_births": 0.12099406900185786,
+        "reconstructed_effective_mature_flow_B": 0.05738521726583551,
+        "stationary_birth_flow": 0.1209940690018575,
+        "stationary_feasibility_projection_mass": 0.0,
+        "stationary_post_fertility_nesting_l1": 3.2015720330572814e-15,
+        "stationary_post_fertility_nesting_max_abs": 4.487327898273436e-17,
+        "stationary_topcode_adjusted_birth_flow": 0.135550505965749,
+        "top_bin_entry_birth_flow": 0.024165699799867935,
+        "topcode_adjusted_birth_flow": 0.1355505059657493,
+        "topcode_adjusted_birth_flow_abs_error": 3.0531133177191805e-16,
+        "zero_entry_mass_accounting_residual": 1.1102230246251565e-16
+      },
+      "payroll_tax": 0.08751017424959717,
+      "policy_array_gates": {
+        "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+        "lower_node_mass_at_negative_steps": 0.0,
+        "maximum_occupied_value_drop": 0.0,
+        "occupied_negative_steps": 0,
+        "probabilities": {
+          "continuation_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "first_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "location": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "tenure": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          }
+        },
+        "share_pre_choice_mass_at_negative_steps": 0.0,
+        "value_drop_tolerance": 1e-07
+      },
+      "price": [
+        0.6132748212026005
+      ],
+      "purchase_accounting": {
+        "end_mortgage_floor_violation_mass": 0.0,
+        "mass_tolerance": 2e-10,
+        "maximum_occupied_end_debt_shortfall": 0.0,
+        "maximum_occupied_transaction_wealth_error": 1.4210854715202004e-14,
+        "purchase_threshold_violation_mass": 0.0,
+        "transaction_outside_grid_mass": 0.0,
+        "wealth_tolerance": 1e-09
+      },
+      "receipt_scale": 0.014109595344202822,
+      "relative_market_residual": 0.028461189357589393,
+      "source_pins": {
+        "diagnostic_files": {
+          "e5f_estate_receipt_jump.py": "a38f92048c5b2e42942a34da99f55b7deb511c10ef0df2d81c059cf8e76b4712",
+          "e5f_estate_receipt_risk_adapter.py": "072ce3417b12f8230de6b7b7dbdc595fb0050f7cd8f21fbcb41758feffe8f4c5",
+          "run_e5f_estate_receipt_risk.py": "67e888d12d15a2742973596a4bdad01e288f2cc139bcdf3ee2ce1b69af95d052",
+          "test_e5f_estate_receipt_jump.py": "3cf467c538f8fb6b4d66893bf51f42ce25c055c562a8805fc7c32bc6549ff207",
+          "test_e5f_estate_receipt_risk_adapter.py": "4bd2732b8e78c072fe9998232d028d96438d19c79e3a5682e8bbfa62b76d827a"
+        },
+        "frozen_source_manifest": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6",
+        "objective": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+        "receipt_profile": "2eee25640eeadd30a7ff798b2f81354e79fbdab5dec3b7a6000aa0526eda04d7",
+        "retained_net_checkpoint": "fa0b8e4764a57c9066ee449b04bac1b20fb54d32d909df7c3109b3bd91bb42db",
+        "selected_original_checkpoint": "d5ef71bdaf9960273035c722a2428a55f14bab160e0596881c8a981e67b8ead1"
+      },
+      "status": "completed_experimental_fixed_price_case",
+      "target_system_sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+      "wall_seconds": 60.85440777905751,
+      "zero_receipt_exact_reproduction": false
+    },
+    {
+      "case": "receipt_lottery",
+      "clipped_wealth_loss": 0.0,
+      "estate_accounts": {
+        "generated_gross_period": 0.1346851421356084,
+        "generated_net_period": 0.12159352731265045,
+        "interpretation": "fixed receipt scale; funding residual reported, not closed",
+        "paid_minus_generated": -0.006903571825426766,
+        "paid_period": 0.11468995548722369
+      },
+      "experimental_changes": "age-pooled receipt profile, restricted age support, IID zero/positive risk versus certain conditional mean, start-period wealth timing; fixed net-valuation price and fixed scale; no recalibration; inherited experimental tax",
+      "fiscal": {
+        "actual_accounts": {
+          "implied_balanced_payroll_tax": 0.08751017424951113,
+          "implied_balanced_pension_period": 1.0004326356579933,
+          "payroll_tax_base_period": 2.9632058966773114,
+          "payroll_tax_rate": 0.08751017424959717,
+          "payroll_tax_revenue": 0.25931066435566535,
+          "pension_budget_residual": 2.549627176051672e-13,
+          "pension_outlays": 0.2593106643554104,
+          "pension_period_units": 1.0004326356570097,
+          "retiree_benefit_exposure": 0.2591985258308916,
+          "retiree_household_mass": 0.2591985258308916,
+          "scaled_pension_budget_residual": 9.832326728200634e-13,
+          "worker_household_mass": 0.7408014741690246
+        },
+        "fiscal_gate": true,
+        "fiscal_tolerance": 1e-06,
+        "marginal_gate": true,
+        "marginal_tolerance": 1e-09,
+        "normalized_age_income_max_gap": 1.5501488981328748e-14
+      },
+      "fixed_preference_birth_replacement_gap": 0.018326215417318,
+      "household_budget": {
+        "actual_rent": 0.1105608130536379,
+        "budget_excess_mass": 0.0,
+        "budget_tolerance": 1e-09,
+        "maximum_occupied_excess": 2.842170943040401e-14
+      },
+      "loss": 388.61181278521275,
+      "market_clearing_required": false,
+      "operator_gates": {
+        "birth_flow": 0.1179504000562062,
+        "birth_flow_abs_error": 1.3877787807814457e-17,
+        "effective_mature_flow_B": 0.05593718260009519,
+        "entry_flow_E": 0.061733456180816895,
+        "mature_flow_abs_error": 1.5959455978986625e-15,
+        "one_step_constant_path_nesting_l1": 1.0057084146476862e-13,
+        "reconstructed_baseline_births": 0.1179504000562062,
+        "reconstructed_effective_mature_flow_B": 0.05593718260009679,
+        "stationary_birth_flow": 0.11795040005620622,
+        "stationary_feasibility_projection_mass": 0.0,
+        "stationary_post_fertility_nesting_l1": 2.188556787969386e-15,
+        "stationary_post_fertility_nesting_max_abs": 4.4897355552321044e-17,
+        "stationary_topcode_adjusted_birth_flow": 0.13206042579086155,
+        "top_bin_entry_birth_flow": 0.02342459538126823,
+        "topcode_adjusted_birth_flow": 0.13206042579086164,
+        "topcode_adjusted_birth_flow_abs_error": 8.326672684688674e-17,
+        "zero_entry_mass_accounting_residual": 4.440892098500626e-16
+      },
+      "payroll_tax": 0.08751017424959717,
+      "policy_array_gates": {
+        "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+        "lower_node_mass_at_negative_steps": 0.0,
+        "maximum_occupied_value_drop": 0.0,
+        "occupied_negative_steps": 0,
+        "probabilities": {
+          "continuation_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "first_birth": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "location": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          },
+          "tenure": {
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "nonfinite": 0
+          }
+        },
+        "share_pre_choice_mass_at_negative_steps": 0.0,
+        "value_drop_tolerance": 1e-07
+      },
+      "price": [
+        0.6132748212026005
+      ],
+      "purchase_accounting": {
+        "end_mortgage_floor_violation_mass": 0.0,
+        "mass_tolerance": 2e-10,
+        "maximum_occupied_end_debt_shortfall": 0.0,
+        "maximum_occupied_transaction_wealth_error": 1.4210854715202004e-14,
+        "purchase_threshold_violation_mass": 0.0,
+        "transaction_outside_grid_mass": 0.0,
+        "wealth_tolerance": 1e-09
+      },
+      "receipt_scale": 0.014109595344202822,
+      "relative_market_residual": 0.02580528824703495,
+      "source_pins": {
+        "diagnostic_files": {
+          "e5f_estate_receipt_jump.py": "a38f92048c5b2e42942a34da99f55b7deb511c10ef0df2d81c059cf8e76b4712",
+          "e5f_estate_receipt_risk_adapter.py": "072ce3417b12f8230de6b7b7dbdc595fb0050f7cd8f21fbcb41758feffe8f4c5",
+          "run_e5f_estate_receipt_risk.py": "67e888d12d15a2742973596a4bdad01e288f2cc139bcdf3ee2ce1b69af95d052",
+          "test_e5f_estate_receipt_jump.py": "3cf467c538f8fb6b4d66893bf51f42ce25c055c562a8805fc7c32bc6549ff207",
+          "test_e5f_estate_receipt_risk_adapter.py": "4bd2732b8e78c072fe9998232d028d96438d19c79e3a5682e8bbfa62b76d827a"
+        },
+        "frozen_source_manifest": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6",
+        "objective": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+        "receipt_profile": "2eee25640eeadd30a7ff798b2f81354e79fbdab5dec3b7a6000aa0526eda04d7",
+        "retained_net_checkpoint": "fa0b8e4764a57c9066ee449b04bac1b20fb54d32d909df7c3109b3bd91bb42db",
+        "selected_original_checkpoint": "d5ef71bdaf9960273035c722a2428a55f14bab160e0596881c8a981e67b8ead1"
+      },
+      "status": "completed_experimental_fixed_price_case",
+      "target_system_sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+      "wall_seconds": 61.39058091503102,
+      "zero_receipt_exact_reproduction": false
+    }
+  ],
+  "decision_scope": "receipt-risk attribution only; economic specification remains experimental",
+  "elapsed_seconds": 210.96709800197277,
+  "household_solves": 3,
+  "source_pins": {
+    "diagnostic_files": {
+      "e5f_estate_receipt_jump.py": "a38f92048c5b2e42942a34da99f55b7deb511c10ef0df2d81c059cf8e76b4712",
+      "e5f_estate_receipt_risk_adapter.py": "072ce3417b12f8230de6b7b7dbdc595fb0050f7cd8f21fbcb41758feffe8f4c5",
+      "run_e5f_estate_receipt_risk.py": "67e888d12d15a2742973596a4bdad01e288f2cc139bcdf3ee2ce1b69af95d052",
+      "test_e5f_estate_receipt_jump.py": "3cf467c538f8fb6b4d66893bf51f42ce25c055c562a8805fc7c32bc6549ff207",
+      "test_e5f_estate_receipt_risk_adapter.py": "4bd2732b8e78c072fe9998232d028d96438d19c79e3a5682e8bbfa62b76d827a"
+    },
+    "frozen_source_manifest": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6",
+    "objective": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+    "receipt_profile": "2eee25640eeadd30a7ff798b2f81354e79fbdab5dec3b7a6000aa0526eda04d7",
+    "retained_net_checkpoint": "fa0b8e4764a57c9066ee449b04bac1b20fb54d32d909df7c3109b3bd91bb42db",
+    "selected_original_checkpoint": "d5ef71bdaf9960273035c722a2428a55f14bab160e0596881c8a981e67b8ead1"
+  },
+  "status": "completed"
+}

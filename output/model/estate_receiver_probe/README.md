@@ -1,5 +1,267 @@
 # Estate recipient diagnostic
 
+## Receipt-risk finding — completed September 26
+
+**Inheritance uncertainty matters.** The matched fixed-price test completed in
+Torch job 18571183 in 3 minutes 35 seconds. It compares no receipts, a certain
+age-specific payment, and a zero/positive lottery with exactly the same
+age-specific mean as the certain payment. Prices, the receipt-profile scale,
+preferences, entry, earnings and the inherited fiscal/target contract are fixed.
+All receipt-law changes are experimental and unadopted.
+
+The numerical follow-up completed in job 18571631 in 11 minutes 4 seconds,
+using 319 rather than 160 wealth nodes. It includes an independent unpatched
+control plus the same three-case comparison. The table below uses this finer
+grid; the [original-grid readout](results/receipt_risk/v1/report/README.md) is
+retained separately.
+
+| Moment | Target | No receipts | Certain mean | Lottery |
+|---|---:|---:|---:|---:|
+| Ownership, ages 30–55 (%) | 67.626 | 75.555 | 73.461 | 75.661 |
+| Recent-parent ownership gap (percentage points) | 12.761 | 7.984 | 3.036 | 6.369 |
+| Childlessness (%) | 19.828 | 17.502 | 14.544 | 16.177 |
+| Fertility | 2.100 | 2.126 | 2.217 | 2.166 |
+| Wealth / annual earnings | 6.927 | 6.054 | 5.961 | 6.251 |
+| Mean rooms | 5.608 | 6.553 | 6.724 | 6.707 |
+
+The complete [comparison and visual packet](results/receipt_risk/finer_grid_v2/report/README.md)
+includes [all target fits, weights and loss contributions](results/receipt_risk/finer_grid_v2/report/full_target_fit.csv)
+and [all parameter estimates, bounds and restrictions](results/receipt_risk/finer_grid_v2/report/parameters.csv).
+The finer-grid fixed-parameter losses are 302.060, 624.166 and 424.947;
+the original-grid losses are 281.190, 584.392 and 388.612. They
+describe fit under the old experimental target contract, not model selection
+or a new calibrated specification.
+
+The original-grid no-receipt control reproduces the retained net-valuation
+arrays, pre-choice distribution, price and every target exactly. The finer-grid
+control reproduces independently solved unpatched arrays and its calendar
+distribution exactly. All 13 current focused tests, the ordered-loop smoke,
+and original budget, purchase, fiscal, calendar, value and probability gates
+pass. Occupied receipt clipping is zero. The 102 standard diagnostic figures
+across both three-case packets are retained unchanged and have been visually
+inspected through complete contact sheets.
+
+The matched test establishes that replacing uncertain receipts by their
+conditional mean substantially changes household behavior. It does not
+attribute every difference from the earlier equal age46–62 payment to risk:
+that earlier experiment also had a different age profile, timing and endogenous
+prices. The recent-parent statistic is a descriptive ownership gap, not a
+causal birth effect. The lottery improves the wealth/earnings comparison but
+leaves material housing-size, childlessness and parent-gap discrepancies.
+
+**Lead recommendation:** use stochastic adult receipts as the candidate for
+funded equilibrium and recalibration. Do not retain guaranteed equal payments
+as the preferred inheritance law, and do not select a receipt law from the
+unrecalibrated loss. Keep observed entrant financial positions separate,
+with their funding and creditor counterparties explicit. The empirical
+age-only pooling, unsupported-age restriction, IID arrival assumption and
+start-period timing must remain visible in the final contract.
+
+The fixed-price cases intentionally do not clear housing or rebalance estates.
+On the finer grid, housing excess demand is 2.952% under certainty and 2.691%
+under risk; the lottery generates more estates than it pays by 6.446e-3 period
+model units. Those feedbacks belong in the funded equilibrium stage.
+
+The [nested-grid comparison](results/receipt_risk/finer_grid_v2/report/grid_effect_comparison.csv)
+preserves the original entry point masses and their income conditionals
+exactly, placing zero entry mass at inserted knots. Its first attempt stopped
+at the fixed-entry-grid safeguard; the corrected and tested embedding changes
+numerical indices only. Prices and the receipt scale remain common across
+grids. The lottery effects relative to each grid's own no-receipt control are
+stable on this refinement: the recent-parent gap changes by −1.611 versus
+−1.615 percentage points; childlessness falls by 1.325 points on both grids;
+fertility rises by 0.040 on both; wealth/earnings rises by 0.198 versus 0.196.
+Ownership changes by +0.199 versus +0.105 points, so describe that effect as
+small rather than attach importance to its magnitude.
+
+**Separate numerical issue:** baseline levels are not established as converged.
+Without receipts, refinement lowers the parent-ownership gap by 0.984 points,
+lowers childlessness by 0.825 points and raises fertility by 0.026. This must
+be addressed in the final calibration/convergence work. Stable receipt
+differences on two grids do not certify converged calibration levels or policy
+effects. The main integration task has this finding and owns its inclusion in
+the final quantitative acceptance checks.
+
+For integration, the stationary receipt hooks are not yet a dated policy
+transition. If the estate scale changes over calendar time, the backward
+continuation from date $t$ and the forward advance into date $t+1$ must both
+use the **receiving date's** receipt law. Stationary age profiles coincide
+across dates in this experiment, so it does not test that dated indexing.
+The funded implementation must also derive the donor pool from the accepted
+household mortality rule and explicitly state taxes, non-household recipients,
+any credit losses at death and the funding of entrant financial positions.
+
+## Resolution work — September 26, 2026
+
+The author requires the open model issues to be scientifically evaluated and
+resolved this week. The working integration deadline is Sunday, September 27.
+The existing advisor checklist owns the consolidated issue list; this packet
+owns estate recipients, their resource account, and compatibility with entrant
+wealth. The completed comparison below remains valid experimental evidence.
+It does not establish that its uniform, certain payment is the preferred
+inheritance specification, nor does a larger fixed-parameter loss select the
+appropriate receipt law.
+
+### Evidence that disciplines the next decision
+
+- [Sommer, Sullivan, and Verbrugge (2013), p. 857](https://www.kamilasommer.net/RentPriceRatio.pdf)
+  explicitly send estate proceeds to government spending that does not affect
+  household utility. Thus no household receipt can be an explicit resource
+  closure. Their model does not by itself justify this project's warm-glow
+  interpretation or its externally initialized entrant wealth. A government
+  recipient cannot be silently relabeled as an inheritance received by children.
+- [Feiveson and Sabelhaus (2018), Federal Reserve note](https://www.federalreserve.gov/econres/notes/feds-notes/how-does-intergenerational-wealth-transmission-affect-wealth-concentration-20180601.html)
+  supplies inheritance probabilities and conditional amounts by age and usual-
+  income group, with [accessible Figure 3 data](https://www.federalreserve.gov/econres/notes/feds-notes/how-does-intergenerational-wealth-transmission-affect-wealth-concentration-accessible-20180601.htm).
+  These are pooled SCF 1995–2016 estimates, not a new 2007 estimate. Receipt
+  probabilities refer to the previous three years; the income groups are
+  within-age usual-income ranks. They are not automatically model labor-income
+  ranks. The table covers ages 25–80 and does not supply sampling uncertainty.
+- The existing public SCF 2007 codebook, inheritance section lines 27644–27739,
+  excludes deceased-spouse receipts, combines life insurance and inherited
+  trusts with inheritance in the public type code, and rounds receipt years
+  to the nearest five years. A precise three- or four-year receipt hazard
+  cannot be reconstructed from those rounded years. Donor-side estate-flow
+  estimates in the existing 2007 packet do not identify recipient incidence.
+
+### Finite experimental design and implementation
+
+Use one pinned household specification for a no-receipt control and an initial
+fixed-price, fixed-funding-scale pair: a deterministic conditional-mean
+transfer and a lottery with the **same age-conditional mean**. This
+pair isolates receipt risk. Subsequently solving separately funded equilibria
+adds endogenous price and estate-pool feedback and is a different comparison.
+The old equal payment to ages46–62 is retained as a separate comparison.
+A fixed-price evaluation is an attribution check within this design, not a
+substitute for resolving the receipt rule. Do not vary estate valuation,
+preferences, earnings, initial
+wealth, tax, or targets between the paired new cases. Any later integration
+of independently accepted changes needs a new common control and full change
+disclosure. The four-utility overnight source remains untouched.
+
+For a published three-year probability $p_3$ and conditional total receipt
+$a_3$, the proposed diagnostic period mapping is
+\[
+p_4=1-(1-p_3)^{4/3},\qquad
+\mu_4=\frac43p_3a_3,\qquad
+a_4=\mu_4/p_4.
+\]
+It assumes a constant arrival intensity within the age/income cell and
+preserves annual expected receipts. It is not an estimated four-year law.
+Representing all positive receipts by $a_4$ also omits variation in size
+conditional on receipt. The published accessible amount header has an unclear
+unit label; use only its relative amount profile until the physical units are
+independently verified. A common source-unit conversion cancels when the
+profile is scaled to the model estate pool.
+
+For pre-receipt household mass $g(x)$ and conditional expected relative
+receipt $\mu(x)$, the funded scale is
+\[
+\lambda=\frac{D}{\sum_x g(x)\mu(x)},\qquad
+T^{\rm mean}(x)=\lambda\mu(x),\qquad
+T^{\rm lottery}(x)=\begin{cases}
+\lambda a_4(x)&\text{with probability }p_4(x),\\
+0&\text{otherwise.}
+\end{cases}
+\]
+Here $D$ is the estate pool available to the modeled recipients after the
+explicitly specified liquidation costs, taxes and external recipients. The
+funding identity must be recomputed in equilibrium. For a pure fixed-price,
+fixed-transfer risk comparison, hold the same $\lambda$ in both cases and
+report the resulting funding residual; do not call that mechanical comparison
+a balanced equilibrium. In separate equilibria, changed donor behavior can
+change $D$ and hence $\lambda$; this feedback must be reported separately.
+
+Keep positive estates and unpaid liabilities separate. If the signed net
+estate is $e=b'+(1-\psi)qh$, define
+\[
+D^+=\sum_x d(x)g(x)\max(e(x),0),\qquad
+L=\sum_x d(x)g(x)\max(-e(x),0),\qquad
+D^{\rm signed}=D^+-L.
+\]
+The positive pool funds household or external recipients and any estate tax.
+$L$ instead identifies liabilities left at exit and requires a creditor/recovery
+rule; do not automatically deduct $L$ from unrelated positive estates or call
+it government expenditure. Selling costs are already inside $e$ and must not
+be deducted a second time. If a modeled exit is the death of the entire
+household decision unit, transfers to a surviving spouse within that unit are
+not an additional cross-household receipt. Reconcile that interpretation with
+the mortality mapping being reviewed by its existing owner.
+
+The three-case fixed-price driver now makes these four experimental choices
+explicit. It uses the exact published age nodes 26,30,...,78 and restricts
+receipts to zero at 18,22,82; the unsupported-age restriction is not an
+empirical finding. It pools published usual-income groups with weights
+0.5/0.4/0.1, avoiding an unsupported mapping to model labor-income states,
+especially during retirement. At each age, the zero/positive approximation
+preserves the pooled probability and expected amount. Receipts are liquid
+wealth at the start of the receiving period, before interest and choices:
+$b\mapsto b+X$. They are not also added to income. This timing differs from
+the old uniform income-transfer diagnostic and is held fixed across the new
+mean/lottery pair. Receipts are independent across periods; a one-lifetime-
+receipt restriction would be a separate economic assumption.
+
+The implemented backward operator is $QV$ and the forward operator is
+$Q^\top g$, with identical positive wealth-grid interpolation weights. It adds
+no persistent state. The forward pass rejects any occupied wealth clipping;
+it records receipt flows and verifies the financial-wealth and mass
+identities. The same operator enters the native stationary distribution and
+cohort transition used by the calendar and event observers. Exact control
+array/target reproduction and the original calendar, budget, fiscal and
+probability gates must pass. Housing and estate funding residuals are
+reported, because prices and the estate-profile scale are fixed in this
+attribution test. They are not treated as cleared markets or a funded GE.
+
+### Decision and verification requirements
+
+1. Reconcile the donor estate definition, surviving-spouse transfers,
+   non-household recipients, debt written off at death, and external entry
+   endowments. An external resource account is permitted only when explicitly
+   stated and used consistently in policy comparisons. Do not automatically
+   subtract later inheritance from observed entry wealth.
+2. Preserve the exact no-receipt control. Verify zero-probability and
+   probability-one limits; mass and wealth conservation at every receipt
+   transition; identical backward/forward shock weights; purchase and debt
+   feasibility; payroll/income-observer exclusion; and the original value,
+   fiscal and market gates. Inspect numerical sensitivity where receipt
+   interpolation crosses down-payment thresholds.
+3. Report the full target-fit and parameter tables plus the stable diagnostic
+   figures. The focal economic diagnostics are ownership and wealth before
+   receipt, ownership after receipt, the recent-parent ownership **gap**
+   (a descriptive association), childlessness, fertility timing, house prices,
+   and wealth dispersion. Do not select on the scalar loss alone.
+4. Compare recalibrated specifications using one common target contract and
+   identifying restrictions before testing the central policy claim. A
+   deadline does not convert a failed gate, underidentification, or an
+   unsupported receipt mapping into evidence. Resolution requires a backed
+   specification choice or an explicit revision of the quantitative claim,
+   rather than another undated diagnostic proposal.
+
+The source extraction and period-mapping builder is implemented in
+`code/data/scf/build_inheritance_receipt_profile.py`. Torch job 18569789 passed
+all eight tests and retained all 168 published rows. The largest annual-mean
+mapping identity residual was 1.776e-15. The HTML source hash and the published
+and mapped tables are in `results/recipient_evidence/v1/`.
+`code/model/tools/audit_e5f_estate_resource_account.py` audits the retained
+signed estates, sale costs, liabilities at exit and entrant financial positions
+without a new household solve. Job 18569810 passed the signed liquidation-cost
+and estate-observer identities. Negative net estates are exactly zero in all
+three retained cases; mean entrant wealth remains 0.186520 annual-earnings
+units in each. The full by-age account is in
+`results/recipient_evidence/accounts_v1/resource_account.json`. This is a
+household-boundary account, not a national resource-constraint certification.
+
+The wealth-jump primitive passed six tests in Torch job 18570774. The new
+adapter is `code/model/tools/e5f_estate_receipt_risk_adapter.py`; the bounded
+driver is `code/model/tools/run_e5f_estate_receipt_risk.py`, submitted with
+`code/cluster/submit_e5f_estate_receipt_risk.sh`. It permits three fixed-price
+household solves, has a 25-minute execution cap, writes a heartbeat every
+55 seconds and complete-case/best-fit receipts, and produces the unchanged
+17-plot packet plus full fit and parameter tables for each case. The exact
+case-loop fixture and adapter tests run before household execution. Reference
+and source identities are pinned in its contract. No new recipient law,
+entry law or production target has been adopted by this experimental work.
+
 ## Status — September 26, 2026
 
 Author requested the three-way test discussed in the bequest-accounting task.
