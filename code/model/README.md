@@ -39,6 +39,13 @@ old incomplete bundles must be rebuilt from their matching solution or re-solved
 
 ## Earnings and wealth candidate tools
 
+The [four-arm utility preparation](../../docs/model/utility_four_arm_preparation.md)
+uses `tools/run_e5f_utility_comparison.py` with a separate runtime adapter and
+finite search design. It reuses the frozen September25 reconciliation, adds
+the adopted pension-ratio binding and explicitly experimental preference arms,
+and requires a reviewed contract before objective execution. Preparation
+receipts are in `../../output/model/utility_comparison/`.
+
 The requested [estate recipient diagnostic](../../output/model/estate_receiver_probe/README.md)
 uses `tools/run_e5f_estate_receiver_probe.py` and its isolated adapter to compare
 the September 25 selected control, net estate valuation, and net valuation plus
