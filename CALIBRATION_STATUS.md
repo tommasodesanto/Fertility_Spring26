@@ -1,5 +1,29 @@
 # Calibration Status
 
+## September 26 evening — bounded travel-window diagnostic and deferred decisions
+
+The author requests approximately 30 minutes of Torch work while travelling
+home, followed by joint specification decisions. Continue the existing
+housing-cost diagnostic, job 18605876, verified RUNNING at 21:32 of its
+40-minute cap around 22:20 UTC. Complete the fixed-benefit and fertility-matched
+floor versus first-child-share comparisons described in
+`output/model/housing_fertility_cost_diagnostic/README.md`. If its internal
+cutoff leaves missing cases, a continuation may solve only those cases from
+saved history, with unchanged economic assumptions and no duplicated solves.
+Stop by approximately 22:50 UTC, reserving time for saved-result checks and
+reporting. No broader search or specification adoption is authorized by this
+travel-window run. The newly chosen estate-funded entry accounting is not
+introduced into this frozen diagnostic.
+
+Retain the current rental restriction/menu and static supply for now. Financing
+remains open, specifically the comparison with Dynamic Urban Economics rather
+than automatic addition of a payment-to-income restriction. The interest rate
+also remains on the review list: the frozen run uses 2 percent annually, which
+is inherited rather than newly approved. Existing numerical target decisions
+are not reopened; implementation and model-measurement consistency remain
+separate outstanding work. The online checklist owner has been sent these
+decisions and retains sole ownership of the Google Doc updates.
+
 ## September 26 later — author chooses estate-funded entry and residual sink
 
 **Author decision, implementation pending:** fund the empirically disciplined
