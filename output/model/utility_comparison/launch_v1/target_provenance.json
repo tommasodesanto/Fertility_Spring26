@@ -1,0 +1,316 @@
+{
+  "displayed_rows": 13,
+  "free_parameter_counts": {
+    "floor": 8,
+    "shares": 9
+  },
+  "identification": "moment count only; no numerical rank or identification claim",
+  "normalization": {
+    "parameter": "psi_child",
+    "status": "externally fixed normalization; parameter derived separately",
+    "target": 2.1,
+    "weight": null
+  },
+  "positive_weight_rows": 12,
+  "target_rows": [
+    {
+      "candidate_estimates": null,
+      "definition": "Author-selected stationary model normalization, using maintained top-parity representative; not empirical female period TFR",
+      "id": "initial_normalization",
+      "label": "Initial model completed fertility",
+      "mapping_warning": "Separate from CPS age-window stocks and actual birth/entry accounting.",
+      "model_observation": "final.normalization.completed_fertility",
+      "sample": "Author-selected stationary model normalization, using maintained top-parity representative; not empirical female period TFR",
+      "source": {
+        "builder": "Author-selected model normalization, not empirical estimation",
+        "contract_id": "author_initial_model_fertility_2_1",
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/OVERNIGHT_PLAN.md",
+        "record_id": "author_2_1"
+      },
+      "standard_error": null,
+      "status": "author-fixed unscored normalization",
+      "target": 2.1,
+      "uncertainty_status": "Author normalization; no empirical SE",
+      "weight": null,
+      "weight_status": "separate_unscored_normalization"
+    },
+    {
+      "candidate_estimates": null,
+      "definition": "Weighted P(FREVER=0) among pooled June 2004 and June 2006 women age 40-44 with valid FREVER 0-20 and positive FRSUPPWT.",
+      "id": "cps_childlessness",
+      "label": "Childless women, ages 40\u201344",
+      "mapping_warning": "Uniform birth-time parity interpolation is the main diagnostic; constant-post-cell sensitivity retained. Model household reproductive member is not certified female exposure; no empirical age reweighting.",
+      "model_observation": "fertility.uniform_birth_time.moments.childless_rate_40_44",
+      "sample": "June, femaleSEX2,age40-44,FREVER0-20,FRSUPPWT>0;excludeFREVER999NIU; 2004+2006 pooled weighted records; Weighted P(FREVER=0) among pooled June 2004 and June 2006 women age 40-44 with valid FREVER 0-20 and positive FRSUPPWT.",
+      "source": {
+        "builder": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/parameter_target_audit/fertility/extract_fertility_availability.py; /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/verify_fertility_contract.py",
+        "contract_id": "early_cps_nchs_fertility_certification_20260911_v2_not_activated",
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/parameter_target_audit/fertility/fertility_availability.json",
+        "record_id": "cps_childless_women_40_44_2004_2006"
+      },
+      "standard_error": null,
+      "status": "retained existing target unchanged",
+      "target": 0.19827875100684264,
+      "uncertainty_status": "annual_generalized_variance_approximation_recovered_pooled_covariance_not_certified",
+      "weight": 35532.3042455214,
+      "weight_status": "frozen_lead_selected_working_minimum_distance_weight"
+    },
+    {
+      "candidate_estimates": null,
+      "definition": "Weighted P(FREVER=1 | FREVER>=1) in the same pooled CPS sample.",
+      "id": "cps_exactly_one",
+      "label": "Exactly one child among mothers, ages 40\u201344",
+      "mapping_warning": "Uniform birth-time parity interpolation is the main diagnostic; constant-post-cell sensitivity retained. Model household reproductive member is not certified female exposure; no empirical age reweighting.",
+      "model_observation": "fertility.uniform_birth_time.moments.exactly_one_among_mothers_40_44",
+      "sample": "June, femaleSEX2,age40-44,FREVER0-20,FRSUPPWT>0;excludeFREVER999NIU; 2004+2006 pooled weighted records; Weighted P(FREVER=1 | FREVER>=1) in the same pooled CPS sample.",
+      "source": {
+        "builder": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/parameter_target_audit/fertility/extract_fertility_availability.py; /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/verify_fertility_contract.py",
+        "contract_id": "early_cps_nchs_fertility_certification_20260911_v2_not_activated",
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/parameter_target_audit/fertility/fertility_availability.json",
+        "record_id": "cps_exactly_one_among_mothers_40_44_2004_2006"
+      },
+      "standard_error": null,
+      "status": "retained existing target unchanged",
+      "target": 0.21365532522014702,
+      "uncertainty_status": "annual_generalized_variance_approximation_recovered_pooled_covariance_not_certified",
+      "weight": 26952.820824310795,
+      "weight_status": "frozen_lead_selected_working_minimum_distance_weight"
+    },
+    {
+      "candidate_estimates": null,
+      "definition": "Pooled national first-birth counts ages 12-49, 2003-2006; age <=21 mapped to midpoint 20, 22-25 to 24, ..., age >=42 to 44; count-weighted mean.",
+      "id": "nchs_mean_age",
+      "label": "Period mean first-birth age",
+      "mapping_warning": "First-birth flow timing, not completed-cohort timing. Household maternal proxy; empirical under-18/over-45 tail collapse retained; raw builder residence and unknown-order comparability remain unresolved.",
+      "model_observation": "fertility.uniform_birth_time.moments.period_mean_age_first_birth",
+      "sample": "US-named raw files; exact/decoded age12-49 and known live-birth order1; 2003 under15 recode mapped14; Pooled national first-birth counts ages 12-49, 2003-2006; age <=21 mapped to midpoint 20, 22-25 to 24, ..., age >=42 to 44; count-weighted mean.",
+      "source": {
+        "builder": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/nchs_natality_timing/build_first_birth_timing.R; /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/verify_fertility_contract.py",
+        "contract_id": "early_cps_nchs_fertility_certification_20260911_v2_not_activated",
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/nchs_natality_timing/first_birth_counts_year_age.csv",
+        "record_id": "nchs_period_mean_age_first_birth_2003_2006"
+      },
+      "standard_error": null,
+      "status": "retained existing target unchanged",
+      "target": 25.976263860992496,
+      "uncertainty_status": "national_count_not_probability_sample",
+      "weight": 139.82806784479274,
+      "weight_status": "frozen_lead_selected_working_minimum_distance_weight"
+    },
+    {
+      "candidate_estimates": null,
+      "definition": "Pooled national first-birth counts ages 12-49, 2003-2006; exact maternal age >=30 divided by all first births in the pooled window.",
+      "id": "nchs_share30",
+      "label": "First births at age 30+",
+      "mapping_warning": "First-birth flow timing, not completed-cohort timing. Household maternal proxy; empirical under-18/over-45 tail collapse retained; raw builder residence and unknown-order comparability remain unresolved.",
+      "model_observation": "fertility.uniform_birth_time.moments.period_share_first_births_age30plus",
+      "sample": "US-named raw files; exact/decoded age12-49 and known live-birth order1; 2003 under15 recode mapped14; Pooled national first-birth counts ages 12-49, 2003-2006; exact maternal age >=30 divided by all first births in the pooled window.",
+      "source": {
+        "builder": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/nchs_natality_timing/build_first_birth_timing.R; /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/fertility_contract/verify_fertility_contract.py",
+        "contract_id": "early_cps_nchs_fertility_certification_20260911_v2_not_activated",
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/nchs_natality_timing/first_birth_counts_year_age.csv",
+        "record_id": "nchs_period_first_birth_share_age30plus_2003_2006"
+      },
+      "standard_error": null,
+      "status": "retained existing target unchanged",
+      "target": 0.2492780130410667,
+      "uncertainty_status": "national_count_not_probability_sample",
+      "weight": 13866.065434728798,
+      "weight_status": "frozen_lead_selected_working_minimum_distance_weight"
+    },
+    {
+      "candidate_estimates": null,
+      "definition": "Ratio of pooled weighted totals: sum(IW*NETWORTHR) among reference persons ages18-85 / sum(IW*EARNINDRRC) among reference persons ages18-65; not total family income and not a mean of household ratios.",
+      "id": "wealth_earnings",
+      "label": "Aggregate net wealth / annual gross labor earnings",
+      "mapping_warning": "Household net worth is scaled by reference-person-plus-spouse gross labor earnings; calendar-specific wealth valuation and earnings-reference-year alignment remains inherited from the PSID shelf and is not newly certified.",
+      "model_observation": "housing_wealth.moments.aggregate_wealth_to_annual_gross_labor_earnings",
+      "sample": "Pooled PSID survey waves 2005 and 2007. Numerator: reference persons ages 18-85 with RELTOHEAD=10, positive finite IW, finite NETWORTHR (11,324 family-years / 6,349 persons). Denominator: ages 18-65 with positive finite IW and finite nonnegative reference-person-plus-spouse gross labor earnings EARNINDRRC (9,750 family-years / 5,521 persons).",
+      "source": {
+        "builder": "code/data/psid_followup_mar2026/audit_aggregate_wealth_earnings_ratio.R; reproduced in output/model/e5f_matched_pf_20260909a/design_research/wealth/build_initial_wealth.R",
+        "contract_id": "author-selected pooled PSID 2005/2007 vintage (CALIBRATION_STATUS.md, 2026-09-23)",
+        "path": "output/model/e5f_matched_pf_20260909a/design_research/wealth/aggregate_wealth_results.csv#initial_2005_2007",
+        "record_id": "aggregate_wealth_gross_labor_earnings_initial_2005_2007"
+      },
+      "standard_error": 0.417310142072186,
+      "status": "author-adopted new target",
+      "target": 6.92658379107299,
+      "uncertainty_status": "Person-ID cluster bootstrap, 999 draws, seed 20260723; dates label PSID survey waves, with detailed within-wave valuation and earnings reference-year metadata inherited from the shelf.",
+      "weight": 7.595098472533724,
+      "weight_status": "unchanged inherited positive calibration weight 7.595098472533724; distinct from updated 2005/2007 bootstrap SE (the old 2003/2005 SE is stale)."
+    },
+    {
+      "candidate_estimates": null,
+      "definition": "Annual child-directed bequest-flow proxy divided by aggregate signed SCF NETWORTH: $674.4895 billion / $92.5096 trillion in 2022 dollars = 0.007291023472616158.",
+      "id": "bequest_wealth",
+      "label": "Annual bequests / aggregate wealth",
+      "mapping_warning": "Experimental approximation: the frozen model observer sums positive estates over all fertility/dependent-child states without child-recipient eligibility or allocation, whereas the adopted SCF ratio is child-directed. No recipient-law change is authorized in this contract.",
+      "model_observation": "housing_wealth.moments.annual_bequest_flow_to_aggregate_wealth",
+      "sample": "2007 SCF; mortality-weighted positive NETWORTH-TRUSTS estate proxy, with qx95 mapping for public ages top-coded at 95; scenario allocates 25% child share for legal marriage and 75% otherwise; aggregate signed NETWORTH denominator.",
+      "source": {
+        "builder": "No checked-in executable builder was retained. Calculation is documented in calculation/verified_receipt.json, calculation/published_method_reconciliation.json, inputs.json, and saved scenario tables; inputs are official 2007 SCF public microdata and 2007 life-table mortality.",
+        "contract_id": "author-adopted target for next calibration; verified SCF calculation receipt",
+        "path": "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/bequest_flow_2007/calculation/verified_receipt.json#/verified_candidate; inputs.json",
+        "record_id": "scf2007_mortality_weighted_child_directed_bequest_flow_over_aggregate_networth"
+      },
+      "standard_error": null,
+      "status": "author-adopted new target",
+      "target": 0.007291023472616158,
+      "uncertainty_status": "inherited synthetic five-percent calibration scale; NOT a standard error",
+      "weight": 5165289.256198346,
+      "weight_status": "frozen_lead_selected_working_minimum_distance_weight"
+    },
+    {
+      "candidate_estimates": null,
+      "definition": "Q_.90(NETWORTHR/INCFAMR)/Q_.50(NETWORTHR/INCFAMR), weighted",
+      "id": "old_dispersion",
+      "label": "Old wealth/income p90 / median, ages 76\u201384",
+      "mapping_warning": "Uniform within-age-cell overlap for ages 76--84 Modeled pension plus configured lump-sum income proxy; not PSID total family income Empirical $1000 real-income and observed-child-history filters are not reproduced At these retirement ages model denominator is pension income (including configured z scaling), while PSID INCFAMR also includes transfers, asset income and other family components. Exact $1000 cutoff is not applied (only income>0), and observed-completed-children selection has no model missingness counterpart. Full 78/82 cells do not cover exactly 76-84. Actual model property-tax lump-sum transfer is zero in this receipt; proxy uses the configured pension-plus-transfer concept.",
+      "model_observation": "housing_wealth.moments.old_total_wealth_to_annual_income_p90_p50_7684",
+      "sample": "Living PSID reference persons ages 76-84, relation_to_head=10, positive IW, completed children observed, INCFAMR>1000; p90/p50 of NETWORTHR/INCFAMR; 2003-2005; 644 valid family-years/416 IDs; bootstrap population 918 living reference IDs ages 65-84, before outcome/children filters.",
+      "source": {
+        "builder": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/wealth/build_initial_wealth.R",
+        "contract_id": "e5f_early_housing_wealth_observer_review_v2_20260911",
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/wealth/old_wealth_results.csv",
+        "record_id": "psid_old_wealth_dispersion_2003_2005"
+      },
+      "standard_error": 0.306910785103348,
+      "status": "retained scored overidentifying; not theta1-identifying",
+      "target": 3.51593508651872,
+      "uncertainty_status": "person bootstrap",
+      "weight": 10.616361531535473,
+      "weight_status": "frozen_lead_selected_working_minimum_distance_weight"
+    },
+    {
+      "candidate_estimates": null,
+      "definition": "sum(HHWT*min(ROOMS,9))/sum(HHWT)",
+      "id": "mean_rooms",
+      "label": "Mean occupied rooms, capped at 9",
+      "mapping_warning": "National ACS target geography is accepted. Remaining mapping limits: model age exposure and policies/distribution are projected uniformly within four-year cells; mean rooms must cap each household at 9 before aggregation, which is not equivalent to capping a collapsed conditional mean.",
+      "model_observation": "housing_wealth.moments.aggregate_mean_occupied_rooms_capped9_18_85",
+      "sample": "National U.S. ACS household heads, ages 18-85; occupied owner or renter homes; HHWT>0; ROOMS>0; survey years 2005-2006 pooled by ratio of weighted sums; no MET2013 restriction.",
+      "source": {
+        "builder": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/housing/inspect_early_housing.py; /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/housing/summarize_early_housing.py",
+        "contract_id": "e5f_early_housing_wealth_observer_review_v2_20260911",
+        "path": "specification_followup/housing_profiles_v1/full/target_recomputed.json#/recomputed/national/mean_rooms",
+        "record_id": "acs_rooms_2005_2006"
+      },
+      "standard_error": null,
+      "status": "author-adopted new target",
+      "target": 5.607885960068579,
+      "uncertainty_status": "National sampling uncertainty not estimated; inherited weight remains the prior 42-metro bootstrap weight.",
+      "weight": 128.02070205233477,
+      "weight_status": "unchanged inherited positive weight; originally based on 42-metro bootstrap, not national sampling variance"
+    },
+    {
+      "candidate_estimates": null,
+      "definition": "sum(HHWT*owner)/sum(HHWT)",
+      "id": "ownership_30_55",
+      "label": "Ownership, heads 30\u201355",
+      "mapping_warning": "National ACS target geography is accepted. The empirical owner sample is restricted to DUE structures UNITSSTR 3:10, a structure-type distinction absent from the model state; age 30-55 is projected through a four-year model cell extending to ages 54-57.",
+      "model_observation": "housing_wealth.moments.own_rate_30_55",
+      "sample": "National U.S. ACS household heads, ages 30-55; owner status OWNERSHP=1; DUE structures UNITSSTR 3:10; valid household/rooms; HHWT>0; survey years 2005-2006; no MET2013 restriction.",
+      "source": {
+        "builder": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/housing/inspect_early_housing.py; /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/housing/summarize_early_housing.py",
+        "contract_id": "e5f_early_housing_wealth_observer_review_v2_20260911",
+        "path": "specification_followup/housing_profiles_v1/full/target_recomputed.json#/recomputed/national/ownership_30_55",
+        "record_id": "acs_ownership_30_55_2005_2006"
+      },
+      "standard_error": null,
+      "status": "author-adopted new target",
+      "target": 0.6762604168538028,
+      "uncertainty_status": "National sampling uncertainty not estimated; inherited weight remains the prior 42-metro bootstrap weight.",
+      "weight": 2339.3623724673616,
+      "weight_status": "unchanged inherited positive weight; originally based on 42-metro bootstrap, not national sampling variance"
+    },
+    {
+      "candidate_estimates": [
+        {
+          "design": "PSID status-at-baseline household head/spouse; +3/+4 versus -3/-2.",
+          "estimate": 1.465,
+          "se": 0.05,
+          "selected": true
+        },
+        {
+          "design": "PSID household design; +3/+4 versus -3/-2.",
+          "estimate": 1.025,
+          "se": 0.073,
+          "selected": false
+        }
+      ],
+      "definition": "A2h Sun-Abraham event-study contrast: +3/+4 interviews relative to -3/-2, among adults who were reference persons or spouses at baseline. Estimate 1.465293280235685 rooms; author-selected rounded target 1.465.",
+      "id": "first_birth_rooms",
+      "label": "First-birth room response, baseline household head/spouse +3/+4 vs -3/-2",
+      "mapping_warning": "The stationary first-birth housing observer approximates this empirical event-study contrast and does not reproduce the Sun-Abraham panel estimator or its baseline-status cohort selection.",
+      "model_observation": "housing_wealth.moments.housing_increment_0to1",
+      "sample": "All-adult IW-weighted PSID first-birth design with household-design choices, confirmed-childless controls, biological birth and cleaned room codes; A2h splits on reference-person/spouse status in the pre-treatment baseline window. A2h fit: 119,334 input observations; 117,853 fitted observations; 9,310 clusters (3,302 treated and 6,008 controls).",
+      "source": {
+        "builder": "code/data/psid_followup_mar2026/sa_rooms_first_birth_household_aligned_v1.do; full reviewed A2h receipt and support files under code/data/psid_followup_mar2026/output/sa_rooms_first_birth_v2/A2h/",
+        "contract_id": "author-selected 1.465 rooms for both experimental arms (CALIBRATION_STATUS.md, 2026-09-25)",
+        "path": "code/data/psid_followup_mar2026/output/sa_rooms_first_birth_v2/A2h/fit_receipt.csv#A2h; code/data/psid_followup_mar2026/output/sa_rooms_first_birth_v2/A2h/run_receipt.json",
+        "record_id": "PSID_all_adult_first_birth_rooms_status_at_baseline_A2h"
+      },
+      "standard_error": 0.0502703781254777,
+      "status": "author-selected exact 1.465 for both experimental arms",
+      "target": 1.465,
+      "uncertainty_status": "A2h fit-receipt SE; covariance clustered by individual ID (9,310 clusters).",
+      "weight": 137.5652749002964,
+      "weight_status": "unchanged inherited positive calibration weight 137.5652749002964; separate from the A2h estimate and SE."
+    },
+    {
+      "candidate_estimates": null,
+      "definition": "E[min(ROOMS,9)|NCHILD>=3,YNGCH<18]-E[min(ROOMS,9)|NCHILD=1-2,YNGCH<18]",
+      "id": "family_rooms",
+      "label": "Rooms: 3+ versus 1\u20132 resident children (model dependent proxy)",
+      "mapping_warning": "National ACS target geography is accepted. Empirical groups use NCHILD=3+ versus 1-2 and require YNGCH<18. Model dependent-child count m is only a proxy: it can differ from resident own-child count and does not guarantee the ACS minor-child restriction.",
+      "model_observation": "housing_wealth.moments.prime30_55_model_dependent_3plus_minus_1to2_rooms_capped9",
+      "sample": "National U.S. ACS household heads, ages 30-55 and YNGCH<18; NCHILD>=3 versus NCHILD=1-2; no DUE structure restriction; HHWT>0; rooms capped at 9; survey years 2005-2006; no MET2013 restriction.",
+      "source": {
+        "builder": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/housing/inspect_early_housing.py; /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/housing/summarize_early_housing.py",
+        "contract_id": "e5f_early_housing_wealth_observer_review_v2_20260911",
+        "path": "specification_followup/housing_profiles_v1/full/target_recomputed.json#/recomputed/national/family_rooms",
+        "record_id": "acs_rooms_3plus_minus_1to2_2005_2006"
+      },
+      "standard_error": null,
+      "status": "author-adopted new target",
+      "target": 0.38509964969278165,
+      "uncertainty_status": "National sampling uncertainty not estimated; inherited weight remains the prior 42-metro bootstrap weight.",
+      "weight": 280.52808370152104,
+      "weight_status": "unchanged inherited positive weight; originally based on 42-metro bootstrap, not national sampling variance"
+    },
+    {
+      "candidate_estimates": null,
+      "definition": "Pr(owner|NCHILD>0,ELDCH<4)-Pr(owner|NCHILD=0)",
+      "id": "recent_parent_ownership",
+      "label": "Recent-parent ownership gap",
+      "mapping_warning": {
+        "age_projection": "uniform_within_age_cell",
+        "approximation_id": "early_2007_parenthood_md_working_v1__recent_parent_synchronized_proxy",
+        "decision_sha256": "b1d399c290d257e56e008afb6d7b76ac1f69191685c8d9e89a4b0bfb06533c9a",
+        "decision_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/initial_calibration_contract/lead_methodological_decision.json",
+        "declaration": "Synchronized post-fertility snapshot; uniform head-age overlap; model dependents proxy resident own children; actual current births from previously empty-dependent homes versus current empty homes inclformerparents. Not an exact annualACS interview reconstruction.",
+        "diagnostic_allow_residence_proxy": true,
+        "exact_acs": false,
+        "maintained": true,
+        "moment": "ownership_current_birth_from_empty_dependent_home_minus_current_empty_home_30_55",
+        "observer_id": "e5f_recent_parent_flow_diagnostic_v1",
+        "snapshot": "synchronized_post_fertility_snapshot"
+      },
+      "model_observation": "ownership_current_birth_from_empty_dependent_home_minus_current_empty_home_30_55",
+      "sample": "National U.S. ACS household heads, ages 30-55; NCHILD>0 and ELDCH<4 versus NCHILD=0; both groups UNITSSTR 3:10; HHWT>0; survey years 2005-2006; no MET2013 restriction.",
+      "source": {
+        "builder": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/housing/inspect_early_housing.py; /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/design_research/housing/summarize_early_housing.py",
+        "contract_id": "e5f_early_housing_wealth_observer_review_v2_20260911",
+        "path": "specification_followup/housing_profiles_v1/full/target_recomputed.json#/recomputed/national/recent_parent_ownership",
+        "record_id": "acs_recent_parent_owner_gap_2005_2006"
+      },
+      "standard_error": null,
+      "status": "author-adopted new target",
+      "target": 0.12760836356692162,
+      "uncertainty_status": "National sampling uncertainty not estimated; inherited weight remains the prior 42-metro bootstrap weight.",
+      "weight": 27055.822957508266,
+      "weight_status": "unchanged inherited positive weight; originally based on 42-metro bootstrap, not national sampling variance"
+    }
+  ],
+  "target_rows_sha256": "83134cf34e3025b4ba01d656513e2df8c3e03c40d1e8b73546ff7785360d4e16"
+}

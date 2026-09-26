@@ -4,7 +4,26 @@ The author delegated tonight's experimental choice; the reviewed fixed-rent
 utility normalization is chosen for the comparison. The design and assumptions are in
 [`docs/model/utility_four_arm_preparation.md`](../../../docs/model/utility_four_arm_preparation.md).
 
-## Active overnight run
+## Outcome in progress: planned recalibration not achieved
+
+By the 01:45 EDT check, all four searches had stopped during their initial
+populations. **The planned full eight-hour recalibration was not achieved;
+no differential-evolution generation ran.** The frozen policy stopped an
+entire arm after its first unexpected feasibility failure or time limit.
+Successful saved points are still useful for a conditional comparison, but
+repeatability of those points does not repair unequal search coverage or
+establish a preferred utility specification.
+
+Both floor arms have completed their selected-point repetitions and reports.
+Each original matches each of its two repetitions exactly, and each report
+contains all 13 target rows, 28 parameters, 17 standard figures and 22 pages.
+Their actual reports have passed visual review with inherited legend/tick
+overlaps documented in `export/visual_review_receipt.json`. Read each PDF
+with the early-stop and three-successful-point limitation below. The two
+share arms were finishing already-running cases under the original limits;
+their final counts, repetitions and exports were still pending at this check.
+
+## Launch and stop evidence
 
 Torch array **18567879** was submitted once. All four arms entered their first
 exact smoke on September 26 at 00:13 EDT. The shared search cutoff is 06:43,
@@ -43,15 +62,41 @@ of fully recalibrated specifications against more extensively searched arms.
 The floor controllers moved to the two required repetitions and export. Both
 share arms were still running at this check. Full failed-trial parameter
 vectors and native feasibility censuses are preserved in each floor arm's
-`run_001/initial_0005_record.json` and `initial_0005_failure.json` files below
-its arm directory. These failures do not provide a completed failed-trial
+`run_001/<arm>/initial_0005_record.json` and `initial_0005_failure.json`.
+These failures do not provide a completed failed-trial
 equilibrium or a validated estate-accounting result.
+
+Both share arms subsequently stopped new dispatch after `initial_0012`
+reached its 3,100-second objective cap. The saved wall times were 3,100.932
+and 3,100.582 seconds for linear and concave benefits, respectively. The
+tracebacks explicitly show `TimeoutError: objective wall budget exhausted`
+from the runner's alarm, subsequently wrapped by Numba as `SystemError`.
+Consequently, the immutable controller records count these as `failed`, not
+`timed_out`. The postmortem identifies the deadline root cause separately;
+this is not evidence of an independent kernel defect. The corresponding
+records, failure receipts, case plans and complete short tracebacks are
+preserved under `run_001/<arm>/initial_0012_*`. The interrupted objectives
+had completed ten and eleven stationary normalization evaluations,
+respectively. All 39 new initial points had already been dispatched in each
+share arm; remaining siblings finish before the existing repeat/export path.
 
 This task owns the half-hourly follow-up
 `check-overnight-utility-comparison`. It stays quiet on unchanged state, reports
 material completion/failure, and stops after the final readout or a bounded
 failure report by 09:00 EDT. The main research task owns canonical status
-integration. Actual-result visual review is still pending.
+integration. Actual floor-result visual review is complete; share-result
+review remains pending.
+
+The requested supplemental birth-versus-wait diagnostic is unavailable from
+these saved outputs. The frozen solver computes the separate action values
+in temporary `Vfa` and `V2` arrays, then saves inclusive values and choice
+probabilities. It does not retain the required action-value arrays and
+eligibility masks. A bounded source-schema review, independently checked by
+the lead, is recorded in `run_001/supplemental_birth_wait/availability.json`.
+No probabilities were inverted, no extra solve was run, and no zero-shock
+equilibrium claim is made. Exact repetitions also do not establish grid
+convergence. The separate borrowing and wealth-grid reviews remain distinct
+from this stationary utility experiment.
 
 ## Preparation and reporting evidence
 

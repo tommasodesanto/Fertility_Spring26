@@ -1,0 +1,110 @@
+OLD_SS_NORMALIZATION_EVAL psi=0.14245465 tfr=2.74689810 seconds=286.95
+OLD_SS_NORMALIZATION_EVAL psi=-0.10754535 tfr=2.71513100 seconds=275.62
+OLD_SS_NORMALIZATION_EVAL psi=-0.35754535 tfr=2.68226345 seconds=276.78
+OLD_SS_NORMALIZATION_EVAL psi=-0.85754535 tfr=2.61296307 seconds=306.17
+OLD_SS_NORMALIZATION_EVAL psi=-1.85754535 tfr=2.45486494 seconds=308.09
+OLD_SS_NORMALIZATION_EVAL psi=-3.85754535 tfr=1.68146776 seconds=285.98
+OLD_SS_NORMALIZATION_EVAL psi=-2.28622821 tfr=2.37197168 seconds=313.08
+OLD_SS_NORMALIZATION_EVAL psi=-2.90512950 tfr=2.20942790 seconds=310.77
+OLD_SS_NORMALIZATION_EVAL psi=-3.10253241 tfr=2.13722993 seconds=311.53
+OLD_SS_NORMALIZATION_EVAL psi=-3.16420729 tfr=2.11162838 seconds=312.29
+Traceback (most recent call last):
+  File "/share/apps/anaconda3/2025.06/lib/python3.13/site-packages/numba/core/serialize.py", line 30, in _numba_unpickle
+    def _numba_unpickle(address, bytedata, hashed):
+    
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/tools/run_e5f_utility_comparison.py", line 278, in alarm
+    def alarm(*_): raise TimeoutError("objective wall budget exhausted")
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: objective wall budget exhausted
+
+The above exception was the direct cause of the following exception:
+
+SystemError: <function _numba_unpickle at 0x153f99262de0> returned a result with an exception set
+
+The above exception was the direct cause of the following exception:
+
+SystemError: <function _numba_unpickle at 0x153f99262de0> returned a result with an exception set
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/tools/run_e5f_utility_comparison.py", line 319, in <module>
+    if __name__ == "__main__": main()
+                               ~~~~^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/tools/run_e5f_utility_comparison.py", line 316, in main
+    {"prepare":prepare,"preflight":preflight,"evaluate":evaluate}[args.stage](args)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/tools/run_e5f_utility_comparison.py", line 284, in evaluate
+    receipt=old.evaluate_point(tax=tax,objective=objective,selected=selected,runtime=runtime,
+        point=request["point"],output=args.output/"case",deadline_epoch=deadline,
+        graphs=bool(request.get("graphs",False)))
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/tools/e5f_utility_comparison_runtime.py", line 203, in evaluate
+    receipt = original_evaluate(**kwargs)
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/run_pair.py", line 135, in evaluate_with_gate
+    receipt = original_evaluate(**kwargs)
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/ancestor_commute.py", line 165, in evaluate_point
+    sol,P,price,chosen_solve_seconds,normalization=normalize_point(selected=selected,model=model,
+                                                   ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        chain=chain,native_solver=runtime["solve_balanced_initial_equilibrium"],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        calibration=calibration,point=point,deadline_epoch=deadline_epoch,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ledger_path=output/"stationary_solves.json")
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/run_pair.py", line 117, in normalize_with_gate
+    result = original_normalize(**kwargs)
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/ancestor_commute.py", line 116, in normalize_point
+    return calibration.solve_old_steady_state(chain,{},initial_psi=START_PSI,
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        completed_fertility_target=2.1,completed_fertility_tolerance=5e-4,normalize=True)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/source/code/model/tools/run_e5f_transition_calibration.py", line 849, in solve_old_steady_state
+    candidate = evaluate(candidate_psi)
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/source/code/model/tools/run_e5f_transition_calibration.py", line 782, in evaluate
+    solution, parameters, price, seconds = closure.solve_ge(chain, overrides)
+                                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/ancestor_commute.py", line 103, in solve_ge
+    sol,P,price,fiscal=native_solver(model=model,parameters=P,
+                       ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+        b_grid=selected["b_grid"],initial_prices=selected["solution"].p_eq,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        payroll_tax=TAX,marginal_tolerance=1e-9,fiscal_tolerance=1e-6)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/source/code/model/tools/e5f_stationary_paygo.py", line 98, in solve_balanced_initial_equilibrium
+    sol, P, prices = model.solve_markov_income_equilibrium(
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        np.asarray(initial_prices, dtype=float), P, b_grid, verbose=False)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/source/code/model/intergen_eqscale_seq_optimized/solver.py", line 1252, in solve_markov_income_equilibrium
+    best_sol, best_p, best_err, scalar_refine_info = refine_one_market_markov_income(
+                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        best_p,
+        ^^^^^^^
+    ...<6 lines>...
+        price_cache=price_cache,
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/source/code/model/intergen_eqscale_seq_optimized/solver.py", line 1361, in refine_one_market_markov_income
+    excess, metric, solution = eval_price(candidate)
+                               ~~~~~~~~~~^^^^^^^^^^^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/source/code/model/intergen_eqscale_seq_optimized/solver.py", line 1327, in eval_price
+    sol = solve_markov_income_at_prices(np.array([price]), P, b_grid, verbose=False, fast_stats=True, SD=SD, retain_payload=True)
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/source/code/model/intergen_eqscale_seq_optimized/solver.py", line 1533, in solve_markov_income_at_prices
+    V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, btime = solve_bellman_full_markov_income(
+                                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        r, p, P, b_grid, SD
+        ^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/shares_linear/shares_linear_initial_0012/reviewed_purchase_runtime.generated.py", line 254, in solve_bellman_full_markov_income
+    Vo_nc, bp_nc, co_nc = full_owner_block_kernel(
+                          ~~~~~~~~~~~~~~~~~~~~~~~^
+        Rv1d_full, Rvt1d_full, Vco, bp_prev_o, has_prev_o, b_grid,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        strict_owner_hbar_feasibility, int(exhaustive_saving),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+SystemError: CPUDispatcher(<function full_owner_block_kernel at 0x153f8c075580>) returned a result with an exception set

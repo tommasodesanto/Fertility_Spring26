@@ -1,0 +1,97 @@
+{
+  "gate_relaxation": false,
+  "reruns": 0,
+  "rows": [
+    {
+      "arm": "shares_linear",
+      "completed_epoch": 1790401331.6008313,
+      "completed_stationary_evaluations_logged": 10,
+      "deadline_epoch": 1790401330.6441917,
+      "evidence_sha256": {
+        "initial_0012_failure.json": "ca00be239c862a2bff2e98d7e7a8cfe42c10ed6bdb322de0760e47f42bac4970",
+        "initial_0012_plan.json": "9dceb3b15d7e51dd2d5bc1694c4c2158f9d777c06dbcda0129271eafa160cb58",
+        "initial_0012_record.json": "a119b41b9bc80b85611f43c6aeaea82128953f9e4e0fb05c7874f6b6fedf579a",
+        "initial_0012_traceback.log": "e3dc9a07291d127b1008e61d964573f95646846e43e0f4513a0566b5baca474d"
+      },
+      "full_dispatch_to_completion_seconds": 3100.932148694992,
+      "logged_completed_stationary_seconds": [
+        286.95,
+        275.62,
+        276.78,
+        306.17,
+        308.09,
+        285.98,
+        313.08,
+        310.77,
+        311.53,
+        312.29
+      ],
+      "objective_cap_seconds": 3100.0,
+      "point": {
+        "H0": 4.2294353874354575,
+        "beta_annual": 0.9824455916876286,
+        "chi": 2.1499946266991854,
+        "delta_alpha": 0.02689333908216311,
+        "delta_alpha_jump": 0.031457043927844576,
+        "first_birth_fixed_cost": 4.561392985987453,
+        "kappa_fert": 3.0809966813916474,
+        "kappa_fert_continuation": 13.77737653949627,
+        "theta0": 0.2936658628146715
+      },
+      "raw_controller_status": "failed",
+      "raw_exception_type": "SystemError",
+      "remainder_interpretation": "Includes the interrupted stationary evaluation and setup/observer/other time; not an isolated overhead estimate. Native times in the log have two-decimal precision.",
+      "sum_logged_completed_stationary_seconds": 2987.26,
+      "trial": "shares_linear_initial_0012",
+      "verified_root_cause": "objective wall-cap alarm; TimeoutError subsequently wrapped as SystemError by Numba",
+      "wall_seconds_not_covered_by_completed_solve_log_entries": 113.67214869499185
+    },
+    {
+      "arm": "shares_concave",
+      "completed_epoch": 1790401329.484645,
+      "completed_stationary_evaluations_logged": 11,
+      "deadline_epoch": 1790401328.8834884,
+      "evidence_sha256": {
+        "initial_0012_failure.json": "49f9e347b202a496d52f499f2f51afc7719d1a2d3f998a0efba77130627f6511",
+        "initial_0012_plan.json": "2cd500899c709c19c4e048b64af220b97913b0e8e84c93d4bac0f67695077656",
+        "initial_0012_record.json": "f4044de210284dcc6df060ea853b1ef9d9ca8fd1bf4da411f159eac3e47e93a9",
+        "initial_0012_traceback.log": "36d04ecb3797692447304accee47cebea29ac7bd9c396a74e7c4cbaad533093b"
+      },
+      "full_dispatch_to_completion_seconds": 3100.5822608470917,
+      "logged_completed_stationary_seconds": [
+        251.56,
+        245.19,
+        248.26,
+        271.01,
+        271.07,
+        269.6,
+        275.11,
+        273.67,
+        272.46,
+        270.79,
+        266.05
+      ],
+      "objective_cap_seconds": 3100.0,
+      "point": {
+        "H0": 4.2294353874354575,
+        "beta_annual": 0.9824455916876286,
+        "chi": 2.1499946266991854,
+        "delta_alpha": 0.02689333908216311,
+        "delta_alpha_jump": 0.031457043927844576,
+        "first_birth_fixed_cost": 4.561392985987453,
+        "kappa_fert": 3.0809966813916474,
+        "kappa_fert_continuation": 13.77737653949627,
+        "theta0": 0.2936658628146715
+      },
+      "raw_controller_status": "failed",
+      "raw_exception_type": "SystemError",
+      "remainder_interpretation": "Includes the interrupted stationary evaluation and setup/observer/other time; not an isolated overhead estimate. Native times in the log have two-decimal precision.",
+      "sum_logged_completed_stationary_seconds": 2914.7700000000004,
+      "trial": "shares_concave_initial_0012",
+      "verified_root_cause": "objective wall-cap alarm; TimeoutError subsequently wrapped as SystemError by Numba",
+      "wall_seconds_not_covered_by_completed_solve_log_entries": 185.81226084709124
+    }
+  ],
+  "source_or_contract_changes": false,
+  "status": "bounded_read_only_failure_diagnosis"
+}

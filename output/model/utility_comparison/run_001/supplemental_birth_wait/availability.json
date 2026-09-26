@@ -1,0 +1,141 @@
+{
+  "schema": "birth_wait_gap_availability_v1",
+  "status": "unavailable",
+  "checked_at_utc": "2026-09-26T05:50:56.311943+00:00",
+  "method": "Narrow authenticated frozen-source schema inspection; no checkpoint unpickling or model execution",
+  "scope": "Native stored birth-attempt minus wait optimized branch values, divided by the appropriate fertility shock scale, by age/resources/current children",
+  "required_objects": {
+    "first_birth_branch_values": false,
+    "continuation_birth_branch_values": false,
+    "stored_birth_attempt_eligibility_flags": false,
+    "complete_authorized_diagnostic_available": false
+  },
+  "field_evidence": [
+    {
+      "object": "first-birth Vfa[...,0:2]",
+      "disposition": "Temporary local array in Bellman loop; used for logsumexp and probabilities, then omitted from return and saved solution"
+    },
+    {
+      "object": "continuation-birth V2[...,0:2]",
+      "disposition": "Temporary local array in Bellman loop; used for logsumexp and probabilities, then omitted from return and saved solution"
+    },
+    {
+      "object": "solution.V and evaluation.policy.V",
+      "disposition": "Saved post-choice value function, including fertility inclusive values at eligible states; not separate birth/wait branch values"
+    },
+    {
+      "object": "solution.fert_value and evaluation.policy.fert_value",
+      "disposition": "Saved first-birth inclusive logsum value; not two branch values"
+    },
+    {
+      "object": "solution.fert_probs, solution.fert2_probs and matching evaluation.policy fields",
+      "disposition": "Saved choice probabilities; reconstruction from probabilities was not authorized and was not attempted"
+    },
+    {
+      "object": "optional joint_choice",
+      "disposition": "Schema stores probabilities, wait/failure probabilities and product choices; no optimized action values or eligibility masks"
+    },
+    {
+      "object": "in_fert, child_states, destination_cs and max-branch feasibility checks",
+      "disposition": "Loop-local eligibility/index/feasibility logic; no corresponding stored action eligibility mask in solution or PolicyBundle"
+    }
+  ],
+  "frozen_source_manifest": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/inputs/source_manifest.json",
+    "sha256": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6"
+  },
+  "sources": [
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/source/code/model/intergen_eqscale_seq_optimized/solver.py",
+      "sha256": "9b0bb34e07ffbbf72afc3590f0c15584bc2fb405e5fbc875d9017e3b5b0c6f96",
+      "matches_source_manifest": true,
+      "purpose": "Temporary action values and saved native solution schema",
+      "line_ranges": [
+        [
+          2790,
+          2805
+        ],
+        [
+          2827,
+          2844
+        ],
+        [
+          2863,
+          2876
+        ],
+        [
+          7168,
+          7187
+        ]
+      ]
+    },
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/source/code/model/tools/run_dynamic_population_transition.py",
+      "sha256": "ece07a55e59f426de171bed01e0cba5512586fc06c9e7770af788bcb24e8e362",
+      "matches_source_manifest": true,
+      "purpose": "Stored evaluation.policy schema and construction from solution",
+      "line_ranges": [
+        [
+          67,
+          80
+        ],
+        [
+          317,
+          339
+        ]
+      ]
+    },
+    {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/source/code/model/intergen_eqscale_seq_optimized/joint_nested.py",
+      "sha256": "64ef6c882746e4c251ec9739fbafe316d184b190ed5a567e22f49904a32d3cbc",
+      "matches_source_manifest": true,
+      "purpose": "Optional joint object stores probabilities/products, not action values",
+      "line_ranges": [
+        [
+          46,
+          91
+        ]
+      ]
+    }
+  ],
+  "selected_case_receipts": [
+    {
+      "arm": "floor_linear",
+      "case": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/floor_linear/floor_linear_initial_0001/case",
+      "receipt_sha256": "3fd7423b2b8022d562696218fd0954e818676824838e531f01639dfc584e8a8a",
+      "receipt_status": "verified_experimental_point",
+      "source_manifest_sha256": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6",
+      "comparison_contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+      "checkpoint_path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/floor_linear/floor_linear_initial_0001/case/initial_state.pkl.gz",
+      "checkpoint_sha256_recorded_in_receipt": "c2863ae2fe153a92043df45657d5dc7982bb69753afda0557efa85d1c8871f18",
+      "checkpoint_size_bytes": 165826740,
+      "checkpoint_hash_recomputed": false,
+      "checkpoint_unpickled": false
+    },
+    {
+      "arm": "floor_concave",
+      "case": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/floor_concave/floor_concave_initial_0001/case",
+      "receipt_sha256": "32beb77bde379776ff3454912ddfebbe79e5c8879ffe0df5596ec36606f7bdaf",
+      "receipt_status": "verified_experimental_point",
+      "source_manifest_sha256": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6",
+      "comparison_contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+      "checkpoint_path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/floor_concave/floor_concave_initial_0001/case/initial_state.pkl.gz",
+      "checkpoint_sha256_recorded_in_receipt": "c684f16d1faee400877b8656a72db8a386c9cf1cc78765c70ee45402772158ff",
+      "checkpoint_size_bytes": 165823584,
+      "checkpoint_hash_recomputed": false,
+      "checkpoint_unpickled": false
+    }
+  ],
+  "inspection_limit": "Source schema is decisive. Checkpoint hashes are retained from existing receipts, not independently recomputed here; checkpoint object keys/shapes were not unpickled. No incomplete share checkpoint inspected.",
+  "stopping_reason": "Required native branch values and eligibility flags are not part of the frozen saved schema. Stop under the author-authorized stored-object-only rule.",
+  "safe_interpretation": "No birth-minus-wait value-gap figure or conclusion can be delivered from the authorized stored objects. Existing aggregate values and probabilities do not certify a zero-shock equilibrium.",
+  "work_performed": {
+    "new_model_code": false,
+    "model_imports": false,
+    "solves": 0,
+    "reruns": 0,
+    "probability_reconstruction": false,
+    "plots_created": 0
+  },
+  "supplemental_artifact_created": false
+}
