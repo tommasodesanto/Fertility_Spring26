@@ -2,6 +2,17 @@
 
 ## September 26 evening — bounded travel-window diagnostic and deferred decisions
 
+**23:07 UTC status check:** job 18605876 ended with exit 1 after 32:40.
+The worker verified the explicit 1,950-second numerical cutoff raised
+`TimeoutError('Stop before report reserve')`; this was not a reported household
+gate failure. Six fixed-benefit cases and two matched baseline/shock pairs
+(floor and 0.100 share loading) were saved. Matching the 0.200 loading remains
+incomplete. An SSH interruption prevented the contemplated continuation;
+none was launched, and its authorized deadline has expired. The unhandled
+cutoff also prevented consolidated reporting. Collecting and auditing saved
+results is in progress; no new solves or completed three-arm comparison are
+claimed. The launch instructions below are retained as history.
+
 The author requests approximately 30 minutes of Torch work while travelling
 home, followed by joint specification decisions. Continue the existing
 housing-cost diagnostic, job 18605876, verified RUNNING at 21:32 of its
