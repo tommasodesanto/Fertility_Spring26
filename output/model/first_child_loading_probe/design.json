@@ -1,0 +1,35 @@
+{
+  "cases": [
+    [
+      "floor_concave",
+      null
+    ],
+    [
+      "shares_zero",
+      0.0
+    ],
+    [
+      "shares_010",
+      0.1
+    ],
+    [
+      "shares_020",
+      0.2
+    ]
+  ],
+  "source_pins": {
+    "receipt.json": "3fd7423b2b8022d562696218fd0954e818676824838e531f01639dfc584e8a8a",
+    "initial_state.pkl.gz": "c2863ae2fe153a92043df45657d5dc7982bb69753afda0557efa85d1c8871f18",
+    "target_fit.csv": "407f8f520793e2cd5dc74c0dfd0cdbd077ad37b388d22d6a003581b5c21caed6",
+    "parameters.csv": "2ae4639a1587d323adca9868e124710b4a6d738104251cf12ffdc84500cbb082"
+  },
+  "target_contract": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+  "restrictions": "Four diagnostic fixed points: floor/concave, no floor at first-child share loadings 0,.1,.2. No later-child share loading. Curvature .14 fixed, first-child benefit fixed. No refit.",
+  "normalization": "Inherited compensated-expenditure normalization at reference rent; substantive trial restriction, no extra estimated parameter.",
+  "unchanged": "Earnings, entry wealth/income, timing, mortality, bequests, credit, shocks, housing products, supply, fiscal rule, targets, weights and numerical gates.",
+  "budget": "Four new GE solves; 25 minute allocation including charts. Reference stationary solve about135 seconds; roughly9 minutes plus reporting. No retries or search.",
+  "code_sha256": {
+    "run_e5f_first_child_loading_probe.py": "49d3a3cb1239d13ee0aba5db2119681c7236e345904807e3e6e247c1804ac51e",
+    "run_e5f_soft_housing_probe.py": "fb4ad7267825c2729bec76b1ea370656cf29a3e9e033c71775f27cf22a6d6572"
+  }
+}

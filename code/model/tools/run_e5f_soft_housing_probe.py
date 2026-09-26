@@ -78,7 +78,7 @@ def incentives(packet, out):
     return rows
 
 
-def report(packet, runtime, tax, objective, reference, out, case):
+def report(packet, runtime, tax, objective, reference, out, case, *, parameter_rows=None, old_housing_floor=None):
     import numpy as np
     P, sol, evaluation = (packet[k] for k in ('parameters', 'solution', 'evaluation'))
     grid, shared = packet['b_grid'], packet['shared']
@@ -112,7 +112,8 @@ def report(packet, runtime, tax, objective, reference, out, case):
                 if row[key] != '':
                     assert float(row[key]) == float(inherited[row['moment']][key]), (row['moment'],key)
     table(out/'target_fit.csv', rows)
-    parameters = list(csv.DictReader((reference/'parameters.csv').open()))
+    parameters = (list(csv.DictReader((reference/'parameters.csv').open())) if parameter_rows is None
+                  else copy.deepcopy(parameter_rows))
     actual = tax.actual_parameters(P)
     for row in parameters:
         key = row['parameter']
@@ -120,13 +121,14 @@ def report(packet, runtime, tax, objective, reference, out, case):
         if key == 'pension_period': row['estimate'] = float(P.pension)
         if key == 'psi_child': row['status'] = 'held at reference; no fertility renormalization'
         elif row['status'] == 'experimental free coordinate': row['status'] = 'held at reference estimate; no recalibration'
-    parameters.append(dict(parameter='softness_fraction', estimate=0. if case=='control' else .1, lower='', upper='', status='fixed experimental restriction; not estimated', near_bound=''))
+    if parameter_rows is None:
+        parameters.append(dict(parameter='softness_fraction', estimate=0. if case=='control' else .1, lower='', upper='', status='fixed experimental restriction; not estimated', near_bound=''))
     table(out/'parameters.csv', parameters)
     incentive_rows = incentives(packet, out)
     # Actual post-tenure renter occupancy, not conditional renter policies.
     mass = np.asarray(evaluation.g_current)[:,0,:,:,:,:,1:]
     housing = np.asarray(evaluation.policy.hR_pol)[:,0,:,:,:,:,1:]
-    hb = float(np.max(shared.hb_flat))
+    hb = float(np.max(shared.hb_flat)) if old_housing_floor is None else float(old_housing_floor)
     parent_rental = dict(mass=float(mass.sum()),
         fraction_below_old_floor=float(mass[housing < hb].sum()/mass.sum()),
         mean_housing=float((mass*housing).sum()/mass.sum()),old_floor=hb)

@@ -60,6 +60,14 @@ These are candidate tools, not a replacement for the September14 reference.
 
 ## Current E5F calibration and policy audit utilities
 
+`tools/run_e5f_first_child_loading_probe.py` tests a conventional first-child
+step in the Cobb-Douglas housing weight with no Stone-Geary floor. It reuses
+the authenticated utility-comparison runtime and the reporting gates from
+`tools/run_e5f_soft_housing_probe.py`. Curvature and trial loadings are fixed,
+not estimated. The readable PDF, all target/parameter tables and unchanged
+standard diagnostic sets are indexed at
+`../../output/model/first_child_loading_probe/README.md`.
+
 `tools/run_e5f_soft_housing_probe.py` and `tools/e5f_soft_housing_adapter.py`
 implement the isolated September 26 housing-requirement sensitivity on Torch.
 They authenticate the saved floor/linear control, replay its policies, and

@@ -1,5 +1,56 @@
 # Calibration Status
 
+## September 26 later — simple first-child housing loading requested
+
+**Completed:** job18604498 solved all four new points in 631 seconds after
+setup, with all unchanged scientific gates passing. First-birth housing proxy
+responses are 0.783 rooms for floor/concave and 0.120, 0.941, 1.538 for no floor
+at loadings 0, 0.100, 0.200. The retained target is 1.465. Thus the explicit
+first-child share loading can generate this magnitude without a housing floor.
+This remains a stationary proxy, not matched event-study validation.
+
+Broader fit is poor at the unchanged benefit level: the 0.200 loading produces
+fertility 2.540, childlessness 4.972%, first-birth age 24.210, and a recent-parent
+ownership gap 0.404 percentage points. Its replacement gap is 17.327% under fixed
+normalized entry. Losses for floor/concave and the three share points are
+296.264, 3707.254, 2871.895, 2084.010, against 285.640 for the original floor/linear
+control. These are descriptive fixed-point comparisons, not recalibrated fits.
+The conventional first-child loading is a candidate for joint calibration;
+neither a numerical loading nor a production specification is adopted here.
+
+Readable PDF: `output/pdf/first_child_loading_probe.pdf`. Full 13-row fits,
+32-row parameter tables, incentive diagnostics, source pins, receipts and
+reproduction instructions: `output/model/first_child_loading_probe/README.md`.
+The PDF includes all 17 standard figures for each case. All 65 target rows and
+160 parameter/restriction rows were checked. The submission description below
+records the experiment's maintained restrictions.
+
+The author prefers a conventional CRRA/Cobb-Douglas presentation with explicit
+material curvature, the defined household equivalence scale, and a separate
+child benefit. The softplus recommendation below is superseded as a proposed
+baseline: its numerical evidence remains valid, but the author does not want
+that functional complexity. No production preference change is adopted.
+
+The author authorizes testing no Stone-Geary floor while retaining a first-child
+housing loading. The trial defines alpha(m)=0.733-lambda*1{m>0}; later children
+add no further direct housing weight. Four fixed points are submitted on Torch
+(18604498, 25-minute cap): floor/concave, no floor at lambda=0, 0.100 and 0.200.
+The zero-loading point is diagnostic; the two positive loadings implement the
+requested first-child step. All new points fix child-benefit curvature at 0.140
+as a literature-guided trial, not an estimate for this model. Code benefit
+b*m^0.86 retains the original one-child benefit b; the CRRA coefficient in
+psi*m^0.86/0.86 is explicitly psi=0.86*b. The original floor/linear selected
+point is an authenticated control.
+
+The existing normalized-share runtime is reused. Its reference rent is fixed,
+and compensation is exact for uncapped renters at that reference rent only.
+Owner products and the owner premium retain their primitive values. Earnings,
+entry wealth/income, timing, mortality, estates, credit, shocks, fiscal rule,
+supply, targets and numerical gates are unchanged. No fertility normalization
+or parameter search is authorized by this bounded trial. Normalized entry is
+held fixed and any reproduction gap is reported. All cases and reports are
+now collected and verified; no extended search or recalibration was launched.
+
 ## September 26 — softened housing requirement tested; recommendation only
 
 One controlled soft-floor experiment completed on Torch (18603346, 188.6 seconds
