@@ -42,9 +42,10 @@ old incomplete bundles must be rebuilt from their matching solution or re-solved
 The requested [estate recipient diagnostic](../../output/model/estate_receiver_probe/README.md)
 uses `tools/run_e5f_estate_receiver_probe.py` and its isolated adapter to compare
 the September 25 selected control, net estate valuation, and net valuation plus
-equal transfers to ages 45–65. Torch preflight, focused tests and exact control
-replay passed; the recipient comparison is running. It preserves fixed
-preferences and reports the demographic replacement gap.
+equal transfers to ages 45–65. All three cases completed on Torch, with exact
+control reproduction and a balanced estate pool. The packet contains complete
+fits, parameters and a 64-page report; both changes remain experimental. The
+comparison preserves preferences and reports the demographic replacement gap.
 
 `tools/build_period_earnings_process.py` constructs the externally estimated
 period AR(1)-plus-iid process. `tools/run_e5f_earnings_wealth_candidate.py` applies

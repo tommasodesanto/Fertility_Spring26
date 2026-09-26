@@ -1,6 +1,6 @@
 # Calibration Status
 
-## September 25 — estate recipient diagnostic launched after focused tests
+## September 26 — estate recipient diagnostic completed; not adopted
 
 The author requests the three-way estate test: unchanged control, net-of-selling-
 cost bequest valuation, and the same valuation with equal estate payments to
@@ -12,17 +12,39 @@ Both estate changes remain experimental, not adopted. Fixed normalized entry
 composition implies that changed fertility is reported as a replacement gap;
 these treatment diagnostics are not certified closed-population equilibria.
 
-Torch access is restored; native source/checkpoint preflight passed (18563842).
-The first preflight (18563806) stopped before model import on a launcher path
-error, now fixed. All nine focused tests passed (18564037). Comparison job
-18564157 is launched under `estate_receiver_probe_20260925_v1/results/v2/run`;
-the control matched all saved solution arrays and targets exactly, and the
-valuation case completed. The recipient fixed point is running; no complete
-comparison or policy conclusion is claimed yet.
-Budget is at most 42 native equilibria and three hours for the comparison.
-Specification, source pointers, stop rules and resume commands are in
-`output/model/estate_receiver_probe/README.md`. Policy transitions, recalibration
-and final PDF assembly are not completed by this preparation.
+All three cases completed on Torch (18564157, 63 minutes, 36 equilibrium solves,
+including 34 recipient iterations), within the 42-solve/three-hour cap. Source
+preflight (18563842) and all nine focused tests (18564037) passed; control
+reproduces every saved solution array and target exactly. All cases pass the
+unchanged numerical gates with zero budget-excess mass. Net-estate funding
+closes to 5.839e-11 model units. No production specification was changed.
+
+Control / net valuation / net valuation plus receipts have losses
+280.411 / 281.190 / 506.158, fertility measures 2.100 / 2.100 / 2.155,
+ownership at ages 30–55 of 75.676% / 75.694% / 72.216%, and wealth/earnings
+6.045 / 6.077 / 5.923. Relative to valuation alone, receipts raise house prices
+2.143% and lower childlessness 1.906 percentage points. Eligible households
+receive 0.385 model income units per four-year period (annual equivalent 0.096).
+Valuation alone is small; returning estates materially changes behavior at
+fixed preferences. Adoption would require recalibration and demographic closure.
+
+The separate entry review is coordinated: observed entry wealth contains prior
+saving/help; later estate receipts are distinct flows. This test balances only
+the death-estate pool, leaving entrant endowments externally supplied. Neither
+the common-scale entry candidate nor new household-exit assumptions are used.
+The inherited target-measurement approximations remain, so the larger loss does
+not determine the appropriate estate closure.
+
+Full 13-row target/weight/loss tables and all 26 parameter/restriction rows per
+case are in `output/model/estate_receiver_probe/results/v2/run/`. The 64-page
+PDF and its source/QA sidecar are in `results/v2/final_report/` under the same
+packet. All 315 target/parameter numeric cells pass independent PDF extraction;
+visual review is complete (whole-report contact sheets and selected full-size
+pages; coverage is recorded in the sidecar). Report-only job18567191 reformatted income
+legends from saved solutions, retaining all 17 figures per case and checking
+that curve data are unchanged. Specification, complete results, accounting and
+reproduction commands are in `output/model/estate_receiver_probe/README.md`.
+Policy transitions and recalibration are outside this completed diagnostic.
 
 ## September 25 — pension target and payroll-tax rule adopted
 

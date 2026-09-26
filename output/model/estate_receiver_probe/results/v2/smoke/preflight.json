@@ -1,0 +1,32 @@
+{
+  "actual_psi_child": 0.13539452644572644,
+  "adapter": {
+    "adapter": "experimental_stationary_estate_receiver_v1",
+    "control_calls_original_bellman": true,
+    "dynamics_implemented": false,
+    "empirical_gross_estate_observer_unchanged": true,
+    "estate_receipts_excluded_from_annual_income_observer": true,
+    "net_bellman_sha256": "7ae6b1de0fe5cad81408bac6989f24e61a1a884cd60e996ceb1716f6036fb9e3",
+    "original_bellman_sha256": "900b8bac964a2f91e8f9f47c566cd89c25e316e5db0afbe0975b58cf1a52bd28",
+    "recipient_rule": "equal per-period transfer to age cells starting in [45,65]",
+    "transfer_timing": "period resources and existing Y/R purchase eligibility; credited once"
+  },
+  "diagnostic_file_sha256": {
+    "e5f_estate_receiver_adapter.py": "38a201553221046ae864ca734f10f38bdee4a9c24ff6297d61125d6409e17089",
+    "run_e5f_estate_receiver_probe.py": "957dbc78be8960e8feedede32533ad178830b92bdf42ffe61b499af8425be7df",
+    "test_e5f_estate_receiver_adapter.py": "4db92d1ee73f57f75d934310e3203dd9e3acb8678c4023f726c6bdd1c0fe0f45",
+    "test_run_e5f_estate_receiver_probe.py": "345374d827c34a4e10e6b4abd69563802d37055b9dc0fce35034e6913882a74d"
+  },
+  "estate_loop_seconds_reference": "September18 fixed-preference sandbox:54 minutes; a different model, not a current runtime guarantee",
+  "experimental_changes": "net estate valuation and optional equal age-45--65 transfers; inherited experimental fiscal setting",
+  "indicative_native_seconds_at_reference_speed": 4192.04104393255,
+  "lock_sha256": "6443195fa3f7de0dce5cc8a4c05e2709b99d586421c96a35dba3c07e93e061a1",
+  "native_ge_solves": 0,
+  "objective_sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+  "payroll_tax": 0.08751017424959717,
+  "selected_checkpoint": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/results/run_001/oasi_087510/worker_05/point_04/initial_state.pkl.gz",
+  "selected_checkpoint_sha256": "d5ef71bdaf9960273035c722a2428a55f14bab160e0596881c8a981e67b8ead1",
+  "selected_chosen_solve_seconds": 99.81050104601309,
+  "source_manifest_sha256": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6",
+  "status": "source_preflight_passed_no_solve"
+}

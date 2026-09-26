@@ -1,0 +1,101 @@
+{
+  "birth_based_adult_entry": 0.06172357947336179,
+  "case": "net_valuation",
+  "estate_accounts": {
+    "funded_transfer_required": false,
+    "generated_gross_period": 0.12734443256116368,
+    "generated_net_period": 0.11468995548722899,
+    "native_gross_flow_gap": 0.0,
+    "net_external_outflow_period": 0.11468995548722899,
+    "paid_period": 0.0,
+    "period_years": 4.0,
+    "recipient_ages": [
+      46.0,
+      50.0,
+      54.0,
+      58.0,
+      62.0
+    ],
+    "recipient_mass": 0.30866728090362605,
+    "residual": -0.11468995548722899,
+    "transfer": 0.0
+  },
+  "experimental_changes": "net estate valuation; equal age-45--65 transfer only in transfer case; inherited experimental PAYGO .08751017424959717; not adopted pension rule",
+  "fiscal": {
+    "actual_accounts": {
+      "implied_balanced_payroll_tax": 0.08751017424951502,
+      "implied_balanced_pension_period": 1.0004326356579492,
+      "payroll_tax_base_period": 2.963205896677233,
+      "payroll_tax_rate": 0.08751017424959717,
+      "payroll_tax_revenue": 0.2593106643556585,
+      "pension_budget_residual": 2.4347190930029683e-13,
+      "pension_outlays": 0.25931066435541505,
+      "pension_period_units": 1.0004326356570097,
+      "retiree_benefit_exposure": 0.25919852583089625,
+      "retiree_household_mass": 0.25919852583089625,
+      "scaled_pension_budget_residual": 9.38919769864775e-13,
+      "worker_household_mass": 0.7408014741690232
+    },
+    "fiscal_gate": true,
+    "fiscal_tolerance": 1e-06,
+    "marginal_gate": true,
+    "marginal_tolerance": 1e-09,
+    "normalized_age_income_max_gap": 1.5138931774849596e-14
+  },
+  "fixed_psi_birth_replacement_residual": 0.00015998954318457827,
+  "fixed_psi_child": 0.13539452644572644,
+  "household_budget": {
+    "actual_rent": 0.1105608130536379,
+    "budget_excess_mass": 0.0,
+    "budget_tolerance": 1e-09,
+    "maximum_occupied_excess": 2.842170943040401e-14
+  },
+  "loss": 281.1902879200032,
+  "market_residual": 1.2189565404153502e-05,
+  "normalized_entrant_flow": 0.06173345618081536,
+  "payroll_tax": 0.08751017424959717,
+  "policy_array_gates": {
+    "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+    "lower_node_mass_at_negative_steps": 0.0,
+    "maximum_occupied_value_drop": 0.0,
+    "occupied_negative_steps": 0,
+    "probabilities": {
+      "continuation_birth": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      },
+      "first_birth": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      },
+      "location": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      },
+      "tenure": {
+        "maximum": 1.0,
+        "minimum": 0.0,
+        "nonfinite": 0
+      }
+    },
+    "share_pre_choice_mass_at_negative_steps": 0.0,
+    "value_drop_tolerance": 1e-07
+  },
+  "population_closure": "fixed normalized entry/age composition; diagnostic, not imposed closed reproduction",
+  "purchase_accounting": {
+    "end_mortgage_floor_violation_mass": 0.0,
+    "mass_tolerance": 2e-10,
+    "maximum_occupied_end_debt_shortfall": 0.0,
+    "maximum_occupied_transaction_wealth_error": 1.4210854715202004e-14,
+    "purchase_threshold_violation_mass": 0.0,
+    "transaction_outside_grid_mass": 0.0,
+    "wealth_tolerance": 1e-09
+  },
+  "selected_reference": "d5ef71bdaf9960273035c722a2428a55f14bab160e0596881c8a981e67b8ead1",
+  "source_manifest_sha256": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6",
+  "status": "completed_experimental_estate_receiver_diagnostic",
+  "target_system_sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58"
+}
