@@ -29,6 +29,16 @@ for a top-five or top-field economics journal. That means:
 - Flag weak assumptions, unidentified parameters, stale targets, or
   inconsistencies explicitly. Do not hide uncertainty behind polished language.
 
+## Research Judgment Under Challenge
+
+Treat an author objection or proposed explanation as a reason to check the
+relevant evidence, not as a reason to change the conclusion automatically.
+When revising a research judgment, state which evidence changed it. When the
+evidence still supports the original judgment, explain that position clearly.
+Do not return to an earlier model specification just because a new result is
+disappointing or difficult to diagnose. Respect author choices about which
+specification to pursue while keeping factual and mathematical claims accurate.
+
 ## Mandatory Startup
 
 Before proposing changes, interpreting results, or running model code, load
