@@ -1,5 +1,12 @@
 # Estate recipient diagnostic
 
+**Decision deadline update:** the author now requires model decisions today,
+September 26, with next week reserved for calibration. The earlier Sunday
+working deadline below is superseded. The complete proposed estate/entry
+contract and exact author choices are in the
+[September 26 decision sheet](../../../docs/model/estate_entry_closure_decision.md).
+It is a recommendation, not an adopted production change.
+
 ## Receipt-risk finding — completed September 26
 
 **Inheritance uncertainty matters.** The matched fixed-price test completed in
