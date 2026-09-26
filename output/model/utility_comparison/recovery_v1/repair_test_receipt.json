@@ -1,0 +1,202 @@
+{
+  "schema": "utility_four_arm_bounded_machine_repair_v1",
+  "status": "focused_code_checks_and_zero_solve_native_identity_passed_with_explicit_production_limits",
+  "started_at_utc": "2026-09-26T15:21:40Z",
+  "verification_recorded_at_utc": "2026-09-26T15:53:25.806316+00:00",
+  "hard_stop_at_utc": "2026-09-26T16:06:40Z",
+  "authorized_window_minutes": 45,
+  "new_model_solves": 0,
+  "new_production_search_submissions": 0,
+  "opt_in_contract_field": {
+    "candidate_failure_policy": "reviewed_failure_v1"
+  },
+  "no_current_production_contract_enables_this_path": true,
+  "original_immutable_bundle_changed": false,
+  "original_contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+  "test_attempts": [
+    {
+      "job_id": "18584696",
+      "scope": "runner synthetic fault/provenance guards",
+      "test_count": 11,
+      "passed": 11,
+      "failed": 0,
+      "errors": 0,
+      "native_solves": 0,
+      "submission": "repair_runner_submission.json",
+      "log": "repair_runner_tests.log"
+    },
+    {
+      "job_id": "18584795",
+      "scope": "first combined focused suite",
+      "test_count": 58,
+      "passed": 57,
+      "failed": 1,
+      "errors": 0,
+      "native_solves": 0,
+      "submission": "repair_integrated_submission.json",
+      "log": "repair_integrated_check_001_tests.log",
+      "finding": "An owned timeout before attempt-sidecar creation was incorrectly fatal. Narrow production repair permits an absent sidecar only with exact plan/dispatch and original-deadline running/kill/reap evidence; malformed/conflicting evidence remains fatal.",
+      "native_identity_stage_ran": false
+    },
+    {
+      "job_id": "18584875",
+      "scope": "second combined focused suite",
+      "test_count": 60,
+      "passed": 59,
+      "failed": 0,
+      "errors": 1,
+      "native_solves": 0,
+      "submission": "repair_integrated_002_submission.json",
+      "log": "repair_integrated_check_002_tests.log",
+      "finding": "Late-repeat fixture could time out its setup candidate under a 0.2-second cap, leaving no selected case. Fixture uses 3 seconds, explicitly asserts successful selection and zero child exit, then observes after the original deadline. Production source unchanged from this attempt to the final suite.",
+      "native_identity_stage_ran": false
+    },
+    {
+      "job_id": "18584901",
+      "scope": "final focused suite plus real native-class identity, zero evaluations",
+      "test_count": 60,
+      "passed": 60,
+      "failed": 0,
+      "errors": 0,
+      "test_seconds": 14.263,
+      "slurm_elapsed_seconds": 30,
+      "slurm_state": "COMPLETED",
+      "slurm_exit_code": "0:0",
+      "native_solves": 0,
+      "submission": "repair_integrated_003_submission.json",
+      "log": "repair_integrated_check_003_tests.log",
+      "native_identity_stage_ran": true
+    }
+  ],
+  "final_source_sha256": {
+    "run_e5f_utility_comparison.py": "7ba6ecf54a7247a8e2aae1c860c7b33a4af9fabf7b8bd70b5271e60dee3cc629",
+    "run_e5f_utility_comparison_search.py": "4e53236e977ac7abaee5036e1e3334e84ec9e66b4f056423020483ef1d0df932",
+    "e5f_utility_comparison_runtime.py": "c52b686d0a6f9364021994eecbf3d8edaf5806ff42c2b365ec22b51888824916",
+    "e5f_utility_comparison_design.py": "036d772c51dc372cf7c533fd1de21525dd146158dc11c303f8f69da36525cbcb",
+    "e5f_utility_recovery_policy_v1.py": "4bfbaaaaee71c2e6943228b7096e84bf798816a235b6be694cc13137a8b21d6d",
+    "test_run_e5f_utility_comparison.py": "de9e6477521e26cc84a39c7fdf029e549c0dbaea0f007967a8e9dd78ff76b104",
+    "test_e5f_utility_comparison_search.py": "1ebfd2f8e820107e651dff1ab5d848e3f2f8268e9d8f210216e2b521158fe792",
+    "test_e5f_utility_comparison_recovery_integration.py": "9dab78636d6ee8f5d076b65efc5dfb76c5569537554e84fed492f3436042b6f1",
+    "test_e5f_utility_recovery_policy_v1.py": "0eab4970ae1db1072f75092eed5f870629bd6a7918011a85bb2c25d48a1f4b0b"
+  },
+  "verification_artifact_sha256": {
+    "repair_runner_tests.log": "123de5ba7e8fb9f9b9a7e075f1e527b89b4cef6b0dadc1fcc8ffcd7d232047bc",
+    "repair_integrated_check_001_tests.log": "8f09009c942308b3f0709fa6033603bc5a7d77b647c51445f9e953d05f298916",
+    "repair_integrated_check_002_tests.log": "55c714cd4c86b5b9faed67c8fd330f4b699b7d6f4e6944d6040dda5acf2c96be",
+    "repair_integrated_check_003_tests.log": "d4ade7d35d033bc7536adb5db9d7aa7bf2b8ca2ef84d7e46f6d68d72870cb8c4",
+    "repair_integrated_check_003_native_identity.log": "ab7b702b29e5be82f42aef3222290e887bc657208c137f5f0f46df134ebeb064",
+    "repair_integrated_check_003_native_identity_receipt.json": "30b17c56343903777caddfb5a09a3c8705b4ae902ec742428e80200c1dd3a99d",
+    "repair_integrated_check_003_status.json": "ef110396b993fe5672e83bdda2fa867364d469967d020c42f8719158b0d95224",
+    "repair_runner_submission.json": "c4786c559785f6b4167b6ce4d61700ddbb082813a5462a6ba59122beda5248f7",
+    "repair_integrated_submission.json": "654a8c023fa5c9c32dba0fac09d42b721be3bfd420b3ce55621f2a33113a76e6",
+    "repair_integrated_002_submission.json": "981d2d3247c9712a12b47517a09d5627e6636419c31ac097db8815de1c28dd51",
+    "repair_integrated_003_submission.json": "cfd1b4277a2e2f961bf939722487915cdbe7e97d3b7ceb91b34ba2fa506827cb"
+  },
+  "native_identity_check": {
+    "status": "actual_frozen_native_class_authenticated_and_structured_capture_passed",
+    "native_solves": 0,
+    "model_evaluation_called": false,
+    "contract_scope": "Original source identity only; not certification of new accepted targets",
+    "producer": {
+      "native_source_path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/source/code/model/intergen_eqscale_seq_optimized/solver.py",
+      "native_source_sha256": "9b0bb34e07ffbbf72afc3590f0c15584bc2fb405e5fbc875d9017e3b5b0c6f96",
+      "native_manifest_sha256": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6",
+      "native_gate_tolerance": 1e-12,
+      "native_value_cutoff": -1000000000.0
+    }
+  },
+  "native_identity_check_limit": "Constructed structured fixture using the actual imported frozen native class; no real infeasible objective, normalization, equilibrium, native repeat, or corrected-target solve was executed.",
+  "actual_controller_methods_exercised": [
+    "batch",
+    "launch",
+    "finish",
+    "checkpoint",
+    "restore",
+    "search control flow",
+    "repeat and export path with a synthetic collector"
+  ],
+  "verified_control_behaviors": [
+    "Reviewed source-authenticated four-row age-34 native renter-deficit evidence rejects only the attempted evaluation; next distinct planned candidate executes, no retry or replacement.",
+    "Unknown errors, wrong context, native-source mismatch and conflicting/malformed evidence stay fatal and stop new dispatch; already-running siblings retain original caps.",
+    "Only original-deadline owned-process evidence supports time censoring; missing startup sidecar may be censored, arbitrary nonzero exits observed late remain fatal.",
+    "Censored results have no scored loss. Both selected repetitions must succeed before export; late completed repeats cannot authorize export.",
+    "Resume authenticates the same contract and absolute clock, exact durable inventory, plans, dispatch and saved scientific artifacts. Completed attempts are not replayed; orphan or changed state refuses resume.",
+    "Cancellation does not rewrite a deadline and cannot produce a successful final status."
+  ],
+  "review": {
+    "lead_model_critical_diff_review": "Reviewed runner exception capture/authentication and controller classification against the unchanged native feasibility mathematics and saved producer fingerprints.",
+    "independent_review": "adapter_review checked source/class/gate authentication and supervisory control flow; concrete serialization, cancellation, barrier, checkpoint and late-repeat issues were resolved.",
+    "feasibility_predicate": "sum_{s: V(s) <= -1e9} g(s) > 1e-12",
+    "new_candidate_rejection_scope": "Exact reviewed exception type/stage and complete finite four-row renter-deficit census with valid mass accounting; no global infeasibility claim for the parameter vector.",
+    "unchanged_objects": [
+      "native solver",
+      "Bellman problem",
+      "KFE",
+      "budget and purchase accounting",
+      "normalization objective and tolerance",
+      "23-native-call guard",
+      "utility adapters",
+      "fiscal gates",
+      "targets and weights",
+      "model observers"
+    ],
+    "reused_scientific_review": "feasibility_review.json",
+    "local_check": "git diff --check passed; final production and test hashes match the successful Torch snapshot."
+  },
+  "remaining_limitations": [
+    "Typed censored DE selection is not integrated: completed initial/DE batches containing censored outcomes stop before selection.",
+    "The fixed 40-member/three-generation/3100-second schedule remains. The proposed 20-by-two bank, 4200-second cap, new budget and authenticated legacy reuse are not implemented or approved by this patch.",
+    "Main task must reconcile accepted scientific inputs: original ACS rooms target 5.607885960068579 and capped-at-nine observer differ from adopted AHS2007 target 5.7294342401; observer and weighting rule need a new explicit contract.",
+    "A separate smoke-only driver and reviewed contract are needed for the proposed native end-to-end check. Current production CLI cannot be relabeled as that schedule.",
+    "No new native comparison, corrected-target fit, grid robustness check, optimizer-convergence claim, or underwater-owner transition validation.",
+    "Collected share figures contain an unresolved upper-wealth housing-policy feature; exact repetition and passed occupied-value gates do not establish that it is harmless."
+  ],
+  "proposed_native_check": {
+    "status": "unsubmitted_plan_for_main_review_after_input_reconciliation",
+    "driver_implemented": false,
+    "arms": 4,
+    "structural_points_per_arm": 1,
+    "sequential_smokes_per_arm": 2,
+    "selected_repeats_per_arm": 2,
+    "new_normalized_objectives_max": 16,
+    "native_calls_per_objective_max": 23,
+    "native_stationary_calls_max": 368,
+    "objective_cap_seconds": 1500,
+    "absolute_budget_minutes": 90,
+    "windows_minutes": {
+      "readiness": [
+        0,
+        3
+      ],
+      "sequential_smokes": [
+        3,
+        53
+      ],
+      "exact_comparison_and_common_barrier": [
+        53,
+        55
+      ],
+      "two_parallel_repeats_per_arm": [
+        55,
+        80
+      ],
+      "reports_collection_qualified_visual_review": [
+        80,
+        90
+      ]
+    },
+    "failed_case_retries": 0,
+    "search_points": 0,
+    "automatic_extensions": false,
+    "stop_rule": "Any timeout, missing scientific check or incomplete report produces an explicit incomplete result within the same absolute clock."
+  },
+  "existing_output_collection": {
+    "status": "completed",
+    "commit": "fb9e756c",
+    "readout": "../run_001/comparison.md",
+    "receipt": "../run_001/collection_completion_receipt.json",
+    "new_model_solves": 0,
+    "large_checkpoints_remained_remote": true
+  },
+  "automatic_monitor_status": "PAUSED"
+}

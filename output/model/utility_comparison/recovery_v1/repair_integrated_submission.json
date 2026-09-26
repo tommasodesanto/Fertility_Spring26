@@ -1,0 +1,19 @@
+{
+  "schema": "utility_machine_repair_integrated_tests_v1",
+  "job_id": "18584795",
+  "remote": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_machine_repair_20260926_v1/integrated_check_001",
+  "native_solves": 0,
+  "tests": "Focused faults plus one actual frozen native-class authentication with zero evaluations",
+  "source_sha256": {
+    "run_e5f_utility_comparison.py": "7ba6ecf54a7247a8e2aae1c860c7b33a4af9fabf7b8bd70b5271e60dee3cc629",
+    "run_e5f_utility_comparison_search.py": "1c015074a0808d8b1cd2e7b77e02ee5e940f809491fb945ea3cbb34d33e6f87a",
+    "e5f_utility_comparison_runtime.py": "c52b686d0a6f9364021994eecbf3d8edaf5806ff42c2b365ec22b51888824916",
+    "e5f_utility_comparison_design.py": "036d772c51dc372cf7c533fd1de21525dd146158dc11c303f8f69da36525cbcb",
+    "e5f_utility_recovery_policy_v1.py": "4bfbaaaaee71c2e6943228b7096e84bf798816a235b6be694cc13137a8b21d6d",
+    "test_run_e5f_utility_comparison.py": "de9e6477521e26cc84a39c7fdf029e549c0dbaea0f007967a8e9dd78ff76b104",
+    "test_e5f_utility_comparison_search.py": "1ebfd2f8e820107e651dff1ab5d848e3f2f8268e9d8f210216e2b521158fe792",
+    "test_e5f_utility_comparison_recovery_integration.py": "9b75cca661f59619bc8735c0f36d49c4842105364d0ad66538a85da371aa8478",
+    "test_e5f_utility_recovery_policy_v1.py": "0eab4970ae1db1072f75092eed5f870629bd6a7918011a85bb2c25d48a1f4b0b"
+  },
+  "slurm_script": "#!/bin/bash\n#SBATCH --job-name=utility-repair-check\n#SBATCH --account=torch_pr_570_general\n#SBATCH --cpus-per-task=1\n#SBATCH --mem=8G\n#SBATCH --time=00:05:00\n#SBATCH --output=/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_machine_repair_20260926_v1/integrated_check_001/slurm.log\nset -euo pipefail\nmodule load anaconda3/2025.06\nexport OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 MPLBACKEND=Agg\ncd /scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_machine_repair_20260926_v1/integrated_check_001\npython3 -m unittest -v test_run_e5f_utility_comparison test_e5f_utility_comparison_search test_e5f_utility_comparison_recovery_integration test_e5f_utility_recovery_policy_v1 > tests.log 2>&1\npython3 - <<'IDENTITY' > native_identity.log 2>&1\nimport json,sys\nfrom pathlib import Path\nimport run_e5f_utility_comparison as runner\nimport test_e5f_utility_recovery_policy_v1 as fixtures\nbase=Path('/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2')\ncontract=runner.read(base/'launch_v1/contract.json')\nassert runner.adapter.file_hash(base/'launch_v1/contract.json')=='c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a'\n# Setup authenticates/imports the immutable reference; it does not evaluate a point.\n_,_,_,_,_,_,runtime,_=runner.setup(contract,'floor_linear',Path('native_identity_setup'))\nnative,producer=runner.authenticated_native_failure_type(contract,runtime)\nfixture=fixtures.InfeasibleThetaError()\nexc=native(stage=fixture.stage,dead_mass=fixture.dead_mass,census=fixture.census)\nevidence=runner.recovery.capture_native_failure(exc,expected_native_type=native,native_gate_tolerance=runtime['model'].DEAD_MASS_TOL,context=fixtures.context())\nassert evidence.narrow_infeasibility_verified\nreceipt=dict(status='actual_frozen_native_class_authenticated_and_structured_capture_passed',native_solves=0,model_evaluation_called=False,contract_scope='Original source identity only; not certification of new accepted targets',producer=producer)\nPath('native_identity_receipt.json').write_text(json.dumps(receipt,indent=2)+'\\n')\nprint(json.dumps(receipt))\n\nIDENTITY\n"
+}

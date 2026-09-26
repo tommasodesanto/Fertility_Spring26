@@ -1,12 +1,12 @@
-"""Review-only recovery-policy prototype. Standard library; no native imports.
+"""Narrow native capture plus a review-only process-policy harness.
 
-NOT INTEGRATED. A new reviewed contract and source pins are required before any
-production use. No existing gate, deadline, >50% barrier, or job is changed.
-Native integration must authenticate the exception class's defining source and
-capture its attributes directly; historical error strings cannot authorize a
-rejection. The supervisor owns the wall clock outside compiled kernels. A future
-runner must remove its competing exception-raising kernel alarm, or explicitly
-hand its deadline event to this supervisor before raising an exception.
+The capture predicate is used by the opt-in reviewed_failure_v1 runner and
+controller. The standalone OwnedProcess/synthetic schedule below remain test
+harnesses, not production entry points. New reviewed source/contract pins are
+required; this module grants no launch permission. The caller authenticates the
+native class's defining source and captures its attributes directly. Historical
+error strings cannot authorize a new native feasibility rejection. Supervised
+runner mode enforces wall time outside compiled kernels without an inner alarm.
 """
 from __future__ import annotations
 
@@ -22,6 +22,7 @@ import time
 
 MANIFEST = dict(schema="utility_recovery_policy_v1", launch_permitted=False,
                 integrated=False, requires_new_reviewed_contract=True,
+                native_capture_integration="opt_in_reviewed_failure_v1",
                 unchanged_dead_mass_gate=1e-12,
                 existing_inadmissibility_barrier="unchanged; integration decision pending")
 SEARCH_STAGES = {"initial", "de"}

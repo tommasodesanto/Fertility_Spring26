@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import copy
 import csv
+from dataclasses import asdict
 import json
 import os
 from pathlib import Path
@@ -21,6 +22,7 @@ import numpy as np
 
 import e5f_utility_comparison_runtime as adapter
 import e5f_utility_comparison_design as design
+import e5f_utility_recovery_policy_v1 as recovery
 
 PARENT_LOCK = "6443195fa3f7de0dce5cc8a4c05e2709b99d586421c96a35dba3c07e93e061a1"
 INADMISSIBLE_PREFIXES = (
@@ -28,6 +30,56 @@ INADMISSIBLE_PREFIXES = (
     "Old-steady-state fertility normalization missed tolerance:",
     "Initial housing equilibrium failed its unchanged strict gate",
 )
+RECOVERY_POLICY = "reviewed_failure_v1"
+
+
+def recovery_enabled(contract):
+    choice = contract.get("candidate_failure_policy")
+    if choice not in (None, RECOVERY_POLICY):
+        raise RuntimeError("unreviewed candidate failure policy")
+    return choice == RECOVERY_POLICY
+
+
+def recovery_context(contract, contract_path, arm, request, output):
+    """Bind structured evidence to this exact externally supervised attempt."""
+    if request.get("candidate_id") != output.name:
+        raise RuntimeError("candidate identity differs from its output directory")
+    runner_hash = contract["files"][Path(__file__).name]["sha256"]
+    if request.get("runner_source_sha256") != runner_hash:
+        raise RuntimeError("case plan runner source differs from the contract")
+    if (request.get("deadline_owner") != "controller"
+            or request.get("controller_pid") != os.getppid()):
+        raise RuntimeError("reviewed failure policy requires its owning controller")
+    return recovery.Context(request["candidate_id"], request["controller_stage"],
+        adapter.file_hash(contract_path), runner_hash,
+        contract["arms"][arm]["objective"]["sha256"],
+        design.canonical_fingerprint(request["point"]))
+
+
+def authenticated_native_failure_type(contract, runtime):
+    """Authenticate the defining solver and its unchanged gates before capture.
+
+    The census is read from the actual exception, never reconstructed from its
+    message. This check adds no numerical acceptance rule or model modification.
+    """
+    model = runtime["model"]
+    relative = "code/model/intergen_eqscale_seq_optimized/solver.py"
+    expected_path = (Path(contract["reference_root"]) / "source" / relative).resolve()
+    manifest_pin = contract["parent_source_inventory"]
+    if adapter.file_hash(manifest_pin["path"]) != manifest_pin["sha256"]:
+        raise RuntimeError("native failure source manifest changed")
+    expected_hash = read(manifest_pin["path"])["files"][relative]
+    native_type = model.InfeasibleThetaError
+    if (Path(model.__file__).resolve() != expected_path
+            or adapter.file_hash(expected_path) != expected_hash
+            or sys.modules.get(native_type.__module__) is not model
+            or Path(native_type.__init__.__code__.co_filename).resolve() != expected_path
+            or native_type.__name__ != "InfeasibleThetaError"
+            or model.DEAD_MASS_TOL != 1e-12 or model.DEAD_VALUE_CUTOFF != -1e9):
+        raise RuntimeError("native failure class or numerical gate differs from the pinned solver")
+    return native_type, dict(native_source_path=str(expected_path),
+        native_source_sha256=expected_hash, native_manifest_sha256=manifest_pin["sha256"],
+        native_gate_tolerance=model.DEAD_MASS_TOL, native_value_cutoff=model.DEAD_VALUE_CUTOFF)
 
 
 def failure_status(exc):
@@ -125,7 +177,7 @@ def prepare(args):
     files = {name: pin(tool_dir/name) for name in (
         "run_e5f_utility_comparison.py", "e5f_utility_comparison_runtime.py",
         "e5f_utility_comparison_design.py", "run_e5f_utility_comparison_search.py",
-        "collect_e5f_utility_comparison.py")}
+        "collect_e5f_utility_comparison.py", "e5f_utility_recovery_policy_v1.py")}
     files["submit_e5f_utility_comparison.sh"] = pin(tool_dir.parent/"submit_e5f_utility_comparison.sh")
     files.update(provenance=pin(args.provenance), pension_receipt=pin(args.pension_receipt),
                  pension_measurement_contract=pin(args.pension_contract), timing_receipt=pin(args.timing_receipt))
@@ -186,7 +238,9 @@ def verified_contract(path):
         raise RuntimeError("explicit reviewed preparation-contract fingerprint required")
     executing={"run_e5f_utility_comparison.py":__file__,
                "e5f_utility_comparison_runtime.py":adapter.__file__,
-               "e5f_utility_comparison_design.py":design.__file__}
+               "e5f_utility_comparison_design.py":design.__file__,
+               "e5f_utility_recovery_policy_v1.py":recovery.__file__}
+    recovery_enabled(contract)
     for name,actual_path in executing.items():
         if Path(actual_path).resolve() != Path(contract["files"][name]["path"]).resolve():
             raise RuntimeError("executing source is not the contract-pinned source: "+name)
@@ -269,18 +323,32 @@ def evaluate(args):
         raise ValueError("case wall cap exceeds the finite approved budget")
     if not np.isfinite(float(request["deadline_epoch"])):
         raise ValueError("case requires a finite absolute deadline")
+    supervised = recovery_enabled(contract)
+    context = recovery_context(contract, args.contract, args.arm, request, args.output) if supervised else None
     # Reserve ownership before the exception path can write a failure receipt.
     # A duplicate request fails here without changing any existing case file.
     args.output.mkdir(parents=True,exist_ok=False)
+    if supervised:
+        # Attempt metadata stays outside scientific receipts: original/repeat
+        # equality must not depend on their distinct IDs or search stages.
+        write(args.output / "attempt_provenance.json", dict(context=asdict(context),
+            arm=args.arm, candidate_failure_policy=RECOVERY_POLICY,
+            case_plan_sha256=adapter.file_hash(args.case_plan)))
     # Absolute deadlines include setup; a shell/Slurm wall limit is also required.
     deadline = min(float(request["deadline_epoch"]), time.time()+cap)
     if deadline <= time.time(): raise TimeoutError("case budget exhausted")
     def alarm(*_): raise TimeoutError("objective wall budget exhausted")
-    signal.signal(signal.SIGALRM,alarm)
-    signal.setitimer(signal.ITIMER_REAL,deadline-time.time())
+    # Opt-in repair moves wall-time enforcement outside the numerical process.
+    # The native per-call absolute deadline and solve-count guards stay intact.
+    if not supervised:
+        signal.signal(signal.SIGALRM,alarm)
+        signal.setitimer(signal.ITIMER_REAL,deadline-time.time())
     start = time.monotonic()
+    native_type, native_source = None, None
     try:
         pair,old,lock,tax,selected,objective,runtime,fiscal = setup(contract,args.arm,args.output,output_reserved=True)
+        if supervised:
+            native_type, native_source = authenticated_native_failure_type(contract, runtime)
         receipt=old.evaluate_point(tax=tax,objective=objective,selected=selected,runtime=runtime,
             point=request["point"],output=args.output/"case",deadline_epoch=deadline,
             graphs=bool(request.get("graphs",False)))
@@ -288,11 +356,27 @@ def evaluate(args):
                        comparison_contract_sha256=adapter.file_hash(args.contract))
         old.write(args.output/"case/receipt.json",receipt)
     except Exception as exc:
-        write(args.output/"failure.json",dict(status=failure_status(exc),error_type=type(exc).__name__,error=str(exc),
-                                              automatic_retry=False))
+        failure = dict(status=failure_status(exc), error_type=type(exc).__name__,
+                       error=str(exc), automatic_retry=False)
+        if supervised:
+            failure.update(arm=args.arm, native_source=native_source,
+                           candidate_failure_policy=RECOVERY_POLICY)
+            try:
+                evidence = recovery.capture_native_failure(exc, expected_native_type=native_type,
+                    native_gate_tolerance=(native_source or {}).get("native_gate_tolerance"), context=context)
+                payload = asdict(evidence)
+                # Invalid diagnostics remain fatal and must not mask the raw
+                # exception by failing while serializing NaN or native objects.
+                json.dumps(payload, allow_nan=False)
+                failure["recovery_evidence"] = payload
+            except Exception as capture_error:
+                # Preserve the original exception even if its diagnostic is malformed.
+                failure["recovery_capture_error"] = type(capture_error).__name__ + ": " + str(capture_error)
+        write(args.output/"failure.json", failure)
         raise
     finally:
-        signal.setitimer(signal.ITIMER_REAL,0)
+        if not supervised:
+            signal.setitimer(signal.ITIMER_REAL,0)
 
 
 def main():

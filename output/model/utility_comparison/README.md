@@ -29,7 +29,19 @@ contains the proposed policy, reuse conditions and a smaller **eight-hour
 option** with at most forty new points per arm. `recovery_v1/eight_hour_option.json`
 is the current budget proposal; the earlier 42-hour calculation is an
 unapproved upper-bound illustration, superseded as the default. This is preparation only,
-not an approved launch, retry or extension of `run_001`.
+not an approved launch, retry or extension of `run_001`. Both proposals predate
+the accepted-input reconciliation and cannot authorize reuse under different
+targets or observers.
+
+The bounded machine repair subsequently passed **60 focused tests on Torch**
+and a zero-solve check of the actual frozen native exception class. The
+[repair receipt](recovery_v1/repair_test_receipt.json) preserves the two earlier
+failed test logs, final source fingerprints, review scope and remaining limits.
+The opt-in controller continues after narrowly evidenced candidate rejection,
+preserves owned timeouts as unscored, and verifies checkpoint resume without
+replaying completed attempts. A batch containing timeouts still stops before
+DE selection. A corrected scientific contract and a separate bounded native
+check remain necessary before another long run.
 
 ## Outcome in progress: planned recalibration not achieved
 

@@ -1,10 +1,10 @@
-# Utility comparison recovery: eight-hour option (plan revision 2)
+# Utility comparison recovery: machine repair and proposed follow-up
 
-**Preparation only; no launch is approved or implemented.** The main research
+**Preparation and bounded machine repair only; no new calibration launch is approved.** The main research
 task requested this separate recovery design after all four searches in
 `run_001` stopped during the initial population. It does not alter array
 18567879, its source snapshot, contract, records or eight-hour clock. Those
-controllers finish their existing repetitions and exports. The experimental
+controllers completed their existing repetitions and exports. The experimental
 utility choices and adopted common pension update remain exactly as disclosed
 in [the original design](utility_four_arm_preparation.md).
 
@@ -15,7 +15,11 @@ per arm**, with paired local and global moves. It is a smaller search with a
 clear coverage tradeoff, not completion of the original 546-objective recovery
 scenario. That scenario's 42-hour calculation is retained only as an
 **unapproved upper-bound illustration**, not the default proposal or an
-authorized extension. No failed or timed-out point is retried.
+authorized extension. No failed or timed-out point is retried. This option was
+written against the old target contract. The subsequent accepted-input review
+found a housing-target discrepancy, so its reuse and timing proposal cannot be
+treated as a launch plan for the corrected contract. Original scores cannot be
+relabeled as results under different targets or observers.
 
 ## What the failures establish
 
@@ -176,24 +180,113 @@ choice. Changes to these choices need a new reviewed contract, but need not
 change scientific acceptance. The eight-hour option explicitly changes
 search coverage and orchestration while preserving the science.
 
-## Concrete prototype and review boundary
+## Bounded machine repair and review boundary
 
-The separate
-[`e5f_utility_recovery_policy_v1.py`](../../code/model/tools/e5f_utility_recovery_policy_v1.py)
-prototype and its focused fault-injection tests exercise classification,
-process ownership, continued dispatch of distinct allowed candidates and
-fatal stopping without importing or solving the model. It is not wired into
-the frozen runner or controller and grants no launch permission.
+On September 26, the author authorized a bounded repair pass before another
+long run. The runner and actual controller now implement the explicitly
+opt-in `candidate_failure_policy = reviewed_failure_v1` path. A new immutable
+source snapshot and reviewed contract are still required; the original remote
+bundle, source pins, failure records and clock were not changed. No current
+contract enables this path, and no new numerical calibration was launched.
 
-Before deployment, lead review must approve the narrow rejection predicate,
-censored-outcome semantics and this smaller eight-hour design. Production
-integration still needs authenticated artifact reuse, the finite paired-move
-bank, typed round selection, scientific-key duplicate prevention and four-arm
-barriers; preserved full success validation; external timeout ownership; and
-synthetic tests of those integration points. Tests
-must demonstrate that missing/altered fingerprints, partial or late outputs,
-smoke/repeat failures and unrelated kernel/accounting errors cannot become
-accepted points. A new immutable snapshot and reviewed contract must bind
-these changes. No numerical run or submission is authorized by this packet.
-This revision changes only the plan and cost documentation. It adds no agents,
-model work or heavy tests; the existing monitor and result collection continue.
+The runner authenticates the native solver file against the frozen source
+manifest, the defining exception class/module/constructor, and the unchanged
+mass and dead-value thresholds. It captures the actual structured exception.
+Only the previously reviewed complete four-row age-34 renter-deficit census
+can become the new candidate-local rejection; other state patterns remain
+fatal. Its native gate remains
+\(\sum_{s:V(s)\leq-10^9} g(s)>10^{-12}\).
+The repair changes what the controller does after this rejection, not the
+Bellman problem, KFE, feasibility predicate, normalization or accepted score.
+
+Separate attempt metadata binds contract, source, arm, stage, full point and
+case plan without entering the scientifically compared receipt. Invalid or
+unserializable diagnostics preserve the raw error and remain fatal. The
+opt-in worker has no exception-raising inner alarm; its owner enforces the
+original absolute deadline outside compiled kernels. Timeout classification
+requires observing the owned process still running at its approved deadline
+and confirming its termination/reaping. Cancellation and an unexplained
+nonzero exit first observed late are fatal. Partial outputs never provide a
+scored loss.
+
+The actual finite batch continues to the next distinct planned candidate after
+an evidenced local rejection or timeout; the slot is never retried or replaced.
+Fatal errors stop new dispatch across arms while already-running siblings
+finish under their existing caps. Both selected repetitions must be successful
+before verified export. Resume requires the identical contract and clock,
+an exact durable-file inventory and unchanged case-artifact hashes. It skips
+completed attempts; orphan dispatches, changed artifacts and an unexplained
+external operation refuse resume. It does not reattach to or replay an
+interrupted numerical objective, and cannot adopt the original run's legacy
+records as newly classified outcomes.
+
+All **60 focused tests passed on Torch**, followed by authentication of the
+actual frozen native exception class and structured capture of a synthetic
+exception constructed with that class. This last check imports the pinned
+native source but makes zero model evaluations. It verifies the producer and
+unchanged thresholds, not a new native calibration or actual failure trajectory.
+Focused synthetic tests exercise the actual controller's batch, launch,
+finish, restore and repeat/export methods with explicit fake subprocesses and
+files. They do not certify a new model fit. The full repair test receipt is
+[`repair_test_receipt.json`](../../output/model/utility_comparison/recovery_v1/repair_test_receipt.json).
+The first combined Torch suite exposed an early-timeout/provenance boundary;
+the narrow repair distinguishes a missing startup sidecar from conflicting
+evidence, while still requiring owned deadline termination. The second suite
+exposed a test setup cap that could time out before creating a valid selected
+case. That fixture now explicitly proves setup success before testing the late
+repeat; the production code was unchanged between the second and final suites.
+Both failed logs are retained separately. The independent
+review also checked native class/source authentication and unchanged gates,
+and identified resume, cancellation and late-repeat control-flow defects that
+were addressed within this pass.
+
+**Remaining production constraints are explicit.** A completed initial/DE batch
+containing censored outcomes stops before DE selection; typed selection is
+not implemented and an unknown loss is never converted to an infeasible
+score. The existing controller's fixed forty-member/three-generation,
+3,100-second design remains unchanged. The proposed two-round bank,
+4,200-second cap, new budget contract and authenticated reuse of legacy
+results are not deployed by this repair. A future implementation must bind
+those choices in a new contract rather than silently run the old schedule.
+
+The main task must also reconcile the accepted scientific inputs before any
+native comparison: the author had chosen AHS mean rooms 5.729, while the frozen
+experiment retained ACS 5.608 and a capped-at-nine model observer. The next
+contract needs the AHS-consistent observer and a declared weighting rule.
+Nothing in the repair chooses weights, edits targets or changes the canonical
+model status. The newly collected [full four-arm readout](../../output/model/utility_comparison/run_001/comparison.md)
+retains the old target system and its limitations.
+
+## Bounded native end-to-end check proposed after input reconciliation
+
+This is a plan for the main task's review, not a submitted job or a launchable
+contract. First prepare a separate smoke-only driver/contract using the
+reconciled target and observer. Exercise one approved structural point per
+arm: two exact sequential smoke objectives, then two selected repetitions
+concurrently within each arm. The first smoke supplies the selected original;
+there is no calibration search and no failed-case retry. Synthetic tests above
+already exercise rejection, timeout, continuation and resume without changing
+or deliberately breaking the native model.
+
+The maximum is **sixteen full normalized objectives across four arms**, each
+retaining the 23-stationary-call safeguard: at most **368 native stationary
+calls**. Propose a **1,500-second cap per objective** and a **ninety-minute
+absolute limit** including readiness, comparison and reporting:
+
+| Shared-clock window | Check and stop rule |
+| --- | --- |
+| 0–3 minutes | Four-arm readiness, source/target verification; stop if incomplete. |
+| 3–53 minutes | Two sequential smokes per arm, arms in parallel. |
+| 53–55 minutes | Exact smoke comparisons and common pass barrier. |
+| 55–80 minutes | Two selected repetitions per arm, concurrently. |
+| 80–90 minutes | Full tables, standard figures, comparison/export and qualified visual review. |
+
+The retained selected objectives in the old run took 551.999–1,393.006 seconds;
+this motivates the finite cap but does not predict the corrected-contract
+runtime. Any timeout or missing scientific/report check ends the short check
+with an explicit incomplete result. Do not extend the clock or weaken a gate.
+The short driver must pin this smaller validation-only schedule before
+submission; the current fixed production schedule cannot be relabeled as this
+check. Passing it would verify the revised execution path at the checked
+points, not optimizer convergence, global feasibility, wealth-grid robustness
+or the unresolved share-policy boundary feature.
