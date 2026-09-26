@@ -1,0 +1,87 @@
+{
+  "artifacts": {
+    "candidate_schedule": "candidate_schedule.csv",
+    "checkpoint_age_exposure": "checkpoint_age_exposure.csv",
+    "checkpoint_exposure": "checkpoint_exposure.json",
+    "profiles": "demographic_profiles.json",
+    "report": "report.md",
+    "schedule_script": "build_household_exit_schedule.py",
+    "torch_script": "measure_checkpoint_exposure.py",
+    "torch_submit_script": "submit_exposure_job.sh"
+  },
+  "checkpoint": {
+    "control_lifecycle_age_marginal_max_abs_gap": 1.9109713811360507e-14,
+    "control_packet_remote": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/estate_receiver_probe_20260925_v1/results/v2/run/control/",
+    "elapsed": "00:00:10",
+    "job_id": "18566254",
+    "job_state": "COMPLETED",
+    "outcome": "Torch-only fixed-distribution reweighting; no household/GE solve or checkpoint download locally",
+    "parity_child_state_shape": [
+      4,
+      4
+    ],
+    "path_remote": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/nightpair_20260925_v1/results/run_001/oasi_087510/worker_05/point_04/initial_state.pkl.gz",
+    "serialized_parity_override_or_topbin_weights": "not recorded in compact checkpoint exposure receipt; discrepancy must be resolved before child-unit m exposure calculation",
+    "sha256": "d5ef71bdaf9960273035c722a2428a55f14bab160e0596881c8a981e67b8ead1",
+    "source_default_n_parity": 3,
+    "source_manifest_sha256": "237904131d159f775c7ae89d1bbf1e8d1dd70c79ad012c80a36d948658d6f9c6",
+    "target_system_sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58",
+    "terminal_cs1_household_mass_at_age82": 0.002889973077112248
+  },
+  "created": "2026-09-25",
+  "deliverable": "2007 SCF-weighted single/couple household-exit proxy and selected-checkpoint dependent-state exposure",
+  "key_results": {
+    "actual_biological_child_ages_minors_orphan_status_identified": false,
+    "candidate_cs1_households_nonterminal_exit_per_period": 0.0030299834634068454,
+    "candidate_cs1_households_nonterminal_first_adult_death_per_period": 0.009711253757849906,
+    "candidate_first_adult_death_q4_62_to_66": 0.08045439202673592,
+    "candidate_household_exit_q4_62_to_66": 0.020221198689163528,
+    "candidate_total_household_age_mass_change_percent": -1.6247347872892282,
+    "candidate_working_to_retiree_mass_ratio": 2.8481711052358327,
+    "current_checkpoint_working_to_retiree_mass_ratio": 2.858046633538401,
+    "current_cs1_households_nonterminal_exit_per_period": 0.0027006112308816032,
+    "equal_sex_count_death_risk_18_to_66": 0.166242151781145,
+    "model_m_recoverable_from_joint_n_cs_state_subject_to_saved_topbin_mapping": true
+  },
+  "limitations": [
+    "Cross-sectional married/cohabiting shares are frozen by reference age; no widow/single-state transition.",
+    "Partner death risks are assumed independent conditional on age and sex.",
+    "Fixed entrant mass and within-age policy/state composition; no birth replacement, fertility reweighting, PAYGO closure, behavior response, or equilibrium re-solve.",
+    "Candidate schedule is diagnostic only and not adopted.",
+    "The age-only exposure sums out parity n. Joint n,cs state would recover model-coded dependent-child count m subject to serialized top-bin mapping/weights; those are not present in the compact exposure receipt.",
+    "Exact biological child ages, minor status, child-specific caregiver links and orphan outcomes are not identified.",
+    "SCF age-specific couple shares are applied to dependent-state households; child-household marital composition is not observed in the checkpoint.",
+    "Mortality event totals cover nonterminal transitions only. Model terminal exit at age 82 is separate; candidate age-82 cs=1 terminal-cell mass is reported separately."
+  ],
+  "method": {
+    "age_mixing": "SCF-weighted reference-age x through x+3 bins; couple shares held fixed cross-sectionally across the synthetic cohort",
+    "child_mix_assumption": "SCF all-household age-specific single/couple shares applied to dependent-state households at same age; child-specific partnership not observed in checkpoint",
+    "dependent_child_state": "cs=1 is active dependent stage; separate parity index n controls model child-count-dependent costs/housing; joint state can recover model-coded m conditional on saved top-bin convention/weights; current exposure aggregates n out",
+    "individual_probability": "q4(age,sex)=1-product_{k=0,...,3}(1-qx(age+k,sex))",
+    "no_dynamic_spouse_status": true,
+    "no_orphan_identification": true,
+    "partnered_first_adult_death": "1-(1-q_head4)(1-q_partner4)",
+    "partnered_household_exit": "q_head4*q_partner4 under independent death timing; household persists after first death",
+    "period_years": 4,
+    "single_household_exit": "reference adult q4"
+  },
+  "source": {
+    "household_composition": {
+      "file": "../../overnight/bequest_flow_2007/calculation/scf2007_keys_ages.csv",
+      "receipt": "../../overnight/bequest_flow_2007/calculation/candidate_receipt.json",
+      "sample": "4417 unique PEUs x five implicates; SCF X42001/5 per row; married/cohabiting status and reference age/sex; partner age and sex where present",
+      "sha256": "c3abf7884c9b43d730e785eff9d6c84739dc920f6372fac4d7162ec12f684e6b",
+      "title": "Federal Reserve, 2007 Survey of Consumer Finances",
+      "url": "https://www.federalreserve.gov/econres/scf_2007.htm"
+    },
+    "mortality": {
+      "csv": "../../overnight/bequest_flow_2007/mortality/nchs_2007_qx_by_age_sex.csv",
+      "input_receipt": "../../overnight/bequest_flow_2007/mortality_source_receipt.json",
+      "official_pdf_url": "https://www.cdc.gov/nchs/data/nvsr/nvsr59/nvsr59_09.pdf",
+      "report_url": "https://stacks.cdc.gov/view/cdc/221925",
+      "sha256": "bdc1c408a1be85ec199dc6fdcdf1c08f88e5d09a2bccdf546d8eff86922832a6",
+      "title": "NCHS, United States Life Tables, 2007"
+    }
+  },
+  "status": "complete_fixed_distribution_diagnostic_no_model_solve"
+}

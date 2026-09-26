@@ -1,0 +1,15 @@
+{
+  "status": "reviewed_reduced_form_diagnostic_not_adopted",
+  "checks": [
+    "Reviewed q4 compounding, single/couple independent-death mapping, SCF implicate weighting and fixed-entry survival reweighting in scripts.",
+    "Reviewed correction excluding terminal exits from mortality event totals and distinguishing household events from child units."
+  ],
+  "worker_retiree_percent_change": -0.34553419061402746,
+  "limitations": [
+    "Static age-specific partnership mix is a reduced-form assumption, not a dynamically tracked surviving-spouse cohort.",
+    "Child-state exposure uses unconditional age-specific partnership mix.",
+    "Exposure totals exclude terminal age82 exit; model child-unit counts require joint state/top-bin mapping not retained in compact aggregation.",
+    "No empirical age-profile goodness-of-fit check or new behavioral/equilibrium solve; closeness to previous W/R is not validation against data."
+  ],
+  "new_runs_by_lead": 0
+}
