@@ -35,6 +35,13 @@ repetitions. Their initial trials are finished; export and actual-report QA
 remain pending. The exact heartbeat and raw count snapshot is retained in
 `run_001/status_20260926_0614.json`.
 
+At 02:21 EDT, the next status read failed SSH authentication; the local Torch
+control socket was absent. No new cluster state was obtained, so this is a
+collection-access problem, not evidence of a controller failure. The main
+task was notified, credentials/settings were left untouched, and the existing
+monitor remains active. `run_001/collection_access.json` records the bounded
+diagnosis. Final share-report verification waits for normal access to return.
+
 ## Launch and stop evidence
 
 Torch array **18567879** was submitted once. All four arms entered their first

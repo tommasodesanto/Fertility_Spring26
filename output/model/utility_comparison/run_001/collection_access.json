@@ -1,0 +1,22 @@
+{
+  "causal_limit": "Effective SSH configuration has GSSAPI disabled. Missing Kerberos tickets are not established as the authentication-failure cause. No new cluster state was obtained.",
+  "cluster_controller_dependence_on_laptop": false,
+  "credentials_or_settings_changed": false,
+  "heartbeat_paused": false,
+  "jobs_retried_or_resubmitted": false,
+  "last_successful_status": {
+    "local_time": "2026-09-26 02:14 EDT",
+    "path": "output/model/utility_comparison/run_001/status_20260926_0614.json",
+    "sha256": "c18cb177da93b29e95bad96cd49c1ebc7d6ea3f9dde4042790045ea5067df7bc",
+    "share_arms": "Both fresh heartbeats; each running two selected repetitions."
+  },
+  "local_control_master_check": "No control socket at the configured Torch ControlPath; ssh -O check exited 255.",
+  "local_kerberos_check": "Default cache absent; klist -l returned no caches.",
+  "main_task_notified": "01a0b10d-b3ab-7b91-a6c9-c882860ce320",
+  "next_action": "Retry only normal authorized status access on the existing monitor; collect final reports after legitimate access restoration. Preserve the 09:00 EDT collection cutoff.",
+  "observed_utc": "2026-09-26T06:21:35Z",
+  "password_prompt_started": false,
+  "schema": "utility_collection_access_receipt_v1",
+  "ssh_status_read": "Permission denied (gssapi-keyex,gssapi-with-mic,password,keyboard-interactive).",
+  "status": "ssh_access_unavailable_collection_pending"
+}
