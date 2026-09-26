@@ -4,13 +4,14 @@
   "date": "2026-09-26",
   "owner": "utility_fertility_decision_history",
   "deliverable": "docs/model/first_birth_observer_resolution.md",
-  "scope": "Read-only local source inspection; no model or empirical run, no target adoption, no edits to frozen contracts/results.",
+  "scope": "Read-only source inspection plus small pure-Python observation-operator and focused Torch unit checks; no model or empirical run, no target adoption, no edits to frozen contracts/results.",
   "central_findings": [
     "The September 24 H-v2 package is the author-labeled final empirical version: 1.025 rooms, SE 0.073; its target horizon remains pending.",
     "A2h is a distinct baseline-status subgroup estimate of 1.465, SE 0.050.",
     "The 1.465 paired-run instruction was authorized for the experimental calibration and its frozen run/target must remain intact. The report makes no post-authorization revocation claim; future empirical/model target adoption is a separate decision.",
     "The existing model observer is an aggregate one-period forced-birth-versus-held-childless branch contrast; saved lunch outputs do not contain respondent-level histories for the empirical event-study estimator.",
-    "A symmetric education-free, four-year-age-cell empirical bridge is necessary because the active model has no education state. It is an auxiliary estimand, not the original 1.025 H coefficient."
+    "A symmetric education-free, four-year-age-cell empirical bridge is proposed because the active model has no education state. It is auxiliary, not the original 1.025 H coefficient and not an automatic replacement.",
+    "A small four-year date/age-cell observer component is implemented and tested on Torch; it explicitly rejects ages above the model\u2019s 82-year support. Full empirical bridge and model-history measurements remain unrun pending lead review of sample support and proposed budget."
   ],
   "historical_source_note": {
     "earlier_author_uncertainty": "memory/transcripts/2026-09-25/normalized/claude/e1fed6d4-d016-431c-9bca-4669a2d4d3ee.md, user turns 2026-09-25T00:47:53Z and 00:48:50Z UTC (precede the overnight run authorization).",
@@ -24,12 +25,26 @@
     "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/phase5_lead_review.json",
     "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/overnight/phase6_lead_review.json",
     "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/lunch_first_birth_model_inventory.json",
-    "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/lunch_first_birth_final_review.json"
+    "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/lunch_first_birth_final_review.json",
+    "code/data/psid_followup_mar2026/observer_bridge.py",
+    "code/data/psid_followup_mar2026/test_observer_bridge.py",
+    "output/model/native_financing_diagnostic_20260919/specification_followup/target_review_v1/observer_resolution/implementation_test_receipt.md"
   ],
   "not_done": [
-    "No checkpoint retrieval or model micro-panel simulation; use latest lead-verified selected point (nightpair worker05point04 unless a newer utility-arm selection is completed and reviewed), not the September 23 B-floor historical checkpoint.",
     "No estimator rerun or new target estimate.",
     "No empirical target adoption or frozen-run modification.",
-    "The education-free/four-year-age bridge remains a proposal, not an adopted replacement estimand."
-  ]
+    "The education-free/four-year-age bridge remains a proposal, not an adopted replacement estimand.",
+    "No H-v2/A2h bridge estimator rerun. Existing H and A2h result packets are present; prepared person-year analysis_sample.dta must be rebuilt from source before the auxiliary bridge.",
+    "The proposed 2 x 20,000-history, 45-minute Torch measurement budget is not authorized/launched; lead review must first confirm sample support and budget.",
+    "No selected checkpoint retrieval or person-level model panel simulation; verify whether the September 26 utility comparison has produced a newer lead-verified selected point before measurement."
+  ],
+  "implementation": {
+    "operator": "code/data/psid_followup_mar2026/observer_bridge.py",
+    "tests": "code/data/psid_followup_mar2026/test_observer_bridge.py",
+    "age_support": [
+      18,
+      82
+    ],
+    "measurement_budget_proposal": "2 independently seeded panels x 20,000 histories; U=0, U=2, seeded household-level U[0,4) on common baseline histories; one Torch measurement-only job, 45-minute hard cap; no retry/expansion; lead review required before launch."
+  }
 }
