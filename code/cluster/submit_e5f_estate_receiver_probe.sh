@@ -9,8 +9,13 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=16G
 set -euo pipefail
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+if [ -n "${SLURM_JOB_ID:-}" ]; then
+  : "${E5F_ESTATE_PROBE_ROOT:?submission must preserve the diagnostic project root}"
+  PROJECT_ROOT="$E5F_ESTATE_PROBE_ROOT"
+else
+  SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+fi
 DRIVER="$PROJECT_ROOT/code/model/tools/run_e5f_estate_receiver_probe.py"
 need_receipt() { [ -s "$1" ] || { echo "missing required receipt: $1" >&2; exit 2; }; }
 if [ "${1:-}" = "--submit" ]; then
@@ -30,6 +35,7 @@ if [ "${1:-}" = "--submit" ]; then
     run) : "${E5F_ESTATE_PROBE_PREFLIGHT_RECEIPT:?successful source-preflight receipt required}"; : "${E5F_ESTATE_PROBE_SMOKE_RECEIPT:?successful exact-loop smoke receipt required}"; need_receipt "$E5F_ESTATE_PROBE_PREFLIGHT_RECEIPT"; need_receipt "$E5F_ESTATE_PROBE_SMOKE_RECEIPT" ;;
     *) echo "invalid stage" >&2; exit 2 ;;
   esac
+  export E5F_ESTATE_PROBE_ROOT="$PROJECT_ROOT"
   exec sbatch --account=torch_pr_570_general --partition=cs --time="$stage_limit" --cpus-per-task=1 --mem=16G --export=ALL "$0" "$@"
 fi
 : "${SLURM_JOB_ID:?prepare only: invoke with --submit after review and successful receipts}"

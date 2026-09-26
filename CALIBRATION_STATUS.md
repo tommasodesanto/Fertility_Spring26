@@ -1,6 +1,6 @@
 # Calibration Status
 
-## September 25 — estate recipient diagnostic requested; execution blocked
+## September 25 — estate recipient diagnostic launched after focused tests
 
 The author requests the three-way estate test: unchanged control, net-of-selling-
 cost bequest valuation, and the same valuation with equal estate payments to
@@ -12,9 +12,13 @@ Both estate changes remain experimental, not adopted. Fixed normalized entry
 composition implies that changed fertility is reported as a replacement gap;
 these treatment diagnostics are not certified closed-population equilibria.
 
-No new numerical results or jobs. Torch SSH returned Permission denied.
-The source-reviewed adapter/driver and focused tests are unexecuted; native
-source preflight, fixture-loop smoke and exact control replay remain required.
+Torch access is restored; native source/checkpoint preflight passed (18563842).
+The first preflight (18563806) stopped before model import on a launcher path
+error, now fixed. All nine focused tests passed (18564037). Comparison job
+18564157 is launched under `estate_receiver_probe_20260925_v1/results/v2/run`;
+the control matched all saved solution arrays and targets exactly, and the
+valuation case completed. The recipient fixed point is running; no complete
+comparison or policy conclusion is claimed yet.
 Budget is at most 42 native equilibria and three hours for the comparison.
 Specification, source pointers, stop rules and resume commands are in
 `output/model/estate_receiver_probe/README.md`. Policy transitions, recalibration

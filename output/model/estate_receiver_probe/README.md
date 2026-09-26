@@ -3,10 +3,16 @@
 ## Status — September 25, 2026
 
 Author requested the three-way test discussed in the bequest-accounting task.
-Code is prepared and source-reviewed; **no tests, preflight, solves, or submission
-have run**. Torch SSH returned `Permission denied` on this task's authentication
-probe. Model work, imports, tests, source hashing and rendering stay on Torch;
-the Mac was used only for text preparation. Existing results are untouched.
+Torch access is restored. Native source/checkpoint preflight passed in job
+18563842 (`results/v2/preflight`), and all nine focused fixture tests passed in
+18564037 (`results/v2/smoke`). Comparison job 18564157 uses `results/v2/run`,
+with exact control replay required before treatments. The control matched all
+saved solution arrays and targets exactly; the valuation case also completed.
+The recipient fixed point is running, so no full comparison is claimed yet.
+The first preflight (18563806) stopped before
+model import because Slurm relocated its script; the launcher now preserves the
+submission project root explicitly. Model work, imports, tests, source hashing
+and rendering stay on Torch. Existing reference results are untouched.
 
 ## Reference and economic changes
 
@@ -59,11 +65,14 @@ recalibration remain a separate stage after this diagnostic.
 - `code/cluster/submit_e5f_estate_receiver_probe.sh`: separate Torch stages.
 - Two `test_*estate_receiver*.py` files test period/annual accounting, death
   timing, income exclusion, funded receipts, control nesting, loop/cap failures.
+- `code/model/tools/build_e5f_estate_receiver_report.py` assembles a completed
+  three-case packet into a PDF with all tables and 51 retained figures. It is
+  source-reviewed; runtime rendering and visual QA await the completed run.
 
 Source review corrected the worker draft's ancestor-versus-selected preference
 comparison, remote paths, solve counter, unconditional transfer balance gate,
-and confusion of mass conservation with demographic replacement. These fixes
-and the adapter have **not been executed**. The native control must reproduce
+and confusion of mass conservation with demographic replacement. Source
+preflight and all nine focused tests have now passed on Torch. The native control must reproduce
 the selected solution arrays and all target model values exactly; failure stops
 the experiment and does not authorize wider tolerances.
 
@@ -84,26 +93,28 @@ is claimed from source preparation alone.
 
 ## Resume on Torch
 
-After authentication is restored, place only the four new Python files and
+Place only the four new Python files and
 launcher in a **separate** task tree, preserving their `code/model/tools/` and
 `code/cluster/` paths. Suggested remote task root:
 `/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/estate_receiver_probe_20260925_v1`.
 Never copy them into or modify the frozen `nightpair_20260925_v1/source` tree.
 
-From the separate task root, use new output directories under `results/v1/`:
+The launched comparison uses `results/v2/`; those directories must not be
+reused. For a separately justified future run, choose a fresh version below.
+From the separate task root, the stage sequence is:
 
 ```bash
 export E5F_ESTATE_PROBE_STAGE=preflight
-export E5F_ESTATE_PROBE_OUTPUT="$PWD/results/v1/preflight"
+export E5F_ESTATE_PROBE_OUTPUT="$PWD/results/NEW_VERSION/preflight"
 bash code/cluster/submit_e5f_estate_receiver_probe.sh --submit
 ```
 
 Inspect completion, then:
 
 ```bash
-export E5F_ESTATE_PROBE_PREFLIGHT_RECEIPT="$PWD/results/v1/preflight/preflight.json"
+export E5F_ESTATE_PROBE_PREFLIGHT_RECEIPT="$PWD/results/NEW_VERSION/preflight/preflight.json"
 export E5F_ESTATE_PROBE_STAGE=smoke
-export E5F_ESTATE_PROBE_OUTPUT="$PWD/results/v1/smoke"
+export E5F_ESTATE_PROBE_OUTPUT="$PWD/results/NEW_VERSION/smoke"
 bash code/cluster/submit_e5f_estate_receiver_probe.sh --submit
 ```
 
@@ -113,13 +124,13 @@ After its success, the first production case is the exact native baseline
 replay, and treatments may proceed only after it passes:
 
 ```bash
-export E5F_ESTATE_PROBE_SMOKE_RECEIPT="$PWD/results/v1/smoke/complete.json"
+export E5F_ESTATE_PROBE_SMOKE_RECEIPT="$PWD/results/NEW_VERSION/smoke/complete.json"
 export E5F_ESTATE_PROBE_STAGE=run
-export E5F_ESTATE_PROBE_OUTPUT="$PWD/results/v1/run"
+export E5F_ESTATE_PROBE_OUTPUT="$PWD/results/NEW_VERSION/run"
 bash code/cluster/submit_e5f_estate_receiver_probe.sh --submit
 ```
 
 Receipts pin the complete parent source/target/checkpoint and the new diagnostic
 files. A source change invalidates smoke/preflight. Do not retry or enlarge the
 budget without a changed, stated diagnosis. The launcher does not poll or create
-a monitor; no cluster job is currently running for this task.
+a monitor; active job status is recorded above.
