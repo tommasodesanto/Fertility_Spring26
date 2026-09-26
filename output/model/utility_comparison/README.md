@@ -23,6 +23,30 @@ smoke barrier gates the full search. Each arm reserves ten CPUs and 120 GiB;
 the cluster independently enforces deadlines and writes latest/best summaries,
 both selected repetitions and reports. No automatic resubmission is allowed.
 
+At the 01:15 EDT check, all four arms had passed both exact smokes and entered
+the search. Both housing-floor arms then stopped new search dispatch after
+the same initial trial (`initial_0005`) raised `InfeasibleThetaError`. At age
+34, positive mass in states without a feasible allocation exceeded the
+unchanged threshold: approximately \(1.194\times10^{-12}>10^{-12}\). The
+census includes renter households with zero liquid wealth, one child at home,
+and a negative budget slack of approximately 0.024 model units. The small
+mass does not establish that this violation is harmless. This error was not
+one of the three prespecified inadmissible-proposal classes, so the frozen
+controller stopped rather than changing its classification or retrying.
+
+Each floor arm attempted ten new initial points: two succeeded, seven were
+rejected by the named housing-equilibrium gate, and one failed as above. Each
+retained the verified smoke seed, leaving 29 initial slots and all 120 DE
+trials unrun. Their selected results are therefore best among only three
+distinct successfully scored points; they cannot support a fair comparison
+of fully recalibrated specifications against more extensively searched arms.
+The floor controllers moved to the two required repetitions and export. Both
+share arms were still running at this check. Full failed-trial parameter
+vectors and native feasibility censuses are preserved in each floor arm's
+`run_001/initial_0005_record.json` and `initial_0005_failure.json` files below
+its arm directory. These failures do not provide a completed failed-trial
+equilibrium or a validated estate-accounting result.
+
 This task owns the half-hourly follow-up
 `check-overnight-utility-comparison`. It stays quiet on unchanged state, reports
 material completion/failure, and stops after the final readout or a bounded
