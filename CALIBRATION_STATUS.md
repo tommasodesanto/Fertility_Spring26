@@ -1,5 +1,25 @@
 # Calibration Status
 
+## September 25 — estate recipient diagnostic requested; execution blocked
+
+The author requests the three-way estate test: unchanged control, net-of-selling-
+cost bequest valuation, and the same valuation with equal estate payments to
+ages 45–65. The prepared isolated driver uses the actual September 25 low-tax
+selected checkpoint, holding all preferences (including fertility utility),
+entrant wealth, earnings, supply, target definitions and numerical gates fixed.
+Its inherited 8.751% tax is experimental and is not today's adopted pension rule.
+Both estate changes remain experimental, not adopted. Fixed normalized entry
+composition implies that changed fertility is reported as a replacement gap;
+these treatment diagnostics are not certified closed-population equilibria.
+
+No new numerical results or jobs. Torch SSH returned Permission denied.
+The source-reviewed adapter/driver and focused tests are unexecuted; native
+source preflight, fixture-loop smoke and exact control replay remain required.
+Budget is at most 42 native equilibria and three hours for the comparison.
+Specification, source pointers, stop rules and resume commands are in
+`output/model/estate_receiver_probe/README.md`. Policy transitions, recalibration
+and final PDF assembly are not completed by this preparation.
+
 ## September 25 — pension target and payroll-tax rule adopted
 
 Author adopts the CPS ASEC 2008 (income 2007) ratio of mean household Social

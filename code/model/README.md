@@ -39,6 +39,12 @@ old incomplete bundles must be rebuilt from their matching solution or re-solved
 
 ## Earnings and wealth candidate tools
 
+The requested [estate recipient diagnostic](../../output/model/estate_receiver_probe/README.md)
+uses `tools/run_e5f_estate_receiver_probe.py` and its isolated adapter to compare
+the September 25 selected control, net estate valuation, and net valuation plus
+equal transfers to ages 45–65. Preparation is untested pending Torch access;
+it preserves fixed preferences and reports the demographic replacement gap.
+
 `tools/build_period_earnings_process.py` constructs the externally estimated
 period AR(1)-plus-iid process. `tools/run_e5f_earnings_wealth_candidate.py` applies
 explicit earnings, entry and purchase changes to an immutable native snapshot.
