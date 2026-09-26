@@ -21,11 +21,15 @@ This does not certify feasibility under revised parameters or policy paths.
 Fail and report a funding shortfall; do not silently reduce entrant wealth,
 borrow from unrelated accounts, or add external support.
 
-This decision changes recipients/funding only. It does not adopt the proposed
-entry-unit/joint-distribution remapping, mortality revisions, estate valuation
-change, or a replacement bequest target. Preserve the existing donor preference
-pending the separate bequest specification/calibration discussion; do not claim
-own-parent/own-child transmission or recipient welfare from a residual sink.
+The author separately reaffirms the bequest motive: households value leaving
+bequests. Retain that preference; its legitimacy is not an open model choice.
+Calibration of its strength and a consistently defined target remain separate.
+
+The allocation decision changes recipients/funding only. It does not adopt the
+proposed entry-unit/joint-distribution remapping, mortality revisions, estate
+valuation change, or a replacement bequest target. Preserve the existing donor
+preference; do not claim own-parent/own-child transmission or recipient welfare
+from a residual sink.
 Implementation must name the absorbing counterparty/use of resources, reconcile
 financial claims and physical housing, and pin payment timing before production
 use. No model code or solved case changed with this decision. The concurrently
