@@ -1,0 +1,6 @@
+{
+  "job_id": "18603092",
+  "remote": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_incentives_floor_linear_20260926",
+  "scope": "Saved checkpoint/source inspection only; zero solves",
+  "script": "#!/bin/bash\n#SBATCH --job-name=utility-incentives-inspect\n#SBATCH --account=torch_pr_570_general\n#SBATCH --cpus-per-task=1\n#SBATCH --mem=12G\n#SBATCH --time=00:03:00\n#SBATCH --output=/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_incentives_floor_linear_20260926/inspection_slurm.log\nset -euo pipefail\nmodule load anaconda3/2025.06\nexport OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMBA_NUM_THREADS=1 PYTHONDONTWRITEBYTECODE=1 MPLBACKEND=Agg\ncd /scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_incentives_floor_linear_20260926\npython3 inspect_saved.py\n"
+}
