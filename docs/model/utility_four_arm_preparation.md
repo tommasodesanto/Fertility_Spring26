@@ -209,3 +209,10 @@ layout is checked separately using an explicitly labeled historical fixture,
 which is not a new model result. The compact output index records the launch
 contract, job IDs and reporting validation. No author draft, slides, mock,
 frozen result or estate job is changed by this experiment.
+
+The approved source was committed and pushed as `d5dbf04d`. Torch array
+`18567879` began its common clock on September 26 at 00:13 EDT, with an absolute
+08:13 EDT finish. All four controllers were running their first exact smoke
+at the recorded launch observation. The new results and their scientific and
+visual certification remain pending. The approved contract and exact clock
+are retained under `output/model/utility_comparison/launch_v1/`.

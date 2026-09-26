@@ -1,0 +1,68 @@
+{
+  "approval": {
+    "authority": "author explicitly delegated the experimental choice and overnight execution",
+    "coordinating_task_id": "01a0b10d-b3ab-7b91-a6c9-c882860ce320",
+    "frozen_utc": "2026-09-26T04:11:36.141678+00:00",
+    "initial_native_solves": 0,
+    "prepared_contract": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/checks_v2/preparation/contract.json",
+      "sha256": "27d43fff4fbc2a47c1163d776307afc2415c433caaba00aedbdbc49acc5bfcd6"
+    },
+    "scope": "Tonight's comparison only; no author manuscript or adopted model changes.",
+    "source_branch": "codex/utility-four-arm-preparation",
+    "source_commit": "d5dbf04d68ff000e1a1b8e66994cdffd31a01580",
+    "source_identity": "All eleven checked runtime/test/launcher files match the pushed commit by SHA256.",
+    "task_id": "01a0dbbf-c270-72f1-b3a8-025240bc11c6",
+    "user_text": "i am not sure, do what you think its best, i'll assess tmrw"
+  },
+  "budget": {
+    "arm_count": 4,
+    "de_generations": 3,
+    "deadline_rule": "stop without retries, replacement slots, or gate relaxation; report unfinished counts",
+    "export_reserve_seconds": 900.0,
+    "identical_smokes_per_arm": 2,
+    "initial_population": 40,
+    "max_de_generations_at_supplied_timing": 3,
+    "objective_overhead_seconds": 120.0,
+    "objective_planning_seconds": 1145.7431141,
+    "objective_solve_p90_seconds": 1025.7431141,
+    "objective_timeout_seconds": 3100.0,
+    "objective_timeouts_wave_bound_seconds": 59800.0,
+    "overhead_status": "explicit assumed allowance; excluded from observed solve-sum timing",
+    "planned_seconds": 26023.3760538,
+    "repeat_reserve_seconds": 4500.0,
+    "repeat_rule": "compare original selected result separately against each of both repeats",
+    "reused_smoke_seed_cases_per_arm": 1,
+    "schema": "e5f_four_arm_finite_budget_v1",
+    "search_attempts_per_arm": 159,
+    "search_population_evaluations_per_arm": 160,
+    "search_waves": 16,
+    "selected_repeats_per_arm": 2,
+    "smoke_estimate_seconds": 2291.4862282,
+    "smoke_schedule": "sequential within each arm; four arms concurrent",
+    "stationary_calls_per_objective_upper_bound": 23,
+    "stationary_calls_upper_bound": 14996,
+    "status": "preparation_only_no_launch",
+    "timing_is_completion_guarantee": false,
+    "total_attempts_per_arm": 163,
+    "total_limit_seconds": 28800.0,
+    "total_objective_attempts": 652,
+    "total_workers": 40,
+    "unallocated_seconds": 2776.6239462000012,
+    "waves_per_generation": 4,
+    "workers_per_arm": 10
+  },
+  "check": {
+    "contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+    "native_solves": 0,
+    "status": "approved_frozen_controller_contract_checked",
+    "total_limit_seconds": 28800.0
+  },
+  "contract": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/launch_v1/contract.json",
+    "sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a"
+  },
+  "production_submitted": false,
+  "source_commit": "d5dbf04d68ff000e1a1b8e66994cdffd31a01580",
+  "status": "approved_contract_frozen_and_controller_checked"
+}

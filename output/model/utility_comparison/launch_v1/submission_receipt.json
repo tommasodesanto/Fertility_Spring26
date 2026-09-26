@@ -1,0 +1,27 @@
+{
+  "automatic_resubmission": false,
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--output=/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001/slurm_%A_%a.out",
+    "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/submit_e5f_utility_comparison.sh"
+  ],
+  "contract": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/launch_v1/contract.json",
+  "contract_sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a",
+  "job_id": "18567879",
+  "resource_request": {
+    "array_tasks": 4,
+    "cpus_per_arm": 10,
+    "memory_GiB_per_arm": 120,
+    "readiness_limit_seconds": 1800,
+    "shared_experiment_limit_seconds": 28800,
+    "slurm_limit": "08:35:00"
+  },
+  "returncode": 0,
+  "run_root": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/results/run_001",
+  "source_commit": "d5dbf04d68ff000e1a1b8e66994cdffd31a01580",
+  "status": "submitted",
+  "stderr": "",
+  "stdout": "18567879",
+  "utc": "2026-09-26T04:12:19.256989+00:00"
+}
