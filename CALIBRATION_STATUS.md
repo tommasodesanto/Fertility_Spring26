@@ -1,5 +1,31 @@
 # Calibration Status
 
+## September 26 morning — utility searches stopped early; share collection blocked
+
+All four searches in array18567879 stopped during their initial populations;
+no DE generation ran. The planned full eight-hour recalibration was not
+achieved. Floor trials stopped on an unexpected native feasibility rejection;
+share trials stopped after the objective deadline, with a wrapped exception.
+A separate additional share-concave exception remains unclassified until its
+traceback is collected. Scientific gates and frozen sources were not changed.
+
+Both floor selected originals match each of their two repetitions exactly;
+complete 13-row fits, 28 parameter/restriction rows and 17 standard figures
+per case are verified. Each floor selection has only three distinct scored
+points behind it. No calibrated utility winner follows from this comparison.
+SSH authentication remained unavailable at08:50 EDT. The last verified remote
+state is02:14 EDT, with both share repeat pairs active; their terminal status,
+final fits and repeat/export verification are unknown, not presumed successful.
+The utility task retains collection responsibility when legitimate access
+returns; periodic polling is paused after its bounded failure readout.
+
+Readout (preparation worktree):
+`/Users/tommasodesanto/.codex/worktrees/962e/Fertility_Spring26/output/model/utility_comparison/run_001/readout.md`.
+A separate reviewed recovery design is prepared but neither integrated nor
+launched. Its current option is an eight-hour, matched-coverage comparison,
+not the superseded 42-hour upper-bound illustration. No automatic retry or
+extension was made. The launch entry below is historical launch evidence.
+
 ## September 26 — four-utility overnight comparison launched
 
 The author authorized the full eight-hour comparison. Torch array 18567879
