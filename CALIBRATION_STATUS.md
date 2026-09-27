@@ -1,5 +1,20 @@
 # Calibration Status
 
+## September 27, 13:08 EDT — bounded local continuation COMPLETE
+
+Finished13:07:38 EDT, before hard end13:14:47. All8 objectives passed; no
+failures, timeouts or unrun points. Final two repeats and selected export have
+byte-identical14-target/31-parameter tables. Lead checked all8 receipt hashes,
+allbounds, loss sum and17standard plots. No model workers remain. Best combined
+scale/curvature candidate loss41.111684 versus anchor41.992733 and original
+42.281937. This is bounded improvement, not convergence/optimum. Earlyfertility
+.530 versus.810, ownership.617 versus.676, wealth/earnings6.024 versus6.927
+remain misses. Housingmarket residual7.44e-7. Full-grid policy plots retain
+high-wealth ownership decline and age30housing downturn; occupied-region policy
+shape certification remains pending. Fulltables/plots in local_continuation/
+run_v1/selected_export; lead_completion_review.json records verification.
+Monitoring restored30min; no newsearch authorized by this completion.
+
 ## September 27 — credit discussion correction; payment-to-income deferred
 
 Author parks payment-to-income while retaining it for later assessment. No model

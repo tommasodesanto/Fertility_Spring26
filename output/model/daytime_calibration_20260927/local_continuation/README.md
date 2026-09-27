@@ -1,5 +1,12 @@
 # Small local calibration continuation
 
+COMPLETE13:07:38 EDT. All8 evaluations passed, no failures/timeouts/unrun
+points. Two final repeats and export reproduce all14/31 table rows byte exactly;
+all17plots visually reviewed. Best41.111684 versus anchor41.992733 and
+original42.281937. No active workers. See run_v1/lead_completion_review.json
+and run_v1/selected_export for full evidence. This is a small improvement,
+not an optimum or complete policy-shape certification.
+
 Explicit September27 author authorization: run a little locally to see how calibration evolves, after the cluster job never started. This new bounded run does not revive or extend the cancelled cluster schedule.
 
 Launched12:45:55 EDT, controller PID2811, two actual single-thread workers. Search cutoff13:03:47 EDT; absolute end13:14:47 EDT including final repetitions and export. Eight-minute per-objective cap,29-minute global cap. Memory at launch:48GiB physical,82% free; no other local model processes active.
