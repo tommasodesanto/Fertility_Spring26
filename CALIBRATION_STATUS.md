@@ -1,5 +1,35 @@
 # Calibration Status
 
+## September 27, 16:30 EDT — six-hour Torch calibration authorized; staging
+
+User authorized a new six-hour calibration window and parallel reviews; Torch
+connectivity restored. No numerical launch yet. Window 16:12–22:12 EDT is fixed;
+search stops 21:27, leaving 45 minutes for repeats/export. Queue/setup consume
+the window. At most 24 single-thread Torch workers, 384 total objectives including
+verification. No heavy Mac computation while the author works.
+
+New contract activates the checked DUE existing-owner rule and searches tenure
+choice scale alongside the previous nine coordinates; child benefit remains
+normalized to completed fertility 2.1. Author retains 2% annual real interest and
+B15 income. Ten scored moments plus normalization; nchs_share30, family_rooms and
+old_dispersion are retained as displayed validation moments. All 14 rows and 31
+parameters remain reported. Primary inherited weights, relative-error diagnostic
+weights and block-balanced diagnostic weights are separate fixed lanes; compare
+all winners under common primary weights. Old loss scalars are not comparable
+without rescoring. No grid, rental, conception or income changes.
+
+Source review, remote focused tests, authenticated native baseline replay and
+six exact-loop DUE smoke cases must pass before search approval. New runtime and
+controller are under review, not yet certified. Evidence belongs under
+output/model/evening_calibration_20260927/. Full frictionless transition remains
+unsolved and outside this six-hour search. No automatic overnight extension.
+
+Parallel target reviews preserve current provisional numbers: recent-parent
+ownership is a joint anchor, not exclusive tenure-scale identification. First-birth
+1.465 provenance must identify sa_rooms_first_birth_v2.do and calendar-year windows;
+model four-year matched-branch contrast remains a proxy. Bequest child-directed
+data versus total positive model estates remains an explicit measurement mismatch.
+
 ## September 27, 15:35 EDT — DUE price-fall check PASSED; optional code integrated
 
 New two-arm permanent10% lower-price diagnostic complete; no workers remain.
