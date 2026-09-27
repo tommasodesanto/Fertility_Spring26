@@ -1,5 +1,25 @@
 # Supervised overnight calibration — September 27
 
+## September 27, 02:48 EDT — hourly economic inspection; search continues
+
+The 02:45 table snapshot has 108 primary and 34 identity search evaluations
+(excluding four acceptance cases), with no failures or resource interventions.
+Ten local evaluators remain active; observed RSS 15.20 GiB and free disk 235 GiB.
+Torch login remains unavailable and cluster search has not launched.
+
+The selected provisional primary loss is 147.412. Complete targets, gaps,
+weights, contributions and all fitted parameters/bounds are in
+`output/model/supervised_calibration_20260927/checks/0245/`. All seventeen
+standard plots were inspected for this exact selected case, de_0108, under
+`hourly_diagnostics/0245_selected/`. Market residual is 3.867e-6 and estate
+funding passes. Ownership rises with age; owner demand remains concentrated
+in the ten-room product. Average rooms fall toward target, but remain high.
+Early fertility is moving farther below target and the first-birth housing
+response remains too large: lower loss does not improve every target. Keep
+this weighting tradeoff explicit in the final memo. No model, weight or search
+intervention; final independent repeats remain pending. Next full plot check
+due by 03:45.
+
 ## September 27, 02:17 EDT — 104 search cases completed without failures
 
 The 02:15 snapshot has 80 primary and 24 identity search evaluations, plus four
