@@ -1,0 +1,43 @@
+{
+  "status": "diagnostic re-ranking of completed candidates only; not a recalibration",
+  "method": "Hold every target and other primary weight fixed; replace early_fertility weight. new_loss=primary_loss+(new_weight-100)*early_gap**2. All successful common-source candidates in this check are eligible. No new solves and no running objective modified.",
+  "parameter_block": "Early fertility adds information on child-benefit curvature, first-birth fixed cost and the two fertility taste scales, jointly with the other retained fertility moments. No identifying moment is dropped.",
+  "results": [
+    {
+      "early_fertility_weight": 100.0,
+      "winner_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/primary/search/de_0130/case",
+      "origin_weighting": "primary",
+      "rescored_loss": 123.34455612558715,
+      "original_primary_loss": 123.34455612558715,
+      "early_fertility": 0.5302204900481631,
+      "early_target": 0.8095276384290021
+    },
+    {
+      "early_fertility_weight": 1000.0,
+      "winner_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/primary/search/de_0130/case",
+      "origin_weighting": "primary",
+      "rescored_loss": 193.55579094855958,
+      "original_primary_loss": 123.34455612558715,
+      "early_fertility": 0.5302204900481631,
+      "early_target": 0.8095276384290021
+    },
+    {
+      "early_fertility_weight": 3000.0,
+      "winner_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/primary/search/de_0135/case",
+      "origin_weighting": "primary",
+      "rescored_loss": 348.7477182344394,
+      "original_primary_loss": 142.6647254906095,
+      "early_fertility": 0.5429510060207052,
+      "early_target": 0.8095276384290021
+    },
+    {
+      "early_fertility_weight": 10000.0,
+      "winner_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/primary/search/de_0067/case",
+      "origin_weighting": "primary",
+      "rescored_loss": 835.3081246644889,
+      "original_primary_loss": 267.2313337178904,
+      "early_fertility": 0.5699832917309221,
+      "early_target": 0.8095276384290021
+    }
+  ]
+}

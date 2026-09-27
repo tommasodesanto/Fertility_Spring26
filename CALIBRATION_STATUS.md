@@ -1,5 +1,32 @@
 # Calibration Status
 
+## September 27, 03:18 EDT — weight tradeoff checked; conditional next experiment
+
+The 03:15 snapshot has 136 primary and 44 identity search cases; all pass the
+retained gates, with no fatal, timeout, inadmissible or resource-stop event.
+Ten local evaluators are active (23.52 GiB RSS); free disk is 229 GiB. Torch
+login remains unavailable. Best provisional primary loss is 123.345; all target
+and parameter tables are in `output/model/supervised_calibration_20260927/checks/0315/`.
+Mean rooms improve but remain high; early fertility remains low and mean age
+at first birth moves later. Final independent repeats are still pending.
+
+A zero-solve re-ranking of saved candidates changes only the early-fertility
+weight from 100 to 1000/3000/10000. Weight 1000 selects the same candidate;
+weight 10000 selects early fertility 0.570 versus target 0.810. These are
+re-ranked existing points, not recalibrations or evidence of an unreachable
+target. CSV/JSON method and results are retained beside the fit tables.
+
+Under the author's authorization for weight experiments, once the identity
+lane has completed its final repeats/export, use its two freed workers for a
+separate early-fertility-weight-3000 sensitivity, starting from the then-validated
+primary best. At most twenty rounds of two workers, two exact smoke evaluations,
+a fresh immutable contract/provenance fingerprint, all other primary weights
+retained, and the same 07:13 search / 08:43 total cutoffs. No launch yet and no
+main-search change. This moment informs child-benefit curvature, first-birth
+cost and both fertility taste scales jointly with retained fertility moments;
+no identifying moment is dropped. Weight 3000 is diagnostic, not an estimated
+optimal weight. Last full plot review 02:45; next due by 03:45.
+
 ## September 27, 02:48 EDT — hourly economic inspection; search continues
 
 The 02:45 table snapshot has 108 primary and 34 identity search evaluations
