@@ -1,5 +1,22 @@
 # Calibration Status
 
+## September 27, 13:46 EDT — saved policy shapes examined separately from fit
+
+No solves; selected local candidate checkpoint authenticated. Supplemental
+policy_shapes/ examines childless incoming renters ages30/42, all15income
+states in CSV,3income ranks in plots, with saved tenure probabilities and
+transaction maps. Full17standardplots remain unchanged. Hugewealth housing
+downturn at3000 has zero mass in examined slices. Occupied-region ownership
+nonmonotonicity remains: declining-pair upper nodes contain.086%/8.826% of
+the examined age30/42 slices (descriptive node statistic, not causal incidence).
+Age42middle-income example: wealth1.419→4.209, ownership.484→.361 while
+expected housing4.545→5.593; four-room owner probability falls as renting
+and six-room ownership gain. Mechanism versus grid contribution NOT resolved.
+Expected consumption/housing mostly smoother; small local declines remain.
+Lead reviewed mapping/extraction, independently reproduced10decline summaries,
+and inspected both plots. No global policy certification, credit/grid/scale
+change or new numerical search. See policy_shapes/README.md.
+
 ## September 27, 13:08 EDT — bounded local continuation COMPLETE
 
 Finished13:07:38 EDT, before hard end13:14:47. All8 objectives passed; no
