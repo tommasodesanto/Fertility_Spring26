@@ -1,5 +1,34 @@
 # Calibration Status
 
+## September 27, 05:48 EDT — both active searches healthy; both plot packets inspected
+
+The 05:45 snapshot has sixteen main-continuation and 22 early-weight search
+cases, plus the finished 240-case original main and 60-case identity searches.
+Verification runs remain separately counted. Ten evaluators are active; RSS
+18.07 GiB, zero swap, 201 GiB disk available. The memory guard is alive and fresh.
+No fatal, inadmissible, timeout, resource stop or stale active progress. Torch
+login still fails; cluster search capacity remains zero. No intervention.
+
+The provisional main winner is continuation de_0010, loss 49.383. Complete
+fourteen-row targets and ten fitted parameters/bounds are in `checks/0545/`;
+that folder also compares every weight system's own winner under primary weights.
+Main childlessness nearly matches (0.198 versus 0.198), but early fertility
+(0.524 versus 0.810), ownership (0.606 versus 0.676) and wealth/earnings
+(5.999 versus 6.927) remain low. The early-weight winner de_0021 has common-primary
+loss 61.006. It brings the first-birth housing response to 1.463 versus 1.465
+and ownership to 0.644, but rooms remain higher (6.202 versus 5.729), and early
+fertility is only 0.531. Neither experiment establishes an optimum or an
+unreachable target; no reweighting is adopted.
+
+All seventeen standard plots for each of those exact winners were regenerated
+without solves and inspected, under `hourly_diagnostics/0545_main/` and
+`0545_early_weight/`. Market residuals are 4.386e-7 and 4.887e-7; estate funding
+passes. Ownership rises with age, while the largest owner product still dominates.
+Wide wealth axes continue to limit visual detail near boundaries; graph set
+unchanged. All fitted coordinates remain within their bounds. Final repeats of
+both active searches remain pending. Next complete plot review due by 06:45;
+search cutoff 07:13, numerical cutoff 08:43, two-page memo by 09:30 remain fixed.
+
 ## September 27, 05:25 EDT — first main search verified; bounded continuation launched
 
 The first main search completed 240 search cases and two final repeats at about
