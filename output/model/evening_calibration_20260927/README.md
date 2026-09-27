@@ -1,10 +1,19 @@
 # Six-hour evening calibration, September 27
 
-Author-authorized new Torch run. Revised gated job **18672459** is submitted on partition
-`cs`, requesting 24 CPUs and 128 GB for the remaining window. It runs six smokes,
-waits for explicit lead approval, then runs search and repeats on the same node.
-Search approval has not yet been issued. See `cluster/gated_launch.json` for
+Author-authorized new Torch run. Revised gated job **18672459** is SEARCHING on
+`cs669`, with **24 actual single-thread model workers** verified at17:28EDT.
+All six smoke cases passed; lead inspected full14/31 tables and all17plots before
+issuing explicit approval. Search and repeats use the same24CPU/128GB allocation.
+See `lead_search_approval.json`, `cluster/gated_v2_launch.json` and `cluster/gated_launch.json` for
 actual scheduler evidence and preserved rejected/cancelled submissions.
+
+Starting primary score33.820603648867845; relative-identity0.16026598337629389;
+block3.3496849785080824. These use different weights and are not comparable loss
+scalars. Complete starting fits/parameters: `cluster/smoke_review_v2/smoke_0000_primary/`.
+Exact pair/cross-lane comparison: `cluster/smoke_review_v2/full_table_comparison.json`.
+Three contact sheets there represent all17plots, byte-identical across six cases.
+Early fertility, ownership and wealth remain material misses. Full-grid policy
+caveats remain; acceptance permits search, not certification of a final calibration.
 
 The first gated run,18671834, timed out all six smoke objectives after reaching
 the fertility target but before completing verification/export. Search never

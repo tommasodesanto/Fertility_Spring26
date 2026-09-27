@@ -1,5 +1,30 @@
 # Calibration Status
 
+## September 27, 17:28 EDT — evening search released; 24 workers verified
+
+Job18672459 oncs669 is SEARCHING under immutable contractv4. Actual24 model
+workers verified in both allocation and controller heartbeat. All six revised
+smokes passed; lead independently checked every14-target/31-parameter row,
+exact repeated pairs and cross-lane model equality, and visually inspected all17
+plots. All six plot packets are byte-identical. Market residual1.4245e-5,
+normalization2.100159545, no negative estates or budget/credit violation mass,
+zero stationary projection, occupied-value monotonicity screen passes.
+
+Lead approval SHA64eccedb1ebcaf74c07de15de51c675a2ccac98a41a13a3352eb330c9aea34bb;
+smokecomplete SHA25ed4cc6e14c85deb63df0270028dff048b767782e9e4665b1fbcba9cda6b532.
+Evidence output/model/evening_calibration_20260927/lead_search_approval.json and
+cluster/smoke_review_v2. Primary starting loss33.820603648867845, relative-identity
+0.16026598337629389, block3.3496849785080824; do not compare these raw scores or
+old objective scalars. All winners will be scored under common primary weights.
+
+Early fertility0.530 vs0.810, ownership0.619 vs0.676, wealth/earnings6.020 vs6.927
+remain main misses; full tables in smoke_review_v2/smoke_0000_primary. Existing
+high-wealth ownership decline and age30 housing downturn remain caveats; standard
+saving/consumption panels are buyer-conditional, not complete DUE-stayer review.
+No global policy certification or identification-rank claim. Final two repeats
+per lane and17plots mandatory.360 search proposals max; fixed21:27 search cutoff,
+22:12 hard end.30-minute heartbeat updated. Mac model computation remains zero.
+
 ## September 27, 17:22 EDT — revised smoke submitted, source unchanged
 
 New gated_v2 job18672459 requests24CPU/128GB for remaining original window.
