@@ -47,8 +47,10 @@ budgets. It will pause again after the authorized jobs finish and are reported.
 
 Credit source review: the authenticated purchase-income adapter enforces
 `x+y/R >= -phi*pH` and owner saving `b_next >= -phi*pH`; changing phi to one
-relaxes both coherently but retains renter debt limits. Both purchase tests are
-algebraically equivalent on supported states, so deleting just one is inert.
+relaxes both coherently but retains renter debt limits. The two tests INSIDE the purchase routine are algebraically equivalent on
+transaction-grid-supported states. This does not identify the purchase screen
+with the separate end-of-period saving constraint, and must not be projected
+back onto the September14 pre-income purchase restriction.
 The estate audit explicitly leaves negative-estate creditor treatment unresolved.
 A sure-repayment benchmark must respect liquidation solvency at possible death
 dates; it cannot simply borrow to the numerical grid minimum. Full review was
@@ -64,3 +66,40 @@ The author subsequently requested a closed demographic endpoint, a transition in
 - `jacobian/README.md`: completed 18/18 local sensitivity evaluations, with all targets and parameters and finite-step nonlinearity checks.
 
 Production integration is not yet certified. It must pass native reference reproduction, benchmark reproduction, dated population/fiscal/estate checks and an actual price/pension transition solve with terminal-distance diagnostics. No old deadline is extended automatically by this new work.
+
+## September 27 — credit-constraint clarification and author decision
+
+Payment-to-income is deferred by the author, retained as an item to revisit;
+no threshold, payment convention or model change has been adopted.
+
+The lead previously conflated two duplicate transaction-screen tests with the
+separate purchase and saving constraints shown in the talk. That statement was
+too broad. The maintained September14 presentation source, lines173–175, shows
+a pre-income down-payment test and an end-of-period collateral limit. The
+September15 timing review in docs/model/POST_PRESENTATION_ISSUES.md, M06,
+explicitly records trade before earnings: these are distinct restrictions.
+Example: house100, financed share.8, initial cash10, gross return1.1, income40,
+consumption5 and holding costs5 imply post-trade wealth−90 and final saving−69.
+The final collateral limit−80 passes, but the cash down payment20 fails.
+
+Current native code differs: define Q=pH, S=net sale proceeds (zero for a
+renter buyer), x=b+S−Q, y=current income and R=gross period return. It tests
+b+S >= (1−phi)Q−y/R and x >= −phi Q−y/R, the SAME purchase test, apart from
+separate numerical grid support. Sources: solver.py3372–3378 and
+kernels.py757–780 in intergen_eqscale_seq_optimized. Income is not added to x;
+it enters the conditional budget c+b_next+o=R*x+y once (solver.py2794–2795),
+where o denotes nonnegative owner holding costs. Final saving must separately
+satisfy b_next >= −phi Q (native owner floor; solver.py165–168).
+
+Under current positive-return, nonnegative-cost baseline primitives, feasible
+consumption and final collateral imply x+y/R=(c+b_next+o)/R >= −phi Q/R
+>= −phi Q. Thus the current income-aware purchase screen is implied by the
+conditional household budget and final collateral in the continuous accounting.
+It is not the same algebraic inequality: the reverse implication need not hold.
+This is not a numerical regression test authorizing deletion of grid screening
+or of the final collateral floor. No kernel or pinned run is changed.
+
+The slide's indicator only on the down-payment RHS also leaves a condition on
+nonmoving owners; the code bypasses purchase screens when tenure/product is
+unchanged. Presentation should state the purchase condition only for buyers.
+Historical sources and author text are preserved; reconciliation remains open.

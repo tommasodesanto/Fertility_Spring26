@@ -1,5 +1,18 @@
 # Calibration Status
 
+## September 27 — credit discussion correction; payment-to-income deferred
+
+Author parks payment-to-income while retaining it for later assessment. No model
+change. The two current purchase-screen checks are algebraic duplicates; this
+must NOT be confused with the talk’s pre-income purchase gate versus final
+saving collateral constraint. Those historical restrictions were distinct.
+Current income-aware purchase screening is implied by feasible final saving
+and the budget under baseline positive returns/nonnegative costs; grid-support
+checks remain separate. Full algebra, counterexample and sources are in
+output/model/daytime_calibration_20260927/README.md. The earlier chat claim
+conflated these objects. Slide buyer-only applicability also needs clarification;
+no historical source or protected author wording changed.
+
 ## September 27, 12:46 EDT — new small local continuation ACTIVE
 
 User explicitly authorized a little local search after the cluster cancellation.
