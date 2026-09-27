@@ -1,5 +1,40 @@
 # Calibration Status
 
+## September 27, 06:48 EDT — both searches near completion; hourly plots pass inspection
+
+The 06:45 snapshot has 80/96 main-continuation and 38/40 early-weight search cases,
+plus the completed original main (240) and identity (60) searches. Ten evaluators
+are active, RSS 21.95 GiB, zero swap and 187 GiB free disk. Heartbeats, checkpoint
+progress, active solve ledgers and the memory guard are fresh. No fatal,
+inadmissible, timeout or resource-stop event. Torch authentication still fails;
+no cluster search launched. No intervention or additional experiment.
+
+The provisional main winner de_0066 has loss 43.656, with all fourteen targets
+and ten fitted parameters/bounds in `checks/0645/`. Main ownership is 0.603 versus
+0.676, wealth/earnings 6.013 versus 6.927, and early fertility 0.528 versus 0.810.
+The early-weight objective's winner de_0037 has early fertility 0.544, first-birth
+housing response 1.479 versus 1.465, and rooms 5.859 versus 5.729, but ownership
+falls to 0.579. Its common-primary loss is 57.608; the best re-ranked saved point
+within that experiment is de_0035 at 57.444. Keep these two selections distinct.
+Complete comparisons and parameter bounds for every objective's own winner are
+saved alongside the main table. No weight system is adopted.
+
+All seventeen standard plots for each exact winner were regenerated without
+solves and inspected under `hourly_diagnostics/0645_main/` and
+`0645_early_weight/`. Both market and estate-funding gates pass. Lifecycle shapes
+are regular at plotted resolution; the largest owner product still dominates,
+and wide wealth axes still limit boundary detail. No out-of-bounds estimate.
+
+Let the remaining fixed case budgets and two final repeats per search finish;
+retain the 07:13 search / 08:43 numerical cutoffs. Do not launch a new exploratory
+lane merely to occupy freed slots. At the next check, authenticate selected
+receipts and checkpoints and compare all fourteen target rows and 31 parameter
+rows across both final repeats before certifying the final export. Preserve any
+censored or failed cases. Rebuild the two-page memo from the final index, inspect
+both rendered pages and the final17-plot packet, include actual local/cluster
+capacity and the preparation failures, and deliver by09:30. Pause the heartbeat
+only after final delivery. Next hourly plot review is due by07:45 if still active.
+
 ## September 27, 06:17 EDT — continuation halfway through its case budget
 
 The 06:15 snapshot records 48/96 main-continuation and 30/40 early-weight search
