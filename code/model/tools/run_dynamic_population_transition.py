@@ -389,6 +389,59 @@ def entrant_cohort(
     return out
 
 
+class InheritedDistributionInfeasible(RuntimeError):
+    """Exact inherited state reaches infeasibility; no population repair allowed."""
+
+    classification = "inherited_distribution_infeasible"
+
+    def __init__(self, evidence):
+        self.audit = evidence
+        self.stage = evidence["stage"]
+        self.dead_mass = evidence["dead_mass"]
+        self.census = evidence["census"]
+        self.evidence_path = evidence.get("evidence_path")
+        super().__init__(f"{self.stage}: exact inherited distribution has "
+                         f"{self.dead_mass:.12g} positive mass at infeasible states; "
+                         "zero projection and zero dead mass are required")
+
+
+def _require_exact_inherited_distribution(out, policy, P, b_grid):
+    """Reject every positive dead-state mass and retain its origin coordinates."""
+    values = np.asarray(policy.V)
+    if (values.shape != out.shape or out.ndim != 7
+            or not np.isfinite(out).all() or np.any(out < 0)):
+        raise ValueError("Exact inherited distribution requires aligned finite nonnegative mass")
+    occupied = out > 0
+    bad = occupied & ((values <= -1e9) | ~np.isfinite(values))
+    if not np.any(bad):
+        return
+    indices = np.argwhere(bad)
+    masses = out[bad]
+    order = np.argsort(-masses, kind="stable")[:8]
+    census = []
+    for index in indices[order]:
+        b,tenure,loc,age,income,children,home = map(int,index)
+        value = float(values[tuple(index)])
+        census.append(dict(wealth_index=b,wealth=float(b_grid[b]),tenure=tenure,
+            location=loc,age_index=age,age=float(P.age_start+age*P.da),
+            income_index=income,children_ever_born_index=children,child_state_index=home,
+            mass=float(out[tuple(index)]),value=value if np.isfinite(value) else None))
+    evidence = dict(classification=InheritedDistributionInfeasible.classification,
+        stage="exact_inherited_pre_fertility",dead_mass=float(masses.sum()),
+        affected_cells=int(len(indices)),census=census,origin_shape=list(out.shape),
+        origin_mass=float(out.sum()),origin_sha256=hashlib.sha256(out.tobytes()).hexdigest(),
+        asset_prices=np.asarray(policy.price,dtype=float).tolist(),value_cutoff=-1e9,
+        required_dead_mass=0.,projection_mass=0.,distribution_modified=False)
+    evidence_dir = getattr(P,"native_inherited_distribution_evidence_dir",None)
+    if not evidence_dir:
+        raise ValueError("Exact inherited-state rejection requires an explicit evidence directory")
+    destination = Path(evidence_dir)/f"inherited_infeasible_{time.time_ns()}.json"
+    destination.parent.mkdir(parents=True,exist_ok=True)
+    evidence["evidence_path"] = str(destination)
+    destination.write_text(json.dumps(evidence,indent=2,sort_keys=True,allow_nan=False)+"\n")
+    raise InheritedDistributionInfeasible(evidence)
+
+
 def gate_pre_fertility_distribution(
     g_pre: np.ndarray,
     policy: PolicyBundle,
@@ -398,6 +451,9 @@ def gate_pre_fertility_distribution(
 ) -> tuple[np.ndarray, float]:
     out = np.asarray(g_pre, dtype=float).copy()
     projected_mass = 0.0
+    if bool(getattr(P,"native_exact_inherited_distribution",False)):
+        _require_exact_inherited_distribution(out,policy,P,b_grid)
+        return out, 0.0
     for j in range(P.J):
         # A surprise price change can leave an inherited debt node just beyond
         # the new Bellman feasibility frontier.  Use the core model's own

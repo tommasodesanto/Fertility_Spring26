@@ -212,6 +212,8 @@ def setup(output, *, contract=CONTRACT, reference=REFERENCE, fixed_reference_pri
     with gzip.open(checkpoint,'rb') as stream: selected=pickle.load(stream)
     P=copy.deepcopy(selected['parameters'])
     model.configure_current_household_contract(P)
+    P.native_exact_inherited_distribution = True
+    P.native_inherited_distribution_evidence_dir = str(output/'inherited_state_failures')
     np.testing.assert_array_equal(model.make_grid(P),selected['b_grid'])
     np.testing.assert_array_equal(P.fixed_reference_entry_grid,selected['b_grid'])
     # Pure observer definitions stay pinned to the actual calibration contract.

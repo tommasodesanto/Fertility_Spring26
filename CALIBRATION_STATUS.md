@@ -36,6 +36,25 @@ unsupported path before solving. Tiny fixtures pass; full matched numerical
 check remains outstanding. Frozen origin-blind estate audit is rejected for
 DUE; a new authenticated source contract is required, no old pin bypass.
 
+Strict-state follow-up: authenticated original and dated checkpoints identify252
+moved cells, all renters,99.705% of moved mass age22. Exact reconstructed
+projection matches saved postprojection distribution bitwise. Original already-
+infeasible support1.833e-15 is tiny; most support loss arises in the dated
+credit scenario. No causal separation of rent/path/grid classifier yet. Census:
+root_smoke_v1/strict_initial_review.json and.csv. Main native runtime now enables
+an exact inherited-state gate that never projects; it saves a census and rejects
+any positive infeasible mass. Root requires zero projection.26 focused tests
+pass; no fresh numerical replay, new approvals/snapshot required. This stricter
+contract may reject even baseline floating-point tails; do not conceal or relax
+that issue to obtain a run.
+
+Torch staging authenticated2689 files and native setup, zero solves, no jobs.
+Receipts in credit_transition/cluster_preparation/setup_only_v1. Staged sources
+precede strict-state fix and cannot be promoted. DUE implementation backed up
+on codex/due-existing-owner-credit at3f6d9e67;16 focused tests pass, main model
+still unchanged. Matched runner draft requires a reviewed origin-aware purchase
+audit, source freeze and owned deadlines; no full DUE numerical match yet.
+
 ## September 27, 13:46 EDT — saved policy shapes examined separately from fit
 
 No solves; selected local candidate checkpoint authenticated. Supplemental
