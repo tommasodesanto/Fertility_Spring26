@@ -39,10 +39,16 @@ pass; lead inspected the supplementary life plot and reviewed the simulation.
 The author approved a first-pass credit benchmark removing artificial purchase,
 collateral and unsecured saving limits while enforcing net-estate solvency at
 every possible death date and feasibility in every reachable continuation.
-It is now launched in `credit_benchmark/run_v2`: one local worker, baseline
-replay, experimental solve and exact repeat; 30-minute total/10-minute per-case
-caps in plan.json. Eleven focused adapter tests pass and generated source was
-reviewed. Do not edit pinned runner/helper while active. The natural boundary
+It completed in `credit_benchmark/run_v2`: baseline replay, experimental solve
+and exact repeat all pass; all31 economic parameter estimates fixed and both
+experimental14-target/31-parameter tables byte-identical. Eleven adapter tests
+pass. Benchmark steady state70seconds, market residual5.66e-6, no negative
+estates or budget violations; full17plot packet inspected. Completed fertility
+2.1001->2.1283, ownership0.6174->0.6465, wealth/earnings6.0247->5.6474; common
+weighted score42.282->66.439. Birth/entry mismatch1.33% is explicitly reported.
+See `credit_benchmark/RESULTS.md` and full tables. run_v1 preserves a wrapper
+error treating eq_iter as economic; fixed by excluding only that solver counter.
+Original deadline retained; no economic or numerical gates relaxed. The natural boundary
 uses conservative feasible grid nodes and the native V>-1e9 classifier: this is
 an explicitly approximate diagnostic, not certified continuum frictionless credit.
 All parameters including child benefit 0.14416490417555738 must stay fixed;

@@ -20,13 +20,14 @@ Separate work and ownership:
 - `households/`: saved-policy and full stationary-distribution checks,
   supplemental zoom plots and three reproducible illustrative household lives.
   No new equilibrium solution or change to the standard 17 diagnostics.
-- `credit_benchmark/run_v2/`: approved same-parameter experiment replacing
+- `credit_benchmark/run_v2/`: completed same-parameter experiment replacing
   artificial credit limits by net-estate solvency at every possible death and
   feasible continuation. One worker, 30-minute total/10-minute case caps;
   baseline replay, benchmark and exact repeat. All preference parameters,
   including the child-benefit level, remain fixed. No fertility renormalization.
   Conservative feasible-grid boundary and native value cutoff are explicit
-  limitations; no continuum frictionless-credit certification. Birth renewal
+  limitations; no continuum frictionless-credit certification. All three cases
+  passed, exact benchmark repeat; see credit_benchmark/RESULTS.md. Birth renewal
   and estate funding are reported, not repaired. See plan.json for source pins.
 - `lifecycle_dashboard/`: first-pass population age profiles versus actual ACS,
   PSID and CPS data, with complete CSVs and provenance. Supplemental diagnostic,
