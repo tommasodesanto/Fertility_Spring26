@@ -1,0 +1,70 @@
+# Six-hour evening calibration, September 27
+
+Author-authorized new Torch run. Gated job **18671834** is submitted on partition
+`cs`, requesting 24 CPUs and 128 GB for the remaining window. It runs six smokes,
+waits for explicit lead approval, then runs search and repeats on the same node.
+Search approval has not yet been issued. See `cluster/gated_launch.json` for
+actual scheduler evidence and preserved rejected/cancelled submissions.
+
+Baseline source equivalence is accepted through the supplemental frozen/current
+Torch comparison: all 64 solution arrays and 31 parameters agree exactly. The
+original Mac/Torch bitwise-array assertion remains failed and preserved; the
+supplement demonstrates platform differences. All 14 moments agree within
+1e-13, scientific gates pass, and all 17 baseline plots were inspected. Read
+`lead_baseline_review.json` and `cluster/crosshost_v3/` for complete evidence.
+
+## Fixed scope and clock
+
+- Window: September 27 16:12–22:12 EDT; absolute end epoch 1790561520.
+- Search cutoff 21:27 EDT, epoch 1790558820. Setup/queue consume the window.
+- At most 24 single-thread model workers on Torch; no local model computation.
+- At most 384 objectives including smokes and repeats. Search cap 366 leaves
+  room for six controller smokes, six repeats and bounded prerequisite checks.
+- Each objective has a parent-owned 900-second cap and at most 23 stationary
+  solves for child-benefit normalization. No restart or extension of old plans.
+
+## Economic contract
+
+Activate the author-adopted DUE existing-owner borrowing rule with separate death
+solvency, retaining buyer origination limits. Search the nine existing coordinates
+and tenure choice scale; normalize child benefit to completed fertility 2.1.
+Tenure scale exploratory bounds [0.001,0.1], proposed in logarithms. Retain all
+other bounds, 2% annual real interest, B15 earnings, entry distributions, grids,
+housing preferences, rental cap, conception schedule and scientific gates.
+
+All 14 target rows and 31 parameter rows remain visible. Ten scored moments plus
+fertility normalization; first births at age 30+, family rooms and older wealth
+dispersion become explicit untargeted validation. Counting restrictions does not
+establish identification. Recent-parent ownership is a joint anchor for tenure
+scale, ownership preference and child housing loading.
+
+Three separately pinned weight lanes: inherited active weights (primary),
+identity after fixed relative-gap scaling, and equal block averages of inherited
+standardized errors. Exact formulas and caveats are in
+`docs/model/e5f_evening_weight_review_20260927.md`. Rescore every lane winner under
+the common primary weights; old loss scalars are not directly comparable.
+
+## Required release gates
+
+Remote source hashes and focused tests; authenticated baseline replay; six
+exact-loop DUE smoke objectives; full 14-target/31-parameter comparisons and
+standard 17-plot inspection. Search requires an explicit pinned lead approval.
+Preserve failures; source corrections require new immutable versioned contracts.
+No failed gate may be bypassed to fill the time window.
+
+Check actual concurrency, checkpoints and memory; investigate progress stale for
+30 minutes. Final per-lane winners require two fresh repeats and standard plot
+exports. No claim of an optimum from a finite search. No automatic overnight
+continuation: the author returns around 22:00 to decide the next plan.
+
+## Open interpretation issues
+
+Current first-birth housing response is a matched four-year model contrast, not
+the exact empirical event-study estimator. Empirical 1.465 provenance is
+`sa_rooms_first_birth_v2.do`, with calendar-year windows. The bequest data are
+child-directed transfers while the model counts positive estates. These remain
+explicit provisional approximations; reviews do not change targets during search.
+Full frictionless equilibrium transition remains unsolved and outside this run.
+
+See the three dated review notes in `docs/model/` for weighting, tenure target and
+target measurement evidence. No Google ledger edits or outside messages.

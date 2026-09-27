@@ -1,0 +1,23 @@
+{
+  "status": "baseline_source_equivalence_accepted_for_controller_smoke",
+  "search_approved": false,
+  "contract_sha256": "ba58d661f717331560c52672c3549a10f9a867080a570efc51b75fce17fb4ad3",
+  "native_baseline_job": 18669560,
+  "original_cross_host_bitwise_assertion": "FAILED; preserved without relabeling",
+  "native_model_moments": "all 14 within 1e-13 of reference",
+  "native_parameter_estimates": "all 31 exact",
+  "native_scientific_gates": "passed; market, household budgets, origination/stayer accounting, estate funding, negative estates, probability/value and stationary operator gates unchanged",
+  "native_standard_plots_inspected": 17,
+  "plot_caveat": "Standard panels retain prior full-grid and buyer-conditional limitations; no global policy-shape certification",
+  "supplemental_proof_job": 18671533,
+  "supplemental_proof_plan_sha256": "cb29fd4de02ab12820ecb24a17467e6b489bcfd5bd98108fe4748be6a157e64a",
+  "frozen_and_native_torch_solution_arrays": {"count": 64, "bitwise_exact": 64},
+  "frozen_parameter_estimates_exact": 31,
+  "interpretation": "Frozen and current code give identical solution arrays on Torch; both reproduce the same tiny differences relative to the Mac checkpoint. Platform arithmetic explains the failed cross-host bitwise comparison at this point.",
+  "actual_hosts": {"native": "cs605", "frozen": "gr102"},
+  "terminology": "Same cluster, not same physical host; verification summary legacy same_host field names do not change these recorded hosts",
+  "scientific_gates_or_tolerances_changed": false,
+  "actual_prerequisite_stationary_solves": 2,
+  "setup_failures": "Preserved separately; did not execute model solves",
+  "next_release_gate": "Six exact-loop DUE smokes, full target/parameter repeat comparisons and standard plot inspection before explicit search approval"
+}

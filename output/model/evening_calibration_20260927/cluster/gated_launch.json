@@ -1,0 +1,37 @@
+{
+  "status": "running_six_smokes",
+  "contract_sha256": "ba58d661f717331560c52672c3549a10f9a867080a570efc51b75fce17fb4ad3",
+  "gated_wrapper_sha256": "bd9dfd87aaacbcb6ab4c34cb7551f8e3eec6aa78a93d9b4ff7583f3ebf462a7c",
+  "inner_wrapper_sha256": "c0d8254546c18171170105969e22d5486935faffe7014c74b891799042d94b18",
+  "controller_sha256": "987654c809ff2b0559f2dfee84c949fdd5f7914ebab7bfe9585b164fe6a84ac8",
+  "resources": {
+    "cpus": 24,
+    "memory": "128G",
+    "maximum_wall": "06:00:00",
+    "partition": "cs",
+    "requested_wall_minutes": 311
+  },
+  "smoke_cases": 6,
+  "search_authorized": false,
+  "approval_condition": "Lead explicit signed-hash file after platform proof plus full smoke tables and17plots",
+  "search_cutoff_epoch": 1790558820,
+  "hard_end_epoch": 1790561520,
+  "timestamp": "2026-09-27T20:58:41.369905+00:00",
+  "submission_history": [
+    {
+      "status": "rejected_no_job_created",
+      "partition": "cpu_short",
+      "reason": "partition 'cpu_short' is not valid for this job; CPU job setup is not valid"
+    },
+    {
+      "job_id": 18671808,
+      "status": "cancelled_pending_before_work",
+      "reason": "Reduce requested walltime to remaining global window; scheduler rejected TimeLimit update"
+    }
+  ],
+  "job_id": 18671834,
+  "actual_workers": 6,
+  "search_approval_exists": false,
+  "node": "cs755",
+  "start_utc": "2026-09-27T21:03:05Z"
+}
