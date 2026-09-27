@@ -25,6 +25,19 @@ VALIDATION = frozenset(('nchs_share30','family_rooms','old_dispersion'))
 ROOT = Path(__file__).resolve().parents[3]
 
 
+def require_current_tool(module,name):
+    expected=(ROOT/'code/model/tools'/f'{name}.py').resolve()
+    actual=Path(module.__file__).resolve()
+    if actual!=expected:
+        raise RuntimeError(f'Cached/imported tool namespace is not current: {name}: {actual}')
+    return module
+
+
+require_current_tool(base,'e5f_calibration_runtime')
+if Path(require_no_negative_estates.__code__.co_filename).resolve() != (ROOT/'code/model/tools/run_e5f_due_stayer_matched_check.py').resolve():
+    raise RuntimeError('Estate gate helper is not from current pinned source')
+
+
 def require_abs_gate(value,tolerance,label):
     number=float(value)
     if not math.isfinite(number) or abs(number)>tolerance:
@@ -90,6 +103,7 @@ def setup(contract,objective,output):
     if sha(objective_pin['path'])!=objective_pin['sha256'] or json.loads(Path(objective_pin['path']).read_text())!=objective:
         raise RuntimeError('Lane objective differs from its complete pinned file')
     import e5f_current_transition_runtime as native
+    require_current_tool(native,'e5f_current_transition_runtime')
     ancestry=contract['native_ancestry_contract']
     if sha(ancestry['path'])!=ancestry['sha256']:raise RuntimeError('Native ancestry changed')
     prepared=native.setup(Path(output)/'native_preparation',contract=Path(ancestry['path']),
@@ -106,8 +120,9 @@ def setup(contract,objective,output):
     for row in objective['parameter_restrictions']:
         if row['parameter'] in oldbounds and (row['lower'],row['upper'])!=oldbounds[row['parameter']]:raise ValueError('Original parameter bounds changed')
     prepared['parameters'].native_due_stayer_credit=False
-    rt=prepared['runtime'];rt['calibration']=importlib.import_module('run_e5f_transition_calibration')
-    purchase=importlib.import_module('e5f_due_purchase_audit');estate=importlib.import_module('e5f_overnight_estate_audit')
+    rt=prepared['runtime'];rt['calibration']=require_current_tool(importlib.import_module('run_e5f_transition_calibration'),'run_e5f_transition_calibration')
+    purchase=require_current_tool(importlib.import_module('e5f_due_purchase_audit'),'e5f_due_purchase_audit')
+    estate=require_current_tool(importlib.import_module('e5f_overnight_estate_audit'),'e5f_overnight_estate_audit')
     if not purchase.SUPPORTS_NATIVE_DUE_STAYER_CREDIT or not estate.SUPPORTS_NATIVE_DUE_STAYER_CREDIT:raise RuntimeError('Origin-specific audit required')
     rt['accounting']=purchase
     result=EveningObjective(contract,objective,prepared,native.EstateAuditContract(estate))

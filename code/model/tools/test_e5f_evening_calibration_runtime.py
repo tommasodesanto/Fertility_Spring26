@@ -16,6 +16,13 @@ def objective():
            parameter_restrictions=[dict(parameter=k,lower=.001 if k=='tenure_choice_kappa' else 0.,upper=.1 if k=='tenure_choice_kappa' else 10.) for k in r.FREE])
 
 class EveningRuntime(unittest.TestCase):
+    def test_stale_namespace_rejected(self):
+        wrong=NS(__file__='/frozen/tools/e5f_overnight_estate_audit.py')
+        with self.assertRaisesRegex(RuntimeError,'not current'):
+            r.require_current_tool(wrong,'e5f_overnight_estate_audit')
+        current=NS(__file__=str(r.ROOT/'code/model/tools/e5f_overnight_estate_audit.py'))
+        self.assertIs(r.require_current_tool(current,'e5f_overnight_estate_audit'),current)
+
     def test_finite_scalar_gates(self):
         r.require_abs_gate(1e-11,2e-10,'budget')
         for value in (float('nan'),float('inf'),-float('inf'),1e-8):
