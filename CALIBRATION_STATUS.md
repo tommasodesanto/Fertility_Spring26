@@ -1,5 +1,22 @@
 # Calibration Status
 
+## September 27, 18:00 EDT — first evening search checkpoint
+
+Torch18672459 remains active with24workers;48 objectives finished:41success,
+5rejected by unchanged housing-equilibrium gate,2parent-owned900s timeouts,
+zero fatal errors. Slurm maximumRSS about66GiB within128GB allocation; heartbeat
+fresh. No intervention or specification change. Primary best32.423985 versus
+starting33.820604 (about4.1% lower), selected tenure scale0.006 versus0.005;
+other ten-coordinate inputs unchanged, child benefit renormalized. Block lane
+selects same point; identity winner's primary rescore34.900167 is worse.
+Early fertility remains0.530 vs0.810; ownership0.621 vs0.676 and wealth/earnings
+6.017 vs6.927 remain material misses. Full14/31 tables and receipts for all lane
+winners in output/model/evening_calibration_20260927/cluster/check_1800/.
+Winning market residual2.187e-6, normalization gap4.988e-5, occupied value screen
+passes. New winners not yet independently repeated or visually certified;
+last17-plot inspection was smoke release17:26. Hourly plot inspection due next
+check. Search remains bounded by original21:27/22:12 cutoffs; no Mac numerics.
+
 ## September 27, 17:28 EDT — evening search released; 24 workers verified
 
 Job18672459 oncs669 is SEARCHING under immutable contractv4. Actual24 model

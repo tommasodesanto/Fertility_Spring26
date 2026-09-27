@@ -1,0 +1,1355 @@
+{
+  "counts": {
+    "success": 41,
+    "inadmissible": 5,
+    "censored_timeout": 2
+  },
+  "best": {
+    "block": {
+      "case": "initial_0008_block",
+      "loss": 3.241136785773292,
+      "primary_rescore": 32.423985344691026,
+      "target_fit": [
+        {
+          "moment": "initial_normalization",
+          "target": "2.1",
+          "model": "2.100049876899302",
+          "gap": "4.9876899301803945e-05",
+          "weight": "",
+          "loss_contribution": "",
+          "role": "normalization"
+        },
+        {
+          "moment": "cps_childlessness",
+          "target": "0.19827875100684264",
+          "model": "0.2007757501060249",
+          "gap": "0.0024969990991822455",
+          "weight": "2961.02535379345",
+          "loss_contribution": "0.01846200640941576",
+          "role": "scored"
+        },
+        {
+          "moment": "cps_exactly_one",
+          "target": "0.21365532522014702",
+          "model": "0.21183608514968316",
+          "gap": "-0.0018192400704638567",
+          "weight": "2246.0684020258996",
+          "loss_contribution": "0.007433665324422357",
+          "role": "scored"
+        },
+        {
+          "moment": "nchs_mean_age",
+          "target": "25.976263860992496",
+          "model": "26.066296858890603",
+          "gap": "0.09003299789810626",
+          "weight": "11.652338987066061",
+          "loss_contribution": "0.09445316896804289",
+          "role": "scored"
+        },
+        {
+          "moment": "nchs_share30",
+          "target": "0.2492780130410667",
+          "model": "0.23221260232078117",
+          "gap": "-0.01706541072028553",
+          "weight": "0.0",
+          "loss_contribution": "0.0",
+          "role": "validation"
+        },
+        {
+          "moment": "wealth_earnings",
+          "target": "6.92658379107299",
+          "model": "6.0165932559306885",
+          "gap": "-0.9099905351423017",
+          "weight": "1.2658497454222875",
+          "loss_contribution": "1.0482283687179672",
+          "role": "scored"
+        },
+        {
+          "moment": "bequest_wealth",
+          "target": "0.007291023472616158",
+          "model": "0.007104199103559182",
+          "gap": "-0.00018682436905697545",
+          "weight": "860881.5426997243",
+          "loss_contribution": "0.03004764538011102",
+          "role": "scored"
+        },
+        {
+          "moment": "old_dispersion",
+          "target": "3.51593508651872",
+          "model": "3.1374625816805564",
+          "gap": "-0.37847250483816364",
+          "weight": "0.0",
+          "loss_contribution": "0.0",
+          "role": "validation"
+        },
+        {
+          "moment": "mean_rooms",
+          "target": "5.729434240102641",
+          "model": "5.917460057353539",
+          "gap": "0.18802581725089773",
+          "weight": "10.668391837694564",
+          "loss_contribution": "0.3771672093566143",
+          "role": "scored"
+        },
+        {
+          "moment": "ownership_30_55",
+          "target": "0.6762604168538028",
+          "model": "0.6214895090591167",
+          "gap": "-0.054770907794686075",
+          "weight": "194.94686437228015",
+          "loss_contribution": "0.5848118073903432",
+          "role": "scored"
+        },
+        {
+          "moment": "first_birth_rooms",
+          "target": "1.465",
+          "model": "1.6312798368060903",
+          "gap": "0.16627983680609026",
+          "weight": "11.463772908358033",
+          "loss_contribution": "0.31696167519316837",
+          "role": "scored"
+        },
+        {
+          "moment": "family_rooms",
+          "target": "0.38509964969278165",
+          "model": "0.3025176906204541",
+          "gap": "-0.08258195907232757",
+          "weight": "0.0",
+          "loss_contribution": "0.0",
+          "role": "validation"
+        },
+        {
+          "moment": "recent_parent_ownership",
+          "target": "0.12760836356692162",
+          "model": "0.12054006937137496",
+          "gap": "-0.007068294195546665",
+          "weight": "2254.6519131256887",
+          "loss_contribution": "0.1126441745997359",
+          "role": "scored"
+        },
+        {
+          "moment": "early_fertility",
+          "target": "0.8095276384290021",
+          "model": "0.5300437431290824",
+          "gap": "-0.2794838952999197",
+          "weight": "8.333333333333334",
+          "loss_contribution": "0.6509270644334706",
+          "role": "scored"
+        }
+      ],
+      "parameters": [
+        {
+          "parameter": "H0",
+          "estimate": "6.206479060846687",
+          "lower": "0.2",
+          "upper": "80.0",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "beta_annual",
+          "estimate": "0.9602456707427426",
+          "lower": "0.94",
+          "upper": "0.99",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "chi",
+          "estimate": "1.0889178301004045",
+          "lower": "0.1",
+          "upper": "5.0",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "first_birth_fixed_cost",
+          "estimate": "0.6465287075719173",
+          "lower": "0.0",
+          "upper": "8.0",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "kappa_fert",
+          "estimate": "0.19096979787755952",
+          "lower": "0.02",
+          "upper": "50.0",
+          "near_bound": "True",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "kappa_fert_continuation",
+          "estimate": "0.3474664229788561",
+          "lower": "0.02",
+          "upper": "50.0",
+          "near_bound": "True",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "theta0",
+          "estimate": "0.11358885656635645",
+          "lower": "0.0",
+          "upper": "8.0",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "delta_alpha_jump",
+          "estimate": "0.14198430659647016",
+          "lower": "0.0",
+          "upper": "0.25",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "child_benefit_curvature",
+          "estimate": "0.07930705056729134",
+          "lower": "0.0",
+          "upper": "0.8",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "tenure_choice_kappa",
+          "estimate": "0.006",
+          "lower": "0.001",
+          "upper": "0.1",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "psi_child",
+          "estimate": "0.1424977205789942",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "normalized to completed fertility 2.1"
+        },
+        {
+          "parameter": "child_benefit_CRRA_coefficient",
+          "estimate": "0.13119664664731215",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "derived from normalized one-child benefit"
+        },
+        {
+          "parameter": "theta1",
+          "estimate": "0.008193084126995582",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "fixed external restriction"
+        },
+        {
+          "parameter": "sigma",
+          "estimate": "2.0",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "fixed"
+        },
+        {
+          "parameter": "alpha_cons",
+          "estimate": "0.733",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "fixed CEX childless expenditure share"
+        },
+        {
+          "parameter": "delta_alpha",
+          "estimate": "0.0",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "fixed zero later-child loading"
+        },
+        {
+          "parameter": "h_P",
+          "estimate": "0.0",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "no housing floor"
+        },
+        {
+          "parameter": "utility_reference_rent",
+          "estimate": "0.11046592704873838",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "fixed substantive utility normalization"
+        },
+        {
+          "parameter": "q_annual",
+          "estimate": "0.020000000000000018",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "author-retained 2% annual real rate"
+        },
+        {
+          "parameter": "financed_share",
+          "estimate": "0.8",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "inherited credit contract"
+        },
+        {
+          "parameter": "housing_supply_elasticity",
+          "estimate": "0.63",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "fixed provisional external mapping"
+        },
+        {
+          "parameter": "payroll_tax",
+          "estimate": "0.08028070961950022",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "derived from adopted pension ratio"
+        },
+        {
+          "parameter": "pension_period",
+          "estimate": "0.917784047463731",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "balanced PAYGO"
+        },
+        {
+          "parameter": "annual_depreciation",
+          "estimate": "0.01416143718381309",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "adopted"
+        },
+        {
+          "parameter": "period_depreciation",
+          "estimate": "0.05545379079326218",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "compounded"
+        },
+        {
+          "parameter": "annual_property_tax",
+          "estimate": "0.010598360773872594",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "adopted"
+        },
+        {
+          "parameter": "period_property_tax",
+          "estimate": "0.042393443095490375",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "linear period convention"
+        },
+        {
+          "parameter": "selling_cost",
+          "estimate": "0.06",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "retained"
+        },
+        {
+          "parameter": "rental_cap",
+          "estimate": "6.0",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "retained provisional"
+        },
+        {
+          "parameter": "wealth_grid_nodes",
+          "estimate": "160.0",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "retained exact grid"
+        },
+        {
+          "parameter": "income_states",
+          "estimate": "15.0",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "retained B15"
+        }
+      ]
+    },
+    "identity": {
+      "case": "initial_0046_identity",
+      "loss": 0.15907969155858195,
+      "primary_rescore": 34.90016662128289,
+      "target_fit": [
+        {
+          "moment": "initial_normalization",
+          "target": "2.1",
+          "model": "2.100044296284643",
+          "gap": "4.429628464297508e-05",
+          "weight": "",
+          "loss_contribution": "",
+          "role": "normalization"
+        },
+        {
+          "moment": "cps_childlessness",
+          "target": "0.19827875100684264",
+          "model": "0.20101972202363597",
+          "gap": "0.0027409710167933254",
+          "weight": "25.435931744386433",
+          "loss_contribution": "0.00019109817411551414",
+          "role": "scored"
+        },
+        {
+          "moment": "cps_exactly_one",
+          "target": "0.21365532522014702",
+          "model": "0.21164718538912458",
+          "gap": "-0.0020081398310224374",
+          "weight": "21.906477831173174",
+          "loss_contribution": "8.834062289025818e-05",
+          "role": "scored"
+        },
+        {
+          "moment": "nchs_mean_age",
+          "target": "25.976263860992496",
+          "model": "26.07011306279358",
+          "gap": "0.0938492018010848",
+          "weight": "0.0014819946156932019",
+          "loss_contribution": "1.3052923486622615e-05",
+          "role": "scored"
+        },
+        {
+          "moment": "nchs_share30",
+          "target": "0.2492780130410667",
+          "model": "0.2324201933662098",
+          "gap": "-0.01685781967485689",
+          "weight": "0.0",
+          "loss_contribution": "0.0",
+          "role": "validation"
+        },
+        {
+          "moment": "wealth_earnings",
+          "target": "6.92658379107299",
+          "model": "6.025590783857083",
+          "gap": "-0.9009930072159076",
+          "weight": "0.02084307616233986",
+          "loss_contribution": "0.01692016742914404",
+          "role": "scored"
+        },
+        {
+          "moment": "bequest_wealth",
+          "target": "0.007291023472616158",
+          "model": "0.007173175381529242",
+          "gap": "-0.00011784809108691605",
+          "weight": "10000.0",
+          "loss_contribution": "0.0001388817257283006",
+          "role": "scored"
+        },
+        {
+          "moment": "old_dispersion",
+          "target": "3.51593508651872",
+          "model": "3.1984577580284324",
+          "gap": "-0.31747732849028765",
+          "weight": "0.0",
+          "loss_contribution": "0.0",
+          "role": "validation"
+        },
+        {
+          "moment": "mean_rooms",
+          "target": "5.729434240102641",
+          "model": "5.95163302139958",
+          "gap": "0.22219878129693882",
+          "weight": "0.030463270139527054",
+          "loss_contribution": "0.0015040416638684455",
+          "role": "scored"
+        },
+        {
+          "moment": "ownership_30_55",
+          "target": "0.6762604168538028",
+          "model": "0.6152007588688134",
+          "gap": "-0.06105965798498936",
+          "weight": "2.186613697257802",
+          "loss_contribution": "0.008152312123808484",
+          "role": "scored"
+        },
+        {
+          "moment": "first_birth_rooms",
+          "target": "1.465",
+          "model": "1.6058683477452833",
+          "gap": "0.14086834774528323",
+          "weight": "0.4659343731435427",
+          "loss_contribution": "0.009245951098550264",
+          "role": "scored"
+        },
+        {
+          "moment": "family_rooms",
+          "target": "0.38509964969278165",
+          "model": "0.2971723494747289",
+          "gap": "-0.08792730021805273",
+          "weight": "0.0",
+          "loss_contribution": "0.0",
+          "role": "validation"
+        },
+        {
+          "moment": "recent_parent_ownership",
+          "target": "0.12760836356692162",
+          "model": "0.12028829822005999",
+          "gap": "-0.007320065346861637",
+          "weight": "61.41037102234466",
+          "loss_contribution": "0.003290573814484184",
+          "role": "scored"
+        },
+        {
+          "moment": "early_fertility",
+          "target": "0.8095276384290021",
+          "model": "0.5296425778210352",
+          "gap": "-0.2798850606079669",
+          "weight": "1.5259371222310545",
+          "loss_contribution": "0.11953527198250584",
+          "role": "scored"
+        }
+      ],
+      "parameters": [
+        {
+          "parameter": "H0",
+          "estimate": "6.206479060846687",
+          "lower": "0.2",
+          "upper": "80.0",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "beta_annual",
+          "estimate": "0.9602456707427426",
+          "lower": "0.94",
+          "upper": "0.99",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "chi",
+          "estimate": "1.0889178301004045",
+          "lower": "0.1",
+          "upper": "5.0",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "first_birth_fixed_cost",
+          "estimate": "0.6465287075719173",
+          "lower": "0.0",
+          "upper": "8.0",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "kappa_fert",
+          "estimate": "0.19096979787755952",
+          "lower": "0.02",
+          "upper": "50.0",
+          "near_bound": "True",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "kappa_fert_continuation",
+          "estimate": "0.3474664229788561",
+          "lower": "0.02",
+          "upper": "50.0",
+          "near_bound": "True",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "theta0",
+          "estimate": "0.1165334502974128",
+          "lower": "0.0",
+          "upper": "8.0",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "delta_alpha_jump",
+          "estimate": "0.14198430659647016",
+          "lower": "0.0",
+          "upper": "0.25",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "child_benefit_curvature",
+          "estimate": "0.07930705056729134",
+          "lower": "0.0",
+          "upper": "0.8",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "tenure_choice_kappa",
+          "estimate": "0.004",
+          "lower": "0.001",
+          "upper": "0.1",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "psi_child",
+          "estimate": "0.1430702157289092",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "normalized to completed fertility 2.1"
+        },
+        {
+          "parameter": "child_benefit_CRRA_coefficient",
+          "estimate": "0.13172373889542333",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "derived from normalized one-child benefit"
+        },
+        {
+          "parameter": "theta1",
+          "estimate": "0.008193084126995582",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "fixed external restriction"
+        },
+        {
+          "parameter": "sigma",
+          "estimate": "2.0",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "fixed"
+        },
+        {
+          "parameter": "alpha_cons",
+          "estimate": "0.733",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "fixed CEX childless expenditure share"
+        },
+        {
+          "parameter": "delta_alpha",
+          "estimate": "0.0",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "fixed zero later-child loading"
+        },
+        {
+          "parameter": "h_P",
+          "estimate": "0.0",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "no housing floor"
+        },
+        {
+          "parameter": "utility_reference_rent",
+          "estimate": "0.11046592704873838",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "fixed substantive utility normalization"
+        },
+        {
+          "parameter": "q_annual",
+          "estimate": "0.020000000000000018",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "author-retained 2% annual real rate"
+        },
+        {
+          "parameter": "financed_share",
+          "estimate": "0.8",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "inherited credit contract"
+        },
+        {
+          "parameter": "housing_supply_elasticity",
+          "estimate": "0.63",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "fixed provisional external mapping"
+        },
+        {
+          "parameter": "payroll_tax",
+          "estimate": "0.08028070961950022",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "derived from adopted pension ratio"
+        },
+        {
+          "parameter": "pension_period",
+          "estimate": "0.917784047463731",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "balanced PAYGO"
+        },
+        {
+          "parameter": "annual_depreciation",
+          "estimate": "0.01416143718381309",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "adopted"
+        },
+        {
+          "parameter": "period_depreciation",
+          "estimate": "0.05545379079326218",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "compounded"
+        },
+        {
+          "parameter": "annual_property_tax",
+          "estimate": "0.010598360773872594",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "adopted"
+        },
+        {
+          "parameter": "period_property_tax",
+          "estimate": "0.042393443095490375",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "linear period convention"
+        },
+        {
+          "parameter": "selling_cost",
+          "estimate": "0.06",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "retained"
+        },
+        {
+          "parameter": "rental_cap",
+          "estimate": "6.0",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "retained provisional"
+        },
+        {
+          "parameter": "wealth_grid_nodes",
+          "estimate": "160.0",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "retained exact grid"
+        },
+        {
+          "parameter": "income_states",
+          "estimate": "15.0",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "retained B15"
+        }
+      ]
+    },
+    "primary": {
+      "case": "initial_0006_primary",
+      "loss": 32.423985344691026,
+      "primary_rescore": 32.423985344691026,
+      "target_fit": [
+        {
+          "moment": "initial_normalization",
+          "target": "2.1",
+          "model": "2.100049876899302",
+          "gap": "4.9876899301803945e-05",
+          "weight": "",
+          "loss_contribution": "",
+          "role": "normalization"
+        },
+        {
+          "moment": "cps_childlessness",
+          "target": "0.19827875100684264",
+          "model": "0.2007757501060249",
+          "gap": "0.0024969990991822455",
+          "weight": "35532.3042455214",
+          "loss_contribution": "0.22154407691298916",
+          "role": "scored"
+        },
+        {
+          "moment": "cps_exactly_one",
+          "target": "0.21365532522014702",
+          "model": "0.21183608514968316",
+          "gap": "-0.0018192400704638567",
+          "weight": "26952.820824310795",
+          "loss_contribution": "0.08920398389306829",
+          "role": "scored"
+        },
+        {
+          "moment": "nchs_mean_age",
+          "target": "25.976263860992496",
+          "model": "26.066296858890603",
+          "gap": "0.09003299789810626",
+          "weight": "139.82806784479274",
+          "loss_contribution": "1.1334380276165148",
+          "role": "scored"
+        },
+        {
+          "moment": "nchs_share30",
+          "target": "0.2492780130410667",
+          "model": "0.23221260232078117",
+          "gap": "-0.01706541072028553",
+          "weight": "0.0",
+          "loss_contribution": "0.0",
+          "role": "validation"
+        },
+        {
+          "moment": "wealth_earnings",
+          "target": "6.92658379107299",
+          "model": "6.0165932559306885",
+          "gap": "-0.9099905351423017",
+          "weight": "7.595098472533724",
+          "loss_contribution": "6.289370212307802",
+          "role": "scored"
+        },
+        {
+          "moment": "bequest_wealth",
+          "target": "0.007291023472616158",
+          "model": "0.007104199103559182",
+          "gap": "-0.00018682436905697545",
+          "weight": "5165289.256198346",
+          "loss_contribution": "0.18028587228066612",
+          "role": "scored"
+        },
+        {
+          "moment": "old_dispersion",
+          "target": "3.51593508651872",
+          "model": "3.1374625816805564",
+          "gap": "-0.37847250483816364",
+          "weight": "0.0",
+          "loss_contribution": "0.0",
+          "role": "validation"
+        },
+        {
+          "moment": "mean_rooms",
+          "target": "5.729434240102641",
+          "model": "5.917460057353539",
+          "gap": "0.18802581725089773",
+          "weight": "128.02070205233477",
+          "loss_contribution": "4.526006512279372",
+          "role": "scored"
+        },
+        {
+          "moment": "ownership_30_55",
+          "target": "0.6762604168538028",
+          "model": "0.6214895090591167",
+          "gap": "-0.054770907794686075",
+          "weight": "2339.3623724673616",
+          "loss_contribution": "7.017741688684118",
+          "role": "scored"
+        },
+        {
+          "moment": "first_birth_rooms",
+          "target": "1.465",
+          "model": "1.6312798368060903",
+          "gap": "0.16627983680609026",
+          "weight": "137.5652749002964",
+          "loss_contribution": "3.8035401023180206",
+          "role": "scored"
+        },
+        {
+          "moment": "family_rooms",
+          "target": "0.38509964969278165",
+          "model": "0.3025176906204541",
+          "gap": "-0.08258195907232757",
+          "weight": "0.0",
+          "loss_contribution": "0.0",
+          "role": "validation"
+        },
+        {
+          "moment": "recent_parent_ownership",
+          "target": "0.12760836356692162",
+          "model": "0.12054006937137496",
+          "gap": "-0.007068294195546665",
+          "weight": "27055.822957508266",
+          "loss_contribution": "1.351730095196831",
+          "role": "scored"
+        },
+        {
+          "moment": "early_fertility",
+          "target": "0.8095276384290021",
+          "model": "0.5300437431290824",
+          "gap": "-0.2794838952999197",
+          "weight": "100.0",
+          "loss_contribution": "7.811124773201647",
+          "role": "scored"
+        }
+      ],
+      "parameters": [
+        {
+          "parameter": "H0",
+          "estimate": "6.206479060846687",
+          "lower": "0.2",
+          "upper": "80.0",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "beta_annual",
+          "estimate": "0.9602456707427426",
+          "lower": "0.94",
+          "upper": "0.99",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "chi",
+          "estimate": "1.0889178301004045",
+          "lower": "0.1",
+          "upper": "5.0",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "first_birth_fixed_cost",
+          "estimate": "0.6465287075719173",
+          "lower": "0.0",
+          "upper": "8.0",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "kappa_fert",
+          "estimate": "0.19096979787755952",
+          "lower": "0.02",
+          "upper": "50.0",
+          "near_bound": "True",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "kappa_fert_continuation",
+          "estimate": "0.3474664229788561",
+          "lower": "0.02",
+          "upper": "50.0",
+          "near_bound": "True",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "theta0",
+          "estimate": "0.11358885656635645",
+          "lower": "0.0",
+          "upper": "8.0",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "delta_alpha_jump",
+          "estimate": "0.14198430659647016",
+          "lower": "0.0",
+          "upper": "0.25",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "child_benefit_curvature",
+          "estimate": "0.07930705056729134",
+          "lower": "0.0",
+          "upper": "0.8",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "tenure_choice_kappa",
+          "estimate": "0.006",
+          "lower": "0.001",
+          "upper": "0.1",
+          "near_bound": "False",
+          "status": "free in evening DUE calibration"
+        },
+        {
+          "parameter": "psi_child",
+          "estimate": "0.1424977205789942",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "normalized to completed fertility 2.1"
+        },
+        {
+          "parameter": "child_benefit_CRRA_coefficient",
+          "estimate": "0.13119664664731215",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "derived from normalized one-child benefit"
+        },
+        {
+          "parameter": "theta1",
+          "estimate": "0.008193084126995582",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "fixed external restriction"
+        },
+        {
+          "parameter": "sigma",
+          "estimate": "2.0",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "fixed"
+        },
+        {
+          "parameter": "alpha_cons",
+          "estimate": "0.733",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "fixed CEX childless expenditure share"
+        },
+        {
+          "parameter": "delta_alpha",
+          "estimate": "0.0",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "fixed zero later-child loading"
+        },
+        {
+          "parameter": "h_P",
+          "estimate": "0.0",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "no housing floor"
+        },
+        {
+          "parameter": "utility_reference_rent",
+          "estimate": "0.11046592704873838",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "fixed substantive utility normalization"
+        },
+        {
+          "parameter": "q_annual",
+          "estimate": "0.020000000000000018",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "author-retained 2% annual real rate"
+        },
+        {
+          "parameter": "financed_share",
+          "estimate": "0.8",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "inherited credit contract"
+        },
+        {
+          "parameter": "housing_supply_elasticity",
+          "estimate": "0.63",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "fixed provisional external mapping"
+        },
+        {
+          "parameter": "payroll_tax",
+          "estimate": "0.08028070961950022",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "derived from adopted pension ratio"
+        },
+        {
+          "parameter": "pension_period",
+          "estimate": "0.917784047463731",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "balanced PAYGO"
+        },
+        {
+          "parameter": "annual_depreciation",
+          "estimate": "0.01416143718381309",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "adopted"
+        },
+        {
+          "parameter": "period_depreciation",
+          "estimate": "0.05545379079326218",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "compounded"
+        },
+        {
+          "parameter": "annual_property_tax",
+          "estimate": "0.010598360773872594",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "adopted"
+        },
+        {
+          "parameter": "period_property_tax",
+          "estimate": "0.042393443095490375",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "linear period convention"
+        },
+        {
+          "parameter": "selling_cost",
+          "estimate": "0.06",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "retained"
+        },
+        {
+          "parameter": "rental_cap",
+          "estimate": "6.0",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "retained provisional"
+        },
+        {
+          "parameter": "wealth_grid_nodes",
+          "estimate": "160.0",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "retained exact grid"
+        },
+        {
+          "parameter": "income_states",
+          "estimate": "15.0",
+          "lower": "",
+          "upper": "",
+          "near_bound": "",
+          "status": "retained B15"
+        }
+      ]
+    }
+  },
+  "timeouts": [
+    {
+      "case": "initial_0041_block",
+      "status": "inadmissible",
+      "error": {
+        "audit": null,
+        "authenticated": true,
+        "classification": "inherited_native_prefix",
+        "context": {
+          "candidate_id": "initial_0041_block",
+          "contract_sha256": "4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be",
+          "point_sha256": "260cd03db732246e3e10f356fb37cd2b759f4a134f1274a79f980833ce9af2fb",
+          "source_sha256": "987654c809ff2b0559f2dfee84c949fdd5f7914ebab7bfe9585b164fe6a84ac8",
+          "stage": "initial",
+          "target_sha256": "794a30e2db9b54636e6b93bc30b35ca79d3eddbb61932a54a4005ff6fc58fb6c"
+        },
+        "error": "Initial housing equilibrium failed its unchanged strict gate",
+        "error_type": "RuntimeError",
+        "native": {
+          "context": {
+            "candidate_id": "initial_0041_block",
+            "contract_sha256": "4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be",
+            "point_sha256": "260cd03db732246e3e10f356fb37cd2b759f4a134f1274a79f980833ce9af2fb",
+            "source_sha256": "987654c809ff2b0559f2dfee84c949fdd5f7914ebab7bfe9585b164fe6a84ac8",
+            "stage": "initial",
+            "target_sha256": "794a30e2db9b54636e6b93bc30b35ca79d3eddbb61932a54a4005ff6fc58fb6c"
+          },
+          "narrow_infeasibility_verified": false,
+          "native_payload": {},
+          "raw_error": "Initial housing equilibrium failed its unchanged strict gate",
+          "raw_type": "RuntimeError",
+          "validation": "exception_type_not_the_authenticated_native_class"
+        },
+        "phase": "objective",
+        "status": "inadmissible",
+        "traceback": "Traceback (most recent call last):\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_evening_calibration.py\", line 91, in evaluate\n    phase='objective';receipt=evaluator.evaluate(req['point'],a.output/'case',req['deadline_epoch'],graphs=req['graphs'],due=True,fixed_reference=False)\n                              ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py\", line 180, in evaluate\n    result=self.evaluate_point(tax=self.tax,objective=self.obj,selected=self.selected,runtime=self.rt,\n        point=point,output=self.case_output,deadline_epoch=deadline_epoch,graphs=graphs)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py\", line 208, in evaluate_point\n    (sol,P,price,seconds,normalization),fiscal_rule,renewal=self.normalize(point,output,deadline_epoch)\n                                                            ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py\", line 175, in normalize\n    return base.StationaryObjective.normalize(self,point,output,deadline)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_calibration_runtime.py\", line 243, in normalize\n    result=calibration.solve_old_steady_state(self.rt['chain'],{},\n        initial_psi=options['initial_psi'],initial_step=options['initial_step'],\n        completed_fertility_target=2.1,completed_fertility_tolerance=5e-4,normalize=True)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_transition_calibration.py\", line 803, in solve_old_steady_state\n    initial = evaluate(float(initial_psi))\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_transition_calibration.py\", line 786, in evaluate\n    solution, parameters, price, seconds = closure.solve_ge(chain, overrides)\n                                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_calibration_runtime.py\", line 225, in solve_ge\n    sol,P,price,fiscal=self.rt['solve_balanced_initial_equilibrium'](\n                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        model=self.rt['model'],parameters=P,b_grid=self.selected['b_grid'],\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        initial_prices=self.selected['solution'].p_eq,payroll_tax=payroll_tax,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        marginal_tolerance=1e-9,fiscal_tolerance=1e-6,warm_price_state=warm)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_stationary_paygo.py\", line 107, in solve_balanced_initial_equilibrium\n    raise RuntimeError('Initial housing equilibrium failed its unchanged strict gate')\nRuntimeError: Initial housing equilibrium failed its unchanged strict gate\n"
+      }
+    },
+    {
+      "case": "initial_0028_identity",
+      "status": "inadmissible",
+      "error": {
+        "audit": null,
+        "authenticated": true,
+        "classification": "inherited_native_prefix",
+        "context": {
+          "candidate_id": "initial_0028_identity",
+          "contract_sha256": "4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be",
+          "point_sha256": "542003e792936d8af30c2d0569e23bf1e4a1e0865472c4ca71cba70ec4e98f05",
+          "source_sha256": "987654c809ff2b0559f2dfee84c949fdd5f7914ebab7bfe9585b164fe6a84ac8",
+          "stage": "initial",
+          "target_sha256": "2f64c7d9c75b42677d5deb1108a0d3a305d00b79d42440a769ceab5046f04da7"
+        },
+        "error": "Initial housing equilibrium failed its unchanged strict gate",
+        "error_type": "RuntimeError",
+        "native": {
+          "context": {
+            "candidate_id": "initial_0028_identity",
+            "contract_sha256": "4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be",
+            "point_sha256": "542003e792936d8af30c2d0569e23bf1e4a1e0865472c4ca71cba70ec4e98f05",
+            "source_sha256": "987654c809ff2b0559f2dfee84c949fdd5f7914ebab7bfe9585b164fe6a84ac8",
+            "stage": "initial",
+            "target_sha256": "2f64c7d9c75b42677d5deb1108a0d3a305d00b79d42440a769ceab5046f04da7"
+          },
+          "narrow_infeasibility_verified": false,
+          "native_payload": {},
+          "raw_error": "Initial housing equilibrium failed its unchanged strict gate",
+          "raw_type": "RuntimeError",
+          "validation": "exception_type_not_the_authenticated_native_class"
+        },
+        "phase": "objective",
+        "status": "inadmissible",
+        "traceback": "Traceback (most recent call last):\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_evening_calibration.py\", line 91, in evaluate\n    phase='objective';receipt=evaluator.evaluate(req['point'],a.output/'case',req['deadline_epoch'],graphs=req['graphs'],due=True,fixed_reference=False)\n                              ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py\", line 180, in evaluate\n    result=self.evaluate_point(tax=self.tax,objective=self.obj,selected=self.selected,runtime=self.rt,\n        point=point,output=self.case_output,deadline_epoch=deadline_epoch,graphs=graphs)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py\", line 208, in evaluate_point\n    (sol,P,price,seconds,normalization),fiscal_rule,renewal=self.normalize(point,output,deadline_epoch)\n                                                            ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py\", line 175, in normalize\n    return base.StationaryObjective.normalize(self,point,output,deadline)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_calibration_runtime.py\", line 243, in normalize\n    result=calibration.solve_old_steady_state(self.rt['chain'],{},\n        initial_psi=options['initial_psi'],initial_step=options['initial_step'],\n        completed_fertility_target=2.1,completed_fertility_tolerance=5e-4,normalize=True)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_transition_calibration.py\", line 803, in solve_old_steady_state\n    initial = evaluate(float(initial_psi))\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_transition_calibration.py\", line 786, in evaluate\n    solution, parameters, price, seconds = closure.solve_ge(chain, overrides)\n                                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_calibration_runtime.py\", line 225, in solve_ge\n    sol,P,price,fiscal=self.rt['solve_balanced_initial_equilibrium'](\n                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        model=self.rt['model'],parameters=P,b_grid=self.selected['b_grid'],\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        initial_prices=self.selected['solution'].p_eq,payroll_tax=payroll_tax,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        marginal_tolerance=1e-9,fiscal_tolerance=1e-6,warm_price_state=warm)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_stationary_paygo.py\", line 107, in solve_balanced_initial_equilibrium\n    raise RuntimeError('Initial housing equilibrium failed its unchanged strict gate')\nRuntimeError: Initial housing equilibrium failed its unchanged strict gate\n"
+      }
+    },
+    {
+      "case": "initial_0027_primary",
+      "status": "inadmissible",
+      "error": {
+        "audit": null,
+        "authenticated": true,
+        "classification": "inherited_native_prefix",
+        "context": {
+          "candidate_id": "initial_0027_primary",
+          "contract_sha256": "4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be",
+          "point_sha256": "b72fb718968e24b11c86e1556f26412692c8703ec3c36808fef6e3f92e5a9c01",
+          "source_sha256": "987654c809ff2b0559f2dfee84c949fdd5f7914ebab7bfe9585b164fe6a84ac8",
+          "stage": "initial",
+          "target_sha256": "04528ece6513e4da9436bb8b35b54cd7e9cecd3a6695d050a0a7aea5a71d5e60"
+        },
+        "error": "Initial housing equilibrium failed its unchanged strict gate",
+        "error_type": "RuntimeError",
+        "native": {
+          "context": {
+            "candidate_id": "initial_0027_primary",
+            "contract_sha256": "4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be",
+            "point_sha256": "b72fb718968e24b11c86e1556f26412692c8703ec3c36808fef6e3f92e5a9c01",
+            "source_sha256": "987654c809ff2b0559f2dfee84c949fdd5f7914ebab7bfe9585b164fe6a84ac8",
+            "stage": "initial",
+            "target_sha256": "04528ece6513e4da9436bb8b35b54cd7e9cecd3a6695d050a0a7aea5a71d5e60"
+          },
+          "narrow_infeasibility_verified": false,
+          "native_payload": {},
+          "raw_error": "Initial housing equilibrium failed its unchanged strict gate",
+          "raw_type": "RuntimeError",
+          "validation": "exception_type_not_the_authenticated_native_class"
+        },
+        "phase": "objective",
+        "status": "inadmissible",
+        "traceback": "Traceback (most recent call last):\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_evening_calibration.py\", line 91, in evaluate\n    phase='objective';receipt=evaluator.evaluate(req['point'],a.output/'case',req['deadline_epoch'],graphs=req['graphs'],due=True,fixed_reference=False)\n                              ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py\", line 180, in evaluate\n    result=self.evaluate_point(tax=self.tax,objective=self.obj,selected=self.selected,runtime=self.rt,\n        point=point,output=self.case_output,deadline_epoch=deadline_epoch,graphs=graphs)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py\", line 208, in evaluate_point\n    (sol,P,price,seconds,normalization),fiscal_rule,renewal=self.normalize(point,output,deadline_epoch)\n                                                            ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py\", line 175, in normalize\n    return base.StationaryObjective.normalize(self,point,output,deadline)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_calibration_runtime.py\", line 243, in normalize\n    result=calibration.solve_old_steady_state(self.rt['chain'],{},\n        initial_psi=options['initial_psi'],initial_step=options['initial_step'],\n        completed_fertility_target=2.1,completed_fertility_tolerance=5e-4,normalize=True)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_transition_calibration.py\", line 803, in solve_old_steady_state\n    initial = evaluate(float(initial_psi))\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_transition_calibration.py\", line 786, in evaluate\n    solution, parameters, price, seconds = closure.solve_ge(chain, overrides)\n                                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_calibration_runtime.py\", line 225, in solve_ge\n    sol,P,price,fiscal=self.rt['solve_balanced_initial_equilibrium'](\n                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        model=self.rt['model'],parameters=P,b_grid=self.selected['b_grid'],\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        initial_prices=self.selected['solution'].p_eq,payroll_tax=payroll_tax,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        marginal_tolerance=1e-9,fiscal_tolerance=1e-6,warm_price_state=warm)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_stationary_paygo.py\", line 107, in solve_balanced_initial_equilibrium\n    raise RuntimeError('Initial housing equilibrium failed its unchanged strict gate')\nRuntimeError: Initial housing equilibrium failed its unchanged strict gate\n"
+      }
+    },
+    {
+      "case": "initial_0039_primary",
+      "status": "inadmissible",
+      "error": {
+        "audit": null,
+        "authenticated": true,
+        "classification": "inherited_native_prefix",
+        "context": {
+          "candidate_id": "initial_0039_primary",
+          "contract_sha256": "4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be",
+          "point_sha256": "40356601dbd6615cd50de17bfd94d4180df0747910274d9f89d76020f670530d",
+          "source_sha256": "987654c809ff2b0559f2dfee84c949fdd5f7914ebab7bfe9585b164fe6a84ac8",
+          "stage": "initial",
+          "target_sha256": "04528ece6513e4da9436bb8b35b54cd7e9cecd3a6695d050a0a7aea5a71d5e60"
+        },
+        "error": "Initial housing equilibrium failed its unchanged strict gate",
+        "error_type": "RuntimeError",
+        "native": {
+          "context": {
+            "candidate_id": "initial_0039_primary",
+            "contract_sha256": "4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be",
+            "point_sha256": "40356601dbd6615cd50de17bfd94d4180df0747910274d9f89d76020f670530d",
+            "source_sha256": "987654c809ff2b0559f2dfee84c949fdd5f7914ebab7bfe9585b164fe6a84ac8",
+            "stage": "initial",
+            "target_sha256": "04528ece6513e4da9436bb8b35b54cd7e9cecd3a6695d050a0a7aea5a71d5e60"
+          },
+          "narrow_infeasibility_verified": false,
+          "native_payload": {},
+          "raw_error": "Initial housing equilibrium failed its unchanged strict gate",
+          "raw_type": "RuntimeError",
+          "validation": "exception_type_not_the_authenticated_native_class"
+        },
+        "phase": "objective",
+        "status": "inadmissible",
+        "traceback": "Traceback (most recent call last):\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_evening_calibration.py\", line 91, in evaluate\n    phase='objective';receipt=evaluator.evaluate(req['point'],a.output/'case',req['deadline_epoch'],graphs=req['graphs'],due=True,fixed_reference=False)\n                              ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py\", line 180, in evaluate\n    result=self.evaluate_point(tax=self.tax,objective=self.obj,selected=self.selected,runtime=self.rt,\n        point=point,output=self.case_output,deadline_epoch=deadline_epoch,graphs=graphs)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py\", line 208, in evaluate_point\n    (sol,P,price,seconds,normalization),fiscal_rule,renewal=self.normalize(point,output,deadline_epoch)\n                                                            ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py\", line 175, in normalize\n    return base.StationaryObjective.normalize(self,point,output,deadline)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_calibration_runtime.py\", line 243, in normalize\n    result=calibration.solve_old_steady_state(self.rt['chain'],{},\n        initial_psi=options['initial_psi'],initial_step=options['initial_step'],\n        completed_fertility_target=2.1,completed_fertility_tolerance=5e-4,normalize=True)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_transition_calibration.py\", line 803, in solve_old_steady_state\n    initial = evaluate(float(initial_psi))\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_transition_calibration.py\", line 786, in evaluate\n    solution, parameters, price, seconds = closure.solve_ge(chain, overrides)\n                                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_calibration_runtime.py\", line 225, in solve_ge\n    sol,P,price,fiscal=self.rt['solve_balanced_initial_equilibrium'](\n                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        model=self.rt['model'],parameters=P,b_grid=self.selected['b_grid'],\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        initial_prices=self.selected['solution'].p_eq,payroll_tax=payroll_tax,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        marginal_tolerance=1e-9,fiscal_tolerance=1e-6,warm_price_state=warm)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_stationary_paygo.py\", line 107, in solve_balanced_initial_equilibrium\n    raise RuntimeError('Initial housing equilibrium failed its unchanged strict gate')\nRuntimeError: Initial housing equilibrium failed its unchanged strict gate\n"
+      }
+    },
+    {
+      "case": "initial_0029_block",
+      "status": "inadmissible",
+      "error": {
+        "audit": null,
+        "authenticated": true,
+        "classification": "inherited_native_prefix",
+        "context": {
+          "candidate_id": "initial_0029_block",
+          "contract_sha256": "4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be",
+          "point_sha256": "7b5fe9b97352af8a33d2e6927388106547ae7c932d9b289f0895eb4d80423c4a",
+          "source_sha256": "987654c809ff2b0559f2dfee84c949fdd5f7914ebab7bfe9585b164fe6a84ac8",
+          "stage": "initial",
+          "target_sha256": "794a30e2db9b54636e6b93bc30b35ca79d3eddbb61932a54a4005ff6fc58fb6c"
+        },
+        "error": "Initial housing equilibrium failed its unchanged strict gate",
+        "error_type": "RuntimeError",
+        "native": {
+          "context": {
+            "candidate_id": "initial_0029_block",
+            "contract_sha256": "4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be",
+            "point_sha256": "7b5fe9b97352af8a33d2e6927388106547ae7c932d9b289f0895eb4d80423c4a",
+            "source_sha256": "987654c809ff2b0559f2dfee84c949fdd5f7914ebab7bfe9585b164fe6a84ac8",
+            "stage": "initial",
+            "target_sha256": "794a30e2db9b54636e6b93bc30b35ca79d3eddbb61932a54a4005ff6fc58fb6c"
+          },
+          "narrow_infeasibility_verified": false,
+          "native_payload": {},
+          "raw_error": "Initial housing equilibrium failed its unchanged strict gate",
+          "raw_type": "RuntimeError",
+          "validation": "exception_type_not_the_authenticated_native_class"
+        },
+        "phase": "objective",
+        "status": "inadmissible",
+        "traceback": "Traceback (most recent call last):\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_evening_calibration.py\", line 91, in evaluate\n    phase='objective';receipt=evaluator.evaluate(req['point'],a.output/'case',req['deadline_epoch'],graphs=req['graphs'],due=True,fixed_reference=False)\n                              ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py\", line 180, in evaluate\n    result=self.evaluate_point(tax=self.tax,objective=self.obj,selected=self.selected,runtime=self.rt,\n        point=point,output=self.case_output,deadline_epoch=deadline_epoch,graphs=graphs)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py\", line 208, in evaluate_point\n    (sol,P,price,seconds,normalization),fiscal_rule,renewal=self.normalize(point,output,deadline_epoch)\n                                                            ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py\", line 175, in normalize\n    return base.StationaryObjective.normalize(self,point,output,deadline)\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_calibration_runtime.py\", line 243, in normalize\n    result=calibration.solve_old_steady_state(self.rt['chain'],{},\n        initial_psi=options['initial_psi'],initial_step=options['initial_step'],\n        completed_fertility_target=2.1,completed_fertility_tolerance=5e-4,normalize=True)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_transition_calibration.py\", line 803, in solve_old_steady_state\n    initial = evaluate(float(initial_psi))\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_transition_calibration.py\", line 786, in evaluate\n    solution, parameters, price, seconds = closure.solve_ge(chain, overrides)\n                                           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_calibration_runtime.py\", line 225, in solve_ge\n    sol,P,price,fiscal=self.rt['solve_balanced_initial_equilibrium'](\n                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        model=self.rt['model'],parameters=P,b_grid=self.selected['b_grid'],\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        initial_prices=self.selected['solution'].p_eq,payroll_tax=payroll_tax,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        marginal_tolerance=1e-9,fiscal_tolerance=1e-6,warm_price_state=warm)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_stationary_paygo.py\", line 107, in solve_balanced_initial_equilibrium\n    raise RuntimeError('Initial housing equilibrium failed its unchanged strict gate')\nRuntimeError: Initial housing equilibrium failed its unchanged strict gate\n"
+      }
+    },
+    {
+      "case": "initial_0040_identity",
+      "status": "censored_timeout",
+      "error": null
+    },
+    {
+      "case": "initial_0044_block",
+      "status": "censored_timeout",
+      "error": null
+    }
+  ]
+}
