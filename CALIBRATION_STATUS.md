@@ -1,5 +1,60 @@
 # Calibration Status
 
+## September 26 late evening — first-run scope and completion sequence
+
+**Author defers the finer owner-housing grid and revised conception-success
+probabilities to tomorrow's tests.** Retain both current objects in the first
+calibration; no grid, choice-shock or fertility-success change is adopted by
+this discussion. Launch remains held while the full parameter/target/weight
+review is completed. No model run follows from this planning update.
+
+Income and wealth are not wholly unreviewed blocks. The July target signoff,
+July entry-sample repair and September earnings/vintage decisions remain
+evidence. The current B15 working process is a four-year single persistent
+AR(1) fitted to own-PSID earnings covariance moments, with 15 Rouwenhorst
+states: persistence 0.7345934905942886 and innovation SD 0.4838308245314463.
+Log variance 0.5084845767213341 and lag-one covariance 0.3735294601270841
+are externally fitted income moments, separate from the 13 proposed scored
+household-calibration moments. Source:
+`output/model/native_financing_diagnostic_20260919/specification_followup/earnings_entry_battery_v1/single_process_external_estimate.json`.
+Keep the accepted ages-18--24 childless-renter entry proxy and frozen level
+wealth marginal; family-income versus gross-earnings units and diagnostic
+income-rank coupling remain explicitly inherited approximations. Estate
+funding does not authorize changing this distribution.
+
+The wealth review confirms the adopted PSID 2005/2007 aggregate target
+6.92658379107299, person-cluster bootstrap SE 0.417310142072186. Its builder
+excludes working-age observations with missing/negative gross earnings from
+both the wealth numerator and earnings denominator; future provenance must
+state that sample restriction. The child-directed SCF bequest target versus
+all-positive-gross-estate model observer remains unresolved. The older
+dispersion target 3.51593508651872 is the 90th-percentile/median ratio of
+net worth divided by **total family income**, PSID 2003/2005 ages 76--84.
+The model instead uses a pension-income proxy and does not reproduce the
+data's income cutoff/observed-child-history filter. With theta1 fixed, the row
+remains a scored additional shape restriction, not a free-theta1 target.
+Neither this finding nor the inherited-weight review drops or replaces a row.
+Sources: `docs/model/e5_target_review_20260724.md`,
+`output/model/e5f_matched_pf_20260909a/design_research/wealth/build_initial_wealth.R`
+and its aggregate/old-wealth result tables; active observer
+`code/model/tools/e5f_initial_housing_observer.py`; frozen target provenance.
+
+**Completion sequence:** (1) one comprehensive list of fixed inputs, free
+parameters/bounds, normalization and all target/measurement/weight choices,
+with adopted, deliberately provisional and deferred status distinguished;
+(2) consolidate the executable specification and implement the agreed utility,
+observers and funding account, preserving the reference for comparison;
+(3) verify a full candidate, repeated evaluation, scientific gates and the
+exact search/checkpoint/export loop, then size the run from measured full
+objective time; (4) bounded first calibration, followed by full target and
+parameter review and a targeted refinement round; (5) separately test the
+finer owner grid and alternative conception schedule, distinguishing numerical
+resolution from changed economics and recalibrating if materially necessary.
+The deliverable is a reproducible stationary baseline with complete fits,
+parameter restrictions, stable diagnostics and a readable report. A first
+exploratory fit with explicit measurement approximations is not yet a fully
+matched final calibration. Transition extensions remain subsequent work.
+
 ## September 26 late evening — launch held; early-fertility estimate verified
 
 **Latest author instruction: discuss parameters, weights and code integration
