@@ -1,0 +1,72 @@
+{
+  "status": "same_price_matched_check_passed_not_new_equilibrium",
+  "reference": "original de_0093, not local continuation candidate",
+  "baseline_loss": 42.281937042662754,
+  "due_loss": 42.04238678362813,
+  "fixed_parameters": 31,
+  "market_residual": 0.0003375311122377841,
+  "solve_seconds": 31.685566791973542,
+  "operator": {
+    "birth_flow": 0.11540047583350928,
+    "birth_flow_abs_error": 6.245004513516506e-16,
+    "effective_mature_flow_B": 0.054751453861751294,
+    "entry_flow_E": 0.06173345618081387,
+    "mature_flow_abs_error": 2.4424906541753444e-15,
+    "one_step_constant_path_nesting_l1": 9.194235366481414e-14,
+    "reconstructed_baseline_births": 0.11540047583350928,
+    "reconstructed_effective_mature_flow_B": 0.054751453861753736,
+    "stationary_birth_flow": 0.11540047583350865,
+    "stationary_feasibility_projection_mass": 0.0,
+    "stationary_post_fertility_nesting_l1": 3.1799100479957762e-15,
+    "stationary_post_fertility_nesting_max_abs": 6.149829773980644e-17,
+    "stationary_topcode_adjusted_birth_flow": 0.12966949216274837,
+    "top_bin_entry_birth_flow": 0.023688541770708726,
+    "topcode_adjusted_birth_flow": 0.12966949216274945,
+    "topcode_adjusted_birth_flow_abs_error": 1.0824674490095276e-15,
+    "zero_entry_mass_accounting_residual": 1.1102230246251565e-16
+  },
+  "purchase": {
+    "end_mortgage_floor_violation_mass": 0.0,
+    "mass_tolerance": 2e-10,
+    "maximum_occupied_end_debt_shortfall": 0.0,
+    "maximum_occupied_stayer_debt_shortfall": 0.0,
+    "maximum_occupied_transaction_wealth_error": 2.842170943040401e-14,
+    "purchase_threshold_violation_mass": 0.0,
+    "source_contract": "origin_specific_due_v1",
+    "stayer_death_estate_violation_mass": 0.0,
+    "stayer_mass": 0.5349145587962699,
+    "stayer_principal_floor_violation_mass": 0.0,
+    "transaction_outside_grid_mass": 0.0,
+    "wealth_tolerance": 1e-09
+  },
+  "budget": {
+    "actual_rent": 0.14899373630481938,
+    "budget_excess_mass": 0.0,
+    "budget_tolerance": 1e-09,
+    "maximum_occupied_excess": 2.842170943040401e-14
+  },
+  "estate_totals": {
+    "death_mass": 0.061733456180721936,
+    "gross_negative": 0.0,
+    "gross_positive": 0.1272217693364917,
+    "gross_signed": 0.1272217693364917,
+    "housing_sale_cost": 0.015084315069486164,
+    "negative_estate_death_mass": 0.0,
+    "net_negative": 0.0,
+    "net_positive": 0.11213745426700555,
+    "net_signed": 0.11213745426700555,
+    "signed_cost_identity_residual": -2.168404344971009e-19
+  },
+  "source_case": "/Users/tommasodesanto/.codex/worktrees/due-existing-owner-credit/Fertility_Spring26/output/model/daytime_calibration_20260927/due_stayer_check/due_v2",
+  "baseline_review": "/Users/tommasodesanto/.codex/worktrees/due-existing-owner-credit/Fertility_Spring26/output/model/daytime_calibration_20260927/due_stayer_check/baseline_v2_review",
+  "failures": [
+    "baseline_v1 reporting dead-tail audit",
+    "baseline_v2 weighted-loss roundoff assertion; independent saved review passed",
+    "due_v1 omitted stayer saving in stationary reconstruction; fixed in due_v2"
+  ],
+  "limitations": [
+    "Fixed price and fixed preferences; not a newly cleared housing equilibrium",
+    "Price-fall dated benchmark remains unrun",
+    "Full frictionless-credit transition remains separate and unsolved"
+  ]
+}

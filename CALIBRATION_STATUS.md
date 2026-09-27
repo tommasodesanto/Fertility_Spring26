@@ -1,5 +1,57 @@
 # Calibration Status
 
+## September 27, 15:09 EDT — DUE same-price matched check PASSED
+
+Complete review in output/model/daytime_calibration_20260927/due_stayer_check/:
+all14 target rows, all31 fixed parameter rows/bounds, source paths and failure
+history. Original de_0093 parameters retained; not latest local41.112 candidate.
+DUE fixed-price diagnostic loss42.042 vsbaseline42.282; fertility2.100474 vs
+2.100105, ownership30–55 .618776 vs.6174 approximately. No calibration or new
+housing equilibrium: market residual3.375e-4. Budget/debt/estate violations zero;
+stationary nesting3.180e-15, one-step9.194e-14. Both17plot packets inspected.
+Core baseline arrays104/107 exact; only3 reporting distributions change below
+7e-15 due removal of old projection. Complete14model moments agree within1e-13.
+All31 estimates exactlyfixed. No worker remains; boundedplan end unchanged,
+four model solves total with3 preserved failedattempts and documented repairs.
+
+Implementation remains isolated/defaultoff in main. User-selected DUE rule now
+has passed same-price numerical comparison; production integration/newcontract
+and dated price-fall test remain. No further author permission needed for those
+bounded checks, but no silent model/target/weight changes. No long calibration
+or full frictionless transition launched. Main exact-state guard now retains
+old1e-12 feasibility tolerance with zero redistribution; passive recent-parent
+audit extension checks only Bellman-dead tails under that tolerance and does
+not change moment formulas or mass.34 main focused tests pass;40 worktree tests
+across repairs. v1 guard rejected baseline floating tails unnecessarily;
+v2 saved-state guard preservesbaseline and still rejects dated1.218e-8 loss.
+
+## September 27, 14:57 EDT — exact-state guard and DUE replay
+
+Saved-state guard replay v2 preserves original initial array byte-for-byte and
+rejects the dated1.218e-8 infeasible mass without redistribution. Version1's
+new zero-infeasible-mass gate also rejected baseline1.286e-14 tail: that was
+an unintended tightening beyond the inherited1e-12 numerical feasibility gate.
+Lead corrected this distinction explicitly: zero redistribution, retain and
+report tails below the existing1e-12 tolerance, reject larger mass or occupied
+nonfinite values. No mass is dropped. v1 failure evidence preserved; v2
+no-solve verification in credit_transition/strict_guard_replay_v2. This does
+NOT resolve the dated benchmark's support loss; no long transition launched.
+
+DUE purchase audit complete in isolated worktree, origin-aware and preserving
+all original transaction/buyer checks, with independent stayer principal and
+estate bounds.32 focused core/accounting/exact-state fixtures pass. Strict-state
+fix integrated there. Baseline_v1 completed the model solve but FAILED at the
+recent-parent reporting audit: it requires normalized location probabilities at
+any positive mass, including the retained numerical tail. Failure preserved,
+no worker remains. Saved checkpoint comparison:104/107 arrays EXACT; only
+three evaluation distributions differ (max6.586e-15,L1<=2.572e-14) because old
+reporting relocated that tail. Core policy arrays and stationary g_pre are exact.
+A narrowly authenticated observer audit extension is being prepared, with no
+mass removal or moment-formula change; full matched DUE test still pending.
+Original paired-plan hard end remains in isolated preparation_v1/plan_reviewed.json;
+no clock extension. Main experimental model remains unchanged. Artifacts in
+isolated worktree due_stayer_check, no Torch numerical jobs.
+
 ## September 27 — author requests transition execution and long calibration
 
 DUE-style existing-owner collateral is SELECTED SUBJECT TO MATCHED CHECK:
@@ -23,8 +75,8 @@ Do not approve a long transition with this projection. Terminal distribution
 L1 .173 and population gap3.404% FAIL retained
 gates; horizon extension unverified. This is a successful short joint-root
 smoke, NOT a completed equilibrium transition. No local model worker remains.
-Cluster byte-preserving package transfer PID14965 in progress; setup-only and
-cross-host numerical checks still pending. Do not execute expired localplan
+Cluster transfer and setup-only authentication are complete; cross-host
+numerical checks remain pending. Do not execute expired localplan
 remotely. Longcalibration PREPARATION ONLY; remaining fixedinput/weight
 decisions and revised scientific contract pending. Interest question pending;
 do not infer acceptance from elapsedtime.

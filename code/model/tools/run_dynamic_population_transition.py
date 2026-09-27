@@ -402,11 +402,11 @@ class InheritedDistributionInfeasible(RuntimeError):
         self.evidence_path = evidence.get("evidence_path")
         super().__init__(f"{self.stage}: exact inherited distribution has "
                          f"{self.dead_mass:.12g} positive mass at infeasible states; "
-                         "zero projection and zero dead mass are required")
+                         "zero projection and the inherited feasibility tolerance are required")
 
 
 def _require_exact_inherited_distribution(out, policy, P, b_grid):
-    """Reject every positive dead-state mass and retain its origin coordinates."""
+    """Preserve all mass, recording tails under the existing feasibility tolerance."""
     values = np.asarray(policy.V)
     if (values.shape != out.shape or out.ndim != 7
             or not np.isfinite(out).all() or np.any(out < 0)):
@@ -417,6 +417,8 @@ def _require_exact_inherited_distribution(out, policy, P, b_grid):
         return
     indices = np.argwhere(bad)
     masses = out[bad]
+    tolerance = float(model.DEAD_MASS_TOL)
+    rejected = float(masses.sum()) > tolerance or np.any(occupied & ~np.isfinite(values))
     order = np.argsort(-masses, kind="stable")[:8]
     census = []
     for index in indices[order]:
@@ -431,7 +433,8 @@ def _require_exact_inherited_distribution(out, policy, P, b_grid):
         affected_cells=int(len(indices)),census=census,origin_shape=list(out.shape),
         origin_mass=float(out.sum()),origin_sha256=hashlib.sha256(out.tobytes()).hexdigest(),
         asset_prices=np.asarray(policy.price,dtype=float).tolist(),value_cutoff=-1e9,
-        required_dead_mass=0.,projection_mass=0.,distribution_modified=False)
+        feasibility_mass_tolerance=tolerance,projection_mass=0.,distribution_modified=False,
+        status="rejected" if rejected else "retained_below_existing_feasibility_tolerance")
     evidence_dir = getattr(P,"native_inherited_distribution_evidence_dir",None)
     if not evidence_dir:
         raise ValueError("Exact inherited-state rejection requires an explicit evidence directory")
@@ -439,7 +442,8 @@ def _require_exact_inherited_distribution(out, policy, P, b_grid):
     destination.parent.mkdir(parents=True,exist_ok=True)
     evidence["evidence_path"] = str(destination)
     destination.write_text(json.dumps(evidence,indent=2,sort_keys=True,allow_nan=False)+"\n")
-    raise InheritedDistributionInfeasible(evidence)
+    if rejected:
+        raise InheritedDistributionInfeasible(evidence)
 
 
 def gate_pre_fertility_distribution(

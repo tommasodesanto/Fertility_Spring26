@@ -24,7 +24,7 @@ def load_gate(model):
 class ExactInheritedTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory()
-        self.ns=load_gate(SimpleNamespace())
+        self.ns=load_gate(SimpleNamespace(DEAD_MASS_TOL=1e-12))
         self.P=SimpleNamespace(J=1,age_start=18,da=4,user_cost_rate=.1,
             native_exact_inherited_distribution=True,native_inherited_distribution_evidence_dir=self.tmp.name)
         self.g=np.zeros((2,1,1,1,1,1,1));self.g[0]=.3;self.g[1]=.7
@@ -39,13 +39,13 @@ class ExactInheritedTests(unittest.TestCase):
         self.assertEqual(out.tobytes(),before);self.assertEqual(projection,0.)
         self.assertIsNot(out,self.g);self.assertEqual(self.g.tobytes(),before)
 
-    def test_tiny_positive_dead_mass_rejected_and_recorded(self):
-        self.g[0]=1e-30;self.policy.V[0]=-1e9
+    def test_above_existing_tolerance_rejected_and_recorded(self):
+        self.g[0]=1e-8;self.policy.V[0]=-1e9
         before=self.g.tobytes()
         with self.assertRaises(self.ns['InheritedDistributionInfeasible']) as caught:self.gate()
         exc=caught.exception
         self.assertEqual(exc.classification,'inherited_distribution_infeasible')
-        self.assertEqual(exc.dead_mass,1e-30)
+        self.assertEqual(exc.dead_mass,1e-8)
         self.assertEqual(self.g.tobytes(),before)
         saved=json.loads(Path(exc.evidence_path).read_text())
         self.assertEqual(saved['census'][0]['wealth'],-1.)
@@ -54,6 +54,15 @@ class ExactInheritedTests(unittest.TestCase):
         self.assertFalse(saved['distribution_modified'])
         self.assertIsInstance(exc,RuntimeError)
         self.assertNotIn('exceeds',str(exc))
+
+    def test_small_tail_preserved_and_reported_without_redistribution(self):
+        self.g[0]=1e-14;self.policy.V[0]=-1e9
+        before=self.g.tobytes();out,projection=self.gate()
+        self.assertEqual(out.tobytes(),before);self.assertEqual(projection,0.)
+        saved=json.loads(next(Path(self.tmp.name).glob('*.json')).read_text())
+        self.assertEqual(saved['status'],'retained_below_existing_feasibility_tolerance')
+        self.assertEqual(saved['feasibility_mass_tolerance'],1e-12)
+        self.assertFalse(saved['distribution_modified'])
 
     def test_zero_mass_dead_cell_allowed(self):
         self.g[0]=0.;self.policy.V[0]=-1e10
