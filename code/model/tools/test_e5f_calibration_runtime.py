@@ -4,10 +4,10 @@ import os
 import sys
 import unittest
 
-if sys.platform!='linux' or not os.environ.get('SLURM_JOB_ID'):
+if not os.environ.get('ALLOW_LOCAL_RUNTIME_TESTS') and (sys.platform!='linux' or not os.environ.get('SLURM_JOB_ID')):
     raise RuntimeError('Run calibration runtime tests only in a Torch allocation')
 
-from e5f_calibration_runtime import score_targets, validate_normalization, NonpositiveNormalizedBenefit
+from e5f_calibration_runtime import score_targets, validate_normalization, NonpositiveNormalizedBenefit, load_seed, sha
 from e5f_overnight_estate_audit import run_self_tests
 
 
@@ -32,6 +32,26 @@ def inputs():
 
 
 class RegistryTests(unittest.TestCase):
+    def test_native_seed_loader_and_pinned_local_bridge(self):
+        import gzip
+        import pickle
+        import tempfile
+        from pathlib import Path
+        from types import SimpleNamespace
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as folder:
+            seed=Path(folder)/'seed.pkl.gz'
+            with gzip.open(seed,'wb') as stream: pickle.dump({'seed':7},stream)
+            self.assertEqual(load_seed({},seed),{'seed':7})
+            adapter=Path(folder)/'adapter.py';adapter.write_text('# fixture')
+            c={'execution':{'kind':'local'},'files':{'local_runtime_adapter':
+                {'path':str(adapter),'sha256':sha(adapter)}}}
+            with patch('e5f_calibration_runtime.load_module',return_value=
+                       SimpleNamespace(load_checkpoint=lambda path: {'bridged':str(path)})):
+                self.assertEqual(load_seed(c,seed),{'bridged':str(seed)})
+            adapter.write_text('# changed')
+            with self.assertRaisesRegex(RuntimeError,'adapter changed'):load_seed(c,seed)
+
     def test_all_fourteen_rows_and_thirteen_scores_preserve_definitions(self):
         args=inputs(); before=copy.deepcopy(args); rows=score_targets(*args)
         self.assertEqual(args,before)

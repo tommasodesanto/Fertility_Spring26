@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
-"""Synthetic controller checks. Run only on Torch; no household solves.
+"""Synthetic controller checks; no household solves.
 
 REVIEWED_RECOVERY_SEARCH must point to the pinned reviewed supervisor. Its real
 run_batch loop is exercised with synthetic owned-process objects.
+Local checks require ALLOW_LOCAL_CONTROLLER_TESTS=1; never spoof Slurm metadata.
 """
 from __future__ import annotations
 import argparse,csv,importlib.util,json,os,signal,sys,tempfile,time,types,unittest
 from pathlib import Path
 from unittest import mock
 
-if not os.environ.get('SLURM_JOB_ID'):
-    raise RuntimeError('Run controller tests on Torch Slurm only')
+if not os.environ.get('SLURM_JOB_ID') and os.environ.get('ALLOW_LOCAL_CONTROLLER_TESTS')!='1':
+    raise RuntimeError('Run on Slurm or explicitly authorize local synthetic checks')
 
 HERE=Path(__file__).resolve().parent
 spec=importlib.util.spec_from_file_location('overnight_test_subject',HERE/'run_e5f_utility_overnight_calibration.py')
@@ -69,6 +70,28 @@ class ControllerTests(unittest.TestCase):
         c=json.loads(json.dumps(self.c));c['status']='approved_production';c['approval']={'reviewer':'test'};c['production_blockers']=[]
         self.assertEqual(d.science_id(c),d.science_id(self.c));c['normalization']['initial_step']=.04
         self.assertNotEqual(d.candidate_id(c,c['initial_point']),d.candidate_id(self.c,self.c['initial_point']))
+    def test_local_execution_is_explicit_host_pinned_and_not_slurm(self):
+        self.c['execution']=dict(kind='local',hostname='approved-host',authorization_id='night-run')
+        with mock.patch.dict(os.environ,{'E5F_LOCAL_EXECUTION_AUTHORIZATION':'night-run'},clear=True),mock.patch.object(d.socket,'gethostname',return_value='approved-host'):
+            d.verify_execution(self.c)
+            with mock.patch.dict(os.environ,{'SLURM_JOB_ID':'123'}):
+                with self.assertRaises(AssertionError):d.verify_execution(self.c)
+            with mock.patch.object(d.socket,'gethostname',return_value='other-host'):
+                with self.assertRaises(AssertionError):d.verify_execution(self.c)
+            os.environ['E5F_LOCAL_EXECUTION_AUTHORIZATION']='wrong'
+            with self.assertRaises(AssertionError):d.verify_execution(self.c)
+    def test_legacy_execution_remains_slurm_only(self):
+        with mock.patch.dict(os.environ,{},clear=True):
+            with self.assertRaises(AssertionError):d.verify_execution(self.c)
+        with mock.patch.dict(os.environ,{'SLURM_JOB_ID':'123'},clear=True):d.verify_execution(self.c)
+    def test_absolute_deadline_preserves_repeat_and_export_reserves(self):
+        start=100000.;self.c['budget']['absolute_end_epoch']=start+20000
+        clock=d.build_clock(self.c,start,'search','contract')
+        self.assertEqual(clock['end'],start+20000)
+        self.assertEqual(clock['repeat_cutoff'],start+18200)
+        self.assertEqual(clock['search_cutoff'],start+14600)
+        self.assertEqual(d.build_clock(self.c,start,'smoke','contract')['search_cutoff'],start+120)
+        with self.assertRaises(AssertionError):d.build_clock(self.c,start+20000,'search','contract')
     def test_clean_runtime_seam(self):
         expected=tuple(range(8));runtime=types.SimpleNamespace(setup=mock.Mock(return_value=expected))
         self.c['files']['calibration_runtime']={'path':'explicit-runtime.py'}
@@ -85,6 +108,19 @@ class ControllerTests(unittest.TestCase):
             changed=dict(self.obj);changed['target_rows']=[dict(self.obj['target_rows'][0],target=9.),self.obj['target_rows'][1]]
             d.write(self.c['objective']['path'],changed)
             with self.assertRaises(AssertionError):d.verify(self.contract)
+    def test_worker_caps_follow_execution_contract(self):
+        self.c['files']['driver']['path']=d.__file__
+        for item in self.c['files'].values():item['sha256']=d.sha(item['path'])
+        base=self.root/'base.json';d.write(base,{'fixed':'reference'})
+        self.c.update(base_contract={'path':str(base),'sha256':d.sha(base)},fixed={'delta_alpha':0,'sigma':2},pending_observer_mismatches=['declared'],economic_changes=['declared'])
+        for kind,workers,valid in [('slurm',24,True),('slurm',25,False),('local',10,True),('local',11,False)]:
+            self.c['execution']=dict(kind=kind,hostname='host',authorization_id='token')
+            self.c['budget'].update(workers=workers,points_per_round=workers)
+            d.write(self.contract,self.c)
+            with mock.patch.dict(os.environ,{'EXPECTED_UTILITY_OVERNIGHT_SHA256':d.sha(self.contract)}):
+                if valid:d.verify(self.contract)
+                else:
+                    with self.assertRaises(AssertionError):d.verify(self.contract)
     def pair(self):
         cases=[]
         for name in ('original','repeat'):
@@ -173,5 +209,51 @@ class ControllerTests(unittest.TestCase):
         self.assertEqual(selected,complete['selected']);self.assertEqual(complete['status'],'bounded_search_complete')
         self.assertEqual(len(list((search.output/'selected_export/standard_diagnostics').glob('*.png'))),17)
         self.assertEqual(d.read(search.output/'selected_export/receipt.json'),d.read(Path(selected['case_path'])/'receipt.json'))
+    def run_interrupted_search(self,mode):
+        owner=self;starts=[];fake_pid=[1000]
+        source=self.root/'source';source.mkdir();(source/'model.py').write_text('pinned source')
+        manifest=self.root/'source_manifest.json';d.write(manifest,dict(files={'model.py':d.sha(source/'model.py')}))
+        self.c.update(source_root=str(source),source_manifest=dict(path=str(manifest),sha256=d.sha(manifest)))
+        d.write(self.contract,self.c)
+        class Process:
+            def __init__(self,command,log_path,deadline,env):
+                self.deadline=deadline;self.observed_epoch=time.time();self.observed_running_at_expiry=False;self.deadline_kill_reaped=False;self.deadline_expired=False
+                fake_pid[0]+=1;self.process=types.SimpleNamespace(pid=fake_pid[0]);self.code=0
+                folder=Path(command[command.index('--output')+1]);req=d.read(command[command.index('--request')+1]);starts.append(req)
+                success(folder,owner.c,req,pid=self.process.pid)
+                if req['stage']=='initial' and folder.name.endswith('0000'):
+                    self.code=1
+                    d.write(folder/'failure.json',dict(context=req['context'],status='fatal',classification='unknown_or_integrity_failure',phase='setup' if mode=='setup' else 'objective',error_type='InfeasibleThetaError',error='Unfamiliar native census'))
+                    if mode=='source_tamper':(source/'model.py').write_text('changed source')
+            def poll(self):return self.code
+            def close(self):pass
+        proxy=types.SimpleNamespace(ManagedProcess=Process,run_batch=supervision.run_batch)
+        smoke=argparse.Namespace(stage='smoke',output=self.root/'smoke',contract=self.contract,smoke_receipt=None,smoke_sha256=None)
+        with mock.patch.object(d,'module',return_value=proxy),mock.patch.object(d,'verify',return_value=(self.c,self.obj)):
+            d.controller(smoke,self.c,self.obj)
+            receipt=smoke.output/'complete.json'
+            search=argparse.Namespace(stage='search',output=self.root/'search',contract=self.contract,smoke_receipt=receipt,smoke_sha256=d.sha(receipt))
+            if mode=='objective':self.assertEqual(d.controller(search,self.c,self.obj),1)
+            else:
+                with self.assertRaises((RuntimeError,AssertionError)):d.controller(search,self.c,self.obj)
+        return search,starts
+    def test_fatal_search_stops_then_verifies_and_labels_saved_best(self):
+        search,starts=self.run_interrupted_search('objective')
+        complete=d.read(search.output/'complete.json')
+        self.assertEqual(complete['status'],'interrupted_search_verified_best')
+        self.assertEqual(sum(r['status']=='fatal' for r in complete['records']),1)
+        self.assertEqual([r['stage'] for r in starts],['smoke','smoke','initial','initial','repeat','repeat'])
+        export=d.read(search.output/'selected_export/export_receipt.json')
+        self.assertEqual(export['status'],'verified_selected_export_from_interrupted_search')
+        self.assertEqual(len(export['search_interruption']['fatal_records']),1)
+    def test_setup_integrity_failure_never_exports_or_dispatches_repeats(self):
+        search,starts=self.run_interrupted_search('setup')
+        self.assertFalse((search.output/'selected_export').exists())
+        self.assertTrue(d.read(search.output/'complete.json')['integrity_compromised'])
+        self.assertFalse(any(r['stage']=='repeat' for r in starts))
+    def test_changed_source_blocks_post_fatal_verification_and_export(self):
+        search,starts=self.run_interrupted_search('source_tamper')
+        self.assertFalse((search.output/'selected_export').exists())
+        self.assertFalse(any(r['stage']=='repeat' for r in starts))
 
 if __name__=='__main__':unittest.main()

@@ -1,0 +1,63 @@
+{
+  "status": "local_exploratory_search_active_cluster_auth_blocked",
+  "created_epoch": 1790484834.200037,
+  "absolute_end_epoch": 1790512980,
+  "report_deadline": "2026-09-27T09:30:00-04:00",
+  "requested_workers": {
+    "cluster": 24,
+    "local": 10
+  },
+  "planned_pools": {
+    "cluster_primary": 20,
+    "cluster_identity": 4,
+    "local_primary": 8,
+    "local_identity": 2
+  },
+  "cluster_authentication": "expired; author asked to refresh; no production submitted",
+  "cluster_verification_jobs": {
+    "default_replay": 18624270,
+    "seed_compatibility": 18624271
+  },
+  "remote_root": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/supervised_calibration_20260927_v1",
+  "local_root": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable",
+  "local_lanes": {
+    "primary": {
+      "contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/primary/contract.json",
+      "smoke": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/primary/smoke",
+      "search": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/primary/search",
+      "log": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/primary/search_controller.log",
+      "production_contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/primary/production_contract.json",
+      "pid": 7730
+    },
+    "identity": {
+      "contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/identity/contract.json",
+      "smoke": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/identity/smoke",
+      "search": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/identity/search",
+      "log": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/identity/search_controller.log",
+      "production_contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/identity/production_contract.json",
+      "pid": 7731
+    },
+    "cold": {
+      "contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/cold/contract.json",
+      "smoke": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/cold/smoke",
+      "log": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/cold/smoke_controller.log"
+    }
+  },
+  "heartbeat_id": "supervise-fertility-calibration-tonight",
+  "economic_changes_from_reviewed_specification": [],
+  "cancelled_preparation_runs": [
+    {
+      "root": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch/primary",
+      "reason": "Preparation generator pinned at mutable repository path; cancelled after pin drift; no accepted result"
+    }
+  ],
+  "local_primary_smoke_pid": 5266,
+  "local_cold_smoke_pid": 5499,
+  "local_search_workers": 10,
+  "local_memory_guard": {
+    "pid": 7737,
+    "threshold_gib": 32,
+    "interval_seconds": 20,
+    "action": "authenticated owned evaluator SIGTERM, recorded resource interruption; controller stops new dispatch"
+  }
+}

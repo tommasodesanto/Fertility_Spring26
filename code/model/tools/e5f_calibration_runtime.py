@@ -70,6 +70,18 @@ def load_module(name, path):
     return result
 
 
+def load_seed(c, path):
+    """Native Torch loader, or a pinned namespace-only local compatibility loader."""
+    if c.get('execution', {}).get('kind', 'slurm') == 'local':
+        record = c['files']['local_runtime_adapter']
+        if sha(record['path']) != record['sha256']:
+            raise RuntimeError('Local compatibility adapter changed')
+        adapter = load_module('calibration_local_compatibility', record['path'])
+        return adapter.load_checkpoint(path)
+    with gzip.open(path, 'rb') as stream:
+        return pickle.load(stream)
+
+
 def score_targets(objective, fertility, housing, recent, completed):
     """Every row is explicit; missing required moments fail before scoring."""
     fertility=fertility[objective['cps_projection']]['moments']
@@ -131,7 +143,7 @@ def setup(c, obj, point, out):
     if sha(pair.PLAN)!=tax.PLAN_SHA or sha(pair.CHECKPOINT)!=tax.CHECKPOINT_SHA:
         raise RuntimeError('Seed ancestry changed')
     plan=json.loads(Path(pair.PLAN).read_text())
-    with gzip.open(pair.CHECKPOINT,'rb') as stream: selected=pickle.load(stream)
+    selected=load_seed(c,pair.CHECKPOINT)
     tax.check_checkpoint(selected)
     ancestor.SOURCE=source
     rt=ancestor.setup_runtime(tax,plan,selected,out)

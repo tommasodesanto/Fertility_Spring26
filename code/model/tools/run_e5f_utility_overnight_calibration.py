@@ -6,7 +6,7 @@ owns dispatch, immutable normalization inputs, artifact verification and export.
 No source rewriting, implicit retries or model imports occur in the controller.
 """
 from __future__ import annotations
-import argparse,csv,dataclasses,hashlib,importlib.util,json,math,os,random,shutil,signal,sys,time,traceback
+import argparse,csv,dataclasses,hashlib,importlib.util,json,math,os,random,shutil,signal,socket,sys,time,traceback
 from pathlib import Path
 
 COMMON=('H0','beta_annual','chi','first_birth_fixed_cost','kappa_fert','kappa_fert_continuation','theta0')
@@ -42,6 +42,34 @@ def norm_inputs(c):
 
 def candidate_id(c,point):return canon(dict(science=science_id(c),point=point,normalization_inputs=norm_inputs(c)))
 
+def execution_settings(c):
+    """Legacy contracts remain Slurm-only; local execution requires an explicit pin."""
+    execution=c.get('execution',{'kind':'slurm'})
+    assert execution['kind'] in ('slurm','local'),'Unknown execution kind'
+    if execution['kind']=='local':
+        assert isinstance(execution.get('hostname'),str) and execution['hostname']
+        assert isinstance(execution.get('authorization_id'),str) and execution['authorization_id']
+    return execution
+
+def verify_execution(c):
+    execution=execution_settings(c)
+    if execution['kind']=='slurm':
+        assert os.environ.get('SLURM_JOB_ID','').isdigit(),'Slurm allocation required'
+    else:
+        assert not os.environ.get('SLURM_JOB_ID'),'Local execution must not impersonate Slurm'
+        assert socket.gethostname()==execution['hostname'],'Unapproved local host'
+        assert os.environ.get('E5F_LOCAL_EXECUTION_AUTHORIZATION')==execution['authorization_id'],'Local execution not authorized'
+    return execution
+
+def build_clock(c,start,stage,contract_sha256):
+    budget=c['budget'];end=min(start+budget['total_seconds'],budget.get('absolute_end_epoch',math.inf))
+    assert start<end,'Absolute overnight cutoff already passed'
+    repeat_cutoff=min(start+budget['search_seconds']+budget['repeat_seconds'],end-budget['export_seconds'])
+    search_cutoff=min(start+budget['search_seconds'],repeat_cutoff-budget['repeat_seconds'])
+    if stage=='smoke':search_cutoff=min(start+budget['smoke_seconds'],search_cutoff)
+    return dict(start=start,search_cutoff=search_cutoff,repeat_cutoff=repeat_cutoff,end=end,
+        absolute_end_epoch=budget.get('absolute_end_epoch'),contract_sha256=contract_sha256)
+
 def verify(path):
     c=read(path);assert c['schema']==SCHEMA and not sys.flags.optimize
     assert os.environ.get('EXPECTED_UTILITY_OVERNIGHT_SHA256')==sha(path),'Unreviewed contract fingerprint'
@@ -56,13 +84,15 @@ def verify(path):
         assert math.isfinite(r['lower']) and math.isfinite(r['upper']) and r['lower']<r['upper']
         assert r['lower']<=c['initial_point'][r['parameter']]<=r['upper']
     assert c['fixed']['delta_alpha']==0 and c['fixed']['sigma']==2
-    budget=c['budget']
-    assert budget['total_seconds']==28800 and 1<=budget['workers']<=10
+    budget=c['budget'];worker_cap=24 if execution_settings(c)['kind']=='slurm' else 10
+    assert budget['total_seconds']==28800 and 1<=budget['workers']<=worker_cap
     assert budget['search_seconds']==23400 and budget['repeat_seconds']==3600 and budget['export_seconds']==1800
-    assert 1<=budget['rounds']<=30 and 1<=budget['points_per_round']<=10
-    assert budget['rounds']*budget['points_per_round']<=300
+    assert 1<=budget['rounds']<=30 and 1<=budget['points_per_round']<=worker_cap
+    assert budget['rounds']*budget['points_per_round']<=30*worker_cap
     assert 0<budget['objective_cap_seconds']<=budget['repeat_seconds']
     assert 0<budget['smoke_seconds']<=budget['total_seconds']
+    if 'absolute_end_epoch' in budget:
+        assert math.isfinite(budget['absolute_end_epoch']) and budget['absolute_end_epoch']>0
     assert set(c['proposal_widths'])==set(FREE) and all(math.isfinite(v) and v>0 for v in c['proposal_widths'].values())
     assert c['pending_observer_mismatches'] and c['economic_changes'];norm_inputs(c)
     return c,obj
@@ -81,11 +111,12 @@ def evaluate(a,c,obj):
     assert context['source_sha256']==c['files']['driver']['sha256'] and context['target_sha256']==c['objective']['sha256']
     assert context['point_sha256']==canon(request['point']) and context['stage']==request['stage']
     write(a.output/'startup.json',dict(context=context,pid=os.getpid(),parent_pid=os.getppid(),normalization_inputs=norm_inputs(c)))
-    runtime=None;start=time.monotonic()
+    runtime=None;phase='setup';start=time.monotonic()
     try:
         old,tax,selected,rt,runner,native,evidence,binding=setup(c,obj,request['point'],a.output)
         runtime=(runner,native,evidence)
         write(a.output/'binding.json',dict(context=context,native=evidence,binding=binding))
+        phase='objective'
         result=old.evaluate_point(tax=tax,objective=obj,selected=selected,runtime=rt,point=request['point'],output=a.output/'case',deadline_epoch=request['deadline_epoch'],graphs=request['graphs'])
         assert result['normalization']['psi_child']>0
         assert result['normalization_inputs']==norm_inputs(c),'Runtime normalization inputs differ'
@@ -103,7 +134,7 @@ def evaluate(a,c,obj):
             elif captured.narrow_infeasibility_verified:status='inadmissible';classification='authenticated_structured_native_gate'
         ledger=getattr(exc,'audit',getattr(exc,'ledger',None))
         if ledger is not None:write(a.output/'error_ledger.json',dict(context=context,ledger=ledger))
-        write(a.output/'failure.json',dict(context=context,status=status,classification=classification,error_type=type(exc).__name__,error=str(exc),traceback=traceback.format_exc(),native=dataclasses.asdict(captured) if captured else None,error_ledger=ledger))
+        write(a.output/'failure.json',dict(context=context,status=status,classification=classification,phase=phase,error_type=type(exc).__name__,error=str(exc),traceback=traceback.format_exc(),native=dataclasses.asdict(captured) if captured else None,error_ledger=ledger))
         raise
 
 def keyed_csv(path,key):
@@ -203,7 +234,7 @@ def classify(folder,c,req,process,code):
                 assert failure['native']['narrow_infeasibility_verified'] and failure['native']['context']==req['context']
             return 'inadmissible',{},failure
         error=failure or 'Unclassified child exit'
-    except Exception as exc:error=f'{type(exc).__name__}: {exc}'
+    except Exception as exc:error=dict(classification='controller_artifact_integrity_failure',error_type=type(exc).__name__,error=str(exc))
     return 'fatal',data,error
 
 def load_smoke(path,pin,c):
@@ -218,7 +249,23 @@ def load_smoke(path,pin,c):
     compare_tables(smoke['records'][0]['case_path'],smoke['records'][1]['case_path'])
     return smoke
 
-def export_selected(selected,repeats,out,c,deadline):
+def verify_recovery_integrity(c,contract,selected):
+    """Reauthenticate source and successful evidence before any post-stop work."""
+    verified,_=verify(contract)
+    assert science_id(verified)==science_id(c),'In-memory contract differs'
+    manifest=c.get('source_manifest')
+    if manifest is not None:
+        assert sha(manifest['path'])==manifest['sha256'],'Source inventory changed'
+        source=Path(c['source_root']).resolve()
+        for relative,expected in read(manifest['path'])['files'].items():
+            path=(source/relative).resolve()
+            assert path.is_relative_to(source) and sha(path)==expected,'Source changed: '+relative
+    request=read(selected['request_path'])
+    data=validate_success(Path(selected['case_path']).parent,c,request)
+    assert selected['point']==request['point']
+    assert all(selected[key]==value for key,value in data.items()),'Selected evidence changed'
+
+def export_selected(selected,repeats,out,c,deadline,interruption=None):
     assert time.time()<deadline and len(repeats)==2
     comparisons=[]
     for r in repeats:
@@ -234,16 +281,15 @@ def export_selected(selected,repeats,out,c,deadline):
     shutil.copytree(graphs,out/'standard_diagnostics')
     (out/'initial_state.pkl.gz').symlink_to((source/'initial_state.pkl.gz').resolve())
     if time.time()>=deadline:raise TimeoutError('Export finished beyond the original total deadline')
-    write(out/'export_receipt.json',dict(status='verified_selected_export',selected=selected,repeats=repeats,comparisons=comparisons,graph_source=str(graphs),scientific_identity=science_id(c),target_weight_fingerprint=c['target_weight_fingerprint']))
+    write(out/'export_receipt.json',dict(status='verified_selected_export_from_interrupted_search' if interruption else 'verified_selected_export',search_interruption=interruption,selected=selected,repeats=repeats,comparisons=comparisons,graph_source=str(graphs),scientific_identity=science_id(c),target_weight_fingerprint=c['target_weight_fingerprint']))
 
 def controller(a,c,obj):
     sys.path.insert(0,c['runtime_tools']);sys.path.insert(0,str(Path(c['files']['recovery_policy']['path']).parent))
     supervision=module('overnight_reviewed_supervision',c['files']['recovery_search']['path'])
     smoke=load_smoke(a.smoke_receipt,a.smoke_sha256,c) if a.stage=='search' else None
     a.output.mkdir(parents=True,exist_ok=False);start=time.time();budget=c['budget']
-    cutoff=start+(budget['smoke_seconds'] if a.stage=='smoke' else budget['search_seconds'])
-    records=[];best=dict(smoke['records'][0]) if smoke else None;seen={candidate_id(c,c['initial_point'])};fatal=False;batches=[]
-    clock=dict(start=start,search_cutoff=cutoff,repeat_cutoff=start+budget['search_seconds']+budget['repeat_seconds'],end=start+budget['total_seconds'],contract_sha256=sha(a.contract))
+    records=[];best=dict(smoke['records'][0]) if smoke else None;seen={candidate_id(c,c['initial_point'])};fatal=False;integrity_compromised=False;batches=[];interruption=None
+    clock=build_clock(c,start,a.stage,sha(a.contract));cutoff=clock['search_cutoff']
     write(a.output/'clock.json',clock)
     if best:write(a.output/'best_so_far.json',best)
     last_heartbeat=0.
@@ -251,8 +297,14 @@ def controller(a,c,obj):
         nonlocal last_heartbeat
         if time.time()-last_heartbeat>=30 or progress.get('force'):
             write(a.output/'heartbeat.json',dict(epoch=time.time(),stage=a.stage,completed=len(records),best_loss=best['loss'] if best else None,**progress));last_heartbeat=time.time()
+    def revalidate_selected(selected):
+        nonlocal integrity_compromised
+        try:verify_recovery_integrity(c,a.contract,selected)
+        except Exception:
+            integrity_compromised=True
+            raise
     def batch(points,stage,deadline,graphs=False):
-        nonlocal best,fatal
+        nonlocal best,fatal,integrity_compromised
         requests=[]
         for p in points:
             name=f'{stage}_{len(records)+len(requests):04d}'
@@ -266,19 +318,23 @@ def controller(a,c,obj):
             cmd=[sys.executable,__file__,'--stage','evaluate','--contract',str(a.contract),'--output',str(folder),'--request',str(path)]
             return supervision.ManagedProcess(cmd,a.output/(req['id']+'.log'),end,env)
         def finish(req,process,code):
-            nonlocal best,fatal
+            nonlocal best,fatal,integrity_compromised
             try:verify(a.contract);status,data,error=classify(a.output/req['id'],c,req,process,code)
-            except Exception as exc:status,data,error='fatal',{},str(exc)
+            except Exception as exc:
+                status,data,error='fatal',{},dict(classification='controller_contract_integrity_failure',error=str(exc))
+            if status=='fatal' and isinstance(error,dict) and (error.get('classification') in
+                    ('controller_artifact_integrity_failure','controller_contract_integrity_failure') or error.get('phase')=='setup'):
+                integrity_compromised=True
             record=dict(case=req['id'],status=status,point=req['point'],request_path=req['request_path'],execution=dict(returncode=code,deadline=process.deadline,observed=process.observed_epoch,owned_timeout=process.observed_running_at_expiry and process.deadline_kill_reaped),error=error)
             record.update(data);records.append(record);write(a.output/'latest_completed.json',record)
             if status=='success' and stage!='repeat' and (best is None or record['loss']<best['loss']):best=record;write(a.output/'best_so_far.json',best)
             if status=='fatal' or stage in ('smoke','repeat') and status!='success':fatal=True
             record['halt_new_dispatch']=fatal
-            write(a.output/'checkpoint.json',dict(records=records,best=best,seen=sorted(seen),clock=clock,scientific_identity=science_id(c),contract_sha256=sha(a.contract)))
+            write(a.output/'checkpoint.json',dict(records=records,best=best,seen=sorted(seen),clock=clock,integrity_compromised=integrity_compromised,scientific_identity=science_id(c),contract_sha256=sha(a.contract)))
             heartbeat(force=True);return record
         result=supervision.run_batch(requests,workers=min(budget['workers'],len(requests)),deadline=deadline,launch=launch,finish=finish,heartbeat=heartbeat,allowed_statuses={'success'} if stage in ('smoke','repeat') else {'success','inadmissible','censored_timeout','censored_late_completion'},guard=lambda:'fatal_stop' if fatal else None)
         batches.append(dict(stage=stage,requested=len(points),**result));write(a.output/'batches.json',batches)
-        if any(r['status']=='failed' for r in result['results']):fatal=True
+        if any(r['status']=='failed' for r in result['results']):fatal=True;integrity_compromised=True
         return result
     try:
         if a.stage=='smoke':
@@ -293,18 +349,28 @@ def controller(a,c,obj):
             result=batch(points,'initial' if round_id==0 else 'de',cutoff)
             if not result['complete']:break
         selected=dict(best);write(a.output/'selected.json',dict(selected=selected,scientific_identity=science_id(c),frozen_before_repeats=True))
-        if fatal:raise RuntimeError('Fatal candidate failure; no further dispatch')
+        if fatal:
+            interruption=dict(reason='fatal_candidate_stopped_search',fatal_records=[r for r in records if r['status']=='fatal'],batches=batches.copy())
+            write(a.output/'search_interruption.json',interruption)
+            if integrity_compromised:raise RuntimeError('Integrity compromised; selected export prohibited')
+            revalidate_selected(selected)
+            assert time.time()<clock['repeat_cutoff'],'No time remains for interrupted-run verification'
+            # Search remains stopped. Only two independent repeats of the frozen
+            # successful selection may run; failures remain fatal and are retained.
+            fatal=False
         result=batch([selected['point'],selected['point']],'repeat',clock['repeat_cutoff'],graphs=True)
         assert not fatal and result['complete'] and len(result['results'])==2,'Selected repetitions incomplete'
-        export_selected(selected,result['results'],a.output/'selected_export',c,clock['end'])
-        write(a.output/'complete.json',dict(status='bounded_search_complete',records=records,selected=selected,elapsed_seconds=time.time()-start,clock=clock,scientific_identity=science_id(c),contract_sha256=sha(a.contract)))
+        revalidate_selected(selected)
+        export_selected(selected,result['results'],a.output/'selected_export',c,clock['end'],interruption=interruption)
+        write(a.output/'complete.json',dict(status='interrupted_search_verified_best' if interruption else 'bounded_search_complete',search_interruption=interruption,records=records,selected=selected,elapsed_seconds=time.time()-start,clock=clock,scientific_identity=science_id(c),contract_sha256=sha(a.contract)))
+        return 1 if interruption else 0
     except Exception as exc:
-        write(a.output/'complete.json',dict(status='incomplete_or_fatal_stop',error_type=type(exc).__name__,error=str(exc),records=records,best=best,clock=clock,scientific_identity=science_id(c)));raise
+        write(a.output/'complete.json',dict(status='incomplete_or_fatal_stop',search_interruption=interruption,integrity_compromised=integrity_compromised,error_type=type(exc).__name__,error=str(exc),records=records,best=best,clock=clock,scientific_identity=science_id(c)));raise
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--stage',required=True,choices=['preflight','smoke','search','evaluate']);ap.add_argument('--contract',type=Path,required=True);ap.add_argument('--output',type=Path,required=True);ap.add_argument('--request',type=Path);ap.add_argument('--smoke-receipt',type=Path);ap.add_argument('--smoke-sha256');a=ap.parse_args()
-    assert os.environ.get('SLURM_JOB_ID'),'Torch Slurm execution only'
     c,obj=verify(a.contract)
+    verify_execution(c)
     if a.stage=='search':
         assert (c['status']=='approved_production' and a.smoke_receipt and a.smoke_sha256
                 and c['approval']['production_authorized'] is True
@@ -314,5 +380,5 @@ def main():
         *_,binding=setup(c,obj,c['initial_point'],a.output)
         write(a.output/'preflight.json',dict(status='zero_solve_passed',contract_sha256=sha(a.contract),binding=binding));return
     if a.stage=='evaluate':evaluate(a,c,obj)
-    else:controller(a,c,obj)
+    else:raise SystemExit(controller(a,c,obj) or 0)
 if __name__=='__main__':main()

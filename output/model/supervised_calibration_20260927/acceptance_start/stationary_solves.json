@@ -1,0 +1,148 @@
+[
+  {
+    "epoch": 1790484927.04845,
+    "incoming_price_state": {},
+    "index": 0,
+    "market_residual": 3.224043807738003e-07,
+    "price": 0.6490517423564838,
+    "price_evaluations": 5,
+    "price_method": "direct_brent",
+    "psi_child": 0.0645126953125,
+    "seconds": 76.24679033299617,
+    "status": "completed",
+    "warm_price_search": {
+      "accepted_state": {
+        "price": 0.6490517423564838,
+        "slope": -13.5380240288513
+      },
+      "fallback_required": false,
+      "initial_price": null,
+      "initial_slope": null,
+      "used": false
+    }
+  },
+  {
+    "epoch": 1790485003.304339,
+    "incoming_price_state": {
+      "price": 0.6490517423564838,
+      "slope": -13.5380240288513
+    },
+    "index": 1,
+    "market_residual": 4.591904680766668e-06,
+    "price": 0.6598068324569709,
+    "price_evaluations": 3,
+    "price_method": "direct_brent",
+    "psi_child": 0.11451269531250001,
+    "seconds": 50.13355949999823,
+    "status": "completed",
+    "warm_price_search": {
+      "accepted_state": {
+        "price": 0.6598068324569709,
+        "slope": -13.043262305795373
+      },
+      "fallback_required": false,
+      "initial_price": 0.6490517423564838,
+      "initial_slope": -13.5380240288513,
+      "price_evaluations": 3,
+      "trace": [
+        {
+          "excess": 0.14143101157826443,
+          "metric": 0.01992355984922696,
+          "price": 0.6490517423564838
+        },
+        {
+          "excess": 0.004052134655423423,
+          "metric": 0.000565115672244711,
+          "price": 0.6594986887702925
+        },
+        {
+          "excess": 3.29357222019766e-05,
+          "metric": 4.591904680766668e-06,
+          "price": 0.6598068324569709
+        }
+      ],
+      "used": true
+    }
+  },
+  {
+    "epoch": 1790485053.446178,
+    "incoming_price_state": {
+      "price": 0.6598068324569709,
+      "slope": -13.043262305795373
+    },
+    "index": 2,
+    "market_residual": 3.976306761904036e-06,
+    "price": 0.6509396963571036,
+    "price_evaluations": 3,
+    "price_method": "direct_brent",
+    "psi_child": 0.0717485298586212,
+    "seconds": 53.1458750830061,
+    "status": "completed",
+    "warm_price_search": {
+      "accepted_state": {
+        "price": 0.6509396963571036,
+        "slope": -13.521880005772623
+      },
+      "fallback_required": false,
+      "initial_price": 0.6598068324569709,
+      "initial_slope": -13.043262305795373,
+      "price_evaluations": 3,
+      "trace": [
+        {
+          "excess": -0.11888843753306766,
+          "metric": 0.016575448670877055,
+          "price": 0.6598068324569709
+        },
+        {
+          "excess": 0.003322376330440413,
+          "metric": 0.00046728364823739945,
+          "price": 0.6506919013342377
+        },
+        {
+          "excess": -2.827823477957736e-05,
+          "metric": 3.976306761904036e-06,
+          "price": 0.6509396963571036
+        }
+      ],
+      "used": true
+    }
+  },
+  {
+    "epoch": 1790485106.601644,
+    "incoming_price_state": {
+      "price": 0.6509396963571036,
+      "slope": -13.521880005772623
+    },
+    "index": 3,
+    "market_residual": 2.3275690729028675e-07,
+    "price": 0.650692343028931,
+    "price_evaluations": 2,
+    "price_method": "direct_brent",
+    "psi_child": 0.07078083486437589,
+    "seconds": 39.20075304200873,
+    "status": "completed",
+    "warm_price_search": {
+      "accepted_state": {
+        "price": 0.650692343028931,
+        "slope": -13.528570423669777
+      },
+      "fallback_required": false,
+      "initial_price": 0.6509396963571036,
+      "initial_slope": -13.521880005772623,
+      "price_evaluations": 2,
+      "trace": [
+        {
+          "excess": -0.003344682022578205,
+          "metric": 0.00047030806011984585,
+          "price": 0.6509396963571036
+        },
+        {
+          "excess": 1.654897133995803e-06,
+          "metric": 2.3275690729028675e-07,
+          "price": 0.650692343028931
+        }
+      ],
+      "used": true
+    }
+  }
+]

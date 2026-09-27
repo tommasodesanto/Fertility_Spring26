@@ -1,5 +1,59 @@
 # Calibration Status
 
+## September 27, 01:07 EDT — ten local search workers active; Torch authentication blocked
+
+Six full local acceptance evaluations passed: two primary warm, two cold and
+two identity-weight. Each pair reproduces all14 target rows and31 parameter
+rows exactly, with17 diagnostic figures per case and all retained numerical,
+fiscal, funding and policy gates. Warm/cold at the same starting point uses
+13 versus19 price evaluations and approximately231 versus312 seconds; all
+reported moment differences are below1e-5. These are observed local timings,
+not a universal speed multiplier. The initial primary loss is592.815; full
+fits, parameter estimates/bounds and diagnostic contact sheets are saved in
+`output/model/supervised_calibration_20260927/acceptance_start/`. Starting
+economic misses are substantial; this is not a calibrated final baseline.
+
+The lead accepted bounded LOCAL EXPLORATION under the author's delegation:
+eight primary workers andtwo identity workers launched, wrapperPIDs7730/7731.
+Full immutable local paths, pins and clock are in the run registry. An external
+memory guard(pid7737) checks owned evaluator RSS every20seconds; above32GiB
+for two samples it records and requests termination of an authenticated owned
+evaluator. The strict controller then records an interruption; no resource stop
+is a valid model observation. Global08:43EDT cutoff is unchanged.
+
+**Torch authentication expired after verification jobs18624270(default replay)
+and18624271(seed-array compatibility) were submitted.** User was asked to refresh
+login. Their results cannot yet be collected;24cluster searchworkers have NOT
+launched. Old-floor native replay and cross-host comparison therefore remain
+outstanding, explicitly distinguished from local new-specification acceptance.
+No old-baseline production certification is claimed. Cluster staging resumes
+only after ordinary authorized login is restored; no credential workaround.
+
+One preparation failure is preserved: the first two local smoke cases were
+cancelled after a generator pinned at a mutable repository path changed during
+review. Fresh `tools_v4` and `night_launch_v2` freeze every local executable pin;
+all subsequent six tests passed. No economic input, target or gate changed.
+
+## September 27, 00:42 EDT — supervised overnight run authorized
+
+The author now authorizes an eight-hour supervised calibration,24 Torch and10
+local workers,30-minute checks, numerical/controller repairs without economic
+model changes, and separately labeled identity-weight experiments. This
+supersedes the launch hold and the Torch-only preference for this run. The
+global numerical cutoff is08:43 EDT September27, including repeats/export;
+a clear TWO-PAGE memo is due09:30 EDT, with all14 target rows and all10 fitted
+parameters, gaps, weights, loss contributions, bounds, failures and next steps.
+
+Preparation and launch registry:
+`output/model/supervised_calibration_20260927/README.md` and `launch.json`.
+Planned pools: cluster20 primary+4 identity; local8 primary+2 identity. Identity
+uses unit weights on raw gaps and remains diagnostic. Primary weight100 for
+early fertility and curvature bounds[0,.8] are provisional lead choices under
+the new delegation. No targets, model primitives, grids or gates change.
+Native repeated smoke, warm/cold comparison and original default-path replay
+are being prepared; prior90 tests alone do not certify overnight acceptance.
+Heartbeat `supervise-fertility-calibration-tonight` checks every30minutes.
+
 ## September 27, 00:00 EDT — code preparation verified; launch held for author instructions
 
 **Latest author instruction supersedes the intervening request to launch tonight:**

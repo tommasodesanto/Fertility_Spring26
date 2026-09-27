@@ -133,10 +133,10 @@ def audit(evaluation, P, b_grid):
 
 
 def run_self_tests():
-    """Small hand-calculated fixtures; executable only within a Torch allocation."""
+    """Small fixtures on Torch or under explicit author-authorized local testing."""
     import os
     import sys
-    if sys.platform != "linux" or not os.environ.get("SLURM_JOB_ID"):
+    if not os.environ.get('ALLOW_LOCAL_RUNTIME_TESTS') and (sys.platform != "linux" or not os.environ.get("SLURM_JOB_ID")):
         raise RuntimeError("Run estate audit synthetic tests only in a Torch allocation")
     from types import SimpleNamespace
     import numpy as np
