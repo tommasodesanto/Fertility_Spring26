@@ -60,6 +60,60 @@ def sample_index(prob,rng):
     flat=np.asarray(prob).ravel(); assert np.min(flat)>=-1e-14 and abs(flat.sum()-1)<1e-9
     return np.unravel_index(rng.choice(flat.size,p=np.maximum(flat,0)/flat.sum()),prob.shape)
 
+def render_lives(rows,out):
+    """Annual display interpolation only; preserve discrete housing/family choices."""
+    import csv
+    import matplotlib.pyplot as plt
+    out=Path(out)
+    continuous=('annual_gross_income','net_worth','consumption')
+    discrete=('children_capped_three','housing_rooms','tenure')
+    annual=[]
+    fig,axs=plt.subplots(3,2,figsize=(11,9),sharex=True)
+    keys=['annual_gross_income','net_worth','children_capped_three','housing_rooms','tenure','consumption']
+    titles=['Annual income: earnings or pension','Net worth','Children ever born (capped at three)','Housing rooms','Renting or owning','Consumption per four-year period']
+    labels=['Lower entry wealth (p10)','Middle entry wealth (p50)','Higher entry wealth (p90)']
+    colors=['#2166ac','#d6604d','#238b45']
+    for a in range(1,4):
+        rr=sorted([r for r in rows if int(r['agent'])==a],key=lambda r:float(r['age']))
+        ages=np.array([float(r['age']) for r in rr]); years=np.arange(ages[0],ages[-1]+1)
+        indices=np.searchsorted(ages,years,side='right')-1
+        values={k:np.interp(years,ages,[float(r[k]) for r in rr]) for k in continuous}
+        values.update({k:np.array([float(r[k]) for r in rr])[indices] for k in discrete})
+        for i,age in enumerate(years):
+            annual.append(dict(agent=a,age=float(age),model_date=bool(age in ages),
+                               **{k:float(v[i]) for k,v in values.items()}))
+        for ax,key,title in zip(axs.ravel(),keys,titles):
+            raw=np.array([float(r[key]) for r in rr]); y=values[key]
+            if key=='tenure':raw=(raw>0).astype(float);y=(y>0).astype(float)
+            if key in continuous:
+                ax.plot(years,y,color=colors[a-1],linewidth=1.8,label=labels[a-1])
+            else:
+                ax.step(years,y,where='post',color=colors[a-1],linewidth=1.8,label=labels[a-1])
+            ax.scatter(ages,raw,s=13,color=colors[a-1],zorder=3)
+            ax.set_title(title,fontsize=11,loc='left');ax.grid(alpha=.16)
+            ax.spines[['top','right']].set_visible(False)
+            ax.set_xticks([20,30,40,50,60,70,80]);ax.tick_params(labelbottom=True)
+            ax.set_xlim(18,82);ax.set_xlabel('Age')
+    axs[1,0].set_yticks([0,1,2,3]);axs[2,0].set_yticks([0,1],['Renter','Owner'])
+    axs[2,0].set_ylim(-.12,1.12)
+    handles,_=axs[0,0].get_legend_handles_labels()
+    fig.legend(handles,labels,loc='upper center',bbox_to_anchor=(.5,.955),ncol=3,frameon=False)
+    fig.suptitle('Three illustrative household lives',fontsize=16,y=.985)
+    fig.text(.5,.025,'Dots: simulated four-year dates. Lines: annual display interpolation for income, wealth and consumption.\n'
+             'Children, housing and tenure stay discrete. Money is in model units; these three draws are not representative averages.',
+             ha='center',fontsize=9,color='#444444')
+    fig.tight_layout(rect=[0,.075,1,.915]);fig.savefig(out/'three_household_lives.png',dpi=160);plt.close(fig)
+    for name,selected in [('three_household_lives_annual_display.csv',annual),
+                          ('three_household_lives_selected_ages.csv',[r for r in annual if r['age'] in (20,30,40,50,60,70,80)])]:
+        with (out/name).open('w',newline='') as stream:
+            writer=csv.DictWriter(stream,fieldnames=selected[0]);writer.writeheader();writer.writerows(selected)
+    metadata=dict(status='display_only',new_model_solves=0,new_simulations=0,
+                  continuous_interpolation='linear between saved four-year observations',
+                  discrete_display='left-constant children, housing and tenure at saved event dates',
+                  selected_ages=[20,30,40,50,60,70,80],
+                  original_csv_sha256=hashlib.sha256((out/'three_household_lives.csv').read_bytes()).hexdigest())
+    (out/'display_interpolation.json').write_text(json.dumps(metadata,indent=2)+'\n')
+
 def simulate(packet,rt,out):
     import csv, inspect
     import matplotlib.pyplot as plt
@@ -94,16 +148,17 @@ def simulate(packet,rt,out):
             cohort=zero.copy();cohort[realised]=1;state=sample_index(advance(cohort,j,True),rng)
     with (out/'three_household_lives.csv').open('w') as f:
         w=csv.DictWriter(f,fieldnames=rows[0]);w.writeheader();w.writerows(rows)
-    fig,axs=plt.subplots(3,2,figsize=(11,10))
-    for ax,key,title in zip(axs.ravel(),['annual_gross_income','net_worth','children_capped_three','housing_rooms','tenure','consumption'],['Annual income (gross earnings; pension in retirement)','Net worth','Children ever born (capped at three)','Housing rooms','Tenure: 0 renter, 1–5 owner product','Period consumption']):
-        for a in range(1,4):
-            rr=[r for r in rows if r['agent']==a];ax.step([r['age'] for r in rr],[r[key] for r in rr],where='post',label=f'Entry wealth q{[10,50,90][a-1]}')
-        ax.set_title(title);ax.set_xlabel('Age');ax.legend(fontsize=7)
-    fig.suptitle('Three illustrative simulated lives — selected entry ranks, not representative averages');fig.tight_layout();fig.savefig(out/'three_household_lives.png',dpi=150);plt.close(fig)
+    render_lives(rows,out)
     receipt=dict(seed=20260927,agents=3,native_solves=0,transition_factorization_l1=errors,fertility_function=inspect.getsourcefile(cal.apply_fertility),forward_function=inspect.getsourcefile(model.advance_cohort_one_period_markov_income),description='Native fertility draw; native current-choice realization; native saving/income/child-aging kernel conditional on realized current state; survival sampled separately. Same interpolation lotteries as KFE. Entry wealth ranks selected, remaining entry states drawn conditionally. Nonrepresentative examples; period grid retained, no interpolation to annual histories.',row_count=len(rows))
     (out/'simulation_verification.json').write_text(json.dumps(receipt,indent=2)+'\n');return receipt
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(); p.add_argument('--contract',type=Path,required=True);p.add_argument('--case',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
-    a=p.parse_args(); packet,rt,r=load(a.contract,a.case,a.output)
-    print(audit(packet,rt,a.output));print(simulate(packet,rt,a.output))
+    p=argparse.ArgumentParser(); p.add_argument('--contract',type=Path);p.add_argument('--case',type=Path);p.add_argument('--output',type=Path,required=True);p.add_argument('--plot-only',action='store_true')
+    a=p.parse_args()
+    if a.plot_only:
+        import csv
+        with (a.output/'three_household_lives.csv').open() as stream:render_lives(list(csv.DictReader(stream)),a.output)
+    else:
+        if not a.contract or not a.case:p.error('--contract and --case are required unless --plot-only')
+        packet,rt,r=load(a.contract,a.case,a.output)
+        print(audit(packet,rt,a.output));print(simulate(packet,rt,a.output))

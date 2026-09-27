@@ -32,7 +32,11 @@ wealth grid nodes at cumulative entry ranks 10%, 50%, 90%, then remaining entry
 states sampled from their conditional distribution. They are illustrative,
 not representative averages or handpicked outcomes. All three happened to
 survive to the terminal age in this fixed draw. The model's four-year age grid
-is retained. Income is annual gross earnings while working and pension in
+is retained in the source CSV. The updated display interpolates financial
+series linearly between those dates, with dots marking the actual simulated
+observations. Housing, children and tenure remain step functions. Age markers
+and a separate table at ages 20, 30, 40, 50, 60, 70 and 80 make comparisons easier. These are
+display interpolations, not additional annual model simulations. Income is annual gross earnings while working and pension in
 retirement; consumption is per model period. Financial quantities are model
 units. Children are capped at three (last state represents three or more).
 
@@ -60,3 +64,14 @@ code/model/.venv/bin/python code/model/tools/inspect_e5f_saved_households.py \
 --case tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/search/de_0093/case \
 --output output/model/daytime_calibration_20260927/households
 ```
+
+Display-only regeneration (no checkpoint loading or simulation):
+
+```sh
+MPLBACKEND=Agg code/model/.venv/bin/python code/model/tools/inspect_e5f_saved_households.py --plot-only --output output/model/daytime_calibration_20260927/households
+```
+
+`three_household_lives_annual_display.csv` and
+`three_household_lives_selected_ages.csv` contain the interpolated display
+values. `display_interpolation.json` records their interpretation and the
+unchanged source CSV hash. All 51 original observations match exactly.

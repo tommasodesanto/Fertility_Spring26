@@ -56,6 +56,23 @@ new search/Jacobian deadlines and pending benchmark definition recorded. It
 will not restart the completed overnight schedule.
 
 
+### Estate clarification and life-plot display update
+
+The selected baseline estate ledger has zero gross negative estates, zero net
+negative estates and zero death mass with negative estates. The unresolved
+creditor rule is therefore a counterfactual concern when credit limits are
+removed, not a realized negative-estate shortfall in this baseline. Positive net
+estates fund entrants; residual positive estates are sunk as previously chosen.
+
+At the author's request, the same three household draws now have clear decade
+age ticks and linear display interpolation for income, wealth and consumption.
+Dots identify the unchanged four-year simulated observations. Children, housing
+and tenure stay discrete; binary tenure labels replace owner-product codes.
+Annual-display and selected-age CSVs are explicitly interpolated illustrations,
+not extra model periods. All 51 original observations and the source CSV bytes
+are unchanged. Updated plot visually inspected; no new model solve/simulation.
+
+
 ## September 27, 07:27 EDT - final two-page memo delivered; supervision paused
 
 All numerical work finished by 07:02 EDT. The final memo is
