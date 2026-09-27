@@ -29,6 +29,14 @@ def budget_function():
 
 
 class DueAccountingTests(unittest.TestCase):
+    def test_all_origin_negative_estate_gate(self):
+        from run_e5f_due_stayer_matched_check import require_no_negative_estates
+        for value in (0.,1e-10):
+            require_no_negative_estates({'estate':{'totals':{'net_negative':value}}})
+        for value in (1.01e-10,-1.,float('nan'),float('inf')):
+            with self.subTest(value=value), self.assertRaises(RuntimeError):
+                require_no_negative_estates({'estate':{'totals':{'net_negative':value}}})
+
     def test_stationary_reconstruction_routes_stayer_saving(self):
         tree=ast.parse((ROOT/'run_dynamic_population_transition.py').read_text())
         node=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='reconstruct_stationary_pre_fertility')

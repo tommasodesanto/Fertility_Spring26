@@ -1,0 +1,59 @@
+{
+  "original_owner_mass": 0.5978473820393965,
+  "original_owner_mass_eligible_below_current_ltv": 0.04014570465688218,
+  "original_owner_mass_with_different_conditional_saving": 0.18530575381303097,
+  "original_owner_mass_with_conditional_saving_below_current_ltv": 0.022946933178478415,
+  "realized_due_stayer_mass": 0.5291834506987774,
+  "realized_due_stayer_mass_below_current_ltv": 0.018803516205236435,
+  "realized_due_stayer_mass_at_total_floor": 0.03672412121893402,
+  "realized_due_stayer_mass_at_death_floor": 0.0,
+  "negative_estates": {
+    "baseline": 0.0,
+    "due": 0.0
+  },
+  "classification": "One dated partial-equilibrium operator, permanent lower-price expectations; no market-clearing claim",
+  "conditional_caveat": "Original owner mass weights keep-the-same-house policies, not actual household choices. Realized stayer statistics use separate post-fertility origin mass. Changes can reflect continuation values as well as the immediate borrowing floor.",
+  "income_index": 7,
+  "income_state": 0.7766868728573969,
+  "income_selection": "weighted median if z_weights supplied; otherwise median support index",
+  "slices": [
+    {
+      "age": 30.0,
+      "income_index": 7,
+      "tenure": 4,
+      "rooms": 8.0,
+      "children_ever_born": 1,
+      "children_home_state": 1,
+      "original_slice_mass": 0.0005226758578330245,
+      "plotted_mass_share": 0.9960016893746418
+    },
+    {
+      "age": 46.0,
+      "income_index": 7,
+      "tenure": 5,
+      "rooms": 10.0,
+      "children_ever_born": 3,
+      "children_home_state": 1,
+      "original_slice_mass": 0.0010170498928828938,
+      "plotted_mass_share": 0.996543038744364
+    },
+    {
+      "age": 70.0,
+      "income_index": 7,
+      "tenure": 2,
+      "rooms": 4.0,
+      "children_ever_born": 3,
+      "children_home_state": 0,
+      "original_slice_mass": 0.0010053571608204667,
+      "plotted_mass_share": 0.995487003511448
+    }
+  ],
+  "source_sha256": "e3a1e7ec052a91335c445704c071ca3e66e8a416be0436ae38ed59467aff8073",
+  "input_sha256": {
+    "output/model/daytime_calibration_20260927/due_price_fall/baseline_v1/policy_and_original_state.pkl.gz": "75c3ad08fe572dbe1c0ead455529d0c2dfdf46dac42f6c48bdff2d3ff378f50a",
+    "output/model/daytime_calibration_20260927/due_price_fall/baseline_v1/dated_operator.pkl.gz": "cfe2a1eddd3cf6c116e502a2b6ce95622218da0aed2c2ba8f0419ccf80da40e2",
+    "output/model/daytime_calibration_20260927/due_price_fall/due_v1/policy_and_original_state.pkl.gz": "e5d9162bb446b6975cecee4f23947db0d2b1f9f26d9fe6f2af0164facd266428",
+    "output/model/daytime_calibration_20260927/due_price_fall/due_v1/dated_operator.pkl.gz": "e720e90340c9b5ab1cadbcc3b3433ec477fdf0ea3b29b576706d2b768b36d493"
+  },
+  "visual_qa": "Inspected all six panels: legible labels/legend, origin-specific baseline/DUE policies, floors and mass markers; no clipped titles. Young indebted owners show saving/consumption differences; older selected slice nearly overlaps."
+}

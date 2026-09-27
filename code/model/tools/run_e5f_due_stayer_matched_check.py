@@ -5,7 +5,7 @@ This separate diagnostic reports market residuals and never calls them an
  equilibrium. It preserves fixed de_0093 parameters and strict household gates.
 """
 from __future__ import annotations
-import argparse,copy,csv,gzip,hashlib,json,os,pickle,signal,sys,time
+import argparse,copy,csv,gzip,hashlib,json,math,os,pickle,signal,sys,time
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[3]
 MAIN=Path('/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26')
@@ -22,6 +22,12 @@ def table(p,rows):
         w=csv.DictWriter(f,fieldnames=list(rows[0]));w.writeheader();w.writerows(rows)
 def rows(p):
     with Path(p).open() as f:return list(csv.DictReader(f))
+def require_no_negative_estates(ledger):
+    """Use the existing production transition tolerance across all origins."""
+    negative=float(ledger['estate']['totals']['net_negative'])
+    if not math.isfinite(negative) or negative < 0 or negative > 1e-10:
+        raise RuntimeError('Negative-estate production gate failed; saved ledger retained')
+
 def verify(plan):
     assert plan['runner_sha256']==sha(__file__)
     assert plan['contract_sha256']==sha(plan['contract'])
@@ -109,6 +115,8 @@ def run(plan_path,arm_id,output):
         budget=rt['primitive'].dated_budget(evaluation,P,shared,grid,float(P.user_cost_rate*price[0]))
         purchasing=purchase.audit_purchase_accounting(evaluation,P,shared,grid,model)
         estates=prepared['objective'].estate.audit(evaluation,P,grid)
+        native.write(out/'estate_funding.json',prepared['tax'].finite_json(cal.jsonable(estates)))
+        require_no_negative_estates(estates)
         packet=dict(parameters=P,b_grid=grid,evaluation=evaluation,shared=shared,supply_rule=supply,solution=sol,stationary_g_pre=pre,demographic_seed=selected.get('demographic_seed'))
         checkpoint=out/'initial_state.pkl.gz'
         with gzip.open(checkpoint,'wb',compresslevel=1) as f:pickle.dump(packet,f,protocol=5)

@@ -1,0 +1,53 @@
+{
+  "records": [
+    {
+      "arm": "baseline",
+      "pid": 20681,
+      "controller_pid": 20678,
+      "start_epoch": 1790537466.05433,
+      "deadline_epoch": 1790537766.0531578,
+      "command": [
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python",
+        "/Users/tommasodesanto/.codex/worktrees/due-existing-owner-credit/Fertility_Spring26/code/model/tools/run_e5f_due_price_fall_check.py",
+        "--plan",
+        "/Users/tommasodesanto/.codex/worktrees/due-existing-owner-credit/Fertility_Spring26/output/model/daytime_calibration_20260927/due_price_fall/preparation_v1/plan_reviewed.json",
+        "--arm",
+        "baseline",
+        "--output",
+        "/Users/tommasodesanto/.codex/worktrees/due-existing-owner-credit/Fertility_Spring26/output/model/daytime_calibration_20260927/due_price_fall/baseline_v1"
+      ],
+      "workers": 1,
+      "threads": 1,
+      "plan_sha256": "eaaf1193b3b5ca5d6d687d49cc62cef01b59c1eaf78515b94e93eea1c9ad12d6",
+      "exit_code": 0,
+      "status": "completed",
+      "end_epoch": 1790537484.527601
+    },
+    {
+      "arm": "due",
+      "pid": 20695,
+      "controller_pid": 20678,
+      "start_epoch": 1790537484.529681,
+      "deadline_epoch": 1790537784.527987,
+      "command": [
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/bin/python",
+        "/Users/tommasodesanto/.codex/worktrees/due-existing-owner-credit/Fertility_Spring26/code/model/tools/run_e5f_due_price_fall_check.py",
+        "--plan",
+        "/Users/tommasodesanto/.codex/worktrees/due-existing-owner-credit/Fertility_Spring26/output/model/daytime_calibration_20260927/due_price_fall/preparation_v1/plan_reviewed.json",
+        "--arm",
+        "due",
+        "--output",
+        "/Users/tommasodesanto/.codex/worktrees/due-existing-owner-credit/Fertility_Spring26/output/model/daytime_calibration_20260927/due_price_fall/due_v1"
+      ],
+      "workers": 1,
+      "threads": 1,
+      "plan_sha256": "eaaf1193b3b5ca5d6d687d49cc62cef01b59c1eaf78515b94e93eea1c9ad12d6",
+      "exit_code": 0,
+      "status": "completed",
+      "end_epoch": 1790537515.062967
+    }
+  ],
+  "end_epoch": 1790537515.0632918,
+  "absolute_end_epoch": 1790538366.0332081,
+  "remaining_arms": []
+}
