@@ -1,0 +1,196 @@
+{
+  "generated_utc": "2026-09-27T10:15:44.912884+00:00",
+  "status": "provisional_results",
+  "counts": {
+    "success": 390
+  },
+  "groups": {
+    "early_fertility_3000": {
+      "completed": 32,
+      "search_completed": 30,
+      "verification_or_other": 2,
+      "best_under_primary_weights": 57.82630714869684,
+      "best_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v3/early_fertility_3000/search/de_0024/case"
+    },
+    "identity": {
+      "completed": 64,
+      "search_completed": 60,
+      "verification_or_other": 4,
+      "best_under_primary_weights": 361.2176383980841,
+      "best_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/identity/search/de_0058/case"
+    },
+    "primary": {
+      "completed": 294,
+      "search_completed": 288,
+      "verification_or_other": 6,
+      "best_under_primary_weights": 45.74023715780834,
+      "best_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/search/de_0047/case"
+    }
+  },
+  "controller_states": [
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/primary/smoke",
+      "weighting": "primary",
+      "status": "exact_loop_smoke_passed",
+      "error": null,
+      "records": 2,
+      "heartbeat": {
+        "best_loss": 592.8153847254691,
+        "completed": 2,
+        "epoch": 1790485158.091991,
+        "force": true,
+        "stage": "smoke"
+      },
+      "heartbeat_age_seconds": 18986.36894416809,
+      "stale_30_minutes": false
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/identity/smoke",
+      "weighting": "identity",
+      "status": "exact_loop_smoke_passed",
+      "error": null,
+      "records": 2,
+      "heartbeat": {
+        "best_loss": 2.806905306938252,
+        "completed": 2,
+        "epoch": 1790485277.994774,
+        "force": true,
+        "stage": "smoke"
+      },
+      "heartbeat_age_seconds": 18866.46693086624,
+      "stale_30_minutes": false
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/primary/search",
+      "weighting": "primary",
+      "status": "bounded_search_complete",
+      "error": null,
+      "records": 242,
+      "heartbeat": {
+        "best_loss": 52.8501543411892,
+        "completed": 242,
+        "epoch": 1790499487.038336,
+        "force": true,
+        "stage": "search"
+      },
+      "heartbeat_age_seconds": 4657.4244730472565,
+      "stale_30_minutes": false
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/identity/search",
+      "weighting": "identity",
+      "status": "bounded_search_complete",
+      "error": null,
+      "records": 62,
+      "heartbeat": {
+        "best_loss": 1.2099520306948721,
+        "completed": 62,
+        "epoch": 1790495964.202657,
+        "force": true,
+        "stage": "search"
+      },
+      "heartbeat_age_seconds": 8180.261250972748,
+      "stale_30_minutes": false
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v3/early_fertility_3000/smoke",
+      "weighting": "early_fertility_3000",
+      "status": "exact_loop_smoke_passed",
+      "error": null,
+      "records": 2,
+      "heartbeat": {
+        "best_loss": 333.323138988988,
+        "completed": 2,
+        "epoch": 1790497387.023347,
+        "force": true,
+        "stage": "smoke"
+      },
+      "heartbeat_age_seconds": 6757.440887212753,
+      "stale_30_minutes": false
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v3/early_fertility_3000/search",
+      "weighting": "early_fertility_3000",
+      "status": "running_or_pending",
+      "error": null,
+      "records": 30,
+      "heartbeat": {
+        "active": 2,
+        "best_loss": 282.7695793083315,
+        "completed": 30,
+        "epoch": 1790504127.793362,
+        "pending": 0,
+        "stage": "search",
+        "stop_reason": null
+      },
+      "heartbeat_age_seconds": 16.671131134033203,
+      "stale_30_minutes": false
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/smoke",
+      "weighting": "primary",
+      "status": "exact_loop_smoke_passed",
+      "error": null,
+      "records": 2,
+      "heartbeat": {
+        "best_loss": 52.8501543411892,
+        "completed": 2,
+        "epoch": 1790500992.25333,
+        "force": true,
+        "stage": "smoke"
+      },
+      "heartbeat_age_seconds": 3152.2113740444183,
+      "stale_30_minutes": false
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/search",
+      "weighting": "primary",
+      "status": "running_or_pending",
+      "error": null,
+      "records": 48,
+      "heartbeat": {
+        "active": 8,
+        "best_loss": 45.74023715780834,
+        "completed": 48,
+        "epoch": 1790504139.01344,
+        "pending": 0,
+        "stage": "search",
+        "stop_reason": null
+      },
+      "heartbeat_age_seconds": 5.451578140258789,
+      "stale_30_minutes": false
+    }
+  ],
+  "errors": [],
+  "median_stationary_solve_seconds": 399.39870208351203,
+  "selected_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/search/de_0047/case",
+  "largest_weighted_misses": [
+    {
+      "moment": "ownership_30_55",
+      "label": "Ownership, ages 30-55",
+      "target": 0.6762604168538028,
+      "model": 0.6024925468977035,
+      "gap": -0.0737678699560993,
+      "weight": 2339.3623724673616,
+      "loss_contribution": 12.730105035716527
+    },
+    {
+      "moment": "early_fertility",
+      "label": "Children ever born at 25, capped at 3",
+      "target": 0.8095276384290021,
+      "model": 0.5254347918644051,
+      "gap": -0.284092846564597,
+      "weight": 100.0,
+      "loss_contribution": 8.070874546917565
+    },
+    {
+      "moment": "wealth_earnings",
+      "label": "Aggregate wealth / annual earnings",
+      "target": 6.92658379107299,
+      "model": 5.9947322219639405,
+      "gap": -0.9318515691090496,
+      "weight": 7.595098472533724,
+      "loss_contribution": 6.595183607696727
+    }
+  ]
+}

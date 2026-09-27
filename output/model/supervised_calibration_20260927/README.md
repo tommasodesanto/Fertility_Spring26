@@ -1,5 +1,33 @@
 # Supervised overnight calibration — September 27
 
+## September 27, 06:17 EDT — continuation halfway through its case budget
+
+The 06:15 snapshot records 48/96 main-continuation and 30/40 early-weight search
+cases, plus the completed 240 original main and 60 identity search cases. All
+verification cases are separate. Ten evaluators remain active, RSS 21.81 GiB,
+zero swap and 194 GiB free disk. Controller heartbeats, active solve ledgers and
+memory guard are fresh. No numerical failure, inadmissible case, timeout or
+resource intervention. Torch login still fails, with no cluster search launched.
+
+The latest main point is continuation de_0047, provisional loss 45.740. Every
+target, gap, weight, contribution, fitted estimate and bound is in `checks/0615/`.
+The first-birth mean age and average rooms improve, but ownership (0.602 versus
+0.676), wealth/earnings (5.995 versus 6.927), and early fertility (0.525 versus
+0.810) remain low. All fitted coordinates are inside their bounds and funding
+passes. The early-weight objective's current winner de_0029 has early fertility
+0.533 and common-primary loss 61.803; its earlier de_0021 still has the best
+common-primary score within that experiment (61.006). Distinguish the objective's
+own winner from re-ranking its saved cases under primary weights. Full comparisons
+and all parameters for each own winner are saved beside the main table.
+
+No intervention or new experiment. Both searches retain their remaining round
+budgets and the 07:13 search / 08:43 numerical cutoff. Final independent repeats
+remain pending for both active searches; completed original-main and identity
+repeats stay available. All seventeen plots for each active experiment's then-best
+point were last inspected at 05:45; next complete review is due by 06:45. Continue
+report preparation from these authenticated outputs, with no optimum or target
+unreachability claim.
+
 ## September 27, 05:48 EDT — both active searches healthy; both plot packets inspected
 
 The 05:45 snapshot has sixteen main-continuation and 22 early-weight search
