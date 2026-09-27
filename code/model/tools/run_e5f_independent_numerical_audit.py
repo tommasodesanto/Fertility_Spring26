@@ -104,9 +104,18 @@ def reconstruct(production_root, out):
     return packet
 
 
-def standard_diagnostics(packet, out, *, validate_production_young=True):
+def standard_diagnostics(packet, out, *, validate_production_young=True, dated_rent=None):
     P, bg, e = packet["parameters"], packet["b_grid"], packet["evaluation"]
     p, g = e.policy, e.g_current
+    # Stationary defaults stay exact; a dated PF price path implies a distinct rent.
+    actual_rent = None
+    if dated_rent is not None:
+        actual_rent = np.asarray(dated_rent, dtype=float)
+        if actual_rent.ndim == 0:
+            actual_rent = actual_rent.reshape(1)
+        if (actual_rent.shape != np.asarray(p.price).shape
+                or not np.isfinite(actual_rent).all() or np.any(actual_rent <= 0)):
+            raise ValueError("Dated diagnostic rent must be positive, finite and match market prices")
     stats = model.compute_markov_statistics(
         g, p.fert_probs, p.loc_probs, P, bg, p.price, p.hR_pol,
         asset_g=e.g_post_fertility, bequest_g=g, bp_pol=p.bp_pol,
@@ -119,7 +128,7 @@ def standard_diagnostics(packet, out, *, validate_production_young=True):
     stats.g, stats.b_grid = g, bg
     stats.type_values,stats.type_weights,_=model.income_transition_values(P)
     stats.owner_asset_price = p.price
-    stats.owner_user_cost = P.user_cost_rate * p.price
+    stats.owner_user_cost = (P.user_cost_rate * p.price if actual_rent is None else actual_rent.copy())
     stats.housing_demand, stats.housing_supply = e.demand_by_loc, e.supply_by_loc
     stats.aggregate_housing_demand = float(e.demand_by_loc.sum())
     stats.aggregate_housing_supply = float(e.supply_by_loc.sum())

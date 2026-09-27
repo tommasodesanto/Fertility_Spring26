@@ -1,5 +1,86 @@
 # Calibration Status
 
+## September 27, 12:02 EDT — native production replays and dated smoke pass exactly
+
+Current-source native household accounting, credit option, PF split-entry queue
+and dated estate audit are implemented. At the original saved price, the native
+baseline reproduces ALL107 saved numeric arrays exactly, all14 target rows and
+all31 parameters. Evidence: `credit_transition/native_baseline_fixed_price_v1/`;
+solve20.647s, standard17plots inspected. The prior free-price replay also passed
+all targets (largest gap2.331e-6) but selected price4.336e-7 lower; fixed-price
+replay demonstrates this was price-solver tolerance, not a household-code change.
+Retain both records. Baseline score42.281937042646 unchanged.
+
+Native natural-credit endpoint also reproduces ALL107 arrays exactly and all
+14/31 rows: `credit_transition/native_endpoint_v1/`, solve22.392s, score57.192915453364.
+This uses explicit native optional credit, no generated household source patches,
+no preference renormalization. All source snapshots and comparisons are saved.
+The current reporter has an explicit positive population-scale argument for
+unit-household versus absolute-supply accounting; default reporting is unchanged.
+
+Final-source v2 baseline/endpoint replays also reproduce all107 arrays and all
+14/31 rows exactly. All17 PNGs are byte-identical to the inspected v1 packets.
+Native changing-price smoke COMPLETE: native_smoke_v1. Both arms pass dated
+budget, actual-next-entry estate, population and exact cache tests. Reference
+market residual7.445e-7, fiscal7.512e-13. Experimental prescribed-price residual
+0.030187 is NOT equilibrium: prices still need solving. Cacheoff/on experimental
+51.828s/27.749s,2actualBellman calls and2hits, alloutputs bitwiseequal; reference
+50.321s/16.256s. No negative estates, funding shortfall or budget violations.
+
+Production root driver is implemented but NOT YET numerically exercised. Dated plots/cache wiring is complete with focused tests; no full
+transition has launched. A bounded joint-root loop test, long-horizon/extension
+checks and cluster dependency packaging remain outstanding before certification.
+The author requests discussion of unresolved specification pieces after these
+checks. Do not mistake implementation/replay success for economic calibration
+quality or an approved production counterfactual result.
+
+## September 27 — closed credit endpoint and production transition integration
+
+Author explicitly requests a closed demographic credit endpoint, transition from
+current calibrated steady state, speed tests, and ALL accepted recent changes
+integrated into production transition code. Pre-September14 decisions must be
+respected; see docs/model/transition_terminal_method_review.md. Retain timing,
+unchanged initial distribution, actual-population fiscal budgets, genuine
+terminal endpoint and horizon checks. Later adopted split16/20 queue, current
+utility/earnings/cost/entry inputs and fixed-tax PAYGO override old numerical
+settings. No historical age reweighting, immigration, population reset, forced
+fertility renormalization or default/insurance is authorized.
+
+Closed credit endpoint COMPLETE: credit_closed_endpoint/run_v1. Twelve
+fixed-price solves including control and exact repeat. All31 parameter estimates
+unchanged;14target repeat exact,17plots inspected. Fixed psi=0.14416490417555738;
+price0.852356569754 versus0.826460157708 (+3.133%); population1.035235125 versus1
+(+3.524%); births/entry2.0999996198, renewalresidual−1.81048e-7. Absolute supply
+unchanged; report-level per-household supply is Habs/N, independent absolute
+housing audit passes. No negative estates/funding shortfall. Common score57.193
+versus42.282. This is a stationary endpoint, not a verified transition.
+
+Transition operator/cache smoke: credit_transition/smoke_v3. Originalsmoke_v1
+failed pre-solve because evaluation.g_pre includes tiny native frontierprojection
+(1.286e-14) versus declared stationary_g_pre; initialization now preserves exact
+original snapshot. smoke_v2 failed no-shock fiscalgate because actualbirth/2.1
+prehistory differs from actualstationaryentry by3.081e-6. Historical-consistent
+adjustedqueue now initializes halfactualentryE in3+4slots, rawbirthqueue unchanged;
+actual newbirths are appended thereafter. Zero-Bellman diagnosis in preparation/.
+No gates relaxed. Baselinecacheon/off allarrays/rows equal;51.831s->16.232s.
+Naturalcacheon/off also passes exactequality;53.509s->15.531s. Constanttwo-date
+paths have extra identical calls: do not extrapolate3.4xspeedup to changingpaths.
+Smokeusesstationaryestateledger only; production must use newly implemented
+next_entrant_cohort datedledger and full price/PAYGO root. No fulltransition launched.
+
+Production matrix: credit_transition/preparation/PRODUCTION_INTEGRATION.md.
+Native accepted entry/purchase/exactallocation options and native PF splitqueue
+are being integrated in separate owned files; require fullnative de_0093 replay
+before adoption. Nativecode does NOT overwrite the frozen calibration release.
+Optional datedestateledger implemented,6new+4oldfixturespass; defaultstationary
+output byte-identical. Fullproduction certification remains OUTSTANDING.
+
+Jacobian COMPLETE18/18, all252target/558parameter rows verified. Lowerfirstbirth
+cost2% improvesloss42.282->41.993 (unrepeated). Rank9 in declared scaledcoordinates,
+condition262.387; weakcurvature/fixedcost direction. Beta/H0/chi finite-step
+nonlinearity means no unguarded Newton step. Fulltables/diagnostics in jacobian/.
+Cluster18645479 remainsqueued; originalsearch/enddeadlines unchanged.
+
 ## September 27, 10:25 EDT - daytime search and local diagnostics authorized
 
 The author now requests continued cluster search, local policy/distribution,

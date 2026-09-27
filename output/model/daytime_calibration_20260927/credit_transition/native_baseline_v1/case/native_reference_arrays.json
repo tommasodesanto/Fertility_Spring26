@@ -1,0 +1,1317 @@
+{
+  "array_count": 107,
+  "arrays": {
+    "b_grid": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        160
+      ],
+      "status": "compared"
+    },
+    "evaluation.births_by_loc": {
+      "exact": false,
+      "finite": true,
+      "l1": 3.0823581922967414e-08,
+      "max_abs": 3.0823581922967414e-08,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "evaluation.demand_by_loc": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.3306217800111995e-06,
+      "max_abs": 2.3306217800111995e-06,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "evaluation.g_current": {
+      "exact": false,
+      "finite": true,
+      "l1": 3.4180633889242986e-06,
+      "mass_weighted_abs": 1.4094995673864924e-10,
+      "max_abs": 1.4524594028620915e-08,
+      "occupied_max_abs": 1.4524594028620915e-08,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "evaluation.g_post_fertility": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.878836892359205e-06,
+      "mass_weighted_abs": 9.843087966867037e-11,
+      "max_abs": 2.1524414477072217e-09,
+      "occupied_max_abs": 2.1524414477072217e-09,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "evaluation.g_pre": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.9283345025966034e-06,
+      "mass_weighted_abs": 8.153680691177616e-11,
+      "max_abs": 3.683990376280211e-09,
+      "occupied_max_abs": 3.683990376280211e-09,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "evaluation.policy.V": {
+      "exact": false,
+      "finite": true,
+      "l1": 792592290.1746757,
+      "mass_weighted_abs": 2.870822654087498e-07,
+      "max_abs": 292110.15719509125,
+      "occupied_max_abs": 0.0013163601979613304,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "evaluation.policy.bp_pol": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.511262622420791,
+      "mass_weighted_abs": 4.3015285473878044e-07,
+      "max_abs": 5.455016821542813e-05,
+      "occupied_max_abs": 1.984476858574169e-05,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "evaluation.policy.c_pol": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.2141744809879427,
+      "mass_weighted_abs": 3.461086475066327e-07,
+      "max_abs": 5.412589052866679e-05,
+      "occupied_max_abs": 1.942049093628384e-05,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "evaluation.policy.fert2_probs": {
+      "exact": false,
+      "finite": true,
+      "l1": 0.012647893979451864,
+      "max_abs": 4.516679049770822e-06,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        2,
+        2,
+        4
+      ],
+      "status": "compared"
+    },
+    "evaluation.policy.fert_probs": {
+      "exact": false,
+      "finite": true,
+      "l1": 0.005918153817841879,
+      "max_abs": 1.8710014746403658e-06,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4
+      ],
+      "status": "compared"
+    },
+    "evaluation.policy.fert_value": {
+      "exact": false,
+      "finite": true,
+      "l1": 6791221.876224592,
+      "max_abs": 264193.5974855423,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15
+      ],
+      "status": "compared"
+    },
+    "evaluation.policy.hR_pol": {
+      "exact": false,
+      "finite": true,
+      "l1": 0.25683519882939554,
+      "mass_weighted_abs": 5.000488062412293e-07,
+      "max_abs": 6.401589884852399e-06,
+      "occupied_max_abs": 5.487628736311478e-06,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "evaluation.policy.loc_probs": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        160,
+        6,
+        1,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "evaluation.policy.maps.lmm_idx": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        1,
+        6,
+        160
+      ],
+      "status": "compared"
+    },
+    "evaluation.policy.maps.lmm_wt": {
+      "exact": false,
+      "finite": true,
+      "l1": 0.00581896148623134,
+      "max_abs": 3.505321892127711e-05,
+      "shape": [
+        1,
+        6,
+        160
+      ],
+      "status": "compared"
+    },
+    "evaluation.policy.maps.tmx_idx": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        1,
+        6,
+        6,
+        4,
+        4,
+        160
+      ],
+      "status": "compared"
+    },
+    "evaluation.policy.maps.tmx_wt": {
+      "exact": false,
+      "finite": true,
+      "l1": 0.47480213429478346,
+      "max_abs": 3.505321892127711e-05,
+      "shape": [
+        1,
+        6,
+        6,
+        4,
+        4,
+        160
+      ],
+      "status": "compared"
+    },
+    "evaluation.policy.price": {
+      "exact": false,
+      "finite": true,
+      "l1": 4.3361230728233835e-07,
+      "max_abs": 4.3361230728233835e-07,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "evaluation.policy.tenure_choice": {
+      "exact": false,
+      "finite": true,
+      "l1": 3.0,
+      "mass_weighted_abs": 2.3535431384949143e-09,
+      "max_abs": 3.0,
+      "occupied_max_abs": 3.0,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "evaluation.policy.tenure_probs": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.6028459021207544,
+      "max_abs": 8.434057235717773e-05,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4,
+        6
+      ],
+      "status": "compared"
+    },
+    "evaluation.supply_by_loc": {
+      "exact": false,
+      "finite": true,
+      "l1": 1.96139842767451e-06,
+      "max_abs": 1.96139842767451e-06,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "shared.alpha_flat": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        1,
+        16
+      ],
+      "status": "compared"
+    },
+    "shared.b": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        160,
+        1
+      ],
+      "status": "compared"
+    },
+    "shared.birth_dp": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        4,
+        4,
+        6,
+        6
+      ],
+      "status": "compared"
+    },
+    "shared.birth_entry_grant": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        1,
+        6,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "shared.bp": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        1,
+        160
+      ],
+      "status": "compared"
+    },
+    "shared.c_bar": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "shared.cb_flat": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        1,
+        16
+      ],
+      "status": "compared"
+    },
+    "shared.escale_flat": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        1,
+        16
+      ],
+      "status": "compared"
+    },
+    "shared.g_bar": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "shared.gb_flat": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        1,
+        16
+      ],
+      "status": "compared"
+    },
+    "shared.h_bar": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "shared.hb_flat": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        1,
+        16
+      ],
+      "status": "compared"
+    },
+    "shared.phi_choice": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        1,
+        6,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "shared.phi_state": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "shared.psi_flat": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        1,
+        16
+      ],
+      "status": "compared"
+    },
+    "shared.psi_v": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "shared.type_cb": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        4
+      ],
+      "status": "compared"
+    },
+    "shared.type_hb": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        4
+      ],
+      "status": "compared"
+    },
+    "shared.type_map": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        16
+      ],
+      "status": "compared"
+    },
+    "shared.type_psi": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        4
+      ],
+      "status": "compared"
+    },
+    "solution.V": {
+      "exact": false,
+      "finite": true,
+      "l1": 792592290.1746757,
+      "mass_weighted_abs": 2.870822654087498e-07,
+      "max_abs": 292110.15719509125,
+      "occupied_max_abs": 0.0013163601979613304,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "solution.adult_entry_potential_by_loc": {
+      "exact": false,
+      "finite": true,
+      "l1": 1.720283009792878e-08,
+      "max_abs": 1.720283009792878e-08,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.aggregate_annual_gross_labor_earnings_by_age": {
+      "exact": false,
+      "finite": true,
+      "l1": 1.734723475976807e-16,
+      "max_abs": 2.7755575615628914e-17,
+      "shape": [
+        17
+      ],
+      "status": "compared"
+    },
+    "solution.aggregate_wealth_by_age": {
+      "exact": false,
+      "finite": true,
+      "l1": 1.618224335035029e-07,
+      "max_abs": 1.5557885590933296e-08,
+      "shape": [
+        17
+      ],
+      "status": "compared"
+    },
+    "solution.attempt_hazard_by_age": {
+      "exact": false,
+      "finite": true,
+      "l1": 7.394966585472229e-07,
+      "max_abs": 1.3660213155075596e-07,
+      "shape": [
+        17
+      ],
+      "status": "compared"
+    },
+    "solution.b_grid": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        160
+      ],
+      "status": "compared"
+    },
+    "solution.births_by_loc": {
+      "exact": false,
+      "finite": true,
+      "l1": 3.082358218664538e-08,
+      "max_abs": 3.082358218664538e-08,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.bp_pol": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.511262622420791,
+      "mass_weighted_abs": 4.3015285473878044e-07,
+      "max_abs": 5.455016821542813e-05,
+      "occupied_max_abs": 1.984476858574169e-05,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "solution.c_pol": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.2141744809879427,
+      "mass_weighted_abs": 3.461086475066327e-07,
+      "max_abs": 5.412589052866679e-05,
+      "occupied_max_abs": 1.942049093628384e-05,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "solution.child_state_dist": {
+      "exact": false,
+      "finite": true,
+      "l1": 3.218996552356375e-06,
+      "max_abs": 1.7628636850286483e-07,
+      "shape": [
+        17,
+        4
+      ],
+      "status": "compared"
+    },
+    "solution.entrants_mature_by_loc": {
+      "exact": false,
+      "finite": true,
+      "l1": 1.476517324378035e-08,
+      "max_abs": 1.476517324378035e-08,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.entry_by_loc": {
+      "exact": false,
+      "finite": true,
+      "l1": 1.3877787807814457e-17,
+      "max_abs": 1.3877787807814457e-17,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.entry_mass_by_loc": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.7755575615628914e-17,
+      "max_abs": 2.7755575615628914e-17,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.entry_wealth_grid_indices": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        50
+      ],
+      "status": "compared"
+    },
+    "solution.entry_wealth_grid_values": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        50
+      ],
+      "status": "compared"
+    },
+    "solution.entry_wealth_grid_weights": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        50
+      ],
+      "status": "compared"
+    },
+    "solution.entry_wealth_ratio_nodes": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        5
+      ],
+      "status": "compared"
+    },
+    "solution.entry_wealth_ratio_weights": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        5
+      ],
+      "status": "compared"
+    },
+    "solution.fert2_probs": {
+      "exact": false,
+      "finite": true,
+      "l1": 0.012647893979451864,
+      "max_abs": 4.516679049770822e-06,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        2,
+        2,
+        4
+      ],
+      "status": "compared"
+    },
+    "solution.fert_by_age": {
+      "exact": false,
+      "finite": true,
+      "l1": 6.497767259250331e-07,
+      "max_abs": 1.2862124454393609e-07,
+      "shape": [
+        17
+      ],
+      "status": "compared"
+    },
+    "solution.fert_probs": {
+      "exact": false,
+      "finite": true,
+      "l1": 0.005918153817841879,
+      "max_abs": 1.8710014746403658e-06,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4
+      ],
+      "status": "compared"
+    },
+    "solution.fert_value": {
+      "exact": false,
+      "finite": true,
+      "l1": 6791221.876224592,
+      "max_abs": 264193.5974855423,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15
+      ],
+      "status": "compared"
+    },
+    "solution.first_birth_age_distribution": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.209235963855638e-07,
+      "max_abs": 9.012010837583517e-08,
+      "shape": [
+        17
+      ],
+      "status": "compared"
+    },
+    "solution.first_birth_hazard_by_age": {
+      "exact": false,
+      "finite": true,
+      "l1": 6.497767258972775e-07,
+      "max_abs": 1.2862124459944724e-07,
+      "shape": [
+        17
+      ],
+      "status": "compared"
+    },
+    "solution.frac_childless_by_loc": {
+      "exact": false,
+      "finite": true,
+      "l1": 1.669719829344718e-07,
+      "max_abs": 1.669719829344718e-07,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.g": {
+      "exact": false,
+      "finite": true,
+      "l1": 3.4180633889179107e-06,
+      "mass_weighted_abs": 1.409499567305724e-10,
+      "max_abs": 1.4524594028620915e-08,
+      "occupied_max_abs": 1.4524594028620915e-08,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "solution.g_beginning_distribution": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.8788368923543125e-06,
+      "mass_weighted_abs": 9.843087966039333e-11,
+      "max_abs": 2.1524414477072217e-09,
+      "occupied_max_abs": 2.1524414477072217e-09,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "solution.g_collapsed": {
+      "exact": false,
+      "finite": true,
+      "l1": 3.185854342772189e-06,
+      "max_abs": 1.5163322166709655e-08,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "solution.g_cross_sectional_wealth_distribution": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.8788368923543125e-06,
+      "mass_weighted_abs": 9.843087966039333e-11,
+      "max_abs": 2.1524414477072217e-09,
+      "occupied_max_abs": 2.1524414477072217e-09,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "solution.hR_pol": {
+      "exact": false,
+      "finite": true,
+      "l1": 0.25683519882939554,
+      "mass_weighted_abs": 5.000488062412293e-07,
+      "max_abs": 6.401589884852399e-06,
+      "occupied_max_abs": 5.487628736311478e-06,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "solution.housing_demand": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.3306217720175937e-06,
+      "max_abs": 2.3306217720175937e-06,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.housing_demand_by_income_type": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.3306217848408187e-06,
+      "max_abs": 5.165604877177543e-07,
+      "shape": [
+        15,
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.housing_supply": {
+      "exact": false,
+      "finite": true,
+      "l1": 1.96139842767451e-06,
+      "max_abs": 1.96139842767451e-06,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.income_state_mass": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.05042959607743e-16,
+      "max_abs": 8.326672684688674e-17,
+      "shape": [
+        15
+      ],
+      "status": "compared"
+    },
+    "solution.income_transition": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        15,
+        15
+      ],
+      "status": "compared"
+    },
+    "solution.loc_probs": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        160,
+        6,
+        1,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "solution.mature_entry_shares": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.mean_fertility_by_income_type": {
+      "exact": false,
+      "finite": true,
+      "l1": 7.4341902465135945e-06,
+      "max_abs": 5.757345173940109e-07,
+      "shape": [
+        15
+      ],
+      "status": "compared"
+    },
+    "solution.mean_housing_by_parity": {
+      "exact": false,
+      "finite": true,
+      "l1": 7.404106340924699e-06,
+      "max_abs": 1.937141626662253e-06,
+      "shape": [
+        4
+      ],
+      "status": "compared"
+    },
+    "solution.mean_parity_by_loc": {
+      "exact": false,
+      "finite": true,
+      "l1": 4.993010918052931e-07,
+      "max_abs": 4.993010918052931e-07,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.own_by_age": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.609521549706839e-06,
+      "max_abs": 2.263220038045688e-07,
+      "shape": [
+        17
+      ],
+      "status": "compared"
+    },
+    "solution.own_by_loc": {
+      "exact": false,
+      "finite": true,
+      "l1": 1.393211164213426e-07,
+      "max_abs": 1.393211164213426e-07,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.own_by_parity": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.934994262626667e-07,
+      "max_abs": 1.011192276578754e-07,
+      "shape": [
+        4
+      ],
+      "status": "compared"
+    },
+    "solution.own_rate_by_income_type": {
+      "exact": false,
+      "finite": true,
+      "l1": 1.0600937409843691e-06,
+      "max_abs": 2.081636141237908e-07,
+      "shape": [
+        15
+      ],
+      "status": "compared"
+    },
+    "solution.owner_asset_price": {
+      "exact": false,
+      "finite": true,
+      "l1": 4.3361230728233835e-07,
+      "max_abs": 4.3361230728233835e-07,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.owner_demand_by_market": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.5614108487559406e-06,
+      "max_abs": 2.5614108487559406e-06,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.owner_demand_by_size": {
+      "exact": false,
+      "finite": true,
+      "l1": 3.9024888107280775e-06,
+      "max_abs": 2.582206325651981e-06,
+      "shape": [
+        5
+      ],
+      "status": "compared"
+    },
+    "solution.owner_user_cost": {
+      "exact": false,
+      "finite": true,
+      "l1": 7.817136393750701e-08,
+      "max_abs": 7.817136393750701e-08,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.p_eq": {
+      "exact": false,
+      "finite": true,
+      "l1": 4.3361230728233835e-07,
+      "max_abs": 4.3361230728233835e-07,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.parity_dist": {
+      "exact": false,
+      "finite": true,
+      "l1": 3.794756409103428e-07,
+      "max_abs": 1.669719829344718e-07,
+      "shape": [
+        4
+      ],
+      "status": "compared"
+    },
+    "solution.pop_share": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.rental_demand_by_market": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.307890711872318e-07,
+      "max_abs": 2.307890711872318e-07,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.rental_demand_by_size": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.307890711872318e-07,
+      "max_abs": 2.307890711872318e-07,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.retiree_mass_by_loc": {
+      "exact": false,
+      "finite": true,
+      "l1": 1.1102230246251565e-16,
+      "max_abs": 1.1102230246251565e-16,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.second_attempt_hazard_by_age": {
+      "exact": false,
+      "finite": true,
+      "l1": 1.6863220603235973e-07,
+      "max_abs": 4.015184107419856e-08,
+      "shape": [
+        17
+      ],
+      "status": "compared"
+    },
+    "solution.second_birth_hazard_by_age": {
+      "exact": false,
+      "finite": true,
+      "l1": 1.2933058274322562e-07,
+      "max_abs": 2.954539501942577e-08,
+      "shape": [
+        17
+      ],
+      "status": "compared"
+    },
+    "solution.tenure_choice": {
+      "exact": false,
+      "finite": true,
+      "l1": 3.0,
+      "mass_weighted_abs": 2.3535431384949143e-09,
+      "max_abs": 3.0,
+      "occupied_max_abs": 3.0,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "status": "compared"
+    },
+    "solution.tenure_probs": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.6028459021207544,
+      "max_abs": 8.434057235717773e-05,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4,
+        6
+      ],
+      "status": "compared"
+    },
+    "solution.third_attempt_hazard_by_age": {
+      "exact": false,
+      "finite": true,
+      "l1": 8.047100691355169e-08,
+      "max_abs": 2.6291361088226495e-08,
+      "shape": [
+        17
+      ],
+      "status": "compared"
+    },
+    "solution.third_birth_hazard_by_age": {
+      "exact": false,
+      "finite": true,
+      "l1": 5.650359347075806e-08,
+      "max_abs": 1.666021226531811e-08,
+      "shape": [
+        17
+      ],
+      "status": "compared"
+    },
+    "solution.type_values": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        15
+      ],
+      "status": "compared"
+    },
+    "solution.type_weights": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        15
+      ],
+      "status": "compared"
+    },
+    "solution.w_hat": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "solution.worker_mass_by_loc": {
+      "exact": true,
+      "finite": true,
+      "l1": 0.0,
+      "max_abs": 0.0,
+      "shape": [
+        1
+      ],
+      "status": "compared"
+    },
+    "stationary_g_pre": {
+      "exact": false,
+      "finite": true,
+      "l1": 2.9283345025966034e-06,
+      "mass_weighted_abs": 8.153680691177616e-11,
+      "max_abs": 3.683990376280211e-09,
+      "occupied_max_abs": 3.683990376280211e-09,
+      "shape": [
+        160,
+        6,
+        1,
+        17,
+        15,
+        4,
+        4
+      ],
+      "status": "compared"
+    }
+  },
+  "scope": "full saved numeric shared, solution, evaluation, grid and distribution arrays; no silent inactive-frontier exclusion",
+  "status": "review_required"
+}

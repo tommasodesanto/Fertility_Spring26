@@ -51,3 +51,14 @@ The estate audit explicitly leaves negative-estate creditor treatment unresolved
 A sure-repayment benchmark must respect liquidation solvency at possible death
 dates; it cannot simply borrow to the numerical grid minimum. Full review was
 read-only and did not change any economic mechanism.
+
+## Production transition work authorized subsequently
+
+The author subsequently requested a closed demographic endpoint, a transition initialized at the exact current calibrated steady state, speed testing and integration of ALL accepted recent changes into production code. The September 14 reference remains immutable; its timing/closure discipline is retained while later accepted primitives replace its old numbers.
+
+- `credit_closed_endpoint/README.md`: closed same-parameter endpoint complete and repeated; complete fit/parameter tables and 17 plots retained.
+- `credit_transition/preparation/PRODUCTION_INTEGRATION.md`: full object-by-object integration and historical reconciliation. Native entry/purchase/allocation, split entry queue and dated estate ledger implemented; native numerical replay pending before adoption.
+- `credit_transition/smoke_v3/`: completed two-date diagnostic operator/cache test using the frozen reference runtime. Both arms are exact cache on/off; constant-path speedups are not evidence of a solved transition or guaranteed changing-path speedups. Earlier failed smoke attempts remain preserved.
+- `jacobian/README.md`: completed 18/18 local sensitivity evaluations, with all targets and parameters and finite-step nonlinearity checks.
+
+Production integration is not yet certified. It must pass native reference reproduction, benchmark reproduction, dated population/fiscal/estate checks and an actual price/pension transition solve with terminal-distance diagnostics. No old deadline is extended automatically by this new work.

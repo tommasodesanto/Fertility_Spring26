@@ -1,0 +1,22 @@
+{
+  "runner": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_credit_closed_endpoint.py",
+  "runner_sha256": "925307db286eb5eda4dfb9640e17e01a80cd7c7d1955f726ee04f8cbcf770ce6",
+  "helper": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_solvency_credit_benchmark.py",
+  "helper_sha256": "63fc1e1af117095c0db6277fdd141e7e23a5611aedff83bea3b6e7f817b8bd7f",
+  "io_sha256": "0dd5385b58c1ce624249c969aa942506925fa3f9e35c5ba565135882235f66a3",
+  "contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/production_contract.json",
+  "contract_sha256": "3b770d8c8c22d2b0449b34a575d6353b063bc015d74ce11016dad7e22ed7ca5e",
+  "reference_case": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/search/de_0093/case",
+  "reference_receipt_sha256": "c15cdd5862106cf95c392d4e2d75adfc786625b5108f5cc3c660b4c3cc1d76de",
+  "deadline": 1790524176.037468,
+  "low_ratio": 0.35,
+  "high_ratio": 3.0,
+  "model_workers": 1,
+  "max_root_prices": 16,
+  "expected_seconds": "18 fixed-price solves about20s each plus audits/17plots;20minute hard cap",
+  "economic_changes": [
+    "Approved removal of artificial credit constraints with net-estate solvency, unchanged preferences",
+    "Inherited finite-level closed demographic endpoint: price satisfies birth renewal, population satisfies absolute housing market"
+  ],
+  "historical_contract": "September13 terminal methods, with September24 adopted split16/20 queue and latest reference primitive values"
+}

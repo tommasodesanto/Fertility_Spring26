@@ -1,0 +1,39 @@
+diff --git a/code/model/tools/e5f_calibration_runtime.py b/code/model/tools/e5f_calibration_runtime.py
+index 7702298f..d3435c85 100644
+--- a/code/model/tools/e5f_calibration_runtime.py
++++ b/code/model/tools/e5f_calibration_runtime.py
+@@ -249,7 +249,12 @@ class StationaryObjective:
+         renewal=require_closed_stationary_renewal(sol.entry_rate,sol.adult_entry_adjusted_birth_children,5e-4)
+         return result,fiscal_rule,renewal
+ 
+-    def evaluate_point(self,*,tax,objective,selected,runtime,point,output,deadline_epoch,graphs=False):
++    def evaluate_point(self,*,tax,objective,selected,runtime,point,output,deadline_epoch,graphs=False,
++                       report_population_scale=1.0):
++        # Stationary packets have unit household mass. For a closed endpoint,
++        # express unchanged absolute supply per household only in this reporter.
++        if not math.isfinite(float(report_population_scale)) or report_population_scale <= 0:
++            raise ValueError('Report population scale must be finite and positive')
+         output.mkdir(parents=True,exist_ok=False)
+         (sol,P,price,seconds,normalization),fiscal_rule,renewal=self.normalize(point,output,deadline_epoch)
+         rt=self.rt; primitive=rt['primitive']; model=rt['model']; grid=selected['b_grid']
+@@ -264,7 +269,7 @@ class StationaryObjective:
+         assert abs(operator['zero_entry_mass_accounting_residual'])<=2e-8
+         assert operator['stationary_feasibility_projection_mass']<=1e-6
+         supply=primitive.pf.calendar.HousingSupplyRule('static-elastic',float(price[0]),
+-            float(P.H0[0]*(P.user_cost_rate*price[0]/P.r_bar[0])**P.xi_supply[0]),float(P.xi_supply[0]))
++            float(P.H0[0]*(P.user_cost_rate*price[0]/P.r_bar[0])**P.xi_supply[0])/report_population_scale,float(P.xi_supply[0]))
+         evaluation=primitive.pf.calendar.evaluate_period(price,pre,P,grid,shared,
+             primitive.pf.calendar.SolveCounter(),supply_rule=supply,supplied_policy=policy)
+         assert evaluation.relative_market_residual<=2e-4
+@@ -331,6 +336,11 @@ class StationaryObjective:
+             model_observer_warnings=self.c['pending_observer_mismatches'],
+             economic_changes=self.c['economic_changes'],
+             retained_owner_grid=np.asarray(P.H_own).tolist(),retained_conception_schedule=np.asarray(model.get_fecundity_by_age(P)).tolist())
++        if report_population_scale != 1.0:
++            receipt['stationary_report_units'] = dict(
++                population_scale=float(report_population_scale),
++                supply='absolute supply divided by population; economic H0 unchanged',
++                distribution='unit household mass; multiply by population for terminal-distance checks')
+         receipt=tax.finite_json(primitive.pf.calendar.jsonable(receipt))
+         write(output/'receipt.json',receipt)
+         if graphs:

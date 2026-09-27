@@ -22,14 +22,16 @@ class EstateFundingShortfall(RuntimeError):
         )
 
 
-def audit(evaluation, P, b_grid):
+def audit(evaluation, P, b_grid, *, next_entrant_cohort=None):
     """Return a ledger, or raise EstateFundingShortfall with its rejected ledger.
 
     Arrays have axes wealth, tenure, location, age, income, children ever born,
     and children at home. Estates use g_current and post-saving b'; entrants
     use the age-zero renter mass in g_pre. Both flows remain in period units.
-    The stationary comparison pairs death funding with the next entry cohort;
-    it does not implement a dated transition ledger or intraperiod settlement.
+    Without next_entrant_cohort, retain the stationary comparison unchanged.
+    With it, date-t death estates fund the supplied actual date-t+1 entry cohort
+    (axes wealth, tenure, location, income, children ever born, children at home).
+    This ledger does not settle financial counterparties or physical housing.
     """
     import numpy as np
     from audit_e5f_estate_resource_account import signed_accounts
@@ -80,14 +82,19 @@ def audit(evaluation, P, b_grid):
         raise ValueError("Pre-fertility and current distributions must preserve positive age mass")
 
     estates = signed_accounts(g, bp, death, np.r_[0.0, prices[0] * houses], selling_cost)
-    entrant = pre[:, :, :, 0]
+    dated = next_entrant_cohort is not None
+    entrant = (np.asarray(next_entrant_cohort, dtype=float)
+               if dated else pre[:, :, :, 0])
+    if dated and (entrant.shape != pre[:, :, :, 0].shape
+                  or not np.isfinite(entrant).all() or np.any(entrant < 0)):
+        raise ValueError("Next entrant cohort must be aligned, finite and nonnegative")
     owner_entry_mass = float(entrant[:, 1:].sum())
     if owner_entry_mass > 1e-10 * mass_scale:
         raise ValueError("Inherited entrants must have renter tenure before transactions")
     # Do not offset positive entrant funding by negative entrant positions.
     entrant_by_asset = entrant.sum(axis=(1, 2, 3, 4, 5))
     entry_mass = float(entrant_by_asset.sum())
-    if entry_mass <= 0:
+    if not dated and entry_mass <= 0:
         raise ValueError("Positive entrant mass is required")
     positive = float(np.dot(entrant_by_asset, np.maximum(bg, 0.0)))
     negative = float(np.dot(entrant_by_asset, np.maximum(-bg, 0.0)))
@@ -101,7 +108,8 @@ def audit(evaluation, P, b_grid):
     tolerance = 1e-10 * max(1.0, totals["net_positive"], positive)
     funded = net_residual >= -tolerance
     ledger = dict(
-        audit_id="estate_funded_entry_provisional_net_v1",
+        audit_id=("estate_funded_dated_entry_provisional_net_v1" if dated
+                  else "estate_funded_entry_provisional_net_v1"),
         status="funded" if funded else "funding_shortfall",
         period_years=years, units="model financial units per model period",
         estate=estates, entry=entry,
@@ -117,7 +125,8 @@ def audit(evaluation, P, b_grid):
         annual_net_positive_estates=totals["net_positive"] / years,
         annual_positive_entrant_funding=positive / years,
         entrant_minus_death_mass=entry_mass - totals["death_mass"],
-        timing="stationary death flow finances the next entrant cohort; no transition implementation",
+        timing=("date-t death flow finances supplied actual date-t+1 entrant cohort" if dated
+                else "stationary death flow finances the next entrant cohort; no transition implementation"),
         policy_changes=False, adult_transfers=False, entry_distribution_changes=False,
         donor_bequest_valuation_changes=False,
         certifies_counterparty_or_physical_housing_settlement=False,

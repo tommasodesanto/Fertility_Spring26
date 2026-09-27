@@ -21,6 +21,12 @@ def make_grid(P: SimpleNamespace) -> np.ndarray:
     at 0 and at the legacy scalar b_entry_fixed; external entry distributions
     are scattered onto the grid by the solver rather than pinned here.
     """
+    if bool(getattr(P, "native_explicit_transaction_grid", False)):
+        grid = np.asarray(P.earnings_transaction_grid, dtype=float)
+        if (grid.ndim != 1 or len(grid) != int(P.Nb) or grid[-1] != P.b_max
+                or not np.isfinite(grid).all() or not np.all(np.diff(grid) > 0)):
+            raise ValueError("explicit transaction-grid metadata mismatch")
+        return grid.copy()
     Nb = int(P.Nb)
     core_lo = float(getattr(P, "b_core_lo", -5.0))
     core_hi = float(getattr(P, "b_core_hi", 7.0))

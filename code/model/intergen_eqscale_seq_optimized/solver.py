@@ -162,6 +162,10 @@ def owner_borrowing_floor(
 
     b_arr = np.asarray(b, dtype=float)
     bf_arr = effective_owner_collateral_floor(P, collateral_floor, j)
+    if bool(getattr(P, "native_purchase_income", False)):
+        if stay_on:
+            raise ValueError("native purchase-income floor does not combine stayer rules")
+        return np.broadcast_to(bf_arr, np.broadcast_shapes(b_arr.shape, bf_arr.shape)).copy()
     if not stay_on:
         current_unsecured = b_arr - bf_arr
         return bf_arr + debt_rule_at_age(P, current_unsecured, j)
@@ -464,6 +468,24 @@ def _scalar_entry_wealth_grid_weights(b_grid: np.ndarray, P: SimpleNamespace) ->
     return idx, wt
 
 
+def configure_current_household_contract(P: SimpleNamespace) -> SimpleNamespace:
+    """Enable the accepted September 27 entry and purchase accounting.
+
+    Caller supplies the authenticated conditional entry arrays and explicit
+    wealth grid. Preferences, income, population and fiscal objects are bound
+    separately; this helper never fills them from historical defaults.
+    """
+    for name in ("fixed_reference_entry_conditional", "fixed_reference_entry_grid",
+                 "earnings_transaction_grid"):
+        if not hasattr(P, name):
+            raise ValueError(f"current household contract missing {name}")
+    P.native_fixed_reference_entry = True
+    P.native_explicit_transaction_grid = True
+    P.native_purchase_income = True
+    P.native_exact_allocation_output = True
+    return P
+
+
 def entry_wealth_grid_weights(
     b_grid: np.ndarray,
     P: SimpleNamespace,
@@ -479,6 +501,21 @@ def entry_wealth_grid_weights(
     wealth/income ratios and those ratios are converted to model wealth using
     annual gross income at the entrant state.
     """
+    if bool(getattr(P, "native_fixed_reference_entry", False)):
+        if i != 0 or j != 0 or int(P.I) != 1:
+            raise ValueError("fixed entry mapping requires age-zero in one market")
+        np.testing.assert_array_equal(b_grid, P.fixed_reference_entry_grid)
+        zz = np.flatnonzero(np.asarray(P.z_grid) == z_value)
+        if len(zz) != 1:
+            raise ValueError("entry lookup requires a unique exact income node")
+        conditional = np.asarray(P.fixed_reference_entry_conditional, dtype=float)
+        if (conditional.shape != (len(b_grid), len(P.z_grid))
+                or not np.isfinite(conditional).all() or np.any(conditional < 0)
+                or not np.allclose(conditional.sum(axis=0), 1.0, rtol=0, atol=2e-12)):
+            raise ValueError("invalid fixed conditional entry distribution")
+        weights = conditional[:, int(zz[0])]
+        idx = np.flatnonzero(weights > 0)
+        return idx, weights[idx]
     if not uses_entry_wealth_income_ratio(P):
         return _scalar_entry_wealth_grid_weights(b_grid, P)
     ratios, weights = entry_wealth_ratio_distribution(P)
@@ -489,7 +526,7 @@ def entry_wealth_grid_weights(
 
 def aggregate_entry_wealth_grid_weights(b_grid: np.ndarray, P: SimpleNamespace) -> tuple[np.ndarray, np.ndarray]:
     """Unconditional entrant wealth distribution over grid nodes for reporting."""
-    if not uses_entry_wealth_income_ratio(P):
+    if not uses_entry_wealth_income_ratio(P) and not bool(getattr(P, "native_fixed_reference_entry", False)):
         return entry_wealth_grid_weights(b_grid, P)
     z_grid, z_weights, _ = income_transition_values(P)
     entry_by_loc = np.maximum(np.asarray(getattr(P, "entry_by_loc", np.ones(P.I)), dtype=float).reshape(-1), 0.0)
@@ -2721,6 +2758,7 @@ def _savings_stage(
     cash-out, plus amortization) instead of the origination collateral
     floor; renter cells match the standard solve bit for bit.
     """
+    natural_credit = bool(getattr(P, "native_solvency_credit", False))
     Nb = len(b_grid)
     I = P.I
     npar = P.n_parity
@@ -2778,6 +2816,8 @@ def _savings_stage(
         if ctx.use_full_kernel:
             bp_prev_r = np.zeros((Nb, nc))
             has_prev_r = 0
+            natural_floor, natural_dead = (native_solvency_support_floor(Vcr, b_grid)
+                if natural_credit else (None, None))
             Vo_nc, bp_nc, co_nc, ho_nc = full_renter_block_kernel(
                 Rv1d_full, Rvt1d_full, Vcr, bp_prev_r, has_prev_r, b_grid,
                 ctx.cb_v, ctx.hb_v, ctx.psi_v_flat, ctx.gb_v, ctx.alpha_v, ctx.esc_v,
@@ -2786,7 +2826,11 @@ def _savings_stage(
                 int(ctx.exhaustive_saving),
                 np.ascontiguousarray(yadj_v), pen_flag,
                 int(wedge_on), wedge_w0, wedge_w1, wedge_hk,
+                bool(getattr(P, "native_exact_allocation_output", False)),
+                natural_floor,
             )
+            if natural_credit:
+                Vo_nc[:, natural_dead] = -1e10
         else:
             Kr = (alpha**alpha * ((1 - alpha) / ri) ** (1 - alpha)) ** oms
             d_nc = SD.cb_flat + ri * SD.hb_flat
@@ -2870,17 +2914,25 @@ def _savings_stage(
                 bf_v = np.ascontiguousarray(
                     effective_owner_collateral_floor(P, bf_v_base, j)
                 )
+                if natural_credit:
+                    bf_v, natural_dead = native_solvency_support_floor(Vco, b_grid)
                 bp_prev_o = np.zeros((Nb, nc))
                 has_prev_o = 0
                 Vo_nc, bp_nc, co_nc = full_owner_block_kernel(
                     Rv1d_full, Rvt1d_full, Vco, bp_prev_o, has_prev_o, b_grid,
                     ctx.cb_v, ctx.hb_v, ctx.psi_v_flat, ctx.gb_v, ctx.alpha_v, ctx.esc_v, bf_v,
                     oc, hsv, ctx.owner_h_bar_scale, ctx.owner_service_premium, P.c_min,
-                    alpha, oms, beta, s_next, D_next, ctx.gs_alpha1, ctx.gs_alpha2, ctx.gs_tol,
+                    alpha, oms, beta,
+                    0.0 if getattr(P, "native_purchase_income", False) else s_next,
+                    0.0 if getattr(P, "native_purchase_income", False) else D_next,
+                    ctx.gs_alpha1, ctx.gs_alpha2, ctx.gs_tol,
                     ctx.strict_owner_hbar_feasibility, int(ctx.exhaustive_saving),
                     np.ascontiguousarray(yadj_v), pen_flag,
                     stay_flag, stay_orig_flag, amort_rate,
+                    bool(getattr(P, "native_exact_allocation_output", False)),
                 )
+                if natural_credit:
+                    Vo_nc[:, natural_dead] = -1e10
             else:
                 for c in range(nc):
                     Vbar = Vco[:, c]
@@ -2911,7 +2963,7 @@ def _savings_stage(
                     bp_nc[:, c] = bp
                     Vo_nc[:, c] = val
                 co_nc = SD.cb_flat + np.maximum(Rv_eff_nc - oc - SD.cb_flat - bp_nc, P.c_min)
-            if ctx.exhaustive_saving:
+            if ctx.exhaustive_saving and not bool(getattr(P, "native_exact_allocation_output", False)):
                 if pen_flag:
                     res_base = Rv + yadj_v.reshape(1, -1)
                     res_test = Rv_test + yadj_v.reshape(1, -1)
@@ -2935,6 +2987,7 @@ def _tenure_location_stage(
     ctx: SimpleNamespace,
     dp_choice: np.ndarray,
     Vd_stay: np.ndarray | None = None,
+    bmo_purchase: np.ndarray | None = None,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray | None, np.ndarray, np.ndarray]:
     """Tenure choice + location logit for savings values ``Vd``.
 
@@ -2949,6 +3002,8 @@ def _tenure_location_stage(
     npar = P.n_parity
     ncs = P.n_child_states
     nt = ctx.hcost.shape[1]
+    purchase_floor = ctx.bmo if bmo_purchase is None else bmo_purchase
+    transaction_support = bool(getattr(P, "native_purchase_income", False))
     birth_entry_grant = SD.birth_entry_grant
     tenure_choice_kappa = max(float(getattr(P, "tenure_choice_kappa", 0.0)), 0.0)
     use_tenure_logit = tenure_choice_kappa > 0.0
@@ -2957,12 +3012,12 @@ def _tenure_location_stage(
 
     if use_tenure_logit and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
         VH, tcj, prj = tenure_logit_kernel(
-            Vd, b_grid, ctx.heq, ctx.hcost, dp_choice, ctx.bmo, SD.birth_dp, birth_entry_grant, tenure_choice_kappa, Vd_stay
+            Vd, b_grid, ctx.heq, ctx.hcost, dp_choice, purchase_floor, SD.birth_dp, birth_entry_grant, tenure_choice_kappa, Vd_stay, transaction_support
         )
         prj_full: np.ndarray | None = prj
     elif (not use_tenure_logit) and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
         VH, tcj = tenure_choice_kernel(
-            Vd, b_grid, ctx.heq, ctx.hcost, dp_choice, ctx.bmo, SD.birth_dp, birth_entry_grant, Vd_stay
+            Vd, b_grid, ctx.heq, ctx.hcost, dp_choice, purchase_floor, SD.birth_dp, birth_entry_grant, Vd_stay, False, transaction_support
         )
         prj_full = None
     else:
@@ -3055,6 +3110,70 @@ def _tenure_location_stage(
     return VH, tcj, prj_full, VI, lpj
 
 
+def native_solvency_support_floor(values: np.ndarray, grid: np.ndarray):
+    """Conservative feasible-node boundary; native value cutoff is approximate.
+
+    This does not distinguish very negative finite utility from infeasibility.
+    Reject holes instead of interpolating across infeasible continuation nodes.
+    """
+    v = np.asarray(values)
+    bg = np.asarray(grid)
+    if (v.ndim != 2 or v.shape[0] != bg.size or bg.size < 2
+            or not np.isfinite(bg).all() or np.any(np.diff(bg) <= 0)
+            or not np.isfinite(v).all()):
+        raise ValueError("Invalid natural-credit continuation or grid")
+    feasible = v > DEAD_VALUE_CUTOFF
+    if np.any(feasible[:-1] & ~feasible[1:]):
+        raise ValueError("Natural-credit feasible support must be an upper interval")
+    dead = ~feasible.any(axis=0)
+    floor = bg[np.argmax(feasible, axis=0)].astype(float)
+    floor[dead] = bg[-1]
+    return np.ascontiguousarray(floor), dead
+
+
+def native_solvency_death_mask(grid, current_house_value, selling_cost):
+    """Post-saving estate at the current decision price, net of liquidation."""
+    return np.asarray(grid) + (1.0 - float(selling_cost)) * float(current_house_value) < 0.0
+
+
+def native_solvency_continuation(next_values, probabilities, death_values, survival):
+    """Expected continuation with infeasibility on every reachable branch.
+
+    next_values has income first; caller chooses stationary or dated values.
+    Death is valued at today's price, independently of next-date prices.
+    """
+    probabilities = np.asarray(probabilities)
+    if (not 0 <= survival <= 1 or len(next_values) != len(probabilities)
+            or not np.isfinite(probabilities).all() or np.any(probabilities < 0)
+            or not np.isclose(probabilities.sum(), 1.0)):
+        raise ValueError("Invalid natural-credit transition probabilities")
+    values = np.zeros_like(death_values)
+    bad = np.zeros_like(death_values, dtype=bool)
+    for weight, continuation in zip(probabilities, next_values):
+        if weight > 0.0:
+            values += weight * continuation
+            bad |= continuation <= DEAD_VALUE_CUTOFF
+    values = survival * values + (1.0 - survival) * death_values
+    bad = ((survival > 0.0) & bad) | ((survival < 1.0) & (death_values <= DEAD_VALUE_CUTOFF))
+    values[bad] = -1e10
+    return values
+
+
+def validate_native_solvency_mode(P):
+    """Default-off experimental mode, restricted to the reviewed household contract."""
+    enabled = bool(getattr(P, "native_solvency_credit", False))
+    if not enabled:
+        return False
+    required = ("native_purchase_income", "native_fixed_reference_entry",
+                "native_explicit_transaction_grid", "native_exact_allocation_output",
+                "exhaustive_saving_control")
+    if (not all(bool(getattr(P, name, False)) for name in required)
+            or parent_age_maturation_active(P) or mortgage_stay_floor_active(P)
+            or bequest_utility_net_active(P) or estate_receiver_active(P)):
+        raise ValueError("Natural credit requires reviewed native household mode without additional estate/stayer/maturation mechanisms")
+    return True
+
+
 def solve_bellman_full_markov_income(
     r_hat: np.ndarray,
     p_hat: np.ndarray,
@@ -3064,6 +3183,21 @@ def solve_bellman_full_markov_income(
     continuation_V: np.ndarray | None = None,
 ):
     t0 = time.perf_counter()
+    natural_credit = validate_native_solvency_mode(P)
+    purchase_income = bool(getattr(P, "native_purchase_income", False))
+    if purchase_income and (
+            bool(getattr(P, "joint_nested_choice", False))
+            or bool(getattr(P, "use_pti_constraint", False))
+            or float(P.lambda_d) != 0.0
+            or not bool(getattr(P, "use_tenure_kernel", True))
+            or not bool(getattr(P, "use_full_kernel", True)) or not NUMBA_AVAILABLE
+            or str(getattr(P, "interp_method", "linear")) != "linear"
+            or bool(getattr(P, "mortgage_origination_only", False))
+            or float(getattr(P, "mortgage_amortization", 0.0)) != 0.0
+            or np.any(np.asarray(getattr(P, "owner_ltv_multipliers", [1.0])) != 1.0)
+            or child_earnings_penalty_active(P) or rental_wedge_active(P)
+            or np.any(SD.birth_dp) or np.any(SD.birth_entry_grant)):
+        raise ValueError("unsupported mechanism combined with native purchase-income timing")
     fec = get_fecundity_by_age(P)
     J = P.J
     I = P.I
@@ -3169,6 +3303,10 @@ def solve_bellman_full_markov_income(
                 for cs in range(ncs):
                     nk = get_completed_fertility(nn, cs, P)
                     Vbq[:, ten, i, nn, cs] = bequest_utility_vec(b_grid + hv, nk, P)
+                    if natural_credit:
+                        gross_house_value = p_hat[i] * P.H_own[ten - 1] if ten > 0 else 0.0
+                        dead_estate = native_solvency_death_mask(b_grid, gross_house_value, P.psi)
+                        Vbq[dead_estate, ten, i, nn, cs] = -1e10
 
     for j in range(J - 1, -1, -1):
         in_fert = (j + 1 >= P.A_f_start) and (j + 1 <= P.A_f_end)
@@ -3190,7 +3328,16 @@ def solve_bellman_full_markov_income(
                 if bool(getattr(P, "use_age_survival", False)):
                     survival = float(P.survival_probs[j])
                     Vnr = survival * Vnr + (1.0 - survival) * Vbq
+            if natural_credit and j < J - 1:
+                survival = float(P.survival_probs[j]) if bool(getattr(P, "use_age_survival", False)) else 1.0
+                # Income is the leading axis for the strict support operator.
+                dated_next = np.moveaxis(next_values[:, :, :, j + 1, :, :, :], 3, 0)
+                Vnr = native_solvency_continuation(dated_next, Pi_z[zz], Vbq, survival)
             Vc = apply_child_aging(Vnr, P, Nb, nt, I, npar, ncs, age_index=j)
+            if natural_credit:
+                child_bad = apply_child_aging((Vnr <= DEAD_VALUE_CUTOFF).astype(float),
+                    P, Nb, nt, I, npar, ncs, age_index=j) > 0.0
+                Vc[child_bad] = -1e10
             # Parent-age newborn exemption (m-d): continuation with the
             # birth-period child safe.  At fertile ages the housing/saving +
             # tenure/location stages are re-solved under Vc_ex and the success
@@ -3222,6 +3369,16 @@ def solve_bellman_full_markov_income(
             bp_pol[:, :, :, j, zz, :, :] = bd
 
             dp_choice = ctx.dp_arr
+            bmo_purchase = None
+            if purchase_income:
+                income_for_purchase = np.array([
+                    income_at_state(P, i, j, float(z_value)) for i in range(I)
+                ], dtype=float).reshape(I, 1, 1, 1) / Rg
+                dp_choice = ctx.dp_arr - income_for_purchase
+                bmo_purchase = np.maximum(ctx.bmo - income_for_purchase, b_grid[0])
+            if natural_credit:
+                dp_choice = np.full_like(ctx.dp_arr, -np.inf)
+                bmo_purchase = np.full_like(ctx.bmo, b_grid[0])
             if bool(getattr(P, "use_pti_constraint", False)):
                 income_j = np.array([income_at_state(P, i, j, float(z_value)) for i in range(I)], dtype=float)
                 dp_choice = pti_adjusted_downpayment(ctx.dp_arr, ctx.hcost, income_j, P, b_grid)
@@ -3255,7 +3412,7 @@ def solve_bellman_full_markov_income(
                 continue
 
             VH, tcj, prj_full, VI, lpj = _tenure_location_stage(
-                Vd, P, b_grid, SD, ctx, dp_choice, Vd_s,
+                Vd, P, b_grid, SD, ctx, dp_choice, Vd_s, bmo_purchase,
             )
             if prj_full is not None:
                 tenure_probs[:, :, :, j, zz, :, :, :] = prj_full
@@ -3284,7 +3441,7 @@ def solve_bellman_full_markov_income(
                 else:
                     Vd_ex_s = Vd_ex
                 _, _, _, VI_ex, _ = _tenure_location_stage(
-                    Vd_ex, P, b_grid, SD, ctx, dp_choice, Vd_ex_s,
+                    Vd_ex, P, b_grid, SD, ctx, dp_choice, Vd_ex_s, bmo_purchase,
                 )
 
             if in_fert:
@@ -4152,6 +4309,23 @@ def build_forward_tenure_transition_maps(
     the historical transaction map.
     """
 
+    if bool(getattr(P, "native_purchase_income", False)):
+        if np.any(birth_dp) or np.any(birth_entry_grant):
+            raise ValueError("native purchase-income maps do not combine grants or waivers")
+        bg = np.asarray(b_grid, dtype=float)
+        I, nt = hc.shape
+        npar, ncs = phi_choice.shape[2:]
+        idx = np.zeros((I, nt, nt, npar, ncs, len(bg)), dtype=np.int64)
+        wt = np.zeros_like(idx, dtype=float)
+        for i in range(I):
+            for old in range(nt):
+                for new in range(nt):
+                    # No collateral clipping: income enters spending once, later.
+                    x = bg if old == new else bg + he[i, old] - hc[i, new]
+                    ii, ww = interp_indices(bg, np.clip(x, bg[0], bg[-1]))
+                    idx[i, old, new, :, :, :] = ii
+                    wt[i, old, new, :, :, :] = ww
+        return idx, wt
     bg = np.asarray(b_grid, dtype=float)
     bmin = float(bg[0])
     bmax = float(bg[-1])

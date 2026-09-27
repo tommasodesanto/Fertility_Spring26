@@ -37,6 +37,31 @@ exact source contracts are in
 Sequential saved policies now need their own continuation-birth probabilities;
 old incomplete bundles must be rebuilt from their matching solution or re-solved.
 
+## Current production transition configuration
+
+`tools/e5f_current_transition_runtime.py` loads the authenticated September 27
+calibration into the current native solver. It explicitly enables the accepted
+conditional entrant wealth/income distribution, exact transaction grid,
+purchase-income accounting and exact allocation output; current preferences and
+earnings come from the checkpoint, never old constructor defaults. Legacy
+configuration remains available through default-off native options.
+
+The native perfect-foresight driver supports the adopted split 16/20-year adult
+entry queue and a dated observer receiving the actual next entrant cohort.
+`tools/e5f_overnight_estate_audit.py` uses that cohort to check net estate funding
+and the residual sink. `native_solvency_credit` is an explicitly experimental
+option with conservative feasible-grid continuation and death solvency; it is
+not the calibrated credit specification.
+
+`tools/run_e5f_current_transition_smoke.py` checks native dated accounting and
+exact cache reuse. `tools/run_e5f_current_transition.py` is the bounded joint
+price/pension root entrypoint; it requires pinned replay/smoke approvals, explicit
+budgets and a genuine terminal endpoint. It preserves initial population and
+fixed preferences, exports dated diagnostics and reports terminal-distance and
+horizon limitations. Its integration status, executable commands and evidence
+are indexed by `output/model/daytime_calibration_20260927/credit_transition/README.md`
+and the canonical status. A driver existing does not certify a completed path.
+
 ## Earnings and wealth candidate tools
 
 The September 27 calibration integration uses

@@ -675,7 +675,9 @@ def eval_renter_block_kernel(
 
 
 @njit(cache=True)
-def _interp_with_clip(bg, V, x, strict_interpolated_support=False):
+def _interp_with_clip(bg, V, x, strict_interpolated_support=False, transaction_support=False):
+    if transaction_support and (x < bg[0] or x > bg[-1]):
+        return -1e10
     nb = bg.size
     if x <= bg[0]:
         return V[0]
@@ -715,6 +717,7 @@ def tenure_choice_kernel(
     birth_entry_grant,   # (I, nt, npar, ncs)
     Vd_stay,             # (Nb, nt, I, npar, ncs) values read at to == tn
     strict_interpolated_support=False,
+    transaction_support=False,
 ):
     # Discrete tenure-choice argmax over `tn` given conditional values Vd
     # for each (origin tenure `to`, location, parity, child-state, b).
@@ -743,7 +746,7 @@ def tenure_choice_kernel(
                             v0 = Vd[b, 0, id_, nn, cs]
                         else:
                             ba = bg_b + sp
-                            v0 = _interp_with_clip(b_grid, Vd[:, 0, id_, nn, cs], ba, strict_interpolated_support)
+                            v0 = _interp_with_clip(b_grid, Vd[:, 0, id_, nn, cs], ba, strict_interpolated_support, transaction_support)
                         if v0 > best_v:
                             best_v = v0
                             best_tn = 0
@@ -758,20 +761,20 @@ def tenure_choice_kernel(
                                 bab = bg_b - hc
                                 if birth_dp[nn, cs, to, tn]:
                                     bag = bab if bab > bmn else bmn
-                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bag, strict_interpolated_support)
+                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bag, strict_interpolated_support, transaction_support)
                                 elif birth_entry_grant[id_, tn, nn, cs] > 0:
                                     gfix = birth_entry_grant[id_, tn, nn, cs]
                                     babg = bab + gfix
-                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], babg, strict_interpolated_support)
+                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], babg, strict_interpolated_support, transaction_support)
                                     if (bg_b + gfix) < dpn or babg < bmn:
                                         v_tn = NEG_INF
                                 else:
-                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bab, strict_interpolated_support)
+                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bab, strict_interpolated_support, transaction_support)
                                     if bg_b < dpn or bab < bmn:
                                         v_tn = NEG_INF
                             else:
                                 bar = bg_b + sp - hc
-                                v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bar, strict_interpolated_support)
+                                v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bar, strict_interpolated_support, transaction_support)
                                 dpc = dpn - sp
                                 if bg_b < dpc or bar < bmn:
                                     v_tn = NEG_INF
@@ -795,6 +798,7 @@ def tenure_logit_kernel(
     birth_entry_grant,   # (I, nt, npar, ncs)
     kappa,               # taste-shock scale
     Vd_stay,             # (Nb, nt, I, npar, ncs) values read at to == tn
+    transaction_support=False,
 ):
     Nb, nt, I, npar, ncs = Vd.shape
     VH = np.empty((Nb, nt, I, npar, ncs))
@@ -816,7 +820,7 @@ def tenure_logit_kernel(
                             v0 = Vd[b, 0, id_, nn, cs]
                         else:
                             ba = bg_b + sp
-                            v0 = _interp_with_clip(b_grid, Vd[:, 0, id_, nn, cs], ba)
+                            v0 = _interp_with_clip(b_grid, Vd[:, 0, id_, nn, cs], ba, False, transaction_support)
                         vals[0] = v0
                         if v0 > best_v:
                             best_v = v0
@@ -831,20 +835,20 @@ def tenure_logit_kernel(
                                 bab = bg_b - hc
                                 if birth_dp[nn, cs, to, tn]:
                                     bag = bab if bab > bmn else bmn
-                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bag)
+                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bag, False, transaction_support)
                                 elif birth_entry_grant[id_, tn, nn, cs] > 0:
                                     gfix = birth_entry_grant[id_, tn, nn, cs]
                                     babg = bab + gfix
-                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], babg)
+                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], babg, False, transaction_support)
                                     if (bg_b + gfix) < dpn or babg < bmn:
                                         v_tn = NEG_INF
                                 else:
-                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bab)
+                                    v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bab, False, transaction_support)
                                     if bg_b < dpn or bab < bmn:
                                         v_tn = NEG_INF
                             else:
                                 bar = bg_b + sp - hc
-                                v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bar)
+                                v_tn = _interp_with_clip(b_grid, Vd[:, tn, id_, nn, cs], bar, False, transaction_support)
                                 dpc = dpn - sp
                                 if bg_b < dpc or bar < bmn:
                                     v_tn = NEG_INF
@@ -975,6 +979,8 @@ def full_renter_block_kernel(
     w0=0.0,
     w1=0.0,
     hk=6.0,
+    exact_allocation_output=False,
+    natural_floor_v=None,
 ):
     # Full-Bellman renter block: golden-section search for bp + post-search
     # consumption / housing arithmetic, fused into one kernel per (i, j).
@@ -1043,6 +1049,8 @@ def full_renter_block_kernel(
             rollover_floor = s_next * (current_b if current_b < 0.0 else 0.0)
             line_floor = -D_next
             unsecured_floor = rollover_floor if rollover_floor < line_floor else line_floor
+            if natural_floor_v is not None:
+                unsecured_floor = natural_floor_v[c]
             lo = unsecured_floor
             if bg0 > lo:
                 lo = bg0
@@ -1126,7 +1134,7 @@ def full_renter_block_kernel(
                         ct = 1e-10
                     ct_eff = ct if ct > c_min else c_min
                     ht_eff = ht_cap_c if ht_cap_c > 0.01 else 0.01
-                    if exhaustive_saving and v_best > -1e9:
+                    if exhaustive_saving and (exact_allocation_output or v_best > -1e9):
                         # Report the intratemporal allocation used by the
                         # objective, without the legacy output-only floors.
                         ct_eff = ct
@@ -1137,7 +1145,7 @@ def full_renter_block_kernel(
                     ct = al * surplus
                     ct_eff = ct if ct > c_min else c_min
                     ht_eff = ht_unc if ht_unc > 0.01 else 0.01
-                    if exhaustive_saving and v_best > -1e9:
+                    if exhaustive_saving and (exact_allocation_output or v_best > -1e9):
                         ct_eff = ct
                         ht_eff = ht_unc
                     co[b, c] = cbc + ct_eff
@@ -1180,6 +1188,7 @@ def full_owner_block_kernel(
     stay_on=0,
     stay_orig=0,
     amort=0.0,
+    exact_allocation_output=False,
 ):
     # yadj_v/pen_on carry the optional children-at-home earnings adjustment;
     # see full_renter_block_kernel. With pen_on == 0 the block matches the
@@ -1320,6 +1329,8 @@ def full_owner_block_kernel(
 
             ct = Rvb - oc - cbc - bp_best
             ct_eff = ct if ct > c_min else c_min
+            if exact_allocation_output and exhaustive_saving and ct > 1e-10:
+                ct_eff = ct
             co[b, c] = cbc + ct_eff
     return Vo, bp_out, co
 

@@ -74,8 +74,65 @@ DEFAULT_TERMINAL_TOLERANCES = {
 @dataclass
 class PFInitialState:
     g_pre: np.ndarray
-    scheduled_entries: list[float]
-    scheduled_raw_entries: list[float]
+    scheduled_entries: list[float] | transition.SplitBirthEntryQueue
+    scheduled_raw_entries: list[float] | transition.SplitBirthEntryQueue
+
+
+def copy_birth_queue(queue):
+    """Copy a queue without discarding its lag structure."""
+    if isinstance(queue, transition.SplitBirthEntryQueue):
+        return transition.SplitBirthEntryQueue(queue.due_in_16, queue.due_in_20)
+    return list(queue)
+
+
+def birth_queue_values(queue):
+    """Flatten for numerical comparisons only; never advance this representation."""
+    if isinstance(queue, transition.SplitBirthEntryQueue):
+        return np.asarray(queue.due_in_16 + queue.due_in_20, dtype=float)
+    return np.asarray(queue, dtype=float)
+
+
+def entry_clock_timing(parameters):
+    return ("split-16-20" if getattr(parameters, "adult_entry_clock", "child_departure")
+            == "split_birth_vintage" else "legacy-20")
+
+
+def stationary_initial_state(g_pre, entry_flow, raw_births, parameters,
+                             birth_to_entry_conversion):
+    """Preserve original pre-choice mass and seed constant actual entry history.
+
+    Adjusted prehistory supplies observed entry, even if the approximate steady
+    state has a tiny renewal gap. Raw prehistory remains actual raw births.
+    """
+    if not np.isfinite(entry_flow) or entry_flow < 0:
+        raise ValueError("Actual entry must be finite and nonnegative")
+    if not np.isfinite(raw_births) or raw_births < 0:
+        raise ValueError("Raw births must be finite and nonnegative")
+    conversion = float(birth_to_entry_conversion)
+    if not np.isfinite(conversion) or conversion <= 0:
+        raise ValueError("Birth-to-entry conversion must be finite and positive")
+    if entry_clock_timing(parameters) == "split-16-20":
+        if not math.isclose(conversion, 1 / 2.1, rel_tol=0, abs_tol=1e-15):
+            raise ValueError("Split entry requires the retained 1/2.1 conversion")
+        half = float(entry_flow) / 2
+        adjusted = transition.SplitBirthEntryQueue((half,) * 3, (half,) * 4)
+        raw = transition.SplitBirthEntryQueue.constant_prehistory(raw_births)
+    else:
+        adjusted = [float(entry_flow)] * continuation.QUEUE_WAITING_SLOTS
+        raw = [conversion * float(raw_births)] * continuation.QUEUE_WAITING_SLOTS
+    return PFInitialState(np.asarray(g_pre, dtype=float).copy(), adjusted, raw)
+
+
+def validate_entry_queues(state, parameters):
+    split = entry_clock_timing(parameters) == "split-16-20"
+    for queue in (state.scheduled_entries, state.scheduled_raw_entries):
+        if isinstance(queue, transition.SplitBirthEntryQueue) != split:
+            raise TypeError("PF queue type does not match the explicit adult-entry clock")
+        values = birth_queue_values(queue)
+        if values.ndim != 1 or values.size == 0 or not np.isfinite(values).all() or np.any(values < 0):
+            raise ValueError("PF birth queues must be finite nonnegative vectors")
+    if birth_queue_values(state.scheduled_entries).shape != birth_queue_values(state.scheduled_raw_entries).shape:
+        raise ValueError("Adjusted and raw PF queue shapes must match")
 
 
 @dataclass(frozen=True)
@@ -134,7 +191,8 @@ class HistoricalConditioning:
         if (shares.shape != (int(P.I),) or not np.isfinite(shares).all()
                 or np.any(shares < 0) or shares.sum() <= 0):
             raise ValueError("Historical entry shares must be finite nonnegative market weights")
-        queues = [np.asarray(q, dtype=float) for q in
+        validate_entry_queues(state, P)
+        queues = [birth_queue_values(q) for q in
                   (state.scheduled_entries, state.scheduled_raw_entries)]
         if (any(q.ndim != 1 or q.size == 0 or not np.isfinite(q).all() or np.any(q < 0)
                 for q in queues) or queues[0].shape != queues[1].shape):
@@ -235,6 +293,9 @@ def parse_args() -> argparse.Namespace:
 
 
 def jsonable(value: Any) -> Any:
+    if isinstance(value, transition.SplitBirthEntryQueue):
+        return {"timing": "split-16-20", "due_in_16": list(value.due_in_16),
+                "due_in_20": list(value.due_in_20)}
     if isinstance(value, dict):
         return {str(key): jsonable(item) for key, item in value.items()}
     if isinstance(value, (list, tuple)):
@@ -392,12 +453,8 @@ def terminal_convergence_diagnostics(
     )
     population_relative_gap = abs(candidate_mass - reference_mass) / reference_mass
 
-    candidate_queue = np.asarray(
-        evaluation.terminal_state.scheduled_entries, dtype=float
-    ).reshape(-1)
-    reference_queue = np.asarray(
-        reference_state.scheduled_entries, dtype=float
-    ).reshape(-1)
+    candidate_queue = birth_queue_values(evaluation.terminal_state.scheduled_entries).reshape(-1)
+    reference_queue = birth_queue_values(reference_state.scheduled_entries).reshape(-1)
     if candidate_queue.shape != reference_queue.shape:
         raise ValueError(
             "Terminal and stationary birth-entry queues have different shapes."
@@ -573,7 +630,14 @@ def evaluate_path_at_prices(
     historical_conditioning: HistoricalConditioning | None = None,
     pension_path: Sequence[float] | None = None,
     payroll_tax_path: Sequence[float] | None = None,
+    dated_observer: Callable[[int, calendar.PeriodEvaluation, SimpleNamespace,
+                              np.ndarray, SimpleNamespace, np.ndarray], None] | None = None,
 ) -> PathEvaluation:
+    # Observer receives date-t evaluation and the actual date-(t+1) entrant cohort.
+    # It may audit or raise; it must not mutate the model objects supplied to it.
+    validate_entry_queues(initial_state, base_parameters)
+    if dated_observer is not None and not callable(dated_observer):
+        raise TypeError("Dated observer must be callable")
     started = time.perf_counter()
     price_path = np.asarray(prices, dtype=float).reshape(-1)
     psi_values = np.asarray(psi_path, dtype=float).reshape(-1)
@@ -608,8 +672,8 @@ def evaluate_path_at_prices(
 
     state = PFInitialState(
         g_pre=np.asarray(initial_state.g_pre, dtype=float).copy(),
-        scheduled_entries=list(initial_state.scheduled_entries),
-        scheduled_raw_entries=list(initial_state.scheduled_raw_entries),
+        scheduled_entries=copy_birth_queue(initial_state.scheduled_entries),
+        scheduled_raw_entries=copy_birth_queue(initial_state.scheduled_raw_entries),
     )
     rows: list[dict[str, Any]] = []
     reproduction_error = 0.0
@@ -654,15 +718,17 @@ def evaluate_path_at_prices(
             parameters,
         )
         adjusted_births = float(accounting["topcode_adjusted_birth_children"])
-        due_entry, next_queue = transition.advance_birth_vintage_queue(
+        due_entry, next_queue = transition.advance_adult_entry_clock(
             state.scheduled_entries,
             adjusted_births,
             birth_to_entry_conversion,
+            entry_clock_timing(parameters),
         )
-        due_raw, next_raw_queue = transition.advance_birth_vintage_queue(
+        due_raw, next_raw_queue = transition.advance_adult_entry_clock(
             state.scheduled_raw_entries,
             float(evaluation.births),
             birth_to_entry_conversion,
+            entry_clock_timing(parameters),
         )
         empty_next, model_mature_by_loc, deaths, _ = (
             transition.advance_sequential_calendar_distribution(
@@ -680,9 +746,10 @@ def evaluate_path_at_prices(
         if historical_conditioning is not None:
             entrants_next = historical_conditioning.outside_flow * entry_shares
             entrants_next[0] += historical_conditioning.retention * float(due_entry)
-        empty_next[:, :, :, 0, :, :, :] = calendar.entrant_cohort(
-            entrants_next, parameters, b_grid
-        )
+        next_entrant_cohort = calendar.entrant_cohort(entrants_next, parameters, b_grid)
+        empty_next[:, :, :, 0, :, :, :] = next_entrant_cohort
+        if dated_observer is not None:
+            dated_observer(period, evaluation, parameters, b_grid, shared, next_entrant_cohort)
         if historical_conditioning is not None:
             next_year = historical_conditioning.next_age_targets.get(period + 1)
             if next_year is not None:
@@ -802,8 +869,8 @@ def evaluate_path_at_prices(
             )
         state = PFInitialState(
             g_pre=empty_next,
-            scheduled_entries=list(next_queue),
-            scheduled_raw_entries=list(next_raw_queue),
+            scheduled_entries=copy_birth_queue(next_queue),
+            scheduled_raw_entries=copy_birth_queue(next_raw_queue),
         )
 
     return PathEvaluation(
@@ -1307,7 +1374,8 @@ def solve_terminal_steady_state(
         float(evaluation.births),
         parameters,
     )
-    conversion = transition.EFFECTIVE_BIRTH_TO_HOUSEHOLD_CONVERSION
+    conversion = (1 / 2.1 if entry_clock_timing(parameters) == "split-16-20"
+                  else transition.EFFECTIVE_BIRTH_TO_HOUSEHOLD_CONVERSION)
     implied_queue_flow = conversion * float(
         accounting["topcode_adjusted_birth_children"]
     )
@@ -1315,11 +1383,8 @@ def solve_terminal_steady_state(
     queue_relative_gap = abs(implied_queue_flow - entry_flow) / max(
         entry_flow, 1e-15
     )
-    state = PFInitialState(
-        g_pre=scaled_g_pre,
-        scheduled_entries=[entry_flow] * continuation.QUEUE_WAITING_SLOTS,
-        scheduled_raw_entries=[raw_queue_flow] * continuation.QUEUE_WAITING_SLOTS,
-    )
+    state = stationary_initial_state(scaled_g_pre, entry_flow, float(evaluation.births),
+                                     parameters, conversion)
     one_step = evaluate_path_at_prices(
         prices=np.array([endpoint_price]),
         psi_path=np.array([float(terminal_psi_child)]),
@@ -1415,6 +1480,8 @@ def reconstruct_2023_state(
     *,
     market_tolerance: float,
 ) -> tuple[PFInitialState, list[dict[str, Any]], dict[str, Any], float]:
+    if entry_clock_timing(prepared.parameters) == "split-16-20":
+        raise ValueError("Legacy historical reconstruction does not support the split entry clock")
     best = contracts["report_best"]
     old_psi = float(best["old_psi_child"])
     new_psi = float(best["new_psi_child"])
@@ -1558,13 +1625,13 @@ def zero_shock_test(
         parameters,
     )
     adjusted_births = float(accounting["topcode_adjusted_birth_children"])
-    exact_conversion = prepared.E_old / adjusted_births
+    exact_conversion = (1 / 2.1 if entry_clock_timing(parameters) == "split-16-20"
+                        else prepared.E_old / adjusted_births)
     raw_conversion = prepared.E_old / max(float(evaluation.births), 1e-15)
-    initial = PFInitialState(
-        g_pre=stationary_g_pre.copy(),
-        scheduled_entries=[prepared.E_old] * continuation.QUEUE_WAITING_SLOTS,
-        scheduled_raw_entries=[prepared.E_old] * continuation.QUEUE_WAITING_SLOTS,
-    )
+    initial = stationary_initial_state(stationary_g_pre, prepared.E_old,
+                                       float(evaluation.births), parameters, exact_conversion)
+    if entry_clock_timing(parameters) == "legacy-20":
+        initial.scheduled_raw_entries = [prepared.E_old] * continuation.QUEUE_WAITING_SLOTS
     path = evaluate_path_at_prices(
         prices=np.full(periods, prepared.old_price),
         psi_path=np.full(periods, old_psi),
