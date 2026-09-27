@@ -539,6 +539,8 @@ def policy_from_objects(
         # Each full Bellman call allocates a fresh joint object, then replaces
         # P._joint_choice. Retain this date's object for forward accounting.
         joint_choice=getattr(P, "_joint_choice", None),
+        bp_pol_stay=getattr(P, "_bp_pol_stay", None),
+        c_pol_stay=getattr(P, "_c_pol_stay", None),
     )
 
 

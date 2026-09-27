@@ -140,6 +140,22 @@ def renter_borrowing_floor(P: SimpleNamespace, b: Any, j: int) -> np.ndarray:
     return debt_rule_at_age(P, b, j)
 
 
+def native_due_owner_floor(b, collateral_floor, *, death_floor=-np.inf):
+    """DUE stayer rule in asset units: service interest, do not grow excess debt.
+
+    The separate net-estate floor preserves no negative estates at possible
+    death; it can require repayment following a sufficiently large price fall.
+    """
+    return np.maximum(np.minimum(np.asarray(b, dtype=float),
+                                 np.asarray(collateral_floor, dtype=float)), death_floor)
+
+
+def native_due_death_floor(P, j, price, house):
+    death_possible = (j == int(P.J) - 1 or
+        (bool(getattr(P, "use_age_survival", False)) and float(P.survival_probs[j]) < 1.0))
+    return -(1.0 - float(P.psi)) * float(price) * float(house) if death_possible else -np.inf
+
+
 def owner_borrowing_floor(
     P: SimpleNamespace,
     b: Any,
@@ -164,6 +180,8 @@ def owner_borrowing_floor(
     bf_arr = effective_owner_collateral_floor(P, collateral_floor, j)
     if bool(getattr(P, "native_purchase_income", False)):
         if stay_on:
+            if bool(getattr(P, "native_due_stayer_credit", False)):
+                return native_due_owner_floor(b_arr, bf_arr)
             raise ValueError("native purchase-income floor does not combine stayer rules")
         return np.broadcast_to(bf_arr, np.broadcast_shapes(b_arr.shape, bf_arr.shape)).copy()
     if not stay_on:
@@ -1209,7 +1227,12 @@ def period_estate_flow_and_recipient_mass(
                     if j in recipient:
                         recipient_mass += float(np.sum(cell_g))
                     if d > 0.0:
-                        flow += float(d) * float(np.sum(cell_g * np.maximum(cell_bp + hv, 0.0)))
+                        cell_flow = np.sum(cell_g * np.maximum(cell_bp + hv, 0.0))
+                        if bool(getattr(P, "native_due_stayer_credit", False)):
+                            stay_g = sol.g_stay_distribution[:, ten, i, j, :, :, :]
+                            stay_bp = sol.bp_pol_stay[:, ten, i, j, :, :, :]
+                            cell_flow += np.sum(stay_g * (np.maximum(stay_bp + hv, 0.0) - np.maximum(cell_bp + hv, 0.0)))
+                        flow += float(d) * float(cell_flow)
     elif g.ndim == 6:
         for j in range(J):
             d = death_weight(j)
@@ -1828,6 +1851,7 @@ def solve_markov_income_at_prices(
         sol._model_payload = (V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, r, p, P._fert2_probs.copy())
         sol.joint_choice = getattr(P, "_joint_choice", None)
         sol._bp_pol_stay = getattr(P, "_bp_pol_stay", None)
+        sol._c_pol_stay = getattr(P, "_c_pol_stay", None)
     if verbose:
         print(
             f"  Markov income fixed-price solve: own={100 * sol.own_rate:.1f}% "
@@ -1849,6 +1873,7 @@ def upgrade_fast_markov_solution(
     P._fert2_probs = fert2_probs
     P._joint_choice = getattr(fast_solution, "joint_choice", None)
     P._bp_pol_stay = getattr(fast_solution, "_bp_pol_stay", None)
+    P._c_pol_stay = getattr(fast_solution, "_c_pol_stay", None)
     start = time.perf_counter()
     g, stats = forward_distribution_markov_income(
         bp_pol, hR_pol, tc, lp_j, fp, V, r, p, P, b_grid, SD,
@@ -2708,6 +2733,7 @@ def _build_housing_stage_ctx(
 
     return SimpleNamespace(
         hcost=hcost,
+        current_prices=np.asarray(p_hat, dtype=float).copy(),
         heq=heq,
         dp_arr=dp_arr,
         bmo=bmo,
@@ -2754,10 +2780,12 @@ def _savings_stage(
     continuation (standard ``Vc`` or newborn-exempt ``Vc_ex``) and returns
     ``(Vd, cd, hd, bd)``.  Policies are re-optimized, so calling this with
     ``Vc_ex`` yields the exact exempt values, not an envelope shift.
-    With ``stay_floor``, owner cells use the stayer mortgage floors (no
-    cash-out, plus amortization) instead of the origination collateral
-    floor; renter cells match the standard solve bit for bit.
+    With ``stay_floor``, owner cells use the selected stayer rule: native DUE
+    grandfathering with a separate death-solvency floor, or the legacy no
+    cash-out/amortization experiment. Renter cells are unchanged.
     """
+    if bool(getattr(P, "native_due_stayer_credit", False)) and not ctx.use_full_kernel:
+        raise NotImplementedError("Native DUE saving requires the full owner kernel with explicit death solvency")
     natural_credit = bool(getattr(P, "native_solvency_credit", False))
     Nb = len(b_grid)
     I = P.I
@@ -2774,7 +2802,8 @@ def _savings_stage(
     use_value_kernel = NUMBA_AVAILABLE and interp_method == "linear"
     stay_orig_on = bool(getattr(P, "mortgage_origination_only", False))
     amort_rate = float(getattr(P, "mortgage_amortization", 0.0)) if stay_floor else 0.0
-    stay_flag = int(bool(stay_floor))
+    due_stay = bool(stay_floor) and bool(getattr(P, "native_due_stayer_credit", False))
+    stay_flag = int(bool(stay_floor) and not due_stay)
     stay_orig_flag = int(bool(stay_floor) and stay_orig_on)
     Vd = np.zeros((Nb, ctx.hcost.shape[1], I, npar, ncs))
     cd = np.zeros_like(Vd)
@@ -2930,6 +2959,8 @@ def _savings_stage(
                     np.ascontiguousarray(yadj_v), pen_flag,
                     stay_flag, stay_orig_flag, amort_rate,
                     bool(getattr(P, "native_exact_allocation_output", False)),
+                    due_stay,
+                    native_due_death_floor(P, j, ctx.current_prices[i], P.H_own[ten - 1]) if due_stay else -np.inf,
                 )
                 if natural_credit:
                     Vo_nc[:, natural_dead] = -1e10
@@ -3184,6 +3215,11 @@ def solve_bellman_full_markov_income(
 ):
     t0 = time.perf_counter()
     natural_credit = validate_native_solvency_mode(P)
+    due_credit = bool(getattr(P, "native_due_stayer_credit", False))
+    if due_credit and (natural_credit or not bool(getattr(P, "native_purchase_income", False))
+                       or mortgage_stay_floor_active(P) or int(P.I) != 1
+                       or not bool(getattr(P, "use_postdecision_current_distribution", True))):
+        raise ValueError("DUE stayer mode requires one-market native accounting, no legacy stayer or natural-credit mode")
     purchase_income = bool(getattr(P, "native_purchase_income", False))
     if purchase_income and (
             bool(getattr(P, "joint_nested_choice", False))
@@ -3286,10 +3322,11 @@ def solve_bellman_full_markov_income(
 
     ctx = _build_housing_stage_ctx(P, b_grid, SD, p_hat, use_full_kernel, exhaustive_saving)
 
-    stay_active = mortgage_stay_floor_active(P)
+    stay_active = mortgage_stay_floor_active(P) or due_credit
     if stay_active and joint_active:
         raise NotImplementedError("stayer mortgage floors: sequential Bellman path only")
     bp_pol_stay: np.ndarray | None = np.ones_like(bp_pol) if stay_active else None
+    c_pol_stay = np.zeros_like(c_pol) if due_credit else None
 
     Vbq = np.zeros((Nb, nt, I, npar, ncs))
     for i in range(I):
@@ -3356,11 +3393,13 @@ def solve_bellman_full_markov_income(
             )
             if stay_active:
                 assert bp_pol_stay is not None
-                Vd_s, _, _, bd_s = _savings_stage(
+                Vd_s, cd_s, _, bd_s = _savings_stage(
                     Vc, P, b_grid, SD, ctx, r_hat, j, float(z_value),
                     s_next, D_next, renter_floor, stay_floor=True,
                 )
                 bp_pol_stay[:, :, :, j, zz, :, :] = bd_s
+                if c_pol_stay is not None:
+                    c_pol_stay[:, :, :, j, zz, :, :] = cd_s
             else:
                 Vd_s = Vd
 
@@ -3533,6 +3572,7 @@ def solve_bellman_full_markov_income(
     P._fert2_probs = fert2_probs
     P._joint_choice = joint
     P._bp_pol_stay = bp_pol_stay
+    P._c_pol_stay = c_pol_stay
     return (
         V,
         c_pol,
@@ -4494,6 +4534,27 @@ def realize_current_choices_markov_income(
             mass_pruning_tolerance=mass_pruning_tolerance,
         )
     return realized
+
+
+def realize_stayer_cross_section(g, loc_probs, tenure_choice, tenure_probs):
+    """Owner stayers after location/tenure choices, before saving (7D mass).
+
+    Preserve origin tenure: new buyers with the same destination state are not
+    eligible for inherited-debt treatment. Moving location liquidates ownership.
+    """
+    if g.ndim != 7:
+        raise ValueError("stayer mass requires income-resolved seven-dimensional mass")
+    out = np.zeros_like(g)
+    for i in range(g.shape[2]):
+        for ten in range(1, g.shape[1]):
+            if tenure_probs is None:
+                pr = tenure_choice[:, ten, i] == ten
+            else:
+                menu = np.asarray(tenure_probs[:, ten, i], dtype=float)
+                total = menu.sum(axis=-1)
+                pr = np.divide(menu[..., ten], total, out=np.zeros_like(total), where=total > 0)
+            out[:, ten, i] = g[:, ten, i] * loc_probs[:, ten, i, i] * pr
+    return out
 
 
 def realize_current_cross_section(
@@ -5993,6 +6054,8 @@ def forward_distribution_markov_income(
     )
     if normalize_population_mass(P):
         assert np.isclose(np.sum(g_current), np.sum(g), rtol=0.0, atol=1e-10)
+    if bool(getattr(P, "native_due_stayer_credit", False)):
+        P._g_stay_distribution = realize_stayer_cross_section(g, loc_probs, tenure_choice, tenure_probs)
     if fast_stats:
         stats = compute_markov_eq_stats(g_current, P, b_grid, p_hat, hR_pol)
     else:
@@ -6008,6 +6071,8 @@ def forward_distribution_markov_income(
             bequest_g=g_current,
             bp_pol=bp_pol,
         )
+    if bool(getattr(P, "native_due_stayer_credit", False)):
+        stats.g_stay_distribution = P._g_stay_distribution.copy()
     P._second_births_by_age = second_births_by_age
     P._second_attempts_by_age = second_attempts_by_age
     P._first_births_by_age = first_births_by_age
@@ -7150,9 +7215,13 @@ def add_aggregate_wealth_bequest_flow_moments(
                             P, float(ph_arr[i]), float(P.H_own[ten - 1]), for_accounting=True
                         )
                     estate = bp_arr[:, ten, i, j, zz, :, :] + estate_hv
-                    annual_bequest_flow += death_probability * float(
-                        np.sum(death_arr[:, ten, i, j, zz, :, :] * np.maximum(estate, 0.0))
-                    ) / max(period_years, 1e-12)
+                    cell_mass = death_arr[:, ten, i, j, zz, :, :]
+                    estate_sum = np.sum(cell_mass * np.maximum(estate, 0.0))
+                    if bool(getattr(P, "native_due_stayer_credit", False)):
+                        stay_mass = P._g_stay_distribution[:, ten, i, j, zz, :, :]
+                        stay_estate = P._bp_pol_stay[:, ten, i, j, zz, :, :] + estate_hv
+                        estate_sum += np.sum(stay_mass * (np.maximum(stay_estate, 0.0) - np.maximum(estate, 0.0)))
+                    annual_bequest_flow += death_probability * float(estate_sum) / max(period_years, 1e-12)
     stats.aggregate_wealth = aggregate_wealth
     stats.aggregate_annual_gross_labor_earnings = aggregate_gross_labor_earnings
     stats.aggregate_wealth_to_annual_gross_labor_earnings = aggregate_wealth / max(aggregate_gross_labor_earnings, 1e-12)
@@ -8238,6 +8307,7 @@ def pack_solution_markov_income(
         fert2_probs=getattr(P, "_fert2_probs", None),
         joint_choice=getattr(P, "_joint_choice", None),
         bp_pol_stay=getattr(P, "_bp_pol_stay", None),
+        c_pol_stay=getattr(P, "_c_pol_stay", None),
         fert_value=fv,
         g=g,
         g_collapsed=np.sum(g, axis=4),

@@ -1189,6 +1189,8 @@ def full_owner_block_kernel(
     stay_orig=0,
     amort=0.0,
     exact_allocation_output=False,
+    due_stayer=False,
+    due_death_floor=-np.inf,
 ):
     # yadj_v/pen_on carry the optional children-at-home earnings adjustment;
     # see full_renter_block_kernel. With pen_on == 0 the block matches the
@@ -1267,6 +1269,10 @@ def full_owner_block_kernel(
                         total_floor = amort_floor
                 elif stay_orig != 0:
                     total_floor = bf
+            if due_stayer:
+                # b is before interest; allowing R*b would capitalize interest.
+                total_floor = min(b_grid[b], bf)
+                total_floor = max(total_floor, due_death_floor)
             lo = total_floor
             if bg0 > lo:
                 lo = bg0

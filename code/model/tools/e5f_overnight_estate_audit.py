@@ -9,6 +9,9 @@ from __future__ import annotations
 
 import math
 
+# Capability must accompany an authenticated source contract, never replace it.
+SUPPORTS_NATIVE_DUE_STAYER_CREDIT = True
+
 
 class EstateFundingShortfall(RuntimeError):
     """Only this exception denotes a candidate rejected for estate funding."""
@@ -20,6 +23,53 @@ class EstateFundingShortfall(RuntimeError):
             f"B={ledger['available_estates_period']:.12g}, "
             f"E={ledger['entry']['positive_financial_endowment']:.12g}"
         )
+
+
+def policy_mass_branches(evaluation, P):
+    """Return disjoint (mass, saving, consumption) branches at current tenure.
+
+    Under DUE the same post-tenure node can contain buyers and inherited
+    owners with different saving policies; averaging policies is invalid for
+    signed estates and feasibility tests. The split must be owned by this date.
+    """
+    import numpy as np
+    g = np.asarray(evaluation.g_current, dtype=float)
+    policy = evaluation.policy
+    base = (g, np.asarray(policy.bp_pol), getattr(policy, "c_pol", None))
+    if not bool(getattr(P, "native_due_stayer_credit", False)):
+        return (base,)
+    stay = getattr(evaluation, "g_stay_distribution", None)
+    bp = getattr(policy, "bp_pol_stay", None)
+    c = getattr(policy, "c_pol_stay", None)
+    if stay is None or bp is None or c is None:
+        raise ValueError("DUE accounting requires date-owned stayer mass/saving/consumption")
+    stay, bp, c = (np.asarray(x, dtype=float) for x in (stay, bp, c))
+    if (g.ndim != 7 or any(x.shape != g.shape for x in (stay, bp, c))
+            or any(not np.isfinite(x).all() for x in (g, stay, bp, c))
+            or np.any(g < 0) or np.any(stay < 0) or np.any(stay[:, 0] != 0)):
+        raise ValueError("DUE accounting requires aligned finite owner-only stayer mass")
+    other = g - stay
+    if np.any(other < -1e-12):
+        raise ValueError("DUE stayer mass exceeds current mass")
+    # Only floating-point subtraction dust, never substantive mass, is removed.
+    other = np.maximum(other, 0.0)
+    return ((other, base[1], base[2]), (stay, bp, c))
+
+
+def branch_estate_accounts(evaluation, P, death, housing_values, selling_cost):
+    """Integrate each origin before applying positive/negative estate splits."""
+    from audit_e5f_estate_resource_account import signed_accounts
+    branches = policy_mass_branches(evaluation, P)
+    result = signed_accounts(branches[0][0], branches[0][1], death, housing_values, selling_cost)
+    for mass, saving, _ in branches[1:]:
+        extra = signed_accounts(mass, saving, death, housing_values, selling_cost)
+        for key in result["totals"]:
+            result["totals"][key] += extra["totals"][key]
+        for row, other in zip(result["by_age"], extra["by_age"]):
+            for key in row:
+                if key != "age_index":
+                    row[key] += other[key]
+    return result
 
 
 def audit(evaluation, P, b_grid, *, next_entrant_cohort=None):
@@ -81,7 +131,7 @@ def audit(evaluation, P, b_grid, *, next_entrant_cohort=None):
     if pre.sum() <= 0 or np.max(np.abs(pre_age - current_age)) > 1e-10 * mass_scale:
         raise ValueError("Pre-fertility and current distributions must preserve positive age mass")
 
-    estates = signed_accounts(g, bp, death, np.r_[0.0, prices[0] * houses], selling_cost)
+    estates = branch_estate_accounts(evaluation, P, death, np.r_[0.0, prices[0] * houses], selling_cost)
     dated = next_entrant_cohort is not None
     entrant = (np.asarray(next_entrant_cohort, dtype=float)
                if dated else pre[:, :, :, 0])

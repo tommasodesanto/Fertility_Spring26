@@ -862,6 +862,11 @@ def advance_sequential_calendar_distribution(
     """Advance incumbents one age cell and measure independently matured children."""
     model = calendar.model
     policy = evaluation.policy
+    stay_saving = None
+    if bool(getattr(P, "native_due_stayer_credit", False)):
+        stay_saving = getattr(policy, "bp_pol_stay", None)
+        if stay_saving is None:
+            raise ValueError("DUE forward operator requires date-owned stayer saving")
     g_post = evaluation.g_post_fertility
     next_pre = np.zeros_like(g_post)
     mature_by_loc = np.zeros(int(P.I))
@@ -914,6 +919,7 @@ def advance_sequential_calendar_distribution(
             P.Pi_child if stochastic else None,
             Pi_z,
             newborn_frac=newborn_frac_by_age[j],
+            bp_pol_stay=stay_saving,
         )
         if bool(getattr(P, "normalize_transition_mass_roundoff", False)):
             advanced = normalize_pure_transition_mass_roundoff(

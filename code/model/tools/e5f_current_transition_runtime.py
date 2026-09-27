@@ -31,6 +31,19 @@ CONTRACT_SHA = '3b770d8c8c22d2b0449b34a575d6353b063bc015d74ce11016dad7e22ed7ca5e
 CHECKPOINT_SHA = '090c9ebda662bf7837c4f4cf1d816159bc9d203a9babe7c70d00d0c4be1e575e'
 
 
+class EstateAuditContract:
+    """Reject origin-blind pinned ledgers when a DUE policy is requested."""
+    def __init__(self, module):
+        self.module = module
+        self.EstateFundingShortfall = module.EstateFundingShortfall
+
+    def audit(self, evaluation, P, b_grid, **kwargs):
+        if (bool(getattr(P, 'native_due_stayer_credit', False))
+                and not bool(getattr(self.module, 'SUPPORTS_NATIVE_DUE_STAYER_CREDIT', False))):
+            raise RuntimeError('DUE requires a newly authenticated origin-specific estate audit contract')
+        return self.module.audit(evaluation, P, b_grid, **kwargs)
+
+
 def sha(path):
     h=hashlib.sha256()
     with Path(path).open('rb') as stream:
@@ -220,7 +233,7 @@ def setup(output, *, contract=CONTRACT, reference=REFERENCE, fixed_reference_pri
     housing=load('current_pinned_housing_observer',frozen_tools/'e5f_initial_housing_observer.py')
     recent=load('current_pinned_recent_observer',frozen_tools/'e5f_recent_parent_flow_observer.py')
     accounting=load('current_pinned_purchase_audit',Path(c['runtime_tools'])/'e5f_earnings_wealth_contract.py')
-    estate=load('current_pinned_stationary_estate',c['files']['estate_audit']['path'])
+    estate=EstateAuditContract(load('current_pinned_stationary_estate',c['files']['estate_audit']['path']))
     paygo=importlib.import_module('e5f_stationary_paygo')
     audit=importlib.import_module('run_e5f_independent_numerical_audit')
     require_current_model(model)
