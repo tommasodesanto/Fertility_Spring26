@@ -80,3 +80,14 @@ normalizes absolute keys relative to its authenticated source root before checki
 the plan inventory; paths outside that root fail. Compile check passed, no solves.
 The strict no-projection fix is underway in main and is not yet merged into this
 isolated worktree. Its final source identity must be reconciled before execution.
+
+## September27 completion superseding preparation status above
+
+Same-price due_v2 passed, after preserved baseline_v1/v2 and due_v1 failures.
+Fullmain summary: /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/daytime_calibration_20260927/due_stayer_check/README.md.
+New authenticated origin-aware purchase audit is complete. Original baseline
+core arrays exact; only three evaluated mass arrays differ below7e-15 because
+of removing projection. Exact g0 retained with existing1e-12 deadmass tolerance.
+Reporting audit extension preserves every frozen measurement byte. Fixed-price
+DUE household budgets/debt/estates and KFE pass. Both17plot packets inspected.
+Price-fall test and production promotion remain outstanding. No running jobs.
