@@ -1,5 +1,35 @@
 # Supervised overnight calibration — September 27
 
+## September 27, 04:48 EDT — final main batch running; hourly plots inspected
+
+The 04:45 snapshot records 232 primary, 60 identity and four early-weight search
+cases, separately from verification runs. Ten local evaluators are active,
+RSS 20.70 GiB, disk availability 208 GiB. Active controller heartbeats and solve
+ledgers are fresh; no fatal, inadmissible, timeout or memory intervention.
+Torch authentication was checked again and still fails, so cluster search
+capacity remains zero. Full target and parameter tables: run output
+`checks/0445/`. Best provisional main loss is 52.850 (de_0226).
+
+All seventeen standard plots for that exact point were regenerated without a
+solve and inspected under `hourly_diagnostics/0445_selected/`. Market residual
+is 1.575e-6. Ownership rises with age; the largest owner product remains dominant.
+Mean rooms improve (5.967 versus 5.729), while ownership is low (0.606 versus
+0.676), wealth/earnings is low (5.999 versus 6.927), and early fertility stays
+low (0.525 versus 0.810). No bound violation or new graphical failure. The
+inherited wide wealth axes limit visual detail at boundary states; no graph
+redesign was made. These tradeoffs remain provisional, not unreachable targets.
+
+No intervention in the active searches. Main has its final eight-case batch
+running, followed by two independent repeats/export. Once complete and verified,
+start a new primary continuation from that selected winner: eight workers,
+at most twelve rounds (96 search evaluations including the initial batch), two
+fresh smokes, two final repeats, new immutable contract and seed. At the observed
+6.3-minute median objective, this is roughly 76 minutes of search plus validation;
+the unchanged 07:13 search / 08:43 total cutoffs dominate. Do not overlap with the
+original main workers or exceed ten local evaluators. Early-weight search retains
+two workers. Next main plot review due by 05:45. Morning report notes now state
+preparation failures and concrete deferred decisions; final delivery remains pending.
+
 ## September 27, 04:31 EDT — identity search verified; early-fertility weight experiment running
 
 The 04:25 frozen readout contains 208 primary and 60 identity search cases;
