@@ -1,5 +1,45 @@
 # Calibration Status
 
+## September 27, 15:35 EDT — DUE price-fall check PASSED; optional code integrated
+
+New two-arm permanent10% lower-price diagnostic complete; no workers remain.
+Read output/model/daytime_calibration_20260927/due_price_fall/README.md,
+summary.json, dated_comparison.csv and complete31parameter table. Exact original
+stationaryg0 is byte-preserved in both arms, all31 originalde0093parameters fixed.
+Baseline/DUE each pass support, budgets, purchase/stayer debt, actualnextentry
+estate funding and mass accounting; negativeestates exactlyzero. Raw dated
+birthflows.120638618/.120666552 (+.023% DUE), not completedfertility.
+Housing residuals10.316%/10.412% at imposedprices: NOTequilibrium. Fixedtax/pension
+PE fiscalgap approximately1.5e-13. OneBellmancall each;18.473/30.533seconds total
+casewalltime. Newparent-ownedplan cap900seconds,300each; bothcomplete, noextensions.
+
+Reviewed core, branch accounting, cache/date routing and tests copied from
+isolatedDUE worktree into main; existingdefaults/frozenproductioncontracts stay
+unchanged.45 focusedmain tests pass (31DUE/7exactstate/7passivereporter). A new
+productioncontract/loader must explicitlyactivateDUE and origin-awareaudits before
+calibration. Supplemental existing-owner saving/consumption plots inspected:6.715%initialowners
+belownewLTV;3.553%realizedDUEstayers borrowbeyondnewLTV,0deathfloorbinding.
+Selectedyoungindebtedowners preserveconsumption; nofullpolicycertification. Longcalibration stillpreparation;
+fullfrictionlesscredittransition remainsunsolved with support/horizon failure.
+
+## September 27, 15:29 EDT — price-fall preparation and independent DUE review
+
+No numerical worker or Torch job is running. A new bounded permanent10% price-fall
+comparison is being prepared in the isolated DUE worktree: exact originalg0,
+unchanged31 parameters, baseline versusDUE. It is a fixed-price household stress
+test, not equilibrium. No expired plan is extended. Independent review confirms
+buyer/stayer principal, death-solvency and dated/cache routing, but identifies
+an explicit gate omission: same-price runner reported all-origin negative
+estates without rejecting them. Saved due_v2 netnegative/grossnegative/deathmass
+are exactlyzero, so that numerical finding remains valid. New runner guard uses
+the existing production1e-10 threshold, retains its ledger, and passes10 focused
+accounting tests. Fresh source pins required before any new solve.
+
+Standard17 plots retain buyer-conditional saving/consumption arrays; they do
+not alone certify DUE stayer policies. Supplemental origin-specific policy
+inspection remains required before production promotion. DUE defaultoff main,
+full frictionless transition unresolved, long calibration still preparationonly.
+
 ## September 27, 15:09 EDT — DUE same-price matched check PASSED
 
 Complete review in output/model/daytime_calibration_20260927/due_stayer_check/:

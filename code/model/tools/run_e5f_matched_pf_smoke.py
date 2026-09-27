@@ -99,6 +99,10 @@ def load_contract(path, expected):
 def policy_arrays(policy):
     result = {name: np.asarray(getattr(policy, name)) for name in FIELDS
               if getattr(policy, name, None) is not None}
+    for name in ('bp_pol_stay', 'c_pol_stay'):
+        value = getattr(policy, name, None)
+        if value is not None:
+            result[name] = np.asarray(value)
     if policy.joint_choice is not None:
         result.update({'joint_' + name: np.asarray(getattr(policy.joint_choice, name))
                        for name in JOINT_FIELDS})
@@ -150,33 +154,37 @@ def save_arrays(path, **arrays):
 
 def dated_budget(evaluation, P, shared, grid, rent):
     """Post-tenure household spending at the actual dated rental price."""
-    p, g = evaluation.policy, evaluation.g_current
+    from e5f_overnight_estate_audit import policy_mass_branches
+    p = evaluation.policy
     bad_mass, largest = 0., 0.
-    for age in range(P.J):
-        for tenure in range(g.shape[1]):
-            for zz, z in enumerate(P.z_grid):
-                for parity in range(P.n_parity):
-                    for child in range(P.n_child_states):
-                        index = (slice(None), tenure, 0, age, zz, parity, child)
-                        mass = g[index]
-                        if mass.sum() <= 0:
-                            continue
-                        flat = parity + P.n_parity * child
-                        income = model.income_at_state(P, 0, age, float(z))
-                        resources = P.R_gross * grid + income
-                        grant = float(shared.gb_flat.reshape(-1)[flat])
-                        resources += np.clip(grant - (P.R_gross * np.maximum(grid, 0) + income), 0, grant)
-                        if tenure == 0:
-                            cost = rent * p.hR_pol[index]
-                        else:
-                            h = P.H_own[tenure - 1]
-                            cost = (P.delta + P.tau_H) * p.price[0] * h
-                            cost += getattr(P, 'owner_size_cost', 0) * p.price[0] * max(h - getattr(P, 'owner_size_cost_ref', 6), 0) ** getattr(P, 'owner_size_cost_power', 2)
-                        gap = p.c_pol[index] + cost + p.bp_pol[index] - resources
-                        bad_mass += float(mass[gap > 1e-9].sum())
-                        occupied = mass > 1e-12
-                        if np.any(occupied):
-                            largest = max(largest, float(gap[occupied].max()))
+    for g, bp, consumption in policy_mass_branches(evaluation, P):
+        if consumption is None:
+            raise ValueError("Budget accounting requires branch consumption")
+        for age in range(P.J):
+            for tenure in range(g.shape[1]):
+                for zz, z in enumerate(P.z_grid):
+                    for parity in range(P.n_parity):
+                        for child in range(P.n_child_states):
+                            index = (slice(None), tenure, 0, age, zz, parity, child)
+                            mass = g[index]
+                            if mass.sum() <= 0:
+                                continue
+                            flat = parity + P.n_parity * child
+                            income = model.income_at_state(P, 0, age, float(z))
+                            resources = P.R_gross * grid + income
+                            grant = float(shared.gb_flat.reshape(-1)[flat])
+                            resources += np.clip(grant - (P.R_gross * np.maximum(grid, 0) + income), 0, grant)
+                            if tenure == 0:
+                                cost = rent * p.hR_pol[index]
+                            else:
+                                h = P.H_own[tenure - 1]
+                                cost = (P.delta + P.tau_H) * p.price[0] * h
+                                cost += getattr(P, 'owner_size_cost', 0) * p.price[0] * max(h - getattr(P, 'owner_size_cost_ref', 6), 0) ** getattr(P, 'owner_size_cost_power', 2)
+                            gap = consumption[index] + cost + bp[index] - resources
+                            bad_mass += float(mass[gap > 1e-9].sum())
+                            occupied = mass > 1e-12
+                            if np.any(occupied):
+                                largest = max(largest, float(gap[occupied].max()))
     if bad_mass > 2e-10:
         raise RuntimeError(f'Dated budget gate failed: mass={bad_mass}, excess={largest}')
     return {'budget_excess_mass': bad_mass, 'maximum_occupied_excess': largest,

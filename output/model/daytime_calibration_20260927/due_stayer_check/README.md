@@ -42,3 +42,12 @@ The initial-state guard separately forbids every redistribution while retaining
 and explicitly recording the existing1e-12 numerical feasibility tolerance.
 Saved-state replay preserves the baseline array exactly and rejects the larger
 1.218e-8 frictionless transition support loss. That full transition is unsolved.
+
+## Independent review follow-up, 15:29 EDT
+
+Saved due_v2 all-origin negative estates are exactly zero. A missing explicit
+rejection in the matched runner is now corrected for future source contracts,
+using the production transition tolerance1e-10. Existing evidence is unchanged.
+The standard17 plots show buyer-conditional saving/consumption and cannot alone
+certify DUE stayer policies. A separate permanent10% price-fall dated comparison
+is being prepared with exact originalg0; no new numerical run yet.

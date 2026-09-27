@@ -721,3 +721,19 @@ styles and spacing, while preserving wording. Content synchronization still
 requires an explicit request. Both manuscript preambles now use the same compact
 run-in subsubsection style; the mock's model subheaders use that command, and
 the forced break before its first subheader is removed.
+
+### September27 — DUE borrowing-rule synchronization outstanding
+
+The author-selected existing-owner rule passed same-price and permanent10%
+price-fall diagnostics and is integrated as optional native code. Purchases
+retain origination limits; stayers may retain inherited debt, with separate
+post-saving net-estate solvency when death is possible. A new production
+calibration contract has not yet activated it.
+
+Representation check: the maintained September14 slides still display a
+continuing collateral floor, and the mock model section retains the historical
+pre-income purchase description without this DUE rule. The author is currently
+editing the draft model section. No author wording or mock content was changed;
+full representation synchronization is outstanding. Preserve the frozen
+September14 reference and do not treat this diagnostic as a quantitative
+equilibrium update.

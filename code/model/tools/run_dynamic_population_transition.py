@@ -78,6 +78,8 @@ class PolicyBundle:
     maps: TransitionMaps
     fert2_probs: np.ndarray | None = None
     joint_choice: Any | None = None
+    bp_pol_stay: np.ndarray | None = None
+    c_pol_stay: np.ndarray | None = None
 
     def __post_init__(self) -> None:
         # The Bellman API returns continuation births on P. Own a snapshot so
@@ -133,6 +135,7 @@ class PeriodEvaluation:
     # Policy branches must inherit the input population, before a candidate
     # price applies its own feasibility projection. Older checkpoints lack it.
     inherited_g_pre: np.ndarray | None = None
+    g_stay_distribution: np.ndarray | None = None
 
 
 class SolveCounter:
@@ -335,6 +338,8 @@ def policy_from_solution(
         build_transition_maps(price, P, b_grid, shared),
         fert2_probs=getattr(solution, "fert2_probs", None),
         joint_choice=getattr(solution, "joint_choice", None),
+        bp_pol_stay=getattr(solution, "bp_pol_stay", None),
+        c_pol_stay=getattr(solution, "c_pol_stay", None),
     )
 
 
@@ -365,6 +370,8 @@ def solve_policy(
         build_transition_maps(price, P, b_grid, shared),
         fert2_probs=getattr(P, "_fert2_probs", None),
         joint_choice=getattr(P, "_joint_choice", None),
+        bp_pol_stay=getattr(P, "_bp_pol_stay", None),
+        c_pol_stay=getattr(P, "_c_pol_stay", None),
     )
 
 
@@ -565,6 +572,17 @@ def evaluate_period(
         policy.maps.tmx_wt,
         use_compiled_scatter=bool(getattr(P, "use_numba_scatter", False)),
     )
+    g_stay = None
+    if bool(getattr(P, "native_due_stayer_credit", False)):
+        if getattr(policy, "bp_pol_stay", None) is None or getattr(policy, "c_pol_stay", None) is None:
+            raise ValueError("DUE dated policy lacks its owned stayer policies")
+        # Use post-fertility origin mass, matching realize_current_cross_section.
+        g_stay = model.realize_stayer_cross_section(
+            g_post, policy.loc_probs, policy.tenure_choice, policy.tenure_probs)
+        # Forward kernels receive this same date's P, never the last backward date.
+        P._bp_pol_stay = policy.bp_pol_stay
+        P._c_pol_stay = policy.c_pol_stay
+        P._g_stay_distribution = g_stay
     demand = housing_demand_by_location(g_current, policy.hR_pol, P)
     supply = (
         supply_rule.quantity(policy.price)
@@ -584,6 +602,7 @@ def evaluate_period(
         residual,
         projected_mass,
         inherited_g_pre=g_pre.copy() if joint_nested_enabled(P) else None,
+        g_stay_distribution=g_stay,
     )
 
 
@@ -683,6 +702,9 @@ def reconstruct_stationary_pre_fertility(
     b_grid: np.ndarray,
     shared: SimpleNamespace,
 ) -> tuple[np.ndarray, dict[str, float]]:
+    stay_saving = getattr(policy, 'bp_pol_stay', None) if bool(getattr(P, 'native_due_stayer_credit', False)) else None
+    if bool(getattr(P, 'native_due_stayer_credit', False)) and stay_saving is None:
+        raise ValueError('DUE reconstruction requires date-owned stayer saving')
     saved_post = np.asarray(solution.g_beginning_distribution, dtype=float)
     g_pre = np.zeros_like(saved_post)
     g_pre[:, :, :, 0, :, :, :] = entrant_cohort(
@@ -710,6 +732,7 @@ def reconstruct_stationary_pre_fertility(
             stochastic,
             P.Pi_child if stochastic else None,
             Pi_z,
+            bp_pol_stay=stay_saving,
         )
     if joint_nested_enabled(P):
         # The solution carries the stationary population's effective tenure
@@ -930,6 +953,11 @@ def advance_calendar_distribution(
     shared: SimpleNamespace,
 ) -> tuple[np.ndarray, np.ndarray, float, float]:
     policy = evaluation.policy
+    stay_saving = None
+    if bool(getattr(P, "native_due_stayer_credit", False)):
+        stay_saving = getattr(policy, "bp_pol_stay", None)
+        if stay_saving is None:
+            raise ValueError("DUE forward operator requires date-owned stayer saving")
     g_post = evaluation.g_post_fertility
     next_pre = np.zeros_like(g_post)
     mature_by_loc = np.zeros(P.I)
@@ -959,6 +987,7 @@ def advance_calendar_distribution(
             stochastic,
             P.Pi_child if stochastic else None,
             Pi_z,
+            bp_pol_stay=stay_saving,
         )
         # Reuse the exact transition kernel on the last active child stage.
         # The resulting mass in an absorbing matured state is this period's
@@ -982,6 +1011,7 @@ def advance_calendar_distribution(
             stochastic,
             P.Pi_child if stochastic else None,
             Pi_z,
+            bp_pol_stay=stay_saving,
         )
         for parity in range(1, P.n_parity):
             matured_state = K + 1 if parity == 1 else K + 2
