@@ -38,21 +38,22 @@
     "cluster": 24,
     "local": 10
   },
-  "status_note": "The first main search completed 240 cases and exact repeats. Eight workers now continue from its verified winner; two test early-fertility weight 3,000. Up to 10 local workers ran; cluster search never launched because SSH access expired.",
+  "status_note": "Completed 436 search cases and 16 checks below, plus two cold-start checks. Up to 10 local workers; zero cluster search workers because SSH access expired. All numerical work finished by 07:02 EDT. No model, grid, target or gate changed during search.",
   "review_notes": [
     "Bequests count all positive estates against a child-directed SCF target. Older-wealth income and first-birth housing-response measurements also retain approximations.",
-    "Weights and the curvature interval remain provisional. This local search does not establish an optimum or prove that targets are unreachable; identification still needs assessment.",
-    "Preparation failures: one zero-solve cluster submission failed; two local smokes were cancelled after source-pin drift. Fresh pinned snapshots replaced them; no accepted result was relabeled."
+    "Weights and the curvature interval remain provisional. The higher early-fertility weight gives 0.544 versus target 0.810, but ownership falls to 0.579; it is not an adopted improvement.",
+    "Preparation failures: one zero-solve cluster submission failed; two local smokes were cancelled after source-pin drift. Fresh pinned snapshots replaced them. No accepted result was relabeled."
   ],
   "next_steps": [
-    "Compare the early-fertility weighting experiment, then profile curvature and fertility taste scales with every fertility target retained.",
-    "Review credit, interest, tenure scale, rental choices and income/wealth inputs; separately test the finer housing grid and conception schedule.",
-    "Restore cluster access, collect the legacy replay and cross-host checks, then extend the unchanged search from independently repeated points."
+    "Check the age-25 fertility measurement and profile child-benefit curvature with the two fertility taste scales, keeping every fertility target.",
+    "Review credit, the 2% interest rate, tenure scale, rental options and income/wealth inputs; test the finer housing grid and conception schedule separately.",
+    "Restore cluster access and collect the legacy/cross-host checks; then run wider searches from several verified starting points under an agreed weighting rule."
   ],
   "repeats": {
-    "status": "The first main and unit-weight winners each have two exact final repeats and 17 inspected plots. The main continuation passed two further exact smokes; its final repeats remain pending."
+    "status": "All four search runs passed two exact final repeats of all 14 target rows and 31 parameter rows. Final checkpoints and receipts were authenticated; all 17 selected diagnostic plots were inspected."
   },
   "benchmark": {
-    "status": "At the same starting point, warm prices required 13 price evaluations versus 19 without them: observed local runtimes were 231 versus 312 seconds. All moment differences were below 1e-5. The old-floor Torch replay remains uncollected."
-  }
+    "status": "Two extra cold-start checks are outside the table. At the same starting point, warm prices used 13 price evaluations versus 19 cold: 231 versus 312 seconds locally, with moment differences below 1e-5. Legacy Torch replay and cross-host checks remain uncollected."
+  },
+  "lead_note": "The no-floor utility generates a large first-birth housing response (1.610 rooms versus 1.465). Joint fit remains incomplete: ownership, wealth and children born by age 25 are too low. Final points reproduce exactly, but the search does not establish an optimum."
 }

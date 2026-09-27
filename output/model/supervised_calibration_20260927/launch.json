@@ -1,5 +1,5 @@
 {
-  "status": "local_exploratory_search_active_cluster_auth_blocked",
+  "status": "report_delivered_supervision_paused",
   "created_epoch": 1790484834.200037,
   "absolute_end_epoch": 1790512980,
   "report_deadline": "2026-09-27T09:30:00-04:00",
@@ -42,7 +42,8 @@
     "cold": {
       "contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/cold/contract.json",
       "smoke": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/cold/smoke",
-      "log": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/cold/smoke_controller.log"
+      "log": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/cold/smoke_controller.log",
+      "status": "exact_loop_smoke_passed"
     },
     "early_fertility_3000": {
       "contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v3/early_fertility_3000/contract.json",
@@ -50,7 +51,7 @@
       "search": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v3/early_fertility_3000/search",
       "log": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v3/early_fertility_3000/search_controller.log",
       "pid": 48392,
-      "status": "search_active",
+      "status": "bounded_search_complete",
       "weighting": "early_fertility_3000",
       "production_contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v3/early_fertility_3000/production_contract.json"
     },
@@ -61,7 +62,7 @@
       "log": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/search_controller.log",
       "smoke_log": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/smoke_controller.log",
       "pid": 57189,
-      "status": "search_active",
+      "status": "bounded_search_complete",
       "weighting": "primary",
       "production_contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/production_contract.json"
     }
@@ -76,15 +77,17 @@
   ],
   "local_primary_smoke_pid": 5266,
   "local_cold_smoke_pid": 5499,
-  "local_search_workers": 10,
+  "local_search_workers": 0,
   "local_memory_guard": {
     "pid": 7737,
     "threshold_gib": 32,
     "interval_seconds": 20,
-    "action": "authenticated owned evaluator SIGTERM, recorded resource interruption; controller stops new dispatch"
+    "action": "authenticated owned evaluator SIGTERM, recorded resource interruption; controller stops new dispatch",
+    "status": "stopped_after_all_numerical_work_completed",
+    "stopped_epoch": 1790508416.654015
   },
   "prepared_followup": {
-    "status": "search_active",
+    "status": "bounded_search_complete",
     "contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v3/early_fertility_3000/contract.json",
     "contract_sha256": "859c81541054bb7ab96138d691b356c1632a21f57b87b70e038d31fd5bcc79f6",
     "preflight": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v3/early_fertility_3000/preflight/preflight.json",
@@ -103,5 +106,9 @@
     "production_contract_sha256": "4b80a123cac017cb6d75520b4e52e4feb80f929eec6b9da6c06c2be7de16ebf0",
     "search_pid": 48392
   },
-  "primary_continuation_contract_sha256": "3b770d8c8c22d2b0449b34a575d6353b063bc015d74ce11016dad7e22ed7ca5e"
+  "primary_continuation_contract_sha256": "3b770d8c8c22d2b0449b34a575d6353b063bc015d74ce11016dad7e22ed7ca5e",
+  "heartbeat_status": "PAUSED",
+  "final_report": "output/pdf/fertility_overnight_memo_20260927.pdf",
+  "support_packet": "output/model/supervised_calibration_20260927/fertility_overnight_support_20260927.zip",
+  "closed_epoch": 1790508476.087768
 }

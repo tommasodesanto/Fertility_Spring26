@@ -57,6 +57,23 @@ def fixture(root, completed=True):
 
 
 class MemoTests(unittest.TestCase):
+    def test_own_weight_winner_is_not_silently_replaced_by_primary_reranking(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);path=fixture(root);index=memo.read(path)
+            case=root/'identity_room_case';shutil.copytree(root/'identity_case',case)
+            fits=list(memo.rows(case/'target_fit.csv','moment').values())
+            for row in fits:
+                gap=.1 if row['moment']=='mean_rooms' else 0.
+                row.update(model=float(row['target'])+gap,gap=gap,
+                           loss_contribution=float(row['weight'])*gap**2 if row['weight'] else '')
+            csvfile(case/'target_fit.csv',fits)
+            receipt=memo.read(case/'receipt.json');receipt['loss']=.01;save(case/'receipt.json',receipt)
+            index['cases'].append(dict(path=str(case),weighting='identity',status='success'))
+            save(path,index);group=memo.collect(path)['groups']['identity']
+            self.assertAlmostEqual(group['best_under_primary_weights'],.25)
+            self.assertAlmostEqual(group['own_winner_primary_loss'],1.)
+            self.assertTrue(group['own_winner_path'].endswith('identity_room_case'))
+
     def test_selected_export_links_graphs_only_to_authenticated_case(self):
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder);index=fixture(root);case=root/'primary_case'

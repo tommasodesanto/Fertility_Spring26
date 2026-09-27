@@ -1,5 +1,66 @@
 # Supervised overnight calibration — September 27
 
+## September 27, 07:27 EDT - final two-page memo delivered; supervision paused
+
+All numerical work finished by 07:02 EDT. The final memo is
+`output/pdf/fertility_overnight_memo_20260927.pdf`; its two pages contain all
+fourteen restrictions and all ten fitted parameters with bounds. The separate
+support packet is `output/model/supervised_calibration_20260927/fertility_overnight_support_20260927.zip`.
+It contains the unchanged seventeen standard diagnostic plots, complete fit and
+parameter tables, alternative-weight comparisons, provenance and verification.
+Read `output/model/supervised_calibration_20260927/final_readout/README.md` for
+artifact details and regeneration commands. Both PDF pages were visually
+inspected; all numeric rows match the selected source and the report builder's
+twelve tests pass. PDF SHA256:
+`b58efa4222284fab4c034647ec9d53869c3a9522c104982e6b4b5379ee4c5a0a`.
+
+There are 436 successful search evaluations (336 main, 60 unit weights, 40
+higher early-fertility weight), sixteen indexed smoke/repeat checks, and two
+additional cold-start checks. All four searches passed two independent final
+repetitions of all fourteen target rows and 31 full parameter rows, with
+checkpoint and receipt authentication. No accepted-run fatal error,
+inadmissible case, timeout or resource intervention occurred. Two preparation
+smokes cancelled after pin drift and one failed zero-solve cluster submission
+remain preserved and excluded. Actual concurrency was at most ten local
+workers and zero cluster search workers: SSH expiry blocked the requested 24.
+Legacy Torch and cross-host verification results remain uncollected.
+
+The final main selection is continuation de_0093, primary loss 42.282 versus
+592.815 at the starting point. Complete targets, model values, gaps, weights
+and loss contributions: `output/model/supervised_calibration_20260927/final_readout/target_fit.csv`.
+All fitted estimates, bounds and bound flags: the adjacent `parameters.csv`.
+Without a housing floor, first-birth housing rises 1.610 rooms versus 1.465;
+ownership is 0.617 versus 0.676, wealth/earnings 6.025 versus 6.927, and children
+born by age 25 are 0.528 versus 0.810. This demonstrates a large housing response
+without the floor, but joint fit remains incomplete. It establishes neither an
+optimum nor an unreachable target. All final standard plot packets were
+inspected; the largest owner product still dominates and wide wealth axes
+limit fine boundary inspection. Main market residual is about 7.44e-7 and
+estate-entry funding passes.
+
+The early-weight experiment's own winner is de_0037: common-primary loss 57.608,
+early fertility 0.544, ownership 0.579. Re-ranking that experiment under main
+weights instead selects de_0035 at 57.444; keep these selections distinct.
+The unit-weight winner has common-primary loss 361.218. Neither alternative
+weight system is adopted. No model, grid, target, bound or scientific gate
+changed during search. The main early-fertility weight and curvature interval
+remain provisional research choices.
+
+Next decisions: check age 25 measurement and profile child-benefit curvature
+jointly with both fertility taste scales while retaining every fertility target;
+review credit, the 2% interest rate, tenure scale, rentals and income/wealth
+inputs. Keep the finer housing grid and conception schedule as separate tests.
+Estate-recipient scope, older-wealth income denominators and the first-birth
+housing observer remain approximations. Restore ordinary cluster access and
+collect legacy/cross-host checks before a wider multi-start search.
+
+The memory guard was stopped after verifying zero active local numerical
+processes. Heartbeat `supervise-fertility-calibration-tonight` is confirmed
+PAUSED through the automation tool. No further search is authorized by this
+completed overnight schedule. The PDF was queued in the task's file panel;
+final chat delivery links the memo and support packet. Google ledger was not
+edited during unattended supervision; its designated writer retains ownership.
+
 ## September 27, 06:48 EDT — both searches near completion; hourly plots pass inspection
 
 The 06:45 snapshot has 80/96 main-continuation and 38/40 early-weight search cases,

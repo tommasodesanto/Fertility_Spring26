@@ -309,11 +309,14 @@ def collect(index_path):
                        {state['weighting'] for state in controllers} | {'primary'}):
         candidates = [x for x in compatible if x['weighting'] == name]
         winner = min(candidates, key=lambda x: x['primary_loss']) if candidates else None
+        own_winner = min(candidates, key=lambda x: x['own_loss']) if candidates else None
         searched = sum(c['phase'] == 'search' for c in candidates)
         groups[name] = dict(completed=len(candidates), search_completed=searched,
                             verification_or_other=len(candidates)-searched,
                             best_under_primary_weights=winner['primary_loss'] if winner else None,
-                            best_path=winner['path'] if winner else None)
+                            best_path=winner['path'] if winner else None,
+                            own_winner_primary_loss=own_winner['primary_loss'] if own_winner else None,
+                            own_winner_path=own_winner['path'] if own_winner else None)
     if best:
         fits, parameters = best['fits'], best['parameters']
     else:
@@ -328,7 +331,8 @@ def collect(index_path):
     return dict(generated_utc=datetime.now(timezone.utc).isoformat(), index_path=str(index_path),
                 primary_objective_path=str(objective_path), primary_objective_sha256=hashlib.sha256(objective_path.read_bytes()).hexdigest(),
                 status='provisional_results' if best else 'no_completed_primary_point',
-                status_note=index.get('status_note', ''), expected_workers=index.get('expected_workers', {}),
+                status_note=index.get('status_note', ''), lead_note=index.get('lead_note', ''),
+                expected_workers=index.get('expected_workers', {}),
                 counts=dict(counts), controller_states=controllers, errors=errors,
                 groups=groups, selected=best, candidates=compatible, target_fit=fits, parameters=parameters,
                 largest_weighted_misses=misses, median_stationary_solve_seconds=statistics.median(timings) if timings else None,
@@ -430,20 +434,22 @@ def render_pdf(path, summary):
             '<b>No completed primary-weight point is available.</b> Targets and restrictions below are known; '
             'model values remain blank. This memo does not invent results.')
     y=paragraph(lead,y,max_height=43)
+    if summary.get('lead_note'):
+        y=paragraph(escape(summary['lead_note']),y,small,max_height=35)
     status = ', '.join(f'{k.replace("_", " ")}: {v}' for k,v in sorted(counts.items())) or 'No completed candidate records yet'
     allocation=summary['expected_workers']
     allocation_text=(' Requested capacity: '+', '.join(f'{v} {k}' for k,v in allocation.items())+'.') if allocation else ''
     y=paragraph('<b>Progress:</b> '+escape(status)+'.'+escape(allocation_text)+' '+escape(summary['status_note'][:330]),y,small,max_height=55)
     group_labels={'primary':'Main weights','identity':'Unit weights',
                   'early_fertility_3000':'Early fertility weight 3,000'}
-    group_rows=[['Weight system','Search / checks','Best loss under main weights']]
+    group_rows=[['Weight system','Search / checks','Loss under main weights']]
     for name, group in summary['groups'].items():
-        group_rows.append([group_labels[name],f"{group['search_completed']} / {group['verification_or_other']}",fmt(group['best_under_primary_weights'])])
+        group_rows.append([group_labels[name],f"{group['search_completed']} / {group['verification_or_other']}",fmt(group['own_winner_primary_loss'])])
     if len(group_rows)>5:
         raise ValueError('At most four weighting systems fit the two-page memo; consolidate the index')
     y=table(group_rows,[225,110,201],y)
-    y=paragraph('Checks include acceptance and final-repeat evaluations. Experimental weights are compared after rescoring under the primary weights. '
-                'The table below reports the best primary-search point; alternative-system details are in summary.json.',y,small,max_height=31)
+    y=paragraph('Checks include acceptance and final-repeat evaluations. Each row scores the point chosen by that weight system using the main weights. '
+                'Full re-ranking is saved separately. The target table below reports the main-weight winner.',y,small,max_height=31)
     y=heading('All 14 restrictions: 13 scored moments and one normalization',y)
     data=[['Moment','Target','Model','Gap','Weight','Loss']]
     for row in summary['target_fit']:
