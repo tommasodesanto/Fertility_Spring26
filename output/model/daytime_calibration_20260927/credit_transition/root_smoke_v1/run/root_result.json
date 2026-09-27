@@ -1,0 +1,512 @@
+{
+  "best": {
+    "closure": "fixed_tax",
+    "fiscal_gate": true,
+    "fiscal_residual": [
+      2.683521274223189e-15,
+      3.5002451402907068e-15
+    ],
+    "fiscal_unknown": "period_pension",
+    "fiscal_values": [
+      0.9177840474643179,
+      0.9177840474644241
+    ],
+    "mapping_valid": true,
+    "market_gate": true,
+    "market_residual": [
+      -0.00012635933624492062,
+      -7.410713009206674e-05
+    ],
+    "payload": {
+      "evaluation": 7
+    },
+    "prices": [
+      0.8480467907723968,
+      0.8483448560444319
+    ],
+    "residual": [
+      -0.00012635933624492062,
+      -7.410713009206674e-05,
+      2.683521274223189e-15,
+      3.5002451402907068e-15
+    ],
+    "score": 0.6317966812246031,
+    "x": [
+      -0.16481946691483498,
+      -0.1644680559942946,
+      -0.0857931584490804,
+      -0.08579315844896464
+    ]
+  },
+  "closure": "fixed_tax",
+  "contract": {
+    "closure": "fixed_tax",
+    "final_reproduction_tolerance": 1e-10,
+    "fiscal_bounds": [
+      0.5,
+      1.5
+    ],
+    "fiscal_residual_scale": 200.00000000000003,
+    "fiscal_slope": 1.0,
+    "fiscal_tolerance": 1e-06,
+    "market_slope": 1.0,
+    "market_tolerance": 0.0002,
+    "max_log_step": 0.05,
+    "score_definition": "maximum absolute residual divided by its own tolerance"
+  },
+  "converged": true,
+  "domain_rejections": {},
+  "elapsed_seconds": 257.8571324159857,
+  "evaluations": 8,
+  "final": {
+    "closure": "fixed_tax",
+    "fiscal_gate": true,
+    "fiscal_residual": [
+      2.683521274223189e-15,
+      3.5002451402907068e-15
+    ],
+    "fiscal_unknown": "period_pension",
+    "fiscal_values": [
+      0.9177840474643179,
+      0.9177840474644241
+    ],
+    "mapping_valid": true,
+    "market_gate": true,
+    "market_residual": [
+      -0.00012635933624492062,
+      -7.410713009206674e-05
+    ],
+    "payload": {
+      "evaluation": 8
+    },
+    "prices": [
+      0.8480467907723968,
+      0.8483448560444319
+    ],
+    "residual": [
+      -0.00012635933624492062,
+      -7.410713009206674e-05,
+      2.683521274223189e-15,
+      3.5002451402907068e-15
+    ],
+    "score": 0.6317966812246031,
+    "x": [
+      -0.16481946691483498,
+      -0.1644680559942946,
+      -0.0857931584490804,
+      -0.08579315844896464
+    ]
+  },
+  "final_damping": 0.6,
+  "final_jacobian": [
+    [
+      -2.387308831907656,
+      1.264530143660941,
+      -3.453243656489378e-11,
+      -4.177501767272718e-11
+    ],
+    [
+      -0.3676656107141355,
+      -2.2149669183485456,
+      -5.158265874994828e-12,
+      -6.212845167046472e-12
+    ],
+    [
+      2.641884673499878e-12,
+      1.360762362421387e-12,
+      -1.0,
+      -9.510066991515745e-23
+    ],
+    [
+      -2.8687586582485926e-12,
+      1.0909876168701388e-13,
+      1.1333351490720668e-22,
+      -1.0
+    ]
+  ],
+  "final_reproduction_max_abs": 0.0,
+  "fiscal_reproduction_max_abs": 0.0,
+  "gates": {
+    "fiscal_replay": true,
+    "housing": true,
+    "mapping": true,
+    "market_replay": true,
+    "social_security": true
+  },
+  "history": [
+    {
+      "best_score": 150.93570192257067,
+      "closure": "fixed_tax",
+      "elapsed_seconds": 31.931549790984718,
+      "evaluation": 1,
+      "evaluation_seconds": 31.92958575001103,
+      "fiscal_gate": true,
+      "fiscal_residual": [
+        6.226936104578014e-13,
+        7.502192084023149e-13
+      ],
+      "fiscal_unknown": "period_pension",
+      "fiscal_values": [
+        0.917784047463731,
+        0.917784047463731
+      ],
+      "mapping_valid": true,
+      "market_gate": false,
+      "market_residual": [
+        0.030187140384514134,
+        0.01813210964468873
+      ],
+      "new_best": true,
+      "phase": "initial",
+      "prices": [
+        0.8350036723228692,
+        0.843635505341485
+      ],
+      "residual": [
+        0.030187140384514134,
+        0.01813210964468873,
+        6.226936104578014e-13,
+        7.502192084023149e-13
+      ],
+      "score": 150.93570192257067
+    },
+    {
+      "actual_log_step": [
+        0.018112284230708486,
+        0.010879265786813197,
+        3.7367331451321206e-13,
+        4.501260475464619e-13
+      ],
+      "best_score": 61.767451633103924,
+      "closure": "fixed_tax",
+      "damping": 0.6,
+      "elapsed_seconds": 64.0045239579922,
+      "evaluation": 2,
+      "evaluation_seconds": 32.061779082985595,
+      "fiscal_gate": true,
+      "fiscal_residual": [
+        2.61234962303729e-13,
+        3.044046523672831e-13
+      ],
+      "fiscal_unknown": "period_pension",
+      "fiscal_values": [
+        0.9177840474640739,
+        0.9177840474641441
+      ],
+      "mapping_valid": true,
+      "market_gate": false,
+      "market_residual": [
+        -0.0002265839158408783,
+        -0.012353490326620786
+      ],
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.8502652903329189,
+        0.8528637474608316
+      ],
+      "requested_log_step": [
+        0.01811228423070848,
+        0.010879265786813237,
+        3.7361616627468084e-13,
+        4.501315250413889e-13
+      ],
+      "reset_reason": null,
+      "residual": [
+        -0.0002265839158408783,
+        -0.012353490326620786,
+        2.61234962303729e-13,
+        3.044046523672831e-13
+      ],
+      "score": 61.767451633103924
+    },
+    {
+      "actual_log_step": [
+        0.0010223832426003998,
+        -0.005565913962165936,
+        1.5557000132560006e-13,
+        1.822986206434507e-13
+      ],
+      "best_score": 43.746508325014645,
+      "closure": "fixed_tax",
+      "damping": 0.6,
+      "elapsed_seconds": 96.11018233301002,
+      "evaluation": 3,
+      "evaluation_seconds": 32.098972417006735,
+      "fiscal_gate": true,
+      "fiscal_residual": [
+        1.0862427418703476e-13,
+        1.2087513217803978e-13
+      ],
+      "fiscal_unknown": "period_pension",
+      "fiscal_values": [
+        0.9177840474642167,
+        0.9177840474643114
+      ],
+      "mapping_valid": true,
+      "market_gate": false,
+      "market_residual": [
+        -0.008749301665002929,
+        -0.0009517925831726403
+      ],
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.851135031846335,
+        0.8481299673482241
+      ],
+      "requested_log_step": [
+        0.0010223832426003705,
+        -0.0055659139621659715,
+        1.5559081461429804e-13,
+        1.8223681086675257e-13
+      ],
+      "reset_reason": null,
+      "residual": [
+        -0.008749301665002929,
+        -0.0009517925831726403,
+        1.0862427418703476e-13,
+        1.2087513217803978e-13
+      ],
+      "score": 43.746508325014645
+    },
+    {
+      "actual_log_step": [
+        -0.0025934827191401166,
+        0.0005350370368382151,
+        6.337985691828862e-14,
+        7.222000775186643e-14
+      ],
+      "best_score": 11.19756505932763,
+      "closure": "fixed_tax",
+      "damping": 0.6,
+      "elapsed_seconds": 128.1915758329851,
+      "evaluation": 4,
+      "evaluation_seconds": 32.072314541001106,
+      "fiscal_gate": true,
+      "fiscal_residual": [
+        4.900343196407566e-14,
+        5.26203519423704e-14
+      ],
+      "fiscal_unknown": "period_pension",
+      "fiscal_values": [
+        0.9177840474642749,
+        0.9177840474643777
+      ],
+      "mapping_valid": true,
+      "market_gate": false,
+      "market_residual": [
+        -0.002239513011865526,
+        -0.0010854391578292162
+      ],
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.8489304878086942,
+        0.8485838697092669
+      ],
+      "requested_log_step": [
+        -0.0025934827191400832,
+        0.0005350370368382657,
+        6.332615204757137e-14,
+        7.227262944208693e-14
+      ],
+      "reset_reason": null,
+      "residual": [
+        -0.002239513011865526,
+        -0.0010854391578292162,
+        4.900343196407566e-14,
+        5.26203519423704e-14
+      ],
+      "score": 11.19756505932763
+    },
+    {
+      "actual_log_step": [
+        -0.000695421519939482,
+        -0.00016534581037616625,
+        3.036459972349803e-14,
+        3.241851231905457e-14
+      ],
+      "best_score": 4.022755349303597,
+      "closure": "fixed_tax",
+      "damping": 0.6,
+      "elapsed_seconds": 160.46965704098693,
+      "evaluation": 5,
+      "evaluation_seconds": 32.26891795900883,
+      "fiscal_gate": true,
+      "fiscal_residual": [
+        1.9134673433591437e-14,
+        2.1701519869802382e-14
+      ],
+      "fiscal_unknown": "period_pension",
+      "fiscal_values": [
+        0.9177840474643028,
+        0.9177840474644074
+      ],
+      "mapping_valid": true,
+      "market_gate": false,
+      "market_residual": [
+        -0.0008045510698607193,
+        -0.0004592539216059377
+      ],
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.8483403285070625,
+        0.8484435715208362
+      ],
+      "requested_log_step": [
+        -0.000695421519939466,
+        -0.00016534581037613,
+        3.0406524033078264e-14,
+        3.2459356112610466e-14
+      ],
+      "reset_reason": null,
+      "residual": [
+        -0.0008045510698607193,
+        -0.0004592539216059377,
+        1.9134673433591437e-14,
+        2.1701519869802382e-14
+      ],
+      "score": 4.022755349303597
+    },
+    {
+      "actual_log_step": [
+        -0.0002483746679989296,
+        -8.24685263404179e-05,
+        1.16157083951407e-14,
+        1.354472090042691e-14
+      ],
+      "best_score": 1.5837324985671626,
+      "closure": "fixed_tax",
+      "damping": 0.6,
+      "elapsed_seconds": 192.93968504099757,
+      "evaluation": 6,
+      "evaluation_seconds": 32.46287258301163,
+      "fiscal_gate": true,
+      "fiscal_residual": [
+        7.817214146650159e-15,
+        7.817214146649249e-15
+      ],
+      "fiscal_unknown": "period_pension",
+      "fiscal_values": [
+        0.9177840474643134,
+        0.9177840474644199
+      ],
+      "mapping_valid": true,
+      "market_gate": false,
+      "market_residual": [
+        -0.00031674649971343255,
+        -0.00018508671495918243
+      ],
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.8481296484245003,
+        0.8483736045148874
+      ],
+      "requested_log_step": [
+        -0.0002483746679988819,
+        -8.2468526340468e-05,
+        1.1653779210854402e-14,
+        1.3547822530132509e-14
+      ],
+      "reset_reason": null,
+      "residual": [
+        -0.00031674649971343255,
+        -0.00018508671495918243,
+        7.817214146650159e-15,
+        7.817214146649249e-15
+      ],
+      "score": 1.5837324985671626
+    },
+    {
+      "actual_log_step": [
+        -9.769933157274813e-05,
+        -3.388714288971029e-05,
+        4.829470157119431e-15,
+        4.593547764386585e-15
+      ],
+      "best_score": 0.6317966812246031,
+      "closure": "fixed_tax",
+      "damping": 0.6,
+      "elapsed_seconds": 225.4404572499916,
+      "evaluation": 7,
+      "evaluation_seconds": 32.49133562500356,
+      "fiscal_gate": true,
+      "fiscal_residual": [
+        2.683521274223189e-15,
+        3.5002451402907068e-15
+      ],
+      "fiscal_unknown": "period_pension",
+      "fiscal_values": [
+        0.9177840474643179,
+        0.9177840474644241
+      ],
+      "mapping_valid": true,
+      "market_gate": true,
+      "market_residual": [
+        -0.00012635933624492062,
+        -7.410713009206674e-05
+      ],
+      "new_best": true,
+      "phase": "iterate",
+      "prices": [
+        0.8480467907723968,
+        0.8483448560444319
+      ],
+      "requested_log_step": [
+        -9.769933157272789e-05,
+        -3.388714288973688e-05,
+        4.8076099143490265e-15,
+        4.554702116403997e-15
+      ],
+      "reset_reason": null,
+      "residual": [
+        -0.00012635933624492062,
+        -7.410713009206674e-05,
+        2.683521274223189e-15,
+        3.5002451402907068e-15
+      ],
+      "score": 0.6317966812246031
+    },
+    {
+      "best_score": 0.6317966812246031,
+      "closure": "fixed_tax",
+      "elapsed_seconds": 257.85677362501156,
+      "evaluation": 8,
+      "evaluation_seconds": 32.409313999989536,
+      "fiscal_gate": true,
+      "fiscal_residual": [
+        2.683521274223189e-15,
+        3.5002451402907068e-15
+      ],
+      "fiscal_unknown": "period_pension",
+      "fiscal_values": [
+        0.9177840474643179,
+        0.9177840474644241
+      ],
+      "mapping_valid": true,
+      "market_gate": true,
+      "market_residual": [
+        -0.00012635933624492062,
+        -7.410713009206674e-05
+      ],
+      "new_best": false,
+      "phase": "final",
+      "prices": [
+        0.8480467907723968,
+        0.8483448560444319
+      ],
+      "residual": [
+        -0.00012635933624492062,
+        -7.410713009206674e-05,
+        2.683521274223189e-15,
+        3.5002451402907068e-15
+      ],
+      "score": 0.6317966812246031
+    }
+  ],
+  "market_reproduction_max_abs": 0.0,
+  "status": "converged"
+}

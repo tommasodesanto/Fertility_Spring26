@@ -1,5 +1,41 @@
 # Calibration Status
 
+## September 27 — author requests transition execution and long calibration
+
+DUE-style existing-owner collateral is SELECTED SUBJECT TO MATCHED CHECK:
+origination limit retained, inherited above-limit debt neednot be forced back
+toLTV afterpricefall, noadditionaldebt beyond inheritedbalance. PTIdeferred.
+Separateworktree due-existing-owner-credit ownsimplementation; main model
+unchanged while originalbaselinecreditbenchmarkruns. Explicit deathestate
+solvency must remain enforced and disclosed separately from LTV restoration.
+
+Native joint price/pension root_smoke_v1 COMPLETE: H2, eight evaluations,
+261.504 seconds. Maximum housing residual 1.264e-4 (gate 2e-4), fiscal
+residual 3.500e-15, fresh final residual replay exact. Both dated standard
+17-plot packets inspected; high old ownership, highly concentrated liquid
+wealth and full-grid tail-policy features remain visible. These plots do not
+certify all occupied policy shapes. Initial population total and all31 parameters
+preserved, BUT date0 inherited mass1.218073124571449e-8 was moved to a
+feasible wealth node by gate_pre_fertility_distribution. This passes the old
+1e-6 projection gate but VIOLATES exact initial-distribution contract. Lead
+found this in path.csv; strict readiness FAILS pending bounded diagnosis.
+Do not approve a long transition with this projection. Terminal distribution
+L1 .173 and population gap3.404% FAIL retained
+gates; horizon extension unverified. This is a successful short joint-root
+smoke, NOT a completed equilibrium transition. No local model worker remains.
+Cluster byte-preserving package transfer PID14965 in progress; setup-only and
+cross-host numerical checks still pending. Do not execute expired localplan
+remotely. Longcalibration PREPARATION ONLY; remaining fixedinput/weight
+decisions and revised scientific contract pending. Interest question pending;
+do not infer acceptance from elapsedtime.
+
+DUE isolated implementation includes separate buyer/stayer saving and consumption,
+origin-aware distributions, dated budget and estate accounting. Lead review
+found missing death floor in the fallback path; implementation now rejects that
+unsupported path before solving. Tiny fixtures pass; full matched numerical
+check remains outstanding. Frozen origin-blind estate audit is rejected for
+DUE; a new authenticated source contract is required, no old pin bypass.
+
 ## September 27, 13:46 EDT — saved policy shapes examined separately from fit
 
 No solves; selected local candidate checkpoint authenticated. Supplemental

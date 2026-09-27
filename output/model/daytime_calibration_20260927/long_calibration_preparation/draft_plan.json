@@ -1,0 +1,78 @@
+{
+  "status": "preparation_only_not_runnable",
+  "launch_performed": false,
+  "model_solves_performed": 0,
+  "requires_lead_review": true,
+  "proposed_numerical_seconds": 28800,
+  "workers_max": 24,
+  "measured_seconds_per_objective": [
+    300,
+    360
+  ],
+  "measured_stationary_solves_typical": 6,
+  "maximum_stationary_solves_per_objective": 23,
+  "case_timeout_seconds": null,
+  "cluster_memory_gib": null,
+  "algorithm": null,
+  "source_choice": null,
+  "latest_verified_candidate": {
+    "loss": 41.111683948239275,
+    "case": "../local_continuation/run_v1/selected_export"
+  },
+  "original_benchmark": {
+    "loss": 42.281937042645964,
+    "case": "overnight primary continuation de_0093"
+  },
+  "current_target_weight_fingerprint": "e79b1d277510e21f7fdf6ac656aca37cd097d9f523500de7dff9ca6f11132f27",
+  "current_source_inventory_sha256": "49566b92deae0d27014ebe4204cc88209ea27a664e90ca697d2e377d2f8f4737",
+  "stages": [
+    {
+      "name": "acceptance",
+      "start_minute": 0,
+      "end_minute": 30,
+      "max_objectives": 4
+    },
+    {
+      "name": "broad_starts",
+      "start_minute": 30,
+      "end_minute": 90,
+      "max_objectives": 96
+    },
+    {
+      "name": "independent_searches",
+      "start_minute": 90,
+      "end_minute": 240,
+      "max_objectives": 576
+    },
+    {
+      "name": "local_refinement",
+      "start_minute": 240,
+      "end_minute": 300,
+      "max_objectives": 192
+    },
+    {
+      "name": "sensitivity_and_profiles",
+      "start_minute": 300,
+      "end_minute": 390,
+      "max_objectives": 126
+    },
+    {
+      "name": "final_repetitions_and_export",
+      "start_minute": 390,
+      "end_minute": 480,
+      "max_objectives": 6
+    }
+  ],
+  "decisions_required": [
+    "credit specification",
+    "other fixed inputs retained or changed",
+    "objective weights measurement and bounds",
+    "frozen or native production source plus new-best replay",
+    "duration coordinates coverage algorithm per-case cap"
+  ],
+  "scientific_changes_adopted": [],
+  "restarts_may_extend_deadline": false,
+  "maximum_objectives": 1000,
+  "expected_stationary_solves": 6000,
+  "worst_case_stationary_solve_ceiling": 23000
+}
