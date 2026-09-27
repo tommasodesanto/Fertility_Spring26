@@ -1,0 +1,377 @@
+{
+  "approval": {
+    "authority": "Tommaso September27 daytime: continue search on cluster; same model and targets",
+    "condition": "Fresh exact-loop smoke and lead cross-host numerical acceptance",
+    "production_authorized": true
+  },
+  "base_contract": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/utility_four_arm_preparation_20260925_v2/launch_v1/contract.json",
+    "sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a"
+  },
+  "budget": {
+    "absolute_end_epoch": 1790531429.7701402,
+    "export_seconds": 1800,
+    "objective_cap_seconds": 3100,
+    "points_per_round": 24,
+    "repeat_seconds": 3600,
+    "rounds": 8,
+    "search_seconds": 23400,
+    "smoke_seconds": 3700,
+    "total_seconds": 28800,
+    "workers": 24
+  },
+  "deferred_review_blocks": [
+    "tenure choice scale .005",
+    "interest rate 2%, credit, DUE and payment-to-income restrictions",
+    "rental menu and cap",
+    "income and entrant-wealth compatibility",
+    "estate valuation, SCF child-directed measurement and older-family-income proxy",
+    "weights, identification and bounds",
+    "numerical/economic tests: finer owner housing grid and conception schedule"
+  ],
+  "economic_changes": [
+    {
+      "change": "Same native compensated housing-share specification as matched diagnostic; first-child loading estimated, later-child loading fixed zero; no child housing floor.",
+      "object": "utility",
+      "status": "author-adopted for first calibration"
+    },
+    {
+      "change": "Estimate curvature in proposed bounds [0,.8]; starting value .14 matches the diagnostic receipt, which reports exponent .86 despite its historical folder suffix.",
+      "object": "child_benefit_curvature",
+      "status": "lead-selected provisional setting under author overnight delegation"
+    },
+    {
+      "change": "Replace ACS capped-nine mean with national AHS 2007 literal-room mean; retain old working weight.",
+      "object": "mean_rooms",
+      "status": "author-adopted"
+    },
+    {
+      "change": "Add exact-age-25 children-ever-born mean capped at three; proposed working weight 100.",
+      "object": "early_fertility",
+      "status": "lead-selected provisional setting under author overnight delegation"
+    },
+    {
+      "change": "Fixed annual pension/income ratio from empirical receipt; payroll tax derived from stationary demographics.",
+      "object": "pensions",
+      "status": "author-adopted"
+    },
+    {
+      "change": "Positive net estates fund positive entrant assets; residual exits through a nonutility sink. Net-estate valuation and physical/financial settlement remain provisional.",
+      "object": "estate_entry_funding",
+      "status": "provisional working closure"
+    },
+    {
+      "change": "B15 earnings, inherited entrant-wealth marginal and income/wealth rank coupling retained; no zero-entry substitution.",
+      "object": "income_entry",
+      "status": "unchanged inherited inputs"
+    },
+    {
+      "change": "Retained working minimum-distance weights, including early-fertility weight 100.",
+      "object": "weighting",
+      "status": "primary retained"
+    },
+    {
+      "change": "Retained working minimum-distance weights, including early-fertility weight 100.",
+      "object": "weighting",
+      "status": "primary retained"
+    }
+  ],
+  "execution": {
+    "kind": "slurm"
+  },
+  "files": {
+    "calibration_runtime": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/e5f_calibration_runtime.py",
+      "sha256": "858fbcbcd22907596440d3fab8b99d5a72ec7c6dbb11d4299190833edbd12130"
+    },
+    "daytime_input:overnight_contract.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/input/overnight_contract.json",
+      "sha256": "3b770d8c8c22d2b0449b34a575d6353b063bc015d74ce11016dad7e22ed7ca5e"
+    },
+    "daytime_input:overnight_objective.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/input/overnight_objective.json",
+      "sha256": "d35349bf5bb4054e50a2092d875b3b21df210637419757f648301585ec0a6812"
+    },
+    "daytime_input:selected_parameters.csv": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/input/selected_parameters.csv",
+      "sha256": "48e01f453c90e10f0527afe05b1b751a67fb6b056e69d1c66ed57696f93fa92c"
+    },
+    "daytime_input:selected_receipt.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/input/selected_receipt.json",
+      "sha256": "c15cdd5862106cf95c392d4e2d75adfc786625b5108f5cc3c660b4c3cc1d76de"
+    },
+    "daytime_input:selected_target_fit.csv": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/input/selected_target_fit.csv",
+      "sha256": "d8714661a83fac12d325835cbd395cf12c9e50d982c6baf6c822c14b9672f03d"
+    },
+    "daytime_preparer": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/prepare_e5f_daytime_search.py",
+      "sha256": "5edb0815c06e60941367e1413fbdbfcf72b9934d84ce05bfc9880e76e0717bb7"
+    },
+    "driver": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/run_e5f_utility_overnight_calibration.py",
+      "sha256": "edc0d8922eeb97b155011819ec6384aed24c222f1b2afe5df1d4f1fefd10b11a"
+    },
+    "estate_audit": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/e5f_overnight_estate_audit.py",
+      "sha256": "31bcdbeca73036da9306dcb2f3ef28a2c3ee43d878f60b75aa044e08aba5f962"
+    },
+    "generator": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/prepare_e5f_calibration_launch.py",
+      "sha256": "6bfd67e0b0d38541dbe385158b2aa7fffaf931a84a5812db19dbdef884c84afc"
+    },
+    "recovery_policy": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/e5f_utility_recovery_policy_v1.py",
+      "sha256": "4bfbaaaaee71c2e6943228b7096e84bf798816a235b6be694cc13137a8b21d6d"
+    },
+    "recovery_runner": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/run_e5f_utility_comparison.py",
+      "sha256": "7ba6ecf54a7247a8e2aae1c860c7b33a4af9fabf7b8bd70b5271e60dee3cc629"
+    },
+    "recovery_search": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/run_e5f_utility_comparison_search.py",
+      "sha256": "4e53236e977ac7abaee5036e1e3334e84ec9e66b4f056423020483ef1d0df932"
+    },
+    "reference:ahs_2007_room_target.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/calibration_code_integration_20260927_v2/launch_v1/reference/ahs_2007_room_target.json",
+      "sha256": "23fde6471d2a17422d30846ac2503f58013ad83ff5dbf092bd402a61b1f5d8c5"
+    },
+    "reference:base_contract.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/calibration_code_integration_20260927_v2/launch_v1/reference/base_contract.json",
+      "sha256": "c3fa4d5b7925a54a747c72511538b8182029e1493e4d02e5ef703a30fcecc28a"
+    },
+    "reference:early_fertility_target.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/calibration_code_integration_20260927_v2/launch_v1/reference/early_fertility_target.json",
+      "sha256": "b7da01f6dac4aee4ca49879fe1f3e41c04a81cd1a0d7049bed2bc928cdc6e888"
+    },
+    "reference:initial_parameters.csv": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/calibration_code_integration_20260927_v2/launch_v1/reference/initial_parameters.csv",
+      "sha256": "61d1f5a9486bc5c01f8937547573374b93aff04a4399e82d932fb3398204dcf1"
+    },
+    "reference:objective.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/calibration_code_integration_20260927_v2/launch_v1/reference/objective.json",
+      "sha256": "cce32a5d8208603e9237607da8253995a5f5517ef39fd5a1ee75bee90718ed58"
+    },
+    "reference:target_provenance.json": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/calibration_code_integration_20260927_v2/launch_v1/reference/target_provenance.json",
+      "sha256": "7b1acfa16968d1e111d3752cdbea0af6e918424c5bc5eccd7f16684f0ff343be"
+    },
+    "runtime_file:audit_e5f_estate_resource_account.py": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/audit_e5f_estate_resource_account.py",
+      "sha256": "6b2c893c19f817a7421ad6b901f7cf9025566c99439d782da42453aa5c012653"
+    },
+    "runtime_file:e5f_calibration_runtime.py": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/e5f_calibration_runtime.py",
+      "sha256": "858fbcbcd22907596440d3fab8b99d5a72ec7c6dbb11d4299190833edbd12130"
+    },
+    "runtime_file:e5f_earnings_wealth_contract.py": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/e5f_earnings_wealth_contract.py",
+      "sha256": "71eebc1d42e28ccd304f921535f0d154f3a994451b5c53bcb8097233ce18669a"
+    },
+    "runtime_file:e5f_overnight_estate_audit.py": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/e5f_overnight_estate_audit.py",
+      "sha256": "31bcdbeca73036da9306dcb2f3ef28a2c3ee43d878f60b75aa044e08aba5f962"
+    },
+    "runtime_file:e5f_utility_comparison_design.py": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/e5f_utility_comparison_design.py",
+      "sha256": "036d772c51dc372cf7c533fd1de21525dd146158dc11c303f8f69da36525cbcb"
+    },
+    "runtime_file:e5f_utility_comparison_runtime.py": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/e5f_utility_comparison_runtime.py",
+      "sha256": "c52b686d0a6f9364021994eecbf3d8edaf5806ff42c2b365ec22b51888824916"
+    },
+    "runtime_file:e5f_utility_recovery_policy_v1.py": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/e5f_utility_recovery_policy_v1.py",
+      "sha256": "4bfbaaaaee71c2e6943228b7096e84bf798816a235b6be694cc13137a8b21d6d"
+    },
+    "runtime_file:prepare_e5f_calibration_launch.py": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/prepare_e5f_calibration_launch.py",
+      "sha256": "6bfd67e0b0d38541dbe385158b2aa7fffaf931a84a5812db19dbdef884c84afc"
+    },
+    "runtime_file:prepare_e5f_local_runtime.py": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/prepare_e5f_local_runtime.py",
+      "sha256": "b1db6d6bc69c37012f6faaa19c7b485c23a94c562df0a73865c4ba078ba1ebbe"
+    },
+    "runtime_file:prepare_e5f_supervised_night.py": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/prepare_e5f_supervised_night.py",
+      "sha256": "67262353cacf41c6bd7d7b5a01ff5460acbd3399993fb2d6969249b1778cb137"
+    },
+    "runtime_file:run_e5f_calibration_preflight.sh": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/run_e5f_calibration_preflight.sh",
+      "sha256": "456eee427c621db8993593c36147e25d3abaa027be4f706a28dd3258b713bbe5"
+    },
+    "runtime_file:run_e5f_preference_share_candidate.py": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/run_e5f_preference_share_candidate.py",
+      "sha256": "907c1ba428366690c512bb8867a3af7e5464ef18661dc687c7b7b80567f6459c"
+    },
+    "runtime_file:run_e5f_utility_comparison.py": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/run_e5f_utility_comparison.py",
+      "sha256": "7ba6ecf54a7247a8e2aae1c860c7b33a4af9fabf7b8bd70b5271e60dee3cc629"
+    },
+    "runtime_file:run_e5f_utility_comparison_search.py": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/run_e5f_utility_comparison_search.py",
+      "sha256": "4e53236e977ac7abaee5036e1e3334e84ec9e66b4f056423020483ef1d0df932"
+    },
+    "runtime_file:run_e5f_utility_overnight_calibration.py": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/run_e5f_utility_overnight_calibration.py",
+      "sha256": "edc0d8922eeb97b155011819ec6384aed24c222f1b2afe5df1d4f1fefd10b11a"
+    },
+    "runtime_file:test_e5f_calibration_runtime.py": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/test_e5f_calibration_runtime.py",
+      "sha256": "46b538ab74d191e156c0e861e69c6cd52d7d766ad9728106257ef849b97c96c0"
+    },
+    "runtime_file:test_e5f_utility_overnight_controller.py": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools/test_e5f_utility_overnight_controller.py",
+      "sha256": "9742cd47e511e51da8b8525ff539a42dc351d43174ee4c5e7f734ef0864c66fd"
+    },
+    "runtime_inventory": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/runtime_inventory.json",
+      "sha256": "cdb84056e0c670eabf4d2ad8cc8b0237dd22c04521141db77a64d7527af53e96"
+    },
+    "source_inventory": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/calibration_code_integration_20260927_v2/launch_v1/source_inventory.json",
+      "sha256": "49566b92deae0d27014ebe4204cc88209ea27a664e90ca697d2e377d2f8f4737"
+    },
+    "target_provenance": {
+      "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/calibration_code_integration_20260927_v2/launch_v1/target_provenance.json",
+      "sha256": "a077150439e42136aec60695e4a217d278149f9f371b4cc98fd952f474d97d04"
+    }
+  },
+  "fixed": {
+    "delta_alpha": 0.0,
+    "other_settings": "Inherited selected checkpoint; no other default changes",
+    "pension_ratio": 0.2294460118659327,
+    "q_period": 0.08243216,
+    "reference_rent": 0.11046592704873838,
+    "sigma": 2.0,
+    "tenure_choice_kappa": 0.005
+  },
+  "identification": {
+    "displayed_rows": 14,
+    "fitted_parameters": 10,
+    "free_parameters": 9,
+    "local_rank_certified": false,
+    "normalizations": 1,
+    "outer_search_parameters": 9,
+    "scored_rows": 13
+  },
+  "initial_point": {
+    "H0": 6.206479060846687,
+    "beta_annual": 0.9602456707427426,
+    "chi": 1.0889178301004045,
+    "child_benefit_curvature": 0.07130705056729134,
+    "delta_alpha_jump": 0.14198430659647016,
+    "first_birth_fixed_cost": 0.6595894538306366,
+    "kappa_fert": 0.19482764369932495,
+    "kappa_fert_continuation": 0.3474664229788561,
+    "theta0": 0.11358885656635645
+  },
+  "normalization": {
+    "initial_psi": 0.0645126953125,
+    "initial_step": 0.05,
+    "maximum_stationary_solves": 23,
+    "warm_price": true
+  },
+  "objective": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/input/overnight_objective.json",
+    "sha256": "d35349bf5bb4054e50a2092d875b3b21df210637419757f648301585ec0a6812"
+  },
+  "objective_canonical_sha256": "ff755b110c5af164ea624f9d33d1dc6c0e2fc8b8ef9f31315bf8177ea9285471",
+  "pending_observer_mismatches": [
+    {
+      "moment": "initial_normalization",
+      "warning": "Separate from CPS age-window stocks and actual birth/entry accounting."
+    },
+    {
+      "moment": "cps_childlessness",
+      "warning": "Uniform birth-time parity interpolation is the main diagnostic; constant-post-cell sensitivity retained. Model household reproductive member is not certified female exposure; no empirical age reweighting."
+    },
+    {
+      "moment": "cps_exactly_one",
+      "warning": "Uniform birth-time parity interpolation is the main diagnostic; constant-post-cell sensitivity retained. Model household reproductive member is not certified female exposure; no empirical age reweighting."
+    },
+    {
+      "moment": "nchs_mean_age",
+      "warning": "First-birth flow timing, not completed-cohort timing. Household maternal proxy; empirical under-18/over-45 tail collapse retained; raw builder residence and unknown-order comparability remain unresolved."
+    },
+    {
+      "moment": "nchs_share30",
+      "warning": "First-birth flow timing, not completed-cohort timing. Household maternal proxy; empirical under-18/over-45 tail collapse retained; raw builder residence and unknown-order comparability remain unresolved."
+    },
+    {
+      "moment": "wealth_earnings",
+      "warning": "Household net worth is scaled by reference-person-plus-spouse gross labor earnings; calendar-specific wealth valuation and earnings-reference-year alignment remains inherited from the PSID shelf and is not newly certified."
+    },
+    {
+      "moment": "bequest_wealth",
+      "warning": "Experimental approximation: the frozen model observer sums positive estates over all fertility/dependent-child states without child-recipient eligibility or allocation, whereas the adopted SCF ratio is child-directed. No recipient-law change is authorized in this contract."
+    },
+    {
+      "moment": "old_dispersion",
+      "warning": "Uniform within-age-cell overlap for ages 76--84 Modeled pension plus configured lump-sum income proxy; not PSID total family income Empirical $1000 real-income and observed-child-history filters are not reproduced At these retirement ages model denominator is pension income (including configured z scaling), while PSID INCFAMR also includes transfers, asset income and other family components. Exact $1000 cutoff is not applied (only income>0), and observed-completed-children selection has no model missingness counterpart. Full 78/82 cells do not cover exactly 76-84. Actual model property-tax lump-sum transfer is zero in this receipt; proxy uses the configured pension-plus-transfer concept."
+    },
+    {
+      "moment": "mean_rooms",
+      "warning": "Uniform model exposure within four-year age cells; literal AHS ROOMS has public-use topcode 21. Model rooms are uncapped. Housing supply normalization remains an empirical normalization."
+    },
+    {
+      "moment": "ownership_30_55",
+      "warning": "National ACS target geography is accepted. The empirical owner sample is restricted to DUE structures UNITSSTR 3:10, a structure-type distinction absent from the model state; age 30-55 is projected through a four-year model cell extending to ages 54-57."
+    },
+    {
+      "moment": "first_birth_rooms",
+      "warning": "The stationary first-birth housing observer approximates this empirical event-study contrast and does not reproduce the Sun-Abraham panel estimator or its baseline-status cohort selection."
+    },
+    {
+      "moment": "family_rooms",
+      "warning": "National ACS target geography is accepted. Empirical groups use NCHILD=3+ versus 1-2 and require YNGCH<18. Model dependent-child count m is only a proxy: it can differ from resident own-child count and does not guarantee the ACS minor-child restriction."
+    },
+    {
+      "moment": "recent_parent_ownership",
+      "warning": {
+        "age_projection": "uniform_within_age_cell",
+        "approximation_id": "early_2007_parenthood_md_working_v1__recent_parent_synchronized_proxy",
+        "decision_sha256": "b1d399c290d257e56e008afb6d7b76ac1f69191685c8d9e89a4b0bfb06533c9a",
+        "decision_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/initial_calibration_contract/lead_methodological_decision.json",
+        "declaration": "Synchronized post-fertility snapshot; uniform head-age overlap; model dependents proxy resident own children; actual current births from previously empty-dependent homes versus current empty homes inclformerparents. Not an exact annualACS interview reconstruction.",
+        "diagnostic_allow_residence_proxy": true,
+        "exact_acs": false,
+        "maintained": true,
+        "moment": "ownership_current_birth_from_empty_dependent_home_minus_current_empty_home_30_55",
+        "observer_id": "e5f_recent_parent_flow_diagnostic_v1",
+        "snapshot": "synchronized_post_fertility_snapshot"
+      }
+    },
+    {
+      "moment": "early_fertility",
+      "warning": "Observed completed age 25 corresponds to [25,26). Fixed uniform birth-time interpolation in [22,26) uses post weight .875 and literal ever-born weights [0,1,2,3]. Household reproductive-member exposure is not certified female exposure. Bootstrap is not CPS design-consistent."
+    }
+  ],
+  "production_blockers": [
+    "Fresh exact-loop smoke and lead acceptance pending"
+  ],
+  "proposal_width_status": "Provisional lead search scales in raw parameter units; inherited seven bounds unchanged",
+  "proposal_widths": {
+    "H0": 0.3,
+    "beta_annual": 0.001,
+    "chi": 0.03,
+    "child_benefit_curvature": 0.08,
+    "delta_alpha_jump": 0.025,
+    "first_birth_fixed_cost": 0.03,
+    "kappa_fert": 0.015,
+    "kappa_fert_continuation": 0.03,
+    "theta0": 0.01
+  },
+  "runtime_tools": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/daytime_calibration_20260927/search/tools",
+  "schema": "e5f_single_share_overnight_v1",
+  "scope": "Bounded daytime continuation from overnight main de_0093; no economic, grid, target, weight, bound, normalization, or gate changes",
+  "seed": 2026092711,
+  "source_manifest": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/calibration_code_integration_20260927_v2/launch_v1/source_inventory.json",
+    "sha256": "49566b92deae0d27014ebe4204cc88209ea27a664e90ca697d2e377d2f8f4737"
+  },
+  "source_root": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/calibration_code_integration_20260927_v2/source",
+  "status": "reviewed_smoke",
+  "target_weight_fingerprint": "e79b1d277510e21f7fdf6ac656aca37cd097d9f523500de7dff9ca6f11132f27",
+  "thread_policy": "No change to inherited thread counts; controller records environment"
+}

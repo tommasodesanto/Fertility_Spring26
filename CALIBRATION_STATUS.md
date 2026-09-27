@@ -1,5 +1,61 @@
 # Calibration Status
 
+## September 27, 10:25 EDT - daytime search and local diagnostics authorized
+
+The author now requests continued cluster search, local policy/distribution,
+Jacobian and three-life diagnostics, plus a same-parameter borrowing-friction
+benchmark. This is new authorization after the completed overnight schedule.
+Main reference remains verified overnight continuation de_0093, loss 42.282.
+Read `output/model/daytime_calibration_20260927/README.md`.
+
+Torch job 18645479 is submitted but queued (nodes unavailable); actual workers 0,
+requested 24, at most192 search cases plus 2 smokes and 2 final repeats. Model, all 14
+restrictions, weights, bounds, normalization and gates are unchanged. Absolute
+end 13:50 EDT, search cutoff 12:20 EDT; final 90 minutes reserved for verification.
+Fresh exact-loop smokes and lead cross-host table/plot acceptance must precede
+search. Remote path and pinned contract: daytime output `search/launch.json`.
+Run remote `accept_e5f_daytime_search.py --root <remote root>` without approval
+first; inspect comparisons and 17 plots, then use `--approve` only if valid.
+
+Local Jacobian has started: 18 central-difference objectives, 2 workers,
+90-minute absolute/15-minute per-case caps; first H0 pair gates remaining 16.
+Actual objective retains child-benefit normalization. Plan/coordinate definitions,
+contract and 5-second heartbeat: daytime output `jacobian/run_v2/` and its README.
+No Jacobian result yet. Preserve empty failed background-launch attempt run_v1;
+it performed zero objectives. No more than 3 local simultaneous model evaluators,
+reserving one for a benchmark. Runner is pinned while active: do not edit.
+
+Saved-state audit and 3 illustrative simulated lives complete in `households/`.
+No new solves. Total mass error 7.2e-14; bottom-grid mass 5.72e-7 and upper-grid
+mass 0; no occupied nonpositive/nonfinite consumption or savings clipping.
+Largest owner size contains 35.236% of owners, not a majority. Ownership at 82
+is 95.352%, an economic flag. Liquid debt includes mortgages, not only unsecured
+distress. Three fixed-seed lives use exact native transition/interpolation laws;
+conditional transition factorization matches at 3 occupied states with L1=0.
+Children are explicitly capped at 3; the final-bin weight 3.602 converts mean 1.869
+to normalized 2.100105, so these statistics do not conflict. Five focused tests
+pass; lead inspected the supplementary life plot and reviewed the simulation.
+
+Borrowing benchmark is not launched while the author's definition is pending:
+remove both purchase/debt limits retaining solvency, or just down payment.
+Actual adapter has purchase x+y/R>=-phi*pH and owner saving b'>=-phi*pH;
+phi=1 is coherent 100%-LTV, not fully unrestricted borrowing. Deleting floors
+would permit terminal debt; negative-estate creditor treatment is unresolved.
+All parameters including child benefit 0.14416490417555738 must stay fixed;
+do not normalize benchmark fertility back to 2.1. Any normalized-entry stationary
+comparison must report birth/entry imbalance and estate funding rather than
+claim closed demographic renewal. Do not silently add insurance/default rules.
+
+Recovered historical verification: jobs 18624270/71 both completed successfully.
+Legacy default replay exactly reproduces its old 13 targets/25 parameters and
+17plots; all 11 Torch/Mac seed-array hashes match. This does not substitute for
+fresh cross-host acceptance of the current calibration point. Evidence is in
+`search/legacy_verification/`.
+Daytime supervision is ACTIVE on the existing half-hour heartbeat, with the
+new search/Jacobian deadlines and pending benchmark definition recorded. It
+will not restart the completed overnight schedule.
+
+
 ## September 27, 07:27 EDT - final two-page memo delivered; supervision paused
 
 All numerical work finished by 07:02 EDT. The final memo is
