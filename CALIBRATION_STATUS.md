@@ -1,5 +1,23 @@
 # Calibration Status
 
+## September 27, 19:30 EDT — 192 attempts and refreshed hourly plots
+
+130success,39unchanged housing-equilibrium gate rejections,23timeouts,0fatal;
+24workers, peakRSS84.1GiB within128GB. Best primary rescore across all successful
+cases is28.488521375232327, case initial_0182_block, also current block winner.
+Primary-lane winner30.043562; identity winner68.690464 under primary weights.
+No source/model/weight/gate/deadline changes or search intervention.
+
+Full14targets/31parameters reviewed. Common best: early fertility0.531 vs0.810,
+ownership0.629 vs0.676, wealth/earnings6.111 vs6.927, meanrooms5.888 vs5.729,
+firstbirthhousing1.660 vs1.465. Tenure scale0.007770 and annualbeta0.961312;
+other changes and bounds retained in complete tables. No new bound hits.
+Lead inspected17standardplots for all3distinct winners, ninecontact sheets in
+evening cluster/check_1930; commonbest reuses blockpacket. Rendering-only
+Torch18678976 completed63sec,zero solves. No new visual numerical failure;
+highwealthpolicy,lateownership/retirementdecumulation caveats persist. Final
+repeats remain pending. Latest plot review about19:34, next due about20:34.
+
 ## September 27, 19:00 EDT — monitoring, no intervention
 
 144 completed search attempts:100success,27housing-equilibrium-gate rejections,
