@@ -157,6 +157,23 @@ def verify_current_reporter(current_path, frozen_path):
         raise RuntimeError('Unreviewed reporting/scoring source change')
 
 
+def verify_current_recent_observer(current_path, frozen_path):
+    """Verify the passive audit extension; every measurement byte stays frozen."""
+    source=Path(current_path).read_text()
+    start=source.index('# BEGIN REVIEWED DEAD-TAIL LOCATION AUDIT\n')
+    end=source.index('# END REVIEWED DEAD-TAIL LOCATION AUDIT\n\n',start)+len('# END REVIEWED DEAD-TAIL LOCATION AUDIT\n\n')
+    extension=source[start:end]
+    if hashlib.sha256(extension.encode()).hexdigest()!='069a28a7baeb9fd8ec1fce92725e7340d40d67e4c64a93b99ac95e8eecb8ff6c':
+        raise RuntimeError('Unreviewed retained-dead-tail audit extension')
+    source=source[:start]+source[end:]
+    replacements=[('    diagnostic_allow_retained_dead_tail: bool = False,\n',''),('    location_sum_error, location_audit = _audit_location_lottery(\n        location_probs, post, getattr(policy, "V", None),\n        allow_dead_tail=diagnostic_allow_retained_dead_tail,\n        dead_mass_tolerance=model.DEAD_MASS_TOL,\n        dead_value_cutoff=model.DEAD_VALUE_CUTOFF)','    location_sum_error = float(np.max(np.abs(location_probs.sum(axis=3)[post > 0] - 1.),\n                                      initial=0.))\n    _check(location_sum_error, "occupied location probability sum")'),("    if diagnostic_allow_retained_dead_tail:\n        accounting['retained_dead_tail_location_audit'] = location_audit\n",'')]
+    for new,old in replacements:
+        if source.count(new)!=1:raise RuntimeError('Recent observer audit seam differs')
+        source=source.replace(new,old,1)
+    if source!=Path(frozen_path).read_text():
+        raise RuntimeError('Recent-parent measurement source changed')
+
+
 def economic_contract(P):
     """Classifications identify retained assumptions without approving new ones."""
     if float(getattr(P, 'property_tax_lump_sum_transfer', 0.0)) != 0.0:
@@ -225,13 +242,20 @@ def setup(output, *, contract=CONTRACT, reference=REFERENCE, fixed_reference_pri
     with gzip.open(checkpoint,'rb') as stream: selected=pickle.load(stream)
     P=copy.deepcopy(selected['parameters'])
     model.configure_current_household_contract(P)
+    P.native_exact_inherited_distribution = True
+    P.native_inherited_distribution_evidence_dir = str(output/'inherited_state_failures')
     np.testing.assert_array_equal(model.make_grid(P),selected['b_grid'])
     np.testing.assert_array_equal(P.fixed_reference_entry_grid,selected['b_grid'])
     # Pure observer definitions stay pinned to the actual calibration contract.
     frozen_tools=source/'code/model/tools'
     fert=load('current_pinned_fertility_observer',frozen_tools/'e5f_initial_fertility_observer.py')
     housing=load('current_pinned_housing_observer',frozen_tools/'e5f_initial_housing_observer.py')
-    recent=load('current_pinned_recent_observer',frozen_tools/'e5f_recent_parent_flow_observer.py')
+    current_recent=ROOT/'code/model/tools/e5f_recent_parent_flow_observer.py'
+    verify_current_recent_observer(current_recent,frozen_tools/'e5f_recent_parent_flow_observer.py')
+    recent=load('current_pinned_recent_observer',current_recent)
+    def observe_recent_with_retained_tail(*args, **kwargs):
+        kwargs['diagnostic_allow_retained_dead_tail']=True
+        return recent.observe_recent_parent_flow(*args, **kwargs)
     accounting=load('current_pinned_purchase_audit',Path(c['runtime_tools'])/'e5f_earnings_wealth_contract.py')
     estate=EstateAuditContract(load('current_pinned_stationary_estate',c['files']['estate_audit']['path']))
     paygo=importlib.import_module('e5f_stationary_paygo')
@@ -242,7 +266,7 @@ def setup(output, *, contract=CONTRACT, reference=REFERENCE, fixed_reference_pri
         certify_initial_pension=paygo.certify_initial_pension,
         observe_initial_fertility=fert.observe_initial_fertility,
         observe_initial_housing_wealth=housing.observe_initial_housing_wealth,
-        observe_recent_parent_flow=recent.observe_recent_parent_flow,
+        observe_recent_parent_flow=observe_recent_with_retained_tail,
         SNAPSHOT=recent.SNAPSHOT,AGE_PROJECTION=recent.AGE_PROJECTION)
     require_current_runtime(rt)
     objective=observer_runtime.StationaryObjective(c,obj,selected,tax,ancestor,rt,runner.adapter,estate)

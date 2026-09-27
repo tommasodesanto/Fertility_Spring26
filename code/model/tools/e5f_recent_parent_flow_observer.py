@@ -56,6 +56,40 @@ def _group(g, age_weights, family_mask=None):
                 unweighted_mass=float(mass_by_age.sum()))
 
 
+# BEGIN REVIEWED DEAD-TAIL LOCATION AUDIT
+
+def _audit_location_lottery(location_probs, post, values, *, allow_dead_tail=False,
+                            dead_mass_tolerance=1e-12, dead_value_cutoff=-1e9):
+    """Audit only; no mass, policy, probability or moment array is modified."""
+    if type(allow_dead_tail) is not bool:
+        raise TypeError("Dead-tail audit opt-in must be boolean")
+    error = np.abs(np.asarray(location_probs).sum(axis=3) - 1.)
+    mass = np.asarray(post)
+    raw = float(np.max(error[mass > 0], initial=0.))
+    evidence = dict(raw_maximum_error=raw, offending_mass=0., accepted_dead_tail=False)
+    if not allow_dead_tail:
+        _check(raw, "occupied location probability sum")
+        return raw, evidence
+    value = np.asarray(values)
+    if (value.shape != mass.shape or not np.isfinite(value).all()
+            or not np.isfinite(error).all() or not np.isfinite(mass).all()
+            or np.any(mass < 0) or dead_mass_tolerance != 1e-12
+            or not np.isfinite(dead_value_cutoff)):
+        raise ValueError("Invalid retained-dead-tail audit inputs or tolerance")
+    offending = (mass > 0) & (error > MASS_ATOL)
+    total = float(mass[offending].sum())
+    evidence.update(offending_mass=total, inherited_dead_mass_tolerance=dead_mass_tolerance,
+                    dead_value_cutoff=float(dead_value_cutoff),
+                    offending_nodes=int(np.count_nonzero(offending)))
+    if np.any(value[offending] > dead_value_cutoff):
+        raise ValueError("Invalid location lottery at a Bellman-live node")
+    if total > dead_mass_tolerance:
+        raise ValueError("Total invalid dead-node location mass exceeds inherited tolerance")
+    evidence['accepted_dead_tail'] = bool(np.any(offending))
+    return raw, evidence
+
+# END REVIEWED DEAD-TAIL LOCATION AUDIT
+
 def observe_recent_parent_flow(
     evaluation: Any,
     parameters: Any,
@@ -65,6 +99,7 @@ def observe_recent_parent_flow(
     age_projection: str | None = None,
     diagnostic_allow_residence_proxy: bool = False,
     input_provenance: dict[str, Any] | None = None,
+    diagnostic_allow_retained_dead_tail: bool = False,
 ) -> dict[str, Any]:
     """Observe actual births into empty-dependent homes using fixed policies.
 
@@ -150,9 +185,11 @@ the real one-birth kernel, which current housing transport preserves.
         probability=True)
     # Occupied post-fertility origins require a complete location lottery.
     # Tenure lotteries, in contrast, are normalized by the existing transport.
-    location_sum_error = float(np.max(np.abs(location_probs.sum(axis=3)[post > 0] - 1.),
-                                      initial=0.))
-    _check(location_sum_error, "occupied location probability sum")
+    location_sum_error, location_audit = _audit_location_lottery(
+        location_probs, post, getattr(policy, "V", None),
+        allow_dead_tail=diagnostic_allow_retained_dead_tail,
+        dead_mass_tolerance=model.DEAD_MASS_TOL,
+        dead_value_cutoff=model.DEAD_VALUE_CUTOFF)
     choices = _array(policy.tenure_choice, "tenure_choice", pre.shape)
     if np.any(choices != np.floor(choices)) or np.any(choices >= nt):
         raise ValueError("tenure_choice contains an invalid tenure index")
@@ -233,6 +270,8 @@ the real one-birth kernel, which current housing transport preserves.
                       all_births=float(all_births), empty_home_births=float(selected_births),
                       pre_empty_mass=float(empty_pre.sum()), feasibility_projection_mass=projection,
                       absolute_tolerance=MASS_ATOL, transport_pruning_tolerance=PRUNING_TOLERANCE)
+    if diagnostic_allow_retained_dead_tail:
+        accounting['retained_dead_tail_location_audit'] = location_audit
     source_files = (Path(__file__), Path(transition.__file__), Path(model.__file__),
                     Path(transition.calendar.__file__),
                     Path(model.readiness_childless_states.__code__.co_filename),

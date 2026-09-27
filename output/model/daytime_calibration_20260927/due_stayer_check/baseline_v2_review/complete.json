@@ -1,0 +1,1417 @@
+{
+  "array_comparison": {
+    "array_count": 107,
+    "arrays": {
+      "b_grid": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          160
+        ],
+        "status": "compared"
+      },
+      "evaluation.births_by_loc": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "evaluation.demand_by_loc": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "evaluation.g_current": {
+        "exact": false,
+        "finite": true,
+        "l1": 1.2861166965062918e-14,
+        "mass_weighted_abs": 3.417449945276139e-22,
+        "max_abs": 6.586281628785434e-15,
+        "occupied_max_abs": 1.4791033320555626e-15,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "evaluation.g_post_fertility": {
+        "exact": false,
+        "finite": true,
+        "l1": 2.5722333951663778e-14,
+        "mass_weighted_abs": 3.417449945276139e-22,
+        "max_abs": 6.586281628785434e-15,
+        "occupied_max_abs": 1.4791033320555626e-15,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "evaluation.g_pre": {
+        "exact": false,
+        "finite": true,
+        "l1": 2.5722333951663778e-14,
+        "mass_weighted_abs": 3.417449945276139e-22,
+        "max_abs": 6.586281628785434e-15,
+        "occupied_max_abs": 1.4791033320555626e-15,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "evaluation.policy.V": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "mass_weighted_abs": 0.0,
+        "max_abs": 0.0,
+        "occupied_max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "evaluation.policy.bp_pol": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "mass_weighted_abs": 0.0,
+        "max_abs": 0.0,
+        "occupied_max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "evaluation.policy.c_pol": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "mass_weighted_abs": 0.0,
+        "max_abs": 0.0,
+        "occupied_max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "evaluation.policy.fert2_probs": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          2,
+          2,
+          4
+        ],
+        "status": "compared"
+      },
+      "evaluation.policy.fert_probs": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4
+        ],
+        "status": "compared"
+      },
+      "evaluation.policy.fert_value": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15
+        ],
+        "status": "compared"
+      },
+      "evaluation.policy.hR_pol": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "mass_weighted_abs": 0.0,
+        "max_abs": 0.0,
+        "occupied_max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "evaluation.policy.loc_probs": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          1,
+          17,
+          15,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "evaluation.policy.maps.lmm_idx": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1,
+          6,
+          160
+        ],
+        "status": "compared"
+      },
+      "evaluation.policy.maps.lmm_wt": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1,
+          6,
+          160
+        ],
+        "status": "compared"
+      },
+      "evaluation.policy.maps.tmx_idx": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1,
+          6,
+          6,
+          4,
+          4,
+          160
+        ],
+        "status": "compared"
+      },
+      "evaluation.policy.maps.tmx_wt": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1,
+          6,
+          6,
+          4,
+          4,
+          160
+        ],
+        "status": "compared"
+      },
+      "evaluation.policy.price": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "evaluation.policy.tenure_choice": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "mass_weighted_abs": 0.0,
+        "max_abs": 0.0,
+        "occupied_max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "evaluation.policy.tenure_probs": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4,
+          4,
+          6
+        ],
+        "status": "compared"
+      },
+      "evaluation.supply_by_loc": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "shared.alpha_flat": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1,
+          16
+        ],
+        "status": "compared"
+      },
+      "shared.b": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          160,
+          1
+        ],
+        "status": "compared"
+      },
+      "shared.birth_dp": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          4,
+          4,
+          6,
+          6
+        ],
+        "status": "compared"
+      },
+      "shared.birth_entry_grant": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1,
+          6,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "shared.bp": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1,
+          160
+        ],
+        "status": "compared"
+      },
+      "shared.c_bar": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "shared.cb_flat": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1,
+          16
+        ],
+        "status": "compared"
+      },
+      "shared.escale_flat": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1,
+          16
+        ],
+        "status": "compared"
+      },
+      "shared.g_bar": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "shared.gb_flat": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1,
+          16
+        ],
+        "status": "compared"
+      },
+      "shared.h_bar": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "shared.hb_flat": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1,
+          16
+        ],
+        "status": "compared"
+      },
+      "shared.phi_choice": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1,
+          6,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "shared.phi_state": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "shared.psi_flat": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1,
+          16
+        ],
+        "status": "compared"
+      },
+      "shared.psi_v": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "shared.type_cb": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          4
+        ],
+        "status": "compared"
+      },
+      "shared.type_hb": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          4
+        ],
+        "status": "compared"
+      },
+      "shared.type_map": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          16
+        ],
+        "status": "compared"
+      },
+      "shared.type_psi": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          4
+        ],
+        "status": "compared"
+      },
+      "solution.V": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "mass_weighted_abs": 0.0,
+        "max_abs": 0.0,
+        "occupied_max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "solution.adult_entry_potential_by_loc": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.aggregate_annual_gross_labor_earnings_by_age": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          17
+        ],
+        "status": "compared"
+      },
+      "solution.aggregate_wealth_by_age": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          17
+        ],
+        "status": "compared"
+      },
+      "solution.attempt_hazard_by_age": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          17
+        ],
+        "status": "compared"
+      },
+      "solution.b_grid": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          160
+        ],
+        "status": "compared"
+      },
+      "solution.births_by_loc": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.bp_pol": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "mass_weighted_abs": 0.0,
+        "max_abs": 0.0,
+        "occupied_max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "solution.c_pol": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "mass_weighted_abs": 0.0,
+        "max_abs": 0.0,
+        "occupied_max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "solution.child_state_dist": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          17,
+          4
+        ],
+        "status": "compared"
+      },
+      "solution.entrants_mature_by_loc": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.entry_by_loc": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.entry_mass_by_loc": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.entry_wealth_grid_indices": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          50
+        ],
+        "status": "compared"
+      },
+      "solution.entry_wealth_grid_values": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          50
+        ],
+        "status": "compared"
+      },
+      "solution.entry_wealth_grid_weights": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          50
+        ],
+        "status": "compared"
+      },
+      "solution.entry_wealth_ratio_nodes": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          5
+        ],
+        "status": "compared"
+      },
+      "solution.entry_wealth_ratio_weights": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          5
+        ],
+        "status": "compared"
+      },
+      "solution.fert2_probs": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          2,
+          2,
+          4
+        ],
+        "status": "compared"
+      },
+      "solution.fert_by_age": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          17
+        ],
+        "status": "compared"
+      },
+      "solution.fert_probs": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4
+        ],
+        "status": "compared"
+      },
+      "solution.fert_value": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15
+        ],
+        "status": "compared"
+      },
+      "solution.first_birth_age_distribution": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          17
+        ],
+        "status": "compared"
+      },
+      "solution.first_birth_hazard_by_age": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          17
+        ],
+        "status": "compared"
+      },
+      "solution.frac_childless_by_loc": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.g": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "mass_weighted_abs": 0.0,
+        "max_abs": 0.0,
+        "occupied_max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "solution.g_beginning_distribution": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "mass_weighted_abs": 0.0,
+        "max_abs": 0.0,
+        "occupied_max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "solution.g_collapsed": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "solution.g_cross_sectional_wealth_distribution": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "mass_weighted_abs": 0.0,
+        "max_abs": 0.0,
+        "occupied_max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "solution.hR_pol": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "mass_weighted_abs": 0.0,
+        "max_abs": 0.0,
+        "occupied_max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "solution.housing_demand": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.housing_demand_by_income_type": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          15,
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.housing_supply": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.income_state_mass": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          15
+        ],
+        "status": "compared"
+      },
+      "solution.income_transition": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          15,
+          15
+        ],
+        "status": "compared"
+      },
+      "solution.loc_probs": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          1,
+          17,
+          15,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "solution.mature_entry_shares": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.mean_fertility_by_income_type": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          15
+        ],
+        "status": "compared"
+      },
+      "solution.mean_housing_by_parity": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          4
+        ],
+        "status": "compared"
+      },
+      "solution.mean_parity_by_loc": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.own_by_age": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          17
+        ],
+        "status": "compared"
+      },
+      "solution.own_by_loc": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.own_by_parity": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          4
+        ],
+        "status": "compared"
+      },
+      "solution.own_rate_by_income_type": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          15
+        ],
+        "status": "compared"
+      },
+      "solution.owner_asset_price": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.owner_demand_by_market": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.owner_demand_by_size": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          5
+        ],
+        "status": "compared"
+      },
+      "solution.owner_user_cost": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.p_eq": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.parity_dist": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          4
+        ],
+        "status": "compared"
+      },
+      "solution.pop_share": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.rental_demand_by_market": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.rental_demand_by_size": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.retiree_mass_by_loc": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.second_attempt_hazard_by_age": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          17
+        ],
+        "status": "compared"
+      },
+      "solution.second_birth_hazard_by_age": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          17
+        ],
+        "status": "compared"
+      },
+      "solution.tenure_choice": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "mass_weighted_abs": 0.0,
+        "max_abs": 0.0,
+        "occupied_max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4,
+          4
+        ],
+        "status": "compared"
+      },
+      "solution.tenure_probs": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4,
+          4,
+          6
+        ],
+        "status": "compared"
+      },
+      "solution.third_attempt_hazard_by_age": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          17
+        ],
+        "status": "compared"
+      },
+      "solution.third_birth_hazard_by_age": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          17
+        ],
+        "status": "compared"
+      },
+      "solution.type_values": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          15
+        ],
+        "status": "compared"
+      },
+      "solution.type_weights": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          15
+        ],
+        "status": "compared"
+      },
+      "solution.w_hat": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "solution.worker_mass_by_loc": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "max_abs": 0.0,
+        "shape": [
+          1
+        ],
+        "status": "compared"
+      },
+      "stationary_g_pre": {
+        "exact": true,
+        "finite": true,
+        "l1": 0.0,
+        "mass_weighted_abs": 0.0,
+        "max_abs": 0.0,
+        "occupied_max_abs": 0.0,
+        "shape": [
+          160,
+          6,
+          1,
+          17,
+          15,
+          4,
+          4
+        ],
+        "status": "compared"
+      }
+    },
+    "scope": "full saved numeric shared, solution, evaluation, grid and distribution arrays; no silent inactive-frontier exclusion",
+    "status": "review_required"
+  },
+  "checkpoint_sha256": "3d0801f711a899b5ece9ea6575822a737558bbe93e9fa21de0809549b937502d",
+  "exact_initial_array": true,
+  "model_solves": 0,
+  "original_failure_preserved": true,
+  "parameters_exact": 31,
+  "plots": {
+    "fertility_by_age.png": "18ea9e5a10ffc6494ff20606dc1154f1b4f571be9ef13f6057e6fce41e5ca0c1",
+    "fertility_policy_by_age_income_state.png": "956c6567f23bbddfd9213bd0cf070e0062fa42b99b3e9ac2540da71e3a09ae6d",
+    "housing_by_age_income_state.png": "d564ccc31819717a0cc907e9302530e45c8933f3ade0d06ec4352a81d662d4c1",
+    "housing_market.png": "e7e913b9a43c8687e878a9d4af43727a44cad819adb2c20a98e37c815b39071b",
+    "housing_prices.png": "1037280f2dc5ed399f1a8860861a585cac11fda034efabc6bce5f59215b10dd0",
+    "income_state_outcomes.png": "70184a8fc24ec18a99f74e4b110bb2cdf6e020338a5554cfa4d185f47e80a8ad",
+    "liquid_wealth_by_age_income_state.png": "6c798a59d7bf940e3a453b8cd475fa419d11723f91e8b837dee69cd3b394ef4a",
+    "market_clearing_by_market.png": "d361ccfc765aeaf351c1321414b1d83a7424793b93dd36b4331c61d45f26f2c0",
+    "market_clearing_residuals.png": "7c5149d8e30c2053d5e6abac9ced5e61ad826b9ee4b2d8b78008af7e0d6ad8f4",
+    "owner_rungs.png": "8d0f54deeb63ad722f98dd500dc7da3e5e36c6506ecb6ab03d5d659053add029",
+    "ownership_by_age.png": "505ad5f980e7884e3241a3a1ab5e3b1a64bc50bb7f8205ecde35b72b491aab90",
+    "ownership_by_age_income_state.png": "6b21161d4163770e4a7f49aed691b79cda5dec2c0100dfc7e35444aaf6d80ef0",
+    "policy_childless_renter_age30.png": "d985e7c54379702b25fb5e7251634fe88ee6efe4c02e1013af52c3d48f7f0d76",
+    "policy_childless_renter_age42.png": "a3aac13e89fc60a33f5e99470986073b5531583d197e6824aacbf491af897aa6",
+    "tenure_services.png": "7ca1fb315a17473d65c2539cc60417bcd078d17f388a27da676e84a9e60d042a",
+    "wealth_dist_childless_renter_age30.png": "705e59a7e72e8e82583e68d937f1a8170ba22e87bd521a77c686c50e4a9cff57",
+    "wealth_dist_childless_renter_age42.png": "ad438f35ba511e1c5ec0dda968403394745edd3a684b977d70b622ac70c3860c"
+  },
+  "reference_checkpoint_sha256": "090c9ebda662bf7837c4f4cf1d816159bc9d203a9babe7c70d00d0c4be1e575e",
+  "status": "lead_verified_saved_baseline_after_weighted_roundoff_assertion_failure",
+  "target_comparison": [
+    {
+      "loss_difference": null,
+      "model_difference": 0.0,
+      "moment": "initial_normalization"
+    },
+    {
+      "loss_difference": 0.0,
+      "model_difference": 0.0,
+      "moment": "cps_childlessness"
+    },
+    {
+      "loss_difference": 0.0,
+      "model_difference": 0.0,
+      "moment": "cps_exactly_one"
+    },
+    {
+      "loss_difference": 0.0,
+      "model_difference": 0.0,
+      "moment": "nchs_mean_age"
+    },
+    {
+      "loss_difference": 0.0,
+      "model_difference": 0.0,
+      "moment": "nchs_share30"
+    },
+    {
+      "loss_difference": 3.6415315207705135e-14,
+      "model_difference": -2.6645352591003757e-15,
+      "moment": "wealth_earnings"
+    },
+    {
+      "loss_difference": -4.107825191113079e-15,
+      "model_difference": 2.6020852139652106e-18,
+      "moment": "bequest_wealth"
+    },
+    {
+      "loss_difference": 0.0,
+      "model_difference": 0.0,
+      "moment": "old_dispersion"
+    },
+    {
+      "loss_difference": 3.9541703245049575e-12,
+      "model_difference": 7.549516567451064e-14,
+      "moment": "mean_rooms"
+    },
+    {
+      "loss_difference": -5.476508135870972e-12,
+      "model_difference": 1.9872992140790302e-14,
+      "moment": "ownership_30_55"
+    },
+    {
+      "loss_difference": 0.0,
+      "model_difference": 0.0,
+      "moment": "first_birth_rooms"
+    },
+    {
+      "loss_difference": 1.9628743075372768e-12,
+      "model_difference": -3.907985046680551e-14,
+      "moment": "family_rooms"
+    },
+    {
+      "loss_difference": 1.63149493914716e-11,
+      "model_difference": -3.325117958752344e-14,
+      "moment": "recent_parent_ownership"
+    },
+    {
+      "loss_difference": 0.0,
+      "model_difference": 0.0,
+      "moment": "early_fertility"
+    }
+  ]
+}

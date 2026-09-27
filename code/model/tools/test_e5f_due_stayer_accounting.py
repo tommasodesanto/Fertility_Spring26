@@ -29,6 +29,25 @@ def budget_function():
 
 
 class DueAccountingTests(unittest.TestCase):
+    def test_stationary_reconstruction_routes_stayer_saving(self):
+        tree=ast.parse((ROOT/'run_dynamic_population_transition.py').read_text())
+        node=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='reconstruct_stationary_pre_fertility')
+        calls=[]
+        def advance(mass,*args,**kwargs):
+            calls.append(kwargs.get('bp_pol_stay'));return mass
+        ns=dict(np=np,model=NS(income_transition_values=lambda p:(None,None,None),advance_cohort_one_period_markov_income=advance),
+            entrant_cohort=lambda *a:np.ones((1,1,1,1,1,1)),gate_pre_fertility_distribution=lambda g,*a:(g,0.),
+            joint_nested_enabled=lambda p:False,apply_fertility=lambda g,*a:(g,0.,None),policy_continuation_birth_probs=lambda *a:None)
+        future=ast.ImportFrom(module='__future__',names=[ast.alias(name='annotations')],level=0)
+        module=ast.fix_missing_locations(ast.Module(body=[future,node],type_ignores=[]));exec(compile(module,'<reconstruction fixture>','exec'),ns)
+        g=np.ones((1,1,1,2,1,1,1));stay=g.copy();maps=NS(lmm_idx=None,lmm_wt=None,tmx_idx=None,tmx_wt=None)
+        policy=NS(bp_pol=g,bp_pol_stay=stay,loc_probs=None,tenure_choice=None,tenure_probs=None,fert_probs=None,maps=maps)
+        sol=NS(g_beginning_distribution=g,entry_by_loc=[1.]);p=NS(J=2,use_age_survival=False,use_stochastic_aging=False,native_due_stayer_credit=True)
+        result,diag=ns['reconstruct_stationary_pre_fertility'](sol,policy,p,np.array([0.]),None)
+        self.assertIs(calls[0],stay);np.testing.assert_array_equal(result,g)
+        policy.bp_pol_stay=None
+        with self.assertRaises(ValueError):ns['reconstruct_stationary_pre_fertility'](sol,policy,p,np.array([0.]),None)
+
     def test_signed_estates_are_integrated_before_netting(self):
         e,p = fixture()
         result = branch_estate_accounts(e,p,[1.],[0.,10.],.2)['totals']

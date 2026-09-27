@@ -198,7 +198,9 @@ def observed_mapping(prepared, terminal, endpoint, prices, pensions, output, ind
         cache_stats=cache.snapshot()
     gates = dict(mass=result.maximum_mass_accounting_error <= 2e-8,
         policy_reproduction=result.maximum_policy_reproduction_error <= 1e-10,
-        feasibility=result.maximum_feasibility_projection_mass <= 1e-6,
+        feasibility=(result.maximum_feasibility_projection_mass == 0.0
+                     if bool(getattr(P,'native_exact_inherited_distribution',False))
+                     else result.maximum_feasibility_projection_mass <= 1e-6),
         dated_audits=len(audits)==H and all(all(a['gates'].values()) for a in audits))
     # Economic measurements retain symbolic t=0; native legacy calendar labels do not define this experiment.
     for t,row in enumerate(result.rows):
@@ -332,7 +334,7 @@ def run(args):
             economic_classification=plan['classification'],no_new_calibration=True,
             limitation='Credit is experimental; estate settlement provisional; publication certification requires standard plots and horizon comparison'))
     except Exception as exc:
-        write(args.output/'failure.json',dict(error_type=type(exc).__name__,error=str(exc),evaluations=count,epoch=time.time()))
+        write(args.output/'failure.json',dict(error_type=type(exc).__name__,error=str(exc),evaluations=count,epoch=time.time(),classification=getattr(exc,'classification','unexpected_error'),inherited_state_evidence=getattr(exc,'audit',None)))
         raise
 
 

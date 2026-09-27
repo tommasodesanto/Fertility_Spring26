@@ -96,9 +96,10 @@ def run(plan_path,arm_id,output):
         else:
             pre,reconstruction=cal.reconstruct_stationary_pre_fertility(sol,policy,P,grid,shared)
             operator=rt['primitive'].pf.transition.operator_gates(sol,policy,pre,P,grid,shared);operator.update(reconstruction)
+            native.write(out/'operator_diagnostics.json',prepared['tax'].finite_json(cal.jsonable(operator)))
             for name in ('stationary_post_fertility_nesting_l1','one_step_constant_path_nesting_l1','mature_flow_abs_error','birth_flow_abs_error','topcode_adjusted_birth_flow_abs_error'):assert abs(operator[name])<=5e-9,name
             assert abs(operator['zero_entry_mass_accounting_residual'])<=2e-8
-            assert operator['stationary_feasibility_projection_mass']<=1e-6
+            assert operator['stationary_feasibility_projection_mass']==0.
         supply=cal.HousingSupplyRule('static-elastic',float(price[0]),float(P.H0[0]*(P.user_cost_rate*price[0]/P.r_bar[0])**P.xi_supply[0]),float(P.xi_supply[0]))
         evaluation=cal.evaluate_period(price,pre,P,grid,shared,cal.SolveCounter(),supply_rule=supply,supplied_policy=policy)
         if arm['inherited_distribution']:
@@ -125,11 +126,23 @@ def run(plan_path,arm_id,output):
         assert len(fit)==14 and len(params)==31;table(out/'parameters.csv',params)
         comparison=native.compare_arrays(selected,packet);write(out/'reference_array_comparison.json',comparison)
         if arm_id=='baseline':
-            assert all(r.get('exact',False) for r in comparison['arrays'].values()),'DUE-off baseline array regression'
+            # Preserve the authored initial array exactly. Removing the old tiny
+            # projection changes only three evaluation distributions; core
+            # policies, shared arrays and stationary distribution stay exact.
+            np.testing.assert_array_equal(evaluation.g_pre,selected['stationary_g_pre'])
+            evaluation_mass={'evaluation.g_pre','evaluation.g_post_fertility','evaluation.g_current'}
+            for name,row in comparison['arrays'].items():
+                if name in evaluation_mass:
+                    assert row.get('finite') and row['l1']<=2*model.DEAD_MASS_TOL,(name,row)
+                else:
+                    assert row.get('exact',False),(name,row)
             old={r['moment']:r for r in rows(Path(plan['reference'])/'target_fit.csv')}
             for row in fit:
                 for key in ('target','model','gap','weight','loss_contribution'):
-                    assert str(row[key])==old[row['moment']][key] or (row[key]!='' and float(row[key])==float(old[row['moment']][key])),(row['moment'],key)
+                    if key=='loss_contribution' and row[key]!='':
+                        assert float(row[key])==float(row['weight'])*float(row['gap'])**2
+                        continue
+                    assert str(row[key])==old[row['moment']][key] or (row[key]!='' and abs(float(row[key])-float(old[row['moment']][key])) <= (1e-12 if key in ('model','gap','loss_contribution') else 0.)),(row['moment'],key)
         rt['audit'].standard_diagnostics(packet,out,validate_production_young=False)
         assert len(list((out/'standard_diagnostics').glob('*.png')))==17
         verify(plan)

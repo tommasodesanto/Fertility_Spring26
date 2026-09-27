@@ -396,6 +396,63 @@ def entrant_cohort(
     return out
 
 
+class InheritedDistributionInfeasible(RuntimeError):
+    """Exact inherited state reaches infeasibility; no population repair allowed."""
+
+    classification = "inherited_distribution_infeasible"
+
+    def __init__(self, evidence):
+        self.audit = evidence
+        self.stage = evidence["stage"]
+        self.dead_mass = evidence["dead_mass"]
+        self.census = evidence["census"]
+        self.evidence_path = evidence.get("evidence_path")
+        super().__init__(f"{self.stage}: exact inherited distribution has "
+                         f"{self.dead_mass:.12g} positive mass at infeasible states; "
+                         "zero projection and the inherited feasibility tolerance are required")
+
+
+def _require_exact_inherited_distribution(out, policy, P, b_grid):
+    """Preserve all mass, recording tails under the existing feasibility tolerance."""
+    values = np.asarray(policy.V)
+    if (values.shape != out.shape or out.ndim != 7
+            or not np.isfinite(out).all() or np.any(out < 0)):
+        raise ValueError("Exact inherited distribution requires aligned finite nonnegative mass")
+    occupied = out > 0
+    bad = occupied & ((values <= -1e9) | ~np.isfinite(values))
+    if not np.any(bad):
+        return
+    indices = np.argwhere(bad)
+    masses = out[bad]
+    tolerance = float(model.DEAD_MASS_TOL)
+    rejected = float(masses.sum()) > tolerance or np.any(occupied & ~np.isfinite(values))
+    order = np.argsort(-masses, kind="stable")[:8]
+    census = []
+    for index in indices[order]:
+        b,tenure,loc,age,income,children,home = map(int,index)
+        value = float(values[tuple(index)])
+        census.append(dict(wealth_index=b,wealth=float(b_grid[b]),tenure=tenure,
+            location=loc,age_index=age,age=float(P.age_start+age*P.da),
+            income_index=income,children_ever_born_index=children,child_state_index=home,
+            mass=float(out[tuple(index)]),value=value if np.isfinite(value) else None))
+    evidence = dict(classification=InheritedDistributionInfeasible.classification,
+        stage="exact_inherited_pre_fertility",dead_mass=float(masses.sum()),
+        affected_cells=int(len(indices)),census=census,origin_shape=list(out.shape),
+        origin_mass=float(out.sum()),origin_sha256=hashlib.sha256(out.tobytes()).hexdigest(),
+        asset_prices=np.asarray(policy.price,dtype=float).tolist(),value_cutoff=-1e9,
+        feasibility_mass_tolerance=tolerance,projection_mass=0.,distribution_modified=False,
+        status="rejected" if rejected else "retained_below_existing_feasibility_tolerance")
+    evidence_dir = getattr(P,"native_inherited_distribution_evidence_dir",None)
+    if not evidence_dir:
+        raise ValueError("Exact inherited-state rejection requires an explicit evidence directory")
+    destination = Path(evidence_dir)/f"inherited_infeasible_{time.time_ns()}.json"
+    destination.parent.mkdir(parents=True,exist_ok=True)
+    evidence["evidence_path"] = str(destination)
+    destination.write_text(json.dumps(evidence,indent=2,sort_keys=True,allow_nan=False)+"\n")
+    if rejected:
+        raise InheritedDistributionInfeasible(evidence)
+
+
 def gate_pre_fertility_distribution(
     g_pre: np.ndarray,
     policy: PolicyBundle,
@@ -405,6 +462,9 @@ def gate_pre_fertility_distribution(
 ) -> tuple[np.ndarray, float]:
     out = np.asarray(g_pre, dtype=float).copy()
     projected_mass = 0.0
+    if bool(getattr(P,"native_exact_inherited_distribution",False)):
+        _require_exact_inherited_distribution(out,policy,P,b_grid)
+        return out, 0.0
     for j in range(P.J):
         # A surprise price change can leave an inherited debt node just beyond
         # the new Bellman feasibility frontier.  Use the core model's own
@@ -522,6 +582,7 @@ def evaluate_period(
         # Forward kernels receive this same date's P, never the last backward date.
         P._bp_pol_stay = policy.bp_pol_stay
         P._c_pol_stay = policy.c_pol_stay
+        P._g_stay_distribution = g_stay
     demand = housing_demand_by_location(g_current, policy.hR_pol, P)
     supply = (
         supply_rule.quantity(policy.price)
@@ -641,6 +702,9 @@ def reconstruct_stationary_pre_fertility(
     b_grid: np.ndarray,
     shared: SimpleNamespace,
 ) -> tuple[np.ndarray, dict[str, float]]:
+    stay_saving = getattr(policy, 'bp_pol_stay', None) if bool(getattr(P, 'native_due_stayer_credit', False)) else None
+    if bool(getattr(P, 'native_due_stayer_credit', False)) and stay_saving is None:
+        raise ValueError('DUE reconstruction requires date-owned stayer saving')
     saved_post = np.asarray(solution.g_beginning_distribution, dtype=float)
     g_pre = np.zeros_like(saved_post)
     g_pre[:, :, :, 0, :, :, :] = entrant_cohort(
@@ -668,6 +732,7 @@ def reconstruct_stationary_pre_fertility(
             stochastic,
             P.Pi_child if stochastic else None,
             Pi_z,
+            bp_pol_stay=stay_saving,
         )
     if joint_nested_enabled(P):
         # The solution carries the stationary population's effective tenure
