@@ -90,17 +90,26 @@ def certify_initial_pension(g, P, *, marginal_tolerance, fiscal_tolerance):
 
 
 def solve_balanced_initial_equilibrium(*, model, parameters, b_grid, initial_prices,
-                                       payroll_tax, marginal_tolerance, fiscal_tolerance):
+                                       payroll_tax, marginal_tolerance, fiscal_tolerance,
+                                       warm_price_state=None):
     """Solve households/prices with the balancing pension already anticipated."""
     if not np.isfinite(parameters.tol_eq) or not 0 < parameters.tol_eq <= 2.5e-5:
         raise ValueError('Initial equilibrium tolerance must retain the 2.5e-5 gate or tighter')
     P, receipt = bind_initial_balanced_pension(parameters, payroll_tax=payroll_tax)
+    # Passing no state preserves the original solver call, including callers
+    # with a frozen pre-warm-start model interface. Commit a state only after
+    # both the market and fiscal certificates pass.
+    candidate_state = dict(warm_price_state) if warm_price_state is not None else None
+    warm_kwargs = {"warm_price_state": candidate_state} if candidate_state is not None else {}
     sol, P, prices = model.solve_markov_income_equilibrium(
-        np.asarray(initial_prices, dtype=float), P, b_grid, verbose=False)
+        np.asarray(initial_prices, dtype=float), P, b_grid, verbose=False, **warm_kwargs)
     if not bool(sol.converged) or not bool(sol.timings.get('strict_converged', False)):
         raise RuntimeError('Initial housing equilibrium failed its unchanged strict gate')
     receipt.update(certify_initial_pension(sol.g, P,
         marginal_tolerance=marginal_tolerance, fiscal_tolerance=fiscal_tolerance))
+    if warm_price_state is not None:
+        warm_price_state.clear()
+        warm_price_state.update(candidate_state)
     return sol, P, prices, receipt
 
 

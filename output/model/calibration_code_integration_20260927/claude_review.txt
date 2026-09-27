@@ -1,0 +1,89 @@
+I found **four launch blockers and one procedural blocker**. None of them is a disagreement about the economics. Each is a way the controller either can't record a successful candidate or treats a routine rejection as a fatal stop. A fatal stop ends new dispatch and skips the repeats and export (`run_e5f_utility_overnight_calibration.py:291`). The pending exact-loop smoke would catch B1 and possibly B4. B2, B3 and B5 would only show up during the search.
+
+This was a read-only review within the 20-minute limit: no edits, no execution, no commits. Plan mode was on, but the plan-file and exit-plan tools weren't available here, so nothing was written to disk.
+
+## Launch blockers
+
+**B1. The success receipt probably can't be written.**
+- `e5f_calibration_runtime.py:300` writes a cleaned, JSON-safe copy of the receipt. Line 304 then returns the raw `receipt` dict.
+- `evaluate` (`run_e5f_utility_overnight_calibration.py:94-95`) adds fields and writes that raw dict again with `json.dumps(allow_nan=False)` and no numpy handler.
+- Any numpy array, numpy boolean or NaN in the fiscal, operator, budget, purchase, array or fiscal-rule fields raises `TypeError`. The case is then logged as fatal.
+- **Fix:** at line 300, assign `receipt = tax.finite_json(primitive.pf.calendar.jsonable(receipt))`, write it, and return that cleaned dict.
+
+**B2. A timeout the child process detects itself is classified as fatal.**
+- The runtime raises `TimeoutError` at `e5f_calibration_runtime.py:180` and `:204`. It uses the same deadline at which the supervisor kills the process (controller lines 257-258).
+- If a solve finishes between that deadline and the supervisor's kill, the child writes `failure.json` with status fatal. `classify` checks for fatal at line 189, before the owned-timeout check at line 190. The existing test at `test_e5f_utility_overnight_controller.py:118-119` pins this ordering.
+- At the search cutoff up to ten cases are in flight, so one unlucky timing halts the search.
+- **Fix (pick one):**
+  - Give the child a later deadline, for example `deadline_epoch = end + 300`, so the supervisor's kill always comes first.
+  - Remove the in-child deadline checks, since the controller owns deadlines.
+  - Write a typed `censored_timeout` status that `classify` accepts only when `process.deadline_expired` is true.
+
+**B3. A proposal that would need a negative child benefit becomes a fatal stop.**
+- `psi_child` is the per-child utility benefit that the normalization solves for so completed fertility equals 2.1.
+- If fertility is above 2.1 at the starting benefit 0.065, the bracketing search in `run_e5f_transition_calibration.py:819-826` steps downward. Worked example: the probes are 0.065 − 0.05 = 0.015, then 0.065 − 0.1 = −0.035. From the second probe on, the benefit is negative.
+- The solver accepts a negative benefit. The runtime rejects it only after every solve has finished, with a generic `RuntimeError('Invalid benefit normalization...')` at line 213. That message is probably not one the inherited failure classifier recognises, so it would be fatal.
+- **Fix:** in `solve_ge`, check `psi_child <= 0` before solving and raise a typed exception. Map it to `inadmissible_parameter_proposal` next to `EstateFundingShortfall` at lines 127-128.
+- **Also confirm on Torch** that the inherited classifier (`failure_status` in the runtime-tools copy of `run_e5f_utility_comparison.py`) treats all of these as inadmissible rather than fatal:
+  - "normalization is not bracketed"
+  - "missed tolerance", including the 23-solve cap
+  - "Initial housing equilibrium failed its unchanged strict gate"
+  - "Initial pension certification failed"
+
+**B4. The exact check on `beta_annual` may fail for most search points.**
+- `validate_success` (line 160) requires the reported estimate to equal the requested point exactly.
+- The runtime reports `tax.actual_parameters(P)` (lines 260 and 264), and binding stores the period discount factor as `beta = beta_annual**4` (`e5f_parenthood_utility.py:145`).
+- If `actual_parameters` recovers the annual value as `P.beta**0.25`, then `(x**4)**0.25 == x` fails for many floating-point values. Every successful search case would then be classified fatal.
+- The smoke could still pass: its starting value came from an earlier `actual_parameters` export, so it may round-trip by luck.
+- **Fix:** for the nine free coordinates, report `point[name]` as the estimate. Record the derived value separately and check it with a relative tolerance of 1e-12.
+
+**B5. Procedural: promoting the contract can invalidate the smoke.**
+- `science_id` (controller line 35) ignores only `status`, `approval` and `verified_smoke`.
+- The contract builder also writes `production_blockers` (`prepare_e5f_calibration_launch.py:262`). Clearing that list when promoting to `approved_production` changes `science_id`, so the smoke receipt no longer validates and you'd need another roughly one-hour smoke.
+- **Fix:** add `production_blockers` to the ignored keys, or edit only `status`/`approval` when promoting.
+
+## Checked and correct
+- **`warm_price.py`:**
+  - Tries the supplied price, then at most eight bounded proposals, with bisection once a sign change is found.
+  - Keeps only the best solution in memory.
+  - Uses the same strict `metric < tol_eq` test as the solver.
+  - Returns a fallback flag instead of accepting a failed point.
+- **Solver changes:**
+  - The warm start is rejected unless there is one market and the direct solver is in use.
+  - The ordinary refinement is skipped only when the warm point is already certified; otherwise it runs with the shared price cache.
+  - Finalization is unchanged.
+  - The warm state is published only if the market converged.
+- **`e5f_stationary_paygo.py`:**
+  - Passes a copy of the warm state and commits it only after both the market and pension certificates pass.
+  - With no warm state, it makes the original solver call.
+  - Enforces the 2.5e-5 market tolerance.
+- **`child_preferences.py`:**
+  - The compensation constant is the Cobb–Douglas indirect-utility term \(K=\alpha^\alpha((1-\alpha)/r^*)^{1-\alpha}\), evaluated at a fixed reference rent.
+  - The utility multiplier \(A^{1-\sigma}\) is consistent with the existing equivalence-scale multiplier \(e^{\sigma-1}\).
+  - The curvature loop covers exactly the cells with children at home, including the reused (childless, readiness) cell.
+  - It changes nothing when both options are off, and it rejects the legacy comparison wrapper.
+- **`initial_step`:** the default of 0.25 is unchanged, so existing callers are unaffected.
+- **Estate audit:**
+  - Rejects shortfalls with a dedicated exception, which the runtime maps to inadmissible.
+  - Does not offset debts against funding and does not mutate its inputs.
+  - Asset timing is consistent: a decedent's end-of-period savings \(b'\) fund an entrant's start-of-period wealth \(b\).
+- **Observers:** the AHS uncapped mean-rooms key and the age-25 capped children-ever-born key (0.875 post-fertility weight) both exist.
+- **Contract builder:** 14 displayed rows, 13 scored moments and 9 free parameters. The budgets satisfy every assertion in the controller.
+
+## Nonblocking limits
+- **Warm-start precondition:** if the selected parameters don't use the direct solver, every case fails at its first solve. The smoke would catch it; a zero-solve assertion in `setup` would catch it earlier.
+- **Warm-start efficiency:**
+  - When the warm price clears on its first try, the solver sets the stored slope to `None` (solver lines 1507-1512), so the next benefit trial falls back to a 2% step. It should keep the previous slope.
+  - A warm price outside the global bounds raises an error instead of being clipped.
+- **Warm versus cold equilibria:** the warm path accepts a different price within the same 2.5e-5 tolerance than the cold path would. Each candidate's result depends on its sequence of benefit trials. That sequence is deterministic because each normalization starts from an empty warm state, so exact repeats still work. Loss differences against cold-path diagnostics are tolerance-level.
+- **Solve cap:** bracketing plus the secant search can need up to 25 solves, so the 23-solve cap binds only in pathological cases. The cap's error message hard-codes "23".
+- **Search design:**
+  - Stages are labelled `'de'`, but the proposals are a Gaussian random walk around the best point, not differential evolution. Describe it accurately in the readout.
+  - Proposals are clamped at the bounds, which piles probability mass on the bounds.
+  - Rounds are synchronous, so each round waits for its slowest case (cap 3,100 s). That allows at most about seven rounds. Size the run once the smoke gives a measured objective time.
+- **Starting curvature:** the search starts at curvature 0.14, while the starting benefit 0.065 came from the linear-benefit diagnostic (curvature 0), so the first benefit trial won't hit 2.1. That's harmless.
+- **Estate audit scope:** house values carry no depreciation, and the gap between entrant and death mass is reported but not gated. This is acceptable while the closed-renewal gate holds.
+- **Frozen source:** confirm that no kernel in the copied Sept 25 source indexes the housing share or equivalence scale by the compressed family type. The runtime's zero-solve check only covers the benefit.
+
+## Not reviewed
+Several Torch-only pieces aren't in this checkout, so I couldn't read them: the inherited recovery runner and its classifier, `tax.actual_parameters`, `jsonable`/`finite_json`, and the process supervisor. B3 and B4 depend on them. I read only the relevant parts of the observer diffs, and nothing was executed.

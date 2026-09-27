@@ -9,6 +9,14 @@ The CPS window [40,45) overlaps the [38,42) and [42,46) model cells for two
 and three years. Uniform birth-time interpolation averages the pre/post parity
 stock using post shares .75 and .375, respectively. Constant-post-cell stock
 is an explicitly different diagnostic approximation. Both use model age mass.
+
+The additional exact-age-25 stock uses [25,26) within the [22,26) cell and
+always applies uniform birth-time interpolation with post share .875. It is
+mean children ever born capped at three, with literal weights [0,1,2,3],
+independent of both the completed-fertility top-bin weight and children at home.
+Its projection does not follow the separate legacy CPS 40--44 selector.
+With zero age-25 population, only the additional moment is unavailable; the
+calibration registry must reject it if that moment is required for scoring.
 """
 from __future__ import annotations
 
@@ -22,6 +30,7 @@ AGE_PROJECTIONS = ("uniform_birth_time", "constant_post_cell")
 MASS_ATOL = 2.0e-10
 FLOW_ATOL = 2.0e-10
 MOMENT_ATOL = 2.0e-12
+EARLY_FERTILITY_MOMENT = "mean_children_ever_born_capped3_age25"
 
 
 def _finite_vector(value: Any, name: str, size: int) -> np.ndarray:
@@ -41,7 +50,7 @@ def observe_initial_fertility(
     *,
     age_projection: str,
 ) -> dict[str, Any]:
-    """Return four diagnostic moments plus parity shares and accounting evidence.
+    """Return five diagnostic moments plus child-count shares and accounting evidence.
 
     ``evaluation.g_pre`` and ``evaluation.g_post_fertility`` must be the same
     population immediately before/after the sequential fertility step, with
@@ -172,15 +181,56 @@ def observe_initial_fertility(
     parity = window_parity_mass / window_mass
     if not np.isfinite(parity).all() or np.any(parity < 0.0) or np.any(parity > 1.0):
         raise RuntimeError("Projected parity shares are invalid")
+
+    # Exact completed age 25 means [25,26), not the 25th birthday. Average
+    # uniform birth timing over that subinterval: (25.5 - 22) / 4 = .875.
+    # These are validated ever-born stocks; the child-at-home axis was summed
+    # out above. Keep this target's definition independent of the older
+    # constant-post-cell diagnostic option for the ages-40--44 window.
+    early_left = np.maximum(ages, 25.0)
+    early_right = np.minimum(ages + float(P.da), 26.0)
+    early_lengths = np.maximum(early_right - early_left, 0.0)
+    early_selected = early_lengths > 0.0
+    if (not math.isclose(float(early_lengths.sum()), 1.0, rel_tol=0.0, abs_tol=MOMENT_ATOL)
+            or np.count_nonzero(early_selected) != 1
+            or float(ages[early_selected][0]) != 22.0):
+        raise ValueError("Age-25 observer requires [25,26) within the [22,26) model cell")
+    early_overlap = early_lengths / float(P.da)
+    early_post_shares = np.zeros(J, dtype=float)
+    early_post_shares[early_selected] = (
+        (early_left[early_selected] + early_right[early_selected]) / 2.0
+        - ages[early_selected]
+    ) / float(P.da)
+    early_projected = ((1.0 - early_post_shares[:, None]) * pre_parity
+                       + early_post_shares[:, None] * post_parity)
+    early_mass_by_children = (early_overlap[:, None] * early_projected).sum(axis=0)
+    early_mass = float(early_mass_by_children.sum())
+    if not math.isfinite(early_mass) or early_mass < 0.0:
+        raise ValueError("Age-25 projected population denominator must be nonnegative and finite")
+    early_available = early_mass > 0.0
+    early_shares = None
+    early_mean = None
+    if early_available:
+        early_shares = early_mass_by_children / early_mass
+        if (not np.isfinite(early_shares).all() or np.any(early_shares < 0.0)
+                or np.any(early_shares > 1.0)):
+            raise RuntimeError("Age-25 projected children-ever-born shares are invalid")
+        early_mean = float(np.dot(np.array([0.0, 1.0, 2.0, 3.0]), early_shares))
     return {
         "moments": {
             "childless_rate_40_44": float(parity[0]),
             "exactly_one_among_mothers_40_44": float(window_parity_mass[1] / mother_mass),
             "period_mean_age_first_birth": helper_mean,
             "period_share_first_births_age30plus": helper_share,
+            EARLY_FERTILITY_MOMENT: early_mean,
         },
         "parity_shares_40_44": {label: float(value) for label, value in
                                 zip(("0", "1", "2", "3plus"), parity, strict=True)},
+        "ever_born_shares_age25": (
+            {label: float(value) for label, value in
+             zip(("0", "1", "2", "3plus"), early_shares, strict=True)}
+            if early_available else None
+        ),
         "accounting": {
             "window_parity_mass": window_parity_mass.tolist(),
             "window_population_mass": window_mass,
@@ -197,6 +247,12 @@ def observe_initial_fertility(
             "explicit_birth_flow": total_births,
             "maximum_age_mass_error": mass_error,
             "maximum_parity_flow_error": parity_error,
+            "age25_ever_born_mass": early_mass_by_children.tolist(),
+            "age25_population_mass": early_mass,
+            "age25_overlap_weights": early_overlap.tolist(),
+            "age25_post_fertility_interpolation_share": [
+                float(early_post_shares[j]) if early_selected[j] else None for j in range(J)
+            ],
         },
         "metadata": {
             "observer_id": "initial_cps_nchs_fertility_diagnostic_v1",
@@ -218,5 +274,24 @@ def observe_initial_fertility(
             "mass_atol": MASS_ATOL,
             "flow_atol": FLOW_ATOL,
             "moment_atol": MOMENT_ATOL,
+            "early_fertility_age25": {
+                "moment_key": EARLY_FERTILITY_MOMENT,
+                "available": early_available,
+                "unavailable_reason": None if early_available else "zero projected population mass in [25,26)",
+                "required_scored_moment_rule": "calibration registry must reject an unavailable required moment",
+                "definition": "mean children ever born capped at three among completed integer age 25",
+                "age_window": "[25,26), observed interview age; not the 25th birthday",
+                "model_age_cell": "[22,26)",
+                "age_projection": "uniform_birth_time",
+                "post_fertility_interpolation_share": 0.875,
+                "projection_independent_of_legacy_40_44_selector": True,
+                "children_ever_born_weights": [0.0, 1.0, 2.0, 3.0],
+                "uses_tfr_top_bin_weight": False,
+                "uses_children_at_home": False,
+                "empirical_source": "output/model/early_fertility_target_20260926/early_fertility_target.json",
+                "empirical_sample": "pooled June 2004/2006 CPS women at exact age 25; valid FREVER and positive FRSUPPWT",
+                "empirical_age_weights_applied": False,
+                "target_or_weight_adopted_by_observer": False,
+            },
         },
     }

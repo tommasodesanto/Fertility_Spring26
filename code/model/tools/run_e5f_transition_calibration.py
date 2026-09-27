@@ -770,8 +770,12 @@ def solve_old_steady_state(
     completed_fertility_target: float,
     completed_fertility_tolerance: float,
     normalize: bool,
+    initial_step: float = 0.25,
 ) -> tuple[Any, SimpleNamespace, np.ndarray, float, dict[str, Any]]:
     """Solve the initial steady state, optionally deriving its fertility intercept."""
+    initial_step = float(initial_step)
+    if not math.isfinite(initial_step) or not 0.0 < initial_step <= 24.0:
+        raise ValueError("Normalization initial_step must be finite and in (0,24]")
     cache: dict[float, tuple[Any, SimpleNamespace, np.ndarray, float, float]] = {}
 
     def evaluate(psi: float) -> tuple[Any, SimpleNamespace, np.ndarray, float, float]:
@@ -802,6 +806,7 @@ def solve_old_steady_state(
     if not normalize or abs(initial[4] - target) <= tolerance:
         return (*initial[:4], {
             "status": "normalized_at_initial_guess" if normalize else "fixed_intercept",
+            "initial_psi": float(initial_psi), "initial_step": initial_step,
             "psi_child": float(initial_psi),
             "completed_fertility": initial[4],
             "target": target,
@@ -811,7 +816,7 @@ def solve_old_steady_state(
         })
 
     initial_gap = initial[4] - target
-    step = 0.25 if initial_gap < 0.0 else -0.25
+    step = initial_step if initial_gap < 0.0 else -initial_step
     probe_psi = float(initial_psi) + step
     probe = evaluate(probe_psi)
     probe_gap = probe[4] - target
@@ -864,6 +869,7 @@ def solve_old_steady_state(
         )
     return (*chosen[:4], {
         "status": "derived_intercept",
+        "initial_psi": float(initial_psi), "initial_step": initial_step,
         "psi_child": float(chosen_psi),
         "completed_fertility": chosen[4],
         "target": target,

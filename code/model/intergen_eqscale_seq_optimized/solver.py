@@ -12,6 +12,8 @@ import numpy as np
 
 from . import joint_nested
 from .adult_entry import adjusted_births, potential_entry_households
+from .warm_price import search_warm_price
+from .child_preferences import apply_child_preferences
 
 from .parameters import (
     apply_overrides,
@@ -1338,6 +1340,8 @@ def solve_markov_income_equilibrium(
     P: SimpleNamespace,
     b_grid: np.ndarray,
     verbose: bool = True,
+    *,
+    warm_price_state: dict[str, float | None] | None = None,
 ) -> tuple[SimpleNamespace, SimpleNamespace, np.ndarray]:
     p = np.asarray(p_init, dtype=float).reshape(-1)
     z_grid, z_weights, Pi_z = income_transition_values(P)
@@ -1359,6 +1363,14 @@ def solve_markov_income_equilibrium(
     SD_shared = precompute_shared(P, b_grid)
     equilibrium_method = str(getattr(P, "markov_equilibrium_method", "legacy_damped")).lower()
     use_direct_scalar = P.I == 1 and equilibrium_method in {"direct", "direct_brent", "brent"}
+    warm_info: dict[str, Any] | None = None
+    if warm_price_state is not None:
+        if not use_direct_scalar:
+            raise ValueError("Warm prices require the one-market direct equilibrium solver")
+        if set(warm_price_state) - {"price", "slope"}:
+            raise ValueError("Warm price state accepts only price and slope")
+        warm_info = {"used": False, "initial_price": warm_price_state.get("price"),
+                     "initial_slope": warm_price_state.get("slope"), "fallback_required": False}
 
     def fast_solve(price: np.ndarray) -> SimpleNamespace:
         nonlocal cache_hits, t_solve
@@ -1380,7 +1392,27 @@ def solve_markov_income_equilibrium(
         price_cache[key] = summary
         return solution
 
-    if use_direct_scalar:
+    use_warm_scalar = warm_price_state is not None and warm_price_state.get("price") is not None
+    if use_warm_scalar:
+        def warm_evaluate(price: float) -> tuple[float, float, SimpleNamespace]:
+            P.eq_iter = len(price_cache) + 1
+            sol = fast_solve(np.array([price]))
+            demand, _ = markov_market_housing_demand(sol, P, b_grid)
+            supply = float(np.asarray(sol.housing_supply).reshape(-1)[0])
+            excess = float(demand[0]) - supply
+            return excess, abs(excess) / max(abs(supply), 1e-12), sol
+
+        price, best_sol, best_err, warm_info = search_warm_price(
+            warm_evaluate,
+            initial_price=float(warm_price_state["price"]),
+            initial_slope=warm_price_state.get("slope"),
+            lower_bound=float(getattr(P, "p_min", 1e-4)),
+            upper_bound=float(getattr(P, "p_max", 100.0)),
+            tolerance=float(P.tol_eq),
+        )
+        best_p, final_err = np.array([price]), best_err
+        iterations_completed = int(warm_info["price_evaluations"])
+    elif use_direct_scalar:
         P.eq_iter = 1
         sol_it = fast_solve(p)
         market_demand, _ = markov_market_housing_demand(sol_it, P, b_grid)
@@ -1419,7 +1451,8 @@ def solve_markov_income_equilibrium(
     if best_sol is None:
         best_sol = fast_solve(best_p)
     scalar_refine_info: dict[str, Any] = {"used": False}
-    if P.I == 1 and bool(getattr(P, "scalar_market_refine", True)):
+    if (P.I == 1 and bool(getattr(P, "scalar_market_refine", True))
+            and not (use_warm_scalar and best_err < P.tol_eq)):
         best_sol, best_p, best_err, scalar_refine_info = refine_one_market_markov_income(
             best_p,
             best_sol,
@@ -1461,6 +1494,25 @@ def solve_markov_income_equilibrium(
         "scalar_market_refine": scalar_refine_info,
     }
     best_sol.converged = bool(best_err < P.tol_eq)
+    if warm_price_state is not None:
+        # Publish only certified starts. Retain lightweight cache summaries,
+        # never whole household payloads, between normalization trials.
+        if best_sol.converged:
+            points = []
+            for key, summary in price_cache.items():
+                demand, _ = markov_market_housing_demand(summary, P, b_grid)
+                excess = float(demand[0]) - float(np.asarray(summary.housing_supply).reshape(-1)[0])
+                if math.isfinite(excess):
+                    points.append((key[0], excess))
+            slope = warm_price_state.get("slope")
+            if len(points) >= 2 and points[-1][0] != points[-2][0]:
+                slope = (points[-1][1] - points[-2][1]) / (points[-1][0] - points[-2][0])
+                if not math.isfinite(slope):
+                    slope = None
+            warm_price_state.update(price=float(best_p[0]), slope=slope)
+        best_sol.timings["warm_price_search"] = {
+            **warm_info, "accepted_state": dict(warm_price_state) if best_sol.converged else None,
+        }
     return best_sol, P, best_p
 
 
@@ -2490,6 +2542,7 @@ def precompute_shared(P: SimpleNamespace, b_grid: np.ndarray) -> SimpleNamespace
                     c_bar[nn, cs] = 0.0
                     h_bar[nn, cs] = 0.0
 
+    apply_child_preferences(P, alpha_bar, psi_v, escale)
     triples = np.column_stack(
         [
             c_bar.reshape(-1, order="F"),

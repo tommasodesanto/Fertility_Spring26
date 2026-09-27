@@ -1,5 +1,60 @@
 # Calibration Status
 
+## September 27, 00:00 EDT — code preparation verified; launch held for author instructions
+
+**Latest author instruction supersedes the intervening request to launch tonight:**
+report implementation/test coverage and wait for his further instruction set
+before starting. No calibration search or new household solve was launched.
+Keep a visible tomorrow-review list; the author explicitly adds the tenure-choice
+scale. Actual retained value is 0.005, fixed and provisional, not estimated in
+this first proposed fit. Do not substitute constructor/profile defaults.
+
+Implemented an explicit version-controlled single-specification objective,
+native child-benefit curvature/compensated first-child shares, separate age-25
+fertility and actual AHS-room observers, estate-funded positive entrant assets
+with a residual sink, optional guarded warm prices and an explicit benefit-search
+step. The original normalizer cache remains intact; Claude's payload-release
+patch can re-solve evicted revisits and was not adopted. The bounded controller
+now authenticates sources, targets, weights and normalization starts; owns all
+deadlines; checks full repeated target/parameter tables and checkpoint hashes;
+freezes selection before repeats/export; and refuses production without
+explicit authorization. There are no saving-kernel, grid, conception or
+scientific-tolerance changes. Existing purchase/entry compatibility adapters
+remain authenticated; they have not been rewritten as native primitives.
+
+Torch job 18623087 passed **90 focused tests and the assembled zero-solve
+preflight**. Independent read-only Claude review and lead adjudication are
+retained. The source is the frozen September 25 package plus narrow reviewed
+edits, not current main substituted wholesale. Both staged copies and the
+original frozen reference are preserved. Latest working snapshot:
+`/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/calibration_code_integration_20260927_v2`;
+review-only contract SHA256
+`399abb6e9eab0d447dca627f94e3de4e6a8006d8920d02241fadac21f6c6ebae`.
+Full-objective warm/cold comparisons, native exact repeats, standard diagnostics,
+actual loop/export acceptance and measured total runtime are **still required**.
+No speed claim or production-code certification follows from unit/preflight
+success. No numerical jobs remain active.
+
+The prepared target system has **14 display rows = 13 scored moments + the
+completed-fertility normalization at 2.1**; **9 free structural parameters + the
+normalized benefit level**. Five scored fertility moments, five housing moments,
+and three wealth moments are retained. No existing target was dropped. Early
+fertility weight 100 and curvature bounds [0,0.8] are lead-proposed working
+choices awaiting the author's instructions, not accepted restrictions. AHS mean
+rooms uses the exact empirical value 5.729434240102641 with the inherited weight.
+
+Tomorrow's review: (1) tenure-choice scale; (2) interest rate and credit/purchase
+constraints, including DUE/PTI alternatives; (3) rental menu/cap; (4) income and
+entrant-wealth compatibility; (5) estate valuation, child-directed versus all-estate
+measurement and older-household income proxy; (6) weights, identification and
+bounds. The finer owner grid and revised conception schedule remain separate
+deferred tests. None is silently changed in this preparation. The Google
+advisor-checklist owner has recorded the latest launch hold and these items.
+
+Code: `code/model/tools/e5f_calibration_runtime.py`,
+`run_e5f_utility_overnight_calibration.py`, `prepare_e5f_calibration_launch.py`;
+evidence and review: `output/model/calibration_code_integration_20260927/README.md`.
+
 ## September 26 late evening — first-run scope and completion sequence
 
 **Author defers the finer owner-housing grid and revised conception-success

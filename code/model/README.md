@@ -39,6 +39,21 @@ old incomplete bundles must be rebuilt from their matching solution or re-solved
 
 ## Earnings and wealth candidate tools
 
+The September 27 calibration integration uses
+`tools/e5f_calibration_runtime.py` for the explicit single-specification
+objective, `tools/run_e5f_utility_overnight_calibration.py` for bounded process
+supervision, and `tools/prepare_e5f_calibration_launch.py` for source, target and
+weight pins. Native optional preferences live in
+`intergen_eqscale_seq_optimized/child_preferences.py`; optional warm price
+proposals live in `intergen_eqscale_seq_optimized/warm_price.py`. Neither changes
+the old default path. The cluster scripts
+`run_e5f_calibration_code_checks.sh` and `run_e5f_calibration_preflight.sh`
+are verification entry points; they do not launch a search.
+See `CALIBRATION_STATUS.md` for launch authority and the integration packet at
+`output/model/calibration_code_integration_20260927/README.md` for test evidence
+and remaining acceptance checks. This is separate from the immutable September
+25 source; it does not silently adopt main's other solver changes.
+
 The requested [estate recipient diagnostic](../../output/model/estate_receiver_probe/README.md)
 uses `tools/run_e5f_estate_receiver_probe.py` and its isolated adapter to compare
 the September 25 selected control, net estate valuation, and net valuation plus

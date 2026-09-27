@@ -1,0 +1,50 @@
+
+----------------------------------------------------------------------
+Ran 72 tests in 0.119s
+
+OK
+test_all_fourteen_rows_and_thirteen_scores_preserve_definitions (test_e5f_calibration_runtime.RegistryTests.test_all_fourteen_rows_and_thirteen_scores_preserve_definitions) ... ok
+test_missing_duplicate_unknown_and_unavailable_rows_fail (test_e5f_calibration_runtime.RegistryTests.test_missing_duplicate_unknown_and_unavailable_rows_fail) ... ok
+test_no_target_is_silently_unweighted_and_normalization_not_double_scored (test_e5f_calibration_runtime.RegistryTests.test_no_target_is_silently_unweighted_and_normalization_not_double_scored) ... ok
+test_only_nonpositive_final_benefit_is_candidate_rejection (test_e5f_calibration_runtime.RegistryTests.test_only_nonpositive_final_benefit_is_candidate_rejection) ... ok
+test_signed_estate_funding_account (test_e5f_calibration_runtime.RegistryTests.test_signed_estate_funding_account) ... ok
+test_approval_does_not_change_science_but_normalization_does (test_e5f_utility_overnight_controller.ControllerTests.test_approval_does_not_change_science_but_normalization_does) ... ok
+test_checkpoint_and_normalization_audited (test_e5f_utility_overnight_controller.ControllerTests.test_checkpoint_and_normalization_audited) ... ok
+test_clean_runtime_seam (test_e5f_utility_overnight_controller.ControllerTests.test_clean_runtime_seam) ... ok
+test_contract_and_target_pins_fail_closed (test_e5f_utility_overnight_controller.ControllerTests.test_contract_and_target_pins_fail_closed) ... ok
+test_every_target_cell_checked_even_equal_loss (test_e5f_utility_overnight_controller.ControllerTests.test_every_target_cell_checked_even_equal_loss) ... /scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/calibration_code_integration_20260927_v2/tools/test_e5f_utility_overnight_controller.py:95: ResourceWarning: unclosed file <_io.TextIOWrapper name='/state/partition1/job-18623087/tmp835_ogtj/repeat/case/target_fit.csv' mode='r' encoding='UTF-8'>
+  rows=list(csv.DictReader((b/'case/target_fit.csv').open()));rows[1]['model']='2.2';table(b/'case/target_fit.csv',rows)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_exact_controller_loop_smoke_reuse_and_frozen_export (test_e5f_utility_overnight_controller.ControllerTests.test_exact_controller_loop_smoke_reuse_and_frozen_export) ... ok
+test_only_beta_roundtrip_has_small_tolerance (test_e5f_utility_overnight_controller.ControllerTests.test_only_beta_roundtrip_has_small_tolerance) ... /scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/calibration_code_integration_20260927_v2/tools/test_e5f_utility_overnight_controller.py:115: ResourceWarning: unclosed file <_io.TextIOWrapper name='/state/partition1/job-18623087/tmpu62rh1nh/one/case/parameters.csv' mode='r' encoding='UTF-8'>
+  rows=list(csv.DictReader((folder/'case/parameters.csv').open()))
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_parameter_bound_and_duplicate_checked (test_e5f_utility_overnight_controller.ControllerTests.test_parameter_bound_and_duplicate_checked) ... /scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/calibration_code_integration_20260927_v2/tools/test_e5f_utility_overnight_controller.py:98: ResourceWarning: unclosed file <_io.TextIOWrapper name='/state/partition1/job-18623087/tmp3ckedqf7/repeat/case/parameters.csv' mode='r' encoding='UTF-8'>
+  (a,_,_),(b,_,_)=self.pair();rows=list(csv.DictReader((b/'case/parameters.csv').open()));rows[0]['upper']='2';table(b/'case/parameters.csv',rows)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_proposals_are_bounded_deterministic_and_distinct (test_e5f_utility_overnight_controller.ControllerTests.test_proposals_are_bounded_deterministic_and_distinct) ... ok
+test_reviewed_batch_drains_siblings_after_fatal (test_e5f_utility_overnight_controller.ControllerTests.test_reviewed_batch_drains_siblings_after_fatal) ... ok
+test_solve_cap_checked (test_e5f_utility_overnight_controller.ControllerTests.test_solve_cap_checked) ... ok
+test_timeout_requires_positive_owned_evidence (test_e5f_utility_overnight_controller.ControllerTests.test_timeout_requires_positive_owned_evidence) ... ok
+test_zero_exit_cannot_be_inadmissible (test_e5f_utility_overnight_controller.ControllerTests.test_zero_exit_cannot_be_inadmissible) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 3.114s
+
+OK
+{
+  "contract": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/calibration_code_integration_20260927_v2/launch_v1/contract.json",
+    "sha256": "399abb6e9eab0d447dca627f94e3de4e6a8006d8920d02241fadac21f6c6ebae"
+  },
+  "displayed_rows": 14,
+  "free_parameters": 9,
+  "launch_performed": false,
+  "required_next_step": "Author instructions; this preparation does not authorize a calibration launch",
+  "runtime_file_count": 15,
+  "scored_rows": 13,
+  "source_file_count": 651
+}

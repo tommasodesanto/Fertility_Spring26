@@ -14,6 +14,7 @@ import numpy as np
 
 
 AGE_PROJECTION = "uniform_within_age_cell"
+AHS_MEAN_ROOMS = "aggregate_mean_occupied_rooms_ahs_uncapped_18_85"
 MOMENT_NAMES = (
     "aggregate_mean_occupied_rooms_capped9_18_85",
     "own_rate_30_55",
@@ -25,6 +26,7 @@ MOMENT_NAMES = (
     "old_total_wealth_to_annual_income_p90_p50_7684",
     "old_total_wealth_to_annual_income_median_7684",
     "housing_increment_0to1",
+    AHS_MEAN_ROOMS,
 )
 
 
@@ -95,7 +97,7 @@ def _housing_totals(g, h_r, houses, age_weights, family_mask=None):
     # collapsed over income; unoccupied policies may legitimately be NaN.
     if family_mask is None:
         family_mask = np.ones(g.shape[-2:], dtype=bool)
-    mass = rooms = owner_mass = 0.0
+    mass = rooms = owner_mass = actual_rooms = above_ahs_topcode_mass = 0.0
     for j, fraction in enumerate(age_weights):
         if fraction <= 0:
             continue
@@ -104,12 +106,20 @@ def _housing_totals(g, h_r, houses, age_weights, family_mask=None):
                                np.minimum(h_r[:, 0, :, j, :, :, :], 9.0), 0.0)
         mass += float(fraction * np.sum(renters))
         rooms += float(fraction * np.sum(renters * rented_rooms))
+        actual_rented_rooms = np.where(renters > 0, h_r[:, 0, :, j, :, :, :], 0.0)
+        actual_rooms += float(fraction * np.sum(renters * actual_rented_rooms))
+        above_ahs_topcode_mass += float(fraction * np.sum(renters * (actual_rented_rooms > 21.0)))
         for ten, house in enumerate(houses, start=1):
             owners = float(fraction * np.sum(g[:, ten, :, j, :, :, :] * family_mask))
             mass += owners
             owner_mass += owners
             rooms += owners * min(float(house), 9.0)
-    return dict(mass=mass, capped_rooms_sum=rooms, owner_mass=owner_mass)
+            actual_rooms += owners * float(house)
+            if float(house) > 21.0:
+                above_ahs_topcode_mass += owners
+    return dict(mass=mass, capped_rooms_sum=rooms, owner_mass=owner_mass,
+                actual_rooms_sum=actual_rooms,
+                above_ahs_topcode_mass=above_ahs_topcode_mass)
 
 
 def _wealth_diagnostics(rows, evaluation, parameters, b_grid, age_weights):
@@ -276,6 +286,35 @@ def observe_initial_housing_wealth(
     _positive_ratio(rows[MOMENT_NAMES[0]], all_housing["capped_rooms_sum"], all_housing["mass"],
                     approximations=common, rooms_capped_at=9.0,
                     cap_before_income_aggregation=True)
+    # AHS national occupied rooms is a separate quantity target. Owner products
+    # are physical room quantities; the owner utility premium is not a room
+    # multiplier. g_current already records the realized tenure allocation, so
+    # conditional renter policies in owner states must never enter this sum.
+    renter_cap = getattr(parameters, "hR_max", None)
+    renter_cap = float(renter_cap) if renter_cap is not None else None
+    if renter_cap is not None and (not math.isfinite(renter_cap) or renter_cap <= 0):
+        renter_cap = None
+    owner_max = float(np.max(houses)) if houses.size else None
+    support_within_topcode = (
+        None if renter_cap is None else
+        renter_cap <= 21.0 and (owner_max is None or owner_max <= 21.0)
+    )
+    _positive_ratio(
+        rows[AHS_MEAN_ROOMS], all_housing["actual_rooms_sum"], all_housing["mass"],
+        approximations=(
+            "Uniform annual-age exposure and constant policies/distribution within each four-year cell",
+            "National occupied model households proxy AHS occupied units with householders ages 18--85",
+            "AHS literal rooms are topcoded at 21; model room choices are left uncapped",
+            "Any realized mass above 21 requires explicit model-data topcode reconciliation",
+        ),
+        units="physical_rooms_per_occupied_household", rooms_capped_at=None,
+        empirical_rooms_topcode=21.0, model_topcode_applied=False,
+        realized_tenure=True, distribution_phase="g_current_after_housing_choice",
+        age_interval=[18.0, 86.0], configured_renter_cap_rooms=renter_cap,
+        model_owner_choice_max_rooms=owner_max,
+        configured_room_support_within_ahs_topcode=support_within_topcode,
+        realized_mass_above_ahs_topcode=all_housing["above_ahs_topcode_mass"],
+    )
     for label in ("30_55", "25_34"):
         totals = _housing_totals(g, h_r, houses, ages[label])
         _positive_ratio(rows[f"own_rate_{label}"], totals["owner_mass"], totals["mass"],
