@@ -1,0 +1,148 @@
+[
+  {
+    "epoch": 1790495383.660962,
+    "incoming_price_state": {},
+    "index": 0,
+    "market_residual": 2.360262868906765e-06,
+    "price": 0.7476075147333545,
+    "price_evaluations": 5,
+    "price_method": "direct_brent",
+    "psi_child": 0.0645126953125,
+    "seconds": 102.17763158297748,
+    "status": "completed",
+    "warm_price_search": {
+      "accepted_state": {
+        "price": 0.7476075147333545,
+        "slope": -11.35470620876223
+      },
+      "fallback_required": false,
+      "initial_price": null,
+      "initial_slope": null,
+      "used": false
+    }
+  },
+  {
+    "epoch": 1790495485.850209,
+    "incoming_price_state": {
+      "price": 0.7476075147333545,
+      "slope": -11.35470620876223
+    },
+    "index": 1,
+    "market_residual": 2.2605384860442226e-06,
+    "price": 0.7596607413584386,
+    "price_evaluations": 3,
+    "price_method": "direct_brent",
+    "psi_child": 0.11451269531250001,
+    "seconds": 65.2200503750064,
+    "status": "completed",
+    "warm_price_search": {
+      "accepted_state": {
+        "price": 0.7596607413584386,
+        "slope": -11.115558124997337
+      },
+      "fallback_required": false,
+      "initial_price": 0.7476075147333545,
+      "initial_slope": -11.35470620876223,
+      "price_evaluations": 3,
+      "trace": [
+        {
+          "excess": 0.1351559013400747,
+          "metric": 0.02103819275343667,
+          "price": 0.7476075147333545
+        },
+        {
+          "excess": 0.00168370646932825,
+          "metric": 0.0002594883636463233,
+          "price": 0.7595105881247011
+        },
+        {
+          "excess": 1.4669472061967781e-05,
+          "metric": 2.2605384860442226e-06,
+          "price": 0.7596607413584386
+        }
+      ],
+      "used": true
+    }
+  },
+  {
+    "epoch": 1790495551.082182,
+    "incoming_price_state": {
+      "price": 0.7596607413584386,
+      "slope": -11.115558124997337
+    },
+    "index": 2,
+    "market_residual": 7.692868042261589e-06,
+    "price": 0.7507569025212677,
+    "price_evaluations": 3,
+    "price_method": "direct_brent",
+    "psi_child": 0.07536605297846123,
+    "seconds": 65.43409766699187,
+    "status": "completed",
+    "warm_price_search": {
+      "accepted_state": {
+        "price": 0.7507569025212677,
+        "slope": -11.615652369570164
+      },
+      "fallback_required": false,
+      "initial_price": 0.7596607413584386,
+      "initial_slope": -11.115558124997337,
+      "price_evaluations": 3,
+      "trace": [
+        {
+          "excess": -0.10096838134620345,
+          "metric": 0.015559040635036029,
+          "price": 0.7596607413584386
+        },
+        {
+          "excess": 0.0020375476981087104,
+          "metric": 0.00031637088946124723,
+          "price": 0.7505772225453671
+        },
+        {
+          "excess": -4.955243972570855e-05,
+          "metric": 7.692868042261589e-06,
+          "price": 0.7507569025212677
+        }
+      ],
+      "used": true
+    }
+  },
+  {
+    "epoch": 1790495616.531874,
+    "incoming_price_state": {
+      "price": 0.7507569025212677,
+      "slope": -11.615652369570164
+    },
+    "index": 3,
+    "market_residual": 1.2107251282846636e-06,
+    "price": 0.7504278911157427,
+    "price_evaluations": 2,
+    "price_method": "direct_brent",
+    "psi_child": 0.07416619066952505,
+    "seconds": 48.12197837498388,
+    "status": "completed",
+    "warm_price_search": {
+      "accepted_state": {
+        "price": 0.7504278911157427,
+        "slope": -11.591955475312675
+      },
+      "fallback_required": false,
+      "initial_price": 0.7507569025212677,
+      "initial_slope": -11.615652369570164,
+      "price_evaluations": 2,
+      "trace": [
+        {
+          "excess": -0.0038216821122025735,
+          "metric": 0.0005933047162033667,
+          "price": 0.7507569025212677
+        },
+        {
+          "excess": -7.79654848681588e-06,
+          "metric": 1.2107251282846636e-06,
+          "price": 0.7504278911157427
+        }
+      ],
+      "used": true
+    }
+  }
+]

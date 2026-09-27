@@ -1,5 +1,50 @@
 # Supervised overnight calibration — September 27
 
+## September 27, 04:31 EDT — identity search verified; early-fertility weight experiment running
+
+The 04:25 frozen readout contains 208 primary and 60 identity search cases;
+identity also completed two exact final repeats. Four original acceptance cases
+and two new experiment smokes are counted separately. The main provisional
+loss is 58.466 (case de_0206), with all fourteen target rows and all ten fitted
+parameters/bounds in `output/model/supervised_calibration_20260927/checks/0425/`.
+At the 04:29 health check, primary had progressed to 216 search completions.
+Ten evaluators were active (eight primary, two early-weight); RSS 20.33 GiB,
+free disk 212 GiB. Active heartbeats and solve ledgers are fresh; no numerical
+failure, inadmissible result, timeout or memory intervention is recorded.
+Torch authentication remains blocked: no cluster search has launched.
+
+Identity completed its 60-search-case budget and exported all seventeen standard
+plots, inspected at 04:18. Its two independent repeats match all fourteen target
+rows and 31 parameter rows exactly; receipt/checkpoint hashes authenticate the
+export. Its own objective is 1.210, but common-primary loss is 361.218: it does
+not improve the main fit. Full evidence is under `identity_final/` in the run
+output root. These are diagnostic weights, not an adopted objective.
+
+The freed two workers now run the separately labeled early-fertility-weight-3000
+experiment, launched at 04:24 after two full exact smoke checks. Only that weight
+changes, from 100 to 3000; all targets, other weights, model inputs, grids, bounds,
+normalization and scientific gates are retained. Both smokes reproduce the
+fourteen model moments and all parameter rows of primary de_0173 exactly.
+Production contract SHA is
+`4b80a123cac017cb6d75520b4e52e4feb80f929eec6b9da6c06c2be7de16ebf0`;
+wrapper PID 48392, two workers, at most forty search evaluations, same absolute
+cutoffs. See `early_weight_acceptance/acceptance.json` and launch.json.
+
+Main fit still misses early fertility (0.527 versus 0.810), wealth/earnings
+(6.007 versus 6.927), and ownership (0.613 versus 0.676). Average rooms are closer
+but high (6.047 versus 5.729). This is a search result, not a global optimum or
+proof that a target is unreachable. Final main-search repeats remain pending.
+Next main standard-plot inspection is due by 04:45. If the first main budget
+finishes early, prepare a fresh bounded continuation from its verified winner,
+with new immutable contracts and smokes, retaining eight plus two local workers
+and the 07:13 search / 08:43 numerical cutoffs.
+
+Reporting now separates search cases from acceptance/repeat checks and locates
+selected diagnostic exports only after authentication. Eleven targeted reporting
+tests pass. Both pages of an internal two-page PDF layout check were inspected;
+this is not the final memo. The final memo still needs morning results and a
+concise account of preparation failures, cluster blockage and deferred decisions.
+
 ## September 27, 03:53 EDT — hourly plots checked; follow-up prepared, not launched
 
 The 03:45 snapshot has 168 primary and 56 identity search cases, with no

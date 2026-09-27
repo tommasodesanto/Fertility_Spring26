@@ -236,7 +236,23 @@ def validate_case(entry, targets, restrictions):
                              inherited_checkpoint=receipt.get('selected_checkpoint_sha256'),
                              owner_grid=receipt.get('retained_owner_grid'),
                              conception_schedule=receipt.get('retained_conception_schedule'))
-    return dict(path=str(path), weighting=entry['weighting'], own_loss=raw_loss,
+    diagnostic_folder = path / 'standard_diagnostics'
+    if entry.get('controller'):
+        export = Path(entry['controller']) / 'selected_export'
+        if (export / 'export_receipt.json').exists():
+            exported = read(export / 'export_receipt.json')
+            selected = exported.get('selected', {})
+            if selected.get('case_path') and Path(selected['case_path']).resolve() == path.resolve():
+                if (exported.get('status') not in ('verified_selected_export', 'verified_selected_export_from_interrupted_search')
+                        or selected.get('receipt_sha256') != hashlib.sha256((path / 'receipt.json').read_bytes()).hexdigest()
+                        or selected.get('checkpoint_sha256') != receipt.get('case_checkpoint_sha256')):
+                    raise ValueError('Selected diagnostic export does not authenticate this case')
+                diagnostic_folder = export / 'standard_diagnostics'
+    case = entry.get('case', '')
+    phase = ('search' if case.startswith(('initial_', 'de_')) else
+             'repeat' if case.startswith('repeat_') else
+             'acceptance' if case.startswith('smoke_') else 'other')
+    return dict(path=str(path), weighting=entry['weighting'], phase=phase, own_loss=raw_loss,
                 primary_loss=sum(r['loss_contribution'] or 0. for r in primary_fit),
                 fits=primary_fit, parameters=fitted,
                 source_manifest_sha256=receipt.get('source_manifest_sha256'),
@@ -244,7 +260,8 @@ def validate_case(entry, targets, restrictions):
                 target_weight_fingerprint=receipt.get('target_weight_fingerprint'),
                 receipt_sha256=hashlib.sha256((path / 'receipt.json').read_bytes()).hexdigest(),
                 stationary_solves=len(solves), solve_seconds=receipt.get('objective_stationary_solve_seconds'),
-                diagnostic_pngs=len(list((path / 'standard_diagnostics').glob('*.png'))),
+                diagnostic_pngs=len(list(diagnostic_folder.glob('*.png'))),
+                diagnostic_source=str(diagnostic_folder),
                 market_residual=receipt.get('market_residual'), estate_funding=receipt.get('estate_funding'),
                 observer_warnings=receipt.get('model_observer_warnings', []),
                 checkpoint_sha256=receipt.get('case_checkpoint_sha256'),
@@ -288,10 +305,14 @@ def collect(index_path):
     primary = [x for x in compatible if x['weighting'] == 'primary']
     best = min(primary, key=lambda x: x['primary_loss']) if primary else None
     groups = {}
-    for name in sorted({e['weighting'] for e in entries} | {'primary'}):
+    for name in sorted({e['weighting'] for e in entries} |
+                       {state['weighting'] for state in controllers} | {'primary'}):
         candidates = [x for x in compatible if x['weighting'] == name]
         winner = min(candidates, key=lambda x: x['primary_loss']) if candidates else None
-        groups[name] = dict(completed=len(candidates), best_under_primary_weights=winner['primary_loss'] if winner else None,
+        searched = sum(c['phase'] == 'search' for c in candidates)
+        groups[name] = dict(completed=len(candidates), search_completed=searched,
+                            verification_or_other=len(candidates)-searched,
+                            best_under_primary_weights=winner['primary_loss'] if winner else None,
                             best_path=winner['path'] if winner else None)
     if best:
         fits, parameters = best['fits'], best['parameters']
@@ -413,13 +434,15 @@ def render_pdf(path, summary):
     allocation=summary['expected_workers']
     allocation_text=(' Requested capacity: '+', '.join(f'{v} {k}' for k,v in allocation.items())+'.') if allocation else ''
     y=paragraph('<b>Progress:</b> '+escape(status)+'.'+escape(allocation_text)+' '+escape(summary['status_note'][:330]),y,small,max_height=55)
-    group_rows=[['Weight system','Completed','Best common-primary loss']]
+    group_labels={'primary':'Main weights','identity':'Unit weights',
+                  'early_fertility_3000':'Early fertility weight 3,000'}
+    group_rows=[['Weight system','Search / checks','Best loss under main weights']]
     for name, group in summary['groups'].items():
-        group_rows.append([name,group['completed'],fmt(group['best_under_primary_weights'])])
+        group_rows.append([group_labels[name],f"{group['search_completed']} / {group['verification_or_other']}",fmt(group['best_under_primary_weights'])])
     if len(group_rows)>5:
         raise ValueError('At most four weighting systems fit the two-page memo; consolidate the index')
-    y=table(group_rows,[250,78,208],y)
-    y=paragraph('Identity and other experimental weights are compared only after rescoring under the primary weights. '
+    y=table(group_rows,[225,110,201],y)
+    y=paragraph('Checks include acceptance and final-repeat evaluations. Experimental weights are compared after rescoring under the primary weights. '
                 'The table below reports the best primary-search point; alternative-system details are in summary.json.',y,small,max_height=31)
     y=heading('All 14 restrictions: 13 scored moments and one normalization',y)
     data=[['Moment','Target','Model','Gap','Weight','Loss']]
@@ -493,7 +516,7 @@ def build(index, output, pdf=True):
     (output/'monitor.json').write_text(json.dumps(monitor,indent=2,allow_nan=False)+'\n')
     write_csv(output/'target_fit.csv',summary['target_fit'],['moment','label','target','model','gap','weight','loss_contribution'])
     write_csv(output/'parameters.csv',summary['parameters'],['parameter','label','estimate','lower','upper','near_bound','restriction'])
-    write_csv(output/'candidates.csv',summary['candidates'],['path','weighting','own_loss','primary_loss','stationary_solves','solve_seconds','diagnostic_pngs','source_manifest_sha256','receipt_sha256','status'])
+    write_csv(output/'candidates.csv',summary['candidates'],['path','weighting','phase','own_loss','primary_loss','stationary_solves','solve_seconds','diagnostic_pngs','source_manifest_sha256','receipt_sha256','status'])
     write_overview(output/'fit_overview.svg',summary)
     if pdf:render_pdf(output/'memo.pdf',summary)
     return summary

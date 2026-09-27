@@ -1,6 +1,8 @@
 """Synthetic reporting tests; none of these values is a model result."""
 import csv
+import hashlib
 import json
+import shutil
 from pathlib import Path
 import tempfile
 import unittest
@@ -55,6 +57,34 @@ def fixture(root, completed=True):
 
 
 class MemoTests(unittest.TestCase):
+    def test_selected_export_links_graphs_only_to_authenticated_case(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);index=fixture(root);case=root/'primary_case'
+            controller=root/'controller';export=controller/'selected_export';graphs=export/'standard_diagnostics';graphs.mkdir(parents=True)
+            for i in range(17):(graphs/f'{i}.png').write_bytes(b'counting fixture, not image')
+            pin=hashlib.sha256((case/'receipt.json').read_bytes()).hexdigest()
+            receipt=dict(status='verified_selected_export',selected=dict(case_path=str(case),receipt_sha256=pin,checkpoint_sha256='synthetic-checkpoint'))
+            save(export/'export_receipt.json',receipt)
+            targets,restrictions=memo.target_spec(memo.read(root/'objective.json'))
+            entry=dict(path=str(case),weighting='primary',controller=str(controller))
+            self.assertEqual(memo.validate_case(entry,targets,restrictions)['diagnostic_pngs'],17)
+            receipt['selected']['receipt_sha256']='changed';save(export/'export_receipt.json',receipt)
+            with self.assertRaisesRegex(ValueError,'does not authenticate'):
+                memo.validate_case(entry,targets,restrictions)
+
+    def test_search_counts_exclude_smokes_and_final_repeats(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);path=fixture(root);index=memo.read(path)
+            index['cases'][0]['case']='initial_0000'
+            index['cases'][1]['case']='repeat_0060'
+            shutil.copytree(root/'primary_case',root/'acceptance_case')
+            index['cases'].append(dict(path='acceptance_case',case='smoke_0000',weighting='primary',status='success'))
+            save(path,index);result=memo.collect(path)
+            self.assertEqual(result['groups']['primary']['search_completed'],1)
+            self.assertEqual(result['groups']['primary']['verification_or_other'],1)
+            self.assertEqual(result['groups']['identity']['search_completed'],0)
+            self.assertEqual(result['groups']['identity']['verification_or_other'],1)
+
     def test_early_weight_experiment_checks_every_weight(self):
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder);path=fixture(root);index=memo.read(path)
@@ -76,11 +106,14 @@ class MemoTests(unittest.TestCase):
 
     def test_pending_keeps_every_target_and_parameter_without_values(self):
         with tempfile.TemporaryDirectory() as folder:
-            result=memo.collect(fixture(Path(folder),False))
+            path=fixture(Path(folder),False);index=memo.read(path)
+            index['controllers']=[dict(path='pending_experiment',weighting='early_fertility_3000')]
+            save(path,index);result=memo.collect(path)
             self.assertEqual(result['status'],'no_completed_primary_point')
             self.assertEqual(len(result['target_fit']),14)
             self.assertEqual(len(result['parameters']),10)
             self.assertTrue(all(r['model'] is None for r in result['target_fit']))
+            self.assertEqual(result['groups']['early_fertility_3000']['completed'],0)
 
     def test_common_weights_and_separate_primary_selection(self):
         with tempfile.TemporaryDirectory() as folder:

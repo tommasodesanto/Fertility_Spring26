@@ -16,13 +16,21 @@
     {
       "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/identity/search",
       "weighting": "identity"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v3/early_fertility_3000/smoke",
+      "weighting": "early_fertility_3000"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v3/early_fertility_3000/search",
+      "weighting": "early_fertility_3000"
     }
   ],
   "expected_workers": {
     "cluster": 24,
     "local": 10
   },
-  "status_note": "Ten local exploratory search workers launched after six full acceptance evaluations. Cluster search awaits renewed SSH authentication; no final calibration certified.",
+  "status_note": "Eight local workers continue the main search. The unit-weight search completed 60 cases and two exact final repeats. Two workers now explore early-fertility weight 3,000 after passing validation. Cluster search never launched because SSH access expired.",
   "review_notes": [
     "Primary weights and curvature bounds are provisional for this authorized exploration.",
     "Inherited housing/estate observer mismatches remain; no economic primitive or target has changed.",
@@ -34,9 +42,9 @@
     "Use the complete fit and economic policies to identify the next model/calibration decision."
   ],
   "repeats": {
-    "status": "Primary local initial point: two exact completed evaluations, all14targetrows and31parameterrows identical."
+    "status": "The unit-weight winner has two exact final repeats across all 14 targets and 31 parameter rows. Its 17 diagnostic plots were exported and inspected. Final repeats of the main-search winner remain pending."
   },
   "benchmark": {
-    "status": "Matched local warm/cold comparison passed;13 vs19priceevaluations,231 vs312seconds atstartingpoint; allmomentgaps<1e-5. Old-floor Torch replay awaits collection."
+    "status": "At the same starting point, warm prices required 13 price evaluations versus 19 without them: observed local runtimes were 231 versus 312 seconds. All moment differences were below 1e-5. The old-floor Torch replay remains uncollected."
   }
 }
