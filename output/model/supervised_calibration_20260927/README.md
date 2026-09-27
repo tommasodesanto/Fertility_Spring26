@@ -1,5 +1,23 @@
 # Supervised overnight calibration — September 27
 
+## September 27, 02:17 EDT — 104 search cases completed without failures
+
+The 02:15 snapshot has 80 primary and 24 identity search evaluations, plus four
+acceptance cases in the comparison collector. Ten local evaluators are active;
+RSS is 18.41 GiB and disk availability 241 GiB. No fatal, timeout, inadmissible or
+resource-stop event is recorded. Torch authentication remains unavailable.
+
+Best provisional primary loss is 202.087. Complete target and parameter tables
+are in `output/model/supervised_calibration_20260927/checks/0215/`. Mean first-birth
+age now matches closely, but mean rooms remain high and childlessness/early
+fertility low. The identity objective's own winner has curvature 0.008 and a
+common-primary loss of 635.407; raw identity-loss improvement does not indicate
+superior primary fit. No model or weight intervention. Last full standard-plot
+inspection was 01:45; next is due by 02:45. If the fixed thirty-round budgets
+finish before the 07:13 search cutoff, evaluate a new bounded continuation from
+validated best points, with a fresh immutable contract and smoke; do not alter
+running contracts. Independent final repeats remain pending.
+
 ## September 27, 01:48 EDT — local fit improves; no search failures
 
 At the frozen 01:45 table snapshot, 43 primary and 12 identity search cases have
