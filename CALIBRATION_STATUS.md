@@ -15,6 +15,22 @@ shape certification remains pending. Fulltables/plots in local_continuation/
 run_v1/selected_export; lead_completion_review.json records verification.
 Monitoring restored30min; no newsearch authorized by this completion.
 
+## September 27 — origination versus existing-owner borrowing remains open
+
+Author clarifies the issue is purchase restrictions versus ongoing collateral,
+not merely earnings timing. Primary-source comparison: DUE equations2.2–2.3
+permits inherited debt above a fallen collateral ceiling while forbidding
+additional borrowing; Sommer–Sullivan–Verbrugge2013 equation4/footnote14 does
+likewise for nonmoving owners not increasing debt. Boar–Gorea–Midrigan and
+Kaplan–Mitman–Violante2020 apply mortgage LTV/PTI at origination/refinancing,
+then contractual repayment; KMV separately marks short-term HELOC limits to
+current collateral. Current native baseline instead enforces b_next>=−phi*pH
+for existing owners as well. Lead recommends a DUE-like rule for consideration;
+AUTHOR HAS NOT ADOPTED IT. No code or numerical result changed. Retain current
+baseline and label any eventual comparison as an explicit economic change.
+A discrete-time adaptation requires verifying timing and inherited debt mapping;
+do not silently enable legacy stayer switches. PTI remains deferred.
+
 ## September 27 — credit discussion correction; payment-to-income deferred
 
 Author parks payment-to-income while retaining it for later assessment. No model

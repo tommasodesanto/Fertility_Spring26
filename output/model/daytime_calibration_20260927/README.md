@@ -103,3 +103,27 @@ The slide's indicator only on the down-payment RHS also leaves a condition on
 nonmoving owners; the code bypasses purchase screens when tenure/product is
 unchanged. Presentation should state the purchase condition only for buyers.
 Historical sources and author text are preserved; reconciliation remains open.
+
+### Primary-source lending comparison (September27; proposed, not adopted)
+
+- DUE, section2.1.7, equations2.2–2.3: postpurchase liquid wealth b>=−phi*pH;
+  between trades prohibit further borrowing if at/below ceiling, without forcing
+  repayment after price declines. Primary project text: tmp/september_slides_review/
+  greaney_reference.txt:440–460; https://www.nber.org/papers/w33512.
+- Sommer–Sullivan–Verbrugge2013, equation4/footnote14: LTV applies to higher
+  mortgage balances or changed housing; no mandatory principal reduction for
+  nonmoving owners following price declines. https://kamilasommer.net/RentPriceRatio.pdf
+- Boar–Gorea–Midrigan, Liquidity Constraints in the U.S. Housing Market, pp10–12,
+  equations1–7: LTV and PTI at origination/refinancing; existing borrowers owe
+  contractual payments, not new collateral tests.
+  https://www.virgiliumidrigan.com/uploads/1/3/9/8/13982648/paper_bgm_v1.pdf
+- Kaplan–Mitman–Violante2020, pp3294–3295: mortgage LTV/PTI at origination,
+  contractual payments thereafter; separate one-period HELOC collateral limits
+  do apply each period.
+  https://violante.economics.princeton.edu/sites/g/files/toruqf5621/files/documents/kaplan-et-al-2020-the-housing-boom-and-bust-model-meets-evidence.pdf
+
+Author concern is the distinction between origination and ongoing collateral.
+Current native baseline marks the final debt floor to current house prices for
+all owners, so it is stricter than DUE on inherited above-limit debt after price
+falls. Lead recommendation to adopt a DUE-like distinction is only a proposal.
+No author adoption and no code changes. PTI remains explicitly deferred.
