@@ -24,13 +24,21 @@
     {
       "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v3/early_fertility_3000/search",
       "weighting": "early_fertility_3000"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/smoke",
+      "weighting": "primary"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/search",
+      "weighting": "primary"
     }
   ],
   "expected_workers": {
     "cluster": 24,
     "local": 10
   },
-  "status_note": "Eight local workers continue the main search. The unit-weight search completed 60 cases and two exact final repeats. Two workers now explore early-fertility weight 3,000 after passing validation. Cluster search never launched because SSH access expired.",
+  "status_note": "The first main search completed 240 cases and exact repeats. Eight workers now continue from its verified winner; two test early-fertility weight 3,000. Up to 10 local workers ran; cluster search never launched because SSH access expired.",
   "review_notes": [
     "Bequests count all positive estates against a child-directed SCF target. Older-wealth income and first-birth housing-response measurements also retain approximations.",
     "Weights and the curvature interval remain provisional. This local search does not establish an optimum or prove that targets are unreachable; identification still needs assessment.",
@@ -42,7 +50,7 @@
     "Restore cluster access, collect the legacy replay and cross-host checks, then extend the unchanged search from independently repeated points."
   ],
   "repeats": {
-    "status": "The unit-weight winner has two exact final repeats across all 14 targets and 31 parameter rows. Its 17 diagnostic plots were exported and inspected. Final repeats of the main-search winner remain pending."
+    "status": "The first main and unit-weight winners each have two exact final repeats and 17 inspected plots. The main continuation passed two further exact smokes; its final repeats remain pending."
   },
   "benchmark": {
     "status": "At the same starting point, warm prices required 13 price evaluations versus 19 without them: observed local runtimes were 231 versus 312 seconds. All moment differences were below 1e-5. The old-floor Torch replay remains uncollected."

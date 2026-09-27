@@ -1,5 +1,49 @@
 # Supervised overnight calibration — September 27
 
+## September 27, 05:25 EDT — first main search verified; bounded continuation launched
+
+The first main search completed 240 search cases and two final repeats at about
+04:58. Lead verification authenticates receipts/checkpoints and exact equality
+of all fourteen target rows and 31 parameter rows. Its selected point remains
+de_0226, loss 52.850; all seventeen plots are exported and were inspected at
+04:45 for this same point. Evidence: `primary_initial_final/`. The 05:15 snapshot
+has 240 main, 60 identity and fourteen early-weight search cases, plus separately
+counted checks. Full ten-parameter bounds and fourteen-row fits, including a
+comparison of each weight system's own winner under common primary weights,
+are in `checks/0515/`. Identity and first main runs both finished successfully.
+
+A fresh primary continuation launched at 05:24 after two new full smokes passed:
+each exactly reproduces the verified main winner's fourteen model rows and 31
+parameter rows, with seventeen plots and authenticated receipts/checkpoints.
+No economic, target, weight, bound, grid, normalization, proposal-width or gate
+change. Only the starting point, random seed (2026092706) and round budget differ.
+The immutable new contract is under
+`tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/`.
+Production SHA `3b770d8c8c22d2b0449b34a575d6353b063bc015d74ce11016dad7e22ed7ca5e`,
+wrapper PID 57189, local authorization
+`tommaso_authorized_20260927_local_primary_continuation_v1`.
+Eight workers, twelve rounds (at most 96 search cases including the initial
+batch), two final repeats; the 07:13 search / 08:43 total cutoffs remain fixed.
+See `primary_continuation_acceptance/` and launch.json. Never reuse old folders
+or mutate tools_v4/followup_tools_v1. Report index includes the new run as primary.
+
+During validation, two early-weight workers plus two smoke workers were active;
+after launch there are ten evaluators (eight continuation, two early-weight),
+RSS 14.94 GiB. The original main workers had already exited; no overlap or
+resource intervention. At 05:24 early-weight had eighteen search completions.
+All active progress is fresh, with no numerical failures, inadmissible cases or
+timeouts. Torch authentication was checked again and remains blocked; no cluster
+search launched. Available disk at 05:15 was 205 GiB.
+
+Early-weight's 05:15 winner has common-primary loss 66.815 and early fertility
+0.532 versus the main winner's 0.525 (target 0.810); the experiment is still young.
+Its first-birth housing response is closer, but average rooms are higher. No
+weight system is adopted from this comparison. All estimates remain in bounds;
+the two taste-scale flags use the disclosed one-percent-of-wide-interval rule.
+Next standard-plot inspection due by 05:45. Two-page memo layout checked again
+with explicit preparation failures and concrete next decisions; final results
+and final continuation repeats remain pending.
+
 ## September 27, 04:48 EDT — final main batch running; hourly plots inspected
 
 The 04:45 snapshot records 232 primary, 60 identity and four early-weight search

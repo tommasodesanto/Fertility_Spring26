@@ -27,7 +27,8 @@
       "search": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/primary/search",
       "log": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/primary/search_controller.log",
       "production_contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/primary/production_contract.json",
-      "pid": 7730
+      "pid": 7730,
+      "status": "bounded_search_complete"
     },
     "identity": {
       "contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/identity/contract.json",
@@ -35,7 +36,8 @@
       "search": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/identity/search",
       "log": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/identity/search_controller.log",
       "production_contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/identity/production_contract.json",
-      "pid": 7731
+      "pid": 7731,
+      "status": "bounded_search_complete"
     },
     "cold": {
       "contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/cold/contract.json",
@@ -51,6 +53,17 @@
       "status": "search_active",
       "weighting": "early_fertility_3000",
       "production_contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v3/early_fertility_3000/production_contract.json"
+    },
+    "primary_continuation": {
+      "contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/contract.json",
+      "smoke": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/smoke",
+      "search": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/search",
+      "log": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/search_controller.log",
+      "smoke_log": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/smoke_controller.log",
+      "pid": 57189,
+      "status": "search_active",
+      "weighting": "primary",
+      "production_contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/production_contract.json"
     }
   },
   "heartbeat_id": "supervise-fertility-calibration-tonight",
@@ -89,5 +102,6 @@
     "smoke_pid": 46969,
     "production_contract_sha256": "4b80a123cac017cb6d75520b4e52e4feb80f929eec6b9da6c06c2be7de16ebf0",
     "search_pid": 48392
-  }
+  },
+  "primary_continuation_contract_sha256": "3b770d8c8c22d2b0449b34a575d6353b063bc015d74ce11016dad7e22ed7ca5e"
 }
