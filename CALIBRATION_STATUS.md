@@ -1,5 +1,75 @@
 # Calibration Status
 
+## September 27, 17:00 EDT — frozen/current Torch source equivalence verified
+
+Cross-cluster comparison job18671533 completed one fixed-price/psi frozen-source
+solve (45.415 seconds;80-second total). ALL64 solution arrays are bitwise exact
+between frozen Torch and current native Torch, including discrete choices; all31
+parameters and parameter primitives unchanged. Both differ from the Mac checkpoint.
+This demonstrates platform arithmetic rather than a DUE-off source behavior change
+at the reference point. Actual nodes gr102 and cs605: SAME-CLUSTER comparison,
+not same physical host despite historical field names in the verification summary.
+
+Lead accepts this supplemental baseline source verification together with the
+14-moment/31-parameter comparisons, scientific gates and17 inspected plots. The
+original107-array cross-host assertion remains FAILED and preserved; no tolerance
+or model gate changed. Evidence cluster/crosshost_v3/ under evening output.
+Earlier crosshost_v1 failed in setup (ancestral-only loader used for a different
+SHA-pinned checkpoint), zero solves; repaired wrapper uses direct authenticated
+loading. Unrun physical-node planv2 retained; cs605 lacked free memory.
+
+One gated24CPU/128GB allocation is being submitted for six exact-loop DUE smokes,
+then a wait for explicit lead approval, then search/repeats on the same node.
+The first cpu_short submission was rejected without creating a job; ordinary
+cs partition is being used. Search not yet approved. Fixed21:27/22:12 cutoffs.
+
+## September 27, 16:47 EDT — numerical replay complete; bitwise gate failed
+
+Baselinev2 job18669560 completed one stationary solve and all economic/numerical
+gates, wrote17plots, then FAILED the cross-host bitwise-array assertion. All31
+estimates exact; all14 model moments agree within1e-13 (maximum7.64e-14).
+51/107 arrays bitwise exact, all107 finite; largest continuous-policy absolute
+difference1.364e-10, largest occupied-state difference1.023e-12. Discrete tenure
+choices/probabilities exact. Birth-flow difference2.78e-17 is only the first
+assertion encountered; policy arrays also differ, so retained tails alone do
+not explain the result. Do not label this a passed bitwise replay.
+
+Lead inspected all17plots via three Torch-rendered contact sheets. Existing
+full-grid high-wealth policy caveats remain; no global policy certification.
+Search/six DUE smokes held. Preparing one same-host frozen-original-code fixed-
+price/psi solve to distinguish platform arithmetic from source changes. This is
+the second actual numerical prerequisite; first staging failure ran zero solves.
+No scientific tolerances, targets or model are relaxed; fixed6h clock unchanged.
+
+## September 27, 16:43 EDT — baseline staging repair, second prerequisite
+
+Job18669317 failed during source authentication, before any model solve: staging
+omitted the already-reviewed recent-parent reporting extension. Its failure is
+preserved. Narrow dependency comparison found no other missing imported updates.
+No mathematical source change: refreshed that one file and created contractv3,
+SHA ba58d661f717331560c52672c3549a10f9a867080a570efc51b75fce17fb4ad3.
+Baselinev2 job18669560 submitted with the same1CPU/16GB/890-second cap plus10-second
+kill grace. Search and six DUE controller smokes remain unreleased.
+Evidence: output/model/evening_calibration_20260927/cluster/contract_v3/ and
+native_baseline_v2_launch.json. Fixed global clock unchanged.
+
+## September 27, 16:38 EDT — Torch baseline prerequisite submitted
+
+New immutable evening contract v2 SHA
+8914ebc4f63197d32cd24746216a06049612ec172270522d462f785824ed2329.
+Source main c0731657; 44 distinct focused tests pass on Torch (43 initial plus
+new namespace guard). Two failed test launchers are preserved: missing environment
+variable, then shared-interpreter archived-module contamination. Fresh test
+interpreters and explicit current-source guards resolve these workflow issues.
+No economic or scientific gate was changed.
+
+Native original-parameter baseline authentication job18669317 submitted with
+one CPU,16GB,15-minute cap, JIT enabled, full14/31 comparisons,107-array census and
+17plots. Search is NOT released. Six controller DUE smokes follow only after
+baseline acceptance. Contract/objectives/receipts are collected in
+output/model/evening_calibration_20260927/cluster/contract_v2/.
+Fixed21:27 search cutoff and22:12 absolute end remain unchanged.
+
 ## September 27, 16:30 EDT — six-hour Torch calibration authorized; staging
 
 User authorized a new six-hour calibration window and parallel reviews; Torch
