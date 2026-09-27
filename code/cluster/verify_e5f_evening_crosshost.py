@@ -129,10 +129,14 @@ def run(plan_path,output):
         objective,tax,seed,rt,runner,native_type,evidence,binding=runtime.setup(c,obj,point,out/'preparation')
         model=rt['model'];expected=Path(c['source_root'])/'code/model/intergen_eqscale_seq_optimized/solver.py'
         if Path(model.__file__).resolve()!=expected.resolve():raise RuntimeError('Wrong frozen solver')
-        # Import the authenticated frozen model before unpickling either packet.
-        # load_seed retains the original namespace-only NumPy compatibility loader.
-        original=runtime.load_seed(c,plan['original_checkpoint']['path'])
-        native=runtime.load_seed(c,plan['native_checkpoint']['path'])
+        # The original runtime's load_seed is deliberately restricted to its
+        # ancestral seed. These two distinct replay packets were authenticated
+        # by the outer plan before setup; load them directly after frozen model
+        # imports, as the reviewed native Torch runtime does for de_0093.
+        with gzip.open(plan['original_checkpoint']['path'],'rb') as stream:
+            original=pickle.load(stream)
+        with gzip.open(plan['native_checkpoint']['path'],'rb') as stream:
+            native=pickle.load(stream)
         P=copy.deepcopy(original['parameters']);before=copy.deepcopy(P)
         grid=original['b_grid'];price=np.asarray(original['solution'].p_eq).copy()
         np.testing.assert_array_equal(seed['b_grid'],grid)
