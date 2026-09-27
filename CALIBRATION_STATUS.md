@@ -1,5 +1,16 @@
 # Calibration Status
 
+## September 27, 19:00 EDT — monitoring, no intervention
+
+144 completed search attempts:100success,27housing-equilibrium-gate rejections,
+17parent-owned timeouts,0fatal. Actual24workers; maximumRSS about80GiB/128GB,
+active ledger age below5minutes. Primary lane improves to31.265661, but overall
+common-primary best remains initial_0043_identity at30.846541. All14/31 tables
+reviewed for lane winners; no changed fixed inputs or new bound hits. Early
+fertility/ownership/wealth misses and weighting tradeoff unchanged. Evidence
+evening cluster/check_1900/. Last17-plot review18:35; next due19:35. No new solves,
+source changes, extra jobs or model interventions in this check.
+
 ## September 27, 18:35 EDT — common-weight comparison and hourly plots
 
 96 search objectives completed at18:30:74success,16unchanged housing-equilibrium

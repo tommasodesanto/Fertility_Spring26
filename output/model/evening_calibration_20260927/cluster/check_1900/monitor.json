@@ -1,0 +1,67 @@
+{
+  "epoch": 1790549987.5051038,
+  "counts": {
+    "success": 100,
+    "inadmissible": 27,
+    "censored_timeout": 17
+  },
+  "errors": {
+    "Initial housing equilibrium failed its unchanged strict gate": 27,
+    "censored_timeout": 17
+  },
+  "heartbeat": {
+    "active": 24,
+    "best": {
+      "block": 3.1486161695844626,
+      "identity": 0.11596496656592777,
+      "primary": 31.265660868505186
+    },
+    "clock": {
+      "end": 1790561520,
+      "repeat_cutoff": 1790561220,
+      "search_cutoff": 1790558820,
+      "start": 1790539920
+    },
+    "completed": 144,
+    "epoch": 1790549985.2481089,
+    "pending": 0,
+    "stage": "search",
+    "stop_reason": null
+  },
+  "best": {
+    "block": {
+      "case": "initial_0110_block",
+      "loss": 3.1486161695844626,
+      "primary_rescore": 31.234135198771423,
+      "market_residual": 3.1868111991539086e-06,
+      "normalization_gap": 9.003662821749359e-05,
+      "occupied_value_negative_steps": 0
+    },
+    "identity": {
+      "case": "initial_0106_identity",
+      "loss": 0.11596496656592777,
+      "primary_rescore": 65.21699389269519,
+      "market_residual": 8.53930139280957e-08,
+      "normalization_gap": 8.577856047686794e-06,
+      "occupied_value_negative_steps": 0
+    },
+    "primary": {
+      "case": "initial_0120_primary",
+      "loss": 31.265660868505186,
+      "primary_rescore": 31.265660868505186,
+      "market_residual": 1.8859239405210884e-06,
+      "normalization_gap": 0.00011072325753147538,
+      "occupied_value_negative_steps": 0
+    },
+    "common_primary_best": {
+      "case": "initial_0043_identity",
+      "loss": 0.16298310275468492,
+      "primary_rescore": 30.846540567085185,
+      "market_residual": 6.877528555746655e-07,
+      "normalization_gap": 0.00028144351348169394,
+      "occupied_value_negative_steps": 0
+    }
+  },
+  "max_active_ledger_age_seconds": 258.90206718444824,
+  "checkpoint_age_seconds": 290.98844504356384
+}
