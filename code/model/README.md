@@ -60,6 +60,15 @@ These are candidate tools, not a replacement for the September14 reference.
 
 ## Current E5F calibration and policy audit utilities
 
+`tools/run_e5f_housing_fertility_cost_diagnostic.py` compares the housing floor
+with first-child housing-share loadings at common prices and after a 10 percent
+price/rent increase. It reports both fixed-benefit and baseline-fertility-matched
+cases, household mechanisms and full diagnostic tables. The saved-packet audit
+is `tools/e5f_housing_fertility_cost_audit.py`; the retained results, continuation
+status and report are indexed in
+[`../../output/model/housing_fertility_cost_diagnostic/README.md`](../../output/model/housing_fertility_cost_diagnostic/README.md).
+These are partial-equilibrium diagnostics, not calibrated production models.
+
 `tools/run_e5f_first_child_loading_probe.py` tests a conventional first-child
 step in the Cobb-Douglas housing weight with no Stone-Geary floor. It reuses
 the authenticated utility-comparison runtime and the reporting gates from

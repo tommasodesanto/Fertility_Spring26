@@ -1,5 +1,81 @@
 # Calibration Status
 
+## September 26 evening — utility mechanism comparison completed
+
+**Numerical comparison complete:** job 18611784 completed the missing matched
+0.200-loading baseline and price-shock cases with four new native solves
+(three benefit midpoints plus one shock). The original 12 benefit-evaluation
+limit sufficed; no extension beyond it was used. The benefit is
+0.0645126953125, inside [0.001, 0.400]. Baseline fertility is
+2.1004094586125275; with prices and rents 10 percent higher it is
+2.0059400758386916, a 4.498 percent decline versus 4.808 percent for the floor.
+The first-birth housing proxy is 1.527 rooms versus 0.785 for the floor and
+the instructed target 1.465. All twelve final cases pass the combined
+saved-result audit; full fits, all parameter restrictions and provenance are
+under `output/model/housing_fertility_cost_diagnostic/combined_001/`.
+The job completed successfully in 5 minutes 41 seconds. The final 167-page PDF
+at `output/pdf/housing_fertility_cost_diagnostic.pdf` includes all 156 target
+rows, 384 parameter rows and 204 standard diagnostic panels. Text bounds and
+all contact sheets passed visual review; the lead also inspected the main
+comparison and common-household pages. No numerical jobs remain active.
+
+For identical original-control childless renters aged 18–34, birth probability
+falls 2.639 percentage points with the larger loading, versus 2.729 with the
+floor. Owner responses are smaller and include asset revaluation. Higher
+stationary mean first-birth age (0.297 versus 0.339 years) is not an identified
+individual postponement path. The no-floor candidate therefore reproduces both
+the housing jump and substantial affordability exposure at these tested
+parameters. This supports considering it for joint calibration, not automatic
+adoption or a claim of good joint fit.
+
+Birth-incentive interpretation remains nuanced. First births at positive
+attempt-minus-wait gaps account for 12.041 percent with the larger loading,
+versus 55.819 percent with the floor, using each case's stationary birth
+weights. However, the first-birth risk-weighted median normalized gap is less
+negative without the floor (-0.739 versus -0.980). These comparisons retain
+the inherited first-birth utility cost and taste scales; they do not establish
+that children are undesirable or that taste shocks are incorrectly specified.
+Do not rank mechanism strength by mean log-gap changes: finite-support samples
+differ, and tiny probabilities can dominate that statistic. Lead with realized
+birth responses using common household states.
+
+After reviewing the partial results, the author requests inspection of the
+household-level mechanism and completion of the missing matched 0.200 housing
+loading. This is a new bounded authorization, not an extension inferred from
+the expired travel window. Retain the frozen diagnostic contract: no changes
+to earnings, entry, estates, credit, fiscal inputs, shock scales, first-birth
+fixed cost, targets or gates. Only the child-benefit level is normalized to
+fertility 2.100 within 0.002, then held fixed under the 10 percent price/rent
+increase. No utility specification is adopted and no full calibration launches.
+
+Resume the nine saved 0.200-loading benefit evaluations rather than repeating
+them. Permit at most seven additional midpoint evaluations and one shocked
+solve, with a 20-minute job cap and reporting reserve. If more than the original
+12 benefit evaluations are needed, label this solely a numerical-budget
+extension, capped at 16 in total. Keep original run_001 results immutable and
+record continuation provenance separately. Inspect identical young household
+states by initial tenure, and distinguish conditional choice probabilities,
+realized births, stationary birth-age endpoints and current-shock-free value
+gaps. The wealth-at-most-one subset is not an empirical low-wealth quantile.
+
+Exact-loop smoke 18611752 passed. Job 18611768 stopped in setup after 16 seconds,
+before any new solve, because smoke and run reused the runtime context path.
+The helper now separates context by stage and Slurm ID. Scoped retry 18611784
+reruns smoke before the same bounded continuation (one CPU, 16 GB, 20-minute
+cap); its exact launch script was reviewed. Source run_001 remains immutable; continuation_001 saves
+new cases and combined_001 combines isolated metadata with original checkpoints
+for the audit/report. Driver:
+`code/model/tools/e5f_housing_fertility_cost_resume.py`.
+
+The preceding ten saved cases passed the independent saved-result audit,
+including target arithmetic, actual normalized benefits, common-state budgets
+and choice availability. Their corrected partial report is
+`output/pdf/housing_fertility_cost_diagnostic.pdf`; complete tables, verification
+and reproduction details are indexed in
+`output/model/housing_fertility_cost_diagnostic/README.md`. This supersedes the
+earlier reporting-pending status. The completed continuation and final report
+above supersede the missing-arm and reporting-pending status.
+
 ## September 26 evening — bounded travel-window diagnostic and deferred decisions
 
 **23:07 UTC status check:** job 18605876 ended with exit 1 after 32:40.

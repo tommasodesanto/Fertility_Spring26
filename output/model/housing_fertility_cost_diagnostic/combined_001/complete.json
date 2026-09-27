@@ -1,0 +1,2769 @@
+{
+  "status": "completed",
+  "records": [
+    {
+      "case": "fixed_floor_concave_1.0",
+      "arm": "floor_concave",
+      "phase": "fixed",
+      "price_factor": 1.0,
+      "price": 0.6128072610924526,
+      "rent": 0.11047652160037388,
+      "b": 0.1339982278467087,
+      "fertility": 2.041278765671173,
+      "target_fit": [
+        {
+          "moment": "initial_normalization",
+          "target": 2.1,
+          "model": 2.041278765671173,
+          "gap": -0.058721234328827254,
+          "weight": "",
+          "loss_contribution": "",
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_childlessness",
+          "target": 0.19827875100684264,
+          "model": 0.19225217528115388,
+          "gap": -0.006026575725688765,
+          "weight": 35532.3042455214,
+          "loss_contribution": 1.2905196094593425,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_exactly_one",
+          "target": 0.21365532522014702,
+          "model": 0.2450959977481806,
+          "gap": 0.03144067252803359,
+          "weight": 26952.820824310795,
+          "loss_contribution": 26.643291638606836,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_mean_age",
+          "target": 25.976263860992496,
+          "model": 26.45462919112756,
+          "gap": 0.47836533013506255,
+          "weight": 139.82806784479274,
+          "loss_contribution": 31.99733065276475,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_share30",
+          "target": 0.2492780130410667,
+          "model": 0.25398971132396236,
+          "gap": 0.0047116982828956655,
+          "weight": 13866.065434728798,
+          "loss_contribution": 0.3078280490891451,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "wealth_earnings",
+          "target": 6.92658379107299,
+          "model": 6.218991939725986,
+          "gap": -0.7075918513470043,
+          "weight": 7.595098472533724,
+          "loss_contribution": 3.8027612062053935,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "bequest_wealth",
+          "target": 0.007291023472616158,
+          "model": 0.006885699242310569,
+          "gap": -0.00040532423030558914,
+          "weight": 5165289.256198346,
+          "loss_contribution": 0.8485936553348049,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "old_dispersion",
+          "target": 3.51593508651872,
+          "model": 2.9104313560589365,
+          "gap": -0.6055037304597835,
+          "weight": 10.616361531535473,
+          "loss_contribution": 3.892327242879669,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "mean_rooms",
+          "target": 5.607885960068579,
+          "model": 6.536043261175066,
+          "gap": 0.928157301106487,
+          "weight": 128.02070205233477,
+          "loss_contribution": 110.28675919718354,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "ownership_30_55",
+          "target": 0.6762604168538028,
+          "model": 0.7618766990194892,
+          "gap": 0.0856162821656864,
+          "weight": 2339.3623724673616,
+          "loss_contribution": 17.14787188214851,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "first_birth_rooms",
+          "target": 1.465,
+          "model": 0.7840579989508134,
+          "gap": -0.6809420010491867,
+          "weight": 137.5652749002964,
+          "loss_contribution": 63.78654300591289,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "family_rooms",
+          "target": 0.38509964969278165,
+          "model": 0.22892585557721112,
+          "gap": -0.15617379411557053,
+          "weight": 280.52808370152104,
+          "loss_contribution": 6.842151206763431,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "recent_parent_ownership",
+          "target": 0.12760836356692162,
+          "model": 0.09497025391549974,
+          "gap": -0.03263810965142189,
+          "weight": 27055.822957508266,
+          "loss_contribution": 28.821112637141216,
+          "descriptive_fixed_psi": true
+        }
+      ],
+      "incentives": [
+        {
+          "group": "first_birth",
+          "risk_mass": 0.2094282405744987,
+          "expected_births": 0.05077258386093204,
+          "risk_share_negative_interior": 0.7234438778660938,
+          "risk_share_positive_interior": 0.228700693787074,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 0.047855428346809385,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.2766025973271455e-14,
+          "birth_share_negative_interior": 0.4672755976167599,
+          "birth_share_positive_interior": 0.5327244023832404,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -13.41339680317628,
+          "gap_over_kappa_median": -1.0860404941716648,
+          "gap_over_kappa_p90": 0.4246106967917483
+        },
+        {
+          "group": "later_births",
+          "risk_mass": 0.19130185097819674,
+          "expected_births": 0.06222353816964942,
+          "risk_share_negative_interior": 0.7532027164689236,
+          "risk_share_positive_interior": 0.2467526901116142,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 4.459341945979829e-05,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.5927526066577144e-15,
+          "birth_share_negative_interior": 0.7411890747149408,
+          "birth_share_positive_interior": 0.25881092528505917,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -0.884456981607777,
+          "gap_over_kappa_median": -0.27679492642602016,
+          "gap_over_kappa_p90": 0.17164037463863885
+        },
+        {
+          "group": "all_births",
+          "risk_mass": 0.4007300915526953,
+          "expected_births": 0.11299612203058149,
+          "risk_share_negative_interior": 0.7376502502541135,
+          "risk_share_positive_interior": 0.2373184152498059,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 0.025031334496067793,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 1.3135642289407555e-14,
+          "birth_share_negative_interior": 0.6181114439371076,
+          "birth_share_positive_interior": 0.3818885560628923,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -5.2826031943819,
+          "gap_over_kappa_median": -0.4220479044136594,
+          "gap_over_kappa_p90": 0.2401469228831942
+        },
+        {
+          "group": "first_birth_nonpositive_liquid_wealth",
+          "risk_mass": 0.13362785701333982,
+          "expected_births": 0.025600928208538026,
+          "risk_share_negative_interior": 0.7506476138817367,
+          "risk_share_positive_interior": 0.17624770466884407,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 0.0731046814493836,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 3.5680051083806686e-14,
+          "birth_share_negative_interior": 0.4800668517310812,
+          "birth_share_positive_interior": 0.5199331482689189,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -23.475845522928353,
+          "gap_over_kappa_median": -1.6993268069326537,
+          "gap_over_kappa_p90": 0.3834840399753741
+        }
+      ],
+      "gates": {
+        "operator": {
+          "stationary_post_fertility_nesting_l1": 2.2036821372621785e-14,
+          "one_step_constant_path_nesting_l1": 9.80821332119621e-14,
+          "zero_entry_mass_accounting_residual": -4.440892098500626e-16,
+          "entry_flow_E": 0.06173345618081467,
+          "effective_mature_flow_B": 0.053577849222985155,
+          "reconstructed_effective_mature_flow_B": 0.05357784922298583,
+          "mature_flow_abs_error": 6.730727086790012e-16,
+          "birth_flow": 0.11299612203058144,
+          "stationary_birth_flow": 0.112996122030581,
+          "birth_flow_abs_error": 4.440892098500626e-16,
+          "top_bin_entry_birth_flow": 0.021613459883034092,
+          "topcode_adjusted_birth_flow": 0.12601519323334057,
+          "stationary_topcode_adjusted_birth_flow": 0.12601519323334012,
+          "topcode_adjusted_birth_flow_abs_error": 4.440892098500626e-16
+        },
+        "budget": {
+          "budget_excess_mass": 0.0,
+          "maximum_occupied_excess": 2.842170943040401e-14,
+          "actual_rent": 0.11047652160037388,
+          "budget_tolerance": 1e-09
+        },
+        "feasibility_projection_mass": 9.380786800629983e-15,
+        "market_residual": 0.0010418148549580426,
+        "market_clearing_required": false
+      },
+      "replacement_gap": 0.02796249253791231,
+      "closure": "Permanent fixed-price partial equilibrium; fixed fiscal inputs and normalized entry; market, fiscal and demographic imbalances not cleared"
+    },
+    {
+      "case": "fixed_floor_concave_1.1",
+      "arm": "floor_concave",
+      "phase": "fixed",
+      "price_factor": 1.1,
+      "price": 0.6740879872016979,
+      "rent": 0.12152417376041127,
+      "b": 0.1339982278467087,
+      "fertility": 1.9396975255932476,
+      "target_fit": [
+        {
+          "moment": "initial_normalization",
+          "target": 2.1,
+          "model": 1.9396975255932476,
+          "gap": -0.1603024744067525,
+          "weight": "",
+          "loss_contribution": "",
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_childlessness",
+          "target": 0.19827875100684264,
+          "model": 0.22468539945049834,
+          "gap": 0.0264066484436557,
+          "weight": 35532.3042455214,
+          "loss_contribution": 24.77706952035084,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_exactly_one",
+          "target": 0.21365532522014702,
+          "model": 0.25693844337433425,
+          "gap": 0.04328311815418723,
+          "weight": 26952.820824310795,
+          "loss_contribution": 50.494177759316045,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_mean_age",
+          "target": 25.976263860992496,
+          "model": 26.788809311726276,
+          "gap": 0.8125454507337793,
+          "weight": 139.82806784479274,
+          "loss_contribution": 92.31870054548202,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_share30",
+          "target": 0.2492780130410667,
+          "model": 0.27487728428734964,
+          "gap": 0.025599271246282945,
+          "weight": 13866.065434728798,
+          "loss_contribution": 9.086747277395487,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "wealth_earnings",
+          "target": 6.92658379107299,
+          "model": 6.244098036797694,
+          "gap": -0.6824857542752962,
+          "weight": 7.595098472533724,
+          "loss_contribution": 3.5376966495771716,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "bequest_wealth",
+          "target": 0.007291023472616158,
+          "model": 0.00688736653250491,
+          "gap": -0.00040365694011124803,
+          "weight": 5165289.256198346,
+          "loss_contribution": 0.8416266802684692,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "old_dispersion",
+          "target": 3.51593508651872,
+          "model": 3.0016741353614695,
+          "gap": -0.5142609511572505,
+          "weight": 10.616361531535473,
+          "loss_contribution": 2.807648895790673,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "mean_rooms",
+          "target": 5.607885960068579,
+          "model": 6.178615616098953,
+          "gap": 0.5707296560303741,
+          "weight": 128.02070205233477,
+          "loss_contribution": 41.70048288284173,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "ownership_30_55",
+          "target": 0.6762604168538028,
+          "model": 0.7423058533691016,
+          "gap": 0.06604543651529882,
+          "weight": 2339.3623724673616,
+          "loss_contribution": 10.204297930625302,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "first_birth_rooms",
+          "target": 1.465,
+          "model": 0.88443495249569,
+          "gap": -0.58056504750431,
+          "weight": 137.5652749002964,
+          "loss_contribution": 46.36717025982347,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "family_rooms",
+          "target": 0.38509964969278165,
+          "model": 0.25161871833832183,
+          "gap": -0.13348093135445982,
+          "weight": 280.52808370152104,
+          "loss_contribution": 4.99821348116505,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "recent_parent_ownership",
+          "target": 0.12760836356692162,
+          "model": 0.10329692220288933,
+          "gap": -0.024311441364032293,
+          "weight": 27055.822957508266,
+          "loss_contribution": 15.991240838171441,
+          "descriptive_fixed_psi": true
+        }
+      ],
+      "incentives": [
+        {
+          "group": "first_birth",
+          "risk_mass": 0.22191678746375626,
+          "expected_births": 0.04885598204314623,
+          "risk_share_negative_interior": 0.7162588386856006,
+          "risk_share_positive_interior": 0.21131051064501316,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 0.07243065066935968,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.6496372265061897e-14,
+          "birth_share_negative_interior": 0.4636697234482187,
+          "birth_share_positive_interior": 0.536330276551781,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -15.11963351395233,
+          "gap_over_kappa_median": -1.2947931868627833,
+          "gap_over_kappa_p90": 0.3813784239805858
+        },
+        {
+          "group": "later_births",
+          "risk_mass": 0.18125804785499863,
+          "expected_births": 0.058721556050707197,
+          "risk_share_negative_interior": 0.7506832003308598,
+          "risk_share_positive_interior": 0.24928351597769438,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 3.328369142277228e-05,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.312822367560117e-14,
+          "birth_share_negative_interior": 0.7377725341367513,
+          "birth_share_positive_interior": 0.2622274658632489,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -0.8870603863565834,
+          "gap_over_kappa_median": -0.27469572821715393,
+          "gap_over_kappa_p90": 0.16986322990442246
+        },
+        {
+          "group": "all_births",
+          "risk_mass": 0.40317483531875487,
+          "expected_births": 0.10757753809385344,
+          "risk_share_negative_interior": 0.7317352326563229,
+          "risk_share_positive_interior": 0.22838229244991562,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 0.03988247489373644,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.4982130837447627e-14,
+          "birth_share_negative_interior": 0.6132896519825627,
+          "birth_share_positive_interior": 0.38671034801743687,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -6.103115889154268,
+          "gap_over_kappa_median": -0.4540815616274951,
+          "gap_over_kappa_p90": 0.23345838992240298
+        },
+        {
+          "group": "first_birth_nonpositive_liquid_wealth",
+          "risk_mass": 0.13787222922750134,
+          "expected_births": 0.023254593894561658,
+          "risk_share_negative_interior": 0.7295997564809729,
+          "risk_share_positive_interior": 0.15709629461235736,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 0.1133039489066272,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 4.2648108654309236e-14,
+          "birth_share_negative_interior": 0.4786017471580357,
+          "birth_share_positive_interior": 0.5213982528419644,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -21.194296179515387,
+          "gap_over_kappa_median": -1.7149202943921276,
+          "gap_over_kappa_p90": 0.3181446059989156
+        }
+      ],
+      "gates": {
+        "operator": {
+          "stationary_post_fertility_nesting_l1": 3.1291627226184334e-14,
+          "one_step_constant_path_nesting_l1": 9.296726433691826e-14,
+          "zero_entry_mass_accounting_residual": -1.1102230246251565e-16,
+          "entry_flow_E": 0.06173345618081091,
+          "effective_mature_flow_B": 0.05097909708535641,
+          "reconstructed_effective_mature_flow_B": 0.05097909708535927,
+          "mature_flow_abs_error": 2.858824288409778e-15,
+          "birth_flow": 0.10757753809385345,
+          "stationary_birth_flow": 0.1075775380938533,
+          "birth_flow_abs_error": 1.5265566588595902e-16,
+          "top_bin_entry_birth_flow": 0.02019839594401196,
+          "topcode_adjusted_birth_flow": 0.11974423220019743,
+          "stationary_topcode_adjusted_birth_flow": 0.11974423220019728,
+          "topcode_adjusted_birth_flow_abs_error": 1.5265566588595902e-16
+        },
+        "budget": {
+          "budget_excess_mass": 0.0,
+          "maximum_occupied_excess": 1.4210854715202004e-14,
+          "actual_rent": 0.12152417376041127,
+          "budget_tolerance": 1e-09
+        },
+        "feasibility_projection_mass": 1.453916239426016e-14,
+        "market_residual": 0.11693977352174593,
+        "market_clearing_required": false
+      },
+      "replacement_gap": 0.07633451162257787,
+      "closure": "Permanent fixed-price partial equilibrium; fixed fiscal inputs and normalized entry; market, fiscal and demographic imbalances not cleared"
+    },
+    {
+      "case": "fixed_shares_010_1.0",
+      "arm": "shares_010",
+      "phase": "fixed",
+      "price_factor": 1.0,
+      "price": 0.6128072610924526,
+      "rent": 0.11047652160037388,
+      "b": 0.1339982278467087,
+      "fertility": 2.6181588470026957,
+      "target_fit": [
+        {
+          "moment": "initial_normalization",
+          "target": 2.1,
+          "model": 2.6181588470026957,
+          "gap": 0.5181588470026957,
+          "weight": "",
+          "loss_contribution": "",
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_childlessness",
+          "target": 0.19827875100684264,
+          "model": 0.03504840549780421,
+          "gap": -0.16323034550903842,
+          "weight": 35532.3042455214,
+          "loss_contribution": 946.7278911967413,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_exactly_one",
+          "target": 0.21365532522014702,
+          "model": 0.16342462849533404,
+          "gap": -0.05023069672481298,
+          "weight": 26952.820824310795,
+          "loss_contribution": 68.0052792651477,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_mean_age",
+          "target": 25.976263860992496,
+          "model": 23.85144271211363,
+          "gap": -2.1248211488788655,
+          "weight": 139.82806784479274,
+          "loss_contribution": 631.3048376059484,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_share30",
+          "target": 0.2492780130410667,
+          "model": 0.11113591106576216,
+          "gap": -0.13814210197530452,
+          "weight": 13866.065434728798,
+          "loss_contribution": 264.60945923551935,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "wealth_earnings",
+          "target": 6.92658379107299,
+          "model": 6.2424301007876455,
+          "gap": -0.6841536902853447,
+          "weight": 7.595098472533724,
+          "loss_contribution": 3.555009426988113,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "bequest_wealth",
+          "target": 0.007291023472616158,
+          "model": 0.006972062518757784,
+          "gap": -0.00031896095385837344,
+          "weight": 5165289.256198346,
+          "loss_contribution": 0.5254963330901002,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "old_dispersion",
+          "target": 3.51593508651872,
+          "model": 2.9284696008080866,
+          "gap": -0.5874654857106334,
+          "weight": 10.616361531535473,
+          "loss_contribution": 3.6638730085112785,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "mean_rooms",
+          "target": 5.607885960068579,
+          "model": 6.749578684406996,
+          "gap": 1.1416927243384167,
+          "weight": 128.02070205233477,
+          "loss_contribution": 166.8701557756022,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "ownership_30_55",
+          "target": 0.6762604168538028,
+          "model": 0.7728869414636915,
+          "gap": 0.09662652460988874,
+          "weight": 2339.3623724673616,
+          "loss_contribution": 21.841890176569716,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "first_birth_rooms",
+          "target": 1.465,
+          "model": 0.923904331196316,
+          "gap": -0.5410956688036841,
+          "weight": 137.5652749002964,
+          "loss_contribution": 40.27698336527357,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "family_rooms",
+          "target": 0.38509964969278165,
+          "model": 0.20961011736013369,
+          "gap": -0.17548953233264797,
+          "weight": 280.52808370152104,
+          "loss_contribution": 8.63930443815907,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "recent_parent_ownership",
+          "target": 0.12760836356692162,
+          "model": -0.04935246961003559,
+          "gap": -0.1769608331769572,
+          "weight": 27055.822957508266,
+          "loss_contribution": 847.2567884574528,
+          "descriptive_fixed_psi": true
+        }
+      ],
+      "incentives": [
+        {
+          "group": "first_birth",
+          "risk_mass": 0.13072009661135087,
+          "expected_births": 0.05983834819490094,
+          "risk_share_negative_interior": 0.43113655502429776,
+          "risk_share_positive_interior": 0.5688634444179947,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 5.576732713316081e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 3.435250866731046e-14,
+          "birth_share_negative_interior": 0.2940626060649473,
+          "birth_share_positive_interior": 0.705937393935053,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -1.0687745633276027,
+          "gap_over_kappa_median": 0.03740523178701393,
+          "gap_over_kappa_p90": 0.6249585030440392
+        },
+        {
+          "group": "later_births",
+          "risk_mass": 0.25228999581429357,
+          "expected_births": 0.08321537581397262,
+          "risk_share_negative_interior": 0.7772532686355798,
+          "risk_share_positive_interior": 0.2227467312598384,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 1.0456072817705424e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.092816428868725e-14,
+          "birth_share_negative_interior": 0.7700822757650829,
+          "birth_share_positive_interior": 0.22991772423491708,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -0.9053334301966391,
+          "gap_over_kappa_median": -0.3164342201741196,
+          "gap_over_kappa_p90": 0.17624806969365492
+        },
+        {
+          "group": "all_births",
+          "risk_mass": 0.3830100924256445,
+          "expected_births": 0.14305372400887353,
+          "risk_share_negative_interior": 0.6591247620065969,
+          "risk_share_positive_interior": 0.3408752377341708,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 2.5920656281253956e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.5509849285560654e-14,
+          "birth_share_negative_interior": 0.5709666572064805,
+          "birth_share_positive_interior": 0.42903334279351957,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -0.9368624662694016,
+          "gap_over_kappa_median": -0.23057464027646005,
+          "gap_over_kappa_p90": 0.37093220245259123
+        },
+        {
+          "group": "first_birth_nonpositive_liquid_wealth",
+          "risk_mass": 0.07957634362689575,
+          "expected_births": 0.03363062906841862,
+          "risk_share_negative_interior": 0.5195246674803231,
+          "risk_share_positive_interior": 0.48047533160353023,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 9.160901416611074e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 5.643088193254635e-14,
+          "birth_share_negative_interior": 0.3597475114817206,
+          "birth_share_positive_interior": 0.6402524885182792,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -1.6397114691877928,
+          "gap_over_kappa_median": -0.09773915132424803,
+          "gap_over_kappa_p90": 0.6241867188980272
+        }
+      ],
+      "gates": {
+        "operator": {
+          "stationary_post_fertility_nesting_l1": 2.6554663774809192e-14,
+          "one_step_constant_path_nesting_l1": 1.0996414886656722e-13,
+          "zero_entry_mass_accounting_residual": 6.661338147750939e-16,
+          "entry_flow_E": 0.06173345618082376,
+          "effective_mature_flow_B": 0.06811469376129241,
+          "reconstructed_effective_mature_flow_B": 0.06811469376129187,
+          "mature_flow_abs_error": 5.412337245047638e-16,
+          "birth_flow": 0.1430537240088737,
+          "stationary_birth_flow": 0.14305372400887362,
+          "birth_flow_abs_error": 8.326672684688674e-17,
+          "top_bin_entry_birth_flow": 0.030835859402603194,
+          "topcode_adjusted_birth_flow": 0.16162799445577655,
+          "stationary_topcode_adjusted_birth_flow": 0.16162799445577647,
+          "topcode_adjusted_birth_flow_abs_error": 8.326672684688674e-17
+        },
+        "budget": {
+          "budget_excess_mass": 0.0,
+          "maximum_occupied_excess": 2.842170943040401e-14,
+          "actual_rent": 0.11047652160037388,
+          "budget_tolerance": 1e-09
+        },
+        "feasibility_projection_mass": 1.1660548782150976e-14,
+        "market_residual": 0.042164725103721025,
+        "market_clearing_required": false
+      },
+      "replacement_gap": 0.19790962935445464,
+      "closure": "Permanent fixed-price partial equilibrium; fixed fiscal inputs and normalized entry; market, fiscal and demographic imbalances not cleared"
+    },
+    {
+      "case": "fixed_shares_010_1.1",
+      "arm": "shares_010",
+      "phase": "fixed",
+      "price_factor": 1.1,
+      "price": 0.6740879872016979,
+      "rent": 0.12152417376041127,
+      "b": 0.1339982278467087,
+      "fertility": 2.579833253337836,
+      "target_fit": [
+        {
+          "moment": "initial_normalization",
+          "target": 2.1,
+          "model": 2.579833253337836,
+          "gap": 0.4798332533378358,
+          "weight": "",
+          "loss_contribution": "",
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_childlessness",
+          "target": 0.19827875100684264,
+          "model": 0.042244855973945006,
+          "gap": -0.15603389503289763,
+          "weight": 35532.3042455214,
+          "loss_contribution": 865.0899599509781,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_exactly_one",
+          "target": 0.21365532522014702,
+          "model": 0.17076376438450172,
+          "gap": -0.0428915608356453,
+          "weight": 26952.820824310795,
+          "loss_contribution": 49.58472688620378,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_mean_age",
+          "target": 25.976263860992496,
+          "model": 24.025891501415092,
+          "gap": -1.950372359577404,
+          "weight": 139.82806784479274,
+          "loss_contribution": 531.8993060162,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_share30",
+          "target": 0.2492780130410667,
+          "model": 0.12023162310910913,
+          "gap": -0.12904638993195755,
+          "weight": 13866.065434728798,
+          "loss_contribution": 230.9111821641176,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "wealth_earnings",
+          "target": 6.92658379107299,
+          "model": 6.224634430085477,
+          "gap": -0.7019493609875136,
+          "weight": 7.595098472533724,
+          "loss_contribution": 3.742354937100607,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "bequest_wealth",
+          "target": 0.007291023472616158,
+          "model": 0.006998454182481511,
+          "gap": -0.0002925692901346467,
+          "weight": 5165289.256198346,
+          "loss_contribution": 0.4421321773238174,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "old_dispersion",
+          "target": 3.51593508651872,
+          "model": 3.000940600290612,
+          "gap": -0.5149944862281082,
+          "weight": 10.616361531535473,
+          "loss_contribution": 2.815664195242571,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "mean_rooms",
+          "target": 5.607885960068579,
+          "model": 6.403224590694674,
+          "gap": 0.7953386306260954,
+          "weight": 128.02070205233477,
+          "loss_contribution": 80.98122814632828,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "ownership_30_55",
+          "target": 0.6762604168538028,
+          "model": 0.7558197257568776,
+          "gap": 0.07955930890307483,
+          "weight": 2339.3623724673616,
+          "loss_contribution": 14.807423720978248,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "first_birth_rooms",
+          "target": 1.465,
+          "model": 0.997176720493794,
+          "gap": -0.46782327950620606,
+          "weight": 137.5652749002964,
+          "loss_contribution": 30.107346341246856,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "family_rooms",
+          "target": 0.38509964969278165,
+          "model": 0.24160202744860992,
+          "gap": -0.14349762224417173,
+          "weight": 280.52808370152104,
+          "loss_contribution": 5.776512996357588,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "recent_parent_ownership",
+          "target": 0.12760836356692162,
+          "model": -0.04413964822113414,
+          "gap": -0.17174801178805577,
+          "weight": 27055.822957508266,
+          "loss_contribution": 798.0758789004545,
+          "descriptive_fixed_psi": true
+        }
+      ],
+      "incentives": [
+        {
+          "group": "first_birth",
+          "risk_mass": 0.1353512149320293,
+          "expected_births": 0.059433536841907865,
+          "risk_share_negative_interior": 0.5158681406984645,
+          "risk_share_positive_interior": 0.4841318587328509,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 5.68649941779936e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 3.4599736483959194e-14,
+          "birth_share_negative_interior": 0.37055182205485643,
+          "birth_share_positive_interior": 0.629448177945144,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -1.239485663726624,
+          "gap_over_kappa_median": -0.023406978021508845,
+          "gap_over_kappa_p90": 0.586986548601608
+        },
+        {
+          "group": "later_births",
+          "risk_mass": 0.24926269256151,
+          "expected_births": 0.0817137947954221,
+          "risk_share_negative_interior": 0.7798049484187838,
+          "risk_share_positive_interior": 0.22019505146462773,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 1.165679210789705e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.0738694392197317e-14,
+          "birth_share_negative_interior": 0.7723386270839087,
+          "birth_share_positive_interior": 0.22766137291609137,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -0.9194310038535224,
+          "gap_over_kappa_median": -0.3203828920007954,
+          "gap_over_kappa_p90": 0.16688865767540934
+        },
+        {
+          "group": "all_births",
+          "risk_mass": 0.3846139074935393,
+          "expected_births": 0.14114733163732995,
+          "risk_share_negative_interior": 0.6869217559647337,
+          "risk_share_positive_interior": 0.3130782437595787,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 2.7566214403509273e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.5616596232955592e-14,
+          "birth_share_negative_interior": 0.6031564640045247,
+          "birth_share_positive_interior": 0.39684353599547534,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -1.0092034765091036,
+          "gap_over_kappa_median": -0.2556517012650555,
+          "gap_over_kappa_p90": 0.34568400495136353
+        },
+        {
+          "group": "first_birth_nonpositive_liquid_wealth",
+          "risk_mass": 0.08161238991197163,
+          "expected_births": 0.03261986169779641,
+          "risk_share_negative_interior": 0.6119975352282456,
+          "risk_share_positive_interior": 0.3880024638286116,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 9.43085487068328e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 5.738241919496804e-14,
+          "birth_share_negative_interior": 0.4501861513536271,
+          "birth_share_positive_interior": 0.549813848646373,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -1.8421020118818967,
+          "gap_over_kappa_median": -0.19589115788278863,
+          "gap_over_kappa_p90": 0.5786794198492826
+        }
+      ],
+      "gates": {
+        "operator": {
+          "stationary_post_fertility_nesting_l1": 2.8119967762451105e-14,
+          "one_step_constant_path_nesting_l1": 1.1715093608162673e-13,
+          "zero_entry_mass_accounting_residual": -7.771561172376096e-16,
+          "entry_flow_E": 0.061733456180831724,
+          "effective_mature_flow_B": 0.06718853471727568,
+          "reconstructed_effective_mature_flow_B": 0.06718853471727808,
+          "mature_flow_abs_error": 2.400857290751901e-15,
+          "birth_flow": 0.14114733163732993,
+          "stationary_birth_flow": 0.14114733163732998,
+          "birth_flow_abs_error": 5.551115123125783e-17,
+          "top_bin_entry_birth_flow": 0.030072894686256957,
+          "topcode_adjusted_birth_flow": 0.1592620230986812,
+          "stationary_topcode_adjusted_birth_flow": 0.15926202309868118,
+          "topcode_adjusted_birth_flow_abs_error": 2.7755575615628914e-17
+        },
+        "budget": {
+          "budget_excess_mass": 0.0,
+          "maximum_occupied_excess": 1.4210854715202004e-14,
+          "actual_rent": 0.12152417376041127,
+          "budget_tolerance": 1e-09
+        },
+        "feasibility_projection_mass": 1.1918526794983062e-14,
+        "market_residual": 0.07633380295032308,
+        "market_clearing_required": false
+      },
+      "replacement_gap": 0.18599390201504887,
+      "closure": "Permanent fixed-price partial equilibrium; fixed fiscal inputs and normalized entry; market, fiscal and demographic imbalances not cleared"
+    },
+    {
+      "case": "fixed_shares_020_1.0",
+      "arm": "shares_020",
+      "phase": "fixed",
+      "price_factor": 1.0,
+      "price": 0.6128072610924526,
+      "rent": 0.11047652160037388,
+      "b": 0.1339982278467087,
+      "fertility": 2.58966093662048,
+      "target_fit": [
+        {
+          "moment": "initial_normalization",
+          "target": 2.1,
+          "model": 2.58966093662048,
+          "gap": 0.48966093662048005,
+          "weight": "",
+          "loss_contribution": "",
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_childlessness",
+          "target": 0.19827875100684264,
+          "model": 0.03951915110596633,
+          "gap": -0.15875959990087632,
+          "weight": 35532.3042455214,
+          "loss_contribution": 895.5778908321885,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_exactly_one",
+          "target": 0.21365532522014702,
+          "model": 0.16942068942362812,
+          "gap": -0.0442346357965189,
+          "weight": 26952.820824310795,
+          "loss_contribution": 52.73866547456843,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_mean_age",
+          "target": 25.976263860992496,
+          "model": 23.985248849084257,
+          "gap": -1.9910150119082388,
+          "weight": 139.82806784479274,
+          "loss_contribution": 554.2981456027097,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_share30",
+          "target": 0.2492780130410667,
+          "model": 0.11777297403927314,
+          "gap": -0.13150503900179356,
+          "weight": 13866.065434728798,
+          "loss_contribution": 239.79384647259033,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "wealth_earnings",
+          "target": 6.92658379107299,
+          "model": 6.446136868705088,
+          "gap": -0.48044692236790176,
+          "weight": 7.595098472533724,
+          "loss_contribution": 1.7531708477317633,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "bequest_wealth",
+          "target": 0.007291023472616158,
+          "model": 0.006884674880808966,
+          "gap": -0.00040634859180719175,
+          "weight": 5165289.256198346,
+          "loss_contribution": 0.8528883164446679,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "old_dispersion",
+          "target": 3.51593508651872,
+          "model": 2.792371723121257,
+          "gap": -0.7235633633974632,
+          "weight": 10.616361531535473,
+          "loss_contribution": 5.558131753719564,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "mean_rooms",
+          "target": 5.607885960068579,
+          "model": 7.041389365675953,
+          "gap": 1.4335034056073743,
+          "weight": 128.02070205233477,
+          "loss_contribution": 263.0738390877523,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "ownership_30_55",
+          "target": 0.6762604168538028,
+          "model": 0.7980717900727353,
+          "gap": 0.12181137321893254,
+          "weight": 2339.3623724673616,
+          "loss_contribution": 34.711483786310914,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "first_birth_rooms",
+          "target": 1.465,
+          "model": 1.4366762524261594,
+          "gap": -0.028323747573840707,
+          "weight": 137.5652749002964,
+          "loss_contribution": 0.11035963382469513,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "family_rooms",
+          "target": 0.38509964969278165,
+          "model": 0.14484411718713197,
+          "gap": -0.24025553250564968,
+          "weight": 280.52808370152104,
+          "loss_contribution": 16.192844279995033,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "recent_parent_ownership",
+          "target": 0.12760836356692162,
+          "model": -0.006676405057068124,
+          "gap": -0.13428476862398975,
+          "weight": 27055.822957508266,
+          "loss_contribution": 487.88139712661894,
+          "descriptive_fixed_psi": true
+        }
+      ],
+      "incentives": [
+        {
+          "group": "first_birth",
+          "risk_mass": 0.1339844373919591,
+          "expected_births": 0.059586003068565485,
+          "risk_share_negative_interior": 0.5206664811971605,
+          "risk_share_positive_interior": 0.47933351824891,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 5.538951705983099e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 3.4512518204074546e-14,
+          "birth_share_negative_interior": 0.39027345259122836,
+          "birth_share_positive_interior": 0.6097265474087717,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -1.090362558716273,
+          "gap_over_kappa_median": -0.059406622068950504,
+          "gap_over_kappa_p90": 0.5963262012456915
+        },
+        {
+          "group": "later_births",
+          "risk_mass": 0.25038075493849943,
+          "expected_births": 0.08207638300452537,
+          "risk_share_negative_interior": 0.7762690909882864,
+          "risk_share_positive_interior": 0.22373090892950512,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 8.219009190300598e-11,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 1.826632955680313e-14,
+          "birth_share_negative_interior": 0.7707492420318711,
+          "birth_share_positive_interior": 0.22925075796812885,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -0.9000937131521328,
+          "gap_over_kappa_median": -0.3122091505058021,
+          "gap_over_kappa_p90": 0.15847836471996657
+        },
+        {
+          "group": "all_births",
+          "risk_mass": 0.38436519233045857,
+          "expected_births": 0.14166238607309087,
+          "risk_share_negative_interior": 0.6871695248669693,
+          "risk_share_positive_interior": 0.3128304748863867,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 2.4662001647740086e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.3929528225939746e-14,
+          "birth_share_negative_interior": 0.6107135954105591,
+          "birth_share_positive_interior": 0.3892864045894407,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -0.9360534947239432,
+          "gap_over_kappa_median": -0.2454739595380771,
+          "gap_over_kappa_p90": 0.2926569714716844
+        },
+        {
+          "group": "first_birth_nonpositive_liquid_wealth",
+          "risk_mass": 0.07931706743339596,
+          "expected_births": 0.032191045663658525,
+          "risk_share_negative_interior": 0.6246686263196342,
+          "risk_share_positive_interior": 0.3753313727446536,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 9.35654017580215e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 5.829943647923761e-14,
+          "birth_share_negative_interior": 0.48341779262083556,
+          "birth_share_positive_interior": 0.5165822073791644,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -1.6589338523976223,
+          "gap_over_kappa_median": -0.1273625101425236,
+          "gap_over_kappa_p90": 0.5940726950882572
+        }
+      ],
+      "gates": {
+        "operator": {
+          "stationary_post_fertility_nesting_l1": 2.8967684857127693e-14,
+          "one_step_constant_path_nesting_l1": 1.1100601323527594e-13,
+          "zero_entry_mass_accounting_residual": 2.220446049250313e-16,
+          "entry_flow_E": 0.061733456180826235,
+          "effective_mature_flow_B": 0.06743719289800633,
+          "reconstructed_effective_mature_flow_B": 0.06743719289800205,
+          "mature_flow_abs_error": 4.274358644806853e-15,
+          "birth_flow": 0.14166238607309098,
+          "stationary_birth_flow": 0.14166238607308917,
+          "birth_flow_abs_error": 1.8041124150158794e-15,
+          "top_bin_entry_birth_flow": 0.030225033784865296,
+          "topcode_adjusted_birth_flow": 0.15986871995394494,
+          "stationary_topcode_adjusted_birth_flow": 0.15986871995394325,
+          "topcode_adjusted_birth_flow_abs_error": 1.6930901125533637e-15
+        },
+        "budget": {
+          "budget_excess_mass": 0.0,
+          "maximum_occupied_excess": 2.842170943040401e-14,
+          "actual_rent": 0.11047652160037388,
+          "budget_tolerance": 1e-09
+        },
+        "feasibility_projection_mass": 1.0810863788129121e-14,
+        "market_residual": 0.09743204518911278,
+        "market_clearing_required": false
+      },
+      "replacement_gap": 0.18908303001936033,
+      "closure": "Permanent fixed-price partial equilibrium; fixed fiscal inputs and normalized entry; market, fiscal and demographic imbalances not cleared"
+    },
+    {
+      "case": "fixed_shares_020_1.1",
+      "arm": "shares_020",
+      "phase": "fixed",
+      "price_factor": 1.1,
+      "price": 0.6740879872016979,
+      "rent": 0.12152417376041127,
+      "b": 0.1339982278467087,
+      "fertility": 2.528340641968203,
+      "target_fit": [
+        {
+          "moment": "initial_normalization",
+          "target": 2.1,
+          "model": 2.528340641968203,
+          "gap": 0.428340641968203,
+          "weight": "",
+          "loss_contribution": "",
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_childlessness",
+          "target": 0.19827875100684264,
+          "model": 0.052227287594331234,
+          "gap": -0.1460514634125114,
+          "weight": 35532.3042455214,
+          "loss_contribution": 757.9406465844453,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_exactly_one",
+          "target": 0.21365532522014702,
+          "model": 0.18046731410615,
+          "gap": -0.033188011113997024,
+          "weight": 26952.820824310795,
+          "loss_contribution": 29.687024982132836,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_mean_age",
+          "target": 25.976263860992496,
+          "model": 24.263278914423083,
+          "gap": -1.7129849465694136,
+          "weight": 139.82806784479274,
+          "loss_contribution": 410.2999362849622,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_share30",
+          "target": 0.2492780130410667,
+          "model": 0.1322836921334585,
+          "gap": -0.1169943209076082,
+          "weight": 13866.065434728798,
+          "loss_contribution": 189.7941434632009,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "wealth_earnings",
+          "target": 6.92658379107299,
+          "model": 6.419638914933661,
+          "gap": -0.5069448761393289,
+          "weight": 7.595098472533724,
+          "loss_contribution": 1.9518879577990087,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "bequest_wealth",
+          "target": 0.007291023472616158,
+          "model": 0.006909313403036321,
+          "gap": -0.00038171006957983707,
+          "weight": 5165289.256198346,
+          "loss_contribution": 0.7525959567078719,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "old_dispersion",
+          "target": 3.51593508651872,
+          "model": 2.8590685909590565,
+          "gap": -0.6568664955596635,
+          "weight": 10.616361531535473,
+          "loss_contribution": 4.580679654480045,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "mean_rooms",
+          "target": 5.607885960068579,
+          "model": 6.709971068107796,
+          "gap": 1.1020851080392173,
+          "weight": 128.02070205233477,
+          "loss_contribution": 155.49286746487766,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "ownership_30_55",
+          "target": 0.6762604168538028,
+          "model": 0.7761344648108138,
+          "gap": 0.09987404795701105,
+          "weight": 2339.3623724673616,
+          "loss_contribution": 23.334731342103687,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "first_birth_rooms",
+          "target": 1.465,
+          "model": 1.561259190082093,
+          "gap": 0.09625919008209283,
+          "weight": 137.5652749002964,
+          "loss_contribution": 1.2746566815870817,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "family_rooms",
+          "target": 0.38509964969278165,
+          "model": 0.17422445114421325,
+          "gap": -0.2108751985485684,
+          "weight": 280.52808370152104,
+          "loss_contribution": 12.474620832143572,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "recent_parent_ownership",
+          "target": 0.12760836356692162,
+          "model": 0.00789824878574763,
+          "gap": -0.11971011478117399,
+          "weight": 27055.822957508266,
+          "loss_contribution": 387.72378422394354,
+          "descriptive_fixed_psi": true
+        }
+      ],
+      "incentives": [
+        {
+          "group": "first_birth",
+          "risk_mass": 0.14167737891779475,
+          "expected_births": 0.05886627532273896,
+          "risk_share_negative_interior": 0.5635844914045607,
+          "risk_share_positive_interior": 0.43641550802281504,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 5.725893325657673e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 3.462737049334525e-14,
+          "birth_share_negative_interior": 0.4148694389672435,
+          "birth_share_positive_interior": 0.5851305610327563,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -1.3683875504306464,
+          "gap_over_kappa_median": -0.1448995059896241,
+          "gap_over_kappa_p90": 0.5453693097887777
+        },
+        {
+          "group": "later_births",
+          "risk_mass": 0.24507904599694313,
+          "expected_births": 0.07970988244928313,
+          "risk_share_negative_interior": 0.7865298646322108,
+          "risk_share_positive_interior": 0.21347013527213987,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 9.563002459909615e-11,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 1.9369877161860655e-14,
+          "birth_share_negative_interior": 0.7804001790878138,
+          "birth_share_positive_interior": 0.21959982091218622,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -0.9096876629496136,
+          "gap_over_kappa_median": -0.32367464269021307,
+          "gap_over_kappa_p90": 0.14906499673202514
+        },
+        {
+          "group": "all_births",
+          "risk_mass": 0.38675642491473783,
+          "expected_births": 0.13857615777202212,
+          "risk_share_negative_interior": 0.7048600743301975,
+          "risk_share_positive_interior": 0.2951399253994267,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 2.7035070213680043e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.4959032311738294e-14,
+          "birth_share_negative_interior": 0.6251250326787083,
+          "birth_share_positive_interior": 0.37487496732129155,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -1.0307499544321896,
+          "gap_over_kappa_median": -0.2729593979862046,
+          "gap_over_kappa_p90": 0.26074279990876337
+        },
+        {
+          "group": "first_birth_nonpositive_liquid_wealth",
+          "risk_mass": 0.08286888821732072,
+          "expected_births": 0.030693004380992383,
+          "risk_share_negative_interior": 0.6863403419104902,
+          "risk_share_positive_interior": 0.3136596571105193,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 9.789313888399872e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 5.920092806659783e-14,
+          "birth_share_negative_interior": 0.5327327435421451,
+          "birth_share_positive_interior": 0.46726725645785494,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -2.0858478810262513,
+          "gap_over_kappa_median": -0.3422102159559663,
+          "gap_over_kappa_p90": 0.47020153696354167
+        }
+      ],
+      "gates": {
+        "operator": {
+          "stationary_post_fertility_nesting_l1": 2.925142172084812e-14,
+          "one_step_constant_path_nesting_l1": 1.0709960068899291e-13,
+          "zero_entry_mass_accounting_residual": 3.3306690738754696e-16,
+          "entry_flow_E": 0.061733456180824826,
+          "effective_mature_flow_B": 0.06593927021158547,
+          "reconstructed_effective_mature_flow_B": 0.06593927021158293,
+          "mature_flow_abs_error": 2.5396351688300456e-15,
+          "birth_flow": 0.13857615777202212,
+          "stationary_birth_flow": 0.1385761577720209,
+          "birth_flow_abs_error": 1.2212453270876722e-15,
+          "top_bin_entry_birth_flow": 0.029064123211741566,
+          "topcode_adjusted_birth_flow": 0.15608320623104513,
+          "stationary_topcode_adjusted_birth_flow": 0.1560832062310438,
+          "topcode_adjusted_birth_flow_abs_error": 1.3322676295501878e-15
+        },
+        "budget": {
+          "budget_excess_mass": 0.0,
+          "maximum_occupied_excess": 1.4210854715202004e-14,
+          "actual_rent": 0.12152417376041127,
+          "budget_tolerance": 1e-09
+        },
+        "feasibility_projection_mass": 1.1455485719574641e-14,
+        "market_residual": 0.02007720765854307,
+        "market_clearing_required": false
+      },
+      "replacement_gap": 0.16941571671823052,
+      "closure": "Permanent fixed-price partial equilibrium; fixed fiscal inputs and normalized entry; market, fiscal and demographic imbalances not cleared"
+    },
+    {
+      "case": "matched_floor_concave_1.0",
+      "arm": "floor_concave",
+      "phase": "matched",
+      "price_factor": 1.0,
+      "price": 0.6128072610924526,
+      "rent": 0.11047652160037388,
+      "b": 0.143611328125,
+      "fertility": 2.100536874863247,
+      "target_fit": [
+        {
+          "moment": "initial_normalization",
+          "target": 2.1,
+          "model": 2.100536874863247,
+          "gap": 0.0005368748632470499,
+          "weight": "",
+          "loss_contribution": "",
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_childlessness",
+          "target": 0.19827875100684264,
+          "model": 0.17726100365470274,
+          "gap": -0.021017747352139904,
+          "weight": 35532.3042455214,
+          "loss_contribution": 15.696242745094866,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_exactly_one",
+          "target": 0.21365532522014702,
+          "model": 0.23558593395981267,
+          "gap": 0.021930608739665652,
+          "weight": 26952.820824310795,
+          "loss_contribution": 12.963002291672199,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_mean_age",
+          "target": 25.976263860992496,
+          "model": 26.314814744895024,
+          "gap": 0.33855088390252774,
+          "weight": 139.82806784479274,
+          "loss_contribution": 16.026631842341434,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_share30",
+          "target": 0.2492780130410667,
+          "model": 0.24590801494666736,
+          "gap": -0.0033699980943993346,
+          "weight": 13866.065434728798,
+          "loss_contribution": 0.15747534044346492,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "wealth_earnings",
+          "target": 6.92658379107299,
+          "model": 6.215700900694441,
+          "gap": -0.7108828903785493,
+          "weight": 7.595098472533724,
+          "loss_contribution": 3.838217068247787,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "bequest_wealth",
+          "target": 0.007291023472616158,
+          "model": 0.006883362655234466,
+          "gap": -0.00040766081738169164,
+          "weight": 5165289.256198346,
+          "loss_contribution": 0.8584056922949839,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "old_dispersion",
+          "target": 3.51593508651872,
+          "model": 2.9104313560589365,
+          "gap": -0.6055037304597835,
+          "weight": 10.616361531535473,
+          "loss_contribution": 3.892327242879669,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "mean_rooms",
+          "target": 5.607885960068579,
+          "model": 6.545748741285836,
+          "gap": 0.9378627812172571,
+          "weight": 128.02070205233477,
+          "loss_contribution": 112.60529358600027,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "ownership_30_55",
+          "target": 0.6762604168538028,
+          "model": 0.7616848933613345,
+          "gap": 0.08542447650753171,
+          "weight": 2339.3623724673616,
+          "loss_contribution": 17.071125390955235,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "first_birth_rooms",
+          "target": 1.465,
+          "model": 0.7847709192519083,
+          "gap": -0.6802290807480917,
+          "weight": 137.5652749002964,
+          "loss_contribution": 63.65304876932249,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "family_rooms",
+          "target": 0.38509964969278165,
+          "model": 0.2284440443613871,
+          "gap": -0.15665560533139455,
+          "weight": 280.52808370152104,
+          "loss_contribution": 6.884433721749988,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "recent_parent_ownership",
+          "target": 0.12760836356692162,
+          "model": 0.08482615424562667,
+          "gap": -0.04278220932129495,
+          "weight": 27055.822957508266,
+          "loss_contribution": 49.52074446146738,
+          "descriptive_fixed_psi": true
+        }
+      ],
+      "incentives": [
+        {
+          "group": "first_birth",
+          "risk_mass": 0.2037457785138901,
+          "expected_births": 0.05165643705899946,
+          "risk_share_negative_interior": 0.7046836301204743,
+          "risk_share_positive_interior": 0.24622216379001355,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 0.04909420608949037,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.139164228635509e-14,
+          "birth_share_negative_interior": 0.441811359428816,
+          "birth_share_positive_interior": 0.5581886405711838,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -13.272639658871674,
+          "gap_over_kappa_median": -0.9797800336586343,
+          "gap_over_kappa_p90": 0.5076549138828402
+        },
+        {
+          "group": "later_births",
+          "risk_mass": 0.19512849803364052,
+          "expected_births": 0.06439044611091928,
+          "risk_share_negative_interior": 0.73876734187072,
+          "risk_share_positive_interior": 0.26118667011090224,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 4.5988018374840645e-05,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.738316345620163e-15,
+          "birth_share_negative_interior": 0.7242009271614036,
+          "birth_share_positive_interior": 0.2757990728385963,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -0.8704668110103797,
+          "gap_over_kappa_median": -0.25302774190335475,
+          "gap_over_kappa_p90": 0.19841458282660746
+        },
+        {
+          "group": "all_births",
+          "risk_mass": 0.39887427654753055,
+          "expected_births": 0.11604688316991874,
+          "risk_share_negative_interior": 0.721357313715221,
+          "risk_share_positive_interior": 0.2535427703417424,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 0.025099915943024197,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 1.2266472557056126e-14,
+          "birth_share_negative_interior": 0.5984996714858206,
+          "birth_share_positive_interior": 0.4015003285141793,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -5.120774862114351,
+          "gap_over_kappa_median": -0.3768267028688887,
+          "gap_over_kappa_p90": 0.2840538936979346
+        },
+        {
+          "group": "first_birth_nonpositive_liquid_wealth",
+          "risk_mass": 0.12992801311732574,
+          "expected_births": 0.025894758569989868,
+          "risk_share_negative_interior": 0.7444567785425175,
+          "risk_share_positive_interior": 0.18050761381098634,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 0.07503560764646265,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 3.354516633290127e-14,
+          "birth_share_negative_interior": 0.4747517694790824,
+          "birth_share_positive_interior": 0.5252482305209178,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -23.40240479329543,
+          "gap_over_kappa_median": -1.598407387324526,
+          "gap_over_kappa_p90": 0.45440407356616164
+        }
+      ],
+      "gates": {
+        "operator": {
+          "stationary_post_fertility_nesting_l1": 2.2756339472246376e-14,
+          "one_step_constant_path_nesting_l1": 9.902417950377347e-14,
+          "zero_entry_mass_accounting_residual": 2.220446049250313e-16,
+          "entry_flow_E": 0.06173345618081609,
+          "effective_mature_flow_B": 0.05503778627278377,
+          "reconstructed_effective_mature_flow_B": 0.05503778627278475,
+          "mature_flow_abs_error": 9.783840404509192e-16,
+          "birth_flow": 0.11604688316991876,
+          "stationary_birth_flow": 0.11604688316991754,
+          "birth_flow_abs_error": 1.2212453270876722e-15,
+          "top_bin_entry_birth_flow": 0.02262190554791682,
+          "topcode_adjusted_birth_flow": 0.12967340112050413,
+          "stationary_topcode_adjusted_birth_flow": 0.12967340112050285,
+          "topcode_adjusted_birth_flow_abs_error": 1.27675647831893e-15
+        },
+        "budget": {
+          "budget_excess_mass": 0.0,
+          "maximum_occupied_excess": 2.842170943040401e-14,
+          "actual_rent": 0.11047652160037388,
+          "budget_tolerance": 1e-09
+        },
+        "feasibility_projection_mass": 9.264830866091875e-15,
+        "market_residual": 0.00047721876279849425,
+        "market_clearing_required": false
+      },
+      "replacement_gap": 0.0002555893537353229,
+      "closure": "Permanent fixed-price partial equilibrium; fixed fiscal inputs and normalized entry; market, fiscal and demographic imbalances not cleared"
+    },
+    {
+      "case": "matched_floor_concave_1.1",
+      "arm": "floor_concave",
+      "phase": "matched",
+      "price_factor": 1.1,
+      "price": 0.6740879872016979,
+      "rent": 0.12152417376041127,
+      "b": 0.143611328125,
+      "fertility": 1.9995456275622963,
+      "target_fit": [
+        {
+          "moment": "initial_normalization",
+          "target": 2.1,
+          "model": 1.9995456275622963,
+          "gap": -0.10045437243770383,
+          "weight": "",
+          "loss_contribution": "",
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_childlessness",
+          "target": 0.19827875100684264,
+          "model": 0.2087672960251366,
+          "gap": 0.010488545018293965,
+          "weight": 35532.3042455214,
+          "loss_contribution": 3.9088937456998774,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_exactly_one",
+          "target": 0.21365532522014702,
+          "model": 0.24754441075749212,
+          "gap": 0.0338890855373451,
+          "weight": 26952.820824310795,
+          "loss_contribution": 30.95450932755508,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_mean_age",
+          "target": 25.976263860992496,
+          "model": 26.653855938995555,
+          "gap": 0.6775920780030589,
+          "weight": 139.82806784479274,
+          "loss_contribution": 64.19940399764198,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_share30",
+          "target": 0.2492780130410667,
+          "model": 0.2670652972675425,
+          "gap": 0.017787284226475825,
+          "weight": 13866.065434728798,
+          "loss_contribution": 4.387049502536498,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "wealth_earnings",
+          "target": 6.92658379107299,
+          "model": 6.241515642950212,
+          "gap": -0.6850681481227783,
+          "weight": 7.595098472533724,
+          "loss_contribution": 3.5645192166809503,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "bequest_wealth",
+          "target": 0.007291023472616158,
+          "model": 0.0068839260815686575,
+          "gap": -0.0004070973910475003,
+          "weight": 5165289.256198346,
+          "loss_contribution": 0.8560345340789325,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "old_dispersion",
+          "target": 3.51593508651872,
+          "model": 3.0016741353614695,
+          "gap": -0.5142609511572505,
+          "weight": 10.616361531535473,
+          "loss_contribution": 2.807648895790673,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "mean_rooms",
+          "target": 5.607885960068579,
+          "model": 6.189789248938275,
+          "gap": 0.5819032888696958,
+          "weight": 128.02070205233477,
+          "loss_contribution": 43.34927396416548,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "ownership_30_55",
+          "target": 0.6762604168538028,
+          "model": 0.741784676548103,
+          "gap": 0.0655242596943002,
+          "weight": 2339.3623724673616,
+          "loss_contribution": 10.043885335567273,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "first_birth_rooms",
+          "target": 1.465,
+          "model": 0.8847405183901573,
+          "gap": -0.5802594816098428,
+          "weight": 137.5652749002964,
+          "loss_contribution": 46.31837470325469,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "family_rooms",
+          "target": 0.38509964969278165,
+          "model": 0.251055552225222,
+          "gap": -0.13404409746755963,
+          "weight": 280.52808370152104,
+          "loss_contribution": 5.040478131378596,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "recent_parent_ownership",
+          "target": 0.12760836356692162,
+          "model": 0.0934873851925977,
+          "gap": -0.03412097837432393,
+          "weight": 27055.822957508266,
+          "loss_contribution": 31.499502846064704,
+          "descriptive_fixed_psi": true
+        }
+      ],
+      "incentives": [
+        {
+          "group": "first_birth",
+          "risk_mass": 0.21617646374405114,
+          "expected_births": 0.049799593214971544,
+          "risk_share_negative_interior": 0.6986893471786141,
+          "risk_share_positive_interior": 0.22706808331267572,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 0.07424256950868538,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.5008361078781233e-14,
+          "birth_share_negative_interior": 0.43842457183351097,
+          "birth_share_positive_interior": 0.5615754281664891,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -14.980470217791753,
+          "gap_over_kappa_median": -1.1938294004219288,
+          "gap_over_kappa_p90": 0.46140931452602546
+        },
+        {
+          "group": "later_births",
+          "risk_mass": 0.1852356886567659,
+          "expected_births": 0.06088118773568259,
+          "risk_share_negative_interior": 0.7348576624101599,
+          "risk_share_positive_interior": 0.2651079705170232,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 3.4367072792301414e-05,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.4882888443542674e-14,
+          "birth_share_negative_interior": 0.7194797911623872,
+          "birth_share_positive_interior": 0.2805202088376128,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -0.868021837653419,
+          "gap_over_kappa_median": -0.25235593495921504,
+          "gap_over_kappa_p90": 0.1969010342209694
+        },
+        {
+          "group": "all_births",
+          "risk_mass": 0.4014121524008172,
+          "expected_births": 0.11068078095065415,
+          "risk_share_negative_interior": 0.7153795812420327,
+          "risk_share_positive_interior": 0.24462197315028847,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 0.03999844560765379,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.4950460465018076e-14,
+          "birth_share_negative_interior": 0.5930221038086739,
+          "birth_share_positive_interior": 0.406977896191326,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -5.942719324683118,
+          "gap_over_kappa_median": -0.4154753950145974,
+          "gap_over_kappa_p90": 0.2742626679066956
+        },
+        {
+          "group": "first_birth_nonpositive_liquid_wealth",
+          "risk_mass": 0.1342040090838238,
+          "expected_births": 0.02353009262958445,
+          "risk_share_negative_interior": 0.7169166372183812,
+          "risk_share_positive_interior": 0.16686803495479569,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 0.11621532782678266,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 4.0283588388693866e-14,
+          "birth_share_negative_interior": 0.4569396895104815,
+          "birth_share_positive_interior": 0.5430603104895184,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -21.050149757320973,
+          "gap_over_kappa_median": -1.6428861347135648,
+          "gap_over_kappa_p90": 0.3951099993809383
+        }
+      ],
+      "gates": {
+        "operator": {
+          "stationary_post_fertility_nesting_l1": 3.365433221966774e-14,
+          "one_step_constant_path_nesting_l1": 9.400938043213456e-14,
+          "zero_entry_mass_accounting_residual": 5.551115123125783e-16,
+          "entry_flow_E": 0.06173345618081151,
+          "effective_mature_flow_B": 0.052462062174357484,
+          "reconstructed_effective_mature_flow_B": 0.0524620621743599,
+          "mature_flow_abs_error": 2.4147350785597155e-15,
+          "birth_flow": 0.11068078095065427,
+          "stationary_birth_flow": 0.1106807809506542,
+          "birth_flow_abs_error": 6.938893903907228e-17,
+          "top_bin_entry_birth_flow": 0.021180180742253807,
+          "topcode_adjusted_birth_flow": 0.12343886238060442,
+          "stationary_topcode_adjusted_birth_flow": 0.12343886238060431,
+          "topcode_adjusted_birth_flow_abs_error": 1.1102230246251565e-16
+        },
+        "budget": {
+          "budget_excess_mass": 0.0,
+          "maximum_occupied_excess": 1.4210854715202004e-14,
+          "actual_rent": 0.12152417376041127,
+          "budget_tolerance": 1e-09
+        },
+        "feasibility_projection_mass": 1.4719203167816454e-14,
+        "market_residual": 0.11531254942977345,
+        "market_clearing_required": false
+      },
+      "replacement_gap": 0.04783541544688013,
+      "closure": "Permanent fixed-price partial equilibrium; fixed fiscal inputs and normalized entry; market, fiscal and demographic imbalances not cleared"
+    },
+    {
+      "case": "matched_shares_010_1.0",
+      "arm": "shares_010",
+      "phase": "matched",
+      "price_factor": 1.0,
+      "price": 0.6128072610924526,
+      "rent": 0.11047652160037388,
+      "b": 0.057499023437500005,
+      "fertility": 2.1005350849824267,
+      "target_fit": [
+        {
+          "moment": "initial_normalization",
+          "target": 2.1,
+          "model": 2.1005350849824267,
+          "gap": 0.0005350849824266035,
+          "weight": "",
+          "loss_contribution": "",
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_childlessness",
+          "target": 0.19827875100684264,
+          "model": 0.14409231990688512,
+          "gap": -0.05418643109995752,
+          "weight": 35532.3042455214,
+          "loss_contribution": 104.32886142939624,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_exactly_one",
+          "target": 0.21365532522014702,
+          "model": 0.2591078373135976,
+          "gap": 0.04545251209345058,
+          "weight": 26952.820824310795,
+          "loss_contribution": 55.682664186543974,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_mean_age",
+          "target": 25.976263860992496,
+          "model": 25.51575737149614,
+          "gap": -0.46050648949635686,
+          "weight": 139.82806784479274,
+          "loss_contribution": 29.652810758124023,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_share30",
+          "target": 0.2492780130410667,
+          "model": 0.20187060610020624,
+          "gap": -0.04740740694086046,
+          "weight": 13866.065434728798,
+          "loss_contribution": 31.163458382867763,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "wealth_earnings",
+          "target": 6.92658379107299,
+          "model": 6.273288703485427,
+          "gap": -0.6532950875875629,
+          "weight": 7.595098472533724,
+          "loss_contribution": 3.2415460383175705,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "bequest_wealth",
+          "target": 0.007291023472616158,
+          "model": 0.006967210382719449,
+          "gap": -0.00032381308989670905,
+          "weight": 5165289.256198346,
+          "loss_contribution": 0.5416059772130896,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "old_dispersion",
+          "target": 3.51593508651872,
+          "model": 2.9284696008080866,
+          "gap": -0.5874654857106334,
+          "weight": 10.616361531535473,
+          "loss_contribution": 3.6638730085112785,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "mean_rooms",
+          "target": 5.607885960068579,
+          "model": 6.657834134248448,
+          "gap": 1.0499481741798693,
+          "weight": 128.02070205233477,
+          "loss_contribution": 141.128891323009,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "ownership_30_55",
+          "target": 0.6762604168538028,
+          "model": 0.7724108925042371,
+          "gap": 0.09615047565043433,
+          "weight": 2339.3623724673616,
+          "loss_contribution": 21.627203872980406,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "first_birth_rooms",
+          "target": 1.465,
+          "model": 0.9890382199205954,
+          "gap": -0.4759617800794047,
+          "weight": 137.5652749002964,
+          "loss_contribution": 31.163984564102773,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "family_rooms",
+          "target": 0.38509964969278165,
+          "model": 0.24437537696907974,
+          "gap": -0.14072427272370192,
+          "weight": 280.52808370152104,
+          "loss_contribution": 5.555387672433186,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "recent_parent_ownership",
+          "target": 0.12760836356692162,
+          "model": 0.024377671973280446,
+          "gap": -0.10323069159364118,
+          "weight": 27055.822957508266,
+          "loss_contribution": 288.3224251180929,
+          "descriptive_fixed_psi": true
+        }
+      ],
+      "incentives": [
+        {
+          "group": "first_birth",
+          "risk_mass": 0.18454012619591928,
+          "expected_births": 0.053579488658735366,
+          "risk_share_negative_interior": 0.9233174127997209,
+          "risk_share_positive_interior": 0.0766825866153993,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 5.848462057025586e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 3.361599526564283e-14,
+          "birth_share_negative_interior": 0.868445641096479,
+          "birth_share_positive_interior": 0.13155435890352107,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -1.9866240446852375,
+          "gap_over_kappa_median": -0.7159392944565768,
+          "gap_over_kappa_p90": -0.04179290632381405
+        },
+        {
+          "group": "later_births",
+          "risk_mass": 0.21758614252817288,
+          "expected_births": 0.06338678836667953,
+          "risk_share_negative_interior": 0.9455321394536472,
+          "risk_share_positive_interior": 0.05446786046197518,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 8.436051685125548e-11,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 1.7095869601672757e-14,
+          "birth_share_negative_interior": 0.9468499557363012,
+          "birth_share_positive_interior": 0.05315004426369879,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -1.0343373542723282,
+          "gap_over_kappa_median": -0.4819419778479341,
+          "gap_over_kappa_p90": -0.03731010266684954
+        },
+        {
+          "group": "all_births",
+          "risk_mass": 0.40212626872409196,
+          "expected_births": 0.11696627702541493,
+          "risk_share_negative_interior": 0.9353375593454374,
+          "risk_share_positive_interior": 0.06466244034049948,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 3.1403885264592887e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.4677135268485528e-14,
+          "birth_share_negative_interior": 0.9109347911788492,
+          "birth_share_positive_interior": 0.08906520882115063,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -1.4998894577908555,
+          "gap_over_kappa_median": -0.5560251324343836,
+          "gap_over_kappa_p90": -0.03926966722456928
+        },
+        {
+          "group": "first_birth_nonpositive_liquid_wealth",
+          "risk_mass": 0.11624233585574452,
+          "expected_births": 0.03067068381650237,
+          "risk_share_negative_interior": 0.9277896413980307,
+          "risk_share_positive_interior": 0.07221035767344519,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 9.284706110817637e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 5.336695931697061e-14,
+          "birth_share_negative_interior": 0.8640784787700615,
+          "birth_share_positive_interior": 0.13592152122993859,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -2.332077449794946,
+          "gap_over_kappa_median": -0.9163753895358846,
+          "gap_over_kappa_p90": -0.06434247134008092
+        }
+      ],
+      "gates": {
+        "operator": {
+          "stationary_post_fertility_nesting_l1": 2.7875616586202473e-14,
+          "one_step_constant_path_nesting_l1": 1.068688487402852e-13,
+          "zero_entry_mass_accounting_residual": 2.220446049250313e-16,
+          "entry_flow_E": 0.061733456180825735,
+          "effective_mature_flow_B": 0.055544011258657065,
+          "reconstructed_effective_mature_flow_B": 0.05554401125866705,
+          "mature_flow_abs_error": 9.985068327722502e-15,
+          "birth_flow": 0.1169662770254148,
+          "stationary_birth_flow": 0.11696627702541415,
+          "birth_flow_abs_error": 6.522560269672795e-16,
+          "top_bin_entry_birth_flow": 0.02109540107669003,
+          "topcode_adjusted_birth_flow": 0.12967329062501784,
+          "stationary_topcode_adjusted_birth_flow": 0.12967329062501687,
+          "topcode_adjusted_birth_flow_abs_error": 9.71445146547012e-16
+        },
+        "budget": {
+          "budget_excess_mass": 0.0,
+          "maximum_occupied_excess": 2.842170943040401e-14,
+          "actual_rent": 0.11047652160037388,
+          "budget_tolerance": 1e-09
+        },
+        "feasibility_projection_mass": 1.1800711719589629e-14,
+        "market_residual": 0.02648229692142714,
+        "market_clearing_required": false
+      },
+      "replacement_gap": 0.0002547374646205813,
+      "closure": "Permanent fixed-price partial equilibrium; fixed fiscal inputs and normalized entry; market, fiscal and demographic imbalances not cleared"
+    },
+    {
+      "case": "matched_shares_010_1.1",
+      "arm": "shares_010",
+      "phase": "matched",
+      "price_factor": 1.1,
+      "price": 0.6740879872016979,
+      "rent": 0.12152417376041127,
+      "b": 0.057499023437500005,
+      "fertility": 2.038470095631758,
+      "target_fit": [
+        {
+          "moment": "initial_normalization",
+          "target": 2.1,
+          "model": 2.038470095631758,
+          "gap": -0.06152990436824224,
+          "weight": "",
+          "loss_contribution": "",
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_childlessness",
+          "target": 0.19827875100684264,
+          "model": 0.16305703471369895,
+          "gap": -0.03522171629314369,
+          "weight": 35532.3042455214,
+          "loss_contribution": 44.08028575674139,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_exactly_one",
+          "target": 0.21365532522014702,
+          "model": 0.2675202353051952,
+          "gap": 0.05386491008504818,
+          "weight": 26952.820824310795,
+          "loss_contribution": 78.2016835319326,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_mean_age",
+          "target": 25.976263860992496,
+          "model": 25.7082575865814,
+          "gap": -0.26800627441109626,
+          "weight": 139.82806784479274,
+          "loss_contribution": 10.043481403975502,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_share30",
+          "target": 0.2492780130410667,
+          "model": 0.21286022834713733,
+          "gap": -0.03641778469392937,
+          "weight": 13866.065434728798,
+          "loss_contribution": 18.389939195696744,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "wealth_earnings",
+          "target": 6.92658379107299,
+          "model": 6.259773439510225,
+          "gap": -0.6668103515627655,
+          "weight": 7.595098472533724,
+          "loss_contribution": 3.3770545458427423,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "bequest_wealth",
+          "target": 0.007291023472616158,
+          "model": 0.0069936571000219615,
+          "gap": -0.00029736637259419624,
+          "weight": 5165289.256198346,
+          "loss_contribution": 0.45674979106317315,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "old_dispersion",
+          "target": 3.51593508651872,
+          "model": 2.951428219577321,
+          "gap": -0.5645068669413988,
+          "weight": 10.616361531535473,
+          "loss_contribution": 3.383094726511889,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "mean_rooms",
+          "target": 5.607885960068579,
+          "model": 6.29949451563803,
+          "gap": 0.6916085555694513,
+          "weight": 128.02070205233477,
+          "loss_contribution": 61.235168704754756,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "ownership_30_55",
+          "target": 0.6762604168538028,
+          "model": 0.7561720717613294,
+          "gap": 0.07991165490752661,
+          "weight": 2339.3623724673616,
+          "loss_contribution": 14.938870052556172,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "first_birth_rooms",
+          "target": 1.465,
+          "model": 1.0776287878330981,
+          "gap": -0.38737121216690196,
+          "weight": 137.5652749002964,
+          "loss_contribution": 20.642557622357813,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "family_rooms",
+          "target": 0.38509964969278165,
+          "model": 0.2776048938921116,
+          "gap": -0.10749475580067003,
+          "weight": 280.52808370152104,
+          "loss_contribution": 3.2415363787751352,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "recent_parent_ownership",
+          "target": 0.12760836356692162,
+          "model": 0.034338969198555724,
+          "gap": -0.0932693943683659,
+          "weight": 27055.822957508266,
+          "loss_contribution": 235.36347194908464,
+          "descriptive_fixed_psi": true
+        }
+      ],
+      "incentives": [
+        {
+          "group": "first_birth",
+          "risk_mass": 0.19219311345752263,
+          "expected_births": 0.05246981383954124,
+          "risk_share_negative_interior": 0.9365873088885965,
+          "risk_share_positive_interior": 0.06341269051686442,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 5.945053311082455e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 3.363896521091791e-14,
+          "birth_share_negative_interior": 0.8843142971469737,
+          "birth_share_positive_interior": 0.11568570285302615,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -2.204479688303227,
+          "gap_over_kappa_median": -0.8150103221914298,
+          "gap_over_kappa_p90": -0.07699949230245509
+        },
+        {
+          "group": "later_births",
+          "risk_mass": 0.2114205480460889,
+          "expected_births": 0.061198593770775564,
+          "risk_share_negative_interior": 0.9492680632922205,
+          "risk_share_positive_interior": 0.0507319366141664,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 9.359640909745566e-11,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 1.6954338070115243e-14,
+          "birth_share_negative_interior": 0.9501027209199603,
+          "birth_share_positive_interior": 0.04989727908004003,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -1.0396865268186994,
+          "gap_over_kappa_median": -0.4882674946095085,
+          "gap_over_kappa_p90": -0.045316048689805544
+        },
+        {
+          "group": "all_births",
+          "risk_mass": 0.4036136615036115,
+          "expected_births": 0.11366840761031682,
+          "risk_share_negative_interior": 0.9432297303459488,
+          "risk_share_positive_interior": 0.05677026932190691,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 3.321196665146073e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.4899238708816876e-14,
+          "birth_share_negative_interior": 0.9197345084963338,
+          "birth_share_positive_interior": 0.08026549150366621,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -1.6809946888332314,
+          "gap_over_kappa_median": -0.5886309145596489,
+          "gap_over_kappa_p90": -0.05729686983997911
+        },
+        {
+          "group": "first_birth_nonpositive_liquid_wealth",
+          "risk_mass": 0.11946087250065218,
+          "expected_births": 0.029179746870521696,
+          "risk_share_negative_interior": 0.9431866892072687,
+          "risk_share_positive_interior": 0.056813309836214965,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 9.564623810374841e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 5.4119623622707985e-14,
+          "birth_share_negative_interior": 0.8846880367835358,
+          "birth_share_positive_interior": 0.1153119632164643,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -2.5863671801246144,
+          "gap_over_kappa_median": -1.0446803788871424,
+          "gap_over_kappa_p90": -0.14951777443393696
+        }
+      ],
+      "gates": {
+        "operator": {
+          "stationary_post_fertility_nesting_l1": 2.9427038171123245e-14,
+          "one_step_constant_path_nesting_l1": 1.1114637525156762e-13,
+          "zero_entry_mass_accounting_residual": -4.440892098500626e-16,
+          "entry_flow_E": 0.0617334561808299,
+          "effective_mature_flow_B": 0.05396171690188964,
+          "reconstructed_effective_mature_flow_B": 0.05396171690190597,
+          "mature_flow_abs_error": 1.6334156249797616e-14,
+          "birth_flow": 0.11366840761031681,
+          "stationary_birth_flow": 0.11366840761031595,
+          "birth_flow_abs_error": 8.604228440844963e-16,
+          "top_bin_entry_birth_flow": 0.020209523200734936,
+          "topcode_adjusted_birth_flow": 0.12584180432458897,
+          "stationary_topcode_adjusted_birth_flow": 0.12584180432458777,
+          "topcode_adjusted_birth_flow_abs_error": 1.1934897514720433e-15
+        },
+        "budget": {
+          "budget_excess_mass": 0.0,
+          "maximum_occupied_excess": 1.4210854715202004e-14,
+          "actual_rent": 0.12152417376041127,
+          "budget_tolerance": 1e-09
+        },
+        "feasibility_projection_mass": 1.207988120211016e-14,
+        "market_residual": 0.09241877498579841,
+        "market_clearing_required": false
+      },
+      "replacement_gap": 0.029299954461279733,
+      "closure": "Permanent fixed-price partial equilibrium; fixed fiscal inputs and normalized entry; market, fiscal and demographic imbalances not cleared"
+    },
+    {
+      "case": "matched_shares_020_1.0",
+      "arm": "shares_020",
+      "phase": "matched",
+      "price_factor": 1.0,
+      "price": 0.6128072610924526,
+      "rent": 0.11047652160037388,
+      "b": 0.0645126953125,
+      "fertility": 2.1004094586125275,
+      "target_fit": [
+        {
+          "moment": "initial_normalization",
+          "target": 2.1,
+          "model": 2.1004094586125275,
+          "gap": 0.00040945861252739135,
+          "weight": "",
+          "loss_contribution": "",
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_childlessness",
+          "target": 0.19827875100684264,
+          "model": 0.1455136487485063,
+          "gap": -0.05276510225833633,
+          "weight": 35532.3042455214,
+          "loss_contribution": 98.927478639332,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_exactly_one",
+          "target": 0.21365532522014702,
+          "model": 0.2580734386412169,
+          "gap": 0.04441811342106988,
+          "weight": 26952.820824310795,
+          "loss_contribution": 53.177074555310575,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_mean_age",
+          "target": 25.976263860992496,
+          "model": 25.534890743831305,
+          "gap": -0.44137311716119143,
+          "weight": 139.82806784479274,
+          "loss_contribution": 27.23993785491069,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_share30",
+          "target": 0.2492780130410667,
+          "model": 0.20297804536571154,
+          "gap": -0.04629996767535516,
+          "weight": 13866.065434728798,
+          "loss_contribution": 29.72450430701995,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "wealth_earnings",
+          "target": 6.92658379107299,
+          "model": 6.441082234834579,
+          "gap": -0.48550155623841107,
+          "weight": 7.595098472533724,
+          "loss_contribution": 1.7902540367641802,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "bequest_wealth",
+          "target": 0.007291023472616158,
+          "model": 0.006899435531186517,
+          "gap": -0.0003915879414296405,
+          "weight": 5165289.256198346,
+          "loss_contribution": 0.7920512183528073,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "old_dispersion",
+          "target": 3.51593508651872,
+          "model": 2.792371723121257,
+          "gap": -0.7235633633974632,
+          "weight": 10.616361531535473,
+          "loss_contribution": 5.558131753719564,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "mean_rooms",
+          "target": 5.607885960068579,
+          "model": 6.902019339734425,
+          "gap": 1.2941333796658459,
+          "weight": 128.02070205233477,
+          "loss_contribution": 214.40666556690613,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "ownership_30_55",
+          "target": 0.6762604168538028,
+          "model": 0.7908260606189575,
+          "gap": 0.11456564376515477,
+          "weight": 2339.3623724673616,
+          "loss_contribution": 30.704801907105303,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "first_birth_rooms",
+          "target": 1.465,
+          "model": 1.5267436412543205,
+          "gap": 0.061743641254320414,
+          "weight": 137.5652749002964,
+          "loss_contribution": 0.5244369658759941,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "family_rooms",
+          "target": 0.38509964969278165,
+          "model": 0.16509658673108163,
+          "gap": -0.22000306296170002,
+          "weight": 280.52808370152104,
+          "loss_contribution": 13.577937322366969,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "recent_parent_ownership",
+          "target": 0.12760836356692162,
+          "model": 0.06002816745151185,
+          "gap": -0.06758019611540977,
+          "weight": 27055.822957508266,
+          "loss_contribution": 123.56618656397968,
+          "descriptive_fixed_psi": true
+        }
+      ],
+      "incentives": [
+        {
+          "group": "first_birth",
+          "risk_mass": 0.18520177429571963,
+          "expected_births": 0.05349167785453803,
+          "risk_share_negative_interior": 0.928500387074136,
+          "risk_share_positive_interior": 0.07149961234536978,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 5.804604354098882e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 3.3752231421978874e-14,
+          "birth_share_negative_interior": 0.8795938707241403,
+          "birth_share_positive_interior": 0.12040612927585978,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -1.9273004658913673,
+          "gap_over_kappa_median": -0.7393766865744714,
+          "gap_over_kappa_p90": -0.04103395960030219
+        },
+        {
+          "group": "later_births",
+          "risk_mass": 0.2167872783718684,
+          "expected_births": 0.06342827001300773,
+          "risk_share_negative_interior": 0.9709550469927211,
+          "risk_share_positive_interior": 0.02904495294046395,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 6.67999360571448e-11,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 1.5191848937518074e-14,
+          "birth_share_negative_interior": 0.9721817017245274,
+          "birth_share_positive_interior": 0.02781829827547274,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -1.029780489533197,
+          "gap_over_kappa_median": -0.4744829175789976,
+          "gap_over_kappa_p90": -0.03436520524080614
+        },
+        {
+          "group": "all_births",
+          "risk_mass": 0.401989052667588,
+          "expected_births": 0.11691994786754578,
+          "risk_share_negative_interior": 0.9513956129935439,
+          "risk_share_positive_interior": 0.048604386702981874,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 3.0345025087161024e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.3742867292169132e-14,
+          "birth_share_negative_interior": 0.929822134178929,
+          "birth_share_positive_interior": 0.07017786582107083,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -1.456566998496234,
+          "gap_over_kappa_median": -0.5631512786237673,
+          "gap_over_kappa_p90": -0.0352819919741376
+        },
+        {
+          "group": "first_birth_nonpositive_liquid_wealth",
+          "risk_mass": 0.11325130092093791,
+          "expected_births": 0.029396650197262952,
+          "risk_share_negative_interior": 0.9273879178743542,
+          "risk_share_positive_interior": 0.07261208117635384,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 9.492368005681973e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 5.519559682721973e-14,
+          "birth_share_negative_interior": 0.8639145374253082,
+          "birth_share_positive_interior": 0.13608546257469178,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -2.2728664264067624,
+          "gap_over_kappa_median": -0.9290575275172842,
+          "gap_over_kappa_p90": -0.06781170126156748
+        }
+      ],
+      "gates": {
+        "operator": {
+          "stationary_post_fertility_nesting_l1": 2.6689363849834112e-14,
+          "one_step_constant_path_nesting_l1": 9.948977040156247e-14,
+          "zero_entry_mass_accounting_residual": -5.551115123125783e-16,
+          "entry_flow_E": 0.06173345618082008,
+          "effective_mature_flow_B": 0.055520166720472205,
+          "reconstructed_effective_mature_flow_B": 0.05552016672047508,
+          "mature_flow_abs_error": 2.8727020762175925e-15,
+          "birth_flow": 0.11691994786754566,
+          "stationary_birth_flow": 0.11691994786754495,
+          "birth_flow_abs_error": 7.077671781985373e-16,
+          "top_bin_entry_birth_flow": 0.021159438935873687,
+          "topcode_adjusted_birth_flow": 0.12966553527499325,
+          "stationary_topcode_adjusted_birth_flow": 0.12966553527499242,
+          "topcode_adjusted_birth_flow_abs_error": 8.326672684688674e-16
+        },
+        "budget": {
+          "budget_excess_mass": 0.0,
+          "maximum_occupied_excess": 2.842170943040401e-14,
+          "actual_rent": 0.11047652160037388,
+          "budget_tolerance": 1e-09
+        },
+        "feasibility_projection_mass": 1.1206340643297878e-14,
+        "market_residual": 0.07363862530211784,
+        "market_clearing_required": false
+      },
+      "replacement_gap": 0.00019494228143684462,
+      "closure": "Permanent fixed-price partial equilibrium; fixed fiscal inputs and normalized entry; market, fiscal and demographic imbalances not cleared"
+    },
+    {
+      "case": "matched_shares_020_1.1",
+      "arm": "shares_020",
+      "phase": "matched",
+      "price_factor": 1.1,
+      "price": 0.6740879872016979,
+      "rent": 0.12152417376041127,
+      "b": 0.0645126953125,
+      "fertility": 2.0059400758386916,
+      "target_fit": [
+        {
+          "moment": "initial_normalization",
+          "target": 2.1,
+          "model": 2.0059400758386916,
+          "gap": -0.09405992416130848,
+          "weight": "",
+          "loss_contribution": "",
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_childlessness",
+          "target": 0.19827875100684264,
+          "model": 0.17509794696849076,
+          "gap": -0.023180804038351877,
+          "weight": 35532.3042455214,
+          "loss_contribution": 19.093272169048678,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "cps_exactly_one",
+          "target": 0.21365532522014702,
+          "model": 0.2702437734288173,
+          "gap": 0.05658844820867026,
+          "weight": 26952.820824310795,
+          "loss_contribution": 86.30973707604991,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_mean_age",
+          "target": 25.976263860992496,
+          "model": 25.83218348361058,
+          "gap": -0.14408037738191481,
+          "weight": 139.82806784479274,
+          "loss_contribution": 2.902712554227476,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "nchs_share30",
+          "target": 0.2492780130410667,
+          "model": 0.2197640364199159,
+          "gap": -0.029513976621150795,
+          "weight": 13866.065434728798,
+          "loss_contribution": 12.078380397114874,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "wealth_earnings",
+          "target": 6.92658379107299,
+          "model": 6.417548958329302,
+          "gap": -0.509034832743688,
+          "weight": 7.595098472533724,
+          "loss_contribution": 1.9680150367423046,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "bequest_wealth",
+          "target": 0.007291023472616158,
+          "model": 0.006926178559525633,
+          "gap": -0.00036484491309052465,
+          "weight": 5165289.256198346,
+          "loss_contribution": 0.6875610052067792,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "old_dispersion",
+          "target": 3.51593508651872,
+          "model": 2.8750512398523487,
+          "gap": -0.6408838466663713,
+          "weight": 10.616361531535473,
+          "loss_contribution": 4.360480518416826,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "mean_rooms",
+          "target": 5.607885960068579,
+          "model": 6.548052090318107,
+          "gap": 0.9401661302495281,
+          "weight": 128.02070205233477,
+          "loss_contribution": 113.15907991573185,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "ownership_30_55",
+          "target": 0.6762604168538028,
+          "model": 0.7694062430372711,
+          "gap": 0.09314582618346834,
+          "weight": 2339.3623724673616,
+          "loss_contribution": 20.296646999950124,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "first_birth_rooms",
+          "target": 1.465,
+          "model": 1.6801814661653633,
+          "gap": 0.21518146616536327,
+          "weight": 137.5652749002964,
+          "loss_contribution": 6.369693642743482,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "family_rooms",
+          "target": 0.38509964969278165,
+          "model": 0.19486340805130453,
+          "gap": -0.19023624164147712,
+          "weight": 280.52808370152104,
+          "loss_contribution": 10.152262995619157,
+          "descriptive_fixed_psi": true
+        },
+        {
+          "moment": "recent_parent_ownership",
+          "target": 0.12760836356692162,
+          "model": 0.07930983131124247,
+          "gap": -0.04829853225567915,
+          "weight": 27055.822957508266,
+          "loss_contribution": 63.114422792081584,
+          "descriptive_fixed_psi": true
+        }
+      ],
+      "incentives": [
+        {
+          "group": "first_birth",
+          "risk_mass": 0.19706084215629074,
+          "expected_births": 0.051755994100320044,
+          "risk_share_negative_interior": 0.9450993173791546,
+          "risk_share_positive_interior": 0.0549006820257887,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 5.950228521975611e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 3.3524077000366767e-14,
+          "birth_share_negative_interior": 0.8985139157662959,
+          "birth_share_positive_interior": 0.10148608423370406,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -2.237328755700753,
+          "gap_over_kappa_median": -0.8934680618762064,
+          "gap_over_kappa_p90": -0.09223883112745292
+        },
+        {
+          "group": "later_births",
+          "risk_mass": 0.2071384449991239,
+          "expected_births": 0.06012635277368814,
+          "risk_share_negative_interior": 0.9718915174826235,
+          "risk_share_positive_interior": 0.028108482440568235,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 7.679199518022903e-11,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 1.6024279593664955e-14,
+          "birth_share_negative_interior": 0.9728196032945939,
+          "birth_share_positive_interior": 0.027180396705405993,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -1.0338642052965006,
+          "gap_over_kappa_median": -0.4789095087399365,
+          "gap_over_kappa_p90": -0.03978832139576726
+        },
+        {
+          "group": "all_births",
+          "risk_mass": 0.4041992871554147,
+          "expected_births": 0.11188234687400819,
+          "risk_share_negative_interior": 0.9588294125176057,
+          "risk_share_positive_interior": 0.041170587152922475,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 3.294470897349738e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 2.455602352324584e-14,
+          "birth_share_negative_interior": 0.9384463099843849,
+          "birth_share_positive_interior": 0.06155369001561491,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -1.7357097940992026,
+          "gap_over_kappa_median": -0.6163765586616234,
+          "gap_over_kappa_p90": -0.05438924420384099
+        },
+        {
+          "group": "first_birth_nonpositive_liquid_wealth",
+          "risk_mass": 0.11871972237004971,
+          "expected_births": 0.027369932255333105,
+          "risk_share_negative_interior": 0.9480906649740096,
+          "risk_share_positive_interior": 0.051909334038266496,
+          "risk_share_tied_interior": 0.0,
+          "risk_share_zero_try": 9.876682830406489e-10,
+          "risk_share_zero_wait": 0.0,
+          "risk_share_unavailable": 5.56460435917531e-14,
+          "birth_share_negative_interior": 0.8907630655520835,
+          "birth_share_positive_interior": 0.10923693444791652,
+          "birth_share_boundary": 0.0,
+          "gap_over_kappa_p10": -2.6864841799381245,
+          "gap_over_kappa_median": -1.0974816122119821,
+          "gap_over_kappa_p90": -0.16145226729862194
+        }
+      ],
+      "gates": {
+        "operator": {
+          "stationary_post_fertility_nesting_l1": 3.495515058469438e-14,
+          "one_step_constant_path_nesting_l1": 1.1532904820079988e-13,
+          "zero_entry_mass_accounting_residual": -3.3306690738754696e-16,
+          "entry_flow_E": 0.06173345618083412,
+          "effective_mature_flow_B": 0.05310317397203807,
+          "reconstructed_effective_mature_flow_B": 0.05310317397204794,
+          "mature_flow_abs_error": 9.867107131356079e-15,
+          "birth_flow": 0.11188234687400826,
+          "stationary_birth_flow": 0.11188234687400625,
+          "birth_flow_abs_error": 2.0122792321330962e-15,
+          "top_bin_entry_birth_flow": 0.01984075696746207,
+          "topcode_adjusted_birth_flow": 0.12383361377314975,
+          "stationary_topcode_adjusted_birth_flow": 0.12383361377314726,
+          "topcode_adjusted_birth_flow_abs_error": 2.4841240175987878e-15
+        },
+        "budget": {
+          "budget_excess_mass": 0.0,
+          "maximum_occupied_excess": 1.4210854715202004e-14,
+          "actual_rent": 0.12152417376041127,
+          "budget_tolerance": 1e-09
+        },
+        "feasibility_projection_mass": 1.1763947537994564e-14,
+        "market_residual": 0.04592705318180951,
+        "market_clearing_required": false
+      },
+      "replacement_gap": 0.04479044007696526,
+      "closure": "Permanent fixed-price partial equilibrium; fixed fiscal inputs and normalized entry; market, fiscal and demographic imbalances not cleared"
+    }
+  ],
+  "matching_status": {
+    "floor_concave": {
+      "status": "matched",
+      "b": 0.143611328125,
+      "fertility": 2.100536874863247,
+      "search_evaluations": 11
+    },
+    "shares_010": {
+      "status": "matched",
+      "b": 0.057499023437500005,
+      "fertility": 2.1005350849824267,
+      "search_evaluations": 12
+    },
+    "shares_020": {
+      "status": "matched",
+      "search_evaluations": 12,
+      "b": 0.0645126953125,
+      "fertility": 2.1004094586125275
+    }
+  },
+  "evaluations": 45,
+  "elapsed_seconds": 2194.0594751919853,
+  "job": "18611784",
+  "source_job": "18605876",
+  "max_b_evaluations": 16,
+  "continuation_source": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/housing_fertility_cost_diagnostic_20260926/continuation_001",
+  "original_source": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/housing_fertility_cost_diagnostic_20260926/run_001",
+  "numerical_budget_extension_only": false
+}
