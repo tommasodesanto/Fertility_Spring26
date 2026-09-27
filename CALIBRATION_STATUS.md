@@ -1,5 +1,42 @@
 # Calibration Status
 
+## September 27, 17:22 EDT — revised smoke submitted, source unchanged
+
+New gated_v2 job18672459 requests24CPU/128GB for remaining original window.
+Contractv4 SHA4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be;
+exact difference receipt confirms only numerical initial psi/step and budget
+accounting changed. Controller prepare passed in genuine Slurm allocation18672448
+(zero solves). Earlier login-node prepare was rejected by Torch-only guard,
+before validation/imports; no guard workaround. Search remains unapproved.
+
+## September 27, 17:19 EDT — smoke cap reached; numerical warm-start repair
+
+Job18671834 stopped with all six objectives censored at the unchanged900-second
+cap. Each completed six normalization equilibria, reaching fertility2.10007709
+at psi0.14280254, but verification/export did not finish before the deadline.
+No search approval or search occurred; actual workers now zero. Preserve gated_v1.
+This was ordinary root progress, not a stalled worker or scientific-gate failure.
+
+New immutable contractv4 preparation is authorized: use the previously verified
+local winner's psi0.14281100340255604 as numerical initial guess, initial step0.005
+instead of0.05. The same algorithm still solves/verifies fertility2.1 within5e-4;
+psi is not fixed. All scientific gates, source, weights, bounds and clocks remain.
+Reduce new search cap366 to360 to account for six failed smokes within the original
+384-objective authorization. Six fresh exact-loop smokes and explicit lead review
+remain mandatory before search. No baseline source rerun or local model work.
+
+## September 27, 17:04 EDT — six exact-loop calibration smokes running
+
+Gated Torch job18671834 started21:03:05UTC on cs755,24CPU/128GB allocation;
+actual6 model workers verified by process count and controller heartbeat.
+Contractv3 unchanged. Smoke output under remote original-root
+output/model/evening_calibration_20260927/gated_v1/smoke. No search approval yet.
+After all six cases and full14/31 comparisons/17plots pass, lead writes the
+explicit approval under gated_v1; same job then runs up to24 search workers,
+at most366 proposals and six final repeats. Global21:27/22:12EDT cutoffs unchanged.
+All failed preparation attempts remain preserved in cluster/gated_launch.json
+and other cluster receipts. Mac numerical work remains prohibited.
+
 ## September 27, 17:00 EDT — frozen/current Torch source equivalence verified
 
 Cross-cluster comparison job18671533 completed one fixed-price/psi frozen-source

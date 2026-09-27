@@ -1,0 +1,40 @@
+{
+  "status": "running_six_smokes",
+  "contract_sha256": "4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be",
+  "gated_wrapper_sha256": "bd9dfd87aaacbcb6ab4c34cb7551f8e3eec6aa78a93d9b4ff7583f3ebf462a7c",
+  "inner_wrapper_sha256": "c0d8254546c18171170105969e22d5486935faffe7014c74b891799042d94b18",
+  "controller_sha256": "987654c809ff2b0559f2dfee84c949fdd5f7914ebab7bfe9585b164fe6a84ac8",
+  "resources": {
+    "cpus": 24,
+    "memory": "128G",
+    "maximum_wall": "06:00:00",
+    "partition": "cs",
+    "requested_wall_minutes": 292
+  },
+  "smoke_cases": 6,
+  "search_authorized": false,
+  "approval_condition": "Lead explicit signed-hash file after platform proof plus full smoke tables and17plots",
+  "search_cutoff_epoch": 1790558820,
+  "hard_end_epoch": 1790561520,
+  "timestamp": "2026-09-27T21:21:18.064869+00:00",
+  "submission_history": [
+    {
+      "job_id": 18671834,
+      "status": "six_censored_timeouts",
+      "preserved": "gated_v1",
+      "changed_method": "normalization start .14281100340255604, step .005; original tolerance/algorithm/caps"
+    }
+  ],
+  "job_id": 18672459,
+  "actual_workers": 6,
+  "search_approval_exists": false,
+  "node": "cs669",
+  "start_utc": "2026-09-27T21:20:44Z",
+  "completed_objectives": 0,
+  "censored_timeouts": 0,
+  "search_started": false,
+  "run_root": "output/model/evening_calibration_20260927/gated_v2",
+  "prior_failed_smokes": 6,
+  "prepare_job_id": 18672448,
+  "prepare_status": "source_contract_verified_no_solves"
+}

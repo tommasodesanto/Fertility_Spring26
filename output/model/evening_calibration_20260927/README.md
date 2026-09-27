@@ -1,10 +1,18 @@
 # Six-hour evening calibration, September 27
 
-Author-authorized new Torch run. Gated job **18671834** is submitted on partition
+Author-authorized new Torch run. Revised gated job **18672459** is submitted on partition
 `cs`, requesting 24 CPUs and 128 GB for the remaining window. It runs six smokes,
 waits for explicit lead approval, then runs search and repeats on the same node.
 Search approval has not yet been issued. See `cluster/gated_launch.json` for
 actual scheduler evidence and preserved rejected/cancelled submissions.
+
+The first gated run,18671834, timed out all six smoke objectives after reaching
+the fertility target but before completing verification/export. Search never
+started. Contractv4 changes only the numerical initial fertility-benefit guess
+to0.14281100340255604 and initial bracket step to0.005; it still solves the same
+normalization equation with unchanged tolerance and gates. Source/weight hashes
+are unchanged. The previous attempts remain in `cluster/smoke_review_v1/`.
+Contractv4 and its exact difference receipt are in `cluster/contract_v4/`.
 
 Baseline source equivalence is accepted through the supplemental frozen/current
 Torch comparison: all 64 solution arrays and 31 parameters agree exactly. The
@@ -18,8 +26,9 @@ supplement demonstrates platform differences. All 14 moments agree within
 - Window: September 27 16:12–22:12 EDT; absolute end epoch 1790561520.
 - Search cutoff 21:27 EDT, epoch 1790558820. Setup/queue consume the window.
 - At most 24 single-thread model workers on Torch; no local model computation.
-- At most 384 objectives including smokes and repeats. Search cap 366 leaves
-  room for six controller smokes, six repeats and bounded prerequisite checks.
+- At most 384 objectives including smokes and repeats. Revised search cap360
+  leaves room for six failed plus six new smokes, six repeats and two numerical
+  prerequisite checks: at most380 in total.
 - Each objective has a parent-owned 900-second cap and at most 23 stationary
   solves for child-benefit normalization. No restart or extension of old plans.
 
