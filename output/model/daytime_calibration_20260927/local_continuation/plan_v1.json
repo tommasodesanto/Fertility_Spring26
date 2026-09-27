@@ -1,0 +1,109 @@
+{
+  "contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/production_contract.json",
+  "contract_sha256": "3b770d8c8c22d2b0449b34a575d6353b063bc015d74ce11016dad7e22ed7ca5e",
+  "anchor_case": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/daytime_calibration_20260927/jacobian/run_v2/first_birth_fixed_cost_minus/case",
+  "point": {
+    "H0": 6.206479060846687,
+    "beta_annual": 0.9602456707427426,
+    "chi": 1.0889178301004045,
+    "child_benefit_curvature": 0.07130705056729134,
+    "delta_alpha_jump": 0.14198430659647016,
+    "first_birth_fixed_cost": 0.6465287075719173,
+    "kappa_fert": 0.19482764369932495,
+    "kappa_fert_continuation": 0.3474664229788561,
+    "theta0": 0.11358885656635645
+  },
+  "cases": [
+    {
+      "id": "lower_birth_cost",
+      "point": {
+        "H0": 6.206479060846687,
+        "beta_annual": 0.9602456707427426,
+        "chi": 1.0889178301004045,
+        "child_benefit_curvature": 0.07130705056729134,
+        "delta_alpha_jump": 0.14198430659647016,
+        "first_birth_fixed_cost": 0.6337265814167244,
+        "kappa_fert": 0.19482764369932495,
+        "kappa_fert_continuation": 0.3474664229788561,
+        "theta0": 0.11358885656635645
+      }
+    },
+    {
+      "id": "lower_initial_fertility_scale",
+      "point": {
+        "H0": 6.206479060846687,
+        "beta_annual": 0.9602456707427426,
+        "chi": 1.0889178301004045,
+        "child_benefit_curvature": 0.07130705056729134,
+        "delta_alpha_jump": 0.14198430659647016,
+        "first_birth_fixed_cost": 0.6465287075719173,
+        "kappa_fert": 0.19096979787755952,
+        "kappa_fert_continuation": 0.3474664229788561,
+        "theta0": 0.11358885656635645
+      }
+    },
+    {
+      "id": "higher_child_curvature",
+      "point": {
+        "H0": 6.206479060846687,
+        "beta_annual": 0.9602456707427426,
+        "chi": 1.0889178301004045,
+        "child_benefit_curvature": 0.07930705056729134,
+        "delta_alpha_jump": 0.14198430659647016,
+        "first_birth_fixed_cost": 0.6465287075719173,
+        "kappa_fert": 0.19482764369932495,
+        "kappa_fert_continuation": 0.3474664229788561,
+        "theta0": 0.11358885656635645
+      }
+    },
+    {
+      "id": "combined_scale_curvature",
+      "point": {
+        "H0": 6.206479060846687,
+        "beta_annual": 0.9602456707427426,
+        "chi": 1.0889178301004045,
+        "child_benefit_curvature": 0.07930705056729134,
+        "delta_alpha_jump": 0.14198430659647016,
+        "first_birth_fixed_cost": 0.6465287075719173,
+        "kappa_fert": 0.19096979787755952,
+        "kappa_fert_continuation": 0.3474664229788561,
+        "theta0": 0.11358885656635645
+      }
+    }
+  ],
+  "workers": 2,
+  "total_seconds": 1740,
+  "search_seconds": 1080,
+  "case_seconds": 480,
+  "anchor_files": {
+    "receipt.json": "9a6acf4803238ca636d32b95abb0c17fb127db07ee8fac014d4e1951196996ef",
+    "initial_state.pkl.gz": "a53f0ee9d289fb8ed0c852f0cb6e81b5e974bf22e4fe2c57ae459dc1c749de50",
+    "target_fit.csv": "616f966ed5489a94bf92cfa7b80fee57bbd73b459fd96237463f7502663f972e",
+    "parameters.csv": "b80cf7e8cd304753493202a054a48b855297155df71da44f30bec86fe3509c36"
+  },
+  "authorization": "September27 user: run it a little locally to see how it evolves; new bounded local run after cancelled Torch continuation",
+  "economic_changes": [],
+  "science": "Same original model,14targets,13weightedrows,9searchcoordinates plusnormalized childbenefit; original weights/bounds/gates.",
+  "design": "Repeat promising Jacobian candidate twice, then four small local proposals; avoid unstable beta/H0/chi Newton directions; two fresh bestpoint repeats with17plots.",
+  "size": {
+    "wealth_nodes": 160,
+    "income_states": 15,
+    "housing_products": 6,
+    "age_nodes": 17,
+    "children_ever_born_states": 4,
+    "children_at_home_states": 4,
+    "max_objectives": 8,
+    "expected_stationary_solves_per_objective": 6,
+    "expected_total_stationary_solves": 48,
+    "observed_objective_wall_seconds": 345.866,
+    "expected_wall_minutes": 24,
+    "hard_wall_minutes": 29
+  },
+  "prior_anchor_loss": 41.99273264651173,
+  "original_production_loss": 42.281937042645964,
+  "reference_case": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/search/de_0093/case",
+  "runner_sha256": "943058f339d1cc5b132151a9a0d00d0f1053e7d1b1dc1fed1d7679cd23a24287",
+  "supersedes_overnight_deadline": true,
+  "absolute_end_epoch": 1790529287.3096151,
+  "runner_snapshot": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/daytime_calibration_20260927/local_continuation/runner_v1.py"
+}

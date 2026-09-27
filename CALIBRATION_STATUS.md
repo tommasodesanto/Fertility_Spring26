@@ -1,5 +1,20 @@
 # Calibration Status
 
+## September 27, 12:46 EDT — new small local continuation ACTIVE
+
+User explicitly authorized a little local search after the cluster cancellation.
+Two actual single-thread workers, controllerPID2811. Immutable plan/controller
+in daytime_calibration_20260927/local_continuation; run_v1 starts12:45:55 EDT.
+Search cutoff13:03:47 EDT; absolute end13:14:47 EDT, no extensions. Twoexact
+anchor smokes, four Jacobian-informed nearby proposals, two bestpoint repeats
+plus17plotexport. All14targets/weights/bounds/model/grid/gates unchanged.
+Anchor is previous first_birth_fixed_cost_minus, loss41.992733 versus original
+42.281937; not promoted until repeated. Maximum8objectives/~48SS,2workers,
+480s case cap,29min total. Heartbeat now10min for this short run. Fulltable
+comparisons gate smokes; failures/timeouts/unrunpoints preserved. No otherlocal
+modelprocesses at launch;48GiB RAM/82%free. See local_continuation/README.md.
+
+
 ## September 27, 12:24 EDT — continuation search cancelled unstarted
 
 Torch job18645479 was still PENDING (Priority) after the12:20:29 search cutoff.
