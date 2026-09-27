@@ -1,5 +1,7 @@
 # September 27 daytime continuation and diagnostics
 
+Latest search status: Torch job18645479 was cancelled unstarted at12:23:35 EDT after the12:20:29 cutoff. It never received CPUs:0 of24 requested workers,0 new cases. No late replacement was launched; see `search/completion.json`. Local numerical diagnostics and native replays/smoke are complete; full equilibrium transition remains outstanding.
+
 Author authorization: continue the calibration search; do policy, stationary
 population, Jacobian and three-household-life diagnostics locally; compute a
 same-parameter benchmark without the borrowing constraint. This supersedes the

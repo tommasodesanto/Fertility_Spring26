@@ -1,5 +1,17 @@
 # Calibration Status
 
+## September 27, 12:24 EDT — continuation search cancelled unstarted
+
+Torch job18645479 was still PENDING (Priority) after the12:20:29 search cutoff.
+Cancelled at12:23:35 EDT; scheduler confirms CANCELLED, Start=None, elapsed0,
+allocated CPUs0. Actual concurrency remained0 of24 requested workers; zero new
+smokes or search cases completed. No replacement or budget extension. Receipt:
+`output/model/daytime_calibration_20260927/search/completion.json`.
+No local calibration/credit/transition processes remain active. Completed native
+replays and dated smoke remain verified; full equilibrium transition/root and
+horizon certification are still outstanding. The author wants to discuss the
+hanging specification pieces; no specification decisions have been made for him.
+
 ## September 27, 12:02 EDT — native production replays and dated smoke pass exactly
 
 Current-source native household accounting, credit option, PF split-entry queue
