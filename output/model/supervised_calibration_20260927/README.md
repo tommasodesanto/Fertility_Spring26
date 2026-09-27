@@ -1,5 +1,26 @@
 # Supervised overnight calibration — September 27
 
+## September 27, 01:48 EDT — local fit improves; no search failures
+
+At the frozen 01:45 table snapshot, 43 primary and 12 identity search cases have
+completed, excluding the four corresponding acceptance cases. No fatal error,
+timeout, inadmissible result or memory intervention is recorded. Capacity remains
+eight primary plus two identity workers (nine active at the health snapshot as a
+batch finished); aggregate evaluator RSS was 17.55 GiB. Torch authentication is
+still unavailable and no cluster search has launched.
+
+The best provisional primary loss is 289.289, versus the starting 592.815.
+Full fourteen-row fits and all ten fitted parameters/bounds are in
+`output/model/supervised_calibration_20260927/checks/0145/`. Ownership and the
+recent-parent ownership gap are close to target; average rooms, childlessness
+and early fertility remain material misses. This selected point has not yet
+received the end-of-search independent repeats. All seventeen standard plots
+were inspected for nearby candidate de_0032 (loss 290.245), distinctly from the
+snapshot winner de_0044 (289.289); markets clear, ownership rises with age and
+owner demand remains concentrated in the ten-room product. No economic change
+or search intervention is warranted by this check. Identity results remain
+separate and are also scored using common primary weights.
+
 ## Current state,01:07 EDT
 
 Ten local searchworkers launched:8primary+2identity. Six complete acceptance

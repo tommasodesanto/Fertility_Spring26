@@ -1,0 +1,119 @@
+{
+  "generated_utc": "2026-09-27T05:45:51.436573+00:00",
+  "status": "provisional_results",
+  "counts": {
+    "success": 59
+  },
+  "groups": {
+    "identity": {
+      "completed": 14,
+      "best_under_primary_weights": 589.1023018968901,
+      "best_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/identity/search/initial_0000/case"
+    },
+    "primary": {
+      "completed": 45,
+      "best_under_primary_weights": 289.28903137154214,
+      "best_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/primary/search/de_0044/case"
+    }
+  },
+  "controller_states": [
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/primary/smoke",
+      "weighting": "primary",
+      "status": "exact_loop_smoke_passed",
+      "error": null,
+      "records": 2,
+      "heartbeat": {
+        "best_loss": 592.8153847254691,
+        "completed": 2,
+        "epoch": 1790485158.091991,
+        "force": true,
+        "stage": "smoke"
+      },
+      "heartbeat_age_seconds": 2793.2880821228027,
+      "stale_30_minutes": false
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/identity/smoke",
+      "weighting": "identity",
+      "status": "exact_loop_smoke_passed",
+      "error": null,
+      "records": 2,
+      "heartbeat": {
+        "best_loss": 2.806905306938252,
+        "completed": 2,
+        "epoch": 1790485277.994774,
+        "force": true,
+        "stage": "smoke"
+      },
+      "heartbeat_age_seconds": 2673.385662794113,
+      "stale_30_minutes": false
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/primary/search",
+      "weighting": "primary",
+      "status": "running_or_pending",
+      "error": null,
+      "records": 43,
+      "heartbeat": {
+        "best_loss": 289.28903137154214,
+        "completed": 43,
+        "epoch": 1790487949.989262,
+        "force": true,
+        "stage": "search"
+      },
+      "heartbeat_age_seconds": 1.39146089553833,
+      "stale_30_minutes": false
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/identity/search",
+      "weighting": "identity",
+      "status": "running_or_pending",
+      "error": null,
+      "records": 12,
+      "heartbeat": {
+        "active": 2,
+        "best_loss": 2.6149134488213095,
+        "completed": 12,
+        "epoch": 1790487921.447753,
+        "pending": 0,
+        "stage": "search",
+        "stop_reason": null
+      },
+      "heartbeat_age_seconds": 29.933239936828613,
+      "stale_30_minutes": false
+    }
+  ],
+  "errors": [],
+  "median_stationary_solve_seconds": 323.8379120839818,
+  "selected_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/primary/search/de_0044/case",
+  "largest_weighted_misses": [
+    {
+      "moment": "mean_rooms",
+      "label": "Mean occupied rooms (AHS)",
+      "target": 5.729434240102641,
+      "model": 6.795176062109077,
+      "gap": 1.0657418220064354,
+      "weight": 128.02070205233477,
+      "loss_contribution": 145.40663429783905
+    },
+    {
+      "moment": "cps_childlessness",
+      "label": "Childlessness, ages 40-44",
+      "target": 0.19827875100684264,
+      "model": 0.15608833785623633,
+      "gap": -0.042190413150606315,
+      "weight": 35532.3042455214,
+      "loss_contribution": 63.24860170179562
+    },
+    {
+      "moment": "cps_exactly_one",
+      "label": "Exactly one child, among mothers",
+      "target": 0.21365532522014702,
+      "model": 0.2516046580540255,
+      "gap": 0.03794933283387847,
+      "weight": 26952.820824310795,
+      "loss_contribution": 38.81615511074339
+    }
+  ]
+}
