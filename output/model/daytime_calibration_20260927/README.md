@@ -3,8 +3,7 @@
 Author authorization: continue the calibration search; do policy, stationary
 population, Jacobian and three-household-life diagnostics locally; compute a
 same-parameter benchmark without the borrowing constraint. This supersedes the
-completed overnight schedule's launch stop; the overnight heartbeat remains
-paused. The reference is overnight continuation de_0093, with the exact source,
+completed overnight schedule's launch stop; the existing heartbeat now supervises this daytime work. The reference is overnight continuation de_0093, with the exact source,
 parameters and targets recorded in ../supervised_calibration_20260927/primary_final/.
 
 Separate work and ownership:
@@ -21,12 +20,17 @@ Separate work and ownership:
 - `households/`: saved-policy and full stationary-distribution checks,
   supplemental zoom plots and three reproducible illustrative household lives.
   No new equilibrium solution or change to the standard 17 diagnostics.
-- Borrowing benchmark: separate experiment, never promoted into calibration.
-  All preference parameters, including the normalized child-benefit level,
-  must remain fixed. The author is clarifying whether to remove both the
-  purchase and debt restrictions or just the down-payment restriction.
-  Source mapping and a solvency-consistent definition precede the benchmark.
-  Do not silently substitute a 100%-LTV experiment for unrestricted borrowing.
+- `credit_benchmark/run_v2/`: approved same-parameter experiment replacing
+  artificial credit limits by net-estate solvency at every possible death and
+  feasible continuation. One worker, 30-minute total/10-minute case caps;
+  baseline replay, benchmark and exact repeat. All preference parameters,
+  including the child-benefit level, remain fixed. No fertility renormalization.
+  Conservative feasible-grid boundary and native value cutoff are explicit
+  limitations; no continuum frictionless-credit certification. Birth renewal
+  and estate funding are reported, not repaired. See plan.json for source pins.
+- `lifecycle_dashboard/`: first-pass population age profiles versus actual ACS,
+  PSID and CPS data, with complete CSVs and provenance. Supplemental diagnostic,
+  not new calibration targets; empirical sample differences are documented.
 
 Torch authentication succeeds at the start of this session. Local diagnostics
 have a shared cap of three simultaneous model evaluators (two Jacobian plus

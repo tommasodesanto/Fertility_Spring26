@@ -36,11 +36,15 @@ Children are explicitly capped at 3; the final-bin weight 3.602 converts mean 1.
 to normalized 2.100105, so these statistics do not conflict. Five focused tests
 pass; lead inspected the supplementary life plot and reviewed the simulation.
 
-Borrowing benchmark is not launched while the author's definition is pending:
-remove both purchase/debt limits retaining solvency, or just down payment.
-Actual adapter has purchase x+y/R>=-phi*pH and owner saving b'>=-phi*pH;
-phi=1 is coherent 100%-LTV, not fully unrestricted borrowing. Deleting floors
-would permit terminal debt; negative-estate creditor treatment is unresolved.
+The author approved a first-pass credit benchmark removing artificial purchase,
+collateral and unsecured saving limits while enforcing net-estate solvency at
+every possible death date and feasibility in every reachable continuation.
+It is now launched in `credit_benchmark/run_v2`: one local worker, baseline
+replay, experimental solve and exact repeat; 30-minute total/10-minute per-case
+caps in plan.json. Eleven focused adapter tests pass and generated source was
+reviewed. Do not edit pinned runner/helper while active. The natural boundary
+uses conservative feasible grid nodes and the native V>-1e9 classifier: this is
+an explicitly approximate diagnostic, not certified continuum frictionless credit.
 All parameters including child benefit 0.14416490417555738 must stay fixed;
 do not normalize benchmark fertility back to 2.1. Any normalized-entry stationary
 comparison must report birth/entry imbalance and estate funding rather than
@@ -52,9 +56,21 @@ Legacy default replay exactly reproduces its old 13 targets/25 parameters and
 fresh cross-host acceptance of the current calibration point. Evidence is in
 `search/legacy_verification/`.
 Daytime supervision is ACTIVE on the existing half-hour heartbeat, with the
-new search/Jacobian deadlines and pending benchmark definition recorded. It
+new search/Jacobian deadlines and approved benchmark scope recorded. It
 will not restart the completed overnight schedule.
 
+
+### First-pass empirical lifecycle comparison
+
+The supplemental `lifecycle_dashboard/lifecycle_dashboard.png` compares saved
+population means with actual ACS2005/06, PSID2005/07 and CPSJune2004/06 data.
+All 125 observations and exact definitions are in that folder. Source and
+aggregate replays pass; lead visually inspected the figure. No new targets.
+Model births lag the data; ownership rises excessively in retirement (82–85:
+0.954 versus ACS0.749), and wealth falls sharply (oldest mean2.243 versus
+PSID6.209 times working-age annual earnings). PSID old-age means are noisy;
+ACS all-structure ownership/capped-nine rooms differ from calibration samples.
+These cross-sectional profiles are not individual longitudinal histories.
 
 ### Estate clarification and life-plot display update
 

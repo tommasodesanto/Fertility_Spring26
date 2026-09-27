@@ -1,0 +1,56 @@
+{
+  "status": "first_pass_diagnostic_not_new_calibration_targets",
+  "model": {
+    "case": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/search/de_0093/case",
+    "contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/production_contract.json",
+    "contract_sha256": "3b770d8c8c22d2b0449b34a575d6353b063bc015d74ce11016dad7e22ed7ca5e",
+    "checkpoint_sha256": "090c9ebda662bf7837c4f4cf1d816159bc9d203a9babe7c70d00d0c4be1e575e",
+    "target_system_sha256": "d35349bf5bb4054e50a2092d875b3b21df210637419757f648301585ec0a6812",
+    "native_solves": 0
+  },
+  "model_mean_working_age_earnings": 1.0000000000001605,
+  "model_measurement": "Exact g_current population, no simulation draws; physical hR_pol/H_own capped9; beginning-period net worth b+qH weighted by g_post_fertility before housing transactions, matching the calibrated wealth observer; ownership actual tenure. Children arithmetic midpoint of pre-birth and post-birth conditional means, uniform birth-time approximation over each four-year interval; literal cap3, not3.602 top-bin adjustment.",
+  "housing": {
+    "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/housing_profiles_v1/full/housing_profile_by_age.csv",
+    "sha256": "c7585b19f066520e5136bc500ecb41f2c2387036ca7613946fa653f59de4f332",
+    "source_provenance": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/native_financing_diagnostic_20260919/specification_followup/housing_profiles_v1/full/provenance.json",
+    "sample": "National ACS2005/2006 household heads ages18-85, all structures, valid tenure/rooms, positiveHHWT; exact precomputed four-year sufficient-statistic bins.",
+    "weight": "HHWT pooled",
+    "caveat": "All structures differs from DUE ownership calibration sample; capped9 ACS rooms differs from uncapped AHS2007 calibration target. These are separate diagnostic comparisons."
+  },
+  "wealth": {
+    "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/PSID/PSIDSHELF_MOBILITY.dta",
+    "source_bytes": 6300266005,
+    "source_mtime_ns": 1730930638959661722,
+    "source_rehashed": false,
+    "sample": "Pooled2005/2007 PSID reference persons RELTOHEAD_=10 ages18-85; IW positive finite, NETWORTHR finite; working ages18-65 additionally finite nonnegative EARNINDRRC. Matches accepted aggregate sample11324.",
+    "weight": "IW pooled family-years",
+    "scaling": "Each age-cell mean NETWORTHR divided by weighted mean EARNINDRRC among selected working-age18-65 households; model scaled analogously.",
+    "aggregate_ratio_replay": 6.92658379107301,
+    "mean_working_earnings": 82881.9541667878
+  },
+  "children": {
+    "source": "/Users/tommasodesanto/Desktop/Projects/Datasets/CPS/extract3/cps_00003.dat.gz",
+    "partitions": {
+      "2004": {
+        "sha256": "44e233bb4780c844892f8e75fc34206533bb753906bba68c3ffc9ced374df786",
+        "bytes": 35825904
+      },
+      "2006": {
+        "sha256": "8bd7a843587d2f7dfb70d9309473855f4c87d1271636572f50e8a7950cf3426a",
+        "bytes": 35483733
+      }
+    },
+    "exact_age25_replay": 0.809527638429002,
+    "sample": "June 2004/2006 women age18-49, FREVER0-20, FRSUPPWT>0; only complete four-year bins18-41 retained (supplement upper age44 leaves42-45 incomplete)",
+    "weight": "FRSUPPWT/10000 pooled; children min(FREVER,3)",
+    "receipt": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/parameter_target_audit/fertility/fertility_availability.json"
+  },
+  "caveats": [
+    "Cross-sectional age gradients are not cohort trajectories. No standard errors yet; small old-age PSID cells can make mean wealth noisy.",
+    "Stationary household reproductive-member ages are compared with CPS women, not an exact sex-composition reconstruction.",
+    "Housing is synchronized post-choice; wealth is beginning-period before housing transactions, matching the target observer. Survey interview timing differs. Wealth valuation and earnings-year metadata inherited from PSID shelf.",
+    "Model wealth normalization uses its own working-age mean earnings; empirical uses its own. No dollar-level normalization asserted.",
+    "No target, weighting, parameter or model change; no native solve."
+  ]
+}
