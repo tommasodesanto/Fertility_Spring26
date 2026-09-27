@@ -1,5 +1,64 @@
 # Calibration Status
 
+## September 26 late evening — launch held; early-fertility estimate verified
+
+**Latest author instruction: discuss parameters, weights and code integration
+before launching.** This supersedes the immediately preceding request to
+prepare an overnight calibration with some outstanding choices. No new
+calibration or numerical smoke was submitted. The newly prepared
+`run_e5f_utility_overnight_calibration.py` and `e5f_overnight_estate_audit.py`
+are unexecuted, unverified drafts; neither is the active implementation.
+Proposed curvature bounds and an early-fertility weight were not adopted.
+
+The requested CPS calculation is complete. Pooled June 2004/2006 women recorded
+at age 25, with valid children-ever-born and positive supplement weights,
+give mean children ever born 0.8569601514801901 (1,774 observations). The
+model-matched candidate, mean children ever born capped at three, is
+0.8095276384290021. Interview age 25 represents [25,26), requiring post-fertility
+weight 0.875 in the existing uniform-birth-time interpolation of the [22,26)
+model cell. The model observer has not yet been integrated. The 2,000-draw
+year-stratified person bootstrap gives capped-mean SE 0.02803450449153517;
+this is diagnostic uncertainty, not a CPS design-consistent SE or an adopted
+objective weight. Torch empirical job 18619369 completed in 11 seconds.
+Source partition/schema hashes, the previous ages-40--44 controls and an
+independent AWK point estimate were verified. Builder:
+`code/data/cps_fertility/build_early_fertility_target.py`; compact evidence and
+reproduction instructions: `output/model/early_fertility_target_20260926/README.md`.
+
+No calibration target was dropped. The inherited contract has 12 scored
+moments plus the separate completed-fertility normalization at 2.1. Adding
+early fertility would give 13 scored moments plus that normalization. The
+proposed no-floor specification has nine free structural coordinates: supply
+level, annual discount factor, owner premium, first-birth cost, first/later
+fertility taste scales, bequest strength, first-child housing loading and
+child-benefit curvature. The benefit level is additionally normalized to 2.1.
+Later-child housing loading remains fixed at zero in this proposal. This
+passes a parameter/moment counting check, not an identification-rank check.
+The accepted AHS mean rooms 5.7294342401 must replace the frozen ACS target
+and capped-nine aggregate observer; the family-room-gap definition is separate.
+
+Weights remain inherited working minimum-distance weights. Several came from
+older samples or synthetic scales, and no joint covariance-based optimality
+claim is supported. Reviewing error scales, correlated moments and imperfect
+model counterparts precedes a new target-and-weight fingerprint. Neither the
+first-birth housing observer mismatch nor the child-directed versus all-estate
+flow mismatch is repaired by reweighting. Existing interest-rate/credit and
+estate-funding implementation questions remain visible; the retained entry
+distribution, mortality, equivalence scale and material curvature are not
+automatically reopened.
+
+The author supplies Claude's speed handoff and requests code review. Its
+diagnostic warm-start gains are evidence for implementation work, not a tested
+production change: the old floor-arm normalization trials took 733 to 484
+seconds with warm prices, and 856 to 353 seconds with combined warm intercept
+and prices on another point. The full new-utility objective is unverified.
+Runtime source rewrites and cluster-only objective code require explicit,
+version-controlled integration; warm inputs must be reproducibly recorded and
+existing economic/numerical gates retained. Saving-kernel pruning remains a
+proposal requiring proof and regression checks. Source review:
+`docs/model/fable_code_quality_performance_review.md`, Section 8, and the
+author-supplied handoff. No code adoption or launch follows from this review.
+
 ## September 26 evening — utility mechanism comparison completed
 
 **Numerical comparison complete:** job 18611784 completed the missing matched

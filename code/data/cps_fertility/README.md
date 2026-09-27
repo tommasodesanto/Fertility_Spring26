@@ -1,5 +1,20 @@
 # June 2024 CPS Fertility Stock Targets
 
+## Historical early-fertility candidate
+
+`build_early_fertility_target.py` separately estimates children ever born at
+interview age 25 from the authenticated June 2004/2006 IPUMS CPS extract. It
+preserves the historical benchmark vintage; it does not replace the June 2024
+build below. The verified raw mean is 0.857 and the mean capped at three is
+0.810, based on 1,774 women. The latter matches the model's 3+ child-count
+state. No calibration weight or new active target contract is adopted.
+
+Run data processing on Torch. Source/control checks, diagnostic bootstrap
+uncertainty, exact command and results are in
+[`output/model/early_fertility_target_20260926/README.md`](../../../output/model/early_fertility_target_20260926/README.md).
+
+## June 2024 build
+
 This folder is the durable source for the calibration's completed-fertility
 stock targets. It constructs the targets from the Census June 2024 Current
 Population Survey Fertility Supplement public-use file.

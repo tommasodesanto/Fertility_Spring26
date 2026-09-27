@@ -1,0 +1,178 @@
+{
+  "status": "verified_empirical_candidate_not_adopted",
+  "authoritative_candidate": "25",
+  "estimator": "sum(FRSUPPWT * FREVER) / sum(FRSUPPWT), pooled records; not average annual means",
+  "source": "IPUMS CPS extract3; June 2004 and June 2006 partitions of cps_00003.dat",
+  "sample": "Women SEX=2 at exact age25; FREVER0-20, positiveFRSUPPWT. Ages24/26 and24-26 are diagnostics.",
+  "timing": "Completed integer age at June interview; cumulative live births as of interview, not exactly at25thbirthday.",
+  "weights": "FRSUPPWT / 10000 per supplied loader; ratio invariant to common scaling",
+  "primary_topcoding": "Model-matched candidate E[min(FREVER,3)] because model topstate is3+; raw and capped5means retained separately.",
+  "model_mapping": "Exact observed age25 means ageinterval[25,26); lead specifies uniform birth-time observer interpolation weight0.875. Builder only estimates empiricalobject.",
+  "uncertainty": "Person bootstrap stratified by survey year, retaining original weights and fixed annual samplecounts; NOT CPSdesign-consistent: no PSU/stratum/replicateweight correction or crossyear covariance. No calibrationweight adopted.",
+  "bootstrap": {
+    "seed": 20260926,
+    "draws": 2000,
+    "numpy_version": "2.1.3"
+  },
+  "partition_checks": {
+    "2004": {
+      "path": "input/june_2004.dat",
+      "bytes": 35825904,
+      "sha256": "44e233bb4780c844892f8e75fc34206533bb753906bba68c3ffc9ced374df786",
+      "counts": {
+        "all_records": 137264,
+        "female24_26": 2550,
+        "female24_26_invalid_frever": 7,
+        "female24_26_nonpositive_weight": 0
+      }
+    },
+    "2006": {
+      "path": "input/june_2006.dat",
+      "bytes": 35483733,
+      "sha256": "8bd7a843587d2f7dfb70d9309473855f4c87d1271636572f50e8a7950cf3426a",
+      "counts": {
+        "all_records": 135953,
+        "female24_26": 2589,
+        "female24_26_invalid_frever": 5,
+        "female24_26_nonpositive_weight": 0
+      }
+    }
+  },
+  "completed40_44_control": {
+    "n": 10872,
+    "childless_share": 0.19827875100684098,
+    "exactly_one_given_mother": 0.2136553252201454
+  },
+  "estimates": {
+    "24": {
+      "n": 1662,
+      "sum_supplement_weights": 4000021.2937,
+      "mean_children_ever_born": 0.6844577126407011,
+      "mean_children_ever_born_capped3": 0.6701713286931946,
+      "mean_children_ever_born_capped5": 0.6844577126407011,
+      "share_with_any_birth": 0.40724450786440575,
+      "childless_share": 0.5927554921355943,
+      "n_frever_above3": 20,
+      "weighted_share_frever_above3": 0.012739391232806227,
+      "n_frever_above5": 0,
+      "independent_person_year_stratified_bootstrap_se": 0.026501291872698837,
+      "capped3_bootstrap_se": 0.02526708881840959,
+      "capped3_bootstrap_percentile_interval95": [
+        0.621921105456987,
+        0.720747823760588
+      ],
+      "bootstrap_percentile_interval95": [
+        0.6338904914882754,
+        0.7390974602096211
+      ],
+      "annual": {
+        "2004": {
+          "n": 825,
+          "mean_children_ever_born": 0.6681625679071637
+        },
+        "2006": {
+          "n": 837,
+          "mean_children_ever_born": 0.6998623899972182
+        }
+      }
+    },
+    "25": {
+      "n": 1774,
+      "sum_supplement_weights": 4122215.2638,
+      "mean_children_ever_born": 0.8569601514801901,
+      "mean_children_ever_born_capped3": 0.8095276384290021,
+      "mean_children_ever_born_capped5": 0.848350576402521,
+      "share_with_any_birth": 0.45725426281169845,
+      "childless_share": 0.5427457371883017,
+      "n_frever_above3": 49,
+      "weighted_share_frever_above3": 0.029163597533520928,
+      "n_frever_above5": 5,
+      "independent_person_year_stratified_bootstrap_se": 0.032479284887508744,
+      "capped3_bootstrap_se": 0.02803450449153517,
+      "capped3_bootstrap_percentile_interval95": [
+        0.7548269572512344,
+        0.8622345702282841
+      ],
+      "bootstrap_percentile_interval95": [
+        0.7946529789435283,
+        0.9191693536326239
+      ],
+      "annual": {
+        "2004": {
+          "n": 886,
+          "mean_children_ever_born": 0.8870455599831486
+        },
+        "2006": {
+          "n": 888,
+          "mean_children_ever_born": 0.8278681279613773
+        }
+      }
+    },
+    "26": {
+      "n": 1691,
+      "sum_supplement_weights": 3798326.1519,
+      "mean_children_ever_born": 0.9591165036150671,
+      "mean_children_ever_born_capped3": 0.9226758406059775,
+      "mean_children_ever_born_capped5": 0.9543086789655527,
+      "share_with_any_birth": 0.5235914014401255,
+      "childless_share": 0.4764085985598745,
+      "n_frever_above3": 43,
+      "weighted_share_frever_above3": 0.024204169632460887,
+      "n_frever_above5": 4,
+      "independent_person_year_stratified_bootstrap_se": 0.03252084531453304,
+      "capped3_bootstrap_se": 0.02962928116829065,
+      "capped3_bootstrap_percentile_interval95": [
+        0.8630696378829713,
+        0.9792672603938766
+      ],
+      "bootstrap_percentile_interval95": [
+        0.8941463445575277,
+        1.0206537085980412
+      ],
+      "annual": {
+        "2004": {
+          "n": 832,
+          "mean_children_ever_born": 0.9569127122868281
+        },
+        "2006": {
+          "n": 859,
+          "mean_children_ever_born": 0.9611105970918201
+        }
+      }
+    },
+    "24_26_diagnostic": {
+      "n": 5127,
+      "sum_supplement_weights": 11920562.7094,
+      "mean_children_ever_born": 0.8316265919798157,
+      "mean_children_ever_born_capped3": 0.7988188796147269,
+      "mean_children_ever_born_capped5": 0.8271173914319578,
+      "share_with_any_birth": 0.46161060110533714,
+      "childless_share": 0.5383893988946629,
+      "n_frever_above3": 112,
+      "weighted_share_frever_above3": 0.022072095085957838,
+      "n_frever_above5": 9,
+      "independent_person_year_stratified_bootstrap_se": 0.018161971960583747,
+      "capped3_bootstrap_se": 0.016405208513460955,
+      "capped3_bootstrap_percentile_interval95": [
+        0.7654659515137837,
+        0.8309617569956883
+      ],
+      "bootstrap_percentile_interval95": [
+        0.7963861565358248,
+        0.8670143066764634
+      ],
+      "annual": {
+        "2004": {
+          "n": 2543,
+          "mean_children_ever_born": 0.835196319007402
+        },
+        "2006": {
+          "n": 2584,
+          "mean_children_ever_born": 0.8282725259480528
+        }
+      }
+    }
+  },
+  "schema_sha256": "eb40824c7a3f11d5ca12400e9935ed6ae8cb5439cbe30009c047be90280bfab3",
+  "builder_sha256": "fedbc416644c3f9a46a44595fd99d607d5f75c02c94252c2876720a9fc36482f"
+}
