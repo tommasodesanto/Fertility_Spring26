@@ -1,5 +1,30 @@
 # Calibration Status
 
+## September 27, 18:35 EDT — common-weight comparison and hourly plots
+
+96 search objectives completed at18:30:74success,16unchanged housing-equilibrium
+gate rejections,6timeouts,0fatal. Actual24workers, fresh checkpoints; maximumRSS
+about74GiB/128GB. No intervention. Primary lane best32.423985, blockwinner31.248497
+under primary weights, identitywinner65.340071 under primary weights. Across ALL
+successful records the best primary rescore is30.846540567085185, identity-lane
+case initial_0043_identity (not the identity lane's own current winner). Future
+readouts must compare all cases under common primary weights, not only lane winners.
+
+Common best improves ownership0.635 and wealth/earnings6.133; early fertility
+still0.532 vs0.810, first-birth housing response worsens to1.701 vs1.465. Identity
+winner raises early fertility to0.568 but mean first-birth age25.433 vs25.976;
+this is a weighting tradeoff, not an accepted weighting change. Full14/31 tables,
+common-primary rescoring and receipts in evening cluster/check_1830/.
+
+Lead inspected all17 standard plots for each of four candidates (12contact sheets)
+at18:35. Rendering-only Torch18676161 completed55sec,2.32GiB,zero solves; all saved
+checkpoint/source hashes authenticated. Market residuals pass; age profiles remain
+similar, large owner products prominent, highwealth policy downturn/late ownership
+and sharp retirement decumulation caveats remain. No new visual numerical failure,
+no comprehensive occupied-policy certification. No search/source/gate/deadline change.
+Final independent repeats remain outstanding, including any cross-lane candidate
+selected as final common-primary best; existing controller repeats lane winners only.
+
 ## September 27, 18:00 EDT — first evening search checkpoint
 
 Torch18672459 remains active with24workers;48 objectives finished:41success,
