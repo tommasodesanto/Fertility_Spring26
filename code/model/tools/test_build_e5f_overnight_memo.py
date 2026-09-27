@@ -55,6 +55,25 @@ def fixture(root, completed=True):
 
 
 class MemoTests(unittest.TestCase):
+    def test_early_weight_experiment_checks_every_weight(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);path=fixture(root);index=memo.read(path)
+            entry=index['cases'][0];entry['weighting']='early_fertility_3000'
+            case=root/'primary_case';fits=list(memo.rows(case/'target_fit.csv','moment').values())
+            for row in fits:
+                if row['moment']=='early_fertility':row['weight']='3000.0'
+            csvfile(case/'target_fit.csv',fits);save(path,index)
+            targets,restrictions=memo.target_spec(memo.read(root/'objective.json'))
+            checked=memo.validate_case(dict(entry,path=str(case)),targets,restrictions)
+            self.assertEqual(checked['weighting'],'early_fertility_3000')
+            changed=next(r for r in fits if r['moment']=='mean_rooms')
+            changed['weight']='1';changed['loss_contribution']=float(changed['gap'])**2
+            csvfile(case/'target_fit.csv',fits)
+            receipt=memo.read(case/'receipt.json');receipt['loss']=sum(float(r['loss_contribution'] or 0) for r in fits)
+            save(case/'receipt.json',receipt)
+            with self.assertRaisesRegex(ValueError,'unexpected weights'):
+                memo.validate_case(dict(entry,path=str(case)),targets,restrictions)
+
     def test_pending_keeps_every_target_and_parameter_without_values(self):
         with tempfile.TemporaryDirectory() as folder:
             result=memo.collect(fixture(Path(folder),False))

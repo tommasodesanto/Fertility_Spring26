@@ -162,6 +162,8 @@ def gather(index, base):
 
 def validate_case(entry, targets, restrictions):
     """Verify complete finite tables and rescore with common primary weights."""
+    if entry['weighting'] not in ('primary', 'identity', 'early_fertility_3000'):
+        raise ValueError('Unknown weighting experiment')
     path = Path(entry['path'])
     receipt = read(path / 'receipt.json')
     if receipt.get('status') != SUCCESS:
@@ -193,6 +195,10 @@ def validate_case(entry, targets, restrictions):
                 raise ValueError('Primary-labelled case has different weights')
             if entry['weighting'] == 'identity' and own_weight != 1:
                 raise ValueError('Identity-labelled case does not have unit weights')
+            if entry['weighting'] == 'early_fertility_3000':
+                expected = 3000. if name == 'early_fertility' else weight
+                if not close(own_weight, expected):
+                    raise ValueError('Early-fertility experiment has unexpected weights')
             raw_loss += number(row['loss_contribution'])
         primary_fit.append(dict(moment=name, label=MOMENTS[name], target=number(target['target']),
                                 model=value, gap=gap, weight=weight,

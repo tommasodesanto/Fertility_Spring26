@@ -1,0 +1,17 @@
+{
+  "status": "prepared_zero_solve_passed_waiting_for_two_free_workers",
+  "contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v3/early_fertility_3000/contract.json",
+  "contract_sha256": "859c81541054bb7ab96138d691b356c1632a21f57b87b70e038d31fd5bcc79f6",
+  "preflight": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v3/early_fertility_3000/preflight/preflight.json",
+  "authorization_id": "tommaso_authorized_20260927_local_early3000_v1",
+  "initial_case_receipt": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v2/primary/search/de_0173/case/receipt.json",
+    "sha256": "eb739070b3150062310d3fe066d459a00b1bdec35325fdb93b5505079dcb60d1"
+  },
+  "workers": 2,
+  "rounds": 20,
+  "approximate_sizing": "2 smoke + 2 initial + <=40 round candidates + 2 final repeats; at 5-7 minutes/objective and two workers, about 2-3 hours; absolute search cutoff07:13 and total08:43 override relative budget.",
+  "scientific_change": "Only early_fertility weight100->3000; all14targets,otherweights,9bounds,fixedinputs,normalization,source retained.",
+  "tests": "6 preparation and9 reporting tests passed; actual zero-solve contract preflight passed.",
+  "launch_instructions": "Wait for identity search/complete.json bounded_search_complete and absence of its evaluators. Launch pinned driver directly at --stage smoke --contract <thiscontract> --output <lane>/smoke; preflight already exists, so do not rerun shell launcher into same folder. Set EXPECTED_UTILITY_OVERNIGHT_SHA256 and E5F_LOCAL_EXECUTION_AUTHORIZATION plus single-thread env. Use project virtualenv, caffeinate and nice8. After the two exact smokes, compare every model moment and parameter estimate to pinned initial-case receipt/tables, verify sole weight difference, then create a separate promoted production_contract and search invocation. No main search mutation."
+}

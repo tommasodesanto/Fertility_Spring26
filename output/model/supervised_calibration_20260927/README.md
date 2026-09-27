@@ -1,5 +1,37 @@
 # Supervised overnight calibration — September 27
 
+## September 27, 03:58 EDT — hourly plots checked; follow-up prepared, not launched
+
+The 03:45 snapshot has 168 primary and 56 identity search cases, with no
+failures or resource interventions. Ten local evaluators are active, observed
+RSS 21.30 GiB and free disk 221 GiB. Torch login remains unavailable. The best
+provisional primary loss is 87.956; all targets and fitted parameters/bounds
+are in `output/model/supervised_calibration_20260927/checks/0345/`. All seventeen
+standard plots for exact selected case de_0161 were inspected under
+`hourly_diagnostics/0345_selected/`. Markets clear and estate funding passes;
+childlessness and mean rooms improve, while early fertility stays low, mean
+first-birth age moves later and wealth/earnings falls. No main-search change.
+
+Prepared the previously announced early-fertility-weight-3000 diagnostic in
+`tmp/e5f_overnight_local_20260927/portable/night_launch_v3/early_fertility_3000/`.
+Its contract SHA is `859c81541054bb7ab96138d691b356c1632a21f57b87b70e038d31fd5bcc79f6`;
+local authorization ID is `tommaso_authorized_20260927_local_early3000_v1`.
+Only the early-fertility weight changes (100 to3000). Targets, all other weights,
+parameter bounds, source, fixed inputs and normalization are unchanged. The
+starting point is authenticated primary case de_0173. Two workers, at most
+20 rounds, same absolute cutoffs. Six preparation and nine reporting tests
+pass, as does the actual zero-solve preflight. Immutable preparer is under
+`portable/followup_tools_v1/`; running tools_v4 files have not changed.
+
+**Not launched:** wait for identity final repeats/export to complete and its
+workers to exit, then run two smokes directly with the pinned driver (the
+preflight folder already exists). Compare every model moment and parameter
+estimate against the pinned initial case before promoting a separate contract
+and starting search. Full paths, hash, environment and sizing are in
+`output/model/supervised_calibration_20260927/early_weight_preparation.json`
+and launch.json. Do not exceed ten concurrent local evaluators. Next plot
+review due by04:45; final independent main-search repeats remain pending.
+
 ## September 27, 03:18 EDT — weight tradeoff checked; conditional next experiment
 
 The 03:15 snapshot has 136 primary and 44 identity search cases; all pass the
