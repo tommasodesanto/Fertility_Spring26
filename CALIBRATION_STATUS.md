@@ -1,5 +1,15 @@
 # Calibration Status
 
+## September 27, 20:00 EDT — 240 attempts, best unchanged
+
+154success,50housing-equilibrium gate rejections,35owned timeouts and1late
+completion excluded from selection;0fatal.24workers, peakRSS about90GiB/128GB,
+fresh progress (active ledgers below5minutes). Common-primary best unchanged
+at28.488521375232327, initial_0182_block. Full14/31 tables reviewed for all lane
+winners in evening cluster/check_2000; no new parameter-bound/fixed-input issues.
+No numerical/source/model intervention. Last17plot review19:34, next due20:34.
+Original360search-case cap and21:27/22:12 deadlines unchanged; finalrepeats pending.
+
 ## September 27, 19:30 EDT — 192 attempts and refreshed hourly plots
 
 130success,39unchanged housing-equilibrium gate rejections,23timeouts,0fatal;
