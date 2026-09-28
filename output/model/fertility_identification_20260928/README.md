@@ -91,3 +91,7 @@ Primary best unchanged. Half-scale profile now0133, not final certified. Saved r
 18724418 PASS zero solves: four lanes all17 hashes unchanged, half0073 all17 inspected;
 market residual7.11e-8, highwealth ownership/age30housing/retirement caveats remain.
 Latest half0133 postdates rendered snapshot. No model/gate/deadline changes.
+
+September28 15:46 EDT:161 records,99success/59timeouts/3inadmissible;24 actual
+workers, fresh heartbeat and408second checkpoint age. MaxRSS125.4GiB/192GiB.
+No new fatal errors or best-point changes. No intervention or deadline extension.
