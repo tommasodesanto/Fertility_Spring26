@@ -1,0 +1,94 @@
+{
+  "damping": 0.4921581351318653,
+  "economic_changes": [
+    {
+      "object": "ten estimated preference and housing-supply coordinates",
+      "status": "proposed diagnostic recalibration",
+      "values": "trial_point below; no adoption"
+    },
+    {
+      "object": "child-benefit level psi",
+      "rule": "renormalize to replacement fertility2.1 and enforce renewal in both arms",
+      "status": "derived within proposed diagnostic"
+    }
+  ],
+  "expected_runtime_basis": "Reference6 stationary solves970.676seconds; no assumed warm-start saving",
+  "identification": "10scored moments/10free coordinates plus separate normalization; numerical full rank is not statistical identification",
+  "initial_bracket_step": 0.005,
+  "launch_prerequisites": [
+    "Resolve any saved-income mismatch before candidate inference",
+    "Pin isolated opt-in normalization-start adapter and all inputs",
+    "Torch synthetic exact dispatch/receipt/failure/timeout smoke",
+    "Implement the explicit paired-consistency screens below before seeing results",
+    "Retain complete tables and17 standard plots; no automatic promotion"
+  ],
+  "max_absolute_log_step": 0.15,
+  "maximum_stationary_solves_per_objective": 23,
+  "maximum_stationary_solves_total": 46,
+  "normalization_rule": "Re-solve psi to2.1 and enforce demographic renewal for each evaluation",
+  "objective_cap_seconds": 1800,
+  "objective_count": 2,
+  "original_undamped_linear_loss": 9.51908751166044,
+  "paired_arms": [
+    "retained initial psi .14281100340255604",
+    "full-step derivative-predicted initial psi"
+  ],
+  "paired_consistency": {
+    "failure_action": "report sensitivity; do not claim equivalent faster normalization or promote",
+    "loss_absolute_difference": 0.05,
+    "price_relative_difference": 0.0001,
+    "psi_absolute_difference": 0.0001,
+    "scored_max_abs_difference_in_working_scale": 0.01,
+    "status": "proposed numerical equivalence screens, additional to unchanged scientific gates",
+    "validation_absolute_difference_rule": ".01*max(1,abs(reference),abs(target))"
+  },
+  "policy_transition_reestimation": false,
+  "predicted_full_loss": 13.33525287216898,
+  "predicted_half_loss": 13.345797319006872,
+  "predicted_initial_psi_full": 0.13052783066857948,
+  "predicted_initial_psi_half": 0.13050306519204674,
+  "price_initialization": "identical retained initialization in both arms",
+  "promotion": "requires separate final exact-repeat verification; none budgeted or launched by this plan",
+  "proposal_method": "full-step log-coordinate ridge10 Gauss-Newton; uniform damping alpha<=.5 and max logstep<=.15",
+  "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "retained_scientific_gates": {
+    "all_other_gates": "unchanged full runtime budget, estate, transaction, probability and occupied-value checks",
+    "completed_fertility_absolute_gap": 0.0005,
+    "demographic_renewal": "original gate unchanged",
+    "market": "original solver and audit gates unchanged",
+    "paygo_scaled_residual": 1e-06,
+    "positive_psi": true
+  },
+  "specification_changes": [],
+  "status": "prepared_not_launched",
+  "stop": [
+    "after pair",
+    "unknown or integrity failure",
+    "deadline; no automatic extension/retry"
+  ],
+  "trial_point": {
+    "H0": 6.223801767503873,
+    "beta_annual": 0.9661993102397552,
+    "chi": 1.0944446654675706,
+    "child_benefit_curvature": 0.06172082331862575,
+    "delta_alpha_jump": 0.12714689271288254,
+    "first_birth_fixed_cost": 0.5344489357823546,
+    "kappa_fert": 0.15479508334160225,
+    "kappa_fert_continuation": 0.2925858962706159,
+    "tenure_choice_kappa": 0.011722209041054756,
+    "theta0": 0.12696970796912974
+  },
+  "unchanged": [
+    "income",
+    "initial wealth/income",
+    "timing",
+    "transfers/floors",
+    "preferences functional form",
+    "target/weight fingerprint",
+    "parameter bounds",
+    "all scientific gates",
+    "17 standard plots"
+  ],
+  "whole_experiment_cap_seconds": 4200,
+  "workers": 2
+}

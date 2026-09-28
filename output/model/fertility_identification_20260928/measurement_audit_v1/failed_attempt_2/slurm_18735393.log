@@ -1,0 +1,7 @@
+Authenticating contract, all export files, and checkpoint
+Saved parameter object loaded; independently reconstructing B15
+Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/measurement_audit_v1/audit_saved.py", line 139, in <module>
+    assert np.max(np.abs(shares-np.asarray(observer['ever_born_shares_age25']))) < 1e-12
+                         ~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+TypeError: unsupported operand type(s) for -: 'float' and 'dict'

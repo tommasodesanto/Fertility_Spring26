@@ -1,0 +1,118 @@
+{
+  "approved_external_estimate": {
+    "innovation_sd": 0.4838308245314463,
+    "innovation_variance": 0.23409226676677922,
+    "rho_four_year": 0.7345934905942886,
+    "stationary_log_variance": 0.5084845767213341
+  },
+  "external_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/measurement_audit_v1/inputs/single_process_external_estimate.json",
+  "external_source_sha256": "8188c0f0beaf56f360891f3937d8f97732969a2411ec8ed92ad7e73cc446e4a5",
+  "implied_log_ar1_rho": 0.7345934905942885,
+  "implied_log_innovation_sd": 0.48383082453144644,
+  "level_covariances_lag0_to4": [
+    0.6287657442262506,
+    0.43332825916881956,
+    0.303889651166039,
+    0.21581490637000733,
+    0.15467114192679537
+  ],
+  "log_covariances_lag0_to4": [
+    0.5084845767213342,
+    0.37352946012708416,
+    0.2743923099545549,
+    0.2015668047617465,
+    0.1480696626978688
+  ],
+  "matrix_shape": [
+    15,
+    15
+  ],
+  "mean_income_multiplier": 1.0,
+  "minimum_probability": 5.252209538422556e-13,
+  "row_sum_max_gap": 2.220446049250313e-16,
+  "saved_fields": {
+    "J": 17,
+    "J_R": 12,
+    "R": null,
+    "age_start": 18.0,
+    "da": 4.0,
+    "income": [
+      [
+        2.650830656801071,
+        2.650830656801071,
+        3.4664708588937074,
+        3.4664708588937074,
+        4.078201010463186,
+        4.078201010463186,
+        4.078201010463186,
+        4.017027995306238,
+        4.017027995306238,
+        4.017027995306238,
+        3.8131179447830785,
+        3.8131179447830785,
+        0.917784047463731,
+        0.917784047463731,
+        0.917784047463731,
+        0.917784047463731,
+        0.917784047463731
+      ]
+    ],
+    "income_shock_persistence": 0.7345934905942886,
+    "income_type_transition": "markov",
+    "n_max": null,
+    "n_top": null,
+    "period_years": 4.0,
+    "permanent_income_levels_enabled": false,
+    "permanent_income_log_variance": 0.0,
+    "psi_child": 0.1355551166583114,
+    "retirement_income_z_scale": 0.0,
+    "tau_pay": 0.08028070961950022,
+    "use_income_types": true,
+    "z_grid": [
+      0.05388932006414422,
+      0.0788928155545071,
+      0.11549739983189591,
+      0.16908573073694466,
+      0.2475379045801784,
+      0.3623902143420617,
+      0.5305315469710143,
+      0.7766868728573969,
+      1.1370530214708616,
+      1.6646213793720133,
+      2.4369702066117713,
+      3.567672421793519,
+      5.222996356169136,
+      7.646355301544813,
+      11.194101127105801
+    ],
+    "z_weights": [
+      6.103515625e-05,
+      0.0008544921875,
+      0.00555419921875,
+      0.022216796875,
+      0.06109619140625,
+      0.1221923828125,
+      0.18328857421875,
+      0.20947265625,
+      0.18328857421875,
+      0.1221923828125,
+      0.06109619140625,
+      0.022216796875,
+      0.00555419921875,
+      0.0008544921875,
+      6.103515625e-05
+    ]
+  },
+  "saved_matrix_copies": {
+    "solution.income_transition": {
+      "max_abs_gap_saved_Pi_z": 5.551115123125783e-17,
+      "sha256_raw_array": "392229b35ca3081bd397b5493bb74558fd9d6d3ff7bb1ea7255ec13ad6f3e95b"
+    }
+  },
+  "saved_vs_approved_grid_max_gap": 5.329070518200751e-15,
+  "saved_vs_binomial_weights_max_gap": 0.0,
+  "saved_vs_effective_matrix_max_gap": 5.551115123125783e-17,
+  "saved_vs_redraw_matrix_max_gap": 0.5983560750052573,
+  "saved_vs_rouwenhorst_matrix_max_gap": 1.1102230246251565e-16,
+  "stationary_distribution_max_gap": 5.551115123125783e-17
+}

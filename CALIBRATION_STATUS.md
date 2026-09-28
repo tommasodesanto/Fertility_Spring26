@@ -1,5 +1,55 @@
 # Calibration Status
 
+## September 28 — saved income and fertility measurement audit complete
+
+Use **2007 stationary reference — block0506, September 28 verified export**,
+`output/model/fertility_identification_20260928/resume_v1/selected_export/primary/`.
+The baseline approximates the 2007 distribution under deliberate replacement
+stationarity. Every calibration proposal separately normalizes child-benefit
+parameter psi to completed fertility 2.1 and enforces demographic renewal.
+The subsequent transition is toward 2023; transition re-estimation remains
+deferred. Economic counterfactuals in the other chat keep the reference fixed;
+calibration normalization is not permission to renormalize after their shocks.
+
+Read-only Torch inspection18735483 passes source/contract/checkpoint identities,
+all30 export hashes including17 standard plots, original block0506 parameter
+identity, and checkpoint fertility-count replay. Actual checkpoint SHA starts
+`b15ba92d`; full identities and all14 fit/31 parameter rows are in
+`output/model/fertility_identification_20260928/measurement_audit_v1/README.md`.
+No new model solves, shared model edits, checkpoint downloads or promotions.
+
+The actual saved15-state income matrix matches independently reconstructed
+Rouwenhorst at1.1e-16, and the solution matrix agrees at5.6e-17. Four-year
+persistence0.7345934905942886, innovation SD0.4838308245314463 and stationary
+log variance0.5084845767213341 match the approved B15 estimate. Constructor
+defaults are not the evidence. The held-out second-lag covariance miss remains
+5.354%; implementation consistency does not certify empirical adequacy.
+
+Age25 CPS/model motherhood shares are0.457254/0.450113; capped children among
+mothers1.770410/1.189537; total capped counts0.809528/0.535426. A symmetric
+exact decomposition assigns96.144% of the count gap to the conditional count,
+not causally to any mechanism. Complete first-birth cell shares and matched
+five-year lifecycle windows are saved. Ages40–44 capped counts1.718406/1.730769
+nearly match; model3+ share0.300209 versus CPS0.286255. The separate terminal
+model3+ share is0.382441, with exact saved top-bin weight3.602359422009 and
+completed fertility2.099998. Against CPS age40–44 uncapped1.878384 or model-coded
+1.890835, imposed replacement differs0.221614/0.209164. These are different
+timing objects, not a reason to reverse the timeline or replace targets.
+
+Claude's0.665 ceiling requires empirical first-birth cell shares not imposed by
+matching their mean; it is not active-target infeasibility proof. Its asserted
+approximately0.43 model3+ share at40–44 is contradicted by saved distributions.
+Four-year birth spacing and cohort/period differences remain important but
+their causal contribution to the early gap is unmeasured. Retain the targets.
+
+Small-table Torch18735908 passes. Full-precision bounded GN/warm-start plan is
+prepared, NOT launched: two identical diagnostic parameter proposals differing
+only in initial psi guess, max46 stationary solves/70min, original scientific
+gates plus paired-consistency screens. Uniformly damped maxlogstep0.15 predicts
+loss13.335/13.346 with full/half Jacobians, but early fertility falls to0.534;
+these are unsolved predictions. Opt-in adapter and launch smoke remain unbuilt.
+Old searches/monitoring stay stopped; no presentation or transition work.
+
 ## September28 17:17 EDT — experiment complete and authenticated
 
 Torch18721946 COMPLETED exit0. All10 repeats pass, with exact14target/31parameter
