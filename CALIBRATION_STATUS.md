@@ -1,5 +1,13 @@
 # Calibration Status
 
+## September 28, 11:30 EDT — replacement smoke progressing
+
+Six actual Torch workers on cs701; fresh heartbeat, zero completed cases yet,
+normalization progressing identically across all six cases. No observed errors.
+Slurm peak RSS ~16.1 GiB within48GiB allocation. Clock started11:23:14 EDT;
+search cutoff16:23:14, repeat cutoff17:13:14, hard end17:23:14, no extension.
+Main search remains unapproved pending all six exact replays and lead review.
+
 ## September 28, 11:22 EDT — launch dependency repair
 Importcheck18716108 COMPLETED/PASS, exact pinned controller-helper import and
 contract verification, zero solves. Replacement smoke18716129 submitted using
