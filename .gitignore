@@ -114,3 +114,6 @@ memory/automation/logs/*
 # Agent session artifacts
 .codex/
 *.pkl
+# Generated binary model checkpoints are reproducible outputs, not source.
+# Keep these out of Git and ignore-respecting automatic change snapshots.
+*.pkl.gz

@@ -101,3 +101,19 @@ fresh heartbeat; checkpoint410seconds, memory125.4GiB/192GiB. Best unchanged.
 Verified original controller freezes selection at16:23 and requests two repeats
 per available lane before17:13, then exports before17:23. No extension.
 Saved-only renderer18731455 queued v4 to refresh half0133; zero objectives.
+
+## Local Git protection and review caveat — September 28
+
+Author authorized prevention of local memory overload. Added *.pkl.gz ignore
+rule and verified an example checkpoint path is ignored. Repository-local
+gc.auto=0 and maintenance.auto=false disable automatic maintenance; pack.threads=2,
+pack.windowMemory=256m and pack.deltaCacheSize=128m bound specific packing caches
+and concurrency, not total process RAM. No existing checkpoint data or Git objects
+deleted; the oversized retained snapshot still needs separate recovery/cleanup.
+
+Claude review's 0.665 early-fertility ceiling conditions on the empirical first-birth
+cell shares, not merely their targeted mean. Matching one mean does not fix those
+shares. Therefore this is a conditional timing-distribution bound, not proof that
+the current target system is infeasible. The observer does confirm age25 interpolation
+with post weight0.875; coarse birth spacing merits measurement checks. No target
+swap or economic change adopted. Predicted Gauss-Newton gains remain untested.
