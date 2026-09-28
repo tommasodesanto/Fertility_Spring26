@@ -1,5 +1,35 @@
 # Calibration Status
 
+## September 27, 21:35 EDT — evening numerical work COMPLETE
+
+Torch18672459 ended21:23:45EDT, COMPLETED0:0, within unchanged deadline. All360
+search attempts:221success,77unchanged housing-equilibrium gate rejections,
+61owned900-second timeouts,1latecompletion excluded,0fatal. Six fresh final
+repeats pass. Peak24workers and102.14GiB/128GB; no model workers remain.
+No extension, no new model runs, no scientific/model/grid/weight/gate changes.
+
+Authenticated final evidence: output/model/evening_calibration_20260927/cluster/final_review/.
+All14targets/31parameters byte-exact between each selected point and both fresh
+repeats; all17plot hashes match. All1238pinned sources revalidated. Lead inspected
+all17standardplots for three lane winners and complete tables. Common-primary
+minimum over every successful case is repeated block winner initial_0347_block:
+26.368192413904882 versus33.820603648867845 starting score (22.035% lower).
+Primary-lane winner26.405155533883452; identity winner113.58426974880621 when
+rescored under primary weights. No cross-objective loss comparison.
+
+Best gaps: earlyfertility0.534/0.810, ownership0.633/0.676, wealth6.230/6.927,
+first-birth rooms1.673/1.465 (model/target). All14 rows, including3validation,
+remain visible. Both fertility scales retain near-lower-bound flags, no exact
+bound hits. No optimum or identification claim. Highwealth ownership downturn,
+buyer-conditional policy coverage and retirement decumulation/ownership caveats
+remain. Numerical gates passed for selected points; failed attempts preserved.
+
+Two-page final PDF delivered: output/pdf/evening_calibration_20260927.pdf.
+Both pages visually checked; all14targets and11fitted quantities with bounds,
+weight comparisons and limitations included. Supporting tables/render source and
+preserved failed first render are in evening final_report/. Monitoring is being
+paused after delivery. No automatic overnight extension is authorized.
+
 ## September 27, 21:00 EDT — final search batch active
 
 336 attempts completed:208success,71unchanged housing-equilibrium rejections,
