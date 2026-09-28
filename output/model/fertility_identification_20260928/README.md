@@ -95,3 +95,9 @@ Latest half0133 postdates rendered snapshot. No model/gate/deadline changes.
 September28 15:46 EDT:161 records,99success/59timeouts/3inadmissible;24 actual
 workers, fresh heartbeat and408second checkpoint age. MaxRSS125.4GiB/192GiB.
 No new fatal errors or best-point changes. No intervention or deadline extension.
+
+September28 16:16 EDT:186 records (105success,78timeout,3inadmissible),24workers,
+fresh heartbeat; checkpoint410seconds, memory125.4GiB/192GiB. Best unchanged.
+Verified original controller freezes selection at16:23 and requests two repeats
+per available lane before17:13, then exports before17:23. No extension.
+Saved-only renderer18731455 queued v4 to refresh half0133; zero objectives.

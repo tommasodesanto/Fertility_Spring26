@@ -1,5 +1,11 @@
 # Calibration Status
 
+September28 16:16 EDT:186 records (105success,78timeout,3inadmissible),24workers,
+fresh heartbeat; checkpoint410seconds, memory125.4GiB/192GiB. Best unchanged.
+Verified original controller freezes selection at16:23 and requests two repeats
+per available lane before17:13, then exports before17:23. No extension.
+Saved-only renderer18731455 queued v4 to refresh half0133; zero objectives.
+
 September28 15:16 EDT: resume18721946 running24workers,136 records (88success,45timeout,
 3inadmissible), no new fatal; generation1 active, heartbeat fresh, MaxRSS121.1GiB/192GiB.
 Primary best unchanged. Half-scale profile now0133, not final certified. Saved renderer
