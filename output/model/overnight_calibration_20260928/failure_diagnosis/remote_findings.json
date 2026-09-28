@@ -1,0 +1,57 @@
+{
+  "remote_ledgers_recovered": 360,
+  "timeout_completed_solve_counts": {
+    "7": 8,
+    "6": 33,
+    "5": 12,
+    "4": 6,
+    "8": 2
+  },
+  "timeout_last_status": {
+    "started": 54,
+    "completed": 7
+  },
+  "timeout_initial_ge": 0,
+  "timeout_later_ge": 54,
+  "gate_counts": {
+    "1started/0completed": 77
+  },
+  "sample_cases": {
+    "initial_0041_block": {
+      "case": "initial_0041_block",
+      "status": "inadmissible",
+      "design": "broad_coverage",
+      "lane": "block",
+      "started": 1,
+      "completed": 0,
+      "completed_seconds": 483.6459247759776,
+      "last_status": "failed",
+      "last_psi": 0.14281100340255604,
+      "max_completed_residual": 0
+    },
+    "initial_0044_block": {
+      "case": "initial_0044_block",
+      "status": "censored_timeout",
+      "design": "joint_local",
+      "lane": "block",
+      "started": 7,
+      "completed": 6,
+      "completed_seconds": 789.2189640890574,
+      "last_status": "started",
+      "last_psi": 0.12124003923881659,
+      "max_completed_residual": 7.777273756325126e-06
+    },
+    "initial_0097_identity": {
+      "case": "initial_0097_identity",
+      "status": "censored_timeout",
+      "design": "coordinate_first_birth_fixed_cost",
+      "lane": "identity",
+      "started": 7,
+      "completed": 6,
+      "completed_seconds": 832.0921498780372,
+      "last_status": "started",
+      "last_psi": 0.11748749492521451,
+      "max_completed_residual": 1.1277822247305498e-05
+    }
+  }
+}

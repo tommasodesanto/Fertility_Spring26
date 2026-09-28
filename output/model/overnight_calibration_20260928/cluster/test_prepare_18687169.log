@@ -1,0 +1,170 @@
+/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/code/model/tools/run_e5f_night_calibration.py: OK
+/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/code/model/tools/prepare_e5f_night_contract.py: OK
+/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/code/model/tools/test_e5f_night_calibration.py: OK
+/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/code/cluster/submit_e5f_night_calibration.sh: OK
+/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/code/cluster/submit_e5f_night_gated.sh: OK
+/scratch/td2248/projects/fertility_night_calibration_20260928_v1/test_and_prepare.sh: OK
+test_all_ten_coordinates_receive_coordinate_draws (test_e5f_night_calibration.NightTests.test_all_ten_coordinates_receive_coordinate_draws) ... ok
+test_anchor_and_repeat_csv_mutation_fails_pins (test_e5f_night_calibration.NightTests.test_anchor_and_repeat_csv_mutation_fails_pins) ... ok
+test_anchor_comparison_ignores_only_lane_weights (test_e5f_night_calibration.NightTests.test_anchor_comparison_ignores_only_lane_weights) ... ok
+test_anchor_comparison_includes_validation_moments (test_e5f_night_calibration.NightTests.test_anchor_comparison_includes_validation_moments) ... ok
+test_common_primary_winner_gets_two_additional_repeats (test_e5f_night_calibration.NightTests.test_common_primary_winner_gets_two_additional_repeats) ... ok
+test_fixed_end_and_two_reserves (test_e5f_night_calibration.NightTests.test_fixed_end_and_two_reserves) ... ok
+test_proposals_never_call_uniform_fullbox (test_e5f_night_calibration.NightTests.test_proposals_never_call_uniform_fullbox) ... ok
+test_real_subprocess_loop_four_selections_eight_repeats_and_hourly_render (test_e5f_night_calibration.NightTests.test_real_subprocess_loop_four_selections_eight_repeats_and_hourly_render)
+Real owned processes/run_batch; synthetic science and reporter only. ... ERROR
+test_seed_and_lane_independence (test_e5f_night_calibration.NightTests.test_seed_and_lane_independence) ... ok
+
+======================================================================
+ERROR: test_real_subprocess_loop_four_selections_eight_repeats_and_hourly_render (test_e5f_night_calibration.NightTests.test_real_subprocess_loop_four_selections_eight_repeats_and_hourly_render)
+Real owned processes/run_batch; synthetic science and reporter only.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/test_e5f_night_calibration.py", line 131, in test_real_subprocess_loop_four_selections_eight_repeats_and_hourly_render
+    try:d.controller(a,self.c,self.objs)
+        ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_night_calibration.py", line 336, in controller
+    if fatal:raise RuntimeError('Fatal case; dispatch stopped and siblings drained')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Fatal case; dispatch stopped and siblings drained
+
+----------------------------------------------------------------------
+Ran 9 tests in 10.248s
+
+FAILED (errors=1)
+RETAINED SYNTHETIC FIXTURE /scratch/td2248/projects/fertility_night_calibration_20260928_v1/test_failures/night_fixture_18687169_2718128
+SUBPROCESS LOG render_0006_primary.log Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/test_e5f_night_calibration.py", line 153, in <module>
+    if '--synthetic-worker' in sys.argv:subprocess_worker()
+                                        ~~~~~~~~~~~~~~~~~^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/test_e5f_night_calibration.py", line 42, in subprocess_worker
+    with mock.patch.object(d,'module',return_value=runtime):d.render_saved(a,c)
+                                                            ~~~~~~~~~~~~~~^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_night_calibration.py", line 112, in render_saved
+    runtime=module('night_saved_runtime',c['files']['runtime']['path'])
+                                         ~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'runtime'
+
+SUBPROCESS LOG render_0007_identity.log Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/test_e5f_night_calibration.py", line 153, in <module>
+    if '--synthetic-worker' in sys.argv:subprocess_worker()
+                                        ~~~~~~~~~~~~~~~~~^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/test_e5f_night_calibration.py", line 42, in subprocess_worker
+    with mock.patch.object(d,'module',return_value=runtime):d.render_saved(a,c)
+                                                            ~~~~~~~~~~~~~~^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_night_calibration.py", line 112, in render_saved
+    runtime=module('night_saved_runtime',c['files']['runtime']['path'])
+                                         ~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'runtime'
+
+SUBPROCESS LOG render_0008_block.log Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/test_e5f_night_calibration.py", line 153, in <module>
+    if '--synthetic-worker' in sys.argv:subprocess_worker()
+                                        ~~~~~~~~~~~~~~~~~^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/test_e5f_night_calibration.py", line 42, in subprocess_worker
+    with mock.patch.object(d,'module',return_value=runtime):d.render_saved(a,c)
+                                                            ~~~~~~~~~~~~~~^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_night_calibration.py", line 112, in render_saved
+    runtime=module('night_saved_runtime',c['files']['runtime']['path'])
+                                         ~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'runtime'
+
+CONTROLLER EVIDENCE latest_completed.json {
+  "case": "initial_0005_block",
+  "case_path": "/state/partition1/job-18687169/tmphykmvfpg/search/initial_0005_block/case",
+  "checkpoint_sha256": "aea1cbc1bb37116a016d04cb2c4b802f43f9e20b2c04202f1dc02bff1186cd92",
+  "deadline": 1790566267.0955238,
+  "design": "joint_local",
+  "error": null,
+  "lane": "block",
+  "loss": 18.0,
+  "point": {
+    "H0": 0.32,
+    "beta_annual": 0.5,
+    "chi": 0.5,
+    "child_benefit_curvature": 0.5,
+    "delta_alpha_jump": 0.5,
+    "first_birth_fixed_cost": 0.5,
+    "kappa_fert": 0.5,
+    "kappa_fert_continuation": 0.5,
+    "tenure_choice_kappa": 0.01,
+    "theta0": 0.5
+  },
+  "primary_rescore": 90.0,
+  "receipt_sha256": "fb8205b270b5c49ad0bd9b1aea5927c31fc66c361e2ed8c261d85ee1d49b0699",
+  "request_path": "/state/partition1/job-18687169/tmphykmvfpg/search/initial_0005_block.request.json",
+  "returncode": 0,
+  "status": "success"
+}
+
+CONTROLLER EVIDENCE hourly_reports.json [
+  {
+    "case": "render_0006_primary",
+    "deadline": 1790569871.111613,
+    "design": "hourly_primary",
+    "error": "[Errno 2] No such file or directory: '/state/partition1/job-18687169/tmphykmvfpg/search/render_0006_primary/render_receipt.json'",
+    "halt_new_dispatch": true,
+    "lane": "primary",
+    "point": {
+      "H0": 0.11,
+      "beta_annual": 0.5,
+      "chi": 0.5,
+      "child_benefit_curvature": 0.5,
+      "delta_alpha_jump": 0.5,
+      "first_birth_fixed_cost": 0.5,
+      "kappa_fert": 0.5,
+      "kappa_fert_continuation": 0.5,
+      "tenure_choice_kappa": 0.01,
+      "theta0": 0.5
+    },
+    "request_path": "/state/partition1/job-18687169/tmphykmvfpg/search/render_0006_primary.request.json",
+    "returncode": 1,
+    "status": "fatal"
+  },
+  {
+    "case": "render_0007_identity",
+    "deadline": 1790569871.1143625,
+    "design": "hourly_identity",
+    "error": "[Errno 2] No such file or directory: '/state/partition1/job-18687169/tmphykmvfpg/search/render_0007_identity/render_receipt.json'",
+    "halt_new_dispatch": true,
+    "lane": "identity",
+    "point": {
+      "H0": 0.21,
+      "beta_annual": 0.5,
+      "chi": 0.5,
+      "child_benefit_curvature": 0.5,
+      "delta_alpha_jump": 0.5,
+      "first_birth_fixed_cost": 0.5,
+      "kappa_fert": 0.5,
+      "kappa_fert_continuation": 0.5,
+      "tenure_choice_kappa": 0.01,
+      "theta0": 0.5
+    },
+    "request_path": "/state/partition1/job-18687169/tmphykmvfpg/search/render_0007_identity.request.json",
+    "returncode": 1,
+    "status": "fatal"
+  },
+  {
+    "case": "render_0008_block",
+    "deadline": 1790569871.122439,
+    "design": "hourly_block",
+    "error": "[Errno 2] No such file or directory: '/state/partition1/job-18687169/tmphykmvfpg/search/render_0008_block/render_receipt.json'",
+    "lane": "block",
+    "point": {
+      "H0": 0.31,
+      "beta_annual": 0.5,
+      "chi": 0.5,
+      "child_benefit_curvature": 0.5,
+      "delta_alpha_jump": 0.5,
+      "first_birth_fixed_cost": 0.5,
+      "kappa_fert": 0.5,
+      "kappa_fert_continuation": 0.5,
+      "tenure_choice_kappa": 0.01,
+      "theta0": 0.5
+    },
+    "request_path": "/state/partition1/job-18687169/tmphykmvfpg/search/render_0008_block.request.json",
+    "returncode": 1,
+    "status": "fatal"
+  }
+]
+

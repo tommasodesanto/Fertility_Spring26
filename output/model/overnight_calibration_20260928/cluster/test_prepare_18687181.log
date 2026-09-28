@@ -1,0 +1,23 @@
+/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/code/model/tools/run_e5f_night_calibration.py: OK
+/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/code/model/tools/prepare_e5f_night_contract.py: OK
+/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/code/model/tools/test_e5f_night_calibration.py: OK
+/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/code/cluster/submit_e5f_night_calibration.sh: OK
+/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/code/cluster/submit_e5f_night_gated.sh: OK
+/scratch/td2248/projects/fertility_night_calibration_20260928_v1/test_and_prepare.sh: OK
+test_all_ten_coordinates_receive_coordinate_draws (test_e5f_night_calibration.NightTests.test_all_ten_coordinates_receive_coordinate_draws) ... ok
+test_anchor_and_repeat_csv_mutation_fails_pins (test_e5f_night_calibration.NightTests.test_anchor_and_repeat_csv_mutation_fails_pins) ... ok
+test_anchor_comparison_ignores_only_lane_weights (test_e5f_night_calibration.NightTests.test_anchor_comparison_ignores_only_lane_weights) ... ok
+test_anchor_comparison_includes_validation_moments (test_e5f_night_calibration.NightTests.test_anchor_comparison_includes_validation_moments) ... ok
+test_common_primary_winner_gets_two_additional_repeats (test_e5f_night_calibration.NightTests.test_common_primary_winner_gets_two_additional_repeats) ... ok
+test_fixed_end_and_two_reserves (test_e5f_night_calibration.NightTests.test_fixed_end_and_two_reserves) ... ok
+test_proposals_never_call_uniform_fullbox (test_e5f_night_calibration.NightTests.test_proposals_never_call_uniform_fullbox) ... ok
+test_real_subprocess_loop_four_selections_eight_repeats_and_hourly_render (test_e5f_night_calibration.NightTests.test_real_subprocess_loop_four_selections_eight_repeats_and_hourly_render)
+Real owned processes/run_batch; synthetic science and reporter only. ... ok
+test_seed_and_lane_independence (test_e5f_night_calibration.NightTests.test_seed_and_lane_independence) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 9.285s
+
+OK
+{"test": "real_subprocess_night_controller", "owned_processes": 23, "smokes": 6, "search_objectives": 6, "final_repeats": 8, "hourly_renders": 3, "selected_cases": 4, "model_solves": 0, "status": "passed"}
+{"contract": {"path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/contract_v1/contract.json", "sha256": "c83aaff1a90b1ba5bb0919151840e745e6816cb0a3a023ce746e750f77226c5d"}, "status": "prepared_no_model_solve", "search_cutoff_epoch": 1790593200, "global_end_epoch": 1790596800}

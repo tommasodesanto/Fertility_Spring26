@@ -1,5 +1,52 @@
 # Calibration Status
 
+## September27,23:04EDT — night numerical smokes submitted, search gated
+
+Torch18687184 submitted24CPU/192GB; sixsmokes before explicitapproval.
+Contractc83aaff1a90b1ba5bb0919151840e745e6816cb0a3a023ce746e750f77226c5d.
+Ninecontrollertests and zero-solvepreparation pass18687181; prior two failures
+were missingruntimepin in syntheticrendererfixture, repairedtestonly. Logsretained.
+Noeconomic/model/gate changes; hourlymonitoractive. Hard08:00EDTend unchanged.
+See output/model/overnight_calibration_20260928/README.md andcluster/launch.json.
+
+## September 27, 22:56 EDT — access restored; new night preparation active
+
+User restored access and reaffirmed launch. Hourly heartbeat successfully
+reactivated; remote newstage fertility_night_calibration_20260928_v1 copied
+without model solves. Newcontroller exact-subprocess tests and sourcepreflight
+pending; no numericalsearchrelease yet. Oldstage preserved.
+
+Recovered all360case ledgers: every61timeout had4–8 certifiedGEs;54were in a
+laterGE,7had completedfertilitynormalization and stoppedbeforefullreceipt.
+Lead permits1800-second nightly objective cap (timeonly), retaining23SSlimit,
+all scientificgates and08:00hardstop. Replay0044block (normalizing) and0186primary
+(postnormalization) at exactsavedpoints in initialsixsearchcases across3lanes.
+Noeconomicchanges. Failure evidence in night failure_diagnosis/.
+
+## September 27, 22:45 EDT — new overnight authorization; execution BLOCKED
+
+User authorizes new Torch calibration/failure diagnosis until September28
+08:00EDT (1790596800), hourly supervision, no economic model changes. Plan:
+max24singlethread workers, stopsearch07:00, reserve onehour for verification;
+720search+6smokes+up to8finalrepeats+12diagnostics<=746objectives. No new
+numerical jobs launched. Old evening work remains complete and immutable.
+
+Session permissions changed: reactivating hourly automation was rejected with
+"MCP tool call requires approval, but approval policy is never". Lead ordinary
+SSH initially worked, then remote staging failed with socket Operationnotpermitted
+and hostname-resolution errors. No new remote stage/test/solve is claimed.
+Automation remains paused. Restore authorized access before launch; do not
+substitute an unmonitored run or bypass permissions. New preparation files under
+output/model/overnight_calibration_20260928/, pending source review/Torch tests.
+
+Saved failure classification: all77housinggate rejections are among84broad
+coverage proposals; remaining7broad attempts timedout, zero broad successes.
+All completed non-broad proposals passed housing;54non-broad timeouts remain.
+All77reject traces stop at first normalization-input GE, before fertility
+bracketing. This does not establish absence of equilibrium. Missing failed
+price/residual histories require bounded matched diagnostic replays. Newnight
+proposal focuses on verified neighborhoods while preserving full parameterbounds.
+
 ## September 27, 21:35 EDT — evening numerical work COMPLETE
 
 Torch18672459 ended21:23:45EDT, COMPLETED0:0, within unchanged deadline. All360
