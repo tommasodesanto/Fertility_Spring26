@@ -1,5 +1,28 @@
 # Calibration Status
 
+## September 27, 20:37 EDT — 288 attempts and hourly plot review
+
+181 successes, 60 unchanged housing-equilibrium gate rejections, 46 owned
+900-second timeouts, one late completion excluded, zero fatal errors. Actual
+24 Torch workers; peak RSS about98GiB within128GB, controller heartbeat fresh,
+checkpoint/active ledgers below8minutes. No intervention or source/model changes.
+
+Common-primary best improves to27.0849133227239, initial_0242_block, versus
+starting33.820603648867845 (19.9% lower). Annual beta0.962567, tenure scale0.007770.
+Ownership0.633 vs0.676, wealth/earnings6.230 vs6.927; early fertility0.532 vs0.810
+remains a major miss. First-birth rooms1.672 vs1.465. Complete14/31 tables and
+weights/contributions/bounds reviewed in evening cluster/check_2030. Primary-lane
+score29.829182; identity weighting still trades earlier births against mean-age
+fit. No exact bound hits; both fertility scales retain near-lower-bound flags.
+
+Lead visually inspected all17 standard plots for each of three distinct winners,
+nine contact sheets. Rendering-only Torch18681229 completed51sec, zero solves.
+Common-best housing residual5.05e-7; no new visual numerical failure. High-wealth
+policy downturn, late ownership and sharp retirement decumulation caveats persist;
+these buyer-conditional figures do not certify every occupied stayer policy.
+Next hourly plot review due about21:37. Final repeated solves/export pending;
+360-proposal cap,21:27 search cutoff and22:12 numerical end unchanged.
+
 ## September 27, 20:00 EDT — 240 attempts, best unchanged
 
 154success,50housing-equilibrium gate rejections,35owned timeouts and1late
