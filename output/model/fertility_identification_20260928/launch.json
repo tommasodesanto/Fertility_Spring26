@@ -37,15 +37,22 @@
     "end": 1790630594.4615145
   },
   "latest_check": {
-    "utc": "2026-09-28T17:43:26Z",
+    "utc": "2026-09-28T18:14:42Z",
     "job": "18721946",
     "node": "cs677",
     "actual_workers": 24,
-    "completed_replayed": 75,
-    "pending": 37,
+    "completed": 100,
+    "success": 70,
+    "censored_timeout": 28,
+    "inadmissible": 2,
+    "new_fatal": 0,
+    "new_success": 11,
+    "new_timeout": 14,
+    "heartbeat_age_seconds": 1,
+    "checkpoint_age_seconds": 37,
+    "memory_max_kib": 126971456,
     "stop_reason": null,
-    "memory_max_kib_early_startup": 14796876,
-    "note": "Compute-node heartbeat verified; login-node metadata briefly stale. No new completed cases yet."
+    "note": "Best points unchanged since final original drain; 75 imported plus25 new attempts. Gates/deadlines unchanged."
   },
   "main_job": "18716710",
   "independent_review_job": "18716599",

@@ -78,3 +78,9 @@ September28 13:43 EDT: resume18721946 RUNNING on cs677,24 actual evaluators.
 Compute-node heartbeat verifies75 imported records,24active,37pending and unchanged
 clock, no stop reason. Login-node directory metadata briefly stale; use compute-node
 receipts if needed. Monitoring restored30minutes. No new completed cases yet.
+
+September28 14:15 EDT monitoring: resume18721946 healthy,24 actual workers;
+100 records =75 imported+25 new (11success,14timeouts); total70success,28timeouts,
+2 preserved known rejections, zero new fatal errors. Heartbeat1sec/checkpoint37sec;
+MaxRSS126971456KiB within192GiB allocation. Best points unchanged, no intervention.
+Original deadlines and gates unchanged. Last plot review13:27; refresh next check.
