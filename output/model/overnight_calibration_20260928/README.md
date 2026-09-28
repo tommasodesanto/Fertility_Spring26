@@ -1,5 +1,17 @@
 # Overnight calibration, September 27–28
 
+## September28,07:28EDT —early experiment still within cap
+
+Early frontier at07:26:7active/3completed, fresh heartbeat; parent owns1800s
+case caps and07:45absolute end. No restart/extension. Price evidence collected
+in failure_diagnosis/completed_review. Full proposed public parameters agree
+across arms except the output-only inherited-state evidence directory; economic
+parameters are identical. Original-start no bracket versus half-start strict
+housing/PAYGO pass is therefore a numerical-start comparison. Final main
+candidate/repeats/visual authentication already complete; report awaits early
+results. No model changes or additional solves launched.
+
+
 ## September28,07:22EDT —main final export authenticated; diagnostics pending
 
 Main18687184 completed07:15: six fresh repeats reproduce all14/31 table bytes

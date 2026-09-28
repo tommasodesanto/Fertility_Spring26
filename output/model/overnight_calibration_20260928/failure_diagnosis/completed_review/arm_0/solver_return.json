@@ -1,0 +1,57 @@
+{
+  "status": "solver_return_not_certification",
+  "seconds": 561.9049042760162,
+  "converged": false,
+  "price": [
+    0.3855497630201292
+  ],
+  "tolerance": 2.5e-05,
+  "timings": {
+    "bellman_full": 0.0,
+    "distribution": 14.601575276930816,
+    "n_full": 0,
+    "n_eval": 0,
+    "n_dist": 1,
+    "income_process": "markov",
+    "bellman_mode": "reused_accepted_price",
+    "reused_bellman_seconds": 42.99329009000212,
+    "iterations_completed": 1,
+    "best_eq_error": 0.03688656231549794,
+    "damped_final_eq_error": 0.593653299020736,
+    "final_eq_error": 0.03688656231549794,
+    "accepted": false,
+    "strict_converged": false,
+    "convergence_reason": "max_iter",
+    "markov_income_solve_time": 54.457922510104254,
+    "equilibrium_method": "direct_brent",
+    "unique_fast_price_evaluations": 11,
+    "price_cache_hits": 0,
+    "scalar_market_refine": {
+      "used": true,
+      "method": "brent",
+      "bracket_found": false,
+      "initial_price": 0.8264601577081016,
+      "best_price": 0.3855497630201292,
+      "best_metric": 0.03688656231549794,
+      "best_excess": -0.3247528493427634,
+      "expansions": 8,
+      "iterations": 0,
+      "price_evaluations": 10,
+      "price_evaluation_time_sec": 492.81529646902345,
+      "cache_hits": 0,
+      "directional_fallback_used": true
+    },
+    "warm_price_search": {
+      "used": false,
+      "initial_price": null,
+      "initial_slope": null,
+      "fallback_required": false,
+      "accepted_state": null
+    }
+  },
+  "mean_children": 2.531406663808275,
+  "completed_fertility": 5.06281332761655,
+  "own_rate": 0.9835935789914216,
+  "calibrated": false,
+  "full_scientific_audit_performed": false
+}

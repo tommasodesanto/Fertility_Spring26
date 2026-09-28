@@ -1,0 +1,42 @@
+{
+  "status": "housing_and_PAYGO_gates_passed_only",
+  "fiscal": {
+    "method": "exogenous_one_market_age_income_recursion",
+    "predicted_accounts": {
+      "payroll_tax_base_period": 2.9632058966759063,
+      "retiree_benefit_exposure": 0.25919852583102354,
+      "worker_household_mass": 0.7408014741689765,
+      "retiree_household_mass": 0.25919852583102354,
+      "payroll_tax_rate": 0.08028070961950022,
+      "pension_period_units": 0.917784047463731,
+      "payroll_tax_revenue": 0.2378882721338292,
+      "pension_outlays": 0.2378882721338292,
+      "pension_budget_residual": 0.0,
+      "scaled_pension_budget_residual": 0.0,
+      "implied_balanced_pension_period": 0.917784047463731,
+      "implied_balanced_payroll_tax": 0.08028070961950022
+    },
+    "actual_accounts": {
+      "payroll_tax_base_period": 2.96320589667602,
+      "retiree_benefit_exposure": 0.25919852583019537,
+      "worker_household_mass": 0.7408014741694049,
+      "retiree_household_mass": 0.25919852583019537,
+      "payroll_tax_rate": 0.08028070961950022,
+      "pension_period_units": 0.917784047463731,
+      "payroll_tax_revenue": 0.23788827213383834,
+      "pension_outlays": 0.23788827213306912,
+      "pension_budget_residual": 7.692180226115397e-13,
+      "scaled_pension_budget_residual": 3.2335264606015125e-12,
+      "implied_balanced_pension_period": 0.9177840474666986,
+      "implied_balanced_payroll_tax": 0.08028070961924064
+    },
+    "normalized_age_income_max_gap": 4.071395998117566e-14,
+    "marginal_tolerance": 1e-09,
+    "fiscal_tolerance": 1e-06,
+    "marginal_gate": true,
+    "fiscal_gate": true
+  },
+  "ge_calls": 1,
+  "calibrated": false,
+  "full_scientific_audit_performed": false
+}

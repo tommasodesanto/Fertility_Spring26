@@ -1,0 +1,8 @@
+{
+  "status": "rejected_or_error",
+  "error_type": "RuntimeError",
+  "error": "Initial housing equilibrium failed its unchanged strict gate",
+  "traceback": "Traceback (most recent call last):\n  File \"/scratch/td2248/projects/fertility_night_calibration_20260928_v1/price_diagnostic_v1/diagnose_e5f_evening_housing_failures.py\", line 124, in child\n    sol,params,price,fiscal=evaluator.rt['solve_balanced_initial_equilibrium'](\n                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        model=SimpleNamespace(solve_markov_income_equilibrium=capture),parameters=P,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        b_grid=evaluator.selected['b_grid'],initial_prices=start_price,payroll_tax=tax,\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        marginal_tolerance=1e-9,fiscal_tolerance=1e-6,warm_price_state={})\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_stationary_paygo.py\", line 107, in solve_balanced_initial_equilibrium\n    raise RuntimeError('Initial housing equilibrium failed its unchanged strict gate')\nRuntimeError: Initial housing equilibrium failed its unchanged strict gate\n",
+  "ge_calls": 1,
+  "calibrated": false
+}
