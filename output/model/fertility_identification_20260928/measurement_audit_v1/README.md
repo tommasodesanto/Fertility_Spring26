@@ -125,6 +125,17 @@ mid-1980–mid-1981. They are not a period fertility rate or one cohort's panel.
 
 ## First-birth timing and the lifecycle
 
+The author-requested [three-panel lifecycle figure](fertility_lifecycle_comparison.png)
+shows children per woman, motherhood, and children among mothers over identical
+five-year age windows. `plot_lifecycle.py` renders only the saved table on Torch;
+`lifecycle_plot_qa.json` verifies all six plotted series against that table.
+It is supplemental and leaves the standard 17 graphs intact. The author is
+considering a wider-age fertility target; no replacement or averaging rule is
+adopted. A candidate must retain information on additional births at young ages
+and be checked for sensitivity to the first-/later-birth taste scales,
+first-birth cost and child-benefit curvature before changing the ten-moment
+system. Close late-age levels do not by themselves validate the early timing.
+
 | First-birth age cell | NCHS share, percent | Model share, percent |
 |---|---:|---:|
 | 18–21, with empirical younger tail collapsed | 34.170 | 32.648 |

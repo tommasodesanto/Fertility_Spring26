@@ -50,6 +50,13 @@ loss13.335/13.346 with full/half Jacobians, but early fertility falls to0.534;
 these are unsolved predictions. Opt-in adapter and launch smoke remain unbuilt.
 Old searches/monitoring stay stopped; no presentation or transition work.
 
+Author-requested supplemental fertility lifecycle graph is now in the audit
+packet: identical five-year windows, children per woman, motherhood, and
+children among mothers. Catch-up appears at40–44; largest count gap is30–34.
+Wider-age averaging is under discussion, not adopted. Any replacement must
+preserve identifying information for the fertility preference block; no target
+or weighting change follows from the graph. Rendering uses saved tables only.
+
 ## September28 17:17 EDT — experiment complete and authenticated
 
 Torch18721946 COMPLETED exit0. All10 repeats pass, with exact14target/31parameter
