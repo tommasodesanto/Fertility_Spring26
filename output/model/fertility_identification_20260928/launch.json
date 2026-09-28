@@ -1,5 +1,5 @@
 {
-  "status": "approved_search_submitted",
+  "status": "running_jacobian",
   "smoke_job": "18716129",
   "preflight_pass_job": "18715779",
   "prepare_pass_job": "18715783",
@@ -37,11 +37,16 @@
     "end": 1790630594.4615145
   },
   "latest_check": {
-    "utc": "2026-09-28T15:30:00Z",
-    "actual_model_workers": 6,
-    "completed": 0,
-    "memory_max_kib": 16873036,
-    "status": "smoke_running_fresh_heartbeat_normalization_progress_no_errors_observed"
+    "utc": "2026-09-28T16:15:00Z",
+    "actual_model_workers": 24,
+    "completed": 5,
+    "success": 5,
+    "fatal": 0,
+    "timeout": 0,
+    "inadmissible": 0,
+    "memory_max_kib": 84960864,
+    "checkpoint_age_seconds": 29,
+    "status": "jacobian_running_fresh_progress"
   },
   "main_job": "18716710",
   "independent_review_job": "18716599",

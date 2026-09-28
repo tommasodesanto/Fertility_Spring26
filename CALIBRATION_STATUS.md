@@ -1,5 +1,12 @@
 # Calibration Status
 
+## September 28, 12:15 EDT — Jacobian active
+
+Main18716710 running on cs741,24 actual model workers;5 completed probes,
+all successful, zero recorded fatal/inadmissible/timeouts. Checkpoint29seconds
+old; peak RSS81.0GiB within192GiB. Full40-probe Jacobian incomplete; do not
+interpret individual probes as reoptimized candidates. Main clock unchanged.
+
 ## September 28, 11:44 EDT — verification passed; main submitted
 
 All six exact-loop smokes pass. Independent Torch review18716599 confirms source
