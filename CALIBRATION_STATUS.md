@@ -1,5 +1,33 @@
 # Calibration Status
 
+## September 28 — current Jacobian and fertility reoptimization authorized
+
+Author requested full current-point Jacobian and full reoptimization strongly
+prioritizing early fertility, including fixed-parameter profiles. New bounded
+contract: `output/model/fertility_identification_20260928/README.md` and
+`launch.json`. Smoke job18715827 submitted; SEARCH NOT YET APPROVED. Six real
+anchor replays (two per primary/10x/100x weights) must reproduce all14 physical
+moments/31parameters and standard17plots before lead acceptance. Seven Torch
+synthetic tests pass18715779; pinned-source prepare18715783 passes. Earlier test
+fixture missingID failure18715719 preserved; productiondriver unchanged by fix.
+Contract SHA68323aadd2c9ad221742842ace9ab108e40437303f0d34da00e7cd83b89f5abf.
+
+Then40 current central/half-step probes and six multistart DE lanes: primary,
+10x/100x earlyweight all10free, plus continuation-scale half/double/quadruple
+profiles with other9free under10xweight. Max480search+12repeats+40probes+6smokes
+=538objectives;24singlethreadTorch/192GiB;1800seconds/case. Six-hour window starts
+actual smoke execution, searchcutoff5h/repeats5h50/end6h, approvaldelay included.
+No model/targets/grids/bounds/gates/closure changes. Childbenefit always normalized
+with original23SS andpositivebenefit gate. No targetswap/demotion or baseline
+adoption. Full14/31tables, primaryandother-momentloss, step-sensitiveSVD and17plots
+required. Old completed searches remain stopped. No heavyMac work.
+
+Separate PSID data audit: `overnight_calibration_20260928/morning_fits/psid_data_audit/`
+finds no arithmetic/units error but actualtopcodes,outlierinfluence,uncertainty
+andweight sensitivity remain unverified; microdata notavailable atcheckedTorch
+paths. No new empirical target adopted.
+
+
 ## September 28 morning — current lifecycle fits plotted
 
 Author-requested supplemental comparisons are in

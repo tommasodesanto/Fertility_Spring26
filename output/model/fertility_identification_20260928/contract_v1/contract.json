@@ -1,0 +1,530 @@
+{
+  "anchor": {
+    "case_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/initial_0506_block/case",
+    "parameters": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/initial_0506_block/case/parameters.csv",
+      "sha256": "4d229fe18ee9c43a8a709413a10690a845d0cf7028efe57925d4f4b1d7c8d036"
+    },
+    "receipt": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/initial_0506_block/case/receipt.json",
+      "sha256": "aaf08ed9fe0d40073b3d35f6f9780d32212a56b47a138e00d8ec51d86b725a8b"
+    },
+    "repeats": [
+      {
+        "case_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/repeat_0557_block/case",
+        "parameters": {
+          "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/repeat_0557_block/case/parameters.csv",
+          "sha256": "4d229fe18ee9c43a8a709413a10690a845d0cf7028efe57925d4f4b1d7c8d036"
+        },
+        "receipt": {
+          "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/repeat_0557_block/case/receipt.json",
+          "sha256": "18de9d309fa66bb21ff6663c427c49571fb6761e57445fb7d1767fa3bcdd3c52"
+        },
+        "target_fit": {
+          "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/repeat_0557_block/case/target_fit.csv",
+          "sha256": "9a06f64fbc7186640a4f7a85e199e089bf7313a89b0dab71084fd3737782c411"
+        }
+      },
+      {
+        "case_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/repeat_0556_block/case",
+        "parameters": {
+          "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/repeat_0556_block/case/parameters.csv",
+          "sha256": "4d229fe18ee9c43a8a709413a10690a845d0cf7028efe57925d4f4b1d7c8d036"
+        },
+        "receipt": {
+          "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/repeat_0556_block/case/receipt.json",
+          "sha256": "7b28bf63e3d63b79508560cff0db4d51136c1da041935971b6dc4965df7e127f"
+        },
+        "target_fit": {
+          "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/repeat_0556_block/case/target_fit.csv",
+          "sha256": "9a06f64fbc7186640a4f7a85e199e089bf7313a89b0dab71084fd3737782c411"
+        }
+      }
+    ],
+    "target_fit": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/initial_0506_block/case/target_fit.csv",
+      "sha256": "9a06f64fbc7186640a4f7a85e199e089bf7313a89b0dab71084fd3737782c411"
+    }
+  },
+  "author_scope": "Current full Jacobian, full early-weight reoptimization, and fixed continuation-scale profiles; no model or target changes. Diagnostic weighting only.",
+  "authorization": "Prepared only. Six exact-loop lane smokes must match all14 anchor physical rows and all31 parameters; search additionally requires a separately pinned approval receipt.",
+  "budget": {
+    "generations": 4,
+    "max_objective_cases": 538,
+    "max_search_cases": 480,
+    "objective_cap_seconds": 1800,
+    "population": 16,
+    "repeat_seconds": 21000,
+    "search_seconds": 18000,
+    "total_seconds": 21600,
+    "workers": 24
+  },
+  "budget_accounting": {
+    "controller_smokes": 6,
+    "final_repeats_at_most": 8,
+    "hourly_plot_exports": "zero-solve saved-checkpoint renderer; consumes worker/time capacity, not objective slots",
+    "other_diagnostic_objectives_at_most": 12,
+    "search_at_most": 720,
+    "total_at_most": 746
+  },
+  "diagnostic_status": "No additional diagnostic objectives dispatched by this version; twelve slots remain reserved, not automatically used.",
+  "early_moment": "early_fertility",
+  "economic_changes": [
+    {
+      "change": "Same native compensated housing-share specification as matched diagnostic; first-child loading estimated, later-child loading fixed zero; no child housing floor.",
+      "object": "utility",
+      "status": "author-adopted for first calibration"
+    },
+    {
+      "change": "Estimate curvature in proposed bounds [0,.8]; starting value .14 matches the diagnostic receipt, which reports exponent .86 despite its historical folder suffix.",
+      "object": "child_benefit_curvature",
+      "status": "lead-selected provisional setting under author overnight delegation"
+    },
+    {
+      "change": "Replace ACS capped-nine mean with national AHS 2007 literal-room mean; retain old working weight.",
+      "object": "mean_rooms",
+      "status": "author-adopted"
+    },
+    {
+      "change": "Add exact-age-25 children-ever-born mean capped at three; proposed working weight 100.",
+      "object": "early_fertility",
+      "status": "lead-selected provisional setting under author overnight delegation"
+    },
+    {
+      "change": "Fixed annual pension/income ratio from empirical receipt; payroll tax derived from stationary demographics.",
+      "object": "pensions",
+      "status": "author-adopted"
+    },
+    {
+      "change": "Positive net estates fund positive entrant assets; residual exits through a nonutility sink. Net-estate valuation and physical/financial settlement remain provisional.",
+      "object": "estate_entry_funding",
+      "status": "provisional working closure"
+    },
+    {
+      "change": "B15 earnings, inherited entrant-wealth marginal and income/wealth rank coupling retained; no zero-entry substitution.",
+      "object": "income_entry",
+      "status": "unchanged inherited inputs"
+    },
+    {
+      "change": "Retained working minimum-distance weights, including early-fertility weight 100.",
+      "object": "weighting",
+      "status": "primary retained"
+    },
+    {
+      "change": "Retained working minimum-distance weights, including early-fertility weight 100.",
+      "object": "weighting",
+      "status": "primary retained"
+    },
+    {
+      "change": "Native DUE stayer credit; tenure choice scale searched; three specified validation moments receive zero objective weight; three separate weighting lanes",
+      "status": "author-adopted tonight"
+    }
+  ],
+  "evening_contract": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/evening_calibration_20260927/contract_v4/contract.json",
+    "sha256": "4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be"
+  },
+  "files": {
+    "bequest_builder": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/scf/build_bequest_flow_2007.py",
+      "sha256": "63d65d6c12994f03d4ee51a6f2db7540162056a051320856fb2f0a277ffe7ae4"
+    },
+    "builder": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/prepare_e5f_night_contract.py",
+      "sha256": "772b8787b2dbd0e033202bf87b923eb729328b0d05728e987a8d4af111e37f58"
+    },
+    "controller_tests": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/test_e5f_night_calibration.py",
+      "sha256": "c2c57089718451afe08bd925b51c8e3cc4395e231be9e668a9b05cda143069cb"
+    },
+    "driver": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_fertility_identification.py",
+      "sha256": "46ea28f709d53ec589a2137a8dfc4d2f97ce82c3a170bf026ef7ed285a0041f5"
+    },
+    "evening_driver": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_evening_calibration.py",
+      "sha256": "987654c809ff2b0559f2dfee84c949fdd5f7914ebab7bfe9585b164fe6a84ac8"
+    },
+    "first_birth_builder": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/psid_followup_mar2026/sa_rooms_first_birth_v2.do",
+      "sha256": "7b08a994bbbe98fc238226870bd8eb82dd8029c81246df680739fa1e2991ebff"
+    },
+    "identification_preparer": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/prepare.py",
+      "sha256": "4b3b4fb08414991a1d2c0e000d757b630938066fb5fb18b9bfa6bd4a2ab7b869"
+    },
+    "identification_tests": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/test_run_e5f_fertility_identification.py",
+      "sha256": "cdcc58b7b51a72ca9b5df34b5f1e655fd800a4ef04cef14c25fea39816f4a0fd"
+    },
+    "measurement_review": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/docs/model/e5f_target_measurement_review_20260927.md",
+      "sha256": "cac7a758d73d8cf2d35eecbd91630e22fa2b2b67cf7f5077158f36948c3a369a"
+    },
+    "night_helper": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_night_calibration.py",
+      "sha256": "c4a75893c53d3b263b0ae5a7a134b0d122d80085d0cc3459fd55cde8b2eef3ad"
+    },
+    "recovery_search": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/tools_v4/run_e5f_utility_comparison_search.py",
+      "sha256": "4e53236e977ac7abaee5036e1e3334e84ec9e66b4f056423020483ef1d0df932"
+    },
+    "runtime": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py",
+      "sha256": "7b5354d794a407c9109b69b17e4449fdf7dc664065c387f8c5e0d8043aa1dbfa"
+    },
+    "runtime_tests": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/test_e5f_evening_calibration_runtime.py",
+      "sha256": "a45043b3e2803a7353ba6b7c5d7bfc07166b27a01952b463a9b4650548a64991"
+    },
+    "weight_review": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/docs/model/e5f_evening_weight_review_20260927.md",
+      "sha256": "54de49647d81f49a96fff0341395cad734cda7e790dcff10b14c0f6f9dd40bbc"
+    }
+  },
+  "fixed": {
+    "delta_alpha": 0.0,
+    "due": true,
+    "other_settings": "Inherited selected checkpoint; no other default changes",
+    "pension_ratio": 0.2294460118659327,
+    "q_period": 0.08243216,
+    "reference_rent": 0.11046592704873838,
+    "sigma": 2.0
+  },
+  "inherited_objective": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/objective.json",
+    "sha256": "d35349bf5bb4054e50a2092d875b3b21df210637419757f648301585ec0a6812"
+  },
+  "initial_design": [
+    {
+      "label": "timeout_replay_initial_0044_block",
+      "point": {
+        "H0": 6.195746714165977,
+        "beta_annual": 0.960794236362862,
+        "chi": 1.0336193650623346,
+        "child_benefit_curvature": 0.017758867987614224,
+        "delta_alpha_jump": 0.08814027594508089,
+        "first_birth_fixed_cost": 0.6212605523080553,
+        "kappa_fert": 0.1870584992106701,
+        "kappa_fert_continuation": 0.36340445812103794,
+        "tenure_choice_kappa": 0.003490260985170037,
+        "theta0": 0.11351628156539642
+      },
+      "scope": "Exact retained point in each lane under1800-second cap; six search slots total"
+    },
+    {
+      "label": "timeout_replay_initial_0186_primary",
+      "point": {
+        "H0": 6.3375567399572725,
+        "beta_annual": 0.9618736823825408,
+        "chi": 1.0652065422207078,
+        "child_benefit_curvature": 0.057959613599081236,
+        "delta_alpha_jump": 0.11902136543243057,
+        "first_birth_fixed_cost": 0.617991705387564,
+        "kappa_fert": 0.1902905524006997,
+        "kappa_fert_continuation": 0.35460697982848416,
+        "tenure_choice_kappa": 0.003454323481787199,
+        "theta0": 0.11861357503517446
+      },
+      "scope": "Exact retained point in each lane under1800-second cap; six search slots total"
+    }
+  ],
+  "initial_point": {
+    "H0": 6.293507689200028,
+    "beta_annual": 0.9634753808828738,
+    "chi": 1.0938718913975698,
+    "child_benefit_curvature": 0.061454973811513665,
+    "delta_alpha_jump": 0.13487659325900622,
+    "first_birth_fixed_cost": 0.6209410745816288,
+    "kappa_fert": 0.17561183772819416,
+    "kappa_fert_continuation": 0.33176505374023935,
+    "tenure_choice_kappa": 0.012087458119671006,
+    "theta0": 0.12451612635999697
+  },
+  "jacobian_steps": {
+    "H0": 0.12587015378400054,
+    "beta_annual": 0.0005,
+    "chi": 0.021877437827951398,
+    "child_benefit_curvature": 0.0012290994762302733,
+    "delta_alpha_jump": 0.0026975318651801246,
+    "first_birth_fixed_cost": 0.012418821491632577,
+    "kappa_fert": 0.0035122367545638833,
+    "kappa_fert_continuation": 0.006635301074804787,
+    "tenure_choice_kappa": 0.00024174916239342014,
+    "theta0": 0.002490322527199939
+  },
+  "lanes": {
+    "early10": {
+      "canonical_sha256": "f23d862de0bad35503faf0c1d308734140c4704073bd522b3ae53d786eec4939",
+      "early_multiplier": 10,
+      "fixed": {},
+      "objective": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/contract_v1/early10_objective.json",
+        "sha256": "a525d0068079b911731f242e3a12b666975ed71f8d7122daf69bc1d883c9b7c0"
+      },
+      "target_weight_fingerprint": "e741c480776f76367a8a49f0ece88ae925b1b498b0e4eefdcff8316a12aaf79e"
+    },
+    "early100": {
+      "canonical_sha256": "b6bc5364de871d06e522da1b43b90ebf16f1cc759a07cf85e1fe5c0ae6291cce",
+      "early_multiplier": 100,
+      "fixed": {},
+      "objective": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/contract_v1/early100_objective.json",
+        "sha256": "7388d56841e0c76c7646818ea12016b3016435ed2eaee24130ecc3e288943cf4"
+      },
+      "target_weight_fingerprint": "0c7c8800f8f5cfb32b774c3b57dc8792b585ea39ac56caba5904e107ae515b32"
+    },
+    "primary": {
+      "canonical_sha256": "97fb4b9731022df785d09e066dc0f4d5506c77ff21f4a506b47cb49eaad266f6",
+      "early_multiplier": 1,
+      "fixed": {},
+      "objective": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/contract_v1/primary_objective.json",
+        "sha256": "04528ece6513e4da9436bb8b35b54cd7e9cecd3a6695d050a0a7aea5a71d5e60"
+      },
+      "target_weight_fingerprint": "20e531855075b807886da8e936930dca9090b989b2ce381de39042cf206efdbd"
+    },
+    "profile_double": {
+      "canonical_sha256": "f23d862de0bad35503faf0c1d308734140c4704073bd522b3ae53d786eec4939",
+      "early_multiplier": 10,
+      "fixed": {
+        "kappa_fert_continuation": 0.6635301074804787
+      },
+      "objective": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/contract_v1/profile_double_objective.json",
+        "sha256": "a525d0068079b911731f242e3a12b666975ed71f8d7122daf69bc1d883c9b7c0"
+      },
+      "target_weight_fingerprint": "e741c480776f76367a8a49f0ece88ae925b1b498b0e4eefdcff8316a12aaf79e"
+    },
+    "profile_half": {
+      "canonical_sha256": "f23d862de0bad35503faf0c1d308734140c4704073bd522b3ae53d786eec4939",
+      "early_multiplier": 10,
+      "fixed": {
+        "kappa_fert_continuation": 0.16588252687011967
+      },
+      "objective": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/contract_v1/profile_half_objective.json",
+        "sha256": "a525d0068079b911731f242e3a12b666975ed71f8d7122daf69bc1d883c9b7c0"
+      },
+      "target_weight_fingerprint": "e741c480776f76367a8a49f0ece88ae925b1b498b0e4eefdcff8316a12aaf79e"
+    },
+    "profile_quadruple": {
+      "canonical_sha256": "f23d862de0bad35503faf0c1d308734140c4704073bd522b3ae53d786eec4939",
+      "early_multiplier": 10,
+      "fixed": {
+        "kappa_fert_continuation": 1.3270602149609574
+      },
+      "objective": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/contract_v1/profile_quadruple_objective.json",
+        "sha256": "a525d0068079b911731f242e3a12b666975ed71f8d7122daf69bc1d883c9b7c0"
+      },
+      "target_weight_fingerprint": "e741c480776f76367a8a49f0ece88ae925b1b498b0e4eefdcff8316a12aaf79e"
+    }
+  },
+  "log_parameters": [
+    "tenure_choice_kappa"
+  ],
+  "native_ancestry_contract": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/production_contract.json",
+    "sha256": "3b770d8c8c22d2b0449b34a575d6353b063bc015d74ce11016dad7e22ed7ca5e"
+  },
+  "normalization": {
+    "initial_psi": 0.14281100340255604,
+    "initial_step": 0.005,
+    "maximum_stationary_solves": 23,
+    "warm_price": true
+  },
+  "omitted_seed_profiles": [],
+  "pending_observer_mismatches": [
+    {
+      "moment": "initial_normalization",
+      "warning": "Separate from CPS age-window stocks and actual birth/entry accounting."
+    },
+    {
+      "moment": "cps_childlessness",
+      "warning": "Uniform birth-time parity interpolation is the main diagnostic; constant-post-cell sensitivity retained. Model household reproductive member is not certified female exposure; no empirical age reweighting."
+    },
+    {
+      "moment": "cps_exactly_one",
+      "warning": "Uniform birth-time parity interpolation is the main diagnostic; constant-post-cell sensitivity retained. Model household reproductive member is not certified female exposure; no empirical age reweighting."
+    },
+    {
+      "moment": "nchs_mean_age",
+      "warning": "First-birth flow timing, not completed-cohort timing. Household maternal proxy; empirical under-18/over-45 tail collapse retained; raw builder residence and unknown-order comparability remain unresolved."
+    },
+    {
+      "moment": "nchs_share30",
+      "warning": "First-birth flow timing, not completed-cohort timing. Household maternal proxy; empirical under-18/over-45 tail collapse retained; raw builder residence and unknown-order comparability remain unresolved."
+    },
+    {
+      "moment": "wealth_earnings",
+      "warning": "Household net worth is scaled by reference-person-plus-spouse gross labor earnings; calendar-specific wealth valuation and earnings-reference-year alignment remains inherited from the PSID shelf and is not newly certified."
+    },
+    {
+      "moment": "bequest_wealth",
+      "warning": "Experimental approximation: the frozen model observer sums positive estates over all fertility/dependent-child states without child-recipient eligibility or allocation, whereas the adopted SCF ratio is child-directed. No recipient-law change is authorized in this contract."
+    },
+    {
+      "moment": "old_dispersion",
+      "warning": "Uniform within-age-cell overlap for ages 76--84 Modeled pension plus configured lump-sum income proxy; not PSID total family income Empirical $1000 real-income and observed-child-history filters are not reproduced At these retirement ages model denominator is pension income (including configured z scaling), while PSID INCFAMR also includes transfers, asset income and other family components. Exact $1000 cutoff is not applied (only income>0), and observed-completed-children selection has no model missingness counterpart. Full 78/82 cells do not cover exactly 76-84. Actual model property-tax lump-sum transfer is zero in this receipt; proxy uses the configured pension-plus-transfer concept."
+    },
+    {
+      "moment": "mean_rooms",
+      "warning": "Uniform model exposure within four-year age cells; literal AHS ROOMS has public-use topcode 21. Model rooms are uncapped. Housing supply normalization remains an empirical normalization."
+    },
+    {
+      "moment": "ownership_30_55",
+      "warning": "National ACS target geography is accepted. The empirical owner sample is restricted to DUE structures UNITSSTR 3:10, a structure-type distinction absent from the model state; age 30-55 is projected through a four-year model cell extending to ages 54-57."
+    },
+    {
+      "moment": "first_birth_rooms",
+      "warning": "The stationary first-birth housing observer approximates this empirical event-study contrast and does not reproduce the Sun-Abraham panel estimator or its baseline-status cohort selection."
+    },
+    {
+      "moment": "family_rooms",
+      "warning": "National ACS target geography is accepted. Empirical groups use NCHILD=3+ versus 1-2 and require YNGCH<18. Model dependent-child count m is only a proxy: it can differ from resident own-child count and does not guarantee the ACS minor-child restriction."
+    },
+    {
+      "moment": "recent_parent_ownership",
+      "warning": {
+        "age_projection": "uniform_within_age_cell",
+        "approximation_id": "early_2007_parenthood_md_working_v1__recent_parent_synchronized_proxy",
+        "decision_sha256": "b1d399c290d257e56e008afb6d7b76ac1f69191685c8d9e89a4b0bfb06533c9a",
+        "decision_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/initial_calibration_contract/lead_methodological_decision.json",
+        "declaration": "Synchronized post-fertility snapshot; uniform head-age overlap; model dependents proxy resident own children; actual current births from previously empty-dependent homes versus current empty homes inclformerparents. Not an exact annualACS interview reconstruction.",
+        "diagnostic_allow_residence_proxy": true,
+        "exact_acs": false,
+        "maintained": true,
+        "moment": "ownership_current_birth_from_empty_dependent_home_minus_current_empty_home_30_55",
+        "observer_id": "e5f_recent_parent_flow_diagnostic_v1",
+        "snapshot": "synchronized_post_fertility_snapshot"
+      }
+    },
+    {
+      "moment": "early_fertility",
+      "warning": "Observed completed age 25 corresponds to [25,26). Fixed uniform birth-time interpolation in [22,26) uses post weight .875 and literal ever-born weights [0,1,2,3]. Household reproductive-member exposure is not certified female exposure. Bootstrap is not CPS design-consistent."
+    }
+  ],
+  "proposal_widths": {
+    "H0": 0.4,
+    "beta_annual": 0.001,
+    "chi": 0.04,
+    "child_benefit_curvature": 0.08,
+    "delta_alpha_jump": 0.025,
+    "first_birth_fixed_cost": 0.15,
+    "kappa_fert": 0.05,
+    "kappa_fert_continuation": 0.15,
+    "tenure_choice_kappa": 0.35,
+    "theta0": 0.02
+  },
+  "provenance_corrections": {
+    "bequest_wealth": {
+      "authority": "Adopted 2007 SCF receipt remains authority for selected row; builder existence corrects frozen metadata, and its historical source fingerprint was not established by the measurement review.",
+      "builder": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/scf/build_bequest_flow_2007.py",
+        "sha256": "63d65d6c12994f03d4ee51a6f2db7540162056a051320856fb2f0a277ffe7ae4"
+      },
+      "model_limit": "Empirical annual child-directed mortality-weighted flow differs from model positive post-saving estates over all child-history states; recipient allocation remains an acknowledged approximation."
+    },
+    "first_birth_rooms": {
+      "adopted_target": 1.465,
+      "arm": "A2h",
+      "builder": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/psid_followup_mar2026/sa_rooms_first_birth_v2.do",
+        "sha256": "7b08a994bbbe98fc238226870bd8eb82dd8029c81246df680739fa1e2991ebff"
+      },
+      "comparison": "calendar years +3/+4 since first birth relative to calendar years -3/-2, not interview numbers",
+      "event_clock": "K = year - f_c_y",
+      "model_limit": "Matched-state destination housing contrast after one four-year model period remains a proxy; it does not reproduce empirical prepath, cohort/event weighting or baseline head/spouse selection.",
+      "receipt_estimate": 1.465293280235685
+    },
+    "scope": "New-contract metadata correction only; targets, samples, observers and immutable ancestry are unchanged.",
+    "source": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/docs/model/e5f_target_measurement_review_20260927.md",
+      "sha256": "cac7a758d73d8cf2d35eecbd91630e22fa2b2b67cf7f5077158f36948c3a369a"
+    }
+  },
+  "reference_case": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/night_launch_v4/primary_continuation/search/de_0093/case",
+  "schema": "e5f_fertility_identification_v1",
+  "search_design": "Local/moderate multivariate proposals around separate lane incumbents starting from the repeated evening block0347 point. Eight-mode cycle: one moderate joint, three local joint, housing subspace, fertility subspace, two coordinate. No full-box proposals tonight. Full scientific bounds remain unchanged; this computational restriction is not a reachability claim.",
+  "search_design_evidence": "Evening broad coverage:77 of84 rejected by unchanged housing gates,seven timed out,zero successes. All61 timeout ledgers contained4-8 certified GEs,none a first-GE timeout. Night doubles only objective wall-time to1800seconds;23-solve cap and scientific gates unchanged. Two exact timeout points replay in allthree lanes within720 search slots.",
+  "seed": 2026092801,
+  "seed_artifacts": [
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/initial_0506_block/case/receipt.json",
+      "sha256": "aaf08ed9fe0d40073b3d35f6f9780d32212a56b47a138e00d8ec51d86b725a8b"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/initial_0487_identity/case/receipt.json",
+      "sha256": "a53ca47cffb7cbec5e8d305a09e6153f46c45c2fe55108fe603f65a311051e1d"
+    }
+  ],
+  "seed_points": [
+    {
+      "H0": 6.293507689200028,
+      "beta_annual": 0.9634753808828738,
+      "chi": 1.0938718913975698,
+      "child_benefit_curvature": 0.061454973811513665,
+      "delta_alpha_jump": 0.13487659325900622,
+      "first_birth_fixed_cost": 0.6209410745816288,
+      "kappa_fert": 0.17561183772819416,
+      "kappa_fert_continuation": 0.33176505374023935,
+      "tenure_choice_kappa": 0.012087458119671006,
+      "theta0": 0.12451612635999697
+    },
+    {
+      "H0": 7.093665559605885,
+      "beta_annual": 0.9636252209507381,
+      "chi": 1.1389278153911344,
+      "child_benefit_curvature": 0.4834540847772565,
+      "delta_alpha_jump": 0.11165508424315794,
+      "first_birth_fixed_cost": 0.6474620185958292,
+      "kappa_fert": 0.10357750738057042,
+      "kappa_fert_continuation": 0.47270447490570805,
+      "tenure_choice_kappa": 0.0031678463873772854,
+      "theta0": 0.11667416852232454
+    }
+  ],
+  "seed_receipt": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/daytime_calibration_20260927/local_continuation/run_v1/selected_export/receipt.json",
+    "sha256": "47f91495374a0e92c7b86fe7fbdef60da1348e06ed1fb9bb9d8f35ecdf889e12"
+  },
+  "source_contract": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/contract_v1/contract.json",
+    "sha256": "c83aaff1a90b1ba5bb0919151840e745e6816cb0a3a023ce746e750f77226c5d"
+  },
+  "source_manifest": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/contract_v1/source_manifest.json",
+    "sha256": "07d84336a3112b251afe505908113d9c00585b91c34bd50f0dee108435db496d"
+  },
+  "source_root": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26",
+  "standard_diagnostic_names": [
+    "fertility_by_age.png",
+    "fertility_policy_by_age_income_state.png",
+    "housing_by_age_income_state.png",
+    "housing_market.png",
+    "housing_prices.png",
+    "income_state_outcomes.png",
+    "liquid_wealth_by_age_income_state.png",
+    "market_clearing_by_market.png",
+    "market_clearing_residuals.png",
+    "owner_rungs.png",
+    "ownership_by_age.png",
+    "ownership_by_age_income_state.png",
+    "policy_childless_renter_age30.png",
+    "policy_childless_renter_age42.png",
+    "tenure_services.png",
+    "wealth_dist_childless_renter_age30.png",
+    "wealth_dist_childless_renter_age42.png"
+  ],
+  "tenure_seed_status": "0.005 is the inherited fixed tenure scale at the selected nine-coordinate seed; the evening contract searches this coordinate in its declared positive interval.",
+  "timeout_replay_history": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/evening_calibration_20260927/cluster/final_review/checkpoint.json",
+    "sha256": "743f26e6e6e470d908ee33fa7c15dc7246e8b2a6eff5f40a5dc20cc2aab14254"
+  },
+  "validation_rows": [
+    "nchs_share30",
+    "family_rooms",
+    "old_dispersion"
+  ]
+}

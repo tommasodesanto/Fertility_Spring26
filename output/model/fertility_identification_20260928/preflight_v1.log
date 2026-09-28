@@ -1,0 +1,26 @@
+test_actual_controller_process_loop (test_run_e5f_fertility_identification.Tests.test_actual_controller_process_loop) ... ok
+test_anchor_mutation_rejected (test_run_e5f_fertility_identification.Tests.test_anchor_mutation_rejected) ... ok
+test_forty_symmetric_points (test_run_e5f_fertility_identification.Tests.test_forty_symmetric_points) ... ok
+test_multistart_and_fixed_profile (test_run_e5f_fertility_identification.Tests.test_multistart_and_fixed_profile) ... ok
+test_owned_real_process_deadline (test_run_e5f_fertility_identification.Tests.test_owned_real_process_deadline) ... ERROR
+test_selection_replaces_inadmissible_and_never_worsens (test_run_e5f_fertility_identification.Tests.test_selection_replaces_inadmissible_and_never_worsens) ... ok
+test_unknown_kill_not_timeout (test_run_e5f_fertility_identification.Tests.test_unknown_kill_not_timeout) ... ok
+
+======================================================================
+ERROR: test_owned_real_process_deadline (test_run_e5f_fertility_identification.Tests.test_owned_real_process_deadline)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/test_run_e5f_fertility_identification.py", line 58, in test_owned_real_process_deadline
+    fx.supervisor.run_batch([{}],workers=1,deadline=time.time()+3,launch=launch,finish=finish,heartbeat=lambda **kw:None,poll_seconds=.05,allowed_statuses={'censored_timeout'})
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/tools_v4/run_e5f_utility_comparison_search.py", line 267, in run_batch
+    active[candidate["id"]] = (candidate, process)
+           ~~~~~~~~~^^^^^^
+KeyError: 'id'
+
+----------------------------------------------------------------------
+Ran 7 tests in 32.452s
+
+FAILED (errors=1)
+INFO:    Terminating squashfuse_ll after timeout
+INFO:    Timeouts can be caused by a running background process
