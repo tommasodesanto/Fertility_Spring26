@@ -84,3 +84,10 @@ September28 14:15 EDT monitoring: resume18721946 healthy,24 actual workers;
 2 preserved known rejections, zero new fatal errors. Heartbeat1sec/checkpoint37sec;
 MaxRSS126971456KiB within192GiB allocation. Best points unchanged, no intervention.
 Original deadlines and gates unchanged. Last plot review13:27; refresh next check.
+
+September28 15:16 EDT: resume18721946 running24workers,136 records (88success,45timeout,
+3inadmissible), no new fatal; generation1 active, heartbeat fresh, MaxRSS121.1GiB/192GiB.
+Primary best unchanged. Half-scale profile now0133, not final certified. Saved renderer
+18724418 PASS zero solves: four lanes all17 hashes unchanged, half0073 all17 inspected;
+market residual7.11e-8, highwealth ownership/age30housing/retirement caveats remain.
+Latest half0133 postdates rendered snapshot. No model/gate/deadline changes.

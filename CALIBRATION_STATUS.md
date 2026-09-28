@@ -1,5 +1,12 @@
 # Calibration Status
 
+September28 15:16 EDT: resume18721946 running24workers,136 records (88success,45timeout,
+3inadmissible), no new fatal; generation1 active, heartbeat fresh, MaxRSS121.1GiB/192GiB.
+Primary best unchanged. Half-scale profile now0133, not final certified. Saved renderer
+18724418 PASS zero solves: four lanes all17 hashes unchanged, half0073 all17 inspected;
+market residual7.11e-8, highwealth ownership/age30housing/retirement caveats remain.
+Latest half0133 postdates rendered snapshot. No model/gate/deadline changes.
+
 September28 13:43 EDT: resume18721946 RUNNING on cs677,24 actual evaluators.
 Compute-node heartbeat verifies75 imported records,24active,37pending and unchanged
 clock, no stop reason. Login-node directory metadata briefly stale; use compute-node
