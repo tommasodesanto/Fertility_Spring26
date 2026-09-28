@@ -56,11 +56,11 @@ widths; moderate joint widths equal the evening widths. Full bounds are retained
 The draft writes checkpoints/latest/best after each case and five-second
 heartbeats. Hourly saved-checkpoint reporting uses the unchanged17-graph reporter
 in owned, deadline-limited subprocesses with zero new equilibrium solves. Its
-end-to-end test remains required. Source/unknown failures stop dispatch and drain
+owned-process end-to-end test passes; a real-backend saved-render check is pending. Source/unknown failures stop dispatch and drain
 owned siblings. Selected cases are frozen before exact repeats and export.
 
-Launch gates still UNRUN: six numerical lane smokes matching all14 anchor
+Launch gates still pending: six numerical lane smokes matching all14 anchor
 physical rows and all31 parameters, independent scientific receipt review and
 pinned search approval. The real scientific plotting backend must still be
 checked; the saved-render control flow passed with a synthetic reporter.
-The numerical smoke/search jobs have not been launched by this worker.
+Lead submitted gated numerical job18687184; six smokes are active, search awaits approval.

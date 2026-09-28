@@ -1,0 +1,127 @@
+{
+  "child_pid": 2292128,
+  "command": [
+    "/share/apps/anaconda3/2025.06/bin/python",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_night_calibration.py",
+    "--stage",
+    "render",
+    "--contract",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/contract_v1/contract.json",
+    "--output",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/saved_render_check_v1/render_check",
+    "--request",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/saved_render_check_v1/request.json"
+  ],
+  "contract_sha256": "c83aaff1a90b1ba5bb0919151840e745e6816cb0a3a023ce746e750f77226c5d",
+  "elapsed_seconds": 34.74314322101418,
+  "helper_sha256": "2a7be8e9e73fbfb7f4f7320e3988a2fc0a758dc17cfd0da32013e3a840dd5e1e",
+  "objective_evaluations": 0,
+  "parameter_rows": 31,
+  "png_byte_identical_to_smoke": true,
+  "png_count": 17,
+  "png_sha256": {
+    "fertility_by_age.png": "90c614c5a5d61b224714ac4215358fa526f37d9d654eefb2f46abe03d985571d",
+    "fertility_policy_by_age_income_state.png": "58a3a7c0954a126c404e030cbdaa749f6c971211bfae7e6ff586162c698eb1f6",
+    "housing_by_age_income_state.png": "97c4445b0907dd6286de3edda69afd36dfca8e4cca7580f4c684592dc05d5edc",
+    "housing_market.png": "a67506bb815765c88fab2926ba20a3ec1c09864fe059b3dcb7595ed816f3f51c",
+    "housing_prices.png": "6e961ec3561ea347f57e988423864f4d94f2678f35200d82232e5f06b559a551",
+    "income_state_outcomes.png": "8d8934992269ea3eaef03ba37493fd9fe773a4625186374f4a97515225f26f95",
+    "liquid_wealth_by_age_income_state.png": "331a54e323b4cd2499c7b05eda719206f190cccb94c61d1eaecb9d65d766757e",
+    "market_clearing_by_market.png": "bda4680e3205297d61de473f4286964222a1fbac5dee0670d7020555a9ac7464",
+    "market_clearing_residuals.png": "f62d650658379fe96a34005764e2f0936690b1e3d861657fdafc3fd3d70810e0",
+    "owner_rungs.png": "493c183b09546a52c3cb5e473c70c1109f3cb34289785450b83284a81cdcf45b",
+    "ownership_by_age.png": "be552945706e2288cba8db8cdb01b800b959b19368a694e68f5b7f9537c60034",
+    "ownership_by_age_income_state.png": "0714a2d04ed9f8cbabfc40cff0aab83b217cc24dca6e1f28aa646dc4ea70e275",
+    "policy_childless_renter_age30.png": "abe4ea2bb8e4095ba1d92aa3576c4d584be0ddcab9886ce2d92dcf1eeed9c51f",
+    "policy_childless_renter_age42.png": "0b023db28db219fcaa289a87f2f749f49485eed96b205cbaaa8e93cdf8c1a5a5",
+    "tenure_services.png": "b2247bc3efa435f7ac76ee738bece9d999ef00940f704bffd3f57a316fe9209f",
+    "wealth_dist_childless_renter_age30.png": "d43d66e36b4dc5b79c07ebcb31fba251a09bdd799f0805c23725b885aa968c9e",
+    "wealth_dist_childless_renter_age42.png": "103a004684dd4427f1f808f586542b9716043730a72825f29215274eca671c31"
+  },
+  "png_sizes": {
+    "fertility_by_age.png": [
+      1260,
+      720
+    ],
+    "fertility_policy_by_age_income_state.png": [
+      1260,
+      720
+    ],
+    "housing_by_age_income_state.png": [
+      1260,
+      720
+    ],
+    "housing_market.png": [
+      1260,
+      720
+    ],
+    "housing_prices.png": [
+      1260,
+      720
+    ],
+    "income_state_outcomes.png": [
+      1260,
+      720
+    ],
+    "liquid_wealth_by_age_income_state.png": [
+      1260,
+      720
+    ],
+    "market_clearing_by_market.png": [
+      1260,
+      720
+    ],
+    "market_clearing_residuals.png": [
+      1260,
+      720
+    ],
+    "owner_rungs.png": [
+      1260,
+      720
+    ],
+    "ownership_by_age.png": [
+      1260,
+      720
+    ],
+    "ownership_by_age_income_state.png": [
+      1260,
+      720
+    ],
+    "policy_childless_renter_age30.png": [
+      1800,
+      1260
+    ],
+    "policy_childless_renter_age42.png": [
+      1800,
+      1260
+    ],
+    "tenure_services.png": [
+      1260,
+      720
+    ],
+    "wealth_dist_childless_renter_age30.png": [
+      1260,
+      720
+    ],
+    "wealth_dist_childless_renter_age42.png": [
+      1260,
+      720
+    ]
+  },
+  "smoke_sha256": "bb551ce9fc20047fe228d3d62009cf7d6dd4e3ee4293be3fbdfe9f283648152a",
+  "source_case": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/smoke/smoke_0000_primary/case",
+  "source_pins": {
+    "initial_state.pkl.gz": "42a1a1ef571d0822818411f6a17463b2c9059d277e1600a533ddcfd54674de18",
+    "parameters.csv": "1a576e37d4afac168c1130f4ce16e963a4c84ed4a8c83076b6c6a9aa15719df5",
+    "receipt.json": "a3f23f92307b389c229fae91daca1b04afd3952a6a75142792a61822370f86d9",
+    "stationary_solves.json": "7ff957471d75c77d4d42c911b6f2c256f8ca6219c14f73f218043ebe87b03975",
+    "target_fit.csv": "3ade05f88ac418f9dc8febd6647d195b8dec44936dbdb0fdd43daaadea041f15"
+  },
+  "status": "real_saved_render_passed",
+  "table_check": {
+    "exact_numeric_cells": true,
+    "parameter_rows": 31,
+    "target_rows": 14
+  },
+  "target_rows": 14
+}

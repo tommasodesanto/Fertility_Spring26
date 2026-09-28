@@ -1,0 +1,60 @@
+{
+  "status": "lead_approved",
+  "scope": "Two diagnostic fixed-intercept GE solves; no fertility normalization, calibration, or scientific acceptance beyond housing/PAYGO gates",
+  "case_id": "initial_0041_block",
+  "arms": [
+    1.0,
+    0.5
+  ],
+  "case_cap_seconds": 1200,
+  "parent_cap_seconds": 2450,
+  "global_end_epoch": 1790595900,
+  "concurrency": 1,
+  "maximum_GE_calls": 2,
+  "economic_changes": [],
+  "numerical_difference": "Only initial house-price guess: original reference price versus half that guess. Fixed child-benefit intercept equals the original failed trial, 0.14281100340255604.",
+  "runner": {
+    "path": "/scratch/td2248/projects/fertility_night_calibration_20260928_v1/price_diagnostic_v1/diagnose_e5f_evening_housing_failures.py",
+    "sha256": "6de36eed05ece769deabe25e0fce219b16b8821006de9131d8011b6eeb3343dc"
+  },
+  "contract": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/evening_calibration_20260927/contract_v4/contract.json",
+    "sha256": "4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be"
+  },
+  "checkpoint": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/evening_calibration_20260927/cluster/final_review/checkpoint.json",
+    "sha256": "743f26e6e6e470d908ee33fa7c15dc7246e8b2a6eff5f40a5dc20cc2aab14254"
+  },
+  "launch_requirements": [
+    "Lead line-by-line review and Torch-only syntax/pure-wrapper checks; no local model execution.",
+    "Immutable original economic source/target manifest remains intact; new wrapper independently pinned outside original manifest.",
+    "Populate exact existing contract path and checkpoint/wrapper SHA256 on Torch, then set status lead_approved; pin complete plan using CLI --plan-sha256.",
+    "Run parent, never invoke an unsupervised child. One CPU, single numerical-library threads, bounded allocation and enclosing author deadline.",
+    "Retain result/error JSON and log for both arms; no failed result may be promoted to an equilibrium or calibrated fit."
+  ],
+  "outputs": [
+    "target_definition.json",
+    "original_reference_parameters.csv",
+    "proposed_parameters.json",
+    "returned_parameters.json when solver returns",
+    "solver_return.json before unchanged gate",
+    "result.json",
+    "parent checkpoint/heartbeat/complete JSON"
+  ],
+  "limitations": [
+    "Returned timings include scalar bracket/expansion/iteration/best-residual evidence, but original cold solver does not expose every evaluated price.",
+    "Fixed-intercept trial need not satisfy fertility normalization. No calibration loss or new full target-fit table is produced.",
+    "Housing/PAYGO gate success alone is not a full scientific certification; estate/purchase/operator audits and standard plots are not rerun by this diagnostic.",
+    "No execution or source hashing was performed during lightweight Mac preparation."
+  ],
+  "lead_review": {
+    "tests_job": "18687536",
+    "tests_passed": 10,
+    "economic_changes": [],
+    "numerical_difference": "initial house-price guess only",
+    "schedule": "After07:00searchcutoff and confirmed mainworkers<=8; one diagnostic child; end07:45EDT",
+    "budget_reservation": "2 of12 reserved diagnostic objectives, no extra search allowance",
+    "source_review": "Call arguments match first StationaryObjective.normalize GE; proxy logs return before unchanged PAYGO rejection",
+    "gate_scope": "No calibrated solution claimed; no scientific gate relaxed"
+  }
+}

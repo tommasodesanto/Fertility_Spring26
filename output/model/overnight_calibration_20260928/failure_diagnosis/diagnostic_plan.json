@@ -1,0 +1,39 @@
+{
+  "status": "awaiting_lead_review_and_Torch_pins",
+  "scope": "Two diagnostic fixed-intercept GE solves; no fertility normalization, calibration, or scientific acceptance beyond housing/PAYGO gates",
+  "case_id": "initial_0041_block",
+  "arms": [1.0, 0.5],
+  "case_cap_seconds": 1750,
+  "parent_cap_seconds": 3550,
+  "global_end_epoch": 1790596800,
+  "concurrency": 1,
+  "maximum_GE_calls": 2,
+  "economic_changes": [],
+  "numerical_difference": "Only initial house-price guess: original reference price versus half that guess. Fixed child-benefit intercept equals the original failed trial, 0.14281100340255604.",
+  "runner": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/diagnose_e5f_evening_housing_failures.py",
+    "sha256": null
+  },
+  "contract": {
+    "path": "LEAD_SET_TO_EXISTING_PINNED_EVENING_V4_CONTRACT_ON_TORCH",
+    "sha256": "4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be"
+  },
+  "checkpoint": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/evening_calibration_20260927/gated_v2/search/checkpoint.json",
+    "sha256": null
+  },
+  "launch_requirements": [
+    "Lead line-by-line review and Torch-only syntax/pure-wrapper checks; no local model execution.",
+    "Immutable original economic source/target manifest remains intact; new wrapper independently pinned outside original manifest.",
+    "Populate exact existing contract path and checkpoint/wrapper SHA256 on Torch, then set status lead_approved; pin complete plan using CLI --plan-sha256.",
+    "Run parent, never invoke an unsupervised child. One CPU, single numerical-library threads, bounded allocation and enclosing author deadline.",
+    "Retain result/error JSON and log for both arms; no failed result may be promoted to an equilibrium or calibrated fit."
+  ],
+  "outputs": ["target_definition.json", "original_reference_parameters.csv", "proposed_parameters.json", "returned_parameters.json when solver returns", "solver_return.json before unchanged gate", "result.json", "parent checkpoint/heartbeat/complete JSON"],
+  "limitations": [
+    "Returned timings include scalar bracket/expansion/iteration/best-residual evidence, but original cold solver does not expose every evaluated price.",
+    "Fixed-intercept trial need not satisfy fertility normalization. No calibration loss or new full target-fit table is produced.",
+    "Housing/PAYGO gate success alone is not a full scientific certification; estate/purchase/operator audits and standard plots are not rerun by this diagnostic.",
+    "No execution or source hashing was performed during lightweight Mac preparation."
+  ]
+}

@@ -1,5 +1,18 @@
 # Calibration Status
 
+## September27,23:16EDT — overnight search ACTIVE,24Torch workers
+
+Job18687184 oncs740 approved after6exactsmokes/full14target31parameter tables/
+17plots reviewed. Real saved-render18687549 passes17PNGbyteidentity,zero solves.
+Approval38a2b7fbcada0759a671d1048e0be7b50dd8c02545c250d642ef7c2eb2f9e316.
+Noeconomic/model/gate changes. Search07:00/repeats07:50/hardend08:00EDT.
+Hourlymonitoractive. Source/contract asbelow; nightREADME/clusterlaunch canonical.
+Separate2GEprice-start diagnostic18687833 queued07:00, end07:45, max1worker
+aftersearchdispatch ends+mainworkers<=8;2of12reservedslots.10puretests pass
+18687536; fixed0041point, onlystartingpricechanges; no calibratedresultclaim.
+Pending18687806 cancelledbeforestart dueunitlessbegininterval; replacement
+explicit07:00verified. Allfailuresretained; no extra diagnostic solves.
+
 ## September27,23:04EDT — night numerical smokes submitted, search gated
 
 Torch18687184 submitted24CPU/192GB; sixsmokes before explicitapproval.

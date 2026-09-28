@@ -2,12 +2,17 @@
 
 ## Live state
 
-Torch job **18687184** is submitted for six gated numerical smokes. Search is
-not yet approved. New stage: `/scratch/td2248/projects/fertility_night_calibration_20260928_v1`.
-Nine focused controller tests pass (job18687181), including23 owned synthetic
-subprocesses covering smokes, search, hourly rendering and eight final repeats.
-Zero-solve source/contract verification passes. Contract/source pins and launch
-receipt are in `contract_v1/` and `cluster/launch.json`.
+Torch job **18687184** is running search with **24 active single-thread workers**
+oncs740. Six numerical smokes pass: complete14target/31parameter tables match
+both their lane repeat and the saved evening block0347 physical results exactly.
+Lead inspected all17standard plots; all six packets are byte-identical. The real
+saved-render backend also passes (18687549), regenerating the same17PNGs and
+unchanged14/31 tables with zero equilibrium solves. Lead approval SHA:
+`38a2b7fbcada0759a671d1048e0be7b50dd8c02545c250d642ef7c2eb2f9e316`.
+
+New stage: `/scratch/td2248/projects/fertility_night_calibration_20260928_v1`.
+Nine controller tests+zero-solve verification pass18687181. Receipts, full smoke
+tables and plots are in `cluster/smoke_review/`; all launch pins in`cluster/launch.json`.
 
 ## Authorized design
 
@@ -46,5 +51,25 @@ pin; controller and household runtime unchanged. Both logs and the remote failed
 fixture are retained;18687181 passes. Independent review also strengthened checks
 of all saved anchor/repeat CSV hashes before contract use.
 
-Next: inspect all six numerical smoke comparisons and17plots before explicit
-lead approval releases search. Old evening run18672459 remains immutable.
+Old evening run18672459 remains immutable. Starting common-primary loss is
+26.368192413904882. Starting block objective2.5279564454651906 and identity
+0.15368278194839702 are different objective scales, never directly compared.
+
+## Scheduled failure diagnosis
+
+Job18687833 is queued explicitly for September28 **07:00EDT**, ending no later
+than **07:45EDT**. It waits until main search dispatch has ended and confirms
+at most8main model workers before launching one diagnostic worker. Two sequential
+GE calls count toward2of12reserved diagnostic slots; no new search allowance.
+Same failed evening0041block point, same fixed child benefit and allmodelinputs;
+only original versus half starting price differs. It records returned residuals
+before unchanged housing/PAYGO gates. Results are diagnostics, not calibrated
+solutions. No fertility normalization or policy certification is claimed.
+
+Ten pure process/pin tests pass18687536. Lead reviewed the call against the first
+native normalization GE. Approved immutableplan and source pins are in
+`failure_diagnosis/approved_plan.json` and`approved_manifest.sha256`; remote files
+under`<stage>/price_diagnostic_v1`, outputs`run_v1`. Caps1200s/arm,2450sparent,
+07:45globalend. Pending18687806 was cancelled before execution because Slurm
+interpreted a unitless relative begin interval as seconds; replacement18687833
+uses explicit07:00EDT. No diagnostic solve was launched by that mistake.
