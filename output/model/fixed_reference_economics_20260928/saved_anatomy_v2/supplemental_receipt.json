@@ -1,0 +1,84 @@
+{
+  "all_parameters_pinned_by_checkpoint": true,
+  "checkpoint": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/initial_state.pkl.gz",
+    "sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d"
+  },
+  "checks": {
+    "age_mass": 1.2670420268534599e-14,
+    "beginning_wealth_stock": 2.6645352591003757e-15,
+    "childless_renter_30_expected_consumption": 0.0,
+    "childless_renter_30_expected_rooms": 0.0,
+    "childless_renter_30_expected_saving": 2.6020852139652106e-18,
+    "childless_renter_30_mass": 0.0,
+    "childless_renter_30_owner_probability": 4.336808689942018e-19,
+    "childless_renter_42_expected_consumption": 3.469446951953614e-18,
+    "childless_renter_42_expected_rooms": 0.0,
+    "childless_renter_42_expected_saving": 1.3010426069826053e-18,
+    "childless_renter_42_mass": 1.734723475976807e-18,
+    "childless_renter_42_owner_probability": 2.168404344971009e-19,
+    "current_mass": 3.519406988061746e-14,
+    "explicit_births": 1.3877787807814457e-17,
+    "first_births_saved": 1.734723475976807e-18,
+    "mean_rooms": 8.881784197001252e-16,
+    "post_birth_mass": 2.6645352591003757e-15,
+    "post_parity_mass_by_age": 9.398948633276838e-15,
+    "pre_mass": 2.886579864025407e-15,
+    "pre_parity_mass_by_age": 0.0,
+    "primary_loss": 3.552713678800501e-15,
+    "second_births_saved": 4.475586568020162e-16,
+    "stayer_mass": 0.0,
+    "third_births_saved": 2.5565487227208195e-16,
+    "wealth_earnings": 0.0
+  },
+  "common_primary_loss": 19.581310760138326,
+  "contract_sha256": "68323aadd2c9ad221742842ace9ab108e40437303f0d34da00e7cd83b89f5abf",
+  "definitions": {
+    "age": "Model age-cell left endpoints, not interpolated annual ages or observed cohort paths.",
+    "balance_sheet": "Beginning net worth b + pH uses post-fertility pre-transaction mass, matching authoritative wealth observer; current balance sheets shown separately.",
+    "birth_quintiles": "Whole wealth nodes assigned by midpoint weighted CDF of all pre-birth households within age; ties mean bins need not contain exactly 20%.",
+    "births": "Actual explicit birth flows during the four-year cell; origin characteristics are pre-birth. Third births do not receive top-bin demographic weights.",
+    "buyer": "Current owners minus exact owner-stayer mass; includes owner-to-different-product purchases.",
+    "conditional": "Pre-birth childless renters; no-birth/first-birth branches and actual stochastic tenure menu. Buyer-conditional columns use positive purchase probabilities only.",
+    "housing_equity": "Unavailable separately: checkpoint stores net financial assets b and gross housing value pH, not independently identified gross financial assets and mortgage debt. No fabricated equity series.",
+    "realized_consumption_saving": "Integrates disjoint date-owned buyer/renter and owner-stayer masses using policy_mass_branches, never buyer policies for owner stayers.",
+    "state_axes": [
+      "net financial wealth",
+      "tenure/product",
+      "location",
+      "age",
+      "income",
+      "children ever born",
+      "children at home"
+    ],
+    "wealth_quantiles": "Left inverse of occupied current-wealth CDF; no interpolation."
+  },
+  "economic_changes": [],
+  "elapsed_seconds": 27.964137297938578,
+  "inherited_measurement_audit": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/measurement_audit_v1/README.md",
+  "label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "limitations": [
+    "Descriptive saved-state accounting does not establish causal mechanisms.",
+    "No housing-equity decomposition without an additional balance-sheet convention.",
+    "No new transition, equilibrium counterfactual, parameter change or fertility renormalization.",
+    "Standard plots retained; all new views are supplemental."
+  ],
+  "model_solves": 0,
+  "reference_manifest": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/fixed_reference_manifest.json",
+    "sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4"
+  },
+  "scientific_identity": "e22ce323d19a9a406b61b8b2e1c36bdfaca150641c78c0619dbfecf594bad2ed",
+  "script_sha256": "81e9576365f7b01dfcde0b4244960835401831e9cd589acd8c4951329bd244dd",
+  "slurm_job": "18738188",
+  "source_changes": [],
+  "source_fit_table": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/target_fit.csv",
+  "source_manifest": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/contract_v1/source_manifest.json",
+    "sha256": "07d84336a3112b251afe505908113d9c00585b91c34bd50f0dee108435db496d"
+  },
+  "source_parameter_table": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/parameters.csv",
+  "standard_plots_unchanged": 17,
+  "status": "PASS",
+  "target_weight_fingerprint": "20e531855075b807886da8e936930dca9090b989b2ce381de39042cf206efdbd"
+}

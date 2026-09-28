@@ -1,0 +1,109 @@
+{
+  "reference_label": "2007 stationary reference — block0506, September 28 verified export",
+  "lead_reviewed": true,
+  "summary": [
+    "The frozen reference is authenticated against the original block0506 export: all 260 serialized parameter fields, the complete target and parameter tables, source identity and checkpoint identity are pinned in the compact reference manifest. The original 17 standard diagnostic plots are retained. This readout adds occupied-state views and one explicitly prescribed-price experiment; no calibration or measurement change is adopted.",
+    "The age-25 fertility miss is concentrated among mothers. Motherhood is 45.01% in the model versus 45.73% in the data, but capped children per mother are 1.190 versus 1.770. The conditional-count component accounts arithmetically for 96.14% of the early-fertility gap. This is a decomposition of a miss, not a causal finding or an impossibility result.",
+    "Explicit first births are most numerous in the youngest cell, while the first-birth probability among still-childless households peaks in the age-26 cell. Second-birth flows peak at age 30 and third-birth flows at age 38. Owners have higher conditional birth rates than renters at the same age: in the age-30 cell, first-birth probabilities are 39.69% and 21.80%, respectively. These probabilities cover a four-year cell and retain wealth/income selection within tenure groups.",
+    "Realized mean housing rises from 6.10 rooms at age 30 to 6.77 at age 42, then falls. Ownership rises from 51.34% at age 30 to 83.32% at age 66 and 94.68% at age 82. Beginning net financial wealth peaks at 5.31 at age 66 and reaches -1.24 at age 82, while beginning net worth remains positive at 2.34. Financial wealth and gross house value are separately observed; mortgage balances and housing equity are not separately identified.",
+    "Native saving limits bind for 25.11% of occupied renters, 4.72% of buyers and 4.54% of owner stayers. In the age-30 cell, the renter share is 42.80%. These are weighted boundary incidences under the saved discrete-grid solution, not shadow values. They exclude the incidence of households prevented from buying; a low buyer binding share cannot establish that down payments are unimportant.",
+    "Both fresh reference controls exactly reproduce 113 numerical arrays, all 14 fit rows, all 31 reported parameters and all 17 standard PNGs. The single permanent 10% price/rent shock passes the household and accounting gates with unchanged preferences. Immediate birth flows fall 4.19%, with 87.10% of that fall coming from first births. Separately recomputed cohort completed fertility falls from 2.100 to 1.988, and mean first-birth age rises from 25.933 to 26.220. Fertility is not renormalized."
+  ],
+  "limitations": [
+    "The price experiment is partial equilibrium. It leaves housing excess supply of 0.545 rooms per reference household on impact and 0.757 in the normalized cohort calculation. The cohort adult-entry replacement gap is 5.33%; that distribution is not a renewed demographic steady state. The tax and pension settings remain fixed and their applicable accounting checks pass.",
+    "Nonhousing consumption rises on impact but falls in the separately recomputed cohort. Initial owners retain their houses as prices rise, so housing revaluation is a plausible mechanism; this aggregate comparison does not identify that channel by itself. Consumption and saving integrate separate buyer/renter and owner-stayer policies.",
+    "Within the central occupied wealth support, childless-renter ownership probabilities generally increase with initial wealth, and birth-outcome housing choices are larger after a first birth. These conditional curves average selected income states; they are not causal birth effects. Cross-sectional plots against post-transaction financial wealth mix tenure selection with borrowing. High-wealth declines, local kinks and late-retirement borrowing remain questions for diagnosis, not certified mechanisms.",
+    "The separate chat Prepare transitions for frozen block0506 owns historical September 10-14 reconstruction, transition-code preparation and the requested credit/fixed-stock cases. Credit liberalization removes artificial limits while retaining lifetime solvency and repayment. The fixed-housing case freezes physical supply while prices and rents clear. A new steady state and the 10% supply expansion require a reconciled demographic, fiscal and estate closure; no such result is claimed here. Historical 2007-to-2023 re-estimation remains separate and deferred.",
+    "Torch jobs 18738188 and 18738587 extracted the saved state without solves. Job 18738157 completed exactly three lifecycle solves in 376.76 seconds within its 20-minute cap. The original checkpoint and all 30 authenticated export files remain unchanged. Nine new tiny-tail diagnostic logs followed an inherited logging path; they were moved, with unchanged hashes, into the corresponding experiment cases. The first extraction attempt failed on float32 probability normalization; the correction matched the native float64 convention and passed the unchanged tolerance."
+  ],
+  "supplemental_panels": [
+    {
+      "title": "First and subsequent births",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/saved_anatomy_v2/supplemental_birth_flows.png",
+      "caption": "Left: explicit births per living household in each four-year age cell. Right: successful birth probability among households eligible for that birth. The denominator matters: an early peak in total first births differs from a peak in the probability among the remaining childless. Third births are explicit entries into the top child-count bin; demographic top-bin weights are not applied.",
+      "sha256": "7cf11e146c8e7b21c6555c808608d2c333aed4bed4a00455b390896053da12e4"
+    },
+    {
+      "title": "Realized lifecycle housing and balance sheets",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/saved_anatomy_v2/supplemental_lifecycle_balance_sheets.png",
+      "caption": "Beginning net worth equals net financial wealth plus gross house value before this period's tenure transaction, matching the authoritative wealth observer. The ownership and room panels show current realized choices. Buyers include previous owners moving to another owner product. The dotted line marks retirement at the age-66 model cell; these are stationary age profiles, not a historical transition.",
+      "sha256": "885a4428d9e4fc515fde2be8f816acb5b8b21f38c0bf67f04faea54ec588a196"
+    },
+    {
+      "title": "Occupied wealth support",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/saved_anatomy_v2/supplemental_occupied_wealth_shapes.png",
+      "caption": "Conditional realized outcomes by post-transaction net financial wealth, restricted to the central 99% of each age cell's occupied wealth distribution. Negative financial wealth is heavily selected toward owners because they hold housing and debt. The resulting shape is not a causal wealth response and should not be read as a policy function.",
+      "sha256": "8b9d34f7d13377e0b83c95eab23978bdffbcdd17e08d46d250e2f17d6a8d8625"
+    },
+    {
+      "title": "Conditional choices of initially childless renters",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/saved_anatomy_v2/supplemental_childless_renter_occupied_choices.png",
+      "caption": "Expected ownership and rooms integrate actual tenure-choice probabilities and transaction interpolation within each birth-outcome branch. The initially occupied renter distribution supplies income weights. First-birth and no-birth branches therefore have different selected income compositions. These supplemental views do not replace the full-grid standard panels.",
+      "sha256": "dfa8a4dd7241096f0af8a4e082ae6b2b6dcd050f89c6d3a254dab6f58f60a568"
+    },
+    {
+      "title": "Occupied credit-limit incidence",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/constraints_v1/supplemental_constraint_binding.png",
+      "caption": "Each denominator is the actual renter, buyer or owner-stayer mass of that age. Saving is compared with the native credit floor, grid floor and, where death is possible, the net-estate solvency boundary. Constraint components may overlap and must not be added. Equality within 1e-8 asset units is a boundary incidence, not a shadow-price estimate. Purchase exclusion incidence is not measured.",
+      "sha256": "8ab84fc5348d1d3618dae02f91240ba8f98985dc8eaddc3e8da15fe13ba46c50"
+    }
+  ],
+  "cases": [
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/fixed_price_v1/price_110",
+      "title": "Experimental +10% prescribed price and rent",
+      "description": "Complete target comparison for the normalized-entry cohort at permanently higher housing prices; all 31 reference parameters remain fixed. The unchanged 2007 targets provide a comparison, not an objective for re-estimation. The old replacement benchmark is displayed but not imposed. Common-primary comparison loss is 99.333; its increase is not evidence of a failed counterfactual.",
+      "receipt_sha256": "8d425fbfcf81100d7b386ce9d6df31cd200fcc122f9ad94e23eea5e9a08485a6"
+    }
+  ],
+  "comparison_rows": [
+    [
+      "Births per household / four-year period",
+      "0.11542",
+      "0.11059",
+      "0.10950"
+    ],
+    [
+      "First births per household / four-year period",
+      "0.05016",
+      "0.04596",
+      "0.04813"
+    ],
+    [
+      "Owners (% of all households)",
+      "66.82",
+      "65.85",
+      "64.64"
+    ],
+    [
+      "Realized rooms per household",
+      "5.848",
+      "5.664",
+      "5.453"
+    ],
+    [
+      "Nonhousing consumption per household",
+      "2.3414",
+      "2.3830",
+      "2.3177"
+    ],
+    [
+      "Completed fertility",
+      "2.100",
+      "-",
+      "1.988"
+    ],
+    [
+      "Asset price",
+      "0.78987",
+      "0.86886",
+      "0.86886"
+    ],
+    [
+      "Implied rent",
+      "0.14240",
+      "0.15664",
+      "0.15664"
+    ]
+  ]
+}

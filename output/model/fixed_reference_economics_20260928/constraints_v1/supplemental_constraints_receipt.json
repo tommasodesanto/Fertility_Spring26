@@ -1,0 +1,1187 @@
+{
+  "checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d",
+  "common_primary_loss": 19.581310760138322,
+  "contract_sha256": "68323aadd2c9ad221742842ace9ab108e40437303f0d34da00e7cd83b89f5abf",
+  "definitions": {
+    "buyer": "Date-owned current owner mass excluding owner stayers, including purchases by previous owners of another product.",
+    "credit": "Native component before grid/death max; component equality may overlap other constraints.",
+    "death": "b\u2032 >= -(1-selling_cost)*pH for owners, b\u2032 >= 0 for renters, only where death possible. DUE owner-stayer bound is explicit; others are audited estate solvency.",
+    "grid": "Wealth-grid minimum shown separately; binding means saving at its node and this component attains the effective floor.",
+    "occupancy": "All positive mass integrated; smallest slack reported only where cell mass exceeds1e-12.",
+    "renter": "Date-owned current renter mass and its saving policy; unsecured rollover/taper limit uses next-age indices.",
+    "stayer": "Date-owned owner-stayer mass with bp_pol_stay, not the buyer saving policy.",
+    "unit": "Asset stock in model annual-income units; no annualization of slack or constraint probability."
+  },
+  "economic_changes": [],
+  "effective_floor_checks": [
+    {
+      "age_left": 18.0,
+      "branch": "renter",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 0.0
+    },
+    {
+      "age_left": 18.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 18.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 18.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 18.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 18.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 18.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 18.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 18.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 18.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 18.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 22.0,
+      "branch": "renter",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 0.0
+    },
+    {
+      "age_left": 22.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 22.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 22.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 22.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 22.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 22.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 22.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 22.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 22.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 22.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 26.0,
+      "branch": "renter",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 0.0
+    },
+    {
+      "age_left": 26.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 26.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 26.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 26.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 26.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 26.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 26.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 26.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 26.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 26.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 30.0,
+      "branch": "renter",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 0.0
+    },
+    {
+      "age_left": 30.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 30.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 30.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 30.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 30.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 30.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 30.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 30.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 30.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 30.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 34.0,
+      "branch": "renter",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 0.0
+    },
+    {
+      "age_left": 34.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 34.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 34.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 34.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 34.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 34.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 34.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 34.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 34.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 34.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 38.0,
+      "branch": "renter",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 0.0
+    },
+    {
+      "age_left": 38.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 38.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 38.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 38.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 38.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 38.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 38.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 38.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 38.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 38.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 42.0,
+      "branch": "renter",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 0.0
+    },
+    {
+      "age_left": 42.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 42.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 42.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 42.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 42.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 42.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 42.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 42.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 42.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 42.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 46.0,
+      "branch": "renter",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 0.0
+    },
+    {
+      "age_left": 46.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 46.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 46.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 46.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 46.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 46.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 46.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 46.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 46.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 46.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 50.0,
+      "branch": "renter",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 0.0
+    },
+    {
+      "age_left": 50.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 50.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 50.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 50.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 50.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 50.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 50.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 50.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 50.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 50.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 54.0,
+      "branch": "renter",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 0.0
+    },
+    {
+      "age_left": 54.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 54.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 54.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 54.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 54.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 54.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 54.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 54.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 54.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 54.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 58.0,
+      "branch": "renter",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 0.0
+    },
+    {
+      "age_left": 58.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 58.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 58.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 58.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 58.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 58.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 58.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 58.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 58.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 58.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 62.0,
+      "branch": "renter",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 0.0
+    },
+    {
+      "age_left": 62.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 62.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 62.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 62.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 62.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 62.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 62.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 62.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 62.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 62.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 66.0,
+      "branch": "renter",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 0.0
+    },
+    {
+      "age_left": 66.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 66.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 66.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 66.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 66.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 66.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 66.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 66.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 66.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 66.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 70.0,
+      "branch": "renter",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 0.0
+    },
+    {
+      "age_left": 70.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 70.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 70.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 70.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 70.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 70.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 70.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 70.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 70.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 70.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 74.0,
+      "branch": "renter",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 0.0
+    },
+    {
+      "age_left": 74.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 74.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 74.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 74.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 74.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 74.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 74.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 74.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 74.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 74.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 78.0,
+      "branch": "renter",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 0.0
+    },
+    {
+      "age_left": 78.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 78.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 78.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 78.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 78.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 78.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 78.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 78.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 78.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 78.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 82.0,
+      "branch": "renter",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 0.0
+    },
+    {
+      "age_left": 82.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 82.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 82.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 82.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 82.0,
+      "branch": "buyer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    },
+    {
+      "age_left": 82.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 2.0
+    },
+    {
+      "age_left": 82.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 4.0
+    },
+    {
+      "age_left": 82.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 6.0
+    },
+    {
+      "age_left": 82.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 8.0
+    },
+    {
+      "age_left": 82.0,
+      "branch": "owner_stayer",
+      "effective_floor_violation_mass": 0.0,
+      "owner_rooms": 10.0
+    }
+  ],
+  "elapsed_seconds": 29.983391184010543,
+  "full_parameter_table": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/parameters.csv",
+  "full_target_table": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/target_fit.csv",
+  "label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "limitations": [
+    "No new solution or counterfactual: equality to a bound does not measure a shadow value or causal response.",
+    "Components overlap; do not sum binding shares across components.",
+    "Purchase entry affordability incidence and excluded alternatives are not implemented. Original exact purchase-feasibility audit is replayed only, including income/R and transaction grid support.",
+    "A reported zero purchase-violation mass is not evidence that no household is excluded by affordability.",
+    "Only the existing discrete-grid solution is described; off-grid optima and numerical-grid sensitivity remain untested."
+  ],
+  "model_solves": 0,
+  "original_purchase_accounting_replay": {
+    "end_mortgage_floor_violation_mass": 0.0,
+    "mass_tolerance": 2e-10,
+    "maximum_occupied_end_debt_shortfall": 0.0,
+    "maximum_occupied_stayer_debt_shortfall": 0.0,
+    "maximum_occupied_transaction_wealth_error": 1.4210854715202004e-14,
+    "purchase_threshold_violation_mass": 0.0,
+    "source_contract": "origin_specific_due_v1",
+    "stayer_death_estate_violation_mass": 0.0,
+    "stayer_mass": 0.46163666002416703,
+    "stayer_principal_floor_violation_mass": 0.0,
+    "transaction_outside_grid_mass": 0.0,
+    "wealth_tolerance": 1e-09
+  },
+  "reference_manifest": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/fixed_reference_manifest.json",
+  "script_sha256": "dcfd11b4cf69724bdc02b44a1a83fa3b9834d9ea1adbbda74641643e08182849",
+  "slurm_job": "18738587",
+  "source_changes": [],
+  "source_equations": {
+    "branch_mass": "e5f_overnight_estate_audit.policy_mass_branches",
+    "buyer": "solver.owner_borrowing_floor with native_purchase_income=True",
+    "renter": "solver.renter_borrowing_floor -> debt_rule_at_age -> unsecured_debt_floor",
+    "stayer": "solver.native_due_owner_floor, then max with native_due_death_floor and grid minimum"
+  },
+  "source_manifest": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/contract_v1/source_manifest.json",
+    "sha256": "07d84336a3112b251afe505908113d9c00585b91c34bd50f0dee108435db496d"
+  },
+  "standard_plots_unchanged": 17,
+  "status": "PASS",
+  "thresholds": {
+    "binding_asset_units": 1e-08,
+    "violation_asset_units": 1e-09,
+    "violation_mass": 2e-10
+  }
+}
