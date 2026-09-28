@@ -1,0 +1,526 @@
+{
+  "status": "authenticated_bounded_exploration",
+  "common_best": {
+    "case": "initial_0506_block",
+    "case_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/initial_0506_block/case",
+    "checkpoint_sha256": "1c4345b4a64b9ad9d8ac5029c5391da3991e045de9ba26c9574f83e2c907c7aa",
+    "deadline": 1790593200.0,
+    "design": "coordinate_theta0",
+    "error": null,
+    "halt_new_dispatch": false,
+    "lane": "block",
+    "loss": 1.883322887168778,
+    "point": {
+      "H0": 6.293507689200028,
+      "beta_annual": 0.9634753808828738,
+      "chi": 1.0938718913975698,
+      "child_benefit_curvature": 0.061454973811513665,
+      "delta_alpha_jump": 0.13487659325900622,
+      "first_birth_fixed_cost": 0.6209410745816288,
+      "kappa_fert": 0.17561183772819416,
+      "kappa_fert_continuation": 0.33176505374023935,
+      "tenure_choice_kappa": 0.012087458119671006,
+      "theta0": 0.12451612635999697
+    },
+    "primary_rescore": 19.581310760138322,
+    "receipt_sha256": "aaf08ed9fe0d40073b3d35f6f9780d32212a56b47a138e00d8ec51d86b725a8b",
+    "request_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/initial_0506_block.request.json",
+    "returncode": 0,
+    "status": "success"
+  },
+  "common_primary_key": "block",
+  "search_counts": {
+    "success": 528,
+    "censored_timeout": 24
+  },
+  "search_attempts": 552,
+  "fresh_successful_repeats": 6,
+  "start_primary_loss": 26.368192413904882,
+  "primary_loss": 19.581310760138322,
+  "loss_reduction_percent": 25.738896118596266,
+  "all_fit_rows": [
+    {
+      "moment": "initial_normalization",
+      "target": "2.1",
+      "model": "2.0999983368073374",
+      "gap": "-1.6631926627042048e-06",
+      "weight": "",
+      "loss_contribution": "",
+      "role": "normalization"
+    },
+    {
+      "moment": "cps_childlessness",
+      "target": "0.19827875100684264",
+      "model": "0.2010621765888024",
+      "gap": "0.002783425581959764",
+      "weight": "35532.3042455214",
+      "loss_contribution": "0.2752850337303754",
+      "role": "scored"
+    },
+    {
+      "moment": "cps_exactly_one",
+      "target": "0.21365532522014702",
+      "model": "0.2094219325930911",
+      "gap": "-0.00423339262705591",
+      "weight": "26952.820824310795",
+      "loss_contribution": "0.4830380277051848",
+      "role": "scored"
+    },
+    {
+      "moment": "nchs_mean_age",
+      "target": "25.976263860992496",
+      "model": "25.93278056306455",
+      "gap": "-0.043483297927945586",
+      "weight": "139.82806784479274",
+      "loss_contribution": "0.26438651897923604",
+      "role": "scored"
+    },
+    {
+      "moment": "nchs_share30",
+      "target": "0.2492780130410667",
+      "model": "0.22364558977321622",
+      "gap": "-0.02563242326785048",
+      "weight": "0.0",
+      "loss_contribution": "0.0",
+      "role": "validation"
+    },
+    {
+      "moment": "wealth_earnings",
+      "target": "6.92658379107299",
+      "model": "6.326314855155861",
+      "gap": "-0.6002689359171294",
+      "weight": "7.595098472533724",
+      "loss_contribution": "2.736687113167318",
+      "role": "scored"
+    },
+    {
+      "moment": "bequest_wealth",
+      "target": "0.007291023472616158",
+      "model": "0.007057418371647596",
+      "gap": "-0.00023360510096856208",
+      "weight": "5165289.256198346",
+      "loss_contribution": "0.2818767727196904",
+      "role": "scored"
+    },
+    {
+      "moment": "old_dispersion",
+      "target": "3.51593508651872",
+      "model": "3.0685912991959516",
+      "gap": "-0.44734378732276836",
+      "weight": "0.0",
+      "loss_contribution": "0.0",
+      "role": "validation"
+    },
+    {
+      "moment": "mean_rooms",
+      "target": "5.729434240102641",
+      "model": "5.847942329061135",
+      "gap": "0.11850808895849418",
+      "weight": "128.02070205233477",
+      "loss_contribution": "1.7979441381033878",
+      "role": "scored"
+    },
+    {
+      "moment": "ownership_30_55",
+      "target": "0.6762604168538028",
+      "model": "0.6548177832031233",
+      "gap": "-0.021442633650679443",
+      "weight": "2339.3623724673616",
+      "loss_contribution": "1.075607326077079",
+      "role": "scored"
+    },
+    {
+      "moment": "first_birth_rooms",
+      "target": "1.465",
+      "model": "1.6221055857475672",
+      "gap": "0.15710558574756717",
+      "weight": "137.5652749002964",
+      "loss_contribution": "3.3954088234135944",
+      "role": "scored"
+    },
+    {
+      "moment": "family_rooms",
+      "target": "0.38509964969278165",
+      "model": "0.3526264368889658",
+      "gap": "-0.032473212803815876",
+      "weight": "0.0",
+      "loss_contribution": "0.0",
+      "role": "validation"
+    },
+    {
+      "moment": "recent_parent_ownership",
+      "target": "0.12760836356692162",
+      "model": "0.11954774603336116",
+      "gap": "-0.008060617533560466",
+      "weight": "27055.822957508266",
+      "loss_contribution": "1.7579130016044182",
+      "role": "scored"
+    },
+    {
+      "moment": "early_fertility",
+      "target": "0.8095276384290021",
+      "model": "0.5354261243026106",
+      "gap": "-0.2741015141263915",
+      "weight": "100.0",
+      "loss_contribution": "7.51316400463804",
+      "role": "scored"
+    }
+  ],
+  "all_parameter_rows": [
+    {
+      "parameter": "H0",
+      "estimate": "6.293507689200028",
+      "lower": "0.2",
+      "upper": "80.0",
+      "near_bound": "False",
+      "status": "free in evening DUE calibration"
+    },
+    {
+      "parameter": "beta_annual",
+      "estimate": "0.9634753808828738",
+      "lower": "0.94",
+      "upper": "0.99",
+      "near_bound": "False",
+      "status": "free in evening DUE calibration"
+    },
+    {
+      "parameter": "chi",
+      "estimate": "1.0938718913975698",
+      "lower": "0.1",
+      "upper": "5.0",
+      "near_bound": "False",
+      "status": "free in evening DUE calibration"
+    },
+    {
+      "parameter": "first_birth_fixed_cost",
+      "estimate": "0.6209410745816288",
+      "lower": "0.0",
+      "upper": "8.0",
+      "near_bound": "False",
+      "status": "free in evening DUE calibration"
+    },
+    {
+      "parameter": "kappa_fert",
+      "estimate": "0.17561183772819416",
+      "lower": "0.02",
+      "upper": "50.0",
+      "near_bound": "True",
+      "status": "free in evening DUE calibration"
+    },
+    {
+      "parameter": "kappa_fert_continuation",
+      "estimate": "0.33176505374023935",
+      "lower": "0.02",
+      "upper": "50.0",
+      "near_bound": "True",
+      "status": "free in evening DUE calibration"
+    },
+    {
+      "parameter": "theta0",
+      "estimate": "0.12451612635999697",
+      "lower": "0.0",
+      "upper": "8.0",
+      "near_bound": "False",
+      "status": "free in evening DUE calibration"
+    },
+    {
+      "parameter": "delta_alpha_jump",
+      "estimate": "0.13487659325900622",
+      "lower": "0.0",
+      "upper": "0.25",
+      "near_bound": "False",
+      "status": "free in evening DUE calibration"
+    },
+    {
+      "parameter": "child_benefit_curvature",
+      "estimate": "0.061454973811513665",
+      "lower": "0.0",
+      "upper": "0.8",
+      "near_bound": "False",
+      "status": "free in evening DUE calibration"
+    },
+    {
+      "parameter": "tenure_choice_kappa",
+      "estimate": "0.012087458119671006",
+      "lower": "0.001",
+      "upper": "0.1",
+      "near_bound": "False",
+      "status": "free in evening DUE calibration"
+    },
+    {
+      "parameter": "psi_child",
+      "estimate": "0.1355551166583114",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "normalized to completed fertility 2.1"
+    },
+    {
+      "parameter": "child_benefit_CRRA_coefficient",
+      "estimate": "0.1272245805140582",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "derived from normalized one-child benefit"
+    },
+    {
+      "parameter": "theta1",
+      "estimate": "0.008193084126995582",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "fixed external restriction"
+    },
+    {
+      "parameter": "sigma",
+      "estimate": "2.0",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "fixed"
+    },
+    {
+      "parameter": "alpha_cons",
+      "estimate": "0.733",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "fixed CEX childless expenditure share"
+    },
+    {
+      "parameter": "delta_alpha",
+      "estimate": "0.0",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "fixed zero later-child loading"
+    },
+    {
+      "parameter": "h_P",
+      "estimate": "0.0",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "no housing floor"
+    },
+    {
+      "parameter": "utility_reference_rent",
+      "estimate": "0.11046592704873838",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "fixed substantive utility normalization"
+    },
+    {
+      "parameter": "q_annual",
+      "estimate": "0.020000000000000018",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "author-retained 2% annual real rate"
+    },
+    {
+      "parameter": "financed_share",
+      "estimate": "0.8",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "inherited credit contract"
+    },
+    {
+      "parameter": "housing_supply_elasticity",
+      "estimate": "0.63",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "fixed provisional external mapping"
+    },
+    {
+      "parameter": "payroll_tax",
+      "estimate": "0.08028070961950022",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "derived from adopted pension ratio"
+    },
+    {
+      "parameter": "pension_period",
+      "estimate": "0.917784047463731",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "balanced PAYGO"
+    },
+    {
+      "parameter": "annual_depreciation",
+      "estimate": "0.01416143718381309",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "adopted"
+    },
+    {
+      "parameter": "period_depreciation",
+      "estimate": "0.05545379079326218",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "compounded"
+    },
+    {
+      "parameter": "annual_property_tax",
+      "estimate": "0.010598360773872594",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "adopted"
+    },
+    {
+      "parameter": "period_property_tax",
+      "estimate": "0.042393443095490375",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "linear period convention"
+    },
+    {
+      "parameter": "selling_cost",
+      "estimate": "0.06",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "retained"
+    },
+    {
+      "parameter": "rental_cap",
+      "estimate": "6.0",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "retained provisional"
+    },
+    {
+      "parameter": "wealth_grid_nodes",
+      "estimate": "160.0",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "retained exact grid"
+    },
+    {
+      "parameter": "income_states",
+      "estimate": "15.0",
+      "lower": "",
+      "upper": "",
+      "near_bound": "",
+      "status": "retained B15"
+    }
+  ],
+  "lane_winners": {
+    "block": {
+      "case": "initial_0506_block",
+      "case_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/initial_0506_block/case",
+      "checkpoint_sha256": "1c4345b4a64b9ad9d8ac5029c5391da3991e045de9ba26c9574f83e2c907c7aa",
+      "deadline": 1790593200.0,
+      "design": "coordinate_theta0",
+      "error": null,
+      "halt_new_dispatch": false,
+      "lane": "block",
+      "loss": 1.883322887168778,
+      "point": {
+        "H0": 6.293507689200028,
+        "beta_annual": 0.9634753808828738,
+        "chi": 1.0938718913975698,
+        "child_benefit_curvature": 0.061454973811513665,
+        "delta_alpha_jump": 0.13487659325900622,
+        "first_birth_fixed_cost": 0.6209410745816288,
+        "kappa_fert": 0.17561183772819416,
+        "kappa_fert_continuation": 0.33176505374023935,
+        "tenure_choice_kappa": 0.012087458119671006,
+        "theta0": 0.12451612635999697
+      },
+      "primary_rescore": 19.581310760138322,
+      "receipt_sha256": "aaf08ed9fe0d40073b3d35f6f9780d32212a56b47a138e00d8ec51d86b725a8b",
+      "request_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/initial_0506_block.request.json",
+      "returncode": 0,
+      "status": "success"
+    },
+    "identity": {
+      "case": "initial_0526_identity",
+      "case_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/initial_0526_identity/case",
+      "checkpoint_sha256": "b8e955608b547b372616365d1b3af056aec3f5c2547905988aaad665d30b71c8",
+      "deadline": 1790593200.0,
+      "design": "fertility_subspace",
+      "error": null,
+      "halt_new_dispatch": false,
+      "lane": "identity",
+      "loss": 0.07085253264601085,
+      "point": {
+        "H0": 6.56899372457187,
+        "beta_annual": 0.9630675295062008,
+        "chi": 1.1061260593381324,
+        "child_benefit_curvature": 0.2996346089321945,
+        "delta_alpha_jump": 0.13945725568578649,
+        "first_birth_fixed_cost": 0.6679328356280663,
+        "kappa_fert": 0.10634897557624248,
+        "kappa_fert_continuation": 0.49584540108306674,
+        "tenure_choice_kappa": 0.008913722069543094,
+        "theta0": 0.11637140890106326
+      },
+      "primary_rescore": 552.7877818557425,
+      "receipt_sha256": "11d1ae26ea18e4e23666d06748a8c373083673cca7fb023adf4e23c5d2e9f695",
+      "request_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/initial_0526_identity.request.json",
+      "returncode": 0,
+      "status": "success"
+    },
+    "primary": {
+      "case": "initial_0507_primary",
+      "case_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/initial_0507_primary/case",
+      "checkpoint_sha256": "4c74281c6ad7bc88fcf9d8da6567322a653a1b7c34ec5963bf11ed54ac2ca48a",
+      "deadline": 1790593200.0,
+      "design": "coordinate_delta_alpha_jump",
+      "error": null,
+      "halt_new_dispatch": false,
+      "lane": "primary",
+      "loss": 22.3974934671076,
+      "point": {
+        "H0": 6.451702239667494,
+        "beta_annual": 0.9630262383109209,
+        "chi": 1.0889178301004045,
+        "child_benefit_curvature": 0.041524005347839385,
+        "delta_alpha_jump": 0.13107814414109578,
+        "first_birth_fixed_cost": 0.6422966212852167,
+        "kappa_fert": 0.18437619822770843,
+        "kappa_fert_continuation": 0.34569116877573275,
+        "tenure_choice_kappa": 0.011810975587510167,
+        "theta0": 0.11497197534220058
+      },
+      "primary_rescore": 22.397493467107605,
+      "receipt_sha256": "e3aab5f3e122651b02e5361668e2b1b9733aa3acaf5e8fd649901c94eb3f06e3",
+      "request_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/gated_v1/search/initial_0507_primary.request.json",
+      "returncode": 0,
+      "status": "success"
+    }
+  },
+  "findings": {
+    "reviewed_by_lead": true,
+    "economic_fit": "Early fertility remains 0.535 versus 0.810; wealth/earnings 6.326 versus 6.927 and ownership 0.655 versus 0.676. Relative-gap weights reach early fertility 0.657, but mean first-birth age falls to 24.047 versus 25.976.",
+    "numerical_review": "528 search cases pass; 24 unfinished cases were stopped at the search cutoff. All six fresh repeats match the full tables and plots. Two old timeout points recover with the longer case budget. These findings do not establish equilibrium existence for every rejected parameter point.",
+    "price_diagnostic": {
+      "status": "reviewed",
+      "text": "At the same failed parameter point, the original price start fails to bracket; half that start clears housing and pensions at unchanged tolerances. This identifies one numerical starting-price failure. Completed fertility is 5.063 at fixed child benefit: this is not a normalized calibration or an explanation of every earlier rejection.",
+      "evidence_path": "/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/output/model/overnight_calibration_20260928/failure_diagnosis/completed_review/lead_review.json",
+      "evidence_sha256": "4d04a24c5dcebd581f84189daac0ad060e9cda41fc91bbd12ec1aa45033f2467"
+    },
+    "early_diagnostic": {
+      "status": "reviewed",
+      "text": "Both exact anchors pass. Halving and quartering the first-birth taste scale raise early fertility from 0.535 to 0.602 and 0.667 (target 0.810). Other-moment primary loss rises from 12.1 to 491.5 and 1398.4. At 0.667, mean first-birth age is 23.43 versus 25.98 and childlessness 0.249 versus 0.198. Of ten cases, four pass (including anchors), five time out and one violates positive child benefit. These are diagnostic probes, not an estimated global frontier.",
+      "evidence_path": "/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/output/model/overnight_calibration_20260928/early_frontier/completed_review/lead_review.json",
+      "evidence_sha256": "d5f9472492a11e8843c503a7e1af8cc02499e02377170e8977265e7b953a5162"
+    },
+    "next_steps": "First diagnose the early-fertility versus birth-timing tradeoff; retain validation rows. Test a robust price-bracketing strategy without weakening gates. Examine occupied-state policy behavior and local identification before any further production calibration."
+  },
+  "source_contract_sha256": "c83aaff1a90b1ba5bb0919151840e745e6816cb0a3a023ce746e750f77226c5d",
+  "authentication_sha256": "80042e4a1c1ca139a44aaed879b4c47b7b90d9133321420cd157a28adf27094b",
+  "model_solves_for_report": 0
+}

@@ -1,5 +1,35 @@
 # Calibration Status
 
+## September 28, final delivery — overnight work complete
+
+The two-page memo is `output/pdf/overnight_calibration_20260928.pdf`, rendered
+on Torch job18708310 and both pages visually checked. All14 target rows and
+11 fitted quantities/bounds are included. Full31-parameter and target tables:
+`cluster/final_review/`; selected17 standard plots:
+`final_report/selected_standard_diagnostics/`.
+
+Selected block0506 common-primary loss19.581310760138322, down25.739% from
+26.368192413904882. Original gates and two fresh repeats pass; all three lane
+winners have exact14/31 tables and17 plot repeat checks. No optimum claim.
+528 searches succeeded;24 unfinished cases were stopped at the07:00 cutoff.
+All model jobs18687184/18687833/18690757 are COMPLETED; no new solves authorized.
+
+Early diagnostic completed: both anchors exact, two proposals pass, five cases
+time out, one violates positive child-benefit restriction. Halving/quartering
+first-birth taste scale raises early fertility.535 to.602/.667 against.810;
+other-moment loss rises12.1 to491.5/1398.4. Quarter-scale mean first-birth age
+23.43 versus25.98, childlessness.249 versus.198. Full14/31/bounds/probability/
+occupied-value screens and all17 plots for each successful case reviewed.
+Evidence `early_frontier/completed_review/lead_review.json`. Diagnostic only;
+no promotion or claim the target is unreachable.
+
+Price-start comparison identifies one numerical bracketing sensitivity: original
+start fails; half start passes unchanged housing/PAYGO gates. Fixed-benefit
+fertility5.063 is not a normalized calibration. No model/grid/target/bound/gate
+changes. Existing policy and measurement caveats remain in the memo. Monitoring
+is paused on delivery; further exploration requires a new author plan.
+
+
 ## September28,07:28EDT —early experiment still within cap
 
 Early frontier at07:26:7active/3completed, fresh heartbeat; parent owns1800s

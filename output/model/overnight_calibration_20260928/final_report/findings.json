@@ -3,12 +3,16 @@
   "economic_fit": "Early fertility remains 0.535 versus 0.810; wealth/earnings 6.326 versus 6.927 and ownership 0.655 versus 0.676. Relative-gap weights reach early fertility 0.657, but mean first-birth age falls to 24.047 versus 25.976.",
   "numerical_review": "528 search cases pass; 24 unfinished cases were stopped at the search cutoff. All six fresh repeats match the full tables and plots. Two old timeout points recover with the longer case budget. These findings do not establish equilibrium existence for every rejected parameter point.",
   "price_diagnostic": {
-    "status": "pending",
-    "text": "Both arms finished: original price start fails to bracket; half the starting price passes unchanged housing and pension gates. Fixed child benefit implies completed fertility 5.063, not normalized to 2.1; this is numerical diagnosis only. Final evidence packaging pending."
+    "status": "reviewed",
+    "text": "At the same failed parameter point, the original price start fails to bracket; half that start clears housing and pensions at unchanged tolerances. This identifies one numerical starting-price failure. Completed fertility is 5.063 at fixed child benefit: this is not a normalized calibration or an explanation of every earlier rejection.",
+    "evidence_path": "/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/output/model/overnight_calibration_20260928/failure_diagnosis/completed_review/lead_review.json",
+    "evidence_sha256": "4d04a24c5dcebd581f84189daac0ad060e9cda41fc91bbd12ec1aa45033f2467"
   },
   "early_diagnostic": {
-    "status": "pending",
-    "text": "The ten-case experiment is still running. It varies first- and later-birth taste scales and includes two boundary probes. Results will replace this paragraph after anchor and full-table checks."
+    "status": "reviewed",
+    "text": "Both exact anchors pass. Halving and quartering the first-birth taste scale raise early fertility from 0.535 to 0.602 and 0.667 (target 0.810). Other-moment primary loss rises from 12.1 to 491.5 and 1398.4. At 0.667, mean first-birth age is 23.43 versus 25.98 and childlessness 0.249 versus 0.198. Of ten cases, four pass (including anchors), five time out and one violates positive child benefit. These are diagnostic probes, not an estimated global frontier.",
+    "evidence_path": "/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/output/model/overnight_calibration_20260928/early_frontier/completed_review/lead_review.json",
+    "evidence_sha256": "d5f9472492a11e8843c503a7e1af8cc02499e02377170e8977265e7b953a5162"
   },
   "next_steps": "First diagnose the early-fertility versus birth-timing tradeoff; retain validation rows. Test a robust price-bracketing strategy without weakening gates. Examine occupied-state policy behavior and local identification before any further production calibration."
 }

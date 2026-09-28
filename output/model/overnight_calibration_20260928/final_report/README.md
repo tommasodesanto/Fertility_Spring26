@@ -119,3 +119,5 @@ use a separate scratch project with an explicitly synthetic, fully consistent
 fixture, and label its output clearly; never publish it as the final report.
 If the main run fails, write an honest failure memo separately rather than
 weakening this renderer's authentication checks.
+
+Final delivery: `../../../pdf/overnight_calibration_20260928.pdf` (two pages; both rendered pages checked). Full target/parameter tables are in `../cluster/final_review/`; all 17 selected standard plots are in `selected_standard_diagnostics/`. Price and early-fertility diagnostic reviews are complete. No new model solves or specification changes.

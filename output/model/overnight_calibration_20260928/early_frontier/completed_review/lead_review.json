@@ -1,0 +1,56 @@
+{
+  "accepted_for_diagnostics_only": true,
+  "counts": {
+    "success": 4,
+    "inadmissible": 1,
+    "censored_timeout": 5
+  },
+  "anchor_checks": {
+    "early_best": {
+      "parameter_rows": 31,
+      "physical_numeric_cells_exact": true,
+      "target_rows": 14
+    },
+    "primary_best": {
+      "parameter_rows": 31,
+      "physical_numeric_cells_exact": true,
+      "target_rows": 14
+    }
+  },
+  "case_checks": {
+    "initial_x_half": {
+      "targets": 14,
+      "parameters": 31,
+      "bounds_pass": true,
+      "occupied_value_screen_pass": true,
+      "probabilities_pass": true,
+      "standard_plots_visually_reviewed": 17
+    },
+    "anchor_early_best": {
+      "targets": 14,
+      "parameters": 31,
+      "bounds_pass": true,
+      "occupied_value_screen_pass": true,
+      "probabilities_pass": true,
+      "standard_plots_visually_reviewed": 17
+    },
+    "initial_x_quarter": {
+      "targets": 14,
+      "parameters": 31,
+      "bounds_pass": true,
+      "occupied_value_screen_pass": true,
+      "probabilities_pass": true,
+      "standard_plots_visually_reviewed": 17
+    },
+    "anchor_primary_best": {
+      "targets": 14,
+      "parameters": 31,
+      "bounds_pass": true,
+      "occupied_value_screen_pass": true,
+      "probabilities_pass": true,
+      "standard_plots_visually_reviewed": 17
+    }
+  },
+  "not_promoted": true,
+  "limitations": "Five cases hit their cap; one failed positive child-benefit gate. No global frontier or unreachable-target claim."
+}
