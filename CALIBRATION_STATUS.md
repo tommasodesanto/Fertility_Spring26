@@ -1,5 +1,19 @@
 # Calibration Status
 
+## September 28, 12:45 EDT — all40 Jacobian probes pass
+
+All40 probes successful; full/half-step Jacobian and normalized-benefit
+derivatives saved in run_v1, copied to lead_review. Six-lane search batch now
+active:24 actual workers,72 queued proposals; no search result yet. Fresh
+heartbeat, last completed-case checkpoint10.5min old; peak RSS84.7GiB/192GiB.
+Local early-fertility derivative is negative for first-birth taste scale and
+positive for later-birth taste scale at both steps. Scaled Jacobian is formally
+rank10 but poorly conditioned (half-step condition4.65e5); only7 singular
+values exceed full/half-step difference norm1.907. This is a numerical
+sensitivity warning, not a statistical rank or global identification verdict.
+No new candidate plot packet yet; smoke17 reviewed at11:44 remain latest.
+No intervention, model changes or deadline extension.
+
 ## September 28, 12:15 EDT — Jacobian active
 
 Main18716710 running on cs741,24 actual model workers;5 completed probes,
