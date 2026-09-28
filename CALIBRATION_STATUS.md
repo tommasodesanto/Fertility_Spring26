@@ -1,5 +1,20 @@
 # Calibration Status
 
+## September28 13:15 EDT — failure classifier bug; new dispatch halted
+
+Main18716710 has65 records:40Jac+12search successes,1fatal,12timeouts;10
+active workers draining,61 proposals unstarted. Original fatal case0045
+profile_quadruple violated positive normalized child benefit. Classifier then
+rejected context stage search (accepts initial/de/smoke/repeat), turning expected
+inadmissibility into fatal. This is a demonstrated controller metadata bug;
+the economic gate remains correct and unchanged. No incumbent source edited.
+Bounded separate resume wrapper being prepared/reviewed; no continuation
+authorized for launch before tests and lead review. Must authenticate parent
+final evidence under old pins, preserve failure/timeouts, run only unattempted
+cells, retain original global count538 and absolute17:23:14 end.
+Saved-winner rendering18721154 submitted, zero solves, to inspect current
+full tables/17plots while old workers drain. No candidate is certified.
+
 ## September 28, 12:45 EDT — all40 Jacobian probes pass
 
 All40 probes successful; full/half-step Jacobian and normalized-benefit

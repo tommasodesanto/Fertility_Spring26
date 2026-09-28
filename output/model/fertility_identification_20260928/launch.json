@@ -1,5 +1,5 @@
 {
-  "status": "jacobian_complete_search_running",
+  "status": "dispatch_halted_classifier_bug_drain_active",
   "smoke_job": "18716129",
   "preflight_pass_job": "18715779",
   "prepare_pass_job": "18715783",
@@ -37,18 +37,17 @@
     "end": 1790630594.4615145
   },
   "latest_check": {
-    "utc": "2026-09-28T16:45:00Z",
-    "actual_model_workers": 24,
-    "completed": 40,
-    "success": 40,
-    "fatal": 0,
-    "timeout": 0,
-    "inadmissible": 0,
-    "memory_max_kib": 88787628,
-    "checkpoint_age_seconds": 630,
-    "status": "all40_jacobian_success_search_batch_active_fresh_heartbeat"
+    "utc": "2026-09-28T17:15:00Z",
+    "heartbeat_active": 10,
+    "completed": 65,
+    "success": 52,
+    "fatal": 1,
+    "timeout": 12,
+    "memory_max_kib": 120660104,
+    "cause": "NonpositiveNormalizedBenefit gate correctly rejected candidate; classifier Context rejects search stage; immutable repair under review"
   },
   "main_job": "18716710",
   "independent_review_job": "18716599",
-  "approval": "approval_v1.json"
+  "approval": "approval_v1.json",
+  "saved_renderer_job": "18721154"
 }
