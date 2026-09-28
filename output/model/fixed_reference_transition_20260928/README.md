@@ -121,3 +121,11 @@ calibration, manuscript or September 14 reference source was edited. The saved
 reference project stayed read-only. Only this packet and its final PDF are included in the bounded source-control
 commit; automatic Git maintenance is disabled. Other existing changes in the
 shared checkout are excluded.
+
+## Ownership correction after preparation
+
+This chat owns transitions. The briefly assigned credit implementation stage
+was withdrawn before any model edit or numerical launch.
+[`credit_v1/README.md`](credit_v1/README.md) records the stopped read-only setup.
+Credit-rule and endpoint objects will come from the economic-analysis chat.
+Work is stopped pending the author's return; no new numerical stage is active.
