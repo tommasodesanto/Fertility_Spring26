@@ -1,5 +1,38 @@
 # Calibration Status
 
+## September 28 — author-requested two-birth spacing diagnostic
+
+The frozen reference remains **2007 stationary reference — block0506,
+September 28 verified export**. The author authorized a small test allowing
+two births within a four-year period and requested the Jacobian interpretation.
+`output/model/fertility_identification_20260928/two_births_v1/` contains an
+isolated fixed-policy replay, not a new equilibrium/calibration. No shared
+model source, preference, target, bound or reference was changed.
+
+Torch18744518 PASS45s: zero model solves, two cohort replays; control reproduces
+saved pre/post populations to4.3e-17 and all birth-order flows. Original source,
+checkpoint and30export/17plot hashes pass; mass/dead-state checks pass. Extra
+opportunity occurs only after a successful birth, using the saved subsequent
+attempt probability at the new child state; at most two new births per period.
+Entry, income, prices, saving/tenure/location policies and psi are fixed.
+
+Age25 capped children rise0.535426->0.698266 versus0.809528, closing59.409% of
+the gap mechanically. Motherhood0.450113 and mapped first-birth age25.932781
+remain unchanged by construction. The40–44 count rises1.730769->1.938930,
+overshooting data1.718406. Terminal model-coded fertility rises2.099998->
+2.362365; potential entrants exceed fixed entry12.494%. Thus the replay does
+NOT enforce replacement or renewal and is not a calibration candidate. It
+shows a substantial spacing effect at fixed choices; the gain after household
+reoptimization and mandatory2.1 normalization is unmeasured. Within-cell
+projection is inherited, with no new ordered birth dates. No full re-solve,
+transition, resumed search or promotion follows from this diagnostic.
+
+`measurement_audit_v1/jacobian_readout.md` gives all ten local directions and
+the concrete timing trade-off: +10% later-birth scale predicts+0.015children
+by25 and-0.199years first-birth age. Offsetting the age change through the
+first-birth scale leaves+0.007children. These are normalized local predictions,
+not an infeasibility proof. The bounded GN proposal remains unlaunched.
+
 ## September 28 — saved income and fertility measurement audit complete
 
 Use **2007 stationary reference — block0506, September 28 verified export**,

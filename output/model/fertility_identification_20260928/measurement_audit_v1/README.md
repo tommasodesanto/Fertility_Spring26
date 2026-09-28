@@ -216,6 +216,13 @@ timeline or the deliberate replacement closure.
 
 ## Identification and a bounded numerical experiment
 
+The [plain-English Jacobian readout](jacobian_readout.md) connects all ten
+parameter directions to early fertility and first-birth age, distinguishes
+verified profiles from linear predictions, and explains weak local directions.
+The author's later two-birth suggestion is examined separately in the
+[fixed-policy spacing replay](../two_births_v1/README.md), a diagnostic with
+zero model solves, not an adopted specification or a new calibration.
+
 The active system has ten scored moments and ten searched coordinates, plus
 the separately normalized \(\psi\). The full/half-step Jacobians are formally
 rank ten, but only seven half-step singular values exceed the step-difference
