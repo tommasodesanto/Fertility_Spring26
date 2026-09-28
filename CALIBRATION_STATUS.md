@@ -1,5 +1,24 @@
 # Calibration Status
 
+## September 28, 11:22 EDT — launch dependency repair
+Importcheck18716108 COMPLETED/PASS, exact pinned controller-helper import and
+contract verification, zero solves. Replacement smoke18716129 submitted using
+immutable run_v2.sh SHA02eb80711e5b18104d8f73ff8d7d4a80b73dd266005a9efd90043f05d30b50b5.
+Outputs use smoke_v1 (previous failure never created it); original failure log
+identification_smoke_v1.log remains intact; new log identification_smoke_launcher_v2.log.
+Main remains unapproved; use run_v2.sh for subsequent approved main submission.
+
+
+Smoke18715827 failed before clock creation or any model solve: dynamic import
+of the pinned recovery scheduler could not find its sibling
+`e5f_utility_comparison_design`. No search approved. Original launcher and failure
+log retained. Versioned `run_v2.sh` adds the existing portable helper directory
+to PYTHONPATH; no source, model, objective or contract change. Torch importcheck
+18716108 checks pinned contract verification and the exact failing helper import
+with zero solves. Await its PASS before a replacement smoke submission.
+No numerical clock exists yet; the six-hour cap still starts at smoke execution.
+
+
 ## September 28 — current Jacobian and fertility reoptimization authorized
 
 Author requested full current-point Jacobian and full reoptimization strongly
