@@ -1,0 +1,34 @@
+run_e5f_early_fertility_frontier.py: OK
+test_e5f_early_fertility_frontier.py: OK
+test.sh: OK
+submit.sh: OK
+test_clipping_and_duplicate_without_replacement (test_e5f_early_fertility_frontier.FrontierTests.test_clipping_and_duplicate_without_replacement) ... ok
+test_compact_loss_allows_only_float_roundoff (test_e5f_early_fertility_frontier.FrontierTests.test_compact_loss_allows_only_float_roundoff) ... ok
+test_compact_scan_does_not_read_checkpoint (test_e5f_early_fertility_frontier.FrontierTests.test_compact_scan_does_not_read_checkpoint) ... ok
+test_fixed_window_and_fresh_ended_proof (test_e5f_early_fertility_frontier.FrontierTests.test_fixed_window_and_fresh_ended_proof) ... ok
+test_nondominance_uses_other_moment_loss (test_e5f_early_fertility_frontier.FrontierTests.test_nondominance_uses_other_moment_loss) ... ok
+test_plan_fingerprint_refuses_mutation_before_imports (test_e5f_early_fertility_frontier.FrontierTests.test_plan_fingerprint_refuses_mutation_before_imports) ... ok
+test_real_owned_batch_all10_and_complete_reports (test_e5f_early_fertility_frontier.FrontierTests.test_real_owned_batch_all10_and_complete_reports) ... /scratch/td2248/projects/fertility_night_calibration_20260928_v1/early_frontier_v1/test_e5f_early_fertility_frontier.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='/state/partition1/job-18690655/tmpo76iko4z/good_batch/full_target_comparison.csv' mode='r' encoding='utf-8'>
+  self.assertEqual(len(list(__import__('csv').DictReader((output/'full_target_comparison.csv').open()))),14*12)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/scratch/td2248/projects/fertility_night_calibration_20260928_v1/early_frontier_v1/test_e5f_early_fertility_frontier.py:97: ResourceWarning: unclosed file <_io.TextIOWrapper name='/state/partition1/job-18690655/tmpo76iko4z/good_batch/full_parameter_comparison.csv' mode='r' encoding='utf-8'>
+  self.assertEqual(len(list(__import__('csv').DictReader((output/'full_parameter_comparison.csv').open()))),31*12)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_real_owned_batch_anchor_failure_rejects_all_claims (test_e5f_early_fertility_frontier.FrontierTests.test_real_owned_batch_anchor_failure_rejects_all_claims) ... /scratch/td2248/projects/fertility_night_calibration_20260928_v1/early_frontier_v1/test_e5f_early_fertility_frontier.py:96: ResourceWarning: unclosed file <_io.TextIOWrapper name='/state/partition1/job-18690655/tmpg3g4vgf1/bad_batch/full_target_comparison.csv' mode='r' encoding='utf-8'>
+  self.assertEqual(len(list(__import__('csv').DictReader((output/'full_target_comparison.csv').open()))),14*12)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/scratch/td2248/projects/fertility_night_calibration_20260928_v1/early_frontier_v1/test_e5f_early_fertility_frontier.py:97: ResourceWarning: unclosed file <_io.TextIOWrapper name='/state/partition1/job-18690655/tmpg3g4vgf1/bad_batch/full_parameter_comparison.csv' mode='r' encoding='utf-8'>
+  self.assertEqual(len(list(__import__('csv').DictReader((output/'full_parameter_comparison.csv').open()))),31*12)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_recipes_preserve_unvaried_coordinates (test_e5f_early_fertility_frontier.FrontierTests.test_recipes_preserve_unvaried_coordinates) ... ok
+test_resource_gate_requires_fresh_at_most8 (test_e5f_early_fertility_frontier.FrontierTests.test_resource_gate_requires_fresh_at_most8) ... ok
+test_stale_heartbeat_needs_exact_fresh_completion_proof (test_e5f_early_fertility_frontier.FrontierTests.test_stale_heartbeat_needs_exact_fresh_completion_proof) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 6.325s
+
+OK
+{"test": "real_frontier_batch", "owned_processes": 10, "anchor_mismatch_injected": false, "accepted": true, "model_solves": 0}
+{"test": "real_frontier_batch", "owned_processes": 10, "anchor_mismatch_injected": true, "accepted": false, "model_solves": 0}

@@ -1,5 +1,24 @@
 # Calibration Status
 
+## September28,00:13EDT — early-fertility tradeoff diagnostic queued
+
+Author explicitly requested focused runs to measure early-fertility improvement
+and sacrifices elsewhere. Torch18690757 is PENDING, explicit StartTime07:00EDT,
+EndTime07:45,10CPU/64GB. Eleven controller tests pass18690655, including actual
+ten-process batches and injected anchor mismatch rejection (zero model solves).
+Two exact14/31 anchor replays plus eight stronger fertility-scale proposals,
+including two labeled zero-cost/loading boundary diagnostics. No model change,
+no adoption, original bounds/normalization/scientific gates. Other-target loss
+excludes early fertility's own contribution. Full tables/17plots retained.
+Main search unchanged. Max main8+frontier10+price1=19 concurrent workers after
+07:00. Ten frontier plus two price diagnostics fill12reserved slots; total746
+unchanged. Per-case1800s, total2400s, hard07:45; no retries/extensions.
+Plan SHA7c6db80402eb34a6368b0c3d8b19c344c4c9393fa020fa1f5fc3574262781248.
+Evidence: early_frontier/README.md, approved_plan.json, tests_18690655.log,
+launch.json. Diagnostic only, not calibrated SMM or global reachability test.
+Hourly automation updated; final08:00 report includes this tradeoff.
+
+
 ## September27,23:55EDT —48search successes; both old timeout points recovered
 
 Job18687184:24actualworkers; peak68.2GiB/192GB.48completed searches,48success,
