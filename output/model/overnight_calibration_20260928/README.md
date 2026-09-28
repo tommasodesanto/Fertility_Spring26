@@ -1,5 +1,21 @@
 # Overnight calibration, September 27–28
 
+## September28,07:08EDT —search stopped; final verification active
+
+Search stopped at its07:00cutoff:528successes and24censored_timeouts from the
+last batch,552attempts total. These cutoff-censored cases are not evidence of
+nonexistent equilibria. Six actual final-repeat workers confirmed by process
+request names0552–0557. Selected primary0507/commonloss22.39749,
+identity0526/commonloss552.78778, block0506/commonloss19.58131 unchanged.
+Main heartbeat3.3s; its stage label remains search during repeats, so process
+requests/selected.json establish the actual phase. Price job18687833 runs arm0;
+early job18690757 has10actualworkers,0completed at07:06, heartbeat0.6s.
+Combined evaluator concurrency17 (6+10+1), below24. Early-job memory23.69GB;
+main and frontier memory.events allzero. No intervention/model change.
+Authenticator and memo builder are staged and Torch syntax passes; final
+execution/visual authentication pending. Next monitor10minutes, end08:00.
+
+
 ## September28,06:59EDT —search cutoff and final reporting preparation
 
 At06:53,524 completed searches all successful;4actualworkers, heartbeat3.3s
