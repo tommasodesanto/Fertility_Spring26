@@ -1,0 +1,127 @@
+{
+  "status": "authenticated_final_export",
+  "model_solves": 0,
+  "counts": {
+    "success": 227,
+    "inadmissible": 77,
+    "censored_timeout": 61,
+    "censored_late_completion": 1
+  },
+  "common_primary_best": {
+    "case": "initial_0347_block",
+    "case_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/evening_calibration_20260927/gated_v2/search/initial_0347_block/case",
+    "checkpoint_sha256": "c96a507f814f4b13317f53340919c69d9f163c90b696f171334f1199d88d2262",
+    "deadline": 1790557816.9682138,
+    "design": "coordinate_theta0",
+    "error": null,
+    "halt_new_dispatch": false,
+    "lane": "block",
+    "loss": 2.5279564454651906,
+    "point": {
+      "H0": 6.206479060846687,
+      "beta_annual": 0.9625666052463695,
+      "chi": 1.0889178301004045,
+      "child_benefit_curvature": 0.07930705056729134,
+      "delta_alpha_jump": 0.14191834048688282,
+      "first_birth_fixed_cost": 0.6465287075719173,
+      "kappa_fert": 0.18742283857244052,
+      "kappa_fert_continuation": 0.3474664229788561,
+      "tenure_choice_kappa": 0.007770045711149935,
+      "theta0": 0.1137084595527858
+    },
+    "primary_rescore": 26.368192413904882,
+    "receipt_sha256": "5da0930ffc20dcf638813e91d564a9fcad3888d7d3570a5b67d9e9c705bce1f2",
+    "request_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/evening_calibration_20260927/gated_v2/search/initial_0347_block.request.json",
+    "returncode": 0,
+    "status": "success"
+  },
+  "lanes": {
+    "primary": {
+      "selected": "initial_0324_primary",
+      "repeats": [
+        "repeat_0361_primary",
+        "repeat_0360_primary"
+      ],
+      "all14_31_byte_exact": true,
+      "all17_repeat_export_plot_hashes_exact": true,
+      "plot_hashes": {
+        "fertility_by_age.png": "f614104121adb3fed1f73ca90d1860fe2fe8d7ff2e8ff031913bf9b8498d7270",
+        "fertility_policy_by_age_income_state.png": "6c166c90769b9622bc9cc560f9b6c6f80ee8072db0e28ccd2a067c890be10d75",
+        "housing_by_age_income_state.png": "4d5e1bcf526e29f83c3407c97aff57bc3261b6b54f20084cbdcf43288cd654ca",
+        "housing_market.png": "2f7d53f7d9a2b74ad72484ec587c9c9c1e785946b6cbc6c9458ade5a670d6aa3",
+        "housing_prices.png": "e6d6a5f55f861697618186bcdba4d068eb68340b8d5b126188f628b73496183e",
+        "income_state_outcomes.png": "26200896978d9d0d51f26bba7fba0e919a324e4f64b3bc548141761c8c00430f",
+        "liquid_wealth_by_age_income_state.png": "c729b23138be9e65ae8724efbb19bd6b29029172e580e88c619856989c4d6dd2",
+        "market_clearing_by_market.png": "d4abaa3cc2082674e69d744d71b7a36cb9766e0eb424246d6967e53030518195",
+        "market_clearing_residuals.png": "4ba334f0d374130a0658489c144c9f693484f64536e3dd640d7414355684154e",
+        "owner_rungs.png": "43c322333763fb849a349f2b0e90dd9891aa9741cbbfa0da25398cb12ce79379",
+        "ownership_by_age.png": "56c15640d79ae1fb0680be3bb224b5e62066bac1ba822f53127c7ed8113b5a48",
+        "ownership_by_age_income_state.png": "fbc907c32f0bd63bfd2bb8b1e0094a849f2e59de99e7de530eb149821bb14b86",
+        "policy_childless_renter_age30.png": "0ad59ed985b8136a65065a2172f2c5ce910884e5f6cba7e6d111dc309ce7ff86",
+        "policy_childless_renter_age42.png": "9edbc8c0b92476ab716fcc8d599e94b435ca9fd1f873680c909d2acfa48a2ea4",
+        "tenure_services.png": "b09dcde936b07a2b9b64a2a862b1e489182e2429397bfef5fa3ad8c61017d87c",
+        "wealth_dist_childless_renter_age30.png": "327e7d5ed79812b8b72100527bae6da0038301647aa0002821fcc398175cb161",
+        "wealth_dist_childless_renter_age42.png": "a411eb974c78a2ce96781686255f235546670bd0256599697811e372dd565a6f"
+      }
+    },
+    "identity": {
+      "selected": "initial_0346_identity",
+      "repeats": [
+        "repeat_0362_identity",
+        "repeat_0363_identity"
+      ],
+      "all14_31_byte_exact": true,
+      "all17_repeat_export_plot_hashes_exact": true,
+      "plot_hashes": {
+        "fertility_by_age.png": "c4a96d52c6b83d20277f51cd6ad095d48ad50c41873e256d6373fee02a499e8a",
+        "fertility_policy_by_age_income_state.png": "a1eef7d56bc60d022f501185e6eef9a06040927251223adc8740d60056cb24c8",
+        "housing_by_age_income_state.png": "1746552bdb36fec4a822e1dacf7aec82e2055a6f38a3c70ad28a377fb6e7be48",
+        "housing_market.png": "68945a0b69c947c571cdb94007f55eec5c7de2557935a34d3ee82e0533541467",
+        "housing_prices.png": "16d4ff1de361aec04be347d8704c9aa02c6281ae1878a65b2da852d05847e9aa",
+        "income_state_outcomes.png": "870fe9e6254076be8aa80303f27495648cadc8cc0576fc57dcf8d347686fdc17",
+        "liquid_wealth_by_age_income_state.png": "d361a37faa3a3d9b57165b721b8cc3ea8ad3923d497dd635f6db8337cf2b65fc",
+        "market_clearing_by_market.png": "21fbd9cf29d2b5dd436ed8e1f0d5499b2560b4625946de19edfb0ab6d8a40890",
+        "market_clearing_residuals.png": "978dd9875c2c49bc7aff2f9305ab833bd2b4b34ecf25ee376e74df9980ba2423",
+        "owner_rungs.png": "f3107c3be7b9b55837f71d7e8116f98ac6dd6791641604357a0a96e3096395b3",
+        "ownership_by_age.png": "b2da24540c8d6b4f2b189a4efb831ebb20a8820fc658bc69fb66eee508036689",
+        "ownership_by_age_income_state.png": "1b6c411992ab951289230d2a9c8ff8ad1d5cad1cd26b1e0bcd394a933ee755cb",
+        "policy_childless_renter_age30.png": "dcad3ce752f7f23c20c73ff3b884317b134a0a5aeef0a7d87a22456243acd9e0",
+        "policy_childless_renter_age42.png": "8335e7e6a994ddea7281ef88300893f2a6af336d3e95632414bc827bb30ec256",
+        "tenure_services.png": "e215a30b069ef72af94936ca14eb89a387cb12e456b56045c92e9a85947eb928",
+        "wealth_dist_childless_renter_age30.png": "8b5109e51a8ebe0e27ba6f695b0d817f1a3aa77e09666140726ac2387701d418",
+        "wealth_dist_childless_renter_age42.png": "d48cf68e107eec23a030a84a21f34f10f38062e0bcccce057dcb60cce5787a73"
+      }
+    },
+    "block": {
+      "selected": "initial_0347_block",
+      "repeats": [
+        "repeat_0364_block",
+        "repeat_0365_block"
+      ],
+      "all14_31_byte_exact": true,
+      "all17_repeat_export_plot_hashes_exact": true,
+      "plot_hashes": {
+        "fertility_by_age.png": "90c614c5a5d61b224714ac4215358fa526f37d9d654eefb2f46abe03d985571d",
+        "fertility_policy_by_age_income_state.png": "58a3a7c0954a126c404e030cbdaa749f6c971211bfae7e6ff586162c698eb1f6",
+        "housing_by_age_income_state.png": "97c4445b0907dd6286de3edda69afd36dfca8e4cca7580f4c684592dc05d5edc",
+        "housing_market.png": "a67506bb815765c88fab2926ba20a3ec1c09864fe059b3dcb7595ed816f3f51c",
+        "housing_prices.png": "6e961ec3561ea347f57e988423864f4d94f2678f35200d82232e5f06b559a551",
+        "income_state_outcomes.png": "8d8934992269ea3eaef03ba37493fd9fe773a4625186374f4a97515225f26f95",
+        "liquid_wealth_by_age_income_state.png": "331a54e323b4cd2499c7b05eda719206f190cccb94c61d1eaecb9d65d766757e",
+        "market_clearing_by_market.png": "bda4680e3205297d61de473f4286964222a1fbac5dee0670d7020555a9ac7464",
+        "market_clearing_residuals.png": "f62d650658379fe96a34005764e2f0936690b1e3d861657fdafc3fd3d70810e0",
+        "owner_rungs.png": "493c183b09546a52c3cb5e473c70c1109f3cb34289785450b83284a81cdcf45b",
+        "ownership_by_age.png": "be552945706e2288cba8db8cdb01b800b959b19368a694e68f5b7f9537c60034",
+        "ownership_by_age_income_state.png": "0714a2d04ed9f8cbabfc40cff0aab83b217cc24dca6e1f28aa646dc4ea70e275",
+        "policy_childless_renter_age30.png": "abe4ea2bb8e4095ba1d92aa3576c4d584be0ddcab9886ce2d92dcf1eeed9c51f",
+        "policy_childless_renter_age42.png": "0b023db28db219fcaa289a87f2f749f49485eed96b205cbaaa8e93cdf8c1a5a5",
+        "tenure_services.png": "b2247bc3efa435f7ac76ee738bece9d999ef00940f704bffd3f57a316fe9209f",
+        "wealth_dist_childless_renter_age30.png": "d43d66e36b4dc5b79c07ebcb31fba251a09bdd799f0805c23725b885aa968c9e",
+        "wealth_dist_childless_renter_age42.png": "103a004684dd4427f1f808f586542b9716043730a72825f29215274eca671c31"
+      }
+    }
+  },
+  "contract_sha256": "4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be",
+  "common_primary_best_is_repeated_selected": true,
+  "all_success_rescored": 227
+}

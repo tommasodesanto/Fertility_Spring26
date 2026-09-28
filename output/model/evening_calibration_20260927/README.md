@@ -1,7 +1,13 @@
 # Six-hour evening calibration, September 27
 
-Author-authorized new Torch run. Revised gated job **18672459** is SEARCHING on
-`cs669`, with **24 actual single-thread model workers** verified at17:28EDT.
+Final two-page report: `../../pdf/evening_calibration_20260927.pdf`. Supporting
+tables and reproducible report source: `final_report/`. Final17plot packets and
+authentication: `cluster/final_review/`. Lead inspected both PDF pages.
+
+Author-authorized Torch run **COMPLETE** at21:23:45EDT. Job **18672459** used
+up to24 single-thread model workers on `cs669`; no model workers remain.
+Final verification: `cluster/final_review/lead_completion_review.json`.
+All360search attempts and6fresh repeats completed; common-primary best26.368192.
 All six smoke cases passed; lead inspected full14/31 tables and all17plots before
 issuing explicit approval. Search and repeats use the same24CPU/128GB allocation.
 See `lead_search_approval.json`, `cluster/gated_v2_launch.json` and `cluster/gated_launch.json` for
