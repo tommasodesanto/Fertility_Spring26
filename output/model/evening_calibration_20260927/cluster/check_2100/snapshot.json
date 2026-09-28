@@ -1,0 +1,2282 @@
+{
+  "epoch": 1790557205.0920963,
+  "counts": {
+    "success": 209,
+    "inadmissible": 71,
+    "censored_timeout": 56,
+    "censored_late_completion": 1
+  },
+  "allocation": {
+    "phase": "search",
+    "epoch": 1790557202,
+    "job_id": "18672459",
+    "node": "cs669",
+    "requested_workers": 24,
+    "actual_model_workers": 23
+  },
+  "heartbeat": {
+    "active": 23,
+    "best": {
+      "block": 2.528250346833371,
+      "identity": 0.10382779924948336,
+      "primary": 26.405155533883452
+    },
+    "clock": {
+      "end": 1790561520,
+      "repeat_cutoff": 1790561220,
+      "search_cutoff": 1790558820,
+      "start": 1790539920
+    },
+    "completed": 337,
+    "epoch": 1790557200.4440413,
+    "pending": 0,
+    "stage": "search",
+    "stop_reason": null
+  },
+  "checkpoint_age": 14.706976175308228,
+  "winners": {
+    "block": {
+      "record": {
+        "case": "initial_0311_block",
+        "case_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/evening_calibration_20260927/gated_v2/search/initial_0311_block/case",
+        "checkpoint_sha256": "d1b9a0080352702361b36584dc497bc402fbaded8054e18a4546437010286d41",
+        "deadline": 1790556012.3744354,
+        "design": "coordinate_kappa_fert",
+        "error": null,
+        "halt_new_dispatch": false,
+        "lane": "block",
+        "loss": 2.528250346833371,
+        "point": {
+          "H0": 6.206479060846687,
+          "beta_annual": 0.9625666052463695,
+          "chi": 1.0889178301004045,
+          "child_benefit_curvature": 0.07930705056729134,
+          "delta_alpha_jump": 0.14191834048688282,
+          "first_birth_fixed_cost": 0.6465287075719173,
+          "kappa_fert": 0.18742283857244052,
+          "kappa_fert_continuation": 0.3474664229788561,
+          "tenure_choice_kappa": 0.007770045711149935,
+          "theta0": 0.11358885656635645
+        },
+        "primary_rescore": 26.36863619951569,
+        "receipt_sha256": "e9800469a1ebd38fa16c066a711404c8eae9fd5bcfc7b7c59d39e6ab80eb2499",
+        "request_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/evening_calibration_20260927/gated_v2/search/initial_0311_block.request.json",
+        "returncode": 0,
+        "status": "success"
+      },
+      "target_fit": "moment,target,model,gap,weight,loss_contribution,role\ninitial_normalization,2.1,2.100217762505393,0.0002177625053927379,,,normalization\ncps_childlessness,0.19827875100684264,0.19976853613932322,0.0014897851324805755,2961.02535379345,0.006571876564706894,scored\ncps_exactly_one,0.21365532522014702,0.21128270697416685,-0.0023726182459801737,2246.0684020258996,0.012643831804951515,scored\nnchs_mean_age,25.976263860992496,25.983531555047247,0.007267694054750251,11.652338987066061,0.0006154692844150619,scored\nnchs_share30,0.2492780130410667,0.22693784091753244,-0.022340172123534258,0.0,0.0,validation\nwealth_earnings,6.92658379107299,6.229661351576629,-0.6969224394963609,1.2658497454222875,0.6148243437471037,scored\nbequest_wealth,0.007291023472616158,0.007057606935411929,-0.0002334165372042292,860881.5426997243,0.046903650000355804,scored\nold_dispersion,3.51593508651872,3.113694925231838,-0.402240161286882,0.0,0.0,validation\nmean_rooms,5.729434240102641,5.8937982510478415,0.16436401094520026,10.668391837694564,0.28821223940897284,scored\nownership_30_55,0.6762604168538028,0.6334129785702999,-0.0428474382835029,194.94686437228015,0.35790352679781645,scored\nfirst_birth_rooms,1.465,1.6729075795847157,0.20790757958471562,11.463772908358033,0.49552802257778517,scored\nfamily_rooms,0.38509964969278165,0.31398186336953415,-0.0711177863232475,0.0,0.0,validation\nrecent_parent_ownership,0.12760836356692162,0.12195230598780415,-0.005656057579117468,2254.6519131256887,0.07212854080506009,scored\nearly_fertility,0.8095276384290021,0.5339368884008773,-0.27559075002812483,8.333333333333334,0.6329188458422033,scored\n",
+      "parameters": "parameter,estimate,lower,upper,near_bound,status\nH0,6.206479060846687,0.2,80.0,False,free in evening DUE calibration\nbeta_annual,0.9625666052463695,0.94,0.99,False,free in evening DUE calibration\nchi,1.0889178301004045,0.1,5.0,False,free in evening DUE calibration\nfirst_birth_fixed_cost,0.6465287075719173,0.0,8.0,False,free in evening DUE calibration\nkappa_fert,0.18742283857244052,0.02,50.0,True,free in evening DUE calibration\nkappa_fert_continuation,0.3474664229788561,0.02,50.0,True,free in evening DUE calibration\ntheta0,0.11358885656635645,0.0,8.0,False,free in evening DUE calibration\ndelta_alpha_jump,0.14191834048688282,0.0,0.25,False,free in evening DUE calibration\nchild_benefit_curvature,0.07930705056729134,0.0,0.8,False,free in evening DUE calibration\ntenure_choice_kappa,0.007770045711149935,0.001,0.1,False,free in evening DUE calibration\npsi_child,0.1405651672547881,,,,normalized to completed fertility 2.1\nchild_benefit_CRRA_coefficient,0.12941735842731286,,,,derived from normalized one-child benefit\ntheta1,0.008193084126995582,,,,fixed external restriction\nsigma,2.0,,,,fixed\nalpha_cons,0.733,,,,fixed CEX childless expenditure share\ndelta_alpha,0.0,,,,fixed zero later-child loading\nh_P,0.0,,,,no housing floor\nutility_reference_rent,0.11046592704873838,,,,fixed substantive utility normalization\nq_annual,0.020000000000000018,,,,author-retained 2% annual real rate\nfinanced_share,0.8,,,,inherited credit contract\nhousing_supply_elasticity,0.63,,,,fixed provisional external mapping\npayroll_tax,0.08028070961950022,,,,derived from adopted pension ratio\npension_period,0.917784047463731,,,,balanced PAYGO\nannual_depreciation,0.01416143718381309,,,,adopted\nperiod_depreciation,0.05545379079326218,,,,compounded\nannual_property_tax,0.010598360773872594,,,,adopted\nperiod_property_tax,0.042393443095490375,,,,linear period convention\nselling_cost,0.06,,,,retained\nrental_cap,6.0,,,,retained provisional\nwealth_grid_nodes,160.0,,,,retained exact grid\nincome_states,15.0,,,,retained B15\n",
+      "receipt": {
+        "adult_entry_gate": {
+          "births_per_entry": 2.1002177625051606,
+          "entry_E": 0.061733456180804856,
+          "entry_residual": -6.4015390810190365e-06,
+          "fertility_gap": 0.00021776250516047924,
+          "potential_B": 0.061739857719885875
+        },
+        "case_checkpoint_sha256": "d1b9a0080352702361b36584dc497bc402fbaded8054e18a4546437010286d41",
+        "chosen_solve_seconds": 103.3825732349651,
+        "contract_sha256": "4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be",
+        "credit_rule": "DUE existing-owner with death solvency",
+        "display_count": 14,
+        "economic_changes": [
+          {
+            "change": "Same native compensated housing-share specification as matched diagnostic; first-child loading estimated, later-child loading fixed zero; no child housing floor.",
+            "object": "utility",
+            "status": "author-adopted for first calibration"
+          },
+          {
+            "change": "Estimate curvature in proposed bounds [0,.8]; starting value .14 matches the diagnostic receipt, which reports exponent .86 despite its historical folder suffix.",
+            "object": "child_benefit_curvature",
+            "status": "lead-selected provisional setting under author overnight delegation"
+          },
+          {
+            "change": "Replace ACS capped-nine mean with national AHS 2007 literal-room mean; retain old working weight.",
+            "object": "mean_rooms",
+            "status": "author-adopted"
+          },
+          {
+            "change": "Add exact-age-25 children-ever-born mean capped at three; proposed working weight 100.",
+            "object": "early_fertility",
+            "status": "lead-selected provisional setting under author overnight delegation"
+          },
+          {
+            "change": "Fixed annual pension/income ratio from empirical receipt; payroll tax derived from stationary demographics.",
+            "object": "pensions",
+            "status": "author-adopted"
+          },
+          {
+            "change": "Positive net estates fund positive entrant assets; residual exits through a nonutility sink. Net-estate valuation and physical/financial settlement remain provisional.",
+            "object": "estate_entry_funding",
+            "status": "provisional working closure"
+          },
+          {
+            "change": "B15 earnings, inherited entrant-wealth marginal and income/wealth rank coupling retained; no zero-entry substitution.",
+            "object": "income_entry",
+            "status": "unchanged inherited inputs"
+          },
+          {
+            "change": "Retained working minimum-distance weights, including early-fertility weight 100.",
+            "object": "weighting",
+            "status": "primary retained"
+          },
+          {
+            "change": "Retained working minimum-distance weights, including early-fertility weight 100.",
+            "object": "weighting",
+            "status": "primary retained"
+          },
+          {
+            "change": "Native DUE stayer credit; tenure choice scale searched; three specified validation moments receive zero objective weight; three separate weighting lanes",
+            "status": "author-adopted tonight"
+          }
+        ],
+        "estate_funding": {
+          "adult_transfers": false,
+          "annual_gross_positive_estates": 0.03257044887350082,
+          "annual_net_positive_estates": 0.028940926041287764,
+          "annual_positive_entrant_funding": 0.00792489228287396,
+          "audit_id": "estate_funded_entry_provisional_net_v1",
+          "available_estates_period": 0.11576370416515105,
+          "available_estates_valuation": "provisional_positive_net_estates_after_inherited_selling_cost",
+          "caveats": [
+            "Availability valuation is provisional; donor utility remains unchanged.",
+            "Negative estates remain explicit liabilities with an unresolved creditor rule.",
+            "Negative entrant positions do not reduce positive entrant funding.",
+            "This is not a child-directed bequest-flow measurement correction.",
+            "An admissible ledger alone does not certify stationary equilibrium."
+          ],
+          "certifies_counterparty_or_physical_housing_settlement": false,
+          "donor_bequest_valuation_changes": false,
+          "entrant_minus_death_mass": 7.357309206312834e-14,
+          "entry": {
+            "mass": 0.061733456180804856,
+            "negative_financial_position": 0.02018506468585461,
+            "owner_prechoice_mass": 0.0,
+            "positive_financial_endowment": 0.03169956913149584,
+            "signed_financial_endowment": 0.01151450444564123
+          },
+          "entry_distribution_changes": false,
+          "estate": {
+            "by_age": [
+              {
+                "age_index": 0,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 1,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 2,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 3,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 4,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 5,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 6,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 7,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 8,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 9,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 10,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 11,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 12,
+                "death_mass": 0.0037579434982043637,
+                "gross_negative": 0.0,
+                "gross_positive": 0.027708057078756263,
+                "housing_sale_cost": 0.0009574421156271964,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.02675061496312907
+              },
+              {
+                "age_index": 13,
+                "death_mass": 0.0047251414348485074,
+                "gross_negative": 0.0,
+                "gross_positive": 0.026377579330830167,
+                "housing_sale_cost": 0.0011635698464311838,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.025214009484398982
+              },
+              {
+                "age_index": 14,
+                "death_mass": 0.00612633844562784,
+                "gross_negative": 0.0,
+                "gross_positive": 0.023788660833230602,
+                "housing_sale_cost": 0.0014618910502802612,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.02232676978295034
+              },
+              {
+                "age_index": 15,
+                "death_mass": 0.008008879884084379,
+                "gross_negative": 0.0,
+                "gross_positive": 0.018431995907727983,
+                "housing_sale_cost": 0.0018701109288138888,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.016561884978914095
+              },
+              {
+                "age_index": 16,
+                "death_mass": 0.039115152917966196,
+                "gross_negative": 0.0,
+                "gross_positive": 0.03397550234345828,
+                "housing_sale_cost": 0.009065077387699703,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.024910424955758577
+              }
+            ],
+            "totals": {
+              "death_mass": 0.06173345618073128,
+              "gross_negative": 0.0,
+              "gross_positive": 0.1302817954940033,
+              "gross_signed": 0.1302817954940033,
+              "housing_sale_cost": 0.014518091328852232,
+              "negative_estate_death_mass": 0.0,
+              "net_negative": 0.0,
+              "net_positive": 0.11576370416515105,
+              "net_signed": 0.11576370416515105,
+              "signed_cost_identity_residual": 4.553649124439119e-18
+            }
+          },
+          "funding_gate_tolerance": 1e-10,
+          "funding_shortfall_period": 0.0,
+          "gross_residual_after_entry_period": 0.09858222636250745,
+          "inherited_selling_cost": 0.06,
+          "net_residual_after_entry_period": 0.08406413503365522,
+          "period_years": 4.0,
+          "policy_changes": false,
+          "residual_sink_period": 0.08406413503365522,
+          "status": "funded",
+          "timing": "stationary death flow finances the next entrant cohort; no transition implementation",
+          "units": "model financial units per model period"
+        },
+        "fiscal": {
+          "actual_accounts": {
+            "implied_balanced_payroll_tax": 0.080280709619472,
+            "implied_balanced_pension_period": 0.9177840474640537,
+            "payroll_tax_base_period": 2.963205896676147,
+            "payroll_tax_rate": 0.08028070961950022,
+            "payroll_tax_revenue": 0.23788827213384853,
+            "pension_budget_residual": 8.365530490550555e-14,
+            "pension_outlays": 0.23788827213376487,
+            "pension_period_units": 0.917784047463731,
+            "retiree_benefit_exposure": 0.25919852583095343,
+            "retiree_household_mass": 0.25919852583095343,
+            "scaled_pension_budget_residual": 3.516579617612954e-13,
+            "worker_household_mass": 0.7408014741689746
+          },
+          "fiscal_gate": true,
+          "fiscal_tolerance": 1e-06,
+          "marginal_gate": true,
+          "marginal_tolerance": 1e-09,
+          "normalized_age_income_max_gap": 1.2826545381372512e-14
+        },
+        "fiscal_rule": {
+          "payroll_tax": 0.08028070961950022,
+          "pension_to_mean_gross_worker_earnings": 0.2294460118659327,
+          "retiree_mass": 0.25919852583102354,
+          "retiree_worker_ratio": 0.3498893224015109,
+          "transition_rule": "hold baseline tax fixed; equal pension balances actual PAYGO",
+          "worker_mass": 0.7408014741689765
+        },
+        "free_count": 10,
+        "household_budget": {
+          "actual_rent": 0.14739566475186222,
+          "budget_excess_mass": 0.0,
+          "budget_tolerance": 1e-09,
+          "maximum_occupied_excess": 2.842170943040401e-14
+        },
+        "lane": "block",
+        "loss": 2.528250346833371,
+        "market_residual": 4.437991942159302e-07,
+        "model_observer_warnings": [
+          {
+            "moment": "initial_normalization",
+            "warning": "Separate from CPS age-window stocks and actual birth/entry accounting."
+          },
+          {
+            "moment": "cps_childlessness",
+            "warning": "Uniform birth-time parity interpolation is the main diagnostic; constant-post-cell sensitivity retained. Model household reproductive member is not certified female exposure; no empirical age reweighting."
+          },
+          {
+            "moment": "cps_exactly_one",
+            "warning": "Uniform birth-time parity interpolation is the main diagnostic; constant-post-cell sensitivity retained. Model household reproductive member is not certified female exposure; no empirical age reweighting."
+          },
+          {
+            "moment": "nchs_mean_age",
+            "warning": "First-birth flow timing, not completed-cohort timing. Household maternal proxy; empirical under-18/over-45 tail collapse retained; raw builder residence and unknown-order comparability remain unresolved."
+          },
+          {
+            "moment": "nchs_share30",
+            "warning": "First-birth flow timing, not completed-cohort timing. Household maternal proxy; empirical under-18/over-45 tail collapse retained; raw builder residence and unknown-order comparability remain unresolved."
+          },
+          {
+            "moment": "wealth_earnings",
+            "warning": "Household net worth is scaled by reference-person-plus-spouse gross labor earnings; calendar-specific wealth valuation and earnings-reference-year alignment remains inherited from the PSID shelf and is not newly certified."
+          },
+          {
+            "moment": "bequest_wealth",
+            "warning": "Experimental approximation: the frozen model observer sums positive estates over all fertility/dependent-child states without child-recipient eligibility or allocation, whereas the adopted SCF ratio is child-directed. No recipient-law change is authorized in this contract."
+          },
+          {
+            "moment": "old_dispersion",
+            "warning": "Uniform within-age-cell overlap for ages 76--84 Modeled pension plus configured lump-sum income proxy; not PSID total family income Empirical $1000 real-income and observed-child-history filters are not reproduced At these retirement ages model denominator is pension income (including configured z scaling), while PSID INCFAMR also includes transfers, asset income and other family components. Exact $1000 cutoff is not applied (only income>0), and observed-completed-children selection has no model missingness counterpart. Full 78/82 cells do not cover exactly 76-84. Actual model property-tax lump-sum transfer is zero in this receipt; proxy uses the configured pension-plus-transfer concept."
+          },
+          {
+            "moment": "mean_rooms",
+            "warning": "Uniform model exposure within four-year age cells; literal AHS ROOMS has public-use topcode 21. Model rooms are uncapped. Housing supply normalization remains an empirical normalization."
+          },
+          {
+            "moment": "ownership_30_55",
+            "warning": "National ACS target geography is accepted. The empirical owner sample is restricted to DUE structures UNITSSTR 3:10, a structure-type distinction absent from the model state; age 30-55 is projected through a four-year model cell extending to ages 54-57."
+          },
+          {
+            "moment": "first_birth_rooms",
+            "warning": "The stationary first-birth housing observer approximates this empirical event-study contrast and does not reproduce the Sun-Abraham panel estimator or its baseline-status cohort selection."
+          },
+          {
+            "moment": "family_rooms",
+            "warning": "National ACS target geography is accepted. Empirical groups use NCHILD=3+ versus 1-2 and require YNGCH<18. Model dependent-child count m is only a proxy: it can differ from resident own-child count and does not guarantee the ACS minor-child restriction."
+          },
+          {
+            "moment": "recent_parent_ownership",
+            "warning": {
+              "age_projection": "uniform_within_age_cell",
+              "approximation_id": "early_2007_parenthood_md_working_v1__recent_parent_synchronized_proxy",
+              "decision_sha256": "b1d399c290d257e56e008afb6d7b76ac1f69191685c8d9e89a4b0bfb06533c9a",
+              "decision_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/initial_calibration_contract/lead_methodological_decision.json",
+              "declaration": "Synchronized post-fertility snapshot; uniform head-age overlap; model dependents proxy resident own children; actual current births from previously empty-dependent homes versus current empty homes inclformerparents. Not an exact annualACS interview reconstruction.",
+              "diagnostic_allow_residence_proxy": true,
+              "exact_acs": false,
+              "maintained": true,
+              "moment": "ownership_current_birth_from_empty_dependent_home_minus_current_empty_home_30_55",
+              "observer_id": "e5f_recent_parent_flow_diagnostic_v1",
+              "snapshot": "synchronized_post_fertility_snapshot"
+            }
+          },
+          {
+            "moment": "early_fertility",
+            "warning": "Observed completed age 25 corresponds to [25,26). Fixed uniform birth-time interpolation in [22,26) uses post weight .875 and literal ever-born weights [0,1,2,3]. Household reproductive-member exposure is not certified female exposure. Bootstrap is not CPS design-consistent."
+          }
+        ],
+        "normalization": {
+          "absolute_gap": 0.0002177625053927379,
+          "completed_fertility": 2.100217762505393,
+          "initial_psi": 0.14281100340255604,
+          "initial_step": 0.005,
+          "psi_child": 0.1405651672547881,
+          "stationary_solve_seconds": 402.64132716401946,
+          "stationary_solves": 3,
+          "status": "derived_intercept",
+          "target": 2.1
+        },
+        "normalization_inputs": {
+          "initial_psi": 0.14281100340255604,
+          "initial_step": 0.005,
+          "maximum_stationary_solves": 23,
+          "warm_price": true
+        },
+        "normalized_count": 1,
+        "objective_stationary_solve_seconds": 402.64132716401946,
+        "objective_stationary_solves": 3,
+        "operator_gates": {
+          "birth_flow": 0.11546658261685838,
+          "birth_flow_abs_error": 4.3021142204224816e-16,
+          "effective_mature_flow_B": 0.05478977330067242,
+          "entry_flow_E": 0.061733456180804856,
+          "mature_flow_abs_error": 1.304512053934559e-14,
+          "one_step_constant_path_nesting_l1": 7.369042872966084e-14,
+          "reconstructed_baseline_births": 0.11546658261685838,
+          "reconstructed_effective_mature_flow_B": 0.05478977330068546,
+          "stationary_birth_flow": 0.11546658261685795,
+          "stationary_feasibility_projection_mass": 0.0,
+          "stationary_post_fertility_nesting_l1": 1.18502299953672e-15,
+          "stationary_post_fertility_nesting_max_abs": 1.2247537243203097e-17,
+          "stationary_topcode_adjusted_birth_flow": 0.12965370121176034,
+          "top_bin_entry_birth_flow": 0.023552580198024364,
+          "topcode_adjusted_birth_flow": 0.12965370121176095,
+          "topcode_adjusted_birth_flow_abs_error": 6.106226635438361e-16,
+          "zero_entry_mass_accounting_residual": 5.551115123125783e-16
+        },
+        "point": {
+          "H0": 6.206479060846687,
+          "beta_annual": 0.9625666052463695,
+          "chi": 1.0889178301004045,
+          "child_benefit_curvature": 0.07930705056729134,
+          "delta_alpha_jump": 0.14191834048688282,
+          "first_birth_fixed_cost": 0.6465287075719173,
+          "kappa_fert": 0.18742283857244052,
+          "kappa_fert_continuation": 0.3474664229788561,
+          "tenure_choice_kappa": 0.007770045711149935,
+          "theta0": 0.11358885656635645
+        },
+        "policy_array_gates": {
+          "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+          "lower_node_mass_at_negative_steps": 0.0,
+          "maximum_occupied_value_drop": 0.0,
+          "occupied_negative_steps": 0,
+          "probabilities": {
+            "continuation_birth": {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "nonfinite": 0
+            },
+            "first_birth": {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "nonfinite": 0
+            },
+            "location": {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "nonfinite": 0
+            },
+            "tenure": {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "nonfinite": 0
+            }
+          },
+          "share_pre_choice_mass_at_negative_steps": 0.0,
+          "value_drop_tolerance": 1e-07
+        },
+        "policy_plot_scope": "Standard saving/consumption panels are buyer-conditional; stayer policies retained separately",
+        "price": 0.8175957416565184,
+        "purchase_accounting": {
+          "end_mortgage_floor_violation_mass": 0.0,
+          "mass_tolerance": 2e-10,
+          "maximum_occupied_end_debt_shortfall": 0.0,
+          "maximum_occupied_stayer_debt_shortfall": 8.881784197001252e-16,
+          "maximum_occupied_transaction_wealth_error": 2.842170943040401e-14,
+          "purchase_threshold_violation_mass": 0.0,
+          "source_contract": "origin_specific_due_v1",
+          "stayer_death_estate_violation_mass": 0.0,
+          "stayer_mass": 0.5089881713664872,
+          "stayer_principal_floor_violation_mass": 0.0,
+          "transaction_outside_grid_mass": 0.0,
+          "wealth_tolerance": 1e-09
+        },
+        "retained_conception_schedule": [
+          0.98,
+          0.9658168691098954,
+          0.9415756781274986,
+          0.9001436879133341,
+          0.829329930686918,
+          0.7082981340823842,
+          0.501435846822519,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "retained_owner_grid": [
+          2.0,
+          4.0,
+          6.0,
+          8.0,
+          10.0
+        ],
+        "scientific_candidate_id": "2a8becd1695fbe7c992a12bf76263bf930cd27870c2e0c8019bdbd3333686b33",
+        "scientific_identity": "b38b968f59f28a8893f19662b3bb2014826a064cfdb77e5a2b5615bd4608cb4b",
+        "selected_checkpoint_sha256": "090c9ebda662bf7837c4f4cf1d816159bc9d203a9babe7c70d00d0c4be1e575e",
+        "source_manifest_sha256": "129ec4a3edde02da91a50e7537081a3d8eb5ca156deb168fbec70dfecb8d76cd",
+        "status": "verified_provisional_calibration_point",
+        "target_system_sha256": "794a30e2db9b54636e6b93bc30b35ca79d3eddbb61932a54a4005ff6fc58fb6c",
+        "target_weight_fingerprint": "14661cd18b5af346adc9750138cdd20529327f5a14f687d046dc500f274d1188",
+        "weighted_count": 10
+      }
+    },
+    "identity": {
+      "record": {
+        "case": "initial_0310_identity",
+        "case_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/evening_calibration_20260927/gated_v2/search/initial_0310_identity/case",
+        "checkpoint_sha256": "bd534a06f0761982382793019e765c9dae834809fa2ff72a6a5a9930f804851b",
+        "deadline": 1790556012.3550735,
+        "design": "coordinate_kappa_fert",
+        "error": null,
+        "halt_new_dispatch": false,
+        "lane": "identity",
+        "loss": 0.10382779924948336,
+        "point": {
+          "H0": 6.4968922285224115,
+          "beta_annual": 0.9626545169663449,
+          "chi": 1.0781978105645995,
+          "child_benefit_curvature": 0.09232846500382948,
+          "delta_alpha_jump": 0.13150232623873945,
+          "first_birth_fixed_cost": 0.6588675772644,
+          "kappa_fert": 0.1478385561334145,
+          "kappa_fert_continuation": 0.3978553672287046,
+          "tenure_choice_kappa": 0.012514516826163469,
+          "theta0": 0.15109268253650396
+        },
+        "primary_rescore": 113.61191481498241,
+        "receipt_sha256": "28ddb8def5acecdba644aaa3fdb070612f65a14872f56b787af6d42339fe78b1",
+        "request_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/evening_calibration_20260927/gated_v2/search/initial_0310_identity.request.json",
+        "returncode": 0,
+        "status": "success"
+      },
+      "target_fit": "moment,target,model,gap,weight,loss_contribution,role\ninitial_normalization,2.1,2.1000042212091605,4.221209160437667e-06,,,normalization\ncps_childlessness,0.19827875100684264,0.1969038160970422,-0.0013749349098004515,25.435931744386433,4.808525557984529e-05,scored\ncps_exactly_one,0.21365532522014702,0.20329795902241396,-0.010357366197733059,21.906477831173174,0.002350018166294296,scored\nnchs_mean_age,25.976263860992496,25.171826062778425,-0.8044377982140709,0.0014819946156932019,0.0009590286094181973,scored\nnchs_share30,0.2492780130410667,0.17816184505236765,-0.07111616798869905,0.0,0.0,validation\nwealth_earnings,6.92658379107299,6.255873369881347,-0.670710421191643,0.02084307616233986,0.009376309275165206,scored\nbequest_wealth,0.007291023472616158,0.007230219505122547,-6.0803967493611166e-05,10000.0,3.697122462964124e-05,scored\nold_dispersion,3.51593508651872,3.082899178606494,-0.4330359079122261,0.0,0.0,validation\nmean_rooms,5.729434240102641,5.92686842736907,0.19743418726642847,0.030463270139527054,0.0011874661387488163,scored\nownership_30_55,0.6762604168538028,0.6311218031091118,-0.04513861374469097,2.186613697257802,0.004455213274189435,scored\nfirst_birth_rooms,1.465,1.5550202689936432,0.09002026899364313,0.4659343731435427,0.0037757685376360196,scored\nfamily_rooms,0.38509964969278165,0.31734471954836163,-0.06775493014442002,0.0,0.0,validation\nrecent_parent_ownership,0.12760836356692162,0.1323161962682592,0.0047078327013375665,61.41037102234466,0.0013610803489795007,scored\nearly_fertility,0.8095276384290021,0.5801613590054147,-0.22936627942358745,1.5259371222310545,0.0802778584188424,scored\n",
+      "parameters": "parameter,estimate,lower,upper,near_bound,status\nH0,6.4968922285224115,0.2,80.0,False,free in evening DUE calibration\nbeta_annual,0.9626545169663449,0.94,0.99,False,free in evening DUE calibration\nchi,1.0781978105645995,0.1,5.0,False,free in evening DUE calibration\nfirst_birth_fixed_cost,0.6588675772644,0.0,8.0,False,free in evening DUE calibration\nkappa_fert,0.1478385561334145,0.02,50.0,True,free in evening DUE calibration\nkappa_fert_continuation,0.3978553672287046,0.02,50.0,True,free in evening DUE calibration\ntheta0,0.15109268253650396,0.0,8.0,False,free in evening DUE calibration\ndelta_alpha_jump,0.13150232623873945,0.0,0.25,False,free in evening DUE calibration\nchild_benefit_curvature,0.09232846500382948,0.0,0.8,False,free in evening DUE calibration\ntenure_choice_kappa,0.012514516826163469,0.001,0.1,False,free in evening DUE calibration\npsi_child,0.1229019464705741,,,,normalized to completed fertility 2.1\nchild_benefit_CRRA_coefficient,0.11155459840696318,,,,derived from normalized one-child benefit\ntheta1,0.008193084126995582,,,,fixed external restriction\nsigma,2.0,,,,fixed\nalpha_cons,0.733,,,,fixed CEX childless expenditure share\ndelta_alpha,0.0,,,,fixed zero later-child loading\nh_P,0.0,,,,no housing floor\nutility_reference_rent,0.11046592704873838,,,,fixed substantive utility normalization\nq_annual,0.020000000000000018,,,,author-retained 2% annual real rate\nfinanced_share,0.8,,,,inherited credit contract\nhousing_supply_elasticity,0.63,,,,fixed provisional external mapping\npayroll_tax,0.08028070961950022,,,,derived from adopted pension ratio\npension_period,0.917784047463731,,,,balanced PAYGO\nannual_depreciation,0.01416143718381309,,,,adopted\nperiod_depreciation,0.05545379079326218,,,,compounded\nannual_property_tax,0.010598360773872594,,,,adopted\nperiod_property_tax,0.042393443095490375,,,,linear period convention\nselling_cost,0.06,,,,retained\nrental_cap,6.0,,,,retained provisional\nwealth_grid_nodes,160.0,,,,retained exact grid\nincome_states,15.0,,,,retained B15\n",
+      "receipt": {
+        "adult_entry_gate": {
+          "births_per_entry": 2.100004221208726,
+          "entry_E": 0.061733456180777226,
+          "entry_residual": -1.2409038281646634e-07,
+          "fertility_gap": 4.2212087261184195e-06,
+          "potential_B": 0.06173358027116004
+        },
+        "case_checkpoint_sha256": "bd534a06f0761982382793019e765c9dae834809fa2ff72a6a5a9930f804851b",
+        "chosen_solve_seconds": 101.9199294190621,
+        "contract_sha256": "4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be",
+        "credit_rule": "DUE existing-owner with death solvency",
+        "display_count": 14,
+        "economic_changes": [
+          {
+            "change": "Same native compensated housing-share specification as matched diagnostic; first-child loading estimated, later-child loading fixed zero; no child housing floor.",
+            "object": "utility",
+            "status": "author-adopted for first calibration"
+          },
+          {
+            "change": "Estimate curvature in proposed bounds [0,.8]; starting value .14 matches the diagnostic receipt, which reports exponent .86 despite its historical folder suffix.",
+            "object": "child_benefit_curvature",
+            "status": "lead-selected provisional setting under author overnight delegation"
+          },
+          {
+            "change": "Replace ACS capped-nine mean with national AHS 2007 literal-room mean; retain old working weight.",
+            "object": "mean_rooms",
+            "status": "author-adopted"
+          },
+          {
+            "change": "Add exact-age-25 children-ever-born mean capped at three; proposed working weight 100.",
+            "object": "early_fertility",
+            "status": "lead-selected provisional setting under author overnight delegation"
+          },
+          {
+            "change": "Fixed annual pension/income ratio from empirical receipt; payroll tax derived from stationary demographics.",
+            "object": "pensions",
+            "status": "author-adopted"
+          },
+          {
+            "change": "Positive net estates fund positive entrant assets; residual exits through a nonutility sink. Net-estate valuation and physical/financial settlement remain provisional.",
+            "object": "estate_entry_funding",
+            "status": "provisional working closure"
+          },
+          {
+            "change": "B15 earnings, inherited entrant-wealth marginal and income/wealth rank coupling retained; no zero-entry substitution.",
+            "object": "income_entry",
+            "status": "unchanged inherited inputs"
+          },
+          {
+            "change": "Retained working minimum-distance weights, including early-fertility weight 100.",
+            "object": "weighting",
+            "status": "primary retained"
+          },
+          {
+            "change": "Retained working minimum-distance weights, including early-fertility weight 100.",
+            "object": "weighting",
+            "status": "primary retained"
+          },
+          {
+            "change": "Native DUE stayer credit; tenure choice scale searched; three specified validation moments receive zero objective weight; three separate weighting lanes",
+            "status": "author-adopted tonight"
+          }
+        ],
+        "estate_funding": {
+          "adult_transfers": false,
+          "annual_gross_positive_estates": 0.033507441617535084,
+          "annual_net_positive_estates": 0.030161393654540628,
+          "annual_positive_entrant_funding": 0.007924892282870414,
+          "audit_id": "estate_funded_entry_provisional_net_v1",
+          "available_estates_period": 0.12064557461816251,
+          "available_estates_valuation": "provisional_positive_net_estates_after_inherited_selling_cost",
+          "caveats": [
+            "Availability valuation is provisional; donor utility remains unchanged.",
+            "Negative estates remain explicit liabilities with an unresolved creditor rule.",
+            "Negative entrant positions do not reduce positive entrant funding.",
+            "This is not a child-directed bequest-flow measurement correction.",
+            "An admissible ledger alone does not certify stationary equilibrium."
+          ],
+          "certifies_counterparty_or_physical_housing_settlement": false,
+          "donor_bequest_valuation_changes": false,
+          "entrant_minus_death_mass": 3.8295755455663993e-14,
+          "entry": {
+            "mass": 0.061733456180777226,
+            "negative_financial_position": 0.020185064685845577,
+            "owner_prechoice_mass": 0.0,
+            "positive_financial_endowment": 0.031699569131481656,
+            "signed_financial_endowment": 0.011514504445636078
+          },
+          "entry_distribution_changes": false,
+          "estate": {
+            "by_age": [
+              {
+                "age_index": 0,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 1,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 2,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 3,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 4,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 5,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 6,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 7,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 8,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 9,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 10,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 11,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 12,
+                "death_mass": 0.0037579434982048295,
+                "gross_negative": 0.0,
+                "gross_positive": 0.02787536445471297,
+                "housing_sale_cost": 0.0008402401077375145,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.027035124346975456
+              },
+              {
+                "age_index": 13,
+                "death_mass": 0.004725141434849093,
+                "gross_negative": 0.0,
+                "gross_positive": 0.026615911865288583,
+                "housing_sale_cost": 0.0010230973511580056,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.025592814514130577
+              },
+              {
+                "age_index": 14,
+                "death_mass": 0.0061263384456285985,
+                "gross_negative": 0.0,
+                "gross_positive": 0.024134871653806178,
+                "housing_sale_cost": 0.001292336398567526,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.022842535255238654
+              },
+              {
+                "age_index": 15,
+                "death_mass": 0.008008879884085371,
+                "gross_negative": 0.0,
+                "gross_positive": 0.01892924886920208,
+                "housing_sale_cost": 0.0016799556995522242,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.017249293169649856
+              },
+              {
+                "age_index": 16,
+                "death_mass": 0.03911515291797104,
+                "gross_negative": 0.0,
+                "gross_positive": 0.036474369627130535,
+                "housing_sale_cost": 0.008548562294962562,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.02792580733216797
+              }
+            ],
+            "totals": {
+              "death_mass": 0.06173345618073893,
+              "gross_negative": 0.0,
+              "gross_positive": 0.13402976647014034,
+              "gross_signed": 0.13402976647014034,
+              "housing_sale_cost": 0.013384191851977832,
+              "negative_estate_death_mass": 0.0,
+              "net_negative": 0.0,
+              "net_positive": 0.12064557461816251,
+              "net_signed": 0.12064557461816251,
+              "signed_cost_identity_residual": -8.673617379884035e-19
+            }
+          },
+          "funding_gate_tolerance": 1e-10,
+          "funding_shortfall_period": 0.0,
+          "gross_residual_after_entry_period": 0.10233019733865868,
+          "inherited_selling_cost": 0.06,
+          "net_residual_after_entry_period": 0.08894600548668086,
+          "period_years": 4.0,
+          "policy_changes": false,
+          "residual_sink_period": 0.08894600548668086,
+          "status": "funded",
+          "timing": "stationary death flow finances the next entrant cohort; no transition implementation",
+          "units": "model financial units per model period"
+        },
+        "fiscal": {
+          "actual_accounts": {
+            "implied_balanced_payroll_tax": 0.0802807096194715,
+            "implied_balanced_pension_period": 0.9177840474640593,
+            "payroll_tax_base_period": 2.963205896676533,
+            "payroll_tax_rate": 0.08028070961950022,
+            "payroll_tax_revenue": 0.2378882721338795,
+            "pension_budget_residual": 8.509859483751825e-14,
+            "pension_outlays": 0.2378882721337944,
+            "pension_period_units": 0.917784047463731,
+            "retiree_benefit_exposure": 0.2591985258309856,
+            "retiree_household_mass": 0.2591985258309856,
+            "scaled_pension_budget_residual": 3.5772505333775425e-13,
+            "worker_household_mass": 0.7408014741689826
+          },
+          "fiscal_gate": true,
+          "fiscal_tolerance": 1e-06,
+          "marginal_gate": true,
+          "marginal_tolerance": 1e-09,
+          "normalized_age_income_max_gap": 9.637163944197901e-15
+        },
+        "fiscal_rule": {
+          "payroll_tax": 0.08028070961950022,
+          "pension_to_mean_gross_worker_earnings": 0.2294460118659327,
+          "retiree_mass": 0.25919852583102354,
+          "retiree_worker_ratio": 0.3498893224015109,
+          "transition_rule": "hold baseline tax fixed; equal pension balances actual PAYGO",
+          "worker_mass": 0.7408014741689765
+        },
+        "free_count": 10,
+        "household_budget": {
+          "actual_rent": 0.13829856954927516,
+          "budget_excess_mass": 0.0,
+          "budget_tolerance": 1e-09,
+          "maximum_occupied_excess": 2.842170943040401e-14
+        },
+        "lane": "identity",
+        "loss": 0.10382779924948335,
+        "market_residual": 1.59245248962864e-07,
+        "model_observer_warnings": [
+          {
+            "moment": "initial_normalization",
+            "warning": "Separate from CPS age-window stocks and actual birth/entry accounting."
+          },
+          {
+            "moment": "cps_childlessness",
+            "warning": "Uniform birth-time parity interpolation is the main diagnostic; constant-post-cell sensitivity retained. Model household reproductive member is not certified female exposure; no empirical age reweighting."
+          },
+          {
+            "moment": "cps_exactly_one",
+            "warning": "Uniform birth-time parity interpolation is the main diagnostic; constant-post-cell sensitivity retained. Model household reproductive member is not certified female exposure; no empirical age reweighting."
+          },
+          {
+            "moment": "nchs_mean_age",
+            "warning": "First-birth flow timing, not completed-cohort timing. Household maternal proxy; empirical under-18/over-45 tail collapse retained; raw builder residence and unknown-order comparability remain unresolved."
+          },
+          {
+            "moment": "nchs_share30",
+            "warning": "First-birth flow timing, not completed-cohort timing. Household maternal proxy; empirical under-18/over-45 tail collapse retained; raw builder residence and unknown-order comparability remain unresolved."
+          },
+          {
+            "moment": "wealth_earnings",
+            "warning": "Household net worth is scaled by reference-person-plus-spouse gross labor earnings; calendar-specific wealth valuation and earnings-reference-year alignment remains inherited from the PSID shelf and is not newly certified."
+          },
+          {
+            "moment": "bequest_wealth",
+            "warning": "Experimental approximation: the frozen model observer sums positive estates over all fertility/dependent-child states without child-recipient eligibility or allocation, whereas the adopted SCF ratio is child-directed. No recipient-law change is authorized in this contract."
+          },
+          {
+            "moment": "old_dispersion",
+            "warning": "Uniform within-age-cell overlap for ages 76--84 Modeled pension plus configured lump-sum income proxy; not PSID total family income Empirical $1000 real-income and observed-child-history filters are not reproduced At these retirement ages model denominator is pension income (including configured z scaling), while PSID INCFAMR also includes transfers, asset income and other family components. Exact $1000 cutoff is not applied (only income>0), and observed-completed-children selection has no model missingness counterpart. Full 78/82 cells do not cover exactly 76-84. Actual model property-tax lump-sum transfer is zero in this receipt; proxy uses the configured pension-plus-transfer concept."
+          },
+          {
+            "moment": "mean_rooms",
+            "warning": "Uniform model exposure within four-year age cells; literal AHS ROOMS has public-use topcode 21. Model rooms are uncapped. Housing supply normalization remains an empirical normalization."
+          },
+          {
+            "moment": "ownership_30_55",
+            "warning": "National ACS target geography is accepted. The empirical owner sample is restricted to DUE structures UNITSSTR 3:10, a structure-type distinction absent from the model state; age 30-55 is projected through a four-year model cell extending to ages 54-57."
+          },
+          {
+            "moment": "first_birth_rooms",
+            "warning": "The stationary first-birth housing observer approximates this empirical event-study contrast and does not reproduce the Sun-Abraham panel estimator or its baseline-status cohort selection."
+          },
+          {
+            "moment": "family_rooms",
+            "warning": "National ACS target geography is accepted. Empirical groups use NCHILD=3+ versus 1-2 and require YNGCH<18. Model dependent-child count m is only a proxy: it can differ from resident own-child count and does not guarantee the ACS minor-child restriction."
+          },
+          {
+            "moment": "recent_parent_ownership",
+            "warning": {
+              "age_projection": "uniform_within_age_cell",
+              "approximation_id": "early_2007_parenthood_md_working_v1__recent_parent_synchronized_proxy",
+              "decision_sha256": "b1d399c290d257e56e008afb6d7b76ac1f69191685c8d9e89a4b0bfb06533c9a",
+              "decision_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/initial_calibration_contract/lead_methodological_decision.json",
+              "declaration": "Synchronized post-fertility snapshot; uniform head-age overlap; model dependents proxy resident own children; actual current births from previously empty-dependent homes versus current empty homes inclformerparents. Not an exact annualACS interview reconstruction.",
+              "diagnostic_allow_residence_proxy": true,
+              "exact_acs": false,
+              "maintained": true,
+              "moment": "ownership_current_birth_from_empty_dependent_home_minus_current_empty_home_30_55",
+              "observer_id": "e5f_recent_parent_flow_diagnostic_v1",
+              "snapshot": "synchronized_post_fertility_snapshot"
+            }
+          },
+          {
+            "moment": "early_fertility",
+            "warning": "Observed completed age 25 corresponds to [25,26). Fixed uniform birth-time interpolation in [22,26) uses post weight .875 and literal ever-born weights [0,1,2,3]. Household reproductive-member exposure is not certified female exposure. Bootstrap is not CPS design-consistent."
+          }
+        ],
+        "normalization": {
+          "absolute_gap": 4.221209160437667e-06,
+          "completed_fertility": 2.1000042212091605,
+          "initial_psi": 0.14281100340255604,
+          "initial_step": 0.005,
+          "psi_child": 0.1229019464705741,
+          "stationary_solve_seconds": 749.6941368429689,
+          "stationary_solves": 6,
+          "status": "derived_intercept",
+          "target": 2.1
+        },
+        "normalization_inputs": {
+          "initial_psi": 0.14281100340255604,
+          "initial_step": 0.005,
+          "maximum_stationary_solves": 23,
+          "warm_price": true
+        },
+        "normalized_count": 1,
+        "objective_stationary_solve_seconds": 749.6941368429689,
+        "objective_stationary_solves": 6,
+        "operator_gates": {
+          "birth_flow": 0.11553492025739452,
+          "birth_flow_abs_error": 3.191891195797325e-16,
+          "effective_mature_flow_B": 0.05489552604586735,
+          "entry_flow_E": 0.061733456180777226,
+          "mature_flow_abs_error": 3.3931191190106347e-15,
+          "one_step_constant_path_nesting_l1": 3.837451308256771e-14,
+          "reconstructed_baseline_births": 0.11553492025739452,
+          "reconstructed_effective_mature_flow_B": 0.054895526045870745,
+          "stationary_birth_flow": 0.1155349202573942,
+          "stationary_feasibility_projection_mass": 0.0,
+          "stationary_post_fertility_nesting_l1": 3.252457424359319e-15,
+          "stationary_post_fertility_nesting_max_abs": 1.8733102422462274e-16,
+          "stationary_topcode_adjusted_birth_flow": 0.1296405185694361,
+          "top_bin_entry_birth_flow": 0.023417245247026486,
+          "topcode_adjusted_birth_flow": 0.1296405185694364,
+          "topcode_adjusted_birth_flow_abs_error": 3.0531133177191805e-16,
+          "zero_entry_mass_accounting_residual": -5.551115123125783e-16
+        },
+        "point": {
+          "H0": 6.4968922285224115,
+          "beta_annual": 0.9626545169663449,
+          "chi": 1.0781978105645995,
+          "child_benefit_curvature": 0.09232846500382948,
+          "delta_alpha_jump": 0.13150232623873945,
+          "first_birth_fixed_cost": 0.6588675772644,
+          "kappa_fert": 0.1478385561334145,
+          "kappa_fert_continuation": 0.3978553672287046,
+          "tenure_choice_kappa": 0.012514516826163469,
+          "theta0": 0.15109268253650396
+        },
+        "policy_array_gates": {
+          "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+          "lower_node_mass_at_negative_steps": 0.0,
+          "maximum_occupied_value_drop": 0.0,
+          "occupied_negative_steps": 0,
+          "probabilities": {
+            "continuation_birth": {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "nonfinite": 0
+            },
+            "first_birth": {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "nonfinite": 0
+            },
+            "location": {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "nonfinite": 0
+            },
+            "tenure": {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "nonfinite": 0
+            }
+          },
+          "share_pre_choice_mass_at_negative_steps": 0.0,
+          "value_drop_tolerance": 1e-07
+        },
+        "policy_plot_scope": "Standard saving/consumption panels are buyer-conditional; stayer policies retained separately",
+        "price": 0.7671346489805538,
+        "purchase_accounting": {
+          "end_mortgage_floor_violation_mass": 0.0,
+          "mass_tolerance": 2e-10,
+          "maximum_occupied_end_debt_shortfall": 0.0,
+          "maximum_occupied_stayer_debt_shortfall": 0.0,
+          "maximum_occupied_transaction_wealth_error": 2.842170943040401e-14,
+          "purchase_threshold_violation_mass": 0.0,
+          "source_contract": "origin_specific_due_v1",
+          "stayer_death_estate_violation_mass": 0.0,
+          "stayer_mass": 0.437754799961468,
+          "stayer_principal_floor_violation_mass": 0.0,
+          "transaction_outside_grid_mass": 0.0,
+          "wealth_tolerance": 1e-09
+        },
+        "retained_conception_schedule": [
+          0.98,
+          0.9658168691098954,
+          0.9415756781274986,
+          0.9001436879133341,
+          0.829329930686918,
+          0.7082981340823842,
+          0.501435846822519,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "retained_owner_grid": [
+          2.0,
+          4.0,
+          6.0,
+          8.0,
+          10.0
+        ],
+        "scientific_candidate_id": "56245f6b05d82e45073ebce2961a4288d84a8b8553feffbe7bf8fe8ec3590b8f",
+        "scientific_identity": "b38b968f59f28a8893f19662b3bb2014826a064cfdb77e5a2b5615bd4608cb4b",
+        "selected_checkpoint_sha256": "090c9ebda662bf7837c4f4cf1d816159bc9d203a9babe7c70d00d0c4be1e575e",
+        "source_manifest_sha256": "129ec4a3edde02da91a50e7537081a3d8eb5ca156deb168fbec70dfecb8d76cd",
+        "status": "verified_provisional_calibration_point",
+        "target_system_sha256": "2f64c7d9c75b42677d5deb1108a0d3a305d00b79d42440a769ceab5046f04da7",
+        "target_weight_fingerprint": "e745920f33f36ac0e22c3ee1ba7fccad9d0f4f8482145d3d335c109cc9ca07da",
+        "weighted_count": 10
+      }
+    },
+    "primary": {
+      "record": {
+        "case": "initial_0324_primary",
+        "case_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/evening_calibration_20260927/gated_v2/search/initial_0324_primary/case",
+        "checkpoint_sha256": "625d19d3a1ec8867299bb263f21944e196f243e081c55a612bc10c9a8331cad4",
+        "deadline": 1790556914.3486812,
+        "design": "coordinate_tenure_choice_kappa",
+        "error": null,
+        "lane": "primary",
+        "loss": 26.405155533883452,
+        "point": {
+          "H0": 6.206479060846687,
+          "beta_annual": 0.9614841329254233,
+          "chi": 1.0889178301004045,
+          "child_benefit_curvature": 0.07930705056729134,
+          "delta_alpha_jump": 0.14198430659647016,
+          "first_birth_fixed_cost": 0.6465287075719173,
+          "kappa_fert": 0.18602764064869315,
+          "kappa_fert_continuation": 0.3562600405052205,
+          "tenure_choice_kappa": 0.008745922137523131,
+          "theta0": 0.11358885656635645
+        },
+        "primary_rescore": 26.405155533883452,
+        "receipt_sha256": "3d6b2b071c3ee822b0b84be2f89da1d02927ccafcd038b577136fb5f10f0c19e",
+        "request_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/evening_calibration_20260927/gated_v2/search/initial_0324_primary.request.json",
+        "returncode": 0,
+        "status": "success"
+      },
+      "target_fit": "moment,target,model,gap,weight,loss_contribution,role\ninitial_normalization,2.1,2.100117522629159,0.0001175226291589837,,,normalization\ncps_childlessness,0.19827875100684264,0.1985890686393175,0.00031031763247485467,35532.3042455214,0.003421655475378179,scored\ncps_exactly_one,0.21365532522014702,0.21198100114163096,-0.0016743240785160596,26952.820824310795,0.07555848997046763,scored\nnchs_mean_age,25.976263860992496,25.938560396281623,-0.037703464710872936,139.82806784479274,0.1987727647982086,scored\nnchs_share30,0.2492780130410667,0.22440895296194704,-0.024869060079119654,0.0,0.0,validation\nwealth_earnings,6.92658379107299,6.125068885475874,-0.8015149055971165,7.595098472533724,4.879289824207742,scored\nbequest_wealth,0.007291023472616158,0.0070333641496774756,-0.00025765932293868223,5165289.256198346,0.342914910626137,scored\nold_dispersion,3.51593508651872,3.103824320256746,-0.41211076626197407,0.0,0.0,validation\nmean_rooms,5.729434240102641,5.870768933729786,0.14133469362714468,128.02070205233477,2.557276973458687,scored\nownership_30_55,0.6762604168538028,0.6314195161659037,-0.04484090068789903,2339.3623724673616,4.703770834590301,scored\nfirst_birth_rooms,1.465,1.664331230358881,0.199331230358881,137.5652749002964,5.465872730660559,scored\nfamily_rooms,0.38509964969278165,0.31226473145145395,-0.0728349182413277,0.0,0.0,validation\nrecent_parent_ownership,0.12760836356692162,0.122268479637198,-0.005339883929723621,27055.822957508266,0.7714794862668869,scored\nearly_fertility,0.8095276384290021,0.5373733097140415,-0.2721543287149606,100.0,7.406797863829083,scored\n",
+      "parameters": "parameter,estimate,lower,upper,near_bound,status\nH0,6.206479060846687,0.2,80.0,False,free in evening DUE calibration\nbeta_annual,0.9614841329254233,0.94,0.99,False,free in evening DUE calibration\nchi,1.0889178301004045,0.1,5.0,False,free in evening DUE calibration\nfirst_birth_fixed_cost,0.6465287075719173,0.0,8.0,False,free in evening DUE calibration\nkappa_fert,0.18602764064869315,0.02,50.0,True,free in evening DUE calibration\nkappa_fert_continuation,0.3562600405052205,0.02,50.0,True,free in evening DUE calibration\ntheta0,0.11358885656635645,0.0,8.0,False,free in evening DUE calibration\ndelta_alpha_jump,0.14198430659647016,0.0,0.25,False,free in evening DUE calibration\nchild_benefit_curvature,0.07930705056729134,0.0,0.8,False,free in evening DUE calibration\ntenure_choice_kappa,0.008745922137523131,0.001,0.1,False,free in evening DUE calibration\npsi_child,0.1387247983480046,,,,normalized to completed fertility 2.1\nchild_benefit_CRRA_coefficient,0.1277229437504821,,,,derived from normalized one-child benefit\ntheta1,0.008193084126995582,,,,fixed external restriction\nsigma,2.0,,,,fixed\nalpha_cons,0.733,,,,fixed CEX childless expenditure share\ndelta_alpha,0.0,,,,fixed zero later-child loading\nh_P,0.0,,,,no housing floor\nutility_reference_rent,0.11046592704873838,,,,fixed substantive utility normalization\nq_annual,0.020000000000000018,,,,author-retained 2% annual real rate\nfinanced_share,0.8,,,,inherited credit contract\nhousing_supply_elasticity,0.63,,,,fixed provisional external mapping\npayroll_tax,0.08028070961950022,,,,derived from adopted pension ratio\npension_period,0.917784047463731,,,,balanced PAYGO\nannual_depreciation,0.01416143718381309,,,,adopted\nperiod_depreciation,0.05545379079326218,,,,compounded\nannual_property_tax,0.010598360773872594,,,,adopted\nperiod_property_tax,0.042393443095490375,,,,linear period convention\nselling_cost,0.06,,,,retained\nrental_cap,6.0,,,,retained provisional\nwealth_grid_nodes,160.0,,,,retained exact grid\nincome_states,15.0,,,,retained B15\n",
+      "receipt": {
+        "adult_entry_gate": {
+          "births_per_entry": 2.1001175226287114,
+          "entry_E": 0.06173345618079522,
+          "entry_residual": -3.4547990713368337e-06,
+          "fertility_gap": 0.00011752262871134178,
+          "potential_B": 0.061736910979866555
+        },
+        "case_checkpoint_sha256": "625d19d3a1ec8867299bb263f21944e196f243e081c55a612bc10c9a8331cad4",
+        "chosen_solve_seconds": 102.8309382260777,
+        "contract_sha256": "4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be",
+        "credit_rule": "DUE existing-owner with death solvency",
+        "display_count": 14,
+        "economic_changes": [
+          {
+            "change": "Same native compensated housing-share specification as matched diagnostic; first-child loading estimated, later-child loading fixed zero; no child housing floor.",
+            "object": "utility",
+            "status": "author-adopted for first calibration"
+          },
+          {
+            "change": "Estimate curvature in proposed bounds [0,.8]; starting value .14 matches the diagnostic receipt, which reports exponent .86 despite its historical folder suffix.",
+            "object": "child_benefit_curvature",
+            "status": "lead-selected provisional setting under author overnight delegation"
+          },
+          {
+            "change": "Replace ACS capped-nine mean with national AHS 2007 literal-room mean; retain old working weight.",
+            "object": "mean_rooms",
+            "status": "author-adopted"
+          },
+          {
+            "change": "Add exact-age-25 children-ever-born mean capped at three; proposed working weight 100.",
+            "object": "early_fertility",
+            "status": "lead-selected provisional setting under author overnight delegation"
+          },
+          {
+            "change": "Fixed annual pension/income ratio from empirical receipt; payroll tax derived from stationary demographics.",
+            "object": "pensions",
+            "status": "author-adopted"
+          },
+          {
+            "change": "Positive net estates fund positive entrant assets; residual exits through a nonutility sink. Net-estate valuation and physical/financial settlement remain provisional.",
+            "object": "estate_entry_funding",
+            "status": "provisional working closure"
+          },
+          {
+            "change": "B15 earnings, inherited entrant-wealth marginal and income/wealth rank coupling retained; no zero-entry substitution.",
+            "object": "income_entry",
+            "status": "unchanged inherited inputs"
+          },
+          {
+            "change": "Retained working minimum-distance weights, including early-fertility weight 100.",
+            "object": "weighting",
+            "status": "primary retained"
+          },
+          {
+            "change": "Retained working minimum-distance weights, including early-fertility weight 100.",
+            "object": "weighting",
+            "status": "primary retained"
+          },
+          {
+            "change": "Native DUE stayer credit; tenure choice scale searched; three specified validation moments receive zero objective weight; three separate weighting lanes",
+            "status": "author-adopted tonight"
+          }
+        ],
+        "estate_funding": {
+          "adult_transfers": false,
+          "annual_gross_positive_estates": 0.03191360891482562,
+          "annual_net_positive_estates": 0.0284073406025616,
+          "annual_positive_entrant_funding": 0.007924892282872723,
+          "audit_id": "estate_funded_entry_provisional_net_v1",
+          "available_estates_period": 0.1136293624102464,
+          "available_estates_valuation": "provisional_positive_net_estates_after_inherited_selling_cost",
+          "caveats": [
+            "Availability valuation is provisional; donor utility remains unchanged.",
+            "Negative estates remain explicit liabilities with an unresolved creditor rule.",
+            "Negative entrant positions do not reduce positive entrant funding.",
+            "This is not a child-directed bequest-flow measurement correction.",
+            "An admissible ledger alone does not certify stationary equilibrium."
+          ],
+          "certifies_counterparty_or_physical_housing_settlement": false,
+          "donor_bequest_valuation_changes": false,
+          "entrant_minus_death_mass": 6.12426775958852e-14,
+          "entry": {
+            "mass": 0.061733456180795225,
+            "negative_financial_position": 0.02018506468585146,
+            "owner_prechoice_mass": 0.0,
+            "positive_financial_endowment": 0.03169956913149089,
+            "signed_financial_endowment": 0.01151450444563943
+          },
+          "entry_distribution_changes": false,
+          "estate": {
+            "by_age": [
+              {
+                "age_index": 0,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 1,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 2,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 3,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 4,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 5,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 6,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 7,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 8,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 9,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 10,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 11,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 12,
+                "death_mass": 0.003757943498204528,
+                "gross_negative": 0.0,
+                "gross_positive": 0.027255197324132757,
+                "housing_sale_cost": 0.0009281014450921424,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.026327095879040613
+              },
+              {
+                "age_index": 13,
+                "death_mass": 0.004725141434848715,
+                "gross_negative": 0.0,
+                "gross_positive": 0.02588500193213105,
+                "housing_sale_cost": 0.0011241615313999688,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.02476084040073108
+              },
+              {
+                "age_index": 14,
+                "death_mass": 0.0061263384456281085,
+                "gross_negative": 0.0,
+                "gross_positive": 0.023287471154049985,
+                "housing_sale_cost": 0.0014082108397203202,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.02187926031432967
+              },
+              {
+                "age_index": 15,
+                "death_mass": 0.008008879884084729,
+                "gross_negative": 0.0,
+                "gross_positive": 0.01800696084769994,
+                "housing_sale_cost": 0.0017996093360722549,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.016207351511627686
+              },
+              {
+                "age_index": 16,
+                "death_mass": 0.0391151529179679,
+                "gross_negative": 0.0,
+                "gross_positive": 0.033219804401288744,
+                "housing_sale_cost": 0.008764990096771392,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.024454814304517354
+              }
+            ],
+            "totals": {
+              "death_mass": 0.06173345618073398,
+              "gross_negative": 0.0,
+              "gross_positive": 0.12765443565930248,
+              "gross_signed": 0.12765443565930248,
+              "housing_sale_cost": 0.014025073249056079,
+              "negative_estate_death_mass": 0.0,
+              "net_negative": 0.0,
+              "net_positive": 0.1136293624102464,
+              "net_signed": 0.1136293624102464,
+              "signed_cost_identity_residual": 1.951563910473908e-18
+            }
+          },
+          "funding_gate_tolerance": 1e-10,
+          "funding_shortfall_period": 0.0,
+          "gross_residual_after_entry_period": 0.0959548665278116,
+          "inherited_selling_cost": 0.06,
+          "net_residual_after_entry_period": 0.08192979327875552,
+          "period_years": 4.0,
+          "policy_changes": false,
+          "residual_sink_period": 0.08192979327875552,
+          "status": "funded",
+          "timing": "stationary death flow finances the next entrant cohort; no transition implementation",
+          "units": "model financial units per model period"
+        },
+        "fiscal": {
+          "actual_accounts": {
+            "implied_balanced_payroll_tax": 0.08028070961946801,
+            "implied_balanced_pension_period": 0.9177840474640993,
+            "payroll_tax_base_period": 2.9632058966764245,
+            "payroll_tax_rate": 0.08028070961950022,
+            "payroll_tax_revenue": 0.23788827213387082,
+            "pension_budget_residual": 9.545142454214783e-14,
+            "pension_outlays": 0.23788827213377536,
+            "pension_period_units": 0.917784047463731,
+            "retiree_benefit_exposure": 0.25919852583096487,
+            "retiree_household_mass": 0.25919852583096487,
+            "scaled_pension_budget_residual": 4.0124476791538874e-13,
+            "worker_household_mass": 0.7408014741689811
+          },
+          "fiscal_gate": true,
+          "fiscal_tolerance": 1e-06,
+          "marginal_gate": true,
+          "marginal_tolerance": 1e-09,
+          "normalized_age_income_max_gap": 1.1082860296813754e-14
+        },
+        "fiscal_rule": {
+          "payroll_tax": 0.08028070961950022,
+          "pension_to_mean_gross_worker_earnings": 0.2294460118659327,
+          "retiree_mass": 0.25919852583102354,
+          "retiree_worker_ratio": 0.3498893224015109,
+          "transition_rule": "hold baseline tax fixed; equal pension balances actual PAYGO",
+          "worker_mass": 0.7408014741689765
+        },
+        "free_count": 10,
+        "household_budget": {
+          "actual_rent": 0.14648310135472456,
+          "budget_excess_mass": 0.0,
+          "budget_tolerance": 1e-09,
+          "maximum_occupied_excess": 2.842170943040401e-14
+        },
+        "lane": "primary",
+        "loss": 26.405155533883452,
+        "market_residual": 1.9793353234466584e-06,
+        "model_observer_warnings": [
+          {
+            "moment": "initial_normalization",
+            "warning": "Separate from CPS age-window stocks and actual birth/entry accounting."
+          },
+          {
+            "moment": "cps_childlessness",
+            "warning": "Uniform birth-time parity interpolation is the main diagnostic; constant-post-cell sensitivity retained. Model household reproductive member is not certified female exposure; no empirical age reweighting."
+          },
+          {
+            "moment": "cps_exactly_one",
+            "warning": "Uniform birth-time parity interpolation is the main diagnostic; constant-post-cell sensitivity retained. Model household reproductive member is not certified female exposure; no empirical age reweighting."
+          },
+          {
+            "moment": "nchs_mean_age",
+            "warning": "First-birth flow timing, not completed-cohort timing. Household maternal proxy; empirical under-18/over-45 tail collapse retained; raw builder residence and unknown-order comparability remain unresolved."
+          },
+          {
+            "moment": "nchs_share30",
+            "warning": "First-birth flow timing, not completed-cohort timing. Household maternal proxy; empirical under-18/over-45 tail collapse retained; raw builder residence and unknown-order comparability remain unresolved."
+          },
+          {
+            "moment": "wealth_earnings",
+            "warning": "Household net worth is scaled by reference-person-plus-spouse gross labor earnings; calendar-specific wealth valuation and earnings-reference-year alignment remains inherited from the PSID shelf and is not newly certified."
+          },
+          {
+            "moment": "bequest_wealth",
+            "warning": "Experimental approximation: the frozen model observer sums positive estates over all fertility/dependent-child states without child-recipient eligibility or allocation, whereas the adopted SCF ratio is child-directed. No recipient-law change is authorized in this contract."
+          },
+          {
+            "moment": "old_dispersion",
+            "warning": "Uniform within-age-cell overlap for ages 76--84 Modeled pension plus configured lump-sum income proxy; not PSID total family income Empirical $1000 real-income and observed-child-history filters are not reproduced At these retirement ages model denominator is pension income (including configured z scaling), while PSID INCFAMR also includes transfers, asset income and other family components. Exact $1000 cutoff is not applied (only income>0), and observed-completed-children selection has no model missingness counterpart. Full 78/82 cells do not cover exactly 76-84. Actual model property-tax lump-sum transfer is zero in this receipt; proxy uses the configured pension-plus-transfer concept."
+          },
+          {
+            "moment": "mean_rooms",
+            "warning": "Uniform model exposure within four-year age cells; literal AHS ROOMS has public-use topcode 21. Model rooms are uncapped. Housing supply normalization remains an empirical normalization."
+          },
+          {
+            "moment": "ownership_30_55",
+            "warning": "National ACS target geography is accepted. The empirical owner sample is restricted to DUE structures UNITSSTR 3:10, a structure-type distinction absent from the model state; age 30-55 is projected through a four-year model cell extending to ages 54-57."
+          },
+          {
+            "moment": "first_birth_rooms",
+            "warning": "The stationary first-birth housing observer approximates this empirical event-study contrast and does not reproduce the Sun-Abraham panel estimator or its baseline-status cohort selection."
+          },
+          {
+            "moment": "family_rooms",
+            "warning": "National ACS target geography is accepted. Empirical groups use NCHILD=3+ versus 1-2 and require YNGCH<18. Model dependent-child count m is only a proxy: it can differ from resident own-child count and does not guarantee the ACS minor-child restriction."
+          },
+          {
+            "moment": "recent_parent_ownership",
+            "warning": {
+              "age_projection": "uniform_within_age_cell",
+              "approximation_id": "early_2007_parenthood_md_working_v1__recent_parent_synchronized_proxy",
+              "decision_sha256": "b1d399c290d257e56e008afb6d7b76ac1f69191685c8d9e89a4b0bfb06533c9a",
+              "decision_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/initial_calibration_contract/lead_methodological_decision.json",
+              "declaration": "Synchronized post-fertility snapshot; uniform head-age overlap; model dependents proxy resident own children; actual current births from previously empty-dependent homes versus current empty homes inclformerparents. Not an exact annualACS interview reconstruction.",
+              "diagnostic_allow_residence_proxy": true,
+              "exact_acs": false,
+              "maintained": true,
+              "moment": "ownership_current_birth_from_empty_dependent_home_minus_current_empty_home_30_55",
+              "observer_id": "e5f_recent_parent_flow_diagnostic_v1",
+              "snapshot": "synchronized_post_fertility_snapshot"
+            }
+          },
+          {
+            "moment": "early_fertility",
+            "warning": "Observed completed age 25 corresponds to [25,26). Fixed uniform birth-time interpolation in [22,26) uses post weight .875 and literal ever-born weights [0,1,2,3]. Household reproductive-member exposure is not certified female exposure. Bootstrap is not CPS design-consistent."
+          }
+        ],
+        "normalization": {
+          "absolute_gap": 0.0001175226291589837,
+          "completed_fertility": 2.100117522629159,
+          "initial_psi": 0.14281100340255604,
+          "initial_step": 0.005,
+          "psi_child": 0.1387247983480046,
+          "stationary_solve_seconds": 398.3737124580657,
+          "stationary_solves": 3,
+          "status": "derived_intercept",
+          "target": 2.1
+        },
+        "normalization_inputs": {
+          "initial_psi": 0.14281100340255604,
+          "initial_step": 0.005,
+          "maximum_stationary_solves": 23,
+          "warm_price": true
+        },
+        "normalized_count": 1,
+        "objective_stationary_solve_seconds": 398.3737124580657,
+        "objective_stationary_solves": 3,
+        "operator_gates": {
+          "birth_flow": 0.11549082785574037,
+          "birth_flow_abs_error": 1.304512053934559e-15,
+          "effective_mature_flow_B": 0.05480685803539214,
+          "entry_flow_E": 0.06173345618079522,
+          "mature_flow_abs_error": 7.702172233337023e-15,
+          "one_step_constant_path_nesting_l1": 6.133364239066002e-14,
+          "reconstructed_baseline_births": 0.11549082785574037,
+          "reconstructed_effective_mature_flow_B": 0.05480685803539984,
+          "stationary_birth_flow": 0.11549082785573907,
+          "stationary_feasibility_projection_mass": 0.0,
+          "stationary_post_fertility_nesting_l1": 4.276428947372906e-15,
+          "stationary_post_fertility_nesting_max_abs": 7.927616934391452e-17,
+          "stationary_topcode_adjusted_birth_flow": 0.12964751305771977,
+          "top_bin_entry_birth_flow": 0.023502056554151052,
+          "topcode_adjusted_birth_flow": 0.12964751305772163,
+          "topcode_adjusted_birth_flow_abs_error": 1.8596235662471372e-15,
+          "zero_entry_mass_accounting_residual": 0.0
+        },
+        "point": {
+          "H0": 6.206479060846687,
+          "beta_annual": 0.9614841329254233,
+          "chi": 1.0889178301004045,
+          "child_benefit_curvature": 0.07930705056729134,
+          "delta_alpha_jump": 0.14198430659647016,
+          "first_birth_fixed_cost": 0.6465287075719173,
+          "kappa_fert": 0.18602764064869315,
+          "kappa_fert_continuation": 0.3562600405052205,
+          "tenure_choice_kappa": 0.008745922137523131,
+          "theta0": 0.11358885656635645
+        },
+        "policy_array_gates": {
+          "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+          "lower_node_mass_at_negative_steps": 0.0,
+          "maximum_occupied_value_drop": 0.0,
+          "occupied_negative_steps": 0,
+          "probabilities": {
+            "continuation_birth": {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "nonfinite": 0
+            },
+            "first_birth": {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "nonfinite": 0
+            },
+            "location": {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "nonfinite": 0
+            },
+            "tenure": {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "nonfinite": 0
+            }
+          },
+          "share_pre_choice_mass_at_negative_steps": 0.0,
+          "value_drop_tolerance": 1e-07
+        },
+        "policy_plot_scope": "Standard saving/consumption panels are buyer-conditional; stayer policies retained separately",
+        "price": 0.8125338020889781,
+        "purchase_accounting": {
+          "end_mortgage_floor_violation_mass": 0.0,
+          "mass_tolerance": 2e-10,
+          "maximum_occupied_end_debt_shortfall": 0.0,
+          "maximum_occupied_stayer_debt_shortfall": 0.0,
+          "maximum_occupied_transaction_wealth_error": 2.842170943040401e-14,
+          "purchase_threshold_violation_mass": 0.0,
+          "source_contract": "origin_specific_due_v1",
+          "stayer_death_estate_violation_mass": 0.0,
+          "stayer_mass": 0.4924952765220506,
+          "stayer_principal_floor_violation_mass": 0.0,
+          "transaction_outside_grid_mass": 0.0,
+          "wealth_tolerance": 1e-09
+        },
+        "retained_conception_schedule": [
+          0.98,
+          0.9658168691098954,
+          0.9415756781274986,
+          0.9001436879133341,
+          0.829329930686918,
+          0.7082981340823842,
+          0.501435846822519,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "retained_owner_grid": [
+          2.0,
+          4.0,
+          6.0,
+          8.0,
+          10.0
+        ],
+        "scientific_candidate_id": "970d86e18b59958e88ad432f47a03b3ec18e294c77b65398743c685f21e56db0",
+        "scientific_identity": "b38b968f59f28a8893f19662b3bb2014826a064cfdb77e5a2b5615bd4608cb4b",
+        "selected_checkpoint_sha256": "090c9ebda662bf7837c4f4cf1d816159bc9d203a9babe7c70d00d0c4be1e575e",
+        "source_manifest_sha256": "129ec4a3edde02da91a50e7537081a3d8eb5ca156deb168fbec70dfecb8d76cd",
+        "status": "verified_provisional_calibration_point",
+        "target_system_sha256": "04528ece6513e4da9436bb8b35b54cd7e9cecd3a6695d050a0a7aea5a71d5e60",
+        "target_weight_fingerprint": "20e531855075b807886da8e936930dca9090b989b2ce381de39042cf206efdbd",
+        "weighted_count": 10
+      }
+    },
+    "common_primary_best": {
+      "record": {
+        "case": "initial_0311_block",
+        "case_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/evening_calibration_20260927/gated_v2/search/initial_0311_block/case",
+        "checkpoint_sha256": "d1b9a0080352702361b36584dc497bc402fbaded8054e18a4546437010286d41",
+        "deadline": 1790556012.3744354,
+        "design": "coordinate_kappa_fert",
+        "error": null,
+        "halt_new_dispatch": false,
+        "lane": "block",
+        "loss": 2.528250346833371,
+        "point": {
+          "H0": 6.206479060846687,
+          "beta_annual": 0.9625666052463695,
+          "chi": 1.0889178301004045,
+          "child_benefit_curvature": 0.07930705056729134,
+          "delta_alpha_jump": 0.14191834048688282,
+          "first_birth_fixed_cost": 0.6465287075719173,
+          "kappa_fert": 0.18742283857244052,
+          "kappa_fert_continuation": 0.3474664229788561,
+          "tenure_choice_kappa": 0.007770045711149935,
+          "theta0": 0.11358885656635645
+        },
+        "primary_rescore": 26.36863619951569,
+        "receipt_sha256": "e9800469a1ebd38fa16c066a711404c8eae9fd5bcfc7b7c59d39e6ab80eb2499",
+        "request_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/evening_calibration_20260927/gated_v2/search/initial_0311_block.request.json",
+        "returncode": 0,
+        "status": "success"
+      },
+      "target_fit": "moment,target,model,gap,weight,loss_contribution,role\ninitial_normalization,2.1,2.100217762505393,0.0002177625053927379,,,normalization\ncps_childlessness,0.19827875100684264,0.19976853613932322,0.0014897851324805755,2961.02535379345,0.006571876564706894,scored\ncps_exactly_one,0.21365532522014702,0.21128270697416685,-0.0023726182459801737,2246.0684020258996,0.012643831804951515,scored\nnchs_mean_age,25.976263860992496,25.983531555047247,0.007267694054750251,11.652338987066061,0.0006154692844150619,scored\nnchs_share30,0.2492780130410667,0.22693784091753244,-0.022340172123534258,0.0,0.0,validation\nwealth_earnings,6.92658379107299,6.229661351576629,-0.6969224394963609,1.2658497454222875,0.6148243437471037,scored\nbequest_wealth,0.007291023472616158,0.007057606935411929,-0.0002334165372042292,860881.5426997243,0.046903650000355804,scored\nold_dispersion,3.51593508651872,3.113694925231838,-0.402240161286882,0.0,0.0,validation\nmean_rooms,5.729434240102641,5.8937982510478415,0.16436401094520026,10.668391837694564,0.28821223940897284,scored\nownership_30_55,0.6762604168538028,0.6334129785702999,-0.0428474382835029,194.94686437228015,0.35790352679781645,scored\nfirst_birth_rooms,1.465,1.6729075795847157,0.20790757958471562,11.463772908358033,0.49552802257778517,scored\nfamily_rooms,0.38509964969278165,0.31398186336953415,-0.0711177863232475,0.0,0.0,validation\nrecent_parent_ownership,0.12760836356692162,0.12195230598780415,-0.005656057579117468,2254.6519131256887,0.07212854080506009,scored\nearly_fertility,0.8095276384290021,0.5339368884008773,-0.27559075002812483,8.333333333333334,0.6329188458422033,scored\n",
+      "parameters": "parameter,estimate,lower,upper,near_bound,status\nH0,6.206479060846687,0.2,80.0,False,free in evening DUE calibration\nbeta_annual,0.9625666052463695,0.94,0.99,False,free in evening DUE calibration\nchi,1.0889178301004045,0.1,5.0,False,free in evening DUE calibration\nfirst_birth_fixed_cost,0.6465287075719173,0.0,8.0,False,free in evening DUE calibration\nkappa_fert,0.18742283857244052,0.02,50.0,True,free in evening DUE calibration\nkappa_fert_continuation,0.3474664229788561,0.02,50.0,True,free in evening DUE calibration\ntheta0,0.11358885656635645,0.0,8.0,False,free in evening DUE calibration\ndelta_alpha_jump,0.14191834048688282,0.0,0.25,False,free in evening DUE calibration\nchild_benefit_curvature,0.07930705056729134,0.0,0.8,False,free in evening DUE calibration\ntenure_choice_kappa,0.007770045711149935,0.001,0.1,False,free in evening DUE calibration\npsi_child,0.1405651672547881,,,,normalized to completed fertility 2.1\nchild_benefit_CRRA_coefficient,0.12941735842731286,,,,derived from normalized one-child benefit\ntheta1,0.008193084126995582,,,,fixed external restriction\nsigma,2.0,,,,fixed\nalpha_cons,0.733,,,,fixed CEX childless expenditure share\ndelta_alpha,0.0,,,,fixed zero later-child loading\nh_P,0.0,,,,no housing floor\nutility_reference_rent,0.11046592704873838,,,,fixed substantive utility normalization\nq_annual,0.020000000000000018,,,,author-retained 2% annual real rate\nfinanced_share,0.8,,,,inherited credit contract\nhousing_supply_elasticity,0.63,,,,fixed provisional external mapping\npayroll_tax,0.08028070961950022,,,,derived from adopted pension ratio\npension_period,0.917784047463731,,,,balanced PAYGO\nannual_depreciation,0.01416143718381309,,,,adopted\nperiod_depreciation,0.05545379079326218,,,,compounded\nannual_property_tax,0.010598360773872594,,,,adopted\nperiod_property_tax,0.042393443095490375,,,,linear period convention\nselling_cost,0.06,,,,retained\nrental_cap,6.0,,,,retained provisional\nwealth_grid_nodes,160.0,,,,retained exact grid\nincome_states,15.0,,,,retained B15\n",
+      "receipt": {
+        "adult_entry_gate": {
+          "births_per_entry": 2.1002177625051606,
+          "entry_E": 0.061733456180804856,
+          "entry_residual": -6.4015390810190365e-06,
+          "fertility_gap": 0.00021776250516047924,
+          "potential_B": 0.061739857719885875
+        },
+        "case_checkpoint_sha256": "d1b9a0080352702361b36584dc497bc402fbaded8054e18a4546437010286d41",
+        "chosen_solve_seconds": 103.3825732349651,
+        "contract_sha256": "4453e92f712b1b6b6d3b9a11a4b16c0231a05ce314d33b207ec50d3a4c5475be",
+        "credit_rule": "DUE existing-owner with death solvency",
+        "display_count": 14,
+        "economic_changes": [
+          {
+            "change": "Same native compensated housing-share specification as matched diagnostic; first-child loading estimated, later-child loading fixed zero; no child housing floor.",
+            "object": "utility",
+            "status": "author-adopted for first calibration"
+          },
+          {
+            "change": "Estimate curvature in proposed bounds [0,.8]; starting value .14 matches the diagnostic receipt, which reports exponent .86 despite its historical folder suffix.",
+            "object": "child_benefit_curvature",
+            "status": "lead-selected provisional setting under author overnight delegation"
+          },
+          {
+            "change": "Replace ACS capped-nine mean with national AHS 2007 literal-room mean; retain old working weight.",
+            "object": "mean_rooms",
+            "status": "author-adopted"
+          },
+          {
+            "change": "Add exact-age-25 children-ever-born mean capped at three; proposed working weight 100.",
+            "object": "early_fertility",
+            "status": "lead-selected provisional setting under author overnight delegation"
+          },
+          {
+            "change": "Fixed annual pension/income ratio from empirical receipt; payroll tax derived from stationary demographics.",
+            "object": "pensions",
+            "status": "author-adopted"
+          },
+          {
+            "change": "Positive net estates fund positive entrant assets; residual exits through a nonutility sink. Net-estate valuation and physical/financial settlement remain provisional.",
+            "object": "estate_entry_funding",
+            "status": "provisional working closure"
+          },
+          {
+            "change": "B15 earnings, inherited entrant-wealth marginal and income/wealth rank coupling retained; no zero-entry substitution.",
+            "object": "income_entry",
+            "status": "unchanged inherited inputs"
+          },
+          {
+            "change": "Retained working minimum-distance weights, including early-fertility weight 100.",
+            "object": "weighting",
+            "status": "primary retained"
+          },
+          {
+            "change": "Retained working minimum-distance weights, including early-fertility weight 100.",
+            "object": "weighting",
+            "status": "primary retained"
+          },
+          {
+            "change": "Native DUE stayer credit; tenure choice scale searched; three specified validation moments receive zero objective weight; three separate weighting lanes",
+            "status": "author-adopted tonight"
+          }
+        ],
+        "estate_funding": {
+          "adult_transfers": false,
+          "annual_gross_positive_estates": 0.03257044887350082,
+          "annual_net_positive_estates": 0.028940926041287764,
+          "annual_positive_entrant_funding": 0.00792489228287396,
+          "audit_id": "estate_funded_entry_provisional_net_v1",
+          "available_estates_period": 0.11576370416515105,
+          "available_estates_valuation": "provisional_positive_net_estates_after_inherited_selling_cost",
+          "caveats": [
+            "Availability valuation is provisional; donor utility remains unchanged.",
+            "Negative estates remain explicit liabilities with an unresolved creditor rule.",
+            "Negative entrant positions do not reduce positive entrant funding.",
+            "This is not a child-directed bequest-flow measurement correction.",
+            "An admissible ledger alone does not certify stationary equilibrium."
+          ],
+          "certifies_counterparty_or_physical_housing_settlement": false,
+          "donor_bequest_valuation_changes": false,
+          "entrant_minus_death_mass": 7.357309206312834e-14,
+          "entry": {
+            "mass": 0.061733456180804856,
+            "negative_financial_position": 0.02018506468585461,
+            "owner_prechoice_mass": 0.0,
+            "positive_financial_endowment": 0.03169956913149584,
+            "signed_financial_endowment": 0.01151450444564123
+          },
+          "entry_distribution_changes": false,
+          "estate": {
+            "by_age": [
+              {
+                "age_index": 0,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 1,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 2,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 3,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 4,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 5,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 6,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 7,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 8,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 9,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 10,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 11,
+                "death_mass": 0.0,
+                "gross_negative": 0.0,
+                "gross_positive": 0.0,
+                "housing_sale_cost": 0.0,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.0
+              },
+              {
+                "age_index": 12,
+                "death_mass": 0.0037579434982043637,
+                "gross_negative": 0.0,
+                "gross_positive": 0.027708057078756263,
+                "housing_sale_cost": 0.0009574421156271964,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.02675061496312907
+              },
+              {
+                "age_index": 13,
+                "death_mass": 0.0047251414348485074,
+                "gross_negative": 0.0,
+                "gross_positive": 0.026377579330830167,
+                "housing_sale_cost": 0.0011635698464311838,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.025214009484398982
+              },
+              {
+                "age_index": 14,
+                "death_mass": 0.00612633844562784,
+                "gross_negative": 0.0,
+                "gross_positive": 0.023788660833230602,
+                "housing_sale_cost": 0.0014618910502802612,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.02232676978295034
+              },
+              {
+                "age_index": 15,
+                "death_mass": 0.008008879884084379,
+                "gross_negative": 0.0,
+                "gross_positive": 0.018431995907727983,
+                "housing_sale_cost": 0.0018701109288138888,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.016561884978914095
+              },
+              {
+                "age_index": 16,
+                "death_mass": 0.039115152917966196,
+                "gross_negative": 0.0,
+                "gross_positive": 0.03397550234345828,
+                "housing_sale_cost": 0.009065077387699703,
+                "negative_estate_death_mass": 0.0,
+                "net_negative": 0.0,
+                "net_positive": 0.024910424955758577
+              }
+            ],
+            "totals": {
+              "death_mass": 0.06173345618073128,
+              "gross_negative": 0.0,
+              "gross_positive": 0.1302817954940033,
+              "gross_signed": 0.1302817954940033,
+              "housing_sale_cost": 0.014518091328852232,
+              "negative_estate_death_mass": 0.0,
+              "net_negative": 0.0,
+              "net_positive": 0.11576370416515105,
+              "net_signed": 0.11576370416515105,
+              "signed_cost_identity_residual": 4.553649124439119e-18
+            }
+          },
+          "funding_gate_tolerance": 1e-10,
+          "funding_shortfall_period": 0.0,
+          "gross_residual_after_entry_period": 0.09858222636250745,
+          "inherited_selling_cost": 0.06,
+          "net_residual_after_entry_period": 0.08406413503365522,
+          "period_years": 4.0,
+          "policy_changes": false,
+          "residual_sink_period": 0.08406413503365522,
+          "status": "funded",
+          "timing": "stationary death flow finances the next entrant cohort; no transition implementation",
+          "units": "model financial units per model period"
+        },
+        "fiscal": {
+          "actual_accounts": {
+            "implied_balanced_payroll_tax": 0.080280709619472,
+            "implied_balanced_pension_period": 0.9177840474640537,
+            "payroll_tax_base_period": 2.963205896676147,
+            "payroll_tax_rate": 0.08028070961950022,
+            "payroll_tax_revenue": 0.23788827213384853,
+            "pension_budget_residual": 8.365530490550555e-14,
+            "pension_outlays": 0.23788827213376487,
+            "pension_period_units": 0.917784047463731,
+            "retiree_benefit_exposure": 0.25919852583095343,
+            "retiree_household_mass": 0.25919852583095343,
+            "scaled_pension_budget_residual": 3.516579617612954e-13,
+            "worker_household_mass": 0.7408014741689746
+          },
+          "fiscal_gate": true,
+          "fiscal_tolerance": 1e-06,
+          "marginal_gate": true,
+          "marginal_tolerance": 1e-09,
+          "normalized_age_income_max_gap": 1.2826545381372512e-14
+        },
+        "fiscal_rule": {
+          "payroll_tax": 0.08028070961950022,
+          "pension_to_mean_gross_worker_earnings": 0.2294460118659327,
+          "retiree_mass": 0.25919852583102354,
+          "retiree_worker_ratio": 0.3498893224015109,
+          "transition_rule": "hold baseline tax fixed; equal pension balances actual PAYGO",
+          "worker_mass": 0.7408014741689765
+        },
+        "free_count": 10,
+        "household_budget": {
+          "actual_rent": 0.14739566475186222,
+          "budget_excess_mass": 0.0,
+          "budget_tolerance": 1e-09,
+          "maximum_occupied_excess": 2.842170943040401e-14
+        },
+        "lane": "block",
+        "loss": 2.528250346833371,
+        "market_residual": 4.437991942159302e-07,
+        "model_observer_warnings": [
+          {
+            "moment": "initial_normalization",
+            "warning": "Separate from CPS age-window stocks and actual birth/entry accounting."
+          },
+          {
+            "moment": "cps_childlessness",
+            "warning": "Uniform birth-time parity interpolation is the main diagnostic; constant-post-cell sensitivity retained. Model household reproductive member is not certified female exposure; no empirical age reweighting."
+          },
+          {
+            "moment": "cps_exactly_one",
+            "warning": "Uniform birth-time parity interpolation is the main diagnostic; constant-post-cell sensitivity retained. Model household reproductive member is not certified female exposure; no empirical age reweighting."
+          },
+          {
+            "moment": "nchs_mean_age",
+            "warning": "First-birth flow timing, not completed-cohort timing. Household maternal proxy; empirical under-18/over-45 tail collapse retained; raw builder residence and unknown-order comparability remain unresolved."
+          },
+          {
+            "moment": "nchs_share30",
+            "warning": "First-birth flow timing, not completed-cohort timing. Household maternal proxy; empirical under-18/over-45 tail collapse retained; raw builder residence and unknown-order comparability remain unresolved."
+          },
+          {
+            "moment": "wealth_earnings",
+            "warning": "Household net worth is scaled by reference-person-plus-spouse gross labor earnings; calendar-specific wealth valuation and earnings-reference-year alignment remains inherited from the PSID shelf and is not newly certified."
+          },
+          {
+            "moment": "bequest_wealth",
+            "warning": "Experimental approximation: the frozen model observer sums positive estates over all fertility/dependent-child states without child-recipient eligibility or allocation, whereas the adopted SCF ratio is child-directed. No recipient-law change is authorized in this contract."
+          },
+          {
+            "moment": "old_dispersion",
+            "warning": "Uniform within-age-cell overlap for ages 76--84 Modeled pension plus configured lump-sum income proxy; not PSID total family income Empirical $1000 real-income and observed-child-history filters are not reproduced At these retirement ages model denominator is pension income (including configured z scaling), while PSID INCFAMR also includes transfers, asset income and other family components. Exact $1000 cutoff is not applied (only income>0), and observed-completed-children selection has no model missingness counterpart. Full 78/82 cells do not cover exactly 76-84. Actual model property-tax lump-sum transfer is zero in this receipt; proxy uses the configured pension-plus-transfer concept."
+          },
+          {
+            "moment": "mean_rooms",
+            "warning": "Uniform model exposure within four-year age cells; literal AHS ROOMS has public-use topcode 21. Model rooms are uncapped. Housing supply normalization remains an empirical normalization."
+          },
+          {
+            "moment": "ownership_30_55",
+            "warning": "National ACS target geography is accepted. The empirical owner sample is restricted to DUE structures UNITSSTR 3:10, a structure-type distinction absent from the model state; age 30-55 is projected through a four-year model cell extending to ages 54-57."
+          },
+          {
+            "moment": "first_birth_rooms",
+            "warning": "The stationary first-birth housing observer approximates this empirical event-study contrast and does not reproduce the Sun-Abraham panel estimator or its baseline-status cohort selection."
+          },
+          {
+            "moment": "family_rooms",
+            "warning": "National ACS target geography is accepted. Empirical groups use NCHILD=3+ versus 1-2 and require YNGCH<18. Model dependent-child count m is only a proxy: it can differ from resident own-child count and does not guarantee the ACS minor-child restriction."
+          },
+          {
+            "moment": "recent_parent_ownership",
+            "warning": {
+              "age_projection": "uniform_within_age_cell",
+              "approximation_id": "early_2007_parenthood_md_working_v1__recent_parent_synchronized_proxy",
+              "decision_sha256": "b1d399c290d257e56e008afb6d7b76ac1f69191685c8d9e89a4b0bfb06533c9a",
+              "decision_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/e5f_matched_pf_20260909a/initial_calibration_contract/lead_methodological_decision.json",
+              "declaration": "Synchronized post-fertility snapshot; uniform head-age overlap; model dependents proxy resident own children; actual current births from previously empty-dependent homes versus current empty homes inclformerparents. Not an exact annualACS interview reconstruction.",
+              "diagnostic_allow_residence_proxy": true,
+              "exact_acs": false,
+              "maintained": true,
+              "moment": "ownership_current_birth_from_empty_dependent_home_minus_current_empty_home_30_55",
+              "observer_id": "e5f_recent_parent_flow_diagnostic_v1",
+              "snapshot": "synchronized_post_fertility_snapshot"
+            }
+          },
+          {
+            "moment": "early_fertility",
+            "warning": "Observed completed age 25 corresponds to [25,26). Fixed uniform birth-time interpolation in [22,26) uses post weight .875 and literal ever-born weights [0,1,2,3]. Household reproductive-member exposure is not certified female exposure. Bootstrap is not CPS design-consistent."
+          }
+        ],
+        "normalization": {
+          "absolute_gap": 0.0002177625053927379,
+          "completed_fertility": 2.100217762505393,
+          "initial_psi": 0.14281100340255604,
+          "initial_step": 0.005,
+          "psi_child": 0.1405651672547881,
+          "stationary_solve_seconds": 402.64132716401946,
+          "stationary_solves": 3,
+          "status": "derived_intercept",
+          "target": 2.1
+        },
+        "normalization_inputs": {
+          "initial_psi": 0.14281100340255604,
+          "initial_step": 0.005,
+          "maximum_stationary_solves": 23,
+          "warm_price": true
+        },
+        "normalized_count": 1,
+        "objective_stationary_solve_seconds": 402.64132716401946,
+        "objective_stationary_solves": 3,
+        "operator_gates": {
+          "birth_flow": 0.11546658261685838,
+          "birth_flow_abs_error": 4.3021142204224816e-16,
+          "effective_mature_flow_B": 0.05478977330067242,
+          "entry_flow_E": 0.061733456180804856,
+          "mature_flow_abs_error": 1.304512053934559e-14,
+          "one_step_constant_path_nesting_l1": 7.369042872966084e-14,
+          "reconstructed_baseline_births": 0.11546658261685838,
+          "reconstructed_effective_mature_flow_B": 0.05478977330068546,
+          "stationary_birth_flow": 0.11546658261685795,
+          "stationary_feasibility_projection_mass": 0.0,
+          "stationary_post_fertility_nesting_l1": 1.18502299953672e-15,
+          "stationary_post_fertility_nesting_max_abs": 1.2247537243203097e-17,
+          "stationary_topcode_adjusted_birth_flow": 0.12965370121176034,
+          "top_bin_entry_birth_flow": 0.023552580198024364,
+          "topcode_adjusted_birth_flow": 0.12965370121176095,
+          "topcode_adjusted_birth_flow_abs_error": 6.106226635438361e-16,
+          "zero_entry_mass_accounting_residual": 5.551115123125783e-16
+        },
+        "point": {
+          "H0": 6.206479060846687,
+          "beta_annual": 0.9625666052463695,
+          "chi": 1.0889178301004045,
+          "child_benefit_curvature": 0.07930705056729134,
+          "delta_alpha_jump": 0.14191834048688282,
+          "first_birth_fixed_cost": 0.6465287075719173,
+          "kappa_fert": 0.18742283857244052,
+          "kappa_fert_continuation": 0.3474664229788561,
+          "tenure_choice_kappa": 0.007770045711149935,
+          "theta0": 0.11358885656635645
+        },
+        "policy_array_gates": {
+          "interpretation": "Adjacent-wealth screen on occupied pre-choice states; fixed-age/income/tenure/family comparisons. A flagged drop requires diagnosis, not automatic attribution to an economic mechanism.",
+          "lower_node_mass_at_negative_steps": 0.0,
+          "maximum_occupied_value_drop": 0.0,
+          "occupied_negative_steps": 0,
+          "probabilities": {
+            "continuation_birth": {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "nonfinite": 0
+            },
+            "first_birth": {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "nonfinite": 0
+            },
+            "location": {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "nonfinite": 0
+            },
+            "tenure": {
+              "maximum": 1.0,
+              "minimum": 0.0,
+              "nonfinite": 0
+            }
+          },
+          "share_pre_choice_mass_at_negative_steps": 0.0,
+          "value_drop_tolerance": 1e-07
+        },
+        "policy_plot_scope": "Standard saving/consumption panels are buyer-conditional; stayer policies retained separately",
+        "price": 0.8175957416565184,
+        "purchase_accounting": {
+          "end_mortgage_floor_violation_mass": 0.0,
+          "mass_tolerance": 2e-10,
+          "maximum_occupied_end_debt_shortfall": 0.0,
+          "maximum_occupied_stayer_debt_shortfall": 8.881784197001252e-16,
+          "maximum_occupied_transaction_wealth_error": 2.842170943040401e-14,
+          "purchase_threshold_violation_mass": 0.0,
+          "source_contract": "origin_specific_due_v1",
+          "stayer_death_estate_violation_mass": 0.0,
+          "stayer_mass": 0.5089881713664872,
+          "stayer_principal_floor_violation_mass": 0.0,
+          "transaction_outside_grid_mass": 0.0,
+          "wealth_tolerance": 1e-09
+        },
+        "retained_conception_schedule": [
+          0.98,
+          0.9658168691098954,
+          0.9415756781274986,
+          0.9001436879133341,
+          0.829329930686918,
+          0.7082981340823842,
+          0.501435846822519,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "retained_owner_grid": [
+          2.0,
+          4.0,
+          6.0,
+          8.0,
+          10.0
+        ],
+        "scientific_candidate_id": "2a8becd1695fbe7c992a12bf76263bf930cd27870c2e0c8019bdbd3333686b33",
+        "scientific_identity": "b38b968f59f28a8893f19662b3bb2014826a064cfdb77e5a2b5615bd4608cb4b",
+        "selected_checkpoint_sha256": "090c9ebda662bf7837c4f4cf1d816159bc9d203a9babe7c70d00d0c4be1e575e",
+        "source_manifest_sha256": "129ec4a3edde02da91a50e7537081a3d8eb5ca156deb168fbec70dfecb8d76cd",
+        "status": "verified_provisional_calibration_point",
+        "target_system_sha256": "794a30e2db9b54636e6b93bc30b35ca79d3eddbb61932a54a4005ff6fc58fb6c",
+        "target_weight_fingerprint": "14661cd18b5af346adc9750138cdd20529327f5a14f687d046dc500f274d1188",
+        "weighted_count": 10
+      }
+    }
+  }
+}

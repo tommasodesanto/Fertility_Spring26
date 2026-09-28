@@ -1,5 +1,21 @@
 # Calibration Status
 
+## September 27, 21:00 EDT — final search batch active
+
+336 attempts completed:208success,71unchanged housing-equilibrium rejections,
+56owned timeouts,1late completion excluded,0fatal. Actual24workers; peakRSS
+about101.4GiB/128GB. Heartbeat fresh; checkpoint4.4minutes, activeledgers3.9minutes.
+Last24proposals active; no new jobs or interventions. Fixed deadlines unchanged.
+
+Full14/31 tables reviewed in evening cluster/check_2100. Common-primary best
+26.36863619951569 (block0311), versus primary-lane26.405155533883452; both
+substantially better than initial33.820604. Identity winner primary-rescores
+113.611915: earlyfertility0.580 improves, but meanfirstbirthage25.172 versus25.976
+shows the weighting tradeoff. Commonbest earlyfertility0.534 vs0.810, ownership
+0.633 vs0.676, wealth6.230 vs6.927; no changed fixed inputs or exact bound hits.
+No convergence claim; fresh finalrepeats/export still pending. Last17plotreview
+20:37, next due21:37 or finalexport. No Mac numerical work.
+
 ## September 27, 20:37 EDT — 288 attempts and hourly plot review
 
 181 successes, 60 unchanged housing-equilibrium gate rejections, 46 owned
