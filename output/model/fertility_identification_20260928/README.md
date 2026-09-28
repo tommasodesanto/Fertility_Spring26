@@ -73,3 +73,8 @@ Do not duplicate. No attempted case is rerun; original538 total cap and16:23 sea
 17:23 hard end remain unchanged. Model, targets, bounds and gates unchanged.
 Continue10minute monitoring until running, then30minutes. No final certification yet.
 
+
+September28 13:43 EDT: resume18721946 RUNNING on cs677,24 actual evaluators.
+Compute-node heartbeat verifies75 imported records,24active,37pending and unchanged
+clock, no stop reason. Login-node directory metadata briefly stale; use compute-node
+receipts if needed. Monitoring restored30minutes. No new completed cases yet.

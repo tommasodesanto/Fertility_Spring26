@@ -1,5 +1,5 @@
 {
-  "status": "resume_submitted_after_authentication_pass",
+  "status": "resume_running",
   "smoke_job": "18716129",
   "preflight_pass_job": "18715779",
   "prepare_pass_job": "18715783",
@@ -37,14 +37,15 @@
     "end": 1790630594.4615145
   },
   "latest_check": {
-    "utc": "2026-09-28T17:15:00Z",
-    "heartbeat_active": 10,
-    "completed": 65,
-    "success": 52,
-    "fatal": 1,
-    "timeout": 12,
-    "memory_max_kib": 120660104,
-    "cause": "NonpositiveNormalizedBenefit gate correctly rejected candidate; classifier Context rejects search stage; immutable repair under review"
+    "utc": "2026-09-28T17:43:26Z",
+    "job": "18721946",
+    "node": "cs677",
+    "actual_workers": 24,
+    "completed_replayed": 75,
+    "pending": 37,
+    "stop_reason": null,
+    "memory_max_kib_early_startup": 14796876,
+    "note": "Compute-node heartbeat verified; login-node metadata briefly stale. No new completed cases yet."
   },
   "main_job": "18716710",
   "independent_review_job": "18716599",

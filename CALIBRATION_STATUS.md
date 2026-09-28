@@ -1,5 +1,10 @@
 # Calibration Status
 
+September28 13:43 EDT: resume18721946 RUNNING on cs677,24 actual evaluators.
+Compute-node heartbeat verifies75 imported records,24active,37pending and unchanged
+clock, no stop reason. Login-node directory metadata briefly stale; use compute-node
+receipts if needed. Monitoring restored30minutes. No new completed cases yet.
+
 ## September 28 13:36 EDT — authenticated continuation submitted
 
 Original job18716710 is terminal FAILED with75 records:59 success (40 Jacobian,
