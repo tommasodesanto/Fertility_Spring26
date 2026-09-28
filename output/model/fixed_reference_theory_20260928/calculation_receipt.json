@@ -1,0 +1,153 @@
+{
+  "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "slurm_job": "18743282",
+  "model_solves": 0,
+  "checkpoint_loaded": false,
+  "reference_manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+  "checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d",
+  "inputs": {
+    "output/model/fixed_reference_economics_20260928/fixed_price_v1/control_1/receipt.json": "4a912ae4384301a0c3d243596dc23a86d67245567e1336702345752426d48414",
+    "output/model/fixed_reference_economics_20260928/fixed_price_v1/control_2/receipt.json": "9d7732b31f15a0c22940dadc4f1a95663fb77e5a010af926e22ce42887d66cb6",
+    "output/model/fixed_reference_economics_20260928/fixed_price_v1/price_110/receipt.json": "8d425fbfcf81100d7b386ce9d6df31cd200fcc122f9ad94e23eea5e9a08485a6",
+    "output/model/fixed_reference_economics_20260928/fixed_price_v1/comparison.json": "5439f92c85577caf23be0e5847094f4c408c026a52cb9a081d696bb2f7371e67"
+  },
+  "verified_source_hashes": {
+    "code/model/intergen_eqscale_seq_optimized/solver.py": "b637a655a9344b63f4461ee0fa4796c04bd98188477c4e6ace2c48ae0fc8aec1",
+    "code/model/intergen_eqscale_seq_optimized/parameters.py": "66f86697c2c58ca3864305bf13dd2be71a008905b2beb573f1a4ebafabef5464",
+    "code/model/intergen_eqscale_seq_optimized/child_preferences.py": "69544858b0137e09d37ac9e07ee6470ddc2d5849236b2c3e33d270737164f09d",
+    "code/model/tools/run_e5f_perfect_foresight_transition.py": "fc5519e89ef8c31906aa76fdad6a08d703ab427b7d7ada775d04bc0e240c8898",
+    "code/model/tools/run_e5f_open_population_transition.py": "af52983e0d6d97f16dff74f2491742825d2cbe506240417d47048773d31f249d"
+  },
+  "source_locations": {
+    "attempts": "solver.py:3486-3550",
+    "continuation": "solver.py:3348-3453",
+    "forward_timing": "solver.py:5533",
+    "dated_rent": "run_e5f_perfect_foresight_transition.py:358-386",
+    "adjusted_births": "run_e5f_open_population_transition.py:767"
+  },
+  "asset_price_ratio": 1.1,
+  "metrics": [
+    {
+      "outcome": "Raw birth flow",
+      "distribution": "Inherited states",
+      "reference": 0.1154188014126581,
+      "shock": 0.11058774873106168,
+      "percent_change": -4.1856721976551325,
+      "log_change_elasticity": -0.4486189487685127,
+      "midpoint_arc_elasticity": -0.44889011512724014
+    },
+    {
+      "outcome": "First-birth flow",
+      "distribution": "Inherited states",
+      "reference": 0.05016405889154707,
+      "shock": 0.04595622439855762,
+      "percent_change": -8.388145987322593,
+      "log_change_elasticity": -0.9192041421173992,
+      "midpoint_arc_elasticity": -0.9193119425801278
+    },
+    {
+      "outcome": "Second-birth flow",
+      "distribution": "Inherited states",
+      "reference": 0.04164532699159618,
+      "shock": 0.04117137921240421,
+      "percent_change": -1.138057528729708,
+      "log_change_elasticity": -0.12009031582813423,
+      "midpoint_arc_elasticity": -0.12017989870925892
+    },
+    {
+      "outcome": "Entry into 3+ flow",
+      "distribution": "Inherited states",
+      "reference": 0.023609415529510624,
+      "shock": 0.02346014512009592,
+      "percent_change": -0.6322494905819376,
+      "log_change_elasticity": -0.06654658018988893,
+      "midpoint_arc_elasticity": -0.06659672523913761
+    },
+    {
+      "outcome": "Rooms per household",
+      "distribution": "Inherited states",
+      "reference": 5.847942329061136,
+      "shock": 5.664363821043602,
+      "percent_change": -3.139198331441262,
+      "log_change_elasticity": -0.334647070678697,
+      "midpoint_arc_elasticity": -0.334871972487732
+    },
+    {
+      "outcome": "Raw birth flow",
+      "distribution": "Normalized cohort",
+      "reference": 0.1154188014126581,
+      "shock": 0.10949738012158954,
+      "percent_change": -5.1303784293320165,
+      "log_change_elasticity": -0.5525814936512565,
+      "midpoint_arc_elasticity": -0.5528719466256156
+    },
+    {
+      "outcome": "First-birth flow",
+      "distribution": "Normalized cohort",
+      "reference": 0.05016405889154707,
+      "shock": 0.04812573775866602,
+      "percent_change": -4.063309823648497,
+      "log_change_elasticity": -0.43522831963926945,
+      "midpoint_arc_elasticity": -0.43549529299396705
+    },
+    {
+      "outcome": "Second-birth flow",
+      "distribution": "Normalized cohort",
+      "reference": 0.04164532699159618,
+      "shock": 0.03939778831543378,
+      "percent_change": -5.396856834899966,
+      "log_change_elasticity": -0.582094008734459,
+      "midpoint_arc_elasticity": -0.5823852158274099
+    },
+    {
+      "outcome": "Entry into 3+ flow",
+      "distribution": "Normalized cohort",
+      "reference": 0.023609415529510624,
+      "shock": 0.02197385404748539,
+      "percent_change": -6.927581413359684,
+      "log_change_elasticity": -0.7532490393730397,
+      "midpoint_arc_elasticity": -0.7534955574986499
+    },
+    {
+      "outcome": "Rooms per household",
+      "distribution": "Normalized cohort",
+      "reference": 5.847942329061136,
+      "shock": 5.453161126072182,
+      "percent_change": -6.750771139227963,
+      "log_change_elasticity": -0.7333361161570704,
+      "midpoint_arc_elasticity": -0.7335925465758191
+    },
+    {
+      "outcome": "Completed fertility",
+      "distribution": "Normalized cohort",
+      "reference": 2.0999983368073374,
+      "shock": 1.988120311708367,
+      "percent_change": -5.327529224097405,
+      "log_change_elasticity": -0.5744079748226275,
+      "midpoint_arc_elasticity": -0.5746992025124807
+    },
+    {
+      "outcome": "Renewal-adjusted birth flow",
+      "distribution": "Inherited states",
+      "reference": 0.12964015530498035,
+      "shock": 0.12471918818584646,
+      "percent_change": -3.795866417744753,
+      "log_change_elasticity": -0.4060202245813809,
+      "midpoint_arc_elasticity": -0.40627683687011323
+    },
+    {
+      "outcome": "Renewal-adjusted birth flow",
+      "distribution": "Normalized cohort",
+      "reference": 0.12964015530498035,
+      "shock": 0.1227335381449392,
+      "percent_change": -5.32752922409977,
+      "log_change_elasticity": -0.5744079748228896,
+      "midpoint_arc_elasticity": -0.5746992025127422
+    }
+  ],
+  "first_birth_share_impact_decline": 0.8709974347867161,
+  "pdf_pages": 4,
+  "pdf_sha256": "8a9a0fa66ede31ea39180d5bbc2204204b6f04389252878e8b654b197f31ce00",
+  "readme_sha256": "d9a1df8debea9122558dcd437c2ddf6e53bcdb5c715a2dbc020768c78f9c9450",
+  "status": "calculation_and_render_pass_visual_review_pending"
+}
