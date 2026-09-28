@@ -1,5 +1,22 @@
 # Calibration Status
 
+## September28 13:27 EDT — controller repair verified, waiting original drain
+
+New isolated resume wrapper plus10 Torch synthetic tests18721444 pass, including
+original controller40Jac+480search+12repeat+6smoke=538 accounting, no duplicate
+solves, exact original clock, imported provenance and unknown-fatal rejection.
+Real runtime gate test18721487 passes: mapped context accepts known nonpositive
+benefit rejection as inadmissible; unknown exception remains fatal, zero solves.
+Independent source review passes. Auth job18721565 waits afterany18716710; it
+requires FAILED terminal parent, pins final records and unchanged sources, then
+validates all imported successful outputs under original contract, zero solves.
+Do not submit continuation before auth PASS; no additional numeric budget.
+Saved rendering first job18721154 failed on second lane because fresh interpreter
+required; preserved. Version2 job18721301 renders each lane in fresh process,
+zero solves; contacts18721407 pass. All17 per three changed lanes visually
+reviewed; primary/early10 exactly match previously reviewed smoke17 hashes.
+Full14/31 tables collected in saved_review_v2. No candidate final repeats yet.
+
 ## September28 13:15 EDT — failure classifier bug; new dispatch halted
 
 Main18716710 has65 records:40Jac+12search successes,1fatal,12timeouts;10
