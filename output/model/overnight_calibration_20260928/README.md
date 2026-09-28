@@ -1,5 +1,27 @@
 # Overnight calibration, September 27–28
 
+## September28,07:22EDT —main final export authenticated; diagnostics pending
+
+Main18687184 completed07:15: six fresh repeats reproduce all14/31 table bytes
+and17PNG hashes per lane. Independent final_report/authenticate_results.py
+passes contract/source/objective/receipt/checkpoint/gate/bound checks on Torch.
+Lead inspected all17 final selected-export plots per lane; market residuals
+primary1.76e-8,identity5.04e-7,block1.76e-9. Existing policy caveats persist.
+Final authentication saved remote gated_v1/final_review/authentication.json and
+local cluster/final_review/authentication.json; commonbest block0506 loss19.58131.
+Price diagnostic18687833 finished: original start fails bracket (residual.03689);
+half start finds bracket and passes unchanged housing/PAYGO (2.22275e-5<2.5e-5).
+Fixed-benefit completed fertility5.06285: not normalized, not a calibrated point.
+One numerical sensitivity demonstrated, not explanation of every evening failure.
+Early18690757 still active at07:16:9workers/1completed; no relaunch.
+Memo draft renders cleanly as2pages on Torch, all14targets/11fitted quantities;
+lead visually inspected bothpages. Diagnostics remain explicitly pending and
+report is NOT delivered. Final findings/re-render pending early experiment.
+First render lacked reportlab; reused existing evening report_deps via PYTHONPATH,
+no install/model change. PDF skill marker successfully run once before rendering.
+Render command must set PYTHONPATH=/scratch/td2248/projects/fertility_evening_calibration_20260927_v1/report_deps.
+
+
 ## September28,07:08EDT —search stopped; final verification active
 
 Search stopped at its07:00cutoff:528successes and24censored_timeouts from the
