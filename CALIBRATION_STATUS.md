@@ -1,5 +1,22 @@
 # Calibration Status
 
+## September28 17:17 EDT — experiment complete and authenticated
+
+Torch18721946 COMPLETED exit0. All10 repeats pass, with exact14target/31parameter
+comparisons and17PNG pair identity. Independent export hash check passes for all
+five available lanes; each17PNG packet matches visually reviewed saved_review_v4.
+Local compact complete tables: resume_v1/selected_export/<lane>/{target_fit,parameters}.csv.
+No binary model checkpoints downloaded. Main primary remains19.581310760; no baseline
+improvement. Early100: early0.558505, primary88.614507; doubled continuation:early0.687888,
+primary807.454086, first-birth age23.693. Half continuation:early0.505300, primary152.816537.
+Quadruple lane unavailable. Total228 attempts includes6smokes+40Jac+172search+10repeats.
+Final records117success,102timeouts (includes cutoff censoring),3inadmissible.
+Do not equate these timeouts with economic nonexistence. No new model/target/gate
+changes; no optimum or unreachable-target claim. Search and all numerical work
+finished within original window. Next author-authorized questions: verify actual
+saved income process and decompose lifecycle/age25 first versus subsequent births.
+Claude's0.665 ceiling is conditional on cell shares, not implied by a targeted mean.
+
 September28 16:16 EDT:186 records (105success,78timeout,3inadmissible),24workers,
 fresh heartbeat; checkpoint410seconds, memory125.4GiB/192GiB. Best unchanged.
 Verified original controller freezes selection at16:23 and requests two repeats

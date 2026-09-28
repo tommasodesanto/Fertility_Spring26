@@ -117,3 +117,26 @@ shares. Therefore this is a conditional timing-distribution bound, not proof tha
 the current target system is infeasible. The observer does confirm age25 interpolation
 with post weight0.875; coarse birth spacing merits measurement checks. No target
 swap or economic change adopted. Predicted Gauss-Newton gains remain untested.
+
+September28 16:46 EDT: search stopped at cutoff. Six repeats successful (primary,
+early10,early100 pairs), four profile repeats active; final equality/export pending.
+218 records:113success,102timeouts,3inadmissible. v4 saved-only renderer passes;
+all17 half0133 plots inspected, other four lanes17hashes unchanged. Half0133 housing
+residual1.65e-6; existing wealth/age30housing/retirement caveats retained.
+
+## September28 17:17 EDT — experiment complete and authenticated
+
+Torch18721946 COMPLETED exit0. All10 repeats pass, with exact14target/31parameter
+comparisons and17PNG pair identity. Independent export hash check passes for all
+five available lanes; each17PNG packet matches visually reviewed saved_review_v4.
+Local compact complete tables: resume_v1/selected_export/<lane>/{target_fit,parameters}.csv.
+No binary model checkpoints downloaded. Main primary remains19.581310760; no baseline
+improvement. Early100: early0.558505, primary88.614507; doubled continuation:early0.687888,
+primary807.454086, first-birth age23.693. Half continuation:early0.505300, primary152.816537.
+Quadruple lane unavailable. Total228 attempts includes6smokes+40Jac+172search+10repeats.
+Final records117success,102timeouts (includes cutoff censoring),3inadmissible.
+Do not equate these timeouts with economic nonexistence. No new model/target/gate
+changes; no optimum or unreachable-target claim. Search and all numerical work
+finished within original window. Next author-authorized questions: verify actual
+saved income process and decompose lifecycle/age25 first versus subsequent births.
+Claude's0.665 ceiling is conditional on cell shares, not implied by a targeted mean.
