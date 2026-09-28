@@ -1,5 +1,23 @@
 # Calibration Status
 
+## September 28 morning — current lifecycle fits plotted
+
+Author-requested supplemental comparisons are in
+`output/model/overnight_calibration_20260928/morning_fits/fit_plots.pdf`, with
+three PNG figures, full plotted CSVs and QA. Torch job18713061 completed in37s,
+zero model solves. Frozen selected block0506 checkpoint authenticated; exact
+age25 fertility and aggregate wealth/earnings replay pass. All three figures
+visually inspected. Ten targeted moments and three zero-weight checks are
+separate; completed fertility remains a separate normalization.
+
+Capped children at ages30–33 are1.058 vs CPS1.446, narrowing at38–41 to1.607 vs1.713.
+Ownership ages82–85 is.947 vs ACS.749; networth at those ages2.340 vs PSID6.209
+(mean working-age earnings units). Rooms42–45 are6.477 vs ACS5.923. Cross-sectional
+age profiles are untargeted diagnostics; housing sample differences and cap3
+versus normalization top-bin weighting are explicitly disclosed. No model,
+weight, target or parameter changes. No search or monitor restarted.
+
+
 ## September 28, final delivery — overnight work complete
 
 The two-page memo is `output/pdf/overnight_calibration_20260928.pdf`, rendered
