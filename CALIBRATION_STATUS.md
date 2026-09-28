@@ -1,5 +1,17 @@
 # Calibration Status
 
+## September 28 13:36 EDT — authenticated continuation submitted
+
+Original job18716710 is terminal FAILED with75 records:59 success (40 Jacobian,
+19 search),14 censored timeouts and2 known nonpositive-benefit rejections
+misclassified by the controller. All original evidence remains immutable.
+Authentication job18721565 completed exit0 and verified all75 records under
+original pins, with zero solves. Lead checked manifest and inherited clock.
+Resume job **18721946** submitted ONCE via resume_v1.sh; pending Priority at13:36.
+Do not duplicate. No attempted case is rerun; original538 total cap and16:23 search /
+17:23 hard end remain unchanged. Model, targets, bounds and gates unchanged.
+Continue10minute monitoring until running, then30minutes. No final certification yet.
+
 ## September28 13:27 EDT — controller repair verified, waiting original drain
 
 New isolated resume wrapper plus10 Torch synthetic tests18721444 pass, including

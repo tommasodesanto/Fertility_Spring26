@@ -60,3 +60,16 @@ comparison is cross-smoke, not an asserted anchor-image comparison.
 Approval_v1.json written; main18716710 submitted ONCE using run_v2.sh,24CPU192GiB.
 Original clock retained: search16:23:14 EDT, repeats17:13:14, end17:23:14.
 Current Jacobian then six bounded search lanes; no model or target changes.
+
+## September 28 13:36 EDT — authenticated continuation submitted
+
+Original job18716710 is terminal FAILED with75 records:59 success (40 Jacobian,
+19 search),14 censored timeouts and2 known nonpositive-benefit rejections
+misclassified by the controller. All original evidence remains immutable.
+Authentication job18721565 completed exit0 and verified all75 records under
+original pins, with zero solves. Lead checked manifest and inherited clock.
+Resume job **18721946** submitted ONCE via resume_v1.sh; pending Priority at13:36.
+Do not duplicate. No attempted case is rerun; original538 total cap and16:23 search /
+17:23 hard end remain unchanged. Model, targets, bounds and gates unchanged.
+Continue10minute monitoring until running, then30minutes. No final certification yet.
+
