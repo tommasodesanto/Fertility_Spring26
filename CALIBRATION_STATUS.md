@@ -1,5 +1,22 @@
 # Calibration Status
 
+## September27,23:55EDT —48search successes; both old timeout points recovered
+
+Job18687184:24actualworkers; peak68.2GiB/192GB.48completed searches,48success,
+0inadmissible/timeout/fatal. Heartbeat<1second, checkpoint4.2minutes at capture.
+Both exactoldtimeoutpoints passall3lanes under1800scap:0044needs9certifiedGEs
+(1088–1100s GEtime),0186needs7(844–886s). This demonstrates runtime-limit failure
+for these two points, not a claim about all77housing failures. Oldfailuresretained.
+Currentcommonprimarybest25.337195149718553 vs26.368192413904882 start; block0041
+is a NEW nightcase, distinctfrom evening0041failed diagnostic. Full14/31tables,
+primaryrescores andbounds reviewed in nightcluster/check_2351. Meanrooms/ownership
+improve; recentparentownershipgap worsens; earlyfertility stays0.533vs0.810.
+Nooccupiedvalue drops, finiteprobabilities;2fertility scalesnear lowerbounds.
+No final repeats/optimumclaim. Reviewed17latestavailable smokeplots23:55; newbest
+hourlyplotexportnotyetdue, do not claim it reviewed. No intervention/modelchange.
+Supplement18687833 remainsqueued07:00EDT. Hard08:00end unchanged.
+
+
 ## September27,23:16EDT — overnight search ACTIVE,24Torch workers
 
 Job18687184 oncs740 approved after6exactsmokes/full14target31parameter tables/

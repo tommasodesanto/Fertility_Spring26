@@ -1,0 +1,100 @@
+[
+  {
+    "epoch": 1790566403.4216251,
+    "incoming_price_state": {},
+    "index": 0,
+    "market_residual": 1.2818256084319998e-06,
+    "price": 0.8155969565885116,
+    "price_evaluations": 4,
+    "price_method": "direct_brent",
+    "psi_child": 0.14281100340255604,
+    "seconds": 192.18905867799185,
+    "status": "completed",
+    "warm_price_search": {
+      "accepted_state": {
+        "price": 0.8155969565885116,
+        "slope": -9.887645214941744
+      },
+      "fallback_required": false,
+      "initial_price": null,
+      "initial_slope": null,
+      "used": false
+    }
+  },
+  {
+    "epoch": 1790566595.6662319,
+    "incoming_price_state": {
+      "price": 0.8155969565885116,
+      "slope": -9.887645214941744
+    },
+    "index": 1,
+    "market_residual": 1.7242640895678503e-05,
+    "price": 0.813810150852309,
+    "price_evaluations": 2,
+    "price_method": "direct_brent",
+    "psi_child": 0.13781100340255603,
+    "seconds": 102.0899502299726,
+    "status": "completed",
+    "warm_price_search": {
+      "accepted_state": {
+        "price": 0.813810150852309,
+        "slope": -9.944354182651537
+      },
+      "fallback_required": false,
+      "initial_price": 0.8155969565885116,
+      "initial_slope": -9.887645214941744,
+      "price_evaluations": 2,
+      "trace": [
+        {
+          "excess": -0.017667301187594298,
+          "metric": 0.0030022361177218415,
+          "price": 0.8155969565885116
+        },
+        {
+          "excess": 0.00010132790879779918,
+          "metric": 1.7242640895678503e-05,
+          "price": 0.813810150852309
+        }
+      ],
+      "used": true
+    }
+  },
+  {
+    "epoch": 1790566697.8081026,
+    "incoming_price_state": {
+      "price": 0.813810150852309,
+      "slope": -9.944354182651537
+    },
+    "index": 2,
+    "market_residual": 2.0950666967681394e-06,
+    "price": 0.8142128179398005,
+    "price_evaluations": 2,
+    "price_method": "direct_brent",
+    "psi_child": 0.13889424075271295,
+    "seconds": 101.39543247304391,
+    "status": "completed",
+    "warm_price_search": {
+      "accepted_state": {
+        "price": 0.8142128179398005,
+        "slope": -9.974939455610558
+      },
+      "fallback_required": false,
+      "initial_price": 0.813810150852309,
+      "initial_slope": -9.944354182651537,
+      "price_evaluations": 2,
+      "trace": [
+        {
+          "excess": 0.004004264135712532,
+          "metric": 0.0006813926129800407,
+          "price": 0.813810150852309
+        },
+        {
+          "excess": -1.2315682782038095e-05,
+          "metric": 2.0950666967681394e-06,
+          "price": 0.8142128179398005
+        }
+      ],
+      "used": true
+    }
+  }
+]

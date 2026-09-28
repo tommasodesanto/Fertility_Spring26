@@ -1,5 +1,13 @@
 # Overnight calibration, September 27–28
 
+## Latest check:23:55EDT
+
+48/48 completed searches pass;24workers active; peak68.2GiB/192GB. Both old
+timeout points now pass in all3lanes with longer time allowance. Full current
+fits/parameters, primary-weight contributions and review:`cluster/check_2351/`.
+No intervention. Final repeats remain pending. Latest available17smoke plots
+reviewed again; newbest hourly exports not yet due.
+
 ## Live state
 
 Torch job **18687184** is running search with **24 active single-thread workers**
