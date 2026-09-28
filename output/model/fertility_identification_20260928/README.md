@@ -1,6 +1,6 @@
 # Current-point fertility identification and reoptimization
 
-Author-authorized September28 follow-up. Smoke submitted as18715827; main search awaits lead acceptance.
+Author-authorized September28 follow-up. Main18716710 submitted after six accepted smokes; see launch.json and approval_v1.json.
 Frozen reference is overnight selected block0506, primary loss19.581310760.
 No model, earnings, entry distribution, target value, grid, bound, closure or
 gate changes. Three untargeted checks remain visible. Child benefit is always
@@ -48,3 +48,15 @@ to PYTHONPATH; no source, model, objective or contract change. Torch importcheck
 with zero solves. Await its PASS before a replacement smoke submission.
 No numerical clock exists yet; the six-hour cap still starts at smoke execution.
 
+
+## September 28, 11:44 EDT — verification passed; main submitted
+
+All six exact-loop smokes pass. Independent Torch review18716599 confirms source
+pins, all14 physical target rows/all31 parameters against anchor, three exact
+within-lane table pairs, correct1x/10x/100x early weights, and all17 PNGs identical
+across six cases. Lead viewed all17 plots; inherited high-wealth ownership, age30
+housing and retirement-profile caveats remain. Search anchor has no PNGs;
+comparison is cross-smoke, not an asserted anchor-image comparison.
+Approval_v1.json written; main18716710 submitted ONCE using run_v2.sh,24CPU192GiB.
+Original clock retained: search16:23:14 EDT, repeats17:13:14, end17:23:14.
+Current Jacobian then six bounded search lanes; no model or target changes.

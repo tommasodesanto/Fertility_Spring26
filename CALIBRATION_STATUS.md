@@ -1,5 +1,17 @@
 # Calibration Status
 
+## September 28, 11:44 EDT — verification passed; main submitted
+
+All six exact-loop smokes pass. Independent Torch review18716599 confirms source
+pins, all14 physical target rows/all31 parameters against anchor, three exact
+within-lane table pairs, correct1x/10x/100x early weights, and all17 PNGs identical
+across six cases. Lead viewed all17 plots; inherited high-wealth ownership, age30
+housing and retirement-profile caveats remain. Search anchor has no PNGs;
+comparison is cross-smoke, not an asserted anchor-image comparison.
+Approval_v1.json written; main18716710 submitted ONCE using run_v2.sh,24CPU192GiB.
+Original clock retained: search16:23:14 EDT, repeats17:13:14, end17:23:14.
+Current Jacobian then six bounded search lanes; no model or target changes.
+
 ## September 28, 11:30 EDT — replacement smoke progressing
 
 Six actual Torch workers on cs701; fresh heartbeat, zero completed cases yet,
