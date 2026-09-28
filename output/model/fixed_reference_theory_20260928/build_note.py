@@ -127,6 +127,7 @@ def inline(text):
 story=[];lines=md.splitlines();i=0;small=False
 while i<len(lines):
     line=lines[i].strip();i+=1
+    if line.startswith('<!-- handoff-index:'): break
     if not line:continue
     if line=='<!-- pagebreak -->':story.append(PageBreak());continue
     if line.startswith('<!--'):continue
