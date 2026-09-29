@@ -37,6 +37,13 @@ fertility renormalization, or automatic adoption of another chat's candidate.
 
 ## Current priorities and useful output
 
+The [closed stationary credit GE](credit_ge_v1/README.md) is now complete and
+exactly repeated: household population +5.000%, house prices and implied rents
++4.007%, with child benefit and all other economic primitives fixed. Replacement
+fertility returns through endogenous prices, not benefit normalization. The
+full fit/parameter tables and 17 standard plots are retained. This is an endpoint;
+the borrowing transition and matched local elasticity comparison remain separate.
+
 Current borrowing implementation and bounded Torch checks: [credit_v1](credit_v1/README.md).
 The first matched-grid credit comparison is complete: immediate births +6.04%,
 first births +11.59%, completed fertility 2.1008 to 2.1482, and mean first-birth

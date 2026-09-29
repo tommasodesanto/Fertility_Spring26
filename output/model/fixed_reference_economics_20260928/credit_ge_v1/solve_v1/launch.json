@@ -1,0 +1,106 @@
+{
+  "deadline_epoch": 1790653823.1527407,
+  "plan": {
+    "adapter_path": "/work/ge_source/natural_credit.py",
+    "base_driver_path": "/work/ge_source/run_fixed_price.py",
+    "case_seconds": 300,
+    "closure": {
+      "estate": "Reference provisional net-estate funding/residual sink; counterparties unresolved",
+      "fiscal": "Reference payroll tax and pension; actual PAYGO and age-income margins gate",
+      "population": "N=Hs(q)/d(q), unchanged absolute supply exponent 0.63",
+      "renewal": "adjusted_births/(2.1*entry)-1 = 0; absolute tolerance 1e-6"
+    },
+    "credit_driver_path": "/work/ge_source/run_credit.py",
+    "credit_mode": "natural_solvency_boolean_grid_stationary_ge_v1",
+    "credit_seed_checkpoint_path": "/work/credit_seed/conditional_cohort_state.pkl.gz",
+    "credit_seed_checkpoint_sha256": "7b0b92f0e2ed33cfc80a3c63c2c15d6417b14ab88db3930284e440e94e2e515c",
+    "credit_seed_fit_path": "/work/credit_seed/target_fit.csv",
+    "credit_seed_parameters_path": "/work/credit_seed/parameters.csv",
+    "credit_seed_receipt_path": "/work/credit_seed/receipt.json",
+    "credit_seed_receipt_sha256": "56fd38695487ae1262b5d772254d77943c046f106f91fcd42a92dc8d452ed18c",
+    "driver_sha256": "59fa315ef6d50aaa8be2abcfb29f01cf406f3756e363a0bd088e473a424311b8",
+    "economic_changes": [
+      "Remove artificial renter, purchaser and incumbent-owner borrowing limits; retain lifetime repayment and net-estate solvency"
+    ],
+    "files": [
+      {
+        "path": "/work/ge_source/run_ge.py",
+        "sha256": "59fa315ef6d50aaa8be2abcfb29f01cf406f3756e363a0bd088e473a424311b8"
+      },
+      {
+        "path": "/work/ge_source/natural_credit.py",
+        "sha256": "569a259d2b04e0ae321944740c4f6f6ab647c31e4f2e922dff6a1828bb002d60"
+      },
+      {
+        "path": "/work/ge_source/run_credit.py",
+        "sha256": "ac56b0de4cede1f969d54f61e51c74da9dfd6ec5371a4cffc142e970348807c6"
+      },
+      {
+        "path": "/work/ge_source/run_fixed_price.py",
+        "sha256": "09edf5affbf20d7a5dc4200a81b1f32ce643ba0ad15680b4b8b208dccda77037"
+      },
+      {
+        "path": "/work/ge_source/preflight_ge.py",
+        "sha256": "751b7341555a230ff06028e10f4de81ccd223ba1cca2280201be1b888d9858dd"
+      },
+      {
+        "path": "/work/ge_source/preflight_ge_receipt.json",
+        "sha256": "55d5a77187fe32ab6644c103dc158e0c133bf9e053e5d0c0dfeea4d5fdd9f45b"
+      },
+      {
+        "path": "/work/ge_source/launch.sh",
+        "sha256": "576655ab5e3f4ca452b5c1e11534099368a98c0d5ab892ebc75cefc35d2fea9a"
+      },
+      {
+        "path": "/work/ge_source/plan_ge_template.json",
+        "sha256": "8ca97a4d024e03e89f6d599a9837e49de33678c4b64655a6e4edaf7628068a05"
+      },
+      {
+        "path": "/work/credit_seed/receipt.json",
+        "sha256": "56fd38695487ae1262b5d772254d77943c046f106f91fcd42a92dc8d452ed18c"
+      },
+      {
+        "path": "/work/credit_seed/conditional_cohort_state.pkl.gz",
+        "sha256": "7b0b92f0e2ed33cfc80a3c63c2c15d6417b14ab88db3930284e440e94e2e515c"
+      },
+      {
+        "path": "/work/credit_seed/target_fit.csv",
+        "sha256": "f07306bf4663d6b4bf8e9d7deda435aedb758707a3966100ac72f9ee664990a0"
+      },
+      {
+        "path": "/work/credit_seed/parameters.csv",
+        "sha256": "234208b2404a83d861a96f24bc1de85b021fde9e9b7e91a359a5de3d384c9818"
+      }
+    ],
+    "lower_price_search_authorized": false,
+    "maximum_lifecycle_solves": 12,
+    "memory_gib": 16,
+    "overlay_root": "/work/ge_source",
+    "preflight_receipt_path": "/work/ge_source/preflight_ge_receipt.json",
+    "psi_child_fixed": 0.1355551166583114,
+    "reference_checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d",
+    "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+    "reference_manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+    "renormalize_fertility": false,
+    "reserve_exact_repeat_solves": 1,
+    "schema": "block0506_stationary_credit_ge_v1",
+    "stop_criteria": [
+      "Any source, q0 seed, solvency, household, estate, fiscal, operator or native-queue gate fails",
+      "No retries, lower-price search, tolerance relaxation, normalization, entry reweighting or debt floor",
+      "No renewal bracket by 1.35q0, 11 search/seed solves, 300 seconds per case, or 2400 seconds total",
+      "Selected root and fresh exact repeat each require 14 fits, 31 parameters and 17 standard plots"
+    ],
+    "threads": 1,
+    "total_seconds": 2400,
+    "upper_price_ratios": [
+      1.05,
+      1.1,
+      1.2,
+      1.35
+    ]
+  },
+  "plan_sha256": "5a382e68e59626930dbf04cf3167ebdf399ac98a6e2f416006924b44e0364dbe",
+  "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "slurm_job": "18764943",
+  "started_epoch": 1790651423.1527407
+}

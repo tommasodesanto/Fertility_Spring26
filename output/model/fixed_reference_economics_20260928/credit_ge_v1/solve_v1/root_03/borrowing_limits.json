@@ -1,0 +1,110 @@
+{
+  "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "rows": [
+    {
+      "age": 18.0,
+      "economic_renter_limit": -1.7624567807506797,
+      "numerical_renter_limit": -1.7608567807506796,
+      "maximum_grid_tightening": 0.0016005000000003378
+    },
+    {
+      "age": 22.0,
+      "economic_renter_limit": -1.7648884383944061,
+      "numerical_renter_limit": -1.763388438394406,
+      "maximum_grid_tightening": 0.0015005000000005708
+    },
+    {
+      "age": 26.0,
+      "economic_renter_limit": -1.7235662469223318,
+      "numerical_renter_limit": -1.7221662469223318,
+      "maximum_grid_tightening": 0.0014005000000008039
+    },
+    {
+      "age": 30.0,
+      "economic_renter_limit": -1.678837777951281,
+      "numerical_renter_limit": -1.677537777951281,
+      "maximum_grid_tightening": 0.001300500000001037
+    },
+    {
+      "age": 34.0,
+      "economic_renter_limit": -1.5974565227386384,
+      "numerical_renter_limit": -1.5962565227386383,
+      "maximum_grid_tightening": 0.00120050000000127
+    },
+    {
+      "age": 38.0,
+      "economic_renter_limit": -1.5093668348753062,
+      "numerical_renter_limit": -1.508266834875306,
+      "maximum_grid_tightening": 0.0011004999999997267
+    },
+    {
+      "age": 42.0,
+      "economic_renter_limit": -1.4140157237676738,
+      "numerical_renter_limit": -1.413015723767674,
+      "maximum_grid_tightening": 0.0010004999999999598
+    },
+    {
+      "age": 46.0,
+      "economic_renter_limit": -1.314101186806121,
+      "numerical_renter_limit": -1.313201186806121,
+      "maximum_grid_tightening": 0.0009005000000001928
+    },
+    {
+      "age": 50.0,
+      "economic_renter_limit": -1.2059504787474276,
+      "numerical_renter_limit": -1.2051504787474276,
+      "maximum_grid_tightening": 0.0008005000000004259
+    },
+    {
+      "age": 54.0,
+      "economic_renter_limit": -1.0888846742179266,
+      "numerical_renter_limit": -1.0881846742179266,
+      "maximum_grid_tightening": 0.0007005000000006589
+    },
+    {
+      "age": 58.0,
+      "economic_renter_limit": -0.9731574565358594,
+      "numerical_renter_limit": -0.9725574565358593,
+      "maximum_grid_tightening": 0.000600500000000892
+    },
+    {
+      "age": 62.0,
+      "economic_renter_limit": -0.8478905943294691,
+      "numerical_renter_limit": -0.8477905943294691,
+      "maximum_grid_tightening": 0.00010050000000028092
+    },
+    {
+      "age": 66.0,
+      "economic_renter_limit": 0.0,
+      "numerical_renter_limit": -0.0,
+      "maximum_grid_tightening": 0.0
+    },
+    {
+      "age": 70.0,
+      "economic_renter_limit": 0.0,
+      "numerical_renter_limit": -0.0,
+      "maximum_grid_tightening": 0.0
+    },
+    {
+      "age": 74.0,
+      "economic_renter_limit": 0.0,
+      "numerical_renter_limit": -0.0,
+      "maximum_grid_tightening": 0.0
+    },
+    {
+      "age": 78.0,
+      "economic_renter_limit": 0.0,
+      "numerical_renter_limit": -0.0,
+      "maximum_grid_tightening": 0.0
+    },
+    {
+      "age": 82.0,
+      "economic_renter_limit": 0.0,
+      "numerical_renter_limit": -0.0,
+      "maximum_grid_tightening": 0.0
+    }
+  ],
+  "economic_formula": "L_j=max(death floor 0, max reachable future (L_{j+1}-y_{j+1})/R); owner limit L_j-net liquidation value",
+  "numerical_method": "Boolean backward reachability on retained grid; no utility-cutoff derivation",
+  "grid_refinement_verified": false
+}

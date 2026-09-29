@@ -1,0 +1,787 @@
+{
+  "comparison_values": {
+    "general_equilibrium_selected": {
+      "mean_age_first_birth": 25.459163639012598,
+      "mean_occupied_rooms_capped9": 5.537144688548168,
+      "mean_occupied_rooms_uncapped": 5.709008021857107
+    },
+    "matched_grid_baseline": {
+      "mean_age_first_birth": 25.926683363907447,
+      "mean_occupied_rooms_capped9": 5.665856169816368,
+      "mean_occupied_rooms_uncapped": 5.857197622314415
+    },
+    "original_credit_v1_control": {
+      "mean_age_first_birth": 25.93278056306455,
+      "mean_occupied_rooms_capped9": 5.658645912724193,
+      "mean_occupied_rooms_uncapped": 5.847942329061135
+    },
+    "partial_equilibrium_credit": {
+      "mean_age_first_birth": 25.334126776993838,
+      "mean_occupied_rooms_capped9": 5.690124463662927,
+      "mean_occupied_rooms_uncapped": 5.879060837804103
+    }
+  },
+  "completion": {
+    "elapsed_seconds": 886.526869058609,
+    "lifecycle_solves": 6
+  },
+  "hash_mismatches": [],
+  "notes": [
+    "No conditional_cohort_state.pkl.gz checkpoint was retained locally.",
+    "Contact-sheet Slurm submission was rejected by Torch for missing account allocation; original selected and repeat PNG packets were collected."
+  ],
+  "plan_sha256": "5a382e68e59626930dbf04cf3167ebdf399ac98a6e2f416006924b44e0364dbe",
+  "received_file_hashes": [
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/completed.json",
+      "local_sha256": "9cb8feda26ebdb37c4c6eab9ba3cbe54fdc777cbb819d5fb73af68ecdaed323f",
+      "match": true,
+      "remote_path": "completed.json",
+      "remote_sha256": "9cb8feda26ebdb37c4c6eab9ba3cbe54fdc777cbb819d5fb73af68ecdaed323f"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected.json",
+      "local_sha256": "9287d80b019935cde94eb7d2844470e46d76827a7cce177d24fa4a10bd3a41c6",
+      "match": true,
+      "remote_path": "selected.json",
+      "remote_sha256": "9287d80b019935cde94eb7d2844470e46d76827a7cce177d24fa4a10bd3a41c6"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/latest_completed.json",
+      "local_sha256": "3be330f223ac8f00149ae8f85606d102f70eba7d8f38cce0673e6ccf49708682",
+      "match": true,
+      "remote_path": "latest_completed.json",
+      "remote_sha256": "3be330f223ac8f00149ae8f85606d102f70eba7d8f38cce0673e6ccf49708682"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/launch.json",
+      "local_sha256": "f711dab164fa20c47f42b768763cc2ca03c41f942f689c77ce2455bd585a3534",
+      "match": true,
+      "remote_path": "launch.json",
+      "remote_sha256": "f711dab164fa20c47f42b768763cc2ca03c41f942f689c77ce2455bd585a3534"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/progress.json",
+      "local_sha256": "8d7bdad7e234c3ca99a41544907669ab4f8b029647d05f785ef72767db5367d8",
+      "match": true,
+      "remote_path": "progress.json",
+      "remote_sha256": "8d7bdad7e234c3ca99a41544907669ab4f8b029647d05f785ef72767db5367d8"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/best_so_far.json",
+      "local_sha256": "56a2f231f5b5b29c5d5907991cfa0f07a6c17da38a4aa01f4f6d73618d884bb5",
+      "match": true,
+      "remote_path": "best_so_far.json",
+      "remote_sha256": "56a2f231f5b5b29c5d5907991cfa0f07a6c17da38a4aa01f4f6d73618d884bb5"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/bracket.json",
+      "local_sha256": "c91aeddca3d617cafc52d7c988c3d83f3317b6805bcdd18fe38c45f9873dbe23",
+      "match": true,
+      "remote_path": "bracket.json",
+      "remote_sha256": "c91aeddca3d617cafc52d7c988c3d83f3317b6805bcdd18fe38c45f9873dbe23"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/borrowing_limits.json",
+      "local_sha256": "2a341358b20e3c6e39aa9746e04553662c8d960e192bbd586d7126180ce0e21c",
+      "match": true,
+      "remote_path": "root_03/borrowing_limits.json",
+      "remote_sha256": "2a341358b20e3c6e39aa9746e04553662c8d960e192bbd586d7126180ce0e21c"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/credit_grid.json",
+      "local_sha256": "e5045ff7d6d32a4c5f81519e290b02161afa4fc01777218649abbe55084eada0",
+      "match": true,
+      "remote_path": "root_03/credit_grid.json",
+      "remote_sha256": "e5045ff7d6d32a4c5f81519e290b02161afa4fc01777218649abbe55084eada0"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/credit_solvency.json",
+      "local_sha256": "43b6e26e8a0dd08b808b85405040edaefc49a54114b2a37cc53f302ed7cd77c8",
+      "match": true,
+      "remote_path": "root_03/credit_solvency.json",
+      "remote_sha256": "43b6e26e8a0dd08b808b85405040edaefc49a54114b2a37cc53f302ed7cd77c8"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/credit_tenure_kernel.generated.py",
+      "local_sha256": "f3113af25a134734940f86587aa4b97552d27512aebae33fc38d1f6a04148284",
+      "match": true,
+      "remote_path": "root_03/credit_tenure_kernel.generated.py",
+      "remote_sha256": "f3113af25a134734940f86587aa4b97552d27512aebae33fc38d1f6a04148284"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/gates.json",
+      "local_sha256": "8ee2c8ad2b2f95ca6614d50ced0099e80524010d66af55e0d5688f39413a190b",
+      "match": true,
+      "remote_path": "root_03/gates.json",
+      "remote_sha256": "8ee2c8ad2b2f95ca6614d50ced0099e80524010d66af55e0d5688f39413a190b"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/grid_embedding.json",
+      "local_sha256": "4f7bec8061c0ed11bfff66d2814007c32541aebe74b467440fd05d39c91b2642",
+      "match": true,
+      "remote_path": "root_03/grid_embedding.json",
+      "remote_sha256": "4f7bec8061c0ed11bfff66d2814007c32541aebe74b467440fd05d39c91b2642"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/lifecycle_2023.csv",
+      "local_sha256": "f12151fbea9797d9f012ef87d95d3481b65e38b06229a60edeacfc7aedc4aae3",
+      "match": true,
+      "remote_path": "root_03/lifecycle_2023.csv",
+      "remote_sha256": "f12151fbea9797d9f012ef87d95d3481b65e38b06229a60edeacfc7aedc4aae3"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/market_quantity_units.json",
+      "local_sha256": "dff1ae2a7c69a4091b6d4bcde25819c4ec92574f6d4f74a544780567da6617a3",
+      "match": true,
+      "remote_path": "root_03/market_quantity_units.json",
+      "remote_sha256": "dff1ae2a7c69a4091b6d4bcde25819c4ec92574f6d4f74a544780567da6617a3"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/observers.json",
+      "local_sha256": "2aebe486137b3f625017f3c886a7f166b0fb548cd1a7c5f154dad9b7f731d191",
+      "match": true,
+      "remote_path": "root_03/observers.json",
+      "remote_sha256": "2aebe486137b3f625017f3c886a7f166b0fb548cd1a7c5f154dad9b7f731d191"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/parameters.csv",
+      "local_sha256": "831e49c1aa364e9bf253cf2e3812dfdddcd3b98f4884b156da34e573cec3ef9c",
+      "match": true,
+      "remote_path": "root_03/parameters.csv",
+      "remote_sha256": "831e49c1aa364e9bf253cf2e3812dfdddcd3b98f4884b156da34e573cec3ef9c"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/policy_array_summary.json",
+      "local_sha256": "825db95a113de33362ad607f864c8da630377916bafbb6b303b7df034f03b6a9",
+      "match": true,
+      "remote_path": "root_03/policy_array_summary.json",
+      "remote_sha256": "825db95a113de33362ad607f864c8da630377916bafbb6b303b7df034f03b6a9"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/progress.json",
+      "local_sha256": "c870498dde75dc6525377dcc56e4f87ccf729520514de86c4a28b7177d0101a0",
+      "match": true,
+      "remote_path": "root_03/progress.json",
+      "remote_sha256": "c870498dde75dc6525377dcc56e4f87ccf729520514de86c4a28b7177d0101a0"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/receipt.json",
+      "local_sha256": "29170e4562520d23c9f97f964a04241e1645f11d4aefb071a5dee4666feb99de",
+      "match": true,
+      "remote_path": "root_03/receipt.json",
+      "remote_sha256": "29170e4562520d23c9f97f964a04241e1645f11d4aefb071a5dee4666feb99de"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/reporting_units.json",
+      "local_sha256": "2b6f8820549314090e2569fc7e4fb3d5c0613bb3539977d2c2188d94d27ec810",
+      "match": true,
+      "remote_path": "root_03/reporting_units.json",
+      "remote_sha256": "2b6f8820549314090e2569fc7e4fb3d5c0613bb3539977d2c2188d94d27ec810"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/target_fit.csv",
+      "local_sha256": "2e34b84e06fdd601f71e207dfd64ca50af7d07a4f975feb630a9b61f330fc001",
+      "match": true,
+      "remote_path": "root_03/target_fit.csv",
+      "remote_sha256": "2e34b84e06fdd601f71e207dfd64ca50af7d07a4f975feb630a9b61f330fc001"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/young_ownership_age_measurement.csv",
+      "local_sha256": "57641e054c7ad1909b7f1905087cc9eabcd6b25066fa1c5a488eaa48174c2547",
+      "match": true,
+      "remote_path": "root_03/young_ownership_age_measurement.csv",
+      "remote_sha256": "57641e054c7ad1909b7f1905087cc9eabcd6b25066fa1c5a488eaa48174c2547"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/standard_diagnostics/fertility_by_age.png",
+      "local_sha256": "8032b03e7ff8241314d6506b8e758f268c7345522d75e5dff5db7058c6442e1b",
+      "match": true,
+      "remote_path": "root_03/standard_diagnostics/fertility_by_age.png",
+      "remote_sha256": "8032b03e7ff8241314d6506b8e758f268c7345522d75e5dff5db7058c6442e1b"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/standard_diagnostics/fertility_policy_by_age_income_state.png",
+      "local_sha256": "263db70c025441d518a7fe8eabf2cd2ab8fd6d795e632b31f7d71d52b357ff59",
+      "match": true,
+      "remote_path": "root_03/standard_diagnostics/fertility_policy_by_age_income_state.png",
+      "remote_sha256": "263db70c025441d518a7fe8eabf2cd2ab8fd6d795e632b31f7d71d52b357ff59"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/standard_diagnostics/housing_by_age_income_state.png",
+      "local_sha256": "94ac868a6af26132e318154d89de856a63caf102000c3cc9105df331f3b37c29",
+      "match": true,
+      "remote_path": "root_03/standard_diagnostics/housing_by_age_income_state.png",
+      "remote_sha256": "94ac868a6af26132e318154d89de856a63caf102000c3cc9105df331f3b37c29"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/standard_diagnostics/housing_market.png",
+      "local_sha256": "e82f831e1388fd5cc59a9d304e87bc3ea9e1d9f372264778c32e869f8d6f08eb",
+      "match": true,
+      "remote_path": "root_03/standard_diagnostics/housing_market.png",
+      "remote_sha256": "e82f831e1388fd5cc59a9d304e87bc3ea9e1d9f372264778c32e869f8d6f08eb"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/standard_diagnostics/housing_prices.png",
+      "local_sha256": "592283198432ac3b6f0f2c8febd204d3414d21ef7db88db8182439c6ef34d3ed",
+      "match": true,
+      "remote_path": "root_03/standard_diagnostics/housing_prices.png",
+      "remote_sha256": "592283198432ac3b6f0f2c8febd204d3414d21ef7db88db8182439c6ef34d3ed"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/standard_diagnostics/income_state_outcomes.png",
+      "local_sha256": "bd3a568f09ac8cb7aa40a826aee02c8a0c7a5f15c831f648402fdc69e6d2872a",
+      "match": true,
+      "remote_path": "root_03/standard_diagnostics/income_state_outcomes.png",
+      "remote_sha256": "bd3a568f09ac8cb7aa40a826aee02c8a0c7a5f15c831f648402fdc69e6d2872a"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+      "local_sha256": "372db6191e89d4348e2a67d3d4766b8401e64225383837f7aa8aa18eb0281908",
+      "match": true,
+      "remote_path": "root_03/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+      "remote_sha256": "372db6191e89d4348e2a67d3d4766b8401e64225383837f7aa8aa18eb0281908"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/standard_diagnostics/market_clearing_by_market.png",
+      "local_sha256": "5ccf382ea03c87af2f5c731b245a5834454b5e532a32b7144949aa27b738137d",
+      "match": true,
+      "remote_path": "root_03/standard_diagnostics/market_clearing_by_market.png",
+      "remote_sha256": "5ccf382ea03c87af2f5c731b245a5834454b5e532a32b7144949aa27b738137d"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/standard_diagnostics/market_clearing_residuals.png",
+      "local_sha256": "eecf600ebcd2de3b54cb544a567e9fae5485cde95540c706252640754b21cae9",
+      "match": true,
+      "remote_path": "root_03/standard_diagnostics/market_clearing_residuals.png",
+      "remote_sha256": "eecf600ebcd2de3b54cb544a567e9fae5485cde95540c706252640754b21cae9"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/standard_diagnostics/owner_rungs.png",
+      "local_sha256": "746bc17df673f4ec001b83e6c6fbea7c37386bae9e054b890ab2d77f984e91e1",
+      "match": true,
+      "remote_path": "root_03/standard_diagnostics/owner_rungs.png",
+      "remote_sha256": "746bc17df673f4ec001b83e6c6fbea7c37386bae9e054b890ab2d77f984e91e1"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/standard_diagnostics/ownership_by_age.png",
+      "local_sha256": "56e483e322c2dae751f5a7d8757cffcff87e2a103b3223b043005c336f3a2c44",
+      "match": true,
+      "remote_path": "root_03/standard_diagnostics/ownership_by_age.png",
+      "remote_sha256": "56e483e322c2dae751f5a7d8757cffcff87e2a103b3223b043005c336f3a2c44"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/standard_diagnostics/ownership_by_age_income_state.png",
+      "local_sha256": "00b08e965a490ed2700e4a1f61d1c93ec1dcf6f1cd30d276f2a44a60c16aefd0",
+      "match": true,
+      "remote_path": "root_03/standard_diagnostics/ownership_by_age_income_state.png",
+      "remote_sha256": "00b08e965a490ed2700e4a1f61d1c93ec1dcf6f1cd30d276f2a44a60c16aefd0"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/standard_diagnostics/policy_childless_renter_age30.png",
+      "local_sha256": "59aab7a16e34aeb474dde8c2f4ec57cf68d7eb1eee8c07fc32e13d122068e2d6",
+      "match": true,
+      "remote_path": "root_03/standard_diagnostics/policy_childless_renter_age30.png",
+      "remote_sha256": "59aab7a16e34aeb474dde8c2f4ec57cf68d7eb1eee8c07fc32e13d122068e2d6"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/standard_diagnostics/policy_childless_renter_age42.png",
+      "local_sha256": "579c3ac2e8e3a54103b11393f37c7c6a181f50ea78a675a4cd2e72101c53bdae",
+      "match": true,
+      "remote_path": "root_03/standard_diagnostics/policy_childless_renter_age42.png",
+      "remote_sha256": "579c3ac2e8e3a54103b11393f37c7c6a181f50ea78a675a4cd2e72101c53bdae"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/standard_diagnostics/tenure_services.png",
+      "local_sha256": "0c304591dbe286ea718de3bfbc9da693886a2806eeca81352d605556e779a6ec",
+      "match": true,
+      "remote_path": "root_03/standard_diagnostics/tenure_services.png",
+      "remote_sha256": "0c304591dbe286ea718de3bfbc9da693886a2806eeca81352d605556e779a6ec"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+      "local_sha256": "bf3c5b6c233781c8f0e8626a6f3571c6a3337813e752e4b6848e1a4a276e6efd",
+      "match": true,
+      "remote_path": "root_03/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+      "remote_sha256": "bf3c5b6c233781c8f0e8626a6f3571c6a3337813e752e4b6848e1a4a276e6efd"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_03/standard_diagnostics/wealth_dist_childless_renter_age42.png",
+      "local_sha256": "f9a97d862c69d010b570e7def735a3f45225f3eccb3e0102d069fd23cf1ebe0f",
+      "match": true,
+      "remote_path": "root_03/standard_diagnostics/wealth_dist_childless_renter_age42.png",
+      "remote_sha256": "f9a97d862c69d010b570e7def735a3f45225f3eccb3e0102d069fd23cf1ebe0f"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/borrowing_limits.json",
+      "local_sha256": "2a341358b20e3c6e39aa9746e04553662c8d960e192bbd586d7126180ce0e21c",
+      "match": true,
+      "remote_path": "selected_repeat/borrowing_limits.json",
+      "remote_sha256": "2a341358b20e3c6e39aa9746e04553662c8d960e192bbd586d7126180ce0e21c"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/credit_grid.json",
+      "local_sha256": "e5045ff7d6d32a4c5f81519e290b02161afa4fc01777218649abbe55084eada0",
+      "match": true,
+      "remote_path": "selected_repeat/credit_grid.json",
+      "remote_sha256": "e5045ff7d6d32a4c5f81519e290b02161afa4fc01777218649abbe55084eada0"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/credit_solvency.json",
+      "local_sha256": "43b6e26e8a0dd08b808b85405040edaefc49a54114b2a37cc53f302ed7cd77c8",
+      "match": true,
+      "remote_path": "selected_repeat/credit_solvency.json",
+      "remote_sha256": "43b6e26e8a0dd08b808b85405040edaefc49a54114b2a37cc53f302ed7cd77c8"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/credit_tenure_kernel.generated.py",
+      "local_sha256": "f3113af25a134734940f86587aa4b97552d27512aebae33fc38d1f6a04148284",
+      "match": true,
+      "remote_path": "selected_repeat/credit_tenure_kernel.generated.py",
+      "remote_sha256": "f3113af25a134734940f86587aa4b97552d27512aebae33fc38d1f6a04148284"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/gates.json",
+      "local_sha256": "8ee2c8ad2b2f95ca6614d50ced0099e80524010d66af55e0d5688f39413a190b",
+      "match": true,
+      "remote_path": "selected_repeat/gates.json",
+      "remote_sha256": "8ee2c8ad2b2f95ca6614d50ced0099e80524010d66af55e0d5688f39413a190b"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/grid_embedding.json",
+      "local_sha256": "e39fa95a69661c164c3aef5ea5aaf9e8aa631187bd0ed0fdcbb663f06308d0c5",
+      "match": true,
+      "remote_path": "selected_repeat/grid_embedding.json",
+      "remote_sha256": "e39fa95a69661c164c3aef5ea5aaf9e8aa631187bd0ed0fdcbb663f06308d0c5"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/lifecycle_2023.csv",
+      "local_sha256": "f12151fbea9797d9f012ef87d95d3481b65e38b06229a60edeacfc7aedc4aae3",
+      "match": true,
+      "remote_path": "selected_repeat/lifecycle_2023.csv",
+      "remote_sha256": "f12151fbea9797d9f012ef87d95d3481b65e38b06229a60edeacfc7aedc4aae3"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/market_quantity_units.json",
+      "local_sha256": "dff1ae2a7c69a4091b6d4bcde25819c4ec92574f6d4f74a544780567da6617a3",
+      "match": true,
+      "remote_path": "selected_repeat/market_quantity_units.json",
+      "remote_sha256": "dff1ae2a7c69a4091b6d4bcde25819c4ec92574f6d4f74a544780567da6617a3"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/observers.json",
+      "local_sha256": "705e9b0d51437e2032dcbe3e6b141e6ae291fa222676f8ac167f90fcef6dd114",
+      "match": true,
+      "remote_path": "selected_repeat/observers.json",
+      "remote_sha256": "705e9b0d51437e2032dcbe3e6b141e6ae291fa222676f8ac167f90fcef6dd114"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/parameters.csv",
+      "local_sha256": "831e49c1aa364e9bf253cf2e3812dfdddcd3b98f4884b156da34e573cec3ef9c",
+      "match": true,
+      "remote_path": "selected_repeat/parameters.csv",
+      "remote_sha256": "831e49c1aa364e9bf253cf2e3812dfdddcd3b98f4884b156da34e573cec3ef9c"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/policy_array_summary.json",
+      "local_sha256": "825db95a113de33362ad607f864c8da630377916bafbb6b303b7df034f03b6a9",
+      "match": true,
+      "remote_path": "selected_repeat/policy_array_summary.json",
+      "remote_sha256": "825db95a113de33362ad607f864c8da630377916bafbb6b303b7df034f03b6a9"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/progress.json",
+      "local_sha256": "4605397f628c63fc8de4a38bc558fe52c034339a8613d060cc5464486342ca1c",
+      "match": true,
+      "remote_path": "selected_repeat/progress.json",
+      "remote_sha256": "4605397f628c63fc8de4a38bc558fe52c034339a8613d060cc5464486342ca1c"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/receipt.json",
+      "local_sha256": "d9d0e1cfe0fbc1ee248da3d73fb6404393b84229f321b5e5b4c30086d9f55ebd",
+      "match": true,
+      "remote_path": "selected_repeat/receipt.json",
+      "remote_sha256": "d9d0e1cfe0fbc1ee248da3d73fb6404393b84229f321b5e5b4c30086d9f55ebd"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/reporting_units.json",
+      "local_sha256": "2b6f8820549314090e2569fc7e4fb3d5c0613bb3539977d2c2188d94d27ec810",
+      "match": true,
+      "remote_path": "selected_repeat/reporting_units.json",
+      "remote_sha256": "2b6f8820549314090e2569fc7e4fb3d5c0613bb3539977d2c2188d94d27ec810"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/selected_repeat_arrays.json",
+      "local_sha256": "ee8fd2d604e0be902f6932bed2a5c1d7daf0d6e475d8016e0a30f7af6448745e",
+      "match": true,
+      "remote_path": "selected_repeat/selected_repeat_arrays.json",
+      "remote_sha256": "ee8fd2d604e0be902f6932bed2a5c1d7daf0d6e475d8016e0a30f7af6448745e"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/target_fit.csv",
+      "local_sha256": "2e34b84e06fdd601f71e207dfd64ca50af7d07a4f975feb630a9b61f330fc001",
+      "match": true,
+      "remote_path": "selected_repeat/target_fit.csv",
+      "remote_sha256": "2e34b84e06fdd601f71e207dfd64ca50af7d07a4f975feb630a9b61f330fc001"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/young_ownership_age_measurement.csv",
+      "local_sha256": "57641e054c7ad1909b7f1905087cc9eabcd6b25066fa1c5a488eaa48174c2547",
+      "match": true,
+      "remote_path": "selected_repeat/young_ownership_age_measurement.csv",
+      "remote_sha256": "57641e054c7ad1909b7f1905087cc9eabcd6b25066fa1c5a488eaa48174c2547"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/standard_diagnostics/fertility_by_age.png",
+      "local_sha256": "8032b03e7ff8241314d6506b8e758f268c7345522d75e5dff5db7058c6442e1b",
+      "match": true,
+      "remote_path": "selected_repeat/standard_diagnostics/fertility_by_age.png",
+      "remote_sha256": "8032b03e7ff8241314d6506b8e758f268c7345522d75e5dff5db7058c6442e1b"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/standard_diagnostics/fertility_policy_by_age_income_state.png",
+      "local_sha256": "263db70c025441d518a7fe8eabf2cd2ab8fd6d795e632b31f7d71d52b357ff59",
+      "match": true,
+      "remote_path": "selected_repeat/standard_diagnostics/fertility_policy_by_age_income_state.png",
+      "remote_sha256": "263db70c025441d518a7fe8eabf2cd2ab8fd6d795e632b31f7d71d52b357ff59"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/standard_diagnostics/housing_by_age_income_state.png",
+      "local_sha256": "94ac868a6af26132e318154d89de856a63caf102000c3cc9105df331f3b37c29",
+      "match": true,
+      "remote_path": "selected_repeat/standard_diagnostics/housing_by_age_income_state.png",
+      "remote_sha256": "94ac868a6af26132e318154d89de856a63caf102000c3cc9105df331f3b37c29"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/standard_diagnostics/housing_market.png",
+      "local_sha256": "e82f831e1388fd5cc59a9d304e87bc3ea9e1d9f372264778c32e869f8d6f08eb",
+      "match": true,
+      "remote_path": "selected_repeat/standard_diagnostics/housing_market.png",
+      "remote_sha256": "e82f831e1388fd5cc59a9d304e87bc3ea9e1d9f372264778c32e869f8d6f08eb"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/standard_diagnostics/housing_prices.png",
+      "local_sha256": "592283198432ac3b6f0f2c8febd204d3414d21ef7db88db8182439c6ef34d3ed",
+      "match": true,
+      "remote_path": "selected_repeat/standard_diagnostics/housing_prices.png",
+      "remote_sha256": "592283198432ac3b6f0f2c8febd204d3414d21ef7db88db8182439c6ef34d3ed"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/standard_diagnostics/income_state_outcomes.png",
+      "local_sha256": "bd3a568f09ac8cb7aa40a826aee02c8a0c7a5f15c831f648402fdc69e6d2872a",
+      "match": true,
+      "remote_path": "selected_repeat/standard_diagnostics/income_state_outcomes.png",
+      "remote_sha256": "bd3a568f09ac8cb7aa40a826aee02c8a0c7a5f15c831f648402fdc69e6d2872a"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+      "local_sha256": "372db6191e89d4348e2a67d3d4766b8401e64225383837f7aa8aa18eb0281908",
+      "match": true,
+      "remote_path": "selected_repeat/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+      "remote_sha256": "372db6191e89d4348e2a67d3d4766b8401e64225383837f7aa8aa18eb0281908"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/standard_diagnostics/market_clearing_by_market.png",
+      "local_sha256": "5ccf382ea03c87af2f5c731b245a5834454b5e532a32b7144949aa27b738137d",
+      "match": true,
+      "remote_path": "selected_repeat/standard_diagnostics/market_clearing_by_market.png",
+      "remote_sha256": "5ccf382ea03c87af2f5c731b245a5834454b5e532a32b7144949aa27b738137d"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/standard_diagnostics/market_clearing_residuals.png",
+      "local_sha256": "eecf600ebcd2de3b54cb544a567e9fae5485cde95540c706252640754b21cae9",
+      "match": true,
+      "remote_path": "selected_repeat/standard_diagnostics/market_clearing_residuals.png",
+      "remote_sha256": "eecf600ebcd2de3b54cb544a567e9fae5485cde95540c706252640754b21cae9"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/standard_diagnostics/owner_rungs.png",
+      "local_sha256": "746bc17df673f4ec001b83e6c6fbea7c37386bae9e054b890ab2d77f984e91e1",
+      "match": true,
+      "remote_path": "selected_repeat/standard_diagnostics/owner_rungs.png",
+      "remote_sha256": "746bc17df673f4ec001b83e6c6fbea7c37386bae9e054b890ab2d77f984e91e1"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/standard_diagnostics/ownership_by_age.png",
+      "local_sha256": "56e483e322c2dae751f5a7d8757cffcff87e2a103b3223b043005c336f3a2c44",
+      "match": true,
+      "remote_path": "selected_repeat/standard_diagnostics/ownership_by_age.png",
+      "remote_sha256": "56e483e322c2dae751f5a7d8757cffcff87e2a103b3223b043005c336f3a2c44"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/standard_diagnostics/ownership_by_age_income_state.png",
+      "local_sha256": "00b08e965a490ed2700e4a1f61d1c93ec1dcf6f1cd30d276f2a44a60c16aefd0",
+      "match": true,
+      "remote_path": "selected_repeat/standard_diagnostics/ownership_by_age_income_state.png",
+      "remote_sha256": "00b08e965a490ed2700e4a1f61d1c93ec1dcf6f1cd30d276f2a44a60c16aefd0"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/standard_diagnostics/policy_childless_renter_age30.png",
+      "local_sha256": "59aab7a16e34aeb474dde8c2f4ec57cf68d7eb1eee8c07fc32e13d122068e2d6",
+      "match": true,
+      "remote_path": "selected_repeat/standard_diagnostics/policy_childless_renter_age30.png",
+      "remote_sha256": "59aab7a16e34aeb474dde8c2f4ec57cf68d7eb1eee8c07fc32e13d122068e2d6"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/standard_diagnostics/policy_childless_renter_age42.png",
+      "local_sha256": "579c3ac2e8e3a54103b11393f37c7c6a181f50ea78a675a4cd2e72101c53bdae",
+      "match": true,
+      "remote_path": "selected_repeat/standard_diagnostics/policy_childless_renter_age42.png",
+      "remote_sha256": "579c3ac2e8e3a54103b11393f37c7c6a181f50ea78a675a4cd2e72101c53bdae"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/standard_diagnostics/tenure_services.png",
+      "local_sha256": "0c304591dbe286ea718de3bfbc9da693886a2806eeca81352d605556e779a6ec",
+      "match": true,
+      "remote_path": "selected_repeat/standard_diagnostics/tenure_services.png",
+      "remote_sha256": "0c304591dbe286ea718de3bfbc9da693886a2806eeca81352d605556e779a6ec"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+      "local_sha256": "bf3c5b6c233781c8f0e8626a6f3571c6a3337813e752e4b6848e1a4a276e6efd",
+      "match": true,
+      "remote_path": "selected_repeat/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+      "remote_sha256": "bf3c5b6c233781c8f0e8626a6f3571c6a3337813e752e4b6848e1a4a276e6efd"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/selected_repeat/standard_diagnostics/wealth_dist_childless_renter_age42.png",
+      "local_sha256": "f9a97d862c69d010b570e7def735a3f45225f3eccb3e0102d069fd23cf1ebe0f",
+      "match": true,
+      "remote_path": "selected_repeat/standard_diagnostics/wealth_dist_childless_renter_age42.png",
+      "remote_sha256": "f9a97d862c69d010b570e7def735a3f45225f3eccb3e0102d069fd23cf1ebe0f"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/q0_smoke/receipt.json",
+      "local_sha256": "e3b9a629b8934c96937ade3b82abd98410ad293de9353eb51ff42337082c948d",
+      "match": true,
+      "remote_path": "q0_smoke/receipt.json",
+      "remote_sha256": "e3b9a629b8934c96937ade3b82abd98410ad293de9353eb51ff42337082c948d"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/q0_smoke/gates.json",
+      "local_sha256": "f4b566799cf17e246a99549537917a9c40eee666821b4b95a5a6b777f21c9a0d",
+      "match": true,
+      "remote_path": "q0_smoke/gates.json",
+      "remote_sha256": "f4b566799cf17e246a99549537917a9c40eee666821b4b95a5a6b777f21c9a0d"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/q0_smoke/observers.json",
+      "local_sha256": "1aa3ac006a7634443ea81081191b83e983b158c4bfa9cdd6dac998334d7c7087",
+      "match": true,
+      "remote_path": "q0_smoke/observers.json",
+      "remote_sha256": "1aa3ac006a7634443ea81081191b83e983b158c4bfa9cdd6dac998334d7c7087"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/q0_smoke/target_fit.csv",
+      "local_sha256": "817db12e6e3d8c6c7c5497754cc3ef5806554a4eb34ad63753334a58d68100a0",
+      "match": true,
+      "remote_path": "q0_smoke/target_fit.csv",
+      "remote_sha256": "817db12e6e3d8c6c7c5497754cc3ef5806554a4eb34ad63753334a58d68100a0"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/q0_smoke/parameters.csv",
+      "local_sha256": "831e49c1aa364e9bf253cf2e3812dfdddcd3b98f4884b156da34e573cec3ef9c",
+      "match": true,
+      "remote_path": "q0_smoke/parameters.csv",
+      "remote_sha256": "831e49c1aa364e9bf253cf2e3812dfdddcd3b98f4884b156da34e573cec3ef9c"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/upper_105/receipt.json",
+      "local_sha256": "a7b924ed33a98c9c071d117ee4c8fd67ad6d30c292020dcfb507483cd9b7e64b",
+      "match": true,
+      "remote_path": "upper_105/receipt.json",
+      "remote_sha256": "a7b924ed33a98c9c071d117ee4c8fd67ad6d30c292020dcfb507483cd9b7e64b"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/upper_105/gates.json",
+      "local_sha256": "235984b8164b7f370466aab526be8038f3cf48d49461a3913f120920c9509e32",
+      "match": true,
+      "remote_path": "upper_105/gates.json",
+      "remote_sha256": "235984b8164b7f370466aab526be8038f3cf48d49461a3913f120920c9509e32"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/upper_105/observers.json",
+      "local_sha256": "36d5d3c17c03d32ae31bb432cf8f6db47358724c0fb31d4fb9b632e3a636fbdf",
+      "match": true,
+      "remote_path": "upper_105/observers.json",
+      "remote_sha256": "36d5d3c17c03d32ae31bb432cf8f6db47358724c0fb31d4fb9b632e3a636fbdf"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/upper_105/target_fit.csv",
+      "local_sha256": "4e5ddbc929997ee02b245962ac2729e9b64215c89765ccf13badeaf674b1d1a8",
+      "match": true,
+      "remote_path": "upper_105/target_fit.csv",
+      "remote_sha256": "4e5ddbc929997ee02b245962ac2729e9b64215c89765ccf13badeaf674b1d1a8"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/upper_105/parameters.csv",
+      "local_sha256": "831e49c1aa364e9bf253cf2e3812dfdddcd3b98f4884b156da34e573cec3ef9c",
+      "match": true,
+      "remote_path": "upper_105/parameters.csv",
+      "remote_sha256": "831e49c1aa364e9bf253cf2e3812dfdddcd3b98f4884b156da34e573cec3ef9c"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_01/receipt.json",
+      "local_sha256": "97c90cfbdaa8b52edf69c2319e784f59097b629e6962b8fa2a85d12759b0451c",
+      "match": true,
+      "remote_path": "root_01/receipt.json",
+      "remote_sha256": "97c90cfbdaa8b52edf69c2319e784f59097b629e6962b8fa2a85d12759b0451c"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_01/gates.json",
+      "local_sha256": "9dc723aaca92a3148f578882793bb49c79c30357317a3740f0f4844f55fd5dcd",
+      "match": true,
+      "remote_path": "root_01/gates.json",
+      "remote_sha256": "9dc723aaca92a3148f578882793bb49c79c30357317a3740f0f4844f55fd5dcd"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_01/observers.json",
+      "local_sha256": "b8e65d55e38f8b38b21e42db77db470dc34163476e26dcd034ff585ce28ed53e",
+      "match": true,
+      "remote_path": "root_01/observers.json",
+      "remote_sha256": "b8e65d55e38f8b38b21e42db77db470dc34163476e26dcd034ff585ce28ed53e"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_01/target_fit.csv",
+      "local_sha256": "4a7beab84bfb285acfdd771b5f5b6deb7b102adeed30df829e21bc736fb901fc",
+      "match": true,
+      "remote_path": "root_01/target_fit.csv",
+      "remote_sha256": "4a7beab84bfb285acfdd771b5f5b6deb7b102adeed30df829e21bc736fb901fc"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_01/parameters.csv",
+      "local_sha256": "831e49c1aa364e9bf253cf2e3812dfdddcd3b98f4884b156da34e573cec3ef9c",
+      "match": true,
+      "remote_path": "root_01/parameters.csv",
+      "remote_sha256": "831e49c1aa364e9bf253cf2e3812dfdddcd3b98f4884b156da34e573cec3ef9c"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_02/receipt.json",
+      "local_sha256": "27a565e005784e11209c8b4bce6def118f59dba388c99f4d863ad344eac31cb4",
+      "match": true,
+      "remote_path": "root_02/receipt.json",
+      "remote_sha256": "27a565e005784e11209c8b4bce6def118f59dba388c99f4d863ad344eac31cb4"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_02/gates.json",
+      "local_sha256": "eb939be35cfa5232e5a5563ef9930fe22d9101ab70c4aa121b83a1598eb4d19d",
+      "match": true,
+      "remote_path": "root_02/gates.json",
+      "remote_sha256": "eb939be35cfa5232e5a5563ef9930fe22d9101ab70c4aa121b83a1598eb4d19d"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_02/observers.json",
+      "local_sha256": "74124bf4c04453982d04d510bf8bb96146992a1654046085f63db007bab73908",
+      "match": true,
+      "remote_path": "root_02/observers.json",
+      "remote_sha256": "74124bf4c04453982d04d510bf8bb96146992a1654046085f63db007bab73908"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_02/target_fit.csv",
+      "local_sha256": "33b1a8db55e3a0544ff58a77c73d7f2cee0c4cb189957e69bb3c2d2357a0a16c",
+      "match": true,
+      "remote_path": "root_02/target_fit.csv",
+      "remote_sha256": "33b1a8db55e3a0544ff58a77c73d7f2cee0c4cb189957e69bb3c2d2357a0a16c"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/solve_v1/root_02/parameters.csv",
+      "local_sha256": "831e49c1aa364e9bf253cf2e3812dfdddcd3b98f4884b156da34e573cec3ef9c",
+      "match": true,
+      "remote_path": "root_02/parameters.csv",
+      "remote_sha256": "831e49c1aa364e9bf253cf2e3812dfdddcd3b98f4884b156da34e573cec3ef9c"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/verification_v1/source_receipts/source.sha256",
+      "local_sha256": "7cb0fad946253efed402c2d3ceab3fca880942f5751487ff1c92fc442c24cb07",
+      "match": true,
+      "remote_path": "sources_solve_v1/source.sha256",
+      "remote_sha256": "7cb0fad946253efed402c2d3ceab3fca880942f5751487ff1c92fc442c24cb07"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/verification_v1/source_receipts/plan_ge_template.json",
+      "local_sha256": "8ca97a4d024e03e89f6d599a9837e49de33678c4b64655a6e4edaf7628068a05",
+      "match": true,
+      "remote_path": "sources_solve_v1/plan_ge_template.json",
+      "remote_sha256": "8ca97a4d024e03e89f6d599a9837e49de33678c4b64655a6e4edaf7628068a05"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/verification_v1/source_receipts/preflight_ge_receipt.json",
+      "local_sha256": "55d5a77187fe32ab6644c103dc158e0c133bf9e053e5d0c0dfeea4d5fdd9f45b",
+      "match": true,
+      "remote_path": "sources_solve_v1/preflight_ge_receipt.json",
+      "remote_sha256": "55d5a77187fe32ab6644c103dc158e0c133bf9e053e5d0c0dfeea4d5fdd9f45b"
+    },
+    {
+      "local_path": "output/model/fixed_reference_economics_20260928/credit_ge_v1/verification_v1/source_receipts/credit_seed_receipt.json",
+      "local_sha256": "56fd38695487ae1262b5d772254d77943c046f106f91fcd42a92dc8d452ed18c",
+      "match": true,
+      "remote_path": "sources_solve_v1/credit_seed_receipt.json",
+      "remote_sha256": "56fd38695487ae1262b5d772254d77943c046f106f91fcd42a92dc8d452ed18c"
+    }
+  ],
+  "reference_checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d",
+  "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "reference_manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+  "repeat": {
+    "case": "selected_repeat",
+    "checkpoint": {
+      "path": "/work/ge_results/solve_v1/selected_repeat/conditional_cohort_state.pkl.gz",
+      "sha256": "2a3e85bca910f2057727637075da174f551de8a88dfca4eb6c4dbe6527db7ecd"
+    },
+    "factor": 1.0400674164439825,
+    "population": 1.050004518162521,
+    "price": 0.821517532009075,
+    "receipt_sha256": "d9d0e1cfe0fbc1ee248da3d73fb6404393b84229f321b5e5b4c30086d9f55ebd",
+    "residual": 6.603267266314106e-09,
+    "role": "repeat"
+  },
+  "repeat_verification": {
+    "array_count": 107,
+    "every_array_exact": true,
+    "parameter_rows": 31,
+    "selected_repeat_parameters_bytes_equal": true,
+    "selected_repeat_target_fit_bytes_equal": true,
+    "target_fit_rows": 14
+  },
+  "saved_supply_and_rooms_decomposition": {
+    "GE_rooms_over_original160_rooms_minus_1": -0.023757810762529807,
+    "Hs_qGE_over_Hs_q0_minus_1": 0.025058707715710282,
+    "q0_absolute_supply": 5.847942339355678,
+    "qGE_absolute_supply": 5.99448421717592
+  },
+  "selected": {
+    "case": "root_03",
+    "checkpoint": {
+      "path": "/work/ge_results/solve_v1/root_03/conditional_cohort_state.pkl.gz",
+      "sha256": "47e9380647b1c8b0dcdacd51ee4bf091c0027d5301a58bdbb52d4d6dd3a51542"
+    },
+    "factor": 1.0400674164439825,
+    "population": 1.050004518162521,
+    "price": 0.821517532009075,
+    "receipt_sha256": "29170e4562520d23c9f97f964a04241e1645f11d4aefb071a5dee4666feb99de",
+    "residual": 6.603267266314106e-09,
+    "role": "search"
+  },
+  "selected_gate_excerpt": {
+    "credit_floor_occupied_mass": 0.00026628368047563957,
+    "paygo_scaled_residual": 1.369762598234121e-13,
+    "queue_adjusted_l1": 2.673499842523265e-14,
+    "queue_raw_l1": 4.28053144278364e-10,
+    "relative_market_residual": 0.0,
+    "renewal_residual": 6.603267266314106e-09,
+    "repeat_gates_bytes_equal": true,
+    "repeat_receipt_sha256": "d9d0e1cfe0fbc1ee248da3d73fb6404393b84229f321b5e5b4c30086d9f55ebd"
+  },
+  "source_manifest_lines": [
+    "59fa315ef6d50aaa8be2abcfb29f01cf406f3756e363a0bd088e473a424311b8  run_ge.py",
+    "576655ab5e3f4ca452b5c1e11534099368a98c0d5ab892ebc75cefc35d2fea9a  launch.sh",
+    "8ca97a4d024e03e89f6d599a9837e49de33678c4b64655a6e4edaf7628068a05  plan_ge_template.json",
+    "569a259d2b04e0ae321944740c4f6f6ab647c31e4f2e922dff6a1828bb002d60  natural_credit.py",
+    "ac56b0de4cede1f969d54f61e51c74da9dfd6ec5371a4cffc142e970348807c6  run_credit.py",
+    "09edf5affbf20d7a5dc4200a81b1f32ce643ba0ad15680b4b8b208dccda77037  run_fixed_price.py",
+    "751b7341555a230ff06028e10f4de81ccd223ba1cca2280201be1b888d9858dd  preflight_ge.py",
+    "55d5a77187fe32ab6644c103dc158e0c133bf9e053e5d0c0dfeea4d5fdd9f45b  preflight_ge_receipt.json",
+    "a3b81c459290554f634d0c28409ab846364c0ecf7270bd164f975f092901cbe2  credit_grid.json"
+  ],
+  "status": "pass"
+}
