@@ -1,5 +1,23 @@
 # Bounded two-stream overnight launcher
 
+## September 29 completion
+
+Both array tasks 18766206 completed with exit 0 and passed both final repeat
+screens. Selected cases are `one_birth_024_gn1_0` and `two_birth_024_gn1_0`:
+losses 7.826 and 7.842, with children by 25 of 0.530 and 0.606 against 0.810.
+The original model's remaining scored loss is 99.52% early fertility. The
+two-birth version reduces that miss while worsening other scored moments.
+Neither candidate is adopted. The final local Jacobian ranks are 10 and 9;
+they were measured at proposal-round centers, not at the selected points.
+
+Full fits, parameter bounds, repeat screens, identity checks and the selected
+17-plot packets: [morning readout](morning_readout_v1/RESULTS.md) and
+[verification](morning_readout_v1/verification.json). These retain the unchanged
+target contract and the explicit experimental birth-opportunity distinction.
+Large checkpoints remain on Torch. The calibration monitor paused at 09:25 UTC;
+no repair, restart or new search occurred. The launch chronology below is
+historical and does not authorize restarting the completed array.
+
 This is an experimental calibration and identification diagnostic, not a
 production/adopted calibration.  It keeps the approved original fourteen-row
 target system, weights, and bounds.  The reference is **2007 stationary

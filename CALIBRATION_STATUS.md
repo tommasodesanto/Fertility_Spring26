@@ -39,7 +39,55 @@ checked between evaluations, rather than bounding each ongoing evaluation.
 Minimal follow-up is recorded in the packet README. No code change or relaunch
 was performed in this audit. These jobs are separate from the streams below.
 
-## September 28 overnight — two calibration streams launched; scheduled monitoring only
+## September 29 — two calibration searches completed; candidates not adopted
+
+Torch array **18766206** completed with exit 0 in both streams, after about
+5.5 hours each. Original-model search: 34 attempts, 32 successful; experimental
+two-birth search: 32 attempts, 31 successful. Three exploratory cases reached
+the eight-stationary-solve cap; no fatal controller failure occurred. Both
+streams completed two final repeats and passed their numerical repeat screens.
+The scheduled monitor paused at 09:25 UTC after both jobs terminated; no
+overnight repair or restart occurred. No new run is authorized by this readout.
+
+Both searches selected their second-round damped Gauss–Newton proposal
+`024_gn1_0`. Original-model loss is **7.826226594410982**, versus the frozen
+reference's 19.581310760138322. Children by 25 remain **0.5304463498285714**
+against 0.8095276384290021, accounting for 99.52% of the remaining scored loss.
+The other nine scored rows fit closely; this does not apply to all validation
+rows. The experimental two-birth loss is **7.8420175378092205**, with children
+by 25 **0.6060544766097269**. Its early gap is 27.1% smaller than the recalibrated
+original model's, but recent-parent ownership and exactly-one-child fit worsen.
+The total scores are effectively tied. Recalibration therefore overturns any
+inference from the poor fixed-coordinate diagnostic that this version cannot
+fit; it does not establish target infeasibility or a global optimum.
+
+Completed fertility (normalization) is 2.099609459078514 and 2.1003719466803252,
+respectively; both native renewal gates pass. Targets, weights and bounds are
+unchanged. Only the experimental stream changes the birth opportunity as
+described below. Ten coordinates and the separately normalized benefit are
+recalibrated in each stream, so their difference is not a fixed-parameter
+mechanism comparison. Neither candidate is adopted, and the other chat's
+**2007 stationary reference — block0506, September 28 verified export** remains
+unchanged.
+
+The last complete local Jacobian has numerical rank 10/10 in the original
+model and 9/10 in the two-birth model at the relative 1e-6 singular-value cutoff.
+These derivatives were evaluated at the round centers before the selected
+steps, not freshly at the selected candidates. Two-birth identification remains
+unverified; numerical full rank alone does not establish statistical
+identification in the original model either.
+
+Full 14-row target fits, all 31 parameters and restrictions, source/checkpoint
+identities, repeat evidence, both Jacobians and all 17 standard plots per
+selected case are retained in
+`output/model/fertility_identification_20260928/two_stream_overnight_v1/morning_readout_v1/`.
+Read `RESULTS.md` and `verification.json`. Selected small-artifact hashes were
+checked on Torch; large checkpoint identities were cross-checked against saved
+controller receipts, without a new checkpoint hash or download. The readout
+also discloses the collector's accidental broader small-file copy and subsequent
+pruning of its own new copies; no checkpoints or original run files were removed.
+
+## September 28 overnight — launch record (completed September 29)
 
 The author authorized a bounded original-model search and a separate search of
 the verified experimental two-birth version, followed by monitoring only for
@@ -95,11 +143,10 @@ around September 29 06:25 EDT, within the 07:30 hard end. Results stay under
 `launch_approval.json` SHA is
 `77be2cf5e988f754ef5650f5d1a4ae2626f9b77165937cc6387fd5ff5c91a32a`.
 
-App heartbeat `monitor-two-stream-fertility-calibration` is ACTIVE every 30
-minutes. It makes one bounded read-only check, inspects relevant failure
-evidence only when needed, and reports new major failures. It cannot repair,
-retry, cancel, extend or promote anything. It pauses after both jobs terminate
-or by September 29 12:30 UTC. Older completed search automations remain paused.
+App heartbeat `monitor-two-stream-fertility-calibration` ran every 30 minutes
+and is now PAUSED after both jobs completed, as recorded above. It performed
+bounded read-only checks for major failures, without repair, retry, cancellation,
+extension or promotion. Older completed search automations remain paused.
 
 ## September 28 — two-birth mechanism verified; benefit adjustment reverses early gain
 
