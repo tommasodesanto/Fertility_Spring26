@@ -26,7 +26,9 @@ and zero-cost rank 9/9 are likewise local round-center diagnostics. Statistical
 identification and selected-point robustness remain unverified: a fresh
 selected-point derivative/noise check and weak-direction profile are outstanding.
 E04/E05 isolated sources are prepared. Torch synthetic/choice-block verification
-job 18834199 was submitted; neither calibration search is launched yet. Native
+job 18834199 failed before model evaluation: the synthetic fixture's coordinate
+ordering and positive-block selector were corrected; verification retry 18834448
+was submitted. Neither calibration search is launched yet. Native
 positive-scale replay and saved-policy checks remain gates before refitting.
 
 ## September 29 — separate taste-shock experiments registered
