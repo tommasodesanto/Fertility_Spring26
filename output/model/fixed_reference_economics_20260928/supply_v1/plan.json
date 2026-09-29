@@ -1,0 +1,41 @@
+{
+  "schema": "block0506_supply_replay_v1",
+  "reference_label": "2007 stationary reference — block0506, September 28 verified export",
+  "maximum_lifecycle_solves": 0,
+  "threads": 1,
+  "memory_gib": 16,
+  "wall_seconds": 300,
+  "driver_sha256": "2b00ec45c32ef8921a1485b9351446384fe8728dc1e2243d2e488221c2aa2d45",
+  "manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+  "reference_checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d",
+  "credit_ge_checkpoint_sha256": "2a3e85bca910f2057727637075da174f551de8a88dfca4eb6c4dbe6527db7ecd",
+  "reference_checkpoint_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/initial_state.pkl.gz",
+  "credit_ge_checkpoint_path": "/work/ge_results/solve_v1/selected_repeat/conditional_cohort_state.pkl.gz",
+  "credit_ge_receipt_path": "/work/ge_results/solve_v1/selected_repeat/receipt.json",
+  "credit_ge_fit_path": "/work/ge_results/solve_v1/selected_repeat/target_fit.csv",
+  "credit_ge_parameters_path": "/work/ge_results/solve_v1/selected_repeat/parameters.csv",
+  "credit_adapter_path": "/work/ge_source/natural_credit.py",
+  "reference_fit_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/target_fit.csv",
+  "source_plot_directories": {
+    "frozen_baseline": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/standard_diagnostics",
+    "credit_household_endpoint": "/work/ge_results/solve_v1/selected_repeat/standard_diagnostics"
+  },
+  "economic_changes": {
+    "baseline_h0_plus10": "Experimental +10% absolute supply intercept H0; elasticity .63, all household and fiscal primitives retained",
+    "credit_fixed_baseline_stock": "Experimental fixed physical stock Hs=5.847942339355678 replacing the elastic supply rule; credit solution and all household and fiscal primitives retained"
+  },
+  "files": [
+    {"path": "/work/supply_source/replay_supply.py", "sha256": "2b00ec45c32ef8921a1485b9351446384fe8728dc1e2243d2e488221c2aa2d45"},
+    {"path": "/work/supply_source/launch.sh", "sha256": "98a61f214839d5da64ac4e88c6b35ed2fccf01d9d9f9f603d82d60bc47da63aa"},
+    {"path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/fixed_reference_manifest.json", "sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4"},
+    {"path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/solver.py", "sha256": "b637a655a9344b63f4461ee0fa4796c04bd98188477c4e6ace2c48ae0fc8aec1"},
+    {"path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_dynamic_population_transition.py", "sha256": "849709afb281193a48ccc44b352ed548c615c28da00b87301f9b7ad212bb1d8c"},
+    {"path": "/work/ge_source/run_ge.py", "sha256": "59fa315ef6d50aaa8be2abcfb29f01cf406f3756e363a0bd088e473a424311b8"},
+    {"path": "/work/ge_source/run_credit.py", "sha256": "ac56b0de4cede1f969d54f61e51c74da9dfd6ec5371a4cffc142e970348807c6"},
+    {"path": "/work/ge_source/run_fixed_price.py", "sha256": "09edf5affbf20d7a5dc4200a81b1f32ce643ba0ad15680b4b8b208dccda77037"},
+    {"path": "/work/ge_source/natural_credit.py", "sha256": "569a259d2b04e0ae321944740c4f6f6ab647c31e4f2e922dff6a1828bb002d60"},
+    {"path": "/work/ge_results/solve_v1/selected_repeat/receipt.json", "sha256": "d9d0e1cfe0fbc1ee248da3d73fb6404393b84229f321b5e5b4c30086d9f55ebd"},
+    {"path": "/work/ge_results/solve_v1/selected_repeat/target_fit.csv", "sha256": "2e34b84e06fdd601f71e207dfd64ca50af7d07a4f975feb630a9b61f330fc001"},
+    {"path": "/work/ge_results/solve_v1/selected_repeat/parameters.csv", "sha256": "831e49c1aa364e9bf253cf2e3812dfdddcd3b98f4884b156da34e573cec3ef9c"}
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "cases": [
+    {
+      "absolute_demand": 6.432736573291248,
+      "absolute_supply": 6.432736573291248,
+      "actual_adjusted_births": 0.14260417108651954,
+      "actual_entrant_flow": 0.06790674813643788,
+      "adjusted_births_per_normalized_household": 0.12964015530497958,
+      "arrays_sha256": "850ab20b9a35b1fdddfe712725dfb2fc22a65b7daa03a43189c9290e38280beb",
+      "case": "baseline_h0_plus10",
+      "deaths": 0.06790680191835625,
+      "estate_counterparty_caveat": "Provisional net-estate entrant funding and residual sink; counterparties unresolved",
+      "fit_rows": 14,
+      "housing_residual": 0.0,
+      "model_solves": 0,
+      "native_accounted_l1": 4.419345033335619e-14,
+      "native_mass_residual": -1.1102230246251565e-15,
+      "native_queue_16_20_pass": true,
+      "native_raw_l1": 5.3782006577003224e-08,
+      "negative_estate_exposure_mass": null,
+      "negative_estate_gate_passed": true,
+      "normalized_demand": 5.84794232906093,
+      "original_H0": 6.293507689200028,
+      "original_xi_supply": 0.63,
+      "parameter_rows": 31,
+      "paygo_residual": 3.171434227590003e-13,
+      "population": 1.100000001936446,
+      "price": 0.7898695017462086,
+      "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+      "renewal_residual": -7.919966967806502e-07,
+      "saved_household_array_max_errors": {
+        "births_by_loc": 0.0,
+        "demand_by_loc": 0.0,
+        "g_current": 0.0,
+        "g_post_fertility": 0.0,
+        "g_pre": 0.0
+      },
+      "saved_solution_market_stats_rebased_to_supply_per_household": true,
+      "serialized_H0": 6.922858458120031,
+      "serialized_xi_supply": 0.63,
+      "source_checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d",
+      "status": "passed",
+      "supply_override": {
+        "H0_multiplier": 1.1,
+        "baseline_absolute_stock": 5.847942339355678,
+        "elasticity": 0.63,
+        "mode": "static-elastic"
+      }
+    },
+    {
+      "absolute_demand": 5.847942339355678,
+      "absolute_supply": 5.847942339355678,
+      "actual_adjusted_births": 0.1327951818648022,
+      "actual_entrant_flow": 0.06323580088800104,
+      "adjusted_births_per_normalized_household": 0.12964025883566488,
+      "arrays_sha256": "975b6144b49cc8f9bacad9647f71acb2e27aa8cf31ae1c5bf79b46ac2a1975e8",
+      "case": "credit_fixed_baseline_stock",
+      "deaths": 0.06323580047041222,
+      "estate_counterparty_caveat": "Provisional net-estate entrant funding and residual sink; counterparties unresolved",
+      "fit_rows": 14,
+      "housing_residual": 0.0,
+      "model_solves": 0,
+      "native_accounted_l1": 2.6033912419333557e-14,
+      "native_mass_residual": 6.661338147750939e-16,
+      "native_queue_16_20_pass": true,
+      "native_raw_l1": 4.175889222843838e-10,
+      "negative_estate_exposure_mass": 0.0,
+      "negative_estate_gate_passed": true,
+      "normalized_demand": 5.709008021856993,
+      "original_H0": 6.293507689200028,
+      "original_xi_supply": 0.63,
+      "parameter_rows": 31,
+      "paygo_residual": 1.3748079919803708e-13,
+      "population": 1.024335982182329,
+      "price": 0.821517532009075,
+      "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+      "renewal_residual": 6.603267266314106e-09,
+      "saved_household_array_max_errors": {
+        "births_by_loc": 0.0,
+        "demand_by_loc": 0.0,
+        "g_current": 0.0,
+        "g_post_fertility": 0.0,
+        "g_pre": 0.0
+      },
+      "saved_solution_market_stats_rebased_to_supply_per_household": true,
+      "serialized_H0": 6.293507689200028,
+      "serialized_xi_supply": 0.63,
+      "source_checkpoint_sha256": "2a3e85bca910f2057727637075da174f551de8a88dfca4eb6c4dbe6527db7ecd",
+      "status": "passed",
+      "supply_override": {
+        "effective_supply_elasticity": 0.0,
+        "mode": "fixed-stock",
+        "physical_stock": 5.847942339355678,
+        "serialized_H0_inactive": 6.293507689200028,
+        "serialized_supply_elasticity_inactive": 0.63
+      }
+    }
+  ],
+  "elapsed_seconds": 56.12375512183644,
+  "model_solves": 0,
+  "original_credit_ge_receipt_sha256": "d9d0e1cfe0fbc1ee248da3d73fb6404393b84229f321b5e5b4c30086d9f55ebd",
+  "plan_sha256": "3d8cc57ec8e0759b5eb62fb99c1b0353d2e195f877b56489c0a709861d923ec0",
+  "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "reference_manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+  "source_fit_tables": [
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/target_fit.csv",
+    "/work/ge_results/solve_v1/selected_repeat/target_fit.csv"
+  ],
+  "source_identity": {
+    "calendar_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_dynamic_population_transition.py",
+    "calendar_sha256": "849709afb281193a48ccc44b352ed548c615c28da00b87301f9b7ad212bb1d8c",
+    "model_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/solver.py",
+    "model_sha256": "b637a655a9344b63f4461ee0fa4796c04bd98188477c4e6ace2c48ae0fc8aec1",
+    "reporting_market_stats_rebased_separately": true,
+    "supply_independent_functions": [
+      "solve_markov_income_at_prices",
+      "precompute_shared",
+      "solve_bellman_full_markov_income",
+      "forward_distribution_markov_income"
+    ]
+  },
+  "source_plot_directories": {
+    "credit_household_endpoint": "/work/ge_results/solve_v1/selected_repeat/standard_diagnostics",
+    "frozen_baseline": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/standard_diagnostics"
+  },
+  "status": "passed"
+}

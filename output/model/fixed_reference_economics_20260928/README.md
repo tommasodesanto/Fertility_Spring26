@@ -37,6 +37,23 @@ fertility renormalization, or automatic adoption of another chat's candidate.
 
 ## Current priorities and useful output
 
+The [supplemental housing-supply figure](slide_inputs_v1/rendered_output_v2/supplemental_housing_supply.pdf)
+and [borrowing table](slide_inputs_v1/rendered_output_v2/borrowing_comparison.tex)
+are ready for slide integration. Their [full-precision CSV](slide_inputs_v1/rendered_output_v2/borrowing_comparison.csv)
+and [input hashes](slide_inputs_v1/rendered_output_v2/manifest.json) accompany them.
+These are 2007 stationary and prescribed-price comparisons; none is a 2023 result.
+
+The [supply replay](supply_v1/README.md) passed on Torch (job 18801003, zero
+lifecycle solves). Removing artificial borrowing limits raises stationary
+household population by **2.434% with fixed physical housing**, versus **5.000%
+with elastic supply**. Prices and mapped rents rise **4.007% in both endpoints**.
+Renewal determines their common price, while supply determines the population
+accommodated. A pure 10% supply-intercept expansion instead raises population
+10% at unchanged reference prices and household behavior. Native population,
+birth-entry queue, housing, PAYGO and estate checks pass within the existing
+tolerances; the provisional estate counterparty and grid-convergence caveats
+remain. Full 14-row fit and 31-row parameter tables are linked in that README.
+
 The [closed stationary credit GE](credit_ge_v1/README.md) is now complete and
 exactly repeated: household population +5.000%, house prices and implied rents
 +4.007%, with child benefit and all other economic primitives fixed. Replacement
@@ -72,8 +89,41 @@ correlation causal. Market-clearing endpoints remain a separate stage.
 Existing evidence measures a permanent +10% house-price and implied-rent
 change. Its log-change elasticities are finite-change responses, not local
 derivatives or rent-only elasticities. The paired credit comparison and local
-step-size checks remain uncomputed. No new numerical budget or job is launched
-by this output specification.
+step-size checks remain uncomputed.
+
+September 29 follow-through: the author authorized completing the borrowing
+and housing-supply comparisons for a small set of slide figures and tables.
+The new `elasticity_v1/` preparation owns price factors 0.98, 0.99, 1, 1.01
+and 1.02 under both credit regimes. Zero-solve preflight **18800762** passed
+support and repayment recurrence checks but exposed a numerical problem:
+the fixed 262-node grid tightens saving floors by up to 0.449 away from the
+reference price, compared with 0.001601 on price-specific boundary grids.
+The proposed ten-case solve was therefore **not launched**. Its sources and
+receipt are retained.
+
+The revised design uses one common union of the boundary grids at all five
+prices. Zero-solve preflight 18801218 passed: the common grid has 602 nodes,
+preserves inherited and entrant atoms, and adds no price-dependent floor
+tightening relative to the candidate-specific grids. Main job **18801318**
+is running; [its plan and original deadline](elasticity_v1/README.md) are pinned.
+The revised pre-launch budget is twelve solves: two reference-credit controls,
+two solvency-only controls (one exact repeat of each), then eight price shocks;
+600 seconds per case and 5400 seconds total, one CPU and 16 GiB on Torch.
+The first controls must also establish a feasible time estimate for the
+remaining cases. This is a new numerical design before production launch,
+not an extension or restart of a completed search. A failed gate stops the
+run, without automatic retries. The common inherited occupied distribution
+is fixed for impact comparisons. Cohort completed fertility is reported
+separately. Price and implied rent move together; these are prescribed-price
+responses, not an equilibrium transition.
+
+The completed `supply_v1/` replay verified that supply enters clearing and
+reporting, but not household optimization at given prices. Each supply case
+changes its explicitly named supply object while retaining the corresponding
+household preferences, credit rule and fiscal inputs. It replays actual birth
+renewal, the 16/20 entry queue, scaled housing clearing and PAYGO. These
+stationary endpoints do not establish a transition path. Estimated 2023
+comparisons remain with the transition chat until its transition is available.
 
 ## Saved-state packet
 
@@ -178,23 +228,13 @@ actual saved parameters with the ancestry setup's parameters.
 
 ## Remaining equilibrium work
 
-The 10% supply-intercept experiment preserves preferences and other primitives
-and endogenizes prices. Population/adult-entry, fiscal and estate closure must
-be reconciled with the new transition machinery before claiming a cleared
-demographic equilibrium. The calibrated reference uses normalized population;
-continuing that numerical normalization after fertility changes does not
-establish demographic renewal. Historical 2007-to-2023 transition estimation
-and new policy transitions from the 2007 reference are separate objects.
-
-The separate transition chat's preparation note now writes the intended closed
-endpoint conditions explicitly: endogenous prices satisfy renewal at fixed
-preferences, PAYGO determines the pension, and housing clearing determines
-population. Replacement in a genuine closed stationary endpoint is an
-endogenous accounting condition, not permission to reset `psi_child`.
-For a pure 10% supply-intercept increase, scaling population and all aggregate
-flows by 1.1 at unchanged prices/policies is an algebraic candidate under the
-present level-linear closure. Native operator/scaling verification, uniqueness,
-stability and the transition remain unestablished; no supply result is claimed.
+The verified supply and credit stationary endpoints retain fixed preferences.
+Endogenous prices satisfy renewal, actual PAYGO balances, and housing clearing
+determines household population. The native operator and queue checks are now
+complete; uniqueness, stability and the adjustment path remain unestablished.
+Replacement is an endogenous stationary accounting condition, not permission
+to reset `psi_child`. Historical 2007-to-2023 estimation and subsequent policy
+transitions require the separate transition chat's new computed path.
 
 All numerical work, imports, tests and rendering belong on Torch. Keep large
 checkpoints there, use isolated versioned experiment sources, preserve receipts,

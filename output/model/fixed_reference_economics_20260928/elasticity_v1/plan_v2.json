@@ -1,0 +1,120 @@
+{
+  "case_seconds": 600,
+  "common_grid_nodes": 602,
+  "credit_mode": "natural_solvency_boolean_grid_stationary_ge_v1",
+  "driver_sha256": "5d461d4999c428c77438ee43dd63db0e69ee0dd10356b0e09d65c62880adc5ca",
+  "economic_changes": [
+    "Remove artificial renter, purchaser and incumbent-owner borrowing limits; retain lifetime repayment and net-estate solvency"
+  ],
+  "factors": [
+    0.98,
+    0.99,
+    1.0,
+    1.01,
+    1.02
+  ],
+  "files": [
+    {
+      "path": "/work/elasticity_source/launch.sh",
+      "sha256": "ac2bdb713f10d5e53bda955d3c5d5ca4fd6fa115f30866f7078bc61cb001344d"
+    },
+    {
+      "path": "/work/elasticity_source/natural_credit.py",
+      "sha256": "569a259d2b04e0ae321944740c4f6f6ab647c31e4f2e922dff6a1828bb002d60"
+    },
+    {
+      "path": "/work/elasticity_source/plan_template.json",
+      "sha256": "23721eb85d76776a26a0a3ec37d01acf45d02ec51ae1a01a525f29b05ed91df0"
+    },
+    {
+      "path": "/work/elasticity_source/preflight.py",
+      "sha256": "0b418031e0f7557a3a84342f8f0bd67a073d1b3b6d5f593e083996cc078b1ca7"
+    },
+    {
+      "path": "/work/elasticity_source/preflight.sh",
+      "sha256": "2cde3885c24c3a0fb01a18f7498f4e2ae0ffe6e4607070032a5cc7ad92a33031"
+    },
+    {
+      "path": "/work/elasticity_source/run_credit.py",
+      "sha256": "ac56b0de4cede1f969d54f61e51c74da9dfd6ec5371a4cffc142e970348807c6"
+    },
+    {
+      "path": "/work/elasticity_source/run_elasticity.py",
+      "sha256": "5d461d4999c428c77438ee43dd63db0e69ee0dd10356b0e09d65c62880adc5ca"
+    },
+    {
+      "path": "/work/elasticity_source/run_fixed_price.py",
+      "sha256": "09edf5affbf20d7a5dc4200a81b1f32ce643ba0ad15680b4b8b208dccda77037"
+    },
+    {
+      "path": "/work/elasticity_results/preflight_v2/preflight.json",
+      "sha256": "17b4030fb5e1923f3117a0394624c2777ea6c6364e0ae9af5405dcc3a6b784b8"
+    },
+    {
+      "path": "/work/elasticity_results/preflight_v2/common_grid.json",
+      "sha256": "cc0c21e5540c155dcf09ac1f0a6a2a6ee12d48c1426de33620b97241bda291e1"
+    },
+    {
+      "path": "/work/credit_seed/grid_control/receipt.json",
+      "sha256": "25c6e12271f51abcde4cecbeebe94adf732dabc7a56dac67c73ac81f5d8215ad"
+    },
+    {
+      "path": "/work/credit_seed/grid_control/conditional_cohort_state.pkl.gz",
+      "sha256": "f1c91fabca457fccfab22dbca33fae7edc750e4171b0f9796924516ed40c417e"
+    },
+    {
+      "path": "/work/credit_seed/grid_control/target_fit.csv",
+      "sha256": "2ea19e8b8911d72175aa6392b9a6c22b66ee532ba13c56a3bad5c0fae86096ab"
+    },
+    {
+      "path": "/work/credit_seed/grid_control/parameters.csv",
+      "sha256": "8ae35c3715265424531462ea9ce7e1e34e2a2778b5215ff8f090e1595f1b0e7b"
+    },
+    {
+      "path": "/work/credit_seed/credit/receipt.json",
+      "sha256": "56fd38695487ae1262b5d772254d77943c046f106f91fcd42a92dc8d452ed18c"
+    },
+    {
+      "path": "/work/credit_seed/credit/conditional_cohort_state.pkl.gz",
+      "sha256": "7b0b92f0e2ed33cfc80a3c63c2c15d6417b14ab88db3930284e440e94e2e515c"
+    },
+    {
+      "path": "/work/credit_seed/credit/target_fit.csv",
+      "sha256": "f07306bf4663d6b4bf8e9d7deda435aedb758707a3966100ac72f9ee664990a0"
+    },
+    {
+      "path": "/work/credit_seed/credit/parameters.csv",
+      "sha256": "234208b2404a83d861a96f24bc1de85b021fde9e9b7e91a359a5de3d384c9818"
+    }
+  ],
+  "grid_path": "/work/elasticity_results/preflight_v2/common_grid.json",
+  "maximum_lifecycle_solves": 12,
+  "memory_gib": 16,
+  "old_credit_checkpoint_path": "/work/credit_seed/credit/conditional_cohort_state.pkl.gz",
+  "old_credit_checkpoint_sha256": "7b0b92f0e2ed33cfc80a3c63c2c15d6417b14ab88db3930284e440e94e2e515c",
+  "old_credit_fit_path": "/work/credit_seed/credit/target_fit.csv",
+  "old_credit_parameters_path": "/work/credit_seed/credit/parameters.csv",
+  "old_credit_receipt_path": "/work/credit_seed/credit/receipt.json",
+  "old_reference_checkpoint_path": "/work/credit_seed/grid_control/conditional_cohort_state.pkl.gz",
+  "old_reference_checkpoint_sha256": "f1c91fabca457fccfab22dbca33fae7edc750e4171b0f9796924516ed40c417e",
+  "old_reference_fit_path": "/work/credit_seed/grid_control/target_fit.csv",
+  "old_reference_parameters_path": "/work/credit_seed/grid_control/parameters.csv",
+  "old_reference_receipt_path": "/work/credit_seed/grid_control/receipt.json",
+  "preflight_receipt_path": "/work/elasticity_results/preflight_v2/preflight.json",
+  "psi_child_fixed": 0.1355551166583114,
+  "reference_checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d",
+  "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "reference_manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+  "renormalize_fertility": false,
+  "schema": "block0506_union_grid_price_elasticity_v2",
+  "stop_criteria": [
+    "Five-price zero-solve union-grid support and floor-parity preflight must pass",
+    "Both q0 reference and credit cases require fresh exact repeats of full arrays, 14 fits, 31 parameters, and 17 plots before shocks",
+    "Any source/input/plan, support, cohort/impact mass, budget, estate, solvency, probability, or occupied-value gate failure stops without retry",
+    "At most 12 fresh-process lifecycle solves, 600 seconds per case, 5400 seconds total",
+    "Conservative observed q0 wall-time forecast stops before next case when remaining budget is insufficient",
+    "Every case retains full 14 fits, 31 parameters, and 17 standard plots"
+  ],
+  "threads": 1,
+  "total_seconds": 5400
+}
