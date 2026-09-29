@@ -1,5 +1,45 @@
 # Calibration Status
 
+## September 28 — two-birth mechanism verified; benefit adjustment reverses early gain
+
+The isolated corrected experiment passes: smoke 18758966 (16 tests and a full
+flag-off replay, all 12 arrays exact), normalized point 18759222 (318 seconds,
+one stationary solve), and saved-table analysis 18759306 (zero solves). Native
+gates and the unchanged 1e-12 extra-probability gate pass. All 14 fit rows,
+31 parameter rows and 17 standard plots were authenticated and reviewed.
+Source identities and full evidence:
+`output/model/fertility_identification_20260928/two_births_optimized_v2/README.md`.
+
+All ten reference calibration coordinates remain fixed. The experimental extra
+conditional choice uses the existing later-birth scale/inclusive value and an
+independent second conception draw. After child benefit adjusts to completed
+fertility 2.1 with renewal enforced, children by 25 are 0.516 versus 0.535 under
+the original rule (target 0.810). Motherhood by 25 falls from 45.011% to 35.656%,
+while children among those mothers rise from 1.190 to 1.448. Mean first-birth
+age rises from 25.933 to 27.399 (target 25.976); loss rises from 19.581 to 394.225.
+This is a diagnostic at unchanged coordinates, not a calibration search or proof
+that the changed model cannot be calibrated. No adoption.
+
+Fixed-benefit control 18760270 completed in 272 seconds, one 197-second solve;
+all specified diagnostic gates pass. At the actual saved reference child benefit
+0.1355551166583114, two births raise children by 25 to 0.742, motherhood to
+49.186%, children among mothers to 1.509, and mean first-birth age to 26.020.
+Completed fertility is 2.619 versus target 2.1; the demographic renewal residual
+(E−B)/E is −24.691%. That miss is explicitly reported, not enforced, for this
+control only. It is not a demographic steady state or calibration candidate.
+
+The extra opportunity improves early fertility at fixed benefit; reducing benefit
+to its normalization value removes that gain, mainly through lower motherhood.
+At ages 40–44, children overshoot to 2.146 versus data 1.718 in the fixed-benefit
+control. Joint recalibration might retain the early gain, but that is untested.
+A local first-birth-cost sensitivity with normalization is a possible next test;
+the original-model Jacobian does not describe derivatives in the changed model.
+Saved comparison 18760896 authenticated all fits, parameters and plots against
+both runs and the reference. Supplemental plotting/check 18761226 passed with
+zero solves; lead visually reviewed the four-series lifecycle figure. Both
+17-plot packets remain intact and visually reviewed. No search, transition,
+shared-source change or adoption.
+
 ## September 28 — numerical pair passes; two-birth result under audit
 
 Completed fertility 2.1 is a target handled by separate child-benefit
@@ -16,8 +56,8 @@ in the new inner probability calculation, not a reached-state support failure.
 Torch 18757604 passes the targeted regression plus eight existing solver tests
 for a proposed shifted-exponential calculation: error falls to 2.220e-16,
 inclusive values remain exactly equal and the 1e-12 gate is unchanged. Both
-checks used zero model solves. The correction is tested but not installed;
-full corrected-solution verification remains outstanding. Preserve the failed
+checks used zero model solves. At that stage the correction was not installed;
+the corrected v2 verification above supersedes that outstanding item. Preserve the failed
 run/source pins; no automatic restart, target change or promotion occurred.
 
 Torch 18753562 COMPLETED: both evaluations of the proposed ten-coordinate

@@ -1,0 +1,198 @@
+{
+  "age25": {
+    "data": {
+      "capped3": 0.8095276384290021,
+      "given_mother": 1.7704102602590128,
+      "mother_share": 0.45725426281169845
+    },
+    "reference": {
+      "capped3": 0.5354261243026106,
+      "given_mother": 1.1895366457709073,
+      "mother_share": 0.45011318163772507,
+      "share_0": 0.5498868183622749,
+      "share_1": 0.3648002389728397,
+      "share_2": 0.08531294266488543,
+      "share_3plus": 0.0
+    },
+    "two_birth": {
+      "capped3": 0.5164342701038768,
+      "given_mother": 1.4483774829870908,
+      "mother_share": 0.356560548731259,
+      "share_0": 0.643439451268741,
+      "share_1": 0.21553508541708105,
+      "share_2": 0.12217720525573783,
+      "share_3plus": 0.01884825805844001
+    }
+  },
+  "age25_symmetric_decompositions": [
+    {
+      "capped_children_difference": -0.2741015141263915,
+      "comparison": "reference_minus_data",
+      "conditional_children_fraction": 0.9614427136712852,
+      "interpretation": "Arithmetic symmetric decomposition; not causal attribution or a target-reachability result",
+      "symmetric_conditional_children_component": -0.26353290356308595,
+      "symmetric_motherhood_component": -0.010568610563305514
+    },
+    {
+      "capped_children_difference": -0.29309336832512534,
+      "comparison": "two_birth_minus_data",
+      "conditional_children_fraction": 0.44708456804025565,
+      "interpretation": "Arithmetic symmetric decomposition; not causal attribution or a target-reachability result",
+      "symmetric_conditional_children_component": -0.1310375219731022,
+      "symmetric_motherhood_component": -0.1620558463520231
+    },
+    {
+      "capped_children_difference": -0.018991854198733837,
+      "comparison": "two_birth_minus_reference",
+      "conditional_children_fraction": -5.497096322036057,
+      "interpretation": "Arithmetic symmetric decomposition; not causal attribution or a target-reachability result",
+      "symmetric_conditional_children_component": 0.10440005186450482,
+      "symmetric_motherhood_component": -0.12339190606323867
+    }
+  ],
+  "all_14_targets_weights_roles_unchanged": true,
+  "all_ten_reference_coordinates_unchanged": true,
+  "case_status": "verified_experimental_two_birth_equilibrium_not_adopted",
+  "caveats": [
+    "CPS observations are pooled cross-sectional 2004/2006 women; model household reproductive-member exposure is approximate.",
+    "First-birth timing uses NCHS period counts 2003\u20132006 with boundary-tail collapse.",
+    "Two births share the retained within-cell event-time proxy; separate ordered birth dates are unavailable.",
+    "A fixed-coordinate economic experiment is not a recalibrated specification or a causal decomposition."
+  ],
+  "checkpoint_reads": 0,
+  "complete_parameter_rows": 31,
+  "economic_changes": [
+    "Experimental: one extra optional birth attempt after a successful birth; maximum two new births per four-year cell.",
+    "Experimental: extra conditional binary choice has existing later-birth Gumbel scale and its inclusive value; no new fitted parameter.",
+    "Experimental: an independent second conception draw uses the existing age-specific success probability.",
+    "Measurement convention retained: pre/post linear age interpolation, without separately dated within-period births.",
+    "Derived: child-benefit level renormalized to completed fertility2.1 with original demographic renewal check.",
+    "All ten reference calibration coordinates, income, entry distribution, housing/fiscal primitives, targets, weights and bounds held fixed."
+  ],
+  "effective_source_manifest_sha256": "2ea39afa424643100ba2c6882c245990e7957a65cf824d5f6913e21a4c0e6a2c",
+  "experimental_checkpoint_sha256": "7e561325fe5c9ff285a9380e381009b1916aaaa160ebca981335da1d988ac6ba",
+  "first_birth_timing": {
+    "data": {
+      "mapped_mean_first_birth_age": 25.976263860992496,
+      "share_first_births_age30plus": 0.24927801304106673
+    },
+    "reference": {
+      "mapped_mean_first_birth_age": 25.93278056306455,
+      "share_first_births_age30plus": 0.22364558977321622
+    },
+    "two_birth": {
+      "mapped_mean_first_birth_age": 27.39901478618801,
+      "share_first_births_age30plus": 0.3165198711123318
+    }
+  },
+  "held_coordinate_statuses_verified": true,
+  "input_hashes": {
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/measurement_audit_v1/early_fertility_decomposition.json": "459298b9712204d16e8e36098170662605743447daeefb8440587d4ae14788a2",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/measurement_audit_v1/fertility_lifecycle_matched_windows.csv": "9ee5aa6f44bf4b5f39093680e1c687be42886a126cda765a2be1d6f6eaed334c",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/measurement_audit_v1/first_birth_age_cells.csv": "8949328bb3a6146750349df7cfeaea924f9ee818d44d278ddfcf0a7e92dcae17",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/artifact_hashes.json": "03cc89a827f9003e2a81434f9f2596940f9ce085ed7c31cdf74f1049ea9a321b",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/observers.json": "440d3eca7b947001a1c5799c5160f0487fa33e89f967c71a71a15e8849550802",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/parameters.csv": "4d229fe18ee9c43a8a709413a10690a845d0cf7028efe57925d4f4b1d7c8d036",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/receipt.json": "8b073c9c8ce73cd0f119cbcd0c8133eb39787fb04cc1acb38a89a07e5af67f74",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/standard_diagnostics/fertility_by_age.png": "640b1c73bbcac37b2f2f2499dd5a048d6e02a5d436e326f7978ca80347fe5912",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/standard_diagnostics/fertility_policy_by_age_income_state.png": "6e43d0f96a51315ee7d1f58399219191a3173fde1f084bd88f08a7dbcbeb5c26",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/standard_diagnostics/housing_by_age_income_state.png": "f01b65f4879980a196cd58fd7660f2a94584981beeed40148958ba31afbbe579",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/standard_diagnostics/housing_market.png": "a9a47b14676ebc5bab292e35d646b1957ddffe71565daa37d608d825404c937f",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/standard_diagnostics/housing_prices.png": "7d616ffe98a73043d5428038838d43dd7ab14cdb660c739b1b72c867d73cbd7c",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/standard_diagnostics/income_state_outcomes.png": "0a6224306dfa051615ed9b4aa354ade2b25ada7b43e101eed9edd2cb68810c14",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/standard_diagnostics/liquid_wealth_by_age_income_state.png": "d354a27cb133e268dad432315fecb848ce1de720e41eae41ac203a6c63200dca",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/standard_diagnostics/market_clearing_by_market.png": "afc87e3116cd3f79276f0dac48cfacf0594f01daaeedc73cee7a3db4d9b5d93d",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/standard_diagnostics/market_clearing_residuals.png": "fff51f77330b67111521413d1faee34cacd40e4fee94701e1374bfd7ba9aa677",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/standard_diagnostics/owner_rungs.png": "1bb9d94100aea860d957925f733ad559584153e1c8780cd27ed7fd2470588b1c",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/standard_diagnostics/ownership_by_age.png": "d0d89cd5d2b7001c7d95e0fb178a9b70503c76daceeece2c1c395577081db820",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/standard_diagnostics/ownership_by_age_income_state.png": "ae80e3f2732bf077bbae6119ff8a590b1dfe7b2f21a0019134acdf1d1795298b",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/standard_diagnostics/policy_childless_renter_age30.png": "8b6e4c327f09dc0d701eb44c0d530567641f27ac2a5f65197cd6fbaab53740d8",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/standard_diagnostics/policy_childless_renter_age42.png": "21f8df7a7aacdf3f3225d04e4c62a5ba7647691abffa062cb595010e51b4af36",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/standard_diagnostics/tenure_services.png": "864c48f2a0eec680ac378b3270a2b0b38602bf68a417a4111975ee8b18983dc2",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/standard_diagnostics/wealth_dist_childless_renter_age30.png": "4680c20806f6f4cfff7de0073a69c1d246a3dd98d48a28bd88cfeff387339d24",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/standard_diagnostics/wealth_dist_childless_renter_age42.png": "42e987ae89ea4dcc818a6bdac08050fbe0a0cdc351c3f15810b5888910b75fad",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/target_fit.csv": "47a9ccb239265cdf8ecf587fe4eb5cc10ce3eed28ed36b19c38b1e82270d023f",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/analyze_result.py": "a2f53f63457b6a2b35b9be37b5b2a046e546b7ecab43187302b5d4e5bfa88e9a",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/driver.py": "522133e5bb0da67273ca5a8eab694bcd06247866afb1a9d31377107e6271a370",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/patch_reporting.py": "941b80794451821f083f75caf2c79d3b07028228175cf49015d33fe14a70eece",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/patch_solver.py": "14268a514b4e06e566e6c4edcebdfb5de75602b96cd6f782fc6cc37b34a22019",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/completion.json": "fe62a41832c321e16de6d3d6d78f782156fe7aab7dc38ebb7356acf522270e6c",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/artifact_hashes.json": "055b41c2da5d626e551b88ac0360c541fded46dcb2bc9e460916b9004556012e",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/observers.json": "bd7155946778a02f955f2a3a7dd4189cdc49dc2b0585806e7dbeff05e5f544b4",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/parameters.csv": "4e6727d5858d6f6fb4a5f729ca358e3109a313b73db8825cadbdf4317d6c86ba",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/receipt.json": "9f39165220da53d64b05c2c109e59bb13c78cdeac7c9a76dfdb45847612bba06",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/standard_diagnostics/fertility_by_age.png": "cbeebd26cf7551ae436cfccbf15e794cc23dce970ecdcced98ff36a0c8fca85c",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/standard_diagnostics/fertility_policy_by_age_income_state.png": "cc932358818fe177cd96c09f8cdbba865c4d01d0e774703900cbb4e899b2df85",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/standard_diagnostics/housing_by_age_income_state.png": "eb171a322b5df79c9fe97f5aa19be8da9fc9bdcc2be30d36c4d86ff38685509f",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/standard_diagnostics/housing_market.png": "8a0bb07aad678e4600e08491a9525675092a6d27fd82926195acfb3a886a4c67",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/standard_diagnostics/housing_prices.png": "75a37f29aae145ba78254ebe554dab3f7dd8e3f18ad714fc13eff00862f62c10",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/standard_diagnostics/income_state_outcomes.png": "6f807b07956185e3b3f9a7c164e7f63316318934a7e696d46cda50bb4c246e60",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/standard_diagnostics/liquid_wealth_by_age_income_state.png": "310e957b0e4f96f4f977dd9147cbb6323160c90c1a90be1805ce27bdcc874fc5",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/standard_diagnostics/market_clearing_by_market.png": "764ed2628c695676e2b4759946f3f36c7176c21999c3b5d73528d3f6902c0a88",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/standard_diagnostics/market_clearing_residuals.png": "e5d76ea14d0c861074f624d943a6689abde542eccccda2b7b270b6e607d9bc56",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/standard_diagnostics/owner_rungs.png": "8643edb5870193e90ee6bea08af382c203ced97062ece4b59e3aa70020ae5baf",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/standard_diagnostics/ownership_by_age.png": "fc3635e0d1ceefdc483cbf1a0a92c718c9a05dc27078a57b6acce9b610327e81",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/standard_diagnostics/ownership_by_age_income_state.png": "c5c4d387ae5d6371154b68983f95720f16e5d094b26c141827a82be463430826",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/standard_diagnostics/policy_childless_renter_age30.png": "cf8dff64824e19162e2fb25f0cad287424dff15a130cd7959b771ce8202201ca",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/standard_diagnostics/policy_childless_renter_age42.png": "4ae63099e52d93aae646a2b7ceb9e5421460c040b8b7cbd97b321439db1f3ebd",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/standard_diagnostics/tenure_services.png": "7f44db3e21ae215ad3ae28703a168d7e48cfdc5626b67a7c38c4f788c929544f",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/standard_diagnostics/wealth_dist_childless_renter_age30.png": "d7e7c28cf5c1de6b35e0666c54b58ccc511897c7f5243e5dab72444301b506cf",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/standard_diagnostics/wealth_dist_childless_renter_age42.png": "4e22eb7589946261972ddb39cf0f75b40ae7fc8e7fa9092070f88bfde84081e2",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/case/target_fit.csv": "cd7c32c3756e8fd220544a657f8e355cfd33385ce2722ca75c4540d1fcf41ed9",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/effective_source_manifest.json": "2ea39afa424643100ba2c6882c245990e7957a65cf824d5f6913e21a4c0e6a2c",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/effective_sources/code/model/intergen_eqscale_seq_optimized/solver.py": "4e262ecd299f8852aba00a32cee40021890a97b3a34c381a0b375b9fa4a8ba7e",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/effective_sources/code/model/tools/e5f_initial_fertility_observer.py": "1147fdc90a384b48dc47ab77b5c74b83564025d7c217f96b0b98b5045398bb2a",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/effective_sources/code/model/tools/e5f_recent_parent_flow_observer.py": "72f1bea4936ebe6c7a8088f9ffe13ed2b42446167cb4fe3d662af0fa75fd7520",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/effective_sources/code/model/tools/run_dynamic_population_transition.py": "39e8ba5aadb960f468b3725b8cfa04d8938ab71c4698675a5ebfcdc912be05ad",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/effective_sources/code/model/tools/run_e5f_open_population_transition.py": "c93e91d34f6eb42bc48d0ac5d7b6a35c873f575f7e0068535956e8afac95d197",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/effective_sources/code/model/tools/run_e5f_transition_calibration.py": "9a9113f7267214f3c6f8b634bc643146e94a13c3d82db3ec021cf03a33899c78",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/run_v1/worker/receipt.json": "e7cf4998cac8132e23e8e4f449e678bdee521e3d7912a00494f51fbf6eb48984",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/tests_reporting.py": "7fff1ab04bfdbe51feadea1f104677ec8c978de10536aa8c603ffa804d6d05b9",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/tests_solver.py": "3c4b4064a9da6a524468316f3076a581706f6308b25a491f0ae9b6ab6027b971"
+  },
+  "model_imports": 0,
+  "model_solves": 0,
+  "output_hashes": {
+    "age25_comparison.csv": "e9f164b3d042b889963b3512188df285c65949977c8db85bf9fb792cbff43ea4",
+    "age25_symmetric_decomposition.csv": "b03f50960cc647a38e582bae798e69ecf785050af59800acbb5be14b5491d12c",
+    "fertility_lifecycle_comparison.csv": "7777a9a9075a321617387a49aa964e00dbc0362b189ff7cd6fedfe2deee88ac3",
+    "first_birth_age_cells_comparison.csv": "0eacafe563e3a895db63a6685261d816f053c72350e1f571feaacc944d808508",
+    "parameters_comparison.csv": "c76464ecb72a766000a069643e90c5810e7d9d387165664be4f8f1f4ca19d899",
+    "supplemental_lifecycle.png": "fe87e7e4e44b4d24eb437e9afe40c57dae7381880046c5dbb16d073b9c196d2e",
+    "target_fit_comparison.csv": "e76d829093b25d9e735ff4b460437b6552e38d48b61afa801cac937003ec039c"
+  },
+  "primary_losses": {
+    "reference": 19.581310760138326,
+    "two_birth": 394.2246073803919
+  },
+  "reference_checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d",
+  "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "reference_lifecycle_first_birth_and_age25_replay": true,
+  "scientific_promotion": false,
+  "slurm_job": "18759306",
+  "standard_17_plots_changed": false,
+  "standard_plot_hashes_verified": true,
+  "standard_plot_names": [
+    "standard_diagnostics/fertility_by_age.png",
+    "standard_diagnostics/fertility_policy_by_age_income_state.png",
+    "standard_diagnostics/housing_by_age_income_state.png",
+    "standard_diagnostics/housing_market.png",
+    "standard_diagnostics/housing_prices.png",
+    "standard_diagnostics/income_state_outcomes.png",
+    "standard_diagnostics/liquid_wealth_by_age_income_state.png",
+    "standard_diagnostics/market_clearing_by_market.png",
+    "standard_diagnostics/market_clearing_residuals.png",
+    "standard_diagnostics/owner_rungs.png",
+    "standard_diagnostics/ownership_by_age.png",
+    "standard_diagnostics/ownership_by_age_income_state.png",
+    "standard_diagnostics/policy_childless_renter_age30.png",
+    "standard_diagnostics/policy_childless_renter_age42.png",
+    "standard_diagnostics/tenure_services.png",
+    "standard_diagnostics/wealth_dist_childless_renter_age30.png",
+    "standard_diagnostics/wealth_dist_childless_renter_age42.png"
+  ],
+  "standard_plot_scope": "Standard probability panels show the outer attempt; extra conditional probabilities are separately audited, not plotted.",
+  "status": "verified_saved_table_comparison_not_adopted",
+  "transition_run": false,
+  "two_birth_projection": "common-event pre/post interpolation; both within-period births share the inherited event time proxy; ordered dates unavailable"
+}

@@ -1,0 +1,51 @@
+{
+  "status": "submitted",
+  "smoke_job": "18758966",
+  "evaluation_job": "18759222",
+  "analysis_job": "18759306",
+  "source_pins": {
+    "driver.py": "522133e5bb0da67273ca5a8eab694bcd06247866afb1a9d31377107e6271a370",
+    "patch_reporting.py": "941b80794451821f083f75caf2c79d3b07028228175cf49015d33fe14a70eece",
+    "patch_solver.py": "14268a514b4e06e566e6c4edcebdfb5de75602b96cd6f782fc6cc37b34a22019",
+    "tests_reporting.py": "7fff1ab04bfdbe51feadea1f104677ec8c978de10536aa8c603ffa804d6d05b9",
+    "tests_solver.py": "3c4b4064a9da6a524468316f3076a581706f6308b25a491f0ae9b6ab6027b971"
+  },
+  "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "smoke_reference_exact_arrays": 12,
+  "stationary_solve_cap": 8,
+  "evaluation_supervisor_seconds": 1200,
+  "estimated_stationary_solve_seconds": [
+    131,
+    239
+  ],
+  "expected_evaluation_seconds": [
+    180,
+    480
+  ],
+  "initial_psi": 0.09018345014418325,
+  "estimated_coordinates": 0,
+  "held_coordinates": 10,
+  "normalization_target": 2.1,
+  "scientific_promotion": false,
+  "numerical_changes": [
+    "Stable shifted-exponential inner probabilities, preserving inclusive value and dead mask",
+    "Initial psi from authenticated prior normalized diagnostic",
+    "Separate zero-menu and nonzero sum-error reporting; unchanged acceptance thresholds"
+  ],
+  "economic_changes": [
+    "Same experimental optional second birth attempt following success, max2births/cell",
+    "Same existing later-birth Gumbel scale/inclusive value and independent second conception draw",
+    "Same linear within-cell projection; no ordered birth dates"
+  ],
+  "unchanged": [
+    "income",
+    "entry",
+    "ten calibration coordinates",
+    "targets",
+    "weights",
+    "bounds",
+    "scientific gates",
+    "17 standard plots"
+  ],
+  "independent_review": "No launch blocker; supervisor owns deadline, native1050argument not separately enforced"
+}
