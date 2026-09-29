@@ -101,3 +101,7 @@ Keep the17 standard plots and complete14/31 tables as supporting files.
 Deliver a compact birth/timing/tenure comparison; no assembled PDF.
 All large checkpoints stay on Torch under
 `/scratch/td2248/projects/fixed_reference_credit_20260929/`.
+Generated runtime source snapshots also remain on Torch; the local packet
+retains their preparation receipts rather than duplicate source trees.
+The exporter retains the legacy filename `lifecycle_2023.csv`; these files
+describe the named 2007 reference and its credit experiment, not a 2023 result.
