@@ -1,5 +1,35 @@
 # Local housing-price elasticities: union-grid successor
 
+**September 29, 12:17 EDT: numerical work stopped; full elasticity comparison
+incomplete.** Job 18801318 completed all four q0 controls and stopped on its
+forecast. Continuation 18803216 completed `reference_990` and `credit_990`, then
+hit the unchanged 600-second case limit in `reference_1010`. Its last progress
+label is `standard_17_plot_rendering`, which also covers subsequent provenance
+checks and checkpoint/receipt writing. A checkpoint exists, but no completion
+receipt certifies that case. The bounded Torch audit found all 17 plots and
+both gate files, but its 185,708,331-byte gzip checkpoint is truncated (EOFError
+before the end-of-stream marker). Its write time immediately precedes the
+timeout: checkpoint finalization, rather than model nonconvergence or a
+documented scientific gate failure, prevented completion. Do not treat it as
+a passed result or load the partial checkpoint for a continuation.
+
+Six cases have passing receipts; a seventh lifecycle case was attempted.
+The +1% credit case and all ±2% cases were not attempted. No centered elasticity
+or full price-response figure is available. The original absolute deadline
+and all solve/case limits remain unchanged; no retry or new solve was launched.
+The hourly monitor is paused after the terminal failure. A bounded zero-solve
+audit has authenticated the passed cases and diagnosed the incomplete output.
+The [partial readout](partial_readout_v1/README.md) contains the one-sided
+0.99-to-1 log elasticities, full tables and four unique 17-plot packets. Impact
+birth elasticities are −0.436 under baseline credit rules and −0.468 with
+solvency-only credit; cohort completed-fertility elasticities are −0.532 and
+−0.551. The lead checked the extraction formula, common inherited-state
+definition and receipt identities. These are one-sided prescribed-price
+responses; symmetry, step-size robustness and GE impact remain unverified.
+The earlier verified borrowing GE and supply endpoints
+are unaffected. Launch descriptions below are historical records, not current
+running status or instructions to resubmit.
+
 **Conditional continuation submitted: Torch job 18803216**, dependent on clean
 completion of 18801318. It uses `source_v4/`, logs to `continue_v4.log`, and
 writes `results_v2/solve_v4/` under the same remote root. It can run only after

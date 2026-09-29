@@ -105,7 +105,10 @@ The revised design uses one common union of the boundary grids at all five
 prices. Zero-solve preflight 18801218 passed: the common grid has 602 nodes,
 preserves inherited and entrant atoms, and adds no price-dependent floor
 tightening relative to the candidate-specific grids. Main job **18801318**
-is running; [its plan and original deadline](elasticity_v1/README.md) are pinned.
+and continuation **18803216** have terminated. Four q0 controls and both −1%
+price cases passed, but the reference +1% case hit its ten-minute cap during
+post-processing. The symmetric elasticity comparison is incomplete; see the
+[failure status, plan and original deadline](elasticity_v1/README.md).
 The revised pre-launch budget is twelve solves: two reference-credit controls,
 two solvency-only controls (one exact repeat of each), then eight price shocks;
 600 seconds per case and 5400 seconds total, one CPU and 16 GiB on Torch.
