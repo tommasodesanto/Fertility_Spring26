@@ -17,6 +17,8 @@ def main(a):
     if sys.platform != "linux" or not os.environ.get("SLURM_JOB_ID", "").isdigit():
         raise RuntimeError("Torch Slurm only")
     source, out = a.source_dir.resolve(), a.output.resolve()
+    if type(a.cache_max_bytes) is not int or a.cache_max_bytes < 0:
+        raise ValueError("Cache budget must be a nonnegative integer number of bytes")
     if out.exists(): raise RuntimeError("output already exists")
     out.mkdir(parents=True); started=time.monotonic(); stop=threading.Event()
     sys.path[:0]=[str(source), "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools"]
@@ -44,17 +46,22 @@ def main(a):
         fresh_endpoint=a.fresh_endpoint or not endpoint_receipt.exists()
         maximum_policy_calls=10*H+24+2+10+(4 if fresh_endpoint else 0)
         plan=estimator.draft_plan("four_successive");plan.update(source_pins=pins,target_contract=contract,horizons=[6,8])
-        plan["acceleration"].update(seed_horizon=H,perturbed_date=a.perturbed_date,seed_receipt=None)
+        reused_seed_pin=None
+        if a.jacobian_receipt is not None:
+            reused_seed_pin=dict(path=str(a.jacobian_receipt.resolve()),sha256=engine.sha(a.jacobian_receipt))
+        plan["acceleration"].update(seed_horizon=H,perturbed_date=a.perturbed_date,seed_receipt=reused_seed_pin)
         plan["budget"].update(total_seconds=a.total_seconds,candidate_seconds=a.total_seconds,
           mapping_seconds=a.mapping_seconds,jacobian_seconds=a.jacobian_seconds,path_seconds=a.jacobian_seconds,
           endpoint_seconds=a.jacobian_seconds,maximum_policy_calls=maximum_policy_calls)
         plan["endpoint"]["max_evaluations"]=2;plan["path"]["max_evaluations"]=2
+        plan["path"]["cache_max_bytes"]=a.cache_max_bytes
         write("plan.json",dict(plan,smoke_maximum_policy_calls=maximum_policy_calls,fresh_endpoint=fresh_endpoint))
         write("best_so_far.json",dict(status="PENDING",phase="native_smoke_not_started",maximum_policy_calls=maximum_policy_calls))
         native=estimator.NativeEstimator(plan,out/"native",manifest,packet,runtime);native.deadline=started+a.total_seconds;native.candidate_deadline=native.deadline
-        write("latest_completed.json",dict(phase="measured_jacobian",epoch=time.time()))
-        native.prepare_jacobian(); seed=out/"native/jacobian_seed/measured/receipt.json"
-        engine.require(seed.exists(),"Five-mapping measured seed receipt missing")
+        write("latest_completed.json",dict(phase="authenticated_jacobian" if reused_seed_pin else "measured_jacobian",epoch=time.time()))
+        native.prepare_jacobian()
+        seed=engine.pinned(reused_seed_pin) if reused_seed_pin else out/"native/jacobian_seed/measured/receipt.json"
+        engine.require(seed.exists(),"Authenticated measured seed receipt missing")
         reused=False
         endpoint_receipt_pin=None
         if not fresh_endpoint:
@@ -92,7 +99,7 @@ def main(a):
         pf=runtime.rt["primitive"].pf; g=float(np.max(np.abs(carried.terminal_state.g_pre-latest["result"].terminal_state.g_pre)))
         queues={n:float(np.max(np.abs(pf.birth_queue_values(getattr(carried.terminal_state,n))-pf.birth_queue_values(getattr(latest["result"].terminal_state,n))))) for n in ("scheduled_entries","scheduled_raw_entries")}
         engine.require(all(record["gates"].values()) and max(gaps)<=2e-10 and max(fertility_gaps)<=1e-12 and g<=1e-12 and max(queues.values())<=1e-12,"Carried-state five-date remainder differs")
-        write("readiness.json",dict(status="PASS",tests_passed=True,native_endpoint_and_fertility_smoke_passed=True,estimator_sources=pins,historical_fit=False,preference_changes=False,target_contract=contract,seed_receipt=dict(path=str(seed),sha256=engine.sha(seed)),reused_endpoint=dict(receipt=endpoint_receipt_pin,reused=reused,identity=endpoint),gates=dict(native_path=receipt["root_and_terminal_pass"],carried=all(record["gates"].values()),rows=max(gaps),fertility=max(fertility_gaps),g_pre=g,queues=queues),timings=dict(seconds=time.monotonic()-started),cache=record["cache"],maximum_policy_calls=maximum_policy_calls,execution_enabled=False,production_horizon_verified=False))
+        write("readiness.json",dict(status="PASS",tests_passed=True,native_endpoint_and_fertility_smoke_passed=True,estimator_sources=pins,historical_fit=False,preference_changes=False,target_contract=contract,seed_receipt=dict(path=str(seed),sha256=engine.sha(seed)),reused_seed=bool(reused_seed_pin),reused_endpoint=dict(receipt=endpoint_receipt_pin,reused=reused,identity=endpoint),gates=dict(native_path=receipt["root_and_terminal_pass"],carried=all(record["gates"].values()),rows=max(gaps),fertility=max(fertility_gaps),g_pre=g,queues=queues),timings=dict(seconds=time.monotonic()-started),cache=record["cache"],cache_max_bytes=a.cache_max_bytes,maximum_policy_calls=maximum_policy_calls,execution_enabled=False,production_horizon_verified=False))
         write("best_so_far.json",dict(status="PASS",native_fertility=observed))
         write("latest_completed.json",dict(status="PASS",phase="complete",epoch=time.time(),reused_endpoint=reused))
     except BaseException as exc:
@@ -101,4 +108,4 @@ def main(a):
     finally: stop.set();thread.join(timeout=1)
 
 if __name__=="__main__":
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument("--source-dir",type=Path,required=True);p.add_argument("--output",type=Path,required=True);p.add_argument("--empirical-blocks",type=Path,required=True);p.add_argument("--annual",type=Path,required=True);p.add_argument("--seed-horizon",type=int,default=10);p.add_argument("--perturbed-date",type=int,default=5);p.add_argument("--mapping-seconds",type=float,required=True);p.add_argument("--jacobian-seconds",type=float,required=True);p.add_argument("--total-seconds",type=float,required=True);p.add_argument("--endpoint-receipt",type=Path);p.add_argument("--fresh-endpoint",action="store_true");main(p.parse_args())
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument("--source-dir",type=Path,required=True);p.add_argument("--output",type=Path,required=True);p.add_argument("--empirical-blocks",type=Path,required=True);p.add_argument("--annual",type=Path,required=True);p.add_argument("--seed-horizon",type=int,default=10);p.add_argument("--perturbed-date",type=int,default=5);p.add_argument("--mapping-seconds",type=float,required=True);p.add_argument("--jacobian-seconds",type=float,required=True);p.add_argument("--total-seconds",type=float,required=True);p.add_argument("--cache-max-bytes",type=int,default=2*1024**3);p.add_argument("--endpoint-receipt",type=Path);p.add_argument("--jacobian-receipt",type=Path);p.add_argument("--fresh-endpoint",action="store_true");main(p.parse_args())

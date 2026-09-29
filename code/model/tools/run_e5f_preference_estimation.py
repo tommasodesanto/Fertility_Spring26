@@ -132,7 +132,8 @@ def validate_plan(plan,launching=False):
         inner.require(0<p['market_tolerance']<=2e-4 and 0<p['fiscal_tolerance']<=1e-6 and
             0<=p['final_reproduction_tolerance']<=1e-10 and 0<e['renewal_tolerance']<=1e-6 and
             0<=e['reproduction_tolerance']<=1e-10,'Equilibrium gates cannot be loosened')
-        inner.require(0<=p['cache_max_bytes']<=2*1024**3,'Cache cap exceeds verified allocation')
+        inner.require(type(p['cache_max_bytes']) is int and p['cache_max_bytes']>=0,
+                      'Cache budget must be a nonnegative integer number of bytes')
         for section in (p,e):
             inner.require(type(section['max_evaluations']) is int and section['max_evaluations']>=2,
                           'Root budget must reserve fresh replay')
@@ -154,12 +155,14 @@ class NativeEstimator:
     def __init__(self,plan,output,manifest,packet,evaluator):
         self.plan=plan;self.out=Path(output);self.m=manifest;self.reference=packet;self.rt=evaluator
         self.deadline=time.monotonic()+plan['budget']['total_seconds'];self.candidate_deadline=self.deadline
+        self.stage_deadline=self.deadline
         self.endpoint_index={};self.endpoint_attempts=0;self.warm={};self.count=0;self.latest=None
         self.inherited=None;self.stage=0;self.year=2007;self.realized=[];self.realized_fertility=[];self.parameters=[]
         self.seed_receipt=None;self.seed_matrices={}
 
     def guarded(self,seconds,call):
-        remaining=min(seconds,self.deadline-time.monotonic(),self.candidate_deadline-time.monotonic())
+        remaining=min(seconds,self.deadline-time.monotonic(),self.candidate_deadline-time.monotonic(),
+                      self.stage_deadline-time.monotonic())
         if remaining<=0:raise TimeoutError('Estimation/candidate time budget exhausted')
         def timeout(*_):raise TimeoutError('Bounded numerical call exhausted its time budget')
         previous=signal.signal(signal.SIGALRM,timeout);signal.setitimer(signal.ITIMER_REAL,remaining)
@@ -167,6 +170,10 @@ class NativeEstimator:
         finally:signal.setitimer(signal.ITIMER_REAL,0);signal.signal(signal.SIGALRM,previous)
 
     def stationary(self,psi,price,output):
+        return self.guarded(self.plan['budget']['mapping_seconds'],
+                            lambda:self._stationary(psi,price,output))
+
+    def _stationary(self,psi,price,output):
         """Fixed-psi solve; only price adjusts renewal, with pension verified on actual mass."""
         import numpy as np
         from e5f_stationary_paygo import bind_initial_balanced_pension
@@ -176,8 +183,8 @@ class NativeEstimator:
         P.native_inherited_distribution_evidence_dir=str(output/'inherited_state_evidence')
         P,pension_rule=bind_initial_balanced_pension(P,payroll_tax=P.tau_pay)
         output.mkdir(parents=True,exist_ok=False)
-        sol=self.guarded(self.plan['budget']['mapping_seconds'],lambda:rt['model'].solve_markov_income_at_prices(
-            np.array([price]),P,grid,verbose=False,fast_stats=False))
+        sol=rt['model'].solve_markov_income_at_prices(
+            np.array([price]),P,grid,verbose=False,fast_stats=False)
         inner.check_endpoint_primitives(self.reference['parameters'],P)
         inner.require(np.array_equal(sol.b_grid,grid),'Endpoint changed the reference grid')
         fiscal=rt['certify_initial_pension'](sol.g,P,marginal_tolerance=1e-9,fiscal_tolerance=1e-6)
@@ -278,7 +285,8 @@ class NativeEstimator:
         P=self.reference['parameters'];proof=receipt.get('scientific_validation',{})
         inner.require(receipt.get('mapping_count')==5 and
             receipt.get('reference_manifest_sha256')==inner.MANIFEST_SHA and
-            receipt.get('source_pins')==self.plan['source_pins'] and
+            all(receipt.get('source_pins',{}).get(name)==self.plan['source_pins'].get(name)
+                for name in inner.SOURCE_NAMES) and
             receipt.get('housing')==self.plan['housing'] and
             receipt.get('closure')=='fixed_tax' and
             receipt.get('expectations')==self.plan['expectations'] and
@@ -302,6 +310,13 @@ class NativeEstimator:
         return self.seed_matrices[horizon].copy()
 
     def endpoint(self,psi):
+        previous=self.stage_deadline
+        self.stage_deadline=min(self.deadline,self.candidate_deadline,
+            time.monotonic()+self.plan['budget']['endpoint_seconds'])
+        try:return self._endpoint(psi)
+        finally:self.stage_deadline=previous
+
+    def _endpoint(self,psi):
         import numpy as np
         from e5f_ssj_scaled_step_root import solve_price_path_scaled
         key=float(psi).hex()
@@ -324,7 +339,7 @@ class NativeEstimator:
         root=solve_price_path_scaled(initial_prices=np.array([q0]),evaluate=evaluate,
             project=lambda q:np.clip(q,q0*c['price_bound_ratios'][0],q0*c['price_bound_ratios'][1]),
             slope=c['slope'],market_tolerance=c['renewal_tolerance'],max_log_step=c['max_log_step'],damping=c['damping'],
-            max_evaluations=c['max_evaluations'],deadline_monotonic=min(self.candidate_deadline,time.monotonic()+self.plan['budget']['endpoint_seconds']),
+            max_evaluations=c['max_evaluations'],deadline_monotonic=self.stage_deadline,
             max_condition_number=self.plan['fit']['max_condition_number'],worsening_factor=self.plan['fit']['worsening_factor'],
             final_reproduction_tolerance=c['reproduction_tolerance'],callback=progress)
         inner.write(folder/'root.json',root)
@@ -347,6 +362,13 @@ class NativeEstimator:
         return packet,item
 
     def path(self,psi,terminal,endpoint,horizon,folder):
+        previous=self.stage_deadline
+        self.stage_deadline=min(self.deadline,self.candidate_deadline,
+            time.monotonic()+self.plan['budget']['path_seconds'])
+        try:return self._path(psi,terminal,endpoint,horizon,folder)
+        finally:self.stage_deadline=previous
+
+    def _path(self,psi,terminal,endpoint,horizon,folder):
         import numpy as np
         from e5f_four_shock_acceleration import solve_joint_with_acceleration
         from e5f_social_security_root import CandidateDomainError
@@ -381,7 +403,7 @@ class NativeEstimator:
             fiscal_bounds=[P.pension*v for v in p['pension_bound_ratios']],market_tolerance=p['market_tolerance'],
             fiscal_tolerance=p['fiscal_tolerance'],market_slope=p['market_slope'],fiscal_slope=p['fiscal_slope'],
             max_log_step=p['max_log_step'],damping=p['damping'],max_evaluations=p['max_evaluations'],
-            deadline_monotonic=min(self.candidate_deadline,time.monotonic()+self.plan['budget']['path_seconds']),
+            deadline_monotonic=self.stage_deadline,
             max_condition_number=self.plan['fit']['max_condition_number'],worsening_factor=self.plan['fit']['worsening_factor'],
             final_reproduction_tolerance=p['final_reproduction_tolerance'],callback=progress,
             initial_jacobian=self.initial_jacobian(horizon) if warm is None else warm['final_jacobian'])
@@ -507,9 +529,9 @@ class NativeEstimator:
         return record
 
 
-def run(plan,output):
+def validate_launch_inputs(plan):
+    """Check every pinned launch input without importing or solving the model."""
     validate_plan(plan,launching=True)
-    inner.require(sys.platform=='linux' and os.environ.get('SLURM_JOB_ID','').isdigit(),'Torch Slurm only')
     inner.require(set(plan['source_pins'])==set(SOURCES),'Complete estimation source pins required')
     for name,digest in plan['source_pins'].items():inner.require(inner.sha(Path(__file__).parent/name)==digest,'Source changed: '+name)
     ready=inner.read(inner.pinned(plan['readiness_receipt']))
@@ -517,6 +539,23 @@ def run(plan,output):
                   ready['native_endpoint_and_fertility_smoke_passed'],'Matching preparation proof required')
     contract=plan['target_contract'];fresh=target_contract(inner.pinned(contract['blocks']),inner.pinned(contract['annual']))
     inner.require(fresh==contract,'Complete target/measurement contract changed')
+    seed=plan['acceleration']['seed_receipt']
+    if seed is not None:
+        receipt=inner.read(inner.pinned(seed))
+        inner.require(receipt.get('reference_manifest_sha256')==inner.MANIFEST_SHA and
+            receipt.get('mapping_count')==5 and
+            isinstance(receipt.get('source_pins'),dict) and
+            all(receipt['source_pins'].get(name)==plan['source_pins'][name]
+                for name in inner.SOURCE_NAMES),
+            'Pinned seed numerical provenance changed')
+        inner.require(isinstance(receipt.get('matrix'),dict),'Pinned seed matrix pin required')
+        inner.pinned(receipt['matrix'])
+
+
+def run(plan,output):
+    validate_launch_inputs(plan)
+    inner.require(sys.platform=='linux' and os.environ.get('SLURM_JOB_ID','').isdigit(),'Torch Slurm only')
+    contract=plan['target_contract']
     output.mkdir(parents=True,exist_ok=False);inner.write(output/'plan.json',plan)
     stop=threading.Event()
     def heartbeat():
@@ -558,9 +597,17 @@ def run(plan,output):
 def main():
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--plan',type=Path,required=True)
     parser.add_argument('--plan-sha256');parser.add_argument('--output',type=Path);parser.add_argument('--execute',action='store_true')
+    parser.add_argument('--preflight',action='store_true')
     args=parser.parse_args();plan=inner.read(args.plan)
+    inner.require(not (args.preflight and args.execute),'Choose preflight or execution')
+    if args.preflight:
+        validate_launch_inputs(plan)
+        print(json.dumps(dict(preflight='PASS',kind=plan['kind'])));return
     if not args.execute:
-        print(json.dumps(dict(execution_enabled=False,unresolved=validate_plan(plan),estimates='shock values and their terminal equilibrium')));return
+        if plan['execution_enabled']:
+            validate_launch_inputs(plan)
+        print(json.dumps(dict(execution_enabled=plan['execution_enabled'],unresolved=validate_plan(plan),
+            estimates='shock values and their terminal equilibrium')));return
     inner.require(args.plan_sha256 and inner.sha(args.plan)==args.plan_sha256 and args.output is not None,'Pinned plan and new output required')
     run(plan,args.output)
 

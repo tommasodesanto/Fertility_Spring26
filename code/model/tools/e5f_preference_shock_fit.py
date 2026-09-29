@@ -55,10 +55,17 @@ def fit_one(*, evaluate, target, initial_level, bounds, controls, callback=None)
         raise RuntimeError('Uncertified derivative proposal; stop without scoring its fertility')
     derivative=float((hi['residual'][0]-lo['residual'][0])/np.log(plus/minus))
     if abs(derivative)<=1e-10:raise RuntimeError('Shock is locally underidentified at the initial proposal')
-    root=solve_price_path_scaled(initial_prices=np.array([x]),evaluate=sample,
+    initial_pending=True
+    def root_sample(levels):
+        nonlocal initial_pending
+        if initial_pending:
+            initial_pending=False
+            if float(levels[0])==x:return base
+        return sample(levels)
+    root=solve_price_path_scaled(initial_prices=np.array([x]),evaluate=root_sample,
         project=lambda values:np.clip(values,limits[0],limits[1]),slope=1.,
         market_tolerance=controls['fertility_tolerance'],max_log_step=controls['max_log_step'],
-        damping=controls['damping'],max_evaluations=maximum-count,deadline_monotonic=deadline,
+        damping=controls['damping'],max_evaluations=maximum-count+1,deadline_monotonic=deadline,
         max_condition_number=controls['max_condition_number'],worsening_factor=controls['worsening_factor'],
         final_reproduction_tolerance=controls['reproduction_tolerance'],
         initial_jacobian=np.array([[derivative]]),callback=callback)

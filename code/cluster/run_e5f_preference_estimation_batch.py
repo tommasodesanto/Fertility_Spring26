@@ -9,8 +9,10 @@ already-gated estimator driver.
 from __future__ import annotations
 
 import argparse
+import copy
 import csv
 import hashlib
+import importlib.util
 import json
 import math
 from pathlib import Path
@@ -131,6 +133,35 @@ def check_readiness(receipt_path, pins):
     return {"path": str(receipt_path), "sha256": sha(receipt_path)}
 
 
+def load_staged_driver(source_dir):
+    """Load the staged stdlib-only driver without retaining import path changes."""
+    source_dir = Path(source_dir).resolve()
+    names = ("run_e5f_preference_transition", "run_e5f_preference_estimation")
+    prior = {name: sys.modules.get(name) for name in names}
+    try:
+        for name in names:
+            spec = importlib.util.spec_from_file_location(name, source_dir / (name + ".py"))
+            module = importlib.util.module_from_spec(spec)
+            sys.modules[name] = module
+            spec.loader.exec_module(module)
+        return sys.modules[names[-1]]
+    finally:
+        for name in names:
+            if prior[name] is None:
+                sys.modules.pop(name, None)
+            else:
+                sys.modules[name] = prior[name]
+
+
+def preflight_plan(plan, source_dir):
+    """Check a completed launch-shaped plan with the staged driver's gates."""
+    driver = load_staged_driver(source_dir)
+    launch_plan = copy.deepcopy(plan)
+    launch_plan["execution_enabled"] = True
+    driver.validate_plan(launch_plan, launching=True)
+    driver.validate_launch_inputs(launch_plan)
+
+
 def plan_from_args(args):
     require_positive_cache_budget(args.cache_max_bytes)
     if args.kind not in ("one_permanent", "four_successive"):
@@ -183,7 +214,12 @@ def plan_from_args(args):
                  "raw_queue_relative_tolerance": 1e-3},
         "labels": {"estate": "provisional inherited estate settlement remains outstanding"},
     }
+    preflight_plan(plan, args.source_dir)
     return plan
+
+
+def create_plan(args):
+    write_json(args.output, plan_from_args(args))
 
 
 def run_harness(args):
@@ -246,7 +282,7 @@ def parser():
     for name in ("total", "candidate", "endpoint", "mapping", "path", "jacobian"):
         create.add_argument("--" + name + "-seconds", type=float, required=True)
     create.add_argument("--enable-execution", action="store_true")
-    create.set_defaults(func=lambda args: write_json(args.output, plan_from_args(args)))
+    create.set_defaults(func=create_plan)
     launch = sub.add_parser("execute", parents=[common]); launch.add_argument("--plan", type=Path, required=True)
     launch.add_argument("--plan-sha256", required=True); launch.add_argument("--source-dir", type=Path, required=True)
     launch.add_argument("--output", type=Path, required=True); launch.set_defaults(func=execute)

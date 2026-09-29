@@ -10,30 +10,76 @@ from unittest.mock import patch
 
 
 CONTROLLER = Path(__file__).parents[2] / "cluster" / "run_e5f_preference_estimation_batch.py"
+STAGED_SOURCE = Path(__file__).parent
 SPEC = importlib.util.spec_from_file_location("preference_batch", CONTROLLER)
 batch = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(batch)
 
 
 class BatchControllerTests(unittest.TestCase):
-    def test_plan_uses_explicit_positive_cache_budget(self):
+    def plan_args(self):
         cache_budget = 64 * 1024 ** 3
-        args = SimpleNamespace(
+        return SimpleNamespace(
             cache_max_bytes=cache_budget, kind="four_successive", horizon=[6, 7],
             seed_horizon=6, perturbed_date=1, log_step=1e-5,
             reference_manifest_sha256=batch.REFERENCE_MANIFEST_SHA256,
             fit_evaluations=5, endpoint_evaluations=2, path_evaluations=2,
-            source_dir=Path("source"), readiness=Path("ready.json"),
+            source_dir=STAGED_SOURCE, readiness=Path("ready.json"), output=Path("plan.json"),
             jacobian_receipt=None, total_seconds=10., candidate_seconds=2.,
             endpoint_seconds=2., mapping_seconds=2., path_seconds=2., jacobian_seconds=2.,
             empirical_blocks=Path("blocks.csv"), annual=Path("annual.csv"),
             housing="fixed_stock", enable_execution=False,
         )
+
+    def test_plan_uses_explicit_positive_cache_budget(self):
+        args = self.plan_args()
         with patch.object(batch, "source_pins", return_value={}), \
              patch.object(batch, "check_readiness", return_value={}), \
-             patch.object(batch, "target_contract", return_value={}):
+             patch.object(batch, "target_contract", return_value={}), \
+             patch.object(batch, "preflight_plan"):
             plan = batch.plan_from_args(args)
-        self.assertEqual(plan["path"]["cache_max_bytes"], cache_budget)
+        self.assertEqual(plan["path"]["cache_max_bytes"], args.cache_max_bytes)
+
+    def test_real_driver_structural_preflight_accepts_complete_64gib_plan(self):
+        driver = batch.load_staged_driver(STAGED_SOURCE)
+        args = self.plan_args()
+        with patch.object(batch, "source_pins", return_value={"source": "pin"}), \
+             patch.object(batch, "check_readiness", return_value={"path": "ready", "sha256": "pin"}), \
+             patch.object(batch, "target_contract", return_value={"rows": [1]}), \
+             patch.object(batch, "load_staged_driver", return_value=driver), \
+             patch.object(driver, "validate_launch_inputs") as shared:
+            plan = batch.plan_from_args(args)
+        self.assertFalse(plan["execution_enabled"])
+        self.assertEqual(plan["path"]["cache_max_bytes"], 64 * 1024 ** 3)
+        shared.assert_called_once()
+        self.assertTrue(shared.call_args.args[0]["execution_enabled"])
+
+    def test_incoherent_plan_fails_real_driver_preflight(self):
+        driver = batch.load_staged_driver(STAGED_SOURCE)
+        args = self.plan_args()
+        with patch.object(batch, "source_pins", return_value={"source": "pin"}), \
+             patch.object(batch, "check_readiness", return_value={"path": "ready", "sha256": "pin"}), \
+             patch.object(batch, "target_contract", return_value={"rows": [1]}), \
+             patch.object(batch, "load_staged_driver", return_value=driver), \
+             patch.object(driver, "validate_launch_inputs"):
+            plan = batch.plan_from_args(args)
+            plan["budget"]["maximum_policy_calls"] -= 1
+            with self.assertRaisesRegex(ValueError, "solve count"):
+                batch.preflight_plan(plan, args.source_dir)
+
+    def test_preflight_failure_writes_no_plan(self):
+        driver = batch.load_staged_driver(STAGED_SOURCE)
+        args = self.plan_args()
+        with tempfile.TemporaryDirectory() as directory:
+            args.output = Path(directory) / "plan.json"
+            with patch.object(batch, "source_pins", return_value={"source": "pin"}), \
+                 patch.object(batch, "check_readiness", return_value={"path": "ready", "sha256": "pin"}), \
+                 patch.object(batch, "target_contract", return_value={"rows": [1]}), \
+                 patch.object(batch, "load_staged_driver", return_value=driver), \
+                 patch.object(driver, "validate_launch_inputs", side_effect=ValueError("preflight rejected")), \
+                 self.assertRaisesRegex(ValueError, "preflight rejected"):
+                batch.create_plan(args)
+            self.assertFalse(args.output.exists())
 
     def test_overlay_relative_path_contract_rejects_escape_forms(self):
         # Mirrors the launcher contract: only paths mounted at the writable

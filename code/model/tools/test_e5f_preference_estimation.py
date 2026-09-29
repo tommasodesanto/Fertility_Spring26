@@ -26,7 +26,24 @@ class ShockEstimationTests(unittest.TestCase):
         result=fit.fit_one(evaluate=evaluate,target=1.65,initial_level=.15,bounds=[.02,.3],controls=self.controls())
         self.assertTrue(result['converged']);self.assertAlmostEqual(result['parameter']['estimate'],.15*np.exp(-.35),places=9)
         self.assertEqual(result['equilibrium_evaluations'],len(calls));self.assertEqual(calls[-1],calls[-2])
+        self.assertEqual(calls.count(.15),1)
         self.assertAlmostEqual(result['initial_fertility_derivative_log_psi'],1.)
+
+    def test_initial_fit_reuses_base_but_freshly_replays_final_and_obeys_budget(self):
+        calls=[]
+        def evaluate(psi):
+            calls.append(psi)
+            return dict(certified=True,model=2.+np.log(psi/.15))
+        result=fit.fit_one(evaluate=evaluate,target=2.,initial_level=.15,bounds=[.02,.3],
+                           controls=dict(self.controls(),max_evaluations=5))
+        self.assertTrue(result['converged'])
+        self.assertEqual(calls,[.15,.15*np.exp(-.01),.15*np.exp(.01),.15])
+        self.assertEqual(result['equilibrium_evaluations'],4)
+        calls.clear()
+        result=fit.fit_one(evaluate=evaluate,target=1.65,initial_level=.15,bounds=[.02,.3],
+                           controls=dict(self.controls(),max_evaluations=5))
+        self.assertLessEqual(len(calls),5)
+        self.assertEqual(result['equilibrium_evaluations'],len(calls))
 
     def test_four_surprises_fit_sequentially_with_inherited_state(self):
         desired=[.13,.12,.11,.10];state=0.;advances=[];calls=[]
@@ -80,7 +97,7 @@ class ShockEstimationTests(unittest.TestCase):
         def evaluate(psi):
             nonlocal count
             count+=1
-            return dict(certified=True,model=2.+np.log(psi/.15)+(0.02 if count==5 else 0.))
+            return dict(certified=True,model=2.+np.log(psi/.15)+(0.02 if count==4 else 0.))
         result=fit.fit_one(evaluate=evaluate,target=2.,initial_level=.15,bounds=[.02,.3],controls=self.controls())
         self.assertFalse(result['converged'])
 
@@ -110,8 +127,53 @@ class ShockEstimationTests(unittest.TestCase):
                 expected=10*seed_horizon+stages*f['max_evaluations']*(e['max_evaluations']+2+sum(2*h*path['max_evaluations'] for h in p['horizons']))+8
                 p['budget']['maximum_policy_calls']=expected
                 self.assertEqual(driver.validate_plan(p,launching=True),[])
+                p['path']['cache_max_bytes']=64*1024**3
+                self.assertEqual(driver.validate_plan(p,launching=True),[])
+                for invalid in (True,-1,1.5):
+                    p['path']['cache_max_bytes']=invalid
+                    with self.assertRaisesRegex(ValueError,'Cache budget'):driver.validate_plan(p,launching=True)
+                p['path']['cache_max_bytes']=0
                 p['budget']['maximum_policy_calls']=expected-1
                 with self.assertRaisesRegex(ValueError,'Conservative solve count'):driver.validate_plan(p,launching=True)
+
+    def test_preflight_checks_complete_pins_readiness_and_target_without_native_model(self):
+        p=driver.draft_plan();p.update(execution_enabled=True,horizons=[6,8],
+            target_contract={'rows':self.targets([1.]*4),'blocks':{'path':'blocks','sha256':'b'},
+                             'annual':{'path':'annual','sha256':'a'}},
+            readiness_receipt={'path':'ready','sha256':'r'},
+            source_pins={name:'same' for name in driver.SOURCES})
+        p['budget'].update(total_seconds=1,candidate_seconds=1,endpoint_seconds=1,
+            mapping_seconds=1,path_seconds=1,jacobian_seconds=1)
+        f,e,path=p['fit'],p['endpoint'],p['path']
+        p['budget']['maximum_policy_calls']=10*p['acceleration']['seed_horizon']+4*f['max_evaluations']*(
+            e['max_evaluations']+2+sum(2*h*path['max_evaluations'] for h in p['horizons']))+8
+        ready=dict(status='PASS',estimator_sources=p['source_pins'].copy(),native_endpoint_and_fertility_smoke_passed=True)
+        with patch.object(driver.inner,'sha',return_value='same'),\
+             patch.object(driver.inner,'pinned',side_effect=lambda item:Path(item['path'])),\
+             patch.object(driver.inner,'read',return_value=ready),\
+             patch.object(driver,'target_contract',return_value=p['target_contract']):
+            self.assertIsNone(driver.validate_launch_inputs(p))
+            ready['estimator_sources']={**ready['estimator_sources'],driver.SOURCES[0]:'changed'}
+            with self.assertRaisesRegex(ValueError,'preparation proof'):
+                driver.validate_launch_inputs(p)
+            ready['estimator_sources']=p['source_pins'].copy()
+            with patch.object(driver,'target_contract',return_value={'rows':[]}):
+                with self.assertRaisesRegex(ValueError,'target/measurement'):
+                    driver.validate_launch_inputs(p)
+            p['acceleration']['seed_receipt']={'path':'seed','sha256':'s'*64}
+            receipt=dict(reference_manifest_sha256=driver.inner.MANIFEST_SHA,mapping_count=5,
+                source_pins=p['source_pins'].copy(),matrix={'path':'matrix','sha256':'m'*64})
+            pinned=[]
+            def pin(item):
+                pinned.append(item['path'])
+                return Path(item['path'])
+            with patch.object(driver.inner,'pinned',side_effect=pin),\
+                 patch.object(driver.inner,'read',side_effect=lambda path:receipt if path.name=='seed' else ready):
+                driver.validate_launch_inputs(p)
+                self.assertIn('matrix',pinned)
+                receipt['source_pins'][driver.inner.SOURCE_NAMES[0]]='changed'
+                with self.assertRaisesRegex(ValueError,'seed numerical provenance'):
+                    driver.validate_launch_inputs(p)
 
     def test_empirical_window_builder_recomputes_annual_rates(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -223,6 +285,7 @@ class ShockEstimationTests(unittest.TestCase):
     def test_pinned_measured_seed_is_reused_only_with_matching_provenance_and_scientific_proof(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory);p=driver.draft_plan();p['acceleration'].update(seed_horizon=6,perturbed_date=2)
+            p['source_pins']={name:'original' for name in driver.SOURCES}
             p['budget'].update(total_seconds=30,candidate_seconds=30,mapping_seconds=20,jacobian_seconds=20)
             P=NS(psi_child=.15,pension=.2);reference=dict(parameters=P,solution=NS(p_eq=np.array([1.])))
             measured=driver.NativeEstimator(p,root/'measured_run',{},reference,None)
@@ -230,14 +293,42 @@ class ShockEstimationTests(unittest.TestCase):
                 measured.prepare_jacobian()
             receipt=root/'measured_run/jacobian_seed/measured/receipt.json'
             p['acceleration']['seed_receipt']=dict(path=str(receipt),sha256=driver.inner.sha(receipt))
+            p['source_pins']['run_e5f_preference_estimation.py']='revised'
+            p['source_pins']['e5f_preference_shock_fit.py']='revised'
             reused=driver.NativeEstimator(p,root/'reused_run',{},reference,None)
             reused.prepare_jacobian()
             self.assertTrue((root/'reused_run/jacobian_seed/reused_receipt.json').exists())
             np.testing.assert_array_equal(reused.initial_jacobian(6),measured.initial_jacobian(6))
+            numerical=next(iter(driver.inner.SOURCE_NAMES))
+            p['source_pins'][numerical]='revised'
+            with self.assertRaisesRegex(ValueError,'provenance'):
+                driver.NativeEstimator(p,root/'changed_numerics',{},reference,None).prepare_jacobian()
+            p['source_pins'][numerical]='original'
             bad=driver.inner.read(receipt);bad['scientific_validation']['baseline_mapping_and_terminal_passed']=False
             driver.inner.write(receipt,bad);p['acceleration']['seed_receipt']['sha256']=driver.inner.sha(receipt)
             with self.assertRaisesRegex(ValueError,'scientific validation'):
                 driver.NativeEstimator(p,root/'rejected_run',{},reference,None).prepare_jacobian()
+
+    def test_stage_deadline_clamps_mapping_alarm_and_restores_on_failure(self):
+        with tempfile.TemporaryDirectory() as directory:
+            p=driver.draft_plan();p['budget'].update(total_seconds=30,candidate_seconds=30,
+                mapping_seconds=20,endpoint_seconds=.05,path_seconds=.05)
+            runner=driver.NativeEstimator(p,Path(directory),{},None,None)
+            timers=[]
+            def bounded():
+                runner.guarded(20,lambda:None)
+                raise RuntimeError('stage failed')
+            with patch.object(driver.signal,'signal',return_value=None),patch.object(driver.signal,'setitimer',side_effect=lambda *args:timers.append(args)):
+                with patch.object(runner,'_endpoint',side_effect=lambda psi:bounded()):
+                    with self.assertRaisesRegex(RuntimeError,'stage failed'):runner.endpoint(.15)
+                with patch.object(runner,'_path',side_effect=lambda *args:bounded()):
+                    with self.assertRaisesRegex(RuntimeError,'stage failed'):
+                        runner.path(.15,None,None,6,Path(directory)/'path')
+            positive=[args[1] for args in timers if args[1]>0]
+            self.assertEqual(len(positive),2)
+            self.assertTrue(all(0<value<=.05 for value in positive))
+            self.assertEqual(runner.stage_deadline,runner.deadline)
+            self.assertEqual(sum(args[1]==0 for args in timers),2)
 
     def test_path_uses_measured_cold_start_then_reuses_updated_warm_jacobian(self):
         with tempfile.TemporaryDirectory() as directory:
