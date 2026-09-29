@@ -1,0 +1,40 @@
+--- code/model/tools/e5f_initial_fertility_observer.py
++++ /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v1/smoke_v3/worker/effective_sources/code/model/tools/e5f_initial_fertility_observer.py
+@@ -123,9 +123,15 @@
+     if (np.any(first_flow < 0.0) or np.any(at_risk < 0.0) or np.any(flows < 0.0)
+             or np.any(hazard < 0.0) or np.any(hazard > 1.0)):
+         raise RuntimeError("Birth flows, risk sets, and hazards must be nonnegative probabilities/masses")
++    boundary_risk = pre_parity[:, :3]
++    if bool(getattr(P, 'two_births_per_period', False)):
++        boundary_risk = np.asarray(period['birth_order_risk'], dtype=float)
++        if (boundary_risk.shape != flows.shape or not np.isfinite(boundary_risk).all()
++                or np.any(boundary_risk < 0.0)):
++            raise RuntimeError('Invalid expanded within-period birth risk sets')
+     if (np.any(at_risk > pre_parity[:, 0] + FLOW_ATOL)
+             or np.any(first_flow > at_risk + FLOW_ATOL)
+-            or np.any(flows > pre_parity[:, :3] + FLOW_ATOL)):
++            or np.any(flows > boundary_risk + FLOW_ATOL)):
+         raise RuntimeError("A parity transition exceeds its pre-fertility risk-set mass")
+     if _maximum_error(first_flow, at_risk * hazard) > FLOW_ATOL:
+         raise RuntimeError("First-birth flow differs from risk set times hazard")
+@@ -262,7 +268,9 @@
+             "cps_age_window": "integer ages 40-44, interpreted as [40,45)",
+             "age_weights": "model age masses times interval overlap; no empirical age reweighting",
+             "stock_phase": "pre/post fertility of the same evaluation; no aging or cohort splicing",
+-            "birth_time_assumption": ("one parity transition per cell, uniformly distributed within the four-year age interval"
++            "birth_time_assumption": (("common-event pre/post interpolation for up to two births; both share the inherited event-time proxy; ordered within-cell dates unavailable"
++                                       if bool(getattr(P, "two_births_per_period", False)) else
++                                       "one parity transition per cell, uniformly distributed within the four-year age interval")
+                                       if age_projection == "uniform_birth_time" else
+                                       "post-fertility parity stock held constant throughout each age cell"),
+             "timing_operator": "first-birth flow weighted midpoint age; cell start >=30 for the 30+ share",
+@@ -283,6 +291,9 @@
+                 "age_window": "[25,26), observed interview age; not the 25th birthday",
+                 "model_age_cell": "[22,26)",
+                 "age_projection": "uniform_birth_time",
++                "two_birth_projection_convention": (
++                    "common-event pre/post interpolation; both within-period births share the inherited event time proxy; ordered dates unavailable"
++                    if bool(getattr(P, "two_births_per_period", False)) else None),
+                 "post_fertility_interpolation_share": 0.875,
+                 "projection_independent_of_legacy_40_44_selector": True,
+                 "children_ever_born_weights": [0.0, 1.0, 2.0, 3.0],

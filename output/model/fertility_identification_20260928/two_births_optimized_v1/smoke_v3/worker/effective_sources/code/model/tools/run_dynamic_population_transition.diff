@@ -1,0 +1,88 @@
+--- code/model/tools/run_dynamic_population_transition.py
++++ /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v1/smoke_v3/worker/effective_sources/code/model/tools/run_dynamic_population_transition.py
+@@ -80,12 +80,15 @@
+     joint_choice: Any | None = None
+     bp_pol_stay: np.ndarray | None = None
+     c_pol_stay: np.ndarray | None = None
++    fert_extra_probs: np.ndarray | None = None
+ 
+     def __post_init__(self) -> None:
+         # The Bellman API returns continuation births on P. Own a snapshot so
+         # another price solve cannot change this policy's forward operator.
+         if self.fert2_probs is not None:
+             self.fert2_probs = self.fert2_probs.copy()
++        if self.fert_extra_probs is not None:
++            self.fert_extra_probs = self.fert_extra_probs.copy()
+ 
+ 
+ def joint_nested_enabled(P: SimpleNamespace) -> bool:
+@@ -117,6 +120,22 @@
+             "Sequential policy lacks continuation-birth probabilities; rebuild "
+             "the policy from its matching solution or solve it again."
+         )
++    return probabilities
++
++
++def policy_extra_birth_probs(
++    policy: PolicyBundle, P: SimpleNamespace,
++) -> np.ndarray | None:
++    """Owned conditional extra opportunity; never read mutable parameter caches."""
++    if not bool(getattr(P, "two_births_per_period", False)):
++        return None
++    probabilities = getattr(policy, "fert_extra_probs", None)
++    if probabilities is None:
++        raise RuntimeError("Two-birth policy lacks owned extra-birth probabilities")
++    expected = np.shape(policy.fert_probs)[:-1] + (2, 2, int(P.n_child_states))
++    if (np.shape(probabilities) != expected or not np.isfinite(probabilities).all()
++            or np.any(probabilities < 0.0) or np.any(probabilities > 1.0)):
++        raise RuntimeError("Two-birth policy has invalid extra-birth probabilities")
+     return probabilities
+ 
+ 
+@@ -337,6 +356,7 @@
+         np.asarray(price, dtype=float).reshape(-1).copy(),
+         build_transition_maps(price, P, b_grid, shared),
+         fert2_probs=getattr(solution, "fert2_probs", None),
++        fert_extra_probs=getattr(solution, "fert_extra_probs", None),
+         joint_choice=getattr(solution, "joint_choice", None),
+         bp_pol_stay=getattr(solution, "bp_pol_stay", None),
+         c_pol_stay=getattr(solution, "c_pol_stay", None),
+@@ -369,6 +389,7 @@
+         price.copy(),
+         build_transition_maps(price, P, b_grid, shared),
+         fert2_probs=getattr(P, "_fert2_probs", None),
++        fert_extra_probs=getattr(P, "_fert_extra_probs", None),
+         joint_choice=getattr(P, "_joint_choice", None),
+         bp_pol_stay=getattr(P, "_bp_pol_stay", None),
+         c_pol_stay=getattr(P, "_c_pol_stay", None),
+@@ -494,7 +515,10 @@
+     fert_probs: np.ndarray,
+     P: SimpleNamespace,
+     fert2_probs: np.ndarray | None = None,
++    *, fert_extra_probs: np.ndarray | None = None,
+ ) -> tuple[np.ndarray, float, np.ndarray]:
++    if bool(getattr(P, 'two_births_per_period', False)):
++        raise RuntimeError('Configure the sequential fertility operator for two-birth policies')
+     out = g_pre.copy()
+     births = 0.0
+     births_by_loc = np.zeros(P.I)
+@@ -559,7 +583,8 @@
+     else:
+         continuation = policy_continuation_birth_probs(policy, P)
+         g_post, births, births_by_loc = apply_fertility(
+-            gated, policy.fert_probs, P, continuation
++            gated, policy.fert_probs, P, continuation,
++            fert_extra_probs=policy_extra_birth_probs(policy, P),
+         )
+     g_current = model.realize_current_cross_section(
+         g_post,
+@@ -744,7 +769,8 @@
+         births = float(np.sum(birth_matrix))
+     else:
+         reconstructed_post, births, _ = apply_fertility(
+-            g_pre, policy.fert_probs, P, policy_continuation_birth_probs(policy, P)
++            g_pre, policy.fert_probs, P, policy_continuation_birth_probs(policy, P),
++            fert_extra_probs=policy_extra_birth_probs(policy, P),
+         )
+     diagnostics = {
+         "stationary_post_fertility_nesting_l1": float(np.sum(np.abs(reconstructed_post - saved_post))),

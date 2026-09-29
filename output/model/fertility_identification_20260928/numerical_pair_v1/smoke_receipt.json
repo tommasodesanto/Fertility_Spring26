@@ -1,0 +1,82 @@
+{
+  "contract_sha256": "7950be909086744f25390211e5a7b93d7ea65f25d73698d68a90fa51ce303303",
+  "model_solves": 0,
+  "no_main_run": true,
+  "original_source_manifest_sha256": "07d84336a3112b251afe505908113d9c00585b91c34bd50f0dee108435db496d",
+  "slurm_job": "18753074",
+  "status": "synthetic_exact_loop_passed",
+  "tests": [
+    {
+      "passed": true,
+      "statuses": {
+        "predicted_start": "success",
+        "retained_start": "success"
+      },
+      "test": "success_pair"
+    },
+    {
+      "passed": true,
+      "statuses": {
+        "predicted_start": "success",
+        "retained_start": "inadmissible"
+      },
+      "test": "explicit_failure"
+    },
+    {
+      "passed": true,
+      "statuses": {
+        "predicted_start": "success",
+        "retained_start": "censored_timeout"
+      },
+      "test": "owned_timeout"
+    },
+    {
+      "passed": true,
+      "statuses": {
+        "predicted_start": "cancelled_after_fatal",
+        "retained_start": "fatal"
+      },
+      "test": "fatal_stop"
+    },
+    {
+      "passed": true,
+      "statuses": {
+        "predicted_start": "cancelled_after_fatal",
+        "retained_start": "fatal"
+      },
+      "test": "receipt_integrity"
+    },
+    {
+      "passed": true,
+      "test": "process_group_descendant_killed"
+    },
+    {
+      "passed": true,
+      "test": "paired_screen_loss"
+    },
+    {
+      "passed": true,
+      "test": "paired_screen_price"
+    },
+    {
+      "passed": true,
+      "test": "paired_screen_psi"
+    },
+    {
+      "passed": true,
+      "test": "paired_screen_scored"
+    },
+    {
+      "passed": true,
+      "test": "paired_screen_validation"
+    },
+    {
+      "passed": true,
+      "test": "fingerprint_failfast"
+    },
+    {
+      "passed": true,
+      "test": "adapter_only_copied_initial_guess"
+    }
+  ]
+}

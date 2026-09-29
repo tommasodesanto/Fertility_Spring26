@@ -1,0 +1,73 @@
+{
+  "economic_changes": [
+    {
+      "object": "ten estimated preference and housing-supply coordinates",
+      "status": "proposed diagnostic recalibration",
+      "values": "trial_point below; no adoption"
+    },
+    {
+      "object": "child-benefit level psi",
+      "rule": "renormalize to replacement fertility2.1 and enforce renewal in both arms",
+      "status": "derived within proposed diagnostic"
+    }
+  ],
+  "files": {
+    "adapter.py": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/numerical_pair_v1/adapter.py",
+      "sha256": "328ce85c4708701873a509b1d70f0d291aeeeee1979d8ffdf3c5262892b227f6"
+    },
+    "prepare.py": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/numerical_pair_v1/prepare.py",
+      "sha256": "6fdfc9b9238bebf5fbbeec6ca2e8074415e835a343efc11c2d4f878975f1bad5"
+    },
+    "run.sh": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/numerical_pair_v1/run.sh",
+      "sha256": "1c528776afdf1c8acc9586addb9cbde37792aee16bafd7b1d85b4b29f8b53437"
+    },
+    "runner.py": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/numerical_pair_v1/runner.py",
+      "sha256": "d8e9291969b86392e9783b9dda20d5ee31055f4d8ca71e2708e35742c1f691fa"
+    }
+  },
+  "main_model_solves_launched": 0,
+  "numerical_change": "Only the initial psi guess differs across the same ten-coordinate trial point.",
+  "objective": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/contract_v1/primary_objective.json",
+    "sha256": "04528ece6513e4da9436bb8b35b54cd7e9cecd3a6695d050a0a7aea5a71d5e60"
+  },
+  "original_contract": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/contract_v1/contract.json",
+    "sha256": "68323aadd2c9ad221742842ace9ab108e40437303f0d34da00e7cd83b89f5abf"
+  },
+  "original_source_manifest": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/contract_v1/source_manifest.json",
+    "sha256": "07d84336a3112b251afe505908113d9c00585b91c34bd50f0dee108435db496d"
+  },
+  "plan": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/measurement_audit_v1/bounded_experiment_plan.json",
+    "sha256": "4050cac186a707579025778307dba635df9b0a13b8adab2aa3d2a15a6b23991a"
+  },
+  "predictions": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/measurement_audit_v1/proposed_step_predictions.csv",
+    "sha256": "27061e3619b2079e73ebeaf1da5ab3885a689e85f1253c32a4529f874e8e32e7"
+  },
+  "promotion": "No automatic promotion; separate final exact repeats required",
+  "reference_fit": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/target_fit.csv",
+    "sha256": "47a9ccb239265cdf8ecf587fe4eb5cc10ce3eed28ed36b19c38b1e82270d023f"
+  },
+  "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "reference_parameters": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/parameters.csv",
+    "sha256": "4d229fe18ee9c43a8a709413a10690a845d0cf7028efe57925d4f4b1d7c8d036"
+  },
+  "reference_receipt": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/receipt.json",
+    "sha256": "8b073c9c8ce73cd0f119cbcd0c8133eb39787fb04cc1acb38a89a07e5af67f74"
+  },
+  "schema": "e5f_numerical_pair_v1",
+  "scored_screen_definition": "max(sqrt(actual_weight)*abs(arm0_moment-arm1_moment)) <= 0.01",
+  "specification_changes": [],
+  "status": "prepared_not_approved_for_main",
+  "target_weight_fingerprint": "20e531855075b807886da8e936930dca9090b989b2ce381de39042cf206efdbd"
+}

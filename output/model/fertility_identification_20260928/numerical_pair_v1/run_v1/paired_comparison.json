@@ -1,0 +1,68 @@
+{
+  "actual_losses": [
+    13.774489597383207,
+    13.778877724754816
+  ],
+  "numerical_equivalence_claim": true,
+  "predicted_full_loss": 13.33525287216898,
+  "predicted_half_loss": 13.345797319006872,
+  "promotion": "disabled; no final exact repeats",
+  "reference_loss": 19.581310760138326,
+  "screens": {
+    "failed_action": "report sensitivity; do not claim equivalent faster normalization or promote",
+    "passed": true,
+    "screens": [
+      {
+        "limit": 0.05,
+        "passed": true,
+        "screen": "loss",
+        "value": 0.004388127371608874
+      },
+      {
+        "limit": 0.0001,
+        "passed": true,
+        "screen": "price_relative",
+        "value": 4.700082382038009e-06
+      },
+      {
+        "limit": 0.0001,
+        "passed": true,
+        "screen": "psi",
+        "value": 1.0719008250281714e-05
+      },
+      {
+        "limit": 0.01,
+        "passed": true,
+        "screen": "validation:nchs_share30",
+        "value": 1.8585569232454358e-05
+      },
+      {
+        "limit": 0.0351593508651872,
+        "passed": true,
+        "screen": "validation:old_dispersion",
+        "value": 1.0007967097269699e-05
+      },
+      {
+        "limit": 0.01,
+        "passed": true,
+        "screen": "validation:family_rooms",
+        "value": 3.939161425492443e-06
+      },
+      {
+        "limit": 0.01,
+        "passed": true,
+        "screen": "scored_max_sqrt_weight_scaled_difference",
+        "value": 0.00721636557691286
+      }
+    ]
+  },
+  "speed": {
+    "predicted_seconds": 579.628910779953,
+    "predicted_solves": 3,
+    "predicted_stationary_seconds": 513.486257960787,
+    "retained_seconds": 1172.470181941986,
+    "retained_solves": 7,
+    "retained_stationary_seconds": 1105.8781335861422
+  },
+  "status": "paired_screens_pass"
+}

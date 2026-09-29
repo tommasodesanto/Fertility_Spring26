@@ -1,0 +1,50 @@
+--- code/model/tools/run_e5f_open_population_transition.py
++++ /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v1/smoke_v3/worker/effective_sources/code/model/tools/run_e5f_open_population_transition.py
+@@ -702,8 +702,9 @@
+     fert_probs: np.ndarray,
+     P: SimpleNamespace,
+     fert2_probs: np.ndarray | None = None,
++    *, fert_extra_probs: np.ndarray | None = None,
+ ) -> tuple[np.ndarray, float, np.ndarray]:
+-    """Apply at most one sequential birth per household during the period."""
++    """Apply original births, or the explicit experimental two-opportunity kernel."""
+     model = calendar.model
+     if not bool(getattr(P, "sequential_births", False)):
+         raise RuntimeError("The E5F transition requires sequential_births=True")
+@@ -717,6 +718,36 @@
+         raise RuntimeError("Sequential continuation-birth probabilities are unavailable")
+     births = 0.0
+     births_by_loc = np.zeros(int(P.I))
++    if bool(getattr(P, "two_births_per_period", False)):
++        if (str(getattr(P, "child_state_mode", "")) != "independent_count"
++                or model.readiness_gate_active(P)
++                or model.parent_age_maturation_active(P)
++                or any(bool(getattr(P, key, False)) for key in
++                       ("joint_nested_choice", "fertility_nest_choice", "two_shock_choice"))):
++            raise RuntimeError("Two-birth calendar requires the isolated independent-count architecture")
++        if fert_extra_probs is None:
++            raise RuntimeError("Two-birth calendar requires explicit policy-owned extra probabilities")
++        expected = g_pre.shape[:5] + (2, 2, int(P.n_child_states))
++        if (np.shape(fert_extra_probs) != expected
++                or not np.isfinite(fert_extra_probs).all()
++                or np.any(fert_extra_probs < 0.0) or np.any(fert_extra_probs > 1.0)):
++            raise RuntimeError("Invalid two-birth calendar probability array")
++        for j in range(int(P.J)):
++            if not (int(P.A_f_start) <= j + 1 <= int(P.A_f_end)):
++                continue
++            cell_post, flow, _, _, _ = model.two_birth_fertility_step(
++                g_pre[:, :, :, j], fert_probs[:, :, :, j, :, 1],
++                continuation[:, :, :, j], fert_extra_probs[:, :, :, j],
++                float(fecundity[j]),
++            )
++            out[:, :, :, j] = cell_post
++            births += float(np.sum(flow))
++            births_by_loc += np.sum(flow, axis=(0, 1, 3, 4))
++        if not np.isfinite(out).all() or float(np.min(out)) < -1e-13:
++            raise RuntimeError("Two-birth fertility produced invalid population mass")
++        if abs(float(np.sum(out) - np.sum(g_pre))) > 2e-10:
++            raise RuntimeError("Two-birth fertility failed mass conservation")
++        return out, births, births_by_loc
+     for j in range(int(P.J)):
+         if not (int(P.A_f_start) <= j + 1 <= int(P.A_f_end)):
+             continue

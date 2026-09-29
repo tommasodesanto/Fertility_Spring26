@@ -1,0 +1,94 @@
+--- code/model/tools/run_e5f_transition_calibration.py
++++ /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v1/smoke_v3/worker/effective_sources/code/model/tools/run_e5f_transition_calibration.py
+@@ -938,6 +938,9 @@
+     if n_progressions != 3:
+         raise RuntimeError("Period-fertility diagnostics require parity states 0/1/2/3+")
+     flows = np.zeros((int(P.J), n_progressions), dtype=float)
++    two_births = bool(getattr(P, 'two_births_per_period', False))
++    extra = calendar.policy_extra_birth_probs(evaluation.policy, P)
++    expanded_risk = np.zeros_like(flows)
+     age_mass = np.sum(evaluation.g_pre, axis=(0, 1, 2, 4, 5, 6))
+     fecundity = model.get_fecundity_by_age(P)
+     continuation = calendar.policy_continuation_birth_probs(evaluation.policy, P)
+@@ -948,6 +951,15 @@
+         if not (int(P.A_f_start) <= j + 1 <= int(P.A_f_end)):
+             continue
+         pi_j = float(fecundity[j])
++        if two_births:
++            post_cell, cell_flows, _, cell_risk, _ = model.two_birth_fertility_step(
++                evaluation.g_pre[:, :, :, j], evaluation.policy.fert_probs[:, :, :, j, :, 1],
++                continuation[:, :, :, j], extra[:, :, :, j], pi_j)
++            if np.max(np.abs(post_cell - evaluation.g_post_fertility[:, :, :, j])) > 2e-10:
++                raise RuntimeError('Two-birth observer does not replay dated population')
++            flows[j] = np.sum(cell_flows, axis=(0, 1, 2, 3))
++            expanded_risk[j] = np.sum(cell_risk, axis=(0, 1, 2, 3))
++            continue
+         for zz in range(evaluation.g_pre.shape[4]):
+             childless = evaluation.g_pre[:, :, :, j, zz, 0, settled]
+             first_attempt = evaluation.policy.fert_probs[:, :, :, j, zz, 1]
+@@ -1024,6 +1036,7 @@
+         # Backward-compatible display field, now explicitly midpoint-coded.
+         "age": ages,
+         "age_mass": age_mass,
++        "birth_order_risk": expanded_risk if two_births else None,
+         "birth_flow_first": flows[:, 0],
+         "birth_flow_second": flows[:, 1],
+         "birth_flow_third_bin_entry": flows[:, 2],
+@@ -1048,8 +1061,9 @@
+     The PSID row is the change from event time -1 to +3.  One model period is
+     four years, so both branches are advanced once from the same pre-birth
+     state before their housing choices are compared.  The branch holds the
+-    current temporary-equilibrium policy fixed and deliberately does not add a
+-    second birth inside the four-year window.
++    current temporary-equilibrium policy fixed. In the isolated two-birth
++    experiment the origin first-birth families carry their actual n=1/n=2
++    destination mixture; the confirmed-childless control is unchanged.
+     """
+     horizon = int(getattr(P, "housing_event_horizon", 0))
+     if horizon != E5_HOUSING_EVENT_HORIZON:
+@@ -1067,6 +1081,7 @@
+         )
+     model = calendar.model
+     policy = evaluation.policy
++    extra = calendar.policy_extra_birth_probs(policy, P)
+     fecundity = model.get_fecundity_by_age(P)
+     settled = model.readiness_settled_state(P)
+     _, _, income_transition = model.income_transition_values(P)
+@@ -1098,6 +1113,10 @@
+                 continue
+             birth_cohort = np.zeros(shape)
+             birth_cohort[:, :, :, zz, 1, 1] = realized
++            if bool(getattr(P, 'two_births_per_period', False)):
++                second = realized * extra[:, :, :, j, zz, 1, 0, settled] * float(fecundity[j])
++                birth_cohort[:, :, :, zz, 1, 1] -= second
++                birth_cohort[:, :, :, zz, 2, 2] = second
+             control_cohort = np.zeros(shape)
+             control_cohort[:, :, :, zz, 0, settled] = realized
+             birth_cohort = model.advance_cohort_horizon_markov_income(
+@@ -1192,6 +1211,7 @@
+     model = calendar.model
+     policy = evaluation.policy
+     joint = calendar.joint_nested_enabled(P)
++    extra = calendar.policy_extra_birth_probs(policy, P)
+     fecundity = model.get_fecundity_by_age(P)
+     settled = model.readiness_settled_state(P)
+     if joint:
+@@ -1214,6 +1234,10 @@
+                 attempt = policy.fert_probs[:, :, :, j, zz, 1]
+                 realized = float(fecundity[j]) * childless * attempt
+                 treated[:, :, :, j, zz, 1, 1] = realized
++                if bool(getattr(P, 'two_births_per_period', False)):
++                    second = realized * extra[:, :, :, j, zz, 1, 0, settled] * float(fecundity[j])
++                    treated[:, :, :, j, zz, 1, 1] -= second
++                    treated[:, :, :, j, zz, 2, 2] = second
+                 control[:, :, :, j, zz, 0, settled] = realized
+         treated_policy = control_policy = policy
+ 
+@@ -1375,6 +1399,7 @@
+             evaluation.policy.fert_probs,
+             P,
+             calendar.policy_continuation_birth_probs(evaluation.policy, P),
++            fert_extra_probs=calendar.policy_extra_birth_probs(evaluation.policy, P),
+         )
+         control_post = control_pre
+         treated_policy = control_policy = evaluation.policy

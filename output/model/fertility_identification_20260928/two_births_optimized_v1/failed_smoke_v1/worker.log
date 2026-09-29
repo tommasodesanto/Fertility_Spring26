@@ -1,0 +1,49 @@
+test_actual_accepted_price_payload_restores_owned_cache (tests_solver.SolverPatchTests.test_actual_accepted_price_payload_restores_owned_cache) ... ok
+test_bellman_two_levels_against_direct_formula (tests_solver.SolverPatchTests.test_bellman_two_levels_against_direct_formula) ... ok
+test_exact_transform_and_syntax (tests_solver.SolverPatchTests.test_exact_transform_and_syntax) ... ok
+test_flag_off_actual_choice_block_exact (tests_solver.SolverPatchTests.test_flag_off_actual_choice_block_exact) ... ok
+test_flow_extremes_and_no_three_birth_chain (tests_solver.SolverPatchTests.test_flow_extremes_and_no_three_birth_chain) ... ok
+test_gates_and_cache_snapshot (tests_solver.SolverPatchTests.test_gates_and_cache_snapshot) ... ok
+test_inner_pi_edges_and_deterministic_limit (tests_solver.SolverPatchTests.test_inner_pi_edges_and_deterministic_limit) ... ok
+test_random_flow_stock_identity_and_zero_extra (tests_solver.SolverPatchTests.test_random_flow_stock_identity_and_zero_extra) ... ok
+test_age25_uses_retained_interpolation_and_reports_approximation (tests_reporting.ReportingTests.test_age25_uses_retained_interpolation_and_reports_approximation) ... ok
+test_birth_counts_and_risk_sets (tests_reporting.ReportingTests.test_birth_counts_and_risk_sets) ... ok
+test_dated_first_birth_housing_cohort_contains_actual_two_child_destinations (tests_reporting.ReportingTests.test_dated_first_birth_housing_cohort_contains_actual_two_child_destinations) ... ok
+test_flag_off_ignores_unrelated_extra_cache (tests_reporting.ReportingTests.test_flag_off_ignores_unrelated_extra_cache) ... ok
+test_owned_cache_cannot_follow_parameter_mutation (tests_reporting.ReportingTests.test_owned_cache_cannot_follow_parameter_mutation) ... ok
+test_recent_parent_counts_households_and_tags_original_first_births (tests_reporting.ReportingTests.test_recent_parent_counts_households_and_tags_original_first_births) ... ERROR
+test_requires_explicit_extra_array (tests_reporting.ReportingTests.test_requires_explicit_extra_array) ... ok
+
+======================================================================
+ERROR: test_recent_parent_counts_households_and_tags_original_first_births (tests_reporting.ReportingTests.test_recent_parent_counts_households_and_tags_original_first_births)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v1/tests_reporting.py", line 156, in test_recent_parent_counts_households_and_tags_original_first_births
+    observed = observer.observe_recent_parent_flow(
+        ev, self.P, diagnostic_enabled=True, snapshot=observer.SNAPSHOT,
+        age_projection=observer.AGE_PROJECTION, diagnostic_allow_residence_proxy=True)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_recent_parent_flow_observer.py", line 222, in observe_recent_parent_flow
+    replay_post, all_births, _ = fertility(pre)
+                                 ~~~~~~~~~^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_recent_parent_flow_observer.py", line 212, in fertility
+    return transition.apply_sequential_fertility(mass, first, P, continuation)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v1/smoke_v1/worker/effective_sources/code/model/tools/run_e5f_open_population_transition.py", line 729, in apply_sequential_fertility
+    raise RuntimeError("Two-birth calendar requires explicit policy-owned extra probabilities")
+RuntimeError: Two-birth calendar requires explicit policy-owned extra probabilities
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.965s
+
+FAILED (errors=1)
+Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v1/driver.py", line 274, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v1/driver.py", line 250, in main
+    worker(args.mode,args.output);return
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v1/driver.py", line 182, in worker
+    assert result.testsRun>0 and result.wasSuccessful(),'synthetic source/kernel tests failed'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: synthetic source/kernel tests failed

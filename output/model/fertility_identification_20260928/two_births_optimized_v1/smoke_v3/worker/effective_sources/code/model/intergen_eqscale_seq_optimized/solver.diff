@@ -1,0 +1,345 @@
+--- code/model/intergen_eqscale_seq_optimized/solver.py
++++ /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v1/smoke_v3/worker/effective_sources/code/model/intergen_eqscale_seq_optimized/solver.py
+@@ -1848,7 +1848,8 @@
+     # with any retained payload so an accepted cached price cannot reuse the
+     # probabilities from a later rejected price evaluation.
+     if fast_stats and retain_payload:
+-        sol._model_payload = (V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, r, p, P._fert2_probs.copy())
++        sol._model_payload = (V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, r, p, P._fert2_probs.copy(), snapshot_extra_birth_probabilities(P))
++        sol.fert_extra_probs = sol._model_payload[-1]
+         sol.joint_choice = getattr(P, "_joint_choice", None)
+         sol._bp_pol_stay = getattr(P, "_bp_pol_stay", None)
+         sol._c_pol_stay = getattr(P, "_c_pol_stay", None)
+@@ -1867,7 +1868,8 @@
+     payload = getattr(fast_solution, "_model_payload", None)
+     if payload is None:
+         raise ValueError("fast solution does not retain a household-solution payload")
+-    V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, r, p, fert2_probs = payload
++    V, c_pol, hR_pol, bp_pol, tc, tp, lp_j, fp, fv, r, p, fert2_probs, fert_extra_probs = payload
++    P._fert_extra_probs = None if fert_extra_probs is None else fert_extra_probs.copy()
+     # Must precede the KFE: forward_distribution reads P._fert2_probs only as
+     # an input; its other P._* fertility fields are KFE outputs.
+     P._fert2_probs = fert2_probs
+@@ -3205,6 +3207,92 @@
+     return True
+ 
+ 
++def two_births_active(P):
++    """Validate the narrow, default-off two-opportunity architecture."""
++    if not bool(getattr(P, "two_births_per_period", False)):
++        return False
++    if (not bool(getattr(P, "sequential_births", False))
++            or bool(getattr(P, "joint_nested_choice", False))
++            or not independent_child_maturation_active(P)
++            or parent_age_maturation_active(P) or readiness_gate_active(P)
++            or int(P.n_parity) != 4 or int(P.n_child_states) != 4):
++        raise ValueError("Two births require sequential independent counts, four child states, and no joint/readiness/parent-age mode")
++    return True
++
++
++def two_birth_last_opportunity(wait_value, success_value, pi, kappa):
++    """The sole remaining attempt after one successful birth this period.
++
++    Its inclusive value includes an additional independent Gumbel opportunity;
++    this is an explicit experimental preference/choice-tree change.
++    """
++    if not np.isfinite(kappa) or float(kappa) <= 0.0:
++        raise ValueError("Continuation birth scale must be positive")
++    if not np.isfinite(pi) or not 0.0 <= float(pi) <= 1.0:
++        raise ValueError("Fecundity must lie in [0, 1]")
++    menu = np.stack((wait_value, pi * success_value + (1.0 - pi) * wait_value), axis=-1)
++    inclusive, probabilities = logsumexp(menu / kappa, axis=menu.ndim - 1)
++    probabilities[np.max(menu, axis=-1) <= DEAD_VALUE_CUTOFF, :] = 0.0
++    return kappa * inclusive, probabilities
++
++
++def two_birth_fertility_step(pre, first_try, continuation, extra, pi):
++    """Route at most two births from original source pools.
++
++    State arrays end in (children ever born, children at home). Continuation
++    and extra arrays end in (action, original child-count slot, at-home count).
++    The extra slots are original n=0/1, unlike continuation slots n-1=0/1.
++    Returns post mass, births/attempts/risk by boundary, and first-birth-tagged
++    post mass. The three flow arrays retain all leading state axes.
++    """
++    if pre.shape[-2:] != (4, 4):
++        raise ValueError("Two-birth flow needs four ever-born and at-home states")
++    leading = pre.shape[:-2]
++    if (first_try.shape != leading or continuation.shape != leading + (2, 2, 4)
++            or extra is None or extra.shape != leading + (2, 2, 4)):
++        raise ValueError("Two-birth policy arrays do not match the source mass")
++    if not np.isfinite(pi) or not 0.0 <= float(pi) <= 1.0:
++        raise ValueError("Fecundity must lie in [0, 1]")
++    post = pre.copy()
++    births = np.zeros(leading + (3,))
++    attempts = np.zeros_like(births)
++    risk = np.zeros_like(births)
++    first_post = np.zeros_like(pre)
++    for nn in range(3):
++        for cs in range(nn + 1):
++            source = pre[..., nn, cs]
++            probability = first_try if nn == 0 else continuation[..., 1, nn - 1, cs]
++            attempted = source * probability
++            success = pi * attempted
++            extra_attempted = (success * extra[..., 1, nn, cs]
++                               if nn <= 1 else np.zeros_like(success))
++            extra_success = pi * extra_attempted
++            post[..., nn, cs] -= success
++            post[..., nn + 1, cs + 1] += success - extra_success
++            births[..., nn] += success
++            attempts[..., nn] += attempted
++            risk[..., nn] += source
++            if nn <= 1:
++                post[..., nn + 2, cs + 2] += extra_success
++                births[..., nn + 1] += extra_success
++                attempts[..., nn + 1] += extra_attempted
++                risk[..., nn + 1] += success
++            if nn == 0:
++                first_post[..., 1, 1] += success - extra_success
++                first_post[..., 2, 2] += extra_success
++    return post, births, attempts, risk, first_post
++
++
++def snapshot_extra_birth_probabilities(P):
++    """Own a price-specific cache; reject absent caches when the flag is on."""
++    if not two_births_active(P):
++        return None
++    probabilities = getattr(P, "_fert_extra_probs", None)
++    if probabilities is None:
++        raise RuntimeError("Two-birth solution lacks its extra-opportunity probabilities")
++    return probabilities.copy()
++
++
+ def solve_bellman_full_markov_income(
+     r_hat: np.ndarray,
+     p_hat: np.ndarray,
+@@ -3214,6 +3302,7 @@
+     continuation_V: np.ndarray | None = None,
+ ):
+     t0 = time.perf_counter()
++    two_births = two_births_active(P)
+     natural_credit = validate_native_solvency_mode(P)
+     due_credit = bool(getattr(P, "native_due_stayer_credit", False))
+     if due_credit and (natural_credit or not bool(getattr(P, "native_purchase_income", False))
+@@ -3318,6 +3407,8 @@
+         fert2_probs = np.zeros((Nb, nt, I, J, Nz, 2, max(npar - 2, 2), ncs))
+     else:
+         fert2_probs = np.zeros((Nb, nt, I, J, Nz, 2, max(npar - 2, 2)))
++    fert_extra_probs = (np.zeros((Nb, nt, I, J, Nz, 2, 2, ncs))
++                        if two_births else None)
+     fert_value = np.zeros((Nb, nt, I, J, Nz))
+ 
+     ctx = _build_housing_stage_ctx(P, b_grid, SD, p_hat, use_full_kernel, exhaustive_saving)
+@@ -3486,6 +3577,8 @@
+             if in_fert:
+                 pi_j = float(fec[j])
+                 if bool(getattr(P, "sequential_births", False)):
++                    kf_extra_raw = getattr(P, "kappa_fert_continuation", None)
++                    kf_extra = float(P.kappa_fert) if kf_extra_raw is None else float(kf_extra_raw)
+                     Vfa = np.empty((Nb, nt, I, 2))
+                     settled_cs = readiness_settled_state(P)
+                     Vfa[:, :, :, 0] = VI[:, :, :, 0, settled_cs]
+@@ -3495,6 +3588,10 @@
+                         first_dest = VI_ex[:, :, :, 1, 1]
+                     else:
+                         first_dest = VI[:, :, :, 1, 1]
++                    if two_births:
++                        first_dest, extra_first = two_birth_last_opportunity(
++                            first_dest, VI[:, :, :, 2, 2], pi_j, kf_extra)
++                        fert_extra_probs[:, :, :, j, zz, :, 0, 0] = extra_first
+                     Vfa[:, :, :, 1] = (
+                         pi_j
+                         * (
+@@ -3538,6 +3635,10 @@
+                                 cont_dest = VI_ex[:, :, :, nn + 1, destination_cs]
+                             else:
+                                 cont_dest = VI[:, :, :, nn + 1, destination_cs]
++                            if two_births and nn <= 1:
++                                cont_dest, extra_later = two_birth_last_opportunity(
++                                    cont_dest, VI[:, :, :, nn + 2, destination_cs + 1], pi_j, kf_cont)
++                                fert_extra_probs[:, :, :, j, zz, :, nn, cs] = extra_later
+                             V2[:, :, :, 1] = (
+                                 pi_j * cont_dest
+                                 + (1.0 - pi_j) * VI[:, :, :, nn, cs]
+@@ -3570,6 +3671,7 @@
+                 V[:, :, :, j, zz, :, :] = VI
+ 
+     P._fert2_probs = fert2_probs
++    P._fert_extra_probs = fert_extra_probs
+     P._joint_choice = joint
+     P._bp_pol_stay = bp_pol_stay
+     P._c_pol_stay = c_pol_stay
+@@ -5389,6 +5491,10 @@
+     tenure_probs: np.ndarray | None = None,
+     bp_pol_stay: np.ndarray | None = None,
+ ) -> tuple[np.ndarray, SimpleNamespace]:
++    two_births = two_births_active(P)
++    extra_policy = getattr(P, "_fert_extra_probs", None)
++    if two_births and extra_policy is None:
++        raise RuntimeError("Two-birth KFE lacks its matching extra probabilities")
+     fec = get_fecundity_by_age(P)
+     J = P.J
+     I = P.I
+@@ -5531,64 +5637,85 @@
+                 pv = np.arange(npar).reshape(1, 1, 1, npar)
+                 pi_j = float(fec[j])
+                 if bool(getattr(P, "sequential_births", False)):
+-                    # Snapshot every upward at-risk pool BEFORE any birth flow
+-                    # lands, so no household can chain two births in a period.
+-                    if independent_child_maturation_active(P):
+-                        at_risk_up = {
+-                            (nn, cs): g[:, :, :, j, zz, nn, cs].copy()
+-                            for nn in range(1, npar - 1)
+-                            for cs in range(0, nn + 1)
+-                        }
++                    first_birth_post = None
++                    if two_births:
++                        source = g[:, :, :, j, zz, :, :].copy()
++                        post, born, attempted, risk, first_birth_post = two_birth_fertility_step(
++                            source, pa[:, :, :, 1], P._fert2_probs[:, :, :, j, zz],
++                            extra_policy[:, :, :, j, zz], pi_j)
++                        g[:, :, :, j, zz, :, :] = post
++                        realized1 = first_birth_post.sum(axis=(-2, -1))
++                        born_total = born.sum(axis=(0, 1, 2))
++                        attempted_total = attempted.sum(axis=(0, 1, 2))
++                        risk_total = risk.sum(axis=(0, 1, 2))
++                        first_births_by_age[j] += float(born_total[0])
++                        second_births_by_age[j] += float(born_total[1])
++                        third_births_by_age[j] += float(born_total[2])
++                        second_attempts_by_age[j] += float(attempted_total[1])
++                        third_attempts_by_age[j] += float(attempted_total[2])
++                        second_at_risk_by_age[j] += float(risk_total[1])
++                        third_at_risk_by_age[j] += float(risk_total[2])
++                        total_births += float(born_total.sum())
++                        births_by_loc += born.sum(axis=(0, 1, 3))
+                     else:
+-                        at_risk_up = {
+-                            (nn, 1): g[:, :, :, j, zz, nn, 1].copy()
+-                            for nn in range(1, npar - 1)
+-                        }
+-                    if readiness_gate_active(P):
+-                        gc = g[:, :, :, j, zz, 0, 1]
+-                    m1 = gc * pa[:, :, :, 1]
+-                    realized1 = pi_j * m1
+-                    if readiness_gate_active(P):
+-                        g[:, :, :, j, zz, 0, 1] = gc - realized1
+-                    else:
+-                        g[:, :, :, j, zz, 0, 0] = gc - realized1
+-                    g[:, :, :, j, zz, 1, 1] += realized1
+-                    if parent_age_maturation_active(P):
+-                        newborn_inflow[1, 1] += float(np.sum(realized1))
+-                    first_births_by_age[j] += float(np.sum(realized1))
+-                    total_births += float(np.sum(realized1))
+-                    for i in range(I):
+-                        births_by_loc[i] += float(np.sum(realized1[:, :, i]))
+-                    p2all = getattr(P, "_fert2_probs", None)
+-                    if p2all is not None:
+-                        for nn in range(1, npar - 1):
+-                            child_states = range(0, nn + 1) if independent_child_maturation_active(P) else (1,)
+-                            for cs in child_states:
+-                                at_risk = at_risk_up[(nn, cs)]
+-                                if independent_child_maturation_active(P):
+-                                    attempt_prob = p2all[:, :, :, j, zz, 1, nn - 1, cs]
+-                                else:
+-                                    attempt_prob = p2all[:, :, :, j, zz, 1, nn - 1]
+-                                m2 = at_risk * attempt_prob
+-                                realized2 = pi_j * m2
+-                                g[:, :, :, j, zz, nn, cs] -= realized2
+-                                destination_cs = birth_destination_child_state(P, cs)
+-                                g[:, :, :, j, zz, nn + 1, destination_cs] += realized2
+-                                if parent_age_maturation_active(P):
+-                                    newborn_inflow[nn + 1, destination_cs] += float(
+-                                        np.sum(realized2)
+-                                    )
+-                                if nn == 1:
+-                                    second_attempts_by_age[j] += float(np.sum(m2))
+-                                    second_births_by_age[j] += float(np.sum(realized2))
+-                                    second_at_risk_by_age[j] += float(np.sum(at_risk))
+-                                else:
+-                                    third_attempts_by_age[j] += float(np.sum(m2))
+-                                    third_births_by_age[j] += float(np.sum(realized2))
+-                                    third_at_risk_by_age[j] += float(np.sum(at_risk))
+-                                total_births += float(np.sum(realized2))
+-                                for i in range(I):
+-                                    births_by_loc[i] += float(np.sum(realized2[:, :, i]))
++                        # Snapshot every upward at-risk pool BEFORE any birth flow
++                        # lands, so no household can chain two births in a period.
++                        if independent_child_maturation_active(P):
++                            at_risk_up = {
++                                (nn, cs): g[:, :, :, j, zz, nn, cs].copy()
++                                for nn in range(1, npar - 1)
++                                for cs in range(0, nn + 1)
++                            }
++                        else:
++                            at_risk_up = {
++                                (nn, 1): g[:, :, :, j, zz, nn, 1].copy()
++                                for nn in range(1, npar - 1)
++                            }
++                        if readiness_gate_active(P):
++                            gc = g[:, :, :, j, zz, 0, 1]
++                        m1 = gc * pa[:, :, :, 1]
++                        realized1 = pi_j * m1
++                        if readiness_gate_active(P):
++                            g[:, :, :, j, zz, 0, 1] = gc - realized1
++                        else:
++                            g[:, :, :, j, zz, 0, 0] = gc - realized1
++                        g[:, :, :, j, zz, 1, 1] += realized1
++                        if parent_age_maturation_active(P):
++                            newborn_inflow[1, 1] += float(np.sum(realized1))
++                        first_births_by_age[j] += float(np.sum(realized1))
++                        total_births += float(np.sum(realized1))
++                        for i in range(I):
++                            births_by_loc[i] += float(np.sum(realized1[:, :, i]))
++                        p2all = getattr(P, "_fert2_probs", None)
++                        if p2all is not None:
++                            for nn in range(1, npar - 1):
++                                child_states = range(0, nn + 1) if independent_child_maturation_active(P) else (1,)
++                                for cs in child_states:
++                                    at_risk = at_risk_up[(nn, cs)]
++                                    if independent_child_maturation_active(P):
++                                        attempt_prob = p2all[:, :, :, j, zz, 1, nn - 1, cs]
++                                    else:
++                                        attempt_prob = p2all[:, :, :, j, zz, 1, nn - 1]
++                                    m2 = at_risk * attempt_prob
++                                    realized2 = pi_j * m2
++                                    g[:, :, :, j, zz, nn, cs] -= realized2
++                                    destination_cs = birth_destination_child_state(P, cs)
++                                    g[:, :, :, j, zz, nn + 1, destination_cs] += realized2
++                                    if parent_age_maturation_active(P):
++                                        newborn_inflow[nn + 1, destination_cs] += float(
++                                            np.sum(realized2)
++                                        )
++                                    if nn == 1:
++                                        second_attempts_by_age[j] += float(np.sum(m2))
++                                        second_births_by_age[j] += float(np.sum(realized2))
++                                        second_at_risk_by_age[j] += float(np.sum(at_risk))
++                                    else:
++                                        third_attempts_by_age[j] += float(np.sum(m2))
++                                        third_births_by_age[j] += float(np.sum(realized2))
++                                        third_at_risk_by_age[j] += float(np.sum(at_risk))
++                                    total_births += float(np.sum(realized2))
++                                    for i in range(I):
++                                        births_by_loc[i] += float(np.sum(realized2[:, :, i]))
+                     birth_mass = realized1
+                     birth_mass_total = float(np.sum(birth_mass))
+                     if not fast_stats and birth_mass_total > 1e-12 and (j + event_horizon) < J:
+@@ -5596,7 +5723,10 @@
+                         birth_weight[:, :, :, zz] = birth_mass
+                         pre_h = mean_housing_childless_weighted_markov(birth_weight, j, hR_pol, P)
+                         birth_cohort = np.zeros((Nb, nt, I, Nz, npar, ncs))
+-                        birth_cohort[:, :, :, zz, 1, 1] = realized1
++                        if two_births:
++                            birth_cohort[:, :, :, zz, :, :] = first_birth_post
++                        else:
++                            birth_cohort[:, :, :, zz, 1, 1] = realized1
+                         birth_cohort = advance_cohort_horizon_markov_income(
+                             birth_cohort,
+                             j,
+@@ -8305,6 +8435,7 @@
+         loc_probs=lp,
+         fert_probs=fp,
+         fert2_probs=getattr(P, "_fert2_probs", None),
++        fert_extra_probs=snapshot_extra_birth_probabilities(P),
+         joint_choice=getattr(P, "_joint_choice", None),
+         bp_pol_stay=getattr(P, "_bp_pol_stay", None),
+         c_pol_stay=getattr(P, "_c_pol_stay", None),

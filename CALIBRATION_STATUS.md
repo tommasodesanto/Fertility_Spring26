@@ -1,5 +1,64 @@
 # Calibration Status
 
+## September 28 — numerical pair passes; optimized two-birth experiment running
+
+Torch 18753562 COMPLETED: both evaluations of the proposed ten-coordinate
+Gauss–Newton step pass all scientific gates and pre-specified paired screens.
+Loss is 13.774490 / 13.778878 versus reference 19.581311 (29.65% improvement).
+The predicted initial psi uses 3 stationary solves versus 7; total times
+579.629s versus 1172.470s (50.56% saving), solving times 513.486s versus
+1105.878s. Same parameters, targets, bounds and original one-birth model;
+only the normalization starting guess differs between arms. This is one-point
+evidence, not a general benchmark, exact repeat or promoted reference.
+
+Early fertility remains 0.533 versus 0.810 (reference 0.535); older wealth/income
+dispersion validation worsens to 2.999 versus 3.516 (reference 3.069). Complete
+14-row fits with targeted/untargeted roles, all 31 parameter/restriction rows,
+original bounds and both 17-plot packets are in `numerical_pair_v1/RESULTS.md`.
+Both fertility choice scales retain the inherited near-lower-bound flags.
+Predicted-start 17 plots visually reviewed; existing high-wealth/retirement
+caveats remain. No checkpoint downloaded or automatic promotion to other chat.
+
+### Preparation and launch record
+
+The author approved one fully solved two-birth diagnostic with other reference
+coordinates fixed, child benefit normalized to2.1 and demographic renewal
+enforced. Isolated implementation belongs to
+`output/model/fertility_identification_20260928/two_births_optimized_v1/`.
+The added conditional second attempt uses the existing later-birth choice
+scale and another age-specific conception draw; its inclusive value affects
+the earlier choice. These are explicit experimental within-period assumptions,
+not an adopted specification or the preceding fixed-policy replay.
+
+Preparation includes source-isolated Bellman/KFE/cache/observer changes and
+Torch synthetic plus flag-off full reference tests before any optimized solve.
+Budget: one reference-price smoke solve capped20min; one normalized diagnostic
+capped23stationary solves/70min. All14fit/31parameter rows and17plots required;
+no automatic promotion, target change, transition or resumed search.
+
+The Jacobian step/warm-start pair tests the original one-birth model, with
+one diagnostic ten-parameter proposal evaluated from two initial psi guesses.
+Torch 18753074 passed all 13 synthetic orchestration/integrity tests in 19s,
+zero model solves. Main pair 18753562 is submitted, with 1,800s/23 stationary
+solves per arm, two workers, no retries or promotion. Pair contract SHA
+`7950be909086744f25390211e5a7b93d7ea65f25d73698d68a90fa51ce303303`;
+explicit launch authorization expires 30 minutes after submission.
+`numerical_pair_v1/` owns its sources and records. Fit and speed predictions
+were unverified at launch; the completed comparison is above. This Jacobian
+does not describe the changed birth model.
+
+Two-birth smoke 18753550 stopped before model solving: 14/15 synthetic tests
+passed, with one observer import bypassing the isolated patch. Canonical/private
+and frozen observer aliases are now handled explicitly, after frozen/current
+source equality verification. Queued repair 18753837 was cancelled before start
+to include both fixes. Revised smoke 18753907 runs the same 15 tests plus one
+reference-price Bellman/distribution replay with the option disabled. It passed:
+15 tests, one model solve, all 12 core arrays exactly identical, 105.1s internal.
+Full experimental job 18754308 is running after source-pin review, capped at
+23 stationary solves/70min, one model worker. At the last check it was on its
+first stationary solve; no optimized two-birth result exists yet. Shared
+sources/reference and old monitoring/searches remain unchanged/stopped.
+
 ## September 28 — author-requested two-birth spacing diagnostic
 
 The frozen reference remains **2007 stationary reference — block0506,
