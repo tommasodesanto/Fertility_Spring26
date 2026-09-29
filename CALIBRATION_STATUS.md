@@ -39,6 +39,34 @@ checked between evaluations, rather than bounding each ongoing evaluation.
 Minimal follow-up is recorded in the packet README. No code change or relaunch
 was performed in this audit. These jobs are separate from the streams below.
 
+## September 29 — selected-model lifecycle comparison, no adoption
+
+The author's deeper comparison is saved under
+`output/model/fertility_identification_20260928/two_stream_overnight_v1/comparison_v1/`.
+Pure-table Torch job 18807539 passes with zero model imports/solves/checkpoint
+reads; the lead reviewed the measurement code and both supplemental figures.
+The original 17-plot packets remain intact. Full target costs and parameter
+bounds remain linked from the packet README and morning readout.
+
+At exact age 25, original/two-birth/CPS motherhood is 44.782%/43.773%/45.725%,
+and capped children among mothers is 1.185/1.385/1.770. The 0.076 improvement
+in children per woman decomposes into +0.089 conditional-count and -0.013
+motherhood components (arithmetic, not causal). Both model profiles approach
+the CPS level at ages 40–44; two-birth improves ages 20–39 but retains sizeable
+middle-age shortfalls. These compare cross-sections, not a tracked cohort.
+The one-child calibration row is conditional on motherhood at ages 40–44.
+
+Other lifecycle profiles are very similar. Both retain high older-age ownership
+relative to ACS. Saved room profiles are uncapped versus capped-nine ACS data,
+so those curves and liquid wealth are shown model-only. Same-cell two-birth
+incidence is unavailable without saved-policy/distribution postprocessing.
+SVD of existing Jacobians finds the weak direction chiefly in child-benefit
+curvature, coupled strongly with tenure-choice dispersion in two-birth; this
+is a round-center numerical diagnostic, not fresh selected-point identification.
+The common-event birth-time approximation, extra conditional taste opportunity,
+and transition integration remain explicit adoption considerations. No model,
+target, transition, frozen reference or monitor was changed.
+
 ## September 29 — two calibration searches completed; candidates not adopted
 
 Torch array **18766206** completed with exit 0 in both streams, after about

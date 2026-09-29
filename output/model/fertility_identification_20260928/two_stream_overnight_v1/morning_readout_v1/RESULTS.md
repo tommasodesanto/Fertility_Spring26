@@ -24,7 +24,7 @@ Full precision: [one-birth fit](run_v1/one_birth/one_birth_024_gn1_0/case/target
 | Moment | target | one model/gap/weight/loss | two model/gap/weight/loss |
 |---|---:|---|---|
 | CPS childlessness | 0.198 | 0.198 / -0.000 / 35532.304 / 0.000 | 0.200 / 0.002 / 35532.304 / 0.152 |
-| CPS exactly one | 0.214 | 0.214 / 0.000 / 26952.821 / 0.004 | 0.219 / 0.006 / 26952.821 / 0.875 |
+| CPS one child among mothers, ages 40–44 | 0.214 | 0.214 / 0.000 / 26952.821 / 0.004 | 0.219 / 0.006 / 26952.821 / 0.875 |
 | Mean first-birth age | 25.976 | 25.965 / -0.011 / 139.828 / 0.017 | 25.961 / -0.016 / 139.828 / 0.034 |
 | Wealth/earnings | 6.927 | 6.896 / -0.031 / 7.595 / 0.007 | 6.830 / -0.097 / 7.595 / 0.071 |
 | Bequest wealth | 0.007 | 0.007 / -1.049e-05 / 5165289.256 / 0.001 | 0.007 / -0.000 / 5165289.256 / 0.060 |
@@ -38,7 +38,7 @@ Full precision: [one-birth fit](run_v1/one_birth/one_birth_024_gn1_0/case/target
 
 | Literal identifier | target | one model/gap/weight/loss | two model/gap/weight/loss |
 |---|---:|---|---|
-| `nchs_share30` | 0.249 | 0.226 / -0.024 / 0 / 0 | 0.230 / -0.020 / 0 / 0 |
+| First births at age 30 or later | 0.249 | 0.226 / -0.024 / 0 / 0 | 0.230 / -0.020 / 0 / 0 |
 | Old dispersion | 3.516 | 2.919 / -0.596 / 0 / 0 | 2.935 / -0.581 / 0 / 0 |
 | Family rooms | 0.385 | 0.473 / 0.088 / 0 / 0 | 0.289 / -0.096 / 0 / 0 |
 

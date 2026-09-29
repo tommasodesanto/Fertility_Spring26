@@ -18,6 +18,66 @@ Large checkpoints remain on Torch. The calibration monitor paused at 09:25 UTC;
 no repair, restart or new search occurred. The launch chronology below is
 historical and does not authorize restarting the completed array.
 
+## Selected-model lifecycle comparison and adoption costs
+
+The author requested a deeper comparison on September 29. The supplemental
+[fertility figure](comparison_v1/fertility_lifecycle_comparison.png) and
+[ownership, rooms and wealth figure](comparison_v1/other_lifecycle_comparison.png)
+compare only the two recalibrated candidates and available data. All 17 standard
+plots per case remain unchanged. Read [definitions and plotted values](comparison_v1/comparison.md),
+[all target costs](comparison_v1/target_costs.csv), and the full parameter bounds
+in the [morning readout](morning_readout_v1/RESULTS.md).
+
+The early improvement comes from more children among mothers: at exact age 25,
+original/two-birth/CPS means are 1.185/1.385/1.770. Motherhood is
+44.782%/43.773%/45.725%, so that margin slightly deteriorates. The exact symmetric
+decomposition of the 0.076-child improvement is +0.089 from conditional children
+and -0.013 from motherhood; this is arithmetic, not causal attribution.
+Two-birth improves capped children per woman across ages 20–39. At 30–34 the
+original/two-birth/data means are 1.090/1.162/1.476; at 40–44 they are
+1.730/1.742/1.718. These are matched cross-sectional ages, not one cohort's
+panel. The one-child target is conditional on motherhood at ages 40–44.
+
+Housing and wealth profiles are visually almost unchanged. Both models retain
+excess ownership at older ages relative to ACS 2007. Available saved model room
+profiles are uncapped; the ACS profiles are capped at nine, so no misleading
+room overlay is drawn. A capped model age profile requires checkpoint
+postprocessing. No matched empirical liquid-wealth curve is asserted.
+
+The two-birth rule introduces no additional estimated coordinate, but adds a
+conditional choice and an independent taste draw/inclusive value. It retains
+the common-event interpolation for both births rather than ordered birth dates.
+Same-cell two-birth incidence is not separately retained in the compact saved
+observers and cannot be inferred from second-birth flows. Exact incidence would
+require the saved pre-choice distribution and both probability caches.
+The selected normalized utility benefit psi falls from 0.122 to 0.032, and the
+later-birth taste scale rises from 0.222 to 0.405. Psi is a utility benefit,
+not a cash transfer. Separate recalibrations do not identify causal effects of
+these parameter differences or guarantee unchanged policy responses.
+
+SVD of the already saved round-center Jacobians shows the weak direction is
+dominated by child-benefit curvature in both versions; in two-birth it also
+loads strongly, with opposite sign, on tenure-choice dispersion. See
+[exact directions](comparison_v1/weak_direction_round_centers.csv). The two-birth
+smallest singular value is only 12.6% below the relative rank cutoff: rank 9
+is a local numerical warning, not proof of statistical underidentification.
+No new derivative or selected-point Jacobian was computed. Stationary checks
+do not validate integration into the other chat's dated transition/caches.
+
+Torch job 18807539 passed in four seconds with 1 CPU/4GB, zero model imports,
+zero model solves and no checkpoint reads. Its source is
+`comparison_v1/build_comparison.py`; [verification](comparison_v1/verification.json)
+records input/output hashes and exact replays of age-25 targets, first-birth
+shares, mean age, original profiles, normalization and loss sums. The lead
+reviewed the projection/SVD code and both rendered figures. Initial job 18807528
+stopped immediately because the small ACS input was absent from the isolated
+stage; copying that one 2,122-byte hash-pinned CSV resolved the missing input.
+No search, transition or reference promotion occurred. Regeneration on Torch:
+
+```sh
+ssh torch 'sbatch --cpus-per-task=1 --mem=4G --time=00:10:00 --wrap="OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 python3 /scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/output/model/fertility_identification_20260928/two_stream_overnight_v1/comparison_v1/build_comparison.py"'
+```
+
 This is an experimental calibration and identification diagnostic, not a
 production/adopted calibration.  It keeps the approved original fourteen-row
 target system, weights, and bounds.  The reference is **2007 stationary
