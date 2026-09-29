@@ -38,6 +38,11 @@ fertility renormalization, or automatic adoption of another chat's candidate.
 ## Current priorities and useful output
 
 Current borrowing implementation and bounded Torch checks: [credit_v1](credit_v1/README.md).
+The first matched-grid credit comparison is complete: immediate births +6.04%,
+first births +11.59%, completed fertility 2.1008 to 2.1482, and mean first-birth
+age 25.927 to 25.334. Repayment is retained and all preferences, including psi,
+are fixed. These are fixed-price results, not equilibrium or transition results.
+The compact readout links the full tables and unchanged 17-plot packets.
 
 The author prioritizes understanding elasticities and financial constraints.
 Choose the economic question and useful output before expanding computation

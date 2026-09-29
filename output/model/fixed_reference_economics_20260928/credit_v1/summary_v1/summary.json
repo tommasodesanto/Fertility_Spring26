@@ -1,0 +1,54 @@
+{
+  "case_pins": {
+    "credit": {
+      "checkpoint": {
+        "path": "/work/credit_results/solve_v1/credit/conditional_cohort_state.pkl.gz",
+        "sha256": "7b0b92f0e2ed33cfc80a3c63c2c15d6417b14ab88db3930284e440e94e2e515c"
+      },
+      "observers_sha256": "aab860a2b5cfc68aa1b625786354eade4105990651ec995565aed2358e1d83c4",
+      "receipt_sha256": "56fd38695487ae1262b5d772254d77943c046f106f91fcd42a92dc8d452ed18c"
+    },
+    "grid_control": {
+      "checkpoint": {
+        "path": "/work/credit_results/solve_v1/grid_control/conditional_cohort_state.pkl.gz",
+        "sha256": "f1c91fabca457fccfab22dbca33fae7edc750e4171b0f9796924516ed40c417e"
+      },
+      "observers_sha256": "11e2cedb6abe3f7a44aea2a7a3a32c8e125407a3677245aee6a64593d1098ad0",
+      "receipt_sha256": "25c6e12271f51abcde4cecbeebe94adf732dabc7a56dac67c73ac81f5d8215ad"
+    }
+  },
+  "cases": {
+    "credit": {
+      "cohort_period_mean_age_first_birth": 25.334126776993838,
+      "completed_fertility": 2.14818846645304,
+      "impact_births": 0.12249283510805853,
+      "impact_births_by_order": [
+        0.05606534783151726,
+        0.042545039905977716,
+        0.023882447370563557
+      ]
+    },
+    "grid_control": {
+      "cohort_period_mean_age_first_birth": 25.926683363907447,
+      "completed_fertility": 2.100784207855092,
+      "impact_births": 0.11551289661084374,
+      "impact_births_by_order": [
+        0.0502436319138745,
+        0.04165629101507148,
+        0.023612973681897693
+      ]
+    }
+  },
+  "elapsed_seconds": 40.58831772999838,
+  "interpretation": {
+    "births": "First and subsequent birth flows grouped by inherited age, tenure and net financial wealth; identical inherited risk pools.",
+    "debt": "Negative next-saving net financial positions; levels, not new borrowing flows or identified mortgage balances.",
+    "mean_age": "Saved flow-weighted first-birth age in the recomputed cohort; not completed-cohort timing or transition."
+  },
+  "lifecycle_solves": 0,
+  "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "run_plan_sha256": "60d9fd49670c450942bf780a18daf91b90b57c5dcebc7231ccc1639df7657ac8",
+  "script_sha256": "04c9988f8dfd84776e07e8124515110ce6f5a21399c967f08497c83eef73f9e8",
+  "status": "passed",
+  "supplied_policy_period_evaluations": 2
+}

@@ -1,0 +1,87 @@
+{
+  "deadline_epoch": 1790646067.7832122,
+  "plan": {
+    "adapter_path": "/work/credit_source/natural_credit.py",
+    "base_driver_path": "/work/credit_source/run_fixed_price.py",
+    "case_seconds": 600,
+    "cases": [
+      "control",
+      "grid_control",
+      "credit"
+    ],
+    "comparison_dimensions": {
+      "ages": 17,
+      "family_cells": 16,
+      "income_states": 15,
+      "tenures": 6,
+      "wealth_nodes": 262
+    },
+    "credit_grid_path": "/work/credit_source/credit_grid.json",
+    "credit_mode": "natural_solvency_boolean_grid_v1",
+    "driver_sha256": "ac56b0de4cede1f969d54f61e51c74da9dfd6ec5371a4cffc142e970348807c6",
+    "economic_changes": [
+      "Remove artificial renter, purchaser and incumbent-owner borrowing limits; retain lifetime repayment and net-estate solvency"
+    ],
+    "expected_runtime_minutes": "about 8-15 including controls, audits and standard diagnostics; queue excluded",
+    "files": [
+      {
+        "path": "/work/credit_source/credit_grid.json",
+        "sha256": "a3b81c459290554f634d0c28409ab846364c0ecf7270bd164f975f092901cbe2"
+      },
+      {
+        "path": "/work/credit_source/launch.sh",
+        "sha256": "bfe6b5842a4da324f8e04c6c93799e9d5519e1192b09ad0efdffcd399bc8dc6a"
+      },
+      {
+        "path": "/work/credit_source/natural_credit.py",
+        "sha256": "a76f0b7965c2b49f33bb31678257422dab59f3aeb34ffd0f6988db2a0c702bac"
+      },
+      {
+        "path": "/work/credit_source/preflight_receipt.json",
+        "sha256": "147733919e2d5141b90b3e8d9f081285a8ea0aa17db4701a0ee34b2b46528d58"
+      },
+      {
+        "path": "/work/credit_source/review_receipt.json",
+        "sha256": "408cc421383c896bce9c741c36b8ac4b9ce5c14cc946fc394c603153fe734947"
+      },
+      {
+        "path": "/work/credit_source/run_credit.py",
+        "sha256": "ac56b0de4cede1f969d54f61e51c74da9dfd6ec5371a4cffc142e970348807c6"
+      },
+      {
+        "path": "/work/credit_source/run_fixed_price.py",
+        "sha256": "09edf5affbf20d7a5dc4200a81b1f32ce643ba0ad15680b4b8b208dccda77037"
+      }
+    ],
+    "maximum_lifecycle_solves": 3,
+    "memory_gib": 16,
+    "overlay_root": "/work/credit_source",
+    "parameter_overrides": {
+      "native_due_stayer_credit": false
+    },
+    "price_factor": 1,
+    "reference_dimensions": {
+      "ages": 17,
+      "family_cells": 16,
+      "income_states": 15,
+      "tenures": 6,
+      "wealth_nodes": 160
+    },
+    "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+    "reference_manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+    "renormalize_fertility": false,
+    "review_receipt_path": "/work/credit_source/review_receipt.json",
+    "schema": "block0506_fixed_price_credit_v1",
+    "stop_criteria": [
+      "Any source/control/household/solvency/accounting gate failure",
+      "600 seconds per case",
+      "1800 seconds total; no retry or deadline extension"
+    ],
+    "threads": 1,
+    "total_seconds": 1800
+  },
+  "plan_sha256": "60d9fd49670c450942bf780a18daf91b90b57c5dcebc7231ccc1639df7657ac8",
+  "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "slurm_job": "18754242",
+  "started_epoch": 1790644267.7832122
+}
