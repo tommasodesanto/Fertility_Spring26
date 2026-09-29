@@ -1,0 +1,211 @@
+{
+  "cache": {
+    "actual_solves": 1,
+    "bytes": 363795168,
+    "evictions": 0,
+    "exceptions": 0,
+    "hits": 9,
+    "maximum_bytes": 68719476736,
+    "misses": 1,
+    "oversize_bypasses": 0,
+    "serialization_bypasses": 0
+  },
+  "cache_max_bytes": 68719476736,
+  "estimator_sources": {
+    "e5f_exact_policy_cache.py": "d51bbd13026288db0194b44b420bb49ff6970588f40a906242978d49038a5d6f",
+    "e5f_four_shock_acceleration.py": "9e8e3bba6c405df22c597b6a5319592daaae1883f850acfbb7dde5b55b716373",
+    "e5f_matched_pf_path_root.py": "1f827bad0c87f2c75d1ea76f1f059494cc67ca5390135087780691cc0ead2c80",
+    "e5f_preference_shock_fit.py": "495b61b0b0aaf577d49ba36d7274c7207c9be546f544113fa30c3c805d46412f",
+    "e5f_social_security_root.py": "269f3d5017da3a240d0a80d9b168471e6c6cd6c55e9617041c70bfb1085cd77a",
+    "e5f_ssj_scaled_step_root.py": "c26d312afa179e296439ba94e8826a5f84f6823c6bf0ca1892889e5e55af059b",
+    "e5f_ssj_toeplitz_jacobian.py": "94c448367c139682c3bc06336dba27ab3ddb384e99120201cc1000d8509dead0",
+    "run_e5f_preference_estimation.py": "bd93821847439b54667706d17f95ff6e114291c3dc321eb7cb7bf06cb1f3ed1e",
+    "run_e5f_preference_transition.py": "26802381cec56be33794a526eeec80eb6066c09ae59ab6e5957d0cee2e26f1ac"
+  },
+  "execution_enabled": false,
+  "gates": {
+    "carried": true,
+    "fertility": 0.0,
+    "g_pre": 0.0,
+    "native_path": true,
+    "queues": {
+      "scheduled_entries": 0.0,
+      "scheduled_raw_entries": 0.0
+    },
+    "rows": 0.0
+  },
+  "historical_fit": false,
+  "maximum_policy_calls": 156,
+  "native_endpoint_and_fertility_smoke_passed": true,
+  "preference_changes": false,
+  "production_horizon_verified": false,
+  "reused_endpoint": {
+    "identity": {
+      "checkpoint": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_transition_20260928/four_shock_v1/estimation_tests/18759951/native/endpoints/endpoint_1/checkpoint.pkl.gz",
+        "sha256": "f58ecc3b0e72aba4964b0733d7fe5c46b20cb711cb8d9249bc0142f239f9709a"
+      },
+      "housing": "fixed_stock",
+      "native_one_step_verified": true,
+      "pension": 0.917784047463731,
+      "population_scale": 1.0000000017604052,
+      "price": 0.7898695017462086,
+      "psi_child": 0.1355551166583114,
+      "reference_manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+      "repeat_verified": true,
+      "source_manifest_sha256": "07d84336a3112b251afe505908113d9c00585b91c34bd50f0dee108435db496d",
+      "terminal": {
+        "all_checks_pass": true,
+        "checks": {
+          "asset_price_relative_gap": true,
+          "birth_queue_maximum_relative_gap": true,
+          "normalized_distribution_l1": true,
+          "population_relative_gap": true,
+          "psi_absolute_gap": true,
+          "renter_price_relative_gap": true
+        },
+        "metrics": {
+          "asset_price_relative_gap": 0.0,
+          "birth_queue_maximum_relative_gap": 3.9599834533180205e-07,
+          "normalized_distribution_l1": 5.640311942197311e-14,
+          "population_relative_gap": 3.974598428158049e-14,
+          "psi_absolute_gap": 0.0,
+          "renter_price_relative_gap": 0.0
+        },
+        "raw_queue_maximum_relative_gap": 0.0,
+        "raw_queue_pass": true,
+        "stationary_asset_price": 0.7898695017462086,
+        "stationary_birth_queue": [
+          0.03086672809038944,
+          0.03086672809038944,
+          0.03086672809038944,
+          0.03086672809038944,
+          0.03086672809038944,
+          0.03086672809038944,
+          0.03086672809038944
+        ],
+        "stationary_population": 1.0000000000000029,
+        "stationary_psi": 0.1355551166583114,
+        "stationary_renter_price": 0.14239719502601744,
+        "status": "passed",
+        "terminal_asset_price_last_endogenous_date": 0.7898695017462086,
+        "terminal_birth_queue": [
+          0.03086672809038944,
+          0.03086672809038944,
+          0.03086670364404294,
+          0.03086672809038944,
+          0.03086672809038944,
+          0.03086672809038944,
+          0.03086670364404294
+        ],
+        "terminal_distribution_l1_from_stationary": 4.0103146569269907e-14,
+        "terminal_population": 1.0000000000000426,
+        "terminal_psi_last_endogenous_date": 0.1355551166583114,
+        "terminal_renter_price_last_endogenous_date": 0.14239719502601744,
+        "tolerances": {
+          "asset_price_relative_gap": 1e-06,
+          "birth_queue_maximum_relative_gap": 1e-06,
+          "normalized_distribution_l1": 1e-06,
+          "population_relative_gap": 1e-06,
+          "psi_absolute_gap": 1e-06,
+          "renter_price_relative_gap": 1e-06
+        }
+      }
+    },
+    "receipt": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_transition_20260928/four_shock_v1/estimation_tests/18759951/native/endpoints/endpoint_1/receipt.json",
+      "sha256": "92c75fd4f7621bdcc0c99d0be033b9648f71cf6c27d243ce0a884e61e5e0c4f6"
+    },
+    "reused": true
+  },
+  "reused_seed": true,
+  "seed_receipt": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_transition_20260928/four_shock_v1/launch_v2/smoke/native/jacobian_seed/measured/receipt.json",
+    "sha256": "d6dfbf6eedbb23ebefea681dccb2b098ea2514dcc407e0ab8cc9c89f6237974d"
+  },
+  "status": "PASS",
+  "target_contract": {
+    "annual": {
+      "path": "output/model/fixed_reference_transition_20260928/four_shock_v1/estimation_inputs/annual_fertility_2007_2023.csv",
+      "sha256": "6028e5fb95fb84900457d5389b6c931aa0d154f93689c51f0afeac055583bc7c"
+    },
+    "blocks": {
+      "path": "output/model/fixed_reference_transition_20260928/four_shock_v1/estimation_inputs/empirical_blocks.csv",
+      "sha256": "8945aa2427e26157e2e01b44b327e374daae5078daa458727f025938569a2f74"
+    },
+    "caveat": "Retained household-rate analogue, not literal female-exposure TFR; no new age-support target adopted",
+    "model_measurement": "period_tfr_topcode_adjusted; sum of four-year birth flows divided by own-age household mass",
+    "rows": [
+      {
+        "birth_year_end": 2011,
+        "birth_year_start": 2008,
+        "clustering": "not applicable",
+        "decision_year": 2007,
+        "estimator": "equal-weight arithmetic mean of four published NCHS annual TFRs",
+        "fixed_effects": "not applicable",
+        "moment": "period_tfr_2008_2011",
+        "period": 0,
+        "sample": "US annual birth-registration rates; published female exposure",
+        "sources": [
+          "https://www.cdc.gov/nchs/data/nvsr/nvsr66/NVSR66_01.pdf",
+          "https://www.cdc.gov/nchs/data/nvsr/nvsr74/nvsr74-1.pdf"
+        ],
+        "target": 1.974875,
+        "uncertainty": null
+      },
+      {
+        "birth_year_end": 2015,
+        "birth_year_start": 2012,
+        "clustering": "not applicable",
+        "decision_year": 2011,
+        "estimator": "equal-weight arithmetic mean of four published NCHS annual TFRs",
+        "fixed_effects": "not applicable",
+        "moment": "period_tfr_2012_2015",
+        "period": 1,
+        "sample": "US annual birth-registration rates; published female exposure",
+        "sources": [
+          "https://www.cdc.gov/nchs/data/nvsr/nvsr74/nvsr74-1.pdf"
+        ],
+        "target": 1.861,
+        "uncertainty": null
+      },
+      {
+        "birth_year_end": 2019,
+        "birth_year_start": 2016,
+        "clustering": "not applicable",
+        "decision_year": 2015,
+        "estimator": "equal-weight arithmetic mean of four published NCHS annual TFRs",
+        "fixed_effects": "not applicable",
+        "moment": "period_tfr_2016_2019",
+        "period": 2,
+        "sample": "US annual birth-registration rates; published female exposure",
+        "sources": [
+          "https://www.cdc.gov/nchs/data/nvsr/nvsr74/nvsr74-1.pdf"
+        ],
+        "target": 1.755375,
+        "uncertainty": null
+      },
+      {
+        "birth_year_end": 2023,
+        "birth_year_start": 2020,
+        "clustering": "not applicable",
+        "decision_year": 2019,
+        "estimator": "equal-weight arithmetic mean of four published NCHS annual TFRs",
+        "fixed_effects": "not applicable",
+        "moment": "period_tfr_2020_2023",
+        "period": 3,
+        "sample": "US annual birth-registration rates; published female exposure",
+        "sources": [
+          "https://www.cdc.gov/nchs/data/nvsr/nvsr74/nvsr74-1.pdf"
+        ],
+        "target": 1.64575,
+        "uncertainty": null
+      }
+    ],
+    "schema": "retained_nchs_four_windows_v1"
+  },
+  "tests_passed": true,
+  "timings": {
+    "seconds": 325.63923296588473
+  }
+}

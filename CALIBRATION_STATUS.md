@@ -1,5 +1,24 @@
 # Calibration Status
 
+## September 29 — authorized historical shock retry running
+
+Following the author's request to proceed for results tonight, cheaper workers
+implemented the bounded audit corrections; the lead reviewed and verified them.
+All **53 tests** and native smoke **18801007** pass with the intended 64-GiB
+cache. The smoke reports zero carried distribution, queue, row and fertility
+discrepancies. Both actual enabled plans passed full preflight before submission.
+Four successive surprises **18801439** and one permanent shock **18801451** were
+confirmed RUNNING. No fitted results or tonight-completion guarantee is claimed.
+
+The block0506 reference economics, fixed physical housing stock, fixed payroll
+tax and provisional estate settlement are unchanged. Only the author-approved
+preference shocks vary; psi is not renormalized during historical fitting.
+The 104/128-date horizons and finite 12-hour fit budgets remain. The existing
+monitor now checks this retry every 30 minutes, read-only, with alerts only for
+new major failures, actionable stalls or completion. No automatic repairs or
+resubmissions. Source, test, plan, budget and job evidence:
+`output/model/fixed_reference_transition_20260928/four_shock_v1/launch_v3/`.
+
 ## September 29 — historical shock launch failed; bounded audit complete
 
 The author authorized the four-successive-surprise fit and the one-permanent-shock

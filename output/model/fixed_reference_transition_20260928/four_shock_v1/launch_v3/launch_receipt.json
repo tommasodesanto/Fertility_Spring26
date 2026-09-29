@@ -1,0 +1,56 @@
+{
+  "status": "submitted_after_native_smoke_and_full_plan_preflight",
+  "submitted_utc": "2026-09-29T15:15:09.870366+00:00",
+  "source_commit": "12049845",
+  "smoke_job": "18801007",
+  "fit_jobs": {
+    "four_successive": "18801439",
+    "one_permanent": "18801451"
+  },
+  "plan_sha256": {
+    "four_successive": "94abd21a2bf9cdcb0255043825152f89c4b1d07415b45c0050fa1199b095fe5f",
+    "one_permanent": "f2bc838f3c0ef4bc04b22317192b3998361a82e1d124d510d97bfbeb09f91914"
+  },
+  "controller_sha256": "55004639c897c190d3256d92cdc88e09ae23af8bc947cba61bbec4ec31f3b066",
+  "launcher_sha256": "a7803b7f6fde773e8de90f85573709c19745963eaa3689bc31d9b4112228fa66",
+  "readiness_sha256": "89729f6e187a777d53ab14c41aea6598ff834ddf8018381a672775b27d73728b",
+  "preflight": "PASS for both actual enabled plans before submission",
+  "pure_tests": 53,
+  "native_smoke": "PASS; zero carried state/queue/row/fertility discrepancies",
+  "horizons": [
+    104,
+    128
+  ],
+  "allocated_cpus_per_fit": 4,
+  "numerical_threads_per_fit": 1,
+  "memory_gib_per_fit": 96,
+  "cache_gib_per_fit": 64,
+  "budgets": {
+    "four_successive": {
+      "candidate_seconds": 36000.0,
+      "endpoint_seconds": 3600.0,
+      "jacobian_seconds": 3000.0,
+      "mapping_seconds": 5400.0,
+      "maximum_policy_calls": 357728,
+      "path_seconds": 21600.0,
+      "total_seconds": 43200.0
+    },
+    "one_permanent": {
+      "candidate_seconds": 36000.0,
+      "endpoint_seconds": 3600.0,
+      "jacobian_seconds": 3000.0,
+      "mapping_seconds": 5400.0,
+      "maximum_policy_calls": 89528,
+      "path_seconds": 21600.0,
+      "total_seconds": 43200.0
+    }
+  },
+  "slurm_seconds": 46800,
+  "monitor": {
+    "automation_id": "monitor-shock-fits-overnight",
+    "interval_minutes": 30,
+    "read_only": true,
+    "until_utc": "2026-09-30T05:00:00Z"
+  },
+  "no_automatic_repair_restart_or_resubmission": true
+}

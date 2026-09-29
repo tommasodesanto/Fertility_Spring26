@@ -2,8 +2,9 @@
 
 **September 28 launch authorization:** Tommaso authorized launch once ready, then
 read-only overnight monitoring for major failures. This supersedes the earlier
-test-only instruction. Current checks, speedups, budgets and launch status are in
-[`launch_v2/README.md`](launch_v2/README.md); retained preparation evidence follows.
+test-only instruction. The authorized September 29 retry, current checks,
+budgets and launch status are in [`launch_v3/README.md`](launch_v3/README.md).
+The failed first launch remains in `launch_v2/`; preparation evidence follows.
 
 The active driver is `code/model/tools/run_e5f_preference_estimation.py`.
 The September 28 author correction supersedes the earlier announced-path
