@@ -41,7 +41,7 @@ The author-requested [Claude visual storyboard and prototypes](slide_inputs_v1/c
 now include occupied-state contributions to additional first births and a
 matched-grid comparison of fixed-price cohort outcomes with the credit GE
 endpoint. The lead independently checked the plotted values and actual images;
-use reviewed_v3, not the superseded initial prototypes. No new model solves ran.
+use reviewed_v5, with plain-language captions and unchanged numbers. No new model solves ran.
 Further economic discussion prioritizes occupied policy maps, timing versus
 completed family size, and heterogeneous responses before selecting new shocks.
 
@@ -177,6 +177,42 @@ native saving-floor boundaries using separate buyer/renter and owner-stayer
 policies. The within-branch shares are 25.112% for renters, 4.722% for buyers,
 and 4.538% for owner stayers. Purchase exclusion incidence is unmeasured;
 these shares do not establish whether down payments are quantitatively weak.
+
+### Exact baseline credit rules (September 29 source check)
+
+Let $b$ denote net financial assets (negative means debt), $b'$ next-period
+assets, $pH$ a home's value, $y$ current after-tax period income, and
+$R=1.08243216$ the four-year gross return. These are the frozen baseline rules:
+
+- **Renters:** $b'\geq s_{j+1}\min(b,0)$. The new unsecured credit line is
+  zero (`lambda_d=0`); inherited debt can roll over. The next-age multiplier
+  equals one through age 42, then 0.8, 0.6, 0.4, 0.2 at ages 46–58, and zero
+  from age 62. The multiplier applies to then-current debt each period.
+- **Buyers:** $b'\geq-0.8pH$. Purchase entry additionally requires
+  $b+S+y/R\geq0.2pH$, where $S$ is sale proceeds from an old home after the
+  6% selling cost (zero for an initial renter). Thus current income counts
+  toward the down payment. The budget, consumption feasibility and grid
+  support still apply; the entry inequality alone is not sufficient.
+- **Owners keeping their home:** $b'\geq\min(b,-0.8pH)$. They can borrow up to
+  80% of current home value or retain existing greater debt without increasing
+  its principal. Interest remains payable. Where death is possible, the
+  separate bound $b'\geq-0.94pH$ protects net estates. There is no scheduled
+  owner amortization in this reference.
+
+The credit experiment removes all three artificial limits, including purchase
+entry, while preserving lifetime repayment and nonnegative estates. It does
+not isolate the down-payment channel. All cases retain finite-grid limitations.
+
+Read-only authentication matched local and frozen Torch solver, parameters and
+kernels to the original source manifest: respective SHA256
+`b637a655a9344b63f4461ee0fa4796c04bd98188477c4e6ace2c48ae0fc8aec1`,
+`66f86697c2c58ca3864305bf13dd2be71a008905b2beb573f1a4ebafabef5464`,
+`639c9a21797dbc9f2a0e9a891f283c115353c2edfcb89c959a7fe9f32b86ca27`.
+Decisive source: `code/model/intergen_eqscale_seq_optimized/solver.py`
+lines 127–187, 2697–2713 and 3410–3417; `parameters.py` lines 718–785;
+`kernels.py` purchase checks and owner floor at lines 1273–1275.
+Serialized settings come from the immutable reference manifest above. No
+model solve or economic change was made for this clarification.
 
 ## Fixed-price experiment contract
 
