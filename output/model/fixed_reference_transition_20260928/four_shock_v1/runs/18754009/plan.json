@@ -1,0 +1,37 @@
+{
+  "cache_bytes": 2147483648,
+  "cases": [
+    {
+      "horizon": 1,
+      "housing": "elastic_reference",
+      "name": "one_date_cached"
+    },
+    {
+      "horizon": 6,
+      "housing": "fixed_stock",
+      "name": "six_date_fixed_stock_cached"
+    }
+  ],
+  "economics": "unchanged reference preferences/credit; fixed-stock plumbing at exact baseline supply",
+  "harness_sha256": "364c9ab947992d0c42a2568a4539ac109a96e58cfa4c14de5fe6c8187c498a9d",
+  "maximum_actual_policy_calls": 14,
+  "memory_gib": 24,
+  "no_retry": true,
+  "preference_shocks": false,
+  "production_transition": false,
+  "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "reference_manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+  "schema": "block0506_pf_preparation_v1",
+  "source_pins": {
+    "e5f_exact_policy_cache.py": "d51bbd13026288db0194b44b420bb49ff6970588f40a906242978d49038a5d6f",
+    "e5f_four_shock_acceleration.py": "5e1e789c6a01290d857bb54945c44185d862e2c6fb8a97bc3e183f6bc99cc6bc",
+    "e5f_matched_pf_path_root.py": "1f827bad0c87f2c75d1ea76f1f059494cc67ca5390135087780691cc0ead2c80",
+    "e5f_social_security_root.py": "269f3d5017da3a240d0a80d9b168471e6c6cd6c55e9617041c70bfb1085cd77a",
+    "e5f_ssj_scaled_step_root.py": "c26d312afa179e296439ba94e8826a5f84f6823c6bf0ca1892889e5e55af059b",
+    "e5f_ssj_toeplitz_jacobian.py": "94c448367c139682c3bc06336dba27ab3ddb384e99120201cc1000d8509dead0",
+    "run_e5f_preference_transition.py": "78f9e03891c20a5a692466020f340b42edd790103651829f690d8c769c57b85c"
+  },
+  "threads": 1,
+  "total_seconds": 900,
+  "workers": 1
+}

@@ -39,6 +39,15 @@ old incomplete bundles must be rebuilt from their matching solution or re-solved
 
 ## Current production transition configuration
 
+`tools/run_e5f_preference_transition.py` prepares the frozen September 28
+block0506 reference for either one permanent preference shock or four shocks
+announced together in 2007. It preserves saved credit, supports fixed physical
+housing stock, and solves the anticipated price/pension paths jointly. Exact
+policy caching and the two-block acceleration helper are wired in. Execution
+is disabled in both draft plans; shock levels and a verified terminal endpoint
+are still required. Torch no-shock checks and usage are indexed in
+`../../output/model/fixed_reference_transition_20260928/four_shock_v1/README.md`.
+
 `tools/e5f_current_transition_runtime.py` loads the authenticated September 27
 calibration into the current native solver. It explicitly enables the accepted
 conditional entrant wealth/income distribution, exact transaction grid,

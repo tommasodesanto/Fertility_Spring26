@@ -2,8 +2,9 @@
 
 Owner: this chat. The economic-analysis chat owns saved-state interpretation,
 fixed-price housing-cost experiments and the +10% supply comparison. The
-calibration chat owns calibration improvement. No shared active model file is
-edited by this preparation. The September 14 tag/reference is read-only.
+calibration chat owns calibration improvement. This chat adds an isolated
+transition driver and helper without changing the native model. The September
+14 tag/reference is read-only.
 
 **Reference:** 2007 stationary reference — block0506, September 28 verified export.
 The authoritative identity is
@@ -15,8 +16,19 @@ Keep this reference even if another calibration improves.
 
 ## Current deliverable
 
+[`four_shock_v1/README.md`](four_shock_v1/README.md) owns the current code and
+readiness evidence. Both one-permanent-shock and four-announced-shock paths are
+prepared, with exact caching and joint price/pension acceleration. Torch
+18754009 passes 21 pure tests plus one-date and six-date native no-shock checks;
+the latter covers fixed physical stock and both entry lags. Shock levels and
+the matching endpoint remain pending, and execution is disabled. No shocked
+transition was run. This update supersedes the earlier unverified six-date and
+fixed-stock statements below; credit implementation belongs to the other chat.
+
+## Earlier preparation evidence
+
 [`preparation_v1/transition_readiness.md`](preparation_v1/transition_readiness.md)
-is the substantive readiness note. Its initial numerical check is deliberately
+is the earlier readiness note. Its initial numerical check was deliberately
 limited to reference replay and no-shock operators. It does not authorize an
 old credit mode, transport old shocks or certify an equilibrium transition.
 The final [six-page PDF](../../pdf/fixed_reference_transition_readiness.pdf)
@@ -116,7 +128,7 @@ Report regeneration from the settled receipts, without a solve:
 ssh torch 'sbatch --output=/scratch/td2248/projects/fixed_reference_transition_20260928/preparation_v1/render_%j.log /scratch/td2248/projects/fixed_reference_transition_20260928/preparation_v1/render.sh'
 ```
 
-All numerical work and rendering ran on Torch. No active model, empirical,
+All numerical work and rendering in that earlier stage ran on Torch. No native model, empirical,
 calibration, manuscript or September 14 reference source was edited. The saved
 reference project stayed read-only. Only this packet and its final PDF are included in the bounded source-control
 commit; automatic Git maintenance is disabled. Other existing changes in the
@@ -128,4 +140,5 @@ This chat owns transitions. The briefly assigned credit implementation stage
 was withdrawn before any model edit or numerical launch.
 [`credit_v1/README.md`](credit_v1/README.md) records the stopped read-only setup.
 Credit-rule and endpoint objects will come from the economic-analysis chat.
-Work is stopped pending the author's return; no new numerical stage is active.
+That credit stage remains stopped. The author's subsequent transition request
+is handled by `four_shock_v1/`, preserving saved credit for these checks.

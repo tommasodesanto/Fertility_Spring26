@@ -1,0 +1,77 @@
+{
+  "birth_to_entry_conversion": 0.47619047619047616,
+  "budget": {
+    "cache_max_bytes": 2147483648,
+    "case_seconds": null,
+    "horizon": null,
+    "max_evaluations": null,
+    "maximum_policy_calls": null,
+    "observed_mapping_seconds": null,
+    "total_seconds": null
+  },
+  "classifications": {
+    "earnings": "externally estimated; saved B15 unchanged",
+    "entry": "empirically normalized conditional entry law; split 16/20-year clock",
+    "estate": "provisional net-estate funding of next entrants; settlement outstanding",
+    "fiscal": "externally normalized payroll tax fixed; dated pension solved",
+    "geography": "externally fixed one-market closed population",
+    "housing": "author-fixed physical reference stock; elastic_reference is explicit alternative",
+    "population": "normalized initial distribution; endogenous subsequent levels",
+    "preferences": "estimated; frozen except explicit announced psi levels",
+    "targets": "frozen reference measurement system"
+  },
+  "credit": "saved_reference_unchanged",
+  "endpoint": null,
+  "execution_enabled": false,
+  "fiscal": "fixed_payroll_tax_endogenous_pension",
+  "historical_shocks_automatically_imported": false,
+  "housing": "fixed_stock",
+  "initial_jacobian": null,
+  "numerics": {
+    "damping": null,
+    "final_reproduction_tolerance": 1e-10,
+    "fiscal_slope": null,
+    "fiscal_tolerance": 1e-06,
+    "initial_pensions": null,
+    "initial_prices": null,
+    "market_slope": null,
+    "market_tolerance": 0.0002,
+    "max_condition_number": null,
+    "max_log_step": null,
+    "pension_bounds": null,
+    "price_bounds": null,
+    "raw_queue_relative_tolerance": null,
+    "terminal_tolerances": null,
+    "worsening_factor": null
+  },
+  "outside_entry": 0,
+  "property_rebate": 0,
+  "readiness_receipt": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_transition_20260928/four_shock_v1/runs/18754009/readiness.json",
+    "sha256": "a6fa778d52c15282dfe6085f3587e39be143fb614e9fb5a4944c923fbde2ac50"
+  },
+  "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "reference_manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+  "retention": 1,
+  "schema": "block0506_preference_pf_v1",
+  "shocks": {
+    "expectations": "perfect_foresight_announced_at_start",
+    "interpretation": null,
+    "kind": "one_permanent",
+    "levels": null,
+    "period_years": 4,
+    "provenance": null,
+    "years": [
+      2007
+    ]
+  },
+  "source_pins": {
+    "e5f_exact_policy_cache.py": "d51bbd13026288db0194b44b420bb49ff6970588f40a906242978d49038a5d6f",
+    "e5f_four_shock_acceleration.py": "5e1e789c6a01290d857bb54945c44185d862e2c6fb8a97bc3e183f6bc99cc6bc",
+    "e5f_matched_pf_path_root.py": "1f827bad0c87f2c75d1ea76f1f059494cc67ca5390135087780691cc0ead2c80",
+    "e5f_social_security_root.py": "269f3d5017da3a240d0a80d9b168471e6c6cd6c55e9617041c70bfb1085cd77a",
+    "e5f_ssj_scaled_step_root.py": "c26d312afa179e296439ba94e8826a5f84f6823c6bf0ca1892889e5e55af059b",
+    "e5f_ssj_toeplitz_jacobian.py": "94c448367c139682c3bc06336dba27ab3ddb384e99120201cc1000d8509dead0",
+    "run_e5f_preference_transition.py": "78f9e03891c20a5a692466020f340b42edd790103651829f690d8c769c57b85c"
+  }
+}
