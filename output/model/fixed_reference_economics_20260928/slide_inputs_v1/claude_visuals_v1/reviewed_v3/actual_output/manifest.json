@@ -1,0 +1,19 @@
+{
+  "inputs": {
+    "impact_birth_decomposition.csv": "972dda76a2a836f37560bbd42d6d878a56f5b020157062de98784b4a49b18085",
+    "borrowing_comparison.csv": "48282c55049e26b72282c4ae9d66c84aea00303a25d17cacf0764466f06d8eee"
+  },
+  "outputs": {
+    "birth_response_contributors.png": "5402ac34e23c2029ddadf124ecbe6eb2aeffe3608715325fb6c1bc1940a0fe0c",
+    "birth_response_contributors.pdf": "f269559ac3675bfecb94e9a30d81e71ca7c438a584983ae2833b8bc4817e95cd",
+    "fixed_price_vs_ge.png": "797961604ce2cd9cce2062ef11fa62eded81369f683fcdc0cc5f6ffe33ef8c50",
+    "fixed_price_vs_ge.pdf": "62952d1156da33b1b0bb18d29693fd0e03360f51382713b210f88356e503463e",
+    "plotted_data.csv": "f88798561a81f80788538819fea8e66eba19c431eecec0668a8097285609d52d"
+  },
+  "first_birth_share_of_total_impact_birth_increase": 0.8340640709034635,
+  "zero_solves": true,
+  "corrections_v2_to_v3": [
+    "Fig2 baseline case corrected from frozen_reference back to matched_grid_baseline_fixed_prices (262-node grid), matching v1 and the lead's 'exact same three cases/values' instruction; label now 'Baseline (matched grid)' with a footer noting it differs numerically from the original 160-node frozen reference.",
+    "plotted_data.csv rewritten with csv.DictWriter (proper escaping of comma-containing cell names), explicit unit column, fig1 values in additional-births-per-1000-initial-households, fig2 values in children/percent/years; re-read and validated (field counts, row counts) after writing."
+  ]
+}

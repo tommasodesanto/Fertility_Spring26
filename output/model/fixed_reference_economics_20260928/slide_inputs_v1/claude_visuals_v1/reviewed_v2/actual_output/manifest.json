@@ -1,0 +1,23 @@
+{
+  "inputs": {
+    "impact_birth_decomposition.csv": "972dda76a2a836f37560bbd42d6d878a56f5b020157062de98784b4a49b18085",
+    "borrowing_comparison.csv": "48282c55049e26b72282c4ae9d66c84aea00303a25d17cacf0764466f06d8eee"
+  },
+  "outputs": {
+    "birth_response_contributors.png": "5402ac34e23c2029ddadf124ecbe6eb2aeffe3608715325fb6c1bc1940a0fe0c",
+    "birth_response_contributors.pdf": "1ffd1a8d7ae4d790d66149d96752abf2ac4cafa54bf0c8e29c9395ba4bcae782",
+    "fixed_price_vs_ge.png": "534443802d001fd09a94430b92bec6e1ebf9c239663800711fdae1603b4345c0",
+    "fixed_price_vs_ge.pdf": "1275015891b5987c5ebbfcd628f8136cc2b6e313be212f2f2d1c98d2c5fada54",
+    "plotted_data.csv": "8b9458b9173dab0e506cced9c0b3d4f3b9ca409fba76bbb522a30cb2c7a414ba"
+  },
+  "first_birth_share_of_total_impact_birth_increase": 0.8340640709034635,
+  "zero_solves": true,
+  "corrections_v1_to_v2": [
+    "Removed invented 83.7% figure; single derived share only, computed from manifest total (all orders denominator).",
+    "Labeled denominator as all initial households, not at-risk/within-cell.",
+    "Added explicit four-year impact / fixed-price labels.",
+    "Fig2: corrected y-axis label from pct.pts. to %; values are recomputed-cohort, not immediate impact.",
+    "Fig2: replaced truncated bar chart with dot plot at true scale, three cases (baseline, credit fixed-price, credit stationary GE).",
+    "Fig2: dropped 'transition' framing; first-birth age described as flow-weighted mean per recomputed population."
+  ]
+}

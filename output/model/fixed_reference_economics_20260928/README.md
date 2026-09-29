@@ -37,6 +37,14 @@ fertility renormalization, or automatic adoption of another chat's candidate.
 
 ## Current priorities and useful output
 
+The author-requested [Claude visual storyboard and prototypes](slide_inputs_v1/claude_visuals_v1/README.md)
+now include occupied-state contributions to additional first births and a
+matched-grid comparison of fixed-price cohort outcomes with the credit GE
+endpoint. The lead independently checked the plotted values and actual images;
+use reviewed_v3, not the superseded initial prototypes. No new model solves ran.
+Further economic discussion prioritizes occupied policy maps, timing versus
+completed family size, and heterogeneous responses before selecting new shocks.
+
 The [three-price elasticity comparison](elasticity_v1/recovery_v1/README.md)
 is complete and authenticated. Recovery **18815133** used exactly two new solves
 and finished in 17 minutes 37 seconds within the approved 35-minute limit.
