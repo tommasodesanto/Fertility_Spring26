@@ -1,5 +1,39 @@
 # Calibration Status
 
+## September 29 — zero first-birth cost diagnostic launched
+
+The author requested a test of removing the first-birth utility fixed cost.
+Isolated packet `output/model/fertility_identification_20260928/zero_first_birth_cost_v1/`
+uses the original one-birth model and selected overnight candidate
+`one_birth_024_gn1_0` as its comparison anchor (loss 7.826226594410982;
+cost 0.35270914196085973). This is an experimental restriction, not adoption:
+the **2007 stationary reference — block0506, September 28 verified export**
+and the other chat's transition work are untouched.
+
+Torch job **18817312** runs an authenticated anchor replay, a zero-cost case
+holding the other nine coordinates fixed, nine finite-difference probes,
+three damped Gauss–Newton proposals, and two final repeats. The cost remains
+exactly zero throughout the restricted refit. All ten scored moments, three
+validation rows, original bounds on the remaining nine parameters, completed
+fertility (normalization) target 2.1, and demographic renewal gate are retained.
+No earnings, entry distributions, birth timing rules, transfers/floors, housing
+or credit primitives change. The successful cases retain the complete 14-row
+fit, 31-row parameter table and 17 standard diagnostic plots.
+
+The serial budget is 1 CPU/24 GB, at most 16 evaluations, four hours overall,
+eight stationary solves and 35 minutes per case, with 70 minutes reserved for
+repeats. A failed anchor replay or unavailable normalized zero-cost center
+stops the refit; neither a resource censor nor a failed local search establishes
+global infeasibility. Five exact-loop synthetic tests passed on Torch
+**18817270**; preparation **18817279** verified source/target/anchor identities.
+Configuration SHA256:
+`7035e2c15641a6cf3dd5ddecd3eac1094bbaabe54057a7cf788c72081d73ce19`.
+No numerical result from this experiment is available at launch.
+Saved-output readout **18817376** follows the calibration job; it skips if no
+normalized zero-cost center exists. Monitor `monitor-zero-first-birth-cost-test`
+checks every 30 minutes, stays quiet for healthy unchanged progress and pauses
+once both jobs end. It cannot repair, restart, extend or promote the experiment.
+
 ## September 29 — historical shock retry stopped before estimation
 
 Following the author's request to proceed for results tonight, cheaper workers

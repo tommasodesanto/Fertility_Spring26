@@ -1,0 +1,247 @@
+{
+  "authorization": "Author-authorized isolated diagnostic; launch only after lead review.",
+  "bounds": {
+    "H0": [
+      0.2,
+      80.0
+    ],
+    "beta_annual": [
+      0.94,
+      0.99
+    ],
+    "chi": [
+      0.1,
+      5.0
+    ],
+    "child_benefit_curvature": [
+      0.0,
+      0.8
+    ],
+    "delta_alpha_jump": [
+      0.0,
+      0.25
+    ],
+    "kappa_fert": [
+      0.02,
+      50.0
+    ],
+    "kappa_fert_continuation": [
+      0.02,
+      50.0
+    ],
+    "tenure_choice_kappa": [
+      0.001,
+      0.1
+    ],
+    "theta0": [
+      0.0,
+      8.0
+    ]
+  },
+  "budget": {
+    "case_seconds": 2100,
+    "final_reserve_seconds": 4200,
+    "max_evaluations": 16,
+    "maximum_stationary_solves": 8,
+    "total_seconds": 14400
+  },
+  "fixed_parameters": {
+    "first_birth_fixed_cost": 0.0
+  },
+  "hard_end_epoch": 1790726504.582713,
+  "identification": "Ten scored rows for nine free coordinates; psi separately normalized. Rank unverified.",
+  "lanes": {
+    "zero_cost": {
+      "anchor_case": "/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/output/model/fertility_identification_20260928/two_stream_overnight_v1/run_v1/one_birth/one_birth_024_gn1_0/case",
+      "anchor_checkpoint_sha256": "308245b919c8a50d25972b29e55b5d4fca1ae57d01155ff6050724dc61610451",
+      "anchor_fixed_cost": 0.35270914196085973,
+      "anchor_loss": 7.82622659441098,
+      "anchor_point": {
+        "H0": 6.10435697600456,
+        "beta_annual": 0.9691258112957628,
+        "chi": 1.0984955654295818,
+        "child_benefit_curvature": 0.06573496189456102,
+        "delta_alpha_jump": 0.11540382367112394,
+        "kappa_fert": 0.10854911052270635,
+        "kappa_fert_continuation": 0.22239802621622237,
+        "tenure_choice_kappa": 0.012684311037930685,
+        "theta0": 0.1562318139510766
+      },
+      "economic_changes": [
+        "Experimental: first_birth_fixed_cost fixed exactly zero; original one-birth opportunity retained.",
+        "Nine other original search coordinates retain original bounds; psi_child renormalized to completed fertility 2.1.",
+        "Original ten scored targets, three validation rows, demographic renewal gate, earnings, entry distributions, transfers/floors, preferences except fixed cost, and housing/credit primitives retained."
+      ],
+      "initial_point": {
+        "H0": 6.10435697600456,
+        "beta_annual": 0.9691258112957628,
+        "chi": 1.0984955654295818,
+        "child_benefit_curvature": 0.06573496189456102,
+        "delta_alpha_jump": 0.11540382367112394,
+        "kappa_fert": 0.10854911052270635,
+        "kappa_fert_continuation": 0.22239802621622237,
+        "tenure_choice_kappa": 0.012684311037930685,
+        "theta0": 0.1562318139510766
+      },
+      "initial_psi": 0.12184551693359474,
+      "scientific_promotion": false,
+      "source_fingerprint": "f31ef4cae89b68c1f7f94a63c3130571bc74d25f0ebf2efca1825182f4b5dd5b",
+      "source_identity": {
+        "birth_rule": "original_one_birth",
+        "evaluator_source": "522133e5bb0da67273ca5a8eab694bcd06247866afb1a9d31377107e6271a370",
+        "fixed_first_birth_cost": 0.0,
+        "original_source_manifest": "07d84336a3112b251afe505908113d9c00585b91c34bd50f0dee108435db496d",
+        "selected_checkpoint_sha256": "308245b919c8a50d25972b29e55b5d4fca1ae57d01155ff6050724dc61610451",
+        "target_weight_fingerprint": "20e531855075b807886da8e936930dca9090b989b2ce381de39042cf206efdbd"
+      },
+      "target_fingerprint": "20e531855075b807886da8e936930dca9090b989b2ce381de39042cf206efdbd"
+    }
+  },
+  "original_bounds": {
+    "H0": [
+      0.2,
+      80.0
+    ],
+    "beta_annual": [
+      0.94,
+      0.99
+    ],
+    "chi": [
+      0.1,
+      5.0
+    ],
+    "child_benefit_curvature": [
+      0.0,
+      0.8
+    ],
+    "delta_alpha_jump": [
+      0.0,
+      0.25
+    ],
+    "first_birth_fixed_cost": [
+      0.0,
+      8.0
+    ],
+    "kappa_fert": [
+      0.02,
+      50.0
+    ],
+    "kappa_fert_continuation": [
+      0.02,
+      50.0
+    ],
+    "tenure_choice_kappa": [
+      0.001,
+      0.1
+    ],
+    "theta0": [
+      0.0,
+      8.0
+    ]
+  },
+  "parameters": [
+    "H0",
+    "beta_annual",
+    "chi",
+    "kappa_fert",
+    "kappa_fert_continuation",
+    "theta0",
+    "delta_alpha_jump",
+    "child_benefit_curvature",
+    "tenure_choice_kappa"
+  ],
+  "pins": {
+    "objective": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/contract_v1/primary_objective.json",
+      "sha256": "04528ece6513e4da9436bb8b35b54cd7e9cecd3a6695d050a0a7aea5a71d5e60"
+    },
+    "original_contract": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/contract_v1/contract.json",
+      "sha256": "68323aadd2c9ad221742842ace9ab108e40437303f0d34da00e7cd83b89f5abf"
+    },
+    "original_source_manifest": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/overnight_calibration_20260928/contract_v1/source_manifest.json",
+      "sha256": "07d84336a3112b251afe505908113d9c00585b91c34bd50f0dee108435db496d"
+    },
+    "prepare": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/zero_first_birth_cost_v1/prepare.py",
+      "sha256": "aac6e538bf591ca797d72d438c7965ed55bb9fd967345ab524adfd27e4047b02"
+    },
+    "reference_parameters.csv": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/parameters.csv",
+      "sha256": "4d229fe18ee9c43a8a709413a10690a845d0cf7028efe57925d4f4b1d7c8d036"
+    },
+    "reference_receipt.json": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/receipt.json",
+      "sha256": "8b073c9c8ce73cd0f119cbcd0c8133eb39787fb04cc1acb38a89a07e5af67f74"
+    },
+    "reference_target_fit.csv": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/selected_export/primary/target_fit.csv",
+      "sha256": "47a9ccb239265cdf8ecf587fe4eb5cc10ce3eed28ed36b19c38b1e82270d023f"
+    },
+    "run": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/zero_first_birth_cost_v1/run.sh",
+      "sha256": "dd87dcc3d916a0d181e542e7134065f778e4c23142de5852a302ff97a348a8eb"
+    },
+    "search": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/zero_first_birth_cost_v1/search.py",
+      "sha256": "11594a8d997db2781d981519b70316d9832349d0740e6d29717bb289f931e93d"
+    },
+    "selected_parameters.csv": {
+      "path": "/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/output/model/fertility_identification_20260928/two_stream_overnight_v1/run_v1/one_birth/one_birth_024_gn1_0/case/parameters.csv",
+      "sha256": "9aeac6710bcd2900a50a3b1168b1387005587677c8078868585779f76277270b"
+    },
+    "selected_receipt.json": {
+      "path": "/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/output/model/fertility_identification_20260928/two_stream_overnight_v1/run_v1/one_birth/one_birth_024_gn1_0/case/receipt.json",
+      "sha256": "987ccad4ac2607cd777dfa9e6fec50becef5335fb52224b56f03bc977acae37a"
+    },
+    "selected_scientific_identity.json": {
+      "path": "/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/output/model/fertility_identification_20260928/two_stream_overnight_v1/run_v1/one_birth/one_birth_024_gn1_0/case/scientific_identity.json",
+      "sha256": "d92faa2b8ad2871edcace0daf3a38dfbf0a05f0ccc503c9f64153e68988b24b8"
+    },
+    "selected_target_fit.csv": {
+      "path": "/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/output/model/fertility_identification_20260928/two_stream_overnight_v1/run_v1/one_birth/one_birth_024_gn1_0/case/target_fit.csv",
+      "sha256": "ae7f9f68fba9c0621fc77335bd66ba471816340cf962696525a5fc822ab79f29"
+    },
+    "tests_receipt": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/zero_first_birth_cost_v1/TESTS.json",
+      "sha256": "10ab3e5a2691a587372965aa6c0581a07347b13d4379194f23c32872e5f95b62"
+    },
+    "tests_search": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/zero_first_birth_cost_v1/tests_search.py",
+      "sha256": "6e76340164d023f64aff9b9a0ca30ab3c3ebbe4c0329a4ae00ac8497df7b7115"
+    },
+    "two_birth_driver.py": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v2/driver.py",
+      "sha256": "522133e5bb0da67273ca5a8eab694bcd06247866afb1a9d31377107e6271a370"
+    },
+    "worker": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/zero_first_birth_cost_v1/worker.py",
+      "sha256": "b6949834a0d8ad1fd97c8c6d3b3220c5c251d3ba28e6fdb1c315002c954cebc9"
+    }
+  },
+  "prepared_epoch": 1790712104.5827453,
+  "reference_checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d",
+  "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "schema": "zero_first_birth_cost_v1",
+  "scientific_promotion": false,
+  "scored_moments": [
+    "cps_childlessness",
+    "cps_exactly_one",
+    "nchs_mean_age",
+    "wealth_earnings",
+    "bequest_wealth",
+    "mean_rooms",
+    "ownership_30_55",
+    "first_birth_rooms",
+    "recent_parent_ownership",
+    "early_fertility"
+  ],
+  "transition_run": false,
+  "worker_command": [
+    "/share/apps/anaconda3/2025.06/bin/python",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/zero_first_birth_cost_v1/worker.py",
+    "--config",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/zero_first_birth_cost_v1/config.json"
+  ]
+}
