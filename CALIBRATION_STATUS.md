@@ -1,5 +1,22 @@
 # Calibration Status
 
+## September 29 — renter repayment decision and disclosure audit
+
+The author selected removal of the arbitrary renter 42–62 debt taper after
+confirming it was absent from the actual September 14 PDF and advisor Google
+Doc. A separate choice of positive unsecured credit remains open; zero new
+credit is the control for isolating taper removal, not a fresh permanent sign-off.
+Lifetime repayment and nonnegative estates remain required. Isolated code and
+tests are in `output/model/fixed_reference_economics_20260928/credit_no_taper_v1/`;
+zero-solve Torch verification **18835438** passed all 11 targeted checks in
+eight seconds. Production evaluator integration and native replay remain
+outstanding; this is not acceptance of a new computed baseline.
+No new household/equilibrium computation or recalibration has run. Preserve
+**2007 stationary reference — block0506, September 28 verified export** and
+ongoing jobs' pinned sources. No reference switch has occurred. The bounded
+cheap disclosure audit and lead corrections are in `specification_audit_v1/`;
+remaining empirical-entry and transition verification gaps are explicit there.
+
 ## September 29 — age clock, teenage births and identification check
 
 Saved-data Torch diagnostics **18833274** and **18833422** passed with zero

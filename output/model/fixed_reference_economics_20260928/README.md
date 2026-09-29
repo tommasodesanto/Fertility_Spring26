@@ -244,6 +244,24 @@ controlled recomputation should keep all parameters, including child-benefit
 level, fixed; subsequent recalibration remains a separate decision and belongs
 to the calibration chat. No new numerical budget or production run was launched.
 
+**Immediate follow-up authorized, September 29:** the author requested a broad
+low-cost audit for further undisclosed rules and a separate implementation of
+taper removal. `specification_audit_v1/` owns the bounded read-only mechanism
+inventory; `credit_no_taper_v1/` owns the isolated patch and targeted test packet.
+Both use the configured `worker_fast` route (`gpt-5.6-terra`, medium), with
+separate 20-minute caps and no production solves. Lead mathematical review and
+Torch verification precede any computation. The author may want positive
+unsecured borrowing but is unsure; its amount and contract remain undecided.
+Keep zero-new-credit as the isolated comparison control, not a new permanent
+author sign-off. No silent reference switch or adoption by another chat.
+The bounded audit returned a module inventory; lead corrections explicitly
+reject its mistaken interpretation of the inactive 0.5 entry-conversion field
+and legacy owner taper. No other comparable hidden active restriction was
+established within the examined scope; entry-construction and transition
+verification remain incomplete. The isolated removal patch passed all 11
+targeted Torch checks in eight seconds (18835438, zero solves). Production
+integration, native replay and equilibrium recomputation remain uncomputed.
+
 Let $b$ denote net financial assets (negative means debt), $b'$ next-period
 assets, $pH$ a home's value, $y$ current after-tax period income, and
 $R=1.08243216$ the four-year gross return. These are the frozen baseline rules:
