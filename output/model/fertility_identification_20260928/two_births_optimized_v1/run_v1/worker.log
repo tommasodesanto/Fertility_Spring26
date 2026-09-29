@@ -1,0 +1,23 @@
+OLD_SS_NORMALIZATION_EVAL psi=0.14281100 tfr=2.68265734 seconds=239.41
+OLD_SS_NORMALIZATION_EVAL psi=0.13781100 tfr=2.63896299 seconds=127.15
+OLD_SS_NORMALIZATION_EVAL psi=0.13281100 tfr=2.59299625 seconds=184.99
+OLD_SS_NORMALIZATION_EVAL psi=0.12281100 tfr=2.49388670 seconds=185.87
+OLD_SS_NORMALIZATION_EVAL psi=0.10281100 tfr=2.26544867 seconds=128.48
+OLD_SS_NORMALIZATION_EVAL psi=0.06281100 tfr=1.69314413 seconds=180.17
+OLD_SS_NORMALIZATION_EVAL psi=0.09570442 tfr=2.17432051 seconds=183.20
+OLD_SS_NORMALIZATION_EVAL psi=0.09062384 tfr=2.10605882 seconds=131.44
+OLD_SS_NORMALIZATION_EVAL psi=0.08923320 tfr=2.08692653 seconds=132.22
+OLD_SS_NORMALIZATION_EVAL psi=0.09018345 tfr=2.10002223 seconds=130.92
+Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v1/driver.py", line 291, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v1/driver.py", line 267, in main
+    worker(args.mode,args.output);return
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v1/driver.py", line 239, in worker
+    cache_audit=audit_extra_cache(experimental_packet,model)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_births_optimized_v1/driver.py", line 180, in audit_extra_cache
+    assert maximum_sum_error<1e-12 and occupied_dead_mass<2e-10
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

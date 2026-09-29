@@ -1,6 +1,24 @@
 # Calibration Status
 
-## September 28 — numerical pair passes; optimized two-birth experiment running
+## September 28 — numerical pair passes; two-birth result under audit
+
+Completed fertility 2.1 is a target handled by separate child-benefit
+normalization. Use "Completed fertility (normalization)" in author-facing
+tables; the author's terminology clarification changes no target or equation.
+
+Two-birth job 18754308 FAILED after 28m20s: ten stationary evaluations reached
+completed fertility 2.100022 and wrote native tables/checkpoint/17 plots, then
+the additional extra-choice cache audit failed. The case is not accepted.
+Saved-array audit 18757242 found 22 nonzero menus with probability-sum error
+up to 9.575e-08; reached mass at these menus and zero menus is exactly zero.
+All three caches agree and have independent ownership. This is cancellation
+in the new inner probability calculation, not a reached-state support failure.
+Torch 18757604 passes the targeted regression plus eight existing solver tests
+for a proposed shifted-exponential calculation: error falls to 2.220e-16,
+inclusive values remain exactly equal and the 1e-12 gate is unchanged. Both
+checks used zero model solves. The correction is tested but not installed;
+full corrected-solution verification remains outstanding. Preserve the failed
+run/source pins; no automatic restart, target change or promotion occurred.
 
 Torch 18753562 COMPLETED: both evaluations of the proposed ten-coordinate
 Gauss–Newton step pass all scientific gates and pre-specified paired screens.
@@ -54,10 +72,10 @@ source equality verification. Queued repair 18753837 was cancelled before start
 to include both fixes. Revised smoke 18753907 runs the same 15 tests plus one
 reference-price Bellman/distribution replay with the option disabled. It passed:
 15 tests, one model solve, all 12 core arrays exactly identical, 105.1s internal.
-Full experimental job 18754308 is running after source-pin review, capped at
-23 stationary solves/70min, one model worker. At the last check it was on its
-first stationary solve; no optimized two-birth result exists yet. Shared
-sources/reference and old monitoring/searches remain unchanged/stopped.
+Full experimental job 18754308 subsequently ran after source-pin review,
+capped at 23 stationary solves/70min, one model worker. Its post-export audit
+failure and current diagnosis are recorded above. Shared sources/reference
+and old monitoring/searches remain unchanged/stopped.
 
 ## September 28 — author-requested two-birth spacing diagnostic
 
