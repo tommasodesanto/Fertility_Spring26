@@ -9,6 +9,10 @@ zero-solve syntax/closure/bracketing checks. No GE result certified yet. Sources
 are immutable in `/scratch/td2248/projects/fixed_reference_credit_ge_20260929/sources_solve_v1/`;
 local `source.sha256` pins them. Results and each completed-case receipt are in
 the sibling `ge_results/solve_v1/`, with `solve_v1.log` at the remote root.
+The q0 controller smoke passed: saved credit arrays, 14 fits and 31 parameter
+estimates replay exactly, with all 17 standard plots. The price search has
+started. Its 0.022947 birth-renewal residual is explicitly not an equilibrium;
+receipt: `q0_smoke_receipt.json`.
 Torch zero-solve
 preflight 18763586 passed in 27.9 seconds at price factors 1, 1.05 and 1.35:
 independent solvency recurrence, exact 262-node q0 grid, zero infeasible entrant
@@ -65,3 +69,12 @@ unbracketed result is retained and reported, not turned into a certified root.
 Keep full fit/parameter tables and the unchanged 17 diagnostics accessible;
 the author-facing deliverable is one compact GE comparison, without a PDF.
 Large checkpoints and runtime source snapshots stay on Torch.
+
+Overnight supervision: `check-frozen-reference-borrowing-ge` checks every ten
+minutes. The author explicitly authorized investigating hiccups rather than
+only notifying. At most two targeted cheaper-worker repair cycles (20 minutes
+each) may fix diagnosed implementation errors in new immutable versions, with
+Torch verification and lead review. Preserve failed evidence and original
+remaining numerical budgets/deadlines; no economic changes, relaxed gates,
+unchanged retries, or duplicate searches. Pause after completion or a concrete
+unresolved blocker, and no later than September 29 at 09:00 New York time.
