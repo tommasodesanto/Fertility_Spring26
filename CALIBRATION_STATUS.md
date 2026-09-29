@@ -1,20 +1,24 @@
 # Calibration Status
 
-## September 28 night — historical shock estimation queued behind native readiness
+## September 29 — historical shock launch failed; bounded audit complete
 
 The author authorized the four-successive-surprise fit and the one-permanent-shock
-alternative from the immutable block0506 reference. Jobs **18765931** and
-**18765932** depend on native smoke **18765176** passing; they were pending at
-submission, with no historical estimate yet. Each has a 12-hour estimator budget,
-104/128-date horizon checks, measured cross-date initialization, warm starts and
-a 64-GiB exact-policy cache. Both retain the prepared credit, entry, housing and
-payroll-tax contract; the inherited estate settlement remains provisional.
+alternative from the immutable block0506 reference. Native smoke **18765176**
+passed, but jobs **18765931** and **18765932** failed before estimation: the
+launcher requested a 64-GiB cache while the driver imposed a 2-GiB maximum.
+Neither fit produced estimates. The failure-only monitor was paused after both
+jobs stopped. The reference and provisional estate settlement are unchanged.
 
 Launch evidence and all finite budgets are in
 `output/model/fixed_reference_transition_20260928/four_shock_v1/launch_v2/`.
-Read-only checks run every 30 minutes for major failures; no overnight repairs,
-restarts, resubmissions or parameter changes are authorized. These jobs are
-separate from the stationary calibration streams below.
+The September 29 bounded audit verified both saved plans without model solves:
+the remaining structural/source/target/readiness/seed checks pass when the known
+cache mismatch is isolated in memory. Additional findings: inspection skips
+launch validation, fixed old plan paths block an identical retry, and the scalar
+fit unnecessarily re-evaluates its initial candidate. Stage time limits are
+checked between evaluations, rather than bounding each ongoing evaluation.
+Minimal follow-up is recorded in the packet README. No code change or relaunch
+was performed in this audit. These jobs are separate from the streams below.
 
 ## September 28 overnight — two calibration streams launched; scheduled monitoring only
 
