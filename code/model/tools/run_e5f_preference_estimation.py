@@ -75,9 +75,10 @@ def draft_plan(kind='four_successive'):
         fiscal='fixed_payroll_tax_endogenous_pension',outside_entry=0,retention=1,property_rebate=0,
         initial_level='saved_reference_level',search_bound_ratios=[.01,2.],
         target_contract=None,source_pins={},readiness_receipt=None,
+        acceleration=dict(seed_horizon=10,perturbed_date=5,log_step=1e-5,seed_receipt=None),
         horizons=None,horizon_comparison_periods=1 if kind=='four_successive' else 4,horizon_relative_tolerance=1e-3,
         budget=dict(total_seconds=None,candidate_seconds=None,endpoint_seconds=None,
-            mapping_seconds=None,path_seconds=None,maximum_policy_calls=None),
+            mapping_seconds=None,path_seconds=None,jacobian_seconds=None,maximum_policy_calls=None),
         fit=dict(max_evaluations=12,log_difference_step=.01,
             fertility_tolerance=.005,max_log_step=.15,damping=.7,max_condition_number=1e8,
             worsening_factor=1.5,reproduction_tolerance=1e-8),
@@ -116,6 +117,14 @@ def validate_plan(plan,launching=False):
         for value in plan['budget'].values():inner.require(math.isfinite(value) and value>0,'Finite positive budgets required')
         lower,upper=plan['search_bound_ratios'];inner.require(0<lower<1<upper and math.isfinite(upper),'Bounds must bracket reference start')
         f,p,e=plan['fit'],plan['path'],plan['endpoint']
+        a=plan['acceleration']
+        inner.require(type(a['seed_horizon']) is int and a['seed_horizon']>=6 and
+            type(a['perturbed_date']) is int and 0<a['perturbed_date']<a['seed_horizon']-1 and
+            math.isfinite(a['log_step']) and 0<a['log_step']<.01 and
+            (a['seed_receipt'] is None or (set(a['seed_receipt'])=={'path','sha256'} and
+             isinstance(a['seed_receipt']['path'],str) and isinstance(a['seed_receipt']['sha256'],str) and
+             len(a['seed_receipt']['sha256'])==64)),
+            'Explicit measured cross-date initialization or pinned seed receipt required')
         inner.require(type(f['max_evaluations']) is int and f['max_evaluations']>=5 and
                       0<f['log_difference_step']<.25,'Finite derivative and replay budget required')
         inner.require(0<f['fertility_tolerance']<=.005 and 0<=f['reproduction_tolerance']<=1e-8,
@@ -132,7 +141,10 @@ def validate_plan(plan,launching=False):
             math.isfinite(p['raw_queue_relative_tolerance']) and 0<p['raw_queue_relative_tolerance']<=1e-3,
             'Complete finite terminal tolerances required')
         stages=4 if plan['kind']=='four_successive' else 1
-        expected=stages*f['max_evaluations']*(e['max_evaluations']+2+sum(2*h*p['max_evaluations'] for h in H))+8
+        # Each of the five residual mappings solves both the backward Bellman
+        # problem and the forward distribution, for the full seed horizon.
+        # Keep this ceiling even when a pinned receipt avoids the work.
+        expected=10*a['seed_horizon']+stages*f['max_evaluations']*(e['max_evaluations']+2+sum(2*h*p['max_evaluations'] for h in H))+8
         inner.require(plan['budget']['maximum_policy_calls']==expected,'Conservative solve count must include all roots and final diagnostics')
     return missing
 
@@ -144,6 +156,7 @@ class NativeEstimator:
         self.deadline=time.monotonic()+plan['budget']['total_seconds'];self.candidate_deadline=self.deadline
         self.endpoint_index={};self.endpoint_attempts=0;self.warm={};self.count=0;self.latest=None
         self.inherited=None;self.stage=0;self.year=2007;self.realized=[];self.realized_fertility=[];self.parameters=[]
+        self.seed_receipt=None;self.seed_matrices={}
 
     def guarded(self,seconds,call):
         remaining=min(seconds,self.deadline-time.monotonic(),self.candidate_deadline-time.monotonic())
@@ -205,6 +218,88 @@ class NativeEstimator:
             absolute_housing_demand=scale*float(ev.demand_by_loc[0]),absolute_housing_supply=float(supply.quantity([price])[0]))
         inner.write(output/'point.json',record)
         return packet,record
+
+    def prepare_jacobian(self):
+        """Measure once at the unchanged reference, before estimating any shock."""
+        import numpy as np
+        a=self.plan['acceleration'];P=self.reference['parameters'];H=a['seed_horizon']
+        q=float(self.reference['solution'].p_eq[0]);folder=self.out/'jacobian_seed';count=0
+        if a['seed_receipt'] is not None:
+            pinned=inner.pinned(a['seed_receipt']);receipt=inner.read(pinned)
+            self._validate_seed_receipt(receipt)
+            stored=inner.pinned(receipt['matrix']);matrix=np.load(stored,allow_pickle=False)
+            reconstructed=self._reconstruct_seed(receipt,H)
+            inner.require(matrix.shape==(2*H,2*H) and np.isfinite(matrix).all() and
+                np.array_equal(matrix,reconstructed),'Pinned seed matrix does not reconstruct its finite measured Jacobian')
+            self.seed_receipt=receipt
+            inner.write(folder/'reused_receipt.json',dict(status='reused_pinned_measured_seed',
+                seed_receipt=dict(path=str(pinned),sha256=a['seed_receipt']['sha256']),
+                matrix=receipt['matrix'],reference_manifest_sha256=inner.MANIFEST_SHA,
+                psi_child=P.psi_child,scientific_validation=receipt['scientific_validation']))
+            return
+        previous_deadline=self.candidate_deadline
+        self.candidate_deadline=min(self.deadline,time.monotonic()+self.plan['budget']['jacobian_seconds'])
+        def evaluate(prices,pensions):
+            nonlocal count
+            count+=1
+            result,record=self.guarded(self.plan['budget']['mapping_seconds'],lambda:inner.mapping(
+                self.reference,self.rt,self.reference,dict(price=q,population_scale=1.),prices,pensions,
+                np.full(H,P.psi_child),self.plan['housing'],folder/f'map_{count}',
+                self.plan['path']['cache_max_bytes']))
+            valid=all(record['gates'].values())
+            if count==1:
+                check=inner.terminal_checks(self.reference,self.rt,self.reference,dict(price=q,population_scale=1.),
+                    result,np.full(H,P.psi_child),dict(terminal_tolerances={k:1e-6 for k in inner.TERMINAL_KEYS},
+                                                       raw_queue_relative_tolerance=1e-6))
+                valid=valid and check['all_checks_pass'] and max(map(abs,record['market_residual']))<=2e-4 and max(map(abs,record['fiscal_residual']))<=1e-6
+                inner.write(folder/'baseline_check.json',dict(valid=valid,terminal=check))
+            return dict(mapping_valid=valid,market_residual=record['market_residual'],fiscal_residual=record['fiscal_residual'])
+        try:
+            matrix=inner.measure_jacobian(evaluate,np.full(H,q),np.full(H,P.pension),a['perturbed_date'],
+                a['log_step'],folder/'measured',dict(reference_manifest_sha256=inner.MANIFEST_SHA,
+                    source_pins=self.plan['source_pins'],housing=self.plan['housing'],closure='fixed_tax',
+                    expectations=self.plan['expectations'],psi_child=P.psi_child,
+                    reuse='approximate initialization only; nonlinear equilibrium and fresh replay remain mandatory'))
+            self.seed_receipt=inner.read(folder/'measured/receipt.json')
+            self.seed_receipt['scientific_validation']=dict(
+                baseline_mapping_and_terminal_passed=True,
+                unchanged_reference=True,baseline_mapping_count=count)
+            self.seed_receipt['matrix_reconstruction']=dict(
+                exact=True,finite=True,shape=list(matrix.shape))
+            inner.write(folder/'measured/receipt.json',self.seed_receipt)
+            inner.require(np.array_equal(matrix,self.initial_jacobian(H)),'Lag reconstruction changed measured matrix')
+        finally:self.candidate_deadline=previous_deadline
+
+    def _reconstruct_seed(self,receipt,horizon):
+        from e5f_four_shock_acceleration import extend_measured_jacobian
+        return extend_measured_jacobian(receipt,horizon)
+
+    def _validate_seed_receipt(self,receipt):
+        P=self.reference['parameters'];proof=receipt.get('scientific_validation',{})
+        inner.require(receipt.get('mapping_count')==5 and
+            receipt.get('reference_manifest_sha256')==inner.MANIFEST_SHA and
+            receipt.get('source_pins')==self.plan['source_pins'] and
+            receipt.get('housing')==self.plan['housing'] and
+            receipt.get('closure')=='fixed_tax' and
+            receipt.get('expectations')==self.plan['expectations'] and
+            receipt.get('psi_child')==P.psi_child,
+            'Pinned measured seed provenance or actual reference psi changed')
+        inner.require(proof.get('baseline_mapping_and_terminal_passed') is True and
+            proof.get('unchanged_reference') is True and proof.get('baseline_mapping_count')==5 and
+            receipt.get('matrix_reconstruction',{}).get('exact') is True and
+            receipt['matrix_reconstruction'].get('finite') is True and
+            receipt['matrix_reconstruction'].get('shape')==[2*receipt.get('horizon',0)]*2,
+            'Pinned seed lacks baseline scientific validation evidence')
+        matrix=receipt.get('matrix',{})
+        inner.require(set(matrix)=={'path','sha256'} and isinstance(matrix['sha256'],str) and len(matrix['sha256'])==64,
+            'Pinned seed requires a matrix path and SHA-256')
+
+    def initial_jacobian(self,horizon):
+        inner.require(self.seed_receipt is not None,'Measure the current-reference cross-date Jacobian before fitting')
+        self._validate_seed_receipt(self.seed_receipt)
+        if horizon not in self.seed_matrices:
+            self.seed_matrices[horizon]=self._reconstruct_seed(self.seed_receipt,horizon)
+        return self.seed_matrices[horizon].copy()
 
     def endpoint(self,psi):
         import numpy as np
@@ -289,7 +384,7 @@ class NativeEstimator:
             deadline_monotonic=min(self.candidate_deadline,time.monotonic()+self.plan['budget']['path_seconds']),
             max_condition_number=self.plan['fit']['max_condition_number'],worsening_factor=self.plan['fit']['worsening_factor'],
             final_reproduction_tolerance=p['final_reproduction_tolerance'],callback=progress,
-            initial_jacobian=None if warm is None else warm['final_jacobian'])
+            initial_jacobian=self.initial_jacobian(horizon) if warm is None else warm['final_jacobian'])
         inner.write(folder/'root.json',root)
         accepted(root['converged'],'Candidate perfect-foresight equilibrium did not converge')
         check=inner.terminal_checks(self.reference,self.rt,terminal,endpoint,latest['result'],path,p)
@@ -299,7 +394,7 @@ class NativeEstimator:
         inner.write(folder/'receipt.json',receipt)
         accepted(receipt['root_and_terminal_pass'],'Candidate path has not approached its terminal equilibrium')
         self.warm[horizon]=dict(prices=root['final']['prices'],fiscal_values=root['final']['fiscal_values'],
-                                final_jacobian=root['final_jacobian'])
+                                final_jacobian=np.asarray(root['final_jacobian'],dtype=float).copy())
         return receipt,latest
 
     def __call__(self,psi):
@@ -435,6 +530,7 @@ def run(plan,output):
         m,packet,evaluator=inner.load_reference(output/'reference')
         native=NativeEstimator(plan,output,m,packet,evaluator)
         native.deadline=started+plan['budget']['total_seconds'];native.candidate_deadline=native.deadline
+        native.prepare_jacobian()
         initial=float(packet['parameters'].psi_child)
         bounds=initial*np.array(plan['search_bound_ratios'])
         controls=dict(plan['fit'],total_seconds=max(0.,native.deadline-time.monotonic()))

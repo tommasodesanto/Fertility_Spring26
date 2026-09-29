@@ -11,6 +11,27 @@ import e5f_social_security_root as social_root
 
 
 class FourShockAccelerationTest(unittest.TestCase):
+    def test_extend_measured_lags_keeps_cross_date_entries_and_zero_fills_only_unmeasured_lags(self):
+        columns=[np.array([1.,-2.,.3,.1,-.2,.4]),np.array([.2,.3,.4,.0,-1.,.0])]
+        matrix,receipt=acceleration.assemble_jacobian(columns,3,1)
+        receipt.update(residual_units='physical_unscaled',coordinate_order=list(acceleration.UNKNOWN_BLOCKS))
+        np.testing.assert_array_equal(acceleration.extend_measured_jacobian(receipt,3),matrix)
+        extended=acceleration.extend_measured_jacobian(receipt,6)
+        self.assertEqual(extended[2,3],1.)
+        self.assertEqual(extended[3,2],.3)
+        self.assertEqual(extended[0,5],0.)
+        self.assertEqual(extended[7,1],-.2)
+        self.assertEqual(extended[7,7],-1.)
+
+    def test_extend_rejects_stale_units_incomplete_profiles_and_bad_support(self):
+        _,receipt=acceleration.assemble_jacobian([np.ones(6),np.ones(6)],3,1)
+        receipt.update(residual_units='scaled_200',coordinate_order=list(acceleration.UNKNOWN_BLOCKS))
+        with self.assertRaisesRegex(ValueError,'convention'):acceleration.extend_measured_jacobian(receipt,6)
+        receipt['residual_units']='physical_unscaled';receipt['measured_lags']=[-2,0,1]
+        with self.assertRaisesRegex(ValueError,'support'):acceleration.extend_measured_jacobian(receipt,6)
+        receipt['measured_lags']=[-1,0,1];receipt['lag_profiles'].pop(next(iter(receipt['lag_profiles'])))
+        with self.assertRaisesRegex(ValueError,'Complete'):acceleration.extend_measured_jacobian(receipt,6)
+
     def arguments(self, evaluate, **changes):
         values = dict(
             closure="fixed_tax", initial_prices=np.array([1.0]),

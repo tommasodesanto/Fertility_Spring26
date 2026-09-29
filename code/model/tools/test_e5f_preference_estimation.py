@@ -99,6 +99,20 @@ class ShockEstimationTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError,'disabled'):driver.validate_plan(p,launching=True)
         with self.assertRaises(ValueError):driver.draft_plan('four_announced')
 
+    def test_policy_budget_counts_full_backward_forward_seed_work_at_each_horizon(self):
+        for seed_horizon in (6,10):
+            with self.subTest(seed_horizon=seed_horizon):
+                p=driver.draft_plan();p.update(execution_enabled=True,horizons=[6,8],target_contract={'rows':self.targets([1.]*4)},
+                    readiness_receipt='ready',source_pins={'source':'pin'})
+                p['acceleration'].update(seed_horizon=seed_horizon,perturbed_date=2)
+                p['budget'].update(total_seconds=1,candidate_seconds=1,endpoint_seconds=1,mapping_seconds=1,path_seconds=1,jacobian_seconds=1)
+                f,e,path=p['fit'],p['endpoint'],p['path'];stages=4
+                expected=10*seed_horizon+stages*f['max_evaluations']*(e['max_evaluations']+2+sum(2*h*path['max_evaluations'] for h in p['horizons']))+8
+                p['budget']['maximum_policy_calls']=expected
+                self.assertEqual(driver.validate_plan(p,launching=True),[])
+                p['budget']['maximum_policy_calls']=expected-1
+                with self.assertRaisesRegex(ValueError,'Conservative solve count'):driver.validate_plan(p,launching=True)
+
     def test_empirical_window_builder_recomputes_annual_rates(self):
         with tempfile.TemporaryDirectory() as directory:
             blocks=Path(directory)/'blocks.csv';annual=Path(directory)/'annual.csv';b=[];a=[]
@@ -177,6 +191,74 @@ class ShockEstimationTests(unittest.TestCase):
         with self.assertRaises(ValueError):driver.inner.check_endpoint_primitives(P,Q)
         Q=copy.deepcopy(P);Q.income[0,0]+=1
         with self.assertRaises(ValueError):driver.inner.check_endpoint_primitives(P,Q)
+
+    def test_measured_seed_uses_only_five_unchanged_reference_mappings(self):
+        with tempfile.TemporaryDirectory() as directory:
+            p=driver.draft_plan();p['acceleration'].update(seed_horizon=6,perturbed_date=2)
+            p['budget'].update(total_seconds=30,candidate_seconds=30,mapping_seconds=20,jacobian_seconds=20)
+            P=NS(psi_child=.15,pension=.2)
+            reference=dict(parameters=P,solution=NS(p_eq=np.array([1.])))
+            runner=driver.NativeEstimator(p,Path(directory),{},reference,None);calls=[]
+            with self.assertRaisesRegex(ValueError,'Measure'):runner.initial_jacobian(8)
+            def mapping(*args,**kwargs):
+                self.assertIs(args[0],reference);self.assertIs(args[2],reference)
+                np.testing.assert_array_equal(args[6],np.full(6,.15))
+                prices,pensions=args[4:6];calls.append((prices.copy(),pensions.copy()))
+                x=np.log(prices);b=np.log(pensions/.2)
+                return NS(),dict(gates={'science':True},market_residual=-2*x+np.r_[x[1:],0.],fiscal_residual=.1*x-3*b)
+            with patch.object(driver.inner,'mapping',side_effect=mapping),patch.object(driver.inner,'terminal_checks',return_value={'all_checks_pass':True}):
+                runner.prepare_jacobian()
+            self.assertEqual(len(calls),5)
+            self.assertEqual(runner.seed_receipt['mapping_count'],5)
+            self.assertEqual(runner.seed_receipt['closure'],'fixed_tax')
+            self.assertEqual(runner.seed_receipt['expectations'],'current_shock_permanent_until_next_surprise')
+            self.assertTrue(runner.seed_receipt['scientific_validation']['baseline_mapping_and_terminal_passed'])
+            matrix=runner.initial_jacobian(8)
+            self.assertAlmostEqual(matrix[2,2],-2.)
+            self.assertAlmostEqual(matrix[2,3],1.)
+            self.assertAlmostEqual(matrix[10,2],.1)
+            self.assertAlmostEqual(matrix[10,10],-3.)
+            matrix[0,0]=99.;self.assertAlmostEqual(runner.initial_jacobian(8)[0,0],-2.)
+
+    def test_pinned_measured_seed_is_reused_only_with_matching_provenance_and_scientific_proof(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory);p=driver.draft_plan();p['acceleration'].update(seed_horizon=6,perturbed_date=2)
+            p['budget'].update(total_seconds=30,candidate_seconds=30,mapping_seconds=20,jacobian_seconds=20)
+            P=NS(psi_child=.15,pension=.2);reference=dict(parameters=P,solution=NS(p_eq=np.array([1.])))
+            measured=driver.NativeEstimator(p,root/'measured_run',{},reference,None)
+            with patch.object(driver.inner,'mapping',return_value=(NS(),dict(gates={'science':True},market_residual=[0.]*6,fiscal_residual=[0.]*6))),patch.object(driver.inner,'terminal_checks',return_value={'all_checks_pass':True}):
+                measured.prepare_jacobian()
+            receipt=root/'measured_run/jacobian_seed/measured/receipt.json'
+            p['acceleration']['seed_receipt']=dict(path=str(receipt),sha256=driver.inner.sha(receipt))
+            reused=driver.NativeEstimator(p,root/'reused_run',{},reference,None)
+            reused.prepare_jacobian()
+            self.assertTrue((root/'reused_run/jacobian_seed/reused_receipt.json').exists())
+            np.testing.assert_array_equal(reused.initial_jacobian(6),measured.initial_jacobian(6))
+            bad=driver.inner.read(receipt);bad['scientific_validation']['baseline_mapping_and_terminal_passed']=False
+            driver.inner.write(receipt,bad);p['acceleration']['seed_receipt']['sha256']=driver.inner.sha(receipt)
+            with self.assertRaisesRegex(ValueError,'scientific validation'):
+                driver.NativeEstimator(p,root/'rejected_run',{},reference,None).prepare_jacobian()
+
+    def test_path_uses_measured_cold_start_then_reuses_updated_warm_jacobian(self):
+        with tempfile.TemporaryDirectory() as directory:
+            p=driver.draft_plan();p['budget'].update(total_seconds=30,candidate_seconds=30,mapping_seconds=20,path_seconds=20)
+            P=NS(pension=.2);reference=dict(parameters=P,solution=NS(p_eq=np.array([1.])))
+            rt=NS(rt={'primitive':NS(pf=NS(rents_from_asset_prices=lambda *args:np.ones(6)))})
+            runner=driver.NativeEstimator(p,Path(directory),{},reference,rt)
+            cold=-2*np.eye(12);warm=-3*np.eye(12);seen=[]
+            runner.initial_jacobian=lambda H:cold.copy()
+            def mapping(*args,**kwargs):
+                return NS(terminal_state=NS(g_pre=np.array([1.]))),dict(gates={'science':True},market_residual=[0.]*6,
+                    fiscal_residual=[0.]*6,rows=[dict(asset_price=1.)]*6,fertility=[dict(period_tfr_topcode_adjusted=2.)]*6)
+            def root(**kwargs):
+                seen.append(kwargs['initial_jacobian'].copy())
+                kwargs['evaluate'](kwargs['initial_prices'],kwargs['initial_fiscal_values'])
+                return dict(converged=True,final={'prices':np.ones(6),'fiscal_values':np.full(6,.2)},final_jacobian=warm)
+            with patch.object(driver.inner,'mapping',side_effect=mapping),patch.object(driver.inner,'terminal_checks',return_value={'all_checks_pass':True}),patch('e5f_four_shock_acceleration.solve_joint_with_acceleration',side_effect=root):
+                for index in range(2):runner.path(.15,{'parameters':P},{'price':1.},6,Path(directory)/str(index))
+            np.testing.assert_array_equal(seen[0],cold);np.testing.assert_array_equal(seen[1],warm)
+            warm[0,0]=99.
+            self.assertEqual(runner.warm[6]['final_jacobian'][0,0],-3.)
 
 
 if __name__=='__main__':unittest.main()

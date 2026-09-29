@@ -48,9 +48,15 @@ foresight price/pension forecast, checks longer horizons, and measures fertility
 Only an accepted fit advances the household distribution and both entry queues,
 under the original forecast's next price and value function. Saved credit,
 physical housing stock and payroll tax are preserved. Exact policy caching,
-bounded endpoint reuse and the two-block accelerated root are retained.
-Execution is disabled; shock levels and endpoints are now internal unknowns,
-not author-supplied inputs. Test evidence and remaining numerical settings are in
+bounded endpoint reuse and the two-block accelerated root are retained. Cold
+starts use a measured cross-date Jacobian from the unchanged reference; accepted
+root updates warm-start subsequent proposals. Pinned derivative receipts can be
+shared between cases. The cluster controller permits an explicit cache budget.
+Draft plans remain disabled. The author authorized launch after readiness on
+September 28; shock levels and endpoints are internal unknowns. Launch receipts,
+finite budgets and read-only overnight monitoring are indexed in
+`../../output/model/fixed_reference_transition_20260928/four_shock_v1/launch_v2/README.md`.
+Earlier test evidence is in
 `../../output/model/fixed_reference_transition_20260928/four_shock_v1/README.md`.
 
 `tools/e5f_current_transition_runtime.py` loads the authenticated September 27

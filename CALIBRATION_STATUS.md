@@ -1,5 +1,21 @@
 # Calibration Status
 
+## September 28 night — historical shock estimation queued behind native readiness
+
+The author authorized the four-successive-surprise fit and the one-permanent-shock
+alternative from the immutable block0506 reference. Jobs **18765931** and
+**18765932** depend on native smoke **18765176** passing; they were pending at
+submission, with no historical estimate yet. Each has a 12-hour estimator budget,
+104/128-date horizon checks, measured cross-date initialization, warm starts and
+a 64-GiB exact-policy cache. Both retain the prepared credit, entry, housing and
+payroll-tax contract; the inherited estate settlement remains provisional.
+
+Launch evidence and all finite budgets are in
+`output/model/fixed_reference_transition_20260928/four_shock_v1/launch_v2/`.
+Read-only checks run every 30 minutes for major failures; no overnight repairs,
+restarts, resubmissions or parameter changes are authorized. These jobs are
+separate from the stationary calibration streams below.
+
 ## September 28 — two-birth mechanism verified; benefit adjustment reverses early gain
 
 The isolated corrected experiment passes: smoke 18758966 (16 tests and a full

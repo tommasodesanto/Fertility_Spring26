@@ -1,4 +1,4 @@
-"""Two-block acceleration helpers for the announced four-shock transition.
+"""Two-block acceleration helpers for the four-successive-surprise transition.
 
 The transition's root coordinates are log house prices and log period pensions.
 Its residuals remain physical housing imbalance and unscaled PAYGO imbalance;
@@ -81,6 +81,36 @@ def _validate_initial_jacobian(initial_jacobian, horizon):
         raise ValueError("old three-block scaled-200 Jacobian is incompatible with the two-block physical root")
     if matrix.shape != (2 * horizon, 2 * horizon) or not np.isfinite(matrix).all():
         raise ValueError("initial_jacobian must be a finite 2T by 2T physical-log-coordinate matrix")
+
+
+def extend_measured_jacobian(receipt, horizon):
+    """Reuse measured lag responses as an approximate seed at another horizon.
+
+    Unmeasured lags are zero, never extrapolated economic derivatives. The
+    nonlinear root must still pass its original physical and replay gates.
+    """
+    if type(horizon) is not int or horizon<=0:
+        raise ValueError('Positive integer forecast horizon required')
+    if (receipt.get('unknown_blocks')!=list(UNKNOWN_BLOCKS) or
+            receipt.get('residual_blocks')!=list(RESIDUAL_BLOCKS) or
+            receipt.get('residual_units')!='physical_unscaled' or
+            receipt.get('coordinate_order')!=list(UNKNOWN_BLOCKS)):
+        raise ValueError('Measured seed must use the two-block physical/log convention')
+    measured=receipt['horizon'];date=receipt['perturbed_date']
+    if type(measured) is not int or measured<=0 or type(date) is not int or not 0<=date<measured:
+        raise ValueError('Invalid measured horizon/date')
+    lags=list(range(-date,measured-date))
+    if receipt['measured_lags']!=lags:raise ValueError('Measured lag support changed')
+    names={r+'<-'+u for r in RESIDUAL_BLOCKS for u in UNKNOWN_BLOCKS}
+    if set(receipt['lag_profiles'])!=names:raise ValueError('Complete two-block lag profiles required')
+    matrix=np.zeros((2*horizon,2*horizon))
+    for i,residual in enumerate(RESIDUAL_BLOCKS):
+        for j,unknown in enumerate(UNKNOWN_BLOCKS):
+            profile=np.asarray(receipt['lag_profiles'][residual+'<-'+unknown],float)
+            if profile.shape!=(measured,) or not np.isfinite(profile).all():
+                raise ValueError('Finite measured lag profile required')
+            matrix[i*horizon:(i+1)*horizon,j*horizon:(j+1)*horizon]=toeplitz_block(lags,profile,horizon)
+    return matrix
 
 
 @contextmanager

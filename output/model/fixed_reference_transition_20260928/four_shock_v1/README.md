@@ -1,4 +1,9 @@
-# One- and four-shock estimation preparation
+# One- and four-shock estimation
+
+**September 28 launch authorization:** Tommaso authorized launch once ready, then
+read-only overnight monitoring for major failures. This supersedes the earlier
+test-only instruction. Current checks, speedups, budgets and launch status are in
+[`launch_v2/README.md`](launch_v2/README.md); retained preparation evidence follows.
 
 The active driver is `code/model/tools/run_e5f_preference_estimation.py`.
 The September 28 author correction supersedes the earlier announced-path
@@ -32,9 +37,9 @@ than the explicit shock, and saved DUE credit are inherited unchanged from the
 Physical stock is held at its actual reference quantity, not its supply-curve
 intercept. Prices and period pensions jointly clear housing and PAYGO under
 perfect foresight; rents follow the dated asset-pricing relation. The saved
-elastic housing rule remains an explicit alternative. No credit experiment,
-historical preference fit or shocked transition is authorized. Only synthetic
-tests and unchanged-preference native integration checks are run here.
+elastic housing rule remains an explicit alternative. No credit experiment or
+alternative economic specification is adopted. The historical fit is now
+authorized after readiness; the preparation checks below held preferences fixed.
 
 ## Current estimator verification
 
@@ -107,13 +112,13 @@ entry queues and terminal distribution/population convergence. Standard
 diagnostics are wired for first/middle/final dates. Longer-horizon comparison
 and visual review remain separate requirements.
 
-New estimator plans remain `execution_enabled: false`. Before a future launch:
+New draft plans remain `execution_enabled: false`. For the authorized launch:
 
 - Choose increasing terminal horizons and finite time/evaluation budgets.
   Each forecast must satisfy terminal and horizon checks before its fertility
   enters the objective. No shocked-horizon adequacy is claimed from baseline tests.
-- Receive the author's subsequent instruction to run. The current instruction
-  authorizes preparation only. No separate approval system is invented here.
+- Pin a separately enabled plan after current-source readiness passes. The
+  author's September 28 instruction already authorizes the launch.
 
 The provisional estate settlement remains an economic outstanding item in the
 canonical status. These checks certify the unchanged native mapping and code
