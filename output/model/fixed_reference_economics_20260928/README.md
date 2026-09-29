@@ -180,6 +180,22 @@ these shares do not establish whether down payments are quantitatively weak.
 
 ### Exact baseline credit rules (September 29 source check)
 
+**Author review outstanding, September 29:** Tommaso questioned whether he had
+approved the renter repayment taper and expected a positive borrowing limit.
+Keep the frozen reference intact; do not present the taper as newly endorsed.
+The bounded provenance check found both `lambda_d=0` and the 42–62 taper in
+commit `411616d2` (July 16, recording July 10–16 machinery). The parent solver
+already required nonnegative renter saving, so the zero new-credit baseline
+predates the explicit multiplier. The July 18/19 forks inherited the schedule.
+No direct human approval was found in the checked commits and candidate chats;
+this is not an exhaustive proof that approval never occurred. The September 26
+`docs/model/borrowing_negative_equity_resolution.md` explicitly classified the
+taper as inherited and its recommendation as not author-adopted. Credit-line
+size and inherited-debt repayment are separate outstanding specification choices.
+The author accepts the estate restriction and regards net-asset accounting as
+consistent with the intended framework. No model change or run is authorized
+by this provenance clarification alone.
+
 Let $b$ denote net financial assets (negative means debt), $b'$ next-period
 assets, $pH$ a home's value, $y$ current after-tax period income, and
 $R=1.08243216$ the four-year gross return. These are the frozen baseline rules:
