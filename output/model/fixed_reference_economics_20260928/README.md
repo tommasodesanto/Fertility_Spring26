@@ -223,6 +223,27 @@ submitted. See `renter_taper_audit_v1/result_v1/README.md`. The inspected actual
 September 14 PDF SHA256 is
 `34f4d52e9587bc7fd7eb2fac8e8d7cf2d535b128ff74ad91a92e72c492b7c98a`.
 
+**Author decision, September 29:** remove the arbitrary renter 42–62 repayment
+taper. Preserve zero new unsecured credit and lifetime repayment/nonnegative
+estates. The advisor Google Doc, *Fertility  Tommaso- Working Document*
+(`1hxESCRA89O028-Kx4LmBjdM19R_CobIkn_GkJdMgbbo`, read at revision modified
+2026-09-29 22:33:16 UTC), does not disclose the taper in its fetched tabs.
+Its statements that the borrowing rule is “chosen” do not establish approval
+of this omitted restriction. This chat did not edit that document.
+
+The replacement must be specified separately from its computation: before
+death-risk dates, an indebted renter may retain, but not increase, principal
+($b'\geq\min(b,0)$). At a decision with positive mortality or certain terminal
+death, nonnegative renter estate requires $b'\geq0$, since renters have no
+house to liquidate and saving precedes death. Simply flattening taper weights
+does not enforce that mortality requirement in the current renter kernel.
+The three frozen source files were reauthenticated on Torch against the
+reference hashes. This is a proposed implementation of the author's removal
+decision, not a computed solution or a replacement reference. The first
+controlled recomputation should keep all parameters, including child-benefit
+level, fixed; subsequent recalibration remains a separate decision and belongs
+to the calibration chat. No new numerical budget or production run was launched.
+
 Let $b$ denote net financial assets (negative means debt), $b'$ next-period
 assets, $pH$ a home's value, $y$ current after-tax period income, and
 $R=1.08243216$ the four-year gross return. These are the frozen baseline rules:
