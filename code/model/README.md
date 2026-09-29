@@ -63,7 +63,7 @@ The bounded numerical follow-up is `../cluster/run_e5f_preference_budget_diagnos
 it tests a pension-accounting update at fixed house prices and unchanged reference
 preferences, first on six dates and then on 104 with a fresh repeat. It does not
 estimate shocks or certify horizon robustness. Its pinned launch and results are
-in `../../output/model/fixed_reference_transition_20260928/four_shock_v1/budget_diagnostic_v1/`.
+in `../../output/model/fixed_reference_transition_20260928/four_shock_v1/budget_diagnostic_v2/`.
 
 `tools/e5f_current_transition_runtime.py` loads the authenticated September 27
 calibration into the current native solver. It explicitly enables the accepted

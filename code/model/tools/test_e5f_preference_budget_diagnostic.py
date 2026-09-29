@@ -12,6 +12,19 @@ from types import SimpleNamespace
 PATH = Path(__file__).resolve().parents[2] / 'cluster' / 'run_e5f_preference_budget_diagnostic.py'
 SPEC = importlib.util.spec_from_file_location('budget_diagnostic', PATH)
 driver = importlib.util.module_from_spec(SPEC); SPEC.loader.exec_module(driver)
+TRANSITION_PATH = Path(__file__).with_name('run_e5f_preference_transition.py')
+TRANSITION_SPEC = importlib.util.spec_from_file_location('budget_diagnostic_transition', TRANSITION_PATH)
+transition = importlib.util.module_from_spec(TRANSITION_SPEC); TRANSITION_SPEC.loader.exec_module(transition)
+
+
+class WriterTests(unittest.TestCase):
+    def test_numpy_values_roundtrip_and_invalid_values_reject(self):
+        path = Path(tempfile.mkdtemp()) / 'receipt.json'
+        value = dict(nested=[np.array([1., 2.]), dict(float=np.float64(.5), integer=np.int64(4), boolean=np.bool_(True))])
+        driver.write(path, value)
+        self.assertEqual(driver.read(path), {'nested': [[1., 2.], {'boolean': True, 'float': .5, 'integer': 4}]})
+        with self.assertRaises(ValueError): driver.write(path, {'nonfinite': np.float64(np.nan)})
+        with self.assertRaises(TypeError): driver.write(path, {'unsupported': object()})
 
 
 class BudgetUpdateTests(unittest.TestCase):
@@ -85,7 +98,7 @@ class ExactLoopTests(unittest.TestCase):
                     cache={'actual_solves':1,'hits':2}, gates={'all':True})
 
     def make(self):
-        d=driver.Diagnostic(self.config(), Path(tempfile.mkdtemp()), object())
+        d=driver.Diagnostic(self.config(), Path(tempfile.mkdtemp()), SimpleNamespace(plain=transition.plain))
         d.setup=lambda: setattr(d, 'reference', dict(q=1., psi=.1, pension=1.))
         d.evaluator=SimpleNamespace(rt={'primitive':SimpleNamespace(pf=SimpleNamespace(birth_queue_values=lambda x: np.asarray(x)))})
         return d
@@ -112,6 +125,30 @@ class ExactLoopTests(unittest.TestCase):
         d.mapping=mapping
         result=d.run()
         self.assertFalse(result['numerical_certified']); self.assertEqual(calls, ['baseline','trial'])
+
+    def test_real_mapping_writes_numpy_terminal_and_replay_receipts(self):
+        d=self.make(); calls=[]
+        def native_mapping(*_args, **_kwargs):
+            state=SimpleNamespace(g_pre=np.zeros((7,)), scheduled_entries=np.arange(7.), scheduled_raw_entries=np.arange(7.))
+            record=self.record()
+            for row in record['rows']:
+                row['payroll_tax_revenue']=1.; row['pension_outlays']=1.
+            return SimpleNamespace(terminal_state=state), record
+        def terminal_checks(*_args, **_kwargs):
+            calls.append(True)
+            return dict(all_checks_pass=True, terminal_birth_queue=np.arange(7.), stationary_birth_queue=np.arange(7.),
+                        native_flag=np.bool_(True), count=np.int64(7), scalar=np.float64(.25))
+        d.inner.mapping=native_mapping; d.inner.terminal_checks=terminal_checks
+        result=d.run()
+        self.assertTrue(result['numerical_certified']); self.assertEqual(len(calls), 3)
+        latest=driver.read(d.output / 'latest_completed.json')
+        self.assertEqual(latest['terminal']['terminal_birth_queue'], list(np.arange(7.)))
+        self.assertEqual(latest['terminal']['stationary_birth_queue'], list(np.arange(7.)))
+        self.assertEqual(latest['terminal']['native_flag'], True)
+        self.assertEqual(latest['terminal']['count'], 7)
+        self.assertEqual(len(driver.read(d.output / 'best_so_far.json')['terminal']['terminal_birth_queue']), 7)
+        driver.write(d.output / 'completed_result.json', result)
+        self.assertEqual(driver.read(d.output / 'completed_result.json')['outcome'], 'certified')
 
 
 if __name__ == '__main__': unittest.main()

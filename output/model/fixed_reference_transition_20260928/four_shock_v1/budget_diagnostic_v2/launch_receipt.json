@@ -1,0 +1,74 @@
+{
+  "allocated_cpus": 4,
+  "budgets": {
+    "full_mapping_seconds": 10800,
+    "full_total_seconds": 14400,
+    "slurm_seconds": 18000,
+    "smoke_mapping_seconds": 1800,
+    "smoke_total_seconds": 2700
+  },
+  "cache_gib": 64,
+  "config_sha256": {
+    "full": "1babba60857d563277bda9d570735a5a651bb599fd384a71b8dcad3b3e9b7e3f",
+    "smoke": "0e9e4c9349aef57a6fae719818a48dc7365494f06ebabb413e616b8df986ceee"
+  },
+  "economic_changes": [],
+  "expected_wall_seconds": [
+    10800,
+    14400
+  ],
+  "horizons": {
+    "full": 104,
+    "smoke": 6
+  },
+  "job_id": "18820811",
+  "launcher_sha256": "4d096c2ab14aead10d51f9f029620472c90b76a09ab9e218c656225452d4a5b2",
+  "maximum_mappings": {
+    "full": 2,
+    "smoke": 3
+  },
+  "maximum_policy_calls": 452,
+  "memory_gib": 96,
+  "monitor": {
+    "automation_id": "monitor-shock-solver-diagnostic",
+    "interval_minutes": 30,
+    "read_only": true
+  },
+  "no_automatic_repair_restart_or_estimation": true,
+  "numerical_threads": 1,
+  "prior_attempt": {
+    "elapsed": "00:06:44",
+    "job_id": "18818674",
+    "reason": "NumPy array serialization while writing first smoke mapping receipt; correction not attempted",
+    "state": "FAILED"
+  },
+  "pure_tests_passed": 66,
+  "purpose": "fixed-price pension correction at unchanged reference preference; not estimation",
+  "recorded_utc": "2026-09-29T21:22:46.734006+00:00",
+  "reporting_regression": {
+    "path": "/scratch/td2248/projects/fixed_reference_transition_20260928/four_shock_v1/budget_diagnostic_v2/reporting_regression.json",
+    "sha256": "8b8dc12d7e4c082e49356ae61d3f25a4c8a18e7c4b662288644e271d5787bd07"
+  },
+  "source_change": "Diagnostic JSON writer handles native arrays/scalars; terminal diagnostics normalized before replay comparison. No numerical changes from v1.",
+  "source_pins": {
+    "e5f_exact_policy_cache.py": "1e8a029247bb80e9a023b11b7eba047402867841e2f99cbf159bbb9f8aa51609",
+    "e5f_four_shock_acceleration.py": "9e8e3bba6c405df22c597b6a5319592daaae1883f850acfbb7dde5b55b716373",
+    "e5f_matched_pf_path_root.py": "1f827bad0c87f2c75d1ea76f1f059494cc67ca5390135087780691cc0ead2c80",
+    "e5f_preference_shock_fit.py": "495b61b0b0aaf577d49ba36d7274c7207c9be546f544113fa30c3c805d46412f",
+    "e5f_social_security_root.py": "269f3d5017da3a240d0a80d9b168471e6c6cd6c55e9617041c70bfb1085cd77a",
+    "e5f_ssj_scaled_step_root.py": "c26d312afa179e296439ba94e8826a5f84f6823c6bf0ca1892889e5e55af059b",
+    "e5f_ssj_toeplitz_jacobian.py": "94c448367c139682c3bc06336dba27ab3ddb384e99120201cc1000d8509dead0",
+    "run_e5f_preference_budget_diagnostic.py": "6c32156788043a58218777624d4adf40cd6d206d31b224c2bd0223e31f67e1b7",
+    "run_e5f_preference_estimation.py": "bd93821847439b54667706d17f95ff6e114291c3dc321eb7cb7bf06cb1f3ed1e",
+    "run_e5f_preference_transition.py": "26802381cec56be33794a526eeec80eb6066c09ae59ab6e5957d0cee2e26f1ac"
+  },
+  "status": "submitted_after_reporting_regression",
+  "timing_basis": "Previous full changed-path maps took89-106minutes; at most2fullmaps plus6-date smoke",
+  "tolerances": {
+    "fiscal": 1e-06,
+    "market": 0.0002,
+    "replay": 1e-10,
+    "terminal": 0.001
+  },
+  "verification_job": "18820759"
+}

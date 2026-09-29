@@ -53,10 +53,16 @@ def read(path):
     return json.loads(Path(path).read_text())
 
 
+def _json_default(value):
+    if hasattr(value, 'tolist'):
+        return value.tolist()
+    raise TypeError(f'Object of type {type(value).__name__} is not JSON serializable')
+
+
 def write(path, value):
     path = Path(path); path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + '.tmp')
-    temporary.write_text(json.dumps(value, indent=2, sort_keys=True, allow_nan=False) + '\n')
+    temporary.write_text(json.dumps(value, indent=2, sort_keys=True, allow_nan=False, default=_json_default) + '\n')
     temporary.replace(path)
 
 
@@ -241,6 +247,7 @@ class Diagnostic:
         validate_record_residuals(record, H)
         terminal = self.inner.terminal_checks(self.packet, self.evaluator, self.terminal, self.endpoint, result,
             [psi] * H, dict(terminal_tolerances={k: 1e-3 for k in TERMINAL_TOLERANCES}, raw_queue_relative_tolerance=1e-3))
+        terminal = self.inner.plain(terminal)
         accepted = (all(record['gates'].values()) and terminal['all_checks_pass'] and
                     max(map(abs, record['market_residual'])) <= GATES['market'] and max(map(abs, record['fiscal_residual'])) <= GATES['fiscal'])
         receipt = dict(phase='mapping', last_completed=name, name=name, coordinates=dict(asset_price=q, psi_child=psi, pensions=list(map(float, pensions))),

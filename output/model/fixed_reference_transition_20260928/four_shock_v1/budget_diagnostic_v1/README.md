@@ -2,7 +2,10 @@
 
 Torch job **18818674** tests one numerical correction after both launch_v3 fits
 failed before fitting any shock. It is not a new estimation launch. All 64 pure
-tests and both actual-config preflights passed; native smoke is running.
+tests and both actual-config preflights passed, but the job FAILED after 6m44s
+while writing the first smoke receipt: a NumPy array was not JSON serializable.
+The pension correction and full stage were never reached. The reporter fix and
+author-authorized retry are retained in the adjacent budget_diagnostic_v2 packet.
 
 At the unchanged September 28 block0506 preference and fixed house-price path,
 set each dated pension to its old value times recorded payroll revenue divided

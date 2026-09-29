@@ -37,9 +37,13 @@ once both jobs end. It cannot repair, restart, extend or promote the experiment.
 ## September 29 — bounded pension-correction diagnostic
 
 The author authorized a focused numerical diagnostic after the failed fits.
-Torch **18818674** passed all 64 pure tests and both actual-config preflights.
-It runs a six-date pension-correction smoke, then only on success tries the same
-correction on 104 dates and a fresh repeat. At the
+The first diagnostic **18818674** failed after 6m44s while serializing NumPy
+arrays in its first smoke receipt, before attempting the correction. The reporter
+now handles native arrays/scalars and normalizes terminal arrays for repeat
+comparison. Verification **18820759** passed 66 tests, reproduced the old failure
+using saved diagnostic data, and verified exact reporting after the fix, without
+model solves. Retry **18820811** runs a six-date pension-correction smoke, then
+only on success tries the same correction on 104 dates and a fresh repeat. At the
 unchanged block0506 preference, it holds already-clearing house prices fixed and
 updates each pension by recorded payroll revenue divided by pension outlays;
 new household policies and distributions determine whether the update works.
@@ -52,7 +56,7 @@ Slurm limit, 64-GiB cache and 96-GiB memory. Full mappings have three-hour limit
 within a four-hour stage. The thirty-minute monitor is read-only and stops on
 job termination; no automatic repair, restart or estimation launch. Receipt,
 source/config pins and subsequent test/result evidence are indexed in
-`output/model/fixed_reference_transition_20260928/four_shock_v1/budget_diagnostic_v1/`.
+`output/model/fixed_reference_transition_20260928/four_shock_v1/budget_diagnostic_v2/`.
 
 ## September 29 — historical shock retry stopped before estimation
 
