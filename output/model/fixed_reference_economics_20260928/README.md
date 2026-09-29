@@ -37,14 +37,20 @@ fertility renormalization, or automatic adoption of another chat's candidate.
 
 ## Current priorities and useful output
 
-The author has authorized the [two-case price-elasticity recovery](elasticity_v1/README.md)
-after the checkpoint-writing timeout: only the missing +1% baseline-credit and
-solvency-only-credit cases, with a fresh explicit two-solve/35-minute budget.
-The lead reviewed the isolated saving correction and verified the passing Torch
-smoke. Production job **18815133** is submitted (pending priority at 15:10 EDT);
-only the two missing cases may run. Zero-solve rendering job **18815186** depends
-on its successful completion. Hourly monitoring is active. The prior passed
-cases, frozen calibration, and completed supply/borrowing GE evidence are preserved.
+The [three-price elasticity comparison](elasticity_v1/recovery_v1/README.md)
+is complete and authenticated. Recovery **18815133** used exactly two new solves
+and finished in 17 minutes 37 seconds within the approved 35-minute limit.
+Immediate-birth price elasticities are **−0.437** with baseline borrowing limits
+and **−0.469** with lifetime repayment only; completed-cohort-fertility slopes
+are **−0.536** and **−0.555**. Removing artificial limits raises fertility levels
+but does not attenuate the local price response at the common reference price.
+House price and mapped rent move together with preferences fixed. These are
+prescribed-price responses, separate from the GE endpoints below.
+The lead checked the [supplemental figure](slide_inputs_v1/recovery_render_v2/actual_output/price_response.pdf)
+and [compact table](slide_inputs_v1/recovery_render_v2/actual_output/local_elasticities.csv).
+Full 14-row fits, 31 parameters, 17 standard plots and source/checkpoint evidence
+are linked in the readout. The monitor is paused; ±2% robustness remains uncomputed.
+The frozen calibration and completed supply/borrowing GE evidence are preserved.
 
 The [supplemental housing-supply figure](slide_inputs_v1/rendered_output_v2/supplemental_housing_supply.pdf)
 and [borrowing table](slide_inputs_v1/rendered_output_v2/borrowing_comparison.tex)

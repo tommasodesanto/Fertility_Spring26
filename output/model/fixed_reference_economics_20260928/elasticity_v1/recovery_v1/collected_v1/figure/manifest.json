@@ -1,0 +1,40 @@
+{
+  "reference_label": "2007 stationary reference — block0506, September 28 verified export",
+  "status": "passed",
+  "complete_three_price": true,
+  "complete_five_price": false,
+  "factors": [
+    0.99,
+    1.0,
+    1.01
+  ],
+  "step_sizes": [
+    0.01
+  ],
+  "figures_are_supplemental": true,
+  "synthetic_test_only": false,
+  "outputs": [
+    "price_response.png",
+    "price_response.pdf",
+    "local_elasticities.csv",
+    "local_elasticities.tex"
+  ],
+  "sources": [
+    {
+      "path": "/scratch/td2248/projects/fixed_reference_elasticity_recovery_20260929/solve_v1/comparison.csv",
+      "sha256": "d64d80440b99adaa10c8075d1849f69a4f68c15b4429a2727145fdbdbc586a2a"
+    },
+    {
+      "path": "/scratch/td2248/projects/fixed_reference_elasticity_recovery_20260929/solve_v1/elasticities.csv",
+      "sha256": "6c9db5054be8c728d8dcf98d6ff92c5ada4ef39d772de1a9c7c7df3172c5586d"
+    },
+    {
+      "path": "/scratch/td2248/projects/fixed_reference_elasticity_recovery_20260929/solve_v1/completed.json",
+      "sha256": "b7a2fb0c0a7e9408ea35e789038f54d9c25c398ff37d46c23f1d15b9240a8f9f"
+    },
+    {
+      "path": "/scratch/td2248/projects/fixed_reference_economic_figures_20260929/recovery_render_v1/source_v1/build_three_price_inputs.py",
+      "sha256": "7e0d3a806dca7c0f27fce677921de5fef105a3aec3f11efa5e6beb9b5d06d766"
+    }
+  ]
+}

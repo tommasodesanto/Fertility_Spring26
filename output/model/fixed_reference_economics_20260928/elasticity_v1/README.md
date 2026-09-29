@@ -1,5 +1,20 @@
 # Local housing-price elasticities: union-grid successor
 
+**September 29 completed and authenticated:** the two-case recovery **18815133**
+finished in 17 minutes 37 seconds, within its separate 35-minute budget. Both
+new checkpoint hashes and all receipts/tables/17-plot packets pass collection
+verification. Centered ±1% price elasticities for immediate births are **−0.437**
+under baseline borrowing limits and **−0.469** with lifetime repayment only;
+cohort completed-fertility elasticities are **−0.536** and **−0.555**. House
+prices and mapped rents move together; preferences including psi stay fixed.
+These are prescribed-price household responses, not cleared GE or transitions.
+See the [compact readout and full tables](recovery_v1/README.md),
+[final supplemental figure](../slide_inputs_v1/recovery_render_v2/actual_output/price_response.pdf),
+and [elasticity table](../slide_inputs_v1/recovery_render_v2/actual_output/local_elasticities.csv).
+The lead checked the slopes and actual chart. The monitor is paused after
+delivery; no extra cases, normalization, ±2% robustness or new grid tests ran.
+All launch/stop descriptions below are historical.
+
 **September 29 recovery authorization:** after the lead proposed completing
 only the two +1% cases with a new two-solve, 15-minute-per-case, 35-minute-total
 budget, the author instructed the lead to proceed. The cheaper workers completed

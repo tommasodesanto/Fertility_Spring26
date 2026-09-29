@@ -1,5 +1,10 @@
 # Three-price recovery figure and table
 
+**Historical render:** actual job 18815186 passed. The lead's visual check found
+overlapping footer lines, corrected by the formatting-only [v2 successor](../recovery_render_v2/README.md)
+on Torch 18817838. Use its final figure; v1 numerical inputs and table values
+are unchanged and this packet remains preserved.
+
 **Synthetic Torch verification passed:** job **18814969**, including rendered
 test-only output and rejection of wrong hashes, missing factors, wrong regimes,
 comparison/elasticity disagreement, and a false five-price completion claim.

@@ -1,0 +1,69 @@
+{
+  "status": "passed",
+  "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "remote_root": "/scratch/td2248/projects/fixed_reference_elasticity_recovery_20260929/solve_v1",
+  "renderer_root": "/scratch/td2248/projects/fixed_reference_economic_figures_20260929/recovery_render_v1/results/actual_v1",
+  "plan_sha256": "b12c59a89b1259494de94c071b2e1176b5e22afaf8503ea36d7e47b3b30c0962",
+  "driver_sha256": "fafec584517acdbe0872296711cfe2b5be11a242d2b2de0179e3720e055ab012",
+  "plan_matches_remote": true,
+  "completed": {
+    "status": "passed",
+    "complete_three_price": true,
+    "complete_five_price": false,
+    "factors": [
+      0.99,
+      1.0,
+      1.01
+    ],
+    "step_sizes": [
+      0.01
+    ],
+    "outcome_rows": 84,
+    "elasticity_rows": 28,
+    "new_lifecycle_solves": 2,
+    "reused_case_count": 6,
+    "market_clearing_certified": false
+  },
+  "new_cases": {
+    "reference_1010": {
+      "receipt_sha256": "51a63dafd30161fdd77167fa6ec33e1fc5694a55fca4c158e2e99286072c402f",
+      "checkpoint_sha256_fresh_remote_rehash": "672201b8a96c800eb2450438aa53ec8990750a941f63d4ea0f01c1f2f24ccb63",
+      "checkpoint_hash_matches_receipt_and_saved_marker": true,
+      "target_fit_rows": 14,
+      "parameter_rows": 31,
+      "standard_plots": 17
+    },
+    "credit_1010": {
+      "receipt_sha256": "3b70a1d54cc5ffbea908b0f5b33b77518ae662c976a4903db8e3418e42b1d9b6",
+      "checkpoint_sha256_fresh_remote_rehash": "ecbc56d83d79fd0cfedafd2e09e1347f23546f5e323c0585648346b8a3d6e5d8",
+      "checkpoint_hash_matches_receipt_and_saved_marker": true,
+      "target_fit_rows": 14,
+      "parameter_rows": 31,
+      "standard_plots": 17
+    }
+  },
+  "prior_six_receipt_sha256": {
+    "grid_control": "30ea3ea6d05d7268f45a8e50c5b4faa4f3ab5320d39a70f1c961effebb55dd6b",
+    "grid_control_repeat": "dfc2d5badcd5c7e0eadd4d3824d3f6b3f3c307b6587a5c607b60ec4b61383cdb",
+    "credit": "65180acd192a17f0f15cf1e301b1e9c37ceb9c776974c5f9ffd66486218afa1b",
+    "credit_repeat": "f89029f3f974a59a0f864488dd86f2b07c458743a687f4b54ff6cb35ebb400ec",
+    "reference_990": "c947552935c7561e8c191e7430c211177a731bb677e69694cfbad0fd59dabe09",
+    "credit_990": "3bc81f9aeff5d015e15db4c4bf931da6dd8544f5e486316ecd96f7d548a3cb92"
+  },
+  "prior_q0_exact_repeat_evidence": {
+    "grid_control_repeat": {
+      "array_count": 113,
+      "all_exact": true,
+      "max_abs": 0
+    },
+    "credit_repeat": {
+      "array_count": 107,
+      "all_exact": true,
+      "max_abs": 0
+    }
+  },
+  "collected_files_remote_hash_verified": 56,
+  "figure_manifest_sha256": "277cb3f73e6d65d4e104606c6cd343cdfc33499178346e300416576b4f63c335",
+  "checkpoints_downloaded": false,
+  "interpretation_limit": "Prescribed-price partial-equilibrium comparison; market clearing is not certified. Supply quantity follows the existing elastic supply rule."
+}

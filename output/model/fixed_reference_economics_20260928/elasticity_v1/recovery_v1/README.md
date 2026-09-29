@@ -1,5 +1,65 @@
 # Bounded +1% recovery, September 29
 
+**September 29 completed computation:** production **18815133** completed with
+exit 0:0 in 17 minutes 37 seconds; both new cases passed within their unchanged
+900-second limits (580.735 and 465.696 seconds). The completion receipt records
+1055.676 seconds from launcher entry, two new solves, six reused passed cases,
+and the separate historical failed attempt. No retries or extra cases ran.
+Independent collection authentication passed: both new checkpoints were freshly
+hashed on Torch and match their receipts and atomic-save markers; all six prior
+receipt pins and the q0 exact-repeat evidence match. Each new case retains all
+14 fit rows, 31 parameter rows and 17 standard plots. The lead reviewed the
+household/cohort/impact/solvency gates, including zero feasibility projection
+and nonnegative occupied solvency slack. Checkpoints remain on Torch.
+Zero-solve figure job **18815186** passed; formatting-only successor **18817838**
+corrected overlapping footer text. The lead reviewed the four-line layout diff,
+authenticated the collected source/output hashes and visually checked the PNG.
+The completed monitor is paused; no further numerical work is scheduled.
+
+The centered log elasticities across prescribed prices \(0.99q_0,1.01q_0\) are:
+
+| Outcome | Baseline borrowing limits | Lifetime repayment only |
+|---|---:|---:|
+| Total births, immediate response | -0.437 | -0.469 |
+| First births, immediate response | -0.880 | -0.906 |
+| Second births, immediate response | -0.114 | -0.116 |
+| Completed fertility, recomputed cohort | -0.536 | -0.555 |
+
+Impact weights use the same inherited households in both regimes. Cohort
+completed fertility instead follows lifecycle choices at each constant
+prescribed price, with the entry distribution fixed. The household distribution
+has unit mass; fertility is not normalized. At baseline credit rules, a 1% price
+and mapped-rent increase lowers immediate births 0.4348% and completed fertility
+from 2.100862 to 2.089593 (0.5364%, or 0.011269 children). First births account
+for 87.57% of the immediate decline. Removing artificial borrowing limits raises
+fertility levels at the common reference price but does not attenuate this
+local price response; the absolute elasticities are slightly larger. This is
+not a causal decomposition of the price effect into credit and other channels.
+
+Lower/upper one-sided slopes are close: immediate total births -0.4356/-0.4380
+under baseline credit and -0.4681/-0.4693 under lifetime repayment only;
+completed fertility -0.5324/-0.5405 and -0.5510/-0.5586. These establish local
+two-sided consistency, not step-size or grid convergence: ±2% cases remain
+uncomputed, and the finite-grid and estate-counterparty caveats remain.
+
+Only prescribed house price/mapped rent and the stated credit regime differ.
+Preferences including psi, earnings, entry/inherited distributions, fiscal
+inputs and housing-supply primitives stay fixed. **Physical stock is not
+imposed fixed in this price experiment:** the existing elastic supply rule is
+evaluated only for diagnostics and markets are not required to clear. These
+are prescribed-price household responses, not GE or transition estimates; the
+separately verified fixed-stock stationary comparison is unchanged.
+
+Evidence: [verification](collected_v1/verification.json), [completion](collected_v1/completed.json),
+[all outcome levels](collected_v1/comparison.csv) and [centered/one-sided elasticities](collected_v1/elasticities.csv).
+The final [supplemental figure](../../slide_inputs_v1/recovery_render_v2/actual_output/price_response.pdf)
+and [compact table](../../slide_inputs_v1/recovery_render_v2/actual_output/local_elasticities.csv)
+are ready. Full +1% baseline [fit](collected_v1/reference_1010/target_fit.csv) and
+[parameters](collected_v1/reference_1010/parameters.csv), and lifetime-repayment-only
+[fit](collected_v1/credit_1010/target_fit.csv) and [parameters](collected_v1/credit_1010/parameters.csv)
+include every row and reference bound. The [earlier six-case packet](../partial_readout_v1/README.md)
+retains all q0/−1% tables and diagnostics. The following submission details are historical.
+
 **Production submitted: Torch job 18815133**, pending priority at 15:10 EDT on
 September 29. The lead reviewed the unchanged scientific block, final saving
 logic and source identities and independently verified final smoke 18814979
