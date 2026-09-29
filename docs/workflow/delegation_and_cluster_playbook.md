@@ -49,8 +49,13 @@ answer with file/line evidence or a diff, checks performed, and uncertainty.
 If the answer needs an unstated economic assumption, source conflicts, a wider
 search, or a contract change, they stop and report it. The lead decides whether
 to answer from the available evidence, send a newly scoped pass, or
-ask the author about a genuine preference or scientific decision. Escalation
-responds to observed difficulty; it is not an automatic second model call.
+ask the author. Ask Tommaso directly if a material ambiguity remains after the
+smallest useful evidence check; pause the dependent decision and continue
+independent work. State the precise uncertainty and the choices it changes.
+Do not accept or present a low-confidence worker result as complete. The same
+evidence and verification standard applies regardless of worker cost.
+Escalation responds to observed difficulty; it is not an automatic second
+model call.
 
 Bound search before dispatch: name the likely folder or source, the question to
 settle, and what finding is sufficient to stop. Expand in bounded steps when

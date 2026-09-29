@@ -354,11 +354,15 @@ Workers must stop and report evidence and uncertainty when the scoped task
 requires an economic assumption, changes the target or model contract, finds
 conflicting sources, or exceeds its search or time limit. The lead then resolves
 the question or assigns a newly scoped pass at the needed capability. Do not let
-a worker guess, silently broaden the search, or automatically escalate every task to a
-frontier model. Review in proportion to risk: check cited lines and output for
-routine work, run a targeted check for code, and verify model-critical diffs
-line by line against the mathematics. Keep user-facing answers concise and
-link the evidence needed to audit them.
+a worker guess, silently broaden the search, or automatically escalate every
+task to a frontier model. If a material ambiguity remains after the smallest
+useful evidence check, ask Tommaso directly and pause the dependent decision;
+continue any independent work. Never fill a missing premise with an unmarked
+assumption or present a provisional result as complete. Lower-cost routing must
+not lower the standard of evidence or verification. Review in proportion to
+risk: check cited lines and output for routine work, run a targeted check for
+code, and verify model-critical diffs line by line against the mathematics.
+Keep user-facing answers concise and link the evidence needed to audit them.
 
 Before delegating, classify the work and choose the least expensive adequate
 route. Do not delegate a task that the lead can complete more quickly than the

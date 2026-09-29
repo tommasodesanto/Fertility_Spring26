@@ -27,4 +27,6 @@ Specify the checks to run, or state explicitly when no check should be run.
 ## Stop and report if
 
 List blockers, ambiguous requirements, unexpected existing changes, unsafe
-actions, or conditions that require the caller's decision.
+actions, conflicting evidence, missing premises, or conditions that require
+the caller's or author's decision. State the exact uncertainty and which result
+it could change; do not guess or claim completion while it is unresolved.
