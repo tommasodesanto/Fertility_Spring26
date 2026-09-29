@@ -1,5 +1,25 @@
 # Zero first-birth fixed-cost diagnostic
 
+## September 29 completion and readout
+
+Calibration **18817312** completed all 16 evaluations in 2h11m and passed both
+final repeats. Losses original / cost zero holding other coordinates fixed /
+bounded nine-parameter refit are 7.826 / 518.306 / 37.076. The selected restricted
+case is `zero_cost_012_gn0_1`; its first-birth taste scale is at the 0.020 lower
+bound. This was one local refitting round, not a proof of global infeasibility.
+No specification or calibration is adopted.
+
+Initial readout **18817376** failed because plain Python lacked matplotlib.
+Report-only repair **18830124** passed in five seconds with the existing
+Anaconda runtime, zero model solves and zero checkpoint reads. Complete
+[target fits](readout_v1/full_target_fit.csv),
+[parameter bounds](readout_v1/full_parameters.csv),
+[fertility lifecycle](readout_v1/fertility_lifecycle.png),
+[other lifecycle](readout_v1/other_lifecycle.png) and
+[verification](readout_v1/verification.json) are retained. The lead reviewed
+the fertility figure; the original 17 standard plots remain unchanged on Torch.
+The monitoring automation is paused.
+
 ## September 29 launch
 
 Torch exact-loop tests **18817270** passed all five cases; preparation

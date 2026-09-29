@@ -1,6 +1,49 @@
 # Calibration Status
 
-## September 29 — zero first-birth cost diagnostic launched
+## September 29 — separate taste-shock experiments registered
+
+The author proposed removing first-birth and later-birth taste shocks one at a
+time. They are **E04** and **E05** in
+`output/model/fertility_identification_20260928/EXPERIMENT_REGISTER.md`.
+Both start from E01's original one-birth selected candidate, including its
+positive first-birth cost, rather than E03's zero-cost refit. The selected scale
+is externally fixed exactly zero; conception risk remains. Initial comparisons
+hold the other nine coordinates fixed and normalize completed fertility to 2.1;
+any subsequent nine-parameter refit includes the first-birth cost within its
+original bounds. All ten scored targets, three validation rows, renewal gate,
+full tables and 17 standard diagnostic plots are retained.
+
+These are preparation records, not launched runs or adopted specifications.
+The active solver divides by positive scales; exact zero needs an isolated
+deterministic choice branch and explicit disclosure that zero lies outside the
+native 0.02 lower bound. Implementation, validation, search design and budgets
+remain outstanding. The register indexes the frozen reference and E01–E05,
+and distinguishes direct specification effects from refitting.
+
+## September 29 — zero first-birth cost diagnostic completed
+
+Calibration **18817312** completed all 16 evaluations in 2h11m; both final
+repeat screens passed. Original / cost-zero holding the other nine coordinates
+fixed / bounded nine-parameter refit losses are **7.826 / 518.306 / 37.076**.
+Completed fertility is normalized to 2.1 in all three. Removing the cost lowers
+childlessness at ages 40–44 from 19.818% to 11.936%, raises the one-child share
+among mothers from 21.403% to 29.609%, and lowers the recent-parent ownership
+gap from 12.704 to 6.560 percentage points. The refit yields 19.364%, 23.435%
+and 14.988 points respectively. Children by 25 are 0.530 / 0.566 / 0.546
+against 0.810. The first-birth taste scale reaches its 0.020 lower bound.
+This is one local derivative/refit round, not proof the zero-cost model cannot
+fit. Selected case is `zero_cost_012_gn0_1`, checkpoint identity
+`3727d214683aadd01c1458c2b3dcb89554f96ffef7c8f310bb5a76ec64dd4463`.
+The unchanged ten scored targets and bounds remain in force; no adoption.
+
+The monitor paused after termination. Initial report **18817376** failed because
+plain Python lacked matplotlib. Saved-output-only report repair **18830124**
+completed in five seconds using the existing Anaconda runtime on Torch.
+`zero_first_birth_cost_v1/readout_v1/` contains the full 14-row fit with weights,
+gaps and loss contributions, all 31 parameters and bounds, and supplemental
+fertility and other lifecycle figures. Its verification is repeat-checked;
+the lead reviewed the fertility figure. No model solve or checkpoint read was
+needed for this repair, and all 17 native standard plots per case are retained.
 
 The author requested a test of removing the first-birth utility fixed cost.
 Isolated packet `output/model/fertility_identification_20260928/zero_first_birth_cost_v1/`
@@ -10,7 +53,7 @@ cost 0.35270914196085973). This is an experimental restriction, not adoption:
 the **2007 stationary reference — block0506, September 28 verified export**
 and the other chat's transition work are untouched.
 
-Torch job **18817312** runs an authenticated anchor replay, a zero-cost case
+Torch job **18817312** ran an authenticated anchor replay, a zero-cost case
 holding the other nine coordinates fixed, nine finite-difference probes,
 three damped Gauss–Newton proposals, and two final repeats. The cost remains
 exactly zero throughout the restricted refit. All ten scored moments, three
@@ -28,7 +71,7 @@ global infeasibility. Five exact-loop synthetic tests passed on Torch
 **18817270**; preparation **18817279** verified source/target/anchor identities.
 Configuration SHA256:
 `7035e2c15641a6cf3dd5ddecd3eac1094bbaabe54057a7cf788c72081d73ce19`.
-No numerical result from this experiment is available at launch.
+The launch record below predates the numerical results above.
 Saved-output readout **18817376** follows the calibration job; it skips if no
 normalized zero-cost center exists. Monitor `monitor-zero-first-birth-cost-test`
 checks every 30 minutes, stays quiet for healthy unchanged progress and pauses

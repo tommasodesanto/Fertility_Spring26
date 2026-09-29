@@ -1,5 +1,7 @@
 # Current-point fertility identification and reoptimization
 
+Experiment index: see [EXPERIMENT_REGISTER.md](EXPERIMENT_REGISTER.md) for the frozen reference, completed experiments, and authorized experiments awaiting budgets and source certification.
+
 Author-authorized September28 follow-up. Main18716710 submitted after six accepted smokes; see launch.json and approval_v1.json.
 Frozen reference is overnight selected block0506, primary loss19.581310760.
 No model, earnings, entry distribution, target value, grid, bound, closure or
