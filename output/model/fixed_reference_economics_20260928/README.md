@@ -181,7 +181,8 @@ these shares do not establish whether down payments are quantitatively weak.
 ### Exact baseline credit rules (September 29 source check)
 
 **Author review outstanding, September 29:** Tommaso questioned whether he had
-approved the renter repayment taper and expected a positive borrowing limit.
+approved the renter repayment taper, then clarified that he remembers and
+intends the zero-new-unsecured-credit baseline.
 Keep the frozen reference intact; do not present the taper as newly endorsed.
 The bounded provenance check found both `lambda_d=0` and the 42–62 taper in
 commit `411616d2` (July 16, recording July 10–16 machinery). The parent solver
@@ -191,10 +192,36 @@ No direct human approval was found in the checked commits and candidate chats;
 this is not an exhaustive proof that approval never occurred. The September 26
 `docs/model/borrowing_negative_equity_resolution.md` explicitly classified the
 taper as inherited and its recommendation as not author-adopted. Credit-line
-size and inherited-debt repayment are separate outstanding specification choices.
+size and inherited-debt repayment are separate specification objects; the
+outstanding question is the treatment and repayment of existing renter debt.
 The author accepts the estate restriction and regards net-asset accounting as
 consistent with the intended framework. No model change or run is authorized
 by this provenance clarification alone.
+
+**Deeper source/disclosure check, September 29:** Greaney, Parkhomenko and Van
+Nieuwerburgh's *Dynamic Urban Economics* (local February 16, 2025 version,
+Section 2.1.7, pp. 11–12) has no age taper. Its transaction feasibility set
+requires $b+(1-\psi)pH\geq0$ when selling into renting. Our native transaction
+map permits a negative sale balance to reach the renter state; the renter
+floor then governs repayment. **Correction after inspecting the author's exact
+PDF:** `latex/september_14_presentation.pdf` (September 14, 11:39; slide 7/28)
+and its accompanying source contain no taper or inherited-debt repayment rule.
+The earlier claim that the presented deck mentioned it mistakenly used the
+different source inside `tmp/paper_baseline_sep14/`; that source's latest
+path-specific commit is September 6 (`13a82133`), before the actual deck's
+September 14 revision (`da5fd543`). The September 15 consolidated structural
+review, H2 (lines 434–451), did explicitly call the taper ad hoc and mark
+resolution as blocking. Both presentation disclosure and subsequent decision
+tracking therefore remain gaps. Presence in another source or code is not
+evidence of author approval. The occupied-state audit in
+`renter_taper_audit_v1/` is zero-solve accounting; no behavioral reform or causal
+effect can be inferred from incidence alone.
+The one authorized accounting attempt (Torch 18832560, 36 seconds) stopped on
+a global location-probability assertion before producing incidence. The
+checkpoint and source hashes passed; no counts are available and no retry was
+submitted. See `renter_taper_audit_v1/result_v1/README.md`. The inspected actual
+September 14 PDF SHA256 is
+`34f4d52e9587bc7fd7eb2fac8e8d7cf2d535b128ff74ad91a92e72c492b7c98a`.
 
 Let $b$ denote net financial assets (negative means debt), $b'$ next-period
 assets, $pH$ a home's value, $y$ current after-tax period income, and

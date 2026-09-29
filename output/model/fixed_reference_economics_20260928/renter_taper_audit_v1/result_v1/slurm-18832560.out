@@ -1,0 +1,9 @@
+audit_renter_taper.py: OK
+launch.sh: OK
+Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/renter_taper_audit_v1/source_v1/audit_renter_taper.py", line 197, in <module>
+    ap=argparse.ArgumentParser(); ap.add_argument('--output',required=True); main(ap.parse_args().output)
+                                                                             ~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/renter_taper_audit_v1/source_v1/audit_renter_taper.py", line 62, in main
+    raise ValueError('One-market location stay probability is not identically one')
+ValueError: One-market location stay probability is not identically one
