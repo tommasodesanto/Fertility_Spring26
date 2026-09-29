@@ -25,14 +25,41 @@ fertility renormalization, or automatic adoption of another chat's candidate.
   and rents clear markets. Household housing and tenure choices remain free.
 - The separate user-owned chat **Prepare transitions for frozen block0506**,
   id `01a0ea09-e255-7f13-8962-40ec1c8d4c1b`, owns the historical September10–14
-  reconstruction, isolated transition implementation, and credit/fixed-stock
-  impact, path and terminal-equilibrium preparation. Its workspace is
-  `../fixed_reference_transition_20260928/`. It also prepares generic closure
-  machinery needed for the supply-intercept experiment, without duplicating
-  this chat's fixed-price calculation.
-- This economic-analysis chat owns the present saved-state packet and
-  fixed-price comparison, economic interpretation and eventual supply-shock
-  comparison. Calibration improvement remains in its separate chat.
+  reconstruction and isolated transition implementation, including the
+  fixed-physical-stock comparison. Its workspace is
+  `../fixed_reference_transition_20260928/`. It receives verified credit rules
+  and terminal endpoints from this economic-analysis chat.
+- This economic-analysis chat owns credit-rule implementation, fixed-price
+  impact, the new steady state, elasticities, economic interpretation and the
+  supply-shock comparison. The author explicitly corrected this division;
+  the transition chat's withdrawn credit stage launched no numerical jobs.
+  Calibration improvement remains in its separate chat.
+
+## Current priorities and useful output
+
+The author prioritizes understanding elasticities and financial constraints.
+Choose the economic question and useful output before expanding computation
+or reporting. Default delivery is a compact comparison table and a short
+mechanism explanation; broad overviews and long assembled reports require a
+specific purpose. Retain the underlying standard diagnostics and complete
+fit/parameter tables, with links, without assembling them into another PDF.
+
+The next comparison should answer two questions: does removing artificial
+credit limits change fertility at given prices, and how does it change the
+fertility response to housing costs? Compare the calibrated borrowing rule
+with solvency-only borrowing, keeping preferences (including psi), earnings,
+entry endowments, fiscal inputs and other primitives fixed. Evaluate impact
+responses on identical inherited occupied states. Report first and subsequent
+birth responses separately; report cohort completed fertility and first-birth
+timing separately from impact flows. Inspect low-financial-wealth households
+and inherited tenure to locate the response, without calling a binding-share
+correlation causal. Market-clearing endpoints remain a separate stage.
+
+Existing evidence measures a permanent +10% house-price and implied-rent
+change. Its log-change elasticities are finite-change responses, not local
+derivatives or rent-only elasticities. The paired credit comparison and local
+step-size checks remain uncomputed. No new numerical budget or job is launched
+by this output specification.
 
 ## Saved-state packet
 
