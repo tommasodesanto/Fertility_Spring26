@@ -37,6 +37,8 @@ fertility renormalization, or automatic adoption of another chat's candidate.
 
 ## Current priorities and useful output
 
+Current borrowing implementation and bounded Torch checks: [credit_v1](credit_v1/README.md).
+
 The author prioritizes understanding elasticities and financial constraints.
 Choose the economic question and useful output before expanding computation
 or reporting. Default delivery is a compact comparison table and a short
