@@ -1,5 +1,11 @@
 # September 29 shock-estimation retry
 
+**Final state:** both fits FAILED before estimating a shock. Four-shock18801439
+stopped after03:13:49; one-shock18801451 after03:30:17. Each stopped during its
+third104-date equilibrium evaluation of the initial unchanged-preference
+proposal. The90-minute evaluation deadline interrupted the reduced-step retry;
+the128-date verification was never reached. Monitoring is paused. No restart.
+
 Four successive surprises: **18801439**. One permanent shock: **18801451**.
 Both were confirmed RUNNING after successful native smoke **18801007** and full
 validation of each actual enabled plan before submission. No fitted result is
