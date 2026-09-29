@@ -44,6 +44,22 @@ Supporting evidence, without an assembled report:
 
 ## Contract and verification
 
+**Supplemental demographic arithmetic:** keeping each regime's new cohort
+age-specific birth rates fixed and starting from the reference age distribution
+and birth prehistory gives household-population differences of +0.209% after
+20 years, +0.974% after 40 years and +3.870% after 80 years. The credit schedule's
+asymptotic annual growth is 0.078%. Survival, the 16/20-year entry split and the
+birth-to-household conversion are unchanged. These are model household units,
+not resident-person headcounts. Within-age wealth/family distributions are not
+updated, and this is not a native transition or equilibrium prediction.
+The original reference control remains stationary within its inherited numerical
+error. [Calculation](population_arithmetic_v1.json) and
+[source](population_arithmetic.py): three scalar projections, no model solves,
+30-second hard limit, immutable source and pinned inputs on Torch under
+`source_population_arithmetic_v1/`; completed in under one second. Holding
+these birth rates permanently produces continuing growth, not a finite new
+stationary population level.
+
 Question: does access to borrowing against future earnings change births and
 their timing? Remove artificial unsecured-credit, purchase/down-payment and
 incumbent-owner debt limits. Retain all preferences (including psi), earnings,

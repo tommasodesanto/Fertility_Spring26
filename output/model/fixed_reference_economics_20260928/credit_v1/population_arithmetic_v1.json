@@ -1,0 +1,83 @@
+{
+  "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "status": "passed",
+  "source_sha256": "942fd62ac9c76290de71aad40349c508d37470661a0449deeeef43aa52a1e9a4",
+  "input_pins": {
+    "control": {
+      "receipt_sha256": "bd55f92279a04bd2b983c021399e840aa7696f510e81ac12e21f311fbbedf4e0",
+      "observers_sha256": "ba3cda2a1b081dee2fd1c8786eadc2f81b16189bf333b86a1249eec16deed915",
+      "lifecycle_sha256": "d41afe253a3f7c75edb0dae5732055be904fcb7964c9d37193a65a8f485d2969"
+    },
+    "grid_control": {
+      "receipt_sha256": "25c6e12271f51abcde4cecbeebe94adf732dabc7a56dac67c73ac81f5d8215ad",
+      "observers_sha256": "11e2cedb6abe3f7a44aea2a7a3a32c8e125407a3677245aee6a64593d1098ad0",
+      "lifecycle_sha256": "cbcbb3e44bfc9fd99726f33839a2454be7e51f9a6102bf5f5783791a46429916"
+    },
+    "credit": {
+      "receipt_sha256": "56fd38695487ae1262b5d772254d77943c046f106f91fcd42a92dc8d452ed18c",
+      "observers_sha256": "aab860a2b5cfc68aa1b625786354eade4105990651ec995565aed2358e1d83c4",
+      "lifecycle_sha256": "d1c76d7f23bc94a1d0e9a88adeabd74c62c633fe02527330f8dbd11b3e6ba9ca"
+    }
+  },
+  "budget": {
+    "cases": 3,
+    "periods_per_case": 100,
+    "seconds": 30,
+    "model_solves": 0
+  },
+  "assumption": "Hold each case age-specific adjusted birth rates fixed at its recomputed cohort averages. Begin with exact reference age masses and reference birth prehistory. Retain survival and half-16/half-20-year entry with births/2.1 conversion.",
+  "limitation": "Household population units, not resident-person headcounts. Approximate demographic projection: within-age wealth/family composition and prices/pensions do not evolve consistently. Not a native policy transition or equilibrium steady state.",
+  "results": {
+    "control": {
+      "annual_growth_pct": -2.6765430871655838e-06,
+      "reproduction_ratio": 0.9999992080036049,
+      "mean_native_generation_years": 29.590283159620473,
+      "household_population": {
+        "0": 1.0000000000000029,
+        "4": 0.9999999511073498,
+        "16": 0.9999998044293908,
+        "20": 0.9999997524483918,
+        "40": 0.9999993802119943,
+        "60": 0.999998845165276,
+        "80": 0.9999983144272735
+      }
+    },
+    "grid_control": {
+      "annual_growth_pct": 0.001261960688370145,
+      "reproduction_ratio": 1.0003734323121527,
+      "mean_native_generation_years": 29.58647702598652,
+      "household_population": {
+        "0": 1.0000000000000029,
+        "4": 0.9999999511073498,
+        "16": 1.0000113555093677,
+        "20": 1.0000344056812902,
+        "40": 1.0001597313028563,
+        "60": 1.0003627353582722,
+        "80": 1.0006269404336257
+      }
+    },
+    "credit": {
+      "annual_growth_pct": 0.07771892267152136,
+      "reproduction_ratio": 1.0229468887873634,
+      "mean_native_generation_years": 29.226785991601286,
+      "household_population": {
+        "0": 1.0000000000000029,
+        "4": 0.9999999511073498,
+        "16": 1.0007081242524483,
+        "20": 1.0021247114340166,
+        "40": 1.0099015230814878,
+        "60": 1.0226216682131557,
+        "80": 1.0393473794893093
+      }
+    }
+  },
+  "credit_vs_matched_baseline_population_pct": {
+    "0": 0.0,
+    "4": 0.0,
+    "16": 0.06967608310064488,
+    "20": 0.2090233836807176,
+    "40": 0.9740235958051846,
+    "60": 2.2250861680599865,
+    "80": 3.869617885653165
+  }
+}
