@@ -130,6 +130,8 @@ def policy_cache(module, max_bytes=DEFAULT_MAX_BYTES):
     def wrapped(*args, **kwargs):
         try:
             key = exact_call_key(original, args, kwargs)
+        except TimeoutError:
+            raise
         except Exception:
             with lock:
                 stats.serialization_bypasses += 1
@@ -155,6 +157,8 @@ def policy_cache(module, max_bytes=DEFAULT_MAX_BYTES):
             raise
         try:
             payload = pickle.dumps(result, protocol=5)
+        except TimeoutError:
+            raise
         except Exception:
             with lock: stats.serialization_bypasses += 1
             return result

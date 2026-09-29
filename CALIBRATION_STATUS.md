@@ -34,6 +34,26 @@ normalized zero-cost center exists. Monitor `monitor-zero-first-birth-cost-test`
 checks every 30 minutes, stays quiet for healthy unchanged progress and pauses
 once both jobs end. It cannot repair, restart, extend or promote the experiment.
 
+## September 29 — bounded pension-correction diagnostic
+
+The author authorized a focused numerical diagnostic after the failed fits.
+Torch **18818674** passed all 64 pure tests and both actual-config preflights.
+It runs a six-date pension-correction smoke, then only on success tries the same
+correction on 104 dates and a fresh repeat. At the
+unchanged block0506 preference, it holds already-clearing house prices fixed and
+updates each pension by recorded payroll revenue divided by pension outlays;
+new household policies and distributions determine whether the update works.
+All economics and acceptance tolerances are unchanged. A small cache fix now
+propagates timeout exceptions instead of swallowing them during serialization.
+This is not a fitted shock or a verified changed-preference transition.
+
+There are at most three smoke mappings and two full mappings, with a five-hour
+Slurm limit, 64-GiB cache and 96-GiB memory. Full mappings have three-hour limits
+within a four-hour stage. The thirty-minute monitor is read-only and stops on
+job termination; no automatic repair, restart or estimation launch. Receipt,
+source/config pins and subsequent test/result evidence are indexed in
+`output/model/fixed_reference_transition_20260928/four_shock_v1/budget_diagnostic_v1/`.
+
 ## September 29 — historical shock retry stopped before estimation
 
 Following the author's request to proceed for results tonight, cheaper workers

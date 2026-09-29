@@ -55,9 +55,15 @@ shared between cases. The cluster controller permits an explicit cache budget.
 Draft plans remain disabled. The author authorized launch after readiness on
 September 28; shock levels and endpoints are internal unknowns. Launch receipts,
 finite budgets and read-only overnight monitoring are indexed in
-`../../output/model/fixed_reference_transition_20260928/four_shock_v1/launch_v2/README.md`.
+`../../output/model/fixed_reference_transition_20260928/four_shock_v1/launch_v3/README.md`.
 Earlier test evidence is in
 `../../output/model/fixed_reference_transition_20260928/four_shock_v1/README.md`.
+
+The bounded numerical follow-up is `../cluster/run_e5f_preference_budget_diagnostic.py`:
+it tests a pension-accounting update at fixed house prices and unchanged reference
+preferences, first on six dates and then on 104 with a fresh repeat. It does not
+estimate shocks or certify horizon robustness. Its pinned launch and results are
+in `../../output/model/fixed_reference_transition_20260928/four_shock_v1/budget_diagnostic_v1/`.
 
 `tools/e5f_current_transition_runtime.py` loads the authenticated September 27
 calibration into the current native solver. It explicitly enables the accepted

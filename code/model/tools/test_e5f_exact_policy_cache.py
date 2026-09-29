@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 
@@ -11,8 +12,11 @@ import e5f_exact_policy_cache as c
 def policy_function(*, price, rent, P, b_grid, shared, continuation_V):
     policy_function.calls += 1
     if getattr(P, "fail", False): raise RuntimeError("native failure")
-    return SimpleNamespace(value=np.array([price, rent, P.psi, shared.scale,
+    if getattr(P, "timeout", False): raise TimeoutError("native timeout")
+    result = SimpleNamespace(value=np.array([price, rent, P.psi, shared.scale,
         b_grid.sum(), continuation_V.sum()], dtype=float))
+    if getattr(P, "unserializable_result", False): result.callback = lambda: None
+    return result
 
 
 policy_function.calls = 0
@@ -102,6 +106,51 @@ class ExactPolicyCacheTests(unittest.TestCase):
             self.assertEqual(result.value[0], 1.0)
             self.assertEqual(stats.snapshot()["serialization_bypasses"], 1)
             self.assertEqual(stats.snapshot()["actual_solves"], 1)
+
+    def test_unserializable_result_bypasses_without_changing_result(self):
+        args = arguments(); args["P"].unserializable_result = True
+        with c.policy_cache(self.module, max_bytes=10000) as stats:
+            self.assertEqual(self.module.solve_date_policy(**args).value[0], 1.0)
+            self.assertEqual(self.module.solve_date_policy(**args).value[0], 1.0)
+            self.assertEqual(stats.snapshot()["serialization_bypasses"], 2)
+            self.assertEqual(stats.snapshot()["actual_solves"], 2)
+
+    def test_timeout_during_key_construction_propagates_and_restores_original(self):
+        original = self.module.solve_date_policy
+        with patch.object(c, "exact_call_key", side_effect=TimeoutError("watchdog")):
+            with c.policy_cache(self.module, max_bytes=10000) as stats:
+                with self.assertRaisesRegex(TimeoutError, "watchdog"):
+                    self.module.solve_date_policy(**arguments())
+                self.assertEqual(policy_function.calls, 0)
+                self.assertEqual(stats.snapshot()["serialization_bypasses"], 0)
+        self.assertIs(self.module.solve_date_policy, original)
+
+    def test_timeout_during_value_serialization_propagates_and_restores_original(self):
+        original = self.module.solve_date_policy
+        original_dumps = c.pickle.dumps
+
+        def timeout_for_result(value, *args, **kwargs):
+            if type(value) is SimpleNamespace and hasattr(value, "value"):
+                raise TimeoutError("watchdog")
+            return original_dumps(value, *args, **kwargs)
+
+        with patch.object(c.pickle, "dumps", side_effect=timeout_for_result):
+            with c.policy_cache(self.module, max_bytes=10000) as stats:
+                with self.assertRaisesRegex(TimeoutError, "watchdog"):
+                    self.module.solve_date_policy(**arguments())
+                self.assertEqual(policy_function.calls, 1)
+                self.assertEqual(stats.snapshot()["serialization_bypasses"], 0)
+        self.assertIs(self.module.solve_date_policy, original)
+
+    def test_native_timeout_propagates_and_original_is_restored(self):
+        original = self.module.solve_date_policy
+        args = arguments(); args["P"].timeout = True
+        with c.policy_cache(self.module, max_bytes=10000) as stats:
+            with self.assertRaisesRegex(TimeoutError, "native timeout"):
+                self.module.solve_date_policy(**args)
+            self.assertEqual(policy_function.calls, 1)
+            self.assertEqual(stats.snapshot()["exceptions"], 1)
+        self.assertIs(self.module.solve_date_policy, original)
 
 
 if __name__ == "__main__": unittest.main()
