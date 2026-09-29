@@ -253,6 +253,18 @@ def supply_rule(packet, pf, housing):
         float(original.quantity([q])[0]), 0.)
 
 
+def check_endpoint_primitives(reference, parameters):
+    """Only the fitted benefit and consistently bound terminal pension may vary."""
+    from e5f_social_security import bind_social_security_income
+    expected=copy.deepcopy(reference)
+    expected.psi_child=parameters.psi_child
+    bind_social_security_income(expected,pension_period=parameters.pension,payroll_tax=reference.tau_pay)
+    skipped=GENERATED_FIELDS | {'native_inherited_distribution_evidence_dir'}
+    before=serialized({k:v for k,v in vars(expected).items() if k not in skipped})
+    after=serialized({k:v for k,v in vars(parameters).items() if k not in skipped})
+    require(before==after,'Endpoint changed frozen primitives or inconsistent pension income')
+
+
 def load_endpoint(record, m, packet, evaluator, plan):
     import numpy as np
     from e5f_social_security import fiscal_accounts
@@ -265,11 +277,7 @@ def load_endpoint(record, m, packet, evaluator, plan):
     path = pinned(receipt['checkpoint'])
     with gzip.open(path,'rb') as stream:
         terminal = pickle.load(stream)
-    before, after = serialized(vars(packet['parameters'])), serialized(vars(terminal['parameters']))
-    allowed = GENERATED_FIELDS | {'psi_child','pension','native_inherited_distribution_evidence_dir'}
-    require(set(before) == set(after), 'Endpoint parameter fields differ')
-    differences = [k for k in before if k not in allowed and before[k] != after[k]]
-    require(not differences, 'Endpoint changed frozen primitives: '+', '.join(differences))
+    check_endpoint_primitives(packet['parameters'],terminal['parameters'])
     require(np.array_equal(packet['b_grid'],terminal['b_grid']), 'Endpoint wealth grid differs')
     P = terminal['parameters']
     require(P.psi_child == plan['shocks']['levels'][-1], 'Endpoint preference is not the last shock')
@@ -298,7 +306,7 @@ def load_endpoint(record, m, packet, evaluator, plan):
 
 
 def mapping(packet, evaluator, terminal, endpoint, prices, pensions, psi_path, housing, output, cache_bytes,
-            capture=False):
+            capture=False, measure_fertility=False, initial_state=None, start_year=2007):
     import numpy as np
     import e5f_exact_policy_cache as cache_module
     import e5f_overnight_estate_audit as estate
@@ -310,10 +318,14 @@ def mapping(packet, evaluator, terminal, endpoint, prices, pensions, psi_path, h
     write(output/'output_override.json', dict(field='native_inherited_distribution_evidence_dir',
         saved=saved_output, effective=P.native_inherited_distribution_evidence_dir, economic_change=False))
     grid, g = packet['b_grid'], packet['stationary_g_pre']
-    state = pf.stationary_initial_state(g,float(g[:,:,:,0].sum()),float(packet['evaluation'].births),P,1/2.1)
-    require(np.array_equal(g,state.g_pre), 'Inherited population must not be rescaled')
+    state = (pf.stationary_initial_state(g,float(g[:,:,:,0].sum()),float(packet['evaluation'].births),P,1/2.1)
+             if initial_state is None else copy.deepcopy(initial_state))
+    require(np.array_equal(g if initial_state is None else initial_state.g_pre,state.g_pre),
+            'Inherited population must not be rescaled')
+    g = state.g_pre
     rents = pf.rents_from_asset_prices(prices,endpoint['price'],P)
     audit_rows = []
+    fertility_rows=[]
     diagnostic_packets=[]
     def observer(t,ev,parameters,bg,shared,next_cohort):
         date = output/f'date_{t:03d}'
@@ -335,6 +347,9 @@ def mapping(packet, evaluator, terminal, endpoint, prices, pensions, psi_path, h
         write(output/'dated_audits.json',audit_rows)
         write(output.parent/'heartbeat.json',dict(phase='forward',period=t,epoch=time.time()))
         require(all(gates.values()), 'Dated household/accounting gate failed')
+        if measure_fertility:
+            fertility_rows.append(dict(period=t,calendar_year=start_year+4*t,
+                **rt['calibration'].period_fertility_diagnostics(ev,parameters)))
         if capture and t in {0,len(prices)//2,len(prices)-1}:
             path=date/'diagnostic_packet.pkl.gz'
             dump_checkpoint(path,dict(parameters=parameters,b_grid=bg,evaluation=ev,shared=shared,
@@ -349,7 +364,7 @@ def mapping(packet, evaluator, terminal, endpoint, prices, pensions, psi_path, h
             pension_path=pensions,payroll_tax_path=np.full(len(prices),P.tau_pay),dated_observer=observer)
         cache_stats=cache.snapshot()
     for t,row in enumerate(result.rows):
-        row['calendar_year']=2007+4*t
+        row['calendar_year']=start_year+4*t
     gates=dict(mass=result.maximum_mass_accounting_error<=2e-8,
         policy_reproduction=result.maximum_policy_reproduction_error<=1e-10,
         projection=result.maximum_feasibility_projection_mass==0,
@@ -362,6 +377,8 @@ def mapping(packet, evaluator, terminal, endpoint, prices, pensions, psi_path, h
         backward_forward_policy_error=result.maximum_policy_reproduction_error,
         mass_error=result.maximum_mass_accounting_error,projection_mass=result.maximum_feasibility_projection_mass,
         diagnostic_packets=diagnostic_packets)
+    if measure_fertility:
+        record['fertility']=fertility_rows
     write(output/'mapping.json',record)
     return result,record
 

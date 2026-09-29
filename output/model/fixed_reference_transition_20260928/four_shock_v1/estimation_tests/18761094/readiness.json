@@ -1,0 +1,175 @@
+{
+  "cache": {
+    "actual_solves": 1,
+    "bytes": 363795168,
+    "evictions": 0,
+    "exceptions": 0,
+    "hits": 9,
+    "maximum_bytes": 2147483648,
+    "misses": 1,
+    "oversize_bypasses": 0,
+    "serialization_bypasses": 0
+  },
+  "carried_distribution_maximum_gap": 0.0,
+  "carried_queue_absolute_gaps": {
+    "scheduled_entries": 0.0,
+    "scheduled_raw_entries": 0.0
+  },
+  "carried_row_maximum_relative_gap": 0.0,
+  "endpoint": {
+    "checkpoint": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_transition_20260928/four_shock_v1/estimation_tests/18759951/native/endpoints/endpoint_1/checkpoint.pkl.gz",
+      "sha256": "f58ecc3b0e72aba4964b0733d7fe5c46b20cb711cb8d9249bc0142f239f9709a"
+    },
+    "housing": "fixed_stock",
+    "native_one_step_verified": true,
+    "pension": 0.917784047463731,
+    "population_scale": 1.0000000017604052,
+    "price": 0.7898695017462086,
+    "psi_child": 0.1355551166583114,
+    "reference_manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+    "repeat_verified": true,
+    "source_manifest_sha256": "07d84336a3112b251afe505908113d9c00585b91c34bd50f0dee108435db496d",
+    "terminal": {
+      "all_checks_pass": true,
+      "checks": {
+        "asset_price_relative_gap": true,
+        "birth_queue_maximum_relative_gap": true,
+        "normalized_distribution_l1": true,
+        "population_relative_gap": true,
+        "psi_absolute_gap": true,
+        "renter_price_relative_gap": true
+      },
+      "metrics": {
+        "asset_price_relative_gap": 0.0,
+        "birth_queue_maximum_relative_gap": 3.9599834533180205e-07,
+        "normalized_distribution_l1": 5.640311942197311e-14,
+        "population_relative_gap": 3.974598428158049e-14,
+        "psi_absolute_gap": 0.0,
+        "renter_price_relative_gap": 0.0
+      },
+      "raw_queue_maximum_relative_gap": 0.0,
+      "raw_queue_pass": true,
+      "stationary_asset_price": 0.7898695017462086,
+      "stationary_birth_queue": [
+        0.03086672809038944,
+        0.03086672809038944,
+        0.03086672809038944,
+        0.03086672809038944,
+        0.03086672809038944,
+        0.03086672809038944,
+        0.03086672809038944
+      ],
+      "stationary_population": 1.0000000000000029,
+      "stationary_psi": 0.1355551166583114,
+      "stationary_renter_price": 0.14239719502601744,
+      "status": "passed",
+      "terminal_asset_price_last_endogenous_date": 0.7898695017462086,
+      "terminal_birth_queue": [
+        0.03086672809038944,
+        0.03086672809038944,
+        0.03086670364404294,
+        0.03086672809038944,
+        0.03086672809038944,
+        0.03086672809038944,
+        0.03086670364404294
+      ],
+      "terminal_distribution_l1_from_stationary": 4.0103146569269907e-14,
+      "terminal_population": 1.0000000000000426,
+      "terminal_psi_last_endogenous_date": 0.1355551166583114,
+      "terminal_renter_price_last_endogenous_date": 0.14239719502601744,
+      "tolerances": {
+        "asset_price_relative_gap": 1e-06,
+        "birth_queue_maximum_relative_gap": 1e-06,
+        "normalized_distribution_l1": 1e-06,
+        "population_relative_gap": 1e-06,
+        "psi_absolute_gap": 1e-06,
+        "renter_price_relative_gap": 1e-06
+      }
+    }
+  },
+  "estimator_sources": {
+    "e5f_exact_policy_cache.py": "d51bbd13026288db0194b44b420bb49ff6970588f40a906242978d49038a5d6f",
+    "e5f_four_shock_acceleration.py": "5e1e789c6a01290d857bb54945c44185d862e2c6fb8a97bc3e183f6bc99cc6bc",
+    "e5f_matched_pf_path_root.py": "1f827bad0c87f2c75d1ea76f1f059494cc67ca5390135087780691cc0ead2c80",
+    "e5f_preference_shock_fit.py": "50a91bacbbfaf632a986bda0d68c7b9ffaaf4c74a31c155f98918b15eea7e5b7",
+    "e5f_social_security_root.py": "269f3d5017da3a240d0a80d9b168471e6c6cd6c55e9617041c70bfb1085cd77a",
+    "e5f_ssj_scaled_step_root.py": "c26d312afa179e296439ba94e8826a5f84f6823c6bf0ca1892889e5e55af059b",
+    "e5f_ssj_toeplitz_jacobian.py": "94c448367c139682c3bc06336dba27ab3ddb384e99120201cc1000d8509dead0",
+    "run_e5f_preference_estimation.py": "936b0b03389dfa9f32e06afcb909ca8d4a74b9a733b346724fabb9bba128b121",
+    "run_e5f_preference_transition.py": "26802381cec56be33794a526eeec80eb6066c09ae59ab6e5957d0cee2e26f1ac"
+  },
+  "execution_enabled": false,
+  "historical_fit": false,
+  "maximum_policy_calls": 10,
+  "native_endpoint_and_fertility_smoke_passed": true,
+  "original_check_job": "18759951",
+  "original_plan": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_transition_20260928/four_shock_v1/estimation_tests/18759951/plan.json",
+    "sha256": "7bc398437d02bdb6b246e2d10a69e133328fc75def10f2c8ce4919f1c92841b2"
+  },
+  "preference_changes": false,
+  "prefix_reproduced": true,
+  "production_horizon_verified": false,
+  "seconds": 129.5022411888931,
+  "status": "PASS",
+  "terminal": {
+    "all_checks_pass": true,
+    "checks": {
+      "asset_price_relative_gap": true,
+      "birth_queue_maximum_relative_gap": true,
+      "normalized_distribution_l1": true,
+      "population_relative_gap": true,
+      "psi_absolute_gap": true,
+      "renter_price_relative_gap": true
+    },
+    "metrics": {
+      "asset_price_relative_gap": 0.0,
+      "birth_queue_maximum_relative_gap": 4.760132591506626e-07,
+      "normalized_distribution_l1": 1.9918881348325824e-07,
+      "population_relative_gap": 1.2399188642863626e-07,
+      "psi_absolute_gap": 0.0,
+      "renter_price_relative_gap": 0.0
+    },
+    "raw_queue_maximum_relative_gap": 7.991838347266309e-08,
+    "raw_queue_pass": true,
+    "stationary_asset_price": 0.7898695017462086,
+    "stationary_birth_queue": [
+      0.030866728144727386,
+      0.030866728144727386,
+      0.030866728144727386,
+      0.030866728144727386,
+      0.030866728144727386,
+      0.030866728144727386,
+      0.030866728144727386
+    ],
+    "stationary_population": 1.0000000017604076,
+    "stationary_psi": 0.1355551166583114,
+    "stationary_renter_price": 0.14239719502601744,
+    "status": "passed",
+    "terminal_asset_price_last_endogenous_date": 0.7898695017462086,
+    "terminal_birth_queue": [
+      0.030866703644049965,
+      0.030866702099877075,
+      0.03086669875878366,
+      0.03086670364404797,
+      0.030866703644049965,
+      0.030866702099877075,
+      0.03086669875878366
+    ],
+    "terminal_distribution_l1_from_stationary": 1.2399188844037297e-07,
+    "terminal_population": 0.999999877768521,
+    "terminal_psi_last_endogenous_date": 0.1355551166583114,
+    "terminal_renter_price_last_endogenous_date": 0.14239719502601744,
+    "tolerances": {
+      "asset_price_relative_gap": 0.001,
+      "birth_queue_maximum_relative_gap": 0.001,
+      "normalized_distribution_l1": 0.001,
+      "population_relative_gap": 0.001,
+      "psi_absolute_gap": 0.001,
+      "renter_price_relative_gap": 0.001
+    }
+  },
+  "test_only": true,
+  "tests_passed": true
+}
