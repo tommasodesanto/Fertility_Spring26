@@ -45,6 +45,15 @@ the complete target fit, every free-parameter estimate and bound status, all 17
 standard plots, repeat evidence, target/source fingerprints, budgets, and job
 receipts before classifying either experiment as completed.
 
+## Measurement diagnostics (no specification change)
+
+**M01 — age clock and teenage births, completed.** Saved-data jobs 18833274 and
+18833422 used zero model solves/imports/checkpoint reads. The matched age-26
+comparison does not close E01's early-child-count gap. Births before model entry
+are observed in CPS/NCHS, but their age-25 cohort contribution is not identified
+by these cross-sectional stock/period-flow measures. No target was replaced.
+See [definitions and full age comparisons](measurement_audit_v1/age_tail_v1/README.md).
+
 ## E04/E05 numerical preparation gates
 
 The active solver divides by both fertility taste scales, so setting either to

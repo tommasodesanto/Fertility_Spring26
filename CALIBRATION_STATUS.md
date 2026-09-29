@@ -1,5 +1,34 @@
 # Calibration Status
 
+## September 29 — age clock, teenage births and identification check
+
+Saved-data Torch diagnostics **18833274** and **18833422** passed with zero
+model solves, model imports or checkpoint reads. At matched CPS/model age 25,
+capped children per woman are 0.810 / 0.530 in E01; at matched age 26 they are
+0.923 / 0.609. The gap widens from -0.279 to -0.313. The actual age-25 observer
+already measures [25,26), using 0.125 pre / 0.875 post mass in [22,26); age 26
+uses 0.875 pre / 0.125 post in [26,30). There is no observed off-by-one correction
+that resolves this miss, and the active target remains age 25.
+
+Births at 18–19 are within model support; births before 18 are omitted. In the
+authenticated CPS June 2004/06 cross sections, age-17 children per woman are
+0.084 and motherhood is 5.5%; ages 18/19 children are 0.107/0.199. NCHS pooled
+2003–06 period first births below 18 are 7.731% of all first births (below 20:
+20.695%). These are different cohorts and distinct stocks/flows. Neither
+statistic identifies the contribution of omitted early births to the age-25
+gap, including subsequent births to early mothers. Evidence and definitions:
+`measurement_audit_v1/age_tail_v1/README.md`.
+
+The original saved round-center Jacobian is numerically full rank 10/10, with
+condition number about 20,148 and weakest scaled direction dominated by child-
+benefit curvature. It precedes the selected E01 candidate. Two-birth rank 9/10
+and zero-cost rank 9/9 are likewise local round-center diagnostics. Statistical
+identification and selected-point robustness remain unverified: a fresh
+selected-point derivative/noise check and weak-direction profile are outstanding.
+E04/E05 isolated sources are prepared. Torch synthetic/choice-block verification
+job 18834199 was submitted; neither calibration search is launched yet. Native
+positive-scale replay and saved-policy checks remain gates before refitting.
+
 ## September 29 — separate taste-shock experiments registered
 
 The author proposed removing first-birth and later-birth taste shocks one at a
