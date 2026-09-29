@@ -338,6 +338,28 @@ outcome, any deadline or urgency, and any non-negotiable constraints; do not
 ask the user to select a model or worker profile when that choice can be made
 from the routing table.
 
+For each request, first decide what judgment is needed and how much evidence
+must be read. Route bounded file searches, deterministic extraction, routine
+edits, and well-specified code changes to the cheapest adequate model-selected
+worker by default. Keep the lead's own tool use narrow: define the question,
+inspect the worker's cited evidence or diff, run the smallest relevant check,
+and make the final decision. A short answer already supported by the current
+context, or a tiny task whose handoff costs more than doing it, can stay with
+the lead. Do not equate a short prompt with an easy task: economic interpretation,
+identification, model specification, contradictory evidence, high-impact
+changes, and open-ended scientific questions require lead judgment even if
+their initial search or coding can be delegated.
+
+Workers must stop and report evidence and uncertainty when the scoped task
+requires an economic assumption, changes the target or model contract, finds
+conflicting sources, or exceeds its search or time limit. The lead then resolves
+the question or assigns a newly scoped pass at the needed capability. Do not let
+a worker guess, silently broaden the search, or automatically escalate every task to a
+frontier model. Review in proportion to risk: check cited lines and output for
+routine work, run a targeted check for code, and verify model-critical diffs
+line by line against the mathematics. Keep user-facing answers concise and
+link the evidence needed to audit them.
+
 Before delegating, classify the work and choose the least expensive adequate
 route. Do not delegate a task that the lead can complete more quickly than the
 handoff would take. Tommaso authorizes proactive parallel work up to the available

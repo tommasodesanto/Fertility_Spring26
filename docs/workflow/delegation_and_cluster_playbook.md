@@ -32,6 +32,33 @@ The lead, not the user, selects the route. A user request needs an outcome and
 constraints; deadline or urgency is helpful, but asking the user to name a
 model/profile defeats the purpose of the routing system.
 
+Classify by the judgment and risk the answer needs, not by prompt length. Use
+the following default ladder; a task can move up when its evidence warrants it.
+
+| Request | First route | Lead's acceptance check |
+|---|---|---|
+| Answer already in current context or a tiny one-step edit | Lead, briefly | Confirm the cited fact or diff; avoid worker setup overhead |
+| Find files, extract facts, reduce logs, build a table | `explorer_fast`, bounded read-only | Open the decisive cited lines or source rows; reject unsupported conclusions |
+| Small mechanical change | `mechanic_fast`, scoped write | Inspect the diff and run the smallest relevant check |
+| Well-specified implementation or diagnosis | `worker_fast`, exclusive file ownership | Inspect the diff, run a targeted check, and examine edge cases |
+| Conflicting evidence or a disputed technical claim | Lead, with `reviewer_strong` for a bounded second opinion when useful | Resolve the conflict from source evidence; state what remains unknown |
+| Economic mechanism, identification, calibration decision, model contract, or model-critical numerics | Lead | Delegate extraction or implementation if useful; independently verify the scientific conclusion |
+
+Give workers a stopping rule in the task prompt. They should return a short
+answer with file/line evidence or a diff, checks performed, and uncertainty.
+If the answer needs an unstated economic assumption, source conflicts, a wider
+search, or a contract change, they stop and report it. The lead decides whether
+to answer from the available evidence, send a newly scoped pass, or
+ask the author about a genuine preference or scientific decision. Escalation
+responds to observed difficulty; it is not an automatic second model call.
+
+Bound search before dispatch: name the likely folder or source, the question to
+settle, and what finding is sufficient to stop. Expand in bounded steps when
+the initial evidence is insufficient, with each new scope stated explicitly. For
+web questions, use current authoritative sources when the claim can change;
+do not launch a broad crawl for a simple answer. Keep worker output compressed
+to conclusions and decisive evidence rather than raw dumps.
+
 1. Keep the work with the lead if the likely handoff cost exceeds the work.
 2. Otherwise dispatch as many least-cost adequate workers as have useful
    independent tasks or distinct verification roles, up to the available agent
