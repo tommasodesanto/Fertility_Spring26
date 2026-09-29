@@ -1,0 +1,318 @@
+{
+  "adapter_sha256": "569a259d2b04e0ae321944740c4f6f6ab647c31e4f2e922dff6a1828bb002d60",
+  "author_approval": "2026-09-29 explicit two-case recovery authorization",
+  "automatic_retries": 0,
+  "case_seconds": 900,
+  "common_grid_nodes": 602,
+  "credit_mode": "natural_solvency_boolean_grid_stationary_ge_v1",
+  "driver_sha256": "fafec584517acdbe0872296711cfe2b5be11a242d2b2de0179e3720e055ab012",
+  "economic_changes": [
+    "Remove artificial renter, purchaser and incumbent-owner borrowing limits; retain lifetime repayment and net-estate solvency"
+  ],
+  "factors": [
+    0.99,
+    1.0,
+    1.01
+  ],
+  "failed_case": "reference_1010",
+  "failed_case_receipt_path": "/work/elasticity_results/solve_v4/reference_1010/receipt.json",
+  "failed_controller_receipt_path": "/work/elasticity_results/solve_v4/failure.json",
+  "failed_controller_receipt_sha256": "062cfc0de749e8f4cdf98f5e8fd8120474c27261066b85b3bfb7228373b022a0",
+  "failed_job": "18803216",
+  "failed_job_state": "FAILED",
+  "files": [
+    {
+      "path": "/work/elasticity_source/launch.sh",
+      "sha256": "ac2bdb713f10d5e53bda955d3c5d5ca4fd6fa115f30866f7078bc61cb001344d"
+    },
+    {
+      "path": "/work/elasticity_source/natural_credit.py",
+      "sha256": "569a259d2b04e0ae321944740c4f6f6ab647c31e4f2e922dff6a1828bb002d60"
+    },
+    {
+      "path": "/work/elasticity_source/plan_template.json",
+      "sha256": "23721eb85d76776a26a0a3ec37d01acf45d02ec51ae1a01a525f29b05ed91df0"
+    },
+    {
+      "path": "/work/elasticity_source/preflight.py",
+      "sha256": "0b418031e0f7557a3a84342f8f0bd67a073d1b3b6d5f593e083996cc078b1ca7"
+    },
+    {
+      "path": "/work/elasticity_source/preflight.sh",
+      "sha256": "2cde3885c24c3a0fb01a18f7498f4e2ae0ffe6e4607070032a5cc7ad92a33031"
+    },
+    {
+      "path": "/work/elasticity_source/run_credit.py",
+      "sha256": "ac56b0de4cede1f969d54f61e51c74da9dfd6ec5371a4cffc142e970348807c6"
+    },
+    {
+      "path": "/work/elasticity_source/run_elasticity.py",
+      "sha256": "5d461d4999c428c77438ee43dd63db0e69ee0dd10356b0e09d65c62880adc5ca"
+    },
+    {
+      "path": "/work/elasticity_source/run_fixed_price.py",
+      "sha256": "09edf5affbf20d7a5dc4200a81b1f32ce643ba0ad15680b4b8b208dccda77037"
+    },
+    {
+      "path": "/work/elasticity_results/preflight_v2/preflight.json",
+      "sha256": "17b4030fb5e1923f3117a0394624c2777ea6c6364e0ae9af5405dcc3a6b784b8"
+    },
+    {
+      "path": "/work/elasticity_results/preflight_v2/common_grid.json",
+      "sha256": "cc0c21e5540c155dcf09ac1f0a6a2a6ee12d48c1426de33620b97241bda291e1"
+    },
+    {
+      "path": "/work/credit_seed/grid_control/receipt.json",
+      "sha256": "25c6e12271f51abcde4cecbeebe94adf732dabc7a56dac67c73ac81f5d8215ad"
+    },
+    {
+      "path": "/work/credit_seed/grid_control/conditional_cohort_state.pkl.gz",
+      "sha256": "f1c91fabca457fccfab22dbca33fae7edc750e4171b0f9796924516ed40c417e"
+    },
+    {
+      "path": "/work/credit_seed/grid_control/target_fit.csv",
+      "sha256": "2ea19e8b8911d72175aa6392b9a6c22b66ee532ba13c56a3bad5c0fae86096ab"
+    },
+    {
+      "path": "/work/credit_seed/grid_control/parameters.csv",
+      "sha256": "8ae35c3715265424531462ea9ce7e1e34e2a2778b5215ff8f090e1595f1b0e7b"
+    },
+    {
+      "path": "/work/credit_seed/credit/receipt.json",
+      "sha256": "56fd38695487ae1262b5d772254d77943c046f106f91fcd42a92dc8d452ed18c"
+    },
+    {
+      "path": "/work/credit_seed/credit/conditional_cohort_state.pkl.gz",
+      "sha256": "7b0b92f0e2ed33cfc80a3c63c2c15d6417b14ab88db3930284e440e94e2e515c"
+    },
+    {
+      "path": "/work/credit_seed/credit/target_fit.csv",
+      "sha256": "f07306bf4663d6b4bf8e9d7deda435aedb758707a3966100ac72f9ee664990a0"
+    },
+    {
+      "path": "/work/credit_seed/credit/parameters.csv",
+      "sha256": "234208b2404a83d861a96f24bc1de85b021fde9e9b7e91a359a5de3d384c9818"
+    }
+  ],
+  "grid_path": "/work/elasticity_results/preflight_v2/common_grid.json",
+  "launcher_sha256": "4ee6eb93d17e6d33f299a1bb7446caf7847b5ab3a425998ce82135de9886da52",
+  "maximum_new_lifecycle_solves": 2,
+  "memory_gib": 16,
+  "old_credit_checkpoint_path": "/work/credit_seed/credit/conditional_cohort_state.pkl.gz",
+  "old_credit_checkpoint_sha256": "7b0b92f0e2ed33cfc80a3c63c2c15d6417b14ab88db3930284e440e94e2e515c",
+  "old_credit_fit_path": "/work/credit_seed/credit/target_fit.csv",
+  "old_credit_parameters_path": "/work/credit_seed/credit/parameters.csv",
+  "old_credit_receipt_path": "/work/credit_seed/credit/receipt.json",
+  "old_reference_checkpoint_path": "/work/credit_seed/grid_control/conditional_cohort_state.pkl.gz",
+  "old_reference_checkpoint_sha256": "f1c91fabca457fccfab22dbca33fae7edc750e4171b0f9796924516ed40c417e",
+  "old_reference_fit_path": "/work/credit_seed/grid_control/target_fit.csv",
+  "old_reference_parameters_path": "/work/credit_seed/grid_control/parameters.csv",
+  "old_reference_receipt_path": "/work/credit_seed/grid_control/receipt.json",
+  "original_deadline_epoch": 1790700222.6872504,
+  "original_job": "18801318",
+  "original_plan_path": "/work/elasticity_results/plan_v2.json",
+  "original_plan_sha256": "6354bafd069fbfc4eda21271fc91747a22e3aeb8c90a57293f7dfde01badf28f",
+  "preflight_receipt_path": "/work/elasticity_results/preflight_v2/preflight.json",
+  "preparer_sha256": "119e75036e9b8d838e7407b59efd4869176194afbd20a21a023db6d4df0bd5bc",
+  "prior_attempts": 7,
+  "prior_cases": [
+    {
+      "case": "grid_control",
+      "checkpoint_path": "/work/elasticity_results/solve_v2/grid_control/conditional_cohort_state.pkl.gz",
+      "checkpoint_sha256": "b410966e696afcb8f501f3a8f9f915b871dcfff7c95f72dd0d6ac0ac3d7cdf6a",
+      "factor": 1.0,
+      "fit_sha256": "e3126056a256e2bf436026087892f71ff9b97342055e27485454f7244142fe09",
+      "parameters_sha256": "7561d6f1ed0b620fd97ce496c2a1e4e8779ab04f34699bbb394e3c2ba8d1f7c4",
+      "receipt_path": "/work/elasticity_results/solve_v2/grid_control/receipt.json",
+      "receipt_sha256": "30ea3ea6d05d7268f45a8e50c5b4faa4f3ab5320d39a70f1c961effebb55dd6b",
+      "regime": "reference",
+      "standard_plot_sha256": {
+        "fertility_by_age.png": "a4713eb926b8b524a564974421b5c5c5d311278a98886c7d8e334e4d9ad5bc31",
+        "fertility_policy_by_age_income_state.png": "9f2f92bf378bb5336059be7093ff10584180fe2e132de96b02ccb7fbbf52bc07",
+        "housing_by_age_income_state.png": "2281b651052651e158360120f141e2bd77f954700df43633f368474c482880d8",
+        "housing_market.png": "061f2c87e030a243795f1f4b67fba31016909db7b804488544e4ff60a1ba15cc",
+        "housing_prices.png": "7d616ffe98a73043d5428038838d43dd7ab14cdb660c739b1b72c867d73cbd7c",
+        "income_state_outcomes.png": "f7aa7a031b8b5d4de7176d971eef913bf96c1bfe37220b28aa00f09ea78a257d",
+        "liquid_wealth_by_age_income_state.png": "f68e576689cb6d729312dbc009746415f783a97080d4068dcfbcb4ad8c02a038",
+        "market_clearing_by_market.png": "0b771c7ab0b41948d7114760d20b3eb5fb5680155f2b0b619d6c4c7b65c39448",
+        "market_clearing_residuals.png": "e7574ed0953ea400201ef453c53906aa18be32ce66ae6a5fb91cf0bbc7d720c9",
+        "owner_rungs.png": "6c853c2a6732649b6d2338e61bc7f797a416ec7b0073580b6994303c88dbf2bc",
+        "ownership_by_age.png": "c3618aa974586f66aeb5510ced8d282775bbfb47d00eeed938da2ce780ac1894",
+        "ownership_by_age_income_state.png": "e89354f54a1b0a7b6b612cd04e3f15520030206ed0e888dfde21afb7f809eda9",
+        "policy_childless_renter_age30.png": "b78e3be3b5670cc9fc381b246cc05c123031795ac9090e7708da77a585e4d54e",
+        "policy_childless_renter_age42.png": "f2191bdd7c11450e2b90d5b2199af6fb57e2df8a7ca0524b0f3bc16c6823c35a",
+        "tenure_services.png": "200ad878acb067ae60aa15424d8f5aff7376cf1722efed16a3fb10bd9685c27d",
+        "wealth_dist_childless_renter_age30.png": "4e1039e57375652f224e3cc87d014d35d8bde1fc3b62e885b57bd9c9bd1b4796",
+        "wealth_dist_childless_renter_age42.png": "45b836bfa8fe842d8a86f40565a3f4e3f666385df276c62c444d5a9b20c24d7c"
+      }
+    },
+    {
+      "case": "grid_control_repeat",
+      "checkpoint_path": "/work/elasticity_results/solve_v2/grid_control_repeat/conditional_cohort_state.pkl.gz",
+      "checkpoint_sha256": "9443ba2048b7b6a525894e098ec344065864ac587cbe8f13b9e00ab837dd7ab7",
+      "factor": 1.0,
+      "fit_sha256": "e3126056a256e2bf436026087892f71ff9b97342055e27485454f7244142fe09",
+      "parameters_sha256": "7561d6f1ed0b620fd97ce496c2a1e4e8779ab04f34699bbb394e3c2ba8d1f7c4",
+      "receipt_path": "/work/elasticity_results/solve_v2/grid_control_repeat/receipt.json",
+      "receipt_sha256": "dfc2d5badcd5c7e0eadd4d3824d3f6b3f3c307b6587a5c607b60ec4b61383cdb",
+      "regime": "reference",
+      "standard_plot_sha256": {
+        "fertility_by_age.png": "a4713eb926b8b524a564974421b5c5c5d311278a98886c7d8e334e4d9ad5bc31",
+        "fertility_policy_by_age_income_state.png": "9f2f92bf378bb5336059be7093ff10584180fe2e132de96b02ccb7fbbf52bc07",
+        "housing_by_age_income_state.png": "2281b651052651e158360120f141e2bd77f954700df43633f368474c482880d8",
+        "housing_market.png": "061f2c87e030a243795f1f4b67fba31016909db7b804488544e4ff60a1ba15cc",
+        "housing_prices.png": "7d616ffe98a73043d5428038838d43dd7ab14cdb660c739b1b72c867d73cbd7c",
+        "income_state_outcomes.png": "f7aa7a031b8b5d4de7176d971eef913bf96c1bfe37220b28aa00f09ea78a257d",
+        "liquid_wealth_by_age_income_state.png": "f68e576689cb6d729312dbc009746415f783a97080d4068dcfbcb4ad8c02a038",
+        "market_clearing_by_market.png": "0b771c7ab0b41948d7114760d20b3eb5fb5680155f2b0b619d6c4c7b65c39448",
+        "market_clearing_residuals.png": "e7574ed0953ea400201ef453c53906aa18be32ce66ae6a5fb91cf0bbc7d720c9",
+        "owner_rungs.png": "6c853c2a6732649b6d2338e61bc7f797a416ec7b0073580b6994303c88dbf2bc",
+        "ownership_by_age.png": "c3618aa974586f66aeb5510ced8d282775bbfb47d00eeed938da2ce780ac1894",
+        "ownership_by_age_income_state.png": "e89354f54a1b0a7b6b612cd04e3f15520030206ed0e888dfde21afb7f809eda9",
+        "policy_childless_renter_age30.png": "b78e3be3b5670cc9fc381b246cc05c123031795ac9090e7708da77a585e4d54e",
+        "policy_childless_renter_age42.png": "f2191bdd7c11450e2b90d5b2199af6fb57e2df8a7ca0524b0f3bc16c6823c35a",
+        "tenure_services.png": "200ad878acb067ae60aa15424d8f5aff7376cf1722efed16a3fb10bd9685c27d",
+        "wealth_dist_childless_renter_age30.png": "4e1039e57375652f224e3cc87d014d35d8bde1fc3b62e885b57bd9c9bd1b4796",
+        "wealth_dist_childless_renter_age42.png": "45b836bfa8fe842d8a86f40565a3f4e3f666385df276c62c444d5a9b20c24d7c"
+      }
+    },
+    {
+      "case": "credit",
+      "checkpoint_path": "/work/elasticity_results/solve_v2/credit/conditional_cohort_state.pkl.gz",
+      "checkpoint_sha256": "1794df620c6e4bef2a4935a2d362d0d7acc091ec47478b388f3358ee67b556fb",
+      "factor": 1.0,
+      "fit_sha256": "6e748906c28f857a3d68e218272b826f426ec653185f4bf06d41dc5f8c47b318",
+      "parameters_sha256": "6316d99e04f02de603d30f2de3c9e6c2854cd419445820ee66f48a4877eee5c5",
+      "receipt_path": "/work/elasticity_results/solve_v2/credit/receipt.json",
+      "receipt_sha256": "65180acd192a17f0f15cf1e301b1e9c37ceb9c776974c5f9ffd66486218afa1b",
+      "regime": "credit",
+      "standard_plot_sha256": {
+        "fertility_by_age.png": "7e81100b7379a8b9df1eda80febaf517bf47597a6417d927ddf645d60122c4e5",
+        "fertility_policy_by_age_income_state.png": "779523d6f11995af8c3f2605eacb70602aba2663b3d0df1b0f6bdf88fc10070c",
+        "housing_by_age_income_state.png": "ab67afa72199e6548952b2d4280aedfa5f201ae275cec527c2b95c3db865d44d",
+        "housing_market.png": "a2614eecf69ed029c54983ec85f5150ce94f174e91ef2e33f05cba6e9c74a5eb",
+        "housing_prices.png": "7d616ffe98a73043d5428038838d43dd7ab14cdb660c739b1b72c867d73cbd7c",
+        "income_state_outcomes.png": "690e74bb8a5fee44b6fb3163497745d4f111850cef0aac77b65a0bc967480e3d",
+        "liquid_wealth_by_age_income_state.png": "5c6a9441a5dfc38d68e5c4de7dc5d06046cee9459fce1757024d8712e116dc8e",
+        "market_clearing_by_market.png": "7266c458045bbe5d5b4a1ada98c613f870a349236e5c91c0f65b8b510d44831e",
+        "market_clearing_residuals.png": "17ba8cbe8d0a1cdef5275cd25ae6c38dc0438e90e92306f7e4c7cde30d233d73",
+        "owner_rungs.png": "753a5ef34858ff561f180799491273300a3d1628642b7195a608521bdcb1e46e",
+        "ownership_by_age.png": "4de3f8b5c001c4bfd63d9a05c7439eb986f8f14425946334b5f05a88e77c5215",
+        "ownership_by_age_income_state.png": "8f7515629393d3c94178437ef5a0381d2c78740f978728c42121671399d7dfd0",
+        "policy_childless_renter_age30.png": "96a7f51518649e73b91ecccd207d756d3d25980b8732cb7b52af324a18fa53e9",
+        "policy_childless_renter_age42.png": "656c931332da50759c8f98a08854b61ae76856b680e4b14b38e7993734734fca",
+        "tenure_services.png": "e1a5f13143c8411424f7dbbf79e76b59538373f9d5d414f0060a076f76d16418",
+        "wealth_dist_childless_renter_age30.png": "4ef4ce5393c4ea739ef82ae99076767480c4371bbfd464d8389e99cf4d4f500a",
+        "wealth_dist_childless_renter_age42.png": "8b73e28eaeb233da54ff0a59473f6786bc136a887f6ec8feb4f1cfadf46ed2e6"
+      }
+    },
+    {
+      "case": "credit_repeat",
+      "checkpoint_path": "/work/elasticity_results/solve_v2/credit_repeat/conditional_cohort_state.pkl.gz",
+      "checkpoint_sha256": "e71863b9dc4af2872ef40ee146238669ba8540bdeb6460a227b8f88d242f58f3",
+      "factor": 1.0,
+      "fit_sha256": "6e748906c28f857a3d68e218272b826f426ec653185f4bf06d41dc5f8c47b318",
+      "parameters_sha256": "6316d99e04f02de603d30f2de3c9e6c2854cd419445820ee66f48a4877eee5c5",
+      "receipt_path": "/work/elasticity_results/solve_v2/credit_repeat/receipt.json",
+      "receipt_sha256": "f89029f3f974a59a0f864488dd86f2b07c458743a687f4b54ff6cb35ebb400ec",
+      "regime": "credit",
+      "standard_plot_sha256": {
+        "fertility_by_age.png": "7e81100b7379a8b9df1eda80febaf517bf47597a6417d927ddf645d60122c4e5",
+        "fertility_policy_by_age_income_state.png": "779523d6f11995af8c3f2605eacb70602aba2663b3d0df1b0f6bdf88fc10070c",
+        "housing_by_age_income_state.png": "ab67afa72199e6548952b2d4280aedfa5f201ae275cec527c2b95c3db865d44d",
+        "housing_market.png": "a2614eecf69ed029c54983ec85f5150ce94f174e91ef2e33f05cba6e9c74a5eb",
+        "housing_prices.png": "7d616ffe98a73043d5428038838d43dd7ab14cdb660c739b1b72c867d73cbd7c",
+        "income_state_outcomes.png": "690e74bb8a5fee44b6fb3163497745d4f111850cef0aac77b65a0bc967480e3d",
+        "liquid_wealth_by_age_income_state.png": "5c6a9441a5dfc38d68e5c4de7dc5d06046cee9459fce1757024d8712e116dc8e",
+        "market_clearing_by_market.png": "7266c458045bbe5d5b4a1ada98c613f870a349236e5c91c0f65b8b510d44831e",
+        "market_clearing_residuals.png": "17ba8cbe8d0a1cdef5275cd25ae6c38dc0438e90e92306f7e4c7cde30d233d73",
+        "owner_rungs.png": "753a5ef34858ff561f180799491273300a3d1628642b7195a608521bdcb1e46e",
+        "ownership_by_age.png": "4de3f8b5c001c4bfd63d9a05c7439eb986f8f14425946334b5f05a88e77c5215",
+        "ownership_by_age_income_state.png": "8f7515629393d3c94178437ef5a0381d2c78740f978728c42121671399d7dfd0",
+        "policy_childless_renter_age30.png": "96a7f51518649e73b91ecccd207d756d3d25980b8732cb7b52af324a18fa53e9",
+        "policy_childless_renter_age42.png": "656c931332da50759c8f98a08854b61ae76856b680e4b14b38e7993734734fca",
+        "tenure_services.png": "e1a5f13143c8411424f7dbbf79e76b59538373f9d5d414f0060a076f76d16418",
+        "wealth_dist_childless_renter_age30.png": "4ef4ce5393c4ea739ef82ae99076767480c4371bbfd464d8389e99cf4d4f500a",
+        "wealth_dist_childless_renter_age42.png": "8b73e28eaeb233da54ff0a59473f6786bc136a887f6ec8feb4f1cfadf46ed2e6"
+      }
+    },
+    {
+      "case": "reference_990",
+      "checkpoint_path": "/work/elasticity_results/solve_v4/reference_990/conditional_cohort_state.pkl.gz",
+      "checkpoint_sha256": "a37423d14bd3c727321626fdc58f6b4a658def5d749246744ce1b8ac6dff46f0",
+      "factor": 0.99,
+      "fit_sha256": "8423137476f08aa1212697b44ac008664d76d933eb4349162552d8f5004a8c5e",
+      "parameters_sha256": "7561d6f1ed0b620fd97ce496c2a1e4e8779ab04f34699bbb394e3c2ba8d1f7c4",
+      "receipt_path": "/work/elasticity_results/solve_v4/reference_990/receipt.json",
+      "receipt_sha256": "c947552935c7561e8c191e7430c211177a731bb677e69694cfbad0fd59dabe09",
+      "regime": "reference",
+      "standard_plot_sha256": {
+        "fertility_by_age.png": "e56a11ae1e02fd5c7f6ecc1abc3bac1aa82425d5fbab0ec51c660ba27b8f4537",
+        "fertility_policy_by_age_income_state.png": "c8e4c596f1955f684276fccb866ec71e0d2cffdc591ba2a84838c9ac52045400",
+        "housing_by_age_income_state.png": "0f947b0aa2c28eb8ee8364edc0ddc1ecfd7429d57bcd1dcbe0aacdf10c3e56e2",
+        "housing_market.png": "b9acb99ef36ea2c1c0a44f72d73a69b7ac2aeeb3da8cf47fe2ad1ee036bc2ba4",
+        "housing_prices.png": "4e77cd14ded10bffde3762485eebdf51985ba1b901de1a00c273ea41daa015a0",
+        "income_state_outcomes.png": "be7ce2942e1b92d91779e8233df6a2233fd35c6999f3551e5adbdf6534574e06",
+        "liquid_wealth_by_age_income_state.png": "6c0e9169aa232fa59f6273b118debbffa971b929a0d6c9909d77bd687e843253",
+        "market_clearing_by_market.png": "b1bef28dc5aecb641fec68c58923c5034eba20c9a7c43538cd0788540cdba211",
+        "market_clearing_residuals.png": "a6adf1181186475268d2899201928702920d231ae93de531aa29876e548319e7",
+        "owner_rungs.png": "d9bcfe8b84c65c07881db2ddced393ae6f97673a64e3a1ce2d2ab6786af39d5b",
+        "ownership_by_age.png": "f2b57921732b8cc11a5047058304f327390d9fc339557accaa4582a04e60c79d",
+        "ownership_by_age_income_state.png": "a4eb4213f4ee2143fda42f56e98d45ec143b6ff7b587335dc18b207e1b749c5d",
+        "policy_childless_renter_age30.png": "211d386cf1eb983d44dee818f26f95aa9eeb3ccf5d2ae187321fb11d59ed7633",
+        "policy_childless_renter_age42.png": "5bae41939d88f07bb6fe3eeb320184c00eef20b0e22badb4a7a3571d86ea5172",
+        "tenure_services.png": "5fa9bbe3e5adcae47eaaed643dc83cc7ec42cbf808899899523171a454c1aac2",
+        "wealth_dist_childless_renter_age30.png": "603fb5f4af33866628e1aa863aca1914aac7aea6668f16c7f922e42c77433a0a",
+        "wealth_dist_childless_renter_age42.png": "0c0fa3198cc5bf30f119e2280070dcd845466043231026cfbc52faedaf36ebf7"
+      }
+    },
+    {
+      "case": "credit_990",
+      "checkpoint_path": "/work/elasticity_results/solve_v4/credit_990/conditional_cohort_state.pkl.gz",
+      "checkpoint_sha256": "eaebddbfe87c43b136618861eef5b98d752473bf128772ef551d7a3c3184695b",
+      "factor": 0.99,
+      "fit_sha256": "c30f6d767bab1e5ec5fcb8310edd56252816f3196413daa4999f8dd6d924ca7f",
+      "parameters_sha256": "6316d99e04f02de603d30f2de3c9e6c2854cd419445820ee66f48a4877eee5c5",
+      "receipt_path": "/work/elasticity_results/solve_v4/credit_990/receipt.json",
+      "receipt_sha256": "3bc81f9aeff5d015e15db4c4bf931da6dd8544f5e486316ecd96f7d548a3cb92",
+      "regime": "credit",
+      "standard_plot_sha256": {
+        "fertility_by_age.png": "4e4b439928c1c42419514d3559447055100fb7f959837eaf13c72c4233da5cc8",
+        "fertility_policy_by_age_income_state.png": "8bee005b4f9a99712acccbf6d6b96ed6697bbca0283c28bd91752569deb12b76",
+        "housing_by_age_income_state.png": "98fbec35637b4a8f464771c498b6ffddf58a8d5ef75dd6b9965fe0850ca338c8",
+        "housing_market.png": "c33576abd45c02eebc2c01e4f5e2209b33f2288c270f050175f12c42aad4d459",
+        "housing_prices.png": "4e77cd14ded10bffde3762485eebdf51985ba1b901de1a00c273ea41daa015a0",
+        "income_state_outcomes.png": "959c6490f6b0f74d861360c066bbf2222b2ab1771660b782e5d24e1684e1aed6",
+        "liquid_wealth_by_age_income_state.png": "a8488d52f83100940b26910c6652237d5dd8f5e17221fda8d09fe1e97db228f3",
+        "market_clearing_by_market.png": "87a54c0bd61a7023d70381c8bca29ab326b5b20ea48d6e315b811e7cb44b8caf",
+        "market_clearing_residuals.png": "1cf036361cee79f299c857da03e33668dd7fea365c31dcd143fa25654addc7bd",
+        "owner_rungs.png": "3c4906c5a6735d0e2c709a1c893ab00813f4c52ae7144c8ba4e935d81f37b017",
+        "ownership_by_age.png": "581c6bf6faeff9ed31408f50cdad5f659f72f274c8438f3fa622617b783a23c2",
+        "ownership_by_age_income_state.png": "2ab453ef3804d25ceade0d2db82339bfc071229aafd24a7e24098f0b197e702a",
+        "policy_childless_renter_age30.png": "172cdbac65baaad7417ff9bd6d39bd564d2b0aa4b205b19b22eb66970bd1b1f7",
+        "policy_childless_renter_age42.png": "36dcd4906b728597bcf8587edcd6404b03544069b507ffaa164e9fe3383339a5",
+        "tenure_services.png": "297ab4e1b5b97042b59f5bd1643024d557fb9503c5af590fa44d8dfadf49ff99",
+        "wealth_dist_childless_renter_age30.png": "88c6341e8ccd20a875aaa48c3b126854e97860a3038c78e6f5ef92c1aedebfea",
+        "wealth_dist_childless_renter_age42.png": "7c75bdf395ba44fe9f5a67dd902e96769442d0b0c1f501f6ab5ae0348e2fd8c7"
+      }
+    }
+  ],
+  "prior_latest_path": "/work/elasticity_results/solve_v4/latest_completed.json",
+  "prior_latest_sha256": "3769b635023baa5ae4432e7d720e1ad6654d3daa4e97da192a7935e3ba175aaa",
+  "prior_passes": 6,
+  "psi_child_fixed": 0.1355551166583114,
+  "reference_checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d",
+  "reference_label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "reference_manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+  "renormalize_fertility": false,
+  "schema": "block0506_three_price_recovery_v1",
+  "stop_criteria": [
+    "Any model or scientific gate failure stops without retry",
+    "Each new fresh-process case completes within 900 seconds including checkpoint and plots",
+    "Two new solves and total 2100 seconds from this recovery job start are hard limits",
+    "Only .99, 1.00 and 1.01 prices can form a completed comparison; no +/-2% claim"
+  ],
+  "threads": 1,
+  "total_seconds": 2100,
+  "v2_driver_sha256": "5d461d4999c428c77438ee43dd63db0e69ee0dd10356b0e09d65c62880adc5ca"
+}

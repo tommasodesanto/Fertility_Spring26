@@ -1,5 +1,25 @@
 # Local housing-price elasticities: union-grid successor
 
+**September 29 recovery authorization:** after the lead proposed completing
+only the two +1% cases with a new two-solve, 15-minute-per-case, 35-minute-total
+budget, the author instructed the lead to proceed. The cheaper workers completed
+the saving repair and renderer; the lead reviewed the source diff and verified
+zero-solve Torch smoke **18814979** passed. Recovery production job **18815133**
+is submitted (pending priority at 15:10 EDT), with dependent zero-solve rendering
+job **18815186**. Hourly monitoring is active. See [recovery_v1](recovery_v1/README.md)
+for immutable sources, input pins, and the separate recovery contract. No old
+deadline is reset and no passed case is rerun. The stopped-run status below is
+historical; it does not describe the newly authorized recovery.
+
+The new recovery retains the same 602-node grid, frozen preferences including
+psi, earnings, inherited distribution, entry, fiscal inputs, supply primitives,
+repayment rules and all scientific gates. The two experimental cases prescribe
+house price and mapped rent at 1.01 times reference; the second also retains the
+already-specified removal of artificial borrowing limits. Checkpoint writing
+will be atomic and precede plotting, with explicit saving progress. Completed
+0.99 and 1.00 cases remain read-only inputs. The intended result is a verified
+three-price comparison; ±2% robustness remains outside this recovery budget.
+
 **September 29, 12:17 EDT: numerical work stopped; full elasticity comparison
 incomplete.** Job 18801318 completed all four q0 controls and stopped on its
 forecast. Continuation 18803216 completed `reference_990` and `credit_990`, then

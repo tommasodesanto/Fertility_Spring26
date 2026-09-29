@@ -37,6 +37,15 @@ fertility renormalization, or automatic adoption of another chat's candidate.
 
 ## Current priorities and useful output
 
+The author has authorized the [two-case price-elasticity recovery](elasticity_v1/README.md)
+after the checkpoint-writing timeout: only the missing +1% baseline-credit and
+solvency-only-credit cases, with a fresh explicit two-solve/35-minute budget.
+The lead reviewed the isolated saving correction and verified the passing Torch
+smoke. Production job **18815133** is submitted (pending priority at 15:10 EDT);
+only the two missing cases may run. Zero-solve rendering job **18815186** depends
+on its successful completion. Hourly monitoring is active. The prior passed
+cases, frozen calibration, and completed supply/borrowing GE evidence are preserved.
+
 The [supplemental housing-supply figure](slide_inputs_v1/rendered_output_v2/supplemental_housing_supply.pdf)
 and [borrowing table](slide_inputs_v1/rendered_output_v2/borrowing_comparison.tex)
 are ready for slide integration. Their [full-precision CSV](slide_inputs_v1/rendered_output_v2/borrowing_comparison.csv)
