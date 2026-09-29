@@ -285,6 +285,11 @@ be stated and recoverable.
 
 ## Delegation And Cost Discipline
 
+Delegate code implementation and fixes to cheaper model-selected workers.
+The lead owns specification, review, coordination and scientific verification
+rather than writing the implementation. Inherited frontier-model subagents are
+not the default coding route; select the least expensive adequate worker.
+
 Default to routing work to the least expensive adequate worker. Spend the lead's
 budget on economics, identification, calibration judgment, specification, and
 final review; send volume and independent passes to model-selected workers. The

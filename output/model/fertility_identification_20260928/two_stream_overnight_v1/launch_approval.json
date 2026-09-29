@@ -1,0 +1,33 @@
+{
+  "schema": "two_stream_launch_approval_v1",
+  "status": "approved_two_stream_overnight",
+  "config_sha256": "419b46d7cffdf51d95760f2999aec67a66b10b08bb9198164ac3d6f7d96323d3",
+  "allowed_lanes": [
+    "one_birth",
+    "two_birth"
+  ],
+  "source_fingerprints": {
+    "one_birth": "8353418c769b95465d717edb429d5a93aa9db4db575d6782e2b973f7f2f7dcce",
+    "two_birth": "b206b1f2dc82dd82e310dbfd78ab632ff9b91f0c123836c71891ac0147193c30"
+  },
+  "synthetic_receipt": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_stream_overnight_v1/synthetic_receipt.json",
+    "sha256": "359b987bf15bb3655f4068594a40399019653164a30cbab1bedcd80bae25ff5a"
+  },
+  "integration_receipts": {
+    "one_birth": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_stream_overnight_v1/integration_smoke_v1/one_birth/SMOKE.json",
+      "sha256": "3e2e065062e5c3f734543912d7dff4594d76308ee4597a98f00686ab0710f40c"
+    },
+    "two_birth": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_stream_overnight_v1/integration_smoke_v1/two_birth/SMOKE.json",
+      "sha256": "c0451150d4aac3635cbb4247c6a1287f09b32ea3d68037db0b5637cd8f2dcbec"
+    }
+  },
+  "not_before_epoch": 1790652273,
+  "expires_epoch": 1790655873,
+  "scientific_promotion": false,
+  "overnight_followup": "read_only_major_failure_monitoring",
+  "author_authorization": "September28 instruction to launch when ready; both model streams; scheduled monitoring only",
+  "lead_review": "All16 synthetic tests passed and all4 native repeated model evaluations passed with full14/31/17 exports. Exact source, target, bounds and checkpoint identities authenticated."
+}

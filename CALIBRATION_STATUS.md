@@ -16,6 +16,68 @@ Read-only checks run every 30 minutes for major failures; no overnight repairs,
 restarts, resubmissions or parameter changes are authorized. These jobs are
 separate from the stationary calibration streams below.
 
+## September 28 overnight — two calibration streams launched; scheduled monitoring only
+
+The author authorized a bounded original-model search and a separate search of
+the verified experimental two-birth version, followed by monitoring only for
+major failures. No repair, restart, budget extension or candidate promotion is
+authorized overnight. Implementation and fixes are delegated to explicitly
+selected cheaper workers; the lead specifies, reviews and verifies.
+
+The new isolated packet is
+`output/model/fertility_identification_20260928/two_stream_overnight_v1/`.
+It keeps the original ten scored moments, three validation rows, completed
+fertility 2.1 (normalization), demographic renewal gate, ten search coordinates
+and original bounds. Only the two-birth stream changes the birth opportunity:
+one optional extra attempt after a success within a four-year cell, using the
+existing later-birth choice scale and an independent conception draw. Earnings,
+entry distributions, transfers/floors, housing and credit primitives are retained.
+The common-event age projection is retained; separate birth dates are not modeled.
+
+Each stream receives one CPU, 24GB, at most seven hours and 36 evaluations,
+including two final repeats; eight stationary solves and 35 minutes per case.
+The search uses two fresh ten-coordinate derivative rounds, three damped
+Gauss–Newton proposals per round, and seven deterministic exploratory proposals,
+subject to time and stopping rules. Final repeats reserve 70 minutes; the hard
+end is September 29 11:30 UTC (07:30 EDT). Rank diagnostics do not certify
+identification. Every accepted case retains all 14 fit rows, 31 parameter rows
+and 17 standard plots. Exact design, run-size estimate and source pins are in
+the packet; checkpoints stay on Torch.
+
+The reference remains **2007 stationary reference — block0506, September 28
+verified export**. The original-model seed is the numerical-pair retained-start
+candidate; the two-birth seed is the normalized v2 diagnostic. Neither is an
+adopted reference. Shared model code, the other chat's frozen reference and
+transition work are untouched.
+
+First preflight authenticated all inputs (18764700), but one of 16 controller
+tests failed (18764691) because descendant termination was inspected immediately
+after sending SIGKILL. The test now allows up to two seconds to observe death,
+still rejecting a live descendant; production timeout behavior is unchanged.
+Failed source/configuration evidence is preserved under `failed_preflight_v1/`
+on Torch. Fresh tests 18765038 pass all 16 checks; preparation 18765039 passes.
+The prepared configuration SHA is
+`419b46d7cffdf51d95760f2999aec67a66b10b08bb9198164ac3d6f7d96323d3`.
+Integration array 18765327 passes both real repeated evaluations per model:
+all four native solves pass with full tables and 17 plots per evaluation.
+The original-model maximum weighted-residual difference from its anchor is
+7.362e-05; the two-birth difference is zero. Both are within the retained 0.01
+screen. No scientific tolerance was relaxed.
+
+Search array **18766206** launched September 28 at 23:24:50 EDT. Task 0 is
+`one_birth`; task 1 is `two_birth`. Both were confirmed RUNNING with fresh
+heartbeats and their first replay dispatched. Their seven-hour clocks end
+around September 29 06:25 EDT, within the 07:30 hard end. Results stay under
+`two_stream_overnight_v1/run_v1/` on the isolated Torch stage.
+`launch_approval.json` SHA is
+`77be2cf5e988f754ef5650f5d1a4ae2626f9b77165937cc6387fd5ff5c91a32a`.
+
+App heartbeat `monitor-two-stream-fertility-calibration` is ACTIVE every 30
+minutes. It makes one bounded read-only check, inspects relevant failure
+evidence only when needed, and reports new major failures. It cannot repair,
+retry, cancel, extend or promote anything. It pauses after both jobs terminate
+or by September 29 12:30 UTC. Older completed search automations remain paused.
+
 ## September 28 — two-birth mechanism verified; benefit adjustment reverses early gain
 
 The isolated corrected experiment passes: smoke 18758966 (16 tests and a full
