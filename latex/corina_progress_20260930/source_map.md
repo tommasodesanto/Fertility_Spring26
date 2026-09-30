@@ -10,7 +10,7 @@ The editable source is standalone and needs no external figures.
 The retained scientific reference is **2007 stationary reference — block0506,
 September 28 verified export**. Its full fourteen-row fit and thirty-one-row
 parameter table are copied unchanged into `evidence/`. Its weighted objective is
-19.581310760138322. The one-birth and two-birth candidates on slide 7 are later,
+19.581310760138322. The one-birth and two-birth candidates on slide 6 are later,
 unadopted experiments, with objectives 7.826226594410982 and 7.8420175378092205.
 Their full fit and parameter tables are also supplied. The presentation's fit
 table deliberately uses the author's `Moment / Target / Model` format.
@@ -25,35 +25,25 @@ through population. Fertility near 2.1 in these runs is not independent validati
 
 ## Slide-by-slide sources
 
-1. **Fertility and Housing Tenure Choice.** Two-week scope and synthesis.
-   `docs/model/situation_report_20260918.md`, the September 23–30 sections of
-   `CALIBRATION_STATUS.md`, and `docs/model/calibration_identification_review_20260929.md`.
+1. **Household preferences.**
+   `output/model/fertility_identification_20260928/resume_v1/selected_export/primary/parameters.csv`
+   and `code/model/intergen_eqscale_seq_optimized/child_preferences.py`. The model
+   stores `psi_child` as the one-child benefit b in `B(m)=b*m^(1-gamma)`. Slide
+   notation writes this as `v(m)=psi*m^(1-gamma)`, so slide psi is the stored
+   one-child benefit, preserving b for financial wealth and B for bequests. The
+   equivalent CRRA coefficient is `(1-gamma)*b`. Compensation is at a fixed
+   reference rent, not the endogenous market rent. Fifteen persistent income
+   states describe the retained reference, not a claim that the earlier AR(1)+iid
+   battery identified a universal earnings process.
 
-2. **Mortgage access and unsecured liquidity.** First table in section 1 of
-   `docs/model/situation_report_20260918.md`. These are fixed-benefit early-sandbox
-   diagnostics. The sandbox baseline is not the exact September 14 replay.
-   The five-year unsecured allowance is a large mechanism probe, not the later
-   0.25 annual-income pilot. The rental wedge, mortgage amortization, parent-age
-   exit and child earnings-penalty proposals in the early review were not adopted
-   wholesale. The slide reports their economic lesson without implying adoption.
+2. **Demographic accounting.** September 24 dependency/entry and September 26
+   estate-funding decisions in `CALIBRATION_STATUS.md`. Independent dependency
+   departure and the adult-entry queue are distinct. The birth-to-household
+   conversion 1/2.1 applies once. Estate funding keeps entrant assets fixed and
+   rejects a shortfall; it does not trace own-family inheritance or grant welfare
+   to the residual sink.
 
-3. **Household preferences and demographic accounting.**
-   `output/model/fertility_identification_20260928/resume_v1/selected_export/primary/parameters.csv`,
-   `code/model/intergen_eqscale_seq_optimized/child_preferences.py`, and the
-   September 24 dependency/entry and September 26 estate-funding decisions in
-   `CALIBRATION_STATUS.md`. The model stores `psi_child` as the one-child benefit
-   b in `B(m)=b*m^(1-gamma)`. Slide notation writes this as
-   `v(m)=psi*m^(1-gamma)`, so slide psi is the stored one-child benefit, preserving
-   b for financial wealth and B for bequests. The equivalent CRRA coefficient is `(1-gamma)*b`.
-   Compensation is at a fixed reference rent, not the endogenous market rent.
-   Fifteen persistent income states describe the retained reference, not a claim
-   that the earlier AR(1)+iid battery identified a universal earnings process.
-   Independent dependency departure and the adult-entry queue are distinct.
-   The birth-to-household conversion 1/2.1 applies once. Estate funding keeps
-   entrant assets fixed and rejects a shortfall; it does not trace own-family
-   inheritance or grant welfare to the residual sink.
-
-4. **Housing around the first birth.** Raw coefficients and receipt:
+3. **Housing around the first birth.** Raw coefficients and receipt:
    `code/data/psid_followup_mar2026/output/sa_rooms_first_birth_v2/A2h/coefficients.csv`
    and `fit_receipt.csv`. The group is all current adults who were reference
    person/spouse in the −3/−2 baseline window, with first biological births,
@@ -69,7 +59,7 @@ through population. Fertility near 2.1 in these runs is not independent validati
    rounds the latter to 1.465. Rooms/moving used rebuilt dated items; ownership
    was contemporaneous. These associations are not an exogenous fertility shock.
 
-5. **Calibration inputs and empirical counterparts.** Author-adopted national
+4. **Calibration inputs and empirical counterparts.** Author-adopted national
    housing inputs (September 23), bequest target (September 24) and pension rule
    (September 25) in `CALIBRATION_STATUS.md`; reconciled in
    `docs/model/accepted_input_reconciliation_20260926.md`. The AHS quantity is
@@ -83,7 +73,7 @@ through population. Fertility near 2.1 in these runs is not independent validati
    event-study estimator. The active bequest observer and the target differ in
    recipient/estate scope. Some wealth and income counterparts use proxies.
 
-6. **2007 stationary reference fit.** Exact source:
+5. **2007 stationary reference fit.** Exact source:
    `output/model/fertility_identification_20260928/resume_v1/selected_export/primary/target_fit.csv`.
    All fourteen rows appear. Percentage and percentage-point rows multiply
    the source fractions by 100. One-child share is conditional on mothers ages
@@ -91,7 +81,7 @@ through population. Fertility near 2.1 in these runs is not independent validati
    fertility is a separate normalization. The reference has ten searched
    coordinates and ten scored moments; the benefit is separately normalized.
 
-7. **Young mothers and the fertility intensive margin.** Raw age-25 values in
+6. **Young mothers and the fertility intensive margin.** Raw age-25 values in
    `output/model/fertility_identification_20260928/two_stream_overnight_v1/comparison_v1/age25_decomposition_inputs.csv`.
    Complete selected results in `two_stream_overnight_v1/morning_readout_v1/RESULTS.md`.
    The 27.1% closes `(0.6060544766097269−0.5304463498285714)/(0.8095276384290021−0.5304463498285714)`.
@@ -102,6 +92,14 @@ through population. Fertility near 2.1 in these runs is not independent validati
    option adds an independent taste opportunity and a common event-time proxy.
    Matching motherhood instead would remove the intensive margin on which the
    model fails. The age clock was checked; relabeling age 25 as 26 does not fix it.
+
+7. **Mortgage access and unsecured liquidity.** First table in section 1 of
+   `docs/model/situation_report_20260918.md`. These are fixed-benefit early-sandbox
+   diagnostics. The sandbox baseline is not the exact September 14 replay.
+   The five-year unsecured allowance is a large mechanism probe, not the later
+   0.25 annual-income pilot. The rental wedge, mortgage amortization, parent-age
+   exit and child earnings-penalty proposals in the early review were not adopted
+   wholesale. The slide reports their economic lesson without implying adoption.
 
 8. **House prices, credit, and births.** Completed September 29 job 18815133:
    `output/model/fixed_reference_economics_20260928/elasticity_v1/recovery_v1/README.md`
@@ -173,6 +171,8 @@ legibility, clipping, equations, plot axes and labels before delivery.
 This deck was migrated into the separate project folder
 `latex/corina_progress_20260930/`; the received version is retained under
 `latex/corina_progress_20260930/archive/received/`, and the original location
-was preserved. This update makes only the requested figure-spacing, table-spacing,
-unit and pilot-status corrections. It adds no scientific results; the pilots
-remain unadopted.
+was preserved. The prior review made the figure-spacing, table-spacing, unit and
+pilot-status corrections; those edits add no scientific results, and the pilots
+remain unadopted. The current update reorders the presentation to lead with the
+model's preferences and demographic accounting, without changing its scientific
+results.

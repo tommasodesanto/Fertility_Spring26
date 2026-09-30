@@ -43,6 +43,17 @@ scientific results. Historical shock fits yielded no estimates; diagnostic
 
 ## Review and changes
 
+The deck now opens with household preferences and demographic accounting, then
+proceeds through the empirical evidence, reference fit, model diagnostics and
+next calibration. The reading order is: Household preferences; Demographic
+accounting; Housing around the first birth; Calibration inputs and empirical
+counterparts; 2007 stationary reference fit; Young mothers and the fertility
+intensive margin; Mortgage access and unsecured liquidity; House prices, credit,
+and births; Stationary computation and grid resolution; Entry wealth, credit,
+and the next calibration. The former general overview frame was removed to keep
+the deck at ten frames. The preferences and accounting material formerly shared
+one frame and now open the deck as two separate frames.
+
 An independent read-only numerical review authenticated all 15 copied source
 artifacts, checked all 14 reference-fit rows and all chart coefficients and
 intervals, and verified the other displayed numbers. The lead checked the
@@ -53,8 +64,9 @@ September 29–30 price, computation and entry work.
 
 The review found a dated status update and three presentation issues: crowded
 negative event-time labels, tight table-column spacing, and the debt allowance
-appearing before its units were defined. Corrections are confined to slides 4,
-6, 9 and 10. The 14-row fit remains in the author's three-column format.
+appearing before its units were defined. The review's references to slides 4, 6,
+9 and 10 use the pre-reordering numbering; the corresponding current frames are
+3, 5, 9 and 10. The 14-row fit remains in the author's three-column format.
 
 No model, calibration, test suite, benchmark, new cluster job, or job stop was
 run for this review. The main deck and both manuscripts retain their existing

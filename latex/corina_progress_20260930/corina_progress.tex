@@ -24,54 +24,9 @@
 % Relative source paths below are in Fertility_Spring26. See source_map.md for full paths.
 \begin{document}
 
-% 1: docs/model/situation_report_20260918.md; CALIBRATION_STATUS.md Sept23--30;
-% docs/model/calibration_identification_review_20260929.md.
-\begin{frame}{Fertility and Housing Tenure Choice}
+% 1: selected_export/primary/parameters.csv; child_preferences.py.
+\begin{frame}{Household preferences}
 \framesubtitle{JMP progress, September 17--30, 2026 \qquad Tommaso De Santo}
-\textbf{Question.} How does access to family-sized housing affect births,
-and which housing policies can change fertility?
-\medskip
-\begin{itemize}\setlength\itemsep{9pt}
-  \item Mechanism tests separate mortgage access, unsecured liquidity, and space costs.
-  \item Revised household preferences and accounting support a new 2007 reference.
-  \item Rebuilt housing evidence and richer fertility moments sharpen the fit diagnosis.
-  \item Faster stationary computation makes controlled recalibration more practical.
-\end{itemize}
-\interpretation{The main remaining fit problem is the number of children among young mothers.}
-\source{PSID, CPS, AHS, and model experiments, September 17--30}
-\end{frame}
-
-% 2: situation_report_20260918.md, section 1. Fixed-psi early sandbox comparisons.
-% Sandbox levels differ from exact September14 replay. No cross-contract loss comparison.
-\begin{frame}{Mortgage access and unsecured liquidity}
-\small
-Early diagnostics hold the child-benefit level and other parameters fixed:
-\medskip
-\begin{center}
-\begin{tabular}{lrrr}
-\toprule
- & Baseline & No down payment & Unsecured credit \\
-\midrule
-Completed fertility & 1.872 & 1.866 & 1.948 \\
-Mean first-birth age & 26.960 & 26.970 & 25.790 \\
-Ownership, ages 30--55 (\%) & 45.9 & 55.7 & 45.0 \\
-\bottomrule
-\end{tabular}
-\end{center}
-\medskip
-The unsecured-credit diagnostic allows five years of earnings.
-\begin{itemize}\setlength\itemsep{5pt}
-  \item Removing the down payment primarily increases homeownership.
-  \item Unsecured liquidity increases births and brings them forward.
-  \item Family-sized rental space limits the connection between buying and births.
-\end{itemize}
-\interpretation{These are comparisons within the early sandbox, before the later specification and recalibration.}
-\source{Model mechanism diagnostics, September 17--19}
-\end{frame}
-
-% 3: selected_export/primary/parameters.csv; child_preferences.py;
-% CALIBRATION_STATUS Sept24 dependency/entry and Sept26 estate-funded-entry decisions.
-\begin{frame}{Household preferences and demographic accounting}
 \small
 A first-child housing-share loading replaces the hard housing floor:
 \[
@@ -84,14 +39,26 @@ $\psi$ the direct benefit level, and $\gamma$ its curvature.
 \begin{itemize}\setlength\itemsep{6pt}
  \item Material utility retains CRRA, equivalence scales, and persistent earnings risk.
  \item Shares are compensated at a fixed rent, with no later-child loading.
- \item Dependency ends with probability $2/9$ per four-year period. Adult entry is a separate queue, split equally after 16 and 20 years.
- \item Estates fund positive entrant assets. An explicit sink absorbs the remainder.
 \end{itemize}
 \interpretation{Concurrent children and lifetime births are distinct calibration objects.}
 \source{Model specification and author decisions, September 24--28}
 \end{frame}
 
-% 4: PSID sa_rooms_first_birth_v2/A2h/{coefficients,fit_receipt}.csv;
+% 2: CALIBRATION_STATUS Sept24 dependency/entry and Sept26 estate-funded-entry decisions.
+\begin{frame}{Demographic accounting}
+\small
+Independent dependency departure and the adult-entry queue are distinct.
+\medskip
+\begin{itemize}\setlength\itemsep{6pt}
+ \item Dependency ends with probability $2/9$ per four-year period.
+ \item Adult entry is a separate queue, split equally between 16 and 20 years after birth.
+ \item Estates fund positive entrant assets. An explicit sink absorbs the remainder.
+\end{itemize}
+\interpretation{Estate funding keeps entrant assets fixed and rejects a shortfall.}
+\source{Model specification and author decisions, September 24--28}
+\end{frame}
+
+% 3: PSID sa_rooms_first_birth_v2/A2h/{coefficients,fit_receipt}.csv;
 % sa_first_birth_outcomes_v3/A2h_{own,moved}/fit_receipt.csv.
 % Plot uses raw coefficients and 1.96*SE pointwise intervals, omitted window shown hollow.
 \begin{frame}{Housing around the first birth}
@@ -136,7 +103,7 @@ At years 3--4: rooms rise by \textbf{1.465} (SE 0.050), ownership by
 \source{PSID, Sun--Abraham event study, person/year effects, IW weights, September 24}
 \end{frame}
 
-% 5: CALIBRATION_STATUS September23 national inputs, Sept24 bequest,
+% 4: CALIBRATION_STATUS September23 national inputs, Sept24 bequest,
 % Sept25 pension decision; accepted_input_reconciliation_20260926.md;
 % calibration_identification_review_20260929.md.
 \begin{frame}{Calibration inputs and empirical counterparts}
@@ -165,7 +132,7 @@ Annual depreciation / property tax & 1.416\% / 1.060\% & National housing inputs
 \source{AHS 2007, CPS ASEC 2008, SCF 2007, PSID}
 \end{frame}
 
-% 6: exact full 14-row fit at resume_v1/selected_export/primary/target_fit.csv.
+% 5: exact full 14-row fit at resume_v1/selected_export/primary/target_fit.csv.
 % Full unrounded gaps, weights, loss contributions and all31 restrictions in evidence/.
 % one-child row is conditional on mothers age40--44; three validation rows daggered.
 \begin{frame}{2007 stationary reference fit}
@@ -197,7 +164,7 @@ Recent-parent ownership difference (pp) & 12.761 & 11.955 \\
 \source{CPS, NCHS, PSID, AHS, SCF, and September 28 verified model export}
 \end{frame}
 
-% 7: two_stream_overnight_v1/comparison_v1/age25_decomposition_inputs.csv;
+% 6: two_stream_overnight_v1/comparison_v1/age25_decomposition_inputs.csv;
 % morning_readout_v1/RESULTS.md; calibration_identification_review_20260929.md.
 \begin{frame}{Young mothers and the fertility intensive margin}
 \small
@@ -222,6 +189,34 @@ Children per mother, capped at three & 1.770 & 1.185 & 1.385 \\
 \end{itemize}
 \interpretation{The extra birth opportunity also adds an independent taste draw. The comparison does not isolate birth spacing alone.}
 \source{CPS June 2004/2006 and model experiments, September 28--29}
+\end{frame}
+
+% 7: situation_report_20260918.md, section 1. Fixed-psi early sandbox comparisons.
+% Sandbox levels differ from exact September14 replay. No cross-contract loss comparison.
+\begin{frame}{Mortgage access and unsecured liquidity}
+\small
+Early diagnostics hold the child-benefit level and other parameters fixed:
+\medskip
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+ & Baseline & No down payment & Unsecured credit \\
+\midrule
+Completed fertility & 1.872 & 1.866 & 1.948 \\
+Mean first-birth age & 26.960 & 26.970 & 25.790 \\
+Ownership, ages 30--55 (\%) & 45.9 & 55.7 & 45.0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\medskip
+The unsecured-credit diagnostic allows five years of earnings.
+\begin{itemize}\setlength\itemsep{5pt}
+  \item Removing the down payment primarily increases homeownership.
+  \item Unsecured liquidity increases births and brings them forward.
+  \item Family-sized rental space limits the connection between buying and births.
+\end{itemize}
+\interpretation{These are comparisons within the early sandbox, before the later specification and recalibration.}
+\source{Model mechanism diagnostics, September 17--19}
 \end{frame}
 
 % 8: fixed_reference_economics_20260928/elasticity_v1/recovery_v1/collected_v1/elasticities.csv.
