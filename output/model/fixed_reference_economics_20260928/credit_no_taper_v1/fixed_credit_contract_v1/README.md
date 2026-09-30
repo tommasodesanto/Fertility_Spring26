@@ -57,3 +57,21 @@ tenure and renter-saving dispatchers compiled. Frozen and effective source pins
 and test hashes were checked before execution. Zero lifecycle solves and zero
 checkpoint reads; full runtime integration, inherited-entry reconciliation and
 a valid equilibrium remain uncomputed.
+
+## Renewed overnight authorization, September 29
+
+The author asked to continue and monitor overnight, retaining Torch for
+substantial testing. This is new validation authorization; the earlier urgent
+comparison deadline remains closed. A cheaper worker's partial
+`runtime_validation_v1/` controller was not submitted and is retained as
+incomplete. The reviewed `runtime_validation_v2/` smoke 18845938 failed before
+Python because Slurm relocated the wrapper and its sibling path was relative
+to `$0`; zero lifecycle evaluations occurred. Preserve v2. A narrowly corrected
+`runtime_validation_v3/` uses explicit staged launcher paths: first a
+zero-lifecycle checkpoint/import smoke, then at most one
+fresh exact control with the overlay's scalar unset. One thread, 24 GiB,
+300 seconds per control and 900 seconds total from its launcher entry; no retry.
+No strict-zero lifecycle, price search or GE will be launched if checkpoint
+affordability confirms the analytic entry blocker. The hourly heartbeat
+`check-frozen-reference-borrowing-ge` now monitors this credit validation and
+pauses after delivery/failure or by 09:00 New York September 30.

@@ -1,0 +1,40 @@
+{
+  "schema": "block0506_fixed_credit_runtime_validation_v2",
+  "reference_label": "2007 stationary reference — block0506, September 28 verified export",
+  "reference_manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+  "reference_checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d",
+  "base_authenticator_sha256": "96d6923a252f57bc4d8c44fd6479b13f48ba217d74edf8ef629d120428b03b44",
+  "driver_sha256": "f9940add31491a6132cff52867d469f91b6134b1e5572b42310aea5a80caf4c1",
+  "overlay_sha256": {
+    "parameters.py": "d7b4d23c4bab2153dca0e86a6f189fe6aed6676c72090999d5a1c9105a8d5f8c",
+    "solver.py": "cefc1627ff3adb124d223a114122a0a578b5c4dc889635b3deb97c6f2b805a3e",
+    "kernels.py": "379d179a8f80477e8d813f60bc526e700a270e37e0f411988aabd9a06fd74352"
+  },
+  "modes": {
+    "smoke": {
+      "lifecycle_solves": 0,
+      "minutes": 5,
+      "memory_gib": 16
+    },
+    "control": {
+      "lifecycle_solves": 1,
+      "case_seconds": 300,
+      "total_seconds": 900,
+      "memory_gib": 24
+    }
+  },
+  "threads": 1,
+  "strict_D0": "cash-infeasibility proof only; no lifecycle solve",
+  "control_scalar": null,
+  "control_prices": "authenticated reference p_eq",
+  "economic_changes": [],
+  "forbidden": [
+    "GE",
+    "price sweep",
+    "positive credit cap",
+    "calibration",
+    "entry mutation",
+    "fertility renormalization"
+  ],
+  "remote_root": "/scratch/td2248/projects/fixed_reference_credit_runtime_20260930_v3"
+}

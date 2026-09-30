@@ -27,6 +27,20 @@ cancelled while pending before this check. Receipt:
 `fixed_credit_contract_v1/verification_local_v1/receipt.json`. No lifecycle,
 checkpoint read or equilibrium calculation ran; the entry blocker remains.
 
+The author subsequently requested continued overnight work, with substantial
+tests on Torch. A new validation-only budget permits checkpoint/import smoke
+and at most one exact baseline replay with the explicit credit scalar unset;
+300 seconds per control, 900 seconds total from launcher entry, one thread,
+no numerical retries. It does not reopen the expired GE-comparison budget.
+Torch smoke 18845938 failed in two seconds before Python at a Slurm wrapper
+path; its sources and receipt are preserved in `runtime_validation_v2/`.
+A narrowly corrected immutable `runtime_validation_v3/` smoke **18846467**
+was submitted once; its README records source pins and the hourly monitor.
+No entry change or strict-zero GE is
+authorized. Source/parameter arithmetic shows the two retained entrant cells
+have negative cash even before rent and consumption; buying is also infeasible
+at nonnegative prices. Actual-checkpoint verification remains the next gate.
+
 ## September 29 — frozen-reference renter-debt comparison (not adopted)
 
 At **2007 stationary reference — block0506, September 28 verified export** parameters and unchanged prices, removal of the age taper with mortality repayment gives completed fertility **2.1026541568**, versus **2.0999983368** in the authenticated reference control (+0.12647%). Ownership is 66.5240% versus 66.8165%. Torch recovery job **18838216** passed the household/cohort gates for this case, retaining 14 fit rows, 31 parameter rows and 17 standard plots. Its diagnostic target loss is 20.7078939879; there was no refit, exact repeat, fertility normalization, GE, or reference switch.
