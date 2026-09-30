@@ -1,0 +1,37 @@
+{
+  "common_deadline_epoch": 1790822297.0,
+  "common_deadline_iso": "2026-10-01T02:38:17Z",
+  "dispatch_lanes": [
+    "empirical_credit_120x9_s1",
+    "empirical_credit_120x9_s2",
+    "empirical_credit_120x9_s3",
+    "nonnegative_mean_120x9_s1",
+    "nonnegative_mean_120x9_s2",
+    "nonnegative_mean_120x9_s3",
+    "nonnegative_mean_160x15_s1",
+    "nonnegative_mean_160x15_s2",
+    "nonnegative_mean_160x15_s3"
+  ],
+  "existing_lanes_untouched": [
+    "empirical_credit_120x9",
+    "nonnegative_mean_120x9",
+    "nonnegative_mean_160x15"
+  ],
+  "lifecycle_solves": 0,
+  "parent_repeat_receipts_scope": "verified pilot parent only; perturbed starts require fresh repeated native baseline",
+  "perturbed_starts_native_verified": false,
+  "plan_sha256": "a369bb872451933eba673ebb8667d8be62f8a17b9674b731154bda3a894a2806",
+  "requires_cluster_preflight": true,
+  "requires_native_baseline_repeat": true,
+  "source_pins_sha256": "5b1ce07232176be7a8a07269cccbd7f04f305268d635d7951438f0a317031b36",
+  "source_pins_verified": 93,
+  "status": "local_preparation_passed_source_frozen",
+  "test_command": "code/model/.venv/bin/python -m unittest -v test_round1 test_multistart (from packet)",
+  "tests_passed": 17,
+  "unchanged_files_sha256": {
+    "inputs.py": "1f91dd9274cd905910bc36ad487a0c20979692f68ce29ad2972f8d5a09ba8178",
+    "phase_b_pilot.py": "949627c883b9910cde1a02cbe725c237a8e38423c16887681d72be6aebef2bc9",
+    "runner.py": "e56fabae9a5c78b4b67d26fd4c3d5bcdf5e6830a2289f89c80e99ac6be755640",
+    "test_round1.py": "d883f522a81a9822c0b8e527a8c5c8a825c4e73a5dd8592a15385ed3284c4d7a"
+  }
+}

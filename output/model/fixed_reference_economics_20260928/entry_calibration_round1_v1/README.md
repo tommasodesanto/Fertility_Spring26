@@ -125,3 +125,8 @@ meaningful failures/actions or completion; no automatic restart or extension.
 All three tasks started at18:38:17NewYork, with a22:38:17hard end.
 All built-in preflights and native entrant-income/mass checks passed; each is
 solving its baseline. This is launch verification, not a completed calibration.
+
+September30 expansion: nine nearby starts submitted as array18900753 under
+[entry_calibration_multistart_v1](../entry_calibration_multistart_v1/README.md),
+bringing the total to12single-core searches with the same22:38:17hard end.
+This original array and its source files remain unchanged.

@@ -1,0 +1,112 @@
+{
+  "baseline": {
+    "kind": "baseline",
+    "label": "000_baseline",
+    "lifecycle_solves": 0,
+    "loss": 0.23518518518518522,
+    "parameters": {
+      "beta_annual": 0.9627532310921522,
+      "chi": 1.0296335533473902,
+      "child_benefit_curvature": 0.058600502010449806,
+      "delta_alpha_jump": 0.13836976834113102,
+      "first_birth_fixed_cost": 0.6384516128848308,
+      "kappa_fert": 0.18056409155212924,
+      "kappa_fert_continuation": 0.3411208282557141,
+      "tenure_choice_kappa": 0.01285432416169036,
+      "theta0": 0.12055651354174905
+    },
+    "population": 1.0,
+    "price": 0.8,
+    "report": "/work/results/preflight/000_baseline",
+    "residual": [
+      -0.1,
+      -0.11111111111111112,
+      -0.12222222222222223,
+      -0.13333333333333333,
+      -0.14444444444444446,
+      -0.15555555555555556,
+      -0.16666666666666669,
+      -0.17777777777777778,
+      -0.18888888888888888,
+      -0.2
+    ],
+    "seconds": 0.009453968144953251,
+    "status": "passed"
+  },
+  "completed_full_ge": 80,
+  "deadline_epoch": 1790809082.1291006,
+  "elapsed_seconds": 4.261477947235107,
+  "experimental_not_adopted": true,
+  "identification": {
+    "budget_stop": true,
+    "center_label": "073_r5_gn_1.0",
+    "center_parameters": {
+      "beta_annual": 0.9672532310921523,
+      "chi": 1.4468100361735954,
+      "child_benefit_curvature": 0.08312593208961921,
+      "delta_alpha_jump": 0.16086976834113104,
+      "first_birth_fixed_cost": 0.9056558151278015,
+      "kappa_fert": 0.25613361485383745,
+      "kappa_fert_continuation": 0.483886414469327,
+      "tenure_choice_kappa": 0.01823410449849186,
+      "theta0": 0.17101171856592032
+    },
+    "free_coordinates": [
+      "beta_annual",
+      "chi",
+      "first_birth_fixed_cost",
+      "kappa_fert",
+      "kappa_fert_continuation",
+      "theta0",
+      "delta_alpha_jump",
+      "child_benefit_curvature",
+      "tenure_choice_kappa"
+    ],
+    "fresh_at_selected": false,
+    "round_index": 6,
+    "scored_targets": 10,
+    "status": "incomplete_jacobian",
+    "valid_probes": 4
+  },
+  "lane": "nonnegative_mean_120x9_s3",
+  "lifecycle_solves": 0,
+  "maximum_full_ge": 80,
+  "rounds_completed": 7,
+  "search_stop_reason": "incomplete_jacobian_budget",
+  "selected": {
+    "kind": "finite_difference",
+    "label": "076_r6_probe_first_birth_fixed_cost",
+    "lifecycle_solves": 0,
+    "loss": 0.12816108038324658,
+    "parameters": {
+      "beta_annual": 0.9672532310921523,
+      "chi": 1.4468100361735954,
+      "child_benefit_curvature": 0.08312593208961921,
+      "delta_alpha_jump": 0.16086976834113104,
+      "first_birth_fixed_cost": 0.9237689314303575,
+      "kappa_fert": 0.25613361485383745,
+      "kappa_fert_continuation": 0.483886414469327,
+      "tenure_choice_kappa": 0.01823410449849186,
+      "theta0": 0.17101171856592032
+    },
+    "population": 1.0,
+    "price": 0.8,
+    "report": "/work/results/preflight/076_r6_probe_first_birth_fixed_cost",
+    "residual": [
+      -0.009999999999996678,
+      -0.025973053391477402,
+      -0.08655755740403138,
+      -0.13182133806919352,
+      -0.1415879901384498,
+      -0.14924865492753414,
+      -0.0766666666666666,
+      -0.14712099017881602,
+      -0.1345476733656414,
+      -0.12070478482836139
+    ],
+    "seconds": 0.012491875095292926,
+    "status": "passed"
+  },
+  "selected_repeats": 2,
+  "status": "selected_verified"
+}

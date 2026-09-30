@@ -1,0 +1,41 @@
+{
+  "status": "running",
+  "job_array": "18900753",
+  "original_array": "18899847",
+  "submitted_utc": "2026-09-30T22:54:25Z",
+  "remote_root": "/scratch/td2248/projects/entry_calibration_multistart_v1",
+  "tasks": {
+    "0": "empirical_credit_120x9_s1",
+    "1": "empirical_credit_120x9_s2",
+    "2": "empirical_credit_120x9_s3",
+    "3": "nonnegative_mean_120x9_s1",
+    "4": "nonnegative_mean_120x9_s2",
+    "5": "nonnegative_mean_120x9_s3",
+    "6": "nonnegative_mean_160x15_s1",
+    "7": "nonnegative_mean_160x15_s2",
+    "8": "nonnegative_mean_160x15_s3"
+  },
+  "total_searches_including_original": 12,
+  "cpus_per_task": 1,
+  "memory_gib_per_task": 24,
+  "common_deadline_utc": "2026-10-01T02:38:17Z",
+  "common_deadline_epoch": 1790822297,
+  "archive_sha256": "7abf6d24020e9ee04c29a35442bcbc3e01ebc3e3edf6ff4bfcc81d4323cb9f23",
+  "preflight_job": "18900620",
+  "native_verification": "pending fresh native baseline/repeat in every new chain",
+  "automation_id": "monitor-entrant-calibration-pilots",
+  "production_adoption": false,
+  "started_utc": "2026-09-30T22:56:27Z",
+  "last_observed_utc": "2026-09-30T22:56:32Z",
+  "new_array_nodes": [
+    "cs608",
+    "cs612",
+    "cs614"
+  ],
+  "all12_nodes_including_original": [
+    "cs605",
+    "cs608",
+    "cs612",
+    "cs614"
+  ]
+}

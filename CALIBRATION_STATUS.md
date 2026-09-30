@@ -1,5 +1,25 @@
 # Calibration Status
 
+## September 30 evening — twelve parallel searches running
+
+The author requests substantially more parallel calibration. Nine additional
+starts are being prepared in `output/model/fixed_reference_economics_20260928/entry_calibration_multistart_v1/`,
+adding three nearby initial parameter vectors for each of the three existing
+specification/grid combinations. The original array18899847 remains untouched.
+Total intended concurrency is12 single-core searches (four per combination).
+All share the original22:38:17NewYork stop, rather than extending tonight's
+window. Each alternative start offsets the pilot-selected vector by three
+existing finite-difference steps in one of three fixed signed directions,
+clipped to existing bounds. Corresponding option3 coarse/fine seeds match.
+These new seeds require native verification; their parents' repeats do not
+certify the perturbed points. Economics, targets, search algorithm and native
+solver remain unchanged. Additional native array18900753 submitted18:54:25NewYork and all9started
+18:56:27. Twelve single-core searches now span4physicalnodes, nine tasks
+in base-major order with suffixes_s1/_s2/_s3. All17 tests and all9cluster
+preflights passed (18900620); solver/search files are byte-identical to the
+running original. Each new chain must freshly verify its perturbed baseline.
+The existing15-minute monitor now follows both arrays and all12outcomes.
+
 ## September 30 evening — four-hour continuation running
 
 The author authorizes three parallel four-hour calibration lanes: empirical
