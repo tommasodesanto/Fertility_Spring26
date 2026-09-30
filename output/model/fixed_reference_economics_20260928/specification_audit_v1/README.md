@@ -46,3 +46,27 @@ remains an open author choice, separate from taper removal.
 
 The audit compares active economic rules and disclosure. It does not mean that
 every source line or all 1,241 pinned files were independently reviewed.
+
+## Short list for the author — September 29 evening
+
+1. **Urgent credit decision:** remove the arbitrary renter age-42--62 repayment
+   taper. The isolated patch retains zero new unsecured credit and nonnegative
+   estates. Native compiled household validation is the next gate; positive new
+   unsecured credit remains a separate, unchosen specification.
+2. **Bequest measurement:** reconcile all positive model estates with the
+   child-directed empirical target before treating the associated preference
+   estimate as recipient-consistent. This is an already disclosed mismatch.
+3. **Entry wealth/income:** validate the construction and sensitivity of the
+   maintained joint distribution; no construction error is established here.
+4. **Dependent-child departure and adult entry:** previously discussed at length
+   with the author, not a new discovery. Retain the independent departure rule
+   and separate 16/20-year entry queue as explicit approximations for reconsideration.
+5. **Behavioral diagnostics:** high-wealth ownership declines, the age-30 housing
+   downturn, retirement wealth profiles and conditional versus occupied policy
+   interpretation remain questions, not certified findings.
+6. **Transition:** the separate 2023 transition must be computed and validated
+   before using it for policy responses. Stationary or prescribed-price results
+   do not supply that missing path.
+
+This list separates unresolved measurement, maintained assumptions and numerical
+validation from confirmed coding errors; it is not a claim that all items are bugs.

@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "scope": "Local native floor and deterministic sale arithmetic only; no household solve or equilibrium",
+  "reference": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "reference_checkpoint_read": false,
+  "local_native_source_hashes_match_frozen": true,
+  "age_rows": [
+    {
+      "age": 38,
+      "current_debt": -1.0,
+      "original_floor": -1.0,
+      "rollover_floor": -1.0,
+      "strict_zero_floor": -0.0
+    },
+    {
+      "age": 46,
+      "current_debt": -1.0,
+      "original_floor": -0.6,
+      "rollover_floor": -1.0,
+      "strict_zero_floor": -0.0
+    },
+    {
+      "age": 62,
+      "current_debt": -1.0,
+      "original_floor": -0.0,
+      "rollover_floor": -1.0,
+      "strict_zero_floor": -0.0
+    },
+    {
+      "age": 66,
+      "current_debt": -1.0,
+      "original_floor": -0.0,
+      "rollover_floor": -0.0,
+      "strict_zero_floor": -0.0
+    }
+  ],
+  "sale_rows": [
+    {
+      "financial_assets_before_sale": -0.5,
+      "gross_home_value": 1.0,
+      "net_assets_after_sale": 0.43999999999999995,
+      "strict_sale_allowed": true
+    },
+    {
+      "financial_assets_before_sale": -0.94,
+      "gross_home_value": 1.0,
+      "net_assets_after_sale": 0.0,
+      "strict_sale_allowed": true
+    },
+    {
+      "financial_assets_before_sale": -1.2,
+      "gross_home_value": 1.0,
+      "net_assets_after_sale": -0.26,
+      "strict_sale_allowed": false
+    }
+  ],
+  "elapsed_seconds_after_import": 0.0029220829892437905
+}

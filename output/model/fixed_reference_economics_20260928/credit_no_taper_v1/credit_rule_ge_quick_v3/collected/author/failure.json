@@ -1,0 +1,7 @@
+{
+  "message": "solve budget/deadline reserve reached",
+  "retries": 0,
+  "status": "failed",
+  "traceback": "Traceback (most recent call last):\n  File \"/work/source_packet/credit_rule_ge_quick_v3/run_credit_rule_ge_quick.py\", line 101, in main\n    try: child(a) if a.factor is not None else controller(a)\n                                               ~~~~~~~~~~^^^\n  File \"/work/source_packet/credit_rule_ge_quick_v3/run_credit_rule_ge_quick.py\", line 85, in controller\n    q=run('q0',1.); selected=q if root_eligible(q) else None; b=None\n  File \"/work/source_packet/credit_rule_ge_quick_v3/run_credit_rule_ge_quick.py\", line 76, in run\n    req(len(rows)<8 and time.time()+180<hard,'solve budget/deadline reserve reached')\n    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/work/source_packet/credit_rule_ge_quick_v3/run_credit_rule_ge_quick.py\", line 18, in req\n    if not x: raise RuntimeError(m)\n              ^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: solve budget/deadline reserve reached\n",
+  "type": "RuntimeError"
+}

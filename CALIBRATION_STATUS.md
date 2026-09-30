@@ -1,5 +1,13 @@
 # Calibration Status
 
+## September 29 — frozen-reference renter-debt comparison (not adopted)
+
+At **2007 stationary reference — block0506, September 28 verified export** parameters and unchanged prices, removal of the age taper with mortality repayment gives completed fertility **2.1026541568**, versus **2.0999983368** in the authenticated reference control (+0.12647%). Ownership is 66.5240% versus 66.8165%. Torch recovery job **18838216** passed the household/cohort gates for this case, retaining 14 fit rows, 31 parameter rows and 17 standard plots. Its diagnostic target loss is 20.7078939879; there was no refit, exact repeat, fertility normalization, GE, or reference switch.
+
+Strict zero renter saving debt plus debt-clearing owner-to-renter sales produced raw completed fertility 2.1008010303 but **failed entrant feasibility**: two age-18 renter cells with financial wealth -0.2558139535 contain approximately 0.00802% of the retained entrant cohort. No projection or entry-debt alteration was applied. This is an inadmissible counterfactual, not a validated result. Negative-debt entry under a strict zero-unsecured-debt rule remains an outstanding author decision.
+
+Both requested GE cases remain uncomputed: the initial controller had a pre-solve type error, and the repaired controller **18838220** stopped at the unchanged 30-minute deadline reserve before price solving. The two PE lifecycle solves lost to a read-only diagnostic destination and their bounded two-solve recovery are recorded in `output/model/fixed_reference_economics_20260928/credit_no_taper_v1/README.md`; compact results, complete tables, diagnostics, and strict rejection census are in `credit_rule_quick_v2/collected/`. All jobs are terminal. No new numerical work is authorized by this expired deadline.
+
 ## September 29 — renter repayment decision and disclosure audit
 
 The author selected removal of the arbitrary renter 42–62 debt taper after
@@ -11,7 +19,8 @@ tests are in `output/model/fixed_reference_economics_20260928/credit_no_taper_v1
 zero-solve Torch verification **18835438** passed all 11 targeted checks in
 eight seconds. Production evaluator integration and native replay remain
 outstanding; this is not acceptance of a new computed baseline.
-No new household/equilibrium computation or recalibration has run. Preserve
+At that initial verification stage, no household/equilibrium computation or
+recalibration had run; the later two-rule comparison is recorded above. Preserve
 **2007 stationary reference — block0506, September 28 verified export** and
 ongoing jobs' pinned sources. No reference switch has occurred. The bounded
 cheap disclosure audit and lead corrections are in `specification_audit_v1/`;

@@ -1,0 +1,29 @@
+{
+  "case_seconds": 360,
+  "cases": ["control", "renter_no_taper"],
+  "compiled_mode": true,
+  "driver_sha256": "e8cbd246eb6b736742f1c3dcdca2e9a8a622cda09f403f931c2440184e61da6b",
+  "fixed_prices_rents_psi_fiscal": true,
+  "grid_nodes": 160,
+  "lambda_d": 0,
+  "maximum_lifecycle_solves": 2,
+  "memory_gib": 24,
+  "natural_credit": false,
+  "overlay_parameters_path": "/work/no_taper_source/overlay_v1/code/model/intergen_eqscale_seq_optimized/parameters.py",
+  "overlay_parameters_sha256": "9c6def300f76b2d5ac55c392e8a595fca881b1d78b15c1cba96016a30a3b83b9",
+  "pinned_files": [
+    {"path": "/work/no_taper_source/run_native_validation.py", "sha256": "e8cbd246eb6b736742f1c3dcdca2e9a8a622cda09f403f931c2440184e61da6b"},
+    {"path": "/work/no_taper_source/overlay_v1/code/model/intergen_eqscale_seq_optimized/parameters.py", "sha256": "9c6def300f76b2d5ac55c392e8a595fca881b1d78b15c1cba96016a30a3b83b9"},
+    {"path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/run_fixed_price.py", "sha256": "09edf5affbf20d7a5dc4200a81b1f32ce643ba0ad15680b4b8b208dccda77037"},
+    {"path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/credit_no_taper_v1/patch_driver.py", "sha256": "60e65c6f8ee1e3a664decf4854889770a1636dacc25d08da245bcdc7015db7a3"},
+    {"path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/credit_no_taper_v1/test_renter_no_taper.py", "sha256": "88a97d4a6c7fc15122525938906b890ed21c7992459359ba7ce281bb7d358b9a"}
+  ],
+  "reference_label": "2007 stationary reference — block0506, September 28 verified export",
+  "reference_manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+  "renormalize_births": false,
+  "required_readout": {"fit_rows": 14, "parameter_rows": 31, "standard_plots": 17},
+  "schema": "block0506_renter_no_taper_native_validation_v2",
+  "threads": 1,
+  "total_seconds": 1200,
+  "base_driver_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/run_fixed_price.py"
+}

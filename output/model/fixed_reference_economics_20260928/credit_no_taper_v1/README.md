@@ -1,5 +1,17 @@
 # Isolated renter no-taper estate bound — targeted checks passed
 
+## Author-requested 30-minute comparison, September 29 evening
+
+The new comparison uses the retained estimated parameters of **2007 stationary reference — block0506, September 28 verified export**; no refit or reference switch. `credit_rule_quick_v1/` compares common-price household outcomes; `credit_rule_ge_quick_v1/` attempts closed stationary GE for each rule with fixed preferences including child-benefit psi. The two rules are rollover of inherited renter debt until mortality repayment (`ours`) and zero renter saving debt at every age plus debt-clearing owner-to-renter sales (`author`). Both retain buyer LTV and incumbent-owner grandfathering. Positive unsecured borrowing is not introduced.
+
+Torch zero-lifecycle compiled smoke **18837749** passed in 11 seconds. Parallel arrays **18837765** (common price) and **18837766** (GE) were submitted once with after-ok dependency. Immutable source packets are under `/scratch/td2248/projects/fixed_reference_credit_rule_quick_20260929/source_credit_rule_quick_v1` and `/scratch/td2248/projects/fixed_reference_credit_rule_ge_quick_20260929/source_packet`. Hard delivery deadline is September 30 **01:00:25 UTC** (September 29 21:00:25 New York); no extension or automatic retries. A numerical root without an exact repeat remains preliminary; failure or incomplete candidates must not be called GE.
+
+GE retains the absolute housing-supply curve and its scale parameter, with population clearing housing and price solving actual birth renewal. This differs from fixing physical housing stock. The inherited estate-counterparty and finite-grid limitations remain. Checkpoints stay on Torch.
+
+Recovery record: GE v1 stopped before any lifecycle solve on a dictionary/set type error. PE v1 completed two lifecycle solves but stopped while writing inherited-state diagnostics into the read-only reference directory, before saving aggregates. These failed outputs and immutable sources are preserved. GE v2 was prepared but never submitted. The bounded logging recovery is **PE v2 job 18838216**, with two additional lifecycle solves at most, and **GE v3 job 18838220**, retaining the original GE solve cap and absolute deadline. Both redirect only the diagnostic destination and save `raw_lifecycle.json` before reconstruction. No feasibility tolerance, projection, entry position, economic primitive, or reference source changed. The original deadline was not reset.
+
+Final result: [compact comparison, full tables and diagnostics](credit_rule_quick_v2/collected/README.md). Rollover passed common-price gates; strict zero debt rejected approximately 0.00802% of entrants. Both GE cases remain uncomputed. All jobs are terminal. The remaining sections describe the earlier standalone overlay test; their uncomputed list applies to that original test, not to the later comparison.
+
 Reference: **2007 stationary reference — block0506, September 28 verified export**.
 
 This packet does not change `code/model/`, the frozen Torch source, its checkpoint,

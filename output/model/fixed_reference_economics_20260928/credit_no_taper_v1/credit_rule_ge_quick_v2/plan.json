@@ -1,0 +1,16 @@
+{
+  "schema": "block0506_credit_rule_ge_quick_v2",
+  "reference_label": "2007 stationary reference — block0506, September 28 verified export",
+  "cases": ["ours", "author"], "grid_nodes": 160, "threads": 1, "memory_gib": 24,
+  "maximum_lifecycle_solves_per_case": 8, "price_solve_seconds": 180, "total_seconds": 960,
+  "absolute_deadline_utc": "2026-09-30T01:00:25Z", "absolute_deadline_epoch": 1790730025,
+  "renewal_tolerance": 1e-6, "paygo_tolerance": 1e-6, "fertility_normalization": false,
+  "source_sha256": {
+    "run_credit_rule_ge_quick.py": "f5c0c5e3a099f5f398883a0dd17ff5b3c16561193409e90dce0031f8b466c7b9",
+    "rule_interface.py": "90e1e46b5f894dcf3e83b75842eb0ab44c0c549a848fbae00730218264846bdf",
+    "../credit_rule_quick_v1/run_credit_rule_quick.py": "192ab1e6022e4c8a7328647132841fab82dddabaad2c68bc685e6c45a40d0ca8",
+    "../credit_rule_quick_v1/strict_tenure.py": "c64f98bf72484facc36be5eb4d38d581c1f813b419feae9ab28eee3e96117677",
+    "run_ge_accounting_source.py": "59fa315ef6d50aaa8be2abcfb29f01cf406f3756e363a0bd088e473a424311b8"
+  },
+  "root_rule": "q0; residual-positive first +.03, negative first -.03; then +/- .08 and +/- .20; safeguarded log secant; no fallback"
+}
