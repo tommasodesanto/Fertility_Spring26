@@ -22,7 +22,16 @@ state-by-state accuracy. Common-support policy comparisons contain large local
 differences requiring diagnosis before production adoption. The largest global
 value/saving discrepancies have zero beginning-of-period probability; the
 saved beginning-distribution check still finds occupied-state choice differences.
-Postdecision `sol.g` must not be used to weight beginning-state policies. The nine-state
+Post-tenure `sol.g` must not weight pre-tenure policies. The saved
+`g_beginning_distribution` is specifically **post-fertility, pre-tenure**,
+not pre-fertility mass. A saved-solution follow-up finds a mass-weighted mean
+absolute ownership-choice gap of 0.8555 percentage points; 3.1521% of household
+mass has a gap above 5 points and 1.4029% above 10 points. Conditional renter
+housing differs by 0.0253 rooms on average, with a 99th percentile of 0.2434
+rooms among pre-tenure renter states on common support. Matched support covers
+99.9494% of proposal mass. These are conditional policy comparisons, not a
+certificate of realized saving/consumption or transition accuracy. Supplemental
+plots are linked in the result README. The nine-state
 entry mapping retains the wealth marginal but approximates its association
 with income (covariance -5.93%); D=0.53 and the corrected no-taper/full-sale rules
 remain experimental relative to the frozen reference. No recalibration,
