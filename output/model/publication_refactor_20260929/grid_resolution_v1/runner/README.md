@@ -1,5 +1,7 @@
 # Full stationary GE grid comparison runner
 
+**Launch:** Torch job **18879780** is running under `/scratch/td2248/projects/grid_resolution_120x9_v1`, one CPU, 24 GiB and 40 minutes. [Launch receipt](launch.json). Submission is not numerical verification. The preparation description below records what was checked before launch.
+
 This is runnable preparation, not an executed GE comparison. Both arms use the previously authorized experimental unsecured allowance D=0.14; the reference remains unchanged. The runner first loads and authenticates original block0506 inputs and the frozen observer, then applies the separately pinned 120x9 numerical proposal. It never asks the immutable reference loader to accept changed inputs. CDF transport preserves entrant wealth atoms/marginal but changes discretized income and joint association: see parent preflight/README for the -5.93% covariance change.
 
 `phase_b_grid.py` is the authored matched full renewal-price/population GE controller, copied with one explicit reporting change: expected wealth-grid/income dimensions are 160/15 or 120/9. All other 29 parameter estimates must equal reference values. Credit D is disclosed separately; psi and preferences remain fixed. No cap selection, borrowing relaxation, recalibration, population normalization, target reweighting, or source edits occur.
