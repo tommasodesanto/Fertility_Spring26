@@ -1,0 +1,476 @@
+{
+  "axis_order": [
+    "wealth",
+    "tenure",
+    "location",
+    "age",
+    "income",
+    "children",
+    "child_state"
+  ],
+  "distribution_source": "native solution.g_beginning_distribution from selected exact-repeat stage: beginning/pre-current-tenure distribution, raw cell probability, not density. solution.g is postdecision current mass and is not used for these occupancy weights",
+  "policy_source": "selected_root snapshot, each arm selected own renewal price",
+  "common_state_count": 987780,
+  "proposal_occupied_common_state_count": 701652,
+  "both_occupied_common_state_count": 681190,
+  "proposal_beginning_g_total": 1.0000000000000007,
+  "control_beginning_g_total": 1.0000000000000002,
+  "fields": {
+    "V": {
+      "common_maximum": {
+        "indices": [
+          19,
+          1,
+          0,
+          0,
+          2,
+          3,
+          0
+        ],
+        "wealth": -3.744186046511628,
+        "income_multiplier": 0.2836419253235218,
+        "control_income_neighbors": [
+          0.2475379045801784,
+          0.3623902143420617
+        ],
+        "control_income_weight_high": 0.31435171672381484,
+        "absolute_gap": 536679910.11940116,
+        "proposed_value": -165367363.49330002,
+        "mapped_control_value": -702047273.6127012,
+        "control_value_low": -972952535.1376439,
+        "control_value_high": -111162231.11663376,
+        "proposal_g_mass": 0.0,
+        "control_g_mass_low": 0.0,
+        "control_g_mass_high": 0.0,
+        "proposal_V": -165367363.49330002,
+        "control_V_low": -972952535.1376439,
+        "control_V_high": -111162231.11663376
+      },
+      "proposal_occupied_maximum": {
+        "indices": [
+          37,
+          0,
+          0,
+          0,
+          3,
+          1,
+          1
+        ],
+        "wealth": -1.2325581395348837,
+        "income_multiplier": 0.4696261998360564,
+        "control_income_neighbors": [
+          0.3623902143420617,
+          0.5305315469710143
+        ],
+        "control_income_weight_high": 0.637772901031055,
+        "absolute_gap": 1.5591116144593515,
+        "proposed_value": -4.306024649478821,
+        "mapped_control_value": -5.865136263938172,
+        "control_value_low": -10.434207751232211,
+        "control_value_high": -3.270103600824671,
+        "proposal_g_mass": 1.769933065764762e-06,
+        "control_g_mass_low": 0.0,
+        "control_g_mass_high": 6.678099811889428e-06,
+        "proposal_V": -4.306024649478821,
+        "control_V_low": -10.434207751232211,
+        "control_V_high": -3.270103600824671
+      },
+      "both_occupied_maximum": {
+        "indices": [
+          37,
+          0,
+          0,
+          0,
+          3,
+          1,
+          1
+        ],
+        "wealth": -1.2325581395348837,
+        "income_multiplier": 0.4696261998360564,
+        "control_income_neighbors": [
+          0.3623902143420617,
+          0.5305315469710143
+        ],
+        "control_income_weight_high": 0.637772901031055,
+        "absolute_gap": 1.5591116144593515,
+        "proposed_value": -4.306024649478821,
+        "mapped_control_value": -5.865136263938172,
+        "control_value_low": -10.434207751232211,
+        "control_value_high": -3.270103600824671,
+        "proposal_g_mass": 1.769933065764762e-06,
+        "control_g_mass_low": 0.0,
+        "control_g_mass_high": 6.678099811889428e-06,
+        "proposal_V": -4.306024649478821,
+        "control_V_low": -10.434207751232211,
+        "control_V_high": -3.270103600824671
+      },
+      "proposal_g_weighted_mean_abs": 0.0157154873617721,
+      "proposal_g_common_covered_mass": 0.9994937827323491
+    },
+    "bp_pol": {
+      "common_maximum": {
+        "indices": [
+          119,
+          2,
+          0,
+          0,
+          0,
+          3,
+          0
+        ],
+        "wealth": 3000.0,
+        "income_multiplier": 0.10346813919312171,
+        "control_income_neighbors": [
+          0.0788928155545071,
+          0.11549739983189591
+        ],
+        "control_income_weight_high": 0.6713728382320449,
+        "absolute_gap": 290.76811022839365,
+        "proposed_value": 2382.984704172845,
+        "mapped_control_value": 2673.7528144012385,
+        "control_value_low": 2673.7528144012385,
+        "control_value_high": 2673.7528144012385,
+        "proposal_g_mass": 0.0,
+        "control_g_mass_low": 0.0,
+        "control_g_mass_high": 0.0,
+        "proposal_V": 1.4640403464392173,
+        "control_V_low": 1.4693597637322617,
+        "control_V_high": 1.469376370650073
+      },
+      "proposal_occupied_maximum": {
+        "indices": [
+          114,
+          3,
+          0,
+          13,
+          2,
+          0,
+          0
+        ],
+        "wealth": 845.5148793793368,
+        "income_multiplier": 0.2836419253235218,
+        "control_income_neighbors": [
+          0.2475379045801784,
+          0.3623902143420617
+        ],
+        "control_income_weight_high": 0.31435171672381484,
+        "absolute_gap": 35.08817443668386,
+        "proposed_value": 600.165195849108,
+        "mapped_control_value": 635.2533702857919,
+        "control_value_low": 635.2533702859178,
+        "control_value_high": 635.2533702855173,
+        "proposal_g_mass": 2.2107758742876022e-35,
+        "control_g_mass_low": 0.0,
+        "control_g_mass_high": 0.0,
+        "proposal_V": 9.285880475099061,
+        "control_V_low": 9.286099608316706,
+        "control_V_high": 9.286099608316704
+      },
+      "both_occupied_maximum": {
+        "indices": [
+          111,
+          0,
+          0,
+          13,
+          1,
+          0,
+          0
+        ],
+        "wealth": 377.67762353825,
+        "income_multiplier": 0.17131229439354081,
+        "control_income_neighbors": [
+          0.16908573073694466,
+          0.2475379045801784
+        ],
+        "control_income_weight_high": 0.02838115946978552,
+        "absolute_gap": 15.405393344482036,
+        "proposed_value": 267.6687449585718,
+        "mapped_control_value": 283.0741383030538,
+        "control_value_low": 283.07413830305285,
+        "control_value_high": 283.0741383030854,
+        "proposal_g_mass": 2.7042803677780504e-22,
+        "control_g_mass_low": 1.5604665672802753e-43,
+        "control_g_mass_high": 1.4351375890925065e-42,
+        "proposal_V": 9.259378904568363,
+        "control_V_low": 9.259952566107234,
+        "control_V_high": 9.259952566107232
+      },
+      "proposal_g_weighted_mean_abs": 0.01937997837636206,
+      "proposal_g_common_covered_mass": 0.9994937827323491
+    },
+    "c_pol": {
+      "common_maximum": {
+        "indices": [
+          119,
+          2,
+          0,
+          0,
+          6,
+          3,
+          0
+        ],
+        "wealth": 3000.0,
+        "income_multiplier": 2.1315621339319213,
+        "control_income_neighbors": [
+          1.6646213793720133,
+          2.4369702066117713
+        ],
+        "control_income_weight_high": 0.6045723617250434,
+        "absolute_gap": 290.76787247979314,
+        "proposed_value": 869.6468625972466,
+        "mapped_control_value": 578.8789901174534,
+        "control_value_low": 577.641209250356,
+        "control_value_high": 579.6885751993477,
+        "proposal_g_mass": 0.0,
+        "control_g_mass_low": 0.0,
+        "control_g_mass_high": 0.0,
+        "proposal_V": 1.464403487435449,
+        "control_V_low": 1.4696103652599182,
+        "control_V_high": 1.4696780673878294
+      },
+      "proposal_occupied_maximum": {
+        "indices": [
+          114,
+          3,
+          0,
+          13,
+          2,
+          0,
+          0
+        ],
+        "wealth": 845.5148793793368,
+        "income_multiplier": 0.2836419253235218,
+        "control_income_neighbors": [
+          0.2475379045801784,
+          0.3623902143420617
+        ],
+        "control_income_weight_high": 0.31435171672381484,
+        "absolute_gap": 35.087817813782806,
+        "proposed_value": 315.4921001749533,
+        "mapped_control_value": 280.4042823611705,
+        "control_value_low": 280.4042823610446,
+        "control_value_high": 280.404282361445,
+        "proposal_g_mass": 2.2107758742876022e-35,
+        "control_g_mass_low": 0.0,
+        "control_g_mass_high": 0.0,
+        "proposal_V": 9.285880475099061,
+        "control_V_low": 9.286099608316706,
+        "control_V_high": 9.286099608316704
+      },
+      "both_occupied_maximum": {
+        "indices": [
+          111,
+          0,
+          0,
+          13,
+          1,
+          0,
+          0
+        ],
+        "wealth": 377.67762353825,
+        "income_multiplier": 0.17131229439354081,
+        "control_income_neighbors": [
+          0.16908573073694466,
+          0.2475379045801784
+        ],
+        "control_income_weight_high": 0.02838115946978552,
+        "absolute_gap": 15.404736281856074,
+        "proposed_value": 141.18798963338537,
+        "mapped_control_value": 125.7832533515293,
+        "control_value_low": 125.78325335153022,
+        "control_value_high": 125.78325335149765,
+        "proposal_g_mass": 2.7042803677780504e-22,
+        "control_g_mass_low": 1.5604665672802753e-43,
+        "control_g_mass_high": 1.4351375890925065e-42,
+        "proposal_V": 9.259378904568363,
+        "control_V_low": 9.259952566107234,
+        "control_V_high": 9.259952566107232
+      },
+      "proposal_g_weighted_mean_abs": 0.01802648477114346,
+      "proposal_g_common_covered_mass": 0.9994937827323491
+    },
+    "hR_pol": {
+      "common_maximum": {
+        "indices": [
+          0,
+          0,
+          0,
+          0,
+          8,
+          0,
+          0
+        ],
+        "wealth": -12.0,
+        "income_multiplier": 5.843348419426847,
+        "control_income_neighbors": [
+          5.222996356169136,
+          7.646355301544813
+        ],
+        "control_income_weight_high": 0.2559885172774278,
+        "absolute_gap": 2.1379090086772674,
+        "proposed_value": 5.571056938808159,
+        "mapped_control_value": 3.4331479301308914,
+        "control_value_low": 2.5499832603709436,
+        "control_value_high": 6.0,
+        "proposal_g_mass": 0.0,
+        "control_g_mass_low": 0.0,
+        "control_g_mass_high": 0.0,
+        "proposal_V": 0.31490801122498,
+        "control_V_low": -0.2105972649310566,
+        "control_V_high": 0.7193477361128179
+      },
+      "proposal_occupied_maximum": {
+        "indices": [
+          20,
+          0,
+          0,
+          0,
+          6,
+          1,
+          1
+        ],
+        "wealth": -3.604651162790698,
+        "income_multiplier": 2.1315621339319213,
+        "control_income_neighbors": [
+          1.6646213793720133,
+          2.4369702066117713
+        ],
+        "control_income_weight_high": 0.6045723617250434,
+        "absolute_gap": 1.2329013235698252,
+        "proposed_value": 6.0,
+        "mapped_control_value": 4.767098676430175,
+        "control_value_low": 2.8821063470719284,
+        "control_value_high": 6.0,
+        "proposal_g_mass": 0.00017100077512199595,
+        "control_g_mass_low": 4.796862356070668e-05,
+        "control_g_mass_high": 0.0001570485498887253,
+        "proposal_V": 0.0782508409525002,
+        "control_V_low": -0.9001284624912891,
+        "control_V_high": 0.34326293807109315
+      },
+      "both_occupied_maximum": {
+        "indices": [
+          20,
+          0,
+          0,
+          0,
+          6,
+          1,
+          1
+        ],
+        "wealth": -3.604651162790698,
+        "income_multiplier": 2.1315621339319213,
+        "control_income_neighbors": [
+          1.6646213793720133,
+          2.4369702066117713
+        ],
+        "control_income_weight_high": 0.6045723617250434,
+        "absolute_gap": 1.2329013235698252,
+        "proposed_value": 6.0,
+        "mapped_control_value": 4.767098676430175,
+        "control_value_low": 2.8821063470719284,
+        "control_value_high": 6.0,
+        "proposal_g_mass": 0.00017100077512199595,
+        "control_g_mass_low": 4.796862356070668e-05,
+        "control_g_mass_high": 0.0001570485498887253,
+        "proposal_V": 0.0782508409525002,
+        "control_V_low": -0.9001284624912891,
+        "control_V_high": 0.34326293807109315
+      },
+      "proposal_g_weighted_mean_abs": 0.010307087595729944,
+      "proposal_g_common_covered_mass": 0.9994937827323491
+    },
+    "owner_choice_probability": {
+      "common_maximum": {
+        "indices": [
+          22,
+          0,
+          0,
+          11,
+          5,
+          3,
+          3
+        ],
+        "wealth": -3.3255813953488373,
+        "income_multiplier": 1.287407703884977,
+        "control_income_neighbors": [
+          1.1370530214708616,
+          1.6646213793720133
+        ],
+        "control_income_weight_high": 0.28499564115686915,
+        "absolute_gap": 0.8225824259957057,
+        "proposed_value": 0.834803581237793,
+        "mapped_control_value": 0.012221155242087198,
+        "control_value_low": 0.0,
+        "control_value_high": 0.04288190230727196,
+        "proposal_g_mass": 0.0,
+        "control_g_mass_low": 0.0,
+        "control_g_mass_high": 0.0,
+        "proposal_V": 1.6494675541320323,
+        "control_V_low": 0.34824324117859673,
+        "control_V_high": 3.216313513784565
+      },
+      "proposal_occupied_maximum": {
+        "indices": [
+          47,
+          0,
+          0,
+          11,
+          2,
+          3,
+          3
+        ],
+        "wealth": 0.1627906976744189,
+        "income_multiplier": 0.2836419253235218,
+        "control_income_neighbors": [
+          0.2475379045801784,
+          0.3623902143420617
+        ],
+        "control_income_weight_high": 0.31435171672381484,
+        "absolute_gap": 0.7980772258706742,
+        "proposed_value": 0.8714429140090942,
+        "mapped_control_value": 0.07336568813842004,
+        "control_value_low": 0.06047230213880539,
+        "control_value_high": 0.10148809850215912,
+        "proposal_g_mass": 2.1778694106170885e-07,
+        "control_g_mass_low": 1.0617990448019657e-07,
+        "control_g_mass_high": 1.6124922437413036e-07,
+        "proposal_V": 1.5602849845246076,
+        "control_V_low": 1.2863813223699339,
+        "control_V_high": 2.0050165309204124
+      },
+      "both_occupied_maximum": {
+        "indices": [
+          47,
+          0,
+          0,
+          11,
+          2,
+          3,
+          3
+        ],
+        "wealth": 0.1627906976744189,
+        "income_multiplier": 0.2836419253235218,
+        "control_income_neighbors": [
+          0.2475379045801784,
+          0.3623902143420617
+        ],
+        "control_income_weight_high": 0.31435171672381484,
+        "absolute_gap": 0.7980772258706742,
+        "proposed_value": 0.8714429140090942,
+        "mapped_control_value": 0.07336568813842004,
+        "control_value_low": 0.06047230213880539,
+        "control_value_high": 0.10148809850215912,
+        "proposal_g_mass": 2.1778694106170885e-07,
+        "control_g_mass_low": 1.0617990448019657e-07,
+        "control_g_mass_high": 1.6124922437413036e-07,
+        "proposal_V": 1.5602849845246076,
+        "control_V_low": 1.2863813223699339,
+        "control_V_high": 2.0050165309204124
+      },
+      "proposal_g_weighted_mean_abs": 0.008555298658949783,
+      "proposal_g_common_covered_mass": 0.9994937827323491
+    }
+  },
+  "remote_readonly_seconds": 6.476608698023483
+}

@@ -1,4 +1,24 @@
-# D = 0.53 grid comparison v2 — submitted, unverified
+# Grid comparison completed: 120×9 is 2.50× faster in this matched run
+
+## Verified results
+
+Both full price/population equilibria passed, using seven lifecycle evaluations each. Total cold-cache arm time, including compilation, authentication, verification and reporting, was **468.606 seconds (160×15)** versus **187.254 seconds (120×9)**: **60.04% less time**. The Slurm job 18883994 completed in 11m12s. This is the full workflow, not a fixed-price household benchmark.
+
+Both arms use fixed preferences and experimental renter borrowing floor $b'\ge-0.53$, no renter taper, and full raw repayment when selling into renting. No final credit specification is adopted. Nine income states retain the previously disclosed approximation to the wealth–income entry association; the wealth marginal is preserved, covariance falls 5.93%. No new entry relocation was allowed. There was no recalibration or production switch.
+
+At these fixed parameters, diagnostic losses are **29.476804** and **29.261200**. Price differs by +0.0755%; childlessness by +0.0176 percentage points; ownership ages 30–55 by +0.2005 percentage points; first-birth age by +0.00445 years; mean rooms by +0.01534. Fertility near 2.1 follows the birth-renewal closure and is not an independent accuracy check.
+
+- [All 14 targets: values, weights, model moments, gaps and loss contributions](collected/full/comparison_target_fit.csv).
+- [160×15: all 31 parameter values, restrictions and near-bound indicators](collected/full/control_160x15/phase_b_ge/selected_root/parameters.csv).
+- [120×9: all 31 parameter values, restrictions and near-bound indicators](collected/full/proposal_120x9/phase_b_ge/selected_root/parameters.csv). Only the two grid-dimension rows differ. These are fixed inherited estimates, not new estimates; both fertility shock-scale coordinates carry the inherited near-bound flag.
+- [160×15 standard diagnostic packet](collected/full/control_160x15/phase_b_ge/selected_root/standard_diagnostics/) and [120×9 standard diagnostic packet](collected/full/proposal_120x9/phase_b_ge/selected_root/standard_diagnostics/): all 17 plots each. Regeneration uses the existing runner's native final observer; no new plot definitions were introduced.
+- [Verification receipt](collected/verification.json), [remote hashes](collected/remote_hash_receipt.json), and [policy extrema with beginning-state probabilities](collected/policy_extrema_occupancy.json).
+
+**Accuracy limitation:** aggregates are close, but this is not a complete pointwise policy-accuracy certificate. The largest global value/saving/ownership-probability differences occur at zero-probability beginning states. Nevertheless, occupied-state choice differences remain, including a local ownership-probability gap about 0.798 at probability 2.18e-7 and a renter housing-policy gap about 1.233 at probability 0.000171. These are interpolated cross-grid comparisons at each equilibrium's own price. Beginning-of-period distribution weights are used; postdecision `sol.g` would be the wrong timing. The common feasible support covers about 99.95% of beginning mass; consult the exact receipt before using weighted errors. No transitions or counterfactuals were validated.
+
+Lead verification independently checked 127 downloaded artifact hashes, all 81 staged source pins, all 34 selected/repeat plot hashes, exact repeated 14/31 tables, seven calls per arm, and unchanged non-grid parameter rows. Representative age-30 policy figures were visually inspected. Native exact-repeat checks are recorded by the completed driver; large arrays remain on Torch. The completion monitor is paused. No further solves were launched during collection.
+
+## Preserved preparation history
 
 Verified facts: original D = 0.53 job 18881132 stopped in the control arm after five lifecycle calls with one call reserved; the 120 × 9 proposal never started. This was the six-call controller limit, not expiry of the 40-minute allocation. The new packet permits twenty lifecycle calls per arm, forty total, within the same 2400-second job clock. See `../preparation_receipt.json` and `budget_regression_receipt.json`.
 

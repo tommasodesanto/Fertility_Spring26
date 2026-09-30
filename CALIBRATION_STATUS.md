@@ -1,5 +1,35 @@
 # Calibration Status
 
+## September 30 — matched grid comparison completed
+
+Torch **18883994** completed the full price/population equilibrium workflow
+on both grids with unchanged diagnostic D=0.53, preferences and convergence
+checks. Each arm used seven lifecycle calls. Complete cold-cache arm times,
+including authentication, compilation, equilibrium, verification and reporting,
+were **468.606 seconds (160×15)** and **187.254 seconds (120×9)**: 2.503× faster,
+or 60.04% less time. The whole paired job took 11m12s in Slurm.
+
+Aggregate differences are small at this fixed parameter vector: price +0.0755%,
+childlessness +0.0176 percentage points, ownership ages 30–55 +0.2005 percentage
+points, mean age at first birth +0.00445 years, and mean rooms +0.01534.
+Weighted diagnostic losses are 29.4768 and 29.2612, respectively; no parameters
+were re-estimated. All target fits and parameter estimates/restrictions are
+linked in the result packet below. Fertility near 2.1 is imposed through the
+renewal-price closure, so it is not independent evidence of grid accuracy.
+
+This establishes the measured speed gain and close aggregates, not full
+state-by-state accuracy. Common-support policy comparisons contain large local
+differences requiring diagnosis before production adoption. The largest global
+value/saving discrepancies have zero beginning-of-period probability; the
+saved beginning-distribution check still finds occupied-state choice differences.
+Postdecision `sol.g` must not be used to weight beginning-state policies. The nine-state
+entry mapping retains the wealth marginal but approximates its association
+with income (covariance -5.93%); D=0.53 and the corrected no-taper/full-sale rules
+remain experimental relative to the frozen reference. No recalibration,
+transition validation, reference promotion or final credit decision occurred.
+Evidence: `output/model/publication_refactor_20260929/grid_resolution_v1/credit053_v2/runner/README.md`.
+
+
 ## September 30 — common diagnostic credit floor for grid validation
 
 The author clarifies that the immediate priority is validating model behavior
@@ -20,8 +50,8 @@ further price iterations. The control passed entrant feasibility but did not
 reach the unchanged equilibrium tolerance; the 120×9 arm never started.
 No new equilibrium, speed comparison or calibration was certified.
 
-The author explicitly authorized a retry. Torch **18883994** is submitted
-under `credit053_v2` (numerical results pending), with
+The author explicitly authorized retry **18883994** under `credit053_v2`,
+now completed as reported above. Its prepared budget was
 20 lifecycle calls per arm (40 total), including seed and repeat, and a
 40-minute global deadline, one CPU, 24 GiB and 300 seconds per call. Only
 iteration limits change; the price algorithm, tolerances, diagnostic D=0.53,
