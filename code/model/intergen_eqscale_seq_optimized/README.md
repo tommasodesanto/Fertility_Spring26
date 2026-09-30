@@ -5,6 +5,28 @@ maintained calibration, outstanding issues, and approved policy contract.
 This package contains the sequential household solver; a bare package CLI does
 not reproduce the dated calibration's parameter, target, and population contract.
 
+## Engine and external configuration
+
+This directory is the core household engine. `parameters.py` constructs and
+validates parameters; `solver.py` computes household policies and advances the
+distribution; `kernels.py` implements the numerical choice and saving kernels.
+Calibration and equilibrium controllers live in `code/model/tools/`; they load
+the selected external parameter/checkpoint values and specify entry, fiscal and
+market closure. Constructor defaults alone are not an estimated model.
+
+For **2007 stationary reference — block0506, September 28 verified export**,
+the authoritative external identity is
+[`fixed_reference_manifest.json`](../../../output/model/fertility_identification_20260928/fixed_reference_manifest.json),
+with compact exported evidence in
+[`selected_export/primary/`](../../../output/model/fertility_identification_20260928/resume_v1/selected_export/primary/).
+Its full checkpoint remains on Torch. Experiments must use their own pinned
+sources and explicit overrides; they do not replace this reference implicitly.
+
+The September 29 scalar unsecured-credit change is prepared separately under
+[`credit_no_taper_v1/`](../../../output/model/fixed_reference_economics_20260928/credit_no_taper_v1/README.md).
+The active files here retain the reference debt rule. No new equilibrium or
+recalibration is implied by preparing an isolated source change.
+
 ## Where to start
 
 | Purpose | File / saved artifact |

@@ -1,0 +1,195 @@
+--- reference/parameters.py
++++ overlay_initial_unaccepted/parameters.py
+@@ -169,6 +169,9 @@
+     P.entry_wealth_ratio_weights = np.array([], dtype=float)
+     P.entry_wealth_ratio_source = ""
+     P.lambda_d = 0.0
++    # None preserves the legacy rollover/taper rule.  A scalar D activates
++    # the isolated renter-only floor b' >= -D.
++    P.unsecured_credit_limit = None
+     P.debt_taper_start_age = 42.0
+     P.debt_taper_end_age = 62.0
+     P.owner_ltv_taper = False
+@@ -501,6 +504,14 @@
+     ):
+         if name in od:
+             setattr(P, name, float(getattr(P, name)))
++    raw_credit = getattr(P, "unsecured_credit_limit", None)
++    if raw_credit is not None:
++        credit = float(raw_credit)
++        if not np.isfinite(credit) or credit < 0.0:
++            raise ValueError("unsecured_credit_limit must be None or a finite non-negative scalar")
++        P.unsecured_credit_limit = credit
++    if raw_credit is not None and bool(getattr(P, "native_solvency_credit", False)):
++        raise ValueError("unsecured_credit_limit cannot be combined with native_solvency_credit")
+     if "eta_supply" in od:
+         P.eta_supply = np.asarray(P.eta_supply, dtype=float)
+         P.xi_supply = P.eta_supply.copy()
+--- reference/solver.py
++++ overlay_initial_unaccepted/solver.py
+@@ -134,10 +134,26 @@
+     )
+ 
+ 
++def fixed_unsecured_credit_active(P: SimpleNamespace) -> bool:
++    return getattr(P, "unsecured_credit_limit", None) is not None
++
++
+ def renter_borrowing_floor(P: SimpleNamespace, b: Any, j: int) -> np.ndarray:
+-    """Renter floor; all renter debt is unsecured."""
+-
+-    return debt_rule_at_age(P, b, j)
++    """Renter floor; scalar credit is separate from the legacy rollover rule."""
++
++    credit = getattr(P, "unsecured_credit_limit", None)
++    if credit is None:
++        return debt_rule_at_age(P, b, j)
++    floor = -float(credit)
++    death_possible = int(j) == int(P.J) - 1 or (
++        bool(getattr(P, "use_age_survival", False))
++        and float(np.asarray(P.survival_probs)[int(j)]) < 1.0
++    )
++    # Estates remain non-negative: a death branch makes the effective floor
++    # max(-D, 0), independently of the age-taper arrays.
++    if death_possible:
++        floor = max(floor, 0.0)
++    return np.zeros_like(np.asarray(b, dtype=float)) + floor
+ 
+ 
+ def native_due_owner_floor(b, collateral_floor, *, death_floor=-np.inf):
+@@ -2787,6 +2803,9 @@
+     if bool(getattr(P, "native_due_stayer_credit", False)) and not ctx.use_full_kernel:
+         raise NotImplementedError("Native DUE saving requires the full owner kernel with explicit death solvency")
+     natural_credit = bool(getattr(P, "native_solvency_credit", False))
++    fixed_credit = fixed_unsecured_credit_active(P)
++    if fixed_credit and natural_credit:
++        raise ValueError("unsecured_credit_limit cannot be combined with native_solvency_credit")
+     Nb = len(b_grid)
+     I = P.I
+     npar = P.n_parity
+@@ -2857,6 +2876,7 @@
+                 int(wedge_on), wedge_w0, wedge_w1, wedge_hk,
+                 bool(getattr(P, "native_exact_allocation_output", False)),
+                 natural_floor,
++                float(renter_floor[0]) if fixed_credit else -np.inf,
+             )
+             if natural_credit:
+                 Vo_nc[:, natural_dead] = -1e10
+@@ -3035,6 +3055,7 @@
+     nt = ctx.hcost.shape[1]
+     purchase_floor = ctx.bmo if bmo_purchase is None else bmo_purchase
+     transaction_support = bool(getattr(P, "native_purchase_income", False))
++    require_owner_sale_solvency = fixed_unsecured_credit_active(P)
+     birth_entry_grant = SD.birth_entry_grant
+     tenure_choice_kappa = max(float(getattr(P, "tenure_choice_kappa", 0.0)), 0.0)
+     use_tenure_logit = tenure_choice_kappa > 0.0
+@@ -3043,12 +3064,12 @@
+ 
+     if use_tenure_logit and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
+         VH, tcj, prj = tenure_logit_kernel(
+-            Vd, b_grid, ctx.heq, ctx.hcost, dp_choice, purchase_floor, SD.birth_dp, birth_entry_grant, tenure_choice_kappa, Vd_stay, transaction_support
++            Vd, b_grid, ctx.heq, ctx.hcost, dp_choice, purchase_floor, SD.birth_dp, birth_entry_grant, tenure_choice_kappa, Vd_stay, transaction_support, require_owner_sale_solvency
+         )
+         prj_full: np.ndarray | None = prj
+     elif (not use_tenure_logit) and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
+         VH, tcj = tenure_choice_kernel(
+-            Vd, b_grid, ctx.heq, ctx.hcost, dp_choice, purchase_floor, SD.birth_dp, birth_entry_grant, Vd_stay, False, transaction_support
++            Vd, b_grid, ctx.heq, ctx.hcost, dp_choice, purchase_floor, SD.birth_dp, birth_entry_grant, Vd_stay, False, transaction_support, require_owner_sale_solvency
+         )
+         prj_full = None
+     else:
+@@ -3064,6 +3085,8 @@
+                 else:
+                     ba = np.clip(b_grid + sp, b_grid[0], b_grid[-1])
+                     Vopt[:, :, :, 0] = interp_on_grid(b_grid, Vd[:, 0, id_, :, :], ba)
++                    if require_owner_sale_solvency:
++                        Vopt[b_grid + sp < 0.0, :, :, 0] = -1e10
+                 for tn in range(1, nt):
+                     hc = ctx.hcost[id_, tn]
+                     Vow = Vd_stay[:, tn, id_, :, :] if to == tn else Vd[:, tn, id_, :, :]
+@@ -3596,6 +3619,8 @@
+     stored_bp: np.ndarray | None,
+     eval_mode: bool,
+ ):
++    if fixed_unsecured_credit_active(P):
++        raise ValueError("unsecured_credit_limit requires solve_bellman_full_markov_income; legacy/factored Bellman routes are unsupported")
+     if fecundity_active(P) or bool(getattr(P, "sequential_births", False)):
+         raise NotImplementedError("fecundity/sequential births: markov-income path only")
+     if str(getattr(P, "preference_spec", "stone_geary")).lower() == "eqscale":
+@@ -4010,12 +4035,12 @@
+ 
+         if use_tenure_logit and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
+             VH, tcj, prj = tenure_logit_kernel(
+-                Vd, b_grid, heq, hcost, dp_choice, bmo, SD.birth_dp, birth_entry_grant, tenure_choice_kappa, Vd
++                Vd, b_grid, heq, hcost, dp_choice, bmo, SD.birth_dp, birth_entry_grant, tenure_choice_kappa, Vd, False, fixed_unsecured_credit_active(P)
+             )
+             tenure_probs[:, :, :, j, :, :, :] = prj
+         elif (not use_tenure_logit) and NUMBA_AVAILABLE and bool(getattr(P, "use_tenure_kernel", True)):
+             VH, tcj = tenure_choice_kernel(
+-                Vd, b_grid, heq, hcost, dp_choice, bmo, SD.birth_dp, birth_entry_grant, Vd
++                Vd, b_grid, heq, hcost, dp_choice, bmo, SD.birth_dp, birth_entry_grant, Vd, False, False, fixed_unsecured_credit_active(P)
+             )
+         else:
+             VH = np.zeros((Nb, nt, I, npar, ncs))
+@@ -4029,6 +4054,8 @@
+                     else:
+                         ba = np.clip(b_grid + sp, b_grid[0], b_grid[-1])
+                         Vopt[:, :, :, 0] = interp_on_grid(b_grid, Vd[:, 0, id_, :, :], ba)
++                    if fixed_unsecured_credit_active(P) and to > 0:
++                        Vopt[b_grid + sp < 0.0, :, :, 0] = -1e10
+                     for tn in range(1, nt):
+                         hc = hcost[id_, tn]
+                         Vow = Vd[:, tn, id_, :, :]
+--- reference/kernels.py
++++ overlay_initial_unaccepted/kernels.py
+@@ -718,6 +718,7 @@
+     Vd_stay,             # (Nb, nt, I, npar, ncs) values read at to == tn
+     strict_interpolated_support=False,
+     transaction_support=False,
++    require_owner_sale_solvency=False,
+ ):
+     # Discrete tenure-choice argmax over `tn` given conditional values Vd
+     # for each (origin tenure `to`, location, parity, child-state, b).
+@@ -747,6 +748,8 @@
+                         else:
+                             ba = bg_b + sp
+                             v0 = _interp_with_clip(b_grid, Vd[:, 0, id_, nn, cs], ba, strict_interpolated_support, transaction_support)
++                            if require_owner_sale_solvency and bg_b + sp < 0.0:
++                                v0 = NEG_INF
+                         if v0 > best_v:
+                             best_v = v0
+                             best_tn = 0
+@@ -799,6 +802,7 @@
+     kappa,               # taste-shock scale
+     Vd_stay,             # (Nb, nt, I, npar, ncs) values read at to == tn
+     transaction_support=False,
++    require_owner_sale_solvency=False,
+ ):
+     Nb, nt, I, npar, ncs = Vd.shape
+     VH = np.empty((Nb, nt, I, npar, ncs))
+@@ -821,6 +825,8 @@
+                         else:
+                             ba = bg_b + sp
+                             v0 = _interp_with_clip(b_grid, Vd[:, 0, id_, nn, cs], ba, False, transaction_support)
++                            if require_owner_sale_solvency and bg_b + sp < 0.0:
++                                v0 = NEG_INF
+                         vals[0] = v0
+                         if v0 > best_v:
+                             best_v = v0
+@@ -981,6 +987,7 @@
+     hk=6.0,
+     exact_allocation_output=False,
+     natural_floor_v=None,
++    fixed_renter_floor=-np.inf,
+ ):
+     # Full-Bellman renter block: golden-section search for bp + post-search
+     # consumption / housing arithmetic, fused into one kernel per (i, j).
+@@ -1049,6 +1056,8 @@
+             rollover_floor = s_next * (current_b if current_b < 0.0 else 0.0)
+             line_floor = -D_next
+             unsecured_floor = rollover_floor if rollover_floor < line_floor else line_floor
++            if fixed_renter_floor > unsecured_floor:
++                unsecured_floor = fixed_renter_floor
+             if natural_floor_v is not None:
+                 unsecured_floor = natural_floor_v[c]
+             lo = unsecured_floor

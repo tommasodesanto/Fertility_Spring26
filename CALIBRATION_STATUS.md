@@ -1,5 +1,25 @@
 # Calibration Status
 
+## September 29 — author-selected sale repayment and explicit renter credit limit
+
+The author selects full mortgage repayment when an owner sells into renting,
+and a named scalar unsecured-credit limit \(\bar d\ge0\) for renters:
+\(b'\ge-\bar d\). The age-42--62 renter taper and inherited renter-debt
+rollover are not part of this selected contract. Prepare the initial check with
+`unsecured_credit_limit=0`; a positive magnitude remains unchosen. Nonnegative
+estates remain a separate requirement. In the current net-financial-asset
+representation, the sale check requires the raw balance after net house-sale
+proceeds to be nonnegative, before any wealth-grid clipping.
+
+Implementation and targeted verification are isolated in
+`output/model/fixed_reference_economics_20260928/credit_no_taper_v1/fixed_credit_contract_v1/`.
+This selects the economic rule, not a new computed reference. Preserve
+**2007 stationary reference — block0506, September 28 verified export**.
+The two retained negative-wealth entrant cells rejected by the earlier strict
+zero-credit test still require explicit reconciliation before a valid lifecycle
+or equilibrium calculation. No entry alteration, recalibration, positive-credit
+choice or new numerical run is implied by this preparation.
+
 ## September 29 — frozen-reference renter-debt comparison (not adopted)
 
 At **2007 stationary reference — block0506, September 28 verified export** parameters and unchanged prices, removal of the age taper with mortality repayment gives completed fertility **2.1026541568**, versus **2.0999983368** in the authenticated reference control (+0.12647%). Ownership is 66.5240% versus 66.8165%. Torch recovery job **18838216** passed the household/cohort gates for this case, retaining 14 fit rows, 31 parameter rows and 17 standard plots. Its diagnostic target loss is 20.7078939879; there was no refit, exact repeat, fertility normalization, GE, or reference switch.

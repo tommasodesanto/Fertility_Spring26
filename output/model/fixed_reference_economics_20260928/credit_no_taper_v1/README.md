@@ -1,5 +1,15 @@
 # Isolated renter no-taper estate bound — targeted checks passed
 
+## Current author-selected contract: scalar renter credit and repayment on sale
+
+The author now selects mortgage repayment on sale into renting and an explicit
+constant `unsecured_credit_limit`, with initial planned value zero. This replaces
+the rollover proposal described below as the specification to prepare. The
+isolated sources, overrides and verification are in
+[`fixed_credit_contract_v1/README.md`](fixed_credit_contract_v1/README.md).
+The frozen reference remains **2007 stationary reference — block0506, September 28 verified export**.
+No positive credit magnitude, entry change, recalibration or new GE has been selected.
+
 ## Author-requested 30-minute comparison, September 29 evening
 
 The new comparison uses the retained estimated parameters of **2007 stationary reference — block0506, September 28 verified export**; no refit or reference switch. `credit_rule_quick_v1/` compares common-price household outcomes; `credit_rule_ge_quick_v1/` attempts closed stationary GE for each rule with fixed preferences including child-benefit psi. The two rules are rollover of inherited renter debt until mortality repayment (`ours`) and zero renter saving debt at every age plus debt-clearing owner-to-renter sales (`author`). Both retain buyer LTV and incumbent-owner grandfathering. Positive unsecured borrowing is not introduced.
