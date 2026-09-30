@@ -2,6 +2,28 @@
 
 **2007 stationary reference — block0506, September 28 verified export**
 
+## Quick facts — verified September 30
+
+Use this section for routine questions; follow the linked evidence only when
+needed. These facts describe the named frozen reference and labeled experiments,
+not the calibration chat's evolving model.
+
+| Object | Verified fact | Evidence |
+|---|---|---|
+| Reference | block0506; loss 19.581310760138322; child-benefit psi 0.1355551166583114 | [Permanent manifest](../fertility_identification_20260928/fixed_reference_manifest.json) |
+| Timing and wealth units | Four-year periods; one wealth unit = equal-working-age mean annual gross earnings | [Entrant extraction](credit_no_taper_v1/fixed_credit_contract_v1/entry_distribution_v1/README.md) |
+| Entrant financial wealth | Age-18 renters: negative 26.2509%, zero 28.3397%, positive 45.4094%; mean 0.186520 | [Full distribution](credit_no_taper_v1/fixed_credit_contract_v1/entry_distribution_v1/entry_distribution_summary.csv) |
+| Entrant wealth percentiles | p10 -1.232558; p25 -0.116279; median 0; p75 0.302326; p90 1.697674 | Same distribution; these are entrants, not all ages |
+| Strict-zero entry problem | Two wealth–income cells, jointly 0.00802196% of entrants, cannot repay; this is not the share affected behaviorally by zero borrowing | [Cash proof and exact control](credit_no_taper_v1/fixed_credit_contract_v1/runtime_validation_v3/README.md) |
+| Proposed entry top-up | 0.139535 per affected entrant, one existing grid step from -0.255814 to -0.116279; not a minimum continuous transfer; not implemented/adopted | [Proposal and caveats](credit_no_taper_v1/fixed_credit_contract_v1/entry_distribution_v1/README.md) |
+| Entry approximation | Five empirical wealth/income bin means; retained wealth–income coupling is not an estimated empirical joint distribution | [Provenance](credit_no_taper_v1/fixed_credit_contract_v1/entry_distribution_v1/README.md) |
+| Constant-credit experiment | D=0.14, age taper removed and mortgage repayment on sale into renting required; completed experimental GE, not a new adopted reference | [Verified results and full tables](credit_no_taper_v1/small_credit_v1/README.md) |
+| Zero-credit revised GE | Uncomputed; entry/funding correction remains a proposed economic change | [Contract status](credit_no_taper_v1/fixed_credit_contract_v1/README.md) |
+
+Verified elasticity, supply and solvency-only credit comparisons are summarized
+under “Current priorities and useful output” below. Price derivatives are
+prescribed-price responses; stationary GE endpoints are not transition paths.
+
 The author authorized all four proposed investigations on September 28: saved
 birth/constraint anatomy, occupied housing/tenure/retirement anatomy, a 10%
 fixed-price housing-cost shock, and a 10% housing-supply-intercept expansion.

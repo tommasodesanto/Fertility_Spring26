@@ -335,6 +335,17 @@ reasoning levels in `ops/codex-workers/config/models.env`, not in this file.
 
 ### Autonomous Routing And Progress Control
 
+Basic model-fact questions are direct lookups, not delegated research tasks.
+Keep a compact, source-linked facts section at the top of each active analysis
+README, recording the reference identity, units, core distributions, rules and
+verified results. Update it when evidence is first verified. Answer from that
+section or already verified conversation context immediately; use at most a
+narrow direct read for a missing fact. Do not launch a worker, repeat an audit,
+rerun extraction or delay the answer for bookkeeping. Recheck underlying evidence
+only when identity has changed, evidence conflicts, or the requested fact is new;
+state that specific reason. This fast path takes precedence over default worker
+routing for routine retrieval. Never invent a missing cached fact.
+
 Routing is the lead agent's responsibility. The user should normally state the
 outcome, any deadline or urgency, and any non-negotiable constraints; do not
 ask the user to select a model or worker profile when that choice can be made
