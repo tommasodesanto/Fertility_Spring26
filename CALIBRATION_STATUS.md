@@ -14,13 +14,23 @@ projection remains the previously disclosed approximation; no additional entry
 relocation or censoring is permitted. Relative to the frozen reference, the
 experimental full-sale repayment and no-taper credit rules remain in place.
 
-Submitted Torch **18881132**, an immutable paired full price/population GE
-comparison with one CPU, 24 GiB, 40 minutes, at most 12 lifecycle calls and
-300 seconds per call. Source hashes and zero-solve controller checks pass;
-numerical results are pending.
-Compare complete moments, policies and total workflow time. No recalibration
-or production adoption yet. Prior failed D=0.14 evidence remains preserved.
-Packet: `output/model/publication_refactor_20260929/grid_resolution_v1/credit053_v1/`.
+Torch **18881132** stopped after five control-grid lifecycle evaluations
+(about five minutes): the six-call cap reserved one final repeat, leaving no
+further price iterations. The control passed entrant feasibility but did not
+reach the unchanged equilibrium tolerance; the 120×9 arm never started.
+No new equilibrium, speed comparison or calibration was certified.
+
+The author explicitly authorized a retry. Torch **18883994** is submitted
+under `credit053_v2` (numerical results pending), with
+20 lifecycle calls per arm (40 total), including seed and repeat, and a
+40-minute global deadline, one CPU, 24 GiB and 300 seconds per call. Only
+iteration limits change; the price algorithm, tolerances, diagnostic D=0.53,
+entry mapping, preferences, targets and all feasibility gates stay unchanged.
+Smoke tests must exercise convergence beyond the former six-call cutoff.
+The 40-minute deadline remains binding even if the call budget is not exhausted.
+Compare complete moments, policies and total workflow time; no recalibration
+or production adoption. Preserve prior attempts under `credit053_v1`.
+Packet: `output/model/publication_refactor_20260929/grid_resolution_v1/credit053_v2/`.
 
 
 ## September 30 — experimental grid reduction blocked; reference preserved

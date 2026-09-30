@@ -29,7 +29,7 @@ household/distribution/equilibrium modules, and a reviewed credit-rule correctio
 It is not the active production baseline; its README records verification and
 the unresolved zero-credit entrant constraint.
 
-September 30 follow-up: the isolated [single-market specialization](experiments/stationary_single_market/README.md) removes inactive household branches while preserving the reviewed package as its oracle. Component checks pass; singleton array axes and full-solution verification remain outstanding. The [120×9 grid preparation](../../output/model/publication_refactor_20260929/grid_resolution_v1/README.md) preserves entrant wealth atoms and explicitly documents its income-discretization approximation. Neither effort changes the production reference or adopts a borrowing contract.
+September 30 follow-up: the isolated [single-market specialization](experiments/stationary_single_market/README.md) removes inactive household branches while preserving the reviewed package as its oracle. Component checks and full-equilibrium equivalence pass at the matched 160×15 diagnostic; singleton array axes remain. The [120×9 grid preparation](../../output/model/publication_refactor_20260929/grid_resolution_v1/README.md) preserves entrant wealth atoms and explicitly documents its income-discretization approximation. Neither effort changes the production reference or adopts a borrowing contract.
 
 [`../../CALIBRATION_STATUS.md`](../../CALIBRATION_STATUS.md) owns the current
 calibration and policy status. The [sequential package reading map](intergen_eqscale_seq_optimized/README.md)

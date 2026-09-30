@@ -1,5 +1,5 @@
 {
-  "status": "submitted_not_verified",
+  "status": "failed_control_call_budget_proposal_not_started",
   "job_id": "18881132",
   "status_recorded_at_utc": "2026-09-30T16:46:55.798008+00:00",
   "submission_evidence": "Lead reports archive hash verified remotely and Slurm submission18881132",
@@ -28,5 +28,12 @@
   "source_rebuild_after_submission": false,
   "preflight_receipt": "runner/preflight_final/completed.json",
   "necessary_cash_receipt": "runner/preflight_final/entry_cash_preflight.json",
-  "native_GE_verification": "pending_no_completed_numerical_result_yet"
+  "native_GE_verification": "control did not certify renewal root; proposal not started",
+  "job_state": "FAILED",
+  "reported_elapsed_seconds_approx": 299,
+  "control_lifecycle_calls_reported": 5,
+  "control_remaining_reserved_calls": 1,
+  "proposal_started": false,
+  "termination": "Six-call arm/root-search budget exhausted before renewal convergence; not 2400-second expiry",
+  "retry_packet": "credit053_v2 explicitly authorized, separate immutable sources"
 }
