@@ -1,5 +1,31 @@
 # Calibration Status
 
+## September 30 — five-ratio entrant initialization test submitted
+
+The author requests a test and comparison of the conventional ratio-based
+initialization: draw the existing five PSID ratios independently of current
+entrant earnings, set $b=r y$ using current annual gross earnings, and project
+onto the existing wealth grid. This is experimental authorization, not adoption.
+Torch **18888956** compares this candidate against the retained conditional
+entry distribution on the same **160×15** grid. Both arms retain experimental
+**D=0.53**, corrected full-sale/no-taper credit, fixed preferences/benefit,
+earnings, taxes, pension, targets, and housing supply. Price clears actual
+birth renewal and population clears physical housing supply; no recalibration.
+
+The native finite-support projection clips **0.0183%** of candidate draw
+probability at the lower wealth boundary; this disclosed numerical approximation
+raises initial mean wealth from 0.186519679 to 0.186633617. No additional forward
+entry relocation is permitted. Compare both the full 14-row fit at prescribed
+reference prices and the full equilibrium, with identical 31 parameter rows,
+17 standard plots per selected/repeated solution, and exact native repeats.
+The new control is needed for the complete prescribed-price fit, which the
+previous matched control did not export. Lead independently verified the
+candidate matrix, zero-solve loop smoke, and local/remote archive SHA.
+Budget: one CPU, 24 GiB, 40 minutes globally, 300 seconds per case, at most
+20 lifecycle calls per arm including the final repeat. No automatic retry.
+No native numerical result yet. Evidence and launch receipt:
+`output/model/fixed_reference_economics_20260928/entry_ratio_comparison_v1/`.
+
 ## September 30 — matched grid comparison completed
 
 Torch **18883994** completed the full price/population equilibrium workflow

@@ -17,6 +17,7 @@ not the calibration chat's evolving model.
 | Strict-zero entry problem | Two wealth–income cells, jointly 0.00802196% of entrants, cannot repay; this is not the share affected behaviorally by zero borrowing | [Cash proof and exact control](credit_no_taper_v1/fixed_credit_contract_v1/runtime_validation_v3/README.md) |
 | Proposed entry top-up | 0.139535 per affected entrant, one existing grid step from -0.255814 to -0.116279; not a minimum continuous transfer; not implemented/adopted | [Proposal and caveats](credit_no_taper_v1/fixed_credit_contract_v1/entry_distribution_v1/README.md) |
 | Entry approximation | Five empirical wealth/income bin means; retained wealth–income coupling is not an estimated empirical joint distribution | [Provenance](credit_no_taper_v1/fixed_credit_contract_v1/entry_distribution_v1/README.md) |
+| Five-ratio entry test | Author-authorized comparison of retained entry against independent empirical ratios times current annual earnings; matched 160×15, common diagnostic D=0.53, fixed parameters. Torch 18888956 running; no adoption. | [Test and launch receipt](entry_ratio_comparison_v1/README.md) |
 | Constant-credit experiment | D=0.14, age taper removed and mortgage repayment on sale into renting required; completed experimental GE, not a new adopted reference | [Verified results and full tables](credit_no_taper_v1/small_credit_v1/README.md) |
 | Zero-credit revised GE | Uncomputed; entry/funding correction remains a proposed economic change | [Contract status](credit_no_taper_v1/fixed_credit_contract_v1/README.md) |
 
