@@ -1,0 +1,31 @@
+{
+  "schema": "small_credit_positive_constant_v1",
+  "reference_label": "2007 stationary reference — block0506, September 28 verified export",
+  "reference_manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+  "reference_checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d",
+  "input_bundle_json_sha256": "427e67a3d9dd663cd23c3f8533c55a1a64b4f9350d396c97b5c5bd4700bc90b7",
+  "frozen_authenticator_sha256": "96d6923a252f57bc4d8c44fd6479b13f48ba217d74edf8ef629d120428b03b44",
+  "source": "staged immutable copy of reviewed 18-engine-file refactor_lab; source.sha256 checked by launcher",
+  "positive_credit_rule": "renter b_prime >= -D except nonnegative estate floor on death risk; raw owner sale repayment gate; owner mortgage rules unchanged",
+  "economic_changes_relative_to_frozen_reference": [
+    {"object": "renter age taper", "change": "removed", "status": "author-adopted correction"},
+    {"object": "unsecured borrowing limit", "change": "constant positive D derived from occupied entrant budget bound on one-cent mesh", "status": "experimental diagnostic"},
+    {"object": "owner-to-renter sale and death estate", "change": "raw-sale repayment and nonnegative estate floors", "status": "author-adopted correction"}
+  ],
+  "unchanged": ["entry wealth-income joint support and mass", "earnings", "initial income and wealth marginals", "psi_child=0.1355551166583114", "mortgage financed share phi", "fiscal inputs", "housing supply", "target definitions and weights"],
+  "closure_classification": {
+    "preferences": "estimated frozen reference",
+    "earnings": "externally fixed frozen reference",
+    "tau_pay_and_fiscal_inputs": "externally fixed frozen reference",
+    "housing_supply": "externally fixed frozen reference",
+    "entry_distribution": "empirically normalized frozen reference",
+    "D": "diagnostic positive constant, analytically selected; not estimated",
+    "actual_birth_renewal_and_population_scale": "endogenous GE closure conditional on diagnostic D"
+  },
+  "budgets": {"total_seconds_from_launcher_entry": 2400, "smoke_seconds": 300, "per_case_seconds": 300, "phase_a_seconds": 900, "phase_a_max_lifecycle": 3, "phase_b_max_new_lifecycle": 7, "total_max_lifecycle": 10, "cpus": 1, "memory_gib": 24},
+  "phase_a": {"q_over_qref_guard": [0.85, 1.15], "selected_cap_rule": "ceil((maximum occupied entrant native budget requirement + 1e-6)/0.01)*0.01", "automatic_cap_increase": false},
+  "phase_b": {"price_bracket_q_over_qref": [0.85, 1.15], "exact_selected_repeat": true, "closed_ge_gate": "native birth renewal, PAYGO, physical housing supply with population scale, frozen observer gates"},
+  "stop_conditions": ["failed authentication or source SHA", "entrant dead mass", "native Bellman/KFE failure", "unbracketed renewal root", "case/global time or lifecycle budget", "fiscal, housing, birth, source, or observer gate failure"],
+  "no_automatic_retry": true
+  ,"user_authorized_skip_smoke": true
+}

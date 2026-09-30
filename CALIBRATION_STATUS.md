@@ -1,5 +1,41 @@
 # Calibration Status
 
+## September 30 — small-credit diagnostic GE verified
+
+Torch job **18869900** completed in **7m47s**, six lifecycle evaluations.
+Experimental constant unsecured allowance D=0.14, removal of renter taper,
+and full sale-to-renting repayment passed with unchanged entrants and fixed
+preferences/psi. Relative to **2007 stationary reference — block0506, September
+28 verified export**, stationary prices/rents rise **0.54127%** and household
+population **0.66723%**. Completed fertility is 2.0999980348 through price
+adjustment. At prescribed reference prices cohort fertility is 2.1061050576.
+Exact repeat, full 14/31 tables and 17 standard plots are authenticated in
+`output/model/fixed_reference_economics_20260928/credit_no_taper_v1/small_credit_v1/collected_v1/`.
+No transition, recalibration or reference adoption. Numerical budget closed.
+Finite-grid and estate-counterparty caveats remain. Production smoke was
+explicitly waived by the author; runtime input authentication remained active.
+
+## September 30 — diagnostic unsecured credit allowance authorized
+
+The author now authorizes a positive constant renter debt allowance, chosen
+just above the feasibility requirement for this test, with the retained entrant
+distribution unchanged. This supersedes the zero-cap test restriction, not the
+frozen reference or a permanent calibration decision. Keep mortgage `phi`
+unchanged; use `unsecured_credit_limit = D > 0` so renter saving satisfies
+\(b'\ge-D\). Full raw sale repayment and nonnegative estates remain required.
+The author requests a new **40-minute Torch job**; prepare exact-loop smoke,
+immutable sources and pinned inputs first. Budget: 2400 seconds from production
+launcher entry, at most ten new lifecycle evaluations including the selected
+repeat, 300 seconds per case, one CPU and 24 GiB. Cap selection/validation
+uses at most three of those evaluations. No automatic extension, recalibration,
+entry change, target change or fertility normalization. The closed stationary
+GE uses price to solve actual birth renewal and population to clear the fixed
+absolute housing-supply curve. The normalized-population lab GE command is
+not a substitute. Preparation/results belong in
+`output/model/fixed_reference_economics_20260928/credit_no_taper_v1/small_credit_v1/`.
+The chosen amount, immutable sources and actual job IDs will be recorded there.
+Preserve **2007 stationary reference — block0506, September 28 verified export**.
+
 ## September 29 — author-selected sale repayment and explicit renter credit limit
 
 The author selects full mortgage repayment when an owner sells into renting,

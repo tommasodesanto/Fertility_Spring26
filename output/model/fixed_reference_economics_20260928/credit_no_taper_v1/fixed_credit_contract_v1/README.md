@@ -119,9 +119,14 @@ rank coupling, explicitly not an estimated joint distribution. See
 The grid includes exact zero; interpolation of a nonnegative entry point cannot
 produce negative-node mass. The blocked node at -0.255814 represents a genuinely
 negative underlying point near -0.177586. At that point, the two current-income
-states have cash -0.049374 and 0.016907 before rent, below the consumption floor
-0.04. Merely inserting that point or refining the grid cannot restore their
-feasibility. Only 0.00802196% of the entrant cohort is rejected by this pairing;
+states have cash -0.049374 and 0.016907 before rent. The first remains
+infeasible even at the exact point, so finer grids alone cannot remove the
+problem. September 30 source correction: `c_min=0.04` and the 0.01 housing
+floor are legacy output-only floors; the accepted exhaustive/exact-allocation
+path reports its actual allocation without them (`engine/kernels.py:771`).
+They are not economic minimum-spending requirements on that path. The second
+off-grid point is therefore not proved infeasible by comparing cash with 0.04.
+Only 0.00802196% of the entrant cohort is rejected by the frozen grid pairing;
 that small figure does not justify zeroing all negative entrant wealth.
 
 **Preferred next diagnostic if the author retains zero unsecured credit:**
