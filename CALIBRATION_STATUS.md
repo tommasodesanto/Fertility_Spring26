@@ -1,5 +1,49 @@
 # Calibration Status
 
+## September 30 — three entrant-wealth calibration pilots submitted
+
+Torch array **18895422**, tasks0/1/2 = empirical_credit/zero_wealth/
+nonnegative_mean, submitted September30 at approximately17:01NewYork.
+All8 pure/mock tests and exact300-second launcher preflights passed each arm
+with15 mocked evaluations and zero native lifecycle calls. Lead and independent
+review checked candidate bindings and the narrow phaseB adapter; native full-GE
+baseline/repeat verification is still a gate inside each job. Archive SHA
+83543d380d2ea1ce6646d5b21fce18ebde69cfca53ba1bbbf0445901a5e9f327.
+
+The author authorizes three parallel one-hour exploratory calibration searches
+on the verified 120-asset/9-income indexed full-GE workflow. The common annual
+real interest rate remains 2%; no borrowing premium is introduced. Experimental
+arms: (1) existing five empirical wealth/income ratio nodes independently times
+current annual entrant earnings, renter saving floor -0.25; (2) all entrants at
+zero wealth, renter saving floor zero; (3) negative ratio nodes mapped to zero
+and positive nodes scaled to preserve the original mean ratio, renter saving
+floor zero. The third arm transforms the five-node approximation, not raw survey
+observations; its positive scaling factor is approximately 0.363238516.
+
+The 0.25 allowance adopts the unsecured-limit/average-annual-labor-income ratio
+in Kaplan, Moll and Violante (2018), p.721 and Table6, not their borrowing wedge
+or entire credit model. Existing corrected homeowner rules, mortality repayment,
+earnings, taxes, pension, targets and weights are preserved. No silent entrant
+feasibility relocation or target revision is allowed. This is experimental
+authorization, not production adoption.
+
+Price clears birth renewal and population clears absolute housing supply.
+Housing supply scale H0 and the child-benefit level psi_child stay fixed;
+the other nine historical free coordinates (including tenure_choice_kappa)
+are searched against ten scored targets, with all14 rows reported. H0 is not
+identified by per-household moments under this closure. A new isolated adapter
+must verify candidate parameter propagation and the full target fingerprint;
+the old normalized-benefit calibration runtime is not a substitute.
+
+Preparation: `output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/`.
+One Torch CPU and24GiB per arm, one computational thread, hard one-hour clock,
+bounded evaluations, latest/best checkpoints and reporting/repeat reserves.
+Exact-loop mocked checks preceded dispatch; each arm must pass native repeated
+baseline GE before search. Numerical outcomes remain outstanding. The fixed
+15-evaluation maximum includes baseline/repeat, nine derivative probes, up to
+two damped search proposals and two selected full-GE repeats. Rank-deficient
+Jacobians skip the search step. No automatic extension or specification fallback.
+
 ## September 30 — five-ratio entrant initialization test completed
 
 Torch **18888956 completed in 18m28s**, fourteen lifecycle calls (seven per arm),
