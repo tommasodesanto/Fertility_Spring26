@@ -177,3 +177,7 @@ Codex account usage was 1% at entry and 7% at the last closeout check, an
 account-wide increase of 6 percentage points shared with other chats. This
 is below the requested 20-point alert threshold. Claude Max has a separate
 allowance not exposed by the Codex usage tool; no combined usage claim is made.
+
+## Verified production grid inventory
+
+[Exact grid inventory](production_grid_inventory.txt) records every wealth node and all household state axes from the pinned September 28 block0506 manifest. The dense value array has shape `(160, 6, 1, 17, 15, 4, 4)`. The active child-state mode is `independent_count`; the shared-clock fallback does not apply. Both later one-birth and two-birth candidate parameter tables also record 160 wealth nodes. This is a read-only extraction, not a new numerical accuracy test.
