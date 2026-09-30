@@ -181,3 +181,11 @@ allowance not exposed by the Codex usage tool; no combined usage claim is made.
 ## Verified production grid inventory
 
 [Exact grid inventory](production_grid_inventory.txt) records every wealth node and all household state axes from the pinned September 28 block0506 manifest. The dense value array has shape `(160, 6, 1, 17, 15, 4, 4)`. The active child-state mode is `independent_count`; the shared-clock fallback does not apply. Both later one-birth and two-birth candidate parameter tables also record 160 wealth nodes. This is a read-only extraction, not a new numerical accuracy test.
+
+## September 30: cleanup and grid-resolution follow-up
+
+Author requested removing historical branches and singleton location machinery, testing 120×9, then recalibrating after the upstream borrowing contract is resolved. The preserved 160×15 code remains the fallback.
+
+[Single-market phase 1](../../../code/model/experiments/stationary_single_market/README.md) removes inactive child-clock, joint-choice and nonsequential branches and specializes the singleton choice calculation. Lead-reviewed arithmetic and 19 component tests pass. Singleton array axes remain; no full-solution or speed certificate yet.
+
+[Proposed 120×9 inputs](grid_resolution_v1/README.md) retain all 50 occupied entrant wealth nodes and the wealth marginal. CDF transport explicitly approximates the wealth–income association (covariance −5.93%); no clipping, censoring or forgiveness. Zero-solve input checks pass. The full-GE comparison runner is separate from this preparation. No recalibration or production adoption has occurred.

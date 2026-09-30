@@ -1,0 +1,1270 @@
+--- code/model/refactor_lab/__init__.py
++++ code/model/experiments/stationary_single_market/__init__.py
+@@ -1,8 +1,2 @@
+-"""Publication refactor laboratory (isolated; not a production model).
+-
+-Reference: 2007 stationary reference — block0506, September 28 verified export.
+-See README.md. `engine/` is a mechanical, hash-receipted extraction of the
+-executed stationary path; `run` is the single entry point.
+-"""
+-
++"""Isolated supported-path single-market specialization; not production promoted."""
+ LABEL = "2007 stationary reference — block0506, September 28 verified export"
+--- code/model/refactor_lab/engine/diagnostics.py
++++ code/model/experiments/stationary_single_market/engine/diagnostics.py
+@@ -171,7 +171,7 @@
+             wealth_age_z[j, zz] = weighted_liquid_wealth(gjz, b_grid)
+             housing_age_z[j, zz] = mean_housing_for_distribution(gjz, sol, P, j, zz)
+             if P.A_f_start - 1 <= j <= P.A_f_end and hasattr(sol, "fert_probs"):
+-                risk_distribution = getattr(sol, "g_pre_choice", g) if bool(getattr(P, "joint_nested_choice", False)) else g
++                risk_distribution = g
+                 childless = np.sum(
+                     risk_distribution[:, :, :, j, zz, 0, readiness_childless_states(P)],
+                     axis=-1,
+@@ -190,7 +190,7 @@
+     plot_age_by_income_state(outdir, plt, ages, z_grid, own_age_z, "ownership rate", "Ownership by age and income state", "ownership_by_age_income_state.png", ylim=(0.0, 1.05))
+     plot_age_by_income_state(outdir, plt, ages, z_grid, wealth_age_z, "mean liquid wealth", "Liquid wealth by age and income state", "liquid_wealth_by_age_income_state.png")
+     plot_age_by_income_state(outdir, plt, ages, z_grid, housing_age_z, "mean housing services", "Housing by age and income state", "housing_by_age_income_state.png")
+-    plot_age_by_income_state(outdir, plt, ages, z_grid, fert_age_z, "first-birth attempt probability" if bool(getattr(P, "joint_nested_choice", False)) else "expected children", "Fertility policy by age and income state", "fertility_policy_by_age_income_state.png")
++    plot_age_by_income_state(outdir, plt, ages, z_grid, fert_age_z, "expected children", "Fertility policy by age and income state", "fertility_policy_by_age_income_state.png")
+ 
+     ages_to_plot = np.asarray(getattr(P, "diagnostic_policy_ages", np.array([30.0, 42.0])), dtype=float).reshape(-1)
+     for age in ages_to_plot:
+@@ -329,12 +329,6 @@
+         else:
+             owner_line = np.sum(tp[:, ten, i, j, zz, nn, cs, 1:], axis=1)
+ 
+-        if bool(getattr(P, "joint_nested_choice", False)):
+-            joint = getattr(sol, "joint_choice", None)
+-            if joint is None:
+-                raise RuntimeError("Joint policy diagnostic lacks original household probabilities")
+-            owner_line = joint.probabilities[:, ten, i, j, zz, nn, cs, 1, :].sum(axis=-1)
+-            h_line = hR_pol[:, ten, i, j, zz, nn, cs]
+ 
+         valid = V[:, ten, i, j, zz, nn, cs] > -1e9
+         c_line = np.where(valid, c_line, np.nan)
+@@ -358,11 +352,6 @@
+     axes[3].set_xlabel("liquid wealth")
+     axes[3].set_ylim(-0.05, 1.05)
+     axes[3].set_title("Owner-entry policy")
+-    if bool(getattr(P, "joint_nested_choice", False)):
+-        axes[0].set_title("Consumption if rent, no birth")
+-        axes[1].set_title("Housing if rent, no birth")
+-        axes[2].set_ylabel("first-birth attempt probability")
+-        axes[3].set_title("Ex ante owner-choice probability")
+     for ax in axes:
+         ax.grid(alpha=0.2)
+     axes[0].legend(frameon=False, ncols=max(1, min(3, len(z_grid))))
+--- code/model/refactor_lab/engine/distribution.py
++++ code/model/experiments/stationary_single_market/engine/distribution.py
+@@ -1,4 +1,4 @@
+-"""Distribution stage of the extracted solver (bodies byte-identical; see split_receipt.json)."""
++"""Distribution stage of the isolated supported-path engine; see source_provenance.json."""
+ from __future__ import annotations
+ import copy
+ import math
+@@ -6,7 +6,7 @@
+ from types import SimpleNamespace
+ from typing import Any
+ import numpy as np
+-from . import joint_nested
++from ..contract import validate_contract
+ from .adult_entry import adjusted_births, potential_entry_households
+ from .warm_price import search_warm_price
+ from .child_preferences import apply_child_preferences
+@@ -566,6 +566,7 @@
+     tenure_probs: np.ndarray | None = None,
+     bp_pol_stay: np.ndarray | None = None,
+ ) -> tuple[np.ndarray, SimpleNamespace]:
++    validate_contract(P)
+     fec = get_fecundity_by_age(P)
+     J = P.J
+     I = P.I
+@@ -598,7 +599,6 @@
+                     g[int(kk), 0, i, 0, zz, 0, 1] += (
+                         settled_entry_share * entrant_mass
+                     )
+-    joint_pre = np.zeros_like(g) if bool(getattr(P, "joint_nested_choice", False)) and not fast_stats else None
+     P._entry_censored_mass = 0.0
+     P._entry_total_mass = float(np.sum(g[:, :, :, 0, :, :, :]))
+     if bool(getattr(P, "entry_wealth_censor_to_frontier", False)):
+@@ -686,169 +686,142 @@
+             SD,
+             markov_income=True,
+         )
+-        if bool(getattr(P, "joint_nested_choice", False)):
+-            if joint_pre is not None:
+-                joint_pre[:, :, :, j] = g[:, :, :, j]
+-            post, effective, born, attempts, risk = joint_nested.factor_age(
+-                g[:, :, :, j], P._joint_choice, P, j
+-            )
+-            g[:, :, :, j] = post
+-            tenure_probs[:, :, :, j] = effective
+-            first_births_by_age[j] = born[0]
+-            second_births_by_age[j] = born[1]
+-            third_births_by_age[j] = born[2]
+-            second_attempts_by_age[j], second_at_risk_by_age[j] = attempts[1], risk[1]
+-            third_attempts_by_age[j], third_at_risk_by_age[j] = attempts[2], risk[2]
+-            total_births += float(born.sum())
+-            births_by_loc[0] += float(born.sum())
+-        elif (j + 1 >= P.A_f_start) and (j + 1 <= P.A_f_end):
++        if (j + 1 >= P.A_f_start) and (j + 1 <= P.A_f_end):
+             for zz in range(Nz):
+                 gc = g[:, :, :, j, zz, 0, 0]
+                 pa = fert_probs[:, :, :, j, zz, :]
+                 pv = np.arange(npar).reshape(1, 1, 1, npar)
+                 pi_j = float(fec[j])
+-                if bool(getattr(P, "sequential_births", False)):
+-                    # Snapshot every upward at-risk pool BEFORE any birth flow
+-                    # lands, so no household can chain two births in a period.
+-                    if independent_child_maturation_active(P):
+-                        at_risk_up = {
+-                            (nn, cs): g[:, :, :, j, zz, nn, cs].copy()
+-                            for nn in range(1, npar - 1)
+-                            for cs in range(0, nn + 1)
+-                        }
+-                    else:
+-                        at_risk_up = {
+-                            (nn, 1): g[:, :, :, j, zz, nn, 1].copy()
+-                            for nn in range(1, npar - 1)
+-                        }
+-                    if readiness_gate_active(P):
+-                        gc = g[:, :, :, j, zz, 0, 1]
+-                    m1 = gc * pa[:, :, :, 1]
+-                    realized1 = pi_j * m1
+-                    if readiness_gate_active(P):
+-                        g[:, :, :, j, zz, 0, 1] = gc - realized1
+-                    else:
+-                        g[:, :, :, j, zz, 0, 0] = gc - realized1
+-                    g[:, :, :, j, zz, 1, 1] += realized1
+-                    if parent_age_maturation_active(P):
+-                        newborn_inflow[1, 1] += float(np.sum(realized1))
+-                    first_births_by_age[j] += float(np.sum(realized1))
+-                    total_births += float(np.sum(realized1))
+-                    for i in range(I):
+-                        births_by_loc[i] += float(np.sum(realized1[:, :, i]))
+-                    p2all = getattr(P, "_fert2_probs", None)
+-                    if p2all is not None:
+-                        for nn in range(1, npar - 1):
+-                            child_states = range(0, nn + 1) if independent_child_maturation_active(P) else (1,)
+-                            for cs in child_states:
+-                                at_risk = at_risk_up[(nn, cs)]
+-                                if independent_child_maturation_active(P):
+-                                    attempt_prob = p2all[:, :, :, j, zz, 1, nn - 1, cs]
+-                                else:
+-                                    attempt_prob = p2all[:, :, :, j, zz, 1, nn - 1]
+-                                m2 = at_risk * attempt_prob
+-                                realized2 = pi_j * m2
+-                                g[:, :, :, j, zz, nn, cs] -= realized2
+-                                destination_cs = birth_destination_child_state(P, cs)
+-                                g[:, :, :, j, zz, nn + 1, destination_cs] += realized2
+-                                if parent_age_maturation_active(P):
+-                                    newborn_inflow[nn + 1, destination_cs] += float(
+-                                        np.sum(realized2)
+-                                    )
+-                                if nn == 1:
+-                                    second_attempts_by_age[j] += float(np.sum(m2))
+-                                    second_births_by_age[j] += float(np.sum(realized2))
+-                                    second_at_risk_by_age[j] += float(np.sum(at_risk))
+-                                else:
+-                                    third_attempts_by_age[j] += float(np.sum(m2))
+-                                    third_births_by_age[j] += float(np.sum(realized2))
+-                                    third_at_risk_by_age[j] += float(np.sum(at_risk))
+-                                total_births += float(np.sum(realized2))
+-                                for i in range(I):
+-                                    births_by_loc[i] += float(np.sum(realized2[:, :, i]))
+-                    birth_mass = realized1
+-                    birth_mass_total = float(np.sum(birth_mass))
+-                    if not fast_stats and birth_mass_total > 1e-12 and (j + event_horizon) < J:
+-                        birth_weight = np.zeros((Nb, nt, I, Nz))
+-                        birth_weight[:, :, :, zz] = birth_mass
+-                        pre_h = mean_housing_childless_weighted_markov(birth_weight, j, hR_pol, P)
+-                        birth_cohort = np.zeros((Nb, nt, I, Nz, npar, ncs))
+-                        birth_cohort[:, :, :, zz, 1, 1] = realized1
+-                        birth_cohort = advance_cohort_horizon_markov_income(
++                at_risk_up = {
++                    (nn, cs): g[:, :, :, j, zz, nn, cs].copy()
++                    for nn in range(1, npar - 1)
++                    for cs in range(0, nn + 1)
++                }
++                if readiness_gate_active(P):
++                    gc = g[:, :, :, j, zz, 0, 1]
++                m1 = gc * pa[:, :, :, 1]
++                realized1 = pi_j * m1
++                if readiness_gate_active(P):
++                    g[:, :, :, j, zz, 0, 1] = gc - realized1
++                else:
++                    g[:, :, :, j, zz, 0, 0] = gc - realized1
++                g[:, :, :, j, zz, 1, 1] += realized1
++                if parent_age_maturation_active(P):
++                    newborn_inflow[1, 1] += float(np.sum(realized1))
++                first_births_by_age[j] += float(np.sum(realized1))
++                total_births += float(np.sum(realized1))
++                for i in range(I):
++                    births_by_loc[i] += float(np.sum(realized1[:, :, i]))
++                p2all = getattr(P, "_fert2_probs", None)
++                if p2all is not None:
++                    for nn in range(1, npar - 1):
++                        child_states = range(0, nn + 1)
++                        for cs in child_states:
++                            at_risk = at_risk_up[(nn, cs)]
++                            attempt_prob = p2all[:, :, :, j, zz, 1, nn - 1, cs]
++                            m2 = at_risk * attempt_prob
++                            realized2 = pi_j * m2
++                            g[:, :, :, j, zz, nn, cs] -= realized2
++                            destination_cs = birth_destination_child_state(P, cs)
++                            g[:, :, :, j, zz, nn + 1, destination_cs] += realized2
++                            if parent_age_maturation_active(P):
++                                newborn_inflow[nn + 1, destination_cs] += float(
++                                    np.sum(realized2)
++                                )
++                            if nn == 1:
++                                second_attempts_by_age[j] += float(np.sum(m2))
++                                second_births_by_age[j] += float(np.sum(realized2))
++                                second_at_risk_by_age[j] += float(np.sum(at_risk))
++                            else:
++                                third_attempts_by_age[j] += float(np.sum(m2))
++                                third_births_by_age[j] += float(np.sum(realized2))
++                                third_at_risk_by_age[j] += float(np.sum(at_risk))
++                            total_births += float(np.sum(realized2))
++                            for i in range(I):
++                                births_by_loc[i] += float(np.sum(realized2[:, :, i]))
++                birth_mass = realized1
++                birth_mass_total = float(np.sum(birth_mass))
++                if not fast_stats and birth_mass_total > 1e-12 and (j + event_horizon) < J:
++                    birth_weight = np.zeros((Nb, nt, I, Nz))
++                    birth_weight[:, :, :, zz] = birth_mass
++                    pre_h = mean_housing_childless_weighted_markov(birth_weight, j, hR_pol, P)
++                    birth_cohort = np.zeros((Nb, nt, I, Nz, npar, ncs))
++                    birth_cohort[:, :, :, zz, 1, 1] = realized1
++                    birth_cohort = advance_cohort_horizon_markov_income(
++                        birth_cohort,
++                        j,
++                        event_horizon,
++                        loc_probs,
++                        tenure_choice,
++                        tenure_probs,
++                        bp_pol,
++                        P,
++                        b_grid,
++                        SD,
++                        lmm_idx,
++                        lmm_wt,
++                        tmx_idx,
++                        tmx_wt,
++                        ust,
++                        Pia,
++                        Pi_z,
++                    )
++                    observed_birth_cohort = (
++                        realize_current_choices_markov_income(
+                             birth_cohort,
+-                            j,
+-                            event_horizon,
++                            j + event_horizon,
+                             loc_probs,
+                             tenure_choice,
+                             tenure_probs,
+-                            bp_pol,
+-                            P,
+-                            b_grid,
+-                            SD,
+                             lmm_idx,
+                             lmm_wt,
+                             tmx_idx,
+                             tmx_wt,
+-                            ust,
+-                            Pia,
+-                            Pi_z,
++                            use_compiled_scatter=use_compiled_scatter,
+                         )
+-                        observed_birth_cohort = (
+-                            realize_current_choices_markov_income(
+-                                birth_cohort,
+-                                j + event_horizon,
+-                                loc_probs,
+-                                tenure_choice,
+-                                tenure_probs,
+-                                lmm_idx,
+-                                lmm_wt,
+-                                tmx_idx,
+-                                tmx_wt,
+-                                use_compiled_scatter=use_compiled_scatter,
+-                            )
+-                            if bool(getattr(P, "use_postdecision_current_distribution", True))
+-                            else birth_cohort
++                        if bool(getattr(P, "use_postdecision_current_distribution", True))
++                        else birth_cohort
++                    )
++                    post_h = mean_housing_distribution_markov(
++                        observed_birth_cohort, j + event_horizon, hR_pol, P
++                    )
++                    # No-birth control: the same pre-birth households (same
++                    # wealth/tenure mass) propagated childless over the same
++                    # horizon. Differencing post_h against this nets out the
++                    # common lifecycle housing drift, leaving the birth effect.
++                    control_cohort = np.zeros((Nb, nt, I, Nz, npar, ncs))
++                    control_cohort[
++                        :, :, :, zz, 0, readiness_settled_state(P)
++                    ] = birth_mass
++                    control_cohort = advance_cohort_horizon_markov_income(
++                        control_cohort, j, event_horizon, loc_probs, tenure_choice,
++                        tenure_probs, bp_pol, P, b_grid, SD, lmm_idx, lmm_wt,
++                        tmx_idx, tmx_wt, ust, Pia, Pi_z,
++                    )
++                    observed_control_cohort = (
++                        realize_current_choices_markov_income(
++                            control_cohort,
++                            j + event_horizon,
++                            loc_probs,
++                            tenure_choice,
++                            tenure_probs,
++                            lmm_idx,
++                            lmm_wt,
++                            tmx_idx,
++                            tmx_wt,
++                            use_compiled_scatter=use_compiled_scatter,
+                         )
+-                        post_h = mean_housing_distribution_markov(
+-                            observed_birth_cohort, j + event_horizon, hR_pol, P
+-                        )
+-                        # No-birth control: the same pre-birth households (same
+-                        # wealth/tenure mass) propagated childless over the same
+-                        # horizon. Differencing post_h against this nets out the
+-                        # common lifecycle housing drift, leaving the birth effect.
+-                        control_cohort = np.zeros((Nb, nt, I, Nz, npar, ncs))
+-                        control_cohort[
+-                            :, :, :, zz, 0, readiness_settled_state(P)
+-                        ] = birth_mass
+-                        control_cohort = advance_cohort_horizon_markov_income(
+-                            control_cohort, j, event_horizon, loc_probs, tenure_choice,
+-                            tenure_probs, bp_pol, P, b_grid, SD, lmm_idx, lmm_wt,
+-                            tmx_idx, tmx_wt, ust, Pia, Pi_z,
+-                        )
+-                        observed_control_cohort = (
+-                            realize_current_choices_markov_income(
+-                                control_cohort,
+-                                j + event_horizon,
+-                                loc_probs,
+-                                tenure_choice,
+-                                tenure_probs,
+-                                lmm_idx,
+-                                lmm_wt,
+-                                tmx_idx,
+-                                tmx_wt,
+-                                use_compiled_scatter=use_compiled_scatter,
+-                            )
+-                            if bool(getattr(P, "use_postdecision_current_distribution", True))
+-                            else control_cohort
+-                        )
+-                        control_post_h = mean_housing_distribution_markov(
+-                            observed_control_cohort, j + event_horizon, hR_pol, P
+-                        )
+-                        birth_es3_pre_sum += birth_mass_total * pre_h
+-                        birth_es3_post_sum += birth_mass_total * post_h
+-                        birth_es3_control_post_sum += birth_mass_total * control_post_h
+-                        birth_es3_mass += birth_mass_total
+-                    continue
++                        if bool(getattr(P, "use_postdecision_current_distribution", True))
++                        else control_cohort
++                    )
++                    control_post_h = mean_housing_distribution_markov(
++                        observed_control_cohort, j + event_horizon, hR_pol, P
++                    )
++                    birth_es3_pre_sum += birth_mass_total * pre_h
++                    birth_es3_post_sum += birth_mass_total * post_h
++                    birth_es3_control_post_sum += birth_mass_total * control_post_h
++                    birth_es3_mass += birth_mass_total
++                continue
+                 mbp = gc[:, :, :, None] * pa
+                 gpf = np.zeros((Nb, nt, I, npar, ncs))
+                 if pi_j < 1.0:
+@@ -1126,18 +1099,10 @@
+                                     Pi = _blended_child_Pi_for_cell(P, Pia, j, f_cell)[
+                                         :, :, nn
+                                     ]
+-                        if not independent_child_maturation_active(P) and cs == K and nn >= 1:
+-                            pm = Pi[cs, csm1] if nn == 1 else Pi[cs, csm2]
+-                            if pm > 0:
+-                                nk = nn
+-                                for im in range(I):
+-                                    fi = ecf * nk * pm * float(np.sum(gp[:, :, im]))
+-                                    entrants_mature_by_loc[im] += fi
+-                                    entrants_mature_total += fi
+                         for csn in range(ncs):
+                             wt_child = Pi[cs, csn]
+                             if wt_child > 0:
+-                                if independent_child_maturation_active(P) and csn < cs:
++                                if (csn < cs):
+                                     matured = cs - csn
+                                     for im in range(I):
+                                         fi = ecf * matured * wt_child * float(np.sum(gp[:, :, im]))
+@@ -1184,23 +1149,11 @@
+         markov_income=True,
+     )
+ 
+-    if bool(getattr(P, "joint_nested_choice", False)):
+-        if joint_pre is not None:
+-            joint_pre[:, :, :, J - 1] = g[:, :, :, J - 1]
+-        post, effective, born, attempts, risk = joint_nested.factor_age(
+-            g[:, :, :, J - 1], P._joint_choice, P, J - 1
+-        )
+-        if born.sum() != 0:
+-            raise NotImplementedError("Fertility in final age is outside this experiment")
+-        g[:, :, :, J - 1] = post
+-        tenure_probs[:, :, :, J - 1] = effective
+ 
+     tm = float(np.sum(g))
+     if tm > 1e-12 and normalize_population_mass(P):
+         sc = P.N_target / tm
+         g *= sc
+-        if joint_pre is not None:
+-            joint_pre *= sc
+         total_births *= sc
+         births_by_loc *= sc
+         first_births_by_age *= sc
+@@ -1257,15 +1210,12 @@
+     P._third_births_by_age = third_births_by_age
+     P._third_attempts_by_age = third_attempts_by_age
+     P._third_at_risk_by_age = third_at_risk_by_age
+-    if bool(getattr(P, "sequential_births", False)):
+-        stats.second_attempt_hazard_by_age = second_attempts_by_age / np.maximum(second_at_risk_by_age, 1e-12)
+-        stats.second_birth_hazard_by_age = second_births_by_age / np.maximum(second_at_risk_by_age, 1e-12)
+-        stats.parity_progression_1to2_flow = float(np.sum(second_births_by_age) / max(np.sum(first_births_by_age), 1e-12))
+-        stats.third_attempt_hazard_by_age = third_attempts_by_age / np.maximum(third_at_risk_by_age, 1e-12)
+-        stats.third_birth_hazard_by_age = third_births_by_age / np.maximum(third_at_risk_by_age, 1e-12)
+-        stats.parity_progression_2to3_flow = float(np.sum(third_births_by_age) / max(np.sum(second_births_by_age), 1e-12))
+-    if bool(getattr(P, "joint_nested_choice", False)) and np.any(SD.birth_entry_grant):
+-        raise NotImplementedError("Joint experimental grant accounting is not implemented")
++    stats.second_attempt_hazard_by_age = second_attempts_by_age / np.maximum(second_at_risk_by_age, 1e-12)
++    stats.second_birth_hazard_by_age = second_births_by_age / np.maximum(second_at_risk_by_age, 1e-12)
++    stats.parity_progression_1to2_flow = float(np.sum(second_births_by_age) / max(np.sum(first_births_by_age), 1e-12))
++    stats.third_attempt_hazard_by_age = third_attempts_by_age / np.maximum(third_at_risk_by_age, 1e-12)
++    stats.third_birth_hazard_by_age = third_births_by_age / np.maximum(third_at_risk_by_age, 1e-12)
++    stats.parity_progression_2to3_flow = float(np.sum(third_births_by_age) / max(np.sum(second_births_by_age), 1e-12))
+     grant_recipient_mass, grant_outlays = markov_grant_outlays(
+         g,
+         tenure_choice,
+@@ -1301,8 +1251,6 @@
+     stats.entrants_mature_total = entrants_mature_total
+     stats.mature_entry_shares = entrants_mature_by_loc / max(entrants_mature_total, 1e-12)
+     if str(getattr(P, "adult_entry_clock", "child_departure")) == "split_birth_vintage":
+-        if not (bool(getattr(P, "sequential_births", False)) or bool(getattr(P, "joint_nested_choice", False))):
+-            raise ValueError("Split birth-vintage entry requires observed sequential third-birth flow")
+         if float(P.period_years) != 4.0:
+             raise ValueError("Split birth-vintage entry requires four-year model periods")
+         if int(P.I) != 1 or int(P.n_parity) != 4 or str(getattr(P, "fertility_units", "")) != "literal_topcode":
+@@ -1338,24 +1286,6 @@
+         else "beginning_of_period_legacy"
+     )
+     stats.wealth_moment_timing = "beginning_of_period_state"
+-    if bool(getattr(P, "joint_nested_choice", False)):
+-        for name in ("housing_increment_0to1_eventstudy_t3", "housing_increment_1to2_proxy_t3",
+-                     "housing_increment_0to1_onechild_eventstudy_t3", "housing_increment_0to2plus_eventstudy_t3"):
+-            setattr(stats, name, float("nan"))
+-        stats.stationary_eventstudy_status = "not_measured_fast_statistics"
+-        if not fast_stats:
+-            try:
+-                stats.housing_increment_0to1_eventstudy_t3 = joint_nested.stationary_first_birth_response(
+-                    joint_pre, P._joint_choice, P, b_grid, SD, loc_probs, tenure_choice,
+-                    bp_pol, hR_pol, (lmm_idx, lmm_wt, tmx_idx, tmx_wt))
+-            except joint_nested.UndefinedStationaryFirstBirthSupport as error:
+-                # Intermediate fertility-normalization trials may have no births.
+-                # Keep this conditional moment unavailable; final target and
+-                # stationary-nesting validation still require every row finite.
+-                stats.stationary_eventstudy_status = "undefined_first_birth_support"
+-                stats.stationary_eventstudy_branch_masses = error.masses
+-            else:
+-                stats.stationary_eventstudy_status = "joint_matched_one_period_branch"
+     return g_current, stats
+ 
+ 
+@@ -1716,7 +1646,7 @@
+             for zz in range(Nz):
+                 for nn in range(npar):
+                     for cs in range(ncs):
+-                        cb = current_child_bin_dt(nn, cs, dep_last, hcut, getattr(P, "child_state_mode", "shared_clock"))
++                        cb = current_child_bin_dt(nn, cs, dep_last, hcut, P.child_state_mode)
+                         gr = g[:, 0, i, j, zz, nn, cs]
+                         hr = hR[:, 0, i, j, zz, nn, cs]
+                         kr = (gr > 0) & np.isfinite(hr) & (hr > 0)
+@@ -1781,7 +1711,7 @@
+                     z_value = float(z_values[zz]) if zz < len(z_values) else 1.0
+                     for nn in range(P.n_parity):
+                         for cs in range(P.n_child_states):
+-                            if childless_only and current_child_bin_dt(nn, cs, dep_last, hcut, getattr(P, "child_state_mode", "shared_clock")) != 2:
++                            if childless_only and current_child_bin_dt(nn, cs, dep_last, hcut, P.child_state_mode) != 2:
+                                 continue
+                             y = annual_gross_income_at_state(
+                                 P, i, j, z_value, children_at_home_count(nn, cs, P)
+@@ -2433,8 +2363,6 @@
+     aew = age_to_index(P, 55)
+     newparent_cs = (
+         list(range(1, P.n_child_states))
+-        if independent_child_maturation_active(P)
+-        else list(range(1, min(P.n_child_stages + 1, 3)))
+     )
+ 
+     if child_earnings_penalty_active(P):
+@@ -2788,7 +2716,7 @@
+         for i in range(I):
+             for nn in range(npar):
+                 for cs in range(ncs):
+-                    if current_child_bin_dt(nn, cs, dep_last, hcut, getattr(P, "child_state_mode", "shared_clock")) != 2:
++                    if current_child_bin_dt(nn, cs, dep_last, hcut, P.child_state_mode) != 2:
+                         continue
+                     gr = g[:, 0, i, j, nn, cs]
+                     hr = hR[:, 0, i, j, nn, cs]
+@@ -2822,7 +2750,7 @@
+         for i in range(I):
+             for nn in range(npar):
+                 for cs in range(ncs):
+-                    child_bin = current_child_bin_dt(nn, cs, dep_last, hcut, getattr(P, "child_state_mode", "shared_clock"))
++                    child_bin = current_child_bin_dt(nn, cs, dep_last, hcut, P.child_state_mode)
+                     gr = g[:, 0, i, j, nn, cs]
+                     hr = hR[:, 0, i, j, nn, cs]
+                     kr = (gr > 0) & np.isfinite(hr) & (hr > 0)
+@@ -2906,7 +2834,7 @@
+         for i in range(I):
+             for nn in range(npar):
+                 for cs in range(ncs):
+-                    child_bin = current_child_bin_dt(nn, cs, dep_last, hcut, getattr(P, "child_state_mode", "shared_clock"))
++                    child_bin = current_child_bin_dt(nn, cs, dep_last, hcut, P.child_state_mode)
+                     gr = g[:, 0, i, j, nn, cs]
+                     hr = hR[:, 0, i, j, nn, cs]
+                     kr = (gr > 0) & np.isfinite(hr) & (hr > 0)
+--- code/model/refactor_lab/engine/equilibrium.py
++++ code/model/experiments/stationary_single_market/engine/equilibrium.py
+@@ -1,4 +1,4 @@
+-"""Equilibrium stage of the extracted solver (bodies byte-identical; see split_receipt.json)."""
++"""Equilibrium stage of the isolated supported-path engine; see source_provenance.json."""
+ from __future__ import annotations
+ import copy
+ import math
+@@ -6,7 +6,6 @@
+ from types import SimpleNamespace
+ from typing import Any
+ import numpy as np
+-from . import joint_nested
+ from .adult_entry import adjusted_births, potential_entry_households
+ from .warm_price import search_warm_price
+ from .child_preferences import apply_child_preferences
+--- code/model/refactor_lab/engine/household.py
++++ code/model/experiments/stationary_single_market/engine/household.py
+@@ -1,4 +1,4 @@
+-"""Household stage of the extracted solver (bodies byte-identical; see split_receipt.json)."""
++"""Household stage of the isolated supported-path engine; see source_provenance.json."""
+ from __future__ import annotations
+ import copy
+ import math
+@@ -6,7 +6,7 @@
+ from types import SimpleNamespace
+ from typing import Any
+ import numpy as np
+-from . import joint_nested
++from ..contract import validate_contract
+ from .adult_entry import adjusted_births, potential_entry_households
+ from .warm_price import search_warm_price
+ from .child_preferences import apply_child_preferences
+@@ -122,15 +122,8 @@
+ 
+ 
+ def birth_destination_child_state(P: SimpleNamespace, current_child_state: int) -> int:
+-    """Child-state destination after a successful upward birth attempt.
+-
+-    The historical shared-clock architecture resets every birth to its single
+-    active child state.  Only the independent-count repair increments the
+-    number of children currently at home.
+-    """
+-    if independent_child_maturation_active(P):
+-        return int(current_child_state) + 1
+-    return 1
++    """A successful birth increments the number of children at home."""
++    return int(current_child_state) + 1
+ 
+ 
+ def _build_housing_stage_ctx(
+@@ -475,16 +468,6 @@
+                     bp_nc[:, c] = bp
+                     Vo_nc[:, c] = val
+                 co_nc = SD.cb_flat + np.maximum(Rv_eff_nc - oc - SD.cb_flat - bp_nc, P.c_min)
+-            if ctx.exhaustive_saving and not bool(getattr(P, "native_exact_allocation_output", False)):
+-                if pen_flag:
+-                    res_base = Rv + yadj_v.reshape(1, -1)
+-                    res_test = Rv_test + yadj_v.reshape(1, -1)
+-                else:
+-                    res_base = Rv
+-                    res_test = Rv_test
+-                resources = res_base + np.clip(SD.gb_flat - res_test, 0.0, SD.gb_flat)
+-                co_nc = joint_nested.owner_consumption_from_solution(
+-                    resources, oc, bp_nc, SD.cb_flat, Vo_nc, co_nc)
+             Vd[:, ten, i, :, :] = unflat_nc(Vo_nc, Nb, npar, ncs)
+             bd[:, ten, i, :, :] = unflat_nc(bp_nc, Nb, npar, ncs)
+             cd[:, ten, i, :, :] = unflat_nc(co_nc, Nb, npar, ncs)
+@@ -597,31 +580,7 @@
+                 tcj[:, to, id_, :, :] = tc
+ 
+     kl = P.kappa_loc
+-    if NUMBA_AVAILABLE and bool(getattr(P, "use_loc_kernel", True)):
+-        VI, lpj = location_logit_kernel(VH, ctx.iidx, ctx.iwt, ctx.loc_shift, kl)
+-    else:
+-        VI = np.zeros((Nb, nt, I, npar, ncs))
+-        lpj = np.zeros((Nb, nt, I, I, npar, ncs))
+-        for io in range(I):
+-            for to in range(nt):
+-                Va = np.zeros((Nb, I, npar, ncs))
+-                Va[:, io, :, :] = VH[:, to, io, :, :]
+-                idx = ctx.iidx[:, io, to]
+-                wt = ctx.iwt[:, io, to]
+-                for id_ in range(I):
+-                    if id_ == io:
+-                        continue
+-                    Vdst = VH[:, 0, id_, :, :]
+-                    Va[:, id_, :, :] = (1 - wt)[:, None, None] * Vdst[idx, :, :] + wt[:, None, None] * Vdst[idx + 1, :, :]
+-                la = Va.copy()
+-                for id_ in range(I):
+-                    la[:, id_, :, :] += ctx.loc_shift[io, id_]
+-                la = la / kl
+-                ls, pr = logsumexp(la, axis=1)
+-                dead_loc = np.max(Va, axis=1) <= DEAD_VALUE_CUTOFF
+-                pr = np.where(dead_loc[:, None, :, :], 0.0, pr)
+-                VI[:, to, io, :, :] = kl * ls
+-                lpj[:, to, io, :, :, :] = pr
++    VI, lpj = location_logit_kernel(VH, ctx.iidx, ctx.iwt, ctx.loc_shift, kl)
+     return VH, tcj, prj_full, VI, lpj
+ 
+ 
+@@ -697,6 +656,7 @@
+     SD: SimpleNamespace,
+     continuation_V: np.ndarray | None = None,
+ ):
++    validate_contract(P)
+     t0 = time.perf_counter()
+     natural_credit = validate_native_solvency_mode(P)
+     due_credit = bool(getattr(P, "native_due_stayer_credit", False))
+@@ -706,17 +666,7 @@
+         raise ValueError("DUE stayer mode requires one-market native accounting, no legacy stayer or natural-credit mode")
+     purchase_income = bool(getattr(P, "native_purchase_income", False))
+     if purchase_income and (
+-            bool(getattr(P, "joint_nested_choice", False))
+-            or bool(getattr(P, "use_pti_constraint", False))
+-            or float(P.lambda_d) != 0.0
+-            or not bool(getattr(P, "use_tenure_kernel", True))
+-            or not bool(getattr(P, "use_full_kernel", True)) or not NUMBA_AVAILABLE
+-            or str(getattr(P, "interp_method", "linear")) != "linear"
+-            or bool(getattr(P, "mortgage_origination_only", False))
+-            or float(getattr(P, "mortgage_amortization", 0.0)) != 0.0
+-            or np.any(np.asarray(getattr(P, "owner_ltv_multipliers", [1.0])) != 1.0)
+-            or child_earnings_penalty_active(P) or rental_wedge_active(P)
+-            or np.any(SD.birth_dp) or np.any(SD.birth_entry_grant)):
++            (bool(getattr(P, "use_pti_constraint", False))) or (float(P.lambda_d) != 0.0) or (not bool(getattr(P, "use_tenure_kernel", True))) or (not bool(getattr(P, "use_full_kernel", True))) or (not NUMBA_AVAILABLE) or (str(getattr(P, "interp_method", "linear")) != "linear") or (bool(getattr(P, "mortgage_origination_only", False))) or (float(getattr(P, "mortgage_amortization", 0.0)) != 0.0) or (np.any(np.asarray(getattr(P, "owner_ltv_multipliers", [1.0])) != 1.0)) or (child_earnings_penalty_active(P)) or (rental_wedge_active(P)) or (np.any(SD.birth_dp)) or (np.any(SD.birth_entry_grant))):
+         raise ValueError("unsupported mechanism combined with native purchase-income timing")
+     fec = get_fecundity_by_age(P)
+     J = P.J
+@@ -763,15 +713,9 @@
+     esc_v = np.ascontiguousarray(SD.escale_flat.reshape(-1))
+ 
+     V = np.zeros((Nb, nt, I, J, Nz, npar, ncs))
+-    joint_active = bool(getattr(P, "joint_nested_choice", False))
+-    exhaustive_saving = joint_active or bool(getattr(P, "exhaustive_saving_control", False))
+-    if getattr(P, "two_shock_choice", False) and not joint_active:
+-        raise ValueError("Two-shock experiment requires joint choice mass accounting")
+-    if getattr(P, "fertility_nest_choice", False) and not joint_active:
+-        raise ValueError("Fertility-nest experiment requires joint choice mass accounting")
++    exhaustive_saving = bool(getattr(P, "exhaustive_saving_control", False))
+     if exhaustive_saving and not use_full_kernel:
+-        raise ValueError("Joint nested choice requires exhaustive compiled saving kernels")
+-    joint = joint_nested.allocate(V.shape, P) if joint_active else None
++        raise ValueError("Exhaustive saving requires compiled kernels")
+     if continuation_V is not None:
+         continuation_V = np.asarray(continuation_V, dtype=float)
+         if continuation_V.shape != V.shape:
+@@ -786,7 +730,7 @@
+     bp_pol = np.ones_like(V)
+     tenure_choice = np.zeros((Nb, nt, I, J, Nz, npar, ncs), dtype=np.int16)
+     tenure_probs = (
+-        np.zeros((Nb, nt, I, J, Nz, npar, ncs, nt), dtype=float if joint_active else np.float32)
++        np.zeros((Nb, nt, I, J, Nz, npar, ncs, nt), dtype=np.float32)
+         if use_tenure_logit
+         else None
+     )
+@@ -798,17 +742,12 @@
+     # mode adds a final at-home-count axis; historical mode keeps this shape.
+     # Shape is unchanged for npar in {3, 4}; retained on P to avoid changing
+     # the established Bellman return contract used by the GE loop.
+-    if independent_child_maturation_active(P):
+-        fert2_probs = np.zeros((Nb, nt, I, J, Nz, 2, max(npar - 2, 2), ncs))
+-    else:
+-        fert2_probs = np.zeros((Nb, nt, I, J, Nz, 2, max(npar - 2, 2)))
++    fert2_probs = np.zeros((Nb, nt, I, J, Nz, 2, max(npar - 2, 2), ncs))
+     fert_value = np.zeros((Nb, nt, I, J, Nz))
+ 
+     ctx = _build_housing_stage_ctx(P, b_grid, SD, p_hat, use_full_kernel, exhaustive_saving)
+ 
+     stay_active = mortgage_stay_floor_active(P) or due_credit
+-    if stay_active and joint_active:
+-        raise NotImplementedError("stayer mortgage floors: sequential Bellman path only")
+     bp_pol_stay: np.ndarray | None = np.ones_like(bp_pol) if stay_active else None
+     c_pol_stay = np.zeros_like(c_pol) if due_credit else None
+ 
+@@ -867,8 +806,7 @@
+             # (Vc_ex is None) bit for bit.
+             Vc_ex = (
+                 apply_child_aging_exempt(Vnr, P, Nb, nt, I, npar, ncs, j)
+-                if parent_age_maturation_active(P)
+-                and independent_child_maturation_active(P)
++                if (parent_age_maturation_active(P))
+                 else None
+             )
+             Vd, cd, hd, bd = _savings_stage(
+@@ -906,33 +844,6 @@
+                 income_j = np.array([income_at_state(P, i, j, float(z_value)) for i in range(I)], dtype=float)
+                 dp_choice = pti_adjusted_downpayment(ctx.dp_arr, ctx.hcost, income_j, P, b_grid)
+ 
+-            if joint_active:
+-                joint_result = joint_nested.bellman_block(
+-                    Vd, (b_grid, ctx.heq, ctx.hcost, dp_choice, ctx.bmo, SD.birth_dp, SD.birth_entry_grant),
+-                    P, j, fec, tenure_choice_kernel,
+-                )
+-                value, joint_prob, product, wait_prob = joint_result[:4]
+-                if getattr(P, "fertility_nest_choice", False):
+-                    joint.failure_probabilities[:, :, :, j, zz] = joint_result[4]
+-                V[:, :, :, j, zz] = value
+-                joint.probabilities[:, :, :, j, zz] = joint_prob
+-                joint.products[:, :, :, j, zz] = product
+-                joint.wait_probabilities[:, :, :, j, zz] = wait_prob
+-                # This wait-menu kernel is a fallback only. Every forward call
+-                # replaces it with exact joint-selected mass for its own pool.
+-                for product_index in range(nt):
+-                    tenure_probs[:, :, :, j, zz, :, :, product_index] = np.sum(
+-                        wait_prob * (product == product_index), axis=-1
+-                    )
+-                tenure_choice[:, :, :, j, zz] = (np.argmax(wait_prob, axis=-1)
+-                    if getattr(P, "fertility_nest_choice", False) else product[..., 0])
+-                loc_probs[:, :, 0, 0, j, zz] = (value[:, :, 0] > DEAD_VALUE_CUTOFF)
+-                fert_probs[:, :, :, j, zz, :2] = joint_nested.action_marginals(joint_prob[..., 0, 0, :, :])
+-                fert_value[:, :, :, j, zz] = value[..., 0, 0]
+-                for nn in range(1, npar - 1):
+-                    for cs in range(nn + 1):
+-                        fert2_probs[:, :, :, j, zz, :, nn - 1, cs] = joint_nested.action_marginals(joint_prob[..., nn, cs, :, :])
+-                continue
+ 
+             VH, tcj, prj_full, VI, lpj = _tenure_location_stage(
+                 Vd, P, b_grid, SD, ctx, dp_choice, Vd_s, bmo_purchase,
+@@ -950,7 +861,6 @@
+             if (
+                 in_fert
+                 and Vc_ex is not None
+-                and bool(getattr(P, "sequential_births", False))
+             ):
+                 Vd_ex, _, _, _ = _savings_stage(
+                     Vc_ex, P, b_grid, SD, ctx, r_hat, j, float(z_value),
+@@ -969,92 +879,70 @@
+ 
+             if in_fert:
+                 pi_j = float(fec[j])
+-                if bool(getattr(P, "sequential_births", False)):
+-                    Vfa = np.empty((Nb, nt, I, 2))
+-                    settled_cs = readiness_settled_state(P)
+-                    Vfa[:, :, :, 0] = VI[:, :, :, 0, settled_cs]
+-                    # Exact exempt success value: re-optimized housing/saving +
+-                    # tenure/location value with the newborn safe next period.
+-                    if VI_ex is not None:
+-                        first_dest = VI_ex[:, :, :, 1, 1]
+-                    else:
+-                        first_dest = VI[:, :, :, 1, 1]
+-                    Vfa[:, :, :, 1] = (
+-                        pi_j
+-                        * (
+-                            first_dest
+-                            - float(P.first_birth_fixed_cost)
++                Vfa = np.empty((Nb, nt, I, 2))
++                settled_cs = readiness_settled_state(P)
++                Vfa[:, :, :, 0] = VI[:, :, :, 0, settled_cs]
++                # Exact exempt success value: re-optimized housing/saving +
++                # tenure/location value with the newborn safe next period.
++                if VI_ex is not None:
++                    first_dest = VI_ex[:, :, :, 1, 1]
++                else:
++                    first_dest = VI[:, :, :, 1, 1]
++                Vfa[:, :, :, 1] = (
++                    pi_j
++                    * (
++                        first_dest
++                        - float(P.first_birth_fixed_cost)
++                    )
++                    + (1.0 - pi_j) * VI[:, :, :, 0, settled_cs]
++                )
++                lf = Vfa / P.kappa_fert
++                ls, pr = logsumexp(lf, axis=3)
++                pr[np.max(Vfa, axis=3) <= DEAD_VALUE_CUTOFF, :] = 0.0
++                fert_probs[:, :, :, j, zz, :2] = pr
++                fert_value[:, :, :, j, zz] = P.kappa_fert * ls
++                if readiness_gate_active(P):
++                    # Unsettled households cannot attempt a first birth.
++                    # Settled households retain the existing entry logit.
++                    V[:, :, :, j, zz, 0, 0] = VI[:, :, :, 0, 0]
++                    V[:, :, :, j, zz, 0, 1] = fert_value[:, :, :, j, zz]
++                else:
++                    V[:, :, :, j, zz, 0, 0] = fert_value[:, :, :, j, zz]
++                V[:, :, :, j, zz, 1:, :] = VI[:, :, :, 1:, :]
++                childless_copy_start = 2 if readiness_gate_active(P) else 1
++                V[:, :, :, j, zz, 0, childless_copy_start:] = VI[
++                    :, :, :, 0, childless_copy_start:
++                ]
++                # Entry (childless wait/try) keeps kappa_fert; upward attempts
++                # at every parity use the continuation scale when set — margin-specific Gumbel scales on the same sequential choice tree.
++                kf_cont_raw = getattr(P, "kappa_fert_continuation", None)
++                kf_cont = float(P.kappa_fert) if kf_cont_raw is None else float(kf_cont_raw)
++                # Parity nn may try for birth nn+1.  Under the historical
++                # shared clock this is only child state 1.  Under the
++                # repaired specification, cs is the current at-home count
++                # and a birth maps (nn, cs) to (nn+1, cs+1).
++                for nn in range(1, npar - 1):
++                    child_states = range(0, nn + 1)
++                    for cs in child_states:
++                        destination_cs = birth_destination_child_state(P, cs)
++                        V2 = np.empty((Nb, nt, I, 2))
++                        V2[:, :, :, 0] = VI[:, :, :, nn, cs]
++                        if VI_ex is not None:
++                            cont_dest = VI_ex[:, :, :, nn + 1, destination_cs]
++                        else:
++                            cont_dest = VI[:, :, :, nn + 1, destination_cs]
++                        V2[:, :, :, 1] = (
++                            pi_j * cont_dest
++                            + (1.0 - pi_j) * VI[:, :, :, nn, cs]
+                         )
+-                        + (1.0 - pi_j) * VI[:, :, :, 0, settled_cs]
+-                    )
+-                    lf = Vfa / P.kappa_fert
+-                    ls, pr = logsumexp(lf, axis=3)
+-                    pr[np.max(Vfa, axis=3) <= DEAD_VALUE_CUTOFF, :] = 0.0
+-                    fert_probs[:, :, :, j, zz, :2] = pr
+-                    fert_value[:, :, :, j, zz] = P.kappa_fert * ls
+-                    if readiness_gate_active(P):
+-                        # Unsettled households cannot attempt a first birth.
+-                        # Settled households retain the existing entry logit.
+-                        V[:, :, :, j, zz, 0, 0] = VI[:, :, :, 0, 0]
+-                        V[:, :, :, j, zz, 0, 1] = fert_value[:, :, :, j, zz]
+-                    else:
+-                        V[:, :, :, j, zz, 0, 0] = fert_value[:, :, :, j, zz]
+-                    V[:, :, :, j, zz, 1:, :] = VI[:, :, :, 1:, :]
+-                    childless_copy_start = 2 if readiness_gate_active(P) else 1
+-                    V[:, :, :, j, zz, 0, childless_copy_start:] = VI[
+-                        :, :, :, 0, childless_copy_start:
+-                    ]
+-                    # Entry (childless wait/try) keeps kappa_fert; upward attempts
+-                    # at every parity use the continuation scale when set — margin-specific Gumbel scales on the same sequential choice tree.
+-                    kf_cont_raw = getattr(P, "kappa_fert_continuation", None)
+-                    kf_cont = float(P.kappa_fert) if kf_cont_raw is None else float(kf_cont_raw)
+-                    # Parity nn may try for birth nn+1.  Under the historical
+-                    # shared clock this is only child state 1.  Under the
+-                    # repaired specification, cs is the current at-home count
+-                    # and a birth maps (nn, cs) to (nn+1, cs+1).
+-                    for nn in range(1, npar - 1):
+-                        child_states = range(0, nn + 1) if independent_child_maturation_active(P) else (1,)
+-                        for cs in child_states:
+-                            destination_cs = birth_destination_child_state(P, cs)
+-                            V2 = np.empty((Nb, nt, I, 2))
+-                            V2[:, :, :, 0] = VI[:, :, :, nn, cs]
+-                            if VI_ex is not None:
+-                                cont_dest = VI_ex[:, :, :, nn + 1, destination_cs]
+-                            else:
+-                                cont_dest = VI[:, :, :, nn + 1, destination_cs]
+-                            V2[:, :, :, 1] = (
+-                                pi_j * cont_dest
+-                                + (1.0 - pi_j) * VI[:, :, :, nn, cs]
+-                            )
+-                            l2, p2 = logsumexp(V2 / kf_cont, axis=3)
+-                            p2[np.max(V2, axis=3) <= DEAD_VALUE_CUTOFF, :] = 0.0
+-                            if independent_child_maturation_active(P):
+-                                fert2_probs[:, :, :, j, zz, :, nn - 1, cs] = p2
+-                            else:
+-                                fert2_probs[:, :, :, j, zz, :, nn - 1] = p2
+-                            V[:, :, :, j, zz, nn, cs] = kf_cont * l2
+-                else:
+-                    Vfa = np.zeros((Nb, nt, I, npar))
+-                    Vfa[:, :, :, 0] = VI[:, :, :, 0, 0]
+-                    if pi_j < 1.0:
+-                        for nn in range(1, npar):
+-                            Vfa[:, :, :, nn] = pi_j * VI[:, :, :, nn, 1] + (1.0 - pi_j) * VI[:, :, :, 0, 0]
+-                    else:
+-                        for nn in range(1, npar):
+-                            Vfa[:, :, :, nn] = VI[:, :, :, nn, 1]
+-                    lf = Vfa / P.kappa_fert
+-                    ls, pr = logsumexp(lf, axis=3)
+-                    pr[np.max(Vfa, axis=3) <= DEAD_VALUE_CUTOFF, :] = 0.0
+-                    fert_probs[:, :, :, j, zz, :] = pr
+-                    fert_value[:, :, :, j, zz] = P.kappa_fert * ls
+-                    V[:, :, :, j, zz, 0, 0] = fert_value[:, :, :, j, zz]
+-                    V[:, :, :, j, zz, 1:, :] = VI[:, :, :, 1:, :]
+-                    V[:, :, :, j, zz, 0, 1:] = VI[:, :, :, 0, 1:]
++                        l2, p2 = logsumexp(V2 / kf_cont, axis=3)
++                        p2[np.max(V2, axis=3) <= DEAD_VALUE_CUTOFF, :] = 0.0
++                        fert2_probs[:, :, :, j, zz, :, nn - 1, cs] = p2
++                        V[:, :, :, j, zz, nn, cs] = kf_cont * l2
+             else:
+                 V[:, :, :, j, zz, :, :] = VI
+ 
+     P._fert2_probs = fert2_probs
+-    P._joint_choice = joint
+     P._bp_pol_stay = bp_pol_stay
+     P._c_pol_stay = c_pol_stay
+     return (
+@@ -1365,9 +1253,7 @@
+     children at home).  A ``None`` age falls back to ``Pia``.
+     """
+     if (
+-        age_index is not None
+-        and parent_age_maturation_active(P)
+-        and independent_child_maturation_active(P)
++        (age_index is not None) and (parent_age_maturation_active(P))
+     ):
+         by_age = getattr(P, "Pi_child_by_age", None)
+         if by_age is not None:
+@@ -1382,9 +1268,7 @@
+     birth-period child safe), or ``None`` in constant mode.
+     """
+     if (
+-        age_index is not None
+-        and parent_age_maturation_active(P)
+-        and independent_child_maturation_active(P)
++        (age_index is not None) and (parent_age_maturation_active(P))
+     ):
+         ex_age = getattr(P, "Pi_child_exempt_by_age", None)
+         if ex_age is not None:
+@@ -1545,22 +1429,11 @@
+     return out
+ 
+ 
+-def current_child_bin_dt(nn, cs, dep_last, high_cutoff=2, child_state_mode="shared_clock"):
+-    """Family-size room bin: 2 = no dependent child present, 3 = small
+-    family, 4 = large family.  ``high_cutoff`` is the parity at which the
+-    large-family bin starts (default 2 = legacy parity bins; 3 under the
+-    literal-parity convention, where bin 3 is "1-2 children" and bin 4 is
+-    "3+")."""
+-    if str(child_state_mode).strip().lower() == "independent_count":
+-        current_n = max(int(cs), 0) if int(cs) <= int(nn) else 0
+-        if current_n <= 0:
+-            return 2
+-        return 3 if current_n < high_cutoff else 4
+-    if cs == 0 or cs > dep_last:
+-        return 2
+-    current_n = max(nn, 0)
++def current_child_bin_dt(nn, cs, dep_last, high_cutoff=2, child_state_mode="independent_count"):
++    """Room bin from children at home: 2 none, 3 small, 4 large family."""
++    if str(child_state_mode).strip().lower() != "independent_count":
++        raise ValueError("single-market engine requires independent_count")
++    current_n = max(int(cs), 0) if int(cs) <= int(nn) else 0
+     if current_n <= 0:
+         return 2
+-    if current_n < high_cutoff:
+-        return 3
+-    return 4
++    return 3 if current_n < high_cutoff else 4
+--- code/model/refactor_lab/engine/kernels.py
++++ code/model/experiments/stationary_single_market/engine/kernels.py
+@@ -1,8 +1,4 @@
+-"""Extracted from kernels.py (reviewed overlay) (sha256 379d179a8f80477e8d813f60bc526e700a270e37e0f411988aabd9a06fd74352).
+-
+-Mechanical copy by refactor_lab/materialize.py: only reachable top-level
+-definitions, bodies byte-identical; import edits listed in the receipt.
+-"""
++"""Supported-path kernels; provenance and exact changes are in source_provenance.json/review.diff."""
+ from __future__ import annotations
+ import numpy as np
+ try:  # pragma: no cover - availability depends on local environment
+@@ -976,58 +972,35 @@
+ 
+ 
+ @njit(cache=True)
+-def location_logit_kernel(
+-    VH,         # (Nb, nt, I, npar, ncs)
+-    iidx,       # (Nb, I, nt) int
+-    iwt,        # (Nb, I, nt)
+-    loc_shift,  # (I, I)
+-    kappa_loc,
+-):
++def location_logit_kernel(VH, iidx, iwt, loc_shift, kappa_loc):
++    """Single supported destination; retain the reference arithmetic order.
++
++    Singleton axes remain at this phase's solver/report interface. Migration
++    interpolation and destination enumeration are absent. iidx/iwt are accepted
++    only for compatibility and are never read.
++    """
+     Nb, nt, I, npar, ncs = VH.shape
+-    VI = np.empty((Nb, nt, I, npar, ncs))
+-    lpj = np.empty((Nb, nt, I, I, npar, ncs))
++    if I != 1:
++        raise ValueError("single-market location stage requires I=1")
++    VI = np.empty((Nb, nt, 1, npar, ncs))
++    lpj = np.empty((Nb, nt, 1, 1, npar, ncs))
+     inv_kl = 1.0 / kappa_loc
+-    for io in range(I):
+-        for to in range(nt):
+-            for nn in range(npar):
+-                for cs in range(ncs):
+-                    for b in range(Nb):
+-                        # Build value-to-go for each destination, then logit
+-                        # First find max for stable logsumexp
+-                        m = -1e300
+-                        all_dead = True
+-                        for idd in range(I):
+-                            if idd == io:
+-                                v = VH[b, to, io, nn, cs]
+-                            else:
+-                                k = iidx[b, io, to]
+-                                w = iwt[b, io, to]
+-                                v = (1.0 - w) * VH[k, 0, idd, nn, cs] + w * VH[k + 1, 0, idd, nn, cs]
+-                            if v > -1e9:
+-                                all_dead = False
+-                            v_shift = (v + loc_shift[io, idd]) * inv_kl
+-                            if v_shift > m:
+-                                m = v_shift
+-                        # accumulate exp sum
+-                        se = 0.0
+-                        # store the shifted values temporarily in lpj
+-                        for idd in range(I):
+-                            if idd == io:
+-                                v = VH[b, to, io, nn, cs]
+-                            else:
+-                                k = iidx[b, io, to]
+-                                w = iwt[b, io, to]
+-                                v = (1.0 - w) * VH[k, 0, idd, nn, cs] + w * VH[k + 1, 0, idd, nn, cs]
+-                            v_shift = (v + loc_shift[io, idd]) * inv_kl
+-                            ex = np.exp(v_shift - m)
+-                            lpj[b, to, io, idd, nn, cs] = ex
+-                            se += ex
+-                        ls = m + np.log(se)
+-                        VI[b, to, io, nn, cs] = kappa_loc * ls
+-                        # normalize probs
+-                        for idd in range(I):
+-                            if all_dead:
+-                                lpj[b, to, io, idd, nn, cs] = 0.0
+-                            else:
+-                                lpj[b, to, io, idd, nn, cs] = lpj[b, to, io, idd, nn, cs] / se
++    for to in range(nt):
++        for nn in range(npar):
++            for cs in range(ncs):
++                for b in range(Nb):
++                    v = VH[b, to, 0, nn, cs]
++                    m = -1e300
++                    v_shift = (v + loc_shift[0, 0]) * inv_kl
++                    if v_shift > m:
++                        m = v_shift
++                    ex = np.exp(v_shift - m)
++                    se = 0.0
++                    se += ex
++                    ls = m + np.log(se)
++                    VI[b, to, 0, nn, cs] = kappa_loc * ls
++                    if v > -1e9:
++                        lpj[b, to, 0, 0, nn, cs] = ex / se
++                    else:
++                        lpj[b, to, 0, 0, nn, cs] = 0.0
+     return VI, lpj
+--- code/model/refactor_lab/engine/parameters.py
++++ code/model/experiments/stationary_single_market/engine/parameters.py
+@@ -1,8 +1,4 @@
+-"""Extracted from parameters.py (reviewed overlay) (sha256 d7b4d23c4bab2153dca0e86a6f189fe6aed6676c72090999d5a1c9105a8d5f8c).
+-
+-Mechanical copy by refactor_lab/materialize.py: only reachable top-level
+-definitions, bodies byte-identical; import edits listed in the receipt.
+-"""
++"""Supported-path parameters; provenance and exact changes are in source_provenance.json/review.diff."""
+ from __future__ import annotations
+ import copy
+ import math
+@@ -86,8 +82,8 @@
+ 
+ 
+ def independent_child_maturation_active(P: SimpleNamespace) -> bool:
+-    """Whether child_state is the number of children currently at home."""
+-    return str(getattr(P, "child_state_mode", "shared_clock")).strip().lower() == "independent_count"
++    """This engine supports independent child counts only."""
++    return True
+ 
+ 
+ def child_earnings_penalty_active(P: SimpleNamespace) -> bool:
+@@ -156,18 +152,8 @@
+ 
+ 
+ def children_at_home_count(nn: int, cs: int, P: SimpleNamespace) -> int:
+-    """Number of children at home for family state (nn, cs), top-coded at 3.
+-
+-    Under independent maturation the child state is that number (bounded by
+-    children ever born); under the shared clock it is one when the state
+-    lies in the dependent stages and zero otherwise.
+-    """
+-    if independent_child_maturation_active(P):
+-        return int(min(max(int(cs), 0), int(nn), 3))
+-    stages = int(getattr(P, "n_child_stages", 1))
+-    if 1 <= int(cs) <= stages:
+-        return 1 if int(nn) >= 1 else 0
+-    return 0
++    """Children currently at home, bounded by children ever born and three."""
++    return int(min(max(int(cs), 0), int(nn), 3))
+ 
+ 
+ def child_earnings_multiplier(P: SimpleNamespace, j: int, m: int) -> float:
+--- code/model/refactor_lab/engine/shared.py
++++ code/model/experiments/stationary_single_market/engine/shared.py
+@@ -1,4 +1,4 @@
+-"""Shared stage of the extracted solver (bodies byte-identical; see split_receipt.json)."""
++"""Shared stage of the isolated supported-path engine; see source_provenance.json."""
+ from __future__ import annotations
+ import copy
+ import math
+@@ -6,7 +6,7 @@
+ from types import SimpleNamespace
+ from typing import Any
+ import numpy as np
+-from . import joint_nested
++from ..contract import validate_contract
+ from .adult_entry import adjusted_births, potential_entry_households
+ from .warm_price import search_warm_price
+ from .child_preferences import apply_child_preferences
+@@ -239,6 +239,7 @@
+ 
+ 
+ def precompute_shared(P: SimpleNamespace, b_grid: np.ndarray) -> SimpleNamespace:
++    validate_contract(P)
+     Nb = len(b_grid)
+     nc = P.n_parity * P.n_child_states
+     K = P.n_child_stages
+@@ -262,12 +263,8 @@
+         raise ValueError("eqscale_form must be one of: linear, power, sqrt")
+     for nn in range(P.n_parity):
+         for cs in range(P.n_child_states):
+-            if independent_child_maturation_active(P):
+-                nk = cs if cs <= nn else 0
+-                kp = nk > 0
+-            else:
+-                nk = nn
+-                kp = (cs >= 1) and (cs < csm1)
++            nk = cs if cs <= nn else 0
++            kp = nk > 0
+             if readiness_gate_active(P) and nn == 0 and cs == 1:
+                 # E6c reuses the otherwise invalid (childless, cs=1) cell for
+                 # the settled state. It has childless preferences, not the
+@@ -467,16 +464,7 @@
+     the precomputed bequest table, and hence V, nest bit for bit at
+     n_parity=3.
+     """
+-    if independent_child_maturation_active(P):
+-        return int(nn)
+-    K = P.n_child_stages
+-    if cs == 0:
+-        return 0
+-    if cs == K + 1:
+-        return 1 if nn <= 2 else nn
+-    if cs == K + 2:
+-        return 2 if nn <= 2 else nn
+-    return nn
++    return int(nn)
+ 
+ 
+ def has_birth_dp_grant(P, nn, cs, to, tn):
+@@ -484,9 +472,7 @@
+         return False
+     if to != 0 or tn <= 0:
+         return False
+-    if independent_child_maturation_active(P):
+-        return (nn >= 1) and (1 <= cs <= nn)
+-    return (nn >= 1) and (cs == 1)
++    return (nn >= 1) and (1 <= cs <= nn)
+ 
+ 
+ def get_phi_state_matrix(P):
+@@ -535,14 +521,7 @@
+ 
+ def get_parent_target_child_states(P):
+     kp = np.zeros(P.n_child_states, dtype=bool)
+-    if independent_child_maturation_active(P):
+-        kp[1:] = True
+-        return kp
+-    if bool(getattr(P, "parent_dp_waiver_birth_state_only", False)):
+-        if P.n_child_states >= 2:
+-            kp[1] = True
+-    else:
+-        kp[1 : P.n_child_stages + 1] = True
++    kp[1:] = True
+     return kp
+ 
+ 
+@@ -566,12 +545,9 @@
+     ten_idx = ten_idx[(ten_idx >= 1) & (ten_idx < nt)]
+     if len(loc_idx) == 0 or len(ten_idx) == 0:
+         return bg
+-    if independent_child_maturation_active(P):
+-        for parity in range(1, P.n_parity):
+-            child_states = np.arange(1, min(parity, P.n_child_states - 1) + 1)
+-            bg[np.ix_(loc_idx, ten_idx, np.array([parity]), child_states)] = grant
+-    else:
+-        bg[np.ix_(loc_idx, ten_idx, np.arange(1, P.n_parity), np.array([1]))] = grant
++    for parity in range(1, P.n_parity):
++        child_states = np.arange(1, min(parity, P.n_child_states - 1) + 1)
++        bg[np.ix_(loc_idx, ten_idx, np.array([parity]), child_states)] = grant
+     return bg
+ 
+ 
+@@ -607,8 +583,6 @@
+             for parity in range(1, P.n_parity):
+                 child_states = (
+                     range(1, min(parity, P.n_child_states - 1) + 1)
+-                    if independent_child_maturation_active(P)
+-                    else (1,)
+                 )
+                 for child_state in child_states:
+                     source = np.asarray(
+--- code/model/refactor_lab/run.py
++++ code/model/experiments/stationary_single_market/run.py
+@@ -1,10 +1,10 @@
+ """Single normal-path entry point (local one core or Torch). Results are PRELIMINARY.
+ 
+-    python -m refactor_lab.run fixed-price --credit reference --reference-root R --bundle B --bundle-sha S --out O
+-    python -m refactor_lab.run fixed-price --credit corrected --d-bar 0 ...      (feasibility diagnostic)
+-    python -m refactor_lab.run equilibrium --credit reference --initial-price-factor 1.05 ...
+-
+-Only `refactor_lab.engine` is imported: no frozen tools, no monkey-patching,
++    python -m experiments.stationary_single_market.run fixed-price --credit reference --reference-root R --bundle B --bundle-sha S --out O
++    python -m experiments.stationary_single_market.run fixed-price --credit corrected --d-bar 0 ...      (feasibility diagnostic)
++    python -m experiments.stationary_single_market.run equilibrium --credit reference --initial-price-factor 1.05 ...
++
++Only `experiments.stationary_single_market.engine` is imported: no frozen tools, no monkey-patching,
+ no calibration or psi normalization. A successful run is a preliminary
+ solve; certification is `verification/acceptance_oracle.py` (frozen reference gates,
+ 14/31 tables, the 17 dated standard plots). Corrected credit is limited to a
+@@ -29,6 +29,7 @@
+ import numpy as np
+ 
+ from . import LABEL, credit, inputs
++from .contract import validate_contract
+ 
+ STATUS = "preliminary_solve_only_not_certified"
+ 
+@@ -60,6 +61,7 @@
+                  "native_explicit_transaction_grid", "native_purchase_income", "native_exact_allocation_output"):
+         if getattr(P, flag) is not True:
+             raise RuntimeError("Reference contract flag not set in checkpoint: " + flag)
++    validate_contract(P)
+     credit.bind_engine_credit(P, args.credit, args.d_bar)
+     # I/O location only (checkpoint value names the old run directory).
+     P.native_inherited_distribution_evidence_dir = str(args.out / "inherited_state_failures")
+@@ -77,7 +79,7 @@
+ 
+ def save_stage(out: Path, sol, sd, P, grid, price) -> dict:
+     """Portable arrays (solution + lab precompute_shared as 'shared.*') and the
+-    trusted acceptance pickle (types.SimpleNamespace, NumPy, refactor_lab.engine.*)."""
++    trusted acceptance pickle (types.SimpleNamespace, NumPy, experiments.stationary_single_market.engine.*)."""
+     out.mkdir(parents=True, exist_ok=False)
+     arrays = {k: v for k, v in vars(sol).items() if isinstance(v, np.ndarray) and v.dtype != object}
+     arrays.update({"shared." + k: v for k, v in vars(sd).items() if isinstance(v, np.ndarray) and v.dtype != object})
+--- code/model/refactor_lab/verification/__init__.py
++++ code/model/experiments/stationary_single_market/verification/__init__.py
+@@ -1,5 +1 @@
+-"""Verification machinery (oracles, benchmarks, provenance and drivers).
+-
+-The normal equilibrium path imports ``verification.callcount`` for the optional
+-``--count-calls`` instrumentation; it is inactive unless that flag is supplied.
+-"""
++"""Optional runtime instrumentation."""

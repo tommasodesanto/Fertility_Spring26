@@ -1,0 +1,44 @@
+{
+  "status": "component_tests_passed_not_full_solution_certified",
+  "tests_passed": 19,
+  "test_seconds": 0.24,
+  "lifecycle_solves": 0,
+  "equilibrium_solves": 0,
+  "threads": 1,
+  "test_command": "PYTHONPATH=code/model <existing-python313> -m pytest -q code/model/experiments/stationary_single_market/tests/test_specialization.py",
+  "source_review_diff_sha256": "bd86f1226c24ea8ed9a0e2bf8f3cde875b2214fb31ca2934cf55a2216b2fb421",
+  "runtime_sha256": {
+    "__init__.py": "8a7e9272ec8857542377693d34eb76b22fbd884d2326d8c0b6ba3d19b5a7ac86",
+    "contract.py": "40d694731a7bc2944a5b79f98d11c11f04a6dfb5400ce23855d31939af0de0f2",
+    "credit.py": "2cf3d0a4a65d577d297262c55da1126c06033730482aab384ed6c7669751c07d",
+    "engine/__init__.py": "c134867d538cf9b27bceaaeb70cfead4aec7706039f5b3b66fc006ff208bbb67",
+    "engine/adult_entry.py": "e752178ad90d64c77575b70d0718a94d6f3b04463b03637d9af12e23f57bce3f",
+    "engine/child_preferences.py": "887763b066bdd64efb2f23b97fac977abfa9630d1e194adb2148da24b2ff7123",
+    "engine/diagnostics.py": "a9a153d44ef489da9cd5a7f4223b416e183674ca2180756092f30a29c1bab3c5",
+    "engine/distribution.py": "f633c8354ca9aaee010b98793e321a366517c9e75866f98e6cf1831738c44bca",
+    "engine/e5f_social_security.py": "df03621afd48135afb6c3fbdec1209bad9605c6133b9f6352fce28fc45c7961b",
+    "engine/e5f_stationary_paygo.py": "7eeb7760b236711d40b3563d6d7a40548ba3cade6a646743c6fe3a02462a8569",
+    "engine/equilibrium.py": "976d0f878640bd8e558e2ff7f87987bfdaf0390a1de7c99d393cd4c0f241ff1f",
+    "engine/household.py": "bd8266180ca49f8e090d0524e39f97f07f87bc26410b8417abec8e1802157193",
+    "engine/kernels.py": "eedabea858a73c2bd5e631400fdf3db856ab9a39216b55a41a3c2684164f6ec6",
+    "engine/parameters.py": "c3b9db9522342cddd0b02730609432bb8fbbaeccc2b90c9ef372eacc327f742d",
+    "engine/shared.py": "5d3437169e62f33a152b1d88924551c40fb8fc9bb1381553dbef874bc00ec1f7",
+    "engine/solver.py": "19e6f9240a4ff7354c39031d35d734ea2c8cad2fbd1f60d128ebb049d587317c",
+    "engine/utils.py": "836d6768af4a9261fe28e758f88dcc8ca059afc277b7c03d36f179a510ebcf36",
+    "engine/warm_price.py": "bc3ff5c8df2a16a9ef753bfaabde914e09e7d3943de90c93be684ebeb0bf2518",
+    "inputs.py": "8fa00ce597aeac1fdba7be0ca5a77c81fbb4bf5c8455f5085de842c51fc609a9",
+    "run.py": "9a503815ad6155e095a631c7051fe1eabb617365b4fc343aed29f1f3722fedf0",
+    "verification/__init__.py": "33b54b2974d0e25a1e7799e5ac9cb49561ceb6e9203b8ab83d9f886801b19881",
+    "verification/callcount.py": "59356bc65dc4bb3304af08d71b057fd24c76a1b08bc71ef483e10b67d332eb2b"
+  },
+  "limitations": [
+    "singleton location axes retained",
+    "no full lifecycle/GE equivalence or speed certificate",
+    "not production promoted"
+  ],
+  "deleted_unused_engine_modules": [
+    "joint_nested.py",
+    "two_shock_choice.py",
+    "fertility_nested.py"
+  ]
+}

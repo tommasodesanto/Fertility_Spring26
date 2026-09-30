@@ -1,0 +1,200 @@
+{
+  "calibration_contract": {
+    "displayed_rows": 14,
+    "free_parameters": {
+      "H0": [
+        0.2,
+        80.0
+      ],
+      "beta_annual": [
+        0.94,
+        0.99
+      ],
+      "chi": [
+        0.1,
+        5.0
+      ],
+      "child_benefit_curvature": [
+        0.0,
+        0.8
+      ],
+      "delta_alpha_jump": [
+        0.0,
+        0.25
+      ],
+      "first_birth_fixed_cost": [
+        0.0,
+        8.0
+      ],
+      "kappa_fert": [
+        0.02,
+        50.0
+      ],
+      "kappa_fert_continuation": [
+        0.02,
+        50.0
+      ],
+      "tenure_choice_kappa": [
+        0.001,
+        0.1
+      ],
+      "theta0": [
+        0.0,
+        8.0
+      ]
+    },
+    "integration": "No existing evaluator directly accepts proposed typed inputs and refactor_lab; isolated factory adapter and full scientific replay are required.",
+    "normalization_parameter": "psi_child",
+    "normalization_target": 2.1,
+    "parameter_rows": 31,
+    "scored_moments": 10,
+    "standard_diagnostics": 17,
+    "target_weight_fingerprint": "20e531855075b807886da8e936930dca9090b989b2ce381de39042cf206efdbd"
+  },
+  "disclosure": "CDF transport changes the discretized joint wealth-income association; exact wealth marginal and total mass retained. Numerical approximation only, pending review.",
+  "effective_dimensions": {
+    "control": [
+      160,
+      15
+    ],
+    "proposal": [
+      120,
+      9
+    ]
+  },
+  "entry_moments": {
+    "difference": {
+      "income_second_moment": -0.023318996719791096,
+      "mean_income_multiplier": -2.220446049250313e-16,
+      "mean_wealth": 2.7755575615628914e-17,
+      "negative_wealth_mass": 0.0,
+      "total_mass": 1.1102230246251565e-16,
+      "wealth_income_covariance": -0.007075235535963953,
+      "wealth_second_moment": 0.0
+    },
+    "proposal": {
+      "income_second_moment": 1.6054467475064598,
+      "mean_income_multiplier": 1.0,
+      "mean_wealth": 0.18651967924681828,
+      "negative_wealth_mass": 0.26250851601267977,
+      "total_mass": 1.0,
+      "wealth_income_covariance": 0.11229690877844273,
+      "wealth_second_moment": 2.616827638490699
+    },
+    "reference": {
+      "income_second_moment": 1.6287657442262509,
+      "mean_income_multiplier": 1.0000000000000002,
+      "mean_wealth": 0.18651967924681825,
+      "negative_wealth_mass": 0.26250851601267977,
+      "total_mass": 0.9999999999999999,
+      "wealth_income_covariance": 0.11937214431440668,
+      "wealth_second_moment": 2.616827638490699
+    }
+  },
+  "income_process": {
+    "inferred_annual_innovation_sd": 0.2695745373962748,
+    "inferred_annual_rho": 0.9257884726460368,
+    "invariant_error": 6.938893903907228e-18,
+    "period_rho": 0.7345934905942886,
+    "period_years": 4.0,
+    "reference_reconstruction_max_z_error": 1.7763568394002505e-15,
+    "stationary_log_sd": 0.7130810449881093,
+    "transition_row_error": 2.220446049250313e-16
+  },
+  "lifecycle_solves": 0,
+  "linear_income_projection_failure": {
+    "explanation": "Nonnegative linear interpolation cannot retain these old income points inside new support; no clipping was applied.",
+    "new_support": [
+      0.10346813919312171,
+      5.843348419426847
+    ],
+    "old_support": [
+      0.05388932006414422,
+      11.194101127105801
+    ],
+    "outside_nodes": [
+      0,
+      1,
+      13,
+      14
+    ],
+    "outside_support_mass": 0.0018310546875
+  },
+  "loop_preflight": {
+    "case_seconds": 300,
+    "checkpoint_after_every_price_trial": true,
+    "credit_selection_required": true,
+    "executable": false,
+    "held_fixed": "Same explicitly selected credit contract in every arm, all reference preferences and primitives, no psi normalization during resolution comparison",
+    "maximum_lifecycle_solves": 18,
+    "proposed_cases": [
+      "160x15 full renewal-price/population GE",
+      "120x9 full renewal-price/population GE",
+      "exact repeat of120x9"
+    ],
+    "reason": "Proposal not lead-reviewed; grid-specific frozen observer adapter and pinned reporting integration absent.",
+    "single_cpu": true,
+    "stop": [
+      "entry feasibility or estate failure",
+      "source/target fingerprint drift",
+      "missing14/31/17 outputs",
+      "price/population closure failure",
+      "time or solve cap"
+    ],
+    "total_seconds": 2400
+  },
+  "mandatory_entry_wealth_atoms": 50,
+  "probability_contraction": {
+    "cdf_weights_finite_positive_unit_mass": true,
+    "finite_and_nonnegative": true,
+    "independent_check": "ordered broadcast sum",
+    "max_agreement_error": 0.0,
+    "method": "np.einsum optimize=False"
+  },
+  "proposed_bundle_sha256": "8189b1682de32608cf5f4236c7dec7f103d11135a0b84eb1f961411017a54fab",
+  "reference_bundle_preserved": true,
+  "reference_identity": {
+    "arrays_sha256": "a48ecb71055f979284e7d63ccfa19bca8570ff8a93635fd352918356c69ee0b0",
+    "artifact_fields_loaded": 0,
+    "bundle_json_sha256": "427e67a3d9dd663cd23c3f8533c55a1a64b4f9350d396c97b5c5bd4700bc90b7",
+    "checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d",
+    "label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+    "manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+    "primitive_fields": 246,
+    "reference_price": [
+      0.7898695017462086
+    ]
+  },
+  "source_pins": {
+    "code/model/refactor_lab/engine/__init__.py": "c134867d538cf9b27bceaaeb70cfead4aec7706039f5b3b66fc006ff208bbb67",
+    "code/model/refactor_lab/engine/adult_entry.py": "e752178ad90d64c77575b70d0718a94d6f3b04463b03637d9af12e23f57bce3f",
+    "code/model/refactor_lab/engine/child_preferences.py": "887763b066bdd64efb2f23b97fac977abfa9630d1e194adb2148da24b2ff7123",
+    "code/model/refactor_lab/engine/diagnostics.py": "eb9c3516e4d4343d59f84341213faaebdaa09eba20cc0efc1bf3bfecb8a28985",
+    "code/model/refactor_lab/engine/distribution.py": "9da9be2525852f78771d735103f0de385c8a8028eff9ab564512627ed2df2e90",
+    "code/model/refactor_lab/engine/e5f_social_security.py": "df03621afd48135afb6c3fbdec1209bad9605c6133b9f6352fce28fc45c7961b",
+    "code/model/refactor_lab/engine/e5f_stationary_paygo.py": "7eeb7760b236711d40b3563d6d7a40548ba3cade6a646743c6fe3a02462a8569",
+    "code/model/refactor_lab/engine/equilibrium.py": "ca88909666802e92e396c44c0ea6f69eadbddb9e707bfec49cf1ec765d013fe9",
+    "code/model/refactor_lab/engine/fertility_nested.py": "aed06c0ee77bb39b0d72da0d5e63c6f1c1b6c3b0a76986372aa17e2d2cb77e85",
+    "code/model/refactor_lab/engine/household.py": "2a34f5f28c0c63ca3d24d9e759cd1b5b92aadaddb5fe04795e65abbc0b448082",
+    "code/model/refactor_lab/engine/joint_nested.py": "909bb9d02ecf8e196e339864572e7692e71a956c35002397c70a494a30bd620b",
+    "code/model/refactor_lab/engine/kernels.py": "fe7d43afdac234af71edd09e1260666e21c309dda83de4adc6a3abff35c3d5d4",
+    "code/model/refactor_lab/engine/parameters.py": "f8871ea7f026b0900f2cd89e2ecbe7f24fbc8b08e83ec46227533a11dea2e163",
+    "code/model/refactor_lab/engine/shared.py": "1fbe36f75befe5fed67c490c39a65663f4c8896b078851693fb4bca533d07773",
+    "code/model/refactor_lab/engine/solver.py": "19e6f9240a4ff7354c39031d35d734ea2c8cad2fbd1f60d128ebb049d587317c",
+    "code/model/refactor_lab/engine/two_shock_choice.py": "0d5201f176ad77f2c3013819d18eae69c1a22a91d7ce9b8060e1d6ef76ad40f1",
+    "code/model/refactor_lab/engine/utils.py": "836d6768af4a9261fe28e758f88dcc8ca059afc277b7c03d36f179a510ebcf36",
+    "code/model/refactor_lab/engine/warm_price.py": "bc3ff5c8df2a16a9ef753bfaabde914e09e7d3943de90c93be684ebeb0bf2518",
+    "code/model/refactor_lab/inputs.py": "8fa00ce597aeac1fdba7be0ca5a77c81fbb4bf5c8455f5085de842c51fc609a9",
+    "code/model/tools/e5f_evening_calibration_runtime.py": "7b5354d794a407c9109b69b17e4449fdf7dc664065c387f8c5e0d8043aa1dbfa",
+    "output/model/fertility_identification_20260928/contract_v1/primary_objective.json": "04528ece6513e4da9436bb8b35b54cd7e9cecd3a6695d050a0a7aea5a71d5e60",
+    "output/model/fertility_identification_20260928/two_stream_overnight_v1/config.json": "419b46d7cffdf51d95760f2999aec67a66b10b08bb9198164ac3d6f7d96323d3",
+    "output/model/fertility_identification_20260928/two_stream_overnight_v1/search.py": "8987f27ace92853ff2af3ab917e27b758d7e8e976e5d37e7bde92efa6e29922f",
+    "output/model/publication_refactor_20260929/grid_resolution_v1/prepare.py": "f1224b8b81cbbf4534b455d3849aa347202be5cbb088023e5f6857c4a4289abd",
+    "output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/driver.py": "865110d481594fc5c30ed353d7977f15298d27e4f541d4d765c8f7a4888087c9",
+    "output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/phase_a.py": "6aec54c7db2aa971dcd3f5f3d15e57f0f432a9b46a5a081d154524b385226d4b",
+    "output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/phase_b_ge.py": "86151df7e2aa955b220581782952f6ee771384d72696f052db6e9792b6ed4c97",
+    "output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/single_price.py": "f6dbfde74fff8b9ffc867ba95da2814faebb6b10a903a42cdc81e2405c92f892"
+  },
+  "status": "zero_solve_proposed_inputs_verified_loop_launch_blocked",
+  "wealth_atom_max_mass_error": 6.938893903907228e-18
+}

@@ -1,0 +1,394 @@
+{
+  "arrays_sha256": "5d894a011ad8d67fabe22ab9c35be61651c2828a6688831358b222a7c4867c77",
+  "changes": [
+    "160 to 120 wealth nodes preserving every occupied entry atom",
+    "15 to 9 Rouwenhorst states, same period rho and stationary log variance",
+    "CDF-overlap transport of fixed conditional wealth law, preserving wealth marginal",
+    "remove two inactive historical 3x5 index arrays"
+  ],
+  "credit_choices": {
+    "corrected_diagnostic": 0.14,
+    "reference_original": null
+  },
+  "parameters": {
+    "A_f_end": 7,
+    "A_f_start": 1,
+    "A_m": 18.0,
+    "E_loc": {
+      "__ndarray__": "a0002",
+      "field": "E_loc"
+    },
+    "E_total": 0.058823529411764705,
+    "H0": {
+      "__ndarray__": "a0003",
+      "field": "H0"
+    },
+    "H_own": {
+      "__ndarray__": "a0004",
+      "field": "H_own"
+    },
+    "I": 1,
+    "J": 17,
+    "J_R": 12,
+    "N_0": {
+      "__ndarray__": "a0005",
+      "field": "N_0"
+    },
+    "N_target": 1.0,
+    "Nb": 120,
+    "Nz": 9,
+    "Pi_child": {
+      "__ndarray__": "a0006",
+      "field": "Pi_child"
+    },
+    "Pi_z": {
+      "__ndarray__": "a0007",
+      "field": "Pi_z"
+    },
+    "R_gross": 1.08243216,
+    "adaptive_damping_decay": 0.7,
+    "adaptive_damping_grow": 1.03,
+    "adaptive_price_damping": true,
+    "adult_entry_clock": "split_birth_vintage",
+    "age_start": 18.0,
+    "allow_uncalibrated_outside_value": false,
+    "alpha_cons": 0.733,
+    "alpha_price": 0.35,
+    "b_core_hi": 7.0,
+    "b_core_lo": -5.0,
+    "b_entry_fixed": 0.0,
+    "b_frac_core": 0.72,
+    "b_frac_low": 0.08,
+    "b_frac_mid": 0.12,
+    "b_grid_power": 1.5,
+    "b_max": 3000.0,
+    "b_mid_hi": 15.0,
+    "b_min": -12.0,
+    "bequest_spec": "linear_child_scale",
+    "beta": 0.8617126876735817,
+    "birth_dp_grant": false,
+    "birth_entry_grant": false,
+    "birth_entry_grant_amount": 0.0,
+    "birth_entry_grant_locations": {
+      "__ndarray__": "a0008",
+      "field": "birth_entry_grant_locations"
+    },
+    "birth_entry_grant_owner_rungs": {
+      "__ndarray__": "a0009",
+      "field": "birth_entry_grant_owner_rungs"
+    },
+    "c_bar_0": 0.0,
+    "c_bar_n": 0.0,
+    "c_min": 0.04,
+    "chi": 1.0938718913975698,
+    "child_benefit_curvature": 0.061454973811513665,
+    "child_bin_high_cutoff": 3,
+    "child_housing_spec": "jump_plus_linear",
+    "child_room_floor": false,
+    "child_state_mode": "independent_count",
+    "compensated_child_housing_shares": true,
+    "cycle_guard_factor": 0.85,
+    "da": 4.0,
+    "debt_caps": {
+      "__ndarray__": "a0010",
+      "field": "debt_caps"
+    },
+    "debt_taper_end_age": 62.0,
+    "debt_taper_start_age": 42.0,
+    "debt_taper_weights": {
+      "__ndarray__": "a0011",
+      "field": "debt_taper_weights"
+    },
+    "delta": 0.05545379079326218,
+    "delta_alpha": 0.0,
+    "delta_alpha_jump": 0.13487659325900622,
+    "earnings_transaction_grid": {
+      "__ndarray__": "a0012",
+      "field": "earnings_transaction_grid"
+    },
+    "earnings_wealth_arm": "literature_income_purchase",
+    "enforce_entry_share_floor": true,
+    "enforce_price_bounds": true,
+    "entrant_conversion_factor": 0.5,
+    "entry_by_loc": {
+      "__ndarray__": "a0013",
+      "field": "entry_by_loc"
+    },
+    "entry_level_update": "log",
+    "entry_log_step_max": 1.0,
+    "entry_mass_floor": 1e-12,
+    "entry_share_floor": 0.0001,
+    "entry_shares": {
+      "__ndarray__": "a0014",
+      "field": "entry_shares"
+    },
+    "entry_wealth_censor_to_frontier": true,
+    "entry_wealth_mode": "income_ratio_distribution",
+    "entry_wealth_ratio_nodes": {
+      "__ndarray__": "a0015",
+      "field": "entry_wealth_ratio_nodes"
+    },
+    "entry_wealth_ratio_source": "PSID reference-person childless renters ages 18-24, primary rows of code/data/psid_followup_mar2026/output/intergen_income_entry_targets_20260716/block2_entry_wealth_18_24.csv: weighted quintile-bin means of wealth over annual family income; mean 0.258855836903436 (person-bootstrap SE 0.125965630995927, 499 replications), weighted median 0.0985177806342346.",
+    "entry_wealth_ratio_weights": {
+      "__ndarray__": "a0016",
+      "field": "entry_wealth_ratio_weights"
+    },
+    "entry_wealth_spread_nodes": 1,
+    "eps_fert": 0.17561183772819416,
+    "eps_loc": 2.0,
+    "eq_iter": 2,
+    "eqscale_form": "power",
+    "estate_tax_exemption": 0.0,
+    "estate_tax_rate": 0.0,
+    "eta_supply": {
+      "__ndarray__": "a0017",
+      "field": "eta_supply"
+    },
+    "exhaustive_saving_control": true,
+    "fecundity_omega1": 0.02,
+    "fecundity_omega2": 0.134,
+    "fecundity_tail_start_age": 40.0,
+    "fecundity_terminal_age": 45.0,
+    "fecundity_terminal_decay": 0.0,
+    "fertility_nest_choice": false,
+    "fertility_units": "literal_topcode",
+    "first_birth_fixed_cost": 0.6209410745816288,
+    "fixed_reference_entry_conditional": {
+      "__ndarray__": "a0018",
+      "field": "fixed_reference_entry_conditional"
+    },
+    "fixed_reference_entry_grid": {
+      "__ndarray__": "a0019",
+      "field": "fixed_reference_entry_grid"
+    },
+    "gamma": 0.0,
+    "gamma_e": 0.0,
+    "hR_max": 6.0,
+    "h_bar_0": 4.0,
+    "h_bar_jump": 0.75,
+    "h_bar_n": 0.6,
+    "h_own_max": {
+      "__npscalar__": "<f8",
+      "value": 10.0
+    },
+    "h_own_min": {
+      "__npscalar__": "<f8",
+      "value": 2.0
+    },
+    "has_lookup_mex": false,
+    "hbar_child_rooms": 0.0,
+    "hbar_first_child_jump": 0.0,
+    "housing_demand_floor_for_supply": 1e-06,
+    "housing_event_horizon": 1,
+    "income": {
+      "__ndarray__": "a0020",
+      "field": "income"
+    },
+    "income_age_breaks": {
+      "__ndarray__": "a0021",
+      "field": "income_age_breaks"
+    },
+    "income_age_profile": {
+      "__ndarray__": "a0022",
+      "field": "income_age_profile"
+    },
+    "income_age_values": {
+      "__ndarray__": "a0023",
+      "field": "income_age_values"
+    },
+    "income_shock_persistence": 0.7345934905942886,
+    "income_type_transition": "markov",
+    "interp_method": "linear",
+    "joint_nest_lambda": 0.5,
+    "joint_nested_choice": false,
+    "kappa_entry": 2.0,
+    "kappa_fert": 0.17561183772819416,
+    "kappa_fert_continuation": 0.33176505374023935,
+    "kappa_h_base": 0.4,
+    "kappa_h_slope": 0.0,
+    "kappa_loc": 2.0,
+    "kfe_wealth_interp": "linear",
+    "lambda_d": 0.0,
+    "lambda_entry_max": 0.35,
+    "lambda_entry_min": 0.005,
+    "lambda_eq": 0.3,
+    "lambda_price_max": 0.35,
+    "lambda_price_min": 0.005,
+    "legacy_entry_income_peak": false,
+    "local_birth_entry_weight": 1.0,
+    "location_choice_form": "additive_due",
+    "location_choice_legacy_converted": false,
+    "markov_equilibrium_method": "direct_brent",
+    "max_iter_eq": 40,
+    "mean_labor_income_by_age": {
+      "__ndarray__": "a0024",
+      "field": "mean_labor_income_by_age"
+    },
+    "mu_age_decay": 0.0,
+    "mu_move": 5.0,
+    "mu_move_parent": 5.0,
+    "mu_stay": 0.0,
+    "n_child_stages": 1,
+    "n_child_states": 4,
+    "n_house": 5,
+    "n_parity": 4,
+    "n_sub": 1,
+    "native_due_stayer_credit": true,
+    "native_exact_allocation_output": true,
+    "native_exact_inherited_distribution": true,
+    "native_explicit_transaction_grid": true,
+    "native_fixed_reference_entry": true,
+    "native_inherited_distribution_evidence_dir": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/resume_v1/repeat_0212_primary/case/inherited_state_failures",
+    "native_purchase_income": true,
+    "normalize_bequest_utility": true,
+    "normalize_income_profile": true,
+    "normalize_population_mass": true,
+    "normalize_transition_mass_roundoff": true,
+    "outside_entry_flow": 0.058823529411764705,
+    "outside_entry_shares": {
+      "__ndarray__": "a0025",
+      "field": "outside_entry_shares"
+    },
+    "outside_value": 0.0,
+    "outside_value_is_calibrated": false,
+    "owner_h_bar_scale": 1.0,
+    "owner_ltv_multipliers": {
+      "__ndarray__": "a0026",
+      "field": "owner_ltv_multipliers"
+    },
+    "owner_ltv_taper": false,
+    "owner_ltv_taper_end_age": 82.0,
+    "owner_ltv_taper_start_age": 66.0,
+    "owner_ltv_terminal_share": 0.0,
+    "owner_size_cost": 0.0,
+    "owner_size_cost_power": 2.0,
+    "owner_size_cost_ref": 6.0,
+    "p_max": 30.0,
+    "p_min": 0.01,
+    "parent_dp_waiver": false,
+    "parent_dp_waiver_birth_state_only": false,
+    "parent_dp_waiver_locations": {
+      "__ndarray__": "a0027",
+      "field": "parent_dp_waiver_locations"
+    },
+    "parent_dp_waiver_owner_rungs": {
+      "__ndarray__": "a0028",
+      "field": "parent_dp_waiver_owner_rungs"
+    },
+    "parent_dp_waiver_phi": 1.0,
+    "pension": 0.917784047463731,
+    "pension_by_loc": {
+      "__ndarray__": "a0029",
+      "field": "pension_by_loc"
+    },
+    "pension_mode": "balanced_stationary",
+    "period_years": 4.0,
+    "permanent_income_level_values": {
+      "__ndarray__": "a0030",
+      "field": "permanent_income_level_values"
+    },
+    "permanent_income_level_weights": {
+      "__ndarray__": "a0031",
+      "field": "permanent_income_level_weights"
+    },
+    "permanent_income_levels_enabled": false,
+    "permanent_income_log_variance": 0.0,
+    "phi": {
+      "__ndarray__": "a0032",
+      "field": "phi"
+    },
+    "population_closure": "normalized",
+    "preference_spec": "eqscale",
+    "propagate_birth_entry_grant": true,
+    "property_tax_lump_sum_transfer": 0.0,
+    "psi": 0.06,
+    "psi_child": 0.1355551166583114,
+    "pti_limit": 0.3,
+    "q": 0.08243215999999998,
+    "r_bar": {
+      "__ndarray__": "a0033",
+      "field": "r_bar"
+    },
+    "readiness_gate_enabled": false,
+    "readiness_location_age": 14.0,
+    "readiness_spread_years": 2.0,
+    "renewal_calibrate_outside_flow": false,
+    "renewal_retention": 1.0,
+    "renewal_target_total_population": 1.0,
+    "report_clamp_hits": true,
+    "retirement_income_z_scale": 0.0,
+    "rho": 0.1604796056789659,
+    "rho_hat": 0.1604796056789659,
+    "scalar_market_direct_expand": 1.1,
+    "scalar_market_direct_iter": 32,
+    "scalar_market_refine": true,
+    "scalar_market_refine_expand": 1.5,
+    "scalar_market_refine_iter": 16,
+    "scalar_market_refine_max_expand": 8,
+    "scalar_market_refine_method": "brent",
+    "scale_flows_to_period": true,
+    "sequential_births": true,
+    "sigma": 2.0,
+    "social_security_income_units": "period",
+    "stage_durations": {
+      "__ndarray__": "a0034",
+      "field": "stage_durations"
+    },
+    "survival_probs": {
+      "__ndarray__": "a0035",
+      "field": "survival_probs"
+    },
+    "target_filter_weight": 0.35,
+    "tau_H": 0.042393443095490375,
+    "tau_pay": 0.08028070961950022,
+    "tenure_choice_kappa": 0.012087458119671006,
+    "tfr_top_bin_weight": 3.602359422009,
+    "theta0": 0.12451612635999697,
+    "theta1": 0.008193084126995582,
+    "theta_n": 0.0,
+    "tol_eq": 2.5e-05,
+    "transfer_floor_G0": 0.0,
+    "transfer_floor_Gn": 0.0,
+    "two_shock_choice": false,
+    "u_bar": 0.0,
+    "use_age_survival": true,
+    "use_income_types": true,
+    "use_numba_scatter": true,
+    "use_postdecision_current_distribution": true,
+    "use_pti_constraint": false,
+    "use_stochastic_aging": true,
+    "user_cost_rate": 0.18027939388875253,
+    "utility_reference_rent": 0.11046592704873838,
+    "w_hat": {
+      "__ndarray__": "a0036",
+      "field": "w_hat"
+    },
+    "xi_supply": {
+      "__ndarray__": "a0037",
+      "field": "xi_supply"
+    },
+    "z_grid": {
+      "__ndarray__": "a0038",
+      "field": "z_grid"
+    },
+    "z_weights": {
+      "__ndarray__": "a0039",
+      "field": "z_weights"
+    }
+  },
+  "parent_bundle_sha256": "427e67a3d9dd663cd23c3f8533c55a1a64b4f9350d396c97b5c5bd4700bc90b7",
+  "parent_identity": {
+    "arrays_sha256": "a48ecb71055f979284e7d63ccfa19bca8570ff8a93635fd352918356c69ee0b0",
+    "artifact_fields_loaded": 0,
+    "bundle_json_sha256": "427e67a3d9dd663cd23c3f8533c55a1a64b4f9350d396c97b5c5bd4700bc90b7",
+    "checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d",
+    "label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+    "manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+    "primitive_fields": 246,
+    "reference_price": [
+      0.7898695017462086
+    ]
+  },
+  "schema": "grid_resolution_proposal_v1",
+  "status": "not_adopted_not_runtime_authorized"
+}
