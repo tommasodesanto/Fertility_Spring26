@@ -1,7 +1,9 @@
 # Three entrant-wealth calibration pilots
 
-Preparation for the author-approved parallel one-hour experiments; **no native
-solve or launch is certified by this README**. Each array arm uses one CPU,
+All three pilots completed with two exact selected full-GE repeats each.
+See [final comparison and full tables](RESULTS.md). No production adoption.
+
+The author-approved parallel one-hour experiments are described below. Each array arm uses one CPU,
 24 GiB, one computational thread, the 120-asset/9-income grid, the indexed
 corrected-credit engine and the full birth-renewal-price/population-housing
 closure from the verified `credit053_v2` comparison.
@@ -32,7 +34,7 @@ actual parameter; annual-beta round trips alone allow 2e-12 floating tolerance.
 same mocked price and search loops with zero lifecycle claims. `test_pilot.py`
 checks entry laws, all nine parameter bindings, all31 actual-parameter drift
 rejections, the D=0 price-loop path, baseline failure, failed probes and deficient
-Jacobian rank. The preparation tests pass; native validation is still required.
+Jacobian rank. The preparation tests and all three native baseline and selected-repeat validations pass.
 
 `runner.py --mode run --arm ARM --out NEW --deadline-seconds 3600` is restricted
 to single-core Torch Slurm. Source pins cover the reused81-file stage and all
@@ -71,5 +73,5 @@ Submitted Torch array **18895422**, tasks0/1/2 for empirical_credit,
 zero_wealth and nonnegative_mean. Each task has one CPU,24GiB and a hard
 one-hour clock. Lead independently passed8 tests, all3 exact300-second
 preflight CLIs,85 runtime/input pins and the8-file overlay archive hashes.
-Native repeated baseline GE remains a gate before each search; no numerical
-result is claimed yet. See `launch.json` and `lead_verification.json`.
+This paragraph records the launch state; terminal evidence is in `RESULTS.md`
+and `final_verification.json`. See `launch.json` and `lead_verification.json`.

@@ -1,5 +1,25 @@
 # Calibration Status
 
+## September 30 — entrant-wealth pilots completed; no adoption
+
+Torch array18895422 completed all three arms with exit0 and two exact selected
+full-equilibrium repeats each. Empirical-credit and zero-wealth used15 GE
+evaluations; mean-preserving nonnegative wealth used14, with the second search
+proposal skipped to preserve the verification reserve. All nine baseline
+finite-difference probes passed and each baseline Jacobian has numerical rank9;
+this is not a fresh selected-point identification or convergence certificate.
+
+Within-arm weighted losses: empirical_credit22.308449→21.727701,
+zero_wealth21.709065→20.583693, nonnegative_mean20.682309→19.696809.
+These are one-round local exploratory improvements, not completed calibrations.
+The different baseline losses capture the different initial-wealth/credit
+specifications; the within-arm changes capture parameter refitting. Same120×9,
+2% common interest rate, fixedH0/psi, nine free parameters, ten scored targets.
+Full14-target/31-parameter tables, bounds and standard diagnostics are indexed in
+`output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/RESULTS.md`.
+No production adoption, new solve or extension. A six-hour continuation plus
+old-grid verification was proposed to the author but has not been launched.
+
 ## September 30 — three entrant-wealth calibration pilots submitted
 
 Torch array **18895422**, tasks0/1/2 = empirical_credit/zero_wealth/
