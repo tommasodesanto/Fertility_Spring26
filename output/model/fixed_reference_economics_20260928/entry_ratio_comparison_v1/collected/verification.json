@@ -1,0 +1,66 @@
+{
+  "job_id": "18888956",
+  "scheduler_state": "COMPLETED",
+  "scheduler_exit_code": "0:0",
+  "scheduler_elapsed_seconds": 1108,
+  "downloaded_artifact_hashes_verified": 137,
+  "deployed_archive_sha256": "4a0381f6d0f66d52f46c05124cd61442bc499ca734cf847fb2a86bccf57c3853",
+  "arms": {
+    "control_fixed_reference": {
+      "native_status": "passed",
+      "lifecycle_solves": 7,
+      "fit_rows": 14,
+      "parameter_rows": 31,
+      "standard_plots": 17,
+      "selected_repeat_tables_and_pngs_exact": true,
+      "calendar_joint_entry_error": 0,
+      "forward_feasibility_projection_mass": 0
+    },
+    "candidate_five_ratios": {
+      "native_status": "passed",
+      "lifecycle_solves": 7,
+      "fit_rows": 14,
+      "parameter_rows": 31,
+      "standard_plots": 17,
+      "selected_repeat_tables_and_pngs_exact": true,
+      "calendar_joint_entry_error": 0,
+      "forward_feasibility_projection_mass": 0
+    }
+  },
+  "all_31_parameter_rows_identical": true,
+  "control_exactly_reproduces_prior_D53_target_table": true,
+  "seed_policy_arrays_identical": {
+    "V": {
+      "identical": true,
+      "maximum_absolute_difference": 0.0
+    },
+    "bp_pol": {
+      "identical": true,
+      "maximum_absolute_difference": 0.0
+    },
+    "c_pol": {
+      "identical": true,
+      "maximum_absolute_difference": 0.0
+    },
+    "hR_pol": {
+      "identical": true,
+      "maximum_absolute_difference": 0.0
+    },
+    "tenure_probs": {
+      "identical": true,
+      "maximum_absolute_difference": 0.0
+    },
+    "fert2_probs": {
+      "identical": true,
+      "maximum_absolute_difference": 0.0
+    }
+  },
+  "loss_control": 29.476804183909323,
+  "loss_candidate": 30.02966778878236,
+  "loss_change_percent": 1.8755886880533312,
+  "equilibrium_price_change_percent": 0.0888220891922531,
+  "population_change_percent": 0.09963305285010104,
+  "recalibration": false,
+  "production_adoption": false,
+  "scope": "Five-ratio initialization at fixed parameters and common diagnostic D=.53; not a grid-convergence or transition certificate."
+}

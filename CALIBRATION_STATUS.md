@@ -1,6 +1,25 @@
 # Calibration Status
 
-## September 30 — five-ratio entrant initialization test submitted
+## September 30 — five-ratio entrant initialization test completed
+
+Torch **18888956 completed in 18m28s**, fourteen lifecycle calls (seven per arm),
+with exact repeats and unchanged native checks. All parameters remain fixed.
+Equilibrium weighted loss changes **29.476804→30.029668 (+1.876%)**; price
+**+0.089%**, population **+0.100%**, ownership ages 30–55 **−0.017pp**,
+childlessness **+0.012pp**, first-birth age **−0.009 years**, wealth/earnings
+**6.150→6.145**, mean rooms **5.764→5.762**. The old-age wealth-dispersion
+validation ratio changes **3.068→3.125**, still below its 3.516 target.
+At prescribed reference prices completed fertility changes by **+0.001**;
+all six checked household policy arrays are identical, isolating the initial
+distribution change. Equilibrium fertility near 2.1 follows birth renewal.
+
+Lead verified 137 downloaded hashes, both exact 14-fit/31-parameter/17-plot
+repeats, identical parameter rows across arms, actual calendar-entry probability
+identity, and zero forward relocation. The control exactly reproduces the prior
+D=0.53 target table. Full tables, parameters/restrictions/bound flags, standard
+plots and verification are linked in the packet README below. Main fit changes
+are small at these parameters; no re-estimation, adoption, transition validation
+or general grid-accuracy certificate follows. Existing estate caveats remain.
 
 The author requests a test and comparison of the conventional ratio-based
 initialization: draw the existing five PSID ratios independently of current
@@ -23,7 +42,7 @@ previous matched control did not export. Lead independently verified the
 candidate matrix, zero-solve loop smoke, and local/remote archive SHA.
 Budget: one CPU, 24 GiB, 40 minutes globally, 300 seconds per case, at most
 20 lifecycle calls per arm including the final repeat. No automatic retry.
-No native numerical result yet. Evidence and launch receipt:
+Completed evidence and launch receipt:
 `output/model/fixed_reference_economics_20260928/entry_ratio_comparison_v1/`.
 
 ## September 30 — matched grid comparison completed

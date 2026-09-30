@@ -1,6 +1,6 @@
 {
   "job_id": "18888956",
-  "status": "submitted",
+  "status": "completed_verified",
   "remote_root": "/scratch/td2248/projects/entry_ratio_comparison_v1",
   "archive_sha256": "4a0381f6d0f66d52f46c05124cd61442bc499ca734cf847fb2a86bccf57c3853",
   "archive_verified_locally_and_remotely": true,
@@ -10,11 +10,17 @@
   "wall_seconds": 2400,
   "case_seconds": 300,
   "maximum_lifecycle_calls_per_arm": 20,
-  "grid": [160, 15],
+  "grid": [
+    160,
+    15
+  ],
   "common_diagnostic_credit_limit": 0.53,
   "economic_change": "Five empirical ratio draws independent of current earnings; b equals ratio times current annual gross earnings, instead of retained wealth-income mapping.",
   "numerical_approximation": "Native retained-grid projection clips 0.0001825797387971116 of candidate draw probability at the lower grid endpoint. No forward feasibility relocation allowed.",
   "recalibration": false,
   "production_adoption": false,
-  "automatic_retry": false
+  "automatic_retry": false,
+  "elapsed_seconds": 1108,
+  "lifecycle_solves": 14,
+  "verification": "collected/verification.json"
 }

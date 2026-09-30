@@ -1,0 +1,84 @@
+{
+  "arms": {
+    "candidate_five_ratios": {
+      "arm": "candidate_five_ratios",
+      "candidate_projection": {
+        "disclosure": "Native finite-support approximation clips out-of-grid raw wealth before linear projection. This is distinct from prohibited forward feasibility relocation; raw debt support is not exactly preserved.",
+        "grid_minimum": -12.0,
+        "lower_clipped_draw_mass": 0.0001825797387971116,
+        "minimum_raw_wealth": -17.92682092397778,
+        "projected_mean_wealth": 0.18663361710229673,
+        "raw_mean_wealth": 0.18651967924681834,
+        "total_clipped_draw_mass": 0.0001825797387971116,
+        "upper_clipped_draw_mass": 0.0
+      },
+      "changed_input_fields": [
+        "fixed_reference_entry_conditional"
+      ],
+      "conditional_sha256": "0d31453254e45487bca16bef743365f30952d47277524b6df5d51b1735ee98ef",
+      "law": "native ratio*current annual gross entrant income, projected to retained grid",
+      "mean_annual_entry_income": 0.7205542725173211,
+      "mean_wealth": 0.18663361710229673,
+      "necessary_current_budget_minimum_slack": 0.46223024384068123,
+      "ratio_draw_independent_of_current_income": true,
+      "ratio_nodes": [
+        -2.22252859121604,
+        -0.0526403178090525,
+        0.104244689233362,
+        0.351572998737395,
+        3.1034542945567
+      ],
+      "ratio_source": "PSID reference-person childless renters ages 18-24, primary rows of code/data/psid_followup_mar2026/output/intergen_income_entry_targets_20260716/block2_entry_wealth_18_24.csv: weighted quintile-bin means of wealth over annual family income; mean 0.258855836903436 (person-bootstrap SE 0.125965630995927, 499 replications), weighted median 0.0985177806342346.",
+      "ratio_weights": [
+        0.19942576269679177,
+        0.20037747293780178,
+        0.1998633085085668,
+        0.20008786061209277,
+        0.20024559524474678
+      ],
+      "runtime_mode": "native_fixed_reference_entry=True with verified conditional matrix"
+    },
+    "control_fixed_reference": {
+      "arm": "control_fixed_reference",
+      "candidate_projection": {
+        "disclosure": "Native finite-support approximation clips out-of-grid raw wealth before linear projection. This is distinct from prohibited forward feasibility relocation; raw debt support is not exactly preserved.",
+        "grid_minimum": -12.0,
+        "lower_clipped_draw_mass": 0.0001825797387971116,
+        "minimum_raw_wealth": -17.92682092397778,
+        "projected_mean_wealth": 0.18663361710229673,
+        "raw_mean_wealth": 0.18651967924681834,
+        "total_clipped_draw_mass": 0.0001825797387971116,
+        "upper_clipped_draw_mass": 0.0
+      },
+      "changed_input_fields": [],
+      "conditional_sha256": "a24255f77656453c7a57d2cb18188f03d6696129dc2d13e97afbbb55c8cbe237",
+      "law": "retained fixed_reference_entry_conditional",
+      "mean_annual_entry_income": 0.7205542725173211,
+      "mean_wealth": 0.1865196792468182,
+      "necessary_current_budget_minimum_slack": 0.39595021146764,
+      "ratio_draw_independent_of_current_income": false,
+      "ratio_nodes": [
+        -2.22252859121604,
+        -0.0526403178090525,
+        0.104244689233362,
+        0.351572998737395,
+        3.1034542945567
+      ],
+      "ratio_source": "PSID reference-person childless renters ages 18-24, primary rows of code/data/psid_followup_mar2026/output/intergen_income_entry_targets_20260716/block2_entry_wealth_18_24.csv: weighted quintile-bin means of wealth over annual family income; mean 0.258855836903436 (person-bootstrap SE 0.125965630995927, 499 replications), weighted median 0.0985177806342346.",
+      "ratio_weights": [
+        0.19942576269679177,
+        0.20037747293780178,
+        0.1998633085085668,
+        0.20008786061209277,
+        0.20024559524474678
+      ],
+      "runtime_mode": "native_fixed_reference_entry=True with verified conditional matrix"
+    }
+  },
+  "credit": 0.53,
+  "dimensions": [
+    160,
+    15
+  ],
+  "lifecycle_solves": 0
+}

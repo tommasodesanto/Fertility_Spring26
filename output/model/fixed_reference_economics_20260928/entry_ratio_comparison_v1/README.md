@@ -1,10 +1,60 @@
-# Five-ratio entrant diagnostic — Torch 18888956 running
+# Five-ratio entrant diagnostic — completed, small changes at fixed parameters
+
+## Verified result — September 30
+
+Torch **18888956 completed successfully in 18m28s**, with seven lifecycle
+solves in each arm, including exact repeats. The five-ratio/current-income
+initialization changes the main fitted moments only slightly at the inherited
+parameter vector. Weighted loss rises from **29.477 to 30.030 (+1.876%)**.
+This is a fixed-parameter sensitivity result, not a re-estimated calibration.
+
+| Equilibrium quantity | Retained entry | Five-ratio entry | Change |
+|---|---:|---:|---:|
+| Childlessness | 20.203% | 20.215% | +0.012 percentage points |
+| Ownership, ages 30–55 | 61.890% | 61.874% | −0.017 percentage points |
+| Mean age at first birth | 25.806 | 25.797 | −0.009 years (about 3 days) |
+| Wealth / earnings | 6.150 | 6.145 | −0.005 |
+| Mean rooms | 5.764 | 5.762 | −0.003 |
+| Old-age wealth p90/p50 (validation) | 3.068 | 3.125 | +0.057 |
+
+Equilibrium price rises **0.089%** and household population **0.100%**.
+Completed fertility is approximately 2.1 in both arms because price clears birth
+renewal; that equality is not independent validation. At the same prescribed
+reference price, completed fertility rises by **0.001 children**, ownership
+ages 30–55 rises **0.013 percentage points**, and childlessness falls
+**0.018 percentage points**. All six checked seed policy arrays (value, saving,
+consumption, rental housing, tenure probabilities, fertility probabilities)
+are exactly equal: only initial probability weights differ at that price.
+
+The test supports the economic transparency of the five-ratio rule without
+evidence of a major disturbance to the main fitted moments. It does not prove
+that re-estimated parameters would remain unchanged, or certify grid convergence,
+transitions, the income-proxy assumption, or the empirical independence assumption.
+The older-wealth dispersion diagnostic moves more than the main fitted moments
+(about 1.9%); it remains below its 3.516 target. Neither initialization is being
+selected by which gives the lower loss. No candidate or credit rule is adopted.
+
+- [Full equilibrium comparison: all 14 targets, weights, roles, gaps and loss contributions](collected/full/comparison_target_fit.csv).
+- [Full same-price comparison: all 14 rows](collected/full/comparison_reference_price_target_fit.csv).
+- [All 31 parameter values, restrictions and bound flags](collected/full/candidate_five_ratios/phase_b_ge/selected_root/parameters.csv). Every row is identical across arms; the inherited fertility shock-scale parameters retain their near-bound flags. No parameters were estimated in this test.
+- [Initial distribution comparison](collected/full/initial_entry_distribution.png), [control standard diagnostics](collected/full/control_fixed_reference/phase_b_ge/selected_root/standard_diagnostics/), and [candidate standard diagnostics](collected/full/candidate_five_ratios/phase_b_ge/selected_root/standard_diagnostics/). All 17 standard plots per arm are retained, unchanged in definition. Regeneration uses the runner's inherited `ge.observe_price(..., final=True)` with the saved native solution and authenticated context; `launch_torch.sh` regenerates the complete two-arm run and packets.
+- [Lead verification](collected/verification.json), [137 downloaded artifact hashes](collected/remote_hash_receipt.json), [native completion](collected/full/completed.json), and [exact standard-plot repeat hashes](collected/full/standard_plot_repeat_hashes.json).
+
+The lead independently checked all 137 downloaded hashes, complete 14-row fit
+and 31-row parameter equality within each exact repeat, all 17 selected/repeat
+PNG hashes per arm, zero actual calendar-entry mapping error, and zero forward
+feasibility projection. The control reproduces the prior D=0.53 target table
+exactly. Ownership and fertility lifecycle plots and candidate policy plots
+were visually inspected. Existing estate-counterparty limitations remain as
+recorded in native gate receipts; this test does not resolve them.
+
+## Specification and preparation record
 
 The lead submitted **18888956** after independent zero-solve smoke, formula and
 calendar-entry review, five-file archive authentication, and remote SHA check.
 The exact submitted archive is retained as `deployed_stage.tar.gz`, SHA
 `4a0381f6d0f66d52f46c05124cd61442bc499ca734cf847fb2a86bccf57c3853`.
-`launch.json` records the run. No result is certified yet.
+`launch.json` records the run; the verified result is reported above.
 
 Provenance clarification: the worker prepared a later six-file archive
 (`c319cea586dab734f4400dd9dbfd4a27439ce5977732cdf4d69a1b90c3f69766`)
