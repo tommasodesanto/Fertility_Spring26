@@ -47,6 +47,13 @@ receipts before classifying either experiment as completed.
 
 ## Measurement diagnostics (no specification change)
 
+The [September 29 identification review](../../../docs/model/calibration_identification_review_20260929.md)
+combines the reference central-difference evidence, overnight round-center
+Jacobians, full E01 fit and parameter bounds, and an independent Astra critique.
+It proposes measurement and parsimony checks; it adopts no specification and
+authorizes no numerical run. Calibration launches are paused during the
+author-led credit revision.
+
 **M01 — age clock and teenage births, completed.** Saved-data jobs 18833274 and
 18833422 used zero model solves/imports/checkpoint reads. The matched age-26
 comparison does not close E01's early-child-count gap. Births before model entry
