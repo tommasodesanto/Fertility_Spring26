@@ -20,6 +20,13 @@ zero-credit test still require explicit reconciliation before a valid lifecycle
 or equilibrium calculation. No entry alteration, recalibration, positive-credit
 choice or new numerical run is implied by this preparation.
 
+Author permitted bounded local tests using one core on the new laptop. The
+compiled scalar-credit/sale-boundary check passed in 5.33 seconds, approximately
+220 MB peak memory, with all compute thread limits one. Torch smoke 18843355 was
+cancelled while pending before this check. Receipt:
+`fixed_credit_contract_v1/verification_local_v1/receipt.json`. No lifecycle,
+checkpoint read or equilibrium calculation ran; the entry blocker remains.
+
 ## September 29 — frozen-reference renter-debt comparison (not adopted)
 
 At **2007 stationary reference — block0506, September 28 verified export** parameters and unchanged prices, removal of the age taper with mortality repayment gives completed fertility **2.1026541568**, versus **2.0999983368** in the authenticated reference control (+0.12647%). Ownership is 66.5240% versus 66.8165%. Torch recovery job **18838216** passed the household/cohort gates for this case, retaining 14 fit rows, 31 parameter rows and 17 standard plots. Its diagnostic target loss is 20.7078939879; there was no refit, exact repeat, fertility normalization, GE, or reference switch.

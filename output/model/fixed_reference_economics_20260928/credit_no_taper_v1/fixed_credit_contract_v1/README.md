@@ -45,3 +45,15 @@ Torch zero-lifecycle compiled smoke **18843355** was submitted once with a
 five-minute limit, one CPU and 16 GiB. Source and test pins are checked before
 execution. Remote sources are read-only; receipts go to `verification_v1/`.
 This submission does not resume the expired numerical comparison budget.
+
+The author subsequently permitted small local tests on the new laptop with one
+core. Torch **18843355** was cancelled while pending (zero runtime), before the
+local test started. The compiled local check **PASS** took 5.33 seconds wall time,
+4.94 seconds CPU and 219,807,744 bytes peak resident memory. Numba, BLAS and OpenMP
+thread limits were all one; wall and CPU limits were 180 seconds. Receipt and log:
+[`verification_local_v1/receipt.json`](verification_local_v1/receipt.json),
+[`test.log`](verification_local_v1/test.log). The tests assert that the actual
+tenure and renter-saving dispatchers compiled. Frozen and effective source pins
+and test hashes were checked before execution. Zero lifecycle solves and zero
+checkpoint reads; full runtime integration, inherited-entry reconciliation and
+a valid equilibrium remain uncomputed.
