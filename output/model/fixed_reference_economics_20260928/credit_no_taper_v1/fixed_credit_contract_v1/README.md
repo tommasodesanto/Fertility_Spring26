@@ -159,3 +159,7 @@ not found in the checked published text/appendix/replication documentation.
 The 2017 draft's 3.6% value and tenth-percentile rationale must not be attributed
 to the published calibration. [Source receipt and exact evidence](literature_published_v1/README.md).
 This research does not adopt a new project credit limit or authorize a solve.
+
+The [expanded Violante-led comparison](literature_expanded_v1/README.md) records
+published limits, empirical credit-capacity targets, borrowing spreads and the
+reference income-unit mapping. No additional economic case was run or adopted.
