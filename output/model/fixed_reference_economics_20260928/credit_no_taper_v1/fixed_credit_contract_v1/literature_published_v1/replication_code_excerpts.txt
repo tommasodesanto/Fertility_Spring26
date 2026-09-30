@@ -1,0 +1,150 @@
+SOURCE: Replication_ReStud/model_replication/Main nu 3/start.m
+
+16: 
+17: p.beta       = 0.985605;
+18: p.alpha      = 0.686624;
+19: p.R          = 0.011292;
+20: p.phi        = 0.938686;                          % productivity non-market
+21: p.F0m        = 0.102974;                          % fixed cost of refinancing
+22: p.B          = 10.265214;                         % bequest motive
+23: p.r1         = 0.358448; 
+24: p.r2         = 10.327567; 
+25: p.rh         = (1 + 0.015765)^(1/4) - 1;          % upper bound on liquid rate
+
+92: % Discretize other state variables
+93: 
+94: amin         = -0.4; 
+95: amax         = 100; 
+96: p.agrid      = amin + (amax - amin)*nodeunif(p.na, 0, 1).^2;
+97: 
+98: omin         = 0;
+99: omax         = 1;
+100: p.ogrid      = omin + (omax - omin)*nodeunif(p.no, 0, 1);
+101: 
+102: tmin         = 0.25; 
+103: tmax         = p.thetam;                                                         % allow to cover fixed cost                                            
+104: p.tgrid      = tmin + (tmax - tmin)*nodeunif(p.nt, 0, 1);
+105: 
+106: hmin         = 5;                                                                % minimum house size
+107: hmax         = 40;                                                               % maximum house size
+108: p.hgrid      = hmin + (hmax - hmin)*nodeunif(p.nh, 0, 1).^1.5;
+109: 
+110: ymin         = min(p.lambdat)*zgrid(1)*egrid(1); 
+111: ymax         = max(p.lambdat)*zgrid(end)*egrid(end); 
+112: 
+113: lmin         = -1;                                                               % keep it reasonably negative so they know that's a bad state to find yourself in 
+114: lmax         = 125;
+115: p.lgrid      = lmin + (lmax - lmin)*nodeunif(p.nl, 0, 1).^1.5;
+116: 
+117: atmin        = -p.delta(2)*hmax + (1 + p.rl)*amin;
+118: atmax        =                    (1 + p.rh)*amax;
+119: p.atgrid     = atmin + (atmax - atmin)*nodeunif(p.nat, 0, 1).^1.5;
+
+156: cmaxh        = bisect('savings', 1e-13, 1e5, p.lgrid, p, 'h', amin);             % c that implies a' = amin
+157: cmaxr        = bisect('savings', 1e-13, 1e5, p.lgrid, p, 'r', amin); 
+158: 
+159: cminh        = bisect('savings', 1e-13, 1e5, p.lgrid, p, 'h', amax);             % c that implies a' = amax
+160: cminr        = bisect('savings', 1e-13, 1e5, p.lgrid, p, 'r', amax);  
+
+180: for t = p.T : -1 : 1
+181: 
+182:     EVh      = griddedInterpolant({p.agrid, (1: 1:p.no*p.nt*p.nh*p.nz)'},  reshape(vbarh(:, t + 1), p.na, p.no*p.nt*p.nh*p.nz), intmeth, 'linear');
+183:     EVr      = griddedInterpolant({p.agrid, (1: 1:               p.nz)'},  reshape(vbarr(:, t + 1), p.na,                p.nz), intmeth, 'linear');
+184:  
+185:     % solve consumption-savings choice
+186:     
+187:     ch(:, t)          = solve_golden('wfunc', cminh, cmaxh, swh, ind2h, EVh, p, 'h');
+188:     cr(:, t)          = solve_golden('wfunc', cminr, cmaxr, swr, ind2r, EVr, p, 'r');
+189:    
+190:     wh(:, t)          = wfunc(ch(:, t), swh, ind2h, EVh, p, 'h');
+191:     wr(:, t)          = wfunc(cr(:, t), swr, ind2r, EVr, p, 'r');
+192: 
+193:     Whinterp          = griddedInterpolant({p.lgrid, (1: 1: p.no*p.nt*p.nh*p.nz)'},  reshape(wh(:, t), p.nl, p.no*p.nt*p.nh*p.nz), intmeth, 'linear'); 
+194:     Wrinterp          = griddedInterpolant({p.lgrid, (1: 1:                p.nz)'},  reshape(wr(:, t), p.nl,                p.nz), intmeth, 'linear');
+195: 
+196:     
+
+SOURCE: Replication_ReStud/model_replication/Main nu 3/start_calibration.m
+
+6: p.beta       = 0.985570;
+7: p.alpha      = 0.689383;
+8: p.R          = 0.011302;
+9: p.phi        = 0.928049;                           % productivity non-market
+10: p.F0m        = 0.090571;                              % fixed cost of refinancing
+11: p.B          = 10.106351;                               % bequest motive
+12: p.r1         = 0.349740; 
+13: p.r2         = 9.488797; 
+14: p.rh         = (1 + 0.015893)^(1/4) - 1;           % upper bound on liquid rate
+15: 
+16: x            = [p.beta;  p.alpha;   p.R;     p.phi;   p.F0m;    p.B;    p.r1;    p.r2;  (1 + p.rh)^4 - 1];
+17:  
+18: lb           = [0.985;    0.67;    0.0111;    0.88;    0.07;     9.7;   0.30;      8;        0.013 ];  
+19: ub           = [0.986;    0.71;    0.0115;    0.96;    0.11;    10.6;   0.40;     11;        0.019 ];
+20: 
+21: ftarget      = @(x) objective(x);
+
+SOURCE: Replication_ReStud/model_replication/Main nu 3/objective.m
+
+14: % Calibrated Parameters
+15: 
+16: p.beta       = x(1);                              % discount factor
+17: p.alpha      = x(2);                              % weight on housing in preferences
+18: p.R          = x(3); 
+19: p.phi        = x(4);                              % productivity non-market
+20: p.F0m        = x(5);                              % fixed cost of refinancing
+21: p.B          = x(6);
+22: p.r1         = x(7); 
+23: p.r2         = x(8);                              % parameters governing shape of rl curve
+24: p.rh         = (1 + x(9))^(1/4) - 1;              % interest rate
+25: 
+26: % Assigned Parameters
+
+90: % Discretize other state variables
+91: 
+92: amin         = -0.4; 
+93: amax         = 100; 
+94: p.agrid      = amin + (amax - amin)*nodeunif(p.na, 0, 1).^2;
+
+156: cmaxh        = bisect('savings', 1e-13, 1e5, p.lgrid, p, 'h', amin);             % c that implies a' = amin
+157: cmaxr        = bisect('savings', 1e-13, 1e5, p.lgrid, p, 'r', amin); 
+158: 
+159: cminh        = bisect('savings', 1e-13, 1e5, p.lgrid, p, 'h', amax);             % c that implies a' = amax
+160: cminr        = bisect('savings', 1e-13, 1e5, p.lgrid, p, 'r', amax);  
+
+SOURCE: Replication_ReStud/model_replication/Main nu 3/savings.m
+
+1: function [Dist, Aprime] = savings(C, s, p, type, bnd)   
+2: 
+3: % gives A' for a given level of consumption
+4: 
+5: if strcmp(type, 'h') 
+6:    
+7:     Aprime = s(:,1) + p.phi^(1 + 1/p.gamma).*C.^(-p.sigma/p.gamma) - C; 
+8:     
+9: else
+10:     
+11:     Aprime = s(:,1) + p.phi^(1 + 1/p.gamma).*C.^(-p.sigma/p.gamma) - (1 + p.alpha^(1/p.sigma)*p.R^(1 - 1/p.sigma)).*C; 
+12:     
+13: end
+14: 
+15: if nargin == 5
+16:     
+17:     Dist = Aprime - bnd; 
+18: 
+19: else
+20:     
+21:     Dist = [];
+22: 
+23: end
+
+SOURCE: Replication_ReStud/model_replication/Main nu 3/solveh.m
+
+138:         if branch == 1                                                                                                    % Switch to Renting
+139:           
+140:             Lall(:, branch)  = At + Y + (1 - p.Fs)*s(:,4) - (1 + p.rm)*s(:,2).*s(:,3).*s(:,4);                   % liquidity after housing choice
+141:             
+142:             omegaall(:, branch) = 0;
+143:             thetaall(:, branch) = 0; 
+144:             hall(:, branch)     = 0; 
+145:         
+146:             vall(:, branch)     = Wrinterp(Lall(:, branch), znow); 

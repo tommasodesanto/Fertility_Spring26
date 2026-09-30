@@ -147,3 +147,15 @@ scalar-unset replay establishes reference equivalence. Neither establishes a
 corrected-credit equilibrium. No taper, sale-debt rollover, mass deletion,
 entry truncation, transfer, positive credit amount, recalibration or fertility
 normalization was introduced. The completed numerical budgets remain closed.
+
+## Published borrowing-limit comparison — September 30
+
+The published Boar–Gorea–Midrigan article and its official replication were
+checked separately from earlier drafts. Their baseline uses a constant liquid
+asset floor of -0.4 model units for renters and owners: 7.324% of average annual
+income using the official README conversion. The bound is fixed outside the
+estimated parameter vector. A separate empirical rationale for that value was
+not found in the checked published text/appendix/replication documentation.
+The 2017 draft's 3.6% value and tenth-percentile rationale must not be attributed
+to the published calibration. [Source receipt and exact evidence](literature_published_v1/README.md).
+This research does not adopt a new project credit limit or authorize a solve.
