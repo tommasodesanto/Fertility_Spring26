@@ -27,32 +27,43 @@ change lowers the consumption share, and its material-utility compensation uses
 a fixed reference rent. Dependency departure and the 16/20-year adult-entry
 queue are separate objects.
 
+The reference price clears aggregate housing demand against elastic supply,
+with household population normalized to one. The child-benefit level is
+separately normalized to completed fertility 2.1. Equal retiree pensions
+balance PAYGO. This is distinct from the later experimental closure that uses
+price for birth renewal and population for absolute housing supply.
+
 The young-age miss chiefly concerns children among mothers in the experimental
 comparison. The weak curvature direction is local to a search-round center;
-it is not a statistical nonidentification result. The completed September 29
-price experiment shows that relaxed credit raises fertility levels without
-attenuating the local response to house prices and mapped rents.
-
-The matched grid comparison keeps diagnostic debt allowance \(D=0.53\) in both
-arms and takes 468.606 versus 187.254 seconds. Small aggregate differences do
-not certify local policy or transition accuracy. The three subsequent pilots
-use \(D=0.25,0,0\), different entrant-wealth rules and a common 2% annual real
-interest rate. Their dated launch/status evidence is separate from completed
-scientific results. Historical shock fits yielded no estimates; diagnostic
-18820811 was cancelled by the author, as recorded in the incoming handoff.
+it is not a statistical nonidentification result. The three entrant-wealth
+pilots use \(D=0.25,0,0\), different entrant-wealth rules and a common 2% annual
+real interest rate. All three completed and remain unadopted; the deck reports
+their designs and completion only. The authoritative completion record is
+[terminal results](../../output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/RESULTS.md).
 
 ## Review and changes
 
-The deck now opens with household preferences and demographic accounting, then
-proceeds through the empirical evidence, reference fit, model diagnostics and
-next calibration. The reading order is: Household preferences; Demographic
-accounting; Housing around the first birth; Calibration inputs and empirical
-counterparts; 2007 stationary reference fit; Young mothers and the fertility
-intensive margin; Mortgage access and unsecured liquidity; House prices, credit,
-and births; Stationary computation and grid resolution; Entry wealth, credit,
-and the next calibration. The former general overview frame was removed to keep
-the deck at ten frames. The preferences and accounting material formerly shared
-one frame and now open the deck as two separate frames.
+The latest author request calls for a matter-of-fact adviser narrative: reviewed
+work and changed decisions, a detailed explanation of the model and calibration,
+and brief selected problems. The ten-frame order is:
+
+1. Model review and revisions
+2. Household decisions
+3. Children and housing demand
+4. Demographic and market equilibrium
+5. Housing around the first birth
+6. Calibration strategy and inputs
+7. 2007 stationary calibration
+8. Calibrated parameters
+9. Fertility at young ages
+10. Credit and further calibration
+
+The fit retains all fourteen rows in three columns. The parameter frame reports
+all ten searched estimates and the normalized child-benefit level; complete
+bounds, restrictions and near-bound flags remain in the supporting CSV. Visible
+source footers, the early sandbox table, price-elasticity table, computation
+section and internal failure history are omitted. Private provenance remains
+in [source_map.md](source_map.md), and prior evidence and receipts are retained.
 
 An independent read-only numerical review authenticated all 15 copied source
 artifacts, checked all 14 reference-fit rows and all chart coefficients and
@@ -62,11 +73,10 @@ September 17–19 mechanism work, September 23–28 input/specification revision
 the September 24 empirical rebuild, September 28–29 fertility experiments, and
 September 29–30 price, computation and entry work.
 
-The review found a dated status update and three presentation issues: crowded
-negative event-time labels, tight table-column spacing, and the debt allowance
-appearing before its units were defined. The review's references to slides 4, 6,
-9 and 10 use the pre-reordering numbering; the corresponding current frames are
-3, 5, 9 and 10. The 14-row fit remains in the author's three-column format.
+Earlier reviews and their slide numbers describe the preserved versions; they
+should not be read as the numbering of this rewritten deck. The final review
+must check the new model equations, full fit and parameter frames, and every
+rendered page against the rewritten source.
 
 No model, calibration, test suite, benchmark, new cluster job, or job stop was
 run for this review. The main deck and both manuscripts retain their existing

@@ -1,6 +1,6 @@
 {
   "review_date": "2026-09-30",
-  "review_completed_utc": "2026-09-30T21:56:38.364923+00:00",
+  "review_completed_utc": "2026-09-30T22:16:45.432625+00:00",
   "frames": 10,
   "pdf_pages": 10,
   "overlays": false,
@@ -112,18 +112,24 @@
   "no_model_execution": true,
   "no_tests_benchmarks_or_cluster_job_changes": true,
   "no_gui_or_computer_use": true,
-  "pilot_status_checked_at": "2026-09-30T21:26:04Z",
-  "pilot_status": "all three RUNNING in direct scheduler receipt; no final comparison asserted",
+  "pilot_status_checked_at": "2026-09-30T22:16:45.432625+00:00",
+  "pilot_status": "All three pilot arms completed and remain unadopted; displayed design and completion only.",
   "library_delivery": {
     "status": "blocked",
     "reason": "No current Library skill or direct Library upload capability is exposed in this local chat; plugin discovery returned no relevant upload integration.",
     "upload_attempted_in_this_chat": false,
     "library_ids_created": []
   },
-  "pdf_sha256": "ad34d4d4bb85bd0e52cc5a32d9440c7e5de5736ec8094e6e80f4e1bcb6aae8d1",
-  "tex_sha256": "bcbbfd992885474a584e85ee88156ea6a552531f3f2ea05f00be53009675864d",
+  "pdf_sha256": "c062a811d3352ea7f83580f36cfcff0d6f9a0ed8a72dfcc91eb81622e7f9ccf8",
+  "tex_sha256": "fac5a07e32b0f6be09c1e7ad35c48e5cc5e2ed4eecfeab6cc89601a88477ef97",
   "source_history": "archive/received; original task folder preserved",
-  "structure_revision": {
+  "pilot_completion_evidence": {
+    "path": "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/final_verification.json",
+    "copied_to": "evidence/pilot_completion_verification.json",
+    "sha256": "168c956c10d81138e340a6354a21a6e9f2d56006eb3b6f3d4d54ea1ca8a5feb1",
+    "scope": "Existing completion receipt; no independent rerun or new numerical results claimed in this review."
+  },
+  "previous_structure_revision": {
     "request": "Lead with changes in the model and make the presentation more linear",
     "previous_commit": "6c217b38",
     "frame_titles": [
@@ -153,5 +159,28 @@
     ],
     "scientific_evidence_unchanged": true,
     "prose_route": "Opus 5.5 unavailable: CLI not logged in. Existing verified wording reused by a scoped mechanical editor."
+  },
+  "structure_revision": {
+    "request": "Explain reviewed work and model decisions in order, re-explain the model in detail, then show full calibration; remove self-source footers and troubleshooting history; computation at most one line.",
+    "previous_commit": "9147b829",
+    "frame_titles": [
+      "Model review and revisions",
+      "Household decisions",
+      "Children and housing demand",
+      "Demographic and market equilibrium",
+      "Housing around the first birth",
+      "Calibration strategy and inputs",
+      "2007 stationary calibration",
+      "Calibrated parameters",
+      "Fertility at young ages",
+      "Credit and further calibration"
+    ],
+    "full_reference_fit_unchanged": true,
+    "raw_psid_figure_unchanged": true,
+    "searched_parameters_displayed": 10,
+    "normalized_child_benefit_displayed": true,
+    "source_footers_removed": true,
+    "computation_reduced_to_one_line": true,
+    "prose_route": "Lead-specified rewrite applied by Luna; economics independently checked by Sol and lead. Opus unavailable because CLI not logged in."
   }
 }

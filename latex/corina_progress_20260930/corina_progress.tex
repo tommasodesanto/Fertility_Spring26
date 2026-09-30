@@ -10,12 +10,9 @@
 \setbeamertemplate{footline}[frame number]
 \setbeamerfont{framesubtitle}{size=\small}
 \linespread{1.08}
-\definecolor{sourcegray}{RGB}{95,95,95}
 \definecolor{plotblue}{RGB}{47,74,135}
-\newcommand{\source}[1]{\par\vspace{0.25em}{\tiny\color{sourcegray}Source: #1}}
-\newcommand{\interpretation}[1]{\vfill{\small #1}}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
-\title{Fertility and Housing Tenure Choice}
+\title{JMP progress, September 17--30, 2026}
 \author{Tommaso De Santo}
 \date{September 30, 2026}
 \hypersetup{pdftitle={JMP progress, September 17--30, 2026},pdfauthor={Tommaso De Santo}}
@@ -24,46 +21,77 @@
 % Relative source paths below are in Fertility_Spring26. See source_map.md for full paths.
 \begin{document}
 
-% 1: selected_export/primary/parameters.csv; child_preferences.py.
-\begin{frame}{Household preferences}
-\framesubtitle{JMP progress, September 17--30, 2026 \qquad Tommaso De Santo}
+% 1: Reviewed changes to model specification and empirical inputs.
+\begin{frame}{Model review and revisions}
+\framesubtitle{JMP progress, September 17--30, 2026 \qquad | \qquad Tommaso De Santo}
 \small
-A first-child housing-share loading replaces the hard housing floor:
+I reviewed preferences, household finance, demographic accounting, and the empirical calibration inputs.
+\medskip
+\begin{itemize}\setlength\itemsep{7pt}
+ \item Replaced the minimum-housing requirement with a first-child increase in the housing expenditure share.
+ \item Allowed diminishing benefits from children at home, distinguishing them from children ever born.
+ \item Separated children leaving home from adult household entry, and tied entrant assets to estates.
+ \item Rebuilt the first-birth housing evidence and recalibrated the revised model.
+\end{itemize}
+\end{frame}
+
+% 2: Household choices and lifecycle risks in the retained model.
+\begin{frame}{Household decisions}
+\small
+Overlapping generations of households differ in age, earnings, wealth, housing tenure, and family size.
+\medskip
+\begin{itemize}\setlength\itemsep{7pt}
+ \item During fertile ages, households choose whether to attempt a birth; success becomes less likely with age.
+ \item They choose consumption, saving, housing size, and whether to rent or own; renters pay rent, while owners make a down payment and face selling costs.
+ \item Persistent earnings risk and borrowing limits shape saving; a first-birth fixed cost and taste shocks shape fertility.
+ \item Households retire, face mortality risk, and value bequests.
+\end{itemize}
+\vfill
+The interaction of housing costs and available wealth affects both birth timing and tenure choice.
+\end{frame}
+
+% 3: Household preference equations and definitions from the verified reference.
+\begin{frame}{Children and housing demand}
+\small
+Households value nonhousing consumption $c$, housing services $s$, and children currently at home $m$:
+\[
+ u(c,s,m)=\frac{[A(m)c^{\alpha(m)}s^{1-\alpha(m)}/e(m)]^{1-\sigma}}{1-\sigma}+v(m),
+\]
 \[
  \alpha(m)=\alpha_0-\Delta\alpha\,\mathbf 1\{m>0\},
  \qquad v(m)=\psi\,m^{1-\gamma},\quad v(0)=0.
 \]
-Here $m$ counts children at home. $\alpha(m)$ is the consumption share,
-$\psi$ the direct benefit level, and $\gamma$ its curvature.
-\medskip
-\begin{itemize}\setlength\itemsep{6pt}
- \item Material utility retains CRRA, equivalence scales, and persistent earnings risk.
- \item Shares are compensated at a fixed rent, with no later-child loading.
-\end{itemize}
-\interpretation{Concurrent children and lifetime births are distinct calibration objects.}
-\source{Model specification and author decisions, September 24--28}
+Here $m$ counts children at home and $n$ is children ever born. $e(m)$ is the
+family-size equivalence scale, and $\sigma$ is risk aversion.
+\par\medskip
+$\alpha(m)$ is the consumption share; $\alpha_0$ is the childless share and
+$\Delta\alpha$ is its reduction after the first child. $\psi$ is the benefit
+level and $\gamma$ its curvature.
+\par\medskip
+$A(m)$ holds optimized material utility constant when the share changes, for given total
+expenditure and equivalence scale at the fixed reference rent. The first child
+raises the housing expenditure share; later children do not change that share.
 \end{frame}
 
-% 2: CALIBRATION_STATUS Sept24 dependency/entry and Sept26 estate-funded-entry decisions.
-\begin{frame}{Demographic accounting}
+% 4: Demographic transitions and market/fiscal closure.
+\begin{frame}{Demographic and market equilibrium}
 \small
-Independent dependency departure and the adult-entry queue are distinct.
+Children leaving home and new adult households entering the economy are separate transitions.
 \medskip
-\begin{itemize}\setlength\itemsep{6pt}
- \item Dependency ends with probability $2/9$ per four-year period.
- \item Adult entry is a separate queue, split equally between 16 and 20 years after birth.
- \item Estates fund positive entrant assets. An explicit sink absorbs the remainder.
+\begin{itemize}\setlength\itemsep{5pt}
+ \item Children leave dependency independently; adult entry follows earlier births with a lag.
+ \item Positive estates finance fixed positive entrant assets; any remainder leaves the economy.
+ \item The house price clears aggregate housing demand against housing supply.
+ \item Equal retiree pensions are financed by a balanced payroll tax.
 \end{itemize}
-\interpretation{Estate funding keeps entrant assets fixed and rejects a shortfall.}
-\source{Model specification and author decisions, September 24--28}
+\vfill
+A stationary equilibrium has constant prices, allocations, and cohort structure, with demographic reproduction and market clearing.
 \end{frame}
 
-% 3: PSID sa_rooms_first_birth_v2/A2h/{coefficients,fit_receipt}.csv;
-% sa_first_birth_outcomes_v3/A2h_{own,moved}/fit_receipt.csv.
-% Plot uses raw coefficients and 1.96*SE pointwise intervals, omitted window shown hollow.
+% 5: PSID event-study estimates; raw coefficients and pointwise intervals.
 \begin{frame}{Housing around the first birth}
 \small
-PSID adults who were the reference person or spouse before the birth:
+I rebuilt the PSID event study using interview dates and household status before the first birth.
 \begin{center}
 \begin{tikzpicture}
 \begin{axis}[
@@ -97,23 +125,22 @@ PSID adults who were the reference person or spouse before the birth:
 \end{tikzpicture}
 \end{center}
 \vspace{-0.8em}
-At years 3--4: rooms rise by \textbf{1.465} (SE 0.050), ownership by
+At years 3--4, rooms rise by \textbf{1.465} (SE 0.050), ownership by
 \textbf{26.886 pp}, and recent moving falls by \textbf{21.147 pp}.
-\interpretation{Rebuilt interview dates and baseline household status resolve earlier measurement differences. Whiskers show 95\% pointwise intervals.}
-\source{PSID, Sun--Abraham event study, person/year effects, IW weights, September 24}
+\par\medskip
+\footnotesize Reference person or spouse before birth. Baseline: years $-3/-2$;
+person and year effects; survey weights; 95\% pointwise intervals.
 \end{frame}
 
-% 4: CALIBRATION_STATUS September23 national inputs, Sept24 bequest,
-% Sept25 pension decision; accepted_input_reconciliation_20260926.md;
-% calibration_identification_review_20260929.md.
-\begin{frame}{Calibration inputs and empirical counterparts}
+% 6: Adopted national inputs and empirical counterparts; September 28 reference.
+\begin{frame}{Calibration strategy and inputs}
 \small
-The single housing market uses national inputs and a replacement-fertility reference.
+I recalibrated the 2007 stationary economy after revising the empirical inputs.
 \medskip
 \begin{center}
 \begin{tabular}{lll}
 \toprule
-Input & Value & Empirical source \\
+Input & Value & Measurement \\
 \midrule
 Mean occupied rooms & 5.729 & AHS 2007 \\
 Pension / working-household earnings & 0.229 & CPS ASEC, income 2007 \\
@@ -123,19 +150,18 @@ Annual depreciation / property tax & 1.416\% / 1.060\% & National housing inputs
 \end{tabular}
 \end{center}
 \medskip
-\begin{itemize}\setlength\itemsep{6pt}
- \item Baseline payroll tax is 8.028\%. Equal retiree pensions balance PAYGO.
- \item The 1.465-room first-birth target has a model proxy, rather than a matched event-study estimator.
- \item Bequest and wealth targets retain recipient and income-definition gaps.
+\begin{itemize}\setlength\itemsep{4pt}
+ \item The calibration matches fertility, wealth, housing size, and tenure; completed fertility is normalized to 2.1.
+ \item The first-birth housing comparison still uses a model proxy for the empirical event study.
 \end{itemize}
-\interpretation{Fertility 2.1 normalizes the reference, rather than observed 2007 period births.}
-\source{AHS 2007, CPS ASEC 2008, SCF 2007, PSID}
+\vfill
+A period is four years. Each dependent child leaves with probability $2/9$;
+adult entry is split equally between 16 and 20 years after birth.
 \end{frame}
 
-% 5: exact full 14-row fit at resume_v1/selected_export/primary/target_fit.csv.
-% Full unrounded gaps, weights, loss contributions and all31 restrictions in evidence/.
-% one-child row is conditional on mothers age40--44; three validation rows daggered.
-\begin{frame}{2007 stationary reference fit}
+% 7: Full 14-row 2007 stationary reference fit; ten scored moments plus normalization.
+\begin{frame}{2007 stationary calibration}
+\centering
 \fontsize{9}{10.7}\selectfont
 {\centering\renewcommand{\arraystretch}{0.95}\setlength{\tabcolsep}{10pt}
 \begin{tabular}{lrr}
@@ -161,19 +187,48 @@ Recent-parent ownership difference (pp) & 12.761 & 11.955 \\
 \par}
 \vspace{0.4em}
 \footnotesize $^\dagger$Untargeted validation. Ten scored moments and a separate fertility normalization.
-\source{CPS, NCHS, PSID, AHS, SCF, and September 28 verified model export}
 \end{frame}
 
-% 6: two_stream_overnight_v1/comparison_v1/age25_decomposition_inputs.csv;
-% morning_readout_v1/RESULTS.md; calibration_identification_review_20260929.md.
-\begin{frame}{Young mothers and the fertility intensive margin}
+% 8: Ten free reference coordinates and normalized child benefit.
+\begin{frame}{Calibrated parameters}
 \small
-Two unadopted experimental calibrations, with completed fertility normalized to 2.1:
+The reference estimates ten free parameters and separately normalizes the child-benefit level.
+\medskip
+\fontsize{9}{10.7}\selectfont
+\begin{center}
+{\setlength{\tabcolsep}{10pt}
+\begin{tabular}{llr}
+\toprule
+Parameter & Economic interpretation & Value \\
+\midrule
+$H_0$ & Housing supply scale & 6.294 \\
+$\beta$ & Annual discount factor & 0.963 \\
+$\chi$ & Owner housing-service premium & 1.094 \\
+$F_1$ & First-birth fixed utility cost & 0.621 \\
+$\kappa_1$ & First-birth taste dispersion & 0.176 \\
+$\kappa_+$ & Later-birth taste dispersion & 0.332 \\
+$\theta_0$ & Bequest weight & 0.125 \\
+$\Delta\alpha$ & First-child housing-share loading & 0.135 \\
+$\gamma$ & Child-benefit curvature & 0.061 \\
+$\kappa_T$ & Tenure-choice dispersion & 0.012 \\
+$\psi$ & Child-benefit level (normalized) & 0.136 \\
+\bottomrule
+\end{tabular}
+}
+\end{center}
+\vfill
+\footnotesize Fixed inputs: $\sigma=2$; $\alpha_0=0.733$; annual interest 2\%; mortgage-financed share 80\%.
+\end{frame}
+
+% 9: Later experimental age-25 fertility comparisons; no adoption implied.
+\begin{frame}{Fertility at young ages}
+\small
+Subsequent experimental calibrations, with completed fertility normalized to 2.1:
 \medskip
 \begin{center}
 \begin{tabular}{lrrr}
 \toprule
-Age-25 moment & Data & One birth per period & Two-birth option \\
+Age-25 moment & Data & \shortstack{One birth\\per period} & \shortstack{Two-birth\\option} \\
 \midrule
 Children per woman, capped at three & 0.810 & 0.530 & 0.606 \\
 Mothers (\%) & 45.725 & 44.782 & 43.773 \\
@@ -182,122 +237,37 @@ Children per mother, capped at three & 1.770 & 1.185 & 1.385 \\
 \end{tabular}
 \end{center}
 \medskip
-\begin{itemize}\setlength\itemsep{7pt}
- \item The motherhood share is close. Additional births among young mothers drive the miss.
- \item The two-birth option closes 27.1\% of the early-count gap, while other fits deteriorate.
- \item Child-benefit curvature dominates a weak local parameter direction. A selected-point robustness check remains open.
+\begin{itemize}\setlength\itemsep{4pt}
+ \item The share of mothers is close to the data; births among young mothers are too few.
+ \item Allowing two births per period closes 27.1\% of the child-count gap, with worse fit elsewhere.
 \end{itemize}
-\interpretation{The extra birth opportunity also adds an independent taste draw. The comparison does not isolate birth spacing alone.}
-\source{CPS June 2004/2006 and model experiments, September 28--29}
+\vfill
+The extension also adds a taste draw, so this comparison does not isolate birth spacing.
 \end{frame}
 
-% 7: situation_report_20260918.md, section 1. Fixed-psi early sandbox comparisons.
-% Sandbox levels differ from exact September14 replay. No cross-contract loss comparison.
-\begin{frame}{Mortgage access and unsecured liquidity}
+% 10: Completed, experimental entrant-wealth calibration pilots; no adoption.
+\begin{frame}{Credit and further calibration}
 \small
-Early diagnostics hold the child-benefit level and other parameters fixed:
+I reviewed the borrowing rules and tested alternative initial-wealth distributions at a common 2\% annual real interest rate.
 \medskip
 \begin{center}
-\begin{tabular}{lrrr}
+\begin{tabularx}{\textwidth}{Y r}
 \toprule
- & Baseline & No down payment & Unsecured credit \\
+Entrant wealth rule & \shortstack{Renter debt limit\\(mean annual earnings)} \\
 \midrule
-Completed fertility & 1.872 & 1.866 & 1.948 \\
-Mean first-birth age & 26.960 & 26.970 & 25.790 \\
-Ownership, ages 30--55 (\%) & 45.9 & 55.7 & 45.0 \\
-\bottomrule
-\end{tabular}
-\end{center}
-\medskip
-The unsecured-credit diagnostic allows five years of earnings.
-\begin{itemize}\setlength\itemsep{5pt}
-  \item Removing the down payment primarily increases homeownership.
-  \item Unsecured liquidity increases births and brings them forward.
-  \item Family-sized rental space limits the connection between buying and births.
-\end{itemize}
-\interpretation{These are comparisons within the early sandbox, before the later specification and recalibration.}
-\source{Model mechanism diagnostics, September 17--19}
-\end{frame}
-
-% 8: fixed_reference_economics_20260928/elasticity_v1/recovery_v1/collected_v1/elasticities.csv.
-% Completed18815133. Fixed preferences incl b/psi, fixed entry and inherited impact weights.
-% Prescribed house price + mapped rent, not GE, fixed physical stock or transition.
-\begin{frame}{House prices, credit, and births}
-\small
-Local elasticities from prescribed house-price and rent changes of $\pm1\%$:
-\medskip
-\begin{center}
-\begin{tabular}{lrr}
-\toprule
-Outcome & Reference credit & Lifetime repayment only \\
-\midrule
-Immediate total births & $-0.437$ & $-0.469$ \\
-Immediate first births & $-0.880$ & $-0.906$ \\
-Immediate second births & $-0.114$ & $-0.116$ \\
-Completed fertility, recomputed cohort & $-0.536$ & $-0.555$ \\
-\bottomrule
-\end{tabular}
-\end{center}
-\medskip
-First births account for 87.57\% of the immediate decline under reference credit.
-\begin{itemize}\setlength\itemsep{6pt}
- \item Relaxing borrowing limits raises fertility levels at the common reference price.
- \item It leaves the local price response at least as strong in this comparison.
-\end{itemize}
-\interpretation{Preferences and entry stay fixed. These are prescribed-price responses, with lifetime solvency, rather than cleared equilibria or transition estimates.}
-\source{Fixed-reference price and credit experiments, September 29}
-\end{frame}
-
-% 9: publication_refactor_20260929/REPORT.md; small_credit_replication_v1/README.md;
-% grid_resolution_v1/credit053_v2/runner/README.md and supplemental_discrepancies.json.
-\begin{frame}{Stationary computation and grid resolution}
-\small
-Matched comparisons preserve each experiment's economics and acceptance checks:
-\medskip
-\begin{center}
-\begin{tabular}{lrrl}
-\toprule
-Comparison & Original & Revised & Result \\
-\midrule
-Saving routine, same $160\times15$ grid & 549 s & 417 s & 24.04\% less time \\
-Grid, $160\times15$ versus $120\times9$ & 469 s & 187 s & 60.04\% less time \\
-\bottomrule
-\end{tabular}
-\end{center}
-\medskip
-\begin{itemize}\setlength\itemsep{6pt}
- \item The saving optimization reproduces policies, full moment tables, and plots exactly.
- \item Grid test with renter debt capped at 53\% of mean annual earnings: ownership $+0.201$ pp, prices $+0.076\%$.
- \item Ownership gaps above 5 pp cover 3.152\% of mass in the interpolated comparison.
-\end{itemize}
-\interpretation{Local thresholds and transitions still require validation. The grid comparison also approximates the joint wealth--income entry distribution.}
-\source{Matched stationary comparisons, September 30}
-\end{frame}
-
-% 10: CALIBRATION_STATUS first section, owner receipt21:13UTC, scheduler21:26UTC;
-% entry_ratio_comparison_v1/README.md. Historicalfit launch_v3 failed,18820811 cancelled per author.
-% D=.25 next pilot is distinct from completed D=.53 diagnostic; common interest2% annual.
-\begin{frame}{Entry wealth, credit, and the next calibration}
-\small
-Full repayment on sale into renting, renter saving floor $b'\ge-D$, and a 2\% annual real rate:
-\medskip
-\begin{tabularx}{\textwidth}{Yr}
-\toprule
-Authorized one-hour exploratory arm & $D$ (mean annual earnings) \\
-\midrule
-Empirical wealth/earnings ratios, independent of income & 0.25 \\
+Empirical wealth/earnings ratios drawn independently of earnings & 0.25 \\
 Zero entrant wealth & 0 \\
-Nonnegative ratio nodes, rescaled to preserve the mean & 0 \\
+Nonnegative ratio distribution with the original mean & 0 \\
 \bottomrule
 \end{tabularx}
+\end{center}
 \medskip
-\begin{itemize}\setlength\itemsep{4pt}
- \item Five-ratio diagnostic at $D=0.53$: prices $+0.089\%$, ownership $-0.017$ pp, with parameters fixed.
- \item Birth-renewal price clearing makes supply scale a population shifter. The new search fixes supply scale and child benefit.
- \item Historical-shock fits yielded no estimates. The pension diagnostic was cancelled.
+\begin{itemize}\setlength\itemsep{5pt}
+ \item The three pilot calibrations are complete; an entrant-wealth and credit specification has yet to be selected.
+ \item The next step is to resolve that choice and assess the remaining young-fertility gap.
 \end{itemize}
-\interpretation{Pilots submitted at 17:01 New York on September 30 and running at 17:26. Discussion: credit/entry, curvature restrictions, and matched empirical moments.}
-\source{Author decisions and verified stationary evidence, September 29--30}
+\vfill
+The stationary solver was reorganized and accelerated to support calibration.
 \end{frame}
 
 \end{document}
