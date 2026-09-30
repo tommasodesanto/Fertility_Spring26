@@ -39,7 +39,11 @@ was submitted once; its README records source pins and the hourly monitor.
 No entry change or strict-zero GE is
 authorized. Source/parameter arithmetic shows the two retained entrant cells
 have negative cash even before rent and consumption; buying is also infeasible
-at nonnegative prices. Actual-checkpoint verification remains the next gate.
+at nonnegative prices. Smoke **18846467 passed** in 41 seconds and confirmed
+this arithmetic using the authenticated checkpoint, with zero lifecycle solves.
+The lead reviewed pins, overlay origins and compiled fixtures, then submitted
+the one authorized scalar-unset baseline replay **18849552**. Its receipt is
+pending; no revised-rule GE or reference switch has occurred.
 
 ## September 29 — frozen-reference renter-debt comparison (not adopted)
 

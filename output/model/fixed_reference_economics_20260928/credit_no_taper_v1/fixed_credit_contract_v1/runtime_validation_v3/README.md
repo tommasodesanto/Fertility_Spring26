@@ -10,6 +10,20 @@ v3 copies the v2 driver and economic plan. Exact changes from v2 are: (1) both S
 
 ## Staging and launch
 
+**September 29 23:45 New York monitor:** smoke **18846467 COMPLETED 0:0**
+in 41 seconds, zero lifecycle evaluations. Lead authenticated receipt pins,
+module origins, compiled fixtures, and actual-checkpoint cash arithmetic.
+The two entrant cells have cash before rent/consumption of -0.1340497885 and
+-0.0677697562; buying resources are also negative. Strict-zero infeasibility
+is confirmed without an entry change. Compact receipts and the lead-review
+record are in `collected/smoke/` and `collected/SMOKE_LEAD_REVIEWED`.
+
+**Authorized control successor submitted once: 18849552.** Remote dispatch
+record: `results/control_submitted.txt`; log: `results/control_18849552.log`.
+Do not submit another control. Read `results/control/launch.json` for its
+unchangeable clocks. This replay leaves the scalar unset and performs at most
+one lifecycle evaluation at the reference price; it is not a new GE solution.
+
 **Submitted once:** Torch smoke **18846467**, September 29 evening. Immutable
 sources were staged and made read-only before submission. Driver SHA256
 `f9940add31491a6132cff52867d469f91b6134b1e5572b42310aea5a80caf4c1`;

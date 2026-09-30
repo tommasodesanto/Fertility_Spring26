@@ -75,3 +75,11 @@ No strict-zero lifecycle, price search or GE will be launched if checkpoint
 affordability confirms the analytic entry blocker. The hourly heartbeat
 `check-frozen-reference-borrowing-ge` now monitors this credit validation and
 pauses after delivery/failure or by 09:00 New York September 30.
+
+At the September 29 23:45 New York wake, v3 smoke **18846467 passed** in
+41 seconds with zero lifecycle evaluations. Actual-checkpoint arithmetic
+confirms the two strict-zero entrant failures, including buying infeasibility.
+After lead receipt/source review, the one authorized scalar-unset exact control
+was submitted as **18849552**. Do not duplicate it; pins, receipts and successor
+paths are recorded in `runtime_validation_v3/README.md`. A valid revised-rule
+GE still needs the author's entry/credit decision.
