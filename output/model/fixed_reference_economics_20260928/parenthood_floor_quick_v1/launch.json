@@ -1,5 +1,5 @@
 {
-  "status": "retry_running_preflight",
+  "status": "terminal_all_unbracketed",
   "array_job_id": "18902151",
   "remote_root": "/scratch/td2248/projects/parenthood_floor_quick_v2",
   "array_order": [
@@ -19,7 +19,7 @@
   "maximum_full_ge_total": 6,
   "maximum_full_ge_per_arm": 2,
   "maximum_lifecycle_per_ge": 20,
-  "preflight_status": "pending_v2",
+  "preflight_status": "all_three_zero_solve_passed_v2",
   "archive_sha256": "9c34e6465cc034621549105a3fbe82123665ea0deb637a39072a4ed11441ff37",
   "archive_bytes": 362605,
   "authenticated_source_files": 94,
@@ -34,5 +34,10 @@
   },
   "submitted_utc": "2026-09-30T23:25:49Z",
   "orchestration_fix": "Native run authenticates once; preflight alone runs independent reporter authentication",
-  "start_source": "Slurm scontrol18902151_0"
+  "start_source": "Slurm scontrol18902151_0",
+  "native_first_point_started": true,
+  "last_observed_utc": "2026-09-30T23:27:32.734080+00:00",
+  "result_report": "RESULTS.md",
+  "new_verified_equilibria": 0,
+  "new_estimates": 0
 }

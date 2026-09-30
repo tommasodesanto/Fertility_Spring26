@@ -1,3 +1,5 @@
+**Terminal outcome:** all three corrected jobs stopped because renewal was unbracketed in the inherited price interval. No new equilibrium or fit was obtained. See [full results and tables](RESULTS.md). The original twelve searches are unchanged.
+
 # Fixed-parameter utility diagnostics
 
 Experimental, author-authorized diagnostic; no adoption or recalibration. Existing twelve searches are untouched. All three new arms use the authenticated pilot-selected `nonnegative_mean` nine-coordinate vector, corrected scalar credit and owner sale solvency, mortality, 2% annual interest, D=0, 120×9 grid, five-bin nonnegative mean-preserving entry, fixed H0 and child-benefit scale. Price clears actual birth renewal and population clears physical housing supply. Target/weight contract is unchanged (14 rows, 10 scored).

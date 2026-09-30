@@ -1,8 +1,33 @@
 # Calibration Status
 
-## September 30 evening — three isolated utility comparisons launched
+## September 30 evening — utility comparisons stopped at price-bracket limits
 
-Torch array **18902151** runs three author-authorized fixed-parameter
+All three corrected tasks in array18902151 are terminal after three native
+price evaluations each (2:11 / 2:19 / 2:15 wall time). Each passed household,
+accounting and zero-projection checks at the tested prices, but none bracketed
+birth renewal on [0.85,1.15] times the frozen reference price. This is not a
+proof of infeasibility or poor fit. No new full equilibrium, parameter estimate,
+14-row model-fit table or 17-plot solution packet was obtained.
+
+At the common reference price 0.789869502, births relative to replacement differ
+by -30.236% for the historical floor, +38.994% with A(m) removed only, and
++11.520% with constant shares/no floor/no A(m). Observed price slopes suggest
+searching lower prices for the floor and higher prices for the other arms;
+they do not establish a root outside the tested range. The next prerequisite
+for estimation is a wider safeguarded price search with unchanged numerical
+acceptance gates. A preliminary local fitting round would need roughly
+60–90 minutes per arm in parallel, conditional on finding valid equilibria;
+that is a planning estimate, not an authorized extension.
+
+Both attempts and 174 compact remote-file hashes are retained. Full target and
+parameter comparison tables explicitly distinguish the verified reused control,
+the three arms' actual fixed inputs, and unavailable new equilibrium moments.
+Preflight mock CSVs are synthetic and are not model results. See
+`output/model/fixed_reference_economics_20260928/parenthood_floor_quick_v1/RESULTS.md`.
+The twelve original calibration searches remain unchanged. No further quick-test
+restart, expanded bracket or estimation has been launched.
+
+Torch array **18902151** was launched for three author-authorized fixed-parameter
 comparisons, ending by **19:41 New York / 23:41 UTC** including preparation.
 The twelve calibration searches below remain unchanged. These additional jobs
 are mechanism diagnostics, not parameter estimates or production adoption.
