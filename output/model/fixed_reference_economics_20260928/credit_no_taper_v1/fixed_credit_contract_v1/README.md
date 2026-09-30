@@ -163,3 +163,19 @@ This research does not adopt a new project credit limit or authorize a solve.
 The [expanded Violante-led comparison](literature_expanded_v1/README.md) records
 published limits, empirical credit-capacity targets, borrowing spreads and the
 reference income-unit mapping. No additional economic case was run or adopted.
+
+
+## Entrant wealth distribution — September 30
+
+The [saved-array extraction](entry_distribution_v1/README.md) reports the actual
+frozen entrant wealth marginal and joint wealth–income probabilities. Negative,
+zero and positive wealth have masses 26.2509%, 28.3397% and 45.4094%; the two
+strict-zero cash failures together account for 0.00802196% of entrants. The
+lead independently reproduced these shares, the two nonpositive-cash cells
+and the annual gross earnings unit from the saved small arrays, without model
+imports or lifecycle solves. A proposed move of just those two cells from
+wealth -0.255814 to -0.116279 would give each recipient 0.139535, one existing
+grid interval. This is not a minimal continuous transfer and has not been
+implemented or adopted. A transfer would require explicit entry and funding
+changes; the tiny affected mass depends on the retained, unestimated joint
+wealth–income coupling. This extraction is not a new equilibrium result.
