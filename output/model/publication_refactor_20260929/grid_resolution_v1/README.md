@@ -1,11 +1,8 @@
 # Proposed 120 wealth × 9 income numerical comparison
 
-**Follow-up status:** the [full-GE runner](runner/README.md) now passes the actual subprocess/controller loop with mocked model evaluations, 64 parameter-drift rejection checks, and a synthetic policy-shape comparison. The lead independently repeated these checks. These are zero-solve tests; no actual 120×9 equilibrium or calibration is established by them. The preparation evidence below is retained as the input-construction record.
+**Numerical follow-up:** Torch job 18879780 completed the 160×15 full-GE control in 477.756 seconds, but rejected the first 120×9 fixed-price evaluation because the inherited feasibility routine relocated occupied entrant mass to higher wealth. The external guard rejected this change; there is no accepted 120×9 equilibrium, speed comparison or calibration. The failed proposal is preserved without retries or credit changes. See [runner evidence](runner/README.md).
 
-Preparation only, September 30. No lifecycle solve, price solve, calibration,
-remote job or reference adoption has run. [preflight.json](preflight.json)
-authenticates the inputs and records checks, source pins and unresolved launch
-requirements. The original input bundle and all model sources are unchanged.
+The preparation record below describes input construction, which did not relocate entry mass. This must be distinguished from the subsequent forward-distribution routine. The proposed discretization is experimental and has not replaced the reference.
 
 ## Verified facts
 
@@ -24,8 +21,7 @@ requirements. The original input bundle and all model sources are unchanged.
   within 1.78e-15 and its transition within floating precision.
 - Entry uses the fixed 160×15 conditional matrix, with 169 occupied cells and
   50 occupied wealth nodes. Historical PSID ratio atoms do not override it.
-  The dormant `entry_wealth_censor_to_frontier=True` is retained but never
-  reached by the fixed-entry branch. No frontier censoring is applied here.
+  The flag `entry_wealth_censor_to_frontier=True` is retained. Although fixed-entry input construction bypasses its historical ratio-based branch, the forward-distribution routine also uses this flag. That later routine attempted wealth relocation in the 120×9 trial, causing rejection. The earlier description of the flag as dormant throughout the solve was incorrect.
 - The displayed contract has 14 target rows: ten positively weighted rows,
   three zero-weight validation rows and completed-fertility normalization 2.1.
   The 31 displayed parameter rows include ten searched coordinates, separately

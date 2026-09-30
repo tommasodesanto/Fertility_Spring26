@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/grid_resolution_v1/runner/run_comparison.py", line 202, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/grid_resolution_v1/runner/run_comparison.py", line 185, in main
+    arm(args,args.arm_name,prep,deadline,mock=args.mock_child)
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/grid_resolution_v1/runner/run_comparison.py", line 102, in arm
+    seed=single_price.solve_fixed_price(context,D,context['q_ref'],budget,'phase_a_fixed_d14',out/'seed')
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/single_price.py", line 51, in solve_fixed_price
+    raise RuntimeError("Inherited entry censoring would remove occupied mass")
+RuntimeError: Inherited entry censoring would remove occupied mass
+Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/grid_resolution_v1/runner/run_comparison.py", line 202, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/grid_resolution_v1/runner/run_comparison.py", line 195, in main
+    require(process.returncode==0,'Fresh-process arm failed: '+name)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/grid_resolution_v1/runner/run_comparison.py", line 23, in require
+    if not ok: raise RuntimeError(message)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Fresh-process arm failed: proposal_120x9

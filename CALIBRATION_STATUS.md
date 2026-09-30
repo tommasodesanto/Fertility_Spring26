@@ -1,5 +1,28 @@
 # Calibration Status
 
+## September 30 — experimental grid reduction blocked; reference preserved
+
+Author requested isolated single-market cleanup and a 120×9 grid experiment,
+with recalibration conditional on numerical validation and the borrowing
+contract. Torch 18879780 passed the 160×15 full-GE control (477.756 seconds,
+six lifecycle evaluations) at fixed diagnostic unsecured allowance D=0.14.
+The first 120×9 evaluation was rejected because the inherited forward routine
+relocated occupied entrant mass to higher wealth. No 120×9 GE, speedup,
+recalibration or production adoption is certified. No credit increase or entry
+adjustment was made to rescue the experiment. The input mapping preserves the
+wealth marginal but approximates its association with income; the prepared
+nine-state mapping needs revision before further economic comparisons.
+Evidence: `output/model/publication_refactor_20260929/grid_resolution_v1/runner/README.md`.
+
+The preserved 160×15 reference remains available for conceptual borrowing work.
+Isolated cleanup component tests pass; its full-GE verification job 18880497
+is queued with one CPU, 24 GiB, a 20-minute/six-case cap and unchanged D=0.14.
+It reuses the successful control. No full cleanup-equivalence claim yet;
+singleton location axes remain. The initially submitted job 18880464 was
+cancelled while pending, with zero solves, to correct archive extraction.
+Evidence: `output/model/publication_refactor_20260929/single_market_verification_v1/README.md`.
+
+
 ## September 30 — small-credit diagnostic GE verified
 
 Torch job **18869900** completed in **7m47s**, six lifecycle evaluations.

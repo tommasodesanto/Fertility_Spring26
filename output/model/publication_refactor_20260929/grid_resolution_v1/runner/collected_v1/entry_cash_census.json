@@ -1,0 +1,109 @@
+{
+  "credit_magnitude_selection": false,
+  "scope": "Necessary current entrant renter-cash condition only; no continuation/Bellman frontier or relocation census exists. Cannot establish which states the failed KFE relocated or how much.",
+  "d_fixed": 0.14,
+  "reference_price": 0.7898695017462086,
+  "arms": {
+    "control_160x15": {
+      "necessary_budget_bound": {
+        "unrounded_requirement": 0.13404978853236008,
+        "bound_price_factors": [
+          1.0
+        ],
+        "childless_cb": 0.0,
+        "childless_hb": 0.0,
+        "occupied_cells": 169,
+        "limiting_cells": [
+          {
+            "b_index": 44,
+            "z_index": 0,
+            "wealth": -0.25581395348837255,
+            "z": 0.05388932006414422,
+            "conditional_weight": 0.08762119663434861,
+            "price_factor": 1.0,
+            "income": 0.14285146170019855,
+            "childless_consumption_cost": 0.0,
+            "childless_housing_cost": 0.0,
+            "required_d": 0.13404978853236008
+          }
+        ],
+        "scope": "necessary entrant budget bound only; c_min/output housing floors do not enter exact branch; native Bellman/KFE is decisive"
+      },
+      "necessary_renter_surplus_failure_mass": 0.0,
+      "failing_cells": [],
+      "wealth_endpoints": [
+        -12.0,
+        3000.0
+      ],
+      "childless_transfer_floor": 0.0,
+      "income_function_includes_property_rebate_and_active_estate_transfer": true,
+      "entry_location_weights_sum": 0.058823529411764705,
+      "lifecycle_solves": 0
+    },
+    "proposal_120x9": {
+      "necessary_budget_bound": {
+        "unrounded_requirement": 0.5194530604969536,
+        "bound_price_factors": [
+          1.0
+        ],
+        "childless_cb": 0.0,
+        "childless_hb": 0.0,
+        "occupied_cells": 165,
+        "limiting_cells": [
+          {
+            "b_index": 9,
+            "z_index": 6,
+            "wealth": -5.7,
+            "z": 2.1315621339319213,
+            "conditional_weight": 0.023051467836202443,
+            "price_factor": 1.0,
+            "income": 5.650410251503047,
+            "childless_consumption_cost": 0.0,
+            "childless_housing_cost": 0.0,
+            "required_d": 0.5194530604969536
+          }
+        ],
+        "scope": "necessary entrant budget bound only; c_min/output housing floors do not enter exact branch; native Bellman/KFE is decisive"
+      },
+      "necessary_renter_surplus_failure_mass": 0.005251124371851983,
+      "failing_cells": [
+        {
+          "b_index": 9,
+          "income_index": 6,
+          "wealth": -5.7,
+          "income_multiplier": 2.1315621339319213,
+          "income": 5.650410251503047,
+          "entrant_joint_mass": 0.0025212542945846424,
+          "necessary_renter_surplus_at_credit_floor": -0.3794530604969536
+        },
+        {
+          "b_index": 20,
+          "income_index": 5,
+          "wealth": -3.604651162790698,
+          "income_multiplier": 1.287407703884977,
+          "income": 3.412699809260172,
+          "entrant_joint_mass": 0.002217467813889081,
+          "necessary_renter_surplus_at_credit_floor": -0.3490905349258743
+        },
+        {
+          "b_index": 21,
+          "income_index": 5,
+          "wealth": -3.4651162790697674,
+          "income_multiplier": 1.287407703884977,
+          "income": 3.412699809260172,
+          "entrant_joint_mass": 0.000512402263378259,
+          "necessary_renter_surplus_at_credit_floor": -0.19805348934447908
+        }
+      ],
+      "wealth_endpoints": [
+        -12.0,
+        3000.0
+      ],
+      "childless_transfer_floor": 0.0,
+      "income_function_includes_property_rebate_and_active_estate_transfer": true,
+      "entry_location_weights_sum": 0.058823529411764705,
+      "lifecycle_solves": 0
+    }
+  },
+  "lifecycle_solves": 0
+}

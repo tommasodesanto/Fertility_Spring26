@@ -1,0 +1,28 @@
+{
+  "status": "submitted_not_verified",
+  "job_id": 18880497,
+  "remote_root": "/scratch/td2248/projects/single_market_verification_v1",
+  "requested_node": "cs713",
+  "cpus": 1,
+  "memory_gib": 24,
+  "global_seconds": 1200,
+  "lifecycle_cap": 6,
+  "per_case_seconds": 300,
+  "source_archive_sha256": "3dab9280fb96d8dc6829d5db351ed33b2c62d44b45ef2976a7518a7ff67d8340",
+  "submission": "direct; no afterok dependency",
+  "baseline_job_id": 18879780,
+  "baseline_arm": "control_160x15",
+  "baseline_arm_status": "passed",
+  "baseline_job_status": "failed in proposal_120x9 entry relocation guard",
+  "reference_model_commit": "1e24652d",
+  "verification": "not yet complete",
+  "no_automatic_retry": true,
+  "cancelled_predecessor": {
+    "job_id": 18880464,
+    "status": "cancelled_while_pending",
+    "lifecycle_solves": 0,
+    "reason": "source archive source/ prefix extracted into an extra nested source directory"
+  },
+  "deployment_correction": "Moved initial_extraction/source to remote root/source; all 25 staged source hashes passed sha256sum -c",
+  "replacement_submission": "Same source archive, launcher and budget; deployment correction, no source change or numerical retry"
+}

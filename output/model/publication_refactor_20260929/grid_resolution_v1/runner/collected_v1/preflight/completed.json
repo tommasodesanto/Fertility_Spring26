@@ -1,0 +1,33 @@
+{
+  "lifecycle_solves": 0,
+  "limitations": "Mock preflight authenticates bundles and pins, not checkpoint observer runtime or numerical GE. Full mode authenticates observer before replacing inputs; reporting remains subject to unchanged gates.",
+  "maximum_lifecycle_solves": 12,
+  "not_recalibrated": true,
+  "results": {
+    "control_160x15": {
+      "lifecycle_solves": 0,
+      "mock_calls": [
+        "lower_085",
+        "upper_115",
+        "root_01",
+        "selected_repeat"
+      ],
+      "selected_price_factor": 1.0200000000000002,
+      "status": "passed_mock_zero_lifecycle"
+    },
+    "proposal_120x9": {
+      "lifecycle_solves": 0,
+      "mock_calls": [
+        "lower_085",
+        "upper_115",
+        "root_01",
+        "selected_repeat"
+      ],
+      "selected_price_factor": 1.0200000000000002,
+      "status": "passed_mock_zero_lifecycle"
+    }
+  },
+  "status": "mock_exact_loop_zero_solves",
+  "total_seconds": 2400,
+  "total_workflow_seconds": 3.7115275859832764
+}

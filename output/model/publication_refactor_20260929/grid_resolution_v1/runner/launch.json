@@ -1,5 +1,5 @@
 {
-  "status": "submitted_not_verified",
+  "status": "failed_proposal_entry_frontier_projection_control_passed",
   "job_id": "18879780",
   "submitted_at_utc": "2026-09-30T16:14:36.675606+00:00",
   "remote_root": "/scratch/td2248/projects/grid_resolution_120x9_v1",
@@ -19,5 +19,17 @@
   ],
   "calibration": false,
   "production_promotion": false,
-  "projection": "CDF overlap preserves entrant wealth marginal; wealth-income covariance changes -5.93%"
+  "projection": "CDF overlap preserves entrant wealth marginal; wealth-income covariance changes -5.93%",
+  "job_state": "FAILED",
+  "job_elapsed_seconds": 547,
+  "job_exit_code": "1:0",
+  "control_workflow_seconds": 477.75559480302036,
+  "control_lifecycle_solves": 6,
+  "proposal_first_stage_workflow_seconds": 55.09286379814148,
+  "proposal_lifecycle_attempts": 1,
+  "proposal_failure": "Nonzero inherited-entry wealth relocation detected after Bellman/KFE; wrapper says remove occupied mass but native operator relocates to higher wealth",
+  "comparison_complete": false,
+  "speed_certificate": false,
+  "retry_authorized": false,
+  "collected_receipt": "output/model/publication_refactor_20260929/grid_resolution_v1/runner/collected_v1/remote_hash_receipt.json"
 }
