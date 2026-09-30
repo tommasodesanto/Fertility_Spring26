@@ -144,3 +144,25 @@ sbatch --export=ALL,LAB_SRC,PHASE=fixed-price,BUNDLE_SHA="$S" "$VT"
   links the complete receipts, tables and plots.
 - **Component suite (local):** 27 tests pass, including the provenance chain,
   credit contract and indexed-vs-original kernel on model columns.
+
+## Corrected-credit full-closure experiment
+
+The external matched experiment in
+[`publication_refactor_20260929/small_credit_replication_v1`](../../../output/model/publication_refactor_20260929/small_credit_replication_v1/README.md)
+compares original scalar and indexed saving with corrected (D=0.14), birth
+renewal and population-scaled housing closure. Torch job **18876666** passed
+the eight-closure, 87-array, 14-fit-row, 31-parameter-row and 17-plot
+comparisons; it also matches the earlier indexed run 18869900. Scalar/indexed
+workflow times were 549/417 s and solve times were 416.4315/283.3924 s.
+
+This experiment uses its separate external driver. The default command above
+continues to solve the lab's normalized-population, static-elastic-supply
+stationary GE; it does not exercise the corrected-credit full birth-renewal
+and population-scaled housing closure. The external (D=0.14) experiment is
+evidence for that bounded comparison, not a change to the lab's default or a
+general certification across credit rules and calibration candidates. The
+verified lab checkpoint remains September 28 block0506/repeat_0212, which is
+also the stationary checkpoint lineage used to initialize the dated
+transition analysis. It does not establish equivalence at later E01/E02
+calibration candidates, reproduce the calibration normalization/search loop,
+or verify transition dynamics.

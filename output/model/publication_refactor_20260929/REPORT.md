@@ -31,7 +31,7 @@ continuation interval, alongside its endpoints. The one-market pension also
 already uses an analytical age/income recursion. Missing elementary derivatives
 were not the source of the improvement found here.
 
-## Full equilibrium timing
+## Fixed-population baseline timing
 
 A matched local pair used one core on an Apple M5 Pro, Python 3.13.15,
 NumPy 2.2.6 and Numba 0.61.2. Both used fresh compilation caches, identical
@@ -60,6 +60,30 @@ lifecycle calls, including an exact repeat. It is not a matched before/after
 benchmark. The improvement here is not described as reducing that run from
 15 minutes to 100 seconds. A household inner-loop time is never substituted
 for full GE time.
+
+## Corrected-credit scalar/indexed replication
+
+A separate Torch comparison (job **18876666**) held the corrected unsecured
+credit limit (D=0.14), birth renewal, and population-scaled housing closure
+fixed while comparing the original scalar saving search with indexed interval
+access. Both arms completed six lifecycle evaluations. Workflow time was
+549 s for scalar and 417 s for indexed, a **24.04% reduction**; measured solve
+time was 416.4315 s versus 283.3924 s, a **31.9474% reduction (31.95%)**. Remaining
+workflow time was 132.5685 s versus 133.6076 s. The exact comparison passed
+eight closure paths, 87 solution-array paths in each of two saved NPZ files,
+all 14 fit rows, all 31 parameter rows, and all 17 final plot files. Indexed
+outputs also match the earlier corrected-credit run, job 18869900. The full
+receipt and tables are in the [replication packet](small_credit_replication_v1/README.md).
+
+This matched pair isolates the saving-search implementation under the same
+corrected-credit contract. For context, the earlier 886.5269 s credit GE used
+513.9394 s in solves and 372.5875 s elsewhere on a 262-point wealth grid;
+the current pair uses 160 points. Job 18869900 used 467 s total, 314.199 s in
+solves and 152.801 s elsewhere, also on 160 points. Those earlier runs differ
+in credit contract and run context, so they do not measure a saving-code speedup.
+The residual workflow time includes unprofiled setup and reporting overhead,
+not all report generation. The older 15-minute result is not a matched
+comparison with this scalar/indexed pair.
 
 ## Numerical verification
 
