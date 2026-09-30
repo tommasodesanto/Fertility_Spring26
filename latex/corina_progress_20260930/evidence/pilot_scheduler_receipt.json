@@ -1,0 +1,27 @@
+{
+  "observation_utc": "2026-09-30T21:26:04Z",
+  "observation_new_york": "2026-09-30 17:26 EDT",
+  "command": "ssh -o BatchMode=yes -o ConnectTimeout=8 torch sacct -j 18895422 -n -P --format=JobID,State,Elapsed,ExitCode",
+  "read_only": true,
+  "tasks": [
+    {
+      "job_id": "18895422_0",
+      "state": "RUNNING",
+      "elapsed": "00:23:01",
+      "reported_exit_code": "0:0"
+    },
+    {
+      "job_id": "18895422_1",
+      "state": "RUNNING",
+      "elapsed": "00:23:01",
+      "reported_exit_code": "0:0"
+    },
+    {
+      "job_id": "18895422_2",
+      "state": "RUNNING",
+      "elapsed": "00:23:01",
+      "reported_exit_code": "0:0"
+    }
+  ],
+  "interpretation": "All three jobs are still running. The displayed exit code is not a completion certificate. No final pilot comparison or adoption is asserted."
+}

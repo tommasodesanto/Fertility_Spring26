@@ -1,5 +1,14 @@
 # LaTeX Workspace
 
+## Corina progress presentation — September 30, 2026
+
+The separately requested ten-slide adviser update for September 17–30 is in
+[corina_progress_20260930/](corina_progress_20260930/README.md), with its editable
+source, PDF, complete reference/experimental tables, provenance and preserved
+received version. It uses the continuing JMP Slides only as a style reference.
+This progress update incorporates newer evidence and does not replace or
+synchronize the main deck, the author-owned draft, or the mock manuscript.
+
 ## September 24 — quantitative mock updated through Opus 5.5
 
 The existing quantification section now reflects the September23 accepted
