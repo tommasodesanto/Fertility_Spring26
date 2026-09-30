@@ -1,3 +1,7 @@
+# Single-market phase 1: full equilibrium equivalence passed
+
+Torch job **18880497** passed against the existing 160×15 control: six lifecycle evaluations each, eight exact closure receipts, all 87 arrays in each of two saved bundles, every 14/31 table row and 17 actual PNG hashes at each final. Compact authenticated receipts are in [collected](collected/comparison.json). Both runs use the same experimental D=0.14. This verifies implementation equivalence for that specification, not complete location-axis removal or a measured speedup. The preparation and launch history below remains for reproducibility.
+
 # Single-market phase-1 full-closure verification — submitted, not verified
 
 This is one verification arm for the committed single-market specialization

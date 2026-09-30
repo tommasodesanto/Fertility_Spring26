@@ -1,3 +1,5 @@
+**September 30 full-GE verification passed:** job 18880497 exactly matches the preserved 160×15, D=0.14 control in eight closure receipts, 87 arrays per saved bundle, all fit/parameter rows and 17 plots per final. Evidence: [verification packet](../../../../output/model/publication_refactor_20260929/single_market_verification_v1/README.md). Singleton axes remain; this is phase-1 equivalence, not completed location-axis removal or a speed certificate.
+
 # Stationary single-market specialization — isolated phase 1
 
 Reference: **2007 stationary reference — block0506, September 28 verified export**.

@@ -1,5 +1,28 @@
 # Calibration Status
 
+## September 30 — common diagnostic credit floor for grid validation
+
+The author clarifies that the immediate priority is validating model behavior
+and speed, and authorizes a mildly negative borrowing floor for this comparison.
+The lead selects experimental `unsecured_credit_limit=0.53` in **both** grids,
+i.e. renter saving must satisfy $b'\ge-0.53$. This is just above the input-only
+necessary current-budget bound of approximately 0.5195 for the proposed entry
+mapping; it does not establish lifecycle feasibility or adopt a final credit
+specification. It replaces D=0.14 only in the new comparison. Preferences,
+targets, fiscal objects and housing supply stay fixed. The nine-state entrant
+projection remains the previously disclosed approximation; no additional entry
+relocation or censoring is permitted. Relative to the frozen reference, the
+experimental full-sale repayment and no-taper credit rules remain in place.
+
+Submitted Torch **18881132**, an immutable paired full price/population GE
+comparison with one CPU, 24 GiB, 40 minutes, at most 12 lifecycle calls and
+300 seconds per call. Source hashes and zero-solve controller checks pass;
+numerical results are pending.
+Compare complete moments, policies and total workflow time. No recalibration
+or production adoption yet. Prior failed D=0.14 evidence remains preserved.
+Packet: `output/model/publication_refactor_20260929/grid_resolution_v1/credit053_v1/`.
+
+
 ## September 30 — experimental grid reduction blocked; reference preserved
 
 Author requested isolated single-market cleanup and a 120×9 grid experiment,
@@ -15,10 +38,11 @@ nine-state mapping needs revision before further economic comparisons.
 Evidence: `output/model/publication_refactor_20260929/grid_resolution_v1/runner/README.md`.
 
 The preserved 160×15 reference remains available for conceptual borrowing work.
-Isolated cleanup component tests pass; its full-GE verification job 18880497
-is queued with one CPU, 24 GiB, a 20-minute/six-case cap and unchanged D=0.14.
-It reuses the successful control. No full cleanup-equivalence claim yet;
-singleton location axes remain. The initially submitted job 18880464 was
+Isolated cleanup full-GE verification job **18880497 passed**, using the
+successful 160×15 control and unchanged diagnostic D=0.14. All eight closure
+receipts, 87 arrays in each of two bundles, 14/31 table rows and 17 actual plots
+per final agree exactly. This certifies phase-1 implementation equivalence at
+that specification; singleton location axes remain and no speedup is claimed. The initially submitted job 18880464 was
 cancelled while pending, with zero solves, to correct archive extraction.
 Evidence: `output/model/publication_refactor_20260929/single_market_verification_v1/README.md`.
 
