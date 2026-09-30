@@ -91,3 +91,54 @@ were verified. Full compact receipts/tables are in
 `runtime_validation_v3/collected/control/`. The revised zero-credit GE remains
 uncomputed due to inherited entrant infeasibility. The monitor is paused;
 there are no pending numerical jobs or remaining runs in this packet.
+
+## September 30 recommendation for author review — not adopted
+
+Reference: **2007 stationary reference — block0506, September 28 verified export**.
+The refactor handoff was assessed against its README, report and final
+verification receipt; all 18 current engine hashes match that receipt.
+`code/model/refactor_lab/` is suitable for the next isolated household and
+distribution diagnostics. Completed certificates will not be rerun. Its
+default equilibrium command clears a normalized household population against
+an elastic supply curve; our closed borrowing experiment instead solves birth
+renewal through price and scales population to housing supply. Reusing the
+faster engine does not authorize switching that equilibrium closure, weakening
+renewal gates, changing preferences or replacing the frozen namespace.
+
+The entrant problem is economic, not just an asset-grid artifact. The PSID
+entry input has two negative wealth/income-bin means, -2.22253 and -0.05264,
+carrying 39.9803% of the model's primitive draw probability. This is not a
+measurement of the survey's individual debt prevalence. The old builder
+multiplies these ratios by annual gross income and interpolates onto the grid;
+the current contract preserves that wealth marginal using a diagnostic income
+rank coupling, explicitly not an estimated joint distribution. See
+`code/data/psid_followup_mar2026/output/intergen_income_entry_targets_20260716/block2_entry_wealth_18_24.csv`,
+`code/model/tools/e5f_earnings_wealth_contract.py:16`, and
+`code/model/refactor_lab/engine/distribution.py:125`.
+
+The grid includes exact zero; interpolation of a nonnegative entry point cannot
+produce negative-node mass. The blocked node at -0.255814 represents a genuinely
+negative underlying point near -0.177586. At that point, the two current-income
+states have cash -0.049374 and 0.016907 before rent, below the consumption floor
+0.04. Merely inserting that point or refining the grid cannot restore their
+feasibility. Only 0.00802196% of the entrant cohort is rejected by this pairing;
+that small figure does not justify zeroing all negative entrant wealth.
+
+**Preferred next diagnostic if the author retains zero unsecured credit:**
+test whether a minimally changed joint wealth–income pairing can preserve both
+the frozen wealth and income marginals while assigning positive entrant mass
+only to budget-feasible states. A mass-preserving transportation calculation
+can test existence; native household feasibility must certify any candidate.
+This would revise an unestimated correlation/selection assumption, not forgive
+debt or remove households. It remains a proposal requiring the author's review;
+no candidate pairing, economic run or parameter override has been adopted.
+If it is impossible or empirically inappropriate, the entry contract must be
+revised explicitly, or a positive constant unsecured limit must be justified
+externally and selected by the author. A limit chosen solely to make the two
+cells pass is not an empirical restriction.
+
+The existing compiled tests establish implementation correctness, and the
+scalar-unset replay establishes reference equivalence. Neither establishes a
+corrected-credit equilibrium. No taper, sale-debt rollover, mass deletion,
+entry truncation, transfer, positive credit amount, recalibration or fertility
+normalization was introduced. The completed numerical budgets remain closed.

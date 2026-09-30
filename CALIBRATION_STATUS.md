@@ -51,6 +51,16 @@ and launch deadlines passed. Compact complete tables/receipts are in
 paused; no revised-rule GE or reference switch has occurred. The infeasible
 entrant-debt contract remains an outstanding author decision.
 
+September 30 read-only follow-up: the verified refactor is available for
+isolated diagnostics; all 18 engine hashes match its final certificate. Entry
+debt originates in negative empirical ratio-bin means, followed by diagnostic
+income-rank coupling; finer grids alone do not remove the two failures.
+The proposed next diagnostic is a minimally changed, budget-feasible joint
+entry pairing preserving wealth and income marginals. This is an unadopted
+economic assumption change, not a numerical fix. Recommendation and source
+citations are in `fixed_credit_contract_v1/README.md`. No new solve, entry
+change, positive credit amount or equilibrium-closure switch has occurred.
+
 ## September 29 — frozen-reference renter-debt comparison (not adopted)
 
 At **2007 stationary reference — block0506, September 28 verified export** parameters and unchanged prices, removal of the age taper with mortality repayment gives completed fertility **2.1026541568**, versus **2.0999983368** in the authenticated reference control (+0.12647%). Ownership is 66.5240% versus 66.8165%. Torch recovery job **18838216** passed the household/cohort gates for this case, retaining 14 fit rows, 31 parameter rows and 17 standard plots. Its diagnostic target loss is 20.7078939879; there was no refit, exact repeat, fertility normalization, GE, or reference switch.
