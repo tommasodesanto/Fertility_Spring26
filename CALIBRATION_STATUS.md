@@ -1,5 +1,42 @@
 # Calibration Status
 
+## September 30 evening — four-hour continuation running
+
+The author authorizes three parallel four-hour calibration lanes: empirical
+entrant wealth with fixed unsecured limit0.25 on120×9; mean-preserving
+nonnegative entrant wealth with no unsecured borrowing on120×9; and that same
+nonnegative specification on the original160×15 grid. Each starts from its
+verified one-hour pilot selection; both nonnegative lanes share exactly the
+same nine-parameter starting vector. This supersedes the earlier six-hour
+proposal and excludes the all-zero entrant-wealth arm tonight.
+
+Option3 is the author's provisional preferred specification pending discussion
+with Corina about unsecured borrowing and its price. It censors negative
+five-bin wealth/income ratios at zero and rescales positive ratios to preserve
+the original mean; it does not re-estimate or truncate raw survey records.
+Option1 remains a comparison. Common2% saving/borrowing rate, corrected owner
+collateral/full-sale repayment and mortality rules, earnings, taxes, pension,
+targets and weights remain unchanged from the pilots. FixedH0/psi, renewal-price
+and population-housing closure, nine free coordinates and ten scored targets
+remain in place. No production reference or manuscript adoption is authorized.
+
+Preparation packet: `output/model/fixed_reference_economics_20260928/entry_calibration_round1_v1/`.
+Each lane: one Torch CPU,24GiB, all numerical thread counts1,14400seconds total
+including preflight and final checks. Iterative local Gauss–Newton searches
+retain the pilot's regularization and bounded steps, updating derivatives at
+the current best each round. Full14-fit/31-parameter/17-plot outputs and two
+selected exact fullGE repeats are required; budget-limited points remain
+provisional. Source authentication, both grids' input checks, exact-loop mocks
+and independent review passed. All13 tests and all three exact cluster
+preflights passed (18899803,80/80/36mockGE,zero lifecycle solves). Native
+array18899847 is running: tasks0/1/2 match the lane order above. All three
+started18:38:17NewYork, ending by22:38:17; all passed native entry checks and
+are solving their baselines at last observation. Each actual
+job must pass its repeated native baseline before searching. Monitor
+monitor-entrant-calibration-pilots now checks this array every15minutes, with
+notifications only for failures, required action or completion. No autonomous
+restart, extension or modification is authorized.
+
 ## September 30 — entrant-wealth pilots completed; no adoption
 
 Torch array18895422 completed all three arms with exit0 and two exact selected
