@@ -48,7 +48,7 @@ that closure must not be assigned to the September 28 reference.
    and `solver.py:2579–2607`; reference `parameters.csv` and manifest.
    Material utility is CRRA of A(m)c^alpha(m)s^(1-alpha(m))/e(m), with
    e(m)=((2+0.7m)/2)^0.7 and alpha(m)=alpha0−Delta_alpha*1{m>0}.
-   Direct child benefit is v(m)=psi*m^(1−gamma), v(0)=0. The stored `psi_child`
+   Direct child benefit is psi*m^(1−gamma), zero at m=0, written directly inside the utility equation on the slide. The stored `psi_child`
    is the one-child benefit, not the equivalent CRRA coefficient.
    A(m)=K(alpha0,r*)/K(alpha(m),r*) with
    K(a,r)=a^a*((1−a)/r)^(1−a). Compensation holds optimized material utility

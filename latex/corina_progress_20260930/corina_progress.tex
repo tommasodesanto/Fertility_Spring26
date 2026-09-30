@@ -53,24 +53,25 @@ The interaction of housing costs and available wealth affects both birth timing 
 % 3: Household preference equations and definitions from the verified reference.
 \begin{frame}{Children and housing demand}
 \small
-Households value nonhousing consumption $c$, housing services $s$, and children currently at home $m$:
+Households consume nonhousing goods $c$ and housing services $s$, and derive
+utility from the $m$ children living at home:
 \[
- u(c,s,m)=\frac{[A(m)c^{\alpha(m)}s^{1-\alpha(m)}/e(m)]^{1-\sigma}}{1-\sigma}+v(m),
+ u(c,s,m)=\frac{\left[\dfrac{A(m)c^{\alpha(m)}s^{1-\alpha(m)}}{e(m)}\right]^{1-\sigma}}{1-\sigma}
+ +\psi m^{1-\gamma}.
 \]
+The equivalence scale $e(m)$ captures the consumption cost of a larger family;
+$\sigma$ governs risk aversion. The benefit from children is zero at $m=0$,
+with $\psi$ setting its level and $\gamma$ its curvature.
+\par\medskip
+Having children also raises the share of expenditure devoted to housing:
 \[
- \alpha(m)=\alpha_0-\Delta\alpha\,\mathbf 1\{m>0\},
- \qquad v(m)=\psi\,m^{1-\gamma},\quad v(0)=0.
+ \alpha(m)=\alpha_0-\Delta\alpha\,\mathbf 1\{m>0\}.
 \]
-Here $m$ counts children at home and $n$ is children ever born. $e(m)$ is the
-family-size equivalence scale, and $\sigma$ is risk aversion.
+$\alpha_0$ is the childless consumption share. The first child raises the
+housing share by $\Delta\alpha$; additional children leave that share unchanged.
 \par\medskip
-$\alpha(m)$ is the consumption share; $\alpha_0$ is the childless share and
-$\Delta\alpha$ is its reduction after the first child. $\psi$ is the benefit
-level and $\gamma$ its curvature.
-\par\medskip
-$A(m)$ holds optimized material utility constant when the share changes, for given total
-expenditure and equivalence scale at the fixed reference rent. The first child
-raises the housing expenditure share; later children do not change that share.
+For given spending and family size, $A(m)$ offsets the utility effect of the
+share change at a fixed reference rent.
 \end{frame}
 
 % 4: Demographic transitions and market/fiscal closure.

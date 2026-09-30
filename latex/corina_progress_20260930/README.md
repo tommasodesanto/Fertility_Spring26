@@ -22,7 +22,7 @@ two-birth experiments remain in `evidence/`; neither experiment is adopted.
 
 The preference equations distinguish children at home from lifetime births.
 The code stores the one-child benefit directly in `psi_child`, giving
-\(v(m)=\psi m^{1-\gamma}\), with zero benefit at \(m=0\). The first-child share
+\(\psi m^{1-\gamma}\), written directly inside utility on the slide, with zero benefit at \(m=0\). The first-child share
 change lowers the consumption share, and its material-utility compensation uses
 a fixed reference rent. Dependency departure and the 16/20-year adult-entry
 queue are separate objects.
