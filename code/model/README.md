@@ -22,6 +22,13 @@ former MATLAB code is archived for historical reference and parity checks.
 
 ## Start here
 
+The isolated [stationary refactor laboratory](refactor_lab/README.md) contains
+the September 29 publication-layout and performance work at the unchanged
+September 28 block0506 reference. It has an explicit input bundle, separate
+household/distribution/equilibrium modules, and a reviewed credit-rule correction.
+It is not the active production baseline; its README records verification and
+the unresolved zero-credit entrant constraint.
+
 [`../../CALIBRATION_STATUS.md`](../../CALIBRATION_STATUS.md) owns the current
 calibration and policy status. The [sequential package reading map](intergen_eqscale_seq_optimized/README.md)
 points to the few files needed to follow the maintained calculation and to the

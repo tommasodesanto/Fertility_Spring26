@@ -1,0 +1,30 @@
+{
+ "cmd": [
+  "output/model/publication_refactor_20260929/local_env_v1/venv313/bin/python",
+  "-m",
+  "refactor_lab.native_ge_benchmark",
+  "run",
+  "--engine",
+  "original",
+  "--reference-root",
+  "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26",
+  "--bundle",
+  "output/model/publication_refactor_20260929/local_export_v1/inputs",
+  "--bundle-sha",
+  "427e67a3d9dd663cd23c3f8533c55a1a64b4f9350d396c97b5c5bd4700bc90b7",
+  "--initial-price-factor",
+  "1.05",
+  "--credit",
+  "reference",
+  "--out",
+  "output/model/publication_refactor_20260929/native_local_pair_v1/original"
+ ],
+ "rc": 0,
+ "stop_reason": null,
+ "wall_seconds": 156.000143917,
+ "peak_sampled_tree_rss_gib": 1.86480712890625,
+ "sampling_interval_seconds": 2,
+ "memory_cap_kind": "sampled every 2 s (not an instantaneous hard ceiling)",
+ "cap_seconds": 1200.0,
+ "cap_rss_gib": 12.0
+}

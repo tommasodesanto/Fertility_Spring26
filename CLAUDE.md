@@ -307,9 +307,11 @@ Default routing:
 - Built-in subagents: use for convenient in-thread parallelism and shared
   context, but do not assume they use a cheaper model because the spawn tool
   does not expose model selection.
-- Any run expected to exceed ~30 minutes, calibration sweeps, and grid or DE
-  searches: the Torch cluster via `code/cluster/torch.sh`, smoke-tested first
-  (see Long-Run Search Safety).
+- Individual model or equilibrium runs may run locally on one core, including
+  overnight, with explicit time and memory budgets. Limit Numba, BLAS and OpenMP
+  to one thread. Use Torch for long batches, calibration sweeps, grid or DE
+  searches, and parallel computation, smoke-tested first (see Long-Run Search
+  Safety). Duration alone does not require moving an individual run to Torch.
 - Model-critical numerics — the SMM objective, the solver, the discrete-time
   down-payment `(1 - phi)` threshold, the KFE, and target measurement — stay
   with the lead, or a delegated diff to that code is verified line by line
@@ -386,9 +388,9 @@ Use a short status format for work that can outlast one interaction:
 `phase | elapsed | route | artifact/evidence | next decision`. For a request
 marked urgent or time-critical, default to a bounded read-only investigation or
 a small verified edit; do not initiate a broad audit, full-context fan-out, or
-long computation without saying so first. Long numerical work remains a Torch
-job with its own smoke test, checkpoints, and health checks, not an open-ended
-agent task.
+long computation without saying so first. Long batches and parallel numerical
+work belong on Torch; individual one-core runs may run locally. Both require
+explicit budgets, checkpoints and health checks, not an open-ended agent task.
 
 ## Economic And Numerical Standards
 

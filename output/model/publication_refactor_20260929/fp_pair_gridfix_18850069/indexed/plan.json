@@ -1,0 +1,4 @@
+{"phase": "fixed-price", "cap_seconds": 900, "engine_cap_seconds": 1200,
+ "max_lifecycle_evaluations_per_engine": 18, "planned_steps": "lab_fixed_price(2 solves), compare_rep1, compare_rep2, compare_reps, oracle(2 certificates)",
+ "estimate": "about 2x107 s observed solves plus JIT/serialization; oracle time unmeasured (uncertain)", "stop": "first failed or timed-out step stops the phase; no retries; timeout is failure",
+ "source_stage": "/scratch/td2248/projects/publication_refactor_20260929/indexed_src_gridfix", "dry_run": 0}

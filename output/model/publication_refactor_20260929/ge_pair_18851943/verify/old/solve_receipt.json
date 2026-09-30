@@ -1,0 +1,121 @@
+{
+  "engine": "old_frozen",
+  "engine_timings": {
+    "accepted": true,
+    "bellman_full": 0.0,
+    "bellman_mode": "reused_accepted_price",
+    "best_eq_error": 2.298531152987127e-06,
+    "convergence_reason": "strict_tol",
+    "damped_final_eq_error": 0.064210880745158,
+    "distribution": 26.495673412224278,
+    "equilibrium_method": "direct_brent",
+    "final_eq_error": 2.298531152987127e-06,
+    "income_process": "markov",
+    "iterations_completed": 1,
+    "markov_income_solve_time": 102.50086716306396,
+    "n_dist": 1,
+    "n_eval": 0,
+    "n_full": 0,
+    "price_cache_hits": 0,
+    "reused_bellman_seconds": 42.731003558961675,
+    "scalar_market_refine": {
+      "best_excess": -1.3441692108706604e-05,
+      "best_metric": 2.298531152987127e-06,
+      "best_price": 0.789870850567871,
+      "bracket_found": true,
+      "cache_hits": 0,
+      "directional_fallback_used": false,
+      "expansions": 1,
+      "initial_price": 0.8293629768335191,
+      "iterations": 2,
+      "method": "brent",
+      "price_evaluation_time_sec": 146.86585222021677,
+      "price_evaluations": 3,
+      "used": true
+    },
+    "strict_converged": true,
+    "unique_fast_price_evaluations": 4
+  },
+  "equilibrium_solve_stage_profiled": true,
+  "equilibrium_solve_stage_seconds": 275.9506095198449,
+  "fiscal": {
+    "actual_accounts": {
+      "implied_balanced_payroll_tax": 0.08028070961947481,
+      "implied_balanced_pension_period": 0.9177840474640214,
+      "payroll_tax_base_period": 2.963205896676405,
+      "payroll_tax_rate": 0.08028070961950022,
+      "payroll_tax_revenue": 0.23788827213386923,
+      "pension_budget_residual": 7.527312106958561e-14,
+      "pension_outlays": 0.23788827213379396,
+      "pension_period_units": 0.917784047463731,
+      "retiree_benefit_exposure": 0.2591985258309851,
+      "retiree_household_mass": 0.2591985258309851,
+      "scaled_pension_budget_residual": 3.164221606823325e-13,
+      "worker_household_mass": 0.740801474168977
+    },
+    "fiscal_gate": true,
+    "fiscal_tolerance": 1e-06,
+    "marginal_gate": true,
+    "marginal_tolerance": 1e-09,
+    "method": "exogenous_one_market_age_income_recursion",
+    "normalized_age_income_max_gap": 9.490085566753138e-15,
+    "predicted_accounts": {
+      "implied_balanced_payroll_tax": 0.08028070961950022,
+      "implied_balanced_pension_period": 0.917784047463731,
+      "payroll_tax_base_period": 2.9632058966759063,
+      "payroll_tax_rate": 0.08028070961950022,
+      "payroll_tax_revenue": 0.2378882721338292,
+      "pension_budget_residual": 0.0,
+      "pension_outlays": 0.2378882721338292,
+      "pension_period_units": 0.917784047463731,
+      "retiree_benefit_exposure": 0.25919852583102354,
+      "retiree_household_mass": 0.25919852583102354,
+      "scaled_pension_budget_residual": 0.0,
+      "worker_household_mass": 0.7408014741689765
+    }
+  },
+  "note": "process includes frozen authentication/imports; not comparable to the lab process total",
+  "price": [
+    0.789870850567871
+  ],
+  "profiled": {
+    "bellman_calls": 4,
+    "budget": {
+      "deadline_seconds": 900.0,
+      "max_lifecycle": 18,
+      "stop_reason": null
+    },
+    "calls": {
+      "attach_markov_market_accounting": 1,
+      "forward_distribution_markov_income": 5,
+      "pack_fast_solution_markov_income": 4,
+      "pack_solution_markov_income": 1,
+      "refine_one_market_markov_income": 1,
+      "solve_bellman_full_markov_income": 4,
+      "solve_markov_income_at_prices": 4,
+      "solve_markov_income_equilibrium": 1,
+      "upgrade_fast_markov_solution": 1
+    },
+    "final_payload_upgrades": 1,
+    "final_solution": "payload_upgrade (no additional household solve)",
+    "inclusive_seconds": {
+      "attach_markov_market_accounting": 1.7727026715874672e-05,
+      "forward_distribution_markov_income": 52.89804893732071,
+      "pack_fast_solution_markov_income": 0.0008381269872188568,
+      "pack_solution_markov_income": 0.008287301054224372,
+      "refine_one_market_markov_income": 146.87274699681439,
+      "solve_bellman_full_markov_income": 222.92854109802283,
+      "solve_markov_income_at_prices": 249.36665105586872,
+      "solve_markov_income_equilibrium": 275.87816035491414,
+      "upgrade_fast_markov_solution": 26.495699865045026
+    },
+    "instrumentation": "sys.setprofile, verification-only, identical for both engines",
+    "kfe_calls": 5,
+    "lifecycle_evaluations": 4,
+    "note": "lifecycle_evaluations counts every at-price solve (fast and full); unique_fast_price_evaluations from the engine already includes refinement entries.",
+    "profiled_solve_stage_seconds": 275.9505912680179
+  },
+  "start": [
+    0.8293629768335191
+  ]
+}

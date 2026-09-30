@@ -1,0 +1,318 @@
+{
+ "arrays": 90,
+ "engine": "original",
+ "engine_timings": {
+  "accepted": true,
+  "bellman_full": 0.0,
+  "bellman_mode": "reused_accepted_price",
+  "best_eq_error": 2.2985312852734116e-06,
+  "convergence_reason": "strict_tol",
+  "damped_final_eq_error": 0.064210880745158,
+  "distribution": 14.871741542010568,
+  "equilibrium_method": "direct_brent",
+  "final_eq_error": 2.2985312852734116e-06,
+  "income_process": "markov",
+  "iterations_completed": 1,
+  "markov_income_solve_time": 57.02063654101221,
+  "n_dist": 1,
+  "n_eval": 0,
+  "n_full": 0,
+  "price_cache_hits": 0,
+  "reused_bellman_seconds": 23.33573058299953,
+  "scalar_market_refine": {
+   "best_excess": -1.3441692882310008e-05,
+   "best_metric": 2.2985312852734116e-06,
+   "best_price": 0.7898708505678714,
+   "bracket_found": true,
+   "cache_hits": 0,
+   "directional_fallback_used": false,
+   "expansions": 1,
+   "initial_price": 0.8293629768335191,
+   "iterations": 2,
+   "method": "brent",
+   "price_evaluation_time_sec": 80.74006970900518,
+   "price_evaluations": 3,
+   "used": true
+  },
+  "strict_converged": true,
+  "unique_fast_price_evaluations": 4
+ },
+ "fiscal": {
+  "actual_accounts": {
+   "implied_balanced_payroll_tax": 0.0802807096194748,
+   "implied_balanced_pension_period": 0.9177840474640216,
+   "payroll_tax_base_period": 2.9632058966764054,
+   "payroll_tax_rate": 0.08028070961950022,
+   "payroll_tax_revenue": 0.2378882721338693,
+   "pension_budget_residual": 7.532863222081687e-14,
+   "pension_outlays": 0.23788827213379396,
+   "pension_period_units": 0.917784047463731,
+   "retiree_benefit_exposure": 0.2591985258309851,
+   "retiree_household_mass": 0.2591985258309851,
+   "scaled_pension_budget_residual": 3.1665551035835187e-13,
+   "worker_household_mass": 0.7408014741689772
+  },
+  "fiscal_gate": true,
+  "fiscal_tolerance": 1e-06,
+  "marginal_gate": true,
+  "marginal_tolerance": 1e-09,
+  "method": "exogenous_one_market_age_income_recursion",
+  "normalized_age_income_max_gap": 9.49008471972019e-15,
+  "predicted_accounts": {
+   "implied_balanced_payroll_tax": 0.08028070961950022,
+   "implied_balanced_pension_period": 0.917784047463731,
+   "payroll_tax_base_period": 2.9632058966759063,
+   "payroll_tax_rate": 0.08028070961950022,
+   "payroll_tax_revenue": 0.2378882721338292,
+   "pension_budget_residual": 0.0,
+   "pension_outlays": 0.2378882721338292,
+   "pension_period_units": 0.917784047463731,
+   "retiree_benefit_exposure": 0.25919852583102354,
+   "retiree_household_mass": 0.25919852583102354,
+   "scaled_pension_budget_residual": 0.0,
+   "worker_household_mass": 0.7408014741689765
+  }
+ },
+ "gates": {
+  "final_eq_error": 2.2985312852734116e-06,
+  "fiscal_gate": true,
+  "marginal_gate": true,
+  "normalized_age_income_max_gap": 9.49008471972019e-15,
+  "strict_converged": true,
+  "tol_eq": 2.5e-05
+ },
+ "identity": {
+  "bundle": {
+   "arrays_sha256": "a48ecb71055f979284e7d63ccfa19bca8570ff8a93635fd352918356c69ee0b0",
+   "artifact_fields_loaded": 0,
+   "bundle_json_sha256": "427e67a3d9dd663cd23c3f8533c55a1a64b4f9350d396c97b5c5bd4700bc90b7",
+   "checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d",
+   "label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+   "manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+   "primitive_fields": 246,
+   "reference_price": [
+    0.7898695017462086
+   ]
+  },
+  "engine": "original",
+  "imports_after_import": {
+   "code/model/intergen_eqscale_seq_optimized/__init__.py": {
+    "basis": "frozen_source_manifest",
+    "module": "intergen_eqscale_seq_optimized",
+    "ok": true,
+    "sha256": "a7a5fd5a56d05e7460e2c44fd8b147c98fe70ce361d2e8d543257dffc72c253a"
+   },
+   "code/model/intergen_eqscale_seq_optimized/adult_entry.py": {
+    "basis": "pass2_pin",
+    "module": "intergen_eqscale_seq_optimized.adult_entry",
+    "ok": true,
+    "sha256": "1e16e29cec889a78e651572a586cec3c4384cc72a1e945de4b68e0cd8f8b5a1e"
+   },
+   "code/model/intergen_eqscale_seq_optimized/child_preferences.py": {
+    "basis": "pass2_pin",
+    "module": "intergen_eqscale_seq_optimized.child_preferences",
+    "ok": true,
+    "sha256": "69544858b0137e09d37ac9e07ee6470ddc2d5849236b2c3e33d270737164f09d"
+   },
+   "code/model/intergen_eqscale_seq_optimized/joint_nested.py": {
+    "basis": "pass2_pin",
+    "module": "intergen_eqscale_seq_optimized.joint_nested",
+    "ok": true,
+    "sha256": "d17fe2c6d430b8056ef89aff254cae18f1c3613f602eb1c61822ab2465e58c83"
+   },
+   "code/model/intergen_eqscale_seq_optimized/kernels.py": {
+    "basis": "pass2_pin",
+    "module": "intergen_eqscale_seq_optimized.kernels",
+    "ok": true,
+    "sha256": "639c9a21797dbc9f2a0e9a891f283c115353c2edfcb89c959a7fe9f32b86ca27"
+   },
+   "code/model/intergen_eqscale_seq_optimized/parameters.py": {
+    "basis": "pass2_pin",
+    "module": "intergen_eqscale_seq_optimized.parameters",
+    "ok": true,
+    "sha256": "66f86697c2c58ca3864305bf13dd2be71a008905b2beb573f1a4ebafabef5464"
+   },
+   "code/model/intergen_eqscale_seq_optimized/solver.py": {
+    "basis": "pass2_pin",
+    "module": "intergen_eqscale_seq_optimized.solver",
+    "ok": true,
+    "sha256": "b637a655a9344b63f4461ee0fa4796c04bd98188477c4e6ace2c48ae0fc8aec1"
+   },
+   "code/model/intergen_eqscale_seq_optimized/utils.py": {
+    "basis": "pass2_pin",
+    "module": "intergen_eqscale_seq_optimized.utils",
+    "ok": true,
+    "sha256": "9bf0d8edb36708bb9222b8abf637ab3e855e985a4467a4114b7862ced4f203a0"
+   },
+   "code/model/intergen_eqscale_seq_optimized/warm_price.py": {
+    "basis": "pass2_pin",
+    "module": "intergen_eqscale_seq_optimized.warm_price",
+    "ok": true,
+    "sha256": "9cc8f3462548826043f1f7410704c8e453f4c9a9907dfca7dd97e3b207564281"
+   },
+   "code/model/tools/e5f_social_security.py": {
+    "basis": "pass2_pin",
+    "module": "e5f_social_security",
+    "ok": true,
+    "sha256": "f7bb7db2774be7ef7d2ca2a635eafa3cb27ba79a503fe69b6f00c1eef9658455"
+   },
+   "code/model/tools/e5f_stationary_paygo.py": {
+    "basis": "pass2_pin",
+    "module": "e5f_stationary_paygo",
+    "ok": true,
+    "sha256": "0877a7670ff4682e00e7fba7f325893ab9c9bffed5361f27eaee51a5b9d27c4c"
+   }
+  },
+  "imports_after_solve": {
+   "code/model/intergen_eqscale_seq_optimized/__init__.py": {
+    "basis": "frozen_source_manifest",
+    "module": "intergen_eqscale_seq_optimized",
+    "ok": true,
+    "sha256": "a7a5fd5a56d05e7460e2c44fd8b147c98fe70ce361d2e8d543257dffc72c253a"
+   },
+   "code/model/intergen_eqscale_seq_optimized/adult_entry.py": {
+    "basis": "pass2_pin",
+    "module": "intergen_eqscale_seq_optimized.adult_entry",
+    "ok": true,
+    "sha256": "1e16e29cec889a78e651572a586cec3c4384cc72a1e945de4b68e0cd8f8b5a1e"
+   },
+   "code/model/intergen_eqscale_seq_optimized/child_preferences.py": {
+    "basis": "pass2_pin",
+    "module": "intergen_eqscale_seq_optimized.child_preferences",
+    "ok": true,
+    "sha256": "69544858b0137e09d37ac9e07ee6470ddc2d5849236b2c3e33d270737164f09d"
+   },
+   "code/model/intergen_eqscale_seq_optimized/joint_nested.py": {
+    "basis": "pass2_pin",
+    "module": "intergen_eqscale_seq_optimized.joint_nested",
+    "ok": true,
+    "sha256": "d17fe2c6d430b8056ef89aff254cae18f1c3613f602eb1c61822ab2465e58c83"
+   },
+   "code/model/intergen_eqscale_seq_optimized/kernels.py": {
+    "basis": "pass2_pin",
+    "module": "intergen_eqscale_seq_optimized.kernels",
+    "ok": true,
+    "sha256": "639c9a21797dbc9f2a0e9a891f283c115353c2edfcb89c959a7fe9f32b86ca27"
+   },
+   "code/model/intergen_eqscale_seq_optimized/parameters.py": {
+    "basis": "pass2_pin",
+    "module": "intergen_eqscale_seq_optimized.parameters",
+    "ok": true,
+    "sha256": "66f86697c2c58ca3864305bf13dd2be71a008905b2beb573f1a4ebafabef5464"
+   },
+   "code/model/intergen_eqscale_seq_optimized/solver.py": {
+    "basis": "pass2_pin",
+    "module": "intergen_eqscale_seq_optimized.solver",
+    "ok": true,
+    "sha256": "b637a655a9344b63f4461ee0fa4796c04bd98188477c4e6ace2c48ae0fc8aec1"
+   },
+   "code/model/intergen_eqscale_seq_optimized/utils.py": {
+    "basis": "pass2_pin",
+    "module": "intergen_eqscale_seq_optimized.utils",
+    "ok": true,
+    "sha256": "9bf0d8edb36708bb9222b8abf637ab3e855e985a4467a4114b7862ced4f203a0"
+   },
+   "code/model/intergen_eqscale_seq_optimized/warm_price.py": {
+    "basis": "pass2_pin",
+    "module": "intergen_eqscale_seq_optimized.warm_price",
+    "ok": true,
+    "sha256": "9cc8f3462548826043f1f7410704c8e453f4c9a9907dfca7dd97e3b207564281"
+   },
+   "code/model/tools/e5f_social_security.py": {
+    "basis": "pass2_pin",
+    "module": "e5f_social_security",
+    "ok": true,
+    "sha256": "f7bb7db2774be7ef7d2ca2a635eafa3cb27ba79a503fe69b6f00c1eef9658455"
+   },
+   "code/model/tools/e5f_stationary_paygo.py": {
+    "basis": "pass2_pin",
+    "module": "e5f_stationary_paygo",
+    "ok": true,
+    "sha256": "0877a7670ff4682e00e7fba7f325893ab9c9bffed5361f27eaee51a5b9d27c4c"
+   }
+  }
+ },
+ "nonfinite_arrays": {},
+ "parameter_differences": {
+  "eq_iter": "run_or_output_field"
+ },
+ "price": [
+  0.7898708505678714
+ ],
+ "profiled": {
+  "bellman_calls": 4,
+  "budget": {
+   "deadline_seconds": 900,
+   "max_lifecycle": 18,
+   "stop_reason": null
+  },
+  "calls": {
+   "attach_markov_market_accounting": 1,
+   "forward_distribution_markov_income": 5,
+   "pack_fast_solution_markov_income": 4,
+   "pack_solution_markov_income": 1,
+   "refine_one_market_markov_income": 1,
+   "solve_bellman_full_markov_income": 4,
+   "solve_markov_income_at_prices": 4,
+   "solve_markov_income_equilibrium": 1,
+   "upgrade_fast_markov_solution": 1
+  },
+  "final_payload_upgrades": 1,
+  "final_solution": "payload_upgrade (no additional household solve)",
+  "inclusive_seconds": {
+   "attach_markov_market_accounting": 9.082999895326793e-06,
+   "forward_distribution_markov_income": 30.420511083983,
+   "pack_fast_solution_markov_income": 0.0004904990055365488,
+   "pack_solution_markov_income": 0.004045249996124767,
+   "refine_one_market_markov_income": 80.74065970900119,
+   "solve_bellman_full_markov_income": 122.2037962500035,
+   "solve_markov_income_at_prices": 137.76066924800398,
+   "solve_markov_income_equilibrium": 152.63487779199204,
+   "upgrade_fast_markov_solution": 14.871754667008645
+  },
+  "instrumentation": "sys.setprofile, verification-only, identical for both engines",
+  "kfe_calls": 5,
+  "lifecycle_evaluations": 4,
+  "note": "lifecycle_evaluations counts every at-price solve (fast and full); unique_fast_price_evaluations from the engine already includes refinement entries.",
+  "profiled_solve_stage_seconds": 152.6500840410008
+ },
+ "renewal": {
+  "classification": "consistent",
+  "diagnostic_threshold": 1e-06,
+  "note": "lead-selected diagnostic; no psi normalization or closure change",
+  "reference_relative_gap_from_adult_entry_gate": 7.919966966208499e-07,
+  "relative_gap": 1.702812197750238e-06
+ },
+ "runtime": {
+  "executable": "/Users/tommasodesanto/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/bin/python3.13",
+  "machine": "arm64",
+  "numba": "0.61.2",
+  "numba_cache_dir": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_local_pair_v1/cache_original",
+  "numba_threads": 1,
+  "numpy": "2.2.6",
+  "numpy_build": {
+   "blas": "{'name': 'accelerate', 'found': True, 'version': 'unknown', 'detection method': 'system', 'include directory': 'unknown', 'lib directory': 'unknown', 'openblas configuration': 'unknown', 'pc file directory': 'unknown'}",
+   "lapack": "{'name': 'accelerate', 'found': True, 'version': 'unknown', 'detection method': 'system', 'include directory': 'unknown', 'lib directory': 'unknown', 'openblas configuration': 'unknown', 'pc file directory': 'unknown'}"
+  },
+  "processor": "arm",
+  "python": "3.13.15",
+  "python_implementation": "CPython",
+  "pythonpath": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_src_v1",
+  "release": "25.6.0",
+  "scipy": "1.15.3",
+  "system": "Darwin"
+ },
+ "scope": "native GE gates only; frozen calendar/observer certificate (113 paths, 14/31, 17 plots) is separate",
+ "start_price": [
+  0.8293629768335191
+ ],
+ "status": "native_GE_benchmark_only",
+ "timing": {
+  "import": 0.08788337500300258,
+  "inputs": 0.049032833994715475,
+  "process_total_in_python": 154.95473016599135,
+  "serialization": 2.1251267079933314,
+  "solve_stage_profiled": 152.65009916599956
+ },
+ "unexplained_parameter_differences": []
+}

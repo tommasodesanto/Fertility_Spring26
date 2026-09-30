@@ -1,0 +1,89 @@
+{
+ "adult_entry_relative_gap": 7.919966966208499e-07,
+ "command": "fixed-price",
+ "counts": {
+  "lifecycle_solves": 2
+ },
+ "credit": "reference",
+ "d_bar": null,
+ "identity": {
+  "arrays_sha256": "a48ecb71055f979284e7d63ccfa19bca8570ff8a93635fd352918356c69ee0b0",
+  "artifact_fields_loaded": 0,
+  "bundle_json_sha256": "427e67a3d9dd663cd23c3f8533c55a1a64b4f9350d396c97b5c5bd4700bc90b7",
+  "checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d",
+  "label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+  "primitive_fields": 246,
+  "reference_price": [
+   0.7898695017462086
+  ]
+ },
+ "label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+ "numba_threads": 1,
+ "omp": "1",
+ "package_diagnostics": {
+  "missing_standard": [],
+  "note": "package write_diagnostics only; the 17 standard dated plots are produced and hash-checked by acceptance_oracle",
+  "produced": [
+   "fertility_by_age.png",
+   "fertility_policy_by_age_income_state.png",
+   "housing_by_age_income_state.png",
+   "housing_market.png",
+   "housing_prices.png",
+   "income_state_outcomes.png",
+   "liquid_wealth_by_age_income_state.png",
+   "market_clearing_by_market.png",
+   "market_clearing_residuals.png",
+   "owner_rungs.png",
+   "ownership_by_age.png",
+   "ownership_by_age_income_state.png",
+   "policy_childless_renter_age30.png",
+   "policy_childless_renter_age42.png",
+   "tenure_services.png",
+   "wealth_dist_childless_renter_age30.png",
+   "wealth_dist_childless_renter_age42.png"
+  ]
+ },
+ "platform": {
+  "cache_state": "cold",
+  "machine": "x86_64",
+  "numba": "0.61.0",
+  "numba_cache_dir": "/scratch/td2248/projects/publication_refactor_20260929/results/fp_pair_gridfix_18850069/scalar/numba_cache_lab",
+  "numba_cache_files_at_start": 0,
+  "numba_threads": 1,
+  "numpy": "2.1.3",
+  "python": "3.13.5",
+  "system": "Linux-6.12.0-211.47.1.el10_2.x86_64-x86_64-with-glibc2.39"
+ },
+ "stages": [
+  {
+   "arrays": 87,
+   "path": "/scratch/td2248/projects/publication_refactor_20260929/results/fp_pair_gridfix_18850069/scalar/lab/rep1"
+  },
+  {
+   "arrays": 87,
+   "path": "/scratch/td2248/projects/publication_refactor_20260929/results/fp_pair_gridfix_18850069/scalar/lab/rep2"
+  }
+ ],
+ "status": "preliminary_solve_only_not_certified",
+ "timing": {
+  "import": 1.519696774892509,
+  "inputs": 0.15905527910217643,
+  "lifecycle_solves": [
+   {
+    "lifecycle": 86.07222533784807,
+    "precompute_shared": 0.0007002740167081356,
+    "repetition": 1,
+    "serialization": 6.694322370924056
+   },
+   {
+    "lifecycle": 72.23649611300789,
+    "precompute_shared": 0.0006159860640764236,
+    "repetition": 2,
+    "serialization": 6.6173493498936296
+   }
+  ],
+  "main_in_process": 177.8560759171378,
+  "reporting": 4.3207969788927585
+ }
+}

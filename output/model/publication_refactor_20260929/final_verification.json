@@ -1,0 +1,59 @@
+{
+  "status": "reference_refactor_verified_corrected_GE_blocked",
+  "timestamp_utc": "2026-09-30T04:44:31.707766+00:00",
+  "engine_files_sha256": {
+    "__init__.py": "c134867d538cf9b27bceaaeb70cfead4aec7706039f5b3b66fc006ff208bbb67",
+    "adult_entry.py": "e752178ad90d64c77575b70d0718a94d6f3b04463b03637d9af12e23f57bce3f",
+    "child_preferences.py": "887763b066bdd64efb2f23b97fac977abfa9630d1e194adb2148da24b2ff7123",
+    "diagnostics.py": "eb9c3516e4d4343d59f84341213faaebdaa09eba20cc0efc1bf3bfecb8a28985",
+    "distribution.py": "9da9be2525852f78771d735103f0de385c8a8028eff9ab564512627ed2df2e90",
+    "e5f_social_security.py": "df03621afd48135afb6c3fbdec1209bad9605c6133b9f6352fce28fc45c7961b",
+    "e5f_stationary_paygo.py": "7eeb7760b236711d40b3563d6d7a40548ba3cade6a646743c6fe3a02462a8569",
+    "equilibrium.py": "ca88909666802e92e396c44c0ea6f69eadbddb9e707bfec49cf1ec765d013fe9",
+    "fertility_nested.py": "aed06c0ee77bb39b0d72da0d5e63c6f1c1b6c3b0a76986372aa17e2d2cb77e85",
+    "household.py": "2a34f5f28c0c63ca3d24d9e759cd1b5b92aadaddb5fe04795e65abbc0b448082",
+    "joint_nested.py": "909bb9d02ecf8e196e339864572e7692e71a956c35002397c70a494a30bd620b",
+    "kernels.py": "fe7d43afdac234af71edd09e1260666e21c309dda83de4adc6a3abff35c3d5d4",
+    "parameters.py": "f8871ea7f026b0900f2cd89e2ecbe7f24fbc8b08e83ec46227533a11dea2e163",
+    "shared.py": "1fbe36f75befe5fed67c490c39a65663f4c8896b078851693fb4bca533d07773",
+    "solver.py": "19e6f9240a4ff7354c39031d35d734ea2c8cad2fbd1f60d128ebb049d587317c",
+    "two_shock_choice.py": "0d5201f176ad77f2c3013819d18eae69c1a22a91d7ce9b8060e1d6ef76ad40f1",
+    "utils.py": "836d6768af4a9261fe28e758f88dcc8ca059afc277b7c03d36f179a510ebcf36",
+    "warm_price.py": "bc3ff5c8df2a16a9ef753bfaabde914e09e7d3943de90c93be684ebeb0bf2518"
+  },
+  "engine_byte_identical_to_tested_stage": true,
+  "fixed_price_certificates": {
+    "repetitions": 4,
+    "nested_paths_each": 113,
+    "fit_rows": 14,
+    "parameter_rows": 31,
+    "plots_exact_each": 17
+  },
+  "native_local_GE": {
+    "arrays_exact": 90,
+    "original_solve_seconds": 152.65009916599956,
+    "refactored_solve_seconds": 99.54670295800315
+  },
+  "torch_GE": {
+    "arrays_exact": 87,
+    "both_full_gates_passed": true,
+    "fit_rows_equal": 14,
+    "parameter_rows_equal": 31,
+    "actual_plot_files_equal": 17,
+    "original_solve_seconds": 275.9506095198449,
+    "refactored_solve_seconds": 204.8696900960058
+  },
+  "components": {
+    "passed": 27,
+    "failed": 0
+  },
+  "instructions_mirrored": true,
+  "economic_changes_adopted": [],
+  "credit_rule": "reviewed correction implemented in test package; D=0 GE blocked by unchanged entrant debt",
+  "renewal": "reported diagnostic difference from frozen reference, not absolute1e-6 certification",
+  "scope": "stationary test package only; no active production or transition replacement",
+  "whitespace_check": {
+    "authored_sources_pass": true,
+    "exact_evidence_preserved": "CSV CRLF line endings and two required unified-diff blank-context prefixes; no evidence bytes normalized"
+  }
+}

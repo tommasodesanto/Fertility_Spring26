@@ -1,0 +1,131 @@
+{
+  "array_comparison": {
+    "array_paths_compared": 87,
+    "array_paths_exact": 87,
+    "checked_elsewhere": {
+      "stationary_g_pre": "acceptance_oracle.fixed_price: exact equality of the frozen stationary reconstruction from the lab policy with the checkpoint stationary_g_pre"
+    },
+    "comparison_count": 87,
+    "lab_only": [],
+    "missing_in_lab": [],
+    "mode": "required_exact",
+    "not_exact": [],
+    "repeat_comparison_passed": true,
+    "strict_comparison_passed": true,
+    "strict_paths": true
+  },
+  "certificate": {
+    "lab_policy_probability_nonfinite_counts": {
+      "continuation_birth": 0,
+      "first_birth": 0,
+      "location": 0,
+      "tenure": 0
+    },
+    "lab_status": "ge_gates_passed_renewal_consistent_not_equivalence",
+    "old_policy_probability_nonfinite_counts": {
+      "continuation_birth": 0,
+      "first_birth": 0,
+      "location": 0,
+      "tenure": 0
+    },
+    "old_status": "ge_gates_passed_renewal_consistent_not_equivalence"
+  },
+  "job": {
+    "completed": {
+      "elapsed_seconds": 627,
+      "last_phase": "all_passed",
+      "rc": 0
+    },
+    "slurm_batch": "18851943.batch|COMPLETED|0:0|631|631|1||4962448K|0",
+    "slurm_summary_header": "JobID|State|ExitCode|ElapsedRaw|CPUTimeRAW|AllocCPUS|ReqMem|MaxRSS|MaxVMSize"
+  },
+  "parameter_identity": {
+    "lab_final_unexplained": [],
+    "lab_initial_identical": true,
+    "lab_vs_old_excluded": [
+      "eq_iter",
+      "native_inherited_distribution_evidence_dir"
+    ],
+    "lab_vs_old_final_identical": true,
+    "old_final_unexplained": [],
+    "old_initial_identical": true
+  },
+  "reporting": {
+    "fit_rows_lab_old": [
+      14,
+      14
+    ],
+    "lab_collected_png_sha256_match_receipt": true,
+    "lab_png_bytes": 1754914,
+    "parameter_rows_lab_old": [
+      31,
+      31
+    ],
+    "plot_hash_count_lab_old": [
+      17,
+      17
+    ],
+    "plot_hashes_equal": true,
+    "price": [
+      0.789870850567871
+    ],
+    "prices_equal_exactly": true,
+    "receipt_plots_hash_checked_flags": [
+      false,
+      false
+    ],
+    "tables": {
+      "parameters.csv": {
+        "lab_sha256": "9ecb45e649c86328861e047e5e6394b543303cc81dbc97d3bd1bd9c289c9c269",
+        "old_sha256": "9ecb45e649c86328861e047e5e6394b543303cc81dbc97d3bd1bd9c289c9c269",
+        "rows_equal": true,
+        "rows_excluding_header": 31,
+        "sha256_equal": true
+      },
+      "target_fit.csv": {
+        "lab_sha256": "5f5866ac59829bb8085b53af8c8f2a62324a097eb1c9136a6ba75f06796af1a8",
+        "old_sha256": "5f5866ac59829bb8085b53af8c8f2a62324a097eb1c9136a6ba75f06796af1a8",
+        "rows_equal": true,
+        "rows_excluding_header": 14,
+        "sha256_equal": true
+      }
+    }
+  },
+  "solve_timing_seconds": {
+    "allocated_cpus": 1,
+    "batch_max_rss": "4962448K",
+    "driver_steps": [
+      {
+        "return_code": 0,
+        "seconds": 219.584,
+        "step": "lab_ge",
+        "step_cap_seconds": 1200
+      },
+      {
+        "return_code": 0,
+        "seconds": 66.526,
+        "step": "lab_ge_certify",
+        "step_cap_seconds": 2474
+      },
+      {
+        "return_code": 0,
+        "seconds": 326.777,
+        "step": "old_ge",
+        "step_cap_seconds": 1200
+      },
+      {
+        "return_code": 0,
+        "seconds": 2.816,
+        "step": "compare_lab_old",
+        "step_cap_seconds": 2080
+      }
+    ],
+    "lab_engine_solve_stage": 204.8696900960058,
+    "old_engine_solve_stage": 275.9506095198449,
+    "requested_memory": "12G",
+    "slurm_cpu_time_raw_seconds": 631,
+    "slurm_elapsed_raw_seconds": 631,
+    "verify_phase_elapsed": 623
+  },
+  "source": "/scratch/td2248/projects/publication_refactor_20260929/results/ge_pair_18851943"
+}

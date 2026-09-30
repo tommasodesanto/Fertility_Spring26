@@ -1,0 +1,334 @@
+{
+ "arrays": 90,
+ "engine": "lab",
+ "engine_timings": {
+  "accepted": true,
+  "bellman_full": 0.0,
+  "bellman_mode": "reused_accepted_price",
+  "best_eq_error": 2.2985312852734116e-06,
+  "convergence_reason": "strict_tol",
+  "damped_final_eq_error": 0.064210880745158,
+  "distribution": 15.555655000003753,
+  "equilibrium_method": "direct_brent",
+  "final_eq_error": 2.2985312852734116e-06,
+  "income_process": "markov",
+  "iterations_completed": 1,
+  "markov_income_solve_time": 42.58881558300345,
+  "n_dist": 1,
+  "n_eval": 0,
+  "n_full": 0,
+  "price_cache_hits": 0,
+  "reused_bellman_seconds": 10.069472458009841,
+  "scalar_market_refine": {
+   "best_excess": -1.3441692882310008e-05,
+   "best_metric": 2.2985312852734116e-06,
+   "best_price": 0.7898708505678714,
+   "bracket_found": true,
+   "cache_hits": 0,
+   "directional_fallback_used": false,
+   "expansions": 1,
+   "initial_price": 0.8293629768335191,
+   "iterations": 2,
+   "method": "brent",
+   "price_evaluation_time_sec": 41.38168633299938,
+   "price_evaluations": 3,
+   "used": true
+  },
+  "strict_converged": true,
+  "unique_fast_price_evaluations": 4
+ },
+ "fiscal": {
+  "actual_accounts": {
+   "implied_balanced_payroll_tax": 0.0802807096194748,
+   "implied_balanced_pension_period": 0.9177840474640216,
+   "payroll_tax_base_period": 2.9632058966764054,
+   "payroll_tax_rate": 0.08028070961950022,
+   "payroll_tax_revenue": 0.2378882721338693,
+   "pension_budget_residual": 7.532863222081687e-14,
+   "pension_outlays": 0.23788827213379396,
+   "pension_period_units": 0.917784047463731,
+   "retiree_benefit_exposure": 0.2591985258309851,
+   "retiree_household_mass": 0.2591985258309851,
+   "scaled_pension_budget_residual": 3.1665551035835187e-13,
+   "worker_household_mass": 0.7408014741689772
+  },
+  "fiscal_gate": true,
+  "fiscal_tolerance": 1e-06,
+  "marginal_gate": true,
+  "marginal_tolerance": 1e-09,
+  "method": "exogenous_one_market_age_income_recursion",
+  "normalized_age_income_max_gap": 9.49008471972019e-15,
+  "predicted_accounts": {
+   "implied_balanced_payroll_tax": 0.08028070961950022,
+   "implied_balanced_pension_period": 0.917784047463731,
+   "payroll_tax_base_period": 2.9632058966759063,
+   "payroll_tax_rate": 0.08028070961950022,
+   "payroll_tax_revenue": 0.2378882721338292,
+   "pension_budget_residual": 0.0,
+   "pension_outlays": 0.2378882721338292,
+   "pension_period_units": 0.917784047463731,
+   "retiree_benefit_exposure": 0.25919852583102354,
+   "retiree_household_mass": 0.25919852583102354,
+   "scaled_pension_budget_residual": 0.0,
+   "worker_household_mass": 0.7408014741689765
+  }
+ },
+ "gates": {
+  "final_eq_error": 2.2985312852734116e-06,
+  "fiscal_gate": true,
+  "marginal_gate": true,
+  "normalized_age_income_max_gap": 9.49008471972019e-15,
+  "strict_converged": true,
+  "tol_eq": 2.5e-05
+ },
+ "identity": {
+  "bundle": {
+   "arrays_sha256": "a48ecb71055f979284e7d63ccfa19bca8570ff8a93635fd352918356c69ee0b0",
+   "artifact_fields_loaded": 0,
+   "bundle_json_sha256": "427e67a3d9dd663cd23c3f8533c55a1a64b4f9350d396c97b5c5bd4700bc90b7",
+   "checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d",
+   "label": "2007 stationary reference \u2014 block0506, September 28 verified export",
+   "manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+   "primitive_fields": 246,
+   "reference_price": [
+    0.7898695017462086
+   ]
+  },
+  "engine": "lab",
+  "imports_after_import": {
+   "refactor_lab": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/__init__.py",
+    "sha256": "9c90c420123ad07b8ba9cae481d020805f439fec38874c0f09c94be51769d8d4"
+   },
+   "refactor_lab.credit": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/credit.py",
+    "sha256": "2cf3d0a4a65d577d297262c55da1126c06033730482aab384ed6c7669751c07d"
+   },
+   "refactor_lab.engine": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/__init__.py",
+    "sha256": "c134867d538cf9b27bceaaeb70cfead4aec7706039f5b3b66fc006ff208bbb67"
+   },
+   "refactor_lab.engine.adult_entry": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/adult_entry.py",
+    "sha256": "e752178ad90d64c77575b70d0718a94d6f3b04463b03637d9af12e23f57bce3f"
+   },
+   "refactor_lab.engine.child_preferences": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/child_preferences.py",
+    "sha256": "887763b066bdd64efb2f23b97fac977abfa9630d1e194adb2148da24b2ff7123"
+   },
+   "refactor_lab.engine.distribution": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/distribution.py",
+    "sha256": "9da9be2525852f78771d735103f0de385c8a8028eff9ab564512627ed2df2e90"
+   },
+   "refactor_lab.engine.e5f_social_security": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/e5f_social_security.py",
+    "sha256": "df03621afd48135afb6c3fbdec1209bad9605c6133b9f6352fce28fc45c7961b"
+   },
+   "refactor_lab.engine.e5f_stationary_paygo": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/e5f_stationary_paygo.py",
+    "sha256": "7eeb7760b236711d40b3563d6d7a40548ba3cade6a646743c6fe3a02462a8569"
+   },
+   "refactor_lab.engine.equilibrium": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/equilibrium.py",
+    "sha256": "ca88909666802e92e396c44c0ea6f69eadbddb9e707bfec49cf1ec765d013fe9"
+   },
+   "refactor_lab.engine.household": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/household.py",
+    "sha256": "2a34f5f28c0c63ca3d24d9e759cd1b5b92aadaddb5fe04795e65abbc0b448082"
+   },
+   "refactor_lab.engine.joint_nested": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/joint_nested.py",
+    "sha256": "909bb9d02ecf8e196e339864572e7692e71a956c35002397c70a494a30bd620b"
+   },
+   "refactor_lab.engine.kernels": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/kernels.py",
+    "sha256": "fe7d43afdac234af71edd09e1260666e21c309dda83de4adc6a3abff35c3d5d4"
+   },
+   "refactor_lab.engine.parameters": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/parameters.py",
+    "sha256": "f8871ea7f026b0900f2cd89e2ecbe7f24fbc8b08e83ec46227533a11dea2e163"
+   },
+   "refactor_lab.engine.shared": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/shared.py",
+    "sha256": "1fbe36f75befe5fed67c490c39a65663f4c8896b078851693fb4bca533d07773"
+   },
+   "refactor_lab.engine.solver": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/solver.py",
+    "sha256": "19e6f9240a4ff7354c39031d35d734ea2c8cad2fbd1f60d128ebb049d587317c"
+   },
+   "refactor_lab.engine.utils": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/utils.py",
+    "sha256": "836d6768af4a9261fe28e758f88dcc8ca059afc277b7c03d36f179a510ebcf36"
+   },
+   "refactor_lab.engine.warm_price": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/warm_price.py",
+    "sha256": "bc3ff5c8df2a16a9ef753bfaabde914e09e7d3943de90c93be684ebeb0bf2518"
+   },
+   "refactor_lab.inputs": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/inputs.py",
+    "sha256": "45c156ced5afac626ad8c16d570cfd7e30b615b47b827a6a644b0d073f22f601"
+   }
+  },
+  "imports_after_solve": {
+   "refactor_lab": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/__init__.py",
+    "sha256": "9c90c420123ad07b8ba9cae481d020805f439fec38874c0f09c94be51769d8d4"
+   },
+   "refactor_lab.callcount": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/callcount.py",
+    "sha256": "59356bc65dc4bb3304af08d71b057fd24c76a1b08bc71ef483e10b67d332eb2b"
+   },
+   "refactor_lab.credit": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/credit.py",
+    "sha256": "2cf3d0a4a65d577d297262c55da1126c06033730482aab384ed6c7669751c07d"
+   },
+   "refactor_lab.engine": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/__init__.py",
+    "sha256": "c134867d538cf9b27bceaaeb70cfead4aec7706039f5b3b66fc006ff208bbb67"
+   },
+   "refactor_lab.engine.adult_entry": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/adult_entry.py",
+    "sha256": "e752178ad90d64c77575b70d0718a94d6f3b04463b03637d9af12e23f57bce3f"
+   },
+   "refactor_lab.engine.child_preferences": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/child_preferences.py",
+    "sha256": "887763b066bdd64efb2f23b97fac977abfa9630d1e194adb2148da24b2ff7123"
+   },
+   "refactor_lab.engine.distribution": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/distribution.py",
+    "sha256": "9da9be2525852f78771d735103f0de385c8a8028eff9ab564512627ed2df2e90"
+   },
+   "refactor_lab.engine.e5f_social_security": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/e5f_social_security.py",
+    "sha256": "df03621afd48135afb6c3fbdec1209bad9605c6133b9f6352fce28fc45c7961b"
+   },
+   "refactor_lab.engine.e5f_stationary_paygo": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/e5f_stationary_paygo.py",
+    "sha256": "7eeb7760b236711d40b3563d6d7a40548ba3cade6a646743c6fe3a02462a8569"
+   },
+   "refactor_lab.engine.equilibrium": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/equilibrium.py",
+    "sha256": "ca88909666802e92e396c44c0ea6f69eadbddb9e707bfec49cf1ec765d013fe9"
+   },
+   "refactor_lab.engine.household": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/household.py",
+    "sha256": "2a34f5f28c0c63ca3d24d9e759cd1b5b92aadaddb5fe04795e65abbc0b448082"
+   },
+   "refactor_lab.engine.joint_nested": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/joint_nested.py",
+    "sha256": "909bb9d02ecf8e196e339864572e7692e71a956c35002397c70a494a30bd620b"
+   },
+   "refactor_lab.engine.kernels": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/kernels.py",
+    "sha256": "fe7d43afdac234af71edd09e1260666e21c309dda83de4adc6a3abff35c3d5d4"
+   },
+   "refactor_lab.engine.parameters": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/parameters.py",
+    "sha256": "f8871ea7f026b0900f2cd89e2ecbe7f24fbc8b08e83ec46227533a11dea2e163"
+   },
+   "refactor_lab.engine.shared": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/shared.py",
+    "sha256": "1fbe36f75befe5fed67c490c39a65663f4c8896b078851693fb4bca533d07773"
+   },
+   "refactor_lab.engine.solver": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/solver.py",
+    "sha256": "19e6f9240a4ff7354c39031d35d734ea2c8cad2fbd1f60d128ebb049d587317c"
+   },
+   "refactor_lab.engine.utils": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/utils.py",
+    "sha256": "836d6768af4a9261fe28e758f88dcc8ca059afc277b7c03d36f179a510ebcf36"
+   },
+   "refactor_lab.engine.warm_price": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/engine/warm_price.py",
+    "sha256": "bc3ff5c8df2a16a9ef753bfaabde914e09e7d3943de90c93be684ebeb0bf2518"
+   },
+   "refactor_lab.inputs": {
+    "file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1/refactor_lab/inputs.py",
+    "sha256": "45c156ced5afac626ad8c16d570cfd7e30b615b47b827a6a644b0d073f22f601"
+   }
+  }
+ },
+ "nonfinite_arrays": {},
+ "parameter_differences": {
+  "eq_iter": "run_or_output_field"
+ },
+ "price": [
+  0.7898708505678714
+ ],
+ "profiled": {
+  "bellman_calls": 4,
+  "budget": {
+   "deadline_seconds": 900,
+   "max_lifecycle": 18,
+   "stop_reason": null
+  },
+  "calls": {
+   "attach_markov_market_accounting": 1,
+   "forward_distribution_markov_income": 5,
+   "pack_fast_solution_markov_income": 4,
+   "pack_solution_markov_income": 1,
+   "refine_one_market_markov_income": 1,
+   "solve_bellman_full_markov_income": 4,
+   "solve_markov_income_at_prices": 4,
+   "solve_markov_income_equilibrium": 1,
+   "upgrade_fast_markov_solution": 1
+  },
+  "final_payload_upgrades": 1,
+  "final_solution": "payload_upgrade (no additional household solve)",
+  "inclusive_seconds": {
+   "attach_markov_market_accounting": 1.2708012945950031e-05,
+   "forward_distribution_markov_income": 31.402547417019377,
+   "pack_fast_solution_markov_income": 0.000503667994053103,
+   "pack_solution_markov_income": 0.004063125001266599,
+   "refine_one_market_markov_income": 41.38230087500415,
+   "solve_bellman_full_markov_income": 68.11471554198943,
+   "solve_markov_income_at_prices": 83.97046424998553,
+   "solve_markov_income_equilibrium": 99.5287572080124,
+   "upgrade_fast_markov_solution": 15.555671417008853
+  },
+  "instrumentation": "sys.setprofile, verification-only, identical for both engines",
+  "kfe_calls": 5,
+  "lifecycle_evaluations": 4,
+  "note": "lifecycle_evaluations counts every at-price solve (fast and full); unique_fast_price_evaluations from the engine already includes refinement entries.",
+  "profiled_solve_stage_seconds": 99.54669158300385
+ },
+ "renewal": {
+  "classification": "consistent",
+  "diagnostic_threshold": 1e-06,
+  "note": "lead-selected diagnostic; no psi normalization or closure change",
+  "reference_relative_gap_from_adult_entry_gate": 7.919966966208499e-07,
+  "relative_gap": 1.702812197750238e-06
+ },
+ "runtime": {
+  "executable": "/Users/tommasodesanto/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/bin/python3.13",
+  "machine": "arm64",
+  "numba": "0.61.2",
+  "numba_cache_dir": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_local_pair_v1/cache_indexed",
+  "numba_threads": 1,
+  "numpy": "2.2.6",
+  "numpy_build": {
+   "blas": "{'name': 'accelerate', 'found': True, 'version': 'unknown', 'detection method': 'system', 'include directory': 'unknown', 'lib directory': 'unknown', 'openblas configuration': 'unknown', 'pc file directory': 'unknown'}",
+   "lapack": "{'name': 'accelerate', 'found': True, 'version': 'unknown', 'detection method': 'system', 'include directory': 'unknown', 'lib directory': 'unknown', 'openblas configuration': 'unknown', 'pc file directory': 'unknown'}"
+  },
+  "processor": "arm",
+  "python": "3.13.15",
+  "python_implementation": "CPython",
+  "pythonpath": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/native_indexed_src_v1",
+  "release": "25.6.0",
+  "scipy": "1.15.3",
+  "system": "Darwin"
+ },
+ "scope": "native GE gates only; frozen calendar/observer certificate (113 paths, 14/31, 17 plots) is separate",
+ "start_price": [
+  0.8293629768335191
+ ],
+ "status": "native_GE_benchmark_only",
+ "timing": {
+  "import": 0.09056637500179932,
+  "inputs": 0.05047291700611822,
+  "process_total_in_python": 101.92758433400013,
+  "serialization": 2.2293524999986403,
+  "solve_stage_profiled": 99.54670295800315
+ },
+ "unexplained_parameter_differences": []
+}

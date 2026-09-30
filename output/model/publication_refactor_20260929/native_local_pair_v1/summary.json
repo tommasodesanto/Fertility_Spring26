@@ -1,0 +1,36 @@
+{
+  "status": "passed_native_GE_pair_only",
+  "reference": "2007 stationary reference \u2014 block0506, September 28 verified export",
+  "seconds": {
+    "original": 152.65009916599956,
+    "indexed": 99.54670295800315
+  },
+  "speedup": 1.533452084599926,
+  "seconds_reduction_pct": 34.7876591617861,
+  "arrays_exact": 90,
+  "all_effective_parameters_equal": true,
+  "core_count": 1,
+  "cache": "cold per engine",
+  "machine": "Apple M5 Pro arm64",
+  "includes": "full stationary GE solve plus identical profiling/JIT",
+  "excludes": "historical calendar/table/17plot certificate",
+  "budget": {
+    "original": {
+      "rc": 0,
+      "wall_seconds": 156.000143917,
+      "peak_sampled_tree_rss_gib": 1.86480712890625
+    },
+    "indexed": {
+      "rc": 0,
+      "wall_seconds": 103.097943,
+      "peak_sampled_tree_rss_gib": 1.90911865234375
+    }
+  },
+  "renewal_diagnostic": {
+    "classification": "consistent",
+    "diagnostic_threshold": 1e-06,
+    "note": "lead-selected diagnostic; no psi normalization or closure change",
+    "reference_relative_gap_from_adult_entry_gate": 7.919966966208499e-07,
+    "relative_gap": 1.702812197750238e-06
+  }
+}
