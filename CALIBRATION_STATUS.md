@@ -1,5 +1,45 @@
 # Calibration Status
 
+## September 30 evening — three isolated utility comparisons launched
+
+Torch array **18902151** runs three author-authorized fixed-parameter
+comparisons, ending by **19:41 New York / 23:41 UTC** including preparation.
+The twelve calibration searches below remain unchanged. These additional jobs
+are mechanism diagnostics, not parameter estimates or production adoption.
+The requested local estimation does not fit the initial thirty-minute envelope;
+no optimizer or automatic extension is authorized by this launch.
+
+All three use the verified nonnegative-wealth pilot-selected vector on 120×9,
+mean-preserving nonnegative five-bin entrant wealth, zero unsecured borrowing,
+the common 2% rate, corrected financing, unchanged earnings/fiscal/demographic
+inputs, fixed H0 and psi, and the same fourteen reported / ten scored targets.
+Price clears birth renewal and population clears absolute housing supply.
+Experimental utility changes relative to that compensated-share control are:
+
+- `floor`: replace child-dependent housing shares and A(m) with the historical
+  parenthood-only physical-room requirement, h_P=1.8900476600128304; retain
+  nonlinear child benefits and the equivalence scale.
+- `no_A`: remove A(m) only; retain child-dependent housing shares.
+- `constant_alpha`: remove A(m) and fix the share to its childless value, with
+  no housing floor; retain nonlinear benefits and the equivalence scale.
+
+The historical floor is an authenticated diagnostic starting value, not an
+estimate for this environment. Owners retain services chi*(rooms-h_P), renters
+rooms-h_P; the same floor applies whenever children are currently at home.
+Each arm is capped at two full GEs (initial and independent repeat), with
+unchanged feasibility/accounting gates, source authentication and standard
+14-target/31-parameter/17-PNG reporting. Failed roots or infeasible states are
+reported, never repaired by changing assumptions. Component and mocked-loop
+checks pass; each job must pass its frozen-runtime preflight before solving.
+Packet: `output/model/fixed_reference_economics_20260928/parenthood_floor_quick_v1/`.
+Initial array18901961 passed all three preflights but stopped before model
+evaluation because the native path authenticated twice in one interpreter.
+Its failure receipts and immutable source are retained. Array18902151 uses
+an isolated orchestration correction: preflight authentication remains in its
+own process; native execution authenticates once and retains all parameter
+checks. No economic or numerical gate changed, and the original deadline is
+unchanged. The second remote packet is `/scratch/td2248/projects/parenthood_floor_quick_v2`.
+
 ## September 30 evening — twelve parallel searches running
 
 The author requests substantially more parallel calibration. Nine additional

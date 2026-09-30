@@ -1,0 +1,27 @@
+WARNING: While bind mounting '/scratch/td2248/projects/parenthood_floor_quick_v1/source/code/model/tools/e5f_evening_calibration_runtime.py:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py': destination is already in the mount point list
+WARNING: While bind mounting '/scratch/td2248/projects/parenthood_floor_quick_v1/source/output/model/fertility_identification_20260928/contract_v1/primary_objective.json:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/contract_v1/primary_objective.json': destination is already in the mount point list
+WARNING: While bind mounting '/scratch/td2248/projects/parenthood_floor_quick_v1/source/output/model/fertility_identification_20260928/two_stream_overnight_v1/config.json:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_stream_overnight_v1/config.json': destination is already in the mount point list
+WARNING: While bind mounting '/scratch/td2248/projects/parenthood_floor_quick_v1/source/output/model/fertility_identification_20260928/two_stream_overnight_v1/search.py:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_stream_overnight_v1/search.py': destination is already in the mount point list
+Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/parenthood_floor_quick_v1/runner.py", line 178, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/parenthood_floor_quick_v1/runner.py", line 150, in main
+    evaluate=pilot.native_evaluator(args.out,'nonnegative_mean',Q,grid,deadline)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/runner.py", line 140, in native_evaluator
+    base.authored.authenticate_frozen(ctx)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/parenthood_floor_quick_v1/runner.py", line 87, in authenticate
+    result=original(ctx);fp=ctx['fp']
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/driver.py", line 100, in authenticate_frozen
+    manifest, _unused, objective, runtime, prepared, reference = fp.authenticate(auth_dir)
+                                                                 ~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/sources/fixed_price_v1/run_fixed_price.py", line 136, in authenticate
+    prepared = runtime.setup(dict(contract, objective=manifest['objective']), objective,
+                             output / 'runtime_preparation')
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py", line 109, in setup
+    prepared=native.setup(Path(output)/'native_preparation',contract=Path(ancestry['path']),
+                          reference=Path(contract['reference_case']),fixed_reference_price=True)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_current_transition_runtime.py", line 209, in setup
+    raise RuntimeError('Fresh interpreter required: model already imported')
+RuntimeError: Fresh interpreter required: model already imported
