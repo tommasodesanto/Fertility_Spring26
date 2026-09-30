@@ -1,5 +1,7 @@
 # Proposed 120 wealth × 9 income numerical comparison
 
+**Follow-up status:** the [full-GE runner](runner/README.md) now passes the actual subprocess/controller loop with mocked model evaluations, 64 parameter-drift rejection checks, and a synthetic policy-shape comparison. The lead independently repeated these checks. These are zero-solve tests; no actual 120×9 equilibrium or calibration is established by them. The preparation evidence below is retained as the input-construction record.
+
 Preparation only, September 30. No lifecycle solve, price solve, calibration,
 remote job or reference adoption has run. [preflight.json](preflight.json)
 authenticates the inputs and records checks, source pins and unresolved launch
