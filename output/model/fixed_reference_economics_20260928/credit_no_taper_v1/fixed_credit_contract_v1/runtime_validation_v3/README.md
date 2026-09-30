@@ -10,6 +10,24 @@ v3 copies the v2 driver and economic plan. Exact changes from v2 are: (1) both S
 
 ## Staging and launch
 
+**September 30 closeout:** control **18849552 COMPLETED 0:0**, 129 seconds
+scheduler wall time, one lifecycle evaluation. Lead independently verified
+remote/local receipt hashes, driver/plan/checkpoint pins, preserved launch
+deadlines, all **113 native** and **67 solution** array paths exactly equal
+and finite, all **14 fit rows** and **31 parameter estimates** exactly equal,
+and all **17 retained standard PNG hashes**. Native fiscal, renewal, purchase,
+estate and occupied-state checks passed under the unchanged gates; the baseline
+housing residual also passed the exact-control market gate. This is an exact
+reference replay at its retained price, not a new equilibrium search.
+
+Compact complete tables and receipts: `collected/control/target_fit.csv`,
+`parameters.csv`, `receipt.json`, `control_arrays.json`, and `verification.json`.
+Checkpoints and caches remain on Torch. The baseline estate-counterparty and
+finite-grid caveats remain. The revised zero-credit GE is uncomputed because
+the two inherited entrant states are infeasible; no entry/credit choice was
+made. Validation is complete and the hourly heartbeat is paused. No successor
+or retry is authorized by this completed packet.
+
 **September 29 23:45 New York monitor:** smoke **18846467 COMPLETED 0:0**
 in 41 seconds, zero lifecycle evaluations. Lead authenticated receipt pins,
 module origins, compiled fixtures, and actual-checkpoint cash arithmetic.

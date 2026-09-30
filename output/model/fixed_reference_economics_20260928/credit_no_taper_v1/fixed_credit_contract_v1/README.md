@@ -83,3 +83,11 @@ After lead receipt/source review, the one authorized scalar-unset exact control
 was submitted as **18849552**. Do not duplicate it; pins, receipts and successor
 paths are recorded in `runtime_validation_v3/README.md`. A valid revised-rule
 GE still needs the author's entry/credit decision.
+
+September 30 closeout: **18849552 passed** in 129 seconds, one lifecycle
+evaluation; 113 native and 67 solution arrays, all 14 fit rows and all 31
+parameter estimates match exactly. The 17 retained standard plot hashes
+were verified. Full compact receipts/tables are in
+`runtime_validation_v3/collected/control/`. The revised zero-credit GE remains
+uncomputed due to inherited entrant infeasibility. The monitor is paused;
+there are no pending numerical jobs or remaining runs in this packet.

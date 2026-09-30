@@ -42,8 +42,14 @@ have negative cash even before rent and consumption; buying is also infeasible
 at nonnegative prices. Smoke **18846467 passed** in 41 seconds and confirmed
 this arithmetic using the authenticated checkpoint, with zero lifecycle solves.
 The lead reviewed pins, overlay origins and compiled fixtures, then submitted
-the one authorized scalar-unset baseline replay **18849552**. Its receipt is
-pending; no revised-rule GE or reference switch has occurred.
+the one authorized scalar-unset baseline replay **18849552**. It completed
+successfully in 129 seconds, one lifecycle evaluation: all 113 native and 67
+solution array paths are exact and finite, all 14 fit rows and 31 estimates
+match, and all 17 retained plot hashes are verified. Unchanged scientific gates
+and launch deadlines passed. Compact complete tables/receipts are in
+`runtime_validation_v3/collected/control/`. Validation is complete and monitoring
+paused; no revised-rule GE or reference switch has occurred. The infeasible
+entrant-debt contract remains an outstanding author decision.
 
 ## September 29 — frozen-reference renter-debt comparison (not adopted)
 
