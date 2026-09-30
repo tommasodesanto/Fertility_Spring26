@@ -25,7 +25,7 @@
 \begin{frame}{Model review and revisions}
 \framesubtitle{JMP progress, September 17--30, 2026 \qquad | \qquad Tommaso De Santo}
 \small
-I reviewed preferences, household finance, demographic accounting, and the empirical calibration inputs.
+I reviewed the full model and calibration: preferences, borrowing rules, demographic accounting, equilibrium conditions, empirical measurements, targets, and the estimation procedure.
 \medskip
 \begin{itemize}\setlength\itemsep{7pt}
  \item Replaced the minimum-housing requirement with a first-child increase in the housing expenditure share.
@@ -135,9 +135,9 @@ person and year effects; survey weights; 95\% pointwise intervals.
 
 % 6: Adopted national inputs and empirical counterparts; September 28 reference.
 \begin{frame}{Calibration strategy and inputs}
-\small
-I recalibrated the 2007 stationary economy after revising the empirical inputs.
-\medskip
+\footnotesize
+I recalibrated a stationary economy representing 2007, using national measures of housing, earnings, wealth, and fertility.
+\par\smallskip
 \begin{center}
 \begin{tabular}{lll}
 \toprule
@@ -150,14 +150,14 @@ Annual depreciation / property tax & 1.416\% / 1.060\% & National housing inputs
 \bottomrule
 \end{tabular}
 \end{center}
-\medskip
-\begin{itemize}\setlength\itemsep{4pt}
- \item The calibration matches fertility, wealth, housing size, and tenure; completed fertility is normalized to 2.1.
- \item The first-birth housing comparison still uses a model proxy for the empirical event study.
+\begin{itemize}\setlength\itemsep{3pt}
+ \item Fixed inputs include earnings and demographic processes, housing depreciation and taxes, the interest rate, and mortgage financing.
+ \item At each candidate parameter vector, I solve household choices and housing-market equilibrium, adjusting $\psi$ separately to match completed fertility of 2.1.
+ \item The objective is a weighted sum of squared gaps for ten moments. Three further moments are retained for validation; the fertility normalization is reported separately.
 \end{itemize}
+\par\smallskip The weights set working error scales; they are not an estimated joint covariance matrix.
 \vfill
-A period is four years. Each dependent child leaves with probability $2/9$;
-adult entry is split equally between 16 and 20 years after birth.
+The first-birth housing comparison uses a model proxy for the empirical event study.
 \end{frame}
 
 % 7: Full 14-row 2007 stationary reference fit; ten scored moments plus normalization.
@@ -193,7 +193,7 @@ Recent-parent ownership difference (pp) & 12.761 & 11.955 \\
 % 8: Ten free reference coordinates and normalized child benefit.
 \begin{frame}{Calibrated parameters}
 \small
-The reference estimates ten free parameters and separately normalizes the child-benefit level.
+Ten parameters are estimated jointly; $\psi$ is adjusted separately to match completed fertility.
 \medskip
 \fontsize{9}{10.7}\selectfont
 \begin{center}
@@ -218,32 +218,23 @@ $\psi$ & Child-benefit level (normalized) & 0.136 \\
 }
 \end{center}
 \vfill
-\footnotesize Fixed inputs: $\sigma=2$; $\alpha_0=0.733$; annual interest 2\%; mortgage-financed share 80\%.
+\footnotesize Fixed inputs: $\sigma=2$; $\alpha_0=0.733$; annual interest 2\%; mortgage-financed share 80\%. The fitted values are conditional on these restrictions.
 \end{frame}
 
-% 9: Later experimental age-25 fertility comparisons; no adoption implied.
-\begin{frame}{Fertility at young ages}
+% 9: Identification discussion for the ten-parameter calibration.
+\begin{frame}{Calibration and identification}
 \small
-Subsequent experimental calibrations, with completed fertility normalized to 2.1:
-\medskip
-\begin{center}
-\begin{tabular}{lrrr}
-\toprule
-Age-25 moment & Data & \shortstack{One birth\\per period} & \shortstack{Two-birth\\option} \\
-\midrule
-Children per woman, capped at three & 0.810 & 0.530 & 0.606 \\
-Mothers (\%) & 45.725 & 44.782 & 43.773 \\
-Children per mother, capped at three & 1.770 & 1.185 & 1.385 \\
-\bottomrule
-\end{tabular}
-\end{center}
+I reviewed which empirical variation disciplines each parameter block; the mapping is joint rather than one parameter per moment.
 \medskip
 \begin{itemize}\setlength\itemsep{4pt}
- \item The share of mothers is close to the data; births among young mothers are too few.
- \item Allowing two births per period closes 27.1\% of the child-count gap, with worse fit elsewhere.
+\footnotesize
+ \item Housing: mean rooms and first-birth room changes discipline supply scale and the child housing-share loading; ownership levels and parenthood differences discipline the owner premium and tenure tastes.
+ \item Saving: wealth relative to earnings and child-directed bequest flows discipline patience and bequest strength; older wealth dispersion provides an additional check.
+ \item Fertility: childlessness, first-birth timing, the one-child share among mothers, and children per woman at age 25 discipline the first-birth cost, birth tastes, and child-benefit curvature.
+ \item Identification: I checked local moment responses to parameter changes. Some combinations are weakly distinguished, especially child-benefit curvature in a later experimental calibration; parameter confidence intervals are not yet available.
 \end{itemize}
-\vfill
-The extension also adds a taste draw, so this comparison does not isolate birth spacing.
+\par\medskip
+\small The main remaining fit problem is the number of children among young mothers. Matching the share of mothers alone would hide that miss.
 \end{frame}
 
 % 10: Completed, experimental entrant-wealth calibration pilots; no adoption.

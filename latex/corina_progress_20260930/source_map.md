@@ -92,6 +92,12 @@ that closure must not be assigned to the September 28 reference.
    Pension/earnings compares household means including zeros, not individual
    replacement rates. Bequest recipient scope, income proxies and the model
    first-birth housing observer retain documented empirical counterpart gaps.
+   The weighted squared-gap objective is implemented in
+   `code/model/tools/e5f_calibration_runtime.py`, lines 122 and 324.
+   The separate completed-fertility normalization, ten searched coordinates,
+   ten scored moments and three validation rows are authenticated by the
+   reference fit and parameter CSVs. Working-weight limitations are explained
+   in `docs/model/calibration_identification_review_20260929.md`.
 
 7. **2007 stationary calibration.** Exact fourteen-row source:
    `output/model/fertility_identification_20260928/resume_v1/selected_export/primary/target_fit.csv`.
@@ -108,17 +114,16 @@ that closure must not be assigned to the September 28 reference.
    full CSV. Both fertility taste scales are near their lower bounds under the
    inherited 1%-of-range screen, but neither equals its lower bound.
 
-9. **Fertility at young ages.**
-   `output/model/fertility_identification_20260928/two_stream_overnight_v1/comparison_v1/age25_decomposition_inputs.csv`
-   and `morning_readout_v1/RESULTS.md`. Use `Original selected` for E01 and
-   `Two-birth selected` for E02, not the separate block0506 `Reference` row.
-   The 27.1% gap closure is
-   (.6060544766097269−.5304463498285714)/(.8095276384290021−.5304463498285714).
-   Both selected candidates passed repeats and remain unadopted. E02 adds an
-   independent taste opportunity and common event-time proxy, so it does not
-   isolate spacing alone. Any curvature discussion is grounded in
-   `docs/model/calibration_identification_review_20260929.md`: the Jacobian is
-   at a search-round center, not a fresh selected-point identification test.
+9. **Calibration and identification.**
+   `docs/model/calibration_identification_review_20260929.md`, sections
+   "What the Jacobian means", "Are the parameters the right ones", and
+   "What the fertility miss tells us". Parameter/moment mappings are economic
+   rationales for joint estimation, not one-to-one identification proofs.
+   Weak curvature evidence is at the later E01 search-round center, not a fresh
+   selected-point test or statistical nonidentification result. No parameter
+   confidence intervals have been established. The age-25 decomposition in
+   `evidence/age25_comparison.csv` grounds the young-mother count miss.
+   The earlier E01/E02 comparison remains in supporting evidence.
 
 10. **Credit and further calibration.** Current completion authority:
     `CALIBRATION_STATUS.md` and
@@ -137,6 +142,9 @@ that closure must not be assigned to the September 28 reference.
     their running statements are superseded by the terminal results.
 
 ## Retained supporting evidence, no longer displayed
+
+The E01/E02 age-25 comparison is retained in `evidence/age25_comparison.csv`;
+the two-birth extension remains unadopted and does not isolate spacing alone.
 
 The early sandbox mechanism table is sourced by
 `docs/model/situation_report_20260918.md`, section 1. The completed prescribed-price

@@ -55,8 +55,10 @@ and brief selected problems. The ten-frame order is:
 6. Calibration strategy and inputs
 7. 2007 stationary calibration
 8. Calibrated parameters
-9. Fertility at young ages
+9. Calibration and identification
 10. Credit and further calibration
+
+The opening explicitly states the full model and calibration review. Calibration exposition explains fixed inputs, the equilibrium solve at each candidate, the separate child-benefit normalization, scored versus validation moments, working weights, and the joint parameter-to-moment mapping. The identification slide distinguishes local sensitivity from statistical precision.
 
 The fit retains all fourteen rows in three columns. The parameter frame reports
 all ten searched estimates and the normalized child-benefit level; complete

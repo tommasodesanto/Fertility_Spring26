@@ -1,6 +1,6 @@
 {
   "review_date": "2026-09-30",
-  "review_completed_utc": "2026-09-30T22:38:55.624657+00:00",
+  "review_completed_utc": "2026-09-30T22:43:39.032741+00:00",
   "frames": 10,
   "pdf_pages": 10,
   "overlays": false,
@@ -120,8 +120,8 @@
     "upload_attempted_in_this_chat": false,
     "library_ids_created": []
   },
-  "pdf_sha256": "b288bacaeba38ba4caf5db73e35cf15149fde92e4f4184f95bf6ed07fc85dda2",
-  "tex_sha256": "5d8cecd3fefeeb7303a28705ef55291b1e32c9b99a49ef8fca72bd04df292fd6",
+  "pdf_sha256": "263c5f60f9402b3e65b7cf844266322ab68e3bbe1f679d71c2b10af24e6d1e78",
+  "tex_sha256": "afd30a05e080c7c69fb6536652829303daba51034100ce4fc0e295d101da01c2",
   "source_history": "archive/received; original task folder preserved",
   "pilot_completion_evidence": {
     "path": "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/final_verification.json",
@@ -172,7 +172,7 @@
       "Calibration strategy and inputs",
       "2007 stationary calibration",
       "Calibrated parameters",
-      "Fertility at young ages",
+      "Calibration and identification",
       "Credit and further calibration"
     ],
     "full_reference_fit_unchanged": true,
@@ -183,7 +183,7 @@
     "computation_reduced_to_one_line": true,
     "prose_route": "Lead-specified rewrite applied by Luna; economics independently checked by Sol and lead. Opus unavailable because CLI not logged in."
   },
-  "latest_slide_revision": {
+  "previous_child_utility_revision": {
     "request": "Write out the child benefit directly in utility and use natural economic prose.",
     "previous_commit": "e019038f",
     "changed_pages_rechecked": [
@@ -193,5 +193,27 @@
     "native_latex_compiler": "success",
     "compile_passes": 2,
     "material_layout_warnings": 0
+  },
+  "latest_slide_revision": {
+    "request": "Add substantially more calibration detail and state the full model and calibration review.",
+    "previous_commit": "c608f6da",
+    "changed_pages_rechecked": [
+      1,
+      6,
+      8,
+      9
+    ],
+    "reference_fit_and_parameter_table_rows_unchanged": true,
+    "native_latex_compiler": "success",
+    "compile_passes": 2,
+    "material_layout_warnings": 0,
+    "route": "Lead specified and verified economics; Luna applied bounded LaTeX edits.",
+    "changes": [
+      "Explicit full review statement",
+      "Fixed versus estimated inputs",
+      "Candidate equilibrium solve and separate fertility normalization",
+      "Weighted objective and scored versus validation moments",
+      "Joint parameter-to-moment mapping and identification limits"
+    ]
   }
 }
