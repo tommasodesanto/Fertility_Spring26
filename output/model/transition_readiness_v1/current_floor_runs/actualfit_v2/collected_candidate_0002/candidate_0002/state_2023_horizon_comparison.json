@@ -1,0 +1,150 @@
+{
+  "passed": false,
+  "available": true,
+  "tolerance": 0.001,
+  "state_value_integrity": true,
+  "state_gaps": {
+    "population_absolute_gap": 3.14645577126349e-06,
+    "population_relative_gap": 3.4197831906659505e-06,
+    "normalized_distribution_l1": 0.0015694665555649686,
+    "scheduled_entries_relative_l1": 0.00012449828914814346,
+    "scheduled_raw_entries_relative_l1": 0.00013112457289380847
+  },
+  "values": {
+    "current_2023_V": {
+      "short": {
+        "shape": [
+          120,
+          6,
+          1,
+          17,
+          9,
+          4,
+          4
+        ],
+        "dtype": "float64",
+        "finite": true,
+        "sha256": "45ec82ceaff6c62408b27916bcf8e7c0e8df4431f0f4d6ed989ad2201946bf4f"
+      },
+      "long": {
+        "shape": [
+          120,
+          6,
+          1,
+          17,
+          9,
+          4,
+          4
+        ],
+        "dtype": "float64",
+        "finite": true,
+        "sha256": "a53da01fe640248f7fe01ac5489d891a11dafc398181c583f602bcaedcdcb775"
+      },
+      "gating": false,
+      "occupied_finite_weight": 1.0,
+      "occupied_weighted_absolute_gap": 0.0006561361867315993,
+      "occupied_weighted_relative_gap": 0.00045318661449927466
+    },
+    "continuation_2027_V": {
+      "short": {
+        "shape": [
+          120,
+          6,
+          1,
+          17,
+          9,
+          4,
+          4
+        ],
+        "dtype": "float64",
+        "finite": true,
+        "sha256": "7d63fd8021e2d7b8982c25eb3b71b9f515017f12142d6bce4772e737b82d588b"
+      },
+      "long": {
+        "shape": [
+          120,
+          6,
+          1,
+          17,
+          9,
+          4,
+          4
+        ],
+        "dtype": "float64",
+        "finite": true,
+        "sha256": "dc32552bb6223456c7650079f3bfbcb1cdd3cd386a1fefb403782f7ea100ae20"
+      },
+      "gating": false,
+      "occupied_finite_weight": 1.0,
+      "occupied_weighted_absolute_gap": 0.0007799081442209804,
+      "occupied_weighted_relative_gap": 0.0005325797631154604
+    }
+  },
+  "forecasts": {
+    "prices": {
+      "short": {
+        "shape": [
+          8
+        ],
+        "dtype": "float64",
+        "finite": true,
+        "sha256": "6bd74f2de83d31a0214f25e8f782febd5dad34fe0b17e8c8adda69dee1215473"
+      },
+      "long": {
+        "shape": [
+          12
+        ],
+        "dtype": "float64",
+        "finite": true,
+        "sha256": "c063ed40877da671c4dcd3a119e49419d8ae11b3c4cd4b159a57b6b0530ccb33"
+      },
+      "overlap_periods": 8,
+      "maximum_overlap_relative_gap": 0.0031403454023043306,
+      "gating": false
+    },
+    "pensions": {
+      "short": {
+        "shape": [
+          8
+        ],
+        "dtype": "float64",
+        "finite": true,
+        "sha256": "3260f9ba4c2f7ab055f612ac084304c3139d55c031a873ff0518e4968bf53f02"
+      },
+      "long": {
+        "shape": [
+          12
+        ],
+        "dtype": "float64",
+        "finite": true,
+        "sha256": "5e0753c893dca08193f6a0903c4ee06a32a3d5b6f6179b4f50768a866c72165a"
+      },
+      "overlap_periods": 8,
+      "maximum_overlap_relative_gap": 0.00011004229802785448,
+      "gating": false
+    },
+    "psi_path": {
+      "short": {
+        "shape": [
+          8
+        ],
+        "dtype": "float64",
+        "finite": true,
+        "sha256": "452ee444e0087454886621f4fed8e66927c8a7267b2ae8867f495ac6c6ef80aa"
+      },
+      "long": {
+        "shape": [
+          12
+        ],
+        "dtype": "float64",
+        "finite": true,
+        "sha256": "8e3a7b1f42ceba51b2b59cc3a1962518a39559df4214a0ddfdeab10e86605d3d"
+      },
+      "overlap_periods": 8,
+      "maximum_overlap_relative_gap": 0.0,
+      "gating": false
+    }
+  },
+  "queue_metric": "L1 difference divided by maximum total absolute queue mass; retains physical queue scaling",
+  "value_forecast_disclosure": "Reported without a new acceptance tolerance; complete actual arrays saved in 2023 packet"
+}
