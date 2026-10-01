@@ -1,0 +1,476 @@
+{
+  "checked_epoch": 1790872184.795906,
+  "checked_utc": "2026-10-01T16:29:44.795906+00:00",
+  "checked_new_york": "2026-10-01T12:29:44.795906-04:00",
+  "scope": {
+    "array": "18958130",
+    "included_original_chains": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "replacement_job": "18958549_1",
+    "excluded_failed_original_chain": 1
+  },
+  "totals": {
+    "case_records": 199,
+    "admissible_computed_ge": 199,
+    "objective_calls": 207,
+    "nonpasses": 0,
+    "fatal_failures": 0,
+    "selected_postchecks": 0,
+    "search_completed_receipts": 0
+  },
+  "best_original_weight": {
+    "chain": "chain_0",
+    "case": "0006_nm",
+    "loss": 30.99909262396404,
+    "price": 0.7188481029285891,
+    "population": 0.920284415998407,
+    "verified": false,
+    "point_packet": "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/best_provisional_20261001T162944Z_chain_0_0006_nm"
+  },
+  "case_runtime_seconds": {
+    "observed_min": 44.10886311531067,
+    "observed_max": 195.15641951560974,
+    "per_chain": {
+      "chain_0": {
+        "count": 23,
+        "minimum": 44.10886311531067,
+        "median": 151.41669154167175,
+        "maximum": 192.2454822063446
+      },
+      "chain_1_replacement_1": {
+        "count": 24,
+        "minimum": 89.35392737388611,
+        "median": 124.02798426151276,
+        "maximum": 175.977792263031
+      },
+      "chain_2": {
+        "count": 22,
+        "minimum": 111.77149486541748,
+        "median": 152.62095022201538,
+        "maximum": 195.15641951560974
+      },
+      "chain_3": {
+        "count": 25,
+        "minimum": 97.23859906196594,
+        "median": 132.397301197052,
+        "maximum": 176.62601733207703
+      },
+      "chain_4": {
+        "count": 26,
+        "minimum": 108.82285141944885,
+        "median": 131.16509449481964,
+        "maximum": 160.98436570167542
+      },
+      "chain_5": {
+        "count": 31,
+        "minimum": 85.63758969306946,
+        "median": 117.46436524391174,
+        "maximum": 137.49719762802124
+      },
+      "chain_6": {
+        "count": 25,
+        "minimum": 100.62202763557434,
+        "median": 141.42895030975342,
+        "maximum": 162.47421002388
+      },
+      "chain_7": {
+        "count": 23,
+        "minimum": 115.39360332489014,
+        "median": 154.9022340774536,
+        "maximum": 178.8299036026001
+      }
+    }
+  },
+  "deadline_epoch": 1790875766.0,
+  "seconds_to_deadline": 3581.2040939331055,
+  "chains": [
+    {
+      "chain": "chain_0",
+      "weight_profile": "base_control",
+      "completed_case_records": 23,
+      "admissible_computed_ge": 23,
+      "objective_calls": 24,
+      "case_statuses": {
+        "passed": 23
+      },
+      "passed_case_seconds": {
+        "count": 23,
+        "minimum": 44.10886311531067,
+        "median": 151.41669154167175,
+        "maximum": 192.2454822063446
+      },
+      "latest_search": {
+        "status": "running_full_GE",
+        "label": "0023_nm",
+        "objective_calls": 24,
+        "completed_full_ge": 23,
+        "deadline_epoch": 1790875766.0
+      },
+      "native_latest": {
+        "status": "lifecycle_claimed",
+        "label": "root_02",
+        "lifecycle_used": 4,
+        "lifecycle_remaining": 28,
+        "time_epoch": 1790872184.0030007,
+        "deadline_epoch": 1790874866.0
+      },
+      "failure": null,
+      "search_completion": null,
+      "selected_postcheck": null,
+      "best_original_weight": {
+        "label": "0006_nm",
+        "base_loss": 30.99909262396404,
+        "price": 0.7188481029285891,
+        "population": 0.920284415998407,
+        "seconds": 108.09804368019104,
+        "status": "passed",
+        "exploration_unverified": true,
+        "experimental_not_adopted": true
+      }
+    },
+    {
+      "chain": "chain_1_replacement_1",
+      "weight_profile": "base_control",
+      "completed_case_records": 24,
+      "admissible_computed_ge": 24,
+      "objective_calls": 25,
+      "case_statuses": {
+        "passed": 24
+      },
+      "passed_case_seconds": {
+        "count": 24,
+        "minimum": 89.35392737388611,
+        "median": 124.02798426151276,
+        "maximum": 175.977792263031
+      },
+      "latest_search": {
+        "status": "running_full_GE",
+        "label": "0024_nm",
+        "objective_calls": 25,
+        "completed_full_ge": 24,
+        "deadline_epoch": 1790875766.0
+      },
+      "native_latest": {
+        "status": "lifecycle_claimed",
+        "label": "expand_01",
+        "lifecycle_used": 2,
+        "lifecycle_remaining": 30,
+        "time_epoch": 1790872174.9314072,
+        "deadline_epoch": 1790874866.0
+      },
+      "failure": null,
+      "search_completion": null,
+      "selected_postcheck": null,
+      "best_original_weight": {
+        "label": "0015_nm",
+        "base_loss": 55.20232015630912,
+        "price": 0.7210233320004474,
+        "population": 0.9309476376968554,
+        "seconds": 142.51504945755005,
+        "status": "passed",
+        "exploration_unverified": true,
+        "experimental_not_adopted": true
+      }
+    },
+    {
+      "chain": "chain_2",
+      "weight_profile": "base_control",
+      "completed_case_records": 22,
+      "admissible_computed_ge": 22,
+      "objective_calls": 23,
+      "case_statuses": {
+        "passed": 22
+      },
+      "passed_case_seconds": {
+        "count": 22,
+        "minimum": 111.77149486541748,
+        "median": 152.62095022201538,
+        "maximum": 195.15641951560974
+      },
+      "latest_search": {
+        "status": "running_full_GE",
+        "label": "0022_nm",
+        "objective_calls": 23,
+        "completed_full_ge": 22,
+        "deadline_epoch": 1790875766.0
+      },
+      "native_latest": {
+        "status": "lifecycle_claimed",
+        "label": "root_05",
+        "lifecycle_used": 7,
+        "lifecycle_remaining": 25,
+        "time_epoch": 1790872180.171425,
+        "deadline_epoch": 1790874866.0
+      },
+      "failure": null,
+      "search_completion": null,
+      "selected_postcheck": null,
+      "best_original_weight": {
+        "label": "0021_nm",
+        "base_loss": 70.65089336250809,
+        "price": 0.7370079004764197,
+        "population": 0.9395161462486187,
+        "seconds": 152.29411506652832,
+        "status": "passed",
+        "exploration_unverified": true,
+        "experimental_not_adopted": true
+      }
+    },
+    {
+      "chain": "chain_3",
+      "weight_profile": "base_control",
+      "completed_case_records": 25,
+      "admissible_computed_ge": 25,
+      "objective_calls": 26,
+      "case_statuses": {
+        "passed": 25
+      },
+      "passed_case_seconds": {
+        "count": 25,
+        "minimum": 97.23859906196594,
+        "median": 132.397301197052,
+        "maximum": 176.62601733207703
+      },
+      "latest_search": {
+        "status": "running_full_GE",
+        "label": "0025_nm",
+        "objective_calls": 26,
+        "completed_full_ge": 25,
+        "deadline_epoch": 1790875766.0
+      },
+      "native_latest": {
+        "status": "lifecycle_claimed",
+        "label": "root_03",
+        "lifecycle_used": 5,
+        "lifecycle_remaining": 27,
+        "time_epoch": 1790872173.9600594,
+        "deadline_epoch": 1790874866.0
+      },
+      "failure": null,
+      "search_completion": null,
+      "selected_postcheck": null,
+      "best_original_weight": {
+        "label": "0024_nm",
+        "base_loss": 69.00494102385025,
+        "price": 0.6691729831936012,
+        "population": 0.854700181951582,
+        "seconds": 130.6294333934784,
+        "status": "passed",
+        "exploration_unverified": true,
+        "experimental_not_adopted": true
+      }
+    },
+    {
+      "chain": "chain_4",
+      "weight_profile": "base_control",
+      "completed_case_records": 26,
+      "admissible_computed_ge": 26,
+      "objective_calls": 27,
+      "case_statuses": {
+        "passed": 26
+      },
+      "passed_case_seconds": {
+        "count": 26,
+        "minimum": 108.82285141944885,
+        "median": 131.16509449481964,
+        "maximum": 160.98436570167542
+      },
+      "latest_search": {
+        "status": "running_full_GE",
+        "label": "0026_nm",
+        "objective_calls": 27,
+        "completed_full_ge": 26,
+        "deadline_epoch": 1790875766.0
+      },
+      "native_latest": {
+        "status": "lifecycle_claimed",
+        "label": "root_05",
+        "lifecycle_used": 7,
+        "lifecycle_remaining": 25,
+        "time_epoch": 1790872176.9070587,
+        "deadline_epoch": 1790874866.0
+      },
+      "failure": null,
+      "search_completion": null,
+      "selected_postcheck": null,
+      "best_original_weight": {
+        "label": "0015_nm",
+        "base_loss": 85.49749434379945,
+        "price": 0.709862346177136,
+        "population": 0.9088919398602279,
+        "seconds": 130.96271085739136,
+        "status": "passed",
+        "exploration_unverified": true,
+        "experimental_not_adopted": true
+      }
+    },
+    {
+      "chain": "chain_5",
+      "weight_profile": "base_control",
+      "completed_case_records": 31,
+      "admissible_computed_ge": 31,
+      "objective_calls": 32,
+      "case_statuses": {
+        "passed": 31
+      },
+      "passed_case_seconds": {
+        "count": 31,
+        "minimum": 85.63758969306946,
+        "median": 117.46436524391174,
+        "maximum": 137.49719762802124
+      },
+      "latest_search": {
+        "status": "running_full_GE",
+        "label": "0031_nm",
+        "objective_calls": 32,
+        "completed_full_ge": 31,
+        "deadline_epoch": 1790875766.0
+      },
+      "native_latest": {
+        "status": "lifecycle_claimed",
+        "label": "root_02",
+        "lifecycle_used": 4,
+        "lifecycle_remaining": 28,
+        "time_epoch": 1790872182.858527,
+        "deadline_epoch": 1790874866.0
+      },
+      "failure": null,
+      "search_completion": null,
+      "selected_postcheck": null,
+      "best_original_weight": {
+        "label": "0025_nm",
+        "base_loss": 36.79991422636258,
+        "price": 0.7078358273964116,
+        "population": 0.912750105710396,
+        "seconds": 117.70453023910522,
+        "status": "passed",
+        "exploration_unverified": true,
+        "experimental_not_adopted": true
+      }
+    },
+    {
+      "chain": "chain_6",
+      "weight_profile": "base_control",
+      "completed_case_records": 25,
+      "admissible_computed_ge": 25,
+      "objective_calls": 26,
+      "case_statuses": {
+        "passed": 25
+      },
+      "passed_case_seconds": {
+        "count": 25,
+        "minimum": 100.62202763557434,
+        "median": 141.42895030975342,
+        "maximum": 162.47421002388
+      },
+      "latest_search": {
+        "status": "running_full_GE",
+        "label": "0025_nm",
+        "objective_calls": 26,
+        "completed_full_ge": 25,
+        "deadline_epoch": 1790875766.0
+      },
+      "native_latest": {
+        "status": "lifecycle_claimed",
+        "label": "root_04",
+        "lifecycle_used": 6,
+        "lifecycle_remaining": 26,
+        "time_epoch": 1790872171.9517937,
+        "deadline_epoch": 1790874866.0
+      },
+      "failure": null,
+      "search_completion": null,
+      "selected_postcheck": null,
+      "best_original_weight": {
+        "label": "0021_nm",
+        "base_loss": 54.87964196041439,
+        "price": 0.703570533588619,
+        "population": 0.9036766074631144,
+        "seconds": 140.84007215499878,
+        "status": "passed",
+        "exploration_unverified": true,
+        "experimental_not_adopted": true
+      }
+    },
+    {
+      "chain": "chain_7",
+      "weight_profile": "base_control",
+      "completed_case_records": 23,
+      "admissible_computed_ge": 23,
+      "objective_calls": 24,
+      "case_statuses": {
+        "passed": 23
+      },
+      "passed_case_seconds": {
+        "count": 23,
+        "minimum": 115.39360332489014,
+        "median": 154.9022340774536,
+        "maximum": 178.8299036026001
+      },
+      "latest_search": {
+        "status": "running_full_GE",
+        "label": "0023_nm",
+        "objective_calls": 24,
+        "completed_full_ge": 23,
+        "deadline_epoch": 1790875766.0
+      },
+      "native_latest": {
+        "status": "completed_case",
+        "label": null,
+        "lifecycle_used": 4,
+        "lifecycle_remaining": 28,
+        "time_epoch": 1790872181.3153687,
+        "deadline_epoch": 1790874866.0
+      },
+      "failure": null,
+      "search_completion": null,
+      "selected_postcheck": null,
+      "best_original_weight": {
+        "label": "0022_nm",
+        "base_loss": 203.0861064880281,
+        "price": 0.6208987220060258,
+        "population": 0.7815714754321943,
+        "seconds": 122.36172842979431,
+        "status": "passed",
+        "exploration_unverified": true,
+        "experimental_not_adopted": true
+      }
+    }
+  ],
+  "scheduler": {
+    "squeue_checked_epoch": 1790872185.0106566,
+    "squeue_returncode": 0,
+    "selected_squeue_lines": [
+      "18958549_1|RUNNING|53:20",
+      "18958130_0|RUNNING|1:00:20",
+      "18958130_2|RUNNING|1:00:20",
+      "18958130_3|RUNNING|1:00:20",
+      "18958130_4|RUNNING|1:00:20",
+      "18958130_5|RUNNING|1:00:20",
+      "18958130_6|RUNNING|1:00:20",
+      "18958130_7|RUNNING|1:00:20"
+    ],
+    "sacct_returncode": 0,
+    "selected_sacct_task_lines": [
+      "18958130_0|RUNNING|0:0|01:00:20|2026-10-01T11:29:24|Unknown",
+      "18958130_2|RUNNING|0:0|01:00:20|2026-10-01T11:29:24|Unknown",
+      "18958130_3|RUNNING|0:0|01:00:20|2026-10-01T11:29:24|Unknown",
+      "18958130_4|RUNNING|0:0|01:00:20|2026-10-01T11:29:24|Unknown",
+      "18958130_5|RUNNING|0:0|01:00:20|2026-10-01T11:29:24|Unknown",
+      "18958130_6|RUNNING|0:0|01:00:20|2026-10-01T11:29:24|Unknown",
+      "18958130_7|RUNNING|0:0|01:00:20|2026-10-01T11:29:24|Unknown",
+      "18958549_1|RUNNING|0:0|00:53:20|2026-10-01T11:36:24|Unknown"
+    ],
+    "excluded_failed_original_chain1_sacct_lines": [
+      "18958130_1|FAILED|127:0|00:00:05|2026-10-01T11:29:24|2026-10-01T11:29:29"
+    ]
+  },
+  "interpretation": "All eight selected tasks were RUNNING in exact squeue output at snapshot. Search receipts had no selected postchecks or fatal failures. New best is provisional only; exact 14/31 tables saved, plots withheld until selected repeat verification."
+}
