@@ -1,0 +1,41 @@
+{
+  "recorded_utc": "2026-10-01T21:50:26Z",
+  "superseded_array_job_id": "18973391",
+  "superseded_remote_results": "/scratch/td2248/projects/utility_floor_psi_continuous_v2/results",
+  "cancellation": {
+    "status": "intentional_authorized_cancellation",
+    "scheduler_evidence": "sacct recorded array tasks 18973428,18973429,18973430 and row18973391 as CANCELLED by scheduler user ID3653198; task stdout recorded SIGTERM at 2026-10-01 17:09:10 EDT.",
+    "authorization_source": {
+      "chat_title": "Audit calibration normalization",
+      "thread_id": "01a0f937-1295-71a3-a710-64913c19354b",
+      "user_message_id": "01a0f949-12d3-7ae1-84da-e1dff9126f6a",
+      "direct_user_instruction_excerpt": "...correct normalization...tens of jobs...can kill and collect jobs currently running",
+      "verified_by": "root"
+    },
+    "interpretation": "Cancellation was authorized to support the normalization correction; it is not an unexplained infrastructure failure, solver failure, or economic infeasibility."
+  },
+  "preserved_evidence": {
+    "diagnostic_receipt": "monitor_snapshot/diagnostic_20261001T214555Z.json",
+    "latest_collector_snapshot": "monitor_snapshot/monitor_20261001T214123Z.json",
+    "last_observed_counts": {
+      "records": 101,
+      "admissible_computed_ge": 101,
+      "objective_calls": 105,
+      "fatal_case_failures": 0
+    },
+    "outputs": "The already-written v2 chain outputs and compact local monitoring snapshots were preserved; no cleanup or restart was performed.",
+    "incumbent": {
+      "base_loss": 30.99909262396404,
+      "chain": "chain_0",
+      "label": "0006_nm",
+      "status": "unchanged_verified_incumbent"
+    }
+  },
+  "superseding_authorized_work": {
+    "normalized_array_job_id": "18979628",
+    "smoke_job_id": "18979627",
+    "ownership": "Owned by the normalization worker/root; this monitor does not duplicate its monitoring or access.",
+    "monitoring": "The prior monitor automation was paused by root after dispatching the normalization work."
+  },
+  "scope": "Local documentation/evidence reconciliation only. No SSH, launches, restarts, source changes, budget changes, or edits to canonical audit-owner sections."
+}
