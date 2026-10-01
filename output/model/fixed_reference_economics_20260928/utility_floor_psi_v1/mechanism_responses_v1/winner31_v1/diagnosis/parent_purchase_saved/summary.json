@@ -1,0 +1,138 @@
+{
+  "Bellman_calls": 0,
+  "GE_calls": 0,
+  "age_definition": "Model cell starts18,22,26,30,34,38,42; not annual age overlap or new target clock",
+  "common_PRE_sha256": "459ab9229e7ce58376bda8c933b583ec059104ede31c57627ce7368c41e5a51b",
+  "driver_sha256": "1cc30ab9355711ce5ddb0613bdb936eb9f943120035bdb1ea64f3f588d4a6fb1",
+  "group_outcomes": [
+    {
+      "baseline_birth_children_per_household": 0.22237400009692315,
+      "baseline_ownership_rate": 0.16780924441680659,
+      "birth_children_per_household_change": -0.00019141983559725628,
+      "group": "initial_renter_young_n0",
+      "initial_PRE_mass": 0.18637617229692666,
+      "new_owner_mass_net": 0.006497580991057433,
+      "ownership_rate_change": 0.03486272365710871,
+      "purchase_birth_children_per_household": 0.2221825802613259,
+      "purchase_ownership_rate": 0.2026719680739153
+    },
+    {
+      "baseline_birth_children_per_household": 0.3061587766037576,
+      "baseline_ownership_rate": 0.32570187816921337,
+      "birth_children_per_household_change": 5.786867511903271e-06,
+      "group": "initial_renter_young_current_parent",
+      "initial_PRE_mass": 0.0547929197764289,
+      "new_owner_mass_net": 0.00021246398970339864,
+      "ownership_rate_change": 0.0038775810920519405,
+      "purchase_birth_children_per_household": 0.3061645634712695,
+      "purchase_ownership_rate": 0.3295794592612653
+    },
+    {
+      "baseline_birth_children_per_household": 0.2454652752948414,
+      "baseline_ownership_rate": 0.21908917660084198,
+      "birth_children_per_household_change": -0.0001323614410199403,
+      "group": "initial_renter_young_all",
+      "initial_PRE_mass": 0.2653547080372992,
+      "new_owner_mass_net": 0.006901994694500549,
+      "ownership_rate_change": 0.02601044747067527,
+      "purchase_birth_children_per_household": 0.24533291385382147,
+      "purchase_ownership_rate": 0.24509962407151725
+    },
+    {
+      "baseline_birth_children_per_household": 0.1152538456218216,
+      "baseline_ownership_rate": 0.6593736000168771,
+      "birth_children_per_household_change": -3.242022946120526e-05,
+      "group": "entire_PRE",
+      "initial_PRE_mass": 1.0000000000000007,
+      "new_owner_mass_net": 0.009342402214460588,
+      "ownership_rate_change": 0.009342402214460588,
+      "purchase_birth_children_per_household": 0.1152214253923604,
+      "purchase_ownership_rate": 0.6687160022313376
+    }
+  ],
+  "lifecycle_calls": 0,
+  "limitations": [
+    "No pre-mask buyer-versus-renter option values or shadow prices saved; zero choice probability does not prove infeasibility",
+    "Net ownership response is not fraction of individually blocked purchasers; no joint taste-shock coupling",
+    "Birth-child flows include continuation births for current parents; n0 group is first-birth mass",
+    "Purchase-only experiment changes lifetime policies and continuation values; fixed PRE is common but policies are optimized separately"
+  ],
+  "source": [
+    {
+      "case": "baseline80_80",
+      "common_PRE_sha256": "459ab9229e7ce58376bda8c933b583ec059104ede31c57627ce7368c41e5a51b",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/winner31_v1/purchase_ltv_v1/local_run/retry5/results/baseline_80_80",
+      "price": 0.719168368828958,
+      "receipt": {
+        "driver_sha256": "90f05562a89d9227c11f907c618cf14b3b69246d6dce2a898542ec3a3eb563dc",
+        "elapsed_seconds": 6.235355334007181,
+        "natural_support_certified": false,
+        "parameters_sha256": "ae092fafab15985f773b61999a29d4a8d505495623e615440cfff1f107c75406",
+        "plot_names": [
+          "fertility_by_age.png",
+          "fertility_policy_by_age_income_state.png",
+          "housing_by_age_income_state.png",
+          "housing_market.png",
+          "housing_prices.png",
+          "income_state_outcomes.png",
+          "liquid_wealth_by_age_income_state.png",
+          "market_clearing_by_market.png",
+          "market_clearing_residuals.png",
+          "owner_rungs.png",
+          "ownership_by_age.png",
+          "ownership_by_age_income_state.png",
+          "policy_childless_renter_age30.png",
+          "policy_childless_renter_age42.png",
+          "tenure_services.png",
+          "wealth_dist_childless_renter_age30.png",
+          "wealth_dist_childless_renter_age42.png"
+        ],
+        "price_factor": 1.0,
+        "regime": "reference",
+        "source_binding_sha256": "47b809b4c1d2a18373c2828b2d90a0b23fed498ea64a925eea8b935ba5dc2c93",
+        "status": "completed_experimental_case",
+        "support_status": "not_applicable_reference_credit",
+        "target_fit_sha256": "80edf254f850d3ed2ad55f2c702316a2ca9dc378e56e23c639ef2bcc2bffd3e2"
+      }
+    },
+    {
+      "case": "purchase100_stayer80",
+      "common_PRE_sha256": "459ab9229e7ce58376bda8c933b583ec059104ede31c57627ce7368c41e5a51b",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/winner31_v1/purchase_ltv_v1/local_run/retry8/results/purchase_100_stayer_80",
+      "price": 0.719168368828958,
+      "receipt": {
+        "driver_sha256": "90f05562a89d9227c11f907c618cf14b3b69246d6dce2a898542ec3a3eb563dc",
+        "elapsed_seconds": 6.470936583005823,
+        "natural_support_certified": false,
+        "parameters_sha256": "ae092fafab15985f773b61999a29d4a8d505495623e615440cfff1f107c75406",
+        "plot_names": [
+          "fertility_by_age.png",
+          "fertility_policy_by_age_income_state.png",
+          "housing_by_age_income_state.png",
+          "housing_market.png",
+          "housing_prices.png",
+          "income_state_outcomes.png",
+          "liquid_wealth_by_age_income_state.png",
+          "market_clearing_by_market.png",
+          "market_clearing_residuals.png",
+          "owner_rungs.png",
+          "ownership_by_age.png",
+          "ownership_by_age_income_state.png",
+          "policy_childless_renter_age30.png",
+          "policy_childless_renter_age42.png",
+          "tenure_services.png",
+          "wealth_dist_childless_renter_age30.png",
+          "wealth_dist_childless_renter_age42.png"
+        ],
+        "price_factor": 1.0,
+        "regime": "reference",
+        "source_binding_sha256": "47b809b4c1d2a18373c2828b2d90a0b23fed498ea64a925eea8b935ba5dc2c93",
+        "status": "completed_experimental_case",
+        "support_status": "not_applicable_reference_credit",
+        "target_fit_sha256": "6e726c46980a6adc868477a1bc341370377680088bb9bc273498155263c920d2"
+      }
+    }
+  ],
+  "state_timing": "Inherited PRE-fertility renter tenure; fertility then location/tenure choices realized under respective saved policy",
+  "status": "saved_policy_algebra_completed_no_solves"
+}
