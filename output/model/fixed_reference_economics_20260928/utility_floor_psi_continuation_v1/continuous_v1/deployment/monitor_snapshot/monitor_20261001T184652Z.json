@@ -1,0 +1,197 @@
+{
+  "captured_utc": "2026-10-01T18:46:52.753623+00:00",
+  "captured_epoch": 1790880412.7536225,
+  "source": "one bounded SSH read using existing no-engine-import collector",
+  "torch_job_id": "18966575",
+  "remote_root": "/scratch/td2248/projects/utility_floor_psi_continuous_v1/results",
+  "scope": [
+    "18966575_0",
+    "18966575_1",
+    "18966575_2",
+    "18966575_3"
+  ],
+  "totals": {
+    "records": 85,
+    "admissible": 85,
+    "objective_calls": 89,
+    "nonpasses": 0,
+    "fatal": 0,
+    "search_completions": 0,
+    "selected_postchecks": 0
+  },
+  "best_in_batch": {
+    "chain": "chain_1",
+    "case": "0017_nm",
+    "base_loss": 33.87219694256253,
+    "status": "provisional, no selected repeat"
+  },
+  "global_verified_reference": {
+    "chain": "prior continuation chain_0/case0006_nm",
+    "loss": 30.99909262396404
+  },
+  "deadlines_epoch": [
+    1790884239,
+    1790884240
+  ],
+  "remaining_seconds_at_capture": [
+    3826.246377468109,
+    3827.246377468109
+  ],
+  "chains": [
+    {
+      "chain": "chain_0",
+      "profile": "base_control",
+      "records": 20,
+      "admissible": 20,
+      "objective_calls": 21,
+      "statuses": {
+        "passed": 20
+      },
+      "case_seconds": {
+        "count": 20,
+        "minimum": 128.58485054969788,
+        "median": 152.5141739845276,
+        "maximum": 196.0100758075714
+      },
+      "best_original_weight_loss": 35.5265901659495,
+      "latest_search": {
+        "label": "0020_nm",
+        "status": "running_full_GE",
+        "completed_full_ge": 20,
+        "objective_calls": 21,
+        "deadline_epoch": 1790884239.0
+      },
+      "latest_native": {
+        "deadline_epoch": 1790883339.0,
+        "lifecycle_remaining": 25,
+        "lifecycle_used": 7,
+        "phase_a_lifecycle": 0,
+        "status": "completed_case",
+        "summary": {
+          "adult_entry_relative_gap": 7.272105574906467e-10,
+          "d_bar": 0.0,
+          "elapsed_seconds": 15.269441558979452,
+          "entry_censored_mass": 0.0,
+          "label": "root_05",
+          "native_array_count": 0,
+          "own_rate": 0.6721497680254042,
+          "q": 0.7460569443843489,
+          "stage_arrays": null,
+          "tfr": 2.09999999847295
+        },
+        "time_epoch": 1790880410.2141643
+      },
+      "failure": null,
+      "search_completion": null,
+      "selected_postcheck": null
+    },
+    {
+      "chain": "chain_1",
+      "profile": "base_control",
+      "records": 21,
+      "admissible": 21,
+      "objective_calls": 22,
+      "statuses": {
+        "passed": 21
+      },
+      "case_seconds": {
+        "count": 21,
+        "minimum": 109.52187061309814,
+        "median": 151.6082317829132,
+        "maximum": 190.08058214187622
+      },
+      "best_original_weight_loss": 33.87219694256253,
+      "latest_search": {
+        "label": "0021_nm",
+        "status": "running_full_GE",
+        "completed_full_ge": 21,
+        "objective_calls": 22,
+        "deadline_epoch": 1790884240.0
+      },
+      "latest_native": {
+        "deadline_epoch": 1790883340.0,
+        "label": "root_01",
+        "lifecycle_remaining": 29,
+        "lifecycle_used": 3,
+        "phase_a_lifecycle": 0,
+        "status": "lifecycle_claimed",
+        "time_epoch": 1790880398.0214028
+      },
+      "failure": null,
+      "search_completion": null,
+      "selected_postcheck": null
+    },
+    {
+      "chain": "chain_2",
+      "profile": "base_control",
+      "records": 22,
+      "admissible": 22,
+      "objective_calls": 23,
+      "statuses": {
+        "passed": 22
+      },
+      "case_seconds": {
+        "count": 22,
+        "minimum": 108.00342082977295,
+        "median": 147.20783245563507,
+        "maximum": 195.55982875823975
+      },
+      "best_original_weight_loss": 36.817931543648726,
+      "latest_search": {
+        "label": "0022_nm",
+        "status": "running_full_GE",
+        "completed_full_ge": 22,
+        "objective_calls": 23,
+        "deadline_epoch": 1790884239.0
+      },
+      "latest_native": {
+        "deadline_epoch": 1790883339.0,
+        "label": "expand_01",
+        "lifecycle_remaining": 30,
+        "lifecycle_used": 2,
+        "phase_a_lifecycle": 0,
+        "status": "lifecycle_claimed",
+        "time_epoch": 1790880402.6070375
+      },
+      "failure": null,
+      "search_completion": null,
+      "selected_postcheck": null
+    },
+    {
+      "chain": "chain_3",
+      "profile": "base_control",
+      "records": 22,
+      "admissible": 22,
+      "objective_calls": 23,
+      "statuses": {
+        "passed": 22
+      },
+      "case_seconds": {
+        "count": 22,
+        "minimum": 92.35504364967346,
+        "median": 147.85317242145538,
+        "maximum": 186.01116061210632
+      },
+      "best_original_weight_loss": 35.671192459117066,
+      "latest_search": {
+        "label": "0022_nm",
+        "status": "running_full_GE",
+        "completed_full_ge": 22,
+        "objective_calls": 23,
+        "deadline_epoch": 1790884240.0
+      },
+      "latest_native": {
+        "deadline_epoch": 1790883340.0,
+        "label": "root_02",
+        "lifecycle_remaining": 28,
+        "lifecycle_used": 4,
+        "phase_a_lifecycle": 0,
+        "status": "lifecycle_claimed",
+        "time_epoch": 1790880401.6999023
+      },
+      "failure": null,
+      "search_completion": null,
+      "selected_postcheck": null
+    }
+  ]
+}
