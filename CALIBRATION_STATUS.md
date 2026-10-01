@@ -1,6 +1,6 @@
 # Calibration Status
 
-## October 1, 06:22 New York — verified 68.843; overnight 38.070 provisional
+## October 1, 06:27 New York — verified 68.843; overnight 38.070 provisional
 
 The live free-\(\psi\) floor search still uses the same fixed-reference economics,
 14 scored/validation target rows, 31-parameter report, and original base weights.
@@ -27,16 +27,16 @@ chains have search-completion receipts and selected-postcheck status
 `selected_numerically_verified`; each native selected-repeat receipt says
 `exact_full_ge_repeat_passed`. Its compact receipt matrix is [here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/round3_terminal_postcheck_matrix_20261001T0231NY.json).
 
-At 06:22:58 New York, overnight array 18925912_0–23 had **3,175 case records,
-3,166 admissible computed GEs, and 3,268 objective calls**. It recorded eight
+At 06:27:58 New York, overnight array 18925912_0–23 had **3,220 case records,
+3,211 admissible computed GEs, and 3,313 objective calls**. It recorded eight
 numerical nonpasses and one bounded-budget case, with no fatal receipts. Chain
 21 is terminal with a selected native-repeat pass; the exact array scheduler
 query showed 23 tasks `RUNNING` and one `COMPLETED`, both with exit code 0.
-Across chains, median passed-case runtime ranged from 126.55 to 166.81 seconds.
+Across chains, median passed-case runtime ranged from 126.79 to 166.81 seconds.
 The best remains provisional chain 7, case 0124_nm, loss 38.0704954968 at price
 0.7136435146; its selected-price native repeat is pending. The 14 target-row
 contributions sum exactly to the base loss. The timestamped [compact cohort
-snapshot](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T062258NY.json) preserves counts, scheduler state, and repeat status.
+snapshot](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T062758NY.json) preserves counts, scheduler state, and repeat status.
 
 Variable-first-child-share job 18930196 is terminal (exit 0; 28:44 elapsed).
 Its six search attempts contain five passed roots and one bounded-budget
