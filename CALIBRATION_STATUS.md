@@ -1,15 +1,15 @@
 # Calibration Status
 
-## October 1, 06:38 New York — verified 68.843; overnight 38.070 provisional
+## October 1, 06:42 New York — verified 68.843; overnight 37.392 provisional
 
 The live free-\(\psi\) floor search still uses the same fixed-reference economics,
 14 scored/validation target rows, 31-parameter report, and original base weights.
 No experimental point is adopted. The lowest passed search point is overnight
-chain 7, case 0124_nm, loss **38.0704954968** at price 0.7136435146; it is
+chain 6, case 0141_nm, loss **37.3920386003** at price 0.7235877021; it is
 provisional until its exact selected-price native repeat is checked. It used
-seven lifecycle solves in 163.54 seconds. The 14-row target-fit contributions
-sum to the reported base loss; its full target and 31-parameter tables are
-[saved here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T055759NY_overnight/).
+seven lifecycle solves in 162.32 seconds. The 14-row target-fit contributions
+sum exactly to the reported base loss; its full target and 31-parameter tables are
+[saved here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T064257NY_overnight/).
 
 The best selected-repeat-verified point is round-three chain 4, case 0035_nm,
 base loss **68.8425812015**, at market price 0.7172609099. Its exact selected
@@ -27,16 +27,16 @@ chains have search-completion receipts and selected-postcheck status
 `selected_numerically_verified`; each native selected-repeat receipt says
 `exact_full_ge_repeat_passed`. Its compact receipt matrix is [here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/round3_terminal_postcheck_matrix_20261001T0231NY.json).
 
-At 06:38:02 New York, overnight array 18925912_0–23 had **3,313 case records,
-3,304 admissible computed GEs, and 3,406 objective calls**. It recorded eight
+At 06:42:57 New York, overnight array 18925912_0–23 had **3,357 case records,
+3,348 admissible computed GEs, and 3,450 objective calls**. It recorded eight
 numerical nonpasses and one bounded-budget case, with no fatal receipts. Chain
 21 has a selected native-repeat verification; the exact array scheduler query
 showed 23 tasks `RUNNING` and one `COMPLETED`, both with exit code 0. Across
-chains, median passed-case runtime ranged from 126.87 to 166.81 seconds. The
-best remains provisional chain 7, case 0124_nm, loss 38.0704954968 at price
-0.7136435146; its selected-price native repeat is pending. Its 14 target-row
-contributions sum exactly to the base loss. The timestamped [compact cohort
-snapshot](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T063802NY.json) preserves counts, scheduler state, and repeat status.
+chains, median passed-case runtime ranged from 126.97 to 166.81 seconds. The
+provisional best is chain 6, case 0141_nm, loss 37.3920386003 at price
+0.7235877021; its selected-price native repeat is pending. The 14 target-row
+contributions sum exactly to its base loss. The timestamped [compact cohort
+snapshot](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T064257NY.json) preserves counts, scheduler state, and repeat status.
 
 Variable-first-child-share job 18930196 is terminal (exit 0; 28:44 elapsed).
 Its six search attempts contain five passed roots and one bounded-budget
