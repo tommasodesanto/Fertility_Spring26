@@ -1,5 +1,31 @@
 # Calibration Status
 
+## September 30, 21:24 New York — non-floor work stopped; floor selection verified
+
+At the author's explicit request, original arrays18899847 and18900753 were
+cancelled and scheduler accounting confirms all12 chains CANCELLED. No_A
+array18904849 and constant-alpha array18904851, and their smoke IDs, were
+already terminal when the authorized scancel request ran. No non-floor job
+remains queued; local non-floor checks were already terminal, so no PIDs were
+killed. Floor IDs18904847/18904846 were not targeted. Do not resume or monitor
+non-floor searches for new work.
+
+All five valid floor starts are terminal selected_verified; start_s5 has its
+previously reported blocked baseline. The best is floor_s2/006 continuation
+probe, loss751.8623271, with two exact final fullGE repeats and authenticated
+14-row/31-parameter/17-PNG packet. It took13GE/93LC in1999.086s. Search stopped
+incomplete_jacobian_budget: eight valid derivative probes out of nine, ninth
+tenure probe termination budget_or_repeat_reserve, no Jacobian rank certificate
+and zero GN proposals. Numerical verification is complete, optimization is not.
+See utility_calibration_round1_v1/deployment/attempt2/floor_selected_verified/.
+
+The author requests a heavy floor continuation. It is not launched and remains
+subject to a bounded reviewed plan. No production adoption, automatic restart,
+solver edit or gate relaxation follows from monitoring. The requested earlier
+with-A comparison and lead source diagnosis are preserved in the utility
+packet README and comparison_requested/; identical entry wealth and correct
+birth-period floor timing do not establish that the floor fit is acceptable.
+
 ## September 30, 21:04 New York — local baselines verified; searches progressing
 
 All three local utility checks are terminal `utility_smoke_verified`: two
