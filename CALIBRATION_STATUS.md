@@ -2,42 +2,42 @@
 
 ## September 30, 22:29 New York — free-psi restart running on Torch and locally
 
-Author-requested restart is running:8Torch original-weight chains18910174_0–7
-and8local chains[0,1,8,9,10,11,12,13], twooriginal-weight controls plus6weight
-profiles. All8Torch exactCLI initializer/metadata gates passedzeroLC, then
-actualnative firstprice work started. All8local correctednativepoints started
-as verified bylead. Eachchain200eval,onefreshfullGE selectedpostcheck required;
-Torch1CPU24GiB/thread,local2threads4GiB each. Originalabsolute deadlines retained:
-Torch1790828667 (04:24:27UTC),local1790828647.767363 (04:24:07UTC).
+The author-requested restart is running: eight original-weight Torch chains,
+18910174_0–7, and eight local chains[0,1,8,9,10,11,12,13]. The four profiles
+are original weights; mean rooms and ownership weights ×4; early fertility
+weight ×4; and both sets ×4. Torch uses original weights. Local searches use
+two saved seeds for each profile. Losses across profiles are not directly comparable.
 
-Separateeconomicchange: psi_child nowestimated jointly (tenfree, tenscored
-targets;localweightprofiles distinctobjectives), diagnosticbounds [.01,.5].
-Actualpsi=.2 zeroLCinitializer matched31effectiveparameters beforelaunch.
-No physicalsolverpatch, normalization/gatechange orproductionadoption.
-Attempt1Torch18909985 and localattempt1 failedbeforeLC from metadataTypeError;
-corrected oneexpression andactualinitializer checks,restartedbyexplicitauthor
-authorization withinoriginalbudgets. Immutablev1remote/failures preserved;
-newremoteutility_floor_psi_v2 SHAca4d65da...111pins114compactfiles.
-Seeutility_floor_psi_v1/README.md,launch.json, deployment/torch_launch.json and
-deployment/attempt2/native_start_receipts.json. Alloldfixedpsi runs stopped.
+All eight Torch exact CLI initializer and metadata gates passed with zero LC,
+then actual native price evaluations started. The lead verified all eight local
+native starts. Each chain allows 200 evaluations and requires one fresh full GE
+postcheck with its intrinsic price repeat and 14/31/17 diagnostic packet. Torch
+uses one CPU, 24GiB and one thread; local chains use two threads and 4GiB each.
+Original absolute deadlines remain: Torch 1790828667 (04:24:27UTC), local
+1790828647.767363 (04:24:07UTC).
 
+The economic experiment estimates psi_child jointly with nine floor coordinates:
+ten free parameters and ten scored targets. Bounds [.01,.5] are diagnostic.
+The actual psi=.2 initializer matched 31 effective parameters before launch.
+There is no physical solver patch, normalization change, gate relaxation or
+production adoption. Attempt1 failed before LC from a metadata TypeError.
+The author authorized a one-expression correction and retry within the original
+budgets. Original files and failures are preserved. The corrected remote is
+utility_floor_psi_v2, archive SHA ca4d65da..., 111 pins and 114 compact files.
+See utility_floor_psi_v1/README.md, launch.json, deployment/torch_launch.json
+and deployment/attempt2/native_start_receipts.json.
 
-## September 30, 22:21 New York — author stops fixed-psi searches for restart
+## September 30, 22:21 New York — fixed-psi searches stopped for restart
 
-At explicit author request, all8Torch18906784 cancelled, scheduler accounting
-confirms CANCELLED and queueempty. Saved all8best/latest/casevectors first in
-utility_floor_round2_v1/deployment/prestop_remote_snapshot.json. Verifiedtask
-commands then stopped7supervisors and8localchildprocessgroups, ensuring no
-automaticpostchecks spawn; newfreepsi paths untouched. Stopreceipt saved in
-same deploymentfolder. Author-owned local restart_seed_snapshot.json preserves
-166.866688 historical,184.977 winner and191.314 low-floor startingvectors.
-
-The next authorized experiments estimate psi_child with originalweights on
-8Torchchains, and two baseline plus6weight-profile localchains, restarting
-fromsavedestimates. Separate utility_floor_psi_v1 source/deployment preparing;
-no newjob submitted yet. Oldfixedpsi/fastresume remain stopped; noautomatic
-restart or productionadoption. Economicchanges/freepsi and weightprofiles must
-be disclosed separately and losses across differentweights are notcomparable.
+At the author's explicit request, all eight Torch 18906784 chains were cancelled.
+Scheduler accounting confirms cancellation and an empty queue. Their best points,
+latest cases and complete parameter vectors were saved first in
+utility_floor_round2_v1/deployment/prestop_remote_snapshot.json. After verifying
+PID commands, seven local supervisors and eight child process groups were stopped,
+preventing automatic postchecks. New free-psi paths were untouched. The local
+restart_seed_snapshot.json preserves provisional losses 166.866688 (historical
+seed),184.977 (winner seed) and191.314 (low-floor seed). Fast resume remains
+terminal, with no attempt3 or automatic restart.
 
 ## September 30, 22:12 New York — first Torch GN proposals; local NM improves
 
