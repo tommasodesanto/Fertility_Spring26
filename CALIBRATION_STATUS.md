@@ -1,6 +1,6 @@
 # Calibration Status
 
-## October 1, 00:32 New York — original 16 terminal; multistart eight active
+## October 1, 00:32 New York — original 16 terminal; multistart eight and round-three 16 active
 
 The original local eight last counted **454 case rows, 446 admissible computed
 GEs, and 454 calls** at 00:13:05 New York; original Torch counted **290/281/290**
@@ -22,6 +22,17 @@ The cohort keeps its original hard deadline of 01:14:04 New York.
 Combining local and original-Torch terminal counts with the 00:32 multistart
 read gives mixed-time totals of **1,043 records, 1,022 admissible GEs, and 1,058
 calls**; the separate check times above govern interpretation.
+
+A separately authorized 16-chain round-three cohort was submitted at 00:41:18
+New York as array 18925600_0–15, with a hard deadline of 02:41:18. It has 12
+Nelder–Mead chains across four reviewed profile winners and four broader PSO
+chains on base weights; each has one CPU, 24 GiB, one thread, at most 200 calls,
+and one selected postcheck with a 900-second reserve. Source and exact
+zero-lifecycle initializers passed review, but native lifecycle receipts remain
+pending. The source-frozen packet and receipts are in
+[utility_floor_psi_round3_v1](output/model/fixed_reference_economics_20260928/utility_floor_psi_round3_v1/README.md).
+Together with the earlier multistart cohort, these bring launched searches to
+40; keep each cohort under its own deadline and budget.
 
 The best original-weight evaluation across all passed cases is now a **provisional
 109.329801** at multistart Torch chain 3, case 0035_nm, base-control profile,
