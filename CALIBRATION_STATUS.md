@@ -1,5 +1,44 @@
 # Calibration Status
 
+## October 1, 18:23 New York — exploratory one-shock fit resumed
+
+Transition job **18985505** (`actualfit_v3`) started at 18:23:26 New York on
+Torch, using the author-selected chain 0, case `0006_nm` current-floor
+[handoff](output/model/transition_readiness_v1/current_floor_handoff/handoff.json).
+Its reference population scale is `0.920284415998407`. The economic experiment
+is one permanent 2007 child-preference shock. Earnings, entrant wealth and
+income distributions, timing, transfers, housing floors, other preferences,
+and targets retain the named reference; none is changed by this restart.
+The complete reference [14-target fit](output/model/transition_readiness_v1/current_floor_handoff/target_fit.csv)
+and [31-parameter table](output/model/transition_readiness_v1/current_floor_handoff/parameters.csv)
+remain the reference evidence, without a new calibration-adoption claim.
+
+The author authorized continuing with diagnostic forecast-comparison tolerances
+of `0.01` for macro relative gaps and fertility absolute gaps, replacing `0.001`.
+Original strict comparisons remain reported. Dated fiscal clearing `2e-5`,
+housing clearing `2e-4`, stationary renewal `1e-6`, and fresh replay `1e-10`
+are unchanged. Full-state and terminal acceptance requirements are unchanged.
+The sole fitted target is the original 2020–2023 household-rate fertility
+analogue `1.64575`; the earlier three windows retain zero validation weights.
+All four previously completed native cases passed authenticated zero-solve
+reuse checks. A final match and its 2023 checkpoint require fresh native
+evaluation and replay. The first new proposal is `psi=0.13079083328964047`;
+no matched result is available at this launch snapshot.
+
+V2 was stopped after both path roots passed but its larger-shock forecast
+comparison failed: 12/16-date measures were `1.885774640307272` and
+`1.8892769682539958`, a `0.0035023279467` gap. Its complete
+[four-window tables and checkpoint evidence](output/model/transition_readiness_v1/current_floor_runs/actualfit_v2/collected_candidate_0004/README.md)
+remain rejected finite-horizon diagnostics. The original deadline is 20:24:47;
+V3 has 1,553 remaining native calls after conservative prior-run debits.
+Thirty-three focused tests and the exact mounted zero-call preflight passed.
+See the [live transition index](output/model/transition_readiness_v1/README.md)
+and [actual V3 start receipt](output/model/transition_readiness_v1/current_floor_preparation/deployment/actualfit_v3_first_phase.json).
+Outstanding: original strict horizon convergence, actual 2023 distribution and
+queue stability, value/forecast continuation validation, terminal convergence,
+and the production policy-closure contract. This is an exploratory fit and
+state export, with production readiness and full-path certification false.
+
 ## October 1, 17:45 New York — internally calibrated supply-level array submitted
 
 The author confirmed the September 23 choice: use the 2007 national AHS mean

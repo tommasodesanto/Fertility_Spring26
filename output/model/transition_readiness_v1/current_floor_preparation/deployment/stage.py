@@ -26,6 +26,18 @@ for planpath in planpaths:
   approved=Path(plan['prepared_consumer_compatibility']['path']);extra.append(approved)
   receipt=json.loads(approved.read_text())
   extra += [Path(receipt[k]['path']) for k in ('original_generator_snapshot','reviewed_audit','reviewed_diff')]
+ if 'diagnostic_measurement_reuse' in plan:
+  manifest=Path(plan['diagnostic_measurement_reuse']['path']);extra.append(manifest)
+  def referenced_pins(value):
+   if isinstance(value,dict):
+    if set(value)=={'path','sha256'}:
+     pin=Path(value['path'])
+     if pin.is_relative_to(ROOT):extra.append(pin)
+    else:
+     for item in value.values():referenced_pins(item)
+   elif isinstance(value,list):
+    for item in value:referenced_pins(item)
+  referenced_pins(json.loads(manifest.read_text()))
 extra.append(OUT/'fit_preflight.py')
 paths += extra
 if DEST.exists():shutil.rmtree(DEST)

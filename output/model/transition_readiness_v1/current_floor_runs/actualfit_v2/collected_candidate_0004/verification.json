@@ -1,0 +1,294 @@
+{
+  "status": "rejected_horizon_measurement_comparison",
+  "candidate": 4,
+  "psi": 0.14766471988070498,
+  "horizons": [
+    {
+      "horizon": 12,
+      "models": [
+        1.879672305135733,
+        1.8858813137591006,
+        1.885170811085986,
+        1.885774640307272
+      ],
+      "weighted_loss": 0.05761182795463525,
+      "root_converged": true,
+      "root_evaluations": 6,
+      "root_gates": {
+        "fiscal_replay": true,
+        "housing": true,
+        "mapping": true,
+        "market_replay": true,
+        "social_security": true
+      },
+      "mapping_gates": {
+        "mass": true,
+        "policy_reproduction": true,
+        "projection": true,
+        "dated_audits": true
+      },
+      "dated_accounting_count": 12,
+      "dated_accounting_pass": true,
+      "market_maximum": 1.5837490347934126e-05,
+      "fiscal_maximum": 1.4205472898428462e-06,
+      "replay_gap": 0.0,
+      "policy_error": 0.0,
+      "projection_mass": 0.0,
+      "mass_error": 7.771561172376096e-16
+    },
+    {
+      "horizon": 16,
+      "models": [
+        1.882306976876054,
+        1.8886641127861519,
+        1.8881276552107067,
+        1.8892769682539958
+      ],
+      "weighted_loss": 0.05930538426698267,
+      "root_converged": true,
+      "root_evaluations": 6,
+      "root_gates": {
+        "fiscal_replay": true,
+        "housing": true,
+        "mapping": true,
+        "market_replay": true,
+        "social_security": true
+      },
+      "mapping_gates": {
+        "mass": true,
+        "policy_reproduction": true,
+        "projection": true,
+        "dated_audits": true
+      },
+      "dated_accounting_count": 16,
+      "dated_accounting_pass": true,
+      "market_maximum": 7.489571387665621e-05,
+      "fiscal_maximum": 7.0234059016671135e-06,
+      "replay_gap": 0.0,
+      "policy_error": 0.0,
+      "projection_mass": 0.0,
+      "mass_error": 1.1102230246251565e-15
+    }
+  ],
+  "shock_fit_complete": false,
+  "state_experiment_ready": false,
+  "full_path_certified": false,
+  "production_ready": false,
+  "measurement_horizon_comparison": {
+    "passed": false,
+    "relative_gaps": {
+      "asset_price": 0.0029528859540766746,
+      "renter_price": 0.0036833676844424544,
+      "adult_population": 3.8849879461582254e-05,
+      "birth_children": 0.002648900866741463,
+      "housing_demand": 0.0018615616178238139,
+      "pension_period_units": 3.7809548584859095e-05
+    },
+    "fertility_absolute_gaps": [
+      0.0026346717403211706,
+      0.0027827990270512526,
+      0.0029568441247207478,
+      0.0035023279467238932
+    ],
+    "early_macro_periods": 5,
+    "early_macro_years": [
+      2007,
+      2011,
+      2015,
+      2019,
+      2023
+    ],
+    "fertility_windows": 4,
+    "macro_tolerance": 0.001,
+    "fertility_tolerance": 0.001,
+    "terminal_passes": [
+      false,
+      false
+    ],
+    "classification": "diagnostic finite-horizon measurement stability; full path uncertified"
+  },
+  "state_horizon_comparison": {
+    "passed": false,
+    "available": true,
+    "tolerance": 0.001,
+    "state_value_integrity": true,
+    "state_gaps": {
+      "population_absolute_gap": 3.563853822752261e-05,
+      "population_relative_gap": 3.8849879460371885e-05,
+      "normalized_distribution_l1": 0.020063093537130365,
+      "scheduled_entries_relative_l1": 0.001598146181492492,
+      "scheduled_raw_entries_relative_l1": 0.001692032920190265
+    },
+    "values": {
+      "current_2023_V": {
+        "short": {
+          "shape": [
+            120,
+            6,
+            1,
+            17,
+            9,
+            4,
+            4
+          ],
+          "dtype": "float64",
+          "finite": true,
+          "sha256": "eb49dfc84b6b3b25497b3fb0ce542cf4077bdeb4c0fee3f0a22257c72d830410"
+        },
+        "long": {
+          "shape": [
+            120,
+            6,
+            1,
+            17,
+            9,
+            4,
+            4
+          ],
+          "dtype": "float64",
+          "finite": true,
+          "sha256": "be58e9c22d88322caee7ed331cb54ed3bfce8242f15643ff56c5fb90d1b0dacf"
+        },
+        "gating": false,
+        "occupied_finite_weight": 1.0000000000000002,
+        "occupied_weighted_absolute_gap": 0.009666293734275409,
+        "occupied_weighted_relative_gap": 0.006804819010843201
+      },
+      "continuation_2027_V": {
+        "short": {
+          "shape": [
+            120,
+            6,
+            1,
+            17,
+            9,
+            4,
+            4
+          ],
+          "dtype": "float64",
+          "finite": true,
+          "sha256": "fb64f02271294b644eb2c54d6c0514c35a10e0da24cc8cedcf72bc6dad7b57b5"
+        },
+        "long": {
+          "shape": [
+            120,
+            6,
+            1,
+            17,
+            9,
+            4,
+            4
+          ],
+          "dtype": "float64",
+          "finite": true,
+          "sha256": "179707ef5c86cf8239b71deafdbb4358a45331c72694519945a79002443c2dee"
+        },
+        "gating": false,
+        "occupied_finite_weight": 1.0000000000000002,
+        "occupied_weighted_absolute_gap": 0.011521011814977833,
+        "occupied_weighted_relative_gap": 0.008038076178987552
+      }
+    },
+    "forecasts": {
+      "prices": {
+        "short": {
+          "shape": [
+            8
+          ],
+          "dtype": "float64",
+          "finite": true,
+          "sha256": "2fe3919ff7d17612a332533eb052946721ae6f780ba77031d375bf98d3fd0b38"
+        },
+        "long": {
+          "shape": [
+            12
+          ],
+          "dtype": "float64",
+          "finite": true,
+          "sha256": "fb0a3bbab7ce30c455756491e1cd8bee4d7ecd60a9a07144de0c09968a5358cc"
+        },
+        "overlap_periods": 8,
+        "maximum_overlap_relative_gap": 0.04548329035324058,
+        "gating": false
+      },
+      "pensions": {
+        "short": {
+          "shape": [
+            8
+          ],
+          "dtype": "float64",
+          "finite": true,
+          "sha256": "2844cbfd4397d2f4618d4426dedf880425f01ba29463606fee82a4153b2cdd7d"
+        },
+        "long": {
+          "shape": [
+            12
+          ],
+          "dtype": "float64",
+          "finite": true,
+          "sha256": "dcf99f5772efae592959f429123062d0548f2574223fc63cba21ce9d384690cd"
+        },
+        "overlap_periods": 8,
+        "maximum_overlap_relative_gap": 0.0012628664075724826,
+        "gating": false
+      },
+      "psi_path": {
+        "short": {
+          "shape": [
+            8
+          ],
+          "dtype": "float64",
+          "finite": true,
+          "sha256": "13ce4618873f38536dd883396fa4de58be0cafddef4971900022678583aefe59"
+        },
+        "long": {
+          "shape": [
+            12
+          ],
+          "dtype": "float64",
+          "finite": true,
+          "sha256": "17302644c4c72a52aee896a1054f5f88b0494b63373dea040a5515ecdde54894"
+        },
+        "overlap_periods": 8,
+        "maximum_overlap_relative_gap": 0.0,
+        "gating": false
+      }
+    },
+    "queue_metric": "L1 difference divided by maximum total absolute queue mass; retains physical queue scaling",
+    "value_forecast_disclosure": "Reported without a new acceptance tolerance; complete actual arrays saved in 2023 packet"
+  },
+  "terminal_passes": [
+    false,
+    false
+  ],
+  "checkpoint_receipt_sha256": "a3e996e74c0de2d53b1e66e7f9de4901cb2cb6950a99ed2a9d723a9539db1de1",
+  "checkpoint_original_flags": {
+    "shock_fit_complete": false,
+    "one_shock_measurement_certified": false,
+    "horizon_stable": false,
+    "state_experiment_ready": false,
+    "full_path_certified": false
+  },
+  "actual_state": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_runs/actualfit_v2/collected_candidate_0004/candidate_0004/state_2023_checkpoint/actual_2023.pkl.gz",
+    "sha256": "1292ff812f62d2ef75e8c8aee380891e2d5768a3bf594c5f7fc18441819780aa",
+    "bytes": 32809849
+  },
+  "files": 71,
+  "input_plan_sha256": "6b6b28afbf798562f2f28fd8c38eb33d844a36363bc53c45d4b35b87aeb34945",
+  "archived_fit_rows_sha256": "495b61b0b0aaf577d49ba36d7274c7207c9be546f544113fa30c3c805d46412f",
+  "copied_remote_hashes_verified": true,
+  "native_model_calls_during_collection": 0,
+  "unresolved": [
+    "Shock not fitted; candidate measurement rejected by unchanged horizon criterion.",
+    "Both diagnostic terminal checks fail.",
+    "Physical2023 distribution comparison fails.",
+    "No production104/128 horizon certification."
+  ],
+  "table_sha256": {
+    "shock_parameter.csv": "6f06308fbc9f524b15e954c1236acc1b66d8f9781b7eeccc27ef83849ae37ddb",
+    "target_fit_horizon_016.csv": "776a0bb6856a200b24fad41c58bb5c849c6a38569c8a3c5fcde8a787553b49b2",
+    "target_fit_horizon_012.csv": "5494054776c8cf512d5224e7659bb2f59a14911cf0a11bf768b88837280dbf66",
+    "baseline_parameters_all31.csv": "3c71b831c40f16d17505faa2c2a872d8b00e795c046715cf1205ab83922aa4ca"
+  }
+}

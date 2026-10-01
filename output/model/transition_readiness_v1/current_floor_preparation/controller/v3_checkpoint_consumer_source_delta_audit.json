@@ -1,0 +1,69 @@
+{
+  "schema": "controller_checkpoint_consumer_source_delta_audit_v1",
+  "old_source": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
+    "sha256": "658859f10ec709d92f07bc599d3d36144c672827a99ffdd16bc4cee6892affef"
+  },
+  "old_snapshot": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/controller_before_checkpoint.py",
+    "sha256": "658859f10ec709d92f07bc599d3d36144c672827a99ffdd16bc4cee6892affef"
+  },
+  "new_source": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
+    "sha256": "3294bc1d83e6cedc433cd34f7b1d28af553be6eb33ddda72b766bf572ded1766"
+  },
+  "original_preparation": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_runs/smoke_v4/native_preparation.json",
+    "sha256": "b775aa584e8e854ea266f56bb50a2bba904852685d301bf13198ff3e3dec1244"
+  },
+  "diff": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/v3_controller_checkpoint_consumer.diff",
+    "sha256": "076b1d08485531d409e1bef49a21888da1dc2ec3cf9a9f9065d380f8d648110f"
+  },
+  "checks": {
+    "NativeAdapter_methods_except_endpoint_AST_identical": true,
+    "NativeAdapter_endpoint_only_stationary_valid_predicate_changed": true,
+    "Controller___init___AST_identical": true,
+    "Controller_remaining_AST_identical": true,
+    "Controller_progress_AST_identical": true,
+    "Controller_account_AST_identical": true,
+    "Controller_prepare_AST_identical": true,
+    "GATES_AST_identical": true,
+    "Preflight_only_exact_diagnostic_horizon_override_requirement_added": true,
+    "Preflight_only_exact_damping_guard_predicate_changed": true,
+    "Original_global_functions_except_validate_preparation_and_exact_preflight_guard_AST_identical": true,
+    "Controller_evaluate_all_critical_numerical_calls_AST_identical": true,
+    "Controller_run_all_critical_numerical_calls_AST_identical": true
+  },
+  "change_scopes": [
+    "output_checkpoint",
+    "explicit_generation_consumer_validation",
+    "stationary_gate_boolean_normalization",
+    "diagnostic_numerical_control_guard",
+    "diagnostic_horizon_acceptance_override",
+    "authenticated_diagnostic_measurement_replay"
+  ],
+  "accepted_numerics_unchanged": false,
+  "prepared_reference_and_measured_seed_numerics_unchanged": true,
+  "lead_review_accepted": false,
+  "lead_review_required": true,
+  "migration_authorized": false,
+  "validate_preparation_changed": true,
+  "NativeAdapter_all_AST_identical": false,
+  "change_scope": "SIX scopes: checkpoints; source compatibility; stationary audit Boolean normalization; diagnostic path damping; explicit diagnostic macro/fertility comparison .001 to .01 preserving strict failed certificate; authenticated V2 diagnostic measurement replay for unmatched cases only. NativeAdapter, root/fitter mathematics, GATES, prepared reference/J unchanged. Final matched state and replay always fresh native.",
+  "original_preparation_receipt_not_rewritten": true,
+  "tests_passed": 33,
+  "new_native_model_calls": 0,
+  "guard_only_source_checks": null,
+  "horizon_override_before": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/controller_before_horizon_override.py",
+    "sha256": "d011b35432706ceb011e605e3a4eaf7dcbb9cf95e76b5f3faa2ffb6875e7b8fb"
+  },
+  "horizon_override_diff": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/v3_diagnostic_horizon_and_reuse.diff",
+    "sha256": "8f9dc08bec5e39d444e112bab637a97c98a6132357541efd25aeff2b108e6902"
+  },
+  "NativeAdapter_AST_identical_to_d011": true,
+  "reuse_point_binding": "Native psi/calendar/price/pension exact; residual difference bounded by original retained replay1e-10; original root residual normalization differs8.47e-22 at case4date15.",
+  "actual_four_case_measurement_binding_verified_zero_native_calls": true
+}

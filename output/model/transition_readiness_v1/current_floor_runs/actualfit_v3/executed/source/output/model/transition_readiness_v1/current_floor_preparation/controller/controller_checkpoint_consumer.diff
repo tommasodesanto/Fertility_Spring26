@@ -1,0 +1,252 @@
+--- /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py
++++ /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py
+@@ -16,6 +16,8 @@
+ import math
+ import signal
+ import copy
++import ast
++import difflib
+ from contextlib import contextmanager
+ from pathlib import Path
+ import sys
+@@ -123,7 +125,7 @@
+     require(all(plan['fit'].get(k)==v for k,v in retained_fit.items()), 'Retained scalar fit/measurement controls required')
+     for name in ('path','endpoint'):
+         require(plan[name].get('price_bound_ratios') == [.05,20.] and plan[name].get('max_log_step') == .15 and
+-                plan[name].get('damping') == .7, 'Retained numerical price domain/step controls required: '+name)
++                path_damping_control_allowed(plan,name), 'Retained numerical price domain/step controls required: '+name)
+     require(plan['endpoint'].get('slope')==1. and plan['path'].get('pension_bound_ratios')==[.05,20.],
+             'Original stationary root initialization and fiscal domain required')
+     psi = plan['initial_psi']
+@@ -139,12 +141,32 @@
+                 stop_conditions=['deadline','iteration cap','actual policy-call cap','failed native accounting','missing native seed'])
+ 
+ 
++def path_damping_control_allowed(plan,name):
++    damping=plan[name].get('damping')
++    if isinstance(damping,bool) or not isinstance(damping,(int,float)) or not math.isfinite(damping):return False
++    if name=='endpoint':return damping==.7
++    override=plan.get('diagnostic_numerical_control_override')
++    if damping==.7:return override is None
++    expected=dict(schema='diagnostic_path_damping_override_v1',classification='diagnostic numerical control override',
++        control='path.damping',original_value=.7,value=1.,economic_changes=False,target_changes=False,gate_changes=False)
++    return bool(name=='path' and damping==1. and plan['mode']=='diagnostic' and override==expected and type(override.get('value')) in (int,float)
++        and all(override.get(key) is False for key in ('economic_changes','target_changes','gate_changes')))
++
++
+ def validate_preparation(plan, preparation):
+     require(preparation.get('schema')=='current_floor_native_reference_seed_v1' and
+             preparation.get('reference_repeat_verified') is True and preparation.get('fresh_seed_baseline_verified') is True,
+             'Completed verified native reference/seed preparation required; no fallback')
+-    for key in ('identity','source_files','target_contract','seed','gates'):
++    for key in ('identity','target_contract','seed','gates'):
+         require(preparation[key]==plan[key], 'Prepared native inputs differ: '+key)
++    generation,consumer=preparation['source_files'],plan['source_files']
++    require(set(generation)==set(consumer),'Prepared source role inventory changed')
++    changed=[key for key in generation if generation[key]!=consumer[key]]
++    if changed:
++        require(changed==['controller'],'Only the reviewed controller consumer may differ')
++        validate_consumer_compatibility(plan,preparation)
++    else:
++        for item in generation.values():pinned(item)
+     for key in ('reference_checkpoint','reconstruction_receipt','measured_seed_receipt','seed_baseline_checks'):
+         pinned(preparation[key])
+     reconstructed=json.loads(pinned(preparation['reconstruction_receipt']).read_text())
+@@ -159,6 +181,94 @@
+             'Prepared measured seed identity/measurement changed')
+     pinned(measured['matrix'])
+     return measured
++
++
++def compatibility_ast_checks(old_text,new_text):
++    old,new=ast.parse(old_text),ast.parse(new_text)
++    def classes(tree):return {n.name:n for n in tree.body if isinstance(n,ast.ClassDef)}
++    def methods(node):return {n.name:n for n in node.body if isinstance(n,ast.FunctionDef)}
++    def same(x,y):return ast.dump(x,include_attributes=False)==ast.dump(y,include_attributes=False)
++    a,b=classes(old),classes(new);x,y=methods(a['Controller']),methods(b['Controller'])
++    old_native,new_native=methods(a['NativeAdapter']),methods(b['NativeAdapter'])
++    checks=dict(NativeAdapter_methods_except_endpoint_AST_identical=all(
++        name in new_native and same(node,new_native[name]) for name,node in old_native.items() if name!='_endpoint'))
++    endpoint=copy.deepcopy(old_native['_endpoint']);replacements=0
++    class NormalizeStationaryPredicate(ast.NodeTransformer):
++        def visit_Call(self,node):
++            nonlocal replacements
++            self.generic_visit(node)
++            if ast.unparse(node)=="all(record['gates'].values())":
++                replacements+=1
++                return ast.copy_location(ast.parse('stationary_mapping_valid(record)',mode='eval').body,node)
++            return node
++    endpoint=NormalizeStationaryPredicate().visit(endpoint)
++    checks['NativeAdapter_endpoint_only_stationary_valid_predicate_changed']=replacements==1 and same(endpoint,new_native['_endpoint'])
++    for name in ('__init__','remaining','progress','account','prepare'):
++        checks['Controller_'+name+'_AST_identical']=same(x[name],y[name])
++    def gates(tree):
++        return next(n for n in tree.body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='GATES' for t in n.targets))
++    checks['GATES_AST_identical']=same(gates(old),gates(new))
++    old_functions={n.name:n for n in old.body if isinstance(n,ast.FunctionDef)}
++    new_functions={n.name:n for n in new.body if isinstance(n,ast.FunctionDef)}
++    preflight=copy.deepcopy(new_functions['preflight']);restorations=0
++    class RestoreOriginalDampingPredicate(ast.NodeTransformer):
++        def visit_Call(self,node):
++            nonlocal restorations
++            self.generic_visit(node)
++            if ast.unparse(node)=='path_damping_control_allowed(plan, name)':
++                restorations+=1
++                return ast.copy_location(ast.parse("plan[name].get('damping') == .7",mode='eval').body,node)
++            return node
++    preflight=RestoreOriginalDampingPredicate().visit(preflight)
++    checks['Preflight_only_exact_damping_guard_predicate_changed']=restorations==1 and same(old_functions['preflight'],preflight)
++    checks['Original_global_functions_except_validate_preparation_and_exact_preflight_guard_AST_identical']=all(
++        name in new_functions and same(node,new_functions[name]) for name,node in old_functions.items() if name not in ('validate_preparation','preflight'))
++    def critical_calls(node):
++        names={'self.runtime.evaluate','diagnostic_horizon_comparison','original.inner.compare_horizons','self.runtime.compare_2023','fitter.fit_one','fitter.fit_rows'}
++        return sorted(ast.dump(n,include_attributes=False) for n in ast.walk(node) if isinstance(n,ast.Call) and ast.unparse(n.func) in names)
++    for name in ('evaluate','run'):
++        checks['Controller_'+name+'_all_critical_numerical_calls_AST_identical']=critical_calls(x[name])==critical_calls(y[name])
++    return checks
++
++
++def validate_consumer_compatibility(plan,preparation):
++    require(plan.get('prepared_consumer_compatibility') is not None,'Explicit approved generation/consumer compatibility pin required')
++    receipt=json.loads(pinned(plan['prepared_consumer_compatibility']).read_text())
++    require(receipt.get('schema')=='current_floor_prepared_consumer_compatibility_v1' and
++        receipt.get('compatibility_approved') is True and receipt.get('lead_review_accepted') is True,
++        'Compatibility requires explicit lead-reviewed approval')
++    require(receipt['original_preparation']==plan['prepared_native_inputs'],'Compatibility names another preparation')
++    require(json.loads(pinned(receipt['original_preparation']).read_text())==preparation,
++            'Compatibility must consume the unchanged original preparation bytes')
++    generator=preparation['source_files']['controller'];consumer=plan['source_files']['controller']
++    require(receipt['original_generator_controller']==generator and
++        generator['sha256']=='658859f10ec709d92f07bc599d3d36144c672827a99ffdd16bc4cee6892affef',
++        'Compatibility supports only the exact original 658 generator')
++    snapshot=pinned(receipt['original_generator_snapshot'])
++    require(sha(snapshot)==generator['sha256'],'Historical generator snapshot bytes differ')
++    current=pinned(receipt['consumer_controller'])
++    require(receipt['consumer_controller']==consumer and current.resolve()==Path(__file__).resolve() and sha(current)==sha(__file__),
++        'Approved consumer differs from the actually installed controller')
++    require(receipt['allowed_source_roles']==['controller'],'No other source-role override is permitted')
++    for role,item in preparation['source_files'].items():
++        if role!='controller':
++            require(item==plan['source_files'][role],'Non-controller source changed')
++            pinned(item)
++    audit=json.loads(pinned(receipt['reviewed_audit']).read_text());diff=pinned(receipt['reviewed_diff'])
++    require(audit['schema']=='controller_checkpoint_consumer_source_delta_audit_v1' and
++        audit.get('accepted_numerics_unchanged') is True and audit.get('lead_review_accepted') is True and
++        audit['original_preparation']==plan['prepared_native_inputs'] and audit['old_snapshot']==receipt['original_generator_snapshot'] and
++        audit['old_source']['sha256']==generator['sha256'] and audit['new_source']==consumer and audit['diff']==receipt['reviewed_diff'],
++        'Stale or unapproved reviewed source audit')
++    scopes=['output_checkpoint','explicit_generation_consumer_validation','stationary_gate_boolean_normalization','diagnostic_numerical_control_guard']
++    require(audit['change_scopes']==scopes and receipt['change_scopes']==scopes,'Compatibility scope changed')
++    checks=compatibility_ast_checks(snapshot.read_text(),current.read_text())
++    require(all(checks.values()) and all(audit['checks'].get(k) is True for k in checks),
++        'Critical numerical AST or reviewed checks changed')
++    actual_diff=''.join(difflib.unified_diff(snapshot.read_text().splitlines(True),current.read_text().splitlines(True),
++        fromfile=audit['old_source']['path'],tofile=audit['new_source']['path']))
++    require(diff.read_text()==actual_diff,'Reviewed diff is stale or does not describe the installed consumer')
++    return receipt
+ 
+ 
+ def smoke_readiness(reply):
+@@ -261,6 +371,23 @@
+         policy_call_count_source='runtime_total_native_calls' if native_calls is not None else 'unavailable_after_failed_callback')
+ 
+ 
++def stationary_mapping_valid(record):
++    """Interpret native audit receipts without truth-testing descriptive zeros."""
++    require(isinstance(record,dict) and isinstance(record.get('gates'),dict),'Native stationary audit record required')
++    gates=record['gates']
++    for key in ('household_budget','purchase','estate','policy_arrays','stationary_operator','fiscal_certificate'):
++        require(isinstance(gates.get(key),dict),'Native stationary audit geometry changed: '+key)
++    require(type(gates.get('housing_market_clearing_required')) is bool and
++        type(gates.get('feasibility_projection_mass')) in (float,int) and
++        math.isfinite(gates['feasibility_projection_mass']), 'Native stationary audit descriptive fields changed')
++    certificate=gates['fiscal_certificate']
++    require(type(certificate.get('marginal_gate')) is bool and type(certificate.get('fiscal_gate')) is bool and
++        certificate.get('marginal_tolerance')==1e-9 and certificate.get('fiscal_tolerance')==1e-6,
++        'Original native stationary marginal/fiscal certification required')
++    return bool(record.get('accounting_valid') is True and certificate['marginal_gate'] is True and
++        certificate['fiscal_gate'] is True and gates['feasibility_projection_mass']==0.)
++
++
+ class RuntimeAdapter:
+     """Native floor runtime callback contract; absence fails without fallback.
+ 
+@@ -422,7 +549,7 @@
+             self._account(record)
+             latest.update(packet=packet, record=record)
+             write(folder/'latest_completed.json', record)
+-            return dict(mapping_valid=all(record['gates'].values()), residual=np.array([record['renewal_residual']]))
++            return dict(mapping_valid=stationary_mapping_valid(record), residual=np.array([record['renewal_residual']]))
+         root = solve_price_path_scaled(initial_prices=np.array([self.q]), evaluate=evaluate,
+             project=lambda q:np.clip(q, self.q*c['price_bound_ratios'][0], self.q*c['price_bound_ratios'][1]),
+             slope=c['slope'], market_tolerance=1e-6, max_log_step=c['max_log_step'], damping=c['damping'],
+@@ -544,6 +671,38 @@
+         self.policy_calls += calls
+         require(self.policy_calls <= self.plan['budget']['maximum_policy_calls'], 'Policy-call budget exceeded')
+ 
++    def checkpoint_2023(self,reply,folder,measurement_certified):
++        """Output-only recoverable native state; no solve or measurement reuse."""
++        self.remaining()
++        directory=Path(folder)/'state_2023_checkpoint'
++        require(not directory.exists(),'Every native candidate checkpoint needs a fresh folder')
++        deadline=min(self.deadline,time.monotonic()+self.plan['budget']['render_seconds'])
++        with watchdog(deadline):
++            exported=self.runtime.export_2023(reply,directory)
++        require(exported.get('calendar_year')==2023 and exported.get('period_index')==4 and
++            exported.get('exact_native_state') is True and exported.get('reconstructed_or_rescaled') is False and
++            exported.get('queue_lags')==[16,20] and exported.get('forecast_and_continuation_saved') is True,
++            'Exact index4 inherited wealth/distribution, both queues, forecast and continuation required')
++        pinned({key:exported[key] for key in ('path','sha256')})
++        self.remaining()
++        receipt=dict(schema='current_floor_candidate_2023_checkpoint_v1',status='complete',
++            identity=self.plan['identity'],psi=float(reply['psi']),candidate=self.count,
++            horizon=reply['horizon'],shock_fit_complete=False,one_shock_measurement_certified=measurement_certified,
++            horizon_stable=reply['horizon_comparison']['passed'],horizon_unstable=not reply['horizon_comparison']['passed'],
++            root_pass=reply['root_pass'],replay_pass=reply['replay_pass'],accounting_valid=reply['accounting_valid'],
++            terminal_passes=reply['terminal_passes'],state_experiment_ready=False,full_path_certified=False,
++            state_physical_horizon_stable=reply['state_horizon_comparison']['passed'],
++            state_value_integrity=reply['state_horizon_comparison'].get('state_value_integrity',False),
++            classification='Exploratory exact native2023 state; complete shock fit and continuation validation outstanding',
++            export=exported)
++        path=directory/'checkpoint_receipt.json'
++        write(path,receipt)
++        checkpoint=dict(path=str(path),sha256=sha(path))
++        reply.update(checkpoint_2023=checkpoint,checkpoint_2023_export=exported)
++        write(self.out/'latest_exploratory_state.json',dict(checkpoint_2023=checkpoint,shock_fit_complete=False,
++            one_shock_measurement_certified=measurement_certified,state_experiment_ready=False))
++        return checkpoint
++
+     def prepare(self):
+         preflight(self.plan)
+         require(self.runtime.identity() == self.plan['identity'], 'Current-floor runtime identity differs')
+@@ -634,8 +793,10 @@
+                     terminal_passes=[previous['terminal_pass'],reply['terminal_pass']])
+                 write(folder/'horizon_comparison.json', comparison)
+                 write(folder/'state_2023_horizon_comparison.json',state_comparison)
++                checkpoint=self.checkpoint_2023(reply,folder,comparison['passed'])
+                 if not comparison['passed']:
+-                    return dict(certified=False, model=None, payload=dict(candidate=self.count, error='horizon gates failed'))
++                    return dict(certified=False, model=None, payload=dict(candidate=self.count, error='horizon gates failed',
++                        checkpoint_2023=checkpoint,shock_fit_complete=False,state_experiment_ready=False))
+             previous = reply
+         models = [r['period_tfr_topcode_adjusted'] for r in reply['fertility'][:4]]
+         require(len(models) == 4 and all(math.isfinite(v) for v in models), 'Four finite original fertility measurements required')
+@@ -643,6 +804,7 @@
+         summary = dict(certified=True, psi=float(psi), model=models[3], gap=models[3]-target,
+             loss_contribution=(models[3]-target)**2, payload=dict(candidate=self.count, models=models, path=str(folder)),
+             mode=self.plan['mode'], production_ready=False,one_shock_measurement_certified=True,
++            checkpoint_2023=reply['checkpoint_2023'],shock_fit_complete=False,
+             full_path_certified=False,state_experiment_ready=False,
+             state_physical_horizon_stable=reply['state_horizon_comparison']['passed'],
+             state_value_integrity=reply['state_horizon_comparison'].get('state_value_integrity',False),
+@@ -674,7 +836,9 @@
+         with (self.out/'fertility_fit.csv').open('w', newline='') as stream:
+             writer = csv.DictWriter(stream, fieldnames=list(rows[0])); writer.writeheader(); writer.writerows(rows)
+         self.progress('export_exact_2023')
+-        exported = self.runtime.export_2023(self.last, self.out/'state_2023')
++        pinned(self.last['checkpoint_2023'])
++        exported = self.last['checkpoint_2023_export']
++        pinned({key:exported[key] for key in ('path','sha256')})
+         require(exported.get('calendar_year') == 2023 and exported.get('period_index') == 4 and
+                 exported.get('exact_native_state') is True and exported.get('reconstructed_or_rescaled') is False and
+                 exported.get('queue_lags') == [16, 20] and exported.get('forecast_and_continuation_saved') is True,

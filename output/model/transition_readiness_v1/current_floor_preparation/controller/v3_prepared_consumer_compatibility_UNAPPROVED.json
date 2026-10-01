@@ -1,0 +1,41 @@
+{
+  "schema": "current_floor_prepared_consumer_compatibility_v1",
+  "compatibility_approved": false,
+  "lead_review_accepted": false,
+  "original_preparation": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_runs/smoke_v4/native_preparation.json",
+    "sha256": "b775aa584e8e854ea266f56bb50a2bba904852685d301bf13198ff3e3dec1244"
+  },
+  "original_generator_controller": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
+    "sha256": "658859f10ec709d92f07bc599d3d36144c672827a99ffdd16bc4cee6892affef"
+  },
+  "original_controller_snapshot": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/controller_before_checkpoint.py",
+    "sha256": "658859f10ec709d92f07bc599d3d36144c672827a99ffdd16bc4cee6892affef"
+  },
+  "consumer_controller": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
+    "sha256": "3294bc1d83e6cedc433cd34f7b1d28af553be6eb33ddda72b766bf572ded1766"
+  },
+  "allowed_source_roles": [
+    "controller"
+  ],
+  "reviewed_audit": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/v3_checkpoint_consumer_source_delta_audit.json",
+    "sha256": "827e45d7ceb66017c24b8db560c6ce6045c14f150a8a3e9da16c735e8ee03009"
+  },
+  "reviewed_diff": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/v3_controller_checkpoint_consumer.diff",
+    "sha256": "076b1d08485531d409e1bef49a21888da1dc2ec3cf9a9f9065d380f8d648110f"
+  },
+  "change_scopes": [
+    "output_checkpoint",
+    "explicit_generation_consumer_validation",
+    "stationary_gate_boolean_normalization",
+    "diagnostic_numerical_control_guard",
+    "diagnostic_horizon_acceptance_override",
+    "authenticated_diagnostic_measurement_replay"
+  ],
+  "note": "UNAPPROVED. Lead review must affirm unchanged prepared reference/J generation and explicitly approve the disclosed diagnostic path damping guard. Original preparation remains untouched. Resolve and pin installed consumer path before use."
+}

@@ -1,0 +1,197 @@
+--- /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/controller_before_horizon_override.py
++++ /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py
+@@ -81,6 +81,7 @@
+     require(plan['fiscal_relaxation_authorized'] is True and plan['gates'] == GATES,
+             'Only author-authorized dated fiscal relaxation to 2e-5 is permitted')
+     require(plan['mode'] in ('production', 'diagnostic'), 'Explicit scientific mode required')
++    require(diagnostic_horizon_override_allowed(plan), 'Explicit diagnostic-only horizon comparison override required')
+     horizons = plan['horizons']
+     require(horizons == [104, 128] if plan['mode'] == 'production' else
+             len(horizons) == 2 and all(type(h) is int for h in horizons) and 5 <= horizons[0] < horizons[1],
+@@ -220,6 +221,10 @@
+                 return ast.copy_location(ast.parse("plan[name].get('damping') == .7",mode='eval').body,node)
+             return node
+     preflight=RestoreOriginalDampingPredicate().visit(preflight)
++    extra="require(diagnostic_horizon_override_allowed(plan), 'Explicit diagnostic-only horizon comparison override required')"
++    matched=[n for n in preflight.body if ast.unparse(n)==extra]
++    preflight.body=[n for n in preflight.body if ast.unparse(n)!=extra]
++    checks['Preflight_only_exact_diagnostic_horizon_override_requirement_added']=len(matched)==1
+     checks['Preflight_only_exact_damping_guard_predicate_changed']=restorations==1 and same(old_functions['preflight'],preflight)
+     checks['Original_global_functions_except_validate_preparation_and_exact_preflight_guard_AST_identical']=all(
+         name in new_functions and same(node,new_functions[name]) for name,node in old_functions.items() if name not in ('validate_preparation','preflight'))
+@@ -260,7 +265,7 @@
+         audit['original_preparation']==plan['prepared_native_inputs'] and audit['old_snapshot']==receipt['original_generator_snapshot'] and
+         audit['old_source']['sha256']==generator['sha256'] and audit['new_source']==consumer and audit['diff']==receipt['reviewed_diff'],
+         'Stale or unapproved reviewed source audit')
+-    scopes=['output_checkpoint','explicit_generation_consumer_validation','stationary_gate_boolean_normalization','diagnostic_numerical_control_guard']
++    scopes=['output_checkpoint','explicit_generation_consumer_validation','stationary_gate_boolean_normalization','diagnostic_numerical_control_guard','diagnostic_horizon_acceptance_override','authenticated_diagnostic_measurement_replay']
+     require(audit['change_scopes']==scopes and receipt['change_scopes']==scopes,'Compatibility scope changed')
+     checks=compatibility_ast_checks(snapshot.read_text(),current.read_text())
+     require(all(checks.values()) and all(audit['checks'].get(k) is True for k in checks),
+@@ -288,6 +293,99 @@
+     numerical=plan['mode']=='production' and plan['horizons']==[104,128]
+     return dict(numerical_path_certified=numerical,
+         production_ready=numerical and plan.get('policy_contract_closed') is True)
++
++
++def diagnostic_horizon_override_allowed(plan):
++    override=plan.get('diagnostic_horizon_tolerance_override')
++    if override is None:return True
++    expected=dict(schema='diagnostic_horizon_tolerance_override_v1',
++        classification='exploratory relaxed finite-horizon comparison',macro_tolerance=.01,fertility_tolerance=.01,
++        original_macro_tolerance=.001,original_fertility_tolerance=.001,
++        state_gate_changes=False,terminal_gate_changes=False,root_gate_changes=False)
++    return bool(plan['mode']=='diagnostic' and override==expected and
++        all(override.get(k) is False for k in ('state_gate_changes','terminal_gate_changes','root_gate_changes')))
++
++
++def diagnostic_comparison_acceptance(strict,plan):
++    require(diagnostic_horizon_override_allowed(plan),'Invalid diagnostic horizon comparison override')
++    if plan.get('diagnostic_horizon_tolerance_override') is None:return strict
++    relaxed=copy.deepcopy(strict)
++    relaxed.update(passed=all(v<=.01 for v in strict['relative_gaps'].values()) and
++        max(strict['fertility_absolute_gaps'])<=.01,macro_tolerance=.01,fertility_tolerance=.01,
++        original_strict_comparison=copy.deepcopy(strict),original_strict_passed=strict['passed'],
++        diagnostic_horizon_tolerance_override=copy.deepcopy(plan['diagnostic_horizon_tolerance_override']),
++        classification='exploratory relaxed finite-horizon comparison; original strict status retained; full path uncertified')
++    return relaxed
++
++
++def reused_native_point_binding(record,root,H,psi):
++    rows=record['rows'];point=root['final']
++    require(len(rows)==H and all(row['psi_child']==float(psi) and row['calendar_year']==2007+4*i
++        for i,row in enumerate(rows)), 'Reused native psi/calendar binding failed')
++    require([row['asset_price'] for row in rows]==point['prices'] and
++        [row['pension_period_units'] for row in rows]==point['fiscal_values'], 'Reused root price/pension binding failed')
++    for key in ('market_residual','fiscal_residual'):
++        a,b=record[key],point[key]
++        require(len(a)==len(b)==H and max(abs(x-y) for x,y in zip(a,b))<=GATES['final_reproduction_tolerance'],
++            'Reused root residual binding failed: '+key)
++
++
++def reused_diagnostic_measurement(plan,psi):
++    """Explicit immutable measurement replay; cannot supply a final fitted state."""
++    item=plan.get('diagnostic_measurement_reuse')
++    if item is None:return None
++    require(plan['mode']=='diagnostic' and plan.get('diagnostic_horizon_tolerance_override') is not None,
++        'Measurement replay requires explicitly relaxed diagnostic mode')
++    manifest=json.loads(pinned(item).read_text())
++    require(manifest.get('schema')=='diagnostic_measurement_reuse_v1' and manifest.get('reuse_authorized') is True,
++        'Explicit authorized measurement replay manifest required')
++    old=json.loads(pinned(manifest['original_plan']).read_text())
++    for key in ('identity','target_contract','seed','gates','horizons','handoff','fit','initial_psi','psi_bound_ratios'):
++        require(old[key]==plan[key],'Reused measurement changed '+key)
++    require(manifest['original_controller_sha256']==old['source_files']['controller']['sha256'] and
++        old['source_files']['controller']['sha256']=='d011b35432706ceb011e605e3a4eaf7dcbb9cf95e76b5f3faa2ffb6875e7b8fb',
++        'Only authenticated V2 generator measurement replay supported')
++    require(set(old['source_files'])==set(plan['source_files']) and all(old['source_files'][k]==plan['source_files'][k]
++        for k in old['source_files'] if k!='controller'),'Reused measurement runtime/model source pins changed')
++    entry=next((e for e in manifest['cases'] if float(e['psi']).hex()==float(psi).hex()),None)
++    if entry is None:return None
++    checkpoint=json.loads(pinned(entry['checkpoint_receipt']).read_text())
++    require(checkpoint['identity']==plan['identity'] and checkpoint['psi']==float(psi) and
++        checkpoint['horizon']==plan['horizons'][-1] and all(checkpoint[k] is True for k in
++        ('root_pass','replay_pass','accounting_valid')),'Reused checkpoint identity/root gates failed')
++    replies=[]
++    for H,proof in zip(plan['horizons'],entry['horizons']):
++        root=json.loads(pinned(proof['root']).read_text());record=json.loads(pinned(proof['record']).read_text())
++        endpoint=json.loads(pinned(proof['endpoint_root']).read_text());stationary=json.loads(pinned(proof['stationary']).read_text())
++        reused_native_point_binding(record,root,H,psi)
++        require(proof['horizon']==H and root['converged'] is True and all(v is True for v in root['gates'].values()) and
++            root['final_reproduction_max_abs']<=GATES['final_reproduction_tolerance'] and
++            record['accounting_valid'] is True and all(v is True for v in record['gates'].values()) and
++            max(map(abs,record['market_residual']))<=GATES['market_tolerance'] and
++            max(map(abs,record['fiscal_residual']))<=GATES['fiscal_tolerance'], 'Reused native root/accounting/replay gates failed')
++        require(endpoint['converged'] is True and endpoint['final_reproduction_max_abs']<=GATES['final_reproduction_tolerance'] and
++            stationary_mapping_valid(stationary) and abs(stationary['renewal_residual'])<=GATES['stationary_renewal_tolerance'] and
++            stationary['psi_child']==float(psi) and stationary['price']==endpoint['final']['prices'][0],
++            'Reused stationary certificate failed')
++        replies.append(dict(identity=plan['identity'],source_pins=plan['identity']['source_pins'],housing=record['housing'],
++            shock_contract=dict(psi=float(psi)),horizon=H,rows=record['rows'],fertility=record['fertility'],
++            terminal_pass=checkpoint['terminal_passes'][len(replies)]))
++    require(len(replies)==2,'Exactly two native horizon proofs required')
++    strict=diagnostic_horizon_comparison(*replies);stored=json.loads(pinned(entry['strict_comparison']).read_text())
++    require(strict==stored,'Reused original strict comparison changed')
++    relaxed=diagnostic_comparison_acceptance(strict,plan)
++    require(relaxed['passed'],'Reused case fails explicit relaxed comparison')
++    model=float(replies[-1]['fertility'][3]['period_tfr_topcode_adjusted']);target=plan['target_contract']['rows'][3]['target']
++    require(math.isfinite(model) and abs(model-target)>plan['fit']['fertility_tolerance'],
++        'Cached final matches forbidden; final fit and replay require fresh native evaluation')
++    return dict(certified=True,psi=float(psi),model=model,scientific_validation=False,production_ready=False,
++        one_shock_measurement_certified=original_measurement_certified(relaxed),horizon_comparison=relaxed,
++        accepted_for_relaxed_diagnostic=True,payload=dict(reused_measurement_manifest=item,
++        original_checkpoint=entry['checkpoint_receipt'],state_experiment_ready=False,final_native_state_available=False))
++
++
++def original_measurement_certified(comparison):
++    return comparison.get('original_strict_passed',comparison['passed']) is True
+ 
+ 
+ def diagnostic_horizon_comparison(short,long):
+@@ -688,6 +786,8 @@
+         receipt=dict(schema='current_floor_candidate_2023_checkpoint_v1',status='complete',
+             identity=self.plan['identity'],psi=float(reply['psi']),candidate=self.count,
+             horizon=reply['horizon'],shock_fit_complete=False,one_shock_measurement_certified=measurement_certified,
++            horizon_comparison=reply['horizon_comparison'],
++            diagnostic_relaxed_finite_horizon_match=reply['horizon_comparison'].get('original_strict_comparison') is not None,
+             horizon_stable=reply['horizon_comparison']['passed'],horizon_unstable=not reply['horizon_comparison']['passed'],
+             root_pass=reply['root_pass'],replay_pass=reply['replay_pass'],accounting_valid=reply['accounting_valid'],
+             terminal_passes=reply['terminal_passes'],state_experiment_ready=False,full_path_certified=False,
+@@ -753,6 +853,11 @@
+                 production_ready=False,shock_fit_verified=False))
+ 
+     def evaluate(self, psi):
++        cached=reused_diagnostic_measurement(self.plan,psi)
++        if cached is not None:
++            self.remaining()
++            self.progress('reused_diagnostic_measurement',psi=psi,proof=cached['payload'])
++            return cached
+         self.count += 1
+         folder = self.out/f'candidate_{self.count:04d}'
+         candidate_deadline = min(self.deadline, time.monotonic()+self.plan['budget']['candidate_seconds'])
+@@ -783,6 +888,7 @@
+                 original, _ = original_modules()
+                 if self.plan['mode']=='diagnostic':
+                     comparison=diagnostic_horizon_comparison(previous,reply)
++                    comparison=diagnostic_comparison_acceptance(comparison,self.plan)
+                 else:
+                     comparison = original.inner.compare_horizons(previous, reply, 4, GATES['horizon_relative_tolerance'])
+                     comparison['fertility_absolute_gaps'] = [abs(a['period_tfr_topcode_adjusted']-b['period_tfr_topcode_adjusted'])
+@@ -793,7 +899,7 @@
+                     terminal_passes=[previous['terminal_pass'],reply['terminal_pass']])
+                 write(folder/'horizon_comparison.json', comparison)
+                 write(folder/'state_2023_horizon_comparison.json',state_comparison)
+-                checkpoint=self.checkpoint_2023(reply,folder,comparison['passed'])
++                checkpoint=self.checkpoint_2023(reply,folder,original_measurement_certified(comparison))
+                 if not comparison['passed']:
+                     return dict(certified=False, model=None, payload=dict(candidate=self.count, error='horizon gates failed',
+                         checkpoint_2023=checkpoint,shock_fit_complete=False,state_experiment_ready=False))
+@@ -803,13 +909,14 @@
+         target = self.plan['target_contract']['rows'][3]['target']
+         summary = dict(certified=True, psi=float(psi), model=models[3], gap=models[3]-target,
+             loss_contribution=(models[3]-target)**2, payload=dict(candidate=self.count, models=models, path=str(folder)),
+-            mode=self.plan['mode'], production_ready=False,one_shock_measurement_certified=True,
++            mode=self.plan['mode'], production_ready=False,one_shock_measurement_certified=original_measurement_certified(comparison),
++            horizon_comparison=comparison,diagnostic_relaxed_finite_horizon_match=comparison.get('original_strict_comparison') is not None,
+             checkpoint_2023=reply['checkpoint_2023'],shock_fit_complete=False,
+             full_path_certified=False,state_experiment_ready=False,
+             state_physical_horizon_stable=reply['state_horizon_comparison']['passed'],
+             state_value_integrity=reply['state_horizon_comparison'].get('state_value_integrity',False),
+             terminal_passes=reply['terminal_passes'],
+-            classification='diagnostic finite-horizon one-shock fit; full path uncertified' if self.plan['mode']=='diagnostic' else 'full 104/128 numerical path measurement')
++            classification=('exploratory relaxed finite-horizon match; original strict certification status retained' if comparison.get('original_strict_comparison') is not None else 'diagnostic finite-horizon one-shock fit; full path uncertified') if self.plan['mode']=='diagnostic' else 'full 104/128 numerical path measurement')
+         write(folder/'complete.json', summary)
+         write(self.out/'latest_completed.json', summary)
+         best_path = self.out/'best_so_far.json'
+@@ -861,7 +968,10 @@
+             hashes={Path(p).name:sha(p) for p in plots}
+         receipt = dict(status='matched', mode=self.plan['mode'], scientific_validation=self.plan['mode']=='production',
+             **production_flags(self.plan), fitted_parameter=result['parameter'],
+-            one_shock_fit_certified=True,state_experiment_ready=False,full_path_certified=False,
++            one_shock_fit_certified=original_measurement_certified(self.last['horizon_comparison']),
++            one_shock_measurement_certified=original_measurement_certified(self.last['horizon_comparison']),
++            diagnostic_relaxed_finite_horizon_match=self.last['horizon_comparison'].get('original_strict_comparison') is not None,
++            state_experiment_ready=False,full_path_certified=False,
+             exploratory_state_available=True,state_physical_horizon_stable=self.last['state_horizon_comparison']['passed'],
+             state_value_integrity=self.last['state_horizon_comparison'].get('state_value_integrity',False),
+             continuation_validation='Outstanding; reported value/forecast gaps do not certify continuation convergence',
