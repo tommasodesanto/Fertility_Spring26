@@ -1,0 +1,121 @@
+[
+  {
+    "computed_valid_loss": false,
+    "label": "0003_nm",
+    "lifecycle_solves": 10,
+    "numerical_rejection": true,
+    "objective": 1000000000000.0,
+    "parameters": {
+      "beta_annual": 0.9632964409686954,
+      "chi": 1.1352744427452073,
+      "child_benefit_curvature": 0.061316551393165844,
+      "first_birth_fixed_cost": 0.6414145758477938,
+      "h_P": 1.0271604938271606,
+      "kappa_fert": 0.16447188996166928,
+      "kappa_fert_continuation": 0.35739355517398674,
+      "psi_child": 0.08,
+      "tenure_choice_kappa": 0.013397534038233572,
+      "theta0": 0.1259886123071811
+    },
+    "price_search": {
+      "attempts": [
+        {
+          "label": "price_start",
+          "price": 0.40056088974841536,
+          "reason": "fresh initial price evaluation",
+          "renewal_residual": -0.23136147648822902,
+          "status": "observed"
+        },
+        {
+          "label": "expand_01",
+          "price": 0.2503505560927596,
+          "reason": "multiplicative expansion direction=-1; initial residual-directed direction=-1; resumed=False",
+          "renewal_residual": -0.12425163339720502,
+          "status": "observed"
+        },
+        {
+          "label": "expand_02",
+          "price": 0.15646909755797472,
+          "reason": "multiplicative expansion direction=-1; initial residual-directed direction=-1; resumed=False",
+          "renewal_residual": -0.05368013805798488,
+          "status": "observed"
+        },
+        {
+          "label": "expand_03",
+          "price": 0.09873368771827608,
+          "reason": "multiplicative expansion direction=-1; initial residual-directed direction=-1; resumed=False",
+          "renewal_residual": -0.010440054258661013,
+          "status": "observed"
+        },
+        {
+          "label": "expand_04",
+          "price": 0.6408974235974646,
+          "reason": "multiplicative expansion direction=1; initial residual-directed direction=-1; resumed=False",
+          "renewal_residual": -0.3775923633189586,
+          "status": "observed"
+        },
+        {
+          "label": "expand_05",
+          "price": 1.0254358777559434,
+          "reason": "multiplicative expansion direction=1; initial residual-directed direction=-1; resumed=False",
+          "renewal_residual": -0.5485727376444485,
+          "status": "observed"
+        },
+        {
+          "label": "expand_06",
+          "price": 1.6406974044095095,
+          "reason": "multiplicative expansion direction=1; initial residual-directed direction=-1; resumed=False",
+          "renewal_residual": -0.7228668830554927,
+          "status": "observed"
+        },
+        {
+          "label": "expand_07",
+          "price": 2.6251158470552154,
+          "reason": "multiplicative expansion direction=1; initial residual-directed direction=-1; resumed=False",
+          "renewal_residual": -0.862271210886798,
+          "status": "observed"
+        },
+        {
+          "label": "expand_08",
+          "price": 4.200185355288345,
+          "reason": "multiplicative expansion direction=1; initial residual-directed direction=-1; resumed=False",
+          "renewal_residual": -0.9419804641613455,
+          "status": "observed"
+        },
+        {
+          "label": "expand_09",
+          "price": 6.318956013969669,
+          "reason": "multiplicative expansion direction=1; initial residual-directed direction=-1; resumed=False",
+          "renewal_residual": -0.9774524516277113,
+          "status": "observed"
+        }
+      ],
+      "bounds_origin_qref": 0.7898695017462086,
+      "bounds_role": "external numerical search caps; not economic restrictions",
+      "events": [
+        {
+          "direction": -1,
+          "price": 0.09873368771827608,
+          "reason": "diagnostic_price_cap"
+        },
+        {
+          "direction": 1,
+          "price": 6.318956013969669,
+          "reason": "diagnostic_price_cap"
+        }
+      ],
+      "expansion_factor": 1.6,
+      "lower": 0.09873368771827608,
+      "maximum_expansion_attempts": 20,
+      "maximum_new_lifecycle": 32,
+      "method": "adaptive_multiplicative_then_safeguarded_secant",
+      "requested_start": "0.40056088974841536",
+      "start": 0.40056088974841536,
+      "termination_reason": "both_diagnostic_price_caps",
+      "upper": 6.318956013969669
+    },
+    "reason": "uncomputed_price_unbracketed",
+    "seconds": 165.43739533424377,
+    "status": "inadmissible_numerical"
+  }
+]

@@ -1,5 +1,27 @@
 # Calibration Status
 
+## September 30, 22:45 New York — provisional progress; one numerical bracket rejection
+
+Torch snapshot at 02:45:15UTC has 47 completed cases: 46 passed computed/admissible
+GEs and one numerical rejection; 55 objective calls. No fatal failures or terminal
+chains. Best original-weight Torch loss remains 166.811289. The lead reports 94
+local passed cases, best original loss 151.113459. Thus 140 passed cases in total;
+failed bracket cases are not counted as computed GEs. All results remain provisional.
+
+The previous report is a preserved timestamped snapshot: 37 Torch cases (36 passed)
+and 80 local passed. See utility_floor_psi_v1/deployment/monitor_snapshot/REPORT.md
+for full 14/31 tables, weighted-versus-original losses and key moments; newer Torch
+counts are separate in deployment/latest_torch_monitor.json. Passed-case median
+runtimes were 121.5–219.2s by Torch chain and 78.8–90.3s locally. Initial simplex
+points repeat across local profiles; this does not establish a weighting response.
+
+Torch chain 2/0003_nm, psi=.08, evaluated 10 prices without a renewal sign change
+and reached both external diagnostic price caps. Reason: uncomputed_price_unbracketed;
+status inadmissible_numerical, declared 1e12 penalty, no valid equilibrium fit.
+This is numerical rejection within configured caps, not proven economic infeasibility.
+No rerun or cap change. Fable audit remains healthy with no final result yet.
+
+
 ## September 30, 22:34 New York — frequent progress and read-only audit
 
 The author requests progress every five minutes, including completed full GE or
