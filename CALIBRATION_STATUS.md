@@ -1,5 +1,32 @@
 # Calibration Status
 
+## September 30, 23:00 New York — free-psi floor searches and audit update
+
+The 23:00 monitor snapshot records 253 passed evaluations and 270 objective
+calls across the sixteen authorized local and Torch chains. The best original-
+weight loss remains 151.113459, unchanged from Torch chain 1 case 0009; no new
+best has appeared. All sixteen chains were active at this check, and the results
+remain provisional. One Torch evaluation remains a numerical price-bracketing
+rejection, not an established economic infeasibility.
+
+The read-only Fable audit completed successfully and its report was delivered;
+see [the audit](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/fable_audit/final.md)
+and [the lead's review](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/fable_audit/lead_review.md).
+The lead independently checked the two initial-simplex residual Jacobians from
+saved evaluations. Both have numerical rank 10 at relative thresholds $10^{-6}$
+and $10^{-8}$; their column-normalized condition numbers are 2,622 and 6,565.
+This is full numerical rank with substantial local ill-conditioning, not proof
+of statistical identification or of calibration failure. No model calls were
+made for these checks; details are in
+[the saved calculation](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/fable_audit/lead_checks/initial_simplex_rank.json).
+
+The author has authorized preparation of an isolated mechanism-response bridge:
+compare credit GE, which removes artificial borrowing limits while retaining
+lifetime and net-estate accounting, and measure fertility responses to $\pm1\%$
+price/rent changes by credit regime. The `floor_experiment_responses` agent is
+preparing it. No numerical run has started; monitor receipts only after an
+authorized actual start, and do not launch it automatically.
+
 ## September 30, 22:45 New York — provisional progress; one numerical bracket rejection
 
 Torch snapshot at 02:45:15UTC has 47 completed cases: 46 passed computed/admissible

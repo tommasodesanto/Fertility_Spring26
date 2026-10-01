@@ -1,0 +1,505 @@
+{
+  "chains": [
+    {
+      "actual_probe_deltas": {
+        "beta_annual": 0.0020000000000000018,
+        "chi": 0.11352744427452066,
+        "child_benefit_curvature": 0.009999999999999995,
+        "first_birth_fixed_cost": 0.06000000000000005,
+        "h_P": 0.10000000000000009,
+        "kappa_fert": 0.016447188996166956,
+        "kappa_fert_continuation": 0.03573935551739865,
+        "psi_child": 0.014999999999999986,
+        "tenure_choice_kappa": 0.0019999999999999983,
+        "theta0": 0.01999999999999999
+      },
+      "all_passed_same_fingerprint": true,
+      "base_label": "0000_nm",
+      "base_parameters": {
+        "beta_annual": 0.9632964409686954,
+        "chi": 1.1352744427452073,
+        "child_benefit_curvature": 0.061316551393165844,
+        "first_birth_fixed_cost": 0.5814145758477938,
+        "h_P": 1.0271604938271606,
+        "kappa_fert": 0.16447188996166928,
+        "kappa_fert_continuation": 0.35739355517398674,
+        "psi_child": 0.1355551166583114,
+        "tenure_choice_kappa": 0.013397534038233572,
+        "theta0": 0.1259886123071811
+      },
+      "base_residual": [
+        0.3685766005652358,
+        -0.6261020847800582,
+        -0.8891903341561178,
+        -2.041350028915663,
+        -0.45735975889498776,
+        1.9327477219327376,
+        1.7092089354948508,
+        -9.344779696586393,
+        -9.172403807294423,
+        -2.739497465617138
+      ],
+      "chain": 0,
+      "coordinate_order": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "h_P",
+        "child_benefit_curvature",
+        "tenure_choice_kappa",
+        "psi_child"
+      ],
+      "diagnostics": {
+        "column_unit_normalized_J": {
+          "condition_number": 2621.6036039385103,
+          "condition_number_note": "unthresholded sigma_max/sigma_min",
+          "rank_relative_thresholds": {
+            "1e-06": 10,
+            "1e-08": 10
+          },
+          "relative_thresholds": [
+            1e-06,
+            1e-08
+          ],
+          "singular_values": [
+            2.3776411673201747,
+            1.2689576727313412,
+            1.0251892706782586,
+            0.9281227048400383,
+            0.6994282089028555,
+            0.4712344290713514,
+            0.3013167363969385,
+            0.1484588729843126,
+            0.00705454692703659,
+            0.0009069415237865008
+          ]
+        },
+        "residual_change_matrix_J_actual_steps": {
+          "condition_number": 13590.778206683197,
+          "condition_number_note": "unthresholded sigma_max/sigma_min",
+          "rank_relative_thresholds": {
+            "1e-06": 10,
+            "1e-08": 10
+          },
+          "relative_thresholds": [
+            1e-06,
+            1e-08
+          ],
+          "singular_values": [
+            13.833932871876796,
+            6.89089079308309,
+            3.1568413055207456,
+            2.3314264499460893,
+            1.4910295178843838,
+            0.557544779439506,
+            0.47118298187046853,
+            0.30949478027907934,
+            0.011037332748310202,
+            0.0010178911510066457
+          ]
+        }
+      },
+      "first_11_case_count": 11,
+      "jacobian_column_norms": {
+        "beta_annual": 460.5880967761132,
+        "chi": 61.6091151298897,
+        "child_benefit_curvature": 42.8792100962414,
+        "first_birth_fixed_cost": 103.51436784544975,
+        "h_P": 29.519531443676453,
+        "kappa_fert": 164.15602819356963,
+        "kappa_fert_continuation": 188.75725330090327,
+        "psi_child": 685.4676363946924,
+        "tenure_choice_kappa": 557.5407099441363,
+        "theta0": 16.680101222617072
+      },
+      "probe_records": [
+        {
+          "base_loss": 196.4880267462845,
+          "changed_parameter": "beta_annual",
+          "early_fertility_model_change": 0.0008167332924269299,
+          "early_fertility_residual_change": 0.0081673329242693,
+          "label": "0001_nm",
+          "passed": true,
+          "physical_delta": 0.0020000000000000018,
+          "probe_index": 1,
+          "same_fingerprint": true
+        },
+        {
+          "base_loss": 320.2111847109149,
+          "changed_parameter": "chi",
+          "early_fertility_model_change": -0.005573852821690539,
+          "early_fertility_residual_change": -0.055738528216905614,
+          "label": "0002_nm",
+          "passed": true,
+          "physical_delta": 0.11352744427452066,
+          "probe_index": 2,
+          "same_fingerprint": true
+        },
+        {
+          "base_loss": 214.76862678377296,
+          "changed_parameter": "first_birth_fixed_cost",
+          "early_fertility_model_change": 0.0011694804578133988,
+          "early_fertility_residual_change": 0.01169480457813421,
+          "label": "0003_nm",
+          "passed": true,
+          "physical_delta": 0.06000000000000005,
+          "probe_index": 3,
+          "same_fingerprint": true
+        },
+        {
+          "base_loss": 215.5738869311956,
+          "changed_parameter": "kappa_fert",
+          "early_fertility_model_change": -0.007705643361423764,
+          "early_fertility_residual_change": -0.07705643361423764,
+          "label": "0004_nm",
+          "passed": true,
+          "physical_delta": 0.016447188996166956,
+          "probe_index": 4,
+          "same_fingerprint": true
+        },
+        {
+          "base_loss": 293.7849024212758,
+          "changed_parameter": "kappa_fert_continuation",
+          "early_fertility_model_change": 0.010903290369790208,
+          "early_fertility_residual_change": 0.1090329036979023,
+          "label": "0005_nm",
+          "passed": true,
+          "physical_delta": 0.03573935551739865,
+          "probe_index": 5,
+          "same_fingerprint": true
+        },
+        {
+          "base_loss": 192.20648459154015,
+          "changed_parameter": "theta0",
+          "early_fertility_model_change": 4.715778315045327e-05,
+          "early_fertility_residual_change": 0.0004715778315045327,
+          "label": "0006_nm",
+          "passed": true,
+          "physical_delta": 0.01999999999999999,
+          "probe_index": 6,
+          "same_fingerprint": true
+        },
+        {
+          "base_loss": 175.57910110148987,
+          "changed_parameter": "h_P",
+          "early_fertility_model_change": -0.000701983163503006,
+          "early_fertility_residual_change": -0.007019831635029838,
+          "label": "0007_nm",
+          "passed": true,
+          "physical_delta": 0.10000000000000009,
+          "probe_index": 7,
+          "same_fingerprint": true
+        },
+        {
+          "base_loss": 194.2373374293507,
+          "changed_parameter": "child_benefit_curvature",
+          "early_fertility_model_change": 0.0004965019215428246,
+          "early_fertility_residual_change": 0.004965019215428246,
+          "label": "0008_nm",
+          "passed": true,
+          "physical_delta": 0.009999999999999995,
+          "probe_index": 8,
+          "same_fingerprint": true
+        },
+        {
+          "base_loss": 204.05701740912997,
+          "changed_parameter": "tenure_choice_kappa",
+          "early_fertility_model_change": -0.00013518441573567852,
+          "early_fertility_residual_change": -0.0013518441573570072,
+          "label": "0009_nm",
+          "passed": true,
+          "physical_delta": 0.0019999999999999983,
+          "probe_index": 9,
+          "same_fingerprint": true
+        },
+        {
+          "base_loss": 370.83509398773657,
+          "changed_parameter": "psi_child",
+          "early_fertility_model_change": -0.0062329206880845645,
+          "early_fertility_residual_change": -0.06232920688084587,
+          "label": "0010_nm",
+          "passed": true,
+          "physical_delta": 0.014999999999999986,
+          "probe_index": 10,
+          "same_fingerprint": true
+        }
+      ],
+      "search_contract_file": "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_0/results/search_contract.json",
+      "source_file": "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_0/results/cases.json",
+      "source_sha256": "f09972d9d826c63382ee2570fa039726d428d794b60e8c47e0e6bfc868daa18a",
+      "target_residual_order": [
+        "cps_childlessness",
+        "cps_exactly_one",
+        "nchs_mean_age",
+        "wealth_earnings",
+        "bequest_wealth",
+        "mean_rooms",
+        "ownership_30_55",
+        "first_birth_rooms",
+        "recent_parent_ownership",
+        "early_fertility"
+      ],
+      "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+    },
+    {
+      "actual_probe_deltas": {
+        "beta_annual": 0.0020000000000000018,
+        "chi": 0.10554808719356212,
+        "child_benefit_curvature": 0.010000000000000009,
+        "first_birth_fixed_cost": 0.05999999999999994,
+        "h_P": 0.09999999999999987,
+        "kappa_fert": 0.01992823735003532,
+        "kappa_fert_continuation": 0.048933650270279405,
+        "psi_child": 0.014999999999999986,
+        "tenure_choice_kappa": 0.001999999999999999,
+        "theta0": 0.020000000000000004
+      },
+      "all_passed_same_fingerprint": true,
+      "base_label": "0000_nm",
+      "base_parameters": {
+        "beta_annual": 0.9613355183079796,
+        "chi": 1.0554808719356203,
+        "child_benefit_curvature": 0.14222939975407772,
+        "first_birth_fixed_cost": 0.49788517527914167,
+        "h_P": 1.8919518118322567,
+        "kappa_fert": 0.19928237350035297,
+        "kappa_fert_continuation": 0.4893365027027936,
+        "psi_child": 0.1355551166583114,
+        "tenure_choice_kappa": 0.006543273640801804,
+        "theta0": 0.10360194418235419
+      },
+      "base_residual": [
+        -4.651616867360305,
+        3.754891814560174,
+        -1.1156348955407744,
+        -2.5724965231698462,
+        -0.7335074317106588,
+        7.1073166218363495,
+        -4.76885932047899,
+        -6.434994316375204,
+        -1.2078665430501339,
+        -2.5701091509693064
+      ],
+      "chain": 1,
+      "coordinate_order": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "h_P",
+        "child_benefit_curvature",
+        "tenure_choice_kappa",
+        "psi_child"
+      ],
+      "diagnostics": {
+        "column_unit_normalized_J": {
+          "condition_number": 6565.1272304676395,
+          "condition_number_note": "unthresholded sigma_max/sigma_min",
+          "rank_relative_thresholds": {
+            "1e-06": 10,
+            "1e-08": 10
+          },
+          "relative_thresholds": [
+            1e-06,
+            1e-08
+          ],
+          "singular_values": [
+            2.3989753581617417,
+            1.357841034991465,
+            0.997151198744187,
+            0.8904452054781153,
+            0.6205837554602701,
+            0.39551384384474764,
+            0.24658164744932387,
+            0.10736636308998372,
+            0.009808210248473528,
+            0.0003654118608743034
+          ]
+        },
+        "residual_change_matrix_J_actual_steps": {
+          "condition_number": 36287.1283485556,
+          "condition_number_note": "unthresholded sigma_max/sigma_min",
+          "rank_relative_thresholds": {
+            "1e-06": 10,
+            "1e-08": 10
+          },
+          "relative_thresholds": [
+            1e-06,
+            1e-08
+          ],
+          "singular_values": [
+            13.818215842396363,
+            10.805328207422502,
+            2.714443660675834,
+            1.7545979674472116,
+            0.9948592240436928,
+            0.6088826713567508,
+            0.36299110165337073,
+            0.31273829343465287,
+            0.02198857225154387,
+            0.0003808021320856709
+          ]
+        }
+      },
+      "first_11_case_count": 11,
+      "jacobian_column_norms": {
+        "beta_annual": 540.0094030620068,
+        "chi": 116.11327176823941,
+        "child_benefit_curvature": 30.513428419294907,
+        "first_birth_fixed_cost": 79.62554929545891,
+        "h_P": 33.319815160563586,
+        "kappa_fert": 110.77859934595861,
+        "kappa_fert_continuation": 156.6610711279168,
+        "psi_child": 545.2284242985844,
+        "tenure_choice_kappa": 961.3770914899808,
+        "theta0": 17.763676457861617
+      },
+      "probe_records": [
+        {
+          "base_loss": 166.81128932452785,
+          "changed_parameter": "beta_annual",
+          "early_fertility_model_change": 0.0005285450659551216,
+          "early_fertility_residual_change": 0.005285450659551216,
+          "label": "0001_nm",
+          "passed": true,
+          "physical_delta": 0.0020000000000000018,
+          "probe_index": 1,
+          "same_fingerprint": true
+        },
+        {
+          "base_loss": 241.63889858869112,
+          "changed_parameter": "chi",
+          "early_fertility_model_change": -0.0013464948571608737,
+          "early_fertility_residual_change": -0.013464948571608737,
+          "label": "0002_nm",
+          "passed": true,
+          "physical_delta": 0.10554808719356212,
+          "probe_index": 2,
+          "same_fingerprint": true
+        },
+        {
+          "base_loss": 205.83329853445693,
+          "changed_parameter": "first_birth_fixed_cost",
+          "early_fertility_model_change": 0.0005678897210392719,
+          "early_fertility_residual_change": 0.005678897210392719,
+          "label": "0003_nm",
+          "passed": true,
+          "physical_delta": 0.05999999999999994,
+          "probe_index": 3,
+          "same_fingerprint": true
+        },
+        {
+          "base_loss": 184.40610501429703,
+          "changed_parameter": "kappa_fert",
+          "early_fertility_model_change": -0.007247227516213983,
+          "early_fertility_residual_change": -0.07247227516214005,
+          "label": "0004_nm",
+          "passed": true,
+          "physical_delta": 0.01992823735003532,
+          "probe_index": 4,
+          "same_fingerprint": true
+        },
+        {
+          "base_loss": 204.00537874664738,
+          "changed_parameter": "kappa_fert_continuation",
+          "early_fertility_model_change": 0.009339612054863777,
+          "early_fertility_residual_change": 0.09339612054863755,
+          "label": "0005_nm",
+          "passed": true,
+          "physical_delta": 0.048933650270279405,
+          "probe_index": 5,
+          "same_fingerprint": true
+        },
+        {
+          "base_loss": 167.9214686146865,
+          "changed_parameter": "theta0",
+          "early_fertility_model_change": 9.633859489432961e-05,
+          "early_fertility_residual_change": 0.0009633859489430741,
+          "label": "0006_nm",
+          "passed": true,
+          "physical_delta": 0.020000000000000004,
+          "probe_index": 6,
+          "same_fingerprint": true
+        },
+        {
+          "base_loss": 185.81760056689157,
+          "changed_parameter": "h_P",
+          "early_fertility_model_change": -0.000545245468198452,
+          "early_fertility_residual_change": -0.00545245468198452,
+          "label": "0007_nm",
+          "passed": true,
+          "physical_delta": 0.09999999999999987,
+          "probe_index": 7,
+          "same_fingerprint": true
+        },
+        {
+          "base_loss": 170.76202313976822,
+          "changed_parameter": "child_benefit_curvature",
+          "early_fertility_model_change": 0.0004661905142111511,
+          "early_fertility_residual_change": 0.004661905142111511,
+          "label": "0008_nm",
+          "passed": true,
+          "physical_delta": 0.010000000000000009,
+          "probe_index": 8,
+          "same_fingerprint": true
+        },
+        {
+          "base_loss": 151.11345889770718,
+          "changed_parameter": "tenure_choice_kappa",
+          "early_fertility_model_change": 0.0002894486655397044,
+          "early_fertility_residual_change": 0.002894486655396822,
+          "label": "0009_nm",
+          "passed": true,
+          "physical_delta": 0.001999999999999999,
+          "probe_index": 9,
+          "same_fingerprint": true
+        },
+        {
+          "base_loss": 181.07971276426576,
+          "changed_parameter": "psi_child",
+          "early_fertility_model_change": -0.005188009212638844,
+          "early_fertility_residual_change": -0.051880092126388444,
+          "label": "0010_nm",
+          "passed": true,
+          "physical_delta": 0.014999999999999986,
+          "probe_index": 10,
+          "same_fingerprint": true
+        }
+      ],
+      "search_contract_file": "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_1/results/search_contract.json",
+      "source_file": "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_1/results/cases.json",
+      "source_sha256": "72dcedec62424d55d7ad477b162882e24553945782853c380455d202449ef228",
+      "target_residual_order": [
+        "cps_childlessness",
+        "cps_exactly_one",
+        "nchs_mean_age",
+        "wealth_earnings",
+        "bequest_wealth",
+        "mean_rooms",
+        "ownership_30_55",
+        "first_birth_rooms",
+        "recent_parent_ownership",
+        "early_fertility"
+      ],
+      "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+    }
+  ],
+  "classification": "initial-simplex local numerical diagnostic; not identification certificate",
+  "definition": "J[:,j]=(probe scored base_residual minus center scored base_residual)/actual one-coordinate physical parameter delta; (a) J times diagonal actual deltas, (b) J with columns normalized to unit Euclidean norm. Rank counts singular values strictly above relative threshold times largest singular value. Condition number is unthresholded sigma_max/sigma_min. Price is excluded.",
+  "provenance": {
+    "cases": "chain_0/1 results/cases.json",
+    "coordinate_order_and_physical_step": "each chain search_contract.json; physical steps were also recorded from run_psi.py:45-58",
+    "fingerprint": "first 11 records within chain have same weight_fingerprint",
+    "scored_residual_identity": "cases.json target_fit scored rows in order; base_residual matches sqrt(weight)*gap"
+  },
+  "relative_rank_thresholds": [
+    1e-06,
+    1e-08
+  ],
+  "status": "completed_read_only_saved_data"
+}
