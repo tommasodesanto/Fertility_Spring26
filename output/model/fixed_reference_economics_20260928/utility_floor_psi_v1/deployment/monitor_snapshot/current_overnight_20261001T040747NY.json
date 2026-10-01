@@ -1,0 +1,40 @@
+{
+  "checked_epoch": 1790842067.546038,
+  "checked_new_york": "2026-10-01T04:07:47.546038-04:00",
+  "array_job_id": "18925912",
+  "collector_summary": {
+    "completed_cases": 1908,
+    "admissible_computed_ge": 1899,
+    "objective_calls": 1995
+  },
+  "statuses": {
+    "budget_exhausted": 1,
+    "inadmissible_numerical": 8,
+    "passed": 1899
+  },
+  "scheduler": {
+    "running": 23,
+    "completed_exit0": 1,
+    "array_query": "sacct -X -n -P -j 18925912"
+  },
+  "fatal_receipts": 0,
+  "postchecks": [
+    {
+      "chain": "chain_21",
+      "status": "selected_numerically_verified"
+    }
+  ],
+  "passed_case_median_seconds_range": [
+    126.72928273677826,
+    166.8077003955841
+  ],
+  "best_base": {
+    "chain": "chain_7",
+    "label": "0079_nm",
+    "base_loss": 47.52248179408936,
+    "price": 0.703052560544374,
+    "lifecycle_solves": 7,
+    "seconds": 150.56198954582214,
+    "selected_repeat_pending": true
+  }
+}
