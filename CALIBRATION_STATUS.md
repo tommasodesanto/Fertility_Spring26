@@ -20,19 +20,19 @@ Its verified best, loss **86.5092189818**, passed an exact repeat; full 14-targe
 31-parameter, and 17-plot evidence is in
 [the point packet](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T044447Z/point.json).
 
-The round-three array 18925600_0–15 has deadline 02:41:18 New York. At 01:23:08,
-the bounded collector recorded **266 case rows, 257 admissible computed GEs,
-and 290 calls**, with nine numerical nonpasses and no fatal, completion, or
+The round-three array 18925600_0–15 has deadline 02:41:18 New York. At 01:31:27,
+the bounded collector recorded **322 case rows, 312 admissible computed GEs,
+and 346 calls**, with ten numerical nonpasses and no fatal, terminal, or
 postcheck receipts. All 16 scheduler jobs were `RUNNING`; median case-time
-ranges across chains were 128.3–160.3 seconds. The cohort uses 12
+ranges across chains were 130.2–159.4 seconds. The cohort uses 12
 Nelder–Mead starts across four reviewed profiles and four base-weight PSOs, with
 200 calls plus one selected postcheck per chain. Deadline and budget remain
 separate from other cohorts.
 
-The overnight array 18925912_0–23 has a 10:00 New York cutoff. At 01:23:08, it
-recorded **289 case rows, 283 admissible computed GEs, and 321 calls**, with six
-numerical nonpasses and no fatal, completion, or postcheck receipts. All 24
-scheduler jobs were `RUNNING`; median case-time ranges across chains were 91.7–176.1
+The overnight array 18925912_0–23 has a 10:00 New York cutoff. At 01:31:27, it
+recorded **374 case rows, 368 admissible computed GEs, and 408 calls**, with six
+numerical nonpasses and no fatal, terminal, or postcheck receipts. All 24
+scheduler jobs were `RUNNING`; median case-time ranges across chains were 107.8–175.5
 seconds. The cohort uses 16 Nelder–Mead starts
 across four profiles and eight original-weight PSOs, with 400 calls and one
 selected postcheck per chain.
@@ -42,7 +42,7 @@ search point** from the overnight cohort, chain 3, case 0009_nm: loss
 **76.9654561058**, $q=0.6887503388$, $\psi_{child}=0.1625983298$, and
 $h_P=1.8511549829$. It used seven lifecycle solves in 115.70 seconds, but has
 no selected-point postcheck; optimization convergence is uncertified. Its full
-14-target and 31-parameter/bounds tables are saved in [the point packet](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T051350Z/point.json), [target table](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T051350Z/target_fit.csv), and [parameter table](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T051350Z/parameters.csv). The prior 86.509218 point remains the latest numerically verified best. The full 14-target/31-parameter packet is timestamped 05:13:50 UTC and the 01:23 New York cohort summaries are [round three](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_round3_20261001T0123NY.json) and [overnight](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T0123NY.json).
+14-target and 31-parameter/bounds tables are saved in [the point packet](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T051350Z/point.json), [target table](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T051350Z/target_fit.csv), and [parameter table](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T051350Z/parameters.csv). The prior 86.509218 point remains the latest numerically verified best. The full 14-target/31-parameter packet is timestamped 05:13:50 UTC and the 01:31 New York cohort summaries are [round three](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_round3_20261001T0131NY.json) and [overnight](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T0131NY.json).
 
 There are 64 launched searches in total: the original 16 and prior multistart eight are terminal; the round-three 16 and overnight 24 remain active. Keep counts, calls, deadlines, and postchecks separate by cohort. These snapshots have different observation times and must not be presented as a simultaneous combined total.
 
