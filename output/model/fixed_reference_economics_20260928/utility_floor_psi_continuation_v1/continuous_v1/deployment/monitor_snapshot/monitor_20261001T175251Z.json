@@ -1,0 +1,221 @@
+{
+  "captured_utc": "2026-10-01T17:52:51.897786+00:00",
+  "source": "dispatcher local native-start receipt; no duplicate SSH poll",
+  "torch_job_id": "18966575",
+  "remote_root": "/scratch/td2248/projects/utility_floor_psi_continuous_v1/results",
+  "summary": {
+    "launcher_started": 4,
+    "init_passes": 4,
+    "search_native_init_passes": 4,
+    "running_full_GE": 4,
+    "native_lifecycle_claims": 4,
+    "completed_case_records": 0,
+    "failed_launchers": 0,
+    "failure_receipts": 0
+  },
+  "search_contract": {
+    "chains": 4,
+    "method": "four independent Nelder-Mead restarts from neighborhoods of verified chain0/case0006_nm",
+    "unchanged_model_targets_weights_bounds": true,
+    "per_chain_call_cap": 100,
+    "per_chain_wall_seconds": 7200,
+    "postcheck_reserve_seconds": 900,
+    "resources": "1 CPU, 24 GiB, 1 thread per chain",
+    "no_resume_claim": "no final simplex was saved"
+  },
+  "chains": [
+    {
+      "chain": 0,
+      "launcher": {
+        "launcher_pid": 291180,
+        "start_epoch": 1790877039,
+        "deadline_epoch": 1790884239
+      },
+      "init": {
+        "status": "exact_initializer_passed_zero_lifecycle",
+        "lifecycle_solves": 0
+      },
+      "native_init": {
+        "status": "passed_zero_solve",
+        "lifecycle_solves": 0
+      },
+      "search_init": {
+        "status": "passed_zero_solve",
+        "lifecycle_solves": 0
+      },
+      "latest": {
+        "status": "running_full_GE",
+        "deadline_epoch": 1790884239.0,
+        "label": "0000_nm",
+        "completed_full_ge": 0
+      },
+      "native_progress": {
+        "status": "lifecycle_claimed",
+        "deadline_epoch": 1790883339.0,
+        "label": "expand_01",
+        "lifecycle_used": 2,
+        "lifecycle_remaining": 30
+      }
+    },
+    {
+      "chain": 1,
+      "launcher": {
+        "launcher_pid": 291181,
+        "start_epoch": 1790877040,
+        "deadline_epoch": 1790884240
+      },
+      "init": {
+        "status": "exact_initializer_passed_zero_lifecycle",
+        "lifecycle_solves": 0
+      },
+      "native_init": {
+        "status": "passed_zero_solve",
+        "lifecycle_solves": 0
+      },
+      "search_init": {
+        "status": "passed_zero_solve",
+        "lifecycle_solves": 0
+      },
+      "latest": {
+        "status": "running_full_GE",
+        "deadline_epoch": 1790884240.0,
+        "label": "0000_nm",
+        "completed_full_ge": 0
+      },
+      "native_progress": {
+        "status": "lifecycle_claimed",
+        "deadline_epoch": 1790883340.0,
+        "label": "expand_01",
+        "lifecycle_used": 2,
+        "lifecycle_remaining": 30
+      }
+    },
+    {
+      "chain": 2,
+      "launcher": {
+        "launcher_pid": 291178,
+        "start_epoch": 1790877039,
+        "deadline_epoch": 1790884239
+      },
+      "init": {
+        "status": "exact_initializer_passed_zero_lifecycle",
+        "lifecycle_solves": 0
+      },
+      "native_init": {
+        "status": "passed_zero_solve",
+        "lifecycle_solves": 0
+      },
+      "search_init": {
+        "status": "passed_zero_solve",
+        "lifecycle_solves": 0
+      },
+      "latest": {
+        "status": "running_full_GE",
+        "deadline_epoch": 1790884239.0,
+        "label": "0000_nm",
+        "completed_full_ge": 0
+      },
+      "native_progress": {
+        "status": "completed_case",
+        "deadline_epoch": 1790883339.0,
+        "lifecycle_used": 2,
+        "lifecycle_remaining": 30
+      }
+    },
+    {
+      "chain": 3,
+      "launcher": {
+        "launcher_pid": 291179,
+        "start_epoch": 1790877040,
+        "deadline_epoch": 1790884240
+      },
+      "init": {
+        "status": "exact_initializer_passed_zero_lifecycle",
+        "lifecycle_solves": 0
+      },
+      "native_init": {
+        "status": "passed_zero_solve",
+        "lifecycle_solves": 0
+      },
+      "search_init": {
+        "status": "passed_zero_solve",
+        "lifecycle_solves": 0
+      },
+      "latest": {
+        "status": "running_full_GE",
+        "deadline_epoch": 1790884240.0,
+        "label": "0000_nm",
+        "completed_full_ge": 0
+      },
+      "native_progress": {
+        "status": "lifecycle_claimed",
+        "deadline_epoch": 1790883340.0,
+        "label": "expand_01",
+        "lifecycle_used": 2,
+        "lifecycle_remaining": 30
+      }
+    }
+  ],
+  "hard_deadlines_local": {
+    "0": "2026-10-01T15:50:39-04:00",
+    "1": "2026-10-01T15:50:40-04:00",
+    "2": "2026-10-01T15:50:39-04:00",
+    "3": "2026-10-01T15:50:40-04:00"
+  },
+  "prior_eight_continuation": {
+    "receipt_path": "../deployment/remaining6_terminal_receipts.json plus verified_chain0_0006_nm packet",
+    "remaining_six": [
+      {
+        "chain": 1,
+        "postcheck_status": "selected_numerically_verified",
+        "selected_base_loss": 55.20232015630912,
+        "launcher_exit_code": 0,
+        "finished_epoch": 1790874391.8413463
+      },
+      {
+        "chain": 2,
+        "postcheck_status": "selected_numerically_verified",
+        "selected_base_loss": 62.618046516926896,
+        "launcher_exit_code": 0,
+        "finished_epoch": 1790874400.1878362
+      },
+      {
+        "chain": 3,
+        "postcheck_status": "selected_numerically_verified",
+        "selected_base_loss": 52.17872683686349,
+        "launcher_exit_code": 0,
+        "finished_epoch": 1790874382.9239273
+      },
+      {
+        "chain": 4,
+        "postcheck_status": "selected_numerically_verified",
+        "selected_base_loss": 65.6303932947726,
+        "launcher_exit_code": 0,
+        "finished_epoch": 1790874409.8883147
+      },
+      {
+        "chain": 6,
+        "postcheck_status": "selected_numerically_verified",
+        "selected_base_loss": 43.229771766423916,
+        "launcher_exit_code": 0,
+        "finished_epoch": 1790874390.0971003
+      },
+      {
+        "chain": 7,
+        "postcheck_status": "selected_numerically_verified",
+        "selected_base_loss": 97.42253189028096,
+        "launcher_exit_code": 0,
+        "finished_epoch": 1790874385.6324334
+      }
+    ],
+    "chain0_best": {
+      "case": "0006_nm",
+      "loss": 30.99909262396404,
+      "native_repeat": "exact_full_ge_repeat_passed"
+    },
+    "chain5_repeat_passed": true,
+    "six_named_launcher_exit0": true,
+    "chain0_and_chain5_launcher_exit_receipts": "not included in the remaining-six receipt; their selected-repeat passes were independently verified in the compact collector"
+  },
+  "no_new_best_in_new_batch": true
+}
