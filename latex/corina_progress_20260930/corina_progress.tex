@@ -158,7 +158,7 @@ The first-birth housing comparison uses a model proxy for the empirical event st
 \centering
 \fontsize{8.8}{9.6}\selectfont
 {\centering\renewcommand{\arraystretch}{0.93}\setlength{\tabcolsep}{7pt}
-\begin{tabular}{lrr}
+\begin{tabular*}{0.82\textwidth}{@{}p{0.60\textwidth}@{\extracolsep{\fill}}rr@{}}
 \toprule
 Moment & Target & Model \\
 \midrule
@@ -166,21 +166,28 @@ Completed fertility (renewal check) & 2.100 & 2.100 \\
 Childlessness, ages 40--44 (\%) & 19.828 & 20.253 \\
 Exactly one child among mothers, ages 40--44 (\%) & 21.366 & 21.063 \\
 Mean first-birth age (years) & 25.976 & 25.956 \\
-First births at age 30+ (\%)$^\dagger$ & 24.928 & 22.931 \\
 Wealth / earnings & 6.927 & 6.489 \\
 Annual child-directed bequest flow / wealth (\%) & 0.729 & 0.666 \\
-Older wealth/income p90/p50$^\dagger$ & 3.516 & 2.976 \\
 Mean occupied rooms & 5.729 & 5.977 \\
 Ownership, ages 30--55 (\%) & 67.626 & 65.697 \\
 First-birth rooms difference & 1.465 & 1.223 \\
-Family rooms difference$^\dagger$ & 0.385 & 0.300 \\
 Recent-parent ownership difference (pp) & 12.761 & 11.837 \\
 \textbf{Children per woman at age 25, capped at three} & \textbf{0.810} & \textbf{0.531} \\
 \bottomrule
-\end{tabular}
+\end{tabular*}
+\par\vspace{0.45em}
+\begin{tabular*}{0.82\textwidth}{@{}p{0.60\textwidth}@{\extracolsep{\fill}}rr@{}}
+\toprule
+Validation moments & Target & Model \\
+\midrule
+First births at age 30+ (\%) & 24.928 & 22.931 \\
+Older wealth/income p90/p50 & 3.516 & 2.976 \\
+Family rooms difference & 0.385 & 0.300 \\
+\bottomrule
+\end{tabular*}
 \par}
 \vspace{0.25em}
-\footnotesize $^\dagger$Validation moments. Ten scored moments; completed fertility is a separate renewal check. Numerical repeat verified; search convergence not established.
+\fontsize{8}{9}\selectfont Completed fertility checks renewal. Numerical repeat verified; search convergence not established.
 \end{frame}
 
 % 8: Ten jointly estimated parameters, including the child-benefit level.

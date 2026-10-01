@@ -190,3 +190,7 @@ source identity, equations, objective labels, fit/parameter tables and clipping.
 Final build/preservation claims belong to the lead's verification receipt;
 this documentation edit itself does not certify the PDF. No model execution
 is required or performed for this rewrite.
+
+The calibration slide places all three validation moments in a separate bottom
+table; the ten scored moments and completed-fertility renewal check remain above.
+All fourteen target/model pairs are unchanged.

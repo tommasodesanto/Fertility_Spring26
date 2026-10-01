@@ -89,3 +89,7 @@ directing auxiliary files to a temporary build directory. The final document
 must contain exactly ten pages and ten frames with no overlays. The final
 verification receipt records compilation, rendered-page inspection, source
 hashes, preservation checks and Library delivery availability.
+
+The calibration slide places all three validation moments in a separate bottom
+table; the ten scored moments and completed-fertility renewal check remain above.
+All fourteen target/model pairs are unchanged.
