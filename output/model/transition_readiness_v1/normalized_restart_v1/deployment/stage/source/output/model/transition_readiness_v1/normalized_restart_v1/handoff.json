@@ -1,0 +1,244 @@
+{
+  "handoff_type": "read-only current-floor evidence extraction",
+  "contract": {
+    "base_target_contract_sha256": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+    "parameter_contract_sha256": "cc0963d4388413f0f53580a001424d6d2a7fbd65a5cad41ff8c6f4e43c91aa75",
+    "weight_contract_sha256": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+    "weight_profile": "base_control",
+    "profile_multipliers": {},
+    "bounds": {
+      "beta_annual": [
+        0.94,
+        0.99
+      ],
+      "chi": [
+        0.1,
+        5.0
+      ],
+      "child_benefit_curvature": [
+        0.0,
+        0.8
+      ],
+      "first_birth_fixed_cost": [
+        0.0,
+        8.0
+      ],
+      "h_P": [
+        0.1,
+        2.3
+      ],
+      "kappa_fert": [
+        0.02,
+        50.0
+      ],
+      "kappa_fert_continuation": [
+        0.02,
+        50.0
+      ],
+      "psi_child": [
+        0.01,
+        0.5
+      ],
+      "tenure_choice_kappa": [
+        0.001,
+        0.1
+      ],
+      "theta0": [
+        0.0,
+        8.0
+      ]
+    },
+    "free_coordinates": [
+      "beta_annual",
+      "chi",
+      "first_birth_fixed_cost",
+      "kappa_fert",
+      "kappa_fert_continuation",
+      "theta0",
+      "h_P",
+      "child_benefit_curvature",
+      "tenure_choice_kappa",
+      "psi_child"
+    ],
+    "target_count": 14,
+    "target_rows": 14,
+    "parameter_rows": 31,
+    "target_rank_unverified": true,
+    "normalized_population": 1.0
+  },
+  "created_local_date": "2026-10-01",
+  "normalized_housing_contract": {
+    "schema": "normalized_n0_fixed_h0_v1",
+    "N0": 1.0,
+    "H0_source": "authenticated_parameter_table",
+    "counterfactual_H0_fixed": true
+  },
+  "selected_point": {
+    "source": "normalized array selected postcheck",
+    "local_packet": "output/model/transition_readiness_v1/normalized_restart_v1",
+    "chain": "chain_20",
+    "case": "0028_nm",
+    "base_loss": 30.371887956158005,
+    "weighted_loss": 30.371887956158005,
+    "price": 0.7167873404451099,
+    "population": 1.0,
+    "H0_derived": 6.851575289344519,
+    "weight_profile": "base_control",
+    "selected_repeat_status": "exact_full_ge_repeat_passed",
+    "selected_postcheck_status": "selected_numerically_verified",
+    "experimental_not_adopted": true,
+    "convergence_certified": false,
+    "verification_pass": true,
+    "root_local_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/native_reports/ROOT",
+    "repeat_local_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/native_reports/REPEAT"
+  },
+  "tables": {
+    "target_fit_csv": {
+      "path": "target_fit.csv",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/native_reports/ROOT/target_fit.csv",
+      "repeat_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/native_reports/REPEAT/target_fit.csv",
+      "sha256": "0ce75a3bf9203f30d6fe3f7facb587e0aaeaf9654790709b14e8ab9a57931303",
+      "rows": 14
+    },
+    "parameters_csv": {
+      "path": "parameters.csv",
+      "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/native_reports/ROOT/parameters.csv",
+      "repeat_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/native_reports/REPEAT/parameters.csv",
+      "sha256": "c94aed6f3a2acbc12d79b6101022d3a99f36d1257b8ca80c6b704e22df14036d",
+      "rows": 31
+    }
+  },
+  "selected_repeat_verification": {
+    "root_repeat_target_csv_sha256_equal": true,
+    "root_repeat_parameter_csv_sha256_equal": true,
+    "target_table_sha256": "0ce75a3bf9203f30d6fe3f7facb587e0aaeaf9654790709b14e8ab9a57931303",
+    "parameter_table_sha256": "c94aed6f3a2acbc12d79b6101022d3a99f36d1257b8ca80c6b704e22df14036d",
+    "repeat_standard_plot_count": 17,
+    "repeat_standard_plot_hashes_match_native_receipt": true,
+    "standard_plot_sha256": {
+      "fertility_by_age.png": "821da6105d8895075c00078633d97828677b46e921f3acb2110301a2130bcc30",
+      "fertility_policy_by_age_income_state.png": "32bc046e2acf8eddb5d4857e924576fad5a80bacf89758eca6b16dc0abc1bf8e",
+      "housing_by_age_income_state.png": "1766372d00c3f33be3096498e4ed7e82e9218485b5dfc185495059fa43f7bf3a",
+      "housing_market.png": "dd0284664e0e1fb8bb8b7372bf55afde9c9a3737dfc792eabfefbedb61bf2a3c",
+      "housing_prices.png": "87ca294911429ba0a6c6c1a9009661df1bd025f6f3fec98a1485f5b39149ecd9",
+      "income_state_outcomes.png": "b30b3f08e202d52d2bf45ee0420f28af8507d0b3a33281e4a3ed995a10b04acd",
+      "liquid_wealth_by_age_income_state.png": "1577d0f3511a73af45ac1910f8239d40405881e65e518608a9d427ce93e96e92",
+      "market_clearing_by_market.png": "1e8495239b38ef1259e4a832a10666102fd51ca3c81374b54a44761450e57faa",
+      "market_clearing_residuals.png": "eecf600ebcd2de3b54cb544a567e9fae5485cde95540c706252640754b21cae9",
+      "owner_rungs.png": "1be3a8bfbe8c4b2a15a55b9c48c5a14d354a4f5482e4f5912fa2c958ccbce300",
+      "ownership_by_age.png": "c83668683033ef0f3d6e3dc916381676037a05c38d80b7343a71de0e0e0b9ce3",
+      "ownership_by_age_income_state.png": "c3d2302344013b759d36a1ca44dd194675fed61443945799f046199dc422dd90",
+      "policy_childless_renter_age30.png": "9ea34d51d0bf1393374176e649bd4ac1c3fe656e0757a862e6ac39af557b2627",
+      "policy_childless_renter_age42.png": "d259c128f1b9034b3950fed354ab44f4d62aa3c5183559d2e40f8daa0c235bd6",
+      "tenure_services.png": "5e5155429235e658e4cb66219a4cebd72040bab8c1465fe15389687bfa81b33c",
+      "wealth_dist_childless_renter_age30.png": "b0f0037b9dabc831f8336494443ee6018527227f8b46b6257504fb48c40c5b80",
+      "wealth_dist_childless_renter_age42.png": "96ba38d74b5546ea4bea0cbd9bda313f52968f1fb20f1930b03ca8a2487d82ef"
+    },
+    "closure_receipts": {
+      "root_closure": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/native_reports/ROOT/closure.json",
+        "sha256": "6db0cb75c6dafa48d27fdece2cf7923fa6ee023b5107d7ba7a79d907f02102cc"
+      },
+      "repeat_closure": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/native_reports/REPEAT/closure.json",
+        "sha256": "f8ea82e2f63e8201b121ce502b21cd2fccdc12b5ec8a17b83332415cb1ce08b2"
+      },
+      "native_selected_repeat_receipt": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/evidence/native_selected_repeat.json",
+        "sha256": "bdc947cb9a5e2256c1cead3ad1248dbaac1a9d8a01f1466fde776512d537dfc7"
+      },
+      "selected_verification": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/evidence/completed.json",
+        "sha256": "285d4ae94bda931677039d44877fa07fb0ec9facc4e4aad09a78c9dbc290726b"
+      }
+    }
+  },
+  "checkpoint_and_sources": {
+    "source_pin_manifest_local": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/source_pins.json",
+      "sha256": "0d19c0d5f72a34f8177bdcb4faab5bb4dad6ba21dd8322698f40777ba7444d7c"
+    },
+    "source_pins_manifest": "output/model/transition_readiness_v1/normalized_restart_v1/source_pins.json",
+    "source_pins_manifest_sha256": "0d19c0d5f72a34f8177bdcb4faab5bb4dad6ba21dd8322698f40777ba7444d7c",
+    "source_pin_count": 223,
+    "executed_deployment_inventory": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/evidence/inventory.json",
+      "sha256": "49201d7c413a0962c7c185e021759c7826bdd37f882e4ff61fb4c1e2d10bde22"
+    },
+    "base_target_contract_sha256": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+    "parameter_contract_sha256": "cc0963d4388413f0f53580a001424d6d2a7fbd65a5cad41ff8c6f4e43c91aa75",
+    "weight_contract_sha256": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+    "selected_root_remote_path": "/scratch/td2248/projects/normalized_calibration_v1/results/chain_20/search/0028_nm/phase_b_ge/selected_root",
+    "selected_repeat_remote_path": "/scratch/td2248/projects/normalized_calibration_v1/results/chain_20/postcheck/selected_postcheck/phase_b_ge/selected_root",
+    "frozen_observer_checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d",
+    "frozen_observer_authenticator_sha256": "96d6923a252f57bc4d8c44fd6479b13f48ba217d74edf8ef629d120428b03b44",
+    "selected_state_checkpoint_sha256": null,
+    "selected_state_checkpoint_status": "Native selected state not retained; fresh reconstruction required; observer checkpoint is source authentication only"
+  },
+  "runtime_inputs": {
+    "preferred_fresh_native_comparison_report": "REPEAT",
+    "root_report_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/native_reports/ROOT",
+    "repeat_report_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/native_reports/REPEAT",
+    "repeat_target_fit": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/native_reports/REPEAT/target_fit.csv",
+    "repeat_parameters": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/native_reports/REPEAT/parameters.csv",
+    "repeat_closure": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/native_reports/REPEAT/closure.json",
+    "repeat_standard_diagnostics": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/native_reports/REPEAT/standard_diagnostics"
+  },
+  "inputs_preserved": {
+    "entry_and_credit": {
+      "approximation": "Existing five empirical quintile-bin means; censoring occurs after binning, not on raw survey observations.",
+      "arm": "nonnegative_mean",
+      "clipped_draw_mass": 0.0,
+      "conditional_sha256": "bf976b033678629c4f9e91df4037092d6e35ab113eebaf3fcf63c59510d2ca4f",
+      "credit": 0.0,
+      "dimensions": [
+        120,
+        9
+      ],
+      "effective_ratio_nodes": [
+        0.0,
+        0.0,
+        0.037865686206423034,
+        0.12770485428797146,
+        1.1272941320837204
+      ],
+      "lambda_positive": 0.3632385158888715,
+      "lifecycle_solves": 0,
+      "mean_annual_entry_income": 0.720554272517321,
+      "mean_wealth": 0.18651967924681834,
+      "necessary_current_budget_minimum_slack": 0.27427651537528747,
+      "negative_wealth_share": 0.0,
+      "ratio_weights": [
+        0.19942576269679177,
+        0.20037747293780178,
+        0.1998633085085668,
+        0.20008786061209277,
+        0.20024559524474678
+      ],
+      "raw_mean_wealth": 0.1865196792468183,
+      "raw_ratio_nodes": [
+        -2.22252859121604,
+        -0.0526403178090525,
+        0.104244689233362,
+        0.351572998737395,
+        3.1034542945567
+      ],
+      "zero_wealth_share": 0.6669475303229839
+    },
+    "economic_changes": [
+      "Experimental: historical parenthood-only floor is free; A(m) off, child shares constant, nonlinear benefit/equivalence scale retained",
+      "Author-requested psi_child estimated jointly with nine floor coordinates; diagnostic bounds [.01,.5]",
+      "Weight profile base_control multipliers {}"
+    ],
+    "normalized_population": 1.0,
+    "fixed_counterfactual_H0": 6.851575289344519,
+    "closure": "Baseline N0=1; H0 derived from absolute housing demand at birth-renewal-clearing price. Counterfactual H0 held fixed.",
+    "no_borrowing": true
+  },
+  "limitations": [
+    "Experimental calibration; no optimizer convergence certificate.",
+    "ROOT plots absent; REPEAT full17graphs verified.",
+    "No selected-native-state pickle retained; reference and seed must be reconstructed.",
+    "223 executed model/calibration source pins byte-identical to local originals;229-file deployment manifest separately retained."
+  ]
+}

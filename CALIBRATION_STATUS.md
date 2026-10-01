@@ -1,5 +1,46 @@
 # Calibration Status
 
+## October 1, 19:47 New York — normalized one-shock transition restarted
+
+The author authorized restarting from the new normalized calibration. Torch
+job **18989789** (`normalized_actualfit_v1`) started at **19:47:30** on cs612;
+its controller entered `selected_native_reference_reconstruction`. This is
+actual execution, not a preparation or fit-completion claim. The reference is
+normalized chain 20, case `0028_nm`, with `N0=1`,
+`H0=6.851575289344519`, price `0.7167873404451099`, and
+`psi_child=0.17198899419542374`. Its original-weight loss is
+`30.371887956158005`; complete [14-target fit](output/model/transition_readiness_v1/normalized_restart_v1/native_reports/ROOT/target_fit.csv),
+[31-parameter estimates and bounds](output/model/transition_readiness_v1/normalized_restart_v1/native_reports/ROOT/parameters.csv),
+and [17 diagnostics](output/model/transition_readiness_v1/normalized_restart_v1/native_reports/REPEAT/standard_diagnostics/)
+are retained. The selected repeat passed; optimizer convergence and target rank
+remain uncertified. The point is selected for this experiment, not adopted as
+a production calibration.
+
+Relative to the stopped reference, baseline population and calibrated supply
+change, and preference/childbirth-cost coordinates are re-estimated. Earnings,
+entry/wealth/income distributions, timing, transfers, housing floors and target
+definitions retain the named calibration contract. The transition adds one
+permanent 2007 child-preference shock, fitting only the original 2020–2023
+household-rate analogue `1.64575`, with all four windows reported. Calibrated
+`H0` stays fixed; physical population evolves. No old reference state, roots,
+Jacobian, shock estimate or 2023 checkpoint certifies this new baseline.
+
+The narrow runtime binding/report-compatibility changes passed 18 independently
+rerun zero-solve tests, full 223-source/table/plot authentication and mounted
+native-import/preflight checks. The actual run must freshly reconstruct and
+repeat the reference and measure its derivatives before fitting. Diagnostic
+comparison tolerances remain `0.01`, original strict statuses remain visible,
+and all other root, replay, state and terminal gates are unchanged. Fresh seed
+preparation has a 1,200-second stage cap; the original **20:24:47** deadline
+and conservative remaining **1,343-call** cap bind. The deadline may stop the
+run without a fitted result. The ten-minute heartbeat is active again.
+
+A coordination overlap submitted duplicate job 18989791; it was cancelled
+before starting, with zero elapsed runtime. Only job 18989789 is active.
+Source/contract changes, budgets, verified inputs and truthful certification
+limits are indexed in the [normalized transition README](output/model/transition_readiness_v1/normalized_restart_v1/README.md)
+and [submission receipt](output/model/transition_readiness_v1/normalized_restart_v1/deployment/submission_receipt.json).
+
 ## October 1, 19:11 New York — one-shock transition stopped by author
 
 The author instructed this chat to stop the transition and read the changing

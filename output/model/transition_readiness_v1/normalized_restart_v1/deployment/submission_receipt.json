@@ -1,0 +1,22 @@
+{
+  "job_id": "18989789",
+  "status": "RUNNING",
+  "label": "normalized_actualfit_v1",
+  "submitted_by": "floor_deployment",
+  "plan_sha256": "5bbb824a1a8e2431efcfc227f65a5a2d2b8ce73a8b01001cffb74bf10d678a4e",
+  "inventory_sha256": "f3546476c38e339462321d5cb203950281de40a423ea2f8e443534840a885d1b",
+  "deadline_epoch": 1790900687,
+  "maximum_policy_calls": 1343,
+  "slurm_start": "2026-10-01T19:47:30",
+  "node": "cs612",
+  "duplicate_coordination_receipt": {
+    "job_id": "18989791",
+    "state": "CANCELLED",
+    "start": null,
+    "end": "2026-10-01T19:47:18",
+    "elapsed_seconds": 0,
+    "native_calls": 0,
+    "cause": "Lead and deployment concurrent submission; second queued job cancelled before start"
+  },
+  "sole_active_job": "18989789"
+}
