@@ -1,0 +1,82 @@
+{
+  "current_floor_validation": false,
+  "diagnostics": {
+    "stubbed_renderer": true
+  },
+  "elapsed_seconds": 0.0049158330002683215,
+  "fitted_shocks": false,
+  "full_horizon_verified": false,
+  "interpretation": "fixed-price historical diagnostic; does not validate joint path solver",
+  "joint_price_pension_root_verified": false,
+  "maps": [
+    {
+      "accepted": true,
+      "cache": {},
+      "gates": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "d": true
+      },
+      "max_fiscal_error": 0.0,
+      "max_market_error": 0.0,
+      "name": "changed_psi_input",
+      "residual_ratios": {
+        "fiscal": 0.0,
+        "market": 0.0
+      },
+      "terminal": {
+        "all_checks_pass": true
+      }
+    },
+    {
+      "accepted": true,
+      "cache": {},
+      "gates": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "d": true
+      },
+      "max_fiscal_error": 0.0,
+      "max_market_error": 0.0,
+      "name": "pension_trial",
+      "residual_ratios": {
+        "fiscal": 0.0,
+        "market": 0.0
+      },
+      "terminal": {
+        "all_checks_pass": true
+      }
+    },
+    {
+      "accepted": true,
+      "cache": {},
+      "gates": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "d": true
+      },
+      "max_fiscal_error": 0.0,
+      "max_market_error": 0.0,
+      "name": "fresh_replay",
+      "residual_ratios": {
+        "fiscal": 0.0,
+        "market": 0.0
+      },
+      "terminal": {
+        "all_checks_pass": true
+      }
+    }
+  ],
+  "numerical_certified": true,
+  "production_ready": false,
+  "replay_max_difference": {
+    "fertility": 0.0,
+    "fiscal": 0.0,
+    "g_pre": 0.0,
+    "market": 0.0,
+    "queues": 0.0
+  }
+}

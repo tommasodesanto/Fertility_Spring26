@@ -1,0 +1,75 @@
+# Transition readiness
+
+## Verified facts
+
+- Reference: **2007 stationary reference — block0506, September 28 verified export**. Child-benefit preference level is `psi_child=0.1355551166583114`; reference manifest SHA256 is `147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4`. This historical numerical reference retains legacy repayment rules. It is not the revised credit/floor calibration.
+- Earlier job **18820811 was CANCELLED after 01:49:27**, following the author's repayment-error finding. It did complete the six-date pension-correction diagnostic; the 104-date correction did not complete. No preference shocks were fitted.
+- The completed six-date correction and independent fresh replay passed housing, fiscal, mass, zero-projection, dated-accounting, policy-reproduction and endpoint gates. Its 1170.573-second runtime covered three maps, with six actual policy solves per map. These are numerical diagnostics, not calibration results.
+- The legacy estimator already solves terminal birth renewal with price and scales population to absolute housing supply. Its hardcoded engine/reference, entry law, grid and credit contract are the obstacle to directly accepting the current floor calibration; changing the closure label alone is insufficient.
+- Current floor search now has native-postchecked points with intrinsic selected-price repeats and full diagnostics. An author-selected transition handoff, actual corrected dated-engine binding and dated housing closure remain unresolved; this task cannot silently adopt a candidate.
+
+## Reused real test
+
+The executed driver was `code/cluster/run_e5f_preference_budget_diagnostic.py`, SHA256 `6c32156788043a58218777624d4adf40cd6d206d31b224c2bd0223e31f67e1b7`. All other executed source pins and budgets are in `prior_evidence/smoke/config.json` and the original launch packet. Price was 0.7898695017462086, reference pension 0.917784047463731, horizon six four-year dates beginning in 2007, and preferences/grid/entry/housing supply were fixed. The first map applied an explicitly diagnostic pension factor of 1.00001. The correction used
+
+\[
+b_t^{new}=b_t^{old}\frac{\text{payroll revenue}_t}{\text{pension outlays}_t}.
+\]
+
+| Map | Maximum relative housing residual | Maximum scaled pension residual | Acceptance |
+|---|---:|---:|---|
+| Perturbed-pension input | 5.24629345e-7 | 1.00712333e-5 | Fiscal gate failed |
+| Corrected pension | 5.75550415e-8 | 3.50024514e-16 | Passed |
+| Fresh corrected replay | 5.75550415e-8 | 3.50024514e-16 | Passed, exact |
+
+Original gates are housing `2e-4`, pension `1e-6`, replay `1e-10`, endpoint distances `1e-3`. In the corrected replay, terminal normalized-distribution L1 was `2.17207814e-7`, population relative gap `1.23991887e-7`, effective birth-queue relative gap `4.76013259e-7`, and raw birth-queue relative gap `7.99183834e-8`. Terminal price/rent/preference gaps were zero. Fertility, fiscal, housing, distribution and both queues repeated exactly. First-four-date fertility did not change under the pension correction.
+
+`prior_evidence/retrieval.json` authenticates ten small receipts against remote SHA256 hashes. `prior_evidence/residuals.csv` independently recomputes dated housing and fiscal residuals from accounts. The old diagnostic did not capture the standard dated 17-plot packets; it cannot provide a fresh visual certificate. Any new real test must save that standard set. Supplemental residual plots, if produced from these saved rows, are explicitly supplemental.
+
+Independent verification is saved in `prior_evidence/independent_verification.json`: all six dated audits passed; maximum mass error was `1.11022302e-15`, backward/forward policy error zero and feasibility projection mass zero. The supplemental saved-row plot is [here](prior_evidence/historical_fixed_reference_residuals.png). Regenerate it with `code/model/experiments/transition_readiness/render_saved_residuals.py` using the bundled Python runtime.
+
+The cancelled 104-date run reused a completed baseline with housing residual `1.02060578e-5` and pension residual `1.01786682e-6`; the fiscal gate was narrowly missed. There is no completed correction, fresh replay or 128-date horizon validation to report.
+
+## Authorized next check
+
+One isolated Torch job, one allocated CPU and one numerical thread, at most 3600 seconds. Use the previously documented 96-GiB allocation and 64-GiB exact-policy cache rather than silently imposing an incompatible cache cap. At most three six-date maps; genuine stationary endpoint construction is separately counted and capped. A small changed preference is an **experimental numerical sensitivity**, not a fitted shock or adopted economic change. All other economic objects and original gates remain fixed. No full 104/128-date path or shock estimation is authorized under this budget.
+
+Isolated implementation is under `code/model/experiments/transition_readiness/`. Six focused tests and the exact run-loop control-flow smoke passed with zero native calls; all ten legacy sources match the previously deployed pins. Eighteen isolated files were authenticated after staging on Torch. The real test was submitted as **18920023**, with experiment `psi_child * 1.001 = 0.1356906717749697`, no fitted shocks, 3550-second internal cap and one-hour Slurm cap. The one-CPU/96-GiB request was rejected before job creation; submission explicitly overrides the launcher to four allocated CPUs, reusing the prior verified memory allocation while retaining one numerical thread. See `preparation/submission_rejection.json`, `stage_receipt.json` and `launch_receipt.json`. This is a single numerical job, not a restarted numerical attempt.
+
+The runner captures the stable 17-plot packet at dates 0, 3 and 5 and retains completed maps and checkpoints even on failure. Prices are fixed during these six-date diagnostics; any passed result does not verify the joint price/pension path root. Production remains blocked pending authenticated selected calibration, engine/entry/credit/grid integration and full endpoint, changed-preference and horizon verification.
+
+### First new real result: endpoint verified
+
+Job 18920023 completed **nine stationary evaluations**, including an exact fresh final repeat, and the native one-step endpoint check. Every stationary evaluation passed its household/estate/accounting/native gates. The experimental preference endpoint has price `0.7910731369532722` (+0.152384%) and population scale `1.0009965377067356` (+0.099654%). Its renewal residual is `3.5829367872608486e-7`, below the original `1e-6` gate.
+
+The one-step mapping passed housing `1.82436174e-15`, fiscal `3.16072136e-13`, mass `6.66133815e-16`, zero projection and zero backward/forward policy error. Terminal normalized-distribution L1 was `5.68659318e-14`, population relative gap `4.06341627e-14`, effective birth-queue relative gap `1.79146839e-7`, and price/rent/preference gaps zero. Original endpoint tolerances were unchanged. The complete source/receipt authentication and independently verified exact repeat are in `early_real_results/endpoint_verification.json`; all nine evaluation rows are in `early_real_results/endpoint_evaluations.csv`.
+
+This verifies endpoint construction for a small historical-reference preference change. It does not certify the six-date path, joint price/pension root, current-floor engine, longer horizons or shock estimation. The fixed old path price differs from this endpoint by more than the original `1e-3` terminal-price gate, so a fixed-price path cannot receive that certificate by construction. Its remaining maps measure fiscal/accounting behavior only.
+
+## Completed changed-preference diagnostic
+
+Job **18920023** stopped after 26:09 at its original gates, as required. The endpoint was verified; the two fixed-old-price six-date mappings did not clear housing. Pension correction reduced the fiscal error from `7.76410967e-5` to `3.50015701e-16`, while the housing error remained `0.00246956548` against the `0.0002` gate. All six dated accounting checks passed; mass error was `1.55431223e-15`, policy reproduction error and feasibility projection were zero. No unqualified fresh replay, retry, full path or shock fit ran.
+
+The corrected candidate's terminal normalized-distribution L1 was `0.01076527`, price relative gap `0.001521522` and rent relative gap `0.009961322`, all above `0.001`. Population and both entrant queues passed. These do **not** isolate horizon truncation: the final price still equals the old equilibrium, and the no-arbitrage rent uses the new endpoint's next-period price. Housing errors also exceeded tolerance before the final date. Joint price/pension clearing is the next diagnostic decision.
+
+The complete results are in `collected/independent_verification.json` and `collected/dated_accounts.csv`. All 158 compact files were checked against remote SHA256 hashes; 51 PNGs reproduce exactly the standard 17-file set at dates 0, 3 and 5. The lead and independent reviewer visually inspected selected plots across these dates; they were readable with no corrupt traces, although some standard legends are crowded. This is a partial visual inspection, not a claim that every plot was individually audited.
+
+The prepared [joint test](../../../code/model/experiments/transition_readiness/JOINT_NEXT_TEST.md) reuses the verified endpoint and genuine original 12-date measured Jacobian. Its six-date lag window is fully measured, saved 24×24 matrix reconstruction is exact, and scaled six-date condition number is `213.22444`, below `1e8`. It keeps original root, replay, terminal and accounting gates. Three source-version differences are explicitly reviewed and recorded rather than hidden: timeout propagation in the cache, deadline/preflight controls in the estimator, and an unused shock-fit wrapper. No new derivatives or endpoint search are required.
+
+The proposed additional job is capped at **1950 seconds**, at most three mappings and one numerical thread. Together with the first job's observed 1563 seconds, this stays under 3600 seconds; it nevertheless needs an explicit extension of the original one-job/three-map limits. No additional job has been launched. It separates market-root certification from terminal convergence and preserves the failed candidate and standard diagnostics if certification fails.
+
+## Selected-floor compatibility and remaining work
+
+The active floor sources are `output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/run_psi.py` and its sibling `utility_floor_round2_v1/runner.py`, `inputs.py` and `phase_b_pilot.py`. This is separate from the CES experiment. The floor input routine applies the five empirical wealth/income bin means to current annual income, truncates negative bin means, rescales positive means to preserve the original mean, and projects onto its own grid. The runner binds the corrected zero-credit engine. Those are substantive differences from the historical block0506 conditional entry arrays and repayment rules. They must be carried into the actual dated solver, not just into its output metadata.
+
+Both endpoints use topcode-adjusted births divided by `2.1 * young-adult mass` as the renewal condition and derive population from absolute supply divided by household housing demand. Dated housing supply still needs an explicit contract: the legacy transition default fixes the original stock, while the current stationary floor uses its retained supply schedule. The common endpoint mathematics does not resolve that dated choice. Fixed payroll tax, endogenous pension, estates and both 16/20-year entrant queues also require source and state verification.
+
+The isolated [adapter](../../../code/model/experiments/transition_readiness/selected_adapter.py) authenticates metadata before a native setup callback. It is not an integrated floor transition engine. A selected floor handoff needs its verified checkpoint and effective parameters, all source hashes, target/weight fingerprint, entry/grid identity, native full-GE receipt and fresh-repeat proof. The callback must verify actual arrays and use the selected engine's backward/forward kernels. No complete authenticated transition handoff has been supplied yet, despite native-postchecked stationary candidates now existing.
+
+After selection, the exact first command is the adapter's `--manifest /absolute/path/to/selected_manifest.json --manifest-sha256 ACTUAL_SHA256` preflight, as documented in `code/model/experiments/transition_readiness/README.md`. A truthful executable command to estimate the selected floor economy cannot yet be given: the native dated-engine integration and full 104/128-date price/pension and surprise-handoff validation remain required. The old estimator command would solve a different reference. Preserve four successive permanent-until-next-surprise shocks at 2007/2011/2015/2019; the alternative remains a single permanent 2007 shock. Do not import fitted shock values from another model.
+
+## Larger verification plan, not launched
+
+After a selected checkpoint and dated closure are authenticated, first wire its backward solver, forward transition operator, earnings/credit routines and entrant constructor in the isolated engine, and verify the no-shock one-step population and both queues against its stationary endpoint. Then reserve a fresh six-date joint price/pension solve with exact replay. Only those passes permit the 104-date correction and fresh replay, followed by the 128-date horizon comparison and the original shock handoff gates. Do not replace the 12-date measured Jacobian with an unmeasured response guess; far-lag response coverage remains unverified.
+
+The observed changed 104-date maps took 89–106 minutes each. Even a correction plus repeat therefore needs about 178–212 minutes before 128-date work, endpoint work and reporting. A convincing full-horizon certificate exceeds the initial one-hour authorization. The concrete proposed follow-up is **one ten-hour validation job**, one numerical thread and the documented 96-GiB/64-GiB legacy allocation: at most two 104-date maps with 120 minutes per map and a four-hour stage cap, then at most two 128-date maps with 150 minutes per map and a five-hour stage cap, with one hour reserved for authentication/reporting. At most 928 backward/forward policy calls across those four maps; reuse a verified endpoint, do not hide a new endpoint search in that reserve. Long work starts only after the selected-engine six-date joint root and replay pass. Checkpoint/heartbeat, latest/best summaries and stop-on-first-failed-gate are mandatory. Current-floor timing must be measured first; this is a proposed budget, not an authorized launch or runtime guarantee. No full shock fitting, retry, gate relaxation or cache/economic rescue is included.

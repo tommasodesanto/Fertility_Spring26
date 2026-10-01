@@ -1,0 +1,154 @@
+{
+  "baseline_residual": [
+    -1.7604052105250377e-09,
+    -1.7603620769480363e-09,
+    -1.7603175764619045e-09,
+    -1.7602723165818113e-09,
+    -1.911473501608895e-08,
+    -5.6921254050736233e-08,
+    -1.0092994738860862e-07,
+    -1.499957282168047e-07,
+    -2.03786210709739e-07,
+    -2.6375865699501254e-07,
+    -3.307148376470199e-07,
+    -4.0470372704547644e-07,
+    3.1723888454840004e-13,
+    3.690425126246918e-13,
+    4.237630116512194e-13,
+    4.812837067899724e-13,
+    -2.37776520054304e-08,
+    -7.133398520503677e-08,
+    -1.2620668364091902e-07,
+    -1.88395791532834e-07,
+    -2.575741414342194e-07,
+    -3.369915107438136e-07,
+    -4.238033231578535e-07,
+    -5.191212810346035e-07
+  ],
+  "closure": "fixed_tax",
+  "coordinate_convention": "d physical residual / d log(coordinate); rows are [housing imbalance, unscaled pension imbalance]",
+  "coordinate_order": [
+    "log_house_price",
+    "log_period_pension"
+  ],
+  "expectations": "current_shock_permanent_until_next_surprise",
+  "fake_news_derivatives_constructed": false,
+  "horizon": 12,
+  "housing": "fixed_stock",
+  "lag_profiles": {
+    "housing_imbalance<-log_house_price": [
+      0.011391180211698595,
+      0.029573541004384106,
+      0.06857064070130536,
+      0.17070621427542182,
+      1.2303757988785553,
+      -1.5772751059001655,
+      -0.29544467506335975,
+      -0.13079008169196674,
+      -0.05454829213060658,
+      -0.03395927992988046,
+      -0.038693425205290996,
+      -0.03815404764664524
+    ],
+    "housing_imbalance<-log_period_pension": [
+      0.004671813558394806,
+      0.006221301341182753,
+      0.006889862459347908,
+      0.007113465418923557,
+      0.007231138654323137,
+      0.006863850679797765,
+      0.0044570488889710096,
+      0.0027727378162828373,
+      0.0015356196239516477,
+      0.0007228199002329258,
+      0.0,
+      0.0
+    ],
+    "pension_imbalance<-log_house_price": [
+      -1.7501225701451254e-11,
+      -2.5243548967072374e-24,
+      2.3334967601935005e-11,
+      5.833741900476178e-12,
+      0.0007789976172369963,
+      0.0028031389725043042,
+      0.006194029074930378,
+      0.012304138390024864,
+      0.023596324186101754,
+      0.0077812128477944605,
+      -0.01550841793981136,
+      -0.02383573502660966
+    ],
+    "pension_imbalance<-log_period_pension": [
+      0.0,
+      -5.8337419004787025e-12,
+      1.1667483800970028e-11,
+      -1.750122570145378e-11,
+      2.333496691219037e-11,
+      -0.999994999728005,
+      1.166748180173396e-11,
+      -2.646977960169688e-18,
+      -2.646977960169688e-18,
+      1.1667479154756e-11,
+      0.0,
+      -5.83374354784494e-12
+    ]
+  },
+  "mapping_count": 5,
+  "matrix": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_transition_20260928/four_shock_v1/launch_v2/smoke/native/jacobian_seed/measured/jacobian.npy",
+    "sha256": "b48bd10fa7ac2806a4db34b5eb373b8b22748b0160b1b08fbccf9e8a1d176860"
+  },
+  "matrix_reconstruction": {
+    "exact": true,
+    "finite": true,
+    "shape": [
+      24,
+      24
+    ]
+  },
+  "measured_lags": [
+    -5,
+    -4,
+    -3,
+    -2,
+    -1,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "perturbation_log_step": 1e-05,
+  "perturbed_date": 5,
+  "psi_child": 0.1355551166583114,
+  "reference_manifest_sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4",
+  "residual_blocks": [
+    "housing_imbalance",
+    "pension_imbalance"
+  ],
+  "residual_units": "physical_unscaled",
+  "reuse": "approximate initialization only; nonlinear equilibrium and fresh replay remain mandatory",
+  "scientific_validation": {
+    "baseline_mapping_and_terminal_passed": true,
+    "baseline_mapping_count": 5,
+    "unchanged_reference": true
+  },
+  "source_pins": {
+    "e5f_exact_policy_cache.py": "d51bbd13026288db0194b44b420bb49ff6970588f40a906242978d49038a5d6f",
+    "e5f_four_shock_acceleration.py": "9e8e3bba6c405df22c597b6a5319592daaae1883f850acfbb7dde5b55b716373",
+    "e5f_matched_pf_path_root.py": "1f827bad0c87f2c75d1ea76f1f059494cc67ca5390135087780691cc0ead2c80",
+    "e5f_preference_shock_fit.py": "50a91bacbbfaf632a986bda0d68c7b9ffaaf4c74a31c155f98918b15eea7e5b7",
+    "e5f_social_security_root.py": "269f3d5017da3a240d0a80d9b168471e6c6cd6c55e9617041c70bfb1085cd77a",
+    "e5f_ssj_scaled_step_root.py": "c26d312afa179e296439ba94e8826a5f84f6823c6bf0ca1892889e5e55af059b",
+    "e5f_ssj_toeplitz_jacobian.py": "94c448367c139682c3bc06336dba27ab3ddb384e99120201cc1000d8509dead0",
+    "run_e5f_preference_estimation.py": "e39873e9fcbeb433435f5a8fcff0bd63baf6c53f7a872a9517d5fec31954f888",
+    "run_e5f_preference_transition.py": "26802381cec56be33794a526eeec80eb6066c09ae59ab6e5957d0cee2e26f1ac"
+  },
+  "unknown_blocks": [
+    "log_house_price",
+    "log_period_pension"
+  ],
+  "zero_filled_entries_per_block": 36
+}

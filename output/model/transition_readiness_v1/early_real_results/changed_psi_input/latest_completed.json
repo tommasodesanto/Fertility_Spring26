@@ -1,0 +1,84 @@
+{
+  "accepted": false,
+  "cache": {
+    "actual_solves": 6,
+    "bytes": 2182771008,
+    "evictions": 0,
+    "exceptions": 0,
+    "hits": 6,
+    "maximum_bytes": 68719476736,
+    "misses": 6,
+    "oversize_bypasses": 0,
+    "serialization_bypasses": 0
+  },
+  "gates": {
+    "dated_audits": true,
+    "mass": true,
+    "policy_reproduction": true,
+    "projection": true
+  },
+  "max_fiscal_error": 7.764109672052968e-05,
+  "max_market_error": 0.0024688894983233936,
+  "name": "changed_psi_input",
+  "residual_ratios": {
+    "fiscal": 77.64109672052969,
+    "market": 12.344447491616966
+  },
+  "terminal": {
+    "all_checks_pass": false,
+    "checks": {
+      "asset_price_relative_gap": false,
+      "birth_queue_maximum_relative_gap": true,
+      "normalized_distribution_l1": false,
+      "population_relative_gap": true,
+      "psi_absolute_gap": true,
+      "renter_price_relative_gap": false
+    },
+    "metrics": {
+      "asset_price_relative_gap": 0.0015215220323360147,
+      "birth_queue_maximum_relative_gap": 0.0004096954381356183,
+      "normalized_distribution_l1": 0.01074539123654848,
+      "population_relative_gap": 0.0008565479546417911,
+      "psi_absolute_gap": 0.0,
+      "renter_price_relative_gap": 0.009961322053379542
+    },
+    "raw_queue_maximum_relative_gap": 0.00038297454054500357,
+    "raw_queue_pass": true,
+    "stationary_asset_price": 0.7910731369532722,
+    "stationary_birth_queue": [
+      0.030897487948815014,
+      0.030897487948815014,
+      0.030897487948815014,
+      0.030897487948815014,
+      0.030897487948815014,
+      0.030897487948815014,
+      0.030897487948815014
+    ],
+    "stationary_population": 1.0009965377067382,
+    "stationary_psi": 0.1356906717749697,
+    "stationary_renter_price": 0.14261418565161002,
+    "status": "not_converged",
+    "terminal_asset_price_last_endogenous_date": 0.7898695017462086,
+    "terminal_birth_queue": [
+      0.030901709285389274,
+      0.030909088390941725,
+      0.030922805068539973,
+      0.030897982159712237,
+      0.030901709285389274,
+      0.030909088390941725,
+      0.030922805068539973
+    ],
+    "terminal_distribution_l1_from_stationary": 0.01068654236052846,
+    "terminal_population": 1.000139136169762,
+    "terminal_psi_last_endogenous_date": 0.1356906717749697,
+    "terminal_renter_price_last_endogenous_date": 0.14119355981895387,
+    "tolerances": {
+      "asset_price_relative_gap": 0.001,
+      "birth_queue_maximum_relative_gap": 0.001,
+      "normalized_distribution_l1": 0.001,
+      "population_relative_gap": 0.001,
+      "psi_absolute_gap": 0.001,
+      "renter_price_relative_gap": 0.001
+    }
+  }
+}
