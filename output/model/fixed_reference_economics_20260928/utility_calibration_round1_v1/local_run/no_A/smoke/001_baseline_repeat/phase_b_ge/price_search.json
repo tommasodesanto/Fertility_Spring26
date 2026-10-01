@@ -1,0 +1,92 @@
+{
+  "attempts": [
+    {
+      "label": "price_start",
+      "price": 0.7898695017462086,
+      "reason": "fresh initial price evaluation",
+      "renewal_residual": 0.3899377957698491,
+      "status": "observed"
+    },
+    {
+      "label": "expand_01",
+      "price": 1.263791202793934,
+      "reason": "multiplicative expansion direction=1; initial residual-directed direction=1; resumed=False",
+      "renewal_residual": 0.28757013544256127,
+      "status": "observed"
+    },
+    {
+      "label": "expand_02",
+      "price": 2.0220659244702945,
+      "reason": "multiplicative expansion direction=1; initial residual-directed direction=1; resumed=False",
+      "renewal_residual": 0.07237376746551338,
+      "status": "observed"
+    },
+    {
+      "label": "expand_03",
+      "price": 3.2353054791524714,
+      "reason": "multiplicative expansion direction=1; initial residual-directed direction=1; resumed=False",
+      "renewal_residual": -0.25047691311990294,
+      "status": "observed"
+    },
+    {
+      "label": "root_01",
+      "price": 2.294039077047558,
+      "reason": "safeguarded secant/bisection inside observed sign bracket",
+      "renewal_residual": -0.006298274970610751,
+      "status": "observed"
+    },
+    {
+      "label": "root_02",
+      "price": 2.2668417617898315,
+      "reason": "safeguarded secant/bisection inside observed sign bracket",
+      "renewal_residual": 0.0014362550644912986,
+      "status": "observed"
+    },
+    {
+      "label": "root_03",
+      "price": 2.2718921373914776,
+      "reason": "safeguarded secant/bisection inside observed sign bracket",
+      "renewal_residual": -3.5258637535173776e-06,
+      "status": "observed"
+    },
+    {
+      "label": "root_04",
+      "price": 2.271387099831313,
+      "reason": "safeguarded secant/bisection inside observed sign bracket",
+      "renewal_residual": 0.00014054457512280294,
+      "status": "observed"
+    },
+    {
+      "label": "root_05",
+      "price": 2.271841633635461,
+      "reason": "safeguarded secant/bisection inside observed sign bracket",
+      "renewal_residual": 1.0879682649012068e-05,
+      "status": "observed"
+    },
+    {
+      "label": "root_06",
+      "price": 2.27187977622462,
+      "reason": "safeguarded secant/bisection inside observed sign bracket",
+      "renewal_residual": -2.717470692914503e-11,
+      "status": "observed"
+    },
+    {
+      "label": "selected_repeat",
+      "price": 2.27187977622462,
+      "reason": "fresh exact selected-price repeat",
+      "renewal_residual": -2.717470692914503e-11,
+      "status": "observed"
+    }
+  ],
+  "bounds_origin_qref": 0.7898695017462086,
+  "bounds_role": "external numerical search caps; not economic restrictions",
+  "events": [],
+  "expansion_factor": 1.6,
+  "lower": 0.09873368771827608,
+  "maximum_expansion_attempts": 20,
+  "maximum_new_lifecycle": 32,
+  "method": "adaptive_multiplicative_then_safeguarded_secant",
+  "requested_start": "0.7898695017462086",
+  "start": 0.7898695017462086,
+  "upper": 6.318956013969669
+}

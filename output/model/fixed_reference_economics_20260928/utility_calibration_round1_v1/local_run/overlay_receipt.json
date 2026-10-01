@@ -1,0 +1,29 @@
+{
+  "original_runner_sha256": "b608cd96ee01c1bce12d2456e75fc82e7554e30ee92ab9a1cf0c78ad2fa201d4",
+  "local_adapter_sha256": "ff2b1d2b75f0927cc10bbac84a5960d28a8505707f50e5ff178fff22cca2f921",
+  "mapping": {
+    "code/model/tools/e5f_exact_policy_cache.py": "frozen_sources/e5f_exact_policy_cache.py",
+    "code/model/tools/test_e5f_exact_policy_cache.py": "frozen_sources/test_e5f_exact_policy_cache.py"
+  },
+  "contract": "Read-only two-file historical overlay, all source/target/numeric auth unchanged",
+  "threads_per_arm": 2,
+  "simultaneous_arms": 3,
+  "per_arm_rss_cap_gib": 12,
+  "common_deadline_epoch": 1790819100,
+  "bootstrap_sha256": "faa00f5aef0484b58881fb060822b522f15c2dbf28eeebc42f480ea9db19d45e",
+  "launcher_sha256": "f2f8a0edb6f09fdcb838c721335a49d0bf80bd306383878acb8af42a7287b03c",
+  "compatibility": "Existing stage_local_paper_calibration NumPy2 and Python3.13 pickle namespace aliases; full parameter identity gate passed",
+  "preflight": "preflight_overlay4/completed.json",
+  "preflight_status": "passed_zero_lifecycle",
+  "machine_memory_gib": 48,
+  "watch_existing_sha256": "9e4eba6ba56a54ea311f55e61c27f749a2815f8b56c94e98334086f676a11787",
+  "floor_watchdog_pid": 37749,
+  "other_supervisor_pids": {
+    "no_A": 37750,
+    "constant_alpha": 37751
+  },
+  "other_preflights": [
+    "preflight_no_A/completed.json",
+    "preflight_constant_alpha/completed.json"
+  ]
+}

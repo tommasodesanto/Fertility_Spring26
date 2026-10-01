@@ -1,5 +1,36 @@
 # Calibration Status
 
+## September 30, 20:50 New York — local checks running; floor calibration priority
+
+All three separately authorized local utility checks are executing native GEs,
+with two CPU threads and a12GiB RSS watchdog per arm. Floor PID36727 started
+20:47:29, with attached watchdog37749 after its original supervisor exited;
+its30-minute hard stop is21:17:29. No_A PID37753/supervisor37750 and
+constant-alpha PID37754/supervisor37751 started20:48:55 and stop21:18:55.
+These runs each repeat the fixed starting baseline; they do not run searches.
+The read-only two-file historical source overlay and Python/NumPy namespace
+compatibility mapping passed the reviewed source and full-parameter gates.
+Sources and receipts are in utility_calibration_round1_v1/local_run/.
+
+The floor's first local fullGE passed eight lifecycle calls. Its measured
+69.904s spans first proposed-parameter to first completed-case receipt,
+including reporting but excluding initialization; lifecycle calls total41.290s
+and later calls take about4.6s. This is an observed timing, not a clean speedup
+comparison or a verified fitted calibration. Independent local repeats remain
+subject to their own completion receipts.
+
+At the bounded cluster check, all original twelve searches have recent receipts
+and remain active. All eighteen new utility starts launched after their own
+verified smoke gates. Fifteen are active; floor_s5 and constant_alpha_s4/s5
+stopped because their perturbed starting baselines did not compute a renewal
+root within the numerical price caps (uncomputed_price_unbracketed). This is
+not a claim of economic infeasibility. The other five floor starts are active.
+Floor_s0's beta probe has loss827.323 versus its starting830.755, but it is not
+a selected point verified by two final fullGE repeats. No jobs were restarted
+and neither cluster cutoff changed. Prioritize reporting a verified floor fit
+promptly with all14 targets,31 parameters/bounds and standard17 plots;
+production adoption remains outstanding.
+
 ## September 30, 20:36 New York — corrected utility round running
 
 The author refreshed Torch access and authorized immediate corrected submission.
@@ -33,10 +64,8 @@ may be explicitly budget-limited. The original twelve entry-wealth searches
 as their separate hard stop. No automatic retries, extensions, numerical edits,
 gate relaxation or production adoption are authorized by monitoring.
 
-The user also authorizes a separate local utility check with two CPU threads for each of the three utility arms. Its
-`local_run/` driver is being prepared; no local numerical run is certified
-running here. Monitor its own receipts when they exist, without starting or
-restarting it autonomously. The prior failed smoke archive, receipts and
+The user also authorizes a separate local utility check with two CPU threads for each of the three utility arms. Its local_run checks are now running as recorded above. Monitor their own
+receipts without starting or restarting them autonomously. The prior failed smoke archive, receipts and
 cancelled never-started dependent arrays remain preserved in
 `utility_calibration_round1_v1/deployment/attempt1/`. Current IDs and receipts
 are in that packet's launch.json and deployment/attempt2/.

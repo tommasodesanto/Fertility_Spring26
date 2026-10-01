@@ -1,0 +1,78 @@
+{
+  "attempts": [
+    {
+      "label": "price_start",
+      "price": 0.7898695017462086,
+      "reason": "fresh initial price evaluation",
+      "renewal_residual": 0.1152036260795899,
+      "status": "observed"
+    },
+    {
+      "label": "expand_01",
+      "price": 1.263791202793934,
+      "reason": "multiplicative expansion direction=1; initial residual-directed direction=1; resumed=False",
+      "renewal_residual": 0.0313114591510828,
+      "status": "observed"
+    },
+    {
+      "label": "expand_02",
+      "price": 2.0220659244702945,
+      "reason": "multiplicative expansion direction=1; initial residual-directed direction=1; resumed=False",
+      "renewal_residual": -0.06526151823845927,
+      "status": "observed"
+    },
+    {
+      "label": "root_01",
+      "price": 1.5096434962082526,
+      "reason": "safeguarded secant/bisection inside observed sign bracket",
+      "renewal_residual": -0.0038831142091918514,
+      "status": "observed"
+    },
+    {
+      "label": "root_02",
+      "price": 1.4825179355672158,
+      "reason": "safeguarded secant/bisection inside observed sign bracket",
+      "renewal_residual": -0.00018925039957973233,
+      "status": "observed"
+    },
+    {
+      "label": "root_03",
+      "price": 1.4606452622898876,
+      "reason": "safeguarded secant/bisection inside observed sign bracket",
+      "renewal_residual": 0.0027872575877196937,
+      "status": "observed"
+    },
+    {
+      "label": "root_04",
+      "price": 1.480330668239483,
+      "reason": "safeguarded secant/bisection inside observed sign bracket",
+      "renewal_residual": 0.00010805938343039223,
+      "status": "observed"
+    },
+    {
+      "label": "root_05",
+      "price": 1.4811256463139992,
+      "reason": "safeguarded secant/bisection inside observed sign bracket",
+      "renewal_residual": 2.054753989177982e-08,
+      "status": "observed"
+    },
+    {
+      "label": "selected_repeat",
+      "price": 1.4811256463139992,
+      "reason": "fresh exact selected-price repeat",
+      "renewal_residual": 2.054753989177982e-08,
+      "status": "observed"
+    }
+  ],
+  "bounds_origin_qref": 0.7898695017462086,
+  "bounds_role": "external numerical search caps; not economic restrictions",
+  "events": [],
+  "expansion_factor": 1.6,
+  "lower": 0.09873368771827608,
+  "maximum_expansion_attempts": 20,
+  "maximum_new_lifecycle": 32,
+  "method": "adaptive_multiplicative_then_safeguarded_secant",
+  "requested_start": "0.7898695017462086",
+  "start": 0.7898695017462086,
+  "upper": 6.318956013969669
+}

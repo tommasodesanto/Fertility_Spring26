@@ -1,0 +1,20 @@
+--- runner.py
++++ local_run/runner_local.py
+@@ -5,7 +5,7 @@
+ from types import SimpleNamespace
+ import numpy as np
+ import inputs
+-HERE=Path(__file__).resolve().parent
++HERE=Path(__file__).resolve().parent.parent
+ ROOT=HERE.parents[3]
+ BASE=ROOT/'output/model/publication_refactor_20260929/grid_resolution_v1/credit053_v2/runner'
+ PLAN=json.loads((HERE/'plan.json').read_text())
+@@ -397,7 +397,7 @@
+             write(args.out/'phase_b_mock_checks.json',dict(price_loop=mock_result,rejected_parameter_drifts=31,lifecycle_solves=0))
+             evaluate=mocked_evaluator(args.out,seed,bounds,lane)
+         else:
+-            require(sys.platform=='linux' and os.environ.get('SLURM_JOB_ID','').isdigit() and os.environ.get('SLURM_CPUS_PER_TASK','1')=='1','Native utility run requires one-core Torch')
++            require(sys.platform=='darwin' and all(os.environ.get(k)=='2' for k in ('NUMBA_NUM_THREADS','OMP_NUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','VECLIB_MAXIMUM_THREADS','NUMEXPR_NUM_THREADS')),'Explicit local authorization requires two threads per arm')
+             evaluate=native_evaluator(args.out,lane,Q,grid,deadline,price_start)
+         if is_smoke:result=smoke(args.out,lane,evaluate,deadline,mock=args.mode=='preflight')
+         else:result=search(args.out,seed,bounds,evaluate,deadline,mock=args.mode=='preflight',lane=lane)

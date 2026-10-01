@@ -1,0 +1,81 @@
+{
+  "deadline_epoch": 1790819273.407516,
+  "points": [
+    {
+      "population_scale": 1.03,
+      "price": 0.8,
+      "renewal_residual": 0.00020000000000000017
+    },
+    {
+      "population_scale": 1.03,
+      "price": 1.2800000000000002,
+      "renewal_residual": -0.005800000000000003
+    },
+    {
+      "population_scale": 1.03,
+      "price": 0.8480000000000001,
+      "renewal_residual": -0.00040000000000000034
+    },
+    {
+      "population_scale": 1.03,
+      "price": 0.8160000000000001,
+      "renewal_residual": 0.0
+    },
+    {
+      "population_scale": 1.03,
+      "price": 0.8160000000000001,
+      "renewal_residual": 0.0
+    }
+  ],
+  "price_search": {
+    "attempts": [
+      {
+        "label": "price_start",
+        "price": 0.8,
+        "reason": "fresh initial price evaluation",
+        "renewal_residual": 0.00020000000000000017,
+        "status": "observed"
+      },
+      {
+        "label": "expand_01",
+        "price": 1.2800000000000002,
+        "reason": "multiplicative expansion direction=1; initial residual-directed direction=1; resumed=False",
+        "renewal_residual": -0.005800000000000003,
+        "status": "observed"
+      },
+      {
+        "label": "root_01",
+        "price": 0.8480000000000001,
+        "reason": "safeguarded secant/bisection inside observed sign bracket",
+        "renewal_residual": -0.00040000000000000034,
+        "status": "observed"
+      },
+      {
+        "label": "root_02",
+        "price": 0.8160000000000001,
+        "reason": "safeguarded secant/bisection inside observed sign bracket",
+        "renewal_residual": 0.0,
+        "status": "observed"
+      },
+      {
+        "label": "selected_repeat",
+        "price": 0.8160000000000001,
+        "reason": "fresh exact selected-price repeat",
+        "renewal_residual": 0.0,
+        "status": "observed"
+      }
+    ],
+    "bounds_origin_qref": 0.8,
+    "bounds_role": "external numerical search caps; not economic restrictions",
+    "events": [],
+    "expansion_factor": 1.6,
+    "lower": 0.1,
+    "maximum_expansion_attempts": 20,
+    "maximum_new_lifecycle": 32,
+    "method": "adaptive_multiplicative_then_safeguarded_secant",
+    "requested_start": "0.8",
+    "start": 0.8,
+    "upper": 6.4
+  },
+  "remaining_lifecycle": 32
+}
