@@ -1,0 +1,52 @@
+{
+  "status": "passed_saved_policy_lifecycle",
+  "model_solves": 0,
+  "baseline_pre_sha256": "c6589a65ad74e624579c7abe2e4069ab4e07712f299496deefda6ec7a6d5e48a",
+  "credit_pre_sha256": "1ac3084dfe6fcb1baff6a07d0e438024879b4f43269daab79cf12db67c161cb0",
+  "source_binding_sha256": "47b809b4c1d2a18373c2828b2d90a0b23fed498ea64a925eea8b935ba5dc2c93",
+  "parameters_sha256": "ae092fafab15985f773b61999a29d4a8d505495623e615440cfff1f107c75406",
+  "source_sha256": "e6b18f56b77a1d4f0191d9570ebd3e0bd0d3c0079a1fa60aad12729ae9e23c27",
+  "baseline_post_nesting_l1": 1.1927427035625712e-15,
+  "credit_post_nesting_l1": 1.480080881726278e-16,
+  "projection_mass": [
+    0.0,
+    0.0
+  ],
+  "pre_mass": [
+    1.000000000000001,
+    0.9999999999999996
+  ],
+  "first_births": {
+    "reference_policy_reference_PRE": 0.049912692674719046,
+    "credit_policy_reference_PRE": 0.05273498885276145,
+    "credit_policy_credit_PRE": 0.0473312829856789
+  },
+  "expected_first_births": {
+    "reference_policy_reference_PRE": 0.049912692674718984,
+    "credit_policy_reference_PRE": 0.05273498885276129,
+    "credit_policy_credit_PRE": 0.0473312829856789
+  },
+  "age_range": "18-42, four-year cells",
+  "rows": 39,
+  "negative_renter_next_assets_interpretation": "unsecured net financial borrowing for destination renters; owner negative assets combine secured and other debt",
+  "binding_natural_credit_floor_mass": "unavailable: saved solution does not retain state-specific lifetime-solvency floor",
+  "solver_traps": [
+    "refactor_lab.engine.solver.solve_bellman_full_markov_income",
+    "refactor_lab.engine.solver.solve_markov_income_at_prices",
+    "refactor_lab.engine.solver.solve_markov_income_equilibrium",
+    "intergen_eqscale_seq_optimized.solver.solve_bellman_core",
+    "intergen_eqscale_seq_optimized.solver.solve_bellman_eval",
+    "intergen_eqscale_seq_optimized.solver.solve_bellman_full",
+    "intergen_eqscale_seq_optimized.solver.solve_bellman_full_markov_income",
+    "intergen_eqscale_seq_optimized.solver.solve_equilibrium",
+    "intergen_eqscale_seq_optimized.solver.solve_income_type_equilibrium",
+    "intergen_eqscale_seq_optimized.solver.solve_income_type_partial_equilibrium",
+    "intergen_eqscale_seq_optimized.solver.solve_markov_income_at_prices",
+    "intergen_eqscale_seq_optimized.solver.solve_markov_income_equilibrium",
+    "intergen_eqscale_seq_optimized.solver.solve_markov_income_partial_equilibrium",
+    "intergen_eqscale_seq_optimized.solver.solve_partial_equilibrium_dt",
+    "run_dynamic_population_transition.solve_policy"
+  ],
+  "elapsed_seconds": 95.03905148099875,
+  "max_rss_kib": 1978608
+}
