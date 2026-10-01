@@ -1,0 +1,35 @@
+--- code/model/refactor_lab/engine/shared.py	2026-09-29 23:27:08
++++ code/model/experiments/stationary_ces_scales/refactor_lab/engine/shared.py	2026-09-30 23:46:42
+@@ -319,6 +319,23 @@
+                     h_bar[nn, cs] = 0.0
+ 
+     apply_child_preferences(P, alpha_bar, psi_v, escale)
++    ces_ec=np.ones_like(escale)
++    ces_eh=np.ones_like(escale)
++    if bool(getattr(P,"ces_enabled",False)):
++        if not independent_child_maturation_active(P):
++            raise ValueError("CES requires independent current-child counts")
++        if (np.any(c_bar != 0.0) or np.any(h_bar != 0.0)
++                or bool(getattr(P,"compensated_child_housing_shares",False))
++                or float(P.delta_alpha)!=0.0 or float(P.delta_alpha_jump)!=0.0
++                or float(P.sigma)!=2.0 or float(P.alpha_cons)!=.733):
++            raise ValueError("CES primitive contract drift: no floors/A/share variation, sigma2, alpha.733")
++        escale[:]=1.0
++        alpha_bar[:]=P.alpha_cons
++        for nn in range(P.n_parity):
++            for cs in range(P.n_child_states):
++                m=cs if cs<=nn else 0
++                ces_ec[nn,cs]=((2.0+.7*m)/2.0)**.7
++                ces_eh[nn,cs]=ces_ec[nn,cs]*(1.0+float(P.lambda_housing)*(m>0))
+     triples = np.column_stack(
+         [
+             c_bar.reshape(-1, order="F"),
+@@ -345,6 +362,8 @@
+         gb_flat=g_bar.reshape(1, nc, order="F"),
+         alpha_flat=alpha_bar.reshape(1, nc, order="F"),
+         escale_flat=escale.reshape(1, nc, order="F"),
++        ces_ec_flat=ces_ec.reshape(1,nc,order="F"),
++        ces_eh_flat=ces_eh.reshape(1,nc,order="F"),
+         nc=nc,
+         b=b_grid.reshape(-1, 1),
+         bp=b_grid.reshape(1, -1),

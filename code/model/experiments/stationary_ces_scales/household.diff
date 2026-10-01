@@ -1,0 +1,37 @@
+--- code/model/refactor_lab/engine/household.py	2026-09-29 23:27:08
++++ code/model/experiments/stationary_ces_scales/refactor_lab/engine/household.py	2026-09-30 23:46:42
+@@ -225,6 +225,9 @@
+         gb_v=np.ascontiguousarray(SD.gb_flat.reshape(-1)),
+         alpha_v=np.ascontiguousarray(SD.alpha_flat.reshape(-1)),
+         esc_v=np.ascontiguousarray(SD.escale_flat.reshape(-1)),
++        ces_eta=float(getattr(P,"ces_eta",0.0)) if bool(getattr(P,"ces_enabled",False)) else 0.0,
++        ces_ec_v=np.ascontiguousarray(SD.ces_ec_flat.reshape(-1)),
++        ces_eh_v=np.ascontiguousarray(SD.ces_eh_flat.reshape(-1)),
+         b=b_grid.reshape(-1, 1),
+         gs_tol=gs_tol,
+         gs_alpha1=gs_alpha1,
+@@ -338,6 +341,7 @@
+                 bool(getattr(P, "native_exact_allocation_output", False)),
+                 natural_floor,
+                 float(renter_floor[0]) if fixed_credit else -np.inf,
++                ctx.ces_eta, ctx.ces_ec_v, ctx.ces_eh_v,
+             )
+             if natural_credit:
+                 Vo_nc[:, natural_dead] = -1e10
+@@ -442,6 +446,7 @@
+                     bool(getattr(P, "native_exact_allocation_output", False)),
+                     due_stay,
+                     native_due_death_floor(P, j, ctx.current_prices[i], P.H_own[ten - 1]) if due_stay else -np.inf,
++                    ctx.ces_eta, ctx.ces_ec_v, ctx.ces_eh_v,
+                 )
+                 if natural_credit:
+                     Vo_nc[:, natural_dead] = -1e10
+@@ -753,6 +758,8 @@
+     # Non-linear value interpolation only exists in the Python eval path, so a
+     # non-linear interp method routes off the compiled full-Bellman kernel.
+     use_full_kernel = NUMBA_AVAILABLE and bool(getattr(P, "use_full_kernel", True)) and interp_method == "linear"
++    if bool(getattr(P,"ces_enabled",False)) and not use_full_kernel:
++        raise ValueError("CES requires the integrated full indexed kernel; CD fallback forbidden")
+     if str(getattr(P, "preference_spec", "stone_geary")) == "eqscale" and not use_full_kernel:
+         raise NotImplementedError("eqscale preferences: full-kernel markov path only")
+     cb_v = np.ascontiguousarray(SD.cb_flat.reshape(-1))
