@@ -1,0 +1,33 @@
+{
+  "b_min": -12.0,
+  "distribution_source": "evaluation.g_current (realized post-tenure occupancy)",
+  "guard": "positive-mass beginning states with bp_pol within tol of b_grid[0]",
+  "limitations": [
+    "This guard covers occupied family states and cannot rule out effects from unoccupied continuation alternatives.",
+    "The native solvency cutoff remains an approximation; a passing occupied-state guard does not certify the lifetime-repayment-only regime over the full unbounded support."
+  ],
+  "occupied_boundary_mass": 0.0,
+  "occupied_boundary_share": 0.0,
+  "occupied_state_count": 683063,
+  "occupied_support_floor_boundary_share_max": 0.0,
+  "policy_source": "solution.bp_pol",
+  "status": "occupied_support_pass_unoccupied_alternatives_unverified",
+  "support_family_mass_source": "solution.g_beginning_distribution (post-fertility inherited tenure aggregated)",
+  "support_floor_boundary_cells": 0,
+  "support_floor_relevance": "for each destination branch, tested against positive-mass family states after aggregating inherited tenure; family states use Fortran order",
+  "support_floor_source": "native_solvency_support_floor(Vc, b_grid) inside engine.household._savings_stage",
+  "support_trace_coverage": {
+    "complete": true,
+    "duplicate_calls": 0,
+    "expected_branches": 918,
+    "observed_calls": 918,
+    "unique_branches": 918
+  },
+  "support_trace_tenure_meaning": "destination renter/owner branch, not inherited beginning-distribution tenure",
+  "threshold": {
+    "absolute_atol": 1e-10,
+    "applied_atol": 3.012e-09,
+    "occupied_mass_share_fail_if_gt": 0.0,
+    "scaled_atol": 1e-12
+  }
+}
