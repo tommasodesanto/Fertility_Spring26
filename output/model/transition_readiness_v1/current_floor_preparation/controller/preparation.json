@@ -1,0 +1,77 @@
+{
+  "status": "controller_implemented_mock_exact_loop_passed",
+  "tests_passed": 14,
+  "native_model_calls": 0,
+  "native_scientific_validation": false,
+  "production_ready": false,
+  "files": {
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py": "a95ec2c5a72c0513476b539fddf7825dc0252cc4df03f0df4abef0977f631cdb",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/test_one_shock_floor.py": "5fd61e95117ae46ef1ef220987653acdf34ad484609ee16d4abcc96a25e23ef4"
+  },
+  "retained_sources": {
+    "target_builder": "pinned_tools/run_e5f_preference_estimation.py:44",
+    "objective": "pinned_tools/run_e5f_preference_estimation.py:93,444",
+    "fit_rows": "pinned_tools/e5f_preference_shock_fit.py:9",
+    "scalar_fitter": "pinned_tools/e5f_preference_shock_fit.py:23"
+  },
+  "actual_next_commands": [
+    "python code/model/experiments/transition_readiness/one_shock_floor.py --plan SMOKE_PLAN.json --output SMOKE_OUTPUT --native-smoke",
+    "python code/model/experiments/transition_readiness/one_shock_floor.py --plan PRODUCTION_PLAN.json --output FIT_OUTPUT --execute"
+  ],
+  "smoke_contract": {
+    "mode": "diagnostic",
+    "horizons": [
+      6,
+      8
+    ],
+    "path_maximum_maps": 6,
+    "native_smoke_psi": "initial_psi * 1.001",
+    "fresh_reference_reconstruction": 2,
+    "fresh_seed_horizon": 12,
+    "fresh_seed_native_mappings": 5,
+    "fresh_seed_cold_policy_calls": 60
+  },
+  "production_contract": {
+    "horizons": [
+      104,
+      128
+    ],
+    "fitted_window": "2020\u20132023",
+    "validation_windows": [
+      "2008\u20132011",
+      "2012\u20132015",
+      "2016\u20132019"
+    ],
+    "gates": {
+      "market_tolerance": 0.0002,
+      "fiscal_tolerance": 2e-05,
+      "final_reproduction_tolerance": 1e-10,
+      "stationary_renewal_tolerance": 1e-06,
+      "terminal_tolerance": 0.001,
+      "raw_queue_relative_tolerance": 0.001,
+      "horizon_relative_tolerance": 0.001
+    },
+    "export_period_index": 4,
+    "export_calendar_year": 2023,
+    "queue_lags": [
+      16,
+      20
+    ]
+  },
+  "remaining": [
+    "lead numerical budgets after native timings",
+    "native readiness smoke on current verified handoff",
+    "lead line-by-line scientific review of current floor dated kernel bindings and actual queue capture",
+    "lead verify saved values4/values5 timing for 2023 continuation",
+    "explicit periodic heartbeat from launcher during long backward solves"
+  ],
+  "no_jobs_launched": true,
+  "endpoint_constant_path": "Uses physical static-elastic housing supply and actual endpoint population H/demand, with both scaled native queues; unit population would create a false market imbalance.",
+  "smoke_classification": "Native root/replay/accounting/stationary readiness is separate from six-date diagnostic terminal convergence; no production claim.",
+  "prepared_reuse": "Optional pinned prepared_native_inputs manifest authenticates native checkpoint, selected-repeat receipt, original target contract, exact source files/identity, native 12-date measured seed and stationary baseline; mismatches stop without fallback. Restore uses zero policy calls.",
+  "production_resume_plan_field": "prepared_native_inputs: {path: native_preparation.json, sha256: actual SHA-256}",
+  "controller_frozen": true,
+  "conservative_seed_policy_calls": 120,
+  "production_ready_guard": "Full104/128 gives numerical_path_certified; production_ready additionally requires explicit policy_contract_closed=True, defaultFalse.",
+  "native_budget_guard": "Mapping, stationary and reference reconstruction enter runtime.native_budget(effective stage deadline, actual remaining policy calls) alongside watchdog; exhausted cap stops before the native call. Source/receipt hash authentication preserved."
+}

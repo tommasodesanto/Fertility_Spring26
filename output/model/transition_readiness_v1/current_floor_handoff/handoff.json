@@ -1,0 +1,831 @@
+{
+  "handoff_type": "read-only current-floor evidence extraction",
+  "created_local_date": "2026-10-01",
+  "selected_point": {
+    "source": "selected postcheck verification packet",
+    "local_packet": "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm",
+    "chain": "chain_0",
+    "case": "0006_nm",
+    "base_loss": 30.99909262396404,
+    "price": 0.7188481029,
+    "population": 0.920284416,
+    "weight_profile": "base_control",
+    "weighted_loss": null,
+    "selected_repeat_status": "exact_full_ge_repeat_passed",
+    "selected_postcheck_status": "selected_numerically_verified",
+    "experimental_not_adopted": true,
+    "convergence_certified": false,
+    "verification_pass": true,
+    "target_contribution_sum": 30.999092623964042,
+    "captured_utc": "2026-10-01T17:05:58.560745+00:00",
+    "root_local_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/root",
+    "repeat_local_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/repeat",
+    "root_packet_relative_path": "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/root",
+    "repeat_packet_relative_path": "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/repeat"
+  },
+  "contract": {
+    "base_target_contract_sha256": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+    "parameter_contract_sha256": "f232dd870b0d49a4e7ae20bbae71b26acc190bc63414b24c8955528e5a5d77ad",
+    "weight_contract_sha256": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+    "weight_profile": "base_control",
+    "profile_multipliers": {},
+    "bounds": {
+      "beta_annual": [
+        0.94,
+        0.99
+      ],
+      "chi": [
+        0.1,
+        5.0
+      ],
+      "child_benefit_curvature": [
+        0.0,
+        0.8
+      ],
+      "first_birth_fixed_cost": [
+        0.0,
+        8.0
+      ],
+      "h_P": [
+        0.1,
+        2.3
+      ],
+      "kappa_fert": [
+        0.02,
+        50.0
+      ],
+      "kappa_fert_continuation": [
+        0.02,
+        50.0
+      ],
+      "psi_child": [
+        0.01,
+        0.5
+      ],
+      "tenure_choice_kappa": [
+        0.001,
+        0.1
+      ],
+      "theta0": [
+        0.0,
+        8.0
+      ]
+    },
+    "free_coordinates": [
+      "beta_annual",
+      "chi",
+      "first_birth_fixed_cost",
+      "kappa_fert",
+      "kappa_fert_continuation",
+      "theta0",
+      "h_P",
+      "child_benefit_curvature",
+      "tenure_choice_kappa",
+      "psi_child"
+    ],
+    "target_count": 14,
+    "target_rows": 14,
+    "parameter_rows": 31,
+    "target_rank_unverified": true
+  },
+  "tables": {
+    "target_fit_csv": {
+      "path": "target_fit.csv",
+      "source": "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/root/target_fit.csv",
+      "sha256": "8a6be314ee043cb572b4f47b602e79af391c3d41948e8a0cd21f46b63a13a17e",
+      "rows": 14,
+      "repeat_source": "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/repeat/target_fit.csv"
+    },
+    "parameters_csv": {
+      "path": "parameters.csv",
+      "source": "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/root/parameters.csv",
+      "sha256": "3c71b831c40f16d17505faa2c2a872d8b00e795c046715cf1205ab83922aa4ca",
+      "rows": 31,
+      "repeat_source": "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/repeat/parameters.csv"
+    }
+  },
+  "selected_repeat_verification": {
+    "root_repeat_target_csv_sha256_equal": true,
+    "root_repeat_parameter_csv_sha256_equal": true,
+    "target_table_sha256": "8a6be314ee043cb572b4f47b602e79af391c3d41948e8a0cd21f46b63a13a17e",
+    "parameter_table_sha256": "3c71b831c40f16d17505faa2c2a872d8b00e795c046715cf1205ab83922aa4ca",
+    "repeat_standard_plot_count": 17,
+    "repeat_standard_plot_hashes_match_native_receipt": true,
+    "standard_plot_sha256": {
+      "fertility_by_age.png": "2a45dfe2c1655f116fcd5b1bb584f437a7ecfb4ea0b45ac04d7bc299b3351b45",
+      "fertility_policy_by_age_income_state.png": "0facd2e9bbd6a23bcfa4cf9be1870e8526c68cb18ab61343dc1298e8197dd0c7",
+      "housing_by_age_income_state.png": "86276d031198b4624ec89767ce15ac4e27ee6e0899f1db4e4ef33adfb5c9266c",
+      "housing_market.png": "217c931f83cacc6e8526d47bbca17c84bd1d3660c48190b426c58710432218a4",
+      "housing_prices.png": "d7fab86c5aee8ba644a4ab76aee232763a3f33670aad321ef1b82cb566042cf9",
+      "income_state_outcomes.png": "212b427f7630ee7589b4f05ee05e03e1695a0fd2dfc7e2174005860c0e72ad9d",
+      "liquid_wealth_by_age_income_state.png": "3dcf06a7ba2674f48c031ecc364c20cb532ff025625969ddb91fd4a687c9cc41",
+      "market_clearing_by_market.png": "1e8495239b38ef1259e4a832a10666102fd51ca3c81374b54a44761450e57faa",
+      "market_clearing_residuals.png": "eecf600ebcd2de3b54cb544a567e9fae5485cde95540c706252640754b21cae9",
+      "owner_rungs.png": "2d9e55611cbc544aae2add37f0a52a407ef0dc876849dc850f5c95652c1e2fd5",
+      "ownership_by_age.png": "ed5422982d5852aa823ad5f6d5bec8089e46802e7034bc8ad08abb99e49b77a5",
+      "ownership_by_age_income_state.png": "79a54c5de34aa55ff3d16766de276445f232218c5af6ce2e91dd881accdabd36",
+      "policy_childless_renter_age30.png": "f3c4b9a2dd90b64b24985bab0c3be48f656973fc672b5efa8504fd3fb90ca85b",
+      "policy_childless_renter_age42.png": "c2fbcda10b7f31f189cc4518c9d63856f49f4c40b9de17c57c69dd4736efa696",
+      "tenure_services.png": "cdd0540b5bc7207695a7225b9ffd33d56076799afc5d71a2e600a561c2504771",
+      "wealth_dist_childless_renter_age30.png": "1eacada9efe9b3ca56585e4a9b5129becd98755ad4a2729f07d71e4961063dcd",
+      "wealth_dist_childless_renter_age42.png": "6c2710bfd8c8f814bf742f6bd7c0947e0f336827e5c7152675f6fa14427d4151"
+    },
+    "frozen_observer_identity_receipt_sha256": "bd2541149e3308017de60f98ea9982bfde1426173e4f81bd0b871ec915dbb765",
+    "closure_receipts": {
+      "root_local_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_handoff/native_reports/ROOT",
+      "repeat_local_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT",
+      "root_closure": {
+        "path": "output/model/transition_readiness_v1/current_floor_handoff/native_reports/ROOT/closure.json",
+        "sha256": "3aa969f957b427b6d4e6de2c1f8b6e6066f8b31e9edc8c02d14c5bae758582d8"
+      },
+      "repeat_closure": {
+        "path": "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/closure.json",
+        "sha256": "4ea3454d077261e2f80b92cb8f09602f93a61941cd0d98f6c5ef0f7f8d715e1e"
+      },
+      "native_selected_repeat_receipt": {
+        "path": "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/receipts/native_selected_repeat.json",
+        "sha256": "f9aaad49a1b3b41089c729b4d279f8e62d844740a2a50482014fbd92153aebf7"
+      },
+      "selected_verification": {
+        "path": "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/verification.json",
+        "sha256": "1f0d338c57f4d8ed2e0cc4b4f39fdc08a0e7f92e1b4eee271d7c47b0233a3179"
+      },
+      "input_contract": {
+        "path": "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/receipts/input_contract.json",
+        "sha256": "0a3e7b594175c04e8fd81457e71b862b19efa86462a0fe2033b583557b9c0966"
+      },
+      "frozen_observer_receipt": {
+        "path": "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/receipts/frozen_observer_identity.json",
+        "sha256": "bd2541149e3308017de60f98ea9982bfde1426173e4f81bd0b871ec915dbb765"
+      },
+      "repeat_plot_materialization": {
+        "path": "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics",
+        "count": 17,
+        "sha256_by_filename": {
+          "fertility_by_age.png": "2a45dfe2c1655f116fcd5b1bb584f437a7ecfb4ea0b45ac04d7bc299b3351b45",
+          "fertility_policy_by_age_income_state.png": "0facd2e9bbd6a23bcfa4cf9be1870e8526c68cb18ab61343dc1298e8197dd0c7",
+          "housing_by_age_income_state.png": "86276d031198b4624ec89767ce15ac4e27ee6e0899f1db4e4ef33adfb5c9266c",
+          "housing_market.png": "217c931f83cacc6e8526d47bbca17c84bd1d3660c48190b426c58710432218a4",
+          "housing_prices.png": "d7fab86c5aee8ba644a4ab76aee232763a3f33670aad321ef1b82cb566042cf9",
+          "income_state_outcomes.png": "212b427f7630ee7589b4f05ee05e03e1695a0fd2dfc7e2174005860c0e72ad9d",
+          "liquid_wealth_by_age_income_state.png": "3dcf06a7ba2674f48c031ecc364c20cb532ff025625969ddb91fd4a687c9cc41",
+          "market_clearing_by_market.png": "1e8495239b38ef1259e4a832a10666102fd51ca3c81374b54a44761450e57faa",
+          "market_clearing_residuals.png": "eecf600ebcd2de3b54cb544a567e9fae5485cde95540c706252640754b21cae9",
+          "owner_rungs.png": "2d9e55611cbc544aae2add37f0a52a407ef0dc876849dc850f5c95652c1e2fd5",
+          "ownership_by_age.png": "ed5422982d5852aa823ad5f6d5bec8089e46802e7034bc8ad08abb99e49b77a5",
+          "ownership_by_age_income_state.png": "79a54c5de34aa55ff3d16766de276445f232218c5af6ce2e91dd881accdabd36",
+          "policy_childless_renter_age30.png": "f3c4b9a2dd90b64b24985bab0c3be48f656973fc672b5efa8504fd3fb90ca85b",
+          "policy_childless_renter_age42.png": "c2fbcda10b7f31f189cc4518c9d63856f49f4c40b9de17c57c69dd4736efa696",
+          "tenure_services.png": "cdd0540b5bc7207695a7225b9ffd33d56076799afc5d71a2e600a561c2504771",
+          "wealth_dist_childless_renter_age30.png": "1eacada9efe9b3ca56585e4a9b5129becd98755ad4a2729f07d71e4961063dcd",
+          "wealth_dist_childless_renter_age42.png": "6c2710bfd8c8f814bf742f6bd7c0947e0f336827e5c7152675f6fa14427d4151"
+        }
+      },
+      "root_plot_materialization": {
+        "path": "output/model/transition_readiness_v1/current_floor_handoff/native_reports/ROOT/standard_diagnostics",
+        "available": false,
+        "reason": "Exact remote selected_root listing contained no standard_diagnostics or PNG files; verification receipt certifies repeat plots only."
+      },
+      "numeric_closure_comparison": {
+        "price": {
+          "root": 0.7188481029285891,
+          "repeat": 0.7188481029285891,
+          "equal": true
+        },
+        "population_scale": {
+          "root": 0.920284415998407,
+          "repeat": 0.920284415998407,
+          "equal": true
+        },
+        "absolute_housing_demand": {
+          "root": 5.510926347641799,
+          "repeat": 5.510926347641799,
+          "equal": true
+        },
+        "physical_housing_supply": {
+          "root": 5.510926347641799,
+          "repeat": 5.510926347641799,
+          "equal": true
+        },
+        "absolute_housing_residual": {
+          "root": 0.0,
+          "repeat": 0.0,
+          "equal": true
+        },
+        "renewal_residual": {
+          "root": 6.176814453251467e-07,
+          "repeat": 6.176814453251467e-07,
+          "equal": true
+        },
+        "actual_paygo_residual": {
+          "root": 3.25522798047137e-14,
+          "repeat": 3.25522798047137e-14,
+          "equal": true
+        },
+        "d_bar": {
+          "root": 0.0,
+          "repeat": 0.0,
+          "equal": true
+        },
+        "housing_supply_elasticity": {
+          "root": 0.63,
+          "repeat": 0.63,
+          "equal": true
+        },
+        "target_fit_rows": {
+          "root": 14,
+          "repeat": 14,
+          "equal": true
+        },
+        "parameter_rows": {
+          "root": 31,
+          "repeat": 31,
+          "equal": true
+        }
+      },
+      "root_closure_sha256": "3aa969f957b427b6d4e6de2c1f8b6e6066f8b31e9edc8c02d14c5bae758582d8",
+      "repeat_closure_sha256": "4ea3454d077261e2f80b92cb8f09602f93a61941cd0d98f6c5ef0f7f8d715e1e",
+      "closures_full_json_equal": false
+    }
+  },
+  "checkpoint_and_sources": {
+    "source_pins_manifest": "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/source_pins.json",
+    "source_pins_manifest_sha256": "4de9a584f05a3ff8d41959d8295e9a8b90701af3ff541f8eea06deb74e92cd2c",
+    "source_pin_count": 187,
+    "base_target_contract_sha256": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+    "parameter_contract_sha256": "f232dd870b0d49a4e7ae20bbae71b26acc190bc63414b24c8955528e5a5d77ad",
+    "weight_contract_sha256": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+    "selected_root_remote_path": "/scratch/td2248/projects/utility_floor_psi_continuation_v1/results/chain_0/search/0006_nm/phase_b_ge/selected_root",
+    "selected_repeat_remote_path": "/scratch/td2248/projects/utility_floor_psi_continuation_v1/results/chain_0/postcheck/selected_postcheck/phase_b_ge/selected_repeat_final",
+    "frozen_observer_checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d",
+    "frozen_observer_authenticator_sha256": "96d6923a252f57bc4d8c44fd6479b13f48ba217d74edf8ef629d120428b03b44",
+    "selected_state_checkpoint_sha256": null,
+    "selected_state_checkpoint_status": "not present in local packet; frozen observer checkpoint identifies frozen source only; reconstruct selected state from this point parameters and pinned sources"
+  },
+  "current_later_provisional_point": {
+    "superseded_as_provisional_by": "human-selected chain0/0006_nm point is now repeat verified",
+    "path": "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm",
+    "status": "selected numerically verified; user selected for scoped transition experiment"
+  },
+  "inputs_preserved": {
+    "entry_and_credit": {
+      "approximation": "Existing five empirical quintile-bin means; censoring occurs after binning, not on raw survey observations.",
+      "arm": "nonnegative_mean",
+      "clipped_draw_mass": 0.0,
+      "conditional_sha256": "bf976b033678629c4f9e91df4037092d6e35ab113eebaf3fcf63c59510d2ca4f",
+      "credit": 0.0,
+      "dimensions": [
+        120,
+        9
+      ],
+      "effective_ratio_nodes": [
+        0.0,
+        0.0,
+        0.037865686206423034,
+        0.12770485428797146,
+        1.1272941320837204
+      ],
+      "lambda_positive": 0.3632385158888715,
+      "lifecycle_solves": 0,
+      "mean_annual_entry_income": 0.720554272517321,
+      "mean_wealth": 0.18651967924681834,
+      "necessary_current_budget_minimum_slack": 0.27427651537528747,
+      "negative_wealth_share": 0.0,
+      "ratio_weights": [
+        0.19942576269679177,
+        0.20037747293780178,
+        0.1998633085085668,
+        0.20008786061209277,
+        0.20024559524474678
+      ],
+      "raw_mean_wealth": 0.1865196792468183,
+      "raw_ratio_nodes": [
+        -2.22252859121604,
+        -0.0526403178090525,
+        0.104244689233362,
+        0.351572998737395,
+        3.1034542945567
+      ],
+      "zero_wealth_share": 0.6669475303229839
+    },
+    "economic_changes": [
+      "Experimental: historical parenthood-only floor is free; A(m) off, child shares constant, nonlinear benefit/equivalence scale retained",
+      "Author-requested psi_child estimated jointly with nine floor coordinates; diagnostic bounds [.01,.5]",
+      "Weight profile base_control multipliers {}"
+    ],
+    "fixed_H0": 6.293507689200028,
+    "no_borrowing": true,
+    "closure": "price clears birth renewal; population clears absolute housing supply",
+    "bounds_role": "diagnostic search restriction; not an estimate or externally identified bound",
+    "source_note": "Selected input_contract says base_control and no weight multipliers; all table values copied from this point."
+  },
+  "sources_with_hashes": {
+    "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/verification.json": {
+      "exists": true,
+      "sha256": "1f0d338c57f4d8ed2e0cc4b4f39fdc08a0e7f92e1b4eee271d7c47b0233a3179"
+    },
+    "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/root/target_fit.csv": {
+      "exists": true,
+      "sha256": "8a6be314ee043cb572b4f47b602e79af391c3d41948e8a0cd21f46b63a13a17e"
+    },
+    "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/root/parameters.csv": {
+      "exists": true,
+      "sha256": "3c71b831c40f16d17505faa2c2a872d8b00e795c046715cf1205ab83922aa4ca"
+    },
+    "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/repeat/target_fit.csv": {
+      "exists": true,
+      "sha256": "8a6be314ee043cb572b4f47b602e79af391c3d41948e8a0cd21f46b63a13a17e"
+    },
+    "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/repeat/parameters.csv": {
+      "exists": true,
+      "sha256": "3c71b831c40f16d17505faa2c2a872d8b00e795c046715cf1205ab83922aa4ca"
+    },
+    "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/receipts/input_contract.json": {
+      "exists": true,
+      "sha256": "0a3e7b594175c04e8fd81457e71b862b19efa86462a0fe2033b583557b9c0966"
+    },
+    "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/receipts/source_pins.json": {
+      "exists": true,
+      "sha256": "4de9a584f05a3ff8d41959d8295e9a8b90701af3ff541f8eea06deb74e92cd2c"
+    },
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/source_pins.json": {
+      "exists": null,
+      "sha256": "4de9a584f05a3ff8d41959d8295e9a8b90701af3ff541f8eea06deb74e92cd2c"
+    },
+    "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/source_pins.json": {
+      "exists": true,
+      "sha256": "4de9a584f05a3ff8d41959d8295e9a8b90701af3ff541f8eea06deb74e92cd2c"
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/closure.json": {
+      "exists": true,
+      "sha256": "4ea3454d077261e2f80b92cb8f09602f93a61941cd0d98f6c5ef0f7f8d715e1e",
+      "bytes": 1287
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics/fertility_by_age.png": {
+      "exists": true,
+      "sha256": "2a45dfe2c1655f116fcd5b1bb584f437a7ecfb4ea0b45ac04d7bc299b3351b45",
+      "bytes": 44739
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics/fertility_policy_by_age_income_state.png": {
+      "exists": true,
+      "sha256": "0facd2e9bbd6a23bcfa4cf9be1870e8526c68cb18ab61343dc1298e8197dd0c7",
+      "bytes": 141077
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics/housing_by_age_income_state.png": {
+      "exists": true,
+      "sha256": "86276d031198b4624ec89767ce15ac4e27ee6e0899f1db4e4ef33adfb5c9266c",
+      "bytes": 135769
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics/housing_market.png": {
+      "exists": true,
+      "sha256": "217c931f83cacc6e8526d47bbca17c84bd1d3660c48190b426c58710432218a4",
+      "bytes": 34182
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics/housing_prices.png": {
+      "exists": true,
+      "sha256": "d7fab86c5aee8ba644a4ab76aee232763a3f33670aad321ef1b82cb566042cf9",
+      "bytes": 48492
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics/income_state_outcomes.png": {
+      "exists": true,
+      "sha256": "212b427f7630ee7589b4f05ee05e03e1695a0fd2dfc7e2174005860c0e72ad9d",
+      "bytes": 63957
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics/liquid_wealth_by_age_income_state.png": {
+      "exists": true,
+      "sha256": "3dcf06a7ba2674f48c031ecc364c20cb532ff025625969ddb91fd4a687c9cc41",
+      "bytes": 146297
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics/market_clearing_by_market.png": {
+      "exists": true,
+      "sha256": "1e8495239b38ef1259e4a832a10666102fd51ca3c81374b54a44761450e57faa",
+      "bytes": 33846
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics/market_clearing_residuals.png": {
+      "exists": true,
+      "sha256": "eecf600ebcd2de3b54cb544a567e9fae5485cde95540c706252640754b21cae9",
+      "bytes": 35765
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics/owner_rungs.png": {
+      "exists": true,
+      "sha256": "2d9e55611cbc544aae2add37f0a52a407ef0dc876849dc850f5c95652c1e2fd5",
+      "bytes": 37150
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics/ownership_by_age.png": {
+      "exists": true,
+      "sha256": "ed5422982d5852aa823ad5f6d5bec8089e46802e7034bc8ad08abb99e49b77a5",
+      "bytes": 44865
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics/ownership_by_age_income_state.png": {
+      "exists": true,
+      "sha256": "79a54c5de34aa55ff3d16766de276445f232218c5af6ce2e91dd881accdabd36",
+      "bytes": 140102
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics/policy_childless_renter_age30.png": {
+      "exists": true,
+      "sha256": "f3c4b9a2dd90b64b24985bab0c3be48f656973fc672b5efa8504fd3fb90ca85b",
+      "bytes": 161111
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics/policy_childless_renter_age42.png": {
+      "exists": true,
+      "sha256": "c2fbcda10b7f31f189cc4518c9d63856f49f4c40b9de17c57c69dd4736efa696",
+      "bytes": 169239
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics/summary.json": {
+      "exists": true,
+      "sha256": "7de9ba1e368a5678fdddc78d0a14629672e470f0638f5a1624cd6856b470146a",
+      "bytes": 5436
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics/tenure_services.png": {
+      "exists": true,
+      "sha256": "cdd0540b5bc7207695a7225b9ffd33d56076799afc5d71a2e600a561c2504771",
+      "bytes": 27502
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics/wealth_dist_childless_renter_age30.png": {
+      "exists": true,
+      "sha256": "1eacada9efe9b3ca56585e4a9b5129becd98755ad4a2729f07d71e4961063dcd",
+      "bytes": 65059
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics/wealth_dist_childless_renter_age42.png": {
+      "exists": true,
+      "sha256": "6c2710bfd8c8f814bf742f6bd7c0947e0f336827e5c7152675f6fa14427d4151",
+      "bytes": 65059
+    },
+    "output/model/transition_readiness_v1/current_floor_handoff/native_reports/ROOT/closure.json": {
+      "exists": true,
+      "sha256": "3aa969f957b427b6d4e6de2c1f8b6e6066f8b31e9edc8c02d14c5bae758582d8",
+      "bytes": 1296
+    }
+  },
+  "source_citations": [
+    {
+      "file": "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/verification.json",
+      "claim": "Chain, case, loss, ROOT/REPEAT equality, plots, source pins, convergence and experimental status."
+    },
+    {
+      "file": "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/receipts/input_contract.json",
+      "claim": "Actual selected point target/weight contracts, bounds, parameters, entry and credit inputs."
+    },
+    {
+      "file": "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/receipts/source_pins.json",
+      "claim": "The selected source pin manifest."
+    },
+    {
+      "file": "User direction in parent handoff",
+      "claim": "Human selection for one permanent 2007 shock transition with dated-only fiscal value 2e-5."
+    }
+  ],
+  "limitations": [
+    "The calibration remains marked experimental_not_adopted.",
+    "Selected state needs reconstruction: recorded b15... checkpoint hash belongs to frozen observer identity and is not this selected point state.",
+    "This handoff does not assert production calibration adoption or optimizer convergence.",
+    "ROOT and REPEAT closure receipts are materialized. REPEAT has its exact 17 standard diagnostic PNGs; remote selected_root contained no PNG files and was not represented by duplicated repeat images.",
+    "The packet lacks a separate reporter configuration file; native selected-repeat, verification and source-pin receipts are present."
+  ],
+  "human_selection": {
+    "status": "human selected",
+    "authorized_use": "one permanent 2007 shock transition experiment",
+    "fiscal_value": 2e-05,
+    "fiscal_timing": "dated only",
+    "calibration_adoption": false,
+    "calibration_experimental_not_adopted": true,
+    "selected_state": "requires reconstruction from the selected parameters and pinned sources; frozen observer checkpoint is not the selected state"
+  },
+  "point_comparison_to_previous_verified_31_284": {
+    "previous_packet": "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/verified_global_20261001T0941NY_chain7_0173",
+    "previous_base_loss": 31.28400725566496,
+    "selected_packet": "output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm",
+    "selected_base_loss": 30.99909262396404,
+    "loss_change": -0.28491463170092146,
+    "target_rows_changed": [
+      {
+        "key": "initial_normalization",
+        "previous": {
+          "moment": "initial_normalization",
+          "target": "2.1",
+          "model": "2.0999999677930745",
+          "gap": "-3.22069255709323e-08",
+          "weight": "",
+          "loss_contribution": "",
+          "role": "normalization"
+        },
+        "selected": {
+          "moment": "initial_normalization",
+          "target": "2.1",
+          "model": "2.1000012971311346",
+          "gap": "1.2971311345033598e-06",
+          "weight": "",
+          "loss_contribution": "",
+          "role": "normalization"
+        }
+      },
+      {
+        "key": "cps_childlessness",
+        "previous": {
+          "moment": "cps_childlessness",
+          "target": "0.19827875100684264",
+          "model": "0.2025329839288211",
+          "gap": "0.0042542329219784625",
+          "weight": "35532.3042455214",
+          "loss_contribution": "0.6430813285978401",
+          "role": "scored"
+        },
+        "selected": {
+          "moment": "cps_childlessness",
+          "target": "0.19827875100684264",
+          "model": "0.20254477520127345",
+          "gap": "0.004266024194430812",
+          "weight": "35532.3042455214",
+          "loss_contribution": "0.6466510699256433",
+          "role": "scored"
+        }
+      },
+      {
+        "key": "cps_exactly_one",
+        "previous": {
+          "moment": "cps_exactly_one",
+          "target": "0.21365532522014702",
+          "model": "0.21063334432983163",
+          "gap": "-0.0030219808903153844",
+          "weight": "26952.820824310795",
+          "loss_contribution": "0.24614309192065922",
+          "role": "scored"
+        },
+        "selected": {
+          "moment": "cps_exactly_one",
+          "target": "0.21365532522014702",
+          "model": "0.21059618528418525",
+          "gap": "-0.003059139935961769",
+          "weight": "26952.820824310795",
+          "loss_contribution": "0.252233584358042",
+          "role": "scored"
+        }
+      },
+      {
+        "key": "nchs_mean_age",
+        "previous": {
+          "moment": "nchs_mean_age",
+          "target": "25.976263860992496",
+          "model": "25.95637803384762",
+          "gap": "-0.019885827144875634",
+          "weight": "139.82806784479274",
+          "loss_contribution": "0.05529446706912973",
+          "role": "scored"
+        },
+        "selected": {
+          "moment": "nchs_mean_age",
+          "target": "25.976263860992496",
+          "model": "25.95394519542065",
+          "gap": "-0.02231866557184503",
+          "weight": "139.82806784479274",
+          "loss_contribution": "0.0696515532748807",
+          "role": "scored"
+        }
+      },
+      {
+        "key": "nchs_share30",
+        "previous": {
+          "moment": "nchs_share30",
+          "target": "0.2492780130410667",
+          "model": "0.22931081311513798",
+          "gap": "-0.019967199925928714",
+          "weight": "0.0",
+          "loss_contribution": "0.0",
+          "role": "validation"
+        },
+        "selected": {
+          "moment": "nchs_share30",
+          "target": "0.2492780130410667",
+          "model": "0.2291683637636796",
+          "gap": "-0.020109649277387093",
+          "weight": "0.0",
+          "loss_contribution": "0.0",
+          "role": "validation"
+        }
+      },
+      {
+        "key": "wealth_earnings",
+        "previous": {
+          "moment": "wealth_earnings",
+          "target": "6.92658379107299",
+          "model": "6.488652892252825",
+          "gap": "-0.43793089882016556",
+          "weight": "7.595098472533724",
+          "loss_contribution": "1.4566143563186504",
+          "role": "scored"
+        },
+        "selected": {
+          "moment": "wealth_earnings",
+          "target": "6.92658379107299",
+          "model": "6.514632048660267",
+          "gap": "-0.4119517424127235",
+          "weight": "7.595098472533724",
+          "loss_contribution": "1.2889203994002023",
+          "role": "scored"
+        }
+      },
+      {
+        "key": "bequest_wealth",
+        "previous": {
+          "moment": "bequest_wealth",
+          "target": "0.007291023472616158",
+          "model": "0.006659276336892271",
+          "gap": "-0.0006317471357238872",
+          "weight": "5165289.256198346",
+          "loss_contribution": "2.0614898940874764",
+          "role": "scored"
+        },
+        "selected": {
+          "moment": "bequest_wealth",
+          "target": "0.007291023472616158",
+          "model": "0.006818925148446632",
+          "gap": "-0.0004720983241695261",
+          "weight": "5165289.256198346",
+          "loss_contribution": "1.1512232834900562",
+          "role": "scored"
+        }
+      },
+      {
+        "key": "old_dispersion",
+        "previous": {
+          "moment": "old_dispersion",
+          "target": "3.51593508651872",
+          "model": "2.975984443818792",
+          "gap": "-0.5399506426999281",
+          "weight": "0.0",
+          "loss_contribution": "0.0",
+          "role": "validation"
+        },
+        "selected": {
+          "moment": "old_dispersion",
+          "target": "3.51593508651872",
+          "model": "2.9265891105325803",
+          "gap": "-0.5893459759861397",
+          "weight": "0.0",
+          "loss_contribution": "0.0",
+          "role": "validation"
+        }
+      },
+      {
+        "key": "mean_rooms",
+        "previous": {
+          "moment": "mean_rooms",
+          "target": "5.729434240102641",
+          "model": "5.9771254010383075",
+          "gap": "0.24769116093566623",
+          "weight": "128.02070205233477",
+          "loss_contribution": "7.8541867240988035",
+          "role": "scored"
+        },
+        "selected": {
+          "moment": "mean_rooms",
+          "target": "5.729434240102641",
+          "model": "5.988286068783494",
+          "gap": "0.25885182868085277",
+          "weight": "128.02070205233477",
+          "loss_contribution": "8.577933584949827",
+          "role": "scored"
+        }
+      },
+      {
+        "key": "ownership_30_55",
+        "previous": {
+          "moment": "ownership_30_55",
+          "target": "0.6762604168538028",
+          "model": "0.6569654337652768",
+          "gap": "-0.019294983088525952",
+          "weight": "2339.3623724673616",
+          "loss_contribution": "0.8709361249670808",
+          "role": "scored"
+        },
+        "selected": {
+          "moment": "ownership_30_55",
+          "target": "0.6762604168538028",
+          "model": "0.6573136785735821",
+          "gap": "-0.018946738280220643",
+          "weight": "2339.3623724673616",
+          "loss_contribution": "0.8397817111896467",
+          "role": "scored"
+        }
+      },
+      {
+        "key": "first_birth_rooms",
+        "previous": {
+          "moment": "first_birth_rooms",
+          "target": "1.465",
+          "model": "1.2231930952117427",
+          "gap": "-0.2418069047882574",
+          "weight": "137.5652749002964",
+          "loss_contribution": "8.043521301678405",
+          "role": "scored"
+        },
+        "selected": {
+          "moment": "first_birth_rooms",
+          "target": "1.465",
+          "model": "1.2234939275017789",
+          "gap": "-0.2415060724982212",
+          "weight": "137.5652749002964",
+          "loss_contribution": "8.023519840367047",
+          "role": "scored"
+        }
+      },
+      {
+        "key": "family_rooms",
+        "previous": {
+          "moment": "family_rooms",
+          "target": "0.38509964969278165",
+          "model": "0.3004909671601661",
+          "gap": "-0.08460868253261555",
+          "weight": "0.0",
+          "loss_contribution": "0.0",
+          "role": "validation"
+        },
+        "selected": {
+          "moment": "family_rooms",
+          "target": "0.38509964969278165",
+          "model": "0.3006247419147412",
+          "gap": "-0.08447490777804045",
+          "weight": "0.0",
+          "loss_contribution": "0.0",
+          "role": "validation"
+        }
+      },
+      {
+        "key": "recent_parent_ownership",
+        "previous": {
+          "moment": "recent_parent_ownership",
+          "target": "0.12760836356692162",
+          "model": "0.11837410900018563",
+          "gap": "-0.009234254566735989",
+          "weight": "27055.822957508266",
+          "loss_contribution": "2.307089454831972",
+          "role": "scored"
+        },
+        "selected": {
+          "moment": "recent_parent_ownership",
+          "target": "0.12760836356692162",
+          "model": "0.1181655838966037",
+          "gap": "-0.009442779670317925",
+          "weight": "27055.822957508266",
+          "loss_contribution": "2.4124618880947173",
+          "role": "scored"
+        }
+      },
+      {
+        "key": "early_fertility",
+        "previous": {
+          "moment": "early_fertility",
+          "target": "0.8095276384290021",
+          "model": "0.5312175503600473",
+          "gap": "-0.27831008806895485",
+          "weight": "100.0",
+          "loss_contribution": "7.745650512094941",
+          "role": "scored"
+        },
+        "selected": {
+          "moment": "early_fertility",
+          "target": "0.8095276384290021",
+          "model": "0.5313781155296453",
+          "gap": "-0.2781495228993568",
+          "weight": "100.0",
+          "loss_contribution": "7.736715708913981",
+          "role": "scored"
+        }
+      }
+    ],
+    "parameter_rows_changed": [
+      {
+        "key": "theta0",
+        "previous": {
+          "estimate": "0.07862721952114816",
+          "lower": "0.0",
+          "near_bound": "True",
+          "parameter": "theta0",
+          "status": "free in experimental utility calibration",
+          "upper": "8.0",
+          "reference_estimate": "0.12451612635999697"
+        },
+        "selected": {
+          "estimate": "0.09862721952114817",
+          "lower": "0.0",
+          "near_bound": "False",
+          "parameter": "theta0",
+          "status": "free in experimental utility calibration",
+          "upper": "8.0",
+          "reference_estimate": "0.12451612635999697"
+        }
+      }
+    ],
+    "note": "Exact string-level CSV row differences. Contracts/weights are pinned by each packet; this does not imply only model values changed."
+  },
+  "runtime_inputs": {
+    "preferred_fresh_native_comparison_report": "REPEAT",
+    "reason": "ROOT is a selected-search evaluation and records selected_price_repeat_performed=false; REPEAT is the exact full GE repeat with complete 14/31 tables, closure and 17 plots.",
+    "root_report_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_handoff/native_reports/ROOT",
+    "repeat_report_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT",
+    "repeat_target_fit": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/repeat/target_fit.csv",
+    "repeat_parameters": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_continuation_v1/deployment/monitor_snapshot/verified_chain0_0006_nm/repeat/parameters.csv",
+    "repeat_closure": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/closure.json",
+    "repeat_standard_diagnostics": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_handoff/native_reports/REPEAT/standard_diagnostics"
+  }
+}

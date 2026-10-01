@@ -1,0 +1,27 @@
+{
+  "status": "prepared_authentication_blocked",
+  "captured_utc": "2026-10-01T17:38:25.099386+00:00",
+  "native_import_executed": false,
+  "model_calls": 0,
+  "jobs_submitted": 0,
+  "tests": {
+    "runtime": 10,
+    "controller": 14,
+    "all_pass": true
+  },
+  "source_sha256": {
+    "code/model/experiments/transition_readiness/floor_runtime.py": "0f00488cacfaef585547579a82c78589c9ceb700f8d6870b5415862c73604750",
+    "code/model/experiments/transition_readiness/one_shock_floor.py": "a95ec2c5a72c0513476b539fddf7825dc0252cc4df03f0df4abef0977f631cdb",
+    "code/model/experiments/transition_readiness/floor_launch.sh": "096be8304fd5cacce2f7b612184c4059f3ba15c78aa92e8086d00005b2afaec4"
+  },
+  "blocker": "Fresh IPv4 Torch SSH reaches the host but authentication is denied; no valid local Kerberos ticket and no existing SSH control socket.",
+  "retry_policy": "No automatic authentication retry. Resume after user refreshes the usual Torch login.",
+  "execution_scope": "One permanent 2007 preference shock, latest verified chain0/case0006_nm current-floor calibration, dated fiscal gate2e-5 only.",
+  "next_steps": [
+    "upload exact final source snapshot",
+    "zero-model-call native import under authenticated calibration source mounts",
+    "generate pinned plan from actual native identity",
+    "90-minute exact-loop native readiness",
+    "choose tonight fitting budget from measured current-floor runtime"
+  ]
+}
