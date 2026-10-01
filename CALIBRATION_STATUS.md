@@ -1,14 +1,14 @@
 # Calibration Status
 
-## October 1, 03:52 New York — verified 68.843; overnight 49.256 provisional
+## October 1, 03:57 New York — verified 68.843; overnight 47.522 provisional
 
 The live free-\(\psi\) floor search still uses the same fixed-reference economics,
 14 scored/validation target rows, 31-parameter report, and original base weights.
 No experimental point is adopted. The lowest passed search point is overnight
-chain 7, case 0069_nm, loss **49.2563478186** at price 0.7143733896; it is
+chain 7, case 0079_nm, loss **47.5224817941** at price 0.7030525605; it is
 provisional until its exact selected-price native repeat is checked. It used
-eight lifecycle solves in 143.19 seconds. Its full target and parameter tables
-are [saved here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T033034NY_overnight/).
+seven lifecycle solves in 150.56 seconds. Its full target and parameter tables
+are [saved here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T035728NY_overnight/).
 
 The best selected-repeat-verified point is round-three chain 4, case 0035_nm,
 base loss **68.8425812015**, at market price 0.7172609099. Its exact selected
@@ -26,8 +26,8 @@ chains have search-completion receipts and selected-postcheck status
 `selected_numerically_verified`; each native selected-repeat receipt says
 `exact_full_ge_repeat_passed`. Its compact receipt matrix is [here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/round3_terminal_postcheck_matrix_20261001T0231NY.json).
 
-At 03:52:30 New York, overnight array 18925912_0–23 had **1,762 case records,
-1,753 admissible computed GEs, and 1,847 objective calls**. It recorded eight
+At 03:57:28 New York, overnight array 18925912_0–23 had **1,810 case records,
+1,801 admissible computed GEs, and 1,895 objective calls**. It recorded eight
 numerical nonpasses and one bounded-budget case, with no fatal failures. It had no fatal
 failure receipts; chain 21 is terminal, with a selected native-repeat pass, and
 the other 23 scheduler tasks were still `RUNNING`. One case reached the
@@ -36,7 +36,7 @@ per-full-GE Phase B lifecycle cap: case 0016_nm on chain 21 stopped as
 pinned evaluator allows 32 lifecycle solves and reserves one for an exact
 repeat; the 400-call cap was not binding. All 24 use this cap, but chain 21 is
 the only observed chain to reach it. Across chains, median passed-case runtime
-ranged from 124.91 to 167.73 seconds. The timestamped [compact cohort snapshot](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T035230NY.json) preserves per-chain counts and receipts.
+ranged from 125.48 to 166.81 seconds. The timestamped [compact cohort snapshot](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T035728NY.json) preserves per-chain counts and receipts.
 
 Variable-first-child-share job 18930196 is terminal (exit 0; 28:44 elapsed).
 Its six search attempts contain five passed roots and one bounded-budget
