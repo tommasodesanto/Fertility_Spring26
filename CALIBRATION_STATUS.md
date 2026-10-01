@@ -1,14 +1,14 @@
 # Calibration Status
 
-## October 1, 03:21 New York — verified 68.843; overnight 52.429 provisional
+## October 1, 03:32 New York — verified 68.843; overnight 49.256 provisional
 
 The live free-\(\psi\) floor search still uses the same fixed-reference economics,
 14 scored/validation target rows, 31-parameter report, and original base weights.
 No experimental point is adopted. The lowest passed search point is overnight
-chain 9, case 0063_nm, loss **52.4285196782** at price 0.7240171613; it is
+chain 7, case 0069_nm, loss **49.2563478186** at price 0.7143733896; it is
 provisional until its exact selected-price native repeat is checked. It used
-eight lifecycle solves in 155.12 seconds. Its full target and parameter tables
-are [saved here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T031704NY_overnight/).
+eight lifecycle solves in 143.19 seconds. Its full target and parameter tables
+are [saved here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T033034NY_overnight/).
 
 The best selected-repeat-verified point is round-three chain 4, case 0035_nm,
 base loss **68.8425812015**, at market price 0.7172609099. Its exact selected
@@ -18,6 +18,7 @@ frozen observer-identity manifests also match: manifest SHA-256
 `bd2541149e3308017de60f98ea9982bfde1426173e4f81bd0b871ec915dbb765`, with
 matching authenticator and checkpoint hashes. Numerical verification does not
 certify optimizer convergence. The [complete fit packet and verification record](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T021657NY_round3/) include target-fit, parameter, closure, plot, and hash evidence.
+The [age-25 observer extraction](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/matched_credit_diagnostic/LATEST_AGE25_OBSERVERS.md) covers the verified 68.842 point and the prior 52.428 provisional point; it does not cover the newer 49.256 search point.
 
 The original 16 and the earlier multistart eight remain terminal. Round-three
 array 18925600_0–15 is also terminal: all 16 Slurm tasks exited 0, and all 16
@@ -25,8 +26,8 @@ chains have search-completion receipts and selected-postcheck status
 `selected_numerically_verified`; each native selected-repeat receipt says
 `exact_full_ge_repeat_passed`. Its compact receipt matrix is [here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/round3_terminal_postcheck_matrix_20261001T0231NY.json).
 
-At 03:21:59 New York, overnight array 18925912_0–23 had **1,457 case records,
-1,448 admissible computed GEs, and 1,532 objective calls**. It recorded eight
+At 03:32:35 New York, overnight array 18925912_0–23 had **1,573 case records,
+1,564 admissible computed GEs, and 1,651 objective calls**. It recorded eight
 numerical nonpasses and one bounded-budget case, with no fatal failures. It had no fatal
 failure receipts; chain 21 is terminal, with a selected native-repeat pass, and
 the other 23 scheduler tasks were still `RUNNING`. One case reached the
@@ -35,7 +36,7 @@ per-full-GE Phase B lifecycle cap: case 0016_nm on chain 21 stopped as
 pinned evaluator allows 32 lifecycle solves and reserves one for an exact
 repeat; the 400-call cap was not binding. All 24 use this cap, but chain 21 is
 the only observed chain to reach it. Across chains, median passed-case runtime
-ranged from 125.80 to 166.81 seconds. The timestamped [compact cohort snapshot](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T032159NY.json) preserves per-chain counts and receipts.
+ranged from 124.46 to 166.81 seconds. The timestamped [compact cohort snapshot](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T033235NY.json) preserves per-chain counts and receipts.
 
 Variable-first-child-share job 18930196 is terminal (exit 0; 28:44 elapsed).
 Its six search attempts contain five passed roots and one bounded-budget
