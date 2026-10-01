@@ -5,10 +5,14 @@
 The author requests progress every five minutes, including completed full GE or
 objective counts, comparable original-weight best fit, weight-profile tradeoffs,
 observed runtimes and issues, even while healthy. The heartbeat is now every
-five minutes. A separate read-only30-minute Fable audit is preparing under
-utility_floor_psi_v1/fable_audit/. Monitor its launch/completion receipts once
-present, report errors or completion promptly, and independently verify critical
-claims before adopting findings. No automatic code changes or numerical launches
+five minutes. The separate read-only 30-minute Fable audit is initialized under
+utility_floor_psi_v1/fable_audit/. Actual model claude-fable-5-1, max effort;
+session 65b39ebb-64a9-40fe-ad5b-63fe5ee095f4, supervisor75883 and CLI75900.
+Initialization was verified at02:36:43UTC with only Glob, Grep and Read tools.
+Deadline1790823998.455219 (23:06:38 New York), no retry or numerical runs.
+Prompt, launcher and README hashes match source_freeze.json. Monitor launch,
+progress and terminal receipts; report errors or completion promptly and
+independently verify critical claims before adopting findings. No automatic code changes or numerical launches
 are authorized. Keep the monitor active until numerical outcomes and audit are
 reported. Existing deadlines and no-restart constraints remain unchanged.
 
