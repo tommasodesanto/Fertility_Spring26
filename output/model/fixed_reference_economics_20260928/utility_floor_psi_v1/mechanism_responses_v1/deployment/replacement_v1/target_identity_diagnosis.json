@@ -1,0 +1,277 @@
+{
+  "status": "confirmed_representation_only_mismatch_exact_scoring_function",
+  "lifecycle_solves_in_diagnosis": 0,
+  "failed_job_completed_native_solves": 1,
+  "failed_job_lifecycle_claims": 1,
+  "failed_job_completed_price_cells": 0,
+  "actual_model_moments_retained": false,
+  "identity_independent_of_model_moment_arguments": true,
+  "scoring_inputs": "placeholder model moments; pinned exact objective; identities unaffected by placeholders",
+  "actual_identity_objects": [
+    {
+      "moment": "initial_normalization",
+      "target": 2.1,
+      "weight": "",
+      "role": "normalization"
+    },
+    {
+      "moment": "cps_childlessness",
+      "target": 0.19827875100684264,
+      "weight": 35532.3042455214,
+      "role": "scored"
+    },
+    {
+      "moment": "cps_exactly_one",
+      "target": 0.21365532522014702,
+      "weight": 26952.820824310795,
+      "role": "scored"
+    },
+    {
+      "moment": "nchs_mean_age",
+      "target": 25.976263860992496,
+      "weight": 139.82806784479274,
+      "role": "scored"
+    },
+    {
+      "moment": "nchs_share30",
+      "target": 0.2492780130410667,
+      "weight": 0.0,
+      "role": "validation"
+    },
+    {
+      "moment": "wealth_earnings",
+      "target": 6.92658379107299,
+      "weight": 7.595098472533724,
+      "role": "scored"
+    },
+    {
+      "moment": "bequest_wealth",
+      "target": 0.007291023472616158,
+      "weight": 5165289.256198346,
+      "role": "scored"
+    },
+    {
+      "moment": "old_dispersion",
+      "target": 3.51593508651872,
+      "weight": 0.0,
+      "role": "validation"
+    },
+    {
+      "moment": "mean_rooms",
+      "target": 5.729434240102641,
+      "weight": 128.02070205233477,
+      "role": "scored"
+    },
+    {
+      "moment": "ownership_30_55",
+      "target": 0.6762604168538028,
+      "weight": 2339.3623724673616,
+      "role": "scored"
+    },
+    {
+      "moment": "first_birth_rooms",
+      "target": 1.465,
+      "weight": 137.5652749002964,
+      "role": "scored"
+    },
+    {
+      "moment": "family_rooms",
+      "target": 0.38509964969278165,
+      "weight": 0.0,
+      "role": "validation"
+    },
+    {
+      "moment": "recent_parent_ownership",
+      "target": 0.12760836356692162,
+      "weight": 27055.822957508266,
+      "role": "scored"
+    },
+    {
+      "moment": "early_fertility",
+      "target": 0.8095276384290021,
+      "weight": 100.0,
+      "role": "scored"
+    }
+  ],
+  "expected_identity_objects": [
+    {
+      "moment": "initial_normalization",
+      "role": "normalization",
+      "target": "2.1",
+      "weight": ""
+    },
+    {
+      "moment": "cps_childlessness",
+      "role": "scored",
+      "target": "0.19827875100684264",
+      "weight": "35532.3042455214"
+    },
+    {
+      "moment": "cps_exactly_one",
+      "role": "scored",
+      "target": "0.21365532522014702",
+      "weight": "26952.820824310795"
+    },
+    {
+      "moment": "nchs_mean_age",
+      "role": "scored",
+      "target": "25.976263860992496",
+      "weight": "139.82806784479274"
+    },
+    {
+      "moment": "nchs_share30",
+      "role": "validation",
+      "target": "0.2492780130410667",
+      "weight": "0.0"
+    },
+    {
+      "moment": "wealth_earnings",
+      "role": "scored",
+      "target": "6.92658379107299",
+      "weight": "7.595098472533724"
+    },
+    {
+      "moment": "bequest_wealth",
+      "role": "scored",
+      "target": "0.007291023472616158",
+      "weight": "5165289.256198346"
+    },
+    {
+      "moment": "old_dispersion",
+      "role": "validation",
+      "target": "3.51593508651872",
+      "weight": "0.0"
+    },
+    {
+      "moment": "mean_rooms",
+      "role": "scored",
+      "target": "5.729434240102641",
+      "weight": "128.02070205233477"
+    },
+    {
+      "moment": "ownership_30_55",
+      "role": "scored",
+      "target": "0.6762604168538028",
+      "weight": "2339.3623724673616"
+    },
+    {
+      "moment": "first_birth_rooms",
+      "role": "scored",
+      "target": "1.465",
+      "weight": "137.5652749002964"
+    },
+    {
+      "moment": "family_rooms",
+      "role": "validation",
+      "target": "0.38509964969278165",
+      "weight": "0.0"
+    },
+    {
+      "moment": "recent_parent_ownership",
+      "role": "scored",
+      "target": "0.12760836356692162",
+      "weight": "27055.822957508266"
+    },
+    {
+      "moment": "early_fertility",
+      "role": "scored",
+      "target": "0.8095276384290021",
+      "weight": "100.0"
+    }
+  ],
+  "csv_roundtrip_identity_objects": [
+    {
+      "moment": "initial_normalization",
+      "target": "2.1",
+      "weight": "",
+      "role": "normalization"
+    },
+    {
+      "moment": "cps_childlessness",
+      "target": "0.19827875100684264",
+      "weight": "35532.3042455214",
+      "role": "scored"
+    },
+    {
+      "moment": "cps_exactly_one",
+      "target": "0.21365532522014702",
+      "weight": "26952.820824310795",
+      "role": "scored"
+    },
+    {
+      "moment": "nchs_mean_age",
+      "target": "25.976263860992496",
+      "weight": "139.82806784479274",
+      "role": "scored"
+    },
+    {
+      "moment": "nchs_share30",
+      "target": "0.2492780130410667",
+      "weight": "0.0",
+      "role": "validation"
+    },
+    {
+      "moment": "wealth_earnings",
+      "target": "6.92658379107299",
+      "weight": "7.595098472533724",
+      "role": "scored"
+    },
+    {
+      "moment": "bequest_wealth",
+      "target": "0.007291023472616158",
+      "weight": "5165289.256198346",
+      "role": "scored"
+    },
+    {
+      "moment": "old_dispersion",
+      "target": "3.51593508651872",
+      "weight": "0.0",
+      "role": "validation"
+    },
+    {
+      "moment": "mean_rooms",
+      "target": "5.729434240102641",
+      "weight": "128.02070205233477",
+      "role": "scored"
+    },
+    {
+      "moment": "ownership_30_55",
+      "target": "0.6762604168538028",
+      "weight": "2339.3623724673616",
+      "role": "scored"
+    },
+    {
+      "moment": "first_birth_rooms",
+      "target": "1.465",
+      "weight": "137.5652749002964",
+      "role": "scored"
+    },
+    {
+      "moment": "family_rooms",
+      "target": "0.38509964969278165",
+      "weight": "0.0",
+      "role": "validation"
+    },
+    {
+      "moment": "recent_parent_ownership",
+      "target": "0.12760836356692162",
+      "weight": "27055.822957508266",
+      "role": "scored"
+    },
+    {
+      "moment": "early_fertility",
+      "target": "0.8095276384290021",
+      "weight": "100.0",
+      "role": "scored"
+    }
+  ],
+  "raw_identity_equal": false,
+  "csv_roundtrip_identity_equal": true,
+  "source_hashes": {
+    "code/model/tools/e5f_evening_calibration_runtime.py": "7b5354d794a407c9109b69b17e4449fdf7dc664065c387f8c5e0d8043aa1dbfa"
+  },
+  "classification": "float target/weight fields compared directly with expected CSV strings; no target/weight/role/order difference",
+  "source_edits": false,
+  "retry": false,
+  "numerical_launch": false
+}

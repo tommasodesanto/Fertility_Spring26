@@ -1,0 +1,27 @@
+{
+  "case_attempts": 1,
+  "cases": [
+    {
+      "error": "RuntimeError('All 14 original targets/weights required')",
+      "failure_class": "fatal_accounting_source_target_shape_or_unexpected",
+      "label": "00_reference_p1.00",
+      "price_factor": 1.0,
+      "regime": "reference",
+      "status": "failed_or_unresolved",
+      "traceback": "Traceback (most recent call last):\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/fixed_price_responses.py\", line 394, in run\n    result = evaluate(auth, regime, factor, out, case_deadline)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/fixed_price_responses.py\", line 228, in make_price_cell\n    require(len(fits)==14 and native.target_identity(fits)==native.PLAN[\"target_contract\"],\"All 14 original targets/weights required\")\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/fixed_price_responses.py\", line 61, in require\n    raise RuntimeError(message)\nRuntimeError: All 14 original targets/weights required\n"
+    }
+  ],
+  "dependent_cases_blocked": true,
+  "failed_case": {
+    "error": "RuntimeError('All 14 original targets/weights required')",
+    "failure_class": "fatal_accounting_source_target_shape_or_unexpected",
+    "label": "00_reference_p1.00",
+    "price_factor": 1.0,
+    "regime": "reference",
+    "status": "failed_or_unresolved",
+    "traceback": "Traceback (most recent call last):\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/fixed_price_responses.py\", line 394, in run\n    result = evaluate(auth, regime, factor, out, case_deadline)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/fixed_price_responses.py\", line 228, in make_price_cell\n    require(len(fits)==14 and native.target_identity(fits)==native.PLAN[\"target_contract\"],\"All 14 original targets/weights required\")\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/fixed_price_responses.py\", line 61, in require\n    raise RuntimeError(message)\nRuntimeError: All 14 original targets/weights required\n"
+  },
+  "lifecycle_solves": 1,
+  "no_auto_retry": true,
+  "status": "fatal_q0_reference_failure"
+}

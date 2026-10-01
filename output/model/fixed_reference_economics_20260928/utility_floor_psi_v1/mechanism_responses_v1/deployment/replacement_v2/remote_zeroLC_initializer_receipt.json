@@ -1,0 +1,83 @@
+{
+  "actual_parameters": {
+    "H0": 6.293507689200028,
+    "alpha_cons": 0.733,
+    "annual_depreciation": 0.01416143718381309,
+    "annual_property_tax": 0.010598360773872594,
+    "beta_annual": 0.961853452563859,
+    "chi": 1.0617379779472653,
+    "child_benefit_CRRA_coefficient": 0.11924610682566991,
+    "child_benefit_curvature": 0.14481907103347513,
+    "delta_alpha": 0.0,
+    "delta_alpha_jump": 0.0,
+    "financed_share": 0.8,
+    "first_birth_fixed_cost": 0.5086632841435258,
+    "h_P": 1.9105885246262313,
+    "housing_supply_elasticity": 0.63,
+    "income_states": 9,
+    "kappa_fert": 0.17614503485474298,
+    "kappa_fert_continuation": 0.49823977425798727,
+    "payroll_tax": 0.08028070961950022,
+    "pension_period": 0.917784047463731,
+    "period_depreciation": 0.05545379079326218,
+    "period_property_tax": 0.042393443095490375,
+    "psi_child": 0.13943962357740752,
+    "q_annual": 0.020000000000000018,
+    "rental_cap": 6.0,
+    "selling_cost": 0.06,
+    "sigma": 2.0,
+    "tenure_choice_kappa": 0.007061207896681282,
+    "theta0": 0.10878128674114897,
+    "theta1": 0.008193084126995582,
+    "utility_reference_rent": 0.11046592704873838,
+    "wealth_grid_nodes": 120
+  },
+  "candidate": "chain_11/results/0026_nm/phase_b_ge/selected_root",
+  "checked_epoch": 1790830147.2929103,
+  "driver_sha256": "daa0e2954b70fc1f38ebb8fa31a37e729d97e38b5184aac5d58e6a9680242961",
+  "entry": {
+    "approximation": "Existing five empirical quintile-bin means; censoring occurs after binning, not on raw survey observations.",
+    "arm": "nonnegative_mean",
+    "clipped_draw_mass": 0.0,
+    "conditional_sha256": "bf976b033678629c4f9e91df4037092d6e35ab113eebaf3fcf63c59510d2ca4f",
+    "credit": 0.0,
+    "dimensions": [
+      120,
+      9
+    ],
+    "effective_ratio_nodes": [
+      0.0,
+      0.0,
+      0.037865686206423034,
+      0.12770485428797146,
+      1.1272941320837204
+    ],
+    "lambda_positive": 0.3632385158888715,
+    "lifecycle_solves": 0,
+    "mean_annual_entry_income": 0.720554272517321,
+    "mean_wealth": 0.18651967924681834,
+    "necessary_current_budget_minimum_slack": 0.27427651537528747,
+    "negative_wealth_share": 0.0,
+    "ratio_weights": [
+      0.19942576269679177,
+      0.20037747293780178,
+      0.1998633085085668,
+      0.20008786061209277,
+      0.20024559524474678
+    ],
+    "raw_mean_wealth": 0.1865196792468183,
+    "raw_ratio_nodes": [
+      -2.22252859121604,
+      -0.0526403178090525,
+      0.104244689233362,
+      0.351572998737395,
+      3.1034542945567
+    ],
+    "zero_wealth_share": 0.6669475303229839
+  },
+  "lifecycle_solves": 0,
+  "natural_support_certified": false,
+  "pid": 1085176,
+  "source_binding_sha256": "9fa247dc587c22877552410597f921e81a0ad777677e767f18816ab8cde11e83",
+  "status": "passed_actual_runtime_zero_lifecycle"
+}

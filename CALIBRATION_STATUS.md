@@ -1,52 +1,60 @@
 # Calibration Status
 
-## October 1, 00:32 New York — original 16 terminal; multistart eight and round-three 16 active
+## October 1, 01:05 New York — 24 search chains terminal; 40 still running
 
 The original local eight last counted **454 case rows, 446 admissible computed
 GEs, and 454 calls** at 00:13:05 New York; original Torch counted **290/281/290**
-at 00:06:15. All 16 original search chains are terminal. All 16 selected native
+at 00:06:15. All original 16 chains are terminal, and all 16 selected native
 repeats passed exact comparison of 14 target rows, 31 parameter rows, and the
-17 standard diagnostic PNG hashes; the local comparison also matched its frozen
+17 standard diagnostic PNG hashes. The local comparison also matched its frozen
 observer identity and input contract. Search termination at a call budget does
 not certify optimizer convergence.
 
-At 00:32, the eight-job multistart Torch cohort recorded **299 case rows, 295
-admissible GEs, and 314 objective calls**. Four trials were rejected as
-`inadmissible_numerical` (two each on chains 6 and 7); there were no fatal
-failures, terminal receipts, or postchecks. All eight latest native receipts
-were `running_full_GE`. The last scheduler snapshot, at 00:22:20, showed every
-array task `RUNNING`; see the receipt for its timestamp and node assignments.
-Its current compact readout is
-[here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/snapshot_20261001T043221Z/compact_8_job_readout.json).
-The cohort keeps its original hard deadline of 01:14:04 New York.
-Combining local and original-Torch terminal counts with the 00:32 multistart
-read gives mixed-time totals of **1,043 records, 1,022 admissible GEs, and 1,058
-calls**; the separate check times above govern interpretation.
+The prior eight-job multistart Torch cohort's last collector read, at 00:53:57,
+recorded **363 case rows, 351 admissible computed GEs, and 371 objective calls**.
+Four cases were rejected as `inadmissible_numerical` (two each on chains 6 and
+7); all eight searches reached `provisional_search_finished`, all eight selected
+postchecks are `selected_numerically_verified`, and no fatal failure was
+recorded. The 00:58:53 scheduler read showed the multistart cohort complete.
+Its compact cohort readout is
+[here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/snapshot_20261001T045853Z/compact_cohort_refresh.json).
 
-A separately authorized 16-chain round-three cohort was submitted at 00:41:18
-New York as array 18925600_0–15, with a hard deadline of 02:41:18. It has 12
-Nelder–Mead chains across four reviewed profile winners and four broader PSO
-chains on base weights; each has one CPU, 24 GiB, one thread, at most 200 calls,
-and one selected postcheck with a 900-second reserve. Source and exact
-zero-lifecycle initializers passed review, but native lifecycle receipts remain
-pending. The source-frozen packet and receipts are in
-[utility_floor_psi_round3_v1](output/model/fixed_reference_economics_20260928/utility_floor_psi_round3_v1/README.md).
-Together with the earlier multistart cohort, these bring launched searches to
-40; keep each cohort under its own deadline and budget.
+The best original-weight point across the passed search cases is chain 3,
+case 0042_nm, loss **86.5092189818**, $q=0.6915191845$,
+$\psi_{child}=0.1625983298$, and $h_P=1.8511549829$. It passed an exact
+selected full-GE repeat at the same loss in 8 lifecycle solves. The root and
+repeat 14-row target tables and 31-row parameter tables are byte-identical, as
+are all 17 standard diagnostic PNG hashes; the pinned input contract and frozen
+observer identity are recorded in the verification file. Optimization
+convergence remains uncertified. See [the selected point](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T044447Z/point.json), [the complete target table](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T044447Z/target_fit.csv), [the 31 parameters and bounds](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T044447Z/parameters.csv), [verification](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T044447Z/verification.json), and [the 17 standard plots](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T044447Z/standard_diagnostics/). This point is experimental and not adopted.
 
-The best original-weight evaluation across all passed cases is now a **provisional
-109.329801** at multistart Torch chain 3, case 0035_nm, base-control profile,
-with $\psi_{child}=0.1524917$ and $h_P=1.7934942$. It used 7 lifecycle solves in
-127.01 seconds and has `exploration_unverified=true`; it has no selected-point
-postcheck yet. Its complete 14-target and 31-parameter/bounds tables are saved in
-[the provisional point packet](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T043221Z/point.json).
-The **best verified selected point remains 109.449872**, original Torch chain 5,
-case 0036_nm, $\psi_{child}=0.1687594$, $h_P=2.0407694$. Its exact selected repeat
-passed, although optimization convergence is not certified. The saved packet
-contains its full target table, parameter bounds, and all 17 standard plots:
-[verified point](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T035441Z/point.json), [14 target rows](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T035441Z/target_fit.csv), [31 parameters](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T035441Z/parameters.csv), [17 diagnostics](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T035441Z/standard_diagnostics/).
-The best verified local point is chain 11 at 114.136041, with full tables in its
-selected postcheck output.
+The round-three 16-chain array 18925600_0–15 has hard deadline 02:41:18 New York.
+Its bounded collector read at 00:58:53 counted **113 case rows, 110 admissible
+computed GEs, and 130 calls**, with 3 numerical rejections, no failure, terminal,
+or postcheck receipts. Scheduler showed 16/16 RUNNING (18:42 elapsed). The
+previous native-start receipt confirmed actual lifecycle calls on all 16 chains.
+The cohort uses 12 Nelder–Mead starts across four reviewed profiles and four
+base-weight PSOs, with 200 calls plus one selected postcheck per chain. Its
+compact source and start receipts are in
+[utility_floor_psi_round3_v1](output/model/fixed_reference_economics_20260928/utility_floor_psi_round3_v1/README.md) and [the native-start receipt](output/model/fixed_reference_economics_20260928/utility_floor_psi_round3_v1/deployment/native_start_receipts.json).
+
+The overnight array 18925912_0–23 has a 10:00 New York cutoff. Scheduler showed
+24/24 RUNNING at 00:58:53. At 01:05:11, the native-start receipt showed all 24
+launchers, exact initializers, search initializers, and first-case lifecycle
+claims; each chain had at least one completed case record, 105 records
+aggregate, with no fatal failure or terminal receipt. Admissible-case and call
+totals have not yet been collected and must not be inferred from the 105 records.
+The cohort uses 16 Nelder–Mead starts across four profiles and eight original-
+weight PSOs, with 400 calls and one selected postcheck per chain. The 86.509219
+point is included only as an explicitly unverified start; all four verified
+profile centers remain included. See [the packet README](output/model/fixed_reference_economics_20260928/utility_floor_psi_overnight_v1/README.md), [submission receipt](output/model/fixed_reference_economics_20260928/utility_floor_psi_overnight_v1/deployment/submission_receipt.json), and [native-start receipt](output/model/fixed_reference_economics_20260928/utility_floor_psi_overnight_v1/deployment/native_start_receipts.json).
+
+The user-authorized total is 64 launched search chains: 16 original chains and
+eight multistart chains are terminal; 16 round-three chains and 24 overnight
+chains remain active. Each cohort retains its own deadline, call cap, and
+postcheck requirement. The latest round-three and overnight receipts are
+asynchronous cohort snapshots; do not treat their different timestamps as one
+simultaneous total.
 
 For the 16 terminal searches, the best weighted-profile evaluation and its
 original-weight loss, followed by model moments for mean rooms, ownership at
@@ -78,7 +86,7 @@ $-1.54\times10^{-9}$; it passed the exact repeat in 8 lifecycle calls and
 18.128926 in the historical snapshot. Because both $A(m)$ and the birth jump
 change, this is not a floor-only comparison. See the [14-row target comparison](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/old_parameters_floor_v1/run_attempt4/comparison_target_fit.csv), [31-row parameter comparison](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/old_parameters_floor_v1/run_attempt4/comparison_parameters.csv), and [receipt](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/old_parameters_floor_v1/run_attempt4/comparison_summary.json). No retry is active.
 
-The first six-cell prescribed-price submission, job 18922355, failed before native work: source preflight passed 144 pins, but the actual initializer raised `ImportError: cannot import name 'inputs' from 'small_credit_lab'`. Slurm reports FAILED, exit 1:0 after 10 seconds, zero lifecycle attempts, and `no_auto_retry`. Under the separately authorized replacement, job 18925514 was submitted with the same 01:46:45 New York deadline, one CPU, 16 GiB, six lifecycle solves total, and a 600-second per-case cap. Its exact zero-lifecycle remote initializer passed; native progress is pending. The replacement receipt is [here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/deployment/replacement_v1/submission_receipt.json), with the [initializer receipt](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/deployment/replacement_v1/remote_zeroLC_initializer_receipt.json). The credit-outcome analysis supports a limited statement, not a full natural certificate; the separate credit-GE implementation remains under lead review.
+The six-cell prescribed-price mechanism response completed under job 18925900 with six lifecycle calls, after one lifecycle call in its prior attempt. The first submission, 18922355, failed before native work; the intervening attempt, 18925514, failed its strict 14-target/weight identity gate after one lifecycle call and completed no price cell. Its diagnosis showed only float-versus-CSV-string representation mismatch; target values, weights, roles, and order were unchanged. The repair retained the strict identity gate. Across natural-renewal price factors 0.99, 1.00, and 1.01, reported residuals were -0.046696, -0.050758, and -0.054815. No upper-only GE numerical check was run. The separate upper-only GE GO was withdrawn; a lower price bracket [0.8, 1.0] is proposed and awaits the author’s numerical-domain decision. No credit GE has launched, and this evidence does not establish infeasibility or a natural certificate. The final per-cell outputs are in [the six response folders](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/deployment/replacement_v2/collected/responses/), with the [launcher terminal receipt](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/deployment/replacement_v2/collected/launcher_terminal.json). The credit-outcome analysis supports a limited statement; the separate credit-GE implementation remains outstanding pending the author decision.
 
 No experimental point is adopted.
 
