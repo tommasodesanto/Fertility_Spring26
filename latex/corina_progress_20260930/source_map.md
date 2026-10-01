@@ -1,6 +1,6 @@
 # Corina adviser progress deck: selected Stone–Geary specification
 
-This separate ten-frame adviser presentation preserves the empirical review
+This separate thirteen-frame adviser presentation preserves the empirical review
 covering September 17–30 and incorporates the October 1 selected-repeat packet
 and latest author decision. It has no overlays, visible `Source:` footers,
 internal failure history or dedicated computation section. This file records
@@ -136,7 +136,7 @@ ROOT tables, and the corresponding sections of `CALIBRATION_STATUS.md`.
    are absent, as recorded in `CALIBRATION_STATUS.md` and
    `utility_floor_psi_v1/mechanism_responses_v1/matched_credit_diagnostic/WINNER_AGE25_LOCAL_CHECK.md`.
 
-8. **Calibrated parameters.** Selected ROOT/parameters.csv supplies all ten
+11. **Calibrated parameters.** Selected ROOT/parameters.csv supplies all ten
    jointly free estimates: beta_annual, chi, first_birth_fixed_cost, kappa_fert,
    kappa_fert_continuation, theta0, h_P, child_benefit_curvature,
    tenure_choice_kappa and psi_child. H0 is fixed. The selected h_P=2.3 equals
@@ -145,7 +145,7 @@ ROOT tables, and the corresponding sections of `CALIBRATION_STATUS.md`.
    not normalized. ROOT/REPEAT parameter SHA256 is
    `7949b86204796b6dd6c8db78988003c0bdd2a5077ce3d9f2a6eeb4fb90cb1dd5`.
 
-9. **Preference alternatives.** Previous compensated-share design and its
+12. **Preference alternatives.** Previous compensated-share design and its
    fixed-reference-rent interpretation remain in
    `code/model/intergen_eqscale_seq_optimized/child_preferences.py:11–14,39–51`
    and historical reference tables. The fixed-parameter `floor`, `no_A` and
@@ -160,7 +160,7 @@ ROOT tables, and the corresponding sections of `CALIBRATION_STATUS.md`.
    Previous E01/E02 or earlier floor-point decompositions cannot be transferred
    to the selected floor point.
 
-10. **Credit, initial wealth and remaining fit.** Selected input/closure and
+13. **Credit, initial wealth and remaining fit.** Selected input/closure and
     the three completed unadopted entrant-wealth pilots in
     `output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/RESULTS.md`.
     Distinguish their alternative laws/limits from the selected nonnegative-mean,
@@ -194,3 +194,6 @@ is required or performed for this rewrite.
 The calibration slide places all three validation moments in a separate bottom
 table; the ten scored moments and completed-fertility renewal check remain above.
 All fourteen target/model pairs are unchanged.
+
+Three blank slides follow the calibration table (pages 8–10), as requested.
+The deck now has thirteen slides; no fixed slide-count limit remains.

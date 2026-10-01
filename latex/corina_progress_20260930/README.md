@@ -45,7 +45,7 @@ reference. That reference and previous experiments remain historical evidence.
 
 ## Review and changes
 
-The ten frames explain reviewed work and author decisions, the selected model,
+The thirteen frames explain reviewed work and author decisions, the selected model,
 its complete calibration, preference alternatives and remaining questions:
 
 1. Model review and revisions
@@ -55,9 +55,10 @@ its complete calibration, preference alternatives and remaining questions:
 5. Housing around the first birth
 6. Calibration strategy and inputs
 7. Stone–Geary calibration
-8. Calibrated parameters
-9. Preference alternatives
-10. Credit, initial wealth and remaining fit
+8–10. Blank slides reserved for additional calibration material
+11. Calibrated parameters
+12. Preference alternatives
+13. Credit, initial wealth and remaining fit
 
 The preference alternatives include compensated housing shares and the requested
 equivalence-scale comparison. A requested comparison is not a completed estimate;
@@ -86,10 +87,13 @@ review's temporary build directory.
 
 Compile the source twice with `pdflatex -interaction=nonstopmode -halt-on-error`,
 directing auxiliary files to a temporary build directory. The final document
-must contain exactly ten pages and ten frames with no overlays. The final
+must contain thirteen pages and thirteen frames with no overlays. The final
 verification receipt records compilation, rendered-page inspection, source
 hashes, preservation checks and Library delivery availability.
 
 The calibration slide places all three validation moments in a separate bottom
 table; the ten scored moments and completed-fertility renewal check remain above.
 All fourteen target/model pairs are unchanged.
+
+Three blank slides follow the calibration table (pages 8–10), as requested.
+The deck now has thirteen slides; no fixed slide-count limit remains.
