@@ -12,6 +12,7 @@ the frozen observer identity hashes match. The 14 base contributions sum to
 31.284007255664957. The [complete ROOT/REPEAT packet](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/verified_global_20261001T0941NY_chain7_0173/)
 contains tables, plots, source/observer identity fingerprints, and verification.
 Optimizer convergence remains uncertified; the experimental point is not adopted.
+For the verified 31.284 winner, capped children ever born at completed age 25 is 0.5312175503600473 versus target 0.8095276384290021. The winner packet lacks ROOT/REPEAT observer reports, so its age-25 motherhood share and children per mother are unavailable; the earlier-point decomposition cannot be transferred. The local availability check is [documented here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/matched_credit_diagnostic/WINNER_AGE25_LOCAL_CHECK.md), with hashes in the accompanying JSON. No remote retrieval was performed.
 
 A previously selected-repeat-verified point is round-three chain 4, case 0035_nm,
 base loss **68.8425812015**, at market price 0.7172609099. Its exact selected

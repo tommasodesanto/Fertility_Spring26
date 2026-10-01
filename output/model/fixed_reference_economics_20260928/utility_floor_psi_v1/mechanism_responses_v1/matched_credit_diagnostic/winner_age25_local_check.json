@@ -1,0 +1,44 @@
+{
+  "status": "partial_local_scalar_only_observer_report_unavailable",
+  "identity": {
+    "base_loss": 31.28400725566496,
+    "chain": "chain_7",
+    "experimental_not_adopted": true,
+    "label": "0173_nm",
+    "postcheck_elapsed_seconds": 214.15160536766052,
+    "price": 0.719168368828958,
+    "search_stop_reason": null,
+    "selected_repeat_status": "selected_numerically_verified",
+    "weighted_loss": 54.52095879194978
+  },
+  "verification_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/verified_global_20261001T0941NY_chain7_0173/verification.json",
+  "verification_sha256": "437ab6b9db608c15cc6e5333ccd446926d854d5fe235129de5ed89a1295d62d2",
+  "target_fit_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/verified_global_20261001T0941NY_chain7_0173/ROOT/target_fit.csv",
+  "target_fit_sha256": "fc08f611473ea3a6c2b40213fee610fadea2b97622ea339114a30dd83ac06a99",
+  "root_repeat_early_fertility_row_exact": true,
+  "capped_ceb_age25": 0.5312175503600473,
+  "target_capped_ceb_age25": 0.8095276384290021,
+  "gap": -0.27831008806895485,
+  "motherhood_age25": null,
+  "capped_children_per_mother_age25": null,
+  "ever_born_shares_age25": null,
+  "missing_local_files": [
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/verified_global_20261001T0941NY_chain7_0173/ROOT/observers.json",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/verified_global_20261001T0941NY_chain7_0173/REPEAT/observers.json"
+  ],
+  "missing_fields": [
+    "fertility.uniform_birth_time.ever_born_shares_age25",
+    "fertility.uniform_birth_time.accounting.pre_parity_mass_by_age",
+    "fertility.uniform_birth_time.accounting.post_parity_mass_by_age",
+    "fertility.uniform_birth_time.accounting.age25_post_fertility_interpolation_share"
+  ],
+  "definition": "completed integer age25 [25,26), cappedCEB stock; prior exact convention0.125PRE+0.875POST in [22,26) cell; winner mixture not independently checked because observer absent",
+  "empirical_auxiliary_comparator": {
+    "motherhood_age25": 0.457254,
+    "capped_children_per_mother_age25": 1.77041,
+    "provenance": "coordinator-supplied rounded values, not independently re-extracted"
+  },
+  "remote_retrieval_performed": false,
+  "model_calls": 0,
+  "arrays_downloaded": false
+}
