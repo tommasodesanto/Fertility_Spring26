@@ -1,15 +1,15 @@
 # Calibration Status
 
-## October 1, 04:12 New York — verified 68.843; overnight 46.195 provisional
+## October 1, 04:17 New York — verified 68.843; overnight 45.088 provisional
 
 The live free-\(\psi\) floor search still uses the same fixed-reference economics,
 14 scored/validation target rows, 31-parameter report, and original base weights.
 No experimental point is adopted. The lowest passed search point is overnight
-chain 7, case 0084_nm, loss **46.1945464085** at price 0.7225942617; it is
+chain 9, case 0091_nm, loss **45.0877868582** at price 0.7106482487; it is
 provisional until its exact selected-price native repeat is checked. It used
-eight lifecycle solves in 175.68 seconds. The 14-row target-fit contributions
+eight lifecycle solves in 167.43 seconds. The 14-row target-fit contributions
 sum to the reported base loss; its full target and 31-parameter tables are
-[saved here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T041235NY_overnight/).
+[saved here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T041756NY_overnight/).
 
 The best selected-repeat-verified point is round-three chain 4, case 0035_nm,
 base loss **68.8425812015**, at market price 0.7172609099. Its exact selected
@@ -19,7 +19,7 @@ frozen observer-identity manifests also match: manifest SHA-256
 `bd2541149e3308017de60f98ea9982bfde1426173e4f81bd0b871ec915dbb765`, with
 matching authenticator and checkpoint hashes. Numerical verification does not
 certify optimizer convergence. The [complete fit packet and verification record](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T021657NY_round3/) include target-fit, parameter, closure, plot, and hash evidence.
-The [age-25 observer extraction](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/matched_credit_diagnostic/LATEST_AGE25_OBSERVERS.md) covers the verified 68.842 point and the prior 52.428 provisional point; it does not cover subsequent overnight points, including the current 46.195 search point.
+The [age-25 observer extraction](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/matched_credit_diagnostic/LATEST_AGE25_OBSERVERS.md) covers the verified 68.842 point and the prior 52.428 provisional point; it does not cover subsequent overnight points, including the current 45.088 search point.
 
 The original 16 and the earlier multistart eight remain terminal. Round-three
 array 18925600_0–15 is also terminal: all 16 Slurm tasks exited 0, and all 16
@@ -27,16 +27,17 @@ chains have search-completion receipts and selected-postcheck status
 `selected_numerically_verified`; each native selected-repeat receipt says
 `exact_full_ge_repeat_passed`. Its compact receipt matrix is [here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/round3_terminal_postcheck_matrix_20261001T0231NY.json).
 
-At 04:12:35 New York, overnight array 18925912_0–23 had **1,954 case records,
-1,945 admissible computed GEs, and 2,042 objective calls**. It recorded eight
+At 04:17:56 New York, overnight array 18925912_0–23 had **2,005 case records,
+1,996 admissible computed GEs, and 2,094 objective calls**. It recorded eight
 numerical nonpasses and one bounded-budget case, with no fatal receipts. Chain
 21 is terminal with a selected native-repeat pass; the exact array scheduler
 query showed 23 tasks `RUNNING` and one `COMPLETED`, both with exit code 0.
-Across chains, median passed-case runtime ranged from 127.28 to 166.81 seconds.
-The new best is provisional chain 7, case 0084_nm, loss 46.1945464085 at price
-0.7225942617; its selected-price native repeat is pending. The 14 target-row
-contributions sum exactly to its base loss. The timestamped [compact cohort
-snapshot](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T041235NY.json) preserves counts, scheduler state, and repeat status.
+Across chains, median passed-case runtime ranged from 128.59 to 166.81 seconds.
+The new best is provisional chain 9, case 0091_nm, loss 45.0877868582 at price
+0.7106482487; its selected-price native repeat is pending. The 14 target-row
+contributions sum to 45.0877868581978, matching the base loss up to floating-
+point rounding. The timestamped [compact cohort
+snapshot](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T041756NY.json) preserves counts, scheduler state, and repeat status.
 
 Variable-first-child-share job 18930196 is terminal (exit 0; 28:44 elapsed).
 Its six search attempts contain five passed roots and one bounded-budget
