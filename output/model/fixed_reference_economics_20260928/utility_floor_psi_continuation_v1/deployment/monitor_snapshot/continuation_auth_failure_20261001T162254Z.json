@@ -1,0 +1,97 @@
+{
+  "checked_utc_epoch": 1790871774.4975622,
+  "checked_utc": "2026-10-01T16:22:54Z",
+  "scope": {
+    "array_job_id": "18958130",
+    "included_original_chains": [
+      0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "included_replacement_job": "18958549_1",
+    "excluded_failed_original_chain": 1
+  },
+  "remote_attempt": {
+    "collector": "utility_floor_psi_v1/deployment/collect_monitor.py, piped to remote python; no remote source write",
+    "ssh_options": "BatchMode=yes ConnectTimeout=8",
+    "status": "authentication_denied",
+    "exit_code": 255,
+    "message": "Permission denied (gssapi-keyex,gssapi-with-mic,password,keyboard-interactive). No retry or credential workaround."
+  },
+  "fresh_search_counts": null,
+  "fresh_scheduler": null,
+  "latest_available_local_receipts": {
+    "original_array_checked_epoch": 1790868760.919942,
+    "original_array_summary": {
+      "init_passes": 7,
+      "native_claims": 7,
+      "completed_case_records": 3,
+      "failed_launchers": 1
+    },
+    "original_chain_receipt_status": {
+      "0": {
+        "launcher_exit": null,
+        "initializer": "exact_initializer_passed_zero_lifecycle",
+        "native_lifecycle_used": 1,
+        "completed_full_ge": 1
+      },
+      "1": {
+        "launcher_exit": 255,
+        "initializer": null,
+        "native_lifecycle_used": null,
+        "completed_full_ge": null
+      },
+      "2": {
+        "launcher_exit": null,
+        "initializer": "exact_initializer_passed_zero_lifecycle",
+        "native_lifecycle_used": 6,
+        "completed_full_ge": 0
+      },
+      "3": {
+        "launcher_exit": null,
+        "initializer": "exact_initializer_passed_zero_lifecycle",
+        "native_lifecycle_used": 6,
+        "completed_full_ge": 0
+      },
+      "4": {
+        "launcher_exit": null,
+        "initializer": "exact_initializer_passed_zero_lifecycle",
+        "native_lifecycle_used": 7,
+        "completed_full_ge": 0
+      },
+      "5": {
+        "launcher_exit": null,
+        "initializer": "exact_initializer_passed_zero_lifecycle",
+        "native_lifecycle_used": 5,
+        "completed_full_ge": 1
+      },
+      "6": {
+        "launcher_exit": null,
+        "initializer": "exact_initializer_passed_zero_lifecycle",
+        "native_lifecycle_used": 5,
+        "completed_full_ge": 1
+      },
+      "7": {
+        "launcher_exit": null,
+        "initializer": "exact_initializer_passed_zero_lifecycle",
+        "native_lifecycle_used": 6,
+        "completed_full_ge": 0
+      }
+    },
+    "replacement_checked_epoch": 1790869094.1335905,
+    "replacement": {
+      "job": "18958549_1",
+      "status": "running_full_GE",
+      "label": "0000_nm",
+      "initializer": "exact_initializer_passed_zero_lifecycle",
+      "lifecycle_used": 2,
+      "completed_full_ge": 0,
+      "deadline_epoch": 1790875766
+    }
+  },
+  "interpretation": "No fresh case/admissible/objective-call counts, best-so-far, scheduler state, or launcher terminal state were obtained because SSH authentication failed. Latest local status is only the earlier native-start snapshot; it does not establish current job health."
+}
