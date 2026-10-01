@@ -10,29 +10,30 @@
     "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
     "sha256": "658859f10ec709d92f07bc599d3d36144c672827a99ffdd16bc4cee6892affef"
   },
-  "original_generator_snapshot": {
+  "original_controller_snapshot": {
     "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/controller_before_checkpoint.py",
     "sha256": "658859f10ec709d92f07bc599d3d36144c672827a99ffdd16bc4cee6892affef"
   },
   "consumer_controller": {
     "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
-    "sha256": "880fe888b3863e45fa10ac59538868f02033b8289a1f5ba6d7c500d0ffae203c"
+    "sha256": "d011b35432706ceb011e605e3a4eaf7dcbb9cf95e76b5f3faa2ffb6875e7b8fb"
   },
   "allowed_source_roles": [
     "controller"
   ],
   "reviewed_audit": {
     "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/checkpoint_consumer_source_delta_audit.json",
-    "sha256": "e79f911cab8fca8dc846c19ef2e614c55d0a87aab82f99a3177843228f1c1a20"
+    "sha256": "c6e7789a6d659f61dd4f69f9832a7e90096e32768c7ea0f876cc91f341d95e63"
   },
   "reviewed_diff": {
     "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/controller_checkpoint_consumer.diff",
-    "sha256": "cffcddb392f718c2856388faeff69782cc5a6a5cd79457d416a95cd69ce2d8a0"
+    "sha256": "1e733637115fc4ff6837f0306b2f9c5d1ec6a4f7b4cc30373a0f7a73d0f7e5bd"
   },
   "change_scopes": [
     "output_checkpoint",
     "explicit_generation_consumer_validation",
-    "stationary_gate_boolean_normalization"
+    "stationary_gate_boolean_normalization",
+    "diagnostic_numerical_control_guard"
   ],
-  "note": "UNAPPROVED local template. Lead must review all THREE scopes/final diff/checks, resolve deployment paths, then explicitly approve audit+receipt and repin both. Original generation preparation remains unchanged."
+  "note": "UNAPPROVED. Lead review must affirm unchanged prepared reference/J generation and explicitly approve the disclosed diagnostic path damping guard. Original preparation remains untouched. Resolve and pin installed consumer path before use."
 }

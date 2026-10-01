@@ -1,0 +1,35 @@
+{
+  "status": "budget_delta_proposal_pending_consumer_pins",
+  "original_absolute_deadline_epoch": 1790900687,
+  "original_deadline_New_York": "2026-10-01 20:24:47 EDT",
+  "prepared_epoch": 1790885048,
+  "remaining_wall_seconds_at_preparation": 15639,
+  "proposed_static_plan_seconds": 15519,
+  "v1_status": "Slurm CANCELLED; no active squeue job",
+  "v1_call_count_exact": false,
+  "v1_verified_completed_call_lower_bound": 101,
+  "v1_unfinished_H12_map_call_upper_bound": 24,
+  "v1_conservative_total_call_upper_bound": 125,
+  "v2_remaining_call_cap": 2075,
+  "aggregate_call_cap": 2200,
+  "source_v1_snapshot": "output/model/transition_readiness_v1/current_floor_runs/actualfit_v1/pre_cancel_snapshot.json",
+  "path_max_evaluations": {
+    "old": 6,
+    "new": 12
+  },
+  "path_damping": {
+    "old": 0.7,
+    "new": "pending lead-approved diagnostic full-step consumer validation"
+  },
+  "candidate_seconds": 5400,
+  "path_seconds": 3600,
+  "mapping_seconds": 1200,
+  "endpoint_seconds": 1800,
+  "seed_restoration_seconds": 600,
+  "render_seconds": 300,
+  "hard_external_timeout": "compute original deadline minus epoch at actual job start; no new five-hour allocation",
+  "economics_targets_gates_horizons_unchanged": true,
+  "consumer_and_approval_pins_pending": true,
+  "restaged": false,
+  "submitted": false
+}

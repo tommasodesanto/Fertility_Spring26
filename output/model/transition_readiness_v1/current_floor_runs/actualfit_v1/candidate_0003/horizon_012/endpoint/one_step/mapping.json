@@ -1,0 +1,116 @@
+{
+  "gates": {
+    "mass": true,
+    "policy_reproduction": true,
+    "projection": true,
+    "dated_audits": true
+  },
+  "rows": [
+    {
+      "period": 0,
+      "calendar_year": 2007,
+      "psi_child": 0.17328615404196776,
+      "asset_price": 0.7270717168020769,
+      "renter_price": 0.13107604841873316,
+      "housing_demand": 5.550561031784207,
+      "housing_supply": 5.550561031784207,
+      "relative_market_residual": 0.0,
+      "adult_population": 0.93340942762662,
+      "property_tax_revenue": 0.17108535038576472,
+      "equal_transfer_period_units": 0.0,
+      "equal_transfer_outlays": 0.0,
+      "government_budget_residual": 0.17108535038576472,
+      "scaled_government_budget_residual": 1.0,
+      "implied_equal_transfer": 0.18329078893148038,
+      "entry_flow_E": 0.05762258999908873,
+      "birth_children": 0.10756160916968156,
+      "birth_children_topcode_adjusted": 0.1210075385157007,
+      "effective_mature_entrant_flow_B": 0.05762258999908873,
+      "raw_state_scheduled_mature_entrant_flow_B": 0.05121981389032457,
+      "entrant_flow_next": 0.05762258999908873,
+      "queue_B_over_current_E": 1.0,
+      "owner_rate": 0.6590723851418643,
+      "adult_deaths": 0.057622589999084775,
+      "model_state_same_period_mature_flow_B": 0.05104855627180045,
+      "mass_accounting_residual": -1.1102230246251565e-16,
+      "policy_reproduction_max_abs": 0.0,
+      "feasibility_frontier_projection_mass": 0.0,
+      "minimum_distribution_mass": 0.0,
+      "nonfinite_distribution_count": 0,
+      "payroll_tax_base_period": 2.765884319956154,
+      "retiree_benefit_exposure": 0.24193834763759833,
+      "worker_household_mass": 0.6914710799890218,
+      "retiree_household_mass": 0.24193834763759833,
+      "payroll_tax_rate": 0.08028070961950022,
+      "pension_period_units": 0.917784047463731,
+      "payroll_tax_revenue": 0.22204715593152882,
+      "pension_outlays": 0.2220471559315222,
+      "pension_budget_residual": 6.63358257213531e-15,
+      "scaled_pension_budget_residual": 2.987465677867481e-14,
+      "implied_balanced_pension_period": 0.9177840474637584,
+      "implied_balanced_payroll_tax": 0.08028070961949782
+    }
+  ],
+  "cache": {
+    "maximum_bytes": 68719476736,
+    "actual_solves": 1,
+    "hits": 1,
+    "misses": 1,
+    "bytes": 164155488,
+    "evictions": 0,
+    "oversize_bypasses": 0,
+    "serialization_bypasses": 0,
+    "exceptions": 0
+  },
+  "seconds": 14.938086003996432,
+  "market_residual": [
+    0.0
+  ],
+  "fiscal_residual": [
+    2.987465677867481e-14
+  ],
+  "initial_mass": 0.9334094276266249,
+  "final_mass": 0.9334094276266288,
+  "population_l1": 4.157474131769413e-15,
+  "backward_forward_policy_error": 0.0,
+  "mass_error": 1.1102230246251565e-16,
+  "projection_mass": 0.0,
+  "diagnostic_packets": [
+    {
+      "path": "/work/transition_runs/actualfit_v1/candidate_0003/horizon_012/endpoint/one_step/date_000/diagnostic_packet.pkl.gz",
+      "sha256": "555b2e65f0fdaf7aa818fb127d5e36fb81e48acb5d65791867e09c2442b4d939",
+      "period": 0,
+      "dated_rent": 0.13107604841873316
+    }
+  ],
+  "fertility": [
+    {
+      "period": 0,
+      "calendar_year": 2007,
+      "period_tfr_explicit_states": 1.8666569685844991,
+      "period_tfr_topcode_adjusted": 2.1000017270591305,
+      "period_first_birth_mean_age": 25.965671196481114,
+      "period_first_birth_share_age30plus": 0.22988816117306396,
+      "age_cell_start": "[18. 22. 26. 30. 34. 38. 42. 46. 50. 54. 58. 62. 66. 70. 74. 78. 82.]",
+      "age_cell_midpoint": "[20. 24. 28. 32. 36. 40. 44. 48. 52. 56. 60. 64. 68. 72. 76. 80. 84.]",
+      "age": "[20. 24. 28. 32. 36. 40. 44. 48. 52. 56. 60. 64. 68. 72. 76. 80. 84.]",
+      "age_mass": "[0.05762259 0.05762259 0.05762259 0.05762259 0.05762259 0.05762259\n 0.05762259 0.05762259 0.05762259 0.05762259 0.05762259 0.05762259\n 0.05762259 0.05411489 0.0497044  0.04398602 0.03651045]",
+      "birth_flow_first": "[0.0151879  0.011724   0.00894114 0.00562911 0.00307693 0.00134671\n 0.00064983 0.         0.         0.         0.         0.\n 0.         0.         0.         0.         0.        ]",
+      "birth_flow_second": "[0.         0.00584999 0.00849844 0.00909583 0.00770124 0.00507094\n 0.00246746 0.         0.         0.         0.         0.\n 0.         0.         0.         0.         0.        ]",
+      "birth_flow_third_bin_entry": "[0.         0.         0.00151618 0.00354573 0.00552547 0.00655322\n 0.00518151 0.         0.         0.         0.         0.\n 0.         0.         0.         0.         0.        ]",
+      "birth_flow_explicit": "[0.0151879  0.01757399 0.01895575 0.01827068 0.01630364 0.01297086\n 0.00829879 0.         0.         0.         0.         0.\n 0.         0.         0.         0.         0.        ]",
+      "birth_flow_topcode_adjusted": "[0.0151879  0.01757399 0.01986904 0.02040649 0.01963195 0.01691825\n 0.01141992 0.         0.         0.         0.         0.\n 0.         0.         0.         0.         0.        ]",
+      "childless_at_risk_mass": "[0.05762259 0.04243469 0.0307107  0.02176956 0.01614045 0.01306351\n 0.01171681 0.01106698 0.01106698 0.01106698 0.01106698 0.01106698\n 0.01106698 0.01039329 0.00954621 0.00844794 0.00701219]",
+      "first_birth_hazard": "[0.26357538 0.27628326 0.29114083 0.25857715 0.19063501 0.10308906\n 0.05546164 0.         0.         0.         0.         0.\n 0.         0.         0.         0.         0.        ]",
+      "first_birth_rate_all_households": "[0.26357538 0.2034618  0.15516724 0.09768931 0.05339806 0.02337114\n 0.01127741 0.         0.         0.         0.         0.\n 0.         0.         0.         0.         0.        ]",
+      "age_specific_birth_rate_explicit": "[0.26357538 0.30498432 0.32896394 0.31707495 0.28293829 0.22510029\n 0.1440198  0.         0.         0.         0.         0.\n 0.         0.         0.         0.         0.        ]",
+      "age_specific_birth_rate_topcode_adjusted": "[0.26357538 0.30498432 0.34481338 0.35414038 0.3406989  0.29360456\n 0.19818482 0.         0.         0.         0.         0.\n 0.         0.         0.         0.         0.        ]"
+    }
+  ],
+  "accounting_valid": true,
+  "policy_calls": 1,
+  "total_native_calls": 101,
+  "actual_initial_population": 0.9334094276266249,
+  "housing": "static-elastic",
+  "exact_policy_cache_bytes": 68719476736
+}

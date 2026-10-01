@@ -1,0 +1,61 @@
+--- /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/controller_before_damping_guard.py
++++ /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py
+@@ -125,7 +125,7 @@
+     require(all(plan['fit'].get(k)==v for k,v in retained_fit.items()), 'Retained scalar fit/measurement controls required')
+     for name in ('path','endpoint'):
+         require(plan[name].get('price_bound_ratios') == [.05,20.] and plan[name].get('max_log_step') == .15 and
+-                plan[name].get('damping') == .7, 'Retained numerical price domain/step controls required: '+name)
++                path_damping_control_allowed(plan,name), 'Retained numerical price domain/step controls required: '+name)
+     require(plan['endpoint'].get('slope')==1. and plan['path'].get('pension_bound_ratios')==[.05,20.],
+             'Original stationary root initialization and fiscal domain required')
+     psi = plan['initial_psi']
+@@ -139,6 +139,18 @@
+                 policy_call_stop_cap=budget['maximum_policy_calls'], total_seconds=budget['total_seconds'],
+                 fitted_moments=1,free_shock_parameters=1,
+                 stop_conditions=['deadline','iteration cap','actual policy-call cap','failed native accounting','missing native seed'])
++
++
++def path_damping_control_allowed(plan,name):
++    damping=plan[name].get('damping')
++    if isinstance(damping,bool) or not isinstance(damping,(int,float)) or not math.isfinite(damping):return False
++    if name=='endpoint':return damping==.7
++    override=plan.get('diagnostic_numerical_control_override')
++    if damping==.7:return override is None
++    expected=dict(schema='diagnostic_path_damping_override_v1',classification='diagnostic numerical control override',
++        control='path.damping',original_value=.7,value=1.,economic_changes=False,target_changes=False,gate_changes=False)
++    return bool(name=='path' and damping==1. and plan['mode']=='diagnostic' and override==expected and type(override.get('value')) in (int,float)
++        and all(override.get(key) is False for key in ('economic_changes','target_changes','gate_changes')))
+ 
+ 
+ def validate_preparation(plan, preparation):
+@@ -198,8 +210,19 @@
+     checks['GATES_AST_identical']=same(gates(old),gates(new))
+     old_functions={n.name:n for n in old.body if isinstance(n,ast.FunctionDef)}
+     new_functions={n.name:n for n in new.body if isinstance(n,ast.FunctionDef)}
+-    checks['Original_global_functions_except_validate_preparation_AST_identical']=all(
+-        name in new_functions and same(node,new_functions[name]) for name,node in old_functions.items() if name!='validate_preparation')
++    preflight=copy.deepcopy(new_functions['preflight']);restorations=0
++    class RestoreOriginalDampingPredicate(ast.NodeTransformer):
++        def visit_Call(self,node):
++            nonlocal restorations
++            self.generic_visit(node)
++            if ast.unparse(node)=='path_damping_control_allowed(plan, name)':
++                restorations+=1
++                return ast.copy_location(ast.parse("plan[name].get('damping') == .7",mode='eval').body,node)
++            return node
++    preflight=RestoreOriginalDampingPredicate().visit(preflight)
++    checks['Preflight_only_exact_damping_guard_predicate_changed']=restorations==1 and same(old_functions['preflight'],preflight)
++    checks['Original_global_functions_except_validate_preparation_and_exact_preflight_guard_AST_identical']=all(
++        name in new_functions and same(node,new_functions[name]) for name,node in old_functions.items() if name not in ('validate_preparation','preflight'))
+     def critical_calls(node):
+         names={'self.runtime.evaluate','diagnostic_horizon_comparison','original.inner.compare_horizons','self.runtime.compare_2023','fitter.fit_one','fitter.fit_rows'}
+         return sorted(ast.dump(n,include_attributes=False) for n in ast.walk(node) if isinstance(n,ast.Call) and ast.unparse(n.func) in names)
+@@ -237,7 +260,7 @@
+         audit['original_preparation']==plan['prepared_native_inputs'] and audit['old_snapshot']==receipt['original_generator_snapshot'] and
+         audit['old_source']['sha256']==generator['sha256'] and audit['new_source']==consumer and audit['diff']==receipt['reviewed_diff'],
+         'Stale or unapproved reviewed source audit')
+-    scopes=['output_checkpoint','explicit_generation_consumer_validation','stationary_gate_boolean_normalization']
++    scopes=['output_checkpoint','explicit_generation_consumer_validation','stationary_gate_boolean_normalization','diagnostic_numerical_control_guard']
+     require(audit['change_scopes']==scopes and receipt['change_scopes']==scopes,'Compatibility scope changed')
+     checks=compatibility_ast_checks(snapshot.read_text(),current.read_text())
+     require(all(checks.values()) and all(audit['checks'].get(k) is True for k in checks),

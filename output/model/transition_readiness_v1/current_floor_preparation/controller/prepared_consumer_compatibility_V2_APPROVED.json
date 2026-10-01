@@ -1,0 +1,58 @@
+{
+  "schema": "current_floor_prepared_consumer_compatibility_v1",
+  "compatibility_approved": true,
+  "lead_review_accepted": true,
+  "original_preparation": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_runs/smoke_v4/native_preparation.json",
+    "sha256": "b775aa584e8e854ea266f56bb50a2bba904852685d301bf13198ff3e3dec1244"
+  },
+  "original_generator_controller": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
+    "sha256": "658859f10ec709d92f07bc599d3d36144c672827a99ffdd16bc4cee6892affef"
+  },
+  "consumer_controller": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
+    "sha256": "d011b35432706ceb011e605e3a4eaf7dcbb9cf95e76b5f3faa2ffb6875e7b8fb"
+  },
+  "allowed_source_roles": [
+    "controller"
+  ],
+  "reviewed_audit": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/checkpoint_consumer_source_delta_audit_V2_APPROVED.json",
+    "sha256": "34c4926cbd5c680f490f2d17299b91608987f3894d8645f5f5e4744060c0ad70"
+  },
+  "reviewed_diff": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/controller_checkpoint_consumer.diff",
+    "sha256": "1e733637115fc4ff6837f0306b2f9c5d1ec6a4f7b4cc30373a0f7a73d0f7e5bd"
+  },
+  "change_scopes": [
+    "output_checkpoint",
+    "explicit_generation_consumer_validation",
+    "stationary_gate_boolean_normalization",
+    "diagnostic_numerical_control_guard"
+  ],
+  "note": "Lead-approved exact consumer source delta. Prepared native reference and measured Jacobian unchanged; diagnostic path correction and bounded iteration capacity changed explicitly below.",
+  "approved_by": "lead source and scientific review",
+  "accepted_numerics_unchanged_scope": "Prepared native reference and measured Jacobian only; solver controls changed explicitly below",
+  "disclosed_numerical_control_change": {
+    "path_damping_before": 0.7,
+    "path_damping_after": 1.0,
+    "path_map_limit_before": 6,
+    "path_map_limit_after": 12,
+    "scope": "diagnostic only",
+    "unchanged": [
+      "equations",
+      "native adapter/controller methods",
+      "targets and weights",
+      "acceptance gates",
+      "endpoint damping",
+      "scalar fit objective, derivative and step controls"
+    ],
+    "fit_evaluation_capacity_before": 9,
+    "fit_evaluation_capacity_after": 12
+  },
+  "original_generator_snapshot": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/controller_before_checkpoint.py",
+    "sha256": "658859f10ec709d92f07bc599d3d36144c672827a99ffdd16bc4cee6892affef"
+  }
+}

@@ -10,7 +10,7 @@
   },
   "new_source": {
     "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
-    "sha256": "880fe888b3863e45fa10ac59538868f02033b8289a1f5ba6d7c500d0ffae203c"
+    "sha256": "d011b35432706ceb011e605e3a4eaf7dcbb9cf95e76b5f3faa2ffb6875e7b8fb"
   },
   "original_preparation": {
     "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_runs/smoke_v4/native_preparation.json",
@@ -18,7 +18,7 @@
   },
   "diff": {
     "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/controller_checkpoint_consumer.diff",
-    "sha256": "cffcddb392f718c2856388faeff69782cc5a6a5cd79457d416a95cd69ce2d8a0"
+    "sha256": "1e733637115fc4ff6837f0306b2f9c5d1ec6a4f7b4cc30373a0f7a73d0f7e5bd"
   },
   "checks": {
     "NativeAdapter_methods_except_endpoint_AST_identical": true,
@@ -29,24 +29,45 @@
     "Controller_account_AST_identical": true,
     "Controller_prepare_AST_identical": true,
     "GATES_AST_identical": true,
-    "Original_global_functions_except_validate_preparation_AST_identical": true,
+    "Preflight_only_exact_damping_guard_predicate_changed": true,
+    "Original_global_functions_except_validate_preparation_and_exact_preflight_guard_AST_identical": true,
     "Controller_evaluate_all_critical_numerical_calls_AST_identical": true,
     "Controller_run_all_critical_numerical_calls_AST_identical": true
   },
   "change_scopes": [
     "output_checkpoint",
     "explicit_generation_consumer_validation",
-    "stationary_gate_boolean_normalization"
+    "stationary_gate_boolean_normalization",
+    "diagnostic_numerical_control_guard"
   ],
-  "numerics_unchanged_except_stationary_boolean_bugfix": true,
   "accepted_numerics_unchanged": false,
+  "prepared_reference_and_measured_seed_numerics_unchanged": true,
   "lead_review_accepted": false,
   "lead_review_required": true,
   "migration_authorized": false,
   "validate_preparation_changed": true,
   "NativeAdapter_all_AST_identical": false,
-  "change_scope": "THREE scopes: output-only candidate2023 checkpoints; explicit fail-closed generation/consumer compatibility; stationary audit Boolean normalization. NativeAdapter endpoint changes solely its mapping-valid predicate. Reference reconstruction, seed measurement, mapping and numerical root calls remain AST-identical.",
+  "change_scope": "FOUR scopes: candidate2023 output checkpoints; explicit generation/consumer validation; stationary audit Boolean predicate correction; exact diagnostic path damping control guard. Prepared reference and measured Jacobian unchanged. Diagnostic path damping 0.7 to 1.0 is an explicitly labeled numerical control change; endpoint remains 0.7. Iteration cap 6 to 12 is a separate plan change, not a source default change. No economic, target, gate, root or fitter mathematical changes.",
   "original_preparation_receipt_not_rewritten": true,
-  "tests_passed": 27,
-  "new_native_model_calls": 0
+  "tests_passed": 29,
+  "new_native_model_calls": 0,
+  "guard_only_source_checks": {
+    "before_damping_guard": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/controller_before_damping_guard.py",
+      "sha256": "880fe888b3863e45fa10ac59538868f02033b8289a1f5ba6d7c500d0ffae203c"
+    },
+    "diagnostic_guard_diff": {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/diagnostic_damping_guard.diff",
+      "sha256": "737c8cd4434cbec32f05a8eac7ba5cd530b7e5545c4ca5669af109e217ed7e6c"
+    },
+    "all_NativeAdapter_and_Controller_class_AST_identical_to_880fe": true,
+    "changed_common_globals_from_880fe": [
+      "preflight",
+      "compatibility_ast_checks",
+      "validate_consumer_compatibility"
+    ],
+    "new_global_helpers": [
+      "path_damping_control_allowed"
+    ]
+  }
 }

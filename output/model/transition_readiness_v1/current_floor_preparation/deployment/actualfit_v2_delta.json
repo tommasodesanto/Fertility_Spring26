@@ -1,0 +1,66 @@
+{
+  "plan_sha256": "6b6b28afbf798562f2f28fd8c38eb33d844a36363bc53c45d4b35b87aeb34945",
+  "delta": {
+    "budget.maximum_policy_calls": {
+      "before": 2200,
+      "after": 2075
+    },
+    "budget.total_seconds": {
+      "before": 18000,
+      "after": 14852
+    },
+    "diagnostic_numerical_control_override": {
+      "before": null,
+      "after": {
+        "schema": "diagnostic_path_damping_override_v1",
+        "classification": "diagnostic numerical control override",
+        "control": "path.damping",
+        "original_value": 0.7,
+        "value": 1.0,
+        "economic_changes": false,
+        "target_changes": false,
+        "gate_changes": false
+      }
+    },
+    "fit.max_evaluations": {
+      "before": 9,
+      "after": 12
+    },
+    "path.damping": {
+      "before": 0.7,
+      "after": 1.0
+    },
+    "path.max_evaluations": {
+      "before": 6,
+      "after": 12
+    },
+    "prepared_consumer_compatibility.path": {
+      "before": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/prepared_consumer_compatibility_APPROVED.json",
+      "after": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/prepared_consumer_compatibility_V2_APPROVED.json"
+    },
+    "prepared_consumer_compatibility.sha256": {
+      "before": "34f2f4a15b3783e9447ac402890d04c47a60574886b9316b238485ae01fd52c1",
+      "after": "3494681e0232f4c2d8b7a157a9bf8af5c60313f439a174d90c081ddba659a4eb"
+    },
+    "source_files.controller.sha256": {
+      "before": "880fe888b3863e45fa10ac59538868f02033b8289a1f5ba6d7c500d0ffae203c",
+      "after": "d011b35432706ceb011e605e3a4eaf7dcbb9cf95e76b5f3faa2ffb6875e7b8fb"
+    }
+  },
+  "original_deadline_epoch": 1790900687,
+  "completed_calls_lower_bound": 101,
+  "conservative_calls_upper_bound": 125,
+  "charged_calls": 125,
+  "remaining_policy_cap": 2075,
+  "v1_terminal": "CANCELLED",
+  "estimate": {
+    "H12_map_seconds_observed": 156,
+    "H16_map_seconds_conservative": 210,
+    "path12_mapping_ceiling_seconds": 4392,
+    "full_steps_may_reduce_iterations": true,
+    "completion_guaranteed": false
+  },
+  "status": "exact_mounted_preflight_passed_pending_lead_review",
+  "inventory_sha256": "7b73532d473d24cad5f4c89f12169f75ed4606aa0628fef8d485a436ef206c75",
+  "inventory_file_count": 101
+}
