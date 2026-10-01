@@ -4,6 +4,14 @@ One-off review, audit, and testing prompts live here instead of the repository
 root. They are useful context, but they are not active model or calibration
 state.
 
+- `credit_ge_population_transition_review_20261001.md`: self-contained current
+  experimental model and evidence for a ChatGPT Pro review of mortgage LTV,
+  equilibrium population, and a proposed transition. Includes the complete
+  14-target and 31-field reference tables, separate mortgage/broad/renter-only
+  treatments, closure equations, and unresolved estate/transition questions.
+  The companion `.txt` is the Oracle-rendered paste packet. Prepared for manual
+  submission; no Pro answer or new numerical run is claimed.
+
 - `HANDOFF_fable_empirical_mock.md`: September 24 empirical-writing brief for
   Tommaso's existing Fable session. Maps the revised PSID, descriptive housing
   evidence, ACS pseudo-panel and national instrument exercises to the existing
