@@ -142,4 +142,83 @@ continuous fractional rental quantities, financial affordability, or the imposed
 demand and supply elasticities. Those are substantive assumptions and empirical
 checks; a change of units neither fixes nor invalidates them. The source map and
 arithmetic record are in the accompanying housing-unit audit.
+
+\newpage
+\begingroup
+\setlength{\parskip}{4pt}
+\begin{center}
+{\large\bfseries From model prices to dollars: a worked example}
+\end{center}
+
+\textbf{The two units.} Housing is measured in rooms; money is measured relative
+to the model's baseline annual gross earnings scale, which is normalized to one.
+Let $M$ be the number of 2007 dollars corresponding to one model monetary unit.
+Let $p$ be the purchase price of one room and $r$ its rent for one four-year model
+period. The model links them by $r=up$, where $u$ is the period user-cost
+coefficient. Neither $r$ nor $u$ determines the earnings-to-dollar conversion.
+
+\textbf{Where the dollar scale comes from.} The diagnostic uses PSID 2007 gross
+labor earnings of the reference person and spouse combined, not total household
+income. For reference persons aged 18--65 with nonnegative earnings and positive
+survey weights, it takes weighted means within twelve four-year age groups and
+then averages those twelve means equally, matching the model income profile's
+age-cell normalization. The result is \$77,963.06 in 2022 purchasing power. Using
+the retained CPI-U annual indices converts this to 2007 dollars:
+\[
+ M\simeq77{,}963.06\times\frac{207.342}{292.655}
+   \simeq\$55{,}235.75\quad\text{per model monetary unit}.
+\]
+This conversion is obtained from earnings, independently of the housing prices
+being checked; it was not chosen to make those prices match the AHS.
+
+\textbf{Purchase prices and rental payments.} Purchase value is a stock, so
+multiply $p$ by $M$. Rent is a payment over four years, so multiply $r$ by $M$
+and divide by 48 months. Using the full saved reference values gives:
+\begin{align*}
+ \text{Purchase value per room}
+   &=0.7898695\ldots\times M=\$43{,}629.03,\\
+ \text{Monthly rent per room}
+   &=0.1423972\ldots\times M/48=\$163.86.
+\end{align*}
+The same conversion applied to the floor experiment gives the last column:
+\begin{center}
+\begin{tabular}{lrrr}
+\toprule
+Cost per room & AHS 2007 & Sept.\ 28 reference & Oct.\ 1 floor\\
+\midrule
+Monthly rent (\$) & 168.22 & 163.86 & 149.20\\
+Purchase value (\$) & 43,495.49 & 43,629.03 & 39,723.80\\
+\bottomrule
+\end{tabular}
+\end{center}
+The data column uses weighted total annual contract rent divided by weighted
+renter rooms and by twelve; owner value uses weighted total reported dwelling
+value divided by weighted owner rooms. These are stock ratios, not averages of
+individual households' price-per-room ratios.
+
+\textbf{What the reference rent $\bar r$ does.} The supply equation uses a
+separate, fixed number $\bar r=0.16$: $S(r)=H_0(r/\bar r)^\xi$. Thus $H_0$ is
+the quantity supplied \emph{at that reference rent}, not necessarily at the
+equilibrium rent $r$. On the same dollar conversion, $\bar r$ corresponds to
+\$184.12 per room per month; households need not pay that amount. It is not a
+price target or the earnings numeraire. It can be absorbed into the coefficient:
+\[
+ S(r)=Ar^\xi,\qquad A=H_0/\bar r^{\xi}\simeq19.966
+ \quad(H_0=6.294,\ \xi=0.630).
+\]
+This is the same supply curve. A third reference, $r_*$ (code:
+\texttt{utility\_reference\_rent}), compensates family-dependent utility weights
+in the adopted reference; it is inactive in the floor specification. It is
+distinct from both actual rent $r$ and supply reference rent $\bar r$.
+
+\textbf{Scope of the comparison.} PSID earnings mainly concern the preceding
+tax year; AHS rents and self-reported values are not quality-adjusted. The floor
+point (no unsecured borrowing, chain 7, case 0173) remains experimental. Its preferences,
+entry/credit rules and calibration procedure differ; the price gap does not
+isolate one change. This preliminary check does not establish equivalence of
+the calibration procedures. The
+\href{price_level_readout.md}{price-level readout} and
+\href{price_level_comparison.json}{saved calculation} retain full inputs and
+qualifications.
+\endgroup
 \end{document}

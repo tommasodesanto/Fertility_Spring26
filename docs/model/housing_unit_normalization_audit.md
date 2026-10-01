@@ -1,6 +1,6 @@
 # Housing-unit normalization: equation audit
 
-October 1, 2026. User requested the unit-equivalence audit and a transparent one-to-two-page advisor note. No model code, economic specification, calibration input, manuscript, or deck changed. The separately requested note is [editable LaTeX](../../latex/housing_unit_normalization_note.tex); its [two-page PDF](../../output/model/fixed_reference_economics_20260928/room_unit_audit_v1/housing_unit_normalization_note.pdf) and arithmetic evidence belong to the existing fixed-reference economics output tree.
+October 1, 2026. User requested the unit-equivalence audit and a transparent advisor note, subsequently expanded to explain the dollar conversion and reference rents. No model code, economic specification, calibration input, manuscript, or deck changed. The separately requested note is [editable LaTeX](../../latex/housing_unit_normalization_note.tex); its [PDF](../../output/model/fixed_reference_economics_20260928/room_unit_audit_v1/housing_unit_normalization_note.pdf) and arithmetic evidence belong to the existing fixed-reference economics output tree.
 
 ## Finding and limits
 
