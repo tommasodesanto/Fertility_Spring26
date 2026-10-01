@@ -1,6 +1,6 @@
 # Calibration Status
 
-## October 1, 01:46 New York — 24 search chains terminal; 40 active
+## October 1, 01:52 New York — 25 search chains terminal; 39 active
 
 The original local eight last counted **454 case rows, 446 admissible computed
 GEs, and 454 calls** at 00:13:05 New York; original Torch counted **290/281/290**
@@ -20,11 +20,11 @@ Its verified best, loss **86.5092189818**, passed an exact repeat; full 14-targe
 31-parameter, and 17-plot evidence is in
 [the point packet](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T044447Z/point.json).
 
-The round-three array 18925600_0–15 has deadline 02:41:18 New York. At 01:46:36,
-the bounded collector recorded **430 case rows, 420 admissible computed GEs,
-and 458 calls**, with ten numerical nonpasses and no fatal, terminal, or
+The round-three array 18925600_0–15 has deadline 02:41:18 New York. At 01:52:00,
+the bounded collector recorded **469 case rows, 458 admissible computed GEs,
+and 500 calls**, with eleven numerical nonpasses and no fatal, terminal, or
 postcheck receipts. All 16 scheduler jobs were `RUNNING`; median case-time
-ranges across chains were 130.6–153.0 seconds. The best round-three point is
+ranges across chains were 128.4–156.4 seconds. The best round-three point is
 chain 8, case 0022_nm, loss 77.6576499385 at market price 0.7140555649; it used
 eight lifecycle solves in 174.93 seconds and awaits its selected-point
 postcheck. Full 14-target and 31-parameter tables are saved in [the point packet](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T014120NY/point.json). The cohort uses 12
@@ -32,11 +32,14 @@ Nelder–Mead starts across four reviewed profiles and four base-weight PSOs, wi
 200 calls plus one selected postcheck per chain. Deadline and budget remain
 separate from other cohorts.
 
-The overnight array 18925912_0–23 has a 10:00 New York cutoff. At 01:46:36, it
-recorded **523 case rows, 516 admissible computed GEs, and 564 calls**, with seven
-numerical nonpasses and no fatal, terminal, or postcheck receipts. All 24
-scheduler jobs were `RUNNING`; median case-time ranges across chains were 116.2–174.1
-seconds. The cohort uses 16 Nelder–Mead starts
+The overnight array 18925912_0–23 has a 10:00 New York cutoff. At 01:52:00, it
+recorded **584 case rows, 576 admissible computed GEs, and 628 calls**, with eight
+numerical nonpasses, no fatal receipts, one terminal receipt, and one selected
+postcheck receipt. Scheduler state was 23/24 `RUNNING`; chain 21 is terminal.
+Median case-time ranges across chains were 116.6–167.7 seconds. Chain 21 stopped
+at its native evaluation budget after 19 objective calls, 17 full GEs, and 176
+lifecycle solves. Its selected case 0000_nm, loss 115.194682, passed the numeric
+selected-point check; optimizer convergence was not certified. The cohort uses 16 Nelder–Mead starts
 across four profiles and eight original-weight PSOs, with 400 calls and one
 selected postcheck per chain.
 
@@ -44,11 +47,13 @@ The best original-weight provisional search point across passed cases remains **
 **76.9654561058**, $q=0.6887503388$, $\psi_{child}=0.1625983298$, and
 $h_P=1.8511549829$. It used seven lifecycle solves in 115.70 seconds, but has
 no selected-point postcheck; optimization convergence is uncertified. Its full
-14-target and 31-parameter/bounds tables are saved in [the point packet](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T051350Z/point.json), [target table](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T051350Z/target_fit.csv), and [parameter table](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T051350Z/parameters.csv). The separate best **verified** point remains 86.509218; the lower 76.965456 result is still provisional pending its selected-point repeat. The full 14-target/31-parameter packet is timestamped 05:13:50 UTC and the 01:46 New York cohort summaries are [round three](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_round3_20261001T014636NY.json) and [overnight](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T014636NY.json).
+14-target and 31-parameter/bounds tables are saved in [the point packet](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T051350Z/point.json), [target table](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T051350Z/target_fit.csv), and [parameter table](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T051350Z/parameters.csv). The separate best **verified** point remains 86.509218; the lower 76.965456 result is still provisional pending its selected-point repeat. The full 14-target/31-parameter packet is timestamped 05:13:50 UTC and the 01:52 New York cohort summaries are [round three](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_round3_20261001T015200NY.json) and [overnight](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T015200NY.json).
 
-There are 64 launched searches in total: the original 16 and prior multistart eight are terminal; the round-three 16 and overnight 24 remain active. Keep counts, calls, deadlines, and postchecks separate by cohort. These snapshots have different observation times and must not be presented as a simultaneous combined total.
+There are 64 launched searches in total: the original 16 and prior multistart eight are terminal, as is overnight chain 21, leaving 39 active chains (16 round-three and 23 overnight). Keep counts, calls, deadlines, and postchecks separate by cohort. These snapshots have different observation times and must not be presented as a simultaneous combined total.
 
 A separate fixed-q comparison, job 18927323, started at 01:11:58 with a 01:31:58 deadline, one CPU, 24 GiB, one thread, a 20-minute limit, and three lifecycle calls total (600 seconds per cell). All three exact initializers passed. All three fixed-price cells completed in three lifecycle calls total, with no fatal failure. Each arm has full 14-target and 31-parameter tables plus the 17 standard diagnostic PNGs locally collected. Original-weight losses were 18.128926 (with_A), 4123.190441 (no_A), and 1082.983025 (constant_alpha); the four requested model moments and reported closure residuals are in the packet README. The arms are prescribed-price comparisons, not roots. The compact status receipt is [here](output/model/fixed_reference_economics_20260928/utility_share_A_decomposition_v1/collected/monitor_status_20261001T0123NY.json). The compact packet is [utility_share_A_decomposition_v1](output/model/fixed_reference_economics_20260928/utility_share_A_decomposition_v1/README.md), with the [submission receipt](output/model/fixed_reference_economics_20260928/utility_share_A_decomposition_v1/deployment/submission_receipt.json), [native-start receipt](output/model/fixed_reference_economics_20260928/utility_share_A_decomposition_v1/deployment/native_launcher_start.json), and [first-cell target table](output/model/fixed_reference_economics_20260928/utility_share_A_decomposition_v1/collected/with_A/target_fit.csv).
+
+A separately authorized variable-first-child-share calibration, job 18930196, was submitted at 01:51:06 New York. It is not yet confirmed native-running: its owner's 01:52 startup check still showed `PENDING` with no remote launcher/native receipt. Its approved budget is one CPU, 24 GiB, one thread, 45 minutes from actual start, at most nine full GEs plus one fresh native selected-point postcheck, with a 600-second reserve and no auto-retry. Local exact fast/native zero-LC preflight and the 217-pin/archive check passed. Wait for a native-start receipt before reporting it active.
 
 For the 16 terminal searches, the best weighted-profile evaluation and its
 original-weight loss, followed by model moments for mean rooms, ownership at
