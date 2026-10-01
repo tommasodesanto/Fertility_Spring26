@@ -1,0 +1,25 @@
+{
+  "status": "failed_strict_probability_sum_gate",
+  "exit_code": 1,
+  "attempts": 1,
+  "model_calls": 0,
+  "slurm_jobs": 0,
+  "array_downloads": 0,
+  "remote_timeout_seconds": 180,
+  "processes": 1,
+  "numerical_threads": 1,
+  "script_sha256": "704d681066e845cb0a6595f5c0196e562dabf1e514bb53eb840897db5c6eed96",
+  "stderr_sha256": "578eb82ff88817212569bbf2bd1dd6fddff8df0facb0fcd5458f7958107d9f9a",
+  "recorded_epoch": 1790832804.151252,
+  "error": "ValueError: Action probabilities do not sum to one",
+  "failure_location": "reduce_saved.py recover(), line31",
+  "completed_checks_before_failure": [
+    "frozen bundle metadata and architecture",
+    "baseline PRE fingerprint and shape",
+    "both case parameter receipts",
+    "same grid/price/source binding/parameters",
+    "same kappa"
+  ],
+  "numerical_result_available": false,
+  "automatic_retry": false
+}

@@ -1,97 +1,62 @@
 # Calibration Status
 
-## October 1, 02:12 New York — 25 search chains terminal; 39 active, plus one new native-running calibration
+## October 1, 02:42 New York — verified 68.843; overnight 62.810 provisional
 
-The original local eight last counted **454 case rows, 446 admissible computed
-GEs, and 454 calls** at 00:13:05 New York; original Torch counted **290/281/290**
-at 00:06:15. All original 16 chains are terminal, and all 16 selected native
-repeats passed exact comparison of 14 target rows, 31 parameter rows, and the
-17 standard diagnostic PNG hashes. The local comparison also matched its frozen
-observer identity and input contract. Search termination at a call budget does
-not certify optimizer convergence.
+The live free-\(\psi\) floor search still uses the same fixed-reference economics,
+14 scored/validation target rows, 31-parameter report, and original base weights.
+No experimental point is adopted. The lowest passed search point is overnight
+chain 9, case 0039_nm, loss **62.8101778771**; it is provisional until its exact
+selected-price native repeat is checked. Its full target and parameter tables
+are [saved here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T023019NY_overnight/).
 
-The prior eight-job multistart Torch cohort's last read, at 00:53:57, recorded
-**363 case rows, 351 admissible computed GEs, and 371 calls**. Four numerical
-rejections were recorded; all eight searches finished and all eight selected
-postchecks are `selected_numerically_verified`. No fatal failure was recorded.
-Its compact refresh is
-[here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/snapshot_20261001T045853Z/compact_cohort_refresh.json).
-Its verified best, loss **86.5092189818**, passed an exact repeat; full 14-target,
-31-parameter, and 17-plot evidence is in
-[the point packet](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T044447Z/point.json).
+The best selected-repeat-verified point is round-three chain 4, case 0035_nm,
+base loss **68.8425812015**, at market price 0.7172609099. Its exact selected
+native repeat passed; the ROOT and REPEAT packets have the same 14 target rows,
+31 parameter rows, and all 17 standard diagnostic plot SHA-256 hashes. The
+frozen observer-identity manifests also match: manifest SHA-256
+`bd2541149e3308017de60f98ea9982bfde1426173e4f81bd0b871ec915dbb765`, with
+matching authenticator and checkpoint hashes. Numerical verification does not
+certify optimizer convergence. The [complete fit packet and verification record](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T021657NY_round3/) include target-fit, parameter, closure, plot, and hash evidence.
 
-The round-three array 18925600_0–15 has deadline 02:41:18 New York. At 01:52:00,
-the bounded collector recorded **469 case rows, 458 admissible computed GEs,
-and 500 calls**, with eleven numerical nonpasses and no fatal, terminal, or
-postcheck receipts. All 16 scheduler jobs were `RUNNING`; median case-time
-ranges across chains were 128.4–156.4 seconds. The best round-three point is
-chain 8, case 0022_nm, loss 77.6576499385 at market price 0.7140555649; it used
-eight lifecycle solves in 174.93 seconds and awaits its selected-point
-postcheck. Full 14-target and 31-parameter tables are saved in [the point packet](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T014120NY/point.json). The cohort uses 12
-Nelder–Mead starts across four reviewed profiles and four base-weight PSOs, with
-200 calls plus one selected postcheck per chain. Deadline and budget remain
-separate from other cohorts.
+The original 16 and the earlier multistart eight remain terminal. Round-three
+array 18925600_0–15 is also terminal: all 16 Slurm tasks exited 0, and all 16
+chains have search-completion receipts and selected-postcheck status
+`selected_numerically_verified`; each native selected-repeat receipt says
+`exact_full_ge_repeat_passed`. Its compact receipt matrix is [here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/round3_terminal_postcheck_matrix_20261001T0231NY.json).
 
-The overnight array 18925912_0–23 has a 10:00 New York cutoff. At 02:12:45, it
-recorded **787 case rows, 779 admissible computed GEs, and 838 calls**, with eight
-numerical nonpasses, no fatal receipts, one terminal receipt, and one selected
-postcheck receipt. Scheduler state was 23/24 `RUNNING`; chain 21 is terminal.
-Median case-time ranges across chains were 119.4–172.7 seconds. Chain 21 stopped
-inside a full-GE evaluation: case 0016_nm reached `uncomputed_bounded_budget`
-after 31 lifecycle solves in 558.46 seconds. The source sets a 32-lifecycle
-Phase B cap and reserves one solve for exact repeat, so the evaluator stops
-searching when only that repeat reserve remains. Its selected case 0000_nm, loss
-115.194682, passed the numeric selected-point check; optimizer convergence was
-not certified. All 24 overnight chains share this per-evaluation Phase B cap,
-but only chain 21 is observed to have reached it. The cohort uses 16 Nelder–Mead starts
-across four profiles and eight original-weight PSOs, with 400 calls and one
-selected postcheck per chain.
+At 02:42:19 New York, overnight array 18925912_0–23 had **1,074 case records,
+1,065 admissible computed GEs, and 1,137 objective calls**. It had no fatal
+failure receipts; chain 21 is terminal, with a selected native-repeat pass, and
+the other 23 scheduler tasks were still `RUNNING`. One case reached the
+per-full-GE Phase B lifecycle cap: case 0016_nm on chain 21 stopped as
+`uncomputed_bounded_budget` after 31 lifecycle solves in 558.46 seconds. The
+pinned evaluator allows 32 lifecycle solves and reserves one for an exact
+repeat; the 400-call cap was not binding. All 24 use this cap, but chain 21 is
+the only observed chain to reach it. Across chains, median passed-case runtime
+ranged from 125.07 to 166.81 seconds. The timestamped [compact cohort snapshot](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T024219NY.json) preserves per-chain counts and receipts.
 
-The best original-weight provisional search point across passed cases remains **unverified**: overnight chain 3, case 0025_nm: loss
-**75.4233581570**, at market price 0.7020175712. It used seven lifecycle
-solves in 145.56 seconds, but has
-no selected-point postcheck; optimization convergence is uncertified. Its full
-14-target and 31-parameter/bounds tables are saved in [the point packet](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T015715NY/point.json), [target table](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T015715NY/target_fit.csv), and [parameter table](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T015715NY/parameters.csv). The best **verified** point remains 86.509218. Both 76.965456 and the lower 75.423358 point are provisional pending their selected-point repeats. The full 14-target/31-parameter packet is timestamped 05:13:50 UTC and the 01:52 New York cohort summaries are [round three](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_round3_20261001T021245NY.json) and [overnight](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T021245NY.json).
+Variable-first-child-share job 18930196 is terminal (exit 0; 28:44 elapsed).
+Its six search attempts contain five passed roots and one bounded-budget
+nonpass. Best case 0004 has loss 2794.772600 and price 2.9701698. The separate
+selected native point and exact full-GE repeat passed, with 14 target rows, 31
+parameters, and all 17 ROOT/REPEAT plot hashes identical. Its original-weight
+moments remain far from their targets: mean rooms 1.88493/5.72943, ownership
+0.31949/0.67626, first-birth rooms 0.6840/1.465, and early fertility
+0.552/0.80953. The source identity manifest and full repeat evidence are in
+[the compact receipt](output/model/fixed_reference_economics_20260928/utility_variable_shares_calibration_v1/collected/search_0004/monitor_receipt.json)
+and [the collected ROOT/REPEAT packets](output/model/fixed_reference_economics_20260928/utility_variable_shares_calibration_v1/collected/search_0004/selected_postcheck/).
+Production adoption is false and optimizer convergence is uncertified. This
+small two-coordinate comparison does not establish broader utility or target
+infeasibility. The fixed-price cells and six-cell mechanism response remain
+separate comparisons; their status and the pending author choice on a credit-GE
+price domain are documented below.
 
-There are 64 launched searches in total: the original 16 and prior multistart eight are terminal, as is overnight chain 21, leaving 39 active chains (16 round-three and 23 overnight). Keep counts, calls, deadlines, and postchecks separate by cohort. These snapshots have different observation times and must not be presented as a simultaneous combined total.
-
-A separate fixed-q comparison, job 18927323, started at 01:11:58 with a 01:31:58 deadline, one CPU, 24 GiB, one thread, a 20-minute limit, and three lifecycle calls total (600 seconds per cell). All three exact initializers passed. All three fixed-price cells completed in three lifecycle calls total, with no fatal failure. Each arm has full 14-target and 31-parameter tables plus the 17 standard diagnostic PNGs locally collected. Original-weight losses were 18.128926 (with_A), 4123.190441 (no_A), and 1082.983025 (constant_alpha); the four requested model moments and reported closure residuals are in the packet README. The arms are prescribed-price comparisons, not roots. The compact status receipt is [here](output/model/fixed_reference_economics_20260928/utility_share_A_decomposition_v1/collected/monitor_status_20261001T0123NY.json). The compact packet is [utility_share_A_decomposition_v1](output/model/fixed_reference_economics_20260928/utility_share_A_decomposition_v1/README.md), with the [submission receipt](output/model/fixed_reference_economics_20260928/utility_share_A_decomposition_v1/deployment/submission_receipt.json), [native-start receipt](output/model/fixed_reference_economics_20260928/utility_share_A_decomposition_v1/deployment/native_launcher_start.json), and [first-cell target table](output/model/fixed_reference_economics_20260928/utility_share_A_decomposition_v1/collected/with_A/target_fit.csv).
-
-A separately authorized variable-first-child-share calibration, job 18930196, was submitted at 01:51:06 New York and started at 01:53:52, with a hard deadline of 02:38:52. At 02:07, the bounded remote read found a source-hash-passed launcher receipt, two initialization pattern outputs with selected roots at prices 3.3199392 and 3.3489867 (11 price attempts each), and a third pattern at lifecycle claim `root_06`; search latest was `GE_attempt_claimed`. No job-level completion or failure receipt was present, and scheduler still showed it `RUNNING` at 02:12 (19:08 elapsed). The first selected root has base loss 2857.574279, renewal residual −2.494e−10, and no selected-price repeat; its 14-target/31-parameter tables are saved under `utility_variable_shares_calibration_v1/collected/initialization_0000/`. Its approved budget is one CPU, 24 GiB, one thread, 45 minutes from actual start, at most nine full GEs plus one fresh native selected-point postcheck, with a 600-second reserve and no auto-retry. The local exact fast/native zero-LC preflight and 217-pin/archive check passed.
-
-For the 16 terminal searches, the best weighted-profile evaluation and its
-original-weight loss, followed by model moments for mean rooms, ownership at
-ages 30–55, first-birth rooms, and early fertility, are:
-
-- Base control: weighted 109.449872; original 109.449872; 6.1759, 0.6081, 1.0076, 0.5321.
-- Early fertility ×4: weighted 133.903971; original 114.136041; 6.1451, 0.5775, 0.9800, 0.5528.
-- Housing levels ×4: weighted 155.894299; original 115.194682; 6.0442, 0.6569, 1.0058, 0.5533.
-- Both groups ×4: weighted 196.576732; original 118.095195; 6.1025, 0.6470, 1.0047, 0.5577.
-
-Weighting profiles use different objectives; compare their original-weight losses
-and moments rather than ranking the weighted objectives across profiles.
-
-A read-only matched-birth decomposition of verified local chain 11 finds mean
-all-household rooms rising from 5.97509 in the childless control branch to
-6.95511 one four-year period later in the treated branch. Renter rooms rise
-4.93653→5.47705, renter-cap incidence 32.01%→55.91%, owner rooms 7.17322→8.41366,
-and the owner share 46.43%→50.33%. Both branches share origin-risk weights; this
-is an accounting decomposition, not causal attribution. Origin-to-destination
-tenure switches and purchase affordability remain unmeasured. See [the report](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/housing_breakdown_v1/README.md), [matched table](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/housing_breakdown_v1/matched_birth_housing.csv), and [verification](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/housing_breakdown_v1/matched_birth_verification.json).
-
-The fixed-parameter floor comparison is complete and not adopted. Relative to
-the provisional with-$A(m)$ nonnegative 120×9 reference, the comparison removes
-$A(m)$, changes $h_P$ from zero to 1.9105885 rooms, and fixes
-$\delta_{\alpha,\mathrm{jump}}$ from .1303383 to zero, holding other shared
-parameters fixed. At $q=0.4044194566$, its renewal residual is
-$-1.54\times10^{-9}$; it passed the exact repeat in 8 lifecycle calls and
-120.40 seconds. Its current-contract loss is **892.522071**, compared with
-18.128926 in the historical snapshot. Because both $A(m)$ and the birth jump
-change, this is not a floor-only comparison. See the [14-row target comparison](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/old_parameters_floor_v1/run_attempt4/comparison_target_fit.csv), [31-row parameter comparison](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/old_parameters_floor_v1/run_attempt4/comparison_parameters.csv), and [receipt](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/old_parameters_floor_v1/run_attempt4/comparison_summary.json). No retry is active.
-
-The six-cell prescribed-price mechanism response completed under job 18925900 with six lifecycle calls, after one lifecycle call in its prior attempt. The first submission, 18922355, failed before native work; the intervening attempt, 18925514, failed its strict 14-target/weight identity gate after one lifecycle call and completed no price cell. Its diagnosis showed only float-versus-CSV-string representation mismatch; target values, weights, roles, and order were unchanged. The repair retained the strict identity gate. Across natural-renewal price factors 0.99, 1.00, and 1.01, reported residuals were -0.046696, -0.050758, and -0.054815. No upper-only GE numerical check was run. The separate upper-only GE GO was withdrawn; a lower price bracket [0.8, 1.0] is proposed and awaits the author’s numerical-domain decision. No credit GE has launched, and this evidence does not establish infeasibility or a natural certificate. The final per-cell outputs are in [the six response folders](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/deployment/replacement_v2/collected/responses/), with the [launcher terminal receipt](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/deployment/replacement_v2/collected/launcher_terminal.json). The credit-outcome analysis supports a limited statement; the separate credit-GE implementation remains outstanding pending the author decision. The domain question remains with the author; make no credit-GE launch until resolved.
-
-No experimental point is adopted.
+There are 64 launched floor searches across the four cohorts above: 40
+terminal (original 16, prior eight, and round-three 16), chain 21 terminal in
+the overnight cohort, and 23 overnight tasks still running. Keep their
+per-cohort counts, limits, and deadlines separate. No broad search refresh or
+new launch is implied by this summary; continue bounded receipt-only monitoring
+of the 23 active overnight tasks and preserve each cohort's own stop rules.
 
 ## September 30, 23:54 New York — 24-search refresh and fixed-parameter floor comparison
 

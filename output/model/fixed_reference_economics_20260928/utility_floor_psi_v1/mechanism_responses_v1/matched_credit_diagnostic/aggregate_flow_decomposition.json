@@ -1,0 +1,77 @@
+{
+  "status": "saved_scalar_three_corner_accounting",
+  "model_calls": 0,
+  "array_reads": 0,
+  "flow_units": "birth events per normalized household cross section per four-year model period; third_bin_entries are entries to the literal 3+ state",
+  "order": "policy first at baseline PRE; composition evaluated at credit policy; reverse corner absent",
+  "common_baseline_pre_sha256": "caf760cb04c6a941cb6890510a832d5c0b61b2744f4fa4c16b89e1c8f3317903",
+  "rows": [
+    {
+      "outcome": "first_births",
+      "baseline_policy_baseline_pre": 0.05137345982900332,
+      "credit_policy_baseline_pre": 0.054148966609093185,
+      "credit_policy_credit_pre": 0.04841213131525568,
+      "policy_change": 0.0027755067800898647,
+      "composition_change": -0.005736835293837506,
+      "total_change": -0.002961328513747641
+    },
+    {
+      "outcome": "second_births",
+      "baseline_policy_baseline_pre": 0.041893040327290465,
+      "credit_policy_baseline_pre": 0.042338861451868826,
+      "credit_policy_credit_pre": 0.03966520403842372,
+      "policy_change": 0.00044582112457836054,
+      "composition_change": -0.0026736574134451074,
+      "total_change": -0.002227836288866747
+    },
+    {
+      "outcome": "third_bin_entries",
+      "baseline_policy_baseline_pre": 0.02270012356930537,
+      "credit_policy_baseline_pre": 0.0228341254493645,
+      "credit_policy_credit_pre": 0.021831951804483912,
+      "policy_change": 0.00013400188005913138,
+      "composition_change": -0.0010021736448805885,
+      "total_change": -0.0008681717648214571
+    },
+    {
+      "outcome": "births",
+      "baseline_policy_baseline_pre": 0.11596662372559963,
+      "credit_policy_baseline_pre": 0.11932195351032662,
+      "credit_policy_credit_pre": 0.10990928715816276,
+      "policy_change": 0.003355329784726996,
+      "composition_change": -0.009412666352163868,
+      "total_change": -0.006057336567436872
+    }
+  ],
+  "sources": {
+    "code/model/tools/run_dynamic_population_transition.py": "849709afb281193a48ccc44b352ed548c615c28da00b87301f9b7ad212bb1d8c",
+    "output/model/fixed_reference_economics_20260928/sources/fixed_price_v1/run_fixed_price.py": "96d6923a252f57bc4d8c44fd6479b13f48ba217d74edf8ef629d120428b03b44",
+    "output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/source/small_credit_lab/engine/distribution.py": "9da9be2525852f78771d735103f0de385c8a8028eff9ab564512627ed2df2e90"
+  },
+  "closure_paths": [
+    "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/deployment/replacement_v2/collected/responses/00_reference_p1.00/closure.json",
+    "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/deployment/replacement_v2/collected/responses/04_lifetime_repayment_only_p1.00/closure.json"
+  ],
+  "closure_sha256": [
+    "5bc32658c14d282892eaca12ff7454117fb7148bc942276d332bb3936d7a3724",
+    "7642e1d15ba77ba7028dee5cae95b647939fafcd4cb5352a7f62989af5972960"
+  ],
+  "completed_fertility_definition": "saved cohort TFR equals topcode-adjusted birth children divided by actual entry flow; raw event flows are distinct",
+  "childlessness_definition": "uniform_birth_time childless_rate_40_44 observer, not all-age childless mass",
+  "references": [
+    {
+      "regime": "local chain_11 case 0026_nm; provisional selected root",
+      "completed_fertility": 2.0999999847530875,
+      "adjusted_birth_children": 0.12964025703833928,
+      "entry": 0.061733456180757505,
+      "raw_birth_events": 0.11596662372559963
+    },
+    {
+      "regime": "local chain_11 case 0026_nm; provisional selected root",
+      "completed_fertility": 1.9934080584783875,
+      "adjusted_birth_children": 0.12305996902844003,
+      "entry": 0.061733456180757165,
+      "raw_birth_events": 0.10990928715816276
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+--- output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/matched_credit_diagnostic/reduce_saved.py	2026-10-01 01:29:33
++++ output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/matched_credit_diagnostic/reduce_saved_v2.py	2026-10-01 01:37:23
+@@ -23,12 +23,17 @@
+     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+ 
+ 
+-def recover(prob, inclusive, k):
++def recover(prob, inclusive, k, weights=None):
+     require(prob.shape[:-1] == inclusive.shape and prob.shape[-1] == 4, "Probability/value shape")
+     require(np.isfinite(prob).all() and ((prob >= 0) & (prob <= 1)).all(), "Invalid probability")
+     require(np.all(prob[..., 2:] == 0), "Unexpected first-birth actions")
+     sums = prob[..., :2].sum(axis=-1)
+-    require(np.all((sums == 0) | (np.abs(sums - 1) <= 1e-12)), "Action probabilities do not sum to one")
++    bad_sums = (sums != 0) & (np.abs(sums - 1) > 1e-12)
++    if weights is None:
++        require(not bad_sums.any(), "Action probabilities do not sum to one")
++    else:
++        require(weights.shape == sums.shape, "Probability-sum weight shape")
++        require(np.all(weights[bad_sums] == 0), "Action probabilities do not sum to one on occupied matched states")
+     valid = ((prob[..., 0] > 0) & (prob[..., 0] < 1)
+              & (prob[..., 1] > 0) & (prob[..., 1] < 1)
+              & np.isfinite(inclusive) & (inclusive > -1e9)
+@@ -46,7 +51,18 @@
+     require(np.isfinite(weights).all() and np.all(weights >= 0), "Invalid pre-fertility mass")
+     require(weights.shape == inclusive_values[0].shape == inclusive_values[1].shape, "Matched-state shapes")
+     require(weights.shape[3] == len(ages) == len(eligible), "Age shapes")
+-    recovered = [recover(p, f, k) for p, f in zip(probabilities, inclusive_values)]
++    recovered = [recover(p, f, k, weights) for p, f in zip(probabilities, inclusive_values)]
++    sum_diagnostics = []
++    for _, _, _, sums in recovered:
++        nonzero = sums != 0
++        error = np.abs(sums-1)
++        bad = nonzero & (error > 1e-12)
++        sum_diagnostics.append(dict(global_nonzero_sum_count=int(nonzero.sum()),
++                                    global_bad_sum_count=int(bad.sum()),
++                                    global_maximum_nonzero_sum_error=float(error[nonzero].max(initial=0)),
++                                    bad_sum_baseline_pre_mass=float(weights[bad].sum()),
++                                    occupied_bad_sum_count=int((bad & (weights > 0)).sum()),
++                                    occupied_maximum_nonzero_sum_error=float(error[nonzero & (weights > 0)].max(initial=0))))
+     rows = []
+     for j, age in enumerate(ages):
+         w = weights[:, :, :, j, :]
+@@ -75,6 +91,9 @@
+     included = sum(r["recovered_mass"] for r in rows)
+     return dict(rows=rows, childless_pre_mass=total, recovered_mass=included,
+                 excluded_mass=total-included, weighted_excluded_fraction=None if total == 0 else 1-included/total,
++                probability_sum_tolerance=1e-12,
++                probability_sum_scope="Every global violation must have exactly zero baseline PRE childless mass; recovery mask unchanged",
++                probability_sum_diagnostics=sum_diagnostics,
+                 maximum_nonzero_probability_sum_error=max(float(np.max(np.abs(x[3][x[3] > 0]-1), initial=0)) for x in recovered))
+ 
+ 
