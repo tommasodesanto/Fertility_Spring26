@@ -79,6 +79,8 @@ tenure probabilities, and optimal consumption and saving, are consequently
 unchanged. Re-estimation is not needed for this conversion.
 
 \newpage
+\begingroup
+\setlength{\parskip}{4pt}
 \textbf{Why the derivative can change without changing behavior.} A derivative
 is measured per numerical housing unit. An upgrade from four to six rooms is
 $4\to6$ in room units and $0.4\to0.6$ in ten-room units. The numerical derivative
@@ -112,36 +114,45 @@ does not. This calculation concerns the supply curve, not the full equilibrium
 response to a preference or fertility shock, which also depends on demand and
 the population closure.
 
-\textbf{Application to the two implemented specifications.} The adopted
-September 28 reference changes the housing weight with children and compensates
-material utility using a fixed reference rent. That reference rent must also
-be multiplied by ten. The compensation then restores the same common factor
-$K$ across family states; scaling the grid and child benefit alone is insufficient.
-In the later floor experiment, the housing weight is common and the physical
-floor must be divided by ten along with the grid. Its population closure sets
-population equal to total supplied housing divided by demand per household.
-Both quantities convert together, leaving population and birth renewal unchanged.
-These are separate specifications, not interchangeable calibration results.
+\textbf{Benchmark population one: how to determine $H_0$.} Keep rooms per
+household and the earnings-based monetary unit unchanged. Let $\bar H_b$ be
+housing demand per household at benchmark rent $r_b$. With benchmark household
+population normalized to one, housing-market clearing requires:
+\[
+ \bar H_b=H_0(r_b/\bar r)^\xi
+ \quad\Longleftrightarrow\quad
+ \boxed{H_0=\bar H_b(\bar r/r_b)^\xi.}
+\]
+For positive demand and rent, this coefficient always exists and makes aggregate
+housing supply equal demand. This is the precise accounting guarantee: the
+supply scale is consistent with the benchmark's price and dwelling choices.
+Birth replacement and fiscal balance remain separate equilibrium conditions.
 
-\textbf{What the audit establishes.} A read-only review traced the implemented
-budget, material utility, child benefit, bequest, choice-probability, aggregation,
-and supply equations. Scalar arithmetic on transcribed formulas reproduced
-the conversion identities at illustrative points, including family compensation
-and the physical floor; it did not evaluate the renter closed-form allocation
-or compare model outputs. Historical parameter conversions remain unchecked.
-Source hashes cover the floor experiment, not the adopted reference.
-No model was imported, recalibrated, or solved.
-A full numerical equivalence certificate remains outstanding because the code
-also contains fixed feasibility thresholds and numerical regularizers.
+If a saved solution instead reports population $N^*$, expressing that same
+solution with population one requires $H_0^{(1)}=H_0/N^*$ and dividing all
+aggregate population and housing stocks and flows by $N^*$. For the floor point
+on page 3, the full saved values give $H_0^{(1)}=6.824$, rather than $6.294$;
+supply becomes $5.977$ rooms per normalized household, exactly its demand.
+Prices and household choices are unchanged by this population-unit conversion.
+An actual recalibration may change them. Neither operation guarantees a good
+empirical fit; the price and preferences must still be disciplined by data.
+Transitions must retain the resulting benchmark supply curve in the same units.
 
-\textbf{Conclusion.} Using rooms is a coherent normalization: the numerical
-label $2$ rather than $0.2$ does not itself select a different region of economic
-curvature. What must be retained is the meaning of the house and every trade-off
-it enters. This result does not validate proportional services per room,
-continuous fractional rental quantities, financial affordability, or the imposed
-demand and supply elasticities. Those are substantive assumptions and empirical
-checks; a change of units neither fixes nor invalidates them. The source map and
-arithmetic record are in the accompanying housing-unit audit.
+\textbf{Application to the two housing preferences.} The adopted reference's
+compensated family-dependent housing weights require its utility reference rent
+to convert with the grid. The floor experiment requires its physical floor to
+convert with the grid. These adjustments preserve the common utility factor
+$K$. The unit-conversion argument applies separately to both specifications;
+it does not prove that their calibration procedures are equivalent.
+
+\textbf{What the audit establishes.} A read-only review and scalar arithmetic
+support the inspected budget, utility, choice and supply identities. They do
+not compare solved policies or explicitly evaluate the renter allocation.
+Source hashes cover the floor experiment, not the adopted reference. Full
+numerical equivalence remains unchecked, including feasibility cutoffs and
+regularizers. No model was imported, recalibrated, or solved. Services per room,
+elasticities and affordability require separate empirical validation.
+\endgroup
 
 \newpage
 \begingroup

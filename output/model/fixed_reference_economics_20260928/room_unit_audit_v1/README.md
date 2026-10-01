@@ -2,7 +2,7 @@
 
 Requested October 1, 2026: read-only unit-invariance audit and one-to-two-page advisor explanation.
 
-- [Advisor note](housing_unit_normalization_note.pdf), updated with a worked dollar conversion and the distinction between actual rent, supply reference rent and the utility reference rent.
+- [Advisor note](housing_unit_normalization_note.pdf), updated with a worked dollar conversion, the distinct reference rents, and the supply coefficient consistent with benchmark population one. The note separates the exact accounting guarantee from empirical fit and recalibration.
 - [Editable LaTeX](../../../../latex/housing_unit_normalization_note.tex).
 - [Detailed source map and proof](../../../../docs/model/housing_unit_normalization_audit.md).
 - [Standalone arithmetic record](arithmetic.json): 1,260 scalar comparisons; maximum relative discrepancy 1.911e-14. Six inspected engine files match experiment source pins.

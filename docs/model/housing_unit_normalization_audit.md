@@ -80,6 +80,21 @@ The raw inverse-supply derivative satisfies \(dr'/dQ'=(dr/dQ)/\lambda^2\), while
 
 Fixed-population housing demand and supply both convert by lambda. In the later renewal-price experiment, \(N=S/\bar H\), so \(N'=\lambda S/(\lambda\bar H)=N\). Per-household fertility and entry probabilities stay unchanged and hence the renewal root is unchanged in physical-price units. Source: [phase_b_pilot.py:93](../../output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/phase_b_pilot.py#L93), especially lines 118--121. Estimating H0 to match a quantity level is a separate economic calibration choice; unit conversion does not endogenize H0. Under the newer population closure, changing H0 alone rescales N and cannot independently repair per-household demand or birth incentives.
 
+## Benchmark population one and the supply coefficient
+
+This is distinct from converting rooms into ten-room housing units. Keep rooms per household and the earnings-based monetary unit fixed. At benchmark rent \(r_b>0\) and household housing demand \(\bar H_b>0\), normalizing benchmark household population to one makes housing clearing
+
+\[
+\bar H_b=H_0(r_b/\bar r)^\xi,
+\qquad H_0=\bar H_b(\bar r/r_b)^\xi.
+\]
+
+Thus a positive coefficient consistent with that benchmark price and demand always exists. This guarantees the aggregate housing identity, not fit to empirical targets or the separate birth-renewal and fiscal conditions. Searching over prices and preferences and deriving this coefficient need not be the same numerical procedure as searching over H0 and solving for prices; matching their admissible sets, roots, bounds and demographic definitions remains a separate question.
+
+For an existing solution with population \(N^*\), a pure change of population units divides population and all aggregate housing quantities by \(N^*\), giving \(H_0^{(1)}=H_0/N^*\). The retained floor illustration has \(N^*=0.9222615666500361\) and \(H_0=6.293507689200028\), so \(H_0^{(1)}=6.82399431655833\). At unchanged period rent \(0.12965123763644737\), this yields supply \(5.977125401038295\), equal to its housing demand per household. These are arithmetic on the [saved closure](../../output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/verified_global_20261001T0941NY_chain7_0173/ROOT/closure.json), not a rerun, new calibration estimate or adoption of that coefficient. A pure change of population units preserves this solution's price and household choices; it does not repair its price-level gap. An actual recalibration can change choices and prices.
+
+The complete supply curve and all initial aggregate stocks and flows must use the same population units, and those units must be retained during transitions. An externally fixed aggregate that is left in its old units would make this an economic change rather than a consistent reexpression of the same solution. Removing the supply reference rent separately uses \(A=H_0/\bar r^\xi\) and preserves the curve algebraically; this does not alter the population normalization or the meaning of a room.
+
 ## Arithmetic coverage and remaining checks
 
 The retained standalone recipe evaluates lambda=.1 and 10 for both identified specifications, consumption levels .1/1/10, children-at-home states 0--3, owner/renter services, physical sizes .35/2/2.3/2.4/4/6/10, all five purchase nodes, financial costs, reference compensation, floor feasibility, child flow utilities, bequests, illustrative choice-value ratios, supply, inverse supply, supply slopes, population accounting and squared room-moment weights. It uses saved JSON/CSV inputs and Python standard-library math; it never imports model packages.
