@@ -1,5 +1,5 @@
 {
-  "status": "attempt2_all_three_smokes_native_first_points_running",
+  "status": "floor_constant_alpha_verified_smokes_twelve_searches_running_no_A_smoke_running",
   "submission_epoch": 1790814862.5464356,
   "common_deadline_epoch": 1790819100,
   "individual_smokes": 3,
@@ -19,7 +19,7 @@
   "old_twelve_jobs_untouched": true,
   "preflight_status": "all_three_mock_smoke_verified_zero_lifecycle",
   "search_gate": "own-arm smoke afterok, exact repeated fullGE receipt and sourcehashes",
-  "last_observed_utc": "2026-10-01T00:36:42.731518+00:00",
+  "last_observed_utc": "2026-10-01T00:45:00.081352+00:00",
   "attempt_number": 2,
   "source_files": 101,
   "attempt1": {
@@ -73,5 +73,19 @@
   "smoke_start_source": "Slurm scontrol18904846; squeue all3elapsed7s",
   "actual_total_budget_from_first_smoke_seconds": 4225,
   "native_first_points_started": true,
-  "price_search_receipts_written": true
+  "price_search_receipts_written": true,
+  "verified_smoke_arms": [
+    "floor",
+    "constant_alpha"
+  ],
+  "verified_smoke_elapsed_seconds": {
+    "floor": 448.2626738548279,
+    "constant_alpha": 433.40735697746277
+  },
+  "search_arrays_running": [
+    "18904847",
+    "18904851"
+  ],
+  "no_A_smoke": "running",
+  "no_A_search_array": "waiting_dependency"
 }

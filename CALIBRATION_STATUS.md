@@ -41,6 +41,12 @@ cancelled never-started dependent arrays remain preserved in
 `utility_calibration_round1_v1/deployment/attempt1/`. Current IDs and receipts
 are in that packet's launch.json and deployment/attempt2/.
 
+Verified progress at20:43 New York: floor and constant-alpha smokes completed
+with exit0 and independent full-GE repeats; elapsed448.263s and433.407s,
+including preflight/reporting. Their two six-start arrays are running (twelve
+searches). The no_A smoke is still running and its six starts await that gate.
+These timing receipts measure the complete workflow, not one price evaluation.
+
 ## September 30, 20:33 New York — utility infrastructure fix ready; SSH refresh required
 
 The three wide-price baseline jobs18903411/13/15 passed their exact zero-solve
