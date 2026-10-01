@@ -19,8 +19,19 @@ tenure probe termination budget_or_repeat_reserve, no Jacobian rank certificate
 and zero GN proposals. Numerical verification is complete, optimization is not.
 See utility_calibration_round1_v1/deployment/attempt2/floor_selected_verified/.
 
-The author requests a heavy floor continuation. It is not launched and remains
-subject to a bounded reviewed plan. No production adoption, automatic restart,
+The author-authorized heavy floor continuation is launched under a reviewed
+plan: utility_floor_round2_v1 fresh smoke18906783, then eight-start afterok
+array18906784. OneCPU24GiB/thread perTorch lane, common05:36:56UTC deadline;
+exact preflight passed and actual baseline native lifecycle work has begun.
+Two isolated local floor chains also started (winner46074,historical46075),
+two threads each, watchdog45608, deadline1790832536.3326.
+Fast resume authenticates the original baseline and8FD columns, fills the
+ninth and attempts3GN points plus2final repeats (at most6newGE/60minutes).
+Attempt1 job18906849 failed before native LC from an unused copied deployment
+variable. Failure preserved; reviewed orchestration correction prepares a new
+immutable attempt2 at the SAME original02:34:06UTC deadline. Corrected first
+derivative job18907055 is submitted after repeated full source/report authentication;
+native missing-derivative price_start lifecycle_claimed1LC is verified. No solve or search contract changed. No production adoption, automatic restart,
 solver edit or gate relaxation follows from monitoring. The requested earlier
 with-A comparison and lead source diagnosis are preserved in the utility
 packet README and comparison_requested/; identical entry wealth and correct
