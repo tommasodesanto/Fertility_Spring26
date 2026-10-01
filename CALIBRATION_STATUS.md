@@ -1,5 +1,22 @@
 # Calibration Status
 
+## September 30, 22:21 New York — author stops fixed-psi searches for restart
+
+At explicit author request, all8Torch18906784 cancelled, scheduler accounting
+confirms CANCELLED and queueempty. Saved all8best/latest/casevectors first in
+utility_floor_round2_v1/deployment/prestop_remote_snapshot.json. Verifiedtask
+commands then stopped7supervisors and8localchildprocessgroups, ensuring no
+automaticpostchecks spawn; newfreepsi paths untouched. Stopreceipt saved in
+same deploymentfolder. Author-owned local restart_seed_snapshot.json preserves
+166.866688 historical,184.977 winner and191.314 low-floor startingvectors.
+
+The next authorized experiments estimate psi_child with originalweights on
+8Torchchains, and two baseline plus6weight-profile localchains, restarting
+fromsavedestimates. Separate utility_floor_psi_v1 source/deployment preparing;
+no newjob submitted yet. Oldfixedpsi/fastresume remain stopped; noautomatic
+restart or productionadoption. Economicchanges/freepsi and weightprofiles must
+be disclosed separately and losses across differentweights are notcomparable.
+
 ## September 30, 22:12 New York — first Torch GN proposals; local NM improves
 
 All8Torch18906784 lanes RUNNING31minutes,80completedGE/cases, nofailures.
