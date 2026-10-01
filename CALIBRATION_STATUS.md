@@ -1,5 +1,17 @@
 # Calibration Status
 
+## September 30, 22:34 New York — frequent progress and read-only audit
+
+The author requests progress every five minutes, including completed full GE or
+objective counts, comparable original-weight best fit, weight-profile tradeoffs,
+observed runtimes and issues, even while healthy. The heartbeat is now every
+five minutes. A separate read-only30-minute Fable audit is preparing under
+utility_floor_psi_v1/fable_audit/. Monitor its launch/completion receipts once
+present, report errors or completion promptly, and independently verify critical
+claims before adopting findings. No automatic code changes or numerical launches
+are authorized. Keep the monitor active until numerical outcomes and audit are
+reported. Existing deadlines and no-restart constraints remain unchanged.
+
 ## September 30, 22:29 New York — free-psi restart running on Torch and locally
 
 The author-requested restart is running: eight original-weight Torch chains,
