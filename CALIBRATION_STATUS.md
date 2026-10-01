@@ -1,5 +1,43 @@
 # Calibration Status
 
+## October 1, 17:45 New York — internally calibrated supply-level array submitted
+
+The author confirmed the September 23 choice: use the 2007 national AHS mean
+occupied rooms, `5.729434240102641`, as the main quantity anchor for internally
+calibrated `H0`; do not fix `H0` externally. In `normalized_calibration_v1`,
+`N0=1` and `H0` is profiled as `h(p)/(u*p/rbar)^xi`; `psi_child` is searched
+with the other nine coordinates. This is the specified calibration contract,
+not a claim of parameter identification or convergence. No new rent target is
+added.
+
+The production array `18979628_0–23` was submitted with 24 parallel slots and
+an `afterok:18979627` dependency on the native incumbent-match smoke gate.
+At 17:49 New York, smoke job `18979627_0` had completed successfully (exit 0,
+elapsed 00:02:16) and passed the full ROOT/REPEAT incumbent-match gate. The gate
+verified the full 14-row target table, all 30 non-`H0` parameter values in the 31-row report, and
+exact ROOT/REPEAT tables; `N0=1`, demand equals supply, the housing residual is
+zero, and the renewal residual is `6.17681445e-7` (below `1e-6`). All 24
+production chains `18979628_0–23` are running after the dependency. This gate
+verifies the incumbent only; it does not report a new calibration fit or
+optimizer convergence. Each chain is budgeted for two hours, 100 objective
+calls, a 900-second final reserve, one CPU and 24 GiB. The run uses a `120×9`
+grid, unchanged target and weight definitions, the physical parenthood housing
+floor (`h_P=2.3` at seed), `D=0`, and the nonnegative mean-preserving entrant
+distribution. Four prior jobs `18973391_0–3` were
+preserved before cancellation in
+`output/model/fixed_reference_economics_20260928/normalized_calibration_v1/deployment/preservation_before_cancel/`;
+transition job `18974228` was left untouched. Source and launch evidence are
+indexed in
+`output/model/fixed_reference_economics_20260928/normalized_calibration_v1/README.md`
+and its `deployment/stage_receipt.json` and `deployment/submission_receipt.json`.
+The independent gate review is recorded in
+`output/model/fixed_reference_economics_20260928/normalized_calibration_v1/deployment/lead_verification.json`.
+
+The exact 24-chain mock completed 100 calls per chain with all cases passing
+and zero model solves. This verifies the mock loop only; it does not establish
+production gate passage, model fit, parameter identification or optimizer
+convergence.
+
 ## October 1, 09:41 New York — overnight 31.284 selected-repeat verified
 
 The live free-\(\psi\) floor search uses the same fixed-reference economics,

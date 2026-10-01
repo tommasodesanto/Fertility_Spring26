@@ -1,0 +1,22 @@
+{
+  "cancelled_array_job_id": "18973391",
+  "cancelled_tasks": [
+    "18973391_0",
+    "18973391_1",
+    "18973391_2",
+    "18973391_3"
+  ],
+  "scheduler_accounting": "CANCELLED by 3653198; exit 0:0; elapsed 01:05:39 for each task",
+  "scope": "utility_floor_psi_continuous_v2 calibration array only",
+  "excluded_running_job": {
+    "job_id": "18974228",
+    "name": "floor_one_shock",
+    "command": "/scratch/td2248/projects/transition_readiness_v1/current_floor/floor_launch.sh",
+    "action": "left running; transition work"
+  },
+  "preservation_before_cancel": "continuous_v2_compact_receipts.tar.gz; compact JSON/JSONL/CSV receipts only, no arrays/checkpoints",
+  "preservation_after_cancel": "continuous_v2_post_cancel_receipts.tar.gz; one compact post-cancel snapshot",
+  "existing_verified_seed": "verified_seed_30_999/receipt.json; 30.99909262396404 base loss, price 0.7188481029285891",
+  "best_selected_repeat_packet": "verified_best_31_284/; ROOT and REPEAT target_fit, parameters, closure, verification and frozen observer identity",
+  "authorization": "User explicitly authorized collect/cancel current floor calibration searches; exact floor array matched deployment receipts before cancellation."
+}
