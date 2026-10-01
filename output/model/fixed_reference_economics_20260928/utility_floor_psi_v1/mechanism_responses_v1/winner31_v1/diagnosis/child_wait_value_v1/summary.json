@@ -1,0 +1,185 @@
+{
+  "Bellman_calls": 0,
+  "GE_calls": 0,
+  "age_cells": [
+    18.0,
+    22.0,
+    26.0,
+    30.0,
+    34.0,
+    38.0,
+    42.0,
+    46.0,
+    50.0,
+    54.0,
+    58.0,
+    62.0,
+    66.0,
+    70.0,
+    74.0,
+    78.0,
+    82.0
+  ],
+  "buyer_override_sha256": "a13e9b3944bc69e0a5229191a8f8133e8542d60f4464d4eaed51a0f9220abdb6",
+  "common_interior_mass": 0.18435604372817618,
+  "conditional_ownership_scope": "Realized saved post-fertility branch policies, not pre-constraint latent willingness; if newborn-exempt optimization active, success-value VI_ex policies are not separately saved",
+  "driver_sha256": "9e7a6767c425fcbfb56da35d5bc626d839ed1537a3caaa4cdc184f19d332f886",
+  "fecundity_by_age": [
+    0.98,
+    0.9658168691098954,
+    0.9415756781274986,
+    0.9001436879133341,
+    0.829329930686918,
+    0.7082981340823842,
+    0.501435846822519,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "fertile_age_indices_1based": [
+    1,
+    7
+  ],
+  "first_birth_block_sha256": "1c8bbba0cb36e2783dd543bca4bc2017cd57c5db0b9274518262c91d25b6ddd5",
+  "first_birth_fixed_cost": 0.4009349064519595,
+  "household_sha256": "2a34f5f28c0c63ca3d24d9e759cd1b5b92aadaddb5fe04795e65abbc0b448082",
+  "kappa_fert": 0.13056430591307258,
+  "lifecycle_calls": 0,
+  "newborn_exempt_success_value_active": false,
+  "purchase_feasibility_split": "Not measured: no pre-mask value/desired size object; rental-cap split is conditional WAIT renter hR policy, not realized rental status",
+  "rental_cap": 6.0,
+  "small_invariant_checks": {
+    "arms": {
+      "baseline80_80": {
+        "baseline_try_zero_excluded_mass": 0.002020128568750512,
+        "baseline_wait_zero_excluded_mass": 0.0,
+        "excluded_actual_first_birth_change_mass": 0.0,
+        "interior_actual_first_birth_change_mass": 0.0,
+        "successful_child_conditional_renter_at_cap_share": 0.35679944600915103,
+        "wait_conditional_renter_at_cap_share": 0.10420068632031664
+      },
+      "both100_100": {
+        "baseline_try_zero_excluded_mass": 0.002020128568750512,
+        "baseline_wait_zero_excluded_mass": 0.0,
+        "excluded_actual_first_birth_change_mass": 0.0,
+        "interior_actual_first_birth_change_mass": -9.632061713078099e-05,
+        "successful_child_conditional_renter_at_cap_share": 0.356799458032131,
+        "wait_conditional_renter_at_cap_share": 0.104204513139004
+      },
+      "purchase100_stayer80": {
+        "baseline_try_zero_excluded_mass": 0.002020128568750512,
+        "baseline_wait_zero_excluded_mass": 0.0,
+        "excluded_actual_first_birth_change_mass": 0.0,
+        "interior_actual_first_birth_change_mass": -3.5676096260360545e-05,
+        "successful_child_conditional_renter_at_cap_share": 0.356799458032131,
+        "wait_conditional_renter_at_cap_share": 0.10420068632031664
+      }
+    },
+    "child_single_location_max_error": 0.0,
+    "excluded_cause": "Fertile occupied states with exact saved attempt probability zero; logarithm not recoverable, no clipping or probability renormalization",
+    "excluded_group_fraction": 0.01083898517634608,
+    "excluded_group_mass": 0.002020128568750512
+  },
+  "source_pins": {
+    "baseline80_80": {
+      "closure_sha256": "3c81851d05f675fffad4e1d9974a9bd310ce9a2c4ab6ec0bbd99cbda08d06b91",
+      "fertile_noninterior_mass": 0.002020128568750512,
+      "folder": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/winner31_v1/purchase_ltv_v1/local_run/retry5/results/baseline_80_80",
+      "interior_mass": 0.18435604372817624,
+      "nonfertile_mass": 0.0,
+      "parameters_sha256": "ae092fafab15985f773b61999a29d4a8d505495623e615440cfff1f107c75406",
+      "solution_arrays_sha256": "cb793ce4bd3029d2fd1e2a18a7b4c6d33321b0b19185d070c3512b434a6cd1bb",
+      "source_receipt": {
+        "audit_override_sha256": "7f30eaa55839f8d941a604331a7e3e9bd96031d57b54f26adcc3527e93cac1b3",
+        "deadline_epoch": 1790877852,
+        "driver_sha256": "5ac7db570ac70e6932b319af1fc6111fb089f6332ae563a86c85eed5fa89d015",
+        "original_audit_sha256": "1289173378b978a51e10f85fffaba34b5840bbda6f3d02c9e1c959e7f318f161",
+        "original_household_sha256": "2a34f5f28c0c63ca3d24d9e759cd1b5b92aadaddb5fe04795e65abbc0b448082",
+        "override_sha256": "ecd712fe036324acfc3020bd4d9d77d4f250115d214ec29b5889f1241d587ae8"
+      }
+    },
+    "both100_100": {
+      "closure_sha256": "de8694dd350c1d3fa120fd925278e07f085cdb394c50044322facf8824170d46",
+      "fertile_noninterior_mass": 0.002020128568750512,
+      "folder": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/winner31_v1/purchase_ltv_v1/local_run/retry9/results/both_100_100",
+      "interior_mass": 0.18435604372817624,
+      "nonfertile_mass": 0.0,
+      "parameters_sha256": "ae5e1586c5d267385939f1d0c9615fb47d583f3c55ab69a686e4e3fc87c6f1d1",
+      "solution_arrays_sha256": "2423d819b7faec01f4e82ee623340ece6535c18530d19bed995603c7fc739812",
+      "source_receipt": {
+        "audit_override_sha256": "7f30eaa55839f8d941a604331a7e3e9bd96031d57b54f26adcc3527e93cac1b3",
+        "deadline_epoch": 1790878870,
+        "driver_sha256": "010275004856fbc239c23718e196a6164815a64dc257dc058fa9f697b39b970b",
+        "original_audit_sha256": "1289173378b978a51e10f85fffaba34b5840bbda6f3d02c9e1c959e7f318f161",
+        "original_household_sha256": "2a34f5f28c0c63ca3d24d9e759cd1b5b92aadaddb5fe04795e65abbc0b448082",
+        "override_sha256": "a13e9b3944bc69e0a5229191a8f8133e8542d60f4464d4eaed51a0f9220abdb6"
+      }
+    },
+    "purchase100_stayer80": {
+      "closure_sha256": "84e8caf0dcd2f70353b0e95026c8bbf957a3a6ec3f8e53ba2b5f927f952bbdb4",
+      "fertile_noninterior_mass": 0.002020128568750512,
+      "folder": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/winner31_v1/purchase_ltv_v1/local_run/retry8/results/purchase_100_stayer_80",
+      "interior_mass": 0.18435604372817624,
+      "nonfertile_mass": 0.0,
+      "parameters_sha256": "ae092fafab15985f773b61999a29d4a8d505495623e615440cfff1f107c75406",
+      "solution_arrays_sha256": "efe3f9c08db4df6e232bb6677af285941a10f9579f8974756ccadd9ec4aa99a8",
+      "source_receipt": {
+        "audit_override_sha256": "7f30eaa55839f8d941a604331a7e3e9bd96031d57b54f26adcc3527e93cac1b3",
+        "deadline_epoch": 1790878870,
+        "driver_sha256": "7a8cd85cd61e7849f3bf78521a9d5f007039b1c3841e59cff34ec0239609137a",
+        "original_audit_sha256": "1289173378b978a51e10f85fffaba34b5840bbda6f3d02c9e1c959e7f318f161",
+        "original_household_sha256": "2a34f5f28c0c63ca3d24d9e759cd1b5b92aadaddb5fe04795e65abbc0b448082",
+        "override_sha256": "a13e9b3944bc69e0a5229191a8f8133e8542d60f4464d4eaed51a0f9220abdb6"
+      }
+    }
+  },
+  "status": "saved_value_inversion_complete_no_solves",
+  "summaries": [
+    {
+      "arm": "purchase100_stayer80",
+      "attempt_gain": 0.0013613344267025657,
+      "attempt_gap_change": -0.0011116861435096742,
+      "birth_change_per_young_renter": -0.00019141983559745434,
+      "birth_linear_gap_approximation_mass": -3.5841291133201854e-05,
+      "first_birth_change_mass": -3.567609626036054e-05,
+      "interior_mass": 0.18435604372817618,
+      "negative_birth_change_mass": -5.111908179295968e-05,
+      "net_expected_owner_mass_change": 0.006497580826930863,
+      "own_child_change": 0.00619091581373511,
+      "own_wait_change": 0.035221166195745585,
+      "positive_birth_change_mass": 1.5442985532599145e-05,
+      "positive_owner_change_weighted_gap_change": -0.002010987439514618,
+      "sensitivity_weighted_gap_change": -0.0002541419688268747,
+      "signed_owner_change_weighted_gap_change": -0.0020117389749115125,
+      "success_net_cost_gain": 0.0012230012180534605,
+      "wait_gain": 0.0024730205702122384
+    },
+    {
+      "arm": "both100_100",
+      "attempt_gain": 0.004298308625631842,
+      "attempt_gap_change": -0.003155031544610179,
+      "birth_change_per_young_renter": -0.0005168075722540701,
+      "birth_linear_gap_approximation_mass": -9.717842025240748e-05,
+      "first_birth_change_mass": -9.632061713078098e-05,
+      "interior_mass": 0.18435604372817618,
+      "negative_birth_change_mass": -0.00012624434799239,
+      "net_expected_owner_mass_change": 0.017755650977545247,
+      "own_child_change": 0.012706228128224814,
+      "own_wait_change": 0.09565257941548806,
+      "positive_birth_change_mass": 2.9923730861609014e-05,
+      "positive_owner_change_weighted_gap_change": -0.006141416401864407,
+      "sensitivity_weighted_gap_change": -0.000689068788248923,
+      "signed_owner_change_weighted_gap_change": -0.006141423760471984,
+      "success_net_cost_gain": 0.003968175889937402,
+      "wait_gain": 0.007453340170242021
+    }
+  ],
+  "young_n0_renter_PRE_mass": 0.18637617229692674
+}
