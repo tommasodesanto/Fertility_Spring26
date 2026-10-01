@@ -1,0 +1,205 @@
+{
+  "status": "winner_saved_scalar_age25_reconstruction_passed",
+  "retrieved_at": "2026-10-01T15:24:53.429059+00:00",
+  "winner": {
+    "base_loss": 31.28400725566496,
+    "chain": "chain_7",
+    "experimental_not_adopted": true,
+    "label": "0173_nm",
+    "postcheck_elapsed_seconds": 214.15160536766052,
+    "price": 0.719168368828958,
+    "search_stop_reason": null,
+    "selected_repeat_status": "selected_numerically_verified",
+    "weighted_loss": 54.52095879194978
+  },
+  "verification_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/verified_global_20261001T0941NY_chain7_0173/verification.json",
+  "source_identity_receipt": {
+    "authenticator_sha256": "96d6923a252f57bc4d8c44fd6479b13f48ba217d74edf8ef629d120428b03b44",
+    "checkpoint_sha256": "b15ba92dc60e3d5590d2beb6e05d36f71d17b20b1a432edc2c2db926a217309d"
+  },
+  "observer_definition_source": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_initial_fertility_observer.py",
+    "sha256": "ca120b5bddc7cf6a8ad48237c821320432c90aeb737b6905ad156d6883474208",
+    "lines": "185-220",
+    "note": "existing native definition; no source edits"
+  },
+  "reports": [
+    {
+      "report_path": "/scratch/td2248/projects/utility_floor_psi_overnight_v1/results/chain_7/postcheck/selected_postcheck/phase_b_ge/selected_root/observers.json",
+      "report_sha256": "c87ce64acc072eafc1731b95e461dca84d2b19cd06a8dfa7b3077ae0f08519cc",
+      "report_bytes": 52650,
+      "capped_ceb_age25": 0.5312175503600473,
+      "motherhood_age25": 0.4424784454890688,
+      "capped_children_per_mother_age25": 1.2005501189394563,
+      "ever_born_shares_age25": {
+        "0": 0.5575215545109312,
+        "1": 0.3537393406180905,
+        "2": 0.0887391048709784,
+        "3plus": 0.0
+      },
+      "age25_pre_weight": 0.125,
+      "age25_post_weight": 0.875,
+      "age25_pre_mass_by_children": [
+        0.04542756946271541,
+        0.01630588671803685,
+        0.0,
+        0.0
+      ],
+      "age25_post_mass_by_children": [
+        0.03284489859701258,
+        0.02262778999280054,
+        0.0062607675909391106,
+        0.0
+      ],
+      "age22_cell_pre_stats": {
+        "childcount_shares": [
+          0.7358662915244193,
+          0.26413370847558065,
+          0.0,
+          0.0
+        ],
+        "motherhood": 0.2641337084755807,
+        "capped_ceb": 0.26413370847558065,
+        "capped_children_per_mother": 0.9999999999999998
+      },
+      "age22_cell_post_stats": {
+        "childcount_shares": [
+          0.5320437349375756,
+          0.3665401452098776,
+          0.10141611985254674,
+          0.0
+        ],
+        "motherhood": 0.4679562650624244,
+        "capped_ceb": 0.5693723849149711,
+        "capped_children_per_mother": 1.2167213635637895
+      },
+      "reconstructed_mixture_max_share_error": 0.0,
+      "early_observer_metadata": {
+        "age_projection": "uniform_birth_time",
+        "age_window": "[25,26), observed interview age; not the 25th birthday",
+        "available": true,
+        "children_ever_born_weights": [
+          0.0,
+          1.0,
+          2.0,
+          3.0
+        ],
+        "definition": "mean children ever born capped at three among completed integer age 25",
+        "empirical_age_weights_applied": false,
+        "empirical_sample": "pooled June 2004/2006 CPS women at exact age 25; valid FREVER and positive FRSUPPWT",
+        "empirical_source": "output/model/early_fertility_target_20260926/early_fertility_target.json",
+        "model_age_cell": "[22,26)",
+        "moment_key": "mean_children_ever_born_capped3_age25",
+        "post_fertility_interpolation_share": 0.875,
+        "projection_independent_of_legacy_40_44_selector": true,
+        "required_scored_moment_rule": "calibration registry must reject an unavailable required moment",
+        "target_or_weight_adopted_by_observer": false,
+        "unavailable_reason": null,
+        "uses_children_at_home": false,
+        "uses_tfr_top_bin_weight": false
+      },
+      "age22_cell_raw_birth_flows": [
+        0.012582670865702804,
+        0.006260767590939103,
+        0.0
+      ],
+      "raw_first_flow": 0.04991269267471906,
+      "raw_subsequent_flow": 0.06534115294710263,
+      "raw_total_birth_flow": 0.1152538456218217
+    },
+    {
+      "report_path": "/scratch/td2248/projects/utility_floor_psi_overnight_v1/results/chain_7/postcheck/selected_postcheck/phase_b_ge/selected_repeat_final/observers.json",
+      "report_sha256": "f076344418046bc8e371fe4547beaf65b642805727baf5c00b28efac5bf885ec",
+      "report_bytes": 52658,
+      "capped_ceb_age25": 0.5312175503600473,
+      "motherhood_age25": 0.4424784454890688,
+      "capped_children_per_mother_age25": 1.2005501189394563,
+      "ever_born_shares_age25": {
+        "0": 0.5575215545109312,
+        "1": 0.3537393406180905,
+        "2": 0.0887391048709784,
+        "3plus": 0.0
+      },
+      "age25_pre_weight": 0.125,
+      "age25_post_weight": 0.875,
+      "age25_pre_mass_by_children": [
+        0.04542756946271541,
+        0.01630588671803685,
+        0.0,
+        0.0
+      ],
+      "age25_post_mass_by_children": [
+        0.03284489859701258,
+        0.02262778999280054,
+        0.0062607675909391106,
+        0.0
+      ],
+      "age22_cell_pre_stats": {
+        "childcount_shares": [
+          0.7358662915244193,
+          0.26413370847558065,
+          0.0,
+          0.0
+        ],
+        "motherhood": 0.2641337084755807,
+        "capped_ceb": 0.26413370847558065,
+        "capped_children_per_mother": 0.9999999999999998
+      },
+      "age22_cell_post_stats": {
+        "childcount_shares": [
+          0.5320437349375756,
+          0.3665401452098776,
+          0.10141611985254674,
+          0.0
+        ],
+        "motherhood": 0.4679562650624244,
+        "capped_ceb": 0.5693723849149711,
+        "capped_children_per_mother": 1.2167213635637895
+      },
+      "reconstructed_mixture_max_share_error": 0.0,
+      "early_observer_metadata": {
+        "age_projection": "uniform_birth_time",
+        "age_window": "[25,26), observed interview age; not the 25th birthday",
+        "available": true,
+        "children_ever_born_weights": [
+          0.0,
+          1.0,
+          2.0,
+          3.0
+        ],
+        "definition": "mean children ever born capped at three among completed integer age 25",
+        "empirical_age_weights_applied": false,
+        "empirical_sample": "pooled June 2004/2006 CPS women at exact age 25; valid FREVER and positive FRSUPPWT",
+        "empirical_source": "output/model/early_fertility_target_20260926/early_fertility_target.json",
+        "model_age_cell": "[22,26)",
+        "moment_key": "mean_children_ever_born_capped3_age25",
+        "post_fertility_interpolation_share": 0.875,
+        "projection_independent_of_legacy_40_44_selector": true,
+        "required_scored_moment_rule": "calibration registry must reject an unavailable required moment",
+        "target_or_weight_adopted_by_observer": false,
+        "unavailable_reason": null,
+        "uses_children_at_home": false,
+        "uses_tfr_top_bin_weight": false
+      },
+      "age22_cell_raw_birth_flows": [
+        0.012582670865702804,
+        0.006260767590939103,
+        0.0
+      ],
+      "raw_first_flow": 0.04991269267471906,
+      "raw_subsequent_flow": 0.06534115294710263,
+      "raw_total_birth_flow": 0.1152538456218217
+    }
+  ],
+  "root_repeat_derived_age25_match": true,
+  "root_repeat_early_target_row_match": true,
+  "empirical_comparator": {
+    "capped_ceb_age25": 0.8095276384290021,
+    "motherhood_age25": 0.457254,
+    "capped_children_per_mother_age25": 1.77041,
+    "auxiliary_provenance": "motherhood and conditional mean supplied by coordinator reviewer, rounded; not independently extracted here"
+  },
+  "model_calls": 0,
+  "arrays_downloaded": false,
+  "report_retrieval_only": true
+}

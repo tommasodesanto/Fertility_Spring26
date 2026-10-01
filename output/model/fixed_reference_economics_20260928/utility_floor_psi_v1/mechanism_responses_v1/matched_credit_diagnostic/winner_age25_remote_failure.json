@@ -1,0 +1,37 @@
+{
+  "status": "blocked_ssh_authentication_failure",
+  "checked_at": "2026-10-01T14:48:49.013140+00:00",
+  "identity": {
+    "base_loss": 31.28400725566496,
+    "chain": "chain_7",
+    "experimental_not_adopted": true,
+    "label": "0173_nm",
+    "postcheck_elapsed_seconds": 214.15160536766052,
+    "price": 0.719168368828958,
+    "search_stop_reason": null,
+    "selected_repeat_status": "selected_numerically_verified",
+    "weighted_loss": 54.52095879194978
+  },
+  "attempted_report_paths": [
+    "/scratch/td2248/projects/utility_floor_psi_overnight_v1/results/chain_7/postcheck/selected_postcheck/phase_b_ge/selected_root/observers.json",
+    "/scratch/td2248/projects/utility_floor_psi_overnight_v1/results/chain_7/postcheck/selected_postcheck/phase_b_ge/selected_repeat_final/observers.json"
+  ],
+  "ssh_options": [
+    "BatchMode=yes",
+    "ConnectTimeout=8"
+  ],
+  "exit_code": 255,
+  "stderr": "td2248@login.torch.hpc.nyu.edu: Permission denied (gssapi-keyex,gssapi-with-mic,password,keyboard-interactive).",
+  "automatic_retry": false,
+  "credential_workaround": false,
+  "remote_reports_retrieved": 0,
+  "model_calls": 0,
+  "arrays_downloaded": false,
+  "remaining_missing": [
+    "age25 motherhood share",
+    "age25 capped children per mother",
+    "age25 0/1/2/3+ childcount shares",
+    "winner-specific PRE/POST mixture check"
+  ],
+  "next_requirement": "Torch authentication refresh by user; no automatic retry was made"
+}

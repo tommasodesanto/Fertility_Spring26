@@ -12,7 +12,7 @@ the frozen observer identity hashes match. The 14 base contributions sum to
 31.284007255664957. The [complete ROOT/REPEAT packet](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/verified_global_20261001T0941NY_chain7_0173/)
 contains tables, plots, source/observer identity fingerprints, and verification.
 Optimizer convergence remains uncertified; the experimental point is not adopted.
-For the verified 31.284 winner, capped children ever born at completed age 25 is 0.5312175503600473 versus target 0.8095276384290021. The winner packet lacks ROOT/REPEAT observer reports, so its age-25 motherhood share and children per mother are unavailable; the earlier-point decomposition cannot be transferred. The local availability check is [documented here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/matched_credit_diagnostic/WINNER_AGE25_LOCAL_CHECK.md), with hashes in the accompanying JSON. No remote retrieval was performed.
+For the verified 31.284 winner, capped children ever born at completed age 25 is 0.5312175503600473 versus target 0.8095276384290021. The winner packet lacks ROOT/REPEAT observer reports, so its age-25 motherhood share and children per mother are unavailable; the earlier-point decomposition cannot be transferred. The local availability check is [documented here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/matched_credit_diagnostic/WINNER_AGE25_LOCAL_CHECK.md), with hashes in the accompanying JSON. A bounded remote attempt failed with Torch authentication denial; no retry or workaround was used. The receipt is [here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/matched_credit_diagnostic/winner_age25_remote_failure.json).
 
 A previously selected-repeat-verified point is round-three chain 4, case 0035_nm,
 base loss **68.8425812015**, at market price 0.7172609099. Its exact selected
@@ -44,16 +44,16 @@ moments remain far from their targets: mean rooms 1.88493/5.72943, ownership
 and [the collected ROOT/REPEAT packets](output/model/fixed_reference_economics_20260928/utility_variable_shares_calibration_v1/collected/search_0004/selected_postcheck/).
 Production adoption is false and optimizer convergence is uncertified. This
 small two-coordinate comparison does not establish broader utility or target
-infeasibility. The fixed-price cells and six-cell mechanism response remain
-separate comparisons; their status and the pending author choice on a credit-GE
-price domain are documented below.
+infeasibility. The winner-specific mechanism diagnostics are separately
+authorized preparations, not numerical results; current contract and access
+status are summarized below.
 
-There are 64 launched floor searches across the four cohorts above: 40
-terminal (original 16, prior eight, and round-three 16), chain 21 terminal in
-the overnight cohort, and 23 overnight tasks still running. Keep their
-per-cohort counts, limits, and deadlines separate. No broad search refresh or
-new launch is implied by this summary; continue bounded receipt-only monitoring
-of the 23 active overnight tasks and preserve each cohort's own stop rules.
+All 64 launched floor searches across the original, prior multistart,
+round-three, and overnight cohorts are terminal. The overnight cohort has 24
+budget-stop search receipts, 24 successful launcher terminal receipts, and 24
+selected postchecks marked `selected_numerically_verified`. Do not poll these
+terminal arrays. The active heartbeat tracks the authorized winner diagnostics
+and calibration continuation using current owner receipts.
 
 ## September 30, 23:54 New York — 24-search refresh and fixed-parameter floor comparison
 
@@ -274,12 +274,15 @@ of statistical identification or of calibration failure. No model calls were
 made for these checks; details are in
 [the saved calculation](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/fable_audit/lead_checks/initial_simplex_rank.json).
 
-The author has authorized preparation of an isolated mechanism-response bridge:
-compare credit GE, which removes artificial borrowing limits while retaining
-lifetime and net-estate accounting, and measure fertility responses to $\pm1\%$
-price/rent changes by credit regime. The `floor_experiment_responses` agent is
-preparing it. No numerical run has started; monitor receipts only after an
-authorized actual start, and do not launch it automatically.
+The author authorized winner-specific follow-up diagnostics after the selected-repeat verification. The six-cell prescribed-price comparison uses the exact verified 31 parameters and 120×9 grid, with baseline and expanded credit at q0×{0.99, 1.00, 1.01}; its reviewed one-CPU/24-GiB controller allows 300 seconds per cell and 1,200 seconds total. The archive SHA-256 is `2188affdb305edde903f40010c2769f1397ee392af0cf09285cd7860694701ac` with 157 compact source pins. Lead review and an independent controller check passed.
+
+A separate native credit-GE controller uses the same candidate and grid, at most 12 lifecycle solves, a 2,400-second cap and one exact repeat; its 133 pinned GE sources and 161 compact archive files passed independent checks. The authenticated q0 renewal sign selected the lower-price branch. The first submission failed before solving because the driver called a missing API; a reviewed serializer-only repair was submitted as described below. No GE numerical result is available.
+
+The six-cell prescribed-price job 18957983 was submitted at 11:23:56 New York and completed all six cells without failure. Source hashes and zero-lifecycle initialization passed. Reference q0, reference ±1% and expanded-credit q0/0.99 fixed-price cells completed; the expanded-credit q0 renewal residual is −0.04657711976139911 at q=0.719168368828958, with baseline-state births 0.11859850 versus reference 0.11525385. These are prescribed-price responses, not a credit-GE result or a natural-equilibrium certificate.
+
+Based on the negative q0 renewal sign, lower-price credit-GE job 18958106 failed before any GE solve because the driver called missing `runner.serialized`. Its controller records `failed_no_ge_result`; this is a driver API failure, not economic or numerical infeasibility. A reviewed serializer-only repair was submitted once as replacement job 18958548, retaining the original deadline and 11 new lifecycle calls plus one previously reserved call. Its 161-source remote hash and zero-lifecycle initializer passed. The first lower-branch evaluation at 0.95q0 completed one lifecycle solve at q=0.6832099504 with renewal residual −0.0203508933, closer to zero than the q0 seed residual −0.0465771198. A second lower-branch evaluation at 0.90q0 (q=0.6472515319) has residual +0.0056729918, opposite the 0.95q0 residual. Root refinement selected root_04 at factor 0.9108537449 (q=0.6550572020; population scale 0.8199246808). The selected native repeat passed with renewal residual +3.789285996e−9. The controller records `completed_support_limited_stationary_ge_diagnostic`; the full 14-target, 31-parameter and 17-plot ROOT/REPEAT checks passed, with compact local collection in progress. This is support-limited and does not certify natural support or production adoption. No further retry is authorized.
+
+An eight-chain calibration continuation, jobs 18958130_0–7, was submitted at 11:28:20 New York under its own two-hour deadline. It uses original weights, unchanged economics and hP≤2.3, one CPU/24 GiB/one thread, a 100-call cap per chain, and a 900-second postcheck reserve. Chain 1 failed container startup before lifecycle work. A read-only-bind repair was submitted as replacement 18958549_1, preserving the original deadline and source hash. The replacement initializer passed, and the replacement has completed two lifecycle calls; the other seven original chains continue. No other restart or budget extension is authorized. Existing experiment and calibration owners provide receipts. The reviewed preparation remains at [winner31_v1](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/mechanism_responses_v1/winner31_v1/).
 
 ## September 30, 22:45 New York — provisional progress; one numerical bracket rejection
 

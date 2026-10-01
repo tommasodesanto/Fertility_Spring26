@@ -1,0 +1,42 @@
+{
+  "schema": "winner31_credit_price_diagnostic_v1",
+  "candidate_root": "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/verified_global_20261001T0941NY_chain7_0173/ROOT",
+  "candidate_case": "chain_7/0173_nm",
+  "candidate_label": "verified overnight chain_7 case 0173_nm; experimental",
+  "price_factors": [
+    0.99,
+    1.0,
+    1.01
+  ],
+  "same_grid_all_cases": true,
+  "grid_contract": "The same original 120x9 wealth/income grid and exact candidate entry distribution are used in all six cells; no automatic grid extension. Any occupied policy mass at b_min=-12 makes the expanded-credit result support-uncertified.",
+  "credit_ge_budget": {
+    "maximum_lifecycle_solves": 12,
+    "maximum_seconds_per_solve": 300,
+    "maximum_total_seconds": 2400,
+    "cpu": 1,
+    "memory_gib": 24,
+    "repeat_required": true
+  },
+  "price_response_budget": {
+    "unique_cases": 6,
+    "maximum_seconds_per_case": 300,
+    "maximum_total_seconds": 1200,
+    "cpu": 1,
+    "memory_gib": 24
+  },
+  "economics": {
+    "baseline_credit": "Reapply exact verified winner31 DUE binding corrected d_bar=0, holding all 31 effective parameters fixed.",
+    "expanded_credit": "Starting from exact winner31 proposal, only disable DUE stayer, clear fixed unsecured limit, and enable existing native solvency credit. Retain lifetime repayment and nonnegative estate.",
+    "price_response": "Prescribe verified q0=.719168368828958 times [.99,1,1.01], with rent mapping and unchanged winner31 preferences, earnings, taxes, menus, entry, supply and all original targets/weights; no market or renewal roots at prescribed prices.",
+    "impact_weights": "Use the exact reconstructed q0 reference cohort_pre BEFORE fertility for all six price impacts; never reuse post-fertility g_beginning_distribution as evaluate_period input. Require exact q0 pre/post/current replay.",
+    "cohort_entry": "Keep the exact current candidate entrant distribution fixed for every prescribed-price cohort solve."
+  },
+  "reporting": {
+    "retain_full_fit_table": true,
+    "retain_full_parameter_table": true,
+    "retain_standard_17_diagnostics": true,
+    "label_as_experimental": true,
+    "production_adoption": false
+  }
+}
