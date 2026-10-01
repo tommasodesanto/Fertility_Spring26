@@ -1,5 +1,5 @@
 {
-  "status": "floor_constant_alpha_verified_smokes_twelve_searches_running_no_A_smoke_running",
+  "status": "all_smokes_verified_fifteen_utility_searches_active_three_known_baselines_blocked",
   "submission_epoch": 1790814862.5464356,
   "common_deadline_epoch": 1790819100,
   "individual_smokes": 3,
@@ -19,7 +19,7 @@
   "old_twelve_jobs_untouched": true,
   "preflight_status": "all_three_mock_smoke_verified_zero_lifecycle",
   "search_gate": "own-arm smoke afterok, exact repeated fullGE receipt and sourcehashes",
-  "last_observed_utc": "2026-10-01T00:45:00.081352+00:00",
+  "last_observed_utc": "2026-10-01T01:06:07.539626+00:00",
   "attempt_number": 2,
   "source_files": 101,
   "attempt1": {
@@ -76,6 +76,7 @@
   "price_search_receipts_written": true,
   "verified_smoke_arms": [
     "floor",
+    "no_A",
     "constant_alpha"
   ],
   "verified_smoke_elapsed_seconds": {
@@ -84,8 +85,21 @@
   },
   "search_arrays_running": [
     "18904847",
+    "18904849",
     "18904851"
   ],
-  "no_A_smoke": "running",
-  "no_A_search_array": "waiting_dependency"
+  "no_A_smoke": "utility_smoke_verified",
+  "no_A_search_array": "running",
+  "utility_active_lanes": 15,
+  "utility_known_blocked_lanes": [
+    "floor_s5",
+    "constant_alpha_s4",
+    "constant_alpha_s5"
+  ],
+  "provisional_floor_best": {
+    "lane": "floor_s2",
+    "label": "006_r0_probe_kappa_fert_continuation",
+    "loss": 751.8623271369056,
+    "selected_two_final_GE_repeats_verified": false
+  }
 }

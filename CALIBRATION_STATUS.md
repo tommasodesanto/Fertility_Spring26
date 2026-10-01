@@ -1,5 +1,27 @@
 # Calibration Status
 
+## September 30, 21:04 New York — local baselines verified; searches progressing
+
+All three local utility checks are terminal `utility_smoke_verified`: two
+independent fullGEs per arm, one fullGE repeat, each with14 target rows,
+31 effective parameter rows and17 standard PNGs. The lead rehashed120 report
+files across the three arms; each pair's twenty-file hash dictionaries agree
+exactly, including all17 PNGs. Complete launch-to-completion times, including
+initialization, both fullGEs and reporting, are141.92s floor,193.00s no_A and
+166.45s constant-alpha with two CPU threads per arm. These are verified fixed
+starting baselines, not refitted calibrations; no local search is authorized
+by the monitor. See utility_calibration_round1_v1/local_run/final_verification.json.
+
+At the bounded cluster check, all twelve original entry searches remain active
+with13–47 completed fullGEs per chain and fresh receipts. Fifteen utility
+searches remain active with4–8 completed GEs each; the three already reported
+perturbed-start failures remain unchanged. Floor's best provisional point has
+loss751.862 at start_s2, a fertility-continuation derivative probe, not a
+selected fit verified by two final fullGE repeats. No new terminal search
+selection or additional failure is certified. The21:45 utility and22:38:17
+entry-search cutoffs remain unchanged. Keep verified floor-fit reporting as
+the priority and provide its complete tables/standard plots when available.
+
 ## September 30, 20:50 New York — local checks running; floor calibration priority
 
 All three separately authorized local utility checks are executing native GEs,
