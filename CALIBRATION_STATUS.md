@@ -7,8 +7,9 @@ authorization, supervisors48787–48792, two threads and4GiBRSS each, deadline
 1790833223.525048, at most500objective calls perchain/3000total plus6final
 postchecks. They reuse the reviewed fast objective: baseline exactly matches
 all14targets and31parameters, seven source-preservation tests pass. Pertrial
-standard17plots and repeated price solve are omitted for speed; final native
-postchecks remain required before treating a selection as verified. User-requested
+standard17plots and repeated price solve are omitted for speed; ONE fresh native fullGE postcheck with its intrinsic selected-price repeat and
+full14/31/17packet remains required before treating anNMselection as verified;
+this differs from the GNtwoindependentfinalGE requirement. User-requested
 quick loss updates may be provisional and must be labeled accordingly. The two
 local GN chains continue; current reported historical-start chi probe loss291.0836
 is provisional. This is separate from the verified751.862327 historical winner.
@@ -35,7 +36,8 @@ See utility_calibration_round1_v1/deployment/attempt2/floor_selected_verified/.
 The author-authorized heavy floor continuation is launched under a reviewed
 plan: utility_floor_round2_v1 fresh smoke18906783, then eight-start afterok
 array18906784. OneCPU24GiB/thread perTorch lane, common05:36:56UTC deadline;
-exact preflight passed and actual baseline native lifecycle work has begun.
+exact preflight and fresh twoGE/oneindependent-repeat smoke passed (22LC,
+all14/31/17hashes identical); all eight search lanes are now RUNNING.
 Two isolated local floor chains also started (winner46074,historical46075),
 two threads each, watchdog45608, deadline1790832536.3326.
 Fast resume authenticates the original baseline and8FD columns, fills the

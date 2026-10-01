@@ -1,0 +1,9 @@
+# Floor calibration round2
+
+Current facts (September30 21:43NewYork): fresh Torch smoke18906783 completed `utility_smoke_verified`, two fullGEs with one independent repeat,22LC and identical14target/31parameter/17PNG report hashes. All eight afterok search lanes18906784_0–7 are running; oneCPU24GiB/thread each. Common absolute deadline1790833016 (October1 05:36:56UTC), four-hour individual cap. Remote `/scratch/td2248/projects/utility_floor_round2_v1`; frozen108file archive SHAffd5458a7e1a3e4fe5793567615ecfdc64bc614695f50b8c8b2024a1d2711add. Exact zeroLC CLI preflight passed before native work.
+
+Experimental physical parenthood-floor utility, nonnegative mean-preserving entrant wealth, no unsecured borrowing and common2percent rate; unchanged targets, bounds, engine and numerical gates. Nine freecoordinates, ten scored targets and14reported moments. Eight starts, up to80GE/eightrounds perchain; every selected Torchpoint requires two independent finalGE repeats. No production adoption or silent extensions.
+
+Two separately authorized local two-thread GNchains winner46074/historical46075 share watchdog45608 and deadline1790832536.3326. Current winner/historicalprobe losses704.949/286.500 are provisional; no optimization convergence claim. Six further fast localNMchains are recorded in sibling utility_floor_nm_v1; their explicit onefreshGE postcheck contract differs from the twofinalGE GN contract.
+
+Launch and source evidence: launch.json, plan.json, source_pins.json, preparation_verification.json and deployment/smoke_receipts. Local overlays/launches remain in local_run; reused historicalsource files are readonly symlinks to previously backed-up source. New source is separately authenticated; no oldsmoke bridge. All prior non-floor searches are cancelled or terminal and preserved.
