@@ -1,0 +1,136 @@
+{
+  "checked_utc": "2026-10-01T21:45:55Z",
+  "array_job_id": "18973391",
+  "remote_root": "/scratch/td2248/projects/utility_floor_psi_continuous_v2",
+  "scope": "read-only targeted scheduler and four-chain runtime diagnostic after 30-minute stale-progress threshold; one SSH session; no model/source changes",
+  "scheduler": {
+    "squeue": "squeue -r -h -j 18973391 returned: slurm_load_jobs error: Invalid job id specified",
+    "sacct_rows": [
+      {
+        "job_id": "18973428",
+        "state": "CANCELLED by 3653198",
+        "elapsed": "01:05:39",
+        "timelimit": "02:00:00",
+        "exit_code": "0:0",
+        "node": "cs612"
+      },
+      {
+        "job_id": "18973428.batch",
+        "state": "CANCELLED",
+        "elapsed": "01:06:12",
+        "exit_code": "0:9",
+        "node": "cs612"
+      },
+      {
+        "job_id": "18973428.extern",
+        "state": "COMPLETED",
+        "elapsed": "01:06:10",
+        "exit_code": "0:0",
+        "node": "cs612"
+      },
+      {
+        "job_id": "18973429",
+        "state": "CANCELLED by 3653198",
+        "elapsed": "01:05:39",
+        "timelimit": "02:00:00",
+        "exit_code": "0:0",
+        "node": "cs612"
+      },
+      {
+        "job_id": "18973429.batch",
+        "state": "CANCELLED",
+        "elapsed": "01:06:12",
+        "exit_code": "0:9",
+        "node": "cs612"
+      },
+      {
+        "job_id": "18973429.extern",
+        "state": "COMPLETED",
+        "elapsed": "01:06:11",
+        "exit_code": "0:0",
+        "node": "cs612"
+      },
+      {
+        "job_id": "18973430",
+        "state": "CANCELLED by 3653198",
+        "elapsed": "01:05:39",
+        "timelimit": "02:00:00",
+        "exit_code": "0:0",
+        "node": "cs612"
+      },
+      {
+        "job_id": "18973430.batch",
+        "state": "CANCELLED",
+        "elapsed": "01:06:12",
+        "exit_code": "0:9",
+        "node": "cs612"
+      },
+      {
+        "job_id": "18973430.extern",
+        "state": "COMPLETED",
+        "elapsed": "01:06:11",
+        "exit_code": "0:0",
+        "node": "cs612"
+      },
+      {
+        "job_id": "18973391",
+        "state": "CANCELLED by 3653198",
+        "elapsed": "01:05:39",
+        "timelimit": "02:00:00",
+        "exit_code": "0:0",
+        "node": "cs612"
+      },
+      {
+        "job_id": "18973391.batch",
+        "state": "CANCELLED",
+        "elapsed": "01:06:11",
+        "exit_code": "0:9",
+        "node": "cs612"
+      },
+      {
+        "job_id": "18973391.extern",
+        "state": "COMPLETED",
+        "elapsed": "01:06:10",
+        "exit_code": "0:0",
+        "node": "cs612"
+      }
+    ],
+    "array_mapping": "launcher_start.json maps chain0\u219218973428, chain1\u219218973429, chain2\u219218973430, chain3\u219218973391"
+  },
+  "runtime_evidence": {
+    "task_stdout_last_line": "All four chain task stdout tails report: *** JOB ... CANCELLED AT 2026-10-01T17:09:10 DUE to SIGNAL Terminated ***",
+    "launcher_start_files": {
+      "chain_0": {
+        "start_epoch": 1790885013,
+        "deadline_epoch": 1790892213,
+        "slurm_job_id": "18973428"
+      },
+      "chain_1": {
+        "start_epoch": 1790885012,
+        "deadline_epoch": 1790892212,
+        "slurm_job_id": "18973429"
+      },
+      "chain_2": {
+        "start_epoch": 1790885012,
+        "deadline_epoch": 1790892212,
+        "slurm_job_id": "18973430"
+      },
+      "chain_3": {
+        "start_epoch": 1790885012,
+        "deadline_epoch": 1790892212,
+        "slurm_job_id": "18973391"
+      }
+    },
+    "last_search_latest_file_mtimes_local_edt": {
+      "chain_0": "2026-10-01 17:09:32.759",
+      "chain_1": "2026-10-01 17:08:03.546",
+      "chain_2": "2026-10-01 17:07:57.374",
+      "chain_3": "2026-10-01 17:08:05.786"
+    },
+    "launcher_terminal_receipts": "not present in the four chain directories at diagnostic time",
+    "search_completion_or_postcheck_receipts": "not present in the four chain directories at diagnostic time",
+    "latest_collector_counts": "101 completed records,101 admissible computed-GE,105 objective calls; no fatal case failures; latest collector saw no completion/postcheck receipts"
+  },
+  "assessment": "Confirmed Slurm cancellation of all four task jobs by scheduler user ID 3653198 before the launcher-declared hard deadlines, with SIGTERM recorded in task stdout. This is an actual cancellation, not merely stale progress. Available evidence does not identify who initiated it or the reason. Search counts are frozen at the last collector snapshot; clean launcher exit receipts and native selected postchecks are absent.",
+  "authorization_boundary": "No relaunch, restart, source modification, budget extension, or new model evaluation performed. Further action requires controller decision."
+}
