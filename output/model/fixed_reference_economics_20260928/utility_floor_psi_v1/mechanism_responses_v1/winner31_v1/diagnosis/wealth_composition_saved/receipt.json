@@ -1,0 +1,64 @@
+{
+  "status": "passed_saved_data_only",
+  "model_solves": 0,
+  "bellman_calls": 0,
+  "ge_calls": 0,
+  "baseline_pre_sha256": "c6589a65ad74e624579c7abe2e4069ab4e07712f299496deefda6ec7a6d5e48a",
+  "credit_pre_sha256": "1ac3084dfe6fcb1baff6a07d0e438024879b4f43269daab79cf12db67c161cb0",
+  "source_binding_sha256": "47b809b4c1d2a18373c2828b2d90a0b23fed498ea64a925eea8b935ba5dc2c93",
+  "parameters_sha256": "ae092fafab15985f773b61999a29d4a8d505495623e615440cfff1f107c75406",
+  "script_sha256": "7ce2db6ad19161e5ede79def483c2518a51fe3c5ba758433eee408e298f0c9d4",
+  "support_status": "occupied_support_pass_unoccupied_alternatives_unverified",
+  "post_nesting_l1": 1.480080881726278e-16,
+  "feasibility_projection_mass": 0.0,
+  "pre_mass": [
+    1.000000000000001,
+    0.9999999999999996
+  ],
+  "birth_risk_mass": [
+    0.7436392775470294,
+    0.7521373246631551
+  ],
+  "g": "age x income x inherited tenure/housing x location x children ever born x children at home",
+  "shared_groups": 4599,
+  "unmatched_groups": 0,
+  "overlap_state_max_rate_gap": 3.3306690738754696e-16,
+  "totals": {
+    "all_births": {
+      "reference_creditpolicy_births": 0.11859850187794616,
+      "credit_creditpolicy_births": 0.10974660778179135,
+      "wealth_term": -0.008259773499692015,
+      "group_mass_term": -0.000592120596462787,
+      "unmatched_term": 0.0,
+      "total_change": -0.008851894096154802
+    },
+    "first_births": {
+      "reference_creditpolicy_births": 0.052734988852761455,
+      "credit_creditpolicy_births": 0.0473312829856789,
+      "wealth_term": -0.007221411500167596,
+      "group_mass_term": 0.001817705633085048,
+      "unmatched_term": 0.0,
+      "total_change": -0.005403705867082548
+    }
+  },
+  "blocked_solver_entries": [
+    "refactor_lab.engine.solver.solve_bellman_full_markov_income",
+    "refactor_lab.engine.solver.solve_markov_income_at_prices",
+    "refactor_lab.engine.solver.solve_markov_income_equilibrium",
+    "intergen_eqscale_seq_optimized.solver.solve_bellman_core",
+    "intergen_eqscale_seq_optimized.solver.solve_bellman_eval",
+    "intergen_eqscale_seq_optimized.solver.solve_bellman_full",
+    "intergen_eqscale_seq_optimized.solver.solve_bellman_full_markov_income",
+    "intergen_eqscale_seq_optimized.solver.solve_equilibrium",
+    "intergen_eqscale_seq_optimized.solver.solve_income_type_equilibrium",
+    "intergen_eqscale_seq_optimized.solver.solve_income_type_partial_equilibrium",
+    "intergen_eqscale_seq_optimized.solver.solve_markov_income_at_prices",
+    "intergen_eqscale_seq_optimized.solver.solve_markov_income_equilibrium",
+    "intergen_eqscale_seq_optimized.solver.solve_markov_income_partial_equilibrium",
+    "intergen_eqscale_seq_optimized.solver.solve_partial_equilibrium_dt",
+    "run_dynamic_population_transition.solve_policy"
+  ],
+  "elapsed_seconds": 87.22848116200475,
+  "max_rss_kib": 1919400,
+  "interpretation": "Symmetric two-order accounting under fixed credit policy; not causal wealth intervention"
+}
