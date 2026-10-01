@@ -13,3 +13,11 @@ Reference identity: September 28 adopted block0506 shares reference. Separately 
 Established: economic-equation equivalence under a complete factor-of-ten conversion. Not certified: a rescaled numerical equilibrium, policy arrays, historical conversion choices or empirical validity of demand/supply elasticities and financial levels. No model code or calibration data changed.
 
 PDF export: `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=output/model/fixed_reference_economics_20260928/room_unit_audit_v1 latex/housing_unit_normalization_note.tex` (twice). Built-in LaTeX compiler diagnostics are also recorded during creation. Only this documentation build is run; no model tests or jobs.
+
+## External review
+
+- [Full Claude Fable 5.1 Max review](claude_full_review.md), completed after explicit user authorization.
+- [Execution receipt](claude_review_receipt.json).
+- [Lead verification and remaining limits](claude_review_response.md).
+
+The note was tightened following review; the arithmetic recipe remains an illustrative equation audit, with the renter closed-form coverage and historical-conversion checks outstanding.

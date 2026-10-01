@@ -67,7 +67,8 @@ housing composite. One transparent conversion replaces $H$ by $10h$ in this
 expression. Material utility then stays exactly the same, and child utility
 needs no alteration.
 
-The implementation uses the housing quantity directly in this expression.
+Owners use housing directly; renters use a closed-form allocation in which
+the same unit conversion enters through rent.
 An equivalent conversion is therefore to keep its functional form in $h$ and
 multiply \emph{all utility-valued coefficients} by the common factor
 $K=(0.1)^{(1-\alpha)(1-\sigma)}$. With $\alpha=0.733$ and $\sigma=2$,
@@ -124,9 +125,12 @@ These are separate specifications, not interchangeable calibration results.
 
 \textbf{What the audit establishes.} A read-only review traced the implemented
 budget, material utility, child benefit, bequest, choice-probability, aggregation,
-and supply equations. Standalone arithmetic using the saved inputs confirmed
-their conversion identities, including the reference's family compensation and
-the experiment's physical floor. No model was imported, recalibrated, or solved.
+and supply equations. Scalar arithmetic on transcribed formulas reproduced
+the conversion identities at illustrative points, including family compensation
+and the physical floor; it did not evaluate the renter closed-form allocation
+or compare model outputs. Historical parameter conversions remain unchecked.
+Source hashes cover the floor experiment, not the adopted reference.
+No model was imported, recalibrated, or solved.
 A full numerical equivalence certificate remains outstanding because the code
 also contains fixed feasibility thresholds and numerical regularizers.
 
