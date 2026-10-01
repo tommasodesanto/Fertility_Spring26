@@ -1,5 +1,18 @@
 # Calibration Status
 
+## September 30, 21:40 New York — additional authorized local floor searches
+
+Six utility_floor_nm_v1 local Nelder–Mead chains started under explicit author
+authorization, supervisors48787–48792, two threads and4GiBRSS each, deadline
+1790833223.525048, at most500objective calls perchain/3000total plus6final
+postchecks. They reuse the reviewed fast objective: baseline exactly matches
+all14targets and31parameters, seven source-preservation tests pass. Pertrial
+standard17plots and repeated price solve are omitted for speed; final native
+postchecks remain required before treating a selection as verified. User-requested
+quick loss updates may be provisional and must be labeled accordingly. The two
+local GN chains continue; current reported historical-start chi probe loss291.0836
+is provisional. This is separate from the verified751.862327 historical winner.
+
 ## September 30, 21:24 New York — non-floor work stopped; floor selection verified
 
 At the author's explicit request, original arrays18899847 and18900753 were
