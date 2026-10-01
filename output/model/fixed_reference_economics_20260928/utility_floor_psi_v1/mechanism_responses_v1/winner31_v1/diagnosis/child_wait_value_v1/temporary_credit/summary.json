@@ -1,0 +1,69 @@
+{
+  "baseline_solution_sha256": "cb793ce4bd3029d2fd1e2a18a7b4c6d33321b0b19185d070c3512b434a6cd1bb",
+  "common_interior_mass": 0.18435604372817618,
+  "continuation_V_sha256": "9277a9de998b3c57a9757b723549efc82050f0d262ec1680636fd5b311a30ddb",
+  "continuation_dead_node_count": 200097,
+  "driver_sha256": "92fdfdee7ab4bd82c2e8074d31692c7bcbc3b5010bc8885949a75016743602da",
+  "equilibrium_evaluations": 0,
+  "excluded_mass": 0.0020201285687505115,
+  "interpretation": "Four-year current-decision credit relaxation with future values anticipated under baseline financing; permanent minus temporary includes duration/expectation interactions, not additive primitive decomposition; no dead continuation value projected or relaxed",
+  "lifecycle_evaluations": 0,
+  "model_period_years": 4.0,
+  "original_household_sha256": "2a34f5f28c0c63ca3d24d9e759cd1b5b92aadaddb5fe04795e65abbc0b448082",
+  "patched_household_sha256": "a13e9b3944bc69e0a5229191a8f8133e8542d60f4464d4eaed51a0f9220abdb6",
+  "permanent_solution_sha256": "2423d819b7faec01f4e82ee623340ece6535c18530d19bed995603c7fc739812",
+  "policy_evaluations": [
+    {
+      "current_financed_share": 0.8,
+      "full_array_max_errors": {
+        "V": 0.0,
+        "fert_probs": 0.0,
+        "fert_value": 0.0
+      },
+      "future_continuation": "exact saved baseline V; native DEAD regions and transition/child-aging unchanged",
+      "label": "baseline_replay",
+      "native_function_source": "2a34f5f28c0c63ca3d24d9e759cd1b5b92aadaddb5fe04795e65abbc0b448082",
+      "seconds": 3.637611541998922
+    },
+    {
+      "current_financed_share": 1.0,
+      "future_continuation": "exact saved baseline V; native DEAD regions and transition/child-aging unchanged",
+      "label": "temporary_both100",
+      "native_function_source": "a13e9b3944bc69e0a5229191a8f8133e8542d60f4464d4eaed51a0f9220abdb6",
+      "seconds": 3.590887958998792
+    }
+  ],
+  "price": 0.719168368828958,
+  "remaining_feasibility_limitation": "Uses native expected continuation and interpolation unchanged; no additional strict support operator or artificial next-period bailout. Occupied-state lifecycle/estate ledger not independently regenerated for this policy-only diagnostic.",
+  "results": [
+    {
+      "arm": "permanent_both100",
+      "attempt_gain": 0.004298308625631842,
+      "attempt_gap_change": -0.003155031544610179,
+      "birth_change_mass": -9.632061713078098e-05,
+      "birth_change_per_young_n0_renter": -0.0005168075722540701,
+      "excluded_birth_change_mass": 0.0,
+      "negative_birth_change_mass": -0.00012624434799239,
+      "positive_birth_change_mass": 2.9923730861609014e-05,
+      "sensitivity_weighted_gap_change": -0.0006890687882489229,
+      "success_net_cost_gain": 0.003968175889937402,
+      "wait_gain": 0.007453340170242021
+    },
+    {
+      "arm": "temporary_both100",
+      "attempt_gain": 0.00016669045183794734,
+      "attempt_gap_change": -0.0003585227330780831,
+      "birth_change_mass": -1.3704644267490892e-05,
+      "birth_change_per_young_n0_renter": -7.353216936796633e-05,
+      "excluded_birth_change_mass": 0.0,
+      "negative_birth_change_mass": -2.803255972537171e-05,
+      "positive_birth_change_mass": 1.432791545788082e-05,
+      "sensitivity_weighted_gap_change": -9.74789741486829e-05,
+      "success_net_cost_gain": 9.775822195691302e-05,
+      "wait_gain": 0.0005252131849160306
+    }
+  ],
+  "status": "two_native_policy_evaluations_completed",
+  "total_seconds": 9.633394002914429,
+  "young_n0_renter_mass": 0.18637617229692674
+}

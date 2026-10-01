@@ -1,0 +1,42 @@
+{
+  "status": "zero_solve_current_option_ablation",
+  "formulas": "DeltaW=kappa_tenure*log(1-p_owned2_wait); C unchanged because child-owned2 prob exactly0; Delta(A-W)=-pi*DeltaW; new_p_try=p_try*exp(-pi*DeltaW/kappa_fert)/(p_wait+p_try*exp(-pi*DeltaW/kappa_fert))",
+  "current_menu_intervention": "Remove two-room ownership from CURRENT decision only; retained original future value functions and all other choices/preferences/financing",
+  "population_mass": 0.18637617229692674,
+  "arms": [
+    {
+      "arm": "baseline",
+      "p2_max": 0.3914559781551361,
+      "rounded_p2_one_mass": 0.0,
+      "attempt_zero_mass": 0.002020128568750512,
+      "mean_wait_value_change_interior": -0.00024769191888574204,
+      "mean_attempt_gap_change_from_ablation_interior": 0.00022216236161857894,
+      "baseline_population_first_birth_mass": 0.04144521495642096,
+      "ablated_first_birth_mass": 0.04148543899592829,
+      "largest_odds_multiplier": 1.025086046759043,
+      "zero_probability_handling": "Saved zero probabilities remain zero under the finite odds multiplier; underlying underflow uncertainty is unchanged and negligible, branch levels not invented"
+    },
+    {
+      "arm": "permanent_both100",
+      "p2_max": 0.6101663112640381,
+      "rounded_p2_one_mass": 0.0,
+      "attempt_zero_mass": 0.002020128568750512,
+      "mean_wait_value_change_interior": -0.0013739183302069699,
+      "mean_attempt_gap_change_from_ablation_interior": 0.0012230830485463193,
+      "baseline_population_first_birth_mass": 0.04134889433929017,
+      "ablated_first_birth_mass": 0.041399009990430426,
+      "largest_odds_multiplier": 1.0813678733036818,
+      "zero_probability_handling": "Saved zero probabilities remain zero under the finite odds multiplier; underlying underflow uncertainty is unchanged and negligible, branch levels not invented"
+    }
+  ],
+  "original_permanent_minus_baseline_birth_change_mass": -9.632061713078098e-05,
+  "ablated_permanent_minus_baseline_birth_change_mass": -8.642900549786515e-05,
+  "original_probability_change": -0.0005168075722540701,
+  "ablated_probability_change": -0.0004637342018172262,
+  "positive_ablated_change_mass": 2.972636283937897e-05,
+  "negative_ablated_change_mass": -0.00011615536833724412,
+  "new_model_solves": 0,
+  "numerical_caveat": "Analytic unnormalized-logit identity evaluated from saved float32 tenure probabilities; exact theory, finite saved precision. No clipping, probability renormalization or population dropping.",
+  "interpretation": "Diagnostic removal, not proposed adoption or full-menu recalibration; changing current choice availability while future menus remain original. Baseline and permanent-credit policy branch levels remain separately optimized.",
+  "driver_sha256": "9f2252df1e0a27f6576e445c450248ff3ee43748642c8c6c9d9b1b7b614552bb"
+}
