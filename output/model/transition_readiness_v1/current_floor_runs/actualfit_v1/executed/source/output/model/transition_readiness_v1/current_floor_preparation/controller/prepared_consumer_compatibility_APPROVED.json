@@ -1,0 +1,38 @@
+{
+  "schema": "current_floor_prepared_consumer_compatibility_v1",
+  "compatibility_approved": true,
+  "lead_review_accepted": true,
+  "original_preparation": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_runs/smoke_v4/native_preparation.json",
+    "sha256": "b775aa584e8e854ea266f56bb50a2bba904852685d301bf13198ff3e3dec1244"
+  },
+  "original_generator_controller": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
+    "sha256": "658859f10ec709d92f07bc599d3d36144c672827a99ffdd16bc4cee6892affef"
+  },
+  "original_generator_snapshot": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/controller_before_checkpoint.py",
+    "sha256": "658859f10ec709d92f07bc599d3d36144c672827a99ffdd16bc4cee6892affef"
+  },
+  "consumer_controller": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
+    "sha256": "880fe888b3863e45fa10ac59538868f02033b8289a1f5ba6d7c500d0ffae203c"
+  },
+  "allowed_source_roles": [
+    "controller"
+  ],
+  "reviewed_audit": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/checkpoint_consumer_source_delta_audit_APPROVED.json",
+    "sha256": "d6e9a7fdfc4700603c9b36e152a2390bf61a5617bd70d0053a2a5d3ee40a412e"
+  },
+  "reviewed_diff": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/controller_checkpoint_consumer.diff",
+    "sha256": "cffcddb392f718c2856388faeff69782cc5a6a5cd79457d416a95cd69ce2d8a0"
+  },
+  "change_scopes": [
+    "output_checkpoint",
+    "explicit_generation_consumer_validation",
+    "stationary_gate_boolean_normalization"
+  ],
+  "note": "Lead-approved three-scope compatibility; preserves actual old generator pins and original preparation bytes, authenticates the unchanged household/seed inputs and current consumer code. Numerical gate interpretation correction explicitly reviewed."
+}

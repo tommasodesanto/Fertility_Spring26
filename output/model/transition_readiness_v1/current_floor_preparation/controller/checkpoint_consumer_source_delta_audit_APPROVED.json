@@ -1,0 +1,54 @@
+{
+  "schema": "controller_checkpoint_consumer_source_delta_audit_v1",
+  "old_source": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
+    "sha256": "658859f10ec709d92f07bc599d3d36144c672827a99ffdd16bc4cee6892affef"
+  },
+  "old_snapshot": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/controller_before_checkpoint.py",
+    "sha256": "658859f10ec709d92f07bc599d3d36144c672827a99ffdd16bc4cee6892affef"
+  },
+  "new_source": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
+    "sha256": "880fe888b3863e45fa10ac59538868f02033b8289a1f5ba6d7c500d0ffae203c"
+  },
+  "original_preparation": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_runs/smoke_v4/native_preparation.json",
+    "sha256": "b775aa584e8e854ea266f56bb50a2bba904852685d301bf13198ff3e3dec1244"
+  },
+  "diff": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/controller_checkpoint_consumer.diff",
+    "sha256": "cffcddb392f718c2856388faeff69782cc5a6a5cd79457d416a95cd69ce2d8a0"
+  },
+  "checks": {
+    "NativeAdapter_methods_except_endpoint_AST_identical": true,
+    "NativeAdapter_endpoint_only_stationary_valid_predicate_changed": true,
+    "Controller___init___AST_identical": true,
+    "Controller_remaining_AST_identical": true,
+    "Controller_progress_AST_identical": true,
+    "Controller_account_AST_identical": true,
+    "Controller_prepare_AST_identical": true,
+    "GATES_AST_identical": true,
+    "Original_global_functions_except_validate_preparation_AST_identical": true,
+    "Controller_evaluate_all_critical_numerical_calls_AST_identical": true,
+    "Controller_run_all_critical_numerical_calls_AST_identical": true
+  },
+  "change_scopes": [
+    "output_checkpoint",
+    "explicit_generation_consumer_validation",
+    "stationary_gate_boolean_normalization"
+  ],
+  "numerics_unchanged_except_stationary_boolean_bugfix": true,
+  "accepted_numerics_unchanged": true,
+  "lead_review_accepted": true,
+  "lead_review_required": false,
+  "migration_authorized": true,
+  "validate_preparation_changed": true,
+  "NativeAdapter_all_AST_identical": false,
+  "change_scope": "THREE scopes: output-only candidate2023 checkpoints; explicit fail-closed generation/consumer compatibility; stationary audit Boolean normalization. NativeAdapter endpoint changes solely its mapping-valid predicate. Reference reconstruction, seed measurement, mapping and numerical root calls remain AST-identical.",
+  "original_preparation_receipt_not_rewritten": true,
+  "tests_passed": 27,
+  "new_native_model_calls": 0,
+  "lead_review_utc": "2026-10-01T19:15:43.344064+00:00",
+  "lead_review_note": "Reference reconstruction and measured-seed numerics are unchanged. Reviewed the complete diff: stationary audit eligibility now checks actual passed fiscal/marginal certificates and zero projection; this corrects heterogeneous Boolean interpretation without changing any tolerance, household solver, target, seed, mapping or root equation. Candidate output preserves exact2023 native state. Original generation receipt stays intact."
+}

@@ -1,0 +1,38 @@
+{
+  "schema": "current_floor_prepared_consumer_compatibility_v1",
+  "compatibility_approved": false,
+  "lead_review_accepted": false,
+  "original_preparation": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_runs/smoke_v4/native_preparation.json",
+    "sha256": "b775aa584e8e854ea266f56bb50a2bba904852685d301bf13198ff3e3dec1244"
+  },
+  "original_generator_controller": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
+    "sha256": "658859f10ec709d92f07bc599d3d36144c672827a99ffdd16bc4cee6892affef"
+  },
+  "original_generator_snapshot": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/controller_before_checkpoint.py",
+    "sha256": "658859f10ec709d92f07bc599d3d36144c672827a99ffdd16bc4cee6892affef"
+  },
+  "consumer_controller": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
+    "sha256": "880fe888b3863e45fa10ac59538868f02033b8289a1f5ba6d7c500d0ffae203c"
+  },
+  "allowed_source_roles": [
+    "controller"
+  ],
+  "reviewed_audit": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/checkpoint_consumer_source_delta_audit.json",
+    "sha256": "e79f911cab8fca8dc846c19ef2e614c55d0a87aab82f99a3177843228f1c1a20"
+  },
+  "reviewed_diff": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/controller_checkpoint_consumer.diff",
+    "sha256": "cffcddb392f718c2856388faeff69782cc5a6a5cd79457d416a95cd69ce2d8a0"
+  },
+  "change_scopes": [
+    "output_checkpoint",
+    "explicit_generation_consumer_validation",
+    "stationary_gate_boolean_normalization"
+  ],
+  "note": "UNAPPROVED local template. Lead must review all THREE scopes/final diff/checks, resolve deployment paths, then explicitly approve audit+receipt and repin both. Original generation preparation remains unchanged."
+}

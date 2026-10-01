@@ -1,0 +1,189 @@
+{
+  "captured_epoch": 1790883084.6189458,
+  "run": "/scratch/td2248/projects/transition_readiness_v1/current_floor/results/actualfit_v1",
+  "launcher_start.json": {
+    "start_epoch": 1790882687,
+    "deadline_epoch": 1790900687,
+    "mode": "fit",
+    "slurm_job_id": "18971392",
+    "threads": 1,
+    "cpus": 4,
+    "memory_GiB": 96
+  },
+  "heartbeat.json": {
+    "phase": "candidate",
+    "epoch": 1790883083.616312,
+    "candidate": 2,
+    "policy_calls": 7,
+    "psi": 0.16985485829436683
+  },
+  "native_input_reuse.json": {
+    "status": "PASS",
+    "policy_calls": 0,
+    "reference_solves": 0,
+    "seed_mappings": 0
+  },
+  "latest_completed.json": {
+    "certified": true,
+    "psi": 0.17156192800028292,
+    "model": 2.100001297131149,
+    "gap": 0.45425129713114876,
+    "loss_contribution": 0.2063442409453312,
+    "payload": {
+      "candidate": 1,
+      "models": [
+        2.100001297131149,
+        2.100001297131149,
+        2.100001297131149,
+        2.100001297131149
+      ],
+      "path": "/work/transition_runs/actualfit_v1/candidate_0001"
+    },
+    "mode": "diagnostic",
+    "production_ready": false,
+    "one_shock_measurement_certified": true,
+    "checkpoint_2023": {
+      "path": "/work/transition_runs/actualfit_v1/candidate_0001/state_2023_checkpoint/checkpoint_receipt.json",
+      "sha256": "4e702d5c96c0754965ca532b857fdda8cbc9d14b5858d3270a686b52f3bfb0b1"
+    },
+    "shock_fit_complete": false,
+    "full_path_certified": false,
+    "state_experiment_ready": false,
+    "state_physical_horizon_stable": true,
+    "state_value_integrity": true,
+    "terminal_passes": [
+      true,
+      true
+    ],
+    "classification": "diagnostic finite-horizon one-shock fit; full path uncertified"
+  },
+  "best_so_far.json": {
+    "certified": true,
+    "psi": 0.17156192800028292,
+    "model": 2.100001297131149,
+    "gap": 0.45425129713114876,
+    "loss_contribution": 0.2063442409453312,
+    "payload": {
+      "candidate": 1,
+      "models": [
+        2.100001297131149,
+        2.100001297131149,
+        2.100001297131149,
+        2.100001297131149
+      ],
+      "path": "/work/transition_runs/actualfit_v1/candidate_0001"
+    },
+    "mode": "diagnostic",
+    "production_ready": false,
+    "one_shock_measurement_certified": true,
+    "checkpoint_2023": {
+      "path": "/work/transition_runs/actualfit_v1/candidate_0001/state_2023_checkpoint/checkpoint_receipt.json",
+      "sha256": "4e702d5c96c0754965ca532b857fdda8cbc9d14b5858d3270a686b52f3bfb0b1"
+    },
+    "shock_fit_complete": false,
+    "full_path_certified": false,
+    "state_experiment_ready": false,
+    "state_physical_horizon_stable": true,
+    "state_value_integrity": true,
+    "terminal_passes": [
+      true,
+      true
+    ],
+    "classification": "diagnostic finite-horizon one-shock fit; full path uncertified"
+  },
+  "latest_exploratory_state.json": {
+    "checkpoint_2023": {
+      "path": "/work/transition_runs/actualfit_v1/candidate_0001/state_2023_checkpoint/checkpoint_receipt.json",
+      "sha256": "4e702d5c96c0754965ca532b857fdda8cbc9d14b5858d3270a686b52f3bfb0b1"
+    },
+    "shock_fit_complete": false,
+    "one_shock_measurement_certified": true,
+    "state_experiment_ready": false
+  },
+  "candidate_receipts": [
+    {
+      "path": "/scratch/td2248/projects/transition_readiness_v1/current_floor/results/actualfit_v1/candidate_0001/complete.json",
+      "summary": {
+        "certified": true,
+        "psi": 0.17156192800028292,
+        "model": 2.100001297131149,
+        "gap": 0.45425129713114876,
+        "loss_contribution": 0.2063442409453312,
+        "payload": {
+          "candidate": 1,
+          "models": [
+            2.100001297131149,
+            2.100001297131149,
+            2.100001297131149,
+            2.100001297131149
+          ],
+          "path": "/work/transition_runs/actualfit_v1/candidate_0001"
+        },
+        "mode": "diagnostic",
+        "production_ready": false,
+        "one_shock_measurement_certified": true,
+        "checkpoint_2023": {
+          "path": "/work/transition_runs/actualfit_v1/candidate_0001/state_2023_checkpoint/checkpoint_receipt.json",
+          "sha256": "4e702d5c96c0754965ca532b857fdda8cbc9d14b5858d3270a686b52f3bfb0b1"
+        },
+        "shock_fit_complete": false,
+        "full_path_certified": false,
+        "state_experiment_ready": false,
+        "state_physical_horizon_stable": true,
+        "state_value_integrity": true,
+        "terminal_passes": [
+          true,
+          true
+        ],
+        "classification": "diagnostic finite-horizon one-shock fit; full path uncertified"
+      }
+    }
+  ],
+  "checkpoint_receipts": [
+    {
+      "path": "/scratch/td2248/projects/transition_readiness_v1/current_floor/results/actualfit_v1/candidate_0001/state_2023_checkpoint/checkpoint_receipt.json",
+      "summary": {
+        "schema": "current_floor_candidate_2023_checkpoint_v1",
+        "status": "complete",
+        "psi": 0.17156192800028292,
+        "candidate": 1,
+        "horizon": 16,
+        "shock_fit_complete": false,
+        "one_shock_measurement_certified": true,
+        "horizon_stable": true,
+        "horizon_unstable": false,
+        "root_pass": true,
+        "replay_pass": true,
+        "accounting_valid": true,
+        "terminal_passes": [
+          true,
+          true
+        ],
+        "state_experiment_ready": false,
+        "full_path_certified": false,
+        "state_physical_horizon_stable": true,
+        "state_value_integrity": true,
+        "classification": "Exploratory exact native2023 state; complete shock fit and continuation validation outstanding",
+        "export": {
+          "path": "/work/transition_runs/actualfit_v1/candidate_0001/state_2023_checkpoint/actual_2023.pkl.gz",
+          "sha256": "7e1f22a14477d82fab618845b6e9f7aa18b45cf7589f642c61cfbd587b8a1c4d",
+          "calendar_year": 2023,
+          "period": 4,
+          "period_index": 4,
+          "exact_native_state": true,
+          "reconstructed_or_rescaled": false,
+          "queue_lags": [
+            16,
+            20
+          ],
+          "forecast_and_continuation_saved": true,
+          "initial_population": 0.9202844335443893,
+          "actual_inherited_state": true,
+          "no_rescaling": true,
+          "both_native_queues": true
+        }
+      }
+    }
+  ],
+  "status": "RUNNING"
+}

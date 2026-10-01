@@ -21,6 +21,12 @@ extra=[]
 for planpath in planpaths:
  plan=json.loads(planpath.read_text())
  extra += [Path(plan['target_contract'][k]['path']) for k in ('blocks','annual')]
+ if 'prepared_native_inputs' in plan:extra.append(Path(plan['prepared_native_inputs']['path']))
+ if 'prepared_consumer_compatibility' in plan:
+  approved=Path(plan['prepared_consumer_compatibility']['path']);extra.append(approved)
+  receipt=json.loads(approved.read_text())
+  extra += [Path(receipt[k]['path']) for k in ('original_generator_snapshot','reviewed_audit','reviewed_diff')]
+extra.append(OUT/'fit_preflight.py')
 paths += extra
 if DEST.exists():shutil.rmtree(DEST)
 files={}

@@ -1,0 +1,31 @@
+{
+  "status": "native_callback_api_passed",
+  "policy_calls": 0,
+  "native_module": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/source/small_credit_lab/engine/solver.py",
+  "native_utils": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/source/small_credit_lab/engine/utils.py",
+  "callbacks": {
+    "interp_indices": "small_credit_lab.engine.utils",
+    "precompute_shared": "small_credit_lab.engine.shared",
+    "solve_bellman_full_markov_income": "small_credit_lab.engine.household",
+    "solve_markov_income_at_prices": "small_credit_lab.engine.equilibrium",
+    "forward_distribution_markov_income": "small_credit_lab.engine.distribution",
+    "advance_cohort_one_period_markov_income": "small_credit_lab.engine.distribution",
+    "property_tax_revenue_from_distribution": "small_credit_lab.engine.shared",
+    "build_forward_tenure_transition_maps": "small_credit_lab.engine.household",
+    "income_transition_values": "small_credit_lab.engine.shared",
+    "entry_wealth_grid_weights": "small_credit_lab.engine.distribution",
+    "DEAD_MASS_TOL": "small_credit_lab.engine.solver",
+    "_censor_entry_dead_mass": "small_credit_lab.engine.distribution",
+    "_gate_dead_mass_at_age": "small_credit_lab.engine.distribution",
+    "realize_current_cross_section": "small_credit_lab.engine.distribution",
+    "realize_stayer_cross_section": "small_credit_lab.engine.distribution",
+    "age_to_index": "small_credit_lab.engine.distribution",
+    "apply_child_aging": "small_credit_lab.engine.household",
+    "bequest_utility_vec": "small_credit_lab.engine.household",
+    "compute_markov_statistics": "small_credit_lab.engine.distribution",
+    "get_completed_fertility": "small_credit_lab.engine.shared",
+    "income_at_state": "small_credit_lab.engine.shared",
+    "owner_borrowing_floor": "small_credit_lab.engine.household",
+    "renter_borrowing_floor": "small_credit_lab.engine.household"
+  }
+}

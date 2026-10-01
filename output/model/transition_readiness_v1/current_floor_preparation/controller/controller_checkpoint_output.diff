@@ -1,0 +1,72 @@
+--- /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_runs/smoke_v4/executed/one_shock_floor.py
++++ /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py
+@@ -544,6 +544,38 @@
+         self.policy_calls += calls
+         require(self.policy_calls <= self.plan['budget']['maximum_policy_calls'], 'Policy-call budget exceeded')
+ 
++    def checkpoint_2023(self,reply,folder,measurement_certified):
++        """Output-only recoverable native state; no solve or measurement reuse."""
++        self.remaining()
++        directory=Path(folder)/'state_2023_checkpoint'
++        require(not directory.exists(),'Every native candidate checkpoint needs a fresh folder')
++        deadline=min(self.deadline,time.monotonic()+self.plan['budget']['render_seconds'])
++        with watchdog(deadline):
++            exported=self.runtime.export_2023(reply,directory)
++        require(exported.get('calendar_year')==2023 and exported.get('period_index')==4 and
++            exported.get('exact_native_state') is True and exported.get('reconstructed_or_rescaled') is False and
++            exported.get('queue_lags')==[16,20] and exported.get('forecast_and_continuation_saved') is True,
++            'Exact index4 inherited wealth/distribution, both queues, forecast and continuation required')
++        pinned({key:exported[key] for key in ('path','sha256')})
++        self.remaining()
++        receipt=dict(schema='current_floor_candidate_2023_checkpoint_v1',status='complete',
++            identity=self.plan['identity'],psi=float(reply['psi']),candidate=self.count,
++            horizon=reply['horizon'],shock_fit_complete=False,one_shock_measurement_certified=measurement_certified,
++            horizon_stable=reply['horizon_comparison']['passed'],horizon_unstable=not reply['horizon_comparison']['passed'],
++            root_pass=reply['root_pass'],replay_pass=reply['replay_pass'],accounting_valid=reply['accounting_valid'],
++            terminal_passes=reply['terminal_passes'],state_experiment_ready=False,full_path_certified=False,
++            state_physical_horizon_stable=reply['state_horizon_comparison']['passed'],
++            state_value_integrity=reply['state_horizon_comparison'].get('state_value_integrity',False),
++            classification='Exploratory exact native2023 state; complete shock fit and continuation validation outstanding',
++            export=exported)
++        path=directory/'checkpoint_receipt.json'
++        write(path,receipt)
++        checkpoint=dict(path=str(path),sha256=sha(path))
++        reply.update(checkpoint_2023=checkpoint,checkpoint_2023_export=exported)
++        write(self.out/'latest_exploratory_state.json',dict(checkpoint_2023=checkpoint,shock_fit_complete=False,
++            one_shock_measurement_certified=measurement_certified,state_experiment_ready=False))
++        return checkpoint
++
+     def prepare(self):
+         preflight(self.plan)
+         require(self.runtime.identity() == self.plan['identity'], 'Current-floor runtime identity differs')
+@@ -634,8 +666,10 @@
+                     terminal_passes=[previous['terminal_pass'],reply['terminal_pass']])
+                 write(folder/'horizon_comparison.json', comparison)
+                 write(folder/'state_2023_horizon_comparison.json',state_comparison)
++                checkpoint=self.checkpoint_2023(reply,folder,comparison['passed'])
+                 if not comparison['passed']:
+-                    return dict(certified=False, model=None, payload=dict(candidate=self.count, error='horizon gates failed'))
++                    return dict(certified=False, model=None, payload=dict(candidate=self.count, error='horizon gates failed',
++                        checkpoint_2023=checkpoint,shock_fit_complete=False,state_experiment_ready=False))
+             previous = reply
+         models = [r['period_tfr_topcode_adjusted'] for r in reply['fertility'][:4]]
+         require(len(models) == 4 and all(math.isfinite(v) for v in models), 'Four finite original fertility measurements required')
+@@ -643,6 +677,7 @@
+         summary = dict(certified=True, psi=float(psi), model=models[3], gap=models[3]-target,
+             loss_contribution=(models[3]-target)**2, payload=dict(candidate=self.count, models=models, path=str(folder)),
+             mode=self.plan['mode'], production_ready=False,one_shock_measurement_certified=True,
++            checkpoint_2023=reply['checkpoint_2023'],shock_fit_complete=False,
+             full_path_certified=False,state_experiment_ready=False,
+             state_physical_horizon_stable=reply['state_horizon_comparison']['passed'],
+             state_value_integrity=reply['state_horizon_comparison'].get('state_value_integrity',False),
+@@ -674,7 +709,9 @@
+         with (self.out/'fertility_fit.csv').open('w', newline='') as stream:
+             writer = csv.DictWriter(stream, fieldnames=list(rows[0])); writer.writeheader(); writer.writerows(rows)
+         self.progress('export_exact_2023')
+-        exported = self.runtime.export_2023(self.last, self.out/'state_2023')
++        pinned(self.last['checkpoint_2023'])
++        exported = self.last['checkpoint_2023_export']
++        pinned({key:exported[key] for key in ('path','sha256')})
+         require(exported.get('calendar_year') == 2023 and exported.get('period_index') == 4 and
+                 exported.get('exact_native_state') is True and exported.get('reconstructed_or_rescaled') is False and
+                 exported.get('queue_lags') == [16, 20] and exported.get('forecast_and_continuation_saved') is True,

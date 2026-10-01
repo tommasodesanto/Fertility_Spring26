@@ -1,0 +1,54 @@
+{
+  "status": "failed_endpoint_initial_mapping",
+  "whole_readiness_passed": false,
+  "job_id": "18969934",
+  "actual_native_calls": 32,
+  "reference_repeat_verified": true,
+  "fresh_seed_baseline_verified": true,
+  "prepared_receipt_sha256": "b775aa584e8e854ea266f56bb50a2bba904852685d301bf13198ff3e3dec1244",
+  "prepared_small_file_pins_verified": true,
+  "reference_checkpoint": {
+    "path": "/work/transition_runs/smoke_v4/native_reference/selected_native_packet.pkl.gz",
+    "sha256": "592b4a01a3ba5b42e49d17cf984d1fab8256f5de712216e53ad838c6bc834648"
+  },
+  "measured_matrix": {
+    "path": "/work/transition_runs/smoke_v4/seed/measured/jacobian.npy",
+    "sha256": "343da756a5c474e39bda035ee2e5344629f9ee01b5cc522761181078ae0f74c8"
+  },
+  "root_status": "invalid_initial_mapping",
+  "root_evaluations": 1,
+  "root_elapsed_seconds": 27.758874577935785,
+  "initial_mapping": {
+    "evaluation": 1,
+    "phase": "initial",
+    "prices": [
+      0.7188481029285891
+    ],
+    "residual": [
+      0.0006200581399176119
+    ],
+    "score": null,
+    "raw_max_abs": null,
+    "trimmed_score": null,
+    "mapping_valid": false,
+    "new_best": false,
+    "best_score": null,
+    "elapsed_seconds": 27.74529747199267,
+    "evaluation_seconds": 27.745191738009453
+  },
+  "native_stationary": {
+    "price": 0.7188481029285891,
+    "psi_child": 0.1717334899282832,
+    "population_scale": 0.9202372154633391,
+    "renewal_residual": 0.0006200581399176119,
+    "accounting_valid": true,
+    "policy_calls": 1,
+    "falsey_top_level_gate_fields": {
+      "feasibility_projection_mass": 0.0,
+      "housing_market_clearing_required": false
+    },
+    "fiscal_certificate_pass": true
+  },
+  "launcher_exit_code": 1,
+  "new_solves_or_submissions": 0
+}

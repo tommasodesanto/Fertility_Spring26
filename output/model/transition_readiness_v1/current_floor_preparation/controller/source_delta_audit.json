@@ -1,0 +1,39 @@
+{
+  "schema": "controller_output_checkpoint_source_delta_audit_v1",
+  "old_source": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_runs/smoke_v4/executed/one_shock_floor.py",
+    "sha256": "658859f10ec709d92f07bc599d3d36144c672827a99ffdd16bc4cee6892affef"
+  },
+  "old_snapshot": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/controller_before_checkpoint.py",
+    "sha256": "658859f10ec709d92f07bc599d3d36144c672827a99ffdd16bc4cee6892affef"
+  },
+  "new_source": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
+    "sha256": "e1cf33e574d7d91bcfdb9a73229beaa6c9f7f6c4d3c04f3daed318d1b08c502f"
+  },
+  "diff": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/controller/controller_checkpoint_output.diff",
+    "sha256": "7cf93223c33ceb96f748b9fb63df3713f7acc9e05cf7e1e085837b88ba4c236a"
+  },
+  "checks": {
+    "NativeAdapter_all_methods_AST_identical": true,
+    "Controller___init___AST_identical": true,
+    "Controller_remaining_AST_identical": true,
+    "Controller_progress_AST_identical": true,
+    "Controller_account_AST_identical": true,
+    "Controller_prepare_AST_identical": true,
+    "Controller_evaluate_all_critical_numerical_calls_AST_identical": true,
+    "Controller_run_all_critical_numerical_calls_AST_identical": true
+  },
+  "numerics_unchanged": true,
+  "accepted_numerics_unchanged": false,
+  "lead_review_required": true,
+  "migration_authorized": false,
+  "prepared_source_pin_guards_unchanged": true,
+  "original_preparation_receipt_not_rewritten": true,
+  "change_scope": "Output-only actual2023 checkpoint after native horizon-pair evaluation, additional receipt/payload links, and reuse of that same export at final fit completion.",
+  "budget_effect": "Checkpoint output uses retained total deadline and render_seconds watchdog; interrupted exports never receive complete controller checkpoint marker or accepted candidate summary.",
+  "tests_passed": 23,
+  "new_native_model_calls": 0
+}

@@ -5,7 +5,7 @@ The launcher reuses the calibrated frozen-root, grid-resolution base overlays, c
 Zero-model-call target-architecture preflight (run on the Torch login node):
 
 ```sh
-bash /scratch/td2248/projects/transition_readiness_v1/current_floor/floor_launch.sh --mode preflight --seconds 300 --label native_import_v1
+bash /scratch/td2248/projects/transition_readiness_v1/current_floor/floor_launch.sh --mode preflight --seconds 300 --label native_import_new_label
 ```
 
 After copying its `preflight.json` here as `native_import_preflight.json`, `make_plan.py` constructs the lead-specified diagnostic smoke plan. It takes the identity from the actual zero-call constructor, actual selected preference from the parameter table, and the retained complete annual target contract. It does not submit a job.
@@ -13,3 +13,19 @@ After copying its `preflight.json` here as `native_import_preflight.json`, `make
 The lead must review and submit the final inventoried smoke plan. Pass `--time=01:31:00` and an explicit log output to `sbatch`, then use launcher arguments `--mode smoke --seconds 5400 --label smoke_v1 --plan /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/deployment/smoke_plan.json`. Allocation is 4 CPUs/96 GiB; native numerical libraries remain one thread. The 90-minute actual-start timeout, per-stage controller limits, iteration limits, and 260 actual policy-call cap stop work without automatic retry. The launcher writes start/terminal receipts and a heartbeat every five minutes; native controller checkpoints preserve completed reference/seed inputs for explicit later reuse.
 
 The short six-date smoke verifies the changed-shock equilibrium and fresh replay. Its terminal comparison remains diagnostic; it cannot certify the full 104/128-date transition or production readiness. No model job is authorized by running these preparation scripts alone.
+
+Actual target-architecture import `native_import_v2` passed with zero policy calls and exit 0. Its receipts and log are retained in `native_import_v2/`; the verified constructor still requires native selected-state reconstruction. The generated `smoke_plan.json` passed the complete zero-call controller preflight. The final 89-file remote inventory was checked after upload. No Slurm job was submitted by this preparation worker.
+
+Native checkpoints and measured-seed receipts use stable `/work/transition_runs/<label>` paths. All prior result folders are mounted read-only at `/work/transition_runs`, with only the current label mounted writable. `/work/results` remains a numerical cache alias. This lets a later explicitly pinned fit reuse completed readiness inputs without rewriting receipt paths.
+
+After the first actual smoke stopped on a native utility export mismatch, the scoped runtime callback repair was deployed with updated controller failure counters. Actual `native_api_v1` passed all 23 required helpers with zero policy calls and exit 0 in 14.7 seconds. Its receipt and log are retained here. The regenerated 89-file inventory and smoke plan pin runtime `e1ecd57d…` and controller `6eafa7da…`; use a fresh `smoke_v2` label for the next lead-submitted model run. The six-part native identity and all numerical budgets remain unchanged.
+
+Actual one-shock fit `actualfit_v1` was submitted as Torch job `18971392` after the exact mounted preflight authenticated the original native checkpoint, measured matrix, generation/consumer audit, and critical AST comparison. It uses horizons `[12,16]`, a five-hour actual-start limit, and 2,200 actual native calls. It began at 15:24:47 New York on October 1; the actual deadline is 20:24:47. Reference/seed restoration passed with zero new solves. The full 98-file executed snapshot is retained under `current_floor_runs/actualfit_v1/executed`. Candidate completion and a fitted shock remain to be observed.
+
+Reproduce the compact read-only collector without importing the model or copying packet arrays:
+
+```sh
+ssh -4 -oConnectTimeout=20 -oBatchMode=yes torch '/share/apps/anaconda3/2025.06/bin/python -' < /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_floor_preparation/deployment/actualfit_progress.py
+```
+
+It reports launcher start/termination, failure, current phase, completed candidates, latest/best measurements, and exact 2023 checkpoint receipt paths while recursively suppressing source identity maps and arrays. The last collected snapshot is `current_floor_runs/actualfit_v1/progress_snapshot.json`.

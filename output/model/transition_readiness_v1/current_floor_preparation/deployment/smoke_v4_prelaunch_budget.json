@@ -1,0 +1,41 @@
+{
+  "label": "smoke_v4",
+  "status": "prelaunch_budget",
+  "maximum_native_call_estimate": 214,
+  "components": {
+    "reference_repeat_calls": 2,
+    "fresh_seed_dates": 12,
+    "fresh_seed_mapping_count": 5,
+    "fresh_seed_upper_calls": 120,
+    "endpoint_max_calls": 18,
+    "stationary_one_step_max_calls": 2,
+    "short_path_mapping_cap": 6,
+    "short_path_dates": 6,
+    "short_path_upper_calls": 72
+  },
+  "observed_saved_reference_bellman_seconds": 21.578089765040204,
+  "observed_saved_reference_distribution_seconds": 4.720418989891186,
+  "reference_timing_source": "current_floor_runs/smoke_v3/native_timings.json",
+  "bellman_upper_estimate_seconds": 4617.711209718604,
+  "bellman_upper_estimate_minutes": 76.96185349531007,
+  "additional_costs": "distribution, dated accounting, authenticated import, report rendering",
+  "actual_cache_may_reduce_calls": true,
+  "cache_savings_guaranteed": false,
+  "launcher_seconds": 5400,
+  "slurm_seconds": 5460,
+  "policy_call_stop_cap": 260,
+  "numerical_threads": 1,
+  "allocated_cpus": 4,
+  "allocated_memory_GiB": 96,
+  "exact_policy_cache_GiB": 64,
+  "stop_conditions": [
+    "global deadline",
+    "per-stage deadline",
+    "policy-call cap",
+    "first failed scientific gate",
+    "no checkpoint/heartbeat for 30 minutes requires investigation"
+  ],
+  "health_check_minutes": 5,
+  "fit_launch_authorized": false,
+  "recorded_epoch": 1790880325.9202619
+}
