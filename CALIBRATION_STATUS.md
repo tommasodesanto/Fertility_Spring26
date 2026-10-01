@@ -1,5 +1,27 @@
 # Calibration Status
 
+## October 1, 19:11 New York — one-shock transition stopped by author
+
+The author instructed this chat to stop the transition and read the changing
+calibration contract in the other chats. Torch confirms job **18985505**
+(`actualfit_v3`) cancelled at 19:11:25; its batch ended at 19:11:55. The
+`one-shock-fit-checkpoints` heartbeat is paused. Saved run results remain
+preserved; no replacement transition is launched. See the
+[cancellation receipt](output/model/transition_readiness_v1/current_floor_runs/actualfit_v3/cancellation_receipt.json).
+
+The stopped transition uses the older selected reference with physical
+population `0.920284415998407` and fixed `H0=6.293507689200028`; it is not a
+transition from the new `N0=1` calibration described below. The
+"Audit calibration normalization" chat also records the author's requested
+direct-`H0` comparator: search `H0` with nine other coordinates and solve price
+and `psi` internally for housing clearing and fertility normalization. Its
+[implementation and review status](output/model/fixed_reference_economics_20260928/direct_h0_calibration_v1/README.md)
+report native validation pending, with no production comparator search launched.
+Equivalence across bounds and equilibrium branches remains unverified. Neither
+that comparator nor a provisional normalized-search point is an authenticated
+new transition handoff. A future transition requires the verified selected
+reference and closure contract; it must not silently reuse the stopped baseline.
+
 ## October 1, 18:23 New York — exploratory one-shock fit resumed
 
 Transition job **18985505** (`actualfit_v3`) started at 18:23:26 New York on
