@@ -1,0 +1,23 @@
+{
+  "attempts": [
+    {
+      "error": "Cannot set NUMBA_NUM_THREADS to a different value once the threads have been launched (currently have 1, trying to set 2)",
+      "error_type": "RuntimeError",
+      "label": "price_start",
+      "price": 0.678660685,
+      "reason": "fresh initial price evaluation",
+      "status": "failed_fatal"
+    }
+  ],
+  "bounds_origin_qref": 0.7898695017462086,
+  "bounds_role": "external numerical search caps; not economic restrictions",
+  "events": [],
+  "expansion_factor": 1.6,
+  "lower": 0.09873368771827608,
+  "maximum_expansion_attempts": 20,
+  "maximum_new_lifecycle": 12,
+  "method": "adaptive_multiplicative_then_safeguarded_secant",
+  "requested_start": "0.678660685",
+  "start": 0.678660685,
+  "upper": 6.318956013969669
+}

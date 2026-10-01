@@ -1,0 +1,108 @@
+{
+  "status": "exact_saved_observer_reproduction",
+  "point": "verified local chain11; original-weight loss114.13604148137114; not newer Torch109 point",
+  "elapsed_seconds": 1.8086903095245361,
+  "budget_seconds": 600,
+  "threads": 1,
+  "memory_budget_gib": 8,
+  "observed_peak_rss_bytes": 619446272,
+  "free_parameters_verified": true,
+  "saved_room_floor_exact": true,
+  "reconstruction": {
+    "stationary_post_fertility_nesting_l1": 1.3705894112593094e-16,
+    "stationary_post_fertility_nesting_max_abs": 8.673617379884035e-19,
+    "reconstructed_baseline_births": 0.11585832656930495,
+    "stationary_feasibility_projection_mass": 0.0
+  },
+  "exact_saved_observer_fields": [
+    "control_mean_housing",
+    "treated_mean_housing",
+    "origin_mass",
+    "destination_mass",
+    "housing_response",
+    "treated_continuation_births"
+  ],
+  "result": {
+    "status": "complete_one_period_dated_matched_branch_did",
+    "origin_period": 0,
+    "destination_period": 1,
+    "origin_price": 0.689763713921058,
+    "destination_price": 0.689763713921058,
+    "origin_mass": 0.05117423014843886,
+    "destination_mass": 0.051174230148438894,
+    "survival_loss": 0.0,
+    "treated_feasibility_projection_mass": 0.0,
+    "control_feasibility_projection_mass": 0.0,
+    "treated_continuation_births": 0.018855545644875554,
+    "treated_mean_housing": 6.955108849086157,
+    "control_mean_housing": 5.975093924961874,
+    "housing_response": 0.9800149241242826,
+    "census_age_bridge_applied": false,
+    "branch_mass_roundoff_gates": [
+      {
+        "stage": "treated_branch_advancement",
+        "actual_mass_before_normalization": 0.05117423014843363,
+        "expected_mass": 0.05117423014843886,
+        "relative_gap": 1.0223751267718206e-13,
+        "relative_tolerance": 5e-09
+      },
+      {
+        "stage": "control_branch_advancement",
+        "actual_mass_before_normalization": 0.05117423014843711,
+        "expected_mass": 0.05117423014843886,
+        "relative_gap": 3.416956657115368e-14,
+        "relative_tolerance": 5e-09
+      },
+      {
+        "stage": "treated_destination_feasibility_gate",
+        "actual_mass_before_normalization": 0.05117423014843887,
+        "expected_mass": 0.05117423014843887,
+        "relative_gap": 0.0,
+        "relative_tolerance": 5e-09
+      },
+      {
+        "stage": "control_destination_feasibility_gate",
+        "actual_mass_before_normalization": 0.05117423014843886,
+        "expected_mass": 0.05117423014843887,
+        "relative_gap": 2.711870362789974e-16,
+        "relative_tolerance": 5e-09
+      },
+      {
+        "stage": "treated_destination_fertility",
+        "actual_mass_before_normalization": 0.05117423014843887,
+        "expected_mass": 0.05117423014843887,
+        "relative_gap": 0.0,
+        "relative_tolerance": 5e-09
+      },
+      {
+        "stage": "treated_destination_current_choice",
+        "actual_mass_before_normalization": 0.05117423014843524,
+        "expected_mass": 0.05117423014843887,
+        "relative_gap": 7.105100350509733e-14,
+        "relative_tolerance": 5e-09
+      },
+      {
+        "stage": "control_destination_current_choice",
+        "actual_mass_before_normalization": 0.05117423014843868,
+        "expected_mass": 0.05117423014843887,
+        "relative_gap": 3.796618507905964e-15,
+        "relative_tolerance": 5e-09
+      }
+    ]
+  },
+  "source_pins": {
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_11/postcheck_results/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/tools/run_e5f_transition_calibration.py": "434503d48a34a7ff8d6c65dbba6bc5cc5e06e98db8caddfcbac8fcf8b440ba16",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_11/postcheck_results/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/tools/run_dynamic_population_transition.py": "849709afb281193a48ccc44b352ed548c615c28da00b87301f9b7ad212bb1d8c",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_11/postcheck_results/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/tools/run_e5f_open_population_transition.py": "af52983e0d6d97f16dff74f2491742825d2cbe506240417d47048773d31f249d",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_11/postcheck_results/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/intergen_eqscale_seq_optimized/solver.py": "b637a655a9344b63f4461ee0fa4796c04bd98188477c4e6ace2c48ae0fc8aec1",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_11/postcheck_results/selected_postcheck/phase_b_ge/selected_repeat/stage/solution_arrays.npz": "ec265d70de0fd030de73c061f5806d1937291ec64883376e03fed9a04034aa07",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_11/postcheck_results/selected_postcheck/proposed_parameters.json": "4ad269856d918c435211cc3f1853edf01365505f4daa1ff084437340b67ff778",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_11/postcheck_results/selected_postcheck/native_selected_repeat.json": "1b752c40dcbe87ff9e732c8216b17880b7d49150b1bdb591d3eb24f936a6a3af",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/grid_resolution_v1/proposed_120x9/bundle.json": "8189b1682de32608cf5f4236c7dec7f103d11135a0b84eb1f961411017a54fab",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/grid_resolution_v1/proposed_120x9/arrays.npz": "5d894a011ad8d67fabe22ab9c35be61651c2828a6688831358b222a7c4867c77"
+  },
+  "model_solves": 0,
+  "capture": "Python return-event profiler, no source edits",
+  "switches": "Unavailable: origin-destination tenure tags not preserved in current branch distribution",
+  "purchase_affordability": "Unavailable in existing observer; requires separate exact state-cash rule measurement"
+}

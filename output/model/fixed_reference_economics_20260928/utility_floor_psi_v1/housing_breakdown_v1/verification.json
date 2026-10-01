@@ -1,0 +1,88 @@
+{
+  "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_11/postcheck_results/selected_postcheck/phase_b_ge/selected_repeat/stage/solution_arrays.npz",
+  "sha256": "ec265d70de0fd030de73c061f5806d1937291ec64883376e03fed9a04034aa07",
+  "repeat_receipt": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_11/postcheck_results/selected_postcheck/native_selected_repeat.json",
+  "fit_identity_exact": true,
+  "aggregate_rooms_matches_saved_observer": true,
+  "aggregate_ownership_matches_saved_g": true,
+  "aggregate_rooms_matches_native_demand": true,
+  "current_children_contributions_add_exact": true,
+  "original_loss": 114.13604148137114,
+  "branch_summary": {
+    "branch_mass_roundoff_gates": [
+      {
+        "actual_mass_before_normalization": 0.05117423014843363,
+        "expected_mass": 0.05117423014843886,
+        "relative_gap": 1.0223751267718206e-13,
+        "relative_tolerance": 5e-09,
+        "stage": "treated_branch_advancement"
+      },
+      {
+        "actual_mass_before_normalization": 0.05117423014843711,
+        "expected_mass": 0.05117423014843886,
+        "relative_gap": 3.416956657115368e-14,
+        "relative_tolerance": 5e-09,
+        "stage": "control_branch_advancement"
+      },
+      {
+        "actual_mass_before_normalization": 0.05117423014843887,
+        "expected_mass": 0.05117423014843887,
+        "relative_gap": 0.0,
+        "relative_tolerance": 5e-09,
+        "stage": "treated_destination_feasibility_gate"
+      },
+      {
+        "actual_mass_before_normalization": 0.05117423014843886,
+        "expected_mass": 0.05117423014843887,
+        "relative_gap": 2.711870362789974e-16,
+        "relative_tolerance": 5e-09,
+        "stage": "control_destination_feasibility_gate"
+      },
+      {
+        "actual_mass_before_normalization": 0.05117423014843887,
+        "expected_mass": 0.05117423014843887,
+        "relative_gap": 0.0,
+        "relative_tolerance": 5e-09,
+        "stage": "treated_destination_fertility"
+      },
+      {
+        "actual_mass_before_normalization": 0.05117423014843524,
+        "expected_mass": 0.05117423014843887,
+        "relative_gap": 7.105100350509733e-14,
+        "relative_tolerance": 5e-09,
+        "stage": "treated_destination_current_choice"
+      },
+      {
+        "actual_mass_before_normalization": 0.05117423014843868,
+        "expected_mass": 0.05117423014843887,
+        "relative_gap": 3.796618507905964e-15,
+        "relative_tolerance": 5e-09,
+        "stage": "control_destination_current_choice"
+      }
+    ],
+    "census_age_bridge_applied": false,
+    "control_feasibility_projection_mass": 0.0,
+    "control_mean_housing": 5.975093924961874,
+    "destination_mass": 0.051174230148438894,
+    "destination_period": 1,
+    "destination_price": 0.689763713921058,
+    "housing_response": 0.9800149241242826,
+    "origin_mass": 0.05117423014843886,
+    "origin_period": 0,
+    "origin_price": 0.689763713921058,
+    "status": "complete_one_period_dated_matched_branch_did",
+    "survival_loss": 0.0,
+    "treated_continuation_births": 0.018855545644875554,
+    "treated_feasibility_projection_mass": 0.0,
+    "treated_mean_housing": 6.955108849086157
+  },
+  "no_model_solves": true,
+  "source_pins": {
+    "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_11/postcheck_results/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/tools/run_e5f_transition_calibration.py": "434503d48a34a7ff8d6c65dbba6bc5cc5e06e98db8caddfcbac8fcf8b440ba16",
+    "output/model/publication_refactor_20260929/grid_resolution_v1/proposed_120x9/bundle.json": "8189b1682de32608cf5f4236c7dec7f103d11135a0b84eb1f961411017a54fab"
+  },
+  "inherited_owner_grid_source": "output/model/publication_refactor_20260929/grid_resolution_v1/proposed_120x9/bundle.json",
+  "inherited_child_state_mode": "independent_count",
+  "cap_definition": "absolute difference from six physical rooms <= 1e-8, weighted by realized renter mass",
+  "no_matched_cohort_distribution_saved": true
+}

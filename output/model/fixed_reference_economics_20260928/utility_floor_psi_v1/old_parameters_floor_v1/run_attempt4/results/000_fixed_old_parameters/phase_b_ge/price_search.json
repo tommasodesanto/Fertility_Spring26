@@ -1,0 +1,71 @@
+{
+  "attempts": [
+    {
+      "label": "price_start",
+      "price": 0.678660685,
+      "reason": "fresh initial price evaluation",
+      "renewal_residual": -0.22524334024792425,
+      "status": "observed"
+    },
+    {
+      "label": "expand_01",
+      "price": 0.42416292812499995,
+      "reason": "multiplicative expansion direction=-1; initial residual-directed direction=-1; resumed=False",
+      "renewal_residual": -0.01697930744952325,
+      "status": "observed"
+    },
+    {
+      "label": "expand_02",
+      "price": 0.26510183007812493,
+      "reason": "multiplicative expansion direction=-1; initial residual-directed direction=-1; resumed=False",
+      "renewal_residual": 0.1196297989161812,
+      "status": "observed"
+    },
+    {
+      "label": "root_01",
+      "price": 0.4043930360669499,
+      "reason": "safeguarded secant/bisection inside observed sign bracket",
+      "renewal_residual": 2.276049207527997e-05,
+      "status": "observed"
+    },
+    {
+      "label": "root_02",
+      "price": 0.4063700252727549,
+      "reason": "safeguarded secant/bisection inside observed sign bracket",
+      "renewal_residual": -0.0017144161884276032,
+      "status": "observed"
+    },
+    {
+      "label": "root_03",
+      "price": 0.4045907349875304,
+      "reason": "safeguarded secant/bisection inside observed sign bracket",
+      "renewal_residual": -0.00014755132842569907,
+      "status": "observed"
+    },
+    {
+      "label": "root_04",
+      "price": 0.40441945657435757,
+      "reason": "safeguarded secant/bisection inside observed sign bracket",
+      "renewal_residual": -1.5379598705678177e-09,
+      "status": "observed"
+    },
+    {
+      "label": "selected_repeat",
+      "price": 0.40441945657435757,
+      "reason": "fresh exact selected-price repeat",
+      "renewal_residual": -1.5379598705678177e-09,
+      "status": "observed"
+    }
+  ],
+  "bounds_origin_qref": 0.7898695017462086,
+  "bounds_role": "external numerical search caps; not economic restrictions",
+  "events": [],
+  "expansion_factor": 1.6,
+  "lower": 0.09873368771827608,
+  "maximum_expansion_attempts": 20,
+  "maximum_new_lifecycle": 12,
+  "method": "adaptive_multiplicative_then_safeguarded_secant",
+  "requested_start": "0.678660685",
+  "start": 0.678660685,
+  "upper": 6.318956013969669
+}

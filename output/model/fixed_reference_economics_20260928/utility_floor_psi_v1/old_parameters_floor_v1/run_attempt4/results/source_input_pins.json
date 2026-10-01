@@ -1,0 +1,136 @@
+{
+  "candidate_floor_parameters_csv": {
+    "path": "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_11/results/0026_nm/phase_b_ge/selected_root/parameters.csv",
+    "sha256": "8045895a884152cc7f8e57dd6449f73e07a4d0400e0dbcc22a9febf79195cae4"
+  },
+  "candidate_floor_target_fit_csv": {
+    "path": "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_11/results/0026_nm/phase_b_ge/selected_root/target_fit.csv",
+    "sha256": "e6d76d393ebbe7e4901b6c2cae210517c034f82c9f89803f8b4e18867d282e82"
+  },
+  "coarse_arrays_sha256": "5d894a011ad8d67fabe22ab9c35be61651c2828a6688831358b222a7c4867c77",
+  "coarse_bundle_sha256": "8189b1682de32608cf5f4236c7dec7f103d11135a0b84eb1f961411017a54fab",
+  "economic_differences": [
+    "A(m) disabled",
+    "delta_alpha_jump 0.13033832072167359 -> 0",
+    "h_P 0 -> 1.9105885246262313 physical rooms"
+  ],
+  "effective_expected_parameters": {
+    "H0": 6.293507689200028,
+    "alpha_cons": 0.733,
+    "annual_depreciation": 0.01416143718381309,
+    "annual_property_tax": 0.010598360773872594,
+    "beta_annual": 0.9644107414298833,
+    "chi": 1.0967367387168123,
+    "child_benefit_CRRA_coefficient": 0.12576511231403403,
+    "child_benefit_curvature": 0.07222157735996547,
+    "delta_alpha": 0.0,
+    "delta_alpha_jump": 0.0,
+    "financed_share": 0.8,
+    "first_birth_fixed_cost": 0.5124446200323417,
+    "h_P": 1.9105885246262313,
+    "housing_supply_elasticity": 0.63,
+    "income_states": 9,
+    "kappa_fert": 0.14997364541773373,
+    "kappa_fert_continuation": 0.27657042729896497,
+    "payroll_tax": 0.08028070961950022,
+    "pension_period": 0.917784047463731,
+    "period_depreciation": 0.05545379079326218,
+    "period_property_tax": 0.042393443095490375,
+    "psi_child": 0.1355551166583114,
+    "q_annual": 0.020000000000000018,
+    "rental_cap": 6.0,
+    "selling_cost": 0.06,
+    "sigma": 2.0,
+    "tenure_choice_kappa": 0.011258537724729019,
+    "theta0": 0.16026323634022843,
+    "theta1": 0.008193084126995582,
+    "utility_reference_rent": 0.11046592704873838,
+    "wealth_grid_nodes": 120
+  },
+  "entry_contract": {
+    "approximation": "Existing five empirical quintile-bin means; censoring occurs after binning, not on raw survey observations.",
+    "arm": "nonnegative_mean",
+    "clipped_draw_mass": 0.0,
+    "conditional_sha256": "bf976b033678629c4f9e91df4037092d6e35ab113eebaf3fcf63c59510d2ca4f",
+    "credit": 0.0,
+    "dimensions": [
+      120,
+      9
+    ],
+    "effective_ratio_nodes": [
+      0.0,
+      0.0,
+      0.037865686206423034,
+      0.12770485428797146,
+      1.1272941320837204
+    ],
+    "lambda_positive": 0.3632385158888715,
+    "lifecycle_solves": 0,
+    "mean_annual_entry_income": 0.720554272517321,
+    "mean_wealth": 0.18651967924681834,
+    "necessary_current_budget_minimum_slack": 0.27427651537528747,
+    "negative_wealth_share": 0.0,
+    "ratio_weights": [
+      0.19942576269679177,
+      0.20037747293780178,
+      0.1998633085085668,
+      0.20008786061209277,
+      0.20024559524474678
+    ],
+    "raw_mean_wealth": 0.1865196792468183,
+    "raw_ratio_nodes": [
+      -2.22252859121604,
+      -0.0526403178090525,
+      0.104244689233362,
+      0.351572998737395,
+      3.1034542945567
+    ],
+    "zero_wealth_share": 0.666947530322984
+  },
+  "h_P_pinned_from_chain_11_0026_nm": 1.9105885246262313,
+  "native_floor_source_pins": "output/model/fixed_reference_economics_20260928/utility_floor_round2_v1/source_pins.json",
+  "native_floor_source_pins_sha256": "dca465cb1d1c79dd52e44a61e83b1bd3738e54751c76fa55fee4a48b02677b52",
+  "old_reference_parameter_values": {
+    "H0": 6.293507689200028,
+    "alpha_cons": 0.733,
+    "annual_depreciation": 0.01416143718381309,
+    "annual_property_tax": 0.010598360773872594,
+    "beta_annual": 0.9644107414298833,
+    "chi": 1.0967367387168123,
+    "child_benefit_CRRA_coefficient": 0.12576511231403403,
+    "child_benefit_curvature": 0.07222157735996547,
+    "delta_alpha": 0.0,
+    "delta_alpha_jump": 0.1303383207216736,
+    "financed_share": 0.8,
+    "first_birth_fixed_cost": 0.5124446200323417,
+    "h_P": 0.0,
+    "housing_supply_elasticity": 0.63,
+    "income_states": 9.0,
+    "kappa_fert": 0.14997364541773373,
+    "kappa_fert_continuation": 0.27657042729896497,
+    "payroll_tax": 0.08028070961950022,
+    "pension_period": 0.917784047463731,
+    "period_depreciation": 0.05545379079326218,
+    "period_property_tax": 0.042393443095490375,
+    "psi_child": 0.1355551166583114,
+    "q_annual": 0.020000000000000018,
+    "rental_cap": 6.0,
+    "selling_cost": 0.06,
+    "sigma": 2.0,
+    "tenure_choice_kappa": 0.011258537724729019,
+    "theta0": 0.16026323634022843,
+    "theta1": 0.008193084126995582,
+    "utility_reference_rent": 0.11046592704873838,
+    "wealth_grid_nodes": 120.0
+  },
+  "old_reference_parameters_csv": {
+    "path": "output/model/fixed_reference_economics_20260928/utility_calibration_round1_v1/deployment/attempt2/comparison_requested/with_A_parameters.csv",
+    "sha256": "5db55618addc2aa0a9d910972b217218689543cbd15143b7f89fe0eb9f861ea9"
+  },
+  "old_reference_target_fit_csv": {
+    "path": "output/model/fixed_reference_economics_20260928/utility_calibration_round1_v1/deployment/attempt2/comparison_requested/with_A_target_fit.csv",
+    "sha256": "16a90e2c6d1a63d65d5794349bfc7b27c933f4763fa18153563504f486f8d6e5"
+  },
+  "selected_price_start": 0.678660685,
+  "target_contract_sha256": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1"
+}

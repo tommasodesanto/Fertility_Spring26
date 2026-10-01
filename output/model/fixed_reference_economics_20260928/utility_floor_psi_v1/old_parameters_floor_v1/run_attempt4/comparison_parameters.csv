@@ -1,0 +1,32 @@
+parameter,old_estimate,floor_estimate,difference,old_status,floor_status,floor_lower,floor_upper,floor_near_bound
+H0,6.293507689200028,6.293507689200028,0.0,fixed population scale; not identified by per-household targets,fixed population scale; not identified by per-household targets,0.2,80.0,False
+beta_annual,0.9644107414298833,0.9644107414298833,0.0,free in exploratory entry calibration,free in experimental utility calibration,0.94,0.99,False
+chi,1.0967367387168123,1.0967367387168123,0.0,free in exploratory entry calibration,free in experimental utility calibration,0.1,5.0,False
+first_birth_fixed_cost,0.5124446200323417,0.5124446200323417,0.0,free in exploratory entry calibration,free in experimental utility calibration,0.0,8.0,False
+kappa_fert,0.14997364541773373,0.14997364541773373,0.0,free in exploratory entry calibration,free in experimental utility calibration,0.02,50.0,True
+kappa_fert_continuation,0.27657042729896497,0.27657042729896497,0.0,free in exploratory entry calibration,free in experimental utility calibration,0.02,50.0,True
+theta0,0.16026323634022843,0.16026323634022843,0.0,free in exploratory entry calibration,free in experimental utility calibration,0.0,8.0,False
+delta_alpha_jump,0.1303383207216736,0.0,-0.1303383207216736,free in exploratory entry calibration,fixed zero under experimental utility contract,,,
+child_benefit_curvature,0.07222157735996547,0.07222157735996547,0.0,free in exploratory entry calibration,free in experimental utility calibration,0.0,0.8,False
+tenure_choice_kappa,0.011258537724729019,0.011258537724729019,0.0,free in exploratory entry calibration,free in experimental utility calibration,0.001,0.1,False
+psi_child,0.1355551166583114,0.1355551166583114,0.0,fixed reference benefit; price clears birth renewal,fixed reference benefit; price clears birth renewal,,,
+child_benefit_CRRA_coefficient,0.12576511231403403,0.12576511231403403,0.0,derived from fixed benefit and proposed curvature,derived from fixed benefit and proposed curvature,,,
+theta1,0.008193084126995582,0.008193084126995582,0.0,fixed external restriction,fixed external restriction,,,
+sigma,2.0,2.0,0.0,fixed,fixed,,,
+alpha_cons,0.733,0.733,0.0,fixed CEX childless expenditure share,fixed CEX childless expenditure share,,,
+delta_alpha,0.0,0.0,0.0,fixed zero later-child loading,fixed zero under experimental utility contract,,,
+h_P,0.0,1.9105885246262313,1.9105885246262313,no housing floor,free in experimental utility calibration,0.1,2.3,False
+utility_reference_rent,0.11046592704873838,0.11046592704873838,0.0,fixed substantive utility normalization,retained inactive normalization; compensation off,,,
+q_annual,0.020000000000000018,0.020000000000000018,0.0,author-retained 2% annual real rate,author-retained 2% annual real rate,,,
+financed_share,0.8,0.8,0.0,inherited credit contract,inherited credit contract,,,
+housing_supply_elasticity,0.63,0.63,0.0,fixed provisional external mapping,fixed provisional external mapping,,,
+payroll_tax,0.08028070961950022,0.08028070961950022,0.0,derived from adopted pension ratio,derived from adopted pension ratio,,,
+pension_period,0.917784047463731,0.917784047463731,0.0,balanced PAYGO,balanced PAYGO,,,
+annual_depreciation,0.01416143718381309,0.01416143718381309,0.0,adopted,adopted,,,
+period_depreciation,0.05545379079326218,0.05545379079326218,0.0,compounded,compounded,,,
+annual_property_tax,0.010598360773872594,0.010598360773872594,0.0,adopted,adopted,,,
+period_property_tax,0.042393443095490375,0.042393443095490375,0.0,linear period convention,linear period convention,,,
+selling_cost,0.06,0.06,0.0,retained,retained,,,
+rental_cap,6.0,6.0,0.0,retained provisional,retained provisional,,,
+wealth_grid_nodes,120.0,120.0,0.0,retained exact grid,retained exact grid,,,
+income_states,9.0,9.0,0.0,retained B15,retained B15,,,
