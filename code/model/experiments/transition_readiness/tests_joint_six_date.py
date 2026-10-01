@@ -26,7 +26,7 @@ class JointTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'Unexpected'):
             joint.seed_compatibility(config,changed)
 
-    def exercise(self, market, fiscal):
+    def exercise(self, market, fiscal, damping=.7, full_step=False):
         sys.path.insert(0,str(joint.frozen.HERE/'pinned_tools'))
         acceleration=importlib.import_module('e5f_four_shock_acceleration')
         accounting=importlib.import_module('run_e5f_preference_budget_diagnostic')
@@ -41,16 +41,42 @@ class JointTests(unittest.TestCase):
         inner=NS(mapping=mapping,write=accounting.write,dump_checkpoint=checkpoint,plain=lambda x:x,
             terminal_checks=lambda *args:dict(all_checks_pass=False,raw_queue_pass=False))
         plan=dict(path=dict(price_bound_ratios=[.05,20.],pension_bound_ratios=[.05,20.],market_tolerance=2e-4,
-            fiscal_tolerance=1e-6,market_slope=1.,fiscal_slope=1.,max_log_step=.15,damping=.7,
+            fiscal_tolerance=1e-6,market_slope=1.,fiscal_slope=1.,max_log_step=.15,damping=damping,
             final_reproduction_tolerance=1e-10),fit=dict(max_condition_number=1e8,worsening_factor=1.5))
         with tempfile.TemporaryDirectory() as td:
             output=Path(td)
             receipt,latest=joint.solve_paths(inner=inner,acceleration=acceleration,packet=packet,evaluator=None,
-                terminal=terminal,endpoint=dict(price=1.),plan=plan,jacobian=-np.eye(12),output=output,deadline=time.monotonic()+1950,native=False)
+                terminal=terminal,endpoint=dict(price=1.),plan=plan,jacobian=-np.eye(12),output=output,
+                deadline=time.monotonic()+(1200 if full_step else 1950),native=False,case_seconds=360 if full_step else 600,
+                warm=dict(prices=np.ones(6),pensions=np.ones(6),market_residual=[market]*6,fiscal_residual=[fiscal]*6) if full_step else None)
             assert (output/'latest_completed.json').is_file() and (output/'best_so_far.json').is_file()
             assert len(list(output.glob('map_*_checkpoint.pkl.gz')))==len(calls)
             assert (output/'root.json').is_file() and (output/'joint_receipt.json').is_file()
             return receipt,calls
+
+    def test_full_step_warm_input_reproduces_and_clears_linear_residuals(self):
+        receipt,calls=self.exercise(.0006125561503191652,.00009814342403773049,damping=1.,full_step=True)
+        self.assertEqual(len(calls),3)
+        self.assertTrue(receipt['root_certified'])
+        np.testing.assert_array_equal(calls[1][0],calls[2][0])
+        np.testing.assert_array_equal(calls[1][1],calls[2][1])
+
+    def test_closed_presets_and_default_regression(self):
+        self.assertEqual(joint.numerical_controls(dict(total_seconds=1950)),dict(numerical_preset='legacy_damped',damping=.7,total_seconds=1950,case_seconds=600))
+        self.assertEqual(joint.numerical_controls(dict(numerical_preset='full_step_1200',total_seconds=1200,damping=1.,case_seconds=360))['damping'],1.)
+        for config in (dict(total_seconds=1200),dict(numerical_preset='full_step_1200',case_seconds=361),dict(damping=.8)):
+            with self.assertRaises(ValueError):joint.numerical_controls(config)
+
+    def test_actual_prior_warm_broyden_reconstruction(self):
+        base=joint.frozen.ROOT/'output/model/transition_readiness_v1'
+        config=json.loads((base/'joint_full_step_preparation/config.json').read_text())
+        seed=json.loads((base/'joint_preparation/measured_seed/receipt.json').read_text())
+        sys.path.insert(0,str(joint.frozen.HERE/'pinned_tools'))
+        from e5f_four_shock_acceleration import extend_measured_jacobian
+        warm=joint.validate_warm_start(config,extend_measured_jacobian(seed,6))
+        self.assertLessEqual(warm['prior_broyden_maximum_reconstruction_gap'],1e-12)
+        changed=copy.deepcopy(config);changed['warm_start']['root']['sha256']='0'*64
+        with self.assertRaises(ValueError):joint.validate_warm_start(changed,extend_measured_jacobian(seed,6))
 
     def test_actual_root_one_step_and_fresh_repeat(self):
         receipt,calls=self.exercise(.0003,.000002)

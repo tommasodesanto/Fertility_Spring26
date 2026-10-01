@@ -3,6 +3,7 @@
 ## Verified facts
 
 - Reference: **2007 stationary reference — block0506, September 28 verified export**. Child-benefit preference level is `psi_child=0.1355551166583114`; reference manifest SHA256 is `147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4`. This historical numerical reference retains legacy repayment rules. It is not the revised credit/floor calibration.
+- Latest joint job **18926856** completed in 11:02: housing error `0.000165653` passes, fiscal error `0.0000144704` fails. All 12 dated audits pass; no qualified replay or transition certificate. The full-step continuation is prepared and unlaunched.
 - Earlier job **18820811 was CANCELLED after 01:49:27**, following the author's repayment-error finding. It did complete the six-date pension-correction diagnostic; the 104-date correction did not complete. No preference shocks were fitted.
 - The completed six-date correction and independent fresh replay passed housing, fiscal, mass, zero-projection, dated-accounting, policy-reproduction and endpoint gates. Its 1170.573-second runtime covered three maps, with six actual policy solves per map. These are numerical diagnostics, not calibration results.
 - The legacy estimator already solves terminal birth renewal with price and scales population to absolute housing supply. Its hardcoded engine/reference, entry law, grid and credit contract are the obstacle to directly accepting the current floor calibration; changing the closure label alone is insufficient.
@@ -56,7 +57,22 @@ The complete results are in `collected/independent_verification.json` and `colle
 
 The prepared [joint test](../../../code/model/experiments/transition_readiness/JOINT_NEXT_TEST.md) reuses the verified endpoint and genuine original 12-date measured Jacobian. Its six-date lag window is fully measured, saved 24×24 matrix reconstruction is exact, and scaled six-date condition number is `213.22444`, below `1e8`. It keeps original root, replay, terminal and accounting gates. Three source-version differences are explicitly reviewed and recorded rather than hidden: timeout propagation in the cache, deadline/preflight controls in the estimator, and an unused shock-fit wrapper. No new derivatives or endpoint search are required.
 
-The proposed additional job is capped at **1950 seconds**, at most three mappings and one numerical thread. Together with the first job's observed 1563 seconds, this stays under 3600 seconds; it nevertheless needs an explicit extension of the original one-job/three-map limits. No additional job has been launched. It separates market-root certification from terminal convergence and preserves the failed candidate and standard diagnostics if certification fails.
+The proposed additional job is capped at **1950 seconds**, at most three mappings and one numerical thread. Together with the first job's observed 1563 seconds, this stays under 3600 seconds; it nevertheless needs an explicit extension of the original one-job/three-map limits. The author approved this specific extension and job **18926856** was launched on October 1 at approximately 01:08 Eastern. It separates market-root certification from terminal convergence and preserves the failed candidate and standard diagnostics if certification fails.
+
+## Completed joint-root test and morning handoff
+
+The author-approved additional job **18926856** completed in **11:02**, with 658.539 seconds inside the numerical driver. It executed two native six-date maps (12 actual policy solves). All 12 dated audits passed; accounts independently reproduce both residual blocks exactly, maximum mass error is `1.11022302e-15`, projection mass and policy reproduction error are zero. All 105 collected compact files match their remote hashes. The standard 17-plot set was retained at three dates (51 PNGs), with three selected plots visually inspected.
+
+| Joint candidate | Housing error (gate 0.0002) | Fiscal error (gate 0.000001) |
+|---|---:|---:|
+| Initial linear endpoint guess | 0.0006125561503 | 0.0000981434240 |
+| One measured joint update, damping 0.7 | 0.0001656526285 | 0.0000144704028 |
+
+Housing now passes. Fiscal still fails by a factor of 14.47, so the driver correctly refused its reserved fresh replay and the root is **not certified**. Slurm completion means the diagnostic finished, not that equilibrium passed. Terminal normalized-distribution L1 is `0.00240187` and rent gap `0.00134531`, above `0.001`; price, population and both queues pass. Since fiscal clearing remains unresolved, these terminal failures do not yet isolate horizon truncation.
+
+The initial saved Jacobian predicted a fiscal error of `0.0000294430` after damping; the actual error is smaller. Thus the strict three-map budget and one damped step were insufficient, and the Jacobian is an approximate initializer. The native two-point Broyden update is authentic and reconstructs to within `1.82e-14`; it supplies a concrete continuation rather than a guessed response. The prepared numerical continuation will start at the actual second candidate, use that updated Jacobian and a full step, and preserve all gates. It remains unlaunched. The latest sleep/coordination instruction allows no new budget extension, so preparation does not authorize another numerical job.
+
+Full receipts and all twelve dated accounts are in `joint_six_date_run/independent_verification.json` and `joint_six_date_run/dated_accounts.csv`. Production blockers remain: an authenticated author-selected current-floor handoff, actual corrected dated-engine integration, a dated housing-supply contract, joint root plus fresh replay, and full 104/128-date/handoff verification. No fitted shocks or current-floor transition certificate exist.
 
 ## Selected-floor compatibility and remaining work
 

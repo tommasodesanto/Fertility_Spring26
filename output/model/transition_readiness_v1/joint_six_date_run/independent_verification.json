@@ -1,0 +1,46 @@
+{
+  "job_id": "18926856",
+  "status": "verified_uncertified_joint_root",
+  "elapsed_seconds": 658.5388760250062,
+  "native_maps": 2,
+  "native_policy_solves": 12,
+  "dated_audits": 12,
+  "all_dated_gates": true,
+  "accounts_recomputation_max_abs_difference": 0.0,
+  "housing_gate": true,
+  "fiscal_gate": false,
+  "market_error": 0.00016565262853761645,
+  "fiscal_error": 1.447040278556002e-05,
+  "root_certified": false,
+  "terminal_certified": false,
+  "terminal_failure_interpretable_as_horizon": false,
+  "terminal": {
+    "asset_price_relative_gap": 0.0002054864318910133,
+    "birth_queue_maximum_relative_gap": 0.0002575756531568692,
+    "normalized_distribution_l1": 0.0024018701181642652,
+    "population_relative_gap": 0.0008800824516774657,
+    "psi_absolute_gap": 0.0,
+    "renter_price_relative_gap": 0.0013453085017266842
+  },
+  "raw_queue_gap": 0.00024858911046044154,
+  "max_mass_error": 1.1102230246251565e-15,
+  "max_projection_mass": 0.0,
+  "max_policy_reproduction": 0.0,
+  "source_and_file_hashes_verified": 105,
+  "standard_pngs": 51,
+  "exact_standard_plot_set": true,
+  "visual_review": {
+    "scope": "three selected standard plots at dates 3,5; not all51 individually reviewed",
+    "plots": [
+      "date_005/housing_prices.png",
+      "date_005/market_clearing_residuals.png",
+      "date_003/ownership_by_age_income_state.png"
+    ],
+    "finding": "Readable; housing residual within originalgate; crowded ownership legend; historical economic fit not recertified"
+  },
+  "fitted_shocks": false,
+  "current_floor_validation": false,
+  "full_horizon_verified": false,
+  "production_ready": false,
+  "fresh_replay": "correctly refused because fiscalgatefailed"
+}

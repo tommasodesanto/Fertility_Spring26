@@ -97,3 +97,26 @@ with the numerical driver capped at 1950 seconds. It uses one numerical thread; 
 loading the actual reference/endpoint state is still a separate runtime gate.
 Preparation did not submit this launcher or run any model. Additional native
 execution remains subject to the human's requested budget extension.
+
+## Executed result and unlaunched numerical continuation
+
+The first joint package was subsequently approved and executed as job 18926856.
+Two native maps completed in 11:02. Housing passed after one damped update;
+fiscal error 1.44704e-5 still failed the 1e-6 gate, so no qualifying fresh replay
+ran. See output/model/transition_readiness_v1/README.md for verified accounts.
+
+The evolving driver also supports the explicit full_step_1200 preset. It starts
+from the authenticated previous best price/pension paths and the actual Broyden
+Jacobian. A fresh map must first reproduce the saved residuals; one full Newton
+step follows, with a fresh replay only if the updated candidate clears both
+gates. The numerical proposal uses damping 1, a 1200-second total cap, at most
+three maps and 360 seconds per map. Original gates, endpoint, inherited
+population, fiscal/housing closure and other economic primitives remain fixed.
+The original default retains damping 0.7, a 1950-second total cap and 600 seconds
+per map. Archived executed sources retain the prior source and configuration.
+
+The exact proposed config and launcher are in
+output/model/transition_readiness_v1/joint_full_step_preparation/. Eight
+zero-lifecycle tests and the lead's actual Broyden reconstruction check passed.
+Native reproduction remains unverified. No full-step job was launched; the
+latest sleep/coordination instruction permits no further budget extension.

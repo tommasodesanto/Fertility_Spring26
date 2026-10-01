@@ -1,0 +1,53 @@
+{
+  "all_other_primitives": "authenticated historical block0506 unchanged",
+  "current_floor_validation": false,
+  "economic_change": {
+    "psi_child": {
+      "classification": "experimental",
+      "experiment": 0.1356906717749697,
+      "reference": 0.1355551166583114
+    }
+  },
+  "endpoint_reused": true,
+  "fresh_endpoint_calls": 0,
+  "horizon": 6,
+  "horizon_comparison_verified": false,
+  "maximum_maps": 3,
+  "maximum_policy_calls_conservative": 36,
+  "model_calls": 0,
+  "native_setup_verified": false,
+  "numerical_controls": {
+    "case_seconds": 360,
+    "damping": 1.0,
+    "numerical_preset": "full_step_1200",
+    "total_seconds": 1200
+  },
+  "production_ready": false,
+  "seed_compatibility": {
+    "cache_change": "two TimeoutError propagation insertions only; successful-call semantics unchanged",
+    "derivative_refresh": false,
+    "estimator_endpoint_path_fit_invoked": false,
+    "estimator_used_computations_unchanged": true,
+    "exact_measured_mapping_modules": 6,
+    "seed_validator": "original archived nine-source validator",
+    "shock_fit_invoked": false,
+    "source_differences": {
+      "e5f_exact_policy_cache.py": {
+        "runtime": "1e8a029247bb80e9a023b11b7eba047402867841e2f99cbf159bbb9f8aa51609",
+        "seed": "d51bbd13026288db0194b44b420bb49ff6970588f40a906242978d49038a5d6f"
+      },
+      "e5f_preference_shock_fit.py": {
+        "runtime": "495b61b0b0aaf577d49ba36d7274c7207c9be546f544113fa30c3c805d46412f",
+        "seed": "50a91bacbbfaf632a986bda0d68c7b9ffaaf4c74a31c155f98918b15eea7e5b7"
+      },
+      "run_e5f_preference_estimation.py": {
+        "runtime": "bd93821847439b54667706d17f95ff6e114291c3dc321eb7cb7bf06cb1f3ed1e",
+        "seed": "e39873e9fcbeb433435f5a8fcff0bd63baf6c53f7a872a9517d5fec31954f888"
+      }
+    },
+    "status": "PASS",
+    "transport": "lead-reviewed numerical warm start; receipt and matrix preserved byte-for-byte"
+  },
+  "status": "PASS",
+  "total_seconds": 1200
+}
