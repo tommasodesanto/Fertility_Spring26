@@ -1,17 +1,19 @@
 # Calibration Status
 
-## October 1, 09:36 New York — verified 68.843; overnight 31.284 provisional
+## October 1, 09:41 New York — overnight 31.284 selected-repeat verified
 
-The live free-\(\psi\) floor search still uses the same fixed-reference economics,
+The live free-\(\psi\) floor search uses the same fixed-reference economics,
 14 scored/validation target rows, 31-parameter report, and original base weights.
-No experimental point is adopted. The lowest passed search point is overnight
-chain 7, case 0173_nm, loss **31.2840072557** at price 0.7191683688; it is
-provisional until its exact selected-price native repeat is checked. It used
-seven lifecycle solves in 150.06 seconds. The 14-row target-fit contributions
-sum to the reported base loss within 3.6e-15; its full target and 31-parameter tables are
-[saved here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T081328NY_overnight/).
+No experimental point is adopted. The lowest original-base-weight point is
+overnight chain 7, case 0173_nm, loss **31.2840072557** at price 0.7191683688.
+Its selected-price native repeat passed; ROOT and REPEAT tables match for all 14
+target rows and 31 parameters, all 17 standard diagnostic plot hashes match, and
+the frozen observer identity hashes match. The 14 base contributions sum to
+31.284007255664957. The [complete ROOT/REPEAT packet](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/verified_global_20261001T0941NY_chain7_0173/)
+contains tables, plots, source/observer identity fingerprints, and verification.
+Optimizer convergence remains uncertified; the experimental point is not adopted.
 
-The best selected-repeat-verified point is round-three chain 4, case 0035_nm,
+A previously selected-repeat-verified point is round-three chain 4, case 0035_nm,
 base loss **68.8425812015**, at market price 0.7172609099. Its exact selected
 native repeat passed; the ROOT and REPEAT packets have the same 14 target rows,
 31 parameter rows, and all 17 standard diagnostic plot SHA-256 hashes. The
@@ -27,7 +29,7 @@ chains have search-completion receipts and selected-postcheck status
 `selected_numerically_verified`; each native selected-repeat receipt says
 `exact_full_ge_repeat_passed`. Its compact receipt matrix is [here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/round3_terminal_postcheck_matrix_20261001T0231NY.json).
 
-At 09:36:10 New York, overnight array 18925912_0–23 had **4,956 case records, 4,924 admissible computed GEs, and 5,026 objective calls**. It recorded eight numerical nonpasses and 24 bounded-budget cases, with no fatal receipts. All 24 search receipts now report `native_evaluation_budget_exhausted`; selected native postchecks are a separate stage, and only chain 21 currently reports `selected_numerically_verified`. The collector latest field for chain 21 remains stale; other 23 chain receipts are nonterminal for postcheck purposes. `squeue -r` reports 23 RUNNING array indices (0–20,22,23); chain 21 index 21 is absent and maps to completed launcher job 18926024. The [concise scheduler receipt](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/scheduler_squeue_20261001T093610NY.txt) preserves the exact output. Across chains, median passed-case runtime ranged from 128.38 to 166.81 seconds. The provisional best remains chain 7, case 0173_nm, loss 31.2840072557 at price 0.7191683688; its selected-price native repeat is pending. Its 14 base contributions sum to reported loss within 3.6e-15. The [timestamped compact cohort snapshot](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T093610NY.json) preserves counts and separates search stops from postchecks.
+At 09:41:06 New York, overnight array 18925912_0–23 had **4,956 case records, 4,924 admissible computed GEs, and 5,026 objective calls**. It recorded eight numerical nonpasses and 24 bounded-budget cases, with no fatal receipts. All 24 searches stopped at the native evaluation budget; all 24 selected native postchecks report `selected_numerically_verified`; all 24 launcher terminal receipts exited 0. The exact queue query returned “Invalid job id specified”; terminal status is based on the launcher, search, and postcheck receipts. The [compact per-chain snapshot](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T094106NY.json), [launcher terminal receipts](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/overnight_launcher_terminals_20261001T094106NY.json), and [queue response](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/scheduler_squeue_20261001T094106NY.txt) preserve the evidence. Across chains, median passed-case runtime ranged from 128.38 to 166.81 seconds. The selected-repeat-verified best is chain 7, case 0173_nm, base loss 31.2840072557 at price 0.7191683688; see its full ROOT/REPEAT packet above. Numerical verification does not certify optimizer convergence.
 
 Variable-first-child-share job 18930196 is terminal (exit 0; 28:44 elapsed).
 Its six search attempts contain five passed roots and one bounded-budget
