@@ -21,3 +21,7 @@ PDF export: `pdflatex -interaction=nonstopmode -halt-on-error -output-directory=
 - [Lead verification and remaining limits](claude_review_response.md).
 
 The note was tightened following review; the arithmetic recipe remains an illustrative equation audit, with the renter closed-form coverage and historical-conversion checks outstanding.
+
+## October 1 empirical supply-level check
+
+[Price-level readout](price_level_readout.md) records fresh national2007 AHS price/room aggregates and a PSID gross-earnings money conversion, separately for adopted block0506 and experimental floor chain7 0173. Adopted implied rent is2.59% below the contract-rent stock ratio; owner price0.31% above the self-reported-value stock ratio. The external stock/rent anchor gives H0=6.06484 versus current6.29351. Experimental rent/value gaps are−11.31%/−8.67%. These are provisional point diagnostics, with income-date, quality and uncertainty limits stated; no model solve or target changes. [Comparison record](price_level_comparison.json), [AHS aggregates](ahs2007_price_quantities.json), [PSID age-cell earnings](psid2007_earnings_by_age.csv) and the retained AHS recipe provide the arithmetic evidence.

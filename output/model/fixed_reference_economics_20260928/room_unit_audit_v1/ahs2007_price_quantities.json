@@ -1,0 +1,60 @@
+{
+  "sample": "STATUS=1,HHAGE18--85,ROOMS>0,WGT90GEO>0",
+  "n": 37793,
+  "weighted_households": 107194201.15842237,
+  "weighted_rooms": 614162126.4575154,
+  "mean_rooms": 5.729434240102641,
+  "groups": {
+    "owner_positive_value": {
+      "n": 25854,
+      "weight": 73300105.26540023,
+      "rooms": 464809800.3721683,
+      "cost": 20217132287735.38,
+      "cost_per_room_sum": 3115736265358.402,
+      "mean_rooms": 6.34118871574898,
+      "mean_cost": 275813.1412572261,
+      "room_weighted_price": 43495.49487026249,
+      "household_weighted_price": 42506.572863396956
+    },
+    "renter_numeric_contract": {
+      "n": 11201,
+      "weight": 31718081.03355198,
+      "rooms": 138276201.13572305,
+      "cost": 279131901436.1386,
+      "cost_per_room_sum": 68456798407.89839,
+      "mean_rooms": 4.359538680459638,
+      "mean_cost": 8800.403187723357,
+      "room_weighted_price": 2018.6546863705103,
+      "household_weighted_price": 2158.2894102415435
+    },
+    "renter_no_reported_subsidy_or_control": {
+      "n": 9323,
+      "weight": 26603228.401298147,
+      "rooms": 117866005.67477757,
+      "cost": 243914708851.38202,
+      "cost_per_room_sum": 59023846108.55077,
+      "mean_rooms": 4.430515120075656,
+      "mean_cost": 9168.613116123899,
+      "room_weighted_price": 2069.4237278592864,
+      "household_weighted_price": 2218.672306165315
+    },
+    "renter_monthly_only": {
+      "n": 10851,
+      "weight": 30762595.425898764,
+      "rooms": 133777288.52238482,
+      "cost": 272912547210.47592,
+      "cost_per_room_sum": 66965737412.63353,
+      "mean_rooms": 4.348699668226266,
+      "mean_cost": 8871.570926707738,
+      "room_weighted_price": 2040.0514184798246,
+      "household_weighted_price": 2176.8559019651393
+    }
+  },
+  "excluded_rent_records": {
+    "income_dependent": 40,
+    "invalid_or_topcoded_frequency": 12
+  },
+  "time": "rent*FRENT annually, frequency topcode53 excluded; RENT=1 income-dependent excluded",
+  "quantity": "occupied housing only, literal public-use rooms topcode21",
+  "raw_sha256": "413324add01c65d178091162f5cee4fd11bd82ca1fbbe0194d3c92a727be598f"
+}

@@ -1,0 +1,56 @@
+{
+  "diagnostic_only": true,
+  "income_normalizer_nominal2007": 55235.7463286145,
+  "normalizer_method": "2007 PSID reference persons18--65 nonnegative RP/spouse earnings, IW-weighted within4-year age cells, equal12cell weights, convert real2022 USD using CPI-U207.342/292.655; tax-year timing differs from AHS past12months",
+  "model_ref_price": 0.7898695017462086,
+  "model_ref_rent_per4years": 0.14239719502601744,
+  "model_ref_annual_rent_per_room_dollars": 1966.3538355908365,
+  "model_ref_purchase_price_per_room_dollars": 43629.03143116271,
+  "physical_mean_room_target": 5.729434240102641,
+  "comparisons": {
+    "renter_numeric_contract": {
+      "annual_rent_per_room_dollars": 2018.6546863705103,
+      "period_rent_per_room_model_units": 0.14618465906921294,
+      "anchored_H0_reference_form": 6.064837859645732,
+      "anchored_A_absorbed_form": 19.240821280508086,
+      "H0_gap_pct": -3.6334241705417214,
+      "model_rent_gap_pct": -2.5908765443043325,
+      "model_supplied_rooms_at_data_rent": 5.945457946168107
+    },
+    "renter_no_reported_subsidy_or_control": {
+      "annual_rent_per_room_dollars": 2069.4237278592864,
+      "period_rent_per_room_model_units": 0.14986119427427638,
+      "anchored_H0_reference_form": 5.970670971736223,
+      "anchored_A_absorbed_form": 18.94207491618,
+      "H0_gap_pct": -5.129678605427124,
+      "model_rent_gap_pct": -4.980608411940379,
+      "model_supplied_rooms_at_data_rent": 6.039227184941737
+    },
+    "renter_monthly_only": {
+      "annual_rent_per_room_dollars": 2040.0514184798246,
+      "period_rent_per_room_model_units": 0.1477341434905526,
+      "anchored_H0_reference_form": 6.024685414621682,
+      "anchored_A_absorbed_form": 19.11343683321335,
+      "H0_gap_pct": -4.271422040838346,
+      "model_rent_gap_pct": -3.61253555775104,
+      "model_supplied_rooms_at_data_rent": 5.985082367510828
+    }
+  },
+  "owner_price_data": 43495.49487026249,
+  "owner_price_gap_pct": 0.30701239587807017,
+  "experimental_floor": {
+    "identity": "October1 09:41NY chain7 case0173_nm, D=0, experimental/notadopted",
+    "price_model_units": 0.719168368828958,
+    "rent_per4years_model_units": 0.12965123763644737,
+    "annual_rent_per_room_dollars": 1790.345718319431,
+    "purchase_price_per_room_dollars": 39723.80158819979,
+    "rent_gap_pct": -11.309956556342637,
+    "owner_price_gap_pct": -8.671457339002187
+  },
+  "measurement_sensitivity": {
+    "different_income_weighting": "Cross-sectional instead of equal12agecell working earnings is83754.79real2022; appropriate model normalization is equalcell. Kept solely as measurement sensitivity, not interchangeable units.",
+    "PSID_timing": "EARNINDRRC label says tax year; 2007 survey labor income primarily2006; AHS income past12months. Main conversion reports real purchasing power in2007. A precise production target requires review of dates/deflator construction.",
+    "price_statistic": "Room-weighted stock ratio primary; household-weighted mean unit rent sensitivity yields larger price. No hedonic quality adjustment.",
+    "no_joint_fit_or_inference": true
+  }
+}
