@@ -1,0 +1,20 @@
+{
+  "reviewer": "lead",
+  "reviewed_images": [
+    {
+      "path": "report/diagnostics/date_000/standard_diagnostics/housing_market.png",
+      "sha256": "acb64dcacff883eb7547a3f83e8f0a5ce887b1814fc2bf7cad5808c6f8beb3bd"
+    },
+    {
+      "path": "report/diagnostics/date_008/standard_diagnostics/market_clearing_residuals.png",
+      "sha256": "5ec5675fd362b89d39fd9ee29b0f9b770411354f0cf0dc7f8dca43a07a145ba7"
+    },
+    {
+      "path": "report/diagnostics/date_015/standard_diagnostics/fertility_by_age.png",
+      "sha256": "529dd3e2f034f7807a07e18f24c1998e5db198eaec2bbdf2c72e72e34aef77e8"
+    }
+  ],
+  "scope": "Three selected standard plots across first/middle/last dates; not every plot individually inspected",
+  "observations": "Readable plots, no corrupt traces; demand and supply agree at first date, middle-date housing residual approximately -1.3e-6; terminal-age birth flow zero. Fit, terminal convergence and 2023 distribution stability remain uncertified.",
+  "production_certified": false
+}
