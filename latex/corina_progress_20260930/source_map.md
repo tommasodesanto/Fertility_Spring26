@@ -195,5 +195,7 @@ The calibration slide places all three validation moments in a separate bottom
 table; the ten scored moments and completed-fertility renewal check remain above.
 All fourteen target/model pairs are unchanged.
 
-Three blank slides follow the calibration table (pages 8–10), as requested.
+Three titled illustration slots follow the calibration table (pages 8–10):
+household policies and lifecycle paths; housing supply and borrowing constraints;
+and transition dynamics. Figure selection and insertion remain pending.
 The deck now has thirteen slides; no fixed slide-count limit remains.

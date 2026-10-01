@@ -55,7 +55,9 @@ its complete calibration, preference alternatives and remaining questions:
 5. Housing around the first birth
 6. Calibration strategy and inputs
 7. Stone–Geary calibration
-8–10. Blank slides reserved for additional calibration material
+8. Household policies and lifecycle paths (figure slot)
+9. Housing supply and borrowing constraints (figure slot)
+10. Transition dynamics (figure slot)
 11. Calibrated parameters
 12. Preference alternatives
 13. Credit, initial wealth and remaining fit
@@ -95,5 +97,7 @@ The calibration slide places all three validation moments in a separate bottom
 table; the ten scored moments and completed-fertility renewal check remain above.
 All fourteen target/model pairs are unchanged.
 
-Three blank slides follow the calibration table (pages 8–10), as requested.
+Three titled illustration slots follow the calibration table (pages 8–10):
+household policies and lifecycle paths; housing supply and borrowing constraints;
+and transition dynamics. Figure selection and insertion remain pending.
 The deck now has thirteen slides; no fixed slide-count limit remains.
