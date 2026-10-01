@@ -1,6 +1,6 @@
 # Calibration Status
 
-## October 1, 03:37 New York — verified 68.843; overnight 49.256 provisional
+## October 1, 03:42 New York — verified 68.843; overnight 49.256 provisional
 
 The live free-\(\psi\) floor search still uses the same fixed-reference economics,
 14 scored/validation target rows, 31-parameter report, and original base weights.
@@ -26,8 +26,8 @@ chains have search-completion receipts and selected-postcheck status
 `selected_numerically_verified`; each native selected-repeat receipt says
 `exact_full_ge_repeat_passed`. Its compact receipt matrix is [here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/round3_terminal_postcheck_matrix_20261001T0231NY.json).
 
-At 03:37:27 New York, overnight array 18925912_0–23 had **1,618 case records,
-1,609 admissible computed GEs, and 1,699 objective calls**. It recorded eight
+At 03:42:26 New York, overnight array 18925912_0–23 had **1,666 case records,
+1,657 admissible computed GEs, and 1,747 objective calls**. It recorded eight
 numerical nonpasses and one bounded-budget case, with no fatal failures. It had no fatal
 failure receipts; chain 21 is terminal, with a selected native-repeat pass, and
 the other 23 scheduler tasks were still `RUNNING`. One case reached the
@@ -36,7 +36,7 @@ per-full-GE Phase B lifecycle cap: case 0016_nm on chain 21 stopped as
 pinned evaluator allows 32 lifecycle solves and reserves one for an exact
 repeat; the 400-call cap was not binding. All 24 use this cap, but chain 21 is
 the only observed chain to reach it. Across chains, median passed-case runtime
-ranged from 124.67 to 166.81 seconds. The timestamped [compact cohort snapshot](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T033727NY.json) preserves per-chain counts and receipts.
+ranged from 124.91 to 166.81 seconds. The timestamped [compact cohort snapshot](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/current_overnight_20261001T034226NY.json) preserves per-chain counts and receipts.
 
 Variable-first-child-share job 18930196 is terminal (exit 0; 28:44 elapsed).
 Its six search attempts contain five passed roots and one bounded-budget
