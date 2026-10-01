@@ -1,0 +1,1999 @@
+{
+  "base_target_contract": [
+    {
+      "moment": "initial_normalization",
+      "role": "normalization",
+      "target": "2.1",
+      "weight": ""
+    },
+    {
+      "moment": "cps_childlessness",
+      "role": "scored",
+      "target": "0.19827875100684264",
+      "weight": "35532.3042455214"
+    },
+    {
+      "moment": "cps_exactly_one",
+      "role": "scored",
+      "target": "0.21365532522014702",
+      "weight": "26952.820824310795"
+    },
+    {
+      "moment": "nchs_mean_age",
+      "role": "scored",
+      "target": "25.976263860992496",
+      "weight": "139.82806784479274"
+    },
+    {
+      "moment": "nchs_share30",
+      "role": "validation",
+      "target": "0.2492780130410667",
+      "weight": "0.0"
+    },
+    {
+      "moment": "wealth_earnings",
+      "role": "scored",
+      "target": "6.92658379107299",
+      "weight": "7.595098472533724"
+    },
+    {
+      "moment": "bequest_wealth",
+      "role": "scored",
+      "target": "0.007291023472616158",
+      "weight": "5165289.256198346"
+    },
+    {
+      "moment": "old_dispersion",
+      "role": "validation",
+      "target": "3.51593508651872",
+      "weight": "0.0"
+    },
+    {
+      "moment": "mean_rooms",
+      "role": "scored",
+      "target": "5.729434240102641",
+      "weight": "128.02070205233477"
+    },
+    {
+      "moment": "ownership_30_55",
+      "role": "scored",
+      "target": "0.6762604168538028",
+      "weight": "2339.3623724673616"
+    },
+    {
+      "moment": "first_birth_rooms",
+      "role": "scored",
+      "target": "1.465",
+      "weight": "137.5652749002964"
+    },
+    {
+      "moment": "family_rooms",
+      "role": "validation",
+      "target": "0.38509964969278165",
+      "weight": "0.0"
+    },
+    {
+      "moment": "recent_parent_ownership",
+      "role": "scored",
+      "target": "0.12760836356692162",
+      "weight": "27055.822957508266"
+    },
+    {
+      "moment": "early_fertility",
+      "role": "scored",
+      "target": "0.8095276384290021",
+      "weight": "100.0"
+    }
+  ],
+  "bounds": {
+    "beta_annual": [
+      0.94,
+      0.99
+    ],
+    "chi": [
+      0.1,
+      5.0
+    ],
+    "child_benefit_curvature": [
+      0.0,
+      0.8
+    ],
+    "first_birth_fixed_cost": [
+      0.0,
+      8.0
+    ],
+    "h_P": [
+      0.1,
+      2.3
+    ],
+    "kappa_fert": [
+      0.02,
+      50.0
+    ],
+    "kappa_fert_continuation": [
+      0.02,
+      50.0
+    ],
+    "psi_child": [
+      0.01,
+      0.5
+    ],
+    "tenure_choice_kappa": [
+      0.001,
+      0.1
+    ],
+    "theta0": [
+      0.0,
+      8.0
+    ]
+  },
+  "broader_pso_chains": 0,
+  "center": {
+    "beta_annual": 0.9674117027550825,
+    "chi": 1.0939774207039408,
+    "child_benefit_curvature": 0.096619823899946,
+    "first_birth_fixed_cost": 0.39241690345357316,
+    "h_P": 2.3,
+    "kappa_fert": 0.12573894551537057,
+    "kappa_fert_continuation": 0.35373610063644423,
+    "psi_child": 0.17198899419542374,
+    "tenure_choice_kappa": 0.01334959647874192,
+    "theta0": 0.10104394093724714
+  },
+  "center_is_normalized": true,
+  "center_receipt": "center/receipt.json",
+  "centers": [
+    {
+      "H0": 6.851575289344519,
+      "base_loss": 30.371887956158005,
+      "chain": 20,
+      "label": "0028_nm",
+      "parameters": {
+        "beta_annual": 0.9674117027550825,
+        "chi": 1.0939774207039408,
+        "child_benefit_curvature": 0.096619823899946,
+        "first_birth_fixed_cost": 0.39241690345357316,
+        "h_P": 2.3,
+        "kappa_fert": 0.12573894551537057,
+        "kappa_fert_continuation": 0.35373610063644423,
+        "psi_child": 0.17198899419542374,
+        "tenure_choice_kappa": 0.01334959647874192,
+        "theta0": 0.10104394093724714
+      },
+      "price": 0.7167873404451099,
+      "provenance": {
+        "lifecycle_solves": 9,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_20/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_20/search/search_completed.json",
+        "slurm_job": "18979628_20"
+      },
+      "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+      "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+      "weight_profile": "base_control"
+    },
+    {
+      "H0": 6.838655072054291,
+      "base_loss": 30.99909262396404,
+      "chain": 0,
+      "label": "0000_nm",
+      "parameters": {
+        "beta_annual": 0.9670100471250203,
+        "chi": 1.093187485240681,
+        "child_benefit_curvature": 0.09689406390932934,
+        "first_birth_fixed_cost": 0.4009349064519595,
+        "h_P": 2.3,
+        "kappa_fert": 0.13056430591307258,
+        "kappa_fert_continuation": 0.364420274899206,
+        "psi_child": 0.17156192800028292,
+        "tenure_choice_kappa": 0.012988772333020718,
+        "theta0": 0.09862721952114817
+      },
+      "price": 0.7188481029285891,
+      "provenance": {
+        "lifecycle_solves": 2,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_0/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_0/search/search_completed.json",
+        "slurm_job": "18979628_0"
+      },
+      "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+      "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+      "weight_profile": "base_control"
+    },
+    {
+      "H0": 6.8848145859911885,
+      "base_loss": 31.100921387845567,
+      "chain": 22,
+      "label": "0040_nm",
+      "parameters": {
+        "beta_annual": 0.9679315816689616,
+        "chi": 1.0949723559579498,
+        "child_benefit_curvature": 0.09110821670569344,
+        "first_birth_fixed_cost": 0.38183363496083617,
+        "h_P": 2.3,
+        "kappa_fert": 0.126674748328909,
+        "kappa_fert_continuation": 0.3594303709018466,
+        "psi_child": 0.16866896443222062,
+        "tenure_choice_kappa": 0.013396031684538137,
+        "theta0": 0.10567563127878332
+      },
+      "price": 0.7145380599869715,
+      "provenance": {
+        "lifecycle_solves": 8,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_22/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_22/search/search_completed.json",
+        "slurm_job": "18979628_22"
+      },
+      "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+      "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+      "weight_profile": "base_control"
+    },
+    {
+      "H0": 6.940808898815555,
+      "base_loss": 31.61038715323214,
+      "chain": 19,
+      "label": "0035_nm",
+      "parameters": {
+        "beta_annual": 0.9682072409730587,
+        "chi": 1.0888301897571244,
+        "child_benefit_curvature": 0.09453784231317947,
+        "first_birth_fixed_cost": 0.40579535710586767,
+        "h_P": 2.3,
+        "kappa_fert": 0.1281292223152471,
+        "kappa_fert_continuation": 0.36103419793760083,
+        "psi_child": 0.17028224334125053,
+        "tenure_choice_kappa": 0.014171398266249115,
+        "theta0": 0.11064771887427581
+      },
+      "price": 0.7071638909981791,
+      "provenance": {
+        "lifecycle_solves": 8,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_19/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_19/search/search_completed.json",
+        "slurm_job": "18979628_19"
+      },
+      "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+      "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+      "weight_profile": "base_control"
+    },
+    {
+      "H0": 6.86085542156994,
+      "base_loss": 31.74122846448217,
+      "chain": 9,
+      "label": "0015_nm",
+      "parameters": {
+        "beta_annual": 0.9675618887009786,
+        "chi": 1.0908582108668496,
+        "child_benefit_curvature": 0.09334832767815478,
+        "first_birth_fixed_cost": 0.42552239908069434,
+        "h_P": 2.3,
+        "kappa_fert": 0.1377574136363107,
+        "kappa_fert_continuation": 0.371088000571219,
+        "psi_child": 0.1728499075395833,
+        "tenure_choice_kappa": 0.013182910638536171,
+        "theta0": 0.10492153300059266
+      },
+      "price": 0.7168977041216273,
+      "provenance": {
+        "lifecycle_solves": 9,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_9/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_9/search/search_completed.json",
+        "slurm_job": "18979628_9"
+      },
+      "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+      "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+      "weight_profile": "base_control"
+    },
+    {
+      "H0": 6.953073799512954,
+      "base_loss": 32.0545918861627,
+      "chain": 11,
+      "label": "0025_nm",
+      "parameters": {
+        "beta_annual": 0.9674978121165125,
+        "chi": 1.0952898145152394,
+        "child_benefit_curvature": 0.091320511336564,
+        "first_birth_fixed_cost": 0.40826050091467403,
+        "h_P": 2.3,
+        "kappa_fert": 0.13167965726157987,
+        "kappa_fert_continuation": 0.35580902309620643,
+        "psi_child": 0.17158116324043424,
+        "tenure_choice_kappa": 0.013559854568362773,
+        "theta0": 0.10472321019979686
+      },
+      "price": 0.7077950642657361,
+      "provenance": {
+        "lifecycle_solves": 8,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_11/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_11/search/search_completed.json",
+        "slurm_job": "18979628_11"
+      },
+      "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+      "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+      "weight_profile": "base_control"
+    }
+  ],
+  "chains": 24,
+  "deadline_basis": "each launcher actual start plus10800 seconds; queue time does not consume budget",
+  "economic_reference": "normalized_calibration_v1",
+  "experimental_not_adopted": true,
+  "final_reserve_seconds": 900,
+  "free_coordinates": [
+    "beta_annual",
+    "chi",
+    "first_birth_fixed_cost",
+    "kappa_fert",
+    "kappa_fert_continuation",
+    "theta0",
+    "h_P",
+    "child_benefit_curvature",
+    "tenure_choice_kappa",
+    "psi_child"
+  ],
+  "identification_status": "unverified; 10 scored targets and 10 free parameters",
+  "initial_price": 0.7167873404451099,
+  "maximum_full_ge_total": 3600,
+  "maximum_objective_calls": 150,
+  "maximum_selected_native_postchecks": 24,
+  "method_label": "NEW bounded NM restarts from postcheck-verified v1 points; saved optimizer simplex unavailable",
+  "nearby_design": {
+    "halfwidths": {
+      "beta_annual": 9.375e-05,
+      "chi": 0.005,
+      "child_benefit_curvature": 0.0025,
+      "first_birth_fixed_cost": 0.00625,
+      "h_P": 0.0125,
+      "kappa_fert": 0.0025,
+      "kappa_fert_continuation": 0.00625,
+      "psi_child": 0.0015625,
+      "tenure_choice_kappa": 0.000125,
+      "theta0": 0.00125
+    },
+    "method": "top-six postcheck-verified v1 centers; one exact plus three bounded deterministic joint neighbors each",
+    "n": 24,
+    "rejection_rule": "clip raw perturbations to unchanged original bounds; record clipped coordinates and actual displacement",
+    "seed": 20261002
+  },
+  "nearby_nm_chains": 24,
+  "nearby_starts": [
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": 0.0,
+        "chi": 0.0,
+        "child_benefit_curvature": 0.0,
+        "first_birth_fixed_cost": 0.0,
+        "h_P": 0.0,
+        "kappa_fert": 0.0,
+        "kappa_fert_continuation": 0.0,
+        "psi_child": 0.0,
+        "tenure_choice_kappa": 0.0,
+        "theta0": 0.0
+      },
+      "center_base_loss": 30.371887956158005,
+      "center_name": "v1_chain20_0028_nm",
+      "center_rank": 1,
+      "chain": 0,
+      "clipped_coordinates": [],
+      "initial_price": 0.7167873404451099,
+      "neighbor": 0,
+      "parameters": {
+        "beta_annual": 0.9674117027550825,
+        "chi": 1.0939774207039408,
+        "child_benefit_curvature": 0.096619823899946,
+        "first_birth_fixed_cost": 0.39241690345357316,
+        "h_P": 2.3,
+        "kappa_fert": 0.12573894551537057,
+        "kappa_fert_continuation": 0.35373610063644423,
+        "psi_child": 0.17198899419542374,
+        "tenure_choice_kappa": 0.01334959647874192,
+        "theta0": 0.10104394093724714
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": 0.0,
+        "chi": 0.0,
+        "child_benefit_curvature": 0.0,
+        "first_birth_fixed_cost": 0.0,
+        "h_P": 0.0,
+        "kappa_fert": 0.0,
+        "kappa_fert_continuation": 0.0,
+        "psi_child": 0.0,
+        "tenure_choice_kappa": 0.0,
+        "theta0": 0.0
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 9,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_20/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_20/search/search_completed.json",
+        "slurm_job": "18979628_20"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": -6.356557131181884e-05,
+        "chi": -0.0035848022354587616,
+        "child_benefit_curvature": 0.0020751073785621743,
+        "first_birth_fixed_cost": -0.0016192356677864894,
+        "h_P": 0.0,
+        "kappa_fert": 0.0020530214195576546,
+        "kappa_fert_continuation": 0.0018843535236170439,
+        "psi_child": -4.770785653168685e-06,
+        "tenure_choice_kappa": -5.698306583425475e-05,
+        "theta0": 0.00027211367589680124
+      },
+      "center_base_loss": 30.371887956158005,
+      "center_name": "v1_chain20_0028_nm",
+      "center_rank": 1,
+      "chain": 1,
+      "clipped_coordinates": [
+        "h_P"
+      ],
+      "initial_price": 0.7167873404451099,
+      "neighbor": 1,
+      "parameters": {
+        "beta_annual": 0.9673481371837707,
+        "chi": 1.090392618468482,
+        "child_benefit_curvature": 0.09869493127850817,
+        "first_birth_fixed_cost": 0.3907976677857867,
+        "h_P": 2.3,
+        "kappa_fert": 0.12779196693492823,
+        "kappa_fert_continuation": 0.3556204541600613,
+        "psi_child": 0.17198422340977057,
+        "tenure_choice_kappa": 0.013292613412907665,
+        "theta0": 0.10131605461314394
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": -6.3565571311811e-05,
+        "chi": -0.003584802235458795,
+        "child_benefit_curvature": 0.0020751073785621778,
+        "first_birth_fixed_cost": -0.0016192356677864673,
+        "h_P": 0.005009207754074877,
+        "kappa_fert": 0.0020530214195576524,
+        "kappa_fert_continuation": 0.0018843535236170606,
+        "psi_child": -4.770785653160706e-06,
+        "tenure_choice_kappa": -5.698306583425505e-05,
+        "theta0": 0.00027211367589680016
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 9,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_20/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_20/search/search_completed.json",
+        "slurm_job": "18979628_20"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": 6.824410838734973e-05,
+        "chi": 0.0039724828914158294,
+        "child_benefit_curvature": 0.001315111378833167,
+        "first_birth_fixed_cost": -0.006080439698276097,
+        "h_P": 0.0,
+        "kappa_fert": -0.0002504010230048037,
+        "kappa_fert_continuation": -0.0036488499225971194,
+        "psi_child": -0.00037979449805009,
+        "tenure_choice_kappa": -0.00010417103671971073,
+        "theta0": 0.0003355909160216858
+      },
+      "center_base_loss": 30.371887956158005,
+      "center_name": "v1_chain20_0028_nm",
+      "center_rank": 1,
+      "chain": 2,
+      "clipped_coordinates": [
+        "h_P"
+      ],
+      "initial_price": 0.7167873404451099,
+      "neighbor": 2,
+      "parameters": {
+        "beta_annual": 0.9674799468634698,
+        "chi": 1.0979499035953566,
+        "child_benefit_curvature": 0.09793493527877917,
+        "first_birth_fixed_cost": 0.38633646375529707,
+        "h_P": 2.3,
+        "kappa_fert": 0.12548854449236577,
+        "kappa_fert_continuation": 0.3500872507138471,
+        "psi_child": 0.17160919969737365,
+        "tenure_choice_kappa": 0.013245425442022209,
+        "theta0": 0.10137953185326883
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": 6.824410838739805e-05,
+        "chi": 0.003972482891415822,
+        "child_benefit_curvature": 0.0013151113788331726,
+        "first_birth_fixed_cost": -0.006080439698276101,
+        "h_P": 0.009444506034518489,
+        "kappa_fert": -0.00025040102300480924,
+        "kappa_fert_continuation": -0.0036488499225970934,
+        "psi_child": -0.0003797944980500942,
+        "tenure_choice_kappa": -0.00010417103671971123,
+        "theta0": 0.0003355909160216897
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 9,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_20/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_20/search/search_completed.json",
+        "slurm_job": "18979628_20"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": -9.074098790007312e-05,
+        "chi": -0.002858136099407993,
+        "child_benefit_curvature": -0.0019526550226509481,
+        "first_birth_fixed_cost": 0.004896275304738074,
+        "h_P": -0.009292908695104352,
+        "kappa_fert": -0.0021236653255210375,
+        "kappa_fert_continuation": 0.0024461760233494,
+        "psi_child": 0.0013163569094753746,
+        "tenure_choice_kappa": -8.91673087643121e-05,
+        "theta0": -0.00011476309178864996
+      },
+      "center_base_loss": 30.371887956158005,
+      "center_name": "v1_chain20_0028_nm",
+      "center_rank": 1,
+      "chain": 3,
+      "clipped_coordinates": [],
+      "initial_price": 0.7167873404451099,
+      "neighbor": 3,
+      "parameters": {
+        "beta_annual": 0.9673209617671824,
+        "chi": 1.0911192846045328,
+        "child_benefit_curvature": 0.09466716887729505,
+        "first_birth_fixed_cost": 0.39731317875831124,
+        "h_P": 2.2907070913048955,
+        "kappa_fert": 0.12361528018984953,
+        "kappa_fert_continuation": 0.35618227665979363,
+        "psi_child": 0.1733053511048991,
+        "tenure_choice_kappa": 0.013260429169977607,
+        "theta0": 0.10092917784545849
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": -9.074098790006187e-05,
+        "chi": -0.0028581360994080407,
+        "child_benefit_curvature": -0.0019526550226509549,
+        "first_birth_fixed_cost": 0.004896275304738091,
+        "h_P": -0.00929290869510443,
+        "kappa_fert": -0.002123665325521031,
+        "kappa_fert_continuation": 0.002446176023349381,
+        "psi_child": 0.0013163569094753653,
+        "tenure_choice_kappa": -8.916730876431283e-05,
+        "theta0": -0.00011476309178865441
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 9,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_20/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_20/search/search_completed.json",
+        "slurm_job": "18979628_20"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": 0.0,
+        "chi": 0.0,
+        "child_benefit_curvature": 0.0,
+        "first_birth_fixed_cost": 0.0,
+        "h_P": 0.0,
+        "kappa_fert": 0.0,
+        "kappa_fert_continuation": 0.0,
+        "psi_child": 0.0,
+        "tenure_choice_kappa": 0.0,
+        "theta0": 0.0
+      },
+      "center_base_loss": 30.99909262396404,
+      "center_name": "v1_chain0_0000_nm",
+      "center_rank": 2,
+      "chain": 4,
+      "clipped_coordinates": [],
+      "initial_price": 0.7188481029285891,
+      "neighbor": 0,
+      "parameters": {
+        "beta_annual": 0.9670100471250203,
+        "chi": 1.093187485240681,
+        "child_benefit_curvature": 0.09689406390932934,
+        "first_birth_fixed_cost": 0.4009349064519595,
+        "h_P": 2.3,
+        "kappa_fert": 0.13056430591307258,
+        "kappa_fert_continuation": 0.364420274899206,
+        "psi_child": 0.17156192800028292,
+        "tenure_choice_kappa": 0.012988772333020718,
+        "theta0": 0.09862721952114817
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": 0.0,
+        "chi": 0.0,
+        "child_benefit_curvature": 0.0,
+        "first_birth_fixed_cost": 0.0,
+        "h_P": 0.0,
+        "kappa_fert": 0.0,
+        "kappa_fert_continuation": 0.0,
+        "psi_child": 0.0,
+        "tenure_choice_kappa": 0.0,
+        "theta0": 0.0
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 2,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_0/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_0/search/search_completed.json",
+        "slurm_job": "18979628_0"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": -4.491018858820972e-05,
+        "chi": -0.0017395036307465972,
+        "child_benefit_curvature": 0.0004621253450514673,
+        "first_birth_fixed_cost": -0.003258524230580262,
+        "h_P": 0.0,
+        "kappa_fert": -0.0005421341807814728,
+        "kappa_fert_continuation": -0.003907920663864306,
+        "psi_child": 0.0011601190475325762,
+        "tenure_choice_kappa": -7.62149951382407e-05,
+        "theta0": 0.000768191992991607
+      },
+      "center_base_loss": 30.99909262396404,
+      "center_name": "v1_chain0_0000_nm",
+      "center_rank": 2,
+      "chain": 5,
+      "clipped_coordinates": [
+        "h_P"
+      ],
+      "initial_price": 0.7188481029285891,
+      "neighbor": 1,
+      "parameters": {
+        "beta_annual": 0.966965136936432,
+        "chi": 1.0914479816099345,
+        "child_benefit_curvature": 0.0973561892543808,
+        "first_birth_fixed_cost": 0.39767638222137924,
+        "h_P": 2.3,
+        "kappa_fert": 0.1300221717322911,
+        "kappa_fert_continuation": 0.36051235423534167,
+        "psi_child": 0.1727220470478155,
+        "tenure_choice_kappa": 0.012912557337882477,
+        "theta0": 0.09939541151413978
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": -4.491018858822863e-05,
+        "chi": -0.0017395036307465805,
+        "child_benefit_curvature": 0.00046212534505147066,
+        "first_birth_fixed_cost": -0.003258524230580258,
+        "h_P": 0.007900864386592519,
+        "kappa_fert": -0.000542134180781485,
+        "kappa_fert_continuation": -0.00390792066386431,
+        "psi_child": 0.0011601190475325734,
+        "tenure_choice_kappa": -7.62149951382409e-05,
+        "theta0": 0.000768191992991614
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 2,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_0/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_0/search/search_completed.json",
+        "slurm_job": "18979628_0"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": 8.814459500228189e-05,
+        "chi": -0.002729707697475936,
+        "child_benefit_curvature": -0.0007576160507436758,
+        "first_birth_fixed_cost": -0.006144706936296651,
+        "h_P": -0.006139310643244578,
+        "kappa_fert": 0.0019536193514833877,
+        "kappa_fert_continuation": 0.0026511111671045917,
+        "psi_child": -0.0014161119855140014,
+        "tenure_choice_kappa": 1.8382636592205112e-05,
+        "theta0": 0.00010526823247805628
+      },
+      "center_base_loss": 30.99909262396404,
+      "center_name": "v1_chain0_0000_nm",
+      "center_rank": 2,
+      "chain": 6,
+      "clipped_coordinates": [],
+      "initial_price": 0.7188481029285891,
+      "neighbor": 2,
+      "parameters": {
+        "beta_annual": 0.9670981917200225,
+        "chi": 1.0904577775432052,
+        "child_benefit_curvature": 0.09613644785858566,
+        "first_birth_fixed_cost": 0.39479019951566285,
+        "h_P": 2.2938606893567552,
+        "kappa_fert": 0.13251792526455597,
+        "kappa_fert_continuation": 0.36707138606631057,
+        "psi_child": 0.1701458160147689,
+        "tenure_choice_kappa": 0.013007154969612923,
+        "theta0": 0.09873248775362622
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": 8.814459500231222e-05,
+        "chi": -0.0027297076974758584,
+        "child_benefit_curvature": -0.0007576160507436758,
+        "first_birth_fixed_cost": -0.006144706936296629,
+        "h_P": -0.006139310643244489,
+        "kappa_fert": 0.0019536193514833903,
+        "kappa_fert_continuation": 0.0026511111671045696,
+        "psi_child": -0.001416111985513997,
+        "tenure_choice_kappa": 1.8382636592205905e-05,
+        "theta0": 0.00010526823247805129
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 2,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_0/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_0/search/search_completed.json",
+        "slurm_job": "18979628_0"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": 8.517672126173714e-05,
+        "chi": -0.0026358977506377723,
+        "child_benefit_curvature": -0.0008101271630204937,
+        "first_birth_fixed_cost": 0.00173928772854548,
+        "h_P": -0.005169398552243631,
+        "kappa_fert": -0.000449331572371342,
+        "kappa_fert_continuation": 0.004138173508375587,
+        "psi_child": -0.000984940703672249,
+        "tenure_choice_kappa": 0.00010462790474996195,
+        "theta0": -0.00019004988534392087
+      },
+      "center_base_loss": 30.99909262396404,
+      "center_name": "v1_chain0_0000_nm",
+      "center_rank": 2,
+      "chain": 7,
+      "clipped_coordinates": [],
+      "initial_price": 0.7188481029285891,
+      "neighbor": 3,
+      "parameters": {
+        "beta_annual": 0.967095223846282,
+        "chi": 1.0905515874900433,
+        "child_benefit_curvature": 0.09608393674630884,
+        "first_birth_fixed_cost": 0.402674194180505,
+        "h_P": 2.294830601447756,
+        "kappa_fert": 0.13011497434070124,
+        "kappa_fert_continuation": 0.36855844840758156,
+        "psi_child": 0.17057698729661067,
+        "tenure_choice_kappa": 0.01309340023777068,
+        "theta0": 0.09843716963580425
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": 8.517672126176623e-05,
+        "chi": -0.0026358977506377858,
+        "child_benefit_curvature": -0.0008101271630205004,
+        "first_birth_fixed_cost": 0.0017392877285454566,
+        "h_P": -0.005169398552243823,
+        "kappa_fert": -0.0004493315723713415,
+        "kappa_fert_continuation": 0.0041381735083755615,
+        "psi_child": -0.0009849407036722532,
+        "tenure_choice_kappa": 0.00010462790474996273,
+        "theta0": -0.00019004988534392282
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 2,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_0/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_0/search/search_completed.json",
+        "slurm_job": "18979628_0"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": 0.0,
+        "chi": 0.0,
+        "child_benefit_curvature": 0.0,
+        "first_birth_fixed_cost": 0.0,
+        "h_P": 0.0,
+        "kappa_fert": 0.0,
+        "kappa_fert_continuation": 0.0,
+        "psi_child": 0.0,
+        "tenure_choice_kappa": 0.0,
+        "theta0": 0.0
+      },
+      "center_base_loss": 31.100921387845567,
+      "center_name": "v1_chain22_0040_nm",
+      "center_rank": 3,
+      "chain": 8,
+      "clipped_coordinates": [],
+      "initial_price": 0.7145380599869715,
+      "neighbor": 0,
+      "parameters": {
+        "beta_annual": 0.9679315816689616,
+        "chi": 1.0949723559579498,
+        "child_benefit_curvature": 0.09110821670569344,
+        "first_birth_fixed_cost": 0.38183363496083617,
+        "h_P": 2.3,
+        "kappa_fert": 0.126674748328909,
+        "kappa_fert_continuation": 0.3594303709018466,
+        "psi_child": 0.16866896443222062,
+        "tenure_choice_kappa": 0.013396031684538137,
+        "theta0": 0.10567563127878332
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": 0.0,
+        "chi": 0.0,
+        "child_benefit_curvature": 0.0,
+        "first_birth_fixed_cost": 0.0,
+        "h_P": 0.0,
+        "kappa_fert": 0.0,
+        "kappa_fert_continuation": 0.0,
+        "psi_child": 0.0,
+        "tenure_choice_kappa": 0.0,
+        "theta0": 0.0
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 8,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_22/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_22/search/search_completed.json",
+        "slurm_job": "18979628_22"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": -8.189000776093192e-05,
+        "chi": 0.001353064483122779,
+        "child_benefit_curvature": -0.0020842093924040295,
+        "first_birth_fixed_cost": 0.005756653848823123,
+        "h_P": 0.0,
+        "kappa_fert": 0.00018775849474989004,
+        "kappa_fert_continuation": -0.0054864998788109465,
+        "psi_child": -0.0007813490680835256,
+        "tenure_choice_kappa": 2.6193967442231236e-06,
+        "theta0": 0.0012252024017729984
+      },
+      "center_base_loss": 31.100921387845567,
+      "center_name": "v1_chain22_0040_nm",
+      "center_rank": 3,
+      "chain": 9,
+      "clipped_coordinates": [
+        "h_P"
+      ],
+      "initial_price": 0.7145380599869715,
+      "neighbor": 1,
+      "parameters": {
+        "beta_annual": 0.9678496916612007,
+        "chi": 1.0963254204410726,
+        "child_benefit_curvature": 0.08902400731328941,
+        "first_birth_fixed_cost": 0.3875902888096593,
+        "h_P": 2.3,
+        "kappa_fert": 0.12686250682365888,
+        "kappa_fert_continuation": 0.35394387102303565,
+        "psi_child": 0.1678876153641371,
+        "tenure_choice_kappa": 0.01339865108128236,
+        "theta0": 0.10690083368055632
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": -8.189000776092548e-05,
+        "chi": 0.0013530644831228522,
+        "child_benefit_curvature": -0.0020842093924040355,
+        "first_birth_fixed_cost": 0.005756653848823104,
+        "h_P": 0.012070728596007343,
+        "kappa_fert": 0.00018775849474989782,
+        "kappa_fert_continuation": -0.0054864998788109465,
+        "psi_child": -0.0007813490680835333,
+        "tenure_choice_kappa": 2.619396744223762e-06,
+        "theta0": 0.0012252024017729963
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 8,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_22/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_22/search/search_completed.json",
+        "slurm_job": "18979628_22"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": 4.61808247276263e-05,
+        "chi": -2.1923993068551084e-05,
+        "child_benefit_curvature": -0.0004691233819942714,
+        "first_birth_fixed_cost": 0.00523912807240523,
+        "h_P": -0.002592698770127466,
+        "kappa_fert": 0.0018999885505410763,
+        "kappa_fert_continuation": -0.005784583614251937,
+        "psi_child": -0.0001905334142835724,
+        "tenure_choice_kappa": 3.0361199046277307e-05,
+        "theta0": 0.00012938784761656885
+      },
+      "center_base_loss": 31.100921387845567,
+      "center_name": "v1_chain22_0040_nm",
+      "center_rank": 3,
+      "chain": 10,
+      "clipped_coordinates": [],
+      "initial_price": 0.7145380599869715,
+      "neighbor": 2,
+      "parameters": {
+        "beta_annual": 0.9679777624936893,
+        "chi": 1.0949504319648813,
+        "child_benefit_curvature": 0.09063909332369917,
+        "first_birth_fixed_cost": 0.3870727630332414,
+        "h_P": 2.2974073012298724,
+        "kappa_fert": 0.12857473687945006,
+        "kappa_fert_continuation": 0.35364578728759466,
+        "psi_child": 0.16847843101793705,
+        "tenure_choice_kappa": 0.013426392883584415,
+        "theta0": 0.10580501912639989
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": 4.6180824727674013e-05,
+        "chi": -2.192399306861548e-05,
+        "child_benefit_curvature": -0.00046912338199427085,
+        "first_birth_fixed_cost": 0.005239128072405239,
+        "h_P": -0.002592698770127511,
+        "kappa_fert": 0.0018999885505410735,
+        "kappa_fert_continuation": -0.005784583614251962,
+        "psi_child": -0.0001905334142835804,
+        "tenure_choice_kappa": 3.0361199046278154e-05,
+        "theta0": 0.0001293878476165669
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 8,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_22/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_22/search/search_completed.json",
+        "slurm_job": "18979628_22"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": 5.600883167633519e-05,
+        "chi": -0.0010730486915997428,
+        "child_benefit_curvature": -0.0005972227357486926,
+        "first_birth_fixed_cost": -0.0008874124164979791,
+        "h_P": -0.00042852509620461277,
+        "kappa_fert": 1.0745426458930174e-05,
+        "kappa_fert_continuation": 0.004079859783049811,
+        "psi_child": -0.00034965410218840143,
+        "tenure_choice_kappa": 9.347612973235712e-05,
+        "theta0": 7.738707054966154e-05
+      },
+      "center_base_loss": 31.100921387845567,
+      "center_name": "v1_chain22_0040_nm",
+      "center_rank": 3,
+      "chain": 11,
+      "clipped_coordinates": [],
+      "initial_price": 0.7145380599869715,
+      "neighbor": 3,
+      "parameters": {
+        "beta_annual": 0.967987590500638,
+        "chi": 1.09389930726635,
+        "child_benefit_curvature": 0.09051099396994475,
+        "first_birth_fixed_cost": 0.3809462225443382,
+        "h_P": 2.299571474903795,
+        "kappa_fert": 0.12668549375536792,
+        "kappa_fert_continuation": 0.3635102306848964,
+        "psi_child": 0.16831931033003222,
+        "tenure_choice_kappa": 0.013489507814270494,
+        "theta0": 0.10575301834933298
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": 5.600883167634672e-05,
+        "chi": -0.0010730486915996652,
+        "child_benefit_curvature": -0.0005972227357486942,
+        "first_birth_fixed_cost": -0.0008874124164979527,
+        "h_P": -0.00042852509620462664,
+        "kappa_fert": 1.0745426458916852e-05,
+        "kappa_fert_continuation": 0.004079859783049813,
+        "psi_child": -0.00034965410218839416,
+        "tenure_choice_kappa": 9.347612973235706e-05,
+        "theta0": 7.738707054965987e-05
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 8,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_22/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_22/search/search_completed.json",
+        "slurm_job": "18979628_22"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": 0.0,
+        "chi": 0.0,
+        "child_benefit_curvature": 0.0,
+        "first_birth_fixed_cost": 0.0,
+        "h_P": 0.0,
+        "kappa_fert": 0.0,
+        "kappa_fert_continuation": 0.0,
+        "psi_child": 0.0,
+        "tenure_choice_kappa": 0.0,
+        "theta0": 0.0
+      },
+      "center_base_loss": 31.61038715323214,
+      "center_name": "v1_chain19_0035_nm",
+      "center_rank": 4,
+      "chain": 12,
+      "clipped_coordinates": [],
+      "initial_price": 0.7071638909981791,
+      "neighbor": 0,
+      "parameters": {
+        "beta_annual": 0.9682072409730587,
+        "chi": 1.0888301897571244,
+        "child_benefit_curvature": 0.09453784231317947,
+        "first_birth_fixed_cost": 0.40579535710586767,
+        "h_P": 2.3,
+        "kappa_fert": 0.1281292223152471,
+        "kappa_fert_continuation": 0.36103419793760083,
+        "psi_child": 0.17028224334125053,
+        "tenure_choice_kappa": 0.014171398266249115,
+        "theta0": 0.11064771887427581
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": 0.0,
+        "chi": 0.0,
+        "child_benefit_curvature": 0.0,
+        "first_birth_fixed_cost": 0.0,
+        "h_P": 0.0,
+        "kappa_fert": 0.0,
+        "kappa_fert_continuation": 0.0,
+        "psi_child": 0.0,
+        "tenure_choice_kappa": 0.0,
+        "theta0": 0.0
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 8,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_19/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_19/search/search_completed.json",
+        "slurm_job": "18979628_19"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": -6.202098882968077e-05,
+        "chi": 3.057006664297646e-05,
+        "child_benefit_curvature": -0.00019832674660964777,
+        "first_birth_fixed_cost": 0.005538096002089932,
+        "h_P": 0.0,
+        "kappa_fert": -0.0013816027936711384,
+        "kappa_fert_continuation": 0.0008199968577002337,
+        "psi_child": 0.00048341177939723035,
+        "tenure_choice_kappa": -9.736094679581482e-05,
+        "theta0": -0.0008978521002573348
+      },
+      "center_base_loss": 31.61038715323214,
+      "center_name": "v1_chain19_0035_nm",
+      "center_rank": 4,
+      "chain": 13,
+      "clipped_coordinates": [
+        "h_P"
+      ],
+      "initial_price": 0.7071638909981791,
+      "neighbor": 1,
+      "parameters": {
+        "beta_annual": 0.968145219984229,
+        "chi": 1.0888607598237674,
+        "child_benefit_curvature": 0.09433951556656982,
+        "first_birth_fixed_cost": 0.4113334531079576,
+        "h_P": 2.3,
+        "kappa_fert": 0.12674761952157595,
+        "kappa_fert_continuation": 0.36185419479530107,
+        "psi_child": 0.17076565512064776,
+        "tenure_choice_kappa": 0.0140740373194533,
+        "theta0": 0.10974986677401848
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": -6.202098882966064e-05,
+        "chi": 3.0570066642876534e-05,
+        "child_benefit_curvature": -0.00019832674660964555,
+        "first_birth_fixed_cost": 0.005538096002089945,
+        "h_P": 0.01039845426966271,
+        "kappa_fert": -0.0013816027936711505,
+        "kappa_fert_continuation": 0.0008199968577002185,
+        "psi_child": 0.0004834117793972283,
+        "tenure_choice_kappa": -9.736094679581459e-05,
+        "theta0": -0.0008978521002573411
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 8,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_19/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_19/search/search_completed.json",
+        "slurm_job": "18979628_19"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": 1.3131796120391392e-05,
+        "chi": 0.001583716505432431,
+        "child_benefit_curvature": 0.0017406154212148972,
+        "first_birth_fixed_cost": -0.0062330532246239745,
+        "h_P": -0.0018438955491286713,
+        "kappa_fert": 0.0022397289017660194,
+        "kappa_fert_continuation": 0.0007427392489830487,
+        "psi_child": 0.0006185639186602199,
+        "tenure_choice_kappa": 7.050511955553583e-05,
+        "theta0": -0.00011272382931712399
+      },
+      "center_base_loss": 31.61038715323214,
+      "center_name": "v1_chain19_0035_nm",
+      "center_rank": 4,
+      "chain": 14,
+      "clipped_coordinates": [],
+      "initial_price": 0.7071638909981791,
+      "neighbor": 2,
+      "parameters": {
+        "beta_annual": 0.968220372769179,
+        "chi": 1.0904139062625569,
+        "child_benefit_curvature": 0.09627845773439436,
+        "first_birth_fixed_cost": 0.3995623038812437,
+        "h_P": 2.298156104450871,
+        "kappa_fert": 0.1303689512170131,
+        "kappa_fert_continuation": 0.3617769371865839,
+        "psi_child": 0.17090080725991075,
+        "tenure_choice_kappa": 0.01424190338580465,
+        "theta0": 0.11053499504495869
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": 1.3131796120337235e-05,
+        "chi": 0.0015837165054324565,
+        "child_benefit_curvature": 0.0017406154212149,
+        "first_birth_fixed_cost": -0.00623305322462395,
+        "h_P": -0.001843895549128563,
+        "kappa_fert": 0.0022397289017660224,
+        "kappa_fert_continuation": 0.0007427392489830404,
+        "psi_child": 0.000618563918660223,
+        "tenure_choice_kappa": 7.050511955553584e-05,
+        "theta0": -0.00011272382931712677
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 8,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_19/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_19/search/search_completed.json",
+        "slurm_job": "18979628_19"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": -7.311171016899376e-05,
+        "chi": 0.0025698694859863647,
+        "child_benefit_curvature": -0.0005377213700094446,
+        "first_birth_fixed_cost": 0.005762110862843284,
+        "h_P": 0.0,
+        "kappa_fert": 0.0015516435978974452,
+        "kappa_fert_continuation": 0.004248403399681022,
+        "psi_child": -0.00026539629768904116,
+        "tenure_choice_kappa": -4.449277704741787e-05,
+        "theta0": 0.0005874748956337383
+      },
+      "center_base_loss": 31.61038715323214,
+      "center_name": "v1_chain19_0035_nm",
+      "center_rank": 4,
+      "chain": 15,
+      "clipped_coordinates": [
+        "h_P"
+      ],
+      "initial_price": 0.7071638909981791,
+      "neighbor": 3,
+      "parameters": {
+        "beta_annual": 0.9681341292628897,
+        "chi": 1.0914000592431108,
+        "child_benefit_curvature": 0.09400012094317002,
+        "first_birth_fixed_cost": 0.41155746796871095,
+        "h_P": 2.3,
+        "kappa_fert": 0.12968086591314454,
+        "kappa_fert_continuation": 0.36528260133728185,
+        "psi_child": 0.1700168470435615,
+        "tenure_choice_kappa": 0.014126905489201697,
+        "theta0": 0.11123519376990955
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": -7.311171016897666e-05,
+        "chi": 0.0025698694859863525,
+        "child_benefit_curvature": -0.0005377213700094397,
+        "first_birth_fixed_cost": 0.005762110862843301,
+        "h_P": 0.008443252926317035,
+        "kappa_fert": 0.001551643597897447,
+        "kappa_fert_continuation": 0.004248403399681049,
+        "psi_child": -0.0002653962976890377,
+        "tenure_choice_kappa": -4.449277704741714e-05,
+        "theta0": 0.0005874748956337373
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 8,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_19/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_19/search/search_completed.json",
+        "slurm_job": "18979628_19"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": 0.0,
+        "chi": 0.0,
+        "child_benefit_curvature": 0.0,
+        "first_birth_fixed_cost": 0.0,
+        "h_P": 0.0,
+        "kappa_fert": 0.0,
+        "kappa_fert_continuation": 0.0,
+        "psi_child": 0.0,
+        "tenure_choice_kappa": 0.0,
+        "theta0": 0.0
+      },
+      "center_base_loss": 31.74122846448217,
+      "center_name": "v1_chain9_0015_nm",
+      "center_rank": 5,
+      "chain": 16,
+      "clipped_coordinates": [],
+      "initial_price": 0.7168977041216273,
+      "neighbor": 0,
+      "parameters": {
+        "beta_annual": 0.9675618887009786,
+        "chi": 1.0908582108668496,
+        "child_benefit_curvature": 0.09334832767815478,
+        "first_birth_fixed_cost": 0.42552239908069434,
+        "h_P": 2.3,
+        "kappa_fert": 0.1377574136363107,
+        "kappa_fert_continuation": 0.371088000571219,
+        "psi_child": 0.1728499075395833,
+        "tenure_choice_kappa": 0.013182910638536171,
+        "theta0": 0.10492153300059266
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": 0.0,
+        "chi": 0.0,
+        "child_benefit_curvature": 0.0,
+        "first_birth_fixed_cost": 0.0,
+        "h_P": 0.0,
+        "kappa_fert": 0.0,
+        "kappa_fert_continuation": 0.0,
+        "psi_child": 0.0,
+        "tenure_choice_kappa": 0.0,
+        "theta0": 0.0
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 9,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_9/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_9/search/search_completed.json",
+        "slurm_job": "18979628_9"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": 2.548367820298658e-05,
+        "chi": 0.004063698632055912,
+        "child_benefit_curvature": 0.0006301791824012692,
+        "first_birth_fixed_cost": -0.0016784602933678228,
+        "h_P": 0.0,
+        "kappa_fert": -0.0006072132126081486,
+        "kappa_fert_continuation": 0.0020693827344849813,
+        "psi_child": 0.00131499061971585,
+        "tenure_choice_kappa": -0.0001054664668355531,
+        "theta0": -0.0008342181189180814
+      },
+      "center_base_loss": 31.74122846448217,
+      "center_name": "v1_chain9_0015_nm",
+      "center_rank": 5,
+      "chain": 17,
+      "clipped_coordinates": [
+        "h_P"
+      ],
+      "initial_price": 0.7168977041216273,
+      "neighbor": 1,
+      "parameters": {
+        "beta_annual": 0.9675873723791816,
+        "chi": 1.0949219094989056,
+        "child_benefit_curvature": 0.09397850686055605,
+        "first_birth_fixed_cost": 0.4238439387873265,
+        "h_P": 2.3,
+        "kappa_fert": 0.13715020042370255,
+        "kappa_fert_continuation": 0.37315738330570397,
+        "psi_child": 0.17416489815929914,
+        "tenure_choice_kappa": 0.013077444171700618,
+        "theta0": 0.10408731488167458
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": 2.5483678203016184e-05,
+        "chi": 0.004063698632055979,
+        "child_benefit_curvature": 0.0006301791824012737,
+        "first_birth_fixed_cost": -0.0016784602933678256,
+        "h_P": 0.010775594303223446,
+        "kappa_fert": -0.0006072132126081364,
+        "kappa_fert_continuation": 0.00206938273448498,
+        "psi_child": 0.0013149906197158405,
+        "tenure_choice_kappa": -0.00010546646683555228,
+        "theta0": -0.0008342181189180837
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 9,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_9/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_9/search/search_completed.json",
+        "slurm_job": "18979628_9"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": -2.8220903594333713e-05,
+        "chi": 0.0031364118057102264,
+        "child_benefit_curvature": -0.001834291021692136,
+        "first_birth_fixed_cost": -0.0018071367784914805,
+        "h_P": -0.005663400068680158,
+        "kappa_fert": -6.718648327705412e-05,
+        "kappa_fert_continuation": -0.003973084563591911,
+        "psi_child": -0.0011550358861317223,
+        "tenure_choice_kappa": 3.347739990659966e-05,
+        "theta0": 0.00047805523085735213
+      },
+      "center_base_loss": 31.74122846448217,
+      "center_name": "v1_chain9_0015_nm",
+      "center_rank": 5,
+      "chain": 18,
+      "clipped_coordinates": [],
+      "initial_price": 0.7168977041216273,
+      "neighbor": 2,
+      "parameters": {
+        "beta_annual": 0.9675336677973843,
+        "chi": 1.0939946226725599,
+        "child_benefit_curvature": 0.09151403665646264,
+        "first_birth_fixed_cost": 0.42371526230220286,
+        "h_P": 2.2943365999313197,
+        "kappa_fert": 0.13769022715303364,
+        "kappa_fert_continuation": 0.3671149160076271,
+        "psi_child": 0.17169487165345157,
+        "tenure_choice_kappa": 0.01321638803844277,
+        "theta0": 0.10539958823145001
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": -2.8220903594388834e-05,
+        "chi": 0.003136411805710311,
+        "child_benefit_curvature": -0.001834291021692132,
+        "first_birth_fixed_cost": -0.001807136778491482,
+        "h_P": -0.005663400068680072,
+        "kappa_fert": -6.718648327706466e-05,
+        "kappa_fert_continuation": -0.0039730845635919014,
+        "psi_child": -0.001155035886131723,
+        "tenure_choice_kappa": 3.347739990660031e-05,
+        "theta0": 0.00047805523085735435
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 9,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_9/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_9/search/search_completed.json",
+        "slurm_job": "18979628_9"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": 2.5994827405284582e-05,
+        "chi": -0.0019771256725098496,
+        "child_benefit_curvature": -0.0005401278321884723,
+        "first_birth_fixed_cost": -0.004421776579207448,
+        "h_P": 0.0,
+        "kappa_fert": 0.0004829540433489987,
+        "kappa_fert_continuation": -0.0051836275691111156,
+        "psi_child": -0.000630387942583216,
+        "tenure_choice_kappa": -0.00011165880987171542,
+        "theta0": -0.0010123246273762432
+      },
+      "center_base_loss": 31.74122846448217,
+      "center_name": "v1_chain9_0015_nm",
+      "center_rank": 5,
+      "chain": 19,
+      "clipped_coordinates": [
+        "h_P"
+      ],
+      "initial_price": 0.7168977041216273,
+      "neighbor": 3,
+      "parameters": {
+        "beta_annual": 0.9675878835283839,
+        "chi": 1.0888810851943398,
+        "child_benefit_curvature": 0.0928081998459663,
+        "first_birth_fixed_cost": 0.4211006225014869,
+        "h_P": 2.3,
+        "kappa_fert": 0.1382403676796597,
+        "kappa_fert_continuation": 0.3659043730021079,
+        "psi_child": 0.17221951959700008,
+        "tenure_choice_kappa": 0.013071251828664456,
+        "theta0": 0.10390920837321642
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": 2.599482740530492e-05,
+        "chi": -0.001977125672509871,
+        "child_benefit_curvature": -0.0005401278321884778,
+        "first_birth_fixed_cost": -0.004421776579207461,
+        "h_P": 0.01129725916525838,
+        "kappa_fert": 0.00048295404334899487,
+        "kappa_fert_continuation": -0.00518362756911111,
+        "psi_child": -0.0006303879425832104,
+        "tenure_choice_kappa": -0.00011165880987171626,
+        "theta0": -0.0010123246273762462
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 9,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_9/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_9/search/search_completed.json",
+        "slurm_job": "18979628_9"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": 0.0,
+        "chi": 0.0,
+        "child_benefit_curvature": 0.0,
+        "first_birth_fixed_cost": 0.0,
+        "h_P": 0.0,
+        "kappa_fert": 0.0,
+        "kappa_fert_continuation": 0.0,
+        "psi_child": 0.0,
+        "tenure_choice_kappa": 0.0,
+        "theta0": 0.0
+      },
+      "center_base_loss": 32.0545918861627,
+      "center_name": "v1_chain11_0025_nm",
+      "center_rank": 6,
+      "chain": 20,
+      "clipped_coordinates": [],
+      "initial_price": 0.7077950642657361,
+      "neighbor": 0,
+      "parameters": {
+        "beta_annual": 0.9674978121165125,
+        "chi": 1.0952898145152394,
+        "child_benefit_curvature": 0.091320511336564,
+        "first_birth_fixed_cost": 0.40826050091467403,
+        "h_P": 2.3,
+        "kappa_fert": 0.13167965726157987,
+        "kappa_fert_continuation": 0.35580902309620643,
+        "psi_child": 0.17158116324043424,
+        "tenure_choice_kappa": 0.013559854568362773,
+        "theta0": 0.10472321019979686
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": 0.0,
+        "chi": 0.0,
+        "child_benefit_curvature": 0.0,
+        "first_birth_fixed_cost": 0.0,
+        "h_P": 0.0,
+        "kappa_fert": 0.0,
+        "kappa_fert_continuation": 0.0,
+        "psi_child": 0.0,
+        "tenure_choice_kappa": 0.0,
+        "theta0": 0.0
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 8,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_11/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_11/search/search_completed.json",
+        "slurm_job": "18979628_11"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": -5.9651186811282564e-05,
+        "chi": 0.004405978569290481,
+        "child_benefit_curvature": -0.00019822339288033675,
+        "first_birth_fixed_cost": 0.0024841016828563434,
+        "h_P": 0.0,
+        "kappa_fert": 0.0006230396486931189,
+        "kappa_fert_continuation": 0.00012481722370977222,
+        "psi_child": 3.829727939691496e-06,
+        "tenure_choice_kappa": -1.8499442167540375e-05,
+        "theta0": -0.00044216820430899306
+      },
+      "center_base_loss": 32.0545918861627,
+      "center_name": "v1_chain11_0025_nm",
+      "center_rank": 6,
+      "chain": 21,
+      "clipped_coordinates": [
+        "h_P"
+      ],
+      "initial_price": 0.7077950642657361,
+      "neighbor": 1,
+      "parameters": {
+        "beta_annual": 0.9674381609297013,
+        "chi": 1.09969579308453,
+        "child_benefit_curvature": 0.09112228794368367,
+        "first_birth_fixed_cost": 0.4107446025975304,
+        "h_P": 2.3,
+        "kappa_fert": 0.132302696910273,
+        "kappa_fert_continuation": 0.3559338403199162,
+        "psi_child": 0.17158499296837393,
+        "tenure_choice_kappa": 0.013541355126195233,
+        "theta0": 0.10428104199548786
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": -5.965118681124194e-05,
+        "chi": 0.004405978569290438,
+        "child_benefit_curvature": -0.00019822339288033675,
+        "first_birth_fixed_cost": 0.0024841016828563685,
+        "h_P": 0.010397822712592004,
+        "kappa_fert": 0.0006230396486931212,
+        "kappa_fert_continuation": 0.0001248172237097764,
+        "psi_child": 3.829727939686292e-06,
+        "tenure_choice_kappa": -1.8499442167539793e-05,
+        "theta0": -0.0004421682043089992
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 8,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_11/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_11/search/search_completed.json",
+        "slurm_job": "18979628_11"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": -4.498260730489978e-05,
+        "chi": -0.002276963371109275,
+        "child_benefit_curvature": 0.00014002814908366246,
+        "first_birth_fixed_cost": -5.740114888241887e-05,
+        "h_P": 0.0,
+        "kappa_fert": -8.832602555414182e-05,
+        "kappa_fert_continuation": 0.00044171430970796344,
+        "psi_child": 0.0008795402480362979,
+        "tenure_choice_kappa": 2.4729477114982315e-05,
+        "theta0": -0.0003785691780090611
+      },
+      "center_base_loss": 32.0545918861627,
+      "center_name": "v1_chain11_0025_nm",
+      "center_rank": 6,
+      "chain": 22,
+      "clipped_coordinates": [
+        "h_P"
+      ],
+      "initial_price": 0.7077950642657361,
+      "neighbor": 2,
+      "parameters": {
+        "beta_annual": 0.9674528295092076,
+        "chi": 1.0930128511441302,
+        "child_benefit_curvature": 0.09146053948564767,
+        "first_birth_fixed_cost": 0.4082030997657916,
+        "h_P": 2.3,
+        "kappa_fert": 0.13159133123602573,
+        "kappa_fert_continuation": 0.3562507374059144,
+        "psi_child": 0.17246070348847053,
+        "tenure_choice_kappa": 0.013584584045477755,
+        "theta0": 0.1043446410217878
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": -4.498260730487208e-05,
+        "chi": -0.0022769633711092253,
+        "child_benefit_curvature": 0.0001400281490836569,
+        "first_birth_fixed_cost": -5.740114888243275e-05,
+        "h_P": 0.010011656815846393,
+        "kappa_fert": -8.832602555412961e-05,
+        "kappa_fert_continuation": 0.00044171430970795373,
+        "psi_child": 0.0008795402480362979,
+        "tenure_choice_kappa": 2.4729477114981803e-05,
+        "theta0": -0.00037856917800906304
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 8,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_11/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_11/search/search_completed.json",
+        "slurm_job": "18979628_11"
+      }
+    },
+    {
+      "actual_physical_perturbations": {
+        "beta_annual": 7.136451735967331e-05,
+        "chi": 0.004120383089046609,
+        "child_benefit_curvature": 0.0014700912086218904,
+        "first_birth_fixed_cost": 0.004367872124034056,
+        "h_P": -0.0030173978410177327,
+        "kappa_fert": 0.001208273226711215,
+        "kappa_fert_continuation": 0.0026671527351208035,
+        "psi_child": -3.003958293931741e-05,
+        "tenure_choice_kappa": -3.612861602622468e-05,
+        "theta0": -0.0003159206887358157
+      },
+      "center_base_loss": 32.0545918861627,
+      "center_name": "v1_chain11_0025_nm",
+      "center_rank": 6,
+      "chain": 23,
+      "clipped_coordinates": [],
+      "initial_price": 0.7077950642657361,
+      "neighbor": 3,
+      "parameters": {
+        "beta_annual": 0.9675691766338722,
+        "chi": 1.099410197604286,
+        "child_benefit_curvature": 0.0927906025451859,
+        "first_birth_fixed_cost": 0.4126283730387081,
+        "h_P": 2.296982602158982,
+        "kappa_fert": 0.1328879304882911,
+        "kappa_fert_continuation": 0.35847617583132724,
+        "psi_child": 0.17155112365749492,
+        "tenure_choice_kappa": 0.013523725952336548,
+        "theta0": 0.10440728951106104
+      },
+      "profile": "base_control",
+      "raw_physical_perturbations": {
+        "beta_annual": 7.136451735965153e-05,
+        "chi": 0.004120383089046608,
+        "child_benefit_curvature": 0.001470091208621895,
+        "first_birth_fixed_cost": 0.004367872124034076,
+        "h_P": -0.003017397841017913,
+        "kappa_fert": 0.001208273226711225,
+        "kappa_fert_continuation": 0.0026671527351207827,
+        "psi_child": -3.003958293930631e-05,
+        "tenure_choice_kappa": -3.612861602622464e-05,
+        "theta0": -0.00031592068873581016
+      },
+      "seed_provenance": {
+        "lifecycle_solves": 8,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_11/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_11/search/search_completed.json",
+        "slurm_job": "18979628_11"
+      }
+    }
+  ],
+  "no_economic_changes_relative_to_v1": true,
+  "no_exact_center_re_evaluation_required": false,
+  "normalization": {
+    "H0_bound_checked_at": "accepted root only",
+    "H0_bounds": [
+      0.2,
+      80.0
+    ],
+    "H0_role": "derived calibrated housing supply coefficient",
+    "formula": "H0=h(p)/(u*p/rbar)^xi",
+    "population": 1.0
+  },
+  "numerical_changes": [
+    "postcheck-verified top-six centers with four starts each",
+    "initial simplex physical steps multiplied by 0.25",
+    "actual-start wall budget 7200 to 10800 seconds",
+    "objective-call limit 100 to 150"
+  ],
+  "previous_round": "normalized_calibration_v1",
+  "previous_round_best_verified_loss": 30.371887956158005,
+  "profiles": {
+    "base_control": {}
+  },
+  "psi_bound_role": "diagnostic search restriction; not an estimate or externally identified bound",
+  "psi_bounds": [
+    0.01,
+    0.5
+  ],
+  "runtime_estimate": {
+    "allocated_CPU_hours": 72,
+    "expected_calls_per_chain_range": [
+      58,
+      78
+    ],
+    "expected_exploration_minutes": 153,
+    "expected_total_calls_range": [
+      1400,
+      1900
+    ],
+    "hard_objective_cap": 3600,
+    "v1_observed_calls_range": [
+      35,
+      47
+    ],
+    "v1_observed_minutes_range": [
+      92,
+      93
+    ]
+  },
+  "shared_native_gate_required": true,
+  "simplex_physical_step_multiplier": 0.25,
+  "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+  "verified_incumbent_retained": {
+    "H0": 6.851575289344519,
+    "base_loss": 30.371887956158005,
+    "chain": 20,
+    "experimental_not_adopted": true,
+    "label": "0028_nm",
+    "parameters": {
+      "beta_annual": 0.9674117027550825,
+      "chi": 1.0939774207039408,
+      "child_benefit_curvature": 0.096619823899946,
+      "first_birth_fixed_cost": 0.39241690345357316,
+      "h_P": 2.3,
+      "kappa_fert": 0.12573894551537057,
+      "kappa_fert_continuation": 0.35373610063644423,
+      "psi_child": 0.17198899419542374,
+      "tenure_choice_kappa": 0.01334959647874192,
+      "theta0": 0.10104394093724714
+    },
+    "price": 0.7167873404451099,
+    "provenance": {
+      "lifecycle_solves": 9,
+      "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+      "native_postcheck_status": "passed",
+      "postcheck_receipt": "chain_20/postcheck/completed.json",
+      "postcheck_status": "selected_numerically_verified",
+      "search_receipt": "chain_20/search/search_completed.json",
+      "slurm_job": "18979628_20"
+    },
+    "source": "output/model/fixed_reference_economics_20260928/normalized_calibration_v2/deployment/best_v1_candidate",
+    "source_sha256": {
+      "parameters.csv": "c94aed6f3a2acbc12d79b6101022d3a99f36d1257b8ca80c6b704e22df14036d",
+      "target_fit.csv": "0ce75a3bf9203f30d6fe3f7facb587e0aaeaf9654790709b14e8ab9a57931303",
+      "verification.json": "ea956725fa26c7581609653316d41d3fcccbc29c09ff94d99d9513a627e1e2ab"
+    },
+    "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+    "verified_selected_repeat": true,
+    "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+    "weight_profile": "base_control"
+  },
+  "verified_seed_centers": [
+    {
+      "H0": 6.851575289344519,
+      "base_loss": 30.371887956158005,
+      "chain": 20,
+      "label": "0028_nm",
+      "parameters": {
+        "beta_annual": 0.9674117027550825,
+        "chi": 1.0939774207039408,
+        "child_benefit_curvature": 0.096619823899946,
+        "first_birth_fixed_cost": 0.39241690345357316,
+        "h_P": 2.3,
+        "kappa_fert": 0.12573894551537057,
+        "kappa_fert_continuation": 0.35373610063644423,
+        "psi_child": 0.17198899419542374,
+        "tenure_choice_kappa": 0.01334959647874192,
+        "theta0": 0.10104394093724714
+      },
+      "price": 0.7167873404451099,
+      "provenance": {
+        "lifecycle_solves": 9,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_20/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_20/search/search_completed.json",
+        "slurm_job": "18979628_20"
+      },
+      "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+      "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+      "weight_profile": "base_control"
+    },
+    {
+      "H0": 6.838655072054291,
+      "base_loss": 30.99909262396404,
+      "chain": 0,
+      "label": "0000_nm",
+      "parameters": {
+        "beta_annual": 0.9670100471250203,
+        "chi": 1.093187485240681,
+        "child_benefit_curvature": 0.09689406390932934,
+        "first_birth_fixed_cost": 0.4009349064519595,
+        "h_P": 2.3,
+        "kappa_fert": 0.13056430591307258,
+        "kappa_fert_continuation": 0.364420274899206,
+        "psi_child": 0.17156192800028292,
+        "tenure_choice_kappa": 0.012988772333020718,
+        "theta0": 0.09862721952114817
+      },
+      "price": 0.7188481029285891,
+      "provenance": {
+        "lifecycle_solves": 2,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_0/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_0/search/search_completed.json",
+        "slurm_job": "18979628_0"
+      },
+      "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+      "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+      "weight_profile": "base_control"
+    },
+    {
+      "H0": 6.8848145859911885,
+      "base_loss": 31.100921387845567,
+      "chain": 22,
+      "label": "0040_nm",
+      "parameters": {
+        "beta_annual": 0.9679315816689616,
+        "chi": 1.0949723559579498,
+        "child_benefit_curvature": 0.09110821670569344,
+        "first_birth_fixed_cost": 0.38183363496083617,
+        "h_P": 2.3,
+        "kappa_fert": 0.126674748328909,
+        "kappa_fert_continuation": 0.3594303709018466,
+        "psi_child": 0.16866896443222062,
+        "tenure_choice_kappa": 0.013396031684538137,
+        "theta0": 0.10567563127878332
+      },
+      "price": 0.7145380599869715,
+      "provenance": {
+        "lifecycle_solves": 8,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_22/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_22/search/search_completed.json",
+        "slurm_job": "18979628_22"
+      },
+      "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+      "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+      "weight_profile": "base_control"
+    },
+    {
+      "H0": 6.940808898815555,
+      "base_loss": 31.61038715323214,
+      "chain": 19,
+      "label": "0035_nm",
+      "parameters": {
+        "beta_annual": 0.9682072409730587,
+        "chi": 1.0888301897571244,
+        "child_benefit_curvature": 0.09453784231317947,
+        "first_birth_fixed_cost": 0.40579535710586767,
+        "h_P": 2.3,
+        "kappa_fert": 0.1281292223152471,
+        "kappa_fert_continuation": 0.36103419793760083,
+        "psi_child": 0.17028224334125053,
+        "tenure_choice_kappa": 0.014171398266249115,
+        "theta0": 0.11064771887427581
+      },
+      "price": 0.7071638909981791,
+      "provenance": {
+        "lifecycle_solves": 8,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_19/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_19/search/search_completed.json",
+        "slurm_job": "18979628_19"
+      },
+      "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+      "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+      "weight_profile": "base_control"
+    },
+    {
+      "H0": 6.86085542156994,
+      "base_loss": 31.74122846448217,
+      "chain": 9,
+      "label": "0015_nm",
+      "parameters": {
+        "beta_annual": 0.9675618887009786,
+        "chi": 1.0908582108668496,
+        "child_benefit_curvature": 0.09334832767815478,
+        "first_birth_fixed_cost": 0.42552239908069434,
+        "h_P": 2.3,
+        "kappa_fert": 0.1377574136363107,
+        "kappa_fert_continuation": 0.371088000571219,
+        "psi_child": 0.1728499075395833,
+        "tenure_choice_kappa": 0.013182910638536171,
+        "theta0": 0.10492153300059266
+      },
+      "price": 0.7168977041216273,
+      "provenance": {
+        "lifecycle_solves": 9,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_9/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_9/search/search_completed.json",
+        "slurm_job": "18979628_9"
+      },
+      "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+      "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+      "weight_profile": "base_control"
+    },
+    {
+      "H0": 6.953073799512954,
+      "base_loss": 32.0545918861627,
+      "chain": 11,
+      "label": "0025_nm",
+      "parameters": {
+        "beta_annual": 0.9674978121165125,
+        "chi": 1.0952898145152394,
+        "child_benefit_curvature": 0.091320511336564,
+        "first_birth_fixed_cost": 0.40826050091467403,
+        "h_P": 2.3,
+        "kappa_fert": 0.13167965726157987,
+        "kappa_fert_continuation": 0.35580902309620643,
+        "psi_child": 0.17158116324043424,
+        "tenure_choice_kappa": 0.013559854568362773,
+        "theta0": 0.10472321019979686
+      },
+      "price": 0.7077950642657361,
+      "provenance": {
+        "lifecycle_solves": 8,
+        "native_postcheck_report": "/work/results/postcheck/selected_postcheck/phase_b_ge/selected_root",
+        "native_postcheck_status": "passed",
+        "postcheck_receipt": "chain_11/postcheck/completed.json",
+        "postcheck_status": "selected_numerically_verified",
+        "search_receipt": "chain_11/search/search_completed.json",
+        "slurm_job": "18979628_11"
+      },
+      "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+      "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+      "weight_profile": "base_control"
+    }
+  ],
+  "verified_seed_receipt_sha256": "3f56722b3843aebdfad3a44100f734d83092716b08925a646dcba8745e8b1e6e",
+  "wall_seconds": 10800,
+  "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+}
