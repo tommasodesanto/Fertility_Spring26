@@ -1,0 +1,12 @@
+{
+  "status": "pure_tests_passed",
+  "tests": 23,
+  "lifecycle_solves": 0,
+  "native_initializer": "exact CLI cluster preflight required; not run locally",
+  "notes": "8 controller tests plus15 price tests; strict atomic writer regression covers phase_out before first write; old attempt receipts preserved",
+  "infrastructure_fix": "Create phase_b_ge directory before initial price_search write; no solver/economic/gate/budget changes",
+  "fixed_source_sha256": {
+    "phase_b_pilot.py": "5a87b5414837539eb69298a9c98fc051744a277859720fb8c0901ee4c2a1821e",
+    "test_price.py": "3a83b7210b5489379b18a746de2fcfbb200c657e1854944678ca00f003aee1dd"
+  }
+}

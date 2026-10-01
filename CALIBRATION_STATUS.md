@@ -1,5 +1,121 @@
 # Calibration Status
 
+## September 30, 20:36 New York — corrected utility round running
+
+The author refreshed Torch access and authorized immediate corrected submission.
+Attempt2 source archive SHA1500ec3950a5444302a8088ae9c4312fd103b3b39e96ef06ac96877fcf3e10ab
+and all101 staged files authenticated at the new remote root
+`/scratch/td2248/projects/utility_calibration_round1_v2`. All23 pure tests and
+98 runtime/input pins passed the reviewed directory-creation correction;
+no economic, numerical or acceptance-gate change was introduced.
+
+Floor smoke18904846 gates search array18904847; no_A smoke18904848 gates
+18904849; constant_alpha smoke18904850 gates18904851. Each search array has
+six starting vectors. All three smokes started20:34:35 New York and passed
+exact CLI zero-lifecycle preflights. Actual first native price evaluations
+are confirmed by per-case lifecycle receipts and price_search.json, including
+an expansion evaluation; this is more than scheduler RUNNING status.
+The first full-GE selected-price checks passed at floor price0.3916615746
+(8 lifecycle calls), no_A price2.2718797762 (11) and constant-alpha price
+1.4811256463 (9), each with14 fit rows,31 effective parameters and17 PNGs.
+These first-GE receipts are not completed calibration results. Independent
+full-GE smoke repeats remain in progress at the last bounded check.
+A transient floor filesystem read error resolved on recheck with live CPU
+usage and readable receipts; it was not treated as a model failure.
+The dependent searches await their own arm's successful full-GE repeat receipt.
+Failed dependencies cancel automatically and do not block other arms.
+
+The common stop remains21:45 New York (October1 01:45 UTC). Actual time from
+smoke start to that stop is70 minutes25 seconds, including all smoke, search
+and repeat work; the nominal90-minute lane cap does not extend it. Results
+may be explicitly budget-limited. The original twelve entry-wealth searches
+(arrays18899847 and18900753) remain untouched and retain22:38:17 New York
+as their separate hard stop. No automatic retries, extensions, numerical edits,
+gate relaxation or production adoption are authorized by monitoring.
+
+The user also authorizes a separate local utility check with two CPU threads for each of the three utility arms. Its
+`local_run/` driver is being prepared; no local numerical run is certified
+running here. Monitor its own receipts when they exist, without starting or
+restarting it autonomously. The prior failed smoke archive, receipts and
+cancelled never-started dependent arrays remain preserved in
+`utility_calibration_round1_v1/deployment/attempt1/`. Current IDs and receipts
+are in that packet's launch.json and deployment/attempt2/.
+
+## September 30, 20:33 New York — utility infrastructure fix ready; SSH refresh required
+
+The three wide-price baseline jobs18903411/13/15 passed their exact zero-solve
+preflights, then failed before their first native lifecycle evaluation: the
+new price-search progress receipt was written before its parent directory
+existed. This is an orchestration error, not an economic or equilibrium failure.
+Only their never-started dependent arrays18903412/14/16 were cancelled, confirmed
+23:59:25 UTC; the original twelve searches remain untouched.
+
+The correction adds parent-directory creation before that receipt write. A
+strict atomic-writer regression now reproduces the real writer contract; all
+23 tests pass and 98 pins match. No numerical, economic or acceptance-gate
+change is part of this correction. Immutable attempt1 sources/receipts are
+preserved. Corrected attempt2 is prepared locally with archive
+SHA1500ec3950a5444302a8088ae9c4312fd103b3b39e96ef06ac96877fcf3e10ab
+(101 files), targeting `/scratch/td2248/projects/utility_calibration_round1_v2`.
+It has NOT been uploaded or submitted: SSH authentication became unavailable
+again and the user has been asked to refresh `ssh torch`. No credential
+workaround is permitted. The existing 21:45 New York cutoff is unchanged;
+a delayed launch therefore has less search time. The user's authorization to
+submit the corrected bounded round remains in place, subject to authenticated
+access and the cutoff. Further solver/search changes or automatic extensions
+are not authorized by monitoring.
+
+### Initial submission record
+
+All three baseline jobs are running; eighteen searches are queued behind their
+arm-specific baseline gates. Floor: smoke18903411, search array18903412;
+no_A: smoke18903413, search array18903414; constant_alpha: smoke18903415,
+search array18903416. Each search array contains starts0–5. All three smokes
+started19:55:25 New York. The original twelve searches remain untouched.
+Archive SHA01391b55458e04d3c233659428c72d493033379b26581f8f7857694e723ce79d
+and all101 staged files were authenticated remotely. Twenty-two pure tests,
+98 runtime/input pins and independent execution/math review passed. Exact
+cluster preflight still gates native computation inside each job. Remote root:
+`/scratch/td2248/projects/utility_calibration_round1_v1`.
+
+Tommaso explicitly authorizes widening the price search and more parallel
+calibration starts for the three utility alternatives. This supersedes the
+earlier thirty-minute quick-test limit for this new round. The twelve earlier
+searches and their contracts remain untouched.
+
+Preparation packet: `output/model/fixed_reference_economics_20260928/utility_calibration_round1_v1/`.
+Plan: three separate wide-price baseline/repeat gates, then six starting vectors
+per utility variant, eighteen new one-CPU/24-GiB search tasks. Each search has a
+90-minute budget including repeated verification; the overall launch window
+ends by 21:45 New York (October 1 01:45 UTC). Thirty-two full-GE evaluations and
+three local derivative rounds are maxima, not promised completed work. Baseline
+gates get at most thirty minutes. Search lanes depend on their own arm's valid
+baseline, so one failed specification does not block the others.
+
+Economic contracts remain the three already disclosed utility variants, with
+nonnegative mean-preserving five-bin entrant wealth, zero unsecured borrowing,
+2% common interest, fixed H0/psi, nonlinear benefits, and unchanged numerical
+targets/weights, income, fiscal and demographic objects. Floor and no_A have
+nine free coordinates; constant_alpha has eight, fixing Delta_alpha at zero
+without adding a replacement parameter. The physical floor replaces Delta_alpha
+as the ninth coordinate in its arm, with historical same-unit bounds [0.1,2.3]
+rooms. These are disclosed search restrictions, not an external estimate for
+the revised economy.
+
+The safeguarded price search expands within [qref/8,8*qref], explicit numerical
+diagnostic caps. Acceptance tolerances, feasibility/accounting gates and exact
+repeat requirements are unchanged. A verified per-arm baseline price initializes
+the later searches without changing the global price caps. Six deterministic
+starts include the shared pilot guess, three local perturbations and two broader
+first-birth-cost/housing-preference guesses; these vary estimated coordinates,
+not fixed assumptions. No model or production adoption is authorized.
+
+SSH authentication briefly became unavailable during preparation; the author
+refreshed access before submission. No credential workaround was used. Smoke
+failures block their own dependent searches; those never-started dependents
+should be reported as blocked and cancelled rather than left pending forever.
+No automatic numerical edits, gate relaxation, retries or extensions follow.
+
 ## September 30 evening — utility comparisons stopped at price-bracket limits
 
 All three corrected tasks in array18902151 are terminal after three native

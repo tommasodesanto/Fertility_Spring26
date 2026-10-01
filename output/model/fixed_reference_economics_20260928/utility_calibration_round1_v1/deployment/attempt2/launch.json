@@ -1,0 +1,77 @@
+{
+  "status": "attempt2_all_three_smokes_native_first_points_running",
+  "submission_epoch": 1790814862.5464356,
+  "common_deadline_epoch": 1790819100,
+  "individual_smokes": 3,
+  "dependent_search_arrays": 3,
+  "total_search_lanes": 18,
+  "automatic_restarts": false,
+  "remote_root": "/scratch/td2248/projects/utility_calibration_round1_v2",
+  "archive_sha256": "1500ec3950a5444302a8088ae9c4312fd103b3b39e96ef06ac96877fcf3e10ab",
+  "archive_bytes": 392213,
+  "authenticated_source_files": 101,
+  "common_deadline_utc": "2026-10-01T01:45:00Z",
+  "smoke_maximum_seconds": 1800,
+  "search_maximum_seconds": 5400,
+  "cpus_per_task": 1,
+  "memory_per_task_gib": 24,
+  "threads": 1,
+  "old_twelve_jobs_untouched": true,
+  "preflight_status": "all_three_mock_smoke_verified_zero_lifecycle",
+  "search_gate": "own-arm smoke afterok, exact repeated fullGE receipt and sourcehashes",
+  "last_observed_utc": "2026-10-01T00:36:42.731518+00:00",
+  "attempt_number": 2,
+  "source_files": 101,
+  "attempt1": {
+    "smoke_jobs": [
+      "18903411",
+      "18903413",
+      "18903415"
+    ],
+    "search_arrays": [
+      "18903412",
+      "18903414",
+      "18903416"
+    ],
+    "status": "smokes_failed_dependency_arrays_authorized_cancel_completed",
+    "receipts": "deployment/attempt1"
+  },
+  "current_jobs_submitted": true,
+  "rows": [
+    {
+      "arm": "floor",
+      "stage": "smoke",
+      "job_id": "18904846"
+    },
+    {
+      "arm": "floor",
+      "stage": "search",
+      "job_id": "18904847"
+    },
+    {
+      "arm": "no_A",
+      "stage": "smoke",
+      "job_id": "18904848"
+    },
+    {
+      "arm": "no_A",
+      "stage": "search",
+      "job_id": "18904849"
+    },
+    {
+      "arm": "constant_alpha",
+      "stage": "smoke",
+      "job_id": "18904850"
+    },
+    {
+      "arm": "constant_alpha",
+      "stage": "search",
+      "job_id": "18904851"
+    }
+  ],
+  "smoke_start_utc": "2026-10-01T00:34:35Z",
+  "smoke_start_source": "Slurm scontrol18904846; squeue all3elapsed7s",
+  "actual_total_budget_from_first_smoke_seconds": 4225,
+  "native_first_points_started": true,
+  "price_search_receipts_written": true
+}

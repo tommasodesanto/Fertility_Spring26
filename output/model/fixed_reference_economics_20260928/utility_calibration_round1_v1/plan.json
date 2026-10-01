@@ -1,0 +1,2612 @@
+{
+  "annual_interest_rate": 0.02,
+  "arms": {
+    "empirical_credit_120x9": 0.25,
+    "nonnegative_mean_120x9": 0.0,
+    "nonnegative_mean_160x15": 0.0
+  },
+  "baseline_repeat_required": true,
+  "budget_seconds": 5400,
+  "bundle_sources": {
+    "coarse": {
+      "arrays_sha256": "5d894a011ad8d67fabe22ab9c35be61651c2828a6688831358b222a7c4867c77",
+      "bundle_sha256": "8189b1682de32608cf5f4236c7dec7f103d11135a0b84eb1f961411017a54fab",
+      "folder": "output/model/publication_refactor_20260929/grid_resolution_v1/proposed_120x9"
+    },
+    "fine": {
+      "arrays_sha256": "a48ecb71055f979284e7d63ccfa19bca8570ff8a93635fd352918356c69ee0b0",
+      "bundle_sha256": "427e67a3d9dd663cd23c3f8533c55a1a64b4f9350d396c97b5c5bd4700bc90b7",
+      "folder": "output/model/publication_refactor_20260929/local_export_v1/inputs"
+    }
+  },
+  "common_deadline_epoch": 1790819100.0,
+  "common_deadline_iso": "2026-10-01T01:45:00Z",
+  "dimensions": "lane specific",
+  "economic_changes": {
+    "constant_alpha": "Experimental: A(m) off; no floor; share fixed childless alpha, delta_alpha_jump fixed zero",
+    "floor": "Experimental: historical parenthood-only floor is free; A(m) off, child shares constant, nonlinear benefit/equivalence scale retained",
+    "no_A": "Experimental: A(m) off only; child share loading remains free; no floor"
+  },
+  "experiment": "utility_calibration_round1_v1",
+  "experimental_not_adopted": true,
+  "final_reserve_seconds": {
+    "coarse": 1200
+  },
+  "fixed": [
+    "H0",
+    "psi_child"
+  ],
+  "fixed_entry_arm": "nonnegative_mean",
+  "h_P_bounds_provenance": {
+    "bounds": [
+      0.1,
+      2.3
+    ],
+    "starting_value": 1.8900476600128304,
+    "status": "Historical restriction and initial search bounds; not a new estimate",
+    "units": "physical rooms"
+  },
+  "lanes": {
+    "constant_alpha_s0": {
+      "arm": "constant_alpha",
+      "bounds": {
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "child_benefit_curvature": [
+          0.0,
+          0.8
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "tenure_choice_kappa": [
+          0.001,
+          0.1
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ]
+      },
+      "dimensions": [
+        120,
+        9
+      ],
+      "free_coordinates": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "child_benefit_curvature",
+        "tenure_choice_kappa"
+      ],
+      "seed": {
+        "beta_annual": 0.9635032310921522,
+        "chi": 1.0953548439865852,
+        "child_benefit_curvature": 0.0623409595855849,
+        "first_birth_fixed_cost": 0.6023128423441799,
+        "kappa_fert": 0.17034348259634835,
+        "kappa_fert_continuation": 0.3218121021280322,
+        "tenure_choice_kappa": 0.012126720907255056,
+        "theta0": 0.12825161015079686
+      },
+      "seed_provenance": {
+        "file_sha256": {
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/011_gn_0.5/phase_b_ge/selected_root/parameters.csv": "153ab49c9c2700ad3dfc23031e603d745f19fad41497d6320aca5624152d0fb0",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/completed.json": "8e20abd2c350582cc012016c6ae917f8a797143290b39e6524e5b53ab2e00449",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_0.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_1.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1"
+        },
+        "full_ge_repeats": 2,
+        "selected_case": "011_gn_0.5",
+        "selected_loss": 19.69680865735299,
+        "source_pilot": "nonnegative_mean"
+      },
+      "size": "coarse",
+      "starting_point_construction": {
+        "base": {
+          "beta_annual": 0.9635032310921522,
+          "chi": 1.0953548439865852,
+          "child_benefit_curvature": 0.0623409595855849,
+          "first_birth_fixed_cost": 0.6023128423441799,
+          "kappa_fert": 0.17034348259634835,
+          "kappa_fert_continuation": 0.3218121021280322,
+          "tenure_choice_kappa": 0.012126720907255056,
+          "theta0": 0.12825161015079686
+        },
+        "direction": null,
+        "index": 0,
+        "native_verified": false,
+        "parameter_order": [
+          "beta_annual",
+          "chi",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "theta0",
+          "child_benefit_curvature",
+          "tenure_choice_kappa"
+        ],
+        "status": "Starting guesses only; no economic contract adoption",
+        "step_sizes": {
+          "beta_annual": 0.0002500000000000002,
+          "chi": 0.021907096879731705,
+          "child_benefit_curvature": 0.001246819191711698,
+          "first_birth_fixed_cost": 0.012046256846883598,
+          "kappa_fert": 0.003406869651926967,
+          "kappa_fert_continuation": 0.006436242042560644,
+          "tenure_choice_kappa": 0.00024253441814510112,
+          "theta0": 0.0025650322030159375
+        }
+      }
+    },
+    "constant_alpha_s1": {
+      "arm": "constant_alpha",
+      "bounds": {
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "child_benefit_curvature": [
+          0.0,
+          0.8
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "tenure_choice_kappa": [
+          0.001,
+          0.1
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ]
+      },
+      "dimensions": [
+        120,
+        9
+      ],
+      "free_coordinates": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "child_benefit_curvature",
+        "tenure_choice_kappa"
+      ],
+      "seed": {
+        "beta_annual": 0.9642532310921522,
+        "chi": 1.0296335533473902,
+        "child_benefit_curvature": 0.06608141716072,
+        "first_birth_fixed_cost": 0.5661740718035291,
+        "kappa_fert": 0.18056409155212924,
+        "kappa_fert_continuation": 0.30250337600035027,
+        "tenure_choice_kappa": 0.011399117652819753,
+        "theta0": 0.1359467067598447
+      },
+      "seed_provenance": {
+        "file_sha256": {
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/011_gn_0.5/phase_b_ge/selected_root/parameters.csv": "153ab49c9c2700ad3dfc23031e603d745f19fad41497d6320aca5624152d0fb0",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/completed.json": "8e20abd2c350582cc012016c6ae917f8a797143290b39e6524e5b53ab2e00449",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_0.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_1.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1"
+        },
+        "full_ge_repeats": 2,
+        "selected_case": "011_gn_0.5",
+        "selected_loss": 19.69680865735299,
+        "source_pilot": "nonnegative_mean"
+      },
+      "size": "coarse",
+      "starting_point_construction": {
+        "base": {
+          "beta_annual": 0.9635032310921522,
+          "chi": 1.0953548439865852,
+          "child_benefit_curvature": 0.0623409595855849,
+          "first_birth_fixed_cost": 0.6023128423441799,
+          "kappa_fert": 0.17034348259634835,
+          "kappa_fert_continuation": 0.3218121021280322,
+          "tenure_choice_kappa": 0.012126720907255056,
+          "theta0": 0.12825161015079686
+        },
+        "direction": [
+          1,
+          -1,
+          -1,
+          1,
+          -1,
+          1,
+          1,
+          -1
+        ],
+        "index": 1,
+        "native_verified": false,
+        "parameter_order": [
+          "beta_annual",
+          "chi",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "theta0",
+          "child_benefit_curvature",
+          "tenure_choice_kappa"
+        ],
+        "status": "Starting guesses only; no economic contract adoption",
+        "step_sizes": {
+          "beta_annual": 0.0002500000000000002,
+          "chi": 0.021907096879731705,
+          "child_benefit_curvature": 0.001246819191711698,
+          "first_birth_fixed_cost": 0.012046256846883598,
+          "kappa_fert": 0.003406869651926967,
+          "kappa_fert_continuation": 0.006436242042560644,
+          "tenure_choice_kappa": 0.00024253441814510112,
+          "theta0": 0.0025650322030159375
+        }
+      }
+    },
+    "constant_alpha_s2": {
+      "arm": "constant_alpha",
+      "bounds": {
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "child_benefit_curvature": [
+          0.0,
+          0.8
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "tenure_choice_kappa": [
+          0.001,
+          0.1
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ]
+      },
+      "dimensions": [
+        120,
+        9
+      ],
+      "free_coordinates": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "child_benefit_curvature",
+        "tenure_choice_kappa"
+      ],
+      "seed": {
+        "beta_annual": 0.9627532310921522,
+        "chi": 1.1610761346257803,
+        "child_benefit_curvature": 0.058600502010449806,
+        "first_birth_fixed_cost": 0.6384516128848308,
+        "kappa_fert": 0.16012287364056746,
+        "kappa_fert_continuation": 0.3411208282557141,
+        "tenure_choice_kappa": 0.01285432416169036,
+        "theta0": 0.12055651354174905
+      },
+      "seed_provenance": {
+        "file_sha256": {
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/011_gn_0.5/phase_b_ge/selected_root/parameters.csv": "153ab49c9c2700ad3dfc23031e603d745f19fad41497d6320aca5624152d0fb0",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/completed.json": "8e20abd2c350582cc012016c6ae917f8a797143290b39e6524e5b53ab2e00449",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_0.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_1.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1"
+        },
+        "full_ge_repeats": 2,
+        "selected_case": "011_gn_0.5",
+        "selected_loss": 19.69680865735299,
+        "source_pilot": "nonnegative_mean"
+      },
+      "size": "coarse",
+      "starting_point_construction": {
+        "base": {
+          "beta_annual": 0.9635032310921522,
+          "chi": 1.0953548439865852,
+          "child_benefit_curvature": 0.0623409595855849,
+          "first_birth_fixed_cost": 0.6023128423441799,
+          "kappa_fert": 0.17034348259634835,
+          "kappa_fert_continuation": 0.3218121021280322,
+          "tenure_choice_kappa": 0.012126720907255056,
+          "theta0": 0.12825161015079686
+        },
+        "direction": [
+          -1,
+          1,
+          1,
+          -1,
+          1,
+          -1,
+          -1,
+          1
+        ],
+        "index": 2,
+        "native_verified": false,
+        "parameter_order": [
+          "beta_annual",
+          "chi",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "theta0",
+          "child_benefit_curvature",
+          "tenure_choice_kappa"
+        ],
+        "status": "Starting guesses only; no economic contract adoption",
+        "step_sizes": {
+          "beta_annual": 0.0002500000000000002,
+          "chi": 0.021907096879731705,
+          "child_benefit_curvature": 0.001246819191711698,
+          "first_birth_fixed_cost": 0.012046256846883598,
+          "kappa_fert": 0.003406869651926967,
+          "kappa_fert_continuation": 0.006436242042560644,
+          "tenure_choice_kappa": 0.00024253441814510112,
+          "theta0": 0.0025650322030159375
+        }
+      }
+    },
+    "constant_alpha_s3": {
+      "arm": "constant_alpha",
+      "bounds": {
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "child_benefit_curvature": [
+          0.0,
+          0.8
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "tenure_choice_kappa": [
+          0.001,
+          0.1
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ]
+      },
+      "dimensions": [
+        120,
+        9
+      ],
+      "free_coordinates": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "child_benefit_curvature",
+        "tenure_choice_kappa"
+      ],
+      "seed": {
+        "beta_annual": 0.9627532310921522,
+        "chi": 1.0296335533473902,
+        "child_benefit_curvature": 0.058600502010449806,
+        "first_birth_fixed_cost": 0.6384516128848308,
+        "kappa_fert": 0.18056409155212924,
+        "kappa_fert_continuation": 0.3411208282557141,
+        "tenure_choice_kappa": 0.01285432416169036,
+        "theta0": 0.12055651354174905
+      },
+      "seed_provenance": {
+        "file_sha256": {
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/011_gn_0.5/phase_b_ge/selected_root/parameters.csv": "153ab49c9c2700ad3dfc23031e603d745f19fad41497d6320aca5624152d0fb0",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/completed.json": "8e20abd2c350582cc012016c6ae917f8a797143290b39e6524e5b53ab2e00449",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_0.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_1.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1"
+        },
+        "full_ge_repeats": 2,
+        "selected_case": "011_gn_0.5",
+        "selected_loss": 19.69680865735299,
+        "source_pilot": "nonnegative_mean"
+      },
+      "size": "coarse",
+      "starting_point_construction": {
+        "base": {
+          "beta_annual": 0.9635032310921522,
+          "chi": 1.0953548439865852,
+          "child_benefit_curvature": 0.0623409595855849,
+          "first_birth_fixed_cost": 0.6023128423441799,
+          "kappa_fert": 0.17034348259634835,
+          "kappa_fert_continuation": 0.3218121021280322,
+          "tenure_choice_kappa": 0.012126720907255056,
+          "theta0": 0.12825161015079686
+        },
+        "direction": [
+          -1,
+          -1,
+          1,
+          1,
+          1,
+          -1,
+          -1,
+          1
+        ],
+        "index": 3,
+        "native_verified": false,
+        "parameter_order": [
+          "beta_annual",
+          "chi",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "theta0",
+          "child_benefit_curvature",
+          "tenure_choice_kappa"
+        ],
+        "status": "Starting guesses only; no economic contract adoption",
+        "step_sizes": {
+          "beta_annual": 0.0002500000000000002,
+          "chi": 0.021907096879731705,
+          "child_benefit_curvature": 0.001246819191711698,
+          "first_birth_fixed_cost": 0.012046256846883598,
+          "kappa_fert": 0.003406869651926967,
+          "kappa_fert_continuation": 0.006436242042560644,
+          "tenure_choice_kappa": 0.00024253441814510112,
+          "theta0": 0.0025650322030159375
+        }
+      }
+    },
+    "constant_alpha_s4": {
+      "arm": "constant_alpha",
+      "bounds": {
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "child_benefit_curvature": [
+          0.0,
+          0.8
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "tenure_choice_kappa": [
+          0.001,
+          0.1
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ]
+      },
+      "dimensions": [
+        120,
+        9
+      ],
+      "free_coordinates": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "child_benefit_curvature",
+        "tenure_choice_kappa"
+      ],
+      "seed": {
+        "beta_annual": 0.9635032310921522,
+        "chi": 1.0953548439865852,
+        "child_benefit_curvature": 0.0623409595855849,
+        "first_birth_fixed_cost": 0.0,
+        "kappa_fert": 0.17034348259634835,
+        "kappa_fert_continuation": 0.3218121021280322,
+        "tenure_choice_kappa": 0.012126720907255056,
+        "theta0": 0.12825161015079686
+      },
+      "seed_provenance": {
+        "file_sha256": {
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/011_gn_0.5/phase_b_ge/selected_root/parameters.csv": "153ab49c9c2700ad3dfc23031e603d745f19fad41497d6320aca5624152d0fb0",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/completed.json": "8e20abd2c350582cc012016c6ae917f8a797143290b39e6524e5b53ab2e00449",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_0.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_1.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1"
+        },
+        "full_ge_repeats": 2,
+        "selected_case": "011_gn_0.5",
+        "selected_loss": 19.69680865735299,
+        "source_pilot": "nonnegative_mean"
+      },
+      "size": "coarse",
+      "starting_point_construction": {
+        "base": {
+          "beta_annual": 0.9635032310921522,
+          "chi": 1.0953548439865852,
+          "child_benefit_curvature": 0.0623409595855849,
+          "first_birth_fixed_cost": 0.6023128423441799,
+          "kappa_fert": 0.17034348259634835,
+          "kappa_fert_continuation": 0.3218121021280322,
+          "tenure_choice_kappa": 0.012126720907255056,
+          "theta0": 0.12825161015079686
+        },
+        "direction": null,
+        "index": 4,
+        "native_verified": false,
+        "parameter_order": [
+          "beta_annual",
+          "chi",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "theta0",
+          "child_benefit_curvature",
+          "tenure_choice_kappa"
+        ],
+        "status": "Starting guesses only; no economic contract adoption",
+        "step_sizes": {
+          "beta_annual": 0.0002500000000000002,
+          "chi": 0.021907096879731705,
+          "child_benefit_curvature": 0.001246819191711698,
+          "first_birth_fixed_cost": 0.012046256846883598,
+          "kappa_fert": 0.003406869651926967,
+          "kappa_fert_continuation": 0.006436242042560644,
+          "tenure_choice_kappa": 0.00024253441814510112,
+          "theta0": 0.0025650322030159375
+        }
+      }
+    },
+    "constant_alpha_s5": {
+      "arm": "constant_alpha",
+      "bounds": {
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "child_benefit_curvature": [
+          0.0,
+          0.8
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "tenure_choice_kappa": [
+          0.001,
+          0.1
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ]
+      },
+      "dimensions": [
+        120,
+        9
+      ],
+      "free_coordinates": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "child_benefit_curvature",
+        "tenure_choice_kappa"
+      ],
+      "seed": {
+        "beta_annual": 0.9635032310921522,
+        "chi": 1.0953548439865852,
+        "child_benefit_curvature": 0.0623409595855849,
+        "first_birth_fixed_cost": 1.60231284234418,
+        "kappa_fert": 0.17034348259634835,
+        "kappa_fert_continuation": 0.3218121021280322,
+        "tenure_choice_kappa": 0.012126720907255056,
+        "theta0": 0.12825161015079686
+      },
+      "seed_provenance": {
+        "file_sha256": {
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/011_gn_0.5/phase_b_ge/selected_root/parameters.csv": "153ab49c9c2700ad3dfc23031e603d745f19fad41497d6320aca5624152d0fb0",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/completed.json": "8e20abd2c350582cc012016c6ae917f8a797143290b39e6524e5b53ab2e00449",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_0.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_1.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1"
+        },
+        "full_ge_repeats": 2,
+        "selected_case": "011_gn_0.5",
+        "selected_loss": 19.69680865735299,
+        "source_pilot": "nonnegative_mean"
+      },
+      "size": "coarse",
+      "starting_point_construction": {
+        "base": {
+          "beta_annual": 0.9635032310921522,
+          "chi": 1.0953548439865852,
+          "child_benefit_curvature": 0.0623409595855849,
+          "first_birth_fixed_cost": 0.6023128423441799,
+          "kappa_fert": 0.17034348259634835,
+          "kappa_fert_continuation": 0.3218121021280322,
+          "tenure_choice_kappa": 0.012126720907255056,
+          "theta0": 0.12825161015079686
+        },
+        "direction": null,
+        "index": 5,
+        "native_verified": false,
+        "parameter_order": [
+          "beta_annual",
+          "chi",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "theta0",
+          "child_benefit_curvature",
+          "tenure_choice_kappa"
+        ],
+        "status": "Starting guesses only; no economic contract adoption",
+        "step_sizes": {
+          "beta_annual": 0.0002500000000000002,
+          "chi": 0.021907096879731705,
+          "child_benefit_curvature": 0.001246819191711698,
+          "first_birth_fixed_cost": 0.012046256846883598,
+          "kappa_fert": 0.003406869651926967,
+          "kappa_fert_continuation": 0.006436242042560644,
+          "tenure_choice_kappa": 0.00024253441814510112,
+          "theta0": 0.0025650322030159375
+        }
+      }
+    },
+    "floor_s0": {
+      "arm": "floor",
+      "bounds": {
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "child_benefit_curvature": [
+          0.0,
+          0.8
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "h_P": [
+          0.1,
+          2.3
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "tenure_choice_kappa": [
+          0.001,
+          0.1
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ]
+      },
+      "dimensions": [
+        120,
+        9
+      ],
+      "free_coordinates": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "h_P",
+        "child_benefit_curvature",
+        "tenure_choice_kappa"
+      ],
+      "seed": {
+        "beta_annual": 0.9635032310921522,
+        "chi": 1.0953548439865852,
+        "child_benefit_curvature": 0.0623409595855849,
+        "first_birth_fixed_cost": 0.6023128423441799,
+        "h_P": 1.8900476600128304,
+        "kappa_fert": 0.17034348259634835,
+        "kappa_fert_continuation": 0.3218121021280322,
+        "tenure_choice_kappa": 0.012126720907255056,
+        "theta0": 0.12825161015079686
+      },
+      "seed_provenance": {
+        "file_sha256": {
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/011_gn_0.5/phase_b_ge/selected_root/parameters.csv": "153ab49c9c2700ad3dfc23031e603d745f19fad41497d6320aca5624152d0fb0",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/completed.json": "8e20abd2c350582cc012016c6ae917f8a797143290b39e6524e5b53ab2e00449",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_0.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_1.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1"
+        },
+        "full_ge_repeats": 2,
+        "selected_case": "011_gn_0.5",
+        "selected_loss": 19.69680865735299,
+        "source_pilot": "nonnegative_mean"
+      },
+      "size": "coarse",
+      "starting_point_construction": {
+        "base": {
+          "beta_annual": 0.9635032310921522,
+          "chi": 1.0953548439865852,
+          "child_benefit_curvature": 0.0623409595855849,
+          "first_birth_fixed_cost": 0.6023128423441799,
+          "h_P": 1.8900476600128304,
+          "kappa_fert": 0.17034348259634835,
+          "kappa_fert_continuation": 0.3218121021280322,
+          "tenure_choice_kappa": 0.012126720907255056,
+          "theta0": 0.12825161015079686
+        },
+        "direction": null,
+        "index": 0,
+        "native_verified": false,
+        "parameter_order": [
+          "beta_annual",
+          "chi",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "theta0",
+          "h_P",
+          "child_benefit_curvature",
+          "tenure_choice_kappa"
+        ],
+        "status": "Starting guesses only; no economic contract adoption",
+        "step_sizes": {
+          "beta_annual": 0.0002500000000000002,
+          "chi": 0.021907096879731705,
+          "child_benefit_curvature": 0.001246819191711698,
+          "first_birth_fixed_cost": 0.012046256846883598,
+          "h_P": 0.011,
+          "kappa_fert": 0.003406869651926967,
+          "kappa_fert_continuation": 0.006436242042560644,
+          "tenure_choice_kappa": 0.00024253441814510112,
+          "theta0": 0.0025650322030159375
+        }
+      }
+    },
+    "floor_s1": {
+      "arm": "floor",
+      "bounds": {
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "child_benefit_curvature": [
+          0.0,
+          0.8
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "h_P": [
+          0.1,
+          2.3
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "tenure_choice_kappa": [
+          0.001,
+          0.1
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ]
+      },
+      "dimensions": [
+        120,
+        9
+      ],
+      "free_coordinates": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "h_P",
+        "child_benefit_curvature",
+        "tenure_choice_kappa"
+      ],
+      "seed": {
+        "beta_annual": 0.9642532310921522,
+        "chi": 1.0296335533473902,
+        "child_benefit_curvature": 0.06608141716072,
+        "first_birth_fixed_cost": 0.5661740718035291,
+        "h_P": 1.8570476600128305,
+        "kappa_fert": 0.18056409155212924,
+        "kappa_fert_continuation": 0.30250337600035027,
+        "tenure_choice_kappa": 0.011399117652819753,
+        "theta0": 0.1359467067598447
+      },
+      "seed_provenance": {
+        "file_sha256": {
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/011_gn_0.5/phase_b_ge/selected_root/parameters.csv": "153ab49c9c2700ad3dfc23031e603d745f19fad41497d6320aca5624152d0fb0",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/completed.json": "8e20abd2c350582cc012016c6ae917f8a797143290b39e6524e5b53ab2e00449",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_0.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_1.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1"
+        },
+        "full_ge_repeats": 2,
+        "selected_case": "011_gn_0.5",
+        "selected_loss": 19.69680865735299,
+        "source_pilot": "nonnegative_mean"
+      },
+      "size": "coarse",
+      "starting_point_construction": {
+        "base": {
+          "beta_annual": 0.9635032310921522,
+          "chi": 1.0953548439865852,
+          "child_benefit_curvature": 0.0623409595855849,
+          "first_birth_fixed_cost": 0.6023128423441799,
+          "h_P": 1.8900476600128304,
+          "kappa_fert": 0.17034348259634835,
+          "kappa_fert_continuation": 0.3218121021280322,
+          "tenure_choice_kappa": 0.012126720907255056,
+          "theta0": 0.12825161015079686
+        },
+        "direction": [
+          1,
+          -1,
+          -1,
+          1,
+          -1,
+          1,
+          -1,
+          1,
+          -1
+        ],
+        "index": 1,
+        "native_verified": false,
+        "parameter_order": [
+          "beta_annual",
+          "chi",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "theta0",
+          "h_P",
+          "child_benefit_curvature",
+          "tenure_choice_kappa"
+        ],
+        "status": "Starting guesses only; no economic contract adoption",
+        "step_sizes": {
+          "beta_annual": 0.0002500000000000002,
+          "chi": 0.021907096879731705,
+          "child_benefit_curvature": 0.001246819191711698,
+          "first_birth_fixed_cost": 0.012046256846883598,
+          "h_P": 0.011,
+          "kappa_fert": 0.003406869651926967,
+          "kappa_fert_continuation": 0.006436242042560644,
+          "tenure_choice_kappa": 0.00024253441814510112,
+          "theta0": 0.0025650322030159375
+        }
+      }
+    },
+    "floor_s2": {
+      "arm": "floor",
+      "bounds": {
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "child_benefit_curvature": [
+          0.0,
+          0.8
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "h_P": [
+          0.1,
+          2.3
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "tenure_choice_kappa": [
+          0.001,
+          0.1
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ]
+      },
+      "dimensions": [
+        120,
+        9
+      ],
+      "free_coordinates": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "h_P",
+        "child_benefit_curvature",
+        "tenure_choice_kappa"
+      ],
+      "seed": {
+        "beta_annual": 0.9627532310921522,
+        "chi": 1.1610761346257803,
+        "child_benefit_curvature": 0.058600502010449806,
+        "first_birth_fixed_cost": 0.6384516128848308,
+        "h_P": 1.9230476600128303,
+        "kappa_fert": 0.16012287364056746,
+        "kappa_fert_continuation": 0.3411208282557141,
+        "tenure_choice_kappa": 0.01285432416169036,
+        "theta0": 0.12055651354174905
+      },
+      "seed_provenance": {
+        "file_sha256": {
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/011_gn_0.5/phase_b_ge/selected_root/parameters.csv": "153ab49c9c2700ad3dfc23031e603d745f19fad41497d6320aca5624152d0fb0",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/completed.json": "8e20abd2c350582cc012016c6ae917f8a797143290b39e6524e5b53ab2e00449",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_0.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_1.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1"
+        },
+        "full_ge_repeats": 2,
+        "selected_case": "011_gn_0.5",
+        "selected_loss": 19.69680865735299,
+        "source_pilot": "nonnegative_mean"
+      },
+      "size": "coarse",
+      "starting_point_construction": {
+        "base": {
+          "beta_annual": 0.9635032310921522,
+          "chi": 1.0953548439865852,
+          "child_benefit_curvature": 0.0623409595855849,
+          "first_birth_fixed_cost": 0.6023128423441799,
+          "h_P": 1.8900476600128304,
+          "kappa_fert": 0.17034348259634835,
+          "kappa_fert_continuation": 0.3218121021280322,
+          "tenure_choice_kappa": 0.012126720907255056,
+          "theta0": 0.12825161015079686
+        },
+        "direction": [
+          -1,
+          1,
+          1,
+          -1,
+          1,
+          -1,
+          1,
+          -1,
+          1
+        ],
+        "index": 2,
+        "native_verified": false,
+        "parameter_order": [
+          "beta_annual",
+          "chi",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "theta0",
+          "h_P",
+          "child_benefit_curvature",
+          "tenure_choice_kappa"
+        ],
+        "status": "Starting guesses only; no economic contract adoption",
+        "step_sizes": {
+          "beta_annual": 0.0002500000000000002,
+          "chi": 0.021907096879731705,
+          "child_benefit_curvature": 0.001246819191711698,
+          "first_birth_fixed_cost": 0.012046256846883598,
+          "h_P": 0.011,
+          "kappa_fert": 0.003406869651926967,
+          "kappa_fert_continuation": 0.006436242042560644,
+          "tenure_choice_kappa": 0.00024253441814510112,
+          "theta0": 0.0025650322030159375
+        }
+      }
+    },
+    "floor_s3": {
+      "arm": "floor",
+      "bounds": {
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "child_benefit_curvature": [
+          0.0,
+          0.8
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "h_P": [
+          0.1,
+          2.3
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "tenure_choice_kappa": [
+          0.001,
+          0.1
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ]
+      },
+      "dimensions": [
+        120,
+        9
+      ],
+      "free_coordinates": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "h_P",
+        "child_benefit_curvature",
+        "tenure_choice_kappa"
+      ],
+      "seed": {
+        "beta_annual": 0.9627532310921522,
+        "chi": 1.0296335533473902,
+        "child_benefit_curvature": 0.058600502010449806,
+        "first_birth_fixed_cost": 0.6384516128848308,
+        "h_P": 1.9230476600128303,
+        "kappa_fert": 0.18056409155212924,
+        "kappa_fert_continuation": 0.3411208282557141,
+        "tenure_choice_kappa": 0.01285432416169036,
+        "theta0": 0.12055651354174905
+      },
+      "seed_provenance": {
+        "file_sha256": {
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/011_gn_0.5/phase_b_ge/selected_root/parameters.csv": "153ab49c9c2700ad3dfc23031e603d745f19fad41497d6320aca5624152d0fb0",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/completed.json": "8e20abd2c350582cc012016c6ae917f8a797143290b39e6524e5b53ab2e00449",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_0.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_1.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1"
+        },
+        "full_ge_repeats": 2,
+        "selected_case": "011_gn_0.5",
+        "selected_loss": 19.69680865735299,
+        "source_pilot": "nonnegative_mean"
+      },
+      "size": "coarse",
+      "starting_point_construction": {
+        "base": {
+          "beta_annual": 0.9635032310921522,
+          "chi": 1.0953548439865852,
+          "child_benefit_curvature": 0.0623409595855849,
+          "first_birth_fixed_cost": 0.6023128423441799,
+          "h_P": 1.8900476600128304,
+          "kappa_fert": 0.17034348259634835,
+          "kappa_fert_continuation": 0.3218121021280322,
+          "tenure_choice_kappa": 0.012126720907255056,
+          "theta0": 0.12825161015079686
+        },
+        "direction": [
+          -1,
+          -1,
+          1,
+          1,
+          1,
+          -1,
+          1,
+          -1,
+          1
+        ],
+        "index": 3,
+        "native_verified": false,
+        "parameter_order": [
+          "beta_annual",
+          "chi",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "theta0",
+          "h_P",
+          "child_benefit_curvature",
+          "tenure_choice_kappa"
+        ],
+        "status": "Starting guesses only; no economic contract adoption",
+        "step_sizes": {
+          "beta_annual": 0.0002500000000000002,
+          "chi": 0.021907096879731705,
+          "child_benefit_curvature": 0.001246819191711698,
+          "first_birth_fixed_cost": 0.012046256846883598,
+          "h_P": 0.011,
+          "kappa_fert": 0.003406869651926967,
+          "kappa_fert_continuation": 0.006436242042560644,
+          "tenure_choice_kappa": 0.00024253441814510112,
+          "theta0": 0.0025650322030159375
+        }
+      }
+    },
+    "floor_s4": {
+      "arm": "floor",
+      "bounds": {
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "child_benefit_curvature": [
+          0.0,
+          0.8
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "h_P": [
+          0.1,
+          2.3
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "tenure_choice_kappa": [
+          0.001,
+          0.1
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ]
+      },
+      "dimensions": [
+        120,
+        9
+      ],
+      "free_coordinates": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "h_P",
+        "child_benefit_curvature",
+        "tenure_choice_kappa"
+      ],
+      "seed": {
+        "beta_annual": 0.9635032310921522,
+        "chi": 1.0953548439865852,
+        "child_benefit_curvature": 0.0623409595855849,
+        "first_birth_fixed_cost": 0.0,
+        "h_P": 1.0,
+        "kappa_fert": 0.17034348259634835,
+        "kappa_fert_continuation": 0.3218121021280322,
+        "tenure_choice_kappa": 0.012126720907255056,
+        "theta0": 0.12825161015079686
+      },
+      "seed_provenance": {
+        "file_sha256": {
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/011_gn_0.5/phase_b_ge/selected_root/parameters.csv": "153ab49c9c2700ad3dfc23031e603d745f19fad41497d6320aca5624152d0fb0",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/completed.json": "8e20abd2c350582cc012016c6ae917f8a797143290b39e6524e5b53ab2e00449",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_0.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_1.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1"
+        },
+        "full_ge_repeats": 2,
+        "selected_case": "011_gn_0.5",
+        "selected_loss": 19.69680865735299,
+        "source_pilot": "nonnegative_mean"
+      },
+      "size": "coarse",
+      "starting_point_construction": {
+        "base": {
+          "beta_annual": 0.9635032310921522,
+          "chi": 1.0953548439865852,
+          "child_benefit_curvature": 0.0623409595855849,
+          "first_birth_fixed_cost": 0.6023128423441799,
+          "h_P": 1.8900476600128304,
+          "kappa_fert": 0.17034348259634835,
+          "kappa_fert_continuation": 0.3218121021280322,
+          "tenure_choice_kappa": 0.012126720907255056,
+          "theta0": 0.12825161015079686
+        },
+        "direction": null,
+        "index": 4,
+        "native_verified": false,
+        "parameter_order": [
+          "beta_annual",
+          "chi",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "theta0",
+          "h_P",
+          "child_benefit_curvature",
+          "tenure_choice_kappa"
+        ],
+        "status": "Starting guesses only; no economic contract adoption",
+        "step_sizes": {
+          "beta_annual": 0.0002500000000000002,
+          "chi": 0.021907096879731705,
+          "child_benefit_curvature": 0.001246819191711698,
+          "first_birth_fixed_cost": 0.012046256846883598,
+          "h_P": 0.011,
+          "kappa_fert": 0.003406869651926967,
+          "kappa_fert_continuation": 0.006436242042560644,
+          "tenure_choice_kappa": 0.00024253441814510112,
+          "theta0": 0.0025650322030159375
+        }
+      }
+    },
+    "floor_s5": {
+      "arm": "floor",
+      "bounds": {
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "child_benefit_curvature": [
+          0.0,
+          0.8
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "h_P": [
+          0.1,
+          2.3
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "tenure_choice_kappa": [
+          0.001,
+          0.1
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ]
+      },
+      "dimensions": [
+        120,
+        9
+      ],
+      "free_coordinates": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "h_P",
+        "child_benefit_curvature",
+        "tenure_choice_kappa"
+      ],
+      "seed": {
+        "beta_annual": 0.9635032310921522,
+        "chi": 1.0953548439865852,
+        "child_benefit_curvature": 0.0623409595855849,
+        "first_birth_fixed_cost": 1.60231284234418,
+        "h_P": 2.2,
+        "kappa_fert": 0.17034348259634835,
+        "kappa_fert_continuation": 0.3218121021280322,
+        "tenure_choice_kappa": 0.012126720907255056,
+        "theta0": 0.12825161015079686
+      },
+      "seed_provenance": {
+        "file_sha256": {
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/011_gn_0.5/phase_b_ge/selected_root/parameters.csv": "153ab49c9c2700ad3dfc23031e603d745f19fad41497d6320aca5624152d0fb0",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/completed.json": "8e20abd2c350582cc012016c6ae917f8a797143290b39e6524e5b53ab2e00449",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_0.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_1.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1"
+        },
+        "full_ge_repeats": 2,
+        "selected_case": "011_gn_0.5",
+        "selected_loss": 19.69680865735299,
+        "source_pilot": "nonnegative_mean"
+      },
+      "size": "coarse",
+      "starting_point_construction": {
+        "base": {
+          "beta_annual": 0.9635032310921522,
+          "chi": 1.0953548439865852,
+          "child_benefit_curvature": 0.0623409595855849,
+          "first_birth_fixed_cost": 0.6023128423441799,
+          "h_P": 1.8900476600128304,
+          "kappa_fert": 0.17034348259634835,
+          "kappa_fert_continuation": 0.3218121021280322,
+          "tenure_choice_kappa": 0.012126720907255056,
+          "theta0": 0.12825161015079686
+        },
+        "direction": null,
+        "index": 5,
+        "native_verified": false,
+        "parameter_order": [
+          "beta_annual",
+          "chi",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "theta0",
+          "h_P",
+          "child_benefit_curvature",
+          "tenure_choice_kappa"
+        ],
+        "status": "Starting guesses only; no economic contract adoption",
+        "step_sizes": {
+          "beta_annual": 0.0002500000000000002,
+          "chi": 0.021907096879731705,
+          "child_benefit_curvature": 0.001246819191711698,
+          "first_birth_fixed_cost": 0.012046256846883598,
+          "h_P": 0.011,
+          "kappa_fert": 0.003406869651926967,
+          "kappa_fert_continuation": 0.006436242042560644,
+          "tenure_choice_kappa": 0.00024253441814510112,
+          "theta0": 0.0025650322030159375
+        }
+      }
+    },
+    "no_A_s0": {
+      "arm": "no_A",
+      "bounds": {
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "child_benefit_curvature": [
+          0.0,
+          0.8
+        ],
+        "delta_alpha_jump": [
+          0.0,
+          0.25
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "tenure_choice_kappa": [
+          0.001,
+          0.1
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ]
+      },
+      "dimensions": [
+        120,
+        9
+      ],
+      "free_coordinates": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "delta_alpha_jump",
+        "child_benefit_curvature",
+        "tenure_choice_kappa"
+      ],
+      "seed": {
+        "beta_annual": 0.9635032310921522,
+        "chi": 1.0953548439865852,
+        "child_benefit_curvature": 0.0623409595855849,
+        "delta_alpha_jump": 0.134619768341131,
+        "first_birth_fixed_cost": 0.6023128423441799,
+        "kappa_fert": 0.17034348259634835,
+        "kappa_fert_continuation": 0.3218121021280322,
+        "tenure_choice_kappa": 0.012126720907255056,
+        "theta0": 0.12825161015079686
+      },
+      "seed_provenance": {
+        "file_sha256": {
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/011_gn_0.5/phase_b_ge/selected_root/parameters.csv": "153ab49c9c2700ad3dfc23031e603d745f19fad41497d6320aca5624152d0fb0",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/completed.json": "8e20abd2c350582cc012016c6ae917f8a797143290b39e6524e5b53ab2e00449",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_0.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_1.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1"
+        },
+        "full_ge_repeats": 2,
+        "selected_case": "011_gn_0.5",
+        "selected_loss": 19.69680865735299,
+        "source_pilot": "nonnegative_mean"
+      },
+      "size": "coarse",
+      "starting_point_construction": {
+        "base": {
+          "beta_annual": 0.9635032310921522,
+          "chi": 1.0953548439865852,
+          "child_benefit_curvature": 0.0623409595855849,
+          "delta_alpha_jump": 0.134619768341131,
+          "first_birth_fixed_cost": 0.6023128423441799,
+          "kappa_fert": 0.17034348259634835,
+          "kappa_fert_continuation": 0.3218121021280322,
+          "tenure_choice_kappa": 0.012126720907255056,
+          "theta0": 0.12825161015079686
+        },
+        "direction": null,
+        "index": 0,
+        "native_verified": false,
+        "parameter_order": [
+          "beta_annual",
+          "chi",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "theta0",
+          "delta_alpha_jump",
+          "child_benefit_curvature",
+          "tenure_choice_kappa"
+        ],
+        "status": "Starting guesses only; no economic contract adoption",
+        "step_sizes": {
+          "beta_annual": 0.0002500000000000002,
+          "chi": 0.021907096879731705,
+          "child_benefit_curvature": 0.001246819191711698,
+          "delta_alpha_jump": 0.00125,
+          "first_birth_fixed_cost": 0.012046256846883598,
+          "kappa_fert": 0.003406869651926967,
+          "kappa_fert_continuation": 0.006436242042560644,
+          "tenure_choice_kappa": 0.00024253441814510112,
+          "theta0": 0.0025650322030159375
+        }
+      }
+    },
+    "no_A_s1": {
+      "arm": "no_A",
+      "bounds": {
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "child_benefit_curvature": [
+          0.0,
+          0.8
+        ],
+        "delta_alpha_jump": [
+          0.0,
+          0.25
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "tenure_choice_kappa": [
+          0.001,
+          0.1
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ]
+      },
+      "dimensions": [
+        120,
+        9
+      ],
+      "free_coordinates": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "delta_alpha_jump",
+        "child_benefit_curvature",
+        "tenure_choice_kappa"
+      ],
+      "seed": {
+        "beta_annual": 0.9642532310921522,
+        "chi": 1.0296335533473902,
+        "child_benefit_curvature": 0.06608141716072,
+        "delta_alpha_jump": 0.130869768341131,
+        "first_birth_fixed_cost": 0.5661740718035291,
+        "kappa_fert": 0.18056409155212924,
+        "kappa_fert_continuation": 0.30250337600035027,
+        "tenure_choice_kappa": 0.011399117652819753,
+        "theta0": 0.1359467067598447
+      },
+      "seed_provenance": {
+        "file_sha256": {
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/011_gn_0.5/phase_b_ge/selected_root/parameters.csv": "153ab49c9c2700ad3dfc23031e603d745f19fad41497d6320aca5624152d0fb0",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/completed.json": "8e20abd2c350582cc012016c6ae917f8a797143290b39e6524e5b53ab2e00449",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_0.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_1.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1"
+        },
+        "full_ge_repeats": 2,
+        "selected_case": "011_gn_0.5",
+        "selected_loss": 19.69680865735299,
+        "source_pilot": "nonnegative_mean"
+      },
+      "size": "coarse",
+      "starting_point_construction": {
+        "base": {
+          "beta_annual": 0.9635032310921522,
+          "chi": 1.0953548439865852,
+          "child_benefit_curvature": 0.0623409595855849,
+          "delta_alpha_jump": 0.134619768341131,
+          "first_birth_fixed_cost": 0.6023128423441799,
+          "kappa_fert": 0.17034348259634835,
+          "kappa_fert_continuation": 0.3218121021280322,
+          "tenure_choice_kappa": 0.012126720907255056,
+          "theta0": 0.12825161015079686
+        },
+        "direction": [
+          1,
+          -1,
+          -1,
+          1,
+          -1,
+          1,
+          -1,
+          1,
+          -1
+        ],
+        "index": 1,
+        "native_verified": false,
+        "parameter_order": [
+          "beta_annual",
+          "chi",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "theta0",
+          "delta_alpha_jump",
+          "child_benefit_curvature",
+          "tenure_choice_kappa"
+        ],
+        "status": "Starting guesses only; no economic contract adoption",
+        "step_sizes": {
+          "beta_annual": 0.0002500000000000002,
+          "chi": 0.021907096879731705,
+          "child_benefit_curvature": 0.001246819191711698,
+          "delta_alpha_jump": 0.00125,
+          "first_birth_fixed_cost": 0.012046256846883598,
+          "kappa_fert": 0.003406869651926967,
+          "kappa_fert_continuation": 0.006436242042560644,
+          "tenure_choice_kappa": 0.00024253441814510112,
+          "theta0": 0.0025650322030159375
+        }
+      }
+    },
+    "no_A_s2": {
+      "arm": "no_A",
+      "bounds": {
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "child_benefit_curvature": [
+          0.0,
+          0.8
+        ],
+        "delta_alpha_jump": [
+          0.0,
+          0.25
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "tenure_choice_kappa": [
+          0.001,
+          0.1
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ]
+      },
+      "dimensions": [
+        120,
+        9
+      ],
+      "free_coordinates": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "delta_alpha_jump",
+        "child_benefit_curvature",
+        "tenure_choice_kappa"
+      ],
+      "seed": {
+        "beta_annual": 0.9627532310921522,
+        "chi": 1.1610761346257803,
+        "child_benefit_curvature": 0.058600502010449806,
+        "delta_alpha_jump": 0.13836976834113102,
+        "first_birth_fixed_cost": 0.6384516128848308,
+        "kappa_fert": 0.16012287364056746,
+        "kappa_fert_continuation": 0.3411208282557141,
+        "tenure_choice_kappa": 0.01285432416169036,
+        "theta0": 0.12055651354174905
+      },
+      "seed_provenance": {
+        "file_sha256": {
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/011_gn_0.5/phase_b_ge/selected_root/parameters.csv": "153ab49c9c2700ad3dfc23031e603d745f19fad41497d6320aca5624152d0fb0",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/completed.json": "8e20abd2c350582cc012016c6ae917f8a797143290b39e6524e5b53ab2e00449",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_0.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_1.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1"
+        },
+        "full_ge_repeats": 2,
+        "selected_case": "011_gn_0.5",
+        "selected_loss": 19.69680865735299,
+        "source_pilot": "nonnegative_mean"
+      },
+      "size": "coarse",
+      "starting_point_construction": {
+        "base": {
+          "beta_annual": 0.9635032310921522,
+          "chi": 1.0953548439865852,
+          "child_benefit_curvature": 0.0623409595855849,
+          "delta_alpha_jump": 0.134619768341131,
+          "first_birth_fixed_cost": 0.6023128423441799,
+          "kappa_fert": 0.17034348259634835,
+          "kappa_fert_continuation": 0.3218121021280322,
+          "tenure_choice_kappa": 0.012126720907255056,
+          "theta0": 0.12825161015079686
+        },
+        "direction": [
+          -1,
+          1,
+          1,
+          -1,
+          1,
+          -1,
+          1,
+          -1,
+          1
+        ],
+        "index": 2,
+        "native_verified": false,
+        "parameter_order": [
+          "beta_annual",
+          "chi",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "theta0",
+          "delta_alpha_jump",
+          "child_benefit_curvature",
+          "tenure_choice_kappa"
+        ],
+        "status": "Starting guesses only; no economic contract adoption",
+        "step_sizes": {
+          "beta_annual": 0.0002500000000000002,
+          "chi": 0.021907096879731705,
+          "child_benefit_curvature": 0.001246819191711698,
+          "delta_alpha_jump": 0.00125,
+          "first_birth_fixed_cost": 0.012046256846883598,
+          "kappa_fert": 0.003406869651926967,
+          "kappa_fert_continuation": 0.006436242042560644,
+          "tenure_choice_kappa": 0.00024253441814510112,
+          "theta0": 0.0025650322030159375
+        }
+      }
+    },
+    "no_A_s3": {
+      "arm": "no_A",
+      "bounds": {
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "child_benefit_curvature": [
+          0.0,
+          0.8
+        ],
+        "delta_alpha_jump": [
+          0.0,
+          0.25
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "tenure_choice_kappa": [
+          0.001,
+          0.1
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ]
+      },
+      "dimensions": [
+        120,
+        9
+      ],
+      "free_coordinates": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "delta_alpha_jump",
+        "child_benefit_curvature",
+        "tenure_choice_kappa"
+      ],
+      "seed": {
+        "beta_annual": 0.9627532310921522,
+        "chi": 1.0296335533473902,
+        "child_benefit_curvature": 0.058600502010449806,
+        "delta_alpha_jump": 0.13836976834113102,
+        "first_birth_fixed_cost": 0.6384516128848308,
+        "kappa_fert": 0.18056409155212924,
+        "kappa_fert_continuation": 0.3411208282557141,
+        "tenure_choice_kappa": 0.01285432416169036,
+        "theta0": 0.12055651354174905
+      },
+      "seed_provenance": {
+        "file_sha256": {
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/011_gn_0.5/phase_b_ge/selected_root/parameters.csv": "153ab49c9c2700ad3dfc23031e603d745f19fad41497d6320aca5624152d0fb0",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/completed.json": "8e20abd2c350582cc012016c6ae917f8a797143290b39e6524e5b53ab2e00449",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_0.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_1.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1"
+        },
+        "full_ge_repeats": 2,
+        "selected_case": "011_gn_0.5",
+        "selected_loss": 19.69680865735299,
+        "source_pilot": "nonnegative_mean"
+      },
+      "size": "coarse",
+      "starting_point_construction": {
+        "base": {
+          "beta_annual": 0.9635032310921522,
+          "chi": 1.0953548439865852,
+          "child_benefit_curvature": 0.0623409595855849,
+          "delta_alpha_jump": 0.134619768341131,
+          "first_birth_fixed_cost": 0.6023128423441799,
+          "kappa_fert": 0.17034348259634835,
+          "kappa_fert_continuation": 0.3218121021280322,
+          "tenure_choice_kappa": 0.012126720907255056,
+          "theta0": 0.12825161015079686
+        },
+        "direction": [
+          -1,
+          -1,
+          1,
+          1,
+          1,
+          -1,
+          1,
+          -1,
+          1
+        ],
+        "index": 3,
+        "native_verified": false,
+        "parameter_order": [
+          "beta_annual",
+          "chi",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "theta0",
+          "delta_alpha_jump",
+          "child_benefit_curvature",
+          "tenure_choice_kappa"
+        ],
+        "status": "Starting guesses only; no economic contract adoption",
+        "step_sizes": {
+          "beta_annual": 0.0002500000000000002,
+          "chi": 0.021907096879731705,
+          "child_benefit_curvature": 0.001246819191711698,
+          "delta_alpha_jump": 0.00125,
+          "first_birth_fixed_cost": 0.012046256846883598,
+          "kappa_fert": 0.003406869651926967,
+          "kappa_fert_continuation": 0.006436242042560644,
+          "tenure_choice_kappa": 0.00024253441814510112,
+          "theta0": 0.0025650322030159375
+        }
+      }
+    },
+    "no_A_s4": {
+      "arm": "no_A",
+      "bounds": {
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "child_benefit_curvature": [
+          0.0,
+          0.8
+        ],
+        "delta_alpha_jump": [
+          0.0,
+          0.25
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "tenure_choice_kappa": [
+          0.001,
+          0.1
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ]
+      },
+      "dimensions": [
+        120,
+        9
+      ],
+      "free_coordinates": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "delta_alpha_jump",
+        "child_benefit_curvature",
+        "tenure_choice_kappa"
+      ],
+      "seed": {
+        "beta_annual": 0.9635032310921522,
+        "chi": 1.0953548439865852,
+        "child_benefit_curvature": 0.0623409595855849,
+        "delta_alpha_jump": 0.05,
+        "first_birth_fixed_cost": 0.0,
+        "kappa_fert": 0.17034348259634835,
+        "kappa_fert_continuation": 0.3218121021280322,
+        "tenure_choice_kappa": 0.012126720907255056,
+        "theta0": 0.12825161015079686
+      },
+      "seed_provenance": {
+        "file_sha256": {
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/011_gn_0.5/phase_b_ge/selected_root/parameters.csv": "153ab49c9c2700ad3dfc23031e603d745f19fad41497d6320aca5624152d0fb0",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/completed.json": "8e20abd2c350582cc012016c6ae917f8a797143290b39e6524e5b53ab2e00449",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_0.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_1.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1"
+        },
+        "full_ge_repeats": 2,
+        "selected_case": "011_gn_0.5",
+        "selected_loss": 19.69680865735299,
+        "source_pilot": "nonnegative_mean"
+      },
+      "size": "coarse",
+      "starting_point_construction": {
+        "base": {
+          "beta_annual": 0.9635032310921522,
+          "chi": 1.0953548439865852,
+          "child_benefit_curvature": 0.0623409595855849,
+          "delta_alpha_jump": 0.134619768341131,
+          "first_birth_fixed_cost": 0.6023128423441799,
+          "kappa_fert": 0.17034348259634835,
+          "kappa_fert_continuation": 0.3218121021280322,
+          "tenure_choice_kappa": 0.012126720907255056,
+          "theta0": 0.12825161015079686
+        },
+        "direction": null,
+        "index": 4,
+        "native_verified": false,
+        "parameter_order": [
+          "beta_annual",
+          "chi",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "theta0",
+          "delta_alpha_jump",
+          "child_benefit_curvature",
+          "tenure_choice_kappa"
+        ],
+        "status": "Starting guesses only; no economic contract adoption",
+        "step_sizes": {
+          "beta_annual": 0.0002500000000000002,
+          "chi": 0.021907096879731705,
+          "child_benefit_curvature": 0.001246819191711698,
+          "delta_alpha_jump": 0.00125,
+          "first_birth_fixed_cost": 0.012046256846883598,
+          "kappa_fert": 0.003406869651926967,
+          "kappa_fert_continuation": 0.006436242042560644,
+          "tenure_choice_kappa": 0.00024253441814510112,
+          "theta0": 0.0025650322030159375
+        }
+      }
+    },
+    "no_A_s5": {
+      "arm": "no_A",
+      "bounds": {
+        "beta_annual": [
+          0.94,
+          0.99
+        ],
+        "chi": [
+          0.1,
+          5.0
+        ],
+        "child_benefit_curvature": [
+          0.0,
+          0.8
+        ],
+        "delta_alpha_jump": [
+          0.0,
+          0.25
+        ],
+        "first_birth_fixed_cost": [
+          0.0,
+          8.0
+        ],
+        "kappa_fert": [
+          0.02,
+          50.0
+        ],
+        "kappa_fert_continuation": [
+          0.02,
+          50.0
+        ],
+        "tenure_choice_kappa": [
+          0.001,
+          0.1
+        ],
+        "theta0": [
+          0.0,
+          8.0
+        ]
+      },
+      "dimensions": [
+        120,
+        9
+      ],
+      "free_coordinates": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "delta_alpha_jump",
+        "child_benefit_curvature",
+        "tenure_choice_kappa"
+      ],
+      "seed": {
+        "beta_annual": 0.9635032310921522,
+        "chi": 1.0953548439865852,
+        "child_benefit_curvature": 0.0623409595855849,
+        "delta_alpha_jump": 0.2,
+        "first_birth_fixed_cost": 1.60231284234418,
+        "kappa_fert": 0.17034348259634835,
+        "kappa_fert_continuation": 0.3218121021280322,
+        "tenure_choice_kappa": 0.012126720907255056,
+        "theta0": 0.12825161015079686
+      },
+      "seed_provenance": {
+        "file_sha256": {
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/011_gn_0.5/phase_b_ge/selected_root/parameters.csv": "153ab49c9c2700ad3dfc23031e603d745f19fad41497d6320aca5624152d0fb0",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/completed.json": "8e20abd2c350582cc012016c6ae917f8a797143290b39e6524e5b53ab2e00449",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_0.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1",
+          "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/collected/nonnegative_mean/selected_repeat_1.json": "9381a9ccf7fc2c3936d872d95d037d36fdcf869b3d49cf8efe1dd87b46d338c1"
+        },
+        "full_ge_repeats": 2,
+        "selected_case": "011_gn_0.5",
+        "selected_loss": 19.69680865735299,
+        "source_pilot": "nonnegative_mean"
+      },
+      "size": "coarse",
+      "starting_point_construction": {
+        "base": {
+          "beta_annual": 0.9635032310921522,
+          "chi": 1.0953548439865852,
+          "child_benefit_curvature": 0.0623409595855849,
+          "delta_alpha_jump": 0.134619768341131,
+          "first_birth_fixed_cost": 0.6023128423441799,
+          "kappa_fert": 0.17034348259634835,
+          "kappa_fert_continuation": 0.3218121021280322,
+          "tenure_choice_kappa": 0.012126720907255056,
+          "theta0": 0.12825161015079686
+        },
+        "direction": null,
+        "index": 5,
+        "native_verified": false,
+        "parameter_order": [
+          "beta_annual",
+          "chi",
+          "first_birth_fixed_cost",
+          "kappa_fert",
+          "kappa_fert_continuation",
+          "theta0",
+          "delta_alpha_jump",
+          "child_benefit_curvature",
+          "tenure_choice_kappa"
+        ],
+        "status": "Starting guesses only; no economic contract adoption",
+        "step_sizes": {
+          "beta_annual": 0.0002500000000000002,
+          "chi": 0.021907096879731705,
+          "child_benefit_curvature": 0.001246819191711698,
+          "delta_alpha_jump": 0.00125,
+          "first_birth_fixed_cost": 0.012046256846883598,
+          "kappa_fert": 0.003406869651926967,
+          "kappa_fert_continuation": 0.006436242042560644,
+          "tenure_choice_kappa": 0.00024253441814510112,
+          "theta0": 0.0025650322030159375
+        }
+      }
+    }
+  },
+  "maximum_full_ge": {
+    "coarse": 32
+  },
+  "maximum_lifecycle_per_ge": 32,
+  "maximum_rounds": {
+    "coarse": 3
+  },
+  "method": "Same iterative GN architecture; complete full-rank 9 or 8 column Jacobian before proposal; maximum3 rounds/32 GEs; two final independent full-GE repeats reserved",
+  "minimum_ge_seconds": {
+    "coarse": 210
+  },
+  "old_twelve_searches_preserved": true,
+  "parameter_reference_csv": "entry_ratio_comparison_v1 selected_root/parameters.csv",
+  "per_lifecycle_seconds": 300,
+  "reference_parameter_csv_sha256": "9ecb45e649c86328861e047e5e6394b543303cc81dbc97d3bd1bd9c289c9c269",
+  "reference_parameter_table": [
+    {
+      "estimate": "6.293507689200028",
+      "lower": "0.2",
+      "near_bound": "False",
+      "parameter": "H0",
+      "reference_estimate": "6.293507689200028",
+      "status": "fixed population scale; not identified by per-household targets",
+      "upper": "80.0"
+    },
+    {
+      "estimate": "0.9635032310921522",
+      "lower": "0.94",
+      "near_bound": "False",
+      "parameter": "beta_annual",
+      "reference_estimate": "0.9634753808828738",
+      "status": "free in exploratory entry calibration",
+      "upper": "0.99"
+    },
+    {
+      "estimate": "1.0953548439865852",
+      "lower": "0.1",
+      "near_bound": "False",
+      "parameter": "chi",
+      "reference_estimate": "1.0938718913975698",
+      "status": "free in exploratory entry calibration",
+      "upper": "5.0"
+    },
+    {
+      "estimate": "0.6023128423441799",
+      "lower": "0.0",
+      "near_bound": "False",
+      "parameter": "first_birth_fixed_cost",
+      "reference_estimate": "0.6209410745816288",
+      "status": "free in exploratory entry calibration",
+      "upper": "8.0"
+    },
+    {
+      "estimate": "0.17034348259634835",
+      "lower": "0.02",
+      "near_bound": "True",
+      "parameter": "kappa_fert",
+      "reference_estimate": "0.17561183772819416",
+      "status": "free in exploratory entry calibration",
+      "upper": "50.0"
+    },
+    {
+      "estimate": "0.3218121021280322",
+      "lower": "0.02",
+      "near_bound": "True",
+      "parameter": "kappa_fert_continuation",
+      "reference_estimate": "0.33176505374023935",
+      "status": "free in exploratory entry calibration",
+      "upper": "50.0"
+    },
+    {
+      "estimate": "0.12825161015079686",
+      "lower": "0.0",
+      "near_bound": "False",
+      "parameter": "theta0",
+      "reference_estimate": "0.12451612635999697",
+      "status": "free in exploratory entry calibration",
+      "upper": "8.0"
+    },
+    {
+      "estimate": "0.134619768341131",
+      "lower": "0.0",
+      "near_bound": "False",
+      "parameter": "delta_alpha_jump",
+      "reference_estimate": "0.13487659325900622",
+      "status": "free in exploratory entry calibration",
+      "upper": "0.25"
+    },
+    {
+      "estimate": "0.0623409595855849",
+      "lower": "0.0",
+      "near_bound": "False",
+      "parameter": "child_benefit_curvature",
+      "reference_estimate": "0.061454973811513665",
+      "status": "free in exploratory entry calibration",
+      "upper": "0.8"
+    },
+    {
+      "estimate": "0.012126720907255056",
+      "lower": "0.001",
+      "near_bound": "False",
+      "parameter": "tenure_choice_kappa",
+      "reference_estimate": "0.012087458119671006",
+      "status": "free in exploratory entry calibration",
+      "upper": "0.1"
+    },
+    {
+      "estimate": "0.1355551166583114",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "psi_child",
+      "reference_estimate": "0.1355551166583114",
+      "status": "fixed reference benefit; price clears birth renewal",
+      "upper": ""
+    },
+    {
+      "estimate": "0.12710448060909638",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "child_benefit_CRRA_coefficient",
+      "reference_estimate": "0.1272245805140582",
+      "status": "derived from fixed benefit and proposed curvature",
+      "upper": ""
+    },
+    {
+      "estimate": "0.008193084126995582",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "theta1",
+      "reference_estimate": "0.008193084126995582",
+      "status": "fixed external restriction",
+      "upper": ""
+    },
+    {
+      "estimate": "2.0",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "sigma",
+      "reference_estimate": "2.0",
+      "status": "fixed",
+      "upper": ""
+    },
+    {
+      "estimate": "0.733",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "alpha_cons",
+      "reference_estimate": "0.733",
+      "status": "fixed CEX childless expenditure share",
+      "upper": ""
+    },
+    {
+      "estimate": "0.0",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "delta_alpha",
+      "reference_estimate": "0.0",
+      "status": "fixed zero later-child loading",
+      "upper": ""
+    },
+    {
+      "estimate": "0.0",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "h_P",
+      "reference_estimate": "0.0",
+      "status": "no housing floor",
+      "upper": ""
+    },
+    {
+      "estimate": "0.11046592704873838",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "utility_reference_rent",
+      "reference_estimate": "0.11046592704873838",
+      "status": "fixed substantive utility normalization",
+      "upper": ""
+    },
+    {
+      "estimate": "0.020000000000000018",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "q_annual",
+      "reference_estimate": "0.020000000000000018",
+      "status": "author-retained 2% annual real rate",
+      "upper": ""
+    },
+    {
+      "estimate": "0.8",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "financed_share",
+      "reference_estimate": "0.8",
+      "status": "inherited credit contract",
+      "upper": ""
+    },
+    {
+      "estimate": "0.63",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "housing_supply_elasticity",
+      "reference_estimate": "0.63",
+      "status": "fixed provisional external mapping",
+      "upper": ""
+    },
+    {
+      "estimate": "0.08028070961950022",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "payroll_tax",
+      "reference_estimate": "0.08028070961950022",
+      "status": "derived from adopted pension ratio",
+      "upper": ""
+    },
+    {
+      "estimate": "0.917784047463731",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "pension_period",
+      "reference_estimate": "0.917784047463731",
+      "status": "balanced PAYGO",
+      "upper": ""
+    },
+    {
+      "estimate": "0.01416143718381309",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "annual_depreciation",
+      "reference_estimate": "0.01416143718381309",
+      "status": "adopted",
+      "upper": ""
+    },
+    {
+      "estimate": "0.05545379079326218",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "period_depreciation",
+      "reference_estimate": "0.05545379079326218",
+      "status": "compounded",
+      "upper": ""
+    },
+    {
+      "estimate": "0.010598360773872594",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "annual_property_tax",
+      "reference_estimate": "0.010598360773872594",
+      "status": "adopted",
+      "upper": ""
+    },
+    {
+      "estimate": "0.042393443095490375",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "period_property_tax",
+      "reference_estimate": "0.042393443095490375",
+      "status": "linear period convention",
+      "upper": ""
+    },
+    {
+      "estimate": "0.06",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "selling_cost",
+      "reference_estimate": "0.06",
+      "status": "retained",
+      "upper": ""
+    },
+    {
+      "estimate": "6.0",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "rental_cap",
+      "reference_estimate": "6.0",
+      "status": "retained provisional",
+      "upper": ""
+    },
+    {
+      "estimate": "120.0",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "wealth_grid_nodes",
+      "reference_estimate": "160.0",
+      "status": "retained exact grid",
+      "upper": ""
+    },
+    {
+      "estimate": "9.0",
+      "lower": "",
+      "near_bound": "",
+      "parameter": "income_states",
+      "reference_estimate": "15.0",
+      "status": "retained B15",
+      "upper": ""
+    }
+  ],
+  "selected_full_ge_repeats": 2,
+  "smoke_budget_seconds": 1800,
+  "smoke_contract": "Two independent full GEs at s0; search lanes require same-arm source-authenticated receipt; all search GEs start at receipt root",
+  "target_contract": [
+    {
+      "moment": "initial_normalization",
+      "role": "normalization",
+      "target": "2.1",
+      "weight": ""
+    },
+    {
+      "moment": "cps_childlessness",
+      "role": "scored",
+      "target": "0.19827875100684264",
+      "weight": "35532.3042455214"
+    },
+    {
+      "moment": "cps_exactly_one",
+      "role": "scored",
+      "target": "0.21365532522014702",
+      "weight": "26952.820824310795"
+    },
+    {
+      "moment": "nchs_mean_age",
+      "role": "scored",
+      "target": "25.976263860992496",
+      "weight": "139.82806784479274"
+    },
+    {
+      "moment": "nchs_share30",
+      "role": "validation",
+      "target": "0.2492780130410667",
+      "weight": "0.0"
+    },
+    {
+      "moment": "wealth_earnings",
+      "role": "scored",
+      "target": "6.92658379107299",
+      "weight": "7.595098472533724"
+    },
+    {
+      "moment": "bequest_wealth",
+      "role": "scored",
+      "target": "0.007291023472616158",
+      "weight": "5165289.256198346"
+    },
+    {
+      "moment": "old_dispersion",
+      "role": "validation",
+      "target": "3.51593508651872",
+      "weight": "0.0"
+    },
+    {
+      "moment": "mean_rooms",
+      "role": "scored",
+      "target": "5.729434240102641",
+      "weight": "128.02070205233477"
+    },
+    {
+      "moment": "ownership_30_55",
+      "role": "scored",
+      "target": "0.6762604168538028",
+      "weight": "2339.3623724673616"
+    },
+    {
+      "moment": "first_birth_rooms",
+      "role": "scored",
+      "target": "1.465",
+      "weight": "137.5652749002964"
+    },
+    {
+      "moment": "family_rooms",
+      "role": "validation",
+      "target": "0.38509964969278165",
+      "weight": "0.0"
+    },
+    {
+      "moment": "recent_parent_ownership",
+      "role": "scored",
+      "target": "0.12760836356692162",
+      "weight": "27055.822957508266"
+    },
+    {
+      "moment": "early_fertility",
+      "role": "scored",
+      "target": "0.8095276384290021",
+      "weight": "100.0"
+    }
+  ],
+  "target_scored_count": 10
+}

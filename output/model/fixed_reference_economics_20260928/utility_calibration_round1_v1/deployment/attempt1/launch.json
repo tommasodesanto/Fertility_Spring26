@@ -1,0 +1,58 @@
+{
+  "status": "three_smokes_failed_searches_dependency_blocked",
+  "submission_epoch": 1790812522.66195,
+  "common_deadline_epoch": 1790819100,
+  "individual_smokes": 3,
+  "dependent_search_arrays": 3,
+  "total_search_lanes": 18,
+  "rows": [
+    {
+      "arm": "floor",
+      "stage": "smoke",
+      "job_id": "18903411"
+    },
+    {
+      "arm": "floor",
+      "stage": "search",
+      "job_id": "18903412"
+    },
+    {
+      "arm": "no_A",
+      "stage": "smoke",
+      "job_id": "18903413"
+    },
+    {
+      "arm": "no_A",
+      "stage": "search",
+      "job_id": "18903414"
+    },
+    {
+      "arm": "constant_alpha",
+      "stage": "smoke",
+      "job_id": "18903415"
+    },
+    {
+      "arm": "constant_alpha",
+      "stage": "search",
+      "job_id": "18903416"
+    }
+  ],
+  "automatic_restarts": false,
+  "remote_root": "/scratch/td2248/projects/utility_calibration_round1_v1",
+  "archive_sha256": "01391b55458e04d3c233659428c72d493033379b26581f8f7857694e723ce79d",
+  "archive_bytes": 392004,
+  "authenticated_source_files": 101,
+  "smoke_start_utc": "2026-09-30T23:55:25Z",
+  "smoke_start_source": "Slurm scontrol18903411; squeue all3elapsed12s",
+  "common_deadline_utc": "2026-10-01T01:45:00Z",
+  "smoke_maximum_seconds": 1800,
+  "search_maximum_seconds": 5400,
+  "cpus_per_task": 1,
+  "memory_per_task_gib": 24,
+  "threads": 1,
+  "old_twelve_jobs_untouched": true,
+  "preflight_status": "all_three_mock_smoke_verified_zero_lifecycle",
+  "search_gate": "own-arm smoke afterok, exact repeated fullGE receipt and sourcehashes",
+  "last_observed_utc": "2026-09-30T23:57:09.923516+00:00",
+  "observed_failure": "FileNotFoundError phase_b_ge/price_search.json.tmp"
+}

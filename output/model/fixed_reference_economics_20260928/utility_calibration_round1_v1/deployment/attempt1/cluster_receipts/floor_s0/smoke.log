@@ -1,0 +1,37 @@
+WARNING: While bind mounting '/scratch/td2248/projects/utility_calibration_round1_v1/source/code/model/tools/e5f_evening_calibration_runtime.py:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py': destination is already in the mount point list
+WARNING: While bind mounting '/scratch/td2248/projects/utility_calibration_round1_v1/source/output/model/fertility_identification_20260928/contract_v1/primary_objective.json:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/contract_v1/primary_objective.json': destination is already in the mount point list
+WARNING: While bind mounting '/scratch/td2248/projects/utility_calibration_round1_v1/source/output/model/fertility_identification_20260928/two_stream_overnight_v1/config.json:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_stream_overnight_v1/config.json': destination is already in the mount point list
+WARNING: While bind mounting '/scratch/td2248/projects/utility_calibration_round1_v1/source/output/model/fertility_identification_20260928/two_stream_overnight_v1/search.py:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_stream_overnight_v1/search.py': destination is already in the mount point list
+Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_calibration_round1_v1/runner.py", line 408, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_calibration_round1_v1/runner.py", line 402, in main
+    if is_smoke:result=smoke(args.out,lane,evaluate,deadline,mock=args.mode=='preflight')
+                       ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_calibration_round1_v1/runner.py", line 352, in smoke
+    row=evaluate(label,seed,deadline);require(row['status']=='passed','Smoke full GE failed; this arm search blocked')
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_calibration_round1_v1/runner.py", line 223, in evaluate
+    solved=ge.run_phase_b(candidate,dict(selected_d_bar=inputs.ARMS[arm]),budget)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_calibration_round1_v1/phase_b_pilot.py", line 347, in run_phase_b
+    seed, seed_live = trial(start, "price_start", reason="fresh initial price evaluation")
+                      ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_calibration_round1_v1/phase_b_pilot.py", line 317, in trial
+    record_search()
+    ~~~~~~~~~~~~~^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_calibration_round1_v1/phase_b_pilot.py", line 296, in record_search
+    context["fp"].write(phase_out / "price_search.json", search)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/sources/fixed_price_v1/run_fixed_price.py", line 54, in write
+    temporary.write_text(json.dumps(value, indent=2, sort_keys=True, allow_nan=False) + '\n')
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/share/apps/anaconda3/2025.06/lib/python3.13/pathlib/_local.py", line 555, in write_text
+    return PathBase.write_text(self, data, encoding, errors, newline)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/share/apps/anaconda3/2025.06/lib/python3.13/pathlib/_abc.py", line 651, in write_text
+    with self.open(mode='w', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/share/apps/anaconda3/2025.06/lib/python3.13/pathlib/_local.py", line 537, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/work/results/smoke/000_baseline/phase_b_ge/price_search.json.tmp'
