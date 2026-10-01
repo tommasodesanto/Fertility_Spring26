@@ -1,0 +1,35 @@
+{
+  "attempted_utc": "2026-10-01T16:56:34Z",
+  "scope": [
+    "18958130_0",
+    "18958130_2",
+    "18958130_3",
+    "18958130_4",
+    "18958130_5",
+    "18958130_6",
+    "18958130_7",
+    "18958549_1"
+  ],
+  "method": "single SSH BatchMode=yes ConnectTimeout=8 invocation of existing no-engine-import collector",
+  "outcome": "collector failed during remote read; no fresh data snapshot",
+  "error": "OSError: [Errno 116] Stale file handle while reading remote checkpoint JSON",
+  "ssh_authentication": "SSH reached remote Python; failure occurred in collector file read, not an authentication denial",
+  "retry": "none in this scheduled pass",
+  "last_successful_snapshot": "continuation_20261001T165103Z.json",
+  "last_successful_counts": {
+    "records": 278,
+    "admissible": 278,
+    "objective_calls": 286,
+    "nonpasses": 0,
+    "fatal": 0,
+    "search_completions": 0,
+    "selected_postchecks": 0
+  },
+  "last_successful_best": {
+    "chain": "chain_0",
+    "case": "0006_nm",
+    "loss": 30.99909262396404,
+    "status": "provisional; no selected repeat"
+  },
+  "hard_deadline_local": "2026-10-01 13:29:26 EDT"
+}
