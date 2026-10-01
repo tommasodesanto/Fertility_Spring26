@@ -1,0 +1,103 @@
+{
+  "status": "saved_policy_current_child_value_shift_complete_no_model_solves",
+  "interpretation": "Diagnostic shift in current successful-first-child value in both arms; continuation values/policies and all other model objects held fixed. Not psi recalibration, not GE, not adoption.",
+  "flow_benefit_definition": "child_preferences.py: benefit[n,m]=psi_child*m^(1-child_benefit_curvature); m=1 gives psi_child exactly",
+  "logit_shift_definition": "logit(p_try_new)=logit(p_try)+pi*delta/kappa_fert for interior probabilities",
+  "fixed_baseline_psi_child": 0.17156192800028292,
+  "kappa_fert": 0.13056430591307258,
+  "young_n0_renter_PRE_mass": 0.18637617229692674,
+  "zero_shift_validation": {
+    "expected_credit_minus_baseline_pp": -0.051680757225407,
+    "computed_credit_minus_baseline_pp": -0.05168075722540695,
+    "absolute_error_pp": 4.85722573273506e-17,
+    "tolerance_pp": 1e-10
+  },
+  "rows": 5,
+  "new_model_solves": 0,
+  "probability_endpoint_rule": "Exact saved p=0 and p=1 remain 0 and 1 under finite log-odds shifts; any underlying saved-probability underflow is retained, not repaired.",
+  "sources": {
+    "driver_sha256": "4f4c99adceb3a9dadec5ffd5e3db0b87c911e0a2745974779351543396033a4c",
+    "diagnostic_parent_summary_sha256": "defe5c80967be9369304f33bad36349c7d0d3c60ceca49155a8a49aa5c144f8a",
+    "baseline_solution_arrays_sha256": "cb793ce4bd3029d2fd1e2a18a7b4c6d33321b0b19185d070c3512b434a6cd1bb",
+    "credit_solution_arrays_sha256": "2423d819b7faec01f4e82ee623340ece6535c18530d19bed995603c7fc739812",
+    "common_PRE_sha256": "096d63d3b7c884a08946dae0ef897a11442ddecafbefa4050266f094650e71e9",
+    "baseline_parameters_sha256": "ae092fafab15985f773b61999a29d4a8d505495623e615440cfff1f107c75406"
+  },
+  "rows_data": [
+    {
+      "current_child_flow_value": 0.01,
+      "delta_from_baseline_psi": -0.1615619280002829,
+      "baseline_psi_child": 0.17156192800028292,
+      "baseline_firstbirth_probability_per_young_n0_renter_PRE": 0.11782478693701548,
+      "credit_firstbirth_probability_per_young_n0_renter_PRE": 0.11767266827212476,
+      "credit_minus_baseline_pp": -0.01521186648906755,
+      "positive_firstbirth_mass": 2.724583678851068e-05,
+      "negative_firstbirth_mass": -5.559713128575368e-05,
+      "net_firstbirth_mass": -2.8351294497242998e-05,
+      "zero_probability_mass_baseline": 0.002020128568750512,
+      "zero_probability_mass_credit": 0.002020128568750512,
+      "one_probability_mass_baseline": 0.0,
+      "one_probability_mass_credit": 0.0
+    },
+    {
+      "current_child_flow_value": 0.1,
+      "delta_from_baseline_psi": -0.07156192800028291,
+      "baseline_psi_child": 0.17156192800028292,
+      "baseline_firstbirth_probability_per_young_n0_renter_PRE": 0.17298592864225096,
+      "credit_firstbirth_probability_per_young_n0_renter_PRE": 0.17266465649006787,
+      "credit_minus_baseline_pp": -0.03212721521830906,
+      "positive_firstbirth_mass": 3.080381744982694e-05,
+      "negative_firstbirth_mass": -9.068129143930709e-05,
+      "net_firstbirth_mass": -5.987747398948017e-05,
+      "zero_probability_mass_baseline": 0.002020128568750512,
+      "zero_probability_mass_credit": 0.002020128568750512,
+      "one_probability_mass_baseline": 0.0,
+      "one_probability_mass_credit": 0.0
+    },
+    {
+      "current_child_flow_value": 0.17156192800028292,
+      "delta_from_baseline_psi": 0.0,
+      "baseline_psi_child": 0.17156192800028292,
+      "baseline_firstbirth_probability_per_young_n0_renter_PRE": 0.22237400009692318,
+      "credit_firstbirth_probability_per_young_n0_renter_PRE": 0.22185719252466907,
+      "credit_minus_baseline_pp": -0.05168075722540695,
+      "positive_firstbirth_mass": 2.9923730861610196e-05,
+      "negative_firstbirth_mass": -0.00012624434799239105,
+      "net_firstbirth_mass": -9.632061713078088e-05,
+      "zero_probability_mass_baseline": 0.002020128568750512,
+      "zero_probability_mass_credit": 0.002020128568750512,
+      "one_probability_mass_baseline": 0.0,
+      "one_probability_mass_credit": 0.0
+    },
+    {
+      "current_child_flow_value": 0.25,
+      "delta_from_baseline_psi": 0.07843807199971708,
+      "baseline_psi_child": 0.17156192800028292,
+      "baseline_firstbirth_probability_per_young_n0_renter_PRE": 0.2783132063467943,
+      "credit_firstbirth_probability_per_young_n0_renter_PRE": 0.27754166529022806,
+      "credit_minus_baseline_pp": -0.07715410565662977,
+      "positive_firstbirth_mass": 2.569143914210758e-05,
+      "negative_firstbirth_mass": -0.00016948830803486075,
+      "net_firstbirth_mass": -0.00014379686889275317,
+      "zero_probability_mass_baseline": 0.002020128568750512,
+      "zero_probability_mass_credit": 0.002020128568750512,
+      "one_probability_mass_baseline": 0.0,
+      "one_probability_mass_credit": 0.0
+    },
+    {
+      "current_child_flow_value": 0.5,
+      "delta_from_baseline_psi": 0.3284380719997171,
+      "baseline_psi_child": 0.17156192800028292,
+      "baseline_firstbirth_probability_per_young_n0_renter_PRE": 0.43936843404820314,
+      "credit_firstbirth_probability_per_young_n0_renter_PRE": 0.43794294746823126,
+      "credit_minus_baseline_pp": -0.14254865799718983,
+      "positive_firstbirth_mass": 9.688530921746484e-06,
+      "negative_firstbirth_mass": -0.0002753652633575459,
+      "net_firstbirth_mass": -0.00026567673243579936,
+      "zero_probability_mass_baseline": 0.002020128568750512,
+      "zero_probability_mass_credit": 0.002020128568750512,
+      "one_probability_mass_baseline": 0.0,
+      "one_probability_mass_credit": 0.0
+    }
+  ]
+}
