@@ -1,0 +1,314 @@
+{
+  "experimental_not_adopted": true,
+  "seed_sources": [
+    {
+      "parameters": {
+        "beta_annual": 0.9632964409686954,
+        "chi": 1.1352744427452073,
+        "child_benefit_curvature": 0.061316551393165844,
+        "first_birth_fixed_cost": 0.5814145758477938,
+        "h_P": 1.0271604938271606,
+        "kappa_fert": 0.16447188996166928,
+        "kappa_fert_continuation": 0.35739355517398674,
+        "tenure_choice_kappa": 0.013397534038233572,
+        "theta0": 0.1259886123071811
+      },
+      "source": "output/model/fixed_reference_economics_20260928/utility_floor_nm_v1/chain_2/results/0012_nm/proposed_parameters.json",
+      "sha256": "5cf11c57bac8e1cfb5209cff97e8bb0e0f5f40e9adb3ad95eed894b9b549b530",
+      "base_fit_source": "output/model/fixed_reference_economics_20260928/utility_floor_nm_v1/chain_2/results/0012_nm/phase_b_ge/selected_root/target_fit.csv",
+      "base_fit_sha256": "7ba26b7d13df88d3996b49d514452af55ec58e9cb5915486387836c97ac675ab"
+    },
+    {
+      "parameters": {
+        "beta_annual": 0.9613355183079796,
+        "chi": 1.0554808719356203,
+        "child_benefit_curvature": 0.14222939975407772,
+        "first_birth_fixed_cost": 0.49788517527914167,
+        "h_P": 1.8919518118322567,
+        "kappa_fert": 0.19928237350035297,
+        "kappa_fert_continuation": 0.4893365027027936,
+        "tenure_choice_kappa": 0.006543273640801804,
+        "theta0": 0.10360194418235419
+      },
+      "source": "output/model/fixed_reference_economics_20260928/utility_floor_nm_v1/chain_1/results/0020_nm/proposed_parameters.json",
+      "sha256": "e5fd51c0d25401715509e74071a6f1e0ae4edd22f57f409d31f72af716e8cd63",
+      "base_fit_source": "output/model/fixed_reference_economics_20260928/utility_floor_nm_v1/chain_1/results/0020_nm/phase_b_ge/selected_root/target_fit.csv",
+      "base_fit_sha256": "8e3982072d61e369f3b15aebb53a56380dbb164971b10b6ac1954000a65f979a"
+    }
+  ],
+  "profiles": {
+    "base_control": {},
+    "housing_levels4x": {
+      "mean_rooms": 4.0,
+      "ownership_30_55": 4.0
+    },
+    "early4x": {
+      "early_fertility": 4.0
+    },
+    "both4x": {
+      "mean_rooms": 4.0,
+      "ownership_30_55": 4.0,
+      "early_fertility": 4.0
+    }
+  },
+  "base_target_contract": [
+    {
+      "moment": "initial_normalization",
+      "role": "normalization",
+      "target": "2.1",
+      "weight": ""
+    },
+    {
+      "moment": "cps_childlessness",
+      "role": "scored",
+      "target": "0.19827875100684264",
+      "weight": "35532.3042455214"
+    },
+    {
+      "moment": "cps_exactly_one",
+      "role": "scored",
+      "target": "0.21365532522014702",
+      "weight": "26952.820824310795"
+    },
+    {
+      "moment": "nchs_mean_age",
+      "role": "scored",
+      "target": "25.976263860992496",
+      "weight": "139.82806784479274"
+    },
+    {
+      "moment": "nchs_share30",
+      "role": "validation",
+      "target": "0.2492780130410667",
+      "weight": "0.0"
+    },
+    {
+      "moment": "wealth_earnings",
+      "role": "scored",
+      "target": "6.92658379107299",
+      "weight": "7.595098472533724"
+    },
+    {
+      "moment": "bequest_wealth",
+      "role": "scored",
+      "target": "0.007291023472616158",
+      "weight": "5165289.256198346"
+    },
+    {
+      "moment": "old_dispersion",
+      "role": "validation",
+      "target": "3.51593508651872",
+      "weight": "0.0"
+    },
+    {
+      "moment": "mean_rooms",
+      "role": "scored",
+      "target": "5.729434240102641",
+      "weight": "128.02070205233477"
+    },
+    {
+      "moment": "ownership_30_55",
+      "role": "scored",
+      "target": "0.6762604168538028",
+      "weight": "2339.3623724673616"
+    },
+    {
+      "moment": "first_birth_rooms",
+      "role": "scored",
+      "target": "1.465",
+      "weight": "137.5652749002964"
+    },
+    {
+      "moment": "family_rooms",
+      "role": "validation",
+      "target": "0.38509964969278165",
+      "weight": "0.0"
+    },
+    {
+      "moment": "recent_parent_ownership",
+      "role": "scored",
+      "target": "0.12760836356692162",
+      "weight": "27055.822957508266"
+    },
+    {
+      "moment": "early_fertility",
+      "role": "scored",
+      "target": "0.8095276384290021",
+      "weight": "100.0"
+    }
+  ],
+  "maximum_objective_calls": 200,
+  "wall_seconds": 7200,
+  "final_reserve_seconds": 900,
+  "seed_count": 2,
+  "chains": 14,
+  "free_psi": true,
+  "psi_bounds": [
+    0.01,
+    0.5
+  ],
+  "psi_bound_role": "diagnostic search restriction; not an estimate or externally identified bound",
+  "target_count": 10,
+  "free_parameter_count": 10,
+  "identification_status": "unverified; count alone does not establish rank",
+  "weight_changes": "base0..7 unchanged; three explicit x4 sensitivity profiles8..13",
+  "psi_starts": [
+    0.1355551166583114,
+    0.08,
+    0.2,
+    0.3
+  ],
+  "economic_change": "Author-requested estimation of child benefit psi jointly with nine earlier floor coordinates; price still solves birth renewal and population clears absolute housing supply",
+  "local_chain_ids": [
+    0,
+    1,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "torch_chain_ids": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "chain_mapping": [
+    {
+      "chain": 0,
+      "seed_index": 0,
+      "initial_psi": 0.1355551166583114,
+      "weight_profile": "base_control",
+      "multipliers": {},
+      "free_psi": true
+    },
+    {
+      "chain": 1,
+      "seed_index": 1,
+      "initial_psi": 0.1355551166583114,
+      "weight_profile": "base_control",
+      "multipliers": {},
+      "free_psi": true
+    },
+    {
+      "chain": 2,
+      "seed_index": 0,
+      "initial_psi": 0.08,
+      "weight_profile": "base_control",
+      "multipliers": {},
+      "free_psi": true
+    },
+    {
+      "chain": 3,
+      "seed_index": 1,
+      "initial_psi": 0.08,
+      "weight_profile": "base_control",
+      "multipliers": {},
+      "free_psi": true
+    },
+    {
+      "chain": 4,
+      "seed_index": 0,
+      "initial_psi": 0.2,
+      "weight_profile": "base_control",
+      "multipliers": {},
+      "free_psi": true
+    },
+    {
+      "chain": 5,
+      "seed_index": 1,
+      "initial_psi": 0.2,
+      "weight_profile": "base_control",
+      "multipliers": {},
+      "free_psi": true
+    },
+    {
+      "chain": 6,
+      "seed_index": 0,
+      "initial_psi": 0.3,
+      "weight_profile": "base_control",
+      "multipliers": {},
+      "free_psi": true
+    },
+    {
+      "chain": 7,
+      "seed_index": 1,
+      "initial_psi": 0.3,
+      "weight_profile": "base_control",
+      "multipliers": {},
+      "free_psi": true
+    },
+    {
+      "chain": 8,
+      "seed_index": 0,
+      "initial_psi": 0.1355551166583114,
+      "weight_profile": "housing_levels4x",
+      "multipliers": {
+        "mean_rooms": 4.0,
+        "ownership_30_55": 4.0
+      },
+      "free_psi": true
+    },
+    {
+      "chain": 9,
+      "seed_index": 1,
+      "initial_psi": 0.1355551166583114,
+      "weight_profile": "housing_levels4x",
+      "multipliers": {
+        "mean_rooms": 4.0,
+        "ownership_30_55": 4.0
+      },
+      "free_psi": true
+    },
+    {
+      "chain": 10,
+      "seed_index": 0,
+      "initial_psi": 0.1355551166583114,
+      "weight_profile": "early4x",
+      "multipliers": {
+        "early_fertility": 4.0
+      },
+      "free_psi": true
+    },
+    {
+      "chain": 11,
+      "seed_index": 1,
+      "initial_psi": 0.1355551166583114,
+      "weight_profile": "early4x",
+      "multipliers": {
+        "early_fertility": 4.0
+      },
+      "free_psi": true
+    },
+    {
+      "chain": 12,
+      "seed_index": 0,
+      "initial_psi": 0.1355551166583114,
+      "weight_profile": "both4x",
+      "multipliers": {
+        "mean_rooms": 4.0,
+        "ownership_30_55": 4.0,
+        "early_fertility": 4.0
+      },
+      "free_psi": true
+    },
+    {
+      "chain": 13,
+      "seed_index": 1,
+      "initial_psi": 0.1355551166583114,
+      "weight_profile": "both4x",
+      "multipliers": {
+        "mean_rooms": 4.0,
+        "ownership_30_55": 4.0,
+        "early_fertility": 4.0
+      },
+      "free_psi": true
+    }
+  ]
+}

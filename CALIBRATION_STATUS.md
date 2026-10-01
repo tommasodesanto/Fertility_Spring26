@@ -1,5 +1,27 @@
 # Calibration Status
 
+## September 30, 22:29 New York — free-psi restart running on Torch and locally
+
+Author-requested restart is running:8Torch original-weight chains18910174_0–7
+and8local chains[0,1,8,9,10,11,12,13], twooriginal-weight controls plus6weight
+profiles. All8Torch exactCLI initializer/metadata gates passedzeroLC, then
+actualnative firstprice work started. All8local correctednativepoints started
+as verified bylead. Eachchain200eval,onefreshfullGE selectedpostcheck required;
+Torch1CPU24GiB/thread,local2threads4GiB each. Originalabsolute deadlines retained:
+Torch1790828667 (04:24:27UTC),local1790828647.767363 (04:24:07UTC).
+
+Separateeconomicchange: psi_child nowestimated jointly (tenfree, tenscored
+targets;localweightprofiles distinctobjectives), diagnosticbounds [.01,.5].
+Actualpsi=.2 zeroLCinitializer matched31effectiveparameters beforelaunch.
+No physicalsolverpatch, normalization/gatechange orproductionadoption.
+Attempt1Torch18909985 and localattempt1 failedbeforeLC from metadataTypeError;
+corrected oneexpression andactualinitializer checks,restartedbyexplicitauthor
+authorization withinoriginalbudgets. Immutablev1remote/failures preserved;
+newremoteutility_floor_psi_v2 SHAca4d65da...111pins114compactfiles.
+Seeutility_floor_psi_v1/README.md,launch.json, deployment/torch_launch.json and
+deployment/attempt2/native_start_receipts.json. Alloldfixedpsi runs stopped.
+
+
 ## September 30, 22:21 New York — author stops fixed-psi searches for restart
 
 At explicit author request, all8Torch18906784 cancelled, scheduler accounting

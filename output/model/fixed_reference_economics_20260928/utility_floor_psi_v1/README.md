@@ -1,0 +1,11 @@
+# Free-psi floor calibration restart
+
+Author-requested economic experiment: estimate psi_child jointly with nine floorcoordinates (tenfree, tenscored targets, fourteenreported). Diagnosticpsi bounds [.01,.5], originaltargetweights on Torch. Housingfourfold, earlyhomeownershipfourfold and bothfourfold weightprofiles are separate local experiments; their weightedlosses are notcomparable as a commonobjective. Entrantwealth nonnegative/meanpreserving, nounsecuredborrowing, physicalparenthoodfloor,2percent commonrate, fixedH0 and populationrenewal/accountinggates unchanged. Rank is unverified; no productionadoption.
+
+Source: run_psi.py,plan.json,source_pins.json,fastobjective reusedfromsiblingNMpacket, unchangedround2nativeengine. ActualzeroLC metadata/nativeinitializer chain4 psi=.2 matched all31effectiveparameters; chain0 also passed. Ten-coordinate toy andweightmapping tests passed. No additional baselineGEsmoke, perauthor reuseauthorization. Pertrial fastobjective omits17plots andprice-repeat; ONEfreshnativefullGE postcheck with intrinsicprice-repeat/full14target31parameter17PNGpacket is required for selectedverification.
+
+CurrentTorch attempt2: immutable remote /scratch/td2248/projects/utility_floor_psi_v2,array18910174_0–7, originalweights. OneCPU24GiB/thread,200eval, originalabsolute cutoff1790828667 (October1 04:24:27UTC), noextension. EachactualCLIinitialize-only zeroLC gate precedes native search. SourcearchiveSHAca4d65da50e6373921ffb1a1558efee152cebca4081ed840e40a130abd9a0c88,111pins114compactfiles. Stage/launch evidence deployment/torch_launch.json and stage_receipt.json.
+
+Attempt1 array18909985 failed beforeANYlifecycle solve from diagnosticmetadata string/listconcatenation. Preserve originalremote /scratch/td2248/projects/utility_floor_psi_v1 and deployment/attempt1 sourcearchive/pins/8terminalreceipts. Correctedmetadataexpression changesnoeconomics/numerics; author-authorized retry keepsoriginaldeadlines.
+
+Eightcorrectedlocal searches chains[0,1,8,9,10,11,12,13],2threads4GiB each,200eval,deadline1790828647.767363,recorded inlaunch.json andchain launch/watchdogreceipts. Twooriginalweightbaselines plus6weightprofiles. Previousfixedpsi8Torch+8local searches stopped onexplicitrequest; their besttables/parameters and restart_seed_snapshot remain preserved. Fastresume terminalnotrestarted. Noautomaticextra jobs orretries.
