@@ -7,3 +7,5 @@ Launched after lead review and actual source/report authentication. Corrected im
 `controller.py` owns source/report authentication, original ridge/trust math, bounded Slurm arrays and progress. `worker.py` imports the unchanged authenticated v2 runtime. Deployment supplies its standard frozen/base/source overlays and one-core 24GiB worker launcher. Reuse old smoke starting price for all new cases, including final repeats.
 
 Before launch execute controller `--authenticate-only` with actual Torch source inventory and old full-report paths. This performs zero lifecycle solves. Synthetic zero-solve tests validate full-rank ridge/trust/damping formulas and block proposals for rank-deficient Jacobians. They do not certify remote reuse or native execution. Lead reviews the packet and remote authentication before authorizing deployment.
+
+Latest author instruction (21:56NewYork): noautomaticrestart/edit. Pipeline remains terminal after successfulFD and controller receipt-visibilityfailure, noGNsubmitted and noattempt3. Preserve completedFD/evidence; nofurthernumericalwork.

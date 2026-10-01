@@ -1,5 +1,22 @@
 # Calibration Status
 
+## September 30, 21:57 New York — floor-only searches progressing
+
+All8Torch18906784 lanes RUNNING, about16minutes elapsed,40completedGE/cases,
+no failure receipts. Each is still in its first-round derivative probes. Best
+Torch snapshot is floor_s5/002beta probe244.855442, followed by floor_s1/003chi
+291.083595; these are provisional, not selected/full-final-repeat verified.
+Author-requested local NM chain2/case0005 best snapshot216.980604 has rooms5.931,
+ownership.74975 and firstbirthroomresponse.6497. LocalGN snapshots: historical
+258.689 jointGN, winner460.117. These improve on751.862327 historicalfloorprobe,
+but finalnativeverification remains pending. No convergence claim.
+
+Fastresume remains stopped after its completedmissingFD7LC/pass789.300556:
+controller terminal receipt-visibility failure preserved. Author's latest
+instruction rules out automaticrestart/edit; noattempt3, noadditionalwork.
+All budgets and verification contracts below remain unchanged. Compact remote
+readout: utility_floor_round2_v1/deployment/latest_monitor.json.
+
 ## September 30, 21:40 New York — additional authorized local floor searches
 
 Six utility_floor_nm_v1 local Nelder–Mead chains started under explicit author
@@ -49,8 +66,8 @@ derivative job18907055 is submitted after repeated full source/report authentica
 native missing derivative completed7LC with casePASSED loss789.300556 and
 launcherexit0. Controller then failed its6second postterminal receipt-visibility
 check; complete case is now visible. PossibleNFSvisibility race, not established.
-No GNsubmitted; lead is reviewing authenticatedcompletedFD continuation without
-a repeatFD, same02:34:06UTC cutoff. No solve or search contract changed. No production adoption, automatic restart,
+No GNsubmitted. Latest author instruction forbids automaticrestart/edit;
+fastresume remains terminal, with noattempt3 or additionalwork. No solve or search contract changed. No production adoption, automatic restart,
 solver edit or gate relaxation follows from monitoring. The requested earlier
 with-A comparison and lead source diagnosis are preserved in the utility
 packet README and comparison_requested/; identical entry wealth and correct
