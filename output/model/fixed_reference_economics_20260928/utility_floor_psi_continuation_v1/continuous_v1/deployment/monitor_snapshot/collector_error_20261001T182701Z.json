@@ -1,0 +1,28 @@
+{
+  "attempted_utc": "2026-10-01T18:27:01Z",
+  "torch_job_id": "18966575",
+  "scope": [
+    "18966575_0",
+    "18966575_1",
+    "18966575_2",
+    "18966575_3"
+  ],
+  "method": "one bounded SSH BatchMode=yes ConnectTimeout=8 invocation of existing no-engine-import collector",
+  "outcome": "collector failed during remote checkpoint read; no fresh chain data",
+  "error": "OSError: [Errno 116] Stale file handle",
+  "last_successful_snapshot": "monitor_20261001T182153Z.json",
+  "last_successful_totals": {
+    "records": 44,
+    "admissible": 44,
+    "objective_calls": 48,
+    "nonpasses": 0,
+    "fatal": 0,
+    "search_completions": 0,
+    "selected_postchecks": 0
+  },
+  "last_verified_reference": {
+    "chain": "prior continuation chain0/case0006_nm",
+    "loss": 30.99909262396404
+  },
+  "retry": "none in this scheduled pass"
+}
