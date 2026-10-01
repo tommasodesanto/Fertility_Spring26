@@ -1,3 +1,21 @@
+## Corina adviser update — October 1, 2026
+
+The separate ten-slide adviser deck at `corina_progress_20260930/corina_progress.tex`
+now presents the author-selected return to a parenthood-only Stone–Geary housing
+requirement with a power equivalence scale and nonlinear child benefit. Its fit
+is the October 1 selected-repeat-verified experimental floor estimate, not the
+September 28 share-model calibration. Complete fit, parameter bounds and numerical
+receipts are retained in its `evidence/` folder. Search convergence is uncertified.
+
+Representation check: the continuing `JMP_slides/JMP_slides.tex` still writes a
+linear child benefit and subtracts the floor from housing services, whereas the
+executed floor experiment applies the physical-room floor before the owner
+premium. The author-owned draft and mock model sections still write a linear
+child benefit with a general consumption aggregator. These files were inspected
+and left unchanged under their editing permissions; this adviser-deck update
+does not claim full synchronization or production adoption of experimental
+estimates. See the adviser deck's `source_map.md` for exact implemented utility.
+
 # LaTeX Workspace
 
 ## Corina progress presentation — September 30, 2026

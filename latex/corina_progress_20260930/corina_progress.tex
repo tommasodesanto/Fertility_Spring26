@@ -12,10 +12,10 @@
 \linespread{1.08}
 \definecolor{plotblue}{RGB}{47,74,135}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
-\title{JMP progress, September 17--30, 2026}
+\title{JMP progress, September 17--October 1, 2026}
 \author{Tommaso De Santo}
-\date{September 30, 2026}
-\hypersetup{pdftitle={JMP progress, September 17--30, 2026},pdfauthor={Tommaso De Santo}}
+\date{October 1, 2026}
+\hypersetup{pdftitle={JMP progress, September 17--October 1, 2026},pdfauthor={Tommaso De Santo}}
 % Separate adviser progress deck. Main source latex/JMP_slides/JMP_slides.tex is read-only.
 % Exactly ten frames, no overlays or separate title/section/appendix pages.
 % Relative source paths below are in Fertility_Spring26. See source_map.md for full paths.
@@ -23,15 +23,15 @@
 
 % 1: Reviewed changes to model specification and empirical inputs.
 \begin{frame}{Model review and revisions}
-\framesubtitle{JMP progress, September 17--30, 2026 \qquad | \qquad Tommaso De Santo}
+\framesubtitle{JMP progress, September 17--October 1, 2026 \qquad | \qquad Tommaso De Santo}
 \small
 I reviewed the full model and calibration: preferences, borrowing rules, demographic accounting, equilibrium conditions, empirical measurements, targets, and the estimation procedure.
 \medskip
 \begin{itemize}\setlength\itemsep{7pt}
- \item Replaced the minimum-housing requirement with a first-child increase in the housing expenditure share.
- \item Allowed diminishing benefits from children at home, distinguishing them from children ever born.
- \item Separated children leaving home from adult household entry, and tied entrant assets to estates.
- \item Rebuilt the first-birth housing evidence and recalibrated the revised model.
+ \item Returned to a Stone--Geary housing requirement that applies only to parents, retaining nonlinear benefits from children.
+ \item Reviewed equivalence scales and housing-share alternatives.
+ \item Rebuilt the first-birth housing evidence and national input measures.
+ \item Checked demographic accounting, credit, and adult entry; recalibrated the model.
 \end{itemize}
 \end{frame}
 
@@ -50,28 +50,20 @@ Overlapping generations of households differ in age, earnings, wealth, housing t
 The interaction of housing costs and available wealth affects both birth timing and tenure choice.
 \end{frame}
 
-% 3: Household preference equations and definitions from the verified reference.
-\begin{frame}{Children and housing demand}
+% 3: Household preferences under the parenthood-only Stone--Geary specification.
+\begin{frame}{Children and housing needs}
 \small
-Households consume nonhousing goods $c$ and housing services $s$, and derive
-utility from the $m$ children living at home:
+The first child requires basic space at home; each additional child raises the goods needs of a larger family.
 \[
- u(c,s,m)=\frac{\left[\dfrac{A(m)c^{\alpha(m)}s^{1-\alpha(m)}}{e(m)}\right]^{1-\sigma}}{1-\sigma}
- +\psi m^{1-\gamma}.
+\begin{aligned}
+u(c,h,m,t)&=\frac{\left[\dfrac{c^{\alpha_0}s_t(h,m)^{1-\alpha_0}}{e(m)}\right]^{1-\sigma}}{1-\sigma}
+ +\psi m^{1-\gamma},\\
+e(m)&=\left(\frac{2+0.7m}{2}\right)^{0.7},\qquad
+s_t(h,m)=\eta_t\left[h-h_P\mathbf 1\{m>0\}\right],\\
+\eta_{\mathrm{rent}}&=1,\qquad \eta_{\mathrm{own}}=\chi.
+\end{aligned}
 \]
-The equivalence scale $e(m)$ captures the consumption cost of a larger family;
-$\sigma$ governs risk aversion. The benefit from children is zero at $m=0$,
-with $\psi$ setting its level and $\gamma$ its curvature.
-\par\medskip
-Having children also raises the share of expenditure devoted to housing:
-\[
- \alpha(m)=\alpha_0-\Delta\alpha\,\mathbf 1\{m>0\}.
-\]
-$\alpha_0$ is the childless consumption share. The first child raises the
-housing share by $\Delta\alpha$; additional children leave that share unchanged.
-\par\medskip
-For given spending and family size, $A(m)$ offsets the utility effect of the
-share change at a fixed reference rent.
+Here $h$ is physical rooms, $m$ is children at home, and $t$ indexes renter or owner tenure. Parents choose $h>h_P$, and $\alpha_0$ is the constant consumption exponent. The equivalence scale raises goods needs with family size; the benefit is zero at $m=0$, with $\psi$ setting its level and $\gamma$ its curvature so the marginal benefit diminishes as $m$ grows.
 \end{frame}
 
 % 4: Demographic transitions and market/fiscal closure.
@@ -81,9 +73,9 @@ Children leaving home and new adult households entering the economy are separate
 \medskip
 \begin{itemize}\setlength\itemsep{5pt}
  \item Children leave dependency independently; adult entry follows earlier births with a lag.
- \item Positive estates finance fixed positive entrant assets; any remainder leaves the economy.
- \item The house price clears aggregate housing demand against housing supply.
- \item Equal retiree pensions are financed by a balanced payroll tax.
+ \item Positive estates finance entrant assets; any remainder leaves the economy.
+ \item The house price adjusts to satisfy birth renewal; population scale clears aggregate housing demand against supply.
+ \item A balanced payroll tax finances equal retiree pensions.
 \end{itemize}
 \vfill
 A stationary equilibrium has constant prices, allocations, and cohort structure, with demographic reproduction and market clearing.
@@ -133,10 +125,10 @@ At years 3--4, rooms rise by \textbf{1.465} (SE 0.050), ownership by
 person and year effects; survey weights; 95\% pointwise intervals.
 \end{frame}
 
-% 6: Adopted national inputs and empirical counterparts; September 28 reference.
+% 6: Fixed national inputs and estimation procedure for the current specification.
 \begin{frame}{Calibration strategy and inputs}
 \footnotesize
-I recalibrated a stationary economy representing 2007, using national measures of housing, earnings, wealth, and fertility.
+I estimate a 2007 stationary economy using national measures of housing, earnings, wealth, and fertility.
 \par\smallskip
 \begin{center}
 \begin{tabular}{lll}
@@ -151,115 +143,102 @@ Annual depreciation / property tax & 1.416\% / 1.060\% & National housing inputs
 \end{tabular}
 \end{center}
 \begin{itemize}\setlength\itemsep{3pt}
- \item Fixed inputs include earnings and demographic processes, housing depreciation and taxes, the interest rate, and mortgage financing.
- \item At each candidate parameter vector, I solve household choices and housing-market equilibrium, adjusting $\psi$ separately to match completed fertility of 2.1.
- \item The objective is a weighted sum of squared gaps for ten moments. Three further moments are retained for validation; the fertility normalization is reported separately.
+ \item Ten parameters are estimated jointly, including $\psi$; housing supply scale $H_0$ is fixed. Other fixed inputs include earnings and demographics, housing depreciation and taxes, the interest rate, and mortgage financing.
+ \item The objective is a weighted sum of squared gaps for ten moments, using working error scales. I increased the age-25 fertility weight fourfold in this search.
+ \item Three further moments are validation checks. Completed fertility is reported separately as a renewal check.
 \end{itemize}
-\par\smallskip The weights set working error scales; they are not an estimated joint covariance matrix.
+\par\smallskip For each parameter vector, I solve household choices, birth renewal, and housing-market equilibrium.
 \vfill
 The first-birth housing comparison uses a model proxy for the empirical event study.
 \end{frame}
 
-% 7: Full 14-row 2007 stationary reference fit; ten scored moments plus normalization.
-\begin{frame}{2007 stationary calibration}
+% 7: Current ROOT fit with ten scored moments and three validation moments.
+\begin{frame}{Stone--Geary calibration}
+\framesubtitle{2007 stationary economy; current estimate}
 \centering
-\fontsize{9}{10.7}\selectfont
-{\centering\renewcommand{\arraystretch}{0.95}\setlength{\tabcolsep}{10pt}
+\fontsize{8.8}{9.6}\selectfont
+{\centering\renewcommand{\arraystretch}{0.93}\setlength{\tabcolsep}{7pt}
 \begin{tabular}{lrr}
 \toprule
 Moment & Target & Model \\
 \midrule
-Completed fertility (normalization) & 2.100 & 2.100 \\
-Childlessness, ages 40--44 (\%) & 19.828 & 20.106 \\
-Exactly one child among mothers, ages 40--44 (\%) & 21.366 & 20.942 \\
-Mean first-birth age (years) & 25.976 & 25.933 \\
-First births at age 30+ (\%)$^\dagger$ & 24.928 & 22.365 \\
-Wealth / earnings & 6.927 & 6.326 \\
-Annual child-directed bequest flow / wealth (\%) & 0.729 & 0.706 \\
-Older wealth/income p90/p50$^\dagger$ & 3.516 & 3.069 \\
-Mean occupied rooms & 5.729 & 5.848 \\
-Ownership, ages 30--55 (\%) & 67.626 & 65.482 \\
-First-birth rooms difference & 1.465 & 1.622 \\
-Family rooms difference$^\dagger$ & 0.385 & 0.353 \\
-Recent-parent ownership difference (pp) & 12.761 & 11.955 \\
-\textbf{Children per woman at age 25, capped at three} & \textbf{0.810} & \textbf{0.535} \\
+Completed fertility (renewal check) & 2.100 & 2.100 \\
+Childlessness, ages 40--44 (\%) & 19.828 & 20.253 \\
+Exactly one child among mothers, ages 40--44 (\%) & 21.366 & 21.063 \\
+Mean first-birth age (years) & 25.976 & 25.956 \\
+First births at age 30+ (\%)$^\dagger$ & 24.928 & 22.931 \\
+Wealth / earnings & 6.927 & 6.489 \\
+Annual child-directed bequest flow / wealth (\%) & 0.729 & 0.666 \\
+Older wealth/income p90/p50$^\dagger$ & 3.516 & 2.976 \\
+Mean occupied rooms & 5.729 & 5.977 \\
+Ownership, ages 30--55 (\%) & 67.626 & 65.697 \\
+First-birth rooms difference & 1.465 & 1.223 \\
+Family rooms difference$^\dagger$ & 0.385 & 0.300 \\
+Recent-parent ownership difference (pp) & 12.761 & 11.837 \\
+\textbf{Children per woman at age 25, capped at three} & \textbf{0.810} & \textbf{0.531} \\
 \bottomrule
 \end{tabular}
 \par}
-\vspace{0.4em}
-\footnotesize $^\dagger$Untargeted validation. Ten scored moments and a separate fertility normalization.
+\vspace{0.25em}
+\footnotesize $^\dagger$Validation moments. Ten scored moments; completed fertility is a separate renewal check. Numerical repeat verified; search convergence not established.
 \end{frame}
 
-% 8: Ten free reference coordinates and normalized child benefit.
+% 8: Ten jointly estimated parameters, including the child-benefit level.
 \begin{frame}{Calibrated parameters}
 \small
-Ten parameters are estimated jointly; $\psi$ is adjusted separately to match completed fertility.
+Ten parameters are estimated jointly, including $\psi$.
 \medskip
-\fontsize{9}{10.7}\selectfont
+\fontsize{9}{10.4}\selectfont
 \begin{center}
 {\setlength{\tabcolsep}{10pt}
 \begin{tabular}{llr}
 \toprule
 Parameter & Economic interpretation & Value \\
 \midrule
-$H_0$ & Housing supply scale & 6.294 \\
-$\beta$ & Annual discount factor & 0.963 \\
-$\chi$ & Owner housing-service premium & 1.094 \\
-$F_1$ & First-birth fixed utility cost & 0.621 \\
-$\kappa_1$ & First-birth taste dispersion & 0.176 \\
-$\kappa_+$ & Later-birth taste dispersion & 0.332 \\
-$\theta_0$ & Bequest weight & 0.125 \\
-$\Delta\alpha$ & First-child housing-share loading & 0.135 \\
-$\gamma$ & Child-benefit curvature & 0.061 \\
-$\kappa_T$ & Tenure-choice dispersion & 0.012 \\
-$\psi$ & Child-benefit level (normalized) & 0.136 \\
+$\beta$ & Annual discount factor & 0.967 \\
+$\chi$ & Owner housing-service premium & 1.093 \\
+$F_1$ & First-birth fixed utility cost & 0.401 \\
+$\kappa_1$ & First-birth taste dispersion & 0.131 \\
+$\kappa_+$ & Later-birth taste dispersion & 0.364 \\
+$\theta_0$ & Bequest weight & 0.079 \\
+$\gamma$ & Child-benefit curvature & 0.097 \\
+$\kappa_T$ & Tenure-choice dispersion & 0.013 \\
+$\psi$ & Child-benefit level & 0.172 \\
+$h_P^\dagger$ & Basic space requirement for parents (rooms) & 2.300 \\
 \bottomrule
 \end{tabular}
 }
 \end{center}
 \vfill
-\footnotesize Fixed inputs: $\sigma=2$; $\alpha_0=0.733$; annual interest 2\%; mortgage-financed share 80\%. The fitted values are conditional on these restrictions.
+\footnotesize Fixed inputs: $H_0=6.294$; $\sigma=2$; $\alpha_0=0.733$; annual interest 2\%; mortgage-financed share 80\%. $^\dagger h_P$ is at its upper bound. Birth-taste dispersions and bequest weight are near their lower bounds; full bounds are in the saved tables.
 \end{frame}
 
-% 9: Identification discussion for the ten-parameter calibration.
-\begin{frame}{Calibration and identification}
+% 9: Preference alternatives considered for household needs and housing.
+\begin{frame}{Preference alternatives}
 \small
-I reviewed which empirical variation disciplines each parameter block; the mapping is joint rather than one parameter per moment.
-\medskip
+I compared different ways of making children raise household needs, especially housing needs at the first birth.
+\par\smallskip
 \begin{itemize}\setlength\itemsep{4pt}
 \footnotesize
- \item Housing: mean rooms and first-birth room changes discipline supply scale and the child housing-share loading; ownership levels and parenthood differences discipline the owner premium and tenure tastes.
- \item Saving: wealth relative to earnings and child-directed bequest flows discipline patience and bequest strength; older wealth dispersion provides an additional check.
- \item Fertility: childlessness, first-birth timing, the one-child share among mothers, and children per woman at age 25 discipline the first-birth cost, birth tastes, and child-benefit curvature.
- \item Identification: I checked local moment responses to parameter changes. Some combinations are weakly distinguished, especially child-benefit curvature in a later experimental calibration; parameter confidence intervals are not yet available.
+ \item The Stone--Geary requirement captures basic space for parents; the equivalence scale captures the cost of a larger family.
+ \item I tested child-dependent housing shares, with and without a compensating utility adjustment, to raise the housing budget share at the first birth.
+ \item I softened the housing requirement to check the role of the sharp threshold. I also considered keeping only the equivalence scale, with constant housing preferences.
+ \item The nonlinear child benefit allows the marginal benefit to diminish as the number of children at home rises.
 \end{itemize}
-\par\medskip
-\small The main remaining fit problem is the number of children among young mothers. Matching the share of mothers alone would hide that miss.
+\par\smallskip
+Room responses alone are insufficient; I assess alternatives jointly with fertility timing, wealth, and tenure.
 \end{frame}
 
-% 10: Completed, experimental entrant-wealth calibration pilots; no adoption.
-\begin{frame}{Credit and further calibration}
-\small
-I reviewed the borrowing rules and tested alternative initial-wealth distributions at a common 2\% annual real interest rate.
-\medskip
-\begin{center}
-\begin{tabularx}{\textwidth}{Y r}
-\toprule
-Entrant wealth rule & \shortstack{Renter debt limit\\(mean annual earnings)} \\
-\midrule
-Empirical wealth/earnings ratios drawn independently of earnings & 0.25 \\
-Zero entrant wealth & 0 \\
-Nonnegative ratio distribution with the original mean & 0 \\
-\bottomrule
-\end{tabularx}
-\end{center}
-\medskip
-\begin{itemize}\setlength\itemsep{5pt}
- \item The three pilot calibrations are complete; an entrant-wealth and credit specification has yet to be selected.
- \item The next step is to resolve that choice and assess the remaining young-fertility gap.
+% 10: Credit and initial wealth restrictions in the current estimate.
+\begin{frame}{Credit, initial wealth, and remaining fit}
+\footnotesize
+\begin{itemize}\setlength\itemsep{7pt}
+ \item I reviewed mortgage purchase and sale decisions and unsecured borrowing limits, distinguishing the down payment needed to own from the liquidity needed to have a child.
+ \item I compared zero, empirical, and nonnegative entrant wealth rules at a common 2\% annual real interest rate.
+ \item The current Stone--Geary estimate uses nonnegative entrant wealth with the original mean and allows no unsecured borrowing.
+ \item The main remaining fit problem is fertility at age 25: 0.531 children ever born per woman, against a target of 0.810 (both capped at three).
+ \item The estimated parent space requirement, $h_P=2.3$, is at its upper bound, so I still need to check whether the search bound is restricting the fit.
 \end{itemize}
-\vfill
-The stationary solver was reorganized and accelerated to support calibration.
 \end{frame}
 
 \end{document}

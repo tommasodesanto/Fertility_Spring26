@@ -1,6 +1,6 @@
 {
-  "review_date": "2026-09-30",
-  "review_completed_utc": "2026-09-30T22:43:39.032741+00:00",
+  "review_date": "2026-10-01",
+  "review_completed_utc": "2026-10-01T16:54:34.542734+00:00",
   "frames": 10,
   "pdf_pages": 10,
   "overlays": false,
@@ -10,10 +10,8 @@
   "all_ten_pages_visually_reviewed": true,
   "changed_pages_rechecked": [
     1,
-    2,
     3,
     4,
-    5,
     6,
     7,
     8,
@@ -26,7 +24,9 @@
     "one_birth_target_fit.csv": 14,
     "one_birth_parameters.csv": 31,
     "two_birth_target_fit.csv": 14,
-    "two_birth_parameters.csv": 31
+    "two_birth_parameters.csv": 31,
+    "floor_target_fit": 14,
+    "floor_parameters": 31
   },
   "reference_fit_rows": 14,
   "reference_parameter_rows": 31,
@@ -120,8 +120,8 @@
     "upload_attempted_in_this_chat": false,
     "library_ids_created": []
   },
-  "pdf_sha256": "263c5f60f9402b3e65b7cf844266322ab68e3bbe1f679d71c2b10af24e6d1e78",
-  "tex_sha256": "afd30a05e080c7c69fb6536652829303daba51034100ce4fc0e295d101da01c2",
+  "pdf_sha256": "37ced97173ba8ecbc95d443949b6c4b02e2b02fef2403bc851aa3f112ff7740b",
+  "tex_sha256": "a5f92e1495e433c6f79fc03ab6f6d92c367beae38cee0e03f3cc8418a2207996",
   "source_history": "archive/received; original task folder preserved",
   "pilot_completion_evidence": {
     "path": "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/final_verification.json",
@@ -195,25 +195,85 @@
     "material_layout_warnings": 0
   },
   "latest_slide_revision": {
-    "request": "Add substantially more calibration detail and state the full model and calibration review.",
-    "previous_commit": "c608f6da",
-    "changed_pages_rechecked": [
-      1,
-      6,
-      8,
-      9
+    "request": "Return to Stone–Geary, retain nonlinear child benefits, explain alternatives and reviewed work naturally, ready ten-slide deck.",
+    "frames": 10,
+    "fit_rows": 14,
+    "free_parameters": 10,
+    "candidate": "verified_global_20261001T0941NY_chain7_0173",
+    "economic_equation_checked_against_native_code": true,
+    "fit_and_parameter_cells_checked_against_full_csv": true,
+    "base_loss": 31.28400725566496,
+    "search_profile": "early4x",
+    "search_loss": 54.52095879194978,
+    "search_convergence_certified": false,
+    "specification_author_selected": true,
+    "production_estimates_adopted": false,
+    "floor_at_upper_bound": true,
+    "nonnegative_mean_preserving_entry": true,
+    "unsecured_credit": 0,
+    "H0_fixed": 6.293507689200028,
+    "route": "Lead economics and numerical identity review; Luna scoped TeX and evidence-document edits."
+  },
+  "previous_review": {
+    "review_date": "2026-09-30",
+    "pdf_sha256": "263c5f60f9402b3e65b7cf844266322ab68e3bbe1f679d71c2b10af24e6d1e78",
+    "tex_sha256": "afd30a05e080c7c69fb6536652829303daba51034100ce4fc0e295d101da01c2",
+    "latest_slide_revision": {
+      "request": "Add substantially more calibration detail and state the full model and calibration review.",
+      "previous_commit": "c608f6da",
+      "changed_pages_rechecked": [
+        1,
+        6,
+        8,
+        9
+      ],
+      "reference_fit_and_parameter_table_rows_unchanged": true,
+      "native_latex_compiler": "success",
+      "compile_passes": 2,
+      "material_layout_warnings": 0,
+      "route": "Lead specified and verified economics; Luna applied bounded LaTeX edits.",
+      "changes": [
+        "Explicit full review statement",
+        "Fixed versus estimated inputs",
+        "Candidate equilibrium solve and separate fertility normalization",
+        "Weighted objective and scored versus validation moments",
+        "Joint parameter-to-moment mapping and identification limits"
+      ]
+    }
+  },
+  "raw_psid_frame_unchanged": true,
+  "selected_floor_evidence": {
+    "selected_packet": "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/verified_global_20261001T0941NY_chain7_0173",
+    "copies": [
+      {
+        "original": "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/verified_global_20261001T0941NY_chain7_0173/ROOT/target_fit.csv",
+        "copy": "latex/corina_progress_20260930/evidence/floor_target_fit.csv",
+        "sha256": "fc08f611473ea3a6c2b40213fee610fadea2b97622ea339114a30dd83ac06a99"
+      },
+      {
+        "original": "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/verified_global_20261001T0941NY_chain7_0173/ROOT/parameters.csv",
+        "copy": "latex/corina_progress_20260930/evidence/floor_parameters.csv",
+        "sha256": "7949b86204796b6dd6c8db78988003c0bdd2a5077ce3d9f2a6eeb4fb90cb1dd5"
+      },
+      {
+        "original": "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/verified_global_20261001T0941NY_chain7_0173/verification.json",
+        "copy": "latex/corina_progress_20260930/evidence/floor_repeat_verification.json",
+        "sha256": "437ab6b9db608c15cc6e5333ccd446926d854d5fe235129de5ed89a1295d62d2"
+      },
+      {
+        "original": "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/verified_global_20261001T0941NY_chain7_0173/input_contract.json",
+        "copy": "latex/corina_progress_20260930/evidence/floor_input_contract.json",
+        "sha256": "5e9936df51ca97cb4bd0730d23b4930c077017fa8ce3e95c7bd3a011116afa4b"
+      },
+      {
+        "original": "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/verified_global_20261001T0941NY_chain7_0173/ROOT/closure.json",
+        "copy": "latex/corina_progress_20260930/evidence/floor_closure.json",
+        "sha256": "75054aeb59dca3ab0930c33286e5dd360a8c433cedbe50e96114e97cb48be1c6"
+      }
     ],
-    "reference_fit_and_parameter_table_rows_unchanged": true,
-    "native_latex_compiler": "success",
-    "compile_passes": 2,
-    "material_layout_warnings": 0,
-    "route": "Lead specified and verified economics; Luna applied bounded LaTeX edits.",
-    "changes": [
-      "Explicit full review statement",
-      "Fixed versus estimated inputs",
-      "Candidate equilibrium solve and separate fertility normalization",
-      "Weighted objective and scored versus validation moments",
-      "Joint parameter-to-moment mapping and identification limits"
-    ]
+    "seed_utility_record": "utility_verification.json checks input_contract seed h_P=2.0808909574; selected ROOT/REPEAT h_P=2.3. runner.utility_checks uses seed; candidate evaluator binds and validates actual candidate parameters.",
+    "base_loss": 31.28400725566496,
+    "early4x_search_loss": 54.52095879194978,
+    "experimental_estimate": true
   }
 }

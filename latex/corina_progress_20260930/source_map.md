@@ -1,72 +1,103 @@
-# Corina adviser progress deck, September 17–30, 2026
+# Corina adviser progress deck: selected Stone–Geary specification
 
-This separate standalone presentation for Corina Boar has ten frames, with no
-overlays. It follows the author's latest request for reviewed work and changed
-decisions, detailed model and calibration exposition, and brief selected
-problems. There are no visible `Source:` footers or dedicated computation
-section. This file records private provenance. Paths below are relative to
+This separate ten-frame adviser presentation preserves the empirical review
+covering September 17–30 and incorporates the October 1 selected-repeat packet
+and latest author decision. It has no overlays, visible `Source:` footers,
+internal failure history or dedicated computation section. This file records
+private provenance. Paths are relative to
 `/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/`.
 
-## Reference and interpretation
+## Selected point and objective contract
 
-The scientific reference is **2007 stationary reference — block0506, September
-28 verified export**, authenticated in
-`output/model/fertility_identification_20260928/fixed_reference_manifest.json`
-and its README. Its unchanged fourteen-row fit and thirty-one-row parameter
-table are copied to `evidence/`. The weighted objective is 19.581310760138322.
-The later E01 one-birth and E02 two-birth selected experiments are distinct,
-unadopted candidates, with objectives 7.826226594410982 and 7.8420175378092205.
-Never compare these objectives with September 17–19 sandbox objectives.
+Let **selected packet** below mean
+`output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/verified_global_20261001T0941NY_chain7_0173/`.
+`ROOT/target_fit.csv` and `ROOT/parameters.csv` are the displayed scientific
+sources, copied locally as `evidence/floor_target_fit.csv` and
+`evidence/floor_parameters.csv`. Local `floor_input_contract.json`,
+`floor_closure.json`, `floor_repeat_verification.json` and
+`floor_evidence_identity.json` preserve the supporting contract and identity. `verification.json` certifies selected ROOT/REPEAT identity for all
+14 target rows, 31 parameter rows and 17 standard-plot hash matches. These
+checks establish repeatability, not optimizer convergence or economic
+plausibility. The author now selects
+the parenthood-only Stone–Geary specification. The saved packet predates that
+choice and says `experimental_not_adopted`; author selection of a specification
+does not certify parameter convergence or production adoption of the point.
 
-In the retained reference, house price clears aggregate housing demand against
-elastic housing supply and household population is normalized to one. The
-calibration separately adjusts the child-benefit level to completed fertility
-2.1. Equal retiree pensions balance PAYGO. The later entrant-wealth pilots instead
-use price to clear birth renewal and population to clear absolute housing supply;
-that closure must not be assigned to the September 28 reference.
+The selected `input_contract.json` uses `weight_profile=early4x`, with the
+`early_fertility` weight multiplied by four. Its search objective is
+54.52095879194978. ROOT's original-base-weight contributions sum to
+31.284007255664957. Distinguish both objectives; neither is a controlled loss
+comparison with September 28 block0506. Ten coordinates are free, including
+psi_child; H0 is fixed at 6.293507689200028. The first CSV row retains the
+historical identifier `initial_normalization`, but economically it checks birth
+renewal under this closure: psi is no longer separately normalized.
+
+## Economic changes relative to block0506
+
+- **Author-selected preferences:** parenthood-only Stone–Geary housing floor,
+  no compensated-share factor A(m), constant consumption/housing shares;
+  nonlinear child benefit and the power equivalence scale remain.
+- **Joint estimation:** psi_child is free alongside nine other coordinates,
+  rather than adjusted separately to completed fertility; H0 is now held fixed.
+  Its [.01,.5] psi interval is a diagnostic search restriction, not an
+  externally identified economic bound.
+- **Entry/credit working contract:** negative five-bin wealth/income ratios
+  become zero and positive nodes are scaled by .3632385158888715 to preserve
+  the original mean. This transforms bin means, not raw survey observations.
+  Renter saving floor is zero, with no unsecured borrowing; the common annual
+  real rate remains 2%. Corrected homeowner sale/no-taper and mortality-repayment
+  rules are retained from the isolated credit workflow.
+- **Equilibrium working contract:** price clears birth renewal; population
+  clears absolute housing supply. This differs from block0506's unit-population
+  housing-price clearing with separately normalized child benefit.
+- **Weighting/search:** the selected case uses early-fertility ×4. Target values
+  remain unchanged. Estimates, identification strength and optimizer convergence
+  remain provisional; repeated solutions do not certify search convergence.
+
+Evidence: selected `input_contract.json`, `ROOT/closure.json`, `verification.json`,
+ROOT tables, and the corresponding sections of `CALIBRATION_STATUS.md`.
 
 ## Slide-by-slide sources
 
-1. **Model review and revisions.** `CALIBRATION_STATUS.md`, the September 23–28
-   accepted decisions, `docs/model/accepted_input_reconciliation_20260926.md`,
-   and `docs/model/calibration_identification_review_20260929.md`. Early work
-   remains documented by `docs/model/situation_report_20260918.md`. Distinguish
-   adopted changes from provisional accounting and experimental calibrations.
+1. **Model review and revisions.** Latest author decision, canonical
+   `CALIBRATION_STATUS.md`, and selected input contract. Previous reviewed
+   choices remain documented by `docs/model/accepted_input_reconciliation_20260926.md`
+   and `docs/model/calibration_identification_review_20260929.md`. Describe
+   specification selection separately from numerical adoption of estimates.
 
-2. **Household decisions.** The reference manifest's
-   `actual_serialized_parameters` and
-   `code/model/intergen_eqscale_seq_optimized/solver.py:278–295,3349,3486–3551`.
-   Households differ in age, wealth, persistent earnings, tenure, children ever
-   born and children at home. They choose birth attempts, housing/tenure,
-   consumption and saving. Earnings are stochastic endowments, not a labor-supply
-   choice. The reference permits one birth opportunity per four-year cell;
-   success moves (n,m) to (n+1,m+1). The two-birth option belongs only to E02.
-   Numeric period lengths belong in calibration, rather than model exposition.
+2. **Household decisions.** Retained lifecycle architecture in
+   `code/model/intergen_eqscale_seq_optimized/solver.py:278–295,3349,3486–3551`
+   and selected fixed-reference bindings. Households differ in age, wealth,
+   persistent earnings, tenure, children ever born n and children at home m.
+   They choose birth attempts, tenure/housing, consumption and saving; labor
+   earnings are stochastic endowments. The one-birth-per-period architecture
+   is retained, not the separate two-birth experiment. Keep numerical timing
+   constants in calibration rather than model exposition.
 
-3. **Children and housing demand.**
-   `code/model/intergen_eqscale_seq_optimized/child_preferences.py:11–14,27–51`
-   and `solver.py:2579–2607`; reference `parameters.csv` and manifest.
-   Material utility is CRRA of A(m)c^alpha(m)s^(1-alpha(m))/e(m), with
-   e(m)=((2+0.7m)/2)^0.7 and alpha(m)=alpha0−Delta_alpha*1{m>0}.
-   Direct child benefit is psi*m^(1−gamma), zero at m=0, written directly inside the utility equation on the slide. The stored `psi_child`
-   is the one-child benefit, not the equivalent CRRA coefficient.
-   A(m)=K(alpha0,r*)/K(alpha(m),r*) with
-   K(a,r)=a^a*((1−a)/r)^(1−a). Compensation holds optimized material utility
-   constant when the expenditure share changes at a fixed reference rent,
-   conditional on expenditure and equivalence scale. It does not compensate
-   the cost of children or preserve utility at every endogenous rent.
-   Bequest utility and the first-birth fixed utility cost are separate objects.
+3. **Children and housing needs.** Selected input contract and native utility
+   bindings. Material utility is CRRA of
+   c^alpha * [eta_t*(h−h_P*1{m>0})]^(1−alpha)/e(m), with
+   e(m)=((2+.7m)/2)^.7, eta_t=1 for renters and the owner service premium for
+   owners. Add psi*m^(1−gamma), with zero child benefit at m=0.
+   The floor applies to parenthood, not each additional child; alpha is constant
+   and A(m) is inactive. Bequest utility and first-birth cost remain separate.
+   Candidate parameters must be taken from ROOT/parameters.csv, not the seed
+   utility receipt: h_P=2.3 at the selected upper bound, not 2.080890957425898.
+   `utility_verification.json` records the input-contract seed. The runner's
+   candidate binding applies the selected coordinates before model evaluation;
+   its utility_checks document the floor, constant shares and inactive factor.
+   Exact implementation: `output/model/fixed_reference_economics_20260928/utility_floor_round2_v1/runner.py:214–220,285–304`,
+   with `code/model/refactor_lab/engine/child_preferences.py` for nonlinear
+   child benefits. Seed utility checks must not replace candidate-table identity.
 
-4. **Demographic and market equilibrium.** Reference
-   `resume_v1/selected_export/primary/receipt.json` fields `fiscal_rule`,
-   `normalization`, `adult_entry_gate` and `estate_funding`;
-   `solver.py:1478–1492,2074–2086`; September 24/26 decisions in
-   `CALIBRATION_STATUS.md`. Housing supply is H0*(r/r_bar)^xi, with owner user
-   cost supplying r. Dependency departure and adult entry are separate clocks;
-   entry splits birth vintages at 16/20 years and applies the 1/2.1 conversion
-   once. Positive net estates fund positive entrant assets and the remainder
-   enters a nonutility sink. This provisional stationary ledger does not trace
-   own-family inheritance or certify counterparties/physical settlement.
+4. **Demographic and market equilibrium.** Selected `ROOT/closure.json` and
+   input contract; reference receipt's inherited demographic/fiscal primitives.
+   House price clears birth renewal and population scales housing demand to
+   absolute supply. H0 is fixed. Equal retiree pensions balance PAYGO at the
+   inherited tax rule. Dependency departure and adult entry are separate
+   clocks, with the birth-to-household conversion applied once. Positive net
+   estates fund positive entrant assets, leaving a nonutility residual sink;
+   creditor/recipient and physical-settlement limitations remain provisional.
 
 5. **Housing around the first birth.**
    `code/data/psid_followup_mar2026/output/sa_rooms_first_birth_v2/A2h/{coefficients,fit_receipt}.csv`
@@ -82,89 +113,80 @@ that closure must not be assigned to the September 28 reference.
    uses its own complete-case sample. The 1.025-room row-by-row household design
    is a different group. These associations are not an exogenous fertility shock.
 
-6. **Calibration strategy and inputs.** Author-adopted national housing inputs,
-   bequest target and pension rule in `CALIBRATION_STATUS.md`, reconciled in
-   `docs/model/accepted_input_reconciliation_20260926.md`; reference contract
-   `output/model/overnight_calibration_20260928/contract_v1/contract.json`.
-   AHS rooms=5.729434240102641; CPS pension/earnings=.2294460118659327;
-   payroll tax=.08028070961950022; annual depreciation=.01416143718381309;
-   annual property tax=.010598360773872594; SCF estate/wealth=.007291023472616158.
+6. **Calibration strategy and inputs.** Selected input contract, ROOT tables,
+   author-adopted input decisions in `CALIBRATION_STATUS.md`, and
+   `docs/model/accepted_input_reconciliation_20260926.md`. Ten jointly free
+   coordinates include psi; H0 is fixed. Target values are unchanged; selected
+   search weighting is early4x. Empirical inputs remain AHS rooms
+   5.729434240102641, CPS pension/earnings .2294460118659327, payroll tax
+   .08028070961950022, annual depreciation .01416143718381309, annual property
+   tax .010598360773872594 and SCF estate/wealth .007291023472616158.
    Pension/earnings compares household means including zeros, not individual
-   replacement rates. Bequest recipient scope, income proxies and the model
-   first-birth housing observer retain documented empirical counterpart gaps.
-   The weighted squared-gap objective is implemented in
-   `code/model/tools/e5f_calibration_runtime.py`, lines 122 and 324.
-   The separate completed-fertility normalization, ten searched coordinates,
-   ten scored moments and three validation rows are authenticated by the
-   reference fit and parameter CSVs. Working-weight limitations are explained
-   in `docs/model/calibration_identification_review_20260929.md`.
+   replacement rates. Recipient scope, income proxies and the model event-study
+   counterpart gaps remain documented limitations.
 
-7. **2007 stationary calibration.** Exact fourteen-row source:
-   `output/model/fertility_identification_20260928/resume_v1/selected_export/primary/target_fit.csv`.
-   All rows appear in `Moment | Target | Model` format. Percentage and pp rows
-   multiply source fractions by 100. One-child share conditions on mothers ages
-   40–44. Three zero-weight rows are validation. Ten moments are scored and
-   completed fertility is separately normalized. Full precision, gaps, weights,
-   loss contributions and roles remain in `evidence/reference_target_fit.csv`.
+7. **Stone–Geary calibration.** Selected ROOT/target_fit.csv: all 14 rows,
+   ten scored, three validation and one unscored birth-renewal check. Percentage
+   and pp entries multiply fractions by 100. One-child share conditions on
+   mothers ages 40–44. The CSV retains original base weights/contributions;
+   distinguish its 31.284007255664957 sum from search loss 54.52095879194978.
+   Selected early fertility is .5312175503600473 versus .8095276384290021.
+   Do not present that miss as a winner-specific young-mother decomposition:
+   ROOT/REPEAT observer reports needed for motherhood and conditional children
+   are absent, as recorded in `CALIBRATION_STATUS.md` and
+   `utility_floor_psi_v1/mechanism_responses_v1/matched_credit_diagnostic/WINNER_AGE25_LOCAL_CHECK.md`.
 
-8. **Calibrated parameters.** Exact source is the same reference's
-   `parameters.csv`, copied to `evidence/reference_parameters.csv`. The slide
-   reports all ten searched coordinates plus normalized `psi_child` in three
-   columns. Bounds, external restrictions and near-bound flags remain in the
-   full CSV. Both fertility taste scales are near their lower bounds under the
-   inherited 1%-of-range screen, but neither equals its lower bound.
+8. **Calibrated parameters.** Selected ROOT/parameters.csv supplies all ten
+   jointly free estimates: beta_annual, chi, first_birth_fixed_cost, kappa_fert,
+   kappa_fert_continuation, theta0, h_P, child_benefit_curvature,
+   tenure_choice_kappa and psi_child. H0 is fixed. The selected h_P=2.3 equals
+   its upper bound. Full restrictions and near-bound flags remain in the CSV;
+   those flags also mark both fertility dispersions and theta0. Psi is estimated,
+   not normalized. ROOT/REPEAT parameter SHA256 is
+   `7949b86204796b6dd6c8db78988003c0bdd2a5077ce3d9f2a6eeb4fb90cb1dd5`.
 
-9. **Calibration and identification.**
-   `docs/model/calibration_identification_review_20260929.md`, sections
-   "What the Jacobian means", "Are the parameters the right ones", and
-   "What the fertility miss tells us". Parameter/moment mappings are economic
-   rationales for joint estimation, not one-to-one identification proofs.
-   Weak curvature evidence is at the later E01 search-round center, not a fresh
-   selected-point test or statistical nonidentification result. No parameter
-   confidence intervals have been established. The age-25 decomposition in
-   `evidence/age25_comparison.csv` grounds the young-mother count miss.
-   The earlier E01/E02 comparison remains in supporting evidence.
+9. **Preference alternatives.** Previous compensated-share design and its
+   fixed-reference-rent interpretation remain in
+   `code/model/intergen_eqscale_seq_optimized/child_preferences.py:11–14,39–51`
+   and historical reference tables. The fixed-parameter `floor`, `no_A` and
+   `constant_alpha` comparisons are recorded in
+   `output/model/fixed_reference_economics_20260928/parenthood_floor_quick_v1/`
+   and the September 30 utility-comparison sections of `CALIBRATION_STATUS.md`.
+   The softened-threshold test is historical, fixed-parameter evidence in
+   `output/model/soft_housing_probe/README.md` and the September 26 status
+   section; it does not supply this selected calibration. The author requests
+   an equivalence-scale comparison; this is a question/preparation until a matching verified results
+   packet exists. Do not claim that its estimates or fit are already completed.
+   Previous E01/E02 or earlier floor-point decompositions cannot be transferred
+   to the selected floor point.
 
-10. **Credit and further calibration.** Current completion authority:
-    `CALIBRATION_STATUS.md` and
+10. **Credit, initial wealth and remaining fit.** Selected input/closure and
+    the three completed unadopted entrant-wealth pilots in
     `output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/RESULTS.md`.
-    The completion receipt is copied to `evidence/pilot_completion_verification.json`.
-    All three arms completed and remain unadopted. The deck displays their
-    designs and completion, without a new pilot-results table: independent
-    empirical five-ratio/current-earnings entry with D=.25; zero entrant wealth
-    with D=0; and nonnegative five-ratio nodes with positive nodes rescaled to
-    preserve the original mean, D=0. The transformation applies to the five-bin
-    approximation, not raw survey observations; factor=.3632385158888715.
-    All use a common 2% annual real rate, no premium, fixed supply scale and
-    child benefit, and search nine remaining coordinates against ten scored
-    targets. Their price-renewal/population-housing closure is experimental.
-    Earlier launch/status receipts remain historical, unchanged evidence;
-    their running statements are superseded by the terminal results.
+    Distinguish their alternative laws/limits from the selected nonnegative-mean,
+    no-unsecured-borrowing contract. The latest questions concern initial wealth,
+    preference alternatives and remaining young-fertility/housing misses.
+    Do not substitute undocumented mechanism or recalibration results.
 
-## Retained supporting evidence, no longer displayed
+## Retained historical supporting evidence
 
-The E01/E02 age-25 comparison is retained in `evidence/age25_comparison.csv`;
-the two-birth extension remains unadopted and does not isolate spacing alone.
-
-The early sandbox mechanism table is sourced by
-`docs/model/situation_report_20260918.md`, section 1. The completed prescribed-price
-elasticities remain in
-`output/model/fixed_reference_economics_20260928/elasticity_v1/recovery_v1/{README.md,collected_v1/elasticities.csv}`.
-Matched saving and grid comparisons remain in
-`output/model/publication_refactor_20260929/small_credit_replication_v1/README.md`
-and `grid_resolution_v1/credit053_v2/runner/README.md`. The fixed-parameter
-five-ratio entry comparison remains in
-`output/model/fixed_reference_economics_20260928/entry_ratio_comparison_v1/README.md`.
-Their copied supporting artifacts and all receipt history are retained unchanged;
-removing their frames does not change or adopt those experiments. The archived
-received `source_map.md` preserves the original detailed provenance.
+September 28 block0506 and its 19.581310760138322 objective remain frozen,
+historical scientific evidence in
+`output/model/fertility_identification_20260928/resume_v1/selected_export/primary/`
+and copied `evidence/reference_*` CSVs. Those files do not supply the displayed
+selected floor fit. E01/E02 results remain in the two-stream overnight packet;
+prior copied fit/parameter and age-25 tables remain historical. Early sandbox,
+price elasticities, saving/grid timing and five-ratio sensitivity provenance
+remain in `archive/received/source_map.md` and their original evidence files.
+All prior receipt history is preserved unchanged. No visible source footers
+are needed to preserve these private records.
 
 ## Build and preservation
 
-The presentation is in `latex/corina_progress_20260930/`; the received version
-is retained in `archive/received/`, with the original task location preserved.
-Compile twice into a temporary build directory and verify exactly ten pages and
-frames with no overlays. Render and inspect every rewritten page for equations,
-legibility, clipping, axes and labels. Final build/preservation claims belong
-in the lead's updated `verification.json`; this documentation edit does not
-itself certify the rewritten PDF. No numerical work is required for this rewrite.
+The deck is in `latex/corina_progress_20260930/`; received versions are preserved
+under `archive/received/`. Compile twice into a temporary build directory and
+verify ten pages/frames without overlays. Inspect every rewritten page for
+source identity, equations, objective labels, fit/parameter tables and clipping.
+Final build/preservation claims belong to the lead's verification receipt;
+this documentation edit itself does not certify the PDF. No model execution
+is required or performed for this rewrite.
