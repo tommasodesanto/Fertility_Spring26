@@ -1,12 +1,12 @@
 {
   "status": "controller_implemented_mock_exact_loop_passed",
-  "tests_passed": 14,
+  "tests_passed": 20,
   "native_model_calls": 0,
   "native_scientific_validation": false,
   "production_ready": false,
   "files": {
-    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py": "a95ec2c5a72c0513476b539fddf7825dc0252cc4df03f0df4abef0977f631cdb",
-    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/test_one_shock_floor.py": "5fd61e95117ae46ef1ef220987653acdf34ad484609ee16d4abcc96a25e23ef4"
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py": "658859f10ec709d92f07bc599d3d36144c672827a99ffdd16bc4cee6892affef",
+    "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/test_one_shock_floor.py": "424f2bea05e17fd3b7265deb06b878b0d003d88c5d863d98799fabaf2c703dbd"
   },
   "retained_sources": {
     "target_builder": "pinned_tools/run_e5f_preference_estimation.py:44",
@@ -73,5 +73,38 @@
   "controller_frozen": true,
   "conservative_seed_policy_calls": 120,
   "production_ready_guard": "Full104/128 gives numerical_path_certified; production_ready additionally requires explicit policy_contract_closed=True, defaultFalse.",
-  "native_budget_guard": "Mapping, stationary and reference reconstruction enter runtime.native_budget(effective stage deadline, actual remaining policy calls) alongside watchdog; exhausted cap stops before the native call. Source/receipt hash authentication preserved."
+  "native_budget_guard": "Mapping, stationary and reference reconstruction enter runtime.native_budget(effective stage deadline, actual remaining policy calls) alongside watchdog; exhausted cap stops before the native call. Source/receipt hash authentication preserved.",
+  "failure_counter": "Failure uses runtime.total_native_calls counted before every actual native call, and separately reports completed-callback control accounting/mismatch. Missing runtime counter is unknown, never a fabricated zero.",
+  "diagnostic_fit_contract": {
+    "candidate_acceptance": "Accounting, root, physical residual, replay and stationary gates; diagnostic terminal pass separately reported",
+    "horizon_comparison": "5 macro rows including 2023 at original relative1e-3; 4 fertility windows at absolute.001",
+    "state_experiment_ready": "Always false: physical horizon stability is reported separately, and continuation validation remains outstanding. Exploratory exact native2023 packet is available for explicitly diagnostic experiments.",
+    "value_forecasts": "Actual V4/V5 full array hashes/shapes/finiteness and occupied weighted gaps; overlap forecasts reported without new tolerance",
+    "scientific_validation": false,
+    "numerical_path_certified": false,
+    "production_ready": false,
+    "state_value_integrity": "False on mismatched native value/distribution dimensions or nonfinite values at occupied states; separate from physical state pass."
+  },
+  "progressive_plan": {
+    "step1": "Complete current native6-date smoke; measure actual reference/seed/path durations and real cache hits before numerical time promise",
+    "step2": "If timing and physical gates support tonight budget, explicit diagnostic12/16 scalarfit; no claim these forecasts are adequate before comparison",
+    "step3": "Report fitted scalar and exploratory native2023 packet with physical horizon stability separately; state_experiment_ready=False/full_path_certified=False until full104/128 and continuation validation.",
+    "step4": "Full104/128 certificate separate; unresolved policy closures still visible"
+  },
+  "time_formula": {
+    "preparation": "sum(two reference solve/report durations)+sum(five actual12-date seed map durations)",
+    "fit": "sum(unique endpoint stationary+one-step durations)+sum(candidate,horizon,map actual map duration)+render/export duration",
+    "cold_policy_call_upper_bounds": {
+      "6/8_per_candidate": "28*K",
+      "12/16_per_candidate": "56*K",
+      "104/128_per_candidate": "464*K",
+      "fresh12date_seed": 120
+    },
+    "definitions": "K is maximum maps per horizon; N scalar evaluations >=4 including derivative probes and fresh replay; U unique endpoint levels<=N. Actual map and isolated LC durations not available; failed67s process included about40s constructor and is not an LC benchmark."
+  },
+  "same_psi_replay_initialization": {
+    "issue": "Original scalar fitter evaluates base, minus, plus, then freshly replays the selected base/root; a horizon-only latest initializer may have been overwritten by another preference level and choose a different acceptable approximate root.",
+    "change": "Retain copied fresh-replayed native root coordinates/J per (horizon,float(psi).hex()) and immutable native identity. Exact same-psi snapshot takes priority; latest other-psi snapshot is only an explicitly labeled initializer for a new level. No residual/model/fertility output reused.",
+    "test": "Different psi overwrites horizon latest; repeated original psi still selects original prices/J, invokes the mapping twice, and rejects changed engine identity."
+  }
 }

@@ -1,0 +1,34 @@
+WARNING: While bind mounting '/scratch/td2248/projects/utility_floor_psi_continuation_v1/source/code/model/tools/e5f_evening_calibration_runtime.py:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py': destination is already in the mount point list
+WARNING: While bind mounting '/scratch/td2248/projects/utility_floor_psi_continuation_v1/source/output/model/fertility_identification_20260928/contract_v1/primary_objective.json:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/contract_v1/primary_objective.json': destination is already in the mount point list
+WARNING: While bind mounting '/scratch/td2248/projects/utility_floor_psi_continuation_v1/source/output/model/fertility_identification_20260928/two_stream_overnight_v1/config.json:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_stream_overnight_v1/config.json': destination is already in the mount point list
+WARNING: While bind mounting '/scratch/td2248/projects/utility_floor_psi_continuation_v1/source/output/model/fertility_identification_20260928/two_stream_overnight_v1/search.py:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_stream_overnight_v1/search.py': destination is already in the mount point list
+Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py", line 636, in <module>
+    main()
+    ~~~~^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py", line 615, in main
+    controller.prepare()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py", line 473, in prepare
+    reference_inputs=self.runtime.prepare_native_reference(
+        min(self.deadline,time.monotonic()+self.plan['budget']['seed_seconds']),self.out/'native_reference')
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py", line 250, in prepare_native_reference
+    self.reference=self.rt.reconstruct_reference(folder)
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/floor_runtime.py", line 303, in reconstruct_reference
+    with self.native_bindings():self.ge.observe_price(ctx,live,'selected_root',final=True)
+                                ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_round2_v1/runner.py", line 269, in observe
+    result=original(ctx,live,label,final=final)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_floor_round2_v1/phase_b_pilot.py", line 143, in observe_price
+    recent = prepared.rt["observe_recent_parent_flow"](
+        ev, P, diagnostic_enabled=True, snapshot=prepared.rt["SNAPSHOT"],
+        age_projection=prepared.rt["AGE_PROJECTION"], diagnostic_allow_residence_proxy=True,
+        input_provenance=dict(case_id=name,
+                              reference_checkpoint_sha256=manifest["checkpoint"]["sha256"]))
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_current_transition_runtime.py", line 258, in observe_recent_with_retained_tail
+    return recent.observe_recent_parent_flow(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_recent_parent_flow_observer.py", line 151, in observe_recent_parent_flow
+    raise ValueError("Caller must configure the sequential calendar model before observation")
+ValueError: Caller must configure the sequential calendar model before observation

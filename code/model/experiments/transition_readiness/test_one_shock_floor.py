@@ -7,6 +7,7 @@ import tempfile
 import unittest
 from types import SimpleNamespace
 from contextlib import contextmanager
+from unittest.mock import patch
 
 import one_shock_floor as runner
 
@@ -62,7 +63,7 @@ class FakeRuntime:
         target = self.p['target_contract']['rows'][3]['target']
         fertility = [dict(period_tfr_topcode_adjusted=target+.1*math.log(psi/.2)) for _ in range(H)]
         return dict(identity=self.identity(),psi=psi,horizon=H,accounting_valid=self.accounting_valid,policy_calls=1,
-            root_and_terminal_pass=True,stationary_pass=True,stationary_renewal_gap=0.,
+            root_and_terminal_pass=True,root_pass=True,replay_pass=True,terminal_pass=True,stationary_pass=True,stationary_renewal_gap=0.,
             market_maximum_residual=0.,fiscal_maximum_residual=0.,replay_maximum_gap=0.,rows=rows,fertility=fertility,
             reference_manifest_sha256=self.identity()['reference_sha256'],source_pins=self.identity()['source_pins'],
             housing='static-elastic',shock_contract=dict(psi=psi,start_year=2007))
@@ -80,6 +81,137 @@ class FakeRuntime:
 
 
 class Tests(unittest.TestCase):
+    def test_different_psi_cannot_replace_same_psi_fresh_replay_initializer(self):
+        import numpy as np
+        p=plan();H=6
+        class Runtime:
+            packet={'parameters':SimpleNamespace(pension=.1)};reference_price=1.;P=SimpleNamespace(psi_child=.2,pension=.1)
+            housing='static-elastic';calls=[]
+            def identity(self):return p['identity']
+            @contextmanager
+            def native_budget(self,*args):yield
+            def mapping(self,terminal,endpoint,q,b,psi,folder,**kwargs):
+                self.calls.append((float(psi[0]),q.copy(),b.copy()))
+                record=FakeRuntime(p).evaluate(psi=float(psi[0]),horizon=len(q))
+                record.update(accounting_valid=True,policy_calls=1,gates={'native':True},
+                    market_residual=[0.]*len(q),fiscal_residual=[0.]*len(q))
+                return SimpleNamespace(),record
+            def terminal_checks(self,*args,**kwargs):return {'all_checks_pass':True}
+        rt=Runtime();adapter=runner.NativeAdapter(rt,p)
+        def root(q,J):
+            return dict(converged=True,gates={'mapping':True,'housing':True,'social_security':True,'market_replay':True,'fiscal_replay':True},
+                final=dict(prices=np.full(H,q),fiscal_values=np.full(H,.1)),final_jacobian=np.eye(2*H)*J,
+                final_reproduction_max_abs=0.)
+        a=root(1.1,-1.);b=root(1.2,-2.)
+        adapter.retain_warm(H,.2,a,'verified_psi_a')
+        adapter.retain_warm(H,.21,b,'verified_psi_b')
+        a['final']['prices'][:]=9. # Stored coordinates must be independent copies.
+        selected,kind=adapter.select_warm(H,.2)
+        np.testing.assert_array_equal(selected['prices'],np.full(H,1.1))
+        self.assertEqual(kind,'same_psi_verified_root_initialization')
+        self.assertEqual(adapter.select_warm(H,.22)[1],'latest_other_psi_initialization')
+        adapter._endpoint=lambda *args:(rt.packet,dict(price=1.,population_scale=.922,stationary_pass=True,stationary_renewal_gap=0.))
+        def fresh_root(**kwargs):
+            np.testing.assert_array_equal(kwargs['initial_prices'],np.full(H,1.1))
+            np.testing.assert_array_equal(kwargs['initial_jacobian'],-np.eye(2*H))
+            kwargs['evaluate'](kwargs['initial_prices'],kwargs['initial_fiscal_values'])
+            kwargs['evaluate'](kwargs['initial_prices'],kwargs['initial_fiscal_values'])
+            return root(1.1,-1.)
+        with tempfile.TemporaryDirectory() as directory,patch('e5f_four_shock_acceleration.extend_measured_jacobian',return_value=-np.eye(2*H)),patch('e5f_four_shock_acceleration.solve_joint_with_acceleration',side_effect=fresh_root):
+            adapter.evaluate(psi=.2,start_year=2007,horizon=H,seed={},gates=p['gates'],budget=p['budget'],
+                endpoint_controls=p['endpoint'],path_controls=p['path'],deadline=__import__('time').monotonic()+5,folder=Path(directory))
+        self.assertEqual(len(rt.calls),2)
+        self.assertEqual([r[0] for r in rt.calls],[.2,.2])
+        p['identity']['engine_sha256']='b'*64
+        with self.assertRaisesRegex(ValueError,'snapshot identity'):
+            adapter.select_warm(H,.2)
+
+    def test_diagnostic_fit_can_report_terminal_nonpass_without_full_certificate(self):
+        p=plan()
+        class DiagnosticFake(FakeRuntime):
+            def evaluate(self,**kwargs):
+                reply=super().evaluate(**kwargs)
+                reply.update(terminal_pass=False,root_and_terminal_pass=False)
+                return reply
+            def compare_2023(self,*args):
+                return dict(passed=True,available=True,state_value_integrity=True,state_gaps={'normalized_distribution_l1':0.})
+        with tempfile.TemporaryDirectory() as directory:
+            result=runner.Controller(p,DiagnosticFake(p),directory).run()
+            self.assertTrue(result['one_shock_fit_certified'])
+            self.assertFalse(result['scientific_validation'])
+            self.assertFalse(result['numerical_path_certified'])
+            self.assertFalse(result['state_experiment_ready'])
+            self.assertTrue(result['state_physical_horizon_stable'])
+            self.assertTrue(result['state_value_integrity'])
+            self.assertFalse(result['full_path_certified'])
+            self.assertTrue(result['exploratory_state_available'])
+            self.assertEqual(result['terminal_passes'],[False,False])
+
+    def test_diagnostic_comparison_includes_actual_2023_macro_row(self):
+        p=plan();rt=FakeRuntime(p)
+        a=rt.evaluate(psi=.2,horizon=6);b=rt.evaluate(psi=.2,horizon=8)
+        b['rows'][4]['asset_price']=1.01
+        result=runner.diagnostic_horizon_comparison(a,b)
+        self.assertFalse(result['passed'])
+        self.assertEqual(result['early_macro_years'][-1],2023)
+
+    def test_production_candidate_still_rejects_terminal_nonpass(self):
+        p=plan();p.update(mode='production',horizons=[104,128])
+        class TerminalFail(FakeRuntime):
+            def evaluate(self,**kwargs):
+                reply=super().evaluate(**kwargs)
+                reply.update(root_and_terminal_pass=False,terminal_pass=False)
+                return reply
+        with tempfile.TemporaryDirectory() as directory:
+            c=runner.Controller(p,TerminalFail(p),directory);c.prepare()
+            self.assertFalse(c.evaluate(.2)['certified'])
+
+    def test_actual_2023_state_queues_gate_separately_from_reported_values(self):
+        import numpy as np
+        def reply(H):
+            state=SimpleNamespace(g_pre=np.array([.4,.6]),scheduled_entries=np.array([.1,.2]),scheduled_raw_entries=np.array([.2,.3]))
+            native=SimpleNamespace(dated_states={4:dict(state=state)},values=[np.array([1.,2.]) for _ in range(H+1)],
+                floor_runtime_paths=dict(prices=np.ones(H),pensions=np.full(H,.1),psi_path=np.full(H,.2)))
+            return dict(native_reply=native)
+        a,b=reply(6),reply(8)
+        b['native_reply'].values[4]=np.array([5.,10.])
+        result=runner.compare_2023_states(a,b,lambda q:q)
+        self.assertTrue(result['passed'])
+        self.assertTrue(result['state_value_integrity'])
+        self.assertGreater(result['values']['current_2023_V']['occupied_weighted_relative_gap'],0)
+        self.assertFalse(result['values']['current_2023_V']['gating'])
+        b['native_reply'].dated_states[4]['state'].scheduled_raw_entries[0]=.3
+        self.assertFalse(runner.compare_2023_states(a,b,lambda q:q)['passed'])
+        b['native_reply'].values[5]=np.array([float('nan'),2.])
+        self.assertFalse(runner.compare_2023_states(a,b,lambda q:q)['state_value_integrity'])
+        b['native_reply'].values[5]=np.ones((1,2))
+        self.assertFalse(runner.compare_2023_states(a,b,lambda q:q)['state_value_integrity'])
+
+    def test_failed_callback_after_native_increment_reports_actual_call(self):
+        p=plan()
+        class FailingRuntime:
+            packet={};reference_price=1.;P=SimpleNamespace(psi_child=.2,pension=.1)
+            total_native_calls=0
+            @contextmanager
+            def native_budget(self,*args):yield
+            def mapping(self,*args,**kwargs):
+                self.total_native_calls+=1
+                raise RuntimeError('callback failed after counted native call')
+        rt=FailingRuntime();adapter=runner.NativeAdapter(rt,p)
+        with tempfile.TemporaryDirectory() as directory:
+            controller=runner.Controller(p,adapter,directory)
+            try:
+                adapter._mapping({}, {}, [1.],[.1],[.2],Path(directory),__import__('time').monotonic()+5)
+            except RuntimeError as exc:
+                receipt=runner.failure_receipt(exc,controller)
+                runner.write(Path(directory)/'failure.json',receipt)
+            else:self.fail('Expected failed callback')
+            saved=json.loads((Path(directory)/'failure.json').read_text())
+            self.assertEqual(saved['actual_policy_calls'],1)
+            self.assertEqual(saved['control_accounted_policy_calls'],0)
+            self.assertTrue(saved['policy_call_count_mismatch'])
+            self.assertEqual(saved['policy_call_count_source'],'runtime_total_native_calls')
+
     def test_exhausted_native_budget_blocks_before_mapping_call(self):
         p=plan()
         class CappedRuntime:

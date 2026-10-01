@@ -15,6 +15,7 @@ import importlib
 import json
 import math
 import signal
+import copy
 from contextlib import contextmanager
 from pathlib import Path
 import sys
@@ -179,6 +180,87 @@ def production_flags(plan):
         production_ready=numerical and plan.get('policy_contract_closed') is True)
 
 
+def diagnostic_horizon_comparison(short,long):
+    require(long['horizon']>short['horizon']>=5,'Diagnostic forecast must cover actual 2023 date')
+    for key in ('identity','source_pins','housing','shock_contract'):
+        require(short[key]==long[key],'Diagnostic comparison changed '+key)
+    gaps={}
+    for key in ('asset_price','renter_price','adult_population','birth_children','housing_demand','pension_period_units'):
+        a=[row[key] for row in short['rows'][:5]];b=[row[key] for row in long['rows'][:5]]
+        require(len(a)==len(b)==5,'Five original macro rows including 2023 required')
+        gaps[key]=max(abs(x-y)/max(abs(x),abs(y),1e-12) for x,y in zip(a,b))
+    fertility=[abs(a['period_tfr_topcode_adjusted']-b['period_tfr_topcode_adjusted'])
+        for a,b in zip(short['fertility'][:4],long['fertility'][:4])]
+    require(len(fertility)==4,'Four original fertility windows required')
+    return dict(passed=all(v<=1e-3 for v in gaps.values()) and max(fertility)<=.001,
+        relative_gaps=gaps,fertility_absolute_gaps=fertility,early_macro_periods=5,
+        early_macro_years=[2007,2011,2015,2019,2023],fertility_windows=4,
+        macro_tolerance=1e-3,fertility_tolerance=.001,
+        terminal_passes=[short['terminal_pass'],long['terminal_pass']],
+        classification='diagnostic finite-horizon measurement stability; full path uncertified')
+
+
+def compare_2023_states(short,long,queue_values):
+    import numpy as np
+    if 'native_reply' not in short or 'native_reply' not in long:
+        return dict(passed=False,available=False,state_value_integrity=False,reason='Actual native 2023 states unavailable')
+    a,b=short['native_reply'],long['native_reply']
+    states=[r.dated_states[4]['state'] for r in (a,b)]
+    g=[np.asarray(s.g_pre,float) for s in states]
+    require(g[0].shape==g[1].shape and all(np.isfinite(v).all() and (v>=0).all() for v in g),'Actual finite common-grid 2023 distributions required')
+    pops=[float(v.sum()) for v in g];require(min(pops)>0,'Positive actual 2023 population required')
+    gaps=dict(population_absolute_gap=abs(pops[0]-pops[1]),
+        population_relative_gap=abs(pops[0]-pops[1])/max(pops),
+        normalized_distribution_l1=float(np.abs(g[0]/pops[0]-g[1]/pops[1]).sum()))
+    for name in ('scheduled_entries','scheduled_raw_entries'):
+        x,y=[np.asarray(queue_values(getattr(s,name)),float) for s in states]
+        require(x.shape==y.shape and np.isfinite(x).all() and np.isfinite(y).all(),'Actual common-shape finite native queues required')
+        gaps[name+'_relative_l1']=float(np.abs(x-y).sum()/max(float(np.abs(x).sum()),float(np.abs(y).sum()),1e-12))
+    values={};weights=.5*(g[0]/pops[0]+g[1]/pops[1]);value_integrity=True
+    def array_info(v):
+        v=np.asarray(v)
+        return dict(shape=list(v.shape),dtype=str(v.dtype),finite=bool(np.isfinite(v).all()),
+            sha256=hashlib.sha256(memoryview(np.ascontiguousarray(v))).hexdigest())
+    for index,label in ((4,'current_2023_V'),(5,'continuation_2027_V')):
+        x,y=[np.asarray(r.values[index]) for r in (a,b)]
+        info=dict(short=array_info(x),long=array_info(y),gating=False)
+        if x.shape==y.shape==weights.shape:
+            value_integrity=value_integrity and bool(np.isfinite(x[weights>0]).all() and np.isfinite(y[weights>0]).all())
+            occupied=(weights>0)&np.isfinite(x)&np.isfinite(y)
+            w=weights[occupied];dx=x[occupied];dy=y[occupied]
+            info.update(occupied_finite_weight=float(w.sum()),
+                occupied_weighted_absolute_gap=float(np.sum(w*np.abs(dx-dy))),
+                occupied_weighted_relative_gap=float(np.sum(w*np.abs(dx-dy)/np.maximum(1.,np.maximum(np.abs(dx),np.abs(dy))))))
+        else:
+            value_integrity=False
+            info['weighted_gap_unavailable']='Native value and distribution dimensions differ; no guessed broadcasting'
+        values[label]=info
+    forecasts={}
+    for key in ('prices','pensions','psi_path'):
+        x,y=[np.asarray(r.floor_runtime_paths[key],float)[4:] for r in (a,b)]
+        n=min(len(x),len(y));require(n>0,'Actual 2023 forecast continuation required')
+        forecasts[key]=dict(short=array_info(x),long=array_info(y),overlap_periods=n,
+            maximum_overlap_relative_gap=float(np.max(np.abs(x[:n]-y[:n])/np.maximum(1e-12,np.maximum(np.abs(x[:n]),np.abs(y[:n]))))),gating=False)
+    gated=[v for k,v in gaps.items() if k!='population_absolute_gap']
+    return dict(passed=all(v<=1e-3 for v in gated),available=True,tolerance=1e-3,state_value_integrity=value_integrity,
+        state_gaps=gaps,values=values,forecasts=forecasts,
+        queue_metric='L1 difference divided by maximum total absolute queue mass; retains physical queue scaling',
+        value_forecast_disclosure='Reported without a new acceptance tolerance; complete actual arrays saved in 2023 packet')
+
+
+def failure_receipt(exc, controller):
+    native_runtime=getattr(controller.runtime,'rt',controller.runtime)
+    native_calls=getattr(native_runtime,'total_native_calls',None)
+    control_calls=controller.policy_calls
+    if native_calls is not None:
+        require(type(native_calls) is int and native_calls>=0, 'Actual native-call counter must be a nonnegative integer')
+    actual=native_calls
+    return dict(status='FAILED',error_type=type(exc).__name__,error=str(exc),
+        scientific_validation=False,production_ready=False,actual_policy_calls=actual,
+        control_accounted_policy_calls=control_calls,policy_call_count_mismatch=None if actual is None else actual!=control_calls,
+        policy_call_count_source='runtime_total_native_calls' if native_calls is not None else 'unavailable_after_failed_callback')
+
+
 class RuntimeAdapter:
     """Native floor runtime callback contract; absence fails without fallback.
 
@@ -227,10 +309,33 @@ class NativeAdapter:
         self.pension = float(runtime.P.pension)
         self.calls = 0
         self.warm = {}
+        self.warm_by_psi = {}
         self.endpoints = {}
 
     def identity(self):
         return self.rt.identity()
+
+    def select_warm(self,horizon,psi):
+        key=(horizon,float(psi).hex())
+        exact=self.warm_by_psi.get(key)
+        warm=exact if exact is not None else self.warm.get(horizon)
+        if warm is not None:
+            require(warm['identity']==self.identity() and warm['horizon']==horizon and warm['fresh_root_replay_passed'] is True,
+                    'Warm root snapshot identity/horizon/replay provenance changed')
+            require(exact is None or warm['psi_hex']==float(psi).hex(),'Same-psi warm snapshot preference identity changed')
+        return warm,('same_psi_verified_root_initialization' if exact is not None else
+                    'latest_other_psi_initialization' if warm is not None else 'fresh_measured_seed_initialization')
+
+    def retain_warm(self,horizon,psi,root,folder):
+        import numpy as np
+        require(root['converged'] is True and all(root['gates'].values()),'Only a genuine fresh-replayed root may initialize future maps')
+        snapshot=dict(identity=copy.deepcopy(self.identity()),horizon=horizon,psi_hex=float(psi).hex(),
+            fresh_root_replay_passed=True,source_folder=str(folder),
+            prices=np.asarray(root['final']['prices'],float).copy(),
+            fiscal_values=np.asarray(root['final']['fiscal_values'],float).copy(),
+            final_jacobian=np.asarray(root['final_jacobian'],float).copy())
+        self.warm_by_psi[(horizon,float(psi).hex())]=snapshot
+        self.warm[horizon]=snapshot
 
     def prepare_native_reference(self, deadline, folder):
         with watchdog(deadline), self.rt.native_budget(deadline,self.plan['budget']['maximum_policy_calls']-self.calls):
@@ -355,9 +460,13 @@ class NativeAdapter:
         # Native own-lag slopes are used for the root's emergency reset too.
         slopes = [float(np.median(np.abs(np.diag(J)[i*horizon:(i+1)*horizon]))) for i in range(2)]
         require(all(math.isfinite(s) and s > 0 for s in slopes), 'Native measured own slopes absent; no default fallback')
-        warm = self.warm.get(horizon)
-        q = np.linspace(q0,qT,horizon) if warm is None else warm['prices']
-        b = np.linspace(b0,bT,horizon) if warm is None else warm['fiscal_values']
+        warm,warm_kind = self.select_warm(horizon,psi)
+        write(folder/'warm_start.json',dict(kind=warm_kind,target_psi_hex=float(psi).hex(),horizon=horizon,
+            source_psi_hex=None if warm is None else warm['psi_hex'],identity=self.identity(),
+            source_folder=None if warm is None else warm['source_folder'],
+            fresh_native_mapping_required=True,residuals_or_fertility_reused=False))
+        q = np.linspace(q0,qT,horizon) if warm is None else warm['prices'].copy()
+        b = np.linspace(b0,bT,horizon) if warm is None else warm['fiscal_values'].copy()
         latest = {}
         count = 0
         path_deadline = min(deadline,time.monotonic()+budget['path_seconds'])
@@ -375,18 +484,18 @@ class NativeAdapter:
             max_log_step=p['max_log_step'],damping=p['damping'],max_evaluations=p['max_evaluations'],
             deadline_monotonic=path_deadline,max_condition_number=self.plan['fit']['max_condition_number'],
             worsening_factor=self.plan['fit']['worsening_factor'],final_reproduction_tolerance=1e-10,
-            initial_jacobian=J if warm is None else warm['final_jacobian'],callback=lambda row:write(folder/'root_progress.json',row))
+            initial_jacobian=J if warm is None else warm['final_jacobian'].copy(),callback=lambda row:write(folder/'root_progress.json',row))
         original.inner.write(folder/'root.json',root)
         record = latest['record']
         terminal_check = self.rt.terminal_checks(terminal,endpoint,latest['native'],psi_path,
             tolerance=1e-3,raw_queue_tolerance=1e-3)
         valid = bool(root['converged'] and terminal_check['all_checks_pass'])
-        if valid:
-            self.warm[horizon] = dict(prices=root['final']['prices'],fiscal_values=root['final']['fiscal_values'],final_jacobian=root['final_jacobian'])
+        if valid or (self.plan['mode']=='diagnostic' and root['converged']):
+            self.retain_warm(horizon,psi,root,folder)
         return dict(identity=self.identity(),reference_manifest_sha256=self.identity()['reference_sha256'],
             source_pins=self.identity()['source_pins'],housing=self.rt.housing,
             shock_contract=dict(kind='one_permanent',start_year=2007,psi=psi,expectations='current_shock_permanent_until_next_surprise'),
-            psi=psi,horizon=horizon,accounting_valid=True,policy_calls=self.calls-start,
+            psi=psi,horizon=horizon,accounting_valid=bool(record['accounting_valid'] and all(record['gates'].values())),policy_calls=self.calls-start,
             root_and_terminal_pass=valid,stationary_pass=endpoint['stationary_pass'],
             root_pass=bool(root['converged']),terminal_pass=bool(terminal_check['all_checks_pass']),
             replay_pass=bool(root['gates']['market_replay'] and root['gates']['fiscal_replay']) if 'gates' in root else bool(root['converged']),
@@ -399,6 +508,9 @@ class NativeAdapter:
 
     def export_2023(self, reply, folder):
         return self.rt.export_2023(reply,folder)
+
+    def compare_2023(self,short,long):
+        return compare_2023_states(short,long,self.rt.pf.birth_queue_values)
 
     def render_standard(self, reply, folder, deadline):
         with watchdog(deadline):
@@ -496,7 +608,8 @@ class Controller:
             self.account(reply)
             require(reply['identity'] == self.plan['identity'] and reply['psi'] == float(psi) and
                     reply['horizon'] == horizon, 'Native candidate identity/psi/horizon changed')
-            valid = (reply['root_and_terminal_pass'] is True and reply['stationary_pass'] is True and
+            root_valid=(reply['root_pass'] is True and reply['replay_pass'] is True and reply['accounting_valid'] is True)
+            valid = (root_valid and (self.plan['mode']=='diagnostic' or reply['root_and_terminal_pass'] is True) and reply['stationary_pass'] is True and
                      reply['market_maximum_residual'] <= GATES['market_tolerance'] and
                      reply['fiscal_maximum_residual'] <= GATES['fiscal_tolerance'] and
                      reply['replay_maximum_gap'] <= GATES['final_reproduction_tolerance'] and
@@ -509,11 +622,18 @@ class Controller:
                     'Original four-year calendar/timing changed')
             if previous is not None:
                 original, _ = original_modules()
-                comparison = original.inner.compare_horizons(previous, reply, 4, GATES['horizon_relative_tolerance'])
-                comparison['fertility_absolute_gaps'] = [abs(a['period_tfr_topcode_adjusted']-b['period_tfr_topcode_adjusted'])
-                    for a,b in zip(previous['fertility'][:4], reply['fertility'][:4])]
-                comparison['passed'] = comparison['passed'] and max(comparison['fertility_absolute_gaps']) <= self.plan['fit']['fertility_tolerance']/5
+                if self.plan['mode']=='diagnostic':
+                    comparison=diagnostic_horizon_comparison(previous,reply)
+                else:
+                    comparison = original.inner.compare_horizons(previous, reply, 4, GATES['horizon_relative_tolerance'])
+                    comparison['fertility_absolute_gaps'] = [abs(a['period_tfr_topcode_adjusted']-b['period_tfr_topcode_adjusted'])
+                        for a,b in zip(previous['fertility'][:4], reply['fertility'][:4])]
+                    comparison['passed'] = comparison['passed'] and max(comparison['fertility_absolute_gaps']) <= self.plan['fit']['fertility_tolerance']/5
+                state_comparison=self.runtime.compare_2023(previous,reply) if hasattr(self.runtime,'compare_2023') else dict(passed=False,available=False,reason='Actual native state comparator unavailable')
+                reply.update(horizon_comparison=comparison,state_horizon_comparison=state_comparison,
+                    terminal_passes=[previous['terminal_pass'],reply['terminal_pass']])
                 write(folder/'horizon_comparison.json', comparison)
+                write(folder/'state_2023_horizon_comparison.json',state_comparison)
                 if not comparison['passed']:
                     return dict(certified=False, model=None, payload=dict(candidate=self.count, error='horizon gates failed'))
             previous = reply
@@ -522,7 +642,12 @@ class Controller:
         target = self.plan['target_contract']['rows'][3]['target']
         summary = dict(certified=True, psi=float(psi), model=models[3], gap=models[3]-target,
             loss_contribution=(models[3]-target)**2, payload=dict(candidate=self.count, models=models, path=str(folder)),
-            mode=self.plan['mode'], production_ready=False)
+            mode=self.plan['mode'], production_ready=False,one_shock_measurement_certified=True,
+            full_path_certified=False,state_experiment_ready=False,
+            state_physical_horizon_stable=reply['state_horizon_comparison']['passed'],
+            state_value_integrity=reply['state_horizon_comparison'].get('state_value_integrity',False),
+            terminal_passes=reply['terminal_passes'],
+            classification='diagnostic finite-horizon one-shock fit; full path uncertified' if self.plan['mode']=='diagnostic' else 'full 104/128 numerical path measurement')
         write(folder/'complete.json', summary)
         write(self.out/'latest_completed.json', summary)
         best_path = self.out/'best_so_far.json'
@@ -570,8 +695,15 @@ class Controller:
             require({Path(p).name for p in plots} == set(self.plan['standard_plot_names']) and len(plots) == 17 and
                     all(Path(p).is_file() for p in plots), 'Retain exact actual 17 standard diagnostics')
             hashes={Path(p).name:sha(p) for p in plots}
-        receipt = dict(status='matched', mode=self.plan['mode'], scientific_validation=True,
+        receipt = dict(status='matched', mode=self.plan['mode'], scientific_validation=self.plan['mode']=='production',
             **production_flags(self.plan), fitted_parameter=result['parameter'],
+            one_shock_fit_certified=True,state_experiment_ready=False,full_path_certified=False,
+            exploratory_state_available=True,state_physical_horizon_stable=self.last['state_horizon_comparison']['passed'],
+            state_value_integrity=self.last['state_horizon_comparison'].get('state_value_integrity',False),
+            continuation_validation='Outstanding; reported value/forecast gaps do not certify continuation convergence',
+            terminal_passes=self.last['terminal_passes'],horizon_comparison=self.last['horizon_comparison'],
+            state_horizon_comparison=self.last['state_horizon_comparison'],
+            diagnostic_disclosure='Finite-horizon fit preserves current economics and exact native 2023 state. Terminal failures remain visible; 104/128 numerical certification and outstanding policy closure are separate.' if self.plan['mode']=='diagnostic' else None,
             actual_policy_calls=self.policy_calls, state_2023=exported, plot_sha256=hashes,
             target_contract=contract, fiscal_relaxation='author-authorized dated gate 2e-5; stationary remains 1e-6')
         write(self.out/'complete.json', receipt)
@@ -613,8 +745,7 @@ def main():
             else:
                 receipt = controller.run()
         except Exception as exc:
-            write(Path(args.output)/'failure.json', dict(status='FAILED', error_type=type(exc).__name__,
-                error=str(exc), scientific_validation=False, production_ready=False, actual_policy_calls=controller.policy_calls))
+            write(Path(args.output)/'failure.json', failure_receipt(exc,controller))
             raise
     write(Path(args.output)/'preflight.json' if not (args.execute or args.native_smoke) else Path(args.output)/'run_receipt.json', receipt)
     print(json.dumps(receipt if not args.execute else {k:receipt[k] for k in ('status','mode','production_ready')}))

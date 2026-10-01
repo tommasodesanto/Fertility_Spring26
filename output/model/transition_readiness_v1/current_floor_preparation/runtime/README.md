@@ -101,3 +101,93 @@ Nested deadlines and allowances all apply. Cache hits consume no native calls;
 if the frozen cache swallows a timeout and tries a fallback, the next guarded
 native entry still fails before solving. Ten focused tests pass, including that
 old-cache retry case (zero native calls) and nested call-limit enforcement.
+
+## Native API repair and truthful failed-call accounting
+
+The first native smoke stopped after its first stationary solve because the
+extracted solver facade does not export `interp_indices`, which the calendar's
+`build_transition_maps` uses. `native_api_bindings()` now temporarily exposes the
+exact helper from `small_credit_lab.engine.utils`. It restores the original module
+attributes when leaving the scope. No numerical engine source is modified and no
+legacy engine supplies a helper. Native utils lines 131–137 use the same clipping,
+right-side bracket search, int64 indices, and bounded linear weights as the
+reviewed original helper. The actual API preflight checks all 23 named native
+attributes required by the active calendar, PF, diagnostics and inherited
+purchase-audit callbacks before any model solve.
+
+The command `floor_runtime.py --native-api-only --output <folder>` imports the
+actual indexed native engine, asserts actual source paths and callback identities,
+and writes `native_api_preflight.json` with zero model calls. This avoids repeating
+the full observer constructor merely to inspect the native API.
+
+`total_native_calls` now increments immediately after pre-call budget guards and
+before each actual native Bellman entry, and remains available if a later step
+fails. The controller's failure receipt reads that runtime total separately from
+its completed-record counter. The original failed smoke receipt remains unchanged;
+`failed_smoke_call_count_correction.json` records why its zero completed-record
+count corresponds to one actual completed lifecycle solve. Twelve focused tests
+pass, including actual native helper/API identity, interpolation boundary values,
+scoped alias restoration, and persistence of the native-call count after failure.
+
+## Indirect population callback repair
+
+The second smoke failed after one native solve because the facade omitted the
+four native parameter helpers used indirectly by the population callbacks:
+`independent_child_maturation_active`, `get_fecundity_by_age`,
+`readiness_settled_state`, and `parent_age_maturation_active`. The scoped facade
+now exposes these exact functions from the selected indexed engine's
+`parameters.py`, alongside the previously verified native interpolation helper.
+The API inventory includes the existing genuine `birth_destination_child_state`
+from `household.py`; the independent inventory worker verified normalized AST
+identity of all five child-transition bodies against the original functions.
+The preflight now verifies all 29 active attributes, including audit helpers,
+module metadata and unchanged native dead-mass tolerance 1e-12.
+
+The actual indirect functions resolve their local `model` through their global
+`calendar`, so binding `transition.model` would only add unused metadata. The
+runtime verifies `transition.calendar is pf.calendar` and checks both indirect
+functions' `__globals__['calendar']`, then binds that actual calendar to the native
+engine. It forbids `configure_sequential_model()` while inside native callback
+scope and verifies the actual calendar model is unchanged on exit. No unused
+model tag is introduced. A zero-lifecycle test uses the real PF/population
+modules to confirm actual global resolution and the forbidden reconfiguration.
+
+Every future stationary solve writes `native_solve_unverified.pkl.gz` and its
+source-identified receipt immediately after the native solution returns, before
+policy construction, cohort reconstruction or observers. This retains parameters,
+grid, shared objects, actual solution, price and call counts for diagnosis. Its
+separate unverified schema cannot satisfy verified-reference restoration. Earlier
+failed jobs did not save this packet and cannot be replayed without a fresh solve;
+no earlier solved state is invented. Fifteen focused tests pass, and no new model
+solve or job was run during this repair.
+
+## Observer dependency injection and saved-solve debug
+
+The third smoke reached the recent-parent observer after one genuine native
+solve. Its local legacy import caused an identity assertion despite the correctly
+bound native calendar. The runtime now loads task-owned observer copies after
+original observer authentication. It changes only the recent observer's one local
+model import and the housing observer's two local model/quantile imports to
+explicitly injected genuine native dependencies. The normalized AST is checked
+against the original after restoring precisely those import nodes; every other
+observer computation is unchanged. `observer_adapters/transformation.json` pins
+original and adapter source bytes, substitution lines, actual native/legacy helper
+source bytes and equal normalized helper ASTs. Native helper bodies for readiness,
+fecundity, transport, aggregate wealth/bequests, annual income and weighted
+quantiles compare exactly; dead-tail constants also match. Native model names are
+preserved and no household/distribution engine is replaced with a legacy engine.
+The original retained-tail opt-in wrapper behavior is retained.
+
+Debug CLI (under the exact authenticated deployment): provide `--handoff`,
+`--handoff-sha256`, `--output`, `--debug-unverified-receipt`, and
+`--debug-unverified-sha256`. The debug branch constructs the zero-solve runtime,
+authenticates the prior unverified receipt/checkpoint, full selected public
+parameters, q, grid and engine identity, then uses the actual saved solution for
+policy construction, stationary cohort reconstruction and all native gates. It
+also executes `ge.observe_price` and compares complete 14/31/17 reports with the
+selected genuine REPEAT. Both native solve APIs are prohibited during this
+operation. It records original call count separately from zero new calls and
+never sets the reference-verified flag or writes a verified checkpoint. Failure
+receipts and any completed native gates/reports are preserved. Sixteen focused
+tests pass; the genuine 57 MB saved-solve debug is pending target deployment and
+has not been run locally or replaced by a synthetic solution.

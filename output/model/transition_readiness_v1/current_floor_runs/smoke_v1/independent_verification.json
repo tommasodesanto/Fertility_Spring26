@@ -1,0 +1,18 @@
+{
+  "status": "native_interface_failure",
+  "job_id": "18966290",
+  "elapsed_seconds": 67,
+  "original_reported_policy_calls": 0,
+  "completed_actual_policy_calls": 1,
+  "count_correction_evidence": [
+    "Traceback occurs after native solve_markov_income_at_prices returned sol, at policy_from_solution/build_transition_maps.",
+    "Pinned current native equilibrium.py solve_markov_income_at_prices contains exactly one Bellman call before returning."
+  ],
+  "failure": "Legacy calendar expected model.interp_indices; genuine native helper exists in engine.utils but is not re-exported by solver facade.",
+  "economic_change": false,
+  "fitted_shock": false,
+  "source_method_change": "Expose genuine native engine.utils.interp_indices through scoped adapter bindings, with preflight API assertions and truthful failure counts.",
+  "native_interp_source": "output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/source/small_credit_lab/engine/utils.py:131",
+  "native_interp_math": "Grid clipping, right-side interval lookup, int64 interval indices, and linear weights clipped to [0,1] are identical to the legacy callback specification.",
+  "native_interp_sha256": "836d6768af4a9261fe28e758f88dcc8ca059afc277b7c03d36f179a510ebcf36"
+}

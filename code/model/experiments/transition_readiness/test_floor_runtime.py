@@ -103,4 +103,97 @@ class RuntimeTests(unittest.TestCase):
                     with self.assertRaisesRegex(RuntimeError,'allowance exhausted'):native()
         self.assertEqual(len(started),1);self.assertEqual(inner['used'],1);self.assertEqual(outer['used'],1)
 
+    def test_actual_native_api_and_interp_boundary_values_without_model_solve(self):
+        result=r.FloorRuntime.native_api_preflight()
+        self.assertEqual(result['policy_calls'],0)
+        self.assertEqual(result['callbacks']['interp_indices'],'small_credit_lab.engine.utils')
+        from small_credit_lab.engine import solver,utils
+        existed=hasattr(solver,'interp_indices');old=getattr(solver,'interp_indices',None)
+        rt=r.FloorRuntime();rt.model=solver
+        with rt.native_api_bindings():
+            self.assertIs(solver.interp_indices,utils.interp_indices)
+            indices,weights=solver.interp_indices(np.array([0.,2.,5.]),np.array([-1.,0.,1.,2.,4.,5.,8.]))
+            np.testing.assert_array_equal(indices,[0,0,0,1,1,1,1])
+            np.testing.assert_allclose(weights,[0.,0.,.5,0.,2/3,1.,1.],rtol=0,atol=1e-15)
+        self.assertEqual(hasattr(solver,'interp_indices'),existed)
+        if existed:self.assertIs(solver.interp_indices,old)
+    def test_native_counter_survives_failure_after_call_entry(self):
+        rt=r.FloorRuntime();rt.total_native_calls=0
+        def completed_solve_then_observer_failure():
+            rt._guard_native_call()
+            raise AttributeError('post-solve native report helper missing')
+        with self.assertRaises(AttributeError):completed_solve_then_observer_failure()
+        self.assertEqual(rt.total_native_calls,1)
+        with rt.native_budget(r.time.monotonic()+60.,0):
+            with self.assertRaisesRegex(RuntimeError,'allowance'):rt._guard_native_call()
+        self.assertEqual(rt.total_native_calls,1)
+
+    def test_actual_indirect_population_helpers_are_native_and_scoped(self):
+        r.FloorRuntime.native_api_preflight()
+        from small_credit_lab.engine import solver,utils,parameters,household
+        rt=r.FloorRuntime();rt.model=solver
+        names=('independent_child_maturation_active','get_fecundity_by_age','readiness_settled_state','parent_age_maturation_active')
+        old={name:(hasattr(solver,name),getattr(solver,name,None)) for name in names}
+        with rt.native_api_bindings() as api:
+            for name in names:
+                self.assertIs(getattr(solver,name),getattr(parameters,name))
+                self.assertEqual(api[name],'small_credit_lab.engine.parameters')
+            self.assertIs(solver.birth_destination_child_state,household.birth_destination_child_state)
+        for name,(existed,value) in old.items():
+            self.assertEqual(hasattr(solver,name),existed)
+            if existed:self.assertIs(getattr(solver,name),value)
+    def test_completed_native_solve_evidence_saved_without_claiming_verification(self):
+        import gzip,pickle
+        rt=r.FloorRuntime();rt.total_native_calls=1;rt.identity=lambda:{'native_source':'authenticated'}
+        P=types.SimpleNamespace(psi_child=.17);solution=types.SimpleNamespace(V=np.array([1.,2.]))
+        with tempfile.TemporaryDirectory() as folder:
+            receipt=rt.save_unverified_native_solve(P,np.array([0.,1.]),types.SimpleNamespace(),solution,.72,folder,1)
+            self.assertEqual(receipt['policy_calls'],1);self.assertFalse(receipt['reference_verified']);self.assertFalse(receipt['production_ready'])
+            self.assertEqual(r.sha(receipt['checkpoint']['path']),receipt['checkpoint']['sha256'])
+            with gzip.open(receipt['checkpoint']['path'],'rb') as stream:packet=pickle.load(stream)
+            np.testing.assert_array_equal(packet['solution'].V,solution.V)
+            self.assertEqual(packet['stage'],'native_solve_completed_reconstruction_pending')
+            with self.assertRaisesRegex(RuntimeError,'not verified'):
+                rt.load_reconstructed_reference(dict(path=str(pathlib.Path(folder)/'native_solve_unverified.json'),sha256=r.sha(pathlib.Path(folder)/'native_solve_unverified.json')),folder)
+
+    def test_real_population_callback_globals_resolve_native_and_block_reconfigure(self):
+        r.FloorRuntime.native_api_preflight()
+        sys.path[:0]=[str(r.ROOT/'code/model/tools'),str(r.ROOT/'code/model')]
+        import run_e5f_perfect_foresight_transition as pf
+        from small_credit_lab.engine import solver
+        rt=r.FloorRuntime();rt.model=solver;rt.pf=pf
+        old=pf.calendar.model;configure=pf.transition.configure_sequential_model
+        rt.rt={'model':old,'primitive':types.SimpleNamespace(model=old),'audit':types.SimpleNamespace(model=old)}
+        with rt.native_bindings():
+            self.assertIs(pf.transition.apply_sequential_fertility.__globals__['calendar'].model,solver)
+            self.assertIs(pf.transition.advance_sequential_calendar_distribution.__globals__['calendar'].model,solver)
+            with self.assertRaisesRegex(RuntimeError,'reconfiguration forbidden'):pf.transition.configure_sequential_model()
+            self.assertIs(pf.calendar.model,solver)
+        self.assertIs(pf.calendar.model,old);self.assertIs(pf.transition.configure_sequential_model,configure)
+
+    def test_observer_adapter_changes_only_dependencies_with_genuine_native_helpers(self):
+        r.FloorRuntime.native_api_preflight()
+        from small_credit_lab.engine import solver
+        rt=r.FloorRuntime();rt.model=solver
+        sys.path[:0]=[str(r.ROOT/'code/model/tools'),str(r.ROOT/'code/model')]
+        housing=r.load('test_original_housing_observer',r.ROOT/'code/model/tools/e5f_initial_housing_observer.py')
+        recent=r.load('test_original_recent_observer',r.ROOT/'code/model/tools/e5f_recent_parent_flow_observer.py')
+        def retained_tail(*args,**kwargs):
+            kwargs['diagnostic_allow_retained_dead_tail']=True
+            return recent.observe_recent_parent_flow(*args,**kwargs)
+        rt.rt={'observe_initial_housing_wealth':housing.observe_initial_housing_wealth,'observe_recent_parent_flow':retained_tail}
+        with tempfile.TemporaryDirectory() as folder:
+            name=solver.__name__;rt.install_observer_adapters(folder)
+            receipt=r.read(pathlib.Path(folder)/'transformation.json')
+            self.assertEqual(solver.__name__,name)
+            self.assertEqual(len(receipt['observers']['housing']['substitutions']),2)
+            self.assertEqual(len(receipt['observers']['recent_parent']['substitutions']),1)
+            self.assertTrue(all(v['computation_ast_unchanged'] for v in receipt['observers'].values()))
+            self.assertEqual(receipt['constants'],dict(DEAD_MASS_TOL=1e-12,DEAD_VALUE_CUTOFF=-1e9))
+            function=rt.rt['observe_initial_housing_wealth']
+            self.assertIs(function.__globals__['_CURRENT_FLOOR_NATIVE_MODEL'],solver)
+            for observer in receipt['observers'].values():
+                self.assertEqual(r.sha(observer['adapter']['path']),observer['adapter']['sha256'])
+                self.assertEqual(r.sha(observer['original']['path']),observer['original']['sha256'])
+
 if __name__=='__main__':unittest.main()

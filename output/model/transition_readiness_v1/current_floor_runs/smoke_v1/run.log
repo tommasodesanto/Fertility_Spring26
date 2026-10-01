@@ -1,0 +1,29 @@
+WARNING: While bind mounting '/scratch/td2248/projects/utility_floor_psi_continuation_v1/source/code/model/tools/e5f_evening_calibration_runtime.py:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py': destination is already in the mount point list
+WARNING: While bind mounting '/scratch/td2248/projects/utility_floor_psi_continuation_v1/source/output/model/fertility_identification_20260928/contract_v1/primary_objective.json:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/contract_v1/primary_objective.json': destination is already in the mount point list
+WARNING: While bind mounting '/scratch/td2248/projects/utility_floor_psi_continuation_v1/source/output/model/fertility_identification_20260928/two_stream_overnight_v1/config.json:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_stream_overnight_v1/config.json': destination is already in the mount point list
+WARNING: While bind mounting '/scratch/td2248/projects/utility_floor_psi_continuation_v1/source/output/model/fertility_identification_20260928/two_stream_overnight_v1/search.py:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_stream_overnight_v1/search.py': destination is already in the mount point list
+Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py", line 624, in <module>
+    main()
+    ~~~~^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py", line 602, in main
+    controller.prepare()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py", line 460, in prepare
+    reference_inputs=self.runtime.prepare_native_reference(
+        min(self.deadline,time.monotonic()+self.plan['budget']['seed_seconds']),self.out/'native_reference')
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py", line 237, in prepare_native_reference
+    self.reference=self.rt.reconstruct_reference(folder)
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/floor_runtime.py", line 222, in reconstruct_reference
+    packet,record=self.stationary(self.P.psi_child,self.reference_price,folder/f'repeat_{i}')
+                  ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/floor_runtime.py", line 201, in stationary
+    policy=cal.policy_from_solution(sol,np.array([price]),P,self.grid,sd)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_dynamic_population_transition.py", line 338, in policy_from_solution
+    build_transition_maps(price, P, b_grid, shared),
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_dynamic_population_transition.py", line 307, in build_transition_maps
+    lmm_idx[i, tenure], lmm_wt[i, tenure] = model.interp_indices(b_grid, wealth)
+                                            ^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'small_credit_lab.engine.solver' has no attribute 'interp_indices'
