@@ -1,5 +1,18 @@
 # Calibration Status
 
+## September 30, 22:12 New York — first Torch GN proposals; local NM improves
+
+All8Torch18906784 lanes RUNNING31minutes,80completedGE/cases, nofailures.
+Native progress receipts updated within12seconds on everylane. floor_s0 ands4
+are evaluating firstjointGNproposals; others complete first-round derivatives.
+BestTorch snapshot228.026258 remains provisional. Leadchecked all8localchains
+healthy,182completedcases; localNMchain1/0020_nm loss166.866688 (historicalstart)
+is provisional and finalnativepostcheck pending. Full14/31tables are saved at
+utility_floor_nm_v1/chain_1/results/0020_nm/phase_b_ge/selected_root/.
+Weights clarification is pending; nochange to frozenobjective, targetcontract,
+weights, gates or runningsearches is authorized. Fastresume remains terminal,
+noautomaticrestart/edit. Budgets unchanged, noextrasolves orlaunches.
+
 ## September 30, 21:57 New York — floor-only searches progressing
 
 All8Torch18906784 lanes RUNNING, about16minutes elapsed,40completedGE/cases,
