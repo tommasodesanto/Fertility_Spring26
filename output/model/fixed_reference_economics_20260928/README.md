@@ -2,6 +2,11 @@
 
 **2007 stationary reference — block0506, September 28 verified export**
 
+The October 1 [housing-unit equation audit and two-page advisor note](room_unit_audit_v1/README.md)
+verify the factor-of-ten conversion algebra for the reference and separately
+identified floor experiment. This is a read-only equation/arithmetic result,
+not a rescaled equilibrium or empirical elasticity validation.
+
 ## Quick facts — verified September 30
 
 Use this section for routine questions; follow the linked evidence only when

@@ -1,0 +1,141 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=0.85in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype}
+\usepackage[hidelinks]{hyperref}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlength{\abovedisplayskip}{7pt}
+\setlength{\belowdisplayskip}{7pt}
+\begin{document}
+\begin{center}
+{\Large\bfseries Housing units, household choices, and equilibrium prices}\\[4pt]
+{\small Tommaso De Santo --- explanatory note, October 1, 2026}
+\end{center}
+
+\textbf{The question.} Why does the model offer houses of size $2,4,6$ rather
+than $0.2,0.4,0.6$, or $20,40,60$? The numerical scale is a choice of units.
+It should not affect consumption, saving, tenure, fertility, or physical price
+responses. Our equations admit that equivalence, provided quantities, prices,
+and utility coefficients are converted together. Changing the grid alone would
+change the economic model.
+
+\textbf{What one housing unit means.} The empirical quantity anchor is the
+American Housing Survey count of rooms, rather than bedrooms. The model uses
+that room scale for housing quantities and assumes services proportional to
+quantity, with a separate owner service premium. A four-room house is $H=4$
+in room units. Define $h=H/10$ if one housing unit instead represents ten rooms;
+the same house is then $h=0.4$. Its physical size has not changed. The empirical
+room target must also be divided by ten when expressed in these new units.
+
+\textbf{Consumption and affordability.} Income and consumption remain in the
+same monetary units. If rent per room is $r$, rent per ten-room unit is $10r$.
+The household therefore pays exactly the same amount:
+\[
+ rH=(10r)(H/10).
+\]
+The same identity applies to purchase value, down payments, collateral, resale
+proceeds, depreciation, and property taxes. All these costs use price times
+housing quantity, with unchanged financing and tax rates. Consequently the
+same consumption and saving choices remain feasible. As an illustration,
+not a calibration estimate:
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+ & Rooms & Ten-room units\\
+\midrule
+Same dwelling's quantity & $4$ & $0.4$\\
+Rent per housing unit & $10$ & $100$\\
+Total rent paid & $40$ & $40$\\
+Income available & $100$ & $100$\\
+Consumption after rent and a child expense of $10$ & $50$ & $50$\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{Fertility and utility.} Preserving the budget is necessary but not
+sufficient: the value of consumption and housing must retain its comparison
+with the value of children. For a fixed consumption weight $\alpha$, write
+material utility as
+\[
+ u^{\mathrm{mat}}(c,H)
+ =\frac{[c^\alpha H^{1-\alpha}]^{1-\sigma}}{1-\sigma}.
+\]
+Here $c$ is consumption and $\sigma$ is curvature of utility over the consumption--
+housing composite. One transparent conversion replaces $H$ by $10h$ in this
+expression. Material utility then stays exactly the same, and child utility
+needs no alteration.
+
+The implementation uses the housing quantity directly in this expression.
+An equivalent conversion is therefore to keep its functional form in $h$ and
+multiply \emph{all utility-valued coefficients} by the common factor
+$K=(0.1)^{(1-\alpha)(1-\sigma)}$. With $\alpha=0.733$ and $\sigma=2$,
+$K=1.849$. This includes child benefits, the fixed birth cost, bequest strength,
+and taste-shock scales. Total values then satisfy $V'=KV$, while the ratios of
+value differences to taste-shock scales remain unchanged. Birth-attempt and
+tenure probabilities, and optimal consumption and saving, are consequently
+unchanged. Re-estimation is not needed for this conversion.
+
+\newpage
+\textbf{Why the derivative can change without changing behavior.} A derivative
+is measured per numerical housing unit. An upgrade from four to six rooms is
+$4\to6$ in room units and $0.4\to0.6$ in ten-room units. The numerical derivative
+and the numerical increment change together. The finite utility comparison
+for the same physical upgrade remains unchanged. For example, holding family
+state and tenure fixed and ignoring a housing floor, the consumption sacrifice
+at material indifference for $4\to6$ is $13.730\%$ under the baseline weight
+$0.733$. It is also $13.730\%$ for $0.4\to0.6$ after a consistent conversion.
+
+\textbf{Housing supply and price curvature.} Supply is expressed in the same
+housing units as demand. Let $Q$ denote total housing, $H_0$ its supply scale,
+$r$ unit rent, $\bar r$ reference unit rent, and $\xi$ supply elasticity:
+\[
+ Q=H_0(r/\bar r)^\xi,
+ \qquad r=\bar r(Q/H_0)^{1/\xi}.
+\]
+Moving to ten-room units divides $Q$ and $H_0$ by ten and multiplies $r$ and
+$\bar r$ by ten. The equation remains satisfied at exactly the same physical
+allocation. Rescaling $H_0$ is part of this conversion; it does not require
+making $H_0$ an endogenous equilibrium variable.
+
+Inverse supply is convex when $\xi<1$. Nevertheless its proportional price
+response is constant:
+\[
+ \frac{d\log r}{d\log Q}=\frac1\xi.
+\]
+At the specified $\xi=0.630$, a $5\%$ quantity expansion along the supply curve
+requires an $8.052\%$ rent increase, in either set of units. The numerical
+slope changes with the coordinates; the implied change in rent per actual room
+does not. This calculation concerns the supply curve, not the full equilibrium
+response to a preference or fertility shock, which also depends on demand and
+the population closure.
+
+\textbf{Application to the two implemented specifications.} The adopted
+September 28 reference changes the housing weight with children and compensates
+material utility using a fixed reference rent. That reference rent must also
+be multiplied by ten. The compensation then restores the same common factor
+$K$ across family states; scaling the grid and child benefit alone is insufficient.
+In the later floor experiment, the housing weight is common and the physical
+floor must be divided by ten along with the grid. Its population closure sets
+population equal to total supplied housing divided by demand per household.
+Both quantities convert together, leaving population and birth renewal unchanged.
+These are separate specifications, not interchangeable calibration results.
+
+\textbf{What the audit establishes.} A read-only review traced the implemented
+budget, material utility, child benefit, bequest, choice-probability, aggregation,
+and supply equations. Standalone arithmetic using the saved inputs confirmed
+their conversion identities, including the reference's family compensation and
+the experiment's physical floor. No model was imported, recalibrated, or solved.
+A full numerical equivalence certificate remains outstanding because the code
+also contains fixed feasibility thresholds and numerical regularizers.
+
+\textbf{Conclusion.} Using rooms is a coherent normalization: the numerical
+label $2$ rather than $0.2$ does not itself select a different region of economic
+curvature. What must be retained is the meaning of the house and every trade-off
+it enters. This result does not validate proportional services per room,
+continuous fractional rental quantities, financial affordability, or the imposed
+demand and supply elasticities. Those are substantive assumptions and empirical
+checks; a change of units neither fixes nor invalidates them. The source map and
+arithmetic record are in the accompanying housing-unit audit.
+\end{document}
