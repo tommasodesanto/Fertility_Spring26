@@ -1,0 +1,174 @@
+{
+  "aggregate": {
+    "admissible_computed_ge": 101,
+    "fatal_failures": 0,
+    "nonpasses": 0,
+    "objective_calls": 105,
+    "records": 101,
+    "search_completion_receipts": 0,
+    "search_native_running": 4,
+    "selected_postcheck_receipts": 0
+  },
+  "array_job_id": "18973391",
+  "batch_best_base_loss": 32.91772619416939,
+  "chains": [
+    {
+      "admissible_computed_ge": 26,
+      "best_base": {
+        "base_loss": 43.18488181418683,
+        "label": "0016_nm",
+        "seconds": 108.82885146141052,
+        "status": "passed"
+      },
+      "case_status_counts": {
+        "passed": 26
+      },
+      "chain": "chain_0",
+      "fatal_failure": false,
+      "native_latest": {
+        "deadline_epoch": 1790891313.0,
+        "label": "price_start",
+        "lifecycle_remaining": 31,
+        "lifecycle_used": 1,
+        "status": "lifecycle_claimed",
+        "time_epoch": 1790888972.824652
+      },
+      "objective_calls": 27,
+      "profile": "base_control",
+      "records": 26,
+      "search": {
+        "completed_full_ge": 26,
+        "deadline_epoch": 1790892213.0,
+        "label": "0026_nm",
+        "objective_calls": 27,
+        "status": "running_full_GE"
+      },
+      "search_completion_receipt": false,
+      "selected_postcheck_receipt": false
+    },
+    {
+      "admissible_computed_ge": 25,
+      "best_base": {
+        "base_loss": 36.06182013940222,
+        "label": "0007_nm",
+        "seconds": 159.67676210403442,
+        "status": "passed"
+      },
+      "case_status_counts": {
+        "passed": 25
+      },
+      "chain": "chain_1",
+      "fatal_failure": false,
+      "native_latest": {
+        "deadline_epoch": 1790891312.0,
+        "label": null,
+        "lifecycle_remaining": 27,
+        "lifecycle_used": 5,
+        "status": "completed_case",
+        "time_epoch": 1790888980.273279
+      },
+      "objective_calls": 26,
+      "profile": "base_control",
+      "records": 25,
+      "search": {
+        "completed_full_ge": 25,
+        "deadline_epoch": 1790892212.0,
+        "label": "0025_nm",
+        "objective_calls": 26,
+        "status": "running_full_GE"
+      },
+      "search_completion_receipt": false,
+      "selected_postcheck_receipt": false
+    },
+    {
+      "admissible_computed_ge": 25,
+      "best_base": {
+        "base_loss": 32.91772619416939,
+        "label": "0017_nm",
+        "seconds": 111.36211562156677,
+        "status": "passed"
+      },
+      "case_status_counts": {
+        "passed": 25
+      },
+      "chain": "chain_2",
+      "fatal_failure": false,
+      "native_latest": {
+        "deadline_epoch": 1790891312.0,
+        "label": "root_04",
+        "lifecycle_remaining": 26,
+        "lifecycle_used": 6,
+        "status": "lifecycle_claimed",
+        "time_epoch": 1790888978.52252
+      },
+      "objective_calls": 26,
+      "profile": "base_control",
+      "records": 25,
+      "search": {
+        "completed_full_ge": 25,
+        "deadline_epoch": 1790892212.0,
+        "label": "0025_nm",
+        "objective_calls": 26,
+        "status": "running_full_GE"
+      },
+      "search_completion_receipt": false,
+      "selected_postcheck_receipt": false
+    },
+    {
+      "admissible_computed_ge": 25,
+      "best_base": {
+        "base_loss": 35.50011353370332,
+        "label": "0022_nm",
+        "seconds": 151.03424954414368,
+        "status": "passed"
+      },
+      "case_status_counts": {
+        "passed": 25
+      },
+      "chain": "chain_3",
+      "fatal_failure": false,
+      "native_latest": {
+        "deadline_epoch": 1790891312.0,
+        "label": "root_03",
+        "lifecycle_remaining": 27,
+        "lifecycle_used": 5,
+        "status": "lifecycle_claimed",
+        "time_epoch": 1790888966.6969337
+      },
+      "objective_calls": 26,
+      "profile": "base_control",
+      "records": 25,
+      "search": {
+        "completed_full_ge": 25,
+        "deadline_epoch": 1790892212.0,
+        "label": "0025_nm",
+        "objective_calls": 26,
+        "status": "running_full_GE"
+      },
+      "search_completion_receipt": false,
+      "selected_postcheck_receipt": false
+    }
+  ],
+  "checked_epoch": 1790889683.0519495,
+  "checked_utc": "2026-10-01T21:21:23Z",
+  "native_deadline_epochs": [
+    1790891313.0,
+    1790891312.0,
+    1790891312.0,
+    1790891312.0
+  ],
+  "plot_caveat": "Preserved housing_market.png title carries stale max-relative residual 8.66e-02 from unit-population stage; at N=0.920284415998407 demand=supply=5.510926347641799; separate residual plot shows zero and bars show 5.988286 rooms/person.",
+  "remote_root": "/scratch/td2248/projects/utility_floor_psi_continuous_v2/results",
+  "scope": "18973391_0-3 only; existing no-engine-import collector; no model calls",
+  "search_deadline_epochs": [
+    1790892213.0,
+    1790892212.0,
+    1790892212.0,
+    1790892212.0
+  ],
+  "verified_incumbent": {
+    "base_loss": 30.99909262396404,
+    "chain": "chain_0",
+    "label": "0006_nm"
+  }
+}
