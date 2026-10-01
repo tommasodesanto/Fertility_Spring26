@@ -46,7 +46,11 @@ Attempt1 job18906849 failed before native LC from an unused copied deployment
 variable. Failure preserved; reviewed orchestration correction prepares a new
 immutable attempt2 at the SAME original02:34:06UTC deadline. Corrected first
 derivative job18907055 is submitted after repeated full source/report authentication;
-native missing-derivative price_start lifecycle_claimed1LC is verified. No solve or search contract changed. No production adoption, automatic restart,
+native missing derivative completed7LC with casePASSED loss789.300556 and
+launcherexit0. Controller then failed its6second postterminal receipt-visibility
+check; complete case is now visible. PossibleNFSvisibility race, not established.
+No GNsubmitted; lead is reviewing authenticatedcompletedFD continuation without
+a repeatFD, same02:34:06UTC cutoff. No solve or search contract changed. No production adoption, automatic restart,
 solver edit or gate relaxation follows from monitoring. The requested earlier
 with-A comparison and lead source diagnosis are preserved in the utility
 packet README and comparison_requested/; identical entry wealth and correct

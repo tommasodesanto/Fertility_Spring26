@@ -1,5 +1,5 @@
 {
-  "status": "native_missing_derivative_started",
+  "status": "controller_failed_after_fd_completed",
   "remote": "/scratch/td2248/projects/utility_floor_fast_resume_v2",
   "jobs": {
     "deadline_epoch": 1790822046.1687856,
@@ -21,5 +21,11 @@
     "label": "price_start",
     "lifecycle_used": 1,
     "time_epoch": 1790818769.1446328
-  }
+  },
+  "fd_completed": true,
+  "fd_lifecycle_solves": 7,
+  "fd_loss": 789.3005559758653,
+  "failure": "Array terminal without all complete GE receipts",
+  "failure_scope": "Host orchestration saw no case receipt during6second postterminal check; completednativecase nowvisible; possibleNFSvisibilityrace,unproven",
+  "gn_submitted": false
 }
