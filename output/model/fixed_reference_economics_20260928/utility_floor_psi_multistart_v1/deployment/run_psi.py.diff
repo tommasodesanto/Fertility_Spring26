@@ -1,0 +1,88 @@
+--- reviewed/run_psi.py
++++ multistart/run_psi.py
+@@ -3,6 +3,8 @@
+ import argparse, importlib.util, json, math, os, shutil, signal, sys, time
+ from pathlib import Path
+ import numpy as np
++from types import SimpleNamespace
++from pso import particle_swarm
+ from scipy.optimize import minimize
+ if sys.platform=='darwin':
+     import importlib,pathlib
+@@ -17,7 +19,7 @@
+ import runner as native
+ inputs = native.inputs
+ write = native.write
+-SEEDS = (0,)*14
++SEEDS = (0,)*8
+ MAX_EVAL = 200
+ RESERVE = 900.
+ PENALTY = 1e12
+@@ -72,12 +74,12 @@
+         if folder.is_dir() and folder.name in ('exact_policy_cache','policy_cache'):
+             shutil.rmtree(folder)
+ 
+-def optimize(out, seed, bounds, coordinates, evaluate, deadline, *, toy=False, maxeval=MAX_EVAL, multipliers=None):
++def optimize(out, seed, bounds, coordinates, evaluate, deadline, *, toy=False, maxeval=MAX_EVAL, multipliers=None, chain=0):
+     multipliers=multipliers or {}
+     out=Path(out);out.mkdir(parents=True,exist_ok=True)
+     lower,spans,initial=simplex(seed,bounds,coordinates)
+     cache={};cases=[];best=None;started=time.time();calls=0;stop=None
+-    write(out/'search_contract.json', dict(method='scipy Nelder-Mead',scaled_bounds=[0.,1.],free_coordinates=list(coordinates),seed=seed,bounds=bounds,initial_simplex=initial.tolist(),physical_simplex_steps=steps(seed,bounds,coordinates),maximum_objective_calls=maxeval,final_reserve_seconds=RESERVE,invalid_numerical_root_penalty=PENALTY,no_extra_baseline_gate=True,exact_vector_cache=True,targets_scored=10,targets_total=14))
++    write(out/'search_contract.json', dict(method='particle_swarm' if chain>=6 else 'scipy Nelder-Mead',scaled_bounds=[0.,1.],free_coordinates=list(coordinates),seed=seed,bounds=bounds,initial_simplex=initial.tolist(),physical_simplex_steps=steps(seed,bounds,coordinates),maximum_objective_calls=maxeval,final_reserve_seconds=RESERVE,invalid_numerical_root_penalty=PENALTY,no_extra_baseline_gate=True,exact_vector_cache=True,targets_scored=10,targets_total=14))
+     def objective(x):
+         nonlocal best,calls
+         if time.time() >= deadline-RESERVE: raise BudgetStop('two_hour_budget_final_reserve')
+@@ -127,7 +129,10 @@
+         return row['objective']
+     result=None
+     try:
+-        result=minimize(objective,initial[0],method='Nelder-Mead',bounds=[(0.,1.)]*len(coordinates),options=dict(initial_simplex=initial,maxfev=maxeval,maxiter=maxeval,xatol=1e-4,fatol=1e-4,adaptive=True))
++        if chain >= 6:
++            result=particle_swarm(objective, lower, spans, bounds, coordinates, CONFIG, chain, out, maxeval)
++        else:
++            result=minimize(objective,initial[0],method='Nelder-Mead',bounds=[(0.,1.)]*len(coordinates),options=dict(initial_simplex=initial,maxfev=maxeval,maxiter=maxeval,xatol=1e-4,fatol=1e-4,adaptive=True))
+         stop='optimizer_success' if result.success else 'optimizer_budget_or_stop'
+     except BudgetStop as exc: stop=str(exc)
+     receipt=dict(status='provisional_search_finished',search_stop_reason=stop,completed_full_ge=len(cases),objective_calls=calls,cache_entries=len(cache),selected=best,lifecycle_solves=sum(r.get('lifecycle_solves',0) for r in cases),optimizer_success=bool(result.success) if result is not None else False,optimization_convergence_certified=False,experimental_not_adopted=True,elapsed_seconds=time.time()-started)
+@@ -137,10 +142,13 @@
+ def alarm(*_): raise TimeoutError('Two-hour hard stop')
+ 
+ def main():
+-    ap=argparse.ArgumentParser();ap.add_argument('--chain',type=int,choices=range(14),required=True);ap.add_argument('--out',type=Path,required=True);ap.add_argument('--deadline-epoch',type=float,required=True);ap.add_argument('--toy',action='store_true');ap.add_argument('--initialize-only',action='store_true');ap.add_argument('--fast-objective',action='store_true');ap.add_argument('--verify-only',type=Path);args=ap.parse_args()
++    ap=argparse.ArgumentParser();ap.add_argument('--chain',type=int,choices=range(8),required=True);ap.add_argument('--out',type=Path,required=True);ap.add_argument('--deadline-epoch',type=float,required=True);ap.add_argument('--toy',action='store_true');ap.add_argument('--initialize-only',action='store_true');ap.add_argument('--fast-objective',action='store_true');ap.add_argument('--verify-only',type=Path);args=ap.parse_args()
+     inputs.require(not args.out.exists(),'Refusing existing results directory');args.out.mkdir(parents=True)
+-    if not args.toy: native.verify_sources()
+-    lane=f'floor_s{SEEDS[args.chain]}';seed,bounds,_=inputs.seed_and_bounds(lane);seed=dict(CONFIG['seed_sources'][args.chain%2]['parameters']);seed['psi_child']=CONFIG['psi_starts'][args.chain//2] if args.chain<8 else CONFIG['psi_starts'][0];profile='base_control' if args.chain<8 else list(CONFIG['profiles'])[1+(args.chain-8)//2];multipliers=CONFIG['profiles'][profile];bounds=dict(bounds);bounds['psi_child']=tuple(CONFIG['psi_bounds']);coordinates=tuple(inputs.parameters(lane))+('psi_child',);parameter_contract=dict(free_coordinates=list(coordinates),bounds=bounds,seed=seed,psi_bound_role=CONFIG['psi_bound_role'],target_contract_sha256=inputs.canonical(CONFIG['base_target_contract']),closure='price clears birth renewal; population clears absolute housing supply',H0_fixed=True);parameter_fingerprint=inputs.canonical(parameter_contract);inputs.LANES[lane].update(seed=seed,bounds=bounds,free_coordinates=list(coordinates));start=time.time();deadline=min(args.deadline_epoch,start+7200)
++    if not args.toy:
++        native.verify_sources()
++        for rel,digest in json.loads((HERE/'source_pins.json').read_text()).items():
++            inputs.require(inputs.sha(native.ROOT/rel)==digest,'Multistart source drift: '+rel)
++    lane=f'floor_s{SEEDS[args.chain]}';seed,bounds,_=inputs.seed_and_bounds(lane);seed=dict(CONFIG['nearby_starts'][args.chain]['parameters'] if args.chain<6 else CONFIG['center']);profile='base_control';multipliers={};bounds=dict(bounds);bounds['psi_child']=tuple(CONFIG['psi_bounds']);coordinates=tuple(inputs.parameters(lane))+('psi_child',);parameter_contract=dict(free_coordinates=list(coordinates),bounds=bounds,seed=seed,psi_bound_role=CONFIG['psi_bound_role'],target_contract_sha256=inputs.canonical(CONFIG['base_target_contract']),closure='price clears birth renewal; population clears absolute housing supply',H0_fixed=True);parameter_fingerprint=inputs.canonical(parameter_contract);inputs.LANES[lane].update(seed=seed,bounds=bounds,free_coordinates=list(coordinates));start=time.time();deadline=min(args.deadline_epoch,start+7200)
+     signal.signal(signal.SIGALRM,alarm);signal.setitimer(signal.ITIMER_REAL,max(.001,deadline-start))
+     try:
+         if args.toy:
+@@ -148,12 +156,12 @@
+             def evaluate(label,point,end):
+                 r=(np.array([point[k] for k in coordinates])-center)/spans-.03
+                 return dict(status='passed',residual=r.tolist(),lifecycle_solves=0,report=str(args.out/label))
+-            result=optimize(args.out,seed,bounds,coordinates,evaluate,deadline,toy=True,maxeval=40,multipliers=multipliers)
++            result=optimize(args.out,seed,bounds,coordinates,evaluate,deadline,toy=True,maxeval=40,multipliers=multipliers,chain=args.chain)
+             inputs.require(result['completed_full_ge']>10 and result['lifecycle_solves']==0,'Toy did not exercise NM loop')
+             write(args.out/'completed.json',result);return
+         inputs.require(inputs.canonical(parameter_contract)==parameter_fingerprint,'Extended parameter contract drift')
+         P,grid=inputs.proposal(lane);P,entry=inputs.entry(P,grid,'nonnegative_mean');Q=native.utility_checks(P,grid,lane,args.out)
+-        receipt={'selected_price':.40056088974841536}
++        receipt={'selected_price':float(CONFIG['initial_price'])}
+         write(args.out/'input_contract.json',dict(lane=lane,entry=entry,seed=seed,bounds=bounds,target_contract=native.PLAN['target_contract'],fixed_H0=float(P.H0[0]),initial_psi=float(seed['psi_child']),psi_status='free in experimental search',economic_changes=[native.PLAN['economic_changes']['floor']]+['Author-requested psi_child estimated jointly with nine floor coordinates; diagnostic bounds [.01,.5]', 'Weight profile '+profile+' multipliers '+json.dumps(multipliers,sort_keys=True)],existing_verified_adapter_reused=True,free_psi=True,psi_bounds=CONFIG['psi_bounds'],psi_bound_role=CONFIG['psi_bound_role'],target_rank_unverified=True,weight_profile=profile,weight_multipliers=multipliers,weight_contract_sha256=weight_fingerprint(multipliers),parameter_contract=parameter_contract,parameter_contract_sha256=parameter_fingerprint,base_target_contract_sha256=inputs.canonical(CONFIG['base_target_contract']),no_borrowing=True,experimental_not_adopted=True))
+         if args.verify_only:
+             search_result=json.loads(args.verify_only.read_text());selected=search_result['selected']
+@@ -174,7 +182,7 @@
+         evaluate=factory(args.out,lane,Q,grid,deadline,receipt['selected_price'])
+         if args.initialize_only:
+             write(args.out/'completed.json',dict(status='exact_initializer_passed_zero_lifecycle',parameter_contract_sha256=parameter_fingerprint,free_coordinates=list(coordinates),lifecycle_solves=0));return
+-        result=optimize(args.out,seed,bounds,coordinates,evaluate,deadline,multipliers=multipliers)
++        result=optimize(args.out,seed,bounds,coordinates,evaluate,deadline,multipliers=multipliers,chain=args.chain)
+         result.update(selected_postcheck='pending_fresh_supervised_process',elapsed_seconds=time.time()-start,deadline_epoch=deadline,no_auto_retry=True)
+         write(args.out/'completed.json',result)
+     except BaseException as exc:

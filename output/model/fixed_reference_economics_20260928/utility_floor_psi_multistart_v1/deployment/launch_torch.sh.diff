@@ -1,0 +1,63 @@
+--- reviewed/deployment/launch_torch.sh
++++ multistart/deployment/launch_torch.sh
+@@ -1,24 +1,25 @@
+ #!/usr/bin/env bash
+-#SBATCH --job-name=floor_psi_v1
++#SBATCH --job-name=floor_multi_v1
+ #SBATCH --cpus-per-task=1
+ #SBATCH --mem=24G
+ #SBATCH --time=02:00:00
+ #SBATCH --signal=B:TERM@30
+ #SBATCH --account=torch_pr_570_general
+ #SBATCH --partition=cs
+-#SBATCH --output=/scratch/td2248/projects/utility_floor_psi_v2/logs/%x-%A_%a.out
++#SBATCH --output=/scratch/td2248/projects/utility_floor_psi_multistart_v1/logs/%x-%A_%a.out
+ set -euo pipefail
+ start_epoch=$(date +%s)
+ deadline_epoch=$((start_epoch+7200))
+-if [[ "$deadline_epoch" -gt 1790828667 ]]; then deadline_epoch=1790828667; fi
++common_deadline_epoch=$(cat "/scratch/td2248/projects/utility_floor_psi_multistart_v1/common_deadline_epoch")
++if [[ "$deadline_epoch" -gt "$common_deadline_epoch" ]]; then deadline_epoch=$common_deadline_epoch; fi
+ task=${SLURM_ARRAY_TASK_ID:?Requires eight-chain array}
+ [[ "$task" =~ ^[0-7]$ ]] || { echo 'Invalid sensitivity chain'; exit 2; }
+-remote=/scratch/td2248/projects/utility_floor_psi_v2
++remote=/scratch/td2248/projects/utility_floor_psi_multistart_v1
+ base=/scratch/td2248/projects/grid_resolution_credit053_v2
+ frozen=/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project
+ inputs=/scratch/td2248/projects/publication_refactor_20260929/export_v1/inputs
+ repo=/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26
+-packet=output/model/fixed_reference_economics_20260928/utility_floor_psi_v1
++packet=output/model/fixed_reference_economics_20260928/utility_floor_psi_multistart_v1
+ python=/share/apps/anaconda3/2025.06/bin/python
+ image=/share/apps/images/ubuntu-24.04.4.sif
+ module load anaconda3/2025.06
+@@ -33,7 +34,7 @@
+   "$python" - "$out" "$code" "$start_epoch" "$deadline_epoch" "$task" <<'PY'
+ import json,os,sys,time
+ from pathlib import Path
+-out=Path(sys.argv[1]);r=dict(exit_code=int(sys.argv[2]),start_epoch=int(sys.argv[3]),deadline_epoch=int(sys.argv[4]),chain=int(sys.argv[5]),finished_epoch=time.time(),slurm_job_id=os.getenv('SLURM_JOB_ID'),no_auto_retry=True)
++out=Path(sys.argv[1]);r=dict(launcher_pid=os.getppid(),exit_code=int(sys.argv[2]),start_epoch=int(sys.argv[3]),deadline_epoch=int(sys.argv[4]),chain=int(sys.argv[5]),finished_epoch=time.time(),slurm_job_id=os.getenv('SLURM_JOB_ID'),no_auto_retry=True)
+ (out/'launcher_terminal.json').write_text(json.dumps(r,indent=2)+'\n')
+ PY
+   exit "$code"
+@@ -47,7 +48,7 @@
+ for folder in (base,remote):
+  for rel,digest in json.loads((folder/'inventory.json').read_text())['files'].items():
+   assert hashlib.sha256((folder/'source'/rel).read_bytes()).hexdigest()==digest,rel
+-launcher_rel='output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/launch_torch.sh'
++launcher_rel='output/model/fixed_reference_economics_20260928/utility_floor_psi_multistart_v1/deployment/launch_torch.sh'
+ assert hashlib.sha256((remote/'launch_torch.sh').read_bytes()).hexdigest()==json.loads((remote/'inventory.json').read_text())['files'][launcher_rel], 'Entrypoint launcher drift'
+ for name,digest in {'bundle.json':'427e67a3d9dd663cd23c3f8533c55a1a64b4f9350d396c97b5c5bd4700bc90b7','arrays.npz':'a48ecb71055f979284e7d63ccfa19bca8570ff8a93635fd352918356c69ee0b0'}.items():
+  assert hashlib.sha256((inputs/name).read_bytes()).hexdigest()==digest,name
+@@ -70,6 +71,11 @@
+   timeout --signal=TERM --kill-after=10s "${remaining}s" apptainer exec "${binds[@]}" --pwd "$repo" "$image" "$python" "$repo/$packet/run_psi.py" --chain "$task" --out "/work/results/$stage" --deadline-epoch "$deadline_epoch" "$@" > "$out/$stage.log" 2>&1
+ }
+ # No extra native model smoke: each search initializes/authenticates its runtime once.
++"$python" - "$out" "$start_epoch" "$deadline_epoch" "$task" "$$" <<'PYREC'
++import json,os,sys,time
++from pathlib import Path
++Path(sys.argv[1],'launcher_start.json').write_text(json.dumps(dict(start_epoch=int(sys.argv[2]),deadline_epoch=int(sys.argv[3]),chain=int(sys.argv[4]),launcher_pid=int(sys.argv[5]),slurm_job_id=os.getenv('SLURM_JOB_ID'),threads=1,cpus=1,memory_GiB=24),indent=2)+'\n')
++PYREC
+ run_stage init --fast-objective --initialize-only
+ run_stage search --fast-objective
+ if "$python" - "$out/search/search_completed.json" <<'PY'

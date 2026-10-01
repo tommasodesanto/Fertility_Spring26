@@ -1,0 +1,1001 @@
+{
+  "chains": [
+    {
+      "actual_fd_steps": {
+        "beta_annual": 0.0020000000000000018,
+        "chi": 0.11352744427452066,
+        "child_benefit_curvature": 0.009999999999999995,
+        "first_birth_fixed_cost": 0.06000000000000005,
+        "h_P": 0.10000000000000009,
+        "kappa_fert": 0.016447188996166956,
+        "kappa_fert_continuation": 0.03573935551739865,
+        "psi_child": 0.014999999999999986,
+        "tenure_choice_kappa": 0.0019999999999999983,
+        "theta0": 0.01999999999999999
+      },
+      "chain": 0,
+      "column_correlation_top5": [
+        {
+          "absolute_correlation": 0.9598924657453405,
+          "correlation": -0.9598924657453405,
+          "parameter_1": "h_P",
+          "parameter_2": "psi_child"
+        },
+        {
+          "absolute_correlation": 0.9394959395986281,
+          "correlation": 0.9394959395986281,
+          "parameter_1": "tenure_choice_kappa",
+          "parameter_2": "psi_child"
+        },
+        {
+          "absolute_correlation": 0.9310365047819208,
+          "correlation": 0.9310365047819208,
+          "parameter_1": "first_birth_fixed_cost",
+          "parameter_2": "h_P"
+        },
+        {
+          "absolute_correlation": 0.911773506578636,
+          "correlation": -0.911773506578636,
+          "parameter_1": "h_P",
+          "parameter_2": "tenure_choice_kappa"
+        },
+        {
+          "absolute_correlation": 0.9046348950252515,
+          "correlation": -0.9046348950252515,
+          "parameter_1": "kappa_fert_continuation",
+          "parameter_2": "h_P"
+        }
+      ],
+      "coordinate_order": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "h_P",
+        "child_benefit_curvature",
+        "tenure_choice_kappa",
+        "psi_child"
+      ],
+      "pairs_abs_corr_gt_0_95": [
+        {
+          "absolute_correlation": 0.9598924657453405,
+          "correlation": -0.9598924657453405,
+          "parameter_1": "h_P",
+          "parameter_2": "psi_child"
+        }
+      ],
+      "search_contract_file": "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_0/results/search_contract.json",
+      "search_contract_sha256": "dbfb7bf13f615eb8b05f5b704ec5f2b1242ad3cfc34cd999770b4868b0f69d1d",
+      "source_file": "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_0/results/cases.json",
+      "source_sha256": "d055e4b803da59595dee207cfec89fbb539ef24f6692b51ac7b6a3c256bf8f33",
+      "step_scaled_column_norms": {
+        "beta_annual": 0.9211761935522272,
+        "chi": 6.994325384711082,
+        "child_benefit_curvature": 0.4287921009624137,
+        "first_birth_fixed_cost": 6.210862070726991,
+        "h_P": 2.9519531443676477,
+        "kappa_fert": 2.699905220559751,
+        "kappa_fert_continuation": 6.746062582208653,
+        "psi_child": 10.282014545920376,
+        "tenure_choice_kappa": 1.1150814198882715,
+        "theta0": 0.3336020244523413
+      },
+      "target_residual_order": [
+        "cps_childlessness",
+        "cps_exactly_one",
+        "nchs_mean_age",
+        "wealth_earnings",
+        "bequest_wealth",
+        "mean_rooms",
+        "ownership_30_55",
+        "first_birth_rooms",
+        "recent_parent_ownership",
+        "early_fertility"
+      ],
+      "target_weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+      "weakest3_right_singular_vectors_column_unit_normalized_J": [
+        {
+          "dominant_parameters": [
+            {
+              "loading": 0.7188991374970539,
+              "parameter": "psi_child"
+            },
+            {
+              "loading": -0.5488777357678617,
+              "parameter": "tenure_choice_kappa"
+            },
+            {
+              "loading": 0.31311717983892834,
+              "parameter": "child_benefit_curvature"
+            },
+            {
+              "loading": -0.20058281329447156,
+              "parameter": "h_P"
+            },
+            {
+              "loading": -0.17054546937316487,
+              "parameter": "chi"
+            }
+          ],
+          "left_vector_top_moments": [
+            {
+              "loading": 0.977642808638717,
+              "moment": "early_fertility"
+            },
+            {
+              "loading": -0.1622859999462217,
+              "moment": "cps_exactly_one"
+            },
+            {
+              "loading": -0.10908266034029791,
+              "moment": "cps_childlessness"
+            },
+            {
+              "loading": 0.07638115632567934,
+              "moment": "nchs_mean_age"
+            }
+          ],
+          "order_from_weakest": 1,
+          "right_vector": {
+            "beta_annual": 0.003454996148076172,
+            "chi": -0.17054546937316487,
+            "child_benefit_curvature": 0.31311717983892834,
+            "first_birth_fixed_cost": 0.04229123322154186,
+            "h_P": -0.20058281329447156,
+            "kappa_fert": -0.02681854160511859,
+            "kappa_fert_continuation": -0.10646710498123318,
+            "psi_child": 0.7188991374970539,
+            "tenure_choice_kappa": -0.5488777357678617,
+            "theta0": -0.02647086773272268
+          },
+          "singular_value": 0.0009069415237865011
+        },
+        {
+          "dominant_parameters": [
+            {
+              "loading": 0.634180542810703,
+              "parameter": "kappa_fert_continuation"
+            },
+            {
+              "loading": 0.48456958603104466,
+              "parameter": "first_birth_fixed_cost"
+            },
+            {
+              "loading": -0.3709465510762364,
+              "parameter": "tenure_choice_kappa"
+            },
+            {
+              "loading": 0.3204848887502821,
+              "parameter": "kappa_fert"
+            },
+            {
+              "loading": -0.2565845375533161,
+              "parameter": "child_benefit_curvature"
+            }
+          ],
+          "left_vector_top_moments": [
+            {
+              "loading": 0.7293392943260668,
+              "moment": "cps_exactly_one"
+            },
+            {
+              "loading": 0.6317007095419371,
+              "moment": "cps_childlessness"
+            },
+            {
+              "loading": 0.20286830232673944,
+              "moment": "early_fertility"
+            },
+            {
+              "loading": -0.13939623306342883,
+              "moment": "nchs_mean_age"
+            }
+          ],
+          "order_from_weakest": 2,
+          "right_vector": {
+            "beta_annual": -0.0017921021774563992,
+            "chi": -0.0784613576602073,
+            "child_benefit_curvature": -0.2565845375533161,
+            "first_birth_fixed_cost": 0.48456958603104466,
+            "h_P": -0.16050141510380087,
+            "kappa_fert": 0.3204848887502821,
+            "kappa_fert_continuation": 0.634180542810703,
+            "psi_child": -0.15775019224227246,
+            "tenure_choice_kappa": -0.3709465510762364,
+            "theta0": -0.007389123834774043
+          },
+          "singular_value": 0.007054546927036593
+        },
+        {
+          "dominant_parameters": [
+            {
+              "loading": 0.8351908927498507,
+              "parameter": "h_P"
+            },
+            {
+              "loading": 0.3896799875060631,
+              "parameter": "kappa_fert_continuation"
+            },
+            {
+              "loading": 0.3022125963033744,
+              "parameter": "psi_child"
+            },
+            {
+              "loading": -0.2094510848289144,
+              "parameter": "first_birth_fixed_cost"
+            },
+            {
+              "loading": -0.08615385210003688,
+              "parameter": "child_benefit_curvature"
+            }
+          ],
+          "left_vector_top_moments": [
+            {
+              "loading": 0.9646088772094701,
+              "moment": "first_birth_rooms"
+            },
+            {
+              "loading": -0.2327116046642108,
+              "moment": "wealth_earnings"
+            },
+            {
+              "loading": -0.08628019844439075,
+              "moment": "recent_parent_ownership"
+            },
+            {
+              "loading": -0.05957029625228945,
+              "moment": "nchs_mean_age"
+            }
+          ],
+          "order_from_weakest": 3,
+          "right_vector": {
+            "beta_annual": -0.06560932651703989,
+            "chi": 0.015478114339032427,
+            "child_benefit_curvature": -0.08615385210003688,
+            "first_birth_fixed_cost": -0.2094510848289144,
+            "h_P": 0.8351908927498507,
+            "kappa_fert": -0.01657804775535473,
+            "kappa_fert_continuation": 0.3896799875060631,
+            "psi_child": 0.3022125963033744,
+            "tenure_choice_kappa": -0.055191862080401506,
+            "theta0": 0.01076356892850133
+          },
+          "singular_value": 0.14845887298431257
+        }
+      ],
+      "weakest3_right_singular_vectors_step_scaled_J": [
+        {
+          "dominant_parameters": [
+            {
+              "loading": 0.8225871456931377,
+              "parameter": "child_benefit_curvature"
+            },
+            {
+              "loading": -0.5497803824653827,
+              "parameter": "tenure_choice_kappa"
+            },
+            {
+              "loading": -0.08882841858860853,
+              "parameter": "theta0"
+            },
+            {
+              "loading": 0.07849174439269993,
+              "parameter": "psi_child"
+            },
+            {
+              "loading": -0.07584196374139654,
+              "parameter": "h_P"
+            }
+          ],
+          "left_vector_top_moments": [
+            {
+              "loading": 0.9678158062994131,
+              "moment": "early_fertility"
+            },
+            {
+              "loading": -0.193190066445922,
+              "moment": "cps_exactly_one"
+            },
+            {
+              "loading": -0.1386940768236585,
+              "moment": "cps_childlessness"
+            },
+            {
+              "loading": 0.08134985218751586,
+              "moment": "nchs_mean_age"
+            }
+          ],
+          "order_from_weakest": 1,
+          "right_vector": {
+            "beta_annual": 0.004216328219119682,
+            "chi": -0.027267725012322913,
+            "child_benefit_curvature": 0.8225871456931377,
+            "first_birth_fixed_cost": 0.007136219749391815,
+            "h_P": -0.07584196374139654,
+            "kappa_fert": -0.011895792680768704,
+            "kappa_fert_continuation": -0.018295673775689154,
+            "psi_child": 0.07849174439269993,
+            "tenure_choice_kappa": -0.5497803824653827,
+            "theta0": -0.08882841858860853
+          },
+          "singular_value": 0.0010178911510066464
+        },
+        {
+          "dominant_parameters": [
+            {
+              "loading": 0.7853812155997109,
+              "parameter": "tenure_choice_kappa"
+            },
+            {
+              "loading": 0.5421834913917057,
+              "parameter": "child_benefit_curvature"
+            },
+            {
+              "loading": -0.18014863141804338,
+              "parameter": "kappa_fert"
+            },
+            {
+              "loading": -0.1384009495411319,
+              "parameter": "kappa_fert_continuation"
+            },
+            {
+              "loading": -0.12553345884662007,
+              "parameter": "first_birth_fixed_cost"
+            }
+          ],
+          "left_vector_top_moments": [
+            {
+              "loading": 0.7204215215254459,
+              "moment": "cps_exactly_one"
+            },
+            {
+              "loading": 0.6302830759428257,
+              "moment": "cps_childlessness"
+            },
+            {
+              "loading": 0.24539500046907362,
+              "moment": "early_fertility"
+            },
+            {
+              "loading": -0.12786229640032443,
+              "moment": "nchs_mean_age"
+            }
+          ],
+          "order_from_weakest": 2,
+          "right_vector": {
+            "beta_annual": 0.0009181098006468547,
+            "chi": 0.0306669732516069,
+            "child_benefit_curvature": 0.5421834913917057,
+            "first_birth_fixed_cost": -0.12553345884662007,
+            "h_P": 0.12140168640083769,
+            "kappa_fert": -0.18014863141804338,
+            "kappa_fert_continuation": -0.1384009495411319,
+            "psi_child": -0.013726816349201747,
+            "tenure_choice_kappa": 0.7853812155997109,
+            "theta0": 0.07731950075932534
+          },
+          "singular_value": 0.011037332748310197
+        },
+        {
+          "dominant_parameters": [
+            {
+              "loading": 0.9733379625320637,
+              "parameter": "theta0"
+            },
+            {
+              "loading": -0.17180284903139442,
+              "parameter": "beta_annual"
+            },
+            {
+              "loading": -0.13045885185001194,
+              "parameter": "tenure_choice_kappa"
+            },
+            {
+              "loading": 0.04812297922194531,
+              "parameter": "h_P"
+            },
+            {
+              "loading": -0.0407114449170555,
+              "parameter": "first_birth_fixed_cost"
+            }
+          ],
+          "left_vector_top_moments": [
+            {
+              "loading": 0.9901780550848307,
+              "moment": "bequest_wealth"
+            },
+            {
+              "loading": -0.10417027429586846,
+              "moment": "wealth_earnings"
+            },
+            {
+              "loading": 0.0851690738854879,
+              "moment": "first_birth_rooms"
+            },
+            {
+              "loading": 0.026684524607308018,
+              "moment": "cps_childlessness"
+            }
+          ],
+          "order_from_weakest": 3,
+          "right_vector": {
+            "beta_annual": -0.17180284903139442,
+            "chi": 0.003601225583396476,
+            "child_benefit_curvature": 0.02241121124561422,
+            "first_birth_fixed_cost": -0.0407114449170555,
+            "h_P": 0.04812297922194531,
+            "kappa_fert": -0.0351807106598976,
+            "kappa_fert_continuation": 0.014685633128601995,
+            "psi_child": 0.01164712059053537,
+            "tenure_choice_kappa": -0.13045885185001194,
+            "theta0": 0.9733379625320637
+          },
+          "singular_value": 0.30949478027907923
+        }
+      ],
+      "weakest_step_scaled_direction_physical_translation": {
+        "max_abs_delta_over_fdstep": 1.0,
+        "normalization": "max_abs(parameter_delta / exact_initial_FD_step)=1",
+        "normalized_coefficients": {
+          "beta_annual": 0.005125691838482196,
+          "chi": -0.0331487370731356,
+          "child_benefit_curvature": 1.0,
+          "first_birth_fixed_cost": 0.008675335843448673,
+          "h_P": -0.09219930573737535,
+          "kappa_fert": -0.01446143760336169,
+          "kappa_fert_continuation": -0.02224162372519527,
+          "psi_child": 0.09542058224914311,
+          "tenure_choice_kappa": -0.6683551832093371,
+          "theta0": -0.10798663588860108
+        },
+        "one_coordinate_fd_step_residual_norms": {
+          "beta_annual": 0.9211761935522272,
+          "chi": 6.994325384711082,
+          "child_benefit_curvature": 0.4287921009624137,
+          "first_birth_fixed_cost": 6.210862070726991,
+          "h_P": 2.9519531443676477,
+          "kappa_fert": 2.699905220559751,
+          "kappa_fert_continuation": 6.746062582208653,
+          "psi_child": 10.282014545920376,
+          "tenure_choice_kappa": 1.1150814198882715,
+          "theta0": 0.3336020244523413
+        },
+        "parameter_deltas": {
+          "beta_annual": 1.0251383676964402e-05,
+          "chi": -0.0037632914008411387,
+          "child_benefit_curvature": 0.009999999999999995,
+          "first_birth_fixed_cost": 0.0005205201506069208,
+          "h_P": -0.009219930573737543,
+          "kappa_fert": -0.0002378499974187654,
+          "kappa_fert_continuation": -0.0007949012975989624,
+          "psi_child": 0.0014313087337371453,
+          "tenure_choice_kappa": -0.001336710366418673,
+          "theta0": -0.0021597327177720204
+        },
+        "predicted_residual_components": {
+          "bequest_wealth": 1.431958601606202e-06,
+          "cps_childlessness": -0.00017162372915127132,
+          "cps_exactly_one": -0.0002390585120704422,
+          "early_fertility": 0.001197600947442997,
+          "first_birth_rooms": 1.3617081558251855e-05,
+          "mean_rooms": -5.440831601227513e-06,
+          "nchs_mean_age": 0.00010066446468433388,
+          "ownership_30_55": 2.581958358792676e-06,
+          "recent_parent_ownership": 3.88880246082387e-06,
+          "wealth_earnings": 7.003106526624066e-07
+        },
+        "predicted_residual_norm": 0.0012374265223278268,
+        "ratio_to_largest_one_coordinate_step": 0.00012034864537502566,
+        "ratio_to_smallest_one_coordinate_step": 0.003709289607457424
+      }
+    },
+    {
+      "actual_fd_steps": {
+        "beta_annual": 0.0020000000000000018,
+        "chi": 0.10554808719356212,
+        "child_benefit_curvature": 0.010000000000000009,
+        "first_birth_fixed_cost": 0.05999999999999994,
+        "h_P": 0.09999999999999987,
+        "kappa_fert": 0.01992823735003532,
+        "kappa_fert_continuation": 0.048933650270279405,
+        "psi_child": 0.014999999999999986,
+        "tenure_choice_kappa": 0.001999999999999999,
+        "theta0": 0.020000000000000004
+      },
+      "chain": 1,
+      "column_correlation_top5": [
+        {
+          "absolute_correlation": 0.967147739364833,
+          "correlation": -0.967147739364833,
+          "parameter_1": "h_P",
+          "parameter_2": "psi_child"
+        },
+        {
+          "absolute_correlation": 0.9599588072651073,
+          "correlation": -0.9599588072651073,
+          "parameter_1": "kappa_fert_continuation",
+          "parameter_2": "h_P"
+        },
+        {
+          "absolute_correlation": 0.9214850483802497,
+          "correlation": 0.9214850483802497,
+          "parameter_1": "first_birth_fixed_cost",
+          "parameter_2": "h_P"
+        },
+        {
+          "absolute_correlation": 0.9201295149240106,
+          "correlation": 0.9201295149240106,
+          "parameter_1": "kappa_fert_continuation",
+          "parameter_2": "psi_child"
+        },
+        {
+          "absolute_correlation": 0.9122255665787142,
+          "correlation": -0.9122255665787142,
+          "parameter_1": "first_birth_fixed_cost",
+          "parameter_2": "psi_child"
+        }
+      ],
+      "coordinate_order": [
+        "beta_annual",
+        "chi",
+        "first_birth_fixed_cost",
+        "kappa_fert",
+        "kappa_fert_continuation",
+        "theta0",
+        "h_P",
+        "child_benefit_curvature",
+        "tenure_choice_kappa",
+        "psi_child"
+      ],
+      "pairs_abs_corr_gt_0_95": [
+        {
+          "absolute_correlation": 0.967147739364833,
+          "correlation": -0.967147739364833,
+          "parameter_1": "h_P",
+          "parameter_2": "psi_child"
+        },
+        {
+          "absolute_correlation": 0.9599588072651073,
+          "correlation": -0.9599588072651073,
+          "parameter_1": "kappa_fert_continuation",
+          "parameter_2": "h_P"
+        }
+      ],
+      "search_contract_file": "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_1/results/search_contract.json",
+      "search_contract_sha256": "e293fbe5a9b7237a7f576e976eee0b664c6c514b5546efda5098357bb5eb5543",
+      "source_file": "output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/chain_1/results/cases.json",
+      "source_sha256": "84202534a51a2a65611c22d823a1b5b6b74623ff26f7120fbd6114558df9d33f",
+      "step_scaled_column_norms": {
+        "beta_annual": 1.0800188061240146,
+        "chi": 12.255533732923908,
+        "child_benefit_curvature": 0.3051342841929494,
+        "first_birth_fixed_cost": 4.77753295772753,
+        "h_P": 3.3319815160563544,
+        "kappa_fert": 2.207622221070731,
+        "kappa_fert_continuation": 7.665998065540848,
+        "psi_child": 8.178426364478758,
+        "tenure_choice_kappa": 1.9227541829799608,
+        "theta0": 0.35527352915723237
+      },
+      "target_residual_order": [
+        "cps_childlessness",
+        "cps_exactly_one",
+        "nchs_mean_age",
+        "wealth_earnings",
+        "bequest_wealth",
+        "mean_rooms",
+        "ownership_30_55",
+        "first_birth_rooms",
+        "recent_parent_ownership",
+        "early_fertility"
+      ],
+      "target_weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+      "weakest3_right_singular_vectors_column_unit_normalized_J": [
+        {
+          "dominant_parameters": [
+            {
+              "loading": 0.7709799878400275,
+              "parameter": "psi_child"
+            },
+            {
+              "loading": 0.36164275049984185,
+              "parameter": "h_P"
+            },
+            {
+              "loading": 0.28407027566739096,
+              "parameter": "child_benefit_curvature"
+            },
+            {
+              "loading": -0.2656757724578764,
+              "parameter": "tenure_choice_kappa"
+            },
+            {
+              "loading": -0.20947488629076597,
+              "parameter": "first_birth_fixed_cost"
+            }
+          ],
+          "left_vector_top_moments": [
+            {
+              "loading": 0.9974357586163366,
+              "moment": "early_fertility"
+            },
+            {
+              "loading": 0.05501389949311193,
+              "moment": "nchs_mean_age"
+            },
+            {
+              "loading": -0.04140022807918395,
+              "moment": "cps_exactly_one"
+            },
+            {
+              "loading": 0.018181006880748876,
+              "moment": "wealth_earnings"
+            }
+          ],
+          "order_from_weakest": 1,
+          "right_vector": {
+            "beta_annual": -0.012080481510258497,
+            "chi": 0.16796098970922874,
+            "child_benefit_curvature": 0.28407027566739096,
+            "first_birth_fixed_cost": -0.20947488629076597,
+            "h_P": 0.36164275049984185,
+            "kappa_fert": -0.14051772028291748,
+            "kappa_fert_continuation": -0.17520602546391578,
+            "psi_child": 0.7709799878400275,
+            "tenure_choice_kappa": -0.2656757724578764,
+            "theta0": -0.02908437064369108
+          },
+          "singular_value": 0.0003654118608743032
+        },
+        {
+          "dominant_parameters": [
+            {
+              "loading": 0.6331080923057182,
+              "parameter": "kappa_fert_continuation"
+            },
+            {
+              "loading": 0.45746543634696885,
+              "parameter": "h_P"
+            },
+            {
+              "loading": -0.4239777148726214,
+              "parameter": "tenure_choice_kappa"
+            },
+            {
+              "loading": 0.2643950685002882,
+              "parameter": "chi"
+            },
+            {
+              "loading": -0.25708610611803223,
+              "parameter": "child_benefit_curvature"
+            }
+          ],
+          "left_vector_top_moments": [
+            {
+              "loading": 0.7543679336213192,
+              "moment": "cps_exactly_one"
+            },
+            {
+              "loading": 0.632764977514934,
+              "moment": "cps_childlessness"
+            },
+            {
+              "loading": -0.15011459301799762,
+              "moment": "nchs_mean_age"
+            },
+            {
+              "loading": 0.05423619882965396,
+              "moment": "mean_rooms"
+            }
+          ],
+          "order_from_weakest": 2,
+          "right_vector": {
+            "beta_annual": -0.024692600708828966,
+            "chi": 0.2643950685002882,
+            "child_benefit_curvature": -0.25708610611803223,
+            "first_birth_fixed_cost": -0.15305107545494714,
+            "h_P": 0.45746543634696885,
+            "kappa_fert": 0.08056364753571624,
+            "kappa_fert_continuation": 0.6331080923057182,
+            "psi_child": -0.20777203130422625,
+            "tenure_choice_kappa": -0.4239777148726214,
+            "theta0": -0.021220805023653033
+          },
+          "singular_value": 0.009808210248473526
+        },
+        {
+          "dominant_parameters": [
+            {
+              "loading": 0.5766548917867634,
+              "parameter": "first_birth_fixed_cost"
+            },
+            {
+              "loading": 0.45931603472295646,
+              "parameter": "kappa_fert_continuation"
+            },
+            {
+              "loading": 0.38665797158889015,
+              "parameter": "tenure_choice_kappa"
+            },
+            {
+              "loading": 0.2983943776950841,
+              "parameter": "psi_child"
+            },
+            {
+              "loading": -0.27041527430479456,
+              "parameter": "chi"
+            }
+          ],
+          "left_vector_top_moments": [
+            {
+              "loading": 0.5946621049658517,
+              "moment": "wealth_earnings"
+            },
+            {
+              "loading": -0.544718495616567,
+              "moment": "first_birth_rooms"
+            },
+            {
+              "loading": -0.44293288415690674,
+              "moment": "mean_rooms"
+            },
+            {
+              "loading": 0.24287171392185886,
+              "moment": "recent_parent_ownership"
+            }
+          ],
+          "order_from_weakest": 3,
+          "right_vector": {
+            "beta_annual": -0.11330453096174779,
+            "chi": -0.27041527430479456,
+            "child_benefit_curvature": 0.1693889341229005,
+            "first_birth_fixed_cost": 0.5766548917867634,
+            "h_P": 0.26395607096775897,
+            "kappa_fert": 0.1832842818685601,
+            "kappa_fert_continuation": 0.45931603472295646,
+            "psi_child": 0.2983943776950841,
+            "tenure_choice_kappa": 0.38665797158889015,
+            "theta0": -0.005782792889469942
+          },
+          "singular_value": 0.1073663630899837
+        }
+      ],
+      "weakest3_right_singular_vectors_step_scaled_J": [
+        {
+          "dominant_parameters": [
+            {
+              "loading": 0.9707268760790383,
+              "parameter": "child_benefit_curvature"
+            },
+            {
+              "loading": -0.14367189915095757,
+              "parameter": "tenure_choice_kappa"
+            },
+            {
+              "loading": 0.11289795235047048,
+              "parameter": "h_P"
+            },
+            {
+              "loading": 0.09822576415446463,
+              "parameter": "psi_child"
+            },
+            {
+              "loading": -0.08520520465643402,
+              "parameter": "theta0"
+            }
+          ],
+          "left_vector_top_moments": [
+            {
+              "loading": 0.9958051512408057,
+              "moment": "early_fertility"
+            },
+            {
+              "loading": -0.06328648809782822,
+              "moment": "cps_exactly_one"
+            },
+            {
+              "loading": 0.05857772258582735,
+              "moment": "nchs_mean_age"
+            },
+            {
+              "loading": -0.02589598637719164,
+              "moment": "cps_childlessness"
+            }
+          ],
+          "order_from_weakest": 1,
+          "right_vector": {
+            "beta_annual": -0.01162596274865589,
+            "chi": 0.014250492857675113,
+            "child_benefit_curvature": 0.9707268760790383,
+            "first_birth_fixed_cost": -0.045633991606234346,
+            "h_P": 0.11289795235047048,
+            "kappa_fert": -0.06634398788640412,
+            "kappa_fert_continuation": -0.02390223185974442,
+            "psi_child": 0.09822576415446463,
+            "tenure_choice_kappa": -0.14367189915095757,
+            "theta0": -0.08520520465643402
+          },
+          "singular_value": 0.0003808021320856709
+        },
+        {
+          "dominant_parameters": [
+            {
+              "loading": 0.7449786516752855,
+              "parameter": "tenure_choice_kappa"
+            },
+            {
+              "loading": -0.5021722727830741,
+              "parameter": "h_P"
+            },
+            {
+              "loading": 0.2828081658083373,
+              "parameter": "theta0"
+            },
+            {
+              "loading": 0.21276438850999294,
+              "parameter": "child_benefit_curvature"
+            },
+            {
+              "loading": 0.15172026927367818,
+              "parameter": "first_birth_fixed_cost"
+            }
+          ],
+          "left_vector_top_moments": [
+            {
+              "loading": 0.7439005903686878,
+              "moment": "cps_exactly_one"
+            },
+            {
+              "loading": 0.6453086151014642,
+              "moment": "cps_childlessness"
+            },
+            {
+              "loading": -0.13479070035943053,
+              "moment": "nchs_mean_age"
+            },
+            {
+              "loading": 0.07103608872176093,
+              "moment": "early_fertility"
+            }
+          ],
+          "order_from_weakest": 2,
+          "right_vector": {
+            "beta_annual": 0.06972011703326113,
+            "chi": -0.07322066284883276,
+            "child_benefit_curvature": 0.21276438850999294,
+            "first_birth_fixed_cost": 0.15172026927367818,
+            "h_P": -0.5021722727830741,
+            "kappa_fert": 0.033885559766820124,
+            "kappa_fert_continuation": -0.14288456188189064,
+            "psi_child": -0.11302762427621711,
+            "tenure_choice_kappa": 0.7449786516752855,
+            "theta0": 0.2828081658083373
+          },
+          "singular_value": 0.021988572251543867
+        },
+        {
+          "dominant_parameters": [
+            {
+              "loading": 0.9309900374924536,
+              "parameter": "theta0"
+            },
+            {
+              "loading": 0.2117382782960258,
+              "parameter": "h_P"
+            },
+            {
+              "loading": -0.21064941392439326,
+              "parameter": "beta_annual"
+            },
+            {
+              "loading": -0.15686840770459082,
+              "parameter": "tenure_choice_kappa"
+            },
+            {
+              "loading": -0.11237664456016408,
+              "parameter": "first_birth_fixed_cost"
+            }
+          ],
+          "left_vector_top_moments": [
+            {
+              "loading": 0.9843062027580619,
+              "moment": "bequest_wealth"
+            },
+            {
+              "loading": -0.11737605128501889,
+              "moment": "wealth_earnings"
+            },
+            {
+              "loading": 0.10245562213397547,
+              "moment": "first_birth_rooms"
+            },
+            {
+              "loading": 0.05268594090225085,
+              "moment": "cps_exactly_one"
+            }
+          ],
+          "order_from_weakest": 3,
+          "right_vector": {
+            "beta_annual": -0.21064941392439326,
+            "chi": 0.022416062481197128,
+            "child_benefit_curvature": 0.01894283532585081,
+            "first_birth_fixed_cost": -0.11237664456016408,
+            "h_P": 0.2117382782960258,
+            "kappa_fert": -0.060225670555743155,
+            "kappa_fert_continuation": 0.0335495158873615,
+            "psi_child": 0.03465625703189407,
+            "tenure_choice_kappa": -0.15686840770459082,
+            "theta0": 0.9309900374924536
+          },
+          "singular_value": 0.31273829343465287
+        }
+      ],
+      "weakest_step_scaled_direction_physical_translation": {
+        "max_abs_delta_over_fdstep": 1.0,
+        "normalization": "max_abs(parameter_delta / exact_initial_FD_step)=1",
+        "normalized_coefficients": {
+          "beta_annual": -0.011976553894969405,
+          "chi": 0.01468022902099479,
+          "child_benefit_curvature": 1.0,
+          "first_birth_fixed_cost": -0.0470101248154983,
+          "h_P": 0.11630248953906386,
+          "kappa_fert": -0.06834464927393467,
+          "kappa_fert_continuation": -0.024623024713491353,
+          "psi_child": 0.10118784858540056,
+          "tenure_choice_kappa": -0.148004451809635,
+          "theta0": -0.08777464264778063
+        },
+        "one_coordinate_fd_step_residual_norms": {
+          "beta_annual": 1.0800188061240146,
+          "chi": 12.255533732923908,
+          "child_benefit_curvature": 0.3051342841929494,
+          "first_birth_fixed_cost": 4.77753295772753,
+          "h_P": 3.3319815160563544,
+          "kappa_fert": 2.207622221070731,
+          "kappa_fert_continuation": 7.665998065540848,
+          "psi_child": 8.178426364478758,
+          "tenure_choice_kappa": 1.9227541829799608,
+          "theta0": 0.35527352915723237
+        },
+        "parameter_deltas": {
+          "beta_annual": -2.3953107789938832e-05,
+          "chi": 0.0015494700927294193,
+          "child_benefit_curvature": 0.010000000000000009,
+          "first_birth_fixed_cost": -0.0028206074889298954,
+          "h_P": 0.01163024895390637,
+          "kappa_fert": -0.0013619883923358894,
+          "kappa_fert_continuation": -0.0012048944799264326,
+          "psi_child": 0.001517817728781007,
+          "tenure_choice_kappa": -0.0002960089036192699,
+          "theta0": -0.001755492852955613
+        },
+        "predicted_residual_components": {
+          "bequest_wealth": -1.2740288739160005e-06,
+          "cps_childlessness": -1.0158621408346358e-05,
+          "cps_exactly_one": -2.482637515633404e-05,
+          "early_fertility": 0.0003906399771953128,
+          "first_birth_rooms": 1.0104678838075874e-07,
+          "mean_rooms": -3.573103250326602e-07,
+          "nchs_mean_age": 2.2979194460486598e-05,
+          "ownership_30_55": 2.0326077192656481e-07,
+          "recent_parent_ownership": 2.9484622802141363e-07,
+          "wealth_earnings": 6.235890797712422e-06
+        },
+        "predicted_residual_norm": 0.0003922855557721983,
+        "ratio_to_largest_one_coordinate_step": 3.200885121129746e-05,
+        "ratio_to_smallest_one_coordinate_step": 0.0012856161240935465
+      }
+    }
+  ],
+  "classification": "local finite-difference directions at two distinct simplex centers; not global identification",
+  "method": "Forward differences in scored standardized base residuals; J columns divided by each exact one-coordinate physical probe delta. No pooled fit; no q/price regressor. Column correlations are Pearson correlations across ten scored-moment rows.",
+  "normalization": "Weak step-scaled right vector v mapped to physical deltas diag(actual_fd_steps)@v; normalized so max absolute delta/FDstep equals 1. Linear predicted residual is J@delta.",
+  "provenance": {
+    "cases": "chain_0/1 results/cases.json first 11 rows",
+    "order_and_steps": "chain-specific results/search_contract.json; source formula run_psi.py:45-58",
+    "target order": "scored rows in base target_fit, same weight fingerprint per chain"
+  },
+  "status": "completed_saved_data_linear_diagnostic"
+}

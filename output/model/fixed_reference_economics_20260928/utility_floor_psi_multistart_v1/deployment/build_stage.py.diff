@@ -1,0 +1,28 @@
+--- reviewed/deployment/build_stage.py
++++ multistart/deployment/build_stage.py
+@@ -37,7 +37,7 @@
+     sources |= {PACKET / "plan.json", PACKET / "source_pins.json"}
+     for rel in pins:
+         path = ROOT / rel
+-        if path.suffix in {".py", ".sh", ".json", ".csv"} and path.stat().st_size <= 2_000_000:
++        if path.suffix in {".py", ".sh", ".json", ".csv", ".md"} and path.stat().st_size <= 2_000_000:
+             sources.add(path)
+     for rel in args.extra_source:
+         path = (ROOT / rel).resolve()
+@@ -46,14 +46,14 @@
+         sources.add(path)
+     # Large caches/checkpoints/results cannot accidentally enter this source-only overlay.
+     for path in sources:
+-        if path.suffix not in {".py", ".sh", ".json", ".csv"} or path.stat().st_size > 2_000_000:
++        if path.suffix not in {".py", ".sh", ".json", ".csv", ".md"} or path.stat().st_size > 2_000_000:
+             raise SystemExit(f"Not a compact driver source: {path}")
+     files = {str(path.relative_to(ROOT)): digest(path) for path in sorted(sources)}
+     inventory = dict(files=files, includes_checkpoints=False, includes_caches=False,
+                      reused_remote_stage=BASE_REMOTE, source_prefix="source/")
+     inventory_path = HERE / "inventory.json"
+     inventory_path.write_text(json.dumps(inventory, indent=2, sort_keys=True) + "\n")
+-    archive = HERE / "utility_floor_psi_v2_stage.tar.gz"
++    archive = HERE / "utility_floor_psi_multistart_v1_stage.tar.gz"
+     with archive.open("wb") as raw:
+         with gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0) as zipped:
+             with tarfile.open(fileobj=zipped, mode="w") as tar:

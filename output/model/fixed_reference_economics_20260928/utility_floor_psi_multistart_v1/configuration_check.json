@@ -1,0 +1,38 @@
+{
+  "status": "passed_zero_lifecycle",
+  "distinct_nearby_starts": 8,
+  "dispatch_nearby_starts": 6,
+  "pso_chains": 2,
+  "pso_particles_each": 8,
+  "weight_contract_exact": true,
+  "parameter_binding_vectors": 24,
+  "hard_bounds_unchanged": true,
+  "controllers": [
+    {
+      "chain": 0,
+      "objective_calls": 40,
+      "completed_mock_cases": 40,
+      "cache_hits": 0,
+      "lifecycle_solves": 0
+    },
+    {
+      "chain": 6,
+      "objective_calls": 40,
+      "completed_mock_cases": 36,
+      "cache_hits": 4,
+      "lifecycle_solves": 0
+    },
+    {
+      "chain": 7,
+      "objective_calls": 40,
+      "completed_mock_cases": 36,
+      "cache_hits": 4,
+      "lifecycle_solves": 0
+    }
+  ],
+  "budget_reserve_stop": true,
+  "fatal_failure_propagation": true,
+  "numerical_rejection_penalty": true,
+  "no_auto_resume": true,
+  "lifecycle_solves": 0
+}

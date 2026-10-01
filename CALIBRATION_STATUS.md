@@ -1,5 +1,104 @@
 # Calibration Status
 
+## September 30, 23:24 New York — 24-job compact refresh
+
+A bounded receipt refresh at 23:24 counted 464 case records, 462 admissible
+computed GEs and 488 objective calls across the 24 launched searches: 434/433/450
+for the original sixteen and 30/29/38 for the new multistart eight. All 24
+latest case receipts were `running_full_GE`; there were no fatal failures,
+completed chains or postchecks. Two cases were numerical rejections, one in old
+Torch chain 2 and one in multistart chain 7. The global best original-weight
+loss remains 146.424617 at the separate old local chain 11 case 0026_nm; no new
+best appeared. Its 14-target and 31-parameter tables remain linked in the point
+packet below. The compact per-chain readout is
+[here](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/snapshot_20261001T032440Z/compact_24_job_readout.json).
+
+## September 30, 23:17 New York — separate multistart cohort launched; provisional best saved
+
+The last compact read of the original sixteen searches, at 23:12, recorded 360
+case rows, 359 admissible GEs and 376 objective calls. All sixteen were active
+then. The best original-weight loss was 146.424617 at local chain 11, case
+0026_nm, with $\psi_{child}=0.1394396$. This case used the early-fertility ×4
+profile, with profile-weighted objective 164.610861; it remains provisional
+because the required selected-price repeat has not run. Its complete tables are
+in [the saved point packet](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T031237Z/point.json).
+
+The separately authorized multistart packet is now running as Torch array
+18912973_0–7 under
+`output/model/fixed_reference_economics_20260928/utility_floor_psi_multistart_v1/`.
+At 23:17:05, its saved native-start receipt showed all eight exact zero-lifecycle
+CLI initializers passed with 31 effective parameters matched in each chain, and
+each chain had begun native work (2–4 lifecycle calls recorded); all eight
+latest statuses were `running_full_GE`, with no failure or terminal receipt.
+The eight jobs comprise six nearby Nelder–Mead starts and two independent
+eight-particle PSOs from broader regions. They retain the original model,
+weights and bounds, with ten free parameters including $\psi_{child}$, up to
+200 calls and one postcheck under a fresh two-hour budget. The hard deadline is
+October 1, 01:14:04 New York. The packet has 125 source pins and archive SHA
+`b4e6daef598278dfd27a6efff3d5c9b43f4a6e95b46839247463f1f99d700a08`. Its
+first price guess uses the later best price 0.678660685 with unchanged
+$q_{ref}$ caps. The packet keeps the previously reviewed center at loss
+151.113459; the later 146.424617 point is saved separately and has not silently
+replaced it. See `deployment/launch.json` and
+`deployment/native_start_receipts.json` for the launch and native evidence.
+
+Saved-data Jacobian diagnostics show $h_P$ and $\psi_{child}$ column
+correlations of -0.960 and -0.967 at the two starting centers. The weakest
+step-scaled linear direction is dominated by the early-fertility residual at
+both centers. This describes local finite-difference conditioning; it does not
+establish global or statistical identification. See
+[the weak-direction receipt](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/fable_audit/lead_checks/weak_directions.json).
+
+The separate 120×9 fail-closed credit/price-response adapter is still in
+preparation under `floor_experiment_responses`; no numerical run has started.
+The separate local fixed-shared-old-parameter floor comparison is also in
+preparation, assigned to Luna and awaiting the lead's launch decision. Its
+intended check is one GE (not a Jacobian) using the prior with-A nonnegative
+120×9 source and $h_P=1.9105885246262313$ from chain 11 case 0026, with shared
+$\psi_{child}$ and other parameters held at their old values. Its proposed
+budget is two CPU threads, 12 GiB, 20 minutes and at most 12 lifecycle calls.
+It has not launched. Do not stage its folder or monitor it before actual launch
+receipts exist. Both preparation tasks remain separate; the active monitor is
+read-only and follows only actual receipts.
+
+## September 30, 23:12 New York — improved provisional point and authorized multistart preparation
+
+A fresh compact pass over the original sixteen searches records 360 case rows,
+359 admissible computed GEs and 376 objective calls. All sixteen were still
+active; no failure, completion or postcheck receipt had appeared. The best
+original-weight loss is now 146.424617 at local chain 11, case 0026_nm, improving
+on 151.113459. This trial used the early-fertility-weighted profile, whose own
+weighted objective is 164.610861; cross-profile losses are not comparable. It
+is provisional because its selected-price repeat has not been performed. The
+full 14-target and 31-parameter tables and point metadata are saved under
+[this snapshot](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/best_original_20261001T031237Z/point.json).
+
+The author now separately authorizes eight Torch multistart jobs under
+`utility_floor_psi_multistart_v1`: six nearby Nelder–Mead starts and two
+independent eight-particle PSOs from broader initial regions, retaining the
+original model, weights and bounds with ten free parameters including
+$\psi_{child}$. Each has a fresh two-hour budget, up to 200 objective calls and
+one required postcheck. The code worker owns the packet, which is pending review;
+it has not launched. Its first price guess uses the best saved price
+0.678660685, with existing $q_{ref}$ caps unchanged. The earlier no-add-jobs
+instruction is superseded only for this specifically authorized packet. The
+monitor must not launch it; begin read-only receipt tracking only after actual
+launch receipts are available. Existing searches remain unchanged.
+
+In parallel, the author authorized preparation of a separate fail-closed
+120x9 credit/price-response adapter. It removes artificial borrowing limits
+while retaining lifetime and net-estate accounting and measures fertility
+responses to $\pm1\%$ price/rent changes by credit regime. The Luna worker is
+implementing the adapter; no numerical run has started.
+
+The saved-data Jacobian follow-up finds $h_P$ and $\psi_{child}$ columns highly
+negatively correlated at both simplex centers ($-0.960$ and $-0.967$). The
+weakest step-scaled linear direction is dominated by the early-fertility
+residual at both centers. These local finite-difference diagnostics do not
+establish global or statistical identification. See
+[the weak-direction calculation](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/fable_audit/lead_checks/weak_directions.json)
+and [the lead's review](output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/fable_audit/lead_review.md).
+
 ## September 30, 23:00 New York — free-psi floor searches and audit update
 
 The 23:00 monitor snapshot records 253 passed evaluations and 270 objective
