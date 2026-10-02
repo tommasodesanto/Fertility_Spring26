@@ -1,3 +1,5 @@
+22:32 checkpoint:16-date map5 housing/fiscalresiduals4.69466e-5/1.14957e-5 arewithinunchanged0.0002/0.00002 gates. Exactreplay andtwo-horizoncomparison stillpending atsnapshot.154nativecallsobserved;job18995772RUNNING. No completedcandidate ornew2023checkpoint atsnapshot. [H16clearingreceipt](h16_clearing_checkpoint.json).
+
 22:22 checkpoint:12-date price/fiscalrootCONVERGED andexactreplayerror0. Longer16-date root has2completedmaps andisstillunconverged.106nativecalls observed;job18995772RUNNING. No completedtwo-horizoncandidate or2023checkpoint yet. The provisional12-dategap0.064457 remainsunchanged. [H12rootreceipt](h12_verified_root.json).
 
 22:11 checkpoint: first12-datepath map4 has housing residual0.00014356 andfiscalresidual0.000005014, withinunchanged gates0.0002/0.00002. Exactreplay/rootcompletion and16-datecomparison pending; this is not a completedcandidate. Latestprovisional2020–23 model1.7102072353,target1.64575,gap0.06445723529,loss0.004154735181796579. Fullfourwindowtable andshockbounds linkedbelow. Job18995772 remainsRUNNING;62nativecalls observed.
