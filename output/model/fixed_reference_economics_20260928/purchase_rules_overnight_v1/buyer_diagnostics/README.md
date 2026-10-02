@@ -22,3 +22,27 @@ The quarter-saving buyer restriction depends on next-period saving \(b'-x\), so 
 `financial_access.py::matched_first_birth_access` is a postcheck hook for that financial-access calculation. It accepts the live native parameter object, shared precomputation, prices, pre-birth distribution and fertility probabilities. It computes the same origin-renter first-birth state weights for \(\phi=.8\) and \(1\), and asks whether any owner product passes the rule-specific purchase screen, transaction-grid support, physical housing floor, saving/death/grid lower bound, and budget with positive consumption surplus. It uses the engine's income, family earnings adjustment, housing-stage context, and fecundity helpers. It reports the stricter \(c_{min}\) margin separately because the owner's numerical utility kernel itself rejects only surplus \(\leq10^{-10}\). It does not evaluate continuation values or choice preferences, so its label is financial access, not desired ownership or caused births. A zero-solve execution with the authenticated older input bundle passed on Torch and found no reverse access loss in the inspected age/income cell; the hook has not yet run on an overnight selected postcheck. Review that execution before numerical reporting.
 
 Once a chain's selected postcheck has passed, `run_selected.py --arm hard|quarter --completed <chain/postcheck/completed.json> --out <new-directory>` authenticates the fit through `mechanism/selected_runtime.py`, reconstructs its exact selected parameters, and writes `buyer_net_closing_ratio.json` and `matched_first_birth_financial_access.json` from its saved repeat stage. It refuses a nonterminal or mismatched selected point and flags any observed first-birth owner choice falling outside the financial map. `run_dated.py --engine-root <matching isolated engine> --packet <date_NNN/diagnostic_packet.pkl.gz> --rule hard|quarter --observed-phi .8|1 --out <new JSON>` applies the same matched-state financial map to a trusted dated policy packet. The dated mechanism driver's `mapping.json` supplies the actual first-birth response; these files supply the access mechanism diagnostic. Neither helper launches a model solve. They must be staged separately from the immutable calibration source archive and smoke-tested on the first genuine selected/dating packet.
+
+## Separate Torch addendum and exact later commands
+
+The separate addendum root is `/scratch/td2248/projects/purchase_buyer_diagnostics_v1`. `stage_torch.sh` writes only that new root. `preflight_torch.sh` checks the SHA-256 of every staged buyer, mechanism, floor and base source, then runs the native financial map with the authenticated input bundle for both purchase rules and **zero model solves**. It does not submit jobs. From the repository root:
+
+```sh
+bash output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/stage_torch.sh
+ssh -o BatchMode=yes torch 'bash /scratch/td2248/projects/purchase_buyer_diagnostics_v1/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/preflight_torch.sh'
+```
+
+After `purchase_mechanism_v1/selection/manifest.json` points to two actually postchecked winners, submit one saved-policy readout per arm. The wrapper rechecks all source hashes and the chosen selection JSON/completed-receipt hashes before entering the native runtime. It then requires both exact ROOT/REPEAT reports, 14 targets, 31 parameters, 17 plots and the retained repeat arrays. It writes only under its new result directory.
+
+```sh
+ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=selected,BUYER_ARM=hard /scratch/td2248/projects/purchase_buyer_diagnostics_v1/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
+ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=selected,BUYER_ARM=quarter /scratch/td2248/projects/purchase_buyer_diagnostics_v1/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
+```
+
+After a dated mechanism case has `run/completed.json` with `status=passed`, the same readout wrapper resolves its accepted mapping, checks the selected date packet exists, and reads the model's observed financed share for that date. For example, the date-zero control packet for the hard rule:
+
+```sh
+ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=dated,BUYER_ARM=hard,BUYER_CASE=case_00_hard_control_h12,BUYER_DATE=date_000 /scratch/td2248/projects/purchase_buyer_diagnostics_v1/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
+```
+
+Substitute the actual accepted case name and `date_000`, midpoint or final date. The wrapper refuses missing or failed case receipts. It runs one CPU, 12 GiB, one thread and 20 minutes at most. It never starts a Bellman, equilibrium or transition solve. Existing calibration and mechanism inventories are read-only and remain unchanged.

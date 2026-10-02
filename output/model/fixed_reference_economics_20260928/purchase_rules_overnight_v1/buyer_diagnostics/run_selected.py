@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import subprocess
 import sys
@@ -20,13 +21,35 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--arm", choices=("hard", "quarter"), required=True)
     ap.add_argument("--completed", type=Path, required=True)
+    ap.add_argument("--selection-json", type=Path, required=True)
+    ap.add_argument("--selection-manifest", type=Path, required=True)
     ap.add_argument("--out", type=Path, required=True)
     args = ap.parse_args()
     if args.out.exists():
         raise SystemExit("Refusing existing diagnostic directory")
+    manifest = json.loads(args.selection_manifest.read_text())
+    entry = manifest["arms"][args.arm]
+    selected = json.loads(args.selection_json.read_text())
+    completed = json.loads(args.completed.read_text())
+    def digest(path):
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+    if (digest(args.selection_json) != entry["selected_json_sha256"]
+            or digest(args.completed) != entry["completed_sha256"]
+            or selected.get("status") != "postchecked"
+            or selected.get("arm") != args.arm
+            or int(selected.get("chain", -1)) != int(entry["chain"])
+            or args.completed.parent.parent.name != f"chain_{entry['chain']}"
+            or completed.get("status") != "selected_numerically_verified"):
+        raise RuntimeError("Selection manifest, chosen JSON and completed postcheck disagree")
     args.out.mkdir(parents=True)
     rt = selected_runtime.construct(args.arm, args.completed, args.out / "runtime_auth")
-    _, _, _, repeat = selected_runtime.authenticate_selected(args.arm, args.completed)
+    _, _, root, repeat = selected_runtime.authenticate_selected(args.arm, args.completed)
+    target_rows = rt.runner.readtable(root / "target_fit.csv")
+    if len(target_rows) != 14 or len(rt.parameter_rows) != 31:
+        raise RuntimeError("Incomplete selected 14-target or 31-parameter table")
+    for folder in (root, repeat):
+        if len(list((folder / "standard_diagnostics").glob("*.png"))) != 17:
+            raise RuntimeError("Selected 17-plot diagnostic set is incomplete")
     stage = repeat / "stage/solution_arrays.npz"
     from refactor_lab.engine.parameters import get_fecundity_by_age
     with np.load(stage, allow_pickle=False) as saved:
@@ -71,6 +94,8 @@ def main() -> None:
         "status": "saved_policy_buyer_diagnostics_passed",
         "arm": args.arm,
         "selected_completed": str(args.completed.resolve()),
+        "selection_json_sha256": digest(args.selection_json),
+        "selection_manifest_sha256": digest(args.selection_manifest),
         "stage": str(stage.resolve()),
         "ltv_summary": str(ltv_out.resolve()),
         "access_summary": str((args.out / "matched_first_birth_financial_access.json").resolve()),
