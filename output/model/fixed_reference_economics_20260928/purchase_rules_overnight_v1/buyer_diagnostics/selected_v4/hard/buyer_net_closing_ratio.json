@@ -1,0 +1,193 @@
+{
+  "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/results/chain_11/postcheck/selected_postcheck/phase_b_ge/selected_repeat/stage/solution_arrays.npz",
+  "source_sha256": "f812846a49da1d49692d656a989be253945b621ac9528edac4ae253c1539da0b",
+  "definition": "implied net closing funding ratio max(0,Q-A)/Q; A=b+(1-psi)*old owner asset value; Q=price*new owner rung",
+  "gross_mortgage_ltv_identified": false,
+  "young_age_cells": [
+    26.0,
+    30.0,
+    34.0
+  ],
+  "young_age_label": "model state ages 25\u201334",
+  "groups": {
+    "renter_to_owner_buyers": {
+      "mass": 0.023062009855050632,
+      "mean": 0.5956615860769272,
+      "p10": 0.2526618588307888,
+      "p25": 0.517417906472488,
+      "p50": 0.6768028180962535,
+      "p75": 0.7564952739081362,
+      "p90": 0.7830594258454303,
+      "share_above_80_percent": 0.0,
+      "share_above_90_percent": 0.0,
+      "share_above_100_percent": 0.0,
+      "mass_above_100_percent_equivalently_negative_A": 0.0,
+      "cdf": [
+        {
+          "net_ltv": 0.0,
+          "share_at_or_below": 0.05362373908711498
+        },
+        {
+          "net_ltv": 0.2,
+          "share_at_or_below": 0.08531351170840996
+        },
+        {
+          "net_ltv": 0.4,
+          "share_at_or_below": 0.1577751170347292
+        },
+        {
+          "net_ltv": 0.6,
+          "share_at_or_below": 0.3533555196152828
+        },
+        {
+          "net_ltv": 0.8,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 0.9,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 1.0,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 1.1,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 1.2,
+          "share_at_or_below": 1.0
+        }
+      ]
+    },
+    "owner_switchers": {
+      "mass": 0.011743277376680945,
+      "mean": 0.30624272814369846,
+      "p10": 0.0,
+      "p25": 0.0,
+      "p50": 0.2836988622261797,
+      "p75": 0.5827783126540209,
+      "p90": 0.711521704904844,
+      "share_above_80_percent": 0.0,
+      "share_above_90_percent": 0.0,
+      "share_above_100_percent": 0.0,
+      "mass_above_100_percent_equivalently_negative_A": 0.0,
+      "cdf": [
+        {
+          "net_ltv": 0.0,
+          "share_at_or_below": 0.3474217610678529
+        },
+        {
+          "net_ltv": 0.2,
+          "share_at_or_below": 0.4457195899709843
+        },
+        {
+          "net_ltv": 0.4,
+          "share_at_or_below": 0.5923209762639322
+        },
+        {
+          "net_ltv": 0.6,
+          "share_at_or_below": 0.7656803805144571
+        },
+        {
+          "net_ltv": 0.8,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 0.9,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 1.0,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 1.1,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 1.2,
+          "share_at_or_below": 1.0
+        }
+      ]
+    },
+    "all_purchasers": {
+      "mass": 0.034805287231731576,
+      "mean": 0.49801188406115016,
+      "p10": 0.0,
+      "p25": 0.30490469097413425,
+      "p50": 0.6044892933780636,
+      "p75": 0.729931121970842,
+      "p90": 0.7830594258454303,
+      "share_above_80_percent": 0.0,
+      "share_above_90_percent": 0.0,
+      "share_above_100_percent": 0.0,
+      "mass_above_100_percent_equivalently_negative_A": 0.0,
+      "cdf": [
+        {
+          "net_ltv": 0.0,
+          "share_at_or_below": 0.15275096771387797
+        },
+        {
+          "net_ltv": 0.2,
+          "share_at_or_below": 0.20691424774315262
+        },
+        {
+          "net_ltv": 0.4,
+          "share_at_or_below": 0.3043905586439668
+        },
+        {
+          "net_ltv": 0.6,
+          "share_at_or_below": 0.49247361332910095
+        },
+        {
+          "net_ltv": 0.8,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 0.9,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 1.0,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 1.1,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 1.2,
+          "share_at_or_below": 1.0
+        }
+      ]
+    }
+  },
+  "all_age_buyers_negative_closing_cash": {
+    "renter_to_owner_buyers": {
+      "buyer_mass": 0.10951050116388805,
+      "negative_A_mass": 0.0,
+      "negative_A_share": 0.0
+    },
+    "owner_switchers": {
+      "buyer_mass": 0.10633078522050309,
+      "negative_A_mass": 0.0,
+      "negative_A_share": 0.0
+    }
+  },
+  "renter_to_owner_definition": "origin tenure renter, destination owner; lifetime first ownership is not observed",
+  "owner_switcher_definition": "origin owner, different destination owner rung",
+  "stayers_excluded": true,
+  "new_parent_unable_to_buy": {
+    "status": "strict_downpayment_ineligibility_only",
+    "population": "first-birth flow from origin renters, all ages",
+    "flow_mass": 0.04627291328618811,
+    "share_ineligible_for_every_owner_rung": 0.46388642824192294,
+    "caveat": "Only the closing cash screen is evaluated. Other feasibility and preference channels are excluded."
+  },
+  "phi_choice_range": [
+    0.8,
+    0.8
+  ]
+}
