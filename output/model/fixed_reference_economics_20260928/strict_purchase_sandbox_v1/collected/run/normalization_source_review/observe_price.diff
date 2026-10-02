@@ -1,0 +1,59 @@
+--- original/observe_price
++++ normalized/observe_price
+@@ -10,8 +10,7 @@
+     _require(np.array_equal(grid, context["b_grid"]), "Wealth grid drift")
+     _require(all(float(getattr(P, k)) == float(getattr(context["P"], k)) for k in ("tau_pay", "psi")),
+              "Fiscal or sale rule drift")
+-    _require(np.array_equal(P.H0, context["P"].H0) and np.array_equal(P.xi_supply, context["P"].xi_supply),
+-             "Physical housing supply curve drift")
++    _require(np.array_equal(P.xi_supply, context["P"].xi_supply), "Housing supply elasticity drift")
+     _require(np.array_equal(P.r_bar, context["P"].r_bar) and float(P.pension) == float(context["P"].pension),
+              "Supply rent anchor or pension input drift")
+     P._fert2_probs = sol.fert2_probs.copy()
+@@ -26,6 +25,7 @@
+         float(P.xi_supply[0]))
+     ev = cal.evaluate_period(price, pre, P, grid, sd, cal.SolveCounter(),
+                              supply_rule=supply, supplied_policy=policy)
++    context, P, ev, supply = _normalize_observation(context, live, P, ev, cal, price, final)
+     renter_floor = audit_realized_renter_floor(P, grid, policy, ev)
+     packet = dict(parameters=P, b_grid=grid, shared=sd, solution=sol,
+                   evaluation=ev, stationary_g_pre=pre, supply_rule=supply,
+@@ -46,7 +46,7 @@
+              "Nonfinite GE accounting")
+     _require(entry > 0 and demand > 0 and physical_supply > 0 and actual_births >= 0,
+              "Invalid GE accounting")
+-    population = physical_supply / demand
++    population = 1.0
+     renewal = float(actual_births / (2.1 * entry) - 1)
+     result = dict(price=float(price[0]), d_bar=float(P.unsecured_credit_limit),
+                   adjusted_births_per_normalized_household=float(actual_births),
+@@ -59,7 +59,9 @@
+                   actual_paygo_residual=paygo, outside_entry=0.0,
+                   birth_to_entry_conversion=1 / 2.1,
+                   housing_supply_elasticity=float(P.xi_supply[0]),
+-                  occupied_renter_floor=renter_floor)
++                  occupied_renter_floor=renter_floor, normalized_population=1.0,
++                  H0_derived=float(P.H0[0]), H0_bounds=[.2,80.],
++                  housing_supply_coefficient_role="derived calibrated coefficient at N0=1")
+     fp.write(out / "closure.json", result)
+     if final:
+         _require(abs(renewal) <= RENEWAL_TOL, "Birth renewal root fails")
+@@ -90,7 +92,9 @@
+                 value = float(row["estimate"])
+                 row["near_bound"] = str(min(value-lo,hi-value) <= .01*(hi-lo))
+             elif key == "H0":
+-                row["status"] = "fixed population scale; not identified by per-household targets"
++                row["status"] = "derived calibrated housing supply coefficient at N0=1"
++                row["lower"], row["upper"] = "0.2", "80.0"
++                row["near_bound"] = str(min(float(P.H0[0])-.2,80.-float(P.H0[0])) <= .01*79.8)
+             elif key == "psi_child":
+                 row["status"] = "fixed reference benefit; price clears birth renewal"
+             elif key == "child_benefit_CRRA_coefficient":
+@@ -113,6 +117,6 @@
+         result["standard_plot_count"] = len(plots)
+         result["target_fit_rows"] = len(fits)
+         result["parameter_rows"] = len(params)
+-        result["standard_plot_supply_units"] = "physical supply divided by endogenous household population"
++        result["standard_plot_supply_units"] = "physical housing supply at normalized N0=1"
+         fp.write(out / "closure.json", result)
+     return result

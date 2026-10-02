@@ -1,3 +1,32 @@
+## October 1, 23:49 — strict purchase sandbox completed
+
+Author authorized an immediate isolated evaluation requiring the down payment
+from beginning-of-period wealth. Torch **19004856** was independently confirmed
+RUNNING at 23:45 New York and is now COMPLETED, exit 0. The sole experimental economic change is purchase
+eligibility: `b + net_sale_proceeds >= (1-phi)*purchase_price`, without current
+income. The existing budget `b_next = R*(b + net_sale_proceeds - purchase_price)
++ income - consumption - owner_costs`, interest timing, final debt bound and
+stayer rules remain unchanged. All ten coordinates are fixed at verified
+normalized-v2 chain2/case0064_nm. The existing renewal-price root and internally
+derived H0 remain active; this is not recalibration or adoption. One CPU, 24 GiB,
+20-minute cap, no automatic retry; full 14-target/31-parameter/17-plot reporting
+and native repeat required. Lead verified the exact one-block edit in each of
+two isolated engine copies, source identities, equation fixture and staged
+hashes. The numerical run completed in 227.363 seconds; exact native repeat
+passed. Loss is 217.2069 versus reference 29.9697. Ownership ages 30–55 falls
+from 0.65933 to 0.60168; the recent-parent ownership difference falls from
+0.11975 to 0.05009; first-birth rooms from 1.22524 to 1.03221; early fertility
+from 0.52940 to 0.52654. Mean rooms improves from 5.98525 to 5.91686 against
+target 5.72943. Price is 0.71525151 and derived H0 is 6.77847340. These are
+fixed-coordinate results after the existing price root, not a recalibration or
+an 80-to-90% financing policy experiment. Completed fertility is normalized by
+that root, so its equality is not evidence of a zero fertility policy effect.
+All 114 collected report/plot/receipt hashes match Torch; full 14-target and
+31-parameter comparisons pass arithmetic and identity checks. Standard
+ownership, housing and fertility plots inspected. Packet and reproducibility:
+`output/model/fixed_reference_economics_20260928/strict_purchase_sandbox_v1/README.md`.
+The separate interest-timing experiment remains on hold.
+
 ## October 1, 23:22 — resumed normalized shock search stopped at time limit, no match
 
 Torch **18995772** is terminal: scheduler FAILED, exit 124:0, elapsed 01:28:55; launcher confirms time-limit exit and no auto retry. Two candidates completed. Best completed trial psi=0.1294894427543237 gives 2020–23 household TFR analogue **1.7036578326322902** versus target **1.64575**, gap **+0.05790783263229016**, squared loss **0.003353317080169329**; the 0.005 target tolerance is not met. Exact native 2023 checkpoint is collected and hash-verified. Both horizon roots and exact replay pass; relaxed comparison passes, but original strict comparison, state stability and both terminal checks fail. No complete shock fit or experiment-ready state is claimed. Standard diagnostic plots are absent because the run stopped before final rendering. Candidate 3 has no completed transition or checkpoint. Monitor **PAUSED** pending author decision; no automatic restart, deadline extension or contract change. Normalized chain20/case0028_nm, N0=1 and fixed H0=6.851575289344519 remain the reference. All four target rows, shock bounds, checkpoint and terminal verification: `output/model/transition_readiness_v1/normalized_restart_v1/resume_preparation/deployment/v2/README.md`.

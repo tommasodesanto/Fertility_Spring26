@@ -1,0 +1,20 @@
+--- original/native_evaluator
++++ normalized/native_evaluator
+@@ -6,7 +6,7 @@
+     spec=importlib.util.spec_from_file_location('pilot_matched_workflow',BASE/'run_comparison.py')
+     base=importlib.util.module_from_spec(spec);spec.loader.exec_module(base)
+     sys.path.insert(0,str(HERE))
+-    import phase_b_pilot as ge
++    ge = _get_normalized_ge(out)
+     ctx=base.authored.context_from_bundle(SimpleNamespace(bundle=ROOT/'output/model/publication_refactor_20260929/local_export_v1/inputs',reference_root=ROOT,out=out))
+     install_reporter_on_authored(base.authored)
+     base.authored.authenticate_frozen(ctx)
+@@ -59,6 +59,8 @@
+             if solved['status']!='passed':
+                 exhausted=solved['status']=='uncomputed_bounded_budget' or solved.get('price_search',{}).get('termination_reason')=='budget_or_repeat_reserve'
+                 return dict(status='budget_exhausted' if exhausted else 'inadmissible_numerical',reason=solved['status'],lifecycle_solves=budget.used_lifecycle,price_search=solved.get('price_search'))
++        except H0BoundError as exc:
++            return dict(status="inadmissible_numerical",reason=str(exc),lifecycle_solves=budget.used_lifecycle,derived_H0_bound_rejection=True,rejection_kind="derived_H0_constraint")
+         except TimeoutError as exc:
+             if evaluation_deadline<deadline and time.time()>=evaluation_deadline:
+                 return dict(status='budget_exhausted',reason=str(exc),lifecycle_solves=budget.used_lifecycle)

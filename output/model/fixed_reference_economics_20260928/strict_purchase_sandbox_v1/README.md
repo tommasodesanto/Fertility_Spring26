@@ -8,13 +8,15 @@ Run `python3 verify_fixture.py` and `bash -n stage_torch.sh launch_torch.sh` bef
 
 ## Torch run
 
-Job **19004856** (`strict_purchase_one`) was confirmed **RUNNING** on `cs655`; Slurm reports start **2026-10-01 23:44:58 New York** and a **20-minute** limit (deadline 2026-10-02 00:04:58). It has **one CPU and 24 GiB**. The submission command from the staged directory was:
+Job **19004856** (`strict_purchase_one`) **COMPLETED with exit 0** on `cs655` in **227.363 seconds**. Slurm reports start **2026-10-01 23:44:58 New York**; its limit was **20 minutes**, with **one CPU and 24 GiB**. The submission command from the staged directory was:
 
 ```bash
 sbatch --job-name=strict_purchase_one launch_torch.sh
 ```
 
-The staged directory is `/scratch/td2248/projects/strict_purchase_sandbox_v1/`. The launcher refuses an existing `results/onecase` directory, so this command documents this submission rather than an in-place retry. There is no completed result or economic comparison yet.
+The staged directory is `/scratch/td2248/projects/strict_purchase_sandbox_v1/`. The launcher refuses an existing `results/onecase` directory, so this command documents this submission rather than an in-place retry. The native root and repeat passed, including 14 target rows, 31 parameter rows and 17 identical standard plot hashes. The completed strict loss is **217.20688594292585**, versus **29.969678753593804** at the fixed reference coordinates before the eligibility change. The strict equilibrium price is **0.7152515073815459**, and its derived \(H_0\) is **6.778473404808042**. See the [full target and parameter comparisons](readout/README.md), [CSV target table](readout/target_comparison.csv), [CSV parameter table](readout/parameter_comparison.csv), and [standard diagnostic plots](collected/run/strict_purchase/phase_b_ge/selected_root/standard_diagnostics/).
+
+At these fixed parameters, excluding current income from the purchase gate sharply reduces recent-parent ownership and worsens fit. Current income still enters the budget after the transaction under the retained interest timing. This is a single experimental gate change; it is neither a recalibration nor an evaluation of changing the financed share from 80% to 90%.
 
 The fixed reference is normalized v2, chain 2, case `0064_nm`. Its ten coordinates, all held fixed during the experiment, are:
 
