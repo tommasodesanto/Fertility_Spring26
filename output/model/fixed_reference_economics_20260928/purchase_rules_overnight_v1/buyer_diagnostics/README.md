@@ -64,3 +64,14 @@ Only after the lead publishes final postchecked winners and accepts the policy s
 ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=selected,BUYER_ARM=hard /scratch/td2248/projects/purchase_buyer_diagnostics_v3/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
 ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=selected,BUYER_ARM=quarter /scratch/td2248/projects/purchase_buyer_diagnostics_v3/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
 ```
+
+## Corrected v4 saved-policy readout
+
+The v3 selected jobs stopped at a plot-location check before writing diagnostics: the native `selected_root` report has all 17 standard plots, while `selected_repeat` saves a compact closure and state arrays without a second plot set. `run_selected.py` now checks the 17 plots in `selected_root`; `selected_runtime` checks the compact closure against the full root and authenticates the saved arrays through its native replay. Preserve the failed v3 jobs as evidence. The corrected source stages in a separate `/scratch/td2248/projects/purchase_buyer_diagnostics_v4`, retaining the reviewed mechanism source and v1 immutable selection data routing.
+
+```sh
+bash output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/stage_torch.sh
+ssh -o BatchMode=yes torch 'bash /scratch/td2248/projects/purchase_buyer_diagnostics_v4/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/preflight_torch.sh'
+ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=selected,BUYER_ARM=hard /scratch/td2248/projects/purchase_buyer_diagnostics_v4/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
+ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=selected,BUYER_ARM=quarter /scratch/td2248/projects/purchase_buyer_diagnostics_v4/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
+```

@@ -5,14 +5,14 @@
 #SBATCH --time=00:20:00
 #SBATCH --account=torch_pr_570_general
 #SBATCH --partition=cs
-#SBATCH --output=/scratch/td2248/projects/purchase_buyer_diagnostics_v3/logs/%x-%j.out
+#SBATCH --output=/scratch/td2248/projects/purchase_buyer_diagnostics_v4/logs/%x-%j.out
 # Saved-policy postprocessing only. Submit with BUYER_MODE/BUYER_ARM etc.
 set -euo pipefail
 mode=${BUYER_MODE:?Set BUYER_MODE=selected or dated}
 arm=${BUYER_ARM:?Set BUYER_ARM=hard or quarter}
 [[ "$mode" == selected || "$mode" == dated ]] || exit 2
 [[ "$arm" == hard || "$arm" == quarter ]] || exit 2
-remote=/scratch/td2248/projects/purchase_buyer_diagnostics_v3
+remote=/scratch/td2248/projects/purchase_buyer_diagnostics_v4
 mechanism=/scratch/td2248/projects/purchase_mechanism_reviewed_93831f5a
 selection_store=/scratch/td2248/projects/purchase_mechanism_v1
 floor=/scratch/td2248/projects/normalized_floor_calibration_v1

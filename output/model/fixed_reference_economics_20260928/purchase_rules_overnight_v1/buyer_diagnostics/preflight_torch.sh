@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Exact staged-source authentication and native financial-map smoke; zero solves.
 set -euo pipefail
-remote=/scratch/td2248/projects/purchase_buyer_diagnostics_v3
+remote=/scratch/td2248/projects/purchase_buyer_diagnostics_v4
 mechanism=/scratch/td2248/projects/purchase_mechanism_reviewed_93831f5a
 floor=/scratch/td2248/projects/normalized_floor_calibration_v1
 base=/scratch/td2248/projects/grid_resolution_credit053_v2

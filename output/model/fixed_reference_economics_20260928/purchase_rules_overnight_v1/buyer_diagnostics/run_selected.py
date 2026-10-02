@@ -17,6 +17,11 @@ sys.path.insert(0, str(PACKET / "mechanism"))
 import selected_runtime  # noqa: E402
 
 
+def require_root_plots(root: Path) -> None:
+    if len(list((root / "standard_diagnostics").glob("*.png"))) != 17:
+        raise RuntimeError("Selected ROOT 17-plot diagnostic set is incomplete")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--arm", choices=("hard", "quarter"), required=True)
@@ -47,9 +52,7 @@ def main() -> None:
     target_rows = rt.runner.readtable(root / "target_fit.csv")
     if len(target_rows) != 14 or len(rt.parameter_rows) != 31:
         raise RuntimeError("Incomplete selected 14-target or 31-parameter table")
-    for folder in (root, repeat):
-        if len(list((folder / "standard_diagnostics").glob("*.png"))) != 17:
-            raise RuntimeError("Selected 17-plot diagnostic set is incomplete")
+    require_root_plots(root)
     stage = repeat / "stage/solution_arrays.npz"
     from refactor_lab.engine.parameters import get_fecundity_by_age
     with np.load(stage, allow_pickle=False) as saved:

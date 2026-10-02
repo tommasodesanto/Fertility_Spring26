@@ -7,7 +7,7 @@ preflight = (here / 'preflight_torch.sh').read_text()
 stage = (here / 'stage_torch.sh').read_text()
 source = '/scratch/td2248/projects/purchase_mechanism_reviewed_93831f5a'
 store = '/scratch/td2248/projects/purchase_mechanism_v1'
-buyer = '/scratch/td2248/projects/purchase_buyer_diagnostics_v3'
+buyer = '/scratch/td2248/projects/purchase_buyer_diagnostics_v4'
 assert f'mechanism={source}' in launch and f'mechanism={source}' in preflight
 assert f'selection_store={store}' in launch
 assert f'remote={buyer}' in launch and f'remote={buyer}' in preflight and f'remote={buyer}' in stage
@@ -19,4 +19,7 @@ assert '"$selection_store/selection/manifest.json"' in launch
 assert '"$selection_store/selection/selected_${arm}.json"' in launch
 assert '"$selection_store" "$arm"' in launch
 assert '/purchase_rules_overnight_v1/results:' not in launch
+readout = (here / 'run_selected.py').read_text()
+assert 'root / "standard_diagnostics"' in readout
+assert 'repeat / "standard_diagnostics"' not in readout
 print('reviewed source and immutable selection routing passed; zero solves')
