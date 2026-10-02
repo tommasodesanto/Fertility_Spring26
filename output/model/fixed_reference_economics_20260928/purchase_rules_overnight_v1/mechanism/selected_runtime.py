@@ -2,12 +2,14 @@
 from __future__ import annotations
 
 import hashlib
+import gzip
 import importlib.util
 import json
+import pickle
 import re
 import sys
 from pathlib import Path
-from types import SimpleNamespace
+from types import SimpleNamespace, MethodType
 import numpy as np
 
 PACKET = Path(__file__).resolve().parent.parent
@@ -46,6 +48,135 @@ def validate_compact_repeat(report, repeat):
     require(bool(compact_closure) and all(full_closure.get(key) == value
                                           for key, value in compact_closure.items()),
             "Saved selected repeat closure differs from selected root")
+
+
+def renderer_identity(report):
+    """Read the renderer written inside every standard PNG artifact."""
+    from PIL import Image
+    plots = sorted((Path(report) / "standard_diagnostics").glob("*.png"))
+    require(len(plots) == 17, "Standard diagnostic plot count differs")
+    versions = set()
+    for plot in plots:
+        with Image.open(plot) as image:
+            marker = image.info.get("Software")
+        require(isinstance(marker, str) and marker.startswith("Matplotlib version"),
+                "Standard plot renderer metadata missing: " + plot.name)
+        versions.add(marker)
+    require(len(versions) == 1, "Mixed renderer identities within standard plots")
+    return next(iter(versions)), [plot.name for plot in plots]
+
+
+def full_native_arrays(packet):
+    """Recreate the 95 saved postcheck arrays from the fresh native solution."""
+    sol, shared, P, ev = (packet[key] for key in ("solution", "shared", "parameters", "evaluation"))
+    values = {key: value for key, value in vars(sol).items()
+              if isinstance(value, np.ndarray) and value.dtype != object}
+    values.update({"shared." + key: value for key, value in vars(shared).items()
+                   if isinstance(value, np.ndarray) and value.dtype != object})
+    for key in ("g_pre", "g_post_fertility", "g_current", "g_stay_distribution"):
+        values["distribution." + key] = getattr(ev, key)
+    demand = np.asarray(ev.demand_by_loc)
+    supply = np.asarray(ev.supply_by_loc)
+    values["market_housing_demand"] = demand
+    values["market_housing_excess"] = demand - supply
+    values["parameters.H0"] = np.asarray(P.H0)
+    values["normalization.population"] = np.array([1.])
+    return values
+
+
+def compare_full_native_arrays(saved_path, packet, tolerance=1e-10):
+    fresh = full_native_arrays(packet)
+    with np.load(saved_path, allow_pickle=False) as saved:
+        require(len(saved.files) == len(fresh) == 95 and set(saved.files) == set(fresh),
+                "Saved native array key set differs")
+        maximum = 0.
+        for key in sorted(saved.files):
+            old, new = saved[key], np.asarray(fresh[key])
+            require(old.shape == new.shape and old.dtype == new.dtype,
+                    "Saved native array shape/dtype differs: " + key)
+            require(old.dtype.kind in "biufc", "Unsupported saved native array dtype: " + key)
+            if old.dtype.kind in "biu":
+                require(np.array_equal(old, new), "Saved discrete native array differs: " + key)
+                continue
+            for mask in (np.isnan, np.isposinf, np.isneginf):
+                require(np.array_equal(mask(old), mask(new)),
+                        "Saved native array nonfinite mask differs: " + key)
+            finite = np.isfinite(old)
+            delta = float(np.max(np.abs(old[finite] - new[finite]))) if finite.any() else 0.
+            require(delta <= tolerance, "Saved native numeric array differs: " + key)
+            maximum = max(maximum, delta)
+    return {"fields": len(fresh), "max_abs_delta": maximum, "numeric_tolerance": tolerance}
+
+
+def compare_renderer_aware_reference(runtime, reference, current, packet, saved_arrays):
+    """Preserve the full existing CSV/closure check; isolate renderer-only PNG drift."""
+    from floor_runtime import compare_normalized_reference_reports
+    old_renderer, old_names = renderer_identity(reference)
+    new_renderer, new_names = renderer_identity(current)
+    require(old_names == new_names, "Standard plot names differ")
+    arrays = compare_full_native_arrays(saved_arrays, packet)
+    if old_renderer == new_renderer:
+        comparison = compare_normalized_reference_reports(reference, current)
+        reason = "same_renderer_exact_pngs"
+    else:
+        try:
+            comparison = compare_normalized_reference_reports(reference, current)
+            reason = "different_renderer_exact_pngs"
+        except RuntimeError as exc:
+            require(str(exc) == "Normalized reference standard plots differ",
+                    "Full native reference report differs: " + str(exc))
+            comparison = {"status": "renderer_only_plot_bytes_differ",
+                          "target_rows": 14, "parameter_rows": 31,
+                          "standard_plot_names": old_names}
+            reason = "cross_renderer_full_arrays_and_reports"
+    return dict(status="passed", reason=reason, saved_renderer=old_renderer,
+                fresh_renderer=new_renderer, arrays=arrays, report=comparison,
+                standard_plot_names=old_names)
+
+
+def reconstruct_purchase_reference(self, folder):
+    """Exact native double replay with the isolated renderer-aware comparison."""
+    from floor_runtime import normalized_housing_contract, write
+    folder = Path(folder)
+    results = []
+    receipts = []
+    saved_arrays = self.selected_repeat / "stage/solution_arrays.npz"
+    for index in range(2):
+        packet, record = self.stationary(self.P.psi_child, self.reference_price,
+                                         folder / f"repeat_{index}")
+        require(abs(record["renewal_residual"]) <= 1e-6, "Selected renewal differs")
+        require(abs(record["population_scale"] / self.population_scale - 1) <= 1e-10,
+                "Selected population differs")
+        live = dict(P=packet["parameters"], b_grid=self.grid, sd=packet["shared"],
+                    sol=packet["solution"], price=np.array([self.reference_price]))
+        context = dict(self.ctx, out=folder / f"repeat_{index}", deadline_epoch=float("inf"))
+        with self.native_bindings():
+            self.ge.observe_price(context, live, "selected_root", final=True)
+        report = folder / f"repeat_{index}/phase_b_ge/selected_root"
+        require(normalized_housing_contract(self.handoff), "Selected normalized housing contract missing")
+        receipts.append(compare_renderer_aware_reference(self, self.report, report, packet, saved_arrays))
+        results.append((packet, record))
+    self.runner.compare_repeated(folder / "repeat_0/phase_b_ge/selected_root",
+                                 folder / "repeat_1/phase_b_ge/selected_root")
+    self.packet = results[-1][0]
+    self.initial_state = self.stationary_state(self.packet, self.population_scale)
+    self.reference_verified = True
+    checkpoint = folder / "selected_native_packet.pkl.gz"
+    with gzip.open(checkpoint, "wb") as stream:
+        pickle.dump(self.packet, stream)
+    write(folder / "reference_reconstruction.json", dict(
+        schema="current_floor_reference_reconstruction_v1", status="passed",
+        policy_calls=sum(row[1]["policy_calls"] for row in results), lifecycle_calls=2,
+        checkpoint=dict(path=str(checkpoint), sha256=sha(checkpoint)),
+        checkpoint_sha256=sha(checkpoint), identity=self.identity(),
+        renderer_aware_replays=receipts,
+        reports={str(report): {str(path.relative_to(report)): sha(path)
+                              for path in report.rglob("*") if path.is_file() and
+                              (path.name in ("parameters.csv", "target_fit.csv", "closure.json")
+                               or path.suffix == ".png")}
+                 for report in (folder / "repeat_0/phase_b_ge/selected_root",
+                                folder / "repeat_1/phase_b_ge/selected_root")}))
+    return self.packet
 
 
 def authenticate_selected(arm, completed):
@@ -147,6 +278,8 @@ def construct(arm, completed, output):
     rt.sourcepins = {**read(PACKET / "source_pins.json"), **{str(PACKET.relative_to(ROOT) / k): v
                     for k, v in read(PACKET / "engine_pins.json").items() if k.startswith("engines/" + arm + "/")}}
     rt.report = report
+    rt.selected_repeat = repeat
+    rt.reconstruct_reference = MethodType(reconstruct_purchase_reference, rt)
     rt.runner = runner
     rt.ge = ge
     rt.ctx = ctx

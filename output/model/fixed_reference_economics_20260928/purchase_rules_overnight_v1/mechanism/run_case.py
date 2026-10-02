@@ -20,6 +20,7 @@ import numpy as np
 from selected_runtime import PACKET, ROOT, construct, read, require, sha
 
 TRANSITION = ROOT / "code/model/experiments/transition_readiness"
+sys.path.insert(0, str(TRANSITION))
 sys.path.insert(0, str(ROOT / "code/model/tools"))
 sys.path.insert(0, str(TRANSITION / "pinned_tools"))
 from e5f_ssj_scaled_step_root import solve_price_path_scaled
@@ -49,9 +50,17 @@ def write(path, value):
 
 
 def stationary_valid(record, gates):
-    return (all(record["gates"].values())
+    # Load the existing typed native-audit interpreter only when the mapping is
+    # evaluated, after construct() authenticates the selected source tree.
+    from one_shock_floor import stationary_mapping_valid
+    demand = record.get("absolute_housing_demand")
+    supply = record.get("absolute_housing_supply")
+    return (stationary_mapping_valid(record)
             and abs(record["renewal_residual"]) <= gates["stationary_renewal_tolerance"]
-            and math.isfinite(record["population_scale"]) and record["population_scale"] > 0)
+            and math.isfinite(record["population_scale"]) and record["population_scale"] > 0
+            and all(isinstance(x, (float, int)) and math.isfinite(x) and x > 0
+                    for x in (demand, supply))
+            and abs(demand-supply)/max(abs(supply), 1e-12) <= gates["market_tolerance"])
 
 
 def solve_terminal(runtime, folder, plan, deadline):

@@ -2,9 +2,12 @@
 from __future__ import annotations
 
 import ast
+import copy
 import difflib
 import hashlib
 import json
+import symtable
+import builtins
 import subprocess
 import sys
 import tempfile
@@ -17,13 +20,112 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[5]
 sys.path.insert(0, str(ROOT / "code/model/tools"))
+sys.path.insert(0, str(ROOT / "code/model/experiments/transition_readiness"))
 import dated_phi
 from integration import bind_phi_path, financing_path
 import run_case
 from selected_runtime import authenticate_selected
+import selected_runtime
 
 
 class PhiPathTests(unittest.TestCase):
+    def test_full_saved_array_gate_rejects_all_material_differences(self):
+        values={f"field_{i:03d}":np.array([float(i)]) for i in range(93)}
+        values["choice"]=np.array([1],dtype=np.int64)
+        values["nonfinite"]=np.array([float("nan"),1.])
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)/"arrays.npz"
+            np.savez(path,**values)
+            with patch.object(selected_runtime,"full_native_arrays",return_value=values):
+                self.assertEqual(selected_runtime.compare_full_native_arrays(path,{})["fields"],95)
+            for name,replacement,error in (
+                ("choice",np.array([2],dtype=np.int64),"discrete"),
+                ("field_000",np.array([1e-5]),"numeric"),
+                ("nonfinite",np.array([0.,1.]),"nonfinite")):
+                altered=dict(values);altered[name]=replacement
+                with patch.object(selected_runtime,"full_native_arrays",return_value=altered):
+                    with self.assertRaisesRegex(RuntimeError,error):
+                        selected_runtime.compare_full_native_arrays(path,{})
+            omitted=dict(values);omitted.pop("field_000")
+            with patch.object(selected_runtime,"full_native_arrays",return_value=omitted):
+                with self.assertRaisesRegex(RuntimeError,"key set"):
+                    selected_runtime.compare_full_native_arrays(path,{})
+
+    def test_renderer_exception_only_for_different_artifact_renderers(self):
+        from PIL import Image, PngImagePlugin
+        import floor_runtime
+        with tempfile.TemporaryDirectory() as tmp:
+            original,current=[Path(tmp)/name for name in ("original","current")]
+            for root,version in ((original,"3.7.1"),(current,"3.10.0")):
+                (root/"standard_diagnostics").mkdir(parents=True)
+                for i in range(17):
+                    info=PngImagePlugin.PngInfo()
+                    info.add_text("Software","Matplotlib version"+version)
+                    Image.new("RGB",(1,1),(i,0,0)).save(root/"standard_diagnostics"/f"plot_{i:02d}.png",pnginfo=info)
+            with (patch.object(selected_runtime,"compare_full_native_arrays",return_value={"fields":95}),
+                  patch.object(floor_runtime,"compare_normalized_reference_reports",
+                               side_effect=RuntimeError("Normalized reference standard plots differ"))):
+                result=selected_runtime.compare_renderer_aware_reference(None,original,current,{},Path(tmp)/"arrays.npz")
+                self.assertEqual(result["reason"],"cross_renderer_full_arrays_and_reports")
+                for plot in (current/"standard_diagnostics").glob("*.png"):
+                    info=PngImagePlugin.PngInfo();info.add_text("Software","Matplotlib version3.7.1")
+                    Image.new("RGB",(1,1),(0,0,0)).save(plot,pnginfo=info)
+                with self.assertRaisesRegex(RuntimeError,"standard plots differ"):
+                    selected_runtime.compare_renderer_aware_reference(None,original,current,{},Path(tmp)/"arrays.npz")
+                (current/"standard_diagnostics/plot_00.png").unlink()
+                with self.assertRaisesRegex(RuntimeError,"plot count differs"):
+                    selected_runtime.compare_renderer_aware_reference(None,original,current,{},Path(tmp)/"arrays.npz")
+            # A changed calibration table cannot be classified as renderer drift.
+            for plot in (current/"standard_diagnostics").glob("*.png"):
+                info=PngImagePlugin.PngInfo();info.add_text("Software","Matplotlib version3.10.0")
+                Image.new("RGB",(1,1)).save(plot,pnginfo=info)
+            info=PngImagePlugin.PngInfo();info.add_text("Software","Matplotlib version3.10.0")
+            Image.new("RGB",(1,1)).save(current/"standard_diagnostics/plot_00.png",pnginfo=info)
+            with (patch.object(selected_runtime,"compare_full_native_arrays",return_value={"fields":95}),
+                  patch.object(floor_runtime,"compare_normalized_reference_reports",
+                               side_effect=RuntimeError("Normalized reference numeric value differs: target_fit.csv"))):
+                with self.assertRaisesRegex(RuntimeError,"target_fit.csv"):
+                    selected_runtime.compare_renderer_aware_reference(None,original,current,{},Path(tmp)/"arrays.npz")
+
+    @staticmethod
+    def valid_stationary_record():
+        return dict(price=.7, population_scale=1.2, renewal_residual=0.,
+                    accounting_valid=True, absolute_housing_demand=6.,
+                    absolute_housing_supply=6., gates=dict(
+                        household_budget={}, purchase={}, estate={}, policy_arrays={},
+                        stationary_operator={}, housing_market_clearing_required=False,
+                        feasibility_projection_mass=0., fiscal_certificate=dict(
+                            marginal_gate=True, fiscal_gate=True,
+                            marginal_tolerance=1e-9, fiscal_tolerance=1e-6)))
+
+    def test_stationary_audit_interprets_descriptive_false_and_rejects_failures(self):
+        controls=dict(stationary_renewal_tolerance=1e-6,market_tolerance=2e-4)
+        base=self.valid_stationary_record()
+        self.assertTrue(run_case.stationary_valid(base,controls))
+        for change in (
+            lambda r:r.update(accounting_valid=False),
+            lambda r:r['gates']['fiscal_certificate'].update(fiscal_gate=False),
+            lambda r:r['gates'].update(feasibility_projection_mass=1e-8),
+            lambda r:r.update(renewal_residual=2e-6),
+            lambda r:r.update(absolute_housing_supply=5.),
+            lambda r:r.update(absolute_housing_demand=.01001,absolute_housing_supply=.01),
+            lambda r:r.update(absolute_housing_demand=float('nan')),
+        ):
+            bad=copy.deepcopy(base);change(bad)
+            self.assertFalse(run_case.stationary_valid(bad,controls))
+
+    def test_copied_path_globals_are_bound(self):
+        source = (Path(__file__).parent / "dated_phi.py").read_text()
+        table = symtable.symtable(source, "dated_phi.py", "exec")
+        module_names = set(dated_phi.__dict__) | set(dir(builtins))
+        for name in ("backward_value_path", "evaluate_path_at_prices"):
+            function = next(child for child in table.get_children() if child.get_name() == name)
+            missing = sorted(symbol.get_name() for symbol in function.get_symbols()
+                             if symbol.is_global() and symbol.is_referenced()
+                             and symbol.get_name() not in module_names)
+            self.assertEqual(missing, [], name)
+        self.assertIs(dated_phi.validate_entry_queues, dated_phi.base.validate_entry_queues)
+
     def test_fresh_startup_defers_legacy_import_until_after_authentication_point(self):
         script = (
             f"import sys; sys.path[:0]={[str(Path(__file__).parent), str(ROOT / 'code/model/tools'), str(ROOT / 'code/model/experiments/transition_readiness/pinned_tools')]!r}; "
@@ -134,8 +236,7 @@ class PhiPathTests(unittest.TestCase):
                 observed_phi.append(float(runtime.P.phi[0]))
                 Path(out).mkdir(parents=True)
                 return (dict(parameters=SimpleNamespace(phi=runtime.P.phi.copy(),pension=.3)),
-                        dict(price=price,population_scale=1.2,renewal_residual=0.,
-                             accounting_valid=True,gates=dict(native=True)))
+                        dict(self.valid_stationary_record(),price=price))
             runtime.stationary=stationary
             def fake_map(runtime, **kw):
                 Path(kw["folder"]).mkdir(parents=True)

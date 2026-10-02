@@ -15,6 +15,7 @@ from run_e5f_perfect_foresight_transition import (
     PFInitialState, PathEvaluation, HistoricalConditioning, calendar,
     social_security, transition, copy_birth_queue, entry_clock_timing,
     rents_from_asset_prices, _owner_rate, CALENDAR_START_YEAR,
+    validate_entry_queues,
 )
 
 def backward_value_path(
