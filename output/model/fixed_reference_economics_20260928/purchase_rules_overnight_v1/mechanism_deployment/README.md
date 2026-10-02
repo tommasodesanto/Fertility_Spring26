@@ -40,3 +40,13 @@ Final one-date native smoke array 19022272 and the dependent 12-case array
 19022273 were submitted under `afterok:19022272`. These are experimental
 best-available fits, not accepted paper baselines; case acceptance still depends
 on the saved native receipts and numerical gates.
+
+The separate 48/64-date numerical-horizon extension is prepared at
+`/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1`. Its
+source archive SHA-256 is `94a1962be2ba0142a1bfc71228c4f18ee16e48e968d9f8f26538aae2586f34d2`
+and inventory SHA-256 is `a4559bf682de6e15461e6e35df595769e515d6b1c5c236900ff8fc46b9dbc24e`.
+Both arm-specific zero-native preflights passed. The extension preserves the
+same economics and acceptance gates, uses the v1 selection store read-only,
+and writes distinct results. Its 12-case routing, per-case four-hour/1,024-call
+limits, absolute 10:00 ET deadline, and external script hashes are recorded in
+`extension_routing_receipt.json`. It has not been submitted as of preparation.
