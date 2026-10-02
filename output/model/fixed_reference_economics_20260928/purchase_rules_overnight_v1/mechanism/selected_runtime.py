@@ -37,6 +37,17 @@ def load(name, path):
     return module
 
 
+def validate_compact_repeat(report, repeat):
+    """Authenticate the saved compact native repeat without demanding full reports."""
+    require((repeat / "stage/solution_arrays.npz").is_file(),
+            "Selected native state arrays missing")
+    compact_closure = read(repeat / "closure.json")
+    full_closure = read(report / "closure.json")
+    require(bool(compact_closure) and all(full_closure.get(key) == value
+                                          for key, value in compact_closure.items()),
+            "Saved selected repeat closure differs from selected root")
+
+
 def authenticate_selected(arm, completed):
     """Require an actual fresh selected postcheck and matching 14/31/17 reports."""
     require(arm in {"hard", "quarter"}, "Unknown purchase rule")
@@ -53,7 +64,7 @@ def authenticate_selected(arm, completed):
     root = completed.parent / "selected_postcheck/phase_b_ge/selected_root"
     repeat = completed.parent / "selected_postcheck/phase_b_ge/selected_repeat"
     require(root.is_dir() and repeat.is_dir(), "Selected native ROOT/REPEAT missing")
-    require((repeat / "stage/solution_arrays.npz").is_file(), "Selected native state arrays missing")
+    validate_compact_repeat(root, repeat)
     input_contract = read(completed.parent / "input_contract.json")
     require(input_contract.get("purchase_rule") == arm and input_contract.get("normalized_population") == 1.0
             and input_contract.get("owner_financed_share") == 0.8
@@ -85,7 +96,8 @@ def construct(arm, completed, output):
     import inputs
     import runner
     from floor_runtime import FloorRuntime, normalized_housing_contract, bind_normalized_reference_housing
-    runner.compare_repeated(report, repeat)
+    # Saved selected_repeat is compact; reconstruct_reference compares two fresh
+    # full 14/31/17 reports against selected_root and against each other.
     rows = runner.readtable(report / "target_fit.csv")
     runner.residual(rows)
     parameter_rows = runner.readtable(report / "parameters.csv")

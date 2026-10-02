@@ -4,6 +4,7 @@ from __future__ import annotations
 import ast
 import difflib
 import hashlib
+import json
 import sys
 import tempfile
 import time
@@ -18,9 +19,42 @@ sys.path.insert(0, str(ROOT / "code/model/tools"))
 import dated_phi
 from integration import bind_phi_path, financing_path
 import run_case
+from selected_runtime import authenticate_selected
 
 
 class PhiPathTests(unittest.TestCase):
+    def test_authenticated_compact_saved_repeat(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            postcheck = Path(tmp) / "chain_9/postcheck"
+            root = postcheck / "selected_postcheck/phase_b_ge/selected_root"
+            repeat = postcheck / "selected_postcheck/phase_b_ge/selected_repeat"
+            root.mkdir(parents=True)
+            (repeat / "stage").mkdir(parents=True)
+            (root / "closure.json").write_text(json.dumps({"price": .7, "population_scale": 1.,
+                                                             "report_only": 17}))
+            compact = repeat / "closure.json"
+            compact.write_text(json.dumps({"price": .7, "population_scale": 1.}))
+            arrays = repeat / "stage/solution_arrays.npz"
+            arrays.write_bytes(b"native-checkpoint-fixture")
+            (postcheck / "input_contract.json").write_text(json.dumps(dict(
+                purchase_rule="hard", normalized_population=1., owner_financed_share=.8,
+                entry=dict(arm="nonnegative_mean"), weight_contract_sha256="weight",
+                parameter_contract_sha256="parameters")))
+            completed = postcheck / "completed.json"
+            completed.write_text(json.dumps(dict(status="selected_numerically_verified",
+                selected=dict(parameters={"p": .1}, weight_fingerprint="weight"),
+                selected_postcheck=dict(status="passed", parameters={"p": .1},
+                                        weight_fingerprint="weight"))))
+            self.assertEqual(authenticate_selected("hard", completed)[2:],
+                             (root.resolve(), repeat.resolve()))
+            arrays.unlink()
+            with self.assertRaisesRegex(RuntimeError, "state arrays missing"):
+                authenticate_selected("hard", completed)
+            arrays.write_bytes(b"native-checkpoint-fixture")
+            compact.write_text(json.dumps({"price": .8, "population_scale": 1.}))
+            with self.assertRaisesRegex(RuntimeError, "repeat closure differs"):
+                authenticate_selected("hard", completed)
+
     def test_paths_and_terminal_values(self):
         self.assertEqual(financing_path("control", 3).tolist(), [.8,.8,.8])
         self.assertEqual(financing_path("temporary", 3).tolist(), [1.,.8,.8])
