@@ -124,6 +124,19 @@ renter housing demand increased: renter and owner rooms clear one aggregate
 housing-services market. The local receipt does not save both tenure-specific
 room quantities at the two dates.
 
+This motivates a duration test without claiming its outcome. At the accepted
+date-zero asset price and fixed saved continuation value, the two crossed-rent
+cells give a secant first-birth response of -0.119527 per unit of rent. Linear
+interpolation places the rent increase that exactly exhausts the direct
+credit gain at approximately 0.000660, or 0.54% of baseline rent. The accepted
+temporary rent increase is 0.002444, or 2.01%. If the asset price instead
+remained flat at its accepted date-zero policy value into the next period,
+the no-arbitrage formula would imply a rent increase of only 0.000353 (0.29%)
+at that same current asset price. This is a fixed-state arithmetic comparison,
+not a forecast: a longer credit policy would change the equilibrium asset
+price path, future values, and household decisions, all of which require a
+separate accepted transition run.
+
 Reproduce locally with the existing source tree. The `--smoke` pass exercises
 the same control and policy branches using the saved fertility array and makes
 zero native calls. Use the watchdog launcher for production; it limits the run
