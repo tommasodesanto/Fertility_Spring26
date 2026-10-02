@@ -116,3 +116,5 @@ The deck now includes the best saved soft point: chain 16, case 0046_nm, loss 23
 Notation follows the older deck where possible: u(c,s;m), tenure subscripts, xi for first_birth_fixed_cost, and kappa_C for kappa_fert_continuation. This changes notation only.
 
 October 2 prose cleanup: shortened review and model exposition, removed repeated workflow summaries, and retained the full identification and fit tables. Equations and numerical results are unchanged.
+
+Calibration setup and identification are combined in one parameter/target slide (13 frames total); recomputed moments are marked. Regression slide notes the earlier mistake without changing estimates.

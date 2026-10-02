@@ -17,7 +17,7 @@
 \date{October 2, 2026}
 \hypersetup{pdftitle={JMP progress, September 17--October 2, 2026},pdfauthor={Tommaso De Santo}}
 % Separate adviser progress deck. Main source latex/JMP_slides/JMP_slides.tex is read-only.
-% Fourteen frames, including three financing-and-fertility result slides after calibration. No overlays.
+% Thirteen frames, including three financing-and-fertility result slides after calibration. No overlays.
 % Relative source paths below are in Fertility_Spring26. See source_map.md for full paths.
 \begin{document}
 
@@ -82,7 +82,7 @@ Children leaving home and new adult households entering the economy are separate
 % 5: PSID event-study estimates; raw coefficients and pointwise intervals.
 \begin{frame}{Housing around the first birth}
 \small
-I rebuilt the PSID event study using interview dates and household status before the first birth.
+We found a mistake in the earlier regression and rebuilt the PSID event study using interview dates and household status before birth.
 \begin{center}
 \begin{tikzpicture}
 \begin{axis}[
@@ -123,57 +123,30 @@ At years 3--4, rooms rise by \textbf{1.465} (SE 0.050), ownership by
 person and year effects; survey weights; 95\% pointwise intervals.
 \end{frame}
 
-% 6: Fixed national inputs and estimation procedure for the current specification.
-\begin{frame}{Calibration strategy and inputs}
-\footnotesize
-I estimate a 2007 stationary economy using national measures of housing, earnings, wealth, and fertility.
-\par\smallskip
-\begin{center}
-\begin{tabular}{lll}
-\toprule
-Input & Value & Measurement \\
-\midrule
-Mean occupied rooms & 5.729 & AHS 2007 \\
-Pension / working-household earnings & 0.229 & CPS ASEC, income 2007 \\
-Annual child-directed estates / wealth & 0.729\% & SCF 2007 mortality proxy \\
-Annual depreciation / property tax & 1.416\% / 1.060\% & National housing inputs \\
-\bottomrule
-\end{tabular}
-\end{center}
-\begin{itemize}\setlength\itemsep{3pt}
- \item Earnings, demographics, housing taxes and depreciation, interest, and mortgage financing are fixed.
- \item Ten parameters match ten moments by weighted least squares.
- \item Three additional moments assess the fit; completed fertility checks birth renewal.
-\end{itemize}
-\par\smallskip For each parameter vector, I solve household choices and birth renewal, then derive $H_0$ so housing demand clears at normalized population $N_0=1$.
-\vfill
-The first-birth housing comparison uses a model proxy for the empirical event study.
-\end{frame}
-
-% 7: Identification across the ten jointly estimated parameters.
-\begin{frame}{Identification}
+% 7: Parameters and target moments across the ten jointly estimated parameters.
+\begin{frame}{Parameters and target moments}
 \small
-Ten parameters are estimated jointly from ten scored moments.
+2007 stationary economy: ten parameters are estimated jointly from ten moments.
 \par\smallskip
-\fontsize{8.7}{9.5}\selectfont
-\begin{tabular*}{0.98\textwidth}{@{}p{0.20\textwidth}p{0.31\textwidth}@{\extracolsep{\fill}}p{0.43\textwidth}@{}}
+\fontsize{8.1}{8.8}\selectfont
+\begin{tabular*}{0.98\textwidth}{@{}>{\raggedright\arraybackslash}p{0.20\textwidth}>{\raggedright\arraybackslash}p{0.26\textwidth}@{\extracolsep{\fill}}>{\raggedright\arraybackslash}p{0.48\textwidth}@{}}
 \toprule
-Parameter & Economic interpretation & Main moments \\
+Parameter & Economic interpretation & Target moments \\
 \midrule
-$\beta$ & Patience & Wealth / earnings \\
-$\theta_0$ & Bequest weight & Annual bequests / wealth \\
-$\chi$ & Owner housing-service premium & Ownership at ages 30--55; mean rooms \\
-$\kappa_T$ & Tenure tastes & Ownership at ages 30--55; recent-parent ownership gap \\
-$h_P$ & Basic space for parents & First-birth rooms; mean rooms \\
-$\xi$ & First-birth cost & Childlessness at ages 40--44; children at age 25 \\
-$\kappa_1$ & First-birth taste dispersion & Mean first-birth age; children at age 25 \\
-$\kappa_C$ & Later-birth taste dispersion & One-child share among mothers; children at age 25 \\
-$\psi$ & Child-benefit level & Childlessness; children at age 25 \\
-$\gamma$ & Child-benefit curvature & One-child share among mothers; children at age 25 \\
+$\beta$ & Patience & Wealth / earnings (6.927) \\
+$\theta_0$ & Bequest weight & Annual bequests / wealth (0.729\%)$^*$ \\
+$\chi$ & Owner housing premium & Ownership, ages 30--55 (67.626\%); mean rooms (5.729)$^*$ \\
+$\kappa_T$ & Tenure tastes & Ownership, ages 30--55; recent-parent gap (12.761 pp) \\
+$h_P$ & Basic space for parents & First-birth rooms (1.465)$^*$; mean rooms \\
+$\xi$ & First-birth cost & Childlessness, ages 40--44 (19.828\%); children at 25 (0.810) \\
+$\kappa_1$ & First-birth taste dispersion & Mean first-birth age (25.976); children at 25 \\
+$\kappa_C$ & Later-birth taste dispersion & One child among mothers (21.366\%); children at 25 \\
+$\psi$ & Child-benefit level & Childlessness; children at 25 \\
+$\gamma$ & Child-benefit curvature & One child among mothers (21.366\%); children at 25 \\
 \bottomrule
 \end{tabular*}
 \par\vspace{0.3em}
-\footnotesize Parameters jointly affect these moments. $H_0$ follows from housing clearing; $\theta_1$ is fixed externally. Local identification has not been established.
+\fontsize{8}{8.8}\selectfont $^*$Recomputed: mean rooms (AHS), bequests (SCF), and first-birth rooms (PSID). Also updated pension/earnings, depreciation and property tax. Parameters jointly affect the moments; $H_0$ follows from housing clearing and $\theta_1$ is fixed externally.
 \end{frame}
 
 % 8: Current ROOT fit with ten scored moments and three validation moments.
