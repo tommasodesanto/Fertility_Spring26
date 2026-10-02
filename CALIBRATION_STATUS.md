@@ -31,12 +31,16 @@ The immutable policy input selection is recorded in
 
 Policy pilot v4 jobs **19022024** and **19022025** passed with three native
 calls each. Under the separately reviewed production source `93831f5a`,
-smoke array **19022272** tasks0/1 is running and the 12-case policy array
-**19022273** is pending on its after-ok dependency. The reviewed source root
-is `/scratch/td2248/projects/purchase_mechanism_reviewed_93831f5a`.
-There is **no policy response yet**. A selected numerical calibration point
-is an input to those runs, not evidence of a fertility effect of 80-to-100%
-financing. Saved-policy buyer diagnostic v4 jobs **19022340** (hard) and
+smoke array **19022272** tasks0/1 passed with exit 0. In 12-case policy array
+**19022273**, all four 80% control cases (00/03/06/09) have completed with
+terminal and mapping gates, while the eight 100% temporary/permanent cases
+are running with fresh checkpoints; the permanent terminal roots converged
+in ten evaluations. The reviewed source root is
+`/scratch/td2248/projects/purchase_mechanism_reviewed_93831f5a`.
+There is **no verified 100% policy first-birth response yet**. A selected
+numerical calibration point is an input to those runs, not evidence of a
+fertility effect of 80-to-100% financing. Saved-policy buyer diagnostic v4
+jobs **19022340** (hard) and
 **19022341** (quarter-saving) passed with zero model solves. Among actual
 first-birth flow originating from renters, **61.829%** under the hard rule and
 **7.411%** under quarter-saving had no financially feasible owner product at
