@@ -173,7 +173,7 @@ Bequest wealth shift $\theta_1$ & 0.008 & 1\% of median annual earnings \\
 % 7: Parameters and target moments across the ten jointly estimated parameters.
 \begin{frame}{Parameters and target moments}
 \small
-2007 stationary economy: ten parameters, ten moments.
+2007 stationary economy: ten parameters, eleven moments.
 \par\smallskip
 \fontsize{8.4}{9.4}\selectfont
 \begin{tabular*}{0.98\textwidth}{@{}>{\raggedright\arraybackslash}p{0.10\textwidth}>{\raggedright\arraybackslash}p{0.32\textwidth}@{\extracolsep{\fill}}>{\raggedright\arraybackslash}p{0.40\textwidth}r@{}}
@@ -188,18 +188,18 @@ $\theta_0$ & Bequest weight & Annual bequests / wealth (\%)$^*$ & 0.729 \\
 $\chi$ & Owner housing premium & Ownership, ages 30--55 (\%) & 67.626 \\
 $\kappa_T$ & Tenure tastes & Recent-parent ownership difference (pp) & 12.761 \\
 $h_P$ & Basic space for parents & First-birth rooms difference$^*$ & 1.465 \\
-$\chi$, $h_P$ & Jointly & Mean rooms$^*$ & 5.729 \\
+-- & Additional moment & Mean rooms$^*$ & 5.729 \\
 \midrule
 \multicolumn{4}{@{}l}{\emph{Fertility}}\\
-$\psi$ & Child-benefit level & Childlessness, ages 40--44 (\%) & 19.828 \\
-$\xi$ & First-birth cost & Children at age 25 & 0.810 \\
+$\psi$ & Child-benefit level & Completed fertility & 2.100 \\
+$\xi$ & First-birth cost & Childlessness, ages 40--44 (\%) & 19.828 \\
 $\kappa_1$ & First-birth taste dispersion & Mean first-birth age & 25.976 \\
-$\kappa_C$ & Later-birth taste dispersion & One child among mothers (\%) & 21.366 \\
-$\gamma$ & Child-benefit curvature & No distinct moment & \\
+$\gamma$ & Child-benefit curvature & One child among mothers (\%) & 21.366 \\
+$\kappa_C$ & Later-birth taste dispersion & Children at age 25 & 0.810 \\
 \bottomrule
 \end{tabular*}
 \par\vspace{0.3em}
-\fontsize{8}{8.8}\selectfont All ten are estimated jointly. Housing has four moments and three parameters; fertility has four and five. $^*$Recomputed: mean rooms (AHS), bequests (SCF), first-birth rooms (PSID).
+\fontsize{8}{8.8}\selectfont Each parameter is paired with the moment it mainly moves; all ten are estimated jointly. $^*$Recomputed: mean rooms (AHS), bequests (SCF), first-birth rooms (PSID).
 \end{frame}
 
 % 8: Current ROOT fit with ten scored moments and three validation moments.
