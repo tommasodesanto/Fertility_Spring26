@@ -50,11 +50,13 @@ at 06:11 New York with unchanged economics and terminal acceptance gates.
 Smoke array **19024491** passed both arms with three native calls each;
 all 12 production tasks in **19024492** were RUNNING at 06:16. Each task
 has at most 1,024 native policy calls and four hours, subject to the absolute
-10:00 New York cutoff. **Policy readout at 08:54:** all four 80% controls and
+10:00 New York cutoff. **Policy readout at 09:23:** all four 80% controls and
 all four temporary 100% financing cases (hard/quarter, 48/64 dates) passed
-their native gates against matched controls. Only the two permanent 64-date
-cases were still running, with fresh checkpoints. Neither permanent 48-date
-case passed, and there is no accepted permanent-policy birth response.
+their native gates against matched controls. Eleven of 12 cases were terminal.
+Only hard permanent 64 dates was still running, at root evaluation 11 with
+726 native calls and a checkpoint about eight minutes old. Neither permanent
+48-date case nor quarter permanent 64 dates passed; there is no accepted
+permanent-policy birth response.
 In the first period, **hard-rule** first-birth flow fell from 0.0498037467
 under its matched control to 0.0495339649 at 48 dates (**0.5416896477%**),
 or 0.0495355343 at 64 dates (**0.5385384782%**). Its aggregate first-birth
@@ -70,7 +72,10 @@ The hard permanent 48-date run exhausted its 12-evaluation root budget: its
 best raw maximum residual was 0.0002548867 versus the 0.0002 gate. The quarter
 permanent 48-date run passed its dated root and replay checks but failed the
 terminal distribution and renter-price gates (0.00225310 and 0.00118360,
-respectively, versus 0.001). Corrected source-pinned 48/64-date overlap
+respectively, versus 0.001). Quarter permanent 64 dates exhausted its
+12-evaluation dated-root budget after 790 native calls; its best scaled score
+was 8.569256145, with housing and Social Security roots failing while mapping
+and replay checks passed. Corrected source-pinned 48/64-date overlap
 checks for **both temporary paths** pass the original first-four-date macro
 and saved period-four population, distribution and both queue gates at 0.001.
 The largest macro gap is 0.00005532 (hard) and 0.00005127 (quarter); saved
@@ -80,7 +85,7 @@ The receipts are in `output/model/fixed_reference_economics_20260928/purchase_ru
 `accepted_hard_temporary_h48_0722.json`, `accepted_quarter_temporary_h48_0752.json`,
 `accepted_hard_temporary_h64_0852.json`, `accepted_quarter_temporary_h64_0822.json`,
 `hard_temporary_h48_h64_overlap_v1.json`,
-`quarter_temporary_h48_h64_overlap_v2.json`, and `progress_0852.json`.
+`quarter_temporary_h48_h64_overlap_v2.json`, and `progress_0922.json`.
 Saved-policy buyer diagnostic v4
 jobs **19022340** (hard) and
 **19022341** (quarter-saving) passed with zero model solves. Among actual

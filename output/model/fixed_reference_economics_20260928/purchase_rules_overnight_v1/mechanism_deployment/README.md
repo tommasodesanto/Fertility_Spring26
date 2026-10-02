@@ -1,10 +1,12 @@
 # Overnight dated financing experiments: launch handoff
 
-**October 2, 08:54 New York policy readout.** All four 80% controls and all
+**October 2, 09:23 New York policy readout.** All four 80% controls and all
 four temporary 100% financing cases (hard/quarter, 48/64 dates) passed their
-native gates against matched controls. Only the two permanent 64-date cases
-were still running, with fresh checkpoints. Neither permanent 48-date case
-passed, so no permanent-policy birth response is accepted. In the first
+native gates against matched controls. Eleven of 12 cases were terminal.
+Only hard permanent 64 dates was still running, at root evaluation 11 with
+726 native calls and a checkpoint about eight minutes old. Neither permanent
+48-date case nor quarter permanent 64 dates passed, so no permanent-policy
+birth response is accepted. In the first
 period, hard-rule flow changed from control 0.04980374667823033 to
 0.04953396493829134 at 48 dates (−0.5416896477%) and 0.049535534338795546
 at 64 dates (−0.5385384782%); aggregate first-birth hazards fell by
@@ -17,6 +19,9 @@ Hard permanent 48 dates exhausted the 12-evaluation root budget: best raw
 maximum residual 0.0002548867 exceeded the 0.0002 gate. Quarter permanent
 48 dates passed dated root and replay checks but failed terminal distribution
 and renter-price gaps, 0.00225310 and 0.00118360 versus a 0.001 gate.
+Quarter permanent 64 dates exhausted its 12-evaluation dated-root budget
+after 790 native calls; its best scaled score was 8.569256145, with housing
+and Social Security roots failing while mapping and replay checks passed.
 Corrected source-pinned 48/64-date overlap checks for the
 [hard temporary path](hard_temporary_h48_h64_overlap_v1.json) and
 [quarter temporary path](quarter_temporary_h48_h64_overlap_v2.json) pass the
@@ -24,14 +29,15 @@ original first-four-date macro and saved period-four population,
 distribution and both queue gates at 0.001. The largest macro gaps are
 0.00005532 and 0.00005127, respectively; saved distribution gaps are
 0.00010931 and 0.00003595. This is not a full native-state certificate:
-the saved checkpoints lack forecast paths and value arrays. The read-only
-comparison is reproduced by `python mechanism_deployment/compare_saved_horizons.py`.
+the saved checkpoints lack forecast paths and value arrays. For the required
+`--source-root`, `--frozen-root`, `--short-case`, `--long-case`, and `--out`
+arguments, run `python mechanism_deployment/compare_saved_horizons.py --help`.
 See
 [hard T48](accepted_hard_temporary_h48_0722.json),
 [quarter T48](accepted_quarter_temporary_h48_0752.json), and
 [hard T64](accepted_hard_temporary_h64_0852.json),
 [quarter T64](accepted_quarter_temporary_h64_0822.json), and
-[progress_0852.json](progress_0852.json). The underlying hard and quarter
+[progress_0922.json](progress_0922.json). The underlying hard and quarter
 fits remain fresh-postchecked at losses 97.0112198 and 51.5560360,
 respectively, without optimizer convergence certificates and with material
 target misses. They are experimental selected points, not adopted paper baselines.
