@@ -84,8 +84,13 @@ renter unit price 0.1204923477, and fixed \(H_0=7.2885733899\).
 In the separate 80%-versus-100% **stationary comparison**, all-age ownership
 rises from 0.60525 to 0.69128 (hard) and 0.64046 to 0.73114 (quarter);
 these are comparisons of two stationary distributions, not accepted
-dated-transition effects. Stationary first-birth flow and hazard are under
-measurement review and are not reported here.
+dated-transition effects. Using the source-matched pre-fertility childless
+risk set, stationary first-birth flow **falls 2.431463%** (hard) and
+**2.215934%** (quarter). The exact observer definition, saved one-step
+agreement and hazards are in
+`mechanism_deployment/permanent_steady_state_comparison.json`. These are
+long-run stationary comparisons, not an accepted first-birth response along
+the failed permanent-policy transitions.
 The terminal price root imposes
 \(\text{births}/(2.1\,\text{entry})=1\), while population adjusts to clear
 housing. This replacement condition is part of the steady-state closure;
