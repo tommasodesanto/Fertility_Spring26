@@ -7,6 +7,12 @@ verify the factor-of-ten conversion algebra for the reference and separately
 identified floor experiment. This is a read-only equation/arithmetic result,
 not a rescaled equilibrium or empirical elasticity validation.
 
+The October 1 [independent assessment of purchase financing and the calibration plateau](independent_assessment_20261001/ASSESSMENT.md)
+is a read-only review with zero model solves: purchase-budget algebra, saved-array
+tabulations at the earlier 31.284 point, and a regression Jacobian from the
+normalized v2 search candidates. It adopts nothing; its
+[facts table and scripts](independent_assessment_20261001/README.md) list every source.
+
 ## Quick facts — verified September 30
 
 Use this section for routine questions; follow the linked evidence only when

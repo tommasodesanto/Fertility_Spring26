@@ -1,0 +1,193 @@
+1277 candidates; params ['beta_annual', 'chi', 'child_benefit_curvature', 'first_birth_fixed_cost', 'h_P', 'kappa_fert', 'kappa_fert_continuation', 'psi_child', 'tenure_choice_kappa', 'theta0']
+moments ['cps_childlessness', 'cps_exactly_one', 'nchs_mean_age', 'wealth_earnings', 'bequest_wealth', 'mean_rooms', 'ownership_30_55', 'first_birth_rooms', 'recent_parent_ownership', 'early_fertility']
+                                      min        50%        max       std
+base_loss                       30.077754  31.987388  46.500391  2.104708
+price                            0.690530   0.715062   0.744418  0.007302
+H0_derived                       6.533665   6.864622   7.139811  0.083855
+param__beta_annual               0.966534   0.967586   0.968720  0.000374
+param__chi                       1.061609   1.091400   1.127188  0.008094
+param__child_benefit_curvature   0.086245   0.094378   0.101195  0.002832
+param__first_birth_fixed_cost    0.369647   0.402562   0.440522  0.014337
+param__h_P                       2.265707   2.297918   2.300000  0.004458
+param__kappa_fert                0.122420   0.130427   0.141696  0.004019
+param__kappa_fert_continuation   0.342532   0.360045   0.382486  0.006176
+param__psi_child                 0.164719   0.171724   0.177915  0.001715
+param__tenure_choice_kappa       0.012728   0.013489   0.014742  0.000395
+param__theta0                    0.098419   0.105527   0.116235  0.003887
+                            target        weight        min        max       std
+cps_childlessness         0.198279  3.553230e+04   0.199210   0.207028  0.001178
+cps_exactly_one           0.213655  2.695282e+04   0.205971   0.214035  0.001145
+nchs_mean_age            25.976264  1.398281e+02  25.859158  26.038045  0.027844
+wealth_earnings           6.926584  7.595098e+00   6.470558   6.690189  0.039346
+bequest_wealth            0.007291  5.165289e+06   0.006809   0.006937  0.000027
+mean_rooms                5.729434  1.280207e+02   5.848598   6.112068  0.035738
+ownership_30_55           0.676260  2.339362e+03   0.604657   0.716376  0.014204
+first_birth_rooms         1.465000  1.375653e+02   1.209796   1.240749  0.004565
+recent_parent_ownership   0.127608  2.705582e+04   0.098760   0.131412  0.004696
+early_fertility           0.809528  1.000000e+02   0.524532   0.536180  0.001854
+                                mean_rooms__model  first_birth_rooms__model  early_fertility__model  recent_parent_ownership__model  ownership_30_55__model  price
+mean_rooms__model                           1.000                    -0.429                   0.057                           0.750                   0.421 -0.941
+first_birth_rooms__model                   -0.429                     1.000                  -0.416                          -0.622                   0.131  0.388
+early_fertility__model                      0.057                    -0.416                   1.000                           0.016                  -0.123 -0.085
+recent_parent_ownership__model              0.750                    -0.622                   0.016                           1.000                  -0.142 -0.758
+ownership_30_55__model                      0.421                     0.131                  -0.123                          -0.142                   1.000 -0.328
+price                                      -0.941                     0.388                  -0.085                          -0.758                  -0.328  1.000
+design rank 11 cond of Z 10.722708419740107
+R2 {'cps_childlessness': 1.0, 'cps_exactly_one': 1.0, 'nchs_mean_age': 1.0, 'wealth_earnings': 1.0, 'bequest_wealth': 0.995, 'mean_rooms': 0.999, 'ownership_30_55': 0.999, 'first_birth_rooms': 0.937, 'recent_parent_ownership': 0.991, 'early_fertility': 0.999}
+resid sd {'cps_childlessness': 1.51e-05, 'cps_exactly_one': 1.59e-05, 'nchs_mean_age': 0.000614, 'wealth_earnings': 0.00018, 'bequest_wealth': 1.8e-06, 'mean_rooms': 0.000846, 'ownership_30_55': 0.000507, 'first_birth_rooms': 0.00115, 'recent_parent_ownership': 0.000434, 'early_fertility': 4.43e-05}
+Jacobian (d moment / d param), physical units
+                         beta_annual    chi  child_benefit_curvature  first_birth_fixed_cost    h_P  kappa_fert  kappa_fert_continuation  psi_child  tenure_choice_kappa  theta0
+cps_childlessness             -0.342  0.012                   -0.088                   0.082  0.003      -0.185                   -0.133      0.346               -0.096  -0.001
+cps_exactly_one                0.110 -0.008                    0.070                  -0.114 -0.002       0.315                    0.078     -0.218                0.056   0.000
+nchs_mean_age                 -2.355  0.256                   -0.604                  -1.597  0.067      10.815                   -4.065      6.810               -1.204  -0.152
+wealth_earnings               98.036  0.755                    0.026                   0.026  0.072       0.425                   -0.017     -0.199               -3.690   1.222
+bequest_wealth                 0.002  0.000                    0.000                   0.000  0.000      -0.000                   -0.000     -0.001               -0.010   0.007
+mean_rooms                     3.028  0.301                    2.086                   2.899  1.447       1.504                   -4.836    -24.582              -29.504   0.529
+ownership_30_55                1.846  1.656                    0.197                   0.293  0.153       0.120                   -0.508     -2.359               -0.548   0.033
+first_birth_rooms              6.277  0.161                   -0.241                  -0.248  0.354       0.453                    0.219      2.419                1.923   0.044
+recent_parent_ownership       -2.932 -0.308                    0.194                   0.426  0.218      -0.126                   -0.793     -2.756               -3.199  -0.009
+early_fertility               -0.531 -0.023                    0.083                   0.028 -0.006      -0.519                    0.310     -0.549                0.100   0.012
+effect of +1 cloud sd of param, in weighted-gap units sqrt(w)*dm
+                         beta_annual    chi  child_benefit_curvature  first_birth_fixed_cost    h_P  kappa_fert  kappa_fert_continuation  psi_child  tenure_choice_kappa  theta0
+cps_childlessness             -0.024  0.018                   -0.047                   0.222  0.002      -0.140                   -0.155      0.112               -0.007  -0.001
+cps_exactly_one                0.007 -0.011                    0.033                  -0.269 -0.001       0.208                    0.079     -0.061                0.004   0.000
+nchs_mean_age                 -0.010  0.024                   -0.020                  -0.271  0.004       0.514                   -0.297      0.138               -0.006  -0.007
+wealth_earnings                0.101  0.017                    0.000                   0.001  0.001       0.005                   -0.000     -0.001               -0.004   0.013
+bequest_wealth                 0.002  0.005                    0.000                   0.003  0.000      -0.001                   -0.003     -0.004               -0.009   0.065
+mean_rooms                     0.013  0.028                    0.067                   0.470  0.073       0.068                   -0.338     -0.477               -0.132   0.023
+ownership_30_55                0.033  0.648                    0.027                   0.203  0.033       0.023                   -0.152     -0.196               -0.010   0.006
+first_birth_rooms              0.028  0.015                   -0.008                  -0.042  0.019       0.021                    0.016      0.049                0.009   0.002
+recent_parent_ownership       -0.181 -0.410                    0.090                   1.005  0.160      -0.083                   -0.805     -0.777               -0.208  -0.006
+early_fertility               -0.002 -0.002                    0.002                   0.004 -0.000      -0.021                    0.019     -0.009                0.000   0.000
+weighted gaps sqrt(w)*g: {'cps_childlessness': 1.063, 'cps_exactly_one': -0.664, 'nchs_mean_age': -0.091, 'wealth_earnings': -1.018, 'bequest_wealth': -0.972, 'mean_rooms': 2.814, 'ownership_30_55': -0.411, 'first_birth_rooms': -2.79, 'recent_parent_ownership': -1.68, 'early_fertility': -2.798} loss 30.077754075654013
+singular values (weighted, per cloud-sd): [1.7868 0.7379 0.6937 0.361  0.1273 0.0644 0.0423 0.0242 0.0094 0.0002] cond 8399.972315625193
+weakest right-singular vector (param mix, cloud-sd units): {'beta_annual': -0.007, 'chi': 0.021, 'child_benefit_curvature': 0.914, 'first_birth_fixed_cost': -0.021, 'h_P': 0.032, 'kappa_fert': -0.075, 'kappa_fert_continuation': -0.057, 'psi_child': 0.228, 'tenure_choice_kappa': -0.316, 'theta0': -0.039}
+unconstrained GN step in cloud-sd units: {'beta_annual': -87.1, 'chi': 268.5, 'child_benefit_curvature': 12032.0, 'first_birth_fixed_cost': -293.0, 'h_P': 532.4, 'kappa_fert': -994.6, 'kappa_fert_continuation': -761.6, 'psi_child': 2993.9, 'tenure_choice_kappa': -4063.9, 'theta0': -485.5}
+implied physical new params: {'beta_annual': 0.9348, 'chi': 3.2709, 'child_benefit_curvature': 34.1551, 'first_birth_fixed_cost': -3.815, 'h_P': 4.6723, 'kappa_fert': -3.8716, 'kappa_fert_continuation': -4.3513, 'psi_child': 5.3055, 'tenure_choice_kappa': -1.5917, 'theta0': -1.7814}
+bounded linear LS predicted loss: 14.291488477793491 step(sd): [ 17.8 -11.9 -35.    6.3  -0.    6.2 -14.9 -33.5 195.1  40.2]
+new params {'beta_annual': 0.974, 'chi': 1.0025, 'child_benefit_curvature': 0.0, 'first_birth_fixed_cost': 0.474, 'h_P': 2.3, 'kappa_fert': 0.1491, 'kappa_fert_continuation': 0.2585, 'psi_child': 0.1144, 'tenure_choice_kappa': 0.0908, 'theta0': 0.2613}
+predicted gaps at bounded optimum {'cps_childlessness': -0.0015, 'cps_exactly_one': -0.0023, 'nchs_mean_age': 0.0034, 'wealth_earnings': 0.1395, 'bequest_wealth': 0.0, 'mean_rooms': -0.0016, 'ownership_30_55': -0.0005, 'first_birth_rooms': -0.2029, 'recent_parent_ownership': -0.0006, 'early_fertility': -0.2872}
+|step|<=3 sd: predicted loss 27.554; gaps rooms 0.215, fbrooms -0.244, early -0.279; active h_P at ub: True
+|step|<=10 sd: predicted loss 23.717; gaps rooms 0.178, fbrooms -0.247, early -0.277; active h_P at ub: True
+|step|<=30 sd: predicted loss 17.634; gaps rooms 0.086, fbrooms -0.241, early -0.277; active h_P at ub: True
+[h_P free] |step|<=3 sd: predicted loss 26.974; h_P -> 2.313; gaps rooms 0.213, fbrooms -0.238, early -0.279
+[h_P free] |step|<=10 sd: predicted loss 21.838; h_P -> 2.345; gaps rooms 0.173, fbrooms -0.222, early -0.278
+[h_P free] |step|<=30 sd: predicted loss 13.318; h_P -> 2.434; gaps rooms 0.068, fbrooms -0.177, early -0.276
+corr(actual loss, linear-moment loss)=0.9867; max abs err=1.957; err at best=0.368
+first_birth_rooms R2 lin 0.9370 quad-diag 0.9688
+mean_rooms R2 lin 0.9994 quad-diag 0.9998
+recent_parent_ownership R2 lin 0.9914 quad-diag 0.9928
+early_fertility R2 lin 0.9994 quad-diag 0.9997
+intercept gaps vs actual gaps at best:
+                             lin   actual
+cps_childlessness        0.00564  0.00564
+cps_exactly_one         -0.00406 -0.00404
+nchs_mean_age           -0.00794 -0.00770
+wealth_earnings         -0.36926 -0.36934
+bequest_wealth          -0.00043 -0.00043
+mean_rooms               0.24935  0.24867
+ownership_30_55         -0.00857 -0.00850
+first_birth_rooms       -0.23727 -0.23785
+recent_parent_ownership -0.01084 -0.01021
+early_fertility         -0.27979 -0.27979
+loss gradient per cloud-sd: {'beta_annual': 0.278, 'chi': 1.007, 'child_benefit_curvature': -0.077, 'first_birth_fixed_cost': -0.016, 'h_P': -0.283, 'kappa_fert': -0.015, 'kappa_fert_continuation': 0.52, 'psi_child': 0.327, 'tenure_choice_kappa': -0.04, 'theta0': -0.021}  |grad|=1.249
+Levenberg-Marquardt path (Euclidean step length in cloud-sd, predicted loss, gaps for rooms/fbrooms/early/rpo):
+lam=100.000 |step|=   0.01 sd  loss= 30.438  rooms +0.249 fb -0.237 early -0.280 rpo -0.0108 own -0.0086  h_P=2.300 psi=0.1719 tk=0.0137 cbc=0.0991
+lam= 10.000 |step|=   0.06 sd  loss= 30.378  rooms +0.250 fb -0.237 early -0.280 rpo -0.0105 own -0.0091  h_P=2.300 psi=0.1718 tk=0.0137 cbc=0.0991
+lam=  3.000 |step|=   0.16 sd  loss= 30.264  rooms +0.251 fb -0.238 early -0.280 rpo -0.0102 own -0.0102  h_P=2.300 psi=0.1718 tk=0.0137 cbc=0.0991
+lam=  1.000 |step|=   0.39 sd  loss= 30.063  rooms +0.250 fb -0.238 early -0.280 rpo -0.0097 own -0.0125  h_P=2.301 psi=0.1718 tk=0.0137 cbc=0.0991
+lam=  0.300 |step|=   0.92 sd  loss= 29.725  rooms +0.247 fb -0.238 early -0.280 rpo -0.0092 own -0.0159  h_P=2.302 psi=0.1716 tk=0.0138 cbc=0.0993
+lam=  0.100 |step|=   2.14 sd  loss= 29.149  rooms +0.240 fb -0.237 early -0.280 rpo -0.0088 own -0.0179  h_P=2.305 psi=0.1712 tk=0.0140 cbc=0.0997
+lam=  0.030 |step|=   6.17 sd  loss= 27.569  rooms +0.224 fb -0.235 early -0.279 rpo -0.0081 own -0.0178  h_P=2.316 psi=0.1701 tk=0.0146 cbc=0.1008
+lam=  0.010 |step|=  15.94 sd  loss= 24.226  rooms +0.195 fb -0.224 early -0.278 rpo -0.0071 own -0.0157  h_P=2.343 psi=0.1680 tk=0.0161 cbc=0.1033
+lam=  0.003 |step|=  39.16 sd  loss= 17.835  rooms +0.140 fb -0.190 early -0.277 rpo -0.0051 own -0.0113  h_P=2.416 psi=0.1642 tk=0.0195 cbc=0.1091
+lam=  0.001 |step|=  70.21 sd  loss= 12.046  rooms +0.080 fb -0.133 early -0.276 rpo -0.0030 own -0.0065  h_P=2.529 psi=0.1618 tk=0.0241 cbc=0.1175
+sample distance from best (cloud-sd): quantiles [1.83 3.83 4.41 5.24 6.55]
+max change in each moment from a 5-sd Euclidean step vs gap:
+  cps_childlessness          reach=0.0087  gap=+0.0056  ratio gap/reach=0.6
+  cps_exactly_one            reach=0.0108  gap=-0.0041  ratio gap/reach=0.4
+  nchs_mean_age              reach=0.2822  gap=-0.0079  ratio gap/reach=0.0
+  wealth_earnings            reach=0.1879  gap=-0.3693  ratio gap/reach=2.0
+  bequest_wealth             reach=0.0001  gap=-0.0004  ratio gap/reach=2.9
+  mean_rooms                 reach=0.3411  gap=+0.2494  ratio gap/reach=0.7
+  ownership_30_55            reach=0.0750  gap=-0.0086  ratio gap/reach=0.1
+  first_birth_rooms          reach=0.0338  gap=-0.2373  ratio gap/reach=7.0
+  recent_parent_ownership    reach=0.0485  gap=-0.0108  ratio gap/reach=0.2
+  early_fertility            reach=0.0152  gap=-0.2798  ratio gap/reach=18.5
+weighted-gap change from +1% of each parameter:
+                         beta_annual    chi  child_benefit_curvature  first_birth_fixed_cost    h_P  kappa_fert  kappa_fert_continuation  psi_child  tenure_choice_kappa  theta0
+cps_childlessness             -0.624  0.024                   -0.016                   0.060  0.011      -0.043                   -0.088      0.112               -0.002  -0.000
+cps_exactly_one                0.174 -0.015                    0.011                  -0.072 -0.008       0.064                    0.045     -0.062                0.001   0.000
+nchs_mean_age                 -0.269  0.033                   -0.007                  -0.073  0.018       0.159                   -0.169      0.138               -0.002  -0.002
+wealth_earnings                2.614  0.023                    0.000                   0.000  0.005       0.001                   -0.000     -0.001               -0.001   0.004
+bequest_wealth                 0.046  0.007                    0.000                   0.001  0.000      -0.000                   -0.002     -0.004               -0.003   0.018
+mean_rooms                     0.331  0.037                    0.023                   0.126  0.376       0.021                   -0.192     -0.478               -0.046   0.006
+ownership_30_55                0.864  0.880                    0.009                   0.054  0.170       0.007                   -0.086     -0.196               -0.004   0.002
+first_birth_rooms              0.712  0.021                   -0.003                  -0.011  0.096       0.007                    0.009      0.049                0.003   0.001
+recent_parent_ownership       -4.666 -0.557                    0.032                   0.269  0.825      -0.026                   -0.457     -0.779               -0.072  -0.002
+early_fertility               -0.051 -0.003                    0.001                   0.001 -0.001      -0.006                    0.011     -0.009                0.000   0.000
+singular values (per 1% param change): [5.6413 1.0852 0.7947 0.2881 0.187  0.1008 0.0182 0.0134 0.0032 0.0001]
+ weak dir -1 {'beta_annual': -0.0, 'chi': 0.01, 'child_benefit_curvature': 0.94, 'first_birth_fixed_cost': -0.03, 'h_P': 0.0, 'kappa_fert': -0.09, 'kappa_fert_continuation': -0.04, 'psi_child': 0.08, 'tenure_choice_kappa': -0.33, 'theta0': -0.05}
+ weak dir -2 {'beta_annual': -0.0, 'chi': 0.01, 'child_benefit_curvature': -0.33, 'first_birth_fixed_cost': -0.37, 'h_P': 0.01, 'kappa_fert': -0.26, 'kappa_fert_continuation': -0.07, 'psi_child': -0.02, 'tenure_choice_kappa': -0.81, 'theta0': -0.16}
+ weak dir -3 {'beta_annual': 0.0, 'chi': -0.0, 'child_benefit_curvature': 0.08, 'first_birth_fixed_cost': -0.61, 'h_P': -0.03, 'kappa_fert': -0.52, 'kappa_fert_continuation': -0.32, 'psi_child': -0.09, 'tenure_choice_kappa': 0.39, 'theta0': 0.28}
+ strongest moment loadings U[:,0..2]
+                            0     1     2
+cps_childlessness       -0.11  0.09  0.18
+cps_exactly_one          0.03 -0.02 -0.06
+nchs_mean_age           -0.05  0.06  0.13
+wealth_earnings          0.45 -0.31 -0.52
+bequest_wealth           0.01 -0.01 -0.00
+mean_rooms               0.04 -0.60 -0.31
+ownership_30_55          0.16 -0.63  0.72
+first_birth_rooms        0.12 -0.11 -0.13
+recent_parent_ownership -0.86 -0.34 -0.21
+early_fertility         -0.01  0.00  0.01
+ moments least spanned (U last cols)
+                            0     1     2
+cps_childlessness       -0.02  0.67 -0.03
+cps_exactly_one          0.28  0.69 -0.07
+nchs_mean_age           -0.04 -0.13  0.06
+wealth_earnings          0.52 -0.03  0.02
+bequest_wealth           0.33 -0.09 -0.01
+mean_rooms              -0.59  0.17 -0.00
+ownership_30_55          0.19 -0.05 -0.00
+first_birth_rooms       -0.28  0.04 -0.00
+recent_parent_ownership  0.26 -0.07  0.00
+early_fertility          0.01  0.07  1.00
+Jacobian entries with OLS s.e. (all 1277 points)
+  mean_rooms h_P 1.447 (0.006); psi_child -24.582 (0.019); tenure_choice_kappa -29.504 (0.120); kappa_fert_continuation -4.836 (0.006); chi 0.301 (0.003); first_birth_fixed_cost 2.899 (0.003); child_benefit_curvature 2.086 (0.010)
+  first_birth_rooms h_P 0.354 (0.008); psi_child 2.419 (0.025); tenure_choice_kappa 1.923 (0.162); kappa_fert_continuation 0.219 (0.008); chi 0.161 (0.004); first_birth_fixed_cost -0.248 (0.005); child_benefit_curvature -0.241 (0.014)
+  recent_parent_ownership h_P 0.218 (0.003); psi_child -2.756 (0.010); tenure_choice_kappa -3.199 (0.061); kappa_fert_continuation -0.793 (0.003); chi -0.308 (0.002); first_birth_fixed_cost 0.426 (0.002); child_benefit_curvature 0.194 (0.005)
+  ownership_30_55 h_P 0.153 (0.003); psi_child -2.359 (0.011); tenure_choice_kappa -0.548 (0.072); kappa_fert_continuation -0.508 (0.004); chi 1.656 (0.002); first_birth_fixed_cost 0.293 (0.002); child_benefit_curvature 0.197 (0.006)
+  early_fertility h_P -0.006 (0.000); psi_child -0.549 (0.001); tenure_choice_kappa 0.100 (0.006); kappa_fert_continuation 0.310 (0.000); chi -0.023 (0.000); first_birth_fixed_cost 0.028 (0.000); child_benefit_curvature 0.083 (0.001)
+  cps_childlessness h_P 0.003 (0.000); psi_child 0.346 (0.000); tenure_choice_kappa -0.096 (0.002); kappa_fert_continuation -0.133 (0.000); chi 0.012 (0.000); first_birth_fixed_cost 0.082 (0.000); child_benefit_curvature -0.088 (0.000)
+loss<=median 639 | d rooms/d h_P 1.45, d fb/d h_P 0.382, d rpo/d h_P 0.200, d rooms/d psi -24.9, d fb/d psi 2.00, d rpo/d psi -2.56, d early/d kcont 0.312
+loss>median 638 | d rooms/d h_P 1.43, d fb/d h_P 0.331, d rpo/d h_P 0.208, d rooms/d psi -24.5, d fb/d psi 2.50, d rpo/d psi -2.79, d early/d kcont 0.310
+chains 0-11 637 | d rooms/d h_P 1.45, d fb/d h_P 0.342, d rpo/d h_P 0.226, d rooms/d psi -24.6, d fb/d psi 2.33, d rpo/d psi -2.83, d early/d kcont 0.310
+chains 12-23 640 | d rooms/d h_P 1.43, d fb/d h_P 0.364, d rpo/d h_P 0.205, d rooms/d psi -24.4, d fb/d psi 2.55, d rpo/d psi -2.71, d early/d kcont 0.310
+share of points with h_P==2.3: 0.24823805794831635  h_P quantiles [2.275  2.2922 2.2979 2.3   ]
+corr(h_P, loss)=-0.141
+     chain  base_loss    price  param__beta_annual  param__chi  param__child_benefit_curvature  param__first_birth_fixed_cost  param__h_P  param__kappa_fert  param__kappa_fert_continuation  param__psi_child  param__tenure_choice_kappa  param__theta0
+167      2   30.07775  0.71691             0.96738     1.09875                         0.09907                        0.38424     2.30000            0.12433                         0.35076           0.17187                     0.01370        0.10525
+48       0   30.10586  0.71807             0.96707     1.09137                         0.09793                        0.38991     2.29888            0.12600                         0.35383           0.17215                     0.01361        0.10366
+49       0   30.10623  0.71815             0.96699     1.09111                         0.09806                        0.38966     2.29877            0.12603                         0.35384           0.17217                     0.01364        0.10392
+154      2   30.10783  0.72008             0.96711     1.09304                         0.09909                        0.38520     2.29790            0.12527                         0.35204           0.17231                     0.01348        0.10368
+161      2   30.11372  0.71520             0.96749     1.09229                         0.09919                        0.38421     2.29845            0.12477                         0.35260           0.17104                     0.01354        0.10396
+58       0   30.12026  0.71653             0.96732     1.09559                         0.09652                        0.38923     2.29968            0.12574                         0.35300           0.17179                     0.01365        0.10402
+69       1   30.12772  0.71739             0.96735     1.09039                         0.09869                        0.39080     2.30000            0.12779                         0.35562           0.17198                     0.01379        0.10132
+59       0   30.13066  0.71833             0.96740     1.09133                         0.09698                        0.38834     2.29849            0.12634                         0.35290           0.17213                     0.01380        0.10557
+{'cps_childlessness': 1.129, 'cps_exactly_one': 0.441, 'nchs_mean_age': 0.008, 'wealth_earnings': 1.036, 'bequest_wealth': 0.945, 'mean_rooms': 7.917, 'ownership_30_55': 0.169, 'first_birth_rooms': 7.783, 'recent_parent_ownership': 2.822, 'early_fertility': 7.828}
+box +-2 sd: predicted loss 28.47 (from 30.45); step(sd) {'beta_annual': -2.0, 'chi': -0.6, 'child_benefit_curvature': 2.0, 'first_birth_fixed_cost': -2.0, 'h_P': -0.0, 'kappa_fert': -1.8, 'kappa_fert_continuation': -2.0, 'psi_child': -0.5, 'tenure_choice_kappa': 2.0, 'theta0': 2.0}
+    new params {'beta_annual': 0.96663, 'chi': 1.09397, 'child_benefit_curvature': 0.10473, 'first_birth_fixed_cost': 0.35557, 'h_P': 2.3, 'kappa_fert': 0.11729, 'kappa_fert_continuation': 0.33842, 'psi_child': 0.17101, 'tenure_choice_kappa': 0.01449, 'theta0': 0.11302}
+    contributions {'cps_childlessness': 1.09, 'cps_exactly_one': 0.31, 'nchs_mean_age': 0.0, 'wealth_earnings': 1.49, 'bequest_wealth': 0.75, 'mean_rooms': 6.5, 'ownership_30_55': 0.75, 'first_birth_rooms': 8.13, 'recent_parent_ownership': 1.66, 'early_fertility': 7.79}
+box +-3 sd: predicted loss 27.82 (from 30.45); step(sd) {'beta_annual': -2.3, 'chi': -0.5, 'child_benefit_curvature': 3.0, 'first_birth_fixed_cost': -3.0, 'h_P': -0.0, 'kappa_fert': -2.7, 'kappa_fert_continuation': -3.0, 'psi_child': -0.8, 'tenure_choice_kappa': 3.0, 'theta0': 3.0}
+    new params {'beta_annual': 0.96652, 'chi': 1.09434, 'child_benefit_curvature': 0.10756, 'first_birth_fixed_cost': 0.34124, 'h_P': 2.3, 'kappa_fert': 0.1134, 'kappa_fert_continuation': 0.33224, 'psi_child': 0.17046, 'tenure_choice_kappa': 0.01489, 'theta0': 0.1169}
+    contributions {'cps_childlessness': 1.06, 'cps_exactly_one': 0.26, 'nchs_mean_age': 0.0, 'wealth_earnings': 1.55, 'bequest_wealth': 0.65, 'mean_rooms': 6.05, 'ownership_30_55': 0.69, 'first_birth_rooms': 8.22, 'recent_parent_ownership': 1.56, 'early_fertility': 7.77}
+box +-5 sd: predicted loss 26.59 (from 30.45); step(sd) {'beta_annual': -1.9, 'chi': -0.6, 'child_benefit_curvature': 5.0, 'first_birth_fixed_cost': -5.0, 'h_P': -0.0, 'kappa_fert': -4.7, 'kappa_fert_continuation': -5.0, 'psi_child': -1.6, 'tenure_choice_kappa': 5.0, 'theta0': 5.0}
+    new params {'beta_annual': 0.96667, 'chi': 1.09404, 'child_benefit_curvature': 0.11322, 'first_birth_fixed_cost': 0.31258, 'h_P': 2.3, 'kappa_fert': 0.1056, 'kappa_fert_continuation': 0.3199, 'psi_child': 0.16918, 'tenure_choice_kappa': 0.01568, 'theta0': 0.12467}
+    contributions {'cps_childlessness': 0.92, 'cps_exactly_one': 0.17, 'nchs_mean_age': 0.0, 'wealth_earnings': 1.43, 'bequest_wealth': 0.47, 'mean_rooms': 5.48, 'ownership_30_55': 0.64, 'first_birth_rooms': 8.27, 'recent_parent_ownership': 1.46, 'early_fertility': 7.73}
+out-of-sample: corr(pred loss, actual)=0.9845, mean abs err=0.291, n=640
+out-of-sample: corr(pred loss, actual)=0.9751, mean abs err=0.329, n=637
+range of chain starting points in sample-sd units per parameter: {'param__beta_annual': 3.4, 'param__chi': 1.3, 'param__child_benefit_curvature': 3.4, 'param__first_birth_fixed_cost': 3.1, 'param__h_P': 2.1, 'param__kappa_fert': 3.6, 'param__kappa_fert_continuation': 3.7, 'param__psi_child': 3.7, 'param__tenure_choice_kappa': 3.4, 'param__theta0': 3.3}
+loss at best point under legacy weights: 30.08 ; with the three documented sampling SEs substituted: 909.2
+{'mean_rooms': (7.92, 780.7, 27.9), 'first_birth_rooms': (7.78, 22.4, 4.7), 'early_fertility': (7.83, 99.6, 10.0)}
