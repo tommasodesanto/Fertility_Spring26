@@ -1,0 +1,89 @@
+{
+  "schema": "saved_accepted_horizon_overlap_v1",
+  "source_shas": {
+    "pinned_tools/run_e5f_preference_transition.py": "26802381cec56be33794a526eeec80eb6066c09ae59ab6e5957d0cee2e26f1ac",
+    "one_shock_floor.py": "a6499da273ff3a607dd741a283e6ba8415e5c9a4c161a18d1b1eab07cce900a0"
+  },
+  "native_source_checks": {
+    "code/model/tools/run_e5f_perfect_foresight_transition.py": {
+      "path": "/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/code/model/tools/run_e5f_perfect_foresight_transition.py",
+      "sha256": "fc5519e89ef8c31906aa76fdad6a08d703ab427b7d7ada775d04bc0e240c8898",
+      "production_receipts": {
+        "case_07_quarter_temporary_h48": "fc5519e89ef8c31906aa76fdad6a08d703ab427b7d7ada775d04bc0e240c8898",
+        "case_10_quarter_temporary_h64": "fc5519e89ef8c31906aa76fdad6a08d703ab427b7d7ada775d04bc0e240c8898"
+      }
+    },
+    "code/model/tools/run_e5f_open_population_transition.py": {
+      "path": "/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/code/model/tools/run_e5f_open_population_transition.py",
+      "sha256": "af52983e0d6d97f16dff74f2491742825d2cbe506240417d47048773d31f249d",
+      "production_receipts": {
+        "case_07_quarter_temporary_h48": "af52983e0d6d97f16dff74f2491742825d2cbe506240417d47048773d31f249d",
+        "case_10_quarter_temporary_h64": "af52983e0d6d97f16dff74f2491742825d2cbe506240417d47048773d31f249d"
+      }
+    },
+    "code/model/tools/run_dynamic_population_transition.py": {
+      "path": "/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/code/model/tools/run_dynamic_population_transition.py",
+      "sha256": "849709afb281193a48ccc44b352ed548c615c28da00b87301f9b7ad212bb1d8c",
+      "production_receipts": {
+        "case_07_quarter_temporary_h48": "849709afb281193a48ccc44b352ed548c615c28da00b87301f9b7ad212bb1d8c",
+        "case_10_quarter_temporary_h64": "849709afb281193a48ccc44b352ed548c615c28da00b87301f9b7ad212bb1d8c"
+      }
+    },
+    "code/model/intergen_eqscale_seq_optimized/adult_entry.py": {
+      "path": "/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/code/model/intergen_eqscale_seq_optimized/adult_entry.py",
+      "sha256": "1e16e29cec889a78e651572a586cec3c4384cc72a1e945de4b68e0cd8f8b5a1e",
+      "production_receipts": {
+        "case_07_quarter_temporary_h48": "1e16e29cec889a78e651572a586cec3c4384cc72a1e945de4b68e0cd8f8b5a1e",
+        "case_10_quarter_temporary_h64": "1e16e29cec889a78e651572a586cec3c4384cc72a1e945de4b68e0cd8f8b5a1e"
+      }
+    }
+  },
+  "completed_paths": [
+    "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_07_quarter_temporary_h48/run/dated_path/completed.json",
+    "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_10_quarter_temporary_h64/run/dated_path/completed.json"
+  ],
+  "verified_period4_state_hashes": [
+    "7228f8efc39ffe0ab2b770f490f01a52153883143395527e227f86bdba39af22",
+    "51b099fafcda6784c0fd462add4d6e72b8d4169001cb391fe026d4da48ab2fbf"
+  ],
+  "macro_original_helper": "pinned_tools/run_e5f_preference_transition.py:compare_horizons",
+  "original_usage_periods": 4,
+  "original_horizon_tolerance": 0.001,
+  "macro": {
+    "passed": true,
+    "relative_gaps": {
+      "asset_price": 8.480737186383638e-06,
+      "renter_price": 5.1274888275389086e-05,
+      "adult_population": 7.771561172376097e-16,
+      "birth_children": 9.602699801450014e-06,
+      "housing_demand": 1.3836098093103909e-05,
+      "pension_period_units": 1.451613408657349e-15
+    },
+    "early_periods": 4,
+    "tolerance": 0.001
+  },
+  "saved_state_original_comparator_gate_fields": {
+    "population_absolute_gap": 2.6737404190679825e-07,
+    "population_relative_gap": 2.6738906528744837e-07,
+    "normalized_distribution_l1": 3.595413547142082e-05,
+    "scheduled_entries_relative_l1": 3.0143607888220145e-06,
+    "scheduled_raw_entries_relative_l1": 3.678859057279012e-06
+  },
+  "saved_state_gate_fields_pass": true,
+  "saved_state_gate_tolerance": 0.001,
+  "full_original_state_comparator_available": false,
+  "unavailable_fields": [
+    "current_2023_V",
+    "continuation_2027_V",
+    "forecast_prices",
+    "forecast_pensions",
+    "forecast_psi"
+  ],
+  "first_birth_flow_first4_absolute_gaps": [
+    9.620736519319606e-07,
+    4.118671456665446e-08,
+    5.35946986859881e-07,
+    2.551550743329356e-07
+  ],
+  "first_birth_flow_first4_max_absolute_gap": 9.620736519319606e-07
+}

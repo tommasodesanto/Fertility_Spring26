@@ -1,0 +1,427 @@
+{
+  "schema": "purchase_horizon_extension_read_only_heartbeat_v1",
+  "observed_epoch": 1790945689.5594144,
+  "remote_root": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results",
+  "slurm": [
+    "19024492_11|R|cs707|2:40:16",
+    "19024492_5|R|cs745|2:40:16"
+  ],
+  "cases": [
+    {
+      "case": "case_00_hard_control_h48",
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_00_hard_control_h48",
+      "dated_mappings": 0,
+      "terminal": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_00_hard_control_h48/run/terminal_receipt.json",
+        "age_seconds": 9272,
+        "status": "passed",
+        "actual_native_policy_calls": 3
+      },
+      "control": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_00_hard_control_h48/run/completed.json",
+        "age_seconds": 9272,
+        "status": "passed"
+      },
+      "launcher_exit_code": 0
+    },
+    {
+      "case": "case_01_hard_temporary_h48",
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_01_hard_temporary_h48",
+      "dated_mappings": 7,
+      "terminal": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_01_hard_temporary_h48/run/terminal_receipt.json",
+        "age_seconds": 5652,
+        "status": "passed",
+        "actual_native_policy_calls": 301
+      },
+      "completed": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_01_hard_temporary_h48/run/dated_path/completed.json",
+        "age_seconds": 5652,
+        "status": "passed"
+      },
+      "terminal_checks": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_01_hard_temporary_h48/run/dated_path/terminal_checks.json",
+        "age_seconds": 5653,
+        "status": "passed",
+        "all_checks_pass": true,
+        "metrics": {
+          "asset_price_relative_gap": 4.345087200298824e-05,
+          "birth_queue_maximum_relative_gap": 5.5519845786983976e-05,
+          "normalized_distribution_l1": 0.00040696366917963384,
+          "population_relative_gap": 0.00012929589438903652,
+          "psi_absolute_gap": 0.0,
+          "renter_price_relative_gap": 0.0002844704975171095
+        }
+      },
+      "dated_heartbeat": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_01_hard_temporary_h48/run/dated_path/heartbeat.json",
+        "age_seconds": 5655,
+        "phase": "forward",
+        "period": 47
+      },
+      "latest": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_01_hard_temporary_h48/run/dated_path/latest_completed.json",
+        "age_seconds": 5653,
+        "total_native_calls": 301
+      },
+      "root": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_01_hard_temporary_h48/run/dated_path/root.json",
+        "age_seconds": 5653,
+        "status": "converged",
+        "evaluations": 7
+      },
+      "root_progress": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_01_hard_temporary_h48/run/dated_path/root_progress.json",
+        "age_seconds": 5653,
+        "status": "converged",
+        "evaluations": 7
+      },
+      "launcher_exit_code": 0
+    },
+    {
+      "case": "case_02_hard_permanent_h48",
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_02_hard_permanent_h48",
+      "dated_mappings": 12,
+      "failure": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_02_hard_permanent_h48/run/failure.json",
+        "age_seconds": 577,
+        "status": "failed",
+        "message": "Dated market/fiscal root or replay failed",
+        "type": "RuntimeError"
+      },
+      "dated_heartbeat": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_02_hard_permanent_h48/run/dated_path/heartbeat.json",
+        "age_seconds": 579,
+        "phase": "forward",
+        "period": 47
+      },
+      "latest": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_02_hard_permanent_h48/run/dated_path/latest_completed.json",
+        "age_seconds": 577,
+        "total_native_calls": 598
+      },
+      "root": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_02_hard_permanent_h48/run/dated_path/root.json",
+        "age_seconds": 577,
+        "status": "evaluation_budget",
+        "evaluations": 12
+      },
+      "root_progress": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_02_hard_permanent_h48/run/dated_path/root_progress.json",
+        "age_seconds": 577,
+        "status": "evaluation_budget",
+        "evaluations": 12
+      },
+      "launcher_exit_code": 1
+    },
+    {
+      "case": "case_03_hard_control_h64",
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_03_hard_control_h64",
+      "dated_mappings": 0,
+      "terminal": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_03_hard_control_h64/run/terminal_receipt.json",
+        "age_seconds": 9191,
+        "status": "passed",
+        "actual_native_policy_calls": 3
+      },
+      "control": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_03_hard_control_h64/run/completed.json",
+        "age_seconds": 9191,
+        "status": "passed"
+      },
+      "launcher_exit_code": 0
+    },
+    {
+      "case": "case_04_hard_temporary_h64",
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_04_hard_temporary_h64",
+      "dated_mappings": 9,
+      "terminal": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_04_hard_temporary_h64/run/terminal_receipt.json",
+        "age_seconds": 1813,
+        "status": "passed",
+        "actual_native_policy_calls": 525
+      },
+      "completed": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_04_hard_temporary_h64/run/dated_path/completed.json",
+        "age_seconds": 1813,
+        "status": "passed"
+      },
+      "terminal_checks": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_04_hard_temporary_h64/run/dated_path/terminal_checks.json",
+        "age_seconds": 1814,
+        "status": "passed",
+        "all_checks_pass": true,
+        "metrics": {
+          "asset_price_relative_gap": 1.707803175952426e-06,
+          "birth_queue_maximum_relative_gap": 1.6490404385096277e-05,
+          "normalized_distribution_l1": 6.746380191655146e-05,
+          "population_relative_gap": 1.943790344238749e-07,
+          "psi_absolute_gap": 0.0,
+          "renter_price_relative_gap": 1.1180894576545034e-05
+        }
+      },
+      "dated_heartbeat": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_04_hard_temporary_h64/run/dated_path/heartbeat.json",
+        "age_seconds": 1817,
+        "phase": "forward",
+        "period": 63
+      },
+      "latest": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_04_hard_temporary_h64/run/dated_path/latest_completed.json",
+        "age_seconds": 1814,
+        "total_native_calls": 525
+      },
+      "root": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_04_hard_temporary_h64/run/dated_path/root.json",
+        "age_seconds": 1814,
+        "status": "converged",
+        "evaluations": 9
+      },
+      "root_progress": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_04_hard_temporary_h64/run/dated_path/root_progress.json",
+        "age_seconds": 1814,
+        "status": "converged",
+        "evaluations": 9
+      },
+      "launcher_exit_code": 0
+    },
+    {
+      "case": "case_05_hard_permanent_h64",
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_05_hard_permanent_h64",
+      "dated_mappings": 10,
+      "dated_heartbeat": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_05_hard_permanent_h64/run/dated_path/heartbeat.json",
+        "age_seconds": 564,
+        "phase": "forward",
+        "period": 63
+      },
+      "latest": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_05_hard_permanent_h64/run/dated_path/latest_completed.json",
+        "age_seconds": 561,
+        "total_native_calls": 598
+      },
+      "root_progress": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_05_hard_permanent_h64/run/dated_path/root_progress.json",
+        "age_seconds": 561,
+        "phase": "iterate",
+        "evaluation": 9,
+        "score": 5.461840727446302
+      }
+    },
+    {
+      "case": "case_06_quarter_control_h48",
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_06_quarter_control_h48",
+      "dated_mappings": 0,
+      "terminal": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_06_quarter_control_h48/run/terminal_receipt.json",
+        "age_seconds": 9246,
+        "status": "passed",
+        "actual_native_policy_calls": 3
+      },
+      "control": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_06_quarter_control_h48/run/completed.json",
+        "age_seconds": 9246,
+        "status": "passed"
+      },
+      "launcher_exit_code": 0
+    },
+    {
+      "case": "case_07_quarter_temporary_h48",
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_07_quarter_temporary_h48",
+      "dated_mappings": 7,
+      "terminal": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_07_quarter_temporary_h48/run/terminal_receipt.json",
+        "age_seconds": 5299,
+        "status": "passed",
+        "actual_native_policy_calls": 301
+      },
+      "completed": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_07_quarter_temporary_h48/run/dated_path/completed.json",
+        "age_seconds": 5299,
+        "status": "passed"
+      },
+      "terminal_checks": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_07_quarter_temporary_h48/run/dated_path/terminal_checks.json",
+        "age_seconds": 5300,
+        "status": "passed",
+        "all_checks_pass": true,
+        "metrics": {
+          "asset_price_relative_gap": 4.271242883094827e-05,
+          "birth_queue_maximum_relative_gap": 3.412186473116159e-05,
+          "normalized_distribution_l1": 0.0004975229699333489,
+          "population_relative_gap": 0.00010623115769203816,
+          "psi_absolute_gap": 0.0,
+          "renter_price_relative_gap": 0.00027963595020300344
+        }
+      },
+      "dated_heartbeat": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_07_quarter_temporary_h48/run/dated_path/heartbeat.json",
+        "age_seconds": 5302,
+        "phase": "forward",
+        "period": 47
+      },
+      "latest": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_07_quarter_temporary_h48/run/dated_path/latest_completed.json",
+        "age_seconds": 5300,
+        "total_native_calls": 301
+      },
+      "root": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_07_quarter_temporary_h48/run/dated_path/root.json",
+        "age_seconds": 5300,
+        "status": "converged",
+        "evaluations": 7
+      },
+      "root_progress": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_07_quarter_temporary_h48/run/dated_path/root_progress.json",
+        "age_seconds": 5300,
+        "status": "converged",
+        "evaluations": 7
+      },
+      "launcher_exit_code": 0
+    },
+    {
+      "case": "case_08_quarter_permanent_h48",
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_08_quarter_permanent_h48",
+      "dated_mappings": 12,
+      "failure": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_08_quarter_permanent_h48/run/failure.json",
+        "age_seconds": 1111,
+        "status": "failed",
+        "message": "Dated terminal-state gate failed",
+        "type": "RuntimeError"
+      },
+      "terminal_checks": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_08_quarter_permanent_h48/run/dated_path/terminal_checks.json",
+        "age_seconds": 1111,
+        "status": "not_converged",
+        "all_checks_pass": false,
+        "metrics": {
+          "asset_price_relative_gap": 0.00018078596236625048,
+          "birth_queue_maximum_relative_gap": 7.514279600440553e-05,
+          "normalized_distribution_l1": 0.002253096965093629,
+          "population_relative_gap": 0.0005314982348081861,
+          "psi_absolute_gap": 0.0,
+          "renter_price_relative_gap": 0.0011835958701797923
+        }
+      },
+      "dated_heartbeat": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_08_quarter_permanent_h48/run/dated_path/heartbeat.json",
+        "age_seconds": 1114,
+        "phase": "forward",
+        "period": 47
+      },
+      "latest": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_08_quarter_permanent_h48/run/dated_path/latest_completed.json",
+        "age_seconds": 1111,
+        "total_native_calls": 598
+      },
+      "root": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_08_quarter_permanent_h48/run/dated_path/root.json",
+        "age_seconds": 1111,
+        "status": "converged",
+        "evaluations": 12
+      },
+      "root_progress": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_08_quarter_permanent_h48/run/dated_path/root_progress.json",
+        "age_seconds": 1111,
+        "status": "converged",
+        "evaluations": 12
+      },
+      "launcher_exit_code": 1
+    },
+    {
+      "case": "case_09_quarter_control_h64",
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_09_quarter_control_h64",
+      "dated_mappings": 0,
+      "terminal": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_09_quarter_control_h64/run/terminal_receipt.json",
+        "age_seconds": 9197,
+        "status": "passed",
+        "actual_native_policy_calls": 3
+      },
+      "control": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_09_quarter_control_h64/run/completed.json",
+        "age_seconds": 9197,
+        "status": "passed"
+      },
+      "launcher_exit_code": 0
+    },
+    {
+      "case": "case_10_quarter_temporary_h64",
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_10_quarter_temporary_h64",
+      "dated_mappings": 8,
+      "terminal": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_10_quarter_temporary_h64/run/terminal_receipt.json",
+        "age_seconds": 3153,
+        "status": "passed",
+        "actual_native_policy_calls": 461
+      },
+      "completed": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_10_quarter_temporary_h64/run/dated_path/completed.json",
+        "age_seconds": 3153,
+        "status": "passed"
+      },
+      "terminal_checks": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_10_quarter_temporary_h64/run/dated_path/terminal_checks.json",
+        "age_seconds": 3154,
+        "status": "passed",
+        "all_checks_pass": true,
+        "metrics": {
+          "asset_price_relative_gap": 4.6023652691143176e-06,
+          "birth_queue_maximum_relative_gap": 2.3669833255888635e-05,
+          "normalized_distribution_l1": 0.00015612859714298554,
+          "population_relative_gap": 1.8180999250549924e-06,
+          "psi_absolute_gap": 0.0,
+          "renter_price_relative_gap": 3.0131435285689265e-05
+        }
+      },
+      "dated_heartbeat": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_10_quarter_temporary_h64/run/dated_path/heartbeat.json",
+        "age_seconds": 3156,
+        "phase": "forward",
+        "period": 63
+      },
+      "latest": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_10_quarter_temporary_h64/run/dated_path/latest_completed.json",
+        "age_seconds": 3154,
+        "total_native_calls": 461
+      },
+      "root": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_10_quarter_temporary_h64/run/dated_path/root.json",
+        "age_seconds": 3154,
+        "status": "converged",
+        "evaluations": 8
+      },
+      "root_progress": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_10_quarter_temporary_h64/run/dated_path/root_progress.json",
+        "age_seconds": 3154,
+        "status": "converged",
+        "evaluations": 8
+      },
+      "launcher_exit_code": 0
+    },
+    {
+      "case": "case_11_quarter_permanent_h64",
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_11_quarter_permanent_h64",
+      "dated_mappings": 11,
+      "dated_heartbeat": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_11_quarter_permanent_h64/run/dated_path/heartbeat.json",
+        "age_seconds": 331,
+        "phase": "forward",
+        "period": 63
+      },
+      "latest": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_11_quarter_permanent_h64/run/dated_path/latest_completed.json",
+        "age_seconds": 328,
+        "total_native_calls": 662
+      },
+      "root_progress": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_11_quarter_permanent_h64/run/dated_path/root_progress.json",
+        "age_seconds": 328,
+        "phase": "iterate",
+        "evaluation": 10,
+        "score": 13.052409445873664
+      }
+    }
+  ]
+}
