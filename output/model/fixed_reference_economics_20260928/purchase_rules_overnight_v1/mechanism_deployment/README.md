@@ -1,20 +1,30 @@
 # Overnight dated financing experiments: launch handoff
 
-**October 2, 07:53 New York progress.** The 48/64-date extension's four 80%
-control cases and both temporary 100% financing, 48-date cases passed all
-numerical gates against matched controls. In the first period, hard-rule
+**October 2, 08:23 New York progress.** The 48/64-date extension's four 80%
+control cases, both temporary 100% financing 48-date cases, and the
+quarter-saving temporary 64-date case passed all numerical gates against
+matched controls. In the first period, hard-rule 48-date
 first-birth flow fell from 0.04980374667823033 to 0.04953396493829134
 (0.5416896477%); its aggregate first-birth hazard fell by 0.08487845
 percentage points. Quarter-saving flow fell from 0.04974551614189717 to
 0.0495313221352156 (0.4305795241%); its hazard fell by 0.06709008 percentage
-points. Six other policy cases were running with no new failures; both
-64-date policy checks and permanent cases remain pending. See
+points at 48 dates. At 64 dates, quarter-saving first-period flow fell from
+0.04974551614189717 to 0.04953228420886753 (0.4286455334%); its hazard
+fell by 0.06678874 percentage points. Five other policy cases were running,
+with no new failures and checkpoints less than 13 minutes old. The hard-rule
+64-date check and all permanent cases remain pending. The quarter 48- and
+64-date first-period responses are close; a full-state horizon-overlap check
+has not been completed. See
 [hard T48](accepted_hard_temporary_h48_0722.json),
 [quarter T48](accepted_quarter_temporary_h48_0752.json), and
-[progress_0752.json](progress_0752.json). The underlying hard and quarter
+[quarter T64](accepted_quarter_temporary_h64_0822.json), plus
+[progress_0822.json](progress_0822.json). The underlying hard and quarter
 fits remain fresh-postchecked at losses 97.0112198 and 51.5560360,
 respectively, without optimizer convergence certificates. They are
 experimental selected points, not adopted paper baselines.
+The date-zero buyer diagnostics for the accepted 48-date hard and quarter
+paths passed without model solves; see [dated v5](../buyer_diagnostics/dated_v5/README.md)
+and [dated v6](../buyer_diagnostics/dated_v6/README.md).
 
 The following is the original, now historical launch handoff. At preparation,
 this was a **prepared, unsubmitted** Torch launcher for the diagnostic plan:
