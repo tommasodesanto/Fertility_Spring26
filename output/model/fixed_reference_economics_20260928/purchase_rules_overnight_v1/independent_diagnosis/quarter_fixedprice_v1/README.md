@@ -73,6 +73,16 @@ separately identified causal equilibrium price effects. Full precision,
 age-by-tenure flows, and source pins are in
 [`local_run/shapley/result.json`](local_run/shapley/result.json).
 
+The direct fixed-price birth gain is concentrated at the youngest model age:
+the age-18 cell contributes +0.000096647, slightly more than the total
++0.000091589 because older cells partly offset it. At 100% financing and
+baseline asset price, raising only rent to the accepted value lowers age-18
+birth flow by 0.000099490 and lowers total first-birth flow by 0.000288138.
+Of that total rent-only reduction, 96.4% originates with households that were
+renters before the fertility choice. These are matched-origin accounting
+results; they do not by themselves identify the parent-versus-childless
+housing-expenditure difference inside each household's value comparison.
+
 The reference is the fresh postchecked experimental quarter-saving 80% fit,
 local chain 54/case0094_nm, loss 51.5560360491. The driver authenticates its
 frozen two-file source overlay, selected receipt, price, wealth grid, saved
