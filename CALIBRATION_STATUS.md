@@ -50,14 +50,31 @@ at 06:11 New York with unchanged economics and terminal acceptance gates.
 Smoke array **19024491** passed both arms with three native calls each;
 all 12 production tasks in **19024492** were RUNNING at 06:16. Each task
 has at most 1,024 native policy calls and four hours, subject to the absolute
-10:00 New York cutoff. **Final available policy readout at 10:45:** all four 80% controls and
+10:00 New York cutoff. **Recovered policy readout at 11:03:** all four 80% controls and
 all four temporary 100% financing cases (hard/quarter, 48/64 dates) passed
-their native gates against matched controls. At the last verified 09:23 cluster
-check, 11 of 12 cases were terminal; hard permanent 64 dates was running at
-root evaluation 11 with 726 native calls. The 10:44 connection attempt failed,
-so its final status is **unknown**. Neither permanent
-48-date case nor quarter permanent 64 dates passed; there is no accepted
-permanent-policy birth response.
+their native gates against matched controls. The final hard permanent 64-date
+case was recovered after the 10:44 connection failure and had failed its
+12-evaluation dated-root budget. All four permanent dated transitions failed;
+there is no accepted first-birth response along the permanent-policy transition.
+Both **permanent terminal steady states** nevertheless passed their saved
+acceptance and strict one-step checks. Their long-run population scales under
+100% financing are **0.9767633182 for hard** and **0.9789468543 for
+quarter-saving**, or **2.323668%** and **2.105315% below** each selected
+80% baseline's normalized population of 1. Hard-rule asset price is
+0.6532917723, renter unit price 0.1177750447, and fixed housing-supply
+coefficient \(H_0=7.5460025240\). Quarter-saving asset price is 0.6683645044,
+renter unit price 0.1204923477, and fixed \(H_0=7.2885733899\).
+In the separate 80%-versus-100% **stationary comparison**, all-age ownership
+rises from 0.60525 to 0.69128 (hard) and 0.64046 to 0.73114 (quarter);
+first-birth flow rises by 5.351% and 5.703%, respectively. These are
+comparisons of two stationary distributions, not accepted dated-transition
+effects. Full definitions, first-birth hazards, source hashes and one-step
+gates are in `mechanism_deployment/permanent_steady_state_comparison.json`.
+The terminal price root imposes
+\(\text{births}/(2.1\,\text{entry})=1\), while population adjusts to clear
+housing. This replacement condition is part of the steady-state closure;
+it is **not** an estimated fertility response to permanent credit relaxation.
+Neither accepted terminal state validates a failed dated transition.
 In the first period, **hard-rule** first-birth flow fell from 0.0498037467
 under its matched control to 0.0495339649 at 48 dates (**0.5416896477%**),
 or 0.0495355343 at 64 dates (**0.5385384782%**). Its aggregate first-birth
@@ -76,7 +93,11 @@ terminal distribution and renter-price gates (0.00225310 and 0.00118360,
 respectively, versus 0.001). Quarter permanent 64 dates exhausted its
 12-evaluation dated-root budget after 790 native calls; its best scaled score
 was 8.569256145, with housing and Social Security roots failing while mapping
-and replay checks passed. Corrected source-pinned 48/64-date overlap
+and replay checks passed. Hard permanent 64 dates likewise exhausted 12 root
+evaluations; its best scaled score was 1.645647730, with housing and Social
+Security roots failing while mapping and replay checks passed. The recovered
+failure receipts are under `mechanism_deployment/permanent_recovery/` in this
+packet. Corrected source-pinned 48/64-date overlap
 checks for **both temporary paths** pass the original first-four-date macro
 and saved period-four population, distribution and both queue gates at 0.001.
 The largest macro gap is 0.00005532 (hard) and 0.00005127 (quarter); saved
@@ -87,7 +108,8 @@ The receipts are in `output/model/fixed_reference_economics_20260928/purchase_ru
 `accepted_hard_temporary_h64_0852.json`, `accepted_quarter_temporary_h64_0822.json`,
 `hard_temporary_h48_h64_overlap_v1.json`,
 `quarter_temporary_h48_h64_overlap_v2.json`, `progress_0922.json`, and
-`progress_0952.json` (the failed 10:44 connectivity check).
+`progress_0952.json` (the failed 10:44 connectivity check). The later
+recovered permanent-transition failures are under `permanent_recovery/`.
 Saved-policy buyer diagnostic v4
 jobs **19022340** (hard) and
 **19022341** (quarter-saving) passed with zero model solves. Among actual

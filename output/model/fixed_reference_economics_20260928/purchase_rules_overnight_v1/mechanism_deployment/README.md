@@ -1,14 +1,33 @@
 # Overnight dated financing experiments: launch handoff
 
-**October 2, 10:45 New York final available policy readout.** All four 80% controls and all
+**October 2, 11:03 New York recovered policy readout.** All four 80% controls and all
 four temporary 100% financing cases (hard/quarter, 48/64 dates) passed their
-native gates against matched controls. At the last verified 09:23 cluster
-check, 11 of 12 cases were terminal; hard permanent 64 dates was running at
-root evaluation 11 with 726 native calls. The 10:44 connection attempt failed,
-so its final status is **unknown**. Neither permanent
-48-date case nor quarter permanent 64 dates passed, so no permanent-policy
-birth response is accepted. In the first
-period, hard-rule flow changed from control 0.04980374667823033 to
+native gates against matched controls. After the 10:44 connection failure,
+the last hard permanent 64-date case was recovered and found to have failed
+its 12-evaluation dated-root budget. All four permanent dated transitions
+failed, so no first-birth response along the permanent-policy transition is
+accepted. Both **permanent terminal steady states** independently passed saved
+acceptance and strict one-step checks. Their long-run population scales under
+100% financing are **0.9767633182 for hard** and **0.9789468543 for
+quarter-saving**, or **2.323668%** and **2.105315% below** each selected
+80% baseline's normalized population of 1. Hard-rule asset price is
+0.6532917723, renter unit price 0.1177750447 and fixed
+\(H_0=7.5460025240\). Quarter-saving has price 0.6683645044, renter unit
+price 0.1204923477 and fixed \(H_0=7.2885733899\). In the separate
+80%-versus-100% stationary comparison, all-age ownership rises from 0.60525
+to 0.69128 (hard) and 0.64046 to 0.73114 (quarter); first-birth flow rises
+by 5.351% and 5.703%, respectively. These compare stationary distributions,
+not accepted dated-transition effects. The
+[compact steady-state comparison](permanent_steady_state_comparison.json)
+provides full definitions, first-birth hazards, source hashes and one-step
+gates. The terminal price root imposes
+\(\text{births}/(2.1\,\text{entry})=1\), and population clears the housing
+market. Replacement fertility is imposed by this closure, not an estimated
+effect of credit relaxation. These accepted endpoints do not validate the
+failed dated transitions.
+
+For the accepted temporary paths, first-period hard-rule flow changed from
+control 0.04980374667823033 to
 0.04953396493829134 at 48 dates (−0.5416896477%) and 0.049535534338795546
 at 64 dates (−0.5385384782%); aggregate first-birth hazards fell by
 0.08487845 and 0.08438469 percentage points. Quarter-saving flow changed
@@ -23,6 +42,11 @@ and renter-price gaps, 0.00225310 and 0.00118360 versus a 0.001 gate.
 Quarter permanent 64 dates exhausted its 12-evaluation dated-root budget
 after 790 native calls; its best scaled score was 8.569256145, with housing
 and Social Security roots failing while mapping and replay checks passed.
+Hard permanent 64 dates also exhausted 12 root evaluations; its best scaled
+score was 1.645647730, with housing and Social Security roots failing while
+mapping and replay checks passed. The recovered receipts are under
+[`permanent_recovery/`](permanent_recovery/assessment.json).
+
 Corrected source-pinned 48/64-date overlap checks for the
 [hard temporary path](hard_temporary_h48_h64_overlap_v1.json) and
 [quarter temporary path](quarter_temporary_h48_h64_overlap_v2.json) pass the
