@@ -123,26 +123,6 @@ At years 3--4, rooms rise by \textbf{1.465} (SE 0.050), ownership by
 person and year effects; survey weights; 95\% pointwise intervals.
 \end{frame}
 
-% 13: The purchase-timing rules.
-\begin{frame}{Credit timing}
-\small
-A renter with financial wealth $b$ and period income $y$ who buys a home worth $Q=pH$:
-\[
-c+(\delta+\tau_H)\,Q+b'=R\,(b-Q)+y .
-\]
-Normally the buyer must have the 20\% down payment at closing: $b\ge(1-\phi)Q$, with $\phi=0.8$.
-\par\medskip
-\textbf{The problem.} A model period is four years. Requiring the down payment from wealth at the start of the period ignores saving within the period; counting all of it lets a buyer close with little equity and reach 20\% only over the next four years. The rules differ in how much of the period's net saving $S=b'-(b-Q)$ counts:
-\[
-b+\lambda\,S\ \ge\ (1-\phi)\,Q .
-\]
-\begin{itemize}\setlength\itemsep{2pt}
- \item Soft, $\lambda=1$: all of the period's saving counts.
- \item Quarter-saving, $\lambda=\tfrac14$: a quarter of it counts, roughly one year of saving.
- \item Hard, $\lambda=0$: only wealth brought into the period counts.
-\end{itemize}
-\end{frame}
-
 % Externally set parameters (common to all three purchase rules; values from the run parameter tables in evidence/).
 \begin{frame}{Externally set parameters}
 \fontsize{8.6}{9.8}\selectfont
@@ -200,6 +180,26 @@ $\kappa_C$ & Later-birth taste dispersion & Children at age 25 & 0.810 \\
 \end{tabular*}
 \par\vspace{0.3em}
 \fontsize{8}{8.8}\selectfont Each parameter is paired with the moment it mainly moves; all ten are estimated jointly. $^*$Recomputed: mean rooms (AHS), bequests (SCF), first-birth rooms (PSID).
+\end{frame}
+
+% 13: The purchase-timing rules.
+\begin{frame}{Credit timing}
+\small
+A renter with financial wealth $b$ and period income $y$ who buys a home worth $Q=pH$:
+\[
+c+(\delta+\tau_H)\,Q+b'=R\,(b-Q)+y .
+\]
+Normally the buyer must have the 20\% down payment at closing: $b\ge(1-\phi)Q$, with $\phi=0.8$.
+\par\medskip
+\textbf{The problem.} A model period is four years. Requiring the down payment from wealth at the start of the period ignores saving within the period; counting all of it lets a buyer close with little equity and reach 20\% only over the next four years. The rules differ in how much of the period's net saving $S=b'-(b-Q)$ counts:
+\[
+b+\lambda\,S\ \ge\ (1-\phi)\,Q .
+\]
+\begin{itemize}\setlength\itemsep{2pt}
+ \item Soft, $\lambda=1$: all of the period's saving counts.
+ \item Quarter-saving, $\lambda=\tfrac14$: a quarter of it counts, roughly one year of saving.
+ \item Hard, $\lambda=0$: only wealth brought into the period counts.
+\end{itemize}
 \end{frame}
 
 % 8: Current ROOT fit with ten scored moments and three validation moments.
