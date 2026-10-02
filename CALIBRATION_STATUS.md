@@ -28,24 +28,55 @@ workers plus as much available cluster capacity as useful, and subsequent
 one-period and permanent100-financing first-birth experiments at fitted points.
 The new packet is `output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/`.
 Smoke19009130 passed both arms (seven lifecycle solves each). Production
-19009131 has all48 chains running:24 hard and24 quarter, four hours perchain,
-250 objective-call cap and900s final reserve. Allten coordinates remainfree;
+19009131 began48 chains,24 hard and24 quarter, four hours perchain,
+250 objective-call cap and900s final reserve. At the verified October2
+04:24 NewYork monitor snapshot,20 original Torch chains remained running and28
+were terminal. Five approved continuation arrays (19012896,19014763,19016153,
+19017442,19019977) had25 chains running; broad-start array19019947 had16
+running. Five of ten local original/resume workers and allfive local restart
+workers remained running. No active checkpoint was stale over30 minutes and
+no continuation, broad-start or local-restart failure was observed in that
+snapshot. Allten coordinates remainfree;
 original targets/weights and bounds retained except the previously authorized
 h_P upperbound2.6. Wider starts include explicitly provisional improved soft
 points. Each selected candidate requires its nativepostcheck and fulltables.
 This is a search, not a convergence certificate. Staged174-file archive SHA256
 is a79e2a2be8c87e8e293a3f6887ebf3b7a3938455de7dd564d12e5b1ada8e33cd.
 
+Across original Torch, continuations, broad starts and local searches, saved
+case receipts contain **2,129 hard** and **2,412 quarter** valid full-equilibrium
+evaluations; they also contain59 hard and13 quarter budget-uncomputed cases,
+plus8 quarter numerical failures. These counts include repeat parameter
+evaluations across sources, not distinct estimates. The lowest saved hard
+search loss is **98.290682** for local chain51/case0066_nm, still provisional
+without its own fresh selected-point postcheck. The best fresh-postchecked hard
+candidate currently available is **104.542680** from original Torch chain9.
+The quarter local chain54/case0094_nm loss **51.556036** has now passed its
+fresh selected-point postcheck and is eligible for comparison; this does not
+certify optimizer convergence or adopt it as a paper baseline. The provisional
+monitor tables for those saved search points are at
+`output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/monitor/hard_local_overall_best_chain51_target_fit.csv`,
+`output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/monitor/hard_local_overall_best_chain51_parameters.csv`,
+`output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/monitor/quarter_local_overall_best_chain54_target_fit.csv`, and
+`output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/monitor/quarter_local_overall_best_chain54_parameters.csv`.
+The collector's fresh full14-target/31-parameter/17-plot postchecks for hard
+Torch9 and quarter local54, plus all-source provenance, are under
+`output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/collection/readout/`.
+The earlier timestamped counts, arm-specific sources and qualification are in
+`output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/monitor/latest_status.json`.
+Broad-start array19019947 had no better saved point at the snapshot. Original
+chains23,24,43 retain verified parent postchecks but received no continuation:
+only about860 seconds of search remained after the mandatory900-second final
+reserve, too little for the initial ten-coordinate simplex.
+
 Old soft array19002589 was intentionally cancelled on the author's instruction
 after saving all24 best checkpoints; its results remain onTorch and the
 aggregate receipt is in `previous_soft_checkpoints/previous_soft_best_before_stop.json`.
 Ten distinct local starts48–57 use the authenticated frozen two-file source
 overlay, one maththread each, a four-hour budget and selectedpostcheck.
-The actual supervisor is PID28162 (persistentexec session19221), with
-caffeinatePID28167; its initial detached launch did not survive the shell.
-The supervised memory-aware ramp had reached six workers at the lastcheck.
-Current local PIDs, losses and memory are in `local_runtime/runs/local10_v1/`.
-Do not claim ten running until its receipt confirms this.
+Five had reached terminal state and five remained running at the snapshot.
+Distinct local restarts had five running. Current local PIDs, losses and memory
+are in `local_runtime/runs/local10_v1/` and `local_runtime/restart_v2/`.
 
 The separate Sol diagnosis chat is01a0faf5-75c1-7323-9513-7fb8fc65fede;
 hourly evidence messages are explicitly authorized. A distinct Sol agent
@@ -55,10 +86,14 @@ monitors numerical work. Thirty-minute heartbeat
 pauses itself. Overall deadline is10:00 NewYork October2. Userrequests mindful
 usage: prefer bounded Sol work and avoid duplicate audits or frequent narration.
 
-Outstanding: completecalibration selectedpostchecks; deploy and review
-buyer financial-access/netclosingLTV diagnostics; finish nativeverification
-and deployment of dated phi paths for temporary and permanent experiments.
-No dated policy result exists yet. Retain fixedH0, endogenous physicalpopulation
+Outstanding: completecalibration selectedpostchecks and verified cross-source
+selection; deploy and review buyer financial-access/netclosingLTV diagnostics;
+finish nativeverification of dated phi paths for temporary and permanent
+experiments. The policy code review has found saved-versus-Torch renderer
+differences under the full-array audit; the queue-validator import fix and
+descriptive stationary-gate handling still need review. There is **no selected
+policy baseline or production dated policy result yet**. Retain fixedH0,
+endogenous physicalpopulation
 and both birth-entry queues, fixed payrolltax/endogenouspension. The permanent
 terminal renewal condition is the existing closed stationarydemography closure;
 it must not force replacement fertility along the dated transition. See the
