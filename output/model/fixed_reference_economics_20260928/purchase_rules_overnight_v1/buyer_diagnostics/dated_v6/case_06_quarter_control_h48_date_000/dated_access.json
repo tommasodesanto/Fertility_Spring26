@@ -1,0 +1,42 @@
+{
+  "rule": "quarter",
+  "first_birth_origin_renter_flow_mass": 0.04370687788834722,
+  "all_origin_first_birth_flow_mass": 0.049745516141897164,
+  "renter_origin_share_of_first_births": 0.8786093959438482,
+  "phi": {
+    "0.8": {
+      "eligible_share": 0.9258901864167112,
+      "origin_renter_financially_ineligible_share_among_all_first_births": 0.06511357854592453,
+      "eligible_share_with_cmin_margin": 0.9258901864077365,
+      "candidate_failure_weighted_counts_overlapping": {
+        "screen": 5.3320193848215337e-05,
+        "transaction_support": 0.0,
+        "housing_floor": 0.043706877888347206,
+        "saving_budget": 0.06989860900109679
+      }
+    },
+    "1.0": {
+      "eligible_share": 1.0,
+      "origin_renter_financially_ineligible_share_among_all_first_births": 2.189532734010742e-24,
+      "eligible_share_with_cmin_margin": 1.0,
+      "candidate_failure_weighted_counts_overlapping": {
+        "screen": 0.0,
+        "transaction_support": 0.0,
+        "housing_floor": 0.043706877888347206,
+        "saving_budget": 3.3348290601499305e-06
+      }
+    }
+  },
+  "share_ineligible_at_80_eligible_at_100": 0.07410981358328875,
+  "share_ineligible_at_80_eligible_at_100_among_all_first_births": 0.06511357854592453,
+  "financial_access_only": true,
+  "continuation_value_and_policy_choice_not_checked": true,
+  "solver_consumption_surplus_threshold": 1e-10,
+  "cmin_margin_reported_separately": true,
+  "observed_choice_audit": {
+    "observed_phi": 0.8,
+    "birth_branch_owner_choice_mass": 0.011308550210219691,
+    "chosen_owner_mass_outside_pointwise_financial_map": 0.0,
+    "share_outside_map": 0.0
+  }
+}
