@@ -143,6 +143,33 @@ b+\lambda\,S\ \ge\ (1-\phi)\,Q .
 \end{itemize}
 \end{frame}
 
+% Externally set parameters (common to all three purchase rules; values from the run parameter tables in evidence/).
+\begin{frame}{Externally set parameters}
+\fontsize{8.6}{9.8}\selectfont
+\renewcommand{\arraystretch}{1.0}
+\begin{tabular*}{0.98\textwidth}{@{}>{\raggedright\arraybackslash}p{0.40\textwidth}@{\extracolsep{\fill}}>{\raggedright\arraybackslash}p{0.20\textwidth}>{\raggedright\arraybackslash}p{0.34\textwidth}@{}}
+\toprule
+Parameter & Value & Source \\
+\midrule
+Model period & 4 years & \\
+Entry and retirement ages & 18, 66 & \\
+Risk aversion $\sigma$ & 2 & \\
+Equivalence scale $(\omega,\nu)$ & $(0.7,\,0.7)$ & Scholz et al.\ (2006) \\
+Consumption share $\alpha_0$ & 0.733 & CEX 2019--23, childless renters \\
+Annual real interest rate & 2\% & Greaney et al.\ (2025) \\
+Annual depreciation; property tax & 1.416\%; 1.060\% & National housing inputs \\
+Financed share $\phi$ & 0.80 & 20\% down payment \\
+Selling cost $\psi_s$ & 6\% & Greaney et al.\ (2025) \\
+Owner house sizes & 2, 4, 6, 8, 10 rooms & \\
+Largest rental unit & 6 rooms & Greaney et al.\ (2025) \\
+Housing-supply elasticity & 0.63 & Baum-Snow and Han (2024) \\
+Pension / working-household earnings & 0.229 & CPS ASEC, income 2007 \\
+Payroll tax & 8.0\% & Balances the pension budget \\
+Bequest wealth shift $\theta_1$ & 0.008 & 1\% of median annual earnings \\
+\bottomrule
+\end{tabular*}
+\end{frame}
+
 % 7: Parameters and target moments across the ten jointly estimated parameters.
 \begin{frame}{Parameters and target moments}
 \small
@@ -232,27 +259,14 @@ $\gamma$ & Child-benefit curvature & 0.101 & 0.101 & 0.098 \\
 $\kappa_T$ & Tenure-choice dispersion & 0.014 & 0.014 & 0.015 \\
 $\psi$ & Child-benefit level & 0.178 & 0.172 & 0.174 \\
 $h_P$ & Basic space requirement for parents (rooms) & 2.504 & 2.562 & 2.492 \\
-$H_0$ & Housing supply coefficient (derived) & 6.757 & 7.546 & 7.289 \\
+$H_0$ & Housing supply coefficient & 6.757 & 7.546 & 7.289 \\
 \bottomrule
 \end{tabular}
 }
 \end{center}
-\vfill
-\footnotesize $H_0$ is derived at normalized population $N_0=1$. Fixed inputs: $\sigma=2$; $\alpha_0=0.733$; annual interest 2\%; financed share $\phi=0.8$. 
 \end{frame}
 
 % 14: Fit comparison and remaining gaps.
-\begin{frame}{Calibration comparison}
-\small
-\begin{itemize}\setlength\itemsep{7pt}
- \item The soft rule fits best. Targets and weights are the same across specifications.
- \item Mean rooms: 5.957 (soft), 6.241 (hard), 6.131 (quarter-saving), against a target of 5.729.
- \item First-birth rooms difference: 1.324, 1.063 and 1.167, respectively, against 1.465.
- \item Children at age 25: 0.528, 0.524 and 0.521, against 0.810. Early fertility remains low in all three.
- \item Each rule is recalibrated. Hard and quarter-saving also require nonnegative net wealth after purchase.
-\end{itemize}
-\end{frame}
-
 % Financing results (October 2 fixed-price experiments, not recalibrated).
 % Sources: output/model/fixed_reference_economics_20260928/per_child_need_probe_v1/NOTE.md (need0 arms)
 \begin{frame}{More credit raises ownership but not births}
