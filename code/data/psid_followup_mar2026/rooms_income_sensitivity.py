@@ -240,8 +240,8 @@ def collect_verify(a: argparse.Namespace) -> None:
         for event,label in EVENTS:
             est,se=(0.,0.) if event=="baseline" else (float(p[event]["estimate"]),float(p[event]["standard_error"]))
             curves.append({"fit":fit,"event":event,"event_label":label,"event_time_years_relative_first_birth":label,"estimate":est,"standard_error":se,"ci_lo":est-1.96*se,"ci_hi":est+1.96*se})
-    with (dest/"comparison.csv").open("w",newline="") as f: w=csv.DictWriter(f,fieldnames=sorted({k for x in comp for k in x}));w.writeheader();w.writerows(comp)
-    with (dest/"full_window.csv").open("w",newline="") as f: w=csv.DictWriter(f,fieldnames=list(curves[0]));w.writeheader();w.writerows(curves)
+    with (dest/"comparison.csv").open("w",newline="") as f: w=csv.DictWriter(f,fieldnames=sorted({k for x in comp for k in x}),lineterminator="\n");w.writeheader();w.writerows(comp)
+    with (dest/"full_window.csv").open("w",newline="") as f: w=csv.DictWriter(f,fieldnames=list(curves[0]),lineterminator="\n");w.writeheader();w.writerows(curves)
     fig,ax=plt.subplots(figsize=(10,5))
     for fit in FITS:
         d=[x for x in curves if x["fit"]==fit]; x=list(range(len(d))); y=[z["estimate"] for z in d]; lo=[z["ci_lo"] for z in d]; hi=[z["ci_hi"] for z in d]

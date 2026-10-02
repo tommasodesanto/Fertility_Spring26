@@ -40,8 +40,8 @@ See [verification.json](verification.json), [comparison.csv](comparison.csv),
 [full_window.csv](full_window.csv) and [the graph](full_window.png).
 
 The full three-fit run completed in 21.6 minutes. The current driver differs
-from the executed version only in post-run receipt validation and graph
-labeling; `executed_driver.py`, `executed_launcher.sh`, and `run_config.json`
+from the executed version only in post-run receipt validation, graph
+labeling and generated CSV line endings; `executed_driver.py`, `executed_launcher.sh`, and `run_config.json`
 preserve native estimation provenance. Source microdata and individual keys
 are excluded from this results folder. No main target or paper specification
 was replaced.
