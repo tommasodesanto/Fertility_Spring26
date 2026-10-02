@@ -1,5 +1,17 @@
 # Experimental purchase-rule calibrations at 80% financing
 
+**October 2, 11:24 New York update.** A new independent 24-chain search for
+the same hard and quarter 80% specifications is running on Torch as array
+**19040483**. All 24 tasks were verified RUNNING; the two mounted zero-native
+initializer preflights and 24-slot exact-loop mock passed first. The search
+uses six fresh-postchecked centers, 12 starts per arm, one core/24 GiB and up
+to four hours/250 objectives per chain with a 900-second final reserve and
+18:00 New York absolute cutoff. The maximum is 6,000 objectives plus 24
+postchecks; a rough observed-speed estimate is 2,160 objectives. Original
+targets, weights, bounds and economics are unchanged. See
+[`fresh_calibration_v1/README.md`](fresh_calibration_v1/README.md) and its
+`DESIGN.md` and `submission_receipt.json`; no new result is accepted yet.
+
 October 2, 2026, 04:55 New York final search status: all **104** calibration processes are terminal across original Torch (48), continuations (25), broader regions (16), local originals (10), and local restarts (5). **102** selected candidates passed fresh native postchecks; local hard chain50 and broader quarter slot15 had no valid selected candidate. Lowest verified experimental losses are hard **97.0112198128** (Torch restart chain11) and quarter **51.5560360491** (local chain54), without optimizer-convergence certificates or paper-baseline adoption. Saved receipts contain 2,319/2,581 valid hard/quarter full-equilibrium evaluations, 99/49 budget-uncomputed cases and 13 numerically inadmissible quarter cases; repeat vectors count separately. Full 14-target/31-parameter/17-plot readout is in `collection/readout/`, with plot audit at `collection/readout/visual_review/REVIEW.md`. The frozen policy input manifest is `mechanism_deployment/selection_snapshot/manifest.json` (SHA-256 `19db8dfcc928c4cdea5810f70c4e62a9de65372bd038646d0bc2d49532913879`). Policy pilot jobs 19022024/19022025 and buyer diagnostics 19022197/19022198 are underway; no policy response has been reported. The earlier soft-rule array 19002589 was intentionally cancelled. Root source files covered by `manifest.json` remain frozen.
 
 This packet searches two distinct purchase rules using the same 2007 normalized stationary calibration contract. Chains 0–23 use the hard closing rule, \(A\geq0.2Q\). Chains 24–47 use the quarter-saving rule, \(A+0.25[b'-(A-Q)]\geq0.2Q\). \(A\) is financial wealth plus net proceeds from selling the previous home, \(Q\) is the chosen home's price, and \(b'\) is the end-of-period financial balance. Both retain the original budget, interest timing, 80% owner debt ceiling, no unsecured renter credit, 120×9 state grid, nonnegative mean-preserving entrants, normalized population \(N_0=1\), a renewal-clearing price, and housing supply coefficient derived from room demand. Both isolated engines enforce a buyer's end-of-period net estate solvency in the Bellman saving choice. The quarter-saving rule intentionally permits an owner moving from a negative closing balance when one quarter of net saving covers the required equity. Neither rule is adopted as the paper baseline by this experiment.

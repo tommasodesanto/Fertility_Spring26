@@ -1,5 +1,22 @@
 ## October 2 — purchase-rule diagnostics and overnight work
 
+**Fresh calibration search launched, 11:24 New York.** Slurm array **19040483**
+has 24 new independent chains, 12 each for the hard and quarter-saving 80%
+purchase rules; all 24 were verified RUNNING. Six fresh-postchecked centers
+seed four deterministic starts each. Economic rules, targets, weights, ten
+free coordinates and bounds are unchanged. Each chain has one core, 24 GiB,
+four hours from actual start, at most 250 objective calls, a 900-second final
+postcheck reserve and an 18:00 New York absolute cutoff. The maximum is
+6,000 candidate objectives plus 24 final postchecks; at the recent 149-second
+median objective and 225-minute search allowance, roughly 2,160 objectives
+may fit, subject to actual solve times. A local exact-loop zero-native test
+and mounted hard/quarter zero-native initializer preflights passed before
+submission. Source is frozen in a separate root. The earlier verified hard
+and quarter losses, 97.0112198128 and 51.5560360491, remain incumbents,
+not optimizer-converged estimates or adopted paper baselines. The design,
+source pins, launch receipt and read-only monitor are in
+`output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/`.
+
 **Final search readout, 04:55 New York.** All 104 calibration processes are
 terminal: 48 original Torch, 25 Torch continuations, 16 broader-region Torch,
 10 local original/resume, and five local restarts. There are 102 fresh,
