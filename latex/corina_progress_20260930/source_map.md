@@ -194,3 +194,5 @@ Fixed-price experiments at the quarter-saving calibration (price 0.6744838540900
 ## GE financing comparison and impact response
 
 Replaced the fixed-price policy slide with permanent steady-state and temporary-impact GE slides. The endpoint comparison is copied unchanged to evidence/permanent_steady_state_comparison.json. H0 and preferences remain fixed within each arm. Permanent steady states pass, but their dated transitions fail. Temporary 48/64-date paths pass; the displayed impact uses 48 dates: hard first-birth flow -0.5416896477%, hazard -0.08487845 pp; quarter flow -0.4305795241%, hazard -0.06709008 pp. Evidence: output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/mechanism_deployment/README.md and accepted_hard_temporary_h48_0722.json / accepted_quarter_temporary_h48_0752.json. These use the earlier overnight fits, not the later fresh-search winners. No new model runs or recalibration.
+
+Other issues slide: entrant mapping and cash-feasibility evidence from the Clarify entrant wealth chat (Sept 30), accepted_input_reconciliation_20260926.md for empirical inputs, and the retained demographic-accounting review above.
