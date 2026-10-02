@@ -50,27 +50,35 @@ at 06:11 New York with unchanged economics and terminal acceptance gates.
 Smoke array **19024491** passed both arms with three native calls each;
 all 12 production tasks in **19024492** were RUNNING at 06:16. Each task
 has at most 1,024 native policy calls and four hours, subject to the absolute
-10:00 New York cutoff. At the 08:23 progress check, all four 80% controls,
-both temporary 100% financing 48-date cases, and the quarter-saving temporary
-64-date case had passed their numerical gates against matched controls. Five
-other policy cases were running, with no new failures and checkpoints less
-than 13 minutes old. The hard-rule temporary 64-date case and all permanent
-cases remain pending.
-In the first period, **hard-rule** first-birth flow fell from 0.0498037467 to
-0.0495339649 (**0.5416896477%**), and its aggregate first-birth hazard fell
-by **0.08487845 percentage points**. **Quarter-saving** first-birth flow fell
-from 0.0497455161 to 0.0495313221 (**0.4305795241%**), and its aggregate
-first-birth hazard fell by **0.06709008 percentage points** at 48 dates. At
-64 dates, its first-period flow was 0.0495322842 versus control 0.0497455161,
-a **0.4286455334%** decrease; its aggregate hazard fell by **0.06678874
-percentage points**. The quarter 48- and 64-date first-period responses are
-close, but a full-state horizon-overlap check has not been completed. These
-are accepted responses for selected experimental fits, fresh-postchecked at losses
-97.0112198 (hard) and 51.5560360 (quarter). Neither optimizer has a
-convergence certificate, and neither fit is an adopted paper baseline.
+10:00 New York cutoff. **Policy readout at 08:54:** all four 80% controls and
+all four temporary 100% financing cases (hard/quarter, 48/64 dates) passed
+their native gates against matched controls. Only the two permanent 64-date
+cases were still running, with fresh checkpoints. Neither permanent 48-date
+case passed, and there is no accepted permanent-policy birth response.
+In the first period, **hard-rule** first-birth flow fell from 0.0498037467
+under its matched control to 0.0495339649 at 48 dates (**0.5416896477%**),
+or 0.0495355343 at 64 dates (**0.5385384782%**). Its aggregate first-birth
+hazard fell by **0.08487845** and **0.08438469 percentage points**, respectively.
+**Quarter-saving** flow fell from 0.0497455161 under its matched control to
+0.0495313221 at 48 dates (**0.4305795241%**), or 0.0495322842 at 64 dates
+(**0.4286455334%**). Its aggregate hazard fell by **0.06709008** and
+**0.06678874 percentage points**, respectively. These are accepted responses
+for selected experimental fits, fresh-postchecked at losses 97.0112198 (hard)
+and 51.5560360 (quarter). Neither optimizer has a convergence certificate;
+both fits materially miss targets, and neither is an adopted paper baseline.
+The hard permanent 48-date run exhausted its 12-evaluation root budget: its
+best raw maximum residual was 0.0002548867 versus the 0.0002 gate. The quarter
+permanent 48-date run passed its dated root and replay checks but failed the
+terminal distribution and renter-price gates (0.00225310 and 0.00118360,
+respectively, versus 0.001). A partial quarter temporary 48/64-date overlap
+diagnostic records first-four-date macro and saved period-four population,
+distribution and queue gaps below 0.001; its source-helper pin needs
+reauthentication before reuse, and a full native-state comparison is
+unavailable because saved forecast paths and value arrays are missing.
 The receipts are in `output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/mechanism_deployment/`:
 `accepted_hard_temporary_h48_0722.json`, `accepted_quarter_temporary_h48_0752.json`,
-`accepted_quarter_temporary_h64_0822.json`, and `progress_0822.json`.
+`accepted_hard_temporary_h64_0852.json`, `accepted_quarter_temporary_h64_0822.json`,
+`quarter_temporary_h48_h64_overlap_verified.json`, and `progress_0852.json`.
 Saved-policy buyer diagnostic v4
 jobs **19022340** (hard) and
 **19022341** (quarter-saving) passed with zero model solves. Among actual
@@ -82,6 +90,9 @@ The measured young-buyer closing funding ratio is an implied **net** ratio,
 not observed gross mortgage loan-to-value. Financial access does not establish
 desired purchase or a causal first-birth response. Full reports are under
 `output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/selected_v4/`.
+The accepted hard and quarter 48-date date-zero buyer diagnostics also passed
+with no model solves; see `buyer_diagnostics/dated_v5/README.md` and
+`buyer_diagnostics/dated_v6/README.md` within the same packet.
 The dated progress account below records earlier overnight states and is
 superseded by this final search readout.
 

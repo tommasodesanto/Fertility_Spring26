@@ -1,27 +1,35 @@
 # Overnight dated financing experiments: launch handoff
 
-**October 2, 08:23 New York progress.** The 48/64-date extension's four 80%
-control cases, both temporary 100% financing 48-date cases, and the
-quarter-saving temporary 64-date case passed all numerical gates against
-matched controls. In the first period, hard-rule 48-date
-first-birth flow fell from 0.04980374667823033 to 0.04953396493829134
-(0.5416896477%); its aggregate first-birth hazard fell by 0.08487845
-percentage points. Quarter-saving flow fell from 0.04974551614189717 to
-0.0495313221352156 (0.4305795241%); its hazard fell by 0.06709008 percentage
-points at 48 dates. At 64 dates, quarter-saving first-period flow fell from
-0.04974551614189717 to 0.04953228420886753 (0.4286455334%); its hazard
-fell by 0.06678874 percentage points. Five other policy cases were running,
-with no new failures and checkpoints less than 13 minutes old. The hard-rule
-64-date check and all permanent cases remain pending. The quarter 48- and
-64-date first-period responses are close; a full-state horizon-overlap check
-has not been completed. See
+**October 2, 08:54 New York policy readout.** All four 80% controls and all
+four temporary 100% financing cases (hard/quarter, 48/64 dates) passed their
+native gates against matched controls. Only the two permanent 64-date cases
+were still running, with fresh checkpoints. Neither permanent 48-date case
+passed, so no permanent-policy birth response is accepted. In the first
+period, hard-rule flow changed from control 0.04980374667823033 to
+0.04953396493829134 at 48 dates (−0.5416896477%) and 0.049535534338795546
+at 64 dates (−0.5385384782%); aggregate first-birth hazards fell by
+0.08487845 and 0.08438469 percentage points. Quarter-saving flow changed
+from control 0.04974551614189717 to 0.0495313221352156 at 48 dates
+(−0.4305795241%) and 0.04953228420886753 at 64 dates (−0.4286455334%);
+hazards fell by 0.06709008 and 0.06678874 percentage points.
+
+Hard permanent 48 dates exhausted the 12-evaluation root budget: best raw
+maximum residual 0.0002548867 exceeded the 0.0002 gate. Quarter permanent
+48 dates passed dated root and replay checks but failed terminal distribution
+and renter-price gaps, 0.00225310 and 0.00118360 versus a 0.001 gate.
+The partial quarter temporary 48/64-date [overlap diagnostic](quarter_temporary_h48_h64_overlap_verified.json)
+records first-four-date macro and saved period-four population, distribution
+and queue gaps below 0.001. Its source-helper pin needs reauthentication
+before reuse. It is not a full native-state certificate: the saved checkpoint
+lacks forecast paths and value arrays. See
 [hard T48](accepted_hard_temporary_h48_0722.json),
 [quarter T48](accepted_quarter_temporary_h48_0752.json), and
-[quarter T64](accepted_quarter_temporary_h64_0822.json), plus
-[progress_0822.json](progress_0822.json). The underlying hard and quarter
+[hard T64](accepted_hard_temporary_h64_0852.json),
+[quarter T64](accepted_quarter_temporary_h64_0822.json), and
+[progress_0852.json](progress_0852.json). The underlying hard and quarter
 fits remain fresh-postchecked at losses 97.0112198 and 51.5560360,
-respectively, without optimizer convergence certificates. They are
-experimental selected points, not adopted paper baselines.
+respectively, without optimizer convergence certificates and with material
+target misses. They are experimental selected points, not adopted paper baselines.
 The date-zero buyer diagnostics for the accepted 48-date hard and quarter
 paths passed without model solves; see [dated v5](../buyer_diagnostics/dated_v5/README.md)
 and [dated v6](../buyer_diagnostics/dated_v6/README.md).
