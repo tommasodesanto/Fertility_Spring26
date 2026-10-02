@@ -1,5 +1,23 @@
 # Calibration Status
 
+## October 1 — modest parenthood housing-floor diagnostic submitted
+
+Author authorized testing a modest increase in the physical parenthood housing
+requirement. Replay gate **19000409** and dependent four-point array
+**19000410_0–3** are submitted; first scheduler check was pending priority and
+pending dependency respectively. No new diagnostic results yet. The experiment
+tests h_P=2.3,2.4,2.5,2.6 with the nine other coordinates fixed at normalized v2
+chain2/case0064_nm, using its authenticated terminal postcheck. It is a
+fixed-coordinate sensitivity, not recalibration or adoption. Only h_P and its
+local admissible upper bound change; all other economic inputs, targets,
+weights, grids and numerical gates stay fixed. N0=1, the fertility price root
+and internally derived H0 remain active. Each worker has one CPU,24GiB and a
+30-minute cap; four points follow an exact incumbent old/extended-bound gate.
+Full14-target/31-parameter/17-plot ROOT/REPEAT reports are required. Sources,
+checks, budget and launch are in
+`output/model/fixed_reference_economics_20260928/normalized_floor_extension_v1/README.md`.
+Mortgage timing and empirical target definitions were not changed.
+
 ## October 1, 21:50 New York — repaired restore verified; replacement submitted
 
 Torch connectivity is restored. Job **18995772** (`normalized_resumed_fit_v2`)
