@@ -1,0 +1,84 @@
+{
+  "captured_at_local": "2026-10-01 21:39:45 EDT",
+  "scheduler": {
+    "gate_job_id": "18989877",
+    "gate_state": "COMPLETED",
+    "gate_exit_code": "0:0",
+    "array_job_id": "18989878",
+    "array_running": 24,
+    "array_terminal": 0,
+    "elapsed_each": "about 01:47:00",
+    "requested_memory": "24G per task"
+  },
+  "counts": {
+    "chains": 24,
+    "completed_cases": 1067,
+    "objective_calls_including_current": 1091,
+    "completed_lifecycle_solves": 7513,
+    "case_range_per_chain": [
+      36,
+      50
+    ],
+    "completed_lifecycle_solve_range_per_chain": [
+      260,
+      339
+    ]
+  },
+  "contract": {
+    "target_contract_sha256": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+    "weight_contract_sha256": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+    "distinct_target_fingerprints": 1,
+    "distinct_weight_fingerprints": 1,
+    "source_pins_sha256": "9759d97cd00ceb869b31eb898e8ec089d3b6da9d3f7ee33f025eface5e9bd8a2"
+  },
+  "current_best_so_far": {
+    "chain": 0,
+    "label": "0048_nm",
+    "loss": 30.105856236534418,
+    "price": 0.7180693638506171,
+    "H0_derived": 6.822439598679229,
+    "lifecycle_solves": 8,
+    "postchecked": false,
+    "terminal": false,
+    "exploration_unverified": true,
+    "top3_loss_contributions": [
+      {
+        "moment": "first_birth_rooms",
+        "contribution": 7.982757682513592,
+        "gap": -0.2408918256464576,
+        "target": 1.465,
+        "model": 1.2241081743535425,
+        "weight": 137.5652749002964
+      },
+      {
+        "moment": "early_fertility",
+        "contribution": 7.8105080873474915,
+        "gap": -0.2794728624991609,
+        "target": 0.8095276384290021,
+        "model": 0.5300547759298412,
+        "weight": 100.0
+      },
+      {
+        "moment": "mean_rooms",
+        "contribution": 7.40934653051381,
+        "gap": 0.24057464367955106,
+        "target": 5.729434240102641,
+        "model": 5.970008883782192,
+        "weight": 128.02070205233477
+      }
+    ]
+  },
+  "same_contract_comparisons": {
+    "prior_live_v2_best": {
+      "loss": 30.127716801065972,
+      "status": "unverified live search point",
+      "current_minus_prior": -0.02186056453155416
+    },
+    "v1_verified_best": {
+      "loss": 30.371887956158005,
+      "status": "postcheck verified",
+      "current_minus_v1": -0.2660317196235873,
+      "verification": "../best_v1_candidate/verification.json"
+    }
+  }
+}
