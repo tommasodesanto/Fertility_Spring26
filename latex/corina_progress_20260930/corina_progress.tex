@@ -141,8 +141,7 @@ This approximates saving before purchase within a four-year period. Under quarte
 \end{frame}
 
 % Financing results (October 2 fixed-price experiments, not recalibrated).
-% Sources: output/model/fixed_reference_economics_20260928/{per_child_need_probe_v1,
-% tenure_barrier_probe_v1, selling_cost_dose_probe_v1, owner_floor_split_cost_probe_v1}/NOTE.md
+% Sources: output/model/fixed_reference_economics_20260928/per_child_need_probe_v1/NOTE.md (need0 arms)
 \begin{frame}{More credit raises ownership but not births}
 \framesubtitle{Quarter-saving rule; financed share 80\% vs.\ 100\%; house price and parameters held fixed}
 \small
@@ -176,34 +175,14 @@ Recalibrating under the hard and quarter-saving rules gives the same sign: first
 These are candidate explanations. We have not yet shown how much of the small response each one accounts for.
 \end{frame}
 
-\begin{frame}{Selling costs and small owner homes}
-\framesubtitle{Exploratory runs, not recalibrated. Change in completed fertility from 80\% to 100\% financing}
+\begin{frame}{What I want to try next}
 \small
-\begin{center}
-\begin{tabular}{lrrrr}
-\toprule
-Selling cost & 6\% & 4\% & 2\% & 0\% \\
-\midrule
-Change in completed fertility & $-0.010$ & $-0.009$ & $-0.005$ & $+0.012$ \\
-\bottomrule
-\end{tabular}
-\par\medskip
-\begin{tabular}{lrr}
-\toprule
-Owner sizes (rooms) & Change in completed fertility & Fit loss at 80\% \\
-\midrule
-2--10 (current) & $-0.010$ & 51.6 \\
-4--10 & $-0.007$ & 57.5 \\
-6--10 & $+0.001$ & 284.3 \\
-\bottomrule
-\end{tabular}
-\end{center}
-\begin{itemize}\setlength\itemsep{3pt}
- \item At 100\% financing more young childless households buy two-room homes, which are too small for parents.
- \item The sign turns positive only without selling costs. Dropping small homes removes the negative sign and worsens the fit.
+\begin{itemize}\setlength\itemsep{7pt}
+ \item Selling costs: check whether the cost of trading up after a birth is what keeps credit from reaching fertility, and whether the 6\% seller-paid cost is the right convention.
+ \item Small owner homes: young buyers may lock into homes too small for a family.
+ \item A housing requirement that grows with the number of children.
+ \item Recalibrate before drawing conclusions from any of these.
 \end{itemize}
-\vfill
-\footnotesize The selling-cost runs also add one required room per additional child.
 \end{frame}
 
 % 7: Parameters and target moments across the ten jointly estimated parameters.
