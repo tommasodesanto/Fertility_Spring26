@@ -31,55 +31,42 @@
   },
   "scheduler": {
     "job_id": "19040483",
-    "returncode": 0,
-    "rows": [
-      "19040483_23|RUNNING|31:22|cs656",
-      "19040483_22|RUNNING|31:22|cs656",
-      "19040483_21|RUNNING|31:22|cs653",
-      "19040483_20|RUNNING|31:22|cs653",
-      "19040483_19|RUNNING|31:22|cs653",
-      "19040483_18|RUNNING|31:22|cs644",
-      "19040483_17|RUNNING|31:22|cs644",
-      "19040483_16|RUNNING|31:22|cs644",
-      "19040483_15|RUNNING|31:22|cs644",
-      "19040483_14|RUNNING|31:22|cs644",
-      "19040483_13|RUNNING|31:22|cs644",
-      "19040483_12|RUNNING|31:22|cs641",
-      "19040483_11|RUNNING|31:22|cs641",
-      "19040483_10|RUNNING|31:22|cs641",
-      "19040483_9|RUNNING|31:22|cs641",
-      "19040483_8|RUNNING|31:22|cs641",
-      "19040483_7|RUNNING|31:22|cs641",
-      "19040483_6|RUNNING|31:22|cs641",
-      "19040483_5|RUNNING|31:22|cs641",
-      "19040483_4|RUNNING|31:22|cs641",
-      "19040483_3|RUNNING|31:22|cs641",
-      "19040483_2|RUNNING|31:23|cs641",
-      "19040483_1|RUNNING|31:23|cs641",
-      "19040483_0|RUNNING|31:23|cs617"
-    ],
-    "stderr": ""
+    "returncode": 1,
+    "rows": [],
+    "stderr": "slurm_load_jobs error: Invalid job id specified"
   },
   "slots": [
     {
       "slot": 0,
       "result_dir_exists": true,
       "counts": {
-        "passed": 16
+        "passed": 101,
+        "budget_exhausted": 1
       },
-      "checkpoint_age_seconds": 27,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 94.73379439616998,
-      "provisional_case": "0007_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 2057,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 0,
+        "start_epoch": 1790954589,
+        "deadline_epoch": 1790968989,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967592.7140436,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 89.60840748129192,
+      "provisional_case": "0093_nm",
+      "verified_loss": 89.60840748129192,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "hard"
     },
@@ -87,21 +74,33 @@
       "slot": 1,
       "result_dir_exists": true,
       "counts": {
-        "passed": 11
+        "passed": 81,
+        "budget_exhausted": 1
       },
-      "checkpoint_age_seconds": 136,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 97.01121981277964,
-      "provisional_case": "0007_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 2015,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 1,
+        "start_epoch": 1790954591,
+        "deadline_epoch": 1790968991,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967637.4171185,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 89.60686323128579,
+      "provisional_case": "0078_nm",
+      "verified_loss": 89.60686323128579,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "hard"
     },
@@ -109,21 +108,33 @@
       "slot": 2,
       "result_dir_exists": true,
       "counts": {
-        "passed": 10
+        "passed": 75,
+        "budget_exhausted": 1
       },
-      "checkpoint_age_seconds": 80,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 94.66094308835973,
-      "provisional_case": "0001_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 1989,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 2,
+        "start_epoch": 1790954589,
+        "deadline_epoch": 1790968989,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967657.4626405,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 89.25269247939744,
+      "provisional_case": "0072_nm",
+      "verified_loss": 89.25269247939744,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "hard"
     },
@@ -131,21 +142,33 @@
       "slot": 3,
       "result_dir_exists": true,
       "counts": {
-        "passed": 10
+        "passed": 74,
+        "budget_exhausted": 2
       },
-      "checkpoint_age_seconds": 131,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 104.64491223456542,
-      "provisional_case": "0007_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 2017,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 3,
+        "start_epoch": 1790954591,
+        "deadline_epoch": 1790968991,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967634.531497,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 89.68688001949099,
+      "provisional_case": "0072_nm",
+      "verified_loss": 89.68688001949099,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "hard"
     },
@@ -153,22 +176,33 @@
       "slot": 4,
       "result_dir_exists": true,
       "counts": {
-        "passed": 7,
-        "budget_exhausted": 1
+        "passed": 56,
+        "budget_exhausted": 7
       },
-      "checkpoint_age_seconds": 50,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 96.71573896981309,
-      "provisional_case": "0004_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 2020,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 4,
+        "start_epoch": 1790954592,
+        "deadline_epoch": 1790968992,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967625.67562,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 93.98491421993373,
+      "provisional_case": "0059_nm",
+      "verified_loss": 93.98491421993373,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "hard"
     },
@@ -176,21 +210,33 @@
       "slot": 5,
       "result_dir_exists": true,
       "counts": {
-        "passed": 10
+        "passed": 78,
+        "budget_exhausted": 1
       },
-      "checkpoint_age_seconds": 160,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 98.29068207287617,
-      "provisional_case": "0007_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 2030,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 5,
+        "start_epoch": 1790954589,
+        "deadline_epoch": 1790968989,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967633.1811767,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 97.47142540824586,
+      "provisional_case": "0012_nm",
+      "verified_loss": 97.47142540824586,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "hard"
     },
@@ -198,21 +244,33 @@
       "slot": 6,
       "result_dir_exists": true,
       "counts": {
-        "passed": 10
+        "passed": 69,
+        "budget_exhausted": 4
       },
-      "checkpoint_age_seconds": 137,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 96.67975393264334,
-      "provisional_case": "0004_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 1992,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 6,
+        "start_epoch": 1790954590,
+        "deadline_epoch": 1790968990,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967611.3309689,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 94.49902402063755,
+      "provisional_case": "0071_nm",
+      "verified_loss": 94.49902402063755,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "hard"
     },
@@ -220,21 +278,33 @@
       "slot": 7,
       "result_dir_exists": true,
       "counts": {
-        "passed": 12
+        "passed": 69,
+        "budget_exhausted": 4
       },
-      "checkpoint_age_seconds": 34,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 102.41378496364749,
-      "provisional_case": "0011_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 2556,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 7,
+        "start_epoch": 1790954589,
+        "deadline_epoch": 1790968989,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967711.209426,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 95.73965654464524,
+      "provisional_case": "0071_nm",
+      "verified_loss": 95.73965654464524,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "hard"
     },
@@ -242,21 +312,33 @@
       "slot": 8,
       "result_dir_exists": true,
       "counts": {
-        "passed": 11
+        "passed": 78,
+        "budget_exhausted": 1
       },
-      "checkpoint_age_seconds": 8,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 96.74106772191189,
-      "provisional_case": "0001_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 1979,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 8,
+        "start_epoch": 1790954590,
+        "deadline_epoch": 1790968990,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967635.740546,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 88.58840278139655,
+      "provisional_case": "0070_nm",
+      "verified_loss": 88.58840278139655,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "hard"
     },
@@ -264,21 +346,33 @@
       "slot": 9,
       "result_dir_exists": true,
       "counts": {
-        "passed": 11
+        "passed": 79,
+        "budget_exhausted": 1
       },
-      "checkpoint_age_seconds": 99,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 100.32688547476201,
-      "provisional_case": "0007_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 2021,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 9,
+        "start_epoch": 1790954590,
+        "deadline_epoch": 1790968990,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967648.6532674,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 88.72788493515321,
+      "provisional_case": "0075_nm",
+      "verified_loss": 88.72788493515321,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "hard"
     },
@@ -286,21 +380,33 @@
       "slot": 10,
       "result_dir_exists": true,
       "counts": {
-        "passed": 11
+        "passed": 75,
+        "budget_exhausted": 2
       },
-      "checkpoint_age_seconds": 15,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 96.38098545427474,
-      "provisional_case": "0001_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 1991,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 10,
+        "start_epoch": 1790954590,
+        "deadline_epoch": 1790968990,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967571.6127555,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 88.89354061166159,
+      "provisional_case": "0070_nm",
+      "verified_loss": 88.89354061166159,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "hard"
     },
@@ -308,21 +414,33 @@
       "slot": 11,
       "result_dir_exists": true,
       "counts": {
-        "passed": 10
+        "passed": 74,
+        "budget_exhausted": 2
       },
-      "checkpoint_age_seconds": 63,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 98.0914717779842,
-      "provisional_case": "0007_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 1972,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 11,
+        "start_epoch": 1790954593,
+        "deadline_epoch": 1790968993,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967655.6960073,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 92.8478616229304,
+      "provisional_case": "0067_nm",
+      "verified_loss": 92.8478616229304,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "hard"
     },
@@ -330,21 +448,33 @@
       "slot": 12,
       "result_dir_exists": true,
       "counts": {
-        "passed": 11
+        "passed": 69,
+        "budget_exhausted": 3
       },
-      "checkpoint_age_seconds": 10,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 51.14446301638376,
-      "provisional_case": "0007_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 2028,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 12,
+        "start_epoch": 1790954590,
+        "deadline_epoch": 1790968990,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967638.4597166,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 50.88137139788448,
+      "provisional_case": "0063_nm",
+      "verified_loss": 50.88137139788448,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "quarter"
     },
@@ -352,21 +482,33 @@
       "slot": 13,
       "result_dir_exists": true,
       "counts": {
-        "passed": 12
+        "passed": 87,
+        "budget_exhausted": 1
       },
-      "checkpoint_age_seconds": 154,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 51.55603604909923,
-      "provisional_case": "0007_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 2010,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 13,
+        "start_epoch": 1790954590,
+        "deadline_epoch": 1790968990,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967622.9710479,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 50.989418611739964,
+      "provisional_case": "0055_nm",
+      "verified_loss": 50.989418611739964,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "quarter"
     },
@@ -374,21 +516,33 @@
       "slot": 14,
       "result_dir_exists": true,
       "counts": {
-        "passed": 11
+        "passed": 85,
+        "budget_exhausted": 1
       },
-      "checkpoint_age_seconds": 50,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 51.056068467093695,
-      "provisional_case": "0009_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 1979,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 14,
+        "start_epoch": 1790954590,
+        "deadline_epoch": 1790968990,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967625.0103245,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 48.66406740447566,
+      "provisional_case": "0084_nm",
+      "verified_loss": 48.66406740447566,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "quarter"
     },
@@ -396,21 +550,33 @@
       "slot": 15,
       "result_dir_exists": true,
       "counts": {
-        "passed": 13
+        "passed": 85,
+        "budget_exhausted": 1
       },
-      "checkpoint_age_seconds": 46,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 52.710389509753654,
-      "provisional_case": "0012_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 2011,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 15,
+        "start_epoch": 1790954591,
+        "deadline_epoch": 1790968991,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967622.1613853,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 49.18408059383816,
+      "provisional_case": "0082_nm",
+      "verified_loss": 49.18408059383816,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "quarter"
     },
@@ -418,21 +584,33 @@
       "slot": 16,
       "result_dir_exists": true,
       "counts": {
-        "passed": 13
+        "passed": 92,
+        "budget_exhausted": 1
       },
-      "checkpoint_age_seconds": 123,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 51.353537492981445,
-      "provisional_case": "0001_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 1985,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 16,
+        "start_epoch": 1790954590,
+        "deadline_epoch": 1790968990,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967658.8350704,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 49.1714313401185,
+      "provisional_case": "0089_nm",
+      "verified_loss": 49.1714313401185,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "quarter"
     },
@@ -440,21 +618,33 @@
       "slot": 17,
       "result_dir_exists": true,
       "counts": {
-        "passed": 14
+        "passed": 88,
+        "budget_exhausted": 2
       },
-      "checkpoint_age_seconds": 89,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 51.9701629582933,
-      "provisional_case": "0007_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 2037,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 17,
+        "start_epoch": 1790954589,
+        "deadline_epoch": 1790968989,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967606.486769,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 50.83971716649244,
+      "provisional_case": "0080_nm",
+      "verified_loss": 50.83971716649244,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "quarter"
     },
@@ -462,21 +652,33 @@
       "slot": 18,
       "result_dir_exists": true,
       "counts": {
-        "passed": 13
+        "passed": 82,
+        "budget_exhausted": 4
       },
-      "checkpoint_age_seconds": 27,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 50.019797313845494,
-      "provisional_case": "0005_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 1984,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 18,
+        "start_epoch": 1790954590,
+        "deadline_epoch": 1790968990,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967605.7883804,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 48.68331219199398,
+      "provisional_case": "0062_nm",
+      "verified_loss": 48.68331219199398,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "quarter"
     },
@@ -484,21 +686,33 @@
       "slot": 19,
       "result_dir_exists": true,
       "counts": {
-        "passed": 11
+        "passed": 74,
+        "budget_exhausted": 2
       },
-      "checkpoint_age_seconds": 69,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 57.38406176970349,
-      "provisional_case": "0003_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 1976,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 19,
+        "start_epoch": 1790954589,
+        "deadline_epoch": 1790968989,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967642.609989,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 48.31993782905434,
+      "provisional_case": "0034_nm",
+      "verified_loss": 48.31993782905434,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "quarter"
     },
@@ -506,21 +720,33 @@
       "slot": 20,
       "result_dir_exists": true,
       "counts": {
-        "passed": 12
+        "passed": 84,
+        "budget_exhausted": 1
       },
-      "checkpoint_age_seconds": 57,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 51.95627311613175,
-      "provisional_case": "0009_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 2049,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 20,
+        "start_epoch": 1790954590,
+        "deadline_epoch": 1790968990,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967592.3302774,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 51.732907992956,
+      "provisional_case": "0070_nm",
+      "verified_loss": 51.732907992956,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "quarter"
     },
@@ -528,21 +754,33 @@
       "slot": 21,
       "result_dir_exists": true,
       "counts": {
-        "passed": 12
+        "passed": 85,
+        "budget_exhausted": 1
       },
-      "checkpoint_age_seconds": 101,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 52.85216465787443,
-      "provisional_case": "0007_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 1994,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 21,
+        "start_epoch": 1790954589,
+        "deadline_epoch": 1790968989,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967634.7796588,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 52.25554150848738,
+      "provisional_case": "0077_nm",
+      "verified_loss": 52.25554150848738,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "quarter"
     },
@@ -550,21 +788,33 @@
       "slot": 22,
       "result_dir_exists": true,
       "counts": {
-        "passed": 8
+        "passed": 81,
+        "budget_exhausted": 2
       },
-      "checkpoint_age_seconds": 557,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 52.87198426857867,
-      "provisional_case": "0005_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 1975,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 22,
+        "start_epoch": 1790954589,
+        "deadline_epoch": 1790968989,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967572.959881,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 48.34926690735736,
+      "provisional_case": "0081_nm",
+      "verified_loss": 48.34926690735736,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "quarter"
     },
@@ -572,21 +822,33 @@
       "slot": 23,
       "result_dir_exists": true,
       "counts": {
-        "passed": 13
+        "passed": 83,
+        "budget_exhausted": 2
       },
-      "checkpoint_age_seconds": 59,
-      "terminal": null,
-      "postcheck_status": null,
-      "postcheck_exact": false,
-      "provisional_loss": 55.12096807675667,
-      "provisional_case": "0012_nm",
-      "verified_loss": null,
+      "checkpoint_age_seconds": 2027,
+      "terminal": {
+        "exit_code": 0,
+        "slot": 23,
+        "start_epoch": 1790954589,
+        "deadline_epoch": 1790968989,
+        "absolute_deadline_epoch": 1790978400,
+        "finished_epoch": 1790967591.5754566,
+        "maximum_objective_calls": 250,
+        "final_reserve_seconds": 900,
+        "no_auto_retry": true,
+        "fresh_independent_campaign": true
+      },
+      "postcheck_status": "selected_numerically_verified",
+      "postcheck_exact": true,
+      "provisional_loss": 51.20138394996403,
+      "provisional_case": "0080_nm",
+      "verified_loss": 51.20138394996403,
       "search_authenticated": true,
-      "postcheck_authenticated": false,
+      "postcheck_authenticated": true,
       "contracts": {
         "init": null,
         "search": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
-        "postcheck": null
+        "postcheck": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20"
       },
       "arm": "quarter"
     }
@@ -595,24 +857,34 @@
   "winners": {
     "hard": {
       "provisional": {
-        "slot": 2,
-        "loss": 94.66094308835973,
-        "target_fit_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/monitor/hard_provisional_slot2_target_fit.csv",
-        "parameters_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/monitor/hard_provisional_slot2_parameters.csv"
+        "slot": 8,
+        "loss": 88.58840278139655,
+        "target_fit_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/monitor/hard_provisional_slot8_target_fit.csv",
+        "parameters_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/monitor/hard_provisional_slot8_parameters.csv"
       },
-      "verified": null
+      "verified": {
+        "slot": 8,
+        "loss": 88.58840278139655,
+        "target_fit_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/monitor/hard_verified_slot8_target_fit.csv",
+        "parameters_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/monitor/hard_verified_slot8_parameters.csv"
+      }
     },
     "quarter": {
       "provisional": {
-        "slot": 18,
-        "loss": 50.019797313845494,
-        "target_fit_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/monitor/quarter_provisional_slot18_target_fit.csv",
-        "parameters_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/monitor/quarter_provisional_slot18_parameters.csv"
+        "slot": 19,
+        "loss": 48.31993782905434,
+        "target_fit_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/monitor/quarter_provisional_slot19_target_fit.csv",
+        "parameters_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/monitor/quarter_provisional_slot19_parameters.csv"
       },
-      "verified": null
+      "verified": {
+        "slot": 19,
+        "loss": 48.31993782905434,
+        "target_fit_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/monitor/quarter_verified_slot19_target_fit.csv",
+        "parameters_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/monitor/quarter_verified_slot19_parameters.csv"
+      }
     }
   },
-  "as_of_utc": "2026-10-02T15:54:33.234613+00:00",
+  "as_of_utc": "2026-10-02T19:29:10.676413+00:00",
   "local_design_sha256": "463fce700a4d3279afa3a0e837b6bcc271589206435e3b117ad713442e206b20",
   "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
   "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"

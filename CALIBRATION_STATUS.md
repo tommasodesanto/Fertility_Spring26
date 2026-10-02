@@ -1,21 +1,27 @@
 ## October 2 — purchase-rule diagnostics and overnight work
 
-**Fresh calibration search launched, 11:24 New York.** Slurm array **19040483**
-has 24 new independent chains, 12 each for the hard and quarter-saving 80%
-purchase rules; all 24 were verified RUNNING. Six fresh-postchecked centers
-seed four deterministic starts each. Economic rules, targets, weights, ten
-free coordinates and bounds are unchanged. Each chain has one core, 24 GiB,
-four hours from actual start, at most 250 objective calls, a 900-second final
-postcheck reserve and an 18:00 New York absolute cutoff. The maximum is
-6,000 candidate objectives plus 24 final postchecks; at the recent 149-second
-median objective and 225-minute search allowance, roughly 2,160 objectives
-may fit, subject to actual solve times. A local exact-loop zero-native test
-and mounted hard/quarter zero-native initializer preflights passed before
-submission. Source is frozen in a separate root. The earlier verified hard
-and quarter losses, 97.0112198128 and 51.5560360491, remain incumbents,
-not optimizer-converged estimates or adopted paper baselines. The design,
-source pins, launch receipt and read-only monitor are in
-`output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/`.
+**Fresh calibration search complete, 15:29 New York.** Slurm array **19040483**
+ended with all 24 chains terminal and all 24 selected-point native postchecks
+passed. The lowest verified experimental losses are **88.5884027814** for the
+hard 80% purchase rule (slot 8, previously 97.0112198128) and
+**48.3199378291** for the quarter-saving 80% rule (slot 19, previously
+51.5560360491). The hard arm recorded 909 valid scored cases and 27
+budget-uncomputed cases; the quarter arm recorded 995 and 21 respectively.
+Neither arm recorded a numerically inadmissible case. Economic rules, targets,
+weights, ten free coordinates and bounds were unchanged. These selected points
+have no optimizer-convergence certificate and are not adopted paper baselines.
+Mean rooms, first-birth room increases, ownership, and early fertility still
+miss important targets; full 14-target fits, 31-parameter estimates and bounds
+are linked in the [fresh search readout](output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/README.md).
+The hard estimate of \(h_P=2.6\) contacts its upper bound; the quarter estimate
+is 2.5720975, below that bound. Fertility curvature parameters have near-bound
+flags, not endpoint contact. The [collection receipt](output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/collection/completed.json)
+authenticates all 24 native selected-point postchecks and SHA-256-verifies both
+winners' complete root/repeat packets, including 17 standard plots each: [hard
+slot 8](output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/collection/hard/slot_8/selected_root)
+and [quarter slot 19](output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/collection/quarter/slot_19/selected_root).
+The monitor is paused after completion. No policy outcome in this note has been
+recomputed at these new fits.
 
 **Final search readout, 04:55 New York.** All 104 calibration processes are
 terminal: 48 original Torch, 25 Torch continuations, 16 broader-region Torch,
