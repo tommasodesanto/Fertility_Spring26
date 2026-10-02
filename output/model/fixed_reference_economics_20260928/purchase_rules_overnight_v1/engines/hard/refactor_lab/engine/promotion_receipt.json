@@ -1,0 +1,43 @@
+{
+ "status": "accepted_for_fixed_reference_test_package_only",
+ "scope": "2007 stationary reference - block0506, September 28 verified export; NOT an active-production replacement",
+ "change": "engine/kernels.py: exhaustive_saving_scalar body replaced by the indexed form (make_indexed_stage.py); no other numerical edit",
+ "chain": {
+  "materialized_original_kernels_sha256": "19dceb70a6b4684ad8da04e119198bef0d88d51d5ee0489debcb297d4434a99e",
+  "transform_before_sha256": "19dceb70a6b4684ad8da04e119198bef0d88d51d5ee0489debcb297d4434a99e",
+  "promoted_kernels_sha256": "fe7d43afdac234af71edd09e1260666e21c309dda83de4adc6a3abff35c3d5d4",
+  "transform_after_sha256": "fe7d43afdac234af71edd09e1260666e21c309dda83de4adc6a3abff35c3d5d4",
+  "tested_stage_kernels_sha256": "fe7d43afdac234af71edd09e1260666e21c309dda83de4adc6a3abff35c3d5d4",
+  "transform_receipt_sha256": "6957d0f591a837e280876d71aa616f6603915fb8ea55598e0bacf448933a9cb7",
+  "one_function_diff_sha256": "d2d6d04a26192aa1a5e063d37fae7fc7caf3e4f6f7d4f5af3deb860b6f1dda9c",
+  "saving_sha256": "25e3fa123b5202d7fb82528dd792c91253cbea3db6d3e23a453f6652385141a3",
+  "generator_sha256": "dd615832ad1ca0397fd5ddc8a76ec5b6ef0f5c6f96e83dfb49e1ffb8da168716",
+  "regenerated_before_promotion_identical": true,
+  "input_kernels_sha256": "19dceb70a6b4684ad8da04e119198bef0d88d51d5ee0489debcb297d4434a99e",
+  "preserved_equivalent_input": "output/model/publication_refactor_20260929/scalar_src_gridfix/refactor_lab/engine"
+ },
+ "evidence": {
+  "torch_fixed_price_18850069": {
+   "completed_json_sha256": "3c52051f623c868c2336ef426db9460925837f05120e338f35d7387d7dc2f638",
+   "indexed_summary_sha256": "bb50f6f2f917858f054aee48449d2af2bf212f04f4c14fbf0fe1185435bb3f54",
+   "note": "scalar and indexed: 2 repetitions each; 113 nested paths exact/finite; 14/31 rows; 17 plot hashes"
+  },
+  "native_local_pair_v1": {
+   "summary_sha256": "4359a9c8b14113c1a331444e86f3f91b8c5447b3f1c4a328c0c2931a51612a78",
+   "comparison_sha256": "291721ea9f128efddb3aa7d28dd8ecd76c7ad5ff4535e8867f071b0e8a00726e",
+   "note": "90 arrays exact, parameters equal; original 152.65 s vs indexed 99.55 s solve stage, cold, 1 thread, M5 Pro; native GE gates only"
+  },
+  "torch_full_ge_18851943": {
+   "status": "passed_old_vs_indexed_GE_and_reporting",
+   "completed_json_sha256": "8b104faa390731d2e6cbcdd5e5b6e245c02566ed0fd4714fb4aa23e700932ded",
+   "strict_array_comparison_sha256": "9bd9b47e931827e0d91dd338c9ca40ab4a5fd84088dd613143d653a7d3c64e9a",
+   "matched_reporting_sha256": "1d754871872085e15509232cc35bd1dc220b2367a5cd49c20687613ff2d1493f",
+   "actual_plot_pair_sha256": "0ae751bed43981604ae74273cbfe94b67b023b5edaa4dec7004b26d2701aab1a",
+   "arrays": 87,
+   "fit_rows": 14,
+   "parameter_rows": 31,
+   "actual_png_files_compared": 17,
+   "renewal": "difference from reference diagnostic only; not an absolute renewal gate"
+  }
+ }
+}

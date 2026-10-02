@@ -1,0 +1,51 @@
+--- native/observe_price
++++ fixed_price/observe_price
+@@ -46,7 +46,7 @@
+              "Nonfinite GE accounting")
+     _require(entry > 0 and demand > 0 and physical_supply > 0 and actual_births >= 0,
+              "Invalid GE accounting")
+-    population = physical_supply / demand
++    population = 1.0  # Fixed physical population, not housing-clearing scale.
+     renewal = float(actual_births / (2.1 * entry) - 1)
+     result = dict(price=float(price[0]), d_bar=float(P.unsecured_credit_limit),
+                   adjusted_births_per_normalized_household=float(actual_births),
+@@ -62,9 +62,10 @@
+                   occupied_renter_floor=renter_floor)
+     fp.write(out / "closure.json", result)
+     if final:
+-        _require(abs(renewal) <= RENEWAL_TOL, "Birth renewal root fails")
+         result["native_population_step"] = native_population_step(
+             context, packet, population, actual_births, entry)
++        result["renewal_status"] = "measured_fixed_price_diagnostic"
++        result["housing_market_status"] = "measured_fixed_H0_diagnostic"
+         fertility = {k: prepared.rt["observe_initial_fertility"](ev, P, age_projection=k)
+                      for k in ("uniform_birth_time", "constant_post_cell")}
+         housing = prepared.rt["observe_initial_housing_wealth"](
+@@ -84,13 +85,17 @@
+         for row in params:
+             row["reference_estimate"], row["estimate"] = row["estimate"], str(float(actual_params[row["parameter"]]))
+             key = row["parameter"]
+-            if key in context["free_coordinates"]:
++            if key in context["fixed_coordinates"]:
++                row["status"] = "fixed at strict-80 reference estimate for diagnostic"
++            elif key in context["free_coordinates"]:
+                 row["status"] = "free in exploratory entry calibration"
+                 lo, hi = float(row["lower"]), float(row["upper"])
+                 value = float(row["estimate"])
+                 row["near_bound"] = str(min(value-lo,hi-value) <= .01*(hi-lo))
+             elif key == "H0":
+-                row["status"] = "fixed population scale; not identified by per-household targets"
++                row["status"] = "fixed strict-80 physical supply coefficient for diagnostic"
++            elif key == "financed_share":
++                row["status"] = "experimental fixed policy input"
+             elif key == "psi_child":
+                 row["status"] = "fixed reference benefit; price clears birth renewal"
+             elif key == "child_benefit_CRRA_coefficient":
+@@ -113,6 +118,6 @@
+         result["standard_plot_count"] = len(plots)
+         result["target_fit_rows"] = len(fits)
+         result["parameter_rows"] = len(params)
+-        result["standard_plot_supply_units"] = "physical supply divided by endogenous household population"
++        result["standard_plot_supply_units"] = "physical supply and demand at fixed N0=1"
+         fp.write(out / "closure.json", result)
+     return result

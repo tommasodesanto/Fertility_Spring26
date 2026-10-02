@@ -1,0 +1,2394 @@
+{
+ "entry": [
+  [
+   "solver",
+   "solve_markov_income_equilibrium"
+  ],
+  [
+   "solver",
+   "solve_markov_income_at_prices"
+  ],
+  [
+   "solver",
+   "precompute_shared"
+  ],
+  [
+   "solver",
+   "make_grid"
+  ],
+  [
+   "solver",
+   "configure_current_household_contract"
+  ],
+  [
+   "solver",
+   "get_fecundity_by_age"
+  ],
+  [
+   "solver",
+   "InfeasibleThetaError"
+  ],
+  [
+   "solver",
+   "DEAD_MASS_TOL"
+  ],
+  [
+   "solver",
+   "DEAD_VALUE_CUTOFF"
+  ],
+  [
+   "e5f_stationary_paygo",
+   "bind_initial_balanced_pension"
+  ],
+  [
+   "e5f_stationary_paygo",
+   "certify_initial_pension"
+  ],
+  [
+   "e5f_stationary_paygo",
+   "solve_balanced_initial_equilibrium"
+  ],
+  [
+   "diagnostics",
+   "write_diagnostics"
+  ]
+ ],
+ "flags": [
+  {
+   "definition": "pack_solution_markov_income",
+   "kind": "dynamic_vars",
+   "line": 8345,
+   "module": "solver"
+  },
+  {
+   "definition": "pack_fast_solution_markov_income",
+   "kind": "dynamic_vars",
+   "line": 8395,
+   "module": "solver"
+  },
+  {
+   "kind": "unresolved_entry",
+   "module": "kernels",
+   "name": "NUMBA_AVAILABLE"
+  },
+  {
+   "kind": "unresolved_entry",
+   "module": "kernels",
+   "name": "NUMBA_AVAILABLE"
+  },
+  {
+   "kind": "unresolved_entry",
+   "module": "kernels",
+   "name": "NUMBA_AVAILABLE"
+  },
+  {
+   "kind": "unresolved_entry",
+   "module": "kernels",
+   "name": "NUMBA_AVAILABLE"
+  },
+  {
+   "kind": "unresolved_entry",
+   "module": "kernels",
+   "name": "NUMBA_AVAILABLE"
+  },
+  {
+   "kind": "unresolved_entry",
+   "module": "kernels",
+   "name": "NUMBA_AVAILABLE"
+  },
+  {
+   "kind": "unresolved_entry",
+   "module": "kernels",
+   "name": "NUMBA_AVAILABLE"
+  },
+  {
+   "kind": "unresolved_entry",
+   "module": "kernels",
+   "name": "NUMBA_AVAILABLE"
+  }
+ ],
+ "modules": {
+  "adult_entry": {
+   "dropped": [
+    "SplitBirthEntryQueue",
+    "require_closed_stationary_renewal"
+   ],
+   "import_edits": [],
+   "kept": [
+    {
+     "lines": [
+      16,
+      16
+     ],
+     "names": [
+      "REPLACEMENT_FERTILITY"
+     ],
+     "sha256": "ab8ec2f6c480475d0d040621d40da06a68bee9f725c7ee1ed85e04d04585a73c"
+    },
+    {
+     "lines": [
+      19,
+      29
+     ],
+     "names": [
+      "adjusted_births"
+     ],
+     "sha256": "4f7ab7a2e25da5c21ee7f213840940903e242d530d93b4333f5d9dfa31cb2d85"
+    },
+    {
+     "lines": [
+      32,
+      37
+     ],
+     "names": [
+      "potential_entry_households"
+     ],
+     "sha256": "d9192f54b014adf24931ec100859fb2edc8eda664279c1e3d1e133c0f1ea93cf"
+    }
+   ],
+   "output_lines": 32,
+   "output_sha256": "e752178ad90d64c77575b70d0718a94d6f3b04463b03637d9af12e23f57bce3f",
+   "source": "code/model/intergen_eqscale_seq_optimized/adult_entry.py",
+   "source_lines": 101,
+   "source_sha256": "1e16e29cec889a78e651572a586cec3c4384cc72a1e945de4b68e0cd8f8b5a1e"
+  },
+  "child_preferences": {
+   "dropped": [],
+   "import_edits": [],
+   "kept": [
+    {
+     "lines": [
+      8,
+      51
+     ],
+     "names": [
+      "apply_child_preferences"
+     ],
+     "sha256": "435a5bac18a221140d0ac32bef9bef07ad5e077599c2e66fb8773fde51464052"
+    }
+   ],
+   "output_lines": 54,
+   "output_sha256": "887763b066bdd64efb2f23b97fac977abfa9630d1e194adb2148da24b2ff7123",
+   "source": "code/model/intergen_eqscale_seq_optimized/child_preferences.py",
+   "source_lines": 51,
+   "source_sha256": "69544858b0137e09d37ac9e07ee6470ddc2d5849236b2c3e33d270737164f09d"
+  },
+  "diagnostics": {
+   "dropped": [],
+   "import_edits": [],
+   "kept": [
+    {
+     "lines": [
+      14,
+      146
+     ],
+     "names": [
+      "write_diagnostics"
+     ],
+     "sha256": "8994341949af0c2f6b77950ea6c16c6cca34125fd5d976ee57d47e5ecf9c296f"
+    },
+    {
+     "lines": [
+      149,
+      214
+     ],
+     "names": [
+      "write_distribution_diagnostics"
+     ],
+     "sha256": "9607de18a643da729b5224f5abb47c4784dd2c75d91acf39e731edc4d7289dd2"
+    },
+    {
+     "lines": [
+      217,
+      220
+     ],
+     "names": [
+      "weighted_liquid_wealth"
+     ],
+     "sha256": "8f8186453d61cf781943672d30bd5e4eb639ae20b8b663a4e8ae67f2f1eb5a53"
+    },
+    {
+     "lines": [
+      223,
+      239
+     ],
+     "names": [
+      "mean_housing_for_distribution"
+     ],
+     "sha256": "f2523c792a919cfeb8c8c6067037e5dabe27f2eae1ebcad14a40be34742bf1d7"
+    },
+    {
+     "lines": [
+      242,
+      265
+     ],
+     "names": [
+      "plot_age_by_income_state"
+     ],
+     "sha256": "13ab729e9acc3618eab41df7dd8f866378c50af31bce50406592b693c93d182c"
+    },
+    {
+     "lines": [
+      268,
+      285
+     ],
+     "names": [
+      "write_policy_diagnostics"
+     ],
+     "sha256": "d1d671c099d8ba067d8dc7c164cff9bf6f9ae853c3d72c5d9d10cdadfc700f00"
+    },
+    {
+     "lines": [
+      288,
+      290
+     ],
+     "names": [
+      "age_to_index"
+     ],
+     "sha256": "8d23b42eb53748299cbf609e41fb67e6fbfaa1e895c705f16ecb244ecb6e788a"
+    },
+    {
+     "lines": [
+      293,
+      372
+     ],
+     "names": [
+      "plot_policy_childless_renter"
+     ],
+     "sha256": "67ea0f17fa9394db69dcaed199c1a1a16d675824cc5b6a8a13e3d4d29524a95c"
+    },
+    {
+     "lines": [
+      375,
+      389
+     ],
+     "names": [
+      "completed_fertility_measure"
+     ],
+     "sha256": "b389d310828188eafc61315b93fd9e17fd826d5be32138a2f7e2f34bfb271353"
+    },
+    {
+     "lines": [
+      392,
+      430
+     ],
+     "names": [
+      "_summary"
+     ],
+     "sha256": "7bac3dece67eaaa8fdff82110f15c2a873f1230ad176c00cb7c2022dcfc70204"
+    },
+    {
+     "lines": [
+      433,
+      447
+     ],
+     "names": [
+      "_dumps_json"
+     ],
+     "sha256": "9375e96f765094dbb2acf418ae67fd3d54e01f9b517743392f79a48e77c22789"
+    }
+   ],
+   "output_lines": 447,
+   "output_sha256": "eb9c3516e4d4343d59f84341213faaebdaa09eba20cc0efc1bf3bfecb8a28985",
+   "source": "code/model/intergen_eqscale_seq_optimized/diagnostics.py",
+   "source_lines": 447,
+   "source_sha256": "3d77fc4ebddad9635407c65cd73f1add3cea8fd2f4a8250d125329c9113a654b"
+  },
+  "e5f_social_security": {
+   "dropped": [
+    "apply_fiscal_date",
+    "validated_fiscal_paths"
+   ],
+   "import_edits": [],
+   "kept": [
+    {
+     "lines": [
+      12,
+      26
+     ],
+     "names": [
+      "_income_primitives"
+     ],
+     "sha256": "efbe43b38d2b7e6a893826f317c121d1facece213bd84e5c1512dcf886ae5d1d"
+    },
+    {
+     "lines": [
+      29,
+      49
+     ],
+     "names": [
+      "bind_social_security_income"
+     ],
+     "sha256": "307d5112eb303f5779e50a5a1dd4a0cb554413f88af2a6aaa16ccfc665403788"
+    },
+    {
+     "lines": [
+      78,
+      124
+     ],
+     "names": [
+      "fiscal_accounts"
+     ],
+     "sha256": "69969f388e41bbf54b9055aeab061ec2f729ec2395b379508ba41604fc93da42"
+    }
+   ],
+   "output_lines": 96,
+   "output_sha256": "df03621afd48135afb6c3fbdec1209bad9605c6133b9f6352fce28fc45c7961b",
+   "source": "code/model/tools/e5f_social_security.py",
+   "source_lines": 124,
+   "source_sha256": "f7bb7db2774be7ef7d2ca2a635eafa3cb27ba79a503fe69b6f00c1eef9658455"
+  },
+  "e5f_stationary_paygo": {
+   "dropped": [
+    "rebase_initial_supply"
+   ],
+   "import_edits": [
+    {
+     "line": 13,
+     "new": "from .e5f_social_security import (bind_social_security_income, fiscal_accounts)\n",
+     "old": "from e5f_social_security import bind_social_security_income, fiscal_accounts\n"
+    }
+   ],
+   "kept": [
+    {
+     "lines": [
+      16,
+      48
+     ],
+     "names": [
+      "stationary_age_income_mass"
+     ],
+     "sha256": "ed02cd0761257ec7e2d95b1a3e49e7d01243c5d98bff1376fca89ec90351f50c"
+    },
+    {
+     "lines": [
+      51,
+      65
+     ],
+     "names": [
+      "bind_initial_balanced_pension"
+     ],
+     "sha256": "7b37c8a7f5e0c97ce259c4f83c5dee26badea23a94294ed7ede8c82a2d749a95"
+    },
+    {
+     "lines": [
+      68,
+      89
+     ],
+     "names": [
+      "certify_initial_pension"
+     ],
+     "sha256": "0200926d8d5da7e5d5077a37ac474d921179dd6f8321115f28f838346f8b2444"
+    },
+    {
+     "lines": [
+      92,
+      113
+     ],
+     "names": [
+      "solve_balanced_initial_equilibrium"
+     ],
+     "sha256": "54b3b082f4740fb0dc646836d1084cfc4205be8e9bf4e75c7cbc0ceb98890b19"
+    }
+   ],
+   "output_lines": 109,
+   "output_sha256": "7eeb7760b236711d40b3563d6d7a40548ba3cade6a646743c6fe3a02462a8569",
+   "source": "code/model/tools/e5f_stationary_paygo.py",
+   "source_lines": 141,
+   "source_sha256": "0877a7670ff4682e00e7fba7f325893ab9c9bffed5361f27eaee51a5b9d27c4c"
+  },
+  "fertility_nested": {
+   "dropped": [],
+   "import_edits": [],
+   "kept": [
+    {
+     "lines": [
+      10,
+      27
+     ],
+     "names": [
+      "logsum"
+     ],
+     "sha256": "1d25b0b739911087f5edd159d368c29431cb9bddec253e64601d77746e001254"
+    },
+    {
+     "lines": [
+      30,
+      62
+     ],
+     "names": [
+      "choose"
+     ],
+     "sha256": "76ace1654d66cce846f591f804508bae2ac6275346a1f33b39b4dbda570adf0b"
+    },
+    {
+     "lines": [
+      65,
+      100
+     ],
+     "names": [
+      "bellman_block"
+     ],
+     "sha256": "0d2d6da40653402d93bf709f6f2297eef9a100a73321cad9eb8ae97cc59752ca"
+    },
+    {
+     "lines": [
+      103,
+      159
+     ],
+     "names": [
+      "factor_age"
+     ],
+     "sha256": "2f22a1faf315068fbe27b6b7c1125c0c4648d91c63674449e54b8c5e32162cc8"
+    }
+   ],
+   "output_lines": 158,
+   "output_sha256": "aed06c0ee77bb39b0d72da0d5e63c6f1c1b6c3b0a76986372aa17e2d2cb77e85",
+   "source": "code/model/intergen_eqscale_seq_optimized/fertility_nested.py",
+   "source_lines": 159,
+   "source_sha256": "02584fe2b84652b7152f1fa932b3934884abb6629ca2878be3629c22e56d0ea8"
+  },
+  "joint_nested": {
+   "dropped": [],
+   "import_edits": [],
+   "kept": [
+    {
+     "lines": [
+      12,
+      16
+     ],
+     "names": [
+      "UndefinedStationaryFirstBirthSupport"
+     ],
+     "sha256": "73625c1c81a3a2d213fcb58261748fd6738e75562616e74b5dcaecedf4f5a78c"
+    },
+    {
+     "lines": [
+      19,
+      28
+     ],
+     "names": [
+      "owner_consumption_from_solution"
+     ],
+     "sha256": "a3173a017a88f2cd4a1184931ff1d0eaa3d56407f2a0dedaedc06dbf4b7c46c2"
+    },
+    {
+     "lines": [
+      31,
+      43
+     ],
+     "names": [
+      "logsum_prob"
+     ],
+     "sha256": "75817a9f62f4fede09dfd2f38cac2208542d07bcdc4503c04829b6de6c514303"
+    },
+    {
+     "lines": [
+      46,
+      78
+     ],
+     "names": [
+      "allocate"
+     ],
+     "sha256": "9e02963e8f1a293eb11792dc4fd0412fd66c24da2c320022b73b7afcfaab59ca"
+    },
+    {
+     "lines": [
+      81,
+      123
+     ],
+     "names": [
+      "bellman_block"
+     ],
+     "sha256": "e8cd029b7bfe974924e986babb74ba5668b54d1ca638ea132626be19ca66eb54"
+    },
+    {
+     "lines": [
+      126,
+      187
+     ],
+     "names": [
+      "factor_age"
+     ],
+     "sha256": "25c0a5a219b137a7ec8ad5cc9ac31d44d3ab252a54ef4fa3c6548d4bc77ae29a"
+    },
+    {
+     "lines": [
+      190,
+      199
+     ],
+     "names": [
+      "factor_distribution"
+     ],
+     "sha256": "08b5cac13b4010fd5093a042f33a2420ecf635e59e8c7d8fed206c6edc648156"
+    },
+    {
+     "lines": [
+      202,
+      233
+     ],
+     "names": [
+      "stationary_first_birth_response"
+     ],
+     "sha256": "dc46e3c38ee8bd1016bbf5a239ca174cb6f1ac2ca91cd79dd82e61a3a08e3747"
+    },
+    {
+     "lines": [
+      236,
+      243
+     ],
+     "names": [
+      "action_marginals"
+     ],
+     "sha256": "52c1be63883470d777449e52bab58087df317b470e36b046f98b63960c50a10c"
+    }
+   ],
+   "output_lines": 241,
+   "output_sha256": "909bb9d02ecf8e196e339864572e7692e71a956c35002397c70a494a30bd620b",
+   "source": "code/model/intergen_eqscale_seq_optimized/joint_nested.py",
+   "source_lines": 243,
+   "source_sha256": "d17fe2c6d430b8056ef89aff254cae18f1c3613f602eb1c61822ab2465e58c83"
+  },
+  "kernels": {
+   "dropped": [
+    "_advance_mass_component",
+    "eval_owner_block_kernel",
+    "eval_renter_block_kernel",
+    "forward_distribution_fast_kernel",
+    "golden_owner_kernel",
+    "golden_renter_kernel",
+    "interp_cols_kernel",
+    "interp_cols_preidx_kernel"
+   ],
+   "import_edits": [],
+   "kept": [
+    {
+     "lines": [
+      30,
+      51
+     ],
+     "names": [
+      "interp_scalar"
+     ],
+     "sha256": "a058805a34d83972f3b02041d5d8ecc82c8b526fdf9072406d60c70c82b8609c"
+    },
+    {
+     "lines": [
+      54,
+      145
+     ],
+     "names": [
+      "renter_wedge_flow"
+     ],
+     "sha256": "d8d593e93d405c72f7db9016e8220132b229e7082830359792f38d11a5d06b6c"
+    },
+    {
+     "lines": [
+      148,
+      175
+     ],
+     "names": [
+      "eval_renter_scalar"
+     ],
+     "sha256": "c29332ad01fc9584700cfb081fb535ad8fc332a884cf2b1ddee8e8e7568f8c4a"
+    },
+    {
+     "lines": [
+      226,
+      233
+     ],
+     "names": [
+      "eval_owner_scalar"
+     ],
+     "sha256": "ec055af3c6a86ffa864296f5d48d587515c2d082f28d241ad1071172980bd45c"
+    },
+    {
+     "lines": [
+      279,
+      290
+     ],
+     "names": [
+      "scatter_vec_kernel"
+     ],
+     "sha256": "3d658f53fc4aef43aa83d6ebdc20fed2ea4dc61f2795815f67018000b9f9ca91"
+    },
+    {
+     "lines": [
+      293,
+      306
+     ],
+     "names": [
+      "scatter_cols_kernel"
+     ],
+     "sha256": "32e5e5722e7385964cf7b416c11bce7ca0eb50804c666e0aa297f5458ac57745"
+    },
+    {
+     "lines": [
+      309,
+      322
+     ],
+     "names": [
+      "scatter_cols_sameidx_kernel"
+     ],
+     "sha256": "ee8af96b7778ae1dd81387cc13ac29fe0d7e72e3fea51192ba1116cf38b02b55"
+    },
+    {
+     "lines": [
+      677,
+      705
+     ],
+     "names": [
+      "_interp_with_clip"
+     ],
+     "sha256": "3da9fbefcac5656bb9d9ae4bd60d5d652a575afa24f759a6f90379d2ed065aa3"
+    },
+    {
+     "lines": [
+      708,
+      789
+     ],
+     "names": [
+      "tenure_choice_kernel"
+     ],
+     "sha256": "5c6d0c1a63ab230932e0ef06d8b58597e9770cde786dab9d148f23292baf3e67"
+    },
+    {
+     "lines": [
+      792,
+      883
+     ],
+     "names": [
+      "tenure_logit_kernel"
+     ],
+     "sha256": "5e882151da356b7c021c14d8ebcffa47c306cad33a88d97888d19dfc45e90ace"
+    },
+    {
+     "lines": [
+      886,
+      951
+     ],
+     "names": [
+      "exhaustive_saving_scalar"
+     ],
+     "sha256": "f53c3e63f59fb22beba86eee34e5fcd46bebf398d92f966e379498b74eba4ca5"
+    },
+    {
+     "lines": [
+      954,
+      1162
+     ],
+     "names": [
+      "full_renter_block_kernel"
+     ],
+     "sha256": "4117b2854e1a62f3a03558ec7ae598013db77d40eaa081c0f3d2e505106df4fc"
+    },
+    {
+     "lines": [
+      1165,
+      1350
+     ],
+     "names": [
+      "full_owner_block_kernel"
+     ],
+     "sha256": "d66d451fdbea892588ec9476565e646a2b4855c2e8ba9da4a3b06ed71d3eeea0"
+    },
+    {
+     "lines": [
+      1353,
+      1408
+     ],
+     "names": [
+      "location_logit_kernel"
+     ],
+     "sha256": "704a183bc95dd8a3e6d5b11b46f9560278fbade78c0464f1dfb5a9cf707885dd"
+    }
+   ],
+   "output_lines": 959,
+   "output_sha256": "19dceb70a6b4684ad8da04e119198bef0d88d51d5ee0489debcb297d4434a99e",
+   "source": "/scratch/td2248/projects/publication_refactor_20260929/opus_pass3/credit_overlay_v1/kernels.py",
+   "source_lines": 1465,
+   "source_sha256": "379d179a8f80477e8d813f60bc526e700a270e37e0f411988aabd9a06fd74352"
+  },
+  "parameters": {
+   "dropped": [
+    "SUPPORTED_DYNAMIC_OVERRIDE_KEYS",
+    "_coerce_value",
+    "apply_overrides",
+    "asdict",
+    "binomial_count_transition",
+    "build_calibration_setup",
+    "build_debt_caps",
+    "child_exit_prob_by_age",
+    "clone_ns",
+    "compute_stationary_worker_income",
+    "configure_child_state_process",
+    "estate_recipient_age_indices",
+    "exempt_count_transition",
+    "fecundity_active",
+    "finalize_location_choice_spec",
+    "get_income_age_profile",
+    "make_child_transition_matrix_with_matured",
+    "make_independent_child_count_transition_matrix",
+    "make_persistent_transition_matrix",
+    "normalize_transition_matrix",
+    "rental_wedge_total_cost",
+    "resolve_pension_value",
+    "set_income_given_w_and_pension",
+    "setup_parameters",
+    "validate_maturation_switch"
+   ],
+   "import_edits": [],
+   "kept": [
+    {
+     "lines": [
+      735,
+      739
+     ],
+     "names": [
+      "unsecured_debt_floor"
+     ],
+     "sha256": "c6a60e87802901a78abe995522d0de642a3dea9fcd652a92362ce1306d8b5226"
+    },
+    {
+     "lines": [
+      920,
+      944
+     ],
+     "names": [
+      "get_fecundity_by_age"
+     ],
+     "sha256": "c91db3d92bb813e93c31c794d07e30b28f1c67dd4e5c5fa2f413231121fcc720"
+    },
+    {
+     "lines": [
+      951,
+      953
+     ],
+     "names": [
+      "readiness_gate_active"
+     ],
+     "sha256": "8dfb5ff1e9f210cfb34197026451e83498a4460a5c50f8ae603498677b8f3355"
+    },
+    {
+     "lines": [
+      956,
+      965
+     ],
+     "names": [
+      "readiness_cumulative_probability"
+     ],
+     "sha256": "35583dd105862e3ba3477aa2797a3bad3b02e077d84643b08f83069b41da0211"
+    },
+    {
+     "lines": [
+      968,
+      978
+     ],
+     "names": [
+      "readiness_transition_hazard"
+     ],
+     "sha256": "03399e651c3815e9a57e03d110b0a9fc1e2cd099e75625a7c495350165bc5e98"
+    },
+    {
+     "lines": [
+      981,
+      983
+     ],
+     "names": [
+      "readiness_childless_states"
+     ],
+     "sha256": "20d7b7bf9b73aa33f44022ca10ca47775ace11090ccdab5d71414fe5131b1bc0"
+    },
+    {
+     "lines": [
+      986,
+      988
+     ],
+     "names": [
+      "readiness_settled_state"
+     ],
+     "sha256": "286916a29d171b3dc7ed13230897ca45d100a694afb594c502f4dbaf40e8a4dd"
+    },
+    {
+     "lines": [
+      991,
+      993
+     ],
+     "names": [
+      "independent_child_maturation_active"
+     ],
+     "sha256": "675040ab58134fe5df54fc54bffb2bc31b9bc2b372d3f032cf4851d8c09915fd"
+    },
+    {
+     "lines": [
+      996,
+      998
+     ],
+     "names": [
+      "child_earnings_penalty_active"
+     ],
+     "sha256": "e5458df335d559ad8cebe468fc673fcf717c9f5b16d5d482b2fe363f3e13efc0"
+    },
+    {
+     "lines": [
+      1001,
+      1005
+     ],
+     "names": [
+      "mortgage_stay_floor_active"
+     ],
+     "sha256": "93feecbbb25dc73175d5c2b508f713c35ef85b485a25f2dc2441f06d2e859db6"
+    },
+    {
+     "lines": [
+      1008,
+      1013
+     ],
+     "names": [
+      "rental_wedge_active"
+     ],
+     "sha256": "e96b2d657f595f0b766ffdad6803a07be4544dddd2dbc44e36097ef92346e07a"
+    },
+    {
+     "lines": [
+      1024,
+      1026
+     ],
+     "names": [
+      "estate_receiver_active"
+     ],
+     "sha256": "4327adfbf9ac63e6d01c35edcb7e7a3be54dfeba6b3895cf1881edf1c1da1689"
+    },
+    {
+     "lines": [
+      1029,
+      1037
+     ],
+     "names": [
+      "bequest_utility_net_active"
+     ],
+     "sha256": "a754e7a4b59975799d7a71b4cda0fc31f0829dd75eca55da012c4815122e1501"
+    },
+    {
+     "lines": [
+      1040,
+      1053
+     ],
+     "names": [
+      "estate_housing_value"
+     ],
+     "sha256": "9d7a18afd606a338bca55a2bb2ccc0d695d77406108a298ab205a8a91818c027"
+    },
+    {
+     "lines": [
+      1067,
+      1077
+     ],
+     "names": [
+      "estate_transfer_at_age"
+     ],
+     "sha256": "0057203bc655faf1d7edee070319c949fa9dc0e07f5f70d43ddec3398f10713e"
+    },
+    {
+     "lines": [
+      1080,
+      1092
+     ],
+     "names": [
+      "children_at_home_count"
+     ],
+     "sha256": "46afa73f9d37968ab7ee1ac405c07c2e4dd47a423c645c5922fc644dbf605c69"
+    },
+    {
+     "lines": [
+      1095,
+      1107
+     ],
+     "names": [
+      "child_earnings_multiplier"
+     ],
+     "sha256": "ed3190aba8d6a174faad3bcafd273679c552605395663ba58dff7c1825837eeb"
+    },
+    {
+     "lines": [
+      1110,
+      1112
+     ],
+     "names": [
+      "parent_age_maturation_active"
+     ],
+     "sha256": "af537c1f64dfb80d69ba0a9015522eef31eb9bb84ccac204cb8a68fb6be606d2"
+    }
+   ],
+   "output_lines": 190,
+   "output_sha256": "f8871ea7f026b0900f2cd89e2ecbe7f24fbc8b08e83ec46227533a11dea2e163",
+   "source": "/scratch/td2248/projects/publication_refactor_20260929/opus_pass3/credit_overlay_v1/parameters.py",
+   "source_lines": 1337,
+   "source_sha256": "d7b4d23c4bab2153dca0e86a6f189fe6aed6676c72090999d5a1c9105a8d5f8c"
+  },
+  "solver": {
+   "dropped": [
+    "_dispatch_stationary_solve",
+    "_entry_value_on_nodes",
+    "accounting_population_scale",
+    "add_annual_gross_estate_wealth_moments",
+    "advance_cohort_horizon",
+    "advance_cohort_one_period",
+    "aggregate_income_type_solutions",
+    "assign_current_choices_to_beginning_assets",
+    "assign_current_choices_to_beginning_assets_markov_income",
+    "assign_current_cross_section_to_beginning_assets",
+    "benchmark_normalized_outside_population_scale",
+    "calibrate_outside_value_for_entry_total",
+    "city_entry_probabilities",
+    "compute_eq_stats",
+    "entry_values_by_location",
+    "forward_distribution",
+    "make_income_type_params",
+    "mean_housing_childless_weighted",
+    "mean_housing_distribution",
+    "outside_option_entry_target",
+    "pack_solution",
+    "period_estate_flow_and_recipient_mass",
+    "run_model_cp_dt",
+    "set_entry_masses",
+    "solve_bellman_core",
+    "solve_bellman_eval",
+    "solve_bellman_full",
+    "solve_equilibrium",
+    "solve_income_type_equilibrium",
+    "solve_income_type_partial_equilibrium",
+    "solve_markov_income_partial_equilibrium",
+    "solve_partial_equilibrium_dt",
+    "uses_benchmark_normalized_outside_closure",
+    "uses_income_types",
+    "uses_markov_income"
+   ],
+   "import_edits": [
+    {
+     "line": 18,
+     "new": "from .parameters import (bequest_utility_net_active, child_earnings_multiplier, child_earnings_penalty_active, children_at_home_count, estate_housing_value, estate_receiver_active, estate_transfer_at_age, get_fecundity_by_age, independent_child_maturation_active, mortgage_stay_floor_active, parent_age_maturation_active, readiness_childless_states, readiness_cumulative_probability, readiness_gate_active, readiness_settled_state, readiness_transition_hazard, rental_wedge_active, unsecured_debt_floor)\n",
+     "old": "from .parameters import (\n    apply_overrides,\n    bequest_utility_net_active,\n    child_earnings_multiplier,\n    child_earnings_penalty_active,\n    children_at_home_count,\n    estate_housing_value,\n    estate_receiver_active,\n    estate_recipient_age_indices,\n    estate_transfer_at_age,\n    fecundity_active,\n    finalize_location_choice_spec,\n    get_fecundity_by_age,\n    independent_child_maturation_active,\n    mortgage_stay_floor_active,\n    parent_age_maturation_active,\n    readiness_childless_states,\n    readiness_cumulative_probability,\n    readiness_gate_active,\n    readiness_settled_state,\n    readiness_transition_hazard,\n    rental_wedge_active,\n    setup_parameters,\n    unsecured_debt_floor,\n)\n"
+    },
+    {
+     "line": 43,
+     "new": "from .kernels import (NUMBA_AVAILABLE, full_owner_block_kernel, full_renter_block_kernel, location_logit_kernel, scatter_cols_kernel, scatter_cols_sameidx_kernel, scatter_vec_kernel, tenure_choice_kernel, tenure_logit_kernel)\n",
+     "old": "from .kernels import (\n    NUMBA_AVAILABLE,\n    eval_owner_block_kernel,\n    eval_renter_block_kernel,\n    full_owner_block_kernel,\n    full_renter_block_kernel,\n    golden_owner_kernel,\n    golden_renter_kernel,\n    forward_distribution_fast_kernel,\n    interp_cols_kernel,\n    interp_cols_preidx_kernel,\n    location_logit_kernel,\n    scatter_cols_kernel,\n    scatter_cols_sameidx_kernel,\n    scatter_vec_kernel,\n    tenure_choice_kernel,\n    tenure_logit_kernel,\n)\n"
+    },
+    {
+     "line": 61,
+     "new": "from .utils import (decode_flat_family_state, flat_nc, interp_indices, interp_on_grid, interp_vector, logsumexp, make_grid, make_value_interp, scatter_redistribute, scatter_redistribute_cols, scatter_redistribute_cols_sameidx, unflat_nc, weighted_median_from_cells, weighted_quantile)\n",
+     "old": "from .utils import (\n    decode_flat_family_state,\n    flat_nc,\n    interp_cols,\n    interp_indices,\n    interp_on_grid,\n    interp_vector,\n    logsumexp,\n    make_grid,\n    make_value_interp,\n    scatter_redistribute,\n    scatter_redistribute_cols,\n    scatter_redistribute_cols_sameidx,\n    unflat_nc,\n    weighted_median_from_cells,\n    weighted_quantile,\n)\n"
+    }
+   ],
+   "kept": [
+    {
+     "lines": [
+      80,
+      80
+     ],
+     "names": [
+      "OUTSIDE_OPTION_CLOSURES"
+     ],
+     "sha256": "1095832773ee1f9a3ed16eb67ccc021faa890438ccf3277d135e61e94df9f2f1"
+    },
+    {
+     "lines": [
+      81,
+      81
+     ],
+     "names": [
+      "ACCOUNTING_SCALE_PRICE_CLOSURES"
+     ],
+     "sha256": "22b8b9e30bf5fbc2402ab5dee9a0048399555bba653d0bbd33937bd03d83cf29"
+    },
+    {
+     "lines": [
+      82,
+      85
+     ],
+     "names": [
+      "BENCHMARK_NORMALIZED_OUTSIDE_CLOSURES"
+     ],
+     "sha256": "1ce838ad130bad02581b6e8527886a5defa7b25c5d0d143633302a043f6f6fe7"
+    },
+    {
+     "lines": [
+      86,
+      86
+     ],
+     "names": [
+      "RENEWAL_VALVE_FIXED_CLOSURES"
+     ],
+     "sha256": "6382dd000adc130cc2c220389b04324fb9701e29f902e1f4fd40c579adffc052"
+    },
+    {
+     "lines": [
+      87,
+      92
+     ],
+     "names": [
+      "RENEWAL_VALVE_CALIBRATED_CLOSURES"
+     ],
+     "sha256": "3c379a1fa0f6ec46b8f36aca34a3bfe1aa2c7344816c5cd2e3fff7f7f97bd4e2"
+    },
+    {
+     "lines": [
+      93,
+      93
+     ],
+     "names": [
+      "RENEWAL_VALVE_CLOSURES"
+     ],
+     "sha256": "4382246ded8ec2fbcf442b7ef389775065f4e33a72715a6de7521a29977c0174"
+    },
+    {
+     "lines": [
+      94,
+      94
+     ],
+     "names": [
+      "DEAD_VALUE_CUTOFF"
+     ],
+     "sha256": "64b1629ba6b365505edc3391496dc61c86fe6eb5aa655cdf490f1f764d1ed439"
+    },
+    {
+     "lines": [
+      95,
+      95
+     ],
+     "names": [
+      "DEAD_MASS_TOL"
+     ],
+     "sha256": "3a2bd8651ff460dfe57af96d69894caedf6f281cbe7d1f7406e0b83b93899612"
+    },
+    {
+     "lines": [
+      98,
+      114
+     ],
+     "names": [
+      "InfeasibleThetaError"
+     ],
+     "sha256": "cd6df17885f78d9ff6602bfe457f145ae6a5da5698aaa695d0aee881fbaf5280"
+    },
+    {
+     "lines": [
+      117,
+      124
+     ],
+     "names": [
+      "jsonable_feasibility_census"
+     ],
+     "sha256": "974c1d70a61f39f34ccb99954ee1ec6d2318cdf0e59095d2319e0489d3da17aa"
+    },
+    {
+     "lines": [
+      127,
+      134
+     ],
+     "names": [
+      "debt_rule_at_age"
+     ],
+     "sha256": "29252918e9a253a638026446c6a4b25d42af98b916054854378ab55e48ed33dd"
+    },
+    {
+     "lines": [
+      137,
+      138
+     ],
+     "names": [
+      "fixed_unsecured_credit_active"
+     ],
+     "sha256": "896d58d89a73e366daeabc4db1c78b55b41bcc9def1ed2e012a0747e22a4e985"
+    },
+    {
+     "lines": [
+      141,
+      156
+     ],
+     "names": [
+      "renter_borrowing_floor"
+     ],
+     "sha256": "dc753c7e8773b653138b0b371ecd5ff9f705baa6847887d27fe885f70432eb37"
+    },
+    {
+     "lines": [
+      159,
+      166
+     ],
+     "names": [
+      "native_due_owner_floor"
+     ],
+     "sha256": "f0c013efeac9be934d7cd7104901e17d40af085a7b49456c9af0cdafb7dc4d2a"
+    },
+    {
+     "lines": [
+      169,
+      172
+     ],
+     "names": [
+      "native_due_death_floor"
+     ],
+     "sha256": "8d614ae3c68e13e289ed1e90c27a715f99e5eb164cfdbaf5072a243ec6b6440c"
+    },
+    {
+     "lines": [
+      175,
+      210
+     ],
+     "names": [
+      "owner_borrowing_floor"
+     ],
+     "sha256": "fc92cb15877af2a5bc77fbab84b01efecca0bd31276cad255f7351877f5cd2d2"
+    },
+    {
+     "lines": [
+      213,
+      229
+     ],
+     "names": [
+      "effective_owner_collateral_floor"
+     ],
+     "sha256": "10f1b3a7b1cb92081284734dc1011eb6ee2b7a36a169f44896137c6ab9125b42"
+    },
+    {
+     "lines": [
+      232,
+      233
+     ],
+     "names": [
+      "uses_outside_option_closure"
+     ],
+     "sha256": "4075053b940ce4f58b35e568ada4b2d9aa570789ef2c9c4f7023d96bb945a59d"
+    },
+    {
+     "lines": [
+      236,
+      238
+     ],
+     "names": [
+      "uses_accounting_scale_price_closure"
+     ],
+     "sha256": "7480b15aeea536cba30f6604ff14edd6bc16c358440764d068ce440ebfffc5f0"
+    },
+    {
+     "lines": [
+      245,
+      246
+     ],
+     "names": [
+      "uses_renewal_valve_closure"
+     ],
+     "sha256": "c91401c0d82681ab33361b4ba3493449dcb48eb56464a804d0faefa96cbe0965"
+    },
+    {
+     "lines": [
+      249,
+      251
+     ],
+     "names": [
+      "uses_calibrated_renewal_valve_closure"
+     ],
+     "sha256": "193c622c176b73f0b3a083410d699ec4f61b6c980d59f87a3f4da6bdf7c15164"
+    },
+    {
+     "lines": [
+      254,
+      257
+     ],
+     "names": [
+      "normalize_population_mass"
+     ],
+     "sha256": "2268884c84a0dd9375233539d8cb7a05bb6cd5e4eba0a66840f0384f86a1b3d5"
+    },
+    {
+     "lines": [
+      269,
+      276
+     ],
+     "names": [
+      "income_type_values"
+     ],
+     "sha256": "d4ec506f46f749ca6fff3ea34c6bced4593e7d2f5f78011dc951418492cadd69"
+    },
+    {
+     "lines": [
+      279,
+      291
+     ],
+     "names": [
+      "income_transition_values"
+     ],
+     "sha256": "9e34b1015b4c6f1fa156c083ce00b7a092ec98bf58804a53ce5dd70f516a6702"
+    },
+    {
+     "lines": [
+      294,
+      311
+     ],
+     "names": [
+      "income_at_state"
+     ],
+     "sha256": "c3ea8e894bc87abd3cc4953a4bf81450683e190dd62999fe4d71efeff549503f"
+    },
+    {
+     "lines": [
+      314,
+      339
+     ],
+     "names": [
+      "penalized_income_at_state"
+     ],
+     "sha256": "3b352d3c21600ca51ddb35961dc79da70698f2bfb67c2519f37715e30f5eb7f6"
+    },
+    {
+     "lines": [
+      342,
+      351
+     ],
+     "names": [
+      "birth_destination_child_state"
+     ],
+     "sha256": "3ea15c8a0ee7dd2cdc43c5c01bd6415de051f538404c61c8a8f0447d87a68e41"
+    },
+    {
+     "lines": [
+      354,
+      357
+     ],
+     "names": [
+      "housing_demand_normalizer"
+     ],
+     "sha256": "a5cbf4413425b93bc1f4e31ffb6f16f737ee22a3e32b939d9edf74d5beb0a2a6"
+    },
+    {
+     "lines": [
+      360,
+      365
+     ],
+     "names": [
+      "ENTRY_WEALTH_INCOME_RATIO_MODES"
+     ],
+     "sha256": "d52c9f052832bc64bb8d9c100d1effb1ac94c74e8c763d17d556e61f82d6b371"
+    },
+    {
+     "lines": [
+      368,
+      376
+     ],
+     "names": [
+      "annual_gross_income_at_state"
+     ],
+     "sha256": "3cbe5c49b70b9fc2bf831ede5a7fb03c0637607dffcc502fbd800d4e5ccf2e3e"
+    },
+    {
+     "lines": [
+      379,
+      380
+     ],
+     "names": [
+      "uses_entry_wealth_income_ratio"
+     ],
+     "sha256": "8d8cad142e858769167bf90922308478a01d4f468b870a725b40c8627bf0f5d9"
+    },
+    {
+     "lines": [
+      383,
+      397
+     ],
+     "names": [
+      "entry_wealth_ratio_distribution"
+     ],
+     "sha256": "96495b26b5cfcc568f41f6358a813abc8099fe1aca35e41b07b5eaf1604b68fe"
+    },
+    {
+     "lines": [
+      400,
+      433
+     ],
+     "names": [
+      "_linear_grid_weights_for_points"
+     ],
+     "sha256": "964f6d0ca69805b9effce11e5b2b055c6114a55925a24d03885aaf616aa190a2"
+    },
+    {
+     "lines": [
+      436,
+      502
+     ],
+     "names": [
+      "_scalar_entry_wealth_grid_weights"
+     ],
+     "sha256": "e7067362571289f6d06cbcc2036a5369bbe6e8f4529733a221af25b11c091f03"
+    },
+    {
+     "lines": [
+      505,
+      520
+     ],
+     "names": [
+      "configure_current_household_contract"
+     ],
+     "sha256": "2d27ae4254fd927dbbb6366682d41b133af650f5b25bbea375bad4c39a41ca97"
+    },
+    {
+     "lines": [
+      523,
+      558
+     ],
+     "names": [
+      "entry_wealth_grid_weights"
+     ],
+     "sha256": "b5f696c8c93d5ce7f3054af977455ab772733a09a887884227a727837cb80ea0"
+    },
+    {
+     "lines": [
+      561,
+      581
+     ],
+     "names": [
+      "aggregate_entry_wealth_grid_weights"
+     ],
+     "sha256": "83b835844748b8b9c9e8b6a8f758e322127037dee3c0a6bee0c28f7162dcce0a"
+    },
+    {
+     "lines": [
+      639,
+      663
+     ],
+     "names": [
+      "attach_entry_wealth_stats"
+     ],
+     "sha256": "c7e3dd7adda3c422adf99b4c831948e72eef95f0e01c76eef3123f43459497cd"
+    },
+    {
+     "lines": [
+      998,
+      1133
+     ],
+     "names": [
+      "renewal_population_scale"
+     ],
+     "sha256": "9b6a707ba1a611a27f04fee2fcaeb4feb5eb1758860bf6b1c624ac1fe2fd3bfd"
+    },
+    {
+     "lines": [
+      1136,
+      1163
+     ],
+     "names": [
+      "markov_market_housing_demand"
+     ],
+     "sha256": "7d246df831eedb43be7169baea5c65fc4fdfab97ae6dccefcd1ecf04013ca516"
+    },
+    {
+     "lines": [
+      1166,
+      1187
+     ],
+     "names": [
+      "attach_markov_market_accounting"
+     ],
+     "sha256": "78b784973e831cae919f7d2fcede7b8a02219c09ae7d54085912a70ac41df65d"
+    },
+    {
+     "lines": [
+      1414,
+      1592
+     ],
+     "names": [
+      "solve_markov_income_equilibrium"
+     ],
+     "sha256": "ef20fa075bc11b0d17063a8a224f1afe5e3f8b4d7297f242050804c8c83dd629"
+    },
+    {
+     "lines": [
+      1595,
+      1810
+     ],
+     "names": [
+      "refine_one_market_markov_income"
+     ],
+     "sha256": "afe461392fafde7de9b4f4a26089e91f8326364701db229e5021f6c5818f5c49"
+    },
+    {
+     "lines": [
+      1813,
+      1876
+     ],
+     "names": [
+      "solve_markov_income_at_prices"
+     ],
+     "sha256": "56b442fe42d0277ce7550880b3441e9fb0e31eab6eaf5d3eed8c167725208137"
+    },
+    {
+     "lines": [
+      1879,
+      1908
+     ],
+     "names": [
+      "upgrade_fast_markov_solution"
+     ],
+     "sha256": "106b6d36a8eae598b774d0076f83a61ba2691fb1511d6b98510652e89ecaa1ae"
+    },
+    {
+     "lines": [
+      2543,
+      2662
+     ],
+     "names": [
+      "precompute_shared"
+     ],
+     "sha256": "a0d8a7140775c007e319b4a3b790bc6b5adff86cbe269ab5f757c91ab373229f"
+    },
+    {
+     "lines": [
+      2675,
+      2776
+     ],
+     "names": [
+      "_build_housing_stage_ctx"
+     ],
+     "sha256": "1e7d775618c5f0c4f0cfbaf7971f97b4e7680035fdb5d709a619c1ef15746fb4"
+    },
+    {
+     "lines": [
+      2779,
+      3030
+     ],
+     "names": [
+      "_savings_stage"
+     ],
+     "sha256": "e1803eeee549f008a1a54b3c30f6809c76c907fe4ae81075dbb77c831deed535"
+    },
+    {
+     "lines": [
+      3033,
+      3164
+     ],
+     "names": [
+      "_tenure_location_stage"
+     ],
+     "sha256": "acd63e2552463322d1fddf3569cc6a13bbe80fdf6ae0ea9bcb616c500ef12ab5"
+    },
+    {
+     "lines": [
+      3167,
+      3185
+     ],
+     "names": [
+      "native_solvency_support_floor"
+     ],
+     "sha256": "11c58e2bba99463309ff148113e8840ba5573cd7c91bedc81a3a417c76791992"
+    },
+    {
+     "lines": [
+      3188,
+      3190
+     ],
+     "names": [
+      "native_solvency_death_mask"
+     ],
+     "sha256": "3356dd0943fc3ad9b0d5885f7b61015d70f6e1f468839b57c6353bae4c726bb1"
+    },
+    {
+     "lines": [
+      3193,
+      3213
+     ],
+     "names": [
+      "native_solvency_continuation"
+     ],
+     "sha256": "0236bacc0e8ffcd634f7298b4eb61787f8e00a68a4d21d9879bd828672e30cb8"
+    },
+    {
+     "lines": [
+      3216,
+      3228
+     ],
+     "names": [
+      "validate_native_solvency_mode"
+     ],
+     "sha256": "6a7b32dff6b6e5d65c094da7ad557114d5df1fcdd95466f9a61a2332997ca2b6"
+    },
+    {
+     "lines": [
+      3231,
+      3610
+     ],
+     "names": [
+      "solve_bellman_full_markov_income"
+     ],
+     "sha256": "15d813264064ecf53fed1a66b0945ae9c44b44f3d7c5182ce398faf0babb6546"
+    },
+    {
+     "lines": [
+      4163,
+      4243
+     ],
+     "names": [
+      "renter_wedge_flow_py"
+     ],
+     "sha256": "adedf400388a549f3cbf9d86f6d4e8533b935be340bd3fc49350ffc191058441"
+    },
+    {
+     "lines": [
+      4246,
+      4256
+     ],
+     "names": [
+      "eval_renter_wedge"
+     ],
+     "sha256": "58aac8e39d2aace2ef9ac7dc65475565853b60198ba9877c6b8d25f4ca2883a6"
+    },
+    {
+     "lines": [
+      4259,
+      4280
+     ],
+     "names": [
+      "golden_renter_wedge"
+     ],
+     "sha256": "6335d1485699f630d70fdda8f2125fd06d65f2cb071c9d175a2847d4af1be9ee"
+    },
+    {
+     "lines": [
+      4283,
+      4302
+     ],
+     "names": [
+      "golden_renter"
+     ],
+     "sha256": "91d08cd4f81a9ccb0de4cf10295856d26cf39b8ae6b43fe45bd86c5d3c440c32"
+    },
+    {
+     "lines": [
+      4305,
+      4322
+     ],
+     "names": [
+      "eval_renter"
+     ],
+     "sha256": "02023ffa03eff077dc2ce3ebe52ceb0f205c5c5ae8e629035135af8d52c81df7"
+    },
+    {
+     "lines": [
+      4325,
+      4344
+     ],
+     "names": [
+      "golden_owner"
+     ],
+     "sha256": "740edb5dfec2ef8be0c9f1759161312b53bcfaedfbdecec8b26c18f3ba4f6c24"
+    },
+    {
+     "lines": [
+      4347,
+      4357
+     ],
+     "names": [
+      "eval_owner"
+     ],
+     "sha256": "0404a5d769816a00f08b16f797f0d0eec25358fb556a0508d51a2192e38646bf"
+    },
+    {
+     "lines": [
+      4360,
+      4445
+     ],
+     "names": [
+      "build_forward_tenure_transition_maps"
+     ],
+     "sha256": "792af5ab74dc9fb4b75fe80984894cb8e606a47945fe2aaf080dfcd954c829ca"
+    },
+    {
+     "lines": [
+      4448,
+      4526
+     ],
+     "names": [
+      "realize_current_choices"
+     ],
+     "sha256": "274fae2d3f75731c5d1cfa1421d8ce38c4874442304643be8f2089f19b2b29ea"
+    },
+    {
+     "lines": [
+      4529,
+      4561
+     ],
+     "names": [
+      "realize_current_choices_markov_income"
+     ],
+     "sha256": "5a5230996031eed1e681aeb89b28e4da6dd06bece3f4fd9d77a344836e09e08c"
+    },
+    {
+     "lines": [
+      4564,
+      4582
+     ],
+     "names": [
+      "realize_stayer_cross_section"
+     ],
+     "sha256": "46e5a74d85541be9b8ced64a3c09bae5c1ff7a3bf83ff5a12ae395ec37b5c30e"
+    },
+    {
+     "lines": [
+      4585,
+      4633
+     ],
+     "names": [
+      "realize_current_cross_section"
+     ],
+     "sha256": "576b0b428788676fab7dfdb26123ab7a04c494a5218ca928596118515e0bfe1d"
+    },
+    {
+     "lines": [
+      4774,
+      4849
+     ],
+     "names": [
+      "_dead_mass_census_at_age"
+     ],
+     "sha256": "f2e38df02642c9bcdf9b6a2c0a764604566420d4b712ec8adcc9632e2448169c"
+    },
+    {
+     "lines": [
+      4852,
+      4877
+     ],
+     "names": [
+      "_gate_dead_mass_at_age"
+     ],
+     "sha256": "3aa9cf6bed373c2ed56617418c559b39dbe70fa1d4b94de2a6fe20316405014d"
+    },
+    {
+     "lines": [
+      4880,
+      4906
+     ],
+     "names": [
+      "_censor_entry_dead_mass"
+     ],
+     "sha256": "0b12ab286cd11d29b2cdaed868148d3bdb9f4ef551b4319afffeb1240ed6be1e"
+    },
+    {
+     "lines": [
+      5401,
+      6207
+     ],
+     "names": [
+      "forward_distribution_markov_income"
+     ],
+     "sha256": "d213ba4f3f2fdf1fd328e17a0a85f20ba8ce4f43d0ea9256251c75aabe95a156"
+    },
+    {
+     "lines": [
+      6210,
+      6217
+     ],
+     "names": [
+      "collapse_markov_policy"
+     ],
+     "sha256": "3bd6ce65ff187852004e01a41ecdfd26f0f1e3d231ed15842efd4d78b873af58"
+    },
+    {
+     "lines": [
+      6220,
+      6234
+     ],
+     "names": [
+      "collapse_markov_fertility_probs"
+     ],
+     "sha256": "3ccd67bcf0118644f60452a5e615beb9ffec4ba3e42866a70ac9c3ac79ead026"
+    },
+    {
+     "lines": [
+      6237,
+      6242
+     ],
+     "names": [
+      "collapse_markov_location_probs"
+     ],
+     "sha256": "3dd3486aed00df20eeb8553c76b01ae287e3b474f987ed6677e39a77137511f1"
+    },
+    {
+     "lines": [
+      6245,
+      6289
+     ],
+     "names": [
+      "advance_cohort_horizon_markov_income"
+     ],
+     "sha256": "1e93fdab119e47d66afdd21babde9bfe01253c6f1f1916491b3faa0b92de44c7"
+    },
+    {
+     "lines": [
+      6292,
+      6488
+     ],
+     "names": [
+      "advance_cohort_one_period_markov_income"
+     ],
+     "sha256": "887827815476184d3c4d613669a2944ad74aface6b5d47dc5470bee24af8a3aa"
+    },
+    {
+     "lines": [
+      6491,
+      6509
+     ],
+     "names": [
+      "mean_housing_childless_weighted_markov"
+     ],
+     "sha256": "634d4badec881f23e37dda282bfb583b633751dbc719457763539f2a055690c3"
+    },
+    {
+     "lines": [
+      6512,
+      6529
+     ],
+     "names": [
+      "mean_housing_distribution_markov"
+     ],
+     "sha256": "ba812237b74326b938362643e80a7478195a0cc32e1f62dfdf0732488dd5193d"
+    },
+    {
+     "lines": [
+      6532,
+      6597
+     ],
+     "names": [
+      "markov_renter_room_moments"
+     ],
+     "sha256": "14b66b4206cba37674a568e669d59a243e825d8b9d2ddbc916d9216365175734"
+    },
+    {
+     "lines": [
+      6600,
+      6668
+     ],
+     "names": [
+      "add_annual_gross_liquid_wealth_moments"
+     ],
+     "sha256": "bd6d63c80a219f750eb112def20c75e778931efc5e752f876e1d1c5e47ce1e69"
+    },
+    {
+     "lines": [
+      6671,
+      6765
+     ],
+     "names": [
+      "add_aggregate_wealth_gross_labor_diagnostics"
+     ],
+     "sha256": "6ddd04f79915edf99a2af5638393a009c15b97bc16b3c8c7cf3ce3617c0d425c"
+    },
+    {
+     "lines": [
+      6768,
+      6857
+     ],
+     "names": [
+      "add_annual_gross_old_wealth_moments"
+     ],
+     "sha256": "6117084fb9134e7c2e006dbe9db509664491804985c73980324fab11bb87668c"
+    },
+    {
+     "lines": [
+      6872,
+      6923
+     ],
+     "names": [
+      "add_old_nonhousing_income_share_moments"
+     ],
+     "sha256": "b13eb34ecc0af12e3eafe7c313dae2e46e507bedd2e025a0a9ae643e7bd03142"
+    },
+    {
+     "lines": [
+      6926,
+      6985
+     ],
+     "names": [
+      "add_old_wealth_income_moments"
+     ],
+     "sha256": "93949528845f0b0e1db2e6da4f4500441d1ac0064f548cbdc628d6653e548bb5"
+    },
+    {
+     "lines": [
+      6988,
+      7165
+     ],
+     "names": [
+      "compute_markov_statistics"
+     ],
+     "sha256": "119ccb50a1aa1874a0ce735e635df1a7ed37e5d737b56dece8625d98e1f7edc3"
+    },
+    {
+     "lines": [
+      7168,
+      7256
+     ],
+     "names": [
+      "add_aggregate_wealth_bequest_flow_moments"
+     ],
+     "sha256": "ea673d2ffdff944c58a7ebd5821ea77508a3e6ba52db501cc0f2f460b951d11e"
+    },
+    {
+     "lines": [
+      7259,
+      7284
+     ],
+     "names": [
+      "compute_markov_eq_stats"
+     ],
+     "sha256": "385372c99fef5677482aa98a59da89ce296817cbde9e5a460f342b2da69e761e"
+    },
+    {
+     "lines": [
+      7317,
+      7319
+     ],
+     "names": [
+      "age_to_index"
+     ],
+     "sha256": "8d23b42eb53748299cbf609e41fb67e6fbfaa1e895c705f16ecb244ecb6e788a"
+    },
+    {
+     "lines": [
+      7322,
+      7973
+     ],
+     "names": [
+      "compute_statistics"
+     ],
+     "sha256": "7b4021eccd729fe5b6127f535359059ab300044f79f4cad07f140e515dd360f2"
+    },
+    {
+     "lines": [
+      7976,
+      7989
+     ],
+     "names": [
+      "append_pension_budget_stats"
+     ],
+     "sha256": "66e97747663c25266266f4eac05e9772035f2d3c111a0bcb9ceb6406ea94a637"
+    },
+    {
+     "lines": [
+      8184,
+      8200
+     ],
+     "names": [
+      "_child_Pa_for_age"
+     ],
+     "sha256": "d2a551c11b5533b0e65b89a0c3dc35de297e0038dca0f9c027b37fab6459bef4"
+    },
+    {
+     "lines": [
+      8203,
+      8217
+     ],
+     "names": [
+      "_child_Pa_exempt_for_age"
+     ],
+     "sha256": "97a021904832f5fd9a3c5a9c62a2aa99446bdb93ddefd9e8295773e4a01cd333"
+    },
+    {
+     "lines": [
+      8220,
+      8244
+     ],
+     "names": [
+      "_blended_child_Pi_for_cell"
+     ],
+     "sha256": "675264e64034936590284ab70e7a8eb52ce6749e4a2c37f70a9fc7994f940cc2"
+    },
+    {
+     "lines": [
+      8247,
+      8282
+     ],
+     "names": [
+      "apply_child_aging"
+     ],
+     "sha256": "d25963fa607deb6d4dc40e723e184267afeb8dd75679a880f1b03a2509731621"
+    },
+    {
+     "lines": [
+      8285,
+      8303
+     ],
+     "names": [
+      "apply_child_aging_exempt"
+     ],
+     "sha256": "7abab1b7346190740bb0b420e061fc39e84ade60ce570b59c7ed9233e6d2f00c"
+    },
+    {
+     "lines": [
+      8306,
+      8386
+     ],
+     "names": [
+      "pack_solution_markov_income"
+     ],
+     "sha256": "0ab6d79b9868e879af98bcd3e9ccc2487a59cfaa313d6c501a694eb0a8b23d42"
+    },
+    {
+     "lines": [
+      8389,
+      8411
+     ],
+     "names": [
+      "pack_fast_solution_markov_income"
+     ],
+     "sha256": "8f55cb1ae9c9b22f802480f38af2477231da7d031eee02cae435456e30d326b0"
+    },
+    {
+     "lines": [
+      8467,
+      8486
+     ],
+     "names": [
+      "get_completed_fertility"
+     ],
+     "sha256": "1d43a91dd5fb383d5c377cb4d79144dba7a89f8256c048ee6373d36d9611bb79"
+    },
+    {
+     "lines": [
+      8489,
+      8523
+     ],
+     "names": [
+      "bequest_utility_vec"
+     ],
+     "sha256": "60896824dd29675fe2f2b9f10d08200e9c2d005a69c3c6d6cfec454ec087660a"
+    },
+    {
+     "lines": [
+      8526,
+      8553
+     ],
+     "names": [
+      "pti_adjusted_downpayment"
+     ],
+     "sha256": "aeefa98cc1d1c4cdc08a09d30574b51c6b6d077e203c308be2047f91653ac4cb"
+    },
+    {
+     "lines": [
+      8556,
+      8563
+     ],
+     "names": [
+      "has_birth_dp_grant"
+     ],
+     "sha256": "900cec6b963b6c07c1e5186f4b5096537255e90e655991f5c721f39269fc58b2"
+    },
+    {
+     "lines": [
+      8566,
+      8574
+     ],
+     "names": [
+      "get_phi_state_matrix"
+     ],
+     "sha256": "385188997412f8c6463021b89e8374886f67516198bbfc0125e4cc561f3ae46f"
+    },
+    {
+     "lines": [
+      8577,
+      8591
+     ],
+     "names": [
+      "get_phi_choice_tensor"
+     ],
+     "sha256": "33a87263622c73d53172952f2c414fa14c021031117cc637c61272ef797e2544"
+    },
+    {
+     "lines": [
+      8594,
+      8599
+     ],
+     "names": [
+      "get_parent_target_locations"
+     ],
+     "sha256": "92b2fe9d7f6a12681ffc72c9a92c10b77b9d65dc2dfddd2911628d632385eb02"
+    },
+    {
+     "lines": [
+      8602,
+      8607
+     ],
+     "names": [
+      "get_parent_target_owner_tenures"
+     ],
+     "sha256": "d7df03bd94041d56e2b874abb6973cd2dee5546c68d127d091cf441701466b6f"
+    },
+    {
+     "lines": [
+      8610,
+      8620
+     ],
+     "names": [
+      "get_parent_target_child_states"
+     ],
+     "sha256": "21add6e877ba464cc7967decaf434cefc4d11152012b29439e75e3af98d489e0"
+    },
+    {
+     "lines": [
+      8623,
+      8649
+     ],
+     "names": [
+      "get_birth_entry_grant_tensor"
+     ],
+     "sha256": "e7ad7b84686239f37031076fda09c5b3c130654192b6b2307ae1852c8d3b9a48"
+    },
+    {
+     "lines": [
+      8652,
+      8667
+     ],
+     "names": [
+      "property_tax_revenue_from_distribution"
+     ],
+     "sha256": "de983dc8fb138aac323b7160c88d3d680b766126ea843ed70c8b94a3c3fbe94a"
+    },
+    {
+     "lines": [
+      8670,
+      8726
+     ],
+     "names": [
+      "markov_grant_outlays"
+     ],
+     "sha256": "4777d1d3feff27e34c94a9be5a5fd37a5a9279f9789008734ea512103d16fff2"
+    },
+    {
+     "lines": [
+      8729,
+      8747
+     ],
+     "names": [
+      "current_child_bin_dt"
+     ],
+     "sha256": "603c4106c96852e4e11e94bf2c3015296951d9d0f1d88d4ff5891b5127769af1"
+    }
+   ],
+   "output_lines": 5970,
+   "output_sha256": "4c4c2cedc2c1665183464f2492ece6526defae7e7633453146005d02819cb625",
+   "source": "/scratch/td2248/projects/publication_refactor_20260929/opus_pass3/credit_overlay_v1/solver.py",
+   "source_lines": 8747,
+   "source_sha256": "cefc1627ff3adb124d223a114122a0a578b5c4dc889635b3deb97c6f2b805a3e"
+  },
+  "two_shock_choice": {
+   "dropped": [
+    "softplus"
+   ],
+   "import_edits": [],
+   "kept": [
+    {
+     "lines": [
+      9,
+      9
+     ],
+     "names": [
+      "_X8",
+      "_W8"
+     ],
+     "sha256": "315f3cdfd52edb3da33c4e631a4716727cb47334eb42293a5ce1fc29b8103a97"
+    },
+    {
+     "lines": [
+      10,
+      10
+     ],
+     "names": [
+      "_X16",
+      "_W16"
+     ],
+     "sha256": "9b113bdee903807ea48fd2e904d6eda7635c80e08356c8fb8a258200c3634c14"
+    },
+    {
+     "lines": [
+      12,
+      15
+     ],
+     "names": [
+      "logistic"
+     ],
+     "sha256": "51412662d8573014ba78147be1a33872c2ec24360989a05fad655e313cbf94e9"
+    },
+    {
+     "lines": [
+      21,
+      38
+     ],
+     "names": [
+      "_node"
+     ],
+     "sha256": "c4e3524c26b606a9d25b4e9c366be3bbf0903ad5e8a4ffd4e652a66dc810e659"
+    },
+    {
+     "lines": [
+      40,
+      45
+     ],
+     "names": [
+      "_rule"
+     ],
+     "sha256": "1a8abca26d7a3faf56cf6b5a806a18a0f4c9fc62139539f15bc72fbc493e37fe"
+    },
+    {
+     "lines": [
+      47,
+      66
+     ],
+     "names": [
+      "_integrate"
+     ],
+     "sha256": "3309470bcee949226ff26cb53ca813c3e0bbf11099d6cc700f160a21b6489a76"
+    },
+    {
+     "lines": [
+      68,
+      122
+     ],
+     "names": [
+      "_one"
+     ],
+     "sha256": "07039bfd870c526ce889f3d55ba5a4ae1589f67827ad994c3809cbd97c8fc195"
+    },
+    {
+     "lines": [
+      124,
+      129
+     ],
+     "names": [
+      "_batch"
+     ],
+     "sha256": "32a871386aa8a5434f024972e431dd548e81f0d2705cad26da2290f3de8e07fd"
+    },
+    {
+     "lines": [
+      131,
+      146
+     ],
+     "names": [
+      "choose"
+     ],
+     "sha256": "94179b1f1f262b531a975e8628985dfddc1d6a8c9f28c275156b22279d8a1e6d"
+    }
+   ],
+   "output_lines": 152,
+   "output_sha256": "0d5201f176ad77f2c3013819d18eae69c1a22a91d7ce9b8060e1d6ef76ad40f1",
+   "source": "code/model/intergen_eqscale_seq_optimized/two_shock_choice.py",
+   "source_lines": 146,
+   "source_sha256": "94a8ac241c3fd6eb655a5f1bc5553ceae8ce40fb332552563b9d83e9ed68712f"
+  },
+  "utils": {
+   "dropped": [
+    "dict_to_namespace",
+    "interp_cols"
+   ],
+   "import_edits": [],
+   "kept": [
+    {
+     "lines": [
+      10,
+      60
+     ],
+     "names": [
+      "make_grid"
+     ],
+     "sha256": "c9f6bcda440045256c2bd87c758d12a4ce44320e425aa09217c435220daf43c5"
+    },
+    {
+     "lines": [
+      63,
+      90
+     ],
+     "names": [
+      "_pchip_slopes"
+     ],
+     "sha256": "4e0b949441225815f87941b9ae4789eab90ca9b02b1acbabb30d2eca93f9e2b8"
+    },
+    {
+     "lines": [
+      93,
+      127
+     ],
+     "names": [
+      "make_value_interp"
+     ],
+     "sha256": "d6c4fadd9ab9284e07b2ad11592d5eb3be006382d4ab43263c00656aa408fcc5"
+    },
+    {
+     "lines": [
+      130,
+      136
+     ],
+     "names": [
+      "interp_indices"
+     ],
+     "sha256": "04c069e442953ed22f60cc9ef2b375277359b2d6858ca978c6d8df89390d9dd8"
+    },
+    {
+     "lines": [
+      139,
+      141
+     ],
+     "names": [
+      "interp_vector"
+     ],
+     "sha256": "c85c47bfebd436b1a36c9792f7a837c342063c2b1d3a95aa840d2da991b0df05"
+    },
+    {
+     "lines": [
+      144,
+      151
+     ],
+     "names": [
+      "interp_on_grid"
+     ],
+     "sha256": "dc357fca69b91431a8e52402fed1bc14d6ec938d50e2203512fe1a2973771a10"
+    },
+    {
+     "lines": [
+      165,
+      170
+     ],
+     "names": [
+      "scatter_redistribute"
+     ],
+     "sha256": "b8f94e62d18eb321b89955b566555887b822274b86b35422002aa83bd5208e88"
+    },
+    {
+     "lines": [
+      173,
+      184
+     ],
+     "names": [
+      "scatter_redistribute_cols"
+     ],
+     "sha256": "4a5d2e54d725ace8539dbdd67f0604598a1adb12fb46befc0b451f9d15631439"
+    },
+    {
+     "lines": [
+      187,
+      199
+     ],
+     "names": [
+      "scatter_redistribute_cols_sameidx"
+     ],
+     "sha256": "58e6df541d867c38158bed20fe94ebd218d574321392bbb6a1df48906a13f3e1"
+    },
+    {
+     "lines": [
+      202,
+      207
+     ],
+     "names": [
+      "logsumexp"
+     ],
+     "sha256": "4f08863668e15837a50d8ce55716cb8f1cbfd8933e6579f4b2357fc33d39ea7c"
+    },
+    {
+     "lines": [
+      213,
+      214
+     ],
+     "names": [
+      "flat_nc"
+     ],
+     "sha256": "5bc6df985e34794e8e2c8fe174ba5411153678908eec984fe88e38a1d87c7ef5"
+    },
+    {
+     "lines": [
+      217,
+      218
+     ],
+     "names": [
+      "unflat_nc"
+     ],
+     "sha256": "8c96f36d7b378ad1106ba29ef220d0d4b7c29c5cce8de7a45165a8159d7b2d6c"
+    },
+    {
+     "lines": [
+      221,
+      228
+     ],
+     "names": [
+      "decode_flat_family_state"
+     ],
+     "sha256": "8694c89f6d5b80831714c4e6dd0abbb3408b2e4d545bfd20997061d14759c371"
+    },
+    {
+     "lines": [
+      231,
+      252
+     ],
+     "names": [
+      "weighted_quantile"
+     ],
+     "sha256": "2800aa797a0d195362ba521ff873363c0c3c80844cacb3c3d7d569d87fed0fe3"
+    },
+    {
+     "lines": [
+      255,
+      258
+     ],
+     "names": [
+      "weighted_median_from_cells"
+     ],
+     "sha256": "db7db4f7617d888092c9c19313a15f7addc57eb27bdfed4d67be65bf0cf0400a"
+    }
+   ],
+   "output_lines": 245,
+   "output_sha256": "836d6768af4a9261fe28e758f88dcc8ca059afc277b7c03d36f179a510ebcf36",
+   "source": "code/model/intergen_eqscale_seq_optimized/utils.py",
+   "source_lines": 262,
+   "source_sha256": "9bf0d8edb36708bb9222b8abf637ab3e855e985a4467a4114b7862ced4f203a0"
+  },
+  "warm_price": {
+   "dropped": [],
+   "import_edits": [],
+   "kept": [
+    {
+     "lines": [
+      13,
+      94
+     ],
+     "names": [
+      "search_warm_price"
+     ],
+     "sha256": "0e8a3375318b15411eb51c54793e338d6b75d484f426e5bd4ca0cd8e479d9436"
+    }
+   ],
+   "output_lines": 92,
+   "output_sha256": "bc3ff5c8df2a16a9ef753bfaabde914e09e7d3943de90c93be684ebeb0bf2518",
+   "source": "code/model/intergen_eqscale_seq_optimized/warm_price.py",
+   "source_lines": 94,
+   "source_sha256": "9cc8f3462548826043f1f7410704c8e453f4c9a9907dfca7dd97e3b207564281"
+  }
+ },
+ "overlay": {
+  "kernels": {
+   "base": "/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/code/model/intergen_eqscale_seq_optimized/kernels.py",
+   "base_sha256": "639c9a21797dbc9f2a0e9a891f283c115353c2edfcb89c959a7fe9f32b86ca27",
+   "overlay": "/scratch/td2248/projects/publication_refactor_20260929/opus_pass3/credit_overlay_v1/kernels.py",
+   "overlay_sha256": "379d179a8f80477e8d813f60bc526e700a270e37e0f411988aabd9a06fd74352"
+  },
+  "parameters": {
+   "base": "/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/code/model/intergen_eqscale_seq_optimized/parameters.py",
+   "base_sha256": "66f86697c2c58ca3864305bf13dd2be71a008905b2beb573f1a4ebafabef5464",
+   "overlay": "/scratch/td2248/projects/publication_refactor_20260929/opus_pass3/credit_overlay_v1/parameters.py",
+   "overlay_sha256": "d7b4d23c4bab2153dca0e86a6f189fe6aed6676c72090999d5a1c9105a8d5f8c"
+  },
+  "solver": {
+   "base": "/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/code/model/intergen_eqscale_seq_optimized/solver.py",
+   "base_sha256": "b637a655a9344b63f4461ee0fa4796c04bd98188477c4e6ace2c48ae0fc8aec1",
+   "overlay": "/scratch/td2248/projects/publication_refactor_20260929/opus_pass3/credit_overlay_v1/solver.py",
+   "overlay_sha256": "cefc1627ff3adb124d223a114122a0a578b5c4dc889635b3deb97c6f2b805a3e"
+  }
+ },
+ "source_root": "/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project"
+}

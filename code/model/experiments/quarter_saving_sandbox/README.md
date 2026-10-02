@@ -1,0 +1,5 @@
+# Quarter-saving purchase sandbox
+
+This source is an isolated copy of the original soft-purchase `refactor_lab` and indexed `small_credit_lab` engines. Only `engine/household.py` and `engine/kernels.py` differ. The buyer saving choice applies a one-quarter net-saving rule; owner-stayers retain the original due-balance rule. The forward transaction map and interest timing are unchanged. The matching driver and source hashes are in `output/model/fixed_reference_economics_20260928/quarter_saving_benchmarks_v1/`.
+
+With start-of-period liquid wealth plus net sale proceeds \(A\), house cost \(Q\), transaction balance \(x=A-Q\), and net saving \(s=b'-x\), a buyer must satisfy \(A+0.25s\geq(1-\phi)Q\). Thus the buyer's lower bound on next-period wealth is \(b'\geq b_f+3\max(0,b_f-x)\), where \(b_f=-\phi Q\). Current income affects net saving through the unchanged budget \(b'=R(A-Q)+y-c-K\). The quarter fraction applies only to buyer optimization; the original soft purchase eligibility screen remains in place.

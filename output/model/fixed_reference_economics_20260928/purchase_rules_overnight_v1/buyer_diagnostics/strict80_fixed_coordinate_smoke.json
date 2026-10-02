@@ -1,0 +1,175 @@
+{
+  "source": "/scratch/td2248/projects/strict_purchase_sandbox_v1/results/onecase/run/strict_purchase/phase_b_ge/selected_repeat/stage/solution_arrays.npz",
+  "source_sha256": "3b79008c60a38ee28e94bfd12cce21f2127a859feaa5d31caac6f07efdded487",
+  "definition": "implied net closing funding ratio max(0,Q-A)/Q; A=b+(1-psi)*old owner asset value; Q=price*new owner rung",
+  "gross_mortgage_ltv_identified": false,
+  "young_age_cells": [
+    26.0,
+    30.0,
+    34.0
+  ],
+  "young_age_label": "model state ages 25\u201334",
+  "groups": {
+    "first_time_buyers": {
+      "mass": 0.023451593418383886,
+      "mean": 0.5866950916254705,
+      "p10": 0.25542535172764846,
+      "p25": 0.5068683188298108,
+      "p50": 0.6545368717076971,
+      "p75": 0.7520794020490533,
+      "p90": 0.7886578509270621,
+      "share_above_80_percent": 0.0,
+      "share_above_90_percent": 0.0,
+      "share_above_100_percent": 0.0,
+      "cdf": [
+        {
+          "net_ltv": 0.0,
+          "share_at_or_below": 0.0511904858671763
+        },
+        {
+          "net_ltv": 0.2,
+          "share_at_or_below": 0.08776824100919857
+        },
+        {
+          "net_ltv": 0.4,
+          "share_at_or_below": 0.17085961159282684
+        },
+        {
+          "net_ltv": 0.6,
+          "share_at_or_below": 0.362412445943946
+        },
+        {
+          "net_ltv": 0.8,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 0.9,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 1.0,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 1.1,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 1.2,
+          "share_at_or_below": 1.0
+        }
+      ]
+    },
+    "owner_switchers": {
+      "mass": 0.011284673422549052,
+      "mean": 0.31168185401348925,
+      "p10": 0.0,
+      "p25": 0.0,
+      "p50": 0.30327410052676845,
+      "p75": 0.5817315701854124,
+      "p90": 0.705491481853207,
+      "share_above_80_percent": 0.0,
+      "share_above_90_percent": 0.0,
+      "share_above_100_percent": 0.0,
+      "cdf": [
+        {
+          "net_ltv": 0.0,
+          "share_at_or_below": 0.3315949594621345
+        },
+        {
+          "net_ltv": 0.2,
+          "share_at_or_below": 0.43421158388008346
+        },
+        {
+          "net_ltv": 0.4,
+          "share_at_or_below": 0.5733720645431509
+        },
+        {
+          "net_ltv": 0.6,
+          "share_at_or_below": 0.772676830877375
+        },
+        {
+          "net_ltv": 0.8,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 0.9,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 1.0,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 1.1,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 1.2,
+          "share_at_or_below": 1.0
+        }
+      ]
+    },
+    "all_purchasers": {
+      "mass": 0.034736266840932936,
+      "mean": 0.49735231372879624,
+      "p10": 0.0,
+      "p25": 0.3131380155129509,
+      "p50": 0.604410849171167,
+      "p75": 0.7276937694637142,
+      "p90": 0.7786483796092242,
+      "share_above_80_percent": 0.0,
+      "share_above_90_percent": 0.0,
+      "share_above_100_percent": 0.0,
+      "cdf": [
+        {
+          "net_ltv": 0.0,
+          "share_at_or_below": 0.1422846994518131
+        },
+        {
+          "net_ltv": 0.2,
+          "share_at_or_below": 0.20031631652971477
+        },
+        {
+          "net_ltv": 0.4,
+          "share_at_or_below": 0.3016227013875261
+        },
+        {
+          "net_ltv": 0.6,
+          "share_at_or_below": 0.49569388410416587
+        },
+        {
+          "net_ltv": 0.8,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 0.9,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 1.0,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 1.1,
+          "share_at_or_below": 1.0
+        },
+        {
+          "net_ltv": 1.2,
+          "share_at_or_below": 1.0
+        }
+      ]
+    }
+  },
+  "first_time_buyer_definition": "origin tenure renter, destination owner",
+  "owner_switcher_definition": "origin owner, different destination owner rung",
+  "stayers_excluded": true,
+  "new_parent_unable_to_buy": {
+    "status": "requires_exact_first_birth_flow_and_rule_specific_eligibility",
+    "reason": "g_beginning_distribution is post-fertility; the n=1,m=1 stock includes prior first births. Renting is not proof of credit ineligibility."
+  },
+  "phi_choice_range": [
+    0.8,
+    0.8
+  ]
+}

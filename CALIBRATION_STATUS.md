@@ -1,3 +1,70 @@
+## October 2 — purchase-rule diagnostics and overnight work
+
+All four fixed-price diagnostics are complete at price 0.7152515073815459,
+H0 6.778473404808042, N0=1 and the ten normalized-v2 chain2/case0064_nm
+coordinates. Hard80/hard100/quarter80/quarter100 losses are respectively
+217.20688594/256.03658589/100.26620364/192.40916255; ownership ages30–55 is
+0.60168409/0.71480096/0.62003987/0.71066233 and completed fertility is
+2.09999999/2.08739494/2.10079957/2.09137847. These are cohort comparisons at
+fixed prices, not fitted alternative baselines or dated policy equilibria.
+Full14-target/31-parameter tables and references are in
+`output/model/fixed_reference_economics_20260928/purchase_rule_comparison_v1/readout/RESULTS.md`.
+
+The initial phi=1 runs failed the net-estate gate because the buyer saving
+branch lacked the no-negative-net-estate restriction already imposed on
+stayers. Isolated corrected engines apply b_next >= -(1-selling_cost)*Q at
+ages with positive death probability, inside the saving choice. Selling cost
+is0.06; the ordinary phi=.8 floor is stricter, so the two80 cases were reused.
+Budget and interest timing, stayer rules and forward maps are unchanged.
+Corrected jobs19008035 and19008074 passed with one lifecycle solve each;
+37 collected report/plot/receipt hashes match each remote result. Quarter80
+packet has40 matching collected hashes. Standard fertility/ownership plots
+and full-table arithmetic were inspected. Hard100 andquarter100 still differ
+for negative closing wealth among owner switchers; quarter100 permits some
+such moves under its net-saving timing rule. No baseline adoption is implied.
+
+Author authorized overnight calibration of both80 specifications, ten local
+workers plus as much available cluster capacity as useful, and subsequent
+one-period and permanent100-financing first-birth experiments at fitted points.
+The new packet is `output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/`.
+Smoke19009130 passed both arms (seven lifecycle solves each). Production
+19009131 has all48 chains running:24 hard and24 quarter, four hours perchain,
+250 objective-call cap and900s final reserve. Allten coordinates remainfree;
+original targets/weights and bounds retained except the previously authorized
+h_P upperbound2.6. Wider starts include explicitly provisional improved soft
+points. Each selected candidate requires its nativepostcheck and fulltables.
+This is a search, not a convergence certificate. Staged174-file archive SHA256
+is a79e2a2be8c87e8e293a3f6887ebf3b7a3938455de7dd564d12e5b1ada8e33cd.
+
+Old soft array19002589 was intentionally cancelled on the author's instruction
+after saving all24 best checkpoints; its results remain onTorch and the
+aggregate receipt is in `previous_soft_checkpoints/previous_soft_best_before_stop.json`.
+Ten distinct local starts48–57 use the authenticated frozen two-file source
+overlay, one maththread each, a four-hour budget and selectedpostcheck.
+The actual supervisor is PID28162 (persistentexec session19221), with
+caffeinatePID28167; its initial detached launch did not survive the shell.
+The supervised memory-aware ramp had reached six workers at the lastcheck.
+Current local PIDs, losses and memory are in `local_runtime/runs/local10_v1/`.
+Do not claim ten running until its receipt confirms this.
+
+The separate Sol diagnosis chat is01a0faf5-75c1-7323-9513-7fb8fc65fede;
+hourly evidence messages are explicitly authorized. A distinct Sol agent
+monitors numerical work. Thirty-minute heartbeat
+`finish-hard-and-quarter-overnight-calibration` posts losses here evenunchanged;
+`first-overnight-calibration-update` supplies one initial10-minute update then
+pauses itself. Overall deadline is10:00 NewYork October2. Userrequests mindful
+usage: prefer bounded Sol work and avoid duplicate audits or frequent narration.
+
+Outstanding: completecalibration selectedpostchecks; deploy and review
+buyer financial-access/netclosingLTV diagnostics; finish nativeverification
+and deployment of dated phi paths for temporary and permanent experiments.
+No dated policy result exists yet. Retain fixedH0, endogenous physicalpopulation
+and both birth-entry queues, fixed payrolltax/endogenouspension. The permanent
+terminal renewal condition is the existing closed stationarydemography closure;
+it must not force replacement fertility along the dated transition. See the
+mechanism and mechanism_deployment notes before launching; mocked tests alone
+do not verify native integration. Preserve all failed attempts and strictgates.
+
 ## October 1, 23:49 — strict purchase sandbox completed
 
 Author authorized an immediate isolated evaluation requiring the down payment

@@ -1,0 +1,1227 @@
+{
+ "source": "engine/solver.py",
+ "source_sha256": "4c4c2cedc2c1665183464f2492ece6526defae7e7633453146005d02819cb625",
+ "definitions": [
+  {
+   "names": [
+    "OUTSIDE_OPTION_CLOSURES"
+   ],
+   "module": "shared",
+   "source_lines": [
+    22,
+    22
+   ],
+   "sha256": "1095832773ee1f9a3ed16eb67ccc021faa890438ccf3277d135e61e94df9f2f1"
+  },
+  {
+   "names": [
+    "ACCOUNTING_SCALE_PRICE_CLOSURES"
+   ],
+   "module": "shared",
+   "source_lines": [
+    25,
+    25
+   ],
+   "sha256": "22b8b9e30bf5fbc2402ab5dee9a0048399555bba653d0bbd33937bd03d83cf29"
+  },
+  {
+   "names": [
+    "BENCHMARK_NORMALIZED_OUTSIDE_CLOSURES"
+   ],
+   "module": "shared",
+   "source_lines": [
+    28,
+    31
+   ],
+   "sha256": "1ce838ad130bad02581b6e8527886a5defa7b25c5d0d143633302a043f6f6fe7"
+  },
+  {
+   "names": [
+    "RENEWAL_VALVE_FIXED_CLOSURES"
+   ],
+   "module": "shared",
+   "source_lines": [
+    34,
+    34
+   ],
+   "sha256": "6382dd000adc130cc2c220389b04324fb9701e29f902e1f4fd40c579adffc052"
+  },
+  {
+   "names": [
+    "RENEWAL_VALVE_CALIBRATED_CLOSURES"
+   ],
+   "module": "shared",
+   "source_lines": [
+    37,
+    42
+   ],
+   "sha256": "3c379a1fa0f6ec46b8f36aca34a3bfe1aa2c7344816c5cd2e3fff7f7f97bd4e2"
+  },
+  {
+   "names": [
+    "RENEWAL_VALVE_CLOSURES"
+   ],
+   "module": "shared",
+   "source_lines": [
+    45,
+    45
+   ],
+   "sha256": "4382246ded8ec2fbcf442b7ef389775065f4e33a72715a6de7521a29977c0174"
+  },
+  {
+   "names": [
+    "DEAD_VALUE_CUTOFF"
+   ],
+   "module": "shared",
+   "source_lines": [
+    48,
+    48
+   ],
+   "sha256": "64b1629ba6b365505edc3391496dc61c86fe6eb5aa655cdf490f1f764d1ed439"
+  },
+  {
+   "names": [
+    "DEAD_MASS_TOL"
+   ],
+   "module": "shared",
+   "source_lines": [
+    51,
+    51
+   ],
+   "sha256": "3a2bd8651ff460dfe57af96d69894caedf6f281cbe7d1f7406e0b83b93899612"
+  },
+  {
+   "names": [
+    "InfeasibleThetaError"
+   ],
+   "module": "shared",
+   "source_lines": [
+    54,
+    70
+   ],
+   "sha256": "cd6df17885f78d9ff6602bfe457f145ae6a5da5698aaa695d0aee881fbaf5280"
+  },
+  {
+   "names": [
+    "jsonable_feasibility_census"
+   ],
+   "module": "shared",
+   "source_lines": [
+    73,
+    80
+   ],
+   "sha256": "974c1d70a61f39f34ccb99954ee1ec6d2318cdf0e59095d2319e0489d3da17aa"
+  },
+  {
+   "names": [
+    "debt_rule_at_age"
+   ],
+   "module": "household",
+   "source_lines": [
+    83,
+    90
+   ],
+   "sha256": "29252918e9a253a638026446c6a4b25d42af98b916054854378ab55e48ed33dd"
+  },
+  {
+   "names": [
+    "fixed_unsecured_credit_active"
+   ],
+   "module": "household",
+   "source_lines": [
+    93,
+    94
+   ],
+   "sha256": "896d58d89a73e366daeabc4db1c78b55b41bcc9def1ed2e012a0747e22a4e985"
+  },
+  {
+   "names": [
+    "renter_borrowing_floor"
+   ],
+   "module": "household",
+   "source_lines": [
+    97,
+    112
+   ],
+   "sha256": "dc753c7e8773b653138b0b371ecd5ff9f705baa6847887d27fe885f70432eb37"
+  },
+  {
+   "names": [
+    "native_due_owner_floor"
+   ],
+   "module": "household",
+   "source_lines": [
+    115,
+    122
+   ],
+   "sha256": "f0c013efeac9be934d7cd7104901e17d40af085a7b49456c9af0cdafb7dc4d2a"
+  },
+  {
+   "names": [
+    "native_due_death_floor"
+   ],
+   "module": "household",
+   "source_lines": [
+    125,
+    128
+   ],
+   "sha256": "8d614ae3c68e13e289ed1e90c27a715f99e5eb164cfdbaf5072a243ec6b6440c"
+  },
+  {
+   "names": [
+    "owner_borrowing_floor"
+   ],
+   "module": "household",
+   "source_lines": [
+    131,
+    166
+   ],
+   "sha256": "fc92cb15877af2a5bc77fbab84b01efecca0bd31276cad255f7351877f5cd2d2"
+  },
+  {
+   "names": [
+    "effective_owner_collateral_floor"
+   ],
+   "module": "household",
+   "source_lines": [
+    169,
+    185
+   ],
+   "sha256": "10f1b3a7b1cb92081284734dc1011eb6ee2b7a36a169f44896137c6ab9125b42"
+  },
+  {
+   "names": [
+    "uses_outside_option_closure"
+   ],
+   "module": "shared",
+   "source_lines": [
+    188,
+    189
+   ],
+   "sha256": "4075053b940ce4f58b35e568ada4b2d9aa570789ef2c9c4f7023d96bb945a59d"
+  },
+  {
+   "names": [
+    "uses_accounting_scale_price_closure"
+   ],
+   "module": "equilibrium",
+   "source_lines": [
+    192,
+    194
+   ],
+   "sha256": "7480b15aeea536cba30f6604ff14edd6bc16c358440764d068ce440ebfffc5f0"
+  },
+  {
+   "names": [
+    "uses_renewal_valve_closure"
+   ],
+   "module": "equilibrium",
+   "source_lines": [
+    197,
+    198
+   ],
+   "sha256": "c91401c0d82681ab33361b4ba3493449dcb48eb56464a804d0faefa96cbe0965"
+  },
+  {
+   "names": [
+    "uses_calibrated_renewal_valve_closure"
+   ],
+   "module": "equilibrium",
+   "source_lines": [
+    201,
+    203
+   ],
+   "sha256": "193c622c176b73f0b3a083410d699ec4f61b6c980d59f87a3f4da6bdf7c15164"
+  },
+  {
+   "names": [
+    "normalize_population_mass"
+   ],
+   "module": "shared",
+   "source_lines": [
+    206,
+    209
+   ],
+   "sha256": "2268884c84a0dd9375233539d8cb7a05bb6cd5e4eba0a66840f0384f86a1b3d5"
+  },
+  {
+   "names": [
+    "income_type_values"
+   ],
+   "module": "shared",
+   "source_lines": [
+    212,
+    219
+   ],
+   "sha256": "d4ec506f46f749ca6fff3ea34c6bced4593e7d2f5f78011dc951418492cadd69"
+  },
+  {
+   "names": [
+    "income_transition_values"
+   ],
+   "module": "shared",
+   "source_lines": [
+    222,
+    234
+   ],
+   "sha256": "9e34b1015b4c6f1fa156c083ce00b7a092ec98bf58804a53ce5dd70f516a6702"
+  },
+  {
+   "names": [
+    "income_at_state"
+   ],
+   "module": "shared",
+   "source_lines": [
+    237,
+    254
+   ],
+   "sha256": "c3ea8e894bc87abd3cc4953a4bf81450683e190dd62999fe4d71efeff549503f"
+  },
+  {
+   "names": [
+    "penalized_income_at_state"
+   ],
+   "module": "shared",
+   "source_lines": [
+    257,
+    282
+   ],
+   "sha256": "3b352d3c21600ca51ddb35961dc79da70698f2bfb67c2519f37715e30f5eb7f6"
+  },
+  {
+   "names": [
+    "birth_destination_child_state"
+   ],
+   "module": "household",
+   "source_lines": [
+    285,
+    294
+   ],
+   "sha256": "3ea15c8a0ee7dd2cdc43c5c01bd6415de051f538404c61c8a8f0447d87a68e41"
+  },
+  {
+   "names": [
+    "housing_demand_normalizer"
+   ],
+   "module": "shared",
+   "source_lines": [
+    297,
+    300
+   ],
+   "sha256": "a5cbf4413425b93bc1f4e31ffb6f16f737ee22a3e32b939d9edf74d5beb0a2a6"
+  },
+  {
+   "names": [
+    "ENTRY_WEALTH_INCOME_RATIO_MODES"
+   ],
+   "module": "shared",
+   "source_lines": [
+    303,
+    308
+   ],
+   "sha256": "d52c9f052832bc64bb8d9c100d1effb1ac94c74e8c763d17d556e61f82d6b371"
+  },
+  {
+   "names": [
+    "annual_gross_income_at_state"
+   ],
+   "module": "shared",
+   "source_lines": [
+    311,
+    319
+   ],
+   "sha256": "3cbe5c49b70b9fc2bf831ede5a7fb03c0637607dffcc502fbd800d4e5ccf2e3e"
+  },
+  {
+   "names": [
+    "uses_entry_wealth_income_ratio"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    322,
+    323
+   ],
+   "sha256": "8d8cad142e858769167bf90922308478a01d4f468b870a725b40c8627bf0f5d9"
+  },
+  {
+   "names": [
+    "entry_wealth_ratio_distribution"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    326,
+    340
+   ],
+   "sha256": "96495b26b5cfcc568f41f6358a813abc8099fe1aca35e41b07b5eaf1604b68fe"
+  },
+  {
+   "names": [
+    "_linear_grid_weights_for_points"
+   ],
+   "module": "shared",
+   "source_lines": [
+    343,
+    376
+   ],
+   "sha256": "964f6d0ca69805b9effce11e5b2b055c6114a55925a24d03885aaf616aa190a2"
+  },
+  {
+   "names": [
+    "_scalar_entry_wealth_grid_weights"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    379,
+    445
+   ],
+   "sha256": "e7067362571289f6d06cbcc2036a5369bbe6e8f4529733a221af25b11c091f03"
+  },
+  {
+   "names": [
+    "configure_current_household_contract"
+   ],
+   "module": "shared",
+   "source_lines": [
+    448,
+    463
+   ],
+   "sha256": "2d27ae4254fd927dbbb6366682d41b133af650f5b25bbea375bad4c39a41ca97"
+  },
+  {
+   "names": [
+    "entry_wealth_grid_weights"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    466,
+    501
+   ],
+   "sha256": "b5f696c8c93d5ce7f3054af977455ab772733a09a887884227a727837cb80ea0"
+  },
+  {
+   "names": [
+    "aggregate_entry_wealth_grid_weights"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    504,
+    524
+   ],
+   "sha256": "83b835844748b8b9c9e8b6a8f758e322127037dee3c0a6bee0c28f7162dcce0a"
+  },
+  {
+   "names": [
+    "attach_entry_wealth_stats"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    527,
+    551
+   ],
+   "sha256": "c7e3dd7adda3c422adf99b4c831948e72eef95f0e01c76eef3123f43459497cd"
+  },
+  {
+   "names": [
+    "renewal_population_scale"
+   ],
+   "module": "equilibrium",
+   "source_lines": [
+    554,
+    689
+   ],
+   "sha256": "9b6a707ba1a611a27f04fee2fcaeb4feb5eb1758860bf6b1c624ac1fe2fd3bfd"
+  },
+  {
+   "names": [
+    "markov_market_housing_demand"
+   ],
+   "module": "equilibrium",
+   "source_lines": [
+    692,
+    719
+   ],
+   "sha256": "7d246df831eedb43be7169baea5c65fc4fdfab97ae6dccefcd1ecf04013ca516"
+  },
+  {
+   "names": [
+    "attach_markov_market_accounting"
+   ],
+   "module": "equilibrium",
+   "source_lines": [
+    722,
+    743
+   ],
+   "sha256": "78b784973e831cae919f7d2fcede7b8a02219c09ae7d54085912a70ac41df65d"
+  },
+  {
+   "names": [
+    "solve_markov_income_equilibrium"
+   ],
+   "module": "equilibrium",
+   "source_lines": [
+    746,
+    924
+   ],
+   "sha256": "ef20fa075bc11b0d17063a8a224f1afe5e3f8b4d7297f242050804c8c83dd629"
+  },
+  {
+   "names": [
+    "refine_one_market_markov_income"
+   ],
+   "module": "equilibrium",
+   "source_lines": [
+    927,
+    1142
+   ],
+   "sha256": "afe461392fafde7de9b4f4a26089e91f8326364701db229e5021f6c5818f5c49"
+  },
+  {
+   "names": [
+    "solve_markov_income_at_prices"
+   ],
+   "module": "equilibrium",
+   "source_lines": [
+    1145,
+    1208
+   ],
+   "sha256": "56b442fe42d0277ce7550880b3441e9fb0e31eab6eaf5d3eed8c167725208137"
+  },
+  {
+   "names": [
+    "upgrade_fast_markov_solution"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    1211,
+    1240
+   ],
+   "sha256": "106b6d36a8eae598b774d0076f83a61ba2691fb1511d6b98510652e89ecaa1ae"
+  },
+  {
+   "names": [
+    "precompute_shared"
+   ],
+   "module": "shared",
+   "source_lines": [
+    1243,
+    1362
+   ],
+   "sha256": "a0d8a7140775c007e319b4a3b790bc6b5adff86cbe269ab5f757c91ab373229f"
+  },
+  {
+   "names": [
+    "_build_housing_stage_ctx"
+   ],
+   "module": "household",
+   "source_lines": [
+    1365,
+    1466
+   ],
+   "sha256": "1e7d775618c5f0c4f0cfbaf7971f97b4e7680035fdb5d709a619c1ef15746fb4"
+  },
+  {
+   "names": [
+    "_savings_stage"
+   ],
+   "module": "household",
+   "source_lines": [
+    1469,
+    1720
+   ],
+   "sha256": "e1803eeee549f008a1a54b3c30f6809c76c907fe4ae81075dbb77c831deed535"
+  },
+  {
+   "names": [
+    "_tenure_location_stage"
+   ],
+   "module": "household",
+   "source_lines": [
+    1723,
+    1854
+   ],
+   "sha256": "acd63e2552463322d1fddf3569cc6a13bbe80fdf6ae0ea9bcb616c500ef12ab5"
+  },
+  {
+   "names": [
+    "native_solvency_support_floor"
+   ],
+   "module": "household",
+   "source_lines": [
+    1857,
+    1875
+   ],
+   "sha256": "11c58e2bba99463309ff148113e8840ba5573cd7c91bedc81a3a417c76791992"
+  },
+  {
+   "names": [
+    "native_solvency_death_mask"
+   ],
+   "module": "household",
+   "source_lines": [
+    1878,
+    1880
+   ],
+   "sha256": "3356dd0943fc3ad9b0d5885f7b61015d70f6e1f468839b57c6353bae4c726bb1"
+  },
+  {
+   "names": [
+    "native_solvency_continuation"
+   ],
+   "module": "household",
+   "source_lines": [
+    1883,
+    1903
+   ],
+   "sha256": "0236bacc0e8ffcd634f7298b4eb61787f8e00a68a4d21d9879bd828672e30cb8"
+  },
+  {
+   "names": [
+    "validate_native_solvency_mode"
+   ],
+   "module": "household",
+   "source_lines": [
+    1906,
+    1918
+   ],
+   "sha256": "6a7b32dff6b6e5d65c094da7ad557114d5df1fcdd95466f9a61a2332997ca2b6"
+  },
+  {
+   "names": [
+    "solve_bellman_full_markov_income"
+   ],
+   "module": "household",
+   "source_lines": [
+    1921,
+    2300
+   ],
+   "sha256": "15d813264064ecf53fed1a66b0945ae9c44b44f3d7c5182ce398faf0babb6546"
+  },
+  {
+   "names": [
+    "renter_wedge_flow_py"
+   ],
+   "module": "household",
+   "source_lines": [
+    2303,
+    2383
+   ],
+   "sha256": "adedf400388a549f3cbf9d86f6d4e8533b935be340bd3fc49350ffc191058441"
+  },
+  {
+   "names": [
+    "eval_renter_wedge"
+   ],
+   "module": "household",
+   "source_lines": [
+    2386,
+    2396
+   ],
+   "sha256": "58aac8e39d2aace2ef9ac7dc65475565853b60198ba9877c6b8d25f4ca2883a6"
+  },
+  {
+   "names": [
+    "golden_renter_wedge"
+   ],
+   "module": "household",
+   "source_lines": [
+    2399,
+    2420
+   ],
+   "sha256": "6335d1485699f630d70fdda8f2125fd06d65f2cb071c9d175a2847d4af1be9ee"
+  },
+  {
+   "names": [
+    "golden_renter"
+   ],
+   "module": "household",
+   "source_lines": [
+    2423,
+    2442
+   ],
+   "sha256": "91d08cd4f81a9ccb0de4cf10295856d26cf39b8ae6b43fe45bd86c5d3c440c32"
+  },
+  {
+   "names": [
+    "eval_renter"
+   ],
+   "module": "household",
+   "source_lines": [
+    2445,
+    2462
+   ],
+   "sha256": "02023ffa03eff077dc2ce3ebe52ceb0f205c5c5ae8e629035135af8d52c81df7"
+  },
+  {
+   "names": [
+    "golden_owner"
+   ],
+   "module": "household",
+   "source_lines": [
+    2465,
+    2484
+   ],
+   "sha256": "740edb5dfec2ef8be0c9f1759161312b53bcfaedfbdecec8b26c18f3ba4f6c24"
+  },
+  {
+   "names": [
+    "eval_owner"
+   ],
+   "module": "household",
+   "source_lines": [
+    2487,
+    2497
+   ],
+   "sha256": "0404a5d769816a00f08b16f797f0d0eec25358fb556a0508d51a2192e38646bf"
+  },
+  {
+   "names": [
+    "build_forward_tenure_transition_maps"
+   ],
+   "module": "household",
+   "source_lines": [
+    2500,
+    2585
+   ],
+   "sha256": "792af5ab74dc9fb4b75fe80984894cb8e606a47945fe2aaf080dfcd954c829ca"
+  },
+  {
+   "names": [
+    "realize_current_choices"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    2588,
+    2666
+   ],
+   "sha256": "274fae2d3f75731c5d1cfa1421d8ce38c4874442304643be8f2089f19b2b29ea"
+  },
+  {
+   "names": [
+    "realize_current_choices_markov_income"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    2669,
+    2701
+   ],
+   "sha256": "5a5230996031eed1e681aeb89b28e4da6dd06bece3f4fd9d77a344836e09e08c"
+  },
+  {
+   "names": [
+    "realize_stayer_cross_section"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    2704,
+    2722
+   ],
+   "sha256": "46e5a74d85541be9b8ced64a3c09bae5c1ff7a3bf83ff5a12ae395ec37b5c30e"
+  },
+  {
+   "names": [
+    "realize_current_cross_section"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    2725,
+    2773
+   ],
+   "sha256": "576b0b428788676fab7dfdb26123ab7a04c494a5218ca928596118515e0bfe1d"
+  },
+  {
+   "names": [
+    "_dead_mass_census_at_age"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    2776,
+    2851
+   ],
+   "sha256": "f2e38df02642c9bcdf9b6a2c0a764604566420d4b712ec8adcc9632e2448169c"
+  },
+  {
+   "names": [
+    "_gate_dead_mass_at_age"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    2854,
+    2879
+   ],
+   "sha256": "3aa9cf6bed373c2ed56617418c559b39dbe70fa1d4b94de2a6fe20316405014d"
+  },
+  {
+   "names": [
+    "_censor_entry_dead_mass"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    2882,
+    2908
+   ],
+   "sha256": "0b12ab286cd11d29b2cdaed868148d3bdb9f4ef551b4319afffeb1240ed6be1e"
+  },
+  {
+   "names": [
+    "forward_distribution_markov_income"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    2911,
+    3717
+   ],
+   "sha256": "d213ba4f3f2fdf1fd328e17a0a85f20ba8ce4f43d0ea9256251c75aabe95a156"
+  },
+  {
+   "names": [
+    "collapse_markov_policy"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    3720,
+    3727
+   ],
+   "sha256": "3bd6ce65ff187852004e01a41ecdfd26f0f1e3d231ed15842efd4d78b873af58"
+  },
+  {
+   "names": [
+    "collapse_markov_fertility_probs"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    3730,
+    3744
+   ],
+   "sha256": "3ccd67bcf0118644f60452a5e615beb9ffec4ba3e42866a70ac9c3ac79ead026"
+  },
+  {
+   "names": [
+    "collapse_markov_location_probs"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    3747,
+    3752
+   ],
+   "sha256": "3dd3486aed00df20eeb8553c76b01ae287e3b474f987ed6677e39a77137511f1"
+  },
+  {
+   "names": [
+    "advance_cohort_horizon_markov_income"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    3755,
+    3799
+   ],
+   "sha256": "1e93fdab119e47d66afdd21babde9bfe01253c6f1f1916491b3faa0b92de44c7"
+  },
+  {
+   "names": [
+    "advance_cohort_one_period_markov_income"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    3802,
+    3998
+   ],
+   "sha256": "887827815476184d3c4d613669a2944ad74aface6b5d47dc5470bee24af8a3aa"
+  },
+  {
+   "names": [
+    "mean_housing_childless_weighted_markov"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    4001,
+    4019
+   ],
+   "sha256": "634d4badec881f23e37dda282bfb583b633751dbc719457763539f2a055690c3"
+  },
+  {
+   "names": [
+    "mean_housing_distribution_markov"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    4022,
+    4039
+   ],
+   "sha256": "ba812237b74326b938362643e80a7478195a0cc32e1f62dfdf0732488dd5193d"
+  },
+  {
+   "names": [
+    "markov_renter_room_moments"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    4042,
+    4107
+   ],
+   "sha256": "14b66b4206cba37674a568e669d59a243e825d8b9d2ddbc916d9216365175734"
+  },
+  {
+   "names": [
+    "add_annual_gross_liquid_wealth_moments"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    4110,
+    4178
+   ],
+   "sha256": "bd6d63c80a219f750eb112def20c75e778931efc5e752f876e1d1c5e47ce1e69"
+  },
+  {
+   "names": [
+    "add_aggregate_wealth_gross_labor_diagnostics"
+   ],
+   "module": "shared",
+   "source_lines": [
+    4181,
+    4275
+   ],
+   "sha256": "6ddd04f79915edf99a2af5638393a009c15b97bc16b3c8c7cf3ce3617c0d425c"
+  },
+  {
+   "names": [
+    "add_annual_gross_old_wealth_moments"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    4278,
+    4367
+   ],
+   "sha256": "6117084fb9134e7c2e006dbe9db509664491804985c73980324fab11bb87668c"
+  },
+  {
+   "names": [
+    "add_old_nonhousing_income_share_moments"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    4370,
+    4421
+   ],
+   "sha256": "b13eb34ecc0af12e3eafe7c313dae2e46e507bedd2e025a0a9ae643e7bd03142"
+  },
+  {
+   "names": [
+    "add_old_wealth_income_moments"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    4424,
+    4483
+   ],
+   "sha256": "93949528845f0b0e1db2e6da4f4500441d1ac0064f548cbdc628d6653e548bb5"
+  },
+  {
+   "names": [
+    "compute_markov_statistics"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    4486,
+    4663
+   ],
+   "sha256": "119ccb50a1aa1874a0ce735e635df1a7ed37e5d737b56dece8625d98e1f7edc3"
+  },
+  {
+   "names": [
+    "add_aggregate_wealth_bequest_flow_moments"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    4666,
+    4754
+   ],
+   "sha256": "ea673d2ffdff944c58a7ebd5821ea77508a3e6ba52db501cc0f2f460b951d11e"
+  },
+  {
+   "names": [
+    "compute_markov_eq_stats"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    4757,
+    4782
+   ],
+   "sha256": "385372c99fef5677482aa98a59da89ce296817cbde9e5a460f342b2da69e761e"
+  },
+  {
+   "names": [
+    "age_to_index"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    4785,
+    4787
+   ],
+   "sha256": "8d23b42eb53748299cbf609e41fb67e6fbfaa1e895c705f16ecb244ecb6e788a"
+  },
+  {
+   "names": [
+    "compute_statistics"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    4790,
+    5441
+   ],
+   "sha256": "7b4021eccd729fe5b6127f535359059ab300044f79f4cad07f140e515dd360f2"
+  },
+  {
+   "names": [
+    "append_pension_budget_stats"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    5444,
+    5457
+   ],
+   "sha256": "66e97747663c25266266f4eac05e9772035f2d3c111a0bcb9ceb6406ea94a637"
+  },
+  {
+   "names": [
+    "_child_Pa_for_age"
+   ],
+   "module": "household",
+   "source_lines": [
+    5460,
+    5476
+   ],
+   "sha256": "d2a551c11b5533b0e65b89a0c3dc35de297e0038dca0f9c027b37fab6459bef4"
+  },
+  {
+   "names": [
+    "_child_Pa_exempt_for_age"
+   ],
+   "module": "household",
+   "source_lines": [
+    5479,
+    5493
+   ],
+   "sha256": "97a021904832f5fd9a3c5a9c62a2aa99446bdb93ddefd9e8295773e4a01cd333"
+  },
+  {
+   "names": [
+    "_blended_child_Pi_for_cell"
+   ],
+   "module": "household",
+   "source_lines": [
+    5496,
+    5520
+   ],
+   "sha256": "675264e64034936590284ab70e7a8eb52ce6749e4a2c37f70a9fc7994f940cc2"
+  },
+  {
+   "names": [
+    "apply_child_aging"
+   ],
+   "module": "household",
+   "source_lines": [
+    5523,
+    5558
+   ],
+   "sha256": "d25963fa607deb6d4dc40e723e184267afeb8dd75679a880f1b03a2509731621"
+  },
+  {
+   "names": [
+    "apply_child_aging_exempt"
+   ],
+   "module": "household",
+   "source_lines": [
+    5561,
+    5579
+   ],
+   "sha256": "7abab1b7346190740bb0b420e061fc39e84ade60ce570b59c7ed9233e6d2f00c"
+  },
+  {
+   "names": [
+    "pack_solution_markov_income"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    5582,
+    5662
+   ],
+   "sha256": "0ab6d79b9868e879af98bcd3e9ccc2487a59cfaa313d6c501a694eb0a8b23d42"
+  },
+  {
+   "names": [
+    "pack_fast_solution_markov_income"
+   ],
+   "module": "distribution",
+   "source_lines": [
+    5665,
+    5687
+   ],
+   "sha256": "8f55cb1ae9c9b22f802480f38af2477231da7d031eee02cae435456e30d326b0"
+  },
+  {
+   "names": [
+    "get_completed_fertility"
+   ],
+   "module": "shared",
+   "source_lines": [
+    5690,
+    5709
+   ],
+   "sha256": "1d43a91dd5fb383d5c377cb4d79144dba7a89f8256c048ee6373d36d9611bb79"
+  },
+  {
+   "names": [
+    "bequest_utility_vec"
+   ],
+   "module": "household",
+   "source_lines": [
+    5712,
+    5746
+   ],
+   "sha256": "60896824dd29675fe2f2b9f10d08200e9c2d005a69c3c6d6cfec454ec087660a"
+  },
+  {
+   "names": [
+    "pti_adjusted_downpayment"
+   ],
+   "module": "household",
+   "source_lines": [
+    5749,
+    5776
+   ],
+   "sha256": "aeefa98cc1d1c4cdc08a09d30574b51c6b6d077e203c308be2047f91653ac4cb"
+  },
+  {
+   "names": [
+    "has_birth_dp_grant"
+   ],
+   "module": "shared",
+   "source_lines": [
+    5779,
+    5786
+   ],
+   "sha256": "900cec6b963b6c07c1e5186f4b5096537255e90e655991f5c721f39269fc58b2"
+  },
+  {
+   "names": [
+    "get_phi_state_matrix"
+   ],
+   "module": "shared",
+   "source_lines": [
+    5789,
+    5797
+   ],
+   "sha256": "385188997412f8c6463021b89e8374886f67516198bbfc0125e4cc561f3ae46f"
+  },
+  {
+   "names": [
+    "get_phi_choice_tensor"
+   ],
+   "module": "shared",
+   "source_lines": [
+    5800,
+    5814
+   ],
+   "sha256": "33a87263622c73d53172952f2c414fa14c021031117cc637c61272ef797e2544"
+  },
+  {
+   "names": [
+    "get_parent_target_locations"
+   ],
+   "module": "shared",
+   "source_lines": [
+    5817,
+    5822
+   ],
+   "sha256": "92b2fe9d7f6a12681ffc72c9a92c10b77b9d65dc2dfddd2911628d632385eb02"
+  },
+  {
+   "names": [
+    "get_parent_target_owner_tenures"
+   ],
+   "module": "shared",
+   "source_lines": [
+    5825,
+    5830
+   ],
+   "sha256": "d7df03bd94041d56e2b874abb6973cd2dee5546c68d127d091cf441701466b6f"
+  },
+  {
+   "names": [
+    "get_parent_target_child_states"
+   ],
+   "module": "shared",
+   "source_lines": [
+    5833,
+    5843
+   ],
+   "sha256": "21add6e877ba464cc7967decaf434cefc4d11152012b29439e75e3af98d489e0"
+  },
+  {
+   "names": [
+    "get_birth_entry_grant_tensor"
+   ],
+   "module": "shared",
+   "source_lines": [
+    5846,
+    5872
+   ],
+   "sha256": "e7ad7b84686239f37031076fda09c5b3c130654192b6b2307ae1852c8d3b9a48"
+  },
+  {
+   "names": [
+    "property_tax_revenue_from_distribution"
+   ],
+   "module": "shared",
+   "source_lines": [
+    5875,
+    5890
+   ],
+   "sha256": "de983dc8fb138aac323b7160c88d3d680b766126ea843ed70c8b94a3c3fbe94a"
+  },
+  {
+   "names": [
+    "markov_grant_outlays"
+   ],
+   "module": "shared",
+   "source_lines": [
+    5893,
+    5949
+   ],
+   "sha256": "4777d1d3feff27e34c94a9be5a5fd37a5a9279f9789008734ea512103d16fff2"
+  },
+  {
+   "names": [
+    "current_child_bin_dt"
+   ],
+   "module": "household",
+   "source_lines": [
+    5952,
+    5970
+   ],
+   "sha256": "603c4106c96852e4e11e94bf2c3015296951d9d0f1d88d4ff5891b5127769af1"
+  }
+ ],
+ "modules": {
+  "shared": {
+   "sha256": "1fbe36f75befe5fed67c490c39a65663f4c8896b078851693fb4bca533d07773",
+   "lines": 652
+  },
+  "household": {
+   "sha256": "2a34f5f28c0c63ca3d24d9e759cd1b5b92aadaddb5fe04795e65abbc0b448082",
+   "lines": 1566
+  },
+  "distribution": {
+   "sha256": "9da9be2525852f78771d735103f0de385c8a8028eff9ab564512627ed2df2e90",
+   "lines": 3110
+  },
+  "equilibrium": {
+   "sha256": "ca88909666802e92e396c44c0ea6f69eadbddb9e707bfec49cf1ec765d013fe9",
+   "lines": 689
+  },
+  "solver": {
+   "sha256": "19e6f9240a4ff7354c39031d35d734ea2c8cad2fbd1f60d128ebb049d587317c",
+   "lines": 5
+  }
+ }
+}

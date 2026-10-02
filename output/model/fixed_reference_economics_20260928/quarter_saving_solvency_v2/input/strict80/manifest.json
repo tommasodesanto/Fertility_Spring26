@@ -1,0 +1,27 @@
+{
+  "experimental_change": "Wealth held at the start of the period alone determines purchase origination eligibility; current income is excluded. No change to interest timing, budget, final debt bound, or stayer rules.",
+  "incumbent_sha256": "872f57dd4cf419d5f9077e6bb4c426d069a58c0306bd1aef09c6ae912da16712",
+  "reference_case": "0064_nm",
+  "reference_chain": 2,
+  "single_evaluation": true,
+  "source_pairs": {
+    "code/model/refactor_lab/engine/household.py|code/model/experiments/strict_purchase_sandbox/source/refactor_lab/engine/household.py": {
+      "original": "2a34f5f28c0c63ca3d24d9e759cd1b5b92aadaddb5fe04795e65abbc0b448082",
+      "sandbox": "3c67efbb2738dfc1f7a2157e92a00330dfab0ed4ca6d55608ddc90fc8fb829d2"
+    },
+    "code/model/refactor_lab/engine/kernels.py|code/model/experiments/strict_purchase_sandbox/source/refactor_lab/engine/kernels.py": {
+      "original": "fe7d43afdac234af71edd09e1260666e21c309dda83de4adc6a3abff35c3d5d4",
+      "sandbox": "fe7d43afdac234af71edd09e1260666e21c309dda83de4adc6a3abff35c3d5d4"
+    },
+    "output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/source/small_credit_lab/engine/household.py|code/model/experiments/strict_purchase_sandbox/source/small_credit_lab/engine/household.py": {
+      "original": "2a34f5f28c0c63ca3d24d9e759cd1b5b92aadaddb5fe04795e65abbc0b448082",
+      "sandbox": "3c67efbb2738dfc1f7a2157e92a00330dfab0ed4ca6d55608ddc90fc8fb829d2"
+    },
+    "output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/source/small_credit_lab/engine/kernels.py|code/model/experiments/strict_purchase_sandbox/source/small_credit_lab/engine/kernels.py": {
+      "original": "fe7d43afdac234af71edd09e1260666e21c309dda83de4adc6a3abff35c3d5d4",
+      "sandbox": "fe7d43afdac234af71edd09e1260666e21c309dda83de4adc6a3abff35c3d5d4"
+    }
+  },
+  "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+  "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+}

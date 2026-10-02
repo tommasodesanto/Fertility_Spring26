@@ -1,0 +1,22 @@
+WARNING: While bind mounting '/scratch/td2248/projects/normalized_calibration_v2/source/code/model/tools/e5f_evening_calibration_runtime.py:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py': destination is already in the mount point list
+WARNING: While bind mounting '/scratch/td2248/projects/normalized_calibration_v2/source/output/model/fertility_identification_20260928/contract_v1/primary_objective.json:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/contract_v1/primary_objective.json': destination is already in the mount point list
+WARNING: While bind mounting '/scratch/td2248/projects/normalized_calibration_v2/source/output/model/fertility_identification_20260928/two_stream_overnight_v1/config.json:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_stream_overnight_v1/config.json': destination is already in the mount point list
+WARNING: While bind mounting '/scratch/td2248/projects/normalized_calibration_v2/source/output/model/fertility_identification_20260928/two_stream_overnight_v1/search.py:/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fertility_identification_20260928/two_stream_overnight_v1/search.py': destination is already in the mount point list
+Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/hard_zero_down_v1/run.py", line 245, in <module>
+    main()
+    ~~~~^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/hard_zero_down_v1/run.py", line 211, in main
+    result = ge.run_phase_b(ctx, dict(selected_d_bar=0.0), budget)
+  File "/work/results/run/source_review/run_phase_b.py", line 13, in run_phase_b
+    observed = _observe_with_deadline(context, live, "selected_root", final=True)
+  File "/work/results/run/source_review/_observe_with_deadline.py", line 9, in _observe_with_deadline
+    return observe_price(context, live, label, final=final)
+  File "/work/results/run/source_review/observe_price.py", line 35, in observe_price
+    gates = fp.gates(packet, prepared, out, stationary=True)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/sources/fixed_price_v1/run_fixed_price.py", line 179, in gates
+    sys.modules['e5f_evening_calibration_runtime'].require_no_negative_estates(estate)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_due_stayer_matched_check.py", line 29, in require_no_negative_estates
+    raise RuntimeError('Negative-estate production gate failed; saved ledger retained')
+RuntimeError: Negative-estate production gate failed; saved ledger retained

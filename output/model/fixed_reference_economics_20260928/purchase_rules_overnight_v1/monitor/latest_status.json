@@ -1,0 +1,45 @@
+{
+  "as_of_utc": "2026-10-02T05:02:50.422369+00:00",
+  "monitor": "Sol read-only active through 10:00 America/New_York Oct 2; 30-minute routine interval after healthy startup",
+  "jobs": {
+    "19008035": {
+      "variant": "hard100 diagnostic retry",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": 87,
+      "result_status": "fixed_price_diagnostic_passed",
+      "loss": 256.03658589324806,
+      "receipt": "/scratch/td2248/projects/hard_zero_down_solvency_v2/results/onecase/run/completed.json"
+    },
+    "19008074": {
+      "variant": "quarter100 diagnostic retry",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": 86,
+      "result_status": "fixed_price_quarter_saving_solvency_retry_passed",
+      "loss": 192.4091625455631,
+      "receipt": "/scratch/td2248/projects/quarter_saving_solvency_v2/results/onecase/run/completed.json"
+    }
+  },
+  "pending_overight_array_ids": true,
+  "limitations": "Agent is not a durable background daemon; host sleep, thread termination, or session limits can interrupt active checks.",
+  "production": {
+    "smoke_job_id": "19009130",
+    "smoke_status": "hard and quarter passed, exit 0",
+    "array_job_id": "19009131",
+    "scheduled_chains": 48,
+    "running_chains": 48,
+    "hard_checkpoints": 14,
+    "quarter_checkpoints": 15,
+    "hard_provisional_best_loss": 153.1548495131398,
+    "quarter_provisional_best_loss": 67.38408488641055,
+    "selected_postcheck_status": "pending",
+    "last_check": "startup first cases"
+  },
+  "local": {
+    "planned_chains": 10,
+    "launched_chains": 2,
+    "first_passed_case": false,
+    "progress_file": "output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/local_runtime/runs/local10_v1/latest_progress.json"
+  }
+}

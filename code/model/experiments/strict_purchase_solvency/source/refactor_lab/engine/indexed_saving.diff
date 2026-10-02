@@ -1,0 +1,161 @@
+--- engine/kernels.py
++++ indexed/kernels.py
+@@ -435,15 +435,73 @@
+ 
+ 
+ @njit(cache=True)
++def _rank(bg, x):
++    """Largest l with bg[l] <= x, or -1."""
++    lo = -1
++    hi = bg.size
++    while hi - lo > 1:
++        mid = (lo + hi) // 2
++        if bg[mid] <= x:
++            lo = mid
++        else:
++            hi = mid
++    return lo
++
++
++@njit(cache=True)
++def _interp_ranked(bg, V, x, r):
++    # interp_scalar with its binary-search index supplied: clamp(r, 0, nb-2).
++    idx = r
++    if idx < 0:
++        idx = 0
++    elif idx > bg.size - 2:
++        idx = bg.size - 2
++    wt = (x - bg[idx]) / (bg[idx + 1] - bg[idx])
++    if wt < 0.0:
++        wt = 0.0
++    elif wt > 1.0:
++        wt = 1.0
++    return (1.0 - wt) * V[idx] + wt * V[idx + 1]
++
++
++@njit(cache=True)
++def _renter_value(bp, r, Rv, Vbar, bg, dc, pc, cc, cb_c, ri, hRmax, ht_cap_c, Kr, alpha, oms, beta, es):
++    # eval_renter_scalar, wedge_on == 0 branch, same operation order.
++    surplus = Rv - dc - bp
++    if surplus <= 1e-10:
++        return -1e10
++    if surplus > cc:
++        ct = Rv - cb_c - ri * hRmax - bp
++        if ct < 1e-10:
++            ct = 1e-10
++        if es != 1.0:
++            u = es * (ct**alpha * ht_cap_c ** (1.0 - alpha)) ** oms / oms + pc
++        else:
++            u = (ct**alpha * ht_cap_c ** (1.0 - alpha)) ** oms / oms + pc
++    else:
++        ss = surplus
++        if ss < 1e-10:
++            ss = 1e-10
++        if es != 1.0:
++            u = es * Kr * ss**oms / oms + pc
++        else:
++            u = Kr * ss**oms / oms + pc
++    return u + beta * _interp_ranked(bg, Vbar, bp, r)
++
++
++@njit(cache=True)
++def _owner_value(bp, r, Rv, Vbar, bg, oc, cb_c, pc, Ko_c, alpha, oms, beta, es):
++    ct = Rv - oc - cb_c - bp
++    if ct <= 1e-10:
++        return -1e10
++    if es != 1.0:
++        return es * Ko_c * ct ** (alpha * oms) / oms + pc + beta * _interp_ranked(bg, Vbar, bp, r)
++    return Ko_c * ct ** (alpha * oms) / oms + pc + beta * _interp_ranked(bg, Vbar, bp, r)
++
++
++@njit(cache=True)
+ def exhaustive_saving_scalar(lo, hi, resources, continuation, bg, rent, hb, cb, pc,
+-                   hmax, alpha, oms, beta, es, owner_cost, owner_K, owner):
+-    """Global maximum for the existing clipped-linear continuation objective.
+-
+-    Utility is concave on each continuation-grid / renter-cap segment.
+-    Endpoints plus the interior first-order candidate therefore exhaust the
+-    segment maximum, even when continuation slopes are globally nonconcave.
+-    Formula and candidate ordering reproduce the September 5 audited oracle.
+-    """
++                              hmax, alpha, oms, beta, es, owner_cost, owner_K, owner):
+     if not (0.0 < alpha < 1.0 and oms < 1.0 and oms != 0.0
+             and beta > 0.0 and es > 0.0 and rent > 0.0 and hi >= lo):
+         raise ValueError("Unsupported exhaustive-saving objective or interval")
+@@ -451,34 +509,50 @@
+     cap=rent*(hmax-hb)/(1-alpha)
+     hcap=max(hmax-hb,1e-10)
+     Kr=(alpha**alpha*((1-alpha)/rent)**(1-alpha))**oms
+-    points=np.empty(bg.size+3)
+-    n=0
+-    points[n]=lo; n+=1
+-    for x in bg:
+-        if lo < x < hi:
+-            points[n]=x; n+=1
++    nb = bg.size
++    # Grid nodes strictly inside (lo, hi) are the contiguous block [g0, g1).
++    g0 = _rank(bg, lo) + 1
++    r_hi = _rank(bg, hi)
++    g1 = r_hi + 1
++    if g1 > g0 and bg[g1 - 1] >= hi:
++        g1 -= 1
++    has_kink = False
++    kink = 0.0
++    r_kink = -1
+     if not owner:
+-        kink=resources-dc-cap
++        kink = resources-dc-cap
+         if lo < kink < hi:
+-            points[n]=kink; n+=1
+-    points[n]=hi; n+=1
+-    points=np.sort(points[:n])
++            has_kink = True
++            r_kink = _rank(bg, kink)
++    points = np.empty(max(g1 - g0, 0) + 3)
++    ranks = np.empty(points.size, dtype=np.int64)
++    n = 0
++    points[n] = lo; ranks[n] = g0 - 1; n += 1
++    for i in range(g0, g1):
++        if has_kink and kink < bg[i]:
++            points[n] = kink; ranks[n] = r_kink; n += 1
++            has_kink = False
++        points[n] = bg[i]; ranks[n] = i; n += 1
++    if has_kink:
++        points[n] = kink; ranks[n] = r_kink; n += 1
++    points[n] = hi; ranks[n] = r_hi; n += 1
+     best=-1e300; bpbest=lo
+     for k in range(n):
+         x=points[k]
++        r=ranks[k]
+         if owner:
+-            value=eval_owner_scalar(x,resources,continuation,bg,owner_cost,cb,pc,owner_K,alpha,oms,beta,es)
++            value=_owner_value(x,r,resources,continuation,bg,owner_cost,cb,pc,owner_K,alpha,oms,beta,es)
+         else:
+-            value=eval_renter_scalar(x,resources,continuation,bg,dc,pc,cap,cb,rent,hmax,hcap,Kr,alpha,oms,beta,es)
++            value=_renter_value(x,r,resources,continuation,bg,dc,pc,cap,cb,rent,hmax,hcap,Kr,alpha,oms,beta,es)
+         if value>best:
+             best=value;bpbest=x
+         if k==n-1 or points[k+1]-x<1e-14:
+             continue
+         mid=(x+points[k+1])/2
+-        if mid<=bg[0] or mid>=bg[-1]:
++        if mid<=bg[0] or mid>=bg[nb-1]:
+             slope=0.0
+         else:
+-            ix=np.searchsorted(bg,mid)-1
++            ix=r
+             slope=(continuation[ix+1]-continuation[ix])/(bg[ix+1]-bg[ix])
+         if slope<=0:
+             continue
+@@ -494,9 +568,9 @@
+             candidate=resources-dc-optimal_surplus
+         if x<candidate<points[k+1]:
+             if owner:
+-                value=eval_owner_scalar(candidate,resources,continuation,bg,owner_cost,cb,pc,owner_K,alpha,oms,beta,es)
++                value=_owner_value(candidate,r,resources,continuation,bg,owner_cost,cb,pc,owner_K,alpha,oms,beta,es)
+             else:
+-                value=eval_renter_scalar(candidate,resources,continuation,bg,dc,pc,cap,cb,rent,hmax,hcap,Kr,alpha,oms,beta,es)
++                value=_renter_value(candidate,r,resources,continuation,bg,dc,pc,cap,cb,rent,hmax,hcap,Kr,alpha,oms,beta,es)
+             if value>best:
+                 best=value;bpbest=candidate
+     return bpbest,best
