@@ -16,6 +16,7 @@ PACKET = HERE.parent
 OUT = HERE / 'readout'
 REMOTE = '/scratch/td2248/projects/purchase_rules_overnight_v1'
 RESTART = '/scratch/td2248/projects/purchase_restart_controller_v2'
+REGIONS = '/scratch/td2248/projects/purchase_broader_regions_v1'
 
 
 def run(*args, input=None, env=None):
@@ -64,6 +65,20 @@ def main():
         row['origin'] = 'torch_restart'
     snapshot['chains'].extend(restarted['chains'])
     snapshot['errors'].extend(restarted['errors'])
+    broad = PACKET / 'broader_regions_v1'
+    regions = json.loads(run('ssh', '-o', 'BatchMode=yes', 'torch',
+        f'env PURCHASE_SOURCE_KIND=regions PURCHASE_RESULTS_ROOT={REGIONS}/results '
+        f'PURCHASE_REGION_ROOT={REGIONS} PURCHASE_CHAIN_FIRST=0 PURCHASE_CHAIN_LAST=16 '
+        f'PURCHASE_REGION_DESIGN_SHA256={sha(broad / "design.json")} '
+        f'PURCHASE_REGION_PINS_SHA256={sha(broad / "source_sha256.json")} '
+        '/share/apps/anaconda3/2025.06/bin/python -', input=source))
+    if (regions['target_fingerprint'] != snapshot['target_fingerprint'] or
+            regions['weight_fingerprint'] != snapshot['weight_fingerprint']):
+        raise RuntimeError('Broad-region target or weight fingerprint drift')
+    for row in regions['chains']:
+        row['origin'] = 'torch_regions'
+    snapshot['chains'].extend(regions['chains'])
+    snapshot['errors'].extend(regions['errors'])
     local_root = PACKET / 'local_runtime/runs/local10_v1'
     if local_root.is_dir():
         env = dict(os.environ, PURCHASE_RESULTS_ROOT=str(local_root), PURCHASE_PACKET_ROOT=str(PACKET),

@@ -21,6 +21,7 @@ ORIGINS = {
     'torch_restart': '/scratch/td2248/projects/purchase_restart_controller_v2/results',
     'local': str(PACKET / 'local_runtime/runs/local10_v1'),
     'local_restart': str(PACKET / 'local_runtime/restart_v2/runs'),
+    'torch_regions': '/scratch/td2248/projects/purchase_broader_regions_v1/results',
 }
 REPORT = 'selected_postcheck/phase_b_ge/selected_root'
 ARRAY = 'selected_postcheck/phase_b_ge/selected_repeat/stage/solution_arrays.npz'
@@ -78,7 +79,21 @@ def physical_source(selected):
     if not isinstance(raw, str) or not raw.startswith('/') or '..' in PurePosixPath(raw).parts:
         raise RuntimeError('Missing or unsafe physical remote_root')
     root = PurePosixPath(raw)
-    if root.parent != PurePosixPath(ORIGINS[origin]) or re.fullmatch(r'chain_?' + str(chain), root.name) is None:
+    if origin == 'torch_regions':
+        slot = selected.get('region_slot')
+        if (type(slot) is not int or not 0 <= slot < 16 or
+                chain != (slot if slot < 8 else slot + 16) or
+                selected.get('arm') != ('hard' if slot < 8 else 'quarter') or
+                root.parent != PurePosixPath(ORIGINS[origin]) or root.name != f'slot_{slot}' or
+                selected.get('source_run') != 'regions' or
+                selected.get('original_chain_index') != chain or
+                selected.get('region_state') != 'ready' or
+                selected.get('region_design_sha256') != sha(PACKET / 'broader_regions_v1/design.json') or
+                any(re.fullmatch(r'[0-9a-f]{64}', selected.get(key, '')) is None for key in (
+                    'region_search_contract_sha256','region_postcheck_contract_sha256',
+                    'region_launcher_terminal_sha256'))):
+            raise RuntimeError('Selected broad-region slot, original chain or provenance drift')
+    elif root.parent != PurePosixPath(ORIGINS[origin]) or re.fullmatch(r'chain_?' + str(chain), root.name) is None:
         raise RuntimeError('Selected physical root differs from origin and chain')
     if selected.get('remote_report') != str(root / 'postcheck' / REPORT) or selected.get('remote_arrays') != str(root / 'postcheck' / ARRAY):
         raise RuntimeError('Collector report or arrays path differs from physical source')
@@ -123,6 +138,10 @@ def main():
     parser.add_argument('--apply', action='store_true', help='Upload selected files after validation')
     args = parser.parse_args()
     plan = json.loads((PACKET / 'plan.json').read_text())
+    collected = json.loads((READOUT / 'snapshot.json').read_text())
+    if (collected.get('errors') or collected.get('target_fingerprint') != plan['target_fingerprint'] or
+            collected.get('weight_fingerprint') != plan['weight_fingerprint']):
+        raise RuntimeError('Latest collector snapshot has errors or mixed target identity')
     manifest = dict(schema='purchase_policy_selected_snapshot_v2',
                     target_fingerprint=plan['target_fingerprint'],
                     weight_fingerprint=plan['weight_fingerprint'], arms={})
@@ -131,6 +150,9 @@ def main():
     for arm in ('hard', 'quarter'):
         source = READOUT / f'selected_{arm}.json'
         selected = json.loads(source.read_text())
+        eligible = [row for row in collected['chains'] if row['arm'] == arm and row['status'] == 'postchecked']
+        if not eligible or selected != min(eligible, key=lambda row: (row['loss'], row['chain'], row['source_run'])):
+            raise RuntimeError('Selected JSON differs from current collector snapshot: ' + arm)
         if selected['status'] != 'postchecked' or selected['arm'] != arm:
             raise RuntimeError('No authenticated selected ' + arm + ' candidate')
         if selected['target_fingerprint'] != plan['target_fingerprint'] or selected['weight_fingerprint'] != plan['weight_fingerprint']:
@@ -160,7 +182,9 @@ def main():
         if json.loads(completed_text).get('status') != 'selected_numerically_verified':
             raise RuntimeError('Selected postcheck is not numerically verified')
         identity = dict(original_selected_json_sha256=sha(source), origin=origin, remote_root=root,
-                        parent_remote_root=selected.get('parent_remote_root'), chain=chain)
+                        parent_remote_root=selected.get('parent_remote_root'), chain=chain,
+                        region_slot=selected.get('region_slot'),
+                        region_design_sha256=selected.get('region_design_sha256'))
         snapshot = f'{MECH_REMOTE}/selected_postchecks/chain_{chain}'
         if args.apply:
             publish_snapshot(origin, root, chain, files, identity)
@@ -170,6 +194,7 @@ def main():
         target.write_text(json.dumps(copy, indent=2, sort_keys=True) + '\n')
         manifest['arms'][arm] = dict(chain=chain, origin=origin, physical_remote_root=root,
             parent_remote_root=selected.get('parent_remote_root'), snapshot_remote_root=snapshot,
+            region_slot=selected.get('region_slot'), region_design_sha256=selected.get('region_design_sha256'),
             selected_json_sha256=sha(target), original_selected_json_sha256=sha(source),
             completed_sha256=files['completed.json'],
             report_sha256={name: files[REPORT + '/' + name] for name in ('target_fit.csv','parameters.csv','closure.json')},
