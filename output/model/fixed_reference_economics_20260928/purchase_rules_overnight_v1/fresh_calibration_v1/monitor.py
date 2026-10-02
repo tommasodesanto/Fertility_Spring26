@@ -112,9 +112,26 @@ def main() -> int:
         raise SystemExit("Design must map slots 0–11 to hard and 12–23 to quarter")
     design_hash = hashlib.sha256(raw_design).hexdigest()
     remote = "ROOT_TEXT=" + repr(args.remote_root) + "\nEXPECTED_HASH=" + repr(design_hash) + "\n" + REMOTE_CODE
-    proc = subprocess.run(["ssh", args.ssh_host, "python3", "-"], input=remote, text=True, capture_output=True)
-    if proc.returncode:
-        raise SystemExit("Remote read failed: " + proc.stderr.strip()[:500])
+    ssh_command = ["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=10",
+                   "-o", "ConnectionAttempts=1", "-o", "ServerAliveInterval=15",
+                   "-o", "ServerAliveCountMax=1", args.ssh_host, "python3", "-"]
+    try:
+        proc = subprocess.run(ssh_command, input=remote, text=True,
+                              capture_output=True, timeout=45)
+    except subprocess.TimeoutExpired as exc:
+        failure = f"Remote read timed out after {exc.timeout} seconds"
+    else:
+        failure = "Remote read failed: " + proc.stderr.strip()[:500] if proc.returncode else None
+    if failure:
+        out = args.output_dir.resolve()
+        out.mkdir(parents=True, exist_ok=True)
+        (out / "failed_attempt.json").write_text(json.dumps({
+            "as_of_utc": datetime.now(timezone.utc).isoformat(),
+            "remote_root": args.remote_root,
+            "ssh_host": args.ssh_host,
+            "error": failure,
+        }, indent=2) + "\n")
+        raise SystemExit(failure)
     snapshot = json.loads(proc.stdout)
     snapshot.update(as_of_utc=datetime.now(timezone.utc).isoformat(), local_design_sha256=design_hash,
                     target_fingerprint=design.get("target_fingerprint"), weight_fingerprint=design.get("weight_fingerprint"))
