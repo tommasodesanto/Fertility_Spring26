@@ -22,6 +22,16 @@ diagnostic, not a replacement empirical estimate. The same driver independently
 verifies the room-extraction offset in 525 matched person-wave observations
 across four annual/biennial waves with `--check-raw-timing`.
 
+## First-birth rooms income sensitivity
+
+The three-fit income comparison uses the pre-birth reference-person/spouse
+sample (`A2h`) and preserves its selection, event windows, weights and other
+controls. See [`output/first_birth_rooms_income_sensitivity_v1/README.md`](output/first_birth_rooms_income_sensitivity_v1/README.md)
+for provenance, estimates and verification. `rooms_income_sensitivity.py`
+stages the byte-pinned reference, compares the full sample with two identical
+income-observed samples, and exports aggregate results. This is a sensitivity
+analysis; it does not replace the main regression or calibration target.
+
 ## Files
 
 - `sa_replication_own_only.do`

@@ -1,0 +1,67 @@
+{
+  "task": "Author-authorized rooms income sensitivity, October 1, 2026",
+  "status": "complete_verified",
+  "main_recommendation": "Keep contemporaneous income out of the main event study; estimate income conditioning as sensitivity only.",
+  "reference_design": "A2h: current adults age 18+, household reference person/spouse status fixed in event years -3/-2, first biological birth, confirmed-childless controls, IW weights, person and survey-year fixed effects, age and education indicators",
+  "reference_estimator": "/scratch/td2248/projects/Fertility_Spring26_rooms_v2_20260924/sa_rooms_first_birth_v2.do",
+  "reference_estimator_sha256": "49ebdb6c4c780eaa6eb00be0c66c0f8523af85ed0f2c049c48d286f2281d8b8e",
+  "reference_prepared_sample": "/scratch/td2248/projects/Fertility_Spring26_rooms_v2_20260924/analysis_sample.dta",
+  "reference_prepared_sample_sha256": "9fd181c48e1951a7a0052836926260a89d056d666aad3e49e2ae9cca05f1ba00",
+  "reference_fitted_key_sha256": "a13845f70a791c812d2a17ab0c366ca6a25c6884a02caa0e5f34a21ccc44ab07",
+  "reference_headline": {
+    "window": "+3/+4",
+    "baseline": "-3/-2",
+    "estimate": 1.465293280235685,
+    "se": 0.0502703781254777,
+    "observations": 117853,
+    "persons": 9310,
+    "treated_persons": 3302,
+    "control_persons": 6008
+  },
+  "income_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/PSID/PSIDSHELF_MOBILITY.dta",
+  "income_source_size": 6300266005,
+  "income_source_mtime_ns": 1730930638959661722,
+  "income_variable": "INCFAMR",
+  "income_definition": "Family-unit total income in real 2022 USD; tax year equals interview year minus one. No family-size adjustment; no rooms-like date shift.",
+  "income_transform": "log(INCFAMR) when observed, strictly positive and not top-code marker 9999999",
+  "arms": [
+    "baseline_full",
+    "common_no_income",
+    "common_income"
+  ],
+  "selection_rule": "Canonical A2h selection and cohort-reference decisions are computed before restricting to usable income; common arms must share exactly the fitted ID/year keys. Stop if restriction removes reference support.",
+  "verification": "verification.json",
+  "run_budget": {
+    "full_regressions": 3,
+    "execution": "sequential on Torch",
+    "cpus": 8,
+    "memory_gib": 32,
+    "expected_full_seconds": 900,
+    "hard_wall_minutes": 90,
+    "automatic_retries": 0
+  },
+  "source_evidence": [
+    "PSID/Construction_Files/Code/01 Collect income variables.do:228-235",
+    "PSID/Construction_Files/Code/07 Calculate inflation adjustments.do:107-151",
+    "local Stata metadata labels read on October 1"
+  ],
+  "adoption": "No target, weight, model, paper or main event-study specification change.",
+  "cluster_task_root": "/scratch/td2248/projects/Fertility_Spring26_rooms_income_sensitivity_v1_20261001",
+  "full_job_id": "19002614",
+  "native_toy_job_id": "19002586",
+  "failed_launches": [
+    {
+      "job_id": "19002444",
+      "stage": "before regression",
+      "cause": "Slurm relocates launcher; fixed driver lookup to task root"
+    },
+    {
+      "job_id": "19002574",
+      "stage": "synthetic regression initialization",
+      "cause": "Missing mata mlib index; restored saved-run initialization"
+    }
+  ],
+  "headline_control_change_rooms": -0.16165954018792594,
+  "headline_control_change_percent": -11.061804103403306,
+  "full_elapsed_seconds": 1293.3864872455597
+}
