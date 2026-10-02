@@ -1,0 +1,181 @@
+table_type,point_index,h_P,coordinate_status,record_name,estimate,gap,loss_contribution,lower,model,moment,near_bound,parameter,reference_estimate,role,status,target,upper,weight
+target_fit,0,2.3,,initial_normalization,,-2.0186750049333568e-08,,,2.09999997981325,initial_normalization,,,,normalization,,2.1,,
+target_fit,0,2.3,,cps_childlessness,,0.005173895159470393,0.9511710433246746,,0.20345264616631303,cps_childlessness,,,,scored,,0.19827875100684264,,35532.3042455214
+target_fit,0,2.3,,cps_exactly_one,,-0.003386668766063694,0.3091360611871829,,0.21026865645408332,cps_exactly_one,,,,scored,,0.21365532522014702,,26952.820824310795
+target_fit,0,2.3,,nchs_mean_age,,0.006704286205938104,0.006284915581801785,,25.982968147198434,nchs_mean_age,,,,scored,,25.976263860992496,,139.82806784479274
+target_fit,0,2.3,,nchs_share30,,-0.01829100799047287,0.0,,0.23098700505059383,nchs_share30,,,,validation,,0.2492780130410667,,0.0
+target_fit,0,2.3,,wealth_earnings,,-0.4033885860335005,1.2358922821255314,,6.52319520503949,wealth_earnings,,,,scored,,6.92658379107299,,7.595098472533724
+target_fit,0,2.3,,bequest_wealth,,-0.00043887032868584943,0.9948717221117017,,0.006852153143930308,bequest_wealth,,,,scored,,0.007291023472616158,,5165289.256198346
+target_fit,0,2.3,,old_dispersion,,-0.5752603907849689,0.0,,2.940674695733751,old_dispersion,,,,validation,,3.51593508651872,,0.0
+target_fit,0,2.3,,mean_rooms,,0.2569438932532302,8.451947780752379,,5.986378133355871,mean_rooms,,,,scored,,5.729434240102641,,128.02070205233477
+target_fit,0,2.3,,ownership_30_55,,-0.016824894951658953,0.6622198931678711,,0.6594355219021438,ownership_30_55,,,,scored,,0.6762604168538028,,2339.3623724673616
+target_fit,0,2.3,,first_birth_rooms,,-0.2394261444708008,7.88591269095979,,1.2255738555291993,first_birth_rooms,,,,scored,,1.465,,137.5652749002964
+target_fit,0,2.3,,family_rooms,,-0.07488369055265398,0.0,,0.3102159591401277,family_rooms,,,,validation,,0.38509964969278165,,0.0
+target_fit,0,2.3,,recent_parent_ownership,,-0.007707190026692512,1.6071369360160657,,0.11990117354022911,recent_parent_ownership,,,,scored,,0.12760836356692162,,27055.822957508266
+target_fit,0,2.3,,early_fertility,,-0.28013090576759003,7.847332436617041,,0.5293967326614121,early_fertility,,,,scored,,0.8095276384290021,,100.0
+parameters,0,2.3,derived,H0,6.869146976278256,,,0.2,,,False,H0,6.293507689200028,,derived calibrated housing supply coefficient at N0=1,,80.0,
+parameters,0,2.3,fixed_at_incumbent,beta_annual,0.9670843817494936,,,0.94,,,False,beta_annual,0.9634753808828738,,free in experimental utility calibration,,0.99,
+parameters,0,2.3,fixed_at_incumbent,chi,1.093429912990833,,,0.1,,,False,chi,1.0938718913975698,,free in experimental utility calibration,,5.0,
+parameters,0,2.3,fixed_at_incumbent,first_birth_fixed_cost,0.38540954564501306,,,0.0,,,False,first_birth_fixed_cost,0.6209410745816288,,free in experimental utility calibration,,8.0,
+parameters,0,2.3,fixed_at_incumbent,kappa_fert,0.126367646227124,,,0.02,,,True,kappa_fert,0.17561183772819416,,free in experimental utility calibration,,50.0,
+parameters,0,2.3,fixed_at_incumbent,kappa_fert_continuation,0.3511943513636155,,,0.02,,,True,kappa_fert_continuation,0.33176505374023935,,free in experimental utility calibration,,50.0,
+parameters,0,2.3,fixed_at_incumbent,theta0,0.10416394115934847,,,0.0,,,False,theta0,0.12451612635999697,,free in experimental utility calibration,,8.0,
+parameters,0,2.3,fixed_in_diagnostic,delta_alpha_jump,0.0,,,,,,,delta_alpha_jump,0.13487659325900622,,fixed zero under experimental utility contract,,,
+parameters,0,2.3,fixed_at_incumbent,child_benefit_curvature,0.09889818563569602,,,0.0,,,False,child_benefit_curvature,0.061454973811513665,,free in experimental utility calibration,,0.8,
+parameters,0,2.3,fixed_at_incumbent,tenure_choice_kappa,0.013862580239215504,,,0.001,,,False,tenure_choice_kappa,0.012087458119671006,,free in experimental utility calibration,,0.1,
+parameters,0,2.3,fixed_at_incumbent,psi_child,0.17141586769606804,,,0.01,,,False,psi_child,0.1355551166583114,,free in experimental utility calibration,,0.5,
+parameters,0,2.3,fixed_in_diagnostic,child_benefit_CRRA_coefficient,0.15446314939175837,,,,,,,child_benefit_CRRA_coefficient,0.1272245805140582,,derived from fixed benefit and proposed curvature,,,
+parameters,0,2.3,fixed_in_diagnostic,theta1,0.008193084126995582,,,,,,,theta1,0.008193084126995582,,fixed external restriction,,,
+parameters,0,2.3,fixed_in_diagnostic,sigma,2.0,,,,,,,sigma,2.0,,fixed,,,
+parameters,0,2.3,fixed_in_diagnostic,alpha_cons,0.733,,,,,,,alpha_cons,0.733,,fixed CEX childless expenditure share,,,
+parameters,0,2.3,fixed_in_diagnostic,delta_alpha,0.0,,,,,,,delta_alpha,0.0,,fixed zero under experimental utility contract,,,
+parameters,0,2.3,diagnostic_varied,h_P,2.3,,,0.1,,,False,h_P,0.0,,free in experimental utility calibration,,2.6,
+parameters,0,2.3,fixed_in_diagnostic,utility_reference_rent,0.11046592704873838,,,,,,,utility_reference_rent,0.11046592704873838,,retained inactive normalization; compensation off,,,
+parameters,0,2.3,fixed_in_diagnostic,q_annual,0.020000000000000018,,,,,,,q_annual,0.020000000000000018,,author-retained 2% annual real rate,,,
+parameters,0,2.3,fixed_in_diagnostic,financed_share,0.8,,,,,,,financed_share,0.8,,inherited credit contract,,,
+parameters,0,2.3,fixed_in_diagnostic,housing_supply_elasticity,0.63,,,,,,,housing_supply_elasticity,0.63,,fixed provisional external mapping,,,
+parameters,0,2.3,fixed_in_diagnostic,payroll_tax,0.08028070961950022,,,,,,,payroll_tax,0.08028070961950022,,derived from adopted pension ratio,,,
+parameters,0,2.3,fixed_in_diagnostic,pension_period,0.917784047463731,,,,,,,pension_period,0.917784047463731,,balanced PAYGO,,,
+parameters,0,2.3,fixed_in_diagnostic,annual_depreciation,0.01416143718381309,,,,,,,annual_depreciation,0.01416143718381309,,adopted,,,
+parameters,0,2.3,fixed_in_diagnostic,period_depreciation,0.05545379079326218,,,,,,,period_depreciation,0.05545379079326218,,compounded,,,
+parameters,0,2.3,fixed_in_diagnostic,annual_property_tax,0.010598360773872594,,,,,,,annual_property_tax,0.010598360773872594,,adopted,,,
+parameters,0,2.3,fixed_in_diagnostic,period_property_tax,0.042393443095490375,,,,,,,period_property_tax,0.042393443095490375,,linear period convention,,,
+parameters,0,2.3,fixed_in_diagnostic,selling_cost,0.06,,,,,,,selling_cost,0.06,,retained,,,
+parameters,0,2.3,fixed_in_diagnostic,rental_cap,6.0,,,,,,,rental_cap,6.0,,retained provisional,,,
+parameters,0,2.3,fixed_in_diagnostic,wealth_grid_nodes,120.0,,,,,,,wealth_grid_nodes,160.0,,retained exact grid,,,
+parameters,0,2.3,fixed_in_diagnostic,income_states,9.0,,,,,,,income_states,15.0,,retained B15,,,
+target_fit,1,2.4,,initial_normalization,,-4.5272319226796753e-10,,,2.099999999547277,initial_normalization,,,,normalization,,2.1,,
+target_fit,1,2.4,,cps_childlessness,,0.005433264076839084,1.0489263606775772,,0.20371201508368172,cps_childlessness,,,,scored,,0.19827875100684264,,35532.3042455214
+target_fit,1,2.4,,cps_exactly_one,,-0.0035962049825915,0.34857248380732614,,0.21005912023755552,cps_exactly_one,,,,scored,,0.21365532522014702,,26952.820824310795
+target_fit,1,2.4,,nchs_mean_age,,0.016663871238456807,0.03882810173871585,,25.992927732230953,nchs_mean_age,,,,scored,,25.976263860992496,,139.82806784479274
+target_fit,1,2.4,,nchs_share30,,-0.017833433177022212,0.0,,0.2314445798640445,nchs_share30,,,,validation,,0.2492780130410667,,0.0
+target_fit,1,2.4,,wealth_earnings,,-0.3960507132546738,1.1913380379553657,,6.530533077818316,wealth_earnings,,,,scored,,6.92658379107299,,7.595098472533724
+target_fit,1,2.4,,bequest_wealth,,-0.00044879941286837116,1.0403972778460466,,0.006842224059747787,bequest_wealth,,,,scored,,0.007291023472616158,,5165289.256198346
+target_fit,1,2.4,,old_dispersion,,-0.6080067607413722,0.0,,2.907928325777348,old_dispersion,,,,validation,,3.51593508651872,,0.0
+target_fit,1,2.4,,mean_rooms,,0.3939162578753068,19.864974669804056,,6.123350497977948,mean_rooms,,,,scored,,5.729434240102641,,128.02070205233477
+target_fit,1,2.4,,ownership_30_55,,-0.002088831208348574,0.01020714290517631,,0.6741715856454542,ownership_30_55,,,,scored,,0.6762604168538028,,2339.3623724673616
+target_fit,1,2.4,,first_birth_rooms,,-0.20923089767427538,6.022273250889446,,1.2557691023257247,first_birth_rooms,,,,scored,,1.465,,137.5652749002964
+target_fit,1,2.4,,family_rooms,,-0.08414808256175998,0.0,,0.30095156713102167,family_rooms,,,,validation,,0.38509964969278165,,0.0
+target_fit,1,2.4,,recent_parent_ownership,,0.013181471834451175,4.700981698344716,,0.1407898354013728,recent_parent_ownership,,,,scored,,0.12760836356692162,,27055.822957508266
+target_fit,1,2.4,,early_fertility,,-0.28108387640970334,7.900814557750538,,0.5284437620192988,early_fertility,,,,scored,,0.8095276384290021,,100.0
+parameters,1,2.4,derived,H0,7.171470564653773,,,0.2,,,False,H0,6.293507689200028,,derived calibrated housing supply coefficient at N0=1,,80.0,
+parameters,1,2.4,fixed_at_incumbent,beta_annual,0.9670843817494936,,,0.94,,,False,beta_annual,0.9634753808828738,,free in experimental utility calibration,,0.99,
+parameters,1,2.4,fixed_at_incumbent,chi,1.093429912990833,,,0.1,,,False,chi,1.0938718913975698,,free in experimental utility calibration,,5.0,
+parameters,1,2.4,fixed_at_incumbent,first_birth_fixed_cost,0.38540954564501306,,,0.0,,,False,first_birth_fixed_cost,0.6209410745816288,,free in experimental utility calibration,,8.0,
+parameters,1,2.4,fixed_at_incumbent,kappa_fert,0.126367646227124,,,0.02,,,True,kappa_fert,0.17561183772819416,,free in experimental utility calibration,,50.0,
+parameters,1,2.4,fixed_at_incumbent,kappa_fert_continuation,0.3511943513636155,,,0.02,,,True,kappa_fert_continuation,0.33176505374023935,,free in experimental utility calibration,,50.0,
+parameters,1,2.4,fixed_at_incumbent,theta0,0.10416394115934847,,,0.0,,,False,theta0,0.12451612635999697,,free in experimental utility calibration,,8.0,
+parameters,1,2.4,fixed_in_diagnostic,delta_alpha_jump,0.0,,,,,,,delta_alpha_jump,0.13487659325900622,,fixed zero under experimental utility contract,,,
+parameters,1,2.4,fixed_at_incumbent,child_benefit_curvature,0.09889818563569602,,,0.0,,,False,child_benefit_curvature,0.061454973811513665,,free in experimental utility calibration,,0.8,
+parameters,1,2.4,fixed_at_incumbent,tenure_choice_kappa,0.013862580239215504,,,0.001,,,False,tenure_choice_kappa,0.012087458119671006,,free in experimental utility calibration,,0.1,
+parameters,1,2.4,fixed_at_incumbent,psi_child,0.17141586769606804,,,0.01,,,False,psi_child,0.1355551166583114,,free in experimental utility calibration,,0.5,
+parameters,1,2.4,fixed_in_diagnostic,child_benefit_CRRA_coefficient,0.15446314939175837,,,,,,,child_benefit_CRRA_coefficient,0.1272245805140582,,derived from fixed benefit and proposed curvature,,,
+parameters,1,2.4,fixed_in_diagnostic,theta1,0.008193084126995582,,,,,,,theta1,0.008193084126995582,,fixed external restriction,,,
+parameters,1,2.4,fixed_in_diagnostic,sigma,2.0,,,,,,,sigma,2.0,,fixed,,,
+parameters,1,2.4,fixed_in_diagnostic,alpha_cons,0.733,,,,,,,alpha_cons,0.733,,fixed CEX childless expenditure share,,,
+parameters,1,2.4,fixed_in_diagnostic,delta_alpha,0.0,,,,,,,delta_alpha,0.0,,fixed zero under experimental utility contract,,,
+parameters,1,2.4,diagnostic_varied,h_P,2.4,,,0.1,,,False,h_P,0.0,,free in experimental utility calibration,,2.6,
+parameters,1,2.4,fixed_in_diagnostic,utility_reference_rent,0.11046592704873838,,,,,,,utility_reference_rent,0.11046592704873838,,retained inactive normalization; compensation off,,,
+parameters,1,2.4,fixed_in_diagnostic,q_annual,0.020000000000000018,,,,,,,q_annual,0.020000000000000018,,author-retained 2% annual real rate,,,
+parameters,1,2.4,fixed_in_diagnostic,financed_share,0.8,,,,,,,financed_share,0.8,,inherited credit contract,,,
+parameters,1,2.4,fixed_in_diagnostic,housing_supply_elasticity,0.63,,,,,,,housing_supply_elasticity,0.63,,fixed provisional external mapping,,,
+parameters,1,2.4,fixed_in_diagnostic,payroll_tax,0.08028070961950022,,,,,,,payroll_tax,0.08028070961950022,,derived from adopted pension ratio,,,
+parameters,1,2.4,fixed_in_diagnostic,pension_period,0.917784047463731,,,,,,,pension_period,0.917784047463731,,balanced PAYGO,,,
+parameters,1,2.4,fixed_in_diagnostic,annual_depreciation,0.01416143718381309,,,,,,,annual_depreciation,0.01416143718381309,,adopted,,,
+parameters,1,2.4,fixed_in_diagnostic,period_depreciation,0.05545379079326218,,,,,,,period_depreciation,0.05545379079326218,,compounded,,,
+parameters,1,2.4,fixed_in_diagnostic,annual_property_tax,0.010598360773872594,,,,,,,annual_property_tax,0.010598360773872594,,adopted,,,
+parameters,1,2.4,fixed_in_diagnostic,period_property_tax,0.042393443095490375,,,,,,,period_property_tax,0.042393443095490375,,linear period convention,,,
+parameters,1,2.4,fixed_in_diagnostic,selling_cost,0.06,,,,,,,selling_cost,0.06,,retained,,,
+parameters,1,2.4,fixed_in_diagnostic,rental_cap,6.0,,,,,,,rental_cap,6.0,,retained provisional,,,
+parameters,1,2.4,fixed_in_diagnostic,wealth_grid_nodes,120.0,,,,,,,wealth_grid_nodes,160.0,,retained exact grid,,,
+parameters,1,2.4,fixed_in_diagnostic,income_states,9.0,,,,,,,income_states,15.0,,retained B15,,,
+target_fit,2,2.5,,initial_normalization,,-8.443777677058506e-08,,,2.0999999155622233,initial_normalization,,,,normalization,,2.1,,
+target_fit,2,2.5,,cps_childlessness,,0.005713303452820506,1.1598396601079068,,0.20399205445966315,cps_childlessness,,,,scored,,0.19827875100684264,,35532.3042455214
+target_fit,2,2.5,,cps_exactly_one,,-0.0038167674368765614,0.39264097629193956,,0.20983855778327046,cps_exactly_one,,,,scored,,0.21365532522014702,,26952.820824310795
+target_fit,2,2.5,,nchs_mean_age,,0.026101129943278067,0.09526052575947487,,26.002364990935774,nchs_mean_age,,,,scored,,25.976263860992496,,139.82806784479274
+target_fit,2,2.5,,nchs_share30,,-0.017357253066092815,0.0,,0.23192075997497388,nchs_share30,,,,validation,,0.2492780130410667,,0.0
+target_fit,2,2.5,,wealth_earnings,,-0.387306627477372,1.139313559422184,,6.539277163595618,wealth_earnings,,,,scored,,6.92658379107299,,7.595098472533724
+target_fit,2,2.5,,bequest_wealth,,-0.0004382003430375434,0.9918364702387429,,0.006852823129578614,bequest_wealth,,,,scored,,0.007291023472616158,,5165289.256198346
+target_fit,2,2.5,,old_dispersion,,-0.5964798951277901,0.0,,2.91945519139093,old_dispersion,,,,validation,,3.51593508651872,,0.0
+target_fit,2,2.5,,mean_rooms,,0.5306492320229559,36.04917121524701,,6.260083472125597,mean_rooms,,,,scored,,5.729434240102641,,128.02070205233477
+target_fit,2,2.5,,ownership_30_55,,0.013111739441591164,0.4021778247049758,,0.689372156295394,ownership_30_55,,,,scored,,0.6762604168538028,,2339.3623724673616
+target_fit,2,2.5,,first_birth_rooms,,-0.17099858007977908,4.022479400190212,,1.294001419920221,first_birth_rooms,,,,scored,,1.465,,137.5652749002964
+target_fit,2,2.5,,family_rooms,,-0.09444026327210331,0.0,,0.29065938642067835,family_rooms,,,,validation,,0.38509964969278165,,0.0
+target_fit,2,2.5,,recent_parent_ownership,,0.03194095770894456,27.603021007351142,,0.15954932127586618,recent_parent_ownership,,,,scored,,0.12760836356692162,,27055.822957508266
+target_fit,2,2.5,,early_fertility,,-0.28192343515798524,7.94808232912787,,0.5276042032710169,early_fertility,,,,scored,,0.8095276384290021,,100.0
+parameters,2,2.5,derived,H0,7.480588839637053,,,0.2,,,False,H0,6.293507689200028,,derived calibrated housing supply coefficient at N0=1,,80.0,
+parameters,2,2.5,fixed_at_incumbent,beta_annual,0.9670843817494936,,,0.94,,,False,beta_annual,0.9634753808828738,,free in experimental utility calibration,,0.99,
+parameters,2,2.5,fixed_at_incumbent,chi,1.093429912990833,,,0.1,,,False,chi,1.0938718913975698,,free in experimental utility calibration,,5.0,
+parameters,2,2.5,fixed_at_incumbent,first_birth_fixed_cost,0.38540954564501306,,,0.0,,,False,first_birth_fixed_cost,0.6209410745816288,,free in experimental utility calibration,,8.0,
+parameters,2,2.5,fixed_at_incumbent,kappa_fert,0.126367646227124,,,0.02,,,True,kappa_fert,0.17561183772819416,,free in experimental utility calibration,,50.0,
+parameters,2,2.5,fixed_at_incumbent,kappa_fert_continuation,0.3511943513636155,,,0.02,,,True,kappa_fert_continuation,0.33176505374023935,,free in experimental utility calibration,,50.0,
+parameters,2,2.5,fixed_at_incumbent,theta0,0.10416394115934847,,,0.0,,,False,theta0,0.12451612635999697,,free in experimental utility calibration,,8.0,
+parameters,2,2.5,fixed_in_diagnostic,delta_alpha_jump,0.0,,,,,,,delta_alpha_jump,0.13487659325900622,,fixed zero under experimental utility contract,,,
+parameters,2,2.5,fixed_at_incumbent,child_benefit_curvature,0.09889818563569602,,,0.0,,,False,child_benefit_curvature,0.061454973811513665,,free in experimental utility calibration,,0.8,
+parameters,2,2.5,fixed_at_incumbent,tenure_choice_kappa,0.013862580239215504,,,0.001,,,False,tenure_choice_kappa,0.012087458119671006,,free in experimental utility calibration,,0.1,
+parameters,2,2.5,fixed_at_incumbent,psi_child,0.17141586769606804,,,0.01,,,False,psi_child,0.1355551166583114,,free in experimental utility calibration,,0.5,
+parameters,2,2.5,fixed_in_diagnostic,child_benefit_CRRA_coefficient,0.15446314939175837,,,,,,,child_benefit_CRRA_coefficient,0.1272245805140582,,derived from fixed benefit and proposed curvature,,,
+parameters,2,2.5,fixed_in_diagnostic,theta1,0.008193084126995582,,,,,,,theta1,0.008193084126995582,,fixed external restriction,,,
+parameters,2,2.5,fixed_in_diagnostic,sigma,2.0,,,,,,,sigma,2.0,,fixed,,,
+parameters,2,2.5,fixed_in_diagnostic,alpha_cons,0.733,,,,,,,alpha_cons,0.733,,fixed CEX childless expenditure share,,,
+parameters,2,2.5,fixed_in_diagnostic,delta_alpha,0.0,,,,,,,delta_alpha,0.0,,fixed zero under experimental utility contract,,,
+parameters,2,2.5,diagnostic_varied,h_P,2.5,,,0.1,,,False,h_P,0.0,,free in experimental utility calibration,,2.6,
+parameters,2,2.5,fixed_in_diagnostic,utility_reference_rent,0.11046592704873838,,,,,,,utility_reference_rent,0.11046592704873838,,retained inactive normalization; compensation off,,,
+parameters,2,2.5,fixed_in_diagnostic,q_annual,0.020000000000000018,,,,,,,q_annual,0.020000000000000018,,author-retained 2% annual real rate,,,
+parameters,2,2.5,fixed_in_diagnostic,financed_share,0.8,,,,,,,financed_share,0.8,,inherited credit contract,,,
+parameters,2,2.5,fixed_in_diagnostic,housing_supply_elasticity,0.63,,,,,,,housing_supply_elasticity,0.63,,fixed provisional external mapping,,,
+parameters,2,2.5,fixed_in_diagnostic,payroll_tax,0.08028070961950022,,,,,,,payroll_tax,0.08028070961950022,,derived from adopted pension ratio,,,
+parameters,2,2.5,fixed_in_diagnostic,pension_period,0.917784047463731,,,,,,,pension_period,0.917784047463731,,balanced PAYGO,,,
+parameters,2,2.5,fixed_in_diagnostic,annual_depreciation,0.01416143718381309,,,,,,,annual_depreciation,0.01416143718381309,,adopted,,,
+parameters,2,2.5,fixed_in_diagnostic,period_depreciation,0.05545379079326218,,,,,,,period_depreciation,0.05545379079326218,,compounded,,,
+parameters,2,2.5,fixed_in_diagnostic,annual_property_tax,0.010598360773872594,,,,,,,annual_property_tax,0.010598360773872594,,adopted,,,
+parameters,2,2.5,fixed_in_diagnostic,period_property_tax,0.042393443095490375,,,,,,,period_property_tax,0.042393443095490375,,linear period convention,,,
+parameters,2,2.5,fixed_in_diagnostic,selling_cost,0.06,,,,,,,selling_cost,0.06,,retained,,,
+parameters,2,2.5,fixed_in_diagnostic,rental_cap,6.0,,,,,,,rental_cap,6.0,,retained provisional,,,
+parameters,2,2.5,fixed_in_diagnostic,wealth_grid_nodes,120.0,,,,,,,wealth_grid_nodes,160.0,,retained exact grid,,,
+parameters,2,2.5,fixed_in_diagnostic,income_states,9.0,,,,,,,income_states,15.0,,retained B15,,,
+target_fit,3,2.6,,initial_normalization,,-1.577490205129095e-07,,,2.0999998422509796,initial_normalization,,,,normalization,,2.1,,
+target_fit,3,2.6,,cps_childlessness,,0.005969568193815611,1.266220112768933,,0.20424831920065825,cps_childlessness,,,,scored,,0.19827875100684264,,35532.3042455214
+target_fit,3,2.6,,cps_exactly_one,,-0.004003807589452235,0.4320665261541212,,0.20965151763069478,cps_exactly_one,,,,scored,,0.21365532522014702,,26952.820824310795
+target_fit,3,2.6,,nchs_mean_age,,0.03519267612222521,0.1731804811917177,,26.01145653711472,nchs_mean_age,,,,scored,,25.976263860992496,,139.82806784479274
+target_fit,3,2.6,,nchs_share30,,-0.016798134758394923,0.0,,0.23247987828267178,nchs_share30,,,,validation,,0.2492780130410667,,0.0
+target_fit,3,2.6,,wealth_earnings,,-0.3812413722937711,1.1039094655772184,,6.545342418779219,wealth_earnings,,,,scored,,6.92658379107299,,7.595098472533724
+target_fit,3,2.6,,bequest_wealth,,-0.0004348910634672139,0.9769123816303936,,0.006856132409148944,bequest_wealth,,,,scored,,0.007291023472616158,,5165289.256198346
+target_fit,3,2.6,,old_dispersion,,-0.6352721302688824,0.0,,2.8806629562498376,old_dispersion,,,,validation,,3.51593508651872,,0.0
+target_fit,3,2.6,,mean_rooms,,0.6661241197795631,56.80551784033236,,6.395558359882204,mean_rooms,,,,scored,,5.729434240102641,,128.02070205233477
+target_fit,3,2.6,,ownership_30_55,,0.026801565886760192,1.680419982401033,,0.703061982740563,ownership_30_55,,,,scored,,0.6762604168538028,,2339.3623724673616
+target_fit,3,2.6,,first_birth_rooms,,-0.13089186339927505,2.3568618207910434,,1.334108136600725,first_birth_rooms,,,,scored,,1.465,,137.5652749002964
+target_fit,3,2.6,,family_rooms,,-0.10738926866266585,0.0,,0.2777103810301158,family_rooms,,,,validation,,0.38509964969278165,,0.0
+target_fit,3,2.6,,recent_parent_ownership,,0.05313704276630782,76.39334212669071,,0.18074540633322944,recent_parent_ownership,,,,scored,,0.12760836356692162,,27055.822957508266
+target_fit,3,2.6,,early_fertility,,-0.28270099219545697,7.991985098829582,,0.5268266462335451,early_fertility,,,,scored,,0.8095276384290021,,100.0
+parameters,3,2.6,derived,H0,7.793605963435364,,,0.2,,,False,H0,6.293507689200028,,derived calibrated housing supply coefficient at N0=1,,80.0,
+parameters,3,2.6,fixed_at_incumbent,beta_annual,0.9670843817494936,,,0.94,,,False,beta_annual,0.9634753808828738,,free in experimental utility calibration,,0.99,
+parameters,3,2.6,fixed_at_incumbent,chi,1.093429912990833,,,0.1,,,False,chi,1.0938718913975698,,free in experimental utility calibration,,5.0,
+parameters,3,2.6,fixed_at_incumbent,first_birth_fixed_cost,0.38540954564501306,,,0.0,,,False,first_birth_fixed_cost,0.6209410745816288,,free in experimental utility calibration,,8.0,
+parameters,3,2.6,fixed_at_incumbent,kappa_fert,0.126367646227124,,,0.02,,,True,kappa_fert,0.17561183772819416,,free in experimental utility calibration,,50.0,
+parameters,3,2.6,fixed_at_incumbent,kappa_fert_continuation,0.3511943513636155,,,0.02,,,True,kappa_fert_continuation,0.33176505374023935,,free in experimental utility calibration,,50.0,
+parameters,3,2.6,fixed_at_incumbent,theta0,0.10416394115934847,,,0.0,,,False,theta0,0.12451612635999697,,free in experimental utility calibration,,8.0,
+parameters,3,2.6,fixed_in_diagnostic,delta_alpha_jump,0.0,,,,,,,delta_alpha_jump,0.13487659325900622,,fixed zero under experimental utility contract,,,
+parameters,3,2.6,fixed_at_incumbent,child_benefit_curvature,0.09889818563569602,,,0.0,,,False,child_benefit_curvature,0.061454973811513665,,free in experimental utility calibration,,0.8,
+parameters,3,2.6,fixed_at_incumbent,tenure_choice_kappa,0.013862580239215504,,,0.001,,,False,tenure_choice_kappa,0.012087458119671006,,free in experimental utility calibration,,0.1,
+parameters,3,2.6,fixed_at_incumbent,psi_child,0.17141586769606804,,,0.01,,,False,psi_child,0.1355551166583114,,free in experimental utility calibration,,0.5,
+parameters,3,2.6,fixed_in_diagnostic,child_benefit_CRRA_coefficient,0.15446314939175837,,,,,,,child_benefit_CRRA_coefficient,0.1272245805140582,,derived from fixed benefit and proposed curvature,,,
+parameters,3,2.6,fixed_in_diagnostic,theta1,0.008193084126995582,,,,,,,theta1,0.008193084126995582,,fixed external restriction,,,
+parameters,3,2.6,fixed_in_diagnostic,sigma,2.0,,,,,,,sigma,2.0,,fixed,,,
+parameters,3,2.6,fixed_in_diagnostic,alpha_cons,0.733,,,,,,,alpha_cons,0.733,,fixed CEX childless expenditure share,,,
+parameters,3,2.6,fixed_in_diagnostic,delta_alpha,0.0,,,,,,,delta_alpha,0.0,,fixed zero under experimental utility contract,,,
+parameters,3,2.6,diagnostic_varied,h_P,2.6,,,0.1,,,True,h_P,0.0,,free in experimental utility calibration,,2.6,
+parameters,3,2.6,fixed_in_diagnostic,utility_reference_rent,0.11046592704873838,,,,,,,utility_reference_rent,0.11046592704873838,,retained inactive normalization; compensation off,,,
+parameters,3,2.6,fixed_in_diagnostic,q_annual,0.020000000000000018,,,,,,,q_annual,0.020000000000000018,,author-retained 2% annual real rate,,,
+parameters,3,2.6,fixed_in_diagnostic,financed_share,0.8,,,,,,,financed_share,0.8,,inherited credit contract,,,
+parameters,3,2.6,fixed_in_diagnostic,housing_supply_elasticity,0.63,,,,,,,housing_supply_elasticity,0.63,,fixed provisional external mapping,,,
+parameters,3,2.6,fixed_in_diagnostic,payroll_tax,0.08028070961950022,,,,,,,payroll_tax,0.08028070961950022,,derived from adopted pension ratio,,,
+parameters,3,2.6,fixed_in_diagnostic,pension_period,0.917784047463731,,,,,,,pension_period,0.917784047463731,,balanced PAYGO,,,
+parameters,3,2.6,fixed_in_diagnostic,annual_depreciation,0.01416143718381309,,,,,,,annual_depreciation,0.01416143718381309,,adopted,,,
+parameters,3,2.6,fixed_in_diagnostic,period_depreciation,0.05545379079326218,,,,,,,period_depreciation,0.05545379079326218,,compounded,,,
+parameters,3,2.6,fixed_in_diagnostic,annual_property_tax,0.010598360773872594,,,,,,,annual_property_tax,0.010598360773872594,,adopted,,,
+parameters,3,2.6,fixed_in_diagnostic,period_property_tax,0.042393443095490375,,,,,,,period_property_tax,0.042393443095490375,,linear period convention,,,
+parameters,3,2.6,fixed_in_diagnostic,selling_cost,0.06,,,,,,,selling_cost,0.06,,retained,,,
+parameters,3,2.6,fixed_in_diagnostic,rental_cap,6.0,,,,,,,rental_cap,6.0,,retained provisional,,,
+parameters,3,2.6,fixed_in_diagnostic,wealth_grid_nodes,120.0,,,,,,,wealth_grid_nodes,160.0,,retained exact grid,,,
+parameters,3,2.6,fixed_in_diagnostic,income_states,9.0,,,,,,,income_states,15.0,,retained B15,,,

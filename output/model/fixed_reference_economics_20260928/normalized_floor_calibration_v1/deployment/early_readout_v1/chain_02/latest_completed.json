@@ -1,0 +1,638 @@
+{
+  "completed_full_ge": 3,
+  "elapsed_seconds": 325.1830518245697,
+  "latest": {
+    "H0_derived": 6.90382883025595,
+    "base_loss": 37.93490085139379,
+    "base_residual": [
+      0.8609335823554749,
+      -0.47346293104796666,
+      0.06249138214468592,
+      -1.0509633253613688,
+      -0.9811237021413797,
+      3.1239035442529812,
+      1.506924584606885,
+      -2.7735188438327505,
+      -2.7104089631984785,
+      -2.798245108227345
+    ],
+    "effective_parameters": [
+      {
+        "estimate": "6.90382883025595",
+        "lower": "0.2",
+        "near_bound": "False",
+        "parameter": "H0",
+        "reference_estimate": "6.293507689200028",
+        "status": "derived calibrated housing supply coefficient at N0=1",
+        "upper": "80.0"
+      },
+      {
+        "estimate": "0.9670612708545003",
+        "lower": "0.94",
+        "near_bound": "False",
+        "parameter": "beta_annual",
+        "reference_estimate": "0.9634753808828738",
+        "status": "free in experimental utility calibration",
+        "upper": "0.99"
+      },
+      {
+        "estimate": "1.12376462072776",
+        "lower": "0.1",
+        "near_bound": "False",
+        "parameter": "chi",
+        "reference_estimate": "1.0938718913975698",
+        "status": "free in experimental utility calibration",
+        "upper": "5.0"
+      },
+      {
+        "estimate": "0.3870835241074717",
+        "lower": "0.0",
+        "near_bound": "False",
+        "parameter": "first_birth_fixed_cost",
+        "reference_estimate": "0.6209410745816288",
+        "status": "free in experimental utility calibration",
+        "upper": "8.0"
+      },
+      {
+        "estimate": "0.12765089232435678",
+        "lower": "0.02",
+        "near_bound": "True",
+        "parameter": "kappa_fert",
+        "reference_estimate": "0.17561183772819416",
+        "status": "free in experimental utility calibration",
+        "upper": "50.0"
+      },
+      {
+        "estimate": "0.355290988342504",
+        "lower": "0.02",
+        "near_bound": "True",
+        "parameter": "kappa_fert_continuation",
+        "reference_estimate": "0.33176505374023935",
+        "status": "free in experimental utility calibration",
+        "upper": "50.0"
+      },
+      {
+        "estimate": "0.10419302969854471",
+        "lower": "0.0",
+        "near_bound": "False",
+        "parameter": "theta0",
+        "reference_estimate": "0.12451612635999697",
+        "status": "free in experimental utility calibration",
+        "upper": "8.0"
+      },
+      {
+        "estimate": "0.0",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "delta_alpha_jump",
+        "reference_estimate": "0.13487659325900622",
+        "status": "fixed zero under experimental utility contract",
+        "upper": ""
+      },
+      {
+        "estimate": "0.09920404611905442",
+        "lower": "0.0",
+        "near_bound": "False",
+        "parameter": "child_benefit_curvature",
+        "reference_estimate": "0.061454973811513665",
+        "status": "free in experimental utility calibration",
+        "upper": "0.8"
+      },
+      {
+        "estimate": "0.013860329968565347",
+        "lower": "0.001",
+        "near_bound": "False",
+        "parameter": "tenure_choice_kappa",
+        "reference_estimate": "0.012087458119671006",
+        "status": "free in experimental utility calibration",
+        "upper": "0.1"
+      },
+      {
+        "estimate": "0.17057550060573645",
+        "lower": "0.01",
+        "near_bound": "False",
+        "parameter": "psi_child",
+        "reference_estimate": "0.1355551166583114",
+        "status": "free in experimental utility calibration",
+        "upper": "0.5"
+      },
+      {
+        "estimate": "0.15365372077686418",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "child_benefit_CRRA_coefficient",
+        "reference_estimate": "0.1272245805140582",
+        "status": "derived from fixed benefit and proposed curvature",
+        "upper": ""
+      },
+      {
+        "estimate": "0.008193084126995582",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "theta1",
+        "reference_estimate": "0.008193084126995582",
+        "status": "fixed external restriction",
+        "upper": ""
+      },
+      {
+        "estimate": "2.0",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "sigma",
+        "reference_estimate": "2.0",
+        "status": "fixed",
+        "upper": ""
+      },
+      {
+        "estimate": "0.733",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "alpha_cons",
+        "reference_estimate": "0.733",
+        "status": "fixed CEX childless expenditure share",
+        "upper": ""
+      },
+      {
+        "estimate": "0.0",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "delta_alpha",
+        "reference_estimate": "0.0",
+        "status": "fixed zero under experimental utility contract",
+        "upper": ""
+      },
+      {
+        "estimate": "2.303604248616325",
+        "lower": "0.1",
+        "near_bound": "False",
+        "parameter": "h_P",
+        "reference_estimate": "0.0",
+        "status": "free in experimental utility calibration",
+        "upper": "2.6"
+      },
+      {
+        "estimate": "0.11046592704873838",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "utility_reference_rent",
+        "reference_estimate": "0.11046592704873838",
+        "status": "retained inactive normalization; compensation off",
+        "upper": ""
+      },
+      {
+        "estimate": "0.020000000000000018",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "q_annual",
+        "reference_estimate": "0.020000000000000018",
+        "status": "author-retained 2% annual real rate",
+        "upper": ""
+      },
+      {
+        "estimate": "0.8",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "financed_share",
+        "reference_estimate": "0.8",
+        "status": "inherited credit contract",
+        "upper": ""
+      },
+      {
+        "estimate": "0.63",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "housing_supply_elasticity",
+        "reference_estimate": "0.63",
+        "status": "fixed provisional external mapping",
+        "upper": ""
+      },
+      {
+        "estimate": "0.08028070961950022",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "payroll_tax",
+        "reference_estimate": "0.08028070961950022",
+        "status": "derived from adopted pension ratio",
+        "upper": ""
+      },
+      {
+        "estimate": "0.917784047463731",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "pension_period",
+        "reference_estimate": "0.917784047463731",
+        "status": "balanced PAYGO",
+        "upper": ""
+      },
+      {
+        "estimate": "0.01416143718381309",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "annual_depreciation",
+        "reference_estimate": "0.01416143718381309",
+        "status": "adopted",
+        "upper": ""
+      },
+      {
+        "estimate": "0.05545379079326218",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "period_depreciation",
+        "reference_estimate": "0.05545379079326218",
+        "status": "compounded",
+        "upper": ""
+      },
+      {
+        "estimate": "0.010598360773872594",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "annual_property_tax",
+        "reference_estimate": "0.010598360773872594",
+        "status": "adopted",
+        "upper": ""
+      },
+      {
+        "estimate": "0.042393443095490375",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "period_property_tax",
+        "reference_estimate": "0.042393443095490375",
+        "status": "linear period convention",
+        "upper": ""
+      },
+      {
+        "estimate": "0.06",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "selling_cost",
+        "reference_estimate": "0.06",
+        "status": "retained",
+        "upper": ""
+      },
+      {
+        "estimate": "6.0",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "rental_cap",
+        "reference_estimate": "6.0",
+        "status": "retained provisional",
+        "upper": ""
+      },
+      {
+        "estimate": "120.0",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "wealth_grid_nodes",
+        "reference_estimate": "160.0",
+        "status": "retained exact grid",
+        "upper": ""
+      },
+      {
+        "estimate": "9.0",
+        "lower": "",
+        "near_bound": "",
+        "parameter": "income_states",
+        "reference_estimate": "15.0",
+        "status": "retained B15",
+        "upper": ""
+      }
+    ],
+    "experimental_not_adopted": true,
+    "exploration_unverified": true,
+    "label": "0002_nm",
+    "lifecycle_solves": 5,
+    "loss": 37.93490085139379,
+    "normalization": "N0=1",
+    "objective": 37.93490085139379,
+    "parameters": {
+      "beta_annual": 0.9670612708545003,
+      "chi": 1.12376462072776,
+      "child_benefit_curvature": 0.09920404611905442,
+      "first_birth_fixed_cost": 0.3870835241074717,
+      "h_P": 2.303604248616325,
+      "kappa_fert": 0.12765089232435678,
+      "kappa_fert_continuation": 0.355290988342504,
+      "psi_child": 0.17057550060573645,
+      "tenure_choice_kappa": 0.013860329968565347,
+      "theta0": 0.10419302969854471
+    },
+    "population": 1.0,
+    "price": 0.7113455142028348,
+    "report": "/work/results/search/0002_nm/phase_b_ge/selected_root",
+    "residual": [
+      0.8609335823554749,
+      -0.47346293104796666,
+      0.06249138214468592,
+      -1.0509633253613688,
+      -0.9811237021413797,
+      3.1239035442529812,
+      1.506924584606885,
+      -2.7735188438327505,
+      -2.7104089631984785,
+      -2.798245108227345
+    ],
+    "seconds": 96.7084608078003,
+    "starting_price": 0.7136094701329704,
+    "status": "passed",
+    "target_fit": [
+      {
+        "gap": "1.8016705176648884e-06",
+        "loss_contribution": "",
+        "model": "2.1000018016705178",
+        "moment": "initial_normalization",
+        "role": "normalization",
+        "target": "2.1",
+        "weight": ""
+      },
+      {
+        "gap": "0.004567283422713703",
+        "loss_contribution": "0.7412066332274312",
+        "model": "0.20284603442955634",
+        "moment": "cps_childlessness",
+        "role": "scored",
+        "target": "0.19827875100684264",
+        "weight": "35532.3042455214"
+      },
+      {
+        "gap": "-0.002883924391695658",
+        "loss_contribution": "0.22416714707653165",
+        "model": "0.21077140082845136",
+        "moment": "cps_exactly_one",
+        "role": "scored",
+        "target": "0.21365532522014702",
+        "weight": "26952.820824310795"
+      },
+      {
+        "gap": "0.005284731802003506",
+        "loss_contribution": "0.003905172842353171",
+        "model": "25.9815485927945",
+        "moment": "nchs_mean_age",
+        "role": "scored",
+        "target": "25.976263860992496",
+        "weight": "139.82806784479274"
+      },
+      {
+        "gap": "-0.018327523659028344",
+        "loss_contribution": "0.0",
+        "model": "0.23095048938203835",
+        "moment": "nchs_share30",
+        "role": "validation",
+        "target": "0.2492780130410667",
+        "weight": "0.0"
+      },
+      {
+        "gap": "-0.38134745867718056",
+        "loss_contribution": "1.1045239112546263",
+        "model": "6.54523633239581",
+        "moment": "wealth_earnings",
+        "role": "scored",
+        "target": "6.92658379107299",
+        "weight": "7.595098472533724"
+      },
+      {
+        "gap": "-0.0004316944289422071",
+        "loss_contribution": "0.9626037189036066",
+        "model": "0.006859329043673951",
+        "moment": "bequest_wealth",
+        "role": "scored",
+        "target": "0.007291023472616158",
+        "weight": "5165289.256198346"
+      },
+      {
+        "gap": "-0.5776452370007155",
+        "loss_contribution": "0.0",
+        "model": "2.9382898495180045",
+        "moment": "old_dispersion",
+        "role": "validation",
+        "target": "3.51593508651872",
+        "weight": "0.0"
+      },
+      {
+        "gap": "0.2760943463622203",
+        "loss_contribution": "9.758773353796338",
+        "model": "6.0055285864648615",
+        "moment": "mean_rooms",
+        "role": "scored",
+        "target": "5.729434240102641",
+        "weight": "128.02070205233477"
+      },
+      {
+        "gap": "0.031156076971404545",
+        "loss_contribution": "2.2708217036926333",
+        "model": "0.7074164938252073",
+        "moment": "ownership_30_55",
+        "role": "scored",
+        "target": "0.6762604168538028",
+        "weight": "2339.3623724673616"
+      },
+      {
+        "gap": "-0.23647035901374314",
+        "loss_contribution": "7.692406777095356",
+        "model": "1.228529640986257",
+        "moment": "first_birth_rooms",
+        "role": "scored",
+        "target": "1.465",
+        "weight": "137.5652749002964"
+      },
+      {
+        "gap": "-0.08686500234482075",
+        "loss_contribution": "0.0",
+        "model": "0.2982346473479609",
+        "moment": "family_rooms",
+        "role": "validation",
+        "target": "0.38509964969278165",
+        "weight": "0.0"
+      },
+      {
+        "gap": "-0.016477998183207387",
+        "loss_contribution": "7.346316747786651",
+        "model": "0.11113036538371424",
+        "moment": "recent_parent_ownership",
+        "role": "scored",
+        "target": "0.12760836356692162",
+        "weight": "27055.822957508266"
+      },
+      {
+        "gap": "-0.2798245108227345",
+        "loss_contribution": "7.830175685718268",
+        "model": "0.5297031276062676",
+        "moment": "early_fertility",
+        "role": "scored",
+        "target": "0.8095276384290021",
+        "weight": "100.0"
+      }
+    ],
+    "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+    "weighted_target_fit": [
+      {
+        "base_loss_contribution": "",
+        "base_weight": "",
+        "gap": "1.8016705176648884e-06",
+        "loss_contribution": "",
+        "model": "2.1000018016705178",
+        "moment": "initial_normalization",
+        "role": "normalization",
+        "target": "2.1",
+        "weight": "",
+        "weight_multiplier": "1.0"
+      },
+      {
+        "base_loss_contribution": "0.7412066332274312",
+        "base_weight": "35532.3042455214",
+        "gap": "0.004567283422713703",
+        "loss_contribution": "0.7412066332274312",
+        "model": "0.20284603442955634",
+        "moment": "cps_childlessness",
+        "role": "scored",
+        "target": "0.19827875100684264",
+        "weight": "35532.3042455214",
+        "weight_multiplier": "1.0"
+      },
+      {
+        "base_loss_contribution": "0.22416714707653165",
+        "base_weight": "26952.820824310795",
+        "gap": "-0.002883924391695658",
+        "loss_contribution": "0.22416714707653165",
+        "model": "0.21077140082845136",
+        "moment": "cps_exactly_one",
+        "role": "scored",
+        "target": "0.21365532522014702",
+        "weight": "26952.820824310795",
+        "weight_multiplier": "1.0"
+      },
+      {
+        "base_loss_contribution": "0.003905172842353171",
+        "base_weight": "139.82806784479274",
+        "gap": "0.005284731802003506",
+        "loss_contribution": "0.003905172842353171",
+        "model": "25.9815485927945",
+        "moment": "nchs_mean_age",
+        "role": "scored",
+        "target": "25.976263860992496",
+        "weight": "139.82806784479274",
+        "weight_multiplier": "1.0"
+      },
+      {
+        "base_loss_contribution": "0.0",
+        "base_weight": "0.0",
+        "gap": "-0.018327523659028344",
+        "loss_contribution": "0.0",
+        "model": "0.23095048938203835",
+        "moment": "nchs_share30",
+        "role": "validation",
+        "target": "0.2492780130410667",
+        "weight": "0.0",
+        "weight_multiplier": "1.0"
+      },
+      {
+        "base_loss_contribution": "1.1045239112546263",
+        "base_weight": "7.595098472533724",
+        "gap": "-0.38134745867718056",
+        "loss_contribution": "1.1045239112546263",
+        "model": "6.54523633239581",
+        "moment": "wealth_earnings",
+        "role": "scored",
+        "target": "6.92658379107299",
+        "weight": "7.595098472533724",
+        "weight_multiplier": "1.0"
+      },
+      {
+        "base_loss_contribution": "0.9626037189036066",
+        "base_weight": "5165289.256198346",
+        "gap": "-0.0004316944289422071",
+        "loss_contribution": "0.9626037189036066",
+        "model": "0.006859329043673951",
+        "moment": "bequest_wealth",
+        "role": "scored",
+        "target": "0.007291023472616158",
+        "weight": "5165289.256198346",
+        "weight_multiplier": "1.0"
+      },
+      {
+        "base_loss_contribution": "0.0",
+        "base_weight": "0.0",
+        "gap": "-0.5776452370007155",
+        "loss_contribution": "0.0",
+        "model": "2.9382898495180045",
+        "moment": "old_dispersion",
+        "role": "validation",
+        "target": "3.51593508651872",
+        "weight": "0.0",
+        "weight_multiplier": "1.0"
+      },
+      {
+        "base_loss_contribution": "9.758773353796338",
+        "base_weight": "128.02070205233477",
+        "gap": "0.2760943463622203",
+        "loss_contribution": "9.758773353796338",
+        "model": "6.0055285864648615",
+        "moment": "mean_rooms",
+        "role": "scored",
+        "target": "5.729434240102641",
+        "weight": "128.02070205233477",
+        "weight_multiplier": "1.0"
+      },
+      {
+        "base_loss_contribution": "2.2708217036926333",
+        "base_weight": "2339.3623724673616",
+        "gap": "0.031156076971404545",
+        "loss_contribution": "2.2708217036926333",
+        "model": "0.7074164938252073",
+        "moment": "ownership_30_55",
+        "role": "scored",
+        "target": "0.6762604168538028",
+        "weight": "2339.3623724673616",
+        "weight_multiplier": "1.0"
+      },
+      {
+        "base_loss_contribution": "7.692406777095356",
+        "base_weight": "137.5652749002964",
+        "gap": "-0.23647035901374314",
+        "loss_contribution": "7.692406777095356",
+        "model": "1.228529640986257",
+        "moment": "first_birth_rooms",
+        "role": "scored",
+        "target": "1.465",
+        "weight": "137.5652749002964",
+        "weight_multiplier": "1.0"
+      },
+      {
+        "base_loss_contribution": "0.0",
+        "base_weight": "0.0",
+        "gap": "-0.08686500234482075",
+        "loss_contribution": "0.0",
+        "model": "0.2982346473479609",
+        "moment": "family_rooms",
+        "role": "validation",
+        "target": "0.38509964969278165",
+        "weight": "0.0",
+        "weight_multiplier": "1.0"
+      },
+      {
+        "base_loss_contribution": "7.346316747786651",
+        "base_weight": "27055.822957508266",
+        "gap": "-0.016477998183207387",
+        "loss_contribution": "7.346316747786651",
+        "model": "0.11113036538371424",
+        "moment": "recent_parent_ownership",
+        "role": "scored",
+        "target": "0.12760836356692162",
+        "weight": "27055.822957508266",
+        "weight_multiplier": "1.0"
+      },
+      {
+        "base_loss_contribution": "7.830175685718268",
+        "base_weight": "100.0",
+        "gap": "-0.2798245108227345",
+        "loss_contribution": "7.830175685718268",
+        "model": "0.5297031276062676",
+        "moment": "early_fertility",
+        "role": "scored",
+        "target": "0.8095276384290021",
+        "weight": "100.0",
+        "weight_multiplier": "1.0"
+      }
+    ]
+  },
+  "objective_calls": 3
+}

@@ -1,5 +1,5 @@
 {
-  "captured_epoch": 1790908965.6279511,
+  "captured_epoch": 1790911367.7702231,
   "run": "/scratch/td2248/projects/transition_readiness_v1/normalized_resumed_fit_v2/results/normalized_resumed_fit_v2",
   "launcher_start.json": {
     "start_epoch": 1790905787,
@@ -10,12 +10,21 @@
     "cpus": 4,
     "memory_GiB": 96
   },
+  "launcher_terminal.json": {
+    "exit_code": 124,
+    "start_epoch": 1790905787,
+    "deadline_epoch": 1790911128,
+    "mode": "fit",
+    "finished_epoch": 1790911119.7166204,
+    "slurm_job_id": "18995772",
+    "no_auto_retry": true
+  },
   "heartbeat.json": {
     "phase": "candidate",
-    "epoch": 1790908597.3942974,
-    "candidate": 2,
-    "policy_calls": 170,
-    "psi": 0.1294894427543237
+    "epoch": 1790910878.0211008,
+    "candidate": 3,
+    "policy_calls": 309,
+    "psi": 0.1321053030172789
   },
   "native_input_reuse.json": {
     "status": "PASS",
@@ -25,19 +34,19 @@
   },
   "latest_completed.json": {
     "certified": true,
-    "psi": 0.13079083328964047,
-    "model": 1.7166458572487717,
-    "gap": 0.07089585724877168,
-    "loss_contribution": 0.005026222575038212,
+    "psi": 0.1294894427543237,
+    "model": 1.7036578326322902,
+    "gap": 0.05790783263229016,
+    "loss_contribution": 0.003353317080169329,
     "payload": {
-      "candidate": 1,
+      "candidate": 2,
       "models": [
-        1.7178542652029831,
-        1.7222822530059991,
-        1.717940720143082,
-        1.7166458572487717
+        1.7060361412497969,
+        1.7100430731593597,
+        1.7052729640713573,
+        1.7036578326322902
       ],
-      "path": "/work/transition_runs/normalized_resumed_fit_v2/candidate_0001"
+      "path": "/work/transition_runs/normalized_resumed_fit_v2/candidate_0002"
     },
     "mode": "diagnostic",
     "production_ready": false,
@@ -45,18 +54,18 @@
     "horizon_comparison": {
       "passed": true,
       "relative_gaps": {
-        "asset_price": 0.0048725082827611585,
-        "renter_price": 0.006268818557100584,
-        "adult_population": 5.538797926316694e-05,
-        "birth_children": 0.005334942859107906,
-        "housing_demand": 0.0030801257788485555,
-        "pension_period_units": 5.7762144966016113e-05
+        "asset_price": 0.005009125275846161,
+        "renter_price": 0.006508261980292565,
+        "adult_population": 5.681735328456888e-05,
+        "birth_children": 0.005594968479638971,
+        "housing_demand": 0.003161613539567585,
+        "pension_period_units": 5.5143439957191755e-05
       },
       "fertility_absolute_gaps": [
-        0.00374712286654999,
-        0.004416106885105631,
-        0.0051120174106711325,
-        0.006438621954379942
+        0.0038431517980859198,
+        0.004604350699807025,
+        0.005359013985936079,
+        0.006744027473160719
       ],
       "early_macro_periods": 5,
       "early_macro_years": [
@@ -77,18 +86,18 @@
       "original_strict_comparison": {
         "passed": false,
         "relative_gaps": {
-          "asset_price": 0.0048725082827611585,
-          "renter_price": 0.006268818557100584,
-          "adult_population": 5.538797926316694e-05,
-          "birth_children": 0.005334942859107906,
-          "housing_demand": 0.0030801257788485555,
-          "pension_period_units": 5.7762144966016113e-05
+          "asset_price": 0.005009125275846161,
+          "renter_price": 0.006508261980292565,
+          "adult_population": 5.681735328456888e-05,
+          "birth_children": 0.005594968479638971,
+          "housing_demand": 0.003161613539567585,
+          "pension_period_units": 5.5143439957191755e-05
         },
         "fertility_absolute_gaps": [
-          0.00374712286654999,
-          0.004416106885105631,
-          0.0051120174106711325,
-          0.006438621954379942
+          0.0038431517980859198,
+          0.004604350699807025,
+          0.005359013985936079,
+          0.006744027473160719
         ],
         "early_macro_periods": 5,
         "early_macro_years": [
@@ -122,8 +131,8 @@
     },
     "diagnostic_relaxed_finite_horizon_match": true,
     "checkpoint_2023": {
-      "path": "/work/transition_runs/normalized_resumed_fit_v2/candidate_0001/state_2023_checkpoint/checkpoint_receipt.json",
-      "sha256": "d4f9b8094cd7bdf4ae929c3918ec2ff126a12ffaf467b96e40c20703e1825ec5"
+      "path": "/work/transition_runs/normalized_resumed_fit_v2/candidate_0002/state_2023_checkpoint/checkpoint_receipt.json",
+      "sha256": "c0c45aea85ef57ce2f924573f135a08287839f83006c8bcf7bf665bbc4f668ae"
     },
     "shock_fit_complete": false,
     "full_path_certified": false,
@@ -138,19 +147,19 @@
   },
   "best_so_far.json": {
     "certified": true,
-    "psi": 0.13079083328964047,
-    "model": 1.7166458572487717,
-    "gap": 0.07089585724877168,
-    "loss_contribution": 0.005026222575038212,
+    "psi": 0.1294894427543237,
+    "model": 1.7036578326322902,
+    "gap": 0.05790783263229016,
+    "loss_contribution": 0.003353317080169329,
     "payload": {
-      "candidate": 1,
+      "candidate": 2,
       "models": [
-        1.7178542652029831,
-        1.7222822530059991,
-        1.717940720143082,
-        1.7166458572487717
+        1.7060361412497969,
+        1.7100430731593597,
+        1.7052729640713573,
+        1.7036578326322902
       ],
-      "path": "/work/transition_runs/normalized_resumed_fit_v2/candidate_0001"
+      "path": "/work/transition_runs/normalized_resumed_fit_v2/candidate_0002"
     },
     "mode": "diagnostic",
     "production_ready": false,
@@ -158,18 +167,18 @@
     "horizon_comparison": {
       "passed": true,
       "relative_gaps": {
-        "asset_price": 0.0048725082827611585,
-        "renter_price": 0.006268818557100584,
-        "adult_population": 5.538797926316694e-05,
-        "birth_children": 0.005334942859107906,
-        "housing_demand": 0.0030801257788485555,
-        "pension_period_units": 5.7762144966016113e-05
+        "asset_price": 0.005009125275846161,
+        "renter_price": 0.006508261980292565,
+        "adult_population": 5.681735328456888e-05,
+        "birth_children": 0.005594968479638971,
+        "housing_demand": 0.003161613539567585,
+        "pension_period_units": 5.5143439957191755e-05
       },
       "fertility_absolute_gaps": [
-        0.00374712286654999,
-        0.004416106885105631,
-        0.0051120174106711325,
-        0.006438621954379942
+        0.0038431517980859198,
+        0.004604350699807025,
+        0.005359013985936079,
+        0.006744027473160719
       ],
       "early_macro_periods": 5,
       "early_macro_years": [
@@ -190,18 +199,18 @@
       "original_strict_comparison": {
         "passed": false,
         "relative_gaps": {
-          "asset_price": 0.0048725082827611585,
-          "renter_price": 0.006268818557100584,
-          "adult_population": 5.538797926316694e-05,
-          "birth_children": 0.005334942859107906,
-          "housing_demand": 0.0030801257788485555,
-          "pension_period_units": 5.7762144966016113e-05
+          "asset_price": 0.005009125275846161,
+          "renter_price": 0.006508261980292565,
+          "adult_population": 5.681735328456888e-05,
+          "birth_children": 0.005594968479638971,
+          "housing_demand": 0.003161613539567585,
+          "pension_period_units": 5.5143439957191755e-05
         },
         "fertility_absolute_gaps": [
-          0.00374712286654999,
-          0.004416106885105631,
-          0.0051120174106711325,
-          0.006438621954379942
+          0.0038431517980859198,
+          0.004604350699807025,
+          0.005359013985936079,
+          0.006744027473160719
         ],
         "early_macro_periods": 5,
         "early_macro_years": [
@@ -235,8 +244,8 @@
     },
     "diagnostic_relaxed_finite_horizon_match": true,
     "checkpoint_2023": {
-      "path": "/work/transition_runs/normalized_resumed_fit_v2/candidate_0001/state_2023_checkpoint/checkpoint_receipt.json",
-      "sha256": "d4f9b8094cd7bdf4ae929c3918ec2ff126a12ffaf467b96e40c20703e1825ec5"
+      "path": "/work/transition_runs/normalized_resumed_fit_v2/candidate_0002/state_2023_checkpoint/checkpoint_receipt.json",
+      "sha256": "c0c45aea85ef57ce2f924573f135a08287839f83006c8bcf7bf665bbc4f668ae"
     },
     "shock_fit_complete": false,
     "full_path_certified": false,
@@ -251,8 +260,8 @@
   },
   "latest_exploratory_state.json": {
     "checkpoint_2023": {
-      "path": "/work/transition_runs/normalized_resumed_fit_v2/candidate_0001/state_2023_checkpoint/checkpoint_receipt.json",
-      "sha256": "d4f9b8094cd7bdf4ae929c3918ec2ff126a12ffaf467b96e40c20703e1825ec5"
+      "path": "/work/transition_runs/normalized_resumed_fit_v2/candidate_0002/state_2023_checkpoint/checkpoint_receipt.json",
+      "sha256": "c0c45aea85ef57ce2f924573f135a08287839f83006c8bcf7bf665bbc4f668ae"
     },
     "shock_fit_complete": false,
     "one_shock_measurement_certified": false,
@@ -362,6 +371,122 @@
         "checkpoint_2023": {
           "path": "/work/transition_runs/normalized_resumed_fit_v2/candidate_0001/state_2023_checkpoint/checkpoint_receipt.json",
           "sha256": "d4f9b8094cd7bdf4ae929c3918ec2ff126a12ffaf467b96e40c20703e1825ec5"
+        },
+        "shock_fit_complete": false,
+        "full_path_certified": false,
+        "state_experiment_ready": false,
+        "state_physical_horizon_stable": false,
+        "state_value_integrity": true,
+        "terminal_passes": [
+          false,
+          false
+        ],
+        "classification": "exploratory relaxed finite-horizon match; original strict certification status retained"
+      }
+    },
+    {
+      "path": "/scratch/td2248/projects/transition_readiness_v1/normalized_resumed_fit_v2/results/normalized_resumed_fit_v2/candidate_0002/complete.json",
+      "summary": {
+        "certified": true,
+        "psi": 0.1294894427543237,
+        "model": 1.7036578326322902,
+        "gap": 0.05790783263229016,
+        "loss_contribution": 0.003353317080169329,
+        "payload": {
+          "candidate": 2,
+          "models": [
+            1.7060361412497969,
+            1.7100430731593597,
+            1.7052729640713573,
+            1.7036578326322902
+          ],
+          "path": "/work/transition_runs/normalized_resumed_fit_v2/candidate_0002"
+        },
+        "mode": "diagnostic",
+        "production_ready": false,
+        "one_shock_measurement_certified": false,
+        "horizon_comparison": {
+          "passed": true,
+          "relative_gaps": {
+            "asset_price": 0.005009125275846161,
+            "renter_price": 0.006508261980292565,
+            "adult_population": 5.681735328456888e-05,
+            "birth_children": 0.005594968479638971,
+            "housing_demand": 0.003161613539567585,
+            "pension_period_units": 5.5143439957191755e-05
+          },
+          "fertility_absolute_gaps": [
+            0.0038431517980859198,
+            0.004604350699807025,
+            0.005359013985936079,
+            0.006744027473160719
+          ],
+          "early_macro_periods": 5,
+          "early_macro_years": [
+            2007,
+            2011,
+            2015,
+            2019,
+            2023
+          ],
+          "fertility_windows": 4,
+          "macro_tolerance": 0.01,
+          "fertility_tolerance": 0.01,
+          "terminal_passes": [
+            false,
+            false
+          ],
+          "classification": "exploratory relaxed finite-horizon comparison; original strict status retained; full path uncertified",
+          "original_strict_comparison": {
+            "passed": false,
+            "relative_gaps": {
+              "asset_price": 0.005009125275846161,
+              "renter_price": 0.006508261980292565,
+              "adult_population": 5.681735328456888e-05,
+              "birth_children": 0.005594968479638971,
+              "housing_demand": 0.003161613539567585,
+              "pension_period_units": 5.5143439957191755e-05
+            },
+            "fertility_absolute_gaps": [
+              0.0038431517980859198,
+              0.004604350699807025,
+              0.005359013985936079,
+              0.006744027473160719
+            ],
+            "early_macro_periods": 5,
+            "early_macro_years": [
+              2007,
+              2011,
+              2015,
+              2019,
+              2023
+            ],
+            "fertility_windows": 4,
+            "macro_tolerance": 0.001,
+            "fertility_tolerance": 0.001,
+            "terminal_passes": [
+              false,
+              false
+            ],
+            "classification": "diagnostic finite-horizon measurement stability; full path uncertified"
+          },
+          "original_strict_passed": false,
+          "diagnostic_horizon_tolerance_override": {
+            "schema": "diagnostic_horizon_tolerance_override_v1",
+            "classification": "exploratory relaxed finite-horizon comparison",
+            "macro_tolerance": 0.01,
+            "fertility_tolerance": 0.01,
+            "original_macro_tolerance": 0.001,
+            "original_fertility_tolerance": 0.001,
+            "state_gate_changes": false,
+            "terminal_gate_changes": false,
+            "root_gate_changes": false
+          }
+        },
+        "diagnostic_relaxed_finite_horizon_match": true,
+        "checkpoint_2023": {
+          "path": "/work/transition_runs/normalized_resumed_fit_v2/candidate_0002/state_2023_checkpoint/checkpoint_receipt.json",
+          "sha256": "c0c45aea85ef57ce2f924573f135a08287839f83006c8bcf7bf665bbc4f668ae"
         },
         "shock_fit_complete": false,
         "full_path_certified": false,
@@ -494,6 +619,129 @@
           ],
           "forecast_and_continuation_saved": true,
           "initial_population": 0.9943830531014983,
+          "actual_inherited_state": true,
+          "no_rescaling": true,
+          "both_native_queues": true
+        }
+      }
+    },
+    {
+      "path": "/scratch/td2248/projects/transition_readiness_v1/normalized_resumed_fit_v2/results/normalized_resumed_fit_v2/candidate_0002/state_2023_checkpoint/checkpoint_receipt.json",
+      "summary": {
+        "schema": "current_floor_candidate_2023_checkpoint_v1",
+        "status": "complete",
+        "psi": 0.1294894427543237,
+        "candidate": 2,
+        "horizon": 16,
+        "shock_fit_complete": false,
+        "one_shock_measurement_certified": false,
+        "horizon_comparison": {
+          "passed": true,
+          "relative_gaps": {
+            "asset_price": 0.005009125275846161,
+            "renter_price": 0.006508261980292565,
+            "adult_population": 5.681735328456888e-05,
+            "birth_children": 0.005594968479638971,
+            "housing_demand": 0.003161613539567585,
+            "pension_period_units": 5.5143439957191755e-05
+          },
+          "fertility_absolute_gaps": [
+            0.0038431517980859198,
+            0.004604350699807025,
+            0.005359013985936079,
+            0.006744027473160719
+          ],
+          "early_macro_periods": 5,
+          "early_macro_years": [
+            2007,
+            2011,
+            2015,
+            2019,
+            2023
+          ],
+          "fertility_windows": 4,
+          "macro_tolerance": 0.01,
+          "fertility_tolerance": 0.01,
+          "terminal_passes": [
+            false,
+            false
+          ],
+          "classification": "exploratory relaxed finite-horizon comparison; original strict status retained; full path uncertified",
+          "original_strict_comparison": {
+            "passed": false,
+            "relative_gaps": {
+              "asset_price": 0.005009125275846161,
+              "renter_price": 0.006508261980292565,
+              "adult_population": 5.681735328456888e-05,
+              "birth_children": 0.005594968479638971,
+              "housing_demand": 0.003161613539567585,
+              "pension_period_units": 5.5143439957191755e-05
+            },
+            "fertility_absolute_gaps": [
+              0.0038431517980859198,
+              0.004604350699807025,
+              0.005359013985936079,
+              0.006744027473160719
+            ],
+            "early_macro_periods": 5,
+            "early_macro_years": [
+              2007,
+              2011,
+              2015,
+              2019,
+              2023
+            ],
+            "fertility_windows": 4,
+            "macro_tolerance": 0.001,
+            "fertility_tolerance": 0.001,
+            "terminal_passes": [
+              false,
+              false
+            ],
+            "classification": "diagnostic finite-horizon measurement stability; full path uncertified"
+          },
+          "original_strict_passed": false,
+          "diagnostic_horizon_tolerance_override": {
+            "schema": "diagnostic_horizon_tolerance_override_v1",
+            "classification": "exploratory relaxed finite-horizon comparison",
+            "macro_tolerance": 0.01,
+            "fertility_tolerance": 0.01,
+            "original_macro_tolerance": 0.001,
+            "original_fertility_tolerance": 0.001,
+            "state_gate_changes": false,
+            "terminal_gate_changes": false,
+            "root_gate_changes": false
+          }
+        },
+        "diagnostic_relaxed_finite_horizon_match": true,
+        "horizon_stable": true,
+        "horizon_unstable": false,
+        "root_pass": true,
+        "replay_pass": true,
+        "accounting_valid": true,
+        "terminal_passes": [
+          false,
+          false
+        ],
+        "state_experiment_ready": false,
+        "full_path_certified": false,
+        "state_physical_horizon_stable": false,
+        "state_value_integrity": true,
+        "classification": "Exploratory exact native2023 state; complete shock fit and continuation validation outstanding",
+        "export": {
+          "path": "/work/transition_runs/normalized_resumed_fit_v2/candidate_0002/state_2023_checkpoint/actual_2023.pkl.gz",
+          "sha256": "a366d4241e673c14ae66bc8db77a0383a06ed19fa447066aa071103857c34cc1",
+          "calendar_year": 2023,
+          "period": 4,
+          "period_index": 4,
+          "exact_native_state": true,
+          "reconstructed_or_rescaled": false,
+          "queue_lags": [
+            16,
+            20
+          ],
+          "forecast_and_continuation_saved": true,
+          "initial_population": 0.9942093450926404,
           "actual_inherited_state": true,
           "no_rescaling": true,
           "both_native_queues": true

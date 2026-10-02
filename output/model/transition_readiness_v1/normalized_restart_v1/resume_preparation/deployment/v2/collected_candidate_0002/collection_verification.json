@@ -1,0 +1,107 @@
+{
+  "status": "VERIFIED_BEST_COMPLETED_EXPLORATORY_TRIAL_TIME_LIMIT_NO_MATCH",
+  "candidate": 2,
+  "job": "18995772",
+  "scheduler_state": "FAILED",
+  "scheduler_exit_code": "124:0",
+  "scheduler_elapsed": "01:28:55",
+  "launcher_terminal": {
+    "exit_code": 124,
+    "start_epoch": 1790905787,
+    "deadline_epoch": 1790911128,
+    "mode": "fit",
+    "finished_epoch": 1790911119.7166204,
+    "slurm_job_id": "18995772",
+    "no_auto_retry": true
+  },
+  "collector_status_disclosure": "Collector top-level RUNNING is stale because it does not classify launcher terminal; independent scheduler and terminal receipt establish ended run.",
+  "roots": {
+    "horizon_012": {
+      "converged": true,
+      "evaluations": 5,
+      "final_reproduction_max_abs": 0.0
+    },
+    "horizon_016": {
+      "converged": true,
+      "evaluations": 4,
+      "final_reproduction_max_abs": 0.0
+    }
+  },
+  "target_rows": [
+    {
+      "moment": "period_tfr_2008_2011",
+      "target": 1.974875,
+      "model": 1.7060361412497969,
+      "gap": -0.2688388587502031,
+      "weight": 0,
+      "loss_contribution": 0.0,
+      "status": "BEST_COMPLETED_EXPLORATORY_TRIAL_TIME_LIMIT_NO_MATCH"
+    },
+    {
+      "moment": "period_tfr_2012_2015",
+      "target": 1.861,
+      "model": 1.7100430731593597,
+      "gap": -0.15095692684064033,
+      "weight": 0,
+      "loss_contribution": 0.0,
+      "status": "BEST_COMPLETED_EXPLORATORY_TRIAL_TIME_LIMIT_NO_MATCH"
+    },
+    {
+      "moment": "period_tfr_2016_2019",
+      "target": 1.755375,
+      "model": 1.7052729640713573,
+      "gap": -0.050102035928642596,
+      "weight": 0,
+      "loss_contribution": 0.0,
+      "status": "BEST_COMPLETED_EXPLORATORY_TRIAL_TIME_LIMIT_NO_MATCH"
+    },
+    {
+      "moment": "period_tfr_2020_2023",
+      "target": 1.64575,
+      "model": 1.7036578326322902,
+      "gap": 0.05790783263229016,
+      "weight": 1,
+      "loss_contribution": 0.003353317080169329,
+      "status": "BEST_COMPLETED_EXPLORATORY_TRIAL_TIME_LIMIT_NO_MATCH"
+    }
+  ],
+  "psi": 0.1294894427543237,
+  "bounds": [
+    0.0017198899419542373,
+    0.3439779883908475
+  ],
+  "near_bound": false,
+  "relaxed_horizon_comparison_pass": true,
+  "original_strict_comparison_pass": false,
+  "state_physical_horizon_stable": false,
+  "state_gaps": {
+    "population_absolute_gap": 5.64883436010577e-05,
+    "population_relative_gap": 5.681735328669046e-05,
+    "normalized_distribution_l1": 0.036130946818287046,
+    "scheduled_entries_relative_l1": 0.0031193893500839334,
+    "scheduled_raw_entries_relative_l1": 0.0033457641536676335
+  },
+  "terminal_passes": [
+    false,
+    false
+  ],
+  "shock_fit_complete": false,
+  "production_ready": false,
+  "checkpoint_calendar_year": 2023,
+  "checkpoint_period_index": 4,
+  "checkpoint_file_hash_verified": true,
+  "checkpoint_receipt_hash_verified": true,
+  "checkpoint_file_sha256": "a366d4241e673c14ae66bc8db77a0383a06ed19fa447066aa071103857c34cc1",
+  "checkpoint_population": 0.9942093450926404,
+  "standard_diagnostic_plots_present": false,
+  "diagnostic_plots_status": "absent: numerical run stopped before final controller diagnostic rendering",
+  "incomplete_candidate_3": {
+    "psi": 0.1321053030172789,
+    "completed_stationary_calls": 7,
+    "complete": false,
+    "checkpoint_present": false
+  },
+  "completed_native_calls_lower_bound": 316,
+  "monitor_status": "PAUSED",
+  "reference_identity_verified": true
+}
