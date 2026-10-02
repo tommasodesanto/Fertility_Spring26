@@ -177,3 +177,9 @@ without overlays and inspect every changed page for equations, source identity,
 full paired tables, credit definitions, figure-slot labels and clipping. Final
 build claims belong to the lead's QA receipt. This documentation update performs
 no model, test, benchmark, cluster, policy or Git work.
+
+## October 2 soft comparison and notation revision
+
+The deck now includes the best saved soft point: chain 16, case 0046_nm, loss 23.078309294160004. Its full fourteen-row fit and thirty-one-row parameter tables are copied unchanged to evidence/overnight_soft_*.csv; the saved best receipt is overnight_soft_best.json. Targets, weights and roles match hard exactly. Soft is exploration-unverified and was stopped before final postchecks; hard and quarter-saving were postchecked. Hard/quarter also add a buyer ending-net-estate restriction, so these are separately recalibrated specifications, not a pure timing experiment.
+
+Notation follows the older deck where possible: u(c,s;m), tenure subscripts, xi for first_birth_fixed_cost, and kappa_C for kappa_fert_continuation. This changes notation only.

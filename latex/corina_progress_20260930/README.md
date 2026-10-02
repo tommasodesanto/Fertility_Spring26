@@ -12,8 +12,8 @@ continuing [JMP Slides](../JMP_slides/JMP_slides.tex).
 
 ## Verified scientific facts
 
-The displayed results compare the October 2 fresh-postchecked hard-closing and
-quarter-saving purchase-rule calibrations. Authoritative full packets are in
+The displayed results compare the best saved soft point with the October 2
+fresh-postchecked hard-closing and quarter-saving calibrations. Authoritative full packets are in
 [overnight readout](../../output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/collection/readout/),
 with unchanged local copies under `evidence/overnight_*`. Each has all fourteen
 fit rows, thirty-one parameter rows and seventeen standard plots. The copied
@@ -21,9 +21,10 @@ identity receipt records byte-identical selected-root/repeat tables and closure.
 Estimates remain provisional: postchecks do not certify optimizer convergence
 or paper-baseline adoption.
 
-Both use the same original target values and weights: hard loss
-97.01121981277964 and quarter-saving loss 51.55603604909936. These can be
-compared within this paired contract. They are not improvement comparisons
+All three use the same original target values and weights: soft loss
+23.078309294160004, hard loss
+97.01121981277964 and quarter-saving loss 51.55603604909936. The loss uses a common objective, but hard and quarter-saving also impose
+a buyer net-estate floor; this is not a pure timing experiment. They are not improvement comparisons
 with the earlier 31.284 or 19.581 objectives, whose economic/weighting contracts
 differ. Ten parameters, including the child-benefit level, are jointly free.
 Ten moments are scored, three are validation, and one checks birth renewal.
@@ -107,3 +108,9 @@ Three titled illustration slots follow the calibration table (pages 9–11):
 household policies and lifecycle paths; housing supply and borrowing constraints;
 and transition dynamics. Figure selection and insertion remain pending.
 No fixed slide-count limit remains.
+
+## October 2 soft comparison and notation revision
+
+The deck now includes the best saved soft point: chain 16, case 0046_nm, loss 23.078309294160004. Its full fourteen-row fit and thirty-one-row parameter tables are copied unchanged to evidence/overnight_soft_*.csv; the saved best receipt is overnight_soft_best.json. Targets, weights and roles match hard exactly. Soft is exploration-unverified and was stopped before final postchecks; hard and quarter-saving were postchecked. Hard/quarter also add a buyer ending-net-estate restriction, so these are separately recalibrated specifications, not a pure timing experiment.
+
+Notation follows the older deck where possible: u(c,s;m), tenure subscripts, xi for first_birth_fixed_cost, and kappa_C for kappa_fert_continuation. This changes notation only.
