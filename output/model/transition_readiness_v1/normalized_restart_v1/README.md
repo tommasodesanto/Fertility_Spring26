@@ -2,6 +2,12 @@
 
 ## Verified facts
 
+**20:40 New York monitor:** The scheduled 20:24:47 deadline has passed, but
+laptop-to-Torch SSH remains unavailable. Terminal state, completed fit and
+2023 checkpoint availability are unverified. The last verified phase was
+selected-reference reconstruction; retained launch evidence below is historical,
+not a claim that the job is still running. [Connectivity/status record](monitor_check.json).
+
 Torch job **18989789** (`normalized_actualfit_v1`) actually started at
 **19:47:30 New York** on cs612. Its first controller phase is
 `selected_native_reference_reconstruction`; no fitted shock is yet established.
