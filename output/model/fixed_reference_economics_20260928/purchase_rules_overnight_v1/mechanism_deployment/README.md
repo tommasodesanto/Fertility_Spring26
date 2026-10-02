@@ -15,12 +15,9 @@ quarter-saving**, or **2.323668%** and **2.105315% below** each selected
 \(H_0=7.5460025240\). Quarter-saving has price 0.6683645044, renter unit
 price 0.1204923477 and fixed \(H_0=7.2885733899\). In the separate
 80%-versus-100% stationary comparison, all-age ownership rises from 0.60525
-to 0.69128 (hard) and 0.64046 to 0.73114 (quarter); first-birth flow rises
-by 5.351% and 5.703%, respectively. These compare stationary distributions,
-not accepted dated-transition effects. The
-[compact steady-state comparison](permanent_steady_state_comparison.json)
-provides full definitions, first-birth hazards, source hashes and one-step
-gates. The terminal price root imposes
+to 0.69128 (hard) and 0.64046 to 0.73114 (quarter). These compare stationary
+distributions, not accepted dated-transition effects. Stationary first-birth
+flow and hazard are under measurement review and are not reported here. The terminal price root imposes
 \(\text{births}/(2.1\,\text{entry})=1\), and population clears the housing
 market. Replacement fertility is imposed by this closure, not an estimated
 effect of credit relaxation. These accepted endpoints do not validate the

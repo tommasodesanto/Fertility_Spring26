@@ -66,10 +66,9 @@ coefficient \(H_0=7.5460025240\). Quarter-saving asset price is 0.6683645044,
 renter unit price 0.1204923477, and fixed \(H_0=7.2885733899\).
 In the separate 80%-versus-100% **stationary comparison**, all-age ownership
 rises from 0.60525 to 0.69128 (hard) and 0.64046 to 0.73114 (quarter);
-first-birth flow rises by 5.351% and 5.703%, respectively. These are
-comparisons of two stationary distributions, not accepted dated-transition
-effects. Full definitions, first-birth hazards, source hashes and one-step
-gates are in `mechanism_deployment/permanent_steady_state_comparison.json`.
+these are comparisons of two stationary distributions, not accepted
+dated-transition effects. Stationary first-birth flow and hazard are under
+measurement review and are not reported here.
 The terminal price root imposes
 \(\text{births}/(2.1\,\text{entry})=1\), while population adjusts to clear
 housing. This replacement condition is part of the steady-state closure;
