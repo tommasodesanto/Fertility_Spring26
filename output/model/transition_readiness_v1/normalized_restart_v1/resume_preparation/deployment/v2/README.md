@@ -1,3 +1,5 @@
+22:11 checkpoint: first12-datepath map4 has housing residual0.00014356 andfiscalresidual0.000005014, withinunchanged gates0.0002/0.00002. Exactreplay/rootcompletion and16-datecomparison pending; this is not a completedcandidate. Latestprovisional2020–23 model1.7102072353,target1.64575,gap0.06445723529,loss0.004154735181796579. Fullfourwindowtable andshockbounds linkedbelow. Job18995772 remainsRUNNING;62nativecalls observed.
+
 First12-date transition mapping atpsi0.1307908333 is available: provisional2020–23 model1.7391019514,target1.64575,gap0.09335195145,loss0.008714586839. Housing/fiscalpaths are unconverged;16-datecomparison and fitted2023checkpoint absent. Allfourrows/weights/contributions: [live_partial_target_fit.csv](live_partial_target_fit.csv). Sourcehash,boundsanddeclaredprovisionalstatus: [live_partial_fit.json](live_partial_fit.json). This is not a completedcandidate orfit.
 
 SchedulerverifiedRUNNING, start21:49:45 NewYork (job18995772). No completedfitresult yet.

@@ -1,60 +1,60 @@
 {
-  "source_path": "/scratch/td2248/projects/transition_readiness_v1/normalized_resumed_fit_v2/results/normalized_resumed_fit_v2/candidate_0001/horizon_012/map_001/mapping.json",
-  "sha256": "fa48dcb6622c1d2e4e15065a14e570776ccb40206cb869cde980af5250934818",
+  "source_path": "/scratch/td2248/projects/transition_readiness_v1/normalized_resumed_fit_v2/results/normalized_resumed_fit_v2/candidate_0001/horizon_012/map_004/mapping.json",
+  "sha256": "dab5f493694a0cdb40d5c50f57c96a8febd270c6fe12d07f6432c2517e359c01",
   "fertility": [
     {
       "period": 0,
       "calendar_year": 2007,
-      "period_tfr_topcode_adjusted": 1.670380666807178
+      "period_tfr_topcode_adjusted": 1.7141071423364331
     },
     {
       "period": 1,
       "calendar_year": 2011,
-      "period_tfr_topcode_adjusted": 1.6921831242071108
+      "period_tfr_topcode_adjusted": 1.7178661461208935
     },
     {
       "period": 2,
       "calendar_year": 2015,
-      "period_tfr_topcode_adjusted": 1.7127606631313552
+      "period_tfr_topcode_adjusted": 1.712828702732411
     },
     {
       "period": 3,
       "calendar_year": 2019,
-      "period_tfr_topcode_adjusted": 1.7391019514479003
+      "period_tfr_topcode_adjusted": 1.7102072352943918
     }
   ],
   "policy_calls": 12,
-  "total_native_calls": 26,
+  "total_native_calls": 62,
   "accounting_valid": true,
   "market_residual": [
-    -0.04853987733299952,
-    -0.037181012399843574,
-    -0.015004035402605961,
-    0.013438673916817719,
-    0.041485369976885185,
-    0.06727948874425327,
-    0.09431501025283401,
-    0.12317107931411533,
-    0.15459528685332835,
-    0.18976504592373672,
-    0.23241500771830018,
-    0.31221093878158335
+    8.608525145643588e-07,
+    -1.9164696926340685e-06,
+    -3.742189008311765e-06,
+    -5.105694090792788e-06,
+    -5.527923166564094e-06,
+    -4.877301134437437e-06,
+    -1.481283529687746e-05,
+    -2.1265680473406627e-05,
+    -1.924426800015676e-05,
+    -1.6010773792029232e-05,
+    -0.0001204288544928619,
+    0.0001435565567826955
   ],
   "fiscal_residual": [
-    2.0651446327721785e-14,
-    2.5551789524130225e-14,
-    2.951873401646081e-14,
-    3.3952377860830286e-14,
-    -0.006142143771555293,
-    -0.018114727865708585,
-    -0.0313713077594415,
-    -0.04575108434188024,
-    -0.06080217094137667,
-    -0.07694163278105075,
-    -0.09314864622251823,
-    -0.10960149920903504
+    3.6289644385041375e-09,
+    2.939122259450911e-07,
+    8.696197294226308e-07,
+    1.589351951296968e-06,
+    2.4945067315162936e-06,
+    2.3440936168370763e-06,
+    8.922838808708647e-07,
+    -2.2982975812293906e-06,
+    -4.0864579884497646e-07,
+    2.35360022389801e-06,
+    4.271572572239164e-06,
+    5.013868348595645e-06
   ],
-  "status": "PROVISIONAL_FIRST_UNCONVERGED_H12_MAP",
+  "status": "PROVISIONAL_H12_MAP4_CLEARING_PASSES_REPLAY_H16_OUTSTANDING",
   "candidate": 1,
   "psi_guess": 0.13079083328964047,
   "psi_bounds": [
@@ -64,43 +64,44 @@
   "estimated_shock": false,
   "horizon_comparison_available": false,
   "production_ready": false,
-  "loss": 0.008714586839131117,
+  "loss": 0.004154735181796579,
   "target_fit": [
     {
       "moment": "period_tfr_2008_2011",
       "target": 1.974875,
-      "model": 1.670380666807178,
-      "gap": -0.30449433319282204,
+      "model": 1.7141071423364331,
+      "gap": -0.2607678576635668,
       "weight": 0,
       "loss_contribution": 0.0,
-      "status": "PROVISIONAL_FIRST_UNCONVERGED_H12_MAP"
+      "status": "PROVISIONAL_H12_MAP4_CLEARING_PASSES_REPLAY_H16_OUTSTANDING"
     },
     {
       "moment": "period_tfr_2012_2015",
       "target": 1.861,
-      "model": 1.6921831242071108,
-      "gap": -0.16881687579288918,
+      "model": 1.7178661461208935,
+      "gap": -0.1431338538791065,
       "weight": 0,
       "loss_contribution": 0.0,
-      "status": "PROVISIONAL_FIRST_UNCONVERGED_H12_MAP"
+      "status": "PROVISIONAL_H12_MAP4_CLEARING_PASSES_REPLAY_H16_OUTSTANDING"
     },
     {
       "moment": "period_tfr_2016_2019",
       "target": 1.755375,
-      "model": 1.7127606631313552,
-      "gap": -0.04261433686864469,
+      "model": 1.712828702732411,
+      "gap": -0.04254629726758896,
       "weight": 0,
       "loss_contribution": 0.0,
-      "status": "PROVISIONAL_FIRST_UNCONVERGED_H12_MAP"
+      "status": "PROVISIONAL_H12_MAP4_CLEARING_PASSES_REPLAY_H16_OUTSTANDING"
     },
     {
       "moment": "period_tfr_2020_2023",
       "target": 1.64575,
-      "model": 1.7391019514479003,
-      "gap": 0.0933519514479002,
+      "model": 1.7102072352943918,
+      "gap": 0.06445723529439173,
       "weight": 1,
-      "loss_contribution": 0.008714586839131117,
-      "status": "PROVISIONAL_FIRST_UNCONVERGED_H12_MAP"
+      "loss_contribution": 0.004154735181796579,
+      "status": "PROVISIONAL_H12_MAP4_CLEARING_PASSES_REPLAY_H16_OUTSTANDING"
     }
-  ]
+  ],
+  "near_bound": false
 }
