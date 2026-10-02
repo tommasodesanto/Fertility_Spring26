@@ -1,0 +1,38 @@
+{
+  "status": "failed_zero_call_launch_restore_fix_ready_transport_blocked",
+  "job_id": "18994245",
+  "scheduler_at_first_check": "PENDING",
+  "tests": {
+    "runtime": 18,
+    "controller": 37,
+    "existing_report": 5,
+    "passed": true
+  },
+  "native_import_identity_exact": true,
+  "mounted_preparation_preflight": "PASS_zero_calls",
+  "controller_sha256": "678b602da22df0fb9a39cd8cf4772769ee4b6f06f8432976099d24712674c051",
+  "runtime_sha256": "cc51438a9a7bd0f92be3c1fe7681461515d21bb1ee44375ee7a51011489407af",
+  "plan_sha256": "f33912119787da38de6c72cf238b5c6366bac90763f946494b37f6035910a05f",
+  "sole_submitter": "lead",
+  "fit_start_psi": 0.13079083328964047,
+  "numerical_seconds": 7200,
+  "maximum_policy_calls": 1214,
+  "no_fit_result_yet": true,
+  "economic_changes_relative_to_prior_normalized_run": [],
+  "search_bounds_unchanged": true,
+  "preparation_reuse_only_new_normalized": true,
+  "monitor_status": "PAUSED_after_ended_run_needs_connection_action",
+  "scheduler_terminal": "FAILED",
+  "actual_policy_calls": 0,
+  "failure": "Saved normalized report H0 and housing-supply metadata role differs from transition fixed-H0 report; read-only restore comparator repair in progress.",
+  "original_deadline_epoch": 1790911128,
+  "no_deadline_extension": true,
+  "approved_source_compatibility_zero_calls": "PASS",
+  "replacement_controller_sha256": "a6499da273ff3a607dd741a283e6ba8415e5c9a4c161a18d1b1eab07cce900a0",
+  "replacement_runtime_sha256": "94914395f158ed58e0d50943708270d74525a875b880ddddf09e8b91cfe09880",
+  "remaining_required_checks": [
+    "actual_mounted_reference_restoration_and_J_loading_zero_solves",
+    "sole_lead_submission_if_transport_recovers_before_original_deadline"
+  ],
+  "transport_error": "ssh: Can't assign requested address"
+}

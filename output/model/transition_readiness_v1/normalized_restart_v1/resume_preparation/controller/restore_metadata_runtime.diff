@@ -1,0 +1,52 @@
+--- /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/floor_runtime.py
++++ /Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/floor_runtime.py
+@@ -91,6 +91,39 @@
+         numeric_tolerance=1e-10,standard_plot_hashes=aa,H0_metadata_exception='Derived calibration coefficient becomes fixed calibrated transition coefficient',
+         native_calls=0,source_reference=str(reference),fixed_H0_report=str(current))
+     write(current/'normalized_reference_compatibility.json',receipt);return receipt
++
++def compare_saved_normalized_reference(handoff,reference,saved):
++    """Read-only exact saved-report comparison; only declared reference roles differ."""
++    require(normalized_housing_contract(handoff),'Saved normalized comparison requires explicit contract')
++    reference,saved=Path(reference),Path(saved)
++    def table(folder,name):
++        with (folder/name).open(newline='') as stream:return list(csv.DictReader(stream))
++    a,b=table(reference,'parameters.csv'),table(saved,'parameters.csv')
++    require(len(a)==len(b)==31,'Saved normalized parameter row count differs')
++    actual={row['parameter']:float(row['estimate']) for row in a}
++    for x,y in zip(a,b):
++        if x.get('parameter')=='H0':
++            require(y.get('parameter')=='H0' and x['status']=='derived calibrated housing supply coefficient at N0=1' and
++                y['status']=='fixed calibrated housing supply coefficient at N0=1','Saved normalized H0 status differs')
++            require({k:v for k,v in x.items() if k!='status'}=={k:v for k,v in y.items() if k!='status'},'Saved normalized H0 values differ')
++        else:require(x==y,'Saved normalized parameter fields differ')
++    a,b=table(reference,'target_fit.csv'),table(saved,'target_fit.csv')
++    require(len(a)==len(b)==14 and a==b,'Saved normalized full target table differs')
++    a,b=read(reference/'closure.json'),read(saved/'closure.json')
++    validate_normalized_housing_report(handoff,a,actual)
++    require(a.get('housing_supply_coefficient_role')=='derived calibrated coefficient at N0=1' and
++        a.get('standard_plot_supply_units')=='physical housing supply at normalized N0=1' and
++        b.get('standard_plot_supply_units')=='physical supply divided by endogenous household population',
++        'Saved normalized closure role metadata differs')
++    declared={'normalized_population','H0_derived','H0_bounds','housing_supply_coefficient_role'}
++    compared={k:v for k,v in a.items() if k not in declared}
++    compared['standard_plot_supply_units']=b['standard_plot_supply_units']
++    require(compared==b,'Saved normalized closure quantities or undeclared metadata differ')
++    aa={p.name:sha(p) for p in (reference/'standard_diagnostics').glob('*.png')}
++    bb={p.name:sha(p) for p in (saved/'standard_diagnostics').glob('*.png')}
++    require(len(aa)==17 and aa==bb,'Saved normalized standard plots differ')
++    return dict(status='saved_normalized_fixed_H0_reports_exact_passed',comparison_native_calls=0,target_rows=14,parameter_rows=31,
++        standard_plot_hashes=aa,declared_metadata_exceptions=['H0.status',*sorted(declared),'standard_plot_supply_units'])
+ 
+ def authenticate_handoff(pin):
+     require(isinstance(pin,dict) and set(pin)=={'path','sha256'},'Pinned handoff required')
+@@ -507,7 +540,8 @@
+                 require(path.is_relative_to(report.resolve()) and sha(path)==digest,'Reconstructed report changed: '+relative)
+             require(all(name in pins for name in ('target_fit.csv','parameters.csv','closure.json')),'Incomplete native reconstruction report')
+             require(len([name for name in pins if name.endswith('.png')])==17,'Reconstructed17 graphs missing')
+-            self.runner.compare_repeated(self.report,report)
++            if normalized_housing_contract(self.handoff):compare_saved_normalized_reference(self.handoff,self.report,report)
++            else:self.runner.compare_repeated(self.report,report)
+         self.runner.compare_repeated(*report_paths)
+         with gzip.open(checkpoint['path'],'rb') as stream:packet=pickle.load(stream)
+         require(np.array_equal(packet['b_grid'],self.grid),'Reconstructed reference grid differs')

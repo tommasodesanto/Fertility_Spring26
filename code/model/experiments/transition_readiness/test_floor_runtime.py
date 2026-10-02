@@ -43,6 +43,10 @@ class RuntimeTests(unittest.TestCase):
             r.write(a/'closure.json',dict(price=.7,population_scale=1.,normalized_population=1.,H0_derived=6.8,H0_bounds=[.2,80.],housing_supply_coefficient_role='derived calibrated coefficient at N0=1',standard_plot_supply_units='physical housing supply at normalized N0=1'))
             r.write(b/'closure.json',dict(price=.7,population_scale=1.,standard_plot_supply_units='physical supply divided by endogenous household population'))
             r.compare_normalized_reference_reports(a,b)
+            handoff=dict(normalized_housing_contract=dict(schema='normalized_n0_fixed_h0_v1',N0=1.,H0_source='authenticated_parameter_table',counterfactual_H0_fixed=True))
+            before={str(p):r.sha(p) for folder in (a,b) for p in folder.rglob('*') if p.is_file()}
+            r.compare_saved_normalized_reference(handoff,a,b)
+            self.assertEqual(before,{str(p):r.sha(p) for folder in (a,b) for p in folder.rglob('*') if p.is_file()})
             with (b/'parameters.csv').open() as stream:self.assertIn('fixed calibrated',list(csv.DictReader(stream))[0]['status'])
             with (b/'target_fit.csv').open() as stream:rows=list(csv.DictReader(stream))
             rows[2]['model']='1.01';table(b,'target_fit.csv',rows)

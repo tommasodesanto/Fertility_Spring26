@@ -1,0 +1,41 @@
+{
+  "schema": "current_floor_fit_start_source_audit_v1",
+  "lead_review_accepted": false,
+  "prepared_numerics_unchanged": false,
+  "original_preparation": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/terminal_collection/native_preparation.json",
+    "sha256": "901a1e66cb385582e6450574ae180165d88e194955910f2b319403b59cb7ac5b"
+  },
+  "old_snapshot": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/resume_preparation/controller/generator_3294.py",
+    "sha256": "3294bc1d83e6cedc433cd34f7b1d28af553be6eb33ddda72b766bf572ded1766"
+  },
+  "old_source": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
+    "sha256": "3294bc1d83e6cedc433cd34f7b1d28af553be6eb33ddda72b766bf572ded1766"
+  },
+  "new_source": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
+    "sha256": "a6499da273ff3a607dd741a283e6ba8415e5c9a4c161a18d1b1eab07cce900a0"
+  },
+  "diff": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/resume_preparation/controller/restore_metadata_controller.diff",
+    "sha256": "ff886b7c607cafd50f1bfe42d60fe62bc63afe4f123091834af1c5f15156ecd3"
+  },
+  "checks": {
+    "exact_single_fit_initial_level_change": true,
+    "exact_preflight_start_guard_added": true,
+    "exact_compatibility_schema_dispatch_added": true,
+    "all_original_module_AST_restored": true
+  },
+  "scope": "Numericalfit start as previouslyapproved plus explicit runtime-only restoremetadata compatibility branch. All sourcepins failclosed; native checkpoint/J/equations unchanged.",
+  "tests_passed": 60,
+  "new_native_calls": 0,
+  "test_breakdown": {
+    "runtime": 18,
+    "controller": 37,
+    "existing_report": 5
+  },
+  "test_command": "PYTHONDONTWRITEBYTECODE=1 bundled-python -m unittest discover -s code/model/experiments/transition_readiness -p 'test_*floor*.py' -q",
+  "actual_full_saved_report_comparison": "Blocked locally only by missing17PNGfiles in collected savedreports; mounted complete remote reports require zeroLCrestore follow-on"
+}

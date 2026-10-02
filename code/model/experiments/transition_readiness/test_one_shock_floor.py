@@ -111,6 +111,73 @@ class Tests(unittest.TestCase):
         strict['relative_gaps']['asset_price']=.011
         self.assertFalse(runner.diagnostic_comparison_acceptance(strict,p)['passed'])
 
+    def test_numerical_fit_start_preserves_reference_bounds_and_default(self):
+        p=plan()
+        for value in (True,0.,float('nan'),float('inf'),.002,.4):
+            bad=copy.deepcopy(p);bad['fit_start_psi']=value
+            with self.assertRaisesRegex(ValueError,'Numerical fit start'):runner.preflight(bad)
+        p['fit_start_psi']=.18;runner.preflight(p)
+        original,fitter=runner.original_modules();actual=fitter.fit_one;seen={}
+        def capture(**kwargs):seen.update(initial=kwargs['initial_level'],bounds=kwargs['bounds']);return actual(**kwargs)
+        with tempfile.TemporaryDirectory() as directory,patch.object(fitter,'fit_one',side_effect=capture):
+            runner.Controller(p,FakeRuntime(p),directory).run()
+        self.assertEqual(seen['initial'],.18);self.assertEqual(seen['bounds'],[.002,.4])
+        self.assertEqual(p['initial_psi'],.2)
+
+    def test_fit_start_consumer_requires_review_and_unchanged_baseline_runtime_targets(self):
+        with tempfile.TemporaryDirectory() as folder:
+            d=Path(folder);p=plan();pin=lambda f:dict(path=str(f),sha256=runner.sha(f))
+            old=runner.HERE.parents[3]/'output/model/transition_readiness_v1/normalized_restart_v1/deployment/executed_snapshot/source/code/model/experiments/transition_readiness/one_shock_floor.py'
+            snapshot=d/'generator.py';snapshot.write_bytes(old.read_bytes())
+            prep={k:copy.deepcopy(p[k]) for k in ('identity','source_files','target_contract','seed','gates')}
+            prep['source_files']['controller']['sha256']=runner.sha(snapshot)
+            original=d/'prep.json';runner.write(original,prep);p['prepared_native_inputs']=pin(original)
+            oldplan=d/'oldplan.json';runner.write(oldplan,p)
+            p['fit_start_psi']=.18
+            current=Path(p['source_files']['controller']['path']);diff=d/'review.diff'
+            diff.write_text(''.join(difflib.unified_diff(snapshot.read_text().splitlines(True),current.read_text().splitlines(True),fromfile=prep['source_files']['controller']['path'],tofile=str(current))))
+            audit=d/'audit.json';runner.write(audit,dict(schema='current_floor_fit_start_source_audit_v1',lead_review_accepted=True,
+                prepared_numerics_unchanged=True,original_preparation=pin(original),old_snapshot=pin(snapshot),
+                old_source=prep['source_files']['controller'],new_source=p['source_files']['controller'],diff=pin(diff),
+                checks=runner.fit_start_compatibility_ast_checks(snapshot.read_text(),current.read_text())))
+            receipt=dict(schema='current_floor_fit_start_consumer_compatibility_v1',compatibility_approved=True,lead_review_accepted=True,
+                original_preparation=pin(original),original_generator_controller=prep['source_files']['controller'],
+                original_generator_snapshot=pin(snapshot),consumer_controller=p['source_files']['controller'],allowed_source_roles=['controller'],
+                fit_start_psi=.18,original_execution_plan=pin(oldplan),reviewed_audit=pin(audit),reviewed_diff=pin(diff))
+            path=d/'receipt.json';runner.write(path,receipt);p['prepared_consumer_compatibility']=pin(path)
+            runner.validate_consumer_compatibility(p,prep)
+            for key,value in (('initial_psi',.21),('psi_bound_ratios',[.02,2.]),('gates',dict(p['gates'],market_tolerance=.001)),
+                ('target_contract',dict(p['target_contract'],schema='changed')),('fit_start_psi',.19)):
+                bad=copy.deepcopy(p);bad[key]=value
+                with self.assertRaises(ValueError):runner.validate_consumer_compatibility(bad,prep)
+            bad=copy.deepcopy(p);bad['source_files']['runtime']['sha256']='a'*64
+            with self.assertRaisesRegex(ValueError,'non-controller'):runner.validate_consumer_compatibility(bad,prep)
+            receipt['compatibility_approved']=False;runner.write(path,receipt);p['prepared_consumer_compatibility']=pin(path)
+            with self.assertRaisesRegex(ValueError,'lead approval'):runner.validate_consumer_compatibility(p,prep)
+            receipt['compatibility_approved']=True;runner.write(path,receipt);p['prepared_consumer_compatibility']=pin(path)
+            diff.write_text('unreviewed')
+            with self.assertRaisesRegex(ValueError,'changed pin'):runner.validate_consumer_compatibility(p,prep)
+
+    def test_runtime_restore_proof_rejects_changed_stationary_equations(self):
+        snapshot=runner.HERE.parents[3]/'output/model/transition_readiness_v1/normalized_restart_v1/resume_preparation/controller/runtime_generator_cc514.py'
+        current=(runner.HERE/'floor_runtime.py').read_text()
+        self.assertTrue(all(runner.runtime_restore_metadata_ast_checks(snapshot.read_text(),current).values()))
+        changed=current.replace('scale=supplyq/demand','scale=1.',1)
+        self.assertNotEqual(changed,current)
+        self.assertFalse(runner.runtime_restore_metadata_ast_checks(snapshot.read_text(),changed)['all_original_runtime_module_AST_restored'])
+        with tempfile.TemporaryDirectory() as directory:
+            p=plan();prep=dict(source_files=dict(runtime=dict(path=str(snapshot),sha256=runner.sha(snapshot))))
+            path=Path(directory)/'runtime_approval.json';runner.write(path,dict(schema='normalized_runtime_restore_metadata_compatibility_v1',compatibility_approved=False,lead_review_accepted=False))
+            receipt=dict(runtime_metadata_compatibility=dict(path=str(path),sha256=runner.sha(path)))
+            with self.assertRaisesRegex(ValueError,'explicit lead approval'):runner.validate_runtime_restore_metadata(p,prep,receipt)
+
+    def test_fit_start_ast_rejects_unrelated_equations_or_bounds(self):
+        old=runner.HERE.parents[3]/'output/model/transition_readiness_v1/normalized_restart_v1/deployment/executed_snapshot/source/code/model/experiments/transition_readiness/one_shock_floor.py'
+        new=(runner.HERE/'one_shock_floor.py').read_text()
+        self.assertTrue(all(runner.fit_start_compatibility_ast_checks(old.read_text(),new).values()))
+        changed=new.replace("bounds=[psi*x for x in self.plan['psi_bound_ratios']]","bounds=[psi*x*2 for x in self.plan['psi_bound_ratios']]",1)
+        self.assertFalse(runner.fit_start_compatibility_ast_checks(old.read_text(),changed)['all_original_module_AST_restored'])
+
     def test_reused_native_measurement_rejects_point_and_psi_mixup(self):
         rows=[dict(psi_child=.2,calendar_year=2007+4*i,asset_price=1.,pension_period_units=.1) for i in range(5)]
         record=dict(rows=rows,market_residual=[0.]*5,fiscal_residual=[0.]*5)
@@ -174,7 +241,7 @@ class Tests(unittest.TestCase):
     def test_compatibility_ast_rejects_unrelated_preflight_change(self):
         snapshot=runner.HERE.parents[3]/'output/model/transition_readiness_v1/current_floor_preparation/controller/controller_before_checkpoint.py'
         current=(runner.HERE/'one_shock_floor.py').read_text()
-        self.assertTrue(all(runner.compatibility_ast_checks(snapshot.read_text(),current).values()))
+        self.assertFalse(all(runner.compatibility_ast_checks(snapshot.read_text(),current).values()))
         altered=current.replace("plan['start_year'] == 2007", "plan['start_year'] == 2008",1)
         self.assertNotEqual(altered,current)
         checks=runner.compatibility_ast_checks(snapshot.read_text(),altered)
@@ -224,7 +291,8 @@ class Tests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             p,prep,receipt,path=self.compatibility_fixture(directory)
             original_digest=runner.sha(p['prepared_native_inputs']['path'])
-            runner.validate_consumer_compatibility(p,prep)
+            with self.assertRaisesRegex(ValueError,'Critical numerical AST'):
+                runner.validate_consumer_compatibility(p,prep)
             self.assertEqual(runner.sha(p['prepared_native_inputs']['path']),original_digest)
             self.assertNotEqual(prep['source_files']['controller']['sha256'],runner.sha(prep['source_files']['controller']['path']))
 

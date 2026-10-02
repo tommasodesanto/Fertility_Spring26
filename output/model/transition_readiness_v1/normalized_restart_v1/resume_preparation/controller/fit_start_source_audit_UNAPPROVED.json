@@ -1,0 +1,40 @@
+{
+  "schema": "current_floor_fit_start_source_audit_v1",
+  "lead_review_accepted": false,
+  "prepared_numerics_unchanged": false,
+  "prepared_reference_J_equations_unchanged": true,
+  "original_preparation": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/terminal_collection/native_preparation.json",
+    "sha256": "901a1e66cb385582e6450574ae180165d88e194955910f2b319403b59cb7ac5b"
+  },
+  "old_snapshot": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/resume_preparation/controller/generator_3294.py",
+    "sha256": "3294bc1d83e6cedc433cd34f7b1d28af553be6eb33ddda72b766bf572ded1766"
+  },
+  "old_source": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
+    "sha256": "3294bc1d83e6cedc433cd34f7b1d28af553be6eb33ddda72b766bf572ded1766"
+  },
+  "new_source": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/one_shock_floor.py",
+    "sha256": "678b602da22df0fb9a39cd8cf4772769ee4b6f06f8432976099d24712674c051"
+  },
+  "diff": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/normalized_restart_v1/resume_preparation/controller/fit_start_consumer.diff",
+    "sha256": "64c526f4fb71252b876824e04557d5fcfbfaba86fe01c3f495d37fe9c7f3f3a3"
+  },
+  "checks": {
+    "exact_single_fit_initial_level_change": true,
+    "exact_preflight_start_guard_added": true,
+    "exact_compatibility_schema_dispatch_added": true,
+    "all_original_module_AST_restored": true
+  },
+  "change_scopes": [
+    "optional_numerical_fit_start",
+    "exact_preflight_fit_start_guard",
+    "explicit_3294_generation_consumer_validation"
+  ],
+  "new_native_calls": 0,
+  "tests_passed": 36,
+  "disclosure": "Only scalar numerical initial_level changes; reference initial_psi and domain bounds unchanged. All original module AST restored after exact initial_level/preflight/schema-dispatch substitutions; new guarded compatibility helpers disclosed. New normalized reference/J only; old .920 state/results not reused. Approval remains lead-owned."
+}

@@ -1,5 +1,44 @@
 # Transition readiness
 
+## October 1, 21:28 New York — restore fix ready; Torch connection unavailable
+
+The author authorized continuing from the previous good numerical starting guess
+**psi=0.13079083328964047**. Job **18994245** was submitted once by the lead,
+started at 21:18:45 and stopped at 21:19:38 with **zero native policy calls**.
+The saved-reference restore check rejected the documented calibration-derived
+versus transition-fixed H0 reporting labels. No new candidate or 2023 fitted
+checkpoint exists. [Failure capture](normalized_restart_v1/resume_preparation/deployment/latest_progress.json).
+
+A scoped read-only restore correction now accepts only those authenticated H0
+and housing-supply reporting labels. All31 parameters, all14 calibration targets,
+other table fields, closure quantities and17 plot hashes must still match exactly.
+No numerical equation, economic primitive, target, search bound or gate changes.
+The unchanged reference is normalized chain20/case0028_nm, initial physical
+population one, fixed H0=6.851575289344519, reference psi=0.17198899419542374,
+and absolute shock bounds [0.0017198899419542373,0.3439779883908475].
+
+The lead independently passed **60 tests** (18 runtime,37 controller,5 report)
+and the exact approved source-scope/AST proof with zero calls. The saved new
+normalized reference and Jacobian remain pinned to preparation901a1e66.
+Old non-normalized states, roots and derivatives are excluded. Actual mounted
+reference restoration plus Jacobian loading is still required before relaunch;
+the previous preflight checked pins but did not exercise that restore path.
+SSH to Torch currently fails with **“Can't assign requested address.”**
+Local replacement staging is being prepared; no replacement job is submitted.
+The pending user request is to check/reconnect the NYU VPN.
+The checkpoint heartbeat is paused because this run ended and requires connection action.
+
+The original continuation deadline stays **23:18:48 New York**
+(epoch1790911128); the conservative remaining native-call cap stays1214.
+This correction does not reset the time budget. Original strict comparisons and
+state,terminal,root,replay,production gates remain unchanged alongside the
+previously authorized0.01 diagnostic comparison. The complete four-window fit
+and shock-bounds tables, exact2023checkpoint and stable diagnostic packet must
+be checked before any successful delivery. No fit or production certification
+is claimed. [Reviewed restore compatibility](normalized_restart_v1/resume_preparation/controller/restore_metadata_consumer_compatibility_APPROVED.json).
+
+
+
 ## Verified facts
 
 - **Current normalized restart:** Author-authorized job **18989789** (`normalized_actualfit_v1`) started **19:47:30 New York** on cs612 and entered fresh selected-reference reconstruction. It uses normalized chain 20/case `0028_nm`, initial physical population one and fixed calibrated `H0=6.851575289344519`; its new preference estimates are retained. Two fresh reference solves and fresh measured derivatives precede shock fitting. No old state, roots, derivatives or fitted-shock evidence is reused. Full [tables, diagnostics, source/contract and budget evidence](normalized_restart_v1/README.md) are indexed in the new packet. Original deadline **20:24:47**, cap **1,343 calls**, fresh seed stage cap **1,200 seconds**; authorized diagnostic `0.01` comparison and all strict-status/state/terminal disclosures remain. The ten-minute heartbeat is active. No fitted shock or certified 2023 state is established at launch. A duplicate queued submission 18989791 was cancelled before start with zero runtime; only 18989789 is active. All older launch statements below are historical.

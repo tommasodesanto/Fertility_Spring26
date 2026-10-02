@@ -1,0 +1,42 @@
+{
+  "captured_epoch": 1790904019.7635307,
+  "run": "/scratch/td2248/projects/transition_readiness_v1/normalized_resumed_fit_v1/results/normalized_resumed_fit_v1",
+  "launcher_start.json": {
+    "start_epoch": 1790903928,
+    "deadline_epoch": 1790911128,
+    "mode": "fit",
+    "slurm_job_id": "18994245",
+    "threads": 1,
+    "cpus": 4,
+    "memory_GiB": 96
+  },
+  "launcher_terminal.json": {
+    "exit_code": 1,
+    "start_epoch": 1790903928,
+    "deadline_epoch": 1790911128,
+    "mode": "fit",
+    "finished_epoch": 1790903975.638747,
+    "slurm_job_id": "18994245",
+    "no_auto_retry": true
+  },
+  "heartbeat.json": {
+    "phase": "restore_authenticated_native_inputs",
+    "epoch": 1790903974.1857598,
+    "candidate": 0,
+    "policy_calls": 0
+  },
+  "failure.json": {
+    "status": "FAILED",
+    "error_type": "RuntimeError",
+    "error": "Repeated full GE differs: parameters.csv",
+    "scientific_validation": false,
+    "production_ready": false,
+    "actual_policy_calls": 0,
+    "control_accounted_policy_calls": 0,
+    "policy_call_count_mismatch": false,
+    "policy_call_count_source": "runtime_total_native_calls"
+  },
+  "candidate_receipts": [],
+  "checkpoint_receipts": [],
+  "status": "FAILED"
+}

@@ -132,7 +132,6 @@ def preflight(plan):
     psi = plan['initial_psi']
     require(math.isfinite(psi) and psi > 0 and plan['psi_bound_ratios'] == [.01, 2.],
             'Use retained positive scalar preference domain')
-    require(fit_start_psi_allowed(plan),'Numerical fit start must be finite and strictly inside reference bounds')
     conservative_calls = 2+5*2*12+plan['fit']['max_evaluations']*(plan['endpoint']['max_evaluations']+1+
         sum(2*h*plan['path']['max_evaluations'] for h in horizons))
     return dict(status='PASS', native_calls=0, mode=plan['mode'],
@@ -141,116 +140,6 @@ def preflight(plan):
                 policy_call_stop_cap=budget['maximum_policy_calls'], total_seconds=budget['total_seconds'],
                 fitted_moments=1,free_shock_parameters=1,
                 stop_conditions=['deadline','iteration cap','actual policy-call cap','failed native accounting','missing native seed'])
-
-
-def fit_start_psi_allowed(plan):
-    value=plan.get('fit_start_psi',plan['initial_psi'])
-    return bool(type(value) in (int,float) and math.isfinite(value) and
-        plan['initial_psi']*plan['psi_bound_ratios'][0]<value<plan['initial_psi']*plan['psi_bound_ratios'][1])
-
-
-def fit_start_compatibility_ast_checks(old_text,new_text):
-    old,new=ast.parse(old_text),ast.parse(new_text)
-    restored=copy.deepcopy(new);start_changes=0;guard_changes=0;seam_changes=0
-    class RestoreFitStart(ast.NodeTransformer):
-        def visit_Call(self,node):
-            nonlocal start_changes
-            self.generic_visit(node)
-            if isinstance(node.func,ast.Name) and node.func.id=='require' and len(node.args)==2 and isinstance(node.args[1],ast.Constant) and node.args[1].value=='Only the reviewed controller consumer may differ':
-                expected=ast.parse("changed==['controller'] or (set(changed)=={'controller','runtime'} and plan.get('prepared_consumer_compatibility') is not None and json.loads(pinned(plan['prepared_consumer_compatibility']).read_text()).get('schema')=='current_floor_fit_start_consumer_compatibility_v1')",mode='eval').body
-                if ast.dump(node.args[0],include_attributes=False)==ast.dump(expected,include_attributes=False):node.args[0]=ast.parse("changed==['controller']",mode='eval').body
-            if ast.unparse(node)=="self.plan.get('fit_start_psi', psi)":
-                start_changes+=1;return ast.copy_location(ast.Name(id='psi',ctx=ast.Load()),node)
-            return node
-        def visit_FunctionDef(self,node):
-            nonlocal guard_changes,seam_changes
-            self.generic_visit(node)
-            if node.name=='preflight':
-                exact="require(fit_start_psi_allowed(plan), 'Numerical fit start must be finite and strictly inside reference bounds')"
-                guard_changes=sum(ast.unparse(n)==exact for n in node.body)
-                node.body=[n for n in node.body if ast.unparse(n)!=exact]
-            if node.name=='validate_consumer_compatibility':
-                exact="if receipt.get('schema') == 'current_floor_fit_start_consumer_compatibility_v1':\n    return validate_fit_start_consumer_compatibility(plan, preparation, receipt)"
-                seam_changes=sum(ast.unparse(n)==exact for n in node.body)
-                node.body=[n for n in node.body if ast.unparse(n)!=exact]
-            return node
-    restored=RestoreFitStart().visit(restored)
-    old_functions={n.name for n in old.body if isinstance(n,ast.FunctionDef)}
-    restored.body=[n for n in restored.body if not isinstance(n,ast.FunctionDef) or n.name in old_functions]
-    return dict(exact_single_fit_initial_level_change=start_changes==1,exact_preflight_start_guard_added=guard_changes==1,
-        exact_compatibility_schema_dispatch_added=seam_changes==1,
-        all_original_module_AST_restored=ast.dump(old,include_attributes=False)==ast.dump(restored,include_attributes=False))
-
-
-def runtime_restore_metadata_ast_checks(old_text,new_text):
-    old,new=ast.parse(old_text),ast.parse(new_text);restored=copy.deepcopy(new);count=0
-    exact="if normalized_housing_contract(self.handoff):\n    compare_saved_normalized_reference(self.handoff, self.report, report)\nelse:\n    self.runner.compare_repeated(self.report, report)"
-    class RestoreSavedReport(ast.NodeTransformer):
-        def visit_If(self,node):
-            nonlocal count
-            self.generic_visit(node)
-            if ast.unparse(node)==exact:
-                count+=1;return node.orelse[0]
-            return node
-    restored=RestoreSavedReport().visit(restored)
-    restored.body=[n for n in restored.body if not isinstance(n,ast.FunctionDef) or n.name!='compare_saved_normalized_reference']
-    return dict(exact_saved_report_comparison_dispatch=count==1,
-        all_original_runtime_module_AST_restored=ast.dump(old,include_attributes=False)==ast.dump(restored,include_attributes=False))
-
-
-def validate_runtime_restore_metadata(plan,preparation,receipt):
-    approval=json.loads(pinned(receipt['runtime_metadata_compatibility']).read_text())
-    require(approval.get('schema')=='normalized_runtime_restore_metadata_compatibility_v1' and
-        approval.get('compatibility_approved') is True and approval.get('lead_review_accepted') is True,
-        'Runtime restore metadata needs explicit lead approval')
-    old=preparation['source_files']['runtime'];new=plan['source_files']['runtime']
-    require(old['sha256']=='cc51438a9a7bd0f92be3c1fe7681461515d21bb1ee44375ee7a51011489407af' and
-        approval['generator_runtime']==old and approval['consumer_runtime']==new and
-        approval['original_preparation']==plan['prepared_native_inputs'],'Runtime restore source/preparation pins differ')
-    snapshot=pinned(approval['generator_snapshot']);current=pinned(new)
-    require(current.resolve()==(HERE/'floor_runtime.py').resolve(),'Runtime restore consumer differs from installed runtime')
-    require(sha(snapshot)==old['sha256'],'Runtime restore historical source differs')
-    checks=runtime_restore_metadata_ast_checks(snapshot.read_text(),current.read_text())
-    require(all(checks.values()) and approval['checks']==checks,'Runtime restore changes original numerical AST')
-    diff=pinned(approval['reviewed_diff'])
-    actual=''.join(difflib.unified_diff(snapshot.read_text().splitlines(True),current.read_text().splitlines(True),fromfile=old['path'],tofile=new['path']))
-    require(diff.read_text()==actual,'Runtime restore reviewed diff stale')
-    return approval
-
-
-def validate_fit_start_consumer_compatibility(plan,preparation,receipt):
-    require(receipt.get('compatibility_approved') is True and receipt.get('lead_review_accepted') is True,
-        'Numerical-start compatibility requires explicit lead approval')
-    require(receipt['original_preparation']==plan['prepared_native_inputs'] and
-        json.loads(pinned(receipt['original_preparation']).read_text())==preparation,'Numerical-start original preparation changed')
-    generator=preparation['source_files']['controller'];consumer=plan['source_files']['controller']
-    require(generator['sha256']=='3294bc1d83e6cedc433cd34f7b1d28af553be6eb33ddda72b766bf572ded1766' and
-        receipt['original_generator_controller']==generator,'Numerical-start generator differs')
-    snapshot=pinned(receipt['original_generator_snapshot']);current=pinned(receipt['consumer_controller'])
-    require(sha(snapshot)==generator['sha256'] and receipt['consumer_controller']==consumer and
-        current.resolve()==Path(__file__).resolve(),'Numerical-start installed consumer differs')
-    require(receipt['allowed_source_roles'] in (['controller'],['controller','runtime']) and receipt['fit_start_psi']==plan.get('fit_start_psi') and
-        fit_start_psi_allowed(plan),'Numerical-start role or approved value differs')
-    original_plan=json.loads(pinned(receipt['original_execution_plan']).read_text())
-    for key in ('identity','target_contract','seed','gates','handoff','initial_psi','psi_bound_ratios','horizons'):
-        require(original_plan[key]==plan[key],'Numerical-start original baseline/contract changed: '+key)
-    require(set(preparation['source_files'])==set(plan['source_files']),'Numerical-start source roles differ')
-    for role,item in preparation['source_files'].items():
-        if role!='controller':
-            if role=='runtime' and receipt['allowed_source_roles']==['controller','runtime']:
-                validate_runtime_restore_metadata(plan,preparation,receipt)
-            else:require(item==plan['source_files'][role],'Numerical-start non-controller source changed');pinned(item)
-    audit=json.loads(pinned(receipt['reviewed_audit']).read_text());diff=pinned(receipt['reviewed_diff'])
-    require(audit.get('schema')=='current_floor_fit_start_source_audit_v1' and audit.get('lead_review_accepted') is True and
-        audit.get('prepared_numerics_unchanged') is True and audit['original_preparation']==receipt['original_preparation'] and
-        audit['old_snapshot']==receipt['original_generator_snapshot'] and audit['new_source']==consumer and audit['diff']==receipt['reviewed_diff'],
-        'Numerical-start source audit stale or unapproved')
-    checks=fit_start_compatibility_ast_checks(snapshot.read_text(),current.read_text())
-    require(all(checks.values()) and audit['checks']==checks,'Numerical-start scope changes unrelated original code')
-    actual=''.join(difflib.unified_diff(snapshot.read_text().splitlines(True),current.read_text().splitlines(True),
-        fromfile=audit['old_source']['path'],tofile=consumer['path']))
-    require(diff.read_text()==actual,'Numerical-start reviewed diff stale')
-    return receipt
 
 
 def path_damping_control_allowed(plan,name):
@@ -275,7 +164,7 @@ def validate_preparation(plan, preparation):
     require(set(generation)==set(consumer),'Prepared source role inventory changed')
     changed=[key for key in generation if generation[key]!=consumer[key]]
     if changed:
-        require(changed==['controller'] or (set(changed)=={'controller','runtime'} and plan.get('prepared_consumer_compatibility') is not None and json.loads(pinned(plan['prepared_consumer_compatibility']).read_text()).get('schema')=='current_floor_fit_start_consumer_compatibility_v1'),'Only the reviewed controller consumer may differ')
+        require(changed==['controller'],'Only the reviewed controller consumer may differ')
         validate_consumer_compatibility(plan,preparation)
     else:
         for item in generation.values():pinned(item)
@@ -350,8 +239,6 @@ def compatibility_ast_checks(old_text,new_text):
 def validate_consumer_compatibility(plan,preparation):
     require(plan.get('prepared_consumer_compatibility') is not None,'Explicit approved generation/consumer compatibility pin required')
     receipt=json.loads(pinned(plan['prepared_consumer_compatibility']).read_text())
-    if receipt.get('schema')=='current_floor_fit_start_consumer_compatibility_v1':
-        return validate_fit_start_consumer_compatibility(plan,preparation,receipt)
     require(receipt.get('schema')=='current_floor_prepared_consumer_compatibility_v1' and
         receipt.get('compatibility_approved') is True and receipt.get('lead_review_accepted') is True,
         'Compatibility requires explicit lead-reviewed approval')
@@ -1045,7 +932,7 @@ class Controller:
         require(contract == self.plan['target_contract'], 'Annual-builder complete target fingerprint changed')
         controls = dict(self.plan['fit'], total_seconds=self.remaining())
         psi = self.plan['initial_psi']
-        result = fitter.fit_one(evaluate=self.evaluate, target=contract['rows'][3]['target'], initial_level=self.plan.get('fit_start_psi',psi),
+        result = fitter.fit_one(evaluate=self.evaluate, target=contract['rows'][3]['target'], initial_level=psi,
             bounds=[psi*x for x in self.plan['psi_bound_ratios']], controls=controls,
             callback=lambda row:self.progress('scalar_fit', root_row=row))
         write(self.out/'fit.json', result)
