@@ -1,3 +1,14 @@
+## Corina adviser update — October 2, 2026
+
+The separate adviser deck `corina_progress_20260930/corina_progress.tex` now
+compares the fresh-postchecked hard and quarter-saving purchase-rule fits from
+the overnight experiment, with a joint parameter-to-moment identification slide
+and explicit credit-timing equations. These stationary calibrations normalize
+population to one and derive their own housing-supply coefficient; the October 1
+fixed-supply-coefficient fit is retained only as historical evidence. The author
+has not adopted either experimental estimate as the paper baseline. Main JMP
+slides, author draft, mock, and model implementation are unchanged by this update.
+
 ## Corina adviser update — October 1, 2026
 
 The separate ten-slide adviser deck at `corina_progress_20260930/corina_progress.tex`

@@ -1,6 +1,6 @@
 # Corina progress presentation
 
-Separate adviser update covering **September 17–October 1, 2026**, prepared for Corina
+Separate adviser update covering **September 17–October 2, 2026**, prepared for Corina
 Boar. This dated presentation was explicitly requested and does not replace the
 continuing [JMP Slides](../JMP_slides/JMP_slides.tex).
 
@@ -12,41 +12,43 @@ continuing [JMP Slides](../JMP_slides/JMP_slides.tex).
 
 ## Verified scientific facts
 
-The displayed calibration is the selected-repeat-verified parenthood-only
-Stone–Geary point, overnight chain 7, case 0173_nm, collected October 1 at
-09:41 New York. Its authoritative packet is
-[ROOT/REPEAT evidence](../../output/model/fixed_reference_economics_20260928/utility_floor_psi_v1/deployment/monitor_snapshot/verified_global_20261001T0941NY_chain7_0173/).
-The latest author decision selects this preference specification; parameter
-estimates remain provisional and optimizer convergence is not certified.
+The displayed results compare the October 2 fresh-postchecked hard-closing and
+quarter-saving purchase-rule calibrations. Authoritative full packets are in
+[overnight readout](../../output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/collection/readout/),
+with unchanged local copies under `evidence/overnight_*`. Each has all fourteen
+fit rows, thirty-one parameter rows and seventeen standard plots. The copied
+identity receipt records byte-identical selected-root/repeat tables and closure.
+Estimates remain provisional: postchecks do not certify optimizer convergence
+or paper-baseline adoption.
 
-The packet contains all 14 fit rows: ten scored moments, three validation rows
-and a birth-renewal check. Ten coordinates, including the child-benefit level,
-are jointly free; housing supply scale is fixed at 6.293507689200028. The
-selected search uses the `early4x` weighting profile: search objective
-54.52095879194978, versus 31.284007255664957 under the original base weights.
-These are two objectives at the same point, not an improvement comparison with
-the old reference. Full fit contributions, parameter bounds and near-bound
-flags are retained in the selected packet's ROOT tables.
+Both use the same original target values and weights: hard loss
+97.01121981277964 and quarter-saving loss 51.55603604909936. These can be
+compared within this paired contract. They are not improvement comparisons
+with the earlier 31.284 or 19.581 objectives, whose economic/weighting contracts
+differ. Ten parameters, including the child-benefit level, are jointly free.
+Ten moments are scored, three are validation, and one checks birth renewal.
+Housing supply scale is now derived at population normalized to one: H0 is
+7.546002524007095 (hard) and 7.288573389887633 (quarter). Price clears birth renewal.
 
-Material utility uses a housing floor whenever children live at home, constant
-consumption/housing shares, the power equivalence scale and nonlinear child
-benefit. The compensated-share factor is inactive. The selected housing floor
-is 2.3, exactly its upper search bound. Children ever born at age 25 are
-0.5312175503600473 versus 0.8095276384290021 in the data. The selected packet
-lacks the motherhood-share and children-per-mother observers; no earlier
-point's decomposition is attributed to this winner.
+The parenthood-only Stone–Geary specification retains constant expenditure
+shares, the power equivalence scale and nonlinear child benefit, with no
+compensated-share factor. The housing-floor search bound is now [0.1,2.6];
+estimates 2.562319632969801 and 2.49169824815624 are not at the upper bound.
+Nonnegative mean-preserving entrant wealth, the common 2% annual real rate and
+no unsecured renter borrowing are retained. Both purchase rules enforce buyer
+end-of-period net-estate solvency. These changed closure, purchase-rule and
+bound settings must be distinguished from the earlier fixed-H0 floor point.
 
-The selected closure uses house price to clear birth renewal and population to
-clear absolute housing supply. Entrant wealth uses nonnegative five-bin ratios
-with positive nodes rescaled to preserve the original mean; the common annual
-real interest rate is 2%, with no unsecured borrowing. These entry, credit,
-closure and preference changes differ from the frozen September 28 block0506
-reference. That reference and previous experiments remain historical evidence.
+The hard purchase test is A >= .2Q. The quarter-saving test is
+A + .25[b'−(A−Q)] >= .2Q, where A is financial wealth plus net sale proceeds,
+Q the chosen home's price and b' the end-of-period financial balance. The
+quarter refers to the eligible fraction of net saving, not quarterly fertility.
+No new policy-response result is claimed.
 
 ## Review and changes
 
-The thirteen frames explain reviewed work and author decisions, the selected model,
-its complete calibration, preference alternatives and remaining questions:
+The fourteen-frame narrative explains the model, joint identification, complete
+paired calibration, purchase-credit timing and remaining fit:
 
 1. Model review and revisions
 2. Household decisions
@@ -54,29 +56,36 @@ its complete calibration, preference alternatives and remaining questions:
 4. Demographic and market equilibrium
 5. Housing around the first birth
 6. Calibration strategy and inputs
-7. Stone–Geary calibration
-8. Household policies and lifecycle paths (figure slot)
-9. Housing supply and borrowing constraints (figure slot)
-10. Transition dynamics (figure slot)
-11. Calibrated parameters
-12. Preference alternatives
-13. Credit, initial wealth and remaining fit
+7. Identification
+8. Stone–Geary calibration
+9. Household policies and lifecycle paths (figure slot)
+10. Housing supply and borrowing constraints (figure slot)
+11. Transition dynamics (figure slot)
+12. Parameter estimates
+13. Credit timing
+14. Calibration comparison
 
-The preference alternatives include compensated housing shares and the requested
-equivalence-scale comparison. A requested comparison is not a completed estimate;
-no new result is claimed without its own verified packet. The fit uses
-`Moment | Target | Model`; the parameter frame reports all ten searched estimates
-in three columns. Complete restrictions, bounds and bound flags stay in the
-supporting CSVs. Visible source footers, internal failure history and a dedicated
-computation section are omitted. Private provenance is in
-[source_map.md](source_map.md).
+Identification discusses all ten parameters and all ten scored moments as joint
+sources of information, not a one-parameter/one-moment mapping. H0 is derived
+and theta1 externally restricted; child-benefit curvature and tenure taste
+scale are free. The old main JMP identification text describes a different
+parameter contract and remains unchanged. The fit uses
+`Moment | Target | Hard | Quarter-saving`; all fourteen rows remain, with three
+validation rows separated below. Full gaps, weights, contributions, restrictions
+and bound flags remain in supporting CSVs. Three titled figure slots remain
+pending; no transition estimate is implied by a placeholder.
 
-The PSID figure and empirical provenance are retained. Earlier source/QA receipts
-and their slide numbering describe preserved versions, not this rewritten deck.
-Final verification checks the new equations, candidate identity, objectives,
-full tables and every rendered page. No model, test suite, benchmark, cluster
+The prior preference-alternatives section is replaced by credit timing. The
+PSID figure and private empirical provenance are preserved. No visible source
+footers, internal failure history or dedicated computation section are added.
+All seventeen standard plots per selected arm have a saved visual review at
+[plot review](../../output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/collection/readout/visual_review/REVIEW.md).
+It documents boundary/support limitations; visual screening is not a convergence
+or policy-acceptance certificate. Earlier receipts describe preserved versions.
+Final deck verification checked the candidate identities, equations,
+all paired table cells and all fourteen rendered pages. No model, test suite, benchmark, cluster
 job or job stop was run for this documentation update. The main JMP deck and
-manuscripts are outside this task's edit scope.
+manuscripts remain outside this task's edit scope.
 
 ## Preservation and build
 
@@ -89,15 +98,12 @@ review's temporary build directory.
 
 Compile the source twice with `pdflatex -interaction=nonstopmode -halt-on-error`,
 directing auxiliary files to a temporary build directory. The final document
-must contain thirteen pages and thirteen frames with no overlays. The final
+must contain fourteen pages and fourteen frames with no overlays. The final
 verification receipt records compilation, rendered-page inspection, source
 hashes, preservation checks and Library delivery availability.
 
-The calibration slide places all three validation moments in a separate bottom
-table; the ten scored moments and completed-fertility renewal check remain above.
-All fourteen target/model pairs are unchanged.
 
-Three titled illustration slots follow the calibration table (pages 8–10):
+Three titled illustration slots follow the calibration table (pages 9–11):
 household policies and lifecycle paths; housing supply and borrowing constraints;
 and transition dynamics. Figure selection and insertion remain pending.
-The deck now has thirteen slides; no fixed slide-count limit remains.
+No fixed slide-count limit remains.

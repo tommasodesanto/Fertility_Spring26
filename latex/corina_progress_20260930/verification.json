@@ -1,8 +1,8 @@
 {
-  "review_date": "2026-10-01",
-  "review_completed_utc": "2026-10-01T17:53:41.856503+00:00",
-  "frames": 13,
-  "pdf_pages": 13,
+  "review_date": "2026-10-02",
+  "review_completed_utc": "2026-10-02T15:02:25.171860+00:00",
+  "frames": 14,
+  "pdf_pages": 14,
   "overlays": false,
   "native_latex_compiler": "success",
   "compile_passes_after_final_edit": 2,
@@ -10,13 +10,13 @@
   "all_ten_pages_visually_reviewed": true,
   "changed_pages_rechecked": [
     1,
-    3,
     4,
     6,
     7,
     8,
-    9,
-    10
+    12,
+    13,
+    14
   ],
   "table_row_counts": {
     "reference_target_fit.csv": 14,
@@ -26,7 +26,11 @@
     "two_birth_target_fit.csv": 14,
     "two_birth_parameters.csv": 31,
     "floor_target_fit": 14,
-    "floor_parameters": 31
+    "floor_parameters": 31,
+    "overnight_hard_target_fit": 14,
+    "overnight_quarter_target_fit": 14,
+    "overnight_hard_parameters": 31,
+    "overnight_quarter_parameters": 31
   },
   "reference_fit_rows": 14,
   "reference_parameter_rows": 31,
@@ -120,8 +124,8 @@
     "upload_attempted_in_this_chat": false,
     "library_ids_created": []
   },
-  "pdf_sha256": "9623250552cc89d9839abf073020af0ef8eaf12ae4c107335dc42a1a0f25a569",
-  "tex_sha256": "1bd6d5a1f7bd30db66c43d7ef0a5606471daea658fe534b65435004ee44efd9b",
+  "pdf_sha256": "0c1c42baa8e1ad844d0f16fc958bb26f33cd65bfc6ecdd649e4563bc1eb213cf",
+  "tex_sha256": "49186a174c78e386b6ef24cdb0ec67f7420eb444099e29e833b38312401900c9",
   "source_history": "archive/received; original task folder preserved",
   "pilot_completion_evidence": {
     "path": "output/model/fixed_reference_economics_20260928/entry_calibration_pilot_v1/final_verification.json",
@@ -195,24 +199,30 @@
     "material_layout_warnings": 0
   },
   "latest_slide_revision": {
-    "request": "Return to Stone–Geary, retain nonlinear child benefits, explain alternatives and reviewed work naturally, ready ten-slide deck.",
-    "frames": 10,
-    "fit_rows": 14,
-    "free_parameters": 10,
-    "candidate": "verified_global_20261001T0941NY_chain7_0173",
-    "economic_equation_checked_against_native_code": true,
-    "fit_and_parameter_cells_checked_against_full_csv": true,
-    "base_loss": 31.28400725566496,
-    "search_profile": "early4x",
-    "search_loss": 54.52095879194978,
+    "request": "Replace preference alternatives with credit timing, add full identification, and compare both overnight hard/quarter-saving fits.",
+    "fit_slide": 8,
+    "identification_slide": 7,
+    "credit_timing_slide": 13,
+    "free_parameters_each": 10,
+    "fit_rows_each": 14,
+    "parameter_rows_each": 31,
+    "H0": "derived at normalized N0=1",
+    "target_weights": "shared original ten scored weights",
+    "hard_loss": 97.01121981277964,
+    "quarter_saving_loss": 51.55603604909936,
     "search_convergence_certified": false,
-    "specification_author_selected": true,
-    "production_estimates_adopted": false,
-    "floor_at_upper_bound": true,
-    "nonnegative_mean_preserving_entry": true,
-    "unsecured_credit": 0,
-    "H0_fixed": 6.293507689200028,
-    "route": "Lead economics and numerical identity review; Luna scoped TeX and evidence-document edits."
+    "paper_baseline_adopted": false,
+    "source_identity_and_root_repeat_checked": true,
+    "all_displayed_fit_and_parameter_values_verified": true,
+    "credit_equations_checked_against_native_saving_floor": true,
+    "numeric_example": "Q=100,A=10,phi=.8,S=40: A+.25S=20",
+    "identification_rank_verified": false,
+    "full_parameter_to_moment_mapping": true,
+    "validation_moments_separate": true,
+    "PSID_frame_unchanged": true,
+    "main_JMP_unchanged": true,
+    "model_runs_this_task": 0,
+    "route": "Luna bounded extraction and mechanical TeX/docs; Sol independent timing/identification grounding; lead specification and validation."
   },
   "previous_review": {
     "review_date": "2026-09-30",
@@ -315,5 +325,69 @@
     "render_checked": true,
     "native_compile": "success",
     "pdflatex_passes": 2
+  },
+  "previous_latest_slide_revision": {
+    "request": "Return to Stone–Geary, retain nonlinear child benefits, explain alternatives and reviewed work naturally, ready ten-slide deck.",
+    "frames": 10,
+    "fit_rows": 14,
+    "free_parameters": 10,
+    "candidate": "verified_global_20261001T0941NY_chain7_0173",
+    "economic_equation_checked_against_native_code": true,
+    "fit_and_parameter_cells_checked_against_full_csv": true,
+    "base_loss": 31.28400725566496,
+    "search_profile": "early4x",
+    "search_loss": 54.52095879194978,
+    "search_convergence_certified": false,
+    "specification_author_selected": true,
+    "production_estimates_adopted": false,
+    "floor_at_upper_bound": true,
+    "nonnegative_mean_preserving_entry": true,
+    "unsecured_credit": 0,
+    "H0_fixed": 6.293507689200028,
+    "route": "Lead economics and numerical identity review; Luna scoped TeX and evidence-document edits."
+  },
+  "all_fourteen_pages_visually_reviewed": true,
+  "selected_overnight_evidence": {
+    "files": [
+      {
+        "arm": "hard",
+        "original": "output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/collection/readout/hard/selected_root/target_fit.csv",
+        "copy": "latex/corina_progress_20260930/evidence/overnight_hard_target_fit.csv",
+        "sha256": "ef528d4d9ebe29dc0e91ebbe35b89595b363fb80c4fe353fa5cd0b0be0f9faa8"
+      },
+      {
+        "arm": "hard",
+        "original": "output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/collection/readout/hard/selected_root/parameters.csv",
+        "copy": "latex/corina_progress_20260930/evidence/overnight_hard_parameters.csv",
+        "sha256": "f6d353c32a2d84edafda144e4733601f0ed50a8a62f75e52356fd9788b789b8d"
+      },
+      {
+        "arm": "hard",
+        "original": "output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/collection/readout/hard/selected_root/closure.json",
+        "copy": "latex/corina_progress_20260930/evidence/overnight_hard_closure.json",
+        "sha256": "3af93b4173dde9cffe1f4b17e8ab06f518e5ab4ff3df837f0fdaeaf06b039067"
+      },
+      {
+        "arm": "quarter",
+        "original": "output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/collection/readout/quarter/selected_root/target_fit.csv",
+        "copy": "latex/corina_progress_20260930/evidence/overnight_quarter_target_fit.csv",
+        "sha256": "28c8f020e608c09a7c9f07c0eb310b174da434acfb81137ced7cde19491a61ac"
+      },
+      {
+        "arm": "quarter",
+        "original": "output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/collection/readout/quarter/selected_root/parameters.csv",
+        "copy": "latex/corina_progress_20260930/evidence/overnight_quarter_parameters.csv",
+        "sha256": "e4bceb5d163014d08a3ecd63cd164d35130cf9d7435ba02c041b6590bf87aae0"
+      },
+      {
+        "arm": "quarter",
+        "original": "output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/collection/readout/quarter/selected_root/closure.json",
+        "copy": "latex/corina_progress_20260930/evidence/overnight_quarter_closure.json",
+        "sha256": "539de8e55c25aa69d27a1b20e97e790ab56482535823010505832df24b659017"
+      }
+    ],
+    "root_repeat_bytes_equal": true,
+    "contract": "Oct2 hard/quarter-saving80percent, normalizedN0=1, H0derived, original10scoredweights",
+    "optimizer_convergence_certified": false
   }
 }
