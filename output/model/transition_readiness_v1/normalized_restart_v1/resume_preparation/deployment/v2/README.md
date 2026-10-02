@@ -1,3 +1,5 @@
+First12-date transition mapping atpsi0.1307908333 is available: provisional2020–23 model1.7391019514,target1.64575,gap0.09335195145,loss0.008714586839. Housing/fiscalpaths are unconverged;16-datecomparison and fitted2023checkpoint absent. Allfourrows/weights/contributions: [live_partial_target_fit.csv](live_partial_target_fit.csv). Sourcehash,boundsanddeclaredprovisionalstatus: [live_partial_fit.json](live_partial_fit.json). This is not a completedcandidate orfit.
+
 SchedulerverifiedRUNNING, start21:49:45 NewYork (job18995772). No completedfitresult yet.
 
 Job18995772 submitted bylead; first schedulercheckPENDING. Actualzero-call reference/JrestorePASSED onTorch. Ten-minute monitorACTIVE; originaldeadline23:18:48unchanged. No completedcandidate orfitclaim.

@@ -1,0 +1,106 @@
+{
+  "source_path": "/scratch/td2248/projects/transition_readiness_v1/normalized_resumed_fit_v2/results/normalized_resumed_fit_v2/candidate_0001/horizon_012/map_001/mapping.json",
+  "sha256": "fa48dcb6622c1d2e4e15065a14e570776ccb40206cb869cde980af5250934818",
+  "fertility": [
+    {
+      "period": 0,
+      "calendar_year": 2007,
+      "period_tfr_topcode_adjusted": 1.670380666807178
+    },
+    {
+      "period": 1,
+      "calendar_year": 2011,
+      "period_tfr_topcode_adjusted": 1.6921831242071108
+    },
+    {
+      "period": 2,
+      "calendar_year": 2015,
+      "period_tfr_topcode_adjusted": 1.7127606631313552
+    },
+    {
+      "period": 3,
+      "calendar_year": 2019,
+      "period_tfr_topcode_adjusted": 1.7391019514479003
+    }
+  ],
+  "policy_calls": 12,
+  "total_native_calls": 26,
+  "accounting_valid": true,
+  "market_residual": [
+    -0.04853987733299952,
+    -0.037181012399843574,
+    -0.015004035402605961,
+    0.013438673916817719,
+    0.041485369976885185,
+    0.06727948874425327,
+    0.09431501025283401,
+    0.12317107931411533,
+    0.15459528685332835,
+    0.18976504592373672,
+    0.23241500771830018,
+    0.31221093878158335
+  ],
+  "fiscal_residual": [
+    2.0651446327721785e-14,
+    2.5551789524130225e-14,
+    2.951873401646081e-14,
+    3.3952377860830286e-14,
+    -0.006142143771555293,
+    -0.018114727865708585,
+    -0.0313713077594415,
+    -0.04575108434188024,
+    -0.06080217094137667,
+    -0.07694163278105075,
+    -0.09314864622251823,
+    -0.10960149920903504
+  ],
+  "status": "PROVISIONAL_FIRST_UNCONVERGED_H12_MAP",
+  "candidate": 1,
+  "psi_guess": 0.13079083328964047,
+  "psi_bounds": [
+    0.0017198899419542373,
+    0.3439779883908475
+  ],
+  "estimated_shock": false,
+  "horizon_comparison_available": false,
+  "production_ready": false,
+  "loss": 0.008714586839131117,
+  "target_fit": [
+    {
+      "moment": "period_tfr_2008_2011",
+      "target": 1.974875,
+      "model": 1.670380666807178,
+      "gap": -0.30449433319282204,
+      "weight": 0,
+      "loss_contribution": 0.0,
+      "status": "PROVISIONAL_FIRST_UNCONVERGED_H12_MAP"
+    },
+    {
+      "moment": "period_tfr_2012_2015",
+      "target": 1.861,
+      "model": 1.6921831242071108,
+      "gap": -0.16881687579288918,
+      "weight": 0,
+      "loss_contribution": 0.0,
+      "status": "PROVISIONAL_FIRST_UNCONVERGED_H12_MAP"
+    },
+    {
+      "moment": "period_tfr_2016_2019",
+      "target": 1.755375,
+      "model": 1.7127606631313552,
+      "gap": -0.04261433686864469,
+      "weight": 0,
+      "loss_contribution": 0.0,
+      "status": "PROVISIONAL_FIRST_UNCONVERGED_H12_MAP"
+    },
+    {
+      "moment": "period_tfr_2020_2023",
+      "target": 1.64575,
+      "model": 1.7391019514479003,
+      "gap": 0.0933519514479002,
+      "weight": 1,
+      "loss_contribution": 0.008714586839131117,
+      "status": "PROVISIONAL_FIRST_UNCONVERGED_H12_MAP"
+    }
+  ]
+}
