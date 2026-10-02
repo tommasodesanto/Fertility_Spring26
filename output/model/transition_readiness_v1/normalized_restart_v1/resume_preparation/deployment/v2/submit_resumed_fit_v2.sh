@@ -4,11 +4,11 @@ remote=/scratch/td2248/projects/transition_readiness_v1/normalized_resumed_fit_v
 /share/apps/anaconda3/2025.06/bin/python - "$remote" <<'PY'
 import json,hashlib,sys
 from pathlib import Path
-r=Path(sys.argv[1]);i=json.loads((r/'inventory.json').read_text());assert hashlib.sha256((r/'inventory.json').read_bytes()).hexdigest()=='a4ad1ec0d9b08e3e261bffce5a508b71a7b8d05204e046c42b916f75561adf99'
+r=Path(sys.argv[1]);i=json.loads((r/'inventory.json').read_text());assert hashlib.sha256((r/'inventory.json').read_bytes()).hexdigest()=='4c99010afa74f22b4af20c60a7012fe79727183f3e6f76660ae1c358729e8494'
 for rel,h in i['files'].items():assert hashlib.sha256((r/'source'/rel).read_bytes()).hexdigest()==h,rel
 assert hashlib.sha256((r/'floor_launch.sh').read_bytes()).hexdigest()==i['files']['code/model/experiments/transition_readiness/floor_launch.sh']
 p=r/'source/output/model/transition_readiness_v1/normalized_restart_v1/resume_preparation/deployment/v2/resume_plan.json';assert hashlib.sha256(p.read_bytes()).hexdigest()=='12b7088ba4d6ffef560e302a698a894bb4997c9fed808918b171d47fe7c1b2ff';plan=json.loads(p.read_text())
-a=json.loads((r/'results/restore_smoke_v1/restore_receipt.json').read_text());assert a['status']=='actual_reference_and_measured_J_restored' and a['native_calls']==0 and a['matrix_shape']==[24,24] and a['reference_verified'];assert a['identity']==plan['identity'] and a['controller']==plan['source_files']['controller'] and a['runtime']==plan['source_files']['runtime']
+a=json.loads((r/'results/restore_smoke_v2/restore_receipt.json').read_text());assert a['status']=='actual_reference_and_measured_J_restored' and a['native_calls']==0 and a['matrix_shape']==[24,24] and a['reference_verified'];assert a['identity']==plan['identity'] and a['controller']==plan['source_files']['controller'] and a['runtime']==plan['source_files']['runtime']
 print('PASS frozen metadata restore inventory',len(i['files']))
 PY
 deadline=1790911128;remaining=$((deadline-$(date +%s)))

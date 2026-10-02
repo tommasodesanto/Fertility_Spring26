@@ -1,5 +1,43 @@
 # Calibration Status
 
+## October 1, 21:50 New York — repaired restore verified; replacement submitted
+
+Torch connectivity is restored. Job **18995772** (`normalized_resumed_fit_v2`)
+was submitted once by the lead; the first independent scheduler check is
+**PENDING**. A subsequent scheduler check confirms **RUNNING**, started
+at **21:49:45 New York**. The original hard deadline remains **23:18:48 New York**
+(epoch1790911128), with at most1214 additional native calls. The ten-minute
+heartbeat is active and reports meaningful milestones, completed candidates,
+failures and required action. This is a submitted run, not a completed fit.
+
+The **actual saved-reference restore and24x24 measured Jacobian load passed**
+on Torch with zero native calls, exact identity/source matches and launcher exit0.
+The smoke used the runtime's hard zero-call allowance. Its first attempt hit a
+harness-only solver-identity conflict caused by a monkeypatch; that wrapper was
+removed, the failed attempt preserved, and the full corrected test passed.
+The numerical model and starting guess were unchanged by the harness correction.
+
+The first fit guess is **psi=0.13079083328964047**, not the reference preference.
+The reference stays normalized chain20/case0028_nm, initial physical population
+one, fixed H0=6.851575289344519, reference psi=0.17198899419542374 and bounds
+[0.0017198899419542373,0.3439779883908475]. Population may evolve; H0 stays fixed.
+No economic primitive, target, weight, bound or numerical gate changed.
+All60 tests and the original runtime/controller numerical AST proofs passed.
+Only authenticated H0 reporting metadata is reconciled during saved restoration.
+No old non-normalized reference, state, root or derivative is used.
+
+[Full zero-call restore receipt](output/model/transition_readiness_v1/normalized_restart_v1/resume_preparation/deployment/v2/restore_smoke_v2/restore_receipt.json),
+[submission receipt](output/model/transition_readiness_v1/normalized_restart_v1/resume_preparation/deployment/v2/submission_receipt.json),
+[compact progress](output/model/transition_readiness_v1/normalized_restart_v1/resume_preparation/deployment/v2/latest_progress.json),
+[executed plan](output/model/transition_readiness_v1/normalized_restart_v1/resume_preparation/deployment/v2/resume_plan.json).
+Live heartbeat confirms candidate1 at psi=0.13079083328964047. New-run
+input reuse passed with zero reference solves and zero seed mappings.
+There is no new completed candidate, fitted shock or fitted2023state yet.
+The full four-window target-fit table, shock bounds, exact2023checkpoint and
+stable diagnostic plots remain required before delivery. Author-authorized0.01
+horizon comparisons retain original strict statuses; state,terminal,root,replay
+and production requirements remain unchanged. No automatic extension or restart.
+
 ## October 1, 21:28 New York — restore fix ready; Torch connection unavailable
 
 The author authorized continuing from the previous good numerical starting guess

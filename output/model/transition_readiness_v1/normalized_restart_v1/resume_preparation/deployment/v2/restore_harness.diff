@@ -1,0 +1,15 @@
+--- prepare_only_before.py
++++ prepare_only.py
+@@ -5,11 +5,10 @@
+ root=Path(__file__).resolve().parents[7];sys.path.insert(0,str(root/'code/model/experiments/transition_readiness'))
+ import one_shock_floor as c
+ from floor_runtime import FloorRuntime
+-from floor_report import forbid_solves
+ plan=json.loads(Path(a.plan).read_text());c.preflight(plan);out=Path(a.output)
+ rt=FloorRuntime.from_handoff(plan['handoff'],out/'runtime');adapter=c.NativeAdapter(rt,plan);controller=c.Controller(plan,adapter,out)
+ try:
+-    with rt.native_budget(time.monotonic()+240,0),forbid_solves(rt):
++    with rt.native_budget(time.monotonic()+240,0):
+         controller.prepare()
+     assert rt.total_native_calls==0 and controller.policy_calls==0
+     assert rt.reference_verified and controller.seed['matrix'].shape==(24,24)
