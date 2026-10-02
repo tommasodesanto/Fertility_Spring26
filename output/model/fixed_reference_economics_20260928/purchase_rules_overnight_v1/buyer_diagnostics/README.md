@@ -25,24 +25,24 @@ Once a chain's selected postcheck has passed, `run_selected.py --arm hard|quarte
 
 ## Separate Torch addendum and exact later commands
 
-The separate addendum root is `/scratch/td2248/projects/purchase_buyer_diagnostics_v1`. `stage_torch.sh` writes only that new root. `preflight_torch.sh` checks the SHA-256 of every staged buyer, mechanism, floor and base source, then runs the native financial map with the authenticated input bundle for both purchase rules and **zero model solves**. It does not submit jobs. From the repository root:
+The original separate addendum root is `/scratch/td2248/projects/purchase_buyer_diagnostics_v1`; preserve it unchanged. The selection-snapshot-compatible addendum stages under `/scratch/td2248/projects/purchase_buyer_diagnostics_v2`. `preflight_torch.sh` checks the SHA-256 of every staged buyer, mechanism, floor and base source, then runs the native financial map with the authenticated input bundle for both purchase rules and **zero model solves**. It does not submit jobs. From the repository root:
 
 ```sh
 bash output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/stage_torch.sh
-ssh -o BatchMode=yes torch 'bash /scratch/td2248/projects/purchase_buyer_diagnostics_v1/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/preflight_torch.sh'
+ssh -o BatchMode=yes torch 'bash /scratch/td2248/projects/purchase_buyer_diagnostics_v2/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/preflight_torch.sh'
 ```
 
-After `purchase_mechanism_v1/selection/manifest.json` points to two actually postchecked winners, submit one saved-policy readout per arm. The wrapper rechecks all source hashes and the chosen selection JSON/completed-receipt hashes before entering the native runtime. It then requires both exact ROOT/REPEAT reports, 14 targets, 31 parameters, 17 plots and the retained repeat arrays. It writes only under its new result directory.
+After `purchase_mechanism_v1/selection/manifest.json` points to two actually postchecked winners, submit one saved-policy readout per arm. The wrapper mounts the immutable `purchase_mechanism_v1/selected_postchecks/` snapshot, keeps each winner's original physical source and restart-parent provenance, and verifies the chosen JSON, completed receipt, full report and native-array SHA-256 values before entering the native runtime. It then requires both exact ROOT/REPEAT reports, 14 targets, 31 parameters, 17 plots and the retained repeat arrays. It writes only under its new result directory.
 
 ```sh
-ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=selected,BUYER_ARM=hard /scratch/td2248/projects/purchase_buyer_diagnostics_v1/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
-ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=selected,BUYER_ARM=quarter /scratch/td2248/projects/purchase_buyer_diagnostics_v1/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
+ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=selected,BUYER_ARM=hard /scratch/td2248/projects/purchase_buyer_diagnostics_v2/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
+ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=selected,BUYER_ARM=quarter /scratch/td2248/projects/purchase_buyer_diagnostics_v2/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
 ```
 
 After a dated mechanism case has `run/completed.json` with `status=passed`, the same readout wrapper resolves its accepted mapping, checks the selected date packet exists, and reads the model's observed financed share for that date. For example, the date-zero control packet for the hard rule:
 
 ```sh
-ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=dated,BUYER_ARM=hard,BUYER_CASE=case_00_hard_control_h12,BUYER_DATE=date_000 /scratch/td2248/projects/purchase_buyer_diagnostics_v1/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
+ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=dated,BUYER_ARM=hard,BUYER_CASE=case_00_hard_control_h12,BUYER_DATE=date_000 /scratch/td2248/projects/purchase_buyer_diagnostics_v2/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
 ```
 
 Substitute the actual accepted case name and `date_000`, midpoint or final date. The wrapper refuses missing or failed case receipts. It runs one CPU, 12 GiB, one thread and 20 minutes at most. It never starts a Bellman, equilibrium or transition solve. Existing calibration and mechanism inventories are read-only and remain unchanged.

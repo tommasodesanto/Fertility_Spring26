@@ -5,16 +5,15 @@
 #SBATCH --time=00:20:00
 #SBATCH --account=torch_pr_570_general
 #SBATCH --partition=cs
-#SBATCH --output=/scratch/td2248/projects/purchase_buyer_diagnostics_v1/logs/%x-%j.out
+#SBATCH --output=/scratch/td2248/projects/purchase_buyer_diagnostics_v2/logs/%x-%j.out
 # Saved-policy postprocessing only. Submit with BUYER_MODE/BUYER_ARM etc.
 set -euo pipefail
 mode=${BUYER_MODE:?Set BUYER_MODE=selected or dated}
 arm=${BUYER_ARM:?Set BUYER_ARM=hard or quarter}
 [[ "$mode" == selected || "$mode" == dated ]] || exit 2
 [[ "$arm" == hard || "$arm" == quarter ]] || exit 2
-remote=/scratch/td2248/projects/purchase_buyer_diagnostics_v1
+remote=/scratch/td2248/projects/purchase_buyer_diagnostics_v2
 mechanism=/scratch/td2248/projects/purchase_mechanism_v1
-calibration=/scratch/td2248/projects/purchase_rules_overnight_v1
 floor=/scratch/td2248/projects/normalized_floor_calibration_v1
 base=/scratch/td2248/projects/grid_resolution_credit053_v2
 frozen=/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project
@@ -37,15 +36,28 @@ PY
 case=${BUYER_CASE:-}
 date=${BUYER_DATE:-date_000}
 if [[ "$mode" == selected ]]; then
-  read -r chain < <("$python" - "$mechanism/selection/manifest.json" "$mechanism/selection/selected_${arm}.json" "$calibration" "$arm" <<'PY'
+  read -r chain < <("$python" - "$mechanism/selection/manifest.json" "$mechanism/selection/selected_${arm}.json" "$mechanism" "$arm" <<'PY'
 import hashlib,json,sys
 from pathlib import Path
 m=json.load(open(sys.argv[1]));s=json.load(open(sys.argv[2]));c=Path(sys.argv[3]);arm=sys.argv[4];e=m['arms'][arm]
-p=c/'results'/('chain_'+str(e['chain']))/'postcheck/completed.json'
+def sha(path):
+ h=hashlib.sha256()
+ with path.open('rb') as f:
+  for block in iter(lambda:f.read(1048576),b''): h.update(block)
+ return h.hexdigest()
+p=c/'selected_postchecks'/('chain_'+str(e['chain']))/'postcheck/completed.json'
 assert s['status']=='postchecked' and s['arm']==arm and int(s['chain'])==int(e['chain'])
+assert e['snapshot_remote_root']==str(p.parent.parent) and s['snapshot_remote_root']==str(p.parent.parent)
+assert s['origin']==e['origin'] and s['remote_root']==e['physical_remote_root']
+assert s.get('parent_remote_root')==e['parent_remote_root']
 assert hashlib.sha256(Path(sys.argv[2]).read_bytes()).hexdigest()==e['selected_json_sha256']
 assert hashlib.sha256(p.read_bytes()).hexdigest()==e['completed_sha256']
 assert json.load(open(p))['status']=='selected_numerically_verified'
+report=p.parent/'selected_postcheck/phase_b_ge/selected_root'
+for name,digest in e['report_sha256'].items():
+ assert hashlib.sha256((report/name).read_bytes()).hexdigest()==digest
+arrays=p.parent/'selected_postcheck/phase_b_ge/selected_repeat/stage/solution_arrays.npz'
+assert sha(arrays)==e['native_arrays_sha256']
 print(e['chain'])
 PY
 )
@@ -84,7 +96,7 @@ binds+=(--bind "$mechanism/source/$packet:$repo/$packet:ro")
 binds+=(--bind "$mechanism/source/code/model/experiments/transition_readiness:$repo/code/model/experiments/transition_readiness:ro")
 binds+=(--bind "$mechanism/source/output/model/transition_readiness_v1/normalized_restart_v1/deployment/fit_plan.json:$repo/output/model/transition_readiness_v1/normalized_restart_v1/deployment/fit_plan.json:ro")
 binds+=(--bind "$remote/source/$packet/buyer_diagnostics:$repo/$packet/buyer_diagnostics:ro")
-binds+=(--bind "$calibration/results:$repo/$packet/results:ro")
+binds+=(--bind "$mechanism/selected_postchecks:$repo/$packet/results:ro")
 binds+=(--bind "$mechanism/selection:$repo/$packet/collection/readout:ro")
 binds+=(--bind "$mechanism/results:$repo/$packet/mechanism/results:ro")
 if [[ "$mode" == selected ]]; then
