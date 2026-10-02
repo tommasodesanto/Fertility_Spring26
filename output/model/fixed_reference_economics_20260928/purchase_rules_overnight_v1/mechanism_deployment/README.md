@@ -1,5 +1,18 @@
 # Overnight dated financing experiments: launch handoff
 
+**October 2, 07:23 New York progress.** The 48/64-date extension's four 80%
+control cases passed. Its hard-rule, temporary 100% financing, 48-date case
+passed all terminal and numerical gates against its matched 80% control. In
+the first period, first-birth flow was 0.04980374667823033 under 80% and
+0.04953396493829134 under 100%, a 0.5416896477% decrease. The aggregate
+first-birth hazard fell by 0.08487845 percentage points. Seven other policy
+cases were running with no new failures; the 64-date consistency check is
+pending. See [accepted_hard_temporary_h48_0722.json](accepted_hard_temporary_h48_0722.json)
+and [progress_0722.json](progress_0722.json). The underlying hard and quarter
+fits remain fresh-postchecked at losses 97.0112198 and 51.5560360,
+respectively, without optimizer convergence certificates. They are
+experimental selected points, not adopted paper baselines.
+
 This is a **prepared, unsubmitted** Torch launcher for the accepted diagnostic plan: two separately fitted 80% purchase-rule baselines (hard and quarter-saving), each compared with a 100% financed-share change for one date and permanently. It runs control, temporary and permanent paths at both 12 and 16 dates: 12 dated cases. The 80% baseline parameters, housing-supply coefficient \(H_0\), earnings, entry, fiscal objects, child preference and all calibration targets remain those of each selected rule. The mechanism source in `../mechanism/` owns the economics and numerical roots; this deployment does not modify it.
 
 Each case has one CPU, 32 GiB, one numerical thread, at most four hours from its actual start, at most 1,024 native policy calls, and an absolute stop at **10:00 New York on October 2, 2026** (epoch `1790949600`). With a 05:30 start, the four-hour cap ends near 09:30. A later start has less time. These are limits, not completion guarantees. Recent single fixed-price household solves took roughly 2–4 minutes before warm reuse; dated mappings may use additional one-date solves, so 1,024 calls is a generous ceiling rather than an expected count. The selected fit and native one-date smoke must pass first. Per-case `run.log`, native mapping progress, latest/best receipts and a terminal or failure receipt remain readable during execution. No automatic retry or contract fallback is configured.

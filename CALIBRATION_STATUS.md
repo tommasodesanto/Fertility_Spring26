@@ -50,10 +50,19 @@ at 06:11 New York with unchanged economics and terminal acceptance gates.
 Smoke array **19024491** passed both arms with three native calls each;
 all 12 production tasks in **19024492** were RUNNING at 06:16. Each task
 has at most 1,024 native policy calls and four hours, subject to the absolute
-10:00 New York cutoff. The longer-horizon results are not yet accepted.
-There is **no accepted 100% policy first-birth response yet**. A selected
-numerical calibration point is an input to those runs, not evidence of a
-fertility effect of 80-to-100% financing. Saved-policy buyer diagnostic v4
+10:00 New York cutoff. At the 07:23 progress check, all four 80% controls
+had passed, seven other policy cases were running, and no new failures were
+reported. The **hard-rule, temporary 100% financing, 48-date** case passed
+all numerical gates against its matched 80% control. Its first-period
+first-birth flow fell from 0.0498037467 to 0.0495339649, a **0.5416896477%**
+decrease; the aggregate first-birth hazard fell by **0.08487845 percentage
+points**. The 64-date consistency check and other policy responses remain
+pending. This is an accepted result for the selected experimental hard-rule
+fit, which remains fresh-postchecked at loss 97.0112198; the quarter fit
+remains fresh-postchecked at loss 51.5560360. Neither optimizer has a
+convergence certificate, and neither fit is an adopted paper baseline.
+The receipts are in `output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/mechanism_deployment/accepted_hard_temporary_h48_0722.json`
+and `progress_0722.json` in that directory. Saved-policy buyer diagnostic v4
 jobs **19022340** (hard) and
 **19022341** (quarter-saving) passed with zero model solves. Among actual
 first-birth flow originating from renters, **61.829%** under the hard rule and
