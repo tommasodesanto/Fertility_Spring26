@@ -5,15 +5,18 @@
 #SBATCH --time=00:20:00
 #SBATCH --account=torch_pr_570_general
 #SBATCH --partition=cs
-#SBATCH --output=/scratch/td2248/projects/purchase_buyer_diagnostics_v4/logs/%x-%j.out
+#SBATCH --output=/scratch/td2248/projects/purchase_buyer_diagnostics_v5/logs/%x-%j.out
 # Saved-policy postprocessing only. Submit with BUYER_MODE/BUYER_ARM etc.
 set -euo pipefail
 mode=${BUYER_MODE:?Set BUYER_MODE=selected or dated}
 arm=${BUYER_ARM:?Set BUYER_ARM=hard or quarter}
 [[ "$mode" == selected || "$mode" == dated ]] || exit 2
 [[ "$arm" == hard || "$arm" == quarter ]] || exit 2
-remote=/scratch/td2248/projects/purchase_buyer_diagnostics_v4
+remote=/scratch/td2248/projects/purchase_buyer_diagnostics_v5
 mechanism=/scratch/td2248/projects/purchase_mechanism_reviewed_93831f5a
+if [[ "$mode" == dated ]]; then
+  mechanism=/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1
+fi
 selection_store=/scratch/td2248/projects/purchase_mechanism_v1
 floor=/scratch/td2248/projects/normalized_floor_calibration_v1
 base=/scratch/td2248/projects/grid_resolution_credit053_v2
@@ -64,22 +67,14 @@ PY
 )
   name="selected_${arm}"
 else
-  [[ "$case" =~ ^case_[0-9][0-9]_(hard|quarter)_(control|temporary|permanent)_h(12|16)$ ]] || exit 2
-  [[ "$date" =~ ^date_[0-9][0-9][0-9]$ ]] || exit 2
+  [[ "$case" == case_00_hard_control_h48 || "$case" == case_01_hard_temporary_h48 ]] || exit 2
+  [[ "$date" == date_000 ]] || exit 2
   [[ "$case" == *"_${arm}_"* ]] || exit 2
-  read -r relative observed_phi < <("$python" - "$mechanism/results/$case/run/completed.json" "$mechanism/results/$case/run" "$date" "$arm" <<'PY'
-import json,sys
-from pathlib import Path
-d=json.load(open(sys.argv[1]));base=Path(sys.argv[2]);date=sys.argv[3];arm=sys.argv[4]
-assert d['status']=='passed' and d['arm']==arm
-accepted=Path(d['accepted_mapping'])
-rel=accepted.relative_to('/work/results/run')
-packet=base/rel/date/'diagnostic_packet.pkl.gz'
-assert packet.is_file(),packet
-phi=float(d['phi_path'][int(date[-3:])]);assert phi in (.8,1.)
-print(str(rel/date/'diagnostic_packet.pkl.gz'),phi)
-PY
-)
+  dated_receipt=$("$python" "$remote/source/$packet/buyer_diagnostics/verify_dated_extension.py" \
+    --root "$mechanism" --store "$selection_store" --case "$case" --date "$date")
+  read -r relative observed_phi < <("$python" -c \
+    'import json,sys; d=json.load(sys.stdin); print(d["relative_packet"],d["observed_phi"])' \
+    <<< "$dated_receipt")
   name="${case}_${date}"
 fi
 out="$remote/results/$name"

@@ -10,7 +10,7 @@ HERE = Path(__file__).resolve().parent
 PACKET = HERE.parent
 ROOT = PACKET.parents[3]
 SOURCES = ("summarize_saved_buyers.py", "financial_access.py", "run_selected.py",
-           "run_dated.py", "preflight_native.py", "preflight_torch.sh", "stage_torch.sh",
+           "run_dated.py", "verify_dated_extension.py", "preflight_native.py", "preflight_torch.sh", "stage_torch.sh",
            "launch_readout.sh", "README.md")
 REL = HERE.relative_to(ROOT)
 
@@ -22,7 +22,7 @@ def main() -> None:
                  "no_model_solve": True,
                  "separate_from_calibration_and_mechanism_source_pins": True}
     (HERE / "inventory.json").write_text(json.dumps(inventory, indent=2, sort_keys=True) + "\n")
-    archive = HERE / "buyer_diagnostics_stage_v4.tar.gz"
+    archive = HERE / "buyer_diagnostics_stage_v5.tar.gz"
     with tarfile.open(archive, "w:gz") as tar:
         for name in SOURCES:
             tar.add(HERE / name, arcname=str(Path("source") / REL / name), recursive=False)

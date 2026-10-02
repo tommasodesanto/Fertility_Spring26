@@ -75,3 +75,23 @@ ssh -o BatchMode=yes torch 'bash /scratch/td2248/projects/purchase_buyer_diagnos
 ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=selected,BUYER_ARM=hard /scratch/td2248/projects/purchase_buyer_diagnostics_v4/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
 ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=selected,BUYER_ARM=quarter /scratch/td2248/projects/purchase_buyer_diagnostics_v4/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
 ```
+
+## T48 accepted dated packets: staged v5 route
+
+The separate v5 buyer source is for saved-policy access readouts from the longer-horizon mechanism root `/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1`. The only dated cases currently routed are `case_00_hard_control_h48` and `case_01_hard_temporary_h48`, each at `date_000`. The latter's accepted receipt is under `run/dated_path/completed.json`; the control receipt is under `run/completed.json`. `verify_dated_extension.py` requires an exit-zero launcher, passed terminal and mapping gates, the unchanged hard-rule selected postcheck, the exact accepted mapping, and the mapping's SHA-256 pin for its date-zero packet. It derives the observed financed share from the accepted path: 80% for control, 100% for temporary. The mechanism and selected-postcheck roots are mounted read-only. `run_dated.py` then computes financial access from the saved date-zero policy and pre-choice distribution, with no Bellman, equilibrium, or dated root call. This is a financial-access addendum, not a first-birth response estimate.
+
+The source-only v5 stage and zero-solve preflight commands are:
+
+```sh
+bash output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/stage_torch.sh
+ssh -o BatchMode=yes torch 'bash /scratch/td2248/projects/purchase_buyer_diagnostics_v5/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/preflight_torch.sh'
+```
+
+After review, the two dated jobs would use these exact commands; **they have not been submitted by this routing change**:
+
+```sh
+ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=dated,BUYER_ARM=hard,BUYER_CASE=case_00_hard_control_h48,BUYER_DATE=date_000 /scratch/td2248/projects/purchase_buyer_diagnostics_v5/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
+ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=dated,BUYER_ARM=hard,BUYER_CASE=case_01_hard_temporary_h48,BUYER_DATE=date_000 /scratch/td2248/projects/purchase_buyer_diagnostics_v5/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
+```
+
+Each readout requests one CPU, 12 GiB, and 20 minutes; simultaneous allocation would be two CPUs and 24 GiB. Results go only to `/scratch/td2248/projects/purchase_buyer_diagnostics_v5/results/`.
