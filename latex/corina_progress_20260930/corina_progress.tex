@@ -125,7 +125,7 @@ person and year effects; survey weights; 95\% pointwise intervals.
 
 % 13: The purchase-timing rules.
 \begin{frame}{Credit timing}
-\small
+\fontsize{9.6}{11.2}\selectfont
 A renter with financial wealth $b$ and period income $y$ who buys a home worth $Q=pH$:
 \[
 c+(\delta+\tau_H)\,Q+b'=R\,(b-Q)+y .
@@ -134,13 +134,15 @@ A purchase requires a 20\% down payment, $(1-\phi)Q$ with $\phi=0.8$. The rules 
 \[
 b+\lambda\,S\ \ge\ (1-\phi)\,Q .
 \]
-\begin{itemize}\setlength\itemsep{4pt}
+\begin{itemize}\setlength\itemsep{1pt}
  \item Soft, $\lambda=1$: all of the period's saving counts. With four-year periods, four years of saving can pay the down payment.
  \item Quarter-saving, $\lambda=\tfrac14$: a quarter of it counts, roughly one year of saving.
  \item Hard, $\lambda=0$: only wealth brought into the period counts.
 \end{itemize}
-\medskip
-Hard and quarter-saving also require $b'\ge-\phi Q$ and a nonnegative net estate for buyers, $b'\ge-(1-\psi_s)Q$ at ages with mortality risk, where $\psi_s$ is the selling cost.
+\smallskip
+\textbf{The problem.} In practice the down payment must be in hand at closing. A model period is four years, so under soft a buyer can close with little equity and reach 20\% only through saving over the next four years. Hard and quarter-saving are two ways to correct this.
+\par\smallskip
+\scriptsize Hard and quarter-saving also require $b'\ge-\phi Q$ and a nonnegative net estate for buyers, $b'\ge-(1-\psi_s)Q$ at ages with mortality risk ($\psi_s$: selling cost).
 \end{frame}
 
 % 7: Parameters and target moments across the ten jointly estimated parameters.
