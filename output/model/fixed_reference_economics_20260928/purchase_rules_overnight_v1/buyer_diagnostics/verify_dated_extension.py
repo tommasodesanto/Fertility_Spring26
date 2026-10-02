@@ -1,4 +1,4 @@
-"""Read-only authentication of accepted T48 date-zero buyer packets."""
+"""Read-only authentication of accepted quarter-rule T48 date-zero packets."""
 from __future__ import annotations
 
 import argparse
@@ -9,8 +9,8 @@ from pathlib import Path
 ROOT = Path('/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1')
 STORE = Path('/scratch/td2248/projects/purchase_mechanism_v1')
 MANIFEST_SHA = '19db8dfcc928c4cdea5810f70c4e62a9de65372bd038646d0bc2d49532913879'
-CASES = {'case_00_hard_control_h48': 'control',
-         'case_01_hard_temporary_h48': 'temporary'}
+CASES = {'case_06_quarter_control_h48': ('quarter', 'control', 48),
+         'case_07_quarter_temporary_h48': ('quarter', 'temporary', 48)}
 
 
 def require(ok, message):
@@ -31,16 +31,16 @@ def read(path):
 
 
 def authenticate(root: Path, store: Path, case: str, date: str) -> dict:
-    require(case in CASES and date == 'date_000', 'Only accepted hard T48 date zero is routed')
-    kind = CASES[case]
+    require(case in CASES and date == 'date_000', 'Only accepted quarter T48 date zero is routed')
+    arm, kind, horizon = CASES[case]
     manifest_path = store / 'selection/manifest.json'
     require(sha(manifest_path) == MANIFEST_SHA, 'Immutable selection manifest differs')
-    selected = read(manifest_path)['arms']['hard']
-    chosen = store / 'selection/selected_hard.json'
-    require(sha(chosen) == selected['selected_json_sha256'], 'Selected hard JSON differs')
+    selected = read(manifest_path)['arms'][arm]
+    chosen = store / 'selection' / f'selected_{arm}.json'
+    require(sha(chosen) == selected['selected_json_sha256'], 'Selected arm JSON differs')
     selected_json = read(chosen)
-    require(selected_json['status'] == 'postchecked' and selected_json['arm'] == 'hard'
-            and int(selected_json['chain']) == int(selected['chain']), 'Selected hard identity differs')
+    require(selected_json['status'] == 'postchecked' and selected_json['arm'] == arm
+            and int(selected_json['chain']) == int(selected['chain']), 'Selected arm identity differs')
     snapshot = store / 'selected_postchecks' / f"chain_{selected['chain']}"
     require(selected['snapshot_remote_root'] == str(snapshot)
             and selected_json['snapshot_remote_root'] == str(snapshot)
@@ -56,18 +56,18 @@ def authenticate(root: Path, store: Path, case: str, date: str) -> dict:
     require(read(run.parent / 'launcher_terminal.json')['exit_code'] == 0,
             'Mechanism launcher did not finish successfully')
     contract = read(run / 'run_contract.json')
-    require(contract['arm'] == 'hard' and contract['kind'] == kind
-            and int(contract['horizon']) == 48
+    require(contract['arm'] == arm and contract['kind'] == kind
+            and int(contract['horizon']) == horizon
             and contract['selected_json_sha256'] == selected['selected_json_sha256']
             and contract['selected_sha256'] == selected['completed_sha256']
             and contract['fixed_H0'] is True,
-            'Dated contract differs from selected hard fit')
+            'Dated contract differs from selected fit')
     completed = run / ('completed.json' if kind == 'control' else 'dated_path/completed.json')
     accepted = read(completed)
-    require(accepted['status'] == 'passed' and accepted['arm'] == 'hard'
-            and accepted['kind'] == kind and int(accepted['horizon']) == 48
+    require(accepted['status'] == 'passed' and accepted['arm'] == arm
+            and accepted['kind'] == kind and int(accepted['horizon']) == horizon
             and accepted['terminal']['all_checks_pass'] is True
-            and len(accepted['rows']) == len(accepted['phi_path']) == 48,
+            and len(accepted['rows']) == len(accepted['phi_path']) == horizon,
             'Dated completion or terminal gate failed')
     if kind == 'temporary':
         dated_root = read(run / 'dated_path/root.json')
@@ -80,7 +80,7 @@ def authenticate(root: Path, store: Path, case: str, date: str) -> dict:
             else mapping_rel.parent == Path('dated_path') and mapping_rel.name.startswith('mapping_'),
             'Accepted mapping directory differs')
     mapping = read(run / mapping_rel / 'mapping.json')
-    require(all(mapping['gates'].values()) and len(mapping['rows']) == 48,
+    require(all(mapping['gates'].values()) and len(mapping['rows']) == horizon,
             'Accepted native mapping gates failed')
     packets = [p for p in mapping['diagnostic_packets'] if int(p['period']) == 0]
     require(len(packets) == 1, 'Unique accepted date-zero packet missing')

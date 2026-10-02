@@ -95,3 +95,23 @@ ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=dated,BUYER_ARM=hard,
 ```
 
 Each readout requests one CPU, 12 GiB, and 20 minutes; simultaneous allocation would be two CPUs and 24 GiB. Results go only to `/scratch/td2248/projects/purchase_buyer_diagnostics_v5/results/`.
+
+## Separate v6 quarter-rule T48 route
+
+The v5 hard-rule source and results remain immutable. This v6 source limits dated access to the newly accepted `case_06_quarter_control_h48` and `case_07_quarter_temporary_h48`, both at `date_000`, in the same longer-horizon mechanism root. `verify_dated_extension.py` selects the quarter fit from the unchanged selection manifest and applies the same launcher, contract, terminal/root/mapping, and exact-packet SHA checks. It refuses all other cases and dates. Its matched-state access percentages use each path's realized first-birth weights and prices; they are not the causal first-birth effect.
+
+Stage and run the zero-solve source/native preflight with:
+
+```sh
+bash output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/stage_torch.sh
+ssh -o BatchMode=yes torch 'bash /scratch/td2248/projects/purchase_buyer_diagnostics_v6/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/preflight_torch.sh'
+```
+
+Only after review, the two quarter readouts would be submitted with:
+
+```sh
+ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=dated,BUYER_ARM=quarter,BUYER_CASE=case_06_quarter_control_h48,BUYER_DATE=date_000 /scratch/td2248/projects/purchase_buyer_diagnostics_v6/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
+ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=dated,BUYER_ARM=quarter,BUYER_CASE=case_07_quarter_temporary_h48,BUYER_DATE=date_000 /scratch/td2248/projects/purchase_buyer_diagnostics_v6/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
+```
+
+Each is bounded to one CPU, 12 GiB, and 20 minutes. No v6 readout job is submitted by staging or preflight.

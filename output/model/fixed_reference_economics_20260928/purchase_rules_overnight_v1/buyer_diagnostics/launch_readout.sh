@@ -5,14 +5,14 @@
 #SBATCH --time=00:20:00
 #SBATCH --account=torch_pr_570_general
 #SBATCH --partition=cs
-#SBATCH --output=/scratch/td2248/projects/purchase_buyer_diagnostics_v5/logs/%x-%j.out
+#SBATCH --output=/scratch/td2248/projects/purchase_buyer_diagnostics_v6/logs/%x-%j.out
 # Saved-policy postprocessing only. Submit with BUYER_MODE/BUYER_ARM etc.
 set -euo pipefail
 mode=${BUYER_MODE:?Set BUYER_MODE=selected or dated}
 arm=${BUYER_ARM:?Set BUYER_ARM=hard or quarter}
 [[ "$mode" == selected || "$mode" == dated ]] || exit 2
 [[ "$arm" == hard || "$arm" == quarter ]] || exit 2
-remote=/scratch/td2248/projects/purchase_buyer_diagnostics_v5
+remote=/scratch/td2248/projects/purchase_buyer_diagnostics_v6
 mechanism=/scratch/td2248/projects/purchase_mechanism_reviewed_93831f5a
 if [[ "$mode" == dated ]]; then
   mechanism=/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1
@@ -67,7 +67,7 @@ PY
 )
   name="selected_${arm}"
 else
-  [[ "$case" == case_00_hard_control_h48 || "$case" == case_01_hard_temporary_h48 ]] || exit 2
+  [[ "$case" == case_06_quarter_control_h48 || "$case" == case_07_quarter_temporary_h48 ]] || exit 2
   [[ "$date" == date_000 ]] || exit 2
   [[ "$case" == *"_${arm}_"* ]] || exit 2
   dated_receipt=$("$python" "$remote/source/$packet/buyer_diagnostics/verify_dated_extension.py" \

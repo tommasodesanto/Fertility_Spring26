@@ -22,7 +22,7 @@ def main() -> None:
                  "no_model_solve": True,
                  "separate_from_calibration_and_mechanism_source_pins": True}
     (HERE / "inventory.json").write_text(json.dumps(inventory, indent=2, sort_keys=True) + "\n")
-    archive = HERE / "buyer_diagnostics_stage_v5.tar.gz"
+    archive = HERE / "buyer_diagnostics_stage_v6.tar.gz"
     with tarfile.open(archive, "w:gz") as tar:
         for name in SOURCES:
             tar.add(HERE / name, arcname=str(Path("source") / REL / name), recursive=False)
