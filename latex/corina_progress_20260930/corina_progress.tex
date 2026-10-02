@@ -185,20 +185,21 @@ $\beta$ & Patience & Wealth / earnings & 6.927 \\
 $\theta_0$ & Bequest weight & Annual bequests / wealth (\%)$^*$ & 0.729 \\
 \midrule
 \multicolumn{4}{@{}l}{\emph{Housing and tenure}}\\
-$\chi$ & Owner housing premium & Mean rooms$^*$ & 5.729 \\
-$\kappa_T$ & Tenure tastes & Ownership, ages 30--55 (\%) & 67.626 \\
+$\chi$ & Owner housing premium & Ownership, ages 30--55 (\%) & 67.626 \\
+$\kappa_T$ & Tenure tastes & Recent-parent ownership difference (pp) & 12.761 \\
 $h_P$ & Basic space for parents & First-birth rooms difference$^*$ & 1.465 \\
+$\chi$, $h_P$ & Jointly & Mean rooms$^*$ & 5.729 \\
 \midrule
 \multicolumn{4}{@{}l}{\emph{Fertility}}\\
 $\psi$ & Child-benefit level & Childlessness, ages 40--44 (\%) & 19.828 \\
-$\xi$ & First-birth cost & Recent-parent ownership difference (pp) & 12.761 \\
+$\xi$ & First-birth cost & Children at age 25 & 0.810 \\
 $\kappa_1$ & First-birth taste dispersion & Mean first-birth age & 25.976 \\
 $\kappa_C$ & Later-birth taste dispersion & One child among mothers (\%) & 21.366 \\
-$\gamma$ & Child-benefit curvature & Children at age 25 & 0.810 \\
+$\gamma$ & Child-benefit curvature & No distinct moment & \\
 \bottomrule
 \end{tabular*}
 \par\vspace{0.3em}
-\fontsize{8}{8.8}\selectfont Each parameter is paired with the moment it mainly moves; all ten are estimated jointly. $^*$Recomputed: mean rooms (AHS), bequests (SCF), and first-birth rooms (PSID). Also updated pension/earnings, depreciation and property tax.
+\fontsize{8}{8.8}\selectfont All ten are estimated jointly. Housing has four moments and three parameters; fertility has four and five. $^*$Recomputed: mean rooms (AHS), bequests (SCF), first-birth rooms (PSID).
 \end{frame}
 
 % 8: Current ROOT fit with ten scored moments and three validation moments.
