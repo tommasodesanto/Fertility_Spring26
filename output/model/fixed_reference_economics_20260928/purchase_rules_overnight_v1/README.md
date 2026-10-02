@@ -2,6 +2,8 @@
 
 The selected quarter-fit [rental-cap and purchase-access overlap diagnostic](independent_diagnosis/quarter_overlap_v1/README.md) uses saved household values and the native renter kernel at fixed prices. It is a bounded mechanism check, not a new calibration or policy result.
 
+The [selected quarter one-date financing and crossed-price diagnostic](independent_diagnosis/quarter_fixedprice_v1/README.md) reproduces the saved 80% first-birth flow, finds a small positive direct response to 100% financing at fixed prices, and shows that the accepted date-zero price pair nearly reproduces the negative temporary-equilibrium response. Its crossed-price accounting locates most of the household-level offset in the renter unit price. This is an experimental mechanism diagnostic, not an adopted calibration or a separate causal equilibrium intervention.
+
 **October 2, 11:24 New York update.** A new independent 24-chain search for
 the same hard and quarter 80% specifications is running on Torch as array
 **19040483**. All 24 tasks were verified RUNNING; the two mounted zero-native
