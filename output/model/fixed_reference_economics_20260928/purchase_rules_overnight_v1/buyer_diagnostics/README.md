@@ -46,3 +46,21 @@ ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=dated,BUYER_ARM=hard,
 ```
 
 Substitute the actual accepted case name and `date_000`, midpoint or final date. The wrapper refuses missing or failed case receipts. It runs one CPU, 12 GiB, one thread and 20 minutes at most. It never starts a Bellman, equilibrium or transition solve. Existing calibration and mechanism inventories are read-only and remain unchanged.
+
+## Reviewed-runtime v3 addendum
+
+The current source-only addendum is `/scratch/td2248/projects/purchase_buyer_diagnostics_v3`, with archive `buyer_diagnostics_stage_v3.tar.gz`. It authenticates the reviewed mechanism source under `/scratch/td2248/projects/purchase_mechanism_reviewed_93831f5a` (including the compact repeat, import and renderer fixes). It reads the eventual immutable winner JSONs and copied postchecks from the separate `/scratch/td2248/projects/purchase_mechanism_v1/selection` and `/selected_postchecks` data store. The prior buyer v1/v2 archives and results remain intact.
+
+From the repository root, stage and run the zero-solve v3 preflight:
+
+```sh
+bash output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/stage_torch.sh
+ssh -o BatchMode=yes torch 'bash /scratch/td2248/projects/purchase_buyer_diagnostics_v3/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/preflight_torch.sh'
+```
+
+Only after the lead publishes final postchecked winners and accepts the policy source, the exact selected readout commands are:
+
+```sh
+ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=selected,BUYER_ARM=hard /scratch/td2248/projects/purchase_buyer_diagnostics_v3/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
+ssh -o BatchMode=yes torch 'sbatch --export=ALL,BUYER_MODE=selected,BUYER_ARM=quarter /scratch/td2248/projects/purchase_buyer_diagnostics_v3/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/launch_readout.sh'
+```

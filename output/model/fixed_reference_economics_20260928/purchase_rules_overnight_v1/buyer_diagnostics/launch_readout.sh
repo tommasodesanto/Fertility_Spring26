@@ -5,15 +5,16 @@
 #SBATCH --time=00:20:00
 #SBATCH --account=torch_pr_570_general
 #SBATCH --partition=cs
-#SBATCH --output=/scratch/td2248/projects/purchase_buyer_diagnostics_v2/logs/%x-%j.out
+#SBATCH --output=/scratch/td2248/projects/purchase_buyer_diagnostics_v3/logs/%x-%j.out
 # Saved-policy postprocessing only. Submit with BUYER_MODE/BUYER_ARM etc.
 set -euo pipefail
 mode=${BUYER_MODE:?Set BUYER_MODE=selected or dated}
 arm=${BUYER_ARM:?Set BUYER_ARM=hard or quarter}
 [[ "$mode" == selected || "$mode" == dated ]] || exit 2
 [[ "$arm" == hard || "$arm" == quarter ]] || exit 2
-remote=/scratch/td2248/projects/purchase_buyer_diagnostics_v2
-mechanism=/scratch/td2248/projects/purchase_mechanism_v1
+remote=/scratch/td2248/projects/purchase_buyer_diagnostics_v3
+mechanism=/scratch/td2248/projects/purchase_mechanism_reviewed_93831f5a
+selection_store=/scratch/td2248/projects/purchase_mechanism_v1
 floor=/scratch/td2248/projects/normalized_floor_calibration_v1
 base=/scratch/td2248/projects/grid_resolution_credit053_v2
 frozen=/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project
@@ -36,7 +37,7 @@ PY
 case=${BUYER_CASE:-}
 date=${BUYER_DATE:-date_000}
 if [[ "$mode" == selected ]]; then
-  read -r chain < <("$python" - "$mechanism/selection/manifest.json" "$mechanism/selection/selected_${arm}.json" "$mechanism" "$arm" <<'PY'
+  read -r chain < <("$python" - "$selection_store/selection/manifest.json" "$selection_store/selection/selected_${arm}.json" "$selection_store" "$arm" <<'PY'
 import hashlib,json,sys
 from pathlib import Path
 m=json.load(open(sys.argv[1]));s=json.load(open(sys.argv[2]));c=Path(sys.argv[3]);arm=sys.argv[4];e=m['arms'][arm]
@@ -96,8 +97,8 @@ binds+=(--bind "$mechanism/source/$packet:$repo/$packet:ro")
 binds+=(--bind "$mechanism/source/code/model/experiments/transition_readiness:$repo/code/model/experiments/transition_readiness:ro")
 binds+=(--bind "$mechanism/source/output/model/transition_readiness_v1/normalized_restart_v1/deployment/fit_plan.json:$repo/output/model/transition_readiness_v1/normalized_restart_v1/deployment/fit_plan.json:ro")
 binds+=(--bind "$remote/source/$packet/buyer_diagnostics:$repo/$packet/buyer_diagnostics:ro")
-binds+=(--bind "$mechanism/selected_postchecks:$repo/$packet/results:ro")
-binds+=(--bind "$mechanism/selection:$repo/$packet/collection/readout:ro")
+binds+=(--bind "$selection_store/selected_postchecks:$repo/$packet/results:ro")
+binds+=(--bind "$selection_store/selection:$repo/$packet/collection/readout:ro")
 binds+=(--bind "$mechanism/results:$repo/$packet/mechanism/results:ro")
 if [[ "$mode" == selected ]]; then
   script="$repo/$packet/buyer_diagnostics/run_selected.py"
