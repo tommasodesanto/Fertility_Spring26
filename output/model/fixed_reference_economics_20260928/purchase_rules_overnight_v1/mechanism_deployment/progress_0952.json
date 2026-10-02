@@ -1,0 +1,283 @@
+{
+  "schema": "purchase_horizon_extension_unreachable_heartbeat_v1",
+  "requested_label": "0952",
+  "verification_time_utc": "2026-10-02T14:44:48.644957+00:00",
+  "current_torch_status": "unavailable",
+  "failure": "SSH multiplex master broken; direct connect requires unavailable interactive askpass",
+  "attempts": [
+    "ssh torch: mux_client_request_session read from master failed Broken pipe; login.torch.hpc.nyu.edu:22 Undefined error 0",
+    "ssh ControlMaster=no ControlPath=none: ssh_askpass /usr/X11R6/bin/ssh-askpass missing; connection terminated"
+  ],
+  "last_verified_progress_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/mechanism_deployment/progress_0922.json",
+  "last_verified_epoch": 1790947390.314837,
+  "last_verified_cases": [
+    {
+      "case": "case_00_hard_control_h48",
+      "launcher_exit_code": 0,
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_00_hard_control_h48",
+      "terminal": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_00_hard_control_h48/run/terminal_receipt.json",
+        "age_seconds": 10973,
+        "status": "passed",
+        "actual_native_policy_calls": 3
+      },
+      "control": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_00_hard_control_h48/run/completed.json",
+        "age_seconds": 10973,
+        "status": "passed",
+        "policy_calls": 3
+      }
+    },
+    {
+      "case": "case_01_hard_temporary_h48",
+      "launcher_exit_code": 0,
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_01_hard_temporary_h48",
+      "terminal": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_01_hard_temporary_h48/run/terminal_receipt.json",
+        "age_seconds": 7352,
+        "status": "passed",
+        "actual_native_policy_calls": 301
+      },
+      "completed": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_01_hard_temporary_h48/run/dated_path/completed.json",
+        "age_seconds": 7353,
+        "status": "passed",
+        "policy_calls": 301
+      },
+      "root": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_01_hard_temporary_h48/run/dated_path/root.json",
+        "age_seconds": 7353,
+        "status": "converged",
+        "evaluations": 7
+      },
+      "root_progress": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_01_hard_temporary_h48/run/dated_path/root_progress.json",
+        "age_seconds": 7353,
+        "status": "converged",
+        "evaluations": 7
+      }
+    },
+    {
+      "case": "case_02_hard_permanent_h48",
+      "launcher_exit_code": 1,
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_02_hard_permanent_h48",
+      "failure": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_02_hard_permanent_h48/run/failure.json",
+        "age_seconds": 2277,
+        "status": "failed",
+        "message": "Dated market/fiscal root or replay failed",
+        "type": "RuntimeError"
+      },
+      "root": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_02_hard_permanent_h48/run/dated_path/root.json",
+        "age_seconds": 2277,
+        "status": "evaluation_budget",
+        "evaluations": 12
+      },
+      "root_progress": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_02_hard_permanent_h48/run/dated_path/root_progress.json",
+        "age_seconds": 2277,
+        "status": "evaluation_budget",
+        "evaluations": 12
+      }
+    },
+    {
+      "case": "case_03_hard_control_h64",
+      "launcher_exit_code": 0,
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_03_hard_control_h64",
+      "terminal": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_03_hard_control_h64/run/terminal_receipt.json",
+        "age_seconds": 10892,
+        "status": "passed",
+        "actual_native_policy_calls": 3
+      },
+      "control": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_03_hard_control_h64/run/completed.json",
+        "age_seconds": 10892,
+        "status": "passed",
+        "policy_calls": 3
+      }
+    },
+    {
+      "case": "case_04_hard_temporary_h64",
+      "launcher_exit_code": 0,
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_04_hard_temporary_h64",
+      "terminal": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_04_hard_temporary_h64/run/terminal_receipt.json",
+        "age_seconds": 3514,
+        "status": "passed",
+        "actual_native_policy_calls": 525
+      },
+      "completed": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_04_hard_temporary_h64/run/dated_path/completed.json",
+        "age_seconds": 3514,
+        "status": "passed",
+        "policy_calls": 525
+      },
+      "root": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_04_hard_temporary_h64/run/dated_path/root.json",
+        "age_seconds": 3515,
+        "status": "converged",
+        "evaluations": 9
+      },
+      "root_progress": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_04_hard_temporary_h64/run/dated_path/root_progress.json",
+        "age_seconds": 3515,
+        "status": "converged",
+        "evaluations": 9
+      }
+    },
+    {
+      "case": "case_05_hard_permanent_h64",
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_05_hard_permanent_h64",
+      "root_progress": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_05_hard_permanent_h64/run/dated_path/root_progress.json",
+        "age_seconds": 493,
+        "phase": "iterate",
+        "evaluation": 11,
+        "score": 1.6456477296114014
+      }
+    },
+    {
+      "case": "case_06_quarter_control_h48",
+      "launcher_exit_code": 0,
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_06_quarter_control_h48",
+      "terminal": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_06_quarter_control_h48/run/terminal_receipt.json",
+        "age_seconds": 10947,
+        "status": "passed",
+        "actual_native_policy_calls": 3
+      },
+      "control": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_06_quarter_control_h48/run/completed.json",
+        "age_seconds": 10947,
+        "status": "passed",
+        "policy_calls": 3
+      }
+    },
+    {
+      "case": "case_07_quarter_temporary_h48",
+      "launcher_exit_code": 0,
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_07_quarter_temporary_h48",
+      "terminal": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_07_quarter_temporary_h48/run/terminal_receipt.json",
+        "age_seconds": 7000,
+        "status": "passed",
+        "actual_native_policy_calls": 301
+      },
+      "completed": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_07_quarter_temporary_h48/run/dated_path/completed.json",
+        "age_seconds": 7000,
+        "status": "passed",
+        "policy_calls": 301
+      },
+      "root": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_07_quarter_temporary_h48/run/dated_path/root.json",
+        "age_seconds": 7001,
+        "status": "converged",
+        "evaluations": 7
+      },
+      "root_progress": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_07_quarter_temporary_h48/run/dated_path/root_progress.json",
+        "age_seconds": 7001,
+        "status": "converged",
+        "evaluations": 7
+      }
+    },
+    {
+      "case": "case_08_quarter_permanent_h48",
+      "launcher_exit_code": 1,
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_08_quarter_permanent_h48",
+      "failure": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_08_quarter_permanent_h48/run/failure.json",
+        "age_seconds": 2812,
+        "status": "failed",
+        "message": "Dated terminal-state gate failed",
+        "type": "RuntimeError"
+      },
+      "root": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_08_quarter_permanent_h48/run/dated_path/root.json",
+        "age_seconds": 2812,
+        "status": "converged",
+        "evaluations": 12
+      },
+      "root_progress": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_08_quarter_permanent_h48/run/dated_path/root_progress.json",
+        "age_seconds": 2812,
+        "status": "converged",
+        "evaluations": 12
+      }
+    },
+    {
+      "case": "case_09_quarter_control_h64",
+      "launcher_exit_code": 0,
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_09_quarter_control_h64",
+      "terminal": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_09_quarter_control_h64/run/terminal_receipt.json",
+        "age_seconds": 10898,
+        "status": "passed",
+        "actual_native_policy_calls": 3
+      },
+      "control": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_09_quarter_control_h64/run/completed.json",
+        "age_seconds": 10898,
+        "status": "passed",
+        "policy_calls": 3
+      }
+    },
+    {
+      "case": "case_10_quarter_temporary_h64",
+      "launcher_exit_code": 0,
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_10_quarter_temporary_h64",
+      "terminal": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_10_quarter_temporary_h64/run/terminal_receipt.json",
+        "age_seconds": 4853,
+        "status": "passed",
+        "actual_native_policy_calls": 461
+      },
+      "completed": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_10_quarter_temporary_h64/run/dated_path/completed.json",
+        "age_seconds": 4854,
+        "status": "passed",
+        "policy_calls": 461
+      },
+      "root": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_10_quarter_temporary_h64/run/dated_path/root.json",
+        "age_seconds": 4854,
+        "status": "converged",
+        "evaluations": 8
+      },
+      "root_progress": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_10_quarter_temporary_h64/run/dated_path/root_progress.json",
+        "age_seconds": 4854,
+        "status": "converged",
+        "evaluations": 8
+      }
+    },
+    {
+      "case": "case_11_quarter_permanent_h64",
+      "launcher_exit_code": 1,
+      "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_11_quarter_permanent_h64",
+      "failure": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_11_quarter_permanent_h64/run/failure.json",
+        "age_seconds": 374,
+        "status": "failed",
+        "message": "Dated market/fiscal root or replay failed",
+        "type": "RuntimeError"
+      },
+      "root": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_11_quarter_permanent_h64/run/dated_path/root.json",
+        "age_seconds": 374,
+        "status": "evaluation_budget",
+        "evaluations": 12
+      },
+      "root_progress": {
+        "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_11_quarter_permanent_h64/run/dated_path/root_progress.json",
+        "age_seconds": 374,
+        "status": "evaluation_budget",
+        "evaluations": 12
+      }
+    }
+  ],
+  "critical_unknown": "Hard permanent T64 case05 final Slurm status, final root/terminal receipt, and accepted first-birth response cannot be verified"
+}
