@@ -1,45 +1,135 @@
 {
-  "as_of_utc": "2026-10-02T05:02:50.422369+00:00",
-  "monitor": "Sol read-only active through 10:00 America/New_York Oct 2; 30-minute routine interval after healthy startup",
-  "jobs": {
-    "19008035": {
-      "variant": "hard100 diagnostic retry",
-      "state": "COMPLETED",
-      "exit_code": "0:0",
-      "elapsed_seconds": 87,
-      "result_status": "fixed_price_diagnostic_passed",
-      "loss": 256.03658589324806,
-      "receipt": "/scratch/td2248/projects/hard_zero_down_solvency_v2/results/onecase/run/completed.json"
+  "as_of_utc": "2026-10-02T08:55:58.683501+00:00",
+  "search_state": "all submitted Torch arrays and local chains terminal",
+  "overall_selected_numerically_verified": {
+    "hard": {
+      "base_loss": 97.01121981277964,
+      "source": "Torch continuation 19012896 chain 11",
+      "case": "0047_nm",
+      "selected_postcheck_status": "selected_numerically_verified",
+      "exact_loss_and_14_target_rows_match": true,
+      "effective_parameters_match_selected": true,
+      "optimization_convergence_certified": false,
+      "search_stop_reason": "native_or_global_evaluation_budget_exhausted",
+      "target_fit_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/monitor/hard_verified_best_chain11_target_fit.csv",
+      "parameters_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/monitor/hard_verified_best_chain11_parameters.csv"
     },
-    "19008074": {
-      "variant": "quarter100 diagnostic retry",
-      "state": "COMPLETED",
-      "exit_code": "0:0",
-      "elapsed_seconds": 86,
-      "result_status": "fixed_price_quarter_saving_solvency_retry_passed",
-      "loss": 192.4091625455631,
-      "receipt": "/scratch/td2248/projects/quarter_saving_solvency_v2/results/onecase/run/completed.json"
+    "quarter": {
+      "base_loss": 51.55603604909936,
+      "source": "local original/resume chain 54",
+      "case": "0094_nm",
+      "selected_postcheck_status": "selected_numerically_verified",
+      "exact_loss_and_14_target_rows_match": true,
+      "effective_parameters_match_selected": true,
+      "optimization_convergence_certified": false,
+      "search_stop_reason": "native_evaluation_budget_exhausted",
+      "target_fit_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/monitor/quarter_verified_best_chain54_target_fit.csv",
+      "parameters_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/monitor/quarter_verified_best_chain54_parameters.csv"
     }
   },
-  "pending_overight_array_ids": true,
-  "limitations": "Agent is not a durable background daemon; host sleep, thread termination, or session limits can interrupt active checks.",
-  "production": {
-    "smoke_job_id": "19009130",
-    "smoke_status": "hard and quarter passed, exit 0",
-    "array_job_id": "19009131",
-    "scheduled_chains": 48,
-    "running_chains": 48,
-    "hard_checkpoints": 14,
-    "quarter_checkpoints": 15,
-    "hard_provisional_best_loss": 153.1548495131398,
-    "quarter_provisional_best_loss": 67.38408488641055,
-    "selected_postcheck_status": "pending",
-    "last_check": "startup first cases"
+  "sources": {
+    "original_torch_19009131": {
+      "terminal": 48,
+      "running": 0,
+      "fresh_postchecks": 48,
+      "hard": {
+        "valid_full_ge": 891,
+        "budget_exhausted_uncomputed": 24,
+        "best_loss": 100.32688547476178
+      },
+      "quarter": {
+        "valid_full_ge": 1533,
+        "budget_exhausted_uncomputed": 24,
+        "best_loss": 51.9701629582933
+      }
+    },
+    "five_torch_continuations": {
+      "terminal": 25,
+      "running": 0,
+      "fresh_postchecks": 25,
+      "hard": {
+        "valid_full_ge": 813,
+        "budget_exhausted_uncomputed": 40,
+        "best_loss": 97.01121981277964
+      },
+      "quarter": {
+        "valid_full_ge": 301,
+        "budget_exhausted_uncomputed": 8,
+        "best_loss": 52.85216465787443
+      }
+    },
+    "broader_torch_19019947": {
+      "terminal": 16,
+      "running": 0,
+      "fresh_postchecks": 15,
+      "quarter_no_selected_candidate_slot": 15,
+      "hard": {
+        "valid_full_ge": 121,
+        "budget_exhausted_uncomputed": 12,
+        "best_loss": 302.3953105436237
+      },
+      "quarter": {
+        "valid_full_ge": 105,
+        "budget_exhausted_uncomputed": 9,
+        "inadmissible_numerical": 13,
+        "best_loss": 163.99416924221023
+      },
+      "quarter_no_selected_candidate_detail": {
+        "slot": 15,
+        "passed_valid_loss": 0,
+        "inadmissible_numerical_uncomputed_price_unbracketed": 13,
+        "budget_exhausted_uncomputed_price_unbracketed": 1,
+        "reported_completed_full_ge_attempts": 14,
+        "note": "completed_full_ge counts attempts, not valid scored losses"
+      }
+    },
+    "local_original_resume": {
+      "terminal": 10,
+      "running": 0,
+      "fresh_postchecks": 9,
+      "hard_no_selected_candidate_chain": 50,
+      "hard": {
+        "valid_full_ge": 295,
+        "budget_exhausted_uncomputed": 5,
+        "best_loss": 98.29068207287607
+      },
+      "quarter": {
+        "valid_full_ge": 563,
+        "budget_exhausted_uncomputed": 5,
+        "best_loss": 51.55603604909936
+      }
+    },
+    "local_restart_v2": {
+      "terminal": 5,
+      "running": 0,
+      "fresh_postchecks": 5,
+      "hard": {
+        "valid_full_ge": 199,
+        "budget_exhausted_uncomputed": 18,
+        "best_loss": 114.87351699411715
+      },
+      "quarter": {
+        "valid_full_ge": 79,
+        "budget_exhausted_uncomputed": 3,
+        "best_loss": 55.31869317871128
+      }
+    }
   },
-  "local": {
-    "planned_chains": 10,
-    "launched_chains": 2,
-    "first_passed_case": false,
-    "progress_file": "output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/local_runtime/runs/local10_v1/latest_progress.json"
-  }
+  "sum_of_saved_case_receipts_across_sources": {
+    "hard_valid_full_ge": 2319,
+    "hard_budget_exhausted_uncomputed": 99,
+    "quarter_valid_full_ge": 2581,
+    "quarter_budget_exhausted_uncomputed": 49,
+    "quarter_inadmissible_numerical": 13
+  },
+  "health": {
+    "slurm_nonzero_launcher_exits_observed": 0,
+    "remaining_running_chains": 0,
+    "scientific_no_selected_candidate": [
+      "broader quarter slot15",
+      "local original hard chain50"
+    ],
+    "active_checkpoint_stale_over_30min": 0
+  },
+  "qualification": "Case counts include repeated parameter evaluations across origins and are not unique parameter vectors. Numerically verified selected points do not imply optimizer convergence. Economics remain experimental, not adopted."
 }

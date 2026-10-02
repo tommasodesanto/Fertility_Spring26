@@ -208,6 +208,7 @@ def solve_path(runtime, kind, horizon, terminal, endpoint, J, folder, plan, dead
     terminal_check = runtime.terminal_checks(terminal, endpoint, native,
         np.full(horizon, runtime.P.psi_child), tolerance=gates["terminal_tolerance"],
         raw_queue_tolerance=gates["raw_queue_relative_tolerance"])
+    write(folder / "terminal_checks.json", terminal_check)
     require(terminal_check["all_checks_pass"], "Dated terminal-state gate failed")
     first_births = [dict(period=int(row["period"]), calendar_year=int(row["calendar_year"]),
                          flow=float(np.sum(row["birth_flow_first"])),

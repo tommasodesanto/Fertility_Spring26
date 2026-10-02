@@ -50,11 +50,12 @@ at 06:11 New York with unchanged economics and terminal acceptance gates.
 Smoke array **19024491** passed both arms with three native calls each;
 all 12 production tasks in **19024492** were RUNNING at 06:16. Each task
 has at most 1,024 native policy calls and four hours, subject to the absolute
-10:00 New York cutoff. **Policy readout at 09:23:** all four 80% controls and
+10:00 New York cutoff. **Final available policy readout at 10:45:** all four 80% controls and
 all four temporary 100% financing cases (hard/quarter, 48/64 dates) passed
-their native gates against matched controls. Eleven of 12 cases were terminal.
-Only hard permanent 64 dates was still running, at root evaluation 11 with
-726 native calls and a checkpoint about eight minutes old. Neither permanent
+their native gates against matched controls. At the last verified 09:23 cluster
+check, 11 of 12 cases were terminal; hard permanent 64 dates was running at
+root evaluation 11 with 726 native calls. The 10:44 connection attempt failed,
+so its final status is **unknown**. Neither permanent
 48-date case nor quarter permanent 64 dates passed; there is no accepted
 permanent-policy birth response.
 In the first period, **hard-rule** first-birth flow fell from 0.0498037467
@@ -85,7 +86,8 @@ The receipts are in `output/model/fixed_reference_economics_20260928/purchase_ru
 `accepted_hard_temporary_h48_0722.json`, `accepted_quarter_temporary_h48_0752.json`,
 `accepted_hard_temporary_h64_0852.json`, `accepted_quarter_temporary_h64_0822.json`,
 `hard_temporary_h48_h64_overlap_v1.json`,
-`quarter_temporary_h48_h64_overlap_v2.json`, and `progress_0922.json`.
+`quarter_temporary_h48_h64_overlap_v2.json`, `progress_0922.json`, and
+`progress_0952.json` (the failed 10:44 connectivity check).
 Saved-policy buyer diagnostic v4
 jobs **19022340** (hard) and
 **19022341** (quarter-saving) passed with zero model solves. Among actual

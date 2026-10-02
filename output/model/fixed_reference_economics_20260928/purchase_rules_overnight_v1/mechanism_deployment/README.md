@@ -1,10 +1,11 @@
 # Overnight dated financing experiments: launch handoff
 
-**October 2, 09:23 New York policy readout.** All four 80% controls and all
+**October 2, 10:45 New York final available policy readout.** All four 80% controls and all
 four temporary 100% financing cases (hard/quarter, 48/64 dates) passed their
-native gates against matched controls. Eleven of 12 cases were terminal.
-Only hard permanent 64 dates was still running, at root evaluation 11 with
-726 native calls and a checkpoint about eight minutes old. Neither permanent
+native gates against matched controls. At the last verified 09:23 cluster
+check, 11 of 12 cases were terminal; hard permanent 64 dates was running at
+root evaluation 11 with 726 native calls. The 10:44 connection attempt failed,
+so its final status is **unknown**. Neither permanent
 48-date case nor quarter permanent 64 dates passed, so no permanent-policy
 birth response is accepted. In the first
 period, hard-rule flow changed from control 0.04980374667823033 to
@@ -37,7 +38,8 @@ See
 [quarter T48](accepted_quarter_temporary_h48_0752.json), and
 [hard T64](accepted_hard_temporary_h64_0852.json),
 [quarter T64](accepted_quarter_temporary_h64_0822.json), and
-[progress_0922.json](progress_0922.json). The underlying hard and quarter
+[progress_0922.json](progress_0922.json) and the
+[10:44 connectivity failure receipt](progress_0952.json). The underlying hard and quarter
 fits remain fresh-postchecked at losses 97.0112198 and 51.5560360,
 respectively, without optimizer convergence certificates and with material
 target misses. They are experimental selected points, not adopted paper baselines.
