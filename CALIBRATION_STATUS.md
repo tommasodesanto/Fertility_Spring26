@@ -44,6 +44,13 @@ is under
 `output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/mechanism_deployment/terminal_diagnosis/`.
 The reviewed source root is
 `/scratch/td2248/projects/purchase_mechanism_reviewed_93831f5a`.
+The separate 48/64-date extension under
+`/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1` was submitted
+at 06:11 New York with unchanged economics and terminal acceptance gates.
+Smoke array **19024491** passed both arms with three native calls each;
+all 12 production tasks in **19024492** were RUNNING at 06:16. Each task
+has at most 1,024 native policy calls and four hours, subject to the absolute
+10:00 New York cutoff. The longer-horizon results are not yet accepted.
 There is **no accepted 100% policy first-birth response yet**. A selected
 numerical calibration point is an input to those runs, not evidence of a
 fertility effect of 80-to-100% financing. Saved-policy buyer diagnostic v4
