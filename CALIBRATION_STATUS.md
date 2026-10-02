@@ -1,3 +1,7 @@
+## October 1, 22:42 — first resumed normalized trial completed; optimization continues
+
+Torch job **18995772** remains RUNNING and has started candidate 2 at psi=0.1294894427543237. Candidate 1, the authorized starting guess psi=0.13079083328964047, completed both 12- and 16-date roots with exact replay error zero. Its 2020–23 household TFR analogue is **1.7166458572487717**, target **1.64575**, gap **0.07089585724877168**, squared loss **0.005026222575038212**. The relaxed horizon comparison passes; original strict comparison, physical-state stability and both terminal tests fail. No completed shock fit or experiment-ready state is claimed. The exact native 2023 checkpoint was collected and its hash verified; standard diagnostic plots are still pending the controller's final fit stage. Reference remains normalized chain20/case0028_nm, N0=1, fixed H0=6.851575289344519. Deadline remains **23:18:48 New York**, with no economic, target or gate changes. Full four-window fit, shock bounds, native checkpoint verification and limitations: `output/model/transition_readiness_v1/normalized_restart_v1/resume_preparation/deployment/v2/README.md`.
+
 # Calibration Status
 
 ## October 1 — modest parenthood housing-floor diagnostic submitted

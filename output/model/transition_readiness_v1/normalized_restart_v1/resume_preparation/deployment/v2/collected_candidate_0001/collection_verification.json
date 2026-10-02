@@ -1,0 +1,96 @@
+{
+  "status": "VERIFIED_COMPLETED_EXPLORATORY_CANDIDATE",
+  "candidate": 1,
+  "job": "18995772",
+  "scheduler_state": "RUNNING",
+  "roots": {
+    "horizon_012": {
+      "converged": true,
+      "evaluations": 5,
+      "final_reproduction_max_abs": 0.0
+    },
+    "horizon_016": {
+      "converged": true,
+      "evaluations": 6,
+      "final_reproduction_max_abs": 0.0
+    }
+  },
+  "target_rows": [
+    {
+      "moment": "period_tfr_2008_2011",
+      "target": 1.974875,
+      "model": 1.7178542652029831,
+      "gap": -0.2570207347970168,
+      "weight": 0,
+      "loss_contribution": 0.0,
+      "status": "COMPLETED_EXPLORATORY_CANDIDATE_NOT_FITTED"
+    },
+    {
+      "moment": "period_tfr_2012_2015",
+      "target": 1.861,
+      "model": 1.7222822530059991,
+      "gap": -0.13871774699400086,
+      "weight": 0,
+      "loss_contribution": 0.0,
+      "status": "COMPLETED_EXPLORATORY_CANDIDATE_NOT_FITTED"
+    },
+    {
+      "moment": "period_tfr_2016_2019",
+      "target": 1.755375,
+      "model": 1.717940720143082,
+      "gap": -0.03743427985691783,
+      "weight": 0,
+      "loss_contribution": 0.0,
+      "status": "COMPLETED_EXPLORATORY_CANDIDATE_NOT_FITTED"
+    },
+    {
+      "moment": "period_tfr_2020_2023",
+      "target": 1.64575,
+      "model": 1.7166458572487717,
+      "gap": 0.07089585724877168,
+      "weight": 1,
+      "loss_contribution": 0.005026222575038212,
+      "status": "COMPLETED_EXPLORATORY_CANDIDATE_NOT_FITTED"
+    }
+  ],
+  "psi": 0.13079083328964047,
+  "bounds": [
+    0.0017198899419542373,
+    0.3439779883908475
+  ],
+  "near_bound": false,
+  "relaxed_horizon_comparison_pass": true,
+  "original_strict_comparison_pass": false,
+  "state_physical_horizon_stable": false,
+  "state_gaps": {
+    "population_absolute_gap": 5.507686792516342e-05,
+    "population_relative_gap": 5.538797926350182e-05,
+    "normalized_distribution_l1": 0.03537633556873801,
+    "scheduled_entries_relative_l1": 0.0029655772558043777,
+    "scheduled_raw_entries_relative_l1": 0.003177491549247901
+  },
+  "terminal_passes": [
+    false,
+    false
+  ],
+  "shock_fit_complete": false,
+  "production_ready": false,
+  "checkpoint_calendar_year": 2023,
+  "checkpoint_period_index": 4,
+  "checkpoint_file_hash_verified": true,
+  "checkpoint_receipt_hash_verified": true,
+  "standard_diagnostic_plots_present": false,
+  "diagnostic_plots_status": "controller renders stable standard packet at final fit stage; not yet produced",
+  "files": {
+    "horizon_comparison.json": "24e802be5bd0a33ce7d2858c30ef95b355546009fbe67c32c728fe007cc5c36d",
+    "shock_parameters.csv": "6f1f3ef92a8334e07aaabb252e1f6af06dcddd8e0ad6068656ed820d9fcf5068",
+    "target_fit.csv": "cc4a4d5ee993417cf329194e2f2a64fdd2b109a31fd7f549b1fc9cd322ebfa7e",
+    "complete.json": "014d8597102fb5572c94fe4ff769453072a922ccf788355b4cdec756da1ff3ea",
+    "state_2023_horizon_comparison.json": "66cefcfc78d9db9b002497cd85f9c38c238921df9e27a9dd257603f112e10500",
+    "state_2023_checkpoint/checkpoint_receipt.json": "d4f9b8094cd7bdf4ae929c3918ec2ff126a12ffaf467b96e40c20703e1825ec5",
+    "state_2023_checkpoint/actual_2023.json": "ec22672ecf7c1e33cf673b99adb5d1e0c81a5f859334865d8da0cae81411a930",
+    "state_2023_checkpoint/actual_2023.pkl.gz": "49e900654455c51823b7eb8e4582f967ac2404555dc7ff2d8e8cd336aaa56cd0",
+    "horizon_016/root.json": "c9b9c3abaf6c20112f5a0eedae92c93939cd4e37fd5343416e58fb6d933e597c",
+    "horizon_012/root.json": "d36d0dbaba8d2500cf794134970bcac760c5cb99ef4f95a24d601dbab2d7691c"
+  }
+}

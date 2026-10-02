@@ -1,0 +1,78 @@
+{
+  "passed": true,
+  "relative_gaps": {
+    "asset_price": 0.0048725082827611585,
+    "renter_price": 0.006268818557100584,
+    "adult_population": 5.538797926316694e-05,
+    "birth_children": 0.005334942859107906,
+    "housing_demand": 0.0030801257788485555,
+    "pension_period_units": 5.7762144966016113e-05
+  },
+  "fertility_absolute_gaps": [
+    0.00374712286654999,
+    0.004416106885105631,
+    0.0051120174106711325,
+    0.006438621954379942
+  ],
+  "early_macro_periods": 5,
+  "early_macro_years": [
+    2007,
+    2011,
+    2015,
+    2019,
+    2023
+  ],
+  "fertility_windows": 4,
+  "macro_tolerance": 0.01,
+  "fertility_tolerance": 0.01,
+  "terminal_passes": [
+    false,
+    false
+  ],
+  "classification": "exploratory relaxed finite-horizon comparison; original strict status retained; full path uncertified",
+  "original_strict_comparison": {
+    "passed": false,
+    "relative_gaps": {
+      "asset_price": 0.0048725082827611585,
+      "renter_price": 0.006268818557100584,
+      "adult_population": 5.538797926316694e-05,
+      "birth_children": 0.005334942859107906,
+      "housing_demand": 0.0030801257788485555,
+      "pension_period_units": 5.7762144966016113e-05
+    },
+    "fertility_absolute_gaps": [
+      0.00374712286654999,
+      0.004416106885105631,
+      0.0051120174106711325,
+      0.006438621954379942
+    ],
+    "early_macro_periods": 5,
+    "early_macro_years": [
+      2007,
+      2011,
+      2015,
+      2019,
+      2023
+    ],
+    "fertility_windows": 4,
+    "macro_tolerance": 0.001,
+    "fertility_tolerance": 0.001,
+    "terminal_passes": [
+      false,
+      false
+    ],
+    "classification": "diagnostic finite-horizon measurement stability; full path uncertified"
+  },
+  "original_strict_passed": false,
+  "diagnostic_horizon_tolerance_override": {
+    "schema": "diagnostic_horizon_tolerance_override_v1",
+    "classification": "exploratory relaxed finite-horizon comparison",
+    "macro_tolerance": 0.01,
+    "fertility_tolerance": 0.01,
+    "original_macro_tolerance": 0.001,
+    "original_fertility_tolerance": 0.001,
+    "state_gate_changes": false,
+    "terminal_gate_changes": false,
+    "root_gate_changes": false
+  }
+}
