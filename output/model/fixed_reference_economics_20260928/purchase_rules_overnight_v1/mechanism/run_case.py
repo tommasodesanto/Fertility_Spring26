@@ -22,9 +22,12 @@ from selected_runtime import PACKET, ROOT, construct, read, require, sha
 TRANSITION = ROOT / "code/model/experiments/transition_readiness"
 sys.path.insert(0, str(ROOT / "code/model/tools"))
 sys.path.insert(0, str(TRANSITION / "pinned_tools"))
-from integration import map_case
 from e5f_ssj_scaled_step_root import solve_price_path_scaled
 from e5f_four_shock_acceleration import solve_joint_with_acceleration, extend_measured_jacobian
+
+# The dated integration imports the legacy model. Bind it only after native
+# source authentication, which requires a fresh interpreter.
+map_case = None
 
 CONTROLS = ROOT / "output/model/transition_readiness_v1/normalized_restart_v1/deployment/fit_plan.json"
 
@@ -220,6 +223,7 @@ def solve_path(runtime, kind, horizon, terminal, endpoint, J, folder, plan, dead
 
 
 def main():
+    global map_case
     ap = argparse.ArgumentParser()
     ap.add_argument("--arm", choices=("hard", "quarter"), required=True)
     ap.add_argument("--selected-json", type=Path, required=True)
@@ -267,6 +271,8 @@ def main():
         fiscal_closure="fixed payroll tax; period pension root", transfer_path="zero"))
     try:
         runtime = construct(args.arm, args.selected_completed, args.out / "runtime")
+        from integration import map_case as authenticated_map_case
+        map_case = authenticated_map_case
         runtime.arm = args.arm
         with runtime.native_budget(deadline, args.maximum_policy_calls):
             runtime.reconstruct_reference(args.out / "reference")

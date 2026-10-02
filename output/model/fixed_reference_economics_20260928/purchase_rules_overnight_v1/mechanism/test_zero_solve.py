@@ -5,6 +5,7 @@ import ast
 import difflib
 import hashlib
 import json
+import subprocess
 import sys
 import tempfile
 import time
@@ -23,6 +24,18 @@ from selected_runtime import authenticate_selected
 
 
 class PhiPathTests(unittest.TestCase):
+    def test_fresh_startup_defers_legacy_import_until_after_authentication_point(self):
+        script = (
+            f"import sys; sys.path[:0]={[str(Path(__file__).parent), str(ROOT / 'code/model/tools'), str(ROOT / 'code/model/experiments/transition_readiness/pinned_tools')]!r}; "
+            "import run_case; "
+            "assert run_case.map_case is None; "
+            "assert not any(n.startswith('intergen_eqscale_seq_optimized') for n in sys.modules); "
+            "import integration; "
+            "assert any(n.startswith('intergen_eqscale_seq_optimized') for n in sys.modules)"
+        )
+        result = subprocess.run([sys.executable, "-c", script], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_authenticated_compact_saved_repeat(self):
         with tempfile.TemporaryDirectory() as tmp:
             postcheck = Path(tmp) / "chain_9/postcheck"
