@@ -17,7 +17,7 @@
 \date{October 2, 2026}
 \hypersetup{pdftitle={JMP progress, September 17--October 2, 2026},pdfauthor={Tommaso De Santo}}
 % Separate adviser progress deck. Main source latex/JMP_slides/JMP_slides.tex is read-only.
-% Thirteen frames, including credit timing and three financing slides before calibration. No overlays.
+% Thirteen frames, including credit timing before calibration and three financing slides after it. No overlays.
 % Relative source paths below are in Fertility_Spring26. See source_map.md for full paths.
 \begin{document}
 
@@ -143,51 +143,6 @@ A period is four years, so the soft rule lets four years of income count toward 
 Hard and quarter-saving also require buyers to keep a nonnegative net estate at the end of the period, $b'\ge-(1-\psi_s)Q$ at ages with mortality risk, where $\psi_s$ is the selling cost.
 \end{frame}
 
-% Financing results (October 2 fixed-price experiments, not recalibrated).
-% Sources: output/model/fixed_reference_economics_20260928/per_child_need_probe_v1/NOTE.md (need0 arms)
-\begin{frame}{More credit raises ownership but not births}
-\framesubtitle{Quarter-saving rule; financed share 80\% vs.\ 100\%; house price and parameters held fixed}
-\small
-\begin{center}
-\begin{tabular}{lrr}
-\toprule
- & 80\% financing & 100\% financing \\
-\midrule
-Ownership, ages 30--55 (\%) & 64.6 & 74.0 \\
-First-birth flow (relative change) & & $-0.5\%$ \\
-Completed fertility & 2.100 & 2.090 \\
-\midrule
-\multicolumn{3}{l}{\emph{Households entering at ages 18--21 (same households in both)}}\\
-Ownership (\%) & 10.5 & 31.4 \\
-First-birth probability (\%) & 25.5 & 25.8 \\
-\bottomrule
-\end{tabular}
-\end{center}
-\medskip
-Recalibrating under the hard and quarter-saving rules gives the same sign: first births fall by about 0.5\%.
-\end{frame}
-
-\begin{frame}{Why the response is small: what we have checked}
-\small
-\begin{itemize}\setlength\itemsep{6pt}
- \item Rent per room equals the owner's cost per room, and $\chi$ does not depend on children. Credit makes buying easier but does not make a child's space cheaper.
- \item 60\% of renting parents are at the six-room cap. Without the cap the median would rent 7.3 rooms. Holding saving fixed, the cap costs them about 2\% of consumption in that period.
- \item The parent requirement $h_P$ is the same for one, two or three children.
-\end{itemize}
-\medskip
-These are candidate explanations. We have not yet shown how much of the small response each one accounts for.
-\end{frame}
-
-\begin{frame}{What I want to try next}
-\small
-\begin{itemize}\setlength\itemsep{7pt}
- \item Selling costs: check whether the cost of trading up after a birth is what keeps credit from reaching fertility, and whether the 6\% seller-paid cost is the right convention.
- \item Small owner homes: young buyers may lock into homes too small for a family.
- \item A housing requirement that grows with the number of children.
- \item Recalibrate before drawing conclusions from any of these.
-\end{itemize}
-\end{frame}
-
 % 7: Parameters and target moments across the ten jointly estimated parameters.
 \begin{frame}{Parameters and target moments}
 \small
@@ -292,6 +247,51 @@ $H_0$ & Housing supply coefficient (derived) & 6.757 & 7.546 & 7.289 \\
  \item First-birth rooms difference: 1.324, 1.063 and 1.167, respectively, against 1.465.
  \item Children at age 25: 0.528, 0.524 and 0.521, against 0.810. Early fertility remains low in all three.
  \item Each rule is recalibrated. Hard and quarter-saving also require nonnegative net wealth after purchase.
+\end{itemize}
+\end{frame}
+
+% Financing results (October 2 fixed-price experiments, not recalibrated).
+% Sources: output/model/fixed_reference_economics_20260928/per_child_need_probe_v1/NOTE.md (need0 arms)
+\begin{frame}{More credit raises ownership but not births}
+\framesubtitle{Quarter-saving rule; financed share 80\% vs.\ 100\%; house price and parameters held fixed}
+\small
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+ & 80\% financing & 100\% financing \\
+\midrule
+Ownership, ages 30--55 (\%) & 64.6 & 74.0 \\
+First-birth flow (relative change) & & $-0.5\%$ \\
+Completed fertility & 2.100 & 2.090 \\
+\midrule
+\multicolumn{3}{l}{\emph{Households entering at ages 18--21 (same households in both)}}\\
+Ownership (\%) & 10.5 & 31.4 \\
+First-birth probability (\%) & 25.5 & 25.8 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\medskip
+Recalibrating under the hard and quarter-saving rules gives the same sign: first births fall by about 0.5\%.
+\end{frame}
+
+\begin{frame}{Why the response is small: what we have checked}
+\small
+\begin{itemize}\setlength\itemsep{6pt}
+ \item Rent per room equals the owner's cost per room, and $\chi$ does not depend on children. Credit makes buying easier but does not make a child's space cheaper.
+ \item 60\% of renting parents are at the six-room cap. Without the cap the median would rent 7.3 rooms. Holding saving fixed, the cap costs them about 2\% of consumption in that period.
+ \item The parent requirement $h_P$ is the same for one, two or three children.
+\end{itemize}
+\medskip
+These are candidate explanations. We have not yet shown how much of the small response each one accounts for.
+\end{frame}
+
+\begin{frame}{What I want to try next}
+\small
+\begin{itemize}\setlength\itemsep{7pt}
+ \item Selling costs: check whether the cost of trading up after a birth is what keeps credit from reaching fertility, and whether the 6\% seller-paid cost is the right convention.
+ \item Small owner homes: young buyers may lock into homes too small for a family.
+ \item A housing requirement that grows with the number of children.
+ \item Recalibrate before drawing conclusions from any of these.
 \end{itemize}
 \end{frame}
 
