@@ -17,11 +17,16 @@ Hard permanent 48 dates exhausted the 12-evaluation root budget: best raw
 maximum residual 0.0002548867 exceeded the 0.0002 gate. Quarter permanent
 48 dates passed dated root and replay checks but failed terminal distribution
 and renter-price gaps, 0.00225310 and 0.00118360 versus a 0.001 gate.
-The partial quarter temporary 48/64-date [overlap diagnostic](quarter_temporary_h48_h64_overlap_verified.json)
-records first-four-date macro and saved period-four population, distribution
-and queue gaps below 0.001. Its source-helper pin needs reauthentication
-before reuse. It is not a full native-state certificate: the saved checkpoint
-lacks forecast paths and value arrays. See
+Corrected source-pinned 48/64-date overlap checks for the
+[hard temporary path](hard_temporary_h48_h64_overlap_v1.json) and
+[quarter temporary path](quarter_temporary_h48_h64_overlap_v2.json) pass the
+original first-four-date macro and saved period-four population,
+distribution and both queue gates at 0.001. The largest macro gaps are
+0.00005532 and 0.00005127, respectively; saved distribution gaps are
+0.00010931 and 0.00003595. This is not a full native-state certificate:
+the saved checkpoints lack forecast paths and value arrays. The read-only
+comparison is reproduced by `python mechanism_deployment/compare_saved_horizons.py`.
+See
 [hard T48](accepted_hard_temporary_h48_0722.json),
 [quarter T48](accepted_quarter_temporary_h48_0752.json), and
 [hard T64](accepted_hard_temporary_h64_0852.json),

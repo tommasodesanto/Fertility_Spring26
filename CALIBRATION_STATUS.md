@@ -70,15 +70,17 @@ The hard permanent 48-date run exhausted its 12-evaluation root budget: its
 best raw maximum residual was 0.0002548867 versus the 0.0002 gate. The quarter
 permanent 48-date run passed its dated root and replay checks but failed the
 terminal distribution and renter-price gates (0.00225310 and 0.00118360,
-respectively, versus 0.001). A partial quarter temporary 48/64-date overlap
-diagnostic records first-four-date macro and saved period-four population,
-distribution and queue gaps below 0.001; its source-helper pin needs
-reauthentication before reuse, and a full native-state comparison is
-unavailable because saved forecast paths and value arrays are missing.
+respectively, versus 0.001). Corrected source-pinned 48/64-date overlap
+checks for **both temporary paths** pass the original first-four-date macro
+and saved period-four population, distribution and both queue gates at 0.001.
+The largest macro gap is 0.00005532 (hard) and 0.00005127 (quarter); saved
+distribution gaps are 0.00010931 and 0.00003595. A full value-function and
+forecast-path comparison remains unavailable from the saved checkpoints.
 The receipts are in `output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/mechanism_deployment/`:
 `accepted_hard_temporary_h48_0722.json`, `accepted_quarter_temporary_h48_0752.json`,
 `accepted_hard_temporary_h64_0852.json`, `accepted_quarter_temporary_h64_0822.json`,
-`quarter_temporary_h48_h64_overlap_verified.json`, and `progress_0852.json`.
+`hard_temporary_h48_h64_overlap_v1.json`,
+`quarter_temporary_h48_h64_overlap_v2.json`, and `progress_0852.json`.
 Saved-policy buyer diagnostic v4
 jobs **19022340** (hard) and
 **19022341** (quarter-saving) passed with zero model solves. Among actual
