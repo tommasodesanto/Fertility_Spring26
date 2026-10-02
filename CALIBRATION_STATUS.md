@@ -36,12 +36,18 @@ smoke array **19022272** tasks0/1 is running and the 12-case policy array
 is `/scratch/td2248/projects/purchase_mechanism_reviewed_93831f5a`.
 There is **no policy response yet**. A selected numerical calibration point
 is an input to those runs, not evidence of a fertility effect of 80-to-100%
-financing. Buyer diagnostic v3 jobs **19022197** and **19022198** failed before
-outputs because their compact repeat incorrectly required all17 standard
-plots; the lead approved checking those plots in the root report while
-preserving the scientific gates, and a v4 retry is being staged. The dated
-progress account below records earlier overnight states and is superseded by
-this final search readout.
+financing. Saved-policy buyer diagnostic v4 jobs **19022340** (hard) and
+**19022341** (quarter-saving) passed with zero model solves. Among actual
+first-birth flow originating from renters, **61.829%** under the hard rule and
+**7.411%** under quarter-saving had no financially feasible owner product at
+the fitted 80% financed share but did at 100%, holding the origin state and
+other inputs fixed. These are **57.446%** and **6.511%** of all first births.
+The measured young-buyer closing funding ratio is an implied **net** ratio,
+not observed gross mortgage loan-to-value. Financial access does not establish
+desired purchase or a causal first-birth response. Full reports are under
+`output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/selected_v4/`.
+The dated progress account below records earlier overnight states and is
+superseded by this final search readout.
 
 All four fixed-price diagnostics are complete at price 0.7152515073815459,
 H0 6.778473404808042, N0=1 and the ten normalized-v2 chain2/case0064_nm
