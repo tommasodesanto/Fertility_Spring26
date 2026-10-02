@@ -9,6 +9,9 @@ candidate only when its summary names `winner=restart`, binds the unchanged
 parent receipts by hash, respects the parent's deadline and remaining 250-call
 budget, and has a fresh successful selected-point postcheck. Original parent
 postchecks stay in their original directories and remain eligible.
+The local controller writes `restart_search_finished` while its postcheck is
+running; the collector records it as pending. A failed or deadline-unverified
+postcheck is visible but cannot be selected.
 
 `selected_hard.json` and `selected_quarter.json` record the winning physical
 `remote_root`, `source_run`, `origin`, chain ID, full 14-row target table and

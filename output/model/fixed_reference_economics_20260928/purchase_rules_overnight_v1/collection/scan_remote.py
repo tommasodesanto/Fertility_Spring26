@@ -125,8 +125,6 @@ def local_restart_provenance(root, index):
     registry = json.loads((PARENT_RESULTS / registry_name).read_text())
     launch = registry[str(index)]
     winner = summary.get('winner')
-    expected_status = ('restart_selected_numerically_verified' if winner == 'restart' else
-                       'parent_selected_retained' if original.get('selected') else 'no_verified_selection')
     if (contract['chain'] != index or summary['chain'] != index or
             contract['parent'] != str(parent) or terminal['chain'] != index or
             contract['parent_search_receipt_sha256'] != sha(parent / 'search/completed.json') or
@@ -152,14 +150,30 @@ def local_restart_provenance(root, index):
             summary['parent_selected_loss'] != (original['selected']['loss'] if original.get('selected') else None) or
             summary['restart_selected_loss'] != (continuation['selected']['loss'] if continuation.get('selected') else None) or
             summary['selected_requires_fresh_postcheck'] != (winner == 'restart') or
-            winner not in ('restart', 'parent') or summary['status'] != expected_status):
-        raise ValueError('Local restart/parent provenance, final status, or budget drift')
+            winner not in ('restart', 'parent')):
+        raise ValueError('Local restart/parent provenance or budget drift')
     if winner == 'restart' and (continuation.get('selected') is None or
             original.get('selected') is not None and
             continuation['selected']['loss'] >= original['selected']['loss']):
         raise ValueError('Local restart is not a strict improvement')
+    status = summary['status']
+    if status == 'restart_search_finished':
+        state = 'postcheck_running' if winner == 'restart' else 'final_receipt_pending'
+    elif winner == 'restart' and status == 'restart_selected_numerically_verified':
+        if summary.get('postcheck_exit_code') != 0 or not (root / 'postcheck/completed.json').is_file():
+            raise ValueError('Local restart claims verification without successful native postcheck')
+        state = 'verified'
+    elif winner == 'restart' and status in ('restart_selected_unverified_deadline_elapsed',
+                                             'restart_selected_postcheck_failed'):
+        state = status
+    elif winner == 'parent' and status == ('parent_selected_retained' if original.get('selected')
+                                           else 'no_verified_selection'):
+        state = 'parent_retained'
+    else:
+        raise ValueError('Local restart status inconsistent with selected winner')
     return dict(parent_remote_root=str(parent),restart_contract_sha256=sha(contract_path),
                 restart_summary_sha256=sha(summary_path),restart_winner=winner,
+                restart_state=state,
                 optimizer_source_sha256=contract['optimizer_source_sha256'],
                 cumulative_objective_calls=summary['cumulative_objective_calls'],
                 original_deadline_epoch=summary['original_deadline_epoch'])
@@ -171,6 +185,9 @@ def check_chain(index):
     provenance = restart_provenance(root, index) if SOURCE_KIND in ('restart', 'local_restart') else {}
     if SOURCE_KIND in ('restart', 'local_restart') and provenance is None:
         return dict(chain=index, arm=arm, status='restart_pending', remote_root=str(root))
+    if SOURCE_KIND == 'local_restart' and provenance['restart_state'] != 'verified':
+        return dict(chain=index, arm=arm, status=provenance['restart_state'],
+                    remote_root=str(root), **provenance)
     if SOURCE_KIND in ('restart', 'local_restart') and provenance['restart_winner'] == 'parent':
         return dict(chain=index, arm=arm, status='restart_parent_retained', remote_root=str(root), **provenance)
     completed = root / 'postcheck/completed.json'

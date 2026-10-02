@@ -44,16 +44,21 @@ class RestartRouteTests(unittest.TestCase):
                     optimizer_source_sha256='a'*64,
                     original_target_contract_sha256=scan.canonical(scan.CONTRACT)))
                 write(restart / 'restart_summary.json', dict(chain=50, winner='restart',
-                    status='restart_selected_numerically_verified',
+                    status='restart_search_finished',
                     cumulative_objective_calls=3, original_deadline_epoch=14401,
                     parent_selected_loss=None, restart_selected_loss=3.,
                     selected_requires_fresh_postcheck=True))
-                self.assertEqual(scan.local_restart_provenance(restart, 50)['restart_winner'], 'restart')
+                self.assertEqual(scan.local_restart_provenance(restart, 50)['restart_state'], 'postcheck_running')
+                write(restart / 'postcheck/completed.json', dict(status='selected_numerically_verified'))
                 summary = json.loads((restart / 'restart_summary.json').read_text())
+                summary['status'] = 'restart_selected_numerically_verified'
+                summary['postcheck_exit_code'] = 0
+                write(restart / 'restart_summary.json', summary)
+                self.assertEqual(scan.local_restart_provenance(restart, 50)['restart_state'], 'verified')
                 summary['status'] = 'restart_selected_postcheck_failed'
                 write(restart / 'restart_summary.json', summary)
-                with self.assertRaisesRegex(ValueError, 'Local restart/parent'):
-                    scan.local_restart_provenance(restart, 50)
+                self.assertEqual(scan.local_restart_provenance(restart, 50)['restart_state'],
+                                 'restart_selected_postcheck_failed')
             finally:
                 scan.PARENT_RESULTS = old_parent
 
