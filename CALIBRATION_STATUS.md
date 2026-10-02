@@ -1,5 +1,42 @@
 ## October 2 — purchase-rule diagnostics and overnight work
 
+**Final search readout, 04:55 New York.** All 104 calibration processes are
+terminal: 48 original Torch, 25 Torch continuations, 16 broader-region Torch,
+10 local original/resume, and five local restarts. There are 102 fresh,
+numerically verified selected-point postchecks. Local hard chain50 and broader
+quarter slot15 produced no valid selected candidate. Across saved case receipts
+there are 2,319 hard and 2,581 quarter valid full-equilibrium evaluations,
+99 and 49 budget-uncomputed cases respectively, and 13 numerically
+inadmissible quarter cases. These counts include repeated parameter vectors.
+The final monitor receipt is
+`output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/monitor/latest_status.json`.
+
+The lowest fresh-postchecked **experimental** fits are hard loss
+**97.0112198128** (Torch continuation chain11/case0047_nm) and quarter loss
+**51.5560360491** (local chain54/case0094_nm). Neither optimizer has a
+convergence certificate; neither rule is adopted as the paper baseline. The
+hard fit still has mean rooms6.241 versus target5.729, first-birth room
+increase1.063 versus1.465, ownership ages30–55 of0.609 versus0.676, and
+early fertility0.524 versus0.810. The quarter fit has mean rooms6.131 versus
+5.729, first-birth room increase1.167 versus1.465, and early fertility0.521
+versus0.810. All 14-target rows, 31 parameter estimates/bounds and standard
+17-plot native packets are under
+`output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/collection/readout/`.
+The standard plots were audited and the saved purchase, budget and net-estate
+gates pass. The plotted housing-policy drop at the highest wealth nodes is
+off support: the saved pre-choice distribution has exactly zero mass there.
+The immutable policy input selection is recorded in
+`output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/mechanism_deployment/selection_snapshot/manifest.json`
+(SHA-256 `19db8dfcc928c4cdea5810f70c4e62a9de65372bd038646d0bc2d49532913879`).
+
+Policy pilot v4 jobs **19022024** and **19022025** are underway using the
+separately reviewed production source `93831f5a`. There is **no policy result
+yet**. A selected numerical calibration point is an input to those pilots,
+not evidence of a fertility response to 80-to-100% financing.
+Buyer diagnostic jobs **19022197** and **19022198** are also running; they do
+not perform new model solves. The dated progress account below records earlier
+overnight states and is superseded by this final search readout.
+
 All four fixed-price diagnostics are complete at price 0.7152515073815459,
 H0 6.778473404808042, N0=1 and the ten normalized-v2 chain2/case0064_nm
 coordinates. Hard80/hard100/quarter80/quarter100 losses are respectively
@@ -86,13 +123,13 @@ monitors numerical work. Thirty-minute heartbeat
 pauses itself. Overall deadline is10:00 NewYork October2. Userrequests mindful
 usage: prefer bounded Sol work and avoid duplicate audits or frequent narration.
 
-Outstanding: completecalibration selectedpostchecks and verified cross-source
-selection; deploy and review buyer financial-access/netclosingLTV diagnostics;
-finish nativeverification of dated phi paths for temporary and permanent
-experiments. The policy code review has found saved-versus-Torch renderer
-differences under the full-array audit; the queue-validator import fix and
-descriptive stationary-gate handling still need review. There is **no selected
-policy baseline or production dated policy result yet**. Retain fixedH0,
+Outstanding: review completed buyer financial-access/netclosingLTV diagnostics
+and the dated temporary and permanent financing experiments when their native
+receipts arrive. The earlier policy code review found saved-versus-Torch
+renderer differences under a full-array audit and required a queue-validator
+import fix and explicit descriptive stationary-gate handling; the reviewed
+production source is separate from that earlier draft. There is **no production
+dated policy result yet**. Retain fixedH0,
 endogenous physicalpopulation
 and both birth-entry queues, fixed payrolltax/endogenouspension. The permanent
 terminal renewal condition is the existing closed stationarydemography closure;
