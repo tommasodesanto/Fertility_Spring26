@@ -128,19 +128,17 @@ person and year effects; survey weights; 95\% pointwise intervals.
 \small
 A renter with financial wealth $b$ and period income $y$ who buys a home worth $Q=pH$:
 \[
-c+(\delta+\tau_H)\,Q+b'=R\,(b-Q)+y,\qquad b'\ge-\phi Q .
+c+(\delta+\tau_H)\,Q+b'=R\,(b-Q)+y .
 \]
-$b'$ is the end-of-period balance and $\phi=0.8$ is the financed share. The three rules differ in what counts toward the 20\% down payment $(1-\phi)Q$:
+$b-Q$ is the balance at closing, $b'$ the balance at the end of the four-year period, and $\phi=0.8$ the financed share. All three rules cap debt at $\phi Q$; they differ in when debt is measured:
 \[
 \begin{aligned}
-\text{Soft:}\quad&b+y/R\ \ge\ (1-\phi)Q &&\text{wealth plus the period's income}\\
-\text{Hard:}\quad&b\ \ge\ (1-\phi)Q &&\text{wealth at closing only}\\
-\text{Quarter-saving:}\quad&b+\tfrac14\left[b'-(b-Q)\right]\ \ge\ (1-\phi)Q &&\text{wealth plus a quarter of net saving}
+\text{Soft:}\quad&b'\ \ge\ -\phi Q &&\text{end of period}\\
+\text{Hard:}\quad&b-Q\ \ge\ -\phi Q &&\text{at closing}\\
+\text{Quarter-saving:}\quad&\tfrac34\,(b-Q)+\tfrac14\,b'\ \ge\ -\phi Q &&\text{weighted average}
 \end{aligned}
 \]
-A period is four years, so the soft rule lets four years of income count toward the down payment. Under soft, the borrowing limit $b'\ge-\phi Q$ already implies the screen.
-\par\medskip
-Hard and quarter-saving also require buyers to keep a nonnegative net estate at the end of the period, $b'\ge-(1-\psi_s)Q$ at ages with mortality risk, where $\psi_s$ is the selling cost.
+Hard and quarter-saving apply in addition to $b'\ge-\phi Q$. They also require buyers to keep a nonnegative net estate, $b'\ge-(1-\psi_s)Q$ at ages with mortality risk, where $\psi_s$ is the selling cost.
 \end{frame}
 
 % 7: Parameters and target moments across the ten jointly estimated parameters.
