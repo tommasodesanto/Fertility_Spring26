@@ -29,13 +29,19 @@ The immutable policy input selection is recorded in
 `output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/mechanism_deployment/selection_snapshot/manifest.json`
 (SHA-256 `19db8dfcc928c4cdea5810f70c4e62a9de65372bd038646d0bc2d49532913879`).
 
-Policy pilot v4 jobs **19022024** and **19022025** are underway using the
-separately reviewed production source `93831f5a`. There is **no policy result
-yet**. A selected numerical calibration point is an input to those pilots,
-not evidence of a fertility response to 80-to-100% financing.
-Buyer diagnostic jobs **19022197** and **19022198** are also running; they do
-not perform new model solves. The dated progress account below records earlier
-overnight states and is superseded by this final search readout.
+Policy pilot v4 jobs **19022024** and **19022025** passed with three native
+calls each. Under the separately reviewed production source `93831f5a`,
+smoke array **19022272** tasks0/1 is running and the 12-case policy array
+**19022273** is pending on its after-ok dependency. The reviewed source root
+is `/scratch/td2248/projects/purchase_mechanism_reviewed_93831f5a`.
+There is **no policy response yet**. A selected numerical calibration point
+is an input to those runs, not evidence of a fertility effect of 80-to-100%
+financing. Buyer diagnostic v3 jobs **19022197** and **19022198** failed before
+outputs because their compact repeat incorrectly required all17 standard
+plots; the lead approved checking those plots in the root report while
+preserving the scientific gates, and a v4 retry is being staged. The dated
+progress account below records earlier overnight states and is superseded by
+this final search readout.
 
 All four fixed-price diagnostics are complete at price 0.7152515073815459,
 H0 6.778473404808042, N0=1 and the ten normalized-v2 chain2/case0064_nm
