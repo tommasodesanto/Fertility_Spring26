@@ -23,6 +23,18 @@ def read(path):
     return json.loads(Path(path).read_text())
 
 
+def require_launcher_scaffold(out):
+    """Accept only the empty directories/log created by launch_torch.sh."""
+    out = Path(out)
+    assert out.is_dir() and not out.is_symlink(), 'Missing launcher result scaffold'
+    assert {p.name for p in out.iterdir()} == {'numba_cache', 'matplotlib', 'search.log'}, 'Existing scientific results or unexpected launcher scaffold'
+    for name in ('numba_cache', 'matplotlib'):
+        folder = out / name
+        assert folder.is_dir() and not folder.is_symlink() and not any(folder.iterdir()), 'Nonempty or invalid launcher cache'
+    log = out / 'search.log'
+    assert log.is_file() and not log.is_symlink(), 'Missing launcher search log'
+
+
 def original_contract(parent, chain):
     parent = Path(parent)
     launch = read(parent / 'launcher_start.json')
@@ -119,8 +131,7 @@ def main():
                     no_clock_reset=True,no_call_count_reset=True)
     if args.dry_run:
         print(json.dumps(contract,indent=2));return
-    assert not args.out.exists(), 'Refusing existing restart results'
-    args.out.mkdir(parents=True)
+    require_launcher_scaffold(args.out)
     (args.out/'restart_contract.json').write_text(json.dumps(contract,indent=2)+'\n')
     # Import the immutable original controller with --chain present so its
     # isolated engine is loaded before the frozen integration.

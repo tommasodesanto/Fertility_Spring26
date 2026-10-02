@@ -9,12 +9,27 @@ PACKET=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(PACKET))
 sys.argv=['run_psi.py','--chain','0']
 import run_psi
-from restart_controller_v2.controller import install_censored_optimizer
+from restart_controller_v2.controller import install_censored_optimizer,require_launcher_scaffold
 
 
 def main():
     install_censored_optimizer(run_psi,8)
     with tempfile.TemporaryDirectory() as tmp:
+        scaffold=Path(tmp)/'launch'
+        scaffold.mkdir()
+        (scaffold/'numba_cache').mkdir()
+        (scaffold/'matplotlib').mkdir()
+        (scaffold/'search.log').write_text('apptainer startup text\n')
+        require_launcher_scaffold(scaffold)
+        (scaffold/'restart_contract.json').write_text('{}\n')
+        try: require_launcher_scaffold(scaffold)
+        except AssertionError: pass
+        else: raise AssertionError('Duplicate scientific results were accepted')
+        (scaffold/'restart_contract.json').unlink()
+        (scaffold/'numba_cache'/'stale-cache').write_text('x')
+        try: require_launcher_scaffold(scaffold)
+        except AssertionError: pass
+        else: raise AssertionError('Nonempty launcher cache was accepted')
         out=Path(tmp)/'continue'
         n=[0]
         def evaluate(label,point,deadline):
