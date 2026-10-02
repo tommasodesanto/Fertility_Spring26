@@ -1,0 +1,99 @@
+{
+  "schema": "permanent_phi100_saved_root_recovery_assessment_v1",
+  "written_utc": "2026-10-02T14:58:07.114019+00:00",
+  "scientific_status": "both permanent 64-date paths failed market/fiscal root; no accepted first-birth response",
+  "existing_api": "solve_joint_with_acceleration accepts initial_prices, initial_fiscal_values, initial_jacobian; solve_social_security_path returns final_jacobian in same physical-log coordinates",
+  "checkpoint_limit": "Saved root has best prices/pensions and finite 128x128 final Jacobian; no serialized in-process Broyden or household policy cache. A continuation would be a new isolated root solve initialized from saved values, not a resumed process or accepted result.",
+  "per_arm": [
+    {
+      "arm": "hard",
+      "status": "evaluation_budget",
+      "launcher_exit_code": 1,
+      "failure_message": "Dated market/fiscal root or replay failed",
+      "root_evaluations": 12,
+      "root_elapsed_seconds": 10840.034944569925,
+      "total_elapsed_seconds": 11696.273408616893,
+      "best_score": 1.6456477296114014,
+      "best_mapping_valid": true,
+      "best_market_max_abs": 0.0003291295459222803,
+      "best_fiscal_max_abs": 2.8826786693025046e-05,
+      "best_price_path_length": 64,
+      "best_pension_path_length": 64,
+      "best_paths_positive_finite": true,
+      "final_jacobian_shape": [
+        128,
+        128
+      ],
+      "final_jacobian_finite": true,
+      "final_jacobian_condition_number_remote_numpy": 9.377986696213046,
+      "root_gates": {
+        "fiscal_replay": true,
+        "housing": false,
+        "mapping": true,
+        "market_replay": true,
+        "social_security": false
+      },
+      "policy_native_calls_from_last_mapping": 790,
+      "receipt_sha256": {
+        "launcher_terminal.json": "337b71ff5801a852657879cd00b54f7265197e6efffb5ae7f4c5cfc6f9407260",
+        "failure.json": "f18606b18863c829f7224372d7da8b8c1cd26116bfa7361062a4a9f7a224991c",
+        "root_progress.json": "1432858da685bfdf98cf5f7abe60b40f74b4a00fa482946da0b05d1fa6a23029",
+        "root.json": "72c2cddb4ae76b137420ff1d0d15b69731735ee4ff50e0d7fe6801338f5ff9e1"
+      },
+      "local_receipt_dir": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/mechanism_deployment/permanent_recovery/hard_h64"
+    },
+    {
+      "arm": "quarter",
+      "status": "evaluation_budget",
+      "launcher_exit_code": 1,
+      "failure_message": "Dated market/fiscal root or replay failed",
+      "root_evaluations": 12,
+      "root_elapsed_seconds": 10074.309701042017,
+      "total_elapsed_seconds": 10934.091472737957,
+      "best_score": 8.569256145184205,
+      "best_mapping_valid": true,
+      "best_market_max_abs": 0.00043264071208187006,
+      "best_fiscal_max_abs": 0.0001713851229036841,
+      "best_price_path_length": 64,
+      "best_pension_path_length": 64,
+      "best_paths_positive_finite": true,
+      "final_jacobian_shape": [
+        128,
+        128
+      ],
+      "final_jacobian_finite": true,
+      "final_jacobian_condition_number_remote_numpy": 4.677807393094843,
+      "root_gates": {
+        "fiscal_replay": true,
+        "housing": false,
+        "mapping": true,
+        "market_replay": true,
+        "social_security": false
+      },
+      "policy_native_calls_from_last_mapping": 790,
+      "receipt_sha256": {
+        "launcher_terminal.json": "a2e52c8fd7728b6679f12fd4b65946b6ffeda5b963c6dd84b1ca6ac6112aaf94",
+        "failure.json": "d5212ef58214a11919f891cee6b5a5b2f36377700b246470e56a647bd5793249",
+        "root_progress.json": "1432858da685bfdf98cf5f7abe60b40f74b4a00fa482946da0b05d1fa6a23029",
+        "root.json": "0bdba3ddeff359c7e405f61d6c0c155baa14ca89c584e034f243f8cc0690362c"
+      },
+      "local_receipt_dir": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/mechanism_deployment/permanent_recovery/quarter_h64"
+    }
+  ],
+  "design_not_submitted": {
+    "economic_rules_and_gates": "unchanged",
+    "source_identity": "reuse authenticated same selected baseline and isolated arm; require exact saved receipt/source hashes before using seeds",
+    "initial_prices_pensions": "root.best.prices and root.best.fiscal_values",
+    "initial_jacobian": "root.final_jacobian; validate 128x128 finite/condition and physical-log convention",
+    "solver_bound": "explicit new root-evaluation and wall-clock caps require user/lead authorization; no automatic retry",
+    "outputs": "new immutable permanent-only root/results, full native root/replay/terminal receipts, matched first-birth response only after all pass"
+  },
+  "cost_from_actual": {
+    "hard_seconds_per_root_evaluation": 903.3362453808271,
+    "quarter_seconds_per_root_evaluation": 839.5258084201681,
+    "observed_native_calls_per_failed_case": 790,
+    "illustrative_fresh_2_to_4_evaluations_wall_hours_per_arm": "roughly 0.6\u20131.3 h plus baseline reconstruction/terminal overhead; not guaranteed",
+    "illustrative_12_evaluations_wall_hours_per_arm": "roughly 3.0\u20133.3 h from actual 64-date failures",
+    "terminal_uncertainty": "A converged market/fiscal root can still fail the unchanged 0.001 terminal distribution/rent/queue gates (quarter T48 did); no permanent first-birth estimate can be accepted until then."
+  }
+}
