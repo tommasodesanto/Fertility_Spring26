@@ -1,0 +1,25 @@
+{
+  "schema": "purchase_policy_source_only_deployment_v2",
+  "verified_utc": "2026-10-02 06:56:10 UTC",
+  "deployment_source_commit": "d7331895",
+  "mechanism": {
+    "remote_root": "/scratch/td2248/projects/purchase_mechanism_v1",
+    "archive": "stage_v2.tar.gz",
+    "archive_sha256_local_and_remote": "4a3f0e0a1efe2861c78630e33c280afc963a6d9af56bb5805138b656539fcff5",
+    "inventory_sha256_local_and_remote": "dfd1293f1f9fc1dbec6fdb1bda2cf0438ec701a32e89d96c81fbf1956e3e6d47",
+    "hard_preflight": "source_and_native_callback_import_passed_zero_solves",
+    "quarter_preflight": "source_and_native_callback_import_passed_zero_solves",
+    "native_policy_calls_each": 0
+  },
+  "buyer": {
+    "remote_root": "/scratch/td2248/projects/purchase_buyer_diagnostics_v2",
+    "archive": "stage.tar.gz",
+    "archive_sha256_local_and_remote": "aaa7fdad1fc06a5eb24af654a46801e1304f60de17f216c6b652ac766efb51e3",
+    "inventory_sha256_local_and_remote": "13b0d915fd828a3a2a09c730c9851b6cfa8c523449f5038f0c73da824a0d9a3e",
+    "hard_preflight": "zero_solve_native_access_passed",
+    "quarter_preflight": "zero_solve_native_access_passed"
+  },
+  "selection_manifest_published": false,
+  "model_jobs_submitted": false,
+  "old_source_archives_preserved": true
+}

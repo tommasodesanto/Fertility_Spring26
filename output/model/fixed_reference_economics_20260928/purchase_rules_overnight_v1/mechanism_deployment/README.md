@@ -17,3 +17,10 @@ Remaining review and launch sequence:
 5. Collect all 12 terminal cases. Compare first-birth flow and at-risk mass at date 0 and later against each arm's same-horizon 80% control; require 12/16 overlap and report terminal, market, fiscal and population/entry-queue gates. Buyer closing-LTV and matched financial-access diagnostics are a separate saved-policy packet and must not be called an observed mortgage LTV or a birth response.
 
 The exact launch matrix and limits are in `plan.json`. The 10:00 deadline is author requested. Failed or incomplete cases remain explicit; they are not silently replaced by an easier closure.
+
+The approved **source-only v2 staging** completed on October 2. The local and Torch SHA-256 values match for mechanism archive `4a3f0e0a1efe2861c78630e33c280afc963a6d9af56bb5805138b656539fcff5` and buyer archive `aaa7fdad1fc06a5eb24af654a46801e1304f60de17f216c6b652ac766efb51e3`. The [deployment receipt](deployment_v2_receipt.json) records the inventory hashes. Both mechanism source preflights and both buyer financial-map preflights passed with zero model solves; no selection manifest or model job was published. The old archives remain intact. To repeat the two preflights on the staged source, use:
+
+```sh
+ssh -o BatchMode=yes torch 'bash /scratch/td2248/projects/purchase_mechanism_v1/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/mechanism_deployment/preflight_torch.sh'
+ssh -o BatchMode=yes torch 'bash /scratch/td2248/projects/purchase_buyer_diagnostics_v2/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/preflight_torch.sh'
+```
