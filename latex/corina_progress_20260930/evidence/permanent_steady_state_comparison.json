@@ -1,0 +1,196 @@
+{
+  "schema": "purchase_rules_permanent_steady_state_comparison_v1",
+  "classification": "Experimental best-available fitted 80% baselines and valid 100% stationary endpoints; permanent dated transitions failed and are not quantified here.",
+  "first_birth_definition": "Exact pre-fertility childless risk set n=0, settled readiness m=0 at all ages. At fertile ages only, first-birth flow is g_pre childless mass \u00d7 fecundity_by_age \u00d7 fert_probs[...,1] (one-child first-birth choice), summed across states and ages. Aggregate hazard is total first-birth flow divided by all-age childless risk mass, matching the control observer denominator. This reproduces source run_e5f_transition_calibration.py:first_birth_accounting_by_age and the saved one-step observer age flows within printed-array rounding.",
+  "closure": "H0 fixed at each fitted 80% baseline; N=physical housing supply divided by per-capita housing demand. Terminal renewal root pins topcode-adjusted completed fertility to replacement 2.1 within numerical tolerance, not population level and not first-birth flow/hazard.",
+  "unavailable_in_this_compact_readout": [
+    "owner_share_ages_30_to_55",
+    "mean_rooms",
+    "full_14_target_fit_table_and_31_parameter_table_for_stationary100_not_a_recalibration"
+  ],
+  "arms": [
+    {
+      "arm": "hard",
+      "stationary_80_to_100": {
+        "asset_price": {
+          "baseline80": 0.6565939129654318,
+          "permanent100": 0.6532917722871069,
+          "absolute_change": -0.003302140678324905,
+          "relative_change_percent": -0.5029197823980924
+        },
+        "renter_price": {
+          "baseline80": 0.11837035266045237,
+          "permanent100": 0.11777504474042856,
+          "absolute_change": -0.0005953079200238104,
+          "relative_change_percent": -0.5029197823981035
+        },
+        "adult_population": {
+          "baseline80": 0.999999999999999,
+          "permanent100": 0.976763318215417,
+          "absolute_change": -0.023236681784582047,
+          "relative_change_percent": -2.3236681784582047
+        },
+        "owner_share_all_ages": {
+          "baseline80": 0.6052503460543357,
+          "permanent100": 0.691275378657032,
+          "absolute_change": 0.08602503260269634,
+          "relative_change_percent": 14.213132328382594
+        },
+        "first_birth_flow": {
+          "baseline80": 0.04980374667823033,
+          "permanent100": 0.04859278690373961,
+          "absolute_change": -0.0012109597744907191,
+          "relative_change_percent": -2.4314632035907446
+        },
+        "childless_mass_all_ages": {
+          "baseline80": 0.3178448044292654,
+          "permanent100": 0.31041921780004145,
+          "absolute_change": -0.007425586629223935,
+          "relative_change_percent": -2.3362303003686358
+        },
+        "first_birth_hazard_all_childless": {
+          "baseline80": 0.156692027002486,
+          "permanent100": 0.15653923506450226,
+          "absolute_change": -0.0001527919379837317,
+          "relative_change_percent": -0.0975109843855071
+        },
+        "completed_fertility_topcode_adjusted": {
+          "baseline80": 2.099999999725183,
+          "permanent100": 2.099998795528701,
+          "absolute_change": -1.2041964820852513e-06,
+          "relative_change_percent": -5.7342689629980015e-05
+        }
+      },
+      "fitted_H0": 7.546002524007095,
+      "permanent100_endpoint_population_scale": 0.9767633182154175,
+      "stationary_renewal_gap": 5.735577717214113e-07,
+      "permanent100_root_status": "converged",
+      "permanent100_root_evaluations": 10,
+      "permanent100_one_step_gates": {
+        "mass": true,
+        "policy_reproduction": true,
+        "projection": true,
+        "dated_audits": true
+      },
+      "permanent100_terminal_all_checks_pass": true,
+      "permanent100_terminal_raw_queue_pass": true,
+      "source_files": {
+        "baseline80_control_completed": {
+          "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_03_hard_control_h64/run/completed.json",
+          "sha256": "ea75d07305a594a5ae803bb054a5ac1ca6ea7c026ea8008a6e22b4e8a5085273"
+        },
+        "permanent100_accepted": {
+          "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_05_hard_permanent_h64/run/permanent_terminal/accepted.json",
+          "sha256": "47aed31acd24d2c90707a2f48b03a824673e9b8491a27f1c8dc1ee6c5373e089"
+        },
+        "permanent100_root": {
+          "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_05_hard_permanent_h64/run/permanent_terminal/root.json",
+          "sha256": "d40d6ee71ac77856b4b38a5ee090f7aa938cc085ea76266e5932b9977c28ac91"
+        },
+        "permanent100_one_step_mapping": {
+          "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_05_hard_permanent_h64/run/permanent_terminal/one_step/mapping.json",
+          "sha256": "177f7d5ff576dde3749538df353a84893e660a34b1c7fcd42563006e0af97770"
+        },
+        "permanent100_one_step_native_packet": {
+          "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_05_hard_permanent_h64/run/permanent_terminal/one_step/date_000/diagnostic_packet.pkl.gz",
+          "sha256": "0e14a9da5a3fe30b0f2ac1a0e41bde71bc6dc0daadcc0517d256a6aa68dcd472"
+        }
+      },
+      "first_birth_native_observer_match_max_abs": "3.72e-9 (hard) or 4.61e-9 (quarter) against saved one_step/mapping.json age-vector printout"
+    },
+    {
+      "arm": "quarter",
+      "stationary_80_to_100": {
+        "asset_price": {
+          "baseline80": 0.6744838540900874,
+          "permanent100": 0.6683645043955561,
+          "absolute_change": -0.0061193496945313175,
+          "relative_change_percent": -0.9072640742136984
+        },
+        "renter_price": {
+          "baseline80": 0.12159554040311076,
+          "permanent100": 0.12049234774918732,
+          "absolute_change": -0.0011031926539234321,
+          "relative_change_percent": -0.9072640742136984
+        },
+        "adult_population": {
+          "baseline80": 1.0000000000000002,
+          "permanent100": 0.9789468543259208,
+          "absolute_change": -0.021053145674079454,
+          "relative_change_percent": -2.1053145674079454
+        },
+        "owner_share_all_ages": {
+          "baseline80": 0.6404564717868237,
+          "permanent100": 0.7311393751461874,
+          "absolute_change": 0.09068290335936369,
+          "relative_change_percent": 14.159104850071301
+        },
+        "first_birth_flow": {
+          "baseline80": 0.04974551614189717,
+          "permanent100": 0.048643188538078266,
+          "absolute_change": -0.0011023276038189048,
+          "relative_change_percent": -2.2159335942450675
+        },
+        "childless_mass_all_ages": {
+          "baseline80": 0.31926329003054366,
+          "permanent100": 0.31273740137884953,
+          "absolute_change": -0.006525888651694123,
+          "relative_change_percent": -2.044046044589032
+        },
+        "first_birth_hazard_all_childless": {
+          "baseline80": 0.15581345458520476,
+          "permanent100": 0.15554004197646956,
+          "absolute_change": -0.0002734126087352018,
+          "relative_change_percent": -0.175474325669156
+        },
+        "completed_fertility_topcode_adjusted": {
+          "baseline80": 2.099999998540028,
+          "permanent100": 2.09999873950005,
+          "absolute_change": -1.259039978052101e-06,
+          "relative_change_percent": -5.995428471461395e-05
+        }
+      },
+      "fitted_H0": 7.288573389887633,
+      "permanent100_endpoint_population_scale": 0.9789468543259232,
+      "stationary_renewal_gap": 6.002381007785829e-07,
+      "permanent100_root_status": "converged",
+      "permanent100_root_evaluations": 10,
+      "permanent100_one_step_gates": {
+        "mass": true,
+        "policy_reproduction": true,
+        "projection": true,
+        "dated_audits": true
+      },
+      "permanent100_terminal_all_checks_pass": true,
+      "permanent100_terminal_raw_queue_pass": true,
+      "source_files": {
+        "baseline80_control_completed": {
+          "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_09_quarter_control_h64/run/completed.json",
+          "sha256": "96d74610867c69ac04ec23a8fe4f030d89216b4873d666a31cb217535ce779b9"
+        },
+        "permanent100_accepted": {
+          "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_11_quarter_permanent_h64/run/permanent_terminal/accepted.json",
+          "sha256": "552ea11e0e551c8b2ba248d49d1055d2458dea86dd1bb6d0fc79bd0c4c214515"
+        },
+        "permanent100_root": {
+          "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_11_quarter_permanent_h64/run/permanent_terminal/root.json",
+          "sha256": "49e91e021f9153656c5c9111df4ac8e3d0f523fbba4670957046c0546f79a7ec"
+        },
+        "permanent100_one_step_mapping": {
+          "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_11_quarter_permanent_h64/run/permanent_terminal/one_step/mapping.json",
+          "sha256": "3d72de33f271756f627387486499e748831f5934430d5786cdb0f31899f776e5"
+        },
+        "permanent100_one_step_native_packet": {
+          "path": "/scratch/td2248/projects/purchase_mechanism_horizon_extension_v1/results/case_11_quarter_permanent_h64/run/permanent_terminal/one_step/date_000/diagnostic_packet.pkl.gz",
+          "sha256": "358d17d4063b1e98be7f2513d751571e735be7c241a67f42cdccb515adff6b66"
+        }
+      },
+      "first_birth_native_observer_match_max_abs": "3.72e-9 (hard) or 4.61e-9 (quarter) against saved one_step/mapping.json age-vector printout"
+    }
+  ],
+  "first_birth_code_provenance": {
+    "observer": "/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project/code/model/tools/run_e5f_transition_calibration.py",
+    "observer_sha256": "434503d48a34a7ff8d6c65dbba6bc5cc5e06e98db8caddfcbac8fcf8b440ba16",
+    "isolated_parameters_sha256": "f8871ea7f026b0900f2cd89e2ecbe7f24fbc8b08e83ec46227533a11dea2e163"
+  }
+}

@@ -118,3 +118,7 @@ Notation follows the older deck where possible: u(c,s;m), tenure subscripts, xi 
 October 2 prose cleanup: shortened review and model exposition, removed repeated workflow summaries, and retained the full identification and fit tables. Equations and numerical results are unchanged.
 
 Calibration setup and identification are combined in one parameter/target slide (13 frames total); recomputed moments are marked. Regression slide notes the earlier mistake without changing estimates.
+
+## GE financing comparison and impact response
+
+Replaced the fixed-price policy slide with permanent steady-state and temporary-impact GE slides. The endpoint comparison is copied unchanged to evidence/permanent_steady_state_comparison.json. H0 and preferences remain fixed within each arm. Permanent steady states pass, but their dated transitions fail. Temporary 48/64-date paths pass; the displayed impact uses 48 dates: hard first-birth flow -0.5416896477%, hazard -0.08487845 pp; quarter flow -0.4305795241%, hazard -0.06709008 pp. Evidence: output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/mechanism_deployment/README.md and accepted_hard_temporary_h48_0722.json / accepted_quarter_temporary_h48_0752.json. These use the earlier overnight fits, not the later fresh-search winners. No new model runs or recalibration.

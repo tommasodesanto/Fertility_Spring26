@@ -190,3 +190,7 @@ Fixed-price experiments at the quarter-saving calibration (price 0.6744838540900
 - Slide 9: `output/model/fixed_reference_economics_20260928/per_child_need_probe_v1/results.csv` (need0 arms); recalibrated temporary-financing responses from `CALIBRATION_STATUS.md` (hard −0.54%, quarter −0.43%).
 - Slide 10: rental-cap counterfactual on saved quarter arrays (lead-verified formula, kernels.py renter branch); see memory note and `per_child_need_probe_v1/NOTE.md`.
 - Slide 11: `selling_cost_dose_probe_v1/NOTE.md` (with one added room per additional child) and `owner_floor_split_cost_probe_v1/NOTE.md` (current requirement).
+
+## GE financing comparison and impact response
+
+Replaced the fixed-price policy slide with permanent steady-state and temporary-impact GE slides. The endpoint comparison is copied unchanged to evidence/permanent_steady_state_comparison.json. H0 and preferences remain fixed within each arm. Permanent steady states pass, but their dated transitions fail. Temporary 48/64-date paths pass; the displayed impact uses 48 dates: hard first-birth flow -0.5416896477%, hazard -0.08487845 pp; quarter flow -0.4305795241%, hazard -0.06709008 pp. Evidence: output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/mechanism_deployment/README.md and accepted_hard_temporary_h48_0722.json / accepted_quarter_temporary_h48_0752.json. These use the earlier overnight fits, not the later fresh-search winners. No new model runs or recalibration.

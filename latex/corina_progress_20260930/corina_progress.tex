@@ -268,28 +268,51 @@ $H_0$ & Housing supply coefficient & 6.757 & 7.546 & 7.289 \\
 \end{frame}
 
 % 14: Fit comparison and remaining gaps.
-% Financing results (October 2 fixed-price experiments, not recalibrated).
-% Sources: output/model/fixed_reference_economics_20260928/per_child_need_probe_v1/NOTE.md (need0 arms)
-\begin{frame}{More credit raises ownership but not births}
-\framesubtitle{Financed share 80\% vs.\ 100\%, house price held fixed}
+% GE policy comparisons at the saved overnight hard and quarter calibrations.
+\begin{frame}{Credit and the long-run equilibrium}
+\framesubtitle{Permanent increase in mortgage financing from 80\% to 100\%}
 \small
+Keep preferences and housing supply scale $H_0$ fixed. Recompute house prices and population; each initial equilibrium has $N=1$.
+\begin{center}
+\begin{tabular}{lrrrr}
+\toprule
+ & \multicolumn{2}{c}{Hard} & \multicolumn{2}{c}{Quarter-saving} \\
+ & 80\% & 100\% & 80\% & 100\% \\
+\midrule
+Population $N$ & 1.0000 & 0.9768 & 1.0000 & 0.9789 \\
+House price & 0.6566 & 0.6533 & 0.6745 & 0.6684 \\
+Ownership, all ages (\%) & 60.53 & 69.13 & 64.05 & 73.11 \\
+Completed fertility & 2.100 & 2.100 & 2.100 & 2.100 \\
+\bottomrule
+\end{tabular}
+\end{center}
+Population falls by \textbf{2.32\%} under hard purchase and \textbf{2.11\%} under quarter-saving. Housing clearing determines the new scale: $N=S(p;H_0)/\bar h(p,\phi)$, where $S$ is supply and $\bar h$ is demand per household.
+\par\smallskip
+Completed fertility remains at replacement under the stationary closure.
+\par\smallskip
+\footnotesize The permanent steady states passed their checks; the permanent transition paths did not.
+\end{frame}
+
+\begin{frame}{The fertility effect on impact}
+\framesubtitle{Temporary increase in mortgage financing from 80\% to 100\%}
+\small
+House prices adjust in equilibrium. Compare the first four-year period with the matched 80\% financing control.
 \begin{center}
 \begin{tabular}{lrr}
 \toprule
- & 80\% & 100\% \\
+ & Hard & Quarter-saving \\
 \midrule
-Ownership, ages 30--55 (\%) & 64.6 & 74.0 \\
-Ownership, ages 18--21 (\%) & 10.5 & 31.4 \\
-First-birth probability, ages 18--21 (\%) & 25.5 & 25.8 \\
-Childlessness, ages 40--44 (\%) & 20.5 & 20.9 \\
-Completed fertility & 2.10 & 2.09 \\
+First births (\% change) & $-0.542$ & $-0.431$ \\
+First-birth hazard (pp change) & $-0.0849$ & $-0.0671$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 \medskip
-First births rise slightly at 18--21 but fall at later ages, so childlessness rises and completed fertility falls slightly.
+Credit relaxation produces a small negative first-birth response on impact at these calibrations. Replacement fertility is a steady-state condition; births can differ from replacement during the transition.
 \par\medskip
-This comparison holds the house price fixed. In dated transitions where the house price adjusts, a temporary move to 100\% financing at the recalibrated hard and quarter-saving points lowers first births by about 0.5\% in the first period.
+The first row is a relative change in births, not a percentage-point change in birth probability. The hazard uses the childless risk set.
+\vfill
+\footnotesize Accepted 48-date temporary paths; the 64-date results are similar. These effects use the overnight fitted points, without recalibration after the policy change.
 \end{frame}
 
 \begin{frame}{Why the response is small: what I have checked}
