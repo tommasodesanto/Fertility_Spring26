@@ -34,6 +34,23 @@ def summarize(x, w):
                 positive_share=float(np.sum(w * (x > 1e-8)) / total) if total else None)
 
 
+def weighted_quantile(x, w, q):
+    active = w > 0
+    if not np.any(active):
+        return None
+    xv, wv = x[active], w[active]
+    order = np.argsort(xv)
+    return float(xv[order][np.searchsorted(np.cumsum(wv[order]), q * wv.sum())])
+
+
+def group_distribution(x, w):
+    total = float(w.sum())
+    return {"mean": float(np.sum(x*w)/total) if total else None,
+            "p10": weighted_quantile(x, w, .1),
+            "median": weighted_quantile(x, w, .5),
+            "p90": weighted_quantile(x, w, .9)}
+
+
 def main():
     # Replay the exact read-only overlay used by the local selected postcheck.
     # Its final dispatch launches a calibration chain, so execute only setup.
@@ -74,6 +91,7 @@ def main():
     access = matched_first_birth_access(P, SD, b, price, g, fert, rule="quarter")
     bridged = ~access["owner_feasible_at_80"].any(-1) & access["owner_feasible_at_100"].any(-1)
     at80 = access["owner_feasible_at_80"].any(-1)
+    never_feasible = ~access["owner_feasible_at_100"].any(-1)
     pi = fec[None, None, :, None]
     p = fert[:, 0, :, :, :, 1]
     mass = g[:, 0, :, :, :, 0, 0]
@@ -90,6 +108,13 @@ def main():
     wait_loose = np.zeros_like(birth)
     relaxed_parent_rooms = np.zeros_like(birth)
     relaxed_wait_rooms = np.zeros_like(birth)
+    capped_parent_rooms = np.zeros_like(birth)
+    capped_wait_rooms = np.zeros_like(birth)
+    sweep_caps = (6.0, 5.5, 5.0, 4.5)
+    sweep_parent_value = {c: np.zeros_like(birth) for c in sweep_caps}
+    sweep_wait_value = {c: np.zeros_like(birth) for c in sweep_caps}
+    sweep_parent_rooms = {c: np.zeros_like(birth) for c in sweep_caps}
+    sweep_wait_rooms = {c: np.zeros_like(birth) for c in sweep_caps}
     baseline_h_max_error = 0.0
     r = float(P.user_cost_rate * price[0])
     cb = np.ascontiguousarray(SD.cb_flat.reshape(-1))
@@ -128,7 +153,7 @@ def main():
             vals = {}
             for label, continuation in (("wait", standard), ("parent", exempt)):
                 vcr = np.ascontiguousarray(flat_nc(continuation[:, 0, 0], len(b), n_c))
-                for max_rooms in (6.0, 100.0):
+                for max_rooms in (*sweep_caps, 100.0):
                     value, _, _, rooms = full_renter_block_kernel(
                         rv, rvt, vcr, np.zeros((len(b), n_c)), 0, b,
                         cb, hb, psi, gb, alpha_v, esc, r, max_rooms,
@@ -145,9 +170,16 @@ def main():
             cap[:, 0, j, zz] = vals[("parent", 6.)][0][:, parent_col]
             loose[:, 0, j, zz] = vals[("parent", 100.)][0][:, parent_col]
             relaxed_parent_rooms[:, 0, j, zz] = vals[("parent", 100.)][1][:, parent_col]
+            capped_parent_rooms[:, 0, j, zz] = vals[("parent", 6.)][1][:, parent_col]
             wait_cap[:, 0, j, zz] = vals[("wait", 6.)][0][:, childless_col]
             wait_loose[:, 0, j, zz] = vals[("wait", 100.)][0][:, childless_col]
             relaxed_wait_rooms[:, 0, j, zz] = vals[("wait", 100.)][1][:, childless_col]
+            capped_wait_rooms[:, 0, j, zz] = vals[("wait", 6.)][1][:, childless_col]
+            for sweep_cap in sweep_caps:
+                sweep_parent_value[sweep_cap][:, 0, j, zz] = vals[("parent", sweep_cap)][0][:, parent_col]
+                sweep_wait_value[sweep_cap][:, 0, j, zz] = vals[("wait", sweep_cap)][0][:, childless_col]
+                sweep_parent_rooms[sweep_cap][:, 0, j, zz] = vals[("parent", sweep_cap)][1][:, parent_col]
+                sweep_wait_rooms[sweep_cap][:, 0, j, zz] = vals[("wait", sweep_cap)][1][:, childless_col]
             h_saved = saved_h[:, 0, 0, j, zz]
             h_current = vals[("wait", 6.)][1][:, childless_col]
             h_parent_saved = saved_h[:, 0, 0, j, zz, 1, 1]
@@ -161,6 +193,10 @@ def main():
     parent_shadow = loose-cap
     wait_shadow = wait_loose-wait_cap
     differential = parent_shadow-wait_shadow
+    if not np.array_equal(sweep_parent_value[6.0], cap) or not np.array_equal(sweep_wait_value[6.0], wait_cap):
+        raise RuntimeError("Cap-six value replay changed")
+    if not np.array_equal(sweep_parent_rooms[6.0], capped_parent_rooms) or not np.array_equal(sweep_wait_rooms[6.0], capped_wait_rooms):
+        raise RuntimeError("Cap-six room replay changed")
     occupied = responsive > 0
     if np.min(parent_shadow[occupied]) < -1e-6 or np.min(wait_shadow[occupied]) < -1e-6:
         raise RuntimeError("Relaxing cap lowered a renter branch value")
@@ -171,8 +207,55 @@ def main():
     if max(relaxed_parent_max, relaxed_wait_max) >= 99.99:
         raise RuntimeError("Relaxed rental cap 100 still binds at a responsive state")
     sections = {}
+    ages = np.broadcast_to(np.asarray(P.age_start + P.da*np.arange(P.J))[None,None,:,None], birth.shape)
+    wealth = np.broadcast_to(b[:,None,None,None], birth.shape)
+    income = np.broadcast_to(np.asarray([[income_at_state(P, 0, j, float(z))
+                                        for z in P.z_grid] for j in range(P.J)])[None,None,:,:], birth.shape)
+    owner_sizes = np.asarray(P.H_own, dtype=float)
+    newly_feasible_products = access["owner_feasible_at_100"] & ~access["owner_feasible_at_80"]
+    def detailed(mask):
+        w_birth = birth*mask
+        w_response = responsive*mask
+        fertile = (ages >= min(age_cells)) & (ages <= max(age_cells))
+        w_mass = mass*mask*fertile
+        total_birth = float(w_birth.sum())
+        total_response = float(w_response.sum())
+        total_mass = float(w_mass.sum())
+        age_rows = []
+        for age in age_cells:
+            age_mask = ages == age
+            age_rows.append({"age": age,
+                             "mass_share": float(np.sum(w_mass*age_mask)/total_mass) if total_mass else None,
+                             "birth_flow_share": float(np.sum(w_birth*age_mask)/total_birth) if total_birth else None,
+                             "responsiveness_share": float(np.sum(w_response*age_mask)/total_response) if total_response else None})
+        room_rows = {}
+        for name, rooms in (("parent_cap6", capped_parent_rooms), ("parent_relaxed100", relaxed_parent_rooms),
+                            ("wait_cap6", capped_wait_rooms), ("wait_relaxed100", relaxed_wait_rooms)):
+            room_rows[name] = {"response_weighted_mean": float(np.sum(w_response*rooms)/total_response) if total_response else None,
+                               "birth_weighted_mean": float(np.sum(w_birth*rooms)/total_birth) if total_birth else None,
+                               "at_six_grid_cell_count": int(np.count_nonzero((w_response>0)&(rooms>=6-1e-5))),
+                               "at_six_responsiveness_share": float(np.sum(w_response*(rooms>=6-1e-5))/total_response) if total_response else None}
+        product_rows = []
+        for k, size in enumerate(owner_sizes):
+            feasible = newly_feasible_products[...,k] & mask
+            product_rows.append({"owner_product_size": float(size),
+                                 "positive_birth_cell_count": int(np.count_nonzero(feasible & (birth>0))),
+                                 "share_of_group_birth_flow_with_new_access_to_product": float(np.sum(w_birth*feasible)/total_birth) if total_birth else None})
+        return {"state_cell_count_positive_response": int(np.count_nonzero(w_response>0)),
+                "pre_fertility_renter_mass": total_mass,
+                "share_of_all_fertile_childless_renter_mass": total_mass/float(np.sum(mass*fertile)),
+                "age_distribution_within_group": age_rows,
+                "income": group_distribution(income, w_response),
+                "wealth": group_distribution(wealth, w_response),
+                "share_negative_wealth_response_weighted": float(np.sum(w_response*(wealth<0))/total_response) if total_response else None,
+                "share_zero_or_negative_wealth_response_weighted": float(np.sum(w_response*(wealth<=0))/total_response) if total_response else None,
+                "renter_rooms": room_rows,
+                "max_parent_cap_shadow_positive_response": float(np.max(parent_shadow[w_response>0])) if total_response else None,
+                "max_parent_minus_wait_shadow_positive_response": float(np.max(differential[w_response>0])) if total_response else None,
+                "newly_feasible_owner_products": product_rows}
     for name, mask in (("all", np.ones_like(bridged, bool)), ("bridged", bridged),
-                       ("feasible_80", at80), ("ineligible_80", ~at80)):
+                       ("feasible_80", at80), ("never_feasible_100", never_feasible),
+                       ("ineligible_80", ~at80)):
         sections[name] = dict(
             birth_flow=float(np.sum(birth*mask)), responsiveness_mass=float(np.sum(responsive*mask)),
             birth_share=float(np.sum(birth*mask)/birth.sum()),
@@ -183,9 +266,40 @@ def main():
             parent_minus_wait_cap_shadow=summarize(differential, responsive*mask),
             parent_minus_wait_cap_shadow_success_weighted=summarize(differential, success_responsive*mask),
             parent_minus_wait_above_tenth_kappa_share=float(np.sum(responsive*mask*(differential>0.1*P.kappa_fert))/np.sum(responsive*mask)) if np.sum(responsive*mask)>0 else None,
+            decomposition=detailed(mask),
         )
+    if not np.allclose(sections["bridged"]["birth_flow"]+sections["feasible_80"]["birth_flow"], sections["all"]["birth_flow"], rtol=0, atol=1e-12):
+        raise RuntimeError("Financial-access birth groups do not exhaust renter-origin births")
+    if not np.allclose(sections["bridged"]["responsiveness_mass"]+sections["feasible_80"]["responsiveness_mass"], sections["all"]["responsiveness_mass"], rtol=0, atol=1e-12):
+        raise RuntimeError("Financial-access responsiveness groups do not exhaust renter margin")
+    if abs(sum(sections[name]["decomposition"]["share_of_all_fertile_childless_renter_mass"] for name in ("bridged", "feasible_80", "never_feasible_100"))-1) > 1e-10:
+        raise RuntimeError("Financial-access groups do not exhaust fertile renter mass")
+    for name in ("all", "bridged", "feasible_80"):
+        for key in ("mass_share", "birth_flow_share", "responsiveness_share"):
+            if abs(sum(row[key] for row in sections[name]["decomposition"]["age_distribution_within_group"])-1) > 1e-10:
+                raise RuntimeError(f"Age decomposition fails for {name}/{key}")
+    cap_sweep = {}
+    for name, mask in (("bridged", bridged), ("feasible_80", at80)):
+        w = success_responsive*mask
+        total = float(w.sum())
+        cap_sweep[name] = []
+        for sweep_cap in sweep_caps:
+            ps = loose-sweep_parent_value[sweep_cap]
+            ws = wait_loose-sweep_wait_value[sweep_cap]
+            diff = ps-ws
+            if np.min(ps[w>0]) < -1e-6 or np.min(ws[w>0]) < -1e-6:
+                raise RuntimeError(f"Lower cap improved renter branch value at {name}/{sweep_cap}")
+            cap_sweep[name].append({"cap_rooms": sweep_cap,
+                                    "parent_minus_wait_cap_shadow_success_weighted": float(np.sum(w*diff)/total),
+                                    "parent_rooms_success_weighted": float(np.sum(w*sweep_parent_rooms[sweep_cap])/total),
+                                    "wait_rooms_success_weighted": float(np.sum(w*sweep_wait_rooms[sweep_cap])/total),
+                                    "parent_rooms_slack100_success_weighted": float(np.sum(w*relaxed_parent_rooms)/total),
+                                    "wait_rooms_slack100_success_weighted": float(np.sum(w*relaxed_wait_rooms)/total)})
+        if cap_sweep[name][0]["parent_minus_wait_cap_shadow_success_weighted"] != sections[name]["parent_minus_wait_cap_shadow_success_weighted"]["mean"]:
+            raise RuntimeError("Cap-six success-weighted shadow changed")
     result = dict(status="computed", definition="One-period rental cap 6 to 100, reoptimizing saving at baseline prices and saved next-age value; owner menu and continuation fixed", rule="quarter", cap_rooms=6.0,
                   relaxed_rooms=100.0, age_cells=age_cells, sections=sections,
+                  fixed_continuation_cap_sweep=cap_sweep,
                   exact_80_to_100_financial_access=access["share_ineligible_at_80_eligible_at_100"],
                   relaxed_max_rooms_positive_responsiveness=dict(parent=relaxed_parent_max, wait=relaxed_wait_max),
                   fixed_unsecured_credit_active=bool(fixed_unsecured_credit_active(P)),

@@ -15,7 +15,37 @@ Among the newly financially reached states, zero responsiveness weight has a dif
 
 With the additional fecundity factor appropriate to a successful-birth branch value, newly reached states account for 14.497% of local response weight; their mean differential cap shadow is 0.00000678, versus 0.01213036 among states already owner feasible at 80%. This confirms that the overlap comparison is insensitive to that age reweighting.
 
-**Interpretation.** In this quarter fit, the rental cap matters particularly for parenting mostly where ownership was already financially feasible. Financing newly reaches a different set of households whose parent-versus-childless renter cap penalty is very small in this diagnostic. This weakens the proposed three-way overlap mechanism for the quarter rule at this fitted point. It does not establish whether those newly reached households want to buy, whether price movements offset a direct gain, or how a permanent change to the cap would work.
+## Who is reached, and what rooms would they rent?
+
+The following mass shares use **all fertile-age childless renters before the fertility choice**. Birth shares use actual first-birth flow; response shares use the local attempt-probability derivative defined above. Income and wealth are in the model's native units, and their means are response weighted. Parent rooms describe the renter branch after a successful first birth, with the same saved continuation values. Counts are positive-response state-grid cells, not households.
+
+| Financial access at the same starting state | Renter mass | Actual renter-origin birth flow | Local response weight | Mean income | Mean wealth | Birth flow at ages 18–22 |
+|---|---:|---:|---:|---:|---:|---:|
+| Opens at 100% | 50.315% | 7.411% | 14.360% | 1.935 | 0.023 | 73.820% |
+| Already feasible at 80% | 47.326% | 92.589% | 85.640% | 3.586 | 0.514 | 60.008% |
+| Still infeasible at 100% | 2.359% | 0% | 0% | — | — | — |
+
+| Financial access | Parent rooms, cap 6 | Parent rooms, cap 100 | Positive-response cells at cap 6 | Response weight at cap 6 | Largest parent cap value gain | Childless wait rooms, cap 6 → 100 |
+|---|---:|---:|---:|---:|---:|---:|
+| Opens at 100% | 5.692 | 5.704 | 1 of 83 | 23.029% | 0.00002874 | 3.845 → 3.845 |
+| Already feasible at 80% | 5.994 | 7.986 | 2,621 of 2,948 | 96.543% | 0.04317 | 5.228 → 5.601 |
+
+For newly reached states, response-weighted wealth has median zero and 90th percentile 0.163; for already feasible states, the corresponding values are 0.302 and 1.140. The four-room owner product becomes financially feasible in every newly reached birth-flow state. Six-, eight- and ten-room owner products also become feasible for 100.000%, 99.9999% and 99.897% of that group's birth flow, respectively; the two-room product is never feasible under the parent housing floor. These are overlapping product-access shares, not purchase choices. The three access groups exhaust fertile renter mass, and the first two exhaust renter-origin births and local response weight to numerical precision.
+
+### Fixed-continuation rental-cap sweep
+
+Each row recomputes the parent and childless-wait renter branches with the indicated room cap, measured against the **same 100-room slack benchmark**. These figures use the successful-birth response weights (including the additional fecundity factor); the saved fertility probabilities, origin distribution, owner financial-access masks, prices and next-age values remain fixed. They are one-period diagnostics, not policy or equilibrium effects.
+
+| Rental cap | Newly reached: parent / wait rooms | Newly reached: parent-minus-wait cap shadow | Already feasible: parent / wait rooms | Already feasible: parent-minus-wait cap shadow |
+|---:|---:|---:|---:|---:|
+| 6.0 | 5.696 / 3.847 | 0.00000678 | 5.994 / 5.221 | 0.012130 |
+| 5.5 | 5.435 / 3.847 | 0.001270 | 5.499 / 5.061 | 0.020524 |
+| 5.0 | 4.992 / 3.847 | 0.008411 | 5.000 / 4.811 | 0.033533 |
+| 4.5 | 4.499 / 3.847 | 0.026348 | 4.500 / 4.448 | 0.053221 |
+
+At the fitted six-room limit, newly reached parent renter demand is largely below the cap. Lower limits increasingly constrain that group's parent branch while leaving its childless wait rooms near 3.85. The group's extra parent cap penalty consequently grows, although it remains below the already-feasible group's penalty throughout this sweep. This shows that the weak overlap finding is specific to the six-room cap and saved fit; it does not prove that the mechanism is absent under other rental limits.
+
+**Interpretation.** The newly reached renters have lower income and wealth, and their parent renter-room choice barely moves when the six-room limit is relaxed. The already owner-feasible group tends to choose six parent renter rooms and raises that choice by about two rooms when allowed. The diagnostic therefore gives a concrete reason for the weak three-way overlap at this fitted point: the credit change reaches low-resource states while the rental cap's larger parenting penalty lies in higher-resource states. It does not establish whether those newly reached households want to buy, whether price movements offset a direct gain, or how a permanent change to the cap would work.
 
 The native reconstructed childless renter-room policy differs from the saved policy by at most 0.005835 room across the audited fertile-age cells. This checks a policy output but does not bound error in the renter value difference. The script's cap relaxation uses 100 rooms; the largest relaxed choice with positive responsiveness weight is 92.593 parent rooms or 90.768 childless rooms, so 100 is nonbinding in that set. The result should not be treated as a new calibration specification. Full precision, source hashes, weights and group moments are in [result.json](result.json). Reproduce with one core:
 
