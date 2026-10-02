@@ -50,19 +50,21 @@ at 06:11 New York with unchanged economics and terminal acceptance gates.
 Smoke array **19024491** passed both arms with three native calls each;
 all 12 production tasks in **19024492** were RUNNING at 06:16. Each task
 has at most 1,024 native policy calls and four hours, subject to the absolute
-10:00 New York cutoff. At the 07:23 progress check, all four 80% controls
-had passed, seven other policy cases were running, and no new failures were
-reported. The **hard-rule, temporary 100% financing, 48-date** case passed
-all numerical gates against its matched 80% control. Its first-period
-first-birth flow fell from 0.0498037467 to 0.0495339649, a **0.5416896477%**
-decrease; the aggregate first-birth hazard fell by **0.08487845 percentage
-points**. The 64-date consistency check and other policy responses remain
-pending. This is an accepted result for the selected experimental hard-rule
-fit, which remains fresh-postchecked at loss 97.0112198; the quarter fit
-remains fresh-postchecked at loss 51.5560360. Neither optimizer has a
+10:00 New York cutoff. At the 07:53 progress check, all four 80% controls and
+both temporary 100% financing, 48-date cases had passed their numerical gates
+against matched controls. Six other policy cases were running, with no new
+failures; both 64-date policy checks and the permanent cases remain pending.
+In the first period, **hard-rule** first-birth flow fell from 0.0498037467 to
+0.0495339649 (**0.5416896477%**), and its aggregate first-birth hazard fell
+by **0.08487845 percentage points**. **Quarter-saving** first-birth flow fell
+from 0.0497455161 to 0.0495313221 (**0.4305795241%**), and its aggregate
+first-birth hazard fell by **0.06709008 percentage points**. These are accepted
+responses for selected experimental fits, fresh-postchecked at losses
+97.0112198 (hard) and 51.5560360 (quarter). Neither optimizer has a
 convergence certificate, and neither fit is an adopted paper baseline.
-The receipts are in `output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/mechanism_deployment/accepted_hard_temporary_h48_0722.json`
-and `progress_0722.json` in that directory. Saved-policy buyer diagnostic v4
+The receipts are in `output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/mechanism_deployment/`:
+`accepted_hard_temporary_h48_0722.json`, `accepted_quarter_temporary_h48_0752.json`,
+and `progress_0752.json`. Saved-policy buyer diagnostic v4
 jobs **19022340** (hard) and
 **19022341** (quarter-saving) passed with zero model solves. Among actual
 first-birth flow originating from renters, **61.829%** under the hard rule and
