@@ -1,0 +1,86 @@
+{
+  "captured_at_local": "2026-10-01 21:13:56 EDT",
+  "scheduler": {
+    "gate_job_id": "18989877",
+    "gate_state": "COMPLETED",
+    "gate_exit_code": "0:0",
+    "gate_elapsed": "00:02:08",
+    "array_job_id": "18989878",
+    "array_state_counts": {
+      "RUNNING": 24,
+      "PENDING": 0,
+      "COMPLETED": 0,
+      "FAILED": 0
+    },
+    "elapsed_each_at_capture": "about 01:21:00",
+    "requested_memory": "24G per task"
+  },
+  "chains": {
+    "total": 24,
+    "running": 24,
+    "terminal_receipts": 0,
+    "postcheck_receipts": 0,
+    "completed_objective_cases": 804,
+    "objective_calls_including_current_per_chain_sum": 828,
+    "completed_native_lifecycle_solves": 5632,
+    "completed_cases_per_chain_range": [
+      27,
+      39
+    ],
+    "completed_lifecycle_solves_per_chain_range": [
+      196,
+      255
+    ]
+  },
+  "identity": {
+    "target_contract_sha256": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+    "weight_contract_sha256": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+    "source_pins_sha256": "9759d97cd00ceb869b31eb898e8ec089d3b6da9d3f7ee33f025eface5e9bd8a2",
+    "distinct_target_fingerprints": 1,
+    "distinct_weight_fingerprints": 1
+  },
+  "global_best_so_far": {
+    "chain": 1,
+    "label": "0009_nm",
+    "base_loss": 30.127716801065972,
+    "price": 0.7173877471845047,
+    "H0_derived": 6.824569806704168,
+    "lifecycle_solves": 8,
+    "postcheck_status": "not run; search active",
+    "exploration_unverified": true,
+    "loss_contributions_top3": [
+      {
+        "moment": "early_fertility",
+        "contribution": 7.827882128553821,
+        "gap": -0.27978352575792986,
+        "target": 0.8095276384290021,
+        "model": 0.5297441126710722,
+        "weight": 100.0
+      },
+      {
+        "moment": "first_birth_rooms",
+        "contribution": 7.794220902594722,
+        "gap": -0.23803013613219393,
+        "target": 1.465,
+        "model": 1.2269698638678062,
+        "weight": 137.5652749002964
+      },
+      {
+        "moment": "mean_rooms",
+        "contribution": 7.304520349599192,
+        "gap": 0.2388667768342092,
+        "target": 5.729434240102641,
+        "model": 5.9683010169368504,
+        "weight": 128.02070205233477
+      }
+    ]
+  },
+  "previous_verified_v1_best": {
+    "chain": 20,
+    "case": "0028_nm",
+    "base_loss": 30.371887956158005,
+    "price": 0.7167873404451099,
+    "H0": 6.851575289344519,
+    "verification_path": "../best_v1_candidate/verification.json"
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "baseline_inherited_PRE_sha256": "096d63d3b7c884a08946dae0ef897a11442ddecafbefa4050266f094650e71e9",
+  "baseline_parameters_sha256": "ae092fafab15985f773b61999a29d4a8d505495623e615440cfff1f107c75406",
+  "baseline_solution_sha256": "cb793ce4bd3029d2fd1e2a18a7b4c6d33321b0b19185d070c3512b434a6cd1bb",
+  "buyer_death_floor_nonbinding_proof": {
+    "added_max_leaves_buyer_floor_unchanged": true,
+    "buyer_floor": "-.9*q*H",
+    "death_floor": "-.94*q*H when death possible, otherwise -inf",
+    "ltv_multiplier": 1.0,
+    "purchase_ltv": 0.9,
+    "selling_cost": 0.06
+  },
+  "common_interior_mass": 0.18435604372817618,
+  "continuation_V_sha256": "9277a9de998b3c57a9757b723549efc82050f0d262ec1680636fd5b311a30ddb",
+  "continuation_dead_node_count": 200097,
+  "driver_sha256": "ad1e2b16bcdef626859bc662f27948c7a0c9e8c8fc022232ee762dd933b5d3d5",
+  "equilibrium_evaluations": 0,
+  "excluded_mass": 0.0020201285687505115,
+  "interpretation": "Four-year current purchase financing80-to90 with stayer80 and exact baseline future values; matched permanent purchase90/stayer80 comparator; permanent minus temporary includes duration/expectation interactions, not additive primitive decomposition; no dead continuation value projected or relaxed",
+  "lifecycle_evaluations": 0,
+  "model_period_years": 4.0,
+  "original_household_sha256": "2a34f5f28c0c63ca3d24d9e759cd1b5b92aadaddb5fe04795e65abbc0b448082",
+  "permanent_parameters_sha256": "ae092fafab15985f773b61999a29d4a8d505495623e615440cfff1f107c75406",
+  "permanent_solution_sha256": "47a3448c4fd262a63d2ad5873ee4f41d82ba9398f7e169cd7cf4e51d4fcedc6d",
+  "policy_evaluations": [
+    {
+      "current_financed_share": 0.8,
+      "current_purchase_ltv": 0.8,
+      "full_array_max_errors": {
+        "V": 0.0,
+        "fert_probs": 0.0,
+        "fert_value": 0.0
+      },
+      "future_continuation": "exact saved baseline V; native DEAD regions and transition/child-aging unchanged",
+      "label": "baseline_replay",
+      "native_function_source": "2a34f5f28c0c63ca3d24d9e759cd1b5b92aadaddb5fe04795e65abbc0b448082",
+      "seconds": 3.6266319580026902
+    },
+    {
+      "current_financed_share": 0.8,
+      "current_purchase_ltv": 0.9,
+      "future_continuation": "exact saved baseline V; native DEAD regions and transition/child-aging unchanged",
+      "label": "temporary_purchase90",
+      "native_function_source": "ecd712fe036324acfc3020bd4d9d77d4f250115d214ec29b5889f1241d587ae8",
+      "seconds": 3.445054292009445
+    }
+  ],
+  "price": 0.719168368828958,
+  "purchase_override_sha256": "ecd712fe036324acfc3020bd4d9d77d4f250115d214ec29b5889f1241d587ae8",
+  "reference_loss": 31.28400725566496,
+  "reference_psi_child": 0.17156192800028292,
+  "remaining_feasibility_limitation": "Uses native expected continuation and interpolation unchanged; no additional strict support operator or artificial next-period bailout. Occupied-state lifecycle/estate ledger not independently regenerated for this policy-only diagnostic.",
+  "results": [
+    {
+      "arm": "permanent_purchase90",
+      "attempt_gain": 0.0010041527902071978,
+      "attempt_gap_change": -0.0003905918602208924,
+      "birth_change_mass": -1.966852294841734e-05,
+      "birth_change_per_young_n0_renter": -0.00010553131715293663,
+      "excluded_birth_change_mass": 0.0,
+      "negative_birth_change_mass": -3.5818501969753946e-05,
+      "positive_birth_change_mass": 1.6149979021336606e-05,
+      "sensitivity_weighted_gap_change": -0.00013998276654108096,
+      "success_net_cost_gain": 0.0009532838298791995,
+      "wait_gain": 0.0013947446504280869
+    },
+    {
+      "arm": "temporary_purchase90",
+      "attempt_gain": 0.00012316876613758265,
+      "attempt_gap_change": -0.00014988494170210264,
+      "birth_change_mass": -1.142896113394835e-05,
+      "birth_change_per_young_n0_renter": -6.132200802868838e-05,
+      "excluded_birth_change_mass": 0.0,
+      "negative_birth_change_mass": -2.5756870921655867e-05,
+      "positive_birth_change_mass": 1.4327909787707519e-05,
+      "sensitivity_weighted_gap_change": -8.127448458002713e-05,
+      "success_net_cost_gain": 9.722324935156563e-05,
+      "wait_gain": 0.0002730537078396854
+    }
+  ],
+  "reviewed_estate_patch_sha256": "a13e9b3944bc69e0a5229191a8f8133e8542d60f4464d4eaed51a0f9220abdb6",
+  "status": "two_native_policy_evaluations_completed",
+  "total_seconds": 9.647622108459473,
+  "young_n0_renter_mass": 0.18637617229692674
+}
