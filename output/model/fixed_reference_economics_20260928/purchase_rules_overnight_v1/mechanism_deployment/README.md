@@ -24,3 +24,19 @@ The approved **source-only v2 staging** completed on October 2. The local and To
 ssh -o BatchMode=yes torch 'bash /scratch/td2248/projects/purchase_mechanism_v1/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/mechanism_deployment/preflight_torch.sh'
 ssh -o BatchMode=yes torch 'bash /scratch/td2248/projects/purchase_buyer_diagnostics_v2/source/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/buyer_diagnostics/preflight_torch.sh'
 ```
+
+The reviewed October 2 source is staged separately at
+`/scratch/td2248/projects/purchase_mechanism_reviewed_93831f5a` (archive
+SHA-256 `051c42a6423fe02396295566f921ca1781693170306c67cfaf4791c046ae2f7a`,
+inventory SHA-256 `7cd28f68e96a18b24b3bea9e9b709038576444de20032a9538a82c37574247a3`).
+Both zero-solve source preflights passed. The separate, unchanged v1 selection
+store contains final best-available experimental checkpoints, hard Torch restart
+chain 11 and quarter local chain 54; its manifest SHA-256 is
+`19db8dfcc928c4cdea5810f70c4e62a9de65372bd038646d0bc2d49532913879`.
+`launch_torch_reviewed.sh` and `submit_torch_reviewed.sh` route reviewed source
+and results to the new root while mounting that v1 selection store read-only;
+the exact route and source hashes are in `reviewed_routing_receipt.json`.
+Final one-date native smoke array 19022272 and the dependent 12-case array
+19022273 were submitted under `afterok:19022272`. These are experimental
+best-available fits, not accepted paper baselines; case acceptance still depends
+on the saved native receipts and numerical gates.

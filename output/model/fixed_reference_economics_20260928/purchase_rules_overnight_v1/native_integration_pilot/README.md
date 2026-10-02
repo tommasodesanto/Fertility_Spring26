@@ -26,3 +26,19 @@ that import. `launch_torch_retry3.sh` binds hash-pinned copies of the corrected
 `run_case.py` and `selected_runtime.py` into a third isolated pilot source;
 the prior v1/v2 sources and results remain intact. Hard job 19020019 and
 quarter job 19020025 use `/scratch/td2248/projects/purchase_native_integration_pilot_v3/`.
+
+The v3 hard pilot reproduced the selected stationary solve twice but then
+stopped at a missing import in the copied dated path. The v3 quarter pilot
+passed the numerical reference tables and closure, then stopped because its
+saved plots were rendered with Matplotlib 3.7.1 while the fresh Torch plots
+used 3.10.0. The reviewed v4 source authenticates all 95 saved solution and
+observer arrays to the original numerical tolerance, keeps exact same-renderer
+plot checks, and reads renderer identity from each PNG. It also applies the
+existing typed stationary audit gate. `launch_torch_retry4.sh` freezes these
+three corrected source files in
+`/scratch/td2248/projects/purchase_native_integration_pilot_v4/`; hard job
+19022024 and quarter job 19022025 are isolated one-date control checks on the
+same provisional points. Their results do not select final baselines.
+Both v4 checks passed with three native policy calls each. Both fresh replays
+matched all 95 saved fields; maximum absolute difference was zero for hard and
+`6.37e-12` for quarter. The dated one-period control mapping passed for both.
