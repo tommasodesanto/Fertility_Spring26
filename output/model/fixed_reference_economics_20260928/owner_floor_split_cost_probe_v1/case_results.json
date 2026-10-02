@@ -1,0 +1,3662 @@
+{
+  "A1_need0_phi08": {
+    "H0": 7.288573389887633,
+    "H_own": [
+      2.0,
+      4.0,
+      6.0,
+      8.0,
+      10.0
+    ],
+    "adult_entry_relative_gap": 6.952485845848328e-10,
+    "buyer_cost_psi_buy": 0.0,
+    "closure": {
+      "H0_bounds": [
+        0.2,
+        80.0
+      ],
+      "H0_fixed": 7.288573389887633,
+      "absolute_housing_demand": 6.131194024311581,
+      "absolute_housing_residual": 0.0,
+      "actual_entry_per_normalized_household": 0.06173345618074983,
+      "actual_paygo_residual": 1.3650956047138179e-14,
+      "adjusted_births_per_normalized_household": 0.12964025788944272,
+      "birth_to_entry_conversion": 0.47619047619047616,
+      "completed_fertility_tfr": 2.0999999985400115,
+      "d_bar": 0.0,
+      "fixed_price": 0.6744838540900874,
+      "gates_status": "passed",
+      "hbar_reporting_accommodation": false,
+      "housing_market_status": "measured_fixed_H0_diagnostic",
+      "housing_supply_coefficient_role": "fixed at selected-point derived value for diagnostic",
+      "housing_supply_elasticity": 0.63,
+      "no_renewal_or_housing_root": true,
+      "normalized_housing_demand": 6.131194024311581,
+      "normalized_population": 1.0,
+      "observe_seconds": 4.227358102798462,
+      "occupied_renter_floor": {
+        "maximum_shortfall": 0.0,
+        "occupied_renter_mass": 0.35954352821317653,
+        "violation_mass": 0.0
+      },
+      "outside_entry": 0.0,
+      "parameter_rows": 31,
+      "physical_housing_supply": 6.131194024311581,
+      "population_scale": 1.0,
+      "price": 0.6744838540900874,
+      "renewal_residual": -6.952464159937222e-10,
+      "renewal_status": "measured_fixed_price_diagnostic",
+      "standard_plot_count": 17,
+      "target_fit_rows": 14,
+      "total_target_loss": 51.55603604909936
+    },
+    "engine": "orig",
+    "extra": {
+      "birth_flows_constant_post_cell": {
+        "explicit_birth_flow": 0.11517446843170157,
+        "first": 0.049745516141897185,
+        "first_birth_flow": 0.049745516141897185,
+        "second": 0.04141373989469549,
+        "third_bin": 0.024015212395108895
+      },
+      "birth_flows_g_arrays": {
+        "first": 0.04974551614189726,
+        "second": 0.0414137398946956,
+        "third_bin": 0.02401521239510901
+      },
+      "birth_flows_uniform_birth_time": {
+        "explicit_birth_flow": 0.11517446843170157,
+        "first": 0.049745516141897185,
+        "first_birth_flow": 0.049745516141897185,
+        "second": 0.04141373989469549,
+        "third_bin": 0.024015212395108895
+      },
+      "childless_owners_22_29": {
+        "age_cells": [
+          1,
+          2
+        ],
+        "age_hi": [
+          26.0,
+          30.0
+        ],
+        "age_lo": [
+          22.0,
+          26.0
+        ],
+        "by_rung_rooms": {
+          "10.0": {
+            "mass": 0.00029094068188852785,
+            "rooms": 10.0,
+            "share_of_22_29": 0.0023564263196012005
+          },
+          "2.0": {
+            "mass": 0.0009685298708751382,
+            "rooms": 2.0,
+            "share_of_22_29": 0.007844448786727479
+          },
+          "4.0": {
+            "mass": 0.0021526834676625166,
+            "rooms": 4.0,
+            "share_of_22_29": 0.017435306565047114
+          },
+          "6.0": {
+            "mass": 0.0012356975602551448,
+            "rooms": 6.0,
+            "share_of_22_29": 0.01000832965383598
+          },
+          "8.0": {
+            "mass": 0.0006874857734795244,
+            "rooms": 8.0,
+            "share_of_22_29": 0.005568178229537653
+          }
+        },
+        "definition": "parity-0 owners; shares of the age 22-29 cross-section mass",
+        "total_mass_22_29": 0.12346691236149764
+      },
+      "entrant_cell_j0": {
+        "entrant_mass": 0.06173345618074983,
+        "entrant_nonzero_parity_mass": 0.0,
+        "first_birth_probability": 0.2551983090449477,
+        "ownership_rate": 0.10499353664125477
+      },
+      "ownership_by_children_home": {
+        "0": {
+          "ownership_rate": 0.5968064807629937,
+          "total_mass": 0.6231863652591518
+        },
+        "1": {
+          "ownership_rate": 0.6796712884695719,
+          "total_mass": 0.2693817714801159
+        },
+        "2": {
+          "ownership_rate": 0.7885619767709149,
+          "total_mass": 0.09394790202226
+        },
+        "3": {
+          "ownership_rate": 0.842483231140963,
+          "total_mass": 0.01348396123847299
+        }
+      },
+      "ownership_rate_all": 0.6404564717868234,
+      "rental_cap": 6.0,
+      "renter_cap_by_children_home": {
+        "0": {
+          "cap_share_of_all": 0.07612117000987915,
+          "cap_share_of_renters": 0.18879561892246965,
+          "renter_mass": 0.25126470374935544,
+          "total_mass": 0.6231863652591518
+        },
+        "1": {
+          "cap_share_of_all": 0.22611238498179545,
+          "cap_share_of_renters": 0.7058761105162964,
+          "renter_mass": 0.08629071576800981,
+          "total_mass": 0.2693817714801159
+        },
+        "2": {
+          "cap_share_of_all": 0.14360077590070902,
+          "cap_share_of_renters": 0.6791624973958593,
+          "renter_mass": 0.019864158690106402,
+          "total_mass": 0.09394790202226
+        },
+        "3": {
+          "cap_share_of_all": 0.10510400487192166,
+          "cap_share_of_renters": 0.6672559730194814,
+          "renter_mass": 0.002123950005704768,
+          "total_mass": 0.01348396123847299
+        }
+      }
+    },
+    "hbar_child_rooms": 0.0,
+    "hbar_first_child_jump": 2.49169824815624,
+    "hbar_reporting_accommodation": false,
+    "lifecycle_solve_seconds": 7.561366750014713,
+    "n_house": 5,
+    "native_array_count": 87,
+    "phi": 0.8,
+    "price": 0.6744838540900874,
+    "purchase_saving_fraction": 0.25,
+    "report": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/owner_floor_split_cost_probe_v1/A1_need0_phi08/phase_b_ge/A1_need0_phi08_selected",
+    "selling_cost_psi": 0.06,
+    "status": "passed",
+    "target_fit": [
+      {
+        "gap": -1.4599885744814856e-09,
+        "loss_contribution": "",
+        "model": 2.0999999985400115,
+        "moment": "initial_normalization",
+        "role": "normalization",
+        "target": 2.1,
+        "weight": ""
+      },
+      {
+        "gap": 0.007176497809970539,
+        "loss_contribution": 1.8299890261419034,
+        "model": 0.20545524881681318,
+        "moment": "cps_childlessness",
+        "role": "scored",
+        "target": 0.19827875100684264,
+        "weight": 35532.3042455214
+      },
+      {
+        "gap": -0.005215591442419343,
+        "loss_contribution": 0.7331812540142837,
+        "model": 0.20843973377772768,
+        "moment": "cps_exactly_one",
+        "role": "scored",
+        "target": 0.21365532522014702,
+        "weight": 26952.820824310795
+      },
+      {
+        "gap": 0.08089044423883607,
+        "loss_contribution": 0.9149319582055676,
+        "model": 26.057154305231332,
+        "moment": "nchs_mean_age",
+        "role": "scored",
+        "target": 25.976263860992496,
+        "weight": 139.82806784479274
+      },
+      {
+        "gap": -0.015328757037988,
+        "loss_contribution": 0.0,
+        "model": 0.2339492560030787,
+        "moment": "nchs_share30",
+        "role": "validation",
+        "target": 0.2492780130410667,
+        "weight": 0.0
+      },
+      {
+        "gap": -0.2815756441893651,
+        "loss_contribution": 0.6021761930073974,
+        "model": 6.645008146883625,
+        "moment": "wealth_earnings",
+        "role": "scored",
+        "target": 6.92658379107299,
+        "weight": 7.595098472533724
+      },
+      {
+        "gap": -0.0004367146353802384,
+        "loss_contribution": 0.9851222766285872,
+        "model": 0.006854308837235919,
+        "moment": "bequest_wealth",
+        "role": "scored",
+        "target": 0.007291023472616158,
+        "weight": 5165289.256198346
+      },
+      {
+        "gap": -0.5791839365728508,
+        "loss_contribution": 0.0,
+        "model": 2.936751149945869,
+        "moment": "old_dispersion",
+        "role": "validation",
+        "target": 3.51593508651872,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.401759784208938,
+        "loss_contribution": 20.663939835974737,
+        "model": 6.131194024311579,
+        "moment": "mean_rooms",
+        "role": "scored",
+        "target": 5.729434240102641,
+        "weight": 128.02070205233477
+      },
+      {
+        "gap": -0.030538475998626247,
+        "loss_contribution": 2.1816858776947883,
+        "model": 0.6457219408551765,
+        "moment": "ownership_30_55",
+        "role": "scored",
+        "target": 0.6762604168538028,
+        "weight": 2339.3623724673616
+      },
+      {
+        "gap": -0.29767452938118244,
+        "loss_contribution": 12.18967626542091,
+        "model": 1.1673254706188176,
+        "moment": "first_birth_rooms",
+        "role": "scored",
+        "target": 1.465,
+        "weight": 137.5652749002964
+      },
+      {
+        "gap": -0.06924544094177687,
+        "loss_contribution": 0.0,
+        "model": 0.3158542087510048,
+        "moment": "family_rooms",
+        "role": "validation",
+        "target": 0.38509964969278165,
+        "weight": 0.0
+      },
+      {
+        "gap": -0.010773592725226488,
+        "loss_contribution": 3.1403774930809756,
+        "model": 0.11683477084169513,
+        "moment": "recent_parent_ownership",
+        "role": "scored",
+        "target": 0.12760836356692162,
+        "weight": 27055.822957508266
+      },
+      {
+        "gap": -0.2883566518901586,
+        "loss_contribution": 8.31495586893021,
+        "model": 0.5211709865388435,
+        "moment": "early_fertility",
+        "role": "scored",
+        "target": 0.8095276384290021,
+        "weight": 100.0
+      }
+    ],
+    "tenure_choice_kappa": 0.015482897400866402,
+    "total_target_loss": 51.55603604909936
+  },
+  "A1_need0_phi10": {
+    "H0": 7.288573389887633,
+    "H_own": [
+      2.0,
+      4.0,
+      6.0,
+      8.0,
+      10.0
+    ],
+    "adult_entry_relative_gap": 0.004913625711799705,
+    "buyer_cost_psi_buy": 0.0,
+    "closure": {
+      "H0_bounds": [
+        0.2,
+        80.0
+      ],
+      "H0_fixed": 7.288573389887633,
+      "absolute_housing_demand": 6.193743230887556,
+      "absolute_housing_residual": 0.06254920657597474,
+      "actual_entry_per_normalized_household": 0.061733456180750726,
+      "actual_paygo_residual": 1.808459989150779e-14,
+      "adjusted_births_per_normalized_household": 0.12900325427468387,
+      "birth_to_entry_conversion": 0.47619047619047616,
+      "completed_fertility_tfr": 2.0896813860052745,
+      "d_bar": 0.0,
+      "fixed_price": 0.6744838540900874,
+      "gates_status": "passed",
+      "hbar_reporting_accommodation": false,
+      "housing_market_status": "measured_fixed_H0_diagnostic",
+      "housing_supply_coefficient_role": "fixed at selected-point derived value for diagnostic",
+      "housing_supply_elasticity": 0.63,
+      "no_renewal_or_housing_root": true,
+      "normalized_housing_demand": 6.193743230887556,
+      "normalized_population": 1.0,
+      "observe_seconds": 4.188705921173096,
+      "occupied_renter_floor": {
+        "maximum_shortfall": 0.0,
+        "occupied_renter_mass": 0.2711203107478481,
+        "violation_mass": 0.0
+      },
+      "outside_entry": 0.0,
+      "parameter_rows": 31,
+      "physical_housing_supply": 6.131194024311581,
+      "population_scale": 1.0,
+      "price": 0.6744838540900874,
+      "renewal_residual": -0.004913625711798764,
+      "renewal_status": "measured_fixed_price_diagnostic",
+      "standard_plot_count": 17,
+      "target_fit_rows": 14,
+      "total_target_loss": 146.12358458163385
+    },
+    "engine": "orig",
+    "extra": {
+      "birth_flows_constant_post_cell": {
+        "explicit_birth_flow": 0.11460326727265972,
+        "first": 0.04950376319999784,
+        "first_birth_flow": 0.04950376319999784,
+        "second": 0.04119353286032974,
+        "third_bin": 0.023905971212332126
+      },
+      "birth_flows_g_arrays": {
+        "first": 0.04950376319999772,
+        "second": 0.04119353286032945,
+        "third_bin": 0.023905971212332122
+      },
+      "birth_flows_uniform_birth_time": {
+        "explicit_birth_flow": 0.11460326727265972,
+        "first": 0.04950376319999784,
+        "first_birth_flow": 0.04950376319999784,
+        "second": 0.04119353286032974,
+        "third_bin": 0.023905971212332126
+      },
+      "childless_owners_22_29": {
+        "age_cells": [
+          1,
+          2
+        ],
+        "age_hi": [
+          26.0,
+          30.0
+        ],
+        "age_lo": [
+          22.0,
+          26.0
+        ],
+        "by_rung_rooms": {
+          "10.0": {
+            "mass": 0.00039584519626768025,
+            "rooms": 10.0,
+            "share_of_22_29": 0.0032060832225939977
+          },
+          "2.0": {
+            "mass": 0.008889666687434761,
+            "rooms": 2.0,
+            "share_of_22_29": 0.0720003968464588
+          },
+          "4.0": {
+            "mass": 0.006077896161991346,
+            "rooms": 4.0,
+            "share_of_22_29": 0.04922692279042293
+          },
+          "6.0": {
+            "mass": 0.002706381770130968,
+            "rooms": 6.0,
+            "share_of_22_29": 0.02191989512305113
+          },
+          "8.0": {
+            "mass": 0.001013477999871052,
+            "rooms": 8.0,
+            "share_of_22_29": 0.00820849878308855
+          }
+        },
+        "definition": "parity-0 owners; shares of the age 22-29 cross-section mass",
+        "total_mass_22_29": 0.12346691236149739
+      },
+      "entrant_cell_j0": {
+        "entrant_mass": 0.061733456180750726,
+        "entrant_nonzero_parity_mass": 0.0,
+        "first_birth_probability": 0.2575196927269007,
+        "ownership_rate": 0.31448057473445296
+      },
+      "ownership_by_children_home": {
+        "0": {
+          "ownership_rate": 0.6935961986742647,
+          "total_mass": 0.6250188408228232
+        },
+        "1": {
+          "ownership_rate": 0.7643034821914343,
+          "total_mass": 0.268092255466451
+        },
+        "2": {
+          "ownership_rate": 0.8416241922330971,
+          "total_mass": 0.09347791927081593
+        },
+        "3": {
+          "ownership_rate": 0.8792698635201878,
+          "total_mass": 0.013410984439908985
+        }
+      },
+      "ownership_rate_all": 0.7288796892521507,
+      "rental_cap": 6.0,
+      "renter_cap_by_children_home": {
+        "0": {
+          "cap_share_of_all": 0.07107640814909412,
+          "cap_share_of_renters": 0.23196973353973985,
+          "renter_mass": 0.19150814872831745,
+          "total_mass": 0.6250188408228232
+        },
+        "1": {
+          "cap_share_of_all": 0.15792053459105343,
+          "cap_share_of_renters": 0.6700164094885661,
+          "renter_mass": 0.06318841106488705,
+          "total_mass": 0.268092255466451
+        },
+        "2": {
+          "cap_share_of_all": 0.09766863927051095,
+          "cap_share_of_renters": 0.6166891310461977,
+          "renter_mass": 0.014804640972884803,
+          "total_mass": 0.09347791927081593
+        },
+        "3": {
+          "cap_share_of_all": 0.07259203730250505,
+          "cap_share_of_renters": 0.6012752028541257,
+          "renter_mass": 0.0016191099817588425,
+          "total_mass": 0.013410984439908985
+        }
+      }
+    },
+    "hbar_child_rooms": 0.0,
+    "hbar_first_child_jump": 2.49169824815624,
+    "hbar_reporting_accommodation": false,
+    "lifecycle_solve_seconds": 7.607482332998188,
+    "n_house": 5,
+    "native_array_count": 87,
+    "phi": 1.0,
+    "price": 0.6744838540900874,
+    "purchase_saving_fraction": 0.25,
+    "report": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/owner_floor_split_cost_probe_v1/A1_need0_phi10/phase_b_ge/A1_need0_phi10_selected",
+    "selling_cost_psi": 0.06,
+    "status": "passed",
+    "target_fit": [
+      {
+        "gap": -0.010318613994725556,
+        "loss_contribution": "",
+        "model": 2.0896813860052745,
+        "moment": "initial_normalization",
+        "role": "normalization",
+        "target": 2.1,
+        "weight": ""
+      },
+      {
+        "gap": 0.011155383434887534,
+        "loss_contribution": 4.421731598711442,
+        "model": 0.20943413444173017,
+        "moment": "cps_childlessness",
+        "role": "scored",
+        "target": 0.19827875100684264,
+        "weight": 35532.3042455214
+      },
+      {
+        "gap": -0.005019915545965009,
+        "loss_contribution": 0.6791990122974934,
+        "model": 0.208635409674182,
+        "moment": "cps_exactly_one",
+        "role": "scored",
+        "target": 0.21365532522014702,
+        "weight": 26952.820824310795
+      },
+      {
+        "gap": 0.06414428248028514,
+        "loss_contribution": 0.5753210435304532,
+        "model": 26.04040814347278,
+        "moment": "nchs_mean_age",
+        "role": "scored",
+        "target": 25.976263860992496,
+        "weight": 139.82806784479274
+      },
+      {
+        "gap": -0.015077230637858985,
+        "loss_contribution": 0.0,
+        "model": 0.2342007824032077,
+        "moment": "nchs_share30",
+        "role": "validation",
+        "target": 0.2492780130410667,
+        "weight": 0.0
+      },
+      {
+        "gap": -0.3416716387567167,
+        "loss_contribution": 0.8866480644448793,
+        "model": 6.5849121523162735,
+        "moment": "wealth_earnings",
+        "role": "scored",
+        "target": 6.92658379107299,
+        "weight": 7.595098472533724
+      },
+      {
+        "gap": -0.0005719539582933926,
+        "loss_contribution": 1.6897279463196269,
+        "model": 0.006719069514322765,
+        "moment": "bequest_wealth",
+        "role": "scored",
+        "target": 0.007291023472616158,
+        "weight": 5165289.256198346
+      },
+      {
+        "gap": -0.5944985053613174,
+        "loss_contribution": 0.0,
+        "model": 2.9214365811574026,
+        "moment": "old_dispersion",
+        "role": "validation",
+        "target": 3.51593508651872,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.4643089907849207,
+        "loss_contribution": 27.599066389448957,
+        "model": 6.193743230887562,
+        "moment": "mean_rooms",
+        "role": "scored",
+        "target": 5.729434240102641,
+        "weight": 128.02070205233477
+      },
+      {
+        "gap": 0.06386940434984056,
+        "loss_contribution": 9.542962825576385,
+        "model": 0.7401298212036433,
+        "moment": "ownership_30_55",
+        "role": "scored",
+        "target": 0.6762604168538028,
+        "weight": 2339.3623724673616
+      },
+      {
+        "gap": -0.1586014981084729,
+        "loss_contribution": 3.46037679355948,
+        "model": 1.3063985018915272,
+        "moment": "first_birth_rooms",
+        "role": "scored",
+        "target": 1.465,
+        "weight": 137.5652749002964
+      },
+      {
+        "gap": -0.07999215300982776,
+        "loss_contribution": 0.0,
+        "model": 0.3051074966829539,
+        "moment": "family_rooms",
+        "role": "validation",
+        "target": 0.38509964969278165,
+        "weight": 0.0
+      },
+      {
+        "gap": -0.05734490535621495,
+        "loss_contribution": 88.9714009427077,
+        "model": 0.07026345821070668,
+        "moment": "recent_parent_ownership",
+        "role": "scored",
+        "target": 0.12760836356692162,
+        "weight": 27055.822957508266
+      },
+      {
+        "gap": -0.28804773849203236,
+        "loss_contribution": 8.297149965037425,
+        "model": 0.5214798999369697,
+        "moment": "early_fertility",
+        "role": "scored",
+        "target": 0.8095276384290021,
+        "weight": 100.0
+      }
+    ],
+    "tenure_choice_kappa": 0.015482897400866402,
+    "total_target_loss": 146.12358458163385
+  },
+  "A1_need1_phi08": {
+    "H0": 7.288573389887633,
+    "H_own": [
+      2.0,
+      4.0,
+      6.0,
+      8.0,
+      10.0
+    ],
+    "adult_entry_relative_gap": 0.08162356998338033,
+    "buyer_cost_psi_buy": 0.0,
+    "closure": {
+      "H0_bounds": [
+        0.2,
+        80.0
+      ],
+      "H0_fixed": 7.288573389887633,
+      "absolute_housing_demand": 6.168273464579797,
+      "absolute_housing_residual": 0.03707944026821597,
+      "actual_entry_per_normalized_household": 0.061733456180749845,
+      "actual_paygo_residual": 2.3568317277965014e-14,
+      "adjusted_births_per_normalized_household": 0.11905855730971544,
+      "birth_to_entry_conversion": 0.47619047619047616,
+      "completed_fertility_tfr": 1.9285905030349058,
+      "d_bar": 0.0,
+      "fixed_price": 0.6744838540900874,
+      "gates_status": "passed",
+      "hbar_reporting_accommodation": true,
+      "housing_market_status": "measured_fixed_H0_diagnostic",
+      "housing_supply_coefficient_role": "fixed at selected-point derived value for diagnostic",
+      "housing_supply_elasticity": 0.63,
+      "no_renewal_or_housing_root": true,
+      "normalized_housing_demand": 6.168273464579797,
+      "normalized_population": 1.0,
+      "observe_seconds": 4.194799900054932,
+      "occupied_renter_floor": {
+        "maximum_shortfall": 0.0,
+        "occupied_renter_mass": 0.35196037391380636,
+        "violation_mass": 0.0
+      },
+      "outside_entry": 0.0,
+      "parameter_rows": 31,
+      "physical_housing_supply": 6.131194024311581,
+      "population_scale": 1.0,
+      "price": 0.6744838540900874,
+      "renewal_residual": -0.08162356998337994,
+      "renewal_status": "measured_fixed_price_diagnostic",
+      "standard_plot_count": 17,
+      "target_fit_rows": 14,
+      "total_target_loss": 190.69016678571737
+    },
+    "engine": "orig",
+    "extra": {
+      "birth_flows_constant_post_cell": {
+        "explicit_birth_flow": 0.10660840567176626,
+        "first": 0.04779310519367882,
+        "first_birth_flow": 0.04779310519367882,
+        "second": 0.03814632580441958,
+        "third_bin": 0.020668974673667857
+      },
+      "birth_flows_g_arrays": {
+        "first": 0.04779310519367885,
+        "second": 0.038146325804419456,
+        "third_bin": 0.020668974673667823
+      },
+      "birth_flows_uniform_birth_time": {
+        "explicit_birth_flow": 0.10660840567176626,
+        "first": 0.04779310519367882,
+        "first_birth_flow": 0.04779310519367882,
+        "second": 0.03814632580441958,
+        "third_bin": 0.020668974673667857
+      },
+      "childless_owners_22_29": {
+        "age_cells": [
+          1,
+          2
+        ],
+        "age_hi": [
+          26.0,
+          30.0
+        ],
+        "age_lo": [
+          22.0,
+          26.0
+        ],
+        "by_rung_rooms": {
+          "10.0": {
+            "mass": 0.0003545597422886257,
+            "rooms": 10.0,
+            "share_of_22_29": 0.0028716984616130757
+          },
+          "2.0": {
+            "mass": 0.0011317937736091068,
+            "rooms": 2.0,
+            "share_of_22_29": 0.009166777980932652
+          },
+          "4.0": {
+            "mass": 0.002943798533316439,
+            "rooms": 4.0,
+            "share_of_22_29": 0.02384281324455047
+          },
+          "6.0": {
+            "mass": 0.0014612981833066999,
+            "rooms": 6.0,
+            "share_of_22_29": 0.011835544886942608
+          },
+          "8.0": {
+            "mass": 0.0008226437688725306,
+            "rooms": 8.0,
+            "share_of_22_29": 0.006662868238446975
+          }
+        },
+        "definition": "parity-0 owners; shares of the age 22-29 cross-section mass",
+        "total_mass_22_29": 0.12346691236149641
+      },
+      "entrant_cell_j0": {
+        "entrant_mass": 0.061733456180749845,
+        "entrant_nonzero_parity_mass": 0.0,
+        "first_birth_probability": 0.22375257738976753,
+        "ownership_rate": 0.1070988246840813
+      },
+      "ownership_by_children_home": {
+        "0": {
+          "ownership_rate": 0.5918188676593726,
+          "total_mass": 0.6447115418565652
+        },
+        "1": {
+          "ownership_rate": 0.6987455727378639,
+          "total_mass": 0.2610752454788816
+        },
+        "2": {
+          "ownership_rate": 0.8827062709240181,
+          "total_mass": 0.08338605983749826
+        },
+        "3": {
+          "ownership_rate": 0.96577574259039,
+          "total_mass": 0.010827152827052083
+        }
+      },
+      "ownership_rate_all": 0.648039626086192,
+      "rental_cap": 6.0,
+      "renter_cap_by_children_home": {
+        "0": {
+          "cap_share_of_all": 0.0752679842658166,
+          "cap_share_of_renters": 0.18439848954852073,
+          "renter_mass": 0.26315908718808484,
+          "total_mass": 0.6447115418565652
+        },
+        "1": {
+          "cap_share_of_all": 0.21226839436353256,
+          "cap_share_of_renters": 0.7046150202427635,
+          "renter_mass": 0.07865007354906223,
+          "total_mass": 0.2610752454788816
+        },
+        "2": {
+          "cap_share_of_all": 0.09456506464164716,
+          "cap_share_of_renters": 0.8062243854519183,
+          "renter_mass": 0.00978066191129312,
+          "total_mass": 0.08338605983749826
+        },
+        "3": {
+          "cap_share_of_all": 0.03168463138921105,
+          "cap_share_of_renters": 0.9257945617342815,
+          "renter_mass": 0.0003705512653662162,
+          "total_mass": 0.010827152827052083
+        }
+      }
+    },
+    "hbar_child_rooms": 1.0,
+    "hbar_first_child_jump": 1.49169824815624,
+    "hbar_reporting_accommodation": true,
+    "lifecycle_solve_seconds": 7.290130957990186,
+    "n_house": 5,
+    "native_array_count": 87,
+    "phi": 0.8,
+    "price": 0.6744838540900874,
+    "purchase_saving_fraction": 0.25,
+    "report": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/owner_floor_split_cost_probe_v1/A1_need1_phi08/phase_b_ge/A1_need1_phi08_selected",
+    "selling_cost_psi": 0.06,
+    "status": "passed",
+    "target_fit": [
+      {
+        "gap": -0.17140949696509433,
+        "loss_contribution": "",
+        "model": 1.9285905030349058,
+        "moment": "initial_normalization",
+        "role": "normalization",
+        "target": 2.1,
+        "weight": ""
+      },
+      {
+        "gap": 0.0411893626293503,
+        "loss_contribution": 60.28281378720741,
+        "model": 0.23946811363619294,
+        "moment": "cps_childlessness",
+        "role": "scored",
+        "target": 0.19827875100684264,
+        "weight": 35532.3042455214
+      },
+      {
+        "gap": 0.0337480475412025,
+        "loss_contribution": 30.69739543456907,
+        "model": 0.24740337276134952,
+        "moment": "cps_exactly_one",
+        "role": "scored",
+        "target": 0.21365532522014702,
+        "weight": 26952.820824310795
+      },
+      {
+        "gap": 0.5980283159963236,
+        "loss_contribution": 50.00781189346461,
+        "model": 26.57429217698882,
+        "moment": "nchs_mean_age",
+        "role": "scored",
+        "target": 25.976263860992496,
+        "weight": 139.82806784479274
+      },
+      {
+        "gap": 0.01572980063723331,
+        "loss_contribution": 0.0,
+        "model": 0.2650078136783,
+        "moment": "nchs_share30",
+        "role": "validation",
+        "target": 0.2492780130410667,
+        "weight": 0.0
+      },
+      {
+        "gap": -0.2450478230130182,
+        "loss_contribution": 0.45607378122576714,
+        "model": 6.681535968059972,
+        "moment": "wealth_earnings",
+        "role": "scored",
+        "target": 6.92658379107299,
+        "weight": 7.595098472533724
+      },
+      {
+        "gap": -0.00046552406741160856,
+        "loss_contribution": 1.1193835606376437,
+        "model": 0.006825499405204549,
+        "moment": "bequest_wealth",
+        "role": "scored",
+        "target": 0.007291023472616158,
+        "weight": 5165289.256198346
+      },
+      {
+        "gap": -0.608993745924872,
+        "loss_contribution": 0.0,
+        "model": 2.906941340593848,
+        "moment": "old_dispersion",
+        "role": "validation",
+        "target": 3.51593508651872,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.43883922447716905,
+        "loss_contribution": 24.65420951072717,
+        "model": 6.16827346457981,
+        "moment": "mean_rooms",
+        "role": "scored",
+        "target": 5.729434240102641,
+        "weight": 128.02070205233477
+      },
+      {
+        "gap": -0.01708313160817898,
+        "loss_contribution": 0.6827040411675664,
+        "model": 0.6591772852456238,
+        "moment": "ownership_30_55",
+        "role": "scored",
+        "target": 0.6762604168538028,
+        "weight": 2339.3623724673616
+      },
+      {
+        "gap": -0.08421407851811336,
+        "loss_contribution": 0.9756144456523315,
+        "model": 1.3807859214818867,
+        "moment": "first_birth_rooms",
+        "role": "scored",
+        "target": 1.465,
+        "weight": 137.5652749002964
+      },
+      {
+        "gap": 0.4016051721178169,
+        "loss_contribution": 0.0,
+        "model": 0.7867048218105985,
+        "moment": "family_rooms",
+        "role": "validation",
+        "target": 0.38509964969278165,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.018815431863743237,
+        "loss_contribution": 9.578315327918475,
+        "model": 0.14642379543066486,
+        "moment": "recent_parent_ownership",
+        "role": "scored",
+        "target": 0.12760836356692162,
+        "weight": 27055.822957508266
+      },
+      {
+        "gap": -0.34979772731033243,
+        "loss_contribution": 12.23584500314737,
+        "model": 0.4597299111186697,
+        "moment": "early_fertility",
+        "role": "scored",
+        "target": 0.8095276384290021,
+        "weight": 100.0
+      }
+    ],
+    "tenure_choice_kappa": 0.015482897400866402,
+    "total_target_loss": 190.69016678571737
+  },
+  "A1_need1_phi10": {
+    "H0": 7.288573389887633,
+    "H_own": [
+      2.0,
+      4.0,
+      6.0,
+      8.0,
+      10.0
+    ],
+    "adult_entry_relative_gap": 0.08636586877988832,
+    "buyer_cost_psi_buy": 0.0,
+    "closure": {
+      "H0_bounds": [
+        0.2,
+        80.0
+      ],
+      "H0_fixed": 7.288573389887633,
+      "absolute_housing_demand": 6.225975357450758,
+      "absolute_housing_residual": 0.09478133313917692,
+      "actual_entry_per_normalized_household": 0.061733456180750525,
+      "actual_paygo_residual": 3.1152181748597233e-14,
+      "adjusted_births_per_normalized_household": 0.11844376447032118,
+      "birth_to_entry_conversion": 0.47619047619047616,
+      "completed_fertility_tfr": 1.9186316755622532,
+      "d_bar": 0.0,
+      "fixed_price": 0.6744838540900874,
+      "gates_status": "passed",
+      "hbar_reporting_accommodation": true,
+      "housing_market_status": "measured_fixed_H0_diagnostic",
+      "housing_supply_coefficient_role": "fixed at selected-point derived value for diagnostic",
+      "housing_supply_elasticity": 0.63,
+      "no_renewal_or_housing_root": true,
+      "normalized_housing_demand": 6.225975357450758,
+      "normalized_population": 1.0,
+      "observe_seconds": 4.228769063949585,
+      "occupied_renter_floor": {
+        "maximum_shortfall": 0.0,
+        "occupied_renter_mass": 0.2649123538755658,
+        "violation_mass": 0.0
+      },
+      "outside_entry": 0.0,
+      "parameter_rows": 31,
+      "physical_housing_supply": 6.131194024311581,
+      "population_scale": 1.0,
+      "price": 0.6744838540900874,
+      "renewal_residual": -0.08636586877988817,
+      "renewal_status": "measured_fixed_price_diagnostic",
+      "standard_plot_count": 17,
+      "target_fit_rows": 14,
+      "total_target_loss": 252.38679130245995
+    },
+    "engine": "orig",
+    "extra": {
+      "birth_flows_constant_post_cell": {
+        "explicit_birth_flow": 0.10605615542989541,
+        "first": 0.04756086574721922,
+        "first_birth_flow": 0.04756086574721922,
+        "second": 0.03793014437605771,
+        "third_bin": 0.02056514530661848
+      },
+      "birth_flows_g_arrays": {
+        "first": 0.04756086574721885,
+        "second": 0.037930144376057295,
+        "third_bin": 0.020565145306618487
+      },
+      "birth_flows_uniform_birth_time": {
+        "explicit_birth_flow": 0.10605615542989541,
+        "first": 0.04756086574721922,
+        "first_birth_flow": 0.04756086574721922,
+        "second": 0.03793014437605771,
+        "third_bin": 0.02056514530661848
+      },
+      "childless_owners_22_29": {
+        "age_cells": [
+          1,
+          2
+        ],
+        "age_hi": [
+          26.0,
+          30.0
+        ],
+        "age_lo": [
+          22.0,
+          26.0
+        ],
+        "by_rung_rooms": {
+          "10.0": {
+            "mass": 0.00048536406392905114,
+            "rooms": 10.0,
+            "share_of_22_29": 0.003931126604251368
+          },
+          "2.0": {
+            "mass": 0.009414788533610673,
+            "rooms": 2.0,
+            "share_of_22_29": 0.07625353508513508
+          },
+          "4.0": {
+            "mass": 0.007986840831607684,
+            "rooms": 4.0,
+            "share_of_22_29": 0.06468810694984546
+          },
+          "6.0": {
+            "mass": 0.0031226944727550856,
+            "rooms": 6.0,
+            "share_of_22_29": 0.02529175155536574
+          },
+          "8.0": {
+            "mass": 0.001218394664427032,
+            "rooms": 8.0,
+            "share_of_22_29": 0.0098681876878861
+          }
+        },
+        "definition": "parity-0 owners; shares of the age 22-29 cross-section mass",
+        "total_mass_22_29": 0.12346691236149654
+      },
+      "entrant_cell_j0": {
+        "entrant_mass": 0.061733456180750525,
+        "entrant_nonzero_parity_mass": 0.0,
+        "first_birth_probability": 0.22651953532831542,
+        "ownership_rate": 0.32051278720778736
+      },
+      "ownership_by_children_home": {
+        "0": {
+          "ownership_rate": 0.6922102293354415,
+          "total_mass": 0.6464746747986254
+        },
+        "1": {
+          "ownership_rate": 0.7748052024243436,
+          "total_mass": 0.25984132657067177
+        },
+        "2": {
+          "ownership_rate": 0.9136492828200171,
+          "total_mass": 0.08292720779771297
+        },
+        "3": {
+          "ownership_rate": 0.9759851077403946,
+          "total_mass": 0.010756790832986352
+        }
+      },
+      "ownership_rate_all": 0.7350876461244334,
+      "rental_cap": 6.0,
+      "renter_cap_by_children_home": {
+        "0": {
+          "cap_share_of_all": 0.0704295757154903,
+          "cap_share_of_renters": 0.2288236401210593,
+          "renter_mass": 0.19897829189671395,
+          "total_mass": 0.6464746747986254
+        },
+        "1": {
+          "cap_share_of_all": 0.15119247941634864,
+          "cap_share_of_renters": 0.6713853119344549,
+          "renter_mass": 0.05851491493887251,
+          "total_mass": 0.25984132657067177
+        },
+        "2": {
+          "cap_share_of_all": 0.0648284310566979,
+          "cap_share_of_renters": 0.7507572973780235,
+          "renter_mass": 0.007160823867065971,
+          "total_mass": 0.08292720779771297
+        },
+        "3": {
+          "cap_share_of_all": 0.021494608884898694,
+          "cap_share_of_renters": 0.8950533132748504,
+          "renter_mass": 0.00025832317291328214,
+          "total_mass": 0.010756790832986352
+        }
+      }
+    },
+    "hbar_child_rooms": 1.0,
+    "hbar_first_child_jump": 1.49169824815624,
+    "hbar_reporting_accommodation": true,
+    "lifecycle_solve_seconds": 7.557354624994332,
+    "n_house": 5,
+    "native_array_count": 87,
+    "phi": 1.0,
+    "price": 0.6744838540900874,
+    "purchase_saving_fraction": 0.25,
+    "report": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/owner_floor_split_cost_probe_v1/A1_need1_phi10/phase_b_ge/A1_need1_phi10_selected",
+    "selling_cost_psi": 0.06,
+    "status": "passed",
+    "target_fit": [
+      {
+        "gap": -0.18136832443774686,
+        "loss_contribution": "",
+        "model": 1.9186316755622532,
+        "moment": "initial_normalization",
+        "role": "normalization",
+        "target": 2.1,
+        "weight": ""
+      },
+      {
+        "gap": 0.04498398946995308,
+        "loss_contribution": 71.90172501319935,
+        "model": 0.24326274047679572,
+        "moment": "cps_childlessness",
+        "role": "scored",
+        "target": 0.19827875100684264,
+        "weight": 35532.3042455214
+      },
+      {
+        "gap": 0.03420622612357174,
+        "loss_contribution": 31.53657670672784,
+        "model": 0.24786155134371876,
+        "moment": "cps_exactly_one",
+        "role": "scored",
+        "target": 0.21365532522014702,
+        "weight": 26952.820824310795
+      },
+      {
+        "gap": 0.5762418715515061,
+        "loss_contribution": 46.430566354808455,
+        "model": 26.552505732544002,
+        "moment": "nchs_mean_age",
+        "role": "scored",
+        "target": 25.976263860992496,
+        "weight": 139.82806784479274
+      },
+      {
+        "gap": 0.01575003461722671,
+        "loss_contribution": 0.0,
+        "model": 0.2650280476582934,
+        "moment": "nchs_share30",
+        "role": "validation",
+        "target": 0.2492780130410667,
+        "weight": 0.0
+      },
+      {
+        "gap": -0.3098792927353857,
+        "loss_contribution": 0.7293206680650476,
+        "model": 6.616704498337604,
+        "moment": "wealth_earnings",
+        "role": "scored",
+        "target": 6.92658379107299,
+        "weight": 7.595098472533724
+      },
+      {
+        "gap": -0.0005945000067573763,
+        "loss_contribution": 1.8255695146411177,
+        "model": 0.0066965234658587815,
+        "moment": "bequest_wealth",
+        "role": "scored",
+        "target": 0.007291023472616158,
+        "weight": 5165289.256198346
+      },
+      {
+        "gap": -0.5948857020779998,
+        "loss_contribution": 0.0,
+        "model": 2.92104938444072,
+        "moment": "old_dispersion",
+        "role": "validation",
+        "target": 3.51593508651872,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.4965411173481371,
+        "loss_contribution": 31.56389855060973,
+        "model": 6.225975357450778,
+        "moment": "mean_rooms",
+        "role": "scored",
+        "target": 5.729434240102641,
+        "weight": 128.02070205233477
+      },
+      {
+        "gap": 0.07485795557405905,
+        "loss_contribution": 13.109116537762317,
+        "model": 0.7511183724278618,
+        "moment": "ownership_30_55",
+        "role": "scored",
+        "target": 0.6762604168538028,
+        "weight": 2339.3623724673616
+      },
+      {
+        "gap": 0.03421226668075383,
+        "loss_contribution": 0.16101729173483503,
+        "model": 1.499212266680754,
+        "moment": "first_birth_rooms",
+        "role": "scored",
+        "target": 1.465,
+        "weight": 137.5652749002964
+      },
+      {
+        "gap": 0.37935402480533487,
+        "loss_contribution": 0.0,
+        "model": 0.7644536744981165,
+        "moment": "family_rooms",
+        "role": "validation",
+        "target": 0.38509964969278165,
+        "weight": 0.0
+      },
+      {
+        "gap": -0.03983949153765631,
+        "loss_contribution": 42.94259868704506,
+        "model": 0.08776887202926531,
+        "moment": "recent_parent_ownership",
+        "role": "scored",
+        "target": 0.12760836356692162,
+        "weight": 27055.822957508266
+      },
+      {
+        "gap": -0.34909027454035757,
+        "loss_contribution": 12.186401977866222,
+        "model": 0.46043736388864454,
+        "moment": "early_fertility",
+        "role": "scored",
+        "target": 0.8095276384290021,
+        "weight": 100.0
+      }
+    ],
+    "tenure_choice_kappa": 0.015482897400866402,
+    "total_target_loss": 252.38679130245995
+  },
+  "A2_need0_phi08": {
+    "H0": 7.288573389887633,
+    "H_own": [
+      4.0,
+      6.0,
+      8.0,
+      10.0
+    ],
+    "adult_entry_relative_gap": 0.0006651904017692859,
+    "buyer_cost_psi_buy": 0.0,
+    "closure": {
+      "H0_bounds": [
+        0.2,
+        80.0
+      ],
+      "H0_fixed": 7.288573389887633,
+      "absolute_housing_demand": 6.173444427440586,
+      "absolute_housing_residual": 0.042250403129004965,
+      "actual_entry_per_normalized_household": 0.06173345618074859,
+      "actual_paygo_residual": 2.6835212742237637e-15,
+      "adjusted_births_per_normalized_household": 0.129726550836043,
+      "birth_to_entry_conversion": 0.47619047619047616,
+      "completed_fertility_tfr": 2.101397829666594,
+      "d_bar": 0.0,
+      "fixed_price": 0.6744838540900874,
+      "gates_status": "passed",
+      "hbar_reporting_accommodation": false,
+      "housing_market_status": "measured_fixed_H0_diagnostic",
+      "housing_supply_coefficient_role": "fixed at selected-point derived value for diagnostic",
+      "housing_supply_elasticity": 0.63,
+      "no_renewal_or_housing_root": true,
+      "normalized_housing_demand": 6.173444427440586,
+      "normalized_population": 1.0,
+      "observe_seconds": 3.501988172531128,
+      "occupied_renter_floor": {
+        "maximum_shortfall": 0.0,
+        "occupied_renter_mass": 0.38463175868304084,
+        "violation_mass": 0.0
+      },
+      "outside_entry": 0.0,
+      "parameter_rows": 31,
+      "physical_housing_supply": 6.131194024311581,
+      "population_scale": 1.0,
+      "price": 0.6744838540900874,
+      "renewal_residual": 0.0006656331745695798,
+      "renewal_status": "measured_fixed_price_diagnostic",
+      "standard_plot_count": 17,
+      "target_fit_rows": 14,
+      "total_target_loss": 57.46110524595043
+    },
+    "engine": "orig",
+    "extra": {
+      "birth_flows_constant_post_cell": {
+        "explicit_birth_flow": 0.1152466249863493,
+        "first": 0.04976724632698187,
+        "first_birth_flow": 0.04976724632698187,
+        "second": 0.04144069789730707,
+        "third_bin": 0.024038680762060366
+      },
+      "birth_flows_g_arrays": {
+        "first": 0.04976724632698204,
+        "second": 0.041440697897306866,
+        "third_bin": 0.02403868076206045
+      },
+      "birth_flows_uniform_birth_time": {
+        "explicit_birth_flow": 0.1152466249863493,
+        "first": 0.04976724632698187,
+        "first_birth_flow": 0.04976724632698187,
+        "second": 0.04144069789730707,
+        "third_bin": 0.024038680762060366
+      },
+      "childless_owners_22_29": {
+        "age_cells": [
+          1,
+          2
+        ],
+        "age_hi": [
+          26.0,
+          30.0
+        ],
+        "age_lo": [
+          22.0,
+          26.0
+        ],
+        "by_rung_rooms": {
+          "10.0": {
+            "mass": 0.0002919736414235604,
+            "rooms": 10.0,
+            "share_of_22_29": 0.002364792605882111
+          },
+          "4.0": {
+            "mass": 0.002246089335270754,
+            "rooms": 4.0,
+            "share_of_22_29": 0.0181918320650514
+          },
+          "6.0": {
+            "mass": 0.0012527566466537803,
+            "rooms": 6.0,
+            "share_of_22_29": 0.010146496925312769
+          },
+          "8.0": {
+            "mass": 0.0006917424196033527,
+            "rooms": 8.0,
+            "share_of_22_29": 0.005602654236448512
+          }
+        },
+        "definition": "parity-0 owners; shares of the age 22-29 cross-section mass",
+        "total_mass_22_29": 0.123466912361496
+      },
+      "entrant_cell_j0": {
+        "entrant_mass": 0.06173345618074859,
+        "entrant_nonzero_parity_mass": 0.0,
+        "first_birth_probability": 0.25570693409072776,
+        "ownership_rate": 0.09619899845687598
+      },
+      "ownership_by_children_home": {
+        "0": {
+          "ownership_rate": 0.5566336993897986,
+          "total_mass": 0.6229537218460693
+        },
+        "1": {
+          "ownership_rate": 0.6794308992258042,
+          "total_mass": 0.26954065634401636
+        },
+        "2": {
+          "ownership_rate": 0.7883152120844399,
+          "total_mass": 0.0940124553433383
+        },
+        "3": {
+          "ownership_rate": 0.8423158059303925,
+          "total_mass": 0.013493166466576346
+        }
+      },
+      "ownership_rate_all": 0.6153682413169591,
+      "rental_cap": 6.0,
+      "renter_cap_by_children_home": {
+        "0": {
+          "cap_share_of_all": 0.07629223621157694,
+          "cap_share_of_renters": 0.1720749549674311,
+          "renter_mass": 0.2761966871062482,
+          "total_mass": 0.6229537218460693
+        },
+        "1": {
+          "cap_share_of_all": 0.22622706850639554,
+          "cap_share_of_renters": 0.7057045359644514,
+          "renter_mass": 0.08640640582628796,
+          "total_mass": 0.26954065634401636
+        },
+        "2": {
+          "cap_share_of_all": 0.14354785163747394,
+          "cap_share_of_renters": 0.6781207712229881,
+          "renter_mass": 0.019901006670775587,
+          "total_mass": 0.0940124553433383
+        },
+        "3": {
+          "cap_share_of_all": 0.10523676930379743,
+          "cap_share_of_renters": 0.667389461098062,
+          "renter_mass": 0.0021276590797291418,
+          "total_mass": 0.013493166466576346
+        }
+      }
+    },
+    "hbar_child_rooms": 0.0,
+    "hbar_first_child_jump": 2.49169824815624,
+    "hbar_reporting_accommodation": false,
+    "lifecycle_solve_seconds": 6.370936666993657,
+    "n_house": 4,
+    "native_array_count": 87,
+    "phi": 0.8,
+    "price": 0.6744838540900874,
+    "purchase_saving_fraction": 0.25,
+    "report": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/owner_floor_split_cost_probe_v1/A2_need0_phi08/phase_b_ge/A2_need0_phi08_selected",
+    "selling_cost_psi": 0.06,
+    "status": "passed",
+    "target_fit": [
+      {
+        "gap": 0.0013978296665939638,
+        "loss_contribution": "",
+        "model": 2.101397829666594,
+        "moment": "initial_normalization",
+        "role": "normalization",
+        "target": 2.1,
+        "weight": ""
+      },
+      {
+        "gap": 0.00681314422338139,
+        "loss_contribution": 1.6493716930526459,
+        "model": 0.20509189523022403,
+        "moment": "cps_childlessness",
+        "role": "scored",
+        "target": 0.19827875100684264,
+        "weight": 35532.3042455214
+      },
+      {
+        "gap": -0.005413870972921009,
+        "loss_contribution": 0.789987149020697,
+        "model": 0.208241454247226,
+        "moment": "cps_exactly_one",
+        "role": "scored",
+        "target": 0.21365532522014702,
+        "weight": 26952.820824310795
+      },
+      {
+        "gap": 0.07466944361505057,
+        "loss_contribution": 0.7796150012004808,
+        "model": 26.050933304607547,
+        "moment": "nchs_mean_age",
+        "role": "scored",
+        "target": 25.976263860992496,
+        "weight": 139.82806784479274
+      },
+      {
+        "gap": -0.015643301709789753,
+        "loss_contribution": 0.0,
+        "model": 0.23363471133127695,
+        "moment": "nchs_share30",
+        "role": "validation",
+        "target": 0.2492780130410667,
+        "weight": 0.0
+      },
+      {
+        "gap": -0.2738248019253673,
+        "loss_contribution": 0.5694806516979588,
+        "model": 6.652758989147623,
+        "moment": "wealth_earnings",
+        "role": "scored",
+        "target": 6.92658379107299,
+        "weight": 7.595098472533724
+      },
+      {
+        "gap": -0.0004251625582803705,
+        "loss_contribution": 0.9336942198528377,
+        "model": 0.006865860914335787,
+        "moment": "bequest_wealth",
+        "role": "scored",
+        "target": 0.007291023472616158,
+        "weight": 5165289.256198346
+      },
+      {
+        "gap": -0.608993745924872,
+        "loss_contribution": 0.0,
+        "model": 2.906941340593848,
+        "moment": "old_dispersion",
+        "role": "validation",
+        "target": 3.51593508651872,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.44401018733794206,
+        "loss_contribution": 25.238647253933276,
+        "model": 6.173444427440583,
+        "moment": "mean_rooms",
+        "role": "scored",
+        "target": 5.729434240102641,
+        "weight": 128.02070205233477
+      },
+      {
+        "gap": -0.03591470023435028,
+        "loss_contribution": 3.017463267561169,
+        "model": 0.6403457166194525,
+        "moment": "ownership_30_55",
+        "role": "scored",
+        "target": 0.6762604168538028,
+        "weight": 2339.3623724673616
+      },
+      {
+        "gap": -0.3428820265962156,
+        "loss_contribution": 16.173285817346844,
+        "model": 1.1221179734037845,
+        "moment": "first_birth_rooms",
+        "role": "scored",
+        "target": 1.465,
+        "weight": 137.5652749002964
+      },
+      {
+        "gap": -0.0689936053610225,
+        "loss_contribution": 0.0,
+        "model": 0.31610604433175915,
+        "moment": "family_rooms",
+        "role": "validation",
+        "target": 0.38509964969278165,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.0012063048726378978,
+        "loss_contribution": 0.03937086100903158,
+        "model": 0.12881466843955952,
+        "moment": "recent_parent_ownership",
+        "role": "scored",
+        "target": 0.12760836356692162,
+        "weight": 27055.822957508266
+      },
+      {
+        "gap": -0.28757936871888934,
+        "loss_contribution": 8.27018933127549,
+        "model": 0.5219482697101128,
+        "moment": "early_fertility",
+        "role": "scored",
+        "target": 0.8095276384290021,
+        "weight": 100.0
+      }
+    ],
+    "tenure_choice_kappa": 0.015482897400866402,
+    "total_target_loss": 57.46110524595043
+  },
+  "A2_need0_phi10": {
+    "H0": 7.288573389887633,
+    "H_own": [
+      4.0,
+      6.0,
+      8.0,
+      10.0
+    ],
+    "adult_entry_relative_gap": 0.002808173283504352,
+    "buyer_cost_psi_buy": 0.0,
+    "closure": {
+      "H0_bounds": [
+        0.2,
+        80.0
+      ],
+      "H0_fixed": 7.288573389887633,
+      "absolute_housing_demand": 6.256800582473577,
+      "absolute_housing_residual": 0.12560655816199606,
+      "actual_entry_per_normalized_household": 0.06173345618074803,
+      "actual_paygo_residual": -1.1667483800972914e-15,
+      "adjusted_births_per_normalized_household": 0.12927620567064604,
+      "birth_to_entry_conversion": 0.47619047619047616,
+      "completed_fertility_tfr": 2.094102836104641,
+      "d_bar": 0.0,
+      "fixed_price": 0.6744838540900874,
+      "gates_status": "passed",
+      "hbar_reporting_accommodation": false,
+      "housing_market_status": "measured_fixed_H0_diagnostic",
+      "housing_supply_coefficient_role": "fixed at selected-point derived value for diagnostic",
+      "housing_supply_elasticity": 0.63,
+      "no_renewal_or_housing_root": true,
+      "normalized_housing_demand": 6.256800582473577,
+      "normalized_population": 1.0,
+      "observe_seconds": 3.4956531524658203,
+      "occupied_renter_floor": {
+        "maximum_shortfall": 0.0,
+        "occupied_renter_mass": 0.3205673384487373,
+        "violation_mass": 0.0
+      },
+      "outside_entry": 0.0,
+      "parameter_rows": 31,
+      "physical_housing_supply": 6.131194024311581,
+      "population_scale": 1.0,
+      "price": 0.6744838540900874,
+      "renewal_residual": -0.002808173283504023,
+      "renewal_status": "measured_fixed_price_diagnostic",
+      "standard_plot_count": 17,
+      "target_fit_rows": 14,
+      "total_target_loss": 66.72949394663688
+    },
+    "engine": "orig",
+    "extra": {
+      "birth_flows_constant_post_cell": {
+        "explicit_birth_flow": 0.1148425950614709,
+        "first": 0.04959830774059467,
+        "first_birth_flow": 0.04959830774059467,
+        "second": 0.04128249626756144,
+        "third_bin": 0.023961791053314804
+      },
+      "birth_flows_g_arrays": {
+        "first": 0.04959830774059537,
+        "second": 0.041282496267561475,
+        "third_bin": 0.023961791053314807
+      },
+      "birth_flows_uniform_birth_time": {
+        "explicit_birth_flow": 0.1148425950614709,
+        "first": 0.04959830774059467,
+        "first_birth_flow": 0.04959830774059467,
+        "second": 0.04128249626756144,
+        "third_bin": 0.023961791053314804
+      },
+      "childless_owners_22_29": {
+        "age_cells": [
+          1,
+          2
+        ],
+        "age_hi": [
+          26.0,
+          30.0
+        ],
+        "age_lo": [
+          22.0,
+          26.0
+        ],
+        "by_rung_rooms": {
+          "10.0": {
+            "mass": 0.000395474587511541,
+            "rooms": 10.0,
+            "share_of_22_29": 0.0032030815377778266
+          },
+          "4.0": {
+            "mass": 0.006614681758150505,
+            "rooms": 4.0,
+            "share_of_22_29": 0.053574529658468525
+          },
+          "6.0": {
+            "mass": 0.002721269095386598,
+            "rooms": 6.0,
+            "share_of_22_29": 0.022040472571461526
+          },
+          "8.0": {
+            "mass": 0.0010134202510020199,
+            "rooms": 8.0,
+            "share_of_22_29": 0.008208031055598515
+          }
+        },
+        "definition": "parity-0 owners; shares of the age 22-29 cross-section mass",
+        "total_mass_22_29": 0.12346691236149607
+      },
+      "entrant_cell_j0": {
+        "entrant_mass": 0.06173345618074803,
+        "entrant_nonzero_parity_mass": 0.0,
+        "first_birth_probability": 0.2583816579274702,
+        "ownership_rate": 0.24245509426205228
+      },
+      "ownership_by_children_home": {
+        "0": {
+          "ownership_rate": 0.615265213737343,
+          "total_mass": 0.6242310748079033
+        },
+        "1": {
+          "ownership_rate": 0.7625531181443408,
+          "total_mass": 0.26865706448584403
+        },
+        "2": {
+          "ownership_rate": 0.8401278499355056,
+          "total_mass": 0.09367376583492963
+        },
+        "3": {
+          "ownership_rate": 0.8782326869729618,
+          "total_mass": 0.013438094871323266
+        }
+      },
+      "ownership_rate_all": 0.6794326615512627,
+      "rental_cap": 6.0,
+      "renter_cap_by_children_home": {
+        "0": {
+          "cap_share_of_all": 0.07132951775296928,
+          "cap_share_of_renters": 0.1853991900391168,
+          "renter_mass": 0.24016340914472714,
+          "total_mass": 0.6242310748079033
+        },
+        "1": {
+          "cap_share_of_all": 0.1591120087678581,
+          "cap_share_of_renters": 0.6700951704414467,
+          "renter_mass": 0.06379178225065846,
+          "total_mass": 0.26865706448584403
+        },
+        "2": {
+          "cap_share_of_all": 0.09842737838495007,
+          "cap_share_of_renters": 0.6156630679279868,
+          "renter_mass": 0.014975826348668172,
+          "total_mass": 0.09367376583492963
+        },
+        "3": {
+          "cap_share_of_all": 0.07326908088998553,
+          "cap_share_of_renters": 0.6017138677743207,
+          "renter_mass": 0.0016363207046834556,
+          "total_mass": 0.013438094871323266
+        }
+      }
+    },
+    "hbar_child_rooms": 0.0,
+    "hbar_first_child_jump": 2.49169824815624,
+    "hbar_reporting_accommodation": false,
+    "lifecycle_solve_seconds": 6.51283200000762,
+    "n_house": 4,
+    "native_array_count": 87,
+    "phi": 1.0,
+    "price": 0.6744838540900874,
+    "purchase_saving_fraction": 0.25,
+    "report": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/owner_floor_split_cost_probe_v1/A2_need0_phi10/phase_b_ge/A2_need0_phi10_selected",
+    "selling_cost_psi": 0.06,
+    "status": "passed",
+    "target_fit": [
+      {
+        "gap": -0.005897163895359103,
+        "loss_contribution": "",
+        "model": 2.094102836104641,
+        "moment": "initial_normalization",
+        "role": "normalization",
+        "target": 2.1,
+        "weight": ""
+      },
+      {
+        "gap": 0.009588776642763225,
+        "loss_contribution": 3.2670048335647874,
+        "model": 0.20786752764960587,
+        "moment": "cps_childlessness",
+        "role": "scored",
+        "target": 0.19827875100684264,
+        "weight": 35532.3042455214
+      },
+      {
+        "gap": -0.005192866868767243,
+        "loss_contribution": 0.7268061632074247,
+        "model": 0.20846245835137978,
+        "moment": "cps_exactly_one",
+        "role": "scored",
+        "target": 0.21365532522014702,
+        "weight": 26952.820824310795
+      },
+      {
+        "gap": 0.05693286876367054,
+        "loss_contribution": 0.45323192383555666,
+        "model": 26.033196729756167,
+        "moment": "nchs_mean_age",
+        "role": "scored",
+        "target": 25.976263860992496,
+        "weight": 139.82806784479274
+      },
+      {
+        "gap": -0.015536189370660175,
+        "loss_contribution": 0.0,
+        "model": 0.23374182367040652,
+        "moment": "nchs_share30",
+        "role": "validation",
+        "target": 0.2492780130410667,
+        "weight": 0.0
+      },
+      {
+        "gap": -0.3328438364206372,
+        "loss_contribution": 0.8414231319527271,
+        "model": 6.593739954652353,
+        "moment": "wealth_earnings",
+        "role": "scored",
+        "target": 6.92658379107299,
+        "weight": 7.595098472533724
+      },
+      {
+        "gap": -0.000568280422287082,
+        "loss_contribution": 1.668092140262315,
+        "model": 0.006722743050329076,
+        "moment": "bequest_wealth",
+        "role": "scored",
+        "target": 0.007291023472616158,
+        "weight": 5165289.256198346
+      },
+      {
+        "gap": -0.5948857020779998,
+        "loss_contribution": 0.0,
+        "model": 2.92104938444072,
+        "moment": "old_dispersion",
+        "role": "validation",
+        "target": 3.51593508651872,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.5273663423709323,
+        "loss_contribution": 35.60451071705728,
+        "model": 6.2568005824735735,
+        "moment": "mean_rooms",
+        "role": "scored",
+        "target": 5.729434240102641,
+        "weight": 128.02070205233477
+      },
+      {
+        "gap": 0.026564387065984185,
+        "loss_contribution": 1.6508100323565382,
+        "model": 0.702824803919787,
+        "moment": "ownership_30_55",
+        "role": "scored",
+        "target": 0.6762604168538028,
+        "weight": 2339.3623724673616
+      },
+      {
+        "gap": -0.1988832251898478,
+        "loss_contribution": 5.4413307919894525,
+        "model": 1.2661167748101523,
+        "moment": "first_birth_rooms",
+        "role": "scored",
+        "target": 1.465,
+        "weight": 137.5652749002964
+      },
+      {
+        "gap": -0.07858691152622832,
+        "loss_contribution": 0.0,
+        "model": 0.30651273816655333,
+        "moment": "family_rooms",
+        "role": "validation",
+        "target": 0.38509964969278165,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.01808987150013408,
+        "loss_contribution": 8.853840871320775,
+        "model": 0.1456982350670557,
+        "moment": "recent_parent_ownership",
+        "role": "scored",
+        "target": 0.12760836356692162,
+        "weight": 27055.822957508266
+      },
+      {
+        "gap": -0.28674803122410475,
+        "loss_contribution": 8.222443341090015,
+        "model": 0.5227796072048974,
+        "moment": "early_fertility",
+        "role": "scored",
+        "target": 0.8095276384290021,
+        "weight": 100.0
+      }
+    ],
+    "tenure_choice_kappa": 0.015482897400866402,
+    "total_target_loss": 66.72949394663688
+  },
+  "A2_need1_phi08": {
+    "H0": 7.288573389887633,
+    "H_own": [
+      4.0,
+      6.0,
+      8.0,
+      10.0
+    ],
+    "adult_entry_relative_gap": 0.08102549405029684,
+    "buyer_cost_psi_buy": 0.0,
+    "closure": {
+      "H0_bounds": [
+        0.2,
+        80.0
+      ],
+      "H0_fixed": 7.288573389887633,
+      "absolute_housing_demand": 6.211914232601286,
+      "absolute_housing_residual": 0.08072020828970494,
+      "actual_entry_per_normalized_household": 0.061733456180748894,
+      "actual_paygo_residual": 1.540107861728415e-14,
+      "adjusted_births_per_normalized_household": 0.11913609202797,
+      "birth_to_entry_conversion": 0.47619047619047616,
+      "completed_fertility_tfr": 1.9298464624943534,
+      "d_bar": 0.0,
+      "fixed_price": 0.6744838540900874,
+      "gates_status": "passed",
+      "hbar_reporting_accommodation": true,
+      "housing_market_status": "measured_fixed_H0_diagnostic",
+      "housing_supply_coefficient_role": "fixed at selected-point derived value for diagnostic",
+      "housing_supply_elasticity": 0.63,
+      "no_renewal_or_housing_root": true,
+      "normalized_housing_demand": 6.211914232601286,
+      "normalized_population": 1.0,
+      "observe_seconds": 3.491006851196289,
+      "occupied_renter_floor": {
+        "maximum_shortfall": 0.0,
+        "occupied_renter_mass": 0.3773387078035767,
+        "violation_mass": 0.0
+      },
+      "outside_entry": 0.0,
+      "parameter_rows": 31,
+      "physical_housing_supply": 6.131194024311581,
+      "population_scale": 1.0,
+      "price": 0.6744838540900874,
+      "renewal_residual": -0.0810254940502958,
+      "renewal_status": "measured_fixed_price_diagnostic",
+      "standard_plot_count": 17,
+      "target_fit_rows": 14,
+      "total_target_loss": 211.15096300119853
+    },
+    "engine": "orig",
+    "extra": {
+      "birth_flows_constant_post_cell": {
+        "explicit_birth_flow": 0.1066743162535169,
+        "first": 0.04781476885174104,
+        "first_birth_flow": 0.04781476885174104,
+        "second": 0.038171275052867784,
+        "third_bin": 0.020688272348908066
+      },
+      "birth_flows_g_arrays": {
+        "first": 0.04781476885174074,
+        "second": 0.03817127505286777,
+        "third_bin": 0.020688272348908104
+      },
+      "birth_flows_uniform_birth_time": {
+        "explicit_birth_flow": 0.1066743162535169,
+        "first": 0.04781476885174104,
+        "first_birth_flow": 0.04781476885174104,
+        "second": 0.038171275052867784,
+        "third_bin": 0.020688272348908066
+      },
+      "childless_owners_22_29": {
+        "age_cells": [
+          1,
+          2
+        ],
+        "age_hi": [
+          26.0,
+          30.0
+        ],
+        "age_lo": [
+          22.0,
+          26.0
+        ],
+        "by_rung_rooms": {
+          "10.0": {
+            "mass": 0.0003559689085122186,
+            "rooms": 10.0,
+            "share_of_22_29": 0.0028831117722453686
+          },
+          "4.0": {
+            "mass": 0.003077615975244251,
+            "rooms": 4.0,
+            "share_of_22_29": 0.02492664566060702
+          },
+          "6.0": {
+            "mass": 0.0014811579614102761,
+            "rooms": 6.0,
+            "share_of_22_29": 0.011996395901386257
+          },
+          "8.0": {
+            "mass": 0.0008280920952899417,
+            "rooms": 8.0,
+            "share_of_22_29": 0.006706996064381883
+          }
+        },
+        "definition": "parity-0 owners; shares of the age 22-29 cross-section mass",
+        "total_mass_22_29": 0.12346691236149678
+      },
+      "entrant_cell_j0": {
+        "entrant_mass": 0.06173345618074891,
+        "entrant_nonzero_parity_mass": 0.0,
+        "first_birth_probability": 0.2242258893917607,
+        "ownership_rate": 0.09782820966157096
+      },
+      "ownership_by_children_home": {
+        "0": {
+          "ownership_rate": 0.5525332731686738,
+          "total_mass": 0.6444882707821228
+        },
+        "1": {
+          "ownership_rate": 0.6984400107071184,
+          "total_mass": 0.261239684037362
+        },
+        "2": {
+          "ownership_rate": 0.8825353689192232,
+          "total_mass": 0.08343891787583561
+        },
+        "3": {
+          "ownership_rate": 0.9657446314591437,
+          "total_mass": 0.01083312730467876
+        }
+      },
+      "ownership_rate_all": 0.622661292196423,
+      "rental_cap": 6.0,
+      "renter_cap_by_children_home": {
+        "0": {
+          "cap_share_of_all": 0.07541247927881681,
+          "cap_share_of_renters": 0.168532037706669,
+          "renter_mass": 0.2883870570080579,
+          "total_mass": 0.6444882707821228
+        },
+        "1": {
+          "cap_share_of_all": 0.21243580758505173,
+          "cap_share_of_renters": 0.7044562114595692,
+          "renter_mass": 0.0787794363211827,
+          "total_mass": 0.261239684037362
+        },
+        "2": {
+          "cap_share_of_all": 0.09477189930010298,
+          "cap_share_of_renters": 0.8068122159676403,
+          "renter_mass": 0.009801121706064272,
+          "total_mass": 0.08343891787583561
+        },
+        "3": {
+          "cap_share_of_all": 0.031717502967904834,
+          "cap_share_of_renters": 0.9259133478618163,
+          "renter_mass": 0.0003710927682717869,
+          "total_mass": 0.01083312730467876
+        }
+      }
+    },
+    "hbar_child_rooms": 1.0,
+    "hbar_first_child_jump": 1.49169824815624,
+    "hbar_reporting_accommodation": true,
+    "lifecycle_solve_seconds": 6.340221416001441,
+    "n_house": 4,
+    "native_array_count": 87,
+    "phi": 0.8,
+    "price": 0.6744838540900874,
+    "purchase_saving_fraction": 0.25,
+    "report": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/owner_floor_split_cost_probe_v1/A2_need1_phi08/phase_b_ge/A2_need1_phi08_selected",
+    "selling_cost_psi": 0.06,
+    "status": "passed",
+    "target_fit": [
+      {
+        "gap": -0.17015353750564666,
+        "loss_contribution": "",
+        "model": 1.9298464624943534,
+        "moment": "initial_normalization",
+        "role": "normalization",
+        "target": 2.1,
+        "weight": ""
+      },
+      {
+        "gap": 0.040827654701308,
+        "loss_contribution": 59.22870515102208,
+        "model": 0.23910640570815064,
+        "moment": "cps_childlessness",
+        "role": "scored",
+        "target": 0.19827875100684264,
+        "weight": 35532.3042455214
+      },
+      {
+        "gap": 0.03357438493750503,
+        "loss_contribution": 30.382279524050087,
+        "model": 0.24722971015765205,
+        "moment": "cps_exactly_one",
+        "role": "scored",
+        "target": 0.21365532522014702,
+        "weight": 26952.820824310795
+      },
+      {
+        "gap": 0.5916596123299591,
+        "loss_contribution": 48.948366801903475,
+        "model": 26.567923473322455,
+        "moment": "nchs_mean_age",
+        "role": "scored",
+        "target": 25.976263860992496,
+        "weight": 139.82806784479274
+      },
+      {
+        "gap": 0.015388280093418832,
+        "loss_contribution": 0.0,
+        "model": 0.26466629313448553,
+        "moment": "nchs_share30",
+        "role": "validation",
+        "target": 0.2492780130410667,
+        "weight": 0.0
+      },
+      {
+        "gap": -0.23728924560862996,
+        "loss_contribution": 0.42765102790189685,
+        "model": 6.68929454546436,
+        "moment": "wealth_earnings",
+        "role": "scored",
+        "target": 6.92658379107299,
+        "weight": 7.595098472533724
+      },
+      {
+        "gap": -0.000453824488445281,
+        "loss_contribution": 1.063825755747009,
+        "model": 0.006837198984170877,
+        "moment": "bequest_wealth",
+        "role": "scored",
+        "target": 0.007291023472616158,
+        "weight": 5165289.256198346
+      },
+      {
+        "gap": -0.608993745924872,
+        "loss_contribution": 0.0,
+        "model": 2.906941340593848,
+        "moment": "old_dispersion",
+        "role": "validation",
+        "target": 3.51593508651872,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.4824799924986509,
+        "loss_contribution": 29.80154789215196,
+        "model": 6.211914232601292,
+        "moment": "mean_rooms",
+        "role": "scored",
+        "target": 5.729434240102641,
+        "weight": 128.02070205233477
+      },
+      {
+        "gap": -0.022781839796077064,
+        "loss_contribution": 1.2141576688321287,
+        "model": 0.6534785770577257,
+        "moment": "ownership_30_55",
+        "role": "scored",
+        "target": 0.6762604168538028,
+        "weight": 2339.3623724673616
+      },
+      {
+        "gap": -0.12687277208598347,
+        "loss_contribution": 2.2143470013144855,
+        "model": 1.3381272279140166,
+        "moment": "first_birth_rooms",
+        "role": "scored",
+        "target": 1.465,
+        "weight": 137.5652749002964
+      },
+      {
+        "gap": 0.4026770187165303,
+        "loss_contribution": 0.0,
+        "model": 0.7877766684093119,
+        "moment": "family_rooms",
+        "role": "validation",
+        "target": 0.38509964969278165,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.03081039579405337,
+        "loss_contribution": 25.683564847028087,
+        "model": 0.158418759360975,
+        "moment": "recent_parent_ownership",
+        "role": "scored",
+        "target": 0.12760836356692162,
+        "weight": 27055.822957508266
+      },
+      {
+        "gap": -0.3490919267363156,
+        "loss_contribution": 12.186517331247316,
+        "model": 0.4604357116926865,
+        "moment": "early_fertility",
+        "role": "scored",
+        "target": 0.8095276384290021,
+        "weight": 100.0
+      }
+    ],
+    "tenure_choice_kappa": 0.015482897400866402,
+    "total_target_loss": 211.15096300119853
+  },
+  "A2_need1_phi10": {
+    "H0": 7.288573389887633,
+    "H_own": [
+      4.0,
+      6.0,
+      8.0,
+      10.0
+    ],
+    "adult_entry_relative_gap": 0.08470042165075241,
+    "buyer_cost_psi_buy": 0.0,
+    "closure": {
+      "H0_bounds": [
+        0.2,
+        80.0
+      ],
+      "H0_fixed": 7.288573389887633,
+      "absolute_housing_demand": 6.291353954727846,
+      "absolute_housing_residual": 0.16015993041626508,
+      "actual_entry_per_normalized_household": 0.061733456180748984,
+      "actual_paygo_residual": 2.1118145679760825e-14,
+      "adjusted_births_per_normalized_household": 0.11865967346579082,
+      "birth_to_entry_conversion": 0.47619047619047616,
+      "completed_fertility_tfr": 1.9221291145333914,
+      "d_bar": 0.0,
+      "fixed_price": 0.6744838540900874,
+      "gates_status": "passed",
+      "hbar_reporting_accommodation": true,
+      "housing_market_status": "measured_fixed_H0_diagnostic",
+      "housing_supply_coefficient_role": "fixed at selected-point derived value for diagnostic",
+      "housing_supply_elasticity": 0.63,
+      "no_renewal_or_housing_root": true,
+      "normalized_housing_demand": 6.291353954727846,
+      "normalized_population": 1.0,
+      "observe_seconds": 3.4623219966888428,
+      "occupied_renter_floor": {
+        "maximum_shortfall": 0.0,
+        "occupied_renter_mass": 0.3153624091080126,
+        "violation_mass": 0.0
+      },
+      "outside_entry": 0.0,
+      "parameter_rows": 31,
+      "physical_housing_supply": 6.131194024311581,
+      "population_scale": 1.0,
+      "price": 0.6744838540900874,
+      "renewal_residual": -0.08470042165075176,
+      "renewal_status": "measured_fixed_price_diagnostic",
+      "standard_plot_count": 17,
+      "target_fit_rows": 14,
+      "total_target_loss": 236.47519938900894
+    },
+    "engine": "orig",
+    "extra": {
+      "birth_flows_constant_post_cell": {
+        "explicit_birth_flow": 0.10624767095748308,
+        "first": 0.047641041980077826,
+        "first_birth_flow": 0.047641041980077826,
+        "second": 0.0380009871383335,
+        "third_bin": 0.020605641839071757
+      },
+      "birth_flows_g_arrays": {
+        "first": 0.047641041980078014,
+        "second": 0.03800098713833361,
+        "third_bin": 0.020605641839071875
+      },
+      "birth_flows_uniform_birth_time": {
+        "explicit_birth_flow": 0.10624767095748308,
+        "first": 0.047641041980077826,
+        "first_birth_flow": 0.047641041980077826,
+        "second": 0.0380009871383335,
+        "third_bin": 0.020605641839071757
+      },
+      "childless_owners_22_29": {
+        "age_cells": [
+          1,
+          2
+        ],
+        "age_hi": [
+          26.0,
+          30.0
+        ],
+        "age_lo": [
+          22.0,
+          26.0
+        ],
+        "by_rung_rooms": {
+          "10.0": {
+            "mass": 0.00048485738800259576,
+            "rooms": 10.0,
+            "share_of_22_29": 0.003927022865713117
+          },
+          "4.0": {
+            "mass": 0.008685573193276548,
+            "rooms": 4.0,
+            "share_of_22_29": 0.07034737507524438
+          },
+          "6.0": {
+            "mass": 0.0031330943387538664,
+            "rooms": 6.0,
+            "share_of_22_29": 0.025375983563762635
+          },
+          "8.0": {
+            "mass": 0.0012182678577340627,
+            "rooms": 8.0,
+            "share_of_22_29": 0.00986716063788098
+          }
+        },
+        "definition": "parity-0 owners; shares of the age 22-29 cross-section mass",
+        "total_mass_22_29": 0.12346691236149687
+      },
+      "entrant_cell_j0": {
+        "entrant_mass": 0.06173345618074898,
+        "entrant_nonzero_parity_mass": 0.0,
+        "first_birth_probability": 0.22720352021951612,
+        "ownership_rate": 0.24714681930575302
+      },
+      "ownership_by_children_home": {
+        "0": {
+          "ownership_rate": 0.6147406715075242,
+          "total_mass": 0.6458175080148961
+        },
+        "1": {
+          "ownership_rate": 0.7731890510365428,
+          "total_mass": 0.26034175244133906
+        },
+        "2": {
+          "ownership_rate": 0.9127680586890445,
+          "total_mass": 0.08306786037574844
+        },
+        "3": {
+          "ownership_rate": 0.9758041475922069,
+          "total_mass": 0.010772879168014518
+        }
+      },
+      "ownership_rate_all": 0.6846375908919865,
+      "rental_cap": 6.0,
+      "renter_cap_by_children_home": {
+        "0": {
+          "cap_share_of_all": 0.07066368439556082,
+          "cap_share_of_renters": 0.1834184902726915,
+          "renter_mass": 0.24880721946650297,
+          "total_mass": 0.6458175080148961
+        },
+        "1": {
+          "cap_share_of_all": 0.15239994479513205,
+          "cap_share_of_renters": 0.6719249907978921,
+          "renter_mass": 0.05904835992602952,
+          "total_mass": 0.26034175244133906
+        },
+        "2": {
+          "cap_share_of_all": 0.06561595893949457,
+          "cap_share_of_renters": 0.7522010625166924,
+          "renter_mass": 0.007246170721123943,
+          "total_mass": 0.08306786037574844
+        },
+        "3": {
+          "cap_share_of_all": 0.021671011038654903,
+          "cap_share_of_renters": 0.8956498276405119,
+          "renter_mass": 0.00026065899435626517,
+          "total_mass": 0.010772879168014518
+        }
+      }
+    },
+    "hbar_child_rooms": 1.0,
+    "hbar_first_child_jump": 1.49169824815624,
+    "hbar_reporting_accommodation": true,
+    "lifecycle_solve_seconds": 6.503212167008314,
+    "n_house": 4,
+    "native_array_count": 87,
+    "phi": 1.0,
+    "price": 0.6744838540900874,
+    "purchase_saving_fraction": 0.25,
+    "report": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/owner_floor_split_cost_probe_v1/A2_need1_phi10/phase_b_ge/A2_need1_phi10_selected",
+    "selling_cost_psi": 0.06,
+    "status": "passed",
+    "target_fit": [
+      {
+        "gap": -0.17787088546660867,
+        "loss_contribution": "",
+        "model": 1.9221291145333914,
+        "moment": "initial_normalization",
+        "role": "normalization",
+        "target": 2.1,
+        "weight": ""
+      },
+      {
+        "gap": 0.04366642702267878,
+        "loss_contribution": 67.75146447830343,
+        "model": 0.24194517802952142,
+        "moment": "cps_childlessness",
+        "role": "scored",
+        "target": 0.19827875100684264,
+        "weight": 35532.3042455214
+      },
+      {
+        "gap": 0.034092595699048905,
+        "loss_contribution": 31.327400604823325,
+        "model": 0.24774792091919592,
+        "moment": "cps_exactly_one",
+        "role": "scored",
+        "target": 0.21365532522014702,
+        "weight": 26952.820824310795
+      },
+      {
+        "gap": 0.5694636045759296,
+        "loss_contribution": 45.34467589935862,
+        "model": 26.545727465568426,
+        "moment": "nchs_mean_age",
+        "role": "scored",
+        "target": 25.976263860992496,
+        "weight": 139.82806784479274
+      },
+      {
+        "gap": 0.01527418447958731,
+        "loss_contribution": 0.0,
+        "model": 0.264552197520654,
+        "moment": "nchs_share30",
+        "role": "validation",
+        "target": 0.2492780130410667,
+        "weight": 0.0
+      },
+      {
+        "gap": -0.3003862457096229,
+        "loss_contribution": 0.6853201401279913,
+        "model": 6.626197545363367,
+        "moment": "wealth_earnings",
+        "role": "scored",
+        "target": 6.92658379107299,
+        "weight": 7.595098472533724
+      },
+      {
+        "gap": -0.0005911073199951575,
+        "loss_contribution": 1.8047926846686855,
+        "model": 0.006699916152621,
+        "moment": "bequest_wealth",
+        "role": "scored",
+        "target": 0.007291023472616158,
+        "weight": 5165289.256198346
+      },
+      {
+        "gap": -0.5948857020779998,
+        "loss_contribution": 0.0,
+        "model": 2.92104938444072,
+        "moment": "old_dispersion",
+        "role": "validation",
+        "target": 3.51593508651872,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.5619197146252155,
+        "loss_contribution": 40.42301875859601,
+        "model": 6.291353954727857,
+        "moment": "mean_rooms",
+        "role": "scored",
+        "target": 5.729434240102641,
+        "weight": 128.02070205233477
+      },
+      {
+        "gap": 0.03615120576094644,
+        "loss_contribution": 3.057335324857126,
+        "model": 0.7124116226147492,
+        "moment": "ownership_30_55",
+        "role": "scored",
+        "target": 0.6762604168538028,
+        "weight": 2339.3623724673616
+      },
+      {
+        "gap": -0.002156734069160615,
+        "loss_contribution": 0.0006398851300174055,
+        "model": 1.4628432659308395,
+        "moment": "first_birth_rooms",
+        "role": "scored",
+        "target": 1.465,
+        "weight": 137.5652749002964
+      },
+      {
+        "gap": 0.38189062039525457,
+        "loss_contribution": 0.0,
+        "model": 0.7669902700880362,
+        "moment": "family_rooms",
+        "role": "validation",
+        "target": 0.38509964969278165,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.03543207481017041,
+        "loss_contribution": 33.96674390756837,
+        "model": 0.16304043837709203,
+        "moment": "recent_parent_ownership",
+        "role": "scored",
+        "target": 0.12760836356692162,
+        "weight": 27055.822957508266
+      },
+      {
+        "gap": -0.34804895784322265,
+        "loss_contribution": 12.113807705575336,
+        "model": 0.46147868058577945,
+        "moment": "early_fertility",
+        "role": "scored",
+        "target": 0.8095276384290021,
+        "weight": 100.0
+      }
+    ],
+    "tenure_choice_kappa": 0.015482897400866402,
+    "total_target_loss": 236.47519938900894
+  },
+  "A3_need0_phi08": {
+    "H0": 7.288573389887633,
+    "H_own": [
+      6.0,
+      8.0,
+      10.0
+    ],
+    "adult_entry_relative_gap": 0.006403848276975925,
+    "buyer_cost_psi_buy": 0.0,
+    "closure": {
+      "H0_bounds": [
+        0.2,
+        80.0
+      ],
+      "H0_fixed": 7.288573389887633,
+      "absolute_housing_demand": 6.315922877453734,
+      "absolute_housing_residual": 0.18472885314215315,
+      "actual_entry_per_normalized_household": 0.06173345618074801,
+      "actual_paygo_residual": -1.1667483800972916e-15,
+      "adjusted_births_per_normalized_household": 0.130475805240145,
+      "birth_to_entry_conversion": 0.47619047619047616,
+      "completed_fertility_tfr": 2.113534755904932,
+      "d_bar": 0.0,
+      "fixed_price": 0.6744838540900874,
+      "gates_status": "passed",
+      "hbar_reporting_accommodation": false,
+      "housing_market_status": "measured_fixed_H0_diagnostic",
+      "housing_supply_coefficient_role": "fixed at selected-point derived value for diagnostic",
+      "housing_supply_elasticity": 0.63,
+      "no_renewal_or_housing_root": true,
+      "normalized_housing_demand": 6.315922877453734,
+      "normalized_population": 1.0,
+      "observe_seconds": 2.8101119995117188,
+      "occupied_renter_floor": {
+        "maximum_shortfall": 0.0,
+        "occupied_renter_mass": 0.44967121313710595,
+        "violation_mass": 0.0
+      },
+      "outside_entry": 0.0,
+      "parameter_rows": 31,
+      "physical_housing_supply": 6.131194024311581,
+      "population_scale": 1.0,
+      "price": 0.6744838540900874,
+      "renewal_residual": 0.0064451218594907544,
+      "renewal_status": "measured_fixed_price_diagnostic",
+      "standard_plot_count": 17,
+      "target_fit_rows": 14,
+      "total_target_loss": 284.2504886586119
+    },
+    "engine": "orig",
+    "extra": {
+      "birth_flows_constant_post_cell": {
+        "explicit_birth_flow": 0.11589290502283967,
+        "first": 0.050003986400629225,
+        "first_birth_flow": 0.050003986400629225,
+        "second": 0.04167928615947204,
+        "third_bin": 0.024209632462738388
+      },
+      "birth_flows_g_arrays": {
+        "first": 0.05000398640062942,
+        "second": 0.04167928615947214,
+        "third_bin": 0.024209632462738218
+      },
+      "birth_flows_uniform_birth_time": {
+        "explicit_birth_flow": 0.11589290502283967,
+        "first": 0.050003986400629225,
+        "first_birth_flow": 0.050003986400629225,
+        "second": 0.04167928615947204,
+        "third_bin": 0.024209632462738388
+      },
+      "childless_owners_22_29": {
+        "age_cells": [
+          1,
+          2
+        ],
+        "age_hi": [
+          26.0,
+          30.0
+        ],
+        "age_lo": [
+          22.0,
+          26.0
+        ],
+        "by_rung_rooms": {
+          "10.0": {
+            "mass": 0.0003105194657000003,
+            "rooms": 10.0,
+            "share_of_22_29": 0.002515001466877517
+          },
+          "6.0": {
+            "mass": 0.0015802625225014176,
+            "rooms": 6.0,
+            "share_of_22_29": 0.012799077034295652
+          },
+          "8.0": {
+            "mass": 0.0007780005618135237,
+            "rooms": 8.0,
+            "share_of_22_29": 0.006301287907286717
+          }
+        },
+        "definition": "parity-0 owners; shares of the age 22-29 cross-section mass",
+        "total_mass_22_29": 0.12346691236149601
+      },
+      "entrant_cell_j0": {
+        "entrant_mass": 0.06173345618074801,
+        "entrant_nonzero_parity_mass": 0.0,
+        "first_birth_probability": 0.2574149900633103,
+        "ownership_rate": 0.08010182284146232
+      },
+      "ownership_by_children_home": {
+        "0": {
+          "ownership_rate": 0.44897048693520764,
+          "total_mass": 0.6208244272398581
+        },
+        "1": {
+          "ownership_rate": 0.6843955582197293,
+          "total_mass": 0.27107501606909246
+        },
+        "2": {
+          "ownership_rate": 0.7895728398183749,
+          "total_mass": 0.09453730225571104
+        },
+        "3": {
+          "ownership_rate": 0.8427415680652638,
+          "total_mass": 0.013563254435338354
+        }
+      },
+      "ownership_rate_all": 0.5503287868628943,
+      "rental_cap": 6.0,
+      "renter_cap_by_children_home": {
+        "0": {
+          "cap_share_of_all": 0.07590253590447563,
+          "cap_share_of_renters": 0.13774677055374104,
+          "renter_mass": 0.34209258184070773,
+          "total_mass": 0.6208244272398581
+        },
+        "1": {
+          "cap_share_of_all": 0.22216133486276077,
+          "cap_share_of_renters": 0.7039233466094039,
+          "renter_mass": 0.08555247912706378,
+          "total_mass": 0.27107501606909246
+        },
+        "2": {
+          "cap_share_of_all": 0.1425027761316452,
+          "cap_share_of_renters": 0.6772071438337481,
+          "renter_mass": 0.019893216044901248,
+          "total_mass": 0.09453730225571104
+        },
+        "3": {
+          "cap_share_of_all": 0.10468848001613201,
+          "cap_share_of_renters": 0.6657098047345321,
+          "renter_mass": 0.0021329361244331667,
+          "total_mass": 0.013563254435338354
+        }
+      }
+    },
+    "hbar_child_rooms": 0.0,
+    "hbar_first_child_jump": 2.49169824815624,
+    "hbar_reporting_accommodation": false,
+    "lifecycle_solve_seconds": 5.0695197909954,
+    "n_house": 3,
+    "native_array_count": 87,
+    "phi": 0.8,
+    "price": 0.6744838540900874,
+    "purchase_saving_fraction": 0.25,
+    "report": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/owner_floor_split_cost_probe_v1/A3_need0_phi08/phase_b_ge/A3_need0_phi08_selected",
+    "selling_cost_psi": 0.06,
+    "status": "passed",
+    "target_fit": [
+      {
+        "gap": 0.013534755904931917,
+        "loss_contribution": "",
+        "model": 2.113534755904932,
+        "moment": "initial_normalization",
+        "role": "normalization",
+        "target": 2.1,
+        "weight": ""
+      },
+      {
+        "gap": 0.003007574061536067,
+        "loss_contribution": 0.32140751972360354,
+        "model": 0.2012863250683787,
+        "moment": "cps_childlessness",
+        "role": "scored",
+        "target": 0.19827875100684264,
+        "weight": 35532.3042455214
+      },
+      {
+        "gap": -0.006264223902392951,
+        "loss_contribution": 1.057642195185905,
+        "model": 0.20739110131775407,
+        "moment": "cps_exactly_one",
+        "role": "scored",
+        "target": 0.21365532522014702,
+        "weight": 26952.820824310795
+      },
+      {
+        "gap": 0.06635818055445952,
+        "loss_contribution": 0.615720050260309,
+        "model": 26.042622041546956,
+        "moment": "nchs_mean_age",
+        "role": "scored",
+        "target": 25.976263860992496,
+        "weight": 139.82806784479274
+      },
+      {
+        "gap": -0.016110336974914152,
+        "loss_contribution": 0.0,
+        "model": 0.23316767606615255,
+        "moment": "nchs_share30",
+        "role": "validation",
+        "target": 0.2492780130410667,
+        "weight": 0.0
+      },
+      {
+        "gap": -0.2631586403361421,
+        "loss_contribution": 0.5259793289913773,
+        "model": 6.663425150736848,
+        "moment": "wealth_earnings",
+        "role": "scored",
+        "target": 6.92658379107299,
+        "weight": 7.595098472533724
+      },
+      {
+        "gap": -0.0004014716683343649,
+        "loss_contribution": 0.8325387421238546,
+        "model": 0.006889551804281793,
+        "moment": "bequest_wealth",
+        "role": "scored",
+        "target": 0.007291023472616158,
+        "weight": 5165289.256198346
+      },
+      {
+        "gap": -0.6965321208973481,
+        "loss_contribution": 0.0,
+        "model": 2.819402965621372,
+        "moment": "old_dispersion",
+        "role": "validation",
+        "target": 3.51593508651872,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.5864886373510938,
+        "loss_contribution": 44.03514284558812,
+        "model": 6.315922877453735,
+        "moment": "mean_rooms",
+        "role": "scored",
+        "target": 5.729434240102641,
+        "weight": 128.02070205233477
+      },
+      {
+        "gap": -0.06486832384705332,
+        "loss_contribution": 9.84380161408257,
+        "model": 0.6113920930067495,
+        "moment": "ownership_30_55",
+        "role": "scored",
+        "target": 0.6762604168538028,
+        "weight": 2339.3623724673616
+      },
+      {
+        "gap": -0.6193542050221634,
+        "loss_contribution": 52.76998872849791,
+        "model": 0.8456457949778367,
+        "moment": "first_birth_rooms",
+        "role": "scored",
+        "target": 1.465,
+        "weight": 137.5652749002964
+      },
+      {
+        "gap": -0.06519670416511669,
+        "loss_contribution": 0.0,
+        "model": 0.31990294552766496,
+        "moment": "family_rooms",
+        "role": "validation",
+        "target": 0.38509964969278165,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.0783690628927794,
+        "loss_contribution": 166.16901892209668,
+        "model": 0.20597742645970102,
+        "moment": "recent_parent_ownership",
+        "role": "scored",
+        "target": 0.12760836356692162,
+        "weight": 27055.822957508266
+      },
+      {
+        "gap": -0.2842401926551137,
+        "loss_contribution": 8.079248712061615,
+        "model": 0.5252874457738884,
+        "moment": "early_fertility",
+        "role": "scored",
+        "target": 0.8095276384290021,
+        "weight": 100.0
+      }
+    ],
+    "tenure_choice_kappa": 0.015482897400866402,
+    "total_target_loss": 284.2504886586119
+  },
+  "A3_need0_phi10": {
+    "H0": 7.288573389887633,
+    "H_own": [
+      6.0,
+      8.0,
+      10.0
+    ],
+    "adult_entry_relative_gap": 0.006836319936596411,
+    "buyer_cost_psi_buy": 0.0,
+    "closure": {
+      "H0_bounds": [
+        0.2,
+        80.0
+      ],
+      "H0_fixed": 7.288573389887633,
+      "absolute_housing_demand": 6.411426317853467,
+      "absolute_housing_residual": 0.2802322935418857,
+      "actual_entry_per_normalized_household": 0.061733456180747985,
+      "actual_paygo_residual": -1.7501225701459376e-15,
+      "adjusted_births_per_normalized_household": 0.13053262073709201,
+      "birth_to_entry_conversion": 0.47619047619047616,
+      "completed_fertility_tfr": 2.1144550914970397,
+      "d_bar": 0.0,
+      "fixed_price": 0.6744838540900874,
+      "gates_status": "passed",
+      "hbar_reporting_accommodation": false,
+      "housing_market_status": "measured_fixed_H0_diagnostic",
+      "housing_supply_coefficient_role": "fixed at selected-point derived value for diagnostic",
+      "housing_supply_elasticity": 0.63,
+      "no_renewal_or_housing_root": true,
+      "normalized_housing_demand": 6.411426317853467,
+      "normalized_population": 1.0,
+      "observe_seconds": 2.738311290740967,
+      "occupied_renter_floor": {
+        "maximum_shortfall": 0.0,
+        "occupied_renter_mass": 0.39865633011738955,
+        "violation_mass": 0.0
+      },
+      "outside_entry": 0.0,
+      "parameter_rows": 31,
+      "physical_housing_supply": 6.131194024311581,
+      "population_scale": 1.0,
+      "price": 0.6744838540900874,
+      "renewal_residual": 0.0068833769033525005,
+      "renewal_status": "measured_fixed_price_diagnostic",
+      "standard_plot_count": 17,
+      "target_fit_rows": 14,
+      "total_target_loss": 726.4008192853648
+    },
+    "engine": "orig",
+    "extra": {
+      "birth_flows_constant_post_cell": {
+        "explicit_birth_flow": 0.1159323702859772,
+        "first": 0.050009331793557335,
+        "first_birth_flow": 0.050009331793557335,
+        "second": 0.04168460224048945,
+        "third_bin": 0.024238436251930416
+      },
+      "birth_flows_g_arrays": {
+        "first": 0.05000933179355749,
+        "second": 0.0416846022404892,
+        "third_bin": 0.024238436251930395
+      },
+      "birth_flows_uniform_birth_time": {
+        "explicit_birth_flow": 0.1159323702859772,
+        "first": 0.050009331793557335,
+        "first_birth_flow": 0.050009331793557335,
+        "second": 0.04168460224048945,
+        "third_bin": 0.024238436251930416
+      },
+      "childless_owners_22_29": {
+        "age_cells": [
+          1,
+          2
+        ],
+        "age_hi": [
+          26.0,
+          30.0
+        ],
+        "age_lo": [
+          22.0,
+          26.0
+        ],
+        "by_rung_rooms": {
+          "10.0": {
+            "mass": 0.0004227896120723182,
+            "rooms": 10.0,
+            "share_of_22_29": 0.0034243150977521977
+          },
+          "6.0": {
+            "mass": 0.0037190579721682973,
+            "rooms": 6.0,
+            "share_of_22_29": 0.03012189987613322
+          },
+          "8.0": {
+            "mass": 0.0011650854417015076,
+            "rooms": 8.0,
+            "share_of_22_29": 0.009436418384629884
+          }
+        },
+        "definition": "parity-0 owners; shares of the age 22-29 cross-section mass",
+        "total_mass_22_29": 0.123466912361496
+      },
+      "entrant_cell_j0": {
+        "entrant_mass": 0.061733456180747985,
+        "entrant_nonzero_parity_mass": 0.0,
+        "first_birth_probability": 0.2616545957448359,
+        "ownership_rate": 0.1934663815360486
+      },
+      "ownership_by_children_home": {
+        "0": {
+          "ownership_rate": 0.48764245005974033,
+          "total_mass": 0.6206352517702407
+        },
+        "1": {
+          "ownership_rate": 0.7642305380242121,
+          "total_mass": 0.27124289072280333
+        },
+        "2": {
+          "ownership_rate": 0.840572420209459,
+          "total_mass": 0.09456256812340862
+        },
+        "3": {
+          "ownership_rate": 0.8788652353227384,
+          "total_mass": 0.013559289383547205
+        }
+      },
+      "ownership_rate_all": 0.6013436698826103,
+      "rental_cap": 6.0,
+      "renter_cap_by_children_home": {
+        "0": {
+          "cap_share_of_all": 0.07077225991257144,
+          "cap_share_of_renters": 0.13813060805061517,
+          "renter_mass": 0.3179871570035565,
+          "total_mass": 0.6206352517702407
+        },
+        "1": {
+          "cap_share_of_all": 0.15349636505837264,
+          "cap_share_of_renters": 0.651044303074907,
+          "renter_mass": 0.06395079041047277,
+          "total_mass": 0.27124289072280333
+        },
+        "2": {
+          "cap_share_of_all": 0.09634225427747078,
+          "cap_share_of_renters": 0.6043010525785242,
+          "renter_mass": 0.015075881374693229,
+          "total_mass": 0.09456256812340862
+        },
+        "3": {
+          "cap_share_of_all": 0.07216868969723006,
+          "cap_share_of_renters": 0.5957719065167517,
+          "renter_mass": 0.0016425013286668786,
+          "total_mass": 0.013559289383547205
+        }
+      }
+    },
+    "hbar_child_rooms": 0.0,
+    "hbar_first_child_jump": 2.49169824815624,
+    "hbar_reporting_accommodation": false,
+    "lifecycle_solve_seconds": 5.210667083010776,
+    "n_house": 3,
+    "native_array_count": 87,
+    "phi": 1.0,
+    "price": 0.6744838540900874,
+    "purchase_saving_fraction": 0.25,
+    "report": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/owner_floor_split_cost_probe_v1/A3_need0_phi10/phase_b_ge/A3_need0_phi10_selected",
+    "selling_cost_psi": 0.06,
+    "status": "passed",
+    "target_fit": [
+      {
+        "gap": 0.014455091497039607,
+        "loss_contribution": "",
+        "model": 2.1144550914970397,
+        "moment": "initial_normalization",
+        "role": "normalization",
+        "target": 2.1,
+        "weight": ""
+      },
+      {
+        "gap": 0.002914477251571068,
+        "loss_contribution": 0.3018177045726519,
+        "model": 0.2011932282584137,
+        "moment": "cps_childlessness",
+        "role": "scored",
+        "target": 0.19827875100684264,
+        "weight": 35532.3042455214
+      },
+      {
+        "gap": -0.006477039621634373,
+        "loss_contribution": 1.1307258782536656,
+        "model": 0.20717828559851265,
+        "moment": "cps_exactly_one",
+        "role": "scored",
+        "target": 0.21365532522014702,
+        "weight": 26952.820824310795
+      },
+      {
+        "gap": 0.025225829351061435,
+        "loss_contribution": 0.0889785375711357,
+        "model": 26.001489690343558,
+        "moment": "nchs_mean_age",
+        "role": "scored",
+        "target": 25.976263860992496,
+        "weight": 139.82806784479274
+      },
+      {
+        "gap": -0.01774413528892127,
+        "loss_contribution": 0.0,
+        "model": 0.23153387775214543,
+        "moment": "nchs_share30",
+        "role": "validation",
+        "target": 0.2492780130410667,
+        "weight": 0.0
+      },
+      {
+        "gap": -0.3232928971138884,
+        "loss_contribution": 0.79382676035955,
+        "model": 6.603290893959102,
+        "moment": "wealth_earnings",
+        "role": "scored",
+        "target": 6.92658379107299,
+        "weight": 7.595098472533724
+      },
+      {
+        "gap": -0.0005635731573921656,
+        "loss_contribution": 1.640571816802555,
+        "model": 0.006727450315223992,
+        "moment": "bequest_wealth",
+        "role": "scored",
+        "target": 0.007291023472616158,
+        "weight": 5165289.256198346
+      },
+      {
+        "gap": -0.5791839365728508,
+        "loss_contribution": 0.0,
+        "model": 2.936751149945869,
+        "moment": "old_dispersion",
+        "role": "validation",
+        "target": 3.51593508651872,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.6819920777508308,
+        "loss_contribution": 59.544117644392756,
+        "model": 6.411426317853472,
+        "moment": "mean_rooms",
+        "role": "scored",
+        "target": 5.729434240102641,
+        "weight": 128.02070205233477
+      },
+      {
+        "gap": -0.022803578892712117,
+        "loss_contribution": 1.2164759437758228,
+        "model": 0.6534568379610907,
+        "moment": "ownership_30_55",
+        "role": "scored",
+        "target": 0.6762604168538028,
+        "weight": 2339.3623724673616
+      },
+      {
+        "gap": -0.5173550086440983,
+        "loss_contribution": 36.820199415349144,
+        "model": 0.9476449913559017,
+        "moment": "first_birth_rooms",
+        "role": "scored",
+        "target": 1.465,
+        "weight": 137.5652749002964
+      },
+      {
+        "gap": -0.07328306907122872,
+        "loss_contribution": 0.0,
+        "model": 0.31181658062155293,
+        "moment": "family_rooms",
+        "role": "validation",
+        "target": 0.38509964969278165,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.15101563347826297,
+        "loss_contribution": 617.0275648060099,
+        "model": 0.2786239970451846,
+        "moment": "recent_parent_ownership",
+        "role": "scored",
+        "target": 0.12760836356692162,
+        "weight": 27055.822957508266
+      },
+      {
+        "gap": -0.27993822136817514,
+        "loss_contribution": 7.836540778277742,
+        "model": 0.529589417060827,
+        "moment": "early_fertility",
+        "role": "scored",
+        "target": 0.8095276384290021,
+        "weight": 100.0
+      }
+    ],
+    "tenure_choice_kappa": 0.015482897400866402,
+    "total_target_loss": 726.4008192853648
+  },
+  "A3_need1_phi08": {
+    "H0": 7.288573389887633,
+    "H_own": [
+      6.0,
+      8.0,
+      10.0
+    ],
+    "adult_entry_relative_gap": 0.07503267865129153,
+    "buyer_cost_psi_buy": 0.0,
+    "closure": {
+      "H0_bounds": [
+        0.2,
+        80.0
+      ],
+      "H0_fixed": 7.288573389887633,
+      "absolute_housing_demand": 6.360302059630766,
+      "absolute_housing_residual": 0.229108035319185,
+      "actual_entry_per_normalized_household": 0.061733456180748256,
+      "actual_paygo_residual": 1.0034036068836686e-14,
+      "adjusted_births_per_normalized_household": 0.11991300216231966,
+      "birth_to_entry_conversion": 0.47619047619047616,
+      "completed_fertility_tfr": 1.9424313748322772,
+      "d_bar": 0.0,
+      "fixed_price": 0.6744838540900874,
+      "gates_status": "passed",
+      "hbar_reporting_accommodation": true,
+      "housing_market_status": "measured_fixed_H0_diagnostic",
+      "housing_supply_coefficient_role": "fixed at selected-point derived value for diagnostic",
+      "housing_supply_elasticity": 0.63,
+      "no_renewal_or_housing_root": true,
+      "normalized_housing_demand": 6.360302059630766,
+      "normalized_population": 1.0,
+      "observe_seconds": 2.822751998901367,
+      "occupied_renter_floor": {
+        "maximum_shortfall": 0.0,
+        "occupied_renter_mass": 0.44702147217692273,
+        "violation_mass": 0.0
+      },
+      "outside_entry": 0.0,
+      "parameter_rows": 31,
+      "physical_housing_supply": 6.131194024311581,
+      "population_scale": 1.0,
+      "price": 0.6744838540900874,
+      "renewal_residual": -0.07503267865129137,
+      "renewal_status": "measured_fixed_price_diagnostic",
+      "standard_plot_count": 17,
+      "target_fit_rows": 14,
+      "total_target_loss": 572.9614328503925
+    },
+    "engine": "orig",
+    "extra": {
+      "birth_flows_constant_post_cell": {
+        "explicit_birth_flow": 0.10735538770984014,
+        "first": 0.0480866515477247,
+        "first_birth_flow": 0.0480866515477247,
+        "second": 0.038421358344736686,
+        "third_bin": 0.02084737781737877
+      },
+      "birth_flows_g_arrays": {
+        "first": 0.048086651547724624,
+        "second": 0.038421358344736645,
+        "third_bin": 0.020847377817378804
+      },
+      "birth_flows_uniform_birth_time": {
+        "explicit_birth_flow": 0.10735538770984014,
+        "first": 0.0480866515477247,
+        "first_birth_flow": 0.0480866515477247,
+        "second": 0.038421358344736686,
+        "third_bin": 0.02084737781737877
+      },
+      "childless_owners_22_29": {
+        "age_cells": [
+          1,
+          2
+        ],
+        "age_hi": [
+          26.0,
+          30.0
+        ],
+        "age_lo": [
+          22.0,
+          26.0
+        ],
+        "by_rung_rooms": {
+          "10.0": {
+            "mass": 0.00037750957881245824,
+            "rooms": 10.0,
+            "share_of_22_29": 0.0030575768972593634
+          },
+          "6.0": {
+            "mass": 0.0019173672222715992,
+            "rooms": 6.0,
+            "share_of_22_29": 0.015529401242802403
+          },
+          "8.0": {
+            "mass": 0.0009425361992415197,
+            "rooms": 8.0,
+            "share_of_22_29": 0.007633917307998156
+          }
+        },
+        "definition": "parity-0 owners; shares of the age 22-29 cross-section mass",
+        "total_mass_22_29": 0.12346691236149651
+      },
+      "entrant_cell_j0": {
+        "entrant_mass": 0.06173345618074826,
+        "entrant_nonzero_parity_mass": 0.0,
+        "first_birth_probability": 0.22613030917384236,
+        "ownership_rate": 0.0790843887143468
+      },
+      "ownership_by_children_home": {
+        "0": {
+          "ownership_rate": 0.44157562310189913,
+          "total_mass": 0.6421585346869179
+        },
+        "1": {
+          "ownership_rate": 0.7026726746279407,
+          "total_mass": 0.2630100402364118
+        },
+        "2": {
+          "ownership_rate": 0.8826590431217303,
+          "total_mass": 0.08394316940385954
+        },
+        "3": {
+          "ownership_rate": 0.9656098318131501,
+          "total_mass": 0.010888255672810267
+        }
+      },
+      "ownership_rate_all": 0.5529785278230768,
+      "rental_cap": 6.0,
+      "renter_cap_by_children_home": {
+        "0": {
+          "cap_share_of_all": 0.07551171122872768,
+          "cap_share_of_renters": 0.13522280608195353,
+          "renter_mass": 0.35859697960233994,
+          "total_mass": 0.6421585346869179
+        },
+        "1": {
+          "cap_share_of_all": 0.21043642731294357,
+          "cap_share_of_renters": 0.7077601328758297,
+          "renter_mass": 0.07820007180948994,
+          "total_mass": 0.2630100402364118
+        },
+        "2": {
+          "cap_share_of_all": 0.09458749571061134,
+          "cap_share_of_renters": 0.8060910548798152,
+          "renter_mass": 0.00984997182124357,
+          "total_mass": 0.08394316940385954
+        },
+        "3": {
+          "cap_share_of_all": 0.03184272314996007,
+          "cap_share_of_renters": 0.9259251939958839,
+          "renter_mass": 0.0003744489438493676,
+          "total_mass": 0.010888255672810267
+        }
+      }
+    },
+    "hbar_child_rooms": 1.0,
+    "hbar_first_child_jump": 1.49169824815624,
+    "hbar_reporting_accommodation": true,
+    "lifecycle_solve_seconds": 5.150827375007793,
+    "n_house": 3,
+    "native_array_count": 87,
+    "phi": 0.8,
+    "price": 0.6744838540900874,
+    "purchase_saving_fraction": 0.25,
+    "report": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/owner_floor_split_cost_probe_v1/A3_need1_phi08/phase_b_ge/A3_need1_phi08_selected",
+    "selling_cost_psi": 0.06,
+    "status": "passed",
+    "target_fit": [
+      {
+        "gap": -0.15756862516772285,
+        "loss_contribution": "",
+        "model": 1.9424313748322772,
+        "moment": "initial_normalization",
+        "role": "normalization",
+        "target": 2.1,
+        "weight": ""
+      },
+      {
+        "gap": 0.03646614224670611,
+        "loss_contribution": 47.250130852111624,
+        "model": 0.23474489325354875,
+        "moment": "cps_childlessness",
+        "role": "scored",
+        "target": 0.19827875100684264,
+        "weight": 35532.3042455214
+      },
+      {
+        "gap": 0.032895191529607654,
+        "loss_contribution": 29.165475610496067,
+        "model": 0.24655051674975467,
+        "moment": "cps_exactly_one",
+        "role": "scored",
+        "target": 0.21365532522014702,
+        "weight": 26952.820824310795
+      },
+      {
+        "gap": 0.5806209117759664,
+        "loss_contribution": 47.138928168068865,
+        "model": 26.556884772768463,
+        "moment": "nchs_mean_age",
+        "role": "scored",
+        "target": 25.976263860992496,
+        "weight": 139.82806784479274
+      },
+      {
+        "gap": 0.014798525565247383,
+        "loss_contribution": 0.0,
+        "model": 0.2640765386063141,
+        "moment": "nchs_share30",
+        "role": "validation",
+        "target": 0.2492780130410667,
+        "weight": 0.0
+      },
+      {
+        "gap": -0.23000370705181794,
+        "loss_contribution": 0.40179366079626366,
+        "model": 6.696580084021172,
+        "moment": "wealth_earnings",
+        "role": "scored",
+        "target": 6.92658379107299,
+        "weight": 7.595098472533724
+      },
+      {
+        "gap": -0.00042929022724082916,
+        "loss_contribution": 0.951911669444642,
+        "model": 0.006861733245375329,
+        "moment": "bequest_wealth",
+        "role": "scored",
+        "target": 0.007291023472616158,
+        "weight": 5165289.256198346
+      },
+      {
+        "gap": -0.6965321208973481,
+        "loss_contribution": 0.0,
+        "model": 2.819402965621372,
+        "moment": "old_dispersion",
+        "role": "validation",
+        "target": 3.51593508651872,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.6308678195281292,
+        "loss_contribution": 50.95149762854623,
+        "model": 6.36030205963077,
+        "moment": "mean_rooms",
+        "role": "scored",
+        "target": 5.729434240102641,
+        "weight": 128.02070205233477
+      },
+      {
+        "gap": -0.05710413869096831,
+        "loss_contribution": 7.628386185629448,
+        "model": 0.6191562781628345,
+        "moment": "ownership_30_55",
+        "role": "scored",
+        "target": 0.6762604168538028,
+        "weight": 2339.3623724673616
+      },
+      {
+        "gap": -0.4254535914544173,
+        "loss_contribution": 24.90079475041351,
+        "model": 1.0395464085455828,
+        "moment": "first_birth_rooms",
+        "role": "scored",
+        "target": 1.465,
+        "weight": 137.5652749002964
+      },
+      {
+        "gap": 0.4116330174919973,
+        "loss_contribution": 0.0,
+        "model": 0.796732667184779,
+        "moment": "family_rooms",
+        "role": "validation",
+        "target": 0.38509964969278165,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.11416485424109335,
+        "loss_contribution": 352.63515136240136,
+        "model": 0.24177321780801497,
+        "moment": "recent_parent_ownership",
+        "role": "scored",
+        "target": 0.12760836356692162,
+        "weight": 27055.822957508266
+      },
+      {
+        "gap": -0.3455048908841161,
+        "loss_contribution": 11.9373629624845,
+        "model": 0.464022747544886,
+        "moment": "early_fertility",
+        "role": "scored",
+        "target": 0.8095276384290021,
+        "weight": 100.0
+      }
+    ],
+    "tenure_choice_kappa": 0.015482897400866402,
+    "total_target_loss": 572.9614328503925
+  },
+  "A3_need1_phi10": {
+    "H0": 7.288573389887633,
+    "H_own": [
+      6.0,
+      8.0,
+      10.0
+    ],
+    "adult_entry_relative_gap": 0.07474682572280837,
+    "buyer_cost_psi_buy": 0.0,
+    "closure": {
+      "H0_bounds": [
+        0.2,
+        80.0
+      ],
+      "H0_fixed": 7.288573389887633,
+      "absolute_housing_demand": 6.4542494510158495,
+      "absolute_housing_residual": 0.32305542670426846,
+      "actual_entry_per_normalized_household": 0.061733456180748374,
+      "actual_paygo_residual": 1.551775345529392e-14,
+      "adjusted_births_per_normalized_household": 0.11995006020971258,
+      "birth_to_entry_conversion": 0.47619047619047616,
+      "completed_fertility_tfr": 1.9430316659820854,
+      "d_bar": 0.0,
+      "fixed_price": 0.6744838540900874,
+      "gates_status": "passed",
+      "hbar_reporting_accommodation": true,
+      "housing_market_status": "measured_fixed_H0_diagnostic",
+      "housing_supply_coefficient_role": "fixed at selected-point derived value for diagnostic",
+      "housing_supply_elasticity": 0.63,
+      "no_renewal_or_housing_root": true,
+      "normalized_housing_demand": 6.4542494510158495,
+      "normalized_population": 1.0,
+      "observe_seconds": 2.857382297515869,
+      "occupied_renter_floor": {
+        "maximum_shortfall": 0.0,
+        "occupied_renter_mass": 0.4002757942921656,
+        "violation_mass": 0.0
+      },
+      "outside_entry": 0.0,
+      "parameter_rows": 31,
+      "physical_housing_supply": 6.131194024311581,
+      "population_scale": 1.0,
+      "price": 0.6744838540900874,
+      "renewal_residual": -0.07474682572280889,
+      "renewal_status": "measured_fixed_price_diagnostic",
+      "standard_plot_count": 17,
+      "target_fit_rows": 14,
+      "total_target_loss": 1070.2680168151912
+    },
+    "engine": "orig",
+    "extra": {
+      "birth_flows_constant_post_cell": {
+        "explicit_birth_flow": 0.10738421999701689,
+        "first": 0.04810433783552542,
+        "first_birth_flow": 0.04810433783552542,
+        "second": 0.03841884844380526,
+        "third_bin": 0.020861033717686203
+      },
+      "birth_flows_g_arrays": {
+        "first": 0.0481043378355257,
+        "second": 0.03841884844380533,
+        "third_bin": 0.020861033717686134
+      },
+      "birth_flows_uniform_birth_time": {
+        "explicit_birth_flow": 0.10738421999701689,
+        "first": 0.04810433783552542,
+        "first_birth_flow": 0.04810433783552542,
+        "second": 0.03841884844380526,
+        "third_bin": 0.020861033717686203
+      },
+      "childless_owners_22_29": {
+        "age_cells": [
+          1,
+          2
+        ],
+        "age_hi": [
+          26.0,
+          30.0
+        ],
+        "age_lo": [
+          22.0,
+          26.0
+        ],
+        "by_rung_rooms": {
+          "10.0": {
+            "mass": 0.0005204791122154746,
+            "rooms": 10.0,
+            "share_of_22_29": 0.004215535176676099
+          },
+          "6.0": {
+            "mass": 0.004470138133314009,
+            "rooms": 6.0,
+            "share_of_22_29": 0.03620515041492223
+          },
+          "8.0": {
+            "mass": 0.001431363445496513,
+            "rooms": 8.0,
+            "share_of_22_29": 0.011593093389309419
+          }
+        },
+        "definition": "parity-0 owners; shares of the age 22-29 cross-section mass",
+        "total_mass_22_29": 0.12346691236149672
+      },
+      "entrant_cell_j0": {
+        "entrant_mass": 0.06173345618074837,
+        "entrant_nonzero_parity_mass": 0.0,
+        "first_birth_probability": 0.23056244733842346,
+        "ownership_rate": 0.18852075600193385
+      },
+      "ownership_by_children_home": {
+        "0": {
+          "ownership_rate": 0.4805666952587657,
+          "total_mass": 0.6419146806738499
+        },
+        "1": {
+          "ownership_rate": 0.7747072615115616,
+          "total_mass": 0.263311588645966
+        },
+        "2": {
+          "ownership_rate": 0.9134837025232577,
+          "total_mass": 0.08390796614832098
+        },
+        "3": {
+          "ownership_rate": 0.9758567466360397,
+          "total_mass": 0.010865764531862098
+        }
+      },
+      "ownership_rate_all": 0.5997242057078345,
+      "rental_cap": 6.0,
+      "renter_cap_by_children_home": {
+        "0": {
+          "cap_share_of_all": 0.07010264022996718,
+          "cap_share_of_renters": 0.1349598487237743,
+          "renter_mass": 0.33343186394433216,
+          "total_mass": 0.6419146806738499
+        },
+        "1": {
+          "cap_share_of_all": 0.1472066153206024,
+          "cap_share_of_renters": 0.6534015091132485,
+          "renter_mass": 0.059322188881791006,
+          "total_mass": 0.263311588645966
+        },
+        "2": {
+          "cap_share_of_all": 0.0649567520309295,
+          "cap_share_of_renters": 0.7508036511663165,
+          "renter_mass": 0.007259406559956585,
+          "total_mass": 0.08390796614832098
+        },
+        "3": {
+          "cap_share_of_all": 0.02161017925079168,
+          "cap_share_of_renters": 0.8950814923331801,
+          "renter_mass": 0.0002623349060858804,
+          "total_mass": 0.010865764531862098
+        }
+      }
+    },
+    "hbar_child_rooms": 1.0,
+    "hbar_first_child_jump": 1.49169824815624,
+    "hbar_reporting_accommodation": true,
+    "lifecycle_solve_seconds": 5.262845707999077,
+    "n_house": 3,
+    "native_array_count": 87,
+    "phi": 1.0,
+    "price": 0.6744838540900874,
+    "purchase_saving_fraction": 0.25,
+    "report": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/owner_floor_split_cost_probe_v1/A3_need1_phi10/phase_b_ge/A3_need1_phi10_selected",
+    "selling_cost_psi": 0.06,
+    "status": "passed",
+    "target_fit": [
+      {
+        "gap": -0.15696833401791466,
+        "loss_contribution": "",
+        "model": 1.9430316659820854,
+        "moment": "initial_normalization",
+        "role": "normalization",
+        "target": 2.1,
+        "weight": ""
+      },
+      {
+        "gap": 0.03614384216758146,
+        "loss_contribution": 46.418596629447116,
+        "model": 0.2344225931744241,
+        "moment": "cps_childlessness",
+        "role": "scored",
+        "target": 0.19827875100684264,
+        "weight": 35532.3042455214
+      },
+      {
+        "gap": 0.0330452922618564,
+        "loss_contribution": 29.432246946818044,
+        "model": 0.24670061748200342,
+        "moment": "cps_exactly_one",
+        "role": "scored",
+        "target": 0.21365532522014702,
+        "weight": 26952.820824310795
+      },
+      {
+        "gap": 0.5301557978381233,
+        "loss_contribution": 39.300799656964195,
+        "model": 26.50641965883062,
+        "moment": "nchs_mean_age",
+        "role": "scored",
+        "target": 25.976263860992496,
+        "weight": 139.82806784479274
+      },
+      {
+        "gap": 0.012378592700665908,
+        "loss_contribution": 0.0,
+        "model": 0.2616566057417326,
+        "moment": "nchs_share30",
+        "role": "validation",
+        "target": 0.2492780130410667,
+        "weight": 0.0
+      },
+      {
+        "gap": -0.29388721672116613,
+        "loss_contribution": 0.6559863473181203,
+        "model": 6.632696574351824,
+        "moment": "wealth_earnings",
+        "role": "scored",
+        "target": 6.92658379107299,
+        "weight": 7.595098472533724
+      },
+      {
+        "gap": -0.0005854567419583522,
+        "loss_contribution": 1.770452462316573,
+        "model": 0.006705566730657806,
+        "moment": "bequest_wealth",
+        "role": "scored",
+        "target": 0.007291023472616158,
+        "weight": 5165289.256198346
+      },
+      {
+        "gap": -0.5791839365728508,
+        "loss_contribution": 0.0,
+        "model": 2.936751149945869,
+        "moment": "old_dispersion",
+        "role": "validation",
+        "target": 3.51593508651872,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.7248152109132153,
+        "loss_contribution": 67.25658348628063,
+        "model": 6.454249451015857,
+        "moment": "mean_rooms",
+        "role": "scored",
+        "target": 5.729434240102641,
+        "weight": 128.02070205233477
+      },
+      {
+        "gap": -0.021124885393970505,
+        "loss_contribution": 1.0439656838437097,
+        "model": 0.6551355314598323,
+        "moment": "ownership_30_55",
+        "role": "scored",
+        "target": 0.6762604168538028,
+        "weight": 2339.3623724673616
+      },
+      {
+        "gap": -0.3420911358208223,
+        "loss_contribution": 16.09876134900274,
+        "model": 1.1229088641791778,
+        "moment": "first_birth_rooms",
+        "role": "scored",
+        "target": 1.465,
+        "weight": 137.5652749002964
+      },
+      {
+        "gap": 0.3977449122734953,
+        "loss_contribution": 0.0,
+        "model": 0.7828445619662769,
+        "moment": "family_rooms",
+        "role": "validation",
+        "target": 0.38509964969278165,
+        "weight": 0.0
+      },
+      {
+        "gap": 0.17794028936181466,
+        "loss_contribution": 856.6616657673189,
+        "model": 0.3055486529287363,
+        "moment": "recent_parent_ownership",
+        "role": "scored",
+        "target": 0.12760836356692162,
+        "weight": 27055.822957508266
+      },
+      {
+        "gap": -0.34101258753719293,
+        "loss_contribution": 11.628958485881167,
+        "model": 0.46851505089180917,
+        "moment": "early_fertility",
+        "role": "scored",
+        "target": 0.8095276384290021,
+        "weight": 100.0
+      }
+    ],
+    "tenure_choice_kappa": 0.015482897400866402,
+    "total_target_loss": 1070.2680168151912
+  }
+}

@@ -1,0 +1,23 @@
+Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/owner_floor_split_cost_probe_v1/run_floor_split_probe.py", line 804, in <module>
+    main()
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/owner_floor_split_cost_probe_v1/run_floor_split_probe.py", line 692, in main
+    np.testing.assert_array_equal(_s_idx, _o_idx)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/lib/python3.10/site-packages/numpy/testing/_private/utils.py", line 985, in assert_array_equal
+    assert_array_compare(operator.__eq__, x, y, err_msg=err_msg,
+  File "/Users/tommasodesanto/.local/share/uv/python/cpython-3.10-macos-aarch64-none/lib/python3.10/contextlib.py", line 79, in inner
+    return func(*args, **kwds)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/.venv/lib/python3.10/site-packages/numpy/testing/_private/utils.py", line 862, in assert_array_compare
+    raise AssertionError(msg)
+AssertionError: 
+Arrays are not equal
+
+Mismatched elements: 12080 / 69120 (17.5%)
+Max absolute difference: 38
+Max relative difference: 1.
+ x: array([[[[[[  0,   1,   2, ..., 117, 118, 118],
+           [  0,   1,   2, ..., 117, 118, 118],
+           [  0,   1,   2, ..., 117, 118, 118],...
+ y: array([[[[[[  0,   1,   2, ..., 117, 118, 118],
+           [  0,   1,   2, ..., 117, 118, 118],
+           [  0,   1,   2, ..., 117, 118, 118],...
