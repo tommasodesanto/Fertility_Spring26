@@ -25,13 +25,13 @@
 \begin{frame}{Model review and revisions}
 \framesubtitle{JMP progress, September 17--October 2, 2026 \qquad | \qquad Tommaso De Santo}
 \small
-I reviewed the full model and calibration: preferences, borrowing rules, demographic accounting, equilibrium conditions, empirical measurements, targets, and the estimation procedure.
+I reviewed the model and calibration, including preferences, credit, demographic accounting, and the empirical targets.
 \medskip
 \begin{itemize}\setlength\itemsep{7pt}
  \item Returned to a Stone--Geary housing requirement that applies only to parents, retaining nonlinear benefits from children.
- \item Reviewed equivalence scales and housing-share alternatives.
+ \item Tested equivalence scales, changing housing shares, and the utility normalization.
  \item Rebuilt the first-birth housing evidence and national input measures.
- \item Checked demographic accounting, credit, and adult entry; recalibrated the model.
+ \item Revised adult entry and tested how purchase timing affects the calibration.
 \end{itemize}
 \end{frame}
 
@@ -46,8 +46,7 @@ Overlapping generations of households differ in age, earnings, wealth, housing t
  \item Persistent earnings risk and borrowing limits shape saving; a first-birth fixed cost and taste shocks shape fertility.
  \item Households retire, face mortality risk, and value bequests.
 \end{itemize}
-\vfill
-The interaction of housing costs and available wealth affects both birth timing and tenure choice.
+
 \end{frame}
 
 % 3: Household preferences under the parenthood-only Stone--Geary specification.
@@ -63,7 +62,7 @@ s=\eta_{\tau}\left[h-h_P\mathbf 1\{m>0\}\right],\\
 \eta_{R}&=1,\qquad \eta_{O}=\chi.
 \end{aligned}
 \]
-Here $h$ is physical rooms, $m$ is children at home, and $\tau\in\{R,O\}$ denotes renting or owning. Parents choose $h>h_P$, and $\alpha_0$ is the constant consumption exponent. The equivalence scale raises goods needs with family size; the benefit is zero at $m=0$, with $\psi$ setting its level and $\gamma$ its curvature so the marginal benefit diminishes as $m$ grows.
+Here $h$ is rooms, $m$ is children at home, and $\tau\in\{R,O\}$ denotes tenure. Parents require $h>h_P$; $\chi$ raises housing services for owners. The equivalence scale $e(m)$ increases family consumption needs. Child benefits are zero at $m=0$; $\psi$ sets their level and $\gamma$ controls diminishing marginal benefits.
 \end{frame}
 
 % 4: Demographic transitions and market/fiscal closure.
@@ -77,8 +76,7 @@ Children leaving home and new adult households entering the economy are separate
  \item Stationary calibration normalizes population to one: the house price satisfies birth renewal, and housing clearing determines $H_0$.
  \item A balanced payroll tax finances equal retiree pensions.
 \end{itemize}
-\vfill
-A stationary equilibrium has constant prices, allocations, and cohort structure, with demographic reproduction and market clearing.
+
 \end{frame}
 
 % 5: PSID event-study estimates; raw coefficients and pointwise intervals.
@@ -143,9 +141,9 @@ Annual depreciation / property tax & 1.416\% / 1.060\% & National housing inputs
 \end{tabular}
 \end{center}
 \begin{itemize}\setlength\itemsep{3pt}
- \item Ten parameters are estimated jointly, including $\psi$. Other exogenous inputs include earnings and demographics, housing depreciation and taxes, the interest rate, and mortgage financing.
- \item The objective is a weighted sum of squared gaps for the original ten scored moments, using working error scales.
- \item Three further moments are validation checks. Completed fertility is reported separately as a renewal check.
+ \item Earnings, demographics, housing taxes and depreciation, interest, and mortgage financing are fixed.
+ \item Ten parameters match ten moments by weighted least squares.
+ \item Three additional moments assess the fit; completed fertility checks birth renewal.
 \end{itemize}
 \par\smallskip For each parameter vector, I solve household choices and birth renewal, then derive $H_0$ so housing demand clears at normalized population $N_0=1$.
 \vfill
@@ -175,7 +173,7 @@ $\gamma$ & Child-benefit curvature & One-child share among mothers; children at 
 \bottomrule
 \end{tabular*}
 \par\vspace{0.3em}
-\footnotesize These are joint sources of variation, not one-to-one restrictions. $H_0$ is derived from housing clearing; $\theta_1$ is fixed externally. Validation moments appear separately; local identification rank is not yet verified.
+\footnotesize Parameters jointly affect these moments. $H_0$ follows from housing clearing; $\theta_1$ is fixed externally. Local identification has not been established.
 \end{frame}
 
 % 8: Current ROOT fit with ten scored moments and three validation moments.
@@ -188,7 +186,7 @@ $\gamma$ & Child-benefit curvature & One-child share among mothers; children at 
 \toprule
 Moment & Target & Soft* & Hard & Quarter-saving \\
 \midrule
-Completed fertility (renewal check) & 2.100 & 2.100 & 2.100 & 2.100 \\
+Completed fertility & 2.100 & 2.100 & 2.100 & 2.100 \\
 Childlessness, ages 40--44 (\%) & 19.828 & 20.222 & 20.413 & 20.546 \\
 One child among mothers, ages 40--44 (\%) & 21.366 & 21.264 & 20.907 & 20.844 \\
 Mean first-birth age (years) & 25.976 & 26.032 & 26.007 & 26.057 \\
@@ -213,7 +211,7 @@ Family rooms difference & 0.385 & 0.304 & 0.321 & 0.316 \\
 \end{tabular*}
 \par}
 \vspace{0.25em}
-\fontsize{8}{9}\selectfont Soft*: best saved search point. Hard and quarter-saving: final numerical postchecks passed.
+\fontsize{8}{9}\selectfont Soft*: best fit before the search stopped; final numerical check pending.
 \end{frame}
 
 % Three illustration slides: figures to be selected before inserting results.
@@ -232,7 +230,7 @@ Family rooms difference & 0.385 & 0.304 & 0.321 & 0.316 \\
 % 12: Parameter estimates under the two purchase rules.
 \begin{frame}{Parameter estimates}
 \small
-Ten parameters are estimated jointly; $H_0$ is derived from housing-market clearing.
+Estimates under the three purchase rules; $H_0$ follows from housing clearing.
 \medskip
 \fontsize{8.7}{9.4}\selectfont
 \begin{center}
@@ -257,7 +255,7 @@ $H_0$ & Housing supply coefficient (derived) & 6.757 & 7.546 & 7.289 \\
 }
 \end{center}
 \vfill
-\footnotesize $H_0$ is derived at normalized population $N_0=1$. Fixed inputs: $\sigma=2$; $\alpha_0=0.733$; annual interest 2\%; financed share $\phi=0.8$. Full parameter bounds are in the saved tables.
+\footnotesize $H_0$ is derived at normalized population $N_0=1$. Fixed inputs: $\sigma=2$; $\alpha_0=0.733$; annual interest 2\%; financed share $\phi=0.8$. 
 \end{frame}
 
 % 13: The purchase-timing rules.
@@ -281,11 +279,11 @@ This approximates saving before purchase within a four-year period. Under quarte
 \begin{frame}{Calibration comparison}
 \small
 \begin{itemize}\setlength\itemsep{7pt}
- \item The soft rule gives the best saved fit. All three calibrations use the same targets and weights.
+ \item The soft rule fits best. Targets and weights are the same across specifications.
  \item Mean rooms: 5.957 (soft), 6.241 (hard), 6.131 (quarter-saving), against a target of 5.729.
  \item First-birth rooms difference: 1.324, 1.063 and 1.167, respectively, against 1.465.
  \item Children at age 25: 0.528, 0.524 and 0.521, against 0.810. Early fertility remains low in all three.
- \item Each specification is recalibrated. The comparison combines purchase timing, the buyer net-estate restriction and parameter adjustment.
+ \item Each rule is recalibrated. Hard and quarter-saving also require nonnegative net wealth after purchase.
 \end{itemize}
 \end{frame}
 
