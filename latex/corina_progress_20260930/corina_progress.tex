@@ -125,8 +125,8 @@ person and year fixed effects; survey weights; 95\% intervals.
 
 % Externally set parameters (common to all three purchase rules; values from the run parameter tables in evidence/).
 \begin{frame}{Externally set parameters}
-\fontsize{8.6}{9.8}\selectfont
-\renewcommand{\arraystretch}{1.0}
+\fontsize{8.1}{8.9}\selectfont
+\renewcommand{\arraystretch}{0.95}
 \begin{tabular*}{0.98\textwidth}{@{}>{\raggedright\arraybackslash}p{0.40\textwidth}@{\extracolsep{\fill}}>{\raggedright\arraybackslash}p{0.20\textwidth}>{\raggedright\arraybackslash}p{0.34\textwidth}@{}}
 \toprule
 Parameter & Value & Source \\
@@ -137,17 +137,20 @@ Risk aversion $\sigma$ & 2 & \\
 Equivalence scale $(\omega,\nu)$ & $(0.7,\,0.7)$ & Scholz et al.\ (2006) \\
 Consumption share $\alpha_0$ & 0.733 & CEX 2019--23, childless renters \\
 Annual real interest rate & 2\% & Greaney et al.\ (2025) \\
-Annual depreciation; property tax & 1.416\%; 1.060\% & National housing inputs \\
+Annual depreciation & 1.416\% & BEA owner-occupied depreciation / Fed housing value, 2007 \\
+Annual property tax & 1.060\% & ACS owner taxes / home value, 2007--11 \\
 Financed share $\phi$ & 0.80 & 20\% down payment \\
 Selling cost $\psi_s$ & 6\% & Greaney et al.\ (2025) \\
 Owner house sizes & 2, 4, 6, 8, 10 rooms & \\
 Largest rental unit & 6 rooms & Greaney et al.\ (2025) \\
 Housing-supply elasticity & 0.63 & Baum-Snow and Han (2024) \\
 Pension / working-household earnings & 0.229 & CPS ASEC, income 2007 \\
-Payroll tax & 8.0\% & Balances the pension budget \\
+Payroll tax & 8.03\% & Implied by the pension target \\
 Bequest wealth shift $\theta_1$ & 0.008 & 1\% of median annual earnings \\
 \bottomrule
 \end{tabular*}
+\par\medskip
+\fontsize{8}{9}\selectfont Payroll tax revenue finances equal pensions. The baseline tax matches the CPS pension/earnings ratio; the tax stays fixed and pensions adjust in policy experiments.
 \end{frame}
 
 % 7: Parameters and target moments across the ten jointly estimated parameters.
