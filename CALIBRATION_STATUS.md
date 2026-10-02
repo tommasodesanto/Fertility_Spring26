@@ -32,12 +32,19 @@ The immutable policy input selection is recorded in
 Policy pilot v4 jobs **19022024** and **19022025** passed with three native
 calls each. Under the separately reviewed production source `93831f5a`,
 smoke array **19022272** tasks0/1 passed with exit 0. In 12-case policy array
-**19022273**, all four 80% control cases (00/03/06/09) have completed with
-terminal and mapping gates, while the eight 100% temporary/permanent cases
-are running with fresh checkpoints; the permanent terminal roots converged
-in ten evaluations. The reviewed source root is
+**19022273**, all four 80% control cases (00/03/06/09) passed, and all eight
+100% temporary/permanent cases passed their dated market/fiscal roots but
+failed the unchanged terminal-state gate; each has a terminal failure receipt.
+A forward-only replay of saved final-date policies and distributions exactly
+reproduced the four controls' terminal metrics without new model solves.
+Temporary paths fail both normalized terminal-distribution and renter-price
+gaps; permanent paths fail population, distribution, birth-entry queues,
+asset-price and renter-price gaps. The detailed native-source-checked recovery
+is under
+`output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/mechanism_deployment/terminal_diagnosis/`.
+The reviewed source root is
 `/scratch/td2248/projects/purchase_mechanism_reviewed_93831f5a`.
-There is **no verified 100% policy first-birth response yet**. A selected
+There is **no accepted 100% policy first-birth response yet**. A selected
 numerical calibration point is an input to those runs, not evidence of a
 fertility effect of 80-to-100% financing. Saved-policy buyer diagnostic v4
 jobs **19022340** (hard) and
