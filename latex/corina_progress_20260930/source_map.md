@@ -183,3 +183,10 @@ no model, test, benchmark, cluster, policy or Git work.
 The deck now includes the best saved soft point: chain 16, case 0046_nm, loss 23.078309294160004. Its full fourteen-row fit and thirty-one-row parameter tables are copied unchanged to evidence/overnight_soft_*.csv; the saved best receipt is overnight_soft_best.json. Targets, weights and roles match hard exactly. Soft is exploration-unverified and was stopped before final postchecks; hard and quarter-saving were postchecked. Hard/quarter also add a buyer ending-net-estate restriction, so these are separately recalibrated specifications, not a pure timing experiment.
 
 Notation follows the older deck where possible: u(c,s;m), tenure subscripts, xi for first_birth_fixed_cost, and kappa_C for kappa_fert_continuation. This changes notation only.
+
+## Slides 9–11: mortgage financing and fertility (added October 2, 2026)
+
+Fixed-price experiments at the quarter-saving calibration (price 0.6744838540900874, H0 7.288573389887633); none recalibrated. Lead readouts:
+- Slide 9: `output/model/fixed_reference_economics_20260928/per_child_need_probe_v1/results.csv` (need0 arms); recalibrated temporary-financing responses from `CALIBRATION_STATUS.md` (hard −0.54%, quarter −0.43%).
+- Slide 10: rental-cap counterfactual on saved quarter arrays (lead-verified formula, kernels.py renter branch); see memory note and `per_child_need_probe_v1/NOTE.md`.
+- Slide 11: `selling_cost_dose_probe_v1/NOTE.md` (with one added room per additional child) and `owner_floor_split_cost_probe_v1/NOTE.md` (current requirement).

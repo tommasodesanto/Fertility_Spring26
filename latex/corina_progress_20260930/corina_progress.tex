@@ -17,7 +17,7 @@
 \date{October 2, 2026}
 \hypersetup{pdftitle={JMP progress, September 17--October 2, 2026},pdfauthor={Tommaso De Santo}}
 % Separate adviser progress deck. Main source latex/JMP_slides/JMP_slides.tex is read-only.
-% Fourteen frames, including three reserved illustration slides after calibration. No overlays.
+% Fourteen frames, including three financing-and-fertility result slides after calibration. No overlays.
 % Relative source paths below are in Fertility_Spring26. See source_map.md for full paths.
 \begin{document}
 
@@ -214,17 +214,74 @@ Family rooms difference & 0.385 & 0.304 & 0.321 & 0.316 \\
 \fontsize{8}{9}\selectfont Soft*: best fit before the search stopped; final numerical check pending.
 \end{frame}
 
-% Three illustration slides: figures to be selected before inserting results.
-\begin{frame}{Household policies and lifecycle paths}
-% Planned figures: housing, fertility and saving policies; lifecycle paths.
+% Three results slides on mortgage financing and fertility (October 2 fixed-price experiments).
+% Sources: output/model/fixed_reference_economics_20260928/{per_child_need_probe_v1,
+% tenure_barrier_probe_v1, selling_cost_dose_probe_v1, owner_floor_split_cost_probe_v1}/NOTE.md
+\begin{frame}{Mortgage financing raises ownership, not births}
+\framesubtitle{Quarter-saving calibration; financed share raised from 80\% to 100\% at a fixed house price}
+\small
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+ & 80\% financing & 100\% financing \\
+\midrule
+Ownership, ages 30--55 (\%) & 64.6 & 74.0 \\
+First-birth flow (relative change) & & $-0.5\%$ \\
+Completed fertility & 2.100 & 2.090 \\
+\midrule
+\multicolumn{3}{l}{\emph{Same entering households, ages 18--21}}\\
+Ownership (\%) & 10.5 & 31.4 \\
+First-birth probability (\%) & 25.5 & 25.8 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{itemize}\setlength\itemsep{4pt}
+ \item The entering cohort is identical across the two cases, so the 18--21 comparison is a response, not a change in composition.
+ \item In the recalibrated hard and quarter-saving economies, temporary 100\% financing lowers first births by about 0.5\%.
+\end{itemize}
 \end{frame}
 
-\begin{frame}{Housing supply and borrowing constraints}
-% Planned figures: housing supply and the effects of mortgage/unsecured credit.
+\begin{frame}{Why credit does not reach the birth decision}
+\small
+\begin{itemize}\setlength\itemsep{6pt}
+ \item Rent per room equals the owner's per-room user cost. Credit changes who holds the house, not the price of the space a child requires.
+ \item The owner premium $\chi$ applies equally to parents and to childless households, so easier ownership raises the value of both alternatives in the birth decision.
+ \item The rental cap binds often but costs little. Among renting parents, 60\% are at the six-room cap; without the cap the median would rent 7.3 rooms.
+ \item Being held at the cap costs parents 2.3\% of period consumption, against 1.6\% for capped childless renters.
+ \item The parent housing requirement is the same with one, two or three children, so it never pushes a family above the rental cap.
+\end{itemize}
+\vfill
+\footnotesize Cap calculations hold each household's saving fixed and use saved policies at the quarter-saving calibration.
 \end{frame}
 
-\begin{frame}{Transition dynamics}
-% Planned figures: fertility, house prices and population along the transition.
+\begin{frame}{Selling costs and small owner homes}
+\framesubtitle{Change in completed fertility from 80\% to 100\% financing, fixed house price}
+\small
+\begin{center}
+\begin{tabular}{lrrrr}
+\toprule
+Selling cost & 6\% & 4\% & 2\% & 0\% \\
+\midrule
+Change in completed fertility & $-0.010$ & $-0.009$ & $-0.005$ & $+0.012$ \\
+\bottomrule
+\end{tabular}
+\par\medskip
+\begin{tabular}{lrr}
+\toprule
+Owner sizes (rooms) & Change in completed fertility & Loss at 80\% \\
+\midrule
+2--10 (current) & $-0.010$ & 51.6 \\
+4--10 & $-0.007$ & 57.5 \\
+6--10 & $+0.001$ & 284.3 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{itemize}\setlength\itemsep{3pt}
+ \item With 100\% financing, more young childless households buy two-room homes, below the parent requirement. A first birth then requires a sale.
+ \item Births respond positively to credit only when trading up is nearly free; removing small owner homes removes the negative effect but worsens the fit.
+\end{itemize}
+\vfill
+\footnotesize Selling-cost runs add one required room per additional child. Owner-size runs use the current requirement. Neither table is recalibrated.
 \end{frame}
 
 % 12: Parameter estimates under the two purchase rules.
