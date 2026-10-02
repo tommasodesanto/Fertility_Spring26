@@ -1,0 +1,148 @@
+{
+  "status": "computed",
+  "definition": "One-period rental cap 6 to 100, reoptimizing saving at baseline prices and saved next-age value; owner menu and continuation fixed",
+  "rule": "quarter",
+  "cap_rooms": 6.0,
+  "relaxed_rooms": 100.0,
+  "age_cells": [
+    18.0,
+    22.0,
+    26.0,
+    30.0,
+    34.0,
+    38.0,
+    42.0
+  ],
+  "sections": {
+    "all": {
+      "birth_flow": 0.04370687788834723,
+      "responsiveness_mass": 0.15291197139973975,
+      "birth_share": 1.0,
+      "responsiveness_share": 1.0,
+      "successful_birth_value_responsiveness_share": 1.0,
+      "parent_cap_shadow": {
+        "mass": 0.15291197139973975,
+        "mean": 0.010910592787507754,
+        "positive_share": 0.859290088218269
+      },
+      "wait_cap_shadow": {
+        "mass": 0.15291197139973975,
+        "mean": 0.0004990348496564119,
+        "positive_share": 0.2354813105539776
+      },
+      "parent_minus_wait_cap_shadow": {
+        "mass": 0.15291197139973975,
+        "mean": 0.010411557937851342,
+        "positive_share": 0.859290088218269
+      },
+      "parent_minus_wait_cap_shadow_success_weighted": {
+        "mass": 0.14277802043751148,
+        "mean": 0.010372826247009434,
+        "positive_share": 0.8589898820925539
+      },
+      "parent_minus_wait_above_tenth_kappa_share": 0.3279840987516918
+    },
+    "bridged": {
+      "birth_flow": 0.0032391085726129784,
+      "responsiveness_mass": 0.02195839206607927,
+      "birth_share": 0.07410981358328876,
+      "responsiveness_share": 0.14360152357643755,
+      "successful_birth_value_responsiveness_share": 0.1449680158993186,
+      "parent_cap_shadow": {
+        "mass": 0.02195839206607927,
+        "mean": 6.617392541707567e-06,
+        "positive_share": 0.23028533187089448
+      },
+      "wait_cap_shadow": {
+        "mass": 0.02195839206607927,
+        "mean": 0.0,
+        "positive_share": 0.0
+      },
+      "parent_minus_wait_cap_shadow": {
+        "mass": 0.02195839206607927,
+        "mean": 6.617392541707567e-06,
+        "positive_share": 0.23028533187089448
+      },
+      "parent_minus_wait_cap_shadow_success_weighted": {
+        "mass": 0.0206982463368584,
+        "mean": 6.780296221751074e-06,
+        "positive_share": 0.23595438169457753
+      },
+      "parent_minus_wait_above_tenth_kappa_share": 0.0
+    },
+    "feasible_80": {
+      "birth_flow": 0.04046776931573425,
+      "responsiveness_mass": 0.13095357933366047,
+      "birth_share": 0.9258901864167113,
+      "responsiveness_share": 0.8563984764235625,
+      "successful_birth_value_responsiveness_share": 0.8550319841006815,
+      "parent_cap_shadow": {
+        "mass": 0.13095357933366047,
+        "mean": 0.012738979365559856,
+        "positive_share": 0.9647620663160383
+      },
+      "wait_cap_shadow": {
+        "mass": 0.13095357933366047,
+        "mean": 0.0005827133786370685,
+        "positive_share": 0.27496698912564616
+      },
+      "parent_minus_wait_cap_shadow": {
+        "mass": 0.13095357933366047,
+        "mean": 0.01215626598692279,
+        "positive_share": 0.9647620663160383
+      },
+      "parent_minus_wait_cap_shadow_success_weighted": {
+        "mass": 0.12207977410065309,
+        "mean": 0.012130357125561812,
+        "positive_share": 0.9646236151072692
+      },
+      "parent_minus_wait_above_tenth_kappa_share": 0.38298071257832966
+    },
+    "ineligible_80": {
+      "birth_flow": 0.0032391085726129784,
+      "responsiveness_mass": 0.02195839206607927,
+      "birth_share": 0.07410981358328876,
+      "responsiveness_share": 0.14360152357643755,
+      "successful_birth_value_responsiveness_share": 0.1449680158993186,
+      "parent_cap_shadow": {
+        "mass": 0.02195839206607927,
+        "mean": 6.617392541707567e-06,
+        "positive_share": 0.23028533187089448
+      },
+      "wait_cap_shadow": {
+        "mass": 0.02195839206607927,
+        "mean": 0.0,
+        "positive_share": 0.0
+      },
+      "parent_minus_wait_cap_shadow": {
+        "mass": 0.02195839206607927,
+        "mean": 6.617392541707567e-06,
+        "positive_share": 0.23028533187089448
+      },
+      "parent_minus_wait_cap_shadow_success_weighted": {
+        "mass": 0.0206982463368584,
+        "mean": 6.780296221751074e-06,
+        "positive_share": 0.23595438169457753
+      },
+      "parent_minus_wait_above_tenth_kappa_share": 0.0
+    }
+  },
+  "exact_80_to_100_financial_access": 0.07410981358328876,
+  "relaxed_max_rooms_positive_responsiveness": {
+    "parent": 92.5932848530511,
+    "wait": 90.76839622742855
+  },
+  "fixed_unsecured_credit_active": true,
+  "baseline_renter_policy_max_room_error": 0.005834645956640568,
+  "source": {
+    "selected_completed": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/local_runtime/runs/local10_v1/chain54/postcheck/completed.json",
+    "completed_sha256": "225bc8f48cca4d9fdbf2c6d804a29c3f2f298a45dca1d7e71edf6df1f6e3eb20",
+    "stage": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/local_runtime/runs/local10_v1/chain54/postcheck/selected_postcheck/phase_b_ge/selected_repeat/stage/solution_arrays.npz",
+    "stage_sha256": "2bd540678798e8ca7323b02fd335713f76feb81e8feb275fb4d788cd1ba02552",
+    "bootstrap": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/local_runtime/bootstrap.py",
+    "bootstrap_sha256": "5f34bdd086e7ffaf4bfb2fe479448f81546a103e65f93649ccef2af7744df133",
+    "root_parameters_sha256": "e4bceb5d163014d08a3ecd63cd164d35130cf9d7435ba02c041b6590bf87aae0",
+    "contract_sha256": "06363808d72b126cde119db3659a7b0721f4ca69f31d60f2608049e8ec0cdba0"
+  },
+  "caution": "Differential renter-only value shadow is not the change in the full fertility attempt/wait values, nor a causal policy response."
+}

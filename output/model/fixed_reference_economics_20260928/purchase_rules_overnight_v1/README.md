@@ -1,5 +1,7 @@
 # Experimental purchase-rule calibrations at 80% financing
 
+The selected quarter-fit [rental-cap and purchase-access overlap diagnostic](independent_diagnosis/quarter_overlap_v1/README.md) uses saved household values and the native renter kernel at fixed prices. It is a bounded mechanism check, not a new calibration or policy result.
+
 **October 2, 11:24 New York update.** A new independent 24-chain search for
 the same hard and quarter 80% specifications is running on Torch as array
 **19040483**. All 24 tasks were verified RUNNING; the two mounted zero-native
