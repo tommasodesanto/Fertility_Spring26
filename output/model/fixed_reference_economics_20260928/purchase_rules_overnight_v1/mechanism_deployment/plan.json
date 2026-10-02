@@ -1,0 +1,31 @@
+{
+  "schema": "purchase_financing_dated_policy_array_v1",
+  "deadline_epoch": 1790949600,
+  "deadline_local": "2026-10-02 10:00:00 America/New_York",
+  "wall_seconds_per_case": 14400,
+  "maximum_native_policy_calls_per_case": 1024,
+  "cpus_per_case": 1,
+  "memory_gib_per_case": 32,
+  "math_threads_per_case": 1,
+  "smoke_cases": [
+    {"task": 0, "arm": "hard", "kind": "control", "horizon": 1},
+    {"task": 1, "arm": "quarter", "kind": "control", "horizon": 1}
+  ],
+  "production_cases": [
+    {"task": 0, "arm": "hard", "kind": "control", "horizon": 12},
+    {"task": 1, "arm": "hard", "kind": "temporary", "horizon": 12},
+    {"task": 2, "arm": "hard", "kind": "permanent", "horizon": 12},
+    {"task": 3, "arm": "hard", "kind": "control", "horizon": 16},
+    {"task": 4, "arm": "hard", "kind": "temporary", "horizon": 16},
+    {"task": 5, "arm": "hard", "kind": "permanent", "horizon": 16},
+    {"task": 6, "arm": "quarter", "kind": "control", "horizon": 12},
+    {"task": 7, "arm": "quarter", "kind": "temporary", "horizon": 12},
+    {"task": 8, "arm": "quarter", "kind": "permanent", "horizon": 12},
+    {"task": 9, "arm": "quarter", "kind": "control", "horizon": 16},
+    {"task": 10, "arm": "quarter", "kind": "temporary", "horizon": 16},
+    {"task": 11, "arm": "quarter", "kind": "permanent", "horizon": 16}
+  ],
+  "experimental_change": "financed owner share 0.80 to 1.00; one date or permanent",
+  "reference": "lowest fresh postchecked 80% calibration candidate for each purchase rule",
+  "status": "prepared_not_submitted"
+}
