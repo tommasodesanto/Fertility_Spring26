@@ -17,7 +17,7 @@
 \date{October 2, 2026}
 \hypersetup{pdftitle={JMP progress, September 17--October 2, 2026},pdfauthor={Tommaso De Santo}}
 % Separate adviser progress deck. Main source latex/JMP_slides/JMP_slides.tex is read-only.
-% Thirteen frames, including three financing-and-fertility result slides after calibration. No overlays.
+% Thirteen frames, including credit timing and three financing slides before calibration. No overlays.
 % Relative source paths below are in Fertility_Spring26. See source_map.md for full paths.
 \begin{document}
 
@@ -123,6 +123,89 @@ At years 3--4, rooms rise by \textbf{1.465} (SE 0.050), ownership by
 person and year effects; survey weights; 95\% pointwise intervals.
 \end{frame}
 
+% 13: The purchase-timing rules.
+\begin{frame}{Credit timing}
+\small
+With $\phi=0.8$, a purchase requires a 20\% down payment. Purchase timing determines which resources count toward it. The soft rule includes current-period income in the purchase screen; the other rules use:
+\[
+\begin{aligned}
+\text{Hard:}\quad&A\ge (1-\phi)Q,\\
+\text{Quarter-saving:}\quad&A+\tfrac14\left[b'-(A-Q)\right]\ge (1-\phi)Q.
+\end{aligned}
+\]
+Here $A$ is financial wealth plus net proceeds from selling the previous home, $Q$ is the cost of the chosen home, and $b'$ is the end-of-period financial balance. Net saving is $b'-(A-Q)$.
+\par\medskip
+For a home costing 100 with 10 available at closing, the hard rule blocks the purchase. The quarter-saving rule meets the 20-unit equity requirement if net saving is 40: $10+0.25\times40=20$.
+\par\medskip
+This approximates saving before purchase within a four-year period. Under quarter-saving, income helps only if saved. Hard and quarter-saving also impose an end-of-period net-estate floor for buyers; this is an additional change from soft.
+\end{frame}
+
+% Financing results (October 2 fixed-price experiments, not recalibrated).
+% Sources: output/model/fixed_reference_economics_20260928/{per_child_need_probe_v1,
+% tenure_barrier_probe_v1, selling_cost_dose_probe_v1, owner_floor_split_cost_probe_v1}/NOTE.md
+\begin{frame}{More credit raises ownership but not births}
+\framesubtitle{Quarter-saving rule; financed share 80\% vs.\ 100\%; house price and parameters held fixed}
+\small
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+ & 80\% financing & 100\% financing \\
+\midrule
+Ownership, ages 30--55 (\%) & 64.6 & 74.0 \\
+First-birth flow (relative change) & & $-0.5\%$ \\
+Completed fertility & 2.100 & 2.090 \\
+\midrule
+\multicolumn{3}{l}{\emph{Households entering at ages 18--21 (same households in both)}}\\
+Ownership (\%) & 10.5 & 31.4 \\
+First-birth probability (\%) & 25.5 & 25.8 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\medskip
+Recalibrating under the hard and quarter-saving rules gives the same sign: first births fall by about 0.5\%.
+\end{frame}
+
+\begin{frame}{Why the response is small: what we have checked}
+\small
+\begin{itemize}\setlength\itemsep{6pt}
+ \item Rent per room equals the owner's cost per room, and $\chi$ does not depend on children. Credit makes buying easier but does not make a child's space cheaper.
+ \item 60\% of renting parents are at the six-room cap. Without the cap the median would rent 7.3 rooms. Holding saving fixed, the cap costs them about 2\% of consumption in that period.
+ \item The parent requirement $h_P$ is the same for one, two or three children.
+\end{itemize}
+\medskip
+These are candidate explanations. We have not yet shown how much of the small response each one accounts for.
+\end{frame}
+
+\begin{frame}{Selling costs and small owner homes}
+\framesubtitle{Exploratory runs, not recalibrated. Change in completed fertility from 80\% to 100\% financing}
+\small
+\begin{center}
+\begin{tabular}{lrrrr}
+\toprule
+Selling cost & 6\% & 4\% & 2\% & 0\% \\
+\midrule
+Change in completed fertility & $-0.010$ & $-0.009$ & $-0.005$ & $+0.012$ \\
+\bottomrule
+\end{tabular}
+\par\medskip
+\begin{tabular}{lrr}
+\toprule
+Owner sizes (rooms) & Change in completed fertility & Fit loss at 80\% \\
+\midrule
+2--10 (current) & $-0.010$ & 51.6 \\
+4--10 & $-0.007$ & 57.5 \\
+6--10 & $+0.001$ & 284.3 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{itemize}\setlength\itemsep{3pt}
+ \item At 100\% financing more young childless households buy two-room homes, which are too small for parents.
+ \item The sign turns positive only without selling costs. Dropping small homes removes the negative sign and worsens the fit.
+\end{itemize}
+\vfill
+\footnotesize The selling-cost runs also add one required room per additional child.
+\end{frame}
+
 % 7: Parameters and target moments across the ten jointly estimated parameters.
 \begin{frame}{Parameters and target moments}
 \small
@@ -187,76 +270,6 @@ Family rooms difference & 0.385 & 0.304 & 0.321 & 0.316 \\
 \fontsize{8}{9}\selectfont Soft*: best fit before the search stopped; final numerical check pending.
 \end{frame}
 
-% Three results slides on mortgage financing and fertility (October 2 fixed-price experiments).
-% Sources: output/model/fixed_reference_economics_20260928/{per_child_need_probe_v1,
-% tenure_barrier_probe_v1, selling_cost_dose_probe_v1, owner_floor_split_cost_probe_v1}/NOTE.md
-\begin{frame}{Mortgage financing raises ownership, not births}
-\framesubtitle{Quarter-saving calibration; financed share raised from 80\% to 100\% at a fixed house price}
-\small
-\begin{center}
-\begin{tabular}{lrr}
-\toprule
- & 80\% financing & 100\% financing \\
-\midrule
-Ownership, ages 30--55 (\%) & 64.6 & 74.0 \\
-First-birth flow (relative change) & & $-0.5\%$ \\
-Completed fertility & 2.100 & 2.090 \\
-\midrule
-\multicolumn{3}{l}{\emph{Same entering households, ages 18--21}}\\
-Ownership (\%) & 10.5 & 31.4 \\
-First-birth probability (\%) & 25.5 & 25.8 \\
-\bottomrule
-\end{tabular}
-\end{center}
-\begin{itemize}\setlength\itemsep{4pt}
- \item The entering cohort is identical across the two cases, so the 18--21 comparison is a response, not a change in composition.
- \item In the recalibrated hard and quarter-saving economies, temporary 100\% financing lowers first births by about 0.5\%.
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Why credit does not reach the birth decision}
-\small
-\begin{itemize}\setlength\itemsep{6pt}
- \item Rent per room equals the owner's per-room user cost. Credit changes who holds the house, not the price of the space a child requires.
- \item The owner premium $\chi$ applies equally to parents and to childless households, so easier ownership raises the value of both alternatives in the birth decision.
- \item The rental cap binds often but costs little. Among renting parents, 60\% are at the six-room cap; without the cap the median would rent 7.3 rooms.
- \item Being held at the cap costs parents 2.3\% of period consumption, against 1.6\% for capped childless renters.
- \item The parent housing requirement is the same with one, two or three children, so it never pushes a family above the rental cap.
-\end{itemize}
-\vfill
-\footnotesize Cap calculations hold each household's saving fixed and use saved policies at the quarter-saving calibration.
-\end{frame}
-
-\begin{frame}{Selling costs and small owner homes}
-\framesubtitle{Change in completed fertility from 80\% to 100\% financing, fixed house price}
-\small
-\begin{center}
-\begin{tabular}{lrrrr}
-\toprule
-Selling cost & 6\% & 4\% & 2\% & 0\% \\
-\midrule
-Change in completed fertility & $-0.010$ & $-0.009$ & $-0.005$ & $+0.012$ \\
-\bottomrule
-\end{tabular}
-\par\medskip
-\begin{tabular}{lrr}
-\toprule
-Owner sizes (rooms) & Change in completed fertility & Loss at 80\% \\
-\midrule
-2--10 (current) & $-0.010$ & 51.6 \\
-4--10 & $-0.007$ & 57.5 \\
-6--10 & $+0.001$ & 284.3 \\
-\bottomrule
-\end{tabular}
-\end{center}
-\begin{itemize}\setlength\itemsep{3pt}
- \item With 100\% financing, more young childless households buy two-room homes, below the parent requirement. A first birth then requires a sale.
- \item Births respond positively to credit only when trading up is nearly free; removing small owner homes removes the negative effect but worsens the fit.
-\end{itemize}
-\vfill
-\footnotesize Selling-cost runs add one required room per additional child. Owner-size runs use the current requirement. Neither table is recalibrated.
-\end{frame}
-
 % 12: Parameter estimates under the two purchase rules.
 \begin{frame}{Parameter estimates}
 \small
@@ -286,23 +299,6 @@ $H_0$ & Housing supply coefficient (derived) & 6.757 & 7.546 & 7.289 \\
 \end{center}
 \vfill
 \footnotesize $H_0$ is derived at normalized population $N_0=1$. Fixed inputs: $\sigma=2$; $\alpha_0=0.733$; annual interest 2\%; financed share $\phi=0.8$. 
-\end{frame}
-
-% 13: The purchase-timing rules.
-\begin{frame}{Credit timing}
-\small
-With $\phi=0.8$, a purchase requires a 20\% down payment. Purchase timing determines which resources count toward it. The soft rule includes current-period income in the purchase screen; the other rules use:
-\[
-\begin{aligned}
-\text{Hard:}\quad&A\ge (1-\phi)Q,\\
-\text{Quarter-saving:}\quad&A+\tfrac14\left[b'-(A-Q)\right]\ge (1-\phi)Q.
-\end{aligned}
-\]
-Here $A$ is financial wealth plus net proceeds from selling the previous home, $Q$ is the cost of the chosen home, and $b'$ is the end-of-period financial balance. Net saving is $b'-(A-Q)$.
-\par\medskip
-For a home costing 100 with 10 available at closing, the hard rule blocks the purchase. The quarter-saving rule meets the 20-unit equity requirement if net saving is 40: $10+0.25\times40=20$.
-\par\medskip
-This approximates saving before purchase within a four-year period. Under quarter-saving, income helps only if saved. Hard and quarter-saving also impose an end-of-period net-estate floor for buyers; this is an additional change from soft.
 \end{frame}
 
 % 14: Fit comparison and remaining gaps.
