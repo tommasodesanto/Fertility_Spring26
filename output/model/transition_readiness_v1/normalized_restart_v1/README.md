@@ -2,6 +2,35 @@
 
 ## Verified facts
 
+**Terminal result verified after connectivity returned:** Job **18989789** ended
+at **20:24:40 New York**, after 37 minutes, on the time-limit termination signal
+(launcher exit 143; scheduler exit signal 15). No fitted shock was produced.
+The completed candidate is the unchanged-preference baseline: all four model
+moments equal 2.099999999935852, with final-target gap 0.4542499999358518.
+Its exact 2023 checkpoint is locally collected and independently SHA-256 checked,
+but it is a baseline checkpoint, not a fitted historical-2023 state.
+[Full baseline four-window table](collected_candidate_0001/target_fit.csv),
+[shock level and bounds](collected_candidate_0001/shock_parameter.csv),
+[collection/lead verification](collected_candidate_0001/verification.json).
+
+The first changed trial lowers child preference by 1% to 0.17027767510986588.
+Its 12-date root converged with exact replay, ending at model 2.084929259240067
+against 1.64575 (gap 0.439179259240067). The 16-date map was interrupted;
+no two-horizon comparison or changed-state checkpoint was completed.
+[Complete partial four-window table](terminal_collection/partial_h12_target_fit.csv)
+and [trial with bounds](terminal_collection/partial_shock_parameter.csv)
+are explicitly provisional. This is not evidence of an unreachable target.
+
+The run spent about 12 minutes on constructor/reference/derivatives, 6 minutes
+on baseline, and 19 minutes on the first changed trial. Authenticated saved
+reference/derivative preparation can be reused with the same source and reference
+identity; this does not authorize a restart. Completed native calls are at least
+97; charging the unfinished 16-date map gives a conservative upper bound of 129.
+[Timing and call evidence](terminal_collection/terminal_summary.json).
+The heartbeat is paused; no replacement numerical job is running. A new time
+budget is required for continuation. Historical launch/network notices below
+are retained for provenance.
+
 **20:40 New York monitor:** The scheduled 20:24:47 deadline has passed, but
 laptop-to-Torch SSH remains unavailable. Terminal state, completed fit and
 2023 checkpoint availability are unverified. The last verified phase was
@@ -14,7 +43,7 @@ Torch job **18989789** (`normalized_actualfit_v1`) actually started at
 The ten-minute checkpoint heartbeat is active. [Submission receipt](deployment/submission_receipt.json)
 and [compact latest progress](progress_snapshot.json) retain execution evidence.
 A coordination overlap submitted duplicate queued job 18989791, which was
-cancelled before starting with zero runtime. Only job 18989789 is active.
+cancelled before starting with zero runtime. Both jobs are now terminal.
 
 The author authorized restarting the one-permanent-shock transition on October 1.
 The selected reference is normalized-calibration chain 20, case `0028_nm`:

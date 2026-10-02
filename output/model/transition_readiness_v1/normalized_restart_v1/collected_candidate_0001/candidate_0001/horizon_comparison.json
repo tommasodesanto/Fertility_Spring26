@@ -1,0 +1,78 @@
+{
+  "passed": true,
+  "relative_gaps": {
+    "asset_price": 0.0,
+    "renter_price": 0.0,
+    "adult_population": 0.0,
+    "birth_children": 0.0,
+    "housing_demand": 0.0,
+    "pension_period_units": 0.0
+  },
+  "fertility_absolute_gaps": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "early_macro_periods": 5,
+  "early_macro_years": [
+    2007,
+    2011,
+    2015,
+    2019,
+    2023
+  ],
+  "fertility_windows": 4,
+  "macro_tolerance": 0.01,
+  "fertility_tolerance": 0.01,
+  "terminal_passes": [
+    true,
+    true
+  ],
+  "classification": "exploratory relaxed finite-horizon comparison; original strict status retained; full path uncertified",
+  "original_strict_comparison": {
+    "passed": true,
+    "relative_gaps": {
+      "asset_price": 0.0,
+      "renter_price": 0.0,
+      "adult_population": 0.0,
+      "birth_children": 0.0,
+      "housing_demand": 0.0,
+      "pension_period_units": 0.0
+    },
+    "fertility_absolute_gaps": [
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "early_macro_periods": 5,
+    "early_macro_years": [
+      2007,
+      2011,
+      2015,
+      2019,
+      2023
+    ],
+    "fertility_windows": 4,
+    "macro_tolerance": 0.001,
+    "fertility_tolerance": 0.001,
+    "terminal_passes": [
+      true,
+      true
+    ],
+    "classification": "diagnostic finite-horizon measurement stability; full path uncertified"
+  },
+  "original_strict_passed": true,
+  "diagnostic_horizon_tolerance_override": {
+    "schema": "diagnostic_horizon_tolerance_override_v1",
+    "classification": "exploratory relaxed finite-horizon comparison",
+    "macro_tolerance": 0.01,
+    "fertility_tolerance": 0.01,
+    "original_macro_tolerance": 0.001,
+    "original_fertility_tolerance": 0.001,
+    "state_gate_changes": false,
+    "terminal_gate_changes": false,
+    "root_gate_changes": false
+  }
+}

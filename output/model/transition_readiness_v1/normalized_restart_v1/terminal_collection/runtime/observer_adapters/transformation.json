@@ -1,0 +1,110 @@
+{
+  "schema": "current_floor_observer_dependency_injection_v1",
+  "observers": {
+    "housing": {
+      "original": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/calibration_code_integration_20260927_v2/source/code/model/tools/e5f_initial_housing_observer.py",
+        "sha256": "f711a61e8e177eb293d6ba58f8c6e7e6dc83f1eadb4af1cb1cf8522c055db435"
+      },
+      "adapter": {
+        "path": "/work/transition_runs/normalized_actualfit_v1/runtime/observer_adapters/housing.py",
+        "sha256": "90ff59ea14870806589562d4f713f9e1aa2f45cf27ba153cc1d05f7e09b019fe"
+      },
+      "substitutions": [
+        {
+          "line": 127,
+          "original": "    from intergen_eqscale_seq_optimized import solver as model",
+          "replacement": "    model = _CURRENT_FLOOR_NATIVE_MODEL"
+        },
+        {
+          "line": 128,
+          "original": "    from intergen_eqscale_seq_optimized.utils import weighted_quantile",
+          "replacement": "    weighted_quantile = _CURRENT_FLOOR_NATIVE_UTILS.weighted_quantile"
+        }
+      ],
+      "computation_ast_unchanged": true
+    },
+    "recent_parent": {
+      "original": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_recent_parent_flow_observer.py",
+        "sha256": "cd68df04f1e7df7055bb19ead94ee08f1ac9506acb7ecf26b2f8676423442e76"
+      },
+      "adapter": {
+        "path": "/work/transition_runs/normalized_actualfit_v1/runtime/observer_adapters/recent_parent.py",
+        "sha256": "eef52390949aa1b4a4437907cebd7734879bc1bb76e9263043edbbae326ead1c"
+      },
+      "substitutions": [
+        {
+          "line": 148,
+          "original": "    from intergen_eqscale_seq_optimized import solver as model",
+          "replacement": "    model = _CURRENT_FLOOR_NATIVE_MODEL"
+        }
+      ],
+      "computation_ast_unchanged": true
+    }
+  },
+  "helpers": {
+    "readiness_childless_states": {
+      "native_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/source/small_credit_lab/engine/parameters.py",
+      "native_sha256": "f8871ea7f026b0900f2cd89e2ecbe7f24fbc8b08e83ec46227533a11dea2e163",
+      "legacy_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/parameters.py",
+      "legacy_sha256": "66f86697c2c58ca3864305bf13dd2be71a008905b2beb573f1a4ebafabef5464",
+      "normalized_ast_sha256": "84d972d21ae2030f85adf29db77f9954b5b7a3f4b5b6a13170d1f45e1cfac3ff"
+    },
+    "readiness_gate_active": {
+      "native_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/source/small_credit_lab/engine/parameters.py",
+      "native_sha256": "f8871ea7f026b0900f2cd89e2ecbe7f24fbc8b08e83ec46227533a11dea2e163",
+      "legacy_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/parameters.py",
+      "legacy_sha256": "66f86697c2c58ca3864305bf13dd2be71a008905b2beb573f1a4ebafabef5464",
+      "normalized_ast_sha256": "feb731f1b246a430fadceed896d92b42292eb7a3e11b40492cadb11ac9f4224f"
+    },
+    "readiness_settled_state": {
+      "native_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/source/small_credit_lab/engine/parameters.py",
+      "native_sha256": "f8871ea7f026b0900f2cd89e2ecbe7f24fbc8b08e83ec46227533a11dea2e163",
+      "legacy_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/parameters.py",
+      "legacy_sha256": "66f86697c2c58ca3864305bf13dd2be71a008905b2beb573f1a4ebafabef5464",
+      "normalized_ast_sha256": "7abce1426bf2efcdc5207938843bf48880b88d18d1ebda46e3e71a2e4e9b21f7"
+    },
+    "get_fecundity_by_age": {
+      "native_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/source/small_credit_lab/engine/parameters.py",
+      "native_sha256": "f8871ea7f026b0900f2cd89e2ecbe7f24fbc8b08e83ec46227533a11dea2e163",
+      "legacy_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/parameters.py",
+      "legacy_sha256": "66f86697c2c58ca3864305bf13dd2be71a008905b2beb573f1a4ebafabef5464",
+      "normalized_ast_sha256": "ae8cf532a655263900c5f5b8c60e776e9b027e38f41b586799ed7750f4352a40"
+    },
+    "realize_current_cross_section": {
+      "native_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/source/small_credit_lab/engine/distribution.py",
+      "native_sha256": "9da9be2525852f78771d735103f0de385c8a8028eff9ab564512627ed2df2e90",
+      "legacy_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/solver.py",
+      "legacy_sha256": "b637a655a9344b63f4461ee0fa4796c04bd98188477c4e6ace2c48ae0fc8aec1",
+      "normalized_ast_sha256": "aeb9167cc3d9fce82cbf324e93b29c507183537bd63840cb8860e57873c6dd77"
+    },
+    "add_aggregate_wealth_bequest_flow_moments": {
+      "native_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/source/small_credit_lab/engine/distribution.py",
+      "native_sha256": "9da9be2525852f78771d735103f0de385c8a8028eff9ab564512627ed2df2e90",
+      "legacy_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/solver.py",
+      "legacy_sha256": "b637a655a9344b63f4461ee0fa4796c04bd98188477c4e6ace2c48ae0fc8aec1",
+      "normalized_ast_sha256": "d6e8866f71c126b22f175319d53ae34709b6d7235e3f3bf8d3142792f8289582"
+    },
+    "annual_gross_income_at_state": {
+      "native_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/source/small_credit_lab/engine/shared.py",
+      "native_sha256": "1fbe36f75befe5fed67c490c39a65663f4c8896b078851693fb4bca533d07773",
+      "legacy_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/solver.py",
+      "legacy_sha256": "b637a655a9344b63f4461ee0fa4796c04bd98188477c4e6ace2c48ae0fc8aec1",
+      "normalized_ast_sha256": "e76ca1f0281996fb48616d290a078373c31d974333cdd665a9e13f37a6d9d08f"
+    },
+    "weighted_quantile": {
+      "native_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/source/small_credit_lab/engine/utils.py",
+      "native_sha256": "836d6768af4a9261fe28e758f88dcc8ca059afc277b7c03d36f179a510ebcf36",
+      "legacy_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/intergen_eqscale_seq_optimized/utils.py",
+      "legacy_sha256": "9bf0d8edb36708bb9222b8abf637ab3e855e985a4467a4114b7862ced4f203a0",
+      "normalized_ast_sha256": "daa74a16d8ddd111cea36c173bc2465954c11b7cbccb2e84eebb87ea2071fe22"
+    }
+  },
+  "constants": {
+    "DEAD_MASS_TOL": 1e-12,
+    "DEAD_VALUE_CUTOFF": -1000000000.0
+  },
+  "model_identity": "small_credit_lab.engine.solver",
+  "no_model_name_masquerade": true
+}

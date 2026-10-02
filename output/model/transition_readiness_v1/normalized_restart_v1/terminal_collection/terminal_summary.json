@@ -1,0 +1,75 @@
+{
+  "status": "deadline_stopped_incomplete_shock_fit",
+  "job_id": "18989789",
+  "elapsed_seconds": 2227.4909455776215,
+  "exit_code": 143,
+  "stages_seconds": {
+    "constructor": 45.0,
+    "fresh_reference_after_constructor": 119.0,
+    "seed_maps_exact": 538.8654204630293,
+    "seed_phase_mtime": 540.0,
+    "baseline_after_seed": 359.935298204422,
+    "changed_candidate_before_stop": 1163.5556473731995,
+    "changed_stationary_root_exact": 314.27024494786747,
+    "changed_H12_root_exact": 669.5597686788533
+  },
+  "calls": {
+    "fresh_reference": 2,
+    "seed": 29,
+    "baseline_additional": 7,
+    "changed_completed_additional": 59,
+    "completed_lower": 97,
+    "unfinished_H16_map_upper": 32,
+    "conservative_total_upper": 129
+  },
+  "changed_psi": 0.17027767510986588,
+  "changed_H12": {
+    "root_converged": true,
+    "replay_max_abs": 0.0,
+    "four_TFR_moments": [
+      2.083824614060411,
+      2.084634003649122,
+      2.0847289134614724,
+      2.084929259240067
+    ],
+    "native_gates": {
+      "fiscal_replay": true,
+      "housing": true,
+      "mapping": true,
+      "market_replay": true,
+      "social_security": true
+    }
+  },
+  "changed_H16": {
+    "completed_mapping": false,
+    "moments_available": false,
+    "comparison_available": false
+  },
+  "preparation": {
+    "status": "pins_and_same_consumer_preparation_match",
+    "native_calls": 0,
+    "preparation_sha256": "901a1e66cb385582e6450574ae180165d88e194955910f2b319403b59cb7ac5b",
+    "reference_verified": true,
+    "seed_verified": true,
+    "source_controller": "3294bc1d83e6cedc433cd34f7b1d28af553be6eb33ddda72b766bf572ded1766",
+    "source_runtime": "cc51438a9a7bd0f92be3c1fe7681461515d21bb1ee44375ee7a51011489407af",
+    "reference_checkpoint": {
+      "path": "/work/transition_runs/normalized_actualfit_v1/native_reference/selected_native_packet.pkl.gz",
+      "sha256": "8de81aa043062a255954afb3ae24f975768dc06d728ce11d3cb0e163a6b2e644"
+    },
+    "matrix": {
+      "path": "/work/transition_runs/normalized_actualfit_v1/seed/measured/jacobian.npy",
+      "sha256": "1fe70d4cf421f28844a89d8949a793056c7bb0a822b7457fda9c2fe2cd560937"
+    },
+    "matrix_shape": [
+      24,
+      24
+    ],
+    "pin_paths": {
+      "reference_checkpoint": "/scratch/td2248/projects/transition_readiness_v1/normalized_restart_v1/results/normalized_actualfit_v1/native_reference/selected_native_packet.pkl.gz",
+      "reconstruction_receipt": "/scratch/td2248/projects/transition_readiness_v1/normalized_restart_v1/results/normalized_actualfit_v1/native_reference/reference_reconstruction.json",
+      "measured_seed_receipt": "/scratch/td2248/projects/transition_readiness_v1/normalized_restart_v1/results/normalized_actualfit_v1/seed/measured/receipt.json",
+      "seed_baseline_checks": "/scratch/td2248/projects/transition_readiness_v1/normalized_restart_v1/results/normalized_actualfit_v1/seed/baseline_checks.json"
+    }
+  }
+}

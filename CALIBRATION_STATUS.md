@@ -1,5 +1,38 @@
 # Calibration Status
 
+## October 1, 20:47 New York — normalized transition ended without a fitted shock
+
+Network access is restored and Torch terminal state is verified. Job 18989789
+ended at 20:24:40, after 37 minutes, on the time-limit signal (launcher 143;
+scheduler signal 15). The completed candidate is the unchanged-preference
+baseline: all four model fertility moments are 2.099999999935852; its last-target
+gap is 0.4542499999358518. The [complete baseline four-window table](output/model/transition_readiness_v1/normalized_restart_v1/collected_candidate_0001/target_fit.csv)
+and [shock level/bounds](output/model/transition_readiness_v1/normalized_restart_v1/collected_candidate_0001/shock_parameter.csv)
+explicitly classify it as baseline only, not an estimated shock.
+The exact baseline 2023 checkpoint is collected and independently hash-checked,
+SHA256 `6e6ecf9f6375c7513c2a4ea7a6a80cda8883f1891239cb3c9b8267e4f8e7322d`.
+All 31 reference estimates and all other table columns match exactly; only
+H0's declared calibration-derived versus transition-fixed role differs.
+[Collection verification](output/model/transition_readiness_v1/normalized_restart_v1/collected_candidate_0001/verification.json).
+
+The first changed trial reduced psi by 1% to 0.17027767510986588. Its 12-date
+root and replay passed, giving final moment 2.084929259240067 against 1.64575
+(gap 0.439179259240067). The 16-date map was interrupted; no horizon comparison,
+fitted-shock checkpoint or fit completion exists. Its full [partial target table](output/model/transition_readiness_v1/normalized_restart_v1/terminal_collection/partial_h12_target_fit.csv)
+and [trial bounds](output/model/transition_readiness_v1/normalized_restart_v1/terminal_collection/partial_shock_parameter.csv)
+are provisional. The original strict and production requirements remain intact.
+
+About 12 minutes went to setup/reference/derivatives, 6 to baseline, and 19 to
+the first changed trial. Fresh reference/derivative preparation is authenticated
+for reuse with the same identity and source. Completed native calls are at least
+97; a conservative upper bound charging the unfinished map is 129. The heartbeat
+is paused and no replacement job is running. A new time budget is required.
+The author asked whether the previous good shock guess was used: it was not.
+The scalar fit started from the new baseline psi, although the prior trial
+0.13079083328964047 remains inside the new search bounds and can be used as a
+numerical starting guess with fresh evaluation. It cannot certify the new
+calibration. [Full terminal evidence](output/model/transition_readiness_v1/normalized_restart_v1/README.md).
+
 ## October 1, 19:47 New York — normalized one-shock transition restarted
 
 The author authorized restarting from the new normalized calibration. Torch
