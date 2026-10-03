@@ -1,0 +1,39 @@
+{
+  "verified_utc": "2026-10-03T12:11:24.058094+00:00",
+  "verification": "zero model solves; both plotting scripts executed successfully; F1 and F5 rendered images visually inspected",
+  "accepted_winner_checks": {
+    "original": {
+      "chain": 15,
+      "native_status": "full_native_postcheck_passed",
+      "native_loss": 18.44530519407432,
+      "accepted_repeat_rows": 14,
+      "accepted_parameter_rows": 31,
+      "target_fit_root_equals_final_repeat": true,
+      "parameters_root_equals_final_repeat": true,
+      "saved_array_sha256": "2170a4bd2e1ced398fa9000cb96d0d2129b61c2ad8324b9da748874b5977fc80",
+      "saved_array_file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/production_original_chain_15/run/native_postcheck/selected_postcheck/phase_b_ge/selected_repeat/stage/solution_arrays.npz"
+    },
+    "alternative": {
+      "chain": 13,
+      "native_status": "full_native_postcheck_passed",
+      "native_loss": 13.771131463467462,
+      "accepted_repeat_rows": 14,
+      "accepted_parameter_rows": 31,
+      "target_fit_root_equals_final_repeat": true,
+      "parameters_root_equals_final_repeat": true,
+      "saved_array_sha256": "029c85e0b2d7bc4f7d4680713807f4939bf183b231d26931b040fd67d8302168",
+      "saved_array_file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/production_alternative_chain_13/run/native_postcheck/selected_postcheck/phase_b_ge/selected_repeat/stage/solution_arrays.npz"
+    }
+  },
+  "files_sha256": {
+    "ECONOMIC_MEMO.md": "2b0273d8598135f923e847fb8dc061818d75aa39d6bcb0dc097b77ba31dbe4c4",
+    "README.md": "3ba742ae7acfa6d8918a66284fb9e9af69b5ece5282dc8a0b641e0fb3be608a0",
+    "analysis/native_grid_analysis.py": "87d70271ac1d43fcc64ed12d0b8de5d5947a07f8343876d5e3f40cac9b83d87e",
+    "analysis/plot_native_asset_states.py": "b2295074139a1d31a8fcec483e2faf1141adb8135f3374dbbd0d758fb302f387",
+    "analysis/out/native_grid_analysis.json": "336ef9e1abecbb5067eef671d7515cdf9a92dd67cccbb411fbb0f9b506bec364",
+    "analysis/out/native_asset_policy_mass.json": "7279b4411d8cc1b36d527379f4054ab67ae38863bb2d032166bcfd27b0ea1265",
+    "analysis/out/F1_age25_decomposition.png": "418f097bc92605189ee53a656326616be3093f57e60e30ecc48d4611884a1ae9",
+    "analysis/out/F5_native_asset_policy_mass.png": "0b611f1cb95b930225e50ffbbf546f2168d076a016f212cdc84f4e1b230d0150"
+  },
+  "source_identity_limit": "selected_repeat is the sole saved NPZ; selected_repeat_final has matching accepted fit and parameter CSVs, but no final-repeat NPZ was saved, so array-by-array equality cannot be asserted"
+}
