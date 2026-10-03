@@ -9,12 +9,23 @@ Open each file in the editor and press Play
 with `code/model/.venv/bin/python` selected. The scripts resolve project paths
 from their own locations, so they work from any current working directory.
 
-The [verified workflow check](../../../output/model/fixed_reference_economics_20260928/model_control_scripts_v1/verification.json)
-replayed all 11 checked baseline arrays exactly. The household solve took 6.2
-seconds and the complete run, including standard figures, saving and validation,
-took 9.9 seconds. Both plotters then loaded the saved result without solving and
-wrote all eight policy and seven aggregate figures. These are measured times
-for the default 120-node fixed-price run.
+The [October 3 workflow check](../../../output/model/fixed_reference_economics_20260928/model_control_scripts_v1/verification.json)
+is a historical check of the earlier runner defaults. It replayed all 11
+checked baseline arrays exactly; the household solve took 6.2 seconds and the
+complete run took 9.9 seconds. The current defaults use a different calibrated
+candidate, so that check does not certify the current default arrays. The
+plotters loaded the saved result without solving and wrote all eight policy and
+seven aggregate figures in that historical check.
+
+The [current-default check](../../../output/model/fixed_reference_economics_20260928/model_control_scripts_v1/overnight_default.json)
+ran the chain 15 original-timing defaults: the household solve took 6.0
+seconds, the full run took 10.0 seconds, and it wrote the expected 17 native
+diagnostic figures, eight policy figures, and seven aggregate figures. Numeric
+standard-diagnostic fields comparable to the selected native receipt match
+within `1e-12`; four overnight summary statistics were unavailable and were
+not compared. The complete [chain 15 target fit and parameter restrictions](../../../output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/RESULTS.md)
+records every target, model moment, gap, weight, loss contribution, and parameter
+restriction.
 
 The equivalent terminal command uses the project interpreter and the absolute
 project path:
@@ -24,11 +35,15 @@ PROJECT=/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26
 "$PROJECT/code/model/.venv/bin/python" "$PROJECT/code/model/run_model.py"
 ```
 
-The run driver starts at the selected soft experimental point, chain 16 / case
-0046. Its default ten internal values are written explicitly in
+The run driver starts at the lowest-loss verified original transaction-timing
+candidate, chain 15 / case `0141_nm`, with native loss 18.44530519407432. Its
+default ten internal values are written explicitly in
 `INTERNAL_PARAMETERS`; common native inputs are in `EXTERNAL_INPUTS`, and extra
 native `P` edits go in `NATIVE_OVERRIDES`. The default fixed price is
-`0.7266387868818555`. All four settings are editable at the top of
+`0.718171981870443`, with housing supply coefficient `H0 = 6.79390271408785`
+and native supply price elasticity `xi_supply = 0.63`. Candidate provenance
+and source hashes are recorded in run metadata; the explicit literals remain
+the defaults. All these settings are editable at the top of
 `run_model.py`, and the saved result records them together with the complete
 effective native `P` object. Editing these settings creates a new experiment;
 it does not update a calibration record or paper baseline. The selected point

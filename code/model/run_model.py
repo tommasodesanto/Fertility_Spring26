@@ -24,16 +24,16 @@ TOOLS = ROOT / "code/model/tools"
 # EDITABLE selected internal coordinates: these are bound by ModelPlayground
 # after the direct native P inputs below, so they take precedence on overlap.
 INTERNAL_PARAMETERS = {
-    "beta_annual": 0.9671931106058198,  # Annual discount factor (four-year beta is compounded).
-    "chi": 1.0972389108161984,  # Owner housing-service premium.
-    "first_birth_fixed_cost": 0.35161589615733957,  # Fixed utility cost of the first birth.
-    "kappa_fert": 0.12428888389792507,  # First-birth choice shock/logit scale.
-    "kappa_fert_continuation": 0.36310164268347417,  # Later-birth attempt choice shock/logit scale.
-    "theta0": 0.10630491855239614,  # Bequest utility scale.
-    "h_P": 2.504044687713671,  # Physical room floor added at the first child.
-    "child_benefit_curvature": 0.10071173914767594,  # Curvature of child benefit by children at home.
-    "tenure_choice_kappa": 0.014279685267457497,  # Tenure-choice logit scale.
-    "psi_child": 0.17840979194160872,  # Child benefit scale.
+    "beta_annual": 0.9670336401689759,  # Annual discount factor; native period beta is compounded.
+    "chi": 1.0905005359076558,  # Owner housing-service premium.
+    "first_birth_fixed_cost": 0.28606371352720844,  # Fixed utility cost of the first birth.
+    "kappa_fert": 0.10777020144717818,  # First-birth choice shock/logit scale.
+    "kappa_fert_continuation": 0.3560939268151674,  # Later-birth attempt choice shock/logit scale.
+    "theta0": 0.15831562642314595,  # Bequest utility scale.
+    "h_P": 2.6,  # Physical room floor added at the first child.
+    "child_benefit_curvature": 0.08407417663994812,  # Curvature of child benefit by children at home.
+    "tenure_choice_kappa": 0.016927769397298127,  # Tenure-choice logit scale.
+    "psi_child": 0.17361208520421256,  # Child benefit scale.
 }
 
 # EDITABLE external inputs, assigned directly to same-named native P fields.
@@ -44,9 +44,9 @@ EXTERNAL_INPUTS = {
     "alpha_cons": 0.733,  # Consumption share in the within-period utility aggregator.
     "theta1": 0.008193084126995582,  # Linear fertility utility term.
     "theta_n": 0.0,  # Number-of-children utility curvature parameter.
-    "R_gross": 1.08243216,  # Gross annual asset return.
-    "delta": 0.05545379079326218,  # Annual housing depreciation rate.
-    "tau_H": 0.042393443095490375,  # Annual property-tax rate.
+    "R_gross": 1.08243216,  # Gross asset return per four-year model period.
+    "delta": 0.05545379079326218,  # Housing depreciation rate per four-year model period.
+    "tau_H": 0.042393443095490375,  # Property-tax rate per four-year model period.
     "psi": 0.06,  # Selling-cost fraction.
     "phi": [0.8, 0.8, 0.8, 0.8],  # Uniform financed share by owner housing rung.
     "unsecured_credit_limit": 0.0,  # Maximum unsecured borrowing (zero here).
@@ -58,9 +58,9 @@ EXTERNAL_INPUTS = {
     "fecundity_omega1": 0.02,  # First fecundity profile coefficient.
     "fecundity_omega2": 0.134,  # Second fecundity profile coefficient.
     "property_tax_lump_sum_transfer": 0.0,  # Lump-sum property-tax transfer.
-    "H0": [6.757074077757929],  # Fixed housing supply by location.
-    "eta_supply": [1.75],  # Housing supply elasticity by location.
-    "xi_supply": [0.63],  # Housing supply scale by location.
+    "H0": [6.79390271408785],  # Housing supply coefficient at the normalized population.
+    "eta_supply": [1.75],  # Retained native input; inactive in this single-market supply equation.
+    "xi_supply": [0.63],  # Housing supply price elasticity in the native supply equation.
     "r_bar": [0.16],  # Reference unit rent by location.
     "income": [[  # Disposable income by location and lifecycle period.
         2.650830656801071, 2.650830656801071, 3.4664708588937074,
@@ -81,7 +81,30 @@ EXTERNAL_INPUTS = {
 NATIVE_OVERRIDES = {}
 
 # A single stationary household solve at this fixed price; no price root or fit.
-FIXED_PRICE = 0.7266387868818555
+# Explicit provenance for the editable defaults above. The literals remain
+# authoritative; the runner never loads a calibration dynamically.
+DEFAULT_CANDIDATE_PROVENANCE = {
+    "experiment": "soft_timing_calibration_20261002_v1",
+    "arm": "original transaction timing",
+    "chain": 15,
+    "case": "0141_nm",
+    "native_loss": 18.44530519407432,
+    "timing": "transaction_inside",
+    "fixed_price": 0.718171981870443,
+    "source_files": {
+        "results": "output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/RESULTS.md",
+        "original_parameters": "output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/original_parameters.csv",
+        "selected_root_closure": "output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/production_original_chain_15/run/native_postcheck/selected_postcheck/phase_b_ge/selected_root/closure.json",
+        "native_postcheck_completion": "output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/production_original_chain_15/run/native_postcheck/completed.json",
+    },
+    "source_sha256": {
+        "results": "897ca05432a7f9daf15c589d4a316d82bb81a6a0fb32ae4a919fad76d566c4e2",
+        "original_parameters": "88f0fb49500a7372d6938947690b8b99b5220adf32890f2d7728c4cdd639aa49",
+        "selected_root_closure": "68607be34a746ec4830f0651817ab0a33ce9d0ed5764faeecf0682ee40d43143",
+        "native_postcheck_completion": "5df6dc7a71843e7095f63e9658ca45a591c7cbecd0b776e66db4aa403c377006",
+    },
+}
+FIXED_PRICE = 0.718171981870443
 RUN_BUDGET_SECONDS = 600
 RUNS_ROOT = ROOT / "tmp/model_runs"
 DERIVED_NATIVE_FIELDS = {"q", "user_cost_rate", "pension", "pension_by_loc"}
@@ -407,6 +430,7 @@ def main():
             "run_budget_seconds": RUN_BUDGET_SECONDS,
             "thread_limit": 1,
             "fixed_price": FIXED_PRICE,
+            "default_candidate_provenance": DEFAULT_CANDIDATE_PROVENANCE,
             "internal_parameters": INTERNAL_PARAMETERS,
             "external_inputs": EXTERNAL_INPUTS,
             "native_overrides": NATIVE_OVERRIDES,

@@ -1,0 +1,584 @@
+{
+  "verified_utc": "2026-10-03T15:29:45.365252+00:00",
+  "candidate": {
+    "experiment": "soft_timing_calibration_20261002_v1",
+    "arm": "original transaction timing",
+    "chain": 15,
+    "case": "0141_nm",
+    "native_loss": 18.44530519407432,
+    "timing": "transaction_inside",
+    "fixed_price": 0.718171981870443,
+    "source_files": {
+      "results": "output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/RESULTS.md",
+      "original_parameters": "output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/original_parameters.csv",
+      "selected_root_closure": "output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/production_original_chain_15/run/native_postcheck/selected_postcheck/phase_b_ge/selected_root/closure.json",
+      "native_postcheck_completion": "output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/production_original_chain_15/run/native_postcheck/completed.json"
+    },
+    "source_sha256": {
+      "results": "897ca05432a7f9daf15c589d4a316d82bb81a6a0fb32ae4a919fad76d566c4e2",
+      "original_parameters": "88f0fb49500a7372d6938947690b8b99b5220adf32890f2d7728c4cdd639aa49",
+      "selected_root_closure": "68607be34a746ec4830f0651817ab0a33ce9d0ed5764faeecf0682ee40d43143",
+      "native_postcheck_completion": "5df6dc7a71843e7095f63e9658ca45a591c7cbecd0b776e66db4aa403c377006"
+    }
+  },
+  "native_postcheck_status": "full_native_postcheck_passed",
+  "defaults_match_verified_candidate": true,
+  "effective_cached_parameters_match": true,
+  "economic_changes": "Parameter recalibration, candidate price and derived H0 only; soft financing, original timing, entry distribution, earnings, external restrictions and target contract retained.",
+  "native_solves": 1,
+  "local_price_root_or_calibration_run": false,
+  "run_directory": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/model_runs/20261003T152611643299Z_97ffcd7a",
+  "run_status": "complete",
+  "solve_seconds": 6.0373974590038415,
+  "total_seconds": 9.961431833013194,
+  "roundtrip_validation": {
+    "P": {
+      "arrays": 49,
+      "fields": 260
+    },
+    "solution": {
+      "arrays": 67,
+      "fields": 228
+    }
+  },
+  "available_numeric_standard_summary_fields_match_overnight": {
+    "J": true,
+    "aggregate_housing_demand": true,
+    "aggregate_housing_excess": true,
+    "aggregate_housing_supply": true,
+    "aggregate_own_rate": true,
+    "aggregate_owner_demand": true,
+    "aggregate_rental_demand": true,
+    "best_max_abs_rel_excess": true,
+    "housing_demand_by_income_type": true,
+    "housing_supply": true,
+    "income_state_weights": true,
+    "income_states": true,
+    "income_transition": true,
+    "income_type_weights": true,
+    "income_types": true,
+    "markets": true,
+    "mean_age_first_birth": true,
+    "mean_fertility_by_income_type": true,
+    "n_child_stages": true,
+    "own_rate": true,
+    "own_rate_3055": true,
+    "own_rate_by_income_type": true,
+    "owner_asset_price": true,
+    "owner_demand_by_size": true,
+    "owner_user_cost": true,
+    "period_years": true,
+    "rental_demand_by_market": true,
+    "target_own_rate": true,
+    "tfr": true,
+    "tfr_by_income_type": true
+  },
+  "unavailable_overnight_summary_fields_not_compared": [
+    "childless_rate",
+    "mean_completed_fertility",
+    "old_owner_rate",
+    "young_owner_rate"
+  ],
+  "unavailable_field_reason": "Native diagnostics uses getattr defaults of NaN when these fields are absent; no equality claimed for missing overnight statistics.",
+  "summary_max_abs_gap": 1.9539925233402755e-14,
+  "summary_tolerance": {
+    "atol": 1e-12,
+    "rtol": 1e-12
+  },
+  "png_counts": {
+    "native_diagnostics": 17,
+    "policy_plots": 8,
+    "aggregate_plots": 7
+  },
+  "solver_diagnostics": {
+    "adult_entry_stationary_relative_gap": 6.795955276569423e-10,
+    "adult_entry_stationary_relative_gap_meaning": "Renewal/stationary-entry diagnostic; not a convergence certificate.",
+    "all_probability_like_arrays_in_unit_interval": true,
+    "all_reported_finite_arrays_finite": true,
+    "distribution_arrays": {
+      "g": {
+        "minimum": 0.0,
+        "nonnegative": true,
+        "sum": 0.9999999999999973
+      },
+      "g_beginning_distribution": {
+        "minimum": 0.0,
+        "nonnegative": true,
+        "sum": 0.9999999999999998
+      },
+      "g_cross_sectional_wealth_distribution": {
+        "minimum": 0.0,
+        "nonnegative": true,
+        "sum": 0.9999999999999998
+      },
+      "g_stay_distribution": {
+        "minimum": 0.0,
+        "nonnegative": true,
+        "sum": 0.40490418990135923
+      }
+    },
+    "finite_arrays": {
+      "V": {
+        "element_count": 1762560,
+        "finite_count": 1762560,
+        "finite_max": 17.396664835302268,
+        "finite_min": -10000000000.0
+      },
+      "adult_entry_potential_by_loc": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 0.061733456138797056,
+        "finite_min": 0.061733456138797056
+      },
+      "aggregate_annual_gross_labor_earnings_by_age": {
+        "element_count": 17,
+        "finite_count": 17,
+        "finite_max": 0.06843431632046124,
+        "finite_min": 0.0
+      },
+      "aggregate_wealth_by_age": {
+        "element_count": 17,
+        "finite_count": 17,
+        "finite_max": 0.5913501678824631,
+        "finite_min": 0.011514504445631159
+      },
+      "attempt_hazard_by_age": {
+        "element_count": 17,
+        "finite_count": 17,
+        "finite_max": 0.14833466288603914,
+        "finite_min": 0.0
+      },
+      "b_grid": {
+        "element_count": 120,
+        "finite_count": 120,
+        "finite_max": 3000.0,
+        "finite_min": -12.0
+      },
+      "births_by_loc": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 0.11526585790269996,
+        "finite_min": 0.11526585790269996
+      },
+      "bp_pol": {
+        "element_count": 1762560,
+        "finite_count": 1762560,
+        "finite_max": 2870.7001757529342,
+        "finite_min": -12.0
+      },
+      "bp_pol_stay": {
+        "element_count": 1762560,
+        "finite_count": 1762560,
+        "finite_max": 2870.7001757529342,
+        "finite_min": -12.0
+      },
+      "c_pol": {
+        "element_count": 1762560,
+        "finite_count": 1762560,
+        "finite_max": 2870.2555559416837,
+        "finite_min": 7.02254366086831e-06
+      },
+      "c_pol_stay": {
+        "element_count": 1762560,
+        "finite_count": 1762560,
+        "finite_max": 2870.2555559416837,
+        "finite_min": 9.999999999177334e-07
+      },
+      "child_state_dist": {
+        "element_count": 68,
+        "finite_count": 68,
+        "finite_max": 0.9289634425058911,
+        "finite_min": 0.0
+      },
+      "entrants_mature_by_loc": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 0.05470973717391442,
+        "finite_min": 0.05470973717391442
+      },
+      "entry_by_loc": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 0.06173345618075084,
+        "finite_min": 0.06173345618075084
+      },
+      "entry_mass_by_loc": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 0.06173345618075084,
+        "finite_min": 0.06173345618075084
+      },
+      "entry_wealth_grid_values": {
+        "element_count": 14,
+        "finite_count": 14,
+        "finite_max": 4.767441860465116,
+        "finite_min": 0.0
+      },
+      "entry_wealth_grid_weights": {
+        "element_count": 14,
+        "finite_count": 14,
+        "finite_max": 0.6669475303229839,
+        "finite_min": 0.00011787192989119238
+      },
+      "entry_wealth_ratio_nodes": {
+        "element_count": 5,
+        "finite_count": 5,
+        "finite_max": 1.1272941320837204,
+        "finite_min": 0.0
+      },
+      "entry_wealth_ratio_weights": {
+        "element_count": 5,
+        "finite_count": 5,
+        "finite_max": 0.20037747293780178,
+        "finite_min": 0.19942576269679177
+      },
+      "fert2_probs": {
+        "element_count": 1762560,
+        "finite_count": 1762560,
+        "finite_max": 1.0,
+        "finite_min": 0.0
+      },
+      "fert_by_age": {
+        "element_count": 17,
+        "finite_count": 17,
+        "finite_max": 0.14256824556059872,
+        "finite_min": 0.0
+      },
+      "fert_probs": {
+        "element_count": 440640,
+        "finite_count": 440640,
+        "finite_max": 1.0,
+        "finite_min": 0.0
+      },
+      "fert_value": {
+        "element_count": 110160,
+        "finite_count": 110160,
+        "finite_max": 5.275216477679872,
+        "finite_min": -9999999999.992289
+      },
+      "first_birth_age_distribution": {
+        "element_count": 17,
+        "finite_count": 17,
+        "finite_max": 0.31987307577129953,
+        "finite_min": 0.0
+      },
+      "first_birth_hazard_by_age": {
+        "element_count": 17,
+        "finite_count": 17,
+        "finite_max": 0.14256824556059874,
+        "finite_min": 0.0
+      },
+      "frac_childless_by_loc": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 0.18963974841269404,
+        "finite_min": 0.18963974841269404
+      },
+      "g": {
+        "element_count": 1762560,
+        "finite_count": 1762560,
+        "finite_max": 0.009845148507937088,
+        "finite_min": 0.0
+      },
+      "g_beginning_distribution": {
+        "element_count": 1762560,
+        "finite_count": 1762560,
+        "finite_max": 0.010714092964372965,
+        "finite_min": 0.0
+      },
+      "g_collapsed": {
+        "element_count": 195840,
+        "finite_count": 195840,
+        "finite_max": 0.028904141197289186,
+        "finite_min": 0.0
+      },
+      "g_cross_sectional_wealth_distribution": {
+        "element_count": 1762560,
+        "finite_count": 1762560,
+        "finite_max": 0.010714092964372965,
+        "finite_min": 0.0
+      },
+      "g_stay_distribution": {
+        "element_count": 1762560,
+        "finite_count": 1762560,
+        "finite_max": 0.00024248022536608094,
+        "finite_min": 0.0
+      },
+      "hR_pol": {
+        "element_count": 1762560,
+        "finite_count": 1762560,
+        "finite_max": 6.0,
+        "finite_min": 0.0
+      },
+      "housing_demand": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 5.945572774974887,
+        "finite_min": 5.945572774974887
+      },
+      "housing_demand_by_income_type": {
+        "element_count": 9,
+        "finite_count": 9,
+        "finite_max": 1.6546930758802747,
+        "finite_min": 0.008882544118223997
+      },
+      "housing_supply": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 5.9455727749749085,
+        "finite_min": 5.9455727749749085
+      },
+      "income_state_mass": {
+        "element_count": 9,
+        "finite_count": 9,
+        "finite_max": 0.27343750000000244,
+        "finite_min": 0.0039062499999959793
+      },
+      "income_transition": {
+        "element_count": 81,
+        "finite_count": 81,
+        "finite_max": 0.44644337722858035,
+        "finite_min": 9.617287445392553e-08
+      },
+      "loc_probs": {
+        "element_count": 1762560,
+        "finite_count": 1762560,
+        "finite_max": 1.0,
+        "finite_min": 0.0
+      },
+      "mature_entry_shares": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 1.0,
+        "finite_min": 1.0
+      },
+      "mean_fertility_by_income_type": {
+        "element_count": 9,
+        "finite_count": 9,
+        "finite_max": 2.097017506049685,
+        "finite_min": 1.5710893235740575
+      },
+      "mean_housing_by_parity": {
+        "element_count": 4,
+        "finite_count": 4,
+        "finite_max": 7.065501319277407,
+        "finite_min": 3.6875663574929103
+      },
+      "mean_parity_by_loc": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 1.8671538098436398,
+        "finite_min": 1.8671538098436398
+      },
+      "own_by_age": {
+        "element_count": 17,
+        "finite_count": 17,
+        "finite_max": 0.9057695189141171,
+        "finite_min": 0.2240256656715535
+      },
+      "own_by_loc": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 0.6590319815261072,
+        "finite_min": 0.6590319815261072
+      },
+      "own_by_parity": {
+        "element_count": 4,
+        "finite_count": 4,
+        "finite_max": 0.8144600745483793,
+        "finite_min": 0.3966035997521141
+      },
+      "own_rate_by_income_type": {
+        "element_count": 9,
+        "finite_count": 9,
+        "finite_max": 0.8895402620140093,
+        "finite_min": 0.27106418768910184
+      },
+      "owner_asset_price": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 0.718171981870443,
+        "finite_min": 0.718171981870443
+      },
+      "owner_demand_by_market": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 4.470026237760222,
+        "finite_min": 4.470026237760222
+      },
+      "owner_demand_by_size": {
+        "element_count": 5,
+        "finite_count": 5,
+        "finite_max": 1.6032701958189135,
+        "finite_min": 0.10803896452623908
+      },
+      "owner_user_cost": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 0.1294716095994876,
+        "finite_min": 0.1294716095994876
+      },
+      "p_eq": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 0.718171981870443,
+        "finite_min": 0.718171981870443
+      },
+      "parity_dist": {
+        "element_count": 4,
+        "finite_count": 4,
+        "finite_max": 0.38655689646673,
+        "finite_min": 0.14012358979770245
+      },
+      "pop_share": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 1.0,
+        "finite_min": 1.0
+      },
+      "rental_demand_by_market": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 1.4755465372146785,
+        "finite_min": 1.4755465372146785
+      },
+      "rental_demand_by_size": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 1.4755465372146785,
+        "finite_min": 1.4755465372146785
+      },
+      "retiree_mass_by_loc": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 0.259198525831022,
+        "finite_min": 0.259198525831022
+      },
+      "second_attempt_hazard_by_age": {
+        "element_count": 17,
+        "finite_count": 17,
+        "finite_max": 0.5251619929368734,
+        "finite_min": 0.0
+      },
+      "second_birth_hazard_by_age": {
+        "element_count": 17,
+        "finite_count": 17,
+        "finite_max": 0.422094111122818,
+        "finite_min": 0.0
+      },
+      "tenure_probs": {
+        "element_count": 10575360,
+        "finite_count": 10575360,
+        "finite_max": 1.0,
+        "finite_min": 0.0
+      },
+      "third_attempt_hazard_by_age": {
+        "element_count": 17,
+        "finite_count": 17,
+        "finite_max": 0.5385869694977721,
+        "finite_min": 0.0
+      },
+      "third_birth_hazard_by_age": {
+        "element_count": 17,
+        "finite_count": 17,
+        "finite_max": 0.31786981472152037,
+        "finite_min": 0.0
+      },
+      "type_values": {
+        "element_count": 9,
+        "finite_count": 9,
+        "finite_max": 5.843348419426847,
+        "finite_min": 0.10346813919312171
+      },
+      "type_weights": {
+        "element_count": 9,
+        "finite_count": 9,
+        "finite_max": 0.2734375,
+        "finite_min": 0.00390625
+      },
+      "w_hat": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 1.0,
+        "finite_min": 1.0
+      },
+      "worker_mass_by_loc": {
+        "element_count": 1,
+        "finite_count": 1,
+        "finite_max": 0.7408014741689755,
+        "finite_min": 0.7408014741689755
+      }
+    },
+    "meaning": "Finite/value/probability/distribution checks only; no convergence certificate.",
+    "probability_like_arrays": {
+      "attempt_hazard_by_age": {
+        "max": 0.14833466288603914,
+        "min": 0.0,
+        "within_unit_interval": true
+      },
+      "fert2_probs": {
+        "max": 1.0,
+        "min": 0.0,
+        "within_unit_interval": true
+      },
+      "fert_probs": {
+        "max": 1.0,
+        "min": 0.0,
+        "within_unit_interval": true
+      },
+      "first_birth_hazard_by_age": {
+        "max": 0.14256824556059874,
+        "min": 0.0,
+        "within_unit_interval": true
+      },
+      "frac_childless_by_loc": {
+        "max": 0.18963974841269404,
+        "min": 0.18963974841269404,
+        "within_unit_interval": true
+      },
+      "loc_probs": {
+        "max": 1.0,
+        "min": 0.0,
+        "within_unit_interval": true
+      },
+      "own_rate_by_income_type": {
+        "max": 0.8895402620140093,
+        "min": 0.27106418768910184,
+        "within_unit_interval": true
+      },
+      "pop_share": {
+        "max": 1.0,
+        "min": 1.0,
+        "within_unit_interval": true
+      },
+      "second_attempt_hazard_by_age": {
+        "max": 0.5251619929368734,
+        "min": 0.0,
+        "within_unit_interval": true
+      },
+      "second_birth_hazard_by_age": {
+        "max": 0.422094111122818,
+        "min": 0.0,
+        "within_unit_interval": true
+      },
+      "tenure_probs": {
+        "max": 1.0,
+        "min": 0.0,
+        "within_unit_interval": true
+      },
+      "third_attempt_hazard_by_age": {
+        "max": 0.5385869694977721,
+        "min": 0.0,
+        "within_unit_interval": true
+      },
+      "third_birth_hazard_by_age": {
+        "max": 0.31786981472152037,
+        "min": 0.0,
+        "within_unit_interval": true
+      }
+    }
+  },
+  "runner_source_sha256": "e31685058ef4e3e6a2be234197ff935d7663aad60223e8851dd1c7ce0af53067",
+  "target_fit_and_parameters": "output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/RESULTS.md",
+  "full_native_arrays_not_available_for_cross_platform_comparison": true
+}

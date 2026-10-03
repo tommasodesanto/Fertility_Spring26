@@ -386,8 +386,20 @@ interactive interface remains optional. A fixed-price household solve is not
 the normalized calibration GE; it reports numerical, renewal and housing
 diagnostics without claiming a new equilibrium.
 
-The [October 3 workflow verification](output/model/fixed_reference_economics_20260928/model_control_scripts_v1/verification.json)
-at the authenticated selected soft point matched all 11 checked baseline arrays
+At Tommaso's request, the Python runner now defaults to the lowest-loss verified
+overnight original-timing soft candidate: chain 15 / case `0141_nm`, all ten
+parameter coordinates, price `0.718171981870443`, and derived housing supply
+coefficient `6.79390271408785`. This selects the local inspection default; the
+paper reference and browser explorer are unchanged. The complete fit and
+parameter restrictions are in the [matched timing readout](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/RESULTS.md).
+The [current-default replay](output/model/fixed_reference_economics_20260928/model_control_scripts_v1/overnight_default.json)
+passed with a 6.0-second solve and 10.0-second full run. Its 30 available numeric
+standard-summary fields matched the overnight receipt within `1e-12`; four
+unreported overnight summary fields were not compared. All 17 native, eight
+policy and seven aggregate figures were generated from the new completed run.
+
+The historical [October 3 workflow verification](output/model/fixed_reference_economics_20260928/model_control_scripts_v1/verification.json)
+at the earlier authenticated selected soft point matched all 11 checked baseline arrays
 exactly. The household solve took 6.2 seconds; the full run with 17 standard
 figures, saving and round-trip validation took 9.9 seconds. Saved loading
 reproduced 67 solution arrays and 49 parameter arrays exactly, without reference
