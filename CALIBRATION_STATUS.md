@@ -429,6 +429,33 @@ See the [deployment report](output/model/production_deployment_20261003/README.m
 and [source map](code/model/README.md). This verifies the local deployment in
 that scope; it establishes no new calibration, grid convergence or dated transition.
 
+The runner now selects an external input file with `PARAMETER_FILE`:
+[`best_params.py`](code/model/parameters/best_params.py) contains that same working
+anchor, while [`toy_params.py`](code/model/parameters/toy_params.py) is an independent
+editable example with annual beta lower by 0.001. Toy outputs have their own
+`output/model/experiments/toy_params/latest` pointer. Plotters and the explorer
+follow the selected file, with `--params` available for a one-off selection.
+The [parameter guide](code/model/parameters/README.md) records the controls and
+output routing. These files isolate parameter experiments and their outputs;
+they do not isolate edits to shared solver source code.
+
+The parameter-file workflow passed 40 focused checks and a fresh toy stationary
+solve, with all 32 figures and the full tables saved separately; production
+`latest` and its solution hash stayed unchanged. Both cached plotters and the
+toy explorer were checked without additional solves
+([verification receipt](output/model/production_deployment_20261003/parameter_file_workflow.json)).
+The canonical calibration driver also passed initialization with zero solves.
+It now makes the authenticated zero unsecured-credit binding explicit and
+exports run-local `best_params.py` only after final native verification, exact
+repeat and matching full input identity. No optimization was launched for this
+workflow change, and existing cluster deployments were not rewritten. Older
+receipts without this input fingerprint are not eligible for automatic export.
+
+Cleanup retained 24 frozen source-authentication dependencies: the two archived
+packages have original-path compatibility symlinks, and the historical runner
+and five helpers retain their exact pinned bytes. These are not alternative
+production entry points; see the [archive record](calibration_archive/model_legacy_20261003/README.md).
+
 The runner holds the physical housing coefficient fixed while finding the
 birth-renewal price root. It reports implied H0 and population scale N
 algebraically from the same solved policies and price; this adds no solve and

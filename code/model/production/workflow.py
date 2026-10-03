@@ -156,7 +156,8 @@ def _expose_native_diagnostics(case: Path, report: Path) -> None:
 
 
 def run_stationary(parameters, external_inputs, native_overrides=None, price_guess=None,
-                   budget_seconds=1800, closure="fixed_h0", output_root=None):
+                   budget_seconds=1800, closure="fixed_h0", output_root=None,
+                   parameter_file_metadata=None):
     """Solve once, validate/cache its result, then atomically publish ``latest``.
 
     Core equilibrium code owns all numerical work.  This wrapper deliberately
@@ -187,6 +188,8 @@ def run_stationary(parameters, external_inputs, native_overrides=None, price_gue
                 "edited_primitives": [],
             },
         }
+        if parameter_file_metadata is not None:
+            input_contract["parameter_file"] = _jsonable(parameter_file_metadata)
         contract_path.write_text(json.dumps(input_contract, indent=2, sort_keys=True,
                                             allow_nan=False) + "\n")
         P, grid = load_inputs(parameters=parameters, external_inputs=external_inputs,

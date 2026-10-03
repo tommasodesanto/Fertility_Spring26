@@ -30,7 +30,7 @@ def main() -> None:
     parser.add_argument("--setup", choices=["fast", "benchmark"], default="fast")
     parser.add_argument("--max-iter-eq", type=int, default=120)
     parser.add_argument("--n", type=int, default=10)
-    parser.add_argument("--json", type=Path, default=Path(__file__).resolve().parents[3] / "output/model/legacy_benchmarks/mini_parameter_solve_2026_05_05.json")
+    parser.add_argument("--json", type=Path, default=Path("benchmarks/mini_parameter_solve_2026_05_05.json"))
     args = parser.parse_args()
 
     setup = build_calibration_setup(args.setup)

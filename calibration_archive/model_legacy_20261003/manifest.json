@@ -699,8 +699,8 @@
       "intergen_surrogate_calibration.data",
       "intergen_surrogate_calibration.gp"
     ],
-    "runner_import_exports": "verified",
-    "runner_subprocess": "mock intercepted before launch; mechanics path and cwd verified",
+    "runner_import_exports": "Historical forwarder was verified during initial move but superseded by exact original authenticated runner restoration.",
+    "runner_subprocess": "Archived runnable copy path was checked by mock before the authenticated original runner was restored.",
     "helper_default_paths": {
       "code/model/tools/grad_descent_report.py": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/calibration_archive/model_legacy_20261003/benchmarks/grad_descent_bench.json",
       "code/model/tools/gradient_descent.py": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/legacy_benchmarks/grad_descent_bridge.json",
@@ -716,7 +716,8 @@
       "calibration_archive/model_legacy_20261003/benchmarks/diag11_lifecycle_python_x0.png",
       "calibration_archive/model_legacy_20261003/benchmarks/figures/mini_parameter_solve_10_fast_population.png",
       "calibration_archive/model_legacy_20261003/benchmarks/figures/scaled_psi_population_housing.png"
-    ]
+    ],
+    "helper_default_paths_status": "Interim path fixes checked, then reverted for frozen authentication; use explicit CLI path overrides documented in README."
   },
   "compatibility_changes": [
     {
@@ -726,7 +727,9 @@
       "exact_snapshot_path": "calibration_archive/model_legacy_20261003/source_snapshot/tools/grad_descent_report.py",
       "old_default": "benchmarks/grad_descent_bench.json",
       "new_default": "calibration_archive/model_legacy_20261003/benchmarks/grad_descent_bench.json",
-      "change": "Default path only; CLI overrides and numerical code unchanged."
+      "change": "Default path only; CLI overrides and numerical code unchanged.",
+      "status": "reverted: frozen authentication pins exact original helper bytes",
+      "effective_default": "benchmarks/grad_descent_bench.json"
     },
     {
       "path": "code/model/tools/gradient_descent.py",
@@ -735,7 +738,9 @@
       "exact_snapshot_path": "calibration_archive/model_legacy_20261003/source_snapshot/tools/gradient_descent.py",
       "old_default": "benchmarks/grad_descent_bridge.json",
       "new_default": "output/model/legacy_benchmarks/grad_descent_bridge.json",
-      "change": "Default path only; CLI overrides and numerical code unchanged."
+      "change": "Default path only; CLI overrides and numerical code unchanged.",
+      "status": "reverted: frozen authentication pins exact original helper bytes",
+      "effective_default": "benchmarks/grad_descent_bridge.json"
     },
     {
       "path": "code/model/tools/mini_parameter_solve.py",
@@ -744,7 +749,9 @@
       "exact_snapshot_path": "calibration_archive/model_legacy_20261003/source_snapshot/tools/mini_parameter_solve.py",
       "old_default": "benchmarks/mini_parameter_solve_2026_05_05.json",
       "new_default": "output/model/legacy_benchmarks/mini_parameter_solve_2026_05_05.json",
-      "change": "Default path only; CLI overrides and numerical code unchanged."
+      "change": "Default path only; CLI overrides and numerical code unchanged.",
+      "status": "reverted: frozen authentication pins exact original helper bytes",
+      "effective_default": "benchmarks/mini_parameter_solve_2026_05_05.json"
     },
     {
       "path": "code/model/tools/plot_lifecycle.py",
@@ -753,7 +760,146 @@
       "exact_snapshot_path": "calibration_archive/model_legacy_20261003/source_snapshot/tools/plot_lifecycle.py",
       "old_default": "benchmarks/diag11_lifecycle_python.png",
       "new_default": "output/model/legacy_benchmarks/diag11_lifecycle_python.png",
-      "change": "Default path only; CLI overrides and numerical code unchanged."
+      "change": "Default path only; CLI overrides and numerical code unchanged.",
+      "status": "reverted: frozen authentication pins exact original helper bytes",
+      "effective_default": "benchmarks/diag11_lifecycle_python.png"
     }
-  ]
+  ],
+  "authenticated_compatibility": {
+    "reason": "Frozen source authentication inventories include legacy Python source even without incoming imports. Preserve exact old paths/bytes; the packages are archived but remain authenticated compatibility dependencies.",
+    "source_manifest": "output/model/overnight_calibration_20260928/contract_v1/source_manifest.json",
+    "source_manifest_sha256": "07d84336a3112b251afe505908113d9c00585b91c34bd50f0dee108435db496d",
+    "controller_contract": "output/model/fertility_identification_20260928/contract_v1/contract.json",
+    "fixed_reference_manifest": "output/model/fertility_identification_20260928/fixed_reference_manifest.json",
+    "directory_symlinks": {
+      "code/model/intergen_housing_fertility_howard_test": "../../calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test",
+      "code/model/intergen_surrogate_calibration": "../../calibration_archive/model_legacy_20261003/intergen_surrogate_calibration"
+    },
+    "runner": "Exact original regular file restored at code/model/run_intergen_model.py; __file__ depth and pinned hash preserved. Archived runnable copy remains for historical settings edits.",
+    "verified_source_pins": [
+      {
+        "path": "code/model/intergen_housing_fertility_howard_test/__init__.py",
+        "sha256": "e8ffc646d33750e9224702d21278831d59b9856b6941a9e2e05f3c920618106b"
+      },
+      {
+        "path": "code/model/intergen_housing_fertility_howard_test/calibration.py",
+        "sha256": "75ee53f3b378acde2b5fa49ff0928daa6fb6c0be909f4caf145c3d680ff1f8a9"
+      },
+      {
+        "path": "code/model/intergen_housing_fertility_howard_test/cli.py",
+        "sha256": "50d35128b652f0521e8dbcf0ed8ea82ff96a3beaf2777a2ec8b0c39d2891ac54"
+      },
+      {
+        "path": "code/model/intergen_housing_fertility_howard_test/diagnostics.py",
+        "sha256": "6f076d7360e066b7a6c47d5a603e14340bd3971d7ab03a4e8c00f2bb50fe3d7d"
+      },
+      {
+        "path": "code/model/intergen_housing_fertility_howard_test/howard_speed_audit.py",
+        "sha256": "89bc9f519e27229368ef29faeee37094a7cc3411622efb4bc910198f301a32d1"
+      },
+      {
+        "path": "code/model/intergen_housing_fertility_howard_test/kernels.py",
+        "sha256": "35a846d5d0ab98f18aababdbe065848b44ca85fffa8b85557f1893ebb849be4a"
+      },
+      {
+        "path": "code/model/intergen_housing_fertility_howard_test/local_panel.py",
+        "sha256": "1486c3375f1ad376b213589916c7e92ec7be05441e3c88748961440463e6c022"
+      },
+      {
+        "path": "code/model/intergen_housing_fertility_howard_test/parameters.py",
+        "sha256": "487b69ed45fd62a7cdc4802bce5835fa9c9d5290a44f661a111e65a376a67eb4"
+      },
+      {
+        "path": "code/model/intergen_housing_fertility_howard_test/solver.py",
+        "sha256": "5a965a1d7ddd203579ef2ff0ad076fe62ee62a2d19917d4c63b8f621404704d9"
+      },
+      {
+        "path": "code/model/intergen_housing_fertility_howard_test/utils.py",
+        "sha256": "bd27d0ae8196d7f0ec99cbfdaeea63a09d7d0a6661ede64bdf34e80a79c9553a"
+      },
+      {
+        "path": "code/model/intergen_surrogate_calibration/__init__.py",
+        "sha256": "d1120db965291d10fccb3bbb75f8177e68dcfc8c34ece0f0774a387bef8508d6"
+      },
+      {
+        "path": "code/model/intergen_surrogate_calibration/bo.py",
+        "sha256": "3a82623d35710aa1719915b2a4f9aeb23a27053c89b4fa034ac2616d3cc9f8ef"
+      },
+      {
+        "path": "code/model/intergen_surrogate_calibration/data.py",
+        "sha256": "9abe3fdc51319032805987041ac1751b1cd6983ca5a32605f519a092a9e08dd5"
+      },
+      {
+        "path": "code/model/intergen_surrogate_calibration/emulator.py",
+        "sha256": "01f047907f250d31d49b2a825858acc64c09959a2289a3a98aff6e216daf6a98"
+      },
+      {
+        "path": "code/model/intergen_surrogate_calibration/gp.py",
+        "sha256": "969375cf73de30cacf4e25fe8357cd44bcbd8338485344df389ad7f698612888"
+      },
+      {
+        "path": "code/model/intergen_surrogate_calibration/identification.py",
+        "sha256": "98a8f9d785dc505b98d3faa7885fd1fae5f4737702b91a293d17b37712b76a12"
+      },
+      {
+        "path": "code/model/intergen_surrogate_calibration/run_surrogate_calibration.py",
+        "sha256": "637dc04181e1697dd6ca3513d9d6929a4b8e7ff408e1654ff3a7e55b15bbf826"
+      },
+      {
+        "path": "code/model/intergen_surrogate_calibration/validate_proposals.py",
+        "sha256": "9dcdda751d859efc4fd66c6493358f5015a17977dc7b8ba2f8952becb5725356"
+      },
+      {
+        "path": "code/model/run_intergen_model.py",
+        "sha256": "3db784bfbebf87d33d03a72696e0784ca1523007f566a655944e3f9df564bffd"
+      }
+    ],
+    "native_solve_count": 0,
+    "cleanup_owned_inventory_check": {
+      "source_manifest_sha256": "07d84336a3112b251afe505908113d9c00585b91c34bd50f0dee108435db496d",
+      "pinned_owned_paths": [
+        "code/model/intergen_housing_fertility_howard_test/__init__.py",
+        "code/model/intergen_housing_fertility_howard_test/calibration.py",
+        "code/model/intergen_housing_fertility_howard_test/cli.py",
+        "code/model/intergen_housing_fertility_howard_test/diagnostics.py",
+        "code/model/intergen_housing_fertility_howard_test/howard_speed_audit.py",
+        "code/model/intergen_housing_fertility_howard_test/kernels.py",
+        "code/model/intergen_housing_fertility_howard_test/local_panel.py",
+        "code/model/intergen_housing_fertility_howard_test/parameters.py",
+        "code/model/intergen_housing_fertility_howard_test/solver.py",
+        "code/model/intergen_housing_fertility_howard_test/utils.py",
+        "code/model/intergen_surrogate_calibration/__init__.py",
+        "code/model/intergen_surrogate_calibration/bo.py",
+        "code/model/intergen_surrogate_calibration/data.py",
+        "code/model/intergen_surrogate_calibration/emulator.py",
+        "code/model/intergen_surrogate_calibration/gp.py",
+        "code/model/intergen_surrogate_calibration/identification.py",
+        "code/model/intergen_surrogate_calibration/run_surrogate_calibration.py",
+        "code/model/intergen_surrogate_calibration/validate_proposals.py",
+        "code/model/run_intergen_model.py",
+        "code/model/tools/audit_intergen_housing_ladder.py",
+        "code/model/tools/grad_descent_report.py",
+        "code/model/tools/gradient_descent.py",
+        "code/model/tools/mini_parameter_solve.py",
+        "code/model/tools/plot_lifecycle.py"
+      ],
+      "mismatches_before": [
+        "code/model/tools/audit_intergen_housing_ladder.py",
+        "code/model/tools/grad_descent_report.py",
+        "code/model/tools/gradient_descent.py",
+        "code/model/tools/mini_parameter_solve.py",
+        "code/model/tools/plot_lifecycle.py"
+      ],
+      "restored_paths": [
+        "code/model/tools/audit_intergen_housing_ladder.py",
+        "code/model/tools/grad_descent_report.py",
+        "code/model/tools/gradient_descent.py",
+        "code/model/tools/mini_parameter_solve.py",
+        "code/model/tools/plot_lifecycle.py"
+      ],
+      "remaining_mismatches": [],
+      "original_source": "590c9f8b^",
+      "native_solve_count": 0
+    }
+  }
 }

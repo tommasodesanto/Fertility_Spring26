@@ -674,7 +674,7 @@ def write_plot_index(run_dir: Path, outdir: Path, payload: dict[str, Any], base:
         ".venv/bin/python tools/audit_intergen_housing_ladder.py",
         "```",
         "",
-        "For first-look policy/market plot refreshes, open `calibration_archive/model_legacy_20261003/run_intergen_model.py` and leave "
+        "For first-look policy/market plot refreshes, open `code/model/run_intergen_model.py` and leave "
         "`REFRESH_PLOTS_FROM_SAVED_SOLUTION = True` and `FAST_REFRESH_FROM_SAVED_SOLUTION = True`.",
         "",
     ]

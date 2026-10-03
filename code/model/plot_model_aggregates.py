@@ -22,7 +22,7 @@ _MODEL_DIR = Path(__file__).resolve().parent
 _TOOLS_DIR = _MODEL_DIR / "tools"
 
 
-def main() -> Path:
+def main(parameter_file=None) -> Path:
     """Load the completed saved run, write seven figures and aggregate data."""
     import sys
 
@@ -38,10 +38,15 @@ def main() -> Path:
     try:
         if RUN_DIRECTORY is None:
             from production.storage import load_latest
-            result, run_directory = load_latest(_MODEL_DIR.parents[1] / "output/model/local_solution")
+            from production.parameter_files import output_root_for, describe_saved_case
+            from run_model import PARAMETER_FILE
+            selected = PARAMETER_FILE if parameter_file is None else parameter_file
+            result, run_directory = load_latest(output_root_for(selected))
+            print(describe_saved_case(run_directory, selected))
         else:
             from production.storage import load_case
             result, run_directory = load_case(RUN_DIRECTORY)
+            print(f"Saved case: {Path(run_directory).resolve()}")
     except FileNotFoundError as exc:
         raise RuntimeError(
             "No completed local GE case is available. Open and run "
@@ -177,4 +182,7 @@ def main() -> Path:
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--params", help="Parameter file whose completed cache to plot")
+    main(parameter_file=parser.parse_args().params)

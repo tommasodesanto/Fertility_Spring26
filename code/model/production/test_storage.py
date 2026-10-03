@@ -161,8 +161,10 @@ def test_workflow_publishes_explorer_case_after_roundtrip(monkeypatch):
 
 def test_playbutton_gross_wage_edit_derives_disposable_income_and_pension():
     runner = runpy.run_path(Path(__file__).resolve().parents[1] / "run_model.py")
-    parameters = runner["PARAMETERS"]
-    external = runner["EXTERNAL_INPUTS"]
+    from production.parameter_files import load_parameter_file
+    config = load_parameter_file(runner["PARAMETER_FILE"])
+    parameters = config["parameters"]
+    external = config["external_inputs"]
     baseline, baseline_grid = load_inputs(parameters, external)
     edited = dict(external)
     edited["w_hat"] = [external["w_hat"][0] * 1.01]

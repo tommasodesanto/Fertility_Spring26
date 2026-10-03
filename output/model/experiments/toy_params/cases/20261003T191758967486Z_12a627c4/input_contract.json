@@ -1,0 +1,124 @@
+{
+  "budget_seconds": 900.0,
+  "closure": "fixed_h0",
+  "entry_law": "reference entrant-wealth mapping retained; no entry-law input was edited",
+  "external_inputs": {
+    "H0": [
+      6.40569359569417
+    ],
+    "R_gross": 1.08243216,
+    "alpha_cons": 0.733,
+    "c_min": 0.04,
+    "delta": 0.05545379079326218,
+    "eta_supply": [
+      1.75
+    ],
+    "fecundity_omega1": 0.02,
+    "fecundity_omega2": 0.134,
+    "income_age_profile": [
+      0.720554272517321,
+      0.720554272517321,
+      0.9422632794457273,
+      0.9422632794457273,
+      1.1085450346420322,
+      1.1085450346420322,
+      1.1085450346420322,
+      1.0919168591224018,
+      1.0919168591224018,
+      1.0919168591224018,
+      1.0364896073903,
+      1.0364896073903,
+      0.720554272517321,
+      0.720554272517321,
+      0.720554272517321,
+      0.720554272517321,
+      0.720554272517321
+    ],
+    "owner_size_cost": 0.0,
+    "owner_size_cost_power": 2.0,
+    "owner_size_cost_ref": 6.0,
+    "phi": [
+      0.8,
+      0.8,
+      0.8,
+      0.8
+    ],
+    "property_tax_lump_sum_transfer": 0.0,
+    "psi": 0.06,
+    "r_bar": [
+      0.16
+    ],
+    "retirement_income_z_scale": 0.0,
+    "sigma": 2.0,
+    "survival_probs": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      0.9391263063710125,
+      0.9184976343249724,
+      0.8849521927812863,
+      0.8300468061015381
+    ],
+    "tau_H": 0.042393443095490375,
+    "tau_pay": 0.08028070961950022,
+    "theta1": 0.008193084126995582,
+    "theta_n": 0.0,
+    "unsecured_credit_limit": 0.0,
+    "w_hat": [
+      1.0
+    ],
+    "xi_supply": [
+      0.63
+    ]
+  },
+  "fiscal_mapping": {
+    "edited_primitives": [],
+    "status": "reference earnings/payroll primitives retained; no fiscal mapping change",
+    "supplied_primitives": [
+      "income_age_profile",
+      "tau_pay",
+      "w_hat"
+    ]
+  },
+  "native_overrides": {},
+  "parameter_file": {
+    "config_sha256": "fe9dfe53150e09caf5d08a9c61b59ead0cfb4ec7b5e48e8c7c53dbae2ed1e334",
+    "config_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/parameters/toy_params.py",
+    "config_text": "\"\"\"Personal experimental copy of October 3 post-interest chain 13 inputs.\n\nOne stationary solution uses these supplied inputs; it does not search for a\nbetter parameter vector. Copy this file or edit toy_params.py for experiments.\n\"\"\"\n# PARAMETERS: ten calibration coordinates. beta_annual is annual; costs and\n# housing taste/fertility controls use the retained native model units.\nPARAMETERS = {\n    \"beta_annual\": 0.9663191380998087 - 0.001,  # Annual patience; the loader compounds to four years.\n    \"chi\": 1.0500762402240174,  # Weight on housing services in preferences.\n    \"first_birth_fixed_cost\": 0.3045994545418478,  # Native consumption cost of first birth.\n    \"kappa_fert\": 0.11652185618155607,  # First-birth choice dispersion.\n    \"kappa_fert_continuation\": 0.40070847699255835,  # Later-birth choice dispersion.\n    \"theta0\": 0.10097400014250629,  # Bequest motive strength.\n    \"h_P\": 2.593759507364224,  # Parenthood housing-floor jump, in rooms.\n    \"child_benefit_curvature\": 0.0629608477756522,  # Curvature of child utility.\n    \"tenure_choice_kappa\": 0.014123854930856623,  # Tenure choice dispersion.\n    \"psi_child\": 0.17892072066041628,  # Level of utility from children.\n}\n\n# EXTERNAL_INPUTS: period-native primitives (one period is four years).\n# phi is the financed share under the retained soft purchase rule; .8 gives\n# a (1-phi)=.2 down-payment threshold, not a strict liquid-cash requirement.\n# All four entries must match. unsecured_credit_limit is renter debt capacity in native wealth units.\n# R_gross is gross period interest; delta and tau_H are period rates; psi is\n# selling cost. H0 is the physical housing supply coefficient, not quantity.\n# w_hat/income_age_profile are gross-earnings controls; tau_pay is the fixed\n# payroll tax. Disposable income and a balanced pension are derived from them.\n# Housing is in rooms; entry wealth/income processes and the finite grid retain\n# the authenticated snapshot. Unsupported structural edits fail explicitly.\nEXTERNAL_INPUTS = {\n    # Preferences, equivalence-scale/bequest controls.\n    \"sigma\": 2.0, \"alpha_cons\": 0.733, \"theta1\": 0.008193084126995582,\n    \"theta_n\": 0.0,\n    # Finance and four-year interest/depreciation/property-tax rates.\n    \"R_gross\": 1.08243216, \"delta\": 0.05545379079326218,\n    \"tau_H\": 0.042393443095490375, \"psi\": 0.06, \"phi\": [0.8, 0.8, 0.8, 0.8],\n    # Credit capacity, in native wealth units.\n    \"unsecured_credit_limit\": 0.0, \"c_min\": 0.04, \"owner_size_cost\": 0.0,\n    \"owner_size_cost_power\": 2.0, \"owner_size_cost_ref\": 6.0,\n    \"retirement_income_z_scale\": 0.0, \"fecundity_omega1\": 0.02,\n    \"fecundity_omega2\": 0.134, \"property_tax_lump_sum_transfer\": 0.0,\n    # Housing supply: physical coefficient, normalization and elasticity.\n    \"H0\": [6.40569359569417], \"eta_supply\": [1.75], \"xi_supply\": [0.63],\n    \"r_bar\": [0.16],\n    # Gross earnings plus fixed payroll tax determine disposable income and\n    # the balanced initial pension. The entrant wealth law stays fixed.\n    \"w_hat\": [1.0], \"income_age_profile\": [\n        0.720554272517321, 0.720554272517321, 0.9422632794457273,\n        0.9422632794457273, 1.1085450346420322, 1.1085450346420322,\n        1.1085450346420322, 1.0919168591224018, 1.0919168591224018,\n        1.0919168591224018, 1.0364896073903, 1.0364896073903,\n        0.720554272517321, 0.720554272517321, 0.720554272517321,\n        0.720554272517321, 0.720554272517321],\n    \"tau_pay\": 0.08028070961950022,\n    # Four-year survival probabilities between successive age cells.\n    \"survival_probs\": [1.0] * 12 + [0.9391263063710125, 0.9184976343249724,\n        0.8849521927812863, 0.8300468061015381],\n}\n\nNATIVE_OVERRIDES = {}\n\nPRICE_GUESS = 0.7760569760205563\n\nCLOSURE = \"fixed_h0\"\n\n# Reserve time for the native selected repeat and reporting acceptance gates.\nBUDGET_SECONDS = 900\n\nPROVENANCE = {\n    \"role\": \"personal_experiment\",\n    \"reference\": \"post-interest soft chain 13; retained old wealth target\",\n    \"verified_receipt\": \"output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/production_alternative_chain_13/run/completed.json\",\n    \"economic_change\": \"annual beta lower by 0.001; other inputs unchanged\",\n    \"reference_native_loss\": 13.771131463467462,\n    'reference_receipt_sha256': '12880d38b335bab36c23f06f1272771d04db485bbe26bbc98c80b3acdb37cbdb',\n    'input_snapshot_sha256': '26ab79ace7df6b3429997ef43ba45598988abeafd662f82596ff16c83b35e448',\n    'input_arrays_sha256': '3877c55f683248d4b81352c04558b1cb93fb150e330bf805caa73ff72db57396',\n    'target_fingerprint': 'db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1',\n    'weight_fingerprint': '2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0',\n    \"not_certified\": \"global optimum, grid adequacy, transition or paper baseline\",\n}\n",
+    "provenance": {
+      "economic_change": "annual beta lower by 0.001; other inputs unchanged",
+      "input_arrays_sha256": "3877c55f683248d4b81352c04558b1cb93fb150e330bf805caa73ff72db57396",
+      "input_snapshot_sha256": "26ab79ace7df6b3429997ef43ba45598988abeafd662f82596ff16c83b35e448",
+      "not_certified": "global optimum, grid adequacy, transition or paper baseline",
+      "reference": "post-interest soft chain 13; retained old wealth target",
+      "reference_native_loss": 13.771131463467462,
+      "reference_receipt_sha256": "12880d38b335bab36c23f06f1272771d04db485bbe26bbc98c80b3acdb37cbdb",
+      "role": "personal_experiment",
+      "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+      "verified_receipt": "output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/production_alternative_chain_13/run/completed.json",
+      "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+    }
+  },
+  "parameters": {
+    "beta_annual": 0.9653191380998087,
+    "chi": 1.0500762402240174,
+    "child_benefit_curvature": 0.0629608477756522,
+    "first_birth_fixed_cost": 0.3045994545418478,
+    "h_P": 2.593759507364224,
+    "kappa_fert": 0.11652185618155607,
+    "kappa_fert_continuation": 0.40070847699255835,
+    "psi_child": 0.17892072066041628,
+    "tenure_choice_kappa": 0.014123854930856623,
+    "theta0": 0.10097400014250629
+  },
+  "price_guess": 0.7760569760205563
+}

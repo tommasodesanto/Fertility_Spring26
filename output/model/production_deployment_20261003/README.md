@@ -92,3 +92,37 @@ MODEL_PY=output/model/publication_refactor_20260929/local_env_v1/venv313/bin/pyt
 ```
 
 The plotter and explorer commands inspect saved results. `run_model.py` launches a new stationary solve. No new cluster job, calibration search, or dated transition was launched for this deployment.
+
+## External parameter files and personal experiments
+
+The runner now selects `code/model/parameters/best_params.py` or an independent
+editable copy such as `toy_params.py`. The [current code map](../../../code/model/README.md)
+and [parameter guide](../../../code/model/parameters/README.md) give the commands.
+The default still uses the same verified chain-13 inputs. Other files have
+separate latest pointers, plots and explorer configurations; edited presets are
+saved with their exact text and hash, and cache readers disclose later edits.
+
+The [workflow receipt](parameter_file_workflow.json) records 40 passing focused
+tests, a zero-solve canonical calibration initialization, both cached plotter
+commands and the toy browser identity. One complete experimental beta-minus-0.001
+GE run converged with 17 standard, 8 policy and 7 aggregate plots. Its full
+[target table](../experiments/toy_params/latest/target_fit.csv),
+[parameter table](../experiments/toy_params/latest/parameters.csv) and
+[summary](../experiments/toy_params/latest/SUMMARY.md) remain separate from the
+production cache; the latter's original latest pointer and NPZ hash were unchanged.
+This is a parameter experiment, not a new calibration or accepted specification.
+
+The initial end-to-end attempts exposed frozen authentication dependencies on
+archived source and a native verification reserve exceeding the proposed
+600-second cap. All 24 cleanup-affected frozen pins now match again; the
+[archive record](../../../calibration_archive/model_legacy_20261003/README.md)
+identifies compatibility paths that must remain. The successful toy run used a
+900-second cap. Failed attempts were retained and never published as latest.
+
+Future canonical calibration runs export a run-local `best_params.py` only
+after a fresh native check, exact repeat and matching complete input/grid
+fingerprint. The export preserves effective fixed primitives, the verified price
+and derived H0. Synthetic tests cover altered caller inputs and reject mismatched
+or missing identity; no new optimization was run to test export. The historical
+preparation's zero unsecured-credit binding is now explicit, exactly as in the
+authenticated predecessor. Existing live cluster bundles were not changed.

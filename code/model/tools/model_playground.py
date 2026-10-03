@@ -19,7 +19,6 @@ for _thread_var in ("NUMBA_NUM_THREADS", "OMP_NUM_THREADS", "OPENBLAS_NUM_THREAD
                     "MKL_NUM_THREADS", "VECLIB_MAXIMUM_THREADS", "NUMEXPR_NUM_THREADS"):
     os.environ[_thread_var] = "1"
 
-import numpy as np
 
 ROOT = Path(__file__).resolve().parents[3]
 EXPLORER_CASES = ROOT / "output/model/fixed_reference_economics_20260928/soft_timing_review_v1/explorer_cases.json"
@@ -70,6 +69,7 @@ _RECOMPUTED_FIELDS = {"q", "user_cost_rate", "rho", "rho_hat", "eps_fert",
 
 
 def _same_value(left, right) -> bool:
+    import numpy as np
     try:
         return bool(np.array_equal(np.asarray(left), np.asarray(right), equal_nan=True))
     except TypeError:
@@ -86,6 +86,7 @@ def _policy_tools():
 
 def bind_parameters(P: SimpleNamespace, parameters: dict[str, float]) -> SimpleNamespace:
     """Copy P and apply the ten native calibration coordinates without clamping."""
+    import numpy as np
     if set(parameters) != set(PARAMETER_ORDER):
         missing = sorted(set(PARAMETER_ORDER) - set(parameters))
         extra = sorted(set(parameters) - set(PARAMETER_ORDER))
@@ -126,6 +127,7 @@ def _selected_parameters() -> dict[str, float]:
 
 def load_saved_solution(case: str = "soft") -> SimpleNamespace:
     """Load a saved explorer case after checking its recorded SHA-256; no solve."""
+    import numpy as np
     config = json.loads(EXPLORER_CASES.read_text())
     spec = next((item for item in config["cases"] if item["id"] == case), None)
     if spec is None:
@@ -165,6 +167,7 @@ def load_reference_model() -> tuple[SimpleNamespace, np.ndarray, SimpleNamespace
     The returned price is in ``P.reference_price``; the closure's derived H0 is
     retained in ``P.H0``.
     """
+    import numpy as np
     _install_read_only_overlay()
     sys.path.insert(0, str(V2_DIR))
     import run_psi as v2
@@ -230,6 +233,7 @@ load_legacy_authenticated_reference_model = load_reference_model
 
 def solve_at_price(P: SimpleNamespace, b_grid: np.ndarray, solver: SimpleNamespace, price: float) -> SimpleNamespace:
     """Run one explicit one-core stationary solve at ``price``; no market root."""
+    import numpy as np
     if not np.isfinite(price) or price <= 0:
         raise ValueError("price must be finite and positive")
     shared = solver.precompute_shared(P, b_grid)
@@ -252,6 +256,7 @@ class ModelResult:
         return getattr(self.solution, name)
 
     def aggregates(self):
+        import numpy as np
         aggregate_solution = _policy_tools().aggregate_solution
         return aggregate_solution(
             self.solution, houses=np.asarray(self.P.H_own, dtype=float),
@@ -259,6 +264,7 @@ class ModelResult:
         )
 
     def plot_policy(self, **kwargs):
+        import numpy as np
         plot_policy = _policy_tools().plot_policy
         options = dict(houses=np.asarray(self.P.H_own, dtype=float),
                        age_start=int(self.P.age_start),
@@ -267,6 +273,7 @@ class ModelResult:
         return plot_policy(self.solution, **options)
 
     def plot_aggregates(self, *, wealth_range="central"):
+        import numpy as np
         plot_aggregates = _policy_tools().plot_aggregates
         return plot_aggregates(
             self.solution, houses=np.asarray(self.P.H_own, dtype=float),
@@ -355,19 +362,24 @@ class AuthenticatedLegacyModelPlayground:
 class CanonicalModelPlayground:
     """Editable partial-equilibrium access through the production inputs/engine."""
 
-    def __init__(self):
+    def __init__(self, parameter_file=None):
+        import numpy as np
         from production import equilibrium
-        from production.inputs import DEFAULT_PARAMETERS, DEFAULT_PRICE, load_inputs
-        self.parameters = copy.deepcopy(DEFAULT_PARAMETERS)
-        self.params = self.parameters  # preserve the established interactive spelling
-        self.external_inputs = {}
-        self.native_overrides = {}
+        from production.inputs import load_inputs
+        from production.parameter_files import load_parameter_file
+        from run_model import PARAMETER_FILE
+        self.parameter_file = PARAMETER_FILE if parameter_file is None else parameter_file
+        self._preset = load_parameter_file(self.parameter_file)
+        self.parameters = copy.deepcopy(self._preset["parameters"])
+        self.params = self.parameters
+        self.external_inputs = copy.deepcopy(self._preset["external_inputs"])
+        self.native_overrides = copy.deepcopy(self._preset["native_overrides"])
         self.P, self.b_grid = load_inputs(self.parameters, self.external_inputs,
-                                          self.native_overrides)
+                                         self.native_overrides)
         self._initial_P = copy.deepcopy(self.P)
         self._initial_grid = np.asarray(self.b_grid).copy()
         self.solver = equilibrium
-        self.reference_price = float(DEFAULT_PRICE)
+        self.reference_price = float(self._preset["price_guess"])
         self.last_result = None
 
     def _direct_native_edits(self):
@@ -409,8 +421,18 @@ class CanonicalModelPlayground:
         native = copy.deepcopy(self.native_overrides)
         native.update(native_overrides or {})
         for name, value in self._direct_native_edits().items():
-            if name in native and not _same_value(native[name], value):
-                raise ValueError(f"Conflicting native override and direct P edit for {name}")
+            # A direct edit replaces unchanged preset defaults. Independent
+            # dictionary or per-call edits remain explicit conflicting controls.
+            for controls, preset, supplied in (
+                    (external, self._preset["external_inputs"], external_inputs or {}),
+                    (native, self._preset["native_overrides"], native_overrides or {})):
+                if name in controls and not _same_value(controls[name], value):
+                    unchanged_default = (name in preset
+                                         and _same_value(controls[name], preset[name])
+                                         and name not in supplied)
+                    if not unchanged_default:
+                        raise ValueError(f"Conflicting input and direct P edit for {name}")
+                    del controls[name]
             native[name] = value
         P, grid = load_inputs(parameters, external, native)
         solve_price = self.reference_price if price is None else float(price)
@@ -421,19 +443,22 @@ class CanonicalModelPlayground:
         return result
 
     def reset_parameters(self):
-        from production.inputs import DEFAULT_PARAMETERS
         self.parameters.clear()
-        self.parameters.update(copy.deepcopy(DEFAULT_PARAMETERS))
+        self.parameters.update(copy.deepcopy(self._preset["parameters"]))
 
     def reset(self):
-        from production.inputs import DEFAULT_PARAMETERS, DEFAULT_PRICE, load_inputs
+        import numpy as np
+        from production.inputs import load_inputs
         self.reset_parameters()
         self.external_inputs.clear()
+        self.external_inputs.update(copy.deepcopy(self._preset["external_inputs"]))
         self.native_overrides.clear()
-        self.P, self.b_grid = load_inputs(self.parameters, {}, {})
+        self.native_overrides.update(copy.deepcopy(self._preset["native_overrides"]))
+        self.P, self.b_grid = load_inputs(self.parameters, self.external_inputs,
+                                        self.native_overrides)
         self._initial_P = copy.deepcopy(self.P)
         self._initial_grid = np.asarray(self.b_grid).copy()
-        self.reference_price = float(DEFAULT_PRICE)
+        self.reference_price = float(self._preset["price_guess"])
 
     def saved_result(self, case="soft"):
         solution = load_saved_solution(case)
@@ -469,31 +494,33 @@ LegacyModelPlayground = AuthenticatedLegacyModelPlayground
 ModelPlayground = CanonicalModelPlayground
 
 
-def main() -> None:
+def main(argv=None) -> None:
     global sol, model, P
-    if len(sys.argv) > 1 and sys.argv[1] in {"-h", "--help"}:
-        print(__doc__)
-        print("Interactive: output/model/publication_refactor_20260929/local_env_v1/venv313/bin/python -i code/model/tools/model_playground.py")
-        return
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--params", help="Parameter file for inputs and saved cache")
+    args = parser.parse_args(argv)
+    model_dir = str(ROOT / "code/model")
+    if model_dir not in sys.path:
+        sys.path.insert(0, model_dir)
+    from run_model import PARAMETER_FILE
+    from production.parameter_files import output_root_for, describe_saved_case
+    from production.storage import load_latest
+    selected = PARAMETER_FILE if args.params is None else args.params
     try:
-        from production.storage import load_latest
-        cached, _ = load_latest(ROOT / "output/model/local_solution")
-        sol = cached.solution
-        price, timing = cached.price, "inherited_only"
-        b_grid = cached.b_grid
-        case_name = "latest local stationary GE"
+        cached, case_dir = load_latest(output_root_for(selected))
     except FileNotFoundError:
-        sol = load_saved_solution()
-        price, timing = sol.price, sol.timing
-        b_grid = sol.b_grid
-        case_name = f"historical saved case {sol.case_id}"
-    print(f"Saved case: {case_name}; price={price:.15g}; timing={timing}")
-    print(f"V shape={sol.V.shape}; wealth grid nodes={len(b_grid)}; arrays loaded with no solve")
-    model = CanonicalModelPlayground()
+        sol = None
+        print(f"No saved solution yet for {selected}; ready for an explicit fixed-price solve.")
+    else:
+        sol = cached.solution
+        print(describe_saved_case(case_dir, selected))
+        print(f"Saved price: {cached.price:.15g}")
+        print(f"V shape={sol.V.shape}; wealth grid nodes={len(cached.b_grid)}; arrays loaded with no solve")
+    model = CanonicalModelPlayground(parameter_file=selected)
     P = model.P
     model.show_parameters()
     print("Ready: model.solve(), model.params['beta_annual']=0.98, result.aggregates(), result.plot_policy(), result.plot_aggregates()")
-    print("Open Python: output/model/publication_refactor_20260929/local_env_v1/venv313/bin/python -i code/model/tools/model_playground.py")
 
 
 if __name__ == "__main__":

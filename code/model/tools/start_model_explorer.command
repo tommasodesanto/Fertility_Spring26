@@ -3,23 +3,26 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../../.." && pwd)"
 PYTHON="$ROOT/code/model/.venv/bin/python"
-HISTORICAL_CONFIG="$ROOT/output/model/fixed_reference_economics_20260928/soft_timing_review_v1/explorer_cases.json"
-LATEST_CONFIG="$ROOT/output/model/local_solution/latest/explorer_cases.json"
-if [[ $# -gt 1 ]]; then
-  echo "Usage: $0 [explorer_cases.json]" >&2
-  exit 2
-elif [[ $# -eq 1 ]]; then
+usage() { echo "Usage: $0 [--params parameter_file.py | explorer_cases.json]"; }
+if [[ $# -eq 1 && ( "$1" == --help || "$1" == -h ) ]]; then
+  usage
+  exit 0
+elif [[ $# -eq 2 && "$1" == --params ]]; then
+  PARAMS="$2"
+  CONFIG="$("$PYTHON" -c 'import sys; from pathlib import Path; sys.path.insert(0, sys.argv[1]); from production.parameter_files import output_root_for, describe_saved_case; root = output_root_for(sys.argv[2]); print(describe_saved_case(root / "latest", sys.argv[2]), file=sys.stderr); print(root / "latest/explorer_cases.json")' "$ROOT/code/model" "$PARAMS")"
+elif [[ $# -eq 0 ]]; then
+  CONFIG="$("$PYTHON" -c 'import sys; sys.path.insert(0, sys.argv[1]); from run_model import PARAMETER_FILE; from production.parameter_files import output_root_for, describe_saved_case; root = output_root_for(PARAMETER_FILE); print(describe_saved_case(root / "latest", PARAMETER_FILE), file=sys.stderr); print(root / "latest/explorer_cases.json")' "$ROOT/code/model")"
+elif [[ $# -eq 1 && "$1" != --* ]]; then
   CONFIG="$1"
   if [[ "$CONFIG" != /* ]]; then
     CONFIG="$(pwd)/$CONFIG"
   fi
-elif [[ -f "$LATEST_CONFIG" ]]; then
-  CONFIG="$LATEST_CONFIG"
 else
-  CONFIG="$HISTORICAL_CONFIG"
+  usage >&2
+  exit 2
 fi
 if [[ ! -f "$CONFIG" ]]; then
-  echo "Explorer case config not found: $CONFIG" >&2
+  echo "No completed saved explorer config found: $CONFIG. Run run_model.py with the matching parameter file first." >&2
   exit 1
 fi
 # Resolve latest once, then compare the exact saved configuration with live servers.

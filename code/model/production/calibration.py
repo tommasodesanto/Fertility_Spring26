@@ -65,6 +65,43 @@ def _serial(value):
     if isinstance(value, (tuple, list)): return [_serial(v) for v in value]
     return value
 
+def effective_input_fingerprint(P, grid):
+    """Hash exact candidate-bound caller inputs before any solver mutations.
+
+    Only the native diagnostics-output directory is normalized. Array identity
+    includes dtype, shape and contents; optional scalar infinities/NaNs have
+    deterministic binary representations rather than invalid JSON numbers.
+    """
+    import struct
+
+    def encode(value):
+        if isinstance(value, np.ndarray):
+            content = ([encode(item) for item in value.flat] if value.dtype.hasobject
+                       else hashlib.sha256(value.tobytes(order='C')).hexdigest())
+            return ['ndarray', value.dtype.str, list(value.shape), content]
+        if isinstance(value, np.generic):
+            return ['numpy_scalar', value.dtype.str, value.tobytes().hex()]
+        if value is None or isinstance(value, (str, bool, int)):
+            return [type(value).__name__, value]
+        if isinstance(value, float):
+            return ['float', struct.pack('>d', value).hex()]
+        if isinstance(value, Path):
+            return ['Path', str(value)]
+        if isinstance(value, Mapping):
+            if any(not isinstance(key, str) for key in value):
+                raise TypeError('input identity requires string mapping keys')
+            return ['mapping', {key: encode(item) for key, item in value.items()}]
+        if isinstance(value, (list, tuple)):
+            return [type(value).__name__, [encode(item) for item in value]]
+        raise TypeError('unsupported input identity type: ' + type(value).__name__)
+
+    fields = dict(vars(P))
+    if 'native_inherited_distribution_evidence_dir' in fields:
+        fields['native_inherited_distribution_evidence_dir'] = ''
+    return _canonical(dict(schema='canonical_caller_inputs_v1',
+                           parameters=encode(fields), wealth_grid=encode(np.asarray(grid))))
+
+
 def make_evaluator(out, lane, P, grid, deadline, price_start=None, *, native_runner=None,
                    exploratory=False, solver: Callable[..., Mapping[str, Any]] | None = None,
                    target_fingerprint=None, weight_fingerprint=None):
@@ -98,6 +135,7 @@ def make_evaluator(out, lane, P, grid, deadline, price_start=None, *, native_run
         from .inputs import bind_parameters
         b_grid = base_grid.copy()
         model_P = bind_parameters(base_P, b_grid, point)
+        input_fingerprint = effective_input_fingerprint(model_P, b_grid)
         result = solver(model_P, b_grid, out=destination / str(label), price_start=start_price,
                         budget_seconds=effective_end - time.time(), max_lifecycle=32, closure='population_one')
         if result.get('status', 'passed') != 'passed':
@@ -115,6 +153,7 @@ def make_evaluator(out, lane, P, grid, deadline, price_start=None, *, native_run
             population=1., normalization='N0=1', H0_derived=h0, price=float(result['price']), starting_price=start_price,
             target_fit=fits, parameter_table=parameters, closure=closure, lifecycle_solves=int(result['lifecycle_solves']),
             target_fingerprint=target_pin, weight_fingerprint=weight_pin,
+            input_fingerprint=input_fingerprint, input_fingerprint_schema='canonical_caller_inputs_v1',
             parameter_report_bound_semantics='reference calibration search bounds are advisory in GE; enforced by the calibration adapter only')
         receipt = _serial(receipt)
         json.dumps(receipt, allow_nan=False)
@@ -162,3 +201,139 @@ if __name__ == '__main__':
     parser.add_argument('--self-test', action='store_true', required=True)
     parser.parse_args()
     print(json.dumps(check_adapter_without_solves(), indent=2))
+
+
+def export_verified_parameters(destination, completed_receipt, P, grid, *, budget_seconds=1800):
+    """Export a run-local input file after the final fresh native acceptance.
+
+    Only the adopted post-interest/old-target production contract is supported.
+    Preserve caller fixed primitives, the verified price and derived H0. Reload
+    the file and compare every effective input/grid before publishing; unsupported
+    contracts or primitive mappings fail rather than reset to reference values.
+    This never promotes or overwrites code/model/parameters/best_params.py.
+    """
+    import pprint
+    from .inputs import bind_parameters
+    from .parameter_files import BEST_FILE, PARAMETER_ROOT, load_parameter_file
+
+    destination = Path(destination).resolve()
+    if destination.name != 'best_params.py' or destination.is_relative_to(PARAMETER_ROOT.resolve()):
+        raise ValueError('calibration export must be a run-local best_params.py')
+    if destination == BEST_FILE.resolve() or destination.exists():
+        raise ValueError('refusing to overwrite an existing parameter file')
+    source = Path(completed_receipt).resolve(strict=True)
+    receipt = json.loads(source.read_text())
+    if receipt.get('status') not in ('selected_numerically_verified', 'selected_native_passed_search_loss_differs'):
+        raise ValueError('parameter export requires a completed fresh native selected-point check')
+    if receipt.get('arm') != 'alternative' or receipt.get('selected_evaluator') != 'full_native':
+        raise ValueError('only the adopted post-interest production selected point can be exported')
+    target, target_pin, weight_pin, bounds = _contract()
+    if receipt.get('target_fingerprint') != target_pin or receipt.get('weight_fingerprint') != weight_pin:
+        raise RuntimeError('calibration export target/weight contract differs from production')
+    selected = receipt.get('selected', {})
+    verification = receipt.get('selected_postcheck', {})
+    repeat = receipt.get('repeat', {})
+    if selected.get('status') != 'passed' or verification.get('status') != 'passed' or repeat.get('status') != 'exact_full_ge_repeat_passed':
+        raise ValueError('accepted selected point and exact native repeat are required')
+    if repeat.get('target_rows') != 14 or repeat.get('parameter_rows') != 31 or len(repeat.get('standard_plot_hashes', {})) != 17:
+        raise ValueError('native repeat table/plot verification is incomplete')
+    point = selected.get('parameters', {})
+    if set(point) != set(bounds):
+        raise ValueError('export requires the complete ten-coordinate selected point')
+    for key, value in point.items():
+        if not math.isfinite(float(value)) or not bounds[key][0] <= float(value) <= bounds[key][1]:
+            raise ValueError('selected export coordinate out of bounds: ' + key)
+    if verification.get('input_fingerprint_schema') != 'canonical_caller_inputs_v1' or not verification.get('input_fingerprint'):
+        raise ValueError('native receipt lacks authenticated caller-input identity; historical receipts cannot export')
+    effective = bind_parameters(P, np.asarray(grid), point)
+    candidate_fingerprint = effective_input_fingerprint(effective, grid)
+    if candidate_fingerprint != verification['input_fingerprint']:
+        raise ValueError('export caller inputs/grid differ from the fresh native verified candidate')
+    report = Path(verification['report'])
+    residual, fits, rows = residual_from_report(report, target)
+    loss = float(residual @ residual)
+    if abs(loss - float(receipt['native_loss'])) > 1e-8:
+        raise RuntimeError('completed native export loss differs from verified report')
+    reported = {row['parameter']: float(row['estimate']) for row in rows}
+    for key, value in point.items():
+        if reported.get(key) != float(value):
+            raise RuntimeError('native report selected-coordinate drift: ' + key)
+    h0 = float(verification['H0_derived'])
+    price = float(verification['price'])
+    if not H0_BOUNDS[0] <= h0 <= H0_BOUNDS[1] or not math.isfinite(price) or price <= 0:
+        raise ValueError('verified native H0/price is inadmissible')
+    if reported.get('H0') != h0:
+        raise RuntimeError('native report derived H0 differs from selected verification')
+    effective.H0 = np.full_like(effective.H0, h0)
+    # This is a diagnostics output directory, not an economic primitive. Native
+    # solves always replace it with the new run's stage directory.
+    effective.native_inherited_distribution_evidence_dir = ''
+    _, reference_grid = load_inputs(point)
+    if not np.array_equal(np.asarray(grid), reference_grid):
+        raise ValueError('cannot export a changed wealth grid using the authenticated input snapshot')
+
+    def same(a, b):
+        if isinstance(a, np.ndarray) or isinstance(b, np.ndarray):
+            return isinstance(a, np.ndarray) and isinstance(b, np.ndarray) and a.dtype == b.dtype and np.array_equal(a, b, equal_nan=True)
+        if isinstance(a, Mapping) and isinstance(b, Mapping):
+            return set(a) == set(b) and all(same(a[k], b[k]) for k in a)
+        if isinstance(a, (list, tuple)) and isinstance(b, type(a)):
+            return len(a) == len(b) and all(same(x, y) for x, y in zip(a, b))
+        if isinstance(a, float) and isinstance(b, float) and math.isnan(a) and math.isnan(b):
+            return True
+        return type(a) == type(b) and a == b
+
+    editable = load_parameter_file(BEST_FILE)
+    external = {key: _serial(getattr(effective, key)) for key in editable['external_inputs']}
+    reconstructed, _ = load_inputs(point, external)
+    derived = {'q', 'user_cost_rate', 'rho', 'rho_hat', 'eps_fert', 'income', 'pension', 'pension_by_loc'}
+    mapped = {'beta', 'hbar_first_child_jump'} | (set(point) - {'beta_annual', 'h_P'})
+    native = {}
+    differences = []
+    for key, value in vars(effective).items():
+        if not hasattr(reconstructed, key):
+            differences.append(key + ' (absent from reference snapshot)')
+        elif not same(value, getattr(reconstructed, key)):
+            if key in derived | mapped:
+                differences.append(key + ' (derived input cannot be exported independently)')
+            else:
+                native[key] = _serial(value)
+    if differences:
+        raise ValueError('cannot faithfully export effective inputs: ' + ', '.join(differences))
+    provenance = dict(role='run_local_verified_calibration', completed_receipt=str(source),
+        completed_receipt_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
+        target_fingerprint=target_pin, weight_fingerprint=weight_pin, native_loss=loss,
+        arm='alternative', chain=receipt.get('chain'), global_default_promoted=False,
+        normalized_population=1., native_repeat='exact_full_ge_repeat_passed',
+        input_snapshot_sha256=hashlib.sha256(SNAPSHOT.read_bytes()).hexdigest(),
+        native_candidate_input_fingerprint=candidate_fingerprint,
+        native_candidate_input_fingerprint_schema='canonical_caller_inputs_v1',
+        exported_input_fingerprint=effective_input_fingerprint(effective, grid),
+        wealth_grid_sha256=hashlib.sha256(np.asarray(grid).tobytes()).hexdigest(),
+        effective_field_count=len(vars(effective)),
+        output_only_evidence_directory_reset=True)
+    config = dict(PARAMETERS=dict(point), EXTERNAL_INPUTS=external, NATIVE_OVERRIDES=native,
+                  PRICE_GUESS=price, CLOSURE='fixed_h0', BUDGET_SECONDS=budget_seconds, PROVENANCE=provenance)
+    text = ('"""Run-local verified calibration inputs; no global promotion.\n'
+            'The stationary solver uses these inputs without searching parameters.\n"""\n\n')
+    text += '\n\n'.join(key + ' = ' + pprint.pformat(value, sort_dicts=False, width=88) for key, value in config.items()) + '\n'
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    temporary = destination.with_name('.best_params_pending.py')
+    if temporary.exists():
+        raise ValueError('pending parameter export already exists')
+    try:
+        temporary.write_text(text)
+        loaded = load_parameter_file(temporary)
+        restored, restored_grid = load_inputs(loaded['parameters'], loaded['external_inputs'], loaded['native_overrides'])
+        mismatches = sorted(set(vars(effective)) ^ set(vars(restored)))
+        mismatches += [key for key in vars(effective) if hasattr(restored, key) and not same(getattr(effective, key), getattr(restored, key))]
+        if mismatches or not np.array_equal(restored_grid, np.asarray(grid)):
+            raise ValueError('export roundtrip differs from effective inputs: ' + ', '.join(mismatches))
+        # Exclusive creation also rejects a file created while validation ran.
+        with destination.open('x') as stream:
+            stream.write(text)
+    finally:
+        temporary.unlink(missing_ok=True)
+    return dict(path=str(destination), sha256=hashlib.sha256(destination.read_bytes()).hexdigest(),
+                effective_field_count=len(vars(effective)), full_input_roundtrip=True,
+                global_default_promoted=False, target_fingerprint=target_pin, weight_fingerprint=weight_pin)

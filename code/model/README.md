@@ -5,13 +5,14 @@
 ## Current stationary GE
 
 - [`run_model.py`](run_model.py) is the editable local general-equilibrium entry point. It calls the canonical implementation in [`production/`](production/README.md): selected inputs, equilibrium and price root, native household and forward-distribution engine, reporting, and storage. The current runner uses the fixed-H0 closure and the adopted post-interest, soft-constraint chain-13 input snapshot.
-- Each successful solve publishes a validated case under `output/model/local_solution/cases/` and updates `output/model/local_solution/latest`. The case includes full fit and parameter tables, saved arrays, 17 standard diagnostic plots, 8 policy plots, 7 aggregate plots, and explorer assets. `latest` is the saved October 3 case until a later successful run publishes another.
+- Each successful solve publishes a validated case under `output/model/local_solution/cases/` and updates `output/model/local_solution/latest`. The case includes full fit and parameter tables, saved arrays, 17 standard diagnostic plots, 8 policy plots, 7 aggregate plots, and explorer assets.
 - [`plot_model_policies.py`](plot_model_policies.py) and [`plot_model_aggregates.py`](plot_model_aggregates.py) read `latest` without another solve. The [production guide](production/README.md) gives the authenticated Python command, cache behavior, supported inputs, and exact numerical limits.
 - The default local GE uses `fixed_h0`: it holds the physical housing-supply coefficient fixed while solving the birth-renewal price root. Its reported implied H0 and population scale N are computed algebraically from those same solved policies and price, without a second solve. The `population_one` calibration normalization instead fixes household scale at one and derives H0. This accounting relies on the documented conditional scale-independence and fixed-payroll assumptions; it does not certify another equilibrium.
 
 | File | Responsibility |
 |---|---|
 | [`production/inputs.py`](production/inputs.py) | Loads and validates the selected primitive and parameter snapshot. |
+| [`production/parameter_files.py`](production/parameter_files.py) | Reads data-only parameter files, validates their inputs, and routes their output directory. |
 | [`production/equilibrium.py`](production/equilibrium.py) | Runs the stationary renewal-price search and its acceptance gates. |
 | [`production/native_phase_b.py`](production/native_phase_b.py) | Implements the bounded stationary closure and phase-level equilibrium checks. |
 | [`production/native_price.py`](production/native_price.py) | Solves the native household and distribution problem at one price. |
@@ -21,9 +22,26 @@
 | [`production/reporting.py`](production/reporting.py) | Binds the authenticated empirical observers and reporting tables. |
 | [`production/workflow.py`](production/workflow.py) / [`production/storage.py`](production/storage.py) | Validates a local run, writes its case artifacts, and publishes the `latest` pointer only after successful storage checks. |
 
+## Edit inputs and run one case
+
+The editable, complete input files are [`parameters/best_params.py`](parameters/best_params.py) and [`parameters/toy_params.py`](parameters/toy_params.py). The first is the adopted working chain-13 point under the retained wealth target; it is not a global optimum. The toy file is a separate copy with annual beta lower by 0.001. Both files use the same engine and grid. Edit the toy copy for a personal experiment; parameter files separate inputs and outputs, not source code.
+
+Each file sets ten `PARAMETERS`, fixed economic `EXTERNAL_INPUTS`, supported advanced `NATIVE_OVERRIDES`, a starting price, closure, and time budget. For example, edit `PARAMETERS["beta_annual"]` to change discounting. In the retained soft purchase rule, `EXTERNAL_INPUTS["phi"] = [0.75] * 4` selects a uniform financed share; its complementary 25% is the nominal non-financed share, not a strict liquid-cash threshold. The four values must match. `unsecured_credit_limit` controls renter debt capacity. Derived earnings and pension fields should not be edited directly; change the source earnings or payroll inputs. The file format accepts dictionaries, comments, literals, arithmetic, and list repetition, then validates fields and shapes before a solve.
+
+From the project root, one command runs one stationary GE using the selected file; it does not search over parameters. Plotting and explorer commands inspect that file's saved result without solving again:
+
+```sh
+PROJECT=/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26
+export NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
+PYTHON="$PROJECT/output/model/publication_refactor_20260929/local_env_v1/venv313/bin/python"
+"$PYTHON" "$PROJECT/code/model/run_model.py" --params toy_params.py
+```
+
+Pass the same `--params toy_params.py` option to the policy plotter, aggregate plotter, or explorer to inspect that experiment's saved case. Relative names resolve inside `code/model/parameters/`, regardless of the shell's current directory. Only the exact canonical `best_params.py` routes to `output/model/local_solution/`; most other files route to `output/model/experiments/<file-stem>/`. Noncanonical files named `best_params.py` receive a source-specific experiment directory to avoid collisions. A plotter or explorer with no cache for its selected file reports the missing case instead of opening another one. See [`parameters/README.md`](parameters/README.md) for the full input contract and [`production/README.md`](production/README.md) for solver and calibration details.
+
 ## Quick household inspection and explorer
 
-For fixed-price partial-equilibrium experiments, launch [`start_model_playground.command`](tools/start_model_playground.command), which opens [`model_playground.py`](tools/model_playground.py) in the authenticated Python 3.13 environment. Its initialization loads the production inputs and available saved case but does not solve. The [playground guide](tools/MODEL_PLAYGROUND.md) has the examples and interpretation limits.
+For fixed-price partial-equilibrium experiments, launch [`start_model_playground.command`](tools/start_model_playground.command), which opens [`model_playground.py`](tools/model_playground.py) in the authenticated Python 3.13 environment. Its initialization loads the selected input file and matching saved case but does not solve. To choose an alternate file, use `start_model_playground.command --params toy_params.py`. If that file has no cached solution, the console reports that fact, leaves `sol=None`, and still creates `model` from the selected inputs for an explicit fixed-price solve. The [playground guide](tools/MODEL_PLAYGROUND.md) has the examples and interpretation limits.
 
 ```python
 model.show_parameters()
@@ -40,6 +58,7 @@ The saved-case browser requires its local server. Run [`start_model_explorer.com
 ## Calibration, transitions, and experiments
 
 - `production/calibration.py` validates the pinned target and weight fingerprints before solving and uses the selected chain-13 packet. The full fit has 14 rows and the parameter table has 31; see the live status and linked collection receipts for values and restrictions.
+- A parameter-file run evaluates one input vector. The outer calibration search is [`experiments/purchase_timing_sandbox/calibrate.py`](experiments/purchase_timing_sandbox/calibrate.py): bounded Nelder–Mead changes the ten coordinates and calls the adapter in `production/calibration.py`, which evaluates each point with the same stationary-GE price-root solver under the calibration's `population_one` closure. Target scoring follows each GE solve; it is not the price-root criterion. A selected point is exported to a run-local `best_params.py` only after fresh native acceptance and an exact repeat. It does not replace the canonical adopted file automatically.
 - Maintained dated-transition entry points are [`tools/e5f_current_transition_runtime.py`](tools/e5f_current_transition_runtime.py), [`tools/run_e5f_current_transition_smoke.py`](tools/run_e5f_current_transition_smoke.py), and [`tools/run_e5f_current_transition.py`](tools/run_e5f_current_transition.py). Their presence or importability does not certify a transition. Read the current status and the named transition packet before proposing or launching a run.
 - Separate post-interest continuation searches use the retained old wealth target and an experimental new wealth target. They are distinct contracts; neither changes the working anchor by itself. Read [`CALIBRATION_STATUS.md`](../../CALIBRATION_STATUS.md) and its submission receipts for current array identities and queue state.
 - Active and historical experiment code is indexed by its owning packet in `CALIBRATION_STATUS.md`; do not infer that an old README paragraph, script, or output folder represents current authorization or live state. Detailed development chronology formerly in this file is retained in the archived copy linked above.
@@ -62,10 +81,19 @@ None is an alternate default for `run_model.py`.
 The Howard test and surrogate calibration code are archived with their READMEs
 at [`intergen_housing_fertility_howard_test/`](../../calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/README.md)
 and [`intergen_surrogate_calibration/`](../../calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/README.md).
+Frozen source authentication still pins ten Howard files, eight surrogate
+files, and the original June runner. The old
+[`code/model/intergen_housing_fertility_howard_test/`](intergen_housing_fertility_howard_test/)
+and [`code/model/intergen_surrogate_calibration/`](intergen_surrogate_calibration/)
+paths are compatibility symlinks into the archive; the original
+[`code/model/run_intergen_model.py`](run_intergen_model.py) remains a regular
+file because the authenticated historical runner depends on its source path.
+Keep these references intact for source authentication and historical use;
+none is a canonical stationary production engine. The pinned source list is
+[`source_manifest.json`](../../output/model/overnight_calibration_20260928/contract_v1/source_manifest.json).
 The old May [`PLAN.md`](../../calibration_archive/model_legacy_20261003/PLAN.md)
-and [`run_intergen_model.py`](../../calibration_archive/model_legacy_20261003/run_intergen_model.py)
-implementation are historical; [`code/model/run_intergen_model.py`](run_intergen_model.py)
-is only a compatibility forwarder. Frozen observer, oracle, and reporting
+and the archived [`run_intergen_model.py`](../../calibration_archive/model_legacy_20261003/run_intergen_model.py)
+remain available for historical use. Frozen observer, oracle, and reporting
 artifacts under `output/model/fixed_reference_economics_20260928/` remain
 read-only dependencies where current code imports or authenticates them.
 

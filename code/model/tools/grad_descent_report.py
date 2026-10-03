@@ -33,7 +33,7 @@ def solve_and_get_moments(theta_full: np.ndarray, P_base, names, max_iter_eq: in
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--gd-json", type=Path, default=Path(__file__).resolve().parents[3] / "calibration_archive/model_legacy_20261003/benchmarks/grad_descent_bench.json")
+    parser.add_argument("--gd-json", type=Path, default=Path("benchmarks/grad_descent_bench.json"))
     parser.add_argument("--setup", default="benchmark")
     args = parser.parse_args()
 

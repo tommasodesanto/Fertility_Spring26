@@ -336,19 +336,24 @@ def _plot_run(result, run_dir: Path) -> list[Path]:
     return written
 
 
-def main() -> list[Path]:
+def main(parameter_file=None) -> list[Path]:
     """Load the selected saved run and write eight editable policy figures."""
     if str(TOOLS_DIR) not in sys.path:
         sys.path.insert(0, str(TOOLS_DIR))
-    if str(ROOT) not in sys.path:
-        sys.path.insert(0, str(ROOT))
+    if str(TOOLS_DIR.parent) not in sys.path:
+        sys.path.insert(0, str(TOOLS_DIR.parent))
     try:
         if RUN_DIRECTORY is None:
             from production.storage import load_latest
-            result, run_dir = load_latest(ROOT / "output/model/local_solution")
+            from production.parameter_files import output_root_for, describe_saved_case
+            from run_model import PARAMETER_FILE
+            selected = PARAMETER_FILE if parameter_file is None else parameter_file
+            result, run_dir = load_latest(output_root_for(selected))
+            print(describe_saved_case(run_dir, selected))
         else:
             from production.storage import load_case
             result, run_dir = load_case(RUN_DIRECTORY)
+            print(f"Saved case: {Path(run_dir).resolve()}")
     except ImportError as exc:
         raise RuntimeError(
             "Saved-run loading is unavailable. Save a completed run with "
@@ -365,4 +370,7 @@ def main() -> list[Path]:
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--params", help="Parameter file whose completed cache to plot")
+    main(parameter_file=parser.parse_args().params)

@@ -71,8 +71,14 @@
   "not_archived": "Authenticated source dependencies, production engine, maintained transition sources, active experiments, frozen reference and retained output bundles remain in place. The separate reviewed legacy archive records the obsolete packages, benchmark evidence, plan and runner implementation moved October 3.",
   "legacy_archive": {
     "path": "calibration_archive/model_legacy_20261003/",
-    "role": "Unpromoted Howard experiment, surrogate methods prototype, May benchmark evidence, superseded port plan, and June diagnostic runner implementation; per-file hashes and zero-solve import/path checks in manifest.json.",
-    "compatibility_entrypoint": "code/model/run_intergen_model.py",
-    "historical_benchmark_helpers": "One default input now reads the archive; three future output defaults use output/model/legacy_benchmarks/."
+    "role": "Historical Howard experiment, surrogate methods prototype, May benchmark evidence, superseded port plan, and June diagnostic runner implementation. The archived runnable copy and per-file hashes are recorded in manifest.json.",
+    "pinned_source_manifest": "output/model/overnight_calibration_20260928/contract_v1/source_manifest.json",
+    "retained_compatibility_paths": [
+      "code/model/intergen_housing_fertility_howard_test/",
+      "code/model/intergen_surrogate_calibration/",
+      "code/model/run_intergen_model.py"
+    ],
+    "compatibility_note": "The pinned manifest authenticates ten Howard files, eight surrogate files, and the original June runner. The two package paths are relative symlinks into this archive; run_intergen_model.py remains the byte-identical original regular file because its source path and __file__ semantics are pinned. These are historical compatibility dependencies, not production defaults.",
+    "historical_benchmark_helpers": "All four helpers and the audit helper retain their original defaults to preserve frozen source pins. For historical use, pass --gd-json, --out, or --json explicitly to direct inputs and outputs to the archived benchmark packet or output/model/legacy_benchmarks/."
   }
 }

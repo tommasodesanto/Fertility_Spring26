@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "verified_date": "2026-10-03",
+  "economic_change": "Experimental annual beta lower by 0.001 only; no adoption",
+  "production_latest": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/local_solution/cases/20261003T175652812716Z_b1c72f13",
+  "production_npz_sha256": "27cae50d61fe07ce44733360b9f1583b4e229581661694a39e9b579820d5e8b6",
+  "production_preserved": true,
+  "toy_case": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/toy_params/cases/20261003T191758967486Z_12a627c4",
+  "toy_input_contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/toy_params/latest/input_contract.json",
+  "toy_parameter_file_sha256": "fe9dfe53150e09caf5d08a9c61b59ead0cfb4ec7b5e48e8c7c53dbae2ed1e334",
+  "figures": {
+    "standard_diagnostics": 17,
+    "policy_plots": 8,
+    "aggregate_plots": 7
+  },
+  "tables": {
+    "target_fit.csv": 14,
+    "parameters.csv": 31
+  },
+  "focused_tests": {
+    "passed": 40,
+    "seconds": 3.43
+  },
+  "cached_plotter_cli": "both passed; no model solves",
+  "explorer": {
+    "url": "http://127.0.0.1:8767",
+    "config_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/toy_params/cases/20261003T191758967486Z_12a627c4/explorer_cases.json",
+    "native_solves": 0
+  },
+  "calibration_preflight": {
+    "status": "evaluator_initialized_zero_solves",
+    "lifecycle_solves": 0,
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/production_deployment_20261003/parameter_files_calibration_preflight_chain0/completed.json"
+  },
+  "calibration_export": "Mocked native receipts validate full caller identity before export; no new calibration optimization run",
+  "restored_frozen_source_pins": 24,
+  "notes": [
+    "Three toy initialization attempts failed before lifecycle solves: missing archived paths, changed pinned helper source, and insufficient600second native reserve. Final toy budget900seconds.",
+    "Two zero-solve calibration preflight invocations rejected invalid requested reserve/chain; final chain0 preflight passed.",
+    "Historical benchmark helpers retain frozen defaults; use explicit archived input and output overrides.",
+    "After the successful solve, two parameter comments were corrected (owner-service premium and successful-first-birth value cost). Current and saved parameter-file ASTs match exactly; immutable saved source retained. Hash-based cache readers correctly disclose the file edit."
+  ],
+  "current_toy_parameter_file_sha256": "81cec287b9035cb98bdd76b82a44a8d764da71f638d35ca15d5c21ba7361042f",
+  "postsolve_comments_only": true
+}

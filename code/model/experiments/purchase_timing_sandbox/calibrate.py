@@ -223,6 +223,22 @@ def selected_repeat_path(report):
     return repeat
 
 
+def bind_canonical_credit(Q):
+    """Materialize the retained zero-credit arm before its production adapter.
+
+    Authenticated utility_floor_round2_v1/runner.py lines 196 and 217 bind
+    corrected credit at zero; inputs.ARMS fixes every retained arm at zero.
+    Historical preparation leaves this field absent until that adapter runs.
+    """
+    production_root = str(ROOT / "code/model")
+    if production_root not in sys.path:
+        sys.path.insert(0, production_root)
+    from production.credit import bind_engine_credit
+    if getattr(Q, "unsecured_credit_limit", 0.0) != 0.0:
+        raise RuntimeError("Canonical retained calibration arm requires zero unsecured credit")
+    return bind_engine_credit(Q, "corrected", 0.0)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--arm", choices=("original", "alternative"), required=True)
@@ -358,6 +374,10 @@ def main():
     # Historical preparation authenticates the adopted utility/credit fields;
     # only the evaluator determines which engine executes lifecycle solves.
     Q = v2.native.utility_checks(P, grid, lane, out)
+    if args.canonical_production:
+        # Complete the authenticated credit contract, without changing other
+        # caller primitives or the historical-reference branch.
+        Q = bind_canonical_credit(Q)
     if args.postcheck_only:
         search_path = args.search_receipt.resolve()
         search = json.loads(search_path.read_text())
@@ -562,6 +582,15 @@ def main():
             target_fit=fits, parameters=parameters, repeat=repeat,
             smoke_fast_full_comparison=smoke_comparison,
             elapsed_seconds=time.time() - start))
+        if args.canonical_production:
+            # The search checkpoint remains provisional. Export only after the
+            # child native check, exact repeat and final receipt are accepted.
+            # This run-local file never promotes the adopted global default.
+            from production.calibration import export_verified_parameters
+            export = export_verified_parameters(out / "best_params.py", out / "completed.json", Q, grid)
+            # Keep the source receipt immutable: its hash is embedded in the
+            # exported file. Store the export receipt separately, without a cycle.
+            v2.write(out / "parameter_file_export.json", export)
         heartbeat("completed", completed_full_ge=len(cases), objective_calls=calls, native_loss=native_loss)
     except BaseException as exc:
         v2.write(out / "failure.json", dict(type=type(exc).__name__, message=str(exc),
