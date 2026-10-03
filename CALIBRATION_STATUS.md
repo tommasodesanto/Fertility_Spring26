@@ -15,6 +15,10 @@ have 48 terminal chains: 46 passed fresh native selected-point checks and two
 original-timing loss is **18.44530519407432** (chain 15); the experimental
 alternative-timing loss is **13.771131463467462** (chain 13). These searches
 do not certify optimizer convergence or adopt either result as a new reference.
+An isolated post-interest-timing recalibration with a narrower experimental
+PSID wealth numerator has also finished: ten of ten chains passed native
+verification; its lowest new-contract loss is **48.170707377609034** (chain 2).
+The target contracts differ, so these native losses cannot be ranked directly.
 
 ## Reference identities and navigation
 
@@ -24,6 +28,7 @@ do not certify optimizer convergence or adopt either result as a new reference.
 | September 28 fixed-economics reference | Older equilibrium/normalization and utility objects. A refactor oracle, not interchangeable with the current soft calibration. | [refactor report](output/model/publication_refactor_20260929/REPORT.md), [refactor runtime](code/model/refactor_lab/README.md) |
 | Current soft selected point | Original timing; chain 16 / case 0046; verified loss 23.078309. | [selection](output/model/fixed_reference_economics_20260928/soft_timing_review_v1/soft_selected.json), [verification](output/model/fixed_reference_economics_20260928/soft_timing_review_v1/soft_verification.json) |
 | Matched timing comparison | Soft constraint, original versus experimental post-interest transaction timing; 24 matched starts per arm, 48 terminal chains, 46 verified. Lowest verified losses 18.445305 and 13.771131. Neither fit is adopted. | [48-chain receipt](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/collection.json), [complete fit and parameter readout](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/RESULTS.md), [driver plan](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/driver_plan.json) |
+| Experimental wealth-numerator comparison | Post-interest timing with one new PSID aggregate wealth/earnings target; ten verified chains, lowest new-contract loss 48.170707. No adoption. | [ten-chain verification](output/model/fixed_reference_economics_20260928/alternative_wealth_local_20261003_v1/collection/verification.json), [three-arm comparison and full tables](output/model/fixed_reference_economics_20260928/alternative_wealth_local_20261003_v1/comparison/COMPARISON.md) |
 | Historical purchase-rule comparison | Fresh hard and quarter results: 88.588403 and 48.319938. Older policy exercises use earlier points with losses 97.011220 and 51.556036. | [fresh calibration readout](output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/README.md) |
 | Historical transition initializer | Normalized-v1 chain 20 / case 0028_nm, loss 30.371888. Its one-shock transition attempt failed acceptance. | [transition deployment/readout](output/model/transition_readiness_v1/normalized_restart_v1/resume_preparation/deployment/v2/README.md) |
 
@@ -331,6 +336,40 @@ Use the owning “Compare interest timing and credit” chat and its existing
 monitor; do not create a duplicate monitor from this documentation refresh.
 Older “prepared/not submitted” prose in design notes is superseded by the
 structured deployment receipt.
+
+## Experimental narrower wealth target: completed local comparison
+
+**Verified October 3, 2026, 08:07 New York.** The isolated local post-interest
+transaction-timing search ended with ten terminal chains, all ten passing fresh
+native selected-point and exact-repeat checks. Chain 2 has the lowest verified
+loss **48.170707377609034** under its *experimental* target contract. The
+new pooled 2005/2007 PSID aggregate net-wealth/annual gross-labor-earnings
+target is **4.45838713455674**, excluding business/farm equity, other real
+estate and vehicles while retaining catch-all other assets; the model moment
+at chain 2 is **6.561732864006831**. The old numerical weight
+**7.595098472533724** was retained for a controlled sensitivity, and no new
+standard error has been estimated. Entry wealth and income distributions, the
+bequest target and all other targets, model observers and economic inputs remain
+unchanged relative to the alternative-timing arm. The model bequest denominator
+and the new PSID wealth numerator have not been reconciled.
+
+The [complete new-target collection](output/model/fixed_reference_economics_20260928/alternative_wealth_local_20261003_v1/collection/RESULTS.md)
+includes the authoritative 14-row fit and 31 parameter records; its native
+`target_fit.csv` uses the **old** wealth target only as a diagnostic, while
+`target_fit_new_contract.csv` is authoritative for this experimental arm. The
+[three-arm comparison](output/model/fixed_reference_economics_20260928/alternative_wealth_local_20261003_v1/comparison/COMPARISON.md)
+links every target, model value, gap, weight, contribution, parameter bound and
+source hash. Arithmetic rescoring of the same saved moments yields old-contract
+scores **18.445305**, **13.771131**, and **15.580542**, and new-contract scores
+**51.765179**, **53.064444**, and **48.170707**, for original timing,
+alternative timing and new-wealth chain 2 respectively. These scores are not
+new solves. The age-25 children-ever-born stock is **0.535240** at chain 2
+against **0.809528**, essentially unresolved across the three points. The ten
+positive-weight moments equal the ten free coordinates in count, but informative
+rank and optimizer convergence are uncertified. The unequal 48-chain and
+10-chain budgets do not establish that the new wealth target is unreachable.
+Neither the target nor the chain-2 parameter vector is adopted; the working
+soft selected point remains unchanged.
 
 ## Interactive inspection and numerical readiness
 
