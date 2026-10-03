@@ -4,6 +4,14 @@ One-off review, audit, and testing prompts live here instead of the repository
 root. They are useful context, but they are not active model or calibration
 state.
 
+- `purchase_constraint_annualization_review_20261002.md`: self-contained
+  ChatGPT Pro review prompt on four-year purchase financing, consumption,
+  residual wealth, and the distinction between an ending debt floor and a
+  purchase-date down-payment requirement. Includes exact equations, a checked
+  numerical example, competing arguments, and primary-source links. Excludes
+  the quarter-saving rule and calibration results. The companion `.txt` is the
+  Oracle-rendered paste packet. Prepared for Tommaso to submit manually.
+
 - `credit_ge_population_transition_review_20261001.md`: self-contained current
   experimental model and evidence for a ChatGPT Pro review of mortgage LTV,
   equilibrium population, and a proposed transition. Includes the complete
