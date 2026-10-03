@@ -1,0 +1,15 @@
+{
+  "state": "corrected_archive_upload_rejected_by_auto_review",
+  "production_submitted": false,
+  "smoke_submitted": false,
+  "remote_preflight_passed": false,
+  "initial_remote_stage_archive_sha256": "a10ec1dff0b22c26535d30450882736bf71ae9aba7b6020a6baf41b83694ae8f",
+  "initial_stage_host_inventory": "passed",
+  "initial_stage_preflight_failure": "Launcher expected hash for unchanged arrays.npz transposed two characters; corrected locally",
+  "initial_remote_archive_preserved_as": "/scratch/td2248/projects/soft_timing_calibration_20261002_v1/stage_attempt1.tar.gz",
+  "corrected_local_archive_sha256": "73b9a7fe6be223eeaad14a05372b8cf86fdf9a7768016e4f04aaa63944548ceb",
+  "corrected_archive_uploaded": false,
+  "approval_rejection": "Automatic approval review rejected source-archive upload because it could include sensitive project code or data and found no explicit authorization for the payload and remote destination.",
+  "requires": "Explicit authorization or accepted evidence before retrying corrected upload; then zero-solve Apptainer preflight, lead-reviewed two-task smoke, and separate production review",
+  "no_auto_retry": true
+}

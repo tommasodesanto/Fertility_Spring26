@@ -1,3 +1,36 @@
+## October 2 evening — soft financing selected; timing calibration pending
+
+Tommaso has selected the soft purchase-financing rule for the current work.
+The new authorized comparison continues calibration under the original interest
+timing and separately calibrates experimental post-interest housing transactions.
+Both retain the same ten free coordinates, complete target/weight contract,
+earnings, nonnegative mean-preserving entrant distribution, physical child room
+floor, constant child utility scale, financed share 0.8 and population normalization.
+The alternative changes the transaction budget from
+\(b'=R(b+S-Q)+y-c-K\) to \(b'=Rb+S-Q+y-c-K\), with matching forward maps
+and seller-solvency accounting. It is not an adopted timing specification.
+
+The authenticated soft starting point is chain16/case0046. Full fit and parameter
+tables are in [the soft review packet](output/model/fixed_reference_economics_20260928/soft_timing_review_v1/).
+The matched search plan is in
+[driver_plan.json](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/driver_plan.json):
+four starts per timing arm, six hours and 250 objective calls per chain,
+1,800 seconds reserved for native selected-point verification, one core and
+24 GiB per chain on Torch. No new Slurm jobs have been submitted. Local lead
+review corrected completion-record, smoke-path and checkpoint-identity issues;
+both arms passed refreshed zero-solve checks. Production submission now requires
+both native smokes on the exact staged source. Remote preflight and exact-loop
+native smokes remain pending.
+Automatic approval review blocked uploading the corrected isolated source archive;
+see [deployment status and recovery](code/cluster/soft_timing_calibration/README.md).
+
+The explorer and direct Python entry are documented in
+[MODEL_PLAYGROUND.md](code/model/tools/MODEL_PLAYGROUND.md).
+The saved asset grid has 120 nodes from -12 to 3,000. Zero mass at its upper
+endpoint does not establish grid convergence; no endpoint-extension or occupied
+region refinement test has been completed. Historical hard/quarter results below
+remain evidence for those experiments, not the current selected financing rule.
+
 ## October 2 — purchase-rule diagnostics and overnight work
 
 **Fresh calibration search complete, 15:29 New York.** Slurm array **19040483**

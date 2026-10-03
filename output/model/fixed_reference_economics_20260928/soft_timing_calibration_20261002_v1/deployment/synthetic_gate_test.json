@@ -1,0 +1,9 @@
+{
+  "test": "python3 code/cluster/soft_timing_calibration/test_verify_smoke_gate.py",
+  "fixture": "synthetic only; no model solves or empirical data",
+  "exit_code": 0,
+  "accepted": ["two valid smoke receipts"],
+  "rejected": ["mixed weight fingerprint", "missing standard plot", "changed stage inventory after smoke"],
+  "production_submission_tested": false,
+  "remote_smoke_tested": false
+}
