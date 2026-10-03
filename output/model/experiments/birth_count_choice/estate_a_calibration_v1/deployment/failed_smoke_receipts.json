@@ -1,0 +1,91 @@
+{
+  "job_array": "19124185",
+  "status": "failed_before_model_solve",
+  "reason": "Missing local_runtime/bootstrap.py in immutable deployment; repaired separately in v2",
+  "arms": {
+    "binary": {
+      "launcher_start.json": {
+        "mode": "smoke",
+        "arm": "binary",
+        "chain": 0,
+        "start_epoch": 1791063215,
+        "deadline_epoch": 1791068615,
+        "slurm_job_id": "19124212",
+        "cpus": 1,
+        "memory_GiB": 24,
+        "wall_seconds": 5400,
+        "maximum_objective_calls": 500,
+        "final_native_reserve_seconds": 1800,
+        "stage_inventory_sha256": "cce0237945c4b6d521f55b1f02c749fde3756088816043b36160440086c8b198"
+      },
+      "launcher_terminal.json": {
+        "exit_code": 1,
+        "mode": "smoke",
+        "arm": "binary",
+        "chain": 0,
+        "start_epoch": 1791063215,
+        "deadline_epoch": 1791068615,
+        "finished_epoch": 1791063222.682038,
+        "slurm_job_id": "19124212",
+        "no_auto_retry": true
+      },
+      "run/heartbeat.json": {
+        "arm": "binary",
+        "chain": 0,
+        "completed_full_ge": 0,
+        "epoch": 1791063222.3500476,
+        "error": "[Errno 2] No such file or directory: '/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/local_runtime/bootstrap.py'",
+        "objective_calls": 1,
+        "status": "failed"
+      },
+      "run/failure.json": {
+        "elapsed_seconds": 2.1649959087371826,
+        "message": "[Errno 2] No such file or directory: '/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/local_runtime/bootstrap.py'",
+        "no_auto_retry": true,
+        "type": "FileNotFoundError"
+      }
+    },
+    "count3": {
+      "launcher_start.json": {
+        "mode": "smoke",
+        "arm": "count3",
+        "chain": 0,
+        "start_epoch": 1791063214,
+        "deadline_epoch": 1791068614,
+        "slurm_job_id": "19124185",
+        "cpus": 1,
+        "memory_GiB": 24,
+        "wall_seconds": 5400,
+        "maximum_objective_calls": 500,
+        "final_native_reserve_seconds": 1800,
+        "stage_inventory_sha256": "cce0237945c4b6d521f55b1f02c749fde3756088816043b36160440086c8b198"
+      },
+      "launcher_terminal.json": {
+        "exit_code": 1,
+        "mode": "smoke",
+        "arm": "count3",
+        "chain": 0,
+        "start_epoch": 1791063214,
+        "deadline_epoch": 1791068614,
+        "finished_epoch": 1791063223.5088685,
+        "slurm_job_id": "19124185",
+        "no_auto_retry": true
+      },
+      "run/heartbeat.json": {
+        "arm": "count3",
+        "chain": 0,
+        "completed_full_ge": 0,
+        "epoch": 1791063222.8689156,
+        "error": "[Errno 2] No such file or directory: '/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/local_runtime/bootstrap.py'",
+        "objective_calls": 1,
+        "status": "failed"
+      },
+      "run/failure.json": {
+        "elapsed_seconds": 2.7786998748779297,
+        "message": "[Errno 2] No such file or directory: '/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/local_runtime/bootstrap.py'",
+        "no_auto_retry": true,
+        "type": "FileNotFoundError"
+      }
+    }
+  }
+}

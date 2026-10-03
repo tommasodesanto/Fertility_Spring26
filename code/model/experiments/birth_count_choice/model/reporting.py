@@ -119,6 +119,10 @@ def build_context(P,grid,out,*,price_start,deadline,max_lifecycle,closure):
     _install_recent_observer(context,facade,out)
     from .observer_adapters import install_birth_count_observers
     install_birth_count_observers(context, facade, out)
+    from .estate_audit_adapter import install_estate_audit
+    install_estate_audit(context, P, out)
+    from .estate_observer_adapter import install_estate_observer
+    install_estate_observer(context, P, facade, out)
     context.update(P=copy.deepcopy(P),b_grid=np.asarray(grid).copy(),selected_d_bar=float(P.unsecured_credit_limit),
         reference_psi=float(P.psi_child),expected_dimensions={'wealth_grid_nodes':int(P.Nb),'income_states':int(P.Nz)},
         free_coordinates=list(DEFAULT_PARAMETERS),price_start=float(price_start),phase_b_max_new_lifecycle=int(max_lifecycle),

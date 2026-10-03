@@ -41,26 +41,64 @@ The canonical local stationary-GE implementation and editable runner are indexed
 
 ## Working economic and accounting contract
 
-**Experimental birth-count menu, verified October 3, 2026, 16:33 New York:**
-the isolated [copy](code/model/experiments/birth_count_choice/README.md) permits
-intended births $k=0,\ldots,3-n$ with $X\sim\mathrm{Binomial}(k,\pi_j)$ using
-the retained age-specific success probability. All ten chain-13 coordinates,
-fixed inputs, targets and weights remain unchanged. The first GE converged in
-eight lifecycle solves (including an exact repeat): price **0.9990392274**,
-renewal residual **1.49e-8**, zero housing residual, PAYGO residual **1.07e-13**.
-Unrecalibrated loss is **1672.491299**, versus the matched binary-menu
-**13.771131**. Mean children by age 25 falls from **0.5338** to **0.3947**
-(target **0.8095**); mean first-birth age rises from **25.9677** to **28.4196**
-(target **25.9763**). This is an experiment, not an adopted specification or
-a credit counterfactual; no recalibration has run. The
-[complete 14-target/31-parameter comparison](output/model/experiments/birth_count_choice/current_params_v1/RESULTS.md)
-and [saved solution with 32 plots](output/model/experiments/birth_count_choice/current_params_v1/latest/SUMMARY.md)
-record the result. The copy preserves the binary solver's no-birth treatment
-of negligible all-zero dead menus under its unchanged 1e-12 mass gate; the
-triggering diagnostic contained 2.97e-38 mass. Four descriptive engine hazard
-arrays now use pre-birth exposure; active empirical target definitions remain
-separate and unchanged. Production code, parameters and latest result remain
-unchanged.
+**Isolated birth-menu and Estate-A comparison, verified October 3, 2026,
+17:32 New York.** The author selected Estate A for this isolated test:
+\(W=b'+(1-\psi)Ph'\), with selling cost \(\psi=0.06\) and no additional interest on \(b'\), applied consistently
+in utility, native death-flow accounting and the empirical bequest observer.
+There is no adult estate-recipient mapping. Both one-intended-birth and
+up-to-three-intended-birth arms retain all ten current chain-13 coordinates,
+fixed inputs, timing and grid. The only empirical target change for common
+scoring is aggregate wealth/earnings **4.45838713455674**; every other target and
+weight, including the provisional SCF bequest target, is retained. This is a
+fixed-parameter experiment, not recalibration or a promoted default.
+
+| Intended-birth cap | No A, common new-target loss | Estate A, common new-target loss | Ownership at age 82, no A | Ownership at age 82, A |
+|---|---:|---:|---:|---:|
+| One | 53.064 | 57.595 | 98.739% | 96.225% |
+| Three | 1714.289 | 1728.298 | 97.897% | 95.010% |
+
+The A runs' old-wealth-target diagnostic losses are **16.895** and **1685.273**;
+these are distinct scoring contracts. The [complete four-arm fit and parameter
+readout](output/model/experiments/birth_count_choice/estate_a_v1/RESULTS.md)
+contains every 14-row fit and 31-row parameter table, plus raw/net estates and
+age-82 financial saving. [Source identities and exact
+results](output/model/experiments/birth_count_choice/estate_a_v1/comparison.json)
+and [estate diagnostics](output/model/experiments/birth_count_choice/estate_a_v1/paired_estate_diagnostics.csv)
+are retained. A reduces terminal ownership but does not eliminate its high
+level or settle SCF wealth-scope, recipient or creditor comparability. The
+one-birth A price and ownership match the independently saved Claude-A solution;
+its utility-only gross-flow report is replaced by a net-flow calculation in
+[the separate comparison](output/model/experiments/birth_count_choice/estate_a_v1/claude_a_comparison.csv).
+
+Both A GEs passed native acceptance and exact repeats, using nine and eight
+lifecycle solves, respectively, and each wrote all 32 standard/policy/aggregate
+plots. The final [35-test log](output/model/experiments/birth_count_choice/estate_a_v1/tests_verified.log)
+passed; [36 production source hashes](output/model/experiments/birth_count_choice/estate_a_v1/source_snapshot.json)
+remained unchanged. All-zero negligible dead menus retain the existing 1e-12
+mass gate. Descriptive count hazards use pre-birth exposure; active empirical
+target observers remain separate. The original no-A count experiment and its
+full fit remain in [current_params_v1](output/model/experiments/birth_count_choice/current_params_v1/RESULTS.md).
+
+**Matched Estate-A recalibration: smoke running as of 17:44 New York;
+ten-task production array not released.** The [start plan](output/model/experiments/birth_count_choice/estate_a_calibration_v1/start_plan.json)
+uses five identical starts per arm, ten tasks total, population-one GE, the same
+new-target contract and bounds, and beta range \([0.93,0.99]\). Starts include
+the preserved provisional new-wealth candidate (chain 6, `0060_nm`, search loss
+**22.141841386410267**), current anchor and three perturbations. That paused
+candidate awaits fresh native verification; [all targets, parameters, actual
+bounds and provenance](output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/PAUSED_BEST.md)
+are recorded. The previous old calibration searches are stopped; there is no
+automatic restart authorization. Both remote arms passed full reporting-context
+preflight with zero solves. The immutable v2 package has 412 pinned files
+(inventory SHA `74a961a913d94e4d337cbe075e8ef3c0bd22b9ef6798ca792dea90266553d2c4`).
+Smoke array **19124485**, tasks **0 and 5**, is **RUNNING**:
+1.5-hour limit, two objective calls plus fresh GE verification per task.
+[Submission receipt](output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt2/smoke_submission_receipt.json)
+records the launch. Both smokes must pass before the ten-task production release.
+The first smoke array 19124185 failed before solving because the package
+omitted a compatibility bootstrap; its source and failure receipts are preserved.
+The v2 package includes that file and its two authenticated dependencies.
+Smoke jobs are validation, not completed calibration results.
 
 These are the retained objects behind the soft-constraint comparison. Numerical
 examples explicitly sourced to the earlier 23.078309 point below remain

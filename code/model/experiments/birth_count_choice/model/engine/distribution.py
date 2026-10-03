@@ -10,7 +10,7 @@ from . import joint_nested, birth_count
 from .adult_entry import adjusted_births, potential_entry_households
 from .warm_price import search_warm_price
 from .child_preferences import apply_child_preferences
-from .parameters import (bequest_utility_net_active, child_earnings_multiplier, child_earnings_penalty_active, children_at_home_count, estate_housing_value, estate_receiver_active, estate_transfer_at_age, get_fecundity_by_age, independent_child_maturation_active, mortgage_stay_floor_active, parent_age_maturation_active, readiness_childless_states, readiness_cumulative_probability, readiness_gate_active, readiness_settled_state, readiness_transition_hazard, rental_wedge_active, unsecured_debt_floor)
+from .parameters import (bequest_utility_net_active, child_earnings_multiplier, child_earnings_penalty_active, children_at_home_count, estate_flow_net_active, estate_housing_value, estate_receiver_active, estate_transfer_at_age, get_fecundity_by_age, independent_child_maturation_active, mortgage_stay_floor_active, parent_age_maturation_active, readiness_childless_states, readiness_cumulative_probability, readiness_gate_active, readiness_settled_state, readiness_transition_hazard, rental_wedge_active, unsecured_debt_floor)
 from .kernels import (NUMBA_AVAILABLE, full_owner_block_kernel, full_renter_block_kernel, location_logit_kernel, scatter_cols_kernel, scatter_cols_sameidx_kernel, scatter_vec_kernel, tenure_choice_kernel, tenure_logit_kernel)
 from .utils import (decode_flat_family_state, flat_nc, interp_indices, interp_on_grid, interp_vector, logsumexp, make_grid, make_value_interp, scatter_redistribute, scatter_redistribute_cols, scatter_redistribute_cols_sameidx, unflat_nc, weighted_median_from_cells, weighted_quantile)
 from .shared import (DEAD_MASS_TOL, DEAD_VALUE_CUTOFF, ENTRY_WEALTH_INCOME_RATIO_MODES, InfeasibleThetaError, _linear_grid_weights_for_points, add_aggregate_wealth_gross_labor_diagnostics, annual_gross_income_at_state, housing_demand_normalizer, income_at_state, income_transition_values, markov_grant_outlays, normalize_population_mass, penalized_income_at_state, property_tax_revenue_from_distribution)
@@ -2418,10 +2418,10 @@ def add_aggregate_wealth_bequest_flow_moments(
                     total_wealth = float(np.sum(mass_by_asset * (bg_arr + housing_value)))
                     aggregate_wealth += total_wealth
                     wealth_by_age[j] += total_wealth
-                    # Death estates are gross by default; net of the selling
-                    # cost when the estate transfer is on (accounting side).
+                    # Death estates are gross by default; the explicit flow
+                    # switch or an active estate transfer deducts selling cost.
                     estate_hv = housing_value
-                    if ten > 0 and estate_receiver_active(P):
+                    if ten > 0 and estate_flow_net_active(P):
                         estate_hv = estate_housing_value(
                             P, float(ph_arr[i]), float(P.H_own[ten - 1]), for_accounting=True
                         )

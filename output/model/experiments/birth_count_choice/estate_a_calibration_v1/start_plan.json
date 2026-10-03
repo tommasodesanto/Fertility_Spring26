@@ -1,0 +1,356 @@
+{
+  "arms": {
+    "binary": 1,
+    "count3": 3
+  },
+  "bounds": {
+    "beta_annual": [
+      0.93,
+      0.99
+    ],
+    "chi": [
+      0.1,
+      5.0
+    ],
+    "child_benefit_curvature": [
+      0.0,
+      0.8
+    ],
+    "first_birth_fixed_cost": [
+      0.0,
+      8.0
+    ],
+    "h_P": [
+      0.1,
+      2.6
+    ],
+    "kappa_fert": [
+      0.02,
+      50.0
+    ],
+    "kappa_fert_continuation": [
+      0.02,
+      50.0
+    ],
+    "psi_child": [
+      0.01,
+      0.5
+    ],
+    "tenure_choice_kappa": [
+      0.001,
+      0.1
+    ],
+    "theta0": [
+      0.0,
+      8.0
+    ]
+  },
+  "coordinates": [
+    "beta_annual",
+    "chi",
+    "child_benefit_curvature",
+    "first_birth_fixed_cost",
+    "h_P",
+    "kappa_fert",
+    "kappa_fert_continuation",
+    "psi_child",
+    "tenure_choice_kappa",
+    "theta0"
+  ],
+  "deterministic_seed": 20261003,
+  "economic_changes": {
+    "beta_bound": "both arms .93 to .99",
+    "birth_menu": "matched engine cap1 current binary economics versus cap3",
+    "estate_A": "utility and deceased-account estate bp+(1-psi)*P*h_prime; no extra R",
+    "unchanged": "all other primitives, entry, timing, targets, weights and numerical gates",
+    "wealth_target": "experimental narrowerPSID wealth target with retained weight"
+  },
+  "free_parameter_count": 10,
+  "identification_rank_certified": false,
+  "no_auto_retry": true,
+  "no_parameter_promotion": true,
+  "per_chain": {
+    "cpus": 1,
+    "final_native_reserve_seconds": 1800,
+    "max_lifecycle_per_GE": 32,
+    "max_objective_calls": 500,
+    "memory_GiB": 24,
+    "wall_seconds": 21600
+  },
+  "perturbation_patterns": [
+    {
+      "beta_annual": -0.0015,
+      "child_benefit_curvature": 0.04,
+      "kappa_fert": 0.04,
+      "tenure_choice_kappa": -0.035
+    },
+    {
+      "h_P": 0.012,
+      "kappa_fert_continuation": -0.035,
+      "psi_child": -0.025,
+      "theta0": 0.04
+    },
+    {
+      "beta_annual": 0.001,
+      "chi": -0.025,
+      "first_birth_fixed_cost": 0.035,
+      "kappa_fert": -0.035,
+      "theta0": -0.04
+    }
+  ],
+  "positive_weight_target_count": 10,
+  "production_release_required": true,
+  "provisional_seed": {
+    "array": "19111687",
+    "chain": 6,
+    "label": "0060_nm",
+    "not_adopted": true,
+    "saved_loss": 22.141841386410267,
+    "seed_only": true,
+    "start_index": 1,
+    "verified": false
+  },
+  "provisional_seed_source": "output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/pause_20261003.json",
+  "provisional_seed_source_sha256": "f5eea8bab420330e173afdad4b519c400e9c0138dd78a543539f0005e8cf5657",
+  "scf_provisional": "Retained target .007291... is not reconciled to recipient and wealth-scope conventions; no row dropped or reweighted.",
+  "solve_budget": {
+    "actual_chain_wall_cap_hours": 6,
+    "final_fresh_GE_calls": 10,
+    "final_max_lifecycle_solves": 320,
+    "rough_calls_per_chain_in_19800seconds_at_90sec": 220,
+    "rough_max_search_hours_at_90sec": 125,
+    "rough_parallel_wall_hours_for_500calls_at_90sec": 12.5,
+    "search_max_GE_calls": 5000,
+    "search_max_lifecycle_solves": 160000,
+    "smoke_final_fresh_GE_calls": 2,
+    "smoke_max_lifecycle_solves": 192,
+    "smoke_search_GE_calls": 4,
+    "total_chains": 10,
+    "typical_GE_seconds": 90,
+    "typical_fixed_price_seconds": 6,
+    "uncertainty": "Prior unchanged economics timing is indicative only; estate and birth menu changes may alter convergence and solve times. Time cap will likely bind before 500calls."
+  },
+  "source_checkpoint": "output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/production_alternative_chain_13/run/completed.json",
+  "source_checkpoint_sha256": "12880d38b335bab36c23f06f1272771d04db485bbe26bbc98c80b3acdb37cbdb",
+  "start_generation": "chain13, preserved unverified new-target chain6 checkpoint, and three deterministic bounded chain13 relative perturbations; no RNG",
+  "starts": [
+    {
+      "beta_annual": 0.9663191380998087,
+      "chi": 1.0500762402240174,
+      "child_benefit_curvature": 0.0629608477756522,
+      "first_birth_fixed_cost": 0.3045994545418478,
+      "h_P": 2.593759507364224,
+      "kappa_fert": 0.11652185618155607,
+      "kappa_fert_continuation": 0.40070847699255835,
+      "psi_child": 0.17892072066041628,
+      "tenure_choice_kappa": 0.014123854930856623,
+      "theta0": 0.10097400014250629
+    },
+    {
+      "beta_annual": 0.9451835224112838,
+      "chi": 1.08686259247603,
+      "child_benefit_curvature": 0.10744210431165098,
+      "first_birth_fixed_cost": 0.32278580234948034,
+      "h_P": 2.4966110470347846,
+      "kappa_fert": 0.1217516653736752,
+      "kappa_fert_continuation": 0.4056320921997011,
+      "psi_child": 0.18651027128236203,
+      "tenure_choice_kappa": 0.014039645537821048,
+      "theta0": 0.10556276085641458
+    },
+    {
+      "beta_annual": 0.9648696593926591,
+      "chi": 1.0500762402240174,
+      "child_benefit_curvature": 0.06547928168667828,
+      "first_birth_fixed_cost": 0.3045994545418478,
+      "h_P": 2.593759507364224,
+      "kappa_fert": 0.12118273042881832,
+      "kappa_fert_continuation": 0.40070847699255835,
+      "psi_child": 0.17892072066041628,
+      "tenure_choice_kappa": 0.01362952000827664,
+      "theta0": 0.10097400014250629
+    },
+    {
+      "beta_annual": 0.9663191380998087,
+      "chi": 1.0500762402240174,
+      "child_benefit_curvature": 0.0629608477756522,
+      "first_birth_fixed_cost": 0.3045994545418478,
+      "h_P": 2.6,
+      "kappa_fert": 0.11652185618155607,
+      "kappa_fert_continuation": 0.3866836802978188,
+      "psi_child": 0.17444770264390588,
+      "tenure_choice_kappa": 0.014123854930856623,
+      "theta0": 0.10501296014820655
+    },
+    {
+      "beta_annual": 0.9672854572379085,
+      "chi": 1.0238243342184168,
+      "child_benefit_curvature": 0.0629608477756522,
+      "first_birth_fixed_cost": 0.31526043545081245,
+      "h_P": 2.593759507364224,
+      "kappa_fert": 0.1124435912152016,
+      "kappa_fert_continuation": 0.40070847699255835,
+      "psi_child": 0.17892072066041628,
+      "tenure_choice_kappa": 0.014123854930856623,
+      "theta0": 0.09693504013680604
+    }
+  ],
+  "storage_budget": {
+    "all_chains_search_max_GiB": 5000,
+    "method": "Preserve generated reports, arrays and plots; no pruning; stop on cap.",
+    "observed_previous_native_GE_MiB": 82,
+    "per_objective_retained_cap_GiB": 1,
+    "runtime_shared_free_floor_GiB": 350,
+    "submission_required_free_GiB": 5200
+  },
+  "target_contract": [
+    {
+      "moment": "initial_normalization",
+      "role": "normalization",
+      "target": "2.1",
+      "weight": ""
+    },
+    {
+      "moment": "cps_childlessness",
+      "role": "scored",
+      "target": "0.19827875100684264",
+      "weight": "35532.3042455214"
+    },
+    {
+      "moment": "cps_exactly_one",
+      "role": "scored",
+      "target": "0.21365532522014702",
+      "weight": "26952.820824310795"
+    },
+    {
+      "moment": "nchs_mean_age",
+      "role": "scored",
+      "target": "25.976263860992496",
+      "weight": "139.82806784479274"
+    },
+    {
+      "moment": "nchs_share30",
+      "role": "validation",
+      "target": "0.2492780130410667",
+      "weight": "0.0"
+    },
+    {
+      "moment": "wealth_earnings",
+      "role": "scored",
+      "target": "4.45838713455674",
+      "weight": "7.595098472533724"
+    },
+    {
+      "moment": "bequest_wealth",
+      "role": "scored",
+      "target": "0.007291023472616158",
+      "weight": "5165289.256198346"
+    },
+    {
+      "moment": "old_dispersion",
+      "role": "validation",
+      "target": "3.51593508651872",
+      "weight": "0.0"
+    },
+    {
+      "moment": "mean_rooms",
+      "role": "scored",
+      "target": "5.729434240102641",
+      "weight": "128.02070205233477"
+    },
+    {
+      "moment": "ownership_30_55",
+      "role": "scored",
+      "target": "0.6762604168538028",
+      "weight": "2339.3623724673616"
+    },
+    {
+      "moment": "first_birth_rooms",
+      "role": "scored",
+      "target": "1.465",
+      "weight": "137.5652749002964"
+    },
+    {
+      "moment": "family_rooms",
+      "role": "validation",
+      "target": "0.38509964969278165",
+      "weight": "0.0"
+    },
+    {
+      "moment": "recent_parent_ownership",
+      "role": "scored",
+      "target": "0.12760836356692162",
+      "weight": "27055.822957508266"
+    },
+    {
+      "moment": "early_fertility",
+      "role": "scored",
+      "target": "0.8095276384290021",
+      "weight": "100.0"
+    }
+  ],
+  "target_fingerprint": "c7a3d185668122e508a6c322bc5ef0715ebb0ecb23948c8d9b184ee25d1cde70",
+  "task_map": [
+    {
+      "arm": "binary",
+      "birth_cap": 1,
+      "chain": 0,
+      "task": 0
+    },
+    {
+      "arm": "binary",
+      "birth_cap": 1,
+      "chain": 1,
+      "task": 1
+    },
+    {
+      "arm": "binary",
+      "birth_cap": 1,
+      "chain": 2,
+      "task": 2
+    },
+    {
+      "arm": "binary",
+      "birth_cap": 1,
+      "chain": 3,
+      "task": 3
+    },
+    {
+      "arm": "binary",
+      "birth_cap": 1,
+      "chain": 4,
+      "task": 4
+    },
+    {
+      "arm": "count3",
+      "birth_cap": 3,
+      "chain": 0,
+      "task": 5
+    },
+    {
+      "arm": "count3",
+      "birth_cap": 3,
+      "chain": 1,
+      "task": 6
+    },
+    {
+      "arm": "count3",
+      "birth_cap": 3,
+      "chain": 2,
+      "task": 7
+    },
+    {
+      "arm": "count3",
+      "birth_cap": 3,
+      "chain": 3,
+      "task": 8
+    },
+    {
+      "arm": "count3",
+      "birth_cap": 3,
+      "chain": 4,
+      "task": 9
+    }
+  ],
+  "weight_fingerprint": "f762ebb5684ab30487b3b8b64fc10977fda396b520035d91c0c5c803255f88e4"
+}

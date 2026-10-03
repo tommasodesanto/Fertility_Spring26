@@ -104,10 +104,16 @@ def effective_input_fingerprint(P, grid):
 
 def make_evaluator(out, lane, P, grid, deadline, price_start=None, *, native_runner=None,
                    exploratory=False, solver: Callable[..., Mapping[str, Any]] | None = None,
-                   target_fingerprint=None, weight_fingerprint=None):
+                   target_fingerprint=None, weight_fingerprint=None, bounds_override=None):
     """Preserve caller primitives/grid and bind only the ten search coordinates."""
     del lane, native_runner, exploratory
     target, target_pin, weight_pin, bounds = _contract()
+    if bounds_override is not None:
+        revised = {k: tuple(map(float, v)) for k, v in bounds_override.items()}
+        expected = dict(bounds, beta_annual=(.93, .99))
+        if revised != expected:
+            raise ValueError("Only estate-A beta bound .93-.99 is supported")
+        bounds = revised
     if target_fingerprint is not None and target_fingerprint != target_pin:
         raise RuntimeError('Caller target fingerprint differs from production contract')
     if weight_fingerprint is not None and weight_fingerprint != weight_pin:

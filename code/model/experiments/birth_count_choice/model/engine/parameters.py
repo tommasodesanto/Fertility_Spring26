@@ -126,15 +126,24 @@ def bequest_utility_net_active(P: SimpleNamespace) -> bool:
     return estate_receiver_active(P)
 
 
+def estate_flow_net_active(P: SimpleNamespace) -> bool:
+    """Whether death-estate accounting deducts the housing selling cost.
+
+    The default-off flow switch does not activate estate transfers. Existing
+    estate transfers continue to value both utility and flows net of this cost.
+    """
+    return bool(getattr(P, "estate_flow_net_of_selling_cost", False)) or estate_receiver_active(P)
+
+
 def estate_housing_value(P: SimpleNamespace, price: float, rooms: float, *, for_accounting: bool) -> float:
     """Housing leg of an estate: gross, or net of the selling cost.
 
     The utility side nets out the selling cost when ``bequest_utility_net``
-    holds; the aggregate-flow accounting nets it out when the estate transfer
-    is on. Otherwise the gross value nests the current model bit for bit.
+    holds; aggregate-flow accounting uses its separate default-off switch or
+    the estate transfer. Otherwise gross value nests the current model exactly.
     """
     gross = float(price) * float(rooms)
-    net = bool(for_accounting and estate_receiver_active(P)) or bool(
+    net = bool(for_accounting and estate_flow_net_active(P)) or bool(
         (not for_accounting) and bequest_utility_net_active(P)
     )
     if net:

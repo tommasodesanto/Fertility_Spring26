@@ -110,28 +110,68 @@ are unchanged. It writes `RESULTS.md`, `comparison.csv` with all 14 target rows,
 and `parameters_comparison.csv` with all 31 parameter records, bounds and
 near-bound indicators into the experiment output root. It generates no plots.
 
-## Proposed matched estate comparison — pending author decision
+## Authorized isolated Estate-A comparison
 
-This is a proposed future comparison, not an adopted estate specification or
-an authorized calibration launch. It would compare the existing binary
-one-birth menu with the experimental menu allowing intended births from zero
-through three, using the retained age-specific Binomial realization
-probabilities. Both arms would use the alternative wealth target
-4.45838713455674 and the candidate terminal estate mapping
-\[
-W=b'+(1-\psi)Ph',
-\]
-with no additional factor of $R$ applied to $b'$. The timing and estate
-interpretation remain unresolved pending the author's decision; the equation
-records a candidate for discussion, not an adopted rule.
+The October 3 author request authorizes an isolated comparison of one intended
+birth per period with the count menu allowing up to three, using the current
+fixed parameter vector in both arms. Both arms apply
+\(W=b'+(1-\psi)Ph'\) in bequest utility and at-death accounting, with no extra
+interest factor on \(b'\), and retain `estate_receiver="none"`. This changes the
+estate mapping; it does not close the donor-recipient or creditor settlement.
+The retained SCF bequest target still has an outstanding wealth-scope/recipient
+mapping mismatch and remains provisional; its value and weight are unchanged.
+The new wealth target is exactly 4.45838713455674, and every other target and
+weight is retained. This experiment does not promote a default model.
 
-If authorized after that decision, the comparison would use ten workers total:
-five matched starting points per arm, with identical starts, parameter bounds,
-grid, target values and weights, solve budgets, and equilibrium closure across
-arms. No jobs have been launched for this comparison. The SCF bequest
-recipient and wealth-scope definition is still unresolved, so this proposal
-does not set a new numeric bequest target or drop or reweight the existing
-bequest target.
+The flags are exactly `birth_count_choice_enabled=True`,
+`birth_count_choice_cap=1` or `3`, `bequest_net_of_selling_cost=True`, and
+`estate_flow_net_of_selling_cost=True`. Removing these four overrides recovers
+all 245 canonical fields and the exact original grid/input fingerprint.
+
+```sh
+"$PYTHON" code/model/experiments/birth_count_choice/run_estate.py --birth-cap 1 --preflight
+"$PYTHON" code/model/experiments/birth_count_choice/run_estate.py --birth-cap 3 --preflight
+"$PYTHON" code/model/experiments/birth_count_choice/run_estate.py --birth-cap 1
+"$PYTHON" code/model/experiments/birth_count_choice/run_estate.py --birth-cap 3
+"$PYTHON" code/model/experiments/birth_count_choice/summarize_estate.py
+```
+
+Each fixed-parameter run has the existing 900-second, 32-lifecycle budget, fixed
+\(H_0=6.40569359569417\), and all 17 standard, eight policy, and seven aggregate
+figures. Output roots are `estate_a_v1/single` and `estate_a_v1/multiple` under
+`output/model/experiments/birth_count_choice/`. The existing `run.py` command
+retains its original behavior and output path.
+
+Native `target_fit.csv` remains authenticated against the complete old empirical
+contract, as a diagnostic. Each successful Estate-A case also writes authoritative
+`target_fit_new_contract.csv` and `estate_a_rescore_receipt.json`. Only the wealth
+row's target, gap and loss contribution change during rescoring. Net estates
+change the model bequest-flow moment because its observer now uses selling-cost
+net housing, while the empirical bequest target stays unchanged. The explicit
+observer schema is `estate_a_postsaving_net_selling_cost_v1`; living-household
+wealth remains beginning \(b+Ph\), and death estates use post-saving \(b'\).
+
+`summarize_estate.py` performs zero solves and compares both completed arms with
+the exact canonical single-birth baseline and the pinned earlier three-birth
+case `20261003T203001912131Z_812b878e`, isolating Estate-A within each menu.
+It separately compares saved Claude-A case `estate_valuation_20261003/cases/net_sale`,
+recomputing its bequest-flow observer net of selling cost from saved arrays. It verifies all ten parameter coordinates,
+full old/new fingerprints and complete plots, then writes a common-contract
+14-row-per-arm fit table for all four arms, all 31 parameter records per arm,
+actual ownership and mean post-saving financial wealth at age 82, and gross/net estate
+flow and old-age death-estate diagnostics, including signed, positive and
+negative estates. `RESULTS.md` contains the complete tables.
+
+The matched calibration adapter is `model.estate_contract.make_evaluator`.
+It uses this package's direct stationary-GE solver with `population_one` closure,
+authenticates complete target/weight fingerprints before solving, and preserves
+caller inputs. Five matched starting points per arm are authorized; each arm uses
+the same ten-coordinate bounds, except the experimental beta range is
+\([0.93,0.99]\). Native parameter tables retain original advisory bounds;
+`parameters_estate_a.csv` and evaluator receipts record the experimental beta
+restriction. See `cluster_calibrate.py` and its staged driver plan for budgets,
+matched starts and launch receipts. The fixed-parameter pair and matched search
+are different exercises.
 
 Four descriptive engine arrays—`attempt_hazard_by_age`,
 `first_birth_hazard_by_age`, `fert_by_age`, and
@@ -144,3 +184,57 @@ cap-one comparison instead of counted as an economic-equivalence failure.
 The all-zero dead-menu identity for occupied mass below 1e-12 preserves the
 inherited numerical convention and changes no economic primitive. The exact
 failed witness that motivated this handling was 2.97e-38 household mass.
+
+## Verified fixed-parameter A packet and Claude handoff
+
+The four-arm [RESULTS.md](../../../../output/model/experiments/birth_count_choice/estate_a_v1/RESULTS.md)
+contains all 14 fit and 31 parameter rows per arm;
+[comparison.json](../../../../output/model/experiments/birth_count_choice/estate_a_v1/comparison.json)
+pins exact cases, flags and scoring identities. Both A runs passed native gates
+and exact repeats (nine/eight lifecycle solves), wrote 32 plots each, and the
+final [35-test run](../../../../output/model/experiments/birth_count_choice/estate_a_v1/tests_verified.log)
+passed. The [source snapshot](../../../../output/model/experiments/birth_count_choice/estate_a_v1/source_snapshot.json)
+records 36 unchanged production source hashes. Failed earlier guard checks and
+logs remain retained; final successful cases are identified in comparison.json.
+
+Common new-target losses are A single 57.594992 versus no-A single 53.064444,
+and A multiple 1728.297964 versus no-A multiple 1714.288539. Old-target A
+losses 16.895020 and 1685.273010 are diagnostics. At age 82 ownership falls
+from 98.739% to 96.225% for the one-birth menu and from 97.897% to 95.010%
+for the three-birth menu. A leaves high terminal ownership and the provisional
+SCF comparability issue outstanding.
+
+As of October 3, 17:44 New York, both remote arms passed full reporting-context
+preflight with zero solves. Smoke array **19124485**, tasks **0 and 5**, is
+**RUNNING**, with a 1.5-hour limit, two objective calls and fresh GE verification
+per task. The ten-task production array is not released; both smokes must pass.
+[Smoke receipt](../../../../output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt2/smoke_submission_receipt.json)
+records the launch; the 412-file source inventory SHA-256 is
+`74a961a913d94e4d337cbe075e8ef3c0bd22b9ef6798ca792dea90266553d2c4`. Its
+[start plan](../../../../output/model/experiments/birth_count_choice/estate_a_calibration_v1/start_plan.json)
+contains five identical starts per arm: paused provisional candidate, current
+anchor, three perturbations. The paused candidate's search loss is
+22.141841386410267, awaiting native verification; its complete evidence is in
+[PAUSED_BEST.md](../../../../output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/PAUSED_BEST.md).
+The first array 19124185 failed before solving because a compatibility bootstrap
+was missing. Immutable v1 evidence is retained; v2 adds the exact bootstrap and
+its two authenticated dependencies. Consult CALIBRATION_STATUS.md and actual
+receipts for later launch status.
+
+Copy-paste handoff for Claude:
+
+> Inspect `output/model/experiments/birth_count_choice/estate_a_v1/RESULTS.md`,
+> `comparison.json`, `paired_estate_diagnostics.csv`, and `claude_a_comparison.csv`.
+> These are fixed-current-parameter GEs, not recalibrations. Both A arms use
+> W=bp+(1-psi)*P*h with no extra R in utility, engine flow, and the empirical
+> observer; receiver remains none. All four arms use the common wealth target
+> 4.45838713455674 for scoring; other empirical values and weights are retained.
+> Read every fit and parameter row before judging fit. Your saved utility-only
+> A case matches our one-birth A price and age-82 ownership; its bequest-flow
+> comparison recomputes net flow from saved arrays. Terminal ownership remains
+> high, and the SCF target's wealth-scope/recipient mapping remains provisional.
+> Preserve production and author-owned paper/mock sources. The ten-task matched
+> search is separate. As of 17:44 New York smoke array 19124485 (tasks 0,5)
+> is RUNNING; both smokes must pass before the ten-task production release.
+> Check current status and receipts before claiming it ran or interpreting a
+> calibration result.

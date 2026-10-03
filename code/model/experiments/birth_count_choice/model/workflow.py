@@ -162,7 +162,7 @@ def _expose_native_diagnostics(case: Path, report: Path) -> None:
 
 def run_stationary(parameters, external_inputs, native_overrides=None, price_guess=None,
                    budget_seconds=1800, closure="fixed_h0", output_root=None,
-                   parameter_file_metadata=None, max_lifecycle=32):
+                   parameter_file_metadata=None, max_lifecycle=32, experiment_flags=None):
     """Solve once, validate/cache its result, then atomically publish ``latest``.
 
     Core equilibrium code owns all numerical work.  This wrapper deliberately
@@ -173,6 +173,10 @@ def run_stationary(parameters, external_inputs, native_overrides=None, price_gue
     import numba
     numba.set_num_threads(1)
 
+    from .estate_contract import apply_experiment_flags
+    if experiment_flags is not None:
+        # Validate before reserving an output case or calling any solver.
+        apply_experiment_flags(None, experiment_flags)
     root = Path(output_root or DEFAULT_OUTPUT_ROOT)
     case = reserve_case(root)
     try:
@@ -200,7 +204,14 @@ def run_stationary(parameters, external_inputs, native_overrides=None, price_gue
         P, grid = load_inputs(parameters=parameters, external_inputs=external_inputs,
                               native_overrides=native_overrides)
         P.birth_count_choice_enabled = True
+        if experiment_flags is not None:
+            apply_experiment_flags(P, experiment_flags)
+            input_contract["experiment_flags"] = _jsonable(experiment_flags)
+            input_contract["experimental_estate_contract"] = "estate_a_postsaving_net_selling_cost_v1"
         input_contract["experimental_economic_change"] = "Joint intended birth menu k=0..3-n; independent existing-age success probabilities Binomial(k, pi)."
+        if experiment_flags is not None:
+            cap = experiment_flags["birth_count_choice_cap"]
+            input_contract["experimental_economic_change"] = (f"Intended birth menu k=0..min({cap},3-n), Binomial(k, pi); Estate A utility and death flow use bp+(1-psi)*price*chosen_house, no additional R; receiver none. New wealth target 4.45838713455674; other targets and weights retained.")
         receipt = getattr(P, "_production_input_receipt", None)
         fiscal_primitives = {"w_hat", "income_age_profile", "tau_pay"}
         fiscal_values = {**external_inputs, **native_overrides}
@@ -240,6 +251,13 @@ def run_stationary(parameters, external_inputs, native_overrides=None, price_gue
         result.closure = outcome["closure"]
         result.report_directory = str(outcome["report_directory"])
         _write_summary(case, outcome)
+        if experiment_flags is not None:
+            from .estate_contract import rescore_report
+            rescore_report(outcome["report_directory"], case)
+            with (case / "SUMMARY.md").open("a") as stream:
+                stream.write("\nEstate-A flags: " + json.dumps(experiment_flags, sort_keys=True) + "\n")
+                stream.write("Authoritative new wealth-contract fit: [target_fit_new_contract.csv](target_fit_new_contract.csv). Native target_fit.csv retains the old empirical wealth target as a diagnostic.\n")
+                stream.write("Estate A: W=bp+(1-psi)*P*h; utility and death-flow accounting deduct selling cost; no additional interest on bp; receiver none. The retained SCF bequest target has an outstanding wealth-scope/recipient mapping mismatch and remains provisional; its empirical value and weight are unchanged.\n")
         _write_explorer_assets(case, result)
         save_case(result, case, metadata={"closure": outcome["closure"],
                                           "report_directory": str(outcome["report_directory"]),
