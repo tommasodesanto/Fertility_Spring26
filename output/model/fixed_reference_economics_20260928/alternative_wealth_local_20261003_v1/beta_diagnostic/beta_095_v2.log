@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/alternative_wealth_calibration/local_entry.py", line 22, in <module>
+    runpy.run_path(str(entry), run_name='__main__')
+  File "/Users/tommasodesanto/.local/share/uv/python/cpython-3.10-macos-aarch64-none/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "/Users/tommasodesanto/.local/share/uv/python/cpython-3.10-macos-aarch64-none/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "/Users/tommasodesanto/.local/share/uv/python/cpython-3.10-macos-aarch64-none/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/alternative_wealth_local_20261003_v1/beta_diagnostic/run_fixed_beta.py", line 134, in <module>
+    main()
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/alternative_wealth_local_20261003_v1/beta_diagnostic/run_fixed_beta.py", line 93, in main
+    result = evaluate("fixed_beta", point, args.deadline_epoch)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/normalized_calibration_v2/normalized_objective.py", line 110, in checked
+    result=evaluate(label,point,end)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/alternative_wealth_local_20261003_v1/beta_diagnostic/beta_095_v2/normalization_source_review/native_evaluator.py", line 58, in evaluate
+    solved=ge.run_phase_b(candidate,dict(selected_d_bar=inputs.ARMS[arm]),budget)
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/alternative_wealth_local_20261003_v1/beta_diagnostic/beta_095_v2/normalization_source_review/run_phase_b.py", line 83, in run_phase_b
+    seed, seed_live = trial(start, "price_start", reason="fresh initial price evaluation")
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/alternative_wealth_local_20261003_v1/beta_diagnostic/beta_095_v2/normalization_source_review/run_phase_b.py", line 46, in trial
+    _require(time.time() + budget.stage_deadline_seconds + 400 < budget.deadline_epoch,
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/utility_calibration_round1_v1/phase_b_pilot.py", line 30, in _require
+    raise RuntimeError(message)
+RuntimeError: No time reserve for selected reporting and exact repeat

@@ -1,0 +1,129 @@
+{
+  "arm": "alternative",
+  "baseline_beta_annual": 0.964494931582842,
+  "baseline_native_loss": 48.170707377609034,
+  "baseline_parameters": {
+    "beta_annual": 0.964494931582842,
+    "chi": 1.0483867888406984,
+    "child_benefit_curvature": 0.10663686028253605,
+    "first_birth_fixed_cost": 0.3557472207488791,
+    "h_P": 2.5080233885111376,
+    "kappa_fert": 0.12291287669685749,
+    "kappa_fert_continuation": 0.39425244197567877,
+    "psi_child": 0.18431834939896372,
+    "tenure_choice_kappa": 0.014042617342481304,
+    "theta0": 0.1061752771068577
+  },
+  "baseline_price": 0.7718578473224864,
+  "beta_annual": 0.95,
+  "bounds": {
+    "beta_annual": [
+      0.94,
+      0.99
+    ],
+    "chi": [
+      0.1,
+      5.0
+    ],
+    "child_benefit_curvature": [
+      0.0,
+      0.8
+    ],
+    "first_birth_fixed_cost": [
+      0.0,
+      8.0
+    ],
+    "h_P": [
+      0.1,
+      2.6
+    ],
+    "kappa_fert": [
+      0.02,
+      50.0
+    ],
+    "kappa_fert_continuation": [
+      0.02,
+      50.0
+    ],
+    "psi_child": [
+      0.01,
+      0.5
+    ],
+    "tenure_choice_kappa": [
+      0.001,
+      0.1
+    ],
+    "theta0": [
+      0.0,
+      8.0
+    ]
+  },
+  "changed_coordinates": [
+    "beta_annual"
+  ],
+  "deadline_epoch": 1791041713.8587258,
+  "diagnostic_parameters": {
+    "beta_annual": 0.95,
+    "chi": 1.0483867888406984,
+    "child_benefit_curvature": 0.10663686028253605,
+    "first_birth_fixed_cost": 0.3557472207488791,
+    "h_P": 2.5080233885111376,
+    "kappa_fert": 0.12291287669685749,
+    "kappa_fert_continuation": 0.39425244197567877,
+    "psi_child": 0.18431834939896372,
+    "tenure_choice_kappa": 0.014042617342481304,
+    "theta0": 0.1061752771068577
+  },
+  "entry": {
+    "approximation": "Existing five empirical quintile-bin means; censoring occurs after binning, not on raw survey observations.",
+    "arm": "nonnegative_mean",
+    "clipped_draw_mass": 0.0,
+    "conditional_sha256": "bf976b033678629c4f9e91df4037092d6e35ab113eebaf3fcf63c59510d2ca4f",
+    "credit": 0.0,
+    "dimensions": [
+      120,
+      9
+    ],
+    "effective_ratio_nodes": [
+      0.0,
+      0.0,
+      0.037865686206423034,
+      0.12770485428797146,
+      1.1272941320837204
+    ],
+    "lambda_positive": 0.3632385158888715,
+    "lifecycle_solves": 0,
+    "mean_annual_entry_income": 0.720554272517321,
+    "mean_wealth": 0.18651967924681834,
+    "necessary_current_budget_minimum_slack": 0.27427651537528747,
+    "negative_wealth_share": 0.0,
+    "ratio_weights": [
+      0.19942576269679177,
+      0.20037747293780178,
+      0.1998633085085668,
+      0.20008786061209277,
+      0.20024559524474678
+    ],
+    "raw_mean_wealth": 0.1865196792468183,
+    "raw_ratio_nodes": [
+      -2.22252859121604,
+      -0.0526403178090525,
+      0.104244689233362,
+      0.351572998737395,
+      3.1034542945567
+    ],
+    "zero_wealth_share": 0.666947530322984
+  },
+  "objective": "illustrative_fixed_parameter_GE_sensitivity_not_calibration",
+  "one_core": true,
+  "source": {
+    "baseline_completion_sha256": "262c5d870bc533a641d6db4d38515d5f6ffb063a0380250055b3f97e0497e76c",
+    "driver_sha256": "6b36b8200044bb39899bdb1fe34bf0805de5934d7322b90a8d75e87100020de3",
+    "normalized_source_pins_sha256": "9759d97cd00ceb869b31eb898e8ec089d3b6da9d3f7ee33f025eface5e9bd8a2",
+    "selected_source_sha256": "b5e21a8584fa536a3740039b3e54480f3c318a63b96266bd31406712c5da991c",
+    "timing_manifest_sha256": "be83815ae924ec558ae3ed4c78c189e42591b38cc7b551c24378e6b82956ccea"
+  },
+  "status": "fixed_beta_ge_requested",
+  "target_fingerprint": "c7a3d185668122e508a6c322bc5ef0715ebb0ecb23948c8d9b184ee25d1cde70",
+  "weight_fingerprint": "f762ebb5684ab30487b3b8b64fc10977fda396b520035d91c0c5c803255f88e4"
+}

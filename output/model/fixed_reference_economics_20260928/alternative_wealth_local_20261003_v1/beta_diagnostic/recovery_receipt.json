@@ -1,0 +1,38 @@
+{
+  "attempts": [
+    {
+      "failure": "wrapper checked unbound P.beta and psi before native evaluator",
+      "ge_solves": 0,
+      "log_sha256": "243a006e827841a835587168885fda70d40db042fb11cc905711967703ad0e32",
+      "name": "beta_095",
+      "os_receipt_sha256": "37bf4b0c5ddd6c2cf21a6ccd8c8ca3997bef5523a5705318f051074a45477660"
+    },
+    {
+      "failure": "native reserve gate: No time reserve for selected reporting and exact repeat",
+      "failure_sha256": "5015df6648a553beec03b965b19ac8d0984afdbc17f9c97807ab7268ba7160a4",
+      "ge_solves": 0,
+      "log_sha256": "c66dc934d4ea4383945e5ab0918ffdf67af44b170dfa6291110b986475de4a79",
+      "name": "beta_095_v2",
+      "os_receipt_sha256": "fe6c2393e8a4ef0dfce48ae5e6654d1375d630c08c56f797a6c22dabac20b347",
+      "request_sha256": "fe86e9a864bd0af85534df5b5ccc17435ab7148dad951f87d275ed65f74921d8"
+    }
+  ],
+  "automatic_retry": false,
+  "baseline_completion_sha256": "262c5d870bc533a641d6db4d38515d5f6ffb063a0380250055b3f97e0497e76c",
+  "beta_094_launched": false,
+  "budget_gate": {
+    "authorized_os_timeout_seconds": 420,
+    "minimum_remaining_seconds_strictly_greater_than": 700,
+    "selected_reporting_repeat_reserve_seconds": 400,
+    "source": "output/model/publication_refactor_20260929/single_market_verification_v1/source/driver.py and native run_phase_b.py",
+    "stage_deadline_seconds": 300
+  },
+  "driver_sha256": "6b36b8200044bb39899bdb1fe34bf0805de5934d7322b90a8d75e87100020de3",
+  "historical_beta_sweep": "output/model/wealth_diag_slot19_20261002/beta_sweep/progress.csv",
+  "historical_comparable_to_current_contract": false,
+  "native_gate_changed": false,
+  "new_numerical_result": false,
+  "status": "stopped_before_any_ge_solve",
+  "target_fingerprint": "c7a3d185668122e508a6c322bc5ef0715ebb0ecb23948c8d9b184ee25d1cde70",
+  "weight_fingerprint": "f762ebb5684ab30487b3b8b64fc10977fda396b520035d91c0c5c803255f88e4"
+}
