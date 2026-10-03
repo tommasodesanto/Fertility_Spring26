@@ -1,0 +1,354 @@
+{
+  "annual_beta_start_values": [
+    0.964494931582842,
+    0.97,
+    0.966,
+    0.96,
+    0.955,
+    0.95,
+    0.945,
+    0.94,
+    0.935,
+    0.93
+  ],
+  "arm": "alternative",
+  "bounds": {
+    "beta_annual": [
+      0.93,
+      0.99
+    ],
+    "chi": [
+      0.1,
+      5.0
+    ],
+    "child_benefit_curvature": [
+      0.0,
+      0.8
+    ],
+    "first_birth_fixed_cost": [
+      0.0,
+      8.0
+    ],
+    "h_P": [
+      0.1,
+      2.6
+    ],
+    "kappa_fert": [
+      0.02,
+      50.0
+    ],
+    "kappa_fert_continuation": [
+      0.02,
+      50.0
+    ],
+    "psi_child": [
+      0.01,
+      0.5
+    ],
+    "tenure_choice_kappa": [
+      0.001,
+      0.1
+    ],
+    "theta0": [
+      0.0,
+      8.0
+    ]
+  },
+  "economic_changes": [
+    "experimental post-interest housing transactions with adopted soft financing",
+    "experimental matched PSID wealth/earnings target 4.45838713455674, numeric weight unchanged",
+    "annual discount factor lower search bound widened from 0.940 to 0.930; upper bound remains 0.990"
+  ],
+  "final_native_reserve_seconds": 1800,
+  "groups": {
+    "near_selected": 10
+  },
+  "matched_across_arms": false,
+  "name": "alternative_wealth_cluster_20261003_v1",
+  "objective_call_cap": 500,
+  "original_target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+  "source_checkpoint_sha256": "262c5d870bc533a641d6db4d38515d5f6ffb063a0380250055b3f97e0497e76c",
+  "start_provenance": [
+    {
+      "all_other_coordinates_unchanged": true,
+      "beta_annual": 0.964494931582842,
+      "group": "near_selected",
+      "reference": "verified new-wealth alternative-timing chain 02",
+      "source_checkpoint_sha256": "262c5d870bc533a641d6db4d38515d5f6ffb063a0380250055b3f97e0497e76c"
+    },
+    {
+      "all_other_coordinates_unchanged": true,
+      "beta_annual": 0.97,
+      "group": "near_selected",
+      "reference": "verified new-wealth alternative-timing chain 02",
+      "source_checkpoint_sha256": "262c5d870bc533a641d6db4d38515d5f6ffb063a0380250055b3f97e0497e76c"
+    },
+    {
+      "all_other_coordinates_unchanged": true,
+      "beta_annual": 0.966,
+      "group": "near_selected",
+      "reference": "verified new-wealth alternative-timing chain 02",
+      "source_checkpoint_sha256": "262c5d870bc533a641d6db4d38515d5f6ffb063a0380250055b3f97e0497e76c"
+    },
+    {
+      "all_other_coordinates_unchanged": true,
+      "beta_annual": 0.96,
+      "group": "near_selected",
+      "reference": "verified new-wealth alternative-timing chain 02",
+      "source_checkpoint_sha256": "262c5d870bc533a641d6db4d38515d5f6ffb063a0380250055b3f97e0497e76c"
+    },
+    {
+      "all_other_coordinates_unchanged": true,
+      "beta_annual": 0.955,
+      "group": "near_selected",
+      "reference": "verified new-wealth alternative-timing chain 02",
+      "source_checkpoint_sha256": "262c5d870bc533a641d6db4d38515d5f6ffb063a0380250055b3f97e0497e76c"
+    },
+    {
+      "all_other_coordinates_unchanged": true,
+      "beta_annual": 0.95,
+      "group": "near_selected",
+      "reference": "verified new-wealth alternative-timing chain 02",
+      "source_checkpoint_sha256": "262c5d870bc533a641d6db4d38515d5f6ffb063a0380250055b3f97e0497e76c"
+    },
+    {
+      "all_other_coordinates_unchanged": true,
+      "beta_annual": 0.945,
+      "group": "near_selected",
+      "reference": "verified new-wealth alternative-timing chain 02",
+      "source_checkpoint_sha256": "262c5d870bc533a641d6db4d38515d5f6ffb063a0380250055b3f97e0497e76c"
+    },
+    {
+      "all_other_coordinates_unchanged": true,
+      "beta_annual": 0.94,
+      "group": "near_selected",
+      "reference": "verified new-wealth alternative-timing chain 02",
+      "source_checkpoint_sha256": "262c5d870bc533a641d6db4d38515d5f6ffb063a0380250055b3f97e0497e76c"
+    },
+    {
+      "all_other_coordinates_unchanged": true,
+      "beta_annual": 0.935,
+      "group": "near_selected",
+      "reference": "verified new-wealth alternative-timing chain 02",
+      "source_checkpoint_sha256": "262c5d870bc533a641d6db4d38515d5f6ffb063a0380250055b3f97e0497e76c"
+    },
+    {
+      "all_other_coordinates_unchanged": true,
+      "beta_annual": 0.93,
+      "group": "near_selected",
+      "reference": "verified new-wealth alternative-timing chain 02",
+      "source_checkpoint_sha256": "262c5d870bc533a641d6db4d38515d5f6ffb063a0380250055b3f97e0497e76c"
+    }
+  ],
+  "starts": [
+    {
+      "beta_annual": 0.964494931582842,
+      "chi": 1.0483867888406984,
+      "child_benefit_curvature": 0.10663686028253605,
+      "first_birth_fixed_cost": 0.3557472207488791,
+      "h_P": 2.5080233885111376,
+      "kappa_fert": 0.12291287669685749,
+      "kappa_fert_continuation": 0.39425244197567877,
+      "psi_child": 0.18431834939896372,
+      "tenure_choice_kappa": 0.014042617342481304,
+      "theta0": 0.1061752771068577
+    },
+    {
+      "beta_annual": 0.97,
+      "chi": 1.0483867888406984,
+      "child_benefit_curvature": 0.10663686028253605,
+      "first_birth_fixed_cost": 0.3557472207488791,
+      "h_P": 2.5080233885111376,
+      "kappa_fert": 0.12291287669685749,
+      "kappa_fert_continuation": 0.39425244197567877,
+      "psi_child": 0.18431834939896372,
+      "tenure_choice_kappa": 0.014042617342481304,
+      "theta0": 0.1061752771068577
+    },
+    {
+      "beta_annual": 0.966,
+      "chi": 1.0483867888406984,
+      "child_benefit_curvature": 0.10663686028253605,
+      "first_birth_fixed_cost": 0.3557472207488791,
+      "h_P": 2.5080233885111376,
+      "kappa_fert": 0.12291287669685749,
+      "kappa_fert_continuation": 0.39425244197567877,
+      "psi_child": 0.18431834939896372,
+      "tenure_choice_kappa": 0.014042617342481304,
+      "theta0": 0.1061752771068577
+    },
+    {
+      "beta_annual": 0.96,
+      "chi": 1.0483867888406984,
+      "child_benefit_curvature": 0.10663686028253605,
+      "first_birth_fixed_cost": 0.3557472207488791,
+      "h_P": 2.5080233885111376,
+      "kappa_fert": 0.12291287669685749,
+      "kappa_fert_continuation": 0.39425244197567877,
+      "psi_child": 0.18431834939896372,
+      "tenure_choice_kappa": 0.014042617342481304,
+      "theta0": 0.1061752771068577
+    },
+    {
+      "beta_annual": 0.955,
+      "chi": 1.0483867888406984,
+      "child_benefit_curvature": 0.10663686028253605,
+      "first_birth_fixed_cost": 0.3557472207488791,
+      "h_P": 2.5080233885111376,
+      "kappa_fert": 0.12291287669685749,
+      "kappa_fert_continuation": 0.39425244197567877,
+      "psi_child": 0.18431834939896372,
+      "tenure_choice_kappa": 0.014042617342481304,
+      "theta0": 0.1061752771068577
+    },
+    {
+      "beta_annual": 0.95,
+      "chi": 1.0483867888406984,
+      "child_benefit_curvature": 0.10663686028253605,
+      "first_birth_fixed_cost": 0.3557472207488791,
+      "h_P": 2.5080233885111376,
+      "kappa_fert": 0.12291287669685749,
+      "kappa_fert_continuation": 0.39425244197567877,
+      "psi_child": 0.18431834939896372,
+      "tenure_choice_kappa": 0.014042617342481304,
+      "theta0": 0.1061752771068577
+    },
+    {
+      "beta_annual": 0.945,
+      "chi": 1.0483867888406984,
+      "child_benefit_curvature": 0.10663686028253605,
+      "first_birth_fixed_cost": 0.3557472207488791,
+      "h_P": 2.5080233885111376,
+      "kappa_fert": 0.12291287669685749,
+      "kappa_fert_continuation": 0.39425244197567877,
+      "psi_child": 0.18431834939896372,
+      "tenure_choice_kappa": 0.014042617342481304,
+      "theta0": 0.1061752771068577
+    },
+    {
+      "beta_annual": 0.94,
+      "chi": 1.0483867888406984,
+      "child_benefit_curvature": 0.10663686028253605,
+      "first_birth_fixed_cost": 0.3557472207488791,
+      "h_P": 2.5080233885111376,
+      "kappa_fert": 0.12291287669685749,
+      "kappa_fert_continuation": 0.39425244197567877,
+      "psi_child": 0.18431834939896372,
+      "tenure_choice_kappa": 0.014042617342481304,
+      "theta0": 0.1061752771068577
+    },
+    {
+      "beta_annual": 0.935,
+      "chi": 1.0483867888406984,
+      "child_benefit_curvature": 0.10663686028253605,
+      "first_birth_fixed_cost": 0.3557472207488791,
+      "h_P": 2.5080233885111376,
+      "kappa_fert": 0.12291287669685749,
+      "kappa_fert_continuation": 0.39425244197567877,
+      "psi_child": 0.18431834939896372,
+      "tenure_choice_kappa": 0.014042617342481304,
+      "theta0": 0.1061752771068577
+    },
+    {
+      "beta_annual": 0.93,
+      "chi": 1.0483867888406984,
+      "child_benefit_curvature": 0.10663686028253605,
+      "first_birth_fixed_cost": 0.3557472207488791,
+      "h_P": 2.5080233885111376,
+      "kappa_fert": 0.12291287669685749,
+      "kappa_fert_continuation": 0.39425244197567877,
+      "psi_child": 0.18431834939896372,
+      "tenure_choice_kappa": 0.014042617342481304,
+      "theta0": 0.1061752771068577
+    }
+  ],
+  "target_contract": [
+    {
+      "moment": "initial_normalization",
+      "role": "normalization",
+      "target": "2.1",
+      "weight": ""
+    },
+    {
+      "moment": "cps_childlessness",
+      "role": "scored",
+      "target": "0.19827875100684264",
+      "weight": "35532.3042455214"
+    },
+    {
+      "moment": "cps_exactly_one",
+      "role": "scored",
+      "target": "0.21365532522014702",
+      "weight": "26952.820824310795"
+    },
+    {
+      "moment": "nchs_mean_age",
+      "role": "scored",
+      "target": "25.976263860992496",
+      "weight": "139.82806784479274"
+    },
+    {
+      "moment": "nchs_share30",
+      "role": "validation",
+      "target": "0.2492780130410667",
+      "weight": "0.0"
+    },
+    {
+      "moment": "wealth_earnings",
+      "role": "scored",
+      "target": "4.45838713455674",
+      "weight": "7.595098472533724"
+    },
+    {
+      "moment": "bequest_wealth",
+      "role": "scored",
+      "target": "0.007291023472616158",
+      "weight": "5165289.256198346"
+    },
+    {
+      "moment": "old_dispersion",
+      "role": "validation",
+      "target": "3.51593508651872",
+      "weight": "0.0"
+    },
+    {
+      "moment": "mean_rooms",
+      "role": "scored",
+      "target": "5.729434240102641",
+      "weight": "128.02070205233477"
+    },
+    {
+      "moment": "ownership_30_55",
+      "role": "scored",
+      "target": "0.6762604168538028",
+      "weight": "2339.3623724673616"
+    },
+    {
+      "moment": "first_birth_rooms",
+      "role": "scored",
+      "target": "1.465",
+      "weight": "137.5652749002964"
+    },
+    {
+      "moment": "family_rooms",
+      "role": "validation",
+      "target": "0.38509964969278165",
+      "weight": "0.0"
+    },
+    {
+      "moment": "recent_parent_ownership",
+      "role": "scored",
+      "target": "0.12760836356692162",
+      "weight": "27055.822957508266"
+    },
+    {
+      "moment": "early_fertility",
+      "role": "scored",
+      "target": "0.8095276384290021",
+      "weight": "100.0"
+    }
+  ],
+  "target_fingerprint": "c7a3d185668122e508a6c322bc5ef0715ebb0ecb23948c8d9b184ee25d1cde70",
+  "wall_seconds_per_chain": 21600,
+  "weight_fingerprint": "f762ebb5684ab30487b3b8b64fc10977fda396b520035d91c0c5c803255f88e4"
+}

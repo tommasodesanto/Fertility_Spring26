@@ -29,3 +29,25 @@ one-thread environment, and no automatic retry.
 
 The run packet and explicit launch receipt are under
 `output/model/fixed_reference_economics_20260928/alternative_wealth_local_20261003_v1/`.
+
+## Widened-beta Torch variant
+
+`cluster_calibrate.py` is a separate, pinned ten-chain variant for Torch. It
+starts at the numerically verified new-wealth local chain 02 point and changes
+only the **search bound** for annual discount factor $\beta$ from $[0.940,0.990]$
+to $[0.930,0.990]$ relative to the local experiment. All ten coordinates
+remain free during optimization. The other nine starting coordinates equal the
+verified point; the ten annual-$\beta$ seeds are recorded in the run packet's
+`start_plan.json`. It requires that exact start file and its SHA-256 on every
+invocation. The objective-call cap is 500 per chain, subject to a six-hour wall
+limit that reserves the final 1800 seconds for native verification. These are
+search-design changes, not changes to the target, observer, economics, or
+numerical acceptance gates. The active 10 scored moments for 10 free
+coordinates still have unverified informative rank.
+
+The cluster variant's input and smoke receipts are under
+`output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/`.
+Direct Linux/Apptainer execution uses `cluster_calibrate.py`; local macOS
+validation uses `local_entry.py` to load the frozen source overlay. A two-call
+native smoke and a zero-solve child preflight at $\beta=0.930$ passed before
+Torch staging. Neither is a production calibration result.
