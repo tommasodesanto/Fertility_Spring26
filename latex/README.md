@@ -1,16 +1,28 @@
-## Revised transaction timing — October 3, 2026
+## JMP Slides model update — October 3, 2026
 
-Tommaso adopted the working post-interest housing-transaction budget
-\(b'=Rb+S-Q+y-c-K\) for continuation. The continuing JMP Slides source
-`JMP_slides/JMP_slides.tex` still places \(R_b\) on the net transaction term
-in its housing budget (line 285 in the inspected source): that is the earlier
-convention and now contradicts the working model timing. The author-owned
-`JMP_DS_draft/sections/03_model.tex` does not yet display a housing budget;
-`JMP_DS_mock/sections/03_model.tex` describes the down-payment gate but not
-the interest placement on sale or purchase cash. Neither source was edited.
-The slide equation needs a coordinated update during
-document work; the September 14 paper reference remains frozen. This note
-records the specific discrepancy and does not claim manuscript synchronization.
+The continuing `JMP_slides/JMP_slides.tex` model exposition is reconciled
+with the canonical stationary production engine and its post-interest chain-13
+input snapshot. Scope: utility, physical-room requirement, finance and transaction
+timing, normalized bequest utility, housing supply and household entry. The
+Estate-A and larger intended-birth menus remain experiments and are excluded.
+The existing calibration, empirical and policy-result slides retain their
+historical sources; this edit does not refresh their numerical results or certify
+a current dated transition.
+
+Representation check: the author-owned `JMP_DS_draft/sections/03_model.tex` and
+`JMP_DS_mock/sections/03_model.tex` still contain a linear child benefit and
+unnormalized bequest utility; the mock also describes a purchase gate excluding
+current income. Both remain unchanged on this slides-only instruction. The
+manuscript's property-tax rebate and supply normalization also require author-side
+reconciliation before claiming complete synchronization. The frozen September 14
+reference remains unchanged.
+
+Four missing May appendix graphs were recovered as original embedded image
+objects from the retained September PDF, identical to
+`september_14_presentation.pdf`. Their object-level provenance is recorded in
+`JMP_slides/assets/README.md`. The reader PDF is rebuilt at
+`../output/pdf/JMP_slides.pdf`; both final builds and every changed frame are
+checked.
 
 ## Corina adviser update — October 2, 2026
 
