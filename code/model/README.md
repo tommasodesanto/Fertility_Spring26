@@ -1,11 +1,66 @@
-# Python model code map
+# Model guide: what to edit, run, and inspect
+
+## Start here
+
+Your main folder is `code/model/`. The everyday workflow is:
+
+**Choose parameters → solve the steady state → inspect saved results.**
+
+| File | What you use it for |
+|---|---|
+| [`parameters/best_params.py`](parameters/best_params.py) | The current working calibration and fixed inputs. |
+| [`parameters/toy_params.py`](parameters/toy_params.py) | **Your editable experiment:** change beta, financing, borrowing limits, or other supported inputs. |
+| [`run_model.py`](run_model.py) | **The file you run** to compute a complete steady state. Its `PARAMETER_FILE` line selects best or toy. |
+| [`plot_model_policies.py`](plot_model_policies.py) | Plot household decisions across wealth, age, and family states. Edit this file to customize policy figures. |
+| [`plot_model_aggregates.py`](plot_model_aggregates.py) | Plot population averages and lifecycle profiles. |
+| [`tools/start_model_explorer.command`](tools/start_model_explorer.command) | Start the browser explorer for saved results. It does not solve the model. |
+| [`tools/start_model_playground.command`](tools/start_model_playground.command) | Open a Python console for quick experiments at a fixed price. This does not compute a complete equilibrium. |
+
+For your first experiment:
+
+1. In `run_model.py`, set `PARAMETER_FILE = "toy_params.py"`.
+2. Edit the values inside `toy_params.py`, such as `beta_annual` or `phi`.
+3. Run `run_model.py` to solve and save the experiment.
+4. Run either plotter or the explorer launcher. With no command-line override, they follow the same `PARAMETER_FILE` choice.
+
+You do **not** need to run calibration to try your own parameter values. The
+[commands below](#edit-inputs-and-run-one-case) also show how to select toy inputs
+with `--params toy_params.py` without changing the default in `run_model.py`.
+
+Your latest complete results are kept separately:
+
+- **Working calibration:** [`output/model/local_solution/latest/`](../../output/model/local_solution/latest/).
+- **Toy experiment:** [`output/model/experiments/toy_params/latest/`](../../output/model/experiments/toy_params/latest/).
+
+Each contains `SUMMARY.md`, full target and parameter tables, and
+`standard_diagnostics/`, `policy_plots/`, and `aggregate_plots/`. Plotting reads
+these saved results without another solve. Parameter files isolate inputs and
+outputs; changing the shared solver equations requires a separate checkout for
+code isolation.
+
+## Calibration versus the steady-state solver
+
+The **steady-state solver**, [`production/equilibrium.py`](production/equilibrium.py),
+takes fixed parameters and computes equilibrium. At each trial price it solves
+household choices backward and propagates the distribution forward. It adjusts
+the price to satisfy birth renewal; with the housing-supply coefficient \(H_0\)
+fixed, population adjusts to clear housing. `run_model.py` calls this solver for you.
+
+The **calibration search**, [`experiments/purchase_timing_sandbox/calibrate.py`](experiments/purchase_timing_sandbox/calibrate.py),
+repeatedly changes parameter values, calls that same solver, and compares model
+moments with empirical targets. Its adapter is [`production/calibration.py`](production/calibration.py).
+Calibration uses the population-one normalization and derives \(H_0\). Future
+canonical runs export a verified, run-local `best_params.py`; they do not
+automatically replace your working default.
+
+## Detailed code map and current reference
 
 **Read [`../../CALIBRATION_STATUS.md`](../../CALIBRATION_STATUS.md) first for the live specification, calibration, overnight jobs, and unresolved numerical questions.** This file is navigation, not a second status ledger. The October 3 stationary-GE deployment commit is `94c0a6e3`; its verified sources, receipts and limits are in [`../../output/model/production_deployment_20261003/README.md`](../../output/model/production_deployment_20261003/README.md). The prior contents of this README are preserved byte-for-byte in [`../../calibration_archive/model_frontend_20261003/README_code_model_before_map.md`](../../calibration_archive/model_frontend_20261003/README_code_model_before_map.md), SHA-256 `aea46dc8c37697791d4c7f989640c2d9a9863acdda21c0603aaefe699d382ccd`.
 
 ## Current stationary GE
 
 - [`run_model.py`](run_model.py) is the editable local general-equilibrium entry point. It calls the canonical implementation in [`production/`](production/README.md): selected inputs, equilibrium and price root, native household and forward-distribution engine, reporting, and storage. The current runner uses the fixed-H0 closure and the adopted post-interest, soft-constraint chain-13 input snapshot.
-- Each successful solve publishes a validated case under `output/model/local_solution/cases/` and updates `output/model/local_solution/latest`. The case includes full fit and parameter tables, saved arrays, 17 standard diagnostic plots, 8 policy plots, 7 aggregate plots, and explorer assets.
+- Each successful solve with the canonical `best_params.py` publishes a validated case under `output/model/local_solution/cases/` and updates `output/model/local_solution/latest`; toy runs use their separate experiment folder. The case includes full fit and parameter tables, saved arrays, 17 standard diagnostic plots, 8 policy plots, 7 aggregate plots, and explorer assets.
 - [`plot_model_policies.py`](plot_model_policies.py) and [`plot_model_aggregates.py`](plot_model_aggregates.py) read `latest` without another solve. The [production guide](production/README.md) gives the authenticated Python command, cache behavior, supported inputs, and exact numerical limits.
 - The default local GE uses `fixed_h0`: it holds the physical housing-supply coefficient fixed while solving the birth-renewal price root. Its reported implied H0 and population scale N are computed algebraically from those same solved policies and price, without a second solve. The `population_one` calibration normalization instead fixes household scale at one and derives H0. This accounting relies on the documented conditional scale-independence and fixed-payroll assumptions; it does not certify another equilibrium.
 
