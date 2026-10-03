@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Explicit production submission after lead review; no dependency auto-submit.
 set -euo pipefail
-remote=/scratch/td2248/projects/soft_timing_calibration_20261002_v1
+remote=/scratch/td2248/projects/soft_timing_calibration_20261002_v2
 cd "$remote"
 [[ ! -e submission_receipt.json ]] || { echo 'Refusing duplicate production submission'; exit 2; }
 /share/apps/anaconda3/2025.06/bin/python verify_stage.py --host

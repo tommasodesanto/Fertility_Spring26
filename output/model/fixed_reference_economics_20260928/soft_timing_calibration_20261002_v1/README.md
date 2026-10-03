@@ -33,7 +33,11 @@ the exploratory search evaluator with zero solves. Use `--smoke` for two
 exploratory objective calls followed by a full native selected-point verification.
 The smoke checks all 14 target rows and 31 parameter rows against the native
 report at the existing absolute tolerance of `1e-10`. Search and final
-verification use the same evaluator modes in smoke and production. A production chain allows 250 objective
+verification use the same evaluator modes in smoke and production. The full
+native selected-point evaluator runs in a fresh child interpreter under the
+same absolute deadline; the parent admits its receipt only after checking the
+search receipt hash, target and weight fingerprints, tables, plots and exact
+repeat. A production chain allows 250 objective
 calls, at most 32 lifecycle solves per case under the native evaluator, six
 hours from actual start, and 30 minutes reserved for native verification. Each
 case writes `latest_completed.json`, `best_so_far.json`, and `heartbeat.json`;

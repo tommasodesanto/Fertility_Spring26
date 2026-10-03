@@ -41,6 +41,9 @@ def fixture(root):
             weight_fingerprint='synthetic_weight'))
         put(run / 'search_contract.json', {'max_objective_calls': 2})
         put(run / 'search_completed.json', {'objective_calls': 2})
+        put(run / 'native_postcheck/completed.json', dict(status='full_native_postcheck_passed',
+            search_receipt_sha256=sha(run / 'search_completed.json'),
+            target_fingerprint='synthetic_target', weight_fingerprint='synthetic_weight'))
         put(run / 'latest_completed.json', {'completed_full_ge': 2})
         put(run / 'best_so_far.json', {'best': {'loss': 0}})
         put(run / 'heartbeat.json', {'status': 'completed'})
@@ -49,7 +52,9 @@ def fixture(root):
             objective_calls=2, selected_postcheck=dict(status='passed',
             report='/work/results/run/native_postcheck/selected_postcheck/phase_b_ge/selected_root'),
             target_fingerprint='synthetic_target', weight_fingerprint='synthetic_weight',
-            native_loss=0))
+            native_loss=0, smoke_fast_full_comparison=dict(status='matched_saved_full_baseline',
+            absolute_tolerance=1e-10, checks={'target_fit.csv': {'rows': 14},
+            'parameters.csv': {'rows': 31}})))
         report.mkdir(parents=True)
         with (report / 'target_fit.csv').open('w') as stream:
             writer = csv.DictWriter(stream, fieldnames=['moment', 'loss_contribution'])
@@ -95,3 +100,10 @@ with tempfile.TemporaryDirectory(prefix='synthetic_soft_gate_') as directory:
     changed['stage_inventory_sha256'] = 'wrong'
     put(launcher, changed)
     expect_failure(root, 'stage changed after smoke')
+    changed['stage_inventory_sha256'] = sha(root / 'inventory.json')
+    put(launcher, changed)
+    child = root / 'results/smoke_original_chain_0/run/native_postcheck/completed.json'
+    changed = json.loads(child.read_text())
+    changed['search_receipt_sha256'] = 'wrong'
+    put(child, changed)
+    expect_failure(root, 'fresh child search receipt mismatch')

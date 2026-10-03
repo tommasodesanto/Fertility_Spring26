@@ -12,7 +12,7 @@ import json
 import subprocess
 from pathlib import Path
 
-REMOTE = '/scratch/td2248/projects/soft_timing_calibration_20261002_v1/results'
+REMOTE = '/scratch/td2248/projects/soft_timing_calibration_20261002_v2/results'
 VALID_MODES = ('mock', 'smoke', 'production')
 
 

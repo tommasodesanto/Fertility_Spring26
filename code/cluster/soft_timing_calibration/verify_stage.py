@@ -6,7 +6,7 @@ import json
 import sys
 from pathlib import Path
 
-REMOTE = Path('/scratch/td2248/projects/soft_timing_calibration_20261002_v1')
+REMOTE = Path('/scratch/td2248/projects/soft_timing_calibration_20261002_v2')
 CONTAINER_STAGE = Path('/work/deployment')
 REPO = Path('/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26')
 NORMAL = Path('output/model/fixed_reference_economics_20260928/normalized_calibration_v2')

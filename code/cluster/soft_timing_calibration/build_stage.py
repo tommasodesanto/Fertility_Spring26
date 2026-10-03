@@ -17,7 +17,7 @@ TIMING = PACKETS / 'purchase_timing_sandbox_v1'
 SOFT = PACKETS / 'soft_timing_review_v1'
 SANDBOX = Path('code/model/experiments/purchase_timing_sandbox')
 PREVIOUS = PACKETS / 'purchase_rules_overnight_v1/previous_soft_checkpoints/previous_soft_best_before_stop.json'
-REMOTE = '/scratch/td2248/projects/soft_timing_calibration_20261002_v1'
+REMOTE = '/scratch/td2248/projects/soft_timing_calibration_20261002_v2'
 
 
 def digest(path: Path) -> str:

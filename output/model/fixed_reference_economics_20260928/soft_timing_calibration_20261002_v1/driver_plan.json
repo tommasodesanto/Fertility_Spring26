@@ -63,6 +63,7 @@
   "no_auto_retry": true,
   "no_retarget_or_fallback": true,
   "normalized_source_pins_sha256": "9759d97cd00ceb869b31eb898e8ec089d3b6da9d3f7ee33f025eface5e9bd8a2",
+  "postcheck_process": "fresh_child_interpreter_same_absolute_deadline",
   "reference": {
     "alternative_fixed_coordinate_loss": 57.1863328545635,
     "alternative_fixed_coordinate_price": 0.7307186231348944,
@@ -79,6 +80,7 @@
     "max_lifecycle_solves_per_case": 32,
     "max_objective_calls_per_chain": 250,
     "memory_gib_per_chain": 24,
+    "postcheck_child_timeout_seconds_max": 1800,
     "wall_seconds_per_chain": 21600
   },
   "search_evaluator": "exploratory",

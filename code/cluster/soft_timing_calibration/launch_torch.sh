@@ -8,10 +8,10 @@
 #SBATCH --signal=B:TERM@30
 #SBATCH --account=torch_pr_570_general
 #SBATCH --partition=cs
-#SBATCH --output=/scratch/td2248/projects/soft_timing_calibration_20261002_v1/logs/%x-%A_%a.out
+#SBATCH --output=/scratch/td2248/projects/soft_timing_calibration_20261002_v2/logs/%x-%A_%a.out
 set -euo pipefail
 
-remote=/scratch/td2248/projects/soft_timing_calibration_20261002_v1
+remote=/scratch/td2248/projects/soft_timing_calibration_20261002_v2
 base=/scratch/td2248/projects/grid_resolution_credit053_v2
 floor_remote=/scratch/td2248/projects/normalized_floor_calibration_v1
 frozen=/scratch/td2248/projects/fertility_night_calibration_20260928_v1/project

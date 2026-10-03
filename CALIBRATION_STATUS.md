@@ -16,13 +16,16 @@ The matched search plan is in
 [driver_plan.json](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/driver_plan.json):
 four starts per timing arm, six hours and 250 objective calls per chain,
 1,800 seconds reserved for native selected-point verification, one core and
-24 GiB per chain on Torch. No new Slurm jobs have been submitted. Local lead
-review corrected completion-record, smoke-path and checkpoint-identity issues;
-both arms passed refreshed zero-solve checks. Production submission now requires
-both native smokes on the exact staged source. Remote preflight and exact-loop
-native smokes remain pending.
-Automatic approval review blocked uploading the corrected isolated source archive;
-see [deployment status and recovery](code/cluster/soft_timing_calibration/README.md).
+24 GiB per chain on Torch. The author confirmed the upload and cluster execution;
+both remote evaluator preflights passed. Smoke array **19085105** completed two
+exploratory evaluations in each arm, then both tasks failed while constructing
+the full native verifier in the already-initialized Python process. The existing
+fresh-interpreter guard correctly stopped this integration path. No production
+jobs were submitted and no selected-point native verification passed.
+A bounded driver repair will execute the postcheck in a fresh process, preserving
+the absolute deadline, source authentication and all numerical gates. A separate
+second smoke stage is being prepared; the first failed stage remains intact.
+See [deployment status and recovery](code/cluster/soft_timing_calibration/README.md).
 
 The explorer and direct Python entry are documented in
 [MODEL_PLAYGROUND.md](code/model/tools/MODEL_PLAYGROUND.md).

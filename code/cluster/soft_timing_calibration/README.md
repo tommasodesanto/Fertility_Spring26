@@ -6,8 +6,8 @@ soft purchase rule, ten free coordinates, target and weight contracts, financed
 share 0.8, entrant rule, earnings, floors and utility. It is an experimental
 search; no fitted point becomes a paper baseline without a fresh native check.
 
-The immutable source stage is built by `build_stage.py`. `stage_torch.sh` creates
-the isolated `/scratch/td2248/projects/soft_timing_calibration_20261002_v1`
+The attempt-2 immutable source stage is built by `build_stage.py`. `stage_torch.sh` creates
+the isolated `/scratch/td2248/projects/soft_timing_calibration_20261002_v2`
 folder, uploads the source archive and runs a zero-solve preflight under the
 existing authenticated Apptainer runtime. The preflight hashes every staged
 source file, the original 234-file pin list, all four paired timing files, the
@@ -18,28 +18,29 @@ the frozen remote copies of `e5f_exact_policy_cache.py` and its test have the
 required historical hashes; the current checkout's newer copies must not be
 overlaid.
 
-The first staged archive, SHA-256
-`a10ec1dff0b22c26535d30450882736bf71ae9aba7b6020a6baf41b83694ae8f`,
-passed the host 325-file inventory check but failed before Apptainer because
-`launch_torch.sh` transposed two characters in the expected hash of the
-unchanged `arrays.npz` input. Its remote archive is preserved as
-`stage_attempt1.tar.gz`. The corrected local archive is recorded in
-`output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/deployment/stage_receipt.json`.
-At the last update, automatic approval review rejected uploading this corrected
-archive, so **remote preflight and both native smokes remain pending**. There
-are no Slurm jobs from this deployment and `submit_torch.sh` has not run.
-The corrected package excludes two incidental `.DS_Store` files and hashes 323
-source and contract files.
-Once that upload is authorized, `bash code/cluster/soft_timing_calibration/restage_torch.sh`
-is the exact guarded recovery command. It requires the preserved first archive,
-no submission receipt and no result directory before replacing the isolated
-stage, then runs the two-arm zero-solve preflight.
+The author approved the first Torch upload. That archive and its inventory,
+status, and failed smoke receipts are preserved locally under
+`output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/deployment/attempt1/`.
+The remote attempt-1 root `/scratch/td2248/projects/soft_timing_calibration_20261002_v1`
+is immutable. Its smoke array `19085105` completed two exploratory calls per
+arm, then both tasks failed when the full native postcheck was constructed in
+the same interpreter. The repair moves postcheck into a fresh child interpreter.
+The attempt-2 stage is prepared locally for lead review (SHA-256
+`f7a8fec4ff370fd3690c0d0068ca595b75a17dd8aaac3bd47f6009ef73ecd68b`);
+it has not been uploaded or submitted. The 323 source hashes differ from
+attempt 1 only for `calibrate.py` and `driver_plan.json`. The target, weight,
+selected-checkpoint and original 234-file source pins are unchanged. The
+synthetic gate checks include the fresh child's search-receipt hash and
+fast/full target and parameter comparison. This is a smoke repair, not a
+production restart.
 
-After the corrected archive is approved and remote preflight passes, a lead may
-submit only the two smoke tasks with:
+After the lead reviews the repaired driver and stage, run
+`bash code/cluster/soft_timing_calibration/stage_torch.sh` once. If its host,
+container, and two zero-solve evaluator checks pass, submit only the two smoke
+tasks with:
 
 ```bash
-ssh torch 'cd /scratch/td2248/projects/soft_timing_calibration_20261002_v1 && sbatch --parsable --array=0,4 --time=01:30:00 --export=ALL,SOFT_RUN_MODE=smoke launch_torch.sh'
+ssh torch 'cd /scratch/td2248/projects/soft_timing_calibration_20261002_v2 && sbatch --parsable --array=0,4 --time=01:30:00 --export=ALL,SOFT_RUN_MODE=smoke launch_torch.sh'
 ```
 
 Smoke task 0 is original chain 0 and task 4 is alternative chain 0. Each runs

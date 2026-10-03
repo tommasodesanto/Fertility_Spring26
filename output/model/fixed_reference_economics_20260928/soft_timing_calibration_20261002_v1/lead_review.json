@@ -1,6 +1,6 @@
 {
-  "status": "local_review_passed_awaiting_upload_approval",
-  "archive_sha256": "73b9a7fe6be223eeaad14a05372b8cf86fdf9a7768016e4f04aaa63944548ceb",
+  "status": "fresh_process_repair_reviewed_attempt2_staging",
+  "archive_sha256": "f7a8fec4ff370fd3690c0d0068ca595b75a17dd8aaac3bd47f6009ef73ecd68b",
   "model_solves_this_review": 0,
   "native_smokes_passed": false,
   "production_submitted": false,
@@ -8,10 +8,12 @@
   "driver_and_timing_observer_reviewed": true,
   "synthetic_gates_verified": true,
   "remaining": [
-    "Explicit upload approval after auto-review rejection",
-    "Remote source preflight",
-    "Two exact-loop native smoke tests",
-    "Review smoke reports before production"
+    "Attempt 2 remote preflight",
+    "Both exact-loop native smokes",
+    "Lead review of full reports before production"
   ],
-  "grid_convergence_certified": false
+  "grid_convergence_certified": false,
+  "upload_authorized": true,
+  "exact_attempt2_upload_authorization": "Approve this exact upload and run",
+  "repair": "Full selected-point native verification in fresh child interpreter; original absolute deadline and all native gates retained."
 }

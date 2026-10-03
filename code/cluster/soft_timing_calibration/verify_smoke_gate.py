@@ -8,7 +8,7 @@ from pathlib import Path
 
 from collect_torch import collect_one, read, tasks
 
-REMOTE = Path('/scratch/td2248/projects/soft_timing_calibration_20261002_v1')
+REMOTE = Path('/scratch/td2248/projects/soft_timing_calibration_20261002_v2')
 NORMAL = 'output/model/fixed_reference_economics_20260928/normalized_calibration_v2/source_pins.json'
 TIMING = 'output/model/fixed_reference_economics_20260928/purchase_timing_sandbox_v1/manifest.json'
 
@@ -33,6 +33,7 @@ def verify(stage: Path) -> dict:
         contract = read(folder / 'start_contract.json')
         search = read(folder / 'search_contract.json')
         completed = read(folder / 'completed.json')
+        child = read(folder / 'native_postcheck/completed.json')
         heartbeat = read(folder / 'heartbeat.json')
         cases = read(folder / 'cases.json')
         if start['wall_seconds'] != 5400 or start['deadline_epoch'] - start['start_epoch'] != 5400:
@@ -53,6 +54,17 @@ def verify(stage: Path) -> dict:
             raise AssertionError(f'{arm} smoke objective count mismatch')
         if completed['selected_postcheck']['status'] != 'passed':
             raise AssertionError(f'{arm} native selected postcheck failed')
+        if child['status'] != 'full_native_postcheck_passed':
+            raise AssertionError(f'{arm} fresh-child postcheck did not pass')
+        if child['search_receipt_sha256'] != sha(folder / 'search_completed.json'):
+            raise AssertionError(f'{arm} fresh child used a different search receipt')
+        if child['target_fingerprint'] != inventory['target_fingerprint'] or child['weight_fingerprint'] != inventory['weight_fingerprint']:
+            raise AssertionError(f'{arm} fresh-child target or weight drift')
+        comparison = completed['smoke_fast_full_comparison']
+        if comparison['status'] != 'matched_saved_full_baseline' or comparison['absolute_tolerance'] != 1e-10:
+            raise AssertionError(f'{arm} fast/full comparison missing or changed')
+        if comparison['checks']['target_fit.csv']['rows'] != 14 or comparison['checks']['parameters.csv']['rows'] != 31:
+            raise AssertionError(f'{arm} fast/full row count drift')
     return {'status': 'both_smokes_passed_on_current_stage',
             'arms': [row['arm'] for row in rows],
             'target_fingerprint': inventory['target_fingerprint'],

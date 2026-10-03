@@ -12,6 +12,7 @@ import inspect
 import json
 import os
 import signal
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -179,15 +180,21 @@ def main():
     parser.add_argument("--mock-smoke", action="store_true")
     parser.add_argument("--preflight-evaluator", action="store_true")
     parser.add_argument("--smoke", action="store_true")
+    parser.add_argument("--postcheck-only", action="store_true")
+    parser.add_argument("--search-receipt", type=Path)
     args = parser.parse_args()
+    if args.postcheck_only != (args.search_receipt is not None):
+        raise RuntimeError("Postcheck mode requires exactly one search receipt")
     if args.out.exists():
         raise RuntimeError("Refusing existing output directory")
     args.out.mkdir(parents=True)
     out = args.out.resolve()
     start = time.time()
     deadline = min(float(args.deadline_epoch), start + 21600)
-    if deadline <= start + RESERVE and not args.mock_smoke:
+    if deadline <= start + RESERVE and not (args.mock_smoke or args.postcheck_only):
         raise RuntimeError("Deadline leaves no 1800-second native reserve")
+    if args.postcheck_only and deadline <= start:
+        raise RuntimeError("Native postcheck child has no remaining deadline")
     v2, timing_driver, manifest, selected = checked_inputs(args.arm)
     lane = "floor_s0"
     _, bounds, _ = v2.inputs.seed_and_bounds(lane)
@@ -274,6 +281,53 @@ def main():
     if args.arm == "alternative":
         install_timing_observer(v2, timing_driver, out, P)
     Q = v2.native.utility_checks(P, grid, lane, out)
+    if args.postcheck_only:
+        search_path = args.search_receipt.resolve()
+        search = json.loads(search_path.read_text())
+        v2.inputs.require(search["status"] == "provisional_search_finished", "Search status drift")
+        v2.inputs.require(search["arm"] == args.arm and search["chain"] == args.chain,
+                          "Postcheck arm or chain drift")
+        v2.inputs.require(search["target_fingerprint"] == manifest["target_fingerprint"] and
+                          search["weight_fingerprint"] == manifest["weight_fingerprint"],
+                          "Postcheck target or weight drift")
+        chosen = search["selected"]
+        v2.inputs.require(chosen is not None and chosen["status"] == "passed" and
+                          chosen["weight_fingerprint"] == manifest["weight_fingerprint"],
+                          "Missing authenticated selected candidate")
+        v2.inputs.check_point(chosen["parameters"], bounds)
+        v2.inputs.require(set(chosen["parameters"]) == set(coordinates),
+                          "Postcheck parameter coordinate drift")
+        native_evaluate = v2.normalized_objective.make_evaluator(out, lane, Q, grid,
+            deadline, float(chosen.get("price", selected["price"])), native_runner=v2.native,
+            exploratory=False)
+        if args.preflight_evaluator:
+            v2.write(out / "completed.json", dict(status="full_native_postcheck_initialized_zero_solves",
+                lifecycle_solves=0, search_receipt_sha256=sha(search_path),
+                target_fingerprint=manifest["target_fingerprint"],
+                weight_fingerprint=manifest["weight_fingerprint"]))
+            return
+        verification = native_evaluate("selected_postcheck", chosen["parameters"], deadline)
+        if verification["status"] != "passed":
+            raise RuntimeError("Selected native postcheck failed: " + str(verification))
+        report = Path(verification["report"])
+        fits = v2.native.readtable(report / "target_fit.csv")
+        parameters = v2.native.readtable(report / "parameters.csv")
+        v2.inputs.require(len(fits) == 14 and len(parameters) == 31, "Native reporting row count drift")
+        v2.inputs.require(v2.native.target_identity(fits) == v2.CONFIG["base_target_contract"],
+                          "Native selected target contract drift")
+        v2.inputs.require(len(list((report / "standard_diagnostics").glob("*.png"))) == 17,
+                          "Native selected diagnostic plot count drift")
+        native_loss = float(sum(float(r["loss_contribution"] or 0) for r in fits))
+        rr = np.asarray(verification["residual"], float)
+        v2.inputs.require(abs(native_loss - float(rr @ rr)) < 1e-8, "Native loss arithmetic drift")
+        repeat = v2.native.compare_repeated(report, selected_repeat_path(report))
+        v2.write(out / "completed.json", dict(status="full_native_postcheck_passed",
+            selected_postcheck=verification, native_loss=native_loss,
+            target_fit=fits, parameters=parameters, repeat=repeat,
+            search_receipt_sha256=sha(search_path), target_fingerprint=manifest["target_fingerprint"],
+            weight_fingerprint=manifest["weight_fingerprint"],
+            elapsed_seconds=time.time()-start))
+        return
     evaluate = v2.normalized_objective.make_evaluator(out, lane, Q, grid, deadline,
         float(selected["price"]), native_runner=v2.native, exploratory=True)
     review_path = out / "normalization_source_review/receipt.json"
@@ -353,25 +407,38 @@ def main():
         if best is None:
             v2.write(out / "completed.json", completion_receipt(search, "no_admissible_candidate"))
             return
-        native_evaluate = v2.normalized_objective.make_evaluator(out / "native_postcheck", lane, Q, grid,
-            deadline, float(best.get("price", selected["price"])), native_runner=v2.native,
-            exploratory=False)
         heartbeat("native_postcheck_running", completed_full_ge=len(cases), objective_calls=calls)
-        verification = native_evaluate("selected_postcheck", best["parameters"], deadline)
-        if verification["status"] != "passed":
-            raise RuntimeError("Selected native postcheck failed: " + str(verification))
+        child_out = out / "native_postcheck"
+        command = [sys.executable]
+        if sys.platform == "darwin":
+            command.append(str(Path(__file__).with_name("local_entry.py")))
+        command.extend((str(Path(__file__).resolve()), "--arm", args.arm, "--chain", str(args.chain),
+                        "--out", str(child_out), "--deadline-epoch", str(deadline),
+                        "--postcheck-only", "--search-receipt", str(out / "search_completed.json")))
+        child_env = os.environ.copy()
+        for key in ("NUMBA_NUM_THREADS", "OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS"):
+            child_env[key] = "1"
+        remaining = min(RESERVE, deadline - time.time())
+        if remaining <= 0:
+            raise BudgetStop("No time remains for native postcheck child")
+        child = subprocess.run(command, env=child_env, capture_output=True, text=True,
+                               timeout=remaining, check=False)
+        (out / "postcheck_child.stdout.log").write_text(child.stdout)
+        (out / "postcheck_child.stderr.log").write_text(child.stderr)
+        if child.returncode != 0:
+            raise RuntimeError(f"Full native postcheck child failed with exit {child.returncode}")
+        child_receipt = json.loads((child_out / "completed.json").read_text())
+        v2.inputs.require(child_receipt["status"] == "full_native_postcheck_passed" and
+                          child_receipt["search_receipt_sha256"] == sha(out / "search_completed.json") and
+                          child_receipt["target_fingerprint"] == manifest["target_fingerprint"] and
+                          child_receipt["weight_fingerprint"] == manifest["weight_fingerprint"],
+                          "Native postcheck child receipt drift")
+        verification = child_receipt["selected_postcheck"]
+        native_loss = child_receipt["native_loss"]
+        fits = child_receipt["target_fit"]
+        parameters = child_receipt["parameters"]
+        repeat = child_receipt["repeat"]
         report = Path(verification["report"])
-        fits = v2.native.readtable(report / "target_fit.csv")
-        parameters = v2.native.readtable(report / "parameters.csv")
-        v2.inputs.require(len(fits) == 14 and len(parameters) == 31, "Native reporting row count drift")
-        v2.inputs.require(v2.native.target_identity(fits) == v2.CONFIG["base_target_contract"],
-                          "Native selected target contract drift")
-        v2.inputs.require(len(list((report / "standard_diagnostics").glob("*.png"))) == 17,
-                          "Native selected diagnostic plot count drift")
-        native_loss = float(sum(float(r["loss_contribution"] or 0) for r in fits))
-        v2.inputs.require(abs(native_loss - float(np.asarray(verification["residual"]) @
-                          np.asarray(verification["residual"]))) < 1e-8, "Native loss arithmetic drift")
-        repeat = v2.native.compare_repeated(report, selected_repeat_path(report))
         smoke_comparison = None
         if args.smoke:
             smoke_comparison = v2.normalized_objective.fast.compare_saved_baseline(
