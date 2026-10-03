@@ -152,21 +152,6 @@ Rules:
 - Prefer concise durable facts over long transcript copies.
 - Do not create new files.
 - Keep the generated block in ${daily_file} intact.
-- Keep daily generated blocks intact; use daily notes and experiment READMEs
-  for chronology, and read archives on demand.
-- Preserve unresolved decisions and safeguards. Do not promote experimental
-  results or infer adoption.
-- Keep ${agent_memory_file} to durable preferences, permissions, recurring
-  pitfalls, and navigation; do not duplicate current calibration state or
-  historical run logs.
-- If updating ${repo_root}/CALIBRATION_STATUS.md, make it a consolidated
-  current snapshot: replace superseded entries rather than prepend or append
-  dated run narratives, and record source identity and verified-as-of time for
-  mutable state.
-- Prefer concise prose with evidence links. Aim for roughly <=4,000 words in
-  CALIBRATION_STATUS.md and <=2,000 words in AGENT_MEMORY.md; these are
-  advisory budgets, so necessary contracts and uncertainties take priority.
-  Do not automatically truncate or delete content at a threshold.
 EOF
 
     if [[ "${detached_memory}" -eq 0 ]]; then

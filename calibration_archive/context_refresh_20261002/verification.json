@@ -1,0 +1,31 @@
+{
+  "verified_at": "2026-10-03T04:28:15.659574+00:00",
+  "checks": {
+    "immutable_original_hashes": "passed",
+    "late_update_patch_exact_reconstruction": "passed before cutover; hash in cutover_manifest",
+    "live_status_matches_cutover": "passed",
+    "external_memory_symlink_and_tracked_snapshot": "passed",
+    "installed_nightly_script_matches_reviewed_source": "passed",
+    "bash_syntax_repo_and_installed": "passed",
+    "AGENTS_CLAUDE_identical": "passed",
+    "local_markdown_link_existence": {
+      "CALIBRATION_STATUS.md": 34,
+      "memory/AGENT_MEMORY.md": 1,
+      "calibration_archive/context_refresh_20261002/README.md": 14
+    },
+    "target_rows": 14,
+    "positive_weight_moments": 10,
+    "free_parameters": 10,
+    "all_parameter_rows": 31,
+    "loss_sum": 23.07830929416,
+    "provenance_values_and_weights_match_csv": "passed",
+    "current_status_sha256": "efde1b945ec86b25218dbb2ff1d520684eec16c28f0c7feff6436d910347be72",
+    "current_memory_sha256": "73df21e6279ead12a41cd97e040c34618bd3cdcb44eba37b1b52c6d5cd393539"
+  },
+  "independent_review": "Three wording findings addressed; no material current-state/table-count error reported.",
+  "limitations": [
+    "Documentation reconstruction; no numerical reruns or fresh cluster poll",
+    "Grid convergence and weak identification remain outstanding",
+    "Historical snapshot whitespace is intentionally preserved byte-for-byte"
+  ]
+}

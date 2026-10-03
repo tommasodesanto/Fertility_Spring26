@@ -64,13 +64,17 @@ Rules:
 Keep root agent instructions stable and procedural. Do not place volatile
 calibration state here.
 
-- `CALIBRATION_STATUS.md` is the canonical live calibration and model-status
-  note.
+- `CALIBRATION_STATUS.md` is the consolidated current calibration and
+  model-status snapshot. Replace superseded entries rather than preserving a
+  dated run narrative; record source identity and verified-as-of time for
+  mutable state.
 - `code/model/` is the active model codebase. The old
   MATLAB active-file index has been archived under
   `calibration_archive/model_history_2026-05-07/legacy_matlab_2026-05-07/status_notes/`.
-- `memory/AGENT_MEMORY.md` stores durable cross-session gotchas and recent
-  working context.
+- `memory/AGENT_MEMORY.md` stores durable preferences, permissions, recurring
+  pitfalls, and navigation. Do not duplicate current calibration state or
+  historical run logs there.
+- Daily notes and experiment READMEs hold chronology. Read archives on demand.
 - `SESSION_DIARY.md` is chronological background, not the first source for the
   current state.
 - Older plans, archived scripts, transcript summaries, and remembered loss

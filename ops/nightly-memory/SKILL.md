@@ -34,17 +34,26 @@ Use this workflow at the end of a work session or when the user asks to rebuild 
    - complete `Summary`, `Decisions`, `Open Questions`, and `Next Actions`
    - keep the generated block intact
 8. Update `memory/AGENT_MEMORY.md`:
-   - overwrite stale status instead of appending duplicate history
-   - keep it short enough to read at the start of a session
+   - retain only durable preferences, permissions, recurring pitfalls,
+     navigation, unresolved decisions, and safeguards
+   - do not duplicate current calibration status or historical run logs
 9. Update `SESSION_DIARY.md` only when the day produced durable solver, calibration, or economics findings.
-10. Update `CALIBRATION_STATUS.md` only when the canonical calibration picture changed.
+10. Update `CALIBRATION_STATUS.md` only when the canonical calibration picture changed; consolidate the current snapshot and replace superseded entries rather than prepend or append dated run narratives. Record source identity and verified-as-of time for mutable state.
 
 ## Rules
 
 - Do not paste full raw chats into tracked memory files.
 - Keep raw transcripts under `memory/transcripts/`.
 - Use exact dates.
-- Prefer replacing stale bullets over appending near-duplicates.
+- Daily notes and experiment READMEs hold chronology; archives are read on demand.
+- Preserve unresolved decisions and safeguards. Do not promote experimental
+  results or infer adoption.
+- Prefer concise prose with evidence links and consolidation over appending
+  near-duplicate dated narratives.
+- Aim for roughly <=4,000 words in `CALIBRATION_STATUS.md` and <=2,000 words
+  in `memory/AGENT_MEMORY.md`; these are advisory budgets, so necessary
+  contracts and uncertainties take priority. Never truncate or delete content
+  automatically at a threshold.
 - Treat generated logs and outputs as evidence, not as canonical project memory.
 - Claude is ingested from local JSONL under `~/.claude/projects/...`.
 - Codex is ingested from local JSONL under `~/.codex/sessions/...`.
