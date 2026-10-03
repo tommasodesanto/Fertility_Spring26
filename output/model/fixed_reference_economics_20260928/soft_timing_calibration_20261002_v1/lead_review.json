@@ -1,19 +1,21 @@
 {
-  "status": "fresh_process_repair_reviewed_attempt2_staging",
+  "status": "production_submitted_after_native_smokes_and_lead_review",
   "archive_sha256": "f7a8fec4ff370fd3690c0d0068ca595b75a17dd8aaac3bd47f6009ef73ecd68b",
   "model_solves_this_review": 0,
-  "native_smokes_passed": false,
-  "production_submitted": false,
+  "native_smokes_passed": true,
+  "production_submitted": true,
   "checkpoint_and_target_fingerprints_verified": true,
   "driver_and_timing_observer_reviewed": true,
   "synthetic_gates_verified": true,
   "remaining": [
-    "Attempt 2 remote preflight",
-    "Both exact-loop native smokes",
-    "Lead review of full reports before production"
+    "Monitor production heartbeats",
+    "Collect all terminal receipts and reject mixed fingerprints",
+    "Review selected fits and standard diagnostics; deliver morning readout"
   ],
   "grid_convergence_certified": false,
   "upload_authorized": true,
   "exact_attempt2_upload_authorization": "Approve this exact upload and run",
-  "repair": "Full selected-point native verification in fresh child interpreter; original absolute deadline and all native gates retained."
+  "repair": "Full selected-point native verification in fresh child interpreter; original absolute deadline and all native gates retained.",
+  "production_job_id": "19086987",
+  "smoke_report_review": "Reviewed full14target/31parameter tables in botharms; native exactrepeat17plots and exactfast/full tables passed; locallydownloadedboth17plotpackets."
 }

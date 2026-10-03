@@ -1,5 +1,7 @@
 # Matched soft-purchase timing calibration: Torch deployment
 
+Production array **19086987** was submitted after both repaired smokes **19086529** passed and lead review accepted their full native reports. Four original-timing and four alternative-timing chains run with the budgets below. Local selected smoke reports, including both 17-plot packets, are in `output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/smoke_collection/`. Monitor production only; no automatic failed-chain restart.
+
 This package runs four independent chains under the original interest clock and
 four under the experimental post-interest transaction clock. Both use the same
 soft purchase rule, ten free coordinates, target and weight contracts, financed
@@ -25,19 +27,26 @@ The remote attempt-1 root `/scratch/td2248/projects/soft_timing_calibration_2026
 is immutable. Its smoke array `19085105` completed two exploratory calls per
 arm, then both tasks failed when the full native postcheck was constructed in
 the same interpreter. The repair moves postcheck into a fresh child interpreter.
-The attempt-2 stage is prepared locally for lead review (SHA-256
+The author explicitly approved this exact repaired archive and Torch v2
+destination. The lead reviewed the fresh-child change and uploaded the
+attempt-2 stage (SHA-256
 `f7a8fec4ff370fd3690c0d0068ca595b75a17dd8aaac3bd47f6009ef73ecd68b`);
-it has not been uploaded or submitted. The 323 source hashes differ from
+host and container source hashes and both zero-solve evaluator preflights
+passed. Smoke array `19086529` completed tasks 0 and 4 successfully. Each
+passed the fresh-child native postcheck, exact full-equilibrium repeat, 14-row
+target and 31-row parameter reports, 17 standard plot hashes, and exact
+fast/full table comparison at tolerance `1e-10`. The full table/receipt readout
+is in `output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/smoke_collection/readout.json`.
+Remote `verify_smoke_gate.py` passed. Production is not submitted pending lead
+review. The 323 source hashes differ from
 attempt 1 only for `calibrate.py` and `driver_plan.json`. The target, weight,
 selected-checkpoint and original 234-file source pins are unchanged. The
 synthetic gate checks include the fresh child's search-receipt hash and
 fast/full target and parameter comparison. This is a smoke repair, not a
 production restart.
 
-After the lead reviews the repaired driver and stage, run
-`bash code/cluster/soft_timing_calibration/stage_torch.sh` once. If its host,
-container, and two zero-solve evaluator checks pass, submit only the two smoke
-tasks with:
+The stage command already completed; do not run it again. The submitted smoke
+command was:
 
 ```bash
 ssh torch 'cd /scratch/td2248/projects/soft_timing_calibration_20261002_v2 && sbatch --parsable --array=0,4 --time=01:30:00 --export=ALL,SOFT_RUN_MODE=smoke launch_torch.sh'

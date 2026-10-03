@@ -1,12 +1,12 @@
 {
   "attempt": 2,
-  "state": "attempt2_uploaded_remote_preflight_running",
+  "state": "production_array_19086987_submitted",
   "remote_root": "/scratch/td2248/projects/soft_timing_calibration_20261002_v2",
   "archive_ready": true,
   "archive_uploaded": true,
-  "remote_preflight_passed": false,
-  "smoke_submitted": false,
-  "production_submitted": false,
+  "remote_preflight_passed": true,
+  "smoke_submitted": true,
+  "production_submitted": true,
   "previous_attempt": {
     "local_snapshot": "output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/deployment/attempt1",
     "remote_root": "/scratch/td2248/projects/soft_timing_calibration_20261002_v1",
@@ -15,7 +15,7 @@
     "failure": "Fresh interpreter required: model already imported"
   },
   "source_contract": "Same soft purchase economics, target and weight fingerprints, selected checkpoint and 234 original source pins; only fresh-child native postcheck orchestration may change.",
-  "next_decision": "Wait for both zero-solve evaluator preflights; if passed submit only smoke tasks 0,4; production requires lead review.",
+  "next_decision": "Monitor only production array19086987; collect and verify all eight selected results after termination.",
   "no_auto_retry": true,
   "archive_sha256": "f7a8fec4ff370fd3690c0d0068ca595b75a17dd8aaac3bd47f6009ef73ecd68b",
   "source_files": 323,
@@ -26,5 +26,13 @@
   "author_approval": "Approve this exact upload and run; source/calibration tables/NPZ to torch:/scratch/td2248/projects/soft_timing_calibration_20261002_v2",
   "host_inventory": "passed",
   "container_inventory": "passed",
-  "updated_epoch": 1790998492.928816
+  "updated_epoch": 1790999619.83979,
+  "smoke_job_id": "19086529",
+  "smoke_gate": "both_smokes_passed_on_current_stage",
+  "smoke_collection": "smoke_collection/readout.json",
+  "smoke_original_loss": 23.07830929416,
+  "smoke_alternative_loss": 57.18633285456362,
+  "production_job_id": "19086987",
+  "native_smokes_passed": true,
+  "lead_review_passed": true
 }
