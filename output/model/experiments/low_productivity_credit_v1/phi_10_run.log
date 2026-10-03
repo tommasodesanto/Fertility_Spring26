@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/run_fixed_price.py", line 260, in <module>
+    run(args.phi, args.max_seconds)
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/run_fixed_price.py", line 166, in run
+    aggregates = result.aggregates()
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/production/storage.py", line 47, in aggregates
+    return aggregate_solution(self.solution, houses=np.asarray(self.P.H_own, dtype=float),
+                              age_start=int(self.P.age_start), period_years=float(self.P.period_years))
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/model_policy_tools.py", line 216, in aggregate_solution
+    return _profiles(sol, houses, int(age_start), int(period_years))
+  File "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/model_policy_tools.py", line 112, in _profiles
+    raise ValueError("buyer-policy mass occupies a nonfinite or initialized-infeasible value entry")
+ValueError: buyer-policy mass occupies a nonfinite or initialized-infeasible value entry
