@@ -1,5 +1,10 @@
 # Alternative wealth target: isolated Torch search
 
+The isolated stage passed host/container source checks and a chain-9 zero-solve
+preflight. Torch smoke array **19111315**, task 9 only, was submitted with the
+90-minute budget; production remains unsubmitted pending native smoke review.
+The stage and launch receipts are in the new run packet's `deployment/` folder.
+
 This package stages the passed October 2 soft-timing source archive and three
 explicit new inputs: `cluster_calibrate.py`, the ten-start plan, and the verified
 new-wealth chain-02 `completed.json`. It never uploads the dirty working tree.
@@ -10,7 +15,7 @@ experiment. This search is experimental and does not adopt a paper calibration.
 
 The isolated Torch root is
 `/scratch/td2248/projects/alternative_wealth_calibration_20261003_v1`.
-After authenticated `ssh torch` access is restored, run from the repository root:
+The commands that staged this exact run from the repository root were:
 
 ```bash
 bash code/cluster/alternative_wealth_calibration/stage_torch.sh
