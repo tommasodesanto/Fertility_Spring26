@@ -1,0 +1,3157 @@
+{
+  "status": "author_stopped_checkpoints_preserved",
+  "job_array": "19112020",
+  "verified_epoch": 1791061133.5716393,
+  "queue_before": "19112020_0|RUNNING|3:32:34|6:00:00\n19112020_1|RUNNING|3:32:34|6:00:00\n19112020_2|RUNNING|3:32:34|6:00:00\n19112020_3|RUNNING|3:32:34|6:00:00\n19112020_4|RUNNING|3:32:34|6:00:00\n19112020_5|RUNNING|3:32:34|6:00:00\n19112020_6|RUNNING|3:32:34|6:00:00\n19112020_7|RUNNING|3:32:34|6:00:00\n19112020_8|RUNNING|3:32:34|6:00:00\n19112020_9|RUNNING|3:32:34|6:00:00\n19111687_0|RUNNING|3:40:26|6:00:00\n19111687_1|RUNNING|3:40:26|6:00:00\n19111687_2|RUNNING|3:40:26|6:00:00\n19111687_3|RUNNING|3:40:26|6:00:00\n19111687_4|RUNNING|3:40:26|6:00:00\n19111687_5|RUNNING|3:40:26|6:00:00\n19111687_6|RUNNING|3:40:26|6:00:00\n19111687_7|RUNNING|3:40:26|6:00:00\n19111687_8|RUNNING|3:40:26|6:00:00\n19111687_9|RUNNING|3:40:26|6:00:00\n",
+  "chains": [
+    {
+      "chain": 0,
+      "remote_run": "/scratch/td2248/projects/soft_timing_continuation_20261003_v1/results/production_alternative_chain_0/run",
+      "files": {
+        "heartbeat": {
+          "arm": "alternative",
+          "chain": 0,
+          "completed_full_ge": 95,
+          "epoch": 1791061050.3800514,
+          "label": "0095_nm",
+          "objective_calls": 96,
+          "status": "running_full_GE"
+        },
+        "latest_completed": {
+          "completed_full_ge": 95,
+          "latest": {
+            "H0_derived": 6.394058228895399,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0094_nm",
+            "lifecycle_solves": 8,
+            "loss": 13.443547278894654,
+            "normalization": "N0=1",
+            "objective": 13.443547278894654,
+            "parameters": {
+              "beta_annual": 0.9657649677331367,
+              "chi": 1.0499658855268543,
+              "child_benefit_curvature": 0.064378469710406,
+              "first_birth_fixed_cost": 0.30970822283562016,
+              "h_P": 2.5943300484443834,
+              "kappa_fert": 0.11436051038212845,
+              "kappa_fert_continuation": 0.39705268781407427,
+              "psi_child": 0.18040678709977365,
+              "tenure_choice_kappa": 0.01419426617972968,
+              "theta0": 0.10706517028182416
+            },
+            "population": 1.0,
+            "price": 0.7768041387364399,
+            "report": "/work/results/run/0094_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.48906863847546767,
+              0.08402879653563046,
+              -0.15609722924246983,
+              -0.6424017061253705,
+              -0.9643437833040629,
+              1.695318847329468,
+              -0.29914877060887257,
+              -1.0724377094386974,
+              -0.3164062193739246,
+              -2.7597937532265138
+            ],
+            "starting_price": 0.7760569760205563,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "objective_calls": 95
+        },
+        "best_so_far": {
+          "best": {
+            "H0_derived": 6.370141326945994,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0088_nm",
+            "lifecycle_solves": 8,
+            "loss": 13.403301333728773,
+            "normalization": "N0=1",
+            "objective": 13.403301333728773,
+            "parameters": {
+              "beta_annual": 0.9658714404981863,
+              "chi": 1.0489329541934558,
+              "child_benefit_curvature": 0.06315936348640643,
+              "first_birth_fixed_cost": 0.31111971507347475,
+              "h_P": 2.595687409318785,
+              "kappa_fert": 0.11482193688851426,
+              "kappa_fert_continuation": 0.39780784663432966,
+              "psi_child": 0.1809483802403317,
+              "tenure_choice_kappa": 0.014378145281183224,
+              "theta0": 0.10566866160809835
+            },
+            "population": 1.0,
+            "price": 0.7785159046909236,
+            "report": "/work/results/run/0088_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.5210344168853424,
+              0.06208656823507312,
+              -0.1037167052317948,
+              -0.6240613647678397,
+              -0.9841306152722409,
+              1.5384622273633108,
+              -0.4314535335198908,
+              -1.0398160446134708,
+              -0.694206556098063,
+              -2.7646136425480403
+            ],
+            "starting_price": 0.7760569760205563,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "completed_full_ge": 95,
+          "status": "provisional_until_full_native_postcheck"
+        },
+        "start_contract": {
+          "all_starts": [
+            {
+              "beta_annual": 0.9663191380998087,
+              "chi": 1.0500762402240174,
+              "child_benefit_curvature": 0.0629608477756522,
+              "first_birth_fixed_cost": 0.3045994545418478,
+              "h_P": 2.593759507364224,
+              "kappa_fert": 0.11652185618155607,
+              "kappa_fert_continuation": 0.40070847699255835,
+              "psi_child": 0.17892072066041628,
+              "tenure_choice_kappa": 0.014123854930856623,
+              "theta0": 0.10097400014250629
+            },
+            {
+              "beta_annual": 0.9662569445278422,
+              "chi": 1.0470124178279687,
+              "child_benefit_curvature": 0.0854823364934924,
+              "first_birth_fixed_cost": 0.287807832942236,
+              "h_P": 2.575808028737859,
+              "kappa_fert": 0.10652616174795099,
+              "kappa_fert_continuation": 0.37242295139952397,
+              "psi_child": 0.1782621076206025,
+              "tenure_choice_kappa": 0.01676983931211905,
+              "theta0": 0.15802569333541386
+            },
+            {
+              "beta_annual": 0.9672112961277929,
+              "chi": 1.0471700514113371,
+              "child_benefit_curvature": 0.09985758419040065,
+              "first_birth_fixed_cost": 0.3419119990862946,
+              "h_P": 2.523195176415312,
+              "kappa_fert": 0.11767103666865444,
+              "kappa_fert_continuation": 0.3823280873065715,
+              "psi_child": 0.1838205888272601,
+              "tenure_choice_kappa": 0.014916432307904483,
+              "theta0": 0.10525815000281447
+            },
+            {
+              "beta_annual": 0.9656806275410592,
+              "chi": 1.0537376493974075,
+              "child_benefit_curvature": 0.10399753595081321,
+              "first_birth_fixed_cost": 0.3535687150795661,
+              "h_P": 2.4985409254479625,
+              "kappa_fert": 0.12414546934542033,
+              "kappa_fert_continuation": 0.3919867216170405,
+              "psi_child": 0.18411460129219204,
+              "tenure_choice_kappa": 0.01393221713646077,
+              "theta0": 0.1055608981455331
+            },
+            {
+              "beta_annual": 0.9677203701817941,
+              "chi": 1.0515775253029178,
+              "child_benefit_curvature": 0.1361128027183495,
+              "first_birth_fixed_cost": 0.2936289501436123,
+              "h_P": 2.5166955847722488,
+              "kappa_fert": 0.09787533782040396,
+              "kappa_fert_continuation": 0.35115579689653814,
+              "psi_child": 0.18701092015727908,
+              "tenure_choice_kappa": 0.014461713975565536,
+              "theta0": 0.043459497227852605
+            },
+            {
+              "beta_annual": 0.9669147063135795,
+              "chi": 1.0497306110232156,
+              "child_benefit_curvature": 0.10327179075736759,
+              "first_birth_fixed_cost": 0.3449423834878797,
+              "h_P": 2.498555290680524,
+              "kappa_fert": 0.1174195790316383,
+              "kappa_fert_continuation": 0.37725874573560214,
+              "psi_child": 0.18457219370940542,
+              "tenure_choice_kappa": 0.014599893844864435,
+              "theta0": 0.11001755639845248
+            },
+            {
+              "beta_annual": 0.96695724796527,
+              "chi": 1.0448767753841357,
+              "child_benefit_curvature": 0.10238966886251494,
+              "first_birth_fixed_cost": 0.35559764841070135,
+              "h_P": 2.4941796762844115,
+              "kappa_fert": 0.1205902687443946,
+              "kappa_fert_continuation": 0.38470941756436094,
+              "psi_child": 0.1852035840505729,
+              "tenure_choice_kappa": 0.01408221878731572,
+              "theta0": 0.10359588921032917
+            },
+            {
+              "beta_annual": 0.9670230655087013,
+              "chi": 1.0442603969922724,
+              "child_benefit_curvature": 0.10229938325804011,
+              "first_birth_fixed_cost": 0.3475428723476154,
+              "h_P": 2.4918249384344238,
+              "kappa_fert": 0.12088462564419321,
+              "kappa_fert_continuation": 0.3839383444206339,
+              "psi_child": 0.18373948088494638,
+              "tenure_choice_kappa": 0.014114220031839007,
+              "theta0": 0.11036552544613076
+            },
+            {
+              "beta_annual": 0.9671306792810477,
+              "chi": 1.0443081780806407,
+              "child_benefit_curvature": 0.10115150011480056,
+              "first_birth_fixed_cost": 0.3479267738357423,
+              "h_P": 2.4925948537741474,
+              "kappa_fert": 0.11962110312737963,
+              "kappa_fert_continuation": 0.38396202808026103,
+              "psi_child": 0.1834232193733987,
+              "tenure_choice_kappa": 0.014151248030042501,
+              "theta0": 0.10673802521174611
+            },
+            {
+              "beta_annual": 0.9666527052739705,
+              "chi": 1.0471462670925766,
+              "child_benefit_curvature": 0.09748611265793072,
+              "first_birth_fixed_cost": 0.35804828157842084,
+              "h_P": 2.465299027959093,
+              "kappa_fert": 0.12134764869841791,
+              "kappa_fert_continuation": 0.38141989563596795,
+              "psi_child": 0.18294434190083142,
+              "tenure_choice_kappa": 0.01408348141780228,
+              "theta0": 0.10329629700694087
+            }
+          ],
+          "arm": "alternative",
+          "bounds": {
+            "beta_annual": [
+              0.94,
+              0.99
+            ],
+            "chi": [
+              0.1,
+              5.0
+            ],
+            "child_benefit_curvature": [
+              0.0,
+              0.8
+            ],
+            "first_birth_fixed_cost": [
+              0.0,
+              8.0
+            ],
+            "h_P": [
+              0.1,
+              2.6
+            ],
+            "kappa_fert": [
+              0.02,
+              50.0
+            ],
+            "kappa_fert_continuation": [
+              0.02,
+              50.0
+            ],
+            "psi_child": [
+              0.01,
+              0.5
+            ],
+            "tenure_choice_kappa": [
+              0.001,
+              0.1
+            ],
+            "theta0": [
+              0.0,
+              8.0
+            ]
+          },
+          "chain": 0,
+          "continuation_checkpoint_sha256": "12880d38b335bab36c23f06f1272771d04db485bbe26bbc98c80b3acdb37cbdb",
+          "continuation_price": 0.7760569760205563,
+          "deadline_epoch": 1791069986.0,
+          "economic_change": "adopted soft purchase financing; author-adopted revised-interest transaction timing",
+          "free_coordinates": [
+            "beta_annual",
+            "chi",
+            "first_birth_fixed_cost",
+            "kappa_fert",
+            "kappa_fert_continuation",
+            "theta0",
+            "h_P",
+            "child_benefit_curvature",
+            "tenure_choice_kappa",
+            "psi_child"
+          ],
+          "lifecycle_solves_per_case_max": 32,
+          "no_auto_retry": true,
+          "normalized_source_pins_sha256": "9759d97cd00ceb869b31eb898e8ec089d3b6da9d3f7ee33f025eface5e9bd8a2",
+          "not_adopted_calibration": true,
+          "objective_calls_max": 500,
+          "other_economics": "N0=1; physical parent room floor; constant alpha; no A(m); nonnegative-mean entry; phi=.8; unchanged ten coordinates and target weights",
+          "reserve_seconds": 1800.0,
+          "seed": {
+            "beta_annual": 0.9663191380998087,
+            "chi": 1.0500762402240174,
+            "child_benefit_curvature": 0.0629608477756522,
+            "first_birth_fixed_cost": 0.3045994545418478,
+            "h_P": 2.593759507364224,
+            "kappa_fert": 0.11652185618155607,
+            "kappa_fert_continuation": 0.40070847699255835,
+            "psi_child": 0.17892072066041628,
+            "tenure_choice_kappa": 0.014123854930856623,
+            "theta0": 0.10097400014250629
+          },
+          "selected_source_sha256": "b5e21a8584fa536a3740039b3e54480f3c318a63b96266bd31406712c5da991c",
+          "selection_receipt_sha256": "63a59480db8664b4be6f9553494cbd0c9d67a4828546818eb386175d8aae823e",
+          "starts_count": 10,
+          "starts_file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_continuation_20261003_v1/start_plan.json",
+          "starts_file_sha256": "ede3fc2dc40fd55e53d48cd417adb529a94e6f902c952839145849c4f8d2e168",
+          "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+          "timing_manifest_sha256": "be83815ae924ec558ae3ed4c78c189e42591b38cc7b551c24378e6b82956ccea",
+          "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+        }
+      }
+    },
+    {
+      "chain": 1,
+      "remote_run": "/scratch/td2248/projects/soft_timing_continuation_20261003_v1/results/production_alternative_chain_1/run",
+      "files": {
+        "heartbeat": {
+          "arm": "alternative",
+          "chain": 1,
+          "completed_full_ge": 79,
+          "epoch": 1791061117.6878183,
+          "label": "0079_nm",
+          "objective_calls": 80,
+          "status": "running_full_GE"
+        },
+        "latest_completed": {
+          "completed_full_ge": 79,
+          "latest": {
+            "H0_derived": 6.488626951951258,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0078_nm",
+            "lifecycle_solves": 6,
+            "loss": 14.059501100168902,
+            "normalization": "N0=1",
+            "objective": 14.059501100168902,
+            "parameters": {
+              "beta_annual": 0.9660966376841051,
+              "chi": 1.0456938898293084,
+              "child_benefit_curvature": 0.08618433935938374,
+              "first_birth_fixed_cost": 0.29170021893323866,
+              "h_P": 2.596985195806871,
+              "kappa_fert": 0.10679298664684414,
+              "kappa_fert_continuation": 0.37678014006147525,
+              "psi_child": 0.18053348968575952,
+              "tenure_choice_kappa": 0.016649355775332036,
+              "theta0": 0.15577345542913681
+            },
+            "population": 1.0,
+            "price": 0.7616549865849105,
+            "report": "/work/results/run/0078_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.45169284986289837,
+              0.14315764956640994,
+              -0.1628300956126034,
+              -0.49932153273117996,
+              -0.35614882456063457,
+              1.8467754196152881,
+              -0.31424465852615324,
+              -1.1201463858581704,
+              -1.0361191084227805,
+              -2.7558488801279957
+            ],
+            "starting_price": 0.7567941098726566,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "objective_calls": 79
+        },
+        "best_so_far": {
+          "best": {
+            "H0_derived": 6.475363250712919,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0075_nm",
+            "lifecycle_solves": 6,
+            "loss": 13.831940714737307,
+            "normalization": "N0=1",
+            "objective": 13.831940714737307,
+            "parameters": {
+              "beta_annual": 0.9659956213380044,
+              "chi": 1.043574789853505,
+              "child_benefit_curvature": 0.08572132005604689,
+              "first_birth_fixed_cost": 0.28805008458523285,
+              "h_P": 2.5997387280478663,
+              "kappa_fert": 0.10574238922787742,
+              "kappa_fert_continuation": 0.3744374979822008,
+              "psi_child": 0.18099874480722436,
+              "tenure_choice_kappa": 0.016572985629670873,
+              "theta0": 0.16072092264062252
+            },
+            "population": 1.0,
+            "price": 0.7632128644641776,
+            "report": "/work/results/run/0075_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.5189656917836276,
+              0.12223234099365367,
+              -0.02645862117806213,
+              -0.5183070608095321,
+              -0.2955204573564956,
+              1.7961922506343144,
+              -0.5333310288072398,
+              -1.0971337192729416,
+              -0.9149157428659143,
+              -2.763960594804363
+            ],
+            "starting_price": 0.7567941098726566,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "completed_full_ge": 79,
+          "status": "provisional_until_full_native_postcheck"
+        },
+        "start_contract": {
+          "all_starts": [
+            {
+              "beta_annual": 0.9663191380998087,
+              "chi": 1.0500762402240174,
+              "child_benefit_curvature": 0.0629608477756522,
+              "first_birth_fixed_cost": 0.3045994545418478,
+              "h_P": 2.593759507364224,
+              "kappa_fert": 0.11652185618155607,
+              "kappa_fert_continuation": 0.40070847699255835,
+              "psi_child": 0.17892072066041628,
+              "tenure_choice_kappa": 0.014123854930856623,
+              "theta0": 0.10097400014250629
+            },
+            {
+              "beta_annual": 0.9662569445278422,
+              "chi": 1.0470124178279687,
+              "child_benefit_curvature": 0.0854823364934924,
+              "first_birth_fixed_cost": 0.287807832942236,
+              "h_P": 2.575808028737859,
+              "kappa_fert": 0.10652616174795099,
+              "kappa_fert_continuation": 0.37242295139952397,
+              "psi_child": 0.1782621076206025,
+              "tenure_choice_kappa": 0.01676983931211905,
+              "theta0": 0.15802569333541386
+            },
+            {
+              "beta_annual": 0.9672112961277929,
+              "chi": 1.0471700514113371,
+              "child_benefit_curvature": 0.09985758419040065,
+              "first_birth_fixed_cost": 0.3419119990862946,
+              "h_P": 2.523195176415312,
+              "kappa_fert": 0.11767103666865444,
+              "kappa_fert_continuation": 0.3823280873065715,
+              "psi_child": 0.1838205888272601,
+              "tenure_choice_kappa": 0.014916432307904483,
+              "theta0": 0.10525815000281447
+            },
+            {
+              "beta_annual": 0.9656806275410592,
+              "chi": 1.0537376493974075,
+              "child_benefit_curvature": 0.10399753595081321,
+              "first_birth_fixed_cost": 0.3535687150795661,
+              "h_P": 2.4985409254479625,
+              "kappa_fert": 0.12414546934542033,
+              "kappa_fert_continuation": 0.3919867216170405,
+              "psi_child": 0.18411460129219204,
+              "tenure_choice_kappa": 0.01393221713646077,
+              "theta0": 0.1055608981455331
+            },
+            {
+              "beta_annual": 0.9677203701817941,
+              "chi": 1.0515775253029178,
+              "child_benefit_curvature": 0.1361128027183495,
+              "first_birth_fixed_cost": 0.2936289501436123,
+              "h_P": 2.5166955847722488,
+              "kappa_fert": 0.09787533782040396,
+              "kappa_fert_continuation": 0.35115579689653814,
+              "psi_child": 0.18701092015727908,
+              "tenure_choice_kappa": 0.014461713975565536,
+              "theta0": 0.043459497227852605
+            },
+            {
+              "beta_annual": 0.9669147063135795,
+              "chi": 1.0497306110232156,
+              "child_benefit_curvature": 0.10327179075736759,
+              "first_birth_fixed_cost": 0.3449423834878797,
+              "h_P": 2.498555290680524,
+              "kappa_fert": 0.1174195790316383,
+              "kappa_fert_continuation": 0.37725874573560214,
+              "psi_child": 0.18457219370940542,
+              "tenure_choice_kappa": 0.014599893844864435,
+              "theta0": 0.11001755639845248
+            },
+            {
+              "beta_annual": 0.96695724796527,
+              "chi": 1.0448767753841357,
+              "child_benefit_curvature": 0.10238966886251494,
+              "first_birth_fixed_cost": 0.35559764841070135,
+              "h_P": 2.4941796762844115,
+              "kappa_fert": 0.1205902687443946,
+              "kappa_fert_continuation": 0.38470941756436094,
+              "psi_child": 0.1852035840505729,
+              "tenure_choice_kappa": 0.01408221878731572,
+              "theta0": 0.10359588921032917
+            },
+            {
+              "beta_annual": 0.9670230655087013,
+              "chi": 1.0442603969922724,
+              "child_benefit_curvature": 0.10229938325804011,
+              "first_birth_fixed_cost": 0.3475428723476154,
+              "h_P": 2.4918249384344238,
+              "kappa_fert": 0.12088462564419321,
+              "kappa_fert_continuation": 0.3839383444206339,
+              "psi_child": 0.18373948088494638,
+              "tenure_choice_kappa": 0.014114220031839007,
+              "theta0": 0.11036552544613076
+            },
+            {
+              "beta_annual": 0.9671306792810477,
+              "chi": 1.0443081780806407,
+              "child_benefit_curvature": 0.10115150011480056,
+              "first_birth_fixed_cost": 0.3479267738357423,
+              "h_P": 2.4925948537741474,
+              "kappa_fert": 0.11962110312737963,
+              "kappa_fert_continuation": 0.38396202808026103,
+              "psi_child": 0.1834232193733987,
+              "tenure_choice_kappa": 0.014151248030042501,
+              "theta0": 0.10673802521174611
+            },
+            {
+              "beta_annual": 0.9666527052739705,
+              "chi": 1.0471462670925766,
+              "child_benefit_curvature": 0.09748611265793072,
+              "first_birth_fixed_cost": 0.35804828157842084,
+              "h_P": 2.465299027959093,
+              "kappa_fert": 0.12134764869841791,
+              "kappa_fert_continuation": 0.38141989563596795,
+              "psi_child": 0.18294434190083142,
+              "tenure_choice_kappa": 0.01408348141780228,
+              "theta0": 0.10329629700694087
+            }
+          ],
+          "arm": "alternative",
+          "bounds": {
+            "beta_annual": [
+              0.94,
+              0.99
+            ],
+            "chi": [
+              0.1,
+              5.0
+            ],
+            "child_benefit_curvature": [
+              0.0,
+              0.8
+            ],
+            "first_birth_fixed_cost": [
+              0.0,
+              8.0
+            ],
+            "h_P": [
+              0.1,
+              2.6
+            ],
+            "kappa_fert": [
+              0.02,
+              50.0
+            ],
+            "kappa_fert_continuation": [
+              0.02,
+              50.0
+            ],
+            "psi_child": [
+              0.01,
+              0.5
+            ],
+            "tenure_choice_kappa": [
+              0.001,
+              0.1
+            ],
+            "theta0": [
+              0.0,
+              8.0
+            ]
+          },
+          "chain": 1,
+          "continuation_checkpoint_sha256": "02eeb4b7efbb807c22d6a44bb839824403935f7ed09882378bd83456aa7a8096",
+          "continuation_price": 0.7567941098726566,
+          "deadline_epoch": 1791069987.0,
+          "economic_change": "adopted soft purchase financing; author-adopted revised-interest transaction timing",
+          "free_coordinates": [
+            "beta_annual",
+            "chi",
+            "first_birth_fixed_cost",
+            "kappa_fert",
+            "kappa_fert_continuation",
+            "theta0",
+            "h_P",
+            "child_benefit_curvature",
+            "tenure_choice_kappa",
+            "psi_child"
+          ],
+          "lifecycle_solves_per_case_max": 32,
+          "no_auto_retry": true,
+          "normalized_source_pins_sha256": "9759d97cd00ceb869b31eb898e8ec089d3b6da9d3f7ee33f025eface5e9bd8a2",
+          "not_adopted_calibration": true,
+          "objective_calls_max": 500,
+          "other_economics": "N0=1; physical parent room floor; constant alpha; no A(m); nonnegative-mean entry; phi=.8; unchanged ten coordinates and target weights",
+          "reserve_seconds": 1800.0,
+          "seed": {
+            "beta_annual": 0.9662569445278422,
+            "chi": 1.0470124178279687,
+            "child_benefit_curvature": 0.0854823364934924,
+            "first_birth_fixed_cost": 0.287807832942236,
+            "h_P": 2.575808028737859,
+            "kappa_fert": 0.10652616174795099,
+            "kappa_fert_continuation": 0.37242295139952397,
+            "psi_child": 0.1782621076206025,
+            "tenure_choice_kappa": 0.01676983931211905,
+            "theta0": 0.15802569333541386
+          },
+          "selected_source_sha256": "b5e21a8584fa536a3740039b3e54480f3c318a63b96266bd31406712c5da991c",
+          "selection_receipt_sha256": "63a59480db8664b4be6f9553494cbd0c9d67a4828546818eb386175d8aae823e",
+          "starts_count": 10,
+          "starts_file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_continuation_20261003_v1/start_plan.json",
+          "starts_file_sha256": "ede3fc2dc40fd55e53d48cd417adb529a94e6f902c952839145849c4f8d2e168",
+          "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+          "timing_manifest_sha256": "be83815ae924ec558ae3ed4c78c189e42591b38cc7b551c24378e6b82956ccea",
+          "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+        }
+      }
+    },
+    {
+      "chain": 2,
+      "remote_run": "/scratch/td2248/projects/soft_timing_continuation_20261003_v1/results/production_alternative_chain_2/run",
+      "files": {
+        "heartbeat": {
+          "arm": "alternative",
+          "chain": 2,
+          "completed_full_ge": 79,
+          "epoch": 1791061012.2697031,
+          "label": "0079_nm",
+          "objective_calls": 80,
+          "status": "running_full_GE"
+        },
+        "latest_completed": {
+          "completed_full_ge": 79,
+          "latest": {
+            "H0_derived": 6.380960763921669,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0078_nm",
+            "lifecycle_solves": 9,
+            "loss": 13.841452095983549,
+            "normalization": "N0=1",
+            "objective": 13.841452095983549,
+            "parameters": {
+              "beta_annual": 0.9667678709935369,
+              "chi": 1.0471597472726153,
+              "child_benefit_curvature": 0.0995173547853801,
+              "first_birth_fixed_cost": 0.33109670988851814,
+              "h_P": 2.5696030794694864,
+              "kappa_fert": 0.11629713231363714,
+              "kappa_fert_continuation": 0.39025478384304263,
+              "psi_child": 0.18634823742594994,
+              "tenure_choice_kappa": 0.014274539614658011,
+              "theta0": 0.1089786897131774
+            },
+            "population": 1.0,
+            "price": 0.7780029012037034,
+            "report": "/work/results/run/0078_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.5912461798300613,
+              -0.05430493049030506,
+              0.11492875048658854,
+              -0.3965099368698494,
+              -0.9295389232473168,
+              1.6235795578236127,
+              -0.5401987965480769,
+              -1.0796816004523393,
+              -0.7736599286782367,
+              -2.78610342661847
+            ],
+            "starting_price": 0.7677872713859983,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "objective_calls": 79
+        },
+        "best_so_far": {
+          "best": {
+            "H0_derived": 6.387012285298096,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0077_nm",
+            "lifecycle_solves": 6,
+            "loss": 13.838924890022282,
+            "normalization": "N0=1",
+            "objective": 13.838924890022282,
+            "parameters": {
+              "beta_annual": 0.9667664090392646,
+              "chi": 1.0470214572268797,
+              "child_benefit_curvature": 0.09967844085912239,
+              "first_birth_fixed_cost": 0.3315886936840193,
+              "h_P": 2.5675860164784474,
+              "kappa_fert": 0.11637189998694172,
+              "kappa_fert_continuation": 0.38984426424291907,
+              "psi_child": 0.18619484845392573,
+              "tenure_choice_kappa": 0.014295118200035546,
+              "theta0": 0.10889531744245107
+            },
+            "population": 1.0,
+            "price": 0.7772655943544555,
+            "report": "/work/results/run/0077_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.5921580728683259,
+              -0.057818780177745846,
+              0.10897886260815931,
+              -0.39918779129578835,
+              -0.9312286808187556,
+              1.6468805540965543,
+              -0.5376887566610292,
+              -1.0952340733861006,
+              -0.6964609530387333,
+              -2.7857846760130087
+            ],
+            "starting_price": 0.7677872713859983,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "completed_full_ge": 79,
+          "status": "provisional_until_full_native_postcheck"
+        },
+        "start_contract": {
+          "all_starts": [
+            {
+              "beta_annual": 0.9663191380998087,
+              "chi": 1.0500762402240174,
+              "child_benefit_curvature": 0.0629608477756522,
+              "first_birth_fixed_cost": 0.3045994545418478,
+              "h_P": 2.593759507364224,
+              "kappa_fert": 0.11652185618155607,
+              "kappa_fert_continuation": 0.40070847699255835,
+              "psi_child": 0.17892072066041628,
+              "tenure_choice_kappa": 0.014123854930856623,
+              "theta0": 0.10097400014250629
+            },
+            {
+              "beta_annual": 0.9662569445278422,
+              "chi": 1.0470124178279687,
+              "child_benefit_curvature": 0.0854823364934924,
+              "first_birth_fixed_cost": 0.287807832942236,
+              "h_P": 2.575808028737859,
+              "kappa_fert": 0.10652616174795099,
+              "kappa_fert_continuation": 0.37242295139952397,
+              "psi_child": 0.1782621076206025,
+              "tenure_choice_kappa": 0.01676983931211905,
+              "theta0": 0.15802569333541386
+            },
+            {
+              "beta_annual": 0.9672112961277929,
+              "chi": 1.0471700514113371,
+              "child_benefit_curvature": 0.09985758419040065,
+              "first_birth_fixed_cost": 0.3419119990862946,
+              "h_P": 2.523195176415312,
+              "kappa_fert": 0.11767103666865444,
+              "kappa_fert_continuation": 0.3823280873065715,
+              "psi_child": 0.1838205888272601,
+              "tenure_choice_kappa": 0.014916432307904483,
+              "theta0": 0.10525815000281447
+            },
+            {
+              "beta_annual": 0.9656806275410592,
+              "chi": 1.0537376493974075,
+              "child_benefit_curvature": 0.10399753595081321,
+              "first_birth_fixed_cost": 0.3535687150795661,
+              "h_P": 2.4985409254479625,
+              "kappa_fert": 0.12414546934542033,
+              "kappa_fert_continuation": 0.3919867216170405,
+              "psi_child": 0.18411460129219204,
+              "tenure_choice_kappa": 0.01393221713646077,
+              "theta0": 0.1055608981455331
+            },
+            {
+              "beta_annual": 0.9677203701817941,
+              "chi": 1.0515775253029178,
+              "child_benefit_curvature": 0.1361128027183495,
+              "first_birth_fixed_cost": 0.2936289501436123,
+              "h_P": 2.5166955847722488,
+              "kappa_fert": 0.09787533782040396,
+              "kappa_fert_continuation": 0.35115579689653814,
+              "psi_child": 0.18701092015727908,
+              "tenure_choice_kappa": 0.014461713975565536,
+              "theta0": 0.043459497227852605
+            },
+            {
+              "beta_annual": 0.9669147063135795,
+              "chi": 1.0497306110232156,
+              "child_benefit_curvature": 0.10327179075736759,
+              "first_birth_fixed_cost": 0.3449423834878797,
+              "h_P": 2.498555290680524,
+              "kappa_fert": 0.1174195790316383,
+              "kappa_fert_continuation": 0.37725874573560214,
+              "psi_child": 0.18457219370940542,
+              "tenure_choice_kappa": 0.014599893844864435,
+              "theta0": 0.11001755639845248
+            },
+            {
+              "beta_annual": 0.96695724796527,
+              "chi": 1.0448767753841357,
+              "child_benefit_curvature": 0.10238966886251494,
+              "first_birth_fixed_cost": 0.35559764841070135,
+              "h_P": 2.4941796762844115,
+              "kappa_fert": 0.1205902687443946,
+              "kappa_fert_continuation": 0.38470941756436094,
+              "psi_child": 0.1852035840505729,
+              "tenure_choice_kappa": 0.01408221878731572,
+              "theta0": 0.10359588921032917
+            },
+            {
+              "beta_annual": 0.9670230655087013,
+              "chi": 1.0442603969922724,
+              "child_benefit_curvature": 0.10229938325804011,
+              "first_birth_fixed_cost": 0.3475428723476154,
+              "h_P": 2.4918249384344238,
+              "kappa_fert": 0.12088462564419321,
+              "kappa_fert_continuation": 0.3839383444206339,
+              "psi_child": 0.18373948088494638,
+              "tenure_choice_kappa": 0.014114220031839007,
+              "theta0": 0.11036552544613076
+            },
+            {
+              "beta_annual": 0.9671306792810477,
+              "chi": 1.0443081780806407,
+              "child_benefit_curvature": 0.10115150011480056,
+              "first_birth_fixed_cost": 0.3479267738357423,
+              "h_P": 2.4925948537741474,
+              "kappa_fert": 0.11962110312737963,
+              "kappa_fert_continuation": 0.38396202808026103,
+              "psi_child": 0.1834232193733987,
+              "tenure_choice_kappa": 0.014151248030042501,
+              "theta0": 0.10673802521174611
+            },
+            {
+              "beta_annual": 0.9666527052739705,
+              "chi": 1.0471462670925766,
+              "child_benefit_curvature": 0.09748611265793072,
+              "first_birth_fixed_cost": 0.35804828157842084,
+              "h_P": 2.465299027959093,
+              "kappa_fert": 0.12134764869841791,
+              "kappa_fert_continuation": 0.38141989563596795,
+              "psi_child": 0.18294434190083142,
+              "tenure_choice_kappa": 0.01408348141780228,
+              "theta0": 0.10329629700694087
+            }
+          ],
+          "arm": "alternative",
+          "bounds": {
+            "beta_annual": [
+              0.94,
+              0.99
+            ],
+            "chi": [
+              0.1,
+              5.0
+            ],
+            "child_benefit_curvature": [
+              0.0,
+              0.8
+            ],
+            "first_birth_fixed_cost": [
+              0.0,
+              8.0
+            ],
+            "h_P": [
+              0.1,
+              2.6
+            ],
+            "kappa_fert": [
+              0.02,
+              50.0
+            ],
+            "kappa_fert_continuation": [
+              0.02,
+              50.0
+            ],
+            "psi_child": [
+              0.01,
+              0.5
+            ],
+            "tenure_choice_kappa": [
+              0.001,
+              0.1
+            ],
+            "theta0": [
+              0.0,
+              8.0
+            ]
+          },
+          "chain": 2,
+          "continuation_checkpoint_sha256": "e60613d663f05bccfe0524d9f51c5e17c0bf3b1dd729587dc4ef27c09727f8da",
+          "continuation_price": 0.7677872713859983,
+          "deadline_epoch": 1791069988.0,
+          "economic_change": "adopted soft purchase financing; author-adopted revised-interest transaction timing",
+          "free_coordinates": [
+            "beta_annual",
+            "chi",
+            "first_birth_fixed_cost",
+            "kappa_fert",
+            "kappa_fert_continuation",
+            "theta0",
+            "h_P",
+            "child_benefit_curvature",
+            "tenure_choice_kappa",
+            "psi_child"
+          ],
+          "lifecycle_solves_per_case_max": 32,
+          "no_auto_retry": true,
+          "normalized_source_pins_sha256": "9759d97cd00ceb869b31eb898e8ec089d3b6da9d3f7ee33f025eface5e9bd8a2",
+          "not_adopted_calibration": true,
+          "objective_calls_max": 500,
+          "other_economics": "N0=1; physical parent room floor; constant alpha; no A(m); nonnegative-mean entry; phi=.8; unchanged ten coordinates and target weights",
+          "reserve_seconds": 1800.0,
+          "seed": {
+            "beta_annual": 0.9672112961277929,
+            "chi": 1.0471700514113371,
+            "child_benefit_curvature": 0.09985758419040065,
+            "first_birth_fixed_cost": 0.3419119990862946,
+            "h_P": 2.523195176415312,
+            "kappa_fert": 0.11767103666865444,
+            "kappa_fert_continuation": 0.3823280873065715,
+            "psi_child": 0.1838205888272601,
+            "tenure_choice_kappa": 0.014916432307904483,
+            "theta0": 0.10525815000281447
+          },
+          "selected_source_sha256": "b5e21a8584fa536a3740039b3e54480f3c318a63b96266bd31406712c5da991c",
+          "selection_receipt_sha256": "63a59480db8664b4be6f9553494cbd0c9d67a4828546818eb386175d8aae823e",
+          "starts_count": 10,
+          "starts_file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_continuation_20261003_v1/start_plan.json",
+          "starts_file_sha256": "ede3fc2dc40fd55e53d48cd417adb529a94e6f902c952839145849c4f8d2e168",
+          "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+          "timing_manifest_sha256": "be83815ae924ec558ae3ed4c78c189e42591b38cc7b551c24378e6b82956ccea",
+          "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+        }
+      }
+    },
+    {
+      "chain": 3,
+      "remote_run": "/scratch/td2248/projects/soft_timing_continuation_20261003_v1/results/production_alternative_chain_3/run",
+      "files": {
+        "heartbeat": {
+          "arm": "alternative",
+          "chain": 3,
+          "completed_full_ge": 79,
+          "epoch": 1791061017.2393954,
+          "label": "0079_nm",
+          "objective_calls": 80,
+          "status": "running_full_GE"
+        },
+        "latest_completed": {
+          "completed_full_ge": 79,
+          "latest": {
+            "H0_derived": 6.363647592667596,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0078_nm",
+            "lifecycle_solves": 8,
+            "loss": 14.744283118847857,
+            "normalization": "N0=1",
+            "objective": 14.744283118847857,
+            "parameters": {
+              "beta_annual": 0.9655645104529867,
+              "chi": 1.0472388648549018,
+              "child_benefit_curvature": 0.10376235076797491,
+              "first_birth_fixed_cost": 0.345210663424769,
+              "h_P": 2.522228896773449,
+              "kappa_fert": 0.12185464287655544,
+              "kappa_fert_continuation": 0.39536268457718055,
+              "psi_child": 0.18480266264771786,
+              "tenure_choice_kappa": 0.014163711293611696,
+              "theta0": 0.1070321607292854
+            },
+            "population": 1.0,
+            "price": 0.7778680854239111,
+            "report": "/work/results/run/0078_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.42811855850725106,
+              0.057198291071715916,
+              -0.1323889069100345,
+              -0.7266803886279141,
+              -0.9478823132720431,
+              1.4360490314189218,
+              -0.7495477524087629,
+              -1.4266762065772727,
+              -0.9300631214189707,
+              -2.7548453354929436
+            ],
+            "starting_price": 0.7742093533536905,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "objective_calls": 79
+        },
+        "best_so_far": {
+          "best": {
+            "H0_derived": 6.374183292693475,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0077_nm",
+            "lifecycle_solves": 7,
+            "loss": 14.453590836302055,
+            "normalization": "N0=1",
+            "objective": 14.453590836302055,
+            "parameters": {
+              "beta_annual": 0.9653139144395201,
+              "chi": 1.0505065427718625,
+              "child_benefit_curvature": 0.10522128467279879,
+              "first_birth_fixed_cost": 0.3446511647014704,
+              "h_P": 2.5256618823661765,
+              "kappa_fert": 0.12257855299307419,
+              "kappa_fert_continuation": 0.39575255059123443,
+              "psi_child": 0.1850670402101055,
+              "tenure_choice_kappa": 0.013758204230791809,
+              "theta0": 0.10703666782544466
+            },
+            "population": 1.0,
+            "price": 0.778330873862498,
+            "report": "/work/results/run/0077_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.41707204436902034,
+              0.0952164345013417,
+              -0.016621215356696074,
+              -0.7689481388356684,
+              -0.9409206505473583,
+              1.570628141235634,
+              -0.4609129866813676,
+              -1.4313282847413904,
+              -0.6778619343245897,
+              -2.757929549684631
+            ],
+            "starting_price": 0.7742093533536905,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "completed_full_ge": 79,
+          "status": "provisional_until_full_native_postcheck"
+        },
+        "start_contract": {
+          "all_starts": [
+            {
+              "beta_annual": 0.9663191380998087,
+              "chi": 1.0500762402240174,
+              "child_benefit_curvature": 0.0629608477756522,
+              "first_birth_fixed_cost": 0.3045994545418478,
+              "h_P": 2.593759507364224,
+              "kappa_fert": 0.11652185618155607,
+              "kappa_fert_continuation": 0.40070847699255835,
+              "psi_child": 0.17892072066041628,
+              "tenure_choice_kappa": 0.014123854930856623,
+              "theta0": 0.10097400014250629
+            },
+            {
+              "beta_annual": 0.9662569445278422,
+              "chi": 1.0470124178279687,
+              "child_benefit_curvature": 0.0854823364934924,
+              "first_birth_fixed_cost": 0.287807832942236,
+              "h_P": 2.575808028737859,
+              "kappa_fert": 0.10652616174795099,
+              "kappa_fert_continuation": 0.37242295139952397,
+              "psi_child": 0.1782621076206025,
+              "tenure_choice_kappa": 0.01676983931211905,
+              "theta0": 0.15802569333541386
+            },
+            {
+              "beta_annual": 0.9672112961277929,
+              "chi": 1.0471700514113371,
+              "child_benefit_curvature": 0.09985758419040065,
+              "first_birth_fixed_cost": 0.3419119990862946,
+              "h_P": 2.523195176415312,
+              "kappa_fert": 0.11767103666865444,
+              "kappa_fert_continuation": 0.3823280873065715,
+              "psi_child": 0.1838205888272601,
+              "tenure_choice_kappa": 0.014916432307904483,
+              "theta0": 0.10525815000281447
+            },
+            {
+              "beta_annual": 0.9656806275410592,
+              "chi": 1.0537376493974075,
+              "child_benefit_curvature": 0.10399753595081321,
+              "first_birth_fixed_cost": 0.3535687150795661,
+              "h_P": 2.4985409254479625,
+              "kappa_fert": 0.12414546934542033,
+              "kappa_fert_continuation": 0.3919867216170405,
+              "psi_child": 0.18411460129219204,
+              "tenure_choice_kappa": 0.01393221713646077,
+              "theta0": 0.1055608981455331
+            },
+            {
+              "beta_annual": 0.9677203701817941,
+              "chi": 1.0515775253029178,
+              "child_benefit_curvature": 0.1361128027183495,
+              "first_birth_fixed_cost": 0.2936289501436123,
+              "h_P": 2.5166955847722488,
+              "kappa_fert": 0.09787533782040396,
+              "kappa_fert_continuation": 0.35115579689653814,
+              "psi_child": 0.18701092015727908,
+              "tenure_choice_kappa": 0.014461713975565536,
+              "theta0": 0.043459497227852605
+            },
+            {
+              "beta_annual": 0.9669147063135795,
+              "chi": 1.0497306110232156,
+              "child_benefit_curvature": 0.10327179075736759,
+              "first_birth_fixed_cost": 0.3449423834878797,
+              "h_P": 2.498555290680524,
+              "kappa_fert": 0.1174195790316383,
+              "kappa_fert_continuation": 0.37725874573560214,
+              "psi_child": 0.18457219370940542,
+              "tenure_choice_kappa": 0.014599893844864435,
+              "theta0": 0.11001755639845248
+            },
+            {
+              "beta_annual": 0.96695724796527,
+              "chi": 1.0448767753841357,
+              "child_benefit_curvature": 0.10238966886251494,
+              "first_birth_fixed_cost": 0.35559764841070135,
+              "h_P": 2.4941796762844115,
+              "kappa_fert": 0.1205902687443946,
+              "kappa_fert_continuation": 0.38470941756436094,
+              "psi_child": 0.1852035840505729,
+              "tenure_choice_kappa": 0.01408221878731572,
+              "theta0": 0.10359588921032917
+            },
+            {
+              "beta_annual": 0.9670230655087013,
+              "chi": 1.0442603969922724,
+              "child_benefit_curvature": 0.10229938325804011,
+              "first_birth_fixed_cost": 0.3475428723476154,
+              "h_P": 2.4918249384344238,
+              "kappa_fert": 0.12088462564419321,
+              "kappa_fert_continuation": 0.3839383444206339,
+              "psi_child": 0.18373948088494638,
+              "tenure_choice_kappa": 0.014114220031839007,
+              "theta0": 0.11036552544613076
+            },
+            {
+              "beta_annual": 0.9671306792810477,
+              "chi": 1.0443081780806407,
+              "child_benefit_curvature": 0.10115150011480056,
+              "first_birth_fixed_cost": 0.3479267738357423,
+              "h_P": 2.4925948537741474,
+              "kappa_fert": 0.11962110312737963,
+              "kappa_fert_continuation": 0.38396202808026103,
+              "psi_child": 0.1834232193733987,
+              "tenure_choice_kappa": 0.014151248030042501,
+              "theta0": 0.10673802521174611
+            },
+            {
+              "beta_annual": 0.9666527052739705,
+              "chi": 1.0471462670925766,
+              "child_benefit_curvature": 0.09748611265793072,
+              "first_birth_fixed_cost": 0.35804828157842084,
+              "h_P": 2.465299027959093,
+              "kappa_fert": 0.12134764869841791,
+              "kappa_fert_continuation": 0.38141989563596795,
+              "psi_child": 0.18294434190083142,
+              "tenure_choice_kappa": 0.01408348141780228,
+              "theta0": 0.10329629700694087
+            }
+          ],
+          "arm": "alternative",
+          "bounds": {
+            "beta_annual": [
+              0.94,
+              0.99
+            ],
+            "chi": [
+              0.1,
+              5.0
+            ],
+            "child_benefit_curvature": [
+              0.0,
+              0.8
+            ],
+            "first_birth_fixed_cost": [
+              0.0,
+              8.0
+            ],
+            "h_P": [
+              0.1,
+              2.6
+            ],
+            "kappa_fert": [
+              0.02,
+              50.0
+            ],
+            "kappa_fert_continuation": [
+              0.02,
+              50.0
+            ],
+            "psi_child": [
+              0.01,
+              0.5
+            ],
+            "tenure_choice_kappa": [
+              0.001,
+              0.1
+            ],
+            "theta0": [
+              0.0,
+              8.0
+            ]
+          },
+          "chain": 3,
+          "continuation_checkpoint_sha256": "0a1346023a0f88e3bffaa8c3f5096084f5d13d81b03e92fe69eb7be8c60047af",
+          "continuation_price": 0.7742093533536905,
+          "deadline_epoch": 1791069988.0,
+          "economic_change": "adopted soft purchase financing; author-adopted revised-interest transaction timing",
+          "free_coordinates": [
+            "beta_annual",
+            "chi",
+            "first_birth_fixed_cost",
+            "kappa_fert",
+            "kappa_fert_continuation",
+            "theta0",
+            "h_P",
+            "child_benefit_curvature",
+            "tenure_choice_kappa",
+            "psi_child"
+          ],
+          "lifecycle_solves_per_case_max": 32,
+          "no_auto_retry": true,
+          "normalized_source_pins_sha256": "9759d97cd00ceb869b31eb898e8ec089d3b6da9d3f7ee33f025eface5e9bd8a2",
+          "not_adopted_calibration": true,
+          "objective_calls_max": 500,
+          "other_economics": "N0=1; physical parent room floor; constant alpha; no A(m); nonnegative-mean entry; phi=.8; unchanged ten coordinates and target weights",
+          "reserve_seconds": 1800.0,
+          "seed": {
+            "beta_annual": 0.9656806275410592,
+            "chi": 1.0537376493974075,
+            "child_benefit_curvature": 0.10399753595081321,
+            "first_birth_fixed_cost": 0.3535687150795661,
+            "h_P": 2.4985409254479625,
+            "kappa_fert": 0.12414546934542033,
+            "kappa_fert_continuation": 0.3919867216170405,
+            "psi_child": 0.18411460129219204,
+            "tenure_choice_kappa": 0.01393221713646077,
+            "theta0": 0.1055608981455331
+          },
+          "selected_source_sha256": "b5e21a8584fa536a3740039b3e54480f3c318a63b96266bd31406712c5da991c",
+          "selection_receipt_sha256": "63a59480db8664b4be6f9553494cbd0c9d67a4828546818eb386175d8aae823e",
+          "starts_count": 10,
+          "starts_file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_continuation_20261003_v1/start_plan.json",
+          "starts_file_sha256": "ede3fc2dc40fd55e53d48cd417adb529a94e6f902c952839145849c4f8d2e168",
+          "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+          "timing_manifest_sha256": "be83815ae924ec558ae3ed4c78c189e42591b38cc7b551c24378e6b82956ccea",
+          "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+        }
+      }
+    },
+    {
+      "chain": 4,
+      "remote_run": "/scratch/td2248/projects/soft_timing_continuation_20261003_v1/results/production_alternative_chain_4/run",
+      "files": {
+        "heartbeat": {
+          "arm": "alternative",
+          "chain": 4,
+          "completed_full_ge": 87,
+          "epoch": 1791061085.8624687,
+          "label": "0087_nm",
+          "objective_calls": 88,
+          "status": "running_full_GE"
+        },
+        "latest_completed": {
+          "completed_full_ge": 87,
+          "latest": {
+            "H0_derived": 6.368177526196722,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0086_nm",
+            "lifecycle_solves": 7,
+            "loss": 14.666236798917472,
+            "normalization": "N0=1",
+            "objective": 14.666236798917472,
+            "parameters": {
+              "beta_annual": 0.9676242774370749,
+              "chi": 1.0469084721875481,
+              "child_benefit_curvature": 0.13555689492142933,
+              "first_birth_fixed_cost": 0.2789563036785408,
+              "h_P": 2.5494724596390337,
+              "kappa_fert": 0.09794010132381864,
+              "kappa_fert_continuation": 0.3591357349099108,
+              "psi_child": 0.18569840822543263,
+              "tenure_choice_kappa": 0.013931119750751408,
+              "theta0": 0.051013414492217246
+            },
+            "population": 1.0,
+            "price": 0.7763292859056489,
+            "report": "/work/results/run/0086_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.302432893452703,
+              0.27630197426867636,
+              0.046576551763780595,
+              -0.3806185699190467,
+              -1.7219214271300687,
+              1.4005468444158022,
+              -0.4870967635785068,
+              -1.2228650778220136,
+              -0.06328985357222376,
+              -2.772755987483555
+            ],
+            "starting_price": 0.7762966821158602,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "objective_calls": 87
+        },
+        "best_so_far": {
+          "best": {
+            "H0_derived": 6.342125608051071,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0084_nm",
+            "lifecycle_solves": 7,
+            "loss": 14.48325506750076,
+            "normalization": "N0=1",
+            "objective": 14.48325506750076,
+            "parameters": {
+              "beta_annual": 0.9676797481469988,
+              "chi": 1.0483391001367002,
+              "child_benefit_curvature": 0.13621711400462397,
+              "first_birth_fixed_cost": 0.27870108300939717,
+              "h_P": 2.53959536964221,
+              "kappa_fert": 0.09659814736984104,
+              "kappa_fert_continuation": 0.3577360329820207,
+              "psi_child": 0.1859192712909083,
+              "tenure_choice_kappa": 0.014046585609388349,
+              "theta0": 0.055777139163669276
+            },
+            "population": 1.0,
+            "price": 0.7787668782206546,
+            "report": "/work/results/run/0084_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.35561936583875353,
+              0.22181478810649877,
+              -0.03148654251073767,
+              -0.35162705088753715,
+              -1.6460481701520628,
+              1.2600096454611063,
+              -0.4159240637916204,
+              -1.2725235937754418,
+              -0.6439450515425432,
+              -2.7710795568812383
+            ],
+            "starting_price": 0.7762966821158602,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "completed_full_ge": 87,
+          "status": "provisional_until_full_native_postcheck"
+        },
+        "start_contract": {
+          "all_starts": [
+            {
+              "beta_annual": 0.9663191380998087,
+              "chi": 1.0500762402240174,
+              "child_benefit_curvature": 0.0629608477756522,
+              "first_birth_fixed_cost": 0.3045994545418478,
+              "h_P": 2.593759507364224,
+              "kappa_fert": 0.11652185618155607,
+              "kappa_fert_continuation": 0.40070847699255835,
+              "psi_child": 0.17892072066041628,
+              "tenure_choice_kappa": 0.014123854930856623,
+              "theta0": 0.10097400014250629
+            },
+            {
+              "beta_annual": 0.9662569445278422,
+              "chi": 1.0470124178279687,
+              "child_benefit_curvature": 0.0854823364934924,
+              "first_birth_fixed_cost": 0.287807832942236,
+              "h_P": 2.575808028737859,
+              "kappa_fert": 0.10652616174795099,
+              "kappa_fert_continuation": 0.37242295139952397,
+              "psi_child": 0.1782621076206025,
+              "tenure_choice_kappa": 0.01676983931211905,
+              "theta0": 0.15802569333541386
+            },
+            {
+              "beta_annual": 0.9672112961277929,
+              "chi": 1.0471700514113371,
+              "child_benefit_curvature": 0.09985758419040065,
+              "first_birth_fixed_cost": 0.3419119990862946,
+              "h_P": 2.523195176415312,
+              "kappa_fert": 0.11767103666865444,
+              "kappa_fert_continuation": 0.3823280873065715,
+              "psi_child": 0.1838205888272601,
+              "tenure_choice_kappa": 0.014916432307904483,
+              "theta0": 0.10525815000281447
+            },
+            {
+              "beta_annual": 0.9656806275410592,
+              "chi": 1.0537376493974075,
+              "child_benefit_curvature": 0.10399753595081321,
+              "first_birth_fixed_cost": 0.3535687150795661,
+              "h_P": 2.4985409254479625,
+              "kappa_fert": 0.12414546934542033,
+              "kappa_fert_continuation": 0.3919867216170405,
+              "psi_child": 0.18411460129219204,
+              "tenure_choice_kappa": 0.01393221713646077,
+              "theta0": 0.1055608981455331
+            },
+            {
+              "beta_annual": 0.9677203701817941,
+              "chi": 1.0515775253029178,
+              "child_benefit_curvature": 0.1361128027183495,
+              "first_birth_fixed_cost": 0.2936289501436123,
+              "h_P": 2.5166955847722488,
+              "kappa_fert": 0.09787533782040396,
+              "kappa_fert_continuation": 0.35115579689653814,
+              "psi_child": 0.18701092015727908,
+              "tenure_choice_kappa": 0.014461713975565536,
+              "theta0": 0.043459497227852605
+            },
+            {
+              "beta_annual": 0.9669147063135795,
+              "chi": 1.0497306110232156,
+              "child_benefit_curvature": 0.10327179075736759,
+              "first_birth_fixed_cost": 0.3449423834878797,
+              "h_P": 2.498555290680524,
+              "kappa_fert": 0.1174195790316383,
+              "kappa_fert_continuation": 0.37725874573560214,
+              "psi_child": 0.18457219370940542,
+              "tenure_choice_kappa": 0.014599893844864435,
+              "theta0": 0.11001755639845248
+            },
+            {
+              "beta_annual": 0.96695724796527,
+              "chi": 1.0448767753841357,
+              "child_benefit_curvature": 0.10238966886251494,
+              "first_birth_fixed_cost": 0.35559764841070135,
+              "h_P": 2.4941796762844115,
+              "kappa_fert": 0.1205902687443946,
+              "kappa_fert_continuation": 0.38470941756436094,
+              "psi_child": 0.1852035840505729,
+              "tenure_choice_kappa": 0.01408221878731572,
+              "theta0": 0.10359588921032917
+            },
+            {
+              "beta_annual": 0.9670230655087013,
+              "chi": 1.0442603969922724,
+              "child_benefit_curvature": 0.10229938325804011,
+              "first_birth_fixed_cost": 0.3475428723476154,
+              "h_P": 2.4918249384344238,
+              "kappa_fert": 0.12088462564419321,
+              "kappa_fert_continuation": 0.3839383444206339,
+              "psi_child": 0.18373948088494638,
+              "tenure_choice_kappa": 0.014114220031839007,
+              "theta0": 0.11036552544613076
+            },
+            {
+              "beta_annual": 0.9671306792810477,
+              "chi": 1.0443081780806407,
+              "child_benefit_curvature": 0.10115150011480056,
+              "first_birth_fixed_cost": 0.3479267738357423,
+              "h_P": 2.4925948537741474,
+              "kappa_fert": 0.11962110312737963,
+              "kappa_fert_continuation": 0.38396202808026103,
+              "psi_child": 0.1834232193733987,
+              "tenure_choice_kappa": 0.014151248030042501,
+              "theta0": 0.10673802521174611
+            },
+            {
+              "beta_annual": 0.9666527052739705,
+              "chi": 1.0471462670925766,
+              "child_benefit_curvature": 0.09748611265793072,
+              "first_birth_fixed_cost": 0.35804828157842084,
+              "h_P": 2.465299027959093,
+              "kappa_fert": 0.12134764869841791,
+              "kappa_fert_continuation": 0.38141989563596795,
+              "psi_child": 0.18294434190083142,
+              "tenure_choice_kappa": 0.01408348141780228,
+              "theta0": 0.10329629700694087
+            }
+          ],
+          "arm": "alternative",
+          "bounds": {
+            "beta_annual": [
+              0.94,
+              0.99
+            ],
+            "chi": [
+              0.1,
+              5.0
+            ],
+            "child_benefit_curvature": [
+              0.0,
+              0.8
+            ],
+            "first_birth_fixed_cost": [
+              0.0,
+              8.0
+            ],
+            "h_P": [
+              0.1,
+              2.6
+            ],
+            "kappa_fert": [
+              0.02,
+              50.0
+            ],
+            "kappa_fert_continuation": [
+              0.02,
+              50.0
+            ],
+            "psi_child": [
+              0.01,
+              0.5
+            ],
+            "tenure_choice_kappa": [
+              0.001,
+              0.1
+            ],
+            "theta0": [
+              0.0,
+              8.0
+            ]
+          },
+          "chain": 4,
+          "continuation_checkpoint_sha256": "b73b8ba726f4799ab203bee966b30a495638323a90ea4c55c9ff0f1b251bad6b",
+          "continuation_price": 0.7762966821158602,
+          "deadline_epoch": 1791069988.0,
+          "economic_change": "adopted soft purchase financing; author-adopted revised-interest transaction timing",
+          "free_coordinates": [
+            "beta_annual",
+            "chi",
+            "first_birth_fixed_cost",
+            "kappa_fert",
+            "kappa_fert_continuation",
+            "theta0",
+            "h_P",
+            "child_benefit_curvature",
+            "tenure_choice_kappa",
+            "psi_child"
+          ],
+          "lifecycle_solves_per_case_max": 32,
+          "no_auto_retry": true,
+          "normalized_source_pins_sha256": "9759d97cd00ceb869b31eb898e8ec089d3b6da9d3f7ee33f025eface5e9bd8a2",
+          "not_adopted_calibration": true,
+          "objective_calls_max": 500,
+          "other_economics": "N0=1; physical parent room floor; constant alpha; no A(m); nonnegative-mean entry; phi=.8; unchanged ten coordinates and target weights",
+          "reserve_seconds": 1800.0,
+          "seed": {
+            "beta_annual": 0.9677203701817941,
+            "chi": 1.0515775253029178,
+            "child_benefit_curvature": 0.1361128027183495,
+            "first_birth_fixed_cost": 0.2936289501436123,
+            "h_P": 2.5166955847722488,
+            "kappa_fert": 0.09787533782040396,
+            "kappa_fert_continuation": 0.35115579689653814,
+            "psi_child": 0.18701092015727908,
+            "tenure_choice_kappa": 0.014461713975565536,
+            "theta0": 0.043459497227852605
+          },
+          "selected_source_sha256": "b5e21a8584fa536a3740039b3e54480f3c318a63b96266bd31406712c5da991c",
+          "selection_receipt_sha256": "63a59480db8664b4be6f9553494cbd0c9d67a4828546818eb386175d8aae823e",
+          "starts_count": 10,
+          "starts_file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_continuation_20261003_v1/start_plan.json",
+          "starts_file_sha256": "ede3fc2dc40fd55e53d48cd417adb529a94e6f902c952839145849c4f8d2e168",
+          "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+          "timing_manifest_sha256": "be83815ae924ec558ae3ed4c78c189e42591b38cc7b551c24378e6b82956ccea",
+          "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+        }
+      }
+    },
+    {
+      "chain": 5,
+      "remote_run": "/scratch/td2248/projects/soft_timing_continuation_20261003_v1/results/production_alternative_chain_5/run",
+      "files": {
+        "heartbeat": {
+          "arm": "alternative",
+          "chain": 5,
+          "completed_full_ge": 88,
+          "epoch": 1791061043.150367,
+          "label": "0088_nm",
+          "objective_calls": 89,
+          "status": "running_full_GE"
+        },
+        "latest_completed": {
+          "completed_full_ge": 88,
+          "latest": {
+            "H0_derived": 6.395317984447733,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0087_nm",
+            "lifecycle_solves": 6,
+            "loss": 14.187525740800762,
+            "normalization": "N0=1",
+            "objective": 14.187525740800762,
+            "parameters": {
+              "beta_annual": 0.9666021702236794,
+              "chi": 1.0464605221437455,
+              "child_benefit_curvature": 0.10576233167117188,
+              "first_birth_fixed_cost": 0.32588845387820087,
+              "h_P": 2.5434686634074146,
+              "kappa_fert": 0.1166344327019327,
+              "kappa_fert_continuation": 0.3881002252387284,
+              "psi_child": 0.18472108388508052,
+              "tenure_choice_kappa": 0.013873528507218121,
+              "theta0": 0.11100152997650709
+            },
+            "population": 1.0,
+            "price": 0.7773281689411956,
+            "report": "/work/results/run/0087_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.36365273280922306,
+              0.14014123044144994,
+              0.017342976112720666,
+              -0.4411250956531104,
+              -0.8893290196531589,
+              1.7366984706444348,
+              -0.6626452207281994,
+              -1.2441211205432137,
+              -0.6156494114142917,
+              -2.769072553287424
+            ],
+            "starting_price": 0.7707230581418745,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "objective_calls": 88
+        },
+        "best_so_far": {
+          "best": {
+            "H0_derived": 6.397785852699132,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0083_nm",
+            "lifecycle_solves": 7,
+            "loss": 14.075421960213044,
+            "normalization": "N0=1",
+            "objective": 14.075421960213044,
+            "parameters": {
+              "beta_annual": 0.9661351738194669,
+              "chi": 1.0473063220070495,
+              "child_benefit_curvature": 0.10830352721596935,
+              "first_birth_fixed_cost": 0.32744980912548116,
+              "h_P": 2.540136052389652,
+              "kappa_fert": 0.11550703806602373,
+              "kappa_fert_continuation": 0.38504306978742564,
+              "psi_child": 0.18502109800123073,
+              "tenure_choice_kappa": 0.014241414518692617,
+              "theta0": 0.11096047336828405
+            },
+            "population": 1.0,
+            "price": 0.7753491206829682,
+            "report": "/work/results/run/0083_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.4823635683400078,
+              0.04591057321645571,
+              -0.050095433448447545,
+              -0.5702319997827283,
+              -0.8965592909058362,
+              1.655528434185181,
+              -0.5863422044490288,
+              -1.3093021697387832,
+              -0.5194812972660114,
+              -2.76413500977692
+            ],
+            "starting_price": 0.7707230581418745,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "completed_full_ge": 88,
+          "status": "provisional_until_full_native_postcheck"
+        },
+        "start_contract": {
+          "all_starts": [
+            {
+              "beta_annual": 0.9663191380998087,
+              "chi": 1.0500762402240174,
+              "child_benefit_curvature": 0.0629608477756522,
+              "first_birth_fixed_cost": 0.3045994545418478,
+              "h_P": 2.593759507364224,
+              "kappa_fert": 0.11652185618155607,
+              "kappa_fert_continuation": 0.40070847699255835,
+              "psi_child": 0.17892072066041628,
+              "tenure_choice_kappa": 0.014123854930856623,
+              "theta0": 0.10097400014250629
+            },
+            {
+              "beta_annual": 0.9662569445278422,
+              "chi": 1.0470124178279687,
+              "child_benefit_curvature": 0.0854823364934924,
+              "first_birth_fixed_cost": 0.287807832942236,
+              "h_P": 2.575808028737859,
+              "kappa_fert": 0.10652616174795099,
+              "kappa_fert_continuation": 0.37242295139952397,
+              "psi_child": 0.1782621076206025,
+              "tenure_choice_kappa": 0.01676983931211905,
+              "theta0": 0.15802569333541386
+            },
+            {
+              "beta_annual": 0.9672112961277929,
+              "chi": 1.0471700514113371,
+              "child_benefit_curvature": 0.09985758419040065,
+              "first_birth_fixed_cost": 0.3419119990862946,
+              "h_P": 2.523195176415312,
+              "kappa_fert": 0.11767103666865444,
+              "kappa_fert_continuation": 0.3823280873065715,
+              "psi_child": 0.1838205888272601,
+              "tenure_choice_kappa": 0.014916432307904483,
+              "theta0": 0.10525815000281447
+            },
+            {
+              "beta_annual": 0.9656806275410592,
+              "chi": 1.0537376493974075,
+              "child_benefit_curvature": 0.10399753595081321,
+              "first_birth_fixed_cost": 0.3535687150795661,
+              "h_P": 2.4985409254479625,
+              "kappa_fert": 0.12414546934542033,
+              "kappa_fert_continuation": 0.3919867216170405,
+              "psi_child": 0.18411460129219204,
+              "tenure_choice_kappa": 0.01393221713646077,
+              "theta0": 0.1055608981455331
+            },
+            {
+              "beta_annual": 0.9677203701817941,
+              "chi": 1.0515775253029178,
+              "child_benefit_curvature": 0.1361128027183495,
+              "first_birth_fixed_cost": 0.2936289501436123,
+              "h_P": 2.5166955847722488,
+              "kappa_fert": 0.09787533782040396,
+              "kappa_fert_continuation": 0.35115579689653814,
+              "psi_child": 0.18701092015727908,
+              "tenure_choice_kappa": 0.014461713975565536,
+              "theta0": 0.043459497227852605
+            },
+            {
+              "beta_annual": 0.9669147063135795,
+              "chi": 1.0497306110232156,
+              "child_benefit_curvature": 0.10327179075736759,
+              "first_birth_fixed_cost": 0.3449423834878797,
+              "h_P": 2.498555290680524,
+              "kappa_fert": 0.1174195790316383,
+              "kappa_fert_continuation": 0.37725874573560214,
+              "psi_child": 0.18457219370940542,
+              "tenure_choice_kappa": 0.014599893844864435,
+              "theta0": 0.11001755639845248
+            },
+            {
+              "beta_annual": 0.96695724796527,
+              "chi": 1.0448767753841357,
+              "child_benefit_curvature": 0.10238966886251494,
+              "first_birth_fixed_cost": 0.35559764841070135,
+              "h_P": 2.4941796762844115,
+              "kappa_fert": 0.1205902687443946,
+              "kappa_fert_continuation": 0.38470941756436094,
+              "psi_child": 0.1852035840505729,
+              "tenure_choice_kappa": 0.01408221878731572,
+              "theta0": 0.10359588921032917
+            },
+            {
+              "beta_annual": 0.9670230655087013,
+              "chi": 1.0442603969922724,
+              "child_benefit_curvature": 0.10229938325804011,
+              "first_birth_fixed_cost": 0.3475428723476154,
+              "h_P": 2.4918249384344238,
+              "kappa_fert": 0.12088462564419321,
+              "kappa_fert_continuation": 0.3839383444206339,
+              "psi_child": 0.18373948088494638,
+              "tenure_choice_kappa": 0.014114220031839007,
+              "theta0": 0.11036552544613076
+            },
+            {
+              "beta_annual": 0.9671306792810477,
+              "chi": 1.0443081780806407,
+              "child_benefit_curvature": 0.10115150011480056,
+              "first_birth_fixed_cost": 0.3479267738357423,
+              "h_P": 2.4925948537741474,
+              "kappa_fert": 0.11962110312737963,
+              "kappa_fert_continuation": 0.38396202808026103,
+              "psi_child": 0.1834232193733987,
+              "tenure_choice_kappa": 0.014151248030042501,
+              "theta0": 0.10673802521174611
+            },
+            {
+              "beta_annual": 0.9666527052739705,
+              "chi": 1.0471462670925766,
+              "child_benefit_curvature": 0.09748611265793072,
+              "first_birth_fixed_cost": 0.35804828157842084,
+              "h_P": 2.465299027959093,
+              "kappa_fert": 0.12134764869841791,
+              "kappa_fert_continuation": 0.38141989563596795,
+              "psi_child": 0.18294434190083142,
+              "tenure_choice_kappa": 0.01408348141780228,
+              "theta0": 0.10329629700694087
+            }
+          ],
+          "arm": "alternative",
+          "bounds": {
+            "beta_annual": [
+              0.94,
+              0.99
+            ],
+            "chi": [
+              0.1,
+              5.0
+            ],
+            "child_benefit_curvature": [
+              0.0,
+              0.8
+            ],
+            "first_birth_fixed_cost": [
+              0.0,
+              8.0
+            ],
+            "h_P": [
+              0.1,
+              2.6
+            ],
+            "kappa_fert": [
+              0.02,
+              50.0
+            ],
+            "kappa_fert_continuation": [
+              0.02,
+              50.0
+            ],
+            "psi_child": [
+              0.01,
+              0.5
+            ],
+            "tenure_choice_kappa": [
+              0.001,
+              0.1
+            ],
+            "theta0": [
+              0.0,
+              8.0
+            ]
+          },
+          "chain": 5,
+          "continuation_checkpoint_sha256": "a3f7984efeaeca14e9298a47e9f0b6031371980214338adb10e6230c8089c8b1",
+          "continuation_price": 0.7707230581418745,
+          "deadline_epoch": 1791069987.0,
+          "economic_change": "adopted soft purchase financing; author-adopted revised-interest transaction timing",
+          "free_coordinates": [
+            "beta_annual",
+            "chi",
+            "first_birth_fixed_cost",
+            "kappa_fert",
+            "kappa_fert_continuation",
+            "theta0",
+            "h_P",
+            "child_benefit_curvature",
+            "tenure_choice_kappa",
+            "psi_child"
+          ],
+          "lifecycle_solves_per_case_max": 32,
+          "no_auto_retry": true,
+          "normalized_source_pins_sha256": "9759d97cd00ceb869b31eb898e8ec089d3b6da9d3f7ee33f025eface5e9bd8a2",
+          "not_adopted_calibration": true,
+          "objective_calls_max": 500,
+          "other_economics": "N0=1; physical parent room floor; constant alpha; no A(m); nonnegative-mean entry; phi=.8; unchanged ten coordinates and target weights",
+          "reserve_seconds": 1800.0,
+          "seed": {
+            "beta_annual": 0.9669147063135795,
+            "chi": 1.0497306110232156,
+            "child_benefit_curvature": 0.10327179075736759,
+            "first_birth_fixed_cost": 0.3449423834878797,
+            "h_P": 2.498555290680524,
+            "kappa_fert": 0.1174195790316383,
+            "kappa_fert_continuation": 0.37725874573560214,
+            "psi_child": 0.18457219370940542,
+            "tenure_choice_kappa": 0.014599893844864435,
+            "theta0": 0.11001755639845248
+          },
+          "selected_source_sha256": "b5e21a8584fa536a3740039b3e54480f3c318a63b96266bd31406712c5da991c",
+          "selection_receipt_sha256": "63a59480db8664b4be6f9553494cbd0c9d67a4828546818eb386175d8aae823e",
+          "starts_count": 10,
+          "starts_file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_continuation_20261003_v1/start_plan.json",
+          "starts_file_sha256": "ede3fc2dc40fd55e53d48cd417adb529a94e6f902c952839145849c4f8d2e168",
+          "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+          "timing_manifest_sha256": "be83815ae924ec558ae3ed4c78c189e42591b38cc7b551c24378e6b82956ccea",
+          "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+        }
+      }
+    },
+    {
+      "chain": 6,
+      "remote_run": "/scratch/td2248/projects/soft_timing_continuation_20261003_v1/results/production_alternative_chain_6/run",
+      "files": {
+        "heartbeat": {
+          "arm": "alternative",
+          "chain": 6,
+          "completed_full_ge": 82,
+          "epoch": 1791061095.002501,
+          "label": "0082_nm",
+          "objective_calls": 83,
+          "status": "running_full_GE"
+        },
+        "latest_completed": {
+          "completed_full_ge": 82,
+          "latest": {
+            "H0_derived": 6.432186031178136,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0081_nm",
+            "lifecycle_solves": 8,
+            "loss": 14.671220744186545,
+            "normalization": "N0=1",
+            "objective": 14.671220744186545,
+            "parameters": {
+              "beta_annual": 0.9663877016908319,
+              "chi": 1.0499372733612768,
+              "child_benefit_curvature": 0.10548855499734927,
+              "first_birth_fixed_cost": 0.342725822400407,
+              "h_P": 2.534419266773636,
+              "kappa_fert": 0.1192143613584469,
+              "kappa_fert_continuation": 0.38710444260902355,
+              "psi_child": 0.185332615941784,
+              "tenure_choice_kappa": 0.013943559083994642,
+              "theta0": 0.10481203701994671
+            },
+            "population": 1.0,
+            "price": 0.7728843538060567,
+            "report": "/work/results/run/0081_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.6145400719716528,
+              -0.09249981607598336,
+              0.022047973825821257,
+              -0.5050531631965923,
+              -0.9685750222976727,
+              1.8790552113996128,
+              -0.2744264931474984,
+              -1.3022577894077982,
+              -0.2947007067785454,
+              -2.7753234765071166
+            ],
+            "starting_price": 0.7750363647095402,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "objective_calls": 82
+        },
+        "best_so_far": {
+          "best": {
+            "H0_derived": 6.405501001485401,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0080_nm",
+            "lifecycle_solves": 6,
+            "loss": 14.393493023385194,
+            "normalization": "N0=1",
+            "objective": 14.393493023385194,
+            "parameters": {
+              "beta_annual": 0.9665160966941082,
+              "chi": 1.0505679137314201,
+              "child_benefit_curvature": 0.10500932767890425,
+              "first_birth_fixed_cost": 0.33185328106298456,
+              "h_P": 2.5374262116323427,
+              "kappa_fert": 0.11917971032253481,
+              "kappa_fert_continuation": 0.38671210185457394,
+              "psi_child": 0.18496523696116457,
+              "tenure_choice_kappa": 0.01409069668180617,
+              "theta0": 0.10843311343981367
+            },
+            "population": 1.0,
+            "price": 0.7754064245766147,
+            "report": "/work/results/run/0080_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.4498323334299405,
+              0.10014236757322652,
+              0.22965317468235572,
+              -0.45986211362343543,
+              -0.9271477989220283,
+              1.7387987829761387,
+              -0.24212861801881258,
+              -1.2827886457272017,
+              -0.7740477511123053,
+              -2.780387474834666
+            ],
+            "starting_price": 0.7750363647095402,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "completed_full_ge": 82,
+          "status": "provisional_until_full_native_postcheck"
+        },
+        "start_contract": {
+          "all_starts": [
+            {
+              "beta_annual": 0.9663191380998087,
+              "chi": 1.0500762402240174,
+              "child_benefit_curvature": 0.0629608477756522,
+              "first_birth_fixed_cost": 0.3045994545418478,
+              "h_P": 2.593759507364224,
+              "kappa_fert": 0.11652185618155607,
+              "kappa_fert_continuation": 0.40070847699255835,
+              "psi_child": 0.17892072066041628,
+              "tenure_choice_kappa": 0.014123854930856623,
+              "theta0": 0.10097400014250629
+            },
+            {
+              "beta_annual": 0.9662569445278422,
+              "chi": 1.0470124178279687,
+              "child_benefit_curvature": 0.0854823364934924,
+              "first_birth_fixed_cost": 0.287807832942236,
+              "h_P": 2.575808028737859,
+              "kappa_fert": 0.10652616174795099,
+              "kappa_fert_continuation": 0.37242295139952397,
+              "psi_child": 0.1782621076206025,
+              "tenure_choice_kappa": 0.01676983931211905,
+              "theta0": 0.15802569333541386
+            },
+            {
+              "beta_annual": 0.9672112961277929,
+              "chi": 1.0471700514113371,
+              "child_benefit_curvature": 0.09985758419040065,
+              "first_birth_fixed_cost": 0.3419119990862946,
+              "h_P": 2.523195176415312,
+              "kappa_fert": 0.11767103666865444,
+              "kappa_fert_continuation": 0.3823280873065715,
+              "psi_child": 0.1838205888272601,
+              "tenure_choice_kappa": 0.014916432307904483,
+              "theta0": 0.10525815000281447
+            },
+            {
+              "beta_annual": 0.9656806275410592,
+              "chi": 1.0537376493974075,
+              "child_benefit_curvature": 0.10399753595081321,
+              "first_birth_fixed_cost": 0.3535687150795661,
+              "h_P": 2.4985409254479625,
+              "kappa_fert": 0.12414546934542033,
+              "kappa_fert_continuation": 0.3919867216170405,
+              "psi_child": 0.18411460129219204,
+              "tenure_choice_kappa": 0.01393221713646077,
+              "theta0": 0.1055608981455331
+            },
+            {
+              "beta_annual": 0.9677203701817941,
+              "chi": 1.0515775253029178,
+              "child_benefit_curvature": 0.1361128027183495,
+              "first_birth_fixed_cost": 0.2936289501436123,
+              "h_P": 2.5166955847722488,
+              "kappa_fert": 0.09787533782040396,
+              "kappa_fert_continuation": 0.35115579689653814,
+              "psi_child": 0.18701092015727908,
+              "tenure_choice_kappa": 0.014461713975565536,
+              "theta0": 0.043459497227852605
+            },
+            {
+              "beta_annual": 0.9669147063135795,
+              "chi": 1.0497306110232156,
+              "child_benefit_curvature": 0.10327179075736759,
+              "first_birth_fixed_cost": 0.3449423834878797,
+              "h_P": 2.498555290680524,
+              "kappa_fert": 0.1174195790316383,
+              "kappa_fert_continuation": 0.37725874573560214,
+              "psi_child": 0.18457219370940542,
+              "tenure_choice_kappa": 0.014599893844864435,
+              "theta0": 0.11001755639845248
+            },
+            {
+              "beta_annual": 0.96695724796527,
+              "chi": 1.0448767753841357,
+              "child_benefit_curvature": 0.10238966886251494,
+              "first_birth_fixed_cost": 0.35559764841070135,
+              "h_P": 2.4941796762844115,
+              "kappa_fert": 0.1205902687443946,
+              "kappa_fert_continuation": 0.38470941756436094,
+              "psi_child": 0.1852035840505729,
+              "tenure_choice_kappa": 0.01408221878731572,
+              "theta0": 0.10359588921032917
+            },
+            {
+              "beta_annual": 0.9670230655087013,
+              "chi": 1.0442603969922724,
+              "child_benefit_curvature": 0.10229938325804011,
+              "first_birth_fixed_cost": 0.3475428723476154,
+              "h_P": 2.4918249384344238,
+              "kappa_fert": 0.12088462564419321,
+              "kappa_fert_continuation": 0.3839383444206339,
+              "psi_child": 0.18373948088494638,
+              "tenure_choice_kappa": 0.014114220031839007,
+              "theta0": 0.11036552544613076
+            },
+            {
+              "beta_annual": 0.9671306792810477,
+              "chi": 1.0443081780806407,
+              "child_benefit_curvature": 0.10115150011480056,
+              "first_birth_fixed_cost": 0.3479267738357423,
+              "h_P": 2.4925948537741474,
+              "kappa_fert": 0.11962110312737963,
+              "kappa_fert_continuation": 0.38396202808026103,
+              "psi_child": 0.1834232193733987,
+              "tenure_choice_kappa": 0.014151248030042501,
+              "theta0": 0.10673802521174611
+            },
+            {
+              "beta_annual": 0.9666527052739705,
+              "chi": 1.0471462670925766,
+              "child_benefit_curvature": 0.09748611265793072,
+              "first_birth_fixed_cost": 0.35804828157842084,
+              "h_P": 2.465299027959093,
+              "kappa_fert": 0.12134764869841791,
+              "kappa_fert_continuation": 0.38141989563596795,
+              "psi_child": 0.18294434190083142,
+              "tenure_choice_kappa": 0.01408348141780228,
+              "theta0": 0.10329629700694087
+            }
+          ],
+          "arm": "alternative",
+          "bounds": {
+            "beta_annual": [
+              0.94,
+              0.99
+            ],
+            "chi": [
+              0.1,
+              5.0
+            ],
+            "child_benefit_curvature": [
+              0.0,
+              0.8
+            ],
+            "first_birth_fixed_cost": [
+              0.0,
+              8.0
+            ],
+            "h_P": [
+              0.1,
+              2.6
+            ],
+            "kappa_fert": [
+              0.02,
+              50.0
+            ],
+            "kappa_fert_continuation": [
+              0.02,
+              50.0
+            ],
+            "psi_child": [
+              0.01,
+              0.5
+            ],
+            "tenure_choice_kappa": [
+              0.001,
+              0.1
+            ],
+            "theta0": [
+              0.0,
+              8.0
+            ]
+          },
+          "chain": 6,
+          "continuation_checkpoint_sha256": "ee677c33fab5d64996dabb2185e4347338dfa44de0525c182c8ea2030f462f71",
+          "continuation_price": 0.7750363647095402,
+          "deadline_epoch": 1791069988.0,
+          "economic_change": "adopted soft purchase financing; author-adopted revised-interest transaction timing",
+          "free_coordinates": [
+            "beta_annual",
+            "chi",
+            "first_birth_fixed_cost",
+            "kappa_fert",
+            "kappa_fert_continuation",
+            "theta0",
+            "h_P",
+            "child_benefit_curvature",
+            "tenure_choice_kappa",
+            "psi_child"
+          ],
+          "lifecycle_solves_per_case_max": 32,
+          "no_auto_retry": true,
+          "normalized_source_pins_sha256": "9759d97cd00ceb869b31eb898e8ec089d3b6da9d3f7ee33f025eface5e9bd8a2",
+          "not_adopted_calibration": true,
+          "objective_calls_max": 500,
+          "other_economics": "N0=1; physical parent room floor; constant alpha; no A(m); nonnegative-mean entry; phi=.8; unchanged ten coordinates and target weights",
+          "reserve_seconds": 1800.0,
+          "seed": {
+            "beta_annual": 0.96695724796527,
+            "chi": 1.0448767753841357,
+            "child_benefit_curvature": 0.10238966886251494,
+            "first_birth_fixed_cost": 0.35559764841070135,
+            "h_P": 2.4941796762844115,
+            "kappa_fert": 0.1205902687443946,
+            "kappa_fert_continuation": 0.38470941756436094,
+            "psi_child": 0.1852035840505729,
+            "tenure_choice_kappa": 0.01408221878731572,
+            "theta0": 0.10359588921032917
+          },
+          "selected_source_sha256": "b5e21a8584fa536a3740039b3e54480f3c318a63b96266bd31406712c5da991c",
+          "selection_receipt_sha256": "63a59480db8664b4be6f9553494cbd0c9d67a4828546818eb386175d8aae823e",
+          "starts_count": 10,
+          "starts_file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_continuation_20261003_v1/start_plan.json",
+          "starts_file_sha256": "ede3fc2dc40fd55e53d48cd417adb529a94e6f902c952839145849c4f8d2e168",
+          "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+          "timing_manifest_sha256": "be83815ae924ec558ae3ed4c78c189e42591b38cc7b551c24378e6b82956ccea",
+          "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+        }
+      }
+    },
+    {
+      "chain": 7,
+      "remote_run": "/scratch/td2248/projects/soft_timing_continuation_20261003_v1/results/production_alternative_chain_7/run",
+      "files": {
+        "heartbeat": {
+          "arm": "alternative",
+          "chain": 7,
+          "completed_full_ge": 89,
+          "epoch": 1791061036.4464164,
+          "label": "0089_nm",
+          "objective_calls": 90,
+          "status": "running_full_GE"
+        },
+        "latest_completed": {
+          "completed_full_ge": 89,
+          "latest": {
+            "H0_derived": 6.366179707809102,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0088_nm",
+            "lifecycle_solves": 7,
+            "loss": 14.690390718171104,
+            "normalization": "N0=1",
+            "objective": 14.690390718171104,
+            "parameters": {
+              "beta_annual": 0.9664329255746587,
+              "chi": 1.0476996447271054,
+              "child_benefit_curvature": 0.10331652603640512,
+              "first_birth_fixed_cost": 0.3349346276830497,
+              "h_P": 2.526702877435262,
+              "kappa_fert": 0.11793496736073163,
+              "kappa_fert_continuation": 0.3877339962096577,
+              "psi_child": 0.18508357890942867,
+              "tenure_choice_kappa": 0.014187577119973867,
+              "theta0": 0.11173018207690703
+            },
+            "population": 1.0,
+            "price": 0.7785980996890128,
+            "report": "/work/results/run/0088_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.5259893334014902,
+              -0.004796816346069433,
+              -0.00045140153056422914,
+              -0.48893049683246265,
+              -0.8832928820708859,
+              1.5016010462843468,
+              -0.619604206590871,
+              -1.3369507691135232,
+              -1.1346414599543615,
+              -2.7714400053312858
+            ],
+            "starting_price": 0.7728028645856944,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "objective_calls": 89
+        },
+        "best_so_far": {
+          "best": {
+            "H0_derived": 6.392852405565993,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0085_nm",
+            "lifecycle_solves": 7,
+            "loss": 14.23994548056671,
+            "normalization": "N0=1",
+            "objective": 14.23994548056671,
+            "parameters": {
+              "beta_annual": 0.9667048855189389,
+              "chi": 1.047892658239288,
+              "child_benefit_curvature": 0.1033233650202803,
+              "first_birth_fixed_cost": 0.3359805067745141,
+              "h_P": 2.536923590313481,
+              "kappa_fert": 0.11572439054970604,
+              "kappa_fert_continuation": 0.3867339609971335,
+              "psi_child": 0.18533289921960497,
+              "tenure_choice_kappa": 0.014093718497073391,
+              "theta0": 0.11125923956279984
+            },
+            "population": 1.0,
+            "price": 0.7767230344254102,
+            "report": "/work/results/run/0085_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.6236920333607864,
+              -0.1278781254024068,
+              -0.16923123780906416,
+              -0.41606231800143656,
+              -0.8875175339270648,
+              1.6783990055430766,
+              -0.4997245316501756,
+              -1.2817416323695203,
+              -0.6805362435698844,
+              -2.769914701843904
+            ],
+            "starting_price": 0.7728028645856944,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "completed_full_ge": 89,
+          "status": "provisional_until_full_native_postcheck"
+        },
+        "start_contract": {
+          "all_starts": [
+            {
+              "beta_annual": 0.9663191380998087,
+              "chi": 1.0500762402240174,
+              "child_benefit_curvature": 0.0629608477756522,
+              "first_birth_fixed_cost": 0.3045994545418478,
+              "h_P": 2.593759507364224,
+              "kappa_fert": 0.11652185618155607,
+              "kappa_fert_continuation": 0.40070847699255835,
+              "psi_child": 0.17892072066041628,
+              "tenure_choice_kappa": 0.014123854930856623,
+              "theta0": 0.10097400014250629
+            },
+            {
+              "beta_annual": 0.9662569445278422,
+              "chi": 1.0470124178279687,
+              "child_benefit_curvature": 0.0854823364934924,
+              "first_birth_fixed_cost": 0.287807832942236,
+              "h_P": 2.575808028737859,
+              "kappa_fert": 0.10652616174795099,
+              "kappa_fert_continuation": 0.37242295139952397,
+              "psi_child": 0.1782621076206025,
+              "tenure_choice_kappa": 0.01676983931211905,
+              "theta0": 0.15802569333541386
+            },
+            {
+              "beta_annual": 0.9672112961277929,
+              "chi": 1.0471700514113371,
+              "child_benefit_curvature": 0.09985758419040065,
+              "first_birth_fixed_cost": 0.3419119990862946,
+              "h_P": 2.523195176415312,
+              "kappa_fert": 0.11767103666865444,
+              "kappa_fert_continuation": 0.3823280873065715,
+              "psi_child": 0.1838205888272601,
+              "tenure_choice_kappa": 0.014916432307904483,
+              "theta0": 0.10525815000281447
+            },
+            {
+              "beta_annual": 0.9656806275410592,
+              "chi": 1.0537376493974075,
+              "child_benefit_curvature": 0.10399753595081321,
+              "first_birth_fixed_cost": 0.3535687150795661,
+              "h_P": 2.4985409254479625,
+              "kappa_fert": 0.12414546934542033,
+              "kappa_fert_continuation": 0.3919867216170405,
+              "psi_child": 0.18411460129219204,
+              "tenure_choice_kappa": 0.01393221713646077,
+              "theta0": 0.1055608981455331
+            },
+            {
+              "beta_annual": 0.9677203701817941,
+              "chi": 1.0515775253029178,
+              "child_benefit_curvature": 0.1361128027183495,
+              "first_birth_fixed_cost": 0.2936289501436123,
+              "h_P": 2.5166955847722488,
+              "kappa_fert": 0.09787533782040396,
+              "kappa_fert_continuation": 0.35115579689653814,
+              "psi_child": 0.18701092015727908,
+              "tenure_choice_kappa": 0.014461713975565536,
+              "theta0": 0.043459497227852605
+            },
+            {
+              "beta_annual": 0.9669147063135795,
+              "chi": 1.0497306110232156,
+              "child_benefit_curvature": 0.10327179075736759,
+              "first_birth_fixed_cost": 0.3449423834878797,
+              "h_P": 2.498555290680524,
+              "kappa_fert": 0.1174195790316383,
+              "kappa_fert_continuation": 0.37725874573560214,
+              "psi_child": 0.18457219370940542,
+              "tenure_choice_kappa": 0.014599893844864435,
+              "theta0": 0.11001755639845248
+            },
+            {
+              "beta_annual": 0.96695724796527,
+              "chi": 1.0448767753841357,
+              "child_benefit_curvature": 0.10238966886251494,
+              "first_birth_fixed_cost": 0.35559764841070135,
+              "h_P": 2.4941796762844115,
+              "kappa_fert": 0.1205902687443946,
+              "kappa_fert_continuation": 0.38470941756436094,
+              "psi_child": 0.1852035840505729,
+              "tenure_choice_kappa": 0.01408221878731572,
+              "theta0": 0.10359588921032917
+            },
+            {
+              "beta_annual": 0.9670230655087013,
+              "chi": 1.0442603969922724,
+              "child_benefit_curvature": 0.10229938325804011,
+              "first_birth_fixed_cost": 0.3475428723476154,
+              "h_P": 2.4918249384344238,
+              "kappa_fert": 0.12088462564419321,
+              "kappa_fert_continuation": 0.3839383444206339,
+              "psi_child": 0.18373948088494638,
+              "tenure_choice_kappa": 0.014114220031839007,
+              "theta0": 0.11036552544613076
+            },
+            {
+              "beta_annual": 0.9671306792810477,
+              "chi": 1.0443081780806407,
+              "child_benefit_curvature": 0.10115150011480056,
+              "first_birth_fixed_cost": 0.3479267738357423,
+              "h_P": 2.4925948537741474,
+              "kappa_fert": 0.11962110312737963,
+              "kappa_fert_continuation": 0.38396202808026103,
+              "psi_child": 0.1834232193733987,
+              "tenure_choice_kappa": 0.014151248030042501,
+              "theta0": 0.10673802521174611
+            },
+            {
+              "beta_annual": 0.9666527052739705,
+              "chi": 1.0471462670925766,
+              "child_benefit_curvature": 0.09748611265793072,
+              "first_birth_fixed_cost": 0.35804828157842084,
+              "h_P": 2.465299027959093,
+              "kappa_fert": 0.12134764869841791,
+              "kappa_fert_continuation": 0.38141989563596795,
+              "psi_child": 0.18294434190083142,
+              "tenure_choice_kappa": 0.01408348141780228,
+              "theta0": 0.10329629700694087
+            }
+          ],
+          "arm": "alternative",
+          "bounds": {
+            "beta_annual": [
+              0.94,
+              0.99
+            ],
+            "chi": [
+              0.1,
+              5.0
+            ],
+            "child_benefit_curvature": [
+              0.0,
+              0.8
+            ],
+            "first_birth_fixed_cost": [
+              0.0,
+              8.0
+            ],
+            "h_P": [
+              0.1,
+              2.6
+            ],
+            "kappa_fert": [
+              0.02,
+              50.0
+            ],
+            "kappa_fert_continuation": [
+              0.02,
+              50.0
+            ],
+            "psi_child": [
+              0.01,
+              0.5
+            ],
+            "tenure_choice_kappa": [
+              0.001,
+              0.1
+            ],
+            "theta0": [
+              0.0,
+              8.0
+            ]
+          },
+          "chain": 7,
+          "continuation_checkpoint_sha256": "b57e1bf9c7cca592292a8a53bb70b67b56ebb020e7353e2502af42b48b5f4f81",
+          "continuation_price": 0.7728028645856944,
+          "deadline_epoch": 1791069988.0,
+          "economic_change": "adopted soft purchase financing; author-adopted revised-interest transaction timing",
+          "free_coordinates": [
+            "beta_annual",
+            "chi",
+            "first_birth_fixed_cost",
+            "kappa_fert",
+            "kappa_fert_continuation",
+            "theta0",
+            "h_P",
+            "child_benefit_curvature",
+            "tenure_choice_kappa",
+            "psi_child"
+          ],
+          "lifecycle_solves_per_case_max": 32,
+          "no_auto_retry": true,
+          "normalized_source_pins_sha256": "9759d97cd00ceb869b31eb898e8ec089d3b6da9d3f7ee33f025eface5e9bd8a2",
+          "not_adopted_calibration": true,
+          "objective_calls_max": 500,
+          "other_economics": "N0=1; physical parent room floor; constant alpha; no A(m); nonnegative-mean entry; phi=.8; unchanged ten coordinates and target weights",
+          "reserve_seconds": 1800.0,
+          "seed": {
+            "beta_annual": 0.9670230655087013,
+            "chi": 1.0442603969922724,
+            "child_benefit_curvature": 0.10229938325804011,
+            "first_birth_fixed_cost": 0.3475428723476154,
+            "h_P": 2.4918249384344238,
+            "kappa_fert": 0.12088462564419321,
+            "kappa_fert_continuation": 0.3839383444206339,
+            "psi_child": 0.18373948088494638,
+            "tenure_choice_kappa": 0.014114220031839007,
+            "theta0": 0.11036552544613076
+          },
+          "selected_source_sha256": "b5e21a8584fa536a3740039b3e54480f3c318a63b96266bd31406712c5da991c",
+          "selection_receipt_sha256": "63a59480db8664b4be6f9553494cbd0c9d67a4828546818eb386175d8aae823e",
+          "starts_count": 10,
+          "starts_file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_continuation_20261003_v1/start_plan.json",
+          "starts_file_sha256": "ede3fc2dc40fd55e53d48cd417adb529a94e6f902c952839145849c4f8d2e168",
+          "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+          "timing_manifest_sha256": "be83815ae924ec558ae3ed4c78c189e42591b38cc7b551c24378e6b82956ccea",
+          "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+        }
+      }
+    },
+    {
+      "chain": 8,
+      "remote_run": "/scratch/td2248/projects/soft_timing_continuation_20261003_v1/results/production_alternative_chain_8/run",
+      "files": {
+        "heartbeat": {
+          "arm": "alternative",
+          "chain": 8,
+          "completed_full_ge": 88,
+          "epoch": 1791061074.617902,
+          "label": "0088_nm",
+          "objective_calls": 89,
+          "status": "running_full_GE"
+        },
+        "latest_completed": {
+          "completed_full_ge": 88,
+          "latest": {
+            "H0_derived": 6.3928107363189195,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0087_nm",
+            "lifecycle_solves": 6,
+            "loss": 14.257776157171604,
+            "normalization": "N0=1",
+            "objective": 14.257776157171604,
+            "parameters": {
+              "beta_annual": 0.9663035955182512,
+              "chi": 1.0494833254454614,
+              "child_benefit_curvature": 0.10096936277591012,
+              "first_birth_fixed_cost": 0.3310427253526714,
+              "h_P": 2.5420757213196556,
+              "kappa_fert": 0.11946997596856125,
+              "kappa_fert_continuation": 0.391963465627818,
+              "psi_child": 0.184471058670546,
+              "tenure_choice_kappa": 0.01370834423177655,
+              "theta0": 0.11232470278318679
+            },
+            "population": 1.0,
+            "price": 0.7781429466510978,
+            "report": "/work/results/run/0087_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.36930338604638824,
+              0.1499482867339652,
+              0.10588273938161087,
+              -0.4971431040680119,
+              -0.8720389144598804,
+              1.7545320881498532,
+              -0.42043787798001303,
+              -1.2703681896060874,
+              -0.7274721472476189,
+              -2.7716223532447914
+            ],
+            "starting_price": 0.7719658681146454,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "objective_calls": 88
+        },
+        "best_so_far": {
+          "best": {
+            "H0_derived": 6.423410370256977,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0085_nm",
+            "lifecycle_solves": 8,
+            "loss": 14.212730538992536,
+            "normalization": "N0=1",
+            "objective": 14.212730538992536,
+            "parameters": {
+              "beta_annual": 0.9661980460132509,
+              "chi": 1.050066851741242,
+              "child_benefit_curvature": 0.1004793801362129,
+              "first_birth_fixed_cost": 0.3334296138177503,
+              "h_P": 2.549423948595838,
+              "kappa_fert": 0.11895725417752778,
+              "kappa_fert_continuation": 0.3908929993730702,
+              "psi_child": 0.18426100959664407,
+              "tenure_choice_kappa": 0.014185066637821559,
+              "theta0": 0.11034591148639444
+            },
+            "population": 1.0,
+            "price": 0.773483526019611,
+            "report": "/work/results/run/0085_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.43832245085565585,
+              0.07561710252394839,
+              0.0031132697783429917,
+              -0.5369745340442652,
+              -0.9047401162566522,
+              1.8205765712212085,
+              -0.27370903800327206,
+              -1.2470190102987129,
+              -0.5520685109209802,
+              -2.7674407417844202
+            ],
+            "starting_price": 0.7719658681146454,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "completed_full_ge": 88,
+          "status": "provisional_until_full_native_postcheck"
+        },
+        "start_contract": {
+          "all_starts": [
+            {
+              "beta_annual": 0.9663191380998087,
+              "chi": 1.0500762402240174,
+              "child_benefit_curvature": 0.0629608477756522,
+              "first_birth_fixed_cost": 0.3045994545418478,
+              "h_P": 2.593759507364224,
+              "kappa_fert": 0.11652185618155607,
+              "kappa_fert_continuation": 0.40070847699255835,
+              "psi_child": 0.17892072066041628,
+              "tenure_choice_kappa": 0.014123854930856623,
+              "theta0": 0.10097400014250629
+            },
+            {
+              "beta_annual": 0.9662569445278422,
+              "chi": 1.0470124178279687,
+              "child_benefit_curvature": 0.0854823364934924,
+              "first_birth_fixed_cost": 0.287807832942236,
+              "h_P": 2.575808028737859,
+              "kappa_fert": 0.10652616174795099,
+              "kappa_fert_continuation": 0.37242295139952397,
+              "psi_child": 0.1782621076206025,
+              "tenure_choice_kappa": 0.01676983931211905,
+              "theta0": 0.15802569333541386
+            },
+            {
+              "beta_annual": 0.9672112961277929,
+              "chi": 1.0471700514113371,
+              "child_benefit_curvature": 0.09985758419040065,
+              "first_birth_fixed_cost": 0.3419119990862946,
+              "h_P": 2.523195176415312,
+              "kappa_fert": 0.11767103666865444,
+              "kappa_fert_continuation": 0.3823280873065715,
+              "psi_child": 0.1838205888272601,
+              "tenure_choice_kappa": 0.014916432307904483,
+              "theta0": 0.10525815000281447
+            },
+            {
+              "beta_annual": 0.9656806275410592,
+              "chi": 1.0537376493974075,
+              "child_benefit_curvature": 0.10399753595081321,
+              "first_birth_fixed_cost": 0.3535687150795661,
+              "h_P": 2.4985409254479625,
+              "kappa_fert": 0.12414546934542033,
+              "kappa_fert_continuation": 0.3919867216170405,
+              "psi_child": 0.18411460129219204,
+              "tenure_choice_kappa": 0.01393221713646077,
+              "theta0": 0.1055608981455331
+            },
+            {
+              "beta_annual": 0.9677203701817941,
+              "chi": 1.0515775253029178,
+              "child_benefit_curvature": 0.1361128027183495,
+              "first_birth_fixed_cost": 0.2936289501436123,
+              "h_P": 2.5166955847722488,
+              "kappa_fert": 0.09787533782040396,
+              "kappa_fert_continuation": 0.35115579689653814,
+              "psi_child": 0.18701092015727908,
+              "tenure_choice_kappa": 0.014461713975565536,
+              "theta0": 0.043459497227852605
+            },
+            {
+              "beta_annual": 0.9669147063135795,
+              "chi": 1.0497306110232156,
+              "child_benefit_curvature": 0.10327179075736759,
+              "first_birth_fixed_cost": 0.3449423834878797,
+              "h_P": 2.498555290680524,
+              "kappa_fert": 0.1174195790316383,
+              "kappa_fert_continuation": 0.37725874573560214,
+              "psi_child": 0.18457219370940542,
+              "tenure_choice_kappa": 0.014599893844864435,
+              "theta0": 0.11001755639845248
+            },
+            {
+              "beta_annual": 0.96695724796527,
+              "chi": 1.0448767753841357,
+              "child_benefit_curvature": 0.10238966886251494,
+              "first_birth_fixed_cost": 0.35559764841070135,
+              "h_P": 2.4941796762844115,
+              "kappa_fert": 0.1205902687443946,
+              "kappa_fert_continuation": 0.38470941756436094,
+              "psi_child": 0.1852035840505729,
+              "tenure_choice_kappa": 0.01408221878731572,
+              "theta0": 0.10359588921032917
+            },
+            {
+              "beta_annual": 0.9670230655087013,
+              "chi": 1.0442603969922724,
+              "child_benefit_curvature": 0.10229938325804011,
+              "first_birth_fixed_cost": 0.3475428723476154,
+              "h_P": 2.4918249384344238,
+              "kappa_fert": 0.12088462564419321,
+              "kappa_fert_continuation": 0.3839383444206339,
+              "psi_child": 0.18373948088494638,
+              "tenure_choice_kappa": 0.014114220031839007,
+              "theta0": 0.11036552544613076
+            },
+            {
+              "beta_annual": 0.9671306792810477,
+              "chi": 1.0443081780806407,
+              "child_benefit_curvature": 0.10115150011480056,
+              "first_birth_fixed_cost": 0.3479267738357423,
+              "h_P": 2.4925948537741474,
+              "kappa_fert": 0.11962110312737963,
+              "kappa_fert_continuation": 0.38396202808026103,
+              "psi_child": 0.1834232193733987,
+              "tenure_choice_kappa": 0.014151248030042501,
+              "theta0": 0.10673802521174611
+            },
+            {
+              "beta_annual": 0.9666527052739705,
+              "chi": 1.0471462670925766,
+              "child_benefit_curvature": 0.09748611265793072,
+              "first_birth_fixed_cost": 0.35804828157842084,
+              "h_P": 2.465299027959093,
+              "kappa_fert": 0.12134764869841791,
+              "kappa_fert_continuation": 0.38141989563596795,
+              "psi_child": 0.18294434190083142,
+              "tenure_choice_kappa": 0.01408348141780228,
+              "theta0": 0.10329629700694087
+            }
+          ],
+          "arm": "alternative",
+          "bounds": {
+            "beta_annual": [
+              0.94,
+              0.99
+            ],
+            "chi": [
+              0.1,
+              5.0
+            ],
+            "child_benefit_curvature": [
+              0.0,
+              0.8
+            ],
+            "first_birth_fixed_cost": [
+              0.0,
+              8.0
+            ],
+            "h_P": [
+              0.1,
+              2.6
+            ],
+            "kappa_fert": [
+              0.02,
+              50.0
+            ],
+            "kappa_fert_continuation": [
+              0.02,
+              50.0
+            ],
+            "psi_child": [
+              0.01,
+              0.5
+            ],
+            "tenure_choice_kappa": [
+              0.001,
+              0.1
+            ],
+            "theta0": [
+              0.0,
+              8.0
+            ]
+          },
+          "chain": 8,
+          "continuation_checkpoint_sha256": "4da469399f357462c674887aa84c9d632b5a2c6f1937469ecc976f249c3a2217",
+          "continuation_price": 0.7719658681146454,
+          "deadline_epoch": 1791069988.0,
+          "economic_change": "adopted soft purchase financing; author-adopted revised-interest transaction timing",
+          "free_coordinates": [
+            "beta_annual",
+            "chi",
+            "first_birth_fixed_cost",
+            "kappa_fert",
+            "kappa_fert_continuation",
+            "theta0",
+            "h_P",
+            "child_benefit_curvature",
+            "tenure_choice_kappa",
+            "psi_child"
+          ],
+          "lifecycle_solves_per_case_max": 32,
+          "no_auto_retry": true,
+          "normalized_source_pins_sha256": "9759d97cd00ceb869b31eb898e8ec089d3b6da9d3f7ee33f025eface5e9bd8a2",
+          "not_adopted_calibration": true,
+          "objective_calls_max": 500,
+          "other_economics": "N0=1; physical parent room floor; constant alpha; no A(m); nonnegative-mean entry; phi=.8; unchanged ten coordinates and target weights",
+          "reserve_seconds": 1800.0,
+          "seed": {
+            "beta_annual": 0.9671306792810477,
+            "chi": 1.0443081780806407,
+            "child_benefit_curvature": 0.10115150011480056,
+            "first_birth_fixed_cost": 0.3479267738357423,
+            "h_P": 2.4925948537741474,
+            "kappa_fert": 0.11962110312737963,
+            "kappa_fert_continuation": 0.38396202808026103,
+            "psi_child": 0.1834232193733987,
+            "tenure_choice_kappa": 0.014151248030042501,
+            "theta0": 0.10673802521174611
+          },
+          "selected_source_sha256": "b5e21a8584fa536a3740039b3e54480f3c318a63b96266bd31406712c5da991c",
+          "selection_receipt_sha256": "63a59480db8664b4be6f9553494cbd0c9d67a4828546818eb386175d8aae823e",
+          "starts_count": 10,
+          "starts_file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_continuation_20261003_v1/start_plan.json",
+          "starts_file_sha256": "ede3fc2dc40fd55e53d48cd417adb529a94e6f902c952839145849c4f8d2e168",
+          "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+          "timing_manifest_sha256": "be83815ae924ec558ae3ed4c78c189e42591b38cc7b551c24378e6b82956ccea",
+          "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+        }
+      }
+    },
+    {
+      "chain": 9,
+      "remote_run": "/scratch/td2248/projects/soft_timing_continuation_20261003_v1/results/production_alternative_chain_9/run",
+      "files": {
+        "heartbeat": {
+          "arm": "alternative",
+          "chain": 9,
+          "completed_full_ge": 90,
+          "epoch": 1791061053.5163774,
+          "label": "0090_nm",
+          "objective_calls": 91,
+          "status": "running_full_GE"
+        },
+        "latest_completed": {
+          "completed_full_ge": 90,
+          "latest": {
+            "H0_derived": 6.431197031316133,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0089_nm",
+            "lifecycle_solves": 6,
+            "loss": 15.426832152470839,
+            "normalization": "N0=1",
+            "objective": 15.426832152470839,
+            "parameters": {
+              "beta_annual": 0.9664247066583794,
+              "chi": 1.051955991456536,
+              "child_benefit_curvature": 0.09826294083517949,
+              "first_birth_fixed_cost": 0.3454257962852302,
+              "h_P": 2.5050720184371436,
+              "kappa_fert": 0.12243403501855196,
+              "kappa_fert_continuation": 0.3872591652562579,
+              "psi_child": 0.18367534246847214,
+              "tenure_choice_kappa": 0.013212396091303712,
+              "theta0": 0.10624057753811461
+            },
+            "population": 1.0,
+            "price": 0.7750685808248865,
+            "report": "/work/results/run/0089_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.5878700840927491,
+              -0.041524963961190035,
+              0.1975440059022089,
+              -0.47532330674630596,
+              -0.9274778515040084,
+              1.9874825309865993,
+              -0.14924142160825274,
+              -1.457944318495608,
+              -0.33724889563685856,
+              -2.7825612809946456
+            ],
+            "starting_price": 0.7705296522335281,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "objective_calls": 90
+        },
+        "best_so_far": {
+          "best": {
+            "H0_derived": 6.388958714299048,
+            "experimental_not_adopted": true,
+            "exploration_unverified": true,
+            "label": "0088_nm",
+            "lifecycle_solves": 7,
+            "loss": 14.81073548850588,
+            "normalization": "N0=1",
+            "objective": 14.81073548850588,
+            "parameters": {
+              "beta_annual": 0.966179275605919,
+              "chi": 1.0510950031154702,
+              "child_benefit_curvature": 0.09739650819187398,
+              "first_birth_fixed_cost": 0.34290892126707556,
+              "h_P": 2.512624622195091,
+              "kappa_fert": 0.12123237632704754,
+              "kappa_fert_continuation": 0.3904642173501065,
+              "psi_child": 0.18409486667699554,
+              "tenure_choice_kappa": 0.013350186082743378,
+              "theta0": 0.10907609247401218
+            },
+            "population": 1.0,
+            "price": 0.7788061610690062,
+            "report": "/work/results/run/0088_nm/phase_b_ge/selected_root",
+            "residual": [
+              0.5636815884216898,
+              -0.03264818634424123,
+              0.04779640037454078,
+              -0.5345408573931376,
+              -0.896177765651486,
+              1.750136958277985,
+              -0.33458256372274997,
+              -1.4313304582682986,
+              -0.6989877547098323,
+              -2.772825997582725
+            ],
+            "starting_price": 0.7705296522335281,
+            "status": "passed",
+            "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+          },
+          "completed_full_ge": 90,
+          "status": "provisional_until_full_native_postcheck"
+        },
+        "start_contract": {
+          "all_starts": [
+            {
+              "beta_annual": 0.9663191380998087,
+              "chi": 1.0500762402240174,
+              "child_benefit_curvature": 0.0629608477756522,
+              "first_birth_fixed_cost": 0.3045994545418478,
+              "h_P": 2.593759507364224,
+              "kappa_fert": 0.11652185618155607,
+              "kappa_fert_continuation": 0.40070847699255835,
+              "psi_child": 0.17892072066041628,
+              "tenure_choice_kappa": 0.014123854930856623,
+              "theta0": 0.10097400014250629
+            },
+            {
+              "beta_annual": 0.9662569445278422,
+              "chi": 1.0470124178279687,
+              "child_benefit_curvature": 0.0854823364934924,
+              "first_birth_fixed_cost": 0.287807832942236,
+              "h_P": 2.575808028737859,
+              "kappa_fert": 0.10652616174795099,
+              "kappa_fert_continuation": 0.37242295139952397,
+              "psi_child": 0.1782621076206025,
+              "tenure_choice_kappa": 0.01676983931211905,
+              "theta0": 0.15802569333541386
+            },
+            {
+              "beta_annual": 0.9672112961277929,
+              "chi": 1.0471700514113371,
+              "child_benefit_curvature": 0.09985758419040065,
+              "first_birth_fixed_cost": 0.3419119990862946,
+              "h_P": 2.523195176415312,
+              "kappa_fert": 0.11767103666865444,
+              "kappa_fert_continuation": 0.3823280873065715,
+              "psi_child": 0.1838205888272601,
+              "tenure_choice_kappa": 0.014916432307904483,
+              "theta0": 0.10525815000281447
+            },
+            {
+              "beta_annual": 0.9656806275410592,
+              "chi": 1.0537376493974075,
+              "child_benefit_curvature": 0.10399753595081321,
+              "first_birth_fixed_cost": 0.3535687150795661,
+              "h_P": 2.4985409254479625,
+              "kappa_fert": 0.12414546934542033,
+              "kappa_fert_continuation": 0.3919867216170405,
+              "psi_child": 0.18411460129219204,
+              "tenure_choice_kappa": 0.01393221713646077,
+              "theta0": 0.1055608981455331
+            },
+            {
+              "beta_annual": 0.9677203701817941,
+              "chi": 1.0515775253029178,
+              "child_benefit_curvature": 0.1361128027183495,
+              "first_birth_fixed_cost": 0.2936289501436123,
+              "h_P": 2.5166955847722488,
+              "kappa_fert": 0.09787533782040396,
+              "kappa_fert_continuation": 0.35115579689653814,
+              "psi_child": 0.18701092015727908,
+              "tenure_choice_kappa": 0.014461713975565536,
+              "theta0": 0.043459497227852605
+            },
+            {
+              "beta_annual": 0.9669147063135795,
+              "chi": 1.0497306110232156,
+              "child_benefit_curvature": 0.10327179075736759,
+              "first_birth_fixed_cost": 0.3449423834878797,
+              "h_P": 2.498555290680524,
+              "kappa_fert": 0.1174195790316383,
+              "kappa_fert_continuation": 0.37725874573560214,
+              "psi_child": 0.18457219370940542,
+              "tenure_choice_kappa": 0.014599893844864435,
+              "theta0": 0.11001755639845248
+            },
+            {
+              "beta_annual": 0.96695724796527,
+              "chi": 1.0448767753841357,
+              "child_benefit_curvature": 0.10238966886251494,
+              "first_birth_fixed_cost": 0.35559764841070135,
+              "h_P": 2.4941796762844115,
+              "kappa_fert": 0.1205902687443946,
+              "kappa_fert_continuation": 0.38470941756436094,
+              "psi_child": 0.1852035840505729,
+              "tenure_choice_kappa": 0.01408221878731572,
+              "theta0": 0.10359588921032917
+            },
+            {
+              "beta_annual": 0.9670230655087013,
+              "chi": 1.0442603969922724,
+              "child_benefit_curvature": 0.10229938325804011,
+              "first_birth_fixed_cost": 0.3475428723476154,
+              "h_P": 2.4918249384344238,
+              "kappa_fert": 0.12088462564419321,
+              "kappa_fert_continuation": 0.3839383444206339,
+              "psi_child": 0.18373948088494638,
+              "tenure_choice_kappa": 0.014114220031839007,
+              "theta0": 0.11036552544613076
+            },
+            {
+              "beta_annual": 0.9671306792810477,
+              "chi": 1.0443081780806407,
+              "child_benefit_curvature": 0.10115150011480056,
+              "first_birth_fixed_cost": 0.3479267738357423,
+              "h_P": 2.4925948537741474,
+              "kappa_fert": 0.11962110312737963,
+              "kappa_fert_continuation": 0.38396202808026103,
+              "psi_child": 0.1834232193733987,
+              "tenure_choice_kappa": 0.014151248030042501,
+              "theta0": 0.10673802521174611
+            },
+            {
+              "beta_annual": 0.9666527052739705,
+              "chi": 1.0471462670925766,
+              "child_benefit_curvature": 0.09748611265793072,
+              "first_birth_fixed_cost": 0.35804828157842084,
+              "h_P": 2.465299027959093,
+              "kappa_fert": 0.12134764869841791,
+              "kappa_fert_continuation": 0.38141989563596795,
+              "psi_child": 0.18294434190083142,
+              "tenure_choice_kappa": 0.01408348141780228,
+              "theta0": 0.10329629700694087
+            }
+          ],
+          "arm": "alternative",
+          "bounds": {
+            "beta_annual": [
+              0.94,
+              0.99
+            ],
+            "chi": [
+              0.1,
+              5.0
+            ],
+            "child_benefit_curvature": [
+              0.0,
+              0.8
+            ],
+            "first_birth_fixed_cost": [
+              0.0,
+              8.0
+            ],
+            "h_P": [
+              0.1,
+              2.6
+            ],
+            "kappa_fert": [
+              0.02,
+              50.0
+            ],
+            "kappa_fert_continuation": [
+              0.02,
+              50.0
+            ],
+            "psi_child": [
+              0.01,
+              0.5
+            ],
+            "tenure_choice_kappa": [
+              0.001,
+              0.1
+            ],
+            "theta0": [
+              0.0,
+              8.0
+            ]
+          },
+          "chain": 9,
+          "continuation_checkpoint_sha256": "5f331c83e535a8a5c4a99d3ca750b610c5fe62bcf2139dd4e80cc7ef31decea2",
+          "continuation_price": 0.7705296522335281,
+          "deadline_epoch": 1791069987.0,
+          "economic_change": "adopted soft purchase financing; author-adopted revised-interest transaction timing",
+          "free_coordinates": [
+            "beta_annual",
+            "chi",
+            "first_birth_fixed_cost",
+            "kappa_fert",
+            "kappa_fert_continuation",
+            "theta0",
+            "h_P",
+            "child_benefit_curvature",
+            "tenure_choice_kappa",
+            "psi_child"
+          ],
+          "lifecycle_solves_per_case_max": 32,
+          "no_auto_retry": true,
+          "normalized_source_pins_sha256": "9759d97cd00ceb869b31eb898e8ec089d3b6da9d3f7ee33f025eface5e9bd8a2",
+          "not_adopted_calibration": true,
+          "objective_calls_max": 500,
+          "other_economics": "N0=1; physical parent room floor; constant alpha; no A(m); nonnegative-mean entry; phi=.8; unchanged ten coordinates and target weights",
+          "reserve_seconds": 1800.0,
+          "seed": {
+            "beta_annual": 0.9666527052739705,
+            "chi": 1.0471462670925766,
+            "child_benefit_curvature": 0.09748611265793072,
+            "first_birth_fixed_cost": 0.35804828157842084,
+            "h_P": 2.465299027959093,
+            "kappa_fert": 0.12134764869841791,
+            "kappa_fert_continuation": 0.38141989563596795,
+            "psi_child": 0.18294434190083142,
+            "tenure_choice_kappa": 0.01408348141780228,
+            "theta0": 0.10329629700694087
+          },
+          "selected_source_sha256": "b5e21a8584fa536a3740039b3e54480f3c318a63b96266bd31406712c5da991c",
+          "selection_receipt_sha256": "63a59480db8664b4be6f9553494cbd0c9d67a4828546818eb386175d8aae823e",
+          "starts_count": 10,
+          "starts_file": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_continuation_20261003_v1/start_plan.json",
+          "starts_file_sha256": "ede3fc2dc40fd55e53d48cd417adb529a94e6f902c952839145849c4f8d2e168",
+          "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+          "timing_manifest_sha256": "be83815ae924ec558ae3ed4c78c189e42591b38cc7b551c24378e6b82956ccea",
+          "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0"
+        }
+      }
+    }
+  ],
+  "reason": "Author requests pause pending estate convention and matched birth-count experiments",
+  "resume_contract": "No exact optimizer resume; completed cases and best points retained; in-flight evaluation may be lost; no automatic restart",
+  "stop_command": "scancel 19111687 19112020",
+  "scheduler_after": {
+    "verified_epoch": 1791061336.0908864,
+    "queue": "",
+    "accounting": "19111687_0|CANCELLED by 3653198|0:0\n19111687_1|CANCELLED by 3653198|0:0\n19111687_2|CANCELLED by 3653198|0:0\n19111687_3|CANCELLED by 3653198|0:0\n19111687_4|CANCELLED by 3653198|0:0\n19111687_5|CANCELLED by 3653198|0:0\n19111687_6|CANCELLED by 3653198|0:0\n19111687_7|CANCELLED by 3653198|0:0\n19111687_8|CANCELLED by 3653198|0:0\n19111687_9|CANCELLED by 3653198|0:0\n19112020_0|CANCELLED by 3653198|0:0\n19112020_1|CANCELLED by 3653198|0:0\n19112020_2|CANCELLED by 3653198|0:0\n19112020_3|CANCELLED by 3653198|0:0\n19112020_4|CANCELLED by 3653198|0:0\n19112020_5|CANCELLED by 3653198|0:0\n19112020_6|CANCELLED by 3653198|0:0\n19112020_7|CANCELLED by 3653198|0:0\n19112020_8|CANCELLED by 3653198|0:0\n19112020_9|CANCELLED by 3653198|0:0\n"
+  },
+  "monitor_automation_status": "PAUSED"
+}

@@ -110,6 +110,29 @@ are unchanged. It writes `RESULTS.md`, `comparison.csv` with all 14 target rows,
 and `parameters_comparison.csv` with all 31 parameter records, bounds and
 near-bound indicators into the experiment output root. It generates no plots.
 
+## Proposed matched estate comparison — pending author decision
+
+This is a proposed future comparison, not an adopted estate specification or
+an authorized calibration launch. It would compare the existing binary
+one-birth menu with the experimental menu allowing intended births from zero
+through three, using the retained age-specific Binomial realization
+probabilities. Both arms would use the alternative wealth target
+4.45838713455674 and the candidate terminal estate mapping
+\[
+W=b'+(1-\psi)Ph',
+\]
+with no additional factor of $R$ applied to $b'$. The timing and estate
+interpretation remain unresolved pending the author's decision; the equation
+records a candidate for discussion, not an adopted rule.
+
+If authorized after that decision, the comparison would use ten workers total:
+five matched starting points per arm, with identical starts, parameter bounds,
+grid, target values and weights, solve budgets, and equilibrium closure across
+arms. No jobs have been launched for this comparison. The SCF bequest
+recipient and wealth-scope definition is still unresolved, so this proposal
+does not set a new numeric bequest target or drop or reweight the existing
+bequest target.
+
 Four descriptive engine arrays—`attempt_hazard_by_age`,
 `first_birth_hazard_by_age`, `fert_by_age`, and
 `first_birth_age_distribution`—use pre-birth exposure rather than the

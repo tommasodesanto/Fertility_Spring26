@@ -409,10 +409,15 @@ and 1,800 seconds reserved for fresh native verification. The
 and [chain-0 smoke receipt](output/model/fixed_reference_economics_20260928/soft_timing_continuation_20261003_v1/smoke_receipt/gate.json)
 pin the source, objective and start identities. The exact two-evaluation smoke
 passed the 14-row target fit, 31-parameter record, 17 standard plots and
-selected-point repeat. The production search has no fallback or automatic
-retry, and a lower loss will remain provisional until native verification.
+selected-point repeat. The production search had no fallback or automatic
+retry. At Tommaso's request, all ten tasks were stopped on October 3 at
+approximately 17:00 New York time, before final optimizer completion or native
+verification. The per-chain best/latest/start checkpoints saved before the
+stop are preserved in the [old-target pause receipt](output/model/fixed_reference_economics_20260928/soft_timing_continuation_20261003_v1/pause_20261003.json).
+They contain no resumable optimizer state; restarting would be a new search.
+There is no final verification or new adoption from this array.
 
-The isolated **new-wealth-target Torch continuation** is now submitted as
+The isolated **new-wealth-target Torch continuation** was submitted as
 array **19111687**, tasks `0-9%10`, in
 `/scratch/td2248/projects/alternative_wealth_calibration_20261003_v1`.
 It searches ten distinct starts with
@@ -430,9 +435,13 @@ target table, 31-row parameter table and 17 standard plots; its
 [collection receipt](output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/smoke_collection/smoke_collection.json),
 [new-contract target table](output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/deployment/smoke_target_fit.csv),
 and [parameter table](output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/deployment/smoke_parameters.csv)
-is diagnostic, not a calibrated result. At the first follow-up queue check,
-all ten production tasks were running; no production result has yet been
-verified.
+is diagnostic, not a calibrated result. At Tommaso's request, all ten
+production tasks were stopped on October 3 at approximately 17:00 New York
+time, before final optimizer completion or native verification. The per-chain
+best/latest/start checkpoints saved before the stop are preserved in the
+[new-wealth pause receipt](output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/pause_20261003.json).
+They contain no resumable optimizer state; restarting would be a new search.
+There is no final verification or new adoption from this array.
 
 ## Interactive inspection and numerical readiness
 
@@ -504,15 +513,18 @@ does not solve the model. Do not open the HTML directly or assume a remembered
 port or selected case is still current.
 
 The adopted working continuation anchor remains post-interest chain 13 under
-the old wealth target (6.926584), with loss 13.771131. Two separate searches
-were submitted October 3: old-target array **19112020** and experimental
-new-wealth-target array **19111687**.
-A fresh Torch check during the October 3 cleanup found all ten tasks in each array running;
-neither search has returned a verified adopted result. The contracts and
-submission receipts are separate: [old-target continuation](output/model/fixed_reference_economics_20260928/soft_timing_continuation_20261003_v1/deployment/status.json)
-and [new-wealth continuation](output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/deployment/production_submission_receipt.json).
-Recheck the live owner/monitor receipt before making any later queue or completion
-claim. Do not rank their losses across target systems.
+the old wealth target (6.926584), with loss 13.771131. Old-target array
+**19112020** and experimental new-wealth-target array **19111687** were both
+stopped at the author's request on October 3 at approximately 17:00 New York
+time. A follow-up scheduler check at approximately 17:01 New York time found
+the queue empty and all 20 tasks `CANCELLED`. The pause receipts preserve each chain's best/latest/start
+checkpoints: [old target](output/model/fixed_reference_economics_20260928/soft_timing_continuation_20261003_v1/pause_20261003.json)
+and [new wealth target](output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/pause_20261003.json).
+Neither array reached final native verification, and neither produced an
+adopted result. Their optimizer states cannot be resumed exactly; no restart
+or replacement job has been launched. The monitor automation
+`finish-and-monitor-soft-timing-calibration` is paused. Do not rank their
+losses across target systems.
 
 The [asset-grid diagnosis](output/model/fixed_reference_economics_20260928/asset_grid_diagnosis_v1/README.md)
 is historical fixed-price evidence under unchanged prices and entry rules. Its
