@@ -2,6 +2,9 @@
 
 Active launchers:
 
+- `alternative_wealth_calibration/` stages the pinned October 3 experimental
+  new-wealth search on Torch. Its README records the ten-chain contract,
+  low-discount-factor smoke, collection, and current deployment state.
 - `submit_python_direct_geometry_overnight.sh`
 - `submit_intergen_housing_fertility_twohour_panel.sh`
 - `submit_intergen_housing_fertility_global_de.sh`
