@@ -41,8 +41,10 @@ separate things are true at once:
 1. In this model the implemented closing screen passes 95–99 percent of young
    childless renters, while 14–24 percent could not buy the four-room rung and
    honor the ending debt floor, and 4–9 percent of young realized owners sit at
-   that floor (Section 3). First-birth attempt probabilities vary sharply with
-   income and only locally with liquid wealth at the states examined. These are
+   that floor (Section 3). Mass-weighted first-birth attempt rates vary sharply
+   with income and change little across the heavily occupied low-wealth nodes
+   examined; F5 shows much steeper native-policy gradients at higher-wealth
+   nodes with little mass. These are
    descriptive conditioning facts at selected states; they do not prove that
    credit cannot matter. Child utility is tenure-neutral, but credit can still
    reach births through budgets, housing size, transaction costs, wealth
@@ -90,14 +92,17 @@ age-25 children ever born from 0.5276 to 0.5249 (−0.0027), while mean age at
 first birth rises by about 0.038 years. That is a held-parameter comparison with a
 re-solved price, not a recalibrated comparison and not a policy transition.
 
-The timing change is economically large. Under original timing a buyer pays
-\(R(b+S-Q)\), so mortgage interest accrues on the whole purchase in the purchase
-period. Under alternative timing the purchase cost sits outside the interest
-factor, a one-period interest waiver worth \((R-1)Q\). For the four-room rung at
-the original price, \(Q=4\times0.718=2.87\) and \((R-1)Q=0.237\) in mean annual
-earnings, roughly nine percent of a four-year entry-age income of 2.65. A
-financing change of that size that leaves the fertility rows within 0.003 at
-held parameters is a strong local insensitivity result for that object. It is
+The timing change is economically large. Original timing carries current net
+transaction cash flow \(S-Q\) through the return factor \(R\); alternative
+timing places it outside that factor. Holding choices fixed, alternative minus
+original next-period liquid wealth is \((R-1)(Q-S)\), where \(S\) is net sale
+proceeds. For a renter buying the four-room rung, \(S=0\), the original price
+gives \(Q=4\times0.718=2.87\) and a difference \((R-1)Q=0.237\) in mean annual
+earnings, roughly nine percent of a four-year entry-age income of 2.65. This
+transaction-timing calculation is not the mortgage principal. In the held-
+parameter comparison, age-25 children ever born changes 0.5276 to 0.5249
+(−0.0027), while mean age at first birth rises by about 0.038 years. This is
+local insensitivity of those moments to that timing change. It is
 not a credit-policy counterfactual under the soft rule, and it says nothing
 about borrowing constraints in the data.
 
@@ -391,4 +396,4 @@ half at 20) and the 18–21 first cell are taken as the observer takes them.
   Alternative timing (chain 13):
   `../collection/production_alternative_chain_13/run/native_postcheck/selected_postcheck/phase_b_ge/selected_root/standard_diagnostics/`.
   In each: `policy_childless_renter_age30.png` and `policy_childless_renter_age42.png` (consumption, saving and housing policies by asset node for the childless renter branch; raw saved policies at grid nodes, including initialized infeasible nodes that carry no mass); `wealth_dist_childless_renter_age30.png` and `..._age42.png` (asset-node mass for that cell); `liquid_wealth_by_age_income_state.png`, `housing_by_age_income_state.png`, `ownership_by_age_income_state.png`, `fertility_policy_by_age_income_state.png` (age profiles by income state, realized distribution weights); `housing_market.png`, `market_clearing_by_market.png`, `market_clearing_residuals.png`, `housing_prices.png`, `owner_rungs.png`, `tenure_services.png` (prices, quantities, residuals); `fertility_by_age.png`, `ownership_by_age.png`, `income_state_outcomes.png`.
-- No additional native-grid panels were added in the revision; the packets above provide the requested consumption, saving, housing and distribution views for both arms.
+- F5 adds a supplemental native-grid policy and wealth-mass panel for ages 22–25; the standard 17-plot packets remain intact for both arms.
