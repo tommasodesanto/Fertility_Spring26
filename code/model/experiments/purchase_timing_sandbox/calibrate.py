@@ -10,6 +10,7 @@ import hashlib
 import importlib.util
 import inspect
 import json
+import math
 import os
 import signal
 import subprocess
@@ -151,6 +152,57 @@ def starts(selected, bounds, coordinates):
     return seeds
 
 
+def load_starts_table(path, expected_sha256, selected, manifest, bounds, coordinates):
+    """Authenticate an external matched start table before model initialization."""
+    path = Path(path).resolve()
+    if sha(path) != expected_sha256:
+        raise RuntimeError("Expanded start table SHA-256 drift")
+    data = json.loads(path.read_text())
+    if data["source_checkpoint_sha256"] != json.loads(SELECTION.read_text())["source_sha256"]:
+        raise RuntimeError("Expanded starts use a different selected checkpoint")
+    if (data["target_fingerprint"] != manifest["target_fingerprint"] or
+            data["weight_fingerprint"] != manifest["weight_fingerprint"]):
+        raise RuntimeError("Expanded starts target or weight fingerprint drift")
+    if set(data["bounds"]) != set(bounds):
+        raise RuntimeError("Expanded starts bound coordinates drift")
+    for key in bounds:
+        values = data["bounds"][key]
+        if len(values) != 2 or tuple(float(v) for v in values) != tuple(bounds[key]):
+            raise RuntimeError("Expanded starts bound drift: " + key)
+    rows = data["starts"]
+    if not isinstance(rows, list) or not rows:
+        raise RuntimeError("Expanded start table is empty")
+    provenance = data["start_provenance"]
+    if not isinstance(provenance, list) or len(provenance) != len(rows):
+        raise RuntimeError("Expanded per-start provenance missing")
+    historical = json.loads((ROOT / json.loads(SELECTION.read_text())["source"]).read_text())
+    result = []
+    for index, row in enumerate(rows):
+        if set(row) != set(coordinates):
+            raise RuntimeError(f"Expanded start {index} coordinate drift")
+        point = {}
+        for key in coordinates:
+            value = row[key]
+            if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value):
+                raise RuntimeError(f"Expanded start {index} nonfinite coordinate: {key}")
+            point[key] = float(value)
+        for key, value in point.items():
+            low, high = bounds[key]
+            if not low <= value <= high:
+                raise RuntimeError(f"Expanded start {index} outside bound: {key}")
+        source = provenance[index]
+        if not isinstance(source, dict) or source.get("group") not in ("legacy", "historical", "near_selected", "broad"):
+            raise RuntimeError(f"Expanded start {index} provenance drift")
+        if source["group"] == "historical":
+            key = source.get("source_key")
+            if key not in historical or historical[key]["best"]["parameters"] != point:
+                raise RuntimeError(f"Expanded historical start {index} source drift")
+        result.append(point)
+    if result[0] != selected["parameters"]:
+        raise RuntimeError("Expanded first start must equal authenticated selected point")
+    return result
+
+
 def completion_receipt(search, status, **fields):
     """Override the provisional search status without duplicate keyword arguments."""
     result = dict(search)
@@ -174,7 +226,7 @@ def selected_repeat_path(report):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--arm", choices=("original", "alternative"), required=True)
-    parser.add_argument("--chain", type=int, choices=range(4), required=True)
+    parser.add_argument("--chain", type=int, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--deadline-epoch", type=float, required=True)
     parser.add_argument("--mock-smoke", action="store_true")
@@ -182,9 +234,13 @@ def main():
     parser.add_argument("--smoke", action="store_true")
     parser.add_argument("--postcheck-only", action="store_true")
     parser.add_argument("--search-receipt", type=Path)
+    parser.add_argument("--starts-file", type=Path)
+    parser.add_argument("--starts-file-sha256")
     args = parser.parse_args()
     if args.postcheck_only != (args.search_receipt is not None):
         raise RuntimeError("Postcheck mode requires exactly one search receipt")
+    if (args.starts_file is None) != (args.starts_file_sha256 is None):
+        raise RuntimeError("Expanded starts require both file and SHA-256")
     if args.out.exists():
         raise RuntimeError("Refusing existing output directory")
     args.out.mkdir(parents=True)
@@ -205,7 +261,13 @@ def main():
     coordinates = tuple(v2.inputs.parameters(lane)) + ("psi_child",)
     v2.inputs.require(len(coordinates) == 10 and set(coordinates) == set(selected["parameters"]),
                       "Ten-coordinate contract drift")
-    all_starts = starts(selected, bounds, coordinates)
+    if args.starts_file is None:
+        all_starts = starts(selected, bounds, coordinates)
+    else:
+        all_starts = load_starts_table(args.starts_file, args.starts_file_sha256,
+                                       selected, manifest, bounds, coordinates)
+    if not 0 <= args.chain < len(all_starts):
+        raise RuntimeError("Chain index outside authenticated start table")
     seed = all_starts[args.chain]
     v2.inputs.check_point(seed, bounds)
     v2.inputs.LANES[lane].update(seed=seed, bounds=bounds, free_coordinates=list(coordinates))
@@ -213,6 +275,9 @@ def main():
         free_coordinates=list(coordinates), bounds=bounds,
         selected_source_sha256=json.loads(SELECTION.read_text())["source_sha256"],
         selection_receipt_sha256=sha(SELECTION),
+        starts_file=str(args.starts_file.resolve()) if args.starts_file else None,
+        starts_file_sha256=args.starts_file_sha256,
+        starts_count=len(all_starts),
         normalized_source_pins_sha256=sha(V2 / "source_pins.json"),
         timing_manifest_sha256=sha(TIMING / "manifest.json") if args.arm == "alternative" else None,
         target_fingerprint=manifest["target_fingerprint"], weight_fingerprint=manifest["weight_fingerprint"],
@@ -290,6 +355,8 @@ def main():
         v2.inputs.require(search["target_fingerprint"] == manifest["target_fingerprint"] and
                           search["weight_fingerprint"] == manifest["weight_fingerprint"],
                           "Postcheck target or weight drift")
+        v2.inputs.require(search["starts_file_sha256"] == args.starts_file_sha256,
+                          "Postcheck start-table snapshot drift")
         chosen = search["selected"]
         v2.inputs.require(chosen is not None and chosen["status"] == "passed" and
                           chosen["weight_fingerprint"] == manifest["weight_fingerprint"],
@@ -303,6 +370,7 @@ def main():
         if args.preflight_evaluator:
             v2.write(out / "completed.json", dict(status="full_native_postcheck_initialized_zero_solves",
                 lifecycle_solves=0, search_receipt_sha256=sha(search_path),
+                starts_file_sha256=args.starts_file_sha256,
                 target_fingerprint=manifest["target_fingerprint"],
                 weight_fingerprint=manifest["weight_fingerprint"]))
             return
@@ -325,6 +393,7 @@ def main():
             selected_postcheck=verification, native_loss=native_loss,
             target_fit=fits, parameters=parameters, repeat=repeat,
             search_receipt_sha256=sha(search_path), target_fingerprint=manifest["target_fingerprint"],
+            starts_file_sha256=args.starts_file_sha256,
             weight_fingerprint=manifest["weight_fingerprint"],
             elapsed_seconds=time.time()-start))
         return
@@ -401,6 +470,7 @@ def main():
             arm=args.arm, chain=args.chain, selected=best, objective_calls=calls,
             completed_full_ge=len(cases), lifecycle_solves=sum(r.get("lifecycle_solves", 0) for r in cases),
             target_fingerprint=manifest["target_fingerprint"], weight_fingerprint=manifest["weight_fingerprint"],
+            starts_file_sha256=args.starts_file_sha256,
             search_evaluator="exploratory", selected_evaluator="full_native",
             optimization_convergence_certified=False, no_auto_retry=True)
         v2.write(out / "search_completed.json", search)
@@ -415,6 +485,9 @@ def main():
         command.extend((str(Path(__file__).resolve()), "--arm", args.arm, "--chain", str(args.chain),
                         "--out", str(child_out), "--deadline-epoch", str(deadline),
                         "--postcheck-only", "--search-receipt", str(out / "search_completed.json")))
+        if args.starts_file is not None:
+            command.extend(("--starts-file", str(args.starts_file.resolve()),
+                            "--starts-file-sha256", args.starts_file_sha256))
         child_env = os.environ.copy()
         for key in ("NUMBA_NUM_THREADS", "OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS"):
             child_env[key] = "1"
@@ -430,6 +503,7 @@ def main():
         child_receipt = json.loads((child_out / "completed.json").read_text())
         v2.inputs.require(child_receipt["status"] == "full_native_postcheck_passed" and
                           child_receipt["search_receipt_sha256"] == sha(out / "search_completed.json") and
+                          child_receipt["starts_file_sha256"] == args.starts_file_sha256 and
                           child_receipt["target_fingerprint"] == manifest["target_fingerprint"] and
                           child_receipt["weight_fingerprint"] == manifest["weight_fingerprint"],
                           "Native postcheck child receipt drift")

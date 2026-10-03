@@ -55,3 +55,34 @@ the results of this matched calibration. The three additional starts are small
 deterministic relative perturbations, paired exactly across clocks. The plan
 records their full numerical values and unchanged search bounds, including the
 author-requested `h_P <= 2.6`.
+
+## Expanded matched starts
+
+The optional `expanded_start_plan.json` supplies 24 deterministic starts for
+**each** timing arm. Its first four vectors exactly match the eight already
+running legacy chains across both arms. The 20 additional vectors per arm are
+seven other saved soft-checkpoint best points (ranks two through eight), eight
+modest perturbations around the selected point, and five broader stratified
+points. The last two groups use independently shuffled Latin-hypercube
+midpoints per coordinate with seed `20261003`. All 24 vectors are unique,
+inside the unchanged ten-parameter search bounds, and paired across timing
+arms. Per-start provenance and broad sampling ranges are in the JSON; those
+sampling ranges do not change optimization bounds or economics. The historical
+anchors retain the same 14 targets and weights.
+
+Pass `--starts-file /absolute/path/expanded_start_plan.json` and
+`--starts-file-sha256 383d3e6833082a0796985d0bf65c017eafcda98d4ad4fa9c401c3a6412706270`
+with `--chain 0` through `--chain 23`. The table hash is checked before model
+setup and passed unchanged to the native postcheck child. Without these flags,
+the four-start behavior remains. Deploy only indices 4–23 in each arm (40 new
+chains); preserve the eight running earlier chains.
+
+At existing caps, all 48 chains represent at most 288 CPU-hours and 12,000
+objective calls; the 40 additional chains account for 240 CPU-hours and
+10,000 calls. Running all 48 simultaneously would reserve 1,152 GiB at
+24 GiB each. The formal 32-lifecycle-solve cap per objective gives a loose
+384,000-solve ceiling; seven solves per objective would be 84,000. These are
+arithmetic budgets, not forecasts: the six-hour chain deadline can stop
+searches earlier. The staged launch controls actual concurrency. An earlier
+120-start proposal was superseded before submission and retained only as
+`driver_verification/superseded_120_start_plan.json`.

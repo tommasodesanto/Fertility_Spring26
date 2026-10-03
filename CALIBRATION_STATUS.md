@@ -26,62 +26,6 @@ See [MODEL_PLAYGROUND.md](code/model/tools/MODEL_PLAYGROUND.md).
 The separate timing-calibration deployment remains under its existing owner
 for deployment and monitoring.
 
-## October 2 late — asset-grid diagnosis and interactive model control
-
-At the authenticated selected soft point chain16/case0046, six one-core
-fixed-price numerical checks now distinguish the upper endpoint from grid
-spacing. The native 120-node baseline exactly replays all 11 checked saved
-arrays. Extending the upper endpoint from 3000 to 6000 changes upper-tail
-policies but leaves every tested tenure-averaged policy at originally occupied
-states and all population means exactly unchanged. Refining strictly above
-the exact core endpoint changes mean financial assets by 0.3155%. Core
-refinement to 214 and 402 total nodes changes that mean by 0.7627% and 0.9619%
-relative to baseline; ownership moves from 66.6495% to 66.4100% to 66.3334%.
-Mean consumption is stable, but some individual policies move materially.
-The second refinement reduces changes; full grid convergence is not certified.
-Prices, all economic inputs, entry atoms and probabilities are unchanged.
-No new grid or calibration is adopted. The complete six-case population table,
-17 standard figures per solution, source definitions and limitations are in
-[the grid packet](output/model/fixed_reference_economics_20260928/asset_grid_diagnosis_v1/README.md).
-
-The existing explorer now separates inherited tenure from conditional policy
-branches, uses saved asset levels by default, and adds whole-population means,
-age profiles and a pooled asset distribution. The Python playground exposes
-editable primitives, direct native inputs, one-price solves and plotting.
-An annual-beta 0.98 fixed-price experiment passed a real solve and plotting
-check in 7.43 seconds; this is not a new equilibrium or calibration.
-See [MODEL_PLAYGROUND.md](code/model/tools/MODEL_PLAYGROUND.md).
-The separate timing-calibration deployment remains under its existing owner
-and pending upload authorization.
-
-## October 2 late — asset-grid diagnosis and interactive model control
-
-At the authenticated selected soft point chain16/case0046, six one-core
-fixed-price numerical checks now distinguish the upper endpoint from grid
-spacing. The native 120-node baseline exactly replays all 11 checked saved
-arrays. Extending the upper endpoint from 3000 to 6000 changes upper-tail
-policies but leaves every tested tenure-averaged policy at originally occupied
-states and all population means exactly unchanged. Refining strictly above
-the exact core endpoint changes mean financial assets by 0.3155%. Core
-refinement to 214 and 402 total nodes changes that mean by 0.7627% and 0.9619%
-relative to baseline; ownership moves from 66.6495% to 66.4100% to 66.3334%.
-Mean consumption is stable, but some individual policies move materially.
-The second refinement reduces changes; full grid convergence is not certified.
-Prices, all economic inputs, entry atoms and probabilities are unchanged.
-No new grid or calibration is adopted. The complete six-case population table,
-17 standard figures per solution, source definitions and limitations are in
-[the grid packet](output/model/fixed_reference_economics_20260928/asset_grid_diagnosis_v1/README.md).
-
-The existing explorer now separates inherited tenure from conditional policy
-branches, uses saved asset levels by default, and adds whole-population means,
-age profiles and a pooled asset distribution. The Python playground exposes
-editable primitives, direct native inputs, one-price solves and plotting.
-An annual-beta 0.98 fixed-price experiment passed a real solve and plotting
-check in 7.43 seconds; this is not a new equilibrium or calibration.
-See [MODEL_PLAYGROUND.md](code/model/tools/MODEL_PLAYGROUND.md).
-The separate timing-calibration deployment remains under its existing owner
-and pending upload authorization.
-
 ## October 2 evening — soft financing selected; timing calibration pending
 
 Tommaso has selected the soft purchase-financing rule for the current work.
@@ -113,7 +57,19 @@ tables. Lead review passed. Production array **19086987** was submitted at
 23:52 New York on October 2, with four chains per arm and the budgets above.
 The remote stage is `/scratch/td2248/projects/soft_timing_calibration_20261002_v2`;
 the first failed stage remains intact. At submission all eight tasks were queued.
-Monitor only this production array; do not automatically restart failed chains.
+The author subsequently increased the final budget to **48 total one-core
+chains, 24 per timing arm**. Expansion array **19087556** was submitted at
+00:10 New York on October 3 for 40 additional chains (indices 4–23 per arm),
+using `/scratch/td2248/projects/soft_timing_calibration_20261002_v3`.
+The 24 matched starts comprise the four original starts, seven other historical
+soft candidates, eight nearby variations and five broader starts. Search bounds,
+targets and numerical gates are unchanged. The optional start-table loader and
+job mapping passed review and zero-solve checks; the optimizer and timing
+functions match the passed v2 smoke implementation. Remote source and inherited
+native-smoke gates passed before submission. The larger 240-chain proposal was
+superseded before submission. Monitor only **19086987 and 19087556**; do not
+automatically restart failed chains. Maximum combined budget: 288 core-hours,
+250 objective calls per chain and 24 GiB per chain, including the final reserve.
 See [deployment status and recovery](code/cluster/soft_timing_calibration/README.md).
 
 The explorer and direct Python entry are documented in

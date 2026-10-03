@@ -1,5 +1,7 @@
 # Matched soft-purchase timing calibration: Torch deployment
 
+The final authorized run is **48 chains total (24 per timing arm)**: eight in array **19086987** on v2 and 40 in array **19087556** on v3. All 48 were RUNNING at the first combined check. Additional-start deployment scripts are in `expanded/`; its source and native-smoke inheritance checks passed. The matched 24-start table and both submission receipts live in `output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/`. No failed-chain restart is automatic.
+
 Production array **19086987** was submitted after both repaired smokes **19086529** passed and lead review accepted their full native reports. Four original-timing and four alternative-timing chains run with the budgets below. Local selected smoke reports, including both 17-plot packets, are in `output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/smoke_collection/`. Monitor production only; no automatic failed-chain restart.
 
 This package runs four independent chains under the original interest clock and
