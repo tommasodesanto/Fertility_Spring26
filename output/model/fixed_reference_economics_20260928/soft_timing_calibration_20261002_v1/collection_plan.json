@@ -1,0 +1,70 @@
+{
+  "name": "matched_soft_timing_48_collection",
+  "authorized_total_chains": 48,
+  "arms": [
+    "original",
+    "alternative"
+  ],
+  "chains_per_arm": 24,
+  "target_fingerprint": "db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1",
+  "weight_fingerprint": "2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0",
+  "selected_source_sha256": "b5e21a8584fa536a3740039b3e54480f3c318a63b96266bd31406712c5da991c",
+  "target_rows": [
+    "initial_normalization",
+    "cps_childlessness",
+    "cps_exactly_one",
+    "nchs_mean_age",
+    "nchs_share30",
+    "wealth_earnings",
+    "bequest_wealth",
+    "old_dispersion",
+    "mean_rooms",
+    "ownership_30_55",
+    "first_birth_rooms",
+    "family_rooms",
+    "recent_parent_ownership",
+    "early_fertility"
+  ],
+  "stages": {
+    "v2": {
+      "remote_root": "/scratch/td2248/projects/soft_timing_calibration_20261002_v2",
+      "job_id": "19086987",
+      "starts_file_sha256": null,
+      "chains_per_arm": "0..3",
+      "array_tasks": "original 0..3; alternative 4..7"
+    },
+    "v3": {
+      "remote_root": "/scratch/td2248/projects/soft_timing_calibration_20261002_v3",
+      "job_id": "19087556",
+      "starts_file_sha256": "383d3e6833082a0796985d0bf65c017eafcda98d4ad4fa9c401c3a6412706270",
+      "chains_per_arm": "4..23",
+      "array_tasks": "original 0..19; alternative 20..39"
+    }
+  },
+  "collection_contract": "Fresh selected native postcheck, exact full GE repeat, 14 fit rows, 31 parameter rows, 17 standard plots, exact target/weight/selected checkpoint; search/native loss disagreement requires review. Optimizer convergence not certified.",
+  "fetch_policy": "Small receipts and CSVs only by default; --winner-artifacts fetches selected winner native arrays and plots. No remote mutation or Slurm control.",
+  "collector_review": {
+    "verified_at_utc": "2026-10-03T04:30:48.019959+00:00",
+    "checks": [
+      "Inspected actual Torch v2 smoke start/search/child/completion receipt keys and local v3 expanded preflight schema; v2 has no starts_file_sha256 or starts_count, v3 pins both.",
+      "Python syntax check passed.",
+      "Synthetic 48-chain fixture passed exact v2/v3 array mapping, legacy/expanded schema checks, per-arm minimum verified native loss, mixed target fingerprint rejection, terminal partial-failure classification, and missing repeat-plot evidence rejection.",
+      "Read-only --status succeeded after remote-shell format correction and printed all 48 chain heartbeat lines plus 48 active Slurm tasks; compact snapshot saved at /tmp/soft_timing_collector_status_20261003.txt.",
+      "Actual Torch v2 smoke completed.json and fresh child completed.json both use /work/results/run/native_postcheck/selected_postcheck/phase_b_ge/selected_root and exact_full_ge_repeat_passed; collector now maps only that container prefix or the exact authenticated remote chain prefix to the local slot.",
+      "Synthetic path checks passed both accepted prefixes and rejected a different remote chain and parent traversal; syntax check passed after the mapping repair."
+    ],
+    "status_snapshot": {
+      "active_slurm_tasks": 48,
+      "chain_status_lines": 48,
+      "missing_heartbeat_receipts": 0,
+      "terminal_receipts": 0
+    },
+    "remaining_limitations": [
+      "Production result collection and winning native artifact fetch were not run because all 48 chains were active at review time.",
+      "Collector checks 17 standard plots for all candidates through the fresh native exact-repeat hash receipt; actual PNG files are fetched only for selected winners with --winner-artifacts.",
+      "Passing native verification does not certify optimizer convergence or adopt either calibration."
+    ],
+    "model_solves": 0,
+    "remote_mutations": 0
+  }
+}
