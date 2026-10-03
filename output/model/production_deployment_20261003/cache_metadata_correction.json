@@ -1,0 +1,42 @@
+{
+  "after_fiscal_mapping": {
+    "basis": "all supplied primitives and effective fiscal/entry fields equal the authenticated production reference bundle",
+    "edited_primitives": [],
+    "status": "reference earnings/payroll primitives retained; no fiscal mapping change",
+    "supplied_primitives": [
+      "income_age_profile",
+      "tau_pay",
+      "w_hat"
+    ]
+  },
+  "arrays_reopened": true,
+  "before_fiscal_mapping": {
+    "edited_primitives": [
+      "income_age_profile",
+      "tau_pay",
+      "w_hat"
+    ],
+    "mapping": "gross wage and age profile determine disposable income and pension; tau_pay is held fixed",
+    "status": "native fixed-payroll balanced-pension mapping applied"
+  },
+  "case": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/local_solution/cases/20261003T175652812716Z_b1c72f13",
+  "corrected_utc": "2026-10-03T18:01:21.096676+00:00",
+  "correction": "input_contract fiscal_mapping changed from applied to unchanged reference primitives; metadata input_contract_sha256 refreshed",
+  "input_contract_sha256_after": "abe6ea968ed40799f5e739051315631150a4b36e20634440253ca801fe0c3d5f",
+  "latest_symlink": "cases/20261003T175652812716Z_b1c72f13",
+  "latest_symlink_unchanged": true,
+  "native_result_sha256_after": "27cae50d61fe07ce44733360b9f1583b4e229581661694a39e9b579820d5e8b6",
+  "native_result_sha256_before": "27cae50d61fe07ce44733360b9f1583b4e229581661694a39e9b579820d5e8b6",
+  "native_solve_or_replot": false,
+  "reference_fields_checked": [
+    "w_hat",
+    "income_age_profile",
+    "tau_pay",
+    "income",
+    "pension",
+    "pension_by_loc",
+    "entry_wealth_ratio_nodes",
+    "entry_wealth_ratio_weights",
+    "fixed_reference_entry_conditional"
+  ]
+}

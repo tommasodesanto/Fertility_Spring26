@@ -340,18 +340,23 @@ def main() -> list[Path]:
     """Load the selected saved run and write eight editable policy figures."""
     if str(TOOLS_DIR) not in sys.path:
         sys.path.insert(0, str(TOOLS_DIR))
+    if str(ROOT) not in sys.path:
+        sys.path.insert(0, str(ROOT))
     try:
-        from model_run_io import load_run
+        if RUN_DIRECTORY is None:
+            from production.storage import load_latest
+            result, run_dir = load_latest(ROOT / "output/model/local_solution")
+        else:
+            from production.storage import load_case
+            result, run_dir = load_case(RUN_DIRECTORY)
     except ImportError as exc:
         raise RuntimeError(
             "Saved-run loading is unavailable. Save a completed run with "
             "code/model/run_model.py, then run this plotter again."
         ) from exc
-    try:
-        result, run_dir = load_run(RUN_DIRECTORY)
     except FileNotFoundError as exc:
         raise FileNotFoundError(
-            "No saved model run was found. Run code/model/run_model.py first, "
+            "No completed local GE case was found. Run code/model/run_model.py first, "
             "then run this script; it never solves implicitly."
         ) from exc
     paths = _plot_run(result, Path(run_dir))

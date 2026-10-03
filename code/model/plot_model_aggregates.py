@@ -31,14 +31,20 @@ def main() -> Path:
 
     if str(_TOOLS_DIR) not in sys.path:
         sys.path.insert(0, str(_TOOLS_DIR))
+    if str(_MODEL_DIR) not in sys.path:
+        sys.path.insert(0, str(_MODEL_DIR))
     from model_policy_tools import aggregate_solution
-    from model_run_io import load_run
 
     try:
-        result, run_directory = load_run(RUN_DIRECTORY)
+        if RUN_DIRECTORY is None:
+            from production.storage import load_latest
+            result, run_directory = load_latest(_MODEL_DIR.parents[1] / "output/model/local_solution")
+        else:
+            from production.storage import load_case
+            result, run_directory = load_case(RUN_DIRECTORY)
     except FileNotFoundError as exc:
         raise RuntimeError(
-            "No completed saved model run is available. Open and run "
+            "No completed local GE case is available. Open and run "
             "code/model/run_model.py, then rerun this plotting script."
         ) from exc
 

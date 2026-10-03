@@ -282,8 +282,13 @@ def save_run(result, *, run_metadata: dict, update_latest: bool = True,
 
 
 def load_run(RUN_DIRECTORY=None):
-    """Load a saved run without solving; default to the validated latest run."""
+    """Load a saved run without solving; prefer the canonical local GE cache."""
+    production_root = ROOT / "output/model/local_solution"
     if RUN_DIRECTORY is None:
+        if (production_root / "latest").exists():
+            from production.storage import load_latest
+            result, run_directory = load_latest(production_root)
+            return result, run_directory
         pointer_path = RUNS_ROOT / "latest.json"
         pointer = json.loads(pointer_path.read_text(encoding="utf-8"))
         run_directory = (RUNS_ROOT / pointer["directory"]).resolve()
@@ -294,5 +299,8 @@ def load_run(RUN_DIRECTORY=None):
             raise RuntimeError("latest.json metadata SHA-256 mismatch")
     else:
         run_directory = Path(RUN_DIRECTORY).expanduser().resolve()
+        if production_root.resolve() in run_directory.parents or run_directory == (production_root / "latest").resolve():
+            from production.storage import load_case
+            return load_case(run_directory)
     result, metadata = _load_directory(run_directory)
     return result, run_directory

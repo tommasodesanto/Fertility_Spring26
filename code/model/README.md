@@ -1,5 +1,25 @@
 # Python Model Codebase
 
+## Current canonical stationary workflow (October 3, 2026)
+
+The canonical local stationary-GE package is [production/](production/README.md), called by the editable [run_model.py](run_model.py). Its native household, distribution, price, and equilibrium sources use the selected post-interest chain-13 soft-financing snapshot and solve the birth-renewal price root; the output cache is `output/model/local_solution/latest`. Frozen observer authentication and reporting remain read-only compatibility dependencies. The [relocation manifest](production/relocation_manifest.json) distinguishes canonical sources, retained compatibility paths, and historical files. The local deployment was verified October 3 within the documented source-parity, runner, cache, plot, explorer, and import scope; see the [unchanged comparison](../output/model/production_deployment_20261003/compare_unchanged/comparison.json), [beta comparison](../output/model/production_deployment_20261003/compare_beta/comparison.json), and scoped summary in [production/README.md](production/README.md). No new calibration or dated-transition result was established.
+
+Use the project Python 3.13 interpreter for the retained reference-pickle inputs:
+
+```sh
+PROJECT=/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26
+export NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
+"$PROJECT/output/model/publication_refactor_20260929/local_env_v1/venv313/bin/python" "$PROJECT/code/model/run_model.py"
+```
+
+The policy and aggregate plotters reload the latest validated case without solving. The browser explorer requires its local server and the case's `explorer_cases.json`; see [production/README.md](production/README.md) for commands, outputs, and limits. The prior fixed-price runner and its exact storage snapshot are retained as history under [calibration_archive/model_frontend_20261003/](../../calibration_archive/model_frontend_20261003/). The live model, calibration, and policy status remains in [CALIBRATION_STATUS.md](../../CALIBRATION_STATUS.md).
+
+---
+
+## Historical fixed-price workflow notes (superseded October 3, 2026)
+
+The notes below preserve the earlier runner context. The canonical command and current output locations are documented at the top of this README and in `production/README.md`.
+
 Run the local fixed-price model with [run_model.py](run_model.py),
 then plot its saved solution using [plot_model_policies.py](plot_model_policies.py)
 and [plot_model_aggregates.py](plot_model_aggregates.py). These scripts use the

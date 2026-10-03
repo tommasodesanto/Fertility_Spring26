@@ -1,6 +1,7 @@
-"""Interactive access to the saved soft reference and its pinned native solver.
+"""Interactive fixed-price access through the canonical production engine.
 
-Importing this module loads no model state and performs no lifecycle solve.
+The historical authenticated loader remains available under an explicit legacy
+name. Importing this module loads no model state and performs no lifecycle solve.
 """
 from __future__ import annotations
 
@@ -44,6 +45,43 @@ PARAMETER_DESCRIPTIONS = {
     "tenure_choice_kappa": "Tenure-choice logit scale.",
     "psi_child": "Child benefit scale.",
 }
+_PARAMETER_NATIVE_FIELDS = {
+    "beta_annual": {"beta", "rho", "rho_hat"},
+    "chi": {"chi"},
+    "first_birth_fixed_cost": {"first_birth_fixed_cost"},
+    "kappa_fert": {"kappa_fert", "eps_fert"},
+    "kappa_fert_continuation": {"kappa_fert_continuation"},
+    "theta0": {"theta0"},
+    "h_P": {"hbar_first_child_jump"},
+    "child_benefit_curvature": {"child_benefit_curvature"},
+    "tenure_choice_kappa": {"tenure_choice_kappa"},
+    "psi_child": {"psi_child"},
+}
+_DISPLAYED_NATIVE_FIELDS = set().union(*_PARAMETER_NATIVE_FIELDS.values())
+_STRUCTURAL_FIELDS = {
+    "Nb", "Nz", "wealth_grid_nodes", "income_states", "b_min", "b_max",
+    "b_grid_power", "earnings_transaction_grid", "period_years", "J_R",
+    "z_grid", "z_weights", "Pi_z", "entry_wealth_ratio_nodes",
+    "entry_wealth_ratio_weights", "fixed_reference_entry_conditional",
+    "fixed_reference_entry_grid",
+}
+_RECOMPUTED_FIELDS = {"q", "user_cost_rate", "rho", "rho_hat", "eps_fert",
+                      "pension", "pension_by_loc", "income"}
+
+
+def _same_value(left, right) -> bool:
+    try:
+        return bool(np.array_equal(np.asarray(left), np.asarray(right), equal_nan=True))
+    except TypeError:
+        return bool(np.array_equal(np.asarray(left), np.asarray(right)))
+
+
+def _policy_tools():
+    try:
+        from . import model_policy_tools
+    except ImportError:
+        import model_policy_tools
+    return model_policy_tools
 
 
 def bind_parameters(P: SimpleNamespace, parameters: dict[str, float]) -> SimpleNamespace:
@@ -185,6 +223,11 @@ def load_reference_model() -> tuple[SimpleNamespace, np.ndarray, SimpleNamespace
     return P, b_grid, solver
 
 
+# Explicit name for old oracle and diagnosis callers; ordinary playground use
+# goes through CanonicalModelPlayground and the production input/engine API.
+load_legacy_authenticated_reference_model = load_reference_model
+
+
 def solve_at_price(P: SimpleNamespace, b_grid: np.ndarray, solver: SimpleNamespace, price: float) -> SimpleNamespace:
     """Run one explicit one-core stationary solve at ``price``; no market root."""
     if not np.isfinite(price) or price <= 0:
@@ -209,14 +252,14 @@ class ModelResult:
         return getattr(self.solution, name)
 
     def aggregates(self):
-        from model_policy_tools import aggregate_solution
+        aggregate_solution = _policy_tools().aggregate_solution
         return aggregate_solution(
             self.solution, houses=np.asarray(self.P.H_own, dtype=float),
             age_start=int(self.P.age_start), period_years=float(self.P.period_years),
         )
 
     def plot_policy(self, **kwargs):
-        from model_policy_tools import plot_policy
+        plot_policy = _policy_tools().plot_policy
         options = dict(houses=np.asarray(self.P.H_own, dtype=float),
                        age_start=int(self.P.age_start),
                        period_years=float(self.P.period_years))
@@ -224,7 +267,7 @@ class ModelResult:
         return plot_policy(self.solution, **options)
 
     def plot_aggregates(self, *, wealth_range="central"):
-        from model_policy_tools import plot_aggregates
+        plot_aggregates = _policy_tools().plot_aggregates
         return plot_aggregates(
             self.solution, houses=np.asarray(self.P.H_own, dtype=float),
             age_start=int(self.P.age_start), period_years=float(self.P.period_years),
@@ -232,8 +275,8 @@ class ModelResult:
         )
 
 
-class ModelPlayground:
-    """Selected soft reference with editable parameters and explicit solves."""
+class AuthenticatedLegacyModelPlayground:
+    """Historical authenticated soft reference for explicit oracle callers."""
 
     def __init__(self):
         P, b_grid, solver = load_reference_model()
@@ -309,20 +352,148 @@ class ModelPlayground:
             print(f"{name:28s} {self.params[name]:<16.10g} {PARAMETER_DESCRIPTIONS[name]}")
 
 
+class CanonicalModelPlayground:
+    """Editable partial-equilibrium access through the production inputs/engine."""
+
+    def __init__(self):
+        from production import equilibrium
+        from production.inputs import DEFAULT_PARAMETERS, DEFAULT_PRICE, load_inputs
+        self.parameters = copy.deepcopy(DEFAULT_PARAMETERS)
+        self.params = self.parameters  # preserve the established interactive spelling
+        self.external_inputs = {}
+        self.native_overrides = {}
+        self.P, self.b_grid = load_inputs(self.parameters, self.external_inputs,
+                                          self.native_overrides)
+        self._initial_P = copy.deepcopy(self.P)
+        self._initial_grid = np.asarray(self.b_grid).copy()
+        self.solver = equilibrium
+        self.reference_price = float(DEFAULT_PRICE)
+        self.last_result = None
+
+    def _direct_native_edits(self):
+        if not _same_value(self.b_grid, self._initial_grid):
+            raise ValueError("Wealth-grid edits are unsupported; use the authenticated 120-node grid.")
+        initial = vars(self._initial_P)
+        current = vars(self.P)
+        added = set(current) - set(initial)
+        if added:
+            raise ValueError(f"Unknown native P fields cannot be edited: {sorted(added)}")
+        changed = {name for name, value in current.items()
+                   if not _same_value(value, initial[name])}
+        structural = changed & _STRUCTURAL_FIELDS
+        if structural:
+            raise ValueError(f"Structural grid or entry-law edits are unsupported: {sorted(structural)}")
+        displayed = changed & _DISPLAYED_NATIVE_FIELDS
+        if displayed:
+            raise ValueError("Edit displayed parameters through model.params instead of model.P: "
+                             + ", ".join(sorted(displayed)))
+        derived = changed & _RECOMPUTED_FIELDS
+        if derived:
+            raise ValueError("These P fields are derived by the production input loader; edit their "
+                             "source primitives instead: " + ", ".join(sorted(derived)))
+        return {name: copy.deepcopy(current[name]) for name in changed}
+
+    def solve(self, *, price=None, overrides=None, external_inputs=None,
+              native_overrides=None):
+        """Run one fixed-price solve through the canonical production engine."""
+        import numba
+        numba.set_num_threads(1)
+        from production.inputs import load_inputs
+        unknown = set(overrides or {}) - set(PARAMETER_ORDER)
+        if unknown:
+            raise KeyError(f"Unknown model parameters: {sorted(unknown)}")
+        self.parameters.update({key: float(value) for key, value in (overrides or {}).items()})
+        parameters = copy.deepcopy(self.parameters)
+        external = copy.deepcopy(self.external_inputs)
+        external.update(external_inputs or {})
+        native = copy.deepcopy(self.native_overrides)
+        native.update(native_overrides or {})
+        for name, value in self._direct_native_edits().items():
+            if name in native and not _same_value(native[name], value):
+                raise ValueError(f"Conflicting native override and direct P edit for {name}")
+            native[name] = value
+        P, grid = load_inputs(parameters, external, native)
+        solve_price = self.reference_price if price is None else float(price)
+        outcome = self.solver.solve_at_price(P, grid, solve_price)
+        result = ModelResult(outcome["solution"], outcome["P"], parameters,
+                             solve_price, label="production fixed-price experiment")
+        self.last_result = result
+        return result
+
+    def reset_parameters(self):
+        from production.inputs import DEFAULT_PARAMETERS
+        self.parameters.clear()
+        self.parameters.update(copy.deepcopy(DEFAULT_PARAMETERS))
+
+    def reset(self):
+        from production.inputs import DEFAULT_PARAMETERS, DEFAULT_PRICE, load_inputs
+        self.reset_parameters()
+        self.external_inputs.clear()
+        self.native_overrides.clear()
+        self.P, self.b_grid = load_inputs(self.parameters, {}, {})
+        self._initial_P = copy.deepcopy(self.P)
+        self._initial_grid = np.asarray(self.b_grid).copy()
+        self.reference_price = float(DEFAULT_PRICE)
+
+    def saved_result(self, case="soft"):
+        solution = load_saved_solution(case)
+        return ModelResult(solution, self.P, self.parameters, solution.price,
+                           label=f"historical saved {case} solution")
+
+    def compare(self, baseline, changed):
+        left, right = baseline.aggregates(), changed.aggregates()
+        fields = tuple(left["overall"])
+        overall = {key: {"baseline": left["overall"][key],
+                         "changed": right["overall"][key],
+                         "difference": right["overall"][key] - left["overall"][key]}
+                   for key in fields}
+        by_age = []
+        for old, new in zip(left["by_age"], right["by_age"]):
+            row = {"age": old["age"]}
+            for key in fields:
+                a, b = old[key], new[key]
+                row[key] = {"baseline": a, "changed": b,
+                            "difference": None if a is None or b is None else b-a}
+            by_age.append(row)
+        return {"units": left["units"], "overall": overall, "by_age": by_age,
+                "baseline_price": baseline.price, "changed_price": changed.price,
+                "changed_parameters": dict(changed.parameters)}
+
+    def show_parameters(self):
+        print("Production input                     value")
+        for name, value in self.parameters.items():
+            print(f"{name:36s} {value}")
+
+
+LegacyModelPlayground = AuthenticatedLegacyModelPlayground
+ModelPlayground = CanonicalModelPlayground
+
+
 def main() -> None:
     global sol, model, P
     if len(sys.argv) > 1 and sys.argv[1] in {"-h", "--help"}:
         print(__doc__)
-        print("Interactive: code/model/.venv/bin/python -i code/model/tools/model_playground.py")
+        print("Interactive: output/model/publication_refactor_20260929/local_env_v1/venv313/bin/python -i code/model/tools/model_playground.py")
         return
-    sol = load_saved_solution()
-    print(f"Saved case: {sol.case_id}; price={sol.price:.15g}; timing={sol.timing}")
-    print(f"V shape={sol.V.shape}; wealth grid nodes={len(sol.b_grid)}; arrays loaded with no solve")
-    model = ModelPlayground()
+    try:
+        from production.storage import load_latest
+        cached, _ = load_latest(ROOT / "output/model/local_solution")
+        sol = cached.solution
+        price, timing = cached.price, "inherited_only"
+        b_grid = cached.b_grid
+        case_name = "latest local stationary GE"
+    except FileNotFoundError:
+        sol = load_saved_solution()
+        price, timing = sol.price, sol.timing
+        b_grid = sol.b_grid
+        case_name = f"historical saved case {sol.case_id}"
+    print(f"Saved case: {case_name}; price={price:.15g}; timing={timing}")
+    print(f"V shape={sol.V.shape}; wealth grid nodes={len(b_grid)}; arrays loaded with no solve")
+    model = CanonicalModelPlayground()
     P = model.P
     model.show_parameters()
     print("Ready: model.solve(), model.params['beta_annual']=0.98, result.aggregates(), result.plot_policy(), result.plot_aggregates()")
-    print("Open Python: code/model/.venv/bin/python -i code/model/tools/model_playground.py")
+    print("Open Python: output/model/publication_refactor_20260929/local_env_v1/venv313/bin/python -i code/model/tools/model_playground.py")
 
 
 if __name__ == "__main__":

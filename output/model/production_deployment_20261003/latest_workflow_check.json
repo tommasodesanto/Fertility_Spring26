@@ -1,0 +1,67 @@
+{
+  "status": "passed",
+  "case": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/local_solution/cases/20261003T175652812716Z_b1c72f13",
+  "public_latest": "output/model/local_solution/latest",
+  "native_lifecycle_solves": 2,
+  "plot_counts": {
+    "standard": 17,
+    "policy": 8,
+    "aggregate": 7
+  },
+  "report_rows": {
+    "target_fit": 14,
+    "parameters": 31
+  },
+  "native_result_sha256": "27cae50d61fe07ce44733360b9f1583b4e229581661694a39e9b579820d5e8b6",
+  "cached_plot_commands_rerun": true,
+  "cached_plot_model_solves": 0,
+  "input_contract_verified": true,
+  "fiscal_mapping": {
+    "basis": "all supplied primitives and effective fiscal/entry fields equal the authenticated production reference bundle",
+    "edited_primitives": [],
+    "status": "reference earnings/payroll primitives retained; no fiscal mapping change",
+    "supplied_primitives": [
+      "income_age_profile",
+      "tau_pay",
+      "w_hat"
+    ]
+  },
+  "closure": {
+    "absolute_housing_demand": 5.886397429645025,
+    "absolute_housing_residual": 0.0,
+    "actual_entry_per_normalized_household": 0.06173345618075164,
+    "actual_paygo_residual": 2.846866047437337e-14,
+    "adjusted_births_per_normalized_household": 0.1296402579707356,
+    "birth_to_entry_conversion": 0.47619047619047616,
+    "closure_mode": "fixed_h0",
+    "d_bar": 0.0,
+    "fixed_h0_population_scale": 1.0000000000000004,
+    "housing_supply_elasticity": 0.63,
+    "implied_H0_at_population_one": 6.405693595694166,
+    "native_population_step": {
+      "actual_birth_derived_entry": 0.0617334561765408,
+      "deaths": 0.061733456180747534,
+      "entry_gap": -4.210881643373909e-12,
+      "mass_residual": -5.551115123125783e-16,
+      "raw_distribution_l1": 4.215193986314761e-12,
+      "renewal_adjusted_distribution_l1": 4.314341535803227e-15,
+      "required_entry": 0.061733456180751684
+    },
+    "normalized_housing_demand": 5.886397429645021,
+    "occupied_renter_floor": {
+      "maximum_shortfall": 0.0,
+      "occupied_renter_mass": 0.3207264443045598,
+      "violation_mass": 0.0
+    },
+    "outside_entry": 0.0,
+    "parameter_rows": 31,
+    "physical_housing_supply": 5.886397429645025,
+    "population_scale": 1.0000000000000007,
+    "price": 0.7760569760205563,
+    "renewal_residual": -6.82106593430376e-11,
+    "standard_plot_count": 17,
+    "standard_plot_supply_units": "physical supply divided by endogenous household population",
+    "status": "converged",
+    "target_fit_rows": 14
+  }
+}

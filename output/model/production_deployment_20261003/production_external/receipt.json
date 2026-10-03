@@ -1,0 +1,872 @@
+{
+  "backend": "production",
+  "case": "external",
+  "point": {
+    "beta_annual": 0.9663191380998087,
+    "chi": 1.0500762402240174,
+    "child_benefit_curvature": 0.0629608477756522,
+    "first_birth_fixed_cost": 0.3045994545418478,
+    "h_P": 2.593759507364224,
+    "kappa_fert": 0.11652185618155607,
+    "kappa_fert_continuation": 0.40070847699255835,
+    "psi_child": 0.17892072066041628,
+    "tenure_choice_kappa": 0.014123854930856623,
+    "theta0": 0.10097400014250629
+  },
+  "external_inputs": {
+    "sigma": 2.01
+  },
+  "report": "report",
+  "array_inventory": {
+    "V": {
+      "shape": [
+        120,
+        6,
+        1,
+        17,
+        9,
+        4,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "9e2a64be017fcfc40bd346abd94f26ff7e32ae702c06e956bca0bb946d83e8b3"
+    },
+    "c_pol": {
+      "shape": [
+        120,
+        6,
+        1,
+        17,
+        9,
+        4,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "782c35c442a9ffa4fc528f8610f6334f76977ebbe17cef4ccb6cf8b40691097c"
+    },
+    "hR_pol": {
+      "shape": [
+        120,
+        6,
+        1,
+        17,
+        9,
+        4,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "c7c25a813b5ac28656f493ac93351793a5f4c9f21450240a8bed44fe2be9ac27"
+    },
+    "bp_pol": {
+      "shape": [
+        120,
+        6,
+        1,
+        17,
+        9,
+        4,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "be7d1b7dc2770cf066fc7b842d15801eb8926c383762f44a6fda3222998799f9"
+    },
+    "tenure_choice": {
+      "shape": [
+        120,
+        6,
+        1,
+        17,
+        9,
+        4,
+        4
+      ],
+      "dtype": "int16",
+      "sha256": "0694a762904819c0cdcaa17e10b2acfb80b0e962b7e4fc545a4a80738e502bb3"
+    },
+    "tenure_probs": {
+      "shape": [
+        120,
+        6,
+        1,
+        17,
+        9,
+        4,
+        4,
+        6
+      ],
+      "dtype": "float32",
+      "sha256": "eead31b3826a1453cacc2cd7515fd37c1d62ecb0963eab0c3543fa82f30a9012"
+    },
+    "loc_probs": {
+      "shape": [
+        120,
+        6,
+        1,
+        1,
+        17,
+        9,
+        4,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "41f065d1498287aebf3dc2f28100310ce9f6dcb4ecaac0bb78538befc1d5d0f1"
+    },
+    "fert_probs": {
+      "shape": [
+        120,
+        6,
+        1,
+        17,
+        9,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "8c61219f1be40d0c480cbb207b1a7ac49089a93dd77551cee2bfb6d640383361"
+    },
+    "fert2_probs": {
+      "shape": [
+        120,
+        6,
+        1,
+        17,
+        9,
+        2,
+        2,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "0614f1179a5db0ca18f98fd926930d3aeda4aa3f6ae8d7ba19afb17f3aad1e27"
+    },
+    "bp_pol_stay": {
+      "shape": [
+        120,
+        6,
+        1,
+        17,
+        9,
+        4,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "3c2c2554e3d0df7532466b64bb67db5cdef00db17adb390de443e8bf6b6707de"
+    },
+    "c_pol_stay": {
+      "shape": [
+        120,
+        6,
+        1,
+        17,
+        9,
+        4,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "0bea157c74abf7c7747927de4f8bd36ab6d798e700b61cfb60538a68a93a2fbf"
+    },
+    "fert_value": {
+      "shape": [
+        120,
+        6,
+        1,
+        17,
+        9
+      ],
+      "dtype": "float64",
+      "sha256": "b62aa7d8b937e1a9f2b10acaa105d002027a304de39e4432a31c12cb78fd1361"
+    },
+    "g": {
+      "shape": [
+        120,
+        6,
+        1,
+        17,
+        9,
+        4,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "469ebe89ec4de0f3279705b7da1a1195c030605fe6dea3545551a31b19eab9d9"
+    },
+    "g_collapsed": {
+      "shape": [
+        120,
+        6,
+        1,
+        17,
+        4,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "69460c6a7cdfb303cab3011be0615918636ab23483a45e472adc4e2f2ec447cf"
+    },
+    "w_hat": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+    },
+    "p_eq": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "69bc96cfbd47aca189692b5dfba06acb368f94ac5b6f7e145fb465779ba6576f"
+    },
+    "type_values": {
+      "shape": [
+        9
+      ],
+      "dtype": "float64",
+      "sha256": "9ae9f5e34adbbc892d0ff4bfcb25a9e77392a2bea975b816a4618ccb4536df32"
+    },
+    "type_weights": {
+      "shape": [
+        9
+      ],
+      "dtype": "float64",
+      "sha256": "2a6e300d6df5564293f72d1c7962e5c8f77aef3b09f7cd51cc96d0fb756a07da"
+    },
+    "income_transition": {
+      "shape": [
+        9,
+        9
+      ],
+      "dtype": "float64",
+      "sha256": "dda372dc44b40d2ec3ee84c19a58ad1062a60d238c55ce5e8fd6aa1efd9ff0a2"
+    },
+    "pop_share": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+    },
+    "own_by_loc": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "f64b7176ebbbf3f20de63af2ac0a34d5c403191b654dfd1dd163d245c0c06f39"
+    },
+    "housing_demand": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "02d9b5854a09d6d378be7b1002a42a238292437812edf701c8f288bc6ad7fba3"
+    },
+    "worker_mass_by_loc": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "f6bee97ff5d00df507e0165d487d7d9bf9ef4b5a95cbfc2ae9d28817273d3943"
+    },
+    "retiree_mass_by_loc": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "8a85d347f93f2db6409ad57ddf21d99e0d69d60c7aba4ea481ac5fd4ec81928f"
+    },
+    "parity_dist": {
+      "shape": [
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "c43be197e723b4c74b3a974ce94effeae39b3296b85fcc8d1ca5b29fd948db06"
+    },
+    "own_by_parity": {
+      "shape": [
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "afbdeb29a58ce29f191b8d9fa2736a1d2c3c881d0ea35b32a4eafcf30ba4e968"
+    },
+    "mean_parity_by_loc": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "3fd6d2bb89688bf7d21d8e0fa824129bc18eba6c058224ffd76efb627aea2a17"
+    },
+    "frac_childless_by_loc": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "f3e9646356968a21fcd88a8a9489b1ac4144f9347bf41af2a73cead2ff31d484"
+    },
+    "own_by_age": {
+      "shape": [
+        17
+      ],
+      "dtype": "float64",
+      "sha256": "ebcc4282acc4d9181e061ae165d6da8b7284bf2540fabfc7ee2c6e82b7f4a345"
+    },
+    "child_state_dist": {
+      "shape": [
+        17,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "a40f7d0e82d48ec02f6dda6704391351e0e949511d008cf9b683a5bb705f6857"
+    },
+    "fert_by_age": {
+      "shape": [
+        17
+      ],
+      "dtype": "float64",
+      "sha256": "04a44ce88b228f73a5705c680e70fd7d0fbd14a9f2a08dd43502b1da325ed3f9"
+    },
+    "entry_mass_by_loc": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "a0967b4db5baf286cfdb843554c517c07b52f10d04b3119288ac7e38f95d85ec"
+    },
+    "attempt_hazard_by_age": {
+      "shape": [
+        17
+      ],
+      "dtype": "float64",
+      "sha256": "2c471158b15a4ad28ac870eab03af7d95c6be204555ff5d1cb97a8d258e6e982"
+    },
+    "first_birth_hazard_by_age": {
+      "shape": [
+        17
+      ],
+      "dtype": "float64",
+      "sha256": "9cd94c7db8c434ea54eeb1d6d6390ca00af13e6d2923fe525a8acdf209ffbe27"
+    },
+    "first_birth_age_distribution": {
+      "shape": [
+        17
+      ],
+      "dtype": "float64",
+      "sha256": "3fdb630d3a1450e1b727356aa85fab8732c30b118df6daf15710f8307e4e62ed"
+    },
+    "mean_housing_by_parity": {
+      "shape": [
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "3da2f646916e98ed332677d2105493487cba9106fc17ae2908d7a277e20c6782"
+    },
+    "aggregate_wealth_by_age": {
+      "shape": [
+        17
+      ],
+      "dtype": "float64",
+      "sha256": "c1e4ba735689c1b6aa5b9eba5efbefc51134b0696a16d65a9df7bb114e4f1c84"
+    },
+    "aggregate_annual_gross_labor_earnings_by_age": {
+      "shape": [
+        17
+      ],
+      "dtype": "float64",
+      "sha256": "befbc4cbbba19c29fea306416976a78c9e0caa84d5f4aadcb3d8561db59b16b7"
+    },
+    "income_state_mass": {
+      "shape": [
+        9
+      ],
+      "dtype": "float64",
+      "sha256": "b0449c6372cc8ee33c1ab27dbf9da5c2cec7181ac92d0b293681a7ef51cb93f1"
+    },
+    "own_rate_by_income_type": {
+      "shape": [
+        9
+      ],
+      "dtype": "float64",
+      "sha256": "d7aa92f7607e8f5841f90d371fe6fa44d665d15f14cd6c13ce4208918b915de0"
+    },
+    "mean_fertility_by_income_type": {
+      "shape": [
+        9
+      ],
+      "dtype": "float64",
+      "sha256": "e880a5a542de3fc7f2d341ac4696006130c2bbe5c37b370cb4636d6026734b66"
+    },
+    "housing_demand_by_income_type": {
+      "shape": [
+        9,
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "7b22664e838e5eaae24a191d0195e5664182c43f8d17744578e1ccbb393b3a7b"
+    },
+    "g_stay_distribution": {
+      "shape": [
+        120,
+        6,
+        1,
+        17,
+        9,
+        4,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "e7fb85307774754708599463aa02fd463080088d043ba30be1eeb650b544a86c"
+    },
+    "second_attempt_hazard_by_age": {
+      "shape": [
+        17
+      ],
+      "dtype": "float64",
+      "sha256": "8b22fbf1c1b2f5b0c8ae4aa61e9156867c5d697c738d99aed51186862e9927a2"
+    },
+    "second_birth_hazard_by_age": {
+      "shape": [
+        17
+      ],
+      "dtype": "float64",
+      "sha256": "370da2a17024b5151ee3d83b80d03c926dc9ecd7384e53fc2eb22aeb9f625131"
+    },
+    "third_attempt_hazard_by_age": {
+      "shape": [
+        17
+      ],
+      "dtype": "float64",
+      "sha256": "5a4c34bc95f644df3057340528d21d0e397c6abcd43751b92732e0a680cba3a9"
+    },
+    "third_birth_hazard_by_age": {
+      "shape": [
+        17
+      ],
+      "dtype": "float64",
+      "sha256": "9689013aa2410f9b6e11fa106cb1de23d37cf291d256fd786c6dc06e799cd194"
+    },
+    "g_beginning_distribution": {
+      "shape": [
+        120,
+        6,
+        1,
+        17,
+        9,
+        4,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "035aab80479e832d238137865ea2f1158478ca30a24c25fd345177523ec3c64f"
+    },
+    "g_cross_sectional_wealth_distribution": {
+      "shape": [
+        120,
+        6,
+        1,
+        17,
+        9,
+        4,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "035aab80479e832d238137865ea2f1158478ca30a24c25fd345177523ec3c64f"
+    },
+    "births_by_loc": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "2a158d702ef7b03727a12938f390db55938a5bce84cf9d5f6c1ca3324b2a7963"
+    },
+    "entry_by_loc": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "d8de83fb29ed0fe6ed344040cdb024575ba478f0f42580b34ca8804a6a639a40"
+    },
+    "entrants_mature_by_loc": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "a02dd8efa4d839effca0ade378f5420ce4121110adc6606ce987bd769726db7f"
+    },
+    "mature_entry_shares": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+    },
+    "adult_entry_potential_by_loc": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "7149e0f51b8a17fefcf189ded111fd38024280ce109e9ae17760615dcd027b7b"
+    },
+    "entry_wealth_grid_indices": {
+      "shape": [
+        14
+      ],
+      "dtype": "int64",
+      "sha256": "229515d81c42bb648e0f21063cd9e9650c80c5d79528ce2800921f9bac64fe0d"
+    },
+    "entry_wealth_grid_values": {
+      "shape": [
+        14
+      ],
+      "dtype": "float64",
+      "sha256": "87c670bed7a86aafe7e2d18e2170846cd32aaa5e8333fac1e89f3b134daddb7e"
+    },
+    "entry_wealth_grid_weights": {
+      "shape": [
+        14
+      ],
+      "dtype": "float64",
+      "sha256": "61739f1f3db59aea4b1edbc65dcb31cc106be6b31267d71f3964717fd2db8716"
+    },
+    "entry_wealth_ratio_nodes": {
+      "shape": [
+        5
+      ],
+      "dtype": "float64",
+      "sha256": "190e47ef920d0447e5024b5c0600df13b7bc25533f56f1fce37a37e3ae5130b8"
+    },
+    "entry_wealth_ratio_weights": {
+      "shape": [
+        5
+      ],
+      "dtype": "float64",
+      "sha256": "c00675f32173b3c4623136568fed9ce95d6a8dd2cac4106b0ca590bbb4f1df2b"
+    },
+    "owner_user_cost": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "c163db300cf480b406139e668671d616f7d0b3e6db10b4ad21967b602492d2f4"
+    },
+    "owner_asset_price": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "69bc96cfbd47aca189692b5dfba06acb368f94ac5b6f7e145fb465779ba6576f"
+    },
+    "rental_demand_by_market": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "70169162d944ba16e75a3f61ecad052a128264dc319627dd0bf5ac6ef3b3b870"
+    },
+    "owner_demand_by_market": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "726626c048904930df7f0841a14d1e27122d8c102333cc26c1acc4d4afafe777"
+    },
+    "owner_demand_by_size": {
+      "shape": [
+        5
+      ],
+      "dtype": "float64",
+      "sha256": "6c252b79f419dc8b344e3fa6243a158778bf2d550c10d5d8e6918d8160531e6c"
+    },
+    "rental_demand_by_size": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "70169162d944ba16e75a3f61ecad052a128264dc319627dd0bf5ac6ef3b3b870"
+    },
+    "housing_supply": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "3e38bac5df73e63fa1cea01ac8bfc9e983ed1b3b24ab48fd449eb46af2ae4133"
+    },
+    "b_grid": {
+      "shape": [
+        120
+      ],
+      "dtype": "float64",
+      "sha256": "6df90d2d19cbc914847c88113b7f01ffaf0c29a699054bcd4c182883f87e2e9d"
+    },
+    "shared.c_bar": {
+      "shape": [
+        4,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca"
+    },
+    "shared.h_bar": {
+      "shape": [
+        4,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "86e60334537ad389132c03cc91e5deb4ec15eae71660a9047821b09ad63572a4"
+    },
+    "shared.psi_v": {
+      "shape": [
+        4,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "541fa3789a5a1f692b777b94bfb853a741e061e26b9ce18037d6694a585dfa71"
+    },
+    "shared.g_bar": {
+      "shape": [
+        4,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca"
+    },
+    "shared.cb_flat": {
+      "shape": [
+        1,
+        16
+      ],
+      "dtype": "float64",
+      "sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca"
+    },
+    "shared.hb_flat": {
+      "shape": [
+        1,
+        16
+      ],
+      "dtype": "float64",
+      "sha256": "ed000a9ef8dfb2fc2840f6c7713f7395bae38cb4bf8365c395ea7e5ac7f08f36"
+    },
+    "shared.psi_flat": {
+      "shape": [
+        1,
+        16
+      ],
+      "dtype": "float64",
+      "sha256": "74b78f0f8c1c9bb0a823d4f6a9615c66ca556d736a4a31e9f49e798d1487f773"
+    },
+    "shared.gb_flat": {
+      "shape": [
+        1,
+        16
+      ],
+      "dtype": "float64",
+      "sha256": "38723a2e5e8a17aa7950dc008209944e898f69a7bd10a23c839d341e935fd5ca"
+    },
+    "shared.alpha_flat": {
+      "shape": [
+        1,
+        16
+      ],
+      "dtype": "float64",
+      "sha256": "950b493929dc0f85f7e735814f4f5fea8ea4b89f802abffb0cbe221bf63029f7"
+    },
+    "shared.escale_flat": {
+      "shape": [
+        1,
+        16
+      ],
+      "dtype": "float64",
+      "sha256": "14a8768f0511c836596c818645665309db7b8506ca99ea8602457936134e11ee"
+    },
+    "shared.b": {
+      "shape": [
+        120,
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "6df90d2d19cbc914847c88113b7f01ffaf0c29a699054bcd4c182883f87e2e9d"
+    },
+    "shared.bp": {
+      "shape": [
+        1,
+        120
+      ],
+      "dtype": "float64",
+      "sha256": "6df90d2d19cbc914847c88113b7f01ffaf0c29a699054bcd4c182883f87e2e9d"
+    },
+    "shared.phi_state": {
+      "shape": [
+        4,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "113294da57cb0c3a362b7225ed3dd80043179f7ef2b9ce2b0f519bc5f1a0f7ac"
+    },
+    "shared.phi_choice": {
+      "shape": [
+        1,
+        6,
+        4,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "3f92606c1e20b670db17856ff91e7a86c99580c3b7c9757caf42f7e58f59638a"
+    },
+    "shared.type_map": {
+      "shape": [
+        16
+      ],
+      "dtype": "int64",
+      "sha256": "49b90f3d3a762575d347f2e67ed0b41ec956aee10360ce5e1107087c3e1e2ef0"
+    },
+    "shared.type_cb": {
+      "shape": [
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+    },
+    "shared.type_hb": {
+      "shape": [
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "5e7bc78cae65889c939037a07090b65907203e7fcf0cef0284d3d0b02f5deb79"
+    },
+    "shared.type_psi": {
+      "shape": [
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "6681c49fdd031c5131c22ca075fd66eb90aab3a4b0eece1ecf74829692962555"
+    },
+    "shared.birth_dp": {
+      "shape": [
+        4,
+        4,
+        6,
+        6
+      ],
+      "dtype": "bool",
+      "sha256": "1a0295f4bf5986c5f74eca9153a6a4cb10b073a01a76ba4a457fd862c78966a4"
+    },
+    "shared.birth_entry_grant": {
+      "shape": [
+        1,
+        6,
+        4,
+        4
+      ],
+      "dtype": "float64",
+      "sha256": "ef115a0e0c15cdc41958ca46b5b14b456115f4baec5e3ca68599d2a8f435e3b8"
+    },
+    "market_housing_demand": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "3e38bac5df73e63fa1cea01ac8bfc9e983ed1b3b24ab48fd449eb46af2ae4133"
+    },
+    "market_housing_excess": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc"
+    },
+    "parameters.H0": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "42a1b4696866185feca6342fc82e20f2fa55dd19c19dae7735357a5a27f3e550"
+    },
+    "normalization.population": {
+      "shape": [
+        1
+      ],
+      "dtype": "float64",
+      "sha256": "6c3c396ed6b5c36dcae172271f462051b1266b851e92df3deea8ac65478fd712"
+    }
+  },
+  "shared_arrays_observed": true,
+  "plot_hashes": {
+    "fertility_by_age.png": "aa09db3e5838a1c5c782094e3e7d0783ed1e9087d98c067f81eaddd6c7671528",
+    "fertility_policy_by_age_income_state.png": "899eef185496277ca03a8a336911adfe03298c613f0b725fac9891791116918c",
+    "housing_by_age_income_state.png": "bafe8dfa791c00386fadf07ee82a214dee153b2fed92d3196e0929ab07018f56",
+    "housing_market.png": "8fa7902721f27d01732532ca3b8a134cde5c26899f49b6e59147eac200e4add3",
+    "housing_prices.png": "4e5b531036b0954408b77bcddf2397957798d16f0d18b3444f605d89a92851c5",
+    "income_state_outcomes.png": "c5e00120e9b1f133fe158a12f5219fbf9c165734ec48374e7aeba326b462ac7a",
+    "liquid_wealth_by_age_income_state.png": "ebc7c8df5779ced465cf83a5dd83ee9a1ae6d9e1f422adcff3a5b9fe62f1e2eb",
+    "market_clearing_by_market.png": "a57a4ff05ae9813462d0921384d63f762d056e5c1a4c04ea5fe048f039e66bad",
+    "market_clearing_residuals.png": "ba2b6d28b2076e0048d3bec551c03e3989b290d1200a3948f1da50efdb0179b6",
+    "owner_rungs.png": "70d55f2c53180d065a31cf2b36a3b2f9ba45f1a6eeef9aafcfc77ece4a978b56",
+    "ownership_by_age.png": "9f68d9b2b9021019036639abbd03141e12d208d6708d75f80bd2d024574d1728",
+    "ownership_by_age_income_state.png": "4335abc2d8945321aae9caadee0a02a7b9f3f9b42293002fcf10658c9d8d87f8",
+    "policy_childless_renter_age30.png": "529b25974e62881b0eac15f960676a5b363f7098335c02910984d45006b0dc79",
+    "policy_childless_renter_age42.png": "ef604087da3b70f0bf11c8884e72b61fb7b2bbf532f6a10e052ad6b00ce73ef8",
+    "tenure_services.png": "12cde51c82444311caf25d756f6b9031c857da87614323aa034e98be3406e94f",
+    "wealth_dist_childless_renter_age30.png": "da0ac05b10be60cb1c7cf6be9f35642dbf06a3c40540f33e9a2766c6372371ef",
+    "wealth_dist_childless_renter_age42.png": "54f80036f56900dfd0fa32bc282446b762d9e08b625c5ac323d161b471142b43"
+  },
+  "closure": {
+    "H0_bounds": [
+      0.2,
+      80.0
+    ],
+    "H0_derived": 6.376133253260102,
+    "absolute_housing_demand": 5.870490424684055,
+    "absolute_housing_residual": 0.0,
+    "actual_entry_per_normalized_household": 0.06173345618075165,
+    "actual_paygo_residual": 2.870201015039283e-14,
+    "adjusted_births_per_normalized_household": 0.12964025796715978,
+    "birth_to_entry_conversion": 0.47619047619047616,
+    "d_bar": 0.0,
+    "housing_supply_coefficient_role": "derived coefficient at N0=1",
+    "housing_supply_elasticity": 0.63,
+    "native_population_step": {
+      "actual_birth_derived_entry": 0.06173345617483798,
+      "deaths": 0.061733456180747506,
+      "entry_gap": -5.9136653907110315e-12,
+      "mass_residual": 0.0,
+      "raw_distribution_l1": 5.918008722260324e-12,
+      "renewal_adjusted_distribution_l1": 4.346565773394871e-15,
+      "required_entry": 0.06173345618075165
+    },
+    "normalized_housing_demand": 5.870490424684055,
+    "normalized_population": 1.0,
+    "occupied_renter_floor": {
+      "maximum_shortfall": 0.0,
+      "occupied_renter_mass": 0.32196537692127863,
+      "violation_mass": 0.0
+    },
+    "outside_entry": 0.0,
+    "parameter_rows": 31,
+    "physical_housing_supply": 5.870490424684055,
+    "population_scale": 1.0,
+    "price": 0.778424953568571,
+    "renewal_residual": -9.579337323373238e-11,
+    "standard_plot_count": 17,
+    "standard_plot_supply_units": "physical housing supply at normalized N0=1",
+    "target_fit_rows": 14
+  },
+  "status": "passed",
+  "lifecycle_solves": 9,
+  "created_epoch": 1791050157.708092,
+  "runtime": {
+    "hostname": "10-18-99-205.dynapool.wireless.nyu.edu",
+    "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "python": "3.13.15",
+    "executable": "/Users/tommasodesanto/.local/share/uv/python/cpython-3.13.15-macos-aarch64-none/bin/python3.13",
+    "packages": {
+      "numpy": "2.2.6",
+      "scipy": "1.15.3",
+      "numba": "0.61.2",
+      "matplotlib": "3.10.3"
+    },
+    "threads": {
+      "NUMBA_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+    }
+  },
+  "closure_contract": "population_one",
+  "selection_source": "output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/production_alternative_chain_13/run/completed.json",
+  "selection_sha256": "12880d38b335bab36c23f06f1272771d04db485bbe26bbc98c80b3acdb37cbdb",
+  "native_receipt_sha256": "ea8c4b322aa92fe7c25169ff8a38974b74a0ef4ef3617c98294718da674511b4"
+}

@@ -37,13 +37,7 @@ The target contracts differ, so these native losses cannot be ranked directly.
 | Historical purchase-rule comparison | Fresh hard and quarter results: 88.588403 and 48.319938. Older policy exercises use earlier points with losses 97.011220 and 51.556036. | [fresh calibration readout](output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/README.md) |
 | Historical transition initializer | Normalized-v1 chain 20 / case 0028_nm, loss 30.371888. Its one-shock transition attempt failed acceptance. | [transition deployment/readout](output/model/transition_readiness_v1/normalized_restart_v1/resume_preparation/deployment/v2/README.md) |
 
-Active model code is under [`code/model/`](code/model/README.md). The timing
-experiment and calibration wrapper are under
-`code/model/experiments/purchase_timing_sandbox/`
-and `code/cluster/soft_timing_calibration/`. The interactive Python interface is
-documented in [MODEL_PLAYGROUND.md](code/model/tools/MODEL_PLAYGROUND.md).
-Check executed saved inputs and the deployment manifest before assuming a generic
-model command reproduces the current normalized calibration.
+The canonical local stationary-GE implementation and editable runner are indexed in [`code/model/README.md`](code/model/README.md) and [`code/model/production/README.md`](code/model/production/README.md); the current Python interface and commands are in [MODEL_PLAYGROUND.md](code/model/tools/MODEL_PLAYGROUND.md). The October 3 local deployment passed scoped verification: fresh same-host original-reference comparisons for unchanged chain 13 and annual \(\beta-0.001\) matched all 91 arrays, every field in the 14-row target table, all 31 numeric parameter values and bounds, and all 17 standard-plot hashes; only 13 enumerated descriptive role/status metadata differences remain ([unchanged](output/model/production_deployment_20261003/compare_unchanged/comparison.json), [beta](output/model/production_deployment_20261003/compare_beta/comparison.json)). The default cached case produced the standard 17, policy 8, aggregate 7, and explorer artifacts. The \(\sigma=2.01\) GE input experiment and algebraic scale exercise are diagnostics, not recalibration or adoption ([input receipt](output/model/production_deployment_20261003/external_input_propagation.json), [scale receipt](output/model/production_deployment_20261003/scale_exercises.json)). Four transition modules import, but no dated transition was replayed. No new calibration or baseline was adopted; chain 13 remains the working continuation anchor, and its empirical identification and grid adequacy remain open. Authenticated observer and oracle bundles remain read-only dependencies; only superseded frontends were archived. See the production guide for exact limits and commands.
 
 ## Working economic and accounting contract
 

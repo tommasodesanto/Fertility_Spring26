@@ -231,12 +231,21 @@ def main():
     parser.add_argument("--deadline-epoch", type=float, required=True)
     parser.add_argument("--mock-smoke", action="store_true")
     parser.add_argument("--preflight-evaluator", action="store_true")
+    route = parser.add_mutually_exclusive_group()
+    route.add_argument("--canonical-production", action="store_true",
+                        help="Explicitly select the default production solver for the alternative arm.")
+    route.add_argument("--historical-reference", action="store_true",
+                        help="Replay the authenticated historical solver for reproducibility.")
     parser.add_argument("--smoke", action="store_true")
     parser.add_argument("--postcheck-only", action="store_true")
     parser.add_argument("--search-receipt", type=Path)
     parser.add_argument("--starts-file", type=Path)
     parser.add_argument("--starts-file-sha256")
     args = parser.parse_args()
+    explicit_canonical = args.canonical_production
+    args.canonical_production = args.arm == "alternative" and not args.historical_reference
+    if explicit_canonical and args.arm != "alternative":
+        raise RuntimeError("The canonical production adapter is only valid for the adopted alternative clock; original remains historical.")
     if args.postcheck_only != (args.search_receipt is not None):
         raise RuntimeError("Postcheck mode requires exactly one search receipt")
     if (args.starts_file is None) != (args.starts_file_sha256 is None):
@@ -283,8 +292,9 @@ def main():
         target_fingerprint=manifest["target_fingerprint"], weight_fingerprint=manifest["weight_fingerprint"],
         objective_calls_max=MAX_CALLS, lifecycle_solves_per_case_max=MAX_LIFECYCLE,
         reserve_seconds=RESERVE, deadline_epoch=deadline,
+        solver_route="canonical_production" if args.canonical_production else "historical_reference",
         economic_change=("adopted soft purchase financing; original interest clock" if args.arm == "original"
-                         else "adopted soft purchase financing; experimental post-interest transaction clock"),
+                         else "adopted soft purchase financing; author-adopted post-interest transaction clock"),
         other_economics="N0=1; physical parent room floor; constant alpha; no A(m); nonnegative-mean entry; phi=.8; unchanged ten coordinates and target weights",
         no_auto_retry=True, not_adopted_calibration=True)
     v2.write(out / "start_contract.json", contract)
@@ -343,8 +353,10 @@ def main():
         normalized_population=float(P.N_target), original_selection_price=float(selected["price"]),
         target_contract=v2.CONFIG["base_target_contract"], target_fingerprint=manifest["target_fingerprint"],
         weight_fingerprint=manifest["weight_fingerprint"]))
-    if args.arm == "alternative":
+    if args.arm == "alternative" and not args.canonical_production:
         install_timing_observer(v2, timing_driver, out, P)
+    # Historical preparation authenticates the adopted utility/credit fields;
+    # only the evaluator determines which engine executes lifecycle solves.
     Q = v2.native.utility_checks(P, grid, lane, out)
     if args.postcheck_only:
         search_path = args.search_receipt.resolve()
@@ -364,9 +376,18 @@ def main():
         v2.inputs.check_point(chosen["parameters"], bounds)
         v2.inputs.require(set(chosen["parameters"]) == set(coordinates),
                           "Postcheck parameter coordinate drift")
-        native_evaluate = v2.normalized_objective.make_evaluator(out, lane, Q, grid,
-            deadline, float(chosen.get("price", selected["price"])), native_runner=v2.native,
-            exploratory=False)
+        if args.canonical_production:
+            production_root = str(ROOT / "code/model")
+            if production_root not in sys.path:
+                sys.path.insert(0, production_root)
+            from production.calibration import make_evaluator as production_evaluator
+            native_evaluate = production_evaluator(out, lane, Q, grid, deadline,
+                float(chosen.get("price", selected["price"])), native_runner=v2.native, exploratory=False,
+                target_fingerprint=manifest["target_fingerprint"], weight_fingerprint=manifest["weight_fingerprint"])
+        else:
+            native_evaluate = v2.normalized_objective.make_evaluator(out, lane, Q, grid,
+                deadline, float(chosen.get("price", selected["price"])), native_runner=v2.native,
+                exploratory=False)
         if args.preflight_evaluator:
             v2.write(out / "completed.json", dict(status="full_native_postcheck_initialized_zero_solves",
                 lifecycle_solves=0, search_receipt_sha256=sha(search_path),
@@ -397,13 +418,28 @@ def main():
             weight_fingerprint=manifest["weight_fingerprint"],
             elapsed_seconds=time.time()-start))
         return
-    evaluate = v2.normalized_objective.make_evaluator(out, lane, Q, grid, deadline,
-        float(selected["price"]), native_runner=v2.native, exploratory=True)
+    if args.canonical_production:
+        production_root = str(ROOT / "code/model")
+        if production_root not in sys.path:
+            sys.path.insert(0, production_root)
+        from production.calibration import make_evaluator as production_evaluator
+        evaluate = production_evaluator(out, lane, Q, grid, deadline,
+            float(selected["price"]), native_runner=v2.native, exploratory=True,
+            target_fingerprint=manifest["target_fingerprint"], weight_fingerprint=manifest["weight_fingerprint"])
+    else:
+        evaluate = v2.normalized_objective.make_evaluator(out, lane, Q, grid, deadline,
+            float(selected["price"]), native_runner=v2.native, exploratory=True)
     review_path = out / "normalization_source_review/receipt.json"
     if args.arm == "alternative":
-        review = json.loads(review_path.read_text())
-        review.update(household_solver_unchanged=False,
-            isolated_purchase_timing_source_manifest_sha256=sha(TIMING / "manifest.json"))
+        if args.canonical_production:
+            review_path.parent.mkdir(parents=True, exist_ok=True)
+            review = dict(canonical_production_adapter=True, normalized_population=1.,
+                          historical_timing_observer_not_loaded=True,
+                          source_manifest_sha256=sha(TIMING / "manifest.json"))
+        else:
+            review = json.loads(review_path.read_text())
+            review.update(household_solver_unchanged=False,
+                isolated_purchase_timing_source_manifest_sha256=sha(TIMING / "manifest.json"))
         v2.write(review_path, review)
     if args.preflight_evaluator:
         v2.write(out / "completed.json", dict(status="evaluator_initialized_zero_solves",
@@ -485,6 +521,7 @@ def main():
         command.extend((str(Path(__file__).resolve()), "--arm", args.arm, "--chain", str(args.chain),
                         "--out", str(child_out), "--deadline-epoch", str(deadline),
                         "--postcheck-only", "--search-receipt", str(out / "search_completed.json")))
+        command.append("--canonical-production" if args.canonical_production else "--historical-reference")
         if args.starts_file is not None:
             command.extend(("--starts-file", str(args.starts_file.resolve()),
                             "--starts-file-sha256", args.starts_file_sha256))

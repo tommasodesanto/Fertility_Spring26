@@ -1,0 +1,72 @@
+{
+  "as_of": "2026-10-03",
+  "purpose": "Canonical source and retention map for the October 3 local stationary-GE production deployment.",
+  "canonical_production": {
+    "path": "code/model/production/",
+    "role": "Canonical stationary-GE package: selected input snapshot, native household/distribution/price/equilibrium source, birth-renewal closure, calibration adapter, workflow, and pickle-free cache storage.",
+    "entrypoint": "code/model/run_model.py",
+    "verification_state": "Local deployment verified October 3, 2026 within the source-parity, default-run, cache, plot, explorer, input-propagation, and transition-import scope; see output/model/production_deployment_20261003/. This does not certify a new calibration or dynamic transition.",
+    "native_sources": [
+      "code/model/production/native_phase_b.py",
+      "code/model/production/native_price.py",
+      "code/model/production/engine/"
+    ]
+  },
+  "retained_frontends_and_compatibility": [
+    {
+      "path": "code/model/run_model.py",
+      "role": "Current editable production runner."
+    },
+    {
+      "path": "code/model/plot_model_policies.py",
+      "role": "Compatibility plotter; reads the validated latest production cache when no run directory is specified."
+    },
+    {
+      "path": "code/model/plot_model_aggregates.py",
+      "role": "Compatibility plotter; reads the validated latest production cache when no run directory is specified."
+    },
+    {
+      "path": "code/model/tools/model_run_io.py",
+      "role": "Compatibility loader: no-argument loads resolve the canonical production latest cache; an explicit saved-run path selects its production or legacy serialized format. The active plotters load production storage directly."
+    },
+    {
+      "path": "code/model/tools/MODEL_PLAYGROUND.md",
+      "role": "Interactive and cached-inspection guide, updated to point to the current production entrypoint and output."
+    }
+  ],
+  "historical_archive": {
+    "path": "calibration_archive/model_frontend_20261003/",
+    "role": "History only: exact copies of the superseded predeployment fixed-price runner and its storage helper, with SHA-256 receipt. These files are not current entrypoints and are not imported by production."
+  },
+  "retained_source_dependencies": [
+    {
+      "path": "code/model/experiments/purchase_timing_sandbox/source/small_credit_lab/",
+      "role": "Original comparison oracle and authenticated source for the copied production engine. Retained in place; not obsolete."
+    },
+    {
+      "path": "code/model/refactor_lab/",
+      "role": "Reviewed oracle and historical refactor evidence. Retained in place."
+    },
+    {
+      "path": "code/model/experiments/stationary_single_market/",
+      "role": "Active isolated experiment and retained comparison. Retained in place."
+    },
+    {
+      "path": "code/model/intergen_eqscale_seq_optimized/ and code/model/tools/ transition stack",
+      "role": "Maintained sequential and dated-transition compatibility sources. Runtime imports and current README contracts require them; retained in place."
+    },
+    {
+      "path": "output/model/publication_refactor_20260929/",
+      "role": "Pinned historical build/runtime dependency, including the Python 3.13 environment used for reference-pickle compatibility. Retained in place."
+    },
+    {
+      "path": "output/model/fixed_reference_economics_20260928/",
+      "role": "Pinned observer and selected chain-13 calibration inputs still read by reporting.py and calibration.py, including frozen observer adapters, calibration target/weight contract, and the completed selected-point packet. Retained as production inputs; not archived."
+    },
+    {
+      "path": "tmp/paper_baseline_sep14/ and tag paper-baseline-2026-09-14",
+      "role": "Frozen reference checkout and tag. Untouched."
+    }
+  ],
+  "not_archived": "The read-only deployment trace found no additional source safe for wholesale archival. Existing experiment bundles and transition sources remain because they serve as authenticated inputs, oracles, active experiments, or runtime dependencies."
+}

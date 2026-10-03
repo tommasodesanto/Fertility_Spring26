@@ -1,0 +1,332 @@
+{
+  "same_host_runtime": true,
+  "same_inputs": true,
+  "policy_arrays_equal": true,
+  "all_arrays_equal": true,
+  "array_comparison": {
+    "V": true,
+    "adult_entry_potential_by_loc": true,
+    "aggregate_annual_gross_labor_earnings_by_age": true,
+    "aggregate_wealth_by_age": true,
+    "attempt_hazard_by_age": true,
+    "b_grid": true,
+    "births_by_loc": true,
+    "bp_pol": true,
+    "bp_pol_stay": true,
+    "c_pol": true,
+    "c_pol_stay": true,
+    "child_state_dist": true,
+    "entrants_mature_by_loc": true,
+    "entry_by_loc": true,
+    "entry_mass_by_loc": true,
+    "entry_wealth_grid_indices": true,
+    "entry_wealth_grid_values": true,
+    "entry_wealth_grid_weights": true,
+    "entry_wealth_ratio_nodes": true,
+    "entry_wealth_ratio_weights": true,
+    "fert2_probs": true,
+    "fert_by_age": true,
+    "fert_probs": true,
+    "fert_value": true,
+    "first_birth_age_distribution": true,
+    "first_birth_hazard_by_age": true,
+    "frac_childless_by_loc": true,
+    "g": true,
+    "g_beginning_distribution": true,
+    "g_collapsed": true,
+    "g_cross_sectional_wealth_distribution": true,
+    "g_stay_distribution": true,
+    "hR_pol": true,
+    "housing_demand": true,
+    "housing_demand_by_income_type": true,
+    "housing_supply": true,
+    "income_state_mass": true,
+    "income_transition": true,
+    "loc_probs": true,
+    "market_housing_demand": true,
+    "market_housing_excess": true,
+    "mature_entry_shares": true,
+    "mean_fertility_by_income_type": true,
+    "mean_housing_by_parity": true,
+    "mean_parity_by_loc": true,
+    "normalization.population": true,
+    "own_by_age": true,
+    "own_by_loc": true,
+    "own_by_parity": true,
+    "own_rate_by_income_type": true,
+    "owner_asset_price": true,
+    "owner_demand_by_market": true,
+    "owner_demand_by_size": true,
+    "owner_user_cost": true,
+    "p_eq": true,
+    "parameters.H0": true,
+    "parity_dist": true,
+    "pop_share": true,
+    "rental_demand_by_market": true,
+    "rental_demand_by_size": true,
+    "retiree_mass_by_loc": true,
+    "second_attempt_hazard_by_age": true,
+    "second_birth_hazard_by_age": true,
+    "shared.alpha_flat": true,
+    "shared.b": true,
+    "shared.birth_dp": true,
+    "shared.birth_entry_grant": true,
+    "shared.bp": true,
+    "shared.c_bar": true,
+    "shared.cb_flat": true,
+    "shared.escale_flat": true,
+    "shared.g_bar": true,
+    "shared.gb_flat": true,
+    "shared.h_bar": true,
+    "shared.hb_flat": true,
+    "shared.phi_choice": true,
+    "shared.phi_state": true,
+    "shared.psi_flat": true,
+    "shared.psi_v": true,
+    "shared.type_cb": true,
+    "shared.type_hb": true,
+    "shared.type_map": true,
+    "shared.type_psi": true,
+    "tenure_choice": true,
+    "tenure_probs": true,
+    "third_attempt_hazard_by_age": true,
+    "third_birth_hazard_by_age": true,
+    "type_values": true,
+    "type_weights": true,
+    "w_hat": true,
+    "worker_mass_by_loc": true
+  },
+  "target_fit": {
+    "equal": true,
+    "all_fields_equal": true,
+    "differences": [],
+    "allowed_differences": []
+  },
+  "parameters": {
+    "equal": true,
+    "all_fields_equal": false,
+    "differences": [],
+    "allowed_differences": [
+      {
+        "row": 0,
+        "parameter": "H0",
+        "column": "status",
+        "before": "derived calibrated housing supply coefficient at N0=1",
+        "after": "derived housing supply coefficient at N0=1; reference bounds advisory",
+        "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+      },
+      {
+        "row": 1,
+        "parameter": "beta_annual",
+        "column": "status",
+        "before": "free in experimental utility calibration",
+        "after": "supplied primitive; reference calibration bounds advisory",
+        "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+      },
+      {
+        "row": 2,
+        "parameter": "chi",
+        "column": "status",
+        "before": "free in experimental utility calibration",
+        "after": "supplied primitive; reference calibration bounds advisory",
+        "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+      },
+      {
+        "row": 3,
+        "parameter": "first_birth_fixed_cost",
+        "column": "status",
+        "before": "free in experimental utility calibration",
+        "after": "supplied primitive; reference calibration bounds advisory",
+        "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+      },
+      {
+        "row": 4,
+        "parameter": "kappa_fert",
+        "column": "status",
+        "before": "free in experimental utility calibration",
+        "after": "supplied primitive; reference calibration bounds advisory",
+        "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+      },
+      {
+        "row": 5,
+        "parameter": "kappa_fert_continuation",
+        "column": "status",
+        "before": "free in experimental utility calibration",
+        "after": "supplied primitive; reference calibration bounds advisory",
+        "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+      },
+      {
+        "row": 6,
+        "parameter": "theta0",
+        "column": "status",
+        "before": "free in experimental utility calibration",
+        "after": "supplied primitive; reference calibration bounds advisory",
+        "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+      },
+      {
+        "row": 8,
+        "parameter": "child_benefit_curvature",
+        "column": "status",
+        "before": "free in experimental utility calibration",
+        "after": "supplied primitive; reference calibration bounds advisory",
+        "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+      },
+      {
+        "row": 9,
+        "parameter": "tenure_choice_kappa",
+        "column": "status",
+        "before": "free in experimental utility calibration",
+        "after": "supplied primitive; reference calibration bounds advisory",
+        "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+      },
+      {
+        "row": 10,
+        "parameter": "psi_child",
+        "column": "status",
+        "before": "free in experimental utility calibration",
+        "after": "supplied primitive; reference calibration bounds advisory",
+        "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+      },
+      {
+        "row": 11,
+        "parameter": "child_benefit_CRRA_coefficient",
+        "column": "status",
+        "before": "derived from fixed benefit and proposed curvature",
+        "after": "derived from supplied benefit and curvature",
+        "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+      },
+      {
+        "row": 16,
+        "parameter": "h_P",
+        "column": "status",
+        "before": "free in experimental utility calibration",
+        "after": "supplied primitive; reference calibration bounds advisory",
+        "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+      }
+    ]
+  },
+  "plot_hashes_equal": true,
+  "closure_equal": true,
+  "closure_comparison": {
+    "equal": true,
+    "all_fields_equal": false,
+    "differences": [],
+    "allowed_differences": [
+      {
+        "field": "housing_supply_coefficient_role",
+        "before": "derived calibrated coefficient at N0=1",
+        "after": "derived coefficient at N0=1",
+        "reason": "descriptive supply-coefficient role, unchanged normalization"
+      }
+    ]
+  },
+  "parameter_csv_bytes_equal": false,
+  "target_csv_bytes_equal": true,
+  "allowed_metadata_differences": [
+    {
+      "row": 0,
+      "parameter": "H0",
+      "column": "status",
+      "before": "derived calibrated housing supply coefficient at N0=1",
+      "after": "derived housing supply coefficient at N0=1; reference bounds advisory",
+      "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+    },
+    {
+      "row": 1,
+      "parameter": "beta_annual",
+      "column": "status",
+      "before": "free in experimental utility calibration",
+      "after": "supplied primitive; reference calibration bounds advisory",
+      "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+    },
+    {
+      "row": 2,
+      "parameter": "chi",
+      "column": "status",
+      "before": "free in experimental utility calibration",
+      "after": "supplied primitive; reference calibration bounds advisory",
+      "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+    },
+    {
+      "row": 3,
+      "parameter": "first_birth_fixed_cost",
+      "column": "status",
+      "before": "free in experimental utility calibration",
+      "after": "supplied primitive; reference calibration bounds advisory",
+      "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+    },
+    {
+      "row": 4,
+      "parameter": "kappa_fert",
+      "column": "status",
+      "before": "free in experimental utility calibration",
+      "after": "supplied primitive; reference calibration bounds advisory",
+      "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+    },
+    {
+      "row": 5,
+      "parameter": "kappa_fert_continuation",
+      "column": "status",
+      "before": "free in experimental utility calibration",
+      "after": "supplied primitive; reference calibration bounds advisory",
+      "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+    },
+    {
+      "row": 6,
+      "parameter": "theta0",
+      "column": "status",
+      "before": "free in experimental utility calibration",
+      "after": "supplied primitive; reference calibration bounds advisory",
+      "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+    },
+    {
+      "row": 8,
+      "parameter": "child_benefit_curvature",
+      "column": "status",
+      "before": "free in experimental utility calibration",
+      "after": "supplied primitive; reference calibration bounds advisory",
+      "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+    },
+    {
+      "row": 9,
+      "parameter": "tenure_choice_kappa",
+      "column": "status",
+      "before": "free in experimental utility calibration",
+      "after": "supplied primitive; reference calibration bounds advisory",
+      "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+    },
+    {
+      "row": 10,
+      "parameter": "psi_child",
+      "column": "status",
+      "before": "free in experimental utility calibration",
+      "after": "supplied primitive; reference calibration bounds advisory",
+      "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+    },
+    {
+      "row": 11,
+      "parameter": "child_benefit_CRRA_coefficient",
+      "column": "status",
+      "before": "derived from fixed benefit and proposed curvature",
+      "after": "derived from supplied benefit and curvature",
+      "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+    },
+    {
+      "row": 16,
+      "parameter": "h_P",
+      "column": "status",
+      "before": "free in experimental utility calibration",
+      "after": "supplied primitive; reference calibration bounds advisory",
+      "reason": "descriptive role of supplied production primitive; reference search bounds are advisory"
+    },
+    {
+      "field": "housing_supply_coefficient_role",
+      "before": "derived calibrated coefficient at N0=1",
+      "after": "derived coefficient at N0=1",
+      "reason": "descriptive supply-coefficient role, unchanged normalization"
+    }
+  ],
+  "expected_scale_only_differences": [],
+  "comparison_policy": "Exact same-host/runtime arrays, targets, numeric parameter restrictions and common numeric closure fields; only enumerated descriptive roles and validated additional scale metadata may differ",
+  "status": "passed"
+}
