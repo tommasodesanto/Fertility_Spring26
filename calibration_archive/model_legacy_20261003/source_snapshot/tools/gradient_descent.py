@@ -154,7 +154,7 @@ def main() -> None:
     parser.add_argument("--lr0", type=float, default=0.05)
     parser.add_argument("--max-iter-eq", type=int, default=120)
     parser.add_argument("--setup", default="benchmark")
-    parser.add_argument("--out", type=Path, default=Path(__file__).resolve().parents[3] / "output/model/legacy_benchmarks/grad_descent_bridge.json")
+    parser.add_argument("--out", type=Path, default=Path("benchmarks/grad_descent_bridge.json"))
     args = parser.parse_args()
 
     setup = build_calibration_setup(args.setup)

@@ -68,5 +68,11 @@
       "role": "Frozen reference checkout and tag. Untouched."
     }
   ],
-  "not_archived": "The read-only deployment trace found no additional source safe for wholesale archival. Existing experiment bundles and transition sources remain because they serve as authenticated inputs, oracles, active experiments, or runtime dependencies."
+  "not_archived": "Authenticated source dependencies, production engine, maintained transition sources, active experiments, frozen reference and retained output bundles remain in place. The separate reviewed legacy archive records the obsolete packages, benchmark evidence, plan and runner implementation moved October 3.",
+  "legacy_archive": {
+    "path": "calibration_archive/model_legacy_20261003/",
+    "role": "Unpromoted Howard experiment, surrogate methods prototype, May benchmark evidence, superseded port plan, and June diagnostic runner implementation; per-file hashes and zero-solve import/path checks in manifest.json.",
+    "compatibility_entrypoint": "code/model/run_intergen_model.py",
+    "historical_benchmark_helpers": "One default input now reads the archive; three future output defaults use output/model/legacy_benchmarks/."
+  }
 }

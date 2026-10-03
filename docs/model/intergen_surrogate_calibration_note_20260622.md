@@ -7,7 +7,7 @@ target system, or any calibration state. It is an alternative *outer loop* for
 the one-market intergenerational housing-fertility model in
 `code/model/intergen_housing_fertility/`.
 
-Code: `code/model/intergen_surrogate_calibration/` (see its `README.md`).
+Code (archived October 3): `calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/` (see its `README.md` and the parent archive's import instructions).
 Output packets: `output/model/intergen_surrogate_calibration/<target_set>/`.
 
 ## What was built

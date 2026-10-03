@@ -415,62 +415,66 @@ verified.
 
 ## Interactive inspection and numerical readiness
 
-Tommaso wants direct Python parameter edits, quick fixed-price solves, policy
-inspection and whole-population aggregates from the existing engine.
-[MODEL_PLAYGROUND.md](code/model/tools/MODEL_PLAYGROUND.md) documents
-the preferred three-script entry: [run_model.py](code/model/run_model.py),
-[plot_model_policies.py](code/model/plot_model_policies.py), and
-[plot_model_aggregates.py](code/model/plot_model_aggregates.py). Internal and
-common external parameters are explicit editable literals. Each run writes its
-full native arrays and effective inputs to a separate `tmp/model_runs/` folder;
-both plotters load those arrays and use editable Matplotlib calls. The older
-interactive interface remains optional. A fixed-price household solve is not
-the normalized calibration GE; it reports numerical, renewal and housing
-diagnostics without claiming a new equilibrium.
+**Verified October 3, 2026.** The October 3 stationary-GE deployment
+commit is `94c0a6e3`; it is distinct from the chain-13 scientific
+anchor and from either live search array below. The editable [`run_model.py`](code/model/run_model.py)
+now runs the adopted post-interest soft chain-13 snapshot as a stationary GE
+under `fixed_h0`. Its validated saved case is [`output/model/local_solution/latest`](output/model/local_solution/latest/SUMMARY.md),
+with a complete 14-row target table, 31-row parameter table, 17 standard plots,
+8 policy plots and 7 aggregate plots. The deployment's fresh same-host reference
+checks matched 91 arrays, the full target table, numeric parameter estimates and
+bounds, and all 17 standard-plot hashes for both unchanged inputs and a beta
+lowered by 0.001; only 13 documented descriptive role/status fields differed.
+See the [deployment report](output/model/production_deployment_20261003/README.md)
+and [source map](code/model/README.md). This verifies the local deployment in
+that scope; it establishes no new calibration, grid convergence or dated transition.
 
-At Tommaso's earlier request, the Python runner still defaults to the verified
-overnight **original-timing** soft candidate: chain 15 / case `0141_nm`, all ten
-parameter coordinates, price `0.718171981870443`, and derived housing supply
-coefficient `6.79390271408785`. This is a retained local inspection default,
-not the adopted revised-timing continuation anchor; any runner default change
-requires an explicit source/input update and verification. The complete fit and
-parameter restrictions are in the [matched timing readout](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/RESULTS.md).
-The [current-default replay](output/model/fixed_reference_economics_20260928/model_control_scripts_v1/overnight_default.json)
-passed with a 6.0-second solve and 10.0-second full run. Its 30 available numeric
-standard-summary fields matched the overnight receipt within `1e-12`; four
-unreported overnight summary fields were not compared. All 17 native, eight
-policy and seven aggregate figures were generated from the new completed run.
+The runner holds the physical housing coefficient fixed while finding the
+birth-renewal price root. It reports implied H0 and population scale N
+algebraically from the same solved policies and price; this adds no solve and
+depends on conditional scale independence under the fixed-payroll mapping.
+The `population_one` calibration normalization instead fixes household scale at
+one and derives H0. The production guide documents this distinction and the
+ordinary input controls. Supported primitive edits through `model.P` are carried
+into the next solve; entry-distribution and structural grid edits are explicitly
+unsupported. The active grid has 120 wealth nodes and 9 income states. Grid
+adequacy and optimizer convergence remain uncertified.
 
-The historical [October 3 workflow verification](output/model/fixed_reference_economics_20260928/model_control_scripts_v1/verification.json)
-at the earlier authenticated selected soft point matched all 11 checked baseline arrays
-exactly. The household solve took 6.2 seconds; the full run with 17 standard
-figures, saving and round-trip validation took 9.9 seconds. Saved loading
-reproduced 67 solution arrays and 49 parameter arrays exactly, without reference
-initialization or solving. The two plotters produced eight policy and seven
-aggregate figures. A failed validation preserves the last complete run.
-The verification receipt records source hashes and its verified-as-of time.
-The browser explorer requires its server; opening its HTML alone is insufficient.
+For a quick fixed-price household inspection, use
+[`MODEL_PLAYGROUND.md`](code/model/tools/MODEL_PLAYGROUND.md) and launch
+[`start_model_playground.command`](code/model/tools/start_model_playground.command).
+Its `model.params` interface edits the ten displayed calibration coordinates;
+ordinary supported primitive edits are available through `model.P`. A call to
+`model.solve()` solves the lifecycle at a fixed price. It does not solve the
+stationary GE root, clear housing markets, or fit the targets. The cached
+plotters ([policies](code/model/plot_model_policies.py),
+[aggregates](code/model/plot_model_aggregates.py)) read `latest` without solving.
+For the saved-case browser, launch
+[`start_model_explorer.command`](code/model/tools/start_model_explorer.command)
+and use the local URL and case it reports; the server reads saved artifacts and
+does not solve the model. Do not open the HTML directly or assume a remembered
+port or selected case is still current.
 
-The explorer distinguishes inherited tenure from the chosen branch, exposes
-asset values and grid indices, and reports aggregates independently of slice
-selectors. Conditional versus averaged policy comparisons use the same age,
-income and family state. Distribution weighting must distinguish the beginning
-distribution after fertility from the saved post-decision distribution.
+The adopted working continuation anchor remains post-interest chain 13 under
+the old wealth target (6.926584), with loss 13.771131. Two separate searches
+were submitted October 3: old-target array **19112020** and experimental
+new-wealth-target array **19111687**.
+A fresh Torch check during the October 3 cleanup found all ten tasks in each array running;
+neither search has returned a verified adopted result. The contracts and
+submission receipts are separate: [old-target continuation](output/model/fixed_reference_economics_20260928/soft_timing_continuation_20261003_v1/deployment/status.json)
+and [new-wealth continuation](output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/deployment/production_submission_receipt.json).
+Recheck the live owner/monitor receipt before making any later queue or completion
+claim. Do not rank their losses across target systems.
 
 The [asset-grid diagnosis](output/model/fixed_reference_economics_20260928/asset_grid_diagnosis_v1/README.md)
-now contains six sequential fixed-price tests with unchanged economics,
-prices and entry rules. On the 120-node \([-12,3000]\) grid, 99.8665% of
-pre-decision mass lies in \([-6.4,33.6606]\), with zero endpoint mass.
-Extending the high-wealth tail to 6000 with 124 nodes changed none of the tested
-occupied averaged policies/aggregates. Refining the occupied region to 214 and
-402 nodes changed mean assets by approximately +0.763% and +0.962%; all-age
-ownership moved from 66.650% to 66.410% and 66.333%. This supports attention to
-core resolution, not a claim of full policy, target or equilibrium convergence.
-Large pointwise differences can coexist with small weighted average differences.
-
-The older matched 160×15 versus 120×9 timing comparison found a 2.503× speedup
-under its retained credit setting. It does not certify the current zero-renter-debt
-calibration, dated transitions or an automatic coarse-to-fine production handoff.
+is historical fixed-price evidence under unchanged prices and entry rules. Its
+tail-extension and occupied-grid refinements do not certify the current
+calibration, target fit, stationary equilibrium, dated transition, or a
+coarse-to-fine production handoff. Historical frontend details remain in the
+[archived exact model-README copy](calibration_archive/model_frontend_20261003/README_code_model_before_map.md).
+The earlier [overnight-default replay receipt](output/model/fixed_reference_economics_20260928/model_control_scripts_v1/overnight_default.json)
+and [workflow verification receipt](output/model/fixed_reference_economics_20260928/model_control_scripts_v1/verification.json)
+are historical checks, not current runner or runtime claims.
 
 ## Historical policy and transition results to retain
 

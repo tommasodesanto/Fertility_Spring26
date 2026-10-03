@@ -194,11 +194,15 @@ def main():
     ap.add_argument('--config', required=True, type=Path)
     ap.add_argument('--port', type=int, default=8765)
     args = ap.parse_args()
-    config = json.loads(args.config.read_text())
+    config_path = args.config.resolve(strict=True)
+    config_bytes = config_path.read_bytes()
+    config = json.loads(config_bytes)
     cases = {x['id']: SavedCase(x,config['common']) for x in config['cases']}
     first = next(iter(cases.values()))
     c = config['common']
     meta = dict(title='Housing and fertility — model explorer',
+        config_path=str(config_path),
+        config_sha256=hashlib.sha256(config_bytes).hexdigest(),
         note='Saved solutions. Changing selectors does not solve or recalibrate the model.',
         links=([dict(label='All moments, parameters and diagnostics',url='/report/readout.html')]
                if 'report_root' in config and (Path(config['report_root'])/'readout.html').is_file() else []),
@@ -254,6 +258,7 @@ def main():
 
     server = ThreadingHTTPServer(('127.0.0.1',args.port),Handler)
     print(json.dumps(dict(url=f'http://127.0.0.1:{args.port}',
+        config_path=meta['config_path'],config_sha256=meta['config_sha256'],
         loaded_seconds={k:v.load_seconds for k,v in cases.items()},native_solves=0)),flush=True)
     server.serve_forever()
 
