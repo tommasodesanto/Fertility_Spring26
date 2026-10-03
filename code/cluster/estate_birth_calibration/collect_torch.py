@@ -13,6 +13,7 @@ def collect(stage,mode):
             contract=read(run/'start_contract.json');done=read(run/'completed.json');launcher=read(run.parent/'launcher_start.json')
             assert launcher['stage_inventory_sha256']==inventory_sha
             assert launcher['mode']==mode and launcher['arm']==arm and launcher['chain']==chain
+            assert done['arm']==arm and done['chain']==chain
             flags=dict(birth_count_choice_enabled=True,birth_count_choice_cap=cap,bequest_net_of_selling_cost=True,estate_flow_net_of_selling_cost=True)
             assert contract['experiment_flags']==flags
             assert contract['birth_cap']==cap and contract['selected_source_sha256']==inv['selected_source_sha256']
@@ -22,7 +23,7 @@ def collect(stage,mode):
                 assert done['selected_postcheck']['experiment_flags']==flags
                 assert done['selected_postcheck']['observer_contract']=='estate_a_postsaving_net_selling_cost_v1'
                 assert len(done['target_fit'])==14 and len(done['parameters'])==31 and len(done['repeat']['standard_plot_hashes'])==17
-            rows.append(dict(arm=arm,chain=chain,**done))
+            rows.append({'arm':arm,'chain':chain,**done})
     best={arm:min([r for r in rows if r['arm']==arm and r['status']=='selected_numerically_verified'],key=lambda r:r['native_loss'],default=None) for arm in ('binary','count3')}
     return dict(mode=mode,target_fingerprint=inv['target_fingerprint'],weight_fingerprint=inv['weight_fingerprint'],chains=rows,best_by_arm=best,no_adoption=True)
 if __name__=='__main__':
