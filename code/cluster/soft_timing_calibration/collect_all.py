@@ -204,16 +204,35 @@ def fetch_one(slot: dict, root: Path, winner: bool = False) -> None:
             local = local_report.parent / name
             local.mkdir(parents=True, exist_ok=True)
             subprocess.run(['rsync', '-a', '--', f'torch:{remote}/', str(local) + '/'], check=True)
+        # The native solution arrays are saved under the repeat stage, outside
+        # the selected_root/report directories.
+        array_rel = 'selected_repeat/stage/solution_arrays.npz'
+        local_array = local_report.parent / array_rel
+        local_array.parent.mkdir(parents=True, exist_ok=True)
+        subprocess.run(['rsync', '-a', '--', f'torch:{remote_parent}/{array_rel}',
+                        str(local_array)], check=True)
         return
-    cmd = [
-        'rsync', '-a', '--exclude=*.npz', '--exclude=*.png', '--exclude=*.npy',
-        '--exclude=*.pkl', '--exclude=*.pickle', '--exclude=numba_cache/', '--']
+    # Whitelist the exact small contract files. A chain can contain hundreds
+    # of exploratory case folders; even without NPZ files those cost minutes.
+    dirs = ('/run/', '/run/native_postcheck/',
+            '/run/native_postcheck/selected_postcheck/',
+            '/run/native_postcheck/selected_postcheck/phase_b_ge/',
+            '/run/native_postcheck/selected_postcheck/phase_b_ge/selected_root/')
+    files = ('/launcher_start.json', '/launcher_terminal.json',
+             '/run/start_contract.json', '/run/completed.json',
+             '/run/latest_completed.json', '/run/best_so_far.json',
+             '/run/search_completed.json', '/run/input_contract.json',
+             '/run/heartbeat.json', '/run/failure.json',
+             '/run/native_postcheck/completed.json',
+             '/run/native_postcheck/selected_postcheck/phase_b_ge/selected_root/target_fit.csv',
+             '/run/native_postcheck/selected_postcheck/phase_b_ge/selected_root/parameters.csv')
+    cmd = ['rsync', '-a', *[f'--include={path}' for path in (*dirs, *files)], '--exclude=*', '--']
     subprocess.run(cmd + [f"torch:{slot['remote']}/", str(folder) + '/'], check=True)
 
 
 def write_csv(path: Path, rows: list[dict]) -> None:
     with path.open('w', newline='') as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator='\n')
         writer.writeheader()
         writer.writerows(rows)
 

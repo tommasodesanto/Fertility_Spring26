@@ -6,16 +6,15 @@ manifest are in [the context archive](calibration_archive/context_refresh_202610
 Read historical chronology there, in dated daily notes or in the named experiment
 packets when needed.
 
-The current working reference is the verified **soft purchase-constraint candidate,
-loss 23.078309**. It is an experimental calibration, not a newly certified paper
-baseline. Tommaso selected this reference for the next comparison. The original
-transaction timing remains the reference; an alternative timing is being
-recalibrated alongside it. The last verified deployment receipt records production
-arrays **19086987 and 19087556 submitted**, with **48 total chains**, 24 per arm.
-The expanded submission receipt is dated October 3 at 00:10:21 New York;
-the separate expanded-status record was updated at 00:12:25.
-That receipt is not a fresh scheduler check, and no production winner from these
-arrays is incorporated here.
+The current working reference remains the verified **soft purchase-constraint
+candidate, loss 23.078309**. It is experimental, not a certified paper baseline.
+The matched original versus alternative timing search is now terminal. Verified
+as of **October 3, 2026, 06:00 New York**, arrays **19086987 and 19087556**
+have 48 terminal chains: 46 passed fresh native selected-point checks and two
+(chain 23 in each arm) found no admissible candidate. The lowest verified
+original-timing loss is **18.44530519407432** (chain 15); the experimental
+alternative-timing loss is **13.771131463467462** (chain 13). These searches
+do not certify optimizer convergence or adopt either result as a new reference.
 
 ## Reference identities and navigation
 
@@ -24,7 +23,7 @@ arrays is incorporated here.
 | Frozen paper reference | `paper-baseline-2026-09-14`; retained checkout `tmp/paper_baseline_sep14/`. Preserve source and results. | `PAPER_BASELINE.md` in that checkout; [baseline checker](code/model/tools/check_paper_baseline.py) |
 | September 28 fixed-economics reference | Older equilibrium/normalization and utility objects. A refactor oracle, not interchangeable with the current soft calibration. | [refactor report](output/model/publication_refactor_20260929/REPORT.md), [refactor runtime](code/model/refactor_lab/README.md) |
 | Current soft selected point | Original timing; chain 16 / case 0046; verified loss 23.078309. | [selection](output/model/fixed_reference_economics_20260928/soft_timing_review_v1/soft_selected.json), [verification](output/model/fixed_reference_economics_20260928/soft_timing_review_v1/soft_verification.json) |
-| Active comparison | Soft constraint, original versus alternative interest timing. Two arms, 24 matched starts each; 48 chains. | [v2 receipt](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/deployment/status.json), [expansion receipt](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/deployment/expanded/submission_receipt.json), [driver plan](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/driver_plan.json), [cluster driver](code/cluster/soft_timing_calibration/README.md) |
+| Matched timing comparison | Soft constraint, original versus experimental post-interest transaction timing; 24 matched starts per arm, 48 terminal chains, 46 verified. Lowest verified losses 18.445305 and 13.771131. Neither fit is adopted. | [48-chain receipt](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/collection.json), [complete fit and parameter readout](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/RESULTS.md), [driver plan](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/driver_plan.json) |
 | Historical purchase-rule comparison | Fresh hard and quarter results: 88.588403 and 48.319938. Older policy exercises use earlier points with losses 97.011220 and 51.556036. | [fresh calibration readout](output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/README.md) |
 | Historical transition initializer | Normalized-v1 chain 20 / case 0028_nm, loss 30.371888. Its one-shock transition attempt failed acceptance. | [transition deployment/readout](output/model/transition_readiness_v1/normalized_restart_v1/resume_preparation/deployment/v2/README.md) |
 
@@ -282,13 +281,38 @@ retains bounds, targets, gates and the passed v2 economic implementation. Starts
 combine the original four, seven other historical soft candidates, eight nearby
 variations and five broader starts. The 240-chain proposal was superseded.
 
-Each chain has a six-hour budget, at most 250 objective evaluations,
+**Final matched search, verified as of October 3, 2026, 06:00 New York.** Both
+arrays are terminal, with zero active Slurm tasks at collection. Of 48 chains,
+46 passed the fresh native selected-point and exact-repeat gates. Original and
+alternative chain 23 ended with no admissible selected point; neither enters
+the winner comparison. The lowest verified original-timing loss is
+**18.44530519407432** (v3 chain 15), and the lowest verified experimental
+post-interest loss is **13.771131463467462** (v3 chain 13). Both winner packets
+have 14 target-fit rows, 31 parameter rows, 17 standard plots in each native
+root and exact repeat, and exact repeated tables and plot hashes. See the
+[complete 48-chain collection receipt](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/collection.json),
+[original fit](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/original_target_fit.csv),
+[alternative fit](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/alternative_target_fit.csv),
+[original parameters](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/original_parameters.csv), and
+[alternative parameters](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/alternative_parameters.csv).
+The selected original estimate of \(h_P=2.6\) contacts its upper bound; the
+alternative estimate is \(2.59376\), near the same bound. Early fertility is
+0.533079 and 0.533805, respectively, against a target of 0.809528. The fit
+improvement therefore does not resolve this target, and neither optimizer has
+a convergence certificate. The common target fingerprint is
+`db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1`,
+the weight fingerprint is
+`2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0`,
+and the selected soft checkpoint SHA-256 is
+`b5e21a8584fa536a3740039b3e54480f3c318a63b96266bd31406712c5da991c`.
+These are experimental recalibrations; the existing working reference remains
+unchanged.
+
+Each chain had a six-hour budget, at most 250 objective evaluations,
 a retained 1,800-second finalization reserve, one CPU and 24 GiB; case lifecycle
-limits and checkpoints are defined in the driver plan. Latest-completed and
-best-so-far summaries must remain readable. The combined maximum budget is
-288 core-hours, with at most 48 concurrent single-core chains. Investigate a 30-minute stale
-heartbeat. Do not silently retry, extend, change targets, use a feasibility
-fallback or promote a partial winner.
+limits and checkpoints are defined in the driver plan. The combined maximum
+budget was 288 core-hours, with at most 48 concurrent single-core chains.
+No failed chain was silently retried, and the selected points remain experimental.
 
 The input contract pins target SHA-256
 `db60605ef444b747b2ed7f9482b6b8c90ef5e8b1d75c49a3ac1ff6f4275c9ba1`
