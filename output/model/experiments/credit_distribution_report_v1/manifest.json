@@ -1,0 +1,804 @@
+{
+  "title": "Household distributions under two fixed-price credit comparisons",
+  "cases": {
+    "reference_phi08": {
+      "case": "reference_phi08",
+      "population": "reference",
+      "label": "phi=0.8",
+      "source_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/solution_arrays.npz",
+      "source_sha256": "04a1d60ad526402fb0c2a52c853b77795b1b1d04488bb222684f0f1ed0d43100",
+      "parameter_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/executed_P.json",
+      "parameter_sha256": "513d7dd55e1559abf42130c590171515d421f232d1abdec48f329180a3bf2e83",
+      "price": 0.7760569760205563,
+      "checks": {
+        "realized_mass": 0.9999999999999952,
+        "beginning_mass": 1.0000000000000002,
+        "max_age_mass_gap": 3.622102617839573e-15,
+        "min_g": 0.0,
+        "min_beginning": 0.0,
+        "max_stayer_excess": 0.0,
+        "max_count_share_sum_gap": 3.552713678800501e-15,
+        "min_age_mass": 0.039115152917976494,
+        "rent_policy_occupied_feasible": true,
+        "infeasible_occupied_buyer_cells": 0,
+        "infeasible_occupied_buyer_mass": 0.0,
+        "first_infeasible_buyer_index": null,
+        "first_infeasible_buyer_value": null
+      },
+      "policy_status": "validated",
+      "policy_error": null,
+      "policy_summary": {
+        "consumption": {
+          "q01": 0.4352913729172195,
+          "q10": 0.9121948269430951,
+          "q25": 1.2845380399121007,
+          "q50": 1.9172088561753506,
+          "q75": 2.9384957099259097,
+          "q90": 4.45205812502766,
+          "q99": 8.948135558237688,
+          "mean": 2.3907543638215083
+        },
+        "next_assets": {
+          "q01": -4.966764646531561,
+          "q10": -2.6279069767441863,
+          "q25": -1.2325581395348837,
+          "q50": 0.26051036632894764,
+          "q75": 2.429852854839197,
+          "q90": 7.355533264451823,
+          "q99": 22.29073656317416,
+          "mean": 1.5788893533168629
+        },
+        "aggregate_overall": {
+          "mean_consumption": 2.39075436382151,
+          "mean_inherited_assets": 1.7037345158776522,
+          "mean_next_assets": 1.5788893533168638,
+          "mean_asset_change": -0.12484516256079613,
+          "mean_rooms": 5.88639742964505,
+          "ownership_rate": 0.6792735556954389
+        },
+        "aggregate_by_age": [
+          {
+            "age": 18,
+            "population_mass": 0.0617334561807515,
+            "mean_consumption": 1.4194229046963538,
+            "mean_inherited_assets": 0.18651967924681834,
+            "mean_next_assets": -0.13433917545371685,
+            "mean_asset_change": -0.32085885470053566,
+            "mean_rooms": 4.02176637708749,
+            "ownership_rate": 0.21883457179461638
+          },
+          {
+            "age": 22,
+            "population_mass": 0.06173345618074795,
+            "mean_consumption": 1.635946279888851,
+            "mean_inherited_assets": -0.1343391754537169,
+            "mean_next_assets": -0.4514464415897922,
+            "mean_asset_change": -0.3171072661360677,
+            "mean_rooms": 4.770099144268286,
+            "ownership_rate": 0.3439990778780457
+          },
+          {
+            "age": 26,
+            "population_mass": 0.06173345618074745,
+            "mean_consumption": 1.9092212560335913,
+            "mean_inherited_assets": -0.4514464415897922,
+            "mean_next_assets": -0.26809744144389275,
+            "mean_asset_change": 0.18334900014590327,
+            "mean_rooms": 5.523634372370639,
+            "ownership_rate": 0.4595166775257006
+          },
+          {
+            "age": 30,
+            "population_mass": 0.061733456180747465,
+            "mean_consumption": 2.128246504399943,
+            "mean_inherited_assets": -0.2680974414438927,
+            "mean_next_assets": -0.14582265955375873,
+            "mean_asset_change": 0.12227478189013374,
+            "mean_rooms": 6.009169884532832,
+            "ownership_rate": 0.5424856596289047
+          },
+          {
+            "age": 34,
+            "population_mass": 0.061733456180747465,
+            "mean_consumption": 2.3566345359099654,
+            "mean_inherited_assets": -0.14582265955375875,
+            "mean_next_assets": 0.4383671913485316,
+            "mean_asset_change": 0.5841898509022907,
+            "mean_rooms": 6.3913658844637915,
+            "ownership_rate": 0.6171582731355271
+          },
+          {
+            "age": 38,
+            "population_mass": 0.06173345618074747,
+            "mean_consumption": 2.5378947070426396,
+            "mean_inherited_assets": 0.43836719134853147,
+            "mean_next_assets": 1.0416694216838975,
+            "mean_asset_change": 0.603302230335366,
+            "mean_rooms": 6.608947534120543,
+            "ownership_rate": 0.6712746530915014
+          },
+          {
+            "age": 42,
+            "population_mass": 0.06173345618074748,
+            "mean_consumption": 2.6783648985610227,
+            "mean_inherited_assets": 1.0416694216838973,
+            "mean_next_assets": 1.7226083653913296,
+            "mean_asset_change": 0.6809389437074325,
+            "mean_rooms": 6.689019126497538,
+            "ownership_rate": 0.7045801483805176
+          },
+          {
+            "age": 46,
+            "population_mass": 0.06173345618074748,
+            "mean_consumption": 2.7542806780379365,
+            "mean_inherited_assets": 1.7226083653913298,
+            "mean_next_assets": 2.4829837404420596,
+            "mean_asset_change": 0.76037537505073,
+            "mean_rooms": 6.617908761110876,
+            "ownership_rate": 0.7217623794846648
+          },
+          {
+            "age": 50,
+            "population_mass": 0.06173345618074747,
+            "mean_consumption": 2.820427537689767,
+            "mean_inherited_assets": 2.4829837404420605,
+            "mean_next_assets": 3.3003376953871446,
+            "mean_asset_change": 0.8173539549450851,
+            "mean_rooms": 6.503217230037572,
+            "ownership_rate": 0.7331897115236962
+          },
+          {
+            "age": 54,
+            "population_mass": 0.06173345618074748,
+            "mean_consumption": 2.867919113053466,
+            "mean_inherited_assets": 3.300337695387144,
+            "mean_next_assets": 4.149976225238199,
+            "mean_asset_change": 0.8496385298510546,
+            "mean_rooms": 6.373787411296383,
+            "ownership_rate": 0.7471835821590697
+          },
+          {
+            "age": 58,
+            "population_mass": 0.061733456180747485,
+            "mean_consumption": 2.8770824017909256,
+            "mean_inherited_assets": 4.149976225238199,
+            "mean_next_assets": 4.852066022704089,
+            "mean_asset_change": 0.7020897974658905,
+            "mean_rooms": 6.2371584319109505,
+            "ownership_rate": 0.7675453932165238
+          },
+          {
+            "age": 62,
+            "population_mass": 0.061733456180747485,
+            "mean_consumption": 2.8287396182689695,
+            "mean_inherited_assets": 4.852066022704089,
+            "mean_next_assets": 5.660402669157176,
+            "mean_asset_change": 0.8083366464530872,
+            "mean_rooms": 6.087667474034442,
+            "ownership_rate": 0.7978626378491208
+          },
+          {
+            "age": 66,
+            "population_mass": 0.06173345618074748,
+            "mean_consumption": 2.7216208964663604,
+            "mean_inherited_assets": 5.660402669157177,
+            "mean_next_assets": 3.818700858960141,
+            "mean_asset_change": -1.8417018101970364,
+            "mean_rooms": 5.898374772623711,
+            "ownership_rate": 0.8197320629239492
+          },
+          {
+            "age": 70,
+            "population_mass": 0.057975512682542134,
+            "mean_consumption": 2.5327044997559875,
+            "mean_inherited_assets": 3.8187008589601406,
+            "mean_next_assets": 2.0650861012937796,
+            "mean_asset_change": -1.7536147576663608,
+            "mean_rooms": 5.674888530363418,
+            "ownership_rate": 0.8430009284956845
+          },
+          {
+            "age": 74,
+            "population_mass": 0.0532503712476924,
+            "mean_consumption": 2.338312540208411,
+            "mean_inherited_assets": 2.065086101293779,
+            "mean_next_assets": 0.35727181962953897,
+            "mean_asset_change": -1.7078142816642405,
+            "mean_rooms": 5.47722166272979,
+            "ownership_rate": 0.8668498424521162
+          },
+          {
+            "age": 78,
+            "population_mass": 0.04712403280206295,
+            "mean_consumption": 2.1195279382068786,
+            "mean_inherited_assets": 0.3572718196295388,
+            "mean_next_assets": -1.38454513499771,
+            "mean_asset_change": -1.741816954627249,
+            "mean_rooms": 5.373577181304812,
+            "ownership_rate": 0.9080590533953459
+          },
+          {
+            "age": 82,
+            "population_mass": 0.03911515291797647,
+            "mean_consumption": 1.8588396558017746,
+            "mean_inherited_assets": -1.3845451349977103,
+            "mean_next_assets": -3.286170368727102,
+            "mean_asset_change": -1.9016252337293922,
+            "mean_rooms": 5.466729017825941,
+            "ownership_rate": 0.9873911912716794
+          }
+        ]
+      },
+      "renter_quantiles": {
+        "mean": 4.132846781337417,
+        "median": 4.134385374516506
+      },
+      "tables": [
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi08_age_children.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi08_age_summary.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi08_productivity.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi08_owned_rooms.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi08_rental_rooms.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi08_beginning_assets.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi08_assets_by_age.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi08_beginning_gross_net_worth.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi08_gross_net_worth_by_age.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi08_gross_net_worth_by_inherited_tenure.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi08_consumption_histogram.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi08_consumption_ecdf.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi08_next_assets_histogram.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi08_next_assets_ecdf.csv"
+      ],
+      "standard_plot_paths": [
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/standard_diagnostics/fertility_by_age.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/standard_diagnostics/fertility_policy_by_age_income_state.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/standard_diagnostics/housing_by_age_income_state.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/standard_diagnostics/housing_market.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/standard_diagnostics/housing_prices.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/standard_diagnostics/income_state_outcomes.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/standard_diagnostics/market_clearing_by_market.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/standard_diagnostics/market_clearing_residuals.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/standard_diagnostics/owner_rungs.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/standard_diagnostics/ownership_by_age.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/standard_diagnostics/ownership_by_age_income_state.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/standard_diagnostics/policy_childless_renter_age30.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/standard_diagnostics/policy_childless_renter_age42.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/standard_diagnostics/tenure_services.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/standard_diagnostics/wealth_dist_childless_renter_age42.png"
+      ]
+    },
+    "reference_phi10": {
+      "case": "reference_phi10",
+      "population": "reference",
+      "label": "phi=1.0",
+      "source_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/solution_arrays.npz",
+      "source_sha256": "38530b04b9520380ca7209e8753272f8d43636104788bf3a0ae80576e1654998",
+      "parameter_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/executed_P.json",
+      "parameter_sha256": "58b08ca841d67fe731ac44e94cc0187eb6c3e9f05c760978d5e5888752f5f27e",
+      "price": 0.7760569760205563,
+      "checks": {
+        "realized_mass": 0.999999999999997,
+        "beginning_mass": 1.0000000000000013,
+        "max_age_mass_gap": 3.594347042223944e-15,
+        "min_g": 0.0,
+        "min_beginning": 0.0,
+        "max_stayer_excess": 0.0,
+        "max_count_share_sum_gap": 3.6637359812630166e-15,
+        "min_age_mass": 0.039115152917976494,
+        "rent_policy_occupied_feasible": true,
+        "infeasible_occupied_buyer_cells": 234,
+        "infeasible_occupied_buyer_mass": 5.25755947452896e-38,
+        "first_infeasible_buyer_index": [
+          22,
+          2,
+          0,
+          12,
+          0,
+          1,
+          1
+        ],
+        "first_infeasible_buyer_value": -9598878274.325258
+      },
+      "policy_status": "unavailable_native_reporter_gate",
+      "policy_error": "buyer-policy mass occupies a nonfinite or initialized-infeasible value entry",
+      "policy_summary": {},
+      "renter_quantiles": {
+        "mean": 4.679886687861291,
+        "median": 5.10886113633255
+      },
+      "tables": [
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi10_age_children.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi10_age_summary.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi10_productivity.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi10_owned_rooms.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi10_rental_rooms.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi10_beginning_assets.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi10_assets_by_age.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi10_beginning_gross_net_worth.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi10_gross_net_worth_by_age.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/reference_phi10_gross_net_worth_by_inherited_tenure.csv"
+      ],
+      "standard_plot_paths": [
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/standard_diagnostics/fertility_by_age.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/standard_diagnostics/fertility_policy_by_age_income_state.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/standard_diagnostics/housing_by_age_income_state.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/standard_diagnostics/housing_market.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/standard_diagnostics/housing_prices.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/standard_diagnostics/income_state_outcomes.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/standard_diagnostics/market_clearing_by_market.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/standard_diagnostics/market_clearing_residuals.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/standard_diagnostics/owner_rungs.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/standard_diagnostics/ownership_by_age.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/standard_diagnostics/ownership_by_age_income_state.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/standard_diagnostics/policy_childless_renter_age30.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/standard_diagnostics/policy_childless_renter_age42.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/standard_diagnostics/tenure_services.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/standard_diagnostics/wealth_dist_childless_renter_age42.png"
+      ]
+    },
+    "low_phi08": {
+      "case": "low_phi08",
+      "population": "low",
+      "label": "phi=0.8",
+      "source_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_08/native_result.npz",
+      "source_sha256": "7b185f8956caf8c1a2d0074b9aaa46db344f6348e55f60da75af2a4440e7fabb",
+      "parameter_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_08/metadata.json",
+      "parameter_sha256": "e3b5a23a6fc354889a5ea334fe123454b775a0159e660d44a1875d1408964540",
+      "price": 0.7760569760205563,
+      "checks": {
+        "realized_mass": 0.9999999999999966,
+        "beginning_mass": 1.0000000000000002,
+        "max_age_mass_gap": 1.3114509478384662e-15,
+        "min_g": 0.0,
+        "min_beginning": 0.0,
+        "max_stayer_excess": 1.8658260760370338e-19,
+        "max_count_share_sum_gap": 3.3306690738754696e-16,
+        "min_age_mass": 0.039115152917974974,
+        "rent_policy_occupied_feasible": true,
+        "infeasible_occupied_buyer_cells": 0,
+        "infeasible_occupied_buyer_mass": 0.0,
+        "first_infeasible_buyer_index": null,
+        "first_infeasible_buyer_value": null
+      },
+      "policy_status": "validated",
+      "policy_error": null,
+      "policy_summary": {
+        "consumption": {
+          "q01": 0.16744978947047745,
+          "q10": 0.1985842162229837,
+          "q25": 0.20937581858097032,
+          "q50": 0.23047658221747008,
+          "q75": 0.2642354795162741,
+          "q90": 0.28977998480876704,
+          "q99": 0.4064151831249578,
+          "mean": 0.24304104908429805
+        },
+        "next_assets": {
+          "q01": 0.0,
+          "q10": 0.0,
+          "q25": 0.07328049916861884,
+          "q50": 0.3023255813953485,
+          "q75": 0.5813953488372094,
+          "q90": 0.7699709776075009,
+          "q99": 1.2954264558849624,
+          "mean": 0.37160398432785263
+        },
+        "aggregate_overall": {
+          "mean_consumption": 0.24304104908429805,
+          "mean_inherited_assets": 0.36641197641954637,
+          "mean_next_assets": 0.37160398432785263,
+          "mean_asset_change": 0.005192007908305058,
+          "mean_rooms": 0.6332245815597478,
+          "ownership_rate": 0.0007706879026196553
+        },
+        "aggregate_by_age": [
+          {
+            "age": 18,
+            "population_mass": 0.06173345618074871,
+            "mean_consumption": 0.2404499935845909,
+            "mean_inherited_assets": 0.1865196792468183,
+            "mean_next_assets": 0.14720430093339093,
+            "mean_asset_change": -0.03931537831342891,
+            "mean_rooms": 0.6261334890012363,
+            "ownership_rate": 0.0006436108893115848
+          },
+          {
+            "age": 22,
+            "population_mass": 0.06173345618074844,
+            "mean_consumption": 0.23749767829941876,
+            "mean_inherited_assets": 0.14720430093339093,
+            "mean_next_assets": 0.10950045523915089,
+            "mean_asset_change": -0.03770384569424069,
+            "mean_rooms": 0.6185109290600538,
+            "ownership_rate": 0.0007596952471755345
+          },
+          {
+            "age": 26,
+            "population_mass": 0.06173345618074842,
+            "mean_consumption": 0.2774904213629796,
+            "mean_inherited_assets": 0.10950045523915088,
+            "mean_next_assets": 0.09866763397589716,
+            "mean_asset_change": -0.010832821263253762,
+            "mean_rooms": 0.7226652469037712,
+            "ownership_rate": 0.0007802164654550503
+          },
+          {
+            "age": 30,
+            "population_mass": 0.06173345618074841,
+            "mean_consumption": 0.2754333601533973,
+            "mean_inherited_assets": 0.0986676339758972,
+            "mean_next_assets": 0.08976915982999505,
+            "mean_asset_change": -0.00889847414590214,
+            "mean_rooms": 0.7173553073140315,
+            "ownership_rate": 0.0007833503431904315
+          },
+          {
+            "age": 34,
+            "population_mass": 0.0617334561807484,
+            "mean_consumption": 0.28259960764096215,
+            "mean_inherited_assets": 0.08976915982999503,
+            "mean_next_assets": 0.13365096413608854,
+            "mean_asset_change": 0.043881804306093425,
+            "mean_rooms": 0.7360780988619133,
+            "ownership_rate": 0.0007833068464655859
+          },
+          {
+            "age": 38,
+            "population_mass": 0.06173345618074823,
+            "mean_consumption": 0.2732318669176774,
+            "mean_inherited_assets": 0.13365096413608848,
+            "mean_next_assets": 0.19392505883695665,
+            "mean_asset_change": 0.060274094700867774,
+            "mean_rooms": 0.7117297437328335,
+            "ownership_rate": 0.0007827201099249342
+          },
+          {
+            "age": 42,
+            "population_mass": 0.0617334561807482,
+            "mean_consumption": 0.2638411352267028,
+            "mean_inherited_assets": 0.1939250588369567,
+            "mean_next_assets": 0.2719732812574979,
+            "mean_asset_change": 0.0780482224205411,
+            "mean_rooms": 0.6873194609459901,
+            "ownership_rate": 0.0007823100610036681
+          },
+          {
+            "age": 46,
+            "population_mass": 0.0617334561807482,
+            "mean_consumption": 0.25514452898491374,
+            "mean_inherited_assets": 0.27197328125749787,
+            "mean_next_assets": 0.3619844571113559,
+            "mean_asset_change": 0.09001117585385805,
+            "mean_rooms": 0.6647152542821774,
+            "ownership_rate": 0.0007821382475988104
+          },
+          {
+            "age": 50,
+            "population_mass": 0.0617334561807482,
+            "mean_consumption": 0.24490051338488408,
+            "mean_inherited_assets": 0.361984457111356,
+            "mean_next_assets": 0.473386143507084,
+            "mean_asset_change": 0.11140168639572816,
+            "mean_rooms": 0.6380779209799647,
+            "ownership_rate": 0.0007820048001165126
+          },
+          {
+            "age": 54,
+            "population_mass": 0.06173345618074759,
+            "mean_consumption": 0.24105057412102807,
+            "mean_inherited_assets": 0.47338614350708413,
+            "mean_next_assets": 0.5992193565454917,
+            "mean_asset_change": 0.12583321303840303,
+            "mean_rooms": 0.6280832515661743,
+            "ownership_rate": 0.0007817229967995793
+          },
+          {
+            "age": 58,
+            "population_mass": 0.061733456180747416,
+            "mean_consumption": 0.23361855245184032,
+            "mean_inherited_assets": 0.5992193565454917,
+            "mean_next_assets": 0.7244604871824962,
+            "mean_asset_change": 0.12524113063700273,
+            "mean_rooms": 0.6087784571213056,
+            "ownership_rate": 0.0007810322565088543
+          },
+          {
+            "age": 62,
+            "population_mass": 0.061733456180747354,
+            "mean_consumption": 0.23396764599098763,
+            "mean_inherited_assets": 0.7244604871824959,
+            "mean_next_assets": 0.8595454164888928,
+            "mean_asset_change": 0.1350849293063959,
+            "mean_rooms": 0.6097194817739263,
+            "ownership_rate": 0.0007797858463815209
+          },
+          {
+            "age": 66,
+            "population_mass": 0.06173345618074732,
+            "mean_consumption": 0.227370433018573,
+            "mean_inherited_assets": 0.8595454164888928,
+            "mean_next_assets": 0.7151874248412061,
+            "mean_asset_change": -0.14435799164768717,
+            "mean_rooms": 0.5925742718623064,
+            "ownership_rate": 0.0007779703990203786
+          },
+          {
+            "age": 70,
+            "population_mass": 0.057975512682541946,
+            "mean_consumption": 0.21681116497511202,
+            "mean_inherited_assets": 0.7151874248412065,
+            "mean_next_assets": 0.5733263158624455,
+            "mean_asset_change": -0.14186110897876114,
+            "mean_rooms": 0.5651386528031461,
+            "ownership_rate": 0.0007767931283776873
+          },
+          {
+            "age": 74,
+            "population_mass": 0.0532503712476922,
+            "mean_consumption": 0.20637326166866454,
+            "mean_inherited_assets": 0.5733263158624453,
+            "mean_next_assets": 0.43399762457787344,
+            "mean_asset_change": -0.13932869128457218,
+            "mean_rooms": 0.5380503685564226,
+            "ownership_rate": 0.0007765625641231685
+          },
+          {
+            "age": 78,
+            "population_mass": 0.047124032802062725,
+            "mean_consumption": 0.19633990089895664,
+            "mean_inherited_assets": 0.43399762457787344,
+            "mean_next_assets": 0.2968625622815675,
+            "mean_asset_change": -0.13713506229630645,
+            "mean_rooms": 0.5119918438766478,
+            "ownership_rate": 0.000776564108421047
+          },
+          {
+            "age": 82,
+            "population_mass": 0.039115152917974974,
+            "mean_consumption": 0.18756364234949768,
+            "mean_inherited_assets": 0.29686256228156743,
+            "mean_next_assets": 0.16038484029402555,
+            "mean_asset_change": -0.1364777219875518,
+            "mean_rooms": 0.48922264569496926,
+            "ownership_rate": 0.0007766720990659866
+          }
+        ]
+      },
+      "renter_quantiles": {
+        "mean": 0.6321704118432969,
+        "median": 0.6000596099577331
+      },
+      "tables": [
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi08_age_children.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi08_age_summary.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi08_productivity.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi08_owned_rooms.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi08_rental_rooms.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi08_beginning_assets.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi08_assets_by_age.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi08_beginning_gross_net_worth.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi08_gross_net_worth_by_age.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi08_gross_net_worth_by_inherited_tenure.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi08_consumption_histogram.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi08_consumption_ecdf.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi08_next_assets_histogram.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi08_next_assets_ecdf.csv"
+      ],
+      "standard_plot_paths": [
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_08/standard_diagnostics/fertility_by_age.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_08/standard_diagnostics/fertility_policy_by_age_income_state.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_08/standard_diagnostics/housing_by_age_income_state.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_08/standard_diagnostics/housing_market.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_08/standard_diagnostics/housing_prices.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_08/standard_diagnostics/income_state_outcomes.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_08/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_08/standard_diagnostics/market_clearing_by_market.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_08/standard_diagnostics/market_clearing_residuals.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_08/standard_diagnostics/owner_rungs.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_08/standard_diagnostics/ownership_by_age.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_08/standard_diagnostics/ownership_by_age_income_state.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_08/standard_diagnostics/policy_childless_renter_age30.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_08/standard_diagnostics/policy_childless_renter_age42.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_08/standard_diagnostics/tenure_services.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_08/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_08/standard_diagnostics/wealth_dist_childless_renter_age42.png"
+      ]
+    },
+    "low_phi10": {
+      "case": "low_phi10",
+      "population": "low",
+      "label": "phi=1.0",
+      "source_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_10/native_result.npz",
+      "source_sha256": "b8d56b789681f3d7671685ccdebf7140f3f6b5aaa30911a305c5b70ce6f11f23",
+      "parameter_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_10/metadata.json",
+      "parameter_sha256": "8158f87e33368f9a1848fad0a742affd161adb8d9af5022d9cbf87548ce66cff",
+      "price": 0.7760569760205563,
+      "checks": {
+        "realized_mass": 0.9999999999999967,
+        "beginning_mass": 1.0,
+        "max_age_mass_gap": 6.245004513516506e-16,
+        "min_g": 0.0,
+        "min_beginning": 0.0,
+        "max_stayer_excess": 3.1750468422520787e-19,
+        "max_count_share_sum_gap": 3.3306690738754696e-16,
+        "min_age_mass": 0.03911515291797573,
+        "rent_policy_occupied_feasible": true,
+        "infeasible_occupied_buyer_cells": 1,
+        "infeasible_occupied_buyer_mass": 2.680992916328218e-15,
+        "first_infeasible_buyer_index": [
+          27,
+          2,
+          0,
+          16,
+          0,
+          1,
+          1
+        ],
+        "first_infeasible_buyer_value": -9540047604.28392
+      },
+      "policy_status": "unavailable_native_reporter_gate",
+      "policy_error": "buyer-policy mass occupies a nonfinite or initialized-infeasible value entry",
+      "policy_summary": {},
+      "renter_quantiles": {
+        "mean": 0.637257658941686,
+        "median": 0.6104907364245545
+      },
+      "tables": [
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi10_age_children.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi10_age_summary.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi10_productivity.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi10_owned_rooms.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi10_rental_rooms.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi10_beginning_assets.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi10_assets_by_age.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi10_beginning_gross_net_worth.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi10_gross_net_worth_by_age.csv",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/low_phi10_gross_net_worth_by_inherited_tenure.csv"
+      ],
+      "standard_plot_paths": [
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_10/standard_diagnostics/fertility_by_age.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_10/standard_diagnostics/fertility_policy_by_age_income_state.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_10/standard_diagnostics/housing_by_age_income_state.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_10/standard_diagnostics/housing_market.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_10/standard_diagnostics/housing_prices.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_10/standard_diagnostics/income_state_outcomes.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_10/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_10/standard_diagnostics/market_clearing_by_market.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_10/standard_diagnostics/market_clearing_residuals.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_10/standard_diagnostics/owner_rungs.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_10/standard_diagnostics/ownership_by_age.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_10/standard_diagnostics/ownership_by_age_income_state.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_10/standard_diagnostics/policy_childless_renter_age30.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_10/standard_diagnostics/policy_childless_renter_age42.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_10/standard_diagnostics/tenure_services.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_10/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+        "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/phi_10/standard_diagnostics/wealth_dist_childless_renter_age42.png"
+      ]
+    }
+  },
+  "figures": [
+    {
+      "id": "reference_01",
+      "population": "reference",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/figures/reference_01_children.png",
+      "title": "Children ever born and currently at home",
+      "caption": "Children ever born and currently at home by four-year age cell. Each line divides by that case's own age-cell mass; 3+ is the top ever-born state."
+    },
+    {
+      "id": "reference_02",
+      "population": "reference",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/figures/reference_02_ownership.png",
+      "title": "Ownership across age and family size",
+      "caption": "Ownership among all households by age, within child-count groups, and within occupied productivity states. Empty groups have no plotted rate."
+    },
+    {
+      "id": "reference_03",
+      "population": "reference",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/figures/reference_03_housing.png",
+      "title": "Housing services and room sizes",
+      "caption": "Owned rooms use realized owner tenure. Rental rooms use the saved conditional renter housing policy only on occupied renter mass after a finite and physical-range check."
+    },
+    {
+      "id": "reference_04",
+      "population": "reference",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/figures/reference_04_wealth.png",
+      "title": "Beginning financial wealth",
+      "caption": "Financial wealth is beginning-of-period net financial assets using the post-fertility, pre-tenure distribution. Units retain the original annual gross-earnings normalization in both populations."
+    },
+    {
+      "id": "reference_05",
+      "population": "reference",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/figures/reference_05_net_worth.png",
+      "title": "Pre-transaction gross net worth",
+      "caption": "Pre-transaction gross net worth equals beginning net financial assets plus held house price times inherited owned rooms; renters have zero owned housing. CDF panels display each group's central 1\u201399% range without renormalizing probabilities; full tails are in the companion CSV. It excludes selling costs and is not an empirical wealth-target observer."
+    },
+    {
+      "id": "reference_06",
+      "population": "reference",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/figures/reference_06_policies.png",
+      "title": "Validated consumption and next-asset policies",
+      "caption": "Only the phi=0.8 aggregate policy reporter passes its native value-function gate. Phi=1 is unavailable because positive buyer mass occupies initialized-infeasible value entries; no mass is filtered. Consumption is a four-year flow and next financial assets are a stock, not national-account saving."
+    },
+    {
+      "id": "low_01",
+      "population": "low",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/figures/low_01_children.png",
+      "title": "Children ever born and currently at home",
+      "caption": "Children ever born and currently at home by four-year age cell. Each line divides by that case's own age-cell mass; 3+ is the top ever-born state."
+    },
+    {
+      "id": "low_02",
+      "population": "low",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/figures/low_02_ownership.png",
+      "title": "Ownership across age and family size",
+      "caption": "Ownership among all households by age, within child-count groups, and within occupied productivity states. Empty groups have no plotted rate."
+    },
+    {
+      "id": "low_03",
+      "population": "low",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/figures/low_03_housing.png",
+      "title": "Housing services and room sizes",
+      "caption": "Owned rooms use realized owner tenure. Rental rooms use the saved conditional renter housing policy only on occupied renter mass after a finite and physical-range check."
+    },
+    {
+      "id": "low_04",
+      "population": "low",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/figures/low_04_wealth.png",
+      "title": "Beginning financial wealth",
+      "caption": "Financial wealth is beginning-of-period net financial assets using the post-fertility, pre-tenure distribution. Units retain the original annual gross-earnings normalization in both populations."
+    },
+    {
+      "id": "low_05",
+      "population": "low",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/figures/low_05_net_worth.png",
+      "title": "Pre-transaction gross net worth",
+      "caption": "Pre-transaction gross net worth equals beginning net financial assets plus held house price times inherited owned rooms; renters have zero owned housing. CDF panels display each group's central 1\u201399% range without renormalizing probabilities; full tails are in the companion CSV. It excludes selling costs and is not an empirical wealth-target observer."
+    },
+    {
+      "id": "low_06",
+      "population": "low",
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/figures/low_06_policies.png",
+      "title": "Validated consumption and next-asset policies",
+      "caption": "Only the phi=0.8 aggregate policy reporter passes its native value-function gate. Phi=1 is unavailable because positive buyer mass occupies initialized-infeasible value entries; no mass is filtered. Consumption is a four-year flow and next financial assets are a stock, not national-account saving."
+    }
+  ],
+  "tables": [
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/comparison_overview.csv",
+      "title": "Four-case outcome overview",
+      "section": "comparison"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/comparison_selected_ages.csv",
+      "title": "Age-cell distribution summary: selected ages",
+      "section": "comparison"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/comparison_owner_rooms.csv",
+      "title": "Owned room-size shares",
+      "section": "comparison"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/credit_distribution_report_v1/tables/comparison_asset_quantiles.csv",
+      "title": "Financial-asset and validated policy quantiles",
+      "section": "comparison"
+    }
+  ],
+  "notes": [
+    "All four cases hold the house price at 0.7760569760205563 and are fixed-price comparisons, not general equilibria or recalibrations.",
+    "Within each population, only the uniform financed share phi differs: 0.8 versus 1.0. Phi=1 retains the collateral floor and other purchase screens.",
+    "The low-productivity experiment also changes every household to the original lowest productivity node, retains the original marginal entrant wealth distribution, and recomputes the balanced pension under the unchanged payroll tax.",
+    "Both phi=1 aggregate reporters fail because positive buyer mass occupies initialized-infeasible value entries. The low-productivity case has a flagged buyer cell of mass 2.681e-15; the reference phi=1 case has total flagged buyer mass 5.258e-38. Consumption and next-asset distributions are unavailable for both phi=1 arms; no gate was altered or mass filtered.",
+    "The 17 inherited standard diagnostic plots per case are supplementary. Their housing-market residual panels evaluate a held price, not market clearing."
+  ],
+  "units": {
+    "assets": "stock in original mean annual gross-earnings units",
+    "consumption": "four-year flow in original mean annual gross-earnings units",
+    "rooms": "physical rooms",
+    "age": "four-year model cells starting at 18"
+  }
+}
