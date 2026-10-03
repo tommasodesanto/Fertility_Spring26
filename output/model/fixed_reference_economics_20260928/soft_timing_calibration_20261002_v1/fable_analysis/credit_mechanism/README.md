@@ -1,5 +1,10 @@
 # Supplemental native-grid housing and tenure mechanism
 
+The bounded [fixed-price credit relaxation](credit_relaxation/README.md)
+compares the current financed share \(\phi=0.8\) with experimental \(\phi=1.0\)
+using the canonical revised-timing production engine. Its matched policy
+overlay and owner-room decomposition are under `credit_relaxation/`.
+
 This packet reads the pinned revised-interest-timing, soft-purchase-constraint
 chain 13 selected repeat. It does not solve or change the model. The exact
 `solution_arrays.npz` path and SHA-256 are in `native_grid_data.json` and are

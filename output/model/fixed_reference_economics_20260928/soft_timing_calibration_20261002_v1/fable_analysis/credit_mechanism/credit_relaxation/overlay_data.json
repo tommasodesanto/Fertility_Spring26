@@ -1,0 +1,66 @@
+{
+  "design": "one fixed-price lifecycle solve per arm at p=0.7760569760205563; only uniform phi changes 0.8 to 1.0",
+  "conditioning": "age22-25, location0, inherited renter, income state4/6; conditional policy schedules at identical beginning b",
+  "weight": "baseline phi=.8 pre-fertility childless inherited-renter native-node mass, normalized separately by income state; identical weights across both arms",
+  "population": "fixed-price credit counterfactual; each arm has its own solved stationary distribution. Conditional family-state schedules are not forced-birth transitions; no GE or dated transition",
+  "income_states": {
+    "4": {
+      "occupied_node_range": [
+        0.0,
+        15.474341649025257
+      ],
+      "baseline_prefertility_childless_mass": 0.011552671282176158,
+      "arm_means_fixed_baseline_weights": {
+        "phi_080": {
+          "first_birth_attempt": 0.005614654404119829,
+          "solved_g_mass": 0.9999999999999952,
+          "childless_ownership": 0.037732365346284394,
+          "childless_rental_rooms": 2.6029300797722628,
+          "childless_expected_rooms": 2.5752098647803088,
+          "one_child_ownership": 0.0004943418106020537,
+          "one_child_rental_rooms": 4.181055562422944,
+          "one_child_expected_rooms": 4.181109333398469
+        },
+        "phi_100": {
+          "first_birth_attempt": 0.0054389126896215376,
+          "solved_g_mass": 0.999999999999997,
+          "childless_ownership": 0.2951264317030722,
+          "childless_rental_rooms": 2.622697353981082,
+          "childless_expected_rooms": 2.479671722525499,
+          "one_child_ownership": 0.0005069284503368168,
+          "one_child_rental_rooms": 4.181417238900506,
+          "one_child_expected_rooms": 4.181468056926835
+        }
+      }
+    },
+    "6": {
+      "occupied_node_range": [
+        0.0,
+        15.474341649025257
+      ],
+      "baseline_prefertility_childless_mass": 0.005974085086041332,
+      "arm_means_fixed_baseline_weights": {
+        "phi_080": {
+          "first_birth_attempt": 0.7378617696042185,
+          "solved_g_mass": 0.9999999999999952,
+          "childless_ownership": 0.43664053874276876,
+          "childless_rental_rooms": 4.989220726593896,
+          "childless_expected_rooms": 5.126721643047753,
+          "one_child_ownership": 0.4344988739872834,
+          "one_child_rental_rooms": 5.999999999999998,
+          "one_child_expected_rooms": 6.435887152768462
+        },
+        "phi_100": {
+          "first_birth_attempt": 0.7381713379507109,
+          "solved_g_mass": 0.999999999999997,
+          "childless_ownership": 0.43930026831022284,
+          "childless_rental_rooms": 4.9996075503310315,
+          "childless_expected_rooms": 5.140282022140937,
+          "one_child_ownership": 0.43808380179071116,
+          "one_child_rental_rooms": 5.999999999999998,
+          "one_child_expected_rooms": 6.444853174139642
+        }
+      }
+    }
+  }
+}
