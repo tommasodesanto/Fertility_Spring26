@@ -1,0 +1,95 @@
+{
+  "phi_080": {
+    "solution_arrays": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/solution_arrays.npz",
+    "solution_arrays_sha256": "04a1d60ad526402fb0c2a52c853b77795b1b1d04488bb222684f0f1ed0d43100",
+    "executed_P": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/executed_P.json",
+    "executed_P_sha256": "513d7dd55e1559abf42130c590171515d421f232d1abdec48f329180a3bf2e83",
+    "executed_fields": {
+      "J": 17,
+      "age_start": 18.0,
+      "da": 4.0,
+      "n_parity": 4,
+      "phi": [
+        0.8,
+        0.8,
+        0.8,
+        0.8
+      ],
+      "use_postdecision_current_distribution": true
+    },
+    "g_shape": [
+      120,
+      6,
+      1,
+      17,
+      9,
+      4,
+      4
+    ],
+    "g_mass": 0.9999999999999953,
+    "minimum_g_cell": 0.0,
+    "minimum_age_mass": 0.03911515291797649,
+    "maximum_age_share_sum_error": 1.1102230246251565e-16,
+    "minimum_cdf_step": 0.0,
+    "maximum_cdf_terminal_error": 1.1102230246251565e-16,
+    "maximum_current_beginning_age_count_mass_gap": 1.8665624601510444e-15
+  },
+  "phi_100": {
+    "solution_arrays": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/solution_arrays.npz",
+    "solution_arrays_sha256": "38530b04b9520380ca7209e8753272f8d43636104788bf3a0ae80576e1654998",
+    "executed_P": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/executed_P.json",
+    "executed_P_sha256": "58b08ca841d67fe731ac44e94cc0187eb6c3e9f05c760978d5e5888752f5f27e",
+    "executed_fields": {
+      "J": 17,
+      "age_start": 18.0,
+      "da": 4.0,
+      "n_parity": 4,
+      "phi": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "use_postdecision_current_distribution": true
+    },
+    "g_shape": [
+      120,
+      6,
+      1,
+      17,
+      9,
+      4,
+      4
+    ],
+    "g_mass": 0.999999999999996,
+    "minimum_g_cell": 0.0,
+    "minimum_age_mass": 0.03911515291797649,
+    "maximum_age_share_sum_error": 0.0,
+    "minimum_cdf_step": 0.0,
+    "maximum_cdf_terminal_error": 0.0,
+    "maximum_current_beginning_age_count_mass_gap": 1.949829186997931e-15
+  },
+  "definition": {
+    "age": "age of the reproductive household member; cell starts at age_start + j*da",
+    "distribution": "saved post-birth current-period household cross-section g",
+    "g_axes": [
+      "asset",
+      "tenure",
+      "location",
+      "age",
+      "income",
+      "children_ever_born_n",
+      "children_at_home_m"
+    ],
+    "conditioning": "within each arm and each age cell, divide mass in n by all household mass at that age",
+    "count_states": [
+      "0",
+      "1",
+      "2",
+      "3 or more"
+    ],
+    "cdf": "P(N <= k | age) for k=0,1,2",
+    "difference": "phi=1.0 minus phi=0.8 in percentage points",
+    "price_closure": "input saved solutions; consult their source receipt for fixed-price status"
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "phi_080": {
+    "solution_arrays": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/children_by_age/phi_08/solution_arrays.npz",
+    "solution_arrays_sha256": "048bcc85b510a4d15778eda1f308068be0d40d25355f73d36d0e60e4cddb4db0",
+    "executed_P": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/children_by_age/phi_08/executed_P.json",
+    "executed_P_sha256": "ff373c8784849bb3c189b7fd3f27cb6dd47449599c6af8fa6a6fc0abe5b5c850",
+    "executed_fields": {
+      "phi": [
+        0.8,
+        0.8,
+        0.8,
+        0.8
+      ],
+      "J": 17,
+      "age_start": 18.0,
+      "da": 4.0,
+      "n_parity": 4,
+      "use_postdecision_current_distribution": true
+    },
+    "g_shape": [
+      120,
+      6,
+      1,
+      17,
+      9,
+      4,
+      4
+    ],
+    "g_mass": 0.9999999999999968,
+    "minimum_g_cell": 0.0,
+    "minimum_age_mass": 0.039115152917974974,
+    "maximum_age_share_sum_error": 1.1102230246251565e-16,
+    "minimum_cdf_step": 0.0,
+    "maximum_cdf_terminal_error": 1.1102230246251565e-16,
+    "maximum_current_beginning_age_count_mass_gap": 6.962813356673961e-16
+  },
+  "phi_100": {
+    "solution_arrays": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/children_by_age/phi_10/solution_arrays.npz",
+    "solution_arrays_sha256": "594d85dedf0835499a7f98c81ef56327910caf0cd7d79eabd24125634e8c617e",
+    "executed_P": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/low_productivity_credit_v1/children_by_age/phi_10/executed_P.json",
+    "executed_P_sha256": "af4bb1d3f24d85cdc94631119ec61388d1a6be8d0f9b1f4b3858f5a319b3e3a4",
+    "executed_fields": {
+      "phi": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "J": 17,
+      "age_start": 18.0,
+      "da": 4.0,
+      "n_parity": 4,
+      "use_postdecision_current_distribution": true
+    },
+    "g_shape": [
+      120,
+      6,
+      1,
+      17,
+      9,
+      4,
+      4
+    ],
+    "g_mass": 0.9999999999999968,
+    "minimum_g_cell": 0.0,
+    "minimum_age_mass": 0.03911515291797574,
+    "maximum_age_share_sum_error": 0.0,
+    "minimum_cdf_step": 0.0,
+    "maximum_cdf_terminal_error": 0.0,
+    "maximum_current_beginning_age_count_mass_gap": 6.167474284574429e-16
+  },
+  "definition": {
+    "age": "age of the reproductive household member; cell starts at age_start + j*da",
+    "distribution": "saved post-birth current-period household cross-section g",
+    "g_axes": [
+      "asset",
+      "tenure",
+      "location",
+      "age",
+      "income",
+      "children_ever_born_n",
+      "children_at_home_m"
+    ],
+    "conditioning": "within each arm and each age cell, divide mass in n by all household mass at that age",
+    "count_states": [
+      "0",
+      "1",
+      "2",
+      "3 or more"
+    ],
+    "cdf": "P(N <= k | age) for k=0,1,2",
+    "difference": "phi=1.0 minus phi=0.8 in percentage points",
+    "price_closure": "input saved solutions; consult their source receipt for fixed-price status"
+  }
+}

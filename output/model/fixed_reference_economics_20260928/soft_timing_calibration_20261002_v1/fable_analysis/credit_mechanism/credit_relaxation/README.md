@@ -57,6 +57,11 @@ has saved arrays, executed input snapshot, and the established 17 standard
 diagnostic figures under `phi_080/` or `phi_100/`. Housing-market figures in
 those folders are fixed-price diagnostics and do not claim market clearing.
 
+[Children ever born by household age](children_by_age/README.md) reduces the
+two saved post-birth household distributions to age-cell shares and CDFs,
+including childless households, with full CSVs and mass checks. It uses no new
+solve.
+
 Regenerate the overlay without solving:
 
 ```sh
