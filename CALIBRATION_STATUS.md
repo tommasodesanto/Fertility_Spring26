@@ -6,15 +6,20 @@ manifest are in [the context archive](calibration_archive/context_refresh_202610
 Read historical chronology there, in dated daily notes or in the named experiment
 packets when needed.
 
-The current working reference remains the verified **soft purchase-constraint
-candidate, loss 23.078309**. It is experimental, not a certified paper baseline.
-The matched original versus alternative timing search is now terminal. Verified
+**Working continuation convention, author-adopted October 3:** net housing
+transactions occur after interest on beginning net financial wealth,
+\(b'=Rb+S-Q+y-c-K\). The verified soft-constraint, old-target post-interest
+chain 13 (loss **13.771131463467462**) is the working continuation anchor,
+not a certified paper baseline, global optimum, or grid/transition validation.
+The earlier original-timing soft selected point (loss 23.078309) and chain 15
+(loss 18.445305) remain comparison evidence. The matched timing search is
+terminal. Verified
 as of **October 3, 2026, 06:00 New York**, arrays **19086987 and 19087556**
 have 48 terminal chains: 46 passed fresh native selected-point checks and two
 (chain 23 in each arm) found no admissible candidate. The lowest verified
-original-timing loss is **18.44530519407432** (chain 15); the experimental
-alternative-timing loss is **13.771131463467462** (chain 13). These searches
-do not certify optimizer convergence or adopt either result as a new reference.
+original-timing loss is **18.44530519407432** (chain 15); the post-interest
+loss is **13.771131463467462** (chain 13). These searches do not certify
+optimizer convergence.
 An isolated post-interest-timing recalibration with a narrower experimental
 PSID wealth numerator has also finished: ten of ten chains passed native
 verification; its lowest new-contract loss is **48.170707377609034** (chain 2).
@@ -26,8 +31,8 @@ The target contracts differ, so these native losses cannot be ranked directly.
 |---|---|---|
 | Frozen paper reference | `paper-baseline-2026-09-14`; retained checkout `tmp/paper_baseline_sep14/`. Preserve source and results. | `PAPER_BASELINE.md` in that checkout; [baseline checker](code/model/tools/check_paper_baseline.py) |
 | September 28 fixed-economics reference | Older equilibrium/normalization and utility objects. A refactor oracle, not interchangeable with the current soft calibration. | [refactor report](output/model/publication_refactor_20260929/REPORT.md), [refactor runtime](code/model/refactor_lab/README.md) |
-| Current soft selected point | Original timing; chain 16 / case 0046; verified loss 23.078309. | [selection](output/model/fixed_reference_economics_20260928/soft_timing_review_v1/soft_selected.json), [verification](output/model/fixed_reference_economics_20260928/soft_timing_review_v1/soft_verification.json) |
-| Matched timing comparison | Soft constraint, original versus experimental post-interest transaction timing; 24 matched starts per arm, 48 terminal chains, 46 verified. Lowest verified losses 18.445305 and 13.771131. Neither fit is adopted. | [48-chain receipt](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/collection.json), [complete fit and parameter readout](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/RESULTS.md), [driver plan](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/driver_plan.json) |
+| Earlier soft selected point | Original timing; chain 16 / case 0046; verified loss 23.078309. Historical comparison, not the continuation anchor. | [selection](output/model/fixed_reference_economics_20260928/soft_timing_review_v1/soft_selected.json), [verification](output/model/fixed_reference_economics_20260928/soft_timing_review_v1/soft_verification.json) |
+| Working revised-timing anchor and matched comparison | Soft constraint; post-interest chain 13 with the retained 6.926584 PSID wealth target, verified loss 13.771131. Original-timing chain 15 loss 18.445305 is comparison evidence. Both arms had 24 matched starts, 48 terminal chains, 46 verified. | [48-chain receipt](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/collection.json), [complete fit and parameter readout](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/RESULTS.md), [driver plan](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/driver_plan.json) |
 | Experimental wealth-numerator comparison | Post-interest timing with one new PSID aggregate wealth/earnings target; ten verified chains, lowest new-contract loss 48.170707. No adoption. | [ten-chain verification](output/model/fixed_reference_economics_20260928/alternative_wealth_local_20261003_v1/collection/verification.json), [three-arm comparison and full tables](output/model/fixed_reference_economics_20260928/alternative_wealth_local_20261003_v1/comparison/COMPARISON.md) |
 | Historical purchase-rule comparison | Fresh hard and quarter results: 88.588403 and 48.319938. Older policy exercises use earlier points with losses 97.011220 and 51.556036. | [fresh calibration readout](output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/fresh_calibration_v1/README.md) |
 | Historical transition initializer | Normalized-v1 chain 20 / case 0028_nm, loss 30.371888. Its one-shock transition attempt failed acceptance. | [transition deployment/readout](output/model/transition_readiness_v1/normalized_restart_v1/resume_preparation/deployment/v2/README.md) |
@@ -42,8 +47,10 @@ model command reproduces the current normalized calibration.
 
 ## Working economic and accounting contract
 
-These are the objects executed at the selected soft point. Retaining them in this
-comparison does not resolve every empirical or publication issue.
+These are the retained objects behind the soft-constraint comparison. Numerical
+examples explicitly sourced to the earlier 23.078309 point below remain
+historical; the working revised-timing anchor is chain 13. Neither resolves
+every empirical or publication issue.
 
 **Units and household choices.** One period is four years. Households choose
 consumption, housing, tenure, saving and fertility over the lifecycle. Children
@@ -92,23 +99,25 @@ annualizations.
 
 Let \(b\) be beginning net financial wealth, \(S\) net sale proceeds, \(Q\) the
 purchase cost, \(y\) current income, \(c\) consumption and \(K\) other costs.
-The original convention is
+The historical original-timing convention is
 \[
 b'=R(b+S-Q)+y-c-K.
 \]
-The alternative is
+The author-adopted working convention is
 \[
 b'=Rb+S-Q+y-c-K.
 \]
-The change moves current net transaction financing outside the interest factor.
+The revised convention moves current net transaction financing outside the
+interest factor.
 At held choices the difference is \((R-1)(Q-S)\). Sale, forward-budget and
 solvency maps must use the chosen convention consistently. Existing debt is
 already in \(b\); do not subtract it again. The applicable owner ending-debt
-floor remains \(b'\geq-\phi Q\). A Pro recommendation motivated the comparison;
-it did not authorize replacing the reference timing. Hard versus soft purchase
-constraints also remain a distinct specification choice.
+floor remains \(b'\geq-\phi Q\). Tommaso adopted the revised timing for
+continuation on October 3 after reviewing both recalibrated arms. Hard versus
+soft purchase constraints remain a distinct specification choice.
 
-**Demography and closure.** The selected soft equilibrium fixes household scale
+**Demography and closure.** The earlier original-timing soft equilibrium fixes
+household scale
 \(N=1\), solves price using stationary birth renewal, and derives the housing
 supply scale \(H_0=6.757074\) from market clearing. \(\psi\) is jointly free
 in the ten-parameter calibration; it is not independently normalized back to
@@ -128,7 +137,7 @@ The October 2 check found no extra factor of two in this path; different
 three-plus weighting and age windows still require care when comparing fertility
 statistics.
 
-At the selected point, entry is \(0.0617334562\), adjusted births
+At that earlier selected point, entry is \(0.0617334562\), adjusted births
 \(0.1296402579\), the birth-renewal residual is approximately
 \(-7.08\times10^{-10}\), the housing residual is zero, and the PAYGO residual
 is \(2.71\times10^{-14}\). Payroll tax is \(0.0802807096\) and the period
@@ -146,9 +155,9 @@ retained supply function, the reported population scale uses
 schedule, not the quantity at every price. This population-scale effect must
 not be described as a total fertility effect.
 
-## Verified current fit and parameters
+## Earlier original-timing selected fit and parameters
 
-The local selected-point repeat passed, reproducing loss **23.07830929416065**.
+The earlier local selected-point repeat passed, reproducing loss **23.07830929416065**.
 The largest saved-moment discrepancy was \(5.33\times10^{-15}\). The packet has
 14 target rows, 31 parameter records and the established 17 plots. A first
 cross-platform exact-double comparison was rejected for roundoff; the accepted
@@ -291,7 +300,7 @@ arrays are terminal, with zero active Slurm tasks at collection. Of 48 chains,
 46 passed the fresh native selected-point and exact-repeat gates. Original and
 alternative chain 23 ended with no admissible selected point; neither enters
 the winner comparison. The lowest verified original-timing loss is
-**18.44530519407432** (v3 chain 15), and the lowest verified experimental
+**18.44530519407432** (v3 chain 15), and the lowest verified
 post-interest loss is **13.771131463467462** (v3 chain 13). Both winner packets
 have 14 target-fit rows, 31 parameter rows, 17 standard plots in each native
 root and exact repeat, and exact repeated tables and plot hashes. See the
@@ -310,8 +319,9 @@ the weight fingerprint is
 `2391cd2d4a39a6669a405be34ff14116ad314354353173cb619f7fa7c66043b0`,
 and the selected soft checkpoint SHA-256 is
 `b5e21a8584fa536a3740039b3e54480f3c318a63b96266bd31406712c5da991c`.
-These are experimental recalibrations; the existing working reference remains
-unchanged.
+The revised timing was author-adopted October 3; chain 13 is the working
+continuation anchor under the retained target system. Its numerical optimum,
+grid adequacy and dated transition remain uncertified.
 
 Each chain had a six-hour budget, at most 250 objective evaluations,
 a retained 1,800-second finalization reserve, one CPU and 24 GiB; case lifecycle
@@ -369,7 +379,12 @@ positive-weight moments equal the ten free coordinates in count, but informative
 rank and optimizer convergence are uncertified. The unequal 48-chain and
 10-chain budgets do not establish that the new wealth target is unreachable.
 Neither the target nor the chain-2 parameter vector is adopted; the working
-soft selected point remains unchanged.
+continuation anchor remains the old-target post-interest chain 13. Two
+additional ten-start cohorts are being prepared under the revised timing: a
+regular old-target search with \(\beta_{\mathrm{annual}}\in[0.94,0.99]\) and a
+separate new-wealth-target search with
+\(\beta_{\mathrm{annual}}\in[0.93,0.99]\). Preparation is not launch or
+verification; job IDs and results must be recorded only after deployment.
 
 ## Interactive inspection and numerical readiness
 
@@ -386,11 +401,12 @@ interactive interface remains optional. A fixed-price household solve is not
 the normalized calibration GE; it reports numerical, renewal and housing
 diagnostics without claiming a new equilibrium.
 
-At Tommaso's request, the Python runner now defaults to the lowest-loss verified
-overnight original-timing soft candidate: chain 15 / case `0141_nm`, all ten
+At Tommaso's earlier request, the Python runner still defaults to the verified
+overnight **original-timing** soft candidate: chain 15 / case `0141_nm`, all ten
 parameter coordinates, price `0.718171981870443`, and derived housing supply
-coefficient `6.79390271408785`. This selects the local inspection default; the
-paper reference and browser explorer are unchanged. The complete fit and
+coefficient `6.79390271408785`. This is a retained local inspection default,
+not the adopted revised-timing continuation anchor; any runner default change
+requires an explicit source/input update and verification. The complete fit and
 parameter restrictions are in the [matched timing readout](output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/RESULTS.md).
 The [current-default replay](output/model/fixed_reference_economics_20260928/model_control_scripts_v1/overnight_default.json)
 passed with a 6.0-second solve and 10.0-second full run. Its 30 available numeric
@@ -476,18 +492,22 @@ initializer for the current soft point.
 **Paper-facing artifacts.** The [Corina source map](latex/corina_progress_20260930/source_map.md)
 and [slides](latex/corina_progress_20260930/corina_progress.tex) use the earlier
 hard/quarter calibration and policy packets. They do not display the latest
-88.588/48.320 results or the current soft 23.078 point. The coordinated draft,
+88.588/48.320 results or the revised-timing soft 13.771 anchor. The coordinated draft,
 slides and mock sources are listed in [latex/README.md](latex/README.md).
-Experimental physical-floor/nonlinear-benefit and timing objects should not
-be described as fully synchronized with the author manuscript. This refresh
-does not change manuscript wording or adopt a new paper specification.
+Experimental physical-floor/nonlinear-benefit objects and the newly adopted
+timing are not fully synchronized with the author manuscript or continuing
+slides. The specific slide timing discrepancy is recorded in
+[latex/README.md](latex/README.md). This status update does not change
+manuscript wording or certify a new paper calibration.
 
 ## Outstanding decisions and checks
 
-1. **Timing and purchase constraint:** collect both recalibrated arms with native
-   postchecks and complete tables before deciding whether to adopt the
-   alternative timing. The hard-versus-soft economic choice remains distinct;
-   prior categorical recommendations were not supported by a completed comparison.
+1. **Timing and purchase constraint:** propagate the adopted post-interest
+   transaction budget consistently through active implementation, saved-input
+   defaults and paper representations before claiming full synchronization.
+   Verify the transition solver's timing and acceptance tests before any dated
+   run; no transition launch is authorized yet. The hard-versus-soft economic
+   choice remains distinct.
 2. **Identification and weights:** count is ten moments for ten free parameters.
    Check informative rank/substitution and the two near-bound fertility/continuation
    noise parameters. National ACS uncertainty and the early-fertility weight remain

@@ -1,3 +1,17 @@
+## Revised transaction timing — October 3, 2026
+
+Tommaso adopted the working post-interest housing-transaction budget
+\(b'=Rb+S-Q+y-c-K\) for continuation. The continuing JMP Slides source
+`JMP_slides/JMP_slides.tex` still places \(R_b\) on the net transaction term
+in its housing budget (line 285 in the inspected source): that is the earlier
+convention and now contradicts the working model timing. The author-owned
+`JMP_DS_draft/sections/03_model.tex` does not yet display a housing budget;
+`JMP_DS_mock/sections/03_model.tex` describes the down-payment gate but not
+the interest placement on sale or purchase cash. Neither source was edited.
+The slide equation needs a coordinated update during
+document work; the September 14 paper reference remains frozen. This note
+records the specific discrepancy and does not claim manuscript synchronization.
+
 ## Corina adviser update — October 2, 2026
 
 The separate adviser deck `corina_progress_20260930/corina_progress.tex` now
