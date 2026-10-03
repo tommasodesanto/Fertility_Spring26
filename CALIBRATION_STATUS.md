@@ -381,7 +381,21 @@ rank and optimizer convergence are uncertified. The unequal 48-chain and
 Neither the target nor the chain-2 parameter vector is adopted; the working
 continuation anchor remains the old-target post-interest chain 13. A separate
 ten-start old-target search under this timing, with
-\(\beta_{\mathrm{annual}}\in[0.94,0.99]\), is being prepared.
+\(\beta_{\mathrm{annual}}\in[0.94,0.99]\), was submitted on October 3 as
+Torch array **19112020** (`0-9%10`) under
+`/scratch/td2248/projects/soft_timing_continuation_20261003_v1`.
+Its ten starts are the ten lowest-loss distinct numerically verified
+post-interest endpoints from the completed comparison, beginning with chain 13.
+It retains all original targets, weights, economic inputs, and ten parameter
+bounds. Each chain has one core, 24 GiB, six hours, at most 500 objective calls,
+and 1,800 seconds reserved for fresh native verification. The
+[start plan](output/model/fixed_reference_economics_20260928/soft_timing_continuation_20261003_v1/start_plan.json),
+[stage and submission receipt](output/model/fixed_reference_economics_20260928/soft_timing_continuation_20261003_v1/deployment/status.json),
+and [chain-0 smoke receipt](output/model/fixed_reference_economics_20260928/soft_timing_continuation_20261003_v1/smoke_receipt/gate.json)
+pin the source, objective and start identities. The exact two-evaluation smoke
+passed the 14-row target fit, 31-parameter record, 17 standard plots and
+selected-point repeat. The production search has no fallback or automatic
+retry, and a lower loss will remain provisional until native verification.
 
 The isolated **new-wealth-target Torch continuation** is now submitted as
 array **19111687**, tasks `0-9%10`, in
