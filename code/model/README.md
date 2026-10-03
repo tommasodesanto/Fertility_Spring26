@@ -32,6 +32,8 @@ Your latest complete results are kept separately:
 - **Working calibration:** [`output/model/local_solution/latest/`](../../output/model/local_solution/latest/).
 - **Toy experiment:** [`output/model/experiments/toy_params/latest/`](../../output/model/experiments/toy_params/latest/).
 
+The isolated [joint birth-count experiment](experiments/birth_count_choice/README.md) retains the current parameters and has its own complete-fit readout and output root.
+
 Each contains `SUMMARY.md`, full target and parameter tables, and
 `standard_diagnostics/`, `policy_plots/`, and `aggregate_plots/`. Plotting reads
 these saved results without another solve. Parameter files isolate inputs and

@@ -1,0 +1,20 @@
+{
+  "root_source": "output/model/fixed_reference_economics_20260928/utility_calibration_round1_v1/phase_b_pilot.py",
+  "root_source_sha256": "5a87b5414837539eb69298a9c98fc051744a277859720fb8c0901ee4c2a1821e",
+  "native_price_source": "output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/single_price.py",
+  "native_price_source_sha256": "f6dbfde74fff8b9ffc867ba95da2814faebb6b10a903a42cdc81e2405c92f892",
+  "edits": [
+    "Relative production imports",
+    "Remove uncalled smoke harness",
+    "Population-one normalization from normalized_objective; remove calibration H0 bound only",
+    "Closure metadata and plot unit label only"
+  ],
+  "credit_documentation_edit": {
+    "before_sha256": "2cf3d0a4a65d577d297262c55da1126c06033730482aab384ed6c7669751c07d",
+    "after_sha256": "0c939767d0fa5fbfc468c47da3dbbb5a3d8c79c3fd7e6b2c6715b11444b0b070",
+    "executable_AST_unchanged": true,
+    "scope": "Docstrings only; historical original-timing fixtures distinguished from adopted post-interest engine",
+    "evidence": "engine/household.py:547-550",
+    "diff": "tmp/production_deployment_20261003/credit_comment_only.diff"
+  }
+}

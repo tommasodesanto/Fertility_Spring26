@@ -41,6 +41,27 @@ The canonical local stationary-GE implementation and editable runner are indexed
 
 ## Working economic and accounting contract
 
+**Experimental birth-count menu, verified October 3, 2026, 16:33 New York:**
+the isolated [copy](code/model/experiments/birth_count_choice/README.md) permits
+intended births $k=0,\ldots,3-n$ with $X\sim\mathrm{Binomial}(k,\pi_j)$ using
+the retained age-specific success probability. All ten chain-13 coordinates,
+fixed inputs, targets and weights remain unchanged. The first GE converged in
+eight lifecycle solves (including an exact repeat): price **0.9990392274**,
+renewal residual **1.49e-8**, zero housing residual, PAYGO residual **1.07e-13**.
+Unrecalibrated loss is **1672.491299**, versus the matched binary-menu
+**13.771131**. Mean children by age 25 falls from **0.5338** to **0.3947**
+(target **0.8095**); mean first-birth age rises from **25.9677** to **28.4196**
+(target **25.9763**). This is an experiment, not an adopted specification or
+a credit counterfactual; no recalibration has run. The
+[complete 14-target/31-parameter comparison](output/model/experiments/birth_count_choice/current_params_v1/RESULTS.md)
+and [saved solution with 32 plots](output/model/experiments/birth_count_choice/current_params_v1/latest/SUMMARY.md)
+record the result. The copy preserves the binary solver's no-birth treatment
+of negligible all-zero dead menus under its unchanged 1e-12 mass gate; the
+triggering diagnostic contained 2.97e-38 mass. Four descriptive engine hazard
+arrays now use pre-birth exposure; active empirical target definitions remain
+separate and unchanged. Production code, parameters and latest result remain
+unchanged.
+
 These are the retained objects behind the soft-constraint comparison. Numerical
 examples explicitly sourced to the earlier 23.078309 point below remain
 historical; the working revised-timing anchor is chain 13. Neither resolves

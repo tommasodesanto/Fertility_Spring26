@@ -1,0 +1,60 @@
+{
+  "status": "verified",
+  "case": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/birth_count_choice/current_params_v1/cases/20261003T203001912131Z_812b878e",
+  "tests_passed": 18,
+  "canonical_source_files_unchanged": 36,
+  "all_31_parameter_values_unchanged": true,
+  "ten_calibration_coordinates_unchanged": true,
+  "canonical_baseline_npz_unchanged": true,
+  "plots": {
+    "standard_diagnostics": 17,
+    "policy_plots": 8,
+    "aggregate_plots": 7
+  },
+  "closure": {
+    "absolute_housing_demand": 6.901660773394733,
+    "absolute_housing_residual": 0.0,
+    "actual_entry_per_normalized_household": 0.06173345618075726,
+    "actual_paygo_residual": 1.0710750129292517e-13,
+    "adjusted_births_per_normalized_household": 0.12964025990993172,
+    "birth_to_entry_conversion": 0.47619047619047616,
+    "closure_mode": "fixed_h0",
+    "d_bar": 0.0,
+    "fixed_h0_population_scale": 1.393514771483737,
+    "housing_supply_elasticity": 0.63,
+    "implied_H0_at_population_one": 4.59678915988364,
+    "native_population_step": {
+      "actual_birth_derived_entry": 0.08602648436356226,
+      "deaths": 0.08602648308261218,
+      "entry_gap": 1.2809330124374796e-09,
+      "mass_residual": -6.661338147750939e-16,
+      "raw_distribution_l1": 1.2809502754725936e-09,
+      "renewal_adjusted_distribution_l1": 1.727309621698242e-14,
+      "required_entry": 0.08602648308262925
+    },
+    "normalized_housing_demand": 4.952700118166834,
+    "occupied_renter_floor": {
+      "maximum_shortfall": 0.0,
+      "occupied_renter_mass": 0.37777381208286465,
+      "violation_mass": 0.0
+    },
+    "outside_entry": 0.0,
+    "parameter_rows": 31,
+    "physical_housing_supply": 6.901660773394733,
+    "population_scale": 1.393514771483737,
+    "price": 0.9990392273831761,
+    "renewal_residual": 1.488998480070336e-08,
+    "standard_plot_count": 17,
+    "standard_plot_supply_units": "physical supply divided by endogenous household population",
+    "status": "converged",
+    "target_fit_rows": 14
+  },
+  "case_files_sha256": {
+    "input_contract.json": "fbc0b5e542b1b129ad96211d4ca23f68491936f5169ebe6045d87126d98bfe95",
+    "metadata.json": "50edc33ee525e1f59fb2f2ed9f1f75856f455f8d6f95105ba4b1ce463332ec0c",
+    "target_fit.csv": "2e154cfa62d9e07f89b08574b04c249b364e9cf4640af510814103d3f190d728",
+    "parameters.csv": "fecdd062270bc0f9a51bd6ef4d9c989f347c0be35f48e29b9de9d75b6b1ff168"
+  },
+  "cap_one_receipt": "cap_one_nesting.json",
+  "numerical_tail_census": "failed_expansion_census.json"
+}
