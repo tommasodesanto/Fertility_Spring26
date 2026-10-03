@@ -1,8 +1,9 @@
 """Local, read-only explorer of authenticated saved household solutions.
 
-Policy curves average the saved tenure lottery after applying its transaction
-map. Owner-stayer consumption/saving remain separate from purchase policies.
-This server never solves the model or changes a saved solution.
+Raw conditional policy curves use saved asset-grid coordinates by default.
+The alternate view averages the saved tenure lottery after applying its
+transaction map. Owner-stayer consumption/saving remain separate from purchase
+policies. This server never solves the model or changes a saved solution.
 """
 from __future__ import annotations
 
@@ -49,7 +50,8 @@ class SavedCase:
         self.load_seconds = time.perf_counter() - started
 
     @lru_cache(maxsize=256)
-    def slice(self, age, income, tenure, children, at_home, view='central'):
+    def slice(self, age, income, tenure, children, at_home, view='central',
+              policy_mode='raw', owner_policy='buying'):
         c, a, b = self.common, self.a, self.b
         age_index = (age-c['age_start']) / c['period_years']
         if not age_index.is_integer():
@@ -61,6 +63,10 @@ class SavedCase:
                 raise ValueError('Selector out of range')
         if view not in ('central', 'all'):
             raise ValueError('Unknown wealth range')
+        if policy_mode not in ('raw', 'average'):
+            raise ValueError('Unknown policy mode')
+        if owner_policy not in ('buying', 'staying'):
+            raise ValueError('Unknown owner policy branch')
         ix = (slice(None),old,0,j,z,n,m)
         probs = np.asarray(a['tenure_probs'][ix], float)
         valid = (a['V'][ix] > -1e9) & (probs.sum(axis=1) > .99)
@@ -71,16 +77,42 @@ class SavedCase:
         costs = np.r_[0., float(self.spec['price'])*np.asarray(c['houses'])]
         sales = (1-c['selling_cost'])*costs
         divisor = c['R_gross'] if self.spec['timing'] == 'inherited_only' else 1.
-        for new in range(self.shape[1]):
-            x = b if old == new else b+(sales[old]-costs[new])/divisor
-            dest = (slice(None),new,0,j,z,n,m)
-            staying = old == new and old > 0
-            cc = a['c_pol_stay' if staying else 'c_pol'][dest]
-            bp = a['bp_pol_stay' if staying else 'bp_pol'][dest]
-            hh = a['hR_pol'][dest] if new == 0 else np.full(len(b),c['houses'][new-1])
-            expected_c += probs[:,new]*np.interp(x,b,cc)
-            expected_b += probs[:,new]*np.interp(x,b,bp)
-            expected_h += probs[:,new]*np.interp(x,b,hh)
+        if policy_mode == 'average':
+            for new in range(self.shape[1]):
+                x = b if old == new else b+(sales[old]-costs[new])/divisor
+                dest = (slice(None),new,0,j,z,n,m)
+                staying = old == new and old > 0
+                cc = a['c_pol_stay' if staying else 'c_pol'][dest]
+                bp = a['bp_pol_stay' if staying else 'bp_pol'][dest]
+                hh = a['hR_pol'][dest] if new == 0 else np.full(len(b),c['houses'][new-1])
+                expected_c += probs[:,new]*np.interp(x,b,cc)
+                expected_b += probs[:,new]*np.interp(x,b,bp)
+                expected_h += probs[:,new]*np.interp(x,b,hh)
+        raw_valid = np.ones(len(b), dtype=bool)
+        if policy_mode == 'raw':
+            branch = 'c_pol_stay' if old > 0 and owner_policy == 'staying' else 'c_pol'
+            saving_branch = 'bp_pol_stay' if old > 0 and owner_policy == 'staying' else 'bp_pol'
+            branch_ix = (slice(None),old,0,j,z,n,m)
+            policy_c = a[branch][branch_ix]
+            policy_b = a[saving_branch][branch_ix]
+            policy_h = (np.full(len(b), c['houses'][old-1]) if old > 0
+                        else a['hR_pol'][branch_ix])
+            policy_xlabel = 'Saved asset-grid coordinate'
+            policy_note = ('The first three charts show raw conditional policy arrays at their saved asset-grid coordinates. '
+                'They do not apply tenure weights or transaction-map interpolation; the coordinate is not transformed physical wealth '
+                'for every tenure branch. Raw arrays include initialized entries '
+                'for infeasible states; zero entries are not certified choices. For owners, the housing curve repeats the '
+                'selected fixed house size and is not a solver choice at infeasible nodes. The remaining three charts are '
+                'inherited-state objects: ownership and birth-attempt probabilities are before the tenure choice, and '
+                'population mass is after fertility and before tenure.')
+            raw_markers = True
+        else:
+            policy_c, policy_b, policy_h = expected_c, expected_b, expected_h
+            policy_xlabel = 'Inherited financial wealth / mean annual gross earnings'
+            policy_note = ('Consumption, saving, housing and ownership condition on the family state after fertility and average over tenure choices. '
+                'The fertility curve is the attempt probability for that family state before the birth decision. '
+                'Mass is after fertility, before tenure; zero-mass states are hypothetical. The top child count is capped at 3.')
+            raw_markers = False
         if n == 0:
             attempt = a['fert_probs'][:,old,0,j,z,1]
         elif n < self.shape[5]-1 and m <= n:
@@ -92,19 +124,18 @@ class SavedCase:
         def values(x):
             return [float(v) if np.isfinite(v) else None for v in np.asarray(x)[keep]]
 
-        def chart(title, unit, y):
-            return dict(title=title,ylabel=unit,series=[dict(label=title,values=values(y))])
+        def chart(title, unit, y, mask=valid, markers=False):
+            return dict(title=title,ylabel=unit,valid=np.asarray(mask)[keep].tolist(),markers=markers,
+                series=[dict(label=title,values=values(y))])
 
         return dict(label=f"{self.spec['label']} · age {age:g} · income state {z+1} · {n} children, {m} at home",
-            note=('Consumption, saving, housing and ownership condition on the family state after fertility and average over tenure choices. '
-                  'The fertility curve is the attempt probability for that family state before the birth decision. '
-                  'Mass is after fertility, before tenure; zero-mass states are hypothetical. The top child count is capped at 3.'),
+            note=policy_note,
             slice_mass=float(mass.sum()/self.total),
-            xlabel='Inherited financial wealth / mean annual gross earnings',
+            xlabel=policy_xlabel,
             x=values(b), valid=valid[keep].tolist(), charts=[
-                chart('Consumption', 'Four-year consumption / mean annual earnings', expected_c),
-                chart('Next-period financial wealth', 'Wealth / mean annual earnings', expected_b),
-                chart('Housing services', 'Rooms', expected_h),
+                chart('Raw conditional consumption' if policy_mode == 'raw' else 'Consumption', 'Four-year consumption / mean annual earnings', policy_c, raw_valid if policy_mode == 'raw' else valid, raw_markers),
+                chart('Raw conditional next wealth' if policy_mode == 'raw' else 'Next-period financial wealth', 'Wealth / mean annual earnings', policy_b, raw_valid if policy_mode == 'raw' else valid, raw_markers),
+                chart('Raw conditional housing' if policy_mode == 'raw' else 'Housing services', 'Rooms', policy_h, raw_valid if policy_mode == 'raw' else valid, raw_markers),
                 chart('Probability of owning', 'Probability', probs[:,1:].sum(axis=1)),
                 chart('Birth attempt probability', 'Probability', attempt),
                 chart('Household wealth distribution', 'Mass at node (% of total population)', 100*mass/self.total)])
@@ -145,7 +176,8 @@ def main():
                 elif url.path == '/api/slice':
                     q = {k:v[0] for k,v in parse_qs(url.query).items()}
                     result = cases[q['case']].slice(float(q['age']),int(q['income']),int(q['tenure']),
-                        int(q['children']),int(q['at_home']),q.get('view','central'))
+                        int(q['children']),int(q['at_home']),q.get('view','central'),
+                        q.get('policy_mode','raw'),q.get('owner_policy','buying'))
                     body = json.dumps(result,allow_nan=False).encode(); kind = 'application/json'
                 elif url.path.startswith('/report/') and 'report_root' in config:
                     root = Path(config['report_root']).resolve()

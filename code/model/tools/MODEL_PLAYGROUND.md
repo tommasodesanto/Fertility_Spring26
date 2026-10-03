@@ -15,6 +15,11 @@ Start the read-only browser explorer by double-clicking
 window stays open while the server runs. If that URL already responds, the
 launcher reports it and leaves the existing process alone.
 
+For direct Python control, double-click
+`code/model/tools/start_model_playground.command`. It opens the interactive
+session below with all six numerical thread limits set to one; loading the
+saved arrays at startup does not solve the model.
+
 From the repository root, start an interactive Python session:
 
 ```bash
@@ -71,5 +76,24 @@ mass. A nonuniform grid is not a household distribution: inspect
 `sol.g_beginning_distribution` for mass after fertility and before tenure,
 and `sol.g` for the realized cross-section. `sol.c_pol` is a conditional policy;
 owner stayers have their own `sol.c_pol_stay` and `sol.bp_pol_stay` arrays.
-The browser's consumption curve averages tenure choices after applying their
-transaction maps. Its range selector only changes the displayed interval.
+The browser defaults to raw conditional policies on saved grid nodes. Its
+separate average-over-tenure mode applies the transaction maps and choice
+probabilities. The range selector only changes the displayed interval.
+
+## Model source map
+
+The active playground imports the hash-checked `small_credit_lab` solver. Its
+model stages are byte-identical to the canonical extracted stages documented
+in `code/model/refactor_lab/README.md`:
+
+| File | Role |
+|---|---|
+| `code/model/tools/model_playground.py` | Python entry point and saved/reference loading |
+| `code/model/refactor_lab/engine/household.py` | Household choices and Bellman solution |
+| `code/model/refactor_lab/engine/distribution.py` | Population distribution and moments |
+| `code/model/refactor_lab/engine/equilibrium.py` | Fixed-price solve and market equilibrium |
+| `code/model/refactor_lab/engine/parameters.py` | Primitive helpers and defaults |
+
+The initialized `P` comes from the selected soft input bundle and checked
+reference contract. Module defaults are not a substitute for those loaded
+parameters.

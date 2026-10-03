@@ -41,6 +41,8 @@
     <section class="controls" aria-label="Slice selection">
       <label>Case<select id="case"></select></label>
       <label>Wealth range<select id="view"><option value="central">Central wealth range</option><option value="all">Full grid</option></select></label>
+      <label>Policy view<select id="policy-mode"><option value="raw">Raw conditional policies</option><option value="average">Average over tenure choices</option></select></label>
+      <label id="owner-policy-control" hidden>Owner branch<select id="owner-policy"><option value="buying">Buying</option><option value="staying">Staying</option></select></label>
       <label>Age<select id="age"></select></label>
       <label>Income<select id="income"></select></label>
       <label>Tenure<select id="tenure"></select></label>
@@ -57,10 +59,15 @@
       'use strict';
       const byId = id => document.getElementById(id);
       const controls = {
-        case: byId('case'), view: byId('view'), age: byId('age'), income: byId('income'),
+        case: byId('case'), view: byId('view'), policy_mode: byId('policy-mode'),
+        owner_policy: byId('owner-policy'), age: byId('age'), income: byId('income'),
         tenure: byId('tenure'), children: byId('children'), at_home: byId('at-home')
       };
       controls.view.value = 'central';
+      controls.policy_mode.value = 'raw';
+      function updateOwnerBranch() {
+        byId('owner-policy-control').hidden = controls.policy_mode.value !== 'raw' || Number(controls.tenure.value) === 0;
+      }
       const chartObservers = new Set();
       let latest = 0;
       let activeController = null;
@@ -107,8 +114,11 @@
       }
       function render(data) {
         const charts = Array.isArray(data.charts) ? data.charts.slice(0, 6) : [];
-        const hasPoints = charts.some(chart => (chart.series || []).some(series =>
-          (series.values || []).some((value, i) => data.valid?.[i] && Number.isFinite(data.x?.[i]) && Number.isFinite(value))));
+        const hasPoints = charts.some(chart => {
+          const valid = Array.isArray(chart.valid) ? chart.valid : data.valid;
+          return (chart.series || []).some(series =>
+            (series.values || []).some((value, i) => valid?.[i] && Number.isFinite(data.x?.[i]) && Number.isFinite(value)));
+        });
         if (!hasPoints) {
           clearView();
           status('This slice has no valid points.');
@@ -144,7 +154,7 @@
         const NS='http://www.w3.org/2000/svg', measured=Math.round(svg.getBoundingClientRect().width), W=measured>0?measured:360,H=390,L=78,R=18,T=22,B=70,pw=W-L-R,ph=H-T-B;
         svg.replaceChildren();
         svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
-        const valid=Array.isArray(data.valid)?data.valid:[];
+        const valid=Array.isArray(chart.valid)?chart.valid:(Array.isArray(data.valid)?data.valid:[]);
         const xs=Array.isArray(data.x)?data.x:[];
         const series=(chart.series||[]).map(s=>({label:s.label??'',values:s.values||[]}));
         const points=[];
@@ -177,6 +187,7 @@
             d+=`${active?' L':' M'} ${X(xs[i])} ${Y(v)}`; active=true;
           });
           if(d) add('path',{d,fill:'none',stroke:colors[si%colors.length],'stroke-width':2.2,'stroke-linecap':'round','stroke-linejoin':'round'});
+          if(chart.markers) s.values.forEach((v,i)=>{if(valid[i]&&Number.isFinite(xs[i])&&Number.isFinite(v))add('circle',{cx:X(xs[i]),cy:Y(v),r:2.5,fill:colors[si%colors.length]});});
           if(series.length>1){const lx=L+si*105;add('line',{x1:lx,y1:H-13,x2:lx+18,y2:H-13,stroke:colors[si%colors.length],'stroke-width':3});add('text',{x:lx+23,y:H-9,fill:style.getPropertyValue('--fg').trim(),'font-size':12},s.label);}
         });
         const xlabel=String(data.xlabel??'x'), maxChars=Math.max(16,Math.floor(pw/8));
@@ -225,7 +236,8 @@
           fill(controls.children,meta.children||[],x=>x,x=>x,meta.default?.children);
           fill(controls.at_home,meta.at_home||[],x=>x,x=>x,meta.default?.at_home);
           if(Object.values(controls).some(select=>!select.options.length))throw new Error('The API did not provide all selector options.');
-          Object.values(controls).forEach(select=>select.addEventListener('change',requestSlice));
+          Object.values(controls).forEach(select=>select.addEventListener('change',()=>{updateOwnerBranch();requestSlice();}));
+          updateOwnerBranch();
           await requestSlice();
         }catch(error){status(`Could not load options: ${error.message||'unknown error'}`,true);}
       }
