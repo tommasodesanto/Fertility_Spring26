@@ -1,9 +1,11 @@
 # Alternative wealth target: isolated Torch search
 
 The isolated stage passed host/container source checks and a chain-9 zero-solve
-preflight. Torch smoke array **19111315**, task 9 only, was submitted with the
-90-minute budget; production remains unsubmitted pending native smoke review.
-The stage and launch receipts are in the new run packet's `deployment/` folder.
+preflight. Torch smoke array **19111315**, task 9 only, completed in 7:36 with
+exit `0:0` and passed its native verification gate. Production array
+**19111687** was then submitted as tasks `0-9%10`; all ten tasks were running
+at the first follow-up queue check. The stage and launch receipts are in the
+new run packet's `deployment/` folder.
 
 This package stages the passed October 2 soft-timing source archive and three
 explicit new inputs: `cluster_calibrate.py`, the ten-start plan, and the verified
@@ -46,3 +48,12 @@ Each chain writes `heartbeat.json`, `latest_completed.json`, and
 reports, requiring the 14-row new-target fit, 31 parameter records, and 17
 standard diagnostic plots. A numerically verified result remains provisional
 if its optimizer has not converged.
+
+The collector is a strict verified-result gate: it succeeds only if every
+requested chain has a passing native report and matching contract fingerprints.
+If a task exits `0:0` with `completed.json` status `no_admissible_candidate`,
+record it separately as a terminal search with no verified point. A nonzero
+launcher exit, absent terminal receipt, or missing native report is an execution
+or verification failure. Neither case supplies an accepted estimate; inspect
+the saved checkpoints and Slurm accounting without automatically rerunning the
+task.

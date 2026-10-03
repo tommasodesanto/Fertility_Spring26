@@ -379,12 +379,31 @@ positive-weight moments equal the ten free coordinates in count, but informative
 rank and optimizer convergence are uncertified. The unequal 48-chain and
 10-chain budgets do not establish that the new wealth target is unreachable.
 Neither the target nor the chain-2 parameter vector is adopted; the working
-continuation anchor remains the old-target post-interest chain 13. Two
-additional ten-start cohorts are being prepared under the revised timing: a
-regular old-target search with \(\beta_{\mathrm{annual}}\in[0.94,0.99]\) and a
-separate new-wealth-target search with
-\(\beta_{\mathrm{annual}}\in[0.93,0.99]\). Preparation is not launch or
-verification; job IDs and results must be recorded only after deployment.
+continuation anchor remains the old-target post-interest chain 13. A separate
+ten-start old-target search under this timing, with
+\(\beta_{\mathrm{annual}}\in[0.94,0.99]\), is being prepared.
+
+The isolated **new-wealth-target Torch continuation** is now submitted as
+array **19111687**, tasks `0-9%10`, in
+`/scratch/td2248/projects/alternative_wealth_calibration_20261003_v1`.
+It searches ten distinct starts with
+\(\beta_{\mathrm{annual}}\in[0.93,0.99]\), retaining the new wealth target
+4.45838713455674, its numerical weight 7.595098472533724, post-interest
+timing, and all other economic inputs. Each task has one core, 24 GiB, six
+hours, a 500-objective-call cap and 1,800 seconds reserved for final native
+verification. There is no fallback, automatic retry, or adoption. The pinned
+[source archive](output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/deployment/stage.tar.gz)
+and [production receipt](output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/deployment/production_submission_receipt.json)
+identify the submitted source and complete target/weight fingerprints. A
+two-call Torch smoke at the new lower bound, job **19111315** task 9, passed
+the exact full-equilibrium repeat, new-contract fast/full comparison, 14-row
+target table, 31-row parameter table and 17 standard plots; its
+[collection receipt](output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/smoke_collection/smoke_collection.json),
+[new-contract target table](output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/deployment/smoke_target_fit.csv),
+and [parameter table](output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/deployment/smoke_parameters.csv)
+is diagnostic, not a calibrated result. At the first follow-up queue check,
+all ten production tasks were running; no production result has yet been
+verified.
 
 ## Interactive inspection and numerical readiness
 
