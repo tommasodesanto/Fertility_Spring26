@@ -29,3 +29,9 @@ the shared hard stop is 07:00 New York time, with 1800 seconds reserved for
 fresh native verification. Queued chains that cannot start within the budget
 are reported as such, never silently retried. Search losses remain provisional
 until selected native verification passes.
+
+The completed ten-chain collection is in `collection/RESULTS.md`, with the
+machine-readable cross-chain checks in `collection/verification.json` and the
+winner's complete experimental target and parameter CSVs. The verified lowest
+new-contract loss is 48.170707377609034 at chain 2. This is a numerical
+selection, not an optimizer-convergence certificate or economic interpretation.
