@@ -8,6 +8,7 @@
     :root { color-scheme: light dark; --bg:#fff; --fg:#202124; --muted:#626a73; --line:#aab2bb; --grid:#e4e8ec; --accent:#2563eb; --panel:#f7f8fa; --error:#b42318; }
     @media (prefers-color-scheme: dark) { :root { --bg:#17191c; --fg:#eef0f2; --muted:#aeb5bd; --line:#77808a; --grid:#343a40; --accent:#7aa2ff; --panel:#202328; --error:#ff8f85; } }
     * { box-sizing:border-box; }
+    [hidden] { display:none !important; }
     body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
     main { max-width:1320px; margin:auto; padding:24px clamp(16px,3vw,36px) 40px; }
     h1 { margin:0 0 6px; font-size:1.55rem; line-height:1.2; }
@@ -25,34 +26,55 @@
     #caption { margin:12px 2px 18px; }
     #caption strong { display:block; }
     #charts { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    #aggregate-age-charts { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    .aggregate-range { max-width:260px; margin:10px 0; }
+    #aggregate-metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px; margin:12px 0; }
+    .metric { padding:12px; border:1px solid var(--grid); border-radius:8px; background:var(--panel); }
+    .metric strong { display:block; font-size:.82rem; color:var(--muted); }
+    .metric span { display:block; margin-top:4px; font-size:1.15rem; }
+    .metric small { display:block; margin-top:3px; color:var(--muted); font-size:.78rem; }
     .chart { min-width:0; padding:12px; border:1px solid var(--grid); border-radius:9px; }
     .chart h2 { margin:0 0 4px; font-size:1rem; }
+    .chart-conditioning { margin:0 0 5px; color:var(--muted); font-size:.8rem; }
     .plot { width:100%; height:auto; display:block; overflow:visible; }
     .hover-readout { min-height:1.4em; margin:3px 2px 0; color:var(--muted); font-size:.82rem; }
     .empty { grid-column:1/-1; padding:24px; color:var(--muted); border:1px dashed var(--line); border-radius:8px; }
-    @media (max-width:700px) { #charts { grid-template-columns:1fr; } main { padding-top:18px; } }
+    @media (max-width:700px) { #charts,#aggregate-age-charts { grid-template-columns:1fr; } main { padding-top:18px; } }
   </style>
 </head>
 <body>
   <main>
     <h1 id="page-title">Curve viewer</h1>
     <p id="meta-note"></p>
+    <p><a href="#aggregate-section">Population aggregates</a></p>
     <nav id="meta-links" aria-label="Related links" hidden></nav>
     <section class="controls" aria-label="Slice selection">
       <label>Case<select id="case"></select></label>
       <label>Wealth range<select id="view"><option value="central">Central wealth range</option><option value="all">Full grid</option></select></label>
       <label>Policy view<select id="policy-mode"><option value="raw">Raw conditional policies</option><option value="average">Average over tenure choices</option></select></label>
+      <label>Policy tenure<select id="policy-tenure"></select></label>
       <label id="owner-policy-control" hidden>Owner branch<select id="owner-policy"><option value="buying">Buying</option><option value="staying">Staying</option></select></label>
+      <label>Asset display<select id="asset-display"><option value="raw">Assets b (model units)</option><option value="normalized">Normalized earnings label</option><option value="node_index">Grid node index</option></select></label>
       <label>Age<select id="age"></select></label>
       <label>Income<select id="income"></select></label>
-      <label>Tenure<select id="tenure"></select></label>
-      <label>Children<select id="children"></select></label>
-      <label>At home<select id="at-home"></select></label>
+      <label>Inherited tenure<select id="tenure"></select></label>
+      <label>Children ever born (n)<select id="children"></select></label>
+      <label>Children currently at home (m)<select id="at-home"></select></label>
     </section>
+    <p class="caption-note">Assets <em>b</em> use the saved grid values. The model expresses them in mean annual gross earnings units; the normalized earnings view relabels the same values without rescaling them. Grid node index relabels nodes 1 through <em>N</em><sub>b</sub> and leaves the saved grid unchanged.</p>
     <div id="status" role="status" aria-live="polite">Loading options…</div>
     <section id="caption" hidden aria-live="polite"><strong id="slice-label"></strong><span id="slice-mass"></span><div class="caption-note" id="slice-note"></div></section>
     <p id="curve-note">Curves join original asset-grid nodes; range only changes the displayed interval.</p>
     <section id="charts" aria-label="Charts"></section>
+    <section id="aggregate-section" aria-labelledby="aggregate-heading">
+      <h2 id="aggregate-heading">Whole-population stationary aggregates</h2>
+      <p class="caption-note">These statistics use the saved stationary population and do not depend on the slice selectors above. They describe this saved solution; they are not new calibration results.</p>
+      <label class="aggregate-range">Pooled asset display range<select id="aggregate-range"><option value="central">Central range</option><option value="all">Full grid</option></select></label>
+      <div id="aggregate-status" role="status" aria-live="polite">Loading population aggregates…</div>
+      <div id="aggregate-metrics"></div>
+      <section id="aggregate-age-charts" aria-label="Whole-population age profiles"></section>
+      <section id="aggregate-wealth-chart" aria-label="Pooled inherited-assets distribution"></section>
+    </section>
   </main>
   <script>
     (() => {
@@ -60,16 +82,23 @@
       const byId = id => document.getElementById(id);
       const controls = {
         case: byId('case'), view: byId('view'), policy_mode: byId('policy-mode'),
-        owner_policy: byId('owner-policy'), age: byId('age'), income: byId('income'),
+        owner_policy: byId('owner-policy'), policy_tenure: byId('policy-tenure'),
+        asset_display: byId('asset-display'), age: byId('age'), income: byId('income'),
         tenure: byId('tenure'), children: byId('children'), at_home: byId('at-home')
       };
       controls.view.value = 'central';
       controls.policy_mode.value = 'raw';
       function updateOwnerBranch() {
-        byId('owner-policy-control').hidden = controls.policy_mode.value !== 'raw' || Number(controls.tenure.value) === 0;
+        const raw=controls.policy_mode.value==='raw';
+        controls.policy_tenure.parentElement.hidden=!raw;
+        byId('owner-policy-control').hidden = !raw || Number(controls.policy_tenure.value) === 0;
       }
       const chartObservers = new Set();
+      const aggregateAgeObservers = new Set();
+      const aggregateWealthObservers = new Set();
       let latest = 0;
+      let aggregateRequest = 0;
+      let cachedAggregates = null;
       let activeController = null;
       const status = (message, error=false) => {
         byId('status').textContent = message;
@@ -112,12 +141,101 @@
           status(`Could not load slice: ${error.message || 'unknown error'}`, true);
         }
       }
+      async function requestAggregates() {
+        const requestId=++aggregateRequest;
+        const host=byId('aggregate-status'), metrics=byId('aggregate-metrics');
+        clearAggregateCharts(aggregateAgeObservers,byId('aggregate-age-charts'));
+        clearAggregateCharts(aggregateWealthObservers,byId('aggregate-wealth-chart'));
+        cachedAggregates=null;
+        metrics.replaceChildren(); host.textContent='Loading whole-population aggregates…';
+        try {
+          const response=await fetch(`/api/aggregates?case=${encodeURIComponent(controls.case.value)}`);
+          if(!response.ok)throw new Error(`Request failed (${response.status})`);
+          const data=await response.json();
+          if(requestId!==aggregateRequest)return;
+          const unitLabels={mean_consumption:data.units?.consumption,
+            mean_inherited_assets:data.units?.financial_assets,mean_next_assets:data.units?.financial_assets,
+            mean_asset_change:'mean b′ minus inherited b',mean_rooms:data.units?.rooms,
+            ownership_rate:data.units?.ownership_rate};
+          const names={mean_consumption:'Mean consumption',mean_inherited_assets:'Mean inherited assets',
+            mean_next_assets:'Mean next assets',mean_asset_change:'Change in financial assets (b′ − inherited b)',mean_rooms:'Mean rooms',
+            ownership_rate:'Ownership rate'};
+          const fmt=value=>Number.isFinite(value)?Number(value).toLocaleString(undefined,{maximumFractionDigits:4}):'—';
+          metrics.replaceChildren(...Object.entries(names).map(([key,label])=>{
+            const card=document.createElement('div');card.className='metric';
+            const name=document.createElement('strong');name.textContent=label;
+            const value=document.createElement('span');
+            value.textContent=key==='ownership_rate'&&Number.isFinite(data.overall?.[key])
+              ? `${fmt(100*data.overall[key])}%` : fmt(data.overall?.[key]);
+            const unit=unitLabels[key];
+            card.append(name,value);
+            if(unit){const detail=document.createElement('small');detail.textContent=unit;card.append(detail);}
+            return card;
+          }));
+          cachedAggregates=data;
+          renderAggregateAgeProfiles(data);
+          renderAggregateWealth(data);
+          host.textContent=`Population mass: ${fmt(data.population_mass)}. Consumption unit: ${data.units?.consumption||'flow per model period'}. Financial asset unit: ${data.units?.financial_assets||'stock in model units'}. Change in financial assets is mean b′ minus inherited b; it includes housing transaction cash flows and is not national-accounts total saving.`;
+        } catch(error) {
+          if(requestId!==aggregateRequest)return;
+          host.textContent=`Could not load whole-population aggregates: ${error.message||'unknown error'}`;
+        }
+      }
+      function clearAggregateCharts(observers,container){
+        observers.forEach(observer=>observer.disconnect());observers.clear();container.replaceChildren();
+      }
+      function renderAggregateAgeProfiles(data){
+        const container=byId('aggregate-age-charts');
+        clearAggregateCharts(aggregateAgeObservers,container);
+        const ageRows=data.by_age||[];
+        const addProfile=(title,field,ylabel)=>{
+          const plot={title,ylabel,conditioning:'Whole saved stationary population, aggregated by age.',
+            x:ageRows.map(row=>row.age),xlabel:'Age (years)',
+            valid:ageRows.map(row=>Number.isFinite(row[field])),markers:true,
+            series:[{label:title,values:ageRows.map(row=>row[field])}]};
+          container.append(makeChart(plot,{xlabel:'Age (years)'},aggregateAgeObservers));
+        };
+        addProfile('Mean rooms by age','mean_rooms','Rooms');
+        addProfile('Ownership by age','ownership_rate','Population share');
+        addProfile('Mean inherited assets by age','mean_inherited_assets',data.units?.financial_assets||'Asset stock');
+        addProfile('Mean next assets by age','mean_next_assets',data.units?.financial_assets||'Asset stock');
+        addProfile('Change in financial assets by age','mean_asset_change','Mean next-period b′ minus inherited b');
+        addProfile('Mean consumption by age','mean_consumption',data.units?.consumption||'Consumption flow');
+      }
+      function renderAggregateWealth(data){
+        const container=byId('aggregate-wealth-chart');
+        clearAggregateCharts(aggregateWealthObservers,container);
+        const distribution=data.inherited_asset_distribution;
+        if(!distribution||!Array.isArray(distribution.asset_nodes)||!distribution.asset_nodes.length)return;
+        const nodes=distribution.asset_nodes, probabilities=distribution.probability;
+        const [first,last]=pooledWealthRange(probabilities,byId('aggregate-range').value);
+        const plot={title:'Pooled inherited-assets distribution',ylabel:'Population probability at node',
+          conditioning:'Post-fertility, pre-tenure inherited assets pooled across age, income, tenure, and family states.',
+          x:nodes.slice(first,last+1),xlabel:'Assets b (model units)',
+          valid:probabilities.slice(first,last+1).map(Number.isFinite),markers:true,
+          series:[{label:'Probability',values:probabilities.slice(first,last+1)}]};
+        container.append(makeChart(plot,{xlabel:plot.xlabel},aggregateWealthObservers));
+      }
+      function pooledWealthRange(probabilities,range){
+        const count=probabilities.length;
+        if(range==='all'||count===0)return [0,Math.max(0,count-1)];
+        let cumulative=0,lower=count,upper=count;
+        for(let i=0;i<count;i++){
+          cumulative+=probabilities[i];
+          if(lower===count&&cumulative>=.0001)lower=i;
+          if(upper===count&&cumulative>=.995)upper=i;
+        }
+        if(lower===count)lower=count-1;
+        if(upper===count)upper=count-1;
+        return [Math.max(0,lower-1),Math.min(count-1,upper+1)];
+      }
       function render(data) {
         const charts = Array.isArray(data.charts) ? data.charts.slice(0, 6) : [];
         const hasPoints = charts.some(chart => {
           const valid = Array.isArray(chart.valid) ? chart.valid : data.valid;
+          const xs = Array.isArray(chart.x) ? chart.x : data.x;
           return (chart.series || []).some(series =>
-            (series.values || []).some((value, i) => valid?.[i] && Number.isFinite(data.x?.[i]) && Number.isFinite(value)));
+            (series.values || []).some((value, i) => valid?.[i] && Number.isFinite(xs?.[i]) && Number.isFinite(value)));
         });
         if (!hasPoints) {
           clearView();
@@ -132,20 +250,21 @@
         byId('charts').replaceChildren(...charts.map(chart => makeChart(chart, data)));
         status('');
       }
-      function makeChart(chart, data) {
+      function makeChart(chart, data, observers=chartObservers) {
         const card = document.createElement('article'); card.className = 'chart';
         const heading = document.createElement('h2'); heading.textContent = chart.title ?? 'Chart';
+        const conditioning=document.createElement('p');conditioning.className='chart-conditioning';conditioning.textContent=chart.conditioning??'';
         const axisDescription = document.createElement('p'); axisDescription.className='axis-description'; axisDescription.textContent=chart.ylabel ?? '';
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         svg.setAttribute('class','plot'); svg.setAttribute('viewBox','0 0 720 390'); svg.setAttribute('role','img');
-        svg.setAttribute('aria-label', `${chart.title ?? 'Chart'}; horizontal axis ${data.xlabel ?? 'x'}; vertical axis ${chart.ylabel ?? 'y'}`);
+        svg.setAttribute('aria-label', `${chart.title ?? 'Chart'}; horizontal axis ${chart.xlabel ?? data.xlabel ?? 'x'}; vertical axis ${chart.ylabel ?? 'y'}`);
         const readout = document.createElement('div'); readout.className='hover-readout'; readout.setAttribute('aria-live','polite');
         const redraw = () => draw(svg, readout, chart, data);
-        card.append(heading, axisDescription, svg, readout);
+        card.append(heading, conditioning, axisDescription, svg, readout);
         redraw();
         if ('ResizeObserver' in window) {
           const observer = new ResizeObserver(redraw);
-          chartObservers.add(observer);
+          observers.add(observer);
           observer.observe(svg);
         } else { window.addEventListener('resize', redraw); }
         return card;
@@ -155,7 +274,7 @@
         svg.replaceChildren();
         svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
         const valid=Array.isArray(chart.valid)?chart.valid:(Array.isArray(data.valid)?data.valid:[]);
-        const xs=Array.isArray(data.x)?data.x:[];
+        const xs=Array.isArray(chart.x)?chart.x:(Array.isArray(data.x)?data.x:[]);
         const series=(chart.series||[]).map(s=>({label:s.label??'',values:s.values||[]}));
         const points=[];
         series.forEach((s,si)=>s.values.forEach((v,i)=>{ if(valid[i]&&Number.isFinite(xs[i])&&Number.isFinite(v)) points.push({x:xs[i],y:v,si,i}); }));
@@ -190,7 +309,7 @@
           if(chart.markers) s.values.forEach((v,i)=>{if(valid[i]&&Number.isFinite(xs[i])&&Number.isFinite(v))add('circle',{cx:X(xs[i]),cy:Y(v),r:2.5,fill:colors[si%colors.length]});});
           if(series.length>1){const lx=L+si*105;add('line',{x1:lx,y1:H-13,x2:lx+18,y2:H-13,stroke:colors[si%colors.length],'stroke-width':3});add('text',{x:lx+23,y:H-9,fill:style.getPropertyValue('--fg').trim(),'font-size':12},s.label);}
         });
-        const xlabel=String(data.xlabel??'x'), maxChars=Math.max(16,Math.floor(pw/8));
+        const xlabel=String(chart.xlabel??data.xlabel??'x'), maxChars=Math.max(16,Math.floor(pw/8));
         const words=xlabel.split(/\s+/), lines=[]; let line='';
         for(const word of words){const next=line?`${line} ${word}`:word;if(next.length>maxChars&&line&&lines.length<1){lines.push(line);line=word;}else line=next;}
         lines.push(line);
@@ -202,10 +321,10 @@
           const xval=xmin+Math.max(0,Math.min(1,(local-L)/pw))*(xmax-xmin);
           let index=-1,best=Infinity;
           xs.forEach((x,i)=>{if(valid[i]&&Number.isFinite(x)&&Math.abs(x-xval)<best){best=Math.abs(x-xval);index=i;}});
-          if(index>=0)readout.textContent=`${data.xlabel??'x'}: ${fmt(xs[index])} · ${series.map(s=>`${s.label}: ${fmt(s.values[index])}`).join(' · ')}`;
+          if(index>=0)readout.textContent=`${xlabel}: ${fmt(xs[index])} · ${series.map(s=>`${s.label}: ${fmt(s.values[index])}`).join(' · ')}`;
         };
         hit.addEventListener('pointermove',e=>showAt(e.clientX));
-        hit.addEventListener('focus',()=>{if(xs.length)readout.textContent=`${data.xlabel??'x'}: ${fmt(xs[0])} · ${series.map(s=>`${s.label}: ${fmt(s.values[0])}`).join(' · ')}`;});
+        hit.addEventListener('focus',()=>{const index=valid.findIndex(Boolean);if(index>=0)readout.textContent=`${xlabel}: ${fmt(xs[index])} · ${series.map(s=>`${s.label}: ${fmt(s.values[index])}`).join(' · ')}`;});
         hit.addEventListener('pointerleave',()=>{readout.textContent='';});
       }
       function fmt(value){return Number.isFinite(value)?Number(value).toLocaleString(undefined,{maximumFractionDigits:3}):'—';}
@@ -233,12 +352,17 @@
           fill(controls.age,meta.ages||[],x=>x,x=>x,meta.default?.age);
           fill(controls.income,meta.incomes||[],x=>x.index,x=>x.label??x.index,meta.default?.income);
           fill(controls.tenure,meta.tenures||[],x=>x.index,x=>x.label??x.index,meta.default?.tenure);
+          fill(controls.policy_tenure,meta.tenures||[],x=>x.index,x=>x.label??x.index,meta.default?.policy_tenure??meta.default?.tenure);
           fill(controls.children,meta.children||[],x=>x,x=>x,meta.default?.children);
           fill(controls.at_home,meta.at_home||[],x=>x,x=>x,meta.default?.at_home);
-          if(Object.values(controls).some(select=>!select.options.length))throw new Error('The API did not provide all selector options.');
-          Object.values(controls).forEach(select=>select.addEventListener('change',()=>{updateOwnerBranch();requestSlice();}));
+          if(Object.entries(controls).some(([key,select])=>key!=='asset_display'&&key!=='owner_policy'&&!select.options.length))throw new Error('The API did not provide all selector options.');
+          Object.entries(controls).forEach(([key,select])=>select.addEventListener('change',()=>{
+            updateOwnerBranch();requestSlice();if(key==='case')requestAggregates();
+          }));
+          byId('aggregate-range').addEventListener('change',()=>{if(cachedAggregates)renderAggregateWealth(cachedAggregates);});
           updateOwnerBranch();
           await requestSlice();
+          await requestAggregates();
         }catch(error){status(`Could not load options: ${error.message||'unknown error'}`,true);}
       }
       init();

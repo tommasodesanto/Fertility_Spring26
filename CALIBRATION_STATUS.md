@@ -24,6 +24,34 @@ An annual-beta 0.98 fixed-price experiment passed a real solve and plotting
 check in 7.43 seconds; this is not a new equilibrium or calibration.
 See [MODEL_PLAYGROUND.md](code/model/tools/MODEL_PLAYGROUND.md).
 The separate timing-calibration deployment remains under its existing owner
+for deployment and monitoring.
+
+## October 2 late — asset-grid diagnosis and interactive model control
+
+At the authenticated selected soft point chain16/case0046, six one-core
+fixed-price numerical checks now distinguish the upper endpoint from grid
+spacing. The native 120-node baseline exactly replays all 11 checked saved
+arrays. Extending the upper endpoint from 3000 to 6000 changes upper-tail
+policies but leaves every tested tenure-averaged policy at originally occupied
+states and all population means exactly unchanged. Refining strictly above
+the exact core endpoint changes mean financial assets by 0.3155%. Core
+refinement to 214 and 402 total nodes changes that mean by 0.7627% and 0.9619%
+relative to baseline; ownership moves from 66.6495% to 66.4100% to 66.3334%.
+Mean consumption is stable, but some individual policies move materially.
+The second refinement reduces changes; full grid convergence is not certified.
+Prices, all economic inputs, entry atoms and probabilities are unchanged.
+No new grid or calibration is adopted. The complete six-case population table,
+17 standard figures per solution, source definitions and limitations are in
+[the grid packet](output/model/fixed_reference_economics_20260928/asset_grid_diagnosis_v1/README.md).
+
+The existing explorer now separates inherited tenure from conditional policy
+branches, uses saved asset levels by default, and adds whole-population means,
+age profiles and a pooled asset distribution. The Python playground exposes
+editable primitives, direct native inputs, one-price solves and plotting.
+An annual-beta 0.98 fixed-price experiment passed a real solve and plotting
+check in 7.43 seconds; this is not a new equilibrium or calibration.
+See [MODEL_PLAYGROUND.md](code/model/tools/MODEL_PLAYGROUND.md).
+The separate timing-calibration deployment remains under its existing owner
 and pending upload authorization.
 
 ## October 2 late — asset-grid diagnosis and interactive model control

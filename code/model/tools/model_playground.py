@@ -4,6 +4,7 @@ Importing this module loads no model state and performs no lifecycle solve.
 """
 from __future__ import annotations
 
+import copy
 import hashlib
 import importlib
 import json
@@ -25,6 +26,64 @@ SELECTION = ROOT / "output/model/fixed_reference_economics_20260928/soft_timing_
 REFERENCE_CLOSURE = ROOT / "output/model/fixed_reference_economics_20260928/soft_timing_review_v1/soft_postcheck/selected_postcheck/phase_b_ge/selected_repeat_final/closure.json"
 V2_DIR = ROOT / "output/model/fixed_reference_economics_20260928/normalized_calibration_v2"
 ORIGINAL_ENGINE = ROOT / "output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/source"
+
+PARAMETER_ORDER = (
+    "beta_annual", "chi", "first_birth_fixed_cost", "kappa_fert",
+    "kappa_fert_continuation", "theta0", "h_P", "child_benefit_curvature",
+    "tenure_choice_kappa", "psi_child",
+)
+PARAMETER_DESCRIPTIONS = {
+    "beta_annual": "Annual discount factor; native period beta is beta_annual ** period_years.",
+    "chi": "Owner housing-service premium.",
+    "first_birth_fixed_cost": "Fixed utility cost of the first birth.",
+    "kappa_fert": "First-birth choice shock/logit scale.",
+    "kappa_fert_continuation": "Later-birth attempt choice shock/logit scale.",
+    "theta0": "Bequest utility scale.",
+    "h_P": "Physical room floor added at the first child.",
+    "child_benefit_curvature": "Curvature of the child benefit by children at home.",
+    "tenure_choice_kappa": "Tenure-choice logit scale.",
+    "psi_child": "Child benefit scale.",
+}
+
+
+def bind_parameters(P: SimpleNamespace, parameters: dict[str, float]) -> SimpleNamespace:
+    """Copy P and apply the ten native calibration coordinates without clamping."""
+    if set(parameters) != set(PARAMETER_ORDER):
+        missing = sorted(set(PARAMETER_ORDER) - set(parameters))
+        extra = sorted(set(parameters) - set(PARAMETER_ORDER))
+        raise ValueError(f"Expected the ten selected parameters; missing={missing}, extra={extra}")
+    values = {name: float(parameters[name]) for name in PARAMETER_ORDER}
+    if not np.isfinite(list(values.values())).all():
+        raise ValueError("Parameter values must be finite")
+    if not 0.0 < values["beta_annual"] < 1.0:
+        raise ValueError("beta_annual must lie strictly between zero and one")
+    if values["chi"] <= 0.0 or values["h_P"] < 0.0 or values["tenure_choice_kappa"] < 0.0:
+        raise ValueError("chi must be positive; h_P and tenure_choice_kappa must be nonnegative")
+    if not 0.0 <= values["child_benefit_curvature"] < 1.0:
+        raise ValueError("child_benefit_curvature must be in [0, 1)")
+    Q = copy.deepcopy(P)
+    for name, value in values.items():
+        if name not in {"beta_annual", "h_P"}:
+            setattr(Q, name, value)
+    # Native calibration mapping: annual discounting is compounded to the
+    # model period and the associated discount-rate fields move with it.
+    Q.beta = values["beta_annual"] ** float(Q.period_years)
+    Q.rho = 1.0 / Q.beta - 1.0
+    Q.rho_hat = Q.rho
+    Q.eps_fert = values["kappa_fert"]
+    # h_P is the physical first-child room floor; later-child floors stay zero.
+    Q.child_room_floor = True
+    Q.hbar_first_child_jump = values["h_P"]
+    Q.hbar_child_rooms = 0.0
+    return Q
+
+
+def _selected_parameters() -> dict[str, float]:
+    selected = json.loads(SELECTION.read_text())["selected"]
+    point = selected["parameters"]
+    if tuple(point.keys()) != PARAMETER_ORDER and set(point) != set(PARAMETER_ORDER):
+        raise RuntimeError("Selected soft record does not contain the expected ten parameters")
+    return {name: float(point[name]) for name in PARAMETER_ORDER}
 
 
 def load_saved_solution(case: str = "soft") -> SimpleNamespace:
@@ -83,6 +142,8 @@ def load_reference_model() -> tuple[SimpleNamespace, np.ndarray, SimpleNamespace
     if source_record[selected["source_key"]]["best"] != selected["selected"]:
         raise RuntimeError("Selected soft parameter record differs from its source")
     point = selected["selected"]["parameters"]
+    if set(point) != set(PARAMETER_ORDER):
+        raise RuntimeError("Selected soft record does not contain the expected ten parameters")
     if selected["selected"]["weight_fingerprint"] != v2.weight_fingerprint({}):
         raise RuntimeError("Soft reference weight fingerprint differs")
     if v2.native.target_identity(selected["selected"]["target_fit"]) != v2.CONFIG["base_target_contract"]:
@@ -99,6 +160,7 @@ def load_reference_model() -> tuple[SimpleNamespace, np.ndarray, SimpleNamespace
         v2.inputs.LANES["floor_s0"].update(seed=dict(point), bounds=bounds, free_coordinates=list(point))
         P, b_grid = v2.inputs.proposal("floor_s0")
         P, _ = v2.inputs.entry(P, b_grid, "nonnegative_mean")
+        P = bind_parameters(P, {name: float(point[name]) for name in PARAMETER_ORDER})
         with tempfile.TemporaryDirectory(prefix="model-playground-check-") as temp:
             P = v2.native.utility_checks(P, b_grid, "floor_s0", Path(temp))
     finally:
@@ -133,8 +195,122 @@ def solve_at_price(P: SimpleNamespace, b_grid: np.ndarray, solver: SimpleNamespa
     )
 
 
+class ModelResult:
+    """A native solution with convenient plots and aggregate summaries."""
+
+    def __init__(self, solution, P, parameters, price, *, label="fixed-price experiment"):
+        self.solution = solution
+        self.P = copy.deepcopy(P)
+        self.parameters = dict(parameters)
+        self.price = float(price)
+        self.label = label
+
+    def __getattr__(self, name):
+        return getattr(self.solution, name)
+
+    def aggregates(self):
+        from model_policy_tools import aggregate_solution
+        return aggregate_solution(
+            self.solution, houses=np.asarray(self.P.H_own, dtype=float),
+            age_start=int(self.P.age_start), period_years=float(self.P.period_years),
+        )
+
+    def plot_policy(self, **kwargs):
+        from model_policy_tools import plot_policy
+        options = dict(houses=np.asarray(self.P.H_own, dtype=float),
+                       age_start=int(self.P.age_start),
+                       period_years=float(self.P.period_years))
+        options.update(kwargs)
+        return plot_policy(self.solution, **options)
+
+    def plot_aggregates(self, *, wealth_range="central"):
+        from model_policy_tools import plot_aggregates
+        return plot_aggregates(
+            self.solution, houses=np.asarray(self.P.H_own, dtype=float),
+            age_start=int(self.P.age_start), period_years=float(self.P.period_years),
+            wealth_range=wealth_range,
+        )
+
+
+class ModelPlayground:
+    """Selected soft reference with editable parameters and explicit solves."""
+
+    def __init__(self):
+        P, b_grid, solver = load_reference_model()
+        self.P = P
+        self.b_grid = b_grid.copy()
+        self.solver = solver
+        self._reference_params = _selected_parameters()
+        self.params = dict(self._reference_params)
+        self.reference_price = float(P.reference_price)
+        self._authenticated_base_P = copy.deepcopy(P)
+        self.last_result = None
+
+    def solve(self, *, price=None, overrides=None):
+        """Solve once at a fixed price; this does not solve a market-price root."""
+        if overrides:
+            unknown = set(overrides) - set(PARAMETER_ORDER)
+            if unknown:
+                raise KeyError(f"Unknown model parameters: {sorted(unknown)}")
+            self.params.update({key: float(value) for key, value in overrides.items()})
+        # Keep advanced edits to non-estimated native P fields. The visible
+        # ten-parameter dictionary deliberately takes precedence on overlaps.
+        P = bind_parameters(self.P, self.params)
+        solve_price = self.reference_price if price is None else float(price)
+        solution = solve_at_price(P, self.b_grid, self.solver, solve_price)
+        result = ModelResult(solution, P, self.params, solve_price)
+        self.last_result = result
+        return result
+
+    def saved_result(self, case="soft"):
+        """Wrap the hash-checked saved solution as the comparison baseline."""
+        solution = load_saved_solution(case)
+        price = float(solution.price)
+        return ModelResult(solution, self._authenticated_base_P, self._reference_params, price,
+                           label=f"saved {case} solution")
+
+    def reset_parameters(self):
+        """Restore the ten estimated coordinates to the authenticated selection."""
+        self.params.clear()
+        self.params.update(self._reference_params)
+
+    def reset(self):
+        """Restore the full initialized P object and all ten selected values."""
+        restored = copy.deepcopy(self._authenticated_base_P)
+        vars(self.P).clear()
+        vars(self.P).update(vars(restored))
+        self.reset_parameters()
+
+    def compare(self, baseline, changed):
+        """Return comparable aggregate levels and changed-minus-baseline gaps."""
+        left, right = baseline.aggregates(), changed.aggregates()
+        fields = tuple(left["overall"])
+        overall = {
+            key: {"baseline": left["overall"][key], "changed": right["overall"][key],
+                  "difference": right["overall"][key] - left["overall"][key]}
+            for key in fields
+        }
+        by_age = []
+        for old, new in zip(left["by_age"], right["by_age"]):
+            row = {"age": old["age"]}
+            for key in fields:
+                a, b = old[key], new[key]
+                row[key] = {"baseline": a, "changed": b,
+                            "difference": None if a is None or b is None else b - a}
+            by_age.append(row)
+        return {"units": left["units"], "overall": overall, "by_age": by_age,
+                "baseline_price": baseline.price, "changed_price": changed.price,
+                "changed_parameters": dict(changed.parameters)}
+
+    def show_parameters(self):
+        """Print the editable selected primitives and their native interpretation."""
+        print("parameter                    value            meaning")
+        for name in PARAMETER_ORDER:
+            print(f"{name:28s} {self.params[name]:<16.10g} {PARAMETER_DESCRIPTIONS[name]}")
+
+
 def main() -> None:
-    global sol
+    global sol, model, P
     if len(sys.argv) > 1 and sys.argv[1] in {"-h", "--help"}:
         print(__doc__)
         print("Interactive: code/model/.venv/bin/python -i code/model/tools/model_playground.py")
@@ -142,6 +318,10 @@ def main() -> None:
     sol = load_saved_solution()
     print(f"Saved case: {sol.case_id}; price={sol.price:.15g}; timing={sol.timing}")
     print(f"V shape={sol.V.shape}; wealth grid nodes={len(sol.b_grid)}; arrays loaded with no solve")
+    model = ModelPlayground()
+    P = model.P
+    model.show_parameters()
+    print("Ready: model.solve(), model.params['beta_annual']=0.98, result.aggregates(), result.plot_policy(), result.plot_aggregates()")
     print("Open Python: code/model/.venv/bin/python -i code/model/tools/model_playground.py")
 
 

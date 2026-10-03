@@ -1,99 +1,105 @@
 # Python model playground
 
-The saved soft case is available as arrays, and the selected soft reference can
-be rebuilt as native Python inputs. Loading either does not solve the model.
-The native interface uses the selected soft parameter vector, the checked
-target and weight contract, nonnegative-mean entry, zero unsecured renter credit,
-soft purchase financing, and the derived \(H_0\) and exact reference price.
-The direct interface was checked on October 2: one 6.14-second native solve
-reproduced all 11 checked policy/distribution arrays exactly. This is a replay
-check, not a grid-convergence certificate.
-
-Start the read-only browser explorer by double-clicking
-`code/model/tools/start_model_explorer.command`. It serves saved cases at
-<http://127.0.0.1:8765>; it does not run solves or overwrite output. Its command
-window stays open while the server runs. If that URL already responds, the
-launcher reports it and leaves the existing process alone.
-
-For direct Python control, double-click
-`code/model/tools/start_model_playground.command`. It opens the interactive
-session below with all six numerical thread limits set to one; loading the
-saved arrays at startup does not solve the model.
-
-From the repository root, start an interactive Python session:
-
-```bash
-NUMBA_NUM_THREADS=1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 \
-  code/model/.venv/bin/python -i code/model/tools/model_playground.py
-```
-
-`sol = load_saved_solution()` loads the hash-checked original-timing arrays into
-a `SimpleNamespace`, including `sol.b_grid`, `sol.V`, `sol.c_pol`, policy
-arrays, and `sol.price`. For example, plot consumption by wealth at age 30 for
-income state five, childless, conditional on renting (not averaged over tenure
-choices). Axes are wealth, tenure, location, age, income, children ever born,
-and children at home. Age index 3 is age 30; income index 4 is state five.
+Start by double-clicking `code/model/tools/start_model_playground.command`. The
+interactive session loads the saved solution and the authenticated selected soft
+reference, but runs no model solve. It displays the ten selected primitives.
+For one core, one explicit fixed-price experiment, use:
 
 ```python
-import matplotlib.pyplot as plt
-plt.plot(sol.b_grid, sol.c_pol[:, 0, 0, 3, 4, 0, 0], ".-", markersize=2)
-plt.xlabel("Financial wealth / mean annual gross earnings")
-plt.ylabel("Four-year consumption / mean annual gross earnings")
-plt.show()
+model.show_parameters()
+model.params["beta_annual"] = 0.98
+changed = model.solve()
+changed.aggregates()
+changed.plot_policy(variable="consumption", age=30, income=4)
+fig, axes = changed.plot_aggregates()
+fig, axes = changed.plot_aggregates(wealth_range="all")
 ```
 
-Build the corresponding native inputs without solving:
+`model.params` is the editable parameter dictionary. `model.P` exposes the
+initialized native parameter object for inspection and direct edits to other
+native inputs; the ten visible parameters take precedence if the same fields
+are changed in both places. Such `P` edits are copied into each solve.
+`model.b_grid` and `model.solver` expose the native grid and solver. The ten
+editable values and their meanings are:
 
-```python
-P, b_grid, solver = load_reference_model()
-P.reference_price
-P.H0
-```
-
-To change a preference parameter and inspect the resulting fixed-price
-partial-equilibrium solution, edit the parameter, rebuild shared objects, and
-explicitly request one solve:
-
-```python
-P.hbar_first_child_jump -= 0.1
-SD = solver.precompute_shared(P, b_grid)
-changed = solver.solve_markov_income_at_prices(
-    [P.reference_price], P, b_grid, SD=SD, fast_stats=False
-)
-from small_credit_lab.engine import diagnostics
-from pathlib import Path
-diagnostics.write_diagnostics(changed, P, Path("output/model/my_fixed_price_diagnostic"))
-```
-
-For another price with the same parameters, call
-`solve_at_price(P, b_grid, solver, price)`. A changed price does not solve the
-renewal-price root or re-derive \(H_0\); this is a fixed-price exercise. A changed
-parameter likewise does not recalibrate or clear markets. Use a copy of `P` if
-you want to preserve the original initialized inputs.
-
-The saved grid has 120 nodes, from -12 to 3000. The upper endpoint has zero
-mass. A nonuniform grid is not a household distribution: inspect
-`sol.g_beginning_distribution` for mass after fertility and before tenure,
-and `sol.g` for the realized cross-section. `sol.c_pol` is a conditional policy;
-owner stayers have their own `sol.c_pol_stay` and `sol.bp_pol_stay` arrays.
-The browser defaults to raw conditional policies on saved grid nodes. Its
-separate average-over-tenure mode applies the transaction maps and choice
-probabilities. The range selector only changes the displayed interval.
-
-## Model source map
-
-The active playground imports the hash-checked `small_credit_lab` solver. Its
-model stages are byte-identical to the canonical extracted stages documented
-in `code/model/refactor_lab/README.md`:
-
-| File | Role |
+| Parameter | Meaning |
 |---|---|
-| `code/model/tools/model_playground.py` | Python entry point and saved/reference loading |
-| `code/model/refactor_lab/engine/household.py` | Household choices and Bellman solution |
-| `code/model/refactor_lab/engine/distribution.py` | Population distribution and moments |
-| `code/model/refactor_lab/engine/equilibrium.py` | Fixed-price solve and market equilibrium |
-| `code/model/refactor_lab/engine/parameters.py` | Primitive helpers and defaults |
+| `beta_annual` | Annual discount factor; native `P.beta = beta_annual ** P.period_years`. |
+| `chi` | Owner housing-service premium. |
+| `first_birth_fixed_cost` | Fixed utility cost of the first birth. |
+| `kappa_fert` | First-birth choice shock scale used in the logit. |
+| `kappa_fert_continuation` | Choice shock scale for later-birth attempts. |
+| `theta0` | Bequest utility scale. |
+| `h_P` | Physical room floor added at the first child. |
+| `child_benefit_curvature` | Curvature of the child benefit by children at home. |
+| `tenure_choice_kappa` | Tenure-choice logit scale. |
+| `psi_child` | Child benefit scale. |
 
-The initialized `P` comes from the selected soft input bundle and checked
-reference contract. Module defaults are not a substitute for those loaded
-parameters.
+The native mapping also sets `P.rho = P.rho_hat = 1/P.beta - 1` as discount-rate
+fields; it leaves gross asset return `P.R_gross = 1.08243216` unchanged.
+It sets `P.eps_fert = P.kappa_fert`, `P.child_room_floor = True`,
+`P.hbar_first_child_jump = h_P`, and `P.hbar_child_rooms = 0`. The other eight
+values map to same-named `P` fields. Every solve starts from a copy of current
+`model.P`, applies the visible dictionary, and rebuilds the shared solver
+objects. It starts from the authenticated selection unless you directly edit
+other `P` fields. Values are not silently clamped to calibration search bounds;
+the model can still reject an economically or numerically invalid value.
+The child preference routine uses the selected curvature and scale as
+`psi_child * m ** (1 - child_benefit_curvature)`, where `m` is children at home.
+
+Each call to `model.solve()` runs the stationary household model once at the
+current fixed price. It does not recalibrate, solve the renewal-price root, or
+clear the housing market. Set a different fixed price explicitly with
+`changed = model.solve(price=0.72)`. To compare against the saved selected soft
+solution, which requires no baseline solve, run:
+
+```python
+baseline = model.saved_result()
+changed = model.solve(overrides={"beta_annual": 0.98})
+comparison = model.compare(baseline, changed)
+comparison["overall"]
+comparison["by_age"]
+```
+
+Use `model.reset()` to restore the initialized selected parameters and native
+inputs after an experiment. Result objects keep their own parameter and solution
+snapshots, so later edits do not change earlier comparisons.
+
+`model_experiment.py` provides the same comparison as a readable script. Edit
+its `OVERRIDES` and `PRICE` at the top, then run
+`code/model/.venv/bin/python code/model/tools/model_experiment.py`. Importing the
+script does not solve anything; executing it runs the changed case and displays
+baseline and changed age profiles. The launcher does not invoke that experiment.
+
+Use `changed.g`, `changed.g_stay_distribution`, and
+`changed.g_beginning_distribution` for realized, stayer, and post-fertility
+pre-tenure mass. `changed.c_pol` and `changed.bp_pol` are conditional policies;
+owner stayers have `changed.c_pol_stay` and `changed.bp_pol_stay`. The aggregate
+summary reports consumption per model period, assets in mean annual
+gross-earnings units, rooms, and ownership. It also returns the inherited asset
+distribution and age profiles. The stationary distribution uses the model's
+demographic construction; it is not a calibrated equilibrium after a parameter
+change. A changed parameter or price can alter the entire stationary
+distribution, not just the plotted policy.
+The aggregate plot defaults to the central inherited-asset range; pass
+`wealth_range="all"` to show every saved asset-grid node.
+
+The saved wealth grid has not been certified as converged. The focused
+[asset-grid diagnosis](../../../output/model/fixed_reference_economics_20260928/asset_grid_diagnosis_v1/README.md)
+finds measurable resolution error in some aggregates, while not establishing
+full convergence for policies, targets, or equilibrium prices.
+
+For one-off experiments, keep the workload to one core and a ten-minute budget.
+The standard launcher sets Numba, BLAS, OpenMP, and NumExpr thread counts to one.
+The saved wealth grid has 120 nodes from -12 to 3000. Zero mass at its upper
+endpoint does not establish grid convergence.
+
+The selected parameter record is authenticated before edits from
+`output/model/fixed_reference_economics_20260928/soft_timing_review_v1/soft_selected.json`
+and its pinned source checkpoint. The target and weight contract is checked
+against `output/model/fixed_reference_economics_20260928/normalized_calibration_v2/`.
+Saved solution arrays are loaded from the hash-checked cases named in
+`output/model/fixed_reference_economics_20260928/soft_timing_review_v1/explorer_cases.json`.
+The active solver is the pinned `small_credit_lab` source overlay; the model
+stages are documented in `code/model/refactor_lab/README.md`. The child benefit
+mapping is implemented in `code/model/refactor_lab/engine/child_preferences.py`.

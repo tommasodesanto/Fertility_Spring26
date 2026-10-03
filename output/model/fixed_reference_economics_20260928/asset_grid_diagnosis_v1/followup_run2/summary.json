@@ -1,0 +1,905 @@
+{
+  "H0": [
+    6.757074077757929
+  ],
+  "baseline_authentication": {
+    "cached_v1_baseline120_against_canonical_arrays": {
+      "V": {
+        "available": true,
+        "exact": true,
+        "shape": [
+          120,
+          6,
+          1,
+          17,
+          9,
+          4,
+          4
+        ]
+      },
+      "bp_pol": {
+        "available": true,
+        "exact": true,
+        "shape": [
+          120,
+          6,
+          1,
+          17,
+          9,
+          4,
+          4
+        ]
+      },
+      "bp_pol_stay": {
+        "available": true,
+        "exact": true,
+        "shape": [
+          120,
+          6,
+          1,
+          17,
+          9,
+          4,
+          4
+        ]
+      },
+      "c_pol": {
+        "available": true,
+        "exact": true,
+        "shape": [
+          120,
+          6,
+          1,
+          17,
+          9,
+          4,
+          4
+        ]
+      },
+      "c_pol_stay": {
+        "available": true,
+        "exact": true,
+        "shape": [
+          120,
+          6,
+          1,
+          17,
+          9,
+          4,
+          4
+        ]
+      },
+      "fert_probs": {
+        "available": true,
+        "exact": true,
+        "shape": [
+          120,
+          6,
+          1,
+          17,
+          9,
+          4
+        ]
+      },
+      "g": {
+        "available": true,
+        "exact": true,
+        "shape": [
+          120,
+          6,
+          1,
+          17,
+          9,
+          4,
+          4
+        ]
+      },
+      "g_beginning_distribution": {
+        "available": true,
+        "exact": true,
+        "shape": [
+          120,
+          6,
+          1,
+          17,
+          9,
+          4,
+          4
+        ]
+      },
+      "g_stay_distribution": {
+        "available": true,
+        "exact": true,
+        "shape": [
+          120,
+          6,
+          1,
+          17,
+          9,
+          4,
+          4
+        ]
+      },
+      "hR_pol": {
+        "available": true,
+        "exact": true,
+        "shape": [
+          120,
+          6,
+          1,
+          17,
+          9,
+          4,
+          4
+        ]
+      },
+      "tenure_probs": {
+        "available": true,
+        "exact": true,
+        "shape": [
+          120,
+          6,
+          1,
+          17,
+          9,
+          4,
+          4,
+          6
+        ]
+      }
+    },
+    "canonical_saved_baseline_sha256": "e154b3430b970390bb4db43eddd26919a11e1f9e15bcba16a37394f31700eab0",
+    "current_H0_matches_v1_with_absolute_tolerance_1e-12": true,
+    "current_loader_reverifies_selected_sources_and_target_contract": true,
+    "current_reference_price_matches_v1": true,
+    "prior_v1_11_array_native_exact_replay_receipt": {
+      "V": {
+        "available": true,
+        "exact": true
+      },
+      "bp_pol": {
+        "available": true,
+        "exact": true
+      },
+      "bp_pol_stay": {
+        "available": true,
+        "exact": true
+      },
+      "c_pol": {
+        "available": true,
+        "exact": true
+      },
+      "c_pol_stay": {
+        "available": true,
+        "exact": true
+      },
+      "fert_probs": {
+        "available": true,
+        "exact": true
+      },
+      "g": {
+        "available": true,
+        "exact": true
+      },
+      "g_beginning_distribution": {
+        "available": true,
+        "exact": true
+      },
+      "g_stay_distribution": {
+        "available": true,
+        "exact": true
+      },
+      "hR_pol": {
+        "available": true,
+        "exact": true
+      },
+      "tenure_probs": {
+        "available": true,
+        "exact": true
+      }
+    }
+  },
+  "cached_214_distribution_alias_verified": true,
+  "case_budget_seconds": 180.0,
+  "cases": {
+    "occupied_region_quarter_refinement": {
+      "comparisons": {
+        "canonical_baseline120": {
+          "expected_policy_differences": {
+            "grid_node_comparison": "candidate expected policies are evaluated on every original beginning-state wealth node",
+            "policies": {
+              "consumption": {
+                "mass_ge_1e-12_population": {
+                  "cells": 568298,
+                  "mass": 0.9999999944600407,
+                  "max_abs": 1.4921876374376168,
+                  "max_state": {
+                    "age_income_children_childstate_indices": [
+                      15,
+                      1,
+                      0,
+                      0
+                    ],
+                    "location_index": 0,
+                    "tenure_index": 5,
+                    "wealth": 53.348382301167675
+                  },
+                  "weighted_mean_abs": 0.015260864265206129
+                },
+                "strictly_positive": {
+                  "cells": 624091,
+                  "mass": 1.0000000000000002,
+                  "max_abs": 1.799187425448082,
+                  "max_state": {
+                    "age_income_children_childstate_indices": [
+                      16,
+                      0,
+                      3,
+                      3
+                    ],
+                    "location_index": 0,
+                    "tenure_index": 5,
+                    "wealth": 212.38373531524127
+                  },
+                  "weighted_mean_abs": 0.015260864435946242
+                }
+              },
+              "housing_services": {
+                "mass_ge_1e-12_population": {
+                  "cells": 568298,
+                  "mass": 0.9999999944600407,
+                  "max_abs": 1.4189015143929282,
+                  "max_state": {
+                    "age_income_children_childstate_indices": [
+                      15,
+                      0,
+                      3,
+                      3
+                    ],
+                    "location_index": 0,
+                    "tenure_index": 5,
+                    "wealth": -3.744186046511628
+                  },
+                  "weighted_mean_abs": 0.0193431173753702
+                },
+                "strictly_positive": {
+                  "cells": 624091,
+                  "mass": 1.0000000000000002,
+                  "max_abs": 1.4189015143929282,
+                  "max_state": {
+                    "age_income_children_childstate_indices": [
+                      15,
+                      0,
+                      3,
+                      3
+                    ],
+                    "location_index": 0,
+                    "tenure_index": 5,
+                    "wealth": -3.744186046511628
+                  },
+                  "weighted_mean_abs": 0.019343117415986127
+                }
+              },
+              "next_wealth": {
+                "mass_ge_1e-12_population": {
+                  "cells": 568298,
+                  "mass": 0.9999999944600407,
+                  "max_abs": 2.3415330734300763,
+                  "max_state": {
+                    "age_income_children_childstate_indices": [
+                      15,
+                      6,
+                      3,
+                      3
+                    ],
+                    "location_index": 0,
+                    "tenure_index": 5,
+                    "wealth": -3.744186046511628
+                  },
+                  "weighted_mean_abs": 0.036600336418066884
+                },
+                "strictly_positive": {
+                  "cells": 624091,
+                  "mass": 1.0000000000000002,
+                  "max_abs": 2.3415330734300763,
+                  "max_state": {
+                    "age_income_children_childstate_indices": [
+                      15,
+                      6,
+                      3,
+                      3
+                    ],
+                    "location_index": 0,
+                    "tenure_index": 5,
+                    "wealth": -3.744186046511628
+                  },
+                  "weighted_mean_abs": 0.036600336706590623
+                }
+              }
+            },
+            "population_mass": 0.9999999999999997,
+            "state_cells_at_or_above_1e-12_population": 568298,
+            "strictly_positive_state_cells": 624091,
+            "transaction_map": "x=b when tenure is unchanged; otherwise x=b+(1-psi)*price*H_old-price*H_new, clipped as in native forward mapping",
+            "weighting": "baseline g_beginning_distribution; policies average over saved tenure_probs at each inherited state"
+          },
+          "pooled_wealth_distribution": {
+            "baseline_mass": 1.0000000000000002,
+            "baseline_normalized_mass": 0.9999999999999998,
+            "candidate_mass": 0.9999999999999999,
+            "candidate_normalized_mass": 1.0,
+            "wealth_cdf_wasserstein1": 0.09329733149814143
+          },
+          "selected_renter_slice": {
+            "definition": "raw renter conditional policy; age 30, income state 5, childless",
+            "max_abs_change": {
+              "bp_pol": {
+                "baseline": 32.34926536832801,
+                "candidate": 31.945287577604795,
+                "value": 0.4039777907232178,
+                "wealth": 33.6605536290589
+              },
+              "c_pol": {
+                "baseline": 5.995403342838017,
+                "candidate": 6.399381133561235,
+                "value": 0.4039777907232178,
+                "wealth": 33.6605536290589
+              },
+              "hR_pol": {
+                "baseline": 4.313676273951418,
+                "candidate": 4.273744893305965,
+                "value": 0.039931380645453096,
+                "wealth": -0.5348837209302326
+              }
+            }
+          },
+          "whole_population_aggregates": {
+            "baseline_overall": {
+              "mean_asset_change": -0.08890837882868836,
+              "mean_consumption": 2.4032577052220314,
+              "mean_inherited_assets": 1.7707893281522993,
+              "mean_next_assets": 1.681880949323618,
+              "mean_rooms": 5.95716775722193,
+              "ownership_rate": 0.6664953270565473
+            },
+            "baseline_population_mass": 0.9999999999999964,
+            "candidate_overall": {
+              "mean_asset_change": -0.08898300140138315,
+              "mean_consumption": 2.4033203279293502,
+              "mean_inherited_assets": 1.787823273128904,
+              "mean_next_assets": 1.6988402717275295,
+              "mean_rooms": 5.952842392962945,
+              "ownership_rate": 0.6633338432169106
+            },
+            "candidate_population_mass": 0.9999999999999957,
+            "overall_differences": {
+              "mean_asset_change": {
+                "absolute_change": -7.462257269479078e-05,
+                "baseline": -0.08890837882868836,
+                "candidate": -0.08898300140138315,
+                "relative_change": -0.0008393199120026252
+              },
+              "mean_consumption": {
+                "absolute_change": 6.26227073188268e-05,
+                "baseline": 2.4032577052220314,
+                "candidate": 2.4033203279293502,
+                "relative_change": 2.6057424962272713e-05
+              },
+              "mean_inherited_assets": {
+                "absolute_change": 0.01703394497660482,
+                "baseline": 1.7707893281522993,
+                "candidate": 1.787823273128904,
+                "relative_change": 0.009619407970104838
+              },
+              "mean_next_assets": {
+                "absolute_change": 0.016959322403911514,
+                "baseline": 1.681880949323618,
+                "candidate": 1.6988402717275295,
+                "relative_change": 0.010083545099153327
+              },
+              "mean_rooms": {
+                "absolute_change": -0.004325364258984443,
+                "baseline": 5.95716775722193,
+                "candidate": 5.952842392962945,
+                "relative_change": -0.0007260772963361262
+              },
+              "ownership_rate": {
+                "absolute_change": -0.0031614838396367695,
+                "baseline": 0.6664953270565473,
+                "candidate": 0.6633338432169106,
+                "relative_change": -0.004743444869446984
+              }
+            },
+            "units": {
+              "asset_change_definition": "mean next-period b' minus inherited b from the post-fertility, pre-tenure distribution; includes housing transactions and is not national-account saving",
+              "consumption": "flow per 4-year model period, in mean annual gross-earnings units",
+              "financial_assets": "stock in mean annual gross-earnings units",
+              "ownership_rate": "fraction of realized household mass",
+              "population_mass": "saved stationary household mass",
+              "rooms": "rooms"
+            }
+          }
+        },
+        "v1_occupied_refinement214": {
+          "expected_policy_differences": {
+            "grid_node_comparison": "candidate expected policies are evaluated on every original beginning-state wealth node",
+            "policies": {
+              "consumption": {
+                "mass_ge_1e-12_population": {
+                  "cells": 1093906,
+                  "mass": 0.9999999887634571,
+                  "max_abs": 0.561659097839696,
+                  "max_state": {
+                    "age_income_children_childstate_indices": [
+                      11,
+                      7,
+                      2,
+                      2
+                    ],
+                    "location_index": 0,
+                    "tenure_index": 3,
+                    "wealth": 33.6605536290589
+                  },
+                  "weighted_mean_abs": 0.006747851625068497
+                },
+                "strictly_positive": {
+                  "cells": 1170097,
+                  "mass": 0.9999999999999998,
+                  "max_abs": 1.358050265035132,
+                  "max_state": {
+                    "age_income_children_childstate_indices": [
+                      16,
+                      0,
+                      0,
+                      0
+                    ],
+                    "location_index": 0,
+                    "tenure_index": 4,
+                    "wealth": 168.70239755710477
+                  },
+                  "weighted_mean_abs": 0.006747851691643574
+                }
+              },
+              "housing_services": {
+                "mass_ge_1e-12_population": {
+                  "cells": 1093906,
+                  "mass": 0.9999999887634571,
+                  "max_abs": 0.30687692244828213,
+                  "max_state": {
+                    "age_income_children_childstate_indices": [
+                      15,
+                      0,
+                      3,
+                      3
+                    ],
+                    "location_index": 0,
+                    "tenure_index": 5,
+                    "wealth": -3.5348837209302326
+                  },
+                  "weighted_mean_abs": 0.005336684133262178
+                },
+                "strictly_positive": {
+                  "cells": 1170097,
+                  "mass": 0.9999999999999998,
+                  "max_abs": 0.30687692244828213,
+                  "max_state": {
+                    "age_income_children_childstate_indices": [
+                      15,
+                      0,
+                      3,
+                      3
+                    ],
+                    "location_index": 0,
+                    "tenure_index": 5,
+                    "wealth": -3.5348837209302326
+                  },
+                  "weighted_mean_abs": 0.005336684152837579
+                }
+              },
+              "next_wealth": {
+                "mass_ge_1e-12_population": {
+                  "cells": 1093906,
+                  "mass": 0.9999999887634571,
+                  "max_abs": 0.7947370123056958,
+                  "max_state": {
+                    "age_income_children_childstate_indices": [
+                      11,
+                      0,
+                      2,
+                      2
+                    ],
+                    "location_index": 0,
+                    "tenure_index": 2,
+                    "wealth": -1.8604651162790697
+                  },
+                  "weighted_mean_abs": 0.010612472860757217
+                },
+                "strictly_positive": {
+                  "cells": 1170097,
+                  "mass": 0.9999999999999998,
+                  "max_abs": 1.3578809075014604,
+                  "max_state": {
+                    "age_income_children_childstate_indices": [
+                      16,
+                      0,
+                      0,
+                      0
+                    ],
+                    "location_index": 0,
+                    "tenure_index": 4,
+                    "wealth": 168.70239755710477
+                  },
+                  "weighted_mean_abs": 0.010612472990059227
+                }
+              }
+            },
+            "population_mass": 1.0000000000000004,
+            "state_cells_at_or_above_1e-12_population": 1093906,
+            "strictly_positive_state_cells": 1170097,
+            "transaction_map": "x=b when tenure is unchanged; otherwise x=b+(1-psi)*price*H_old-price*H_new, clipped as in native forward mapping",
+            "weighting": "baseline g_beginning_distribution; policies average over saved tenure_probs at each inherited state"
+          },
+          "pooled_wealth_distribution": {
+            "baseline_mass": 0.9999999999999998,
+            "baseline_normalized_mass": 1.0,
+            "candidate_mass": 0.9999999999999999,
+            "candidate_normalized_mass": 1.0,
+            "wealth_cdf_wasserstein1": 0.0426534156627902
+          },
+          "selected_renter_slice": {
+            "definition": "raw renter conditional policy; age 30, income state 5, childless",
+            "max_abs_change": {
+              "bp_pol": {
+                "baseline": 28.4224770859266,
+                "candidate": 28.27330458893283,
+                "value": 0.14917249699377066,
+                "wealth": 29.696839960528948
+              },
+              "c_pol": {
+                "baseline": 5.631740477391027,
+                "candidate": 5.780912974384798,
+                "value": 0.14917249699377066,
+                "wealth": 29.696839960528948
+              },
+              "hR_pol": {
+                "baseline": 4.301698132655224,
+                "candidate": 4.330093771036114,
+                "value": 0.028395638380890098,
+                "wealth": -0.4651162790697674
+              }
+            }
+          },
+          "whole_population_aggregates": {
+            "baseline_overall": {
+              "mean_asset_change": -0.0889151081463544,
+              "mean_consumption": 2.4033385080431584,
+              "mean_inherited_assets": 1.7842960059701158,
+              "mean_next_assets": 1.6953808978237674,
+              "mean_rooms": 5.953624628469315,
+              "ownership_rate": 0.6641004044703284
+            },
+            "baseline_population_mass": 0.9999999999999961,
+            "candidate_overall": {
+              "mean_asset_change": -0.08898300140138315,
+              "mean_consumption": 2.4033203279293502,
+              "mean_inherited_assets": 1.787823273128904,
+              "mean_next_assets": 1.6988402717275295,
+              "mean_rooms": 5.952842392962945,
+              "ownership_rate": 0.6633338432169106
+            },
+            "candidate_population_mass": 0.9999999999999957,
+            "overall_differences": {
+              "mean_asset_change": {
+                "absolute_change": -6.789325502876142e-05,
+                "baseline": -0.0889151081463544,
+                "candidate": -0.08898300140138315,
+                "relative_change": -0.0007635738902438159
+              },
+              "mean_consumption": {
+                "absolute_change": -1.8180113808163867e-05,
+                "baseline": 2.4033385080431584,
+                "candidate": 2.4033203279293502,
+                "relative_change": -7.564524825496365e-06
+              },
+              "mean_inherited_assets": {
+                "absolute_change": 0.003527267158788261,
+                "baseline": 1.7842960059701158,
+                "candidate": 1.787823273128904,
+                "relative_change": 0.0019768396874657
+              },
+              "mean_next_assets": {
+                "absolute_change": 0.003459373903762053,
+                "baseline": 1.6953808978237674,
+                "candidate": 1.6988402717275295,
+                "relative_change": 0.002040470025468961
+              },
+              "mean_rooms": {
+                "absolute_change": -0.0007822355063700215,
+                "baseline": 5.953624628469315,
+                "candidate": 5.952842392962945,
+                "relative_change": -0.00013138811315538637
+              },
+              "ownership_rate": {
+                "absolute_change": -0.0007665612534177857,
+                "baseline": 0.6641004044703284,
+                "candidate": 0.6633338432169106,
+                "relative_change": -0.0011542851777498581
+              }
+            },
+            "units": {
+              "asset_change_definition": "mean next-period b' minus inherited b from the post-fertility, pre-tenure distribution; includes housing transactions and is not national-account saving",
+              "consumption": "flow per 4-year model period, in mean annual gross-earnings units",
+              "financial_assets": "stock in mean annual gross-earnings units",
+              "ownership_rate": "fraction of realized household mass",
+              "population_mass": "saved stationary household mass",
+              "rooms": "rooms"
+            }
+          }
+        }
+      },
+      "elapsed_solve_seconds": 43.121113834000425,
+      "entry_censored_mass": 0.0,
+      "g_beginning_mass": 0.9999999999999997,
+      "grid_max": 3000.0,
+      "grid_min": -12.0,
+      "grid_nodes": 402,
+      "status": "complete",
+      "total_population_mass": 0.9999999999999957,
+      "upper_endpoint_mass": 0.0
+    },
+    "strict_upper_tail_refinement": {
+      "comparisons": {
+        "canonical_baseline120": {
+          "expected_policy_differences": {
+            "grid_node_comparison": "candidate expected policies are evaluated on every original beginning-state wealth node",
+            "policies": {
+              "consumption": {
+                "mass_ge_1e-12_population": {
+                  "cells": 568298,
+                  "mass": 0.9999999944600407,
+                  "max_abs": 3.6257620164577276,
+                  "max_state": {
+                    "age_income_children_childstate_indices": [
+                      11,
+                      8,
+                      3,
+                      0
+                    ],
+                    "location_index": 0,
+                    "tenure_index": 5,
+                    "wealth": 168.70239755710477
+                  },
+                  "weighted_mean_abs": 0.0016477470334517969
+                },
+                "strictly_positive": {
+                  "cells": 624091,
+                  "mass": 1.0000000000000002,
+                  "max_abs": 18.3512725886838,
+                  "max_state": {
+                    "age_income_children_childstate_indices": [
+                      13,
+                      8,
+                      0,
+                      0
+                    ],
+                    "location_index": 0,
+                    "tenure_index": 3,
+                    "wealth": 845.5148793793368
+                  },
+                  "weighted_mean_abs": 0.0016477485333545973
+                }
+              },
+              "housing_services": {
+                "mass_ge_1e-12_population": {
+                  "cells": 568298,
+                  "mass": 0.9999999944600407,
+                  "max_abs": 0.506820903159678,
+                  "max_state": {
+                    "age_income_children_childstate_indices": [
+                      5,
+                      0,
+                      1,
+                      0
+                    ],
+                    "location_index": 0,
+                    "tenure_index": 5,
+                    "wealth": 33.6605536290589
+                  },
+                  "weighted_mean_abs": 0.000358687796548715
+                },
+                "strictly_positive": {
+                  "cells": 624091,
+                  "mass": 1.0000000000000002,
+                  "max_abs": 0.5189140187576413,
+                  "max_state": {
+                    "age_income_children_childstate_indices": [
+                      3,
+                      0,
+                      1,
+                      0
+                    ],
+                    "location_index": 0,
+                    "tenure_index": 5,
+                    "wealth": 33.6605536290589
+                  },
+                  "weighted_mean_abs": 0.0003586878650656825
+                }
+              },
+              "next_wealth": {
+                "mass_ge_1e-12_population": {
+                  "cells": 568298,
+                  "mass": 0.9999999944600407,
+                  "max_abs": 3.5661455293136157,
+                  "max_state": {
+                    "age_income_children_childstate_indices": [
+                      11,
+                      8,
+                      3,
+                      0
+                    ],
+                    "location_index": 0,
+                    "tenure_index": 5,
+                    "wealth": 168.70239755710477
+                  },
+                  "weighted_mean_abs": 0.001905680586163546
+                },
+                "strictly_positive": {
+                  "cells": 624091,
+                  "mass": 1.0000000000000002,
+                  "max_abs": 18.345169142327222,
+                  "max_state": {
+                    "age_income_children_childstate_indices": [
+                      13,
+                      8,
+                      0,
+                      0
+                    ],
+                    "location_index": 0,
+                    "tenure_index": 4,
+                    "wealth": 845.5148793793368
+                  },
+                  "weighted_mean_abs": 0.00190568209193111
+                }
+              }
+            },
+            "population_mass": 0.9999999999999997,
+            "state_cells_at_or_above_1e-12_population": 568298,
+            "strictly_positive_state_cells": 624091,
+            "transaction_map": "x=b when tenure is unchanged; otherwise x=b+(1-psi)*price*H_old-price*H_new, clipped as in native forward mapping",
+            "weighting": "baseline g_beginning_distribution; policies average over saved tenure_probs at each inherited state"
+          },
+          "pooled_wealth_distribution": {
+            "baseline_mass": 1.0000000000000002,
+            "baseline_normalized_mass": 0.9999999999999998,
+            "candidate_mass": 0.9999999999999999,
+            "candidate_normalized_mass": 1.0,
+            "wealth_cdf_wasserstein1": 0.011105876603459465
+          },
+          "selected_renter_slice": {
+            "definition": "raw renter conditional policy; age 30, income state 5, childless",
+            "max_abs_change": {
+              "bp_pol": {
+                "baseline": 2299.385490660104,
+                "candidate": 2274.022101679917,
+                "value": 25.36338898018721,
+                "wealth": 2382.984704172845
+              },
+              "c_pol": {
+                "baseline": 281.9431928643371,
+                "candidate": 307.3065818445243,
+                "value": 25.36338898018721,
+                "wealth": 2382.984704172845
+              },
+              "hR_pol": {
+                "baseline": 5.994271265773484,
+                "candidate": 5.994254746823445,
+                "value": 1.6518950038957314e-05,
+                "wealth": 4.069767441860465
+              }
+            }
+          },
+          "whole_population_aggregates": {
+            "baseline_overall": {
+              "mean_asset_change": -0.08890837882868836,
+              "mean_consumption": 2.4032577052220314,
+              "mean_inherited_assets": 1.7707893281522993,
+              "mean_next_assets": 1.681880949323618,
+              "mean_rooms": 5.95716775722193,
+              "ownership_rate": 0.6664953270565473
+            },
+            "baseline_population_mass": 0.9999999999999964,
+            "candidate_overall": {
+              "mean_asset_change": -0.08876403107020994,
+              "mean_consumption": 2.403574277300091,
+              "mean_inherited_assets": 1.7763768193896505,
+              "mean_next_assets": 1.6876127883194472,
+              "mean_rooms": 5.956722647988579,
+              "ownership_rate": 0.6664318864017285
+            },
+            "candidate_population_mass": 0.9999999999999963,
+            "overall_differences": {
+              "mean_asset_change": {
+                "absolute_change": 0.00014434775847842196,
+                "baseline": -0.08890837882868836,
+                "candidate": -0.08876403107020994,
+                "relative_change": 0.0016235562989688076
+              },
+              "mean_consumption": {
+                "absolute_change": 0.0003165720780597958,
+                "baseline": 2.4032577052220314,
+                "candidate": 2.403574277300091,
+                "relative_change": 0.00013172623034638246
+              },
+              "mean_inherited_assets": {
+                "absolute_change": 0.00558749123735125,
+                "baseline": 1.7707893281522993,
+                "candidate": 1.7763768193896505,
+                "relative_change": 0.003155367580163488
+              },
+              "mean_next_assets": {
+                "absolute_change": 0.005731838995829186,
+                "baseline": 1.681880949323618,
+                "candidate": 1.6876127883194472,
+                "relative_change": 0.0034079932935409557
+              },
+              "mean_rooms": {
+                "absolute_change": -0.00044510923335039365,
+                "baseline": 5.95716775722193,
+                "candidate": 5.956722647988579,
+                "relative_change": -7.471826402920811e-05
+              },
+              "ownership_rate": {
+                "absolute_change": -6.34406548188915e-05,
+                "baseline": 0.6664953270565473,
+                "candidate": 0.6664318864017285,
+                "relative_change": -9.518544578409176e-05
+              }
+            },
+            "units": {
+              "asset_change_definition": "mean next-period b' minus inherited b from the post-fertility, pre-tenure distribution; includes housing transactions and is not national-account saving",
+              "consumption": "flow per 4-year model period, in mean annual gross-earnings units",
+              "financial_assets": "stock in mean annual gross-earnings units",
+              "ownership_rate": "fraction of realized household mass",
+              "population_mass": "saved stationary household mass",
+              "rooms": "rooms"
+            }
+          }
+        }
+      },
+      "elapsed_solve_seconds": 7.29670466700918,
+      "entry_censored_mass": 0.0,
+      "g_beginning_mass": 0.9999999999999999,
+      "grid_max": 3000.0,
+      "grid_min": -12.0,
+      "grid_nodes": 137,
+      "status": "complete",
+      "total_population_mass": 0.9999999999999963,
+      "upper_endpoint_mass": 0.0
+    }
+  },
+  "classification": "follow-up fixed-price grid diagnosis; no recalibration or general-equilibrium root",
+  "elapsed_seconds": 54.92966670799069,
+  "exact_core_cutoff": 33.6605536290589,
+  "excluded_process_local_field": "native_inherited_distribution_evidence_dir",
+  "input_fingerprint_excluding_grid_and_exact_evidence_scratch_path": "30789497c75a3f01183ba1a7b9370d10d7509b5d74f6c3d52b12a8c00acef8b0",
+  "occupied_interval_rule": "original intervals overlapping [-6.4, exact core cutoff], with quarter, midpoint, and three-quarter nodes",
+  "preserved_prior_failed_attempt_log": "output/model/fixed_reference_economics_20260928/asset_grid_diagnosis_v1/followup",
+  "price": 0.7266387868818555,
+  "reference_case": "authenticated selected soft checkpoint chain16/case0046",
+  "resource_limit": {
+    "applied": false,
+    "reason": "current virtual size unavailable or already at/above 24 GiB"
+  },
+  "selection_source_key": "chain_16/search/best_so_far.json",
+  "status": "complete",
+  "v1_214_saved_arrays": "output/model/fixed_reference_economics_20260928/asset_grid_diagnosis_v1/occupied_region_refinement/solution_arrays.npz",
+  "v1_214_saved_arrays_sha256": "810af40a9e6a0723664a9f95627bfefe828fb65120688912530b8ef5ba065448",
+  "v1_214_wealth_distribution_alias": {
+    "basis": "native solver assigns g_cross_sectional_wealth_distribution = g.copy() immediately after capturing g_beginning_distribution = g.copy()",
+    "pinned_native_source": "output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/source/small_credit_lab/engine/distribution.py:1294-1295",
+    "reconstructed_from": "g_beginning_distribution.copy()",
+    "stored_in_minimal_npz": false
+  },
+  "v1_boundary_note": "The preserved v1 tail refinement used old[1:] > 33.66055 and therefore included the interval ending at 33.6605536290589. This follow-up strict tail grid starts at the original node old[searchsorted(old, 33.66055)] = exact core cutoff.",
+  "wall_budget_seconds": 600.0
+}
