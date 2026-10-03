@@ -1,0 +1,65 @@
+{
+  "verified_utc": "2026-10-03T04:49:46.973856+00:00",
+  "run_directory": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/model_runs/20261003T043422512745Z_49780265",
+  "reference": "authenticated selected soft chain16/case0046; original transaction timing",
+  "economic_changes": [],
+  "native_solves": 1,
+  "baseline_saved_array_exact_matches": {
+    "V": true,
+    "c_pol": true,
+    "bp_pol": true,
+    "hR_pol": true,
+    "tenure_probs": true,
+    "fert_probs": true,
+    "bp_pol_stay": true,
+    "c_pol_stay": true,
+    "g": true,
+    "g_stay_distribution": true,
+    "g_beginning_distribution": true
+  },
+  "household_solve_seconds": 6.217803916981211,
+  "total_seconds_through_roundtrip": 9.874640291993273,
+  "roundtrip_validation": {
+    "P": {
+      "arrays": 49,
+      "fields": 260
+    },
+    "solution": {
+      "arrays": 67,
+      "fields": 228
+    }
+  },
+  "png_counts": {
+    "native_diagnostics": 17,
+    "policy_plots": 8,
+    "aggregate_plots": 7
+  },
+  "saved_loading_initializes_or_solves_model": false,
+  "failed_validation_preserves_latest": true,
+  "failed_validation_not_publicly_loadable": true,
+  "native_result_sha256": "5aff6b98b5b82948c0853647cd501c3ee345313105f545f94a148436d242e5df",
+  "fixed_price": 0.7266387868818555,
+  "solver_diagnostics_summary": {
+    "adult_entry_stationary_relative_gap": 7.078028620522224e-10,
+    "adult_entry_stationary_relative_gap_meaning": "Renewal/stationary-entry diagnostic; not a convergence certificate.",
+    "all_probability_like_arrays_in_unit_interval": true,
+    "all_reported_finite_arrays_finite": true,
+    "meaning": "Finite/value/probability/distribution checks only; no convergence certificate."
+  },
+  "outputs_are_temporary": true,
+  "market_price_root_solved": false,
+  "calibration_run": false,
+  "explicit_nonbeta_internal_edit_applies": true,
+  "explicit_external_edit_applies": true,
+  "return_and_user_cost_binding_checked": true,
+  "ineffective_constructor_edits_rejected": true,
+  "invalid_or_heterogeneous_financing_rejected": true,
+  "final_source_sha256": {
+    "code/model/run_model.py": "a7bbc64766d02ab1972df6bf68dede4c61a8739bb65a0073e92688c5bcea05ac",
+    "code/model/plot_model_policies.py": "13cdd3211c2ebeeeff6d1fb7b0ae34897272d15e6ba8d00872eb88f5ffdcb47c",
+    "code/model/plot_model_aggregates.py": "d07fbe92b9f746370d6747feedfc54bf844227812c786e0db0c94e91647b60ae",
+    "code/model/tools/model_run_io.py": "31caee2ab0b161844549592debfbbb2ca84891de4c8d544b1e19d2b3fc2680de"
+  },
+  "post_native_smoke_changes": "Guard-only and plot-label changes; default economic bindings unchanged and checked without another solve.",
+  "existing_playground_and_policy_tests_passed": 9
+}

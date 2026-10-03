@@ -1,8 +1,12 @@
 # Python Model Codebase
 
-Direct access to the checked October 2 soft solution, editable Python inputs,
-one-price solves, and the local viewer: [model playground](tools/MODEL_PLAYGROUND.md).
-This is an inspection interface; it does not adopt an experimental calibration.
+Run the local fixed-price model with [run_model.py](run_model.py),
+then plot its saved solution using [plot_model_policies.py](plot_model_policies.py)
+and [plot_model_aggregates.py](plot_model_aggregates.py). These scripts use the
+project Python environment, save each validated result under
+`tmp/model_runs/`, and let both plotters reload it without another solve. See
+the [run and plotting guide](tools/MODEL_PLAYGROUND.md) for the selected
+starting point, limits, outputs, and optional interactive workflow.
 
 Local installation and laptop smoke checks: [setup guide](../../docs/workflow/local_laptop_setup.md).
 The tested Apple Silicon dependency snapshot is `requirements-laptop.txt`.

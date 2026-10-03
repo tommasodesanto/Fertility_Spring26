@@ -313,10 +313,25 @@ structured deployment receipt.
 Tommaso wants direct Python parameter edits, quick fixed-price solves, policy
 inspection and whole-population aggregates from the existing engine.
 [MODEL_PLAYGROUND.md](code/model/tools/MODEL_PLAYGROUND.md) documents
-`model.params`, the wider `model.P` dictionary, `model.solve(overrides=...)`,
-saved-result comparisons and aggregate plotting. A fixed-price playground solve
-is not the normalized calibration GE. The browser explorer requires its server;
-opening its HTML alone is insufficient.
+the preferred three-script entry: [run_model.py](code/model/run_model.py),
+[plot_model_policies.py](code/model/plot_model_policies.py), and
+[plot_model_aggregates.py](code/model/plot_model_aggregates.py). Internal and
+common external parameters are explicit editable literals. Each run writes its
+full native arrays and effective inputs to a separate `tmp/model_runs/` folder;
+both plotters load those arrays and use editable Matplotlib calls. The older
+interactive interface remains optional. A fixed-price household solve is not
+the normalized calibration GE; it reports numerical, renewal and housing
+diagnostics without claiming a new equilibrium.
+
+The [October 3 workflow verification](output/model/fixed_reference_economics_20260928/model_control_scripts_v1/verification.json)
+at the authenticated selected soft point matched all 11 checked baseline arrays
+exactly. The household solve took 6.2 seconds; the full run with 17 standard
+figures, saving and round-trip validation took 9.9 seconds. Saved loading
+reproduced 67 solution arrays and 49 parameter arrays exactly, without reference
+initialization or solving. The two plotters produced eight policy and seven
+aggregate figures. A failed validation preserves the last complete run.
+The verification receipt records source hashes and its verified-as-of time.
+The browser explorer requires its server; opening its HTML alone is insufficient.
 
 The explorer distinguishes inherited tenure from the chosen branch, exposes
 asset values and grid indices, and reports aggregates independently of slice
