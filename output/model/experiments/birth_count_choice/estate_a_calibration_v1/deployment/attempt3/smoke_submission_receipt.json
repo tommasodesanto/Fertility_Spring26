@@ -1,0 +1,45 @@
+{
+  "status": "paired_loop_smoke_submitted",
+  "remote_root": "/scratch/td2248/projects/estate_birth_calibration_20261003_v3",
+  "source_files": 412,
+  "archive_sha256": "5cb99a84f1aa51dab49462292ab31756f9183776e30d2d327844ae2af2c5fc44",
+  "inventory_sha256": "d14a39bcbb55067060ca492943f1e0067000c10733a48c3a3aff3b06e61e2afe",
+  "reporting_source_sha256": "306a02bb5a43a0e0819a5392694141075c03607d6bec30828359ca4194859968",
+  "start_plan_sha256": "b2f46d15a78cd3ee5b70a206ee76df78822c0cca706755aa45c188fc9ea29c66",
+  "target_fingerprint": "c7a3d185668122e508a6c322bc5ef0715ebb0ecb23948c8d9b184ee25d1cde70",
+  "weight_fingerprint": "f762ebb5684ab30487b3b8b64fc10977fda396b520035d91c0c5c803255f88e4",
+  "preflight": {
+    "binary": {
+      "status": "evaluator_initialized_zero_solves",
+      "actual_reporting_context_built": true,
+      "lifecycle_solves": 0,
+      "context_flags": {
+        "bequest_net_of_selling_cost": true,
+        "birth_count_choice_cap": 1,
+        "birth_count_choice_enabled": true,
+        "estate_flow_net_of_selling_cost": true
+      }
+    },
+    "count3": {
+      "status": "evaluator_initialized_zero_solves",
+      "actual_reporting_context_built": true,
+      "lifecycle_solves": 0,
+      "context_flags": {
+        "bequest_net_of_selling_cost": true,
+        "birth_count_choice_cap": 3,
+        "birth_count_choice_enabled": true,
+        "estate_flow_net_of_selling_cost": true
+      }
+    }
+  },
+  "production_submitted": false,
+  "smoke_submitted": true,
+  "lifecycle_solves": 0,
+  "preserved_failed_v1_v2": true,
+  "host_and_container_pin_verification_passed": true,
+  "verified_epoch": 1791064735.110676,
+  "job_id": "19125188",
+  "array": "0,5%2",
+  "submission_epoch": 1791064891.7262762,
+  "smoke_gate": "two full objective calls plus fresh-process selected-point verification for each arm; exact native repeat, all 14 moments/31 parameters/17 plots"
+}

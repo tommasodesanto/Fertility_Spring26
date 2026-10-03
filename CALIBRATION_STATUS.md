@@ -79,26 +79,37 @@ mass gate. Descriptive count hazards use pre-birth exposure; active empirical
 target observers remain separate. The original no-A count experiment and its
 full fit remain in [current_params_v1](output/model/experiments/birth_count_choice/current_params_v1/RESULTS.md).
 
-**Matched Estate-A recalibration: smoke running as of 17:44 New York;
-ten-task production array not released.** The [start plan](output/model/experiments/birth_count_choice/estate_a_calibration_v1/start_plan.json)
-uses five identical starts per arm, ten tasks total, population-one GE, the same
-new-target contract and bounds, and beta range \([0.93,0.99]\). Starts include
-the preserved provisional new-wealth candidate (chain 6, `0060_nm`, search loss
-**22.141841386410267**), current anchor and three perturbations. That paused
-candidate awaits fresh native verification; [all targets, parameters, actual
-bounds and provenance](output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/PAUSED_BEST.md)
-are recorded. The previous old calibration searches are stopped; there is no
-automatic restart authorization. Both remote arms passed full reporting-context
-preflight with zero solves. The immutable v2 package has 412 pinned files
-(inventory SHA `74a961a913d94e4d337cbe075e8ef3c0bd22b9ef6798ca792dea90266553d2c4`).
-Smoke array **19124485**, tasks **0 and 5**, is **RUNNING**:
-1.5-hour limit, two objective calls plus fresh GE verification per task.
-[Submission receipt](output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt2/smoke_submission_receipt.json)
-records the launch. Both smokes must pass before the ten-task production release.
-The first smoke array 19124185 failed before solving because the package
-omitted a compatibility bootstrap; its source and failure receipts are preserved.
-The v2 package includes that file and its two authenticated dependencies.
-Smoke jobs are validation, not completed calibration results.
+**Matched Estate-A recalibration: v3 smoke RUNNING; submitted October 3, 18:01:31
+New York (22:01:31 UTC); ten-task production array NOT released.**
+Smoke array **19125188**, tasks **0 and 5**, has a 1.5-hour limit, two objective
+calls plus fresh selected-point GE verification per arm; both smokes must pass
+before production release. A fresh scheduler check confirms both tasks RUNNING on `cs604`. [Submission receipt](output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt3/smoke_submission_receipt.json)
+and [actual-context preflight](output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt3/context_preflight_receipt.json)
+pin the 412-file v3 package (inventory SHA
+`d14a39bcbb55067060ca492943f1e0067000c10733a48c3a3aff3b06e61e2afe`).
+Both arms built their actual reporting contexts with zero solves. The reporting
+adapter now installs count corrections once per actual module and rebinds the
+facade for each context; 35 tests pass, including three successive count-menu
+contexts. The retained first-call local A GE results above remain valid.
+
+The [start plan](output/model/experiments/birth_count_choice/estate_a_calibration_v1/start_plan.json)
+uses five identical starts per arm, ten tasks total, population-one GE and beta
+range \([0.93,0.99]\). Starts include the preserved provisional new-wealth
+candidate (chain 6, `0060_nm`, search loss **22.141841386410267**), current
+anchor and three perturbations. The provisional search value awaits fresh native
+verification; it is distinct from the earlier fully verified new-target loss
+**48.170707377609034**. [Complete paused fit, bounds and provenance](output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/PAUSED_BEST.md)
+are retained. Previous old calibration searches are stopped with no automatic
+restart. Smoke submissions and zero-solve checks are validation, not completed
+calibration results; earlier smoke chronology is in the October 3 daily note.
+
+The ACTIVE hourly heartbeat **Monitor matched estate and birth calibrations**
+(automation `finish-and-monitor-soft-timing-calibration`) owns continuation in
+chat **Compare interest timing and credit** (`01a0ff53-5843-73a2-aaf3-0e1f1313e91f`).
+It may release exactly ten production tasks through the duplicate-guarded
+`submit_torch.sh` only after both current v3 smoke gates and full 14-target /
+31-parameter review pass, then monitor and collect. Root will not independently
+submit. No production array exists yet; no automatic repair or retry is authorized.
 
 These are the retained objects behind the soft-constraint comparison. Numerical
 examples explicitly sourced to the earlier 23.078309 point below remain

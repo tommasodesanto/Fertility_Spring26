@@ -71,6 +71,16 @@ def _install_recent_observer(context,facade,out):
     recent=next((cell.cell_contents for cell in (wrapped.__closure__ or ())
                  if hasattr(cell.cell_contents,'observe_recent_parent_flow')),None)
     if recent is None: raise RuntimeError('Authenticated recent-observer closure drift')
+    installed=getattr(recent,'_production_recent_adapter_receipt',None)
+    if installed is not None:
+        # Keep the count-aware code installed subsequently by observer_adapters.
+        # Rebind its facade to this context so the inherited identity guard still
+        # compares against the current calendar.model; do not replace its code.
+        recent.observe_recent_parent_flow.__globals__['_production_model_facade']=facade
+        context['fp'].write(Path(out)/'recent_observer_adapter_receipt.json',dict(
+            installed, reused_installed_observer=True,
+            active_observer_source=inspect.getsourcefile(recent.observe_recent_parent_flow)))
+        return
     original=getattr(recent,'_production_original_observe',recent.observe_recent_parent_flow)
     recent._production_original_observe=original
     before=inspect.getsource(original)
@@ -81,12 +91,14 @@ def _install_recent_observer(context,facade,out):
     path=Path(out)/'production_recent_parent_observer.py';path.write_text(after)
     exec(compile(after,str(path),'exec'),namespace)
     recent.observe_recent_parent_flow=namespace['observe_recent_parent_flow']
-    context['fp'].write(Path(out)/'recent_observer_adapter_receipt.json',dict(
+    receipt=dict(
         original_source_path=inspect.getsourcefile(original),clone_source_path=str(path),
         original_sha256=hashlib.sha256(before.encode()).hexdigest(),
         clone_sha256=hashlib.sha256(after.encode()).hexdigest(),
         edit='Only local solver import becomes the bound production facade; identity guard and all numerical statements unchanged',
-        acceptance_tolerances_unchanged=True))
+        acceptance_tolerances_unchanged=True)
+    recent._production_recent_adapter_receipt=receipt
+    context['fp'].write(Path(out)/'recent_observer_adapter_receipt.json',receipt)
 
 def build_context(P,grid,out,*,price_start,deadline,max_lifecycle,closure):
     """Authenticate reporting once; never build or replace production primitives."""

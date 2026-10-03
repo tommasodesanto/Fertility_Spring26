@@ -204,22 +204,33 @@ from 98.739% to 96.225% for the one-birth menu and from 97.897% to 95.010%
 for the three-birth menu. A leaves high terminal ownership and the provisional
 SCF comparability issue outstanding.
 
-As of October 3, 17:44 New York, both remote arms passed full reporting-context
-preflight with zero solves. Smoke array **19124485**, tasks **0 and 5**, is
-**RUNNING**, with a 1.5-hour limit, two objective calls and fresh GE verification
-per task. The ten-task production array is not released; both smokes must pass.
-[Smoke receipt](../../../../output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt2/smoke_submission_receipt.json)
-records the launch; the 412-file source inventory SHA-256 is
-`74a961a913d94e4d337cbe075e8ef3c0bd22b9ef6798ca792dea90266553d2c4`. Its
-[start plan](../../../../output/model/experiments/birth_count_choice/estate_a_calibration_v1/start_plan.json)
+V3 smoke array **19125188**, tasks **0 and 5**, is **RUNNING**, submitted October 3,
+18:01:31 New York (22:01:31 UTC); both tasks are confirmed RUNNING on `cs604`. Each arm has a
+1.5-hour limit, two objective calls and fresh selected-point GE verification.
+The ten-task production array is **NOT released**; both smokes must pass.
+[Submission receipt](../../../../output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt3/smoke_submission_receipt.json)
+and [context preflight](../../../../output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt3/context_preflight_receipt.json)
+pin 412 files; both actual reporting contexts initialized with zero solves.
+Count corrections install once per actual module and the facade rebinds per
+context; 35 tests pass, including three successive count-menu contexts. The
+first-call local A results remain valid. Earlier smoke chronology stays in the
+daily note; immutable failed attempts are retained.
+
+The [start plan](../../../../output/model/experiments/birth_count_choice/estate_a_calibration_v1/start_plan.json)
 contains five identical starts per arm: paused provisional candidate, current
-anchor, three perturbations. The paused candidate's search loss is
-22.141841386410267, awaiting native verification; its complete evidence is in
-[PAUSED_BEST.md](../../../../output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/PAUSED_BEST.md).
-The first array 19124185 failed before solving because a compatibility bootstrap
-was missing. Immutable v1 evidence is retained; v2 adds the exact bootstrap and
-its two authenticated dependencies. Consult CALIBRATION_STATUS.md and actual
-receipts for later launch status.
+anchor and three perturbations. Search loss **22.141841386410267** remains
+provisional, awaiting fresh native verification; the earlier fully verified
+new-target loss is **48.170707377609034**. [PAUSED_BEST.md](../../../../output/model/fixed_reference_economics_20260928/alternative_wealth_cluster_20261003_v1/PAUSED_BEST.md)
+records the full paused fit and restrictions. Consult current status and actual
+receipts before interpreting a calibration result.
+
+The ACTIVE hourly heartbeat **Monitor matched estate and birth calibrations**,
+automation `finish-and-monitor-soft-timing-calibration`, owns conditional release
+in chat **Compare interest timing and credit** (`01a0ff53-5843-73a2-aaf3-0e1f1313e91f`).
+After both v3 smoke gates and complete 14-target/31-parameter review pass, it
+may submit exactly ten tasks through duplicate-guarded `submit_torch.sh`, then
+monitor and collect. Root will not submit independently. There is no production
+array yet and no authorization for automatic repair or retry.
 
 Copy-paste handoff for Claude:
 
@@ -234,7 +245,10 @@ Copy-paste handoff for Claude:
 > comparison recomputes net flow from saved arrays. Terminal ownership remains
 > high, and the SCF target's wealth-scope/recipient mapping remains provisional.
 > Preserve production and author-owned paper/mock sources. The ten-task matched
-> search is separate. As of 17:44 New York smoke array 19124485 (tasks 0,5)
-> is RUNNING; both smokes must pass before the ten-task production release.
+> search is separate. V3 smoke array 19125188 (tasks 0,5) is RUNNING on cs604.
+> The ACTIVE hourly heartbeat Monitor matched estate and birth calibrations owns
+> release after both smoke gates and full 14-target/31-parameter review pass;
+> it submits exactly ten tasks with the duplicate guard. No production yet,
+> independent submission, automatic repair or retry.
 > Check current status and receipts before claiming it ran or interpreting a
 > calibration result.

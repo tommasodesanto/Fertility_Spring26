@@ -1,7 +1,7 @@
 """Fail closed unless each arm passed exact two-call loop and fresh native repeat."""
 import hashlib,json,sys
 from pathlib import Path
-REMOTE=Path('/scratch/td2248/projects/estate_birth_calibration_20261003_v2')
+REMOTE=Path('/scratch/td2248/projects/estate_birth_calibration_20261003_v3')
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def read(p):return json.loads(p.read_text())
 def verify(stage):

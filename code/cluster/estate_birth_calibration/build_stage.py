@@ -3,12 +3,12 @@ import gzip,hashlib,io,json,tarfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[3];HERE=Path(__file__).resolve().parent
 PACKETS=Path('output/model/fixed_reference_economics_20260928')
-OUT=ROOT/'output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt2'
+OUT=ROOT/'output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt3'
 PARENT=ROOT/PACKETS/'soft_timing_calibration_20261002_v1/deployment/attempt2/stage.tar.gz'
 PARENT_SHA='f7a8fec4ff370fd3690c0d0068ca595b75a17dd8aaac3bd47f6009ef73ecd68b'
 STARTS='output/model/experiments/birth_count_choice/estate_a_calibration_v1/start_plan.json'
 ANCHOR=str(PACKETS/'soft_timing_calibration_20261002_v1/collection/production_alternative_chain_13/run/completed.json')
-REMOTE='/scratch/td2248/projects/estate_birth_calibration_20261003_v2'
+REMOTE='/scratch/td2248/projects/estate_birth_calibration_20261003_v3'
 def sha(b):return hashlib.sha256(b).hexdigest()
 def main():
     assert sha(PARENT.read_bytes())==PARENT_SHA,'Parent archive drift'

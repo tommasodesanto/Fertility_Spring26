@@ -1,7 +1,7 @@
 """Verify exact staged source and both matched-arm inputs without model solves."""
 import hashlib,json,sys
 from pathlib import Path
-REMOTE=Path('/scratch/td2248/projects/estate_birth_calibration_20261003_v2')
+REMOTE=Path('/scratch/td2248/projects/estate_birth_calibration_20261003_v3')
 REPO=Path('/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26')
 STARTS='output/model/experiments/birth_count_choice/estate_a_calibration_v1/start_plan.json'
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()

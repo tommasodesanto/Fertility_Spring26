@@ -37,9 +37,23 @@ class ReportingTests(unittest.TestCase):
         from model.inputs import load_inputs
         from model.reporting import build_context
         P, grid = load_inputs(); P.birth_count_choice_enabled = True
+        P.birth_count_choice_cap = 3
         with tempfile.TemporaryDirectory() as directory:
-            context = build_context(P, grid, directory, price_start=.776,
-                                    deadline=time.time()+120, max_lifecycle=32, closure='fixed_h0')
+            functions=[]; codes=[]
+            for index in range(3):
+                out=Path(directory)/str(index); out.mkdir()
+                context = build_context(P, grid, out, price_start=.776,
+                                        deadline=time.time()+120, max_lifecycle=32, closure='fixed_h0')
+                wrapped=context['prepared'].rt['observe_recent_parent_flow']
+                module=next(cell.cell_contents for cell in wrapped.__closure__
+                            if hasattr(cell.cell_contents,'observe_recent_parent_flow'))
+                functions.append(module.observe_recent_parent_flow)
+                codes.append(module.observe_recent_parent_flow.__code__)
+                self.assertIs(module.observe_recent_parent_flow.__globals__['_production_model_facade'],
+                              context['prepared'].rt['model'])
+                self.assertIn('selected_households',module.observe_recent_parent_flow.__code__.co_varnames)
+            self.assertTrue(all(fn is functions[0] for fn in functions))
+            self.assertTrue(all(code is codes[0] for code in codes))
             rt = context['prepared'].rt; facade = rt['model']
             nb, nt, loc, ages, nz = 2, 6, 1, 17, 1
             shape = (nb, nt, loc, ages, nz, 4, 4)

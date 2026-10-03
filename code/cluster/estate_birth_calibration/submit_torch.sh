@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Invoke only after explicit root release; paired smoke gate mandatory.
 set -euo pipefail
-remote=/scratch/td2248/projects/estate_birth_calibration_20261003_v2
+remote=/scratch/td2248/projects/estate_birth_calibration_20261003_v3
 cd "$remote"
 [[ ! -e submission_receipt.json ]] || { echo 'Refusing duplicate production submission'; exit 2; }
 /share/apps/anaconda3/2025.06/bin/python verify_stage.py --host
