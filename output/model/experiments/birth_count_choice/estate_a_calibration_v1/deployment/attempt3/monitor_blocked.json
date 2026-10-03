@@ -1,0 +1,32 @@
+{
+  "checked_at": "2026-10-03 about 19:00 America/New_York",
+  "status": "blocked_before_production",
+  "smoke_array": "19125188",
+  "tasks": {
+    "0": {"state": "COMPLETED", "exit_code": 0, "elapsed": "15m40s"},
+    "5": {"state": "COMPLETED", "exit_code": 0, "elapsed": "15m52s"}
+  },
+  "smoke_gate": "matched_both_arm_smoke_passed",
+  "inventory_sha256": "d14a39bcbb55067060ca492943f1e0067000c10733a48c3a3aff3b06e61e2afe",
+  "target_fingerprint": "c7a3d185668122e508a6c322bc5ef0715ebb0ecb23948c8d9b184ee25d1cde70",
+  "weight_fingerprint": "f762ebb5684ab30487b3b8b64fc10977fda396b520035d91c0c5c803255f88e4",
+  "completed_receipts": {
+    "binary/0": {"selected_numerically_verified": true, "objective_calls": 2, "target_rows": 14, "parameter_rows": 31, "contains_arm_and_chain": true},
+    "count3/0": {"selected_numerically_verified": true, "objective_calls": 2, "target_rows": 14, "parameter_rows": 31, "contains_arm_and_chain": true}
+  },
+  "collector_error": {
+    "file": "collect_torch.py",
+    "line": 25,
+    "expression": "rows.append(dict(arm=arm,chain=chain,**done))",
+    "type": "TypeError",
+    "message": "dict() got multiple values for keyword argument 'arm'",
+    "cause": "completed receipts already include arm and chain"
+  },
+  "smoke_collection_exists": false,
+  "production_submission_receipt_exists": false,
+  "full_table_review_complete": false,
+  "production_released": false,
+  "monitor_automation": "finish-and-monitor-soft-timing-calibration",
+  "monitor_status": "PAUSED",
+  "next_action": "Collector repair requires authorization under monitor scope; production remains blocked pending successful collection and independent full-table review."
+}

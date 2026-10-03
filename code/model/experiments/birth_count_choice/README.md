@@ -204,10 +204,23 @@ from 98.739% to 96.225% for the one-birth menu and from 97.897% to 95.010%
 for the three-birth menu. A leaves high terminal ownership and the provisional
 SCF comparability issue outstanding.
 
-V3 smoke array **19125188**, tasks **0 and 5**, is **RUNNING**, submitted October 3,
-18:01:31 New York (22:01:31 UTC); both tasks are confirmed RUNNING on `cs604`. Each arm has a
+V3 smoke array **19125188**, tasks **0 and 5**, was submitted October 3,
+18:01:31 New York (22:01:31 UTC). Both tasks **COMPLETED**, exit code 0,
+in 15m40s and 15m52s. Each arm has a
 1.5-hour limit, two objective calls and fresh selected-point GE verification.
-The ten-task production array is **NOT released**; both smokes must pass.
+Remote `verify_smoke_gate.py` passed `matched_both_arm_smoke_passed` with
+inventory SHA `d14a39bcbb55067060ca492943f1e0067000c10733a48c3a3aff3b06e61e2afe`,
+target fingerprint `c7a3d185668122e508a6c322bc5ef0715ebb0ecb23948c8d9b184ee25d1cde70`,
+and weight fingerprint `f762ebb5684ab30487b3b8b64fc10977fda396b520035d91c0c5c803255f88e4`.
+`collect_torch.py` then failed at line 25 because `done` already contains
+`arm` and `chain`: `dict(arm=arm,chain=chain,**done)` raised `TypeError: dict()
+got multiple values for keyword argument 'arm'`. Both completed receipts say
+`selected_numerically_verified` and contain 2 calls, 14 target rows, and 31
+parameter rows. There is no `smoke_collection` or production submission receipt;
+independent full-table review remains incomplete. The ten-task production
+array is **NOT released**. This is a collector error, not a solver failure.
+[Blocker receipt](../../../../output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt3/monitor_blocked.json)
+records the stop.
 [Submission receipt](../../../../output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt3/smoke_submission_receipt.json)
 and [context preflight](../../../../output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt3/context_preflight_receipt.json)
 pin 412 files; both actual reporting contexts initialized with zero solves.
@@ -224,13 +237,12 @@ new-target loss is **48.170707377609034**. [PAUSED_BEST.md](../../../../output/m
 records the full paused fit and restrictions. Consult current status and actual
 receipts before interpreting a calibration result.
 
-The ACTIVE hourly heartbeat **Monitor matched estate and birth calibrations**,
-automation `finish-and-monitor-soft-timing-calibration`, owns conditional release
-in chat **Compare interest timing and credit** (`01a0ff53-5843-73a2-aaf3-0e1f1313e91f`).
-After both v3 smoke gates and complete 14-target/31-parameter review pass, it
-may submit exactly ten tasks through duplicate-guarded `submit_torch.sh`, then
-monitor and collect. Root will not submit independently. There is no production
-array yet and no authorization for automatic repair or retry.
+The hourly heartbeat **Monitor matched estate and birth calibrations**,
+automation `finish-and-monitor-soft-timing-calibration`, in chat
+**Compare interest timing and credit** (`01a0ff53-5843-73a2-aaf3-0e1f1313e91f`)
+was PAUSED after the collector blocker. There is no production array and no
+authorization for source changes, automatic repair, or retry. Production
+release remains blocked until the complete 14-target/31-parameter review.
 
 Copy-paste handoff for Claude:
 
@@ -245,10 +257,12 @@ Copy-paste handoff for Claude:
 > comparison recomputes net flow from saved arrays. Terminal ownership remains
 > high, and the SCF target's wealth-scope/recipient mapping remains provisional.
 > Preserve production and author-owned paper/mock sources. The ten-task matched
-> search is separate. V3 smoke array 19125188 (tasks 0,5) is RUNNING on cs604.
-> The ACTIVE hourly heartbeat Monitor matched estate and birth calibrations owns
-> release after both smoke gates and full 14-target/31-parameter review pass;
-> it submits exactly ten tasks with the duplicate guard. No production yet,
-> independent submission, automatic repair or retry.
+> search is separate. V3 smoke array 19125188 (tasks 0,5) completed exit 0;
+> the remote smoke gate passed. Collection failed on duplicate `arm` in
+> `collect_torch.py`, leaving the full 14-target/31-parameter review incomplete.
+> The Monitor matched estate and birth calibrations heartbeat is PAUSED.
+> No production submission exists. Source change, automatic repair, and retry
+> are not authorized; release is blocked pending full-table review. See
+> `deployment/attempt3/monitor_blocked.json`.
 > Check current status and receipts before claiming it ran or interpreting a
 > calibration result.

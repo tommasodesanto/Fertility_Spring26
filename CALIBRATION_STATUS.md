@@ -79,11 +79,23 @@ mass gate. Descriptive count hazards use pre-birth exposure; active empirical
 target observers remain separate. The original no-A count experiment and its
 full fit remain in [current_params_v1](output/model/experiments/birth_count_choice/current_params_v1/RESULTS.md).
 
-**Matched Estate-A recalibration: v3 smoke RUNNING; submitted October 3, 18:01:31
-New York (22:01:31 UTC); ten-task production array NOT released.**
+**Matched Estate-A recalibration: v3 smoke completed; collection blocked as of
+October 3, about 19:00 New York; ten-task production array NOT released.**
 Smoke array **19125188**, tasks **0 and 5**, has a 1.5-hour limit, two objective
 calls plus fresh selected-point GE verification per arm; both smokes must pass
-before production release. A fresh scheduler check confirms both tasks RUNNING on `cs604`. [Submission receipt](output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt3/smoke_submission_receipt.json)
+before production release. Both tasks completed with exit code 0, in 15m40s
+and 15m52s. Remote `verify_smoke_gate.py` passed with
+`matched_both_arm_smoke_passed` for inventory SHA
+`d14a39bcbb55067060ca492943f1e0067000c10733a48c3a3aff3b06e61e2afe`,
+target fingerprint `c7a3d185668122e508a6c322bc5ef0715ebb0ecb23948c8d9b184ee25d1cde70`,
+and weight fingerprint `f762ebb5684ab30487b3b8b64fc10977fda396b520035d91c0c5c803255f88e4`.
+The subsequent `collect_torch.py` failed at line 25,
+`rows.append(dict(arm=arm,chain=chain,**done))`, with `TypeError: dict() got
+multiple values for keyword argument 'arm'`. There is no `smoke_collection`;
+independent full-table review remains incomplete. This is a collector error,
+not a solver failure. No `submission_receipt` existed at the check.
+[Blocker receipt](output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt3/monitor_blocked.json)
+records the stop. [Submission receipt](output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt3/smoke_submission_receipt.json)
 and [actual-context preflight](output/model/experiments/birth_count_choice/estate_a_calibration_v1/deployment/attempt3/context_preflight_receipt.json)
 pin the 412-file v3 package (inventory SHA
 `d14a39bcbb55067060ca492943f1e0067000c10733a48c3a3aff3b06e61e2afe`).
@@ -103,13 +115,12 @@ are retained. Previous old calibration searches are stopped with no automatic
 restart. Smoke submissions and zero-solve checks are validation, not completed
 calibration results; earlier smoke chronology is in the October 3 daily note.
 
-The ACTIVE hourly heartbeat **Monitor matched estate and birth calibrations**
-(automation `finish-and-monitor-soft-timing-calibration`) owns continuation in
-chat **Compare interest timing and credit** (`01a0ff53-5843-73a2-aaf3-0e1f1313e91f`).
-It may release exactly ten production tasks through the duplicate-guarded
-`submit_torch.sh` only after both current v3 smoke gates and full 14-target /
-31-parameter review pass, then monitor and collect. Root will not independently
-submit. No production array exists yet; no automatic repair or retry is authorized.
+The hourly heartbeat **Monitor matched estate and birth calibrations**
+(automation `finish-and-monitor-soft-timing-calibration`) in chat
+**Compare interest timing and credit** (`01a0ff53-5843-73a2-aaf3-0e1f1313e91f`)
+was PAUSED after the collector blocker. No production array exists yet; no
+source change or retry is authorized. Production release remains blocked until
+the full 14-target / 31-parameter review is completed.
 
 These are the retained objects behind the soft-constraint comparison. Numerical
 examples explicitly sourced to the earlier 23.078309 point below remain
