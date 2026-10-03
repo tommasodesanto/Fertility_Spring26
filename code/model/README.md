@@ -1,5 +1,9 @@
 # Python Model Codebase
 
+Direct access to the checked October 2 soft solution, editable Python inputs,
+one-price solves, and the local viewer: [model playground](tools/MODEL_PLAYGROUND.md).
+This is an inspection interface; it does not adopt an experimental calibration.
+
 Local installation and laptop smoke checks: [setup guide](../../docs/workflow/local_laptop_setup.md).
 The tested Apple Silicon dependency snapshot is `requirements-laptop.txt`.
 

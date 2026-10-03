@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Curve viewer</title>
+  <style>
+    :root { color-scheme: light dark; --bg:#fff; --fg:#202124; --muted:#626a73; --line:#aab2bb; --grid:#e4e8ec; --accent:#2563eb; --panel:#f7f8fa; --error:#b42318; }
+    @media (prefers-color-scheme: dark) { :root { --bg:#17191c; --fg:#eef0f2; --muted:#aeb5bd; --line:#77808a; --grid:#343a40; --accent:#7aa2ff; --panel:#202328; --error:#ff8f85; } }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    main { max-width:1320px; margin:auto; padding:24px clamp(16px,3vw,36px) 40px; }
+    h1 { margin:0 0 6px; font-size:1.55rem; line-height:1.2; }
+    #meta-note,.caption-note { color:var(--muted); white-space:pre-wrap; }
+    #meta-note { margin:0 0 8px; }
+    #meta-links { display:flex; flex-wrap:wrap; gap:8px 16px; margin:0 0 18px; }
+    #meta-links a { color:var(--accent); }
+    .axis-description { margin:0 0 4px; color:var(--muted); font-size:.82rem; overflow-wrap:anywhere; }
+    .controls { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; padding:16px; border:1px solid var(--grid); border-radius:10px; background:var(--panel); }
+    label { display:grid; gap:5px; font-size:.86rem; font-weight:600; }
+    select { width:100%; min-height:38px; padding:6px 9px; color:var(--fg); background:var(--bg); border:1px solid var(--line); border-radius:6px; font:inherit; }
+    select:focus-visible, button:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+    #status { min-height:1.5em; margin:12px 2px; color:var(--muted); }
+    #status.error { color:var(--error); }
+    #caption { margin:12px 2px 18px; }
+    #caption strong { display:block; }
+    #charts { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    .chart { min-width:0; padding:12px; border:1px solid var(--grid); border-radius:9px; }
+    .chart h2 { margin:0 0 4px; font-size:1rem; }
+    .plot { width:100%; height:auto; display:block; overflow:visible; }
+    .hover-readout { min-height:1.4em; margin:3px 2px 0; color:var(--muted); font-size:.82rem; }
+    .empty { grid-column:1/-1; padding:24px; color:var(--muted); border:1px dashed var(--line); border-radius:8px; }
+    @media (max-width:700px) { #charts { grid-template-columns:1fr; } main { padding-top:18px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1 id="page-title">Curve viewer</h1>
+    <p id="meta-note"></p>
+    <nav id="meta-links" aria-label="Related links" hidden></nav>
+    <section class="controls" aria-label="Slice selection">
+      <label>Case<select id="case"></select></label>
+      <label>Wealth range<select id="view"><option value="central">Central wealth range</option><option value="all">Full grid</option></select></label>
+      <label>Age<select id="age"></select></label>
+      <label>Income<select id="income"></select></label>
+      <label>Tenure<select id="tenure"></select></label>
+      <label>Children<select id="children"></select></label>
+      <label>At home<select id="at-home"></select></label>
+    </section>
+    <div id="status" role="status" aria-live="polite">Loading options…</div>
+    <section id="caption" hidden aria-live="polite"><strong id="slice-label"></strong><span id="slice-mass"></span><div class="caption-note" id="slice-note"></div></section>
+    <p id="curve-note">Curves join original asset-grid nodes; range only changes the displayed interval.</p>
+    <section id="charts" aria-label="Charts"></section>
+  </main>
+  <script>
+    (() => {
+      'use strict';
+      const byId = id => document.getElementById(id);
+      const controls = {
+        case: byId('case'), view: byId('view'), age: byId('age'), income: byId('income'),
+        tenure: byId('tenure'), children: byId('children'), at_home: byId('at-home')
+      };
+      controls.view.value = 'central';
+      const chartObservers = new Set();
+      let latest = 0;
+      let activeController = null;
+      const status = (message, error=false) => {
+        byId('status').textContent = message;
+        byId('status').classList.toggle('error', error);
+      };
+      const clearView = () => {
+        chartObservers.forEach(observer => observer.disconnect());
+        chartObservers.clear();
+        byId('caption').hidden = true;
+        byId('charts').replaceChildren();
+      };
+      const option = (value, label) => {
+        const el = document.createElement('option');
+        el.value = String(value);
+        el.textContent = String(label);
+        return el;
+      };
+      function fill(select, rows, valueOf, labelOf, selected) {
+        select.replaceChildren(...rows.map(row => option(valueOf(row), labelOf(row))));
+        const wanted = String(selected);
+        if ([...select.options].some(item => item.value === wanted)) select.value = wanted;
+      }
+      async function requestSlice() {
+        const requestId = ++latest;
+        if (activeController) activeController.abort();
+        activeController = new AbortController();
+        clearView();
+        status('Loading slice…');
+        const params = new URLSearchParams();
+        for (const key of Object.keys(controls)) params.set(key, controls[key].value);
+        try {
+          const response = await fetch(`/api/slice?${params}`, { signal: activeController.signal });
+          if (!response.ok) throw new Error(`Request failed (${response.status})`);
+          const data = await response.json();
+          if (requestId !== latest) return;
+          render(data);
+        } catch (error) {
+          if (requestId !== latest || error.name === 'AbortError') return;
+          clearView();
+          status(`Could not load slice: ${error.message || 'unknown error'}`, true);
+        }
+      }
+      function render(data) {
+        const charts = Array.isArray(data.charts) ? data.charts.slice(0, 6) : [];
+        const hasPoints = charts.some(chart => (chart.series || []).some(series =>
+          (series.values || []).some((value, i) => data.valid?.[i] && Number.isFinite(data.x?.[i]) && Number.isFinite(value))));
+        if (!hasPoints) {
+          clearView();
+          status('This slice has no valid points.');
+          return;
+        }
+        byId('slice-label').textContent = data.label ?? '';
+        const mass = Number(data.slice_mass);
+        byId('slice-mass').textContent = data.slice_mass == null || !Number.isFinite(mass) ? '' : `Slice mass: ${new Intl.NumberFormat(undefined,{maximumSignificantDigits:4}).format(mass*100)}%`;
+        byId('slice-note').textContent = data.note ?? '';
+        byId('caption').hidden = false;
+        byId('charts').replaceChildren(...charts.map(chart => makeChart(chart, data)));
+        status('');
+      }
+      function makeChart(chart, data) {
+        const card = document.createElement('article'); card.className = 'chart';
+        const heading = document.createElement('h2'); heading.textContent = chart.title ?? 'Chart';
+        const axisDescription = document.createElement('p'); axisDescription.className='axis-description'; axisDescription.textContent=chart.ylabel ?? '';
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('class','plot'); svg.setAttribute('viewBox','0 0 720 390'); svg.setAttribute('role','img');
+        svg.setAttribute('aria-label', `${chart.title ?? 'Chart'}; horizontal axis ${data.xlabel ?? 'x'}; vertical axis ${chart.ylabel ?? 'y'}`);
+        const readout = document.createElement('div'); readout.className='hover-readout'; readout.setAttribute('aria-live','polite');
+        const redraw = () => draw(svg, readout, chart, data);
+        card.append(heading, axisDescription, svg, readout);
+        redraw();
+        if ('ResizeObserver' in window) {
+          const observer = new ResizeObserver(redraw);
+          chartObservers.add(observer);
+          observer.observe(svg);
+        } else { window.addEventListener('resize', redraw); }
+        return card;
+      }
+      function draw(svg, readout, chart, data) {
+        const NS='http://www.w3.org/2000/svg', measured=Math.round(svg.getBoundingClientRect().width), W=measured>0?measured:360,H=390,L=78,R=18,T=22,B=70,pw=W-L-R,ph=H-T-B;
+        svg.replaceChildren();
+        svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+        const valid=Array.isArray(data.valid)?data.valid:[];
+        const xs=Array.isArray(data.x)?data.x:[];
+        const series=(chart.series||[]).map(s=>({label:s.label??'',values:s.values||[]}));
+        const points=[];
+        series.forEach((s,si)=>s.values.forEach((v,i)=>{ if(valid[i]&&Number.isFinite(xs[i])&&Number.isFinite(v)) points.push({x:xs[i],y:v,si,i}); }));
+        if(!points.length) return;
+        const finiteX=xs.filter(Number.isFinite);
+        let xmin=Math.min(...finiteX), xmax=Math.max(...finiteX);
+        let ymin=Math.min(...points.map(p=>p.y)), ymax=Math.max(...points.map(p=>p.y));
+        const pad=(lo,hi)=>{const d=hi-lo||Math.max(Math.abs(lo)*.05,1); return [lo-d*.06,hi+d*.06];};
+        [ymin,ymax]=pad(ymin,ymax);
+        if(xmax===xmin){const d=Math.max(Math.abs(xmin)*.005,0.5);xmin-=d;xmax+=d;}
+        const X=x=>L+(x-xmin)/(xmax-xmin)*pw, Y=y=>T+ph-(y-ymin)/(ymax-ymin)*ph;
+        const add=(tag,attrs,text)=>{const el=document.createElementNS(NS,tag); for(const [k,v] of Object.entries(attrs||{}))el.setAttribute(k,v); if(text!=null)el.textContent=text; svg.append(el); return el;};
+        const style=getComputedStyle(document.documentElement);
+        for(let i=0;i<4;i++){
+          const f=i/3, yy=T+ph-f*ph, yv=ymin+f*(ymax-ymin), xx=L+f*pw, xv=xmin+f*(xmax-xmin);
+          add('line',{x1:L,y1:yy,x2:W-R,y2:yy,stroke:style.getPropertyValue('--grid').trim(),'stroke-width':1});
+          add('text',{x:L-9,y:yy+4,'text-anchor':'end',fill:style.getPropertyValue('--muted').trim(),'font-size':12},fmt(yv));
+          add('line',{x1:xx,y1:T,x2:xx,y2:T+ph,stroke:style.getPropertyValue('--grid').trim(),'stroke-width':1});
+          add('text',{x:xx,y:T+ph+20,'text-anchor':'middle',fill:style.getPropertyValue('--muted').trim(),'font-size':12},fmt(xv));
+        }
+        add('line',{x1:L,y1:T+ph,x2:W-R,y2:T+ph,stroke:style.getPropertyValue('--line').trim()});
+        add('line',{x1:L,y1:T,x2:L,y2:T+ph,stroke:style.getPropertyValue('--line').trim()});
+        const colors=['#2563eb','#d04437','#16865b','#9a5bcc','#cb7b13','#087e8b'];
+        series.forEach((s,si)=>{
+          let d='',active=false;
+          s.values.forEach((v,i)=>{
+            const ok=valid[i]&&Number.isFinite(xs[i])&&Number.isFinite(v);
+            if(!ok){active=false;return;}
+            d+=`${active?' L':' M'} ${X(xs[i])} ${Y(v)}`; active=true;
+          });
+          if(d) add('path',{d,fill:'none',stroke:colors[si%colors.length],'stroke-width':2.2,'stroke-linecap':'round','stroke-linejoin':'round'});
+          if(series.length>1){const lx=L+si*105;add('line',{x1:lx,y1:H-13,x2:lx+18,y2:H-13,stroke:colors[si%colors.length],'stroke-width':3});add('text',{x:lx+23,y:H-9,fill:style.getPropertyValue('--fg').trim(),'font-size':12},s.label);}
+        });
+        const xlabel=String(data.xlabel??'x'), maxChars=Math.max(16,Math.floor(pw/8));
+        const words=xlabel.split(/\s+/), lines=[]; let line='';
+        for(const word of words){const next=line?`${line} ${word}`:word;if(next.length>maxChars&&line&&lines.length<1){lines.push(line);line=word;}else line=next;}
+        lines.push(line);
+        const label=add('text',{x:L+pw/2,y:T+ph+39,'text-anchor':'middle',fill:style.getPropertyValue('--fg').trim(),'font-size':12});
+        lines.slice(0,2).forEach((part,i)=>{const span=document.createElementNS(NS,'tspan');span.setAttribute('x',String(L+pw/2));span.setAttribute('dy',i===0?'0':'1.15em');span.textContent=part;label.append(span);});
+        const hit=add('rect',{x:L,y:T,width:pw,height:ph,fill:'transparent',tabindex:0,'aria-label':'Hover or focus to inspect values'});
+        const showAt=clientX=>{
+          const box=svg.getBoundingClientRect(), local=(clientX-box.left)/box.width*W;
+          const xval=xmin+Math.max(0,Math.min(1,(local-L)/pw))*(xmax-xmin);
+          let index=-1,best=Infinity;
+          xs.forEach((x,i)=>{if(valid[i]&&Number.isFinite(x)&&Math.abs(x-xval)<best){best=Math.abs(x-xval);index=i;}});
+          if(index>=0)readout.textContent=`${data.xlabel??'x'}: ${fmt(xs[index])} · ${series.map(s=>`${s.label}: ${fmt(s.values[index])}`).join(' · ')}`;
+        };
+        hit.addEventListener('pointermove',e=>showAt(e.clientX));
+        hit.addEventListener('focus',()=>{if(xs.length)readout.textContent=`${data.xlabel??'x'}: ${fmt(xs[0])} · ${series.map(s=>`${s.label}: ${fmt(s.values[0])}`).join(' · ')}`;});
+        hit.addEventListener('pointerleave',()=>{readout.textContent='';});
+      }
+      function fmt(value){return Number.isFinite(value)?Number(value).toLocaleString(undefined,{maximumFractionDigits:3}):'—';}
+      async function init(){
+        if(window.location.protocol==='file:'){
+          status('This page needs the local model server. Start it with start_model_explorer.command, then open ',true);
+          const link=document.createElement('a');link.href='http://127.0.0.1:8765/';link.textContent='http://127.0.0.1:8765/';
+          byId('status').append(link);
+          return;
+        }
+        try{
+          const response=await fetch('/api/meta');
+          if(!response.ok)throw new Error(`Request failed (${response.status})`);
+          const meta=await response.json();
+          byId('page-title').textContent=meta.title||'Curve viewer';
+          byId('meta-note').textContent=meta.note||'';
+          const links=byId('meta-links');
+          const safeLinks=(meta.links||[]).filter(link=>{
+            if(!link||typeof link.url!=='string'||/^[a-z][a-z0-9+.-]*:/i.test(link.url)||link.url.startsWith('//'))return false;
+            try{return new URL(link.url,window.location.href).origin===window.location.origin;}catch{return false;}
+          });
+          links.replaceChildren(...safeLinks.map(link=>{const a=document.createElement('a');a.href=new URL(link.url,window.location.href).href;a.textContent=String(link.label??link.url);return a;}));
+          links.hidden=safeLinks.length===0;
+          fill(controls.case,meta.cases||[],x=>x.id,x=>x.label??x.id,meta.default?.case??meta.cases?.[0]?.id);
+          fill(controls.age,meta.ages||[],x=>x,x=>x,meta.default?.age);
+          fill(controls.income,meta.incomes||[],x=>x.index,x=>x.label??x.index,meta.default?.income);
+          fill(controls.tenure,meta.tenures||[],x=>x.index,x=>x.label??x.index,meta.default?.tenure);
+          fill(controls.children,meta.children||[],x=>x,x=>x,meta.default?.children);
+          fill(controls.at_home,meta.at_home||[],x=>x,x=>x,meta.default?.at_home);
+          if(Object.values(controls).some(select=>!select.options.length))throw new Error('The API did not provide all selector options.');
+          Object.values(controls).forEach(select=>select.addEventListener('change',requestSlice));
+          await requestSlice();
+        }catch(error){status(`Could not load options: ${error.message||'unknown error'}`,true);}
+      }
+      init();
+    })();
+  </script>
+</body>
+</html>
