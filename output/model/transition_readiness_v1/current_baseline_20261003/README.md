@@ -1,43 +1,37 @@
-# Current-baseline fertility-shock estimation — paused before implementation
+# Current-baseline fertility-shock estimation
 
-Tommaso paused this work on October 3, 2026, to resume at home. No transition
-job was launched, no transition source was changed and no transition solve ran.
-The separate ten-chain calibration array 19127370 continues with six-hour limits.
+**Cluster status:** eight-core smoke **19139732 is RUNNING** in immutable v5 and has completed both native reference reconstructions; it is measuring the fresh transition response seed. The author explicitly requested simultaneous guesses and capped use at 48 nodes. Immutable v6 adds twelve independent scalar-fit starts, capped at twelve concurrent single-node jobs with eight cores/96 GiB and six hours each. Native source identity, both v5 plans, baseline and all gates are unchanged. Array submission waits for the actual smoke result and lead review of the separately pinned panel driver; no fit array is submitted yet. Current configuration is `plans_v6/panel_config.json`.
 
-The author clarified the requested exercise: estimate one permanent 2007 change
-in the fertility-preference parameter `psi_child` to match the retained
-2020–2023 average fertility target, 1.64575. Earlier three four-year windows are
-validation rows. A no-shock check is preliminary validation, not the deliverable.
+**Code handoff is a separate completed task:** the tested review ZIP is `output/model/review_bundle_20261003/Fertility_Model_Review_20261003.zip`. Cluster resource requests do not describe the ZIP's requirements or size.
 
-The intended initial state is the verified current-parameter, one-birth Estate-A
-case at `output/model/experiments/birth_count_choice/estate_a_v1/single/cases/20261003T212605039706Z_a739edc3`.
-It retains post-interest transaction timing, soft financing and the current
-chain-13 parameter vector, with estates net of the 6% selling cost in utility
-and death-flow accounting, and no extra interest on post-saving financial wealth.
-Pending recalibration candidates are not adopted initial conditions.
+## Verified facts and source identity
 
-The maintained `transition_readiness/floor_runtime.py` constructor still loads
-the older utility-floor/small-credit context. The legacy
-`run_e5f_current_transition.py` additionally requires experimental natural
-solvency. Neither can be silently used for this baseline. The existing
-`one_shock_floor.py` controller supplies the scalar fitting loop, pinned targets,
-checkpoints, budgets, two-horizon checks and strict numerical gates.
+- **Question:** estimate one permanent 2007 change in `psi_child` to match the retained **2020–2023 average fertility target 1.64575**. Earlier windows 2008–2011, 2012–2015 and 2016–2019 validate the path. One fitted moment identifies one shock parameter.
+- **Initial state:** [saved one-birth Estate-A case](../../experiments/birth_count_choice/estate_a_v1/single/cases/20261003T212605039706Z_a739edc3/metadata.json), current chain-13 coordinates. Initial `psi_child=0.17892072066041628`, price `0.776101253093739`, actual population `1.0009489339264241`, fixed housing-supply coefficient `H0=6.40569359569417`.
+- **Economics:** experimental one-birth Estate-A, both bequest utility and death estates net of the 6% selling cost, no extra interest on post-saving wealth; adopted post-interest transactions and current soft financing. Actual inherited population, separate raw/adjusted birth queues, half-entry at ages 16/20 with conversion 1/2.1, fixed payroll tax/endogenous pension, and fixed-H0 elastic housing supply remain in place. Pending recalibration candidates are not adopted.
+- **Scope of this run:** only the permanent fertility-preference shock is estimated. No earnings, initial wealth/income, credit, estate-transfer, floor, geography or target changes are introduced relative to that named saved case. Estate recipient/funding and residual-sink closure remain provisional; this is not a certified policy exercise.
+- **Local verification:** [receipt](adapter_smoke2/receipt.json), [78 saved-array comparisons](adapter_smoke2/saved_array_comparison.json), [unchanged path](adapter_smoke2/unchanged/mapping.json), [tiny price perturbation](adapter_smoke2/perturbed/mapping.json). Two fresh stationary solves match all 14 target rows, 31 parameter rows and 17 standard PNGs exactly. All 78 stored solution arrays match exactly. Both two-date maps pass accounting, mass and policy reproduction with zero projected mass. A console-only NumPy serialization error after writing the successful receipt is preserved in `adapter_smoke2/console_format_failure.json`; all numerical assertions had completed.
 
-Next: verify dated backward and forward bindings against the current model,
-then implement an isolated current-context runtime/controller adapter in the
-birth-count experiment. Dynamic post-interest timing and net-estate accounting
-are not yet verified. Preserve both birth-entry queues, inherited population,
-fixed baseline housing-supply coefficient, fixed payroll tax/endogenous pension,
-and the retained provisional estate-accounting limitations. Do not substitute
-the historical fixed-stock path without reconciling the closure.
+## Active implementation and controls
 
-A preliminary design considered a six-hour, one-core cluster job with 96 GiB,
-a 2-GiB exact-policy cache and two horizons of 24/32 four-year dates; this is
-unreviewed and not launch-ready. Estimate its solve count and runtime, validate
-the exact loop and current-baseline no-shock mapping, preserve all acceptance
-checks, and label finite-horizon results diagnostic. No old Jacobian/checkpoint
-can be reused as current evidence without verification.
+The current adapter is `code/model/experiments/birth_count_choice/transition_runtime.py`; the entry point is `code/model/experiments/birth_count_choice/transition.py`. They reuse the maintained `code/model/experiments/transition_readiness/one_shock_floor.py` controller unchanged. The old floor/small-credit constructor is not used. Every dated policy owns its current full birth-count probabilities. Source/case hashes and the complete target fingerprint are pinned in [plans](plans/).
 
-Read-only grounding is in `work/inspect_final.md`. The interrupted implementation
-agent `current_transition_engine` completed context loading only and changed no
-files. Resume from this specification, avoiding a new broad historical audit.
+The author resumed overnight work through the coordinating chat on October 3. Current phase: local checks passed; v1 cluster preflight stopped before solving because duplicate mount arguments exceeded the OS limit. Subsequent zero-solve preflights caught a copied-script root-path assumption and a masked historical contract. V4 keeps complete package mounts and historical file overlays separate, and raises only the fit-evaluation/call caps within the same six-hour limit. Exact-loop Torch smoke must pass before fit release. No fit job is claimed until a submission receipt exists.
+
+The fit is a **24/32 four-year-period diagnostic comparison**, not the 104/128 production certification. No numerical gate or horizon tolerance is relaxed. Per search: eight CPUs on one node, 96GiB, 2GiB exact-policy cache; six-hour external limit and 21,480-second controller limit; at most 12 shock evaluations, 12 path iterations per horizon, 16 endpoint iterations, 20,000 actual policy calls. The conservative iteration bound is 16,454 policy calls. Local dated checks cost 8.83 and11.96 seconds for two dates (one/two actual backward calls with caching); extrapolating roughly 6 seconds/date gives about 13.4 hours for the full 12-candidate path-iteration ceiling, plus seed/endpoint/report overhead. The six-hour wall budget is therefore the binding limit in a worst-case search; early root convergence and cached identical policies can reduce cost. Completed candidates and the best-so-far result are retained if the budget expires.
+
+Every stage has explicit deadlines. The fit stops on its time/call/iteration limit or a failed numerical/accounting gate. Fresh 12-date finite-difference seed: 5 maps; exact-loop smoke: 6-date perturbed path, at most 6 path maps, one-hour external limit. No historical Jacobian or transition checkpoint is reused. Latest completed and best-so-far summaries, native state checkpoints and five-minute launcher heartbeat are retained. Standard 17 graphs are retained for the selected dated diagnostic samples.
+
+Deployment commands and immutable-stage checks are documented in `code/cluster/estate_birth_transition/README.md`; receipts will be under [deployment](deployment/). Existing calibration jobs remain untouched. Historical grounding is in [work/inspect_final.md](work/inspect_final.md).
+
+## Cross-platform reference comparison
+
+The saved Mac case and Torch replay retain exact parameter values, target definitions and weights. Derived report values must agree within absolute `1e-10`; plot names and all 17 outputs must match, while rendering hashes are recorded rather than compared across platforms. All 78 solution arrays are checked. Integer arrays, shapes, dtypes and nonfinite masks are exact. Ordinary float64 arrays retain absolute `1e-10`; value functions also allow 16 machine-epsilon units scaled by value magnitude. Living consumption/saving policies allow `sqrt(eps64)` scaled error and occupied states retain absolute `1e-10`. Controls at states dead in both value functions are recorded without a distance-equivalence claim. Float32 probabilities allow two ULPs with exact zero support. The proof is recomputed from the authenticated native checkpoint. These are disclosed numerical comparison criteria, not a claim of bitwise or optimizer identity. Same-host repeated reports remain exact; all dated convergence, accounting, feasibility and policy-reproduction gates remain unchanged.
+
+Frozen observer initialization sets a historical one-thread environment. The current adapter restores the caller's explicit Numba allocation immediately afterward and records requested/actual thread counts. Only the two independent-column household kernels are parallel; BLAS and OpenMP remain at one thread.
+
+## Parallel search starts
+
+The author clarified that different shock guesses should run at the same time. The panel launches twelve copies of the unchanged scalar estimator. Only `fit_start_psi`, its numerical starting guess, differs; the initial economic state and original preference bounds remain fixed. Starting ratios relative to baseline are `0.10, 0.30, 0.50, 0.65, 0.75, 0.82, 0.88, 0.94, 1.00, 1.10, 1.30, 1.60`. Each search refines its own guess and must freshly reproduce its match before output is accepted. Each deliberately repeats the current reference and seed to keep workers independent. The per-search 12-evaluation/20,000-call/six-hour limits remain; the aggregate hard call cap is 240,000. The previous single-core worst-case estimate is 13.4 hours per full search ceiling, so six-hour wall limits remain binding; no eight-core speedup factor is assumed before measurement. Early convergence saves the unused budget.
+
+The panel source is separately pinned; all pre-existing v5 source/data pins and both plans must be byte-identical for v5 smoke evidence to authorize v6. Four focused panel tests verify different starts, unchanged baseline/bounds, strict collection and failure rejection. The collector accepts only matching native, target, numerical and panel fingerprints and preserves all four fertility rows, baseline parameters, shock bounds, root/horizon gates, exact 2023 states and the standard diagnostics. No model specification is changed by a numerical starting guess.

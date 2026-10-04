@@ -760,8 +760,11 @@ manuscript wording or certify a new paper calibration.
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
    The author authorized resuming the current one-birth Estate-A fertility-shock
-   estimation on October 3. Local fresh-reference and dated-accounting checks
-   passed; Torch exact-loop smoke and fit release are tracked in
+   estimation on October 3 and clarified on October 4 that different shock
+   guesses must run simultaneously, with at most 48 nodes. The current design
+   uses twelve independently refining scalar-fit starts, each with the same
+   saved baseline, target contract and numerical gates. Local checks passed;
+   Torch smoke 19139732 is running and array release is tracked in
    [the current transition readout](output/model/transition_readiness_v1/current_baseline_20261003/README.md).
    This authorization does not certify a transition result. The hard-versus-soft
    economic choice remains distinct.
