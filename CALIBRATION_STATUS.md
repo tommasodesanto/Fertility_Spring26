@@ -166,6 +166,35 @@ benefit at \(m=0\); the first-birth cost and bequest motive are separate objects
 Historical lower-\(A(m)\), renter-borrowing and other utility probes are
 diagnostics, not silently adopted components of this reference.
 
+**Normalized CES-limit share test, prepared; Torch reauthentication required, not launched.** The
+experimental composite denominator applies in all family states:
+\(Q=c^{\alpha(m)}s^{1-\alpha(m)}/[\alpha(m)^{\alpha(m)}(1-\alpha(m))^{1-\alpha(m)}]\).
+There is no childless-share numerator or reference-rent correction. The
+author-authorized rule sets \(\alpha(0)=.733\) and
+\(\alpha(m)=\operatorname{clip}(.733-\delta_{\rm jump}-\delta_{\rm slope}m,.05,.95)\)
+for parents; both parameters are free on \([0,.25]\), and \(h_P=0\).
+The experimental target contract has 11 free coordinates and 11 scored moments
+among 14 rows. It promotes `family_rooms` (target 0.38509964969278165, weight
+280.52808370152104); national uncertainty is unavailable, so this is the
+inherited 42-metro bootstrap weight, and the model-dependent-child observer
+remains a proxy.
+
+The post-interest chain-13 starting reference retains old wealth target
+6.92658379107299, timing, earnings, birth architecture and other economic
+inputs. There is no `rstar` or `alpha0` numerator, added birth shock, or utility
+cost rescaling. V1 and v2 zero-solve preflights failed because of historical
+dependency-packaging failures. V3 was built (archive SHA-256
+`9552a5038ebe7224572a5cf0294619df28e5ddc002ae696f5c8768994a7562bd`), but
+the SSH session expired during transfer at 21:04 New York on October 3;
+NYU/Duo reauthentication is required to resume. No Slurm job was submitted. Local checks
+report 8 passed/1 skipped and all four mock-chain checks passing. No numerical
+calibration or adoption is established. A launch must pass the v3 preflight and
+smoke; native postcheck requirements are 11 coordinates, full 14-row
+experimental target CSV, 31 parameter records, 17 plots, and exact repeat.
+See [experiment specification](code/model/experiments/ces_normalized_shares/README.md),
+[deployment workflow](code/cluster/ces_normalized_shares_calibration/README.md), and
+[complete proposed targets, bounds and starts](output/model/experiments/ces_normalized_shares/overnight_v1/start_plan.json).
+
 **Earnings and entry.** Earnings use a deterministic age profile and a single
 persistent four-year process: \(\rho=0.7345934906\), innovation standard deviation
 \(0.4838308245\). There is no separately adopted permanent-type plus transitory
