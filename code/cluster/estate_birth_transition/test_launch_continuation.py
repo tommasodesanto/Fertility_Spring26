@@ -13,7 +13,7 @@ import launch_continuation as m
 
 
 class LauncherTests(unittest.TestCase):
-    def fixture(self, directory, mode='smoke', wall=21600):
+    def fixture(self, directory, mode='smoke', wall=1800):
         root=Path(directory)
         driver=root/'driver.py';driver.write_text('# test only\n')
         manifest=root/'manifest.json';manifest.write_text('{}')
@@ -29,7 +29,7 @@ class LauncherTests(unittest.TestCase):
     def test_both_modes_reject_excess_wall_budget_without_children(self):
         for mode in ('smoke','run'):
             with self.subTest(mode=mode),tempfile.TemporaryDirectory() as d:
-                args,root=self.fixture(d,mode,21601)
+                args,root=self.fixture(d,mode,1801 if mode=='smoke' else 21601)
                 if mode=='run':
                     receipt=root/'smoke.json';receipt.write_text('{}')
                     args+=['--smoke-receipt-pin',json.dumps(dict(path=str(receipt),sha256=m.sha(receipt)))]
@@ -47,14 +47,14 @@ class LauncherTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             args,_=self.fixture(d);args+=['--smoke-receipt-pin','{}'];self.reject(args)
 
-    def test_smoke_accepts_explicit_six_hour_bound_with_mocked_children(self):
+    def test_smoke_accepts_explicit_half_hour_bound_with_mocked_children(self):
         with tempfile.TemporaryDirectory() as d:
             args,root=self.fixture(d)
             with patch.object(m.subprocess,'Popen',return_value=MagicMock(pid=1234)) as children,contextlib.redirect_stdout(io.StringIO()):
                 m.main(args)
             self.assertEqual(children.call_count,2)
             spec=json.loads((root/'launch/invocation.json').read_text())
-            self.assertEqual(spec['wall_seconds'],21600);self.assertEqual(spec['memory_gib'],24)
+            self.assertEqual(spec['wall_seconds'],1800);self.assertEqual(spec['memory_gib'],24)
             self.assertIsNone(spec['smoke_receipt_pin'])
 
     def test_receipt_pin_exact_fields_hash_and_content_remain_required(self):

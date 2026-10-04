@@ -1,0 +1,79 @@
+{
+  "status": "PASS_LEAD_STATIC_AND_CONTROL_REVIEW",
+  "verified_epoch": 1791142374.363404,
+  "source_pins": {
+    "code/model/experiments/birth_count_choice/two_shock.py": "20fdf029c153336e4bafae59db36826aae2d33b967ef57e4bc12d3d1993ff461",
+    "code/model/experiments/birth_count_choice/two_shock_runtime.py": "b6e3bc2ddb7e2e5717e5db8f0925ec0729b679fce0f9c80b854567a3f07739e3",
+    "code/model/experiments/birth_count_choice/test_two_shock.py": "7e8512cb26a7938df3b6507cd087321118217a32376c2bdc2a3d2978061ae779",
+    "code/cluster/estate_birth_transition/launch_continuation.py": "412592a369ce2895144589572278bd4aef271118f548d40a15681728a3b556fd",
+    "code/cluster/estate_birth_transition/test_launch_continuation.py": "70e143b84574147b47a839cbbf801c71f50ec6ee79a7db07f5a69b9f13de1a09"
+  },
+  "prior_commit": "5072d75eabee8e878678cc1a277a482bdf9a31ab",
+  "empirical_control_and_contract_equality": {
+    "baseline_psi": true,
+    "psi_bound_ratios": true,
+    "stages": true,
+    "rows": true,
+    "weights": true,
+    "target_contract": true,
+    "identity": true,
+    "gates": true,
+    "seed": true,
+    "fit": true,
+    "path": true,
+    "endpoint": true,
+    "budget": true,
+    "horizons": true,
+    "stage_starts": true,
+    "standard_plot_names": true,
+    "smoke_seed_endpoint_padding": true
+  },
+  "unchanged_scientific_functions": {
+    "diagnostic_horizon_comparison": true,
+    "compare_dated_state": true,
+    "Controller.evaluate": true,
+    "Controller.selected": true,
+    "Controller._run": true,
+    "Controller.account": true,
+    "Controller.remaining": true,
+    "Controller.render": true
+  },
+  "focused_tests_reported": {
+    "two_shock": 23,
+    "launcher": 8
+  },
+  "lead_checks": [
+    "line-by-line smoke/fit gate separation",
+    "unchanged empirical native path and scalar evaluation functions",
+    "prefix uses plan gates, with empirical exact original gates enforced",
+    "release requires authenticated zero-call constructor and actual pinned smoke artifacts"
+  ],
+  "smoke_budget": {
+    "candidate_seconds": 360,
+    "endpoint_seconds": 240,
+    "mapping_seconds": 180,
+    "maximum_policy_calls": 400,
+    "path_seconds": 240,
+    "render_seconds": 120,
+    "seed_seconds": 360,
+    "total_seconds": 1680
+  },
+  "smoke_horizons": [
+    6
+  ],
+  "smoke_path_evaluations": 3,
+  "smoke_endpoint_evaluations": 8,
+  "smoke_scalar_optimization": false,
+  "empirical_gates_unchanged": true,
+  "native_calls": 0,
+  "execution_smoke_passed": false,
+  "empirical_fit_launched": false,
+  "limitations": [
+    "Smoke checks execution only",
+    "Empirical 24/32 stability and full scalar fitting untested by native smoke",
+    "Smoke forecast padding allowed only for short numerical initializer; empirical requires actual slice [2:14]"
+  ],
+  "terminal_diagnostics_preserved_nongating": true,
+  "packaging_tests_reported": 14,
+  "package_inventory_sha256": "1f5bb7f6db502e768cd5805682ceaa81e04c666eca548fbfba25ca344d971f1e"
+}

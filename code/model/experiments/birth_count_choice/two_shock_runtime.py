@@ -142,6 +142,7 @@ class StageAdapter(retained.NativeAdapter):
             fiscal_maximum_residual=max(map(abs,record['fiscal_residual'])),
             replay_maximum_gap=root['final_reproduction_max_abs'] if root['final_reproduction_max_abs'] is not None else float('inf'),
             terminal=terminal_check,rows=record['rows'],fertility=record['fertility'],
+            final_mapping_pin=pin(folder/f'map_{count:03d}'/'native_record.json'),path_evaluations=count,
             native_reply=latest['native'],terminal_packet=terminal,endpoint=endpoint,psi_path=psi_path,root=root)
 
 
@@ -214,6 +215,7 @@ class NativeRuntime:
                 budget=self.plan['budget'],deadline=deadline,folder=folder)
             receipt.update(mapping_count=5,horizon=12,identity=adapter.identity())
         else: receipt=adapter.measure_inherited_seed(Path(folder),deadline)
+        receipt['source_evidence']=[pin(path) for path in sorted(Path(folder).glob('map_*/native_record.json'))]
         self.seeds[stage]=copy.deepcopy(receipt);return receipt
 
     def evaluate_stage(self,*,stage,psi,horizon,start_year,inherited_state,deadline,folder,**unused):
