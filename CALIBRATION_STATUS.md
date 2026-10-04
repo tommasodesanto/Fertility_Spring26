@@ -758,11 +758,13 @@ manuscript wording or certify a new paper calibration.
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
    The author authorized current one-birth Estate-A fertility-shock estimation
-   with simultaneous guesses and at most 48 cluster nodes. **Verified 07:59
-   New York, October 4:** five searches are running on five ordinary `cs`
-   nodes: v7 array 19142578 indices 6, 8, 9, 10, and v9 replacement 19147666_4.
-   Each requests eight CPUs/48 GiB/six hours. Never resubmit these arrays.
-   All v6 workers and both original one-core local searches have ended.
+   with simultaneous guesses and at most 48 cluster nodes. **Verified 08:04
+   New York, October 4:** only v9 replacement 19147666_4 remains running on
+   one ordinary `cs` node, with eight CPUs/48 GiB and its original six-hour
+   limit. All v6/v7 workers and both original one-core local searches ended.
+   Never resubmit these arrays. V7 tasks 8/9/10 hit watchdog timeouts; task 6
+   completed trial 5 and then failed its next stationary endpoint renewal/replay
+   gate. Completed trials and [terminal evidence](output/model/transition_readiness_v1/current_baseline_20261003/deployment_v7/failure_review/) are preserved.
    Local workers 5/7 and v6 tasks 7/8 exhausted time; these were not memory
    failures. Earlier endpoint-cap, initial-path feasibility and diagnostic
    output failures remain documented in the [transition README](output/model/transition_readiness_v1/current_baseline_20261003/README.md).
@@ -782,7 +784,8 @@ manuscript wording or certify a new paper calibration.
    bind this run. It restores only authenticated converged price/pension paths
    and Jacobians, preserving native source, `Controller.run`, economics,
    targets, bounds and gates. Fresh reference and seed are still required.
-   No new fit is launched yet: native replay and four-window agreement must
+   The smoke has completed the fresh reference and five seed maps; candidate 1
+   is active. No new fit is launched yet: native replay and four-window agreement must
    pass before one separate six-hour scalar restart at psi_child
    0.11999694638724082. Existing budgets are not extended.
 
