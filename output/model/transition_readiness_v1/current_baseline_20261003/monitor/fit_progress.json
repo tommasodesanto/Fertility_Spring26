@@ -1,7 +1,7 @@
 {
   "status": "completed_trial_not_matched",
-  "recorded_utc": "2026-10-04T06:43:04.526442+00:00",
-  "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/worker_7/run/candidate_0001/complete.json",
+  "recorded_utc": "2026-10-04T11:07:23.396173+00:00",
+  "source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/worker_5/run/candidate_0005/complete.json",
   "fit_rows": [
     {
       "moment": "period_tfr_2008_2011",
@@ -19,8 +19,8 @@
         "https://www.cdc.gov/nchs/data/nvsr/nvsr66/NVSR66_01.pdf",
         "https://www.cdc.gov/nchs/data/nvsr/nvsr74/nvsr74-1.pdf"
       ],
-      "model": 2.0714675373875555,
-      "gap": 0.09659253738755558,
+      "model": 1.6933377914967078,
+      "gap": -0.2815372085032921,
       "weight": 0.0,
       "loss_contribution": 0.0,
       "role": "validation"
@@ -40,8 +40,8 @@
       "sources": [
         "https://www.cdc.gov/nchs/data/nvsr/nvsr74/nvsr74-1.pdf"
       ],
-      "model": 2.073977924195933,
-      "gap": 0.21297792419593287,
+      "model": 1.709496459512693,
+      "gap": -0.15150354048730708,
       "weight": 0.0,
       "loss_contribution": 0.0,
       "role": "validation"
@@ -61,8 +61,8 @@
       "sources": [
         "https://www.cdc.gov/nchs/data/nvsr/nvsr74/nvsr74-1.pdf"
       ],
-      "model": 2.0746541726357055,
-      "gap": 0.3192791726357056,
+      "model": 1.7115053694197429,
+      "gap": -0.04386963058025706,
       "weight": 0.0,
       "loss_contribution": 0.0,
       "role": "validation"
@@ -82,16 +82,16 @@
       "sources": [
         "https://www.cdc.gov/nchs/data/nvsr/nvsr74/nvsr74-1.pdf"
       ],
-      "model": 2.075416638388689,
-      "gap": 0.4296666383886891,
+      "model": 1.7143879141286649,
+      "gap": 0.06863791412866482,
       "weight": 1.0,
-      "loss_contribution": 0.18461342014423654,
+      "loss_contribution": 0.004711163255933966,
       "role": "fitted"
     }
   ],
   "parameter": {
     "name": "psi_child",
-    "trial_value": 0.17534230624720795,
+    "trial_value": 0.12839959665634437,
     "lower": 0.001789207206604163,
     "upper": 0.35784144132083257,
     "near_bound": false,
@@ -100,19 +100,19 @@
   "fertility_tolerance": 0.005,
   "source_receipt": {
     "certified": true,
-    "psi": 0.17534230624720795,
-    "model": 2.075416638388689,
-    "gap": 0.4296666383886891,
-    "loss_contribution": 0.18461342014423654,
+    "psi": 0.12839959665634437,
+    "model": 1.7143879141286649,
+    "gap": 0.06863791412866482,
+    "loss_contribution": 0.004711163255933966,
     "payload": {
-      "candidate": 1,
+      "candidate": 5,
       "models": [
-        2.0714675373875555,
-        2.073977924195933,
-        2.0746541726357055,
-        2.075416638388689
+        1.6933377914967078,
+        1.709496459512693,
+        1.7115053694197429,
+        1.7143879141286649
       ],
-      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/worker_7/run/candidate_0001"
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/worker_5/run/candidate_0005"
     },
     "mode": "diagnostic",
     "production_ready": false,
@@ -120,18 +120,18 @@
     "horizon_comparison": {
       "passed": true,
       "relative_gaps": {
-        "asset_price": 5.858251650701091e-07,
-        "renter_price": 1.055191859703772e-06,
-        "adult_population": 1.694056777916718e-08,
-        "birth_children": 2.259252022362708e-06,
-        "housing_demand": 8.030050214166349e-07,
-        "pension_period_units": 3.2234533011114333e-08
+        "asset_price": 1.4087563470578772e-05,
+        "renter_price": 1.2721999718760475e-05,
+        "adult_population": 2.432969592857586e-07,
+        "birth_children": 2.4481176776418975e-05,
+        "housing_demand": 8.868953750650483e-06,
+        "pension_period_units": 2.3704156014501207e-07
       },
       "fertility_absolute_gaps": [
-        1.1520584002333578e-06,
-        1.9335462004832493e-06,
-        2.7546324186111804e-06,
-        3.617679502632143e-06
+        1.645363228286456e-05,
+        2.129387379889991e-05,
+        2.7424671092290964e-05,
+        3.4281416656956054e-05
       ],
       "early_macro_periods": 5,
       "early_macro_years": [
@@ -152,8 +152,8 @@
     },
     "diagnostic_relaxed_finite_horizon_match": false,
     "checkpoint_2023": {
-      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/worker_7/run/candidate_0001/state_2023_checkpoint/checkpoint_receipt.json",
-      "sha256": "4866f2fef54e2624f28e78a4e82d03fdd63f57e0b1c918fadbae2989aa274e12"
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/worker_5/run/candidate_0005/state_2023_checkpoint/checkpoint_receipt.json",
+      "sha256": "f33a4f2ef18c3cf0ccf1495a6f2a826229636f1bb3f80af0b4515db871f9ae3d"
     },
     "shock_fit_complete": false,
     "full_path_certified": false,
@@ -165,5 +165,36 @@
       false
     ],
     "classification": "diagnostic finite-horizon one-shock fit; full path uncertified"
-  }
+  },
+  "source_sha256": "71efdd52810cbea9e0410916f97bb93086d3f6be7a9ff65ed4d659a7ffe18272",
+  "root_verification": [
+    {
+      "horizon": 24,
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/worker_5/run/candidate_0005/horizon_024/root.json",
+      "sha256": "db88fc8b32c3d0a4b64b5023909c870859f948928bfd3839b2ad49aa46d2fe19",
+      "converged": true,
+      "replay_max_abs": 0.0,
+      "gates": {
+        "fiscal_replay": true,
+        "housing": true,
+        "mapping": true,
+        "market_replay": true,
+        "social_security": true
+      }
+    },
+    {
+      "horizon": 32,
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/worker_5/run/candidate_0005/horizon_032/root.json",
+      "sha256": "381331dbd397438663cdbfb9d9b2d22b15895f64647f4517a21caad12fb40411",
+      "converged": true,
+      "replay_max_abs": 0.0,
+      "gates": {
+        "fiscal_replay": true,
+        "housing": true,
+        "mapping": true,
+        "market_replay": true,
+        "social_security": true
+      }
+    }
+  ]
 }

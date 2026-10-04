@@ -815,10 +815,10 @@ manuscript wording or certify a new paper calibration.
    paths; [the repair receipt](output/model/transition_readiness_v1/current_baseline_20261003/deployment_v9/endpoint_output_fix_verified.json)
    preserves the evidence. Seven cluster searches on seven physical nodes
    and both local searches remain active. All existing searches and their
-   sources remain unchanged. Both local searches have completed four
-   24/32-date trial measurements and are evaluating candidate 5. The retained
-   initial-trial readout for local index 7 reports fertility 2.075417
-   versus target 1.645750, gap +0.429667. This
+   sources remain unchanged. At 07:04 New York both local searches had
+   completed five 24/32-date trial measurements and were evaluating candidate 6.
+   The best completed local trial, index 5 at psi_child=0.12839959665634437,
+   reports fertility 1.714388 versus target 1.645750, gap +0.068638. This
    is not a matched shock; [the full trial table and bounds](output/model/transition_readiness_v1/current_baseline_20261003/monitor/fit_progress.md)
    retain the four target rows and all fixed parameter links. The search continues.
    No fertility fit is accepted yet. Live receipts and fit outcomes are in
