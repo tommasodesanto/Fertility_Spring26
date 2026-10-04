@@ -799,10 +799,13 @@ manuscript wording or certify a new paper calibration.
    trials do not establish equilibrium infeasibility. The four-line routing
    fix was staged separately as v8, whose zero-solve preflight caught a stale
    handoff-reference hash. V9 corrects only that metadata and passed actual container/native-constructor
-   preflight with zero solves and eight threads. Its one-hour smoke 19146797
-   was submitted in `cs` and was pending at 04:00 New York. Only index 4 may
-   restart after fresh smoke review; no replacement search is submitted and
-   no running source is changed. Both local searches have
+   preflight with zero solves and eight threads. Smoke 19146797 passed
+   required native gates with 64 calls and verified owned diagnostic paths;
+   its six-date terminal failure remains disclosed. After exact same-stage
+   local/remote gate review, replacement 19147666, index 4 only, was submitted
+   for six hours in `cs` at eight CPUs/48 GiB; it was **RUNNING** on `cs615`
+   at 04:27 New York.
+   All existing searches and their sources remain unchanged. Both local searches have
    completed two 24/32-date trial measurements and are evaluating candidate 3. Local index 7 has now completed both horizons at its initial
    trial: fertility 2.075417 versus target 1.645750, gap +0.429667. This
    is not a matched shock; [the full trial table and bounds](output/model/transition_readiness_v1/current_baseline_20261003/monitor/fit_progress.md)

@@ -1,0 +1,32 @@
+{
+  "status": "submitted",
+  "created_epoch": 1791102410.888554,
+  "command": "cd /scratch/td2248/projects/current_estate_transition_20261003_v9 && sbatch --parsable --partition=cs --time=06:00:00 --nodes=1 --ntasks=1 --array=4%1 --export=ALL,TRANSITION_MODE=panel,TRANSITION_WALL_SECONDS=21600 panel_launch_torch_v7.sh",
+  "remote_root": "/scratch/td2248/projects/current_estate_transition_20261003_v9",
+  "inventory_sha256": "15cc5f6036d57b985ea2ea9098f015dd527d2ce11ec94bd458a49913f017d977",
+  "indices": [
+    4
+  ],
+  "no_auto_retry": true,
+  "mode": "panel",
+  "wall_seconds": 21600,
+  "maximum_concurrent_nodes": 1,
+  "cpus": 8,
+  "memory_GiB": 48,
+  "controller_seconds": 21480,
+  "fit_evaluation_cap": 12,
+  "path_evaluation_cap": 12,
+  "endpoint_evaluation_cap": 48,
+  "endpoint_seconds": 1800,
+  "actual_policy_call_cap": 20000,
+  "conservative_policy_call_bound": 16838,
+  "baseline_and_gates_unchanged": true,
+  "old_completed_trial_preserved": true,
+  "prior_task_failure": "v7_4_readonly_diagnostic_path",
+  "new_native_smoke_job": "19146797",
+  "returncode": 0,
+  "stdout": "19147666\n",
+  "stderr": "",
+  "job_id": "19147666",
+  "submitted_epoch": 1791102411.21564
+}
