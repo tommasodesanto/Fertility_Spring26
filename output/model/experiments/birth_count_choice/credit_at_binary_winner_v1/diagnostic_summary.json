@@ -1,0 +1,124 @@
+{
+  "age25_projection": "0.125 pre-birth + 0.875 post-birth at completed interview age 25",
+  "arms": {
+    "phi_080": {
+      "accepted_native_report": true,
+      "age25_cdf": [
+        0.5539341228051152,
+        0.8964810410742758,
+        1.0000000000000002,
+        1.0000000000000002
+      ],
+      "age25_children_conditional_on_motherhood": 1.2320710106245079,
+      "age25_mean_children_ever_born": 0.5495848361206093,
+      "age25_motherhood": 0.4460658771948848,
+      "age25_shares": [
+        0.5539341228051152,
+        0.34254691826916056,
+        0.10351895892572434,
+        0.0
+      ],
+      "births_by_order": [
+        0.05014157286126287,
+        0.041167192041896936,
+        0.023921912103134938
+      ],
+      "estate_negative_death_mass": 0.0,
+      "estate_negative_period": 0.0,
+      "estate_total_death_mass": 0.061733456180747784,
+      "expected_births": 0.11523067700629475,
+      "label": "phi_080",
+      "ownership_age22_25": 0.39652450386278915,
+      "ownership_age26_29": 0.5067894020389216,
+      "ownership_all_households": 0.6961726453392626,
+      "phi": 0.8,
+      "source_arrays_sha256": "3e906f62afe4af4fadfc8740f3952d1e5930306fe2cbae57ebebaa78f3122811"
+    },
+    "phi_100": {
+      "accepted_native_report": false,
+      "age25_cdf": [
+        0.5646033688030435,
+        0.897370426575925,
+        1.0,
+        1.0
+      ],
+      "age25_children_conditional_on_motherhood": 1.2357151297701456,
+      "age25_mean_children_ever_born": 0.5380262046210313,
+      "age25_motherhood": 0.4353966311969565,
+      "age25_shares": [
+        0.5646033688030435,
+        0.33276705777288146,
+        0.10262957342407496,
+        0.0
+      ],
+      "births_by_order": [
+        0.04909705651488638,
+        0.04023416509701873,
+        0.023405553309205324
+      ],
+      "estate_negative_death_mass": 1.2708687061129053e-07,
+      "estate_negative_period": 1.1913129272953309e-08,
+      "estate_total_death_mass": 0.0617334561807478,
+      "expected_births": 0.11273677492111042,
+      "label": "phi_100",
+      "ownership_age22_25": 0.7178715420787337,
+      "ownership_age26_29": 0.7883406797741838,
+      "ownership_all_households": 0.8189674914004479,
+      "phi": 1.0,
+      "source_arrays_sha256": "8a8e1a3498b53c5ea59ca0e89c41c4a697269bcb3bb6445c4ad764f5210fde71"
+    }
+  },
+  "change": {
+    "age25_children_conditional_on_motherhood": 0.003644119145637781,
+    "age25_motherhood_percentage_points": -1.066924599792829,
+    "expected_births_percent": -2.1642692293199706,
+    "ownership_percentage_points": 12.27948460611853
+  },
+  "fixed_H0": 6.1245552591467405,
+  "no_new_lifecycle_solve": true,
+  "postprocessor_sha256": "120ff46f65e0d8d0e491307d961915a4c3a1906327ffaef8e869cfaac47ab10d",
+  "price": 0.7811670615311468,
+  "relaxed_acceptance": "failed_negative_estate_gate; diagnostics provisional, not accepted counterfactual",
+  "source_code_pins": {
+    "code/model/experiments/birth_count_choice/model/__init__.py": "f06337c12a7e759bbabd50f0562932be661fc7ef216cfa7810ac77e0705d9a3c",
+    "code/model/experiments/birth_count_choice/model/calibration.py": "f81ccbf6d7ef522123bc7e91ab082470213bc33a6fa0516b2c6eb8c54f6b6bfd",
+    "code/model/experiments/birth_count_choice/model/credit.py": "0c939767d0fa5fbfc468c47da3dbbb5a3d8c79c3fd7e6b2c6715b11444b0b070",
+    "code/model/experiments/birth_count_choice/model/engine/__init__.py": "c134867d538cf9b27bceaaeb70cfead4aec7706039f5b3b66fc006ff208bbb67",
+    "code/model/experiments/birth_count_choice/model/engine/adult_entry.py": "e752178ad90d64c77575b70d0718a94d6f3b04463b03637d9af12e23f57bce3f",
+    "code/model/experiments/birth_count_choice/model/engine/birth_count.py": "ad349b259dd3da505bcdc036b9a4696621b3c9062203e9bc8ac40db87761332e",
+    "code/model/experiments/birth_count_choice/model/engine/child_preferences.py": "887763b066bdd64efb2f23b97fac977abfa9630d1e194adb2148da24b2ff7123",
+    "code/model/experiments/birth_count_choice/model/engine/diagnostics.py": "9d65d92cb80b7a11593b6d1c85b87581d28baeaa320897d7136733be9735adb3",
+    "code/model/experiments/birth_count_choice/model/engine/distribution.py": "6e855e183aa60707cf97d8c12227850ab8c246ab3d9ee75a14aa84aa73189aca",
+    "code/model/experiments/birth_count_choice/model/engine/e5f_social_security.py": "df03621afd48135afb6c3fbdec1209bad9605c6133b9f6352fce28fc45c7961b",
+    "code/model/experiments/birth_count_choice/model/engine/e5f_stationary_paygo.py": "7eeb7760b236711d40b3563d6d7a40548ba3cade6a646743c6fe3a02462a8569",
+    "code/model/experiments/birth_count_choice/model/engine/equilibrium.py": "ca88909666802e92e396c44c0ea6f69eadbddb9e707bfec49cf1ec765d013fe9",
+    "code/model/experiments/birth_count_choice/model/engine/fertility_nested.py": "aed06c0ee77bb39b0d72da0d5e63c6f1c1b6c3b0a76986372aa17e2d2cb77e85",
+    "code/model/experiments/birth_count_choice/model/engine/household.py": "95ecba8a5aa0d6eb28418d64b8f5a81e951ab483deed69c28cc1974d88dba95e",
+    "code/model/experiments/birth_count_choice/model/engine/joint_nested.py": "909bb9d02ecf8e196e339864572e7692e71a956c35002397c70a494a30bd620b",
+    "code/model/experiments/birth_count_choice/model/engine/kernels.py": "a615c1df43e54ee4b5da7fbe775e1ba343e3132afa45a0159f9846a7a598e279",
+    "code/model/experiments/birth_count_choice/model/engine/parameters.py": "f7cffd220514f6c231a72de7a754e8ca357aeba6e3274b91266576b840ce896f",
+    "code/model/experiments/birth_count_choice/model/engine/shared.py": "1fbe36f75befe5fed67c490c39a65663f4c8896b078851693fb4bca533d07773",
+    "code/model/experiments/birth_count_choice/model/engine/solver.py": "19e6f9240a4ff7354c39031d35d734ea2c8cad2fbd1f60d128ebb049d587317c",
+    "code/model/experiments/birth_count_choice/model/engine/two_shock_choice.py": "0d5201f176ad77f2c3013819d18eae69c1a22a91d7ce9b8060e1d6ef76ad40f1",
+    "code/model/experiments/birth_count_choice/model/engine/utils.py": "836d6768af4a9261fe28e758f88dcc8ca059afc277b7c03d36f179a510ebcf36",
+    "code/model/experiments/birth_count_choice/model/engine/warm_price.py": "bc3ff5c8df2a16a9ef753bfaabde914e09e7d3943de90c93be684ebeb0bf2518",
+    "code/model/experiments/birth_count_choice/model/equilibrium.py": "0be7e1f945c77b8d84ec473cdc6a0ff9f35a9f1df5764488f47fff94a53eb5a4",
+    "code/model/experiments/birth_count_choice/model/estate_audit_adapter.py": "0857813dc0a91cdc95ceecd23888336a1885e5d52e561496932e01772fec3b41",
+    "code/model/experiments/birth_count_choice/model/estate_contract.py": "137289a0da54f64a3ccb33fbc41e30b8edf3efbe6ca875ab58e6924ba9340e91",
+    "code/model/experiments/birth_count_choice/model/estate_observer_adapter.py": "7efd671554de7744dddbab0a0b5edd94b73b01f422079b8839a799e4a39af37e",
+    "code/model/experiments/birth_count_choice/model/frozen_sources.py": "4374264fdcc5e027f533123dc0c3df7f019df7b5011a4b06b691a35af74271fe",
+    "code/model/experiments/birth_count_choice/model/inputs.py": "fef4cc9f85766c8843d62a2257a718d3ed1f9979cdb9e92729b9983527669763",
+    "code/model/experiments/birth_count_choice/model/native_phase_b.py": "b4625c448937f3f0f6f74a257c601434ee4c6d58ac84608b54439036957893c9",
+    "code/model/experiments/birth_count_choice/model/native_price.py": "53e8e83d90f34b64050b7f75dc45a7bd24e8c891b8ab1754d87852d23e9e5450",
+    "code/model/experiments/birth_count_choice/model/observer_adapters.py": "9080c5652c7f8da42db5e96a518270764b71824a419f17c4a156d1c65fe1c650",
+    "code/model/experiments/birth_count_choice/model/parameter_files.py": "e5da9811ae8fefd7be0559ce3ce87e26b7d9c5cfc118822b1164496e81358218",
+    "code/model/experiments/birth_count_choice/model/reporting.py": "306a02bb5a43a0e0819a5392694141075c03607d6bec30828359ca4194859968",
+    "code/model/experiments/birth_count_choice/model/storage.py": "2cdeb5fdb7fd915a309405433467643516cfdfc6246e584a343a3e0a5782df3c",
+    "code/model/experiments/birth_count_choice/model/verification.py": "c5af97acb1156e8f5581bf3e2ed5569ec6579bf73fae72845406156c8fbebe27",
+    "code/model/experiments/birth_count_choice/model/workflow.py": "2e79670c7e20bd4462dd3a41c31f436f4767eee91de4fee82e6954d45824b5d0",
+    "code/model/experiments/birth_count_choice/run_cap2_at_binary_winner.py": "571eadca34bb75e6d22fee66e5d4d0fc78e60a2b5ce89e906c7c0da6c908212a",
+    "code/model/experiments/birth_count_choice/run_credit_at_binary_winner.py": "dc6ffb52e019b48a220c2ad10c62979df922e1386e2d836f9b85bfd9e81c3172"
+  },
+  "source_search_sha256": "2e104f260050b802370de3d8bdd0d0792c8a7af9e13be849fadfdd6171106f71",
+  "status": "read_only_postprocess_complete"
+}

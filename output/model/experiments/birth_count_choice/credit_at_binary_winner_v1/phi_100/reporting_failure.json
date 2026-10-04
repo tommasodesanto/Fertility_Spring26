@@ -1,0 +1,7 @@
+{
+  "error_type": "RuntimeError",
+  "message": "Negative-estate production gate failed; saved ledger retained",
+  "no_gate_change": true,
+  "solver_output_preserved": true,
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/run_credit_at_binary_winner.py\", line 152, in solve_one\n    observed = native_phase_b.observe_price(context, live, label,\n                                             final=(label == \"phi_080\"))\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/model/native_phase_b.py\", line 108, in observe_price\n    gates = fp.gates(packet, prepared, out, stationary=True)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/sources/fixed_price_v1/run_fixed_price.py\", line 179, in gates\n    sys.modules['e5f_evening_calibration_runtime'].require_no_negative_estates(estate)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_due_stayer_matched_check.py\", line 29, in require_no_negative_estates\n    raise RuntimeError('Negative-estate production gate failed; saved ledger retained')\nRuntimeError: Negative-estate production gate failed; saved ledger retained\n"
+}

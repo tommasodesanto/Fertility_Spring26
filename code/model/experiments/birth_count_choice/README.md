@@ -284,6 +284,13 @@ automation `finish-and-monitor-soft-timing-calibration`, in chat
 is ACTIVE after the reviewed release. No automatic retry
 is authorized.
 
+The [fixed-price credit diagnostic at the verified Estate-A binary winner](../../../../output/model/experiments/birth_count_choice/credit_at_binary_winner_v1/README.md)
+holds the ten coordinates, $H_0$, price, and birth cap at the verified one-birth
+point while changing only the uniform financed share from 0.8 to 1.0. The 0.8
+arm reproduces the accepted target fit. The 1.0 arm solves but fails the
+unchanged negative-estate production gate, so its saved-array comparisons are
+provisional and are not an accepted counterfactual.
+
 Copy-paste handoff for Claude:
 
 > Inspect `output/model/experiments/birth_count_choice/estate_a_v1/RESULTS.md`,
