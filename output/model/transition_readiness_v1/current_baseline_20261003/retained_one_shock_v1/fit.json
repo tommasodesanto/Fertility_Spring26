@@ -1,0 +1,120 @@
+{
+  "status": "matched",
+  "converged": true,
+  "root": {
+    "converged": true,
+    "status": "converged",
+    "best": {
+      "prices": [
+        0.11999694638724082
+      ],
+      "x": [
+        -2.120288983296859
+      ],
+      "residual": [
+        0.0026159748829854834
+      ],
+      "score": 0.0026159748829854834,
+      "raw_max_abs": 0.0026159748829854834,
+      "trimmed_score": 0.0026159748829854834,
+      "mapping_valid": true,
+      "payload": {
+        "candidate": 1,
+        "models": [
+          1.6266185669112152,
+          1.6413074510640842,
+          1.6416996993988433,
+          1.6431340251170146
+        ],
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_0001",
+        "model": 1.6431340251170146,
+        "outer_evaluation": 1
+      }
+    },
+    "final": {
+      "prices": [
+        0.11999694638724082
+      ],
+      "x": [
+        -2.120288983296859
+      ],
+      "residual": [
+        0.0026159748829854834
+      ],
+      "score": 0.0026159748829854834,
+      "raw_max_abs": 0.0026159748829854834,
+      "trimmed_score": 0.0026159748829854834,
+      "mapping_valid": true,
+      "payload": {
+        "candidate": 4,
+        "models": [
+          1.6266185669112152,
+          1.6413074510640842,
+          1.6416996993988433,
+          1.6431340251170146
+        ],
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_0004",
+        "model": 1.6431340251170146,
+        "outer_evaluation": 4
+      }
+    },
+    "final_reproduction_max_abs": 0.0,
+    "evaluations": 2,
+    "elapsed_seconds": 818.1547207909753,
+    "history": [
+      {
+        "evaluation": 1,
+        "phase": "initial",
+        "prices": [
+          0.11999694638724082
+        ],
+        "residual": [
+          0.0026159748829854834
+        ],
+        "score": 0.0026159748829854834,
+        "raw_max_abs": 0.0026159748829854834,
+        "trimmed_score": 0.0026159748829854834,
+        "mapping_valid": true,
+        "new_best": true,
+        "best_score": 0.0026159748829854834,
+        "elapsed_seconds": 7.345800986513495e-05,
+        "evaluation_seconds": 3.8583006244152784e-05
+      },
+      {
+        "evaluation": 2,
+        "phase": "final",
+        "prices": [
+          0.11999694638724082
+        ],
+        "residual": [
+          0.0026159748829854834
+        ],
+        "score": 0.0026159748829854834,
+        "raw_max_abs": 0.0026159748829854834,
+        "trimmed_score": 0.0026159748829854834,
+        "mapping_valid": true,
+        "new_best": false,
+        "best_score": 0.0026159748829854834,
+        "elapsed_seconds": 818.1542348329676,
+        "evaluation_seconds": 818.1516178750317
+      }
+    ],
+    "final_jacobian": [
+      [
+        -1.0272622896451051
+      ]
+    ],
+    "final_damping": 0.7,
+    "tolerance_vector": null,
+    "gate": 0.005,
+    "trim_count": 0
+  },
+  "parameter": {
+    "estimate": 0.11999694638724082,
+    "lower": 0.001789207206604163,
+    "upper": 0.35784144132083257,
+    "near_bound": false
+  },
+  "equilibrium_evaluations": 4,
+  "initial_fertility_derivative_log_psi": 1.0272622896451051
+}

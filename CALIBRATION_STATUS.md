@@ -800,60 +800,46 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   The author authorized current one-birth Estate-A fertility-shock estimation
-   with simultaneous guesses and at most 48 cluster nodes. **Verified 10:31
-   New York, October 4:** all v6/v7/v9 cluster workers and both original local
-   searches have ended. V9 replacement 19147666_4 stopped at 10:26:22 during
-   candidate 5 after 5h59m01s: watchdog TimeoutError wrapped by Numba
-   SystemError, not an out-of-memory stop. Its four completed trials and
-   [exact failure evidence](output/model/transition_readiness_v1/current_baseline_20261003/deployment_v9/failure_review/task_4.json)
-   are retained. Separate fingerprint-checked panel collections accepted no
-   completed search: v6 rejected 12, v7 rejected 11, and v9 rejected one.
-   Never resubmit these arrays. V7 tasks 8/9/10 hit watchdog timeouts; task 6
-   completed trial 5 and then failed its next stationary endpoint renewal/replay
-   gate. Completed trials and [terminal evidence](output/model/transition_readiness_v1/current_baseline_20261003/deployment_v7/failure_review/) are preserved.
-   Local workers 5/7 and v6 tasks 7/8 exhausted time; these were not memory
-   failures. Earlier endpoint-cap, initial-path feasibility and diagnostic
-   output failures remain documented in the [transition README](output/model/transition_readiness_v1/current_baseline_20261003/README.md).
-   Initial-path rejection does not establish equilibrium infeasibility.
-   V7 increased the endpoint cap 16→48 within the same 1,800-second endpoint
-   budget. V9 applies only a four-line diagnostic-routing fix; its fresh
-   native smoke passed required gates, and its second-candidate endpoint
-   passed the previously failing output stage. Sources and panel identities
-   stay separate; completed candidates and all failure evidence are retained.
+   **Current transition direction, verified October 4 at 11:48 New York:** the
+   author requested preservation of the one-shock experiment and estimation of
+   two unanticipated permanent preference changes, in 2007 and 2015. Fit the
+   2012–2015 fertility target **1.861** and retain the 2020–2023 target **1.64575**;
+   the other two windows remain validation rows. Both preference levels keep
+   the original absolute bounds \([0.001789207206604163,0.35784144132083257]\).
+   Carry the accepted first-vintage household state and both queues into 2015,
+   without advance knowledge of the second shock or population rescaling.
+   The one-birth Estate-A case, earnings, financing, post-interest timing,
+   estate rules, fixed-H0 housing and payroll-tax/pension closure stay unchanged.
+   This is an experimental extension, not adoption of a new baseline. See the
+   [two-shock contract](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/README.md).
+   Its implementation and exact-loop verification are pending; no new native
+   run has launched.
 
-   Following the concrete local budget failure, the separately fingerprinted
-   recovery passed nine focused tests, real-source preflight and the actual
-   native 24/32-date replay smoke. Both roots converged in two maps each,
-   replay discrepancy was zero, every required root/accounting gate passed,
-   and all four fertility values exactly reproduced the saved trial. The test
-   took about 22 minutes and 241 native calls; both terminal gates remain false.
-   [Lead review and pinned smoke](output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_review_gate.json)
-   preserve the evidence.
+   The one-shock scalar fit and fresh final replay **completed numerically** at
+   \(\psi_{child}=0.11999694638724082\), with final fertility **1.6431340251170146**,
+   gap **−0.0026159748829854834** and loss **6.8433245884109135e-06**. Original
+   root, replay, accounting and historical-horizon checks passed. All four
+   target/model/gap/weight/loss rows, bounds, exact 2023 state, 51 standard plots
+   (17 at each of three dates) and original source hashes are saved in the
+   [retained experimental reference](output/model/transition_readiness_v1/current_baseline_20261003/retained_one_shock_v1/README.md).
+   Final panel collection failed after the numerical work because two live
+   source files changed concurrently; the failed receipt remains visible.
+   The retention audit checked 28 source files from the original runtime
+   snapshot, including both changed files, and 59 still-matching working files.
+   It creates no accepted panel receipt and makes no equivalence claim about
+   the later code. Both terminal checks remain false; 24/32-date diagnostics
+   are not 104/128 production certification, and estate closure remains provisional.
 
-   The authorized new local scalar fit is **RUNNING**, verified 10:31 New York:
-   manager 91634, worker 91636, started 08:27:19, one core, six-hour external
-   limit, 21,480-second internal budget and 24-GiB owned-RSS guard.
-   [Launch receipt](output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/launcher_start.json)
-   is authoritative; never duplicate it. Numerical start is psi_child
-   0.11999694638724082. It restores only authenticated converged price/pension
-   paths and Jacobians, preserving native source, `Controller.run`, economics,
-   targets, bounds and gates. The scalar optimizer restarts, and fresh reference
-   and seed are still required. Existing budgets are not extended.
+   All v6/v7/v9 cluster and original/recovery local searches have stopped.
+   Never resubmit them. Timeouts, endpoint renewal/replay failures, initial-path
+   rejections and the repaired output-routing bug are distinguished in the
+   [transition README and receipts](output/model/transition_readiness_v1/current_baseline_20261003/README.md).
+   Separate fingerprint-checked collections accepted zero searches: v6 rejected
+   12, v7 rejected 11, v9 rejected one. Initial-path rejection does not establish
+   equilibrium infeasibility. The two-shock work will use an isolated source
+   package; unrelated calibration changes are not adopted or modified. The
+   hard-versus-soft economic choice remains separate from this experiment.
 
-   **First continuation trial within tolerance, verified 09:36 New York:**
-   psi_child 0.11999694638724082 gives final-window fertility 1.643134 versus
-   1.645750, gap −0.002616 (tolerance ±0.005), loss 6.8433245884109135e-06.
-   Both 24/32 roots converged and passed exact replay, accounting and horizon
-   checks. Candidate 2 completed; candidate 3 is the positive derivative probe.
-   The unchanged estimator is completing its derivative checks and final
-   reproduction/output steps; **no final fit is accepted yet**. The
-   [full four-window table and parameter bounds](output/model/transition_readiness_v1/current_baseline_20261003/monitor/fit_progress.md)
-   retain the sizeable earlier-window validation gaps. Both terminal checks
-   remain false. Diagnostic 24/32 horizons are not 104/128 production
-   certification; estate recipient/funding closure remains provisional.
-   Unrelated calibrations are untouched. The hard-versus-soft economic choice
-   remains distinct from this authorized search.
 2. **Identification and weights:** count is ten moments for ten free parameters.
    Check informative rank/substitution and the two near-bound fertility/continuation
    noise parameters. National ACS uncertainty and the early-fertility weight remain

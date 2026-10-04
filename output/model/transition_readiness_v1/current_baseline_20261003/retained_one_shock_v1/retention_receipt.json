@@ -1,0 +1,837 @@
+{
+  "authenticated_source_count": 87,
+  "files": {
+    "baseline_parameters.csv": {
+      "bytes": 2876,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/experiments/birth_count_choice/estate_a_v1/single/cases/20261003T212605039706Z_a739edc3/parameters.csv",
+      "sha256": "fecdd062270bc0f9a51bd6ef4d9c989f347c0be35f48e29b9de9d75b6b1ff168"
+    },
+    "candidate_receipt.json": {
+      "bytes": 22604,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_receipt.json",
+      "sha256": "e785d3078a85120a7ff815d47abfdb6010ce9ccf88b868989b0f890e8ec201a5"
+    },
+    "complete.json": {
+      "bytes": 30560,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/complete.json",
+      "sha256": "744b95844af44877cbc2f35302260e4ea66cb9c987c4ee2493a558656584842e"
+    },
+    "diagnostics/date_000/standard_diagnostics/fertility_by_age.png": {
+      "bytes": 41308,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_000/standard_diagnostics/fertility_by_age.png",
+      "sha256": "5063615a3c077c008407e554533d50917a033fd2959ef17593c0599c86392e80"
+    },
+    "diagnostics/date_000/standard_diagnostics/fertility_policy_by_age_income_state.png": {
+      "bytes": 123375,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_000/standard_diagnostics/fertility_policy_by_age_income_state.png",
+      "sha256": "0bbd7da9f31133c10970fdf468ca8dae334be3d0149488ad6ef325c165cf1fa7"
+    },
+    "diagnostics/date_000/standard_diagnostics/housing_by_age_income_state.png": {
+      "bytes": 125399,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_000/standard_diagnostics/housing_by_age_income_state.png",
+      "sha256": "02749d5dbf900aa12a2b73549e3ffa955874f69b10991cc877acb11bc82ad2d7"
+    },
+    "diagnostics/date_000/standard_diagnostics/housing_market.png": {
+      "bytes": 28621,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_000/standard_diagnostics/housing_market.png",
+      "sha256": "ae49d6ad4073034102b660029c8f25c2f1216a9ed592b393a5d7fe3a6ea02eec"
+    },
+    "diagnostics/date_000/standard_diagnostics/housing_prices.png": {
+      "bytes": 45140,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_000/standard_diagnostics/housing_prices.png",
+      "sha256": "563de3badfd6d2029c4850fb57a18f44ff699e4bddf0e4a9d20ca4c58bfb8052"
+    },
+    "diagnostics/date_000/standard_diagnostics/income_state_outcomes.png": {
+      "bytes": 55574,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_000/standard_diagnostics/income_state_outcomes.png",
+      "sha256": "cc687ef9506785d6a85d00d4c74e2b8e68efbc2dcff3b1f90f48810165cc2fb9"
+    },
+    "diagnostics/date_000/standard_diagnostics/liquid_wealth_by_age_income_state.png": {
+      "bytes": 133801,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_000/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+      "sha256": "7029a33ecd05608a072d2f3f7490e6b12e60078bcabf12c8cac96af6c9aeeb28"
+    },
+    "diagnostics/date_000/standard_diagnostics/market_clearing_by_market.png": {
+      "bytes": 30805,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_000/standard_diagnostics/market_clearing_by_market.png",
+      "sha256": "c318d9af27efbfa66b99c0dab7284d27a9fb7c7289b9280f95b2b156113f5c6c"
+    },
+    "diagnostics/date_000/standard_diagnostics/market_clearing_residuals.png": {
+      "bytes": 33388,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_000/standard_diagnostics/market_clearing_residuals.png",
+      "sha256": "84fcd5a334b1965f47c36be9b58bbb639eb1c201b6ef619ad8f975715ca992d7"
+    },
+    "diagnostics/date_000/standard_diagnostics/owner_rungs.png": {
+      "bytes": 32906,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_000/standard_diagnostics/owner_rungs.png",
+      "sha256": "885065b86df75e3bc9036f4d46b27a042975c68305eff4c69fbce7232ad6a051"
+    },
+    "diagnostics/date_000/standard_diagnostics/ownership_by_age.png": {
+      "bytes": 41596,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_000/standard_diagnostics/ownership_by_age.png",
+      "sha256": "e900af47a7d36fa979bcfb836a6be2f616ce16e2d3e4d46148ed1e949e19e959"
+    },
+    "diagnostics/date_000/standard_diagnostics/ownership_by_age_income_state.png": {
+      "bytes": 132634,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_000/standard_diagnostics/ownership_by_age_income_state.png",
+      "sha256": "dde72bf31a5b047d85cf717484fcfd4429108913fb6cddf1c695a842a736d9a0"
+    },
+    "diagnostics/date_000/standard_diagnostics/policy_childless_renter_age30.png": {
+      "bytes": 148590,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_000/standard_diagnostics/policy_childless_renter_age30.png",
+      "sha256": "61e90b7c10531f6f322aef0772a1eee416dc0362a8fbce7a97e34f2d99382207"
+    },
+    "diagnostics/date_000/standard_diagnostics/policy_childless_renter_age42.png": {
+      "bytes": 156660,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_000/standard_diagnostics/policy_childless_renter_age42.png",
+      "sha256": "0e4db713b2aa8eef662b052d240b85aedcc0148b3b5e3ae677f0f03d4fbb5791"
+    },
+    "diagnostics/date_000/standard_diagnostics/tenure_services.png": {
+      "bytes": 23924,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_000/standard_diagnostics/tenure_services.png",
+      "sha256": "e72e053ad8922d364f8c32bd222f85aabed47f6591e9c15fcd639aecfe3716f3"
+    },
+    "diagnostics/date_000/standard_diagnostics/wealth_dist_childless_renter_age30.png": {
+      "bytes": 56480,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_000/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+      "sha256": "e1641f55368f4a4a54ea4d77ba5b251d3fd2a6fb30dcdbe46079a8d384c37f77"
+    },
+    "diagnostics/date_000/standard_diagnostics/wealth_dist_childless_renter_age42.png": {
+      "bytes": 56241,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_000/standard_diagnostics/wealth_dist_childless_renter_age42.png",
+      "sha256": "2537dd937c70ef4d15b73da71dbcfdadb7d70671908493e58a65fa47c48b11de"
+    },
+    "diagnostics/date_016/standard_diagnostics/fertility_by_age.png": {
+      "bytes": 40043,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_016/standard_diagnostics/fertility_by_age.png",
+      "sha256": "1b9e1acffd062ea8a9eb50a9ec5999401cad4e1d69635f62fcc3beaf37f62191"
+    },
+    "diagnostics/date_016/standard_diagnostics/fertility_policy_by_age_income_state.png": {
+      "bytes": 128458,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_016/standard_diagnostics/fertility_policy_by_age_income_state.png",
+      "sha256": "da93f09253ac725b6fc9e1323916ac90a344595b3e2c43654cbbc9a1c6f640c4"
+    },
+    "diagnostics/date_016/standard_diagnostics/housing_by_age_income_state.png": {
+      "bytes": 122913,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_016/standard_diagnostics/housing_by_age_income_state.png",
+      "sha256": "e1b8a4940b16c861a07bc2dc302af1c203011a0f4b6bf8078f6da3ddf402c15d"
+    },
+    "diagnostics/date_016/standard_diagnostics/housing_market.png": {
+      "bytes": 28679,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_016/standard_diagnostics/housing_market.png",
+      "sha256": "4fa10ce25d40f4371861831c5fe956df97fd12a6c92aa327e125e69189533cd7"
+    },
+    "diagnostics/date_016/standard_diagnostics/housing_prices.png": {
+      "bytes": 42630,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_016/standard_diagnostics/housing_prices.png",
+      "sha256": "96d332d19b565a54516d5178f08d04a53222a921d5cdada4948cfe22b52deb76"
+    },
+    "diagnostics/date_016/standard_diagnostics/income_state_outcomes.png": {
+      "bytes": 54227,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_016/standard_diagnostics/income_state_outcomes.png",
+      "sha256": "cd74d20ad1bf02aee450d80c13d27a1eb1f82ad508205ddbcbb986c6e18c86b5"
+    },
+    "diagnostics/date_016/standard_diagnostics/liquid_wealth_by_age_income_state.png": {
+      "bytes": 139086,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_016/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+      "sha256": "71ebfce33fb80f25fa3c5691f81ee574b11f21dca37d18d486d90ad01be584b1"
+    },
+    "diagnostics/date_016/standard_diagnostics/market_clearing_by_market.png": {
+      "bytes": 30733,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_016/standard_diagnostics/market_clearing_by_market.png",
+      "sha256": "61b98de607f440654d5c956223287fe5cff3b007732f7985fe20b5f27183ec9c"
+    },
+    "diagnostics/date_016/standard_diagnostics/market_clearing_residuals.png": {
+      "bytes": 32480,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_016/standard_diagnostics/market_clearing_residuals.png",
+      "sha256": "2f9b91c1234db7a5b446d8576dcf63471723b9826088a774fabb160b296c43f6"
+    },
+    "diagnostics/date_016/standard_diagnostics/owner_rungs.png": {
+      "bytes": 35746,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_016/standard_diagnostics/owner_rungs.png",
+      "sha256": "4527d49b9ac6b82c01ce1a454b736dd5f3a36108ec1702e421868b8479e22604"
+    },
+    "diagnostics/date_016/standard_diagnostics/ownership_by_age.png": {
+      "bytes": 41404,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_016/standard_diagnostics/ownership_by_age.png",
+      "sha256": "f209a70382f48b0f6d77b6f4a81a89f44b350a218f51dc662a5e6b9ada5f9a01"
+    },
+    "diagnostics/date_016/standard_diagnostics/ownership_by_age_income_state.png": {
+      "bytes": 127667,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_016/standard_diagnostics/ownership_by_age_income_state.png",
+      "sha256": "8618dc948f1edd66e9edafad138d9d7b56f0946862dfca95fcb2c07fa37e339f"
+    },
+    "diagnostics/date_016/standard_diagnostics/policy_childless_renter_age30.png": {
+      "bytes": 146188,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_016/standard_diagnostics/policy_childless_renter_age30.png",
+      "sha256": "6178523b9c0dd0035ff24b1b40b887b923e09b36f23923b4c369845ddbedd73a"
+    },
+    "diagnostics/date_016/standard_diagnostics/policy_childless_renter_age42.png": {
+      "bytes": 154216,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_016/standard_diagnostics/policy_childless_renter_age42.png",
+      "sha256": "c846a47bb2085ded261f49e4d47fe34ee2aac36d270901cee9c7e800c554c211"
+    },
+    "diagnostics/date_016/standard_diagnostics/tenure_services.png": {
+      "bytes": 24327,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_016/standard_diagnostics/tenure_services.png",
+      "sha256": "dcef680c77109b7030819312d0fbc88fba36a45404fec488c7f0ac7d869a0155"
+    },
+    "diagnostics/date_016/standard_diagnostics/wealth_dist_childless_renter_age30.png": {
+      "bytes": 56638,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_016/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+      "sha256": "504b2f436cc7778dc85fc02aae43686752a0700aa5a5034cc8809e2c0c242e45"
+    },
+    "diagnostics/date_016/standard_diagnostics/wealth_dist_childless_renter_age42.png": {
+      "bytes": 56349,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_016/standard_diagnostics/wealth_dist_childless_renter_age42.png",
+      "sha256": "3ca15f634bd6cb8747b8a1704bac2a5fd8064ec4dd5dfa87f979a3a318ea0879"
+    },
+    "diagnostics/date_031/standard_diagnostics/fertility_by_age.png": {
+      "bytes": 40991,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_031/standard_diagnostics/fertility_by_age.png",
+      "sha256": "ca4fe989de0532b7ca2d91590953473fab418530a52f5ede64789252e54cc74a"
+    },
+    "diagnostics/date_031/standard_diagnostics/fertility_policy_by_age_income_state.png": {
+      "bytes": 131442,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_031/standard_diagnostics/fertility_policy_by_age_income_state.png",
+      "sha256": "8f73c283de3f278583acfc90448d831a2da02ca4d80b47720a3e5b4d1a4d28c5"
+    },
+    "diagnostics/date_031/standard_diagnostics/housing_by_age_income_state.png": {
+      "bytes": 118505,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_031/standard_diagnostics/housing_by_age_income_state.png",
+      "sha256": "047c005d870a79ad4a60f96adda15d01a8eb86ac272cbfedb561b90634acf9e4"
+    },
+    "diagnostics/date_031/standard_diagnostics/housing_market.png": {
+      "bytes": 29613,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_031/standard_diagnostics/housing_market.png",
+      "sha256": "eacdffa89f8ff6eabfdedb7923c94b5e22ab605232e7a2c900395fc290bc1b4b"
+    },
+    "diagnostics/date_031/standard_diagnostics/housing_prices.png": {
+      "bytes": 39516,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_031/standard_diagnostics/housing_prices.png",
+      "sha256": "b846d0444a646475fafe6f332f3ae61d692594b321638de23dc5e47d6ac51382"
+    },
+    "diagnostics/date_031/standard_diagnostics/income_state_outcomes.png": {
+      "bytes": 55352,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_031/standard_diagnostics/income_state_outcomes.png",
+      "sha256": "c87f37ee9b77d83e2969ffa23c00930b3e4eb442823c8b894f18e8e74913796d"
+    },
+    "diagnostics/date_031/standard_diagnostics/liquid_wealth_by_age_income_state.png": {
+      "bytes": 138759,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_031/standard_diagnostics/liquid_wealth_by_age_income_state.png",
+      "sha256": "fa7399c516903b7a9d34693f338a28b9b590a6bf58bb89235f36d2c7e12f781f"
+    },
+    "diagnostics/date_031/standard_diagnostics/market_clearing_by_market.png": {
+      "bytes": 31168,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_031/standard_diagnostics/market_clearing_by_market.png",
+      "sha256": "e6fe942b2f652e9e1d3cbb87dd083c9c5714dcab7d669798dd6d606b96e87473"
+    },
+    "diagnostics/date_031/standard_diagnostics/market_clearing_residuals.png": {
+      "bytes": 29158,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_031/standard_diagnostics/market_clearing_residuals.png",
+      "sha256": "59f4e26598a6e2afaa3a2ae6d9eeec771ea8c0aee31689ecd0fb5bc622d5ea4b"
+    },
+    "diagnostics/date_031/standard_diagnostics/owner_rungs.png": {
+      "bytes": 32315,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_031/standard_diagnostics/owner_rungs.png",
+      "sha256": "f4bb42df7ef7561e244cc9755a64781e0d2705dd9c8a70b1c63f09c03da22c3c"
+    },
+    "diagnostics/date_031/standard_diagnostics/ownership_by_age.png": {
+      "bytes": 40408,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_031/standard_diagnostics/ownership_by_age.png",
+      "sha256": "c57133880ec6d09347da397a9f23d581d74cda6e5c133a4b810bd4474a6b6350"
+    },
+    "diagnostics/date_031/standard_diagnostics/ownership_by_age_income_state.png": {
+      "bytes": 123952,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_031/standard_diagnostics/ownership_by_age_income_state.png",
+      "sha256": "9e6539e2c44a8dd133810719eda95ccc3ca1f6dd63633205f35f3f1f8da6176d"
+    },
+    "diagnostics/date_031/standard_diagnostics/policy_childless_renter_age30.png": {
+      "bytes": 143685,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_031/standard_diagnostics/policy_childless_renter_age30.png",
+      "sha256": "843703e67c2474fa1ab2d842381373cfae041446d43a9c58efec3b2fe7a09951"
+    },
+    "diagnostics/date_031/standard_diagnostics/policy_childless_renter_age42.png": {
+      "bytes": 153464,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_031/standard_diagnostics/policy_childless_renter_age42.png",
+      "sha256": "63af7f77c026b314bb9bb54d60be17581170c57fec43b0d9d0074f0c535655e8"
+    },
+    "diagnostics/date_031/standard_diagnostics/tenure_services.png": {
+      "bytes": 24922,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_031/standard_diagnostics/tenure_services.png",
+      "sha256": "cf764e3cb40edafb3e079b3415d62bb7b5f9c96ff48bd7e8fb57705c44d08402"
+    },
+    "diagnostics/date_031/standard_diagnostics/wealth_dist_childless_renter_age30.png": {
+      "bytes": 56462,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_031/standard_diagnostics/wealth_dist_childless_renter_age30.png",
+      "sha256": "e350e1cc95832c4c76cca1d74dc181f519a3d7457f4b1626a181c17f6360b889"
+    },
+    "diagnostics/date_031/standard_diagnostics/wealth_dist_childless_renter_age42.png": {
+      "bytes": 56420,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/diagnostics/date_031/standard_diagnostics/wealth_dist_childless_renter_age42.png",
+      "sha256": "0ddc69a8cdd9f8effdb770c47e44f4a055d0b7a52afc7fe2cd8991812c3e508f"
+    },
+    "effective_plan.json": {
+      "bytes": 22318,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/effective_plan.json",
+      "sha256": "5b99d2a5c15e1d0eddecb9f6ac93cb4f470093f40f3172c92d734faf04989736"
+    },
+    "fertility_fit.csv": {
+      "bytes": 1535,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/fertility_fit.csv",
+      "sha256": "87ce79d3a4e7e2a56b9b6167fed660cc854ba4e044760c75f7737288cea6bee6"
+    },
+    "fit.json": {
+      "bytes": 3333,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/fit.json",
+      "sha256": "1becb06642582766631f4df45d0042fd1aeb137ac31eacbdfaf7bedfa8b44bc0"
+    },
+    "input_manifest.json": {
+      "bytes": 66835,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/inputs/manifest.json",
+      "sha256": "7f5e30f9e7b88e82a89da4e0c31f28504f1316643ee631e5ff6dc52e90ffd1ef"
+    },
+    "manager_terminal.json": {
+      "bytes": 177,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/manager_terminal.json",
+      "sha256": "19ac91cd08e679f8ecafc1ea40f529dd4b2faddb4af9d4818ee6f47c66525056"
+    },
+    "roots/horizon_024/latest_completed.json": {
+      "bytes": 234079,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_0004/horizon_024/latest_completed.json",
+      "sha256": "654f4ce4eec68c3861f0617c9867c42af890062c25820c0ddcab106ea3eacf13"
+    },
+    "roots/horizon_024/root.json": {
+      "bytes": 90494,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_0004/horizon_024/root.json",
+      "sha256": "4b5570e29d41709dc6c1aab1b607636c693db8a9616f9e01810adde891aa6fa4"
+    },
+    "roots/horizon_032/latest_completed.json": {
+      "bytes": 311554,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_0004/horizon_032/latest_completed.json",
+      "sha256": "a27ed93d45558ab29fc9e1c18327dccc1abc63e436f74df854a19e8579d2d59b"
+    },
+    "roots/horizon_032/root.json": {
+      "bytes": 149153,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_0004/horizon_032/root.json",
+      "sha256": "9446b2c915b5b69345e2e23bb2c472d7dc5a928cfea052122eefd963abc44be2"
+    },
+    "selected_candidate/complete.json": {
+      "bytes": 2223,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_0004/complete.json",
+      "sha256": "9feecd283a91a2914de87161f13c4de7b4d48f19397bb0e7e20680328e587c8d"
+    },
+    "selected_candidate/horizon_comparison.json": {
+      "bytes": 804,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_0004/horizon_comparison.json",
+      "sha256": "e24177a3ef23937abe12f35d532d931de356987680d317e615c36225654924c3"
+    },
+    "selected_candidate/state_2023_horizon_comparison.json": {
+      "bytes": 3888,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_0004/state_2023_horizon_comparison.json",
+      "sha256": "1040478a26f9f50b33c576b48abcae43275ac9d1c9160b87e2b7aa9fddb7b80f"
+    },
+    "shock_parameters.csv": {
+      "bytes": 181,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/shock_parameters.csv",
+      "sha256": "9e46184b392e0e128022ebd105fb75bae8d493c2c563a860a86064367a3495c1"
+    },
+    "slide_plot/fertility_2007_2063.pdf": {
+      "bytes": 15272,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/monitor/slide_plot/fertility_2007_2063.pdf",
+      "sha256": "9379e1121af71e44c0283f755adbc4295de233add5a1d8222ce3ed7da8d923e3"
+    },
+    "slide_plot/fertility_2007_2063.png": {
+      "bytes": 97199,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/monitor/slide_plot/fertility_2007_2063.png",
+      "sha256": "8e00d71ad301cac3b2a8ace5d3a10a4611f0a6b2afd7639ea63225658c3a18fa"
+    },
+    "slide_plot/fertility_2007_2063_plotted_values.csv": {
+      "bytes": 651,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/monitor/slide_plot/fertility_2007_2063_plotted_values.csv",
+      "sha256": "2eb7e5443672d26a71005df6da639db302cddec2c37a544f6b08db1db78446a0"
+    },
+    "slide_plot/verification.json": {
+      "bytes": 7705,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/monitor/slide_plot/verification.json",
+      "sha256": "8d40c6265e724d1e0c8fa96ef57006c67fab8a342ace620cde6b95b5a7fa5597"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/check_cap_one.py": {
+      "bytes": 5735,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/check_cap_one.py",
+      "sha256": "eb96a4b68bce217b7a7b7600a47d8b83f54b6a808274275bc26709b108d7cb7f"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/cluster_calibrate.py": {
+      "bytes": 18019,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/cluster_calibrate.py",
+      "sha256": "9274f854b8207458354c96e7edba3d3fc50b1a375ba16284087e12e69fe0a3a3"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/__init__.py": {
+      "bytes": 186,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/__init__.py",
+      "sha256": "e8ffc646d33750e9224702d21278831d59b9856b6941a9e2e05f3c920618106b"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/calibration.py": {
+      "bytes": 35525,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/calibration.py",
+      "sha256": "75ee53f3b378acde2b5fa49ff0928daa6fb6c0be909f4caf145c3d680ff1f8a9"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/cli.py": {
+      "bytes": 15165,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/cli.py",
+      "sha256": "50d35128b652f0521e8dbcf0ed8ea82ff96a3beaf2777a2ec8b0c39d2891ac54"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/diagnostics.py": {
+      "bytes": 17149,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/diagnostics.py",
+      "sha256": "6f076d7360e066b7a6c47d5a603e14340bd3971d7ab03a4e8c00f2bb50fe3d7d"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/howard_speed_audit.py": {
+      "bytes": 9352,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/howard_speed_audit.py",
+      "sha256": "89bc9f519e27229368ef29faeee37094a7cc3411622efb4bc910198f301a32d1"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/kernels.py": {
+      "bytes": 37549,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/kernels.py",
+      "sha256": "35a846d5d0ab98f18aababdbe065848b44ca85fffa8b85557f1893ebb849be4a"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/local_panel.py": {
+      "bytes": 30843,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/local_panel.py",
+      "sha256": "1486c3375f1ad376b213589916c7e92ec7be05441e3c88748961440463e6c022"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/parameters.py": {
+      "bytes": 18886,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/parameters.py",
+      "sha256": "487b69ed45fd62a7cdc4802bce5835fa9c9d5290a44f661a111e65a376a67eb4"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/solver.py": {
+      "bytes": 221477,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/solver.py",
+      "sha256": "5a965a1d7ddd203579ef2ff0ad076fe62ee62a2d19917d4c63b8f621404704d9"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/utils.py": {
+      "bytes": 5409,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/utils.py",
+      "sha256": "bd27d0ae8196d7f0ec99cbfdaeea63a09d7d0a6661ede64bdf34e80a79c9553a"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/__init__.py": {
+      "bytes": 533,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/__init__.py",
+      "sha256": "d1120db965291d10fccb3bbb75f8177e68dcfc8c34ece0f0774a387bef8508d6"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/bo.py": {
+      "bytes": 11127,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/bo.py",
+      "sha256": "3a82623d35710aa1719915b2a4f9aeb23a27053c89b4fa034ac2616d3cc9f8ef"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/data.py": {
+      "bytes": 10643,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/data.py",
+      "sha256": "9abe3fdc51319032805987041ac1751b1cd6983ca5a32605f519a092a9e08dd5"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/emulator.py": {
+      "bytes": 8683,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/emulator.py",
+      "sha256": "01f047907f250d31d49b2a825858acc64c09959a2289a3a98aff6e216daf6a98"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/gp.py": {
+      "bytes": 13416,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/gp.py",
+      "sha256": "969375cf73de30cacf4e25fe8357cd44bcbd8338485344df389ad7f698612888"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/identification.py": {
+      "bytes": 7991,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/identification.py",
+      "sha256": "98a8f9d785dc505b98d3faa7885fd1fae5f4737702b91a293d17b37712b76a12"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/run_surrogate_calibration.py": {
+      "bytes": 15613,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/run_surrogate_calibration.py",
+      "sha256": "637dc04181e1697dd6ca3513d9d6929a4b8e7ff408e1654ff3a7e55b15bbf826"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/validate_proposals.py": {
+      "bytes": 9217,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/frozen_sources/calibration_archive/model_legacy_20261003/intergen_surrogate_calibration/validate_proposals.py",
+      "sha256": "9dcdda751d859efc4fd66c6493358f5015a17977dc7b8ba2f8952becb5725356"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/__init__.py": {
+      "bytes": 468,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/__init__.py",
+      "sha256": "f06337c12a7e759bbabd50f0562932be661fc7ef216cfa7810ac77e0705d9a3c"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/calibration.py": {
+      "bytes": 21038,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/calibration.py",
+      "sha256": "f81ccbf6d7ef522123bc7e91ab082470213bc33a6fa0516b2c6eb8c54f6b6bfd"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/credit.py": {
+      "bytes": 7498,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/model/credit.py",
+      "sha256": "0c939767d0fa5fbfc468c47da3dbbb5a3d8c79c3fd7e6b2c6715b11444b0b070"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/engine/__init__.py": {
+      "bytes": 67,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/engine/__init__.py",
+      "sha256": "c134867d538cf9b27bceaaeb70cfead4aec7706039f5b3b66fc006ff208bbb67"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/engine/adult_entry.py": {
+      "bytes": 1391,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/engine/adult_entry.py",
+      "sha256": "e752178ad90d64c77575b70d0718a94d6f3b04463b03637d9af12e23f57bce3f"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/engine/birth_count.py": {
+      "bytes": 12407,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/engine/birth_count.py",
+      "sha256": "ad349b259dd3da505bcdc036b9a4696621b3c9062203e9bc8ac40db87761332e"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/engine/child_preferences.py": {
+      "bytes": 3117,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/engine/child_preferences.py",
+      "sha256": "887763b066bdd64efb2f23b97fac977abfa9630d1e194adb2148da24b2ff7123"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/engine/diagnostics.py": {
+      "bytes": 19851,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/model/engine/diagnostics.py",
+      "sha256": "9d65d92cb80b7a11593b6d1c85b87581d28baeaa320897d7136733be9735adb3"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/engine/distribution.py": {
+      "bytes": 159368,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/engine/distribution.py",
+      "sha256": "6e855e183aa60707cf97d8c12227850ab8c246ab3d9ee75a14aa84aa73189aca"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/engine/e5f_social_security.py": {
+      "bytes": 5133,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/model/engine/e5f_social_security.py",
+      "sha256": "df03621afd48135afb6c3fbdec1209bad9605c6133b9f6352fce28fc45c7961b"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/engine/e5f_stationary_paygo.py": {
+      "bytes": 6541,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/model/engine/e5f_stationary_paygo.py",
+      "sha256": "7eeb7760b236711d40b3563d6d7a40548ba3cade6a646743c6fe3a02462a8569"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/engine/equilibrium.py": {
+      "bytes": 31837,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/engine/equilibrium.py",
+      "sha256": "ca88909666802e92e396c44c0ea6f69eadbddb9e707bfec49cf1ec765d013fe9"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/engine/fertility_nested.py": {
+      "bytes": 8536,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/model/engine/fertility_nested.py",
+      "sha256": "aed06c0ee77bb39b0d72da0d5e63c6f1c1b6c3b0a76986372aa17e2d2cb77e85"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/engine/household.py": {
+      "bytes": 76437,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/engine/household.py",
+      "sha256": "95ecba8a5aa0d6eb28418d64b8f5a81e951ab483deed69c28cc1974d88dba95e"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/engine/joint_nested.py": {
+      "bytes": 13131,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/engine/joint_nested.py",
+      "sha256": "909bb9d02ecf8e196e339864572e7692e71a956c35002397c70a494a30bd620b"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/engine/kernels.py": {
+      "bytes": 40316,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/engine/kernels.py",
+      "sha256": "a615c1df43e54ee4b5da7fbe775e1ba343e3132afa45a0159f9846a7a598e279"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/engine/parameters.py": {
+      "bytes": 8366,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/engine/parameters.py",
+      "sha256": "f7cffd220514f6c231a72de7a754e8ca357aeba6e3274b91266576b840ce896f"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/engine/shared.py": {
+      "bytes": 27656,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/engine/shared.py",
+      "sha256": "1fbe36f75befe5fed67c490c39a65663f4c8896b078851693fb4bca533d07773"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/engine/solver.py": {
+      "bytes": 3308,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/engine/solver.py",
+      "sha256": "19e6f9240a4ff7354c39031d35d734ea2c8cad2fbd1f60d128ebb049d587317c"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/engine/two_shock_choice.py": {
+      "bytes": 5929,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/model/engine/two_shock_choice.py",
+      "sha256": "0d5201f176ad77f2c3013819d18eae69c1a22a91d7ce9b8060e1d6ef76ad40f1"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/engine/utils.py": {
+      "bytes": 9996,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/engine/utils.py",
+      "sha256": "836d6768af4a9261fe28e758f88dcc8ca059afc277b7c03d36f179a510ebcf36"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/engine/warm_price.py": {
+      "bytes": 4353,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/engine/warm_price.py",
+      "sha256": "bc3ff5c8df2a16a9ef753bfaabde914e09e7d3943de90c93be684ebeb0bf2518"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/equilibrium.py": {
+      "bytes": 5281,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/model/equilibrium.py",
+      "sha256": "0be7e1f945c77b8d84ec473cdc6a0ff9f35a9f1df5764488f47fff94a53eb5a4"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/estate_audit_adapter.py": {
+      "bytes": 4095,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/model/estate_audit_adapter.py",
+      "sha256": "0857813dc0a91cdc95ceecd23888336a1885e5d52e561496932e01772fec3b41"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/estate_contract.py": {
+      "bytes": 7623,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/estate_contract.py",
+      "sha256": "1a4e8ae269bf4a803be48afe0f2f29571a971d3c1ccbc1ec84379d9d529100d0"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/estate_observer_adapter.py": {
+      "bytes": 3238,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/model/estate_observer_adapter.py",
+      "sha256": "7efd671554de7744dddbab0a0b5edd94b73b01f422079b8839a799e4a39af37e"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/frozen_sources.py": {
+      "bytes": 1849,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/frozen_sources.py",
+      "sha256": "4374264fdcc5e027f533123dc0c3df7f019df7b5011a4b06b691a35af74271fe"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/inputs.py": {
+      "bytes": 10186,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/inputs.py",
+      "sha256": "fef4cc9f85766c8843d62a2257a718d3ed1f9979cdb9e92729b9983527669763"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/native_phase_b.py": {
+      "bytes": 29254,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/native_phase_b.py",
+      "sha256": "b4625c448937f3f0f6f74a257c601434ee4c6d58ac84608b54439036957893c9"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/native_price.py": {
+      "bytes": 3497,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/native_price.py",
+      "sha256": "53e8e83d90f34b64050b7f75dc45a7bd24e8c891b8ab1754d87852d23e9e5450"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/observer_adapters.py": {
+      "bytes": 12972,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/observer_adapters.py",
+      "sha256": "53901dfb017a49bf405aa9d0a8f3341778d0612eb7ac87cd85b85300d69782c1"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/parameter_files.py": {
+      "bytes": 6537,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/model/parameter_files.py",
+      "sha256": "e5da9811ae8fefd7be0559ce3ce87e26b7d9c5cfc118822b1164496e81358218"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/reference_inputs/export_reference.py": {
+      "bytes": 2810,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/model/reference_inputs/export_reference.py",
+      "sha256": "8048da017253c8b7a54f866862e48cbdc23e27ba6259f8b25b18fefa9f45c5c1"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/reporting.py": {
+      "bytes": 9795,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/reporting.py",
+      "sha256": "306a02bb5a43a0e0819a5392694141075c03607d6bec30828359ca4194859968"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/storage.py": {
+      "bytes": 10727,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/model/storage.py",
+      "sha256": "2cdeb5fdb7fd915a309405433467643516cfdfc6246e584a343a3e0a5782df3c"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/verification.py": {
+      "bytes": 19909,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/model/verification.py",
+      "sha256": "c5af97acb1156e8f5581bf3e2ed5569ec6579bf73fae72845406156c8fbebe27"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/model/workflow.py": {
+      "bytes": 16048,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/model/workflow.py",
+      "sha256": "2e79670c7e20bd4462dd3a41c31f436f4767eee91de4fee82e6954d45824b5d0"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/plot_policies.py": {
+      "bytes": 18001,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/plot_policies.py",
+      "sha256": "d20e18e0c7ecb721f649fa07889f5cbadfe02dc07f587cc62d6add196371898d"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/run.py": {
+      "bytes": 4594,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/run.py",
+      "sha256": "50389214e7e23bf052406fe8d9ac2c91801420a4895239f9e9cd006aa1515460"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/run_estate.py": {
+      "bytes": 4352,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/run_estate.py",
+      "sha256": "92cefe80e24342a8144925237e58f30e107bea996a88c9257d5a81338ae43957"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/summarize.py": {
+      "bytes": 10116,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/summarize.py",
+      "sha256": "6ff0813adaea8c75d336420ffd6469a2583b83174a2f0d03310b83967304e12b"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/summarize_estate.py": {
+      "bytes": 11585,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/birth_count_choice/summarize_estate.py",
+      "sha256": "f0e7107dda408621add1b251e895e6020c60591ed03d5f214019ef8b19715def"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/transition.py": {
+      "bytes": 11866,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/transition.py",
+      "sha256": "67a6747f00ad229f9117933349dbe2bd6601df60ba205d2d633fcad2a0396cde"
+    },
+    "source_snapshot/code/model/experiments/birth_count_choice/transition_runtime.py": {
+      "bytes": 31310,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/birth_count_choice/transition_runtime.py",
+      "sha256": "6c60f7367774a88205a10eb15ae72736db9803f36c5a3c7bcadae3542cbd901b"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/floor_report.py": {
+      "bytes": 7789,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/floor_report.py",
+      "sha256": "a5283f4ef833d22fc39a107663106102376fd767d753297a772f603ada95cddb"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/floor_runtime.py": {
+      "bytes": 58080,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/transition_readiness/floor_runtime.py",
+      "sha256": "94914395f158ed58e0d50943708270d74525a875b880ddddf09e8b91cfe09880"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/joint_six_date.py": {
+      "bytes": 25641,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/joint_six_date.py",
+      "sha256": "c4b51b7b38f812a572d1ea8b2e6c4341b53b617a3a43d1fe6ea6fc7645bb207e"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/legacy_changed_psi.py": {
+      "bytes": 12039,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/legacy_changed_psi.py",
+      "sha256": "ec9073db9b226fecd5c268aeab7ef5e2a0cfe8371e4f2e66895b7dda651e81d4"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/one_shock_floor.py": {
+      "bytes": 79545,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/runtime/runtime_auth/runtime_preparation/native_preparation/source_snapshot/code/model/experiments/transition_readiness/one_shock_floor.py",
+      "sha256": "a6499da273ff3a607dd741a283e6ba8415e5c9a4c161a18d1b1eab07cce900a0"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/pinned_tools/e5f_exact_policy_cache.py": {
+      "bytes": 6987,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/pinned_tools/e5f_exact_policy_cache.py",
+      "sha256": "1e8a029247bb80e9a023b11b7eba047402867841e2f99cbf159bbb9f8aa51609"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/pinned_tools/e5f_four_shock_acceleration.py": {
+      "bytes": 6785,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/pinned_tools/e5f_four_shock_acceleration.py",
+      "sha256": "9e8e3bba6c405df22c597b6a5319592daaae1883f850acfbb7dde5b55b716373"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/pinned_tools/e5f_matched_pf_path_root.py": {
+      "bytes": 9040,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/pinned_tools/e5f_matched_pf_path_root.py",
+      "sha256": "1f827bad0c87f2c75d1ea76f1f059494cc67ca5390135087780691cc0ead2c80"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/pinned_tools/e5f_preference_shock_fit.py": {
+      "bytes": 6101,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/pinned_tools/e5f_preference_shock_fit.py",
+      "sha256": "495b61b0b0aaf577d49ba36d7274c7207c9be546f544113fa30c3c805d46412f"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/pinned_tools/e5f_social_security_root.py": {
+      "bytes": 12899,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/pinned_tools/e5f_social_security_root.py",
+      "sha256": "269f3d5017da3a240d0a80d9b168471e6c6cd6c55e9617041c70bfb1085cd77a"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/pinned_tools/e5f_ssj_scaled_step_root.py": {
+      "bytes": 11433,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/pinned_tools/e5f_ssj_scaled_step_root.py",
+      "sha256": "c26d312afa179e296439ba94e8826a5f84f6823c6bf0ca1892889e5e55af059b"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/pinned_tools/e5f_ssj_toeplitz_jacobian.py": {
+      "bytes": 7059,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/pinned_tools/e5f_ssj_toeplitz_jacobian.py",
+      "sha256": "94c448367c139682c3bc06336dba27ab3ddb384e99120201cc1000d8509dead0"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/pinned_tools/run_e5f_preference_budget_diagnostic.py": {
+      "bytes": 21445,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/pinned_tools/run_e5f_preference_budget_diagnostic.py",
+      "sha256": "6c32156788043a58218777624d4adf40cd6d206d31b224c2bd0223e31f67e1b7"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/pinned_tools/run_e5f_preference_estimation.py": {
+      "bytes": 43344,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/pinned_tools/run_e5f_preference_estimation.py",
+      "sha256": "bd93821847439b54667706d17f95ff6e114291c3dc321eb7cb7bf06cb1f3ed1e"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/pinned_tools/run_e5f_preference_transition.py": {
+      "bytes": 33536,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/pinned_tools/run_e5f_preference_transition.py",
+      "sha256": "26802381cec56be33794a526eeec80eb6066c09ae59ab6e5957d0cee2e26f1ac"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/render_saved_residuals.py": {
+      "bytes": 3324,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/render_saved_residuals.py",
+      "sha256": "6da03835d43ec79075f7bee80d314fe2a54a5c0fed5a022fbc99b2f77cb6ca3a"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/selected_adapter.py": {
+      "bytes": 8258,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/selected_adapter.py",
+      "sha256": "c5106831877b518e7e616e90bf4eebf4b4b955c0e4e716ffc34af1df0f59f272"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/smoke_exact_loop.py": {
+      "bytes": 4060,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/smoke_exact_loop.py",
+      "sha256": "09abfc76201973ba1b12b71dbc525c544864f7ebb86748292a1946ef3d7d9ddd"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/test_floor_report.py": {
+      "bytes": 3094,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/test_floor_report.py",
+      "sha256": "881bb185fdc939ca6313b7ed9bfcd1e8c7aad813b42163de3fb15e29351520f3"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/test_floor_runtime.py": {
+      "bytes": 20102,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/test_floor_runtime.py",
+      "sha256": "e1d7bfdc6029a8f61305fef665e93da8bd8f4cbe547d621646c973048c5f584a"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/test_one_shock_floor.py": {
+      "bytes": 46748,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/test_one_shock_floor.py",
+      "sha256": "e617c05c93cb1a04ea421121065e12d85a367d144213fb049781cf6d6ffdee79"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/test_readiness.py": {
+      "bytes": 2160,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/test_readiness.py",
+      "sha256": "9b22d39b831aaf0ff002592a24afd53ed555f29a5a47ef92a71efe0fdc87a363"
+    },
+    "source_snapshot/code/model/experiments/transition_readiness/tests_joint_six_date.py": {
+      "bytes": 6338,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/experiments/transition_readiness/tests_joint_six_date.py",
+      "sha256": "2e20a1f93dceb5767e17aeb1bd52289b386bd1aa3ce042fba965b429f07aedd3"
+    },
+    "state_2023/actual_2023.pkl.gz": {
+      "bytes": 51502830,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_0004/state_2023_checkpoint/actual_2023.pkl.gz",
+      "sha256": "2cc2c5216ec274a5fdfcc02623a21eaa444163c0d11da6c3b76b763e3cd956e9"
+    },
+    "state_2023/checkpoint_receipt.json": {
+      "bytes": 31750,
+      "original_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_continuation_v1/fit_job/run/candidate_0004/state_2023_checkpoint/checkpoint_receipt.json",
+      "sha256": "f000ad78e7ad1a714fe4e57c83db58f913e25d9c1d710660b4f15866d61ab03d"
+    }
+  },
+  "fitted_parameter": {
+    "estimate": 0.11999694638724082,
+    "lower": 0.001789207206604163,
+    "near_bound": false,
+    "upper": 0.35784144132083257
+  },
+  "gap": -0.0026159748829854834,
+  "loss": 6.8433245884109135e-06,
+  "models": [
+    1.6266185669112152,
+    1.6413074510640842,
+    1.6416996993988433,
+    1.6431340251170146
+  ],
+  "new_model_calls": 0,
+  "panel_failure": "Concurrent working-tree source drift detected after completed numerical fit and diagnostics. Original source hashes are preserved; no accepted panel receipt was created.",
+  "panel_failure_preserved": true,
+  "production_ready": false,
+  "root_replay_horizon_gates_passed": true,
+  "schema": "retained_one_shock_experimental_reference_v1",
+  "selected_candidate": 4,
+  "sources_from_runtime_snapshot": 28,
+  "sources_from_unchanged_working_files": 59,
+  "standard_plots_verified": 51,
+  "state_experiment_ready": false,
+  "status": "preserved_completed_numerical_fit_with_panel_finalization_failure",
+  "target": 1.64575,
+  "terminal_passes": [
+    false,
+    false
+  ],
+  "verified_at": "2026-10-04T15:45:07.153498+00:00"
+}
