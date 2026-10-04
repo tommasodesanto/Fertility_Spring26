@@ -1,0 +1,45 @@
+def checked_plan(path, digest):
+    require(sha(path)==digest, 'Recovery plan SHA drift')
+    plan=json.loads(Path(path).read_text());anchor=json.loads(ANCHOR.read_text())
+    require(anchor['status']=='selected_numerically_verified' and anchor['chain']==13 and anchor['arm']=='alternative', 'Anchor identity drift')
+    require(plan['source_checkpoint_sha256']==sha(ANCHOR), 'Anchor SHA drift')
+    require(plan['parent_job_id']=='19127370' and plan['parent_inventory_sha256']=='d14a39bcbb55067060ca492943f1e0067000c10733a48c3a3aff3b06e61e2afe', 'Parent stage identity drift')
+    parent=Path(plan['parent_receipt_root'])
+    require(sha(parent/'inventory.json')==plan['parent_inventory_sha256'], 'Parent inventory drift')
+    parent_inventory=json.loads((parent/'inventory.json').read_text())
+    require(plan['target_fingerprint']==parent_inventory['target_fingerprint'] and plan['weight_fingerprint']==parent_inventory['weight_fingerprint'], 'Parent target fingerprint drift')
+    original_path=parent/'source/output/model/experiments/birth_count_choice/estate_a_calibration_v1/start_plan.json'
+    require(sha(original_path)==plan['original_start_plan_sha256']==parent_inventory['start_plan_sha256'], 'Original plan drift')
+    original=json.loads(original_path.read_text())
+    require(plan['bounds']==original['bounds'] and plan['target_contract']==original['target_contract'] and plan['target_fingerprint']==original['target_fingerprint'] and plan['weight_fingerprint']==original['weight_fingerprint'], 'Target/bounds drift')
+    require(plan['arms']=={'binary':1,'count3':3} and plan['bounds']['beta_annual']==[.93,.99] and len(plan['bounds'])==10, 'Arm/bound drift')
+    rows=plan['parent_rows'];require([r['task'] for r in rows]==list(range(10)), 'Parent task mapping drift')
+    for r in rows:
+        task=r['task'];arm='binary' if task<5 else 'count3';chain=task%5
+        require(r['arm']==arm and r['chain']==chain, 'Parent arm/chain drift')
+        folder=parent/'results'/f'production_{arm}_chain_{chain}'
+        require(sha(folder/'run/best_so_far.json')==r['best_sha256'] and sha(folder/'run/cases.json')==r['cases_sha256'] and sha(folder/'run/start_contract.json')==r['contract_sha256'] and sha(folder/'launcher_terminal.json')==r['terminal_sha256'] and sha(folder/'launcher_start.json')==r['launcher_start_sha256'], 'Parent checkpoint bytes drift')
+        terminal=json.loads((folder/'launcher_terminal.json').read_text())
+        launch=json.loads((folder/'launcher_start.json').read_text())
+        require(launch['stage_inventory_sha256']==plan['parent_inventory_sha256'] and launch['mode']=='production' and launch['arm']==arm and launch['chain']==chain, 'Parent launcher source/task drift')
+        require(terminal['slurm_job_id']==launch['slurm_job_id'] and terminal['arm']==arm and terminal['chain']==chain, 'Parent Slurm task identity drift')
+        contract=json.loads((folder/'run/start_contract.json').read_text())
+        best=json.loads((folder/'run/best_so_far.json').read_text())['best']
+        cases=json.loads((folder/'run/cases.json').read_text())
+        require(terminal['exit_code']!=0 and contract['arm']==arm and contract['chain']==chain and contract['starts_file_sha256']==plan['original_start_plan_sha256'], 'Failed parent provenance drift')
+        require(contract['target_fingerprint']==plan['target_fingerprint'] and contract['weight_fingerprint']==plan['weight_fingerprint'] and contract['bounds']==plan['bounds'], 'Parent objective drift')
+        require(best['status']=='passed' and best in cases and best==min((c for c in cases if c['status']=='passed'),key=lambda c:c['loss']), 'Parent saved best/cases drift')
+        require(best['parameters']==r['parameters'] and best['loss']==r['provisional_loss'], 'Provisional seed drift')
+    binary=rows[:5];count3=rows[5:];b=min(binary,key=lambda r:(r['provisional_loss'],r['task']))['parameters'];c=min(count3,key=lambda r:(r['provisional_loss'],r['task']))['parameters']
+    bounds=plan['bounds']
+    def clip(row):return {k:min(bounds[k][1],max(bounds[k][0],float(v))) for k,v in row.items()}
+    one=dict(b);two={k:(b[k]+c[k])/2 for k in c}
+    three=dict(c);three['beta_annual']=.94;three['first_birth_fixed_cost']=c['first_birth_fixed_cost']*.5
+    four=dict(c);four['kappa_fert']=c['kappa_fert']*3;four['kappa_fert_continuation']=c['kappa_fert_continuation']*3
+    five=dict(c);five['theta0']=c['theta0']*2;five['psi_child']=c['psi_child']*1.5;five['h_P']=c['h_P']-.25
+    expected=[r['parameters'] for r in (binary if plan['recovery_arm']=='binary' else count3)]+([] if plan['recovery_arm']=='binary' else [clip(s) for s in (one,two,three,four,five)])
+    require(plan['starts']==expected and len(expected)==(5 if plan['recovery_arm']=='binary' else 10), 'Recovery starts drift')
+    require(len({canonical(s) for s in expected})==len(expected), 'Duplicate recovery starts')
+    require(all(set(s)==set(bounds) and all(math.isfinite(v) and bounds[k][0]<=v<=bounds[k][1] for k,v in s.items()) for s in expected), 'Seed outside bounds')
+    return plan,anchor
+

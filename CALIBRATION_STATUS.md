@@ -139,39 +139,30 @@ and [release review](output/model/experiments/birth_count_choice/estate_a_calibr
 This launch is experimental; it does not adopt a new baseline or certify
 optimization convergence.
 
-**Overnight Estate-A continuation blocked by the failed parent.**
-Controller **19136605** is PENDING with `DependencyNeverSatisfied` because
-parent array **19127370** failed. The separate [continuation stage](code/cluster/estate_birth_calibration/continuation/README.md)
-and [submission receipt](output/model/experiments/birth_count_choice/estate_a_continuation_20261004_v1/deployment/controller_submission.json)
-pin the same economic inputs, ten free-parameter bounds, target and weight
-fingerprints, and numerical gates. If every parent task exits successfully with
-a fresh native exact repeat, each new chain will begin from its **own** verified
-endpoint with a fresh optimizer simplex. The one-core controller first runs two
-native optimizer calls and fresh selected-point verification in each arm; only
-if both pass does it release up to ten one-core production tasks. Search retains
-the 500-call cap per task, reserves 1,800 seconds for native verification and
-stops by October 4 **10:00 New York** (epoch `1791122400`). The production job
-ID was never assigned. Parent-final and continuation-native gates did not pass;
-this is an experimental design, not an adopted calibration or exact
-optimizer-state resume. No failed chain will be restarted automatically.
-
-**Five additional count-three starts also blocked by the failed parent.**
-The isolated [count-three expansion](code/cluster/estate_birth_calibration/count3_expansion/README.md)
-controller **19139361** remains PENDING on `afterok:19136605`; that dependency
-cannot release while controller **19136605** is blocked. The
-new controller will select the best verified binary and count-three parent
-endpoints and construct five bounded, nonduplicate search starts (binary best,
-the midpoint, and three deterministic count-three perturbations). All ten
-parameters, bounds, target values, weights, economics and native gates remain
-unchanged. One fresh two-call count-three native smoke must pass before a
-five-task array can be released. Combined with the existing continuation,
-this caps Estate-A production at **15 one-core tasks**. The extra tasks retain
-500 calls each, a 1,800-second fresh-native reserve and the same October 4
-**10:00 New York** absolute stop. A 7,800-GiB free-space gate covers the
-7,500-GiB combined retained-case planning maximum; the actual staging check
-found about 434,526 GiB free. The new smoke, final parent verification and
-five-task production did not run. No production job ID, adopted result,
-automatic retry or exact optimizer-state resume is claimed.
+**Estate-A recovery submitted October 4 at 01:15 New York; Slurm array
+19141024 is pending priority as of submission.** The failed-parent-dependent
+controllers **19136605** and **19139361** were canceled; their proposed native
+continuations never ran. The isolated [recovery stage](code/cluster/estate_birth_calibration/recovery/README.md)
+starts five binary and ten count-three chains from the ten *provisional* saved
+parent best cases and five bounded count-three perturbations. It authenticates
+each failed parent's source, start contract, launcher and saved cases. These
+seeds have not passed the parent's final native verification; the new searches
+must independently pass their own fresh selected-point check. The five extra
+starts use the best provisional binary seed, its midpoint with the best
+provisional count-three seed, and three predeclared perturbations. This changes
+search design only: all ten free parameters, β bounds \([0.93,0.99]\),
+economic inputs, 14 targets, weights and native numerical gates are unchanged.
+The driver adds a pre-evaluation 800-second search-budget guard and narrowly
+classifies three exact native time-exhaustion errors as a search stop only when
+at most 700 seconds remain; other numerical errors and final native check
+failures stay fatal. Each task uses one CPU, 24 GiB, at most 500 calls, a
+1,800-second final verification reserve, and the absolute October 4 **10:00
+New York** stop (epoch `1791122400`); at most 15 run concurrently. Both arms
+passed actual zero-solve reporting-context preflights. [Submission and stage
+receipts](output/model/experiments/birth_count_choice/estate_a_recovery_20261004_v1/deployment/)
+pin inventory SHA `974a14e243da6a2ad0572bb9825b47ab349828f9144cbbad69e74b40a4408b22`.
+No recovered result, fresh native repeat, adopted calibration or optimizer-state
+resume is yet claimed.
 
 The hourly heartbeat **Monitor matched estate and birth calibrations**
 (automation `finish-and-monitor-soft-timing-calibration`) in chat
