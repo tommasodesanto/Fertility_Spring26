@@ -1,0 +1,20 @@
+# PSID prebirth resources: bounded availability verdict
+
+**Not feasible from the presently staged panels.** The authoritative first-birth housing panel preserves histories and weights, but omits gross household labor earnings and liquid wealth. No descriptive hazard table was produced; replacing the missing variables with total family income or selected-parent outcomes would change the requested object.
+
+Verified October 4, 2026 by source review, small-file headers and remote metadata/hash reads. No download, source rebuild, model run or target change. [Availability receipt](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/measurement/prebirth/availability.json).
+
+| Cached object | Available information | Limitation |
+|---|---|---|
+| Remote `analysis_sample.dta`, 31 MB, 863,751 rows | Person/interview keys, biological first-birth year, confirmed-zero history indicator, age, current status, relationship, household/family IDs, individual longitudinal weight | No earnings or wealth columns |
+| Remote `income.dta`, 64 MB, 3,533,123 rows | `ID`, `year`, `INCFAMR` | Total family income, not gross labor earnings; no wealth |
+| Local income/wealth/fertility master, 2.5 MB, 11,692 rows | Ages-25–30 average resources and eventual fertility outcomes | One row per person; no interview-year risk set or lag clock |
+| Local pre-renter wealth event sample, 499 KB | Selected eventual-parent event observations | Cannot supply the full childless denominator |
+
+The remote housing panel’s SHA-256 matches the live A2h receipt exactly. Its builder is [prepare_first_birth_rooms_v2.do](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/psid_followup_mar2026/prepare_first_birth_rooms_v2.do): it finds the earliest biological birth across child records and person-years, and retains current observations through death. `bio_first_year` is birth history, not children presently at home. `relchirep_max=0` is the builder’s confirmed-childless convention. The panel is prior to event-study sample selection and therefore contains potential never-birth controls. Using A2h fitted/event-selected rows would impose future-parent and baseline-support selection.
+
+The staged income sidecar uses tax-year income for `interview_year−1`, in real 2022 dollars. Its hash matches the October 1 income-sensitivity receipt. The model-comparable household labor-earnings source identified by the existing wealth audit is `EARNINDRRC`, combined reference-person/spouse gross earnings. `INCFAMR` also includes transfers, pensions and asset income.
+
+**Do not use the existing all-zero “hazard” tables.** [fertility_wealth_v1.do](/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/psid_followup_mar2026/fertility_wealth_v1.do:117) sets the event to `first_birth_year==year`, then retains `year<first_birth_year` or missing birth year. This drops every event. It also uses the first child record rather than the reviewed full biological history, and calls its result annual despite biennial interviews.
+
+The concrete requirement is a small, authenticated `ID/year` resource sidecar carrying `EARNINDRRC`, liquid net wealth/components, currency/measurement dates and missing-code definitions, linked to the full prepared history panel. Preserve women with valid childless history, including never-births; select the household/woman unit using **prebirth** relationship and household keys. Use resources from the previous observed interview, retain interview gaps explicitly, and count a successful first birth between interviews. Ages 22–33 must refer explicitly to exposure-start age. Annual and biennial intervals cannot share an unlabeled annual hazard; birth-year-only histories require a declared same-year convention. Retain positive survey weights and household/person clustering as appropriate. Until this sidecar and denominator are verified, uncertainty is unavailable. This describes observed successful births, not latent attempts.

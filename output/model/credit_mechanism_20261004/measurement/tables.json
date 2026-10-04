@@ -1,0 +1,533 @@
+{
+  "status": "cached_only_diagnostic_not_calibration",
+  "source": {
+    "cps": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/data/cps_fertility/cache/jun24pub.csv",
+    "cps_sha256": "d72940e53ccaa5aa539402f7fd9b8918b85441ee0b85c8fc878011f3e3ea5abf",
+    "model": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080",
+    "model_sha256": "04a1d60ad526402fb0c2a52c853b77795b1b1d04488bb222684f0f1ed0d43100",
+    "helper_sha256": "cc5db200504ff388680741194b33e955c7c10e12e5ddf7ce374ad36662c23e8d",
+    "recovered_summary": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/evidence/preserved/fertility_by_income.json"
+  },
+  "checks": {
+    "minimum_reconstructed_prebirth_mass": -2.9129769081699176e-18,
+    "negative_prebirth_mass": 1.1019583866363627e-17,
+    "forward_reconstruction_max_error": 2.168404344971009e-19,
+    "native_flow_max_error": 3.9898639947466563e-17,
+    "age_mass_max_error": 1.3877787807814457e-17
+  },
+  "maximum_pasted_mean_reproduction_error": 2.220446049250313e-16,
+  "empirical": {
+    "age24_26_all_women_fixed_bins": {
+      "groups": [
+        {
+          "group": 1,
+          "n_contributing": 425,
+          "weighted_share": 0.2668767587589194,
+          "mean_cap3": 0.6353930495198207,
+          "mean_cap5": 0.6503232869503032,
+          "childless": 0.6041122365025697,
+          "two_plus": 0.18367636023133915,
+          "approximate_household_cluster_se": 0.05205640098249992
+        },
+        {
+          "group": 2,
+          "n_contributing": 676,
+          "weighted_share": 0.39836843504214686,
+          "mean_cap3": 0.44697939353183486,
+          "mean_cap5": 0.4509862594152117,
+          "childless": 0.7104873846129716,
+          "two_plus": 0.13053124485728035,
+          "approximate_household_cluster_se": 0.03881576094178004
+        },
+        {
+          "group": 3,
+          "n_contributing": 572,
+          "weighted_share": 0.33475480619893366,
+          "mean_cap3": 0.22649690497276534,
+          "mean_cap5": 0.22649690497276534,
+          "childless": 0.8326839250020147,
+          "two_plus": 0.0479667233366816,
+          "approximate_household_cluster_se": 0.02660007177111465
+        }
+      ],
+      "high_minus_low": -0.40889614454705536,
+      "approximate_contrast_se": 0.058458812008791876,
+      "approximate_interval95": [
+        -0.5234754160842874,
+        -0.2943168730098233
+      ]
+    },
+    "age24_26_all_women_fractional_weighted_thirds": {
+      "groups": [
+        {
+          "group": 1,
+          "n_contributing": 550,
+          "weighted_share": 0.3333333333333333,
+          "mean_cap3": 0.5956354173347083,
+          "mean_cap5": 0.6075890174535531,
+          "childless": 0.6249747810954102,
+          "two_plus": 0.17511057330733867,
+          "approximate_household_cluster_se": 0.044749324167853745
+        },
+        {
+          "group": 2,
+          "n_contributing": 963,
+          "weighted_share": 0.3333333333333333,
+          "mean_cap3": 0.4483584879202043,
+          "mean_cap5": 0.4531471145943581,
+          "childless": 0.7112403659634824,
+          "two_plus": 0.12818789920105922,
+          "approximate_household_cluster_se": 0.04249706416879904
+        },
+        {
+          "group": 3,
+          "n_contributing": 572,
+          "weighted_share": 0.3333333333333333,
+          "mean_cap3": 0.2263712346050173,
+          "mean_cap5": 0.2263712346050173,
+          "childless": 0.8327974801477529,
+          "two_plus": 0.0479282392665289,
+          "approximate_household_cluster_se": 0.026606883240318308
+        }
+      ],
+      "high_minus_low": -0.36926418272969097,
+      "approximate_contrast_se": 0.05206177339702894,
+      "approximate_interval95": [
+        -0.4713052585878677,
+        -0.26722310687151424
+      ]
+    },
+    "age24_26_reference_or_spouse_fixed_bins": {
+      "groups": [
+        {
+          "group": 1,
+          "n_contributing": 178,
+          "weighted_share": 0.30373409909800675,
+          "mean_cap3": 1.2350154412856647,
+          "mean_cap5": 1.2629603547109554,
+          "childless": 0.24777654069747707,
+          "two_plus": 0.36530534152130606,
+          "approximate_household_cluster_se": 0.08453837337501989
+        },
+        {
+          "group": 2,
+          "n_contributing": 260,
+          "weighted_share": 0.4278675258255757,
+          "mean_cap3": 0.8956956953334922,
+          "mean_cap5": 0.9060634982885565,
+          "childless": 0.42937784405688206,
+          "two_plus": 0.26896616978556515,
+          "approximate_household_cluster_se": 0.07433368585082967
+        },
+        {
+          "group": 3,
+          "n_contributing": 170,
+          "weighted_share": 0.26839837507641756,
+          "mean_cap3": 0.5353435006323514,
+          "mean_cap5": 0.5353435006323514,
+          "childless": 0.5953417317971913,
+          "two_plus": 0.11033644316293724,
+          "approximate_household_cluster_se": 0.06375874858515775
+        }
+      ],
+      "high_minus_low": -0.6996719406533133,
+      "approximate_contrast_se": 0.10588632864557931,
+      "approximate_interval95": [
+        -0.9072091447986488,
+        -0.49213473650797784
+      ]
+    },
+    "age24_26_reference_or_spouse_fractional_weighted_thirds": {
+      "groups": [
+        {
+          "group": 1,
+          "n_contributing": 219,
+          "weighted_share": 0.3333333333333333,
+          "mean_cap3": 1.2138536088653156,
+          "mean_cap5": 1.239317078176123,
+          "childless": 0.2561305218204647,
+          "two_plus": 0.36183908672810344,
+          "approximate_household_cluster_se": 0.07839695694337288
+        },
+        {
+          "group": 2,
+          "n_contributing": 260,
+          "weighted_share": 0.3333333333333333,
+          "mean_cap3": 0.9230025772129445,
+          "mean_cap5": 0.9363107158088357,
+          "childless": 0.4241052889597271,
+          "two_plus": 0.28397729158273305,
+          "approximate_household_cluster_se": 0.08242462467198418
+        },
+        {
+          "group": 3,
+          "n_contributing": 266,
+          "weighted_share": 0.3333333333333333,
+          "mean_cap3": 0.5692660014120379,
+          "mean_cap5": 0.5692660014120379,
+          "childless": 0.5760555099503682,
+          "two_plus": 0.12113872305788022,
+          "approximate_household_cluster_se": 0.05473224594959334
+        }
+      ],
+      "high_minus_low": -0.6445876074532777,
+      "approximate_contrast_se": 0.09561224610199176,
+      "approximate_interval95": [
+        -0.8319876098131815,
+        -0.45718760509337386
+      ]
+    },
+    "age40_44_all_women_fixed_bins": {
+      "groups": [
+        {
+          "group": 1,
+          "n_contributing": 574,
+          "weighted_share": 0.181748710970561,
+          "mean_cap3": 1.7707014323881243,
+          "mean_cap5": 1.998991388199125,
+          "childless": 0.19956034085996727,
+          "two_plus": 0.6205098986996025,
+          "approximate_household_cluster_se": 0.052776061914941226
+        },
+        {
+          "group": 2,
+          "n_contributing": 1111,
+          "weighted_share": 0.3431801562310272,
+          "mean_cap3": 1.7647727026651203,
+          "mean_cap5": 1.987170030958084,
+          "childless": 0.18942793569011515,
+          "two_plus": 0.6268309497281046,
+          "approximate_household_cluster_se": 0.037511232582274304
+        },
+        {
+          "group": 3,
+          "n_contributing": 1593,
+          "weighted_share": 0.4750711327984118,
+          "mean_cap3": 1.7098779805555893,
+          "mean_cap5": 1.8379424897446914,
+          "childless": 0.1829238691743714,
+          "two_plus": 0.6387855503055737,
+          "approximate_household_cluster_se": 0.02955925576813163
+        }
+      ],
+      "high_minus_low": -0.060823451832535014,
+      "approximate_contrast_se": 0.060490183607057546,
+      "approximate_interval95": [
+        -0.1793842117023678,
+        0.05773730803729778
+      ]
+    },
+    "age40_44_all_women_fractional_weighted_thirds": {
+      "groups": [
+        {
+          "group": 1,
+          "n_contributing": 1287,
+          "weighted_share": 0.3333333333333333,
+          "mean_cap3": 1.784005647140653,
+          "mean_cap5": 2.0129076872225635,
+          "childless": 0.18823174520024924,
+          "two_plus": 0.630717557697276,
+          "approximate_household_cluster_se": 0.037692737023780905
+        },
+        {
+          "group": 2,
+          "n_contributing": 1328,
+          "weighted_share": 0.3333333333333333,
+          "mean_cap3": 1.7022169927559863,
+          "mean_cap5": 1.891337804551669,
+          "childless": 0.20678581023952786,
+          "two_plus": 0.608815465439783,
+          "approximate_household_cluster_se": 0.0351342960800115
+        },
+        {
+          "group": 3,
+          "n_contributing": 1593,
+          "weighted_share": 0.3333333333333333,
+          "mean_cap3": 1.7330913916015815,
+          "mean_cap5": 1.8510290592745604,
+          "childless": 0.16952122362423275,
+          "two_plus": 0.654551154333499,
+          "approximate_household_cluster_se": 0.032129048468572355
+        }
+      ],
+      "high_minus_low": -0.05091425553907136,
+      "approximate_contrast_se": 0.04952795351960119,
+      "approximate_interval95": [
+        -0.14798904443748967,
+        0.04616053335934696
+      ]
+    },
+    "age40_44_reference_or_spouse_fixed_bins": {
+      "groups": [
+        {
+          "group": 1,
+          "n_contributing": 398,
+          "weighted_share": 0.15754372974458714,
+          "mean_cap3": 2.080620213580411,
+          "mean_cap5": 2.347359960342278,
+          "childless": 0.07957976608212602,
+          "two_plus": 0.7203641645144763,
+          "approximate_household_cluster_se": 0.05448086884231577
+        },
+        {
+          "group": 2,
+          "n_contributing": 873,
+          "weighted_share": 0.3317784972227847,
+          "mean_cap3": 2.0362793775773462,
+          "mean_cap5": 2.2915825538603682,
+          "childless": 0.08896682838960585,
+          "two_plus": 0.737575535172537,
+          "approximate_household_cluster_se": 0.03718543178491666
+        },
+        {
+          "group": 3,
+          "n_contributing": 1386,
+          "weighted_share": 0.5106777730326282,
+          "mean_cap3": 1.8726813846410564,
+          "mean_cap5": 2.0127754063498777,
+          "childless": 0.11245170469326972,
+          "two_plus": 0.7067076747013158,
+          "approximate_household_cluster_se": 0.028678900821835395
+        }
+      ],
+      "high_minus_low": -0.20793882893935445,
+      "approximate_contrast_se": 0.06156820950914753,
+      "approximate_interval95": [
+        -0.3286125195772836,
+        -0.0872651383014253
+      ]
+    },
+    "age40_44_reference_or_spouse_fractional_weighted_thirds": {
+      "groups": [
+        {
+          "group": 1,
+          "n_contributing": 941,
+          "weighted_share": 0.33333333333333337,
+          "mean_cap3": 2.092519851239934,
+          "mean_cap5": 2.353704553010526,
+          "childless": 0.07556237767457465,
+          "two_plus": 0.7482567826158146,
+          "approximate_household_cluster_se": 0.034986955394259944
+        },
+        {
+          "group": 2,
+          "n_contributing": 1100,
+          "weighted_share": 0.33333333333333337,
+          "mean_cap3": 1.9114844984802886,
+          "mean_cap5": 2.1240384697816097,
+          "childless": 0.11709067196379332,
+          "two_plus": 0.6915040965626756,
+          "approximate_household_cluster_se": 0.035893276771345045
+        },
+        {
+          "group": 3,
+          "n_contributing": 1386,
+          "weighted_share": 0.3333333333333333,
+          "mean_cap3": 1.8751530689476277,
+          "mean_cap5": 1.9962249411581785,
+          "childless": 0.1057904301007594,
+          "two_plus": 0.717540505025483,
+          "approximate_household_cluster_se": 0.03334016011172882
+        }
+      ],
+      "high_minus_low": -0.21736678229230622,
+      "approximate_contrast_se": 0.04832859737293902,
+      "approximate_interval95": [
+        -0.3120908331432667,
+        -0.12264273144134574
+      ]
+    }
+  },
+  "model": {
+    "end22_25_scratch_midpoint_thirds": {
+      "groups": [
+        {
+          "group": 1,
+          "weighted_share": 0.36328124999999895,
+          "mean_cap3": 0.07886577310125614,
+          "childless": 0.9359223112533254
+        },
+        {
+          "group": 2,
+          "weighted_share": 0.2734375000000002,
+          "mean_cap3": 0.5291225236814814,
+          "childless": 0.5475161384053638
+        },
+        {
+          "group": 3,
+          "weighted_share": 0.36328125000000083,
+          "mean_cap3": 1.0963555804275842,
+          "childless": 0.1204026460211268
+        }
+      ],
+      "high_minus_low": 1.017489807326328
+    },
+    "end22_25_fractional_weighted_thirds": {
+      "groups": [
+        {
+          "group": 1,
+          "weighted_share": 0.33333333333333337,
+          "mean_cap3": 0.07573890216238659,
+          "childless": 0.9383639422537918
+        },
+        {
+          "group": 2,
+          "weighted_share": 0.33333333333333337,
+          "mean_cap3": 0.5354246585986421,
+          "childless": 0.5451341678987556
+        },
+        {
+          "group": 3,
+          "weighted_share": 0.3333333333333332,
+          "mean_cap3": 1.103689906456387,
+          "childless": 0.11686537478767874
+        }
+      ],
+      "high_minus_low": 1.0279510042940003
+    },
+    "end42_45_scratch_midpoint_thirds": {
+      "groups": [
+        {
+          "group": 1,
+          "weighted_share": 0.36328124999998296,
+          "mean_cap3": 1.476931366060981,
+          "childless": 0.3336853190124777
+        },
+        {
+          "group": 2,
+          "weighted_share": 0.27343750000000355,
+          "mean_cap3": 1.918290500866918,
+          "childless": 0.16281472388392962
+        },
+        {
+          "group": 3,
+          "weighted_share": 0.3632812500000136,
+          "mean_cap3": 2.2198781163892125,
+          "childless": 0.06369433313660665
+        }
+      ],
+      "high_minus_low": 0.7429467503282314
+    },
+    "end42_45_fractional_weighted_thirds": {
+      "groups": [
+        {
+          "group": 1,
+          "weighted_share": 0.33333333333333337,
+          "mean_cap3": 1.4633221470734499,
+          "childless": 0.33876644855898214
+        },
+        {
+          "group": 2,
+          "weighted_share": 0.33333333333333337,
+          "mean_cap3": 1.91267619851396,
+          "childless": 0.16591119966620166
+        },
+        {
+          "group": 3,
+          "weighted_share": 0.3333333333333333,
+          "mean_cap3": 2.2265440402940966,
+          "childless": 0.06196303523269313
+        }
+      ],
+      "high_minus_low": 0.7632218932206467
+    },
+    "uniform_interview_age24_26_scratch_midpoint_thirds": {
+      "groups": [
+        {
+          "group": 1,
+          "weighted_share": 0.3632812499999871,
+          "mean_cap3": 0.1284331773481261,
+          "childless": 0.8935517087858804
+        },
+        {
+          "group": 2,
+          "weighted_share": 0.2734375000000053,
+          "mean_cap3": 0.5039834752454836,
+          "childless": 0.5722348670569665
+        },
+        {
+          "group": 3,
+          "weighted_share": 0.3632812500000076,
+          "mean_cap3": 0.9647384321557508,
+          "childless": 0.2168522560954558
+        }
+      ],
+      "high_minus_low": 0.8363052548076247
+    },
+    "uniform_interview_age24_26_fractional_weighted_thirds": {
+      "groups": [
+        {
+          "group": 1,
+          "weighted_share": 0.3333333333333333,
+          "mean_cap3": 0.12426333331977699,
+          "childless": 0.8969423667713372
+        },
+        {
+          "group": 2,
+          "weighted_share": 0.3333333333333333,
+          "mean_cap3": 0.5080391771414686,
+          "childless": 0.570623084018574
+        },
+        {
+          "group": 3,
+          "weighted_share": 0.33333333333333354,
+          "mean_cap3": 0.9725076803713308,
+          "childless": 0.21201278469387996
+        }
+      ],
+      "high_minus_low": 0.8482443470515538
+    },
+    "uniform_interview_age40_44_scratch_midpoint_thirds": {
+      "groups": [
+        {
+          "group": 1,
+          "weighted_share": 0.36328124999998057,
+          "mean_cap3": 1.3314231740309646,
+          "childless": 0.3616127142767543
+        },
+        {
+          "group": 2,
+          "weighted_share": 0.2734375000000044,
+          "mean_cap3": 1.7887311883633865,
+          "childless": 0.16643424871712106
+        },
+        {
+          "group": 3,
+          "weighted_share": 0.36328125000001504,
+          "mean_cap3": 2.097217223395442,
+          "childless": 0.06167072847395236
+        }
+      ],
+      "high_minus_low": 0.7657940493644773
+    },
+    "uniform_interview_age40_44_fractional_weighted_thirds": {
+      "groups": [
+        {
+          "group": 1,
+          "weighted_share": 0.33333333333333326,
+          "mean_cap3": 1.3178336228713614,
+          "childless": 0.36724156560442933
+        },
+        {
+          "group": 2,
+          "weighted_share": 0.33333333333333337,
+          "mean_cap3": 1.782242121895887,
+          "childless": 0.17062037243547398
+        },
+        {
+          "group": 3,
+          "weighted_share": 0.33333333333333326,
+          "mean_cap3": 2.103925116319818,
+          "childless": 0.05997897117118448
+        }
+      ],
+      "high_minus_low": 0.7860914934484566
+    }
+  },
+  "caveats": [
+    "Approximate household-cluster SE conditions on original weights; no CPS strata, PSU or replicate-weight design correction.",
+    "Weighted thirds fractionally split tied discrete income categories, using the same fraction for every woman in a tied category.",
+    "Uniform age diagnostic mixes exact prebirth/postbirth stock within each four-year cell; assumes uniform birth timing and equal exposure to each completed age.",
+    "Model income ranks current persistent Markov z; CPS ranks last-12-month combined family money income."
+  ]
+}

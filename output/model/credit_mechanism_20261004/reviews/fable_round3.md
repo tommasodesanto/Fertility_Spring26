@@ -1,0 +1,24 @@
+**Agreed position.** Small, heterogeneous credit responses with an adverse exposure shift. A policy term in a birth-flow decomposition is a count at held exposure and carries no welfare content. Stationary endpoints are valid conditional demographic scales that reveal neither transition births nor welfare. The authenticated cases fix the magnitudes:
+
+| Fixed-price case, explicit births | Total | Policy at baseline exposure | Exposure |
+|---|---:|---:|---:|
+| φ 0.8 → 0.95 | −0.250% | +0.156% | −0.406% |
+| Price × 1.1, all inputs unchanged | −6.434% | −7.417% | +0.983% |
+
+Neither case has an executed dated-budget or purchase audit. I do not certify them.
+
+**Resolved.**
+
+1. **Attribution of the positive component.** I withdraw "the parent's larger down payment." The census shows parent-suitable purchase access for essentially all first-birth susceptibility at φ=0.8 under the income-inclusive screen, so the origination screen is not the responsive margin. What φ still relaxes is the ending-debt floor on the purchased house, which binds for 11.5% of fertile childless owners. The positive component is a borrowing-capacity effect on the same house for older childless households on the owner track, not access to a parent-suitable product and not more space. Susceptibility-weighted parent rooms move only from 6.285 to 6.287. This is measured accounting, not an identified causal effect of debt.
+
+2. **Gradient.** Unresolved, not refuted. My reweighting argument held fixed policies; a corrected child-cost block would change within-state responses as well as weights. The cash-floor experiment is bundled, and the baseline-vintage income gradient is unavailable. Validation concern retained, causal attribution withheld in both directions.
+
+3. **Income-inclusive purchase rule.** A deliberate author choice, recorded in September, and not a bug. The analytical section's cash-before-income rule describes a different model, and the two should be labelled as such. The census quantifies the stake: under a before-income diagnostic inequality, parent-suitable access falls to 28% of susceptibility. That makes within-period timing a specification question that needs evidence, not a lever.
+
+4. **The price case gives a structural signature.** First-birth policy responses are about −12% to −17% at every fertile age; second- and third-birth responses are −1.3% to −3%. The ratio is consistent with a space requirement that applies only at the first child and with the sharper first-birth choice dispersion. The change bundles rent, purchase cost, collateral and incumbent wealth; it is not an isolated space-floor experiment and not a market-clearing endpoint.
+
+**Retained unknowns.** Selection versus state dependence in the shift into two-room indebted units. The split of the price response between relative space cost and household resources; the recovered rebated-tax arithmetic points toward resources but is uncertified and redistributive. Transition births. Informative rank of the ten-moment fit.
+
+**Conditional unchanged-model paper statement.** At the working calibration, with the implemented four-year income-inclusive purchase screen and tenure-neutral space costs, raising the financed share from 80% to 95% at fixed prices moves young households into ownership and changes births by about a quarter of a percent, while a 10% rise in house prices and rents lowers births by about 6%, concentrated at the first-birth margin where the family-space requirement applies. Fertility in this model responds to housing costs, not to mortgage access. This is a fixed-price statement about household responses. It is not a market-clearing, transition or welfare result, and it does not establish that mortgage access is generally irrelevant.
+
+**First empirical decision.** Settle the purchase-timing contract before touching preferences. Measure, for first-time buyers around first births in 2005–2007 data, liquid funds held at origination relative to the required down payment, and the share of down payments drawn from within-year income or gifts. If most buyers hold the down payment in liquid assets before purchase, the cash-before-income rule is the better contract and credit can bind for a large share of the birth margin. If income and gifts routinely fund it, the current rule stands. The affected object is the purchase screen alone, with all targets retained. The complementary validation is the PSID first-birth hazard by predetermined pre-birth earnings tercile, compared with the model's successful-birth hazard, conception probability times attempt probability, over matched four-year windows.

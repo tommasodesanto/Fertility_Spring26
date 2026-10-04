@@ -1,0 +1,80 @@
+{
+  "reference": "post-interest chain13 without Estate-A, fixed price; diagnostic, no recalibration",
+  "pair_changes": [
+    "phi"
+  ],
+  "price": 0.7760569760205563,
+  "income_cuts": [
+    0.3383911647779436,
+    0.7326667409040528
+  ],
+  "income_definition": "annual gross labor earnings: P.income*z/[period_years*(1-tau_pay)]; current Markov earnings state, fixed baseline childless exposure boundaries",
+  "wealth_groups": [
+    "b<=0",
+    "0<b<=1",
+    "b>1"
+  ],
+  "checks": [
+    {
+      "minimum_reconstructed_prebirth_mass": -2.9129769081699176e-18,
+      "negative_prebirth_mass": 1.1019583866363627e-17,
+      "forward_reconstruction_max_error": 2.168404344971009e-19,
+      "native_flow_max_error": 3.9898639947466563e-17,
+      "age_mass_max_error": 1.3877787807814457e-17
+    },
+    {
+      "minimum_reconstructed_prebirth_mass": -9.225998389556058e-19,
+      "negative_prebirth_mass": 1.1476119532926064e-17,
+      "forward_reconstruction_max_error": 1.0842021724855044e-19,
+      "native_flow_max_error": 3.122502256758253e-17,
+      "age_mass_max_error": 1.3877787807814457e-17
+    }
+  ],
+  "logit_checks": [
+    {
+      "children_ever_born": 0,
+      "children_at_home": 0,
+      "logit_identity_error": 1.1102230246251565e-14
+    },
+    {
+      "children_ever_born": 1,
+      "children_at_home": 0,
+      "logit_identity_error": 2.842170943040401e-14
+    },
+    {
+      "children_ever_born": 1,
+      "children_at_home": 1,
+      "logit_identity_error": 2.036715329722938e-08
+    },
+    {
+      "children_ever_born": 2,
+      "children_at_home": 0,
+      "logit_identity_error": 7.105427357601002e-15
+    },
+    {
+      "children_ever_born": 2,
+      "children_at_home": 1,
+      "logit_identity_error": 1.5492317650966925e-08
+    },
+    {
+      "children_ever_born": 2,
+      "children_at_home": 2,
+      "logit_identity_error": 2.3100810153664497e-09
+    }
+  ],
+  "sources": [
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080",
+      "arrays_sha256": "04a1d60ad526402fb0c2a52c853b77795b1b1d04488bb222684f0f1ed0d43100",
+      "parameters_sha256": "513d7dd55e1559abf42130c590171515d421f232d1abdec48f329180a3bf2e83",
+      "standard_diagnostics": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/standard_diagnostics"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100",
+      "arrays_sha256": "38530b04b9520380ca7209e8753272f8d43636104788bf3a0ae80576e1654998",
+      "parameters_sha256": "58b08ca841d67fe731ac44e94cc0187eb6c3e9f05c760978d5e5888752f5f27e",
+      "standard_diagnostics": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/standard_diagnostics"
+    }
+  ],
+  "validity": "No aggregate-policy consumption/saving claims. Signed inversion roundoff retained. All gap support denominators reported; no dropped mass, probability clipping or gate changes."
+}

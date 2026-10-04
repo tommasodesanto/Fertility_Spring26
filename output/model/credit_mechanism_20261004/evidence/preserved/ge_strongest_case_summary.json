@@ -1,0 +1,35 @@
+{
+ "ge_default": {
+  "status": "ok",
+  "seconds": 26.4,
+  "result_keys": [
+   "P",
+   "b_grid",
+   "closure",
+   "comparison_metadata",
+   "lifecycle_solves",
+   "price",
+   "reference_metadata",
+   "report_directory",
+   "shared",
+   "solution"
+  ],
+  "scalars": {
+   "price": 0.7760569760205563,
+   "report_directory": "/private/tmp/claude-501/-Users-tommasodesanto-Desktop-Projects-Fertility-Fertility-Spring26/e6ffcec8-ecc2-4f4e-80e3-a9983d1b3762/scratchpad/ge_runs/ge_default/phase_b_ge/selected_root",
+   "lifecycle_solves": 2
+  }
+ },
+ "ge_cap4_hb1_phi80": {
+  "status": "failed",
+  "seconds": 5.9,
+  "error": "RuntimeError('Dated budget gate failed: mass=1.6320644235993315e-07, excess=0.2229782409198926')",
+  "tb": "m.py\", line 60, in solve_stationary_ge\n    try: result=ge.run_phase_b(context,{'selected_d_bar':float(P.unsecured_credit_limit)},budget)\n                ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/production/native_phase_b.py\", line 355, in run_phase_b\n    seed, seed_live = trial(start, \"price_start\", reason=\"fresh initial price evaluation\")\n                      ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/production/native_phase_b.py\", line 330, in trial\n    observed = _observe_with_deadline(context, live, label, final=False)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/production/native_phase_b.py\", line 64, in _observe_with_deadline\n    return observe_price(context, live, label, final=final)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/production/equilibrium.py\", line 56, in capture\n    observed=prior_observe(ctx,live,label,final=final)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/production/native_phase_b.py\", line 106, in observe_price\n    gates = fp.gates(packet, prepared, out, stationary=True)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/sources/fixed_price_v1/run_fixed_price.py\", line 171, in gates\n    budget = rt['primitive'].dated_budget(ev, P, sd, grid, float(P.user_cost_rate*ev.policy.price[0]))\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_matched_pf_smoke.py\", line 189, in dated_budget\n    raise RuntimeError(f'Dated budget gate failed: mass={bad_mass}, excess={largest}')\nRuntimeError: Dated budget gate failed: mass=1.6320644235993315e-07, excess=0.2229782409198926\n"
+ },
+ "ge_cap4_hb1_phi95": {
+  "status": "failed",
+  "seconds": 6.0,
+  "error": "RuntimeError('Dated budget gate failed: mass=5.260517108321199e-08, excess=0.08307115965976863')",
+  "tb": "m.py\", line 60, in solve_stationary_ge\n    try: result=ge.run_phase_b(context,{'selected_d_bar':float(P.unsecured_credit_limit)},budget)\n                ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/production/native_phase_b.py\", line 355, in run_phase_b\n    seed, seed_live = trial(start, \"price_start\", reason=\"fresh initial price evaluation\")\n                      ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/production/native_phase_b.py\", line 330, in trial\n    observed = _observe_with_deadline(context, live, label, final=False)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/production/native_phase_b.py\", line 64, in _observe_with_deadline\n    return observe_price(context, live, label, final=final)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/production/equilibrium.py\", line 56, in capture\n    observed=prior_observe(ctx,live,label,final=final)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/production/native_phase_b.py\", line 106, in observe_price\n    gates = fp.gates(packet, prepared, out, stationary=True)\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/sources/fixed_price_v1/run_fixed_price.py\", line 171, in gates\n    budget = rt['primitive'].dated_budget(ev, P, sd, grid, float(P.user_cost_rate*ev.policy.price[0]))\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_matched_pf_smoke.py\", line 189, in dated_budget\n    raise RuntimeError(f'Dated budget gate failed: mass={bad_mass}, excess={largest}')\nRuntimeError: Dated budget gate failed: mass=5.260517108321199e-08, excess=0.08307115965976863\n"
+ }
+}

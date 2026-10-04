@@ -1,0 +1,169 @@
+{
+  "status": "prepared_passed",
+  "kind": "price110",
+  "contract": "lead-approved exact reached-runtime identity; economic and native gates unchanged",
+  "strict_failure_receipt": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/diagnostics/phi095_strict_inventory_failure.json",
+  "exclusions": {
+    "code/model/production/calibration.py": "Calibration adapter is neither imported nor called by solve_at_price.",
+    "code/model/production/workflow.py": "GE publication frontend is neither imported nor called by solve_at_price.",
+    "code/model/production/test_storage.py": "Test file is not imported or executed by this diagnostic.",
+    "code/model/production/parameter_files.py": "Parameter-file frontend is not used; inputs.load_inputs is called directly.",
+    "code/model/production/test_parameter_files.py": "Test file is not imported or executed by this diagnostic.",
+    "code/model/production/test_parameter_frontend.py": "Test file is not imported or executed by this diagnostic."
+  },
+  "production_mismatches": [],
+  "cached_public_P_mismatches": [],
+  "grid_identical": true,
+  "baseline_price_identical": true,
+  "changed_fields": [],
+  "price_change": {
+    "baseline": 0.7760569760205563,
+    "diagnostic": 0.8536626736226121,
+    "multiplier": 1.1
+  },
+  "economic_change": "price +10% jointly changes rents, purchase cost, collateral and inherited owner housing wealth; all P, grid, entry and taxes unchanged",
+  "source_sha256": {
+    "code/model/production/__init__.py": "f06337c12a7e759bbabd50f0562932be661fc7ef216cfa7810ac77e0705d9a3c",
+    "code/model/production/credit.py": "0c939767d0fa5fbfc468c47da3dbbb5a3d8c79c3fd7e6b2c6715b11444b0b070",
+    "code/model/production/engine/__init__.py": "c134867d538cf9b27bceaaeb70cfead4aec7706039f5b3b66fc006ff208bbb67",
+    "code/model/production/engine/adult_entry.py": "e752178ad90d64c77575b70d0718a94d6f3b04463b03637d9af12e23f57bce3f",
+    "code/model/production/engine/child_preferences.py": "887763b066bdd64efb2f23b97fac977abfa9630d1e194adb2148da24b2ff7123",
+    "code/model/production/engine/diagnostics.py": "eb9c3516e4d4343d59f84341213faaebdaa09eba20cc0efc1bf3bfecb8a28985",
+    "code/model/production/engine/distribution.py": "9da9be2525852f78771d735103f0de385c8a8028eff9ab564512627ed2df2e90",
+    "code/model/production/engine/e5f_social_security.py": "df03621afd48135afb6c3fbdec1209bad9605c6133b9f6352fce28fc45c7961b",
+    "code/model/production/engine/e5f_stationary_paygo.py": "7eeb7760b236711d40b3563d6d7a40548ba3cade6a646743c6fe3a02462a8569",
+    "code/model/production/engine/equilibrium.py": "ca88909666802e92e396c44c0ea6f69eadbddb9e707bfec49cf1ec765d013fe9",
+    "code/model/production/engine/fertility_nested.py": "aed06c0ee77bb39b0d72da0d5e63c6f1c1b6c3b0a76986372aa17e2d2cb77e85",
+    "code/model/production/engine/household.py": "b9a94d660258d394b906f8920a6db6a44d2b436d66378ffc7c6aa92ba0c0ed20",
+    "code/model/production/engine/joint_nested.py": "909bb9d02ecf8e196e339864572e7692e71a956c35002397c70a494a30bd620b",
+    "code/model/production/engine/kernels.py": "a615c1df43e54ee4b5da7fbe775e1ba343e3132afa45a0159f9846a7a598e279",
+    "code/model/production/engine/parameters.py": "f8871ea7f026b0900f2cd89e2ecbe7f24fbc8b08e83ec46227533a11dea2e163",
+    "code/model/production/engine/shared.py": "1fbe36f75befe5fed67c490c39a65663f4c8896b078851693fb4bca533d07773",
+    "code/model/production/engine/solver.py": "19e6f9240a4ff7354c39031d35d734ea2c8cad2fbd1f60d128ebb049d587317c",
+    "code/model/production/engine/two_shock_choice.py": "0d5201f176ad77f2c3013819d18eae69c1a22a91d7ce9b8060e1d6ef76ad40f1",
+    "code/model/production/engine/utils.py": "836d6768af4a9261fe28e758f88dcc8ca059afc277b7c03d36f179a510ebcf36",
+    "code/model/production/engine/warm_price.py": "bc3ff5c8df2a16a9ef753bfaabde914e09e7d3943de90c93be684ebeb0bf2518",
+    "code/model/production/equilibrium.py": "0be7e1f945c77b8d84ec473cdc6a0ff9f35a9f1df5764488f47fff94a53eb5a4",
+    "code/model/production/inputs.py": "ef9ec4411fa746c978192d1ffbe8388e533173dbd2ea4e025e783506ca5b8676",
+    "code/model/production/native_phase_b.py": "cefe8b4dd96a47ff36fea5aab1becf53be76e4a44fe02675b6de28f8a455f718",
+    "code/model/production/native_price.py": "53e8e83d90f34b64050b7f75dc45a7bd24e8c891b8ab1754d87852d23e9e5450",
+    "code/model/production/reference_inputs/export_reference.py": "8048da017253c8b7a54f866862e48cbdc23e27ba6259f8b25b18fefa9f45c5c1",
+    "code/model/production/reporting.py": "819abc1330e5997f01bd982b01d3c463ce9006ce8d783c4a00e62da960bc33a2",
+    "code/model/production/storage.py": "7a2ad6abeee0b93321bebe393b4c349a023039f3a2e19e848cba160a77464efb",
+    "code/model/production/verification.py": "c5af97acb1156e8f5581bf3e2ed5569ec6579bf73fae72845406156c8fbebe27",
+    "code/model/production/reference_inputs/bundle.json": "26ab79ace7df6b3429997ef43ba45598988abeafd662f82596ff16c83b35e448",
+    "code/model/production/reference_inputs/arrays.npz": "3877c55f683248d4b81352c04558b1cb93fb150e330bf805caa73ff72db57396",
+    "output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/collection/production_alternative_chain_13/run/native_postcheck/selected_postcheck/phase_b_ge/selected_repeat/stage/solution_arrays.npz": "029c85e0b2d7bc4f7d4680713807f4939bf183b231d26931b040fd67d8302168"
+  },
+  "imported_modules_before": {
+    "production": {
+      "path": "code/model/production/__init__.py",
+      "sha256": "f06337c12a7e759bbabd50f0562932be661fc7ef216cfa7810ac77e0705d9a3c"
+    },
+    "production.inputs": {
+      "path": "code/model/production/inputs.py",
+      "sha256": "ef9ec4411fa746c978192d1ffbe8388e533173dbd2ea4e025e783506ca5b8676"
+    },
+    "production.credit": {
+      "path": "code/model/production/credit.py",
+      "sha256": "0c939767d0fa5fbfc468c47da3dbbb5a3d8c79c3fd7e6b2c6715b11444b0b070"
+    },
+    "production.native_price": {
+      "path": "code/model/production/native_price.py",
+      "sha256": "53e8e83d90f34b64050b7f75dc45a7bd24e8c891b8ab1754d87852d23e9e5450"
+    },
+    "production.native_phase_b": {
+      "path": "code/model/production/native_phase_b.py",
+      "sha256": "cefe8b4dd96a47ff36fea5aab1becf53be76e4a44fe02675b6de28f8a455f718"
+    },
+    "production.engine": {
+      "path": "code/model/production/engine/__init__.py",
+      "sha256": "c134867d538cf9b27bceaaeb70cfead4aec7706039f5b3b66fc006ff208bbb67"
+    },
+    "production.engine.joint_nested": {
+      "path": "code/model/production/engine/joint_nested.py",
+      "sha256": "909bb9d02ecf8e196e339864572e7692e71a956c35002397c70a494a30bd620b"
+    },
+    "production.engine.adult_entry": {
+      "path": "code/model/production/engine/adult_entry.py",
+      "sha256": "e752178ad90d64c77575b70d0718a94d6f3b04463b03637d9af12e23f57bce3f"
+    },
+    "production.engine.warm_price": {
+      "path": "code/model/production/engine/warm_price.py",
+      "sha256": "bc3ff5c8df2a16a9ef753bfaabde914e09e7d3943de90c93be684ebeb0bf2518"
+    },
+    "production.engine.child_preferences": {
+      "path": "code/model/production/engine/child_preferences.py",
+      "sha256": "887763b066bdd64efb2f23b97fac977abfa9630d1e194adb2148da24b2ff7123"
+    },
+    "production.engine.parameters": {
+      "path": "code/model/production/engine/parameters.py",
+      "sha256": "f8871ea7f026b0900f2cd89e2ecbe7f24fbc8b08e83ec46227533a11dea2e163"
+    },
+    "production.engine.kernels": {
+      "path": "code/model/production/engine/kernels.py",
+      "sha256": "a615c1df43e54ee4b5da7fbe775e1ba343e3132afa45a0159f9846a7a598e279"
+    },
+    "production.engine.utils": {
+      "path": "code/model/production/engine/utils.py",
+      "sha256": "836d6768af4a9261fe28e758f88dcc8ca059afc277b7c03d36f179a510ebcf36"
+    },
+    "production.engine.shared": {
+      "path": "code/model/production/engine/shared.py",
+      "sha256": "1fbe36f75befe5fed67c490c39a65663f4c8896b078851693fb4bca533d07773"
+    },
+    "production.engine.household": {
+      "path": "code/model/production/engine/household.py",
+      "sha256": "b9a94d660258d394b906f8920a6db6a44d2b436d66378ffc7c6aa92ba0c0ed20"
+    },
+    "production.engine.distribution": {
+      "path": "code/model/production/engine/distribution.py",
+      "sha256": "9da9be2525852f78771d735103f0de385c8a8028eff9ab564512627ed2df2e90"
+    },
+    "production.engine.equilibrium": {
+      "path": "code/model/production/engine/equilibrium.py",
+      "sha256": "ca88909666802e92e396c44c0ea6f69eadbddb9e707bfec49cf1ec765d013fe9"
+    },
+    "production.engine.solver": {
+      "path": "code/model/production/engine/solver.py",
+      "sha256": "19e6f9240a4ff7354c39031d35d734ea2c8cad2fbd1f60d128ebb049d587317c"
+    },
+    "production.reporting": {
+      "path": "code/model/production/reporting.py",
+      "sha256": "819abc1330e5997f01bd982b01d3c463ce9006ce8d783c4a00e62da960bc33a2"
+    },
+    "production.equilibrium": {
+      "path": "code/model/production/equilibrium.py",
+      "sha256": "0be7e1f945c77b8d84ec473cdc6a0ff9f35a9f1df5764488f47fff94a53eb5a4"
+    },
+    "production.engine.diagnostics": {
+      "path": "code/model/production/engine/diagnostics.py",
+      "sha256": "eb9c3516e4d4343d59f84341213faaebdaa09eba20cc0efc1bf3bfecb8a28985"
+    }
+  },
+  "versions": {
+    "numpy": "2.2.6",
+    "matplotlib": "3.10.3",
+    "numba": "0.61.2",
+    "llvmlite": "0.44.0",
+    "scipy": "1.15.3",
+    "python": "3.13.15 (main, Sep  1 2026, 14:05:45) [Clang 22.1.3 ]",
+    "executable": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/local_env_v1/venv313/bin/python"
+  },
+  "baseline_arrays_sha256": "04a1d60ad526402fb0c2a52c853b77795b1b1d04488bb222684f0f1ed0d43100",
+  "baseline_parameters_sha256": "513d7dd55e1559abf42130c590171515d421f232d1abdec48f329180a3bf2e83",
+  "price": 0.8536626736226121,
+  "case_budget_seconds": 600,
+  "memory_budget_gib": 8,
+  "case_count": 1,
+  "phase_budget_seconds": 1500,
+  "threads": {
+    "NUMBA_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "standard_graph_command": "production.engine.diagnostics.write_diagnostics(solution,P,destination/standard_diagnostics)",
+  "expected_standard_graphs": 17
+}

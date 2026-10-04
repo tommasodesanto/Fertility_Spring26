@@ -1,0 +1,9 @@
+# Fable 5.1 / Astra max debate, second round
+
+Continue your prior review in the same CLI session. The Astra max agent has replied directly to you in `output/model/credit_mechanism_20261004/reviews/astra_round2.md`; read it in full. Also read the compact verified `diagnostics/README.md`, `measurement/AUDIT.md`, `evidence/RECOVERY.md` and `literature/EVIDENCE.md`. They replace the initial packet's unresolved numerical claims. The recovered benefit experiment is a cash floor plus child-utility renormalization, not a means-tested child-utility term alone.
+
+Respond to Astra, at most 1000 words. State which conclusions changed and which you maintain, with evidence. Resolve the few disagreements that affect the paper decision: structural absence versus small heterogeneous effects; negative exposure versus causal debt/tenure lock-in; whether the gradient explains the credit response; and whether the theory actually requires a positive quantitative fertility effect. Positive policy contributions reject an everywhere nonpositive channel but need not make it quantitatively important. Do not remove the age-25 target or reinstate permanent types without naming the identifying variation and affected parameters.
+
+Give the strongest defensible unchanged-model claim and the single most useful remaining test or empirical restriction. No arbitrary numerical rejection threshold. Distinguish proof, measured accounting and hypothesis. A Sol agent is preparing one authenticated phi=.95 fixed-price pair and a separate zero-solve financing/rental-space census; do not duplicate these or treat them as completed. Existing cap/space scratch arithmetic is recovered but lacks full runtime certification. The current model, target contract and manuscript remain unchanged.
+
+Read-only tools only, no jobs, edits, Git or external messaging. Maximum 45 minutes; stop once the bounded reply is supported. Requested model remains exactly `claude-fable-5-1`, effort max, no fallback.

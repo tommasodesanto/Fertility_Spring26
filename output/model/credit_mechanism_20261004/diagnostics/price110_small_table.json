@@ -1,0 +1,158 @@
+{
+  "age_table": [
+    {
+      "case": "baseline",
+      "age": 18,
+      "mass": 0.06173345618075151,
+      "ownership": 0.21883457179461632,
+      "rooms": 4.02176637708749
+    },
+    {
+      "case": "baseline",
+      "age": 22,
+      "mass": 0.06173345618074794,
+      "ownership": 0.3439990778780457,
+      "rooms": 4.770099144268289
+    },
+    {
+      "case": "baseline",
+      "age": 26,
+      "mass": 0.06173345618074749,
+      "ownership": 0.4595166775257002,
+      "rooms": 5.523634372370633
+    },
+    {
+      "case": "baseline",
+      "age": 30,
+      "mass": 0.061733456180747465,
+      "ownership": 0.5424856596289045,
+      "rooms": 6.009169884532831
+    },
+    {
+      "case": "baseline",
+      "age": 34,
+      "mass": 0.06173345618074748,
+      "ownership": 0.617158273135527,
+      "rooms": 6.391365884463791
+    },
+    {
+      "case": "baseline",
+      "age": 38,
+      "mass": 0.06173345618074749,
+      "ownership": 0.6712746530915011,
+      "rooms": 6.608947534120541
+    },
+    {
+      "case": "baseline",
+      "age": 42,
+      "mass": 0.06173345618074747,
+      "ownership": 0.7045801483805179,
+      "rooms": 6.689019126497539
+    },
+    {
+      "case": "baseline",
+      "age": "18-29 pooled",
+      "mass": 0.18520036854224695,
+      "ownership": 0.34078344239945146,
+      "rooms": 4.771833297908788
+    },
+    {
+      "case": "alternative",
+      "age": 18,
+      "mass": 0.06173345618075372,
+      "ownership": 0.1899361855833735,
+      "rooms": 3.666982779165886
+    },
+    {
+      "case": "alternative",
+      "age": 22,
+      "mass": 0.0617334561807501,
+      "ownership": 0.30279704622435877,
+      "rooms": 4.335104813552925
+    },
+    {
+      "case": "alternative",
+      "age": 26,
+      "mass": 0.06173345618074802,
+      "ownership": 0.41508812506368764,
+      "rooms": 5.081531499069513
+    },
+    {
+      "case": "alternative",
+      "age": 30,
+      "mass": 0.061733456180747076,
+      "ownership": 0.4985902513122313,
+      "rooms": 5.585598679101227
+    },
+    {
+      "case": "alternative",
+      "age": 34,
+      "mass": 0.06173345618074711,
+      "ownership": 0.5770453764205719,
+      "rooms": 5.978040560267557
+    },
+    {
+      "case": "alternative",
+      "age": 38,
+      "mass": 0.06173345618074711,
+      "ownership": 0.6361282416180655,
+      "rooms": 6.2054927785995
+    },
+    {
+      "case": "alternative",
+      "age": 42,
+      "mass": 0.06173345618074712,
+      "ownership": 0.6749958829946018,
+      "rooms": 6.299357593939057
+    },
+    {
+      "case": "alternative",
+      "age": "18-29 pooled",
+      "mass": 0.18520036854225183,
+      "ownership": 0.3026071189571365,
+      "rooms": 4.361206363929419
+    }
+  ],
+  "first_birth_gap": {
+    "all": {
+      "susceptibility_sum": 0.13818918275841274,
+      "supported_susceptibility": 0.13818918275841272,
+      "unsupported_susceptibility": 1.3763507832405818e-41,
+      "weighted_success_gap_delta": -0.06773114645150448,
+      "first_birth_flow_linear_change": -0.009359711775423768,
+      "definition": "baseline G*pi^2*a*(1-a)/kappa weights; derivative of realized first births with respect to successful-birth-minus-wait utility"
+    },
+    "inherited_renter": {
+      "susceptibility_sum": 0.11980460014734592,
+      "supported_susceptibility": 0.11980460014734592,
+      "unsupported_susceptibility": 1.3763507832405818e-41,
+      "weighted_success_gap_delta": -0.07350014123465731,
+      "first_birth_flow_linear_change": -0.008805655031391572,
+      "definition": "baseline G*pi^2*a*(1-a)/kappa weights; derivative of realized first births with respect to successful-birth-minus-wait utility"
+    },
+    "b_nonpositive": {
+      "susceptibility_sum": 0.06704661547532278,
+      "supported_susceptibility": 0.0670466154753228,
+      "unsupported_susceptibility": 2.5226284766564656e-56,
+      "weighted_success_gap_delta": -0.06978163349669708,
+      "first_birth_flow_linear_change": -0.004678622348292955,
+      "definition": "baseline G*pi^2*a*(1-a)/kappa weights; derivative of realized first births with respect to successful-birth-minus-wait utility"
+    }
+  },
+  "checks": [
+    {
+      "minimum_reconstructed_prebirth_mass": -2.9129769081699176e-18,
+      "negative_prebirth_mass": 1.1019583866363627e-17,
+      "forward_reconstruction_max_error": 2.168404344971009e-19,
+      "native_flow_max_error": 3.9898639947466563e-17,
+      "age_mass_max_error": 1.3877787807814457e-17
+    },
+    {
+      "minimum_reconstructed_prebirth_mass": -7.521994807673725e-19,
+      "negative_prebirth_mass": 1.0651136725353271e-17,
+      "forward_reconstruction_max_error": 1.0842021724855044e-19,
+      "native_flow_max_error": 1.9081958235744878e-17,
+      "age_mass_max_error": 1.3877787807814457e-17
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "reference": "post-interest soft chain13, no Estate A; phi080 fixed-price baseline exposure",
+  "zero_solves": true,
+  "changes": [
+    "phi"
+  ],
+  "price": 0.7760569760205563,
+  "R_gross": 1.08243216,
+  "H_own": [
+    2.0,
+    4.0,
+    6.0,
+    8.0,
+    10.0
+  ],
+  "parent_floor": 2.593759507364224,
+  "owner_service_premium": 1.0500762402240174,
+  "renter_cap": 6.0,
+  "susceptibility": "G_pre*pi_age^2*a*(1-a)/kappa_fert; derivative of first-birth flow w.r.t. successful-birth-minus-wait cardinal utility",
+  "timing": "soft: Rb+y+S >= (1-phi)Q; diagnostic cash: Rb+S >= (1-phi)Q",
+  "income": "period after-tax P.income[i,j]*z+zero property-tax transfer; distinct from annual gross earnings",
+  "worked_example": {
+    "age": 22,
+    "z": 0.7775605363025857,
+    "income": 2.0611813071495764,
+    "four_room_purchase_price": 3.1042279040822254,
+    "four_room_downpayment": 0.6208455808164449,
+    "minimum_b_renter_soft": -1.3306475727154408,
+    "minimum_b_renter_before_income": 0.5735653501060473
+  },
+  "stayers": "same owner product excluded from purchase census; current-home suitability recorded separately",
+  "inversion_checks": [
+    {
+      "minimum_reconstructed_prebirth_mass": -2.9129769081699176e-18,
+      "negative_prebirth_mass": 1.1019583866363627e-17,
+      "forward_reconstruction_max_error": 2.168404344971009e-19,
+      "native_flow_max_error": 3.9898639947466563e-17,
+      "age_mass_max_error": 1.3877787807814457e-17
+    },
+    {
+      "minimum_reconstructed_prebirth_mass": -9.225998389556058e-19,
+      "negative_prebirth_mass": 1.1476119532926064e-17,
+      "forward_reconstruction_max_error": 1.0842021724855044e-19,
+      "native_flow_max_error": 3.122502256758253e-17,
+      "age_mass_max_error": 1.3877787807814457e-17
+    }
+  ],
+  "housing_checks": [
+    {
+      "arm": "phi080",
+      "branch": "childless_wait",
+      "dead_common_exposure": 0.0,
+      "live_tenure_probability_sum_max_error": 2.220446049250313e-16,
+      "conditional_renter_below_floor_exposure": 0.0,
+      "conditional_renter_above_cap_exposure": 0.0
+    },
+    {
+      "arm": "phi080",
+      "branch": "one_child_at_home",
+      "dead_common_exposure": 0.0009241882016246165,
+      "live_tenure_probability_sum_max_error": 2.220446049250313e-16,
+      "conditional_renter_below_floor_exposure": 0.0,
+      "conditional_renter_above_cap_exposure": 0.0
+    },
+    {
+      "arm": "phi100",
+      "branch": "childless_wait",
+      "dead_common_exposure": 0.0,
+      "live_tenure_probability_sum_max_error": 3.3306690738754696e-16,
+      "conditional_renter_below_floor_exposure": 0.0,
+      "conditional_renter_above_cap_exposure": 0.0
+    },
+    {
+      "arm": "phi100",
+      "branch": "one_child_at_home",
+      "dead_common_exposure": 0.0008742508227752942,
+      "live_tenure_probability_sum_max_error": 2.220446049250313e-16,
+      "conditional_renter_below_floor_exposure": 0.0,
+      "conditional_renter_above_cap_exposure": 0.0
+    }
+  ],
+  "debt_checks": [
+    {
+      "group": "all_ages_all_family_states",
+      "owner_mass": 0.6792735556954359,
+      "new_owner_mass": 0.230450142812344,
+      "stayer_mass": 0.44882341288309197,
+      "floor_tolerance": 1e-06
+    },
+    {
+      "group": "fertile_childless",
+      "owner_mass": 0.027310634778405285,
+      "new_owner_mass": 0.018835709033009424,
+      "stayer_mass": 0.008474925745395849,
+      "floor_tolerance": 1e-06
+    }
+  ],
+  "sources": [
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/census/census.py",
+      "sha256": "b8e3d1a314832fee1f1bc83c2f0978a71298dcb27a1c6f8e76cde8b89137d46d"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/diagnostics/extract_common_states.py",
+      "sha256": "b8a103457b5aef9a78ff8365de5182a1c07ec234a81f30fc510e2f8ab775918b"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/production/engine/household.py",
+      "sha256": "b9a94d660258d394b906f8920a6db6a44d2b436d66378ffc7c6aa92ba0c0ed20"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/production/engine/kernels.py",
+      "sha256": "a615c1df43e54ee4b5da7fbe775e1ba343e3132afa45a0159f9846a7a598e279"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/production/engine/shared.py",
+      "sha256": "1fbe36f75befe5fed67c490c39a65663f4c8896b078851693fb4bca533d07773"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/production/engine/distribution.py",
+      "sha256": "9da9be2525852f78771d735103f0de385c8a8028eff9ab564512627ed2df2e90"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/executed_P.json",
+      "sha256": "513d7dd55e1559abf42130c590171515d421f232d1abdec48f329180a3bf2e83"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_080/solution_arrays.npz",
+      "sha256": "04a1d60ad526402fb0c2a52c853b77795b1b1d04488bb222684f0f1ed0d43100"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/executed_P.json",
+      "sha256": "58b08ca841d67fe731ac44e94cc0187eb6c3e9f05c760978d5e5888752f5f27e"
+    },
+    {
+      "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/soft_timing_calibration_20261002_v1/fable_analysis/credit_mechanism/credit_relaxation/phi_100/solution_arrays.npz",
+      "sha256": "38530b04b9520380ca7209e8753272f8d43636104788bf3a0ae80576e1654998"
+    }
+  ],
+  "rows": 612
+}

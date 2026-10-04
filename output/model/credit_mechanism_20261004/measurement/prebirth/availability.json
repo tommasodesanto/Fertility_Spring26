@@ -1,0 +1,40 @@
+{
+  "status": "not_feasible_from_staged_panels_missing_earnings_and_liquid_wealth",
+  "verified_date": "2026-10-04",
+  "operations": "Read-only source review, 128-KiB remote Stata header reads, hashes of two small staged files, local 2.5-MB file header. No full shelf read or download.",
+  "authoritative_preparation": "code/data/psid_followup_mar2026/prepare_first_birth_rooms_v2.do",
+  "authoritative_estimator_receipt": "code/data/psid_followup_mar2026/output/sa_rooms_first_birth_v2/A2h/run_receipt.json",
+  "analysis_panel": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_rooms_v2_20260924/analysis_sample.dta",
+    "size_bytes": 31224503,
+    "nobs": 863751,
+    "sha256": "9fd181c48e1951a7a0052836926260a89d056d666aad3e49e2ae9cca05f1ba00",
+    "columns": ["ID", "year", "AGEREP", "EDUYEAR", "rooms_shift", "rooms", "raw_matched", "bio_first_year", "relchirep_max", "relchi1_year", "n_current_fids", "woman", "current", "rel", "hhid", "fid", "iw", "year_entry_adult"]
+  },
+  "income_sidecar": {
+    "path": "/scratch/td2248/projects/Fertility_Spring26_rooms_income_sensitivity_v1_20261001/income.dta",
+    "size_bytes": 63971585,
+    "nobs": 3533123,
+    "sha256": "fb762cc72917aa9aff9031ed98213b8f0b03d9003373ddc7768321b5a3296383",
+    "columns": ["ID", "year", "INCFAMR"],
+    "clock": "Family income in tax year interview_year-1",
+    "units": "Real2022 USD",
+    "definition_receipt": "code/data/psid_followup_mar2026/output/first_birth_rooms_income_sensitivity_v1/income_source_metadata.json"
+  },
+  "collapsed_master": {
+    "path": "code/data/psid_followup_mar2026/output/income_wealth_fertility_master_v1/income_wealth_fertility_master_sample_v1.dta",
+    "nobs": 11692,
+    "missing_required_columns": ["year", "AGEREP", "CURRENT", "HHID", "FID", "EARNINDRRC"],
+    "reason": "Resources averaged ages25-30; no sequential interview risk set."
+  },
+  "legacy_hazard_error": {
+    "builder": "code/data/psid_followup_mar2026/fertility_wealth_v1.do",
+    "event_line": 117,
+    "risk_rule_line": 120,
+    "filter_line": 129,
+    "contradiction": "Event requires first_birth_year==year; retained risk rows require missing first_birth_year or year<first_birth_year. All event rows removed."
+  },
+  "required_next_input": "Authenticated ID/year EARNINDRRC and liquid-net-wealth/components sidecar, including measurement clocks, units, missing-code definitions; full prepared biological-history panel with never-birth controls; explicit prior-interview exposure and unit mapping.",
+  "table": null,
+  "uncertainty": "Unavailable; no valid descriptive hazard computed."
+}

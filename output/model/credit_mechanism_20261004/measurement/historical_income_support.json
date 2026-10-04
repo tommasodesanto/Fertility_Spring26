@@ -1,0 +1,22 @@
+{
+  "status": "bounded_read_only_check_no_new_target",
+  "source": "/scratch/td2248/projects/Fertility_Spring26_native_financing_20260919a/early_fertility_target_20260926/input",
+  "schema": "/Users/tommasodesanto/Desktop/Projects/Datasets/CPS/extract3/loader.do",
+  "authoritative_receipt": "output/model/e5f_matched_pf_20260909a/parameter_target_audit/fertility/fertility_availability.json",
+  "sample": "SEX=2, AGE24..26 or40..44, FREVER0..20, FRSUPPWT>0",
+  "columns_1based_inclusive": {"HHINCOME": [76,83], "FTOTVAL": [189,198]},
+  "HEFAMINC": "absent_from_retained_extract_schema",
+  "2004": {
+    "n": 8143,
+    "partition_sha256": "44e233bb4780c844892f8e75fc34206533bb753906bba68c3ffc9ced374df786",
+    "HHINCOME_blank": 8143,
+    "FTOTVAL_blank": 8143
+  },
+  "2006": {
+    "n": 7856,
+    "partition_sha256": "8bd7a843587d2f7dfb70d9309473855f4c87d1271636572f50e8a7950cf3426a",
+    "HHINCOME_blank": 7856,
+    "FTOTVAL_blank": 7856
+  },
+  "implication": "No matched-vintage income gradient recoverable from this retained extract. No full source decompression or rebuild performed."
+}

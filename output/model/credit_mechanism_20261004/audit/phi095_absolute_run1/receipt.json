@@ -1,0 +1,26 @@
+{
+  "case": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/diagnostics/phi_095_run1",
+  "audit_out": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/audit/phi095_absolute_run1",
+  "source_contract": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/diagnostics/phi095_preparation.json",
+  "source_contract_sha256": "f391e4a7fbe26fe444e60a7984d6146311622480dccf8bc8ff2c38fe36dff3e6",
+  "production_source_snapshot": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/production_source_snapshot.json",
+  "production_source_snapshot_sha256": "ac53a162a088a691682129566c88e4b8c6b32b64636ebd8db31b534fa7e3ae77",
+  "source_pin_count": 31,
+  "arrays_sha256": "dc124ac6ae7333f2bef11c1d93d49e4e06754079989142921c23c4c5c731a971",
+  "parameters_sha256": "99c69ff729145d47096eea345260d8410d17708cacfa8e71f010972c299049ed",
+  "threads": {
+    "NUMBA_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  },
+  "canonical_budget_purchase_status": "unexecuted_initialization_blocked",
+  "canonical_budget_purchase_error": "[Errno 2] No such file or directory: '/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/__init__.py'",
+  "canonical_budget_purchase_missing_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/__init__.py",
+  "exception_type": "FileNotFoundError",
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/credit_mechanism_20261004/audit/audit_saved_native.py\", line 38, in main\n    ctx=build_context(P,sol.b_grid,out,price_start=float(sol.p_eq[0]),deadline=time.time()+90,max_lifecycle=0,closure='fixed_h0')\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/production/reporting.py\", line 99, in build_context\n    authored.authenticate_frozen(initial)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/publication_refactor_20260929/small_credit_replication_v1/arms/indexed/driver.py\", line 100, in authenticate_frozen\n    manifest, _unused, objective, runtime, prepared, reference = fp.authenticate(auth_dir)\n                                                                 ~~~~~~~~~~~~~~~^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/sources/fixed_price_v1/run_fixed_price.py\", line 136, in authenticate\n    prepared = runtime.setup(dict(contract, objective=manifest['objective']), objective,\n                             output / 'runtime_preparation')\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py\", line 101, in setup\n    validate_objective(objective);verify_sources(contract)\n                                  ~~~~~~~~~~~~~~^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_evening_calibration_runtime.py\", line 95, in verify_sources\n    if not path.is_relative_to(root) or sha(path)!=digest:raise RuntimeError('Source changed: '+relative)\n                                        ~~~^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/e5f_calibration_runtime.py\", line 48, in sha\n    with Path(path).open('rb') as stream:\n         ~~~~~~~~~~~~~~~^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/local_runtime/bootstrap.py\", line 26, in <lambda>\n    Path.open=lambda self,mode=\"r\",*args,**kwargs:redirected_open(self,mode,*args,**kwargs)\n                                                  ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/fixed_reference_economics_20260928/purchase_rules_overnight_v1/local_runtime/bootstrap.py\", line 19, in redirected_open\n    return old_io_open(target,mode,*args,**kwargs)\nFileNotFoundError: [Errno 2] No such file or directory: '/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/calibration_archive/model_legacy_20261003/intergen_housing_fertility_howard_test/__init__.py'\n",
+  "elapsed_seconds": 1.8300795420072973,
+  "peak_rss": 1445429248,
+  "source_mismatches_after": []
+}
