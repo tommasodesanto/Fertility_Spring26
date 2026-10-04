@@ -883,8 +883,9 @@ manuscript wording or certify a new paper calibration.
    reconstruction and three first-stage seed maps completed before the fourth
    map hit the original 360-second seed deadline. The watchdog timeout was
    wrapped by Numba; peak RSS was about 11.0 GiB, below 24 GiB. All evidence and
-   completed work are preserved. A smaller smoke-only seed is under diagnosis
-   within the same 30-minute total cap; no unchanged retry is authorized.
+   completed work are preserved. A four-date/date-1 smoke seed repair passes 26 focused tests and lead review.
+   Its fresh v4 package is transferring; the 30-minute total and all stage caps
+   remain unchanged. No unchanged retry is authorized.
    No complete smoke pass or empirical fitting launch has occurred. The original
    empirical 24/32 roots, accounting, replay,
    horizon gates, 0.005 fitted-gap tolerance and six-hour budget remain unchanged.

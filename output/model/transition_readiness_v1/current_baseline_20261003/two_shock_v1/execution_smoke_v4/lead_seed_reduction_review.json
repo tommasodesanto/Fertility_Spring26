@@ -1,0 +1,48 @@
+{
+  "status": "reviewed_small_seed_repair",
+  "verified_epoch": 1791146943.698933,
+  "inventory_sha256": "c2618b8b263ed90c82ca60f40b1f02c8836bc6ebeede1db3e89087ea7bbc9ce3",
+  "failure_addressed": "v3 360-second seed deadline during fourth twelve-date map",
+  "changed_method": {
+    "smoke_seed": {
+      "horizon": 4,
+      "log_step": 1e-05,
+      "perturbed_date": 1
+    },
+    "stage2_initializer": "accepted forecast slice [2:6], no padding",
+    "fixed_candidate_horizons": [
+      6
+    ]
+  },
+  "empirical_controls_exactly_unchanged": true,
+  "economic_target_identity_fields_verified": [
+    "identity",
+    "baseline_psi",
+    "psi_bound_ratios",
+    "stages",
+    "rows",
+    "weights",
+    "target_contract",
+    "stage_starts"
+  ],
+  "path_relocation_only_in_target_pins": true,
+  "native_sources_unchanged": 709,
+  "smoke_budgets_unchanged": true,
+  "focused_tests": {
+    "passed": 26,
+    "failed": 0,
+    "native_solves": 0
+  },
+  "scientific_routines_ast_unchanged": 13,
+  "lead_mathematical_review": "Runtime parameters route identically for empirical seed12/date5 and actual [2:14]; smoke uses measured lag support[-1,0,1,2], helper extends with zero unmeasured lags. Full measured receipt retained. Five actual maps and complete source/state/clock/replay/accounting evidence stay required. Original handoff/scalar/root/export routines unchanged.",
+  "untested": [
+    "native completion within existing30minute cap",
+    "empirical12date Jacobian",
+    "12to24/32 extension",
+    "24/32 horizon comparison",
+    "empirical scalar fitting"
+  ],
+  "remote_preflight": "pending",
+  "smoke_launched": false,
+  "empirical_fit_launched": false
+}

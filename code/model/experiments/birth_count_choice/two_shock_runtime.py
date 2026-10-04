@@ -60,9 +60,9 @@ class StageAdapter(retained.NativeAdapter):
 
     def measure_inherited_seed(self,folder,deadline):
         original,_=retained.original_modules()
-        h=12;count=0;start=self.calls;init=self.initialization
+        seed=self.plan['seed'];h=seed['horizon'];count=0;start=self.calls;init=self.initialization
         require(init is not None and len(init['prices'])==len(init['pensions'])==h,
-                'Actual accepted forecast 12-date seed initialization required')
+                'Actual accepted forecast must match pinned seed horizon')
         endpoint=init['endpoint'];terminal=init['terminal_packet'];psi=init['psi']
         def evaluate(q,b):
             nonlocal count
@@ -75,7 +75,7 @@ class StageAdapter(retained.NativeAdapter):
                     stationarity_required=False,reason='Actual 2015 inherited state is nonstationary',identity=self.identity()))
             return dict(mapping_valid=valid,market_residual=record['market_residual'],fiscal_residual=record['fiscal_residual'])
         matrix=original.inner.measure_jacobian(evaluate,np.asarray(init['prices']),np.asarray(init['pensions']),
-            5,1e-5,folder/'measured',dict(identity=self.identity(),native_measured=True,
+            seed['perturbed_date'],seed['log_step'],folder/'measured',dict(identity=self.identity(),native_measured=True,
                 source_candidate=init['candidate'],initialization_kind=init['kind']))
         receipt=json.loads((folder/'measured/receipt.json').read_text())
         require(count==5,'Original five-map Jacobian required')
@@ -211,9 +211,9 @@ class NativeRuntime:
         adapter=StageAdapter(self.rt,self.plan,inherited_state,start_year,self.initialization if stage else None)
         self.adapters[stage]=adapter
         if stage==0:
-            receipt=adapter.measure_seed(horizon=12,perturbed_date=5,log_step=1e-5,gates=self.plan['gates'],
+            receipt=adapter.measure_seed(**self.plan['seed'],gates=self.plan['gates'],
                 budget=self.plan['budget'],deadline=deadline,folder=folder)
-            receipt.update(mapping_count=5,horizon=12,identity=adapter.identity())
+            receipt.update(identity=adapter.identity())
         else: receipt=adapter.measure_inherited_seed(Path(folder),deadline)
         receipt['source_evidence']=[pin(path) for path in sorted(Path(folder).glob('map_*/native_record.json'))]
         self.seeds[stage]=copy.deepcopy(receipt);return receipt
@@ -239,12 +239,15 @@ class NativeRuntime:
         return dict(record,terminal_state=native.terminal_state,values=native.values,native_reply=native)
 
     def set_stage2_initialization(self,accepted,candidate):
-        q=np.asarray(accepted['prices'])[2:14].copy();b=np.asarray(accepted['pensions'])[2:14].copy();kind='accepted_stage1_forecast_slice_2_14'
-        if len(q)<12:
+        h=self.plan['seed']['horizon'];stop=2+h
+        q=np.asarray(accepted['prices'])[2:stop].copy();b=np.asarray(accepted['pensions'])[2:stop].copy()
+        require(len(q)==len(b),'Accepted stage1 price/pension forecast lengths differ')
+        kind=f'accepted_stage1_forecast_slice_2_{stop}'
+        if len(q)<h:
             require(self.plan['smoke'] and self.plan.get('smoke_seed_endpoint_padding') is True,
                     'Stage1 forecast insufficient for required stage2 seed')
-            q=np.r_[q,np.full(12-len(q),accepted['endpoint']['price'])]
-            b=np.r_[b,np.full(12-len(b),accepted['terminal_packet']['parameters'].pension)]
+            q=np.r_[q,np.full(h-len(q),accepted['endpoint']['price'])]
+            b=np.r_[b,np.full(h-len(b),accepted['terminal_packet']['parameters'].pension)]
             kind='smoke_only_accepted_slice_then_stationary_endpoint_numerical_padding'
         self.initialization=dict(prices=q,pensions=b,psi=accepted['psi'],endpoint=accepted['endpoint'],
             terminal_packet=accepted['terminal_packet'],candidate=candidate,kind=kind)

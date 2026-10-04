@@ -29,7 +29,7 @@ BASELINE_PSI=.17892072066041628
 SCHEMA='estate_a_two_unanticipated_psi_v1'
 TARGETS=[1.974875,1.861,1.755375,1.64575]
 STAGES=[dict(start_year=2007,accepted_periods=2,target_index=1),dict(start_year=2015,accepted_periods=0,target_index=1)]
-SMOKE_PROTOCOL='native_two_stage_execution_only_v1'
+SMOKE_PROTOCOL='native_two_stage_execution_only_v2'
 GATES=dict(market_tolerance=2e-4,fiscal_tolerance=2e-5,final_reproduction_tolerance=1e-10,
  stationary_renewal_tolerance=1e-6,terminal_tolerance=1e-3,raw_queue_relative_tolerance=1e-3,horizon_relative_tolerance=1e-3)
 def require(ok, message):
@@ -104,6 +104,7 @@ def empirical_controls(base):
 
 def smoke_controls(empirical):
     controls=copy.deepcopy(empirical)
+    controls['seed']=dict(horizon=4,perturbed_date=1,log_step=1e-5)
     controls['horizons']=[6];controls['smoke_seed_endpoint_padding']=True
     controls['gates'].update(market_tolerance=.05,fiscal_tolerance=.005)
     controls['path']['max_evaluations']=3;controls['endpoint']['max_evaluations']=8
@@ -256,9 +257,10 @@ def validate_smoke_pin(plan,item):
     expected=fingerprints(plan);observed=receipt.get('fingerprints',{})
     require(observed==fingerprints(smoke) and all(observed.get(k)==expected[k] for k in
         ('source','contract','empirical_controls','smoke_controls')),'Smoke source/contract/empirical fingerprints differ')
+    require(receipt.get('seed_controls')==smoke['seed'],'Actual smoke seed controls differ')
     require(receipt.get('semantic_gates')==dict(fixed_baseline_candidates=True,scalar_optimizer=False,derivative_probes=False,
         nonanticipating_prefix=True,both_queues=True,fresh_replays=True,exact_2023=True,standard_diagnostics=True,
-        empirical_horizon_gates_tested=False,empirical_forecast_slice_tested=False),'Execution-only smoke semantic gates required')
+        empirical_horizon_gates_tested=False,empirical_forecast_slice_tested=False,empirical_seed_jacobian_tested=False),'Execution-only smoke semantic gates required')
     reference=receipt['reference_evidence'];proof=json.loads(pinned(reference['reconstruction_receipt']).read_text())
     checkpoint=pinned(reference['reference_checkpoint'])
     require(reference.get('accounting_valid') is True and type(reference.get('policy_calls')) is int and reference['policy_calls']>0 and
@@ -270,14 +272,19 @@ def validate_smoke_pin(plan,item):
     require(len(receipt.get('stage_seed_pins',[]))==len(receipt.get('selected_candidate_pins',[]))==2,'Both concrete smoke seeds/candidates required')
     for stage,(seed_pin,candidate_pin) in enumerate(zip(receipt['stage_seed_pins'],receipt['selected_candidate_pins'])):
         seed=json.loads(pinned(seed_pin).read_text());candidate=json.loads(pinned(candidate_pin).read_text())
-        require(seed['mapping_count']==5 and seed['horizon']==12 and
+        require(seed['mapping_count']==5 and seed['horizon']==smoke['seed']['horizon'] and
+            seed.get('perturbed_date')==smoke['seed']['perturbed_date'] and
+            seed.get('perturbation_log_step')==smoke['seed']['log_step'] and
+            seed['identity']==dict(plan['identity'],stage_start_year=STAGES[stage]['start_year'],
+                inherited_state_sha256=seed['identity']['inherited_state_sha256']) and
             (stage==0 or seed.get('nonstationary_inherited_state') is True),'Actual stage-bound five-map seeds required')
         require(len(seed.get('source_evidence',[]))==5,'Five actual native seed map pins required')
         for proof in seed['source_evidence']:
             record=json.loads(pinned(proof).read_text())
             require(record.get('accounting_valid') is True and bool(record.get('gates')) and all(record['gates'].values()) and
-                len(record['rows'])==12 and all(row['calendar_year']==STAGES[stage]['start_year']+4*i for i,row in enumerate(record['rows'])) and
-                record['two_shock_provenance']['inherited_state_sha256']==seed['identity']['inherited_state_sha256'],
+                len(record['rows'])==smoke['seed']['horizon'] and all(row['calendar_year']==STAGES[stage]['start_year']+4*i for i,row in enumerate(record['rows'])) and
+                record['two_shock_provenance']['inherited_state_sha256']==seed['identity']['inherited_state_sha256'] and
+                record['two_shock_provenance']['start_year']==STAGES[stage]['start_year'],
                 'Actual smoke seed native map clock/state/accounting differs')
         require(candidate.get('status')=='execution_passed' and candidate.get('certified') is False and
             candidate['stage']==stage and candidate['psi']==BASELINE_PSI and candidate['horizon']==6 and
@@ -511,9 +518,12 @@ class Controller:
             self.remaining();folder=self.out/f'stage{stage+1}'
             seed=self.runtime.measure_seed(stage=stage,start_year=settings['start_year'],inherited_state=self.current_state,
                 folder=folder/'seed',deadline=min(self.deadline,time.monotonic()+self.plan['budget']['seed_seconds']))
-            self.account(seed);require(seed['mapping_count']==5 and seed['horizon']==12 and
+            self.account(seed);require(seed['mapping_count']==5 and seed['horizon']==self.plan['seed']['horizon'] and
+                seed.get('perturbed_date')==self.plan['seed']['perturbed_date'] and
+                seed.get('perturbation_log_step')==self.plan['seed']['log_step'] and
                 (stage==0 or seed['nonstationary_inherited_state'] is True),'Original fresh stage-bound seed required')
-            require(seed['identity']['inherited_state_sha256']==state_hash(self.current_state,self.runtime.queue_values),'Fresh seed state identity differs')
+            require(seed['identity']==dict(self.plan['identity'],stage_start_year=settings['start_year'],
+                inherited_state_sha256=state_hash(self.current_state,self.runtime.queue_values)),'Fresh seed state/clock identity differs')
             require(len(seed.get('source_evidence',[]))==5,'Five actual native seed map pins required')
             self.evidence.extend(seed['source_evidence'])
             write(folder/'seed_receipt.json',seed);seed_pins.append(pin(folder/'seed_receipt.json'))
@@ -559,14 +569,17 @@ class Controller:
             fingerprints=fingerprints(self.plan),smoke_manifest_pin=pin(self.out/'executed_manifest.json'),
             semantic_gates=dict(fixed_baseline_candidates=True,scalar_optimizer=False,derivative_probes=False,nonanticipating_prefix=True,
                 both_queues=True,fresh_replays=True,exact_2023=True,standard_diagnostics=True,
-                empirical_horizon_gates_tested=False,empirical_forecast_slice_tested=False),
+                empirical_horizon_gates_tested=False,empirical_forecast_slice_tested=False,empirical_seed_jacobian_tested=False),
             reference_evidence=prepared,stage_seed_pins=seed_pins,selected_candidate_pins=candidate_pins,handoff_pin=pin(self.out/'accepted_2007'/'handoff.json'),
             diagnostic_pins=diagnostic_pins,exact_2023_state=exported,evidence_pins=self.evidence,
             actual_policy_calls=self.calls,native_actual_policy_calls=actual,terminal_passes_by_stage=terminal_passes,
             terminal_diagnostics_gating=False,
             classification='Execution-only native integration; no scalar fit or empirical convergence certification',
-            untested=['empirical 24/32 horizon stability','full scalar fits and derivatives','actual stage1 forecast slice [2:14]'],
-            initializer='Smoke-only accepted short forecast plus stationary endpoint numerical padding',disclosure=self.plan['disclosure'])
+            seed_controls=copy.deepcopy(self.plan['seed']),
+            untested=['empirical 12-date Jacobian at perturbed date 5','empirical 12-to-24/32 measured-Jacobian extension',
+                'empirical 24/32 horizon stability','full scalar fits and derivatives','actual stage1 forecast slice [2:14]'],
+            initializer='Actual accepted four-date stage1 forecast slice [2:6]; no endpoint padding executed',
+            disclosure=self.plan['disclosure'])
         write(self.out/'complete.json',receipt);return receipt
 
     def _run(self):

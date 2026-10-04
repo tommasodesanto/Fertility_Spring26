@@ -54,10 +54,11 @@ class FakeRuntime:
         for i in range(5):
             path=Path(kw['folder'])/f'map_{i+1:03d}'/'native_record.json'
             m.write(path,dict(accounting_valid=True,gates=dict(accounting=True),
-                rows=[dict(calendar_year=kw['start_year']+4*j) for j in range(12)],
-                two_shock_provenance=dict(inherited_state_sha256=m.state_hash(kw['inherited_state']))))
+                rows=[dict(calendar_year=kw['start_year']+4*j) for j in range(self.p['seed']['horizon'])],
+                two_shock_provenance=dict(start_year=kw['start_year'],inherited_state_sha256=m.state_hash(kw['inherited_state']))))
             proofs.append(m.pin(path))
-        return dict(source_evidence=proofs,identity=dict(self.p['identity'],stage_start_year=kw['start_year'],inherited_state_sha256=m.state_hash(kw['inherited_state'])),accounting_valid=True,policy_calls=5,mapping_count=5,horizon=12,nonstationary_inherited_state=kw['stage']==1,matrix=np.eye(24))
+        return dict(source_evidence=proofs,identity=dict(self.p['identity'],stage_start_year=kw['start_year'],inherited_state_sha256=m.state_hash(kw['inherited_state'])),accounting_valid=True,policy_calls=5,mapping_count=5,horizon=self.p['seed']['horizon'],perturbed_date=self.p['seed']['perturbed_date'],
+            perturbation_log_step=self.p['seed']['log_step'],nonstationary_inherited_state=kw['stage']==1,matrix=np.eye(2*self.p['seed']['horizon']))
     def evaluate_stage(self,**kw):
         year=kw['start_year'];h=kw['horizon'];stage=kw['stage'];psi=kw['psi'];self.rt.total_native_calls+=10;self.calls.append(('eval',year,psi,h))
         target=(1.861,1.64575)[stage];center=(.15,.12)[stage]
@@ -92,7 +93,7 @@ class FakeRuntime:
         return dict(accounting_valid=True,policy_calls=2,gates={'accounting':True},market_residual=[0.,0.],fiscal_residual=[0.,0.],
           rows=copy.deepcopy(self.selected['rows'][:2]),fertility=copy.deepcopy(self.selected['fertility'][:2]),
           values=copy.deepcopy(self.selected['values'][:3]),terminal_state=state(2015),native_reply=native)
-    def set_stage2_initialization(self,accepted,candidate):self.initialization=(accepted['prices'][2:14].copy(),accepted['psi'])
+    def set_stage2_initialization(self,accepted,candidate):self.initialization=(accepted['prices'][2:2+self.p['seed']['horizon']].copy(),accepted['psi'])
     def release_stage1(self):pass
     def export_state(self,reply,**kw):
         self.calls.append(('export',reply['shock_contract']['start_year'],kw['index']));folder=Path(kw['folder']);folder.mkdir(parents=True)
@@ -191,8 +192,12 @@ class ManifestControlTests(unittest.TestCase):
 
     def test_execution_controls_separate_original_empirical_fingerprint(self):
         with tempfile.TemporaryDirectory() as d:smoke,fit=self.prepared_pair(d)
+        self.assertEqual(smoke['seed'],dict(horizon=4,perturbed_date=1,log_step=1e-5))
+        self.assertEqual(fit['seed'],dict(horizon=12,perturbed_date=5,log_step=1e-5))
         self.assertEqual(smoke['horizons'],[6]);self.assertEqual(smoke['path']['max_evaluations'],3)
         self.assertEqual(smoke['endpoint']['max_evaluations'],8);self.assertEqual(smoke['budget']['total_seconds'],1680)
+        self.assertEqual({k:smoke['budget'][k] for k in ('seed_seconds','mapping_seconds','candidate_seconds','path_seconds')},
+            dict(seed_seconds=360,mapping_seconds=180,candidate_seconds=360,path_seconds=240))
         self.assertEqual(smoke['budget']['maximum_policy_calls'],400);self.assertIs(smoke['smoke_seed_endpoint_padding'],True)
         self.assertEqual(smoke['gates']['market_tolerance'],.05);self.assertEqual(smoke['gates']['fiscal_tolerance'],.005)
         self.assertEqual(fit['horizons'],[24,32]);self.assertEqual(fit['gates'],m.GATES)
@@ -202,6 +207,7 @@ class ManifestControlTests(unittest.TestCase):
         self.assertIs(fit['smoke_seed_endpoint_padding'],False)
         for p in (smoke,fit):m.validate_mode_controls(p)
         self.assertEqual(smoke['empirical_controls'],m.numerical_controls(fit))
+        self.assertEqual(m.numerical_controls(fit),plan()['empirical_controls'])
         a,b=m.fingerprints(smoke),m.fingerprints(fit)
         for key in ('source','contract','empirical_controls','smoke_controls'):self.assertEqual(a[key],b[key])
         self.assertNotEqual(a['controls'],b['controls'])
@@ -214,7 +220,7 @@ class ManifestControlTests(unittest.TestCase):
                 ('fit','max_evaluations',3),('path','max_evaluations',3),('endpoint','max_evaluations',8)]:
                 p=copy.deepcopy(mode);p['empirical_controls'][block][key]=value
                 with self.subTest(smoke=p['smoke'],block=block,key=key),self.assertRaisesRegex(ValueError,'Original empirical'):m.validate_mode_controls(p)
-            for key,value in [('horizons',[6]),('smoke_seed_endpoint_padding',True)]:
+            for key,value in [('seed',dict(horizon=4,perturbed_date=1,log_step=1e-5)),('horizons',[6]),('smoke_seed_endpoint_padding',True)]:
                 p=copy.deepcopy(mode);p['empirical_controls'][key]=value
                 with self.assertRaisesRegex(ValueError,'Original empirical'):m.validate_mode_controls(p)
 
@@ -225,6 +231,8 @@ class ManifestControlTests(unittest.TestCase):
                 ('budget','total_seconds',1801),('path','max_evaluations',4),('endpoint','max_evaluations',9)]:
                 p=copy.deepcopy(mode);p[block][key]=value
                 with self.assertRaisesRegex(ValueError,'Exact smoke'):m.validate_mode_controls(p)
+            p=copy.deepcopy(mode);p['smoke_protocol']='native_two_stage_execution_only_v1'
+            with self.assertRaisesRegex(ValueError,'execution-only'):m.validate_mode_controls(p)
             p=copy.deepcopy(mode);p['smoke_seed_endpoint_padding']=not p['smoke_seed_endpoint_padding']
             with self.assertRaisesRegex(ValueError,'Exact smoke'):m.validate_mode_controls(p)
 
@@ -251,19 +259,39 @@ class ExecutionSmokeTests(unittest.TestCase):
             result,r,c=self.execute(d)
             self.assertEqual([x for x in r.calls if x[0]=='eval'],[('eval',2007,m.BASELINE_PSI,6),('eval',2015,m.BASELINE_PSI,6)])
             self.assertEqual([x for x in r.calls if x[0]=='seed'],[('seed',2007,m.state_hash(state(2007))),('seed',2015,m.state_hash(state(2015)))])
+            self.assertEqual(result['seed_controls'],dict(horizon=4,perturbed_date=1,log_step=1e-5))
+            self.assertIn('[2:6]',result['initializer']);self.assertIn('no endpoint padding executed',result['initializer'])
+            self.assertIn('empirical 12-date Jacobian at perturbed date 5',result['untested'])
+            self.assertIn('empirical 12-to-24/32 measured-Jacobian extension',result['untested'])
             self.assertEqual(result['status'],'execution_passed');self.assertIs(result['empirical_fitted'],False)
             self.assertEqual(result['terminal_passes_by_stage'],{'1':False,'2':False});self.assertIs(result['terminal_diagnostics_gating'],False)
             for proof in result['selected_candidate_pins']:
                 candidate=json.loads(m.pinned(proof).read_text());self.assertIs(candidate['terminal_pass'],False)
                 terminal=json.loads(m.pinned(candidate['terminal_diagnostics_pin']).read_text())
                 self.assertIs(terminal['all_checks_pass'],False);self.assertEqual(terminal['raw_queue_maximum_relative_gap'],.01)
+            for proof in result['diagnostic_pins']:
+                diagnostic=json.loads(m.pinned(proof).read_text())
+                self.assertEqual(set(diagnostic['sampled_dates'][0]['plots']),set(plan()['standard_plot_names']))
+                self.assertEqual(len(diagnostic['sampled_dates'][0]['plots']),17)
+            with m.gzip.open(result['exact_2023_state']['path'],'rb') as stream:packet=m.pickle.load(stream)
+            np.testing.assert_array_equal(packet['scheduled_entries'],state(2023).scheduled_entries)
+            np.testing.assert_array_equal(packet['scheduled_raw_entries'],state(2023).scheduled_raw_entries)
             self.assertEqual(c.calls,34);self.assertEqual(r.replayed['boundary_price'],1.002)
             self.assertEqual(r.replayed['boundary_value'][0],2015.);np.testing.assert_array_equal(r.replayed['pensions'],[.1,.1])
             self.assertFalse((Path(d)/'out/fertility_fit.csv').exists());self.assertFalse((Path(d)/'out/stage1/fit.json').exists())
             with patch.object(m,'preflight',return_value={'status':'PASS'}):m.validate_smoke_pin(plan(),m.pin(Path(d)/'out/complete.json'))
 
+    def test_controller_rejects_seed_controls_and_missing_actual_maps(self):
+        for key,value in [('horizon',12),('perturbed_date',2),('perturbation_log_step',1e-4),('mapping_count',4),('source_evidence',[])]:
+            with self.subTest(key=key),tempfile.TemporaryDirectory() as d:
+                p=self.smoke_plan();r=FakeRuntime(p);measure=r.measure_seed
+                def wrong_seed(**kw):
+                    receipt=measure(**kw);receipt[key]=value;return receipt
+                r.measure_seed=wrong_seed;c=m.Controller(p,r,Path(d)/'out')
+                with patch.object(m,'preflight',return_value={'status':'PASS'}),self.assertRaises(ValueError):c.run()
+
     def test_receipt_rejects_changed_plots_or_actual_checkpoint(self):
-        for kind in ('plot','state','handoff','root','mapping','call_cap','fingerprint'):
+        for kind in ('plot','state','handoff','root','mapping','call_cap','fingerprint','seed_horizon','seed_date','seed_step','seed_maps','seed_proofs'):
             with self.subTest(kind=kind),tempfile.TemporaryDirectory() as d:
                 result,r,c=self.execute(d);path=Path(d)/'out/complete.json'
                 if kind=='plot':
@@ -293,6 +321,11 @@ class ExecutionSmokeTests(unittest.TestCase):
                         for proof in pins:
                             if proof['path']==new['path']:proof.update(new)
                     m.write(cp,candidate);result['selected_candidate_pins'][-1]=m.pin(cp)
+                elif kind.startswith('seed_'):
+                    cp=m.pinned(result['stage_seed_pins'][-1]);seed=json.loads(cp.read_text())
+                    key,value={'seed_horizon':('horizon',12),'seed_date':('perturbed_date',2),'seed_step':('perturbation_log_step',1e-4),
+                        'seed_maps':('mapping_count',4),'seed_proofs':('source_evidence',seed['source_evidence'][:4])}[kind]
+                    seed[key]=value;m.write(cp,seed);result['stage_seed_pins'][-1]=m.pin(cp)
                 elif kind=='call_cap':result['actual_policy_calls']=result['native_actual_policy_calls']=401
                 else:result['fingerprints']['empirical_controls']='changed'
                 m.write(path,result)
@@ -301,13 +334,78 @@ class ExecutionSmokeTests(unittest.TestCase):
 
 
 class NativeSeamTests(unittest.TestCase):
+    def test_real_four_date_jacobian_five_maps_and_six_date_lag_support(self):
+        import run_e5f_preference_transition as inner
+        import e5f_four_shock_acceleration as acceleration
+        profiles=[{-1:.2,0:2.,1:.5,2:.1},{-1:.1,0:.4,1:.3,2:.2},
+            {-1:.3,0:.7,1:.2,2:.1},{-1:.2,0:3.,1:.4,2:.3}]
+        def matrix(h):
+            blocks=[sum((np.diag(np.full(h-abs(lag),value),-lag)
+                for lag,value in profile.items()),np.zeros((h,h))) for profile in profiles]
+            return np.block([[blocks[0],blocks[1]],[blocks[2],blocks[3]]])
+        derivative=matrix(4);calls=[]
+        def evaluate(q,b):
+            calls.append((q.copy(),b.copy()))
+            residual=derivative@np.r_[np.log(q),np.log(b)]
+            return dict(mapping_valid=True,market_residual=residual[:4],fiscal_residual=residual[4:])
+        with tempfile.TemporaryDirectory() as d:
+            measured=inner.measure_jacobian(evaluate,np.ones(4),np.ones(4),1,1e-5,Path(d)/'measured',{})
+            receipt=json.loads((Path(d)/'measured/receipt.json').read_text())
+        self.assertEqual(len(calls),5);self.assertEqual(receipt['mapping_count'],5)
+        self.assertEqual((receipt['horizon'],receipt['perturbed_date']),(4,1))
+        self.assertEqual(receipt['measured_lags'],[-1,0,1,2])
+        np.testing.assert_allclose(measured,derivative,atol=1e-10)
+        extended=acceleration.extend_measured_jacobian(receipt,6)
+        np.testing.assert_allclose(extended,matrix(6),atol=1e-10)
+        self.assertEqual(extended[5,0],0.) # Lag5 was never measured.
+        for index,(q,b) in enumerate(calls[1:]):
+            changed=np.flatnonzero(np.r_[q,b]!=1.)
+            np.testing.assert_array_equal(changed,[1 if index<2 else 5])
+
+    def test_actual_runtime_routes_pinned_seed_controls_both_stages(self):
+        import two_shock_runtime as native
+        original,_=native.retained.original_modules()
+        for smoke in (False,True):
+            with self.subTest(smoke=smoke),tempfile.TemporaryDirectory() as d:
+                adapter,rt,_=self.adapter()
+                runtime=native.NativeRuntime.__new__(native.NativeRuntime)
+                runtime.plan=adapter.plan
+                runtime.plan['smoke']=smoke
+                if smoke:runtime.plan.update(m.smoke_controls(runtime.plan['empirical_controls']))
+                runtime.rt=rt;runtime.adapters={};runtime.seeds={};runtime.initialization=None
+                runtime.queue_values=rt.pf.birth_queue_values
+                rt.terminal_checks=lambda *a,**k:dict(all_checks_pass=True)
+                h=runtime.plan['seed']['horizon'];date=runtime.plan['seed']['perturbed_date']
+                accepted=dict(prices=np.arange(6 if smoke else 24.)+1.,
+                    pensions=np.full(6 if smoke else 24,.2),psi=m.BASELINE_PSI,
+                    endpoint=dict(price=2.),terminal_packet=dict(parameters=NS(pension=.3)))
+                with patch.object(original.inner,'measure_jacobian',wraps=original.inner.measure_jacobian) as measure:
+                    for stage,year in enumerate((2007,2015)):
+                        if stage:runtime.set_stage2_initialization(accepted,1)
+                        receipt=runtime.measure_seed(stage=stage,start_year=year,inherited_state=state(year),
+                            folder=Path(d)/f'stage{stage}',deadline=m.time.monotonic()+30)
+                        self.assertEqual((receipt['horizon'],receipt['perturbed_date']),(h,date))
+                        self.assertEqual(receipt['perturbation_log_step'],1e-5)
+                        self.assertEqual(receipt['mapping_count'],5);self.assertEqual(len(receipt['source_evidence']),5)
+                        self.assertEqual(receipt['measured_lags'],list(range(-date,h-date)))
+                        self.assertEqual(measure.call_args.args[3:5],(date,1e-5))
+                        self.assertEqual(len(measure.call_args.args[1]),h)
+                        if stage:
+                            np.testing.assert_array_equal(measure.call_args.args[1],accepted['prices'][2:2+h])
+                            np.testing.assert_array_equal(measure.call_args.args[2],accepted['pensions'][2:2+h])
+                            self.assertEqual(receipt['initialization_kind'],f'accepted_stage1_forecast_slice_2_{2+h}')
+                    self.assertEqual(measure.call_count,2)
+                self.assertEqual(rt.total_native_calls,10)
+                self.assertEqual([entry[1] for entry in rt.seen],[2007]*5+[2015]*5)
+
+
     @staticmethod
     def measured_seed_receipt():
         horizon=12; date=5
         names=('housing_imbalance<-log_house_price','housing_imbalance<-log_period_pension',
             'pension_imbalance<-log_house_price','pension_imbalance<-log_period_pension')
         profiles={name:[(i+1)*.01*(j+1) for j in range(horizon)] for i,name in enumerate(names)}
-        return dict(matrix=np.eye(24),unknown_blocks=['log_house_price','log_period_pension'],
+        return dict(matrix=np.eye(24),mapping_count=5,perturbation_log_step=1e-5,unknown_blocks=['log_house_price','log_period_pension'],
             residual_blocks=['housing_imbalance','pension_imbalance'],residual_units='physical_unscaled',
             coordinate_order=['log_house_price','log_period_pension'],horizon=horizon,perturbed_date=date,
             measured_lags=list(range(-date,horizon-date)),lag_profiles=profiles)
@@ -396,13 +494,23 @@ class NativeSeamTests(unittest.TestCase):
             endpoint=dict(price=2.),terminal_packet=dict(parameters=NS(pension=.3)))
         runtime=native.NativeRuntime.__new__(native.NativeRuntime);runtime.plan=plan()
         with self.assertRaisesRegex(ValueError,'forecast insufficient'):runtime.set_stage2_initialization(accepted,1)
-        runtime.plan['smoke']=True;runtime.plan['smoke_seed_endpoint_padding']=True
+        runtime.plan['smoke']=True;runtime.plan.update(m.smoke_controls(runtime.plan['empirical_controls']))
         runtime.set_stage2_initialization(accepted,1)
-        np.testing.assert_array_equal(runtime.initialization['prices'][:4],accepted['prices'][2:])
-        np.testing.assert_array_equal(runtime.initialization['prices'][4:],np.full(8,2.))
-        self.assertEqual(len(runtime.initialization['pensions']),12)
-        runtime.plan['smoke']=False
-        with self.assertRaisesRegex(ValueError,'forecast insufficient'):runtime.set_stage2_initialization(accepted,1)
+        np.testing.assert_array_equal(runtime.initialization['prices'],accepted['prices'][2:6])
+        np.testing.assert_array_equal(runtime.initialization['pensions'],accepted['pensions'][2:6])
+        self.assertEqual(runtime.initialization['kind'],'accepted_stage1_forecast_slice_2_6')
+        short=dict(accepted,prices=accepted['prices'][:4],pensions=accepted['pensions'][:4])
+        runtime.set_stage2_initialization(short,1)
+        np.testing.assert_array_equal(runtime.initialization['prices'],[3.,4.,2.,2.])
+        self.assertIn('smoke_only',runtime.initialization['kind'])
+        runtime.plan['smoke_seed_endpoint_padding']=False
+        with self.assertRaisesRegex(ValueError,'forecast insufficient'):runtime.set_stage2_initialization(short,1)
+        runtime.plan=plan()
+        accepted.update(prices=np.arange(24.)+1.,pensions=np.arange(24.)*.01+.2)
+        runtime.set_stage2_initialization(accepted,1)
+        np.testing.assert_array_equal(runtime.initialization['prices'],accepted['prices'][2:14])
+        np.testing.assert_array_equal(runtime.initialization['pensions'],accepted['pensions'][2:14])
+        self.assertEqual(runtime.initialization['kind'],'accepted_stage1_forecast_slice_2_14')
 
     def test_export_delegates_actual_2023_local_index(self):
         adapter,rt,native=self.adapter();runtime=native.NativeRuntime.__new__(native.NativeRuntime);runtime.rt=rt
