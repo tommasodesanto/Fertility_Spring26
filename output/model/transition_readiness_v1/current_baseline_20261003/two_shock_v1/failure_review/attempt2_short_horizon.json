@@ -1,0 +1,48 @@
+{
+  "schema": "two_shock_short_horizon_failure_review_v1",
+  "reviewed_epoch": 1791132341.837255,
+  "status": "derivative_candidate_rejected_current_probe_still_running",
+  "classification": "short-horizon stability rejection, both nonlinear roots converged",
+  "comparison": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt2/smoke_job/run/stage1/candidate_0002/horizon_comparison.json",
+    "sha256": "e0b9698ef31f92582c8b045f9a257f2324040310de04ecc5600300b3a3bfa4b3"
+  },
+  "candidate_failure": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt2/smoke_job/run/stage1/candidate_0002/failure.json",
+    "sha256": "4a9b364f395f6b9f4a96a890dbf408946a81b7786ba888f37f9eab8d0fc0f2b0"
+  },
+  "roots": [
+    {
+      "horizon": 6,
+      "evaluations": 6,
+      "replay_gap": 0.0,
+      "root": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt2/smoke_job/run/stage1/candidate_0002/horizon_006/root.json",
+        "sha256": "c8d64141b1a71efbdf638925d85fc85cfe43f544187d503b14314749f8b8c2ac"
+      }
+    },
+    {
+      "horizon": 8,
+      "evaluations": 6,
+      "replay_gap": 0.0,
+      "root": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt2/smoke_job/run/stage1/candidate_0002/horizon_008/root.json",
+        "sha256": "5500b0420c11f76a50e2d7169b5251ad10057eadfa3f2cda4abb84ce802ff758"
+      }
+    }
+  ],
+  "failed_metrics": {
+    "asset_price": 0.001478254233716878,
+    "renter_price": 0.0035614976323396245
+  },
+  "fertility_absolute_gaps": [
+    0.0002273798825784823,
+    0.00023367657854089785,
+    0.0008479551068942826,
+    0.0012477350026047773
+  ],
+  "tolerance_unchanged": 0.001,
+  "full_smoke_terminal_observed": false,
+  "empirical_fit_released": false,
+  "next_decision": "Inspect terminal result after current probe. A longer-horizon, separately scoped native smoke may be necessary; do not relax gates, edit the running source, extend its budget, or repeat the same failed short-horizon test."
+}
