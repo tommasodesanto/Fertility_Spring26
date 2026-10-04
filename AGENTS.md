@@ -284,6 +284,18 @@ take more than 30 minutes:
 7. If no checkpoint or heartbeat appears for 30 minutes, treat the run as
    unhealthy and investigate.
 
+
+Smoke tests must be genuinely small on both local machines and clusters. Use
+loose numerical tolerances (low accuracy), minimal grids/horizons where suitable,
+and small iteration/call/time budgets to check interfaces, loop execution,
+state handoffs, checkpoints and expected outputs. State the smoke budget before
+launch. Do not turn a smoke into full synthetic estimation or production-scale
+validation. A smoke pass certifies execution only, not economic results or
+numerical convergence. Keep production convergence, accounting and acceptance
+gates separate and unchanged; label smoke outputs diagnostic. If reduced
+controls cannot test a required object, report that limitation and scope a
+separate validation check rather than silently expanding the smoke.
+
 Do not launch long searches just to "see what happens." The search design must
 be stated and recoverable.
 
