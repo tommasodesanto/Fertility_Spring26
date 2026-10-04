@@ -845,7 +845,7 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   **Current transition direction, verified October 4 at 18:03 New York:** the
+   **Current transition direction, verified October 4 at 18:07 New York:** the
    author requested preservation of the one-shock experiment and estimation of
    two unanticipated permanent preference changes, in 2007 and 2015. Fit the
    2012–2015 fertility target **1.861** and retain the 2020–2023 target **1.64575**;
@@ -896,8 +896,9 @@ manuscript wording or certify a new paper calibration.
    2023 export, and the original 17 plot names at five dates passed artifact
    validation. Both smoke terminal diagnostics were true and nongating. This
    certifies execution only, not empirical convergence. The empirical fit was
-   submitted once at **18:03:13**, job **19180137**, and was pending at 18:03:30,
-   with one CPU, 24 GiB and the same frozen package. No estimate is accepted yet. The original
+   submitted once at **18:03:13**, job **19180137**, and is **RUNNING on cl014**
+   from **18:03:32**, with a hard deadline of **00:03:32 October 5 New York**.
+   It uses one CPU, 24 GiB and the same frozen package. No estimate is accepted yet. The original
    empirical 24/32 roots, accounting, replay,
    horizon gates, 0.005 fitted-gap tolerance and six-hour budget remain unchanged.
    [Current run and launch receipts](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/README.md).
