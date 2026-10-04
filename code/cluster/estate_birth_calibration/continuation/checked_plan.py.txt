@@ -1,0 +1,35 @@
+def checked_plan(path, digest):
+    require(sha(path)==digest, 'Continuation plan SHA-256 drift')
+    plan=json.loads(Path(path).read_text()); anchor=json.loads(ANCHOR.read_text())
+    require(anchor['status']=='selected_numerically_verified' and anchor['chain']==13 and anchor['arm']=='alternative', 'Chain13 identity drift')
+    require(plan['source_checkpoint_sha256']==sha(ANCHOR), 'Anchor checkpoint drift')
+    require(plan['parent_job_id']=='19127370', 'Parent job identity drift')
+    require(plan['parent_inventory_sha256']=='d14a39bcbb55067060ca492943f1e0067000c10733a48c3a3aff3b06e61e2afe', 'Parent stage identity drift')
+    require(sha(Path(plan['parent_receipt_root'])/'inventory.json')==plan['parent_inventory_sha256'], 'Parent inventory bytes drift')
+    require(len(plan['parent_receipts'])==10 and len(plan['starts'])==5, 'Ten parent receipts / five starts required')
+    require({r['task'] for r in plan['parent_receipts']}==set(range(10)), 'Parent task set drift')
+    require(plan['arms']=={'binary':1,'count3':3} and plan['bounds']['beta_annual']==[.93,.99], 'Economic contract drift')
+    require(len(plan['bounds'])==10, 'Coordinate count drift')
+    require(plan['target_fingerprint']==canonical(plan['target_contract']), 'Target fingerprint drift')
+    require(plan['weight_fingerprint']==canonical(dict(base_contract=plan['target_contract'],multipliers={})), 'Weight fingerprint drift')
+    own=[]
+    for item in plan['parent_receipts']:
+        task=item['task']; arm='binary' if task<5 else 'count3'; chain=task%5
+        require(item['arm']==arm and item['chain']==chain and item['task']==task, 'Parent task map drift')
+        folder=Path(plan['parent_receipt_root'])/'results'/f'production_{arm}_chain_{chain}'
+        launcher=json.loads((folder/'launcher_terminal.json').read_text())
+        require(launcher['exit_code']==0 and launcher['slurm_job_id']==item['slurm_task_job_id'], 'Parent launcher unsuccessful')
+        receipt=folder/'run/completed.json'
+        require(sha(receipt)==item['completed_sha256'], 'Parent completion bytes drift')
+        result=json.loads(receipt.read_text())
+        require(result['status']=='selected_numerically_verified' and result['arm']==arm and result['chain']==chain, 'Parent numerical gate drift')
+        require(result['repeat']['status']=='exact_full_ge_repeat_passed' and len(result['repeat']['standard_plot_hashes'])==17, 'Parent native repeat drift')
+        require(result['selected_postcheck']['status']=='passed' and len(result['target_fit'])==14 and len(result['parameters'])==31, 'Parent report drift')
+        require(result['target_fingerprint']==plan['target_fingerprint'] and result['weight_fingerprint']==plan['weight_fingerprint'], 'Parent target/weight drift')
+        require(result['selected']['parameters']==item['parameters'], 'Parent endpoint drift')
+        if arm==plan['continuation_arm']:own.append(item['parameters'])
+    require(own==plan['starts'], 'Continuation starts differ from own arm verified endpoints')
+    for row in plan['starts']:
+        require(set(row)==set(plan['bounds']), 'Start coordinate drift')
+        require(all(math.isfinite(v) and lo<=v<=hi for k,v in row.items() for lo,hi in [plan['bounds'][k]]), 'Start outside bounds')
+    return plan,anchor

@@ -1,0 +1,41 @@
+{
+  "status": "conditionally_authorized_controller_queued",
+  "controller_job_id": "19136605",
+  "parent_array_job_id": "19127370",
+  "dependency": "afterok:19127370",
+  "reviewed_stage_archive_sha256": "7652f0eeb17563de5f1a70c525ce31a9299f573cb09a1451796f322d84e0109c",
+  "reviewed_inventory_sha256": "a3f82c0b40d64911ad1354e77c777553eb9e27260abfb4c8e88a55a323f9d6cc",
+  "reviewed_derived_driver_sha256": "7ced53b0beabcc660f8b48eab4cb0758670a1bcb16ba850cbc8c71bca1ce2633",
+  "derivative_diff_scope": [
+    "parent receipt and arm-specific plan gate",
+    "explicit continuation-arm match",
+    "internal clock ceiling 21600 to 43200 seconds and corresponding metadata"
+  ],
+  "unchanged_numerical_contract": [
+    "full native GE evaluator",
+    "ten free coordinates and bounds",
+    "target and weight fingerprints",
+    "500 objective calls per chain",
+    "32 lifecycle solves per GE",
+    "fresh selected-point verification",
+    "exact native repeat",
+    "14 target rows",
+    "31 parameter rows",
+    "17 standard diagnostic plots"
+  ],
+  "independent_review": "read_only_review_passed_after_fixes",
+  "local_and_remote_validation": "validation_receipt.json",
+  "conditional_release": [
+    "all ten parent tasks successful and selected numerically verified",
+    "both arm native two-call optimizer smokes and exact repeats pass",
+    "storage and 10:00 New York budget gates pass"
+  ],
+  "native_continuation_checks": "pending",
+  "production_job_id": null,
+  "hard_stop_epoch": 1791122400,
+  "hard_stop_local": "2026-10-04T10:00:00-04:00",
+  "native_reserve_seconds": 1800,
+  "max_concurrent_production_cores": 10,
+  "no_auto_retry": true,
+  "no_scientific_adoption": true
+}

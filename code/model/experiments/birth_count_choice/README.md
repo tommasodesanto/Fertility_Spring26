@@ -173,6 +173,17 @@ restriction. See `cluster_calibrate.py` and its staged driver plan for budgets,
 matched starts and launch receipts. The fixed-parameter pair and matched search
 are different exercises.
 
+An [isolated overnight continuation](../../../cluster/estate_birth_calibration/continuation/README.md)
+is queued as controller job **19136605**, dependent on successful completion of
+parent array **19127370**. It adds no economic or target change. If all ten
+parent endpoints pass fresh native verification, each chain starts a new
+optimizer simplex at its own verified endpoint. Two fresh native smoke loops
+must pass before conditional production release. The ten-task maximum remains
+ten cores, with 500 calls per chain, a 1,800-second native reserve, and a hard
+October 4 10:00 New York stop. The continuation has no production job ID or
+verified results yet; neither its estimates nor the earlier experimental
+Estate-A estimates are author adopted.
+
 Four descriptive engine arrays—`attempt_hazard_by_age`,
 `first_birth_hazard_by_age`, `fert_by_age`, and
 `first_birth_age_distribution`—use pre-birth exposure rather than the

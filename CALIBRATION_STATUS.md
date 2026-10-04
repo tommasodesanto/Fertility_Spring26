@@ -134,6 +134,22 @@ and [release review](output/model/experiments/birth_count_choice/estate_a_calibr
 This launch is experimental; it does not adopt a new baseline or certify
 optimization convergence.
 
+**Overnight Estate-A continuation queued October 3, 23:34 New York.**
+Controller **19136605** is pending `afterok:19127370`; the original ten-task
+array remains running. The separate [continuation stage](code/cluster/estate_birth_calibration/continuation/README.md)
+and [submission receipt](output/model/experiments/birth_count_choice/estate_a_continuation_20261004_v1/deployment/controller_submission.json)
+pin the same economic inputs, ten free-parameter bounds, target and weight
+fingerprints, and numerical gates. If every parent task exits successfully with
+a fresh native exact repeat, each new chain will begin from its **own** verified
+endpoint with a fresh optimizer simplex. The one-core controller first runs two
+native optimizer calls and fresh selected-point verification in each arm; only
+if both pass does it release up to ten one-core production tasks. Search retains
+the 500-call cap per task, reserves 1,800 seconds for native verification and
+stops by October 4 **10:00 New York** (epoch `1791122400`). The production job
+ID is not yet assigned. All parent-final and continuation-native gates remain
+pending; this is an experimental search, not an adopted calibration or exact
+optimizer-state resume. No failed chain will be restarted automatically.
+
 The hourly heartbeat **Monitor matched estate and birth calibrations**
 (automation `finish-and-monitor-soft-timing-calibration`) in chat
 **Compare interest timing and credit** (`01a0ff53-5843-73a2-aaf3-0e1f1313e91f`)
