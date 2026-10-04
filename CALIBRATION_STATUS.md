@@ -139,8 +139,8 @@ and [release review](output/model/experiments/birth_count_choice/estate_a_calibr
 This launch is experimental; it does not adopt a new baseline or certify
 optimization convergence.
 
-**Estate-A recovery submitted October 4 at 01:15 New York; Slurm array
-19141024 is pending priority as of submission.** The failed-parent-dependent
+**Estate-A recovery submitted October 4 at 01:15 New York; all 15 tasks in Slurm
+array 19141024 were running by 01:20, with 15/15 pinned start contracts written.** The failed-parent-dependent
 controllers **19136605** and **19139361** were canceled; their proposed native
 continuations never ran. The isolated [recovery stage](code/cluster/estate_birth_calibration/recovery/README.md)
 starts five binary and ten count-three chains from the ten *provisional* saved
