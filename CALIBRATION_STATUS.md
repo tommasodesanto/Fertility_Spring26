@@ -813,7 +813,7 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   **Current transition direction, verified October 4 at 11:48 New York:** the
+   **Current transition direction, verified October 4 at 12:08 New York:** the
    author requested preservation of the one-shock experiment and estimation of
    two unanticipated permanent preference changes, in 2007 and 2015. Fit the
    2012–2015 fertility target **1.861** and retain the 2020–2023 target **1.64575**;
@@ -825,8 +825,11 @@ manuscript wording or certify a new paper calibration.
    estate rules, fixed-H0 housing and payroll-tax/pension closure stay unchanged.
    This is an experimental extension, not adoption of a new baseline. See the
    [two-shock contract](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/README.md).
-   Its implementation and exact-loop verification are pending; no new native
-   run has launched.
+   Its reviewed isolated implementation passed 14 focused tests and a zero-call
+   native constructor. The exact-loop smoke launched at 12:08:31 New York,
+   manager **36070**, worker **36072**, one core/24 GiB/one hour. Empirical
+   two-shock estimation is not released until the smoke actually passes.
+   [Current run and launch receipts](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/README.md).
 
    The one-shock scalar fit and fresh final replay **completed numerically** at
    \(\psi_{child}=0.11999694638724082\), with final fertility **1.6431340251170146**,
@@ -849,7 +852,7 @@ manuscript wording or certify a new paper calibration.
    [transition README and receipts](output/model/transition_readiness_v1/current_baseline_20261003/README.md).
    Separate fingerprint-checked collections accepted zero searches: v6 rejected
    12, v7 rejected 11, v9 rejected one. Initial-path rejection does not establish
-   equilibrium infeasibility. The two-shock work will use an isolated source
+   equilibrium infeasibility. The two-shock work uses an authenticated isolated source
    package; unrelated calibration changes are not adopted or modified. The
    hard-versus-soft economic choice remains separate from this experiment.
 

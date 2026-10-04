@@ -1,0 +1,27 @@
+{
+  "entrypoints_sha256": {
+    "deploy.py": "7ac8c9016926b5cca5c5459723c0b20748f6fe0516284b4f636c98c202f306cf",
+    "launch_torch.sh": "4343c6ae9198f224ea4b35c125e252753ce4aaa358e2b127794f3e3be2b9f8b2",
+    "panel_launch_torch_v7.sh": "7ddf734d573ade6b982f2650d5a96c0c6b4fb75ead5a6880fbc16ddabb3d4ca7"
+  },
+  "extra_sources": [],
+  "model_solves": 0,
+  "native_calls": 0,
+  "plan_sources": {
+    "base_fit_plan.json": "066251fdf23775b3488c76de9a81ddfa2d0551f81c18f49f47c96e2ec01c6880",
+    "base_smoke_plan.json": "ea74bcce4ce4f2cf7bc984a318033a26c721d0a4a10c75132fb552438269990e"
+  },
+  "schema": "two_shock_frozen_source_package_v1",
+  "source_authentication": "every file and entrypoint checked against immutable deployment_v9 inventory before physical copy; destination rehashed after copy",
+  "source_bytes": 241947327,
+  "source_file_count": 709,
+  "source_inventory_sha256": "15cc5f6036d57b985ea2ea9098f015dd527d2ce11ec94bd458a49913f017d977",
+  "stage_receipt_sha256": "ea075527e527e9ebfc7fa93c1cdf72823ddbc65961e708e86ef3dcedc88ce7f5",
+  "zero_solve_check": {
+    "failure": "Frozen source expects output/model/publication_refactor_20260929/local_export_v1/inputs and output/model/fertility_identification_20260928/fixed_reference_manifest.json; these auxiliary inputs are absent from the authenticated v9 package.",
+    "model_solves_observed": 0,
+    "native_calls_observed": 0,
+    "plan_preflight": "passed for base_fit_plan.json and base_smoke_plan.json",
+    "runtime_constructor": "blocked before construction completed"
+  }
+}

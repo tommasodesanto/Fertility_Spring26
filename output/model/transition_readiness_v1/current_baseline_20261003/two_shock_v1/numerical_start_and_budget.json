@@ -1,0 +1,51 @@
+{
+  "schema": "two_shock_numerical_start_v1",
+  "stage1": {
+    "psi_guess": 0.14736308634876963,
+    "formula": "linear secant through two completed midpoint measurements",
+    "target": 1.861,
+    "points": [
+      {
+        "psi": 0.14475858193493155,
+        "midpoint": 1.840502324504995,
+        "source": {
+          "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/worker_5/run/candidate_0004/complete.json",
+          "sha256": "8bf5de3defaf535282497afe897632edeb55c68c8e3166192fdd8450c9e291b8"
+        }
+      },
+      {
+        "psi": 0.15091852159173713,
+        "midpoint": 1.8889815835468124,
+        "source": {
+          "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/worker_7/run/candidate_0004/complete.json",
+          "sha256": "e6c8ce171fae5de6e777b6052730b6b6bd8b7f618d949b285cc6f0d01094517f"
+        }
+      }
+    ]
+  },
+  "stage2": {
+    "psi_guess": 0.12,
+    "basis": "numerical guess close to the retained one-shock fit; the 2015 inherited state will be new"
+  },
+  "native_measurements_reused": false,
+  "optimizer_state_reused": false,
+  "purpose": "initial preference guesses only; both fits require new native roots, targets and final replay",
+  "rough_size": {
+    "horizons_per_candidate": [
+      24,
+      32
+    ],
+    "max_scalar_evaluations_per_stage": 12,
+    "max_stages": 2,
+    "shared_policy_call_cap": 20000,
+    "internal_wall_seconds": 21480,
+    "external_wall_seconds": 21600,
+    "one_shock_observed_seconds": 11295.751919500006,
+    "one_shock_observed_native_calls": 2624,
+    "two_stage_wall_estimate_hours": [
+      5,
+      7
+    ],
+    "disclosure": "Twice the observed one-shock fit is about 6.3 hours; the six-hour hard cap may bind. Native smoke will measure the new loop before release; no budget extension is implicit."
+  }
+}

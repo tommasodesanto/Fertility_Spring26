@@ -1,0 +1,31 @@
+{
+  "constructor": "blocked",
+  "destination_for_future_authenticated_closure": "output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/frozen/source",
+  "failure": "CurrentEstateARuntime.from_handoff reached the frozen observer authenticator, then its setup verified code/model/tools/e5f_exact_policy_cache.py against the original source contract and found the current checkout file differed. Continuing would use working-tree source or require staging a larger authenticated source closure; stopped here.",
+  "model_solves_observed": 0,
+  "native_calls_observed": 0,
+  "plan_preflight": {
+    "base_fit_plan.json": "passed",
+    "base_smoke_plan.json": "passed"
+  },
+  "provenance": {
+    "missing_verified_source": "code/model/tools/e5f_exact_policy_cache.py",
+    "nested_source_manifest": {
+      "file_count": 1241,
+      "path": "output/model/overnight_calibration_20260928/contract_v1/source_manifest.json",
+      "sha256": "07d84336a3112b251afe505908113d9c00585b91c34bd50f0dee108435db496d",
+      "source_contract_pin_in_reference_manifest": "c83aaff1a90b1ba5bb0919151840e745e6816cb0a3a023ce746e750f77226c5d"
+    },
+    "observer_entrypoint": {
+      "authenticator": "frozen v9 small_credit_replication_v1/arms/indexed/driver.py AUTH_SHA",
+      "path": "output/model/fixed_reference_economics_20260928/sources/fixed_price_v1/run_fixed_price.py",
+      "sha256": "96d6923a252f57bc4d8c44fd6479b13f48ba217d74edf8ef629d120428b03b44"
+    },
+    "reference_manifest": {
+      "authenticator": "frozen v9 code/model/refactor_lab/inputs.py MANIFEST_SHA256",
+      "path": "output/model/fertility_identification_20260928/fixed_reference_manifest.json",
+      "sha256": "147f9e2cb20f66350f1ceaa16cb41f822041ec869676ef5d5b9d04f16e4190d4"
+    }
+  },
+  "schema": "two_shock_zero_solve_constructor_check_v1"
+}
