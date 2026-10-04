@@ -14,7 +14,7 @@ For an independent copy to share, see the [portable review bundle](../../output/
 | [`parameters/toy_params.py`](parameters/toy_params.py) | **Your editable experiment:** change beta, financing, borrowing limits, or other supported inputs. |
 | [`run_model.py`](run_model.py) | **The file you run** to compute a complete steady state. Its `PARAMETER_FILE` line selects best or toy. |
 | [`plot_model_policies.py`](plot_model_policies.py) | Plot household decisions across wealth, age, and family states. Edit this file to customize policy figures. |
-| [`plot_model_aggregates.py`](plot_model_aggregates.py) | Plot population averages and lifecycle profiles. |
+| [`plot_model_aggregates.py`](plot_model_aggregates.py) | Plot population averages and lifecycle profiles, plus three pages comparing fertility, housing, earnings and wealth with data. |
 | [`tools/start_model_explorer.command`](tools/start_model_explorer.command) | Start the browser explorer for saved results. It does not solve the model. |
 | [`tools/start_model_playground.command`](tools/start_model_playground.command) | Open a Python console for quick experiments at a fixed price. This does not compute a complete equilibrium. |
 
@@ -41,6 +41,8 @@ Each contains `SUMMARY.md`, full target and parameter tables, and
 these saved results without another solve. Parameter files isolate inputs and
 outputs; changing the shared solver equations requires a separate checkout for
 code isolation.
+
+The aggregate plotter also saves `aggregate_plots/model_data_assessment/model_data_assessment.pdf` in the selected case. Run the same plotter command to regenerate it; it reads the saved solution and local empirical data.
 
 ## Calibration versus the steady-state solver
 

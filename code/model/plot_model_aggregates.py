@@ -177,7 +177,12 @@ def main(parameter_file=None) -> Path:
     else:
         for figure in figures:
             plt.close(figure)
+    # This only reads the immutable saved case; it cannot initialize reporting or
+    # invoke a solver.  The assessment is generated from this same saved case.
+    from model_data_assessment import prepare_assessment
+    assessment_directory = prepare_assessment(result, Path(run_directory))
     print(f"Wrote 7 plots and aggregate tables to {output_directory}")
+    print(f"Model-data assessment: {assessment_directory}")
     return output_directory
 
 
