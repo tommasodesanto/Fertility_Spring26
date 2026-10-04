@@ -785,15 +785,16 @@ manuscript wording or certify a new paper calibration.
    records inventory SHA-256
    `5f1ee713bd1c5ab62d2a1776667f6191d61e69794cfe9a1fd22e6a6841397e92`;
    zero-solve preflight passed with exit zero and native/plan/config pins are
-   unchanged. Eight new and three retained cluster tasks remain below the
+   unchanged. Five new and three retained cluster tasks remain below the
    48-node cap. SSH authentication is restored; bounded keepalive PID 31864
    lasts at most 21,700 seconds under
    [its receipt](output/model/transition_readiness_v1/current_baseline_20261003/deployment_v7/ssh_keepalive.json).
    Local caffeinate PID 28708 supports overnight execution.
    [V7 plans](output/model/transition_readiness_v1/current_baseline_20261003/plans_v7/)
-   pin this execution. By about 02:20 New York, v7 task 11 had also failed
-   on the same read-only diagnostic-output path; the other eight remained
-   active. A four-line output-routing patch is prepared and mock-tested,
+   pin this execution. By about 02:30 New York, v7 tasks 0, 1 and 3 had
+   failed initial trial feasibility, and task 11 had failed on diagnostic
+   output routing. V7 tasks 4, 6, 8, 9 and 10 remain active; rejected initial
+   trials do not establish equilibrium infeasibility. A four-line output-routing patch is prepared and mock-tested,
    but has not changed any running source. Both local 24-date roots
    converged with exact replay (zero reproduction gap); the 32-date checks
    are running. No fertility fit is accepted yet. Live receipts and fit outcomes are in
