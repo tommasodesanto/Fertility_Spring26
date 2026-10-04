@@ -1,0 +1,77 @@
+{
+  "schema": "two_shock_full_horizon_negative_probe_review_v1",
+  "reviewed_epoch": 1791137684.738925,
+  "candidate_receipt": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/smoke_job/run/stage1/candidate_0002/complete.json",
+    "sha256": "cb8f4a425b0bb70758c45351d82954af923877c5070d494d84f55102c913a43d"
+  },
+  "psi": 0.1771404297441265,
+  "certified": true,
+  "horizon_comparison": {
+    "classification": "Strict finite diagnostic horizon comparison; terminal gates remain separate",
+    "early_macro_periods": 5,
+    "early_macro_years": [
+      2007,
+      2011,
+      2015,
+      2019,
+      2023
+    ],
+    "fertility_absolute_gaps": [
+      1.4289326313310369e-06,
+      3.37761863367092e-07,
+      1.2750823508156373e-08,
+      2.322963235101838e-07
+    ],
+    "fertility_tolerance": 0.001,
+    "fertility_windows": 4,
+    "macro_tolerance": 0.001,
+    "passed": true,
+    "relative_gaps": {
+      "adult_population": 2.1007462749531004e-08,
+      "asset_price": 2.6557029447316026e-06,
+      "birth_children": 7.428389351625943e-07,
+      "housing_demand": 7.758693087571892e-07,
+      "pension_period_units": 3.3046589548222846e-07,
+      "renter_price": 2.734041709548048e-06
+    },
+    "terminal_passes": [
+      false,
+      false
+    ]
+  },
+  "roots": [
+    {
+      "horizon": 24,
+      "evaluations": 7,
+      "elapsed_seconds": 1191.0371437910362,
+      "replay_gap": 0.0,
+      "root": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/smoke_job/run/stage1/candidate_0002/horizon_024/root.json",
+        "sha256": "657d413daf9b123b5a889c7fb489a7c65008c453b57022fdce8fae0d52297d91"
+      }
+    },
+    {
+      "horizon": 32,
+      "evaluations": 8,
+      "elapsed_seconds": 1855.6832926250063,
+      "replay_gap": 0.0,
+      "root": {
+        "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/smoke_job/run/stage1/candidate_0002/horizon_032/root.json",
+        "sha256": "73a4e1ea16399eef03b2122e71b05e09362555012f587eb2ac8a447f49efad00"
+      }
+    }
+  ],
+  "evidence_pins_verified": 20,
+  "checkpoint": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/attempt3/smoke_job/run/stage1/candidate_0002/state_2023_checkpoint/checkpoint_receipt.json",
+    "sha256": "24c6c43e7d695cae2f7a02b64cd88e783b7b2eb225a6ee49b0a1b5f9a4a90549"
+  },
+  "terminal_passes": [
+    false,
+    false
+  ],
+  "classification": "Synthetic validation probe passed the original full-horizon and native gates. Not a completed two-stage smoke or empirical fit.",
+  "full_smoke_passed": false,
+  "empirical_fit_released": false
+}
