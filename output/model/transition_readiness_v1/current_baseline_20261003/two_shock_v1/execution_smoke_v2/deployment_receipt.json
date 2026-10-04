@@ -1,0 +1,56 @@
+{
+  "verified_epoch": 1791144192.397436,
+  "inventory_sha256": "13d62072f50af06718e25d7cc43bce70b33c9fa9b73597e22ceb160282a683a7",
+  "remote_inventory_sha256": "13d62072f50af06718e25d7cc43bce70b33c9fa9b73597e22ceb160282a683a7",
+  "transfer_exit_code": 0,
+  "remote_root": "/scratch/td2248/projects/current_estate_two_shock_20261004_v2",
+  "implementation_commit": "694b2bfe",
+  "preflight": {
+    "name": "preflight_v1",
+    "status": "failed_before_native_solves",
+    "exit_code": 1,
+    "native_calls": 0,
+    "classification": "legacy_module_not_discoverable_despite_authenticated_overlay_source",
+    "missing_module": "run_e5f_due_stayer_matched_check",
+    "host_verification": {
+      "files": 3363,
+      "model_solves": 0,
+      "native_calls": 0,
+      "scientific_validation": false,
+      "status": "PASS_ZERO_SOLVES_PACKAGE"
+    },
+    "container_verification": {
+      "files": 3363,
+      "model_solves": 0,
+      "native_calls": 0,
+      "scientific_validation": false,
+      "status": "PASS_ZERO_SOLVES_PACKAGE"
+    },
+    "driver_preflight": {
+      "fingerprints": {
+        "contract": "d189d469c7924d12a4cd472ae51848803169530b0750253eb26bb536f1da66f2",
+        "controls": "be98a2d4d3eb4f27dd0db58d782f7e031538e8c3617d54e0683be854e9998d45",
+        "empirical_controls": "386d479e8da0c68fece9bfaa3f449c0a7832c757d9ae716f30e736afe7368e4e",
+        "smoke_controls": "0cb22c9274c60706a1889f54cb7cea6584905aacb8c90bf2d3eb5c051535436a",
+        "source": "aa7707e20bd7e08c582481909ab9c055b1b99486393889f5c20ffcb7261a2865"
+      },
+      "horizons": [
+        6
+      ],
+      "native_calls": 0,
+      "policy_call_stop_cap": 400,
+      "production_ready": false,
+      "schema": "estate_a_two_unanticipated_psi_v1",
+      "scientific_validation": false,
+      "status": "PASS",
+      "total_seconds": 1680
+    },
+    "evidence": {
+      "results/preflight_preflight_v1/native_constructor.log": "df6c0f0e37387540b0889b58c299e4419811e907fc17aa6d8a95666b53d735f2",
+      "results/preflight_preflight_v1/launcher_terminal.json": "1c4d8f18caa3744d360b24d32d5f41d1f1e9fb4011cdc4356916ed97e3ce5f2d"
+    },
+    "next_action": "Materialize missing original overlay sources in fresh canonical import tree, preserving existing authenticated v9/runtime inputs. No live package edits or unchanged retry."
+  },
+  "smoke_launched": false,
+  "empirical_fit_launched": false
+}

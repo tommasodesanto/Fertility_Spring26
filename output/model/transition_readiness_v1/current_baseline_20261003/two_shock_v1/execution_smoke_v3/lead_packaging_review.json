@@ -1,0 +1,29 @@
+{
+  "verified_epoch": 1791144391.985861,
+  "status": "local_packaging_review_passed_remote_constructor_pending",
+  "inventory_sha256": "29e33841c54f11d39066dacc605cdf04912f5a886086020a61e38a78f992c71a",
+  "builder_sha256": "a6a79f7cce1e04f81a2a3790dbd01901804054c59fb1867ceba13cfa5bb6d035",
+  "package_files": 4599,
+  "packaging_tests": {
+    "passed": 19,
+    "failed": 0
+  },
+  "namespace_counts": {
+    "existing_different_overlay_precedence": 0,
+    "existing_identical": 6,
+    "materialized_missing": 1235
+  },
+  "unchanged_scientific_sources": {
+    "code/model/experiments/birth_count_choice/two_shock.py": "20fdf029c153336e4bafae59db36826aae2d33b967ef57e4bc12d3d1993ff461",
+    "code/model/experiments/birth_count_choice/two_shock_runtime.py": "b6e3bc2ddb7e2e5717e5db8f0925ec0729b679fce0f9c80b854567a3f07739e3",
+    "code/cluster/estate_birth_transition/two_shock_source_overlay.py": "ad4d8407b8a192f21a39c28c916f5ca36b565733ab5c85e6d31682d540d23ecd"
+  },
+  "manifest_comparison": {
+    "both_modes_non_path_fields_unchanged": 26,
+    "target_contract_hashes_and_fields_unchanged": true
+  },
+  "failure_addressed": "v2 missing physical original module entries despite exact overlay bytes",
+  "lead_review": "No original byte overwritten; v9, reference inputs, wrapper and helper hashes retained. Real helper keeps original read-only get_code precedence. Targeted discovery regression and real snapshot discovery checked without imports/solves. No model/numerical changes.",
+  "smoke_launched": false,
+  "empirical_fit_launched": false
+}

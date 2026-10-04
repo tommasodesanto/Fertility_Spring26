@@ -845,7 +845,7 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   **Current transition direction, verified October 4 at 15:52 New York:** the
+   **Current transition direction, verified October 4 at 16:07 New York:** the
    author requested preservation of the one-shock experiment and estimation of
    two unanticipated permanent preference changes, in 2007 and 2015. Fit the
    2012–2015 fertility target **1.861** and retain the 2020–2023 target **1.64575**;
@@ -872,11 +872,13 @@ manuscript wording or certify a new paper calibration.
    kill; worker 43649 and caffeinate 43648 are also absent. Four completed
    candidates, frozen sources and all receipts are preserved. This is a workflow
    replacement, not a numerical failure. The small execution-smoke implementation
-   passes 47 focused checks. The Torch package passed host/container inventory
+   passes 50 focused checks. The Torch package passed host/container inventory
    and driver preflight; its zero-call constructor stopped on a missing nested
-   authenticated reference contract. The repair passes 16 packaging tests; a fresh
-   3,363-file package is transferring, with remote constructor verification pending.
-   No new Slurm smoke or empirical two-shock fit has launched. The original
+   authenticated reference contract. V2 repaired that input graph but then found a
+   missing physical import entry for an existing authenticated overlay source.
+   V3 materializes exact missing filenames without overwriting sources and passes
+   19 packaging tests. It is transferring to Torch; the native constructor remains
+   unverified. No new Slurm smoke or empirical two-shock fit has launched. The original
    empirical 24/32 roots, accounting, replay,
    horizon gates, 0.005 fitted-gap tolerance and six-hour budget remain unchanged.
    [Current run and launch receipts](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/README.md).

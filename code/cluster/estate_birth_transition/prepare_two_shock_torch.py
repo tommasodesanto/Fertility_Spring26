@@ -179,6 +179,55 @@ def authenticated_reference_sources(repo, frozen, overlay, original_inventory, o
     return files,provenance,chosen
 
 
+def materialize_overlay_sources(source_root, snapshot_root, files):
+    """Make original filenames discoverable without replacing existing bytes.
+
+    The installed read-only overlay remains authoritative for mapped reads and
+    SourceFileLoader.get_code. Physical files only supply the missing filesystem
+    entries needed by Python's module finder and source-presence checks.
+    """
+    source=Path(source_root);snapshot=Path(snapshot_root)
+    authenticate_files(snapshot,files)
+    records={}
+    for rel,digest in sorted(files.items()):
+        path=source/safe_rel(rel)
+        if path.exists():
+            require(path.is_file() and not path.is_symlink(),'Overlay discovery path is not an ordinary file: '+rel)
+            physical=sha(path)
+            classification='existing_identical' if physical==digest else 'existing_different_overlay_precedence'
+        else:
+            path.parent.mkdir(parents=True,exist_ok=True)
+            # Exclusive creation prevents a concurrent addition from being
+            # overwritten between the presence check and the physical copy.
+            with path.open('xb') as output, (snapshot/rel).open('rb') as input_stream:
+                shutil.copyfileobj(input_stream,output,1<<20)
+            path.chmod(0o444);physical=sha(path)
+            require(physical==digest,'Overlay discovery copy changed: '+rel)
+            classification='materialized_missing'
+        records[rel]=dict(classification=classification,physical_sha256=physical,overlay_sha256=digest,
+            read_and_loader_precedence='unchanged exact read-only overlay')
+    return dict(schema='exact_overlay_discovery_materialization_v1',files=records,
+        counts={name:sum(item['classification']==name for item in records.values()) for name in
+          ('materialized_missing','existing_identical','existing_different_overlay_precedence')},
+        existing_files_overwritten=0)
+
+
+def verify_overlay_materialization(source, files, receipt):
+    require(receipt.get('schema')=='exact_overlay_discovery_materialization_v1' and
+        receipt.get('existing_files_overwritten')==0,'Overlay discovery provenance differs')
+    require(set(receipt['files'])==set(files),'Overlay discovery filename set differs')
+    for rel,digest in files.items():
+        record=receipt['files'][rel];classification=record['classification']
+        require(classification in ('materialized_missing','existing_identical','existing_different_overlay_precedence'),'Unknown overlay namespace priority')
+        require(record['overlay_sha256']==digest and sha(Path(source)/rel)==record['physical_sha256'],'Overlay discovery physical/source pin differs: '+rel)
+        require(classification=='existing_different_overlay_precedence' or record['physical_sha256']==digest,'Overlay discovery bytes differ: '+rel)
+        if classification=='existing_different_overlay_precedence':require(record['physical_sha256']!=digest,'Different-source precedence classified incorrectly')
+        require(not ((Path(source)/rel).stat().st_mode & 0o222),'Overlay discovery source is writable: '+rel)
+    expected={name:sum(item['classification']==name for item in receipt['files'].values()) for name in
+        ('materialized_missing','existing_identical','existing_different_overlay_precedence')}
+    require(receipt['counts']==expected,'Overlay discovery counts differ')
+
+
 def prepare_plans(destination, python):
     destination=Path(destination);source=destination/'frozen/source'
     # A fresh process imports the staged driver, so active concurrent edits can
@@ -235,6 +284,10 @@ def build(args):
     shutil.copyfile(review_manifest,dest/'provenance/reviewed_case_leaf_manifest.sha256')
     require(sha(dest/'provenance/reviewed_case_leaf_manifest.sha256')==REVIEW_MANIFEST_SHA,'Copied reviewed leaf authority changed')
     copy_exact(overlay_base/'files',dest/'frozen/source_overlay/files',manifest['files'])
+    discovery=materialize_overlay_sources(source,dest/'frozen/source_overlay/files',manifest['files'])
+    dump(dest/'provenance/overlay_discovery.json',discovery)
+    # Confirm every protected native/input/reviewed file retained its exact byte pin.
+    authenticate_files(source,{**original_pins,**additions,**reference_files})
     dump(dest/'frozen/source_overlay/overlay.json',newmeta)
     copy_exact(base/'deployment_v9',dest/'provenance',{'inventory.json':EXPECTED_INVENTORY})
     (dest/'provenance/inventory.json').rename(dest/'provenance/v9_inventory.json')
@@ -255,7 +308,7 @@ def build(args):
     files={str(p.relative_to(dest)):sha(p) for p in sorted(dest.rglob('*')) if p.is_file()}
     inventory=dict(schema=SCHEMA,local_root=str(dest),remote_root=str(remote),canonical_root=str(canonical),files=files,
         native_inventory_sha256=EXPECTED_INVENTORY,native_file_count=709,auxiliary_file_count=4,overlay_manifest_sha256=EXPECTED_MANIFEST,
-        overlay_file_count=1241,reference_input_count=len(reference_files),identity=inv['identity'],plans={m:pin(dest/'inputs'/f'{m}_manifest.json') for m in ('smoke','fit')},
+        overlay_file_count=1241,overlay_discovery_counts=discovery['counts'],reference_input_count=len(reference_files),identity=inv['identity'],plans={m:pin(dest/'inputs'/f'{m}_manifest.json') for m in ('smoke','fit')},
         resources=dict(cpus=1,numba_threads=1,blas_threads=1,memory_gib=24,maximum_wall_seconds=21600),
         no_model_solves=True,no_submission=True)
     dump(dest/'inventory.json',inventory)
@@ -276,6 +329,7 @@ def verify(stage):
     authenticate_files(stage/'frozen/source',EXPECTED_INPUTS)
     require(sha(stage/'frozen/source'/MANIFEST_REL)==EXPECTED_MANIFEST,'Original overlay manifest changed')
     authenticate_files(stage/'frozen/source_overlay/files',read(stage/'frozen/source'/MANIFEST_REL)['files'])
+    verify_overlay_materialization(stage/'frozen/source',read(stage/'frozen/source'/MANIFEST_REL)['files'],read(stage/'provenance/overlay_discovery.json'))
     require(sha(stage/'provenance/reviewed_case_leaf_manifest.sha256')==REVIEW_MANIFEST_SHA,'Reviewed case-leaf authority differs')
     reference_receipt=read(stage/'provenance/reference_inputs.json')
     reference_manifest=read(stage/'frozen/source'/REFERENCE_REL)

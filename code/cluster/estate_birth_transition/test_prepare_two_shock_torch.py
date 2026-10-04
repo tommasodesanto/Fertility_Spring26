@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import importlib.util
+import importlib.machinery
 import json
 from pathlib import Path
 import subprocess
@@ -181,6 +182,39 @@ class PackagingTests(unittest.TestCase):
             files,authority,chosen=p.authenticated_reference_sources(repo,frozen,overlay,{}, {'historical/exact.json':wanted})
             self.assertEqual(chosen['required.json'],overlay/'historical/exact.json')
             self.assertEqual(files['required.json'],wanted)
+    def test_overlay_materialization_preserves_priority_and_pins(self):
+        source=self.root/'source';snapshot=self.root/'snapshot'
+        files={name:self.put(snapshot/name,blob) for name,blob in
+          [('missing.py',b'missing overlay'),('same.py',b'same bytes'),('different.py',b'old overlay')]}
+        self.put(source/'same.py',b'same bytes');native=self.put(source/'different.py',b'protected native')
+        receipt=p.materialize_overlay_sources(source,snapshot,files)
+        self.assertEqual(receipt['counts'],dict(materialized_missing=1,existing_identical=1,existing_different_overlay_precedence=1))
+        self.assertEqual(p.sha(source/'different.py'),native)
+        self.assertEqual(p.sha(source/'missing.py'),files['missing.py'])
+        self.assertEqual(receipt['existing_files_overwritten'],0)
+        # Builder's final freeze makes retained inputs read-only as well.
+        for path in source.iterdir():path.chmod(0o444)
+        p.verify_overlay_materialization(source,files,receipt)
+        (source/'missing.py').chmod(0o644);(source/'missing.py').write_bytes(b'drift')
+        with self.assertRaisesRegex(ValueError,'physical/source pin differs'):
+            p.verify_overlay_materialization(source,files,receipt)
+    def test_overlay_materialization_enables_module_discovery_without_import(self):
+        source=self.root/'source';tools=source/'code/model/tools';tools.mkdir(parents=True)
+        snapshot=self.root/'snapshot';rel='code/model/tools/run_e5f_due_stayer_matched_check.py'
+        # If accidentally imported, this fixture deliberately fails. Finding its
+        # source path is the specific operation that failed in the real package.
+        digest=self.put(snapshot/rel,b'raise RuntimeError("must not import native code")\n')
+        self.assertIsNone(importlib.machinery.PathFinder.find_spec('run_e5f_due_stayer_matched_check',[str(tools)]))
+        receipt=p.materialize_overlay_sources(source,snapshot,{rel:digest})
+        spec=importlib.machinery.PathFinder.find_spec('run_e5f_due_stayer_matched_check',[str(tools)])
+        self.assertIsNotNone(spec);self.assertEqual(Path(spec.origin),tools/'run_e5f_due_stayer_matched_check.py')
+        self.assertEqual(receipt['counts']['materialized_missing'],1)
+        p.verify_overlay_materialization(source,{rel:digest},receipt)
+    def test_overlay_materialization_rejects_missing_snapshot(self):
+        source=self.root/'source';snapshot=self.root/'snapshot'
+        with self.assertRaisesRegex(ValueError,'Authenticated file mismatch'):
+            p.materialize_overlay_sources(source,snapshot,{'missing.py':'expected-sha'})
+        self.assertFalse(source.exists())
     def test_verify_rejects_uninventoried_control_drift(self):
         stage=self.root/'stage';control='inputs/fit_manifest.json'
         digest=self.put(stage/control,b'{}')
