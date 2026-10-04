@@ -5,9 +5,9 @@ import csv, hashlib, json, os, socket, subprocess, sys, tempfile, time, urllib.r
 OUT = Path(__file__).resolve().parent
 REPO = OUT.parents[2]
 ARCHIVE = OUT / 'Fertility_Model_Review_20261003.zip'
-PYTHON = REPO / 'output/model/publication_refactor_20260929/local_env_v1/venv313/bin/python'
+PYTHON = Path(os.environ.get('PORTABLE_TEST_PYTHON', str(REPO / 'output/model/publication_refactor_20260929/local_env_v1/venv313/bin/python')))
 REFERENCE = REPO / 'output/model/local_solution/cases/20261003T175652812716Z_b1c72f13'
-receipt = {'status': 'running', 'started_epoch': time.time(), 'archive_sha256': hashlib.sha256(ARCHIVE.read_bytes()).hexdigest()}
+receipt = {'status': 'running', 'started_epoch': time.time(), 'archive_sha256': hashlib.sha256(ARCHIVE.read_bytes()).hexdigest(), 'test_python': str(PYTHON)}
 
 def save():
     (OUT / 'verification.json').write_text(json.dumps(receipt, indent=2) + '\n')
@@ -57,7 +57,7 @@ print('PORTABLE_PROJECT_ACCESS_AUDIT_PASS', flush=True)
     env['MPLCONFIGDIR'] = str(temp/'matplotlib')
     env.pop('PYTHONPATH', None)
     def command(relative, *args):
-        return [str(PYTHON), str(wrapper), str(REPO), str(PYTHON.parent.parent), str(bundle), str(bundle/relative), *args]
+        return [str(PYTHON), str(wrapper), str(REPO), str(PYTHON.parent.parent.resolve()), str(bundle), str(bundle/relative), *args]
     def run(relative, log, *args, timeout=120):
         with (OUT/log).open('w') as stream:
             result = subprocess.run(command(relative, *args), cwd=bundle, env=env, stdout=stream, stderr=subprocess.STDOUT, timeout=timeout)

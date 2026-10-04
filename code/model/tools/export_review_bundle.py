@@ -162,6 +162,13 @@ def copy_nested_routing_closure() -> dict[str, str]:
     for name, expected in inventory["files"].items():
         retain(str(reference / "source" / name), expected)
     routing[digest(inventory_path)] = inventory_path.relative_to(ROOT).as_posix()
+    # Native setup reads the selected ancestry case before binding observers.
+    # Retain its raw receipts/tables/checkpoint rather than an executable search.
+    identification = json.loads((ROOT / "output/model/fertility_identification_20260928/contract_v1/contract.json").read_text())
+    case = Path(identification["reference_case"])
+    for name in ("receipt.json", "initial_state.pkl.gz", "target_fit.csv", "parameters.csv"):
+        source = case / name
+        retain(str(source), digest(source))
     tax = reference.parent / "paygo_tax_comparison_20260924/run_paygo_two_rate.py"
     retain(str(tax), lock["tax_driver_sha256"])
     return routing
@@ -255,12 +262,16 @@ import importlib.machinery
 OLD_ROOT = %r
 
 def localize(value, root):
+    if isinstance(value, str) and (value == str(root) or value.startswith(str(root) + "/")):
+        return value
     if value == OLD_ROOT:
         return str(root)
     if isinstance(value, str) and value.startswith(OLD_ROOT + "/"):
         return str(Path(root) / value.removeprefix(OLD_ROOT + "/"))
     if isinstance(value, list): return [localize(x, root) for x in value]
-    if isinstance(value, dict): return {k: localize(v, root) for k, v in value.items()}
+    if isinstance(value, dict):
+        return {k: v if k == "actual_serialized_parameters" else localize(v, root)
+                for k, v in value.items()}
     return value
 
 def install(frozen_module, root):
@@ -548,12 +559,127 @@ def build(*, replace=False) -> dict:
             "archive_bytes": ZIP.stat().st_size, "files": sum(1 for p in STAGE.rglob("*") if p.is_file())}
 
 
+def finalize_verified() -> dict:
+    """Publish verified documentation without rebuilding any executable bytes."""
+    receipt_path = OUT / "verification.json"
+    receipt = json.loads(receipt_path.read_text())
+    tested_sha = digest(ZIP)
+    if receipt.get("status") != "passed" or receipt.get("archive_sha256") != tested_sha:
+        raise RuntimeError("Finalization requires a passed receipt for this exact ZIP")
+    environment = json.loads((OUT / "test_environment.json").read_text())
+    if (environment.get("created_from_declared_requirements_only") is not True or
+            environment.get("requirements_sha256") != digest(STAGE / "requirements.txt") or
+            environment.get("python") != receipt.get("test_python")):
+        raise RuntimeError("Verified environment/requirements identity differs")
+    manifest_path = STAGE / "SOURCE_MANIFEST.sha256"
+    original_manifest = manifest_path.read_bytes()
+    rows = {}
+    for line in original_manifest.decode().splitlines():
+        expected, kind, relative = line.split("  ", 2)
+        if relative in rows: raise RuntimeError("Duplicate manifest path: " + relative)
+        rows[relative] = (expected, kind)
+    stage_files = {p.relative_to(STAGE).as_posix() for p in STAGE.rglob("*") if p.is_file()}
+    if stage_files != set(rows) | {"SOURCE_MANIFEST.sha256"}:
+        raise RuntimeError("Stage contains unmanifested or missing files")
+    for relative, (expected, _kind) in rows.items():
+        if digest(STAGE / relative) != expected:
+            raise RuntimeError("Stage differs from tested source manifest: " + relative)
+    with zipfile.ZipFile(ZIP) as archive:
+        names = [item.filename for item in archive.infolist()]
+        wanted = {STAGE.name + "/" + name for name in stage_files}
+        if len(names) != len(set(names)) or set(names) != wanted:
+            raise RuntimeError("ZIP file inventory differs from stage")
+        for relative in stage_files:
+            h = hashlib.sha256()
+            with archive.open(STAGE.name + "/" + relative) as stream:
+                for block in iter(lambda: stream.read(1 << 20), b""): h.update(block)
+            if h.hexdigest() != digest(STAGE / relative):
+                raise RuntimeError("ZIP bytes differ from stage: " + relative)
+    text = (STAGE / "README.md").read_text()
+    candidate = "**Review candidate:** code and cached-result inspection are included. A fresh\nequilibrium solve after extraction has not passed independent portability\nverification. Do not treat this package as a certified standalone reproduction."
+    verified = "**Verified current working baseline:** independent clean extraction passed cached\nplots, the explorer, and a fresh stationary equilibrium with exact agreement on\nall 14 target rows, 31 parameter rows, and stored arrays. Original-project file\naccess was blocked. See `VERIFICATION.json`. This is the post-interest, soft-credit\nchain-13 working baseline, not a certified paper calibration or global optimum."
+    if text.count(candidate) != 1:
+        raise RuntimeError("Unexpected candidate README; refusing finalization")
+    text = text.replace(candidate, verified)
+    text = text.replace(
+        "The bundle is intended to reproduce the local stationary workflow at the supplied\ninputs; the fresh-solve portability check remains incomplete. It\n",
+        "The bundle reproduces the tested stationary workflow at the supplied inputs. It\n")
+    start = text.index("On Windows, use ")
+    end = text.index("## Change a parameter", start)
+    text = text[:start] + "The fresh solve was tested on macOS with Python 3.13.15 using one core\nand an environment installed only from `requirements.txt`. Windows execution\nis untested; the implementation includes POSIX dependencies. Set\n`PYTHON=/path/to/python` before a script to use another interpreter.\n\n" + text[end:]
+    public = {key: receipt[key] for key in
+        ("status", "full_target_rows_exact", "full_parameter_rows_exact", "stored_arrays_exact",
+         "fresh_ge_original_project_access_blocked", "cached_reference_preserved",
+         "production_defaults_unchanged", "transition_not_included", "cached_plotters", "explorer",
+         "fresh_figures", "clean_dependency_environment_verified")
+        if key in receipt}
+    public.update(tested_archive_sha256=tested_sha, baseline="October 3, 2026 post-interest soft-credit chain 13",
+                  requirements_sha256=environment["requirements_sha256"],
+                  python="3.13.15", platform_tested="macOS", cores=1,
+                  environment="Installed only from requirements.txt", windows_execution="untested")
+    changed = ["README.md", "SOURCE_MANIFEST.sha256", "VERIFICATION.json"]
+    replacements = {"README.md": text.encode(),
+                    "VERIFICATION.json": (json.dumps(public, indent=2) + "\n").encode()}
+    updated = dict(rows)
+    for relative, data in replacements.items():
+        updated[relative] = (hashlib.sha256(data).hexdigest(), "generated verified bundle documentation")
+    replacements["SOURCE_MANIFEST.sha256"] = ("\n".join(
+        f"{expected}  {kind}  {relative}" for relative, (expected, kind) in sorted(updated.items())) + "\n").encode()
+    temporary = ZIP.with_name(ZIP.name + ".finalizing")
+    try:
+        with zipfile.ZipFile(ZIP) as source, zipfile.ZipFile(temporary, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=6) as dest:
+            for item in source.infolist():
+                relative = item.filename.removeprefix(STAGE.name + "/")
+                if relative in replacements:
+                    dest.writestr(item, replacements[relative])
+                else:
+                    with source.open(item) as incoming, dest.open(item, "w") as outgoing:
+                        shutil.copyfileobj(incoming, outgoing, 1 << 20)
+            dest.writestr(STAGE.name + "/VERIFICATION.json", replacements["VERIFICATION.json"])
+        # No input/source has been recopied. Assert the exact documentation delta.
+        with zipfile.ZipFile(ZIP) as before, zipfile.ZipFile(temporary) as after:
+            differences = []
+            for name in set(before.namelist()) | set(after.namelist()):
+                if name not in before.namelist() or name not in after.namelist():
+                    differences.append(name.removeprefix(STAGE.name + "/")); continue
+                if before.getinfo(name).CRC != after.getinfo(name).CRC or before.getinfo(name).file_size != after.getinfo(name).file_size:
+                    differences.append(name.removeprefix(STAGE.name + "/"))
+            if sorted(differences) != changed:
+                raise RuntimeError("Unexpected finalization delta: " + repr(differences))
+        with zipfile.ZipFile(temporary) as final_archive:
+            for relative, (expected, _kind) in updated.items():
+                h = hashlib.sha256()
+                with final_archive.open(STAGE.name + "/" + relative) as stream:
+                    for block in iter(lambda: stream.read(1 << 20), b""): h.update(block)
+                if h.hexdigest() != expected:
+                    raise RuntimeError("Final ZIP byte identity differs: " + relative)
+            if final_archive.read(STAGE.name + "/SOURCE_MANIFEST.sha256") != replacements["SOURCE_MANIFEST.sha256"]:
+                raise RuntimeError("Final ZIP manifest differs")
+        final_sha = digest(temporary)
+        for relative, data in replacements.items():
+            target = STAGE / relative
+            pending = target.with_name(target.name + ".finalizing")
+            pending.write_bytes(data); os.replace(pending, target)
+        os.replace(temporary, ZIP)
+        receipt.update(tested_archive_sha256=tested_sha, archive_sha256=final_sha,
+                       documentation_only_changed=changed)
+        pending_receipt = receipt_path.with_name(receipt_path.name + ".finalizing")
+        pending_receipt.write_text(json.dumps(receipt, indent=2) + "\n")
+        os.replace(pending_receipt, receipt_path)
+        return {"archive_sha256": final_sha, "tested_archive_sha256": tested_sha,
+                "documentation_only_changed": changed, "archive_bytes": ZIP.stat().st_size}
+    finally:
+        if temporary.exists(): temporary.unlink()
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--build", action="store_true", help="create the bundle")
     parser.add_argument("--replace", action="store_true", help="replace this exporter's incomplete stage only")
+    parser.add_argument("--finalize-verified", action="store_true", help="finalize documentation after exact-ZIP verification")
     args = parser.parse_args()
-    if not args.build: parser.error("pass --build")
-    print(json.dumps(build(replace=args.replace), indent=2))
+    if args.build == args.finalize_verified: parser.error("pass exactly one of --build or --finalize-verified")
+    if args.finalize_verified and args.replace: parser.error("--replace applies only to --build")
+    print(json.dumps(finalize_verified() if args.finalize_verified else build(replace=args.replace), indent=2))
 
 if __name__ == "__main__": main()

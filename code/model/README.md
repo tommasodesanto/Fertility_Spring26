@@ -4,6 +4,8 @@
 
 Your main folder is `code/model/`. The everyday workflow is:
 
+For an independent copy to share, see the [portable review bundle](../../output/model/review_bundle_20261003/README.md).
+
 **Choose parameters → solve the steady state → inspect saved results.**
 
 | File | What you use it for |

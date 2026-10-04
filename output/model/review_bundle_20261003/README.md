@@ -1,14 +1,18 @@
 # Portable stationary-model review bundle
 
-Status: review candidate, October 3, 2026. Cached inspection passed; fresh-solve
-portability is unverified. The ZIP is approximately 611 MB.
+Status: fresh-solve portability verified October 3, 2026, 23:14 New York.
+The ZIP is approximately 783 MB.
 No package has been sent to anyone.
 
-The author challenged the hour-long packaging effort. Stop expanding this audit:
-deliver the code and cached-inspection package with this explicit limitation.
-Earlier relocated fresh-run attempts failed during reporting initialization,
-before numerical solving. The final archive receives cached-inspection checks
-only; its rebuilt path adapter has not passed a complete fresh equilibrium.
+The author explicitly required completion after the earlier review-only package.
+A clean extraction now completes a fresh equilibrium using a newly created
+Python 3.13.15 environment with only the declared requirements. All original
+project reads were blocked. Every field in the 14-row target table and 31-row
+parameter table, and all 117 stored arrays, matches the canonical reference
+exactly. The fresh case generated 17 standard, eight policy and seven aggregate
+figures. Both cached plotters and all four explorer HTTP routes also passed.
+The complete verification took 54 seconds on this host; this is not a runtime
+guarantee for another machine. macOS was tested; other operating systems were not.
 
 ## Reference and scope
 
@@ -28,6 +32,7 @@ only; its rebuilt path adapter has not passed a complete fresh equilibrium.
 
 - [ZIP](Fertility_Model_Review_20261003.zip)
 - [Build receipt](lead_build.log)
+- [Finalization receipt](finalization.json): delivered ZIP identity; only verified documentation changed.
 - [Verification receipt](verification.json)
 - [Independent clean-extraction verifier](verify_portable.py)
 - [Exporter](../../../code/model/tools/export_review_bundle.py)
@@ -44,7 +49,11 @@ of the bundled cached example. An unsuccessful import is not a completed solve.
 Only the exported copy receives documented portability adaptations for historical
 paths, explorer assets and first-run cache publication. Frozen source bytes,
 target definitions, parameter values and scientific acceptance gates are retained.
-The failed first clean-extraction receipt is retained in `verification_attempt1/`.
+The failed first clean-extraction receipt is retained in `verification_attempt1/`;
+the final startup failure before completion is in `startup_failure_before_resume/`.
+Earlier ZIPs and receipts are superseded by the final archive and verification
+receipt linked above. Finalization changes documentation only and records both
+the tested archive hash and the delivered archive hash.
 
 Transition preparation remains paused. This packaging work does not launch,
 cancel or duplicate cluster calibrations.
