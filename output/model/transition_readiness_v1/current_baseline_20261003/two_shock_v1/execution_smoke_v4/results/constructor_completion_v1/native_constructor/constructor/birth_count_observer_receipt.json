@@ -1,0 +1,177 @@
+{
+  "frozen_sources_edited": false,
+  "authentication_before_adaptation": true,
+  "acceptance_tolerances_unchanged": true,
+  "adapters": [
+    {
+      "function": "evaluate_period",
+      "original_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_dynamic_population_transition.py",
+      "clone_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/constructor_completion_v1/native_constructor/constructor/birth_count_evaluate_period.py",
+      "original_sha256": "489f62481da76c3b926c493c82268bba1e59f155eba7b70a869ea50b2e476359",
+      "clone_sha256": "bef5870f7fd2e99fece4ed4198818b3aab10e6a98c20f93e582b8d962d496c6a",
+      "exact_replacements": [
+        {
+          "before": "            gated, policy.fert_probs, P, continuation\n",
+          "after": "            gated, policy.fert_probs, P, continuation,\n            birth_count_realized_probs=policy.birth_count_realized_probs,\n"
+        }
+      ]
+    },
+    {
+      "function": "reconstruct_stationary_pre_fertility",
+      "original_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_dynamic_population_transition.py",
+      "clone_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/constructor_completion_v1/native_constructor/constructor/birth_count_reconstruct_stationary_pre_fertility.py",
+      "original_sha256": "40b5880c27804d901e1f61086c2e7321c5ef367a0b8a6f54a84085f1d3f9dac0",
+      "clone_sha256": "55a26e9f048024d0140f06904d5f463e437fda901b565fe18a75b7459529ba7e",
+      "exact_replacements": [
+        {
+          "before": "            g_pre, policy.fert_probs, P, policy_continuation_birth_probs(policy, P)\n",
+          "after": "            g_pre, policy.fert_probs, P, policy_continuation_birth_probs(policy, P),\n            birth_count_realized_probs=policy.birth_count_realized_probs,\n"
+        }
+      ]
+    },
+    {
+      "function": "period_fertility_diagnostics",
+      "original_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_transition_calibration.py",
+      "clone_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/constructor_completion_v1/native_constructor/constructor/birth_count_period_fertility_diagnostics.py",
+      "original_sha256": "431fd532b086e8575f03009ae98b78c4d78ce184718d2ae503c77a91e290161b",
+      "clone_sha256": "d56e6734dbfb9e3433b0fb0fe2fdb26f823da9544758c54658b7b54f9a1fb5a4",
+      "exact_replacements": [
+        {
+          "before": "    for j in range(int(P.J)):\n        if not (int(P.A_f_start) <= j + 1 <= int(P.A_f_end)):\n            continue\n        pi_j = float(fecundity[j])\n        for zz in range(evaluation.g_pre.shape[4]):\n            childless = evaluation.g_pre[:, :, :, j, zz, 0, settled]\n            first_attempt = evaluation.policy.fert_probs[:, :, :, j, zz, 1]\n            flows[j, 0] += float(np.sum(pi_j * childless * first_attempt))\n            for parity in range(1, int(P.n_parity) - 1):\n                for child_state in range(parity + 1):\n                    pool = evaluation.g_pre[\n                        :, :, :, j, zz, parity, child_state\n                    ]\n                    attempt = continuation[\n                        :, :, :, j, zz, 1, parity - 1, child_state\n                    ]\n                    flows[j, parity] += float(np.sum(pi_j * pool * attempt))\n",
+          "after": "    flows, count_risk = _count_flows_and_risks(evaluation, P)\n"
+        },
+        {
+          "before": "        \"birth_flow_first\": flows[:, 0],\n",
+          "after": "        \"birth_order_risk\": count_risk,\n        \"birth_flow_first\": flows[:, 0],\n"
+        }
+      ]
+    },
+    {
+      "function": "observe_initial_fertility",
+      "original_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/calibration_code_integration_20260927_v2/source/code/model/tools/e5f_initial_fertility_observer.py",
+      "clone_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/constructor_completion_v1/native_constructor/constructor/birth_count_observe_initial_fertility.py",
+      "original_sha256": "a6bfa423c304cb2168a9f15116689738baf9a4fa9754a4ca5a43be85aff372d1",
+      "clone_sha256": "dd02991d8c317f8416c23022fa0ce5d78c7c1d430a8ff6046b0746d276823dfe",
+      "exact_replacements": [
+        {
+          "before": "            or np.any(flows > pre_parity[:, :3] + FLOW_ATOL)):",
+          "after": "            or np.any(flows > np.asarray(period[\"birth_order_risk\"]) + FLOW_ATOL)):"
+        },
+        {
+          "before": "\"one parity transition per cell, uniformly distributed within the four-year age interval\"",
+          "after": "\"count-menu pre/post stocks interpolated uniformly within the four-year age interval; ordered within-cell dates unavailable\""
+        }
+      ]
+    },
+    {
+      "function": "first_birth_housing_response",
+      "original_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_transition_calibration.py",
+      "clone_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/constructor_completion_v1/native_constructor/constructor/birth_count_first_birth_housing_response.py",
+      "original_sha256": "df6fb96d089605f000729a09a6478597135cfe299ace8654ae7acc3656ad49e7",
+      "clone_sha256": "8ec3dd48d7254b5cf8db313e53955350b06d70e2b5608fbe1f9e85ece87a6655",
+      "exact_replacements": [
+        {
+          "before": "            attempt = policy.fert_probs[:, :, :, j, zz, 1]\n            realized = float(fecundity[j]) * childless * attempt\n",
+          "after": "            origin = np.zeros(shape)\n            origin[:, :, :, zz, 0, settled] = childless\n            tagged = _count_transition(origin, policy.birth_count_realized_probs[:, :, :, j])[\"first_birth_tagged_post\"]\n            realized = np.sum(tagged, axis=(-2, -1))[:, :, :, zz]\n"
+        },
+        {
+          "before": "            birth_cohort[:, :, :, zz, 1, 1] = realized\n",
+          "after": "            birth_cohort = tagged\n"
+        },
+        {
+          "before": "    second birth inside the four-year window.\n",
+          "after": "    further fertility choice inside the four-year window; origin births retain their actual count mixture.\n"
+        }
+      ]
+    },
+    {
+      "function": "finish_dated_first_birth_housing_branch",
+      "original_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_transition_calibration.py",
+      "clone_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/constructor_completion_v1/native_constructor/constructor/birth_count_finish_dated_first_birth_housing_branch.py",
+      "original_sha256": "7fea26e88875a8212e5e54123855af7a322396170bae1782143a7eca65b00e6b",
+      "clone_sha256": "da1c7cf0b6b991f13fb50618971b29b37e36726884f9807094941dea3760630c",
+      "exact_replacements": [
+        {
+          "before": "            calendar.policy_continuation_birth_probs(evaluation.policy, P),\n        )\n        control_post = control_pre",
+          "after": "            calendar.policy_continuation_birth_probs(evaluation.policy, P),\n            birth_count_realized_probs=evaluation.policy.birth_count_realized_probs,\n        )\n        control_post = control_pre"
+        }
+      ]
+    },
+    {
+      "function": "standard_diagnostics",
+      "original_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_independent_numerical_audit.py",
+      "clone_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/constructor_completion_v1/native_constructor/constructor/birth_count_standard_diagnostics.py",
+      "original_sha256": "64d55fba06e9af3f811771c8a59dd7ce75bc57f09e91ce9feb43d4625511b58f",
+      "clone_sha256": "0ef09d69dd18942160db28d76e9e52c5088292342fb6a1930e89560ab04e8012",
+      "exact_replacements": [
+        {
+          "before": "    stats.fert2_probs = calendar.policy_continuation_birth_probs(p, P)\n",
+          "after": "    stats.fert2_probs = calendar.policy_continuation_birth_probs(p, P)\n    stats.birth_count_action_probs = p.birth_count_action_probs.copy()\n    stats.birth_count_realized_probs = p.birth_count_realized_probs.copy()\n    stats.birth_count_pre_distribution = e.g_pre.copy()\n"
+        }
+      ]
+    },
+    {
+      "function": "begin_dated_first_birth_housing_branch",
+      "original_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/code/model/tools/run_e5f_transition_calibration.py",
+      "clone_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/constructor_completion_v1/native_constructor/constructor/birth_count_begin_dated_first_birth_housing_branch.py",
+      "original_sha256": "71f13897657b7cef6e675d1e75fac966e8a851dc7692c4ac77b60346e4cbc9a6",
+      "clone_sha256": "d48c23a8d445ffcb59e3c0c651ffa888d9cf1b523e934fef04c4e5012774d56d",
+      "exact_replacements": [
+        {
+          "before": "                attempt = policy.fert_probs[:, :, :, j, zz, 1]\n                realized = float(fecundity[j]) * childless * attempt\n                treated[:, :, :, j, zz, 1, 1] = realized\n",
+          "after": "                origin = np.zeros_like(evaluation.g_pre[:, :, :, j])\n                origin[:, :, :, zz, 0, settled] = childless\n                tagged = _count_transition(origin, policy.birth_count_realized_probs[:, :, :, j])[\"first_birth_tagged_post\"]\n                realized = np.sum(tagged, axis=(-2, -1))[:, :, :, zz]\n                treated[:, :, :, j] += tagged\n"
+        }
+      ]
+    },
+    {
+      "function": "observe_recent_parent_flow",
+      "original_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/constructor_completion_v1/native_constructor/constructor/production_recent_parent_observer.py",
+      "clone_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/constructor_completion_v1/native_constructor/constructor/birth_count_observe_recent_parent_flow.py",
+      "original_sha256": "555b3edcaa011012a83651dcdfb53f9d6b431cd5e35913da29114bdcd3bce53e",
+      "clone_sha256": "77a8aeb223f7a581b0aaa1538c57fb13c08decc35af84570542e263a29359357",
+      "exact_replacements": [
+        {
+          "before": "        return transition.apply_sequential_fertility(mass, first, P, continuation)",
+          "after": "        return transition.apply_sequential_fertility(mass, first, P, continuation,\n            birth_count_realized_probs=policy.birth_count_realized_probs)"
+        },
+        {
+          "before": "    birth_post = empty_post * ((parity > 0) & (child_state == 1))\n",
+          "after": "    birth_post = empty_post * ((parity > 0) & (child_state > 0))\n    selected_households = float(np.sum(empty_pre * np.sum(policy.birth_count_realized_probs[..., 1:], axis=-1)))\n"
+        },
+        {
+          "before": "selected_birth_flow_error=abs(float(birth_post.sum()) - selected_births)",
+          "after": "selected_birth_flow_error=abs(float(birth_post.sum()) - selected_households)"
+        },
+        {
+          "before": "    weights = uniform_age_cell_overlap(P, 30., 56.)\n",
+          "after": "    first_post = _count_transition(pre * never, policy.birth_count_realized_probs)[\"first_birth_tagged_post\"]\n    former_post, _, _ = fertility(pre * former)\n    first_current = transport(first_post)\n    continuation_current = transport(former_post * ((parity > 0) & (child_state > 0)))\n    _check(_error(first_current + continuation_current, birth_current), \"origin-tag partition\")\n    weights = uniform_age_cell_overlap(P, 30., 56.)\n"
+        },
+        {
+          "before": "        first_birth=_group(birth_current, weights, parity == 1),\n        continuation_birth=_group(birth_current, weights, parity >= 2),\n",
+          "after": "        first_birth=_group(first_current, weights),\n        continuation_birth=_group(continuation_current, weights),\n"
+        },
+        {
+          "before": "\"supplied policy.fert_probs and owned policy.fert2_probs\"",
+          "after": "\"owned policy.birth_count_realized_probs; first/continuation groups tagged by origin\""
+        },
+        {
+          "before": "\"At most one explicit birth per four-year period; top-code representative does not scale household mass\"",
+          "after": "\"Up to three births per period; successful households counted once; first-birth families keep n=1/2/3 mixtures\""
+        }
+      ]
+    }
+  ],
+  "maintained_conventions": [
+    "post-interest transactions",
+    "soft credit",
+    "top-count correction",
+    "linear within-age-cell stock interpolation",
+    "unchanged empirical targets and weights"
+  ],
+  "revised_conventions": [
+    "owned Binomial count kernel",
+    "crossed-order flows",
+    "first-birth origin tags and actual destination mixture",
+    "birth-household weights counted once"
+  ]
+}

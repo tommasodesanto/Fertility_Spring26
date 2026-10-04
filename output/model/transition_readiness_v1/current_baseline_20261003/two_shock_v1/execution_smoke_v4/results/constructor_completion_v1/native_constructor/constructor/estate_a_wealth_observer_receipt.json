@@ -1,0 +1,21 @@
+{
+  "age_geometry_and_state_weights_unchanged": true,
+  "clone_function_sha256": "02e0649bf8c82e2a671118773c8ea67c9e9b43b572f628d587c2a4539f842f37",
+  "estate_formula": "bp+(1-psi)*price*chosen_house; positive-part death-weighted and annualized once; no extra R",
+  "exact_replacement": {
+    "after": "    _estate_a_aggregate_moments(model,\n",
+    "before": "    model.add_aggregate_wealth_bequest_flow_moments(\n"
+  },
+  "frozen_source_mutation": false,
+  "identity": "estate_a_postsaving_net_selling_cost_v1",
+  "living_wealth_and_earnings_unchanged": true,
+  "modified_statistics": [
+    "annual_bequest_flow",
+    "annual_bequest_flow_to_aggregate_wealth"
+  ],
+  "net_flow_primitive_source": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/frozen/source/code/model/experiments/birth_count_choice/model/engine/distribution.py",
+  "original_file_sha256": "f711a61e8e177eb293d6ba58f8c6e7e6dc83f1eadb4af1cb1cf8522c055db435",
+  "original_function_sha256": "abdd1b0fc34840c4f05dc10b13ad2f80f7cc5f572f92dcce9d87a0e05267d2bc",
+  "original_source_path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/tmp/e5f_overnight_local_20260927/portable/calibration_code_integration_20260927_v2/source/code/model/tools/e5f_initial_housing_observer.py",
+  "targets_unchanged": true
+}

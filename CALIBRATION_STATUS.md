@@ -845,7 +845,7 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   **Current transition direction, verified October 4 at 17:35 New York:** the
+   **Current transition direction, verified October 4 at 17:40 New York:** the
    author requested preservation of the one-shock experiment and estimation of
    two unanticipated permanent preference changes, in 2007 and 2015. Fit the
    2012–2015 fertility target **1.861** and retain the 2020–2023 target **1.64575**;
@@ -887,10 +887,12 @@ manuscript wording or certify a new paper calibration.
    Its fresh v4 transfer completed with exit zero and matching inventory; its
    zero-solve preflight timed out after host/container/driver checks passed,
    leaving its constructor incomplete. The separate completion packet passes
-   29 checks; job **19179215**, submitted once at 17:34:30, was pending at 17:35.
-   It runs the exact zero-call constructor under a new ten-minute, one-core,
-   24-GiB allocation; the failed preflight is preserved. No smoke has launched.
-   The 30-minute total and all stage caps
+   29 checks; job **19179215** completed with exit zero at 17:35:57, zero native
+   calls, one thread and the exact saved-case identity. Lead verified the
+   combined phase evidence; the failed original preflight remains preserved.
+   Small smoke **19179291** is **RUNNING on cl017** from **17:39:01**, with a
+   hard scheduler deadline of **18:09:01 New York**, one CPU and 24 GiB.
+   No completed candidate is claimed. The 30-minute total and all stage caps
    remain unchanged. No unchanged retry is authorized.
    No complete smoke pass or empirical fitting launch has occurred. The original
    empirical 24/32 roots, accounting, replay,

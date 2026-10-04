@@ -1,0 +1,47 @@
+{
+  "attempted_at": "2026-10-04T21:38:57.426828+00:00",
+  "command": [
+    "sbatch",
+    "--parsable",
+    "--time=00:30:00",
+    "/scratch/td2248/projects/current_estate_two_shock_20261004_v4/launch_torch.sh",
+    "smoke",
+    "smoke_v1"
+  ],
+  "cpus": 1,
+  "empirical_fitted": false,
+  "fixed_candidate_horizon": 6,
+  "internal_seconds": 1680,
+  "inventory_sha256": "c2618b8b263ed90c82ca60f40b1f02c8836bc6ebeede1db3e89087ea7bbc9ce3",
+  "job_id": "19179291",
+  "launcher_start": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/results/smoke_smoke_v1/launcher_start.json",
+    "sha256": "3eb6d4947871bb5ff5f5e71e4b3fa8e728b3639c364c91dcaf95fc6a7d98ac83"
+  },
+  "lead_review": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/composite_preflight_review.json",
+    "sha256": "d0a083504fc691b7d101017eaafc7d09ce2d3de7a0ec3fdc79fd2a657924fd5f"
+  },
+  "local_root": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4",
+  "memory_gib": 24,
+  "native_call_cap": 400,
+  "no_auto_retry": true,
+  "no_duplicate_claim_or_output": true,
+  "remote_root": "/scratch/td2248/projects/current_estate_two_shock_20261004_v4",
+  "returncode": 0,
+  "scheduler_deadline": "2026-10-04T18:09:01-04:00",
+  "scheduler_node": "cl017",
+  "scheduler_start": "2026-10-04T17:39:01-04:00",
+  "scheduler_state": "RUNNING",
+  "scheduler_verified_at": "2026-10-04T21:40:12.900441+00:00",
+  "scientific_validation": false,
+  "seed": {
+    "horizon": 4,
+    "maps_per_stage": 5,
+    "perturbed_date": 1
+  },
+  "status": "SUBMITTED",
+  "stderr": "",
+  "stdout": "19179291",
+  "wall_seconds": 1800
+}
