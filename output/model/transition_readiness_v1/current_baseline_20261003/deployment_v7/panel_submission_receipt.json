@@ -1,0 +1,29 @@
+{
+  "status": "submitted",
+  "mode": "panel",
+  "job_id": "19142578",
+  "wall_seconds": 21600,
+  "submitted_epoch": 1791093709.596848,
+  "inventory_sha256": "5f1ee713bd1c5ab62d2a1776667f6191d61e69794cfe9a1fd22e6a6841397e92",
+  "remote_root": "/scratch/td2248/projects/current_estate_transition_20261003_v7",
+  "partition": "cs",
+  "cpus": 8,
+  "numba_threads": 8,
+  "memory_GiB": 48,
+  "nodes_per_task": 1,
+  "ntasks": 1,
+  "array": "0-1,3-4,6,8-11%9",
+  "maximum_concurrent_nodes": 9,
+  "no_auto_retry": true,
+  "command": "cd /scratch/td2248/projects/current_estate_transition_20261003_v7 && sbatch --parsable --partition=cs --time=06:00:00 --export=ALL,TRANSITION_MODE=panel,TRANSITION_WALL_SECONDS=21600 --nodes=1 --ntasks=1 --array=0-1,3-4,6,8-11%9 panel_launch_torch_v7.sh",
+  "lead_dispatch_override": "Strict subset of prepared cluster indices; native sources, plan and config unchanged",
+  "skipped_indices": [
+    2
+  ],
+  "skip_reason": "Exact 0.82-times-baseline guess already failed inherited-distribution feasibility in v6 task5; additional endpoint iterations do not address that failure",
+  "local_indices": [
+    5,
+    7
+  ],
+  "preserve_old_running": true
+}

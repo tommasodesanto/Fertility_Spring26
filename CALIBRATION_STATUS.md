@@ -757,29 +757,39 @@ manuscript wording or certify a new paper calibration.
    defaults and paper representations before claiming full synchronization.
    The author authorized resuming the current one-birth Estate-A fertility-shock
    estimation on October 3 and clarified on October 4 that different shock
-   guesses must run simultaneously, with at most 48 nodes. The current design
-   uses twelve independently refining scalar-fit starts, each with the same
-   saved baseline, target contract and numerical gates. Torch smoke 19139732
-   passed with measured peak RSS 13.93 GiB; its six-date terminal check failed,
-   so it is not production certification. Prior v6 array 19140535 tasks 0–1
-   failed after roughly sixteen minutes at the 16-evaluation endpoint cap,
-   not from memory exhaustion; tasks 2–11 were last seen pending at 01:25
-   New York, and no current authenticated SSH check is available. V7 increases
+   guesses must run simultaneously, with at most 48 nodes. The prepared design
+   uses twelve scalar-fit starts with the same saved baseline, target contract
+   and numerical gates. Torch smoke 19139732 passed with measured peak RSS
+   13.93 GiB; its six-date terminal check failed, so it is not production
+   certification. Prior v6 array 19140535 tasks 0–1 failed at the 16-evaluation
+   endpoint cap; tasks 2–6 failed `InheritedDistributionInfeasible` (task 6
+   reported mass `2.9164e-11`). These were not out-of-memory failures.
+   At approximately 02:04 New York on October 4, old tasks 7–11 remained
+   running and were preserved; no cancellations were performed. V7 increases
    the endpoint cap to 48 within the same 1,800-second budget, preserving
-   the model and all scientific gates. Its twelve numerical starting ratios are
+   the model and all scientific gates. Its prepared starting ratios are
    `0.70, 0.76, 0.82, 0.88, 0.92, 0.94, 0.96, 0.98, 1.00, 1.02, 1.08, 1.15`.
-   Two one-core, six-hour local searches launched October 4 at 05:33 UTC
-   (01:33 New York): manager 27036, workers 27037/index 5 and 27038/index 7.
+   Two one-core, six-hour local searches launched at 05:33 UTC (01:33 New York):
+   manager 27036, workers 27037/index 5 and 27038/index 7, both healthy in root
+   maps at the latest check.
    [Local status](output/model/transition_readiness_v1/current_baseline_20261003/local_workers_v7/status.json)
-   records the 24-GiB pause/30-GiB termination guard. Ten ordinary-`cs` starts
-   (indices 0–4, 6, 8–11; eight CPUs/48 GiB each) are prepared and verified,
-   not staged or submitted, under
-   [the v7 release review](output/model/transition_readiness_v1/current_baseline_20261003/deployment_v7/panel_review_gate.json):
-   the shared SSH session expired and the author has been asked to reconnect.
+   records the 24-GiB pause/30-GiB termination guard. V7 array **19142578**
+   submitted nine ordinary-`cs` starts as `0-1,3-4,6,8-11%9`, each with eight
+   CPUs, 48 GiB and six hours; all nine were running at approximately 02:04
+   New York. Index 2's exact `0.82` start was skipped because v6 task 5 had
+   already failed feasibility there. New index 3's `0.88` start was already
+   running when its prior failure was recognized and was preserved.
+   [The submission receipt](output/model/transition_readiness_v1/current_baseline_20261003/deployment_v7/panel_submission_receipt.json)
+   records inventory SHA-256
+   `5f1ee713bd1c5ab62d2a1776667f6191d61e69794cfe9a1fd22e6a6841397e92`;
+   zero-solve preflight passed with exit zero and native/plan/config pins are
+   unchanged. Nine new and five retained cluster tasks remain below the
+   48-node cap. SSH authentication is restored; bounded keepalive PID 31864
+   lasts at most 21,700 seconds under
+   [its receipt](output/model/transition_readiness_v1/current_baseline_20261003/deployment_v7/ssh_keepalive.json).
+   Local caffeinate PID 28708 supports overnight execution.
    [V7 plans](output/model/transition_readiness_v1/current_baseline_20261003/plans_v7/)
-   pin this execution; cancel only v6 tasks confirmed still pending before
-   replacement, preserving any old tasks now running under the 48-node cap.
-   Live receipts and fit outcomes are in
+   pin this execution. Live receipts and fit outcomes are in
    [the current transition readout](output/model/transition_readiness_v1/current_baseline_20261003/README.md).
    This authorization does not certify a transition result. The hard-versus-soft
    economic choice remains distinct.

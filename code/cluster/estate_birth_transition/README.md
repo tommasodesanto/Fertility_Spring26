@@ -252,3 +252,7 @@ plan and panel config have their own SHA identities. Cancellation of pending old
 array tasks is a separate root-owned action; this tooling never cancels jobs.
 Scheduler test-only start estimates use Torch's New York timezone (`-04:00` at
 the October 4 check); they are estimates, not launch guarantees.
+
+### Actual October 4 release
+
+Array `19142578` was submitted as `0-1,3-4,6,8-11%9` and all nine tasks were observed running on ordinary `cs` nodes at about 02:04 New York. Each has eight CPUs, 48 GiB and six hours. This strict subset of the prepared panel skips index 2 after the exact starting guess failed inherited-distribution feasibility in v6. Native sources, fit plan and panel configuration are unchanged. The authoritative receipt is `output/model/transition_readiness_v1/current_baseline_20261003/deployment_v7/panel_submission_receipt.json`; do not resubmit the array. Local indices 5 and 7 and already-running v6 tasks are preserved.
