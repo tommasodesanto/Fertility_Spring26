@@ -845,7 +845,7 @@ manuscript wording or certify a new paper calibration.
 1. **Timing and purchase constraint:** propagate the adopted post-interest
    transaction budget consistently through active implementation, saved-input
    defaults and paper representations before claiming full synchronization.
-   **Current transition direction, verified October 4 at 17:40 New York:** the
+   **Current transition direction, verified October 4 at 18:03 New York:** the
    author requested preservation of the one-shock experiment and estimation of
    two unanticipated permanent preference changes, in 2007 and 2015. Fit the
    2012–2015 fertility target **1.861** and retain the 2020–2023 target **1.64575**;
@@ -890,11 +890,14 @@ manuscript wording or certify a new paper calibration.
    29 checks; job **19179215** completed with exit zero at 17:35:57, zero native
    calls, one thread and the exact saved-case identity. Lead verified the
    combined phase evidence; the failed original preflight remains preserved.
-   Small smoke **19179291** is **RUNNING on cl017** from **17:39:01**, with a
-   hard scheduler deadline of **18:09:01 New York**, one CPU and 24 GiB.
-   No completed candidate is claimed. The 30-minute total and all stage caps
-   remain unchanged. No unchanged retry is authorized.
-   No complete smoke pass or empirical fitting launch has occurred. The original
+   Small smoke **19179291** passed at **17:57:05**, exit zero, after 18m04s
+   and 39 native calls. Both fresh five-map seeds, fixed six-date candidates,
+   zero fresh-replay discrepancy, inherited 2015 state and both queues, exact
+   2023 export, and the original 17 plot names at five dates passed artifact
+   validation. Both smoke terminal diagnostics were true and nongating. This
+   certifies execution only, not empirical convergence. The empirical fit was
+   submitted once at **18:03:13**, job **19180137**, and was pending at 18:03:30,
+   with one CPU, 24 GiB and the same frozen package. No estimate is accepted yet. The original
    empirical 24/32 roots, accounting, replay,
    horizon gates, 0.005 fitted-gap tolerance and six-hour budget remain unchanged.
    [Current run and launch receipts](output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/README.md).

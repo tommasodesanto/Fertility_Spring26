@@ -3,11 +3,13 @@
     "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/composite_preflight_review.json",
     "sha256": "d0a083504fc691b7d101017eaafc7d09ce2d3de7a0ec3fdc79fd2a657924fd5f"
   },
-  "empirical_fit_launched": false,
+  "empirical_fit_job_id": "19180137",
+  "empirical_fit_launched": true,
+  "empirical_fit_scheduler_state": "PENDING",
   "expected_inventory_paths": 4599,
   "implementation_commit": "70362320",
   "inventory_sha256": "c2618b8b263ed90c82ca60f40b1f02c8836bc6ebeede1db3e89087ea7bbc9ce3",
-  "next_step": "monitor_actual_native_smoke_progress_and_original_deadline",
+  "next_step": "monitor_existing_empirical_job_actual_native_progress_and_original_deadline",
   "observed_remote_inventory_paths": 2660,
   "preflight": {
     "attempt_recorded_epoch": 1791148224.399594,
@@ -26,15 +28,21 @@
   },
   "remote_inventory_sha256": "c2618b8b263ed90c82ca60f40b1f02c8836bc6ebeede1db3e89087ea7bbc9ce3",
   "remote_root": "/scratch/td2248/projects/current_estate_two_shock_20261004_v4",
+  "smoke_actual_calls": 39,
   "smoke_job_id": "19179291",
   "smoke_launched": true,
+  "smoke_review": {
+    "path": "/Users/tommasodesanto/Desktop/Projects/Fertility/Fertility_Spring26/output/model/transition_readiness_v1/current_baseline_20261003/two_shock_v1/execution_smoke_v4/fit_review_gate.json",
+    "sha256": "8f14125454a32ff6cc909029f1c31d0e038e096305d05b6e1ac9186e15a1bcbb"
+  },
   "smoke_scheduler_deadline": "2026-10-04T18:09:01-04:00",
   "smoke_scheduler_start": "2026-10-04T17:39:01-04:00",
-  "status": "composite_readiness_passed_smoke_running",
+  "smoke_status": "execution_passed",
+  "status": "smoke_execution_passed_empirical_fit_submitted",
   "transfer_completion_verified": true,
   "transfer_exit_code": 0,
   "transfer_method": "rsync -a -c --copy-dest of preserved v3; fresh destination, no hardlinks",
   "transfer_pid": 72467,
   "transfer_tool_session": 45793,
-  "verified_epoch": 1791150012.8998778
+  "verified_epoch": 1791151461.564776
 }
