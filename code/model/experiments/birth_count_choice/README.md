@@ -291,6 +291,13 @@ arm reproduces the accepted target fit. The 1.0 arm solves but fails the
 unchanged negative-estate production gate, so its saved-array comparisons are
 provisional and are not an accepted counterfactual.
 
+The [net-estate-solvent v2 credit diagnostic](../../../../output/model/experiments/birth_count_choice/credit_at_binary_winner_v2/README.md)
+adds the explicit death-estate saving floor to this experimental engine. At
+the same verified fixed price and parameters, both 0.8 and 1.0 financed-share
+arms pass the native partial-equilibrium gates, with zero negative death
+estates. The 1.0 arm does not clear the held-price renewal equation, so this
+is a partial-equilibrium result, not a new calibration or equilibrium.
+
 Copy-paste handoff for Claude:
 
 > Inspect `output/model/experiments/birth_count_choice/estate_a_v1/RESULTS.md`,

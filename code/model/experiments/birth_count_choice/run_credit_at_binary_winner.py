@@ -144,9 +144,9 @@ def solve_one(label, P, grid, preparation):
         raise RuntimeError(f"{label}: standard diagnostic plot count differs from 17")
     live = dict(P=Q, b_grid=np.asarray(grid), sd=sd, sol=sol,
                 price=np.asarray([PRICE]), case_deadline_epoch=time.time() + 300)
-    # Baseline uses the unchanged final native observer/gates to authenticate
-    # its 14 moments against the selected GE point. Relaxed arm is diagnostic:
-    # final=True would impose a GE renewal root on a fixed-price counterfactual.
+    # A fixed-price relaxed arm must not be subjected to a GE renewal-root
+    # gate. Its native PE observation still runs the unchanged production
+    # estate, PAYGO, and reconstruction gates; V2 treats any failure as fatal.
     context["out"] = arm / "reporting"
     try:
         observed = native_phase_b.observe_price(context, live, label,
@@ -156,7 +156,7 @@ def solve_one(label, P, grid, preparation):
         write(arm / "reporting_failure.json", dict(error_type=type(exc).__name__,
             message=str(exc), traceback=traceback.format_exc(),
             solver_output_preserved=True, no_gate_change=True))
-        if label == "phi_080":
+        if label == "phi_080" or OUT.name.endswith("_v2"):
             raise
     return arm
 
@@ -196,11 +196,14 @@ def verify_baseline(arm):
 
 
 def main():
+    global OUT
     parser = argparse.ArgumentParser(description=__doc__)
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--prepare", action="store_true")
     mode.add_argument("--run", action="store_true")
+    parser.add_argument("--output-version", choices=("v1", "v2"), default="v1")
     args = parser.parse_args()
+    OUT = ROOT / f"output/model/experiments/birth_count_choice/credit_at_binary_winner_{args.output_version}"
     sys.path.insert(0, str(HERE))
     baseline, relaxed, preparation = setup()
     OUT.mkdir(parents=True, exist_ok=True)
@@ -220,7 +223,8 @@ def main():
         second = solve_one("phi_100", *relaxed, preparation)
         write(OUT / "completed.json", dict(status="two_fixed_price_solves_complete",
               phi_080=str(first), phi_100=str(second), baseline_fit_gate=gate,
-              relaxed_reporting_status="observation_only" if not (second / "reporting_failure.json").exists() else "failed_preserved",
+              relaxed_reporting_status=("pe_native_gates_passed" if OUT.name.endswith("_v2")
+                  else "observation_only") if not (second / "reporting_failure.json").exists() else "failed_preserved",
               completed_epoch=time.time()))
     except Exception as exc:
         write(OUT / "failure.json", dict(error_type=type(exc).__name__, message=str(exc),

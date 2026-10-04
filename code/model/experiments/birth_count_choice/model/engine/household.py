@@ -10,7 +10,7 @@ from . import joint_nested, birth_count
 from .adult_entry import adjusted_births, potential_entry_households
 from .warm_price import search_warm_price
 from .child_preferences import apply_child_preferences
-from .parameters import (bequest_utility_net_active, child_earnings_multiplier, child_earnings_penalty_active, children_at_home_count, estate_housing_value, estate_receiver_active, estate_transfer_at_age, get_fecundity_by_age, independent_child_maturation_active, mortgage_stay_floor_active, parent_age_maturation_active, readiness_childless_states, readiness_cumulative_probability, readiness_gate_active, readiness_settled_state, readiness_transition_hazard, rental_wedge_active, unsecured_debt_floor)
+from .parameters import (bequest_utility_net_active, child_earnings_multiplier, child_earnings_penalty_active, children_at_home_count, estate_flow_net_active, estate_housing_value, estate_receiver_active, estate_transfer_at_age, get_fecundity_by_age, independent_child_maturation_active, mortgage_stay_floor_active, parent_age_maturation_active, readiness_childless_states, readiness_cumulative_probability, readiness_gate_active, readiness_settled_state, readiness_transition_hazard, rental_wedge_active, unsecured_debt_floor)
 from .kernels import (NUMBA_AVAILABLE, full_owner_block_kernel, full_renter_block_kernel, location_logit_kernel, scatter_cols_kernel, scatter_cols_sameidx_kernel, scatter_vec_kernel, tenure_choice_kernel, tenure_logit_kernel)
 from .utils import (decode_flat_family_state, flat_nc, interp_indices, interp_on_grid, interp_vector, logsumexp, make_grid, make_value_interp, scatter_redistribute, scatter_redistribute_cols, scatter_redistribute_cols_sameidx, unflat_nc, weighted_median_from_cells, weighted_quantile)
 from .shared import (DEAD_VALUE_CUTOFF, get_completed_fertility, income_at_state, income_transition_values)
@@ -30,20 +30,30 @@ def fixed_unsecured_credit_active(P: SimpleNamespace) -> bool:
     return getattr(P, "unsecured_credit_limit", None) is not None
 
 
+def death_possible_at_age(P: SimpleNamespace, j: int) -> bool:
+    return int(j) == int(P.J) - 1 or (
+        bool(getattr(P, "use_age_survival", False))
+        and float(np.asarray(P.survival_probs)[int(j)]) < 1.0
+    )
+
+
+def net_estate_saving_floor(P: SimpleNamespace, j: int, price: float, house: float) -> float:
+    """Lower bound on post-saving assets when net-estate death can occur."""
+    if not estate_flow_net_active(P) or not death_possible_at_age(P, j):
+        return -np.inf
+    return -(1.0 - float(P.psi)) * float(price) * float(house)
+
+
 def renter_borrowing_floor(P: SimpleNamespace, b: Any, j: int) -> np.ndarray:
     """Renter floor; scalar credit is separate from the legacy rollover rule."""
 
     credit = getattr(P, "unsecured_credit_limit", None)
     if credit is None:
-        return debt_rule_at_age(P, b, j)
+        return np.maximum(debt_rule_at_age(P, b, j), net_estate_saving_floor(P, j, 0.0, 0.0))
     floor = -float(credit)
-    death_possible = int(j) == int(P.J) - 1 or (
-        bool(getattr(P, "use_age_survival", False))
-        and float(np.asarray(P.survival_probs)[int(j)]) < 1.0
-    )
     # Estates remain non-negative: a death branch makes the effective floor
     # max(-D, 0), independently of the age-taper arrays.
-    if death_possible:
+    if death_possible_at_age(P, j):
         floor = max(floor, 0.0)
     return np.zeros_like(np.asarray(b, dtype=float)) + floor
 
@@ -59,9 +69,7 @@ def native_due_owner_floor(b, collateral_floor, *, death_floor=-np.inf):
 
 
 def native_due_death_floor(P, j, price, house):
-    death_possible = (j == int(P.J) - 1 or
-        (bool(getattr(P, "use_age_survival", False)) and float(P.survival_probs[j]) < 1.0))
-    return -(1.0 - float(P.psi)) * float(price) * float(house) if death_possible else -np.inf
+    return -(1.0 - float(P.psi)) * float(price) * float(house) if death_possible_at_age(P, j) else -np.inf
 
 
 def owner_borrowing_floor(
@@ -338,6 +346,7 @@ def _savings_stage(
                 bool(getattr(P, "native_exact_allocation_output", False)),
                 natural_floor,
                 float(renter_floor[0]) if fixed_credit else -np.inf,
+                net_estate_saving_floor(P, j, 0.0, 0.0),
             )
             if natural_credit:
                 Vo_nc[:, natural_dead] = -1e10
@@ -442,6 +451,7 @@ def _savings_stage(
                     bool(getattr(P, "native_exact_allocation_output", False)),
                     due_stay,
                     native_due_death_floor(P, j, ctx.current_prices[i], P.H_own[ten - 1]) if due_stay else -np.inf,
+                    net_estate_saving_floor(P, j, ctx.current_prices[i], P.H_own[ten - 1]),
                 )
                 if natural_credit:
                     Vo_nc[:, natural_dead] = -1e10
@@ -453,13 +463,14 @@ def _savings_stage(
                     owner_residual_h = hsv - ctx.owner_h_bar_scale * SD.hb_flat[0, c]
                     nn_c, cs_c = decode_flat_family_state(c, npar)
                     bf_c = ctx.bmo[i, ten, nn_c, cs_c]
-                    lo = np.maximum(
+                    lo = np.maximum.reduce((
                         owner_borrowing_floor(
                             P, b_grid, bf_c, j,
                             stay_on=stay_floor, stay_orig=stay_orig_on, amort=amort_rate,
                         ),
-                        b_grid[0],
-                    )
+                        np.full(Nb, b_grid[0]),
+                        np.full(Nb, net_estate_saving_floor(P, j, ctx.current_prices[i], P.H_own[ten - 1])),
+                    ))
                     hi = np.maximum(Rv_eff_nc[:, c] - oc - cb_c - 1e-6, lo)
                     if ctx.strict_owner_hbar_feasibility and owner_residual_h <= 0.0:
                         bp = lo.copy()

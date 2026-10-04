@@ -66,12 +66,12 @@ def reconstruct(label, phi, source, point, h0):
     evaluation = cal.evaluate_period(price, pre, Q, grid, shared, cal.SolveCounter(),
                                      supply_rule=supply, supplied_policy=policy)
     ledger = context["prepared"].estate.audit(evaluation, Q, grid)
-    baseline_ledger_equal = None
-    if label == "phi_080":
-        saved = json.loads((arm / "reporting/phase_b_ge/phi_080/gates.json").read_text())["estate"]
-        baseline_ledger_equal = ledger == saved
-        if not baseline_ledger_equal:
-            raise RuntimeError("Read-only baseline ledger differs from accepted native ledger")
+    native_gate_ledger_equal = None
+    if label == "phi_080" or OUT.name.endswith("_v2"):
+        saved = json.loads((arm / "reporting/phase_b_ge" / label / "gates.json").read_text())["estate"]
+        native_gate_ledger_equal = ledger == saved
+        if not native_gate_ledger_equal:
+            raise RuntimeError(f"{label}: read-only ledger differs from native PE gate ledger")
     death = np.r_[1 - np.asarray(Q.survival_probs), 1.]
     branches = policy_mass_branches(evaluation, Q)
     tenure = []
@@ -89,8 +89,8 @@ def reconstruct(label, phi, source, point, h0):
         if abs(sum(t[key] for t in tenure) - totals[key]) > 1e-12:
             raise RuntimeError(f"{label}: tenure estate split differs from audited ledger: {key}")
     write(arm / "estate_from_saved_arrays.json", dict(
-        status="read_only_reconstruction_matches_native" if label == "phi_080" else "read_only_reconstruction_unaccepted_arm",
-        baseline_ledger_exact_match=baseline_ledger_equal, source_arrays_sha256=sha(source_arrays),
+        status="read_only_reconstruction_matches_native" if native_gate_ledger_equal else "read_only_reconstruction_unaccepted_arm",
+        native_gate_ledger_exact_match=native_gate_ledger_equal, source_arrays_sha256=sha(source_arrays),
         reconstruction=checks, ledger=ledger, by_tenure=tenure,
         gate_net_negative_limit=1e-10,
         production_gate_passes=totals["net_negative"] <= 1e-10))
@@ -120,7 +120,8 @@ def reconstruct(label, phi, source, point, h0):
         estate_negative_period=totals["net_negative"],
         estate_negative_death_mass=totals["negative_estate_death_mass"],
         estate_total_death_mass=totals["death_mass"],
-        accepted_native_report=label == "phi_080")
+        accepted_native_pe_gates=label == "phi_080" or OUT.name.endswith("_v2"),
+        full_target_report=label == "phi_080")
     age_rows = []
     for j in range(int(Q.J)):
         for timing, shares in (("pre_birth", shares_pre[j]), ("post_birth", shares_post[j])):
@@ -130,6 +131,12 @@ def reconstruct(label, phi, source, point, h0):
 
 
 def main():
+    global OUT
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output-version", choices=("v1", "v2"), default="v1")
+    args = parser.parse_args()
+    OUT = ROOT / f"output/model/experiments/birth_count_choice/credit_at_binary_winner_{args.output_version}"
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt
@@ -150,8 +157,10 @@ def main():
     fig, ax = plt.subplots(figsize=(6.2, 4.2))
     for arm, color in ((base, "#2864a4"), (relaxed, "#bc6442")):
         label = f"financed share {arm['phi']:.1f}"
-        if arm["phi"] == 1.:
+        if arm["phi"] == 1. and args.output_version == "v1":
             label += " (provisional; estate check failed)"
+        elif arm["phi"] == 1.:
+            label += " (PE gates passed; fixed price)"
         ax.step(values, arm["age25_cdf"], where="post", marker="o", color=color,
                 label=label)
     ax.set(xlabel="children ever born by completed interview age 25", ylabel="cumulative household share",
@@ -167,7 +176,8 @@ def main():
             ownership_percentage_points=100 * (relaxed["ownership_all_households"] - base["ownership_all_households"]),
             age25_motherhood_percentage_points=100 * (relaxed["age25_motherhood"] - base["age25_motherhood"]),
             age25_children_conditional_on_motherhood=relaxed["age25_children_conditional_on_motherhood"] - base["age25_children_conditional_on_motherhood"]),
-        relaxed_acceptance="failed_negative_estate_gate; diagnostics provisional, not accepted counterfactual",
+        relaxed_acceptance=("native_PE_gates_passed; fixed_price_not_GE" if args.output_version == "v2"
+            else "failed_negative_estate_gate; diagnostics provisional, not accepted counterfactual"),
         no_new_lifecycle_solve=True)
     write(OUT / "diagnostic_summary.json", result)
     print(json.dumps(dict(status=result["status"], change=result["change"],

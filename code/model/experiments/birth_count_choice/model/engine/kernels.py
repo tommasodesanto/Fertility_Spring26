@@ -615,6 +615,7 @@ def full_renter_block_kernel(
     exact_allocation_output=False,
     natural_floor_v=None,
     fixed_renter_floor=-np.inf,
+    net_estate_death_floor=-np.inf,
 ):
     # Full-Bellman renter block: golden-section search for bp + post-search
     # consumption / housing arithmetic, fused into one kernel per (i, j).
@@ -687,6 +688,8 @@ def full_renter_block_kernel(
                 unsecured_floor = fixed_renter_floor
             if natural_floor_v is not None:
                 unsecured_floor = natural_floor_v[c]
+            if net_estate_death_floor > unsecured_floor:
+                unsecured_floor = net_estate_death_floor
             lo = unsecured_floor
             if bg0 > lo:
                 lo = bg0
@@ -827,6 +830,7 @@ def full_owner_block_kernel(
     exact_allocation_output=False,
     due_stayer=False,
     due_death_floor=-np.inf,
+    net_estate_death_floor=-np.inf,
 ):
     # yadj_v/pen_on carry the optional children-at-home earnings adjustment;
     # see full_renter_block_kernel. With pen_on == 0 the block matches the
@@ -909,6 +913,10 @@ def full_owner_block_kernel(
                 # b is before interest; allowing R*b would capitalize interest.
                 total_floor = min(b_grid[b], bf)
                 total_floor = max(total_floor, due_death_floor)
+            # In Estate-A, a death can occur after this saving decision.
+            # Apply the net sale-value bound to buyers and stayers alike.
+            if net_estate_death_floor > total_floor:
+                total_floor = net_estate_death_floor
             lo = total_floor
             if bg0 > lo:
                 lo = bg0
