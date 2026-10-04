@@ -1,6 +1,6 @@
 """Regenerate standard PDFs from the saved 2007 and 2023 snapshots; no solves."""
 from pathlib import Path
-import gzip, pickle, shutil, sys, json
+import gzip, pickle, shutil, sys, json, csv
 ROOT = Path(__file__).resolve().parents[2]
 sys.path[:0] = [str(ROOT/'code/model'), str(ROOT/'code/model/tools')]
 from production.storage import load_case
@@ -19,4 +19,46 @@ prepare_assessment(result, case, output=OUT/'2023', data_year=2023,
                    acs_path=case/'data/housing_profile_by_age.csv', save_pages=False)
 shutil.copyfile(OUT/'transition/solution/slide_plot/fertility_2007_2063.pdf',
                 OUT/'transition/fertility_path.pdf')
+# Concise 2023 fit readout from exactly the numbers drawn in the PDF.
+shutil.copyfile(OUT/'transition/solution/fertility_fit.csv',OUT/'2023/target_fit.csv')
+with (OUT/'2023/plotted_long.csv').open() as stream:
+    plotted=list(csv.DictReader(stream))
+def points(panel,series):
+    return [(float(r['x']),float(r['value'])) for r in plotted if r['panel']==panel and r['series']==series]
+def mean_count(panel,series):
+    return sum(x*y for x,y in points(panel,series))
+def cdf_mean(panel,series):
+    last=0.; total=0.
+    for x,f in points(panel,series): total+=x*(f-last); last=f
+    return total
+checks=[]
+for label,panel,operator in [
+    ('Children ever born, ages 22–25 (cap 3)','children_22_25',mean_count),
+    ('Childlessness, ages 22–25','children_22_25',lambda p,s:points(p,s)[0][1]),
+    ('Children ever born, ages 40–44 (cap 3)','children_40_44',mean_count),
+    ('Childlessness, ages 40–44','children_40_44',lambda p,s:points(p,s)[0][1]),
+    ('First-birth mean age (band midpoints)','first_birth_age',lambda p,s:sum((20+4*x)*y for x,y in points(p,s))),
+    ('First-birth share age 30+','first_birth_age',lambda p,s:sum(y for x,y in points(p,s) if x>=3)),
+    ('Mean rooms, all households (PSID)','rooms_all',cdf_mean),
+    ('Mean rooms, owners (PSID)','rooms_owner',cdf_mean),
+    ('Mean rooms, renters (PSID)','rooms_renter',cdf_mean),
+    ('Mean total net wealth / own mean earnings','resource_totalwealth_cdf',cdf_mean),
+    ('Negative financial position, all ages','resource_financial_cdf',lambda p,s:max([y for x,y in points(p,s) if x<0],default=0))]:
+    checks.append((label,operator(panel,'Data'),operator(panel,'Model')))
+text=['# 2023 snapshot: model and data','',
+      'These cross-sectional comparisons are validation moments, not fitted targets. CPS is June 2024; first-birth timing is NCHS 2023; resources and room distributions use PSID 2019.','',
+      '| Validation moment | Data | Model | Model − data |','|---|---:|---:|---:|']
+text += [f'| {label} | {data:.4f} | {model:.4f} | {model-data:+.4f} |' for label,data,model in checks]
+text += ['', '## Complete target system for the retained transition', '',
+         'Only the 2020–2023 window was fitted. These are the original household-rate fertility statistics, distinct from children-ever-born stocks above.', '',
+         '| Birth window | Target | Model | Gap | Weight | Loss contribution |','|---|---:|---:|---:|---:|---:|']
+with (OUT/'2023/target_fit.csv').open() as stream:
+    for r in csv.DictReader(stream):
+        text.append(f"| {r['birth_year_start']}–{r['birth_year_end']} | {float(r['target']):.6f} | {float(r['model']):.6f} | {float(r['gap']):+.6f} | {float(r['weight']):g} | {float(r['loss_contribution']):.8g} |")
+text += ['', 'Estimated shock: psi_child=0.1199969464, bounds [0.0017892072, 0.3578414413], away from either bound. [All 31 supplied baseline parameters and reference bounds](../transition/solution/baseline_parameters.csv).', '',
+         '## CPS data check','',
+         'The weighted five-year age groups reproduce Census Table 1 population totals and children-count shares to its published rounding. Ages 35–45 have about 600–700 respondents per single age. The annual-age line is a cross-section of different cohorts, not a trajectory for the same women. No monotonicity is imposed.', '',
+         'Capping at three is intentional and applied to both model and data: ages 40–44 have a CPS mean of 1.739771 after this cap, versus 1.918425 in the public file before the cap (which itself codes five or more as five).', '',
+         '[Official Census Table 1](https://www2.census.gov/programs-surveys/demo/tables/fertility/2024/am-women-fertility/t1.xlsx). No data or graph definition was changed by this check.']
+(OUT/'2023/model_data_fit.md').write_text('\n'.join(text)+'\n')
 print(OUT)
